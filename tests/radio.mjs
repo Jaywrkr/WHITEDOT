@@ -88,9 +88,11 @@ try {
     for(let tick=1;tick<=2400;tick++){runtime.ac.currentTime=start+tick*.025;schedule();}
     assert(started>previous+20,`${genre}: no sustained audio while stationary`);
     assert(heard.size>0,`${genre}: no instruments scheduled`);
-    if(['tropical','melodic','robotic','nudisco'].includes(genre)){assert(heard.has(runtime.GEN[genre].bassI));assert(runtime.GEN[genre].hookP.some(id=>heard.has(id)));}
+    if(['tropical','melodic','robotic','nudisco'].includes(genre)){assert(heard.has('kick'),`${genre}: groove has no kick`);assert(heard.has(runtime.GEN[genre].bassI));assert(runtime.GEN[genre].hookP.some(id=>heard.has(id)));}
     assert.equal(runtime.MU.radio.genre,genre);
   }
+  runtime.S.softMusic=true;runtime.applyComfort();assert.equal(runtime.musicVolume(),.65);
+  runtime.S.sound=false;runtime.applyComfort();assert.equal(runtime.musicVolume(),0);runtime.S.sound=true;runtime.S.softMusic=false;
   runtime.S.mode = 'camino';
   for(let tick=0;tick<24;tick++){runtime.ac.currentTime+=.025;schedule();}
   assert.equal(runtime.MU.radio, null, 'radio leaked into daily path');

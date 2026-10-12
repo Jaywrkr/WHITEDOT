@@ -1,3 +1,4 @@
+import {harmonicDegree,createVoiceCurator} from './grammar.js';
 import { createRadio } from './radio.js';
 
 // Motor musical, síntesis y programación de Web Audio.
@@ -25,14 +26,27 @@ export function initialize(runtime) {
     biome:0,biomeT:0,tr:0,sq:[],nb:null,nbW:0,prevKit:null,xf0:-999,bpmFrom:96,dnaA:null,dnaT:null,q8:[],near:[],singers:[],vari:-1,timbre:0,follower:false,voices:[57,60,64,67],resp:false,layers:new Set(),flowers:[],boltAt:0,groove:0};
   const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN);
   MU.radio = null;
-  let ac=null,master,mfilt,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
+  let ac=null,master,mfilt,comfortShelf,comfortLowpass,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
+  const voiceCurator=createVoiceCurator();
+  const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:.85):0;
+  function applyComfort(time=ac?.currentTime||0){
+    if(!ac)return;
+    const soft=!!runtime.S.softMusic;
+    master.gain.setTargetAtTime(musicVolume(),time,.25);
+    comfortShelf.gain.setTargetAtTime(soft?-5:-1.5,time,1);
+    comfortLowpass.frequency.setTargetAtTime(soft?5500:runtime.inWorld()?(MU.radio?.grammar?.brightness||10000):18000,time,1.2);
+  }
   function impulse(sec){const n=ac.sampleRate*sec|0,b=ac.createBuffer(2,n,ac.sampleRate);for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);}return b;}
   function audio(){
     if(!ac){
       try{ac=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return;}
-      master=ac.createGain();master.gain.value=runtime.S.sound?.85:0;
+      master=ac.createGain();master.gain.value=musicVolume();
       mfilt=ac.createBiquadFilter();mfilt.type="lowpass";mfilt.frequency.value=18000;
-      const comp=ac.createDynamicsCompressor();master.connect(mfilt).connect(comp).connect(ac.destination);
+      const comp=ac.createDynamicsCompressor();
+      if(comp.threshold){comp.threshold.value=-18;comp.knee.value=18;comp.ratio.value=3;comp.attack.value=.008;comp.release.value=.25;}
+      comfortShelf=ac.createBiquadFilter();comfortShelf.type='highshelf';comfortShelf.frequency.value=3500;comfortShelf.gain.value=runtime.S.softMusic?-5:-1.5;
+      comfortLowpass=ac.createBiquadFilter();comfortLowpass.type='lowpass';comfortLowpass.Q.value=.7;comfortLowpass.frequency.value=runtime.S.softMusic?5500:18000;
+      master.connect(mfilt).connect(comfortShelf).connect(comfortLowpass).connect(comp).connect(ac.destination);
       bus=ac.createGain();bus.connect(master);
       verb=ac.createConvolver();verb.buffer=impulse(3.2);verbIn=ac.createGain();verbIn.gain.value=.8;verbIn.connect(verb).connect(master);
       delay=ac.createDelay(1.5);delay.delayTime.value=SIX*3;dfb=ac.createGain();dfb.gain.value=.38;const dl=ac.createBiquadFilter();dl.type="lowpass";dl.frequency.value=2000;
@@ -65,7 +79,7 @@ export function initialize(runtime) {
     let opts=NEXTD[MU.deg];
     const pref=MU.dirY<-.3?UPD:MU.dirY>.3?DOWND:null;
     if(pref){const f=opts.filter(o=>pref.includes(o));if(f.length&&rnd()<.7)opts=f;}
-    MU.deg=opts[Math.floor(rnd()*opts.length)];MU.pending=false;MU.dist=0;MU.lastChange=MU.step;
+    MU.deg=runtime.inWorld()&&MU.radio?.grammar?harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar):opts[Math.floor(rnd()*opts.length)];MU.pending=false;MU.dist=0;MU.lastChange=MU.step;
     voiceLead();
     padOsc.forEach(p=>p.o.frequency.setTargetAtTime(hz(MU.voices[p.i]),t,.35+rnd()*.4));
     drone.frequency.setTargetAtTime(hz(root()-12),t,.6);
@@ -125,28 +139,6 @@ export function initialize(runtime) {
         if((s===4||s===12)&&E>.6&&P(.8))clap(t,vel(.06));
         if(ACID[s]&&P(.85))!DO&&acid(R+(ACID[s]===2?12:0)+(s===14?3:0),t,vel(.11),200+MU.speed*2600);
         break;
-      case "tropical":
-        if(L1&&s%4===0)kick2(t,vel(.24),50,.28);
-        if(L2&&[3,6,10,14].includes(s))conga(tt,[180,250,320][variation],vel(.085));
-        if(L2&&(s===2||s===10))runtime.guiro(tt,vel(.024));
-        if(L3&&s===15&&bar%4===3)runtime.timbale(tt,vel(.06));
-        if(L2&&s%2===1)shaker(tt,vel(.014));break;
-      case "melodic":
-        if(L1&&s%4===0)kick2(t,vel(.26),49,.32);
-        if(L2&&(s===4||s===12))clap(t,vel(.055));
-        if(L2&&s%4===2)hatO(tt,vel(.025));
-        if(L3&&s===0&&bar%4===0&&!DO)ct.slice(0,3).forEach(n=>hookInst('strings',n,t,vel(.025)));break;
-      case "robotic":
-        if(L1&&[0,7,10].includes(s))kick2(t,vel(.27),48,.22);
-        if(L1&&(s===4||s===12))snare(t,vel(.085));
-        if(L2&&s%2===0)hatC(tt,vel(.02));
-        if(L3&&s===[3,11,15][variation])runtime.timbale(tt,vel(.04));break;
-      case "nudisco":
-        if(L1&&s%4===0)kick2(t,vel(.25),53,.25);
-        if(L2&&(s===4||s===12))clap(t,vel(.07));
-        if(L2&&s%4===2)hatO(tt,vel(.03));
-        if(L3&&s===7)runtime.guiro(tt,vel(.025));
-        if(L3&&(s===6||s===14)&&!DO)ct.slice(0,3).forEach(n=>hookInst('brass',n,tt,vel(.022)));break;
       case "heart":
         if(s===0||s===3)kick(t,vel(s===0?.22:.14));
         if(s===0&&MU.step%32===0)!DO&&pluck(ct[0]+12,t,.04,2);
@@ -158,10 +150,10 @@ export function initialize(runtime) {
     const s=MU.step%16,k=style(),calm=runtime.isFree()&&runtime.S.mode==="camino";
     const live=runtime.inWorld()||runtime.S.mode==="studio";
     if(s===0){
-      if(MU.biome!==MU.biomeT||MU.dnaA!==MU.dnaT){MU.biome=MU.biomeT;MU.dnaA=MU.dnaT;MU.tr=BI().tr+(MU.dnaA?MU.dnaA.trOff:0);MU.pending=true;}
+      if(MU.biome!==MU.biomeT||MU.dnaA!==MU.dnaT){MU.biome=MU.biomeT;MU.dnaA=MU.dnaT;MU.tr=BI().tr+(MU.dnaA?MU.dnaA.trOff:0);MU.pending=true;MU.harmonyRegion=null;}
       const nb=runtime.inWorld()?MU.nb:null,w=nb?MU.nbW:0;
       const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;BPM=Math.round(bA*(1-w)+bB*w);SIX=60/BPM/4;delay.delayTime.setTargetAtTime(SIX*3,t,.2);
-      if(MU.pending||(MU.step-MU.lastChange>16*(6+Math.floor(rnd()*4))))changeChord(t);
+      if(!runtime.inWorld()&&(MU.pending||(MU.step-MU.lastChange>16*(6+Math.floor(rnd()*4)))))changeChord(t);
       if(BI().id==="tormenta"&&runtime.inWorld()&&(MU.step/16)%2===0&&rnd()<.75)MU.boltAt=t+SIX*(rnd()<.5?0:8);
     }
     if(runtime.inWorld()&&MU.dnaA){
@@ -169,7 +161,9 @@ export function initialize(runtime) {
         near:MU.near.length,singers:MU.singers.length,variant:MU.vari,quiet:runtime.currentPocket?.()?.kind==='quiet',
         event:runtime.eventOf(MU.dnaA)?.[0]
       });
-    }else MU.radio=null;
+      if(s===0){const degree=harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar);if(MU.harmonyRegion!==MU.dnaA.key||MU.deg!==degree){changeChord(t);MU.harmonyRegion=MU.dnaA.key;}else if(MU.pending){MU.pending=false;MU.dist=0;}}
+    }else{MU.radio=null;voiceCurator.clear();}
+    if(s===0)applyComfort(t);
     const E=(calm||runtime.S.mode==="camino")?Math.min(MU.E,.2):Math.max(MU.E,MU.radio?.energy||0);
     const A=live&&MU.dnaA?MU.dnaA:null,G=A?runtime.GEN[A.genre]:runtime.GEN.ambient,nb=runtime.inWorld()&&MU.nb&&MU.nb!==A?MU.nb:null,w=nb?MU.nbW:0;
     if(s%4===0){MU.bq.push(t);if(MU.bq.length>8)MU.bq.shift();}
@@ -188,7 +182,14 @@ export function initialize(runtime) {
     if(live){
       if(nb){VW=w;drums(nb.genre,s,bar,t,t+((s%2)?SIX*(runtime.GEN[nb.genre].sw||0):0)+jit(),E,ct,true);}
       VW=1-w*.7;drums(A?A.genre:"ambient",s,bar,t,tt,E,ct,false);
-      if(runtime.inWorld()&&A)playTrack(A,s,tt,E,ct);
+      if(runtime.inWorld()&&A){
+        playTrack(A,s,tt,E,ct);
+        const grammar=MU.radio?.grammar;
+        if(grammar&&E>.32&&runtime.currentPocket?.()?.kind!=='quiet'&&grammar.accents.includes(s)&&s%4!==0){
+          const v=vel(grammar.accentLevel*(MU.radio.section===0?.5:1));
+          if(grammar.accentInstrument==='wood')wood(tt,v);else if(grammar.accentInstrument==='rim')rim(tt,v);else shaker(tt,v);
+        }
+      }
       VW=1;
     }
     // tu Estudio: cada pieza suena en su paso
@@ -329,14 +330,36 @@ export function initialize(runtime) {
         if(L2&&s%2===0)hatC(tt,vel(.02));
         if(L3&&s%4===3)hatC(tt,vel(.008));
         if(L3&&s===[7,9,15][variation])snare(tt,vel(.035));break;
+      case "tropical":
+        if(L1&&s%4===0)kick2(t,vel(.24),50,.28);
+        if(L2&&[3,6,10,14].includes(s))conga(tt,[180,250,320][variation],vel(.085));
+        if(L2&&(s===2||s===10))runtime.guiro(tt,vel(.024));
+        if(L3&&s===15&&bar%4===3)runtime.timbale(tt,vel(.06));
+        if(L2&&s%2===1)shaker(tt,vel(.014));break;
+      case "melodic":
+        if(L1&&s%4===0)kick2(t,vel(.26),49,.32);
+        if(L2&&(s===4||s===12))clap(t,vel(.055));
+        if(L2&&s%4===2)hatO(tt,vel(.025));
+        if(L3&&s===0&&bar%4===0&&!DO)ct.slice(0,3).forEach(n=>hookInst('strings',n,t,vel(.025)));break;
+      case "robotic":
+        if(L1&&[0,7,10].includes(s))kick2(t,vel(.27),48,.22);
+        if(L1&&(s===4||s===12))snare(t,vel(.085));
+        if(L2&&s%2===0)hatC(tt,vel(.02));
+        if(L3&&s===[3,11,15][variation])runtime.timbale(tt,vel(.04));break;
+      case "nudisco":
+        if(L1&&s%4===0)kick2(t,vel(.25),53,.25);
+        if(L2&&(s===4||s===12))clap(t,vel(.07));
+        if(L2&&s%4===2)hatO(tt,vel(.03));
+        if(L3&&s===7)runtime.guiro(tt,vel(.025));
+        if(L3&&(s===6||s===14)&&!DO)ct.slice(0,3).forEach(n=>hookInst('brass',n,tt,vel(.022)));break;
       case "heart":if(s===0||s===3)kick2(t,vel(s?.14:.22),45,.4);if(L3&&s===8&&r()<.4&&!DO)dubChord(ct,tt);break;
     }
   }
   function playTrack(d,s,t,E,ct){
     const base=d&&d.track;if(!base)return;const tr=MU.radio?{...base,...MU.radio}:base;const sc=d.scale,bar=(MU.step>>4)&1,nt=(dg,base)=>base+MU.tr+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
     const gid=d.genre,bs=MU.radio?tr.bass[s]:gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
-    if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel(gid==="rominimal"?.13:.17));}
-    let h=tr.hook[s];if(h>=0&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!MU.radio)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);hookInst(tr.hookI,n,t,vel(.05+.05*E));}
+    if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel((gid==="rominimal"?.13:.17)*(MU.radio?.grammar.bassLevel||1)));}
+    let h=tr.hook[s];if(h>=0&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!MU.radio)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);hookInst(tr.hookI,n,t,vel((.05+.05*E)*(MU.radio?.grammar.hookLevel||1)));}
   }
   function thunder(t){noise(t,"lowpass",900,.5,.25,.9,true);noise(t,"highpass",3000,.5,.06,.12);}
   const soon=fn=>{if(ac)MU.queue.push(fn);};
@@ -345,6 +368,10 @@ export function initialize(runtime) {
 
 
   Object.defineProperties(runtime, {
+    musicVolume: { get: () => musicVolume },
+    applyComfort: { get: () => applyComfort },
+    curatedVoiceGain: { get: () => (time,role)=>voiceCurator.gain(time,SIX,role,runtime.S.softMusic) },
+    comfortLowpass: { get: () => comfortLowpass },
     noiseHit: { get: () => noise },
     clap: { get: () => clap },
     hatHit: { get: () => hatC },

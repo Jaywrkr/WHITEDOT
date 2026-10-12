@@ -1,19 +1,22 @@
+import {createGrammar,shapeMotif} from './grammar.js';
 import {PALETTE_STEPS} from './palettes.js';
 // Composición por frases: el reloj musical avanza sin necesitar movimiento.
 // No modifica el ADN de la región ni guarda estado en la partida.
 export function createRadio(seedOf, rng, genres) {
   let regionKey = null, phrase = -1, nextPhrase = 0, nextSection = 0;
-  let section = 0, energy = .25, arrangement = null;
+  let section = 0, energy = .25, arrangement = null,grammar,startBar=0;
   const levels = [.24, .43, .62, .3];
 
   function advance(region, bar, environment = {}) {
     if (region.key !== regionKey) {
       regionKey = region.key;
+      startBar=bar;
       phrase = -1;
       nextPhrase = nextSection = bar;
       section = 0;
       energy = region.genre === 'ambient' ? .16 : .25;
       arrangement = null;
+      grammar=createGrammar(region,seedOf,rng);
     }
     if (bar >= nextPhrase) {
       phrase++;
@@ -39,23 +42,27 @@ export function createRadio(seedOf, rng, genres) {
       });
       // Keep a recognisable motif for four phrases; vary space and accents first.
       const motifRandom=rng(seedOf(`radio-motif:v1:${region.key}:${Math.floor(phrase/4)}`));
-      const lean=['minimal','rominimal','microhouse','minimaltechno','dub','heart'].includes(region.genre);
-      const budget=sparse?2:lean?3:5;
+      const budget=sparse?2:grammar.hookLimit;
       const recipe=PALETTE_STEPS[region.genre]?Array.from({length:16},(_,i)=>PALETTE_STEPS[region.genre].includes(i)?0:-1):region.track.hook;
-      const candidates=recipe.map((degree,step)=>({degree,step})).filter(n=>n.degree>=0);
+      const candidates=shapeMotif(recipe,grammar).map((degree,step)=>({degree,step})).filter(n=>n.degree>=0);
       const anchor=candidates.find(n=>n.step%4===0)?.step??0;
       const positions=[anchor,...candidates.filter(n=>n.step!==anchor).map(n=>n.step)];
       for(let i=positions.length-1;i>1;i--){const j=1+Math.floor(motifRandom()*i);[positions[i],positions[j]]=[positions[j],positions[i]];}
       const motif=Array(16).fill(-1),tones=[0,2,4];
-      positions.slice(0,lean?3:5).forEach((step,i)=>{motif[step]=i===0?0:tones[Math.floor(motifRandom()*tones.length)];});
+      positions.slice(0,grammar.hookLimit).forEach((step,i)=>{motif[step]=i===0?0:tones[Math.floor(motifRandom()*tones.length)];});
       const hook=motif.map((degree,step)=>degree<0||step!==anchor&&(random()<.25)?-1:degree);
       let notes=1;hook.forEach((degree,step)=>{if(step!==anchor&&degree>=0&&++notes>budget)hook[step]=-1;});
       hook[anchor]=motif[anchor];
+      if(arrangement&&hook.every((n,i)=>n===arrangement.hook[i])){
+        const active=hook.findIndex((n,i)=>i!==anchor&&n>=0);
+        if(active>=0)hook[active]=-1;
+        else {const alternative=motif.findIndex((n,i)=>i!==anchor&&n>=0);if(alternative>=0)hook[alternative]=motif[alternative];}
+      }
       // Identity changes with the section, rather than swapping instruments every phrase.
       const toneRandom=rng(seedOf(`radio-tone:v1:${region.key}:${section}`));
       const pool = genres[region.genre].hookP;
-      arrangement = { phrase, section, bass, hook, hookI: pool[Math.floor(toneRandom() * pool.length)] };
-      nextPhrase = bar + 4 + Math.floor(random() * 3) * 2;
+      arrangement = { phrase, section, grammar, bass, hook, hookI: pool[Math.floor(toneRandom() * pool.length)] };
+      nextPhrase = bar + grammar.phraseBars + (random()<.25?2:0);
     }
     const life = Math.min(.08, (environment.near || 0) * .002 + (environment.singers || 0) * .015);
     const event = environment.event === 'eclipse' ? -.06 : environment.event ? .05 : 0;
@@ -63,7 +70,7 @@ export function createRadio(seedOf, rng, genres) {
     const limit = environment.quiet ? .24 : region.genre === 'ambient' ? .3 : .7;
     const target = Math.max(.14, Math.min(limit, levels[section] + life + event + density));
     energy += (target - energy) * .25;
-    return { ...arrangement, energy, genre: region.genre };
+    return { ...arrangement, harmonyBar:bar-startBar, energy, genre: region.genre };
   }
   return { advance };
 }
