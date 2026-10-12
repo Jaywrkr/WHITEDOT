@@ -16,7 +16,7 @@ export function initialize(runtime) {
   runtime.$("bWorld").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else runtime.enterWorld();};
   runtime.$("bSky").onclick=runtime.openSky;runtime.$("kClose").onclick=()=>{runtime.$("mSky").hidden=true;};runtime.$("kShare").onclick=()=>{runtime.$("mSky").hidden=true;runtime.shareCard("sky");};
   runtime.$("oSky").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openSky();};runtime.$("oClose").onclick=()=>{runtime.$("mOut").hidden=true;};
-  runtime.$("bAch").onclick=runtime.openAch;runtime.$("aClose").onclick=()=>{runtime.$("mAch").hidden=true;};
+  runtime.$("bAch").onclick=runtime.openJournal;runtime.$("aClose").onclick=()=>{runtime.$("mAch").hidden=true;};
   runtime.$("sClose").onclick=()=>{runtime.$("mShare").hidden=true;};
   const rs=runtime.$("rStyle");
   const styleName=I=>I<.2?"Ambiente":I<.45?"Minimal":I<.72?"Deep":"Underground";

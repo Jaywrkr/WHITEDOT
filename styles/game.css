@@ -108,3 +108,9 @@ input[type=range]{width:100%;accent-color:var(--gold);height:28px;}
 .swatches button.on{outline:2px solid var(--ink);outline-offset:2px;}
 .swatches button:disabled{opacity:.2;cursor:default;}
 @media (prefers-reduced-motion:reduce){.phrase,.toast,.bar i{transition:none;}}
+
+.journal-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.journal-card{border:1px solid var(--faint);padding:12px;min-width:0}
+.journal-card h3,#journalBody>h3{font-size:13px;margin:0 0 8px;color:var(--gold);overflow-wrap:anywhere}
+.journal-card p,.journal-card li{font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.journal-card ul{margin:8px 0 0;padding-left:18px}

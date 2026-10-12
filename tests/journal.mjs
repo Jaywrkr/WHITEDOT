@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {ensureJournal,regionFromKey} from '../src/journal.js';
+const old={cat:{'0,0:0':1},places:{'0,0':1},stars:[{d:'2026-10-12',s:1}],events:{'aurora:-2,32026-10-12':1}};
+const j=ensureJournal(old);
+assert.deepEqual(old.cat,{'0,0:0':1});assert.equal(old.stars.length,1);
+assert.deepEqual(j.relics,{});assert.equal(j.events['-2,3'],1);
+old.stars.push({region:'2,-3'});ensureJournal(old);assert.equal(j.relics['2,-3'],1);
+assert.deepEqual(ensureJournal(JSON.parse(JSON.stringify(old))),j);
+assert.equal(regionFromKey('<script>',{}),null);
+assert.equal(regionFromKey('2,-3',{REG:4,WCH:900,regionOfPos:(x,y)=>[x,y]})[0],7201);
+console.log('PASS: legacy discoveries retained, event locations recovered, old relic locations not fabricated, journal survives serialization');

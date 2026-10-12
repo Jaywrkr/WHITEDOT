@@ -68,6 +68,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/progress.js` | Guardado v4, días, racha, crecimiento, linterna, RNG y cachés. |
 | `src/world.js` | Camino, generación de regiones/chunks, eventos y reliquias. |
 | `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros y tracks. |
+| `src/journal.js` | Bitácora de lugares, formas, música y logros; compatibilidad de registros v4. |
 | `src/gravity.js` | Gravedad estable por región y mezcla de velocidades en bordes y esquinas. |
 | `src/voices.js` | Roles, registros e instrumentos de interacción por región; emite sonidos con la síntesis existente. |
 | `src/radio.js` | Composición del Mundo por frases y secciones, independiente del movimiento. |
@@ -185,7 +186,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Sintaxis:** correr `node --check` sobre los archivos de `src/`. Ya no hay un script inline para extraer.
 - **Visual y funcional:** servir el repositorio por HTTP y usar Playwright headless (Chromium) en 390×844 (móvil) y escritorio. Comprobar entrada y reentrada al Mundo con reto visible, transición de día sin reto residual, pausa de linterna en menús, colocación y persistencia de muestras en el Estudio y generación de tarjetas. Capturar errores JavaScript y screenshots. Los errores de carga de Google Fonts sin red son esperables.
 - **Tope diario:** comprobar que una luz de valor 10 recogida cuando faltaba 1 solo suma 1 tanto a `todayLight` como a `totalLight`.
-- **Pruebas versionadas:** `npm test` (core, radio y voces regionales) y `python3 tests/smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
+- **Pruebas versionadas:** `npm test` (core, radio, voces, gravedad y Bitácora) y `python3 tests/smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
 - **Audio:** en headless no se oye nada. **Jay valida el sonido en su teléfono** con la URL de Vercel. Es la prueba que importa.
 - **Atajos de prototipo** (menú → Prototipo):
   - `dFill`: llena la barra del día.
@@ -201,7 +202,8 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Audio en iOS:** requiere un gesto del usuario para arrancar, y el modo silencio del iPhone puede mutear Web Audio.
 - **El documento de diseño está desactualizado** en: motor de géneros, ADN de región, eliminación del slider y la propuesta de Bitácora.
 - **Restos del slider eliminado:** siguen presentes el modal `mMusic`, `rStyle`, `S.style` y sus handlers, pero el botón Música del menú solo activa/desactiva sonido. `style()` calcula la intensidad según el modo y el bioma, no según `S.style`. La limpieza de esos restos es trabajo pendiente.
-- **Bitácora aún sin interfaz propia:** `S.cat` y `S.places` guardan identificadores, y Logros muestra una lista breve de formas recientes. No se guarda un historial completo de géneros/instrumentos escuchados ni se vinculan las estrellas a sus regiones; esa información necesita un diseño de persistencia para la futura Bitácora.
+- **Bitácora implementada:** botón Bitácora del menú y cuatro pestañas. Lugares recupera el ADN por ID e incluye gravedad, género y progreso en formas/reto/evento/reliquia; Origen no exige evento porque no puede generarlo. Formas agrupa los IDs descubiertos usando `getVoice()`, sin mostrar criaturas no descubiertas. Música registra los instrumentos programados con sonido activo en el Mundo, géneros y escalas; Logros organiza categorías y oculta los secretos pendientes.
+- **Compatibilidad histórica de la Bitácora:** se conservan `places`, `cat`, logros y estrellas v4. Eventos antiguos con coordenadas se recuperan de sus claves. Las estrellas nuevas guardan `region`; las antiguas sin ese dato se conservan pero no se atribuyen a un lugar. Música no inventa un historial previo: empieza a registrarse desde esta versión. El estado adicional vive en `S.journal` y se normaliza al abrir la Bitácora.
 
 ## 10. Roadmap priorizado
 
@@ -214,7 +216,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 5. **Identidad musical regional — esta etapa:** reparto de roles, registros e instrumentos entre objetos y criaturas, estable por semilla y variable entre regiones del mismo bioma.
 **Propiedades físicas regionales — implementadas antes de la Bitácora:** gravedad, velocidad y aviso al entrar. La Bitácora deberá registrar esta propiedad.
 
-6. **Bitácora** (estilo No Man's Sky / Astroneer), con 4 pestañas:
+6. **Bitácora — implementada** (estilo No Man's Sky / Astroneer), con 4 pestañas:
    - **Lugares:** regiones visitadas con % completado (especies, reto, evento, reliquia).
    - **Formas:** especies agrupadas por rol musical.
    - **Música:** géneros, escalas e instrumentos escuchados, cada uno con una explicación corta. Aquí se aprende música.
