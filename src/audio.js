@@ -26,7 +26,8 @@ export function initialize(runtime) {
   const MU={deg:0,pending:false,dist:0,E:0,act:0,still:0,dirY:0,speed:0,mel:69,motif:[],lastNoteStep:-999,step:0,next:0,queue:[],bq:[],cell:CELLS[0],lastChange:0,
     biome:0,biomeT:0,tr:0,sq:[],nb:null,nbW:0,prevKit:null,xf0:-999,bpmFrom:96,dnaA:null,dnaT:null,q8:[],near:[],singers:[],vari:-1,timbre:0,follower:false,voices:[57,60,64,67],resp:false,layers:new Set(),flowers:[],boltAt:0,groove:0};
   const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN);
-  MU.radio = null;
+  const neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN);
+  MU.radio = null;MU.neighborRadio=null;
   let ac=null,master,mfilt,comfortShelf,comfortLowpass,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
   const voiceCurator=createVoiceCurator();
   const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:.85):0;
@@ -165,6 +166,7 @@ export function initialize(runtime) {
       });
       if(s===0){const degree=harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar);if(MU.harmonyRegion!==MU.dnaA.key||MU.deg!==degree){changeChord(t);MU.harmonyRegion=MU.dnaA.key;}else if(MU.pending){MU.pending=false;MU.dist=0;}}
     }else{MU.radio=null;voiceCurator.clear();}
+    if(runtime.inWorld()&&MU.nb&&MU.nbW>0){if(s===0||MU.neighborRadio?.key!==MU.nb.key)MU.neighborRadio={...neighborRadio.advance(MU.nb,MU.step>>4),key:MU.nb.key};}else MU.neighborRadio=null;
     if(s===0)applyComfort(t);
     const E=(calm||runtime.S.mode==="camino")?Math.min(MU.E,.2):Math.max(MU.E,MU.radio?.energy||0);
     const A=live&&MU.dnaA?MU.dnaA:null,G=A?runtime.GEN[A.genre]:runtime.GEN.ambient,nb=runtime.inWorld()&&MU.nb&&MU.nb!==A?MU.nb:null,w=nb?MU.nbW:0;
@@ -182,8 +184,8 @@ export function initialize(runtime) {
     if(air==="esporas"&&s===14&&bar%4===3&&rnd()<.2)pluck(chordTones()[1]+12,t,.012,4);
     const swA=(s%2)?SIX*(G.sw||0):0,tt=t+swA+jit(),R=root(),ct=chordTones();
     if(live){
-      if(nb){VW=w;drums(nb.genre,s,bar,t,t+((s%2)?SIX*(runtime.GEN[nb.genre].sw||0):0)+jit(),E,ct,true);}
-      VW=1-w*.7;drums(A?A.genre:"ambient",s,bar,t,tt,E,ct,false);
+      if(nb){VW=w;const nt=t+((s%2)?SIX*(runtime.GEN[nb.genre].sw||0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }
+      VW=1-w;drums(A?A.genre:"ambient",s,bar,t,tt,E,ct,false);
       if(runtime.inWorld()&&A){
         playTrack(A,s,tt,E,ct);
         const grammar=MU.radio?.grammar;
@@ -357,11 +359,11 @@ export function initialize(runtime) {
       case "heart":if(s===0||s===3)kick2(t,vel(s?.14:.22),45,.4);if(L3&&s===8&&r()<.4&&!DO)dubChord(ct,tt);break;
     }
   }
-  function playTrack(d,s,t,E,ct){
-    const base=d&&d.track;if(!base)return;const tr=MU.radio?{...base,...MU.radio}:base;const sc=d.scale,bar=(MU.step>>4)&1,nt=(dg,base)=>base+MU.tr+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
-    const gid=d.genre,bs=MU.radio?tr.bass[s]:gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
-    if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel((gid==="rominimal"?.13:.17)*(MU.radio?.grammar.bassLevel||1)));}
-    let h=tr.hook[s];if(h>=0&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!MU.radio)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);hookInst(tr.hookI,n,t,vel((.05+.05*E)*(MU.radio?.grammar.hookLevel||1)));}
+  function playTrack(d,s,t,E,ct,arrangement=MU.radio){
+    const base=d&&d.track;if(!base)return;const tr=arrangement?{...base,...arrangement}:base;const sc=MU.dnaA?.scale||d.scale,bar=(MU.step>>4)&1,nt=(dg,base)=>base+MU.tr+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
+    const gid=d.genre,bs=arrangement?tr.bass[s]:gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
+    if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel((gid==="rominimal"?.13:.17)*(arrangement?.grammar.bassLevel||1)));}
+    let h=tr.hook[s];if(h>=0&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);hookInst(tr.hookI,n,t,vel((.05+.05*E)*(arrangement?.grammar.hookLevel||1)));}
   }
   function thunder(t){noise(t,"lowpass",900,.5,.25,.9,true);noise(t,"highpass",3000,.5,.06,.12);}
   const soon=fn=>{if(ac)MU.queue.push(fn);};
