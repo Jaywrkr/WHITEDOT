@@ -1,6 +1,10 @@
 // Eventos de botones y controles de prototipo.
 export function initialize(runtime) {
   /* ---------- botones ---------- */
+  runtime.$("bSession").onclick=runtime.openSession;
+  runtime.$("oSession").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openSession();};
+  runtime.$("sessionClose").onclick=()=>{runtime.$("mSession").hidden=true;};
+  runtime.$("sessionShare").onclick=runtime.shareSession;
   runtime.$("hcGo").onclick=()=>{runtime.S.help.camino=true;runtime.$("mHelpC").hidden=true;runtime.audio();if(!runtime.S.voiceStart){runtime.S.voiceStart=true;setTimeout(()=>runtime.say(runtime.VOZ.start),900);}runtime.save();};
   runtime.$("bMenu").onclick=()=>{runtime.$("mMenu").hidden=false;};runtime.$("mnClose").onclick=()=>{runtime.$("mMenu").hidden=true;};
   document.querySelectorAll("#mMenu .tiles button,#mMenu .devbox button").forEach(b=>b.addEventListener("click",()=>{if(b.id!=="dReset")runtime.$("mMenu").hidden=true;}));

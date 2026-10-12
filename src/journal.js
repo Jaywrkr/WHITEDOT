@@ -34,6 +34,7 @@ export function initialize(runtime) {
     const music=data().music;
     music.instruments[id]=1;
     const region=runtime.MU.dnaA;
+    runtime.sessionInstrument?.(id,region);
     if(region){music.genres[region.genre]=1;music.scales[region.scale.join(',')]=1;}
   }
   const card=(title,description,extra='')=>`<article class="journal-card"><h3>${escape(title)}</h3><p>${escape(description)}</p>${extra}</article>`;

@@ -35,7 +35,7 @@ export function initialize(runtime) {
   function enterWorld(){
     if(!runtime.isFree()){toast("<em>Mundo</em> · Primero completa el camino de hoy");return;}
     if(runtime.lampLeft()<=0){toast("<em>Linterna</em> · Vuelve mañana");return;}
-    runtime.audio();if(runtime.S.lastWorldDay!==runtime.S.todayKey){if(runtime.S.studio.x!=null){runtime.S.wx=runtime.S.studio.x;runtime.S.wy=runtime.S.studio.y;}runtime.S.lastWorldDay=runtime.S.todayKey;}runtime.zoneHops=0;runtime.S.mode="world";runtime.curZone=-1;{const rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);runtime.curRegion=rg.key;runtime.enterRegion(rg,rg.z);}runtime.MU.layers=new Set();
+    runtime.beginSession();runtime.audio();if(runtime.S.lastWorldDay!==runtime.S.todayKey){if(runtime.S.studio.x!=null){runtime.S.wx=runtime.S.studio.x;runtime.S.wy=runtime.S.studio.y;}runtime.S.lastWorldDay=runtime.S.todayKey;}runtime.zoneHops=0;runtime.S.mode="world";runtime.curZone=-1;{const rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);runtime.curRegion=rg.key;runtime.enterRegion(rg,rg.z);}runtime.MU.layers=new Set();
     runtime.todayRelics();runtime.enterFx=1;runtime.flocks=[];
     runtime.soon(q=>[0,7,12,15,19,24].forEach((k,i)=>runtime.pluck(45+runtime.BIOMES[runtime.curZone].tr+k,q+i*runtime.SIX*2,.07,2)));
     unlock("mundo");
@@ -43,6 +43,7 @@ export function initialize(runtime) {
     runtime.save();hud();
   }
   function exitWorld(out){
+    runtime.finishSession();
     runtime.S.mode="camino";runtime.setBiome(0);runtime.MU.dnaT=null;runtime.MU.vari=-1;runtime.MU.near=[];runtime.MU.singers=[];runtime.curRegion=null;runtime.RP=null;runtime.retoUI();runtime.MU.layers=new Set();runtime.MU.flowers=[];runtime.MU.follower=false;if(runtime.inPond&&runtime.mfilt){runtime.inPond=false;runtime.mfilt.frequency.setTargetAtTime(18000,runtime.ac.currentTime,.2);}runtime.save();hud();
     if(out){runtime.say(runtime.VOZ.lampOut);$("oToday").textContent=runtime.relicsGot();$("oStars").textContent=runtime.S.stars.length;$("oStreak").textContent=runtime.shownStreak();$("mOut").hidden=false;}
   }
