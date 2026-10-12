@@ -58,17 +58,20 @@ export function initialize(runtime) {
     function hit(t, degree, strength) {
       runtime.soundCue?.(source,voice.role,t);
       const n = note(degree), v = runtime.vel(strength * volume);
-      if (voice.role === 'bajo') runtime.bassInst(voice.instrument,n,t,v);
-      else if (voice.role === 'perc') {
-        if (voice.instrument === 'kick') runtime.kick(t,v);
-        else if (voice.instrument === 'conga') runtime.conga(t,110+voice.degree*25,v);
-        else if (voice.instrument === 'wood') runtime.wood(t,v);
-        else if (voice.instrument === 'rim') runtime.rim(t,v);
-        else if (voice.instrument === 'shaker') runtime.shaker(t,v);
-        else runtime.tom(t,55+voice.degree*15,v);
-      } else if (voice.role === 'acorde') {
-        [0,2,4].forEach(d=>runtime.hookInst(voice.instrument,note(degree+d)-(voice.instrument==='glass'?12:0),t,v*.4));
-      } else runtime.hookInst(voice.instrument,n-(voice.instrument==='glass'?12:0),t,v);
+      const emit=()=>{
+        if (voice.role === 'bajo') runtime.bassInst(voice.instrument,n,t,v);
+        else if (voice.role === 'perc') {
+          if (voice.instrument === 'kick') runtime.kick(t,v);
+          else if (voice.instrument === 'conga') runtime.conga(t,110+voice.degree*25,v);
+          else if (voice.instrument === 'wood') runtime.wood(t,v);
+          else if (voice.instrument === 'rim') runtime.rim(t,v);
+          else if (voice.instrument === 'shaker') runtime.shaker(t,v);
+          else runtime.tom(t,55+voice.degree*15,v);
+        } else if (voice.role === 'acorde') {
+          [0,2,4].forEach(d=>runtime.hookInst(voice.instrument,note(degree+d)-(voice.instrument==='glass'?12:0),t,v*.4));
+        } else runtime.hookInst(voice.instrument,n-(voice.instrument==='glass'?12:0),t,v);
+      };
+      if(runtime.withVoiceEffect)runtime.withVoiceEffect(kind,region,voice,t,emit);else emit();
     }
     const strength = voice.role === 'bajo' ? .15 : voice.role === 'perc' ? .12 : voice.role === 'agudo' ? .03 : .075;
     hit(time,index%7,strength);
