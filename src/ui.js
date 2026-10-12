@@ -1,3 +1,5 @@
+import { gravityOf } from './gravity.js';
+
 // HUD, avisos y transiciones del Mundo.
 export function initialize(runtime) {
   /* ---------- HUD ---------- */
@@ -6,7 +8,7 @@ export function initialize(runtime) {
   function era(d){return runtime.ERAS.find(e=>d<=e[0])[1];}
   function hud(dist){
     const d=runtime.displayDay();
-    $("day").textContent="DÍA "+d;$("era").textContent=runtime.inWorld()?(runtime.MU.dnaT?runtime.MU.dnaT.name+" · "+runtime.BIOMES[runtime.MU.dnaT.z].name+(runtime.MU.vari>=0?" "+runtime.VARS[runtime.MU.vari][1].toLowerCase():""):"El Mundo"):"Era "+era(d);
+    $("day").textContent="DÍA "+d;$("era").textContent=runtime.inWorld()?(runtime.MU.dnaT?runtime.MU.dnaT.name+" · "+gravityOf(runtime.MU.dnaT,runtime.seedOf).name:"El Mundo"):"Era "+era(d);
     $("streak").textContent=runtime.shownStreak();$("starsN").textContent=runtime.S.stars.length;$("size").textContent=runtime.level();
     $("bar").classList.toggle("free",runtime.isFree());
     const fill=$("barfill"),goal=$("goal"),gr=$("goalR");

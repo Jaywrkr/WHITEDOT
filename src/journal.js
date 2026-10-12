@@ -42,7 +42,7 @@ export function initialize(runtime) {
       const found=region.species.filter(sp=>runtime.S.cat[sp.id]).length,gravity=gravityOf(region,runtime.seedOf),j=data();
       const tasks=[['Formas',found===region.species.length],['Reto',!!runtime.S.retos[region.key]],...(region.name==='Origen'?[]:[['Evento',!!j.events[region.key]]]),['Reliquia',!!j.relics[region.key]]];
       const percent=Math.round((found/region.species.length+tasks.slice(1).filter(t=>t[1]).length)/tasks.length*100);
-      return card(region.name,`${runtime.BIOMES[region.z].name} · ${runtime.GEN[region.genre].name} · ${region.bpm} BPM · ${gravity.name} · ${gravity.movement}`,`<p>Descubrimiento ${percent}% · Formas ${found}/${region.species.length}</p><ul>${tasks.map(([name,done])=>`<li>${name}: ${done?'descubierto':'pendiente'}</li>`).join('')}</ul>`);
+      return card(region.name,`${runtime.BIOMES[region.z].name} · ${runtime.GEN[region.genre].name} · ${region.bpm} BPM · ${gravity.name} · ${gravity.movement}`,`<p>${escape(region.hab?.[1]||"")} · ${escape(region.fill?.[1]||"")} · ${escape(runtime.AIRTXT[region.air]||"")} · ${escape(region.ground?"Suelo de "+region.ground:"Sin suelo")}</p><p>Descubrimiento ${percent}% · Formas ${found}/${region.species.length}</p><ul>${tasks.map(([name,done])=>`<li>${name}: ${done?'descubierto':'pendiente'}</li>`).join('')}</ul>`);
     }).join(''):card('El mapa espera','Completa el Camino y entra al Mundo para descubrir lugares.');
   }
   function forms() {

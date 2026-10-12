@@ -5,13 +5,13 @@ export function initialize(runtime) {
   function discover(sp){if(runtime.S.cat[sp.id])return;runtime.S.cat[sp.id]=1;runtime.S.catN=(runtime.S.catN||0)+1;runtime.S.catRecent=[{n:sp.name,r:sp.region,d:runtime.S.todayKey}].concat(runtime.S.catRecent||[]).slice(0,40);
     runtime.toast("<em>Forma nueva</em> · "+sp.name+" · "+runtime.S.catN);runtime.unlock("forma1");if(runtime.S.catN>=25)runtime.unlock("cat25");if(runtime.S.catN>=100)runtime.unlock("cat100");if(runtime.S.catN>=500)runtime.unlock("cat500");runtime.save();}
   function showRegion(d,first){
-    const B=runtime.BIOMES[d.z],Z=runtime.ZINFO[B.id],el=document.getElementById("zone"),left=d.species.filter(sp=>!runtime.S.cat[sp.id]).length;
-    document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+" · "+d.bpm+" BPM · "+B.name+(d.mix!=null?" y "+runtime.BIOMES[d.mix].name:"")+" "+d.trait;
+    const el=document.getElementById("zone");
+    document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+" · "+d.bpm+" BPM";
     document.getElementById("zName").textContent=d.name;
-    const ev=runtime.eventOf(d);
-    document.getElementById("zDo").textContent=[gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement,d.hab?(d.fill?d.fill[1]+", ":"")+d.hab[1].toLowerCase()+", "+runtime.AIRTXT[d.air]+(d.ground?", suelo de "+d.ground:""):null,ev?"Hoy: "+ev[1]:null,first?Z[2][0]:null,left?left+(left===1?" forma nueva":" formas nuevas"):null].filter(Boolean).join(" · ");
-    el.classList.add("on");clearTimeout(zoneT);zoneT=setTimeout(()=>el.classList.remove("on"),first?7000:4500);
+    document.getElementById("zDo").textContent=gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
+    el.classList.add("on");clearTimeout(zoneT);zoneT=setTimeout(()=>el.classList.remove("on"),first?3200:2200);
   }
+
   let curRegion=null,RP=null;
   function retoUI(){const el=document.getElementById("reto");if(!RP||!runtime.inWorld()||runtime.S.retos[RP.key]){el.hidden=true;return;}el.hidden=false;
     el.textContent="Reto · "+runtime.RETOTXT[RP.type](RP.goal)+" · "+Math.min(RP.goal,Math.floor(RP.val))+" / "+RP.goal;}
