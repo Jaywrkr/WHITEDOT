@@ -14,13 +14,10 @@ Escucha agradable para público amplio: controlar fatiga, disonancia accidental,
 
 ## 0. Revisión e integración de lo ya implementado
 
-**Estado:** instrumentos procedurales implementados/subidos en `feat/procedural-instrument-voices`, `6bf69f6`, no presentes en main revisado `a4746bb`. Esta rama documental no integra su código.
+**Estado (auditoría 2026-10-12):** `main` `3c58c56` contiene todas las etapas 1–25, incluidos los instrumentos procedurales (PR #25). Pruebas en verde. Pendiente de PR: `feat/rhythm-atlas` (Atlas de ritmos y correcciones de documentación).
 
-- Revisar ese diff y escucharlo en móvil; gestionar PR/merge por Jay antes de abrir una etapa de producto que dependa de perfiles de material.
-- Revisar cambios que proponga Claude en una rama acotada, con pruebas adecuadas y sin deshacer funciones anteriores por accidente.
-- Si main cambia durante revisión, actualizar la base y resolver conflictos conservando vecindarios, fenómenos, efectos, proximidad y perfiles; no asumir que una rama pendiente fue integrada.
-
-**Resultado comprobable:** main contiene la etapa aprobada, pruebas siguen pasando y documentación refleja integración real. Rama documental puede integrarse por separado; sus snapshots deben actualizarse si se usan más adelante.
+- Jay escucha en móvil la mezcla actual (instrumentos procedurales + proximidad + efectos) usando el Atlas para saltar entre ritmos.
+- Seguir con una rama por etapa; no asumir que una rama está integrada sin verlo en `main`.
 
 ## 1. Curaduría perceptiva de la base actual
 
@@ -29,6 +26,28 @@ Escucha agradable para público amplio: controlar fatiga, disonancia accidental,
 **Falta:** escuchar regiones representativas de las 34 familias, tanto quieto como interactuando y cruzando fronteras. Afinar grave/medio/agudo, dinámica, swing, articulación, envíos y claridad de roles. Evitar que todos los sonidos se vuelvan apagados o iguales al contener brillo. Comparar auriculares/altavoz móvil, volumen bajo y sesiones prolongadas. Revisar mezcla de familias con tempos muy distintos sin volverlas genéricas.
 
 **Aceptación:** pulso/groove reconocible, bajo legible, capas diferenciadas, sin saturación ni fatiga marcada en pruebas humanas. Registrar coordenadas/casos problemáticos y correcciones. No prometer agrado universal ni tratar tests de scheduler como validación artística. Puede acompañar todas las etapas; no exige paralizar el siguiente paso si Jay lo autoriza.
+
+## 1b. Biblioteca de ~100 ritmos (pedido de Jay)
+
+**Ya hay:** 34 estilos, Atlas de ritmos para listarlos, verificarlos y viajar a cada uno.
+
+**Objetivo:** llegar a unos 100 ritmos agradables y distintos entre sí, con muchas raíces afro/afrolatinas/afroamericanas, industriales, latinas, asiáticas y de todas las épocas de la electrónica. Cada uno con patrón de batería propio, bajo, hook, swing, tempo y escala; no un renombre de otro.
+
+**Lista propuesta de ~66 nuevos** (agrupados; ajustar con Jay):
+- Raíz afroamericana / house y techno clásicos: Chicago house, Detroit techno, acid house, deep/soulful house, gospel house, garage house (NY), ghetto house, juke/footwork, Baltimore club, Jersey club, Miami bass, electro-funk, boogie, hip hop instrumental (boom bap), lo-fi hip hop, trap, G-funk, R&B alternativo, Detroit electro, broken beat.
+- Afro y diáspora: afrobeat electrónico, gqom, kuduro, baile funk, afro tech, 3-step, kwaito, Afro-Cuban house, highlife electrónico, Ethio-groove.
+- Latinas y andinas: cumbia digital, tribal guarachero, reggaetón/dembow, moombahton, bossa electrónica, salsa house, latin house, dancehall, champeta electrónica, pasillo/sanjuanito electrónico.
+- Industrial y oscuro: industrial techno, EBM clásico (ya está darkwave/EBM; separar), hard techno, Berlin minimal oscuro, noise ambient, dark ambient, witch house, coldwave.
+- Bass y breaks: UK funky, grime, 2-step, jungle, footwork jungle, halftime, future garage, bassline, big beat.
+- Otras escenas: trance clásico, psytrance, goa, Balearic, Italo disco, synthwave, French house, electroclash, glitch, chillwave, vaporwave, city pop electrónico, J-ambient (kankyō ongaku), Bollywood/Asian underground, Arabic/maqam house, Balkan electro, krautrock motorik, dub reggae, ambient techno.
+
+**Cómo construirlo:**
+- Hacerlo en tandas de ~15–20 por rama (por ejemplo: raíz afroamericana primero), cada una con prueba en `tests/atlas.mjs` de que todos aparecen y con patrones distintos (como `tests/references.mjs`).
+- Mover la elección de género de "pools por bioma + probabilidades sueltas" a una tabla única con peso por género y afinidad por bioma, para que el reparto sea parejo (hoy IDM ≈ 13 % y deep house ≈ 1 %).
+- Tempos > 150 BPM (jungle, footwork, psytrance) y < 80 BPM necesitan revisar la mezcla de fronteras y el campo de vecindarios.
+- Atlas con filtro por familia y marca de "probado" para que Jay valide uno por uno.
+
+**Aceptación:** ~100 géneros en `GEN`, todos alcanzables en el Atlas dentro de 30 anillos, reparto sin géneros por encima de ~3 % ni debajo de ~0,5 %, patrones de batería distintos verificados por prueba, y validación audible de Jay por tandas.
 
 ## 2. Más iniciativa del ambiente tras aproximadamente 60 segundos quieto
 
@@ -138,4 +157,4 @@ Jay quiere que otra persona entre como punto distinguible, puedan verse/encontra
 
 ## Cómo continuar con Claude
 
-Primero leer los tres Markdown y código de main y de la rama pendiente. Revisar/escuchar lo actual, presentar hallazgos concretos, y acordar una etapa. Si se implementa: main actualizado, rama nueva, cambio acotado, pruebas, commit/push; Jay PR/merge. Registrar en CAMBIOS lo que realmente terminó y actualizar esta lista. No marcar como hecha una propuesta ni borrar contexto de decisiones al reorganizar documentos.
+Primero leer los tres Markdown y el código de `main`. Revisar/escuchar lo actual, presentar hallazgos concretos, y acordar una etapa. Si se implementa: main actualizado, rama nueva, cambio acotado, pruebas, commit/push; Jay PR/merge. Registrar en CAMBIOS lo que realmente terminó y actualizar esta lista. No marcar como hecha una propuesta ni borrar contexto de decisiones al reorganizar documentos.

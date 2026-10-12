@@ -24,6 +24,7 @@ import { initialize as spatial } from './spatial.js';
 import { initialize as phenomena } from './phenomena.js';
 import { initialize as patches } from './patches.js';
 import { initialize as controls } from './controls.js';
+import { initialize as atlas } from './atlas.js';
 
 // Initialize once, in the same order as the original game. Never expose runtime on window.
 const runtime = Object.create(null);
@@ -53,6 +54,7 @@ spatial(runtime);
 phenomena(runtime);
 patches(runtime);
 controls(runtime);
+atlas(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
 runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||runtime.lampLeft()<=0))runtime.S.mode="camino";

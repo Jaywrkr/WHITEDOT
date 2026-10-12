@@ -132,3 +132,9 @@ body:has(.toast.on) .zone,body:has(.voice.on) .phrase,body:has(.toast.on) .phras
 body:has(.scanner:not([hidden])) .voice,body:has(.scanner:not([hidden])) .toast{opacity:0;pointer-events:none;transition:none}
 
 .era{font-size:9px;letter-spacing:.08em;max-width:55vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Atlas de ritmos (prototipo) */
+.list .atlas-row{align-items:center;}
+.atlas-txt{flex:1;min-width:0;}
+.atlas-txt small{display:block;overflow-wrap:anywhere;}
+.atlas-row button{flex:none;padding:8px 14px;font-size:11px;}

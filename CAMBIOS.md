@@ -4,10 +4,9 @@ Revisión: 2026-10-12. Leer junto con [HANDOFF.md](HANDOFF.md) y [PENDIENTES.md]
 
 ## Estado exacto para Claude
 
-- `main` revisado: `a4746bb`, hasta PR #24, fenómenos musicales ambientales.
-- Última rama implementada y subida: `feat/procedural-instrument-voices`, commit `6bf69f6`. Añade instrumentos procedurales; todavía no está integrada en el `origin/main` consultado.
-- Esta entrega documental sale de `main`, en `docs/complete-project-handoff`. No incorpora el código de instrumentos procedurales ni hace merges.
-- Para revisar todo el producto implementado, consultar también el diff `a4746bb..6bf69f6`. Evitar diagnosticar como ausente en esa rama lo que solo falta integrar en main.
+- `main` auditado por Claude: `3c58c56` (PR #26). Incluye todo hasta instrumentos procedurales (PR #25) y esta documentación.
+- Rama pendiente de PR: `feat/rhythm-atlas` (etapa 26, Atlas de ritmos) más correcciones de documentación.
+- Auditoría 2026-10-12: 20 suites Node + smoke móvil/escritorio pasan en `main`; los 34 géneros existen en el mundo; las afirmaciones de README/HANDOFF se comprobaron contra el código. Diferencias encontradas: la documentación aún describía los instrumentos procedurales como rama pendiente (ya integrados) y HANDOFF tenía esa sección duplicada; quedaron corregidas.
 - Flujo obligatorio: rama por etapa, implementar, verificar, commit y push. Jay crea PR y merge. No publicar directamente en main. No ejecutar las fases pendientes sin su autorización.
 
 ## Lo que ya existía en el prototipo
@@ -130,11 +129,15 @@ Curador atenúa voces superpuestas por semicorchea, bajos repetidos y agudos. Sa
 
 `src/phenomena.js`: aves de eco poco frecuentes que responden al final de frases con dos notas del acorde/timbre local; semilleros de caja que se sacuden con snare/clap reales sin duplicar golpe y pueden emitir caja discreta por contacto/acento propio; nubes de pulso que emiten grave/ruido filtrado y relámpago local. Contacto/pulso, efectos, proximidad y curaduría; visual sincronizado con reloj de audio. Semilla independiente `phenomena:v1`, uno/dos por chunk (uno en Vacío), caché 64. Máximo un evento autónomo/compás, ciclos 4/8 compases y cooldown. Claros omiten generación automática, no interacción directa. Escuchar incluye nombre/rol/instrumento. No añade muestras/logros/registro de rareza; lluvia y rayos originales conservados.
 
-### 25. Instrumentos procedurales — `6bf69f6`, rama pendiente
+### 25. Instrumentos procedurales — `6bf69f6`, PR #25 (integrado)
 
 `src/patches.js`: perfil estable por región/género/instrumento/rol/objeto. ID o rasgos inmutables, nunca posición móvil: desplazarse no cambia timbre. Materiales madera cálida, cristal suave, metal filtrado y aire sedoso con preferencias por familia/rol. Variación acotada de brillo/cutoff, resonancia, ataque/caída, armónicos, profundidad FM, anchura y envíos. Niveles atenuados, fundamentales conservadas y bajos sin desafinación adicional.
 
 Síntesis nueva modifica parciales/FM y envolvente; heredada recibe filtro/envolvente y armónicos donde aplica, flauta incluida. Radio/vecino toman perfil de su región; objetos/fenómenos perfil propio. Escuchar muestra material. Hasta 32 grupos de color por dos segundos y 256 perfiles en caché; reconstrucción determinista tras expulsión. Límite conserva diferencias de síntesis sin más rutas. Restituye buses/perfil incluso ante error y no duplica perfiles al invocar voz de bajo/hook. Camino/Estudio omiten creación. Sin nuevos campos guardados. No equivale a sintetizador modular editable ni banco ilimitado de samples.
+
+### 26. Atlas de ritmos (prototipo) — rama `feat/rhythm-atlas`
+
+`src/atlas.js` y botón **Ritmos** en Menú → Prototipo. Lista los 34 géneros ordenados por tempo con BPM, origen, número de regiones, región más cercana y si ya se escucharon. **Ir** viaja al centro de la región más cercana con ese ritmo, desde el Mundo o desde el Camino (en el Camino completa el día, solo como herramienta de prueba). Escanea 3.721 regiones en ~200 ms al abrir. Sin campos nuevos en el guardado. Pruebas: `tests/atlas.mjs` (todos alcanzables, destino correcto, determinista) y `tests/atlas_smoke.py` (móvil/escritorio, viaje desde Camino y desde Mundo).
 
 ## Persistencia y compatibilidad
 
@@ -148,7 +151,7 @@ Aplicación: `python3 -m http.server 8000`, abrir por HTTP. Node >=18, sin npm i
 
 Suites de main: core, radio, voices, gravity, journal, scanner, playthings, personality, pockets, feedback, relics, effects, session, palettes, grammar, spatial, neighborhoods, references y phenomena. Rama pendiente suma patches y extiende radio/palettes/smoke para comprobar estabilidad al mover fuentes, límites/restauración y cambios reales de grafo sin cambiar frecuencia base. Core cubre guardado/tope/determinismo; otras verifican condiciones, compatibilidad y audio programado. `node --check` sirve para sintaxis.
 
-Última implementación `6bf69f6`: 20 suites Node y smoke móvil/escritorio aprobados. Este cambio documental no modifica código y se verifica por diff, enlaces, inventario de archivos y coherencia con historial. No hay CI configurado. Headless no evalúa escucha humana: balance, groove, fatiga, transiciones y sensación profesional requieren probar con sonido real.
+En `main` `3c58c56`: 20 suites Node y smoke móvil/escritorio aprobados. Con `feat/rhythm-atlas`: 21 suites, smoke y `tests/atlas_smoke.py`. Este cambio documental no modifica código y se verifica por diff, enlaces, inventario de archivos y coherencia con historial. No hay CI configurado. Headless no evalúa escucha humana: balance, groove, fatiga, transiciones y sensación profesional requieren probar con sonido real.
 
 ## Límites y revisión recomendada
 
@@ -162,4 +165,4 @@ Suites de main: core, radio, voices, gravity, journal, scanner, playthings, pers
 
 ## Trazabilidad exhaustiva
 
-Se inventarían todas las etapas de producto del historial desde `596fa31`, incluidos correcciones, arquitectura, interfaz, audio, mundo, persistencia y pruebas. Los commits repetidos de radio/voces y resolución de conflictos representan integración de las mismas etapas, no funciones adicionales. Para auditar líneas concretas: `git log --reverse --oneline`, `git show <commit>` y `git diff 596fa31..6bf69f6`. HANDOFF conserva explicación de los sistemas originales y detalles de ejecución; PENDIENTES separa acuerdos futuros de funciones actuales.
+Se inventarían todas las etapas de producto del historial desde `596fa31`, incluidos correcciones, arquitectura, interfaz, audio, mundo, persistencia y pruebas. Los commits repetidos de radio/voces y resolución de conflictos representan integración de las mismas etapas, no funciones adicionales. Para auditar líneas concretas: `git log --reverse --oneline`, `git show <commit>` y `git diff 596fa31..main`. HANDOFF conserva explicación de los sistemas originales y detalles de ejecución; PENDIENTES separa acuerdos futuros de funciones actuales.

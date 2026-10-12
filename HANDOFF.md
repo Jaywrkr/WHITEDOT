@@ -1,7 +1,7 @@
 # HANDOFF · WHITEDOT / Pixel Blanco
 
 > Documento de traspaso para continuar el desarrollo con otra IA (ChatGPT, Claude, etc.) o con otro dev.
-> Lee este archivo junto con [CAMBIOS.md](CAMBIOS.md) y [PENDIENTES.md](PENDIENTES.md). Última revisión: 2026-10-12. CAMBIOS distingue el prototipo original, lo integrado y la última rama pendiente; PENDIENTES es la lista vigente de trabajo.
+> Lee este archivo junto con [CAMBIOS.md](CAMBIOS.md) y [PENDIENTES.md](PENDIENTES.md). Última revisión: 2026-10-12 (auditoría de Claude sobre `main` `3c58c56`, PR #26). Todo lo descrito aquí está integrado en `main`; ya no hay ramas de producto pendientes de merge salvo la que se indique en CAMBIOS.
 
 - **Juego en vivo:** https://whitedot-inky.vercel.app
 - **Repo:** https://github.com/Jaywrkr/WHITEDOT (rama `main`). Cada push a `main` despliega solo en Vercel.
@@ -95,11 +95,13 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/sharing.js` | Constelación y tarjetas para compartir. |
 | `src/feedback.js` | Señales visuales del rol musical sincronizadas con el inicio del sonido. |
 | `src/phenomena.js` | Aves de eco, semilleros de caja y nubes de pulso; generación y reloj audiovisual. |
-| `src/patches.js` (rama pendiente) | Perfiles de material y síntesis procedurales; ver estado en CAMBIOS.md. |
+| `src/patches.js` | Perfiles de material y síntesis procedurales por región/instrumento/rol/objeto (PR #25, integrado). |
+| `src/atlas.js` | Atlas de ritmos (prototipo): lista todos los géneros, verifica que existen en el mundo y viaja a la región más cercana. |
 | `src/controls.js` | Botones, controles de prototipo y sonido. |
 | `package.json` | Declara módulos ES para Node y `npm test`; no instala dependencias de aplicación. |
 | `tests/core.mjs` | Compatibilidad del guardado, tope diario y mundo determinista. |
 | `tests/smoke.py` | Flujos funcionales del navegador en móvil y escritorio. |
+| `tests/atlas.mjs` / `tests/atlas_smoke.py` | Atlas: todos los géneros alcanzables y viaje correcto desde Camino y Mundo. |
 
 ### Estado guardado `S` (localStorage)
 
@@ -208,7 +210,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Sintaxis:** correr `node --check` sobre los archivos de `src/`. Ya no hay un script inline para extraer.
 - **Visual y funcional:** servir el repositorio por HTTP y usar Playwright headless (Chromium) en 390×844 (móvil) y escritorio. Comprobar entrada y reentrada al Mundo con reto visible, transición de día sin reto residual, pausa de linterna en menús, colocación y persistencia de muestras en el Estudio y generación de tarjetas. Capturar errores JavaScript y screenshots. Los errores de carga de Google Fonts sin red son esperables.
 - **Tope diario:** comprobar que una luz de valor 10 recogida cuando faltaba 1 solo suma 1 tanto a `todayLight` como a `totalLight`.
-- **Pruebas versionadas:** `npm test` (19 suites en main revisado; 20 al integrar instrumentos procedurales, inventario en CAMBIOS.md) y `python3 tests/smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
+- **Pruebas versionadas:** `npm test` (21 suites, inventario en CAMBIOS.md) `python3 tests/smoke.py` y `python3 tests/atlas_smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
 - **Audio:** en headless no se oye nada. **Jay valida el sonido en su teléfono** con la URL de Vercel. Es la prueba que importa.
 - **Atajos de prototipo** (menú → Prototipo):
   - `dFill`: llena la barra del día.
@@ -231,7 +233,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 
 La lista única, ordenada y con criterios de aceptación está en **[PENDIENTES.md](PENDIENTES.md)**. El historial completo de etapas terminadas está en **[CAMBIOS.md](CAMBIOS.md)**. No tratar las etapas terminadas como nuevas tareas ni asumir que una primera versión agota la visión.
 
-La siguiente etapa de producto propuesta es dar mayor iniciativa al ambiente tras unos 60 segundos de quietud, después de revisar/integrar los instrumentos procedurales y escuchar su mezcla. Favoritos, retorno, autopilot, looper, escenas y multiplayer siguen pendientes. Jay autoriza cada rama por separado.
+La siguiente etapa de producto propuesta es dar mayor iniciativa al ambiente tras unos 60 segundos de quietud, después de escuchar en móvil la mezcla con los instrumentos procedurales ya integrados. Jay pidió además ampliar la biblioteca a ~100 ritmos (ver PENDIENTES, etapa 1b). Favoritos, retorno, autopilot, looper, escenas y multiplayer siguen pendientes. Jay autoriza cada rama por separado.
 
 ## 11. Flujo de ramas y deploy
 
@@ -252,7 +254,7 @@ No hay build ni variables de entorno de aplicación: es un sitio estático.
 
 ## 12. Prompt sugerido para arrancar en otra IA
 
-> Soy Jay. Estoy haciendo WHITEDOT / Pixel Blanco, un juego web de música electrónica generativa con Canvas + Web Audio y módulos JavaScript nativos. Lee HANDOFF.md, CAMBIOS.md, PENDIENTES.md y el código actual; consulta también la rama pendiente indicada en CAMBIOS antes de evaluar todo lo implementado. Respeta las decisiones de la sección 3. Quiero que construyas [etapa autorizada del roadmap]. Implementa y verifica los cambios en una rama nueva desde `main` actualizado, haz commit y push y entrégame la rama y los resultados. Yo creo el PR y hago el merge. Háblame en español, directo.
+> Soy Jay. Estoy haciendo WHITEDOT / Pixel Blanco, un juego web de música electrónica generativa con Canvas + Web Audio y módulos JavaScript nativos. Lee HANDOFF.md, CAMBIOS.md, PENDIENTES.md y el código actual de `main`. Respeta las decisiones de la sección 3. Quiero que construyas [etapa autorizada del roadmap]. Implementa y verifica los cambios en una rama nueva desde `main` actualizado, haz commit y push y entrégame la rama y los resultados. Yo creo el PR y hago el merge. Háblame en español, directo.
 
 ### Sitios raros (octubre de 2026)
 
@@ -300,7 +302,7 @@ Hasta 32 grupos de proximidad, liberados después de 3 segundos desde el inicio 
 
 `src/references.js` añade 12 familias: tech house, electrónica andina, cosmic disco, melodic techno, organic house, amapiano, jazztronica, Berlin School, IDM, liquid drum & bass, darkwave/EBM y algorave. Junto con las anteriores hay 34 estilos base; se siguen combinando con gramáticas regionales. No se copian canciones de los artistas citados. Las referencias tienen ritmos de percusión y frases de bajo/melodía propios, paletas de instrumentos y modos compatibles. Electrónica andina usa un vocabulario melódico pentatónico; jazztronica incluye séptimas; Berlin/EBM priorizan secuencias estables; algorave rota acentos euclidianos. El nuevo log drum FM aporta el bajo percutido del amapiano. “Algorave” es una inspiración generativa, no un editor de live coding.
 
-La selección entra en el campo de vecindarios musicales; los tempos mantienen sus rangos y se conserva la mezcla por fronteras. Las pruebas de evolución valoran cambios audibles de bajo, motivo, timbre y armonía, para permitir que una melodía hipnótica repita mientras la composición se desarrolla. Las voces de objetos, Bitácora y Escuchar reconocen los instrumentos nuevos. El mapa y los registros previos se conservan; incorporar familias cambia la elección musical de algunas regiones. La etapa de instrumentos procedurales está implementada en la rama `feat/procedural-instrument-voices`, commit `6bf69f6`, pendiente de integrar en el main revisado. Ver CAMBIOS.md.
+La selección entra en el campo de vecindarios musicales; los tempos mantienen sus rangos y se conserva la mezcla por fronteras. Las pruebas de evolución valoran cambios audibles de bajo, motivo, timbre y armonía, para permitir que una melodía hipnótica repita mientras la composición se desarrolla. Las voces de objetos, Bitácora y Escuchar reconocen los instrumentos nuevos. El mapa y los registros previos se conservan; incorporar familias cambia la elección musical de algunas regiones. La etapa de instrumentos procedurales (`6bf69f6`) quedó integrada en `main` con el PR #25.
 
 ### Fenómenos musicales ambientales
 
@@ -308,13 +310,15 @@ La selección entra en el campo de vecindarios musicales; los tempos mantienen s
 
 Los sonidos usan proximidad, efectos y curaduría; el dibujo consulta los inicios programados en el reloj de audio. Máximo un fenómeno autónomo por compás, con ciclos de cuatro/ocho compases y cooldown. Los claros de escucha omiten su generación sonora automática; interacción directa sigue disponible. Escuchar incluye nombre, rol e instrumento de los fenómenos. No se agregan descubrimientos, muestras o logros nuevos; los encuentros son por ahora sonoros y visuales. Los rayos originales de Tormenta y la lluvia anterior se conservan.
 
-### Instrumentos procedurales — implementados en rama pendiente
-
-Snapshot revisado: `feat/procedural-instrument-voices`, commit `6bf69f6`. `src/patches.js` deriva material, brillo, resonancia, ataque, caída, armónicos, modulación y envíos por región/instrumento/rol/objeto. Usa ID o rasgos inmutables, nunca la posición móvil. Materiales: madera cálida, cristal suave, metal filtrado y aire sedoso. Conserva las notas fundamentales; los bajos no reciben desafinación adicional. Las familias nuevas modifican parciales/FM y envolvente; las anteriores reciben filtro y ajustes donde su síntesis lo permite.
-
-Se aplica a radio, voces vecinas, objetos y fenómenos; Escuchar muestra el material. Máximo 32 rutas durante dos segundos y 256 perfiles reconstruibles; al alcanzar el límite conserva variación de síntesis sin crear rutas adicionales. Camino y Estudio no crean perfiles. Compatible con proximidad, efectos y Escucha suave; sin guardado nuevo. Las 20 suites y smoke móvil/escritorio pasaron en ese commit. Esta documentación no integra ese código: Jay debe gestionar su PR/merge por separado.
 ### Instrumentos procedurales
 
 `src/patches.js` deriva material, brillo, resonancia, ataque, caída, armónicos, modulación y envíos de una semilla estable por región/instrumento/rol/objeto. Usa ID o rasgos individuales inmutables; no usa la posición móvil, así que tocar o desplazar un objeto no cambia su timbre. Materiales: madera cálida, cristal suave, metal filtrado y aire sedoso, con preferencias por familia musical. La nota fundamental no se desplaza; solo los parciales secundarios reciben desafinación suave, y los bajos no se desafinan.
 
 Las familias nuevas modifican su síntesis de parciales/FM y envolvente. Las anteriores reciben color de filtro, cambios de ataque/caída y armónicos cuando su síntesis lo permite. Percusión conserva su golpe con filtro y envolvente propios. También se aplica a la radio, las voces vecinas y los fenómenos; Escuchar muestra el material. Hasta 32 rutas de color durante dos segundos y 256 perfiles en caché, reconstruibles al revisitar. Al alcanzar el límite se conservan las variaciones de síntesis sin crear más filtros. Camino y Estudio no crean perfiles nuevos. Compatible con proximidad, efectos, curaduría y Escucha suave; sin guardado adicional.
+
+### Atlas de ritmos (prototipo)
+
+Menú → Prototipo → **Ritmos**. `src/atlas.js` recorre 61 × 61 regiones alrededor del origen (3.721, unos 200 ms; se calcula al abrir y queda en caché) y lista cada género de `GEN` ordenado por tempo: BPM, origen (Base / Paleta / Referencia), cuántas regiones lo tienen, la región más cercana y si ya se escuchó (`S.journal.music.genres`). **Ir** pone al jugador en el centro de esa región; si estaba en el Camino sin completar, completa el día (herramienta de prueba) y entra al Mundo. No agrega campos al guardado. Sirve para probar cada ritmo y para verificar que todo género nuevo es alcanzable: `tests/atlas.mjs` falla si algún género no aparece en el área.
+
+Auditoría de distribución (61×61 regiones): los 34 géneros aparecen, pero el reparto es muy desigual. IDM ≈ 13 %, algorave ≈ 11 %, ambient ≈ 10 %, mientras deep house, afro house, minimal house y tech house quedan en ≈ 1–2 % cada uno. Dub profundo aparece por primera vez a 10 regiones del origen; cosmic disco y liquid DnB a 7. Equilibrar esto es parte de la etapa 1b de PENDIENTES.
+
