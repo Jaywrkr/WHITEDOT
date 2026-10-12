@@ -14,7 +14,7 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr)
 2. **Mundo:** al terminar el camino entras al Mundo. Tu linterna dura 10 minutos, más 1 minuto por día de racha (máximo 60). El tiempo de linterna se pausa mientras consultas menús y paneles.
 3. **Explora:** las regiones son grandes y cambian poco a poco, igual que bajar de la sierra a la costa. Cada una tiene un género (afro house, minimal, rominimal, dub techno, acid, garage, electro, progressive house, microhouse, minimal techno, dubstep y drum & bass…), su escala, su suelo, su aire y su fauna. Aunque te quedes quieto, la música sigue componiendo: cambia frases, instrumentos y secciones con el tiempo y la actividad del ambiente.
 4. **Interactúa:**
-   - Choca objetos. Encontrarás luces fugitivas, brotes saltarines, cometas flotantes, prismas giratorios y aros resonantes: unos salen volando, otros saltan, giran o resuenan sin moverse. También reaccionan al pulso.
+   - Choca objetos. Encontrarás luces fugitivas, brotes saltarines, cometas flotantes, prismas giratorios y aros resonantes: unos salen volando, otros saltan, giran o resuenan sin moverse. También reaccionan al pulso. Cada objeto tiene rasgos propios: algunos son serenos, otros vivaces o elásticos; varían su movimiento, impulso y recuperación incluso dentro de una misma región.
    - Lanza un **pulso** tocando brevemente la pantalla o con Espacio.
    - **Escuchar:** mantén presionado sin arrastrar durante medio segundo (o mantén E en escritorio). Consulta las fuentes cercanas, su función musical, instrumento, región, género y escala. Suelta para volver a moverte.
    - Deja que las criaturas te sigan y canten.

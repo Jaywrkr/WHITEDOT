@@ -11,18 +11,20 @@ export function createPlaythings(cx,cy,size,density,biome,seedOf,rng) {
 }
 export function reactPlaything(o,x,y) {
   const dx=o.x-x,dy=o.y-y,d=Math.hypot(dx,dy)||1;
+  const p=o.personality||{mass:1,speed:1,spin:8};
   o.lit=1;
-  if(o.kind==='spark'||o.kind==='kite'){o.vx=dx/d*170+(d===1?80:0);o.vy=dy/d*170;o.jump=1;}
-  else if(o.kind==='spring'){o.jump=1;o.vx=dx/d*60;o.vy=dy/d*60;}
-  else if(o.kind==='rotor')o.spin=8;
+  if(o.kind==='spark'||o.kind==='kite'){o.vx=dx/d*170*p.speed/p.mass+(d===1?80*p.speed/p.mass:0);o.vy=dy/d*170*p.speed/p.mass;o.jump=1;}
+  else if(o.kind==='spring'){o.jump=1;o.vx=dx/d*60/p.mass;o.vy=dy/d*60/p.mass;}
+  else if(o.kind==='rotor')o.spin=p.spin;
   else o.ring=1;
 }
 export function stepPlaything(o,dt) {
-  o.lit=Math.max(0,o.lit-dt);o.jump=Math.max(0,o.jump-dt*.7);o.ring=Math.max(0,(o.ring||0)-dt*.8);
-  o.rotation+=(.15+(o.spin||0))*dt;o.spin=(o.spin||0)*Math.exp(-dt*2);
+  const p=o.personality||{recovery:1,home:.7,drag:1,speed:1};
+  o.lit=Math.max(0,o.lit-dt*p.recovery);o.jump=Math.max(0,o.jump-dt*.7*p.recovery);o.ring=Math.max(0,(o.ring||0)-dt*.8);
+  o.rotation+=(.15*p.speed+(o.spin||0))*dt;o.spin=(o.spin||0)*Math.exp(-dt*2*p.drag);
   if(o.kind!=='rotor'&&o.kind!=='resonator'){
-    o.vx+= (o.hx-o.x)*dt*.7;o.vy+=(o.hy-o.y)*dt*.7;
-    o.vx*=Math.exp(-dt*1.5);o.vy*=Math.exp(-dt*1.5);o.x+=o.vx*dt;o.y+=o.vy*dt;
+    o.vx+= (o.hx-o.x)*dt*p.home;o.vy+=(o.hy-o.y)*dt*p.home;
+    o.vx*=Math.exp(-dt*1.5*p.drag);o.vy*=Math.exp(-dt*1.5*p.drag);o.x+=o.vx*dt;o.y+=o.vy*dt;
   }
 }
 export function initialize(runtime) {
@@ -32,19 +34,19 @@ export function initialize(runtime) {
       stepPlaything(o,dt);
       const distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),wave=runtime.waves.length&&runtime.hitW(o.x,o.y);
       if(now>o.cd&&(distance<Math.min(runtime.pxSize(),22)/2+o.size+6||wave)) {
-        o.cd=now+850;reactPlaything(o,runtime.S.wx,runtime.S.wy);runtime.MU.act+=.15;runtime.touched();
+        o.cd=now+(o.personality?.cooldown||850);reactPlaything(o,runtime.S.wx,runtime.S.wy);runtime.MU.act+=.15;runtime.touched();
         if(wave)runtime.wsoon(wave,o.snd);else runtime.beatSoon(o.snd);
         runtime.burst(o.x,o.y,5,true);
       }
       if(distance<radius)near.push(o);
       if(distance>radius*1.3&&!o.lit)continue;
-      const x=o.x+ox,y=o.y+oy-Math.sin(o.jump*Math.PI)*22;
+      const x=o.x+ox,y=o.y+oy-Math.sin(o.jump*Math.PI)*(o.personality?.jump||22);
       ctx.globalAlpha=Math.min(1,Math.max(0,1-distance/(radius*1.3))*.8+o.lit*.7);
       ctx.strokeStyle=o.lit>0?runtime.GOLD:chunk.pal.acc;ctx.fillStyle=ctx.strokeStyle;ctx.lineWidth=1.2;
       ctx.save();ctx.translate(x,y);
       if(o.kind==='spark'){ctx.rotate(o.rotation);ctx.fillRect(-2,-2,4,4);ctx.strokeRect(-o.size,-o.size,o.size*2,o.size*2);}
       else if(o.kind==='spring'){ctx.beginPath();ctx.arc(0,0,o.size,Math.PI,0);ctx.stroke();ctx.fillRect(-1,0,2,7);}
-      else if(o.kind==='kite'){ctx.rotate(Math.sin(t/1100+o.phase)*.3);ctx.beginPath();ctx.moveTo(0,-o.size);ctx.lineTo(o.size,0);ctx.lineTo(0,o.size);ctx.lineTo(-o.size,0);ctx.closePath();ctx.stroke();ctx.beginPath();ctx.moveTo(0,o.size);ctx.lineTo(Math.sin(t/300+o.phase)*8,o.size+15);ctx.stroke();}
+      else if(o.kind==='kite'){ctx.rotate(Math.sin(t/(o.personality?.period||1100)+o.phase)*.3);ctx.beginPath();ctx.moveTo(0,-o.size);ctx.lineTo(o.size,0);ctx.lineTo(0,o.size);ctx.lineTo(-o.size,0);ctx.closePath();ctx.stroke();ctx.beginPath();ctx.moveTo(0,o.size);ctx.lineTo(Math.sin(t/300+o.phase)*8,o.size+15);ctx.stroke();}
       else if(o.kind==='rotor'){ctx.rotate(o.rotation);ctx.strokeRect(-o.size,-o.size,o.size*2,o.size*2);ctx.fillRect(-1,-1,2,2);}
       else {ctx.beginPath();ctx.arc(0,0,o.size+3,0,Math.PI*2);ctx.stroke();if(o.ring>0){ctx.beginPath();ctx.arc(0,0,o.size+3+(1-o.ring)*35,0,Math.PI*2);ctx.stroke();}}
       ctx.restore();

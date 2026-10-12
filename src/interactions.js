@@ -2,9 +2,9 @@
 export function initialize(runtime) {
   let emptyP=0,waves=[],lastSonar=0,tapStart=null,rain=[],beams=[];
   function beatSoon(fn,vis){if(runtime.ac)runtime.MU.q8.push({fn,vis});else if(vis)vis();}
-  function pushO(o,fx,fy,force){const dx=o.x-fx,dy=o.y-fy,d=Math.hypot(dx,dy)||1;o.vx=(o.vx||0)+dx/d*force;o.vy=(o.vy||0)+dy/d*force;}
+  function pushO(o,fx,fy,force){const dx=o.x-fx,dy=o.y-fy,d=Math.hypot(dx,dy)||1;o.vx=(o.vx||0)+dx/d*force/(o.personality?.mass||1);o.vy=(o.vy||0)+dy/d*force/(o.personality?.mass||1);}
   function physics(o,dt,list,bound){
-    if(!o.vx&&!o.vy)return;o.x+=o.vx*dt;o.y+=o.vy*dt;const f=Math.pow(.15,dt);o.vx*=f;o.vy*=f;
+    if(!o.vx&&!o.vy)return;o.x+=o.vx*dt;o.y+=o.vy*dt;const f=Math.pow(.15,dt*(o.personality?.drag||1));o.vx*=f;o.vy*=f;
     if(bound){const dx=o.x-bound.x,dy=o.y-bound.y,dd=Math.hypot(dx,dy)||1;if(dd>bound.r-12){o.x=bound.x+dx/dd*(bound.r-12);o.y=bound.y+dy/dd*(bound.r-12);o.vx*=-.6;o.vy*=-.6;}}
     const sp=Math.hypot(o.vx,o.vy);if(sp<8){o.vx=o.vy=0;return;}
     if(sp>45){const n=performance.now();for(const p of list){if(p===o)continue;if(Math.abs(p.x-o.x)<16&&Math.abs(p.y-o.y)<16&&n>(p.cd||0)){p.cd=n+450;p.vx=(p.vx||0)+o.vx*.6;p.vy=(p.vy||0)+o.vy*.6;o.vx*=.4;o.vy*=.4;if(p.snd)beatSoon(p.snd,()=>{p.lit=1;p.hit=1;});}}}
@@ -34,8 +34,8 @@ export function initialize(runtime) {
       case "antena":runtime.cx.fillRect(x-.75,y-s*1.4,1.5,s*2.4);runtime.cx.arc(x,y-s*1.4,2.5,0,6.283);runtime.cx.fill();break;
       case "gota":runtime.cx.moveTo(x,y-s);runtime.cx.quadraticCurveTo(x+s*.8,y+s*.3,x,y+s*.6);runtime.cx.quadraticCurveTo(x-s*.8,y+s*.3,x,y-s);runtime.cx.stroke();break;
       case "astro":runtime.cx.fillRect(x-s,y-.75,s*2,1.5);runtime.cx.fillRect(x-.75,y-s,1.5,s*2);runtime.cx.fillRect(x-1.5,y-1.5,3,3);break;}}
-  function plantSound(pt,q,region){runtime.playVoice('planta:'+pt.t,0,q,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy));}
-  function drawPlant(o,x,y,t,b){const pt=o.pt,h=o.h,sw=Math.sin(t/1100+o.ph)*h*.08+o.sw*Math.sin(t/60)*3,lit=o.lit>.1,c=lit?runtime.GOLD:`hsl(${pt.hue},28%,${lit?70:52}%)`,c2=lit?"#fff":`hsl(${pt.hue},60%,70%)`;
+  function plantSound(pt,q,region,traits){runtime.playVoice('planta:'+pt.t,traits?.degree||0,q,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy),false,traits?.volume||1);}
+  function drawPlant(o,x,y,t,b){const pt=o.pt,h=o.h,sw=Math.sin(t/(o.personality?.period||1100)+o.ph)*h*(o.personality?.sway||.08)+o.sw*Math.sin(t/60)*3,lit=o.lit>.1,c=lit?runtime.GOLD:`hsl(${pt.hue},28%,${lit?70:52}%)`,c2=lit?"#fff":`hsl(${pt.hue},60%,70%)`;
     runtime.cx.fillStyle=c;runtime.cx.strokeStyle=c;runtime.cx.lineWidth=1;
     switch(pt.t){
       case "hierba":runtime.cx.fillRect(x,y-h*.5,1,h*.5);runtime.cx.fillRect(x+sw*.5,y-h*.5-2,1,2);break;
@@ -61,10 +61,10 @@ export function initialize(runtime) {
         case "agua":{const sh=Math.sin(t/700+h*12);runtime.cx.globalAlpha=al*(.22+.15*sh);runtime.cx.fillStyle=pal.main;runtime.cx.fillRect(gx,gy,6+sh*3,1);break;}}}}
   function touchRing(x,y,d,R,b){if(d<R&&b>.25){runtime.cx.globalAlpha=b*.3*(1-d/R);runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1;runtime.cx.beginPath();runtime.cx.arc(x,y,13+b*5,0,6.283);runtime.cx.stroke();}}
   function drawSprite(bits,x,y,c,col){runtime.cx.fillStyle=col;for(let row=0;row<5;row++)for(let k=0;k<3;k++)if(bits>>(row*3+k)&1){runtime.cx.fillRect(x+(k-2)*c,y+(row-2.5)*c,c,c);if(k<2)runtime.cx.fillRect(x+(2-k)*c,y+(row-2.5)*c,c,c);}}
-  function speciesSound(sp,t,full){
+  function speciesSound(sp,t,full,traits){
     const key=sp.id.split(':')[0],coords=key.split(',').map(Number);
     const region=runtime.regionOfPos(coords[0]*runtime.REG*runtime.WCH+1,coords[1]*runtime.REG*runtime.WCH+1);
-    runtime.playVoice('forma:'+sp.id,sp.deg,t,region,full);
+    runtime.playVoice('forma:'+sp.id,sp.deg+(traits?.degree||0),t,region,full,traits?.volume||1);
   }
 
   Object.defineProperties(runtime, {
