@@ -15,14 +15,15 @@ export const INSTRUMENT_SPECS={
 export function initialize(runtime) {
  function playNewInstrument(id,m,time,volume) {
   const spec=INSTRUMENT_SPECS[id],ac=runtime.ac;if(!spec)return false;if(!ac)return true;
-  const hz=runtime.hz(m),end=time+(spec.attack||.008)+spec.dec+.12,f=ac.createBiquadFilter(),gain=ac.createGain();
-  f.type=spec.formant?'bandpass':'lowpass';f.Q.value=spec.formant?2.2:.7;
-  f.frequency.setValueAtTime(spec.cut,time);f.frequency.exponentialRampToValueAtTime(spec.cut*(spec.formant?.55:.45),time+Math.min(.25,spec.dec));
-  runtime.env(gain,time,spec.attack||.008,volume,spec.dec);f.connect(gain).connect(runtime.bus);
+  const patch=runtime.activeInstrumentPatch,attack=Math.min(.12,(spec.attack||.008)*(patch?.attackScale||1)),decay=Math.min(1.3,spec.dec*(patch?.decayScale||1)),cut=spec.cut*(patch?.toneScale||1);
+  const hz=runtime.hz(m),end=time+attack+decay+.12,f=ac.createBiquadFilter(),gain=ac.createGain();
+  f.type=spec.formant?'bandpass':'lowpass';f.Q.value=spec.formant?2.2:patch?.resonance||.7;
+  f.frequency.setValueAtTime(cut,time);f.frequency.exponentialRampToValueAtTime(cut*(spec.formant?.55:.45),time+Math.min(.25,decay));
+  runtime.env(gain,time,attack,volume*(patch?.level||1),decay,true);f.connect(gain).connect(runtime.bus);
   if(spec.send){const send=ac.createGain();send.gain.value=spec.send;gain.connect(send).connect(runtime.verbIn);}
   spec.partials.forEach(([ratio,type,level],i)=>{
-   const osc=ac.createOscillator(),levelGain=ac.createGain();osc.type=type;osc.frequency.value=hz*ratio;levelGain.gain.value=level;osc.connect(levelGain).connect(f);
-   if(spec.fm&&i===0){const mod=ac.createOscillator(),depth=ac.createGain();mod.frequency.value=hz*spec.fm;depth.gain.setValueAtTime(hz*spec.index,time);depth.gain.exponentialRampToValueAtTime(.1,time+spec.dec*.75);mod.connect(depth).connect(osc.frequency);mod.start(time);mod.stop(end);}
+   const osc=ac.createOscillator(),levelGain=ac.createGain();osc.type=type;osc.frequency.value=hz*ratio;levelGain.gain.value=level*(i>0?(patch?.harmonics||1):1);if(i>0&&patch)osc.detune.value=(i%2?1:-1)*patch.widthCents;osc.connect(levelGain).connect(f);
+   if(spec.fm&&i===0){const mod=ac.createOscillator(),depth=ac.createGain();mod.frequency.value=hz*spec.fm;depth.gain.setValueAtTime(hz*spec.index*(patch?.fmIndex||1),time);depth.gain.exponentialRampToValueAtTime(.1,time+decay*.75);mod.connect(depth).connect(osc.frequency);mod.start(time);mod.stop(end);}
    osc.start(time);osc.stop(end);
   });
   return true;

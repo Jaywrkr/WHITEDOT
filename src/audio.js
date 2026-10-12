@@ -91,6 +91,7 @@ export function initialize(runtime) {
   function sched(){
     runtime.effectsTick?.();
     runtime.spatialTick?.();
+    runtime.patchTick?.();
     if(!ac||ac.state!=="running")return;
     if(MU.next<ac.currentTime){const n=Math.ceil((ac.currentTime-MU.next)/SIX);MU.next+=n*SIX;MU.step+=n;}
     while(MU.next<ac.currentTime+.12){playStep(MU.next);MU.next+=SIX;MU.step++;}
@@ -244,7 +245,7 @@ export function initialize(runtime) {
       if(gold)chordTones().slice(0,4).forEach((c,i)=>pluck(snap(n+3+i*4,chordTones()),t+(i+1)*SIX,vel(.07),MU.timbre));
       if(MU.follower)pluck(n-12,t+SIX*8,vel(.05),2);});
   }
-  function env(g,t,a,peak,dec){g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0002,peak),t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+dec);}
+  function env(g,t,a,peak,dec,shaped=false){const patch=shaped?null:runtime.activeInstrumentPatch;if(patch){a=Math.min(.12,a*patch.attackScale);dec*=patch.legacyDecay;peak*=patch.level;}g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0002,peak),t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+dec);}
   function kick(t,v){runtime.recordInstrument?.("kick");const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(44,t+.11);env(g,t,.003,v,.32);o.connect(g).connect(bus);o.start(t);o.stop(t+.4);}
   function tom(t,f,v){runtime.recordInstrument?.("tom");const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(f*1.6,t);o.frequency.exponentialRampToValueAtTime(f,t+.06);env(g,t,.003,v,.28);o.connect(g).connect(bus);const s=ac.createGain();s.gain.value=.4;g.connect(s).connect(verbIn);o.start(t);o.stop(t+.4);}
   function noise(t,type,f,q,v,dec,toVerb){const s=ac.createBufferSource();s.buffer=noiseBuf;const fl=ac.createBiquadFilter();fl.type=type;fl.frequency.value=f;fl.Q.value=q;const g=ac.createGain();env(g,t,.001,v,dec);s.connect(fl).connect(g).connect(bus);if(toVerb)g.connect(verbIn);s.start(t,rnd()*1.5);s.stop(t+dec+.05);}
@@ -259,9 +260,9 @@ export function initialize(runtime) {
     tri.forEach(m=>{const o=ac.createOscillator();o.type="sawtooth";o.frequency.value=hz(m);o.connect(f);o.start(t);o.stop(t+.35);});f.connect(g).connect(bus);g.connect(d).connect(dsend);}
   function pluck(m,t,v,tim=0){runtime.recordInstrument?.(["keys","marimba","bell","pluck","glass","saw"][tim]||"keys");
     const T=TIMBRE[tim]||TIMBRE[0],o=ac.createOscillator(),o2=ac.createOscillator(),g=ac.createGain(),g2=ac.createGain(),sd=ac.createGain(),sv=ac.createGain();
-    o.type="sine";o2.type=T.w;o.frequency.value=hz(m);o2.frequency.value=hz(m)*T.r;g2.gain.value=T.h;
+    o.type="sine";o2.type=T.w;o.frequency.value=hz(m);o2.frequency.value=hz(m)*T.r;g2.gain.value=T.h*(runtime.activeInstrumentPatch?.harmonics||1);
     const world=runtime.inWorld();
-    if(world){const f=ac.createBiquadFilter();f.type="lowpass";f.Q.value=.65;f.frequency.setValueAtTime(tim===4?1800:2400,t);f.frequency.exponentialRampToValueAtTime(tim===4?650:1000,t+.2);o.connect(f);o2.connect(g2).connect(f);f.connect(g);g2.gain.value=T.h*.55;}
+    if(world){const f=ac.createBiquadFilter();f.type="lowpass";f.Q.value=.65;f.frequency.setValueAtTime(tim===4?1800:2400,t);f.frequency.exponentialRampToValueAtTime(tim===4?650:1000,t+.2);o.connect(f);o2.connect(g2).connect(f);f.connect(g);g2.gain.value=T.h*.55*(runtime.activeInstrumentPatch?.harmonics||1);}
     else{o.connect(g);o2.connect(g2).connect(g);}
     env(g,t,world?.012:.005,v,world?Math.min(T.dec,.65):T.dec);g.connect(bus);
     sd.gain.value=runtime.inWorld()?.18:.3;g.connect(sd).connect(dsend);sv.gain.value=runtime.inWorld()?T.send*.65:T.send;g.connect(sv).connect(verbIn);
@@ -270,7 +271,7 @@ export function initialize(runtime) {
   function fmBass(m,t,v){const o=ac.createOscillator(),mo=ac.createOscillator(),mg=ac.createGain(),g=ac.createGain();o.frequency.value=hz(m);mo.frequency.value=hz(m)*2;mg.gain.setValueAtTime(hz(m)*2.5,t);mg.gain.exponentialRampToValueAtTime(1,t+.25);mo.connect(mg).connect(o.frequency);env(g,t,.004,v,.3);o.connect(g).connect(bus);o.start(t);mo.start(t);o.stop(t+.4);mo.stop(t+.4);}
   function sawLead(m,t,v){const o=ac.createOscillator(),f=ac.createBiquadFilter(),g=ac.createGain(),d=ac.createGain();o.type="sawtooth";o.frequency.value=hz(m);f.type="lowpass";f.frequency.setValueAtTime(2200,t);f.frequency.exponentialRampToValueAtTime(500,t+.2);f.Q.value=4;env(g,t,.005,v*.7,.22);d.gain.value=.5;o.connect(f).connect(g).connect(bus);g.connect(d).connect(dsend);o.start(t);o.stop(t+.3);}
   function organ(m,t,v){runtime.recordInstrument?.("organ");const f=ac.createBiquadFilter(),g=ac.createGain();f.type="lowpass";f.frequency.value=1600;[0,12].forEach(k=>{const o=ac.createOscillator();o.type="square";o.frequency.value=hz(m+k);o.connect(f);o.start(t);o.stop(t+.3);});env(g,t,.008,v*.45,.2);f.connect(g).connect(bus);const sv=ac.createGain();sv.gain.value=.3;g.connect(sv).connect(verbIn);}
-  function flute(m,t,v){runtime.recordInstrument?.("flute");const o=ac.createOscillator(),l=ac.createOscillator(),lg=ac.createGain(),g=ac.createGain(),sv=ac.createGain();o.type="sine";o.frequency.value=hz(m);l.frequency.value=5.2;lg.gain.value=hz(m)*.006;l.connect(lg).connect(o.frequency);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(v,t+.06);g.gain.exponentialRampToValueAtTime(.0001,t+.6);sv.gain.value=.5;o.connect(g).connect(bus);g.connect(sv).connect(verbIn);o.start(t);l.start(t);o.stop(t+.7);l.stop(t+.7);}
+  function flute(m,t,v){runtime.recordInstrument?.("flute");const o=ac.createOscillator(),l=ac.createOscillator(),lg=ac.createGain(),g=ac.createGain(),sv=ac.createGain();o.type="sine";o.frequency.value=hz(m);l.frequency.value=5.2;lg.gain.value=hz(m)*.006;l.connect(lg).connect(o.frequency);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(v*(runtime.activeInstrumentPatch?.level||1),t+.06*(runtime.activeInstrumentPatch?.attackScale||1));g.gain.exponentialRampToValueAtTime(.0001,t+.6*(runtime.activeInstrumentPatch?.legacyDecay||1));sv.gain.value=.5;o.connect(g).connect(bus);g.connect(sv).connect(verbIn);o.start(t);l.start(t);o.stop(t+.7);l.stop(t+.7);}
   function kick2(t,v,fe,dec){runtime.recordInstrument?.("kick");const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(125,t);o.frequency.exponentialRampToValueAtTime(fe,t+.1);env(g,t,.003,v,dec);o.connect(g).connect(bus);o.start(t);o.stop(t+dec+.1);}
   function snare(t,v){runtime.phenomenonPercussionCue?.(t);runtime.recordInstrument?.("snare");noise(t,"bandpass",1800,1,v,.14,true);const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=190;env(g,t,.002,v*.6,.08);o.connect(g).connect(bus);o.start(t);o.stop(t+.12);}
   function conga(t,f,v){runtime.recordInstrument?.("conga");const o=ac.createOscillator(),g=ac.createGain(),sv=ac.createGain();o.frequency.setValueAtTime(f*1.4,t);o.frequency.exponentialRampToValueAtTime(f,t+.03);env(g,t,.002,v,.13);sv.gain.value=.25;o.connect(g).connect(bus);g.connect(sv).connect(verbIn);o.start(t);o.stop(t+.2);}
@@ -281,8 +282,8 @@ export function initialize(runtime) {
   function dubChord(ct,t){stab(ct.slice(0,3).map(n=>n+12),t,.35);}
   function organChord(ct,t){ct.slice(0,3).forEach(n=>organ(n+12,t,vel(.05)));}
   function reese(m,t,v){runtime.recordInstrument?.("reese");const f=ac.createBiquadFilter(),g=ac.createGain();f.type="lowpass";f.frequency.value=480;[-12,12].forEach(dt=>{const o=ac.createOscillator();o.type="sawtooth";o.frequency.value=hz(m);o.detune.value=dt;o.connect(f);o.start(t);o.stop(t+.45);});env(g,t,.01,v*.7,.35);f.connect(g).connect(bus);}
-  function bassInst(ty,m,t,v){runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "reese":reese(m,t,v);return;case "organb":organ(m,t,v*1.5);return;case "roll":houseBass(m,t,v*.8,.3);return;}switch(ty){case "sub":softBass(m,t,v);break;case "acid":acid(m,t,v*.85,300+MU.speed*2200);break;case "pluck":houseBass(m,t,v,.5);break;case "fm":fmBass(m,t,v);break;case "boing":runtime.boing(m,t,v);break;}}
-  function hookInst(ty,m,t,v){runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
+  function bassInst(ty,m,t,v,region=MU.dnaA||MU.dnaT){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'bajo'},null,t,()=>bassInst(ty,m,t,v,region));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "reese":reese(m,t,v);return;case "organb":organ(m,t,v*1.5);return;case "roll":houseBass(m,t,v*.8,.3);return;}switch(ty){case "sub":softBass(m,t,v);break;case "acid":acid(m,t,v*.85,300+MU.speed*2200);break;case "pluck":houseBass(m,t,v,.5);break;case "fm":fmBass(m,t,v);break;case "boing":runtime.boing(m,t,v);break;}}
+  function hookInst(ty,m,t,v,region=MU.dnaA||MU.dnaT){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'lead'},null,t,()=>hookInst(ty,m,t,v,region));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
   function drums(gid,s,bar,t,tt,E,ct,DO){
     const L1=E>.12,L2=E>.32,L3=E>.55,variation=(bar>>2)%3;
     // Repeat the placement of ghost hits across four bars; velocity still breathes.
@@ -379,8 +380,8 @@ export function initialize(runtime) {
   function playTrack(d,s,t,E,ct,arrangement=MU.radio){
     const base=d&&d.track;if(!base)return;const tr=arrangement?{...base,...arrangement}:base;const sc=MU.dnaA?.scale||d.scale,bar=(MU.step>>4)&1,nt=(dg,base)=>base+MU.tr+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
     const gid=d.genre,bs=arrangement?tr.bass[s]:gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
-    if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel((gid==="rominimal"?.13:.17)*(arrangement?.grammar.bassLevel||1)));}
-    let h=tr.hook[s];if(h>=0&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);hookInst(tr.hookI,n,t,vel((.05+.05*E)*(arrangement?.grammar.hookLevel||1)));}
+    if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel((gid==="rominimal"?.13:.17)*(arrangement?.grammar.bassLevel||1)),d);}
+    let h=tr.hook[s];if(h>=0&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);hookInst(tr.hookI,n,t,vel((.05+.05*E)*(arrangement?.grammar.hookLevel||1)),d);}
   }
   function thunder(t){noise(t,"lowpass",900,.5,.25,.9,true);noise(t,"highpass",3000,.5,.06,.12);}
   const soon=fn=>{if(ac)MU.queue.push(fn);};

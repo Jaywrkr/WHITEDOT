@@ -80,3 +80,5 @@ Las regiones vecinas tienden a compartir tempo y afinación. Al acercarte a una 
 La biblioteca incluye 34 estilos base, entre ellos electrónica andina, amapiano, jazztronica, Berlin School, IDM, cosmic disco, liquid drum & bass y darkwave/EBM. Sus patrones, armonías e instrumentos alimentan la gramática generativa y las mezclas entre regiones vecinas.
 
 El entorno incluye aves de eco que responden a las frases, semilleros que se sacuden con cajas/claps y nubes que lanzan relámpagos graves. También reaccionan al contacto y al pulso; Escuchar identifica su función musical.
+
+Los instrumentos tienen materiales sonoros procedurales —madera cálida, cristal suave, metal filtrado y aire sedoso— y variaciones de ataque, resonancia y armónicos. Cada objeto conserva su timbre al volver; Escuchar muestra su material.
