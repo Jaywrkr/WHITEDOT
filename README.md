@@ -67,7 +67,7 @@ Las reliquias pertenecen a sitios fijos del mundo, sin flecha global ni generaci
 
 ## Para seguir desarrollando
 
-Lee **[HANDOFF.md](HANDOFF.md)**. Tiene todo el contexto: visión, decisiones tomadas, arquitectura del código, sistemas, cómo probar y el roadmap. Está pensado para pegarlo en otra IA (ChatGPT, Claude, etc.) y seguir sin perder nada.
+Lee **[HANDOFF.md](HANDOFF.md)**. Se complementa con **[CAMBIOS.md](CAMBIOS.md)** (inventario de todo lo añadido respecto al prototipo, referencias y estado de ramas) y **[PENDIENTES.md](PENDIENTES.md)** (plan vigente ordenado y criterios de aceptación). HANDOFF explica visión, decisiones, arquitectura, sistemas y pruebas. Está pensado para pegarlo en otra IA (ChatGPT, Claude, etc.) y seguir sin perder nada.
 
 La variedad musical incluye paletas tropicales, melódicas, robóticas y disco, con grooves y escalas propios. Sus instrumentos electrónicos incluyen steel pan, kalimba FM, teclas cálidas, cuerdas, metales, clavinet, bajos filtrados o FM, formantes, güiro y timbal. Escuchar y Bitácora muestran qué aporta cada fuente.
 
