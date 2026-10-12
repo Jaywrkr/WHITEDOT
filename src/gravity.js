@@ -1,15 +1,15 @@
 // Propiedad regional independiente del RNG del mapa y del guardado.
 const LEVELS = [
-  { name: 'Gravedad ligera', movement: 'Movimiento rápido', multiplier: 1.35 },
+  { name: 'Gravedad ligera', movement: 'Movimiento rápido', multiplier: 1.65 },
   { name: 'Gravedad normal', movement: 'Movimiento equilibrado', multiplier: 1 },
-  { name: 'Gravedad alta', movement: 'Movimiento lento', multiplier: .7 },
+  { name: 'Gravedad alta', movement: 'Movimiento lento', multiplier: .55 },
 ];
 export function gravityOf(region, seedOf) {
   return LEVELS[region.key === '0,0' ? 1 : seedOf(`gravity:v1:${region.key}`) % LEVELS.length];
 }
 
 export function movementMultiplier(x, y, size, regionOfPos, seedOf) {
-  const band = size / 4;
+  const band = size / 8;
   function axis(value) {
     const local = ((value % size) + size) % size;
     const distance = Math.min(local, size - local);

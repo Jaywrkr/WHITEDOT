@@ -50,8 +50,8 @@ export function initialize(runtime) {
       }
       if(runtime.S.mode==="camino"&&!runtime.isFree()&&runtime.MU.still>25&&!runtime.idleSaid&&runtime.S.help.camino){runtime.idleSaid=true;runtime.say(runtime.VOZ.idle);}
     }
-    if(runtime.windG)runtime.windG.gain.setTargetAtTime(runtime.inWorld()&&(runtime.BI().id==="dunas"||(runtime.MU.dnaT&&runtime.MU.dnaT.air==="polvo"))?runtime.MU.speed*.045:0,runtime.ac.currentTime,.3);
-    if(runtime.windF)runtime.windF.frequency.setTargetAtTime(400+runtime.MU.speed*1400,runtime.ac.currentTime,.3);
+    if(runtime.windG)runtime.windG.gain.setTargetAtTime(runtime.inWorld()&&(runtime.BI().id==="dunas"||(runtime.MU.dnaT&&runtime.MU.dnaT.air==="polvo"))?runtime.MU.speed*.012:0,runtime.ac.currentTime,.8);
+    if(runtime.windF)runtime.windF.frequency.setTargetAtTime(260+runtime.MU.speed*550,runtime.ac.currentTime,.8);
 
     runtime.updateScanner();
     const b=runtime.beat();
@@ -298,7 +298,7 @@ export function initialize(runtime) {
     }
     runtime.MU.follower=follow;if(followers>=2)runtime.unlock("fiesta");runtime.MU.near=nearO;runtime.MU.singers=singers;
     runtime.beams=runtime.beams.filter(be=>(be.l-=dt*1.6)>0);runtime.cx.lineWidth=1.2;for(const be of runtime.beams){runtime.cx.globalAlpha=be.l*.8;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.beginPath();runtime.cx.moveTo(be.x1+ox,be.y1+oy);runtime.cx.lineTo(be.x2+ox,be.y2+oy);runtime.cx.stroke();}
-    {const cc=runtime.wchunk(Math.floor(runtime.S.wx/runtime.WCH),Math.floor(runtime.S.wy/runtime.WCH));if(cc.var!==runtime.MU.vari){const was=runtime.MU.vari;runtime.MU.vari=cc.var;if(was>=0)runtime.showPhrase(runtime.BIOMES[cc.z].name+" "+runtime.VARS[cc.var][1].toLowerCase());}}
+    {const cc=runtime.wchunk(Math.floor(runtime.S.wx/runtime.WCH),Math.floor(runtime.S.wy/runtime.WCH));if(cc.var!==runtime.MU.vari){runtime.MU.vari=cc.var;}}
     // tu Estudio en el mapa
     if(runtime.S.studio.x!=null){const d=Math.hypot(runtime.S.studio.x-runtime.S.wx,runtime.S.studio.y-runtime.S.wy);if(d<R*2.5){const x=runtime.S.studio.x+ox,y=runtime.S.studio.y+oy;runtime.cx.globalAlpha=Math.min(1,1.2-d/(R*2.5));runtime.cx.strokeStyle=runtime.S.color;runtime.cx.lineWidth=1.5;runtime.cx.strokeRect(x-8,y-8,16,16);runtime.cx.beginPath();runtime.cx.moveTo(x-11,y-8);runtime.cx.lineTo(x,y-17);runtime.cx.lineTo(x+11,y-8);runtime.cx.stroke();}}
     // bandadas en cielo abierto

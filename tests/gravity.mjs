@@ -16,6 +16,6 @@ assert.equal(values.size,3);
 for(let edge=-10800;edge<=10800;edge+=3600)for(const offset of [0,400,1800,3600]) {
  assert(Math.abs(speed(edge-.001,offset)-speed(edge+.001,offset))<.00001);
  assert(Math.abs(speed(offset,edge-.001)-speed(offset,edge+.001))<.00001);
- assert(speed(edge,offset)>=.7&&speed(edge,offset)<=1.35);
+ assert(speed(edge,offset)>=.55&&speed(edge,offset)<=1.65);
 }
 console.log('PASS: stable gravity, three speeds, neutral origin, continuous edges/corners including negative coordinates');
