@@ -125,6 +125,28 @@ export function initialize(runtime) {
         if((s===4||s===12)&&E>.6&&P(.8))clap(t,vel(.06));
         if(ACID[s]&&P(.85))!DO&&acid(R+(ACID[s]===2?12:0)+(s===14?3:0),t,vel(.11),200+MU.speed*2600);
         break;
+      case "tropical":
+        if(L1&&s%4===0)kick2(t,vel(.24),50,.28);
+        if(L2&&[3,6,10,14].includes(s))conga(tt,[180,250,320][variation],vel(.085));
+        if(L2&&(s===2||s===10))runtime.guiro(tt,vel(.024));
+        if(L3&&s===15&&bar%4===3)runtime.timbale(tt,vel(.06));
+        if(L2&&s%2===1)shaker(tt,vel(.014));break;
+      case "melodic":
+        if(L1&&s%4===0)kick2(t,vel(.26),49,.32);
+        if(L2&&(s===4||s===12))clap(t,vel(.055));
+        if(L2&&s%4===2)hatO(tt,vel(.025));
+        if(L3&&s===0&&bar%4===0&&!DO)ct.slice(0,3).forEach(n=>hookInst('strings',n,t,vel(.025)));break;
+      case "robotic":
+        if(L1&&[0,7,10].includes(s))kick2(t,vel(.27),48,.22);
+        if(L1&&(s===4||s===12))snare(t,vel(.085));
+        if(L2&&s%2===0)hatC(tt,vel(.02));
+        if(L3&&s===[3,11,15][variation])runtime.timbale(tt,vel(.04));break;
+      case "nudisco":
+        if(L1&&s%4===0)kick2(t,vel(.25),53,.25);
+        if(L2&&(s===4||s===12))clap(t,vel(.07));
+        if(L2&&s%4===2)hatO(tt,vel(.03));
+        if(L3&&s===7)runtime.guiro(tt,vel(.025));
+        if(L3&&(s===6||s===14)&&!DO)ct.slice(0,3).forEach(n=>hookInst('brass',n,tt,vel(.022)));break;
       case "heart":
         if(s===0||s===3)kick(t,vel(s===0?.22:.14));
         if(s===0&&MU.step%32===0)!DO&&pluck(ct[0]+12,t,.04,2);
@@ -252,8 +274,8 @@ export function initialize(runtime) {
   function dubChord(ct,t){stab(ct.slice(0,3).map(n=>n+12),t,.35);}
   function organChord(ct,t){ct.slice(0,3).forEach(n=>organ(n+12,t,vel(.05)));}
   function reese(m,t,v){runtime.recordInstrument?.("reese");const f=ac.createBiquadFilter(),g=ac.createGain();f.type="lowpass";f.frequency.value=480;[-12,12].forEach(dt=>{const o=ac.createOscillator();o.type="sawtooth";o.frequency.value=hz(m);o.detune.value=dt;o.connect(f);o.start(t);o.stop(t+.45);});env(g,t,.01,v*.7,.35);f.connect(g).connect(bus);}
-  function bassInst(ty,m,t,v){runtime.recordInstrument?.(ty);switch(ty){case "reese":reese(m,t,v);return;case "organb":organ(m,t,v*1.5);return;case "roll":houseBass(m,t,v*.8,.3);return;}switch(ty){case "sub":softBass(m,t,v);break;case "acid":acid(m,t,v*.85,300+MU.speed*2200);break;case "pluck":houseBass(m,t,v,.5);break;case "fm":fmBass(m,t,v);break;case "boing":runtime.boing(m,t,v);break;}}
-  function hookInst(ty,m,t,v){runtime.recordInstrument?.(ty);switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
+  function bassInst(ty,m,t,v){runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "reese":reese(m,t,v);return;case "organb":organ(m,t,v*1.5);return;case "roll":houseBass(m,t,v*.8,.3);return;}switch(ty){case "sub":softBass(m,t,v);break;case "acid":acid(m,t,v*.85,300+MU.speed*2200);break;case "pluck":houseBass(m,t,v,.5);break;case "fm":fmBass(m,t,v);break;case "boing":runtime.boing(m,t,v);break;}}
+  function hookInst(ty,m,t,v){runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
   function drums(gid,s,bar,t,tt,E,ct,DO){
     const L1=E>.12,L2=E>.32,L3=E>.55,variation=(bar>>2)%3;
     // Repeat the placement of ghost hits across four bars; velocity still breathes.
@@ -323,6 +345,9 @@ export function initialize(runtime) {
 
 
   Object.defineProperties(runtime, {
+    noiseHit: { get: () => noise },
+    clap: { get: () => clap },
+    hatHit: { get: () => hatC },
     bassInst: { get: () => bassInst },
     hookInst: { get: () => hookInst },
     kick: { get: () => kick },

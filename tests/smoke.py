@@ -68,6 +68,7 @@ with sync_playwright() as p:
   page.locator('#sClose').click();page.locator('#bPrimary').click()
   assert page.evaluate('window.__testRuntime.S.session===null && window.__testRuntime.S.lastSession!==null')
   page.locator('#bMenu').click();page.locator('#bSession').click();assert 'Última sesión' in page.locator('#sessionBody').inner_text();page.locator('#sessionClose').click();page.locator('#bPrimary').click()
+  page.evaluate('''async()=>{const r=window.__testRuntime,{INSTRUMENT_SPECS}=await import('/src/instruments.js');for(const id of Object.keys(INSTRUMENT_SPECS)){const t=r.ac.currentTime+.05;r.hookInst(id,id==='rubber'||id==='machine'?43:60,t,.012);}r.guiro(r.ac.currentTime+.05,.01);r.timbale(r.ac.currentTime+.05,.01);const seen=new Map();for(let x=-20;x<=20;x++)for(let y=-20;y<=20;y++){const region=r.regionOfPos(x*3600+900,y*3600+900);if(['tropical','melodic','robotic','nudisco'].includes(region.genre))seen.set(region.genre,region);}if(seen.size!==4)throw Error('Missing electronic palette');for(const region of seen.values()){for(const kind of ['arbol','luz','pulso'])r.playVoice(kind,0,r.ac.currentTime+.1,region,true,.25);}}''')
   page.keyboard.press('Space')
   page.keyboard.down('d');page.wait_for_timeout(300);page.keyboard.up('d')
   page.locator('#bPrimary').click();page.locator('#bPrimary').click();assert page.locator('#reto').is_visible() == page.evaluate('!window.__testRuntime.S.retos[window.__testRuntime.regionOfPos(window.__testRuntime.S.wx,window.__testRuntime.S.wy).key]')

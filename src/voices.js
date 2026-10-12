@@ -21,9 +21,9 @@ export function createRegionalVoices(region, biomes, genres, seedOf, rng) {
   }
   const genre = genres[region.genre];
   const calm = ['ambient','heart','downtempo','dub'].includes(region.genre);
-  const bassPool = [...new Set([genre.bassI, 'sub', calm ? 'fm' : 'pluck'])];
-  const melodyPool = [...new Set([...genre.hookP, calm ? 'flute' : 'organ', 'keys'])];
-  const percussionPool = calm ? ['tom','wood','shaker'] : ['kick','conga','wood','rim','tom','shaker'];
+  const bassPool = [...new Set(genre.bassP||[genre.bassI, 'sub', calm ? 'fm' : 'pluck'])];
+  const melodyPool = [...new Set([...genre.hookP,...(genre.bassP?[]:[calm ? 'flute' : 'organ', 'keys'])])];
+  const percussionPool = genre.percP || (calm ? ['tom','wood','shaker'] : ['kick','conga','wood','rim','tom','shaker']);
   const voices = Object.create(null);
   kinds.forEach((kind, i) => {
     const role = roles[i % roles.length];
@@ -66,6 +66,10 @@ export function initialize(runtime) {
           else if (voice.instrument === 'wood') runtime.wood(t,v);
           else if (voice.instrument === 'rim') runtime.rim(t,v);
           else if (voice.instrument === 'shaker') runtime.shaker(t,v);
+          else if (voice.instrument === 'guiro') runtime.guiro(t,v);
+          else if (voice.instrument === 'timbale') runtime.timbale(t,v);
+          else if (voice.instrument === 'clap') runtime.clap(t,v);
+          else if (voice.instrument === 'hat') runtime.hatHit(t,v);
           else runtime.tom(t,55+voice.degree*15,v);
         } else if (voice.role === 'acorde') {
           [0,2,4].forEach(d=>runtime.hookInst(voice.instrument,note(degree+d)-(voice.instrument==='glass'?12:0),t,v*.4));

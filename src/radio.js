@@ -1,3 +1,4 @@
+import {PALETTE_STEPS} from './palettes.js';
 // Composición por frases: el reloj musical avanza sin necesitar movimiento.
 // No modifica el ADN de la región ni guarda estado en la partida.
 export function createRadio(seedOf, rng, genres) {
@@ -29,6 +30,10 @@ export function createRadio(seedOf, rng, genres) {
         if (region.genre === 'dnb') degree = [0,2,6,8,10,14].includes(step) ? [0,4,7][Math.floor(random()*3)] : -1;
         if (region.genre === 'progressive') degree = step%2===0 ? (step%8===6?4:0) : -1;
         if (region.genre === 'acid') degree = [1,0,1,1,0,1,0,2,1,0,1,0,2,1,0,1][step] ? (step === 7 || step === 12 ? 7 : 0) : -1;
+        if(PALETTE_STEPS[region.genre]){
+          const steps={tropical:[0,3,6,10,14],melodic:[0,6,8,14],robotic:[0,3,8,11,14],nudisco:[0,3,6,8,10,14]}[region.genre];
+          degree=steps.includes(step)?(region.genre==='robotic'?0:[0,0,4,2][step%4]):-1;
+        }
         if (degree < 0 || (step !== 0 && random() < (sparse ? .45 : .12))) return -1;
         return step === 0 ? 0 : Math.max(0, Math.min(9, degree));
       });
@@ -36,7 +41,8 @@ export function createRadio(seedOf, rng, genres) {
       const motifRandom=rng(seedOf(`radio-motif:v1:${region.key}:${Math.floor(phrase/4)}`));
       const lean=['minimal','rominimal','microhouse','minimaltechno','dub','heart'].includes(region.genre);
       const budget=sparse?2:lean?3:5;
-      const candidates=region.track.hook.map((degree,step)=>({degree,step})).filter(n=>n.degree>=0);
+      const recipe=PALETTE_STEPS[region.genre]?Array.from({length:16},(_,i)=>PALETTE_STEPS[region.genre].includes(i)?0:-1):region.track.hook;
+      const candidates=recipe.map((degree,step)=>({degree,step})).filter(n=>n.degree>=0);
       const anchor=candidates.find(n=>n.step%4===0)?.step??0;
       const positions=[anchor,...candidates.filter(n=>n.step!==anchor).map(n=>n.step)];
       for(let i=positions.length-1;i>1;i--){const j=1+Math.floor(motifRandom()*i);[positions[i],positions[j]]=[positions[j],positions[i]];}
