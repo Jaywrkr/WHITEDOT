@@ -25,6 +25,7 @@ export function initialize(runtime) {
   /* ---------- loop ---------- */
   function frame(t){
     if(!runtime.inWorld()||!runtime.S.sound)runtime.clearSoundCues();
+    if(!runtime.inWorld())runtime.clearRelicProgress();
     const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;
     const modal=[...document.querySelectorAll(".modal")].some(m=>!m.hidden&&!m.classList.contains("lite"));
     let dx=(runtime.keys.arrowright||runtime.keys.d?1:0)-(runtime.keys.arrowleft||runtime.keys.a?1:0), dy=(runtime.keys.arrowdown||runtime.keys.s?1:0)-(runtime.keys.arrowup||runtime.keys.w?1:0);
@@ -320,21 +321,25 @@ export function initialize(runtime) {
       for(const q of f.b){const x=f.x+q.ox+Math.sin(t/400+q.ph)*6,y=f.y+q.oy+Math.cos(t/520+q.ph)*5,e=Math.hypot(x-runtime.S.wx,y-runtime.S.wy);if(e>vis)continue;
         const flap=Math.sin(t/90+q.ph)>0;runtime.cx.globalAlpha=Math.min(1,.2+.8*(1-e/vis));runtime.cx.fillRect(x+ox-1,y+oy-(flap?1:0),flap?3:2,flap?1:2);}
     }
-    // reliquias de hoy + flecha
-    let near=null,nd=1e9;
-    for(const rl of runtime.todayRelics()){
-      if(rl.got)continue;const d=Math.hypot(rl.x-runtime.S.wx,rl.y-runtime.S.wy);
-      if(d<ds/2+16){runtime.takeRelic(rl);continue;}
-      if(d<nd){nd=d;near=rl;}
-      if(d<R*1.4){const al=Math.min(1,1.2-d/(R*1.4));
-        runtime.cx.globalAlpha=al*.18;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.beginPath();runtime.cx.arc(rl.x+ox,rl.y+oy,26+b*14,0,6.283);runtime.cx.fill();
-        runtime.cx.globalAlpha=al;glyph(runtime.cx,rl.s,rl.x+ox,rl.y+oy,10*(1+b*.2));}
+    // Only local clues: no global arrow or player-relative spawning.
+    let nd=0;
+    runtime.pruneRelics();
+    for(const rl of runtime.nearbyRelics()){
+      const d=Math.hypot(rl.x-runtime.S.wx,rl.y-runtime.S.wy);
+      if(!rl.id&&d<ds/2+16){runtime.takeRelic(rl);continue;}
+      if(runtime.visitRelic(rl,paused||runtime.scanning?0:dt))continue;
+      if(d>R)continue;
+      nd=nd?Math.min(nd,d):d;
+      const al=Math.max(0,1-d/R),progress=runtime.relicProgress(rl),need=rl.magical?5:3;
+      runtime.cx.globalAlpha=al;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1;
+      const x=rl.x+ox,y=rl.y+oy,size=rl.magical?16:10;
+      glyph(runtime.cx,rl.s,x,y,size*(1+b*.2));
+      for(let i=0;i<need;i++){const a=i/need*6.283+t/6000;runtime.cx.globalAlpha=al*(i<progress.pulses ? .9 : .25);runtime.cx.beginPath();runtime.cx.arc(x+Math.cos(a)*28,y+Math.sin(a)*28,2,0,6.283);runtime.cx.stroke();}
+      runtime.cx.globalAlpha=al*.6;runtime.cx.beginPath();runtime.cx.arc(x,y,36,-Math.PI/2,-Math.PI/2+6.283*(progress.dwell/(rl.magical?12:6)));runtime.cx.stroke();
+      if(d<100){runtime.cx.globalAlpha=.8;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.font="10px monospace";runtime.cx.textAlign="center";runtime.cx.fillText(rl.name||"Reliquia",x,y-44);runtime.cx.fillText(`Escucha ${Math.floor(progress.dwell)}/${rl.magical?12:6}s · ${progress.pulses}/${need} pulsos`,x,y+52);}
     }
-    if(near&&nd>R*.9){const an=Math.atan2(near.y-runtime.S.wy,near.x-runtime.S.wx),rr=Math.min(runtime.W,runtime.H)/2-60;
-      runtime.cx.save();runtime.cx.translate(runtime.W/2+Math.cos(an)*rr,runtime.H/2+Math.sin(an)*rr);runtime.cx.rotate(an);runtime.cx.globalAlpha=.55+b*.45;runtime.cx.fillStyle=runtime.GOLD;
-      runtime.cx.beginPath();runtime.cx.moveTo(10,0);runtime.cx.lineTo(-6,-7);runtime.cx.lineTo(-6,7);runtime.cx.closePath();runtime.cx.fill();runtime.cx.restore();}
     runtime.drawSoundCues(ox,oy,R);
-    if((runtime.hudT+=dt)>.5){runtime.hudT=0;runtime.hud(near?nd:0);}
+    if((runtime.hudT+=dt)>.5){runtime.hudT=0;runtime.hud(nd);}
     return ds;
   }
 

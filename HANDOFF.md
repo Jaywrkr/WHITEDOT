@@ -24,7 +24,7 @@ Un pixel blanco en un mundo negro que va creciendo. **El centro de todo es la M�
 
 - **Camino diario:** corto. Construye constancia y racha, y el crecimiento tiene tope por día. Su música es casi ambient. No debe convertirse en grind.
 - **Mundo:** se abre después del camino. Es infinito y procedural, y todo genera música. Ahí está la diversión de verdad.
-- **Descubrimientos excepcionales:** Jay quiere encontrar cosas mágicas muy rara vez, con identidad propia y difíciles de conseguir. Las reliquias actuales le resultan demasiado fáciles. Esta dirección está acordada; su implementación sigue pendiente.
+- **Descubrimientos excepcionales:** Jay quiere encontrar cosas mágicas muy rara vez, con identidad propia y difíciles de conseguir. Las reliquias actuales le resultan demasiado fáciles. Primera implementación: sitios fijos raros y constelaciones dormidas; ver `src/relics.js`.
 - **Inspiraciones:**
   - Logros absurdos y ocultos estilo *Dungeon Crawler Carl*.
   - Una "Voz del sistema" sarcástica estilo Carl pero también con el humor de Jay.
@@ -68,6 +68,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/progress.js` | Guardado v4, días, racha, crecimiento, linterna, RNG y cachés. |
 | `src/world.js` | Camino, generación de regiones/chunks, eventos y reliquias. |
 | `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros y tracks. |
+| `src/relics.js` | Sitios raros estables, resonancia y compatibilidad de reliquias antiguas. |
 | `src/pockets.js` | Espacios locales de escucha, ensamble y descubrimiento; distribución estable y pistas discretas. |
 | `src/personality.js` | Rasgos estables de movimiento, reacción y respuesta musical por objeto. |
 | `src/playthings.js` | Nuevos elementos, generación independiente, reacciones de contacto/pulso y dibujo. |
@@ -94,7 +95,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 ```
 offset, lastDay, streak, best, totalDays, totalLight, todayKey, todayLight, capShown,
 collected[], trail[], px, py, ach{}, sound, mode("camino"|"world"|"studio"),
-wx, wy (posición en el mundo), lampDay, lampUsed, species{}, rel, stars[], help{},
+wx, wy (posición en el mundo), lampDay, lampUsed, species{}, rel, relicSites{}, stars[], help{},
 zones{}, bag{muestra:cantidad}, studio{x,y,biome,slots{}}, color, cat{} (catálogo de especies),
 catN, places{}, placesN, retos{}, retosN, events{}
 ```
@@ -104,7 +105,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 ## 5. Mundo procedural
 
 - **RNG con semilla:** `seedOf(str)` (hash FNV) y `rng(seed)` (tipo mulberry). La semilla es fija, así que el mundo es igual para todos.
-- **Chunks:** `WCH=900` px. `wchunk(cx,cy)` genera plantas, props, especies y luces. Las reliquias se generan aparte en `todayRelics()`.
+- **Chunks:** `WCH=900` px. `wchunk(cx,cy)` genera plantas, props, especies y luces. Las reliquias se consultan aparte en `nearbyRelics()`; `todayRelics()` queda como alias interno.
 - **Regiones:** `REG=4` chunks por lado (3.600 × 3.600 px). `regionAt(cx,cy)` recibe coordenadas de chunk, calcula la región y devuelve su **ADN**:
   - Identidad: `name` (generado con sílabas) y `trait`.
   - Visual: `hue`, `pal` (paleta armónica), `ground`, `air`, `plants`.
@@ -125,7 +126,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
   - el audio: `MU.nb` y `MU.nbW` hacen crossfade de drums y BPM.
 - **Aire (`AIRP`):** claro, esporas, niebla, polvo/arena en el aire, etc.
 - **Eventos actuales por región:** lluvia de notas, eclipse, migración y aurora (`eventOf`). Cada región salvo Origen tiene un 15 % de probabilidad diaria de tener un evento, determinado por semilla. Esto no constituye todavía un sistema de encuentros únicos o de rarezas coleccionables.
-- **Reliquias actuales:** 3 por día (`todayRelics()`), a distancias de 520, 1.300 y 2.400 px de la posición del jugador cuando se genera la lista de ese día. Una flecha apunta a la más cercana sin recoger. Al recogerlas se añaden estrellas a la constelación; no se conserva en ellas la región de procedencia. Jay quiere revisar su dificultad, no dar por definitivo este sistema.
+- **Reliquias actuales:** sitios fijos raros de `src/relics.js`, obtenidos una sola vez por partida tras permanecer cerca y lanzar pulsos. Sin flecha global ni lista diaria nueva. Se guardan ID, nombre, fecha, región y tipo mágico en la estrella; `S.relicSites` evita repetir el sitio. Las listas antiguas pendientes solo duran hasta acabar su día.
 - **Linterna:** dura 10 min más 1 min por cada día de racha, con un máximo de 60 (`lampMax`). Su consumo se pausa mientras hay un modal abierto, y no consume dentro del Estudio. El mundo y su audio pueden seguir activos; no es una pausa completa de la simulación.
 
 ## 6. Motor musical (lo más importante)
@@ -232,14 +233,14 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
    - **Música:** géneros, escalas e instrumentos escuchados, cada uno con una explicación corta. Aquí se aprende música.
    - **Logros:** por categoría, con los ocultos como "???".
 7. **Escuchar (escáner) — implementado:** mantener presionado 500 ms sin arrastrar muestra hasta cinco fuentes musicales cercanas (250 px), región, género, escala, rol e instrumento. Tecla E como alternativa en escritorio. Un desplazamiento de 14 px inicia el arrastre y cancela la pulsación larga; el toque breve mantiene el pulso. Se cierra al soltar, cancelar el gesto, perder foco, abrir un modal o salir del Mundo. Las formas no descubiertas no revelan su nombre. El panel identifica voces potenciales del entorno, no detecta qué nodos de audio están sonando en ese instante. No añade descubrimientos ni modifica el guardado.
-8. **Encuentros mágicos y reliquias:** hallazgos muy raros y memorables; revisar la dificultad de las reliquias y su guía directa. Diseñar pistas, condiciones y recompensas al abordar esta etapa.
+8. **Encuentros mágicos y reliquias — primera versión implementada:** sitios fijos por chunk (1/48), incluyendo constelaciones dormidas (1/384), sin flecha global. Ecos: permanecer a 100 px durante 6 s y emitir 3 pulsos; constelaciones: 12 s y 5 pulsos. Más de 140 px reinicia la resonancia; menús y Escuchar no suman tiempo. Una estrella por sitio y partida, guardada con ID, nombre, región y tipo mágico. Los sitios son compartidos por semilla, la obtención es local a cada partida. Se conservan estrellas antiguas y pendientes del día del guardado legado.
 9. **Efectos por acciones y lugares:** ampliar filtros, reverb, eco y transformaciones robóticas con respuestas musicales claras, sin tapar la mezcla. Pendiente de implementación.
 10. **Resumen de la sesión:** descubrimientos, retos y música creada, con tarjeta para compartir.
 11. **Looper / ecos y banda de criaturas:** grabar 1–2 compases y dejarlos en el mundo; sumar capas de bajo, percusión, melodía y voz con las criaturas que siguen al jugador y combos musicales.
 12. **Ampliar el Estudio y los descubrimientos:** combinar muestras, decorar y nombrar especies y lugares; mostrar esos nombres en las tarjetas.
 13. **Optimizar según pruebas en móvil:** rendimiento visual y estabilidad del audio. Evaluar AudioWorklet si las pruebas detectan problemas de timing.
 
-La rareza y los efectos nuevos siguen pendientes. Para los hallazgos falta definir si «único» significa único en una partida o compartido entre jugadores; aún no hay probabilidades, reglas de obtención ni recompensas nuevas implementadas.
+Los efectos nuevos siguen pendientes. La primera versión de rareza usa sitios compartidos por semilla y obtención única por partida; aún pueden ampliarse las familias de encuentros y recompensas.
 
 **Después:**
 
@@ -268,3 +269,7 @@ No hay build ni variables de entorno de aplicación: es un sitio estático.
 ## 12. Prompt sugerido para arrancar en otra IA
 
 > Soy Jay. Estoy haciendo WHITEDOT / Pixel Blanco, un juego web de música electrónica generativa con Canvas + Web Audio y módulos JavaScript nativos. Lee HANDOFF.md y el código actual. Respeta las decisiones de la sección 3. Quiero que construyas [etapa autorizada del roadmap]. Implementa y verifica los cambios en una rama nueva desde `main` actualizado, haz commit y push y entrégame la rama y los resultados. Yo creo el PR y hago el merge. Háblame en español, directo.
+
+### Sitios raros (octubre de 2026)
+
+`src/relics.js` usa la semilla independiente `relic-site:v1`, excluye los chunks centrales con max(abs(cx),abs(cy)) < 2 y no modifica terreno ni objetos anteriores. `S.relicSites` conserva sitios obtenidos; la resonancia es temporal y se limpia al salir del Mundo. `tests/relics.mjs` verifica rareza, coordenadas negativas, condiciones, duplicados, recarga y compatibilidad. El logro histórico `dia3` conserva su ID y requiere tres hallazgos en un día. Ya no hay objetivo diario de tres reliquias.

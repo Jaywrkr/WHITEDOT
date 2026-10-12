@@ -61,7 +61,7 @@ Los avisos del sistema ocupan dos líneas; tócalos para leer el mensaje complet
 
 ## Dirección del juego
 
-Queremos encuentros mágicos muy raros y descubrimientos únicos que cueste conseguir. Jay considera que las reliquias actuales son demasiado fáciles: hoy se generan tres alrededor del jugador cada día y una flecha guía hacia ellas. Revisar esa dificultad y añadir encuentros excepcionales es trabajo pendiente; todavía no hay un sistema de rarezas o de objetos únicos coleccionables.
+Las reliquias pertenecen a sitios fijos del mundo, sin flecha global ni generación alrededor del jugador. Por chunk hay una probabilidad de 1/48 de un hallazgo, incluyendo constelaciones dormidas (1/384). Cerca del origen no aparecen. Los ecos requieren permanecer cerca 6 segundos y lanzar 3 pulsos; las constelaciones, 12 segundos y 5 pulsos. Al alejarte más de 140 px, la resonancia vuelve a cero. Cada sitio se obtiene una sola vez por partida y queda en tu constelación; su posición es compartida por la semilla del mundo. Las estrellas anteriores se conservan, y las reliquias pendientes del guardado antiguo siguen disponibles durante su día.
 
 ## Para seguir desarrollando
 

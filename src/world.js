@@ -117,13 +117,10 @@ export function initialize(runtime) {
     runtime.wchunks.set(id,c);return c;
   }
   const biomeOfPos=(x,y)=>biomeAt(Math.floor(x/runtime.WCH),Math.floor(y/runtime.WCH));
-  function todayRelics(){
-    if(runtime.S.rel&&runtime.S.rel.day===runtime.S.todayKey)return runtime.S.rel.list;
-    const r=runtime.rng(runtime.seedOf("reliquias:"+runtime.S.todayKey)),a0=r()*6.28;
-    const list=[0,1,2].map(i=>{const a=a0+i*2.2+(r()-.5)*.6,d=[520,1300,2400][i];return{x:runtime.S.wx+Math.cos(a)*d,y:runtime.S.wy+Math.sin(a)*d,s:Math.floor(r()*12),got:false};});
-    runtime.S.rel={day:runtime.S.todayKey,list};runtime.save();return list;
-  }
-  const relicsGot=()=>runtime.S.rel&&runtime.S.rel.day===runtime.S.todayKey?runtime.S.rel.list.filter(x=>x.got).length:0;
+  // Kept as a runtime alias for existing consumers; sites are no longer daily spawns.
+  const todayRelics=()=>runtime.nearbyRelics();
+  const relicsGot=()=>runtime.S.stars.filter(star=>star.d===runtime.S.todayKey).length;
+
 
 
   Object.defineProperties(runtime, {

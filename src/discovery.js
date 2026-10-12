@@ -59,14 +59,16 @@ export function initialize(runtime) {
   }
 
   function takeRelic(rl){
+    if(rl.got||rl.id&&runtime.S.relicSites?.[rl.id])return;
     rl.got=true;
-    const idx=runtime.S.stars.length;runtime.S.stars.push({d:runtime.S.todayKey,s:rl.s,p:idx%runtime.ECOS.length,region:runtime.regionOfPos(rl.x,rl.y).key});
+    if(rl.id){runtime.S.relicSites||={};runtime.S.relicSites[rl.id]={day:runtime.S.todayKey,name:rl.name};}
+    const idx=runtime.S.stars.length;runtime.S.stars.push({d:runtime.S.todayKey,s:rl.s,name:rl.name,id:rl.id,magical:!!rl.magical,p:idx%runtime.ECOS.length,region:runtime.regionOfPos(rl.x,rl.y).key});
     runtime.flash=1;runtime.pulse=1;burst(rl.x,rl.y,40,true);
     runtime.soon(t=>runtime.chordTones().concat(runtime.chordTones().map(n=>n+12)).slice(0,7).forEach((n,i)=>runtime.pluck(n+12,t+i*runtime.SIX,runtime.vel(.07),2)));
     const n=runtime.relicsGot();
     runtime.showPhrase(runtime.ECOS[idx%runtime.ECOS.length],true);
-    runtime.toast("<em>Estrella "+runtime.S.stars.length+"</em> · Reliquia "+n+" / 3");
-    runtime.unlock("estrella1");if(n>=3){runtime.unlock("dia3");setTimeout(()=>runtime.showPhrase("Las 3 de hoy. Explora libre: hay más zonas por descubrir."),5200);}
+    runtime.toast("<em>Estrella "+runtime.S.stars.length+"</em> · "+(rl.name||"Reliquia"));
+    runtime.unlock("estrella1");if(n>=3){runtime.unlock("dia3");setTimeout(()=>runtime.showPhrase("Tres hallazgos en un día. El mundo todavía guarda secretos."),5200);}
     if(runtime.S.stars.length>=30)runtime.unlock("e30");if(runtime.S.stars.length>=100)runtime.unlock("e100");
     runtime.save();runtime.hud();
   }

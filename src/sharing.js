@@ -21,7 +21,7 @@ export function initialize(runtime) {
     const c=runtime.$("skyCv"),x=c.getContext("2d");x.fillStyle="#000";x.fillRect(0,0,720,720);drawSky(x,50,50,620,620);
     const days=new Set(runtime.S.stars.map(s=>s.d));
     runtime.$("kStars").textContent=runtime.S.stars.length;runtime.$("kDays").textContent=days.size;runtime.$("kStreak").textContent=runtime.shownStreak();
-    runtime.$("kList").innerHTML=runtime.S.stars.length?runtime.S.stars.slice().reverse().map((s,i)=>`<div class="q"><span class="px"></span><span>${runtime.ECOS[s.p]}<small>ESTRELLA ${runtime.S.stars.length-i} · ${s.d}</small></span></div>`).join(""):`<div><span class="px"></span><span class="q">Completa el camino, entra al Mundo y encuentra las reliquias de hoy.</span></div>`;
+    runtime.$("kList").innerHTML=runtime.S.stars.length?runtime.S.stars.slice().reverse().map((s,i)=>`<div class="q"><span class="px"></span><span>${runtime.ECOS[s.p]}<small>ESTRELLA ${runtime.S.stars.length-i} · ${s.d}${s.name?" · "+s.name:""}</small></span></div>`).join(""):`<div><span class="px"></span><span class="q">Completa el camino, entra al Mundo y busca ecos antiguos.</span></div>`;
     runtime.$("mSky").hidden=false;
   }
 
