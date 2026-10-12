@@ -17,9 +17,9 @@ export function initialize(runtime) {
     const fill=$("barfill"),goal=$("goal"),gr=$("goalR");
     $("bDeploy").hidden=!runtime.inWorld();
     if(runtime.S.mode==="studio"){const n=Object.keys(runtime.S.studio.slots).length;$("era").textContent="Estudio · "+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/64*100)+"%";goal.textContent="Estudio · "+n+" sonando";gr.textContent="Toca un punto";}
-    else if(runtime.inWorld()){const n=runtime.relicsGot(),l=runtime.lampLeft();fill.style.width=(l/runtime.lampMax()*100)+"%";
-      goal.textContent=n<3?"Reliquias de hoy · "+n+" / 3":"Lugares "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
-      gr.textContent=(n<3&&dist?Math.round(dist/10)+" m · ":"")+fmt(l);}
+    else if(runtime.inWorld()){const l=runtime.lampLeft();fill.style.width=(l/runtime.lampMax()*100)+"%";
+      goal.textContent=dist?"Eco cercano · escucha y pulsa":"Lugares "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
+      gr.textContent=fmt(l);}
     else if(runtime.isFree()){const l=runtime.lampLeft();fill.style.width="100%";goal.textContent=l>0?"Camino completo · entra al Mundo":"Vuelve mañana";gr.textContent=l>0?"Linterna "+fmt(l):"";}
     else{fill.style.width=(runtime.S.todayLight/runtime.CAP*100)+"%";goal.textContent="Recoge luz · "+runtime.S.todayLight+" / "+runtime.CAP;gr.textContent="Toca en el beat";}
     const canWorld=runtime.S.mode==="camino"&&runtime.isFree()&&runtime.lampLeft()>0,bp=$("bPrimary");$("bWorld").querySelector("span").textContent=runtime.inWorld()?"Camino":"Mundo";
@@ -44,7 +44,7 @@ export function initialize(runtime) {
   }
   function exitWorld(out){
     runtime.S.mode="camino";runtime.setBiome(0);runtime.MU.dnaT=null;runtime.MU.vari=-1;runtime.MU.near=[];runtime.MU.singers=[];runtime.curRegion=null;runtime.RP=null;runtime.retoUI();runtime.MU.layers=new Set();runtime.MU.flowers=[];runtime.MU.follower=false;if(runtime.inPond&&runtime.mfilt){runtime.inPond=false;runtime.mfilt.frequency.setTargetAtTime(18000,runtime.ac.currentTime,.2);}runtime.save();hud();
-    if(out){runtime.say(runtime.VOZ.lampOut);$("oToday").textContent=runtime.relicsGot()+"/3";$("oStars").textContent=runtime.S.stars.length;$("oStreak").textContent=runtime.shownStreak();$("mOut").hidden=false;}
+    if(out){runtime.say(runtime.VOZ.lampOut);$("oToday").textContent=runtime.relicsGot();$("oStars").textContent=runtime.S.stars.length;$("oStreak").textContent=runtime.shownStreak();$("mOut").hidden=false;}
   }
   function openCap(){$("cDay").textContent=runtime.displayDay();$("cStreak").textContent=runtime.shownStreak();$("cSize").textContent=runtime.level();$("cLamp").textContent=Math.round(runtime.lampLeft()/60)+" min";$("mCap").hidden=false;}
   function openAch(){

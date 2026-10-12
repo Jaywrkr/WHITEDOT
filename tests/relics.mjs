@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import {relicAt,advanceRelic,initialize} from '../src/relics.js';
+import {initialize as data} from '../src/data.js';
+import {initialize as progress} from '../src/progress.js';
+import {initialize as world} from '../src/world.js';
+import {initialize as discovery} from '../src/discovery.js';
+const storage=new Map();globalThis.localStorage={getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)};
+const r={};data(r);progress(r);world(r);initialize(r);
+let total=0,magic=0,normal;
+for(let x=-100;x<100;x++)for(let y=-100;y<100;y++){
+ const site=relicAt(x,y,900,r.seedOf,r.rng);if(!site)continue;
+ total++;magic+=site.magical?1:0;if(!site.magical)normal=site;
+ assert.deepEqual(site,relicAt(x,y,900,r.seedOf,r.rng));
+ assert(site.x>=x*900&&site.x<(x+1)*900);assert(site.y>=y*900&&site.y<(y+1)*900);
+}
+assert(total>650&&total<1050);assert(magic>70&&magic<150);
+assert.equal(relicAt(0,0,900,r.seedOf,r.rng),null);
+const state={};for(let i=0;i<3;i++)advanceRelic(state,normal,0,50,true);
+assert.equal(advanceRelic(state,normal,.05,50),false);
+for(let i=0;i<125;i++)advanceRelic(state,normal,.05,50);
+assert.equal(advanceRelic(state,normal,0,50),true);
+advanceRelic(state,normal,.05,141);assert.deepEqual(state,{dwell:0,pulses:0});
+const magical={...normal,magical:true},m={};for(let i=0;i<300;i++)advanceRelic(m,magical,.05,50);
+for(let i=0;i<4;i++)assert.equal(advanceRelic(m,magical,0,50,true),false);
+assert.equal(advanceRelic(m,magical,0,50,true),true);
+r.S.wx=normal.x;r.S.wy=normal.y;r.S.todayKey='2026-10-12';
+const before=r.nearbyRelics();r.S.todayKey='2026-10-13';assert.deepEqual(before,r.nearbyRelics());
+Object.assign(r,{parts:[],soon(){},showPhrase(){},toast(){},unlock(){},hud(){}});discovery(r);
+r.takeRelic(normal);assert.equal(r.S.stars.length,1);r.takeRelic({...normal,got:false});assert.equal(r.S.stars.length,1);
+assert(!r.nearbyRelics().some(s=>s.id===normal.id));
+r.save();const loaded={};data(loaded);progress(loaded);world(loaded);initialize(loaded);
+loaded.S.wx=normal.x;loaded.S.wy=normal.y;assert(!loaded.nearbyRelics().some(s=>s.id===normal.id));
+loaded.S.rel={day:loaded.S.todayKey,list:[{x:normal.x,y:normal.y,s:2,got:false}]};
+assert(loaded.nearbyRelics().some(s=>!s.id));loaded.S.todayKey='later';assert(!loaded.nearbyRelics().some(s=>!s.id));
+assert.equal(loaded.S.stars.length,1);
+console.log(`PASS: stable rare sites (${total}/40000, ${magic} magical), awakening, repeat prevention, reload and legacy save`);

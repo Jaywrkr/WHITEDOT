@@ -72,7 +72,7 @@ export function initialize(runtime) {
    ["tiempo","En tiempo","8 luces seguidas justo en el beat."],
    ["mundo","El Mundo","Entraste al Mundo por primera vez."],
    ["estrella1","Primera estrella","Encontraste tu primera reliquia."],
-   ["dia3","Noche completa","Las 3 reliquias de un día."],
+   ["dia3","Noche completa","Despertaste tres reliquias en un día."],
    ["e30","30 estrellas","Tu constelación tiene 30 estrellas."],
    ["e100","100 estrellas","Tu constelación tiene 100 estrellas."],
    ["zona5","Explorador","Descubriste 5 zonas."],
