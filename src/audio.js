@@ -72,6 +72,7 @@ export function initialize(runtime) {
   }
   function setBiome(z){MU.biomeT=z;MU.timbre=runtime.S.mode==="camino"?2:MU.dnaT?runtime.GEN[MU.dnaT.genre].pt:runtime.BIOMES[z].tim;}
   function sched(){
+    runtime.effectsTick?.();
     if(!ac||ac.state!=="running")return;
     if(MU.next<ac.currentTime){const n=Math.ceil((ac.currentTime-MU.next)/SIX);MU.next+=n*SIX;MU.step+=n;}
     while(MU.next<ac.currentTime+.12){playStep(MU.next);MU.next+=SIX;MU.step++;}
@@ -334,6 +335,7 @@ export function initialize(runtime) {
     ac: { get: () => ac, set: value => { ac = value; } },
     master: { get: () => master, set: value => { master = value; } },
     mfilt: { get: () => mfilt, set: value => { mfilt = value; } },
+    dsend: { get: () => dsend, set: value => { dsend = value; } },
     bus: { get: () => bus, set: value => { bus = value; } },
     verbIn: { get: () => verbIn, set: value => { verbIn = value; } },
     windG: { get: () => windG, set: value => { windG = value; } },

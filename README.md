@@ -19,6 +19,7 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr)
    - **Escuchar:** mantén presionado sin arrastrar durante medio segundo (o mantén E en escritorio). Consulta las fuentes cercanas, su función musical, instrumento, región, género y escala. Suelta para volver a moverte.
    - Deja que las criaturas te sigan y canten.
    - Cumple el reto de cada región.
+   - Algunos objetos añaden filtro suave, eco a tempo, espacio o modulación metálica a su voz. Su carácter varía por región y aparece en Escuchar.
    - Escucha el reparto musical del lugar: un árbol, cristal o criatura puede aportar bajos, percusión, acordes o melodías según la región. Su función e instrumento se conservan al volver, pero varían incluso dentro del mismo bioma.
    - Cada región muestra su gravedad al entrar: ligera (más rápido), normal o alta (más lento). La velocidad cambia suavemente en sus fronteras: ligera 1,65×, normal 1× y alta 0,55×.
 5. **Estudio:** un secuenciador radial portátil. Lo armas con las muestras que recoges y lo despliegas como refugio, que también sirve de checkpoint.
