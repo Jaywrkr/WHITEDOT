@@ -69,6 +69,8 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/world.js` | Camino, generación de regiones/chunks, eventos y reliquias. |
 | `src/spatial.js` | Presencia por distancia, selección de fuentes cercanas y actualización de voces activas. |
 | `src/grammar.js` | Perfiles musicales regionales, ritmo/frase/armonía y atenuación por densidad. |
+| `src/references.js` | Familias de referencia y sus patrones de bajo, melodía y percusión. |
+| `src/neighborhoods.js` | Campo de tempo/afinación y selección compatible de regiones vecinas. |
 | `src/palettes.js` | Paletas tropical, melódica, robótica y disco, asignación regional y patrones. |
 | `src/instruments.js` | Nuevos timbres de parciales, FM y filtros, güiro y timbal electrónicos. |
 | `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros y tracks. |
@@ -156,7 +158,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
   - Cada uno define rango de BPM, swing (`sw`), patrón, instrumento de bajo (`bassI`) y de hook (`hookP`), y nivel de pad.
   - `GPOOL[bioma]` conserva las familias originales. `EXTRA_GPOOL` añade las seis nuevas mediante una semilla independiente (`extra-genres:v1:<región>`), con 45 % de probabilidad de selección fuera de Origen cuando el bioma admite géneros nuevos. Vacío mantiene ambient y Origen mantiene minimal. Cambia la música de algunas regiones, no su paisaje ni los IDs de criaturas.
   - Los géneros nuevos tienen patrones propios: electro sincopado, progressive de pulso regular y capas melódicas, microhouse con detalles y espacios, minimal techno de acentos secos, dubstep a medio tiempo y drum & bass a 166–174 BPM. Sus acentos varían cada cuatro compases. La radio adapta también las frases de bajo de progressive, dubstep y drum & bass; los géneros anteriores ganan pequeños fills compatibles con su ritmo.
-  - Bitácora y Escuchar reconocen las nuevas familias. Las pruebas ejercitan instrumentos y scheduler en los 22 géneros; la valoración audible de mezcla y groove sigue siendo de Jay en teléfono.
+  - Bitácora y Escuchar reconocen las nuevas familias. Las pruebas ejercitan instrumentos y scheduler en los 34 géneros; la valoración audible de mezcla y groove sigue siendo de Jay en teléfono.
 - **`drums(gid, …)`:** los patrones de batería de cada género. Se escriben a mano con kick, clap, hats, congas, clave, rim y shaker.
 - **`playTrack(dna, …)`:** bajo y hook de la región, tocados con los instrumentos del género.
 - **Instrumentos (todo síntesis):**
@@ -309,7 +311,7 @@ La curaduría atenúa voces superpuestas por semicorchea, especialmente bajos re
 Cada etapa sigue el flujo rama nueva desde main actualizado, pruebas, commit y push; Jay hace PR y merge. La autorización es por etapa.
 
 1. Gramática musical y curaduría: primera base implementada en esta etapa.
-2. Ampliar referencias: minimal techno, tech house, deep house, electrónica andina, cosmic disco, nu-disco, melodic techno, ambient, microhouse, organic house/downtempo, dub techno, afro house, amapiano, jazztronica, Berlin School, IDM, progressive house, liquid drum & bass, darkwave/EBM y algorave. Son ingredientes para identidades generativas; no un límite de estilos.
+2. Ampliar referencias (primera biblioteca implementada): minimal techno, tech house, deep house, electrónica andina, cosmic disco, nu-disco, melodic techno, ambient, microhouse, organic house/downtempo, dub techno, afro house, amapiano, jazztronica, Berlin School, IDM, progressive house, liquid drum & bass, darkwave/EBM y algorave. Son ingredientes para identidades generativas; no un límite de estilos.
 3. Instrumentos procedurales: materiales, resonancia, envolventes, afinación y modulación con identidad estable.
 4. Curaduría perceptiva: continuar pruebas de escucha, controlar agudos, graves, disonancias, acumulación y transiciones; modo Suave ya implementado.
 5. Evolución ambiental: tras unos 60 s quieto, el ambiente toma mayor iniciativa mediante criaturas, texturas y nuevas secciones; la radio actual ya evoluciona sin movimiento.
@@ -332,3 +334,9 @@ Hasta 32 grupos de proximidad, liberados después de 3 segundos desde el inicio 
 ### Vecindarios musicales
 
 `src/neighborhoods.js` genera un campo suave de tempo, afinación por quintas y carácter armónico sobre una cuadrícula de cuatro regiones. La selección de género favorece los rangos de tempo cercanos al campo; se mantienen los tempos propios de cada estilo y las paletas visuales/objetos anteriores. Origen mantiene minimal y Vacío mantiene ambient. El carácter musical de algunos lugares cambia. Las fronteras mezclan ahora percusión, bajo y melodía con pesos complementarios; la voz vecina usa la escala y afinación activas mientras se mezcla para evitar choque armónico. Se conserva la banda de transición de 900 px y una sola región vecina a la vez. No se simula todavía una mezcla de cuatro regiones en esquinas.
+
+### Nuevas referencias electrónicas
+
+`src/references.js` añade 12 familias: tech house, electrónica andina, cosmic disco, melodic techno, organic house, amapiano, jazztronica, Berlin School, IDM, liquid drum & bass, darkwave/EBM y algorave. Junto con las anteriores hay 34 estilos base; se siguen combinando con gramáticas regionales. No se copian canciones de los artistas citados. Las referencias tienen ritmos de percusión y frases de bajo/melodía propios, paletas de instrumentos y modos compatibles. Electrónica andina usa un vocabulario melódico pentatónico; jazztronica incluye séptimas; Berlin/EBM priorizan secuencias estables; algorave rota acentos euclidianos. El nuevo log drum FM aporta el bajo percutido del amapiano. “Algorave” es una inspiración generativa, no un editor de live coding.
+
+La selección entra en el campo de vecindarios musicales; los tempos mantienen sus rangos y se conserva la mezcla por fronteras. Las pruebas de evolución valoran cambios audibles de bajo, motivo, timbre y armonía, para permitir que una melodía hipnótica repita mientras la composición se desarrolla. Las voces de objetos, Bitácora y Escuchar reconocen los instrumentos nuevos. El mapa y los registros previos se conservan; incorporar familias cambia la elección musical de algunas regiones. La próxima etapa del plan es generar instrumentos procedurales con más variación de materiales y envolventes.

@@ -76,3 +76,5 @@ Cada región combina una gramática propia de acentos, armonía, fraseo y brillo
 Los objetos y criaturas se oyen más presentes al acercarte y se apagan gradualmente al alejarte. Su volumen sigue la distancia incluso durante la nota; la música de fondo continúa componiendo.
 
 Las regiones vecinas tienden a compartir tempo y afinación. Al acercarte a una frontera se mezclan gradualmente sus percusiones, bajos y melodías.
+
+La biblioteca incluye 34 estilos base, entre ellos electrónica andina, amapiano, jazztronica, Berlin School, IDM, cosmic disco, liquid drum & bass y darkwave/EBM. Sus patrones, armonías e instrumentos alimentan la gramática generativa y las mezclas entre regiones vecinas.

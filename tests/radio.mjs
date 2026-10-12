@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {harmonicDegree} from '../src/grammar.js';
 import { createRadio } from '../src/radio.js';
 import { initialize as data } from '../src/data.js';
 import { initialize as progress } from '../src/progress.js';
@@ -16,15 +17,15 @@ const originalDNA = JSON.stringify(origin);
 for (const genre of Object.keys(runtime.GEN)) {
   const region = { ...origin, genre, key: genre };
   const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN);
-  const melodies = new Set(), sections = new Set(), energies = [];
+  const melodies = new Set(), compositions=new Set(), sections = new Set(), energies = [];
   let previous;
   for (let bar = 0; bar < 160; bar++) {
     const music = radio.advance(region, bar, { near: 0, singers: 0 });
-    melodies.add(JSON.stringify(music.hook)); sections.add(music.section); energies.push(music.energy);
+    melodies.add(JSON.stringify(music.hook));compositions.add(JSON.stringify([music.bass,music.hook,music.hookI,harmonicDegree(music.grammar,music.harmonyBar)])); sections.add(music.section); energies.push(music.energy);
     assert.equal(music.genre, genre);
     const lean=['minimal','rominimal','microhouse','minimaltechno','dub','heart'].includes(genre);
     assert(music.hook.filter(n=>n>=0).length<=(music.section===0?2:lean?3:5),'overcrowded melody');
-    assert(music.hook.every(n=>n<0||[0,2,4].includes(n)),'unrelated melodic leap');
+    assert(music.hook.every(n=>n<0||(runtime.GEN[genre].melodyDegrees||[0,2,4]).includes(n)),'unrelated melodic leap');
     if(previous&&Math.floor(previous.phrase/4)===Math.floor(music.phrase/4))music.hook.forEach((n,i)=>{if(n>=0&&previous.hook[i]>=0)assert.equal(n,previous.hook[i],'motif changed pitch before its cycle');});
     if(previous&&music.section===previous.section)assert.equal(music.hookI,previous.hookI,'timbre swapped inside section');
     previous=music;
@@ -33,7 +34,7 @@ for (const genre of Object.keys(runtime.GEN)) {
     assert(music.energy >= .14 && music.energy <= (genre === 'ambient' ? .3 : .7));
     assert(runtime.GEN[genre].hookP.includes(music.hookI));
   }
-  assert(melodies.size > 10, `${genre}: stopped composing while stationary`);
+  assert(melodies.size>4&&compositions.size>10,`${genre}: stopped developing melody, bass and harmony while stationary`);
   assert(sections.size > 1, `${genre}: no section changes`);
   assert(Math.max(...energies) - Math.min(...energies) > .05);
 }
@@ -89,7 +90,7 @@ try {
     for(let tick=1;tick<=2400;tick++){runtime.ac.currentTime=start+tick*.025;schedule();}
     assert(started>previous+20,`${genre}: no sustained audio while stationary`);
     assert(heard.size>0,`${genre}: no instruments scheduled`);
-    if(['tropical','melodic','robotic','nudisco'].includes(genre)){assert(heard.has('kick'),`${genre}: groove has no kick`);assert(heard.has(runtime.GEN[genre].bassI));assert(runtime.GEN[genre].hookP.some(id=>heard.has(id)));}
+    if(runtime.GEN[genre].bassP){assert(heard.has('kick'),`${genre}: groove has no kick`);assert(heard.has(runtime.GEN[genre].bassI));assert(runtime.GEN[genre].hookP.some(id=>heard.has(id)));}
     assert.equal(runtime.MU.radio.genre,genre);
   }
   const mixed=new Set();runtime.recordInstrument=id=>mixed.add(id);

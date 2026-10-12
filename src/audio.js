@@ -1,3 +1,4 @@
+import {REFERENCE_GENRES,referenceRhythm} from './references.js';
 import {chooseNearbySource} from './spatial.js';
 import {harmonicDegree,createVoiceCurator} from './grammar.js';
 import { createRadio } from './radio.js';
@@ -289,6 +290,21 @@ export function initialize(runtime) {
       if(["afro","tribal"].includes(gid))conga(tt,220,vel(.045));
       else if(["breaks","garage","dnb"].includes(gid))snare(tt,vel(.025));
       else rim(tt,vel(.025));
+    }
+    if(REFERENCE_GENRES[gid]){
+      const pattern=referenceRhythm(gid,variation),at=field=>pattern[field]?.includes(s),fast=gid==='liquid';
+      if(L1&&at('kick'))kick2(t,vel(.24),fast?52:50,fast?.18:.29);
+      if(L1&&at('snare'))snare(t,vel(fast?.09:.08));
+      if(L2&&at('clap'))clap(t,vel(.055));
+      if(L2&&at('rim'))rim(tt,vel(.035));
+      if(L2&&at('hat'))hatC(tt,vel(fast?.018:.022));
+      if(L2&&at('wood'))wood(tt,vel(.035));
+      if(L2&&at('conga'))conga(tt,180+variation*35,vel(.06));
+      if(L2&&at('guiro'))runtime.guiro(tt,vel(.023));
+      if(L3&&at('timbale'))runtime.timbale(tt,vel(.04));
+      if(L3&&at('shaker'))shaker(tt,vel(.013));
+      if(L3&&at('chord')&&bar%4===0&&!DO)ct.slice(0,3).forEach(n=>hookInst(gid==='cosmic'?'strings':'rhodes',n,t,vel(.023)));
+      return;
     }
     switch(gid){
       case "ambient":if(L2&&s===0&&bar%2===0&&!DO)pluck(ct[0]+24,t,vel(.035),4);break;

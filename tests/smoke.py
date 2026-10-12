@@ -81,6 +81,7 @@ with sync_playwright() as p:
   page.evaluate('''()=>{const r=window.__testRuntime;window.__borderRestore={x:r.S.wx,y:r.S.wy};r.S.wx=3590;r.S.wy=1800;r.frame.l=performance.now();r.frame(performance.now()+16);if(!r.MU.nb||r.MU.nbW<.45)throw Error('No border mix');}''')
   page.wait_for_timeout(2200);assert page.evaluate('!!window.__testRuntime.MU.neighborRadio')
   page.evaluate('''()=>{const r=window.__testRuntime;r.S.wx=window.__borderRestore.x;r.S.wy=window.__borderRestore.y;r.frame.l=performance.now();}''')
+  page.evaluate('''async()=>{const r=window.__testRuntime,{REFERENCE_GENRES}=await import('/src/references.js'),found=new Map();for(let x=-20;x<=20;x++)for(let y=-20;y<=20;y++){const region=r.regionOfPos(x*3600+900,y*3600+900);if(REFERENCE_GENRES[region.genre])found.set(region.genre,region);}if(found.size!==12)throw Error('Missing reference family');for(const region of found.values()){const t=r.ac.currentTime+.05;r.bassInst(r.GEN[region.genre].bassI,43,t,.025);r.hookInst(r.GEN[region.genre].hookP[0],60,t,.012);r.playVoice('arbol',0,t,region,false,.15);}if(!r.S.journal.music.instruments.logdrum)throw Error('Log drum not recorded');}''')
   page.keyboard.press('Space')
   page.keyboard.down('d');page.wait_for_timeout(300);page.keyboard.up('d')
   page.locator('#bPrimary').click();page.locator('#bPrimary').click();assert page.locator('#reto').is_visible() == page.evaluate('!window.__testRuntime.S.retos[window.__testRuntime.regionOfPos(window.__testRuntime.S.wx,window.__testRuntime.S.wy).key]')
