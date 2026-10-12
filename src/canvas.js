@@ -8,9 +8,32 @@ export function initialize(runtime) {
   const keys={};let ptr=null;
   addEventListener("keydown",e=>{keys[e.key.toLowerCase()]=1;runtime.audio();if(e.key.startsWith("Arrow"))e.preventDefault();if(e.code==="Space"&&!e.repeat&&e.target===document.body){e.preventDefault();runtime.sonar();}});
   addEventListener("keyup",e=>{keys[e.key.toLowerCase()]=0;});
-  cv.addEventListener("pointerdown",e=>{runtime.audio();if(runtime.S.mode==="studio"){runtime.studioTap(e.clientX,e.clientY);return;}runtime.tapStart={t:performance.now(),x:e.clientX,y:e.clientY};ptr={x:e.clientX,y:e.clientY};cv.setPointerCapture(e.pointerId);});
-  cv.addEventListener("pointermove",e=>{if(ptr)ptr={x:e.clientX,y:e.clientY};});
-  const up=e=>{if(runtime.tapStart&&e&&performance.now()-runtime.tapStart.t<240&&Math.hypot(e.clientX-runtime.tapStart.x,e.clientY-runtime.tapStart.y)<14)runtime.sonar();runtime.tapStart=null;ptr=null;};cv.addEventListener("pointerup",up);cv.addEventListener("pointercancel",up);
+  let holdTimer=null,activePointer=null,dragging=false,held=false;
+  const cancelHold=()=>{clearTimeout(holdTimer);holdTimer=null;};
+  cv.addEventListener("pointerdown",e=>{
+    if(!e.isPrimary||activePointer!==null)return;
+    runtime.audio();if(runtime.S.mode==="studio"){runtime.studioTap(e.clientX,e.clientY);return;}
+    activePointer=e.pointerId;dragging=held=false;
+    runtime.tapStart={t:performance.now(),x:e.clientX,y:e.clientY};ptr=null;cv.setPointerCapture(e.pointerId);
+    if(runtime.inWorld())holdTimer=setTimeout(()=>{held=true;runtime.startScanner();},500);
+    else ptr={x:e.clientX,y:e.clientY};
+  });
+  cv.addEventListener("pointermove",e=>{
+    if(e.pointerId!==activePointer||held||!runtime.tapStart)return;
+    if(Math.hypot(e.clientX-runtime.tapStart.x,e.clientY-runtime.tapStart.y)>=14){dragging=true;cancelHold();}
+    if(dragging||!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
+  });
+  const up=e=>{
+    if(e.pointerId!==activePointer)return;
+    cancelHold();
+    if(e.type==="pointerup"&&!held&&!dragging&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240)runtime.sonar();
+    runtime.stopScanner();runtime.tapStart=null;ptr=null;activePointer=null;held=dragging=false;
+  };
+  cv.addEventListener("pointerup",up);cv.addEventListener("pointercancel",up);cv.addEventListener("lostpointercapture",up);
+  cv.addEventListener("contextmenu",e=>e.preventDefault());
+  addEventListener("keydown",e=>{if(e.code==="KeyE"&&!e.repeat&&e.target===document.body)runtime.startScanner();});
+  addEventListener("keyup",e=>{if(e.code==="KeyE")runtime.stopScanner();});
+  addEventListener("blur",()=>{cancelHold();activePointer=null;ptr=null;runtime.tapStart=null;for(const key in keys)keys[key]=0;runtime.stopScanner();});
 
   let parts=[],flash=0,pulse=0,lastTrail=null,camX=0,camY=0,curZone=-1,hudT=0,flocks=[],enterFx=0,inPond=false,bolts=[],planted=false,gardenN=0;
   const STARS=Array.from({length:110},()=>({x:Math.random(),y:Math.random(),s:Math.random()<.1?2:1,a:.08+Math.random()*.22}));

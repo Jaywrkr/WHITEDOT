@@ -15,7 +15,8 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr)
 3. **Explora:** las regiones son grandes y cambian poco a poco, igual que bajar de la sierra a la costa. Cada una tiene un género (afro house, minimal, rominimal, dub techno, acid, garage…), su escala, su suelo, su aire y su fauna. Aunque te quedes quieto, la música sigue componiendo: cambia frases, instrumentos y secciones con el tiempo y la actividad del ambiente.
 4. **Interactúa:**
    - Choca objetos.
-   - Lanza un **pulso** tocando la pantalla o con Espacio.
+   - Lanza un **pulso** tocando brevemente la pantalla o con Espacio.
+   - **Escuchar:** mantén presionado sin arrastrar durante medio segundo (o mantén E en escritorio). Consulta las fuentes cercanas, su función musical, instrumento, región, género y escala. Suelta para volver a moverte.
    - Deja que las criaturas te sigan y canten.
    - Cumple el reto de cada región.
    - Escucha el reparto musical del lugar: un árbol, cristal o criatura puede aportar bajos, percusión, acordes o melodías según la región. Su función e instrumento se conservan al volver, pero varían incluso dentro del mismo bioma.

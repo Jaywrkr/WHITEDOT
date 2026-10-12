@@ -68,6 +68,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/progress.js` | Guardado v4, días, racha, crecimiento, linterna, RNG y cachés. |
 | `src/world.js` | Camino, generación de regiones/chunks, eventos y reliquias. |
 | `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros y tracks. |
+| `src/scanner.js` | Fuentes musicales cercanas y panel Escuchar durante una pulsación larga o tecla E. |
 | `src/journal.js` | Bitácora de lugares, formas, música y logros; compatibilidad de registros v4. |
 | `src/gravity.js` | Gravedad estable por región y mezcla de velocidades en bordes y esquinas. |
 | `src/voices.js` | Roles, registros e instrumentos de interacción por región; emite sonidos con la síntesis existente. |
@@ -221,7 +222,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
    - **Formas:** especies agrupadas por rol musical.
    - **Música:** géneros, escalas e instrumentos escuchados, cada uno con una explicación corta. Aquí se aprende música.
    - **Logros:** por categoría, con los ocultos como "???".
-7. **Escuchar (escáner):** mantener presionado muestra qué suena cerca: género, escala, la especie y su rol.
+7. **Escuchar (escáner) — implementado:** mantener presionado 500 ms sin arrastrar muestra hasta cinco fuentes musicales cercanas (250 px), región, género, escala, rol e instrumento. Tecla E como alternativa en escritorio. Un desplazamiento de 14 px inicia el arrastre y cancela la pulsación larga; el toque breve mantiene el pulso. Se cierra al soltar, cancelar el gesto, perder foco, abrir un modal o salir del Mundo. Las formas no descubiertas no revelan su nombre. El panel identifica voces potenciales del entorno, no detecta qué nodos de audio están sonando en ese instante. No añade descubrimientos ni modifica el guardado.
 8. **Encuentros mágicos y reliquias:** hallazgos muy raros y memorables; revisar la dificultad de las reliquias y su guía directa. Diseñar pistas, condiciones y recompensas al abordar esta etapa.
 9. **Efectos por acciones y lugares:** ampliar filtros, reverb, eco y transformaciones robóticas con respuestas musicales claras, sin tapar la mezcla. Pendiente de implementación.
 10. **Resumen de la sesión:** descubrimientos, retos y música creada, con tarjeta para compartir.

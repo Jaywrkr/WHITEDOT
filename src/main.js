@@ -12,6 +12,7 @@ import { initialize as render } from './render.js';
 import { initialize as ui } from './ui.js';
 import { initialize as sharing } from './sharing.js';
 import { initialize as journal } from './journal.js';
+import { initialize as scanner } from './scanner.js';
 import { initialize as controls } from './controls.js';
 
 // Initialize once, in the same order as the original game. Never expose runtime on window.
@@ -30,6 +31,7 @@ render(runtime);
 ui(runtime);
 sharing(runtime);
 journal(runtime);
+scanner(runtime);
 controls(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
