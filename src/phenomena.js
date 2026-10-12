@@ -33,7 +33,7 @@ export function initialize(runtime){
     if(o.kind==='bird')runtime.hookInst(voice.instrument,Math.min(76,tones[index%3]),t,volume);
     else if(o.kind==='shaker')runtime.snareHit(t,volume);
     else{runtime.bassInst(voice.instrument,runtime.root(),t,volume);runtime.noiseHit(t,'lowpass',700,.7,volume*.4,.3,true);}
-   };if(runtime.withVoiceEffect)runtime.withVoiceEffect(`phenomenon:${o.kind}`,region,voice,t,sound);else sound();};
+   };const patchEmit=()=>{if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(`phenomenon:${o.kind}`,region,voice,o,t,sound);else sound();};if(runtime.withVoiceEffect)runtime.withVoiceEffect(`phenomenon:${o.kind}`,region,voice,t,patchEmit);else patchEmit();};
    if(runtime.withSpatialVoice)runtime.withSpatialVoice(o,t,emit);else emit();
    cue(o,t);runtime.soundCue?.(o,voice.role,t);
   }
