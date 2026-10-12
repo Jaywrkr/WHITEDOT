@@ -21,6 +21,18 @@ with sync_playwright() as p:
   assert page.locator('#reto').is_visible()
   page.evaluate('''()=>{const r=window.__testRuntime;for(let i=0;i<12;i++){const region=r.regionOfPos(i*3600+900,900);for(const kind of ['arbol','cristal','pilar','loto','luz','pulso','luciernaga'])r.playVoice(kind,i,r.ac.currentTime+.05,region,true);for(const sp of region.species)r.speciesSound(sp,r.ac.currentTime+.05,true);}}''')
   page.evaluate('''async()=>{const r=window.__testRuntime,{gravityOf}=await import('/src/gravity.js');const oldRAF=window.requestAnimationFrame,oldX=r.S.wx,oldY=r.S.wy;window.requestAnimationFrame=()=>0;try{for(const factor of [.7,1,1.35]){let region,x,y;for(let i=-10;i<=10;i++){x=i*3600+1800;y=1800;region=r.regionOfPos(x,y);if(gravityOf(region,r.seedOf).multiplier===factor)break;}if(gravityOf(region,r.seedOf).multiplier!==factor)throw Error('Missing gravity');r.S.wx=x;r.S.wy=y;r.ptr=null;r.keys.d=1;r.frame.l=1000;r.frame(1050);r.keys.d=0;if(Math.abs(r.S.wx-x-r.SPEED*factor*.05)>.001)throw Error('Gravity movement mismatch');r.showRegion(region,true);if(!document.getElementById('zDo').textContent.includes(gravityOf(region,r.seedOf).name))throw Error('Gravity label missing');}}finally{r.S.wx=oldX;r.S.wy=oldY;r.keys.d=0;r.frame.l=performance.now();window.requestAnimationFrame=oldRAF;}}''')
+  page.locator('#bMenu').click();page.locator('#bAch').click()
+  assert page.locator('#mJournal').is_visible()
+  assert 'Gravedad' in page.locator('#journalBody').inner_text()
+  page.locator('[data-journal-tab="forms"]').click()
+  page.evaluate('''()=>{const r=window.__testRuntime;r.discover(r.regionOfPos(900,900).species[0]);}''')
+  page.locator('[data-journal-tab="places"]').click();page.locator('[data-journal-tab="forms"]').click()
+  assert 'Sin formas descubiertas' not in page.locator('#journalBody').inner_text()
+  page.locator('[data-journal-tab="music"]').click();assert 'Instrumentos' in page.locator('#journalBody').inner_text()
+  assert page.evaluate('Object.keys(window.__testRuntime.S.journal.music.instruments).length > 0')
+  page.evaluate('''()=>{const r=window.__testRuntime,old=r.S.sound;r.S.sound=false;r.recordInstrument('muted-test');r.S.sound=old;if(r.S.journal.music.instruments['muted-test'])throw Error('Muted music incorrectly recorded');}''')
+  page.locator('[data-journal-tab="achievements"]').click();assert '???' in page.locator('#journalBody').inner_text()
+  page.locator('#journalClose').click()
   page.keyboard.press('Space')
   page.keyboard.down('d');page.wait_for_timeout(300);page.keyboard.up('d')
   page.locator('#bPrimary').click();page.locator('#bPrimary').click();assert page.locator('#reto').is_visible()
@@ -29,6 +41,7 @@ with sync_playwright() as p:
   page.wait_for_timeout(2100);assert page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4")).mode')=='camino'
   page.locator('#bMenu').click();page.locator('#bStudio').click();page.locator('#w').click(position={'x':size['width']/2,'y':size['height']/2-min(size['width'],size['height']-260)*.13});assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).studio.slots).length')==1
   page.locator('#stExit').click();page.reload(wait_until='domcontentloaded');page.wait_for_function('document.getElementById("bMenu").onclick !== null');assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).studio.slots).length')==1
+  assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).journal.music.instruments).length > 0')
   page.locator('#bMenu').click();page.locator('#bShare').click();assert page.locator('#shareImg').evaluate('(i)=>i.naturalWidth>0');assert not errors,errors
   print(label+': challenges, day rollover, paused lamp, studio persistence, sharing PASS',flush=True);c.close()
  b.close()

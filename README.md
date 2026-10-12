@@ -21,7 +21,7 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr)
    - Escucha el reparto musical del lugar: un árbol, cristal o criatura puede aportar bajos, percusión, acordes o melodías según la región. Su función e instrumento se conservan al volver, pero varían incluso dentro del mismo bioma.
    - Cada región muestra su gravedad al entrar: ligera (más rápido), normal o alta (más lento). La velocidad cambia suavemente en sus fronteras.
 5. **Estudio:** un secuenciador radial portátil. Lo armas con las muestras que recoges y lo despliegas como refugio, que también sirve de checkpoint.
-6. **Logros:** absurdos, y muchos ocultos. La Voz del sistema comenta lo que haces sin pedir permiso.
+6. **Bitácora:** consulta lugares y su gravedad, formas agrupadas por función musical, música descubierta y logros. Los logros ocultos se muestran como “???”. La Voz del sistema comenta lo que haces sin pedir permiso.
 7. **Compartir:** genera una tarjeta para redes con tu racha y tus descubrimientos.
 
 ## Tecnología

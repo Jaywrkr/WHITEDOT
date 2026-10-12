@@ -46,7 +46,7 @@
       <button id="bWorld"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/></svg><span>Mundo</span></button>
       <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Estudio</span></button>
       <button id="bSky"><svg viewBox="0 0 24 24"><path d="M5 17l5-6 4 3 5-8"/><circle cx="5" cy="17" r="1.5"/><circle cx="10" cy="11" r="1.5"/><circle cx="14" cy="14" r="1.5"/><circle cx="19" cy="6" r="1.5"/></svg><span>Constelación</span></button>
-      <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Logros</span></button>
+      <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
       <button id="bSound"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg><span>Música</span></button>
       <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
     </div>
@@ -133,6 +133,18 @@
       <div class="list" id="kList"></div>
     </div>
     <div class="row"><button id="kShare" class="gold">Compartir</button><button id="kClose">Cerrar</button></div>
+  </div>
+</div>
+
+<div class="modal" id="mJournal" role="dialog" aria-modal="true" aria-labelledby="journalTitle" hidden>
+  <div class="sheet">
+    <h2 id="journalTitle">Bitácora</h2>
+    <div class="journal-tabs" aria-label="Secciones de la Bitácora">
+      <button data-journal-tab="places">Lugares</button><button data-journal-tab="forms">Formas</button>
+      <button data-journal-tab="music">Música</button><button data-journal-tab="achievements">Logros</button>
+    </div>
+    <div class="scroll" id="journalBody" aria-live="polite"></div>
+    <button id="journalClose">Cerrar</button>
   </div>
 </div>
 
