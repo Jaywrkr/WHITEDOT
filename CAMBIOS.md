@@ -1,0 +1,165 @@
+# WHITEDOT: inventario de cambios y contexto para revisión
+
+Revisión: 2026-10-12. Leer junto con [HANDOFF.md](HANDOFF.md) y [PENDIENTES.md](PENDIENTES.md). Este inventario compara el prototipo `596fa31` con `main` revisado `a4746bb` y, por separado, con la última implementación `6bf69f6`. El historial Git y las pruebas son las referencias para verificar detalles de implementación. Las mejoras futuras no se presentan como terminadas.
+
+## Estado exacto para Claude
+
+- `main` revisado: `a4746bb`, hasta PR #24, fenómenos musicales ambientales.
+- Última rama implementada y subida: `feat/procedural-instrument-voices`, commit `6bf69f6`. Añade instrumentos procedurales; todavía no está integrada en el `origin/main` consultado.
+- Esta entrega documental sale de `main`, en `docs/complete-project-handoff`. No incorpora el código de instrumentos procedurales ni hace merges.
+- Para revisar todo el producto implementado, consultar también el diff `a4746bb..6bf69f6`. Evitar diagnosticar como ausente en esa rama lo que solo falta integrar en main.
+- Flujo obligatorio: rama por etapa, implementar, verificar, commit y push. Jay crea PR y merge. No publicar directamente en main. No ejecutar las fases pendientes sin su autorización.
+
+## Lo que ya existía en el prototipo
+
+El prototipo ya tenía Camino diario, luces, crecimiento/racha, Mundo procedural, regiones/biomas/mini-biomas, criaturas generadas, descubrimientos, retos, logros y colores, texto de la Voz, pulsos, choques y cadenas de objetos, lluvia/rayos/otros eventos, síntesis Web Audio, géneros iniciales y mezcla por bordes, criaturas que siguen/cantan, recolección de muestras, Estudio radial y checkpoint, tarjetas y guardado local v4. La nueva arquitectura distribuye esos sistemas en módulos; no significa que todos esos sistemas hayan sido creados durante estas etapas.
+
+Ya existían ambient, downtempo, dub techno, deep house, afro house, minimal house, rominimal, acid techno, breaks, UK garage, tribal y dub profundo. El Estudio ya era de 16 pasos × 4 anillos. La lluvia que le encanta a Jay se conservó. No atribuir la lluvia ni los rayos originales de Tormenta a la etapa nueva de fenómenos.
+
+## Inventario de todas las etapas añadidas o modificadas
+
+### 1. Base del juego corregida — `80a9020`, PR #1
+
+- Entrar/reentrar al Mundo pasa por la inicialización completa de región: reto, lugar, bioma, música y aviso; antes el reto podía quedar sin activar.
+- Cambio de día limpia colecciones y cachés del Camino/Mundo, cierra avisos residuales y sale correctamente del Mundo. Si ocurre dentro del Estudio, el modo de retorno se ajusta al Camino.
+- Una luz que rebasa el tope diario solo suma lo que faltaba tanto al total diario como al total acumulado; antes el total podía crecer de más.
+- Menús detienen consumo de linterna. No es pausa global de simulación/audio. Se conservaron reglas de racha, límites y duración de linterna.
+
+### 2. Documentación y proceso — `8d1de03`, `3c50b39`, PR #2
+
+README/HANDOFF documentaron sistemas reales, diferencias con el diseño externo, ejecución, pruebas, decisiones y roadmap. Se fijó el proceso de ramas y la responsabilidad de Jay sobre PR/merge. Esta entrega consolida ese contexto sin cambiar jugabilidad.
+
+### 3. Modularización y regresiones — `31aec25`, PR #3
+
+El HTML monolítico se separó en `index.html`, `styles/game.css` y módulos ES nativos. `main.js` inicializa un contexto privado `runtime`; módulos publican getters/setters según necesidad, sin exponerlo en `window`. Se conservó orden de inicialización, estado v4 y comportamiento previo. No se introdujeron build, framework, TypeScript ni dependencias de aplicación. Se añadieron `package.json`, pruebas Node y smoke Playwright móvil/escritorio.
+
+Módulos del sistema anterior: data, progress, world, audio, canvas, messages, studio, interactions, discovery, render, ui, sharing, controls y main. Los módulos nuevos de producto aparecen en las etapas siguientes. Radio, gravity, personality, grammar, palettes, references y neighborhoods también contienen funciones puras consumidas por otros módulos: no todos requieren un `initialize` en main.
+
+### 4. Radio generativa estando quieto — `ad9287d`, PR #4
+
+`src/radio.js` compone frases de bajo/melodía y secciones por reloj musical aunque el jugador no se mueva. Frases de 4–8 compases, cambios de instrumentos dentro del género y un mínimo de energía variable por sección. Objetos, criaturas, variantes y eventos influyen sin fingir movimiento/actividad del jugador. Conserva BPM/escala regional y carácter rítmico. Funciona sin objetos alrededor. Estado compositivo temporal, no grabado en v4. Camino/Estudio conservan sus funciones. Depende de Web Audio activo; no garantiza ejecución en segundo plano.
+
+### 5. Funciones musicales regionales — `db33b3a`, PR #5
+
+`src/voices.js` asigna por semilla roles bajo, percusión, acorde, lead y agudo a familias de objetos, plantas y formas. Un árbol puede ser bajo en un lugar y agudo en otro, también entre regiones del mismo bioma. Registros e instrumentos se eligen con afinidad al género; notas ajustadas a armonía. Contacto, pulso y ensamble ambiental usan este reparto, con respuestas a tempo. Voces reconstruibles, sin cambiar mapa/IDs ni guardar perfiles nuevos. El Estudio mantiene las muestras existentes. Los commits de integración `2eb4af7` y `f957941` resolvieron compatibilidad entre ramas sin eliminar voces o gravedad; no fueron etapas de producto adicionales.
+
+### 6. Gravedad / velocidad regional — `824c310`, PR #6
+
+`src/gravity.js`: ligera 1,65×, normal 1×, alta 0,55×; Origen normal. Semilla independiente. Mezcla en ambos ejes en 450 px del borde, incluyendo esquinas y negativos. Solo velocidad del jugador en Mundo; no gravedad vertical ni cambio de BPM, criaturas, Camino o Estudio. Aviso de entrada y Bitácora muestran la propiedad. Jay luego expresó dudas sobre cuánto se percibe: sigue implementada, pendiente de evaluar, no eliminada.
+
+### 7. Bitácora — `4fe4052`, PR #7
+
+`src/journal.js`, botón y panel de cuatro pestañas:
+
+- Lugares: regiones visitadas y progreso en formas, retos, eventos/reliquias; gravedad y ADN recuperado por ID. Origen no exige evento inexistente.
+- Formas: descubiertas agrupadas por función musical; no revela las no descubiertas.
+- Música: géneros, escalas e instrumentos programados con sonido activo en Mundo, con explicaciones breves.
+- Logros: categorías y secretos pendientes como `???`.
+
+Conserva historial v4 disponible, recupera región de eventos antiguos por coordenadas, conserva estrellas antiguas sin inventarles región. Registro musical comienza desde esta versión; no inventa escucha histórica. Normaliza `S.journal`.
+
+### 8. Escuchar — `d2c477d`, PR #8
+
+`src/scanner.js`: mantener 500 ms sin arrastrar, o tecla E, muestra hasta cinco fuentes dentro de 250 px, región/género/escala, función e instrumento. Desplazamiento de 14 px cancela el gesto y empieza arrastre; toque breve sigue siendo pulso. Se cierra al soltar/cancelar/perder foco/abrir modal/salir del Mundo. Formas no descubiertas ocultan nombre. No descubre por sí solo ni analiza los nodos que están sonando: identifica voces potenciales. Etapas posteriores añadieron temperamento, espacio local, efecto, carácter musical y fenómenos; materiales llegan en la rama pendiente.
+
+### 9. UI compacta y viento — `d3fb69c`, PR #9
+
+Tarjeta de entrada breve con nombre/género/gravedad; detalles a Bitácora/Escuchar. Voz limitada a dos líneas y ampliable por toque o Enter/Espacio, cola de tres pendientes. Avisos y tarjetas evitan superponerse. Viento de dunas/polvo más grave y discreto: ganancia máxima 0,012 frente a 0,045, filtro 260–810 Hz y transición 0,8 s. Lluvia conservada.
+
+### 10. Seis ritmos electrónicos más — `1a713c2`, PR #10
+
+Electro, progressive house, microhouse, minimal techno, dubstep y drum & bass: patrones, swing, bajos/hooks y acentos propios. Selección por semilla independiente entre regiones elegibles; Origen/Vacío conservados. DnB 166–174 BPM y dubstep a medio tiempo; radio adapta frases a familias. Detalles y fills por grupos de compases. Biblioteca pasa de 12 a 18 estilos; Bitácora/Escuchar y pruebas reconocen los nuevos.
+
+### 11. Más elementos interactivos — `dadddf7`, PR #11
+
+`src/playthings.js`: luces fugitivas, brotes saltarines, cometas flotantes, prismas giratorios y aros resonantes. Unos se desplazan/saltan, otros giran o expanden resonancia en su sitio. Contacto/pulso/ensamble generan sonido cuantizado, con cooldown base 850 ms. Móviles recuperan ancla. Semilla `playthings:v1`, pools por bioma, hasta 40/chunk y Vacío escaso. Generación independiente preserva mundo anterior; reacciones temporales, sin nuevas muestras/logros.
+
+### 12. Personalidad individual — `9109fa9`, PR #12
+
+`src/personality.js`: perfiles sereno, vivaz y elástico, con variación individual de velocidad, masa, drag, regreso, cooldown, periodo/balanceo, recuperación, salto, giro, grado, volumen y duración de seguimiento. Aplicados después de generar contenido para no alterar posiciones/IDs/RNG anterior. Árboles/plantas dejan de moverse idénticos; árboles responden al pulso; objetos y criaturas reaccionan de formas distintas. Rasgos reconstruibles, posiciones/reacciones temporales. Escuchar muestra temperamento.
+
+### 13. Distribución en espacios locales — `00bc9ef`, PR #13
+
+`src/pockets.js`: claro de escucha, espacio de ensamble y rincón de descubrimiento por chunk. Centros separados; aproximadamente 70 % de nuevos elementos agrupados en ensamble, resto en rincón pequeño. Reorganiza solo elementos nuevos, conservando IDs/cantidades/tipos/rasgos y flora/fauna anteriores. Claros reducen energía y omiten ensamble automático; interacción directa permanece. Pistas discretas en suelo, HUD/Escuchar identifican espacio. No son recompensas raras adicionales.
+
+### 14. Feedback audiovisual por función — `67cbfd3`, PR #14
+
+`src/feedback.js` señala fuente/rol al inicio programado del audio: círculos amplios para bajos, marcas de percusión, trazos de lead/agudo y anillos de acorde. Cola máxima 32, duración 650 ms. No aparece con audio suspendido/silenciado; se limpia fuera del Mundo. Sigue objeto y reloj de inicio, no solo el momento del contacto. No añade más disparos sonoros.
+
+### 15. Reliquias realmente raras — `cf09be3`, PR #15
+
+`src/relics.js` sustituye búsqueda nueva diaria alrededor del jugador por sitios fijos compartidos por semilla: probabilidad 1/48 por chunk, constelaciones dormidas 1/384, excluyendo chunks centrales con max(abs(cx),abs(cy)) < 2. Sin flecha global ni cuota diaria de tres. Ecos requieren permanecer a 100 px seis segundos y tres pulsos; constelaciones doce segundos y cinco. Alejarse >140 px reinicia resonancia; menús/Escuchar no suman tiempo. Una obtención por sitio/partida, guardada con ID/nombre/fecha/región/tipo mágico; `S.relicSites` evita duplicados. Estrellas antiguas se conservan; listas pendientes antiguas disponibles hasta terminar su día. Logro `dia3` conserva ID y pide tres hallazgos en un día. Primera versión de rareza, no catálogo completo de encuentros mágicos.
+
+### 16. Dirección musical más contenida — `4d0e075`, PR #16
+
+Golpes secundarios conservan posiciones cuatro compases con variaciones de intensidad, fills al cierre. Radio conserva motivos cuatro frases, menos notas (2–3 por compás minimal/dub, hasta cinco otros), cambios de timbre por sección. Se retiraron saltos de octava por densidad y campanas automáticas a frase del jugador en Mundo. Plucks de Mundo filtrados, armónicos/envíos más suaves. Respuestas largas repiten nota con menor intensidad en vez de subida automática. Reliquias usan acorde suave, no fanfarria ascendente. Camino/Estudio mantienen síntesis previa. Es dirección hacia electrónica con groove; no certificación artística automática.
+
+### 17. Efectos locales — `3d1da88`, PR #17
+
+`src/effects.js`: natural, filtro suave, eco rítmico, espacio profundo y modulación metálica por región/tipo. Solo procesa voz emitida y restaura buses incluso ante excepción. Bajo natural, percusión natural/filtrada. Eco: una repetición de tres semicorcheas, filtrada, sin feedback extra. Espacio reutiliza convolución. Metal añade banda lateral discreta conservando señal original. Atenúa envíos existentes para evitar acumulación. Máximo 12 grupos/colas de tres segundos; al alcanzar límite, voz natural. Sin procesamiento en Camino/Estudio/silencio. Escuchar identifica efecto potencial. No hay voz hablada robótica: Voz sigue siendo texto.
+
+### 18. Resumen de sesión — `5a79c32`, PR #18
+
+`src/session.js`: sesión al entrar al Mundo, continúa en Estudio, termina al salir. Base de contadores tomada antes del lugar de entrada; lugares/formas/retos/hallazgos nuevos, interacciones/pulsos, lugares visitados y géneros/instrumentos. Tiempo excluye menús/Escuchar. Recarga conserva `S.session`; `S.lastSession` conserva última terminada. Panel en menú y acceso al agotar linterna, sin apertura automática al salir. Tarjeta PNG 1080×1350 para compartir. No graba ni exporta audio ni inventa sesiones anteriores.
+
+### 19. Paletas e instrumentos electrónicos — `8a3a974`, PR #19
+
+`src/palettes.js`: tropical house, melodic house, electro robótico y nu-disco, 22 estilos en total entonces. Semilla `world-palette:v1`, 40 % de regiones elegibles; cambia identidad musical, no paisaje/nombres/IDs/descubrimientos. Modos mayores/dóricos/mixolidios para cálido/disco; menor/dórico melódico y menor/frigio robótico. Patrones específicos y voces usan instrumentos de paleta sin añadir siempre keys/marimba genéricos.
+
+`src/instruments.js`: steel pan, kalimba FM, teclas FM cálidas/Rhodes, cuerdas analógicas, metales, clavinet, bajo elástico filtrado, bajo modular FM, formantes y teclas metálicas; güiro y timbal sintetizados. Parciales, FM y filtros, no grabaciones ni instrumentos acústicos reales. Envolventes/duración acotadas y destinos compatibles con efectos. Explicaciones en Bitácora/Escuchar.
+
+### 20. Gramática regional, curaduría y Escucha suave — `aa6f09a`, PR #20
+
+`src/grammar.js` genera célula/rotación de acentos, instrumento de detalle, progresión, duración de armonía/frase, desplazamiento del motivo, límites de densidad/brillo y carácter por región/género. Radio conserva anclas y desarrolla articulación y frases por reloj musical. Reloj armónico desde entrada de región; progresiones en su escala y conducción de voces; moverse no reinicia pad con mismo acorde.
+
+Curador atenúa voces superpuestas por semicorchea, bajos repetidos y agudos. Salida con shelf suave, paso bajo y compresor. Escucha suave en menú reduce nivel/brillo y se guarda en `S.softMusic`; respeta Silencio. Escuchar muestra carácter. Corrección importante: patrones de cuatro paletas estaban en `kitPlay()` antiguo; se trasladaron a `drums()`, usado por Mundo. Pruebas exigen bombo, bajo y melodía. No garantiza agrado universal ni introduce autopilot/favoritos.
+
+### 21. Audio por cercanía — `d341673`, PR #21
+
+`src/spatial.js`: fuente física máxima junto al jugador, mitad de amplitud a 180 px, cero a 360 px, curva suave sin amplificar sobre nivel original. Directo/reverb/delay siguen jugador/objeto durante nota con transición 120 ms; cola global ya emitida permanece. Cercanos más probables en ensamble, sin sumar disparos. Claros mantienen ensamble omitido. Máximo 32 grupos durante tres segundos; fallback de atenuación fija al alcanzar límite. Compatible con curaduría/efectos y restauración ante fallos. Radio base/capas de faros sin fuente física conservan mezcla. No es audio 3D/HRTF.
+
+### 22. Vecindarios para ir mezclando — `646fd8d`, PR #22
+
+`src/neighborhoods.js`: campo suave de tempo, afinación por quintas y carácter armónico en cuadrícula de cuatro regiones. Selección musical favorece estilos con rangos compatibles; cada familia mantiene tempos propios, Origen minimal y Vacío ambient. Cambia música de algunos lugares, conserva mundo visual. Banda de 900 px mezcla ahora baterías, bajos y melodías con pesos complementarios; vecino armonizado a escala/afinación activas. Una región vecina a la vez; no mezcla cuatro regiones simultáneas en esquinas.
+
+### 23. Doce familias de referencia más — `5f26942`, PR #23
+
+`src/references.js`: tech house, electrónica andina, cosmic disco, melodic techno, organic house, amapiano, jazztronica, Berlin School, IDM, liquid drum & bass, darkwave/EBM y algorave. Total 34 estilos base. Ritmos/bajos/melodías/instrumentos/modos propios; andina pentatónica, jazztronica séptimas, Berlin/EBM secuencias estables, algorave acentos euclidianos rotados. Log drum FM para amapiano, llevando a once familias nuevas de síntesis tonal. Integra vecindarios, radio, objetos, Bitácora y Escuchar. Pruebas aceptan repetición hipnótica si cambian bajo/motivo/timbre/armonía. Algorave es inspiración generativa, no editor de código en vivo. No copia canciones ni implica modelos de Endel o artistas. Las veinte referencias de Jay son ingredientes, no techo de variedad.
+
+### 24. Fenómenos musicales ambientales — `4e769e6`, PR #24
+
+`src/phenomena.js`: aves de eco poco frecuentes que responden al final de frases con dos notas del acorde/timbre local; semilleros de caja que se sacuden con snare/clap reales sin duplicar golpe y pueden emitir caja discreta por contacto/acento propio; nubes de pulso que emiten grave/ruido filtrado y relámpago local. Contacto/pulso, efectos, proximidad y curaduría; visual sincronizado con reloj de audio. Semilla independiente `phenomena:v1`, uno/dos por chunk (uno en Vacío), caché 64. Máximo un evento autónomo/compás, ciclos 4/8 compases y cooldown. Claros omiten generación automática, no interacción directa. Escuchar incluye nombre/rol/instrumento. No añade muestras/logros/registro de rareza; lluvia y rayos originales conservados.
+
+### 25. Instrumentos procedurales — `6bf69f6`, rama pendiente
+
+`src/patches.js`: perfil estable por región/género/instrumento/rol/objeto. ID o rasgos inmutables, nunca posición móvil: desplazarse no cambia timbre. Materiales madera cálida, cristal suave, metal filtrado y aire sedoso con preferencias por familia/rol. Variación acotada de brillo/cutoff, resonancia, ataque/caída, armónicos, profundidad FM, anchura y envíos. Niveles atenuados, fundamentales conservadas y bajos sin desafinación adicional.
+
+Síntesis nueva modifica parciales/FM y envolvente; heredada recibe filtro/envolvente y armónicos donde aplica, flauta incluida. Radio/vecino toman perfil de su región; objetos/fenómenos perfil propio. Escuchar muestra material. Hasta 32 grupos de color por dos segundos y 256 perfiles en caché; reconstrucción determinista tras expulsión. Límite conserva diferencias de síntesis sin más rutas. Restituye buses/perfil incluso ante error y no duplica perfiles al invocar voz de bajo/hook. Camino/Estudio omiten creación. Sin nuevos campos guardados. No equivale a sintetizador modular editable ni banco ilimitado de samples.
+
+## Persistencia y compatibilidad
+
+Clave `pixel-blanco-v4` conservada; progreso solo en navegador. Añadidos durante etapas: `S.journal`, `S.softMusic`, `S.relicSites`, metadatos de nuevas estrellas, `S.session` y `S.lastSession`. Partidas antiguas se normalizan sin inventar historial. Perfiles de radio, voz, gravedad, personalidad, espacios, efectos, gramática, vecindarios, fenómenos y materiales se reconstruyen o son temporales; no se guarda estado exacto de música. Reacciones/posiciones dinámicas no garantizan persistencia al reconstruir chunk. IDs del mundo físico se han preservado; nuevos géneros/campos sí pueden cambiar identidad musical de coordenadas antiguas.
+
+Favoritos con versión exacta de una composición necesitarán escenas/versión del generador: volver a coordenadas no basta para repetir el mismo compás. No hay cuentas, guardado remoto ni multiplayer.
+
+## Pruebas y cómo reproducir la revisión
+
+Aplicación: `python3 -m http.server 8000`, abrir por HTTP. Node >=18, sin npm install para aplicación. `npm test` ejecuta todas las suites Node. `python3 tests/smoke.py` necesita Playwright Python y Chromium; requisitos en `tests/requirements.txt`, ejecutable configurable con `CHROMIUM_PATH`. Smoke abre servidor propio, prueba móvil 390×844 y escritorio 1280×800, captura errores y no usa partida personal.
+
+Suites de main: core, radio, voices, gravity, journal, scanner, playthings, personality, pockets, feedback, relics, effects, session, palettes, grammar, spatial, neighborhoods, references y phenomena. Rama pendiente suma patches y extiende radio/palettes/smoke para comprobar estabilidad al mover fuentes, límites/restauración y cambios reales de grafo sin cambiar frecuencia base. Core cubre guardado/tope/determinismo; otras verifican condiciones, compatibilidad y audio programado. `node --check` sirve para sintaxis.
+
+Última implementación `6bf69f6`: 20 suites Node y smoke móvil/escritorio aprobados. Este cambio documental no modifica código y se verifica por diff, enlaces, inventario de archivos y coherencia con historial. No hay CI configurado. Headless no evalúa escucha humana: balance, groove, fatiga, transiciones y sensación profesional requieren probar con sonido real.
+
+## Límites y revisión recomendada
+
+- Mundo combinatorio y procedural grande, no infinitud literal de instrumentos/estilos: 34 familias base y reglas acotadas.
+- Audio/simulación/render aún comparten hilo principal y runtime acoplado; evaluar móvil antes de migrar a AudioWorklet.
+- Linterna limita tiempo de exploración; modales pausan consumo, no necesariamente mundo/audio. Navegador puede suspender audio; requiere gesto al iniciar, especialmente iOS.
+- Sin snapshot de música, favoritos, mapa navegable, viaje automático, autopilot, looper, escenas, banda coordinada ni sesión de red.
+- Restos históricos de slider: `mMusic`, `rStyle`, `S.style` y handlers; intensidad actual depende de modo/bioma, no slider. Limpieza pendiente.
+- Diseño externo y textos de Voz pueden estar desactualizados. Usar repo/documentos actuales y decisiones de Jay.
+- Revisar combinación de proximidad + efectos + materiales, densidad real, graves/agudos y transición de familias. Las pruebas acotan rutas, no sustituyen escucha ni profiling de sesiones largas.
+
+## Trazabilidad exhaustiva
+
+Se inventarían todas las etapas de producto del historial desde `596fa31`, incluidos correcciones, arquitectura, interfaz, audio, mundo, persistencia y pruebas. Los commits repetidos de radio/voces y resolución de conflictos representan integración de las mismas etapas, no funciones adicionales. Para auditar líneas concretas: `git log --reverse --oneline`, `git show <commit>` y `git diff 596fa31..6bf69f6`. HANDOFF conserva explicación de los sistemas originales y detalles de ejecución; PENDIENTES separa acuerdos futuros de funciones actuales.
