@@ -14,10 +14,17 @@ for (const genre of Object.keys(runtime.GEN)) {
   const region = { ...origin, genre, key: genre };
   const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN);
   const melodies = new Set(), sections = new Set(), energies = [];
+  let previous;
   for (let bar = 0; bar < 160; bar++) {
     const music = radio.advance(region, bar, { near: 0, singers: 0 });
     melodies.add(JSON.stringify(music.hook)); sections.add(music.section); energies.push(music.energy);
     assert.equal(music.genre, genre);
+    const lean=['minimal','rominimal','microhouse','minimaltechno','dub','heart'].includes(genre);
+    assert(music.hook.filter(n=>n>=0).length<=(music.section===0?2:lean?3:5),'overcrowded melody');
+    assert(music.hook.every(n=>n<0||[0,2,4].includes(n)),'unrelated melodic leap');
+    if(previous&&Math.floor(previous.phrase/4)===Math.floor(music.phrase/4))music.hook.forEach((n,i)=>{if(n>=0&&previous.hook[i]>=0)assert.equal(n,previous.hook[i],'motif changed pitch before its cycle');});
+    if(previous&&music.section===previous.section)assert.equal(music.hookI,previous.hookI,'timbre swapped inside section');
+    previous=music;
     assert.equal(music.hook.length, 16);
     assert(music.hook.some((note, step) => step % 4 === 0 && note >= 0));
     assert(music.energy >= .14 && music.energy <= (genre === 'ambient' ? .3 : .7));

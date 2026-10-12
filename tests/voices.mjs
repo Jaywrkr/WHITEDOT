@@ -37,6 +37,11 @@ for(let x=0;x<30;x++) {
    assert(Number.isFinite(call.n));assert(call.n>=voice.low&&call.n<=voice.high,`${voice.role} out of range: ${call.n}`);
    assert(call.v>0&&call.v<=.15);
   }
+  if(voice.role==='lead'||voice.role==='agudo'||voice.role==='bajo') {
+   const pitched=calls.filter(c=>c.n!==undefined);
+   assert.equal(pitched.length,2);assert.equal(pitched[0].n,pitched[1].n,'response became a rising pickup jingle');
+   assert(pitched[1].v<pitched[0].v);
+  }
   if(voice.role==='bajo')assert(calls.every(c=>c.type==='bass'));
   if(voice.role==='perc')assert(calls.every(c=>c.type==='perc'));
   assert.deepEqual(runtime.getVoice(kind,region),voice);

@@ -64,7 +64,7 @@ export function initialize(runtime) {
     if(rl.id){runtime.S.relicSites||={};runtime.S.relicSites[rl.id]={day:runtime.S.todayKey,name:rl.name};}
     const idx=runtime.S.stars.length;runtime.S.stars.push({d:runtime.S.todayKey,s:rl.s,name:rl.name,id:rl.id,magical:!!rl.magical,p:idx%runtime.ECOS.length,region:runtime.regionOfPos(rl.x,rl.y).key});
     runtime.flash=1;runtime.pulse=1;burst(rl.x,rl.y,40,true);
-    runtime.soon(t=>runtime.chordTones().concat(runtime.chordTones().map(n=>n+12)).slice(0,7).forEach((n,i)=>runtime.pluck(n+12,t+i*runtime.SIX,runtime.vel(.07),2)));
+    runtime.soon(t=>runtime.chordTones().slice(0,3).forEach(n=>runtime.pluck(n,t,runtime.vel(.035),0)));
     const n=runtime.relicsGot();
     runtime.showPhrase(runtime.ECOS[idx%runtime.ECOS.length],true);
     runtime.toast("<em>Estrella "+runtime.S.stars.length+"</em> · "+(rl.name||"Reliquia"));

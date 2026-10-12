@@ -23,7 +23,6 @@ export function createRadio(seedOf, rng, genres) {
         nextSection = bar + 12 + Math.floor(random() * 4) * 4;
       }
       const sparse = section === 0;
-      const shift = [-2, -1, 0, 1, 2][Math.floor(random() * 5)];
       const bass = region.track.bass.map((degree, step) => {
         if (region.genre === 'rominimal') degree = step % 2 ? (step % 8 === 7 ? 4 : 0) : -1;
         if (region.genre === 'dubstep') degree = [0,3,4,10,14].includes(step) ? [0,0,4,7][Math.floor(random()*4)] : -1;
@@ -31,21 +30,25 @@ export function createRadio(seedOf, rng, genres) {
         if (region.genre === 'progressive') degree = step%2===0 ? (step%8===6?4:0) : -1;
         if (region.genre === 'acid') degree = [1,0,1,1,0,1,0,2,1,0,1,0,2,1,0,1][step] ? (step === 7 || step === 12 ? 7 : 0) : -1;
         if (degree < 0 || (step !== 0 && random() < (sparse ? .45 : .12))) return -1;
-        return step === 0 ? 0 : Math.max(0, Math.min(9, degree + (random() < .3 ? shift : 0)));
+        return step === 0 ? 0 : Math.max(0, Math.min(9, degree));
       });
-      const hook = region.track.hook.map((degree, step) => {
-        if (degree < 0) return !sparse && step % 4 === 2 && random() < .3 ? 2 + Math.floor(random() * 5) : -1;
-        if (random() < (sparse ? .5 : .18)) return -1;
-        return Math.max(0, Math.min(11, degree + shift + (random() < .25 ? 2 : 0)));
-      });
-      // Siempre hay una voz melódica, incluso en un rincón sin fauna u objetos.
-      if ([0, 4, 8, 12].every(step => hook[step] < 0)) hook[Math.floor(random() * 4) * 4] = 2;
-      if (arrangement && hook.every((degree, i) => degree === arrangement.hook[i])) {
-        const i = hook.findIndex(degree => degree >= 0);
-        hook[i] = (hook[i] + 1) % 12;
-      }
+      // Keep a recognisable motif for four phrases; vary space and accents first.
+      const motifRandom=rng(seedOf(`radio-motif:v1:${region.key}:${Math.floor(phrase/4)}`));
+      const lean=['minimal','rominimal','microhouse','minimaltechno','dub','heart'].includes(region.genre);
+      const budget=sparse?2:lean?3:5;
+      const candidates=region.track.hook.map((degree,step)=>({degree,step})).filter(n=>n.degree>=0);
+      const anchor=candidates.find(n=>n.step%4===0)?.step??0;
+      const positions=[anchor,...candidates.filter(n=>n.step!==anchor).map(n=>n.step)];
+      for(let i=positions.length-1;i>1;i--){const j=1+Math.floor(motifRandom()*i);[positions[i],positions[j]]=[positions[j],positions[i]];}
+      const motif=Array(16).fill(-1),tones=[0,2,4];
+      positions.slice(0,lean?3:5).forEach((step,i)=>{motif[step]=i===0?0:tones[Math.floor(motifRandom()*tones.length)];});
+      const hook=motif.map((degree,step)=>degree<0||step!==anchor&&(random()<.25)?-1:degree);
+      let notes=1;hook.forEach((degree,step)=>{if(step!==anchor&&degree>=0&&++notes>budget)hook[step]=-1;});
+      hook[anchor]=motif[anchor];
+      // Identity changes with the section, rather than swapping instruments every phrase.
+      const toneRandom=rng(seedOf(`radio-tone:v1:${region.key}:${section}`));
       const pool = genres[region.genre].hookP;
-      arrangement = { phrase, section, bass, hook, hookI: pool[Math.floor(random() * pool.length)] };
+      arrangement = { phrase, section, bass, hook, hookI: pool[Math.floor(toneRandom() * pool.length)] };
       nextPhrase = bar + 4 + Math.floor(random() * 3) * 2;
     }
     const life = Math.min(.08, (environment.near || 0) * .002 + (environment.singers || 0) * .015);

@@ -22,7 +22,7 @@ export function createRegionalVoices(region, biomes, genres, seedOf, rng) {
   const genre = genres[region.genre];
   const calm = ['ambient','heart','downtempo','dub'].includes(region.genre);
   const bassPool = [...new Set([genre.bassI, 'sub', calm ? 'fm' : 'pluck'])];
-  const melodyPool = [...new Set([...genre.hookP, calm ? 'flute' : 'marimba', 'keys'])];
+  const melodyPool = [...new Set([...genre.hookP, calm ? 'flute' : 'organ', 'keys'])];
   const percussionPool = calm ? ['tom','wood','shaker'] : ['kick','conga','wood','rim','tom','shaker'];
   const voices = Object.create(null);
   kinds.forEach((kind, i) => {
@@ -31,7 +31,7 @@ export function createRegionalVoices(region, biomes, genres, seedOf, rng) {
     voices[kind] = Object.freeze({role, instrument:pool[Math.floor(random()*pool.length)],
       degree:Math.floor(random()*7), response:[2,3,6][Math.floor(random()*3)],
       low:role==='bajo'?36:role==='agudo'?72:role==='acorde'?48:55,
-      high:role==='bajo'?55:role==='agudo'?88:role==='acorde'?72:79});
+      high:role==='bajo'?55:role==='agudo'?84:role==='acorde'?72:79});
   });
   return Object.freeze(voices);
 }
@@ -70,9 +70,9 @@ export function initialize(runtime) {
         [0,2,4].forEach(d=>runtime.hookInst(voice.instrument,note(degree+d)-(voice.instrument==='glass'?12:0),t,v*.4));
       } else runtime.hookInst(voice.instrument,n-(voice.instrument==='glass'?12:0),t,v);
     }
-    const strength = voice.role === 'bajo' ? .15 : voice.role === 'perc' ? .12 : voice.role === 'agudo' ? .045 : .075;
+    const strength = voice.role === 'bajo' ? .15 : voice.role === 'perc' ? .12 : voice.role === 'agudo' ? .03 : .075;
     hit(time,index%7,strength);
-    if (full) hit(time+runtime.SIX*voice.response,(index+2)%7,strength*.6);
+    if (full) hit(time+runtime.SIX*voice.response,index%7,strength*.45);
   }
   Object.defineProperties(runtime, {
     getVoice: {get:()=>getVoice},
