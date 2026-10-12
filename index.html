@@ -485,7 +485,12 @@ function lampLeft(){return S.lampDay===S.todayKey?Math.max(0,lampMax()-S.lampUse
 
 function checkDay(){
   const k=dayKey();
-  if(S.todayKey!==k){S.todayKey=k;S.todayLight=0;S.capShown=false;S.collected=[];collected=new Set();chunks.clear();if(inWorld())S.mode="camino";setBiome(0);save();}
+  if(S.todayKey!==k){S.todayKey=k;S.todayLight=0;S.capShown=false;S.collected=[];collected=new Set();chunks.clear();wchunks.clear();
+    if(inWorld())exitWorld(false);
+    else if(S.mode==="studio")S.prevMode="camino";
+    else setBiome(0);
+    document.getElementById("mCap").hidden=true;document.getElementById("mOut").hidden=true;document.getElementById("mHelpW").hidden=true;
+    save();}
 }
 function onFirstLight(){
   const k=S.todayKey;
@@ -1091,7 +1096,7 @@ function collect(m){
   if(S.lastDay!==S.todayKey) onFirstLight();
   const r=Math.random(), gold=r<(m.off?.25:.05), big=!gold&&r<(m.off?.6:.25);
   const val=gold?10:big?3:1, before=level();
-  S.todayLight=Math.min(CAP,S.todayLight+val);S.totalLight+=val;
+  const added=Math.min(val,CAP-S.todayLight);S.todayLight+=added;S.totalLight+=added;
   playerNote(big?.17:.14,gold);
   if(gold){flash=1;unlock("dorada");}
   burst(m.x,m.y,gold?18:6,gold||grooveFx>.9);
@@ -1175,7 +1180,7 @@ function frame(t){
   const b=beat();
   cx.fillStyle="#000";cx.fillRect(0,0,W,H);
   if(inWorld()||S.mode==="studio"){ambientStars(t,dt,b);ambient(t,dt,b);}
-  const ds=S.mode==="studio"?studioStep(t,dt,b):inWorld()?worldStep(t,dt,dx,dy,b):caminoStep(t,dt,dx,dy,b);
+  const ds=S.mode==="studio"?studioStep(t,dt,b):inWorld()?worldStep(t,dt,dx,dy,b,modal):caminoStep(t,dt,dx,dy,b);
   const ox=W/2-camX,oy=H/2-camY;
   parts=parts.filter(p=>(p.l-=dt*1.6)>0);
   for(const p of parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;cx.globalAlpha=p.l;cx.fillStyle=p.g?GOLD:S.color;cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
@@ -1243,12 +1248,12 @@ function caminoStep(t,dt,dx,dy,b){
   return sz;
 }
 
-function worldStep(t,dt,dx,dy,b){
+function worldStep(t,dt,dx,dy,b,paused=false){
   const sz=pxSize(),ds=Math.min(sz,22);
   if(dx||dy){S.wx+=dx*SPEED*dt;S.wy+=dy*SPEED*dt;}
   camX=S.wx;camY=S.wy;
   if(S.lampDay!==S.todayKey){S.lampDay=S.todayKey;S.lampUsed=0;}
-  S.lampUsed+=dt;
+  if(!paused)S.lampUsed+=dt;
   if(lampLeft()<=0){exitWorld(true);return ds;}
   const z=biomeOfPos(S.wx,S.wy),rg=regionOfPos(S.wx,S.wy);
   if(rg.key!==curRegion){curRegion=rg.key;enterRegion(rg,z);}
@@ -1481,12 +1486,11 @@ function nextToast(){if(toasting||!toastQ.length)return;toasting=true;const el=$
 function enterWorld(){
   if(!isFree()){toast("<em>Mundo</em> · Primero completa el camino de hoy");return;}
   if(lampLeft()<=0){toast("<em>Linterna</em> · Vuelve mañana");return;}
-  audio();if(S.lastWorldDay!==S.todayKey){if(S.studio.x!=null){S.wx=S.studio.x;S.wy=S.studio.y;}S.lastWorldDay=S.todayKey;}zoneHops=0;S.mode="world";curZone=biomeOfPos(S.wx,S.wy);setBiome(curZone);{const rg=regionOfPos(S.wx,S.wy);curRegion=rg.key;MU.dnaT=rg;if(!S.places[rg.key]){S.places[rg.key]=1;S.placesN=(S.placesN||0)+1;}}MU.layers=new Set();
-  if(!S.zones[BIOMES[curZone].id]){S.zones[BIOMES[curZone].id]=S.todayKey;}
+  audio();if(S.lastWorldDay!==S.todayKey){if(S.studio.x!=null){S.wx=S.studio.x;S.wy=S.studio.y;}S.lastWorldDay=S.todayKey;}zoneHops=0;S.mode="world";curZone=-1;{const rg=regionOfPos(S.wx,S.wy);curRegion=rg.key;enterRegion(rg,rg.z);}MU.layers=new Set();
   todayRelics();enterFx=1;flocks=[];
   soon(q=>[0,7,12,15,19,24].forEach((k,i)=>pluck(45+BIOMES[curZone].tr+k,q+i*SIX*2,.07,2)));
   unlock("mundo");
-  if(!S.help.mundo){$("mHelpW").hidden=false;}else setTimeout(()=>showRegion(regionOfPos(S.wx,S.wy),false),600);
+  if(!S.help.mundo){$("mHelpW").hidden=false;}
   save();hud();
 }
 function exitWorld(out){
