@@ -1,3 +1,5 @@
+import { POCKET_NAMES } from './pockets.js';
+
 import { TOY_NAMES } from './playthings.js';
 
 import { ROLES, INSTRUMENTS, MODES } from './journal.js';
@@ -25,7 +27,7 @@ export function initialize(runtime) {
     if(!runtime.inWorld()||[...document.querySelectorAll('.modal')].some(m=>!m.hidden)){stopScanner();return;}
     const now=performance.now();if(!force&&now-lastUpdate<200)return;lastUpdate=now;
     const region=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
-    document.getElementById('scannerRegion').textContent=`${region.name} · ${runtime.GEN[region.genre].name} · ${region.bpm} BPM · ${MODES[region.scale.join(",")]||"Escala regional"}`;
+    document.getElementById('scannerRegion').textContent=`${region.name}${runtime.currentPocket()?.kind?" · "+POCKET_NAMES[runtime.currentPocket().kind]:""} · ${runtime.GEN[region.genre].name} · ${region.bpm} BPM · ${MODES[region.scale.join(",")]||"Escala regional"}`;
     list.replaceChildren();
     const sources=nearbySources(runtime.wchunks,runtime.S.wx,runtime.S.wy);
     for(const source of sources) {
@@ -38,6 +40,7 @@ export function initialize(runtime) {
     }
     if(!sources.length){const item=document.createElement('li');item.textContent='Sin objetos musicales cercanos. La región sigue componiendo.';list.append(item);}
     document.getElementById('scannerHint').textContent=runtime.S.sound?'Voces cercanas · no todas suenan al mismo tiempo':'Sonido silenciado · mostrando las voces del lugar';
+    while(panel.scrollHeight>panel.clientHeight+2&&list.childElementCount>1)list.lastElementChild.remove();
   }
   function startScanner(){if(!runtime.inWorld())return;scanning=true;runtime.ptr=null;panel.hidden=false;updateScanner(true);}
   Object.defineProperties(runtime,{scanning:{get:()=>scanning},startScanner:{get:()=>startScanner},stopScanner:{get:()=>stopScanner},updateScanner:{get:()=>updateScanner}});
