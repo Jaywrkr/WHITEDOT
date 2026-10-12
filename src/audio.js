@@ -218,6 +218,7 @@ export function initialize(runtime) {
     if(runtime.inWorld()&&s===0&&(MU.step>>4)%2===1)MU.singers.slice(0,2).forEach(o=>{runtime.speciesSound(o.s,t+SIX*2,true,o.personality,o);setTimeout(()=>{o.lit=1;},Math.max(0,(t+SIX*2-ac.currentTime)*1000));});
     // lo que tocas espera la siguiente corchea (con un poco de vida humana)
     if(s%2===0){let m=0;while(MU.q8.length&&m<3){const it=MU.q8.shift(),t2=t+jit()*1.5;it.fn(t2);if(it.vis)setTimeout(it.vis,Math.max(0,(t2-ac.currentTime)*1000));m++;}}
+    runtime.phenomenaStep?.(s,bar,t);
     let n=0;while(MU.queue.length&&n<4){MU.queue.shift()(t);n++;}
   }
   function snap(n,ct){let best=n,bd=99;ct.forEach(c=>{for(let o=-36;o<=36;o+=12){const d=Math.abs(c+o-n);if(d<bd){bd=d;best=c+o;}}});return best;}
@@ -250,7 +251,7 @@ export function initialize(runtime) {
   const hat=(t,v,dec)=>(runtime.recordInstrument?.("hat"),noise(t,"highpass",7500+rnd()*1500,.7,v,dec));
   const shaker=(t,v)=>{runtime.recordInstrument?.("shaker");return noise(t,"bandpass",6000,1.5,v,.05);};
   const rim=(t,v)=>{runtime.recordInstrument?.("rim");return noise(t,"bandpass",2800,6,v,.03);};
-  const clap=(t,v)=>{runtime.recordInstrument?.("clap");return noise(t,"bandpass",1500,1.2,v,.14,true);};
+  const clap=(t,v)=>{runtime.phenomenonPercussionCue?.(t);runtime.recordInstrument?.("clap");return noise(t,"bandpass",1500,1.2,v,.14,true);};
   function softBass(m,t,v){const o=ac.createOscillator(),g=ac.createGain();o.type="sine";o.frequency.value=hz(m);env(g,t,.01,v*1.1,.45);o.connect(g).connect(bus);o.start(t);o.stop(t+.6);}
   function houseBass(m,t,v,k){const o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter();o.type="sawtooth";o.frequency.value=hz(m);f.type="lowpass";f.Q.value=6;f.frequency.setValueAtTime(160+k*650+MU.E*300,t);f.frequency.exponentialRampToValueAtTime(130,t+.2);env(g,t,.004,v,.22);o.connect(f).connect(g).connect(bus);o.start(t);o.stop(t+.3);}
   function acid(m,t,v,cut){const o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter();o.type="sawtooth";o.frequency.value=hz(m);f.type="lowpass";f.Q.value=13;f.frequency.setValueAtTime(cut,t);f.frequency.exponentialRampToValueAtTime(Math.max(120,cut*.3),t+.12);env(g,t,.003,v,.15);o.connect(f).connect(g).connect(bus);const d=ac.createGain();d.gain.value=.2;g.connect(d).connect(dsend);o.start(t);o.stop(t+.22);}
@@ -271,7 +272,7 @@ export function initialize(runtime) {
   function organ(m,t,v){runtime.recordInstrument?.("organ");const f=ac.createBiquadFilter(),g=ac.createGain();f.type="lowpass";f.frequency.value=1600;[0,12].forEach(k=>{const o=ac.createOscillator();o.type="square";o.frequency.value=hz(m+k);o.connect(f);o.start(t);o.stop(t+.3);});env(g,t,.008,v*.45,.2);f.connect(g).connect(bus);const sv=ac.createGain();sv.gain.value=.3;g.connect(sv).connect(verbIn);}
   function flute(m,t,v){runtime.recordInstrument?.("flute");const o=ac.createOscillator(),l=ac.createOscillator(),lg=ac.createGain(),g=ac.createGain(),sv=ac.createGain();o.type="sine";o.frequency.value=hz(m);l.frequency.value=5.2;lg.gain.value=hz(m)*.006;l.connect(lg).connect(o.frequency);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(v,t+.06);g.gain.exponentialRampToValueAtTime(.0001,t+.6);sv.gain.value=.5;o.connect(g).connect(bus);g.connect(sv).connect(verbIn);o.start(t);l.start(t);o.stop(t+.7);l.stop(t+.7);}
   function kick2(t,v,fe,dec){runtime.recordInstrument?.("kick");const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(125,t);o.frequency.exponentialRampToValueAtTime(fe,t+.1);env(g,t,.003,v,dec);o.connect(g).connect(bus);o.start(t);o.stop(t+dec+.1);}
-  function snare(t,v){runtime.recordInstrument?.("snare");noise(t,"bandpass",1800,1,v,.14,true);const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=190;env(g,t,.002,v*.6,.08);o.connect(g).connect(bus);o.start(t);o.stop(t+.12);}
+  function snare(t,v){runtime.phenomenonPercussionCue?.(t);runtime.recordInstrument?.("snare");noise(t,"bandpass",1800,1,v,.14,true);const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=190;env(g,t,.002,v*.6,.08);o.connect(g).connect(bus);o.start(t);o.stop(t+.12);}
   function conga(t,f,v){runtime.recordInstrument?.("conga");const o=ac.createOscillator(),g=ac.createGain(),sv=ac.createGain();o.frequency.setValueAtTime(f*1.4,t);o.frequency.exponentialRampToValueAtTime(f,t+.03);env(g,t,.002,v,.13);sv.gain.value=.25;o.connect(g).connect(bus);g.connect(sv).connect(verbIn);o.start(t);o.stop(t+.2);}
   function clave(t,v){const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=2500;env(g,t,.001,v,.04);o.connect(g).connect(bus);o.start(t);o.stop(t+.08);}
   function wood(t,v){runtime.recordInstrument?.("wood");noise(t,"bandpass",1100,8,v,.04);const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=820;env(g,t,.001,v*.5,.03);o.connect(g).connect(bus);o.start(t);o.stop(t+.06);}
@@ -393,6 +394,7 @@ export function initialize(runtime) {
     curatedVoiceGain: { get: () => (time,role)=>voiceCurator.gain(time,SIX,role,runtime.S.softMusic) },
     comfortLowpass: { get: () => comfortLowpass },
     noiseHit: { get: () => noise },
+    snareHit: { get: () => snare },
     clap: { get: () => clap },
     hatHit: { get: () => hatC },
     bassInst: { get: () => bassInst },

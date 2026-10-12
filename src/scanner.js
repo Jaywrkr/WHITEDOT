@@ -30,11 +30,11 @@ export function initialize(runtime) {
     const region=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
     document.getElementById('scannerRegion').textContent=`${region.name}${runtime.currentPocket()?.kind?" · "+POCKET_NAMES[runtime.currentPocket().kind]:""} · ${runtime.GEN[region.genre].name} · ${region.bpm} BPM · ${MODES[region.scale.join(",")]||"Escala regional"}`;
     list.replaceChildren();
-    const sources=nearbySources(runtime.wchunks,runtime.S.wx,runtime.S.wy);
+    const sources=[...nearbySources(runtime.wchunks,runtime.S.wx,runtime.S.wy),...(runtime.phenomenonSources?.()||[])].sort((a,b)=>a.distance-b.distance).slice(0,5);
     for(const source of sources) {
       const sp=source.object.s;
       const own=sp?runtime.regionOfPos(...sp.id.split(':')[0].split(',').map(n=>+n*runtime.REG*runtime.WCH+1)):runtime.regionOfPos(source.object.x,source.object.y);
-      const voice=runtime.getVoice(source.kind,own),item=document.createElement('li');
+      const voice=source.voice||runtime.getVoice(source.kind,own),item=document.createElement('li');
       const effect=runtime.getEffectProfile?.(source.kind,own,voice);
       const name=sp&&!runtime.S.cat[sp.id]?'Forma desconocida':source.name;
       item.textContent=`${name} · ${ROLES[voice.role]} · ${INSTRUMENTS[voice.instrument]?.[0]||voice.instrument} · ${own.name}${effect&&effect.type!=="dry"?" · "+effect.name:""}${source.object.personality?" · "+source.object.personality.name:""}`;

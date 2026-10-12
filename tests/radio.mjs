@@ -7,6 +7,7 @@ import { initialize as world } from '../src/world.js';
 import { initialize as audio } from '../src/audio.js';
 import { initialize as voices } from '../src/voices.js';
 import { initialize as instruments } from '../src/instruments.js';
+import { initialize as phenomena } from '../src/phenomena.js';
 import { initialize as spatial } from '../src/spatial.js';
 import { initialize as effects } from '../src/effects.js';
 globalThis.localStorage = { getItem: () => null, setItem() {} };
@@ -65,7 +66,7 @@ class Context {
 }
 globalThis.window = { AudioContext: Context };
 try {
-  audio(runtime); voices(runtime); effects(runtime); instruments(runtime); spatial(runtime);
+  audio(runtime); voices(runtime); effects(runtime); instruments(runtime); spatial(runtime); phenomena(runtime);
   runtime.S.mode = 'world'; runtime.S.todayKey = '2026-10-12';
   runtime.MU.dnaT = origin; runtime.MU.layers = new Set([0,1,2]);
   runtime.MU.flowers = [{n:69,st:0,x:900,y:900}];

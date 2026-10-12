@@ -78,3 +78,5 @@ Los objetos y criaturas se oyen más presentes al acercarte y se apagan gradualm
 Las regiones vecinas tienden a compartir tempo y afinación. Al acercarte a una frontera se mezclan gradualmente sus percusiones, bajos y melodías.
 
 La biblioteca incluye 34 estilos base, entre ellos electrónica andina, amapiano, jazztronica, Berlin School, IDM, cosmic disco, liquid drum & bass y darkwave/EBM. Sus patrones, armonías e instrumentos alimentan la gramática generativa y las mezclas entre regiones vecinas.
+
+El entorno incluye aves de eco que responden a las frases, semilleros que se sacuden con cajas/claps y nubes que lanzan relámpagos graves. También reaccionan al contacto y al pulso; Escuchar identifica su función musical.
