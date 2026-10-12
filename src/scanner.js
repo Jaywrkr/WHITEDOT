@@ -33,7 +33,7 @@ export function initialize(runtime) {
       const own=sp?runtime.regionOfPos(...sp.id.split(':')[0].split(',').map(n=>+n*runtime.REG*runtime.WCH+1)):runtime.regionOfPos(source.object.x,source.object.y);
       const voice=runtime.getVoice(source.kind,own),item=document.createElement('li');
       const name=sp&&!runtime.S.cat[sp.id]?'Forma desconocida':source.name;
-      item.textContent=`${name} · ${ROLES[voice.role]} · ${INSTRUMENTS[voice.instrument]?.[0]||voice.instrument} · ${own.name}`;
+      item.textContent=`${name} · ${ROLES[voice.role]} · ${INSTRUMENTS[voice.instrument]?.[0]||voice.instrument} · ${own.name}${source.object.personality?" · "+source.object.personality.name:""}`;
       list.append(item);
     }
     if(!sources.length){const item=document.createElement('li');item.textContent='Sin objetos musicales cercanos. La región sigue componiendo.';list.append(item);}
