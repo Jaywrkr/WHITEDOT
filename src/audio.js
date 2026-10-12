@@ -1,3 +1,4 @@
+import {chooseNearbySource} from './spatial.js';
 import {harmonicDegree,createVoiceCurator} from './grammar.js';
 import { createRadio } from './radio.js';
 
@@ -87,6 +88,7 @@ export function initialize(runtime) {
   function setBiome(z){MU.biomeT=z;MU.timbre=runtime.S.mode==="camino"?2:MU.dnaT?runtime.GEN[MU.dnaT.genre].pt:runtime.BIOMES[z].tim;}
   function sched(){
     runtime.effectsTick?.();
+    runtime.spatialTick?.();
     if(!ac||ac.state!=="running")return;
     if(MU.next<ac.currentTime){const n=Math.ceil((ac.currentTime-MU.next)/SIX);MU.next+=n*SIX;MU.step+=n;}
     while(MU.next<ac.currentTime+.12){playStep(MU.next);MU.next+=SIX;MU.step++;}
@@ -209,7 +211,7 @@ export function initialize(runtime) {
       MU.motif.slice(-6).forEach(m=>{const off=Math.min(m.st-st0,24);pluck(snap(m.n,ct)-12,t+off*SIX,vel(.05),2);});
     }
     // el mundo toca solo: objetos cercanos suenan en el beat, las criaturas que te siguen cantan
-    if(runtime.inWorld()&&s%4===0&&MU.near.length&&rnd()<(.06+.2*E)*(MU.vari===4?1.8:MU.vari===0?.6:1)){const o=MU.near[Math.floor(rnd()*MU.near.length)];if(o.snd){o.snd(t);setTimeout(()=>{o.lit=1;o.hit=1;},Math.max(0,(t-ac.currentTime)*1000));}}
+    if(runtime.inWorld()&&s%4===0&&MU.near.length&&rnd()<(.06+.2*E)*(MU.vari===4?1.8:MU.vari===0?.6:1)){const o=chooseNearbySource(MU.near,runtime.S.wx,runtime.S.wy,rnd);if(o?.snd){o.snd(t);setTimeout(()=>{o.lit=1;o.hit=1;},Math.max(0,(t-ac.currentTime)*1000));}}
     if(runtime.inWorld()&&s===0&&(MU.step>>4)%2===1)MU.singers.slice(0,2).forEach(o=>{runtime.speciesSound(o.s,t+SIX*2,true,o.personality,o);setTimeout(()=>{o.lit=1;},Math.max(0,(t+SIX*2-ac.currentTime)*1000));});
     // lo que tocas espera la siguiente corchea (con un poco de vida humana)
     if(s%2===0){let m=0;while(MU.q8.length&&m<3){const it=MU.q8.shift(),t2=t+jit()*1.5;it.fn(t2);if(it.vis)setTimeout(it.vis,Math.max(0,(t2-ac.currentTime)*1000));m++;}}

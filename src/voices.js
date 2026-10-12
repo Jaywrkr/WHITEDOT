@@ -57,7 +57,7 @@ export function initialize(runtime) {
     };
     function hit(t, degree, strength) {
       runtime.soundCue?.(source,voice.role,t);
-      const n = note(degree), v = runtime.vel(strength * volume)*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
+      const n = note(degree);let v = runtime.vel(strength * volume)*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
       const emit=()=>{
         if (voice.role === 'bajo') runtime.bassInst(voice.instrument,n,t,v);
         else if (voice.role === 'perc') {
@@ -75,7 +75,8 @@ export function initialize(runtime) {
           [0,2,4].forEach(d=>runtime.hookInst(voice.instrument,note(degree+d)-(voice.instrument==='glass'?12:0),t,v*.4));
         } else runtime.hookInst(voice.instrument,n-(voice.instrument==='glass'?12:0),t,v);
       };
-      if(runtime.withVoiceEffect)runtime.withVoiceEffect(kind,region,voice,t,emit);else emit();
+      const spatialEmit=(gain=1)=>{v*=gain;if(runtime.withVoiceEffect)runtime.withVoiceEffect(kind,region,voice,t,emit);else emit();};
+      if(runtime.withSpatialVoice)runtime.withSpatialVoice(source,t,spatialEmit);else spatialEmit();
     }
     const strength = voice.role === 'bajo' ? .15 : voice.role === 'perc' ? .12 : voice.role === 'agudo' ? .03 : .075;
     hit(time,index%7,strength);
