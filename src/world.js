@@ -1,3 +1,5 @@
+import { createPlaythings } from './playthings.js';
+
 // Generación procedural del camino, regiones y reliquias.
 export function initialize(runtime) {
   /* ---------- camino ---------- */
@@ -103,6 +105,8 @@ export function initialize(runtime) {
     c.sp.forEach(o=>o.snd=q=>runtime.speciesSound(o.s,q,false));
     const rd=runtime.rng(runtime.seedOf("notas:"+id+runtime.S.todayKey));
     for(let i=0;i<(B.id==="vacio"?6:18);i++)c.motes.push({x:ox+rd()*runtime.WCH,y:oy+rd()*runtime.WCH,ph:rd()*6});
+    c.playthings=createPlaythings(cx,cy,runtime.WCH,dens,B.id,runtime.seedOf,runtime.rng);
+    c.playthings.forEach((o,i)=>{o.snd=q=>runtime.playVoice('toy:'+o.kind,i,q,runtime.regionOfPos(o.x,o.y));});
     runtime.wchunks.set(id,c);return c;
   }
   const biomeOfPos=(x,y)=>biomeAt(Math.floor(x/runtime.WCH),Math.floor(y/runtime.WCH));

@@ -68,6 +68,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/progress.js` | Guardado v4, días, racha, crecimiento, linterna, RNG y cachés. |
 | `src/world.js` | Camino, generación de regiones/chunks, eventos y reliquias. |
 | `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros y tracks. |
+| `src/playthings.js` | Nuevos elementos, generación independiente, reacciones de contacto/pulso y dibujo. |
 | `src/scanner.js` | Fuentes musicales cercanas y panel Escuchar durante una pulsación larga o tecla E. |
 | `src/journal.js` | Bitácora de lugares, formas, música y logros; compatibilidad de registros v4. |
 | `src/gravity.js` | Gravedad estable por región y mezcla de velocidades en bordes y esquinas. |
@@ -110,6 +111,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
   - Juego: `reto` y `mix`.
 - **Bioma base:** cada región parte de un bioma de `BIOMES` (llanura, bosque, lago, ruinas, jardín, dunas, cristales, faros, tormenta, cueva, vacío). La disponibilidad depende de la distancia al origen: `d = 2 * max(abs(rx), abs(ry))`, y se eligen biomas cuyo `minD <= d`. No depende de los días jugados.
 - **Gravedad regional (implementada):** semilla independiente `gravity:v1:<región>`. Ligera: velocidad ×1,65; normal: ×1; alta: ×0,55. Origen es normal. Solo modifica el movimiento del jugador en el Mundo, no el Camino, el Estudio ni la velocidad de criaturas. Se mezcla en ambos ejes dentro de 450 px de una frontera, incluyendo esquinas y coordenadas negativas. La tarjeta del lugar indica su gravedad y tipo de movimiento. Es una propiedad de movilidad, no una simulación física de gravedad vertical. No cambia mapa ni guardado v4.
+- **Elementos interactivos nuevos:** luces fugitivas y cometas salen impulsadas, brotes saltan, prismas giran en su sitio y aros expanden una resonancia sin desplazarse. Generación por chunk con semilla independiente `playthings:v1`, pools por bioma y máximo 40 elementos por chunk (Vacío es más escaso). Contacto y pulso comparten voz regional, cooldown de 850 ms y sonidos a tempo. El ambiente también puede hacerlos sonar. Escuchar muestra sus nombres y roles. Los móviles vuelven gradualmente a su ancla. Su estado es temporal, como otros objetos del mundo; no se añaden muestras ni logros nuevos. Las personalidades individuales más profundas quedan para la próxima etapa.
 - **Mini-biomas:** cada chunk tiene una variante de `VARS` (claro / espeso / húmedo / eco / brillo).
 - **Hábitat:** `HAB` (equilibrado, florido, salvaje, mineral, desierto) multiplica las cantidades de flora, fauna y minerales.
 - **Bordes:** en una franja `BAND=900` px cerca del borde de la región, todo se mezcla con la región vecina:
