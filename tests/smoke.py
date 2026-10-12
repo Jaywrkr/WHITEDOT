@@ -15,9 +15,11 @@ with sync_playwright() as p:
  b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
  for label,size in [('mobile',{'width':390,'height':844}),('desktop',{'width':1280,'height':800})]:
   c=b.new_context(viewport=size);page=c.new_page();page.set_default_timeout(5000);page.add_init_script('window.__audioContexts=[];window.AudioContext=class extends AudioContext {constructor(...args){super(...args);window.__audioContexts.push(this);}}');errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
   page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click();page.wait_for_function('window.__audioContexts.length === 1 && window.__audioContexts[0].state === "running" && window.__audioContexts[0].currentTime > 0')
   assert page.locator('#reto').is_visible()
+  page.evaluate('''()=>{const r=window.__testRuntime;for(let i=0;i<12;i++){const region=r.regionOfPos(i*3600+900,900);for(const kind of ['arbol','cristal','pilar','loto','luz','pulso','luciernaga'])r.playVoice(kind,i,r.ac.currentTime+.05,region,true);for(const sp of region.species)r.speciesSound(sp,r.ac.currentTime+.05,true);}}''')
   page.keyboard.press('Space')
   page.keyboard.down('d');page.wait_for_timeout(300);page.keyboard.up('d')
   page.locator('#bPrimary').click();page.locator('#bPrimary').click();assert page.locator('#reto').is_visible()
