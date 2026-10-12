@@ -15,7 +15,8 @@
 - Llámalo **Jay**. Sé directo y práctico, sin halagos. Él prueba en el **móvil**, así que todo tiene que funcionar con el dedo.
 - Él da feedback por sensación ("suena robótico", "no siento que cambia"). Tradúcelo a cambios concretos y hazlos. No le devuelvas preguntas técnicas.
 - Responde en **español**. Todo el texto del juego está en español.
-- Cuando dice "hazlo", quiere el cambio implementado y desplegado, no un plan.
+- Cuando dice "hazlo", quiere el cambio implementado y probado dentro de la etapa acordada, con commit y push en una rama nueva desde `main` actualizado. **Jay crea el PR y hace el merge.** No hacer push directo a `main`, crear PRs ni hacer merges. El despliegue de producción ocurre después de su merge.
+- La autorización se da por etapa. No ejecutar todo el roadmap por una aprobación de la etapa actual.
 
 ## 2. Visión
 
@@ -23,6 +24,7 @@ Un pixel blanco en un mundo negro que va creciendo. **El centro de todo es la M�
 
 - **Camino diario:** corto. Construye constancia y racha, y el crecimiento tiene tope por día. Su música es casi ambient. No debe convertirse en grind.
 - **Mundo:** se abre después del camino. Es infinito y procedural, y todo genera música. Ahí está la diversión de verdad.
+- **Descubrimientos excepcionales:** Jay quiere encontrar cosas mágicas muy rara vez, con identidad propia y difíciles de conseguir. Las reliquias actuales le resultan demasiado fáciles. Esta dirección está acordada; su implementación sigue pendiente.
 - **Inspiraciones:**
   - Logros absurdos y ocultos estilo *Dungeon Crawler Carl*.
   - Una "Voz del sistema" sarcástica estilo Carl pero también con el humor de Jay.
@@ -51,7 +53,7 @@ Un pixel blanco en un mundo negro que va creciendo. **El centro de todo es la M�
 
 ## 4. Arquitectura de `index.html`
 
-Es un archivo único sin build. El orden importa porque todo es global.
+Es un archivo único sin build. El JavaScript comparte estado dentro de una función autoejecutable (`IIFE`); no expone los sistemas en `window`. El orden de inicialización importa. Las líneas de la tabla son aproximadas; buscar los nombres y comentarios de sección antes de editar.
 
 | Línea aprox. | Sección | Qué hay |
 |---|---|---|
@@ -84,14 +86,14 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 ## 5. Mundo procedural
 
 - **RNG con semilla:** `seedOf(str)` (hash FNV) y `rng(seed)` (tipo mulberry). La semilla es fija, así que el mundo es igual para todos.
-- **Chunks:** `WCH=900` px. `wchunk(cx,cy)` genera el contenido de un chunk: plantas, props, especies, luces y reliquias.
-- **Regiones:** `REG=4` chunks (3.600 px). `regionAt(rx,ry)` devuelve el **ADN de la región**:
+- **Chunks:** `WCH=900` px. `wchunk(cx,cy)` genera plantas, props, especies y luces. Las reliquias se generan aparte en `todayRelics()`.
+- **Regiones:** `REG=4` chunks por lado (3.600 × 3.600 px). `regionAt(cx,cy)` recibe coordenadas de chunk, calcula la región y devuelve su **ADN**:
   - Identidad: `name` (generado con sílabas) y `trait`.
   - Visual: `hue`, `pal` (paleta armónica), `ground`, `air`, `plants`.
-  - Música: `scale`/`mode`, `trOff` (transposición), `euclid` (patrón euclidiano), `kOff`, `track` (bajo y hook), `genre`, `bpm`.
+  - Música: `scale`, `trOff` (transposición), `pat` (patrón generado con `euclid()`), `kOff`, `track` (bajo y hook), `genre`, `bpm`.
   - Vida: `species` y `fill` (densidad).
   - Juego: `reto` y `mix`.
-- **Bioma base:** cada región parte de un bioma de `BIOMES` (llanura, bosque, lago, ruinas, jardín, dunas, cristales, faros, tormenta, cueva, vacío). Los biomas se desbloquean por días jugados (`minD`).
+- **Bioma base:** cada región parte de un bioma de `BIOMES` (llanura, bosque, lago, ruinas, jardín, dunas, cristales, faros, tormenta, cueva, vacío). La disponibilidad depende de la distancia al origen: `d = 2 * max(abs(rx), abs(ry))`, y se eligen biomas cuyo `minD <= d`. No depende de los días jugados.
 - **Mini-biomas:** cada chunk tiene una variante de `VARS` (claro / espeso / húmedo / eco / brillo).
 - **Hábitat:** `HAB` (equilibrado, florido, salvaje, mineral, desierto) multiplica las cantidades de flora, fauna y minerales.
 - **Bordes:** en una franja `BAND=900` px cerca del borde de la región, todo se mezcla con la región vecina:
@@ -100,9 +102,9 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
   - las plantas del vecino, que aparecen en los chunks de borde;
   - el audio: `MU.nb` y `MU.nbW` hacen crossfade de drums y BPM.
 - **Aire (`AIRP`):** claro, esporas, niebla, polvo/arena en el aire, etc.
-- **Eventos raros por región:** lluvia de notas, eclipse, migración y aurora (`eventOf`).
-- **Reliquias:** 3 por día (`todayRelics`). Se guardan en la constelación (`openSky`).
-- **Linterna:** dura 10 min más 1 min por cada día de racha, con un máximo de 60 (`lampMax`).
+- **Eventos actuales por región:** lluvia de notas, eclipse, migración y aurora (`eventOf`). Cada región salvo Origen tiene un 15 % de probabilidad diaria de tener un evento, determinado por semilla. Esto no constituye todavía un sistema de encuentros únicos o de rarezas coleccionables.
+- **Reliquias actuales:** 3 por día (`todayRelics()`), a distancias de 520, 1.300 y 2.400 px de la posición del jugador cuando se genera la lista de ese día. Una flecha apunta a la más cercana sin recoger. Al recogerlas se añaden estrellas a la constelación; no se conserva en ellas la región de procedencia. Jay quiere revisar su dificultad, no dar por definitivo este sistema.
+- **Linterna:** dura 10 min más 1 min por cada día de racha, con un máximo de 60 (`lampMax`). Su consumo se pausa mientras hay un modal abierto, y no consume dentro del Estudio. El mundo y su audio pueden seguir activos; no es una pausa completa de la simulación.
 
 ## 6. Motor musical (lo más importante)
 
@@ -127,6 +129,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
   - Melódicos: stab, pluck, sawLead, organ, flute, marimba, glass, keys; también dubChord y organChord.
 - **Mezcla espacial:** en la franja del borde, `VW` escala el volumen de las dos baterías y el BPM hace lerp entre las dos regiones.
 - **Camino:** casi ambient (`GEN.ambient`).
+- **Efectos existentes:** filtro de paso bajo al entrar al agua, reverb por convolución, delay sincronizado al tempo y cambios de feedback/envío en cuevas y variantes de eco. Jay quiere ampliar los efectos según acciones y lugares (filtros, reverb, eco, robot, etc.); los efectos nuevos siguen pendientes. La voz robótica no está implementada: la Voz del sistema actual es texto.
 - **Autonomía sonora:**
   - `physics()`: los choques entre objetos suenan.
   - `chain()`: un rayo de luz salta en cascada entre cristales, pilares, campanillas, antenas y astros.
@@ -141,6 +144,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
   - Sprite de 5×5 en espejo, con rol musical, tipo de movimiento y motivo.
   - Hay unas 4,7 millones de combinaciones. `discover()` las agrega al catálogo `S.cat`.
 - **Retos por región** (`RETOTXT`): cantar (hacer cantar las formas), pulsos en el beat, luces en tiempo, quieto 20 s, compás y pulso grande.
+  - El reto se inicializa al entrar o volver al Mundo y al cruzar de región. Los retos completados se guardan en `S.retos`; el progreso parcial de un reto es temporal.
 - **Logros** (`ACH`):
   - Formato `[id, nombre, descripción, oculto?]`. Si el 4.º elemento es `1`, el logro es oculto.
   - Se desbloquean con `unlock(id)`.
@@ -155,7 +159,9 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 ## 8. Cómo probar
 
 - **Sintaxis:** extrae el `<script>` y corre `node --check`.
-- **Visual:** Playwright headless (chromium), abriendo `index.html` local y sacando screenshots en 390×844 (móvil) y desktop. Los errores de carga de Google Fonts sin red son esperables.
+- **Visual y funcional:** servir el repositorio por HTTP y usar Playwright headless (Chromium) en 390×844 (móvil) y escritorio. Comprobar entrada y reentrada al Mundo con reto visible, transición de día sin reto residual, pausa de linterna en menús, colocación y persistencia de muestras en el Estudio y generación de tarjetas. Capturar errores JavaScript y screenshots. Los errores de carga de Google Fonts sin red son esperables.
+- **Tope diario:** comprobar que una luz de valor 10 recogida cuando faltaba 1 solo suma 1 tanto a `todayLight` como a `totalLight`.
+- No hay una suite de pruebas automatizadas versionada ni CI en el repositorio. Las comprobaciones anteriores describen el flujo de validación, no un comando de tests ya existente.
 - **Audio:** en headless no se oye nada. **Jay valida el sonido en su teléfono** con la URL de Vercel. Es la prueba que importa.
 - **Atajos de prototipo** (menú → Prototipo):
   - `dFill`: llena la barra del día.
@@ -170,41 +176,54 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Progreso solo en `localStorage`:** se pierde si borras datos del navegador. No hay cuentas ni nube.
 - **Audio en iOS:** requiere un gesto del usuario para arrancar, y el modo silencio del iPhone puede mutear Web Audio.
 - **El documento de diseño está desactualizado** en: motor de géneros, ADN de región, eliminación del slider y la propuesta de Bitácora.
+- **Restos del slider eliminado:** siguen presentes el modal `mMusic`, `rStyle`, `S.style` y sus handlers, pero el botón Música del menú solo activa/desactiva sonido. `style()` calcula la intensidad según el modo y el bioma, no según `S.style`. La limpieza de esos restos es trabajo pendiente.
+- **Bitácora aún sin interfaz propia:** `S.cat` y `S.places` guardan identificadores, y Logros muestra una lista breve de formas recientes. No se guarda un historial completo de géneros/instrumentos escuchados ni se vinculan las estrellas a sus regiones; esa información necesita un diseño de persistencia para la futura Bitácora.
 
 ## 10. Roadmap priorizado
 
-**Siguiente (Parte 3, propuesta ya aceptada en espíritu, falta construir):**
+**Etapas acordadas como orden de trabajo; cada implementación requiere que Jay autorice su etapa:**
 
-1. **Bitácora** (estilo No Man's Sky / Astroneer), con 4 pestañas:
+1. **Corregir la base — completado:** activar retos al entrar/reentrar al Mundo, limpiar la transición de día, respetar el tope de crecimiento y pausar el consumo de linterna en menús. Integrado en `main` mediante el PR #1.
+2. **Actualizar documentación — esta etapa:** estado real del juego, diferencias con el diseño y flujo de ramas. No incluye cambios de jugabilidad.
+3. **Organizar el código en módulos:** separar mundo, audio, interfaz y progreso, conservando comportamiento y partidas. Elegir herramientas al abordar la etapa; TypeScript + Vite es una opción, no una dependencia actual.
+4. **Bitácora** (estilo No Man's Sky / Astroneer), con 4 pestañas:
    - **Lugares:** regiones visitadas con % completado (especies, reto, evento, reliquia).
    - **Formas:** especies agrupadas por rol musical.
    - **Música:** géneros, escalas e instrumentos escuchados, cada uno con una explicación corta. Aquí se aprende música.
    - **Logros:** por categoría, con los ocultos como "???".
-2. **Escuchar (escáner):** mantener presionado muestra qué suena cerca: género, escala, la especie y su rol.
-3. **Resumen del día** al cerrar sesión o al apagarse la linterna: qué descubriste, cuánta música hiciste, y la tarjeta para compartir.
-4. **Looper / ecos:** graba 1–2 compases de lo que tocas y déjalo plantado en el mundo como un "eco" que sigue sonando.
-5. **Fusión / crafting en el Estudio:** combinar 2 muestras para crear una nueva (por ejemplo cristal + agua = campana húmeda).
-6. **Banda estilo Incredibox:** cada criatura que te sigue suma una capa (bajo, percusión, melodía, voz). Hay combos secretos que desbloquean un "bonus" musical y un logro.
-7. **Nombrar descubrimientos:** el jugador pone nombre a especies y lugares, y el nombre sale en la tarjeta.
+5. **Escuchar (escáner):** mantener presionado muestra qué suena cerca: género, escala, la especie y su rol.
+6. **Efectos por acciones y lugares:** ampliar filtros, reverb, eco y transformaciones robóticas con respuestas musicales claras, sin tapar la mezcla. Pendiente de implementación.
+7. **Resumen de la sesión:** descubrimientos, retos y música creada, con tarjeta para compartir.
+8. **Looper / ecos y banda de criaturas:** grabar 1–2 compases y dejarlos en el mundo; sumar capas de bajo, percusión, melodía y voz con las criaturas que siguen al jugador y combos musicales.
+9. **Ampliar el Estudio y los descubrimientos:** combinar muestras, decorar y nombrar especies y lugares; mostrar esos nombres en las tarjetas.
+10. **Optimizar según pruebas en móvil:** rendimiento visual y estabilidad del audio. Evaluar AudioWorklet si las pruebas detectan problemas de timing.
+
+**Dirección nueva de jugabilidad, pendiente de etapa propia:** encuentros mágicos excepcionalmente raros, descubrimientos únicos y reliquias más difíciles de conseguir. Definir su ubicación en la secuencia con Jay antes de implementarlos. No hay probabilidades, reglas de obtención ni recompensas nuevas aprobadas todavía; tampoco se ha definido si «único» significa único en una partida o compartido entre jugadores.
 
 **Después:**
 
 - Portar las frases corregidas de la Voz.
-- Refactor a TypeScript + Vite con módulos (`world/`, `audio/`, `render/`, `ui/`, `systems/`).
-- AudioWorklet para el scheduler y la síntesis pesada.
 - Cuentas y guardado en la nube (Supabase).
 - Empaquetar con Capacitor (iOS/Android) y Tauri (desktop).
 - Multiplayer o visitas a Estudios de otros jugadores.
 
-## 11. Flujo de deploy
+## 11. Flujo de ramas y deploy
 
 ```bash
-git add -A && git commit -m "mensaje" && git push origin main
-# Vercel (proyecto "whitedot") despliega solo en ~30 s → https://whitedot-inky.vercel.app
+git fetch origin main
+git switch -c tipo/nombre-del-cambio origin/main
+# Implementar y verificar el cambio; revisar el diff y preservar trabajo previo.
+git add archivo-modificado
+git commit -m "Descripción del cambio"
+git push -u origin tipo/nombre-del-cambio
 ```
 
-No hay build ni variables de entorno: es un sitio estático.
+Crear la rama en el checkout aislado existente; no crear un worktree salvo petición explícita de Jay. Antes de cambiar de rama, revisar el estado de Git y preservar cambios locales. No basar una etapa nueva en una rama pendiente de merge salvo que se acuerde esa dependencia.
+
+Después del push, entregar a Jay la rama, el commit, los cambios y el resultado de las verificaciones. **Jay crea el PR y hace el merge.** El asistente no crea PRs, no hace merges ni push directo a `main`. Vercel (proyecto `whitedot`) despliega producción al integrar en `main`; un push a la rama no confirma un despliegue de producción.
+
+No hay build ni variables de entorno de aplicación: es un sitio estático.
 
 ## 12. Prompt sugerido para arrancar en otra IA
 
-> Soy Jay. Estoy haciendo WHITEDOT / Pixel Blanco, un juego web de música electrónica generativa en un solo `index.html` (Canvas + Web Audio). Te paso HANDOFF.md con todo el contexto y el `index.html`. Respeta las decisiones de la sección 3. Quiero que construyas [X del roadmap]. Dame el código como cambios concretos (o el archivo completo) que pueda pegar y subir a GitHub. Háblame en español, directo.
+> Soy Jay. Estoy haciendo WHITEDOT / Pixel Blanco, un juego web de música electrónica generativa en un solo `index.html` (Canvas + Web Audio). Lee HANDOFF.md y el código actual. Respeta las decisiones de la sección 3. Quiero que construyas [etapa autorizada del roadmap]. Implementa y verifica los cambios en una rama nueva desde `main` actualizado, haz commit y push y entrégame la rama y los resultados. Yo creo el PR y hago el merge. Háblame en español, directo.
