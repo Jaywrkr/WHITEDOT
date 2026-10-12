@@ -175,7 +175,7 @@ export function initialize(runtime) {
       if(MU.layers.has(0)&&s%2===0)runtime.playVoice('faro',0,t+jit(),MU.dnaA,false,.4);
       if(MU.layers.has(1)&&(s===0||s===8))runtime.playVoice('faro',1,t,MU.dnaA,false,.7);
       if(MU.layers.has(2)&&s%4===0&&rnd()<.6)runtime.playVoice('faro',2,t,MU.dnaA,false,.4);
-      for(const f of MU.flowers){if(f.st===s){runtime.playVoice('planta:flor',f.n%7,t,runtime.regionOfPos(f.x,f.y),false,.7);f.hit=performance.now()+(t-ac.currentTime)*1000;}}
+      for(const f of MU.flowers){if(f.st===s){runtime.playVoice('planta:flor',f.n%7,t,runtime.regionOfPos(f.x,f.y),false,.7,f);f.hit=performance.now()+(t-ac.currentTime)*1000;}}
     }
     // quieto: campanas lentas sobre el acorde
     if((G===runtime.GEN.ambient||!live)&&MU.still>2.5&&s%2===0&&rnd()<.05){const n=ct[Math.floor(rnd()*ct.length)]+12+(rnd()<.4?12:0);pluck(n,t+jit(),vel(.045),2);}
@@ -186,7 +186,7 @@ export function initialize(runtime) {
     }
     // el mundo toca solo: objetos cercanos suenan en el beat, las criaturas que te siguen cantan
     if(runtime.inWorld()&&s%4===0&&MU.near.length&&rnd()<(.06+.2*E)*(MU.vari===4?1.8:MU.vari===0?.6:1)){const o=MU.near[Math.floor(rnd()*MU.near.length)];if(o.snd){o.snd(t);setTimeout(()=>{o.lit=1;o.hit=1;},Math.max(0,(t-ac.currentTime)*1000));}}
-    if(runtime.inWorld()&&s===0&&(MU.step>>4)%2===1)MU.singers.slice(0,2).forEach(o=>{runtime.speciesSound(o.s,t+SIX*2,true,o.personality);setTimeout(()=>{o.lit=1;},Math.max(0,(t+SIX*2-ac.currentTime)*1000));});
+    if(runtime.inWorld()&&s===0&&(MU.step>>4)%2===1)MU.singers.slice(0,2).forEach(o=>{runtime.speciesSound(o.s,t+SIX*2,true,o.personality,o);setTimeout(()=>{o.lit=1;},Math.max(0,(t+SIX*2-ac.currentTime)*1000));});
     // lo que tocas espera la siguiente corchea (con un poco de vida humana)
     if(s%2===0){let m=0;while(MU.q8.length&&m<3){const it=MU.q8.shift(),t2=t+jit()*1.5;it.fn(t2);if(it.vis)setTimeout(it.vis,Math.max(0,(t2-ac.currentTime)*1000));m++;}}
     let n=0;while(MU.queue.length&&n<4){MU.queue.shift()(t);n++;}

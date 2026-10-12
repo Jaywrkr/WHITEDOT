@@ -44,7 +44,7 @@ export function initialize(runtime) {
     // Legacy or border objects absent from the region's own flora retain a stable voice.
     return voices[kind] || voices[Object.keys(voices)[runtime.seedOf(kind) % Object.keys(voices).length]];
   }
-  function playVoice(kind, index, time, region, full=false, volume=1) {
+  function playVoice(kind, index, time, region, full=false, volume=1, source=null) {
     if (!runtime.ac || !region) return;
     const voice = getVoice(kind, region);
     const scale = region.scale, transposition = runtime.BIOMES[region.z].tr + region.trOff;
@@ -56,6 +56,7 @@ export function initialize(runtime) {
       return n;
     };
     function hit(t, degree, strength) {
+      runtime.soundCue?.(source,voice.role,t);
       const n = note(degree), v = runtime.vel(strength * volume);
       if (voice.role === 'bajo') runtime.bassInst(voice.instrument,n,t,v);
       else if (voice.role === 'perc') {

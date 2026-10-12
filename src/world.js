@@ -101,18 +101,18 @@ export function initialize(runtime) {
     const lxr=((cx%runtime.REG)+runtime.REG)%runtime.REG,lyr=((cy%runtime.REG)+runtime.REG)%runtime.REG,nbs=[];if(lxr===0)nbs.push(regionAt(cx-1,cy));if(lxr===runtime.REG-1)nbs.push(regionAt(cx+1,cy));if(lyr===0)nbs.push(regionAt(cx,cy-1));if(lyr===runtime.REG-1)nbs.push(regionAt(cx,cy+1));
     (dna.plants||[]).forEach(pt0=>{const n=Math.round(14*H[2]*dens);for(let i=0;i<n;i++){const[x,y]=P();const k=1+Math.floor(r()*4);let pt=pt0;if(nbs.length&&r()<.4){const nb=nbs[Math.floor(r()*nbs.length)];if(nb.plants&&nb.plants.length)pt=nb.plants[Math.floor(r()*nb.plants.length)];}for(let j=0;j<k;j++)c.plants.push({x:x+(r()-.5)*40,y:y+(r()-.5)*40,pt,h:pt.h*(.6+r()*.7),ph:r()*6.28,lit:0,cd:0,sw:0});}});
     if(runtime.PROPK[B.id])for(let i=0;i<Math.round(16*dens*H[4]);i++){const[x,y]=P();c.props.push({x,y,k:runtime.PROPK[B.id],i,cd:0,lit:0});}
-    const voice=(kind,index,o,q,full=false)=>runtime.playVoice(kind,index+(o.personality?.degree||0),q,runtime.regionOfPos(o.x,o.y),full,o.personality?.volume||1);
+    const voice=(kind,index,o,q,full=false)=>runtime.playVoice(kind,index+(o.personality?.degree||0),q,runtime.regionOfPos(o.x,o.y),full,o.personality?.volume||1,o);
     c.props.forEach(o=>o.snd=q=>voice(o.k,o.i,o,q));
     c.lotus.forEach(o=>o.snd=q=>voice('loto',o.deg,o,q));
     c.crystals.forEach(o=>o.snd=(q,dep=0)=>voice('cristal',dep,o,q));
     c.pillars.forEach(o=>o.snd=q=>voice('pilar',Math.floor(o.h/10),o,q));
-    c.sp.forEach(o=>o.snd=q=>runtime.speciesSound(o.s,q,false,o.personality));
+    c.sp.forEach(o=>o.snd=q=>runtime.speciesSound(o.s,q,false,o.personality,o));
     const rd=runtime.rng(runtime.seedOf("notas:"+id+runtime.S.todayKey));
     for(let i=0;i<(B.id==="vacio"?6:18);i++)c.motes.push({x:ox+rd()*runtime.WCH,y:oy+rd()*runtime.WCH,ph:rd()*6});
     c.playthings=createPlaythings(cx,cy,runtime.WCH,dens,B.id,runtime.seedOf,runtime.rng);
     c.pockets=createPockets(cx,cy,runtime.WCH,runtime.seedOf,runtime.rng);
     distributePlaythings(c.playthings,c.pockets,runtime.seedOf,runtime.rng);
-    c.playthings.forEach((o,i)=>{o.snd=q=>runtime.playVoice('toy:'+o.kind,i+(o.personality?.degree||0),q,runtime.regionOfPos(o.x,o.y),false,o.personality?.volume||1);});
+    c.playthings.forEach((o,i)=>{o.snd=q=>runtime.playVoice('toy:'+o.kind,i+(o.personality?.degree||0),q,runtime.regionOfPos(o.x,o.y),false,o.personality?.volume||1,o);});
     attachPersonalities(c,runtime.seedOf,runtime.rng);
     runtime.wchunks.set(id,c);return c;
   }

@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/core.mjs && node tests/radio.mjs && node tests/voices.mjs && node tests/gravity.mjs && node tests/journal.mjs && node tests/scanner.mjs && node tests/playthings.mjs && node tests/personality.mjs && node tests/pockets.mjs"
+    "test": "node tests/core.mjs && node tests/radio.mjs && node tests/voices.mjs && node tests/gravity.mjs && node tests/journal.mjs && node tests/scanner.mjs && node tests/playthings.mjs && node tests/personality.mjs && node tests/pockets.mjs && node tests/feedback.mjs"
   },
   "engines": {
     "node": ">=18"

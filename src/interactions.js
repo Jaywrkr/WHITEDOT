@@ -21,7 +21,7 @@ export function initialize(runtime) {
     if(runtime.S.mode==="studio")return;runtime.audio();const ms=performance.now();if(ms-lastSonar<700)return;lastSonar=ms;
     const x=runtime.inWorld()?runtime.S.wx:runtime.S.px,y=runtime.inWorld()?runtime.S.wy:runtime.S.py;waves.push({x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0});
     if(runtime.inWorld()&&runtime.RP&&runtime.RP.type==="pulsos"){runtime.RP.pst=runtime.onBeatNow()?runtime.RP.pst+1:0;runtime.retoSet("pulsos",runtime.RP.pst);}
-    runtime.MU.act+=.25;runtime.pulse=Math.max(runtime.pulse,.6);runtime.soon(t=>{if(runtime.inWorld())runtime.playVoice('pulso',0,t,runtime.regionOfPos(x,y),true);else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08),2));}});
+    runtime.MU.act+=.25;runtime.pulse=Math.max(runtime.pulse,.6);runtime.soon(t=>{if(runtime.inWorld())runtime.playVoice('pulso',0,t,runtime.regionOfPos(x,y),true,1,{x,y});else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08),2));}});
   }
   function boing(m,t,v){const o=runtime.ac.createOscillator(),g=runtime.ac.createGain();o.type="sine";o.frequency.setValueAtTime(runtime.hz(m+12),t);o.frequency.exponentialRampToValueAtTime(runtime.hz(m),t+.12);runtime.env(g,t,.004,v,.35);o.connect(g).connect(runtime.bus);const sv=runtime.ac.createGain();sv.gain.value=.3;g.connect(sv).connect(runtime.verbIn);o.start(t);o.stop(t+.5);}
   function propSound(k,i,t,region){runtime.playVoice(k,i,t,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy));}
@@ -34,7 +34,7 @@ export function initialize(runtime) {
       case "antena":runtime.cx.fillRect(x-.75,y-s*1.4,1.5,s*2.4);runtime.cx.arc(x,y-s*1.4,2.5,0,6.283);runtime.cx.fill();break;
       case "gota":runtime.cx.moveTo(x,y-s);runtime.cx.quadraticCurveTo(x+s*.8,y+s*.3,x,y+s*.6);runtime.cx.quadraticCurveTo(x-s*.8,y+s*.3,x,y-s);runtime.cx.stroke();break;
       case "astro":runtime.cx.fillRect(x-s,y-.75,s*2,1.5);runtime.cx.fillRect(x-.75,y-s,1.5,s*2);runtime.cx.fillRect(x-1.5,y-1.5,3,3);break;}}
-  function plantSound(pt,q,region,traits){runtime.playVoice('planta:'+pt.t,traits?.degree||0,q,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy),false,traits?.volume||1);}
+  function plantSound(pt,q,region,traits,source){runtime.playVoice('planta:'+pt.t,traits?.degree||0,q,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy),false,traits?.volume||1,source);}
   function drawPlant(o,x,y,t,b){const pt=o.pt,h=o.h,sw=Math.sin(t/(o.personality?.period||1100)+o.ph)*h*(o.personality?.sway||.08)+o.sw*Math.sin(t/60)*3,lit=o.lit>.1,c=lit?runtime.GOLD:`hsl(${pt.hue},28%,${lit?70:52}%)`,c2=lit?"#fff":`hsl(${pt.hue},60%,70%)`;
     runtime.cx.fillStyle=c;runtime.cx.strokeStyle=c;runtime.cx.lineWidth=1;
     switch(pt.t){
@@ -61,10 +61,10 @@ export function initialize(runtime) {
         case "agua":{const sh=Math.sin(t/700+h*12);runtime.cx.globalAlpha=al*(.22+.15*sh);runtime.cx.fillStyle=pal.main;runtime.cx.fillRect(gx,gy,6+sh*3,1);break;}}}}
   function touchRing(x,y,d,R,b){if(d<R&&b>.25){runtime.cx.globalAlpha=b*.3*(1-d/R);runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1;runtime.cx.beginPath();runtime.cx.arc(x,y,13+b*5,0,6.283);runtime.cx.stroke();}}
   function drawSprite(bits,x,y,c,col){runtime.cx.fillStyle=col;for(let row=0;row<5;row++)for(let k=0;k<3;k++)if(bits>>(row*3+k)&1){runtime.cx.fillRect(x+(k-2)*c,y+(row-2.5)*c,c,c);if(k<2)runtime.cx.fillRect(x+(2-k)*c,y+(row-2.5)*c,c,c);}}
-  function speciesSound(sp,t,full,traits){
+  function speciesSound(sp,t,full,traits,source){
     const key=sp.id.split(':')[0],coords=key.split(',').map(Number);
     const region=runtime.regionOfPos(coords[0]*runtime.REG*runtime.WCH+1,coords[1]*runtime.REG*runtime.WCH+1);
-    runtime.playVoice('forma:'+sp.id,sp.deg+(traits?.degree||0),t,region,full,traits?.volume||1);
+    runtime.playVoice('forma:'+sp.id,sp.deg+(traits?.degree||0),t,region,full,traits?.volume||1,source);
   }
 
   Object.defineProperties(runtime, {
