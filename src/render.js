@@ -1,3 +1,5 @@
+import { movementMultiplier } from './gravity.js';
+
 // Loop, simulación y dibujo del juego.
 export function initialize(runtime) {
   /* ---------- glifos ---------- */
@@ -35,7 +37,8 @@ export function initialize(runtime) {
     runtime.MU.E+=(target-runtime.MU.E)*Math.min(1,dt/(target>runtime.MU.E?2.5:6));
     runtime.MU.still=sp<.05?runtime.MU.still+dt:0;
     runtime.MU.dirY+=(dy*sp-runtime.MU.dirY)*Math.min(1,dt*1.5);
-    runtime.MU.dist+=sp*runtime.SPEED*dt;if(runtime.MU.dist>650)runtime.MU.pending=true;
+    const movementSpeed=runtime.SPEED*(runtime.inWorld()?movementMultiplier(runtime.S.wx,runtime.S.wy,runtime.REG*runtime.WCH,runtime.regionOfPos,runtime.seedOf):1);
+    runtime.MU.dist+=sp*movementSpeed*dt;if(runtime.MU.dist>650)runtime.MU.pending=true;
     if(runtime.S.mode!=="studio"){
       if(dx<-.6&&Math.abs(dy)<.35)runtime.leftT+=dt;else if(dx>-.2||Math.abs(dy)>.5)runtime.leftT=0;if(runtime.leftT>=90)runtime.unlock("alreves");
       if(runtime.MU.mel<=67&&performance.now()-runtime.lastNoteMs<1500)runtime.lowT+=dt;else if(runtime.MU.mel>67)runtime.lowT=0;if(runtime.lowT>=45)runtime.unlock("bajista");
@@ -53,7 +56,7 @@ export function initialize(runtime) {
     const b=runtime.beat();
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);ambient(t,dt,b);}
-    const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?worldStep(t,dt,dx,dy,b,modal):caminoStep(t,dt,dx,dy,b);
+    const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?worldStep(t,dt,dx,dy,b,modal,movementSpeed):caminoStep(t,dt,dx,dy,b);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.GOLD:runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
@@ -121,9 +124,9 @@ export function initialize(runtime) {
     return sz;
   }
 
-  function worldStep(t,dt,dx,dy,b,paused=false){
+  function worldStep(t,dt,dx,dy,b,paused=false,movementSpeed=runtime.SPEED){
     const sz=runtime.pxSize(),ds=Math.min(sz,22);
-    if(dx||dy){runtime.S.wx+=dx*runtime.SPEED*dt;runtime.S.wy+=dy*runtime.SPEED*dt;}
+    if(dx||dy){runtime.S.wx+=dx*movementSpeed*dt;runtime.S.wy+=dy*movementSpeed*dt;}
     runtime.camX=runtime.S.wx;runtime.camY=runtime.S.wy;
     if(runtime.S.lampDay!==runtime.S.todayKey){runtime.S.lampDay=runtime.S.todayKey;runtime.S.lampUsed=0;}
     if(!paused)runtime.S.lampUsed+=dt;

@@ -1,3 +1,5 @@
+import { gravityOf } from './gravity.js';
+
 // Catálogo, retos y recompensas de exploración.
 export function initialize(runtime) {
   function discover(sp){if(runtime.S.cat[sp.id])return;runtime.S.cat[sp.id]=1;runtime.S.catN=(runtime.S.catN||0)+1;runtime.S.catRecent=[{n:sp.name,r:sp.region,d:runtime.S.todayKey}].concat(runtime.S.catRecent||[]).slice(0,40);
@@ -7,7 +9,7 @@ export function initialize(runtime) {
     document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+" · "+d.bpm+" BPM · "+B.name+(d.mix!=null?" y "+runtime.BIOMES[d.mix].name:"")+" "+d.trait;
     document.getElementById("zName").textContent=d.name;
     const ev=runtime.eventOf(d);
-    document.getElementById("zDo").textContent=[d.hab?(d.fill?d.fill[1]+", ":"")+d.hab[1].toLowerCase()+", "+runtime.AIRTXT[d.air]+(d.ground?", suelo de "+d.ground:""):null,ev?"Hoy: "+ev[1]:null,first?Z[2][0]:null,left?left+(left===1?" forma nueva":" formas nuevas"):null].filter(Boolean).join(" · ");
+    document.getElementById("zDo").textContent=[gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement,d.hab?(d.fill?d.fill[1]+", ":"")+d.hab[1].toLowerCase()+", "+runtime.AIRTXT[d.air]+(d.ground?", suelo de "+d.ground:""):null,ev?"Hoy: "+ev[1]:null,first?Z[2][0]:null,left?left+(left===1?" forma nueva":" formas nuevas"):null].filter(Boolean).join(" · ");
     el.classList.add("on");clearTimeout(zoneT);zoneT=setTimeout(()=>el.classList.remove("on"),first?7000:4500);
   }
   let curRegion=null,RP=null;
