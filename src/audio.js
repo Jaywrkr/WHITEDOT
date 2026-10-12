@@ -1,8 +1,10 @@
+import { createRadio } from './radio.js';
+
 // Motor musical, síntesis y programación de Web Audio.
 export function initialize(runtime) {
   /* ---------- música generativa ----------
-     No hay loop. La armonía avanza cuando tú avanzas, el ritmo nace de tu movimiento,
-     cada zona cambia escala, ritmo y timbre, y la música te responde con lo que tocaste. */
+     La región compone por frases y secciones aunque estés quieto; tu movimiento
+     añade energía. Cada zona conserva su escala, género y timbres. */
   const A=57;
   const NEXTD={0:[5,3,6,2],1:[4,6,0],2:[5,3,6],3:[0,6,4,1],4:[0,5,3],5:[2,6,3,0],6:[2,0,5]};
   const UPD=[2,6,5,4],DOWND=[3,5,0,1];
@@ -21,6 +23,8 @@ export function initialize(runtime) {
   const style=()=>{if(runtime.S.mode==="camino")return .08;return runtime.clamp((KB[BI().id]??.3)+(MU.dnaA?MU.dnaA.kOff||0:0),0,1);};
   const MU={deg:0,pending:false,dist:0,E:0,act:0,still:0,dirY:0,speed:0,mel:69,motif:[],lastNoteStep:-999,step:0,next:0,queue:[],bq:[],cell:CELLS[0],lastChange:0,
     biome:0,biomeT:0,tr:0,sq:[],nb:null,nbW:0,prevKit:null,xf0:-999,bpmFrom:96,dnaA:null,dnaT:null,q8:[],near:[],singers:[],vari:-1,timbre:0,follower:false,voices:[57,60,64,67],resp:false,layers:new Set(),flowers:[],boltAt:0,groove:0};
+  const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN);
+  MU.radio = null;
   let ac=null,master,mfilt,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
   function impulse(sec){const n=ac.sampleRate*sec|0,b=ac.createBuffer(2,n,ac.sampleRate);for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);}return b;}
   function audio(){
@@ -129,14 +133,22 @@ export function initialize(runtime) {
   }
   function playStep(t){
     const s=MU.step%16,k=style(),calm=runtime.isFree()&&runtime.S.mode==="camino";
-    const E=(calm||runtime.S.mode==="camino")?Math.min(MU.E,.2):MU.E;
-    const live=runtime.inWorld()||runtime.S.mode==="studio",A=live&&MU.dnaA?MU.dnaA:null,G=A?runtime.GEN[A.genre]:runtime.GEN.ambient,nb=runtime.inWorld()&&MU.nb&&MU.nb!==A?MU.nb:null,w=nb?MU.nbW:0;
+    const live=runtime.inWorld()||runtime.S.mode==="studio";
     if(s===0){
       if(MU.biome!==MU.biomeT||MU.dnaA!==MU.dnaT){MU.biome=MU.biomeT;MU.dnaA=MU.dnaT;MU.tr=BI().tr+(MU.dnaA?MU.dnaA.trOff:0);MU.pending=true;}
+      const nb=runtime.inWorld()?MU.nb:null,w=nb?MU.nbW:0;
       const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;BPM=Math.round(bA*(1-w)+bB*w);SIX=60/BPM/4;delay.delayTime.setTargetAtTime(SIX*3,t,.2);
       if(MU.pending||(MU.step-MU.lastChange>16*(6+Math.floor(rnd()*4))))changeChord(t);
       if(BI().id==="tormenta"&&runtime.inWorld()&&(MU.step/16)%2===0&&rnd()<.75)MU.boltAt=t+SIX*(rnd()<.5?0:8);
     }
+    if(runtime.inWorld()&&MU.dnaA){
+      if(s===0||!MU.radio)MU.radio=radio.advance(MU.dnaA,MU.step>>4,{
+        near:MU.near.length,singers:MU.singers.length,variant:MU.vari,
+        event:runtime.eventOf(MU.dnaA)?.[0]
+      });
+    }else MU.radio=null;
+    const E=(calm||runtime.S.mode==="camino")?Math.min(MU.E,.2):Math.max(MU.E,MU.radio?.energy||0);
+    const A=live&&MU.dnaA?MU.dnaA:null,G=A?runtime.GEN[A.genre]:runtime.GEN.ambient,nb=runtime.inWorld()&&MU.nb&&MU.nb!==A?MU.nb:null,w=nb?MU.nbW:0;
     if(s%4===0){MU.bq.push(t);if(MU.bq.length>8)MU.bq.shift();}
     MU.sq.push({t,s});if(MU.sq.length>12)MU.sq.shift();
     const id=BI().id,cave=id==="cueva",vac=id==="vacio",bar=MU.step>>4;
@@ -256,8 +268,8 @@ export function initialize(runtime) {
     }
   }
   function playTrack(d,s,t,E,ct){
-    const tr=d&&d.track;if(!tr)return;const sc=d.scale,bar=(MU.step>>4)&1,nt=(dg,base)=>base+MU.tr+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
-    const gid=d.genre,bs=gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
+    const base=d&&d.track;if(!base)return;const tr=MU.radio?{...base,...MU.radio}:base;const sc=d.scale,bar=(MU.step>>4)&1,nt=(dg,base)=>base+MU.tr+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
+    const gid=d.genre,bs=MU.radio?tr.bass[s]:gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
     if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel(gid==="rominimal"?.13:.17));}
     let h=tr.hook[s];if(h>=0&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar)h+=tr.shift;let n=nt(h,57+(MU.vari===4?12:0));if(s%4===0)n=snap(n,ct);hookInst(tr.hookI,n,t,vel(.05+.05*E));}
   }
