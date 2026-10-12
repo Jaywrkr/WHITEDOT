@@ -53,6 +53,7 @@ Al integrar el PR en `main`, Vercel despliega producción automáticamente. No h
 ```bash
 npm test
 python3 tests/smoke.py
+python3 tests/atlas_smoke.py
 ```
 
 Las pruebas core necesitan Node. Para las pruebas de navegador necesitas Python y Playwright: instala `tests/requirements.txt` en un entorno virtual (`python3 -m pip install -r tests/requirements.txt`) y usa Chromium instalado en el sistema, o instala el navegador con `python3 -m playwright install chromium`. Puedes indicar su ejecutable mediante `CHROMIUM_PATH`. El smoke test levanta su propio servidor y verifica móvil y escritorio; no evalúa la calidad audible de la música.
@@ -60,6 +61,10 @@ Las pruebas core necesitan Node. Para las pruebas de navegador necesitas Python 
 Los módulos requieren servir el juego por HTTP; abrir `index.html` mediante `file://` no es el flujo soportado.
 
 Los avisos del sistema ocupan dos líneas; tócalos para leer el mensaje completo. La tarjeta de entrada es breve y los detalles del lugar quedan en Bitácora y Escuchar.
+
+## Atlas de ritmos (para probar)
+
+Menú → Prototipo → **Ritmos** lista todos los géneros del juego ordenados por tempo, confirma que existen en el mundo y muestra cuáles ya escuchaste. **Ir** te lleva a la región más cercana con ese ritmo.
 
 ## Dirección del juego
 
