@@ -1,5 +1,5 @@
 const LEAN=['minimal','rominimal','microhouse','minimaltechno','dub','heart','robotic','techhouse','melodictechno','berlin','ebm'];
-const CALM=['ambient','heart','downtempo'];
+const CALM=['ambient','heart','downtempo','lofi'];
 const PROGRESSIONS=[[0,5,3,4],[0,3,5,4],[0,4,3,5],[0,0,3,0]];
 const RHYTHMS=[[0,3,6,10,12],[2,6,10,14],[3,7,11,15],[0,5,10],[1,6,9,14]];
 export function createGrammar(region,seedOf,rng) {

@@ -23,13 +23,17 @@ Escucha agradable para público amplio: controlar fatiga, disonancia accidental,
 
 **Ya hay:** motivos contenidos, gramática, perfiles materiales (en rama), filtro/shelf/compresor, atenuación por densidad, Escucha suave, efectos locales y vecindarios.
 
-**Falta:** escuchar regiones representativas de las 34 familias, tanto quieto como interactuando y cruzando fronteras. Afinar grave/medio/agudo, dinámica, swing, articulación, envíos y claridad de roles. Evitar que todos los sonidos se vuelvan apagados o iguales al contener brillo. Comparar auriculares/altavoz móvil, volumen bajo y sesiones prolongadas. Revisar mezcla de familias con tempos muy distintos sin volverlas genéricas.
+**Falta:** escuchar regiones representativas de los 52 estilos, tanto quieto como interactuando y cruzando fronteras. Afinar grave/medio/agudo, dinámica, swing, articulación, envíos y claridad de roles. Evitar que todos los sonidos se vuelvan apagados o iguales al contener brillo. Comparar auriculares/altavoz móvil, volumen bajo y sesiones prolongadas. Revisar mezcla de familias con tempos muy distintos sin volverlas genéricas.
 
 **Aceptación:** pulso/groove reconocible, bajo legible, capas diferenciadas, sin saturación ni fatiga marcada en pruebas humanas. Registrar coordenadas/casos problemáticos y correcciones. No prometer agrado universal ni tratar tests de scheduler como validación artística. Puede acompañar todas las etapas; no exige paralizar el siguiente paso si Jay lo autoriza.
 
 ## 1b. Biblioteca de ~100 ritmos (pedido de Jay)
 
-**Ya hay:** 34 estilos, Atlas de ritmos para listarlos, verificarlos y viajar a cada uno.
+**Ya hay (rama `feat/rhythms-afro-roots`):** 52 estilos. Tanda 1 hecha: 18 de raíz afroamericana. Reparto ponderado (máx. ≈ 3,4 %, mín. ≈ 0,7 %). Atlas con filtro por familia y marca de probado.
+
+**Siguientes tandas, en este orden propuesto:** 2) afro y diáspora, 3) latino y andino, 4) industrial y oscuro, 5) bass y breaks, 6) otras escenas. Cada tanda en su propia rama, siguiendo la receta descrita en HANDOFF ("Biblioteca de ritmos y reparto equilibrado"). Ya no hace falta separar EBM clásico de darkwave/EBM si Jay no lo pide.
+
+**Pendiente de esta etapa:** Jay escucha la tanda 1 con el Atlas y marca cuáles suenan bien; ajustar las que no. Dar a cada familia una afinidad suave por bioma si se quiere que el paisaje y el ritmo se correspondan más (hoy el campo de tempo decide casi todo, salvo Origen y Vacío).
 
 **Objetivo:** llegar a unos 100 ritmos agradables y distintos entre sí, con muchas raíces afro/afrolatinas/afroamericanas, industriales, latinas, asiáticas y de todas las épocas de la electrónica. Cada uno con patrón de batería propio, bajo, hook, swing, tempo y escala; no un renombre de otro.
 

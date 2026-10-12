@@ -22,10 +22,20 @@ with sync_playwright() as p:
   page.wait_for_function('document.querySelectorAll("#atlasBody button[data-atlas]").length>0')
   rows=page.locator('#atlasBody button[data-atlas]').count();n=page.evaluate('Object.keys(window.__testRuntime.GEN).length');assert rows==n,(rows,n)
   assert 'verificados' in page.locator('#atlasSummary').inner_text()
+  page.locator('#atlasFilters button[data-atlas-filter="afroamericana"]').click()
+  fam=page.evaluate('Object.keys(window.__testRuntime.GEN).filter(id=>window.__testRuntime.GEN[id].family==="afroamericana").length')
+  assert page.locator('#atlasBody button[data-atlas]').count()==fam and fam>=18
+  page.locator('#atlasBody button[data-atlas-test="footwork"]').click()
+  assert page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4")).atlasTested.footwork===1')
+  assert 'probados' in page.locator('#atlasSummary').inner_text()
+  page.locator('#atlasFilters button[data-atlas-filter="untested"]').click()
+  assert page.locator('#atlasBody button[data-atlas="footwork"]').count()==0
+  page.locator('#atlasFilters button[data-atlas-filter="afroamericana"]').click()
   page.screenshot(path=f'/tmp/whitedot-atlas-{label}.png')
-  for gid in ['amapiano','liquid']:
+  for gid in ['footwork','amapiano','trap']:
    if not page.locator('#mAtlas').is_visible():
     page.locator('#bMenu').click();page.locator('#dAtlas').click();page.wait_for_function('document.querySelectorAll("#atlasBody button[data-atlas]").length>0')
+    page.locator('#atlasFilters button[data-atlas-filter="all"]').click()
    page.locator(f'#atlasBody button[data-atlas="{gid}"]').click()
    if page.locator('#mHelpW').is_visible():page.locator('#hwGo').click()
    page.wait_for_function(f'window.__testRuntime.S.mode==="world" && window.__testRuntime.MU.dnaT && window.__testRuntime.MU.dnaT.genre==="{gid}"')

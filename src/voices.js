@@ -70,6 +70,7 @@ export function initialize(runtime) {
           else if (voice.instrument === 'timbale') runtime.timbale(t,v);
           else if (voice.instrument === 'clap') runtime.clap(t,v);
           else if (voice.instrument === 'hat') runtime.hatHit(t,v);
+          else if (voice.instrument === 'snare') runtime.snare(t,v*.8);
           else runtime.tom(t,55+voice.degree*15,v);
         } else if (voice.role === 'acorde') {
           [0,2,4].forEach(d=>runtime.hookInst(voice.instrument,note(degree+d)-(voice.instrument==='glass'?12:0),t,v*.4));

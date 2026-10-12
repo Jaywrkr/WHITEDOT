@@ -1,5 +1,6 @@
 import {REFERENCE_GENRES} from './references.js';
 import {WORLD_GENRES} from './palettes.js';
+import {RHYTHM_GENRES} from './rhythms.js';
 // Tablas y constantes del juego.
 export function initialize(runtime) {
   const CAP=120, PER_LEVEL=40, CHUNK=320, SPEED=190, WCH=900, REG=4, GOLD="#f0d27a";
@@ -61,7 +62,8 @@ export function initialize(runtime) {
    dnb:{name:"Drum & bass",bpm:[166,174],sw:.02,pt:5,bassI:"reese",hookP:["keys","organ"]},
    heart:{name:"Dub profundo",bpm:[68,76],sw:0,pt:2,bassI:"sub",hookP:["flute"],pad:.5},
    ...WORLD_GENRES,
-   ...REFERENCE_GENRES
+   ...REFERENCE_GENRES,
+   ...RHYTHM_GENRES
   };
   const GPOOL={llanura:["minimal","deep","downtempo"],bosque:["afro","deep","tribal"],lago:["ambient","dub"],ruinas:["tribal","afro"],jardin:["rominimal","deep","minimal"],dunas:["downtempo","afro","dub"],cristales:["garage","minimal"],faros:["deep","dub"],tormenta:["acid","breaks"],cueva:["heart","dub"],vacio:["ambient"]};
   // Se usa una semilla independiente para conservar el RNG visual de las regiones.
