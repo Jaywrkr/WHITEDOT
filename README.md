@@ -70,3 +70,5 @@ Las reliquias pertenecen a sitios fijos del mundo, sin flecha global ni generaci
 Lee **[HANDOFF.md](HANDOFF.md)**. Tiene todo el contexto: visión, decisiones tomadas, arquitectura del código, sistemas, cómo probar y el roadmap. Está pensado para pegarlo en otra IA (ChatGPT, Claude, etc.) y seguir sin perder nada.
 
 La variedad musical incluye paletas tropicales, melódicas, robóticas y disco, con grooves y escalas propios. Sus instrumentos electrónicos incluyen steel pan, kalimba FM, teclas cálidas, cuerdas, metales, clavinet, bajos filtrados o FM, formantes, güiro y timbal. Escuchar y Bitácora muestran qué aporta cada fuente.
+
+Cada región combina una gramática propia de acentos, armonía, fraseo y brillo, además de su género. La composición evoluciona estando quieto. **Escucha suave**, en el menú, reduce volumen y brillo; puedes combinarla con el control de silencio.

@@ -67,6 +67,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/data.js` | Constantes, biomas, géneros, logros, muestras y textos. |
 | `src/progress.js` | Guardado v4, días, racha, crecimiento, linterna, RNG y cachés. |
 | `src/world.js` | Camino, generación de regiones/chunks, eventos y reliquias. |
+| `src/grammar.js` | Perfiles musicales regionales, ritmo/frase/armonía y atenuación por densidad. |
 | `src/palettes.js` | Paletas tropical, melódica, robótica y disco, asignación regional y patrones. |
 | `src/instruments.js` | Nuevos timbres de parciales, FM y filtros, güiro y timbal electrónicos. |
 | `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros y tracks. |
@@ -295,3 +296,28 @@ Jay pide evitar ritmos y sonidos con sensación de videojuego. Priorizar groove,
 `src/palettes.js` añade tropical house, melodic house, electro robótico y nu-disco (22 géneros en total). La semilla independiente `world-palette:v1` asigna una nueva paleta al 40 % de regiones elegibles; Origen y Vacío conservan su selección anterior. Solo cambian género, escala, tempo e instrumentos de la pista. Se conservan el terreno, nombres, criaturas, posiciones, rasgos y descubrimientos. Las paletas tropical/disco favorecen modos mayores o dóricos/mixolidios; melódico usa menor/dórico y robótico menor/frigio.
 
 `src/instruments.js` sintetiza steel pan, kalimba FM, teclas FM cálidas, cuerdas analógicas, metales, clavinet, bajo elástico filtrado, bajo modular FM, formantes y teclas metálicas. Añade güiro y timbal sintetizados. Son aproximaciones electrónicas mediante parciales, FM y filtros, sin muestras grabadas. Sus envelopes tienen duración acotada y los destinos respetan los efectos locales. Las voces de objetos usan los instrumentos de su paleta: no se agregan teclas o marimba genéricas a esas cuatro familias. La percusión y los patrones de bajo y melodía también cambian por estilo. Bitácora y Escuchar explican los instrumentos nuevos. `tests/palettes.mjs` comprueba familias, síntesis distinta y cinco fixtures del mundo anterior; el scheduler verifica los 22 géneros. La calidad y el equilibrio final requieren escuchar en móvil.
+
+### Gramática musical y curaduría
+
+`src/grammar.js` genera perfiles independientes por región/género (`grammar:v1`): célula y rotación de acentos, instrumento de detalle, progresión armónica, duración de armonía/frase, desplazamiento del motivo, límites de densidad y brillo. La radio conserva anclas, cambia articulación dentro del motivo y desarrolla frases nuevas con el reloj musical aunque el jugador esté quieto. El reloj armónico se mide desde la entrada a la región; sus progresiones usan grados de la escala del lugar y el pad mantiene conducción de voces. Moverse ya no reinicia el pad con el mismo acorde. La etapa no añade todos los géneros de referencia ni autopilot/favoritos: son fases posteriores del plan.
+
+La curaduría atenúa voces superpuestas por semicorchea, especialmente bajos repetidos y agudos. Un shelf suave, paso bajo y compresor controlan la salida. El menú ofrece Escucha suave: menor volumen y brillo, persistidos en `S.softMusic` dentro de v4; respeta Silencio. Escuchar muestra el carácter del perfil. Las cuatro paletas anteriores ahora tienen su percusión en `drums()`, la ruta que usa el Mundo; antes sus casos estaban por error en el dispatcher antiguo `kitPlay()`. Las pruebas del scheduler exigen bombo en las cuatro, además de bajo y melodía. Esta versión construye variación combinatoria con continuidad musical; el gusto y el equilibrio perceptivo se validan escuchando en móvil.
+
+### Plan ampliado acordado con Jay
+
+Cada etapa sigue el flujo rama nueva desde main actualizado, pruebas, commit y push; Jay hace PR y merge. La autorización es por etapa.
+
+1. Gramática musical y curaduría: primera base implementada en esta etapa.
+2. Ampliar referencias: minimal techno, tech house, deep house, electrónica andina, cosmic disco, nu-disco, melodic techno, ambient, microhouse, organic house/downtempo, dub techno, afro house, amapiano, jazztronica, Berlin School, IDM, progressive house, liquid drum & bass, darkwave/EBM y algorave. Son ingredientes para identidades generativas; no un límite de estilos.
+3. Instrumentos procedurales: materiales, resonancia, envolventes, afinación y modulación con identidad estable.
+4. Curaduría perceptiva: continuar pruebas de escucha, controlar agudos, graves, disonancias, acumulación y transiciones; modo Suave ya implementado.
+5. Evolución ambiental: tras unos 60 s quieto, el ambiente toma mayor iniciativa mediante criaturas, texturas y nuevas secciones; la radio actual ya evoluciona sin movimiento.
+6. Favoritos musicales: marcar cualquier punto, nombrarlo, guardar coordenadas y carácter sonoro en Bitácora/mapa.
+7. Volver a favoritos: orientación/distancia, viaje automático y retorno a puntos descubiertos. La identidad permanece; guardar una versión exacta requiere escenas.
+8. Autopilot: paseo lento y viaje a favoritos; cancelación al mover y con botón, pausa en menús, consumo normal de linterna.
+9. Interacciones profundas: objetos que sostienen acordes, cambian secuencias y acentos, responden o transforman vecinos.
+10. Looper, escenas y banda de criaturas: frases de uno/dos compases, roles coordinados y combinaciones recuperables.
+11. Vida y encuentros excepcionales: objetos autónomos, interacción entre criaturas y fenómenos musicales raros.
+12. Estudio, mapa e interfaz compacta: favoritos, escenas, muestras y descubrimientos.
+13. Escucha y rendimiento en móvil: sesiones largas, mezcla densa, quietud y autopilot.
+14. Encuentros entre jugadores: puntos distintos visibles y creación musical compartida con reloj, armonía y límites coordinados.

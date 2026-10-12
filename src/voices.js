@@ -57,7 +57,7 @@ export function initialize(runtime) {
     };
     function hit(t, degree, strength) {
       runtime.soundCue?.(source,voice.role,t);
-      const n = note(degree), v = runtime.vel(strength * volume);
+      const n = note(degree), v = runtime.vel(strength * volume)*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
       const emit=()=>{
         if (voice.role === 'bajo') runtime.bassInst(voice.instrument,n,t,v);
         else if (voice.role === 'perc') {
