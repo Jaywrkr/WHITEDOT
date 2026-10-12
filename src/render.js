@@ -29,7 +29,7 @@ export function initialize(runtime) {
     let dx=(runtime.keys.arrowright||runtime.keys.d?1:0)-(runtime.keys.arrowleft||runtime.keys.a?1:0), dy=(runtime.keys.arrowdown||runtime.keys.s?1:0)-(runtime.keys.arrowup||runtime.keys.w?1:0);
     if(runtime.ptr){dx=runtime.ptr.x-runtime.W/2;dy=runtime.ptr.y-runtime.H/2;const l=Math.hypot(dx,dy);if(l<6){dx=dy=0;}else{const k=Math.min(1,l/80);dx=dx/l*k;dy=dy/l*k;}}
     else{const l=Math.hypot(dx,dy);if(l){dx/=l;dy/=l;}}
-    if(modal||runtime.S.mode==="studio"){dx=dy=0;}
+    if(modal||runtime.scanning||runtime.S.mode==="studio"){dx=dy=0;}
     const sp=Math.hypot(dx,dy);
     runtime.MU.speed+=(sp-runtime.MU.speed)*Math.min(1,dt*3);
     runtime.MU.act*=Math.pow(.5,dt/2.5);
@@ -53,6 +53,7 @@ export function initialize(runtime) {
     if(runtime.windG)runtime.windG.gain.setTargetAtTime(runtime.inWorld()&&(runtime.BI().id==="dunas"||(runtime.MU.dnaT&&runtime.MU.dnaT.air==="polvo"))?runtime.MU.speed*.045:0,runtime.ac.currentTime,.3);
     if(runtime.windF)runtime.windF.frequency.setTargetAtTime(400+runtime.MU.speed*1400,runtime.ac.currentTime,.3);
 
+    runtime.updateScanner();
     const b=runtime.beat();
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);ambient(t,dt,b);}

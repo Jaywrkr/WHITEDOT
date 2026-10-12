@@ -14,7 +14,7 @@ CHROMIUM = os.environ.get('CHROMIUM_PATH') or shutil.which('chromium') or shutil
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
  for label,size in [('mobile',{'width':390,'height':844}),('desktop',{'width':1280,'height':800})]:
-  c=b.new_context(viewport=size);page=c.new_page();page.set_default_timeout(5000);page.add_init_script('window.__audioContexts=[];window.AudioContext=class extends AudioContext {constructor(...args){super(...args);window.__audioContexts.push(this);}}');errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(5000);page.add_init_script('window.__audioContexts=[];window.AudioContext=class extends AudioContext {constructor(...args){super(...args);window.__audioContexts.push(this);}}');errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
   page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click();page.wait_for_function('window.__audioContexts.length === 1 && window.__audioContexts[0].state === "running" && window.__audioContexts[0].currentTime > 0')
@@ -33,6 +33,20 @@ with sync_playwright() as p:
   page.evaluate('''()=>{const r=window.__testRuntime,old=r.S.sound;r.S.sound=false;r.recordInstrument('muted-test');r.S.sound=old;if(r.S.journal.music.instruments['muted-test'])throw Error('Muted music incorrectly recorded');}''')
   page.locator('[data-journal-tab="achievements"]').click();assert '???' in page.locator('#journalBody').inner_text()
   page.locator('#journalClose').click()
+  # Real pointer gestures: hold scans, drag moves, a short tap pulses.
+  center={'x':size['width']/2,'y':size['height']/2}
+  page.mouse.move(center['x']+60,center['y']);before=page.evaluate('({x:window.__testRuntime.S.wx,y:window.__testRuntime.S.wy,waves:window.__testRuntime.waves.length})')
+  page.mouse.down();page.wait_for_timeout(650);assert page.locator('#scanner').is_visible();page.screenshot(path='/tmp/whitedot-scanner-'+label+'.png')
+  after=page.evaluate('({x:window.__testRuntime.S.wx,y:window.__testRuntime.S.wy,waves:window.__testRuntime.waves.length})')
+  assert abs(after['x']-before['x'])<.001 and abs(after['y']-before['y'])<.001
+  page.mouse.up();assert not page.locator('#scanner').is_visible()
+  page.wait_for_timeout(800);page.mouse.click(center['x'],center['y'])
+  assert page.evaluate('window.__testRuntime.waves.length > 0')
+  page.mouse.move(center['x'],center['y']);before=page.evaluate('window.__testRuntime.S.wx');page.mouse.down();page.mouse.move(center['x']+80,center['y']);page.wait_for_timeout(650)
+  assert not page.locator('#scanner').is_visible();assert page.evaluate('window.__testRuntime.S.wx')>before;page.mouse.up()
+  page.keyboard.down('e');assert page.locator('#scanner').is_visible();page.keyboard.up('e');assert not page.locator('#scanner').is_visible()
+  if label=='mobile':
+   cdp=c.new_cdp_session(page);cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':[center]});page.wait_for_timeout(650);assert page.locator('#scanner').is_visible();cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]});assert not page.locator('#scanner').is_visible()
   page.keyboard.press('Space')
   page.keyboard.down('d');page.wait_for_timeout(300);page.keyboard.up('d')
   page.locator('#bPrimary').click();page.locator('#bPrimary').click();assert page.locator('#reto').is_visible()
