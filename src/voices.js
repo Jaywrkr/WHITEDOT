@@ -75,7 +75,8 @@ export function initialize(runtime) {
           [0,2,4].forEach(d=>runtime.hookInst(voice.instrument,note(degree+d)-(voice.instrument==='glass'?12:0),t,v*.4));
         } else runtime.hookInst(voice.instrument,n-(voice.instrument==='glass'?12:0),t,v);
       };
-      const spatialEmit=(gain=1)=>{v*=gain;if(runtime.withVoiceEffect)runtime.withVoiceEffect(kind,region,voice,t,emit);else emit();};
+      const patchEmit=()=>{if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(kind,region,voice,source,t,emit);else emit();};
+      const spatialEmit=(gain=1)=>{v*=gain;if(runtime.withVoiceEffect)runtime.withVoiceEffect(kind,region,voice,t,patchEmit);else patchEmit();};
       if(runtime.withSpatialVoice)runtime.withSpatialVoice(source,t,spatialEmit);else spatialEmit();
     }
     const strength = voice.role === 'bajo' ? .15 : voice.role === 'perc' ? .12 : voice.role === 'agudo' ? .03 : .075;

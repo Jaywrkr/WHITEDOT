@@ -35,9 +35,10 @@ export function initialize(runtime) {
       const sp=source.object.s;
       const own=sp?runtime.regionOfPos(...sp.id.split(':')[0].split(',').map(n=>+n*runtime.REG*runtime.WCH+1)):runtime.regionOfPos(source.object.x,source.object.y);
       const voice=source.voice||runtime.getVoice(source.kind,own),item=document.createElement('li');
+      const patch=runtime.getInstrumentPatch?.(source.kind,own,voice,source.object);
       const effect=runtime.getEffectProfile?.(source.kind,own,voice);
       const name=sp&&!runtime.S.cat[sp.id]?'Forma desconocida':source.name;
-      item.textContent=`${name} · ${ROLES[voice.role]} · ${INSTRUMENTS[voice.instrument]?.[0]||voice.instrument} · ${own.name}${effect&&effect.type!=="dry"?" · "+effect.name:""}${source.object.personality?" · "+source.object.personality.name:""}`;
+      item.textContent=`${name} · ${ROLES[voice.role]} · ${INSTRUMENTS[voice.instrument]?.[0]||voice.instrument}${patch?" · "+patch.name:""} · ${own.name}${effect&&effect.type!=="dry"?" · "+effect.name:""}${source.object.personality?" · "+source.object.personality.name:""}`;
       list.append(item);
     }
     if(!sources.length){const item=document.createElement('li');item.textContent='Sin objetos musicales cercanos. La región sigue componiendo.';list.append(item);}

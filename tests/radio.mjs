@@ -7,6 +7,7 @@ import { initialize as world } from '../src/world.js';
 import { initialize as audio } from '../src/audio.js';
 import { initialize as voices } from '../src/voices.js';
 import { initialize as instruments } from '../src/instruments.js';
+import { initialize as patches } from '../src/patches.js';
 import { initialize as phenomena } from '../src/phenomena.js';
 import { initialize as spatial } from '../src/spatial.js';
 import { initialize as effects } from '../src/effects.js';
@@ -66,7 +67,7 @@ class Context {
 }
 globalThis.window = { AudioContext: Context };
 try {
-  audio(runtime); voices(runtime); effects(runtime); instruments(runtime); spatial(runtime); phenomena(runtime);
+  audio(runtime); voices(runtime); effects(runtime); instruments(runtime); spatial(runtime); phenomena(runtime); patches(runtime);
   runtime.S.mode = 'world'; runtime.S.todayKey = '2026-10-12';
   runtime.MU.dnaT = origin; runtime.MU.layers = new Set([0,1,2]);
   runtime.MU.flowers = [{n:69,st:0,x:900,y:900}];
@@ -76,7 +77,7 @@ try {
   for (let tick = 0; tick < 4800; tick++) {
     runtime.ac.currentTime = tick * .025;
     schedule();
-    assert(runtime.activeEffectCount<=12);assert(runtime.activeSpatialCount<=32);
+    assert(runtime.activeEffectCount<=12);assert(runtime.activeSpatialCount<=32);assert(runtime.activePatchCount<=32);
     if (runtime.MU.radio) phrases.add(runtime.MU.radio.phrase);
   }
   assert(phrases.size > 5, 'actual audio scheduler failed to evolve music');
