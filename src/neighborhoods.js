@@ -1,0 +1,24 @@
+const smooth=x=>x*x*(3-2*x);
+export function musicalField(rx,ry,seedOf,rng) {
+ const x=rx/4,y=ry/4,gx=Math.floor(x),gy=Math.floor(y),tx=smooth(x-gx),ty=smooth(y-gy);
+ const anchor=(a,b)=>{if(a===0&&b===0)return [124,0,.3];const r=rng(seedOf(`musical-field:v1:${a},${b}`));return [68+r()*106,-3+r()*6,r()];};
+ const corners=[anchor(gx,gy),anchor(gx+1,gy),anchor(gx,gy+1),anchor(gx+1,gy+1)];
+ const values=[0,1,2].map(i=>(corners[0][i]*(1-tx)+corners[1][i]*tx)*(1-ty)+(corners[2][i]*(1-tx)+corners[3][i]*tx)*ty);
+ return {tempo:values[0],fifths:Math.round(values[1]),warm:values[2]>.5};
+}
+export function applyNeighborhood(region,biomes,genres,seedOf,rng) {
+ const [rx,ry]=region.key.split(',').map(Number),field=musicalField(rx,ry,seedOf,rng);
+ if(rx===0&&ry===0)return region;
+ const r=rng(seedOf(`musical-neighbor-choice:v1:${region.key}`));
+ if(biomes[region.z].id!=='vacio'){
+  const scored=Object.entries(genres).map(([id,g])=>({id,g,cost:Math.max(g.bpm[0]-field.tempo,field.tempo-g.bpm[1],0)}));
+  const best=Math.min(...scored.map(s=>s.cost)),candidates=scored.filter(s=>s.cost<=best+3);
+  region.genre=candidates[Math.floor(r()*candidates.length)].id;
+ }
+ const g=genres[region.genre];region.bpm=Math.round(Math.max(g.bpm[0],Math.min(g.bpm[1],field.tempo)));
+ const pitch=((field.fifths*7)%12+12)%12;region.trOff=(pitch>5?pitch-12:pitch)-biomes[region.z].tr;
+ const modes=field.warm?[[0,2,4,5,7,9,10],[0,2,4,5,7,9,11]]:[[0,2,3,5,7,9,10],[0,2,3,5,7,8,10]];
+ const scales=g.scales||modes;region.scale=scales[Math.floor(r()*scales.length)].slice();
+ region.track.bassI=g.bassI;region.track.hookI=g.hookP[Math.floor(r()*g.hookP.length)];
+ return region;
+}

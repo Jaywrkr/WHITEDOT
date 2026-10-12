@@ -74,3 +74,5 @@ La variedad musical incluye paletas tropicales, melódicas, robóticas y disco, 
 Cada región combina una gramática propia de acentos, armonía, fraseo y brillo, además de su género. La composición evoluciona estando quieto. **Escucha suave**, en el menú, reduce volumen y brillo; puedes combinarla con el control de silencio.
 
 Los objetos y criaturas se oyen más presentes al acercarte y se apagan gradualmente al alejarte. Su volumen sigue la distancia incluso durante la nota; la música de fondo continúa componiendo.
+
+Las regiones vecinas tienden a compartir tempo y afinación. Al acercarte a una frontera se mezclan gradualmente sus percusiones, bajos y melodías.

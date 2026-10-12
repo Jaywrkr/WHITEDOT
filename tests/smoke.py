@@ -77,6 +77,10 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('#bSoft').click();assert page.evaluate('!window.__testRuntime.S.softMusic && window.__testRuntime.musicVolume()===.85')
   assert page.evaluate('!!window.__testRuntime.MU.radio?.grammar && window.__testRuntime.MU.radio.grammar.hookLimit<=5')
   page.evaluate('''()=>{const r=window.__testRuntime,region=r.regionOfPos(r.S.wx,r.S.wy),source={x:r.S.wx+150,y:r.S.wy},original=[r.bus,r.verbIn,r.dsend];let local;r.withSpatialVoice(source,r.ac.currentTime+.05,()=>{local=r.bus;r.hookInst('strings',60,r.ac.currentTime+.05,.02);});if(r.bus!==original[0]||r.verbIn!==original[1]||r.dsend!==original[2])throw Error('Spatial routing leaked');source.x=r.S.wx;source.y=r.S.wy;r.spatialTick();if(r.activeSpatialCount>32)throw Error('Spatial voices unbounded');r.playVoice('arbol',0,r.ac.currentTime+.1,region,true,.3,source);}''')
+
+  page.evaluate('''()=>{const r=window.__testRuntime;window.__borderRestore={x:r.S.wx,y:r.S.wy};r.S.wx=3590;r.S.wy=1800;r.frame.l=performance.now();r.frame(performance.now()+16);if(!r.MU.nb||r.MU.nbW<.45)throw Error('No border mix');}''')
+  page.wait_for_timeout(2200);assert page.evaluate('!!window.__testRuntime.MU.neighborRadio')
+  page.evaluate('''()=>{const r=window.__testRuntime;r.S.wx=window.__borderRestore.x;r.S.wy=window.__borderRestore.y;r.frame.l=performance.now();}''')
   page.keyboard.press('Space')
   page.keyboard.down('d');page.wait_for_timeout(300);page.keyboard.up('d')
   page.locator('#bPrimary').click();page.locator('#bPrimary').click();assert page.locator('#reto').is_visible() == page.evaluate('!window.__testRuntime.S.retos[window.__testRuntime.regionOfPos(window.__testRuntime.S.wx,window.__testRuntime.S.wy).key]')
