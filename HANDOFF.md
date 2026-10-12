@@ -96,11 +96,13 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/feedback.js` | Señales visuales del rol musical sincronizadas con el inicio del sonido. |
 | `src/phenomena.js` | Aves de eco, semilleros de caja y nubes de pulso; generación y reloj audiovisual. |
 | `src/patches.js` | Perfiles de material y síntesis procedurales por región/instrumento/rol/objeto (PR #25, integrado). |
+| `src/rhythms.js` | Biblioteca ampliada de ritmos por recetas (batería, bajo, frase, instrumentos, escalas, guía) y familias de todos los géneros. |
 | `src/atlas.js` | Atlas de ritmos (prototipo): lista todos los géneros, verifica que existen en el mundo y viaja a la región más cercana. |
 | `src/controls.js` | Botones, controles de prototipo y sonido. |
 | `package.json` | Declara módulos ES para Node y `npm test`; no instala dependencias de aplicación. |
 | `tests/core.mjs` | Compatibilidad del guardado, tope diario y mundo determinista. |
 | `tests/smoke.py` | Flujos funcionales del navegador en móvil y escritorio. |
+| `tests/rhythms.mjs` | Recetas completas, baterías distintas, instrumentos explicados y reparto equilibrado de géneros. |
 | `tests/atlas.mjs` / `tests/atlas_smoke.py` | Atlas: todos los géneros alcanzables y viaje correcto desde Camino y Mundo. |
 
 ### Estado guardado `S` (localStorage)
@@ -159,11 +161,11 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
   - No cambia el ADN procedural ni el formato de guardado v4. El estado de composición es temporal; no se conserva al recargar.
   - Respeta activar/silenciar sonido y la duración de la linterna. No es audio en segundo plano garantizado: depende de que el navegador mantenga activo Web Audio.
   - Las pruebas verifican evolución y programación de notas; Jay valida la sensación musical y la mezcla en teléfono.
-- **Géneros (`GEN`):** 34 estilos base. `data.js` incluye ambient, downtempo, dub techno, deep house, afro house, minimal house, rominimal, acid techno, breaks, UK garage, tribal, dub profundo, electro, progressive house, microhouse, minimal techno, dubstep y drum & bass. `palettes.js` suma tropical house, melodic house, electro robótico y nu-disco; `references.js` suma tech house, electrónica andina, cosmic disco, melodic techno, organic house, amapiano, jazztronica, Berlin School, IDM, liquid drum & bass, darkwave/EBM y algorave.
+- **Géneros (`GEN`):** 52 estilos. `src/rhythms.js` (tanda 1, raíz afroamericana) suma 18 recetas completas: Chicago house, Detroit techno, acid house, soulful/gospel house, garage house de Nueva York, ghetto house, footwork, Baltimore club, Jersey club, Miami bass, electro-funk, boogie, boom bap, lo-fi hip hop, trap, G-funk, electro de Detroit y broken beat. Los 34 anteriores: `data.js` incluye ambient, downtempo, dub techno, deep house, afro house, minimal house, rominimal, acid techno, breaks, UK garage, tribal, dub profundo, electro, progressive house, microhouse, minimal techno, dubstep y drum & bass. `palettes.js` suma tropical house, melodic house, electro robótico y nu-disco; `references.js` suma tech house, electrónica andina, cosmic disco, melodic techno, organic house, amapiano, jazztronica, Berlin School, IDM, liquid drum & bass, darkwave/EBM y algorave.
   - Cada uno define rango de BPM, swing (`sw`), patrón, instrumento de bajo (`bassI`) y de hook (`hookP`), y nivel de pad.
   - `GPOOL[bioma]` conserva las familias originales. `EXTRA_GPOOL` añade las seis nuevas mediante una semilla independiente (`extra-genres:v1:<región>`), con 45 % de probabilidad de selección fuera de Origen cuando el bioma admite géneros nuevos. Vacío mantiene ambient y Origen mantiene minimal. Cambia la música de algunas regiones, no su paisaje ni los IDs de criaturas.
   - Los géneros nuevos tienen patrones propios: electro sincopado, progressive de pulso regular y capas melódicas, microhouse con detalles y espacios, minimal techno de acentos secos, dubstep a medio tiempo y drum & bass a 166–174 BPM. Sus acentos varían cada cuatro compases. La radio adapta también las frases de bajo de progressive, dubstep y drum & bass; los géneros anteriores ganan pequeños fills compatibles con su ritmo.
-  - Bitácora y Escuchar reconocen las nuevas familias. Las pruebas ejercitan instrumentos y scheduler en los 34 géneros; la valoración audible de mezcla y groove sigue siendo de Jay en teléfono.
+  - Bitácora y Escuchar reconocen las nuevas familias. Las pruebas ejercitan instrumentos y scheduler en los 52 géneros; la valoración audible de mezcla y groove sigue siendo de Jay en teléfono.
 - **`drums(gid, …)`:** los patrones de batería de cada género. Se escriben a mano con kick, clap, hats, congas, clave, rim y shaker.
 - **`playTrack(dna, …)`:** bajo y hook de la región, tocados con los instrumentos del género.
 - **Instrumentos (todo síntesis):**
@@ -210,7 +212,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Sintaxis:** correr `node --check` sobre los archivos de `src/`. Ya no hay un script inline para extraer.
 - **Visual y funcional:** servir el repositorio por HTTP y usar Playwright headless (Chromium) en 390×844 (móvil) y escritorio. Comprobar entrada y reentrada al Mundo con reto visible, transición de día sin reto residual, pausa de linterna en menús, colocación y persistencia de muestras en el Estudio y generación de tarjetas. Capturar errores JavaScript y screenshots. Los errores de carga de Google Fonts sin red son esperables.
 - **Tope diario:** comprobar que una luz de valor 10 recogida cuando faltaba 1 solo suma 1 tanto a `todayLight` como a `totalLight`.
-- **Pruebas versionadas:** `npm test` (21 suites, inventario en CAMBIOS.md) `python3 tests/smoke.py` y `python3 tests/atlas_smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
+- **Pruebas versionadas:** `npm test` (22 suites, inventario en CAMBIOS.md) `python3 tests/smoke.py` y `python3 tests/atlas_smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
 - **Audio:** en headless no se oye nada. **Jay valida el sonido en su teléfono** con la URL de Vercel. Es la prueba que importa.
 - **Atajos de prototipo** (menú → Prototipo):
   - `dFill`: llena la barra del día.
@@ -320,5 +322,11 @@ Las familias nuevas modifican su síntesis de parciales/FM y envolvente. Las ant
 
 Menú → Prototipo → **Ritmos**. `src/atlas.js` recorre 61 × 61 regiones alrededor del origen (3.721, unos 200 ms; se calcula al abrir y queda en caché) y lista cada género de `GEN` ordenado por tempo: BPM, origen (Base / Paleta / Referencia), cuántas regiones lo tienen, la región más cercana y si ya se escuchó (`S.journal.music.genres`). **Ir** pone al jugador en el centro de esa región; si estaba en el Camino sin completar, completa el día (herramienta de prueba) y entra al Mundo. No agrega campos al guardado. Sirve para probar cada ritmo y para verificar que todo género nuevo es alcanzable: `tests/atlas.mjs` falla si algún género no aparece en el área.
 
-Auditoría de distribución (61×61 regiones): los 34 géneros aparecen, pero el reparto es muy desigual. IDM ≈ 13 %, algorave ≈ 11 %, ambient ≈ 10 %, mientras deep house, afro house, minimal house y tech house quedan en ≈ 1–2 % cada uno. Dub profundo aparece por primera vez a 10 regiones del origen; cosmic disco y liquid DnB a 7. Equilibrar esto es parte de la etapa 1b de PENDIENTES.
+El Atlas tiene filtros por familia y "Sin probar", y un cuadro para marcar cada ritmo como probado (`S.atlasTested`, dentro de v4, solo herramienta de prueba).
+
+### Biblioteca de ritmos y reparto equilibrado
+
+Antes, el género lo decidía en la práctica `applyNeighborhood`: entre los estilos compatibles con el tempo del campo musical elegía al azar, así que los de rango de tempo amplio acaparaban el mundo (IDM ≈ 13 %, algorave ≈ 11 %; deep house ≈ 1 %). Ahora `genreWeights()` en `src/neighborhoods.js` calcula, una vez y en caché, un peso por género con ajuste iterativo sobre los tempos de 61×61 regiones, y la elección es ponderada. La ventana de compatibilidad pasó de 3 a 5 BPM. Resultado con 52 estilos: máximo ≈ 3,4 % (footwork, que es casi el único estilo en 150–165 BPM), mínimo ≈ 0,7 %; ambient ≈ 6 % porque además ocupa el Vacío. La vecindad de tempo se conserva (≈ 9 BPM entre vecinas frente a ≈ 26 entre lejanas). Esto cambia el género de muchas coordenadas antiguas; el paisaje, nombres e IDs no cambian.
+
+**Para añadir una tanda:** agregar recetas en `RHYTHM_GENRES` con `family` (y la familia en `FAMILIES` si es nueva). Audio (`drums`), radio (bajo y frase), voces, Bitácora, Atlas y pesos las recogen solas. Campos de batería admitidos: kick, snare, clap, clapRoll, rim, hat, hatO, hatRoll (ráfaga de tresillos), conga, tom, cowbell, shaker, chord (con `chordI`). `kickTone:[frecuencia final, decaimiento]` da el carácter del bombo (808 largo ≈ `[38,.8]`). `v` permite tres variaciones que rotan cada cuatro compases. `tests/rhythms.mjs` exige receta completa, batería no repetida, instrumentos con explicación y reparto entre 0,5 % y 3,6 %.
 

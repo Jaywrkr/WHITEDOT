@@ -1,4 +1,5 @@
 import {REFERENCE_GENRES,referenceRhythm} from './references.js';
+import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
 import {chooseNearbySource} from './spatial.js';
 import {harmonicDegree,createVoiceCurator} from './grammar.js';
 import { createRadio } from './radio.js';
@@ -276,6 +277,7 @@ export function initialize(runtime) {
   function snare(t,v){runtime.phenomenonPercussionCue?.(t);runtime.recordInstrument?.("snare");noise(t,"bandpass",1800,1,v,.14,true);const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=190;env(g,t,.002,v*.6,.08);o.connect(g).connect(bus);o.start(t);o.stop(t+.12);}
   function conga(t,f,v){runtime.recordInstrument?.("conga");const o=ac.createOscillator(),g=ac.createGain(),sv=ac.createGain();o.frequency.setValueAtTime(f*1.4,t);o.frequency.exponentialRampToValueAtTime(f,t+.03);env(g,t,.002,v,.13);sv.gain.value=.25;o.connect(g).connect(bus);g.connect(sv).connect(verbIn);o.start(t);o.stop(t+.2);}
   function clave(t,v){const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=2500;env(g,t,.001,v,.04);o.connect(g).connect(bus);o.start(t);o.stop(t+.08);}
+  function cowbell(t,v){runtime.recordInstrument?.("cowbell");const f=ac.createBiquadFilter(),g=ac.createGain();f.type="bandpass";f.frequency.value=800;f.Q.value=3;[540,800].forEach(fr=>{const o=ac.createOscillator();o.type="square";o.frequency.value=fr;o.connect(f);o.start(t);o.stop(t+.2);});env(g,t,.001,v,.12);f.connect(g).connect(bus);}
   function wood(t,v){runtime.recordInstrument?.("wood");noise(t,"bandpass",1100,8,v,.04);const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=820;env(g,t,.001,v*.5,.03);o.connect(g).connect(bus);o.start(t);o.stop(t+.06);}
   const hatC=(t,v)=>hat(t,v,.035),hatO=(t,v)=>hat(t,v,.15);
   function blip(m,t,v){const o=ac.createOscillator(),g=ac.createGain(),d=ac.createGain();o.type="sine";o.frequency.value=hz(m);env(g,t,.002,v,.06);d.gain.value=.6;o.connect(g).connect(bus);g.connect(d).connect(dsend);o.start(t);o.stop(t+.1);}
@@ -292,6 +294,24 @@ export function initialize(runtime) {
       if(["afro","tribal"].includes(gid))conga(tt,220,vel(.045));
       else if(["breaks","garage","dnb"].includes(gid))snare(tt,vel(.025));
       else rim(tt,vel(.025));
+    }
+    if(RHYTHM_GENRES[gid]){
+      // Tanda de ritmos ampliada: patrón por receta, tono de bombo propio, ráfagas y acordes.
+      const G=RHYTHM_GENRES[gid],pattern=rhythmPattern(gid,variation),at=field=>pattern[field]?.includes(s),[kf,kd]=G.kickTone||[50,.28],soft=G.soft?.7:1;
+      if(L1&&at('kick'))kick2(t,vel(.25*soft),kf,kd);
+      if(L1&&at('snare'))snare(tt,vel(.085*soft));
+      if(L2&&at('clap'))clap(t,vel(.055*soft));
+      if(L2&&at('clapRoll')){clap(tt,vel(.035));clap(tt+SIX/2,vel(.03));}
+      if(L2&&at('rim'))rim(tt,vel(.035*soft));
+      if(L2&&at('hat'))hatC(tt,vel((s%4===2?.024:.016)*soft));
+      if(L2&&at('hatO'))hatO(tt,vel(.03*soft));
+      if(L3&&at('hatRoll'))[0,1,2].forEach(i=>hatC(tt+i*SIX/3,vel(.014+i*.003)));
+      if(L2&&at('conga'))conga(tt,190+variation*30,vel(.06));
+      if(L2&&at('tom'))tom(tt,80+(s%3)*20,vel(.09));
+      if(L3&&at('cowbell'))cowbell(tt,vel(.02));
+      if(L3&&at('shaker'))shaker(tt,vel(.013));
+      if(L3&&at('chord')&&bar%2===0&&!DO)ct.slice(0,3).forEach(n=>hookInst(G.chordI||'rhodes',n+12,tt,vel(.02)));
+      return;
     }
     if(REFERENCE_GENRES[gid]){
       const pattern=referenceRhythm(gid,variation),at=field=>pattern[field]?.includes(s),fast=gid==='liquid';
@@ -398,6 +418,8 @@ export function initialize(runtime) {
     snareHit: { get: () => snare },
     clap: { get: () => clap },
     hatHit: { get: () => hatC },
+    snare: { get: () => snare },
+    cowbell: { get: () => cowbell },
     bassInst: { get: () => bassInst },
     hookInst: { get: () => hookInst },
     kick: { get: () => kick },

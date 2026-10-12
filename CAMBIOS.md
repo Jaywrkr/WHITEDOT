@@ -5,7 +5,7 @@ Revisión: 2026-10-12. Leer junto con [HANDOFF.md](HANDOFF.md) y [PENDIENTES.md]
 ## Estado exacto para Claude
 
 - `main` auditado por Claude: `3c58c56` (PR #26). Incluye todo hasta instrumentos procedurales (PR #25) y esta documentación.
-- Rama pendiente de PR: `feat/rhythm-atlas` (etapa 26, Atlas de ritmos) más correcciones de documentación.
+- Ramas pendientes de PR: `feat/rhythm-atlas` (etapa 26) y `feat/rhythms-afro-roots` (etapa 27, construida encima de la 26; integrar esta incluye ambas).
 - Auditoría 2026-10-12: 20 suites Node + smoke móvil/escritorio pasan en `main`; los 34 géneros existen en el mundo; las afirmaciones de README/HANDOFF se comprobaron contra el código. Diferencias encontradas: la documentación aún describía los instrumentos procedurales como rama pendiente (ya integrados) y HANDOFF tenía esa sección duplicada; quedaron corregidas.
 - Flujo obligatorio: rama por etapa, implementar, verificar, commit y push. Jay crea PR y merge. No publicar directamente en main. No ejecutar las fases pendientes sin su autorización.
 
@@ -138,6 +138,15 @@ Síntesis nueva modifica parciales/FM y envolvente; heredada recibe filtro/envol
 ### 26. Atlas de ritmos (prototipo) — rama `feat/rhythm-atlas`
 
 `src/atlas.js` y botón **Ritmos** en Menú → Prototipo. Lista los 34 géneros ordenados por tempo con BPM, origen, número de regiones, región más cercana y si ya se escucharon. **Ir** viaja al centro de la región más cercana con ese ritmo, desde el Mundo o desde el Camino (en el Camino completa el día, solo como herramienta de prueba). Escanea 3.721 regiones en ~200 ms al abrir. Sin campos nuevos en el guardado. Pruebas: `tests/atlas.mjs` (todos alcanzables, destino correcto, determinista) y `tests/atlas_smoke.py` (móvil/escritorio, viaje desde Camino y desde Mundo).
+
+### 27. Tanda 1 de ritmos: raíz afroamericana y reparto equilibrado — rama `feat/rhythms-afro-roots`
+
+- `src/rhythms.js`: 18 estilos nuevos con receta completa (tempo, swing, batería con variaciones, bajo, frase, instrumentos, escalas y guía para la Bitácora): Chicago house, Detroit techno, acid house, soulful/gospel house, garage house de Nueva York, ghetto house, footwork, Baltimore club, Jersey club, Miami bass, electro-funk, boogie, boom bap, lo-fi hip hop, trap, G-funk, electro de Detroit y broken beat. Total: 52.
+- Batería: soporte de ráfagas de hi-hat en tresillo, claps dobles, hi-hat abierto, toms, cencerro nuevo y bombos con tono propio (808 largo en trap y Miami bass).
+- `src/neighborhoods.js`: elección de género ponderada por `genreWeights()` y ventana de tempo de 5 BPM. Máximo ≈ 3,4 %, mínimo ≈ 0,7 % (antes 13 % / 1 %). Cambia el género de coordenadas antiguas.
+- Atlas: filtros por familia y "Sin probar", cuadro de probado guardado en `S.atlasTested`. Todos los géneros tienen familia (`familyOf`).
+- Voces: la caja (`snare`) suena como caja; antes caía en tom. Lo-fi cuenta como estilo calmo en la gramática.
+- Pruebas: `tests/rhythms.mjs` nueva; `tests/atlas_smoke.py` cubre filtros y marca; las 22 suites y el smoke pasan.
 
 ## Persistencia y compatibilidad
 
