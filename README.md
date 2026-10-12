@@ -12,7 +12,7 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr)
 
 1. **Camino del día:** mueve el pixel (arrastra o usa WASD/flechas) y recoge luces. La barra tiene un tope diario. Volver cada día suma racha.
 2. **Mundo:** al terminar el camino entras al Mundo. Tu linterna dura 10 minutos, más 1 minuto por día de racha (máximo 60). El tiempo de linterna se pausa mientras consultas menús y paneles.
-3. **Explora:** las regiones son grandes y cambian poco a poco, igual que bajar de la sierra a la costa. Cada una tiene un género (afro house, minimal, rominimal, dub techno, acid, garage…), su escala, su suelo, su aire y su fauna.
+3. **Explora:** las regiones son grandes y cambian poco a poco, igual que bajar de la sierra a la costa. Cada una tiene un género (afro house, minimal, rominimal, dub techno, acid, garage…), su escala, su suelo, su aire y su fauna. Aunque te quedes quieto, la música sigue componiendo: cambia frases, instrumentos y secciones con el tiempo y la actividad del ambiente.
 4. **Interactúa:**
    - Choca objetos.
    - Lanza un **pulso** tocando la pantalla o con Espacio.
@@ -46,7 +46,7 @@ Al integrar el PR en `main`, Vercel despliega producción automáticamente. No h
 ## Verificar cambios
 
 ```bash
-node tests/core.mjs
+npm test
 python3 tests/smoke.py
 ```
 
