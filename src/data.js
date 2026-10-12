@@ -51,9 +51,17 @@ export function initialize(runtime) {
    breaks:{name:"Breaks",bpm:[126,134],sw:.06,pt:5,bassI:"reese",hookP:["saw","organ"]},
    garage:{name:"UK garage",bpm:[130,134],sw:.33,pt:4,bassI:"organb",hookP:["keys","glass"]},
    tribal:{name:"Tribal",bpm:[116,122],sw:.12,pt:3,bassI:"fm",hookP:["marimba","organ"]},
+   electro:{name:"Electro",bpm:[124,136],sw:.05,pt:5,bassI:"fm",hookP:["saw","keys"]},
+   progressive:{name:"Progressive house",bpm:[120,128],sw:.04,pt:0,bassI:"pluck",hookP:["saw","keys","organ"],pad:.3},
+   microhouse:{name:"Microhouse",bpm:[120,126],sw:.18,pt:1,bassI:"roll",hookP:["marimba","keys"]},
+   minimaltechno:{name:"Minimal techno",bpm:[126,134],sw:.06,pt:3,bassI:"fm",hookP:["organ","keys"]},
+   dubstep:{name:"Dubstep",bpm:[136,144],sw:.12,pt:5,bassI:"reese",hookP:["organ","saw"]},
+   dnb:{name:"Drum & bass",bpm:[166,174],sw:.02,pt:5,bassI:"reese",hookP:["keys","organ"]},
    heart:{name:"Dub profundo",bpm:[68,76],sw:0,pt:2,bassI:"sub",hookP:["flute"],pad:.5}
   };
   const GPOOL={llanura:["minimal","deep","downtempo"],bosque:["afro","deep","tribal"],lago:["ambient","dub"],ruinas:["tribal","afro"],jardin:["rominimal","deep","minimal"],dunas:["downtempo","afro","dub"],cristales:["garage","minimal"],faros:["deep","dub"],tormenta:["acid","breaks"],cueva:["heart","dub"],vacio:["ambient"]};
+  // Se usa una semilla independiente para conservar el RNG visual de las regiones.
+  const EXTRA_GPOOL={llanura:["progressive","microhouse"],bosque:["microhouse","dnb"],lago:["progressive","dubstep"],ruinas:["minimaltechno","electro"],jardin:["microhouse","progressive"],dunas:["electro","dubstep"],cristales:["electro","dnb"],faros:["progressive","minimaltechno"],tormenta:["minimaltechno","dnb","dubstep"],cueva:["dubstep","minimaltechno"],vacio:[]};
   const FILL=[[.15,"Casi vacío"],[.45,"Escaso"],[1,"Normal"],[1.7,"Lleno"],[2.6,"Muy lleno"]];
   const PROPK={llanura:"piedra",bosque:"hongo",jardin:"campanilla",dunas:"cactus",tormenta:"antena",cueva:"gota",vacio:"astro"};
   const SPECIES=[["luciernaga","Luciérnagas","Huyen si te acercas. Si las tocas, suenan."],["arbol","Árboles de luz","Crecen en el bosque y brillan cuando pasas."],["estanque","Agua","Bajo el agua todo suena distinto."],["bandada","Bandadas","Cruzan el cielo. Vuela con ellas."],["caminante","Caminantes","Si te quedas cerca, te siguen y cantan contigo."]];
@@ -204,6 +212,7 @@ export function initialize(runtime) {
     PLANTP: { get: () => PLANTP },
     AIRTXT: { get: () => AIRTXT },
     GEN: { get: () => GEN },
+    EXTRA_GPOOL: { get: () => EXTRA_GPOOL },
     GPOOL: { get: () => GPOOL },
     FILL: { get: () => FILL },
     PROPK: { get: () => PROPK },
