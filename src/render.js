@@ -155,6 +155,7 @@ export function initialize(runtime) {
     // suelo
     for(let a=a0;a<=a1;a++)for(let bb=b0;bb<=b1;bb++){
       const c=runtime.wchunk(a,bb);
+      runtime.drawPlaythings(c,t,dt,ox,oy,R,nearO);
       if(c.dunes){runtime.cx.fillStyle="#fff";const y0=Math.floor((runtime.S.wy-R)/38)*38;
         for(let y=y0;y<runtime.S.wy+R;y+=38){if(y<bb*runtime.WCH||y>=(bb+1)*runtime.WCH)continue;for(let x=Math.max(a*runtime.WCH,runtime.S.wx-R);x<Math.min((a+1)*runtime.WCH,runtime.S.wx+R);x+=6){const yy=y+Math.sin(x/130+y*.07+t/4000)*12,d=Math.hypot(x-runtime.S.wx,yy-runtime.S.wy);if(d>R)continue;runtime.cx.globalAlpha=Math.pow(1-d/R,1.4)*.35;runtime.cx.fillRect(x+ox,yy+oy,2,1);}}}
       for(const p of c.ponds){const d=Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy);

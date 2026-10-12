@@ -1,15 +1,17 @@
+import { TOY_NAMES } from './playthings.js';
+
 import { ROLES, INSTRUMENTS, MODES } from './journal.js';
 const NAMES={props:null,lotus:'Loto',crystals:'Cristal',pillars:'Pilar',flies:'Luciérnaga',grass:'Árbol',flowers:'Flor',stal:'Gota',motes:'Luz',walkers:'Caminante',beacons:'Faro'};
 const KINDS={lotus:'loto',crystals:'cristal',pillars:'pilar',flies:'luciernaga',grass:'arbol',flowers:'planta:flor',stal:'gota',motes:'luz',walkers:'caminante',beacons:'faro'};
 export function nearbySources(chunks,x,y,radius=250) {
   const items=[];
-  for(const chunk of chunks.values())for(const field of [...Object.keys(NAMES),'plants','sp'])for(const object of chunk[field]||[]) {
+  for(const chunk of chunks.values())for(const field of [...Object.keys(NAMES),'plants','sp','playthings'])for(const object of chunk[field]||[]) {
     if(field==='grass'&&!object.tall)continue;
     if(field==='plants'&&object.pt.t==='hierba')continue;
     const distance=Math.hypot(object.x-x,object.y-y);
     if(distance>radius)continue;
-    const kind=field==='sp'?`forma:${object.s.id}`:field==='plants'?`planta:${object.pt.t}`:field==='props'?object.k:KINDS[field];
-    const name=field==='sp'?object.s.name:field==='plants'?object.pt.t:field==='props'?object.k:NAMES[field];
+    const kind=field==='playthings'?`toy:${object.kind}`:field==='sp'?`forma:${object.s.id}`:field==='plants'?`planta:${object.pt.t}`:field==='props'?object.k:KINDS[field];
+    const name=field==='playthings'?TOY_NAMES[object.kind]:field==='sp'?object.s.name:field==='plants'?object.pt.t:field==='props'?object.k:NAMES[field];
     items.push({object,kind,name,distance});
   }
   return items.sort((a,b)=>a.distance-b.distance).slice(0,5);
