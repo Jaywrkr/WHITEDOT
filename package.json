@@ -1,0 +1,11 @@
+{
+  "name": "whitedot",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/core.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

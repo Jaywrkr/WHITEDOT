@@ -6,7 +6,7 @@
 - **Juego en vivo:** https://whitedot-inky.vercel.app
 - **Repo:** https://github.com/Jaywrkr/WHITEDOT (rama `main`). Cada push a `main` despliega solo en Vercel.
 - **Documento de diseño (más largo, visión completa):** https://claude.ai/code/artifact/034e1ffb-4be3-4044-9a25-47da3d713190
-- **Código:** todo está en `index.html`, unas 1.600 líneas con HTML, CSS y JS juntos.
+- **Código:** HTML en `index.html`, estilos en `styles/game.css` y módulos JavaScript nativos en `src/`. No hay build.
 
 ---
 
@@ -51,25 +51,35 @@ Un pixel blanco en un mundo negro que va creciendo. **El centro de todo es la M�
 | UI móvil | Mínima, con íconos. Un dock de 3 botones y un menú modal para lo demás. |
 | Objetos | Tienen autonomía: hacen cosas, no solo suenan. Están en armonía visual y musical con su región. |
 
-## 4. Arquitectura de `index.html`
+## 4. Arquitectura
 
-Es un archivo único sin build. El JavaScript comparte estado dentro de una función autoejecutable (`IIFE`); no expone los sistemas en `window`. El orden de inicialización importa. Las líneas de la tabla son aproximadas; buscar los nombres y comentarios de sección antes de editar.
+El juego usa módulos JavaScript nativos (`import`/`export`), servidos por HTTP. `index.html` carga `src/main.js` con `type="module"`. No necesita compilación ni dependencias de aplicación.
 
-| Línea aprox. | Sección | Qué hay |
-|---|---|---|
-| 1–275 | HTML + CSS | `<canvas id="w">`, HUD, dock (`bPrimary`, `bDeploy`, `bMenu`), modal del menú (`bWorld`, `bStudio`, `bSky`, `bAch`, `bSound`, `bShare` y una sección "Prototipo" con `dFill`/`dNext`/`dSkip`/`dReset`), tarjeta de zona `#zone`, línea `#reto`, `#voice`, `#studioPanel`. |
-| 280–455 | Tablas de datos | `BIOMES`, `ZINFO`, `VARS`, `HAB`, `TRACKP`, `GROUNDP`, `AIRP`, `PLANTP`, `GEN`, `GPOOL`, `FILL`, `PROPK`, `SPECIES`, `ACH`, `SAMPLES`, `COLORS`, `VOZ`. |
-| 456 | estado | `KEY="pixel-blanco-v4"`, `fresh()`, el objeto `S`, `save()`, `dayKey()`, días y racha. |
-| 502 | camino | Camino diario `pathY(x)`, luces y tope (CAP). |
-| 514 | mundo | Chunks, regiones, ADN de región, eventos, reliquias y retos. |
-| 613 | música generativa | Scheduler, armonía, instrumentos sintetizados, `drums()`, `playTrack()`, `playStep()`. |
-| 879 | canvas | Dibujo: suelo, plantas, props, sprites, aire, estudio, física, pulso. |
-| 1125 | glifos | Pixel font o íconos. |
-| 1145 | loop | `frame()`, `caminoStep()`, `worldStep()`, descubrimiento, entrar y salir del mundo. |
-| 1454 | HUD | `hud()`, toasts, `unlock()` de logros. |
-| 1506 | constelación | Cielo con las reliquias recogidas (`openSky`). |
-| 1531 | tarjetas | `shareCard()`, una imagen para redes. |
-| 1554 | botones | Eventos de UI e input (touch, mouse, teclado). |
+`main.js` crea un contexto interno `runtime` e inicializa cada sistema una sola vez en el orden explícito de imports. Cada módulo mantiene sus variables en su propia función `initialize(runtime)`, publica únicamente las referencias usadas por otros sistemas mediante getters y, para estado reasignable, setters. Las referencias a otros sistemas usan `runtime.nombre`; no se expone este contexto en `window`. Los callbacks y eventos empiezan a ejecutarse después de completar la inicialización.
+
+La separación conserva las relaciones originales entre sistemas. Todavía hay acoplamiento mediante el contexto compartido; no son componentes independientes. Antes de cambiar una referencia publicada, revisar sus consumidores. No reinicializar módulos sobre el mismo contexto ni cambiar el orden sin comprobar las dependencias.
+
+| Archivo | Responsabilidad |
+|---|---|
+| `index.html` | Canvas, HUD, dock, paneles y estructura accesible de la interfaz. |
+| `styles/game.css` | Estilos y adaptaciones móviles, en el mismo orden de cascada que antes. |
+| `src/main.js` | Contexto compartido, inicialización, normalización de la partida, autosave y arranque del loop. |
+| `src/data.js` | Constantes, biomas, géneros, logros, muestras y textos. |
+| `src/progress.js` | Guardado v4, días, racha, crecimiento, linterna, RNG y cachés. |
+| `src/world.js` | Camino, generación de regiones/chunks, eventos y reliquias. |
+| `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros y tracks. |
+| `src/canvas.js` | Canvas, tamaño, input de movimiento y estado visual temporal. |
+| `src/messages.js` | Cola y animación de la Voz del sistema. |
+| `src/studio.js` | Muestras, secuenciador radial, bolsa, colores y checkpoint. |
+| `src/interactions.js` | Pulsos, colisiones y respuestas sonoras/visuales de objetos y especies. |
+| `src/discovery.js` | Descubrimientos, regiones, retos, recolección y recompensas. |
+| `src/render.js` | Glifos, loop, dibujo y simulación del Camino y del Mundo. |
+| `src/ui.js` | HUD, avisos, logros y entrada/salida del Mundo. |
+| `src/sharing.js` | Constelación y tarjetas para compartir. |
+| `src/controls.js` | Botones, controles de prototipo y sonido. |
+| `package.json` | Declara módulos ES para Node y `npm test`; no instala dependencias de aplicación. |
+| `tests/core.mjs` | Compatibilidad del guardado, tope diario y mundo determinista. |
+| `tests/smoke.py` | Flujos funcionales del navegador en móvil y escritorio. |
 
 ### Estado guardado `S` (localStorage)
 
@@ -158,10 +168,10 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 
 ## 8. Cómo probar
 
-- **Sintaxis:** extrae el `<script>` y corre `node --check`.
+- **Sintaxis:** correr `node --check` sobre los archivos de `src/`. Ya no hay un script inline para extraer.
 - **Visual y funcional:** servir el repositorio por HTTP y usar Playwright headless (Chromium) en 390×844 (móvil) y escritorio. Comprobar entrada y reentrada al Mundo con reto visible, transición de día sin reto residual, pausa de linterna en menús, colocación y persistencia de muestras en el Estudio y generación de tarjetas. Capturar errores JavaScript y screenshots. Los errores de carga de Google Fonts sin red son esperables.
 - **Tope diario:** comprobar que una luz de valor 10 recogida cuando faltaba 1 solo suma 1 tanto a `todayLight` como a `totalLight`.
-- No hay una suite de pruebas automatizadas versionada ni CI en el repositorio. Las comprobaciones anteriores describen el flujo de validación, no un comando de tests ya existente.
+- **Pruebas versionadas:** `node tests/core.mjs` y `python3 tests/smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
 - **Audio:** en headless no se oye nada. **Jay valida el sonido en su teléfono** con la URL de Vercel. Es la prueba que importa.
 - **Atajos de prototipo** (menú → Prototipo):
   - `dFill`: llena la barra del día.
@@ -171,7 +181,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 
 ## 9. Limitaciones conocidas
 
-- **Un solo archivo grande:** cuesta editarlo. Conviene refactorizar a módulos (TypeScript + Vite) antes de crecer mucho más.
+- **Acoplamiento entre módulos:** la separación usa un contexto compartido para conservar el comportamiento. El loop mezcla simulación y render; todavía no hay interfaces independientes entre todos los sistemas.
 - **Audio en el hilo principal:** con mucho en pantalla, en móviles viejos el timing puede variar. La solución futura es AudioWorklet.
 - **Progreso solo en `localStorage`:** se pierde si borras datos del navegador. No hay cuentas ni nube.
 - **Audio en iOS:** requiere un gesto del usuario para arrancar, y el modo silencio del iPhone puede mutear Web Audio.
@@ -184,8 +194,8 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 **Etapas acordadas como orden de trabajo; cada implementación requiere que Jay autorice su etapa:**
 
 1. **Corregir la base — completado:** activar retos al entrar/reentrar al Mundo, limpiar la transición de día, respetar el tope de crecimiento y pausar el consumo de linterna en menús. Integrado en `main` mediante el PR #1.
-2. **Actualizar documentación — esta etapa:** estado real del juego, diferencias con el diseño y flujo de ramas. No incluye cambios de jugabilidad.
-3. **Organizar el código en módulos:** separar mundo, audio, interfaz y progreso, conservando comportamiento y partidas. Elegir herramientas al abordar la etapa; TypeScript + Vite es una opción, no una dependencia actual.
+2. **Actualizar documentación — completado:** estado real del juego, diferencias con el diseño y flujo de ramas. No incluye cambios de jugabilidad.
+3. **Organizar el código en módulos — esta etapa:** JavaScript nativo, CSS separado y contexto interno para conservar comportamiento y partidas v4. Sin introducir TypeScript, Vite o un build.
 4. **Bitácora** (estilo No Man's Sky / Astroneer), con 4 pestañas:
    - **Lugares:** regiones visitadas con % completado (especies, reto, evento, reliquia).
    - **Formas:** especies agrupadas por rol musical.
@@ -226,4 +236,4 @@ No hay build ni variables de entorno de aplicación: es un sitio estático.
 
 ## 12. Prompt sugerido para arrancar en otra IA
 
-> Soy Jay. Estoy haciendo WHITEDOT / Pixel Blanco, un juego web de música electrónica generativa en un solo `index.html` (Canvas + Web Audio). Lee HANDOFF.md y el código actual. Respeta las decisiones de la sección 3. Quiero que construyas [etapa autorizada del roadmap]. Implementa y verifica los cambios en una rama nueva desde `main` actualizado, haz commit y push y entrégame la rama y los resultados. Yo creo el PR y hago el merge. Háblame en español, directo.
+> Soy Jay. Estoy haciendo WHITEDOT / Pixel Blanco, un juego web de música electrónica generativa con Canvas + Web Audio y módulos JavaScript nativos. Lee HANDOFF.md y el código actual. Respeta las decisiones de la sección 3. Quiero que construyas [etapa autorizada del roadmap]. Implementa y verifica los cambios en una rama nueva desde `main` actualizado, haz commit y push y entrégame la rama y los resultados. Yo creo el PR y hago el merge. Háblame en español, directo.

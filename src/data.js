@@ -1,0 +1,216 @@
+// Tablas y constantes del juego.
+export function initialize(runtime) {
+  const CAP=120, PER_LEVEL=40, CHUNK=320, SPEED=190, WCH=900, REG=4, GOLD="#f0d27a";
+  const PHRASES=["Hoy cuenta.","Un día más. Eso es todo.","No tienes que ganar. Tienes que volver.","Lo que haces cada día es lo que eres.","Constancia antes que intensidad.","Pequeño también es avanzar.","Nadie te ve crecer. Igual creces.","Hazlo aunque no tengas ganas.","Caer no borra lo que construiste.","Hoy sumaste."];
+  const ECOS=["Hoy no tenías ganas. Igual viniste.","Nadie aplaude la constancia. Hazlo igual.","Un mal día no es una mala vida.","Lo difícil se vuelve normal si lo repites.","Disciplina es hacerlo cuando nadie mira.","Empezar de nuevo también cuenta.","No compitas con nadie. Compite con ayer.","Si fallaste ayer, hoy vuelves.","Poco todos los días gana a mucho una vez.","Tu yo de mañana te lo va a agradecer.","No necesitas motivación. Necesitas rutina.","Lo que repites, se queda.","Haz la parte aburrida.","Cumplirte a ti mismo es lo primero.","Paso pequeño. Paso real.","Sin atajos.","Volver es la habilidad.","Hoy también.","Nadie lo va a hacer por ti.","El progreso no se siente. Se acumula.","Termina lo que empiezas.","Primero hazlo. Luego mejóralo.","Tu racha es tu palabra.","Llegar tarde es mejor que no llegar.","Hazlo simple. Hazlo hoy.","Un día a la vez.","Lo pequeño suma.","No esperes el momento perfecto.","Hoy es suficiente.","Sigue aunque sea lento.","Menos excusas. Más pasos.","Hoy decides tú.","Constancia es respeto propio.","Llegaste. Mañana otra vez."];
+  const ERAS=[[30,"I · Pixel"],[90,"II · Línea"],[180,"III · Forma"],[270,"IV · Luz"],[365,"V · Constelación"],[1e9,"∞ · Sin final"]];
+  // Cada zona: escala, ritmo, timbre y una forma propia de tocar música.
+  const BIOMES=[
+   {id:"llanura",name:"Llanura",minD:0,w:3,scale:[0,2,3,5,7,8,10],tr:0,bpm:0,kit:"soft",tim:0,desc:"Pasto y luciérnagas. Todo empieza aquí."},
+   {id:"bosque",name:"Bosque",minD:1,w:3,scale:[0,2,3,5,7,9,10],tr:-2,bpm:-4,kit:"broken",tim:1,desc:"Los árboles de luz suenan cuando pasas."},
+   {id:"lago",name:"Lago",minD:1,w:2,scale:[0,2,4,6,7,9,11],tr:3,bpm:-12,kit:"float",tim:2,desc:"Bajo el agua todo suena distinto. Toca los lotos."},
+   {id:"ruinas",name:"Ruinas",minD:2,w:2,scale:[0,1,3,5,7,8,10],tr:-4,bpm:0,kit:"tribal",tim:3,desc:"Los pilares son tambores. Choca con ellos."},
+   {id:"jardin",name:"Jardín",minD:2,w:2,scale:[0,2,4,5,7,9,11],tr:5,bpm:-6,kit:"soft",tim:1,desc:"Quédate quieto para sembrar. Cada flor repite tu nota."},
+   {id:"dunas",name:"Dunas",minD:3,w:2,scale:[0,1,4,5,7,8,10],tr:-1,bpm:-14,kit:"half",tim:3,desc:"El viento suena con tu velocidad."},
+   {id:"cristales",name:"Cristales",minD:3,w:2,scale:[0,2,4,5,7,9,11],tr:7,bpm:6,kit:"garage",tim:4,desc:"Cada cristal es un arpegio."},
+   {id:"faros",name:"Faros",minD:3,w:2,scale:[0,2,4,5,7,9,10],tr:2,bpm:0,kit:"soft",tim:0,desc:"Enciende faros. Cada uno suma un instrumento."},
+   {id:"tormenta",name:"Tormenta",minD:4,w:2,scale:[0,2,3,5,7,8,10],tr:-5,bpm:14,kit:"techno",tim:5,desc:"El ácido sigue tu velocidad. Los rayos caen en el beat."},
+   {id:"cueva",name:"Cueva",minD:4,w:2,scale:[0,1,3,5,7,8,10],tr:-7,bpm:-22,kit:"heart",tim:2,desc:"Todo lo que tocas vuelve en eco."},
+   {id:"vacio",name:"Vacío",minD:6,w:1,scale:[0,2,4,6,7,9,11],tr:0,bpm:-30,kit:"none",tim:2,desc:"Nada. Solo tú y tus notas."}
+  ];
+  const LAYERS=["Arpegio","Sub","Campanas"];
+  const ZINFO={
+   llanura:["Calma","Minimal ambient",["Recoge luces","Toca piedras y luciérnagas","Pulso: toca la pantalla"]],
+   bosque:["Curioso","Broken beat",["Pasa entre los árboles de luz","Salta sobre los hongos: suenan graves"]],
+   lago:["Sereno","Ambient",["Entra al agua: todo suena distinto","Toca los lotos"]],
+   ruinas:["Tenso","Tribal",["Choca los pilares: son tambores","Lanza un pulso entre ellos"]],
+   jardin:["Alegre","Deep house",["Quédate quieto para sembrar","Toca las campanillas"]],
+   dunas:["Hipnótico","Half-time",["Corre: el viento suena con tu velocidad","Toca los cactus"]],
+   cristales:["Brillante","UK garage",["Toca los cristales: cada uno es un arpegio","Un pulso los hace sonar todos"]],
+   faros:["Épico","Progresivo",["Enciende los faros: cada uno suma un instrumento"]],
+   tormenta:["Intenso","Acid techno",["Corre: el ácido sube con tu velocidad","Toca las antenas","Los rayos caen en el beat"]],
+   cueva:["Oscuro","Dub",["Todo lo que tocas vuelve en eco","Toca las gotas"]],
+   vacio:["Infinito","Ambient",["Solo tú, tus notas y los astros"]]
+  };
+  const VARS=[["claro","Claro"],["espeso","Espeso"],["humedo","Húmedo"],["eco","De eco"],["brillo","Brillante"]];
+  const TRACKP={llanura:[["sub","pluck"],["keys","marimba"],.25,.3],bosque:[["boing","sub"],["marimba","flute"],.3,.35],lago:[["sub"],["glass","flute"],.12,.18],ruinas:[["fm","boing"],["organ","marimba"],.35,.3],jardin:[["pluck"],["keys","glass"],.35,.35],dunas:[["sub","fm"],["flute","organ"],.22,.25],cristales:[["pluck","fm"],["glass","keys"],.35,.4],faros:[["sub","pluck"],["saw","keys"],.3,.3],tormenta:[["acid"],["saw","organ"],.55,.3],cueva:[["sub"],["flute","glass"],.15,.15],vacio:[[],["glass"],0,.12]};
+  const HAB=[["equilibrado","Equilibrado",1,1,1],["florido","Florido",2.2,.6,.8],["salvaje","Salvaje",.8,2.2,.7],["mineral","Mineral",.5,.7,2],["desierto","Desierto",.35,.5,.6]];
+  const GROUNDP={llanura:["musgo","arena","piedra"],bosque:["musgo","ceniza"],lago:["agua","musgo"],ruinas:["piedra","arena"],jardin:["musgo"],dunas:["arena"],cristales:["cristal","piedra"],faros:["piedra","musgo"],tormenta:["ceniza","piedra"],cueva:["piedra","cristal"],vacio:[null]};
+  const AIRP={llanura:["claro","esporas","niebla"],bosque:["esporas","niebla"],lago:["niebla","claro"],ruinas:["polvo","claro"],jardin:["esporas","claro"],dunas:["polvo"],cristales:["claro","esporas"],faros:["niebla","claro"],tormenta:["polvo","ceniza"],cueva:["niebla","esporas"],vacio:["claro"]};
+  const PLANTP={llanura:["hierba","flor","arbusto"],bosque:["helecho","arbusto","junco"],lago:["junco","flor"],ruinas:["arbusto","hierba"],jardin:["flor","arbusto","helecho"],dunas:["coral","hierba"],cristales:["coral","junco"],faros:["hierba","junco"],tormenta:["coral","arbusto"],cueva:["coral","helecho"],vacio:[]};
+  const AIRTXT={claro:"aire claro",niebla:"niebla",polvo:"polvo de arena",esporas:"esporas",ceniza:"ceniza en el aire"};
+  const GEN={
+   ambient:{name:"Ambient",bpm:[72,84],pt:2,bassI:"sub",hookP:["glass","flute"],pad:1},
+   downtempo:{name:"Downtempo",bpm:[88,98],sw:.18,pt:0,bassI:"sub",hookP:["keys","flute"],pad:.6},
+   dub:{name:"Dub techno",bpm:[116,122],sw:.05,pt:2,bassI:"sub",hookP:["glass","flute"],pad:.35},
+   deep:{name:"Deep house",bpm:[118,122],sw:.12,pt:0,bassI:"pluck",hookP:["keys","organ"]},
+   afro:{name:"Afro house",bpm:[118,122],sw:.1,pt:1,bassI:"sub",hookP:["marimba","flute"]},
+   minimal:{name:"Minimal house",bpm:[122,126],sw:.08,pt:0,bassI:"pluck",hookP:["keys","glass"]},
+   rominimal:{name:"Rominimal",bpm:[124,128],sw:.3,pt:3,bassI:"roll",hookP:["marimba","keys"]},
+   acid:{name:"Acid techno",bpm:[130,138],sw:0,pt:5,bassI:"acid",hookP:["saw"]},
+   breaks:{name:"Breaks",bpm:[126,134],sw:.06,pt:5,bassI:"reese",hookP:["saw","organ"]},
+   garage:{name:"UK garage",bpm:[130,134],sw:.33,pt:4,bassI:"organb",hookP:["keys","glass"]},
+   tribal:{name:"Tribal",bpm:[116,122],sw:.12,pt:3,bassI:"fm",hookP:["marimba","organ"]},
+   heart:{name:"Dub profundo",bpm:[68,76],sw:0,pt:2,bassI:"sub",hookP:["flute"],pad:.5}
+  };
+  const GPOOL={llanura:["minimal","deep","downtempo"],bosque:["afro","deep","tribal"],lago:["ambient","dub"],ruinas:["tribal","afro"],jardin:["rominimal","deep","minimal"],dunas:["downtempo","afro","dub"],cristales:["garage","minimal"],faros:["deep","dub"],tormenta:["acid","breaks"],cueva:["heart","dub"],vacio:["ambient"]};
+  const FILL=[[.15,"Casi vacío"],[.45,"Escaso"],[1,"Normal"],[1.7,"Lleno"],[2.6,"Muy lleno"]];
+  const PROPK={llanura:"piedra",bosque:"hongo",jardin:"campanilla",dunas:"cactus",tormenta:"antena",cueva:"gota",vacio:"astro"};
+  const SPECIES=[["luciernaga","Luciérnagas","Huyen si te acercas. Si las tocas, suenan."],["arbol","Árboles de luz","Crecen en el bosque y brillan cuando pasas."],["estanque","Agua","Bajo el agua todo suena distinto."],["bandada","Bandadas","Cruzan el cielo. Vuela con ellas."],["caminante","Caminantes","Si te quedas cerca, te siguen y cantan contigo."]];
+  const ACH=[
+   ["dia1","Día 1","Empezaste. Eso ya es más que la mayoría."],
+   ["dorada","Luz dorada","Encontraste tu primera luz dorada."],
+   ["tope","Camino completo","Llenaste la barra de un día."],
+   ["tiempo","En tiempo","8 luces seguidas justo en el beat."],
+   ["mundo","El Mundo","Entraste al Mundo por primera vez."],
+   ["estrella1","Primera estrella","Encontraste tu primera reliquia."],
+   ["dia3","Noche completa","Las 3 reliquias de un día."],
+   ["e30","30 estrellas","Tu constelación tiene 30 estrellas."],
+   ["e100","100 estrellas","Tu constelación tiene 100 estrellas."],
+   ["zona5","Explorador","Descubriste 5 zonas."],
+   ["atlas","Atlas completo","Descubriste las 11 zonas."],
+   ["faro","Primer faro","Encendiste un faro."],
+   ["banda","Tu banda","Encendiste los 3 instrumentos de los faros."],
+   ["jardinero","Jardinero","Sembraste 4 flores en un jardín."],
+   ["tambor","Tambor","Tocaste 8 pilares en las ruinas."],
+   ["compania","Compañía","Un caminante te siguió."],
+   ["vuelo","Vuelo","Volaste con una bandada."],
+   ["vida","Todo vive","Encontraste las 5 formas de vida."],
+   ["under","Underground","Una tormenta a toda energía."],
+   ["r3","Racha de 3","3 días seguidos."],
+   ["r7","Racha de 7","Una semana sin fallar."],
+   ["r30","Racha de 30","Un mes completo."],
+   ["r100","Racha de 100","100 días seguidos."],
+   ["r365","Racha de 365","Un año entero."],
+   ["regreso","Volviste","Fallaste un día y regresaste."],
+   ["t10","10 días totales","10 días jugados, con o sin racha."],
+   ["t30","30 días totales","30 días jugados."],
+   ["t100","100 días totales","100 días jugados."],
+   ["s10","Tamaño 10","Tu pixel llegó a tamaño 10."],
+   ["forma1","Primera forma","Descubriste una forma que nadie había nombrado."],
+   ["cat25","Coleccionista","25 formas en tu catálogo."],
+   ["cat100","Naturalista","100 formas en tu catálogo."],
+   ["cat500","Enciclopedia","500 formas en tu catálogo."],
+   ["lugar10","Viajero","10 lugares distintos."],
+   ["lugar50","Nómada","50 lugares distintos."],
+   ["lugar200","Sin mapa","200 lugares distintos."],
+   ["reto1","Primer reto","Cumpliste el reto de un lugar."],
+   ["reto10","Diez retos","Cumpliste 10 retos de lugar."],
+   ["reto50","Cincuenta retos","Cumpliste 50 retos de lugar."],
+   ["frontera","Frontera","Encontraste un lugar donde se mezclan dos familias."],
+   ["evento1","Testigo","Viste un evento raro."],
+   ["eventos4","Todos los cielos","Viste los 4 tipos de evento."],
+   ["silencio","Silencio incómodo","60 s quieto en una zona con ritmo.",1],
+   ["contratiempo","Contratiempo profesional","20 luces seguidas, todas fuera del beat.",1],
+   ["turista","Turista","Cruzaste 10 fronteras de zona en una sesión.",1],
+   ["bajista","Bajista frustrado","Tu melodía se quedó 45 s en notas graves.",1],
+   ["alreves","Al revés","90 s caminando solo hacia la izquierda.",1],
+   ["dj","Gritando al vacío","10 pulsos seguidos sin que nada suene.",1],
+   ["fiesta","Fiesta de dos","Dos caminantes te siguen al mismo tiempo.",1],
+   ["ballena","Ballena","90 s seguidos bajo el agua.",1],
+   ["esquivador","Esquivador","45 s moviéndote en el Mundo sin tocar ninguna luz.",1],
+   ["insistente","Insistente","Golpeaste el mismo pilar 25 veces.",1]
+  ];
+  const SAMPLES={luz:"Luz",cristal:"Cristal",pilar:"Pilar",loto:"Loto",arbol:"Árbol",luciernaga:"Luciérnaga",flor:"Flor",faro:"Faro"};
+  const COLORS=[["#ffffff","Blanco",null],["#f0d27a","Ámbar","tope"],["#7fe0b0","Menta","estrella1"],["#6fd3ff","Cian","mundo"],["#ff8a7a","Coral","r3"],["#b9a2ff","Lila","oculto"]];
+  // La Voz del sistema: sarcástica, directa, con cariño por debajo. Estas son para que Jay las corrija.
+  const VOZ={
+   dia1:"Día uno. La mayoría ni siquiera llega aquí. Tú llegaste. No te emociones todavía.",
+   dorada:"Una luz dorada. Brilla más que las otras. Igual que tú cuando apareces.",
+   tope:"Barra llena. Hiciste lo que dijiste que ibas a hacer. Raro en estos tiempos.",
+   tiempo:"Ocho en el beat. Alguien aquí tiene ritmo. Sorprendente.",
+   mundo:"Bienvenido al Mundo. Nada aquí te hace crecer. Solo te hace feliz. Disfruta el descuento.",
+   estrella1:"Tu primera estrella. Una. No es una constelación. Es un comienzo.",
+   dia3:"Tres de tres. Ojalá tu lista de pendientes se viera así.",
+   e30:"Treinta estrellas. Ya se ve algo en tu cielo.",
+   e100:"Cien estrellas. Esto ya no es suerte. Es hábito.",
+   zona5:"Cinco zonas. Explorador oficial. No hay medalla física, lo siento.",
+   atlas:"Atlas completo. Conoces el mapa mejor que quien lo hizo.",
+   faro:"Encendiste un faro. Ahora suenas como alguien que sabe lo que hace.",
+   banda:"Tres faros. Tienes banda. Y no tienes que pagarles.",
+   jardinero:"Cuatro flores. Plantaste música. Literalmente.",
+   tambor:"Ocho pilares golpeados. Los vecinos no van a estar contentos.",
+   compania:"Alguien te sigue. Tranquilo, es un caminante. Solo quiere cantar.",
+   vuelo:"Volaste con la bandada. No tienes alas. Detalles.",
+   vida:"Encontraste toda la vida que hay. Por ahora.",
+   under:"Tormenta a máxima energía. Esto ya es un club. Sin portero.",
+   r3:"Tres días seguidos. Ahí empieza todo.",
+   r7:"Siete días. Una semana sin fallarte. Eso vale más que cualquier logro.",
+   r30:"Treinta días. Esto ya es parte de quién eres.",
+   r100:"Cien días. Ya no necesitas que te lo diga.",
+   r365:"Un año. No tengo nada sarcástico que decir. Respeto.",
+   regreso:"Fallaste un día. Volviste. Es lo único que importa.",
+   t10:"Diez días jugados. Con o sin racha, cuentan.",
+   t30:"Treinta días. Caíste y volviste varias veces. Eso es constancia de verdad.",
+   t100:"Cien días. El pixel ya no es tan pequeño.",
+   s10:"Tamaño diez. Ya no eres un punto. Eres un punto grande.",
+   silencio:"60 segundos quieto en plena fiesta. Nadie te va a sacar a bailar.",
+   contratiempo:"Veinte notas fuera de tiempo seguidas. Eso también es un estilo. Un estilo malo, pero tuyo.",
+   turista:"Diez fronteras y no te quedaste en ninguna. Turista profesional.",
+   bajista:"Solo notas graves. El bajista de la banda manda saludos.",
+   alreves:"Noventa segundos caminando a la izquierda. El mapa es infinito hacia todos lados, por si acaso.",
+   dj:"Diez pulsos y nada respondió. A veces el mundo no está de humor. Insiste.",
+   fiesta:"Dos caminantes te siguen. Ya es una fiesta. Nadie trajo hielo.",
+   ballena:"Noventa segundos bajo el agua. Los pixeles no respiran. Lo comprobaste.",
+   esquivador:"Viniste a un juego de luces a no tocar luces. Respeto el compromiso.",
+   insistente:"Veinticinco golpes al mismo pilar. Él no te hizo nada.",
+   forma1:"Una forma nueva. Nadie la había visto antes. Literalmente nadie. Le pusimos nombre por ti.",
+   cat25:"Veinticinco formas. Ya tienes una colección. No se la enseñes a cualquiera.",
+   cat100:"Cien formas. Eres oficialmente la persona más rara de este mundo. Es un cumplido.",
+   cat500:"Quinientas formas. A este punto el mundo te descubre a ti.",
+   lugar10:"Diez lugares. Ya no eres turista. Bueno, un poco.",
+   lugar50:"Cincuenta lugares. El mapa no se acaba. Tú tampoco.",
+   lugar200:"Doscientos lugares. Ya ni sé dónde estás. Y está bien.",
+   reto:"Reto cumplido. Nadie te lo pidió. Bueno, yo. Toma una muestra.",
+   reto1:"Primer reto. Cada lugar quiere algo distinto de ti. Como la gente.",
+   reto10:"Diez retos. Ya entendiste cómo funciona esto.",
+   reto50:"Cincuenta. A este punto los retos te tienen miedo.",
+   frontera:"Dos familias en un mismo lugar. Nadie se pone de acuerdo, pero suena bien.",
+   evento1:"Un evento raro. Pasa poco. Te tocó a ti. Aprovecha.",
+   eventos4:"Viste los cuatro cielos. Ya nada te sorprende. Mentira.",
+   lluvia:"Está lloviendo notas. No traje paraguas. Tú tampoco.",
+   eclipse:"Eclipse. Se fue la luz. No es el juego, es el cielo.",
+   migracion:"Las formas se están mudando. No preguntes a dónde.",
+   aurora:"Aurora. El cielo decidió ponerse bonito hoy.",
+   start:"Soy el sistema. Voy a estar mirando. No juzgo. Bueno, un poco.",
+   idle:"La luz no se recoge sola. Lo intenté.",
+   capPlus:"Ya llenaste la barra. Recoger más no te hace más grande. Te hace más terco.",
+   deploy:"Estudio desplegado. Mañana empiezas aquí.",
+   studioEmpty:"Tu Estudio está vacío. Como un sábado sin plan. Elige una muestra y toca un punto.",
+   firstPlace:"Primera pieza colocada. Ya suena a algo. Poco, pero algo.",
+   lampOut:"Se apagó tu linterna. Mañana dura un minuto más si vuelves."
+  };
+
+
+  Object.defineProperties(runtime, {
+    CAP: { get: () => CAP },
+    PER_LEVEL: { get: () => PER_LEVEL },
+    CHUNK: { get: () => CHUNK },
+    SPEED: { get: () => SPEED },
+    WCH: { get: () => WCH },
+    REG: { get: () => REG },
+    GOLD: { get: () => GOLD },
+    PHRASES: { get: () => PHRASES },
+    ECOS: { get: () => ECOS },
+    ERAS: { get: () => ERAS },
+    BIOMES: { get: () => BIOMES },
+    LAYERS: { get: () => LAYERS },
+    ZINFO: { get: () => ZINFO },
+    VARS: { get: () => VARS },
+    TRACKP: { get: () => TRACKP },
+    HAB: { get: () => HAB },
+    GROUNDP: { get: () => GROUNDP },
+    AIRP: { get: () => AIRP },
+    PLANTP: { get: () => PLANTP },
+    AIRTXT: { get: () => AIRTXT },
+    GEN: { get: () => GEN },
+    GPOOL: { get: () => GPOOL },
+    FILL: { get: () => FILL },
+    PROPK: { get: () => PROPK },
+    SPECIES: { get: () => SPECIES },
+    ACH: { get: () => ACH },
+    SAMPLES: { get: () => SAMPLES },
+    COLORS: { get: () => COLORS },
+    VOZ: { get: () => VOZ },
+  });
+}
