@@ -67,6 +67,8 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/data.js` | Constantes, biomas, géneros, logros, muestras y textos. |
 | `src/progress.js` | Guardado v4, días, racha, crecimiento, linterna, RNG y cachés. |
 | `src/world.js` | Camino, generación de regiones/chunks, eventos y reliquias. |
+| `src/palettes.js` | Paletas tropical, melódica, robótica y disco, asignación regional y patrones. |
+| `src/instruments.js` | Nuevos timbres de parciales, FM y filtros, güiro y timbal electrónicos. |
 | `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros y tracks. |
 | `src/session.js` | Resumen de exploración y actividad, conservación de la última sesión y tarjeta PNG. |
 | `src/effects.js` | Procesamiento local por voz, perfiles regionales y liberación de nodos de audio. |
@@ -152,7 +154,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
   - Cada uno define rango de BPM, swing (`sw`), patrón, instrumento de bajo (`bassI`) y de hook (`hookP`), y nivel de pad.
   - `GPOOL[bioma]` conserva las familias originales. `EXTRA_GPOOL` añade las seis nuevas mediante una semilla independiente (`extra-genres:v1:<región>`), con 45 % de probabilidad de selección fuera de Origen cuando el bioma admite géneros nuevos. Vacío mantiene ambient y Origen mantiene minimal. Cambia la música de algunas regiones, no su paisaje ni los IDs de criaturas.
   - Los géneros nuevos tienen patrones propios: electro sincopado, progressive de pulso regular y capas melódicas, microhouse con detalles y espacios, minimal techno de acentos secos, dubstep a medio tiempo y drum & bass a 166–174 BPM. Sus acentos varían cada cuatro compases. La radio adapta también las frases de bajo de progressive, dubstep y drum & bass; los géneros anteriores ganan pequeños fills compatibles con su ritmo.
-  - Bitácora y Escuchar reconocen las nuevas familias. Las pruebas ejercitan instrumentos y scheduler en los 18 géneros; la valoración audible de mezcla y groove sigue siendo de Jay en teléfono.
+  - Bitácora y Escuchar reconocen las nuevas familias. Las pruebas ejercitan instrumentos y scheduler en los 22 géneros; la valoración audible de mezcla y groove sigue siendo de Jay en teléfono.
 - **`drums(gid, …)`:** los patrones de batería de cada género. Se escriben a mano con kick, clap, hats, congas, clave, rim y shaker.
 - **`playTrack(dna, …)`:** bajo y hook de la región, tocados con los instrumentos del género.
 - **Instrumentos (todo síntesis):**
@@ -287,3 +289,9 @@ Jay pide evitar ritmos y sonidos con sensación de videojuego. Priorizar groove,
 ### Resumen de sesión
 
 `src/session.js` guarda una base de contadores al entrar al Mundo, antes de registrar el lugar de entrada. `S.session` contiene actividad y música escuchada, con versión 1; `S.lastSession` es un resumen terminado e independiente de los cambios posteriores. El panel muestra la sesión actual o la última y no aparece automáticamente al salir. El botón Resumen de la pantalla de linterna agotada también lo abre. Los instrumentos se anotan desde el registro musical existente, solo cuando el sonido está activo. Las interacciones cuentan acciones sobre objetos y los pulsos del jugador, no pistas grabadas. Se mantiene la clave v4 y las partidas anteriores empiezan sin historial de sesiones inventado.
+
+### Paletas electrónicas ampliadas
+
+`src/palettes.js` añade tropical house, melodic house, electro robótico y nu-disco (22 géneros en total). La semilla independiente `world-palette:v1` asigna una nueva paleta al 40 % de regiones elegibles; Origen y Vacío conservan su selección anterior. Solo cambian género, escala, tempo e instrumentos de la pista. Se conservan el terreno, nombres, criaturas, posiciones, rasgos y descubrimientos. Las paletas tropical/disco favorecen modos mayores o dóricos/mixolidios; melódico usa menor/dórico y robótico menor/frigio.
+
+`src/instruments.js` sintetiza steel pan, kalimba FM, teclas FM cálidas, cuerdas analógicas, metales, clavinet, bajo elástico filtrado, bajo modular FM, formantes y teclas metálicas. Añade güiro y timbal sintetizados. Son aproximaciones electrónicas mediante parciales, FM y filtros, sin muestras grabadas. Sus envelopes tienen duración acotada y los destinos respetan los efectos locales. Las voces de objetos usan los instrumentos de su paleta: no se agregan teclas o marimba genéricas a esas cuatro familias. La percusión y los patrones de bajo y melodía también cambian por estilo. Bitácora y Escuchar explican los instrumentos nuevos. `tests/palettes.mjs` comprueba familias, síntesis distinta y cinco fixtures del mundo anterior; el scheduler verifica los 22 géneros. La calidad y el equilibrio final requieren escuchar en móvil.

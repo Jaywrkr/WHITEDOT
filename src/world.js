@@ -1,3 +1,4 @@
+import {applyPalette} from './palettes.js';
 import { createPockets, distributePlaythings } from './pockets.js';
 
 import { attachPersonalities } from './personality.js';
@@ -65,6 +66,7 @@ export function initialize(runtime) {
      const G=runtime.GEN[d.genre];
      d.bpm=Math.round(G.bpm[0]+r()*(G.bpm[1]-G.bpm[0]));const fr=r();d.fill=origin?runtime.FILL[2]:fr<.15?runtime.FILL[0]:fr<.35?runtime.FILL[1]:fr<.65?runtime.FILL[2]:fr<.85?runtime.FILL[3]:runtime.FILL[4];
      d.track.bassI=G.bassI;d.track.hookI=G.hookP[Math.floor(r()*G.hookP.length)];}
+    applyPalette(d,runtime.BIOMES[z].id,origin,runtime.seedOf,runtime.rng);
     rcache.set(key,d);return d;
   }
   const EVENTS=[["lluvia","Lluvia de notas","Caen notas del cielo. Atrápalas."],["eclipse","Eclipse","La luz se achica. Todo se escucha más hondo."],["migracion","Migración","Las formas de aquí están viajando."],["aurora","Aurora","El cielo canta en otro color."]];

@@ -5,6 +5,7 @@ import { initialize as progress } from '../src/progress.js';
 import { initialize as world } from '../src/world.js';
 import { initialize as audio } from '../src/audio.js';
 import { initialize as voices } from '../src/voices.js';
+import { initialize as instruments } from '../src/instruments.js';
 import { initialize as effects } from '../src/effects.js';
 globalThis.localStorage = { getItem: () => null, setItem() {} };
 const runtime = Object.create(null);
@@ -62,7 +63,7 @@ class Context {
 }
 globalThis.window = { AudioContext: Context };
 try {
-  audio(runtime); voices(runtime); effects(runtime);
+  audio(runtime); voices(runtime); effects(runtime); instruments(runtime);
   runtime.S.mode = 'world'; runtime.S.todayKey = '2026-10-12';
   runtime.MU.dnaT = origin; runtime.MU.layers = new Set([0,1,2]);
   runtime.MU.flowers = [{n:69,st:0,x:900,y:900}];
@@ -79,13 +80,15 @@ try {
   assert(started > 100, 'stationary world did not schedule instruments');
   assert.equal(runtime.MU.speed, 0);
   runtime.MU.layers.clear();runtime.MU.flowers=[];
+  runtime.MU.E=.65;
   for(const genre of Object.keys(runtime.GEN)) {
-    runtime.MU.dnaT={...origin,key:`audio-test:${genre}`,genre,bpm:runtime.GEN[genre].bpm[0]};
+    runtime.MU.dnaT={...origin,key:`audio-test:${genre}`,genre,bpm:runtime.GEN[genre].bpm[0],track:{...origin.track,bassI:runtime.GEN[genre].bassI}};
     const start=runtime.ac.currentTime,previous=started,heard=new Set();
     runtime.recordInstrument=id=>heard.add(id);
     for(let tick=1;tick<=2400;tick++){runtime.ac.currentTime=start+tick*.025;schedule();}
     assert(started>previous+20,`${genre}: no sustained audio while stationary`);
     assert(heard.size>0,`${genre}: no instruments scheduled`);
+    if(['tropical','melodic','robotic','nudisco'].includes(genre)){assert(heard.has(runtime.GEN[genre].bassI));assert(runtime.GEN[genre].hookP.some(id=>heard.has(id)));}
     assert.equal(runtime.MU.radio.genre,genre);
   }
   runtime.S.mode = 'camino';
