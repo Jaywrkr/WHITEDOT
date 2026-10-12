@@ -15,6 +15,7 @@ import { initialize as journal } from './journal.js';
 import { initialize as scanner } from './scanner.js';
 import { initialize as playthings } from './playthings.js';
 import { initialize as pockets } from './pockets.js';
+import { initialize as feedback } from './feedback.js';
 import { initialize as controls } from './controls.js';
 
 // Initialize once, in the same order as the original game. Never expose runtime on window.
@@ -36,6 +37,7 @@ journal(runtime);
 scanner(runtime);
 playthings(runtime);
 pockets(runtime);
+feedback(runtime);
 controls(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
