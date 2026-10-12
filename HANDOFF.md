@@ -68,6 +68,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/progress.js` | Guardado v4, días, racha, crecimiento, linterna, RNG y cachés. |
 | `src/world.js` | Camino, generación de regiones/chunks, eventos y reliquias. |
 | `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros y tracks. |
+| `src/radio.js` | Composición del Mundo por frases y secciones, independiente del movimiento. |
 | `src/canvas.js` | Canvas, tamaño, input de movimiento y estado visual temporal. |
 | `src/messages.js` | Cola y animación de la Voz del sistema. |
 | `src/studio.js` | Muestras, secuenciador radial, bolsa, colores y checkpoint. |
@@ -127,7 +128,12 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
   - El pad usa voice-leading con osciladores persistentes que "respiran".
   - `snap()` ajusta las notas a los tonos del acorde.
   - La melodía sigue la dirección del movimiento del jugador. Un motivo call-response repite su frase.
-- **Energía `MU.E`:** sube con el movimiento y la actividad, y abre capas por umbrales (L1/L2/L3).
+- **Energía `MU.E`:** sube con el movimiento y la actividad. En el Mundo, la energía musical también tiene un mínimo variable por sección (`MU.radio.energy`), que sostiene capas estando quieto sin alterar los contadores de actividad del jugador.
+- **Radio generativa del Mundo (implementada):** `radio.js` genera nuevas frases de bajo y melodía cada 4–8 compases, cambia secciones más largas e instrumentos dentro del género y conserva escala y BPM regionales. Objetos cercanos, criaturas que cantan, variantes y eventos modifican su energía. Funciona aunque no haya objetos alrededor y el jugador esté inmóvil; se guía por el reloj del scheduler de Web Audio. Los patrones rítmicos del género siguen siendo reconocibles.
+  - El Camino mantiene su calma y el Estudio conserva su secuenciador; el compositor solo opera en el Mundo.
+  - No cambia el ADN procedural ni el formato de guardado v4. El estado de composición es temporal; no se conserva al recargar.
+  - Respeta activar/silenciar sonido y la duración de la linterna. No es audio en segundo plano garantizado: depende de que el navegador mantenga activo Web Audio.
+  - Las pruebas verifican evolución y programación de notas; Jay valida la sensación musical y la mezcla en teléfono.
 - **Géneros (`GEN`):** ambient, downtempo, dub techno, deep house, afro house, minimal house, rominimal, acid techno, breaks, UK garage, tribal y dub profundo.
   - Cada uno define rango de BPM, swing (`sw`), patrón, instrumento de bajo (`bassI`) y de hook (`hookP`), y nivel de pad.
   - `GPOOL[bioma]` define qué géneros puede tener cada bioma.
@@ -171,7 +177,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Sintaxis:** correr `node --check` sobre los archivos de `src/`. Ya no hay un script inline para extraer.
 - **Visual y funcional:** servir el repositorio por HTTP y usar Playwright headless (Chromium) en 390×844 (móvil) y escritorio. Comprobar entrada y reentrada al Mundo con reto visible, transición de día sin reto residual, pausa de linterna en menús, colocación y persistencia de muestras en el Estudio y generación de tarjetas. Capturar errores JavaScript y screenshots. Los errores de carga de Google Fonts sin red son esperables.
 - **Tope diario:** comprobar que una luz de valor 10 recogida cuando faltaba 1 solo suma 1 tanto a `todayLight` como a `totalLight`.
-- **Pruebas versionadas:** `node tests/core.mjs` y `python3 tests/smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
+- **Pruebas versionadas:** `npm test` (core y radio) y `python3 tests/smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
 - **Audio:** en headless no se oye nada. **Jay valida el sonido en su teléfono** con la URL de Vercel. Es la prueba que importa.
 - **Atajos de prototipo** (menú → Prototipo):
   - `dFill`: llena la barra del día.
@@ -195,7 +201,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 
 1. **Corregir la base — completado:** activar retos al entrar/reentrar al Mundo, limpiar la transición de día, respetar el tope de crecimiento y pausar el consumo de linterna en menús. Integrado en `main` mediante el PR #1.
 2. **Actualizar documentación — completado:** estado real del juego, diferencias con el diseño y flujo de ramas. No incluye cambios de jugabilidad.
-3. **Organizar el código en módulos — esta etapa:** JavaScript nativo, CSS separado y contexto interno para conservar comportamiento y partidas v4. Sin introducir TypeScript, Vite o un build.
+3. **Organizar el código en módulos — completado:** JavaScript nativo, CSS separado y contexto interno para conservar comportamiento y partidas v4. Sin introducir TypeScript, Vite o un build.
 4. **Bitácora** (estilo No Man's Sky / Astroneer), con 4 pestañas:
    - **Lugares:** regiones visitadas con % completado (especies, reto, evento, reliquia).
    - **Formas:** especies agrupadas por rol musical.
@@ -207,6 +213,8 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 8. **Looper / ecos y banda de criaturas:** grabar 1–2 compases y dejarlos en el mundo; sumar capas de bajo, percusión, melodía y voz con las criaturas que siguen al jugador y combos musicales.
 9. **Ampliar el Estudio y los descubrimientos:** combinar muestras, decorar y nombrar especies y lugares; mostrar esos nombres en las tarjetas.
 10. **Optimizar según pruebas en móvil:** rendimiento visual y estabilidad del audio. Evaluar AudioWorklet si las pruebas detectan problemas de timing.
+
+**Etapa musical añadida por Jay, implementada:** evolución del Mundo como una radio generativa incluso estando quieto. No sustituye la Bitácora ni autoriza por sí sola efectos nuevos o cambios en reliquias.
 
 **Dirección nueva de jugabilidad, pendiente de etapa propia:** encuentros mágicos excepcionalmente raros, descubrimientos únicos y reliquias más difíciles de conseguir. Definir su ubicación en la secuencia con Jay antes de implementarlos. No hay probabilidades, reglas de obtención ni recompensas nuevas aprobadas todavía; tampoco se ha definido si «único» significa único en una partida o compartido entre jugadores.
 
