@@ -14,7 +14,7 @@ CHROMIUM = os.environ.get('CHROMIUM_PATH') or shutil.which('chromium') or shutil
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
  for label,size in [('mobile',{'width':390,'height':844}),('desktop',{'width':1280,'height':800})]:
-  c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(5000);page.add_init_script('window.__audioContexts=[];window.AudioContext=class extends AudioContext {constructor(...args){super(...args);window.__audioContexts.push(this);}}');errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(5000);page.add_init_script('window.__audioContexts=[];window.AudioContext=class extends AudioContext {constructor(...args){super(...args);window.__audioContexts.push(this);}}');errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
   page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click();page.wait_for_function('window.__audioContexts.length === 1 && window.__audioContexts[0].state === "running" && window.__audioContexts[0].currentTime > 0')
@@ -56,6 +56,7 @@ with sync_playwright() as p:
   page.evaluate('''async()=>{const r=window.__testRuntime,{TOY_NAMES}=await import('/src/playthings.js'),c=r.wchunk(Math.floor(r.S.wx/900),Math.floor(r.S.wy/900));window.__toyRestore={c,items:c.playthings};c.playthings=Object.keys(TOY_NAMES).map((kind,i)=>({kind,x:r.S.wx+(i-2)*35,y:r.S.wy-80,hx:r.S.wx+(i-2)*35,hy:r.S.wy-80,size:8,phase:i,rotation:.4,lit:1,jump:.2,ring:.7,vx:0,vy:0,cd:1e12,snd:q=>r.playVoice('toy:'+kind,i,q,r.regionOfPos(r.S.wx,r.S.wy))}));r.frame.l=1000;r.frame(1050);r.frame.l=performance.now();}''')
   page.screenshot(path='/tmp/whitedot-playthings-'+label+'.png')
   page.evaluate('''()=>{window.__toyRestore.c.playthings=window.__toyRestore.items;delete window.__toyRestore;}''')
+  page.evaluate('''()=>{const r=window.__testRuntime,oldX=r.S.wx,oldY=r.S.wy,c=r.wchunk(Math.floor(r.S.wx/900),Math.floor(r.S.wy/900));for(const p of c.pockets){r.S.wx=p.x;r.S.wy=p.y;r.frame.l=1000;r.frame(1050);r.hud();if(r.currentPocket()?.kind!==p.kind)throw Error('Pocket not recognized');if(p.kind==='quiet'&&r.MU.near.length)throw Error('Listening center has automatic object ensemble');}r.S.wx=oldX;r.S.wy=oldY;r.frame.l=performance.now();}''')
   page.keyboard.press('Space')
   page.keyboard.down('d');page.wait_for_timeout(300);page.keyboard.up('d')
   page.locator('#bPrimary').click();page.locator('#bPrimary').click();assert page.locator('#reto').is_visible() == page.evaluate('!window.__testRuntime.S.retos[window.__testRuntime.regionOfPos(window.__testRuntime.S.wx,window.__testRuntime.S.wy).key]')

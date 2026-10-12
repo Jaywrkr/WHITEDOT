@@ -51,7 +51,7 @@ export function createRadio(seedOf, rng, genres) {
     const life = Math.min(.08, (environment.near || 0) * .002 + (environment.singers || 0) * .015);
     const event = environment.event === 'eclipse' ? -.06 : environment.event ? .05 : 0;
     const density = environment.variant === 0 ? -.05 : environment.variant === 4 ? .04 : 0;
-    const limit = region.genre === 'ambient' ? .3 : .7;
+    const limit = environment.quiet ? .24 : region.genre === 'ambient' ? .3 : .7;
     const target = Math.max(.14, Math.min(limit, levels[section] + life + event + density));
     energy += (target - energy) * .25;
     return { ...arrangement, energy, genre: region.genre };

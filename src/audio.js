@@ -143,7 +143,7 @@ export function initialize(runtime) {
     }
     if(runtime.inWorld()&&MU.dnaA){
       if(s===0||!MU.radio)MU.radio=radio.advance(MU.dnaA,MU.step>>4,{
-        near:MU.near.length,singers:MU.singers.length,variant:MU.vari,
+        near:MU.near.length,singers:MU.singers.length,variant:MU.vari,quiet:runtime.currentPocket?.()?.kind==='quiet',
         event:runtime.eventOf(MU.dnaA)?.[0]
       });
     }else MU.radio=null;

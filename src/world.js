@@ -1,3 +1,5 @@
+import { createPockets, distributePlaythings } from './pockets.js';
+
 import { attachPersonalities } from './personality.js';
 
 import { createPlaythings } from './playthings.js';
@@ -108,6 +110,8 @@ export function initialize(runtime) {
     const rd=runtime.rng(runtime.seedOf("notas:"+id+runtime.S.todayKey));
     for(let i=0;i<(B.id==="vacio"?6:18);i++)c.motes.push({x:ox+rd()*runtime.WCH,y:oy+rd()*runtime.WCH,ph:rd()*6});
     c.playthings=createPlaythings(cx,cy,runtime.WCH,dens,B.id,runtime.seedOf,runtime.rng);
+    c.pockets=createPockets(cx,cy,runtime.WCH,runtime.seedOf,runtime.rng);
+    distributePlaythings(c.playthings,c.pockets,runtime.seedOf,runtime.rng);
     c.playthings.forEach((o,i)=>{o.snd=q=>runtime.playVoice('toy:'+o.kind,i+(o.personality?.degree||0),q,runtime.regionOfPos(o.x,o.y),false,o.personality?.volume||1);});
     attachPersonalities(c,runtime.seedOf,runtime.rng);
     runtime.wchunks.set(id,c);return c;

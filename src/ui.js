@@ -1,3 +1,5 @@
+import { POCKET_NAMES } from './pockets.js';
+
 import { gravityOf } from './gravity.js';
 
 // HUD, avisos y transiciones del Mundo.
@@ -8,7 +10,8 @@ export function initialize(runtime) {
   function era(d){return runtime.ERAS.find(e=>d<=e[0])[1];}
   function hud(dist){
     const d=runtime.displayDay();
-    $("day").textContent="DÍA "+d;$("era").textContent=runtime.inWorld()?(runtime.MU.dnaT?runtime.MU.dnaT.name+" · "+gravityOf(runtime.MU.dnaT,runtime.seedOf).name:"El Mundo"):"Era "+era(d);
+    const pocket=runtime.currentPocket?.();
+    $("day").textContent="DÍA "+d;$("era").textContent=runtime.inWorld()?(runtime.MU.dnaT?runtime.MU.dnaT.name+" · "+(pocket?POCKET_NAMES[pocket.kind]:gravityOf(runtime.MU.dnaT,runtime.seedOf).name):"El Mundo"):"Era "+era(d);
     $("streak").textContent=runtime.shownStreak();$("starsN").textContent=runtime.S.stars.length;$("size").textContent=runtime.level();
     $("bar").classList.toggle("free",runtime.isFree());
     const fill=$("barfill"),goal=$("goal"),gr=$("goalR");

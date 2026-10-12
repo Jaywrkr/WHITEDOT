@@ -24,7 +24,7 @@ export function initialize(runtime) {
 
   /* ---------- loop ---------- */
   function frame(t){
-    const dt=Math.min(.05,(t-(frame.l||t))/1000);frame.l=t;
+    const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;
     const modal=[...document.querySelectorAll(".modal")].some(m=>!m.hidden&&!m.classList.contains("lite"));
     let dx=(runtime.keys.arrowright||runtime.keys.d?1:0)-(runtime.keys.arrowleft||runtime.keys.a?1:0), dy=(runtime.keys.arrowdown||runtime.keys.s?1:0)-(runtime.keys.arrowup||runtime.keys.w?1:0);
     if(runtime.ptr){dx=runtime.ptr.x-runtime.W/2;dy=runtime.ptr.y-runtime.H/2;const l=Math.hypot(dx,dy);if(l<6){dx=dy=0;}else{const k=Math.min(1,l/80);dx=dx/l*k;dy=dy/l*k;}}
@@ -155,6 +155,7 @@ export function initialize(runtime) {
     // suelo
     for(let a=a0;a<=a1;a++)for(let bb=b0;bb<=b1;bb++){
       const c=runtime.wchunk(a,bb);
+      runtime.drawPocketHints(c,ox,oy,R);
       runtime.drawPlaythings(c,t,dt,ox,oy,R,nearO);
       if(c.dunes){runtime.cx.fillStyle="#fff";const y0=Math.floor((runtime.S.wy-R)/38)*38;
         for(let y=y0;y<runtime.S.wy+R;y+=38){if(y<bb*runtime.WCH||y>=(bb+1)*runtime.WCH)continue;for(let x=Math.max(a*runtime.WCH,runtime.S.wx-R);x<Math.min((a+1)*runtime.WCH,runtime.S.wx+R);x+=6){const yy=y+Math.sin(x/130+y*.07+t/4000)*12,d=Math.hypot(x-runtime.S.wx,yy-runtime.S.wy);if(d>R)continue;runtime.cx.globalAlpha=Math.pow(1-d/R,1.4)*.35;runtime.cx.fillRect(x+ox,yy+oy,2,1);}}}
@@ -298,7 +299,7 @@ export function initialize(runtime) {
         const mw=runtime.waves.length&&runtime.hitW(m.x,m.y);if(mw){m.fl=1;runtime.wsoon(mw,q=>runtime.playVoice('luz',Math.floor(d/30),q,runtime.regionOfPos(m.x,m.y)));}m.fl=Math.max(0,(m.fl||0)-dt*2);
         if(d>R&&!m.fl)continue;runtime.cx.globalAlpha=Math.min(1,Math.max(m.fl,Math.pow(Math.max(0,1-d/R),1.3)*(.5+.25*Math.sin(t/400+m.ph)+b*.35)));runtime.cx.fillStyle=m.fl>.1?runtime.GOLD:"#fff";runtime.cx.fillRect(m.x+ox-1.5,m.y+oy-1.5,3,3);}
     }
-    runtime.MU.follower=follow;if(followers>=2)runtime.unlock("fiesta");runtime.MU.near=nearO;runtime.MU.singers=singers;
+    runtime.MU.follower=follow;if(followers>=2)runtime.unlock("fiesta");runtime.MU.near=runtime.currentPocket()?.kind==='quiet'?[]:nearO;runtime.MU.singers=singers;
     runtime.beams=runtime.beams.filter(be=>(be.l-=dt*1.6)>0);runtime.cx.lineWidth=1.2;for(const be of runtime.beams){runtime.cx.globalAlpha=be.l*.8;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.beginPath();runtime.cx.moveTo(be.x1+ox,be.y1+oy);runtime.cx.lineTo(be.x2+ox,be.y2+oy);runtime.cx.stroke();}
     {const cc=runtime.wchunk(Math.floor(runtime.S.wx/runtime.WCH),Math.floor(runtime.S.wy/runtime.WCH));if(cc.var!==runtime.MU.vari){runtime.MU.vari=cc.var;}}
     // tu Estudio en el mapa
