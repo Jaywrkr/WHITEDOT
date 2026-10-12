@@ -340,6 +340,7 @@ export function initialize(runtime) {
       runtime.cx.globalAlpha=al*.6;runtime.cx.beginPath();runtime.cx.arc(x,y,36,-Math.PI/2,-Math.PI/2+6.283*(progress.dwell/(rl.magical?12:6)));runtime.cx.stroke();
       if(d<100){runtime.cx.globalAlpha=.8;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.font="10px monospace";runtime.cx.textAlign="center";runtime.cx.fillText(rl.name||"Reliquia",x,y-44);runtime.cx.fillText(`Escucha ${Math.floor(progress.dwell)}/${rl.magical?12:6}s · ${progress.pulses}/${need} pulsos`,x,y+52);}
     }
+    runtime.drawPhenomena(t,dt,ox,oy,R);
     runtime.drawSoundCues(ox,oy,R);
     if((runtime.hudT+=dt)>.5){runtime.hudT=0;runtime.hud(nd);}
     return ds;
