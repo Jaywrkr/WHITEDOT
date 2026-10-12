@@ -24,6 +24,7 @@ export function initialize(runtime) {
 
   /* ---------- loop ---------- */
   function frame(t){
+    runtime.syncSession();
     if(!runtime.inWorld()||!runtime.S.sound)runtime.clearSoundCues();
     if(!runtime.inWorld())runtime.clearRelicProgress();
     const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;
@@ -133,6 +134,7 @@ export function initialize(runtime) {
     runtime.camX=runtime.S.wx;runtime.camY=runtime.S.wy;
     if(runtime.S.lampDay!==runtime.S.todayKey){runtime.S.lampDay=runtime.S.todayKey;runtime.S.lampUsed=0;}
     if(!paused)runtime.S.lampUsed+=dt;
+    if(!paused&&!runtime.scanning)runtime.sessionTime(dt);
     if(runtime.lampLeft()<=0){runtime.exitWorld(true);return ds;}
     const z=runtime.biomeOfPos(runtime.S.wx,runtime.S.wy),rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
     if(rg.key!==runtime.curRegion){runtime.curRegion=rg.key;runtime.enterRegion(rg,z);}

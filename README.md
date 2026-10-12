@@ -24,7 +24,8 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr)
    - Cada región muestra su gravedad al entrar: ligera (más rápido), normal o alta (más lento). La velocidad cambia suavemente en sus fronteras: ligera 1,65×, normal 1× y alta 0,55×.
 5. **Estudio:** un secuenciador radial portátil. Lo armas con las muestras que recoges y lo despliegas como refugio, que también sirve de checkpoint.
 6. **Bitácora:** consulta lugares y su gravedad, formas agrupadas por función musical, música descubierta y logros. Los logros ocultos se muestran como “???”. La Voz del sistema comenta lo que haces sin pedir permiso.
-7. **Compartir:** genera una tarjeta para redes con tu racha y tus descubrimientos.
+7. **Sesión:** desde el menú consulta tus descubrimientos nuevos, retos, hallazgos, interacciones y pulsos, junto con los lugares y la música escuchada. Al salir del Mundo se conserva el resumen; puedes compartirlo como imagen.
+8. **Compartir:** genera una tarjeta para redes con tu racha y tus descubrimientos.
 
 ## Tecnología
 

@@ -68,6 +68,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/progress.js` | Guardado v4, días, racha, crecimiento, linterna, RNG y cachés. |
 | `src/world.js` | Camino, generación de regiones/chunks, eventos y reliquias. |
 | `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros y tracks. |
+| `src/session.js` | Resumen de exploración y actividad, conservación de la última sesión y tarjeta PNG. |
 | `src/effects.js` | Procesamiento local por voz, perfiles regionales y liberación de nodos de audio. |
 | `src/relics.js` | Sitios raros estables, resonancia y compatibilidad de reliquias antiguas. |
 | `src/pockets.js` | Espacios locales de escucha, ensamble y descubrimiento; distribución estable y pistas discretas. |
@@ -96,7 +97,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 ```
 offset, lastDay, streak, best, totalDays, totalLight, todayKey, todayLight, capShown,
 collected[], trail[], px, py, ach{}, sound, mode("camino"|"world"|"studio"),
-wx, wy (posición en el mundo), lampDay, lampUsed, species{}, rel, relicSites{}, stars[], help{},
+wx, wy (posición en el mundo), lampDay, lampUsed, session, lastSession, species{}, rel, relicSites{}, stars[], help{},
 zones{}, bag{muestra:cantidad}, studio{x,y,biome,slots{}}, color, cat{} (catálogo de especies),
 catN, places{}, placesN, retos{}, retosN, events{}
 ```
@@ -236,7 +237,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 7. **Escuchar (escáner) — implementado:** mantener presionado 500 ms sin arrastrar muestra hasta cinco fuentes musicales cercanas (250 px), región, género, escala, rol e instrumento. Tecla E como alternativa en escritorio. Un desplazamiento de 14 px inicia el arrastre y cancela la pulsación larga; el toque breve mantiene el pulso. Se cierra al soltar, cancelar el gesto, perder foco, abrir un modal o salir del Mundo. Las formas no descubiertas no revelan su nombre. El panel identifica voces potenciales del entorno, no detecta qué nodos de audio están sonando en ese instante. No añade descubrimientos ni modifica el guardado.
 8. **Encuentros mágicos y reliquias — primera versión implementada:** sitios fijos por chunk (1/48), incluyendo constelaciones dormidas (1/384), sin flecha global. Ecos: permanecer a 100 px durante 6 s y emitir 3 pulsos; constelaciones: 12 s y 5 pulsos. Más de 140 px reinicia la resonancia; menús y Escuchar no suman tiempo. Una estrella por sitio y partida, guardada con ID, nombre, región y tipo mágico. Los sitios son compartidos por semilla, la obtención es local a cada partida. Se conservan estrellas antiguas y pendientes del día del guardado legado.
 9. **Efectos por acciones y lugares — primera versión implementada:** perfiles estables por región y tipo de voz: natural, filtro suave, eco a tempo, espacio y modulación metálica. Cada nota procesa su propia señal; no cambia el bus del resto de la composición. Bajos naturales y percusión natural o filtrada. Hasta 12 efectos simultáneos, liberados por el reloj de audio. Escuchar indica el efecto potencial. Sin voz hablada robótica ni persistencia nueva.
-10. **Resumen de la sesión:** descubrimientos, retos y música creada, con tarjeta para compartir.
+10. **Resumen de la sesión — implementado:** panel Sesión en el menú y al agotar la linterna, con lugares/formas nuevos, retos y hallazgos, interacciones/pulsos, lugares visitados y música escuchada. Tarjeta PNG de 1080×1350. Una sesión comienza al entrar al Mundo y termina al salir; Estudio conserva la sesión. El tiempo excluye menús y Escuchar. Recargar conserva la sesión actual; la última terminada permanece en `S.lastSession`. No se graba ni exporta audio.
 11. **Looper / ecos y banda de criaturas:** grabar 1–2 compases y dejarlos en el mundo; sumar capas de bajo, percusión, melodía y voz con las criaturas que siguen al jugador y combos musicales.
 12. **Ampliar el Estudio y los descubrimientos:** combinar muestras, decorar y nombrar especies y lugares; mostrar esos nombres en las tarjetas.
 13. **Optimizar según pruebas en móvil:** rendimiento visual y estabilidad del audio. Evaluar AudioWorklet si las pruebas detectan problemas de timing.
@@ -282,3 +283,7 @@ Jay pide evitar ritmos y sonidos con sensación de videojuego. Priorizar groove,
 ### Efectos locales de interacción
 
 `effect:v1:<región>:<tipo>` asigna un carácter musical estable sin cambiar el reparto de roles ni el terreno. `withVoiceEffect` redirige solo la construcción síncrona de una nota y restaura los destinos incluso si falla el sintetizador. El eco tiene una sola repetición de tres semicorcheas, filtrada y sin feedback adicional; espacio reutiliza la convolución existente. La modulación metálica añade una banda lateral discreta y conserva la señal original. Los envíos previos de esa nota se atenúan para no apilar ecos. `effectsTick` desconecta los nodos después de su cola; con 12 grupos activos las notas adicionales siguen sonando con su voz natural. Silencio, Camino y Estudio no crean estos efectos. La función “robot” se interpreta aquí como modulación metálica de sintetizador; la Voz del sistema sigue siendo texto.
+
+### Resumen de sesión
+
+`src/session.js` guarda una base de contadores al entrar al Mundo, antes de registrar el lugar de entrada. `S.session` contiene actividad y música escuchada, con versión 1; `S.lastSession` es un resumen terminado e independiente de los cambios posteriores. El panel muestra la sesión actual o la última y no aparece automáticamente al salir. El botón Resumen de la pantalla de linterna agotada también lo abre. Los instrumentos se anotan desde el registro musical existente, solo cuando el sonido está activo. Las interacciones cuentan acciones sobre objetos y los pulsos del jugador, no pistas grabadas. Se mantiene la clave v4 y las partidas anteriores empiezan sin historial de sesiones inventado.
