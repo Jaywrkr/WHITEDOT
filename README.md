@@ -24,9 +24,9 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr)
 
 ## Tecnología
 
-- Un solo archivo: `index.html`.
+- HTML en `index.html`, CSS en `styles/game.css` y módulos JavaScript nativos en `src/`.
 - Canvas 2D y Web Audio API. Todo el sonido se sintetiza en vivo, sin samples.
-- Sin dependencias ni build.
+- Sin dependencias de aplicación ni build. `package.json` declara módulos ES y el comando de pruebas core; no hace falta `npm install`.
 - Guarda el progreso en `localStorage` (clave `pixel-blanco-v4`).
 
 ## Correr local
@@ -41,7 +41,18 @@ Desde la carpeta del repositorio, ejecuta ese comando y abre `http://localhost:8
 
 El repo está conectado a Vercel (proyecto `whitedot`). Los cambios se preparan en una rama nueva desde `main` actualizado, se verifican y se suben con commit y push. **Jay crea el PR y hace el merge.** El asistente no hace push directo a `main`, no crea PRs y no hace merges.
 
-Al integrar el PR en `main`, Vercel despliega producción automáticamente. No hay paso de build: Vercel sirve `index.html` tal cual.
+Al integrar el PR en `main`, Vercel despliega producción automáticamente. No hay paso de build: Vercel sirve `index.html`, `styles/` y `src/` como archivos estáticos.
+
+## Verificar cambios
+
+```bash
+node tests/core.mjs
+python3 tests/smoke.py
+```
+
+Las pruebas core necesitan Node. Para las pruebas de navegador necesitas Python y Playwright: instala `tests/requirements.txt` en un entorno virtual (`python3 -m pip install -r tests/requirements.txt`) y usa Chromium instalado en el sistema, o instala el navegador con `python3 -m playwright install chromium`. Puedes indicar su ejecutable mediante `CHROMIUM_PATH`. El smoke test levanta su propio servidor y verifica móvil y escritorio; no evalúa la calidad audible de la música.
+
+Los módulos requieren servir el juego por HTTP; abrir `index.html` mediante `file://` no es el flujo soportado.
 
 ## Dirección del juego
 

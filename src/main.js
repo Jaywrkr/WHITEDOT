@@ -1,0 +1,36 @@
+import { initialize as data } from './data.js';
+import { initialize as progress } from './progress.js';
+import { initialize as world } from './world.js';
+import { initialize as audio } from './audio.js';
+import { initialize as canvas } from './canvas.js';
+import { initialize as messages } from './messages.js';
+import { initialize as studio } from './studio.js';
+import { initialize as interactions } from './interactions.js';
+import { initialize as discovery } from './discovery.js';
+import { initialize as render } from './render.js';
+import { initialize as ui } from './ui.js';
+import { initialize as sharing } from './sharing.js';
+import { initialize as controls } from './controls.js';
+
+// Initialize once, in the same order as the original game. Never expose runtime on window.
+const runtime = Object.create(null);
+data(runtime);
+progress(runtime);
+world(runtime);
+audio(runtime);
+canvas(runtime);
+messages(runtime);
+studio(runtime);
+interactions(runtime);
+discovery(runtime);
+render(runtime);
+ui(runtime);
+sharing(runtime);
+controls(runtime);
+
+if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
+runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||runtime.lampLeft()<=0))runtime.S.mode="camino";
+runtime.styleUI();runtime.hud();
+if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
+setInterval(()=>{runtime.checkDay();if(!runtime.inWorld())runtime.hud();runtime.S.collected=[...runtime.collected];runtime.save();},2000);
+requestAnimationFrame(runtime.frame);
