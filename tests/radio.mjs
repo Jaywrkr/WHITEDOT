@@ -4,6 +4,7 @@ import { initialize as data } from '../src/data.js';
 import { initialize as progress } from '../src/progress.js';
 import { initialize as world } from '../src/world.js';
 import { initialize as audio } from '../src/audio.js';
+import { initialize as voices } from '../src/voices.js';
 globalThis.localStorage = { getItem: () => null, setItem() {} };
 const runtime = Object.create(null);
 data(runtime); progress(runtime); world(runtime);
@@ -53,9 +54,11 @@ class Context {
 }
 globalThis.window = { AudioContext: Context };
 try {
-  audio(runtime);
+  audio(runtime); voices(runtime);
   runtime.S.mode = 'world'; runtime.S.todayKey = '2026-10-12';
-  runtime.MU.dnaT = origin; runtime.MU.E = 0; runtime.MU.speed = 0; runtime.MU.still = 60;
+  runtime.MU.dnaT = origin; runtime.MU.layers = new Set([0,1,2]);
+  runtime.MU.flowers = [{n:69,st:0,x:900,y:900}];
+  runtime.MU.E = 0; runtime.MU.speed = 0; runtime.MU.still = 60;
   runtime.audio();
   const phrases = new Set();
   for (let tick = 0; tick < 4800; tick++) {

@@ -68,6 +68,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/progress.js` | Guardado v4, días, racha, crecimiento, linterna, RNG y cachés. |
 | `src/world.js` | Camino, generación de regiones/chunks, eventos y reliquias. |
 | `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros y tracks. |
+| `src/voices.js` | Roles, registros e instrumentos de interacción por región; emite sonidos con la síntesis existente. |
 | `src/radio.js` | Composición del Mundo por frases y secciones, independiente del movimiento. |
 | `src/canvas.js` | Canvas, tamaño, input de movimiento y estado visual temporal. |
 | `src/messages.js` | Cola y animación de la Voz del sistema. |
@@ -146,6 +147,11 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Mezcla espacial:** en la franja del borde, `VW` escala el volumen de las dos baterías y el BPM hace lerp entre las dos regiones.
 - **Camino:** casi ambient (`GEN.ambient`).
 - **Efectos existentes:** filtro de paso bajo al entrar al agua, reverb por convolución, delay sincronizado al tempo y cambios de feedback/envío en cuevas y variantes de eco. Jay quiere ampliar los efectos según acciones y lugares (filtros, reverb, eco, robot, etc.); los efectos nuevos siguen pendientes. La voz robótica no está implementada: la Voz del sistema actual es texto.
+- **Identidad musical regional (implementada):** `voices.js` usa una semilla independiente (`voices:v1:<región>`) para repartir bajos, percusión, acordes, melodía media y detalles agudos entre objetos, plantas y criaturas. Un mismo objeto puede cambiar de función e instrumento en regiones del mismo bioma; el reparto permanece estable al volver.
+  - `getVoice(tipo, región)` devuelve la función efectiva, instrumento y rango. Para las formas se usa `forma:<id>`; el antiguo `sp.role` permanece como dato del generador, pero ya no determina por sí solo el sonido. La futura Bitácora/escáner debe consultar `getVoice()`.
+  - Choques, pulsos y autonomía usan la misma voz del objeto. Los objetos emplean la región de su posición y las criaturas su región de origen; al cruzar una frontera no adoptan arbitrariamente la voz del jugador.
+  - Los registros se limitan por rol y los instrumentos se eligen entre los sintetizadores existentes con afinidad al género. Las respuestas largas añaden un segundo golpe/nota a tempo; no convierten todo en arpegios agudos.
+  - El mapa, el ADN visual y los IDs de criaturas no cambian. Las voces no se guardan en v4: se reconstruyen por semilla. El Camino y los sonidos de las muestras del Estudio conservan su comportamiento actual.
 - **Autonomía sonora:**
   - `physics()`: los choques entre objetos suenan.
   - `chain()`: un rayo de luz salta en cascada entre cristales, pilares, campanillas, antenas y astros.
@@ -177,7 +183,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Sintaxis:** correr `node --check` sobre los archivos de `src/`. Ya no hay un script inline para extraer.
 - **Visual y funcional:** servir el repositorio por HTTP y usar Playwright headless (Chromium) en 390×844 (móvil) y escritorio. Comprobar entrada y reentrada al Mundo con reto visible, transición de día sin reto residual, pausa de linterna en menús, colocación y persistencia de muestras en el Estudio y generación de tarjetas. Capturar errores JavaScript y screenshots. Los errores de carga de Google Fonts sin red son esperables.
 - **Tope diario:** comprobar que una luz de valor 10 recogida cuando faltaba 1 solo suma 1 tanto a `todayLight` como a `totalLight`.
-- **Pruebas versionadas:** `npm test` (core y radio) y `python3 tests/smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
+- **Pruebas versionadas:** `npm test` (core, radio y voces regionales) y `python3 tests/smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
 - **Audio:** en headless no se oye nada. **Jay valida el sonido en su teléfono** con la URL de Vercel. Es la prueba que importa.
 - **Atajos de prototipo** (menú → Prototipo):
   - `dFill`: llena la barra del día.
@@ -202,21 +208,22 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 1. **Corregir la base — completado:** activar retos al entrar/reentrar al Mundo, limpiar la transición de día, respetar el tope de crecimiento y pausar el consumo de linterna en menús. Integrado en `main` mediante el PR #1.
 2. **Actualizar documentación — completado:** estado real del juego, diferencias con el diseño y flujo de ramas. No incluye cambios de jugabilidad.
 3. **Organizar el código en módulos — completado:** JavaScript nativo, CSS separado y contexto interno para conservar comportamiento y partidas v4. Sin introducir TypeScript, Vite o un build.
-4. **Bitácora** (estilo No Man's Sky / Astroneer), con 4 pestañas:
+4. **Radio generativa — implementada:** evolución del Mundo por frases y secciones incluso estando quieto.
+5. **Identidad musical regional — esta etapa:** reparto de roles, registros e instrumentos entre objetos y criaturas, estable por semilla y variable entre regiones del mismo bioma.
+6. **Bitácora** (estilo No Man's Sky / Astroneer), con 4 pestañas:
    - **Lugares:** regiones visitadas con % completado (especies, reto, evento, reliquia).
    - **Formas:** especies agrupadas por rol musical.
    - **Música:** géneros, escalas e instrumentos escuchados, cada uno con una explicación corta. Aquí se aprende música.
    - **Logros:** por categoría, con los ocultos como "???".
-5. **Escuchar (escáner):** mantener presionado muestra qué suena cerca: género, escala, la especie y su rol.
-6. **Efectos por acciones y lugares:** ampliar filtros, reverb, eco y transformaciones robóticas con respuestas musicales claras, sin tapar la mezcla. Pendiente de implementación.
-7. **Resumen de la sesión:** descubrimientos, retos y música creada, con tarjeta para compartir.
-8. **Looper / ecos y banda de criaturas:** grabar 1–2 compases y dejarlos en el mundo; sumar capas de bajo, percusión, melodía y voz con las criaturas que siguen al jugador y combos musicales.
-9. **Ampliar el Estudio y los descubrimientos:** combinar muestras, decorar y nombrar especies y lugares; mostrar esos nombres en las tarjetas.
-10. **Optimizar según pruebas en móvil:** rendimiento visual y estabilidad del audio. Evaluar AudioWorklet si las pruebas detectan problemas de timing.
+7. **Escuchar (escáner):** mantener presionado muestra qué suena cerca: género, escala, la especie y su rol.
+8. **Encuentros mágicos y reliquias:** hallazgos muy raros y memorables; revisar la dificultad de las reliquias y su guía directa. Diseñar pistas, condiciones y recompensas al abordar esta etapa.
+9. **Efectos por acciones y lugares:** ampliar filtros, reverb, eco y transformaciones robóticas con respuestas musicales claras, sin tapar la mezcla. Pendiente de implementación.
+10. **Resumen de la sesión:** descubrimientos, retos y música creada, con tarjeta para compartir.
+11. **Looper / ecos y banda de criaturas:** grabar 1–2 compases y dejarlos en el mundo; sumar capas de bajo, percusión, melodía y voz con las criaturas que siguen al jugador y combos musicales.
+12. **Ampliar el Estudio y los descubrimientos:** combinar muestras, decorar y nombrar especies y lugares; mostrar esos nombres en las tarjetas.
+13. **Optimizar según pruebas en móvil:** rendimiento visual y estabilidad del audio. Evaluar AudioWorklet si las pruebas detectan problemas de timing.
 
-**Etapa musical añadida por Jay, implementada:** evolución del Mundo como una radio generativa incluso estando quieto. No sustituye la Bitácora ni autoriza por sí sola efectos nuevos o cambios en reliquias.
-
-**Dirección nueva de jugabilidad, pendiente de etapa propia:** encuentros mágicos excepcionalmente raros, descubrimientos únicos y reliquias más difíciles de conseguir. Definir su ubicación en la secuencia con Jay antes de implementarlos. No hay probabilidades, reglas de obtención ni recompensas nuevas aprobadas todavía; tampoco se ha definido si «único» significa único en una partida o compartido entre jugadores.
+La rareza y los efectos nuevos siguen pendientes. Para los hallazgos falta definir si «único» significa único en una partida o compartido entre jugadores; aún no hay probabilidades, reglas de obtención ni recompensas nuevas implementadas.
 
 **Después:**
 

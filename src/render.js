@@ -160,18 +160,18 @@ export function initialize(runtime) {
           runtime.cx.strokeStyle="#fff";runtime.cx.lineWidth=1;const ph=(t/2600)%1;
           for(let i=0;i<3;i++){const q=(ph+i/3)%1;runtime.cx.globalAlpha=Math.min(1,(.25+b*.3)*(1-q)*fall);runtime.cx.beginPath();runtime.cx.arc(p.x+ox,p.y+oy,p.r*q,0,6.283);runtime.cx.stroke();}}}
       for(const l of c.lotus){l.vx=(l.vx||0)+Math.sin(t/3000+l.deg)*dt*6;l.vy=(l.vy||0)+Math.cos(t/3500+l.deg)*dt*6;runtime.physics(l,dt,c.lotus,l.pond);const d=Math.hypot(l.x-runtime.S.wx,l.y-runtime.S.wy);if(d<R)nearO.push(l);
-        const lw=runtime.waves.length&&runtime.hitW(l.x,l.y);if(lw){l.lit=1;const n=runtime.chordTones()[l.deg%4]+12;runtime.wsoon(lw,q=>runtime.pluck(n,q,runtime.vel(.08),2));}
-        if(d<ds/2+14&&ms>l.cd){l.cd=ms+1500;runtime.MU.act+=.3;runtime.touched();if(!l.given){l.given=1;runtime.gain("loto");}runtime.pushO(l,runtime.S.wx,runtime.S.wy,140);const n=runtime.chordTones()[l.deg%4]+12;runtime.beatSoon(q=>{runtime.pluck(n,q,runtime.vel(.11),2);runtime.pluck(n+7,q+runtime.SIX*2,runtime.vel(.06),4);runtime.pluck(n+12,q+runtime.SIX*4,runtime.vel(.05),4);},()=>{l.lit=1;runtime.burst(l.x,l.y,8,true);});}
+        const lw=runtime.waves.length&&runtime.hitW(l.x,l.y);if(lw){l.lit=1;runtime.wsoon(lw,l.snd);}
+        if(d<ds/2+14&&ms>l.cd){l.cd=ms+1500;runtime.MU.act+=.3;runtime.touched();if(!l.given){l.given=1;runtime.gain("loto");}runtime.pushO(l,runtime.S.wx,runtime.S.wy,140);runtime.beatSoon(q=>runtime.playVoice('loto',l.deg,q,runtime.regionOfPos(l.x,l.y),true),()=>{l.lit=1;runtime.burst(l.x,l.y,8,true);});}
         l.lit=Math.max(0,l.lit-dt*.4);if(d>R*1.3)continue;const al=Math.max(Math.max(0,1-d/(R*1.3))*.6,l.lit);
         runtime.cx.globalAlpha=Math.min(1,al);runtime.cx.strokeStyle=l.lit>.1?runtime.GOLD:(c.pal?c.pal.main:"#fff");runtime.cx.lineWidth=1.5;runtime.cx.beginPath();runtime.cx.arc(l.x+ox,l.y+oy,7+l.lit*6+b*2,0,6.283);runtime.cx.stroke();if(l.lit<.1)runtime.touchRing(l.x+ox,l.y+oy,d,R,b);}
       for(const o of c.plants){const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),w=runtime.waves.length&&runtime.hitW(o.x,o.y);
-        if((d<14&&ms>o.cd)||w){o.cd=ms+1600;o.lit=1;o.sw=1;if(o.pt.t!=="hierba"&&runtime.rnd()<(w?.5:.4))runtime.beatSoon(q=>runtime.plantSound(o.pt,q));}
+        if((d<14&&ms>o.cd)||w){o.cd=ms+1600;o.lit=1;o.sw=1;if(o.pt.t!=="hierba"&&runtime.rnd()<(w?.5:.4))runtime.beatSoon(q=>runtime.plantSound(o.pt,q,runtime.regionOfPos(o.x,o.y)));}
         o.lit=Math.max(0,o.lit-dt/4);o.sw=Math.max(0,o.sw-dt*1.5);if(d>R+20&&o.lit<=0)continue;
         runtime.cx.globalAlpha=Math.min(1,Math.max(Math.pow(Math.max(0,1-d/R),.7)*.95,o.lit*.9));runtime.drawPlant(o,o.x+ox,o.y+oy,t,b);}
       for(const gr of c.grass){
         const d=Math.hypot(gr.x-runtime.S.wx,gr.y-runtime.S.wy);
         if(gr.tall&&runtime.waves.length&&runtime.hitW(gr.x,gr.y)){gr.lit=1;}
-        if(d<(gr.tall?34:26)){if(gr.tall&&!gr.given&&runtime.rnd()<.04){gr.given=1;runtime.gain("arbol");}if(gr.lit<.5&&gr.tall&&runtime.rnd()<.25)runtime.beatSoon(q=>runtime.pluck(runtime.snap(76+Math.floor(runtime.rnd()*12),runtime.chordTones()),q,.035,1));gr.lit=1;}else if(gr.lit>0)gr.lit=Math.max(0,gr.lit-dt/9);
+        if(d<(gr.tall?34:26)){if(gr.tall&&!gr.given&&runtime.rnd()<.04){gr.given=1;runtime.gain("arbol");}if(gr.lit<.5&&gr.tall&&runtime.rnd()<.25)runtime.beatSoon(q=>runtime.playVoice('arbol',0,q,runtime.regionOfPos(gr.x,gr.y),false,.5));gr.lit=1;}else if(gr.lit>0)gr.lit=Math.max(0,gr.lit-dt/9);
         if(d>R+30&&gr.lit<=0)continue;
         if(gr.tall&&d<R)runtime.seen("arbol");
         const al=Math.max(Math.max(0,1-d/R)*(gr.tall?.5:.4),gr.lit*.6);if(al<.02)continue;
@@ -182,14 +182,14 @@ export function initialize(runtime) {
       }
       // pilares: tambores
       for(const p of c.pillars){const d=Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy);
-        const pw=runtime.waves.length&&runtime.hitW(p.x,p.y);if(pw){p.hit=1;const f=55+(110-p.h)*.9;runtime.wsoon(pw,q=>runtime.tom(q,f,runtime.vel(.18)));}
+        const pw=runtime.waves.length&&runtime.hitW(p.x,p.y);if(pw){p.hit=1;runtime.wsoon(pw,p.snd);}
         if(d<p.w/2+ds/2+6&&ms>p.cd){p.cd=ms+600;runtime.MU.act+=.35;runtime.touched();p.hits=(p.hits||0)+1;if(p.hits>=25)runtime.unlock("insistente");if(!p.given){p.given=1;runtime.gain("pilar");}runtime.chain(c.pillars,p,0,new Set(),5);runtime.S.drums++;if(runtime.S.drums>=8)runtime.unlock("tambor");runtime.burst(p.x,p.y-p.h/2,6,false);}
         if(d<R)nearO.push(p);p.hit=Math.max(0,p.hit-dt*3);if(d>R+80&&!p.hit)continue;const al=Math.max(0,1-d/(R+80));
         runtime.cx.globalAlpha=Math.min(1,al*.5+p.hit*.6);runtime.cx.strokeStyle=p.hit>.1?runtime.GOLD:(c.pal?c.pal.main:"#fff");runtime.cx.lineWidth=1;runtime.cx.strokeRect(p.x+ox-p.w/2,p.y+oy-p.h,p.w,p.h);
         runtime.cx.globalAlpha=Math.min(1,al*.12+p.hit*.4);runtime.cx.fillStyle=p.hit>.1?runtime.GOLD:"#fff";runtime.cx.fillRect(p.x+ox-p.w/2,p.y+oy-p.h,p.w,p.h);if(p.hit<.1)runtime.touchRing(p.x+ox,p.y+oy-p.h/2,d,R,b);}
       // cristales: arpegios
       for(const k of c.crystals){const d=Math.hypot(k.x-runtime.S.wx,k.y-runtime.S.wy);
-        const kw=runtime.waves.length&&runtime.hitW(k.x,k.y);if(kw){k.lit=1;const ct=runtime.chordTones(),n=runtime.snap(76+k.s,ct);runtime.wsoon(kw,q=>runtime.pluck(n,q,runtime.vel(.08),4));}
+        const kw=runtime.waves.length&&runtime.hitW(k.x,k.y);if(kw){k.lit=1;runtime.wsoon(kw,k.snd);}
         if(d<k.s+ds/2+4&&ms>k.cd){k.cd=ms+1500;runtime.MU.act+=.3;runtime.touched();if(!k.given){k.given=1;runtime.gain("cristal");}runtime.chain(c.crystals,k,0,new Set(),7);runtime.burst(k.x,k.y,6,true);}
         if(d<R)nearO.push(k);
         k.lit=Math.max(0,k.lit-dt*.25);if(d>R*1.2&&k.lit<=0)continue;const al=Math.max(Math.max(0,1-d/(R*1.2))*.55,k.lit);
@@ -197,10 +197,10 @@ export function initialize(runtime) {
         runtime.cx.beginPath();runtime.cx.moveTo(0,-k.s*1.6);runtime.cx.lineTo(k.s*.5,0);runtime.cx.lineTo(0,k.s*.6);runtime.cx.lineTo(-k.s*.5,0);runtime.cx.closePath();runtime.cx.stroke();
         if(k.lit>.1){runtime.cx.globalAlpha=k.lit*.35;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.fill();}runtime.cx.restore();if(k.lit<.1)runtime.touchRing(k.x+ox,k.y+oy,d,R,b);}
       for(const p2 of c.props){runtime.physics(p2,dt,c.props);const d=Math.hypot(p2.x-runtime.S.wx,p2.y-runtime.S.wy),w=runtime.waves.length&&runtime.hitW(p2.x,p2.y);
-        if(w){p2.lit=1;runtime.wsoon(w,q=>runtime.propSound(p2.k,p2.i,q));}
+        if(w){p2.lit=1;runtime.wsoon(w,p2.snd);}
         if(d<ds/2+12&&ms>p2.cd){p2.cd=ms+700;runtime.MU.act+=.3;runtime.touched();runtime.burst(p2.x,p2.y,6,true);
           if(p2.k==="campanilla"||p2.k==="antena"||p2.k==="astro")runtime.chain(c.props,p2,0,new Set(),5);
-          else if(p2.k==="hongo")runtime.beatSoon(q=>{runtime.propSound(p2.k,p2.i,q);[1,2,3].forEach(k=>runtime.pluck(runtime.chordTones()[k%4]+24,q+runtime.SIX*2*k,runtime.vel(.045),4));},()=>{p2.lit=1;p2.jump=1;for(let k=0;k<3;k++)runtime.parts.push({x:p2.x,y:p2.y-8,vx:(Math.random()-.5)*60,vy:-60-Math.random()*40,l:1.4,g:true});});
+          else if(p2.k==="hongo")runtime.beatSoon(q=>{runtime.playVoice(p2.k,p2.i,q,runtime.regionOfPos(p2.x,p2.y),true);},()=>{p2.lit=1;p2.jump=1;for(let k=0;k<3;k++)runtime.parts.push({x:p2.x,y:p2.y-8,vx:(Math.random()-.5)*60,vy:-60-Math.random()*40,l:1.4,g:true});});
           else{runtime.pushO(p2,runtime.S.wx,runtime.S.wy,170);runtime.beatSoon(p2.snd,()=>{p2.lit=1;});}}
         if(d<R)nearO.push(p2);
         p2.lit=Math.max(0,p2.lit-dt*.8);p2.jump=Math.max(0,(p2.jump||0)-dt*2.2);if(d>R*1.2&&p2.lit<=0)continue;
@@ -218,7 +218,7 @@ export function initialize(runtime) {
       for(const s2 of c.stal){const d=Math.hypot(s2.x-runtime.S.wx,s2.y-runtime.S.wy);if(d>R*1.3)continue;const al=Math.max(0,1-d/(R*1.3));runtime.cx.globalAlpha=al*.5;runtime.cx.fillStyle="#fff";
         for(let i=0;i<s2.h;i+=3)runtime.cx.fillRect(s2.x+ox,s2.y+oy+i,1,1);
         const dp=((t/1000+s2.ph*3)%4)/4;runtime.cx.globalAlpha=al*(1-dp);runtime.cx.fillRect(s2.x+ox,s2.y+oy+s2.h+dp*30,1,2);
-        if(d<R*.8&&dp<.02&&runtime.rnd()<.3)runtime.beatSoon(q=>runtime.pluck(runtime.snap(88+Math.floor(runtime.rnd()*6),runtime.chordTones()),q,.015,2));}
+        if(d<R*.8&&dp<.02&&runtime.rnd()<.3)runtime.beatSoon(q=>runtime.playVoice('gota',0,q,runtime.regionOfPos(s2.x,s2.y),false,.3));}
       // jardín: flores sembradas
       for(const f of c.flowers){flowersNear.push(f);const d=Math.hypot(f.x-runtime.S.wx,f.y-runtime.S.wy);if(d>R*1.6)continue;
         const k=Math.max(0,1-(ms-(f.hit||0))/400),al=Math.max(0,1-d/(R*1.6))*.7+k*.3,s2=4+k*4;
@@ -233,7 +233,7 @@ export function initialize(runtime) {
           runtime.burst(runtime.S.wx,runtime.S.wy,12,true);runtime.showPhrase("Sembraste una nota. Muévete y vuelve a quedarte quieto.");if(runtime.gardenN>=4)runtime.unlock("jardinero");}}
       if(runtime.MU.still===0)runtime.planted=false;
     }
-    if(pondNow!==runtime.inPond){runtime.inPond=pondNow;if(runtime.mfilt)runtime.mfilt.frequency.setTargetAtTime(runtime.inPond?650:18000,runtime.ac.currentTime,.25);if(runtime.inPond)runtime.beatSoon(q=>runtime.pluck(runtime.chordTones()[0]+12,q,.06,2));}
+    if(pondNow!==runtime.inPond){runtime.inPond=pondNow;if(runtime.mfilt)runtime.mfilt.frequency.setTargetAtTime(runtime.inPond?650:18000,runtime.ac.currentTime,.25);if(runtime.inPond)runtime.beatSoon(q=>runtime.playVoice('agua',0,q,rg));}
     // tormenta: rayos en el beat
     if(runtime.MU.boltAt&&runtime.ac&&runtime.ac.currentTime>=runtime.MU.boltAt){runtime.MU.boltAt=0;if(id==="tormenta"){const a=runtime.rnd()*6.28,d=60+runtime.rnd()*R,x=runtime.S.wx+Math.cos(a)*d,y=runtime.S.wy+Math.sin(a)*d;
       const pts=[[x,y-runtime.H]];for(let i=1;i<=8;i++)pts.push([x+(runtime.rnd()-.5)*60*(1-i/9),y-runtime.H+runtime.H*i/8]);runtime.bolts.push({pts,l:1});runtime.flash=Math.max(runtime.flash,.5);runtime.now(runtime.thunder);}}
@@ -246,10 +246,10 @@ export function initialize(runtime) {
       for(const f of c.flies){
         const tx=f.hx+Math.sin(t/1000*f.a+f.ph)*90,ty=f.hy+Math.cos(t/1300*f.a+f.ph*1.3)*70;
         const ddx=f.x-runtime.S.wx,ddy=f.y-runtime.S.wy,d=Math.hypot(ddx,ddy)||1;
-        const fw=runtime.waves.length&&runtime.hitW(f.x,f.y);if(fw){f.fx+=ddx/d*120;f.fy+=ddy/d*120;runtime.wsoon(fw,q=>runtime.pluck(runtime.snap(84+Math.floor(runtime.rnd()*7),runtime.chordTones()),q,.05,4));}
+        const fw=runtime.waves.length&&runtime.hitW(f.x,f.y);if(fw){f.fx+=ddx/d*120;f.fy+=ddy/d*120;runtime.wsoon(fw,q=>runtime.playVoice('luciernaga',0,q,runtime.regionOfPos(f.x,f.y),false,.7));}
         if(d<90){f.fx+=ddx/d*dt*260;f.fy+=ddy/d*dt*260;}
         f.fx*=.97;f.fy*=.97;f.x=tx+f.fx;f.y=ty+f.fy;
-        if(d<ds/2+10&&ms>f.cd){f.cd=ms+3000;if(!f.given){f.given=1;runtime.gain("luciernaga");}f.fx+=ddx/d*160;f.fy+=ddy/d*160;runtime.beatSoon(q=>runtime.pluck(runtime.snap(84+Math.floor(runtime.rnd()*7),runtime.chordTones()),q,.05,4));}
+        if(d<ds/2+10&&ms>f.cd){f.cd=ms+3000;if(!f.given){f.given=1;runtime.gain("luciernaga");}f.fx+=ddx/d*160;f.fy+=ddy/d*160;runtime.beatSoon(q=>runtime.playVoice('luciernaga',0,q,runtime.regionOfPos(f.x,f.y),false,.7));}
         const vis=R*1.8;if(d>vis)continue;if(d<R*1.2)runtime.seen("luciernaga");
         const bl=Math.max(0,Math.sin(t/260+f.ph*3));runtime.cx.globalAlpha=Math.min(1,(.15+.85*bl*bl)*(1-d/vis)+b*.15);runtime.cx.fillStyle=runtime.GOLD;runtime.cx.fillRect(f.x+ox-1,f.y+oy-1,2,2);
       }
@@ -278,7 +278,7 @@ export function initialize(runtime) {
         else{
           k.a+=Math.sin(t/1700+k.hx)*dt*.8;if(Math.hypot(k.hx-k.x,k.hy-k.y)>420)k.a=Math.atan2(k.hy-k.y,k.hx-k.x);
           k.x+=Math.cos(k.a)*22*dt;k.y+=Math.sin(k.a)*22*dt;
-          if(d<80){k.near+=dt;if(k.near>1.5&&!k.done){k.done=true;k.follow=30;runtime.unlock("compania");runtime.showPhrase("Un caminante te sigue. Canta lo que tocas.");runtime.soon(q=>runtime.chordTones().slice(0,3).forEach((n,i)=>runtime.pluck(n-12,q+i*runtime.SIX*2,.07,2)));}}
+          if(d<80){k.near+=dt;if(k.near>1.5&&!k.done){k.done=true;k.follow=30;runtime.unlock("compania");runtime.showPhrase("Un caminante te sigue. Canta lo que tocas.");runtime.soon(q=>runtime.playVoice('caminante',0,q,runtime.regionOfPos(k.x,k.y),true));}}
           else k.near=Math.max(0,k.near-dt);
         }
         if(!k.lt||Math.hypot(k.x-k.lt[0],k.y-k.lt[1])>12){k.lt=[k.x,k.y];k.trail.push(k.lt);if(k.trail.length>30)k.trail.shift();}
@@ -289,7 +289,7 @@ export function initialize(runtime) {
       }
       for(let i=c.motes.length-1;i>=0;i--){const m=c.motes[i],d=Math.hypot(m.x-runtime.S.wx,m.y-runtime.S.wy);
         if(d<ds/2+10){c.motes.splice(i,1);runtime.playerNote(.13);runtime.burst(m.x,m.y,5,runtime.grooveFx>.9);continue;}
-        const mw=runtime.waves.length&&runtime.hitW(m.x,m.y);if(mw){m.fl=1;runtime.wsoon(mw,q=>runtime.pluck(runtime.snap(72+Math.floor(d/30),runtime.chordTones()),q,runtime.vel(.06),runtime.MU.timbre));}m.fl=Math.max(0,(m.fl||0)-dt*2);
+        const mw=runtime.waves.length&&runtime.hitW(m.x,m.y);if(mw){m.fl=1;runtime.wsoon(mw,q=>runtime.playVoice('luz',Math.floor(d/30),q,runtime.regionOfPos(m.x,m.y)));}m.fl=Math.max(0,(m.fl||0)-dt*2);
         if(d>R&&!m.fl)continue;runtime.cx.globalAlpha=Math.min(1,Math.max(m.fl,Math.pow(Math.max(0,1-d/R),1.3)*(.5+.25*Math.sin(t/400+m.ph)+b*.35)));runtime.cx.fillStyle=m.fl>.1?runtime.GOLD:"#fff";runtime.cx.fillRect(m.x+ox-1.5,m.y+oy-1.5,3,3);}
     }
     runtime.MU.follower=follow;if(followers>=2)runtime.unlock("fiesta");runtime.MU.near=nearO;runtime.MU.singers=singers;
@@ -306,7 +306,7 @@ export function initialize(runtime) {
     for(const f of runtime.flocks){
       f.h+=Math.sin(t/1500+f.b[0].ph)*dt*.3;f.x+=Math.cos(f.h)*80*dt;f.y+=Math.sin(f.h)*80*dt;
       const d=Math.hypot(f.x-runtime.S.wx,f.y-runtime.S.wy),vis=R*1.5;
-      if(d<90){f.close+=dt;if(f.close>2.5&&!f.done){f.done=true;runtime.unlock("vuelo");runtime.soon(q=>[0,1,2].forEach(i=>runtime.pluck(runtime.chordTones()[i]+24,q+i*runtime.SIX,.05,2)));}}
+      if(d<90){f.close+=dt;if(f.close>2.5&&!f.done){f.done=true;runtime.unlock("vuelo");runtime.soon(q=>runtime.playVoice('bandada',0,q,runtime.regionOfPos(f.x,f.y),true));}}
       if(d<R*1.2)runtime.seen("bandada");
       runtime.cx.fillStyle="#fff";
       for(const q of f.b){const x=f.x+q.ox+Math.sin(t/400+q.ph)*6,y=f.y+q.oy+Math.cos(t/520+q.ph)*5,e=Math.hypot(x-runtime.S.wx,y-runtime.S.wy);if(e>vis)continue;
