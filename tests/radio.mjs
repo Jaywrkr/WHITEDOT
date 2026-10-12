@@ -69,11 +69,21 @@ try {
   assert(phrases.size > 5, 'actual audio scheduler failed to evolve music');
   assert(started > 100, 'stationary world did not schedule instruments');
   assert.equal(runtime.MU.speed, 0);
+  runtime.MU.layers.clear();runtime.MU.flowers=[];
+  for(const genre of Object.keys(runtime.GEN)) {
+    runtime.MU.dnaT={...origin,key:`audio-test:${genre}`,genre,bpm:runtime.GEN[genre].bpm[0]};
+    const start=runtime.ac.currentTime,previous=started,heard=new Set();
+    runtime.recordInstrument=id=>heard.add(id);
+    for(let tick=1;tick<=2400;tick++){runtime.ac.currentTime=start+tick*.025;schedule();}
+    assert(started>previous+20,`${genre}: no sustained audio while stationary`);
+    assert(heard.size>0,`${genre}: no instruments scheduled`);
+    assert.equal(runtime.MU.radio.genre,genre);
+  }
   runtime.S.mode = 'camino';
-  runtime.ac.currentTime += .2; schedule();
+  for(let tick=0;tick<24;tick++){runtime.ac.currentTime+=.025;schedule();}
   assert.equal(runtime.MU.radio, null, 'radio leaked into daily path');
   runtime.S.mode = 'studio';
-  runtime.S.studio.slots = {}; runtime.ac.currentTime += .2; schedule();
+  runtime.S.studio.slots = {}; runtime.ac.currentTime += runtime.SIX+.2; schedule();
   assert.equal(runtime.MU.radio, null, 'radio leaked into sequencer');
 } finally { globalThis.setInterval = interval; }
-console.log('PASS: 12 genres evolve at rest, environment affects composition, real scheduler plays without movement, path/studio remain separate');
+console.log('PASS: '+Object.keys(runtime.GEN).length+' genres evolve at rest, environment affects composition, real scheduler plays without movement, path/studio remain separate');

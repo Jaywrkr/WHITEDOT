@@ -238,7 +238,7 @@ export function initialize(runtime) {
   function sawLead(m,t,v){const o=ac.createOscillator(),f=ac.createBiquadFilter(),g=ac.createGain(),d=ac.createGain();o.type="sawtooth";o.frequency.value=hz(m);f.type="lowpass";f.frequency.setValueAtTime(2200,t);f.frequency.exponentialRampToValueAtTime(500,t+.2);f.Q.value=4;env(g,t,.005,v*.7,.22);d.gain.value=.5;o.connect(f).connect(g).connect(bus);g.connect(d).connect(dsend);o.start(t);o.stop(t+.3);}
   function organ(m,t,v){runtime.recordInstrument?.("organ");const f=ac.createBiquadFilter(),g=ac.createGain();f.type="lowpass";f.frequency.value=1600;[0,12].forEach(k=>{const o=ac.createOscillator();o.type="square";o.frequency.value=hz(m+k);o.connect(f);o.start(t);o.stop(t+.3);});env(g,t,.008,v*.45,.2);f.connect(g).connect(bus);const sv=ac.createGain();sv.gain.value=.3;g.connect(sv).connect(verbIn);}
   function flute(m,t,v){runtime.recordInstrument?.("flute");const o=ac.createOscillator(),l=ac.createOscillator(),lg=ac.createGain(),g=ac.createGain(),sv=ac.createGain();o.type="sine";o.frequency.value=hz(m);l.frequency.value=5.2;lg.gain.value=hz(m)*.006;l.connect(lg).connect(o.frequency);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(v,t+.06);g.gain.exponentialRampToValueAtTime(.0001,t+.6);sv.gain.value=.5;o.connect(g).connect(bus);g.connect(sv).connect(verbIn);o.start(t);l.start(t);o.stop(t+.7);l.stop(t+.7);}
-  function kick2(t,v,fe,dec){const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(125,t);o.frequency.exponentialRampToValueAtTime(fe,t+.1);env(g,t,.003,v,dec);o.connect(g).connect(bus);o.start(t);o.stop(t+dec+.1);}
+  function kick2(t,v,fe,dec){runtime.recordInstrument?.("kick");const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(125,t);o.frequency.exponentialRampToValueAtTime(fe,t+.1);env(g,t,.003,v,dec);o.connect(g).connect(bus);o.start(t);o.stop(t+dec+.1);}
   function snare(t,v){runtime.recordInstrument?.("snare");noise(t,"bandpass",1800,1,v,.14,true);const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=190;env(g,t,.002,v*.6,.08);o.connect(g).connect(bus);o.start(t);o.stop(t+.12);}
   function conga(t,f,v){runtime.recordInstrument?.("conga");const o=ac.createOscillator(),g=ac.createGain(),sv=ac.createGain();o.frequency.setValueAtTime(f*1.4,t);o.frequency.exponentialRampToValueAtTime(f,t+.03);env(g,t,.002,v,.13);sv.gain.value=.25;o.connect(g).connect(bus);g.connect(sv).connect(verbIn);o.start(t);o.stop(t+.2);}
   function clave(t,v){const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=2500;env(g,t,.001,v,.04);o.connect(g).connect(bus);o.start(t);o.stop(t+.08);}
@@ -251,7 +251,12 @@ export function initialize(runtime) {
   function bassInst(ty,m,t,v){runtime.recordInstrument?.(ty);switch(ty){case "reese":reese(m,t,v);return;case "organb":organ(m,t,v*1.5);return;case "roll":houseBass(m,t,v*.8,.3);return;}switch(ty){case "sub":softBass(m,t,v);break;case "acid":acid(m,t,v*.85,300+MU.speed*2200);break;case "pluck":houseBass(m,t,v,.5);break;case "fm":fmBass(m,t,v);break;case "boing":runtime.boing(m,t,v);break;}}
   function hookInst(ty,m,t,v){runtime.recordInstrument?.(ty);switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
   function drums(gid,s,bar,t,tt,E,ct,DO){
-    const L1=E>.12,L2=E>.32,L3=E>.55,r=rnd;
+    const L1=E>.12,L2=E>.32,L3=E>.55,r=rnd,variation=(bar>>2)%3;
+    if(L3&&s===15&&variation===2&&!["ambient","heart","downtempo","dub"].includes(gid)&&r()<.35){
+      if(["afro","tribal"].includes(gid))conga(tt,220,vel(.045));
+      else if(["breaks","garage","dnb"].includes(gid))snare(tt,vel(.025));
+      else rim(tt,vel(.025));
+    }
     switch(gid){
       case "ambient":if(L2&&s===0&&bar%2===0&&!DO)pluck(ct[0]+24,t,vel(.035),4);break;
       case "downtempo":if(L1&&(s===0||s===10))kick2(t,vel(.26),58,.35);if(L2&&s===8)snare(tt,vel(.09));if(L2&&s%4===2)hatC(tt,vel(.03));if(L3&&s%2===1&&r()<.4)hatC(tt,vel(.012));break;
@@ -264,6 +269,38 @@ export function initialize(runtime) {
       case "breaks":if(L1&&(s===0||s===10))kick2(t,vel(.3),58,.25);if(L1&&(s===4||s===12))snare(tt,vel(.12));if(L2&&(s===7||s===14)&&r()<.5)snare(tt,vel(.04));if(L2&&s%2===0)hatC(tt,vel(.025));if(L3&&s===11&&r()<.5)kick2(t,vel(.18),58,.2);break;
       case "garage":if(L1&&[0,7,10].includes(s)&&(s===0||r()<.75))kick2(t,vel(.27),55,.25);if(L1&&(s===4||s===12))snare(tt,vel(.1));if(L2&&s%2===1)hatC(tt,vel(.02));if(L3&&s%4===2)hatO(tt,vel(.03));break;
       case "tribal":{const T={0:70,3:95,6:70,8:130,11:95,14:70,15:110};if(L1&&s===0)kick2(t,vel(.25),50,.3);if(L1&&T[s]&&r()<.8)tom(tt,T[s],vel(.15));if(L2&&s%2===1)shaker(tt,vel(.018));if(L3&&(s===2||s===10))conga(tt,280,vel(.08));break;}
+      case "electro":
+        if(L1&&[0,variation===1?6:7,10].includes(s))kick2(t,vel(.28),54,.24);
+        if(L1&&(s===4||s===12))snare(tt,vel(.1));
+        if(L2&&s%2===0)hatC(tt,vel(.025));
+        if(L3&&s===[3,11,15][variation])rim(tt,vel(.045));break;
+      case "progressive":
+        if(L1&&s%4===0)kick2(t,vel(.27),50,.32);
+        if(L2&&(s===4||s===12))clap(t,vel(.065));
+        if(L2&&s%4===2)hatO(tt,vel(.03));
+        if(L3&&s%2===1)shaker(tt,vel(.012));
+        if(L3&&s===[6,10,14][variation]&&!DO)organChord(ct,tt);break;
+      case "microhouse":
+        if(L1&&s%4===0&&!(s===12&&variation===2))kick2(t,vel(.22),55,.19);
+        if(L2&&[3,variation===1?9:7,14].includes(s))wood(tt,vel(.04));
+        if(L2&&s%4===2)hatC(tt,vel(.02));
+        if(L3&&s===13&&!DO)blip(ct[variation]+12,tt,vel(.03));break;
+      case "minimaltechno":
+        if(L1&&s%4===0)kick2(t,vel(.29),47,.24);
+        if(L2&&s%4===2)hatC(tt,vel(.025));
+        if(L2&&s===[3,6,11][variation])rim(tt,vel(.05));
+        if(L3&&s===15)tom(tt,80+variation*20,vel(.09));break;
+      case "dubstep":
+        if(L1&&(s===0||s===[6,11,14][variation]))kick2(t,vel(.3),44,.38);
+        if(L1&&s===8)snare(t,vel(.13));
+        if(L2&&[2,5,10,13].includes(s))hatC(tt,vel(.02));
+        if(L3&&s===15)hatO(tt,vel(.025));break;
+      case "dnb":
+        if(L1&&(s===0||s===[6,10,11][variation]))kick2(t,vel(.25),55,.17);
+        if(L1&&(s===4||s===12))snare(t,vel(.1));
+        if(L2&&s%2===0)hatC(tt,vel(.02));
+        if(L3&&s%4===3)hatC(tt,vel(.008));
+        if(L3&&s===[7,9,15][variation])snare(tt,vel(.035));break;
       case "heart":if(s===0||s===3)kick2(t,vel(s?.14:.22),45,.4);if(L3&&s===8&&r()<.4&&!DO)dubChord(ct,tt);break;
     }
   }

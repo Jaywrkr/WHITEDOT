@@ -42,4 +42,7 @@ for(let x=0;x<30;x++) {
   assert.deepEqual(runtime.getVoice(kind,region),voice);
  }
 }
+const encountered=new Set();
+for(let x=-20;x<=20;x++)for(let y=-20;y<=20;y++)encountered.add(runtime.regionOfPos(x*3600+900,y*3600+900).genre);
+for(const genre of ['electro','progressive','microhouse','minimaltechno','dubstep','dnb'])assert(encountered.has(genre),`${genre}: unavailable in world`);
 console.log('PASS: stable regional voices, five tree roles within one biome, varied instruments, bounded emitted registers and groove responses');

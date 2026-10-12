@@ -26,6 +26,9 @@ export function createRadio(seedOf, rng, genres) {
       const shift = [-2, -1, 0, 1, 2][Math.floor(random() * 5)];
       const bass = region.track.bass.map((degree, step) => {
         if (region.genre === 'rominimal') degree = step % 2 ? (step % 8 === 7 ? 4 : 0) : -1;
+        if (region.genre === 'dubstep') degree = [0,3,4,10,14].includes(step) ? [0,0,4,7][Math.floor(random()*4)] : -1;
+        if (region.genre === 'dnb') degree = [0,2,6,8,10,14].includes(step) ? [0,4,7][Math.floor(random()*3)] : -1;
+        if (region.genre === 'progressive') degree = step%2===0 ? (step%8===6?4:0) : -1;
         if (region.genre === 'acid') degree = [1,0,1,1,0,1,0,2,1,0,1,0,2,1,0,1][step] ? (step === 7 || step === 12 ? 7 : 0) : -1;
         if (degree < 0 || (step !== 0 && random() < (sparse ? .45 : .12))) return -1;
         return step === 0 ? 0 : Math.max(0, Math.min(9, degree + (random() < .3 ? shift : 0)));

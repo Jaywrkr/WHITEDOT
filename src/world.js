@@ -54,7 +54,9 @@ export function initialize(runtime) {
      const pool=runtime.PLANTP[id].slice(),np=Math.min(pool.length,2+(r()<.4?1:0));d.plants=[];
      for(let i=0;i<np;i++){const t=pool.splice(Math.floor(r()*pool.length),1)[0];d.plants.push({t,h:8+r()*22,pet:4+Math.floor(r()*4),hue:(hue+(i*22)-11+360)%360});}
      d.pal={main:`hsl(${hue},32%,74%)`,soft:`hsl(${hue},22%,50%)`,acc:`hsl(${(hue+28)%360},72%,70%)`,sand:`hsl(${(hue+40)%360},35%,68%)`};}
-    {const id=runtime.BIOMES[z].id,pool=runtime.GPOOL[id];d.genre=origin?"minimal":pool[Math.floor(r()*pool.length)];const G=runtime.GEN[d.genre];
+    {const id=runtime.BIOMES[z].id,pool=runtime.GPOOL[id];d.genre=origin?"minimal":pool[Math.floor(r()*pool.length)];const extra=runtime.EXTRA_GPOOL[id],er=runtime.rng(runtime.seedOf("extra-genres:v1:"+key));
+     if(!origin&&extra.length&&er()<.45)d.genre=extra[Math.floor(er()*extra.length)];
+     const G=runtime.GEN[d.genre];
      d.bpm=Math.round(G.bpm[0]+r()*(G.bpm[1]-G.bpm[0]));const fr=r();d.fill=origin?runtime.FILL[2]:fr<.15?runtime.FILL[0]:fr<.35?runtime.FILL[1]:fr<.65?runtime.FILL[2]:fr<.85?runtime.FILL[3]:runtime.FILL[4];
      d.track.bassI=G.bassI;d.track.hookI=G.hookP[Math.floor(r()*G.hookP.length)];}
     rcache.set(key,d);return d;
