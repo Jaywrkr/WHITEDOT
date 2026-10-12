@@ -20,6 +20,7 @@ import { initialize as relics } from './relics.js';
 import { initialize as effects } from './effects.js';
 import { initialize as session } from './session.js';
 import { initialize as instruments } from './instruments.js';
+import { initialize as spatial } from './spatial.js';
 import { initialize as controls } from './controls.js';
 
 // Initialize once, in the same order as the original game. Never expose runtime on window.
@@ -46,6 +47,7 @@ relics(runtime);
 effects(runtime);
 session(runtime);
 instruments(runtime);
+spatial(runtime);
 controls(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}

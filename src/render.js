@@ -229,7 +229,7 @@ export function initialize(runtime) {
       for(const s2 of c.stal){const d=Math.hypot(s2.x-runtime.S.wx,s2.y-runtime.S.wy);if(d>R*1.3)continue;const al=Math.max(0,1-d/(R*1.3));runtime.cx.globalAlpha=al*.5;runtime.cx.fillStyle="#fff";
         for(let i=0;i<s2.h;i+=3)runtime.cx.fillRect(s2.x+ox,s2.y+oy+i,1,1);
         const dp=((t/1000+s2.ph*3)%4)/4;runtime.cx.globalAlpha=al*(1-dp);runtime.cx.fillRect(s2.x+ox,s2.y+oy+s2.h+dp*30,1,2);
-        if(d<R*.8&&dp<.02&&runtime.rnd()<.3)runtime.beatSoon(q=>runtime.playVoice('gota',0,q,runtime.regionOfPos(s2.x,s2.y),false,.3));}
+        if(d<R*.8&&dp<.02&&runtime.rnd()<.3)runtime.beatSoon(q=>runtime.playVoice('gota',0,q,runtime.regionOfPos(s2.x,s2.y),false,.3,s2));}
       // jardín: flores sembradas
       for(const f of c.flowers){flowersNear.push(f);const d=Math.hypot(f.x-runtime.S.wx,f.y-runtime.S.wy);if(d>R*1.6)continue;
         const k=Math.max(0,1-(ms-(f.hit||0))/400),al=Math.max(0,1-d/(R*1.6))*.7+k*.3,s2=4+k*4;
@@ -289,7 +289,7 @@ export function initialize(runtime) {
         else{
           k.a+=Math.sin(t/1700+k.hx)*dt*.8;if(Math.hypot(k.hx-k.x,k.hy-k.y)>420)k.a=Math.atan2(k.hy-k.y,k.hx-k.x);
           k.x+=Math.cos(k.a)*22*dt*(k.personality?.speed||1);k.y+=Math.sin(k.a)*22*dt*(k.personality?.speed||1);
-          if(d<80){k.near+=dt;if(k.near>1.5/(k.personality?.speed||1)&&!k.done){k.done=true;k.follow=k.personality?.stamina||30;runtime.unlock("compania");runtime.showPhrase("Un caminante te sigue. Canta lo que tocas.");runtime.soon(q=>runtime.playVoice('caminante',0,q,runtime.regionOfPos(k.x,k.y),true));}}
+          if(d<80){k.near+=dt;if(k.near>1.5/(k.personality?.speed||1)&&!k.done){k.done=true;k.follow=k.personality?.stamina||30;runtime.unlock("compania");runtime.showPhrase("Un caminante te sigue. Canta lo que tocas.");runtime.soon(q=>runtime.playVoice('caminante',0,q,runtime.regionOfPos(k.x,k.y),true,1,k));}}
           else k.near=Math.max(0,k.near-dt);
         }
         if(!k.lt||Math.hypot(k.x-k.lt[0],k.y-k.lt[1])>12){k.lt=[k.x,k.y];k.trail.push(k.lt);if(k.trail.length>30)k.trail.shift();}
@@ -300,7 +300,7 @@ export function initialize(runtime) {
       }
       for(let i=c.motes.length-1;i>=0;i--){const m=c.motes[i],d=Math.hypot(m.x-runtime.S.wx,m.y-runtime.S.wy);
         if(d<ds/2+10){c.motes.splice(i,1);runtime.playerNote(.13);runtime.burst(m.x,m.y,5,runtime.grooveFx>.9);continue;}
-        const mw=runtime.waves.length&&runtime.hitW(m.x,m.y);if(mw){m.fl=1;runtime.wsoon(mw,q=>runtime.playVoice('luz',Math.floor(d/30),q,runtime.regionOfPos(m.x,m.y)));}m.fl=Math.max(0,(m.fl||0)-dt*2);
+        const mw=runtime.waves.length&&runtime.hitW(m.x,m.y);if(mw){m.fl=1;runtime.wsoon(mw,q=>runtime.playVoice('luz',Math.floor(d/30),q,runtime.regionOfPos(m.x,m.y),false,1,m));}m.fl=Math.max(0,(m.fl||0)-dt*2);
         if(d>R&&!m.fl)continue;runtime.cx.globalAlpha=Math.min(1,Math.max(m.fl,Math.pow(Math.max(0,1-d/R),1.3)*(.5+.25*Math.sin(t/400+m.ph)+b*.35)));runtime.cx.fillStyle=m.fl>.1?runtime.GOLD:"#fff";runtime.cx.fillRect(m.x+ox-1.5,m.y+oy-1.5,3,3);}
     }
     runtime.MU.follower=follow;if(followers>=2)runtime.unlock("fiesta");runtime.MU.near=runtime.currentPocket()?.kind==='quiet'?[]:nearO;runtime.MU.singers=singers;
@@ -317,7 +317,7 @@ export function initialize(runtime) {
     for(const f of runtime.flocks){
       f.h+=Math.sin(t/1500+f.b[0].ph)*dt*.3;f.x+=Math.cos(f.h)*80*dt;f.y+=Math.sin(f.h)*80*dt;
       const d=Math.hypot(f.x-runtime.S.wx,f.y-runtime.S.wy),vis=R*1.5;
-      if(d<90){f.close+=dt;if(f.close>2.5&&!f.done){f.done=true;runtime.unlock("vuelo");runtime.soon(q=>runtime.playVoice('bandada',0,q,runtime.regionOfPos(f.x,f.y),true));}}
+      if(d<90){f.close+=dt;if(f.close>2.5&&!f.done){f.done=true;runtime.unlock("vuelo");runtime.soon(q=>runtime.playVoice('bandada',0,q,runtime.regionOfPos(f.x,f.y),true,1,f));}}
       if(d<R*1.2)runtime.seen("bandada");
       runtime.cx.fillStyle="#fff";
       for(const q of f.b){const x=f.x+q.ox+Math.sin(t/400+q.ph)*6,y=f.y+q.oy+Math.cos(t/520+q.ph)*5,e=Math.hypot(x-runtime.S.wx,y-runtime.S.wy);if(e>vis)continue;

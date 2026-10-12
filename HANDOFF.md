@@ -67,6 +67,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/data.js` | Constantes, biomas, géneros, logros, muestras y textos. |
 | `src/progress.js` | Guardado v4, días, racha, crecimiento, linterna, RNG y cachés. |
 | `src/world.js` | Camino, generación de regiones/chunks, eventos y reliquias. |
+| `src/spatial.js` | Presencia por distancia, selección de fuentes cercanas y actualización de voces activas. |
 | `src/grammar.js` | Perfiles musicales regionales, ritmo/frase/armonía y atenuación por densidad. |
 | `src/palettes.js` | Paletas tropical, melódica, robótica y disco, asignación regional y patrones. |
 | `src/instruments.js` | Nuevos timbres de parciales, FM y filtros, güiro y timbal electrónicos. |
@@ -321,3 +322,9 @@ Cada etapa sigue el flujo rama nueva desde main actualizado, pruebas, commit y p
 12. Estudio, mapa e interfaz compacta: favoritos, escenas, muestras y descubrimientos.
 13. Escucha y rendimiento en móvil: sesiones largas, mezcla densa, quietud y autopilot.
 14. Encuentros entre jugadores: puntos distintos visibles y creación musical compartida con reloj, armonía y límites coordinados.
+
+### Audio por proximidad
+
+`src/spatial.js` atenúa cada voz con fuente física mediante una curva suave: máxima presencia junto al objeto, mitad de amplitud a 180 px y cero a 360 px. Nunca eleva la voz por encima de su volumen normal. Sus rutas de señal directa, reverb y delay siguen la posición del objeto y del jugador durante la nota, con transiciones de 120 ms. La reverberación global ya emitida conserva su cola natural. Las fuentes más próximas tienen más probabilidad de responder en el ensamble automático; no se agregan disparos ni se altera la radio. Los claros de escucha mantienen el ensamble automático vacío.
+
+Hasta 32 grupos de proximidad, liberados después de 3 segundos desde el inicio de la nota; al llegar al límite, las nuevas notas usan atenuación fija por distancia. Las rutas se restauran incluso al fallar la síntesis y son compatibles con efectos locales, curaduría y Escucha suave. La composición base y las capas desbloqueadas de faros no tienen fuente física y conservan su mezcla. No se introduce guardado nuevo.

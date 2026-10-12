@@ -72,3 +72,5 @@ Lee **[HANDOFF.md](HANDOFF.md)**. Tiene todo el contexto: visión, decisiones to
 La variedad musical incluye paletas tropicales, melódicas, robóticas y disco, con grooves y escalas propios. Sus instrumentos electrónicos incluyen steel pan, kalimba FM, teclas cálidas, cuerdas, metales, clavinet, bajos filtrados o FM, formantes, güiro y timbal. Escuchar y Bitácora muestran qué aporta cada fuente.
 
 Cada región combina una gramática propia de acentos, armonía, fraseo y brillo, además de su género. La composición evoluciona estando quieto. **Escucha suave**, en el menú, reduce volumen y brillo; puedes combinarla con el control de silencio.
+
+Los objetos y criaturas se oyen más presentes al acercarte y se apagan gradualmente al alejarte. Su volumen sigue la distancia incluso durante la nota; la música de fondo continúa componiendo.
