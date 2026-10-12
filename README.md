@@ -32,14 +32,20 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr)
 ## Correr local
 
 ```bash
-npx serve .        # o: python3 -m http.server 8000
+python3 -m http.server 8000
 ```
 
-Abre `http://localhost:8000`. También puedes abrir `index.html` directo en el navegador.
+Desde la carpeta del repositorio, ejecuta ese comando y abre `http://localhost:8000`. También puedes usar `npx serve .` y abrir la dirección que indique ese servidor.
 
 ## Deploy
 
-El repo está conectado a Vercel (proyecto `whitedot`). Cada push a `main` despliega producción automáticamente. No hay paso de build: Vercel sirve `index.html` tal cual.
+El repo está conectado a Vercel (proyecto `whitedot`). Los cambios se preparan en una rama nueva desde `main` actualizado, se verifican y se suben con commit y push. **Jay crea el PR y hace el merge.** El asistente no hace push directo a `main`, no crea PRs y no hace merges.
+
+Al integrar el PR en `main`, Vercel despliega producción automáticamente. No hay paso de build: Vercel sirve `index.html` tal cual.
+
+## Dirección del juego
+
+Queremos encuentros mágicos muy raros y descubrimientos únicos que cueste conseguir. Jay considera que las reliquias actuales son demasiado fáciles: hoy se generan tres alrededor del jugador cada día y una flecha guía hacia ellas. Revisar esa dificultad y añadir encuentros excepcionales es trabajo pendiente; todavía no hay un sistema de rarezas o de objetos únicos coleccionables.
 
 ## Para seguir desarrollando
 
