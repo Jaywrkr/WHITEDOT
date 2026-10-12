@@ -160,7 +160,7 @@ export function initialize(runtime) {
     dsend.gain.setTargetAtTime(cave?2.2:MU.vari===3&&runtime.inWorld()?1.8:1,t,.5);
     const air=runtime.inWorld()&&MU.dnaA?MU.dnaA.air:null;
     verbIn.gain.setTargetAtTime(vac?1.6:cave||air==="niebla"?1.25:.8,t,1);
-    if(air==="esporas"&&s%4===2&&rnd()<.07)pluck(chordTones()[Math.floor(rnd()*4)]+36,t,.02,4);
+    if(air==="esporas"&&s===14&&bar%4===3&&rnd()<.2)pluck(chordTones()[1]+12,t,.012,4);
     const swA=(s%2)?SIX*(G.sw||0):0,tt=t+swA+jit(),R=root(),ct=chordTones();
     if(live){
       if(nb){VW=w;drums(nb.genre,s,bar,t,t+((s%2)?SIX*(runtime.GEN[nb.genre].sw||0):0)+jit(),E,ct,true);}
@@ -178,9 +178,9 @@ export function initialize(runtime) {
       for(const f of MU.flowers){if(f.st===s){runtime.playVoice('planta:flor',f.n%7,t,runtime.regionOfPos(f.x,f.y),false,.7,f);f.hit=performance.now()+(t-ac.currentTime)*1000;}}
     }
     // quieto: campanas lentas sobre el acorde
-    if((G===runtime.GEN.ambient||!live)&&MU.still>2.5&&s%2===0&&rnd()<.05){const n=ct[Math.floor(rnd()*ct.length)]+12+(rnd()<.4?12:0);pluck(n,t+jit(),vel(.045),2);}
+    if(!live&&MU.still>2.5&&s%2===0&&rnd()<.05){const n=ct[Math.floor(rnd()*ct.length)]+12+(rnd()<.4?12:0);pluck(n,t+jit(),vel(.045),2);}
     // la música te responde con tu propia frase
-    if(!MU.resp&&MU.motif.length>=3&&MU.step-MU.lastNoteStep===24){
+    if(!runtime.inWorld()&&!MU.resp&&MU.motif.length>=3&&MU.step-MU.lastNoteStep===24){
       MU.resp=true;const st0=MU.motif[0].st;
       MU.motif.slice(-6).forEach(m=>{const off=Math.min(m.st-st0,24);pluck(snap(m.n,ct)-12,t+off*SIX,vel(.05),2);});
     }
@@ -230,8 +230,11 @@ export function initialize(runtime) {
   function pluck(m,t,v,tim=0){runtime.recordInstrument?.(["keys","marimba","bell","pluck","glass","saw"][tim]||"keys");
     const T=TIMBRE[tim]||TIMBRE[0],o=ac.createOscillator(),o2=ac.createOscillator(),g=ac.createGain(),g2=ac.createGain(),sd=ac.createGain(),sv=ac.createGain();
     o.type="sine";o2.type=T.w;o.frequency.value=hz(m);o2.frequency.value=hz(m)*T.r;g2.gain.value=T.h;
-    o.connect(g);o2.connect(g2).connect(g);env(g,t,.005,v,T.dec);g.connect(bus);
-    sd.gain.value=.3;g.connect(sd).connect(dsend);sv.gain.value=T.send;g.connect(sv).connect(verbIn);
+    const world=runtime.inWorld();
+    if(world){const f=ac.createBiquadFilter();f.type="lowpass";f.Q.value=.65;f.frequency.setValueAtTime(tim===4?1800:2400,t);f.frequency.exponentialRampToValueAtTime(tim===4?650:1000,t+.2);o.connect(f);o2.connect(g2).connect(f);f.connect(g);g2.gain.value=T.h*.55;}
+    else{o.connect(g);o2.connect(g2).connect(g);}
+    env(g,t,world?.012:.005,v,world?Math.min(T.dec,.65):T.dec);g.connect(bus);
+    sd.gain.value=runtime.inWorld()?.18:.3;g.connect(sd).connect(dsend);sv.gain.value=runtime.inWorld()?T.send*.65:T.send;g.connect(sv).connect(verbIn);
     o.start(t);o2.start(t);o.stop(t+T.dec+.3);o2.stop(t+T.dec+.3);
   }
   function fmBass(m,t,v){const o=ac.createOscillator(),mo=ac.createOscillator(),mg=ac.createGain(),g=ac.createGain();o.frequency.value=hz(m);mo.frequency.value=hz(m)*2;mg.gain.setValueAtTime(hz(m)*2.5,t);mg.gain.exponentialRampToValueAtTime(1,t+.25);mo.connect(mg).connect(o.frequency);env(g,t,.004,v,.3);o.connect(g).connect(bus);o.start(t);mo.start(t);o.stop(t+.4);mo.stop(t+.4);}
@@ -251,8 +254,10 @@ export function initialize(runtime) {
   function bassInst(ty,m,t,v){runtime.recordInstrument?.(ty);switch(ty){case "reese":reese(m,t,v);return;case "organb":organ(m,t,v*1.5);return;case "roll":houseBass(m,t,v*.8,.3);return;}switch(ty){case "sub":softBass(m,t,v);break;case "acid":acid(m,t,v*.85,300+MU.speed*2200);break;case "pluck":houseBass(m,t,v,.5);break;case "fm":fmBass(m,t,v);break;case "boing":runtime.boing(m,t,v);break;}}
   function hookInst(ty,m,t,v){runtime.recordInstrument?.(ty);switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
   function drums(gid,s,bar,t,tt,E,ct,DO){
-    const L1=E>.12,L2=E>.32,L3=E>.55,r=rnd,variation=(bar>>2)%3;
-    if(L3&&s===15&&variation===2&&!["ambient","heart","downtempo","dub"].includes(gid)&&r()<.35){
+    const L1=E>.12,L2=E>.32,L3=E>.55,variation=(bar>>2)%3;
+    // Repeat the placement of ghost hits across four bars; velocity still breathes.
+    const r=runtime.inWorld()?runtime.rng(runtime.seedOf(`groove:v1:${MU.dnaA?.key}:${gid}:${Math.floor(bar/4)}:${s}`)):rnd;
+    if(L3&&s===15&&bar%4===3&&variation===2&&!["ambient","heart","downtempo","dub"].includes(gid)&&r()<.35){
       if(["afro","tribal"].includes(gid))conga(tt,220,vel(.045));
       else if(["breaks","garage","dnb"].includes(gid))snare(tt,vel(.025));
       else rim(tt,vel(.025));
@@ -263,7 +268,7 @@ export function initialize(runtime) {
       case "dub":if(L1&&s%4===0)kick2(t,vel(.22),48,.4);if(L2&&s%4===2)hatC(tt,vel(.025));if(L3&&(s===3||s===11)&&r()<.7&&!DO)dubChord(ct,tt);if(L3&&s%2===1&&r()<.3)shaker(tt,vel(.012));break;
       case "deep":if(L1&&s%4===0)kick2(t,vel(.28),52,.32);if(L2&&(s===4||s===12))clap(t,vel(.07));if(L2&&s%4===2)hatO(tt,vel(.035));if(L3&&s%2===1)shaker(tt,vel(.015));if(L3&&(s===6||s===14)&&r()<.6&&!DO)organChord(ct,tt);break;
       case "afro":{if(L1&&s%4===0)kick2(t,vel(.27),50,.3);const C={2:250,3:180,6:250,7:320,10:180,11:250,14:320};if(L2&&C[s]&&r()<.85)conga(tt,C[s],vel(.12));if(L2&&[0,3,6,10,12].includes(s))clave(tt,vel(.035));if(L3&&s%2===1)shaker(tt,vel(.018));if(L3&&(s===4||s===12))clap(t,vel(.05));break;}
-      case "minimal":if(L1&&s%4===0)kick2(t,vel(.26),55,.25);if(L2&&s%4===2)hatC(tt,vel(.03));if(L2&&[3,7,13].includes(s)&&r()<.6)rim(tt,vel(.05));if(L3&&s%4===1&&r()<.4&&!DO)blip(ct[1]+36,tt,vel(.05));break;
+      case "minimal":if(L1&&s%4===0)kick2(t,vel(.26),55,.25);if(L2&&s%4===2)hatC(tt,vel(.03));if(L2&&[3,7,13].includes(s)&&r()<.6)rim(tt,vel(.05));if(L3&&s%4===1&&r()<.4&&!DO)blip(ct[1],tt,vel(.025));break;
       case "rominimal":if(L1&&s%4===0&&!(s===12&&bar%4===3))kick2(t,vel(.26),52,.28);if(L2&&s%2===1)shaker(tt,vel(s%4===3?.026:.016));if(L2&&[3,6,11,15].includes(s)&&r()<.75)wood(tt,vel(.05));if(L3&&(s===4||s===12)&&r()<.5)rim(tt,vel(.04));break;
       case "acid":if(L1&&s%4===0)kick2(t,vel(.34),60,.25);if(L2&&s%2===1)hatC(tt,vel(.02));if(L2&&s%4===2)hatO(t,vel(.04));if(L3&&(s===4||s===12))clap(t,vel(.06));break;
       case "breaks":if(L1&&(s===0||s===10))kick2(t,vel(.3),58,.25);if(L1&&(s===4||s===12))snare(tt,vel(.12));if(L2&&(s===7||s===14)&&r()<.5)snare(tt,vel(.04));if(L2&&s%2===0)hatC(tt,vel(.025));if(L3&&s===11&&r()<.5)kick2(t,vel(.18),58,.2);break;
@@ -308,7 +313,7 @@ export function initialize(runtime) {
     const base=d&&d.track;if(!base)return;const tr=MU.radio?{...base,...MU.radio}:base;const sc=d.scale,bar=(MU.step>>4)&1,nt=(dg,base)=>base+MU.tr+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
     const gid=d.genre,bs=MU.radio?tr.bass[s]:gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
     if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel(gid==="rominimal"?.13:.17));}
-    let h=tr.hook[s];if(h>=0&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar)h+=tr.shift;let n=nt(h,57+(MU.vari===4?12:0));if(s%4===0)n=snap(n,ct);hookInst(tr.hookI,n,t,vel(.05+.05*E));}
+    let h=tr.hook[s];if(h>=0&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!MU.radio)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);hookInst(tr.hookI,n,t,vel(.05+.05*E));}
   }
   function thunder(t){noise(t,"lowpass",900,.5,.25,.9,true);noise(t,"highpass",3000,.5,.06,.12);}
   const soon=fn=>{if(ac)MU.queue.push(fn);};
