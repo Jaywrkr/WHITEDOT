@@ -12,5 +12,5 @@ let events=[];function param(){return {value:0,setValueAtTime(v,t){assert(Number
 function node(){const n={frequency:param(),gain:param(),Q:param(),connect(target){return target;},start(t){assert.equal(t,10);events.push(['osc',this.type,this.frequency.value]);},stop(t){assert(t>10&&t<12);}};return n;}
 r.ac={createOscillator:node,createGain:node,createBiquadFilter:node};r.bus=node();r.verbIn=node();r.hz=m=>440*2**((m-69)/12);r.env=(g,t,a,v,d)=>{assert(a>0&&v>0&&d>0);events.push(['env',a,v,d]);};instruments(r);
 const signatures=new Set();for(const id of Object.keys(INSTRUMENT_SPECS)){assert(INSTRUMENTS[id]);for(const pitch of [36,60,84]){events=[];assert.equal(r.playNewInstrument(id,pitch,10,.1),true);assert(events.some(e=>e[0]==='osc'));if(pitch===60)signatures.add(JSON.stringify(events));}}
-assert.equal(signatures.size,10);assert.equal(r.playNewInstrument('unknown',60,10,.1),false);
-console.log('PASS: four reachable electronic palettes, family-specific voices, preserved world fixtures and ten distinct bounded synth graphs');
+assert.equal(signatures.size,Object.keys(INSTRUMENT_SPECS).length);assert.equal(r.playNewInstrument('unknown',60,10,.1),false);
+console.log('PASS: four reachable electronic palettes, family-specific voices, preserved world fixtures and distinct bounded synth graphs');

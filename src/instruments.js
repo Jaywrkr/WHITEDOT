@@ -1,5 +1,6 @@
 // Synthesized families: resonant partials, FM keys and filtered subtractive voices.
 export const INSTRUMENT_SPECS={
+ logdrum:{fm:.5,index:2.2,partials:[[1,'sine',.9]],cut:500,dec:.24,send:0},
  steel:{partials:[[1,'sine',.65],[2.02,'sine',.2],[3.1,'sine',.08]],cut:2400,dec:.48,send:.16},
  kalimba:{fm:3,index:.7,partials:[[1,'sine',.8]],cut:2200,dec:.32,send:.12},
  rhodes:{fm:1,index:.65,partials:[[1,'sine',.8],[2,'sine',.08]],cut:1900,dec:.65,send:.16},

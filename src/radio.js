@@ -1,3 +1,4 @@
+import {REFERENCE_STEPS,REFERENCE_BASS} from './references.js';
 import {createGrammar,shapeMotif} from './grammar.js';
 import {PALETTE_STEPS} from './palettes.js';
 // Composición por frases: el reloj musical avanza sin necesitar movimiento.
@@ -37,18 +38,20 @@ export function createRadio(seedOf, rng, genres) {
           const steps={tropical:[0,3,6,10,14],melodic:[0,6,8,14],robotic:[0,3,8,11,14],nudisco:[0,3,6,8,10,14]}[region.genre];
           degree=steps.includes(step)?(region.genre==='robotic'?0:[0,0,4,2][step%4]):-1;
         }
+        if(REFERENCE_BASS[region.genre])degree=REFERENCE_BASS[region.genre].includes(step)?(region.genre==='ebm'||region.genre==='berlin'?0:[0,0,4,2][step%4]):-1;
         if (degree < 0 || (step !== 0 && random() < (sparse ? .45 : .12))) return -1;
         return step === 0 ? 0 : Math.max(0, Math.min(9, degree));
       });
       // Keep a recognisable motif for four phrases; vary space and accents first.
       const motifRandom=rng(seedOf(`radio-motif:v1:${region.key}:${Math.floor(phrase/4)}`));
       const budget=sparse?2:grammar.hookLimit;
-      const recipe=PALETTE_STEPS[region.genre]?Array.from({length:16},(_,i)=>PALETTE_STEPS[region.genre].includes(i)?0:-1):region.track.hook;
+      const steps=REFERENCE_STEPS[region.genre]||PALETTE_STEPS[region.genre];
+      const recipe=steps?Array.from({length:16},(_,i)=>steps.includes(i)?0:-1):region.track.hook;
       const candidates=shapeMotif(recipe,grammar).map((degree,step)=>({degree,step})).filter(n=>n.degree>=0);
       const anchor=candidates.find(n=>n.step%4===0)?.step??0;
       const positions=[anchor,...candidates.filter(n=>n.step!==anchor).map(n=>n.step)];
       for(let i=positions.length-1;i>1;i--){const j=1+Math.floor(motifRandom()*i);[positions[i],positions[j]]=[positions[j],positions[i]];}
-      const motif=Array(16).fill(-1),tones=[0,2,4];
+      const motif=Array(16).fill(-1),tones=genres[region.genre].melodyDegrees||[0,2,4];
       positions.slice(0,grammar.hookLimit).forEach((step,i)=>{motif[step]=i===0?0:tones[Math.floor(motifRandom()*tones.length)];});
       const hook=motif.map((degree,step)=>degree<0||step!==anchor&&(random()<.25)?-1:degree);
       let notes=1;hook.forEach((degree,step)=>{if(step!==anchor&&degree>=0&&++notes>budget)hook[step]=-1;});
