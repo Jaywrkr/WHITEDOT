@@ -1,0 +1,76 @@
+import assert from 'node:assert/strict';
+import { createRadio } from '../src/radio.js';
+import { initialize as data } from '../src/data.js';
+import { initialize as progress } from '../src/progress.js';
+import { initialize as world } from '../src/world.js';
+import { initialize as audio } from '../src/audio.js';
+globalThis.localStorage = { getItem: () => null, setItem() {} };
+const runtime = Object.create(null);
+data(runtime); progress(runtime); world(runtime);
+const origin = runtime.regionOfPos(900, 900);
+const originalDNA = JSON.stringify(origin);
+for (const genre of Object.keys(runtime.GEN)) {
+  const region = { ...origin, genre, key: genre };
+  const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN);
+  const melodies = new Set(), sections = new Set(), energies = [];
+  for (let bar = 0; bar < 160; bar++) {
+    const music = radio.advance(region, bar, { near: 0, singers: 0 });
+    melodies.add(JSON.stringify(music.hook)); sections.add(music.section); energies.push(music.energy);
+    assert.equal(music.genre, genre);
+    assert.equal(music.hook.length, 16);
+    assert(music.hook.some((note, step) => step % 4 === 0 && note >= 0));
+    assert(music.energy >= .14 && music.energy <= (genre === 'ambient' ? .3 : .7));
+    assert(runtime.GEN[genre].hookP.includes(music.hookI));
+  }
+  assert(melodies.size > 10, `${genre}: stopped composing while stationary`);
+  assert(sections.size > 1, `${genre}: no section changes`);
+  assert(Math.max(...energies) - Math.min(...energies) > .05);
+}
+assert.equal(JSON.stringify(origin), originalDNA);
+const calm = createRadio(runtime.seedOf, runtime.rng, runtime.GEN);
+const alive = createRadio(runtime.seedOf, runtime.rng, runtime.GEN);
+assert(alive.advance(origin, 0, { near: 20, singers: 2, event: 'aurora' }).energy > calm.advance(origin, 0).energy);
+
+// Exercise the actual scheduler and instrument paths with a stationary player.
+// Fake audio nodes capture scheduling, rather than making the test wait minutes.
+let schedule, started = 0;
+const interval = globalThis.setInterval;
+globalThis.setInterval = fn => { schedule = fn; return 1; };
+function param() {
+  return { value: 0, setValueAtTime: check, setTargetAtTime: check,
+    exponentialRampToValueAtTime: check, linearRampToValueAtTime: check };
+}
+function check(value, time) { assert(Number.isFinite(value)); assert(Number.isFinite(time)); }
+function node() {
+  return { gain: param(), frequency: param(), detune: param(), delayTime: param(), Q: param(),
+    connect(target) { return target; }, start(time=0) { assert(Number.isFinite(time)); started++; }, stop: () => {} };
+}
+class Context {
+  currentTime = 0; state = 'running'; sampleRate = 1000; destination = node();
+  createGain = node; createOscillator = node; createBiquadFilter = node;
+  createDynamicsCompressor = node; createConvolver = node; createDelay = node; createBufferSource = node;
+  createBuffer(channels, length) { const buffers = Array.from({length:channels},()=>new Float32Array(length)); return {getChannelData:i=>buffers[i]}; }
+}
+globalThis.window = { AudioContext: Context };
+try {
+  audio(runtime);
+  runtime.S.mode = 'world'; runtime.S.todayKey = '2026-10-12';
+  runtime.MU.dnaT = origin; runtime.MU.E = 0; runtime.MU.speed = 0; runtime.MU.still = 60;
+  runtime.audio();
+  const phrases = new Set();
+  for (let tick = 0; tick < 4800; tick++) {
+    runtime.ac.currentTime = tick * .025;
+    schedule();
+    if (runtime.MU.radio) phrases.add(runtime.MU.radio.phrase);
+  }
+  assert(phrases.size > 5, 'actual audio scheduler failed to evolve music');
+  assert(started > 100, 'stationary world did not schedule instruments');
+  assert.equal(runtime.MU.speed, 0);
+  runtime.S.mode = 'camino';
+  runtime.ac.currentTime += .2; schedule();
+  assert.equal(runtime.MU.radio, null, 'radio leaked into daily path');
+  runtime.S.mode = 'studio';
+  runtime.S.studio.slots = {}; runtime.ac.currentTime += .2; schedule();
+  assert.equal(runtime.MU.radio, null, 'radio leaked into sequencer');
+} finally { globalThis.setInterval = interval; }
+console.log('PASS: 12 genres evolve at rest, environment affects composition, real scheduler plays without movement, path/studio remain separate');
