@@ -28,6 +28,7 @@ import { initialize as map } from './map.js';
 import { initialize as wonders } from './wonders.js';
 import { initialize as alive } from './alive.js';
 import { initialize as layers } from './layers.js';
+import { initialize as focusui } from './focusui.js';
 import { initialize as patchgarden } from './patchgarden.js';
 import { initialize as influence } from './influence.js';
 import { initialize as mirrors } from './mirrors.js';
@@ -85,6 +86,7 @@ mirrors(runtime);
 patchgarden(runtime);
 fxpad(runtime);
 controls(runtime);
+focusui(runtime);
 pwa(runtime);
 atlas(runtime);
 

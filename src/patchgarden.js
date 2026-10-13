@@ -36,7 +36,7 @@ export function initialize(runtime){
  function connect(site,i){
   if(!surface()||!site||!Number.isInteger(i)||i<0||i>=3||Math.hypot(site.x-S().wx,site.y-S().wy)>230)return false;
   if(site.connections.includes(i))site.connections=site.connections.filter(n=>n!==i);else site.connections.push(i);
-  remember(site);runtime.stopAutopilot();runtime.unlock('patch1');open(site);runtime.save();return true;
+  remember(site);runtime.stopAutopilot();runtime.unlock('patch1');panel();runtime.save();return true;
  }
  function at(x,y){
   if(!surface()||runtime.scanning||document.querySelector('.modal:not([hidden])'))return null;
@@ -44,10 +44,12 @@ export function initialize(runtime){
   for(const site of nearby(230)){
    if(Math.hypot(wx-site.out.x,wy-site.out.y)<22)return {site,index:-1};
    for(let i=0;i<3;i++)if(Math.hypot(wx-site.inputs[i].x,wy-site.inputs[i].y)<22)return {site,index:i};
+   if(wx>site.out.x-48&&wx<site.out.x&&Math.abs(wy-site.out.y)<22)return {site,index:-2};
+   for(const input of site.inputs)if(wx>input.x&&wx<input.x+65&&Math.abs(wy-input.y)<22)return {site,index:-2};
   }return null;
  }
  function down(e){const hit=at(e.clientX,e.clientY);if(!hit||hit.index!==-1||e.target!==$('w'))return false;
-  runtime.audio();runtime.stopAutopilot();open(hit.site);armed=hit.site;drag={pointer:e.pointerId,x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY};runtime.ptr=null;runtime.tapStart=null;try{$('w').setPointerCapture(e.pointerId);}catch(_){}e.preventDefault();return true;
+  runtime.audio();runtime.stopAutopilot();runtime.closeGlass?.();runtime.closeMirrors?.();close();armed=hit.site;drag={pointer:e.pointerId,x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY};runtime.ptr=null;runtime.tapStart=null;try{$('w').setPointerCapture(e.pointerId);}catch(_){}e.preventDefault();return true;
  }
  function move(e){if(drag?.pointer!==e.pointerId)return false;drag.x=e.clientX;drag.y=e.clientY;e.preventDefault();return true;}
  function up(e){if(drag?.pointer!==e.pointerId)return false;const hit=at(e.clientX,e.clientY);
@@ -56,9 +58,10 @@ export function initialize(runtime){
   if(e.type==='pointercancel'||e.type==='lostpointercapture')armed=null;drag=null;return true;
  }
  function tap(x,y){const hit=at(x,y);if(!hit)return false;
-  if(hit.index<0){armed=hit.site;open(hit.site);}
+  if(hit.index===-2)open(hit.site);
+  else if(hit.index===-1){armed=hit.site;}
   else if(armed===hit.site||hit.site.connections.includes(hit.index)){connect(hit.site,hit.index);armed=null;}
-  else open(hit.site);return true;
+  else if(!S().help.patch){S().help.patch=true;runtime.say(runtime.VOZ.patch,'Jardín modular');}return true;
  }
  function tick(){
   if(previous!==S()){previous=S();cache.clear();S().patchSites=normalizePatchSites(S().patchSites);close();}

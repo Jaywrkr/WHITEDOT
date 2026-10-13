@@ -43,6 +43,7 @@ export function initialize(runtime) {
     }
     if(!sources.length){const item=document.createElement('li');item.textContent='Sin objetos musicales cercanos. La región sigue componiendo.';list.append(item);}
     document.getElementById('scannerHint').textContent=runtime.S.sound?`Voces cercanas · ${region.recipe?.name||createGrammar(region,runtime.seedOf,runtime.rng).character}${runtime.initiativeState?.stage?" · El ambiente responde":""}`:'Sonido silenciado · mostrando las voces del lugar';
+    if(runtime.RP)document.getElementById('scannerHint').textContent+=' · '+runtime.$('reto').textContent;
     const influence=runtime.influenceState?.values;if(influence&&Object.values(influence).some(v=>Math.abs(v)>.15))document.getElementById('scannerHint').textContent+=' · Tu presencia transforma la composición';
     while(panel.scrollHeight>panel.clientHeight+2&&list.childElementCount>1)list.lastElementChild.remove();
   }

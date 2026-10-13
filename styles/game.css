@@ -196,3 +196,21 @@ body:has(#glassPanel:not([hidden])) .zone,body:has(#glassPanel:not([hidden])) .p
 body:has(#mirrorPanel:not([hidden])) .zone,body:has(#mirrorPanel:not([hidden])) .phrase,body:has(#mirrorPanel:not([hidden])) .routehud{visibility:hidden}
 
 body:has(#patchPanel:not([hidden])) .zone,body:has(#patchPanel:not([hidden])) .phrase,body:has(#patchPanel:not([hidden])) .routehud{visibility:hidden}
+
+/* A single persistent button while exploring. Restore counters explicitly from the menu. */
+body.world-mode:not(.tools-open) .dock>button:not(#bMenu){display:none}
+body.world-mode .hud .day{display:none}
+body.world-focus .hud .stats,body.world-focus .bar,body.world-focus .goal b,body.world-focus .reto{display:none}
+body.world-focus .hud{padding-top:calc(env(safe-area-inset-top,0px) + 14px)}
+body.world-focus .era{margin:0;max-width:calc(100vw - 100px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:9px;letter-spacing:.05em}
+body.world-focus .goal{top:calc(env(safe-area-inset-top,0px) + 14px);left:auto;width:68px;justify-content:flex-end;font-size:10px;letter-spacing:.03em}
+body.world-focus .voice{top:calc(env(safe-area-inset-top,0px) + 45px);max-width:320px}
+body.world-focus .voice:not(.expanded) span{-webkit-line-clamp:1}
+body.world-focus .zone span{display:none}
+body.world-focus .zone b{font-size:15px}
+body.world-focus .phrase{font-size:12px;max-width:310px;margin-left:auto;margin-right:auto}
+body.world-mode .tiles button[aria-pressed="true"]{color:var(--gold);border-color:var(--gold)}
+.glasspanel button,.glasspanel select,.glasspanel input[type="range"],.routehud button,.fxbtns button,.fxhead button{min-height:44px}
+.glasspanel .fxhead button,.routehud button{min-width:44px}
+body.world-mode:has(.modal:not([hidden])) .dock,body.world-mode:has(.modal:not([hidden])) .voice,body.world-mode:has(.modal:not([hidden])) .zone{visibility:hidden}
+body.world-mode:has(.glasspanel:not([hidden])) .voice{opacity:0;pointer-events:none}

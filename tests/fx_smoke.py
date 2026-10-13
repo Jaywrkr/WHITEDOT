@@ -18,7 +18,7 @@ with sync_playwright() as p:
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
   page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
-  page.locator('#bFx').click();assert page.locator('#fxPanel').is_visible()
+  page.locator('#bMenu').click();page.locator('#bTools').click();page.locator('#bFx').click();assert page.locator('#fxPanel').is_visible()
   box=page.locator('#fxPad').bounding_box();before=page.evaluate('[window.__testRuntime.S.wx,window.__testRuntime.S.wy]')
   page.mouse.move(box['x']+box['width']*.1,box['y']+box['height']*.2);page.mouse.down();page.wait_for_timeout(400)
   st=page.evaluate('(()=>{const f=window.__testRuntime.fx;return [f.lp.frequency.value,f.verbSend.gain.value]})()');assert st[0]<1500 and st[1]>.4,st
@@ -35,7 +35,7 @@ with sync_playwright() as p:
   page.locator('#fxStop').click();page.wait_for_timeout(250);assert page.evaluate('window.__testRuntime.fx.dry.gain.value')<.6
   assert page.evaluate('!!window.__testRuntime.S.ach.robot && !!window.__testRuntime.S.ach.cinta')
   page.locator('#fxClose').click();assert not page.locator('#fxPanel').is_visible()
-  page.locator('#bPrimary').click();page.wait_for_function('document.getElementById("bFx").hidden')
+  page.locator('#bMenu').click();page.locator('#bWorld').click();page.wait_for_function('document.getElementById("bFx").hidden')
   assert not errors,errors
   print(label+': fx pad filters and space, clean on release, hold, eco, robot, tape stop, does not move the pixel PASS',flush=True);c.close()
  b.close()

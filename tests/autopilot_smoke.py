@@ -31,7 +31,7 @@ with sync_playwright() as p:
   page.evaluate('window.__testRuntime.MU.anomaly=null')
   page.screenshot(path=f'/tmp/whitedot-autopilot-{label}.png')
   page.evaluate("window.__testRuntime.startAutopilot('wander')");page.locator('#autoStop').click();assert page.evaluate('window.__testRuntime.autopilotState.mode') is None
-  page.evaluate("window.__testRuntime.startAutopilot('wander')");page.locator('#bPrimary').click();assert page.evaluate('window.__testRuntime.autopilotState.mode') is None
+  page.evaluate("window.__testRuntime.startAutopilot('wander')");page.locator('#bMenu').click();page.locator('#bWorld').click();assert page.evaluate('window.__testRuntime.autopilotState.mode') is None
   assert not errors,errors
   print(label+': slow autopilot, lamp consumption, menu pause, manual/stop cancellation and destination arrival PASS',flush=True);c.close()
  b.close()
