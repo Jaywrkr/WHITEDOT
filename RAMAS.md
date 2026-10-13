@@ -95,3 +95,4 @@ Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; el pedido post
 
 - `feat/phase-04-materia-y-compartir` (Claude): materia (cuerdas, prisma, membrana), FX chorus/phaser/freeze, códigos de lugar y grabar set. Pendiente de merge por Jay. Ver `FASE_04_MATERIA.md`.
 - `feat/laboratorio-y-fase-05` (Claude, creada sobre la anterior): Laboratorio + fase 5 Vida. Pendiente de merge por Jay; hacer merge de esta incluye la anterior. Ver `LABORATORIO_Y_FASE_05.md`.
+- `feat/expansion-fase-06` (Claude, sobre las dos anteriores): el cubo toca el mundo, quitados jardín modular y rastro, colores, quietud, música experimental, cajas y poderes. Pendiente de merge. Ver `CUBO_Y_EXPANSION.md`.

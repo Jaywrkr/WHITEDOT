@@ -7,6 +7,7 @@ Actualizado el 13 de octubre de 2026, después de integrar #73. [Estado comproba
 Fases 1/2, revisión de registros/atlas, consolidación, fase 3 y bloque de espejos/vidrios de fase 4 **ya están integrados** (#68–#73). Ya existen guardado recuperable/respaldo, cachés acotadas, favoritos/regreso/autopilot, Original y Paisajes vivos, blobs, radio/quietud, instrumentos nuevos, vidrios por aros, espejos por arrastre, jardín modular, diez encuentros, suelo en vez de cajas, animal intuitivo, rastros e instrumento dormido, fijación voluntaria/borrado, interfaz silenciosa y offline. No listarlos como funciones ausentes.
 
 ## Entregado en rama pendiente de merge
+- `feat/expansion-fase-06` (incluye las anteriores): solo el cubo interactúa, colores, quietud, música experimental, cajas/poderes. **Siguiente: fase 6, mundo vasto, modo auto** → `CUBO_Y_EXPANSION.md`.
 - `feat/laboratorio-y-fase-05` (incluye la anterior): Laboratorio para probar y anotar cada elemento; fase 5 con bandadas, luciérnagas, ave lira y flora que crece. Detalle en `LABORATORIO_Y_FASE_05.md`.
 - `feat/phase-04-materia-y-compartir`: cuerdas, prisma y membrana; Chorus/Phaser/Freeze; códigos de lugar `WD1-`; grabar set de 60 s. Detalle en `FASE_04_MATERIA.md`.
 - Siguiente de fase 4: superficies/materiales restantes y escucha larga de las tres familias en teléfono.

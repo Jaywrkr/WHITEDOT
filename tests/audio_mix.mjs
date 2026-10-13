@@ -16,23 +16,6 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   r.MU.dnaT={...origin,key:'0,0',genre,bpm:(G.bpm[0]+G.bpm[1])/2,track:{...origin.track,bassI:G.bassI,hookI:G.hookP[0]}};
   r.MU.E=dense?.8:.45;r.MU.vit=1;r.MU.vari=2;r.audio();
   if(influenced){r.activeLayerRegion=()=>r.MU.dnaT;for(const k of ['bass','groove','melody'])r.driveInfluence(r.MU.dnaT,k,1,3);for(let i=0;i<100;i++)r.influenceTick(.05,false);}
-  if(installation){
-   origin.genre=genre;origin.track={...r.MU.dnaT.track};r.unlock=()=>{};r.$=id=>document.getElementById(id);document.querySelectorAll('.modal').forEach(m=>m.hidden=true);
-   const garden=await import('../src/patchgarden.js');garden.initialize(r);
-   const site=r.nearbyPatches(5000).find(s=>s.id==='patch:0,0');if(!site)throw Error('missing patch render site');
-   site.source=installation;site.connections=[0,1,2];site.amount=1;r.S.wx=site.x;r.S.wy=site.y;
-   r.S.glassSites['glass:0,0']={seen:true,angles:[0,0,0]};
-   const {createMirrorSite}=await import('../src/mirrors.js'),mirror=createMirrorSite(site.region,r.REG*r.WCH,r.seedOf,r.rng);
-   r.S.mirrorSites['mirror:0,0']={angles:mirror.solution,solved:true};
-  }
-  if(trail){
-   r.soundCue=source=>{if(source?.id?.startsWith('trail:'))trailNotes++;};
-   origin.genre=genre;origin.track={...r.MU.dnaT.track};document.querySelectorAll('.modal').forEach(m=>m.hidden=true);
-   const url=new URL(location.href);url.searchParams.set('encounter','trail');history.replaceState(null,'',url);r.S.previewSeed='trail-audio';
-   const {initialize}=await import('../src/sound-trails.js');initialize(r);
-   const route=r.nearbyTrails(10000).find(t=>t.id==='trail:0,0');if(!route)throw Error('missing audio trail');
-   r.S.soundTrails[route.id]={stage:1,seen:true};r.S.wx=route.nodes[1].x;r.S.wy=route.nodes[1].y;
-  }
   if(glass){
    r.soundCue=(source,role)=>{if(source?.id?.startsWith('glass:')){glassNotes++;glassRoles.add(role);}};
    origin.genre=genre;origin.track={...r.MU.dnaT.track};r.$=id=>document.getElementById(id);r.unlock=()=>{};r.stopAutopilot=()=>{};document.querySelectorAll('.modal').forEach(m=>m.hidden=true);

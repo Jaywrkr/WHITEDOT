@@ -33,7 +33,7 @@ export function initialize(runtime){
   if(!playable()||paused){if(gesture)cancel();runtime.depthPause?.();return;}
   const x=Math.floor(runtime.S.wx/runtime.WCH),y=Math.floor(runtime.S.wy/runtime.WCH);visible=[];
   for(let a=x-1;a<=x+1;a++)for(let b=y-1;b<=y+1;b++)visible.push(...chunk(a,b));
-  visible=visible.filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<460);runtime.depthUI?.();
+  visible=visible.filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<460);runtime.depthUI?.();bodyEncounter();
   const closest=visible.slice().sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy)).slice(0,2);
   if(!active())return;
   const combined={};
@@ -45,6 +45,17 @@ export function initialize(runtime){
   }
   const region=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
   for(const [channel,input]of Object.entries(combined))runtime.driveInfluence?.(region,channel,Math.max(-1,Math.min(1,input.level)),input.variant);
+ }
+ // Cuerpo: entrar con el cubo = tocar; moverse dentro = moldear (como arrastrar); salir = soltar.
+ let bodyGesture=null;
+ function bodyEncounter(){
+  const b=runtime.body,S=runtime.S;if(gesture||!b?.ready||!playable()||b.jump){bodyGesture=null;return;}
+  if(bodyGesture){const g=bodyGesture,o=g.object;if(Math.hypot(o.x-S.wx,o.y-S.wy)>72){if(g.moved)record(o,'model');bodyGesture=null;return;}
+   const dx=S.wx-g.x,dy=S.wy-g.y;g.moved||=Math.hypot(dx,dy)>9;
+   if(g.moved){Object.assign(o.state,g.initial);FAMILIES[o.kind].drag(o.state,dx,dy,b.speed);o.state.active=16;}return;}
+  const now=performance.now(),o=visible.find(o=>Math.hypot(o.x-S.wx,o.y-S.wy)<30&&now>(o.bodyNext||0));if(!o)return;
+  runtime.audio();if(!runtime.depthTap?.(o,120))FAMILIES[o.kind].tap(o.state);record(o,'touch');o.bodyNext=now+1500;
+  bodyGesture={object:o,initial:{...o.state},x:S.wx,y:S.wy,moved:false};
  }
  function cancel(){if(gesture){for(const k of Object.keys(gesture.object.state))delete gesture.object.state[k];Object.assign(gesture.object.state,gesture.initial);}gesture=null;}
  function down(e){
@@ -88,13 +99,13 @@ export function initialize(runtime){
   }
   if(!playable()||runtime.MU.speed>.1||runtime.scanning)return;
   const nearest=visible.slice().sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy))[0];
-  if(nearest&&Math.hypot(nearest.x-runtime.S.wx,nearest.y-runtime.S.wy)<140){c.save();c.fillStyle='#ddd';c.globalAlpha=.65;c.textAlign='center';c.font='10px monospace';const offset=nearest.kind==='box'&&nearest.state.a>.65?-132:72;c.fillText(FAMILIES[nearest.kind].name,runtime.W/2,runtime.H/2+offset,Math.min(300,runtime.W-32));c.fillText(runtime.depthHint?.(nearest)||FAMILIES[nearest.kind].hint,runtime.W/2,runtime.H/2+offset+15,Math.min(330,runtime.W-24));c.restore();}
+  if(nearest&&Math.hypot(nearest.x-runtime.S.wx,nearest.y-runtime.S.wy)<140){c.save();c.fillStyle='#ddd';c.globalAlpha=.65;c.textAlign='center';c.font='10px monospace';const offset=nearest.kind==='box'&&nearest.state.a>.65?-132:72;c.fillText(FAMILIES[nearest.kind].name,runtime.W/2,runtime.H/2+offset,Math.min(300,runtime.W-32));c.fillText(runtime.fingerTouch?(runtime.depthHint?.(nearest)||FAMILIES[nearest.kind].hint):'Entra con el cubo para tocar · muévete dentro para moldear · quédate cerca',runtime.W/2,runtime.H/2+offset+15,Math.min(330,runtime.W-24));c.restore();}
  }
  function sources(){return visible.map(o=>({object:o,kind:'encounter:'+o.kind+(FAMILIES[o.kind].voiceRole?':'+FAMILIES[o.kind].voiceRole(o.state):''),name:FAMILIES[o.kind].name,hint:runtime.depthHint?.(o),distance:Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)})).filter(s=>s.distance<250);}
  function journal(){return Object.keys(runtime.S.journal.encounters||{}).filter(k=>FAMILIES[k]).map(k=>`<article class="journal-card"><h3>${FAMILIES[k].name}</h3><p>${FAMILIES[k].description||FAMILIES[k].hint}. Su papel y su timbre cambian con la región; los gestos transforman la composición existente.</p></article>`).join('');}
  for(const [kind,f]of Object.entries(FAMILIES)){runtime.VOZ['encounter:'+kind]=f.hint+'. Escucha cómo cambia este lugar.';runtime.ACH.push(['encounter:'+kind,f.name,'Aprende un gesto de este encuentro.']);}
  addEventListener('blur',cancel);
- Object.defineProperties(runtime,{encounterReset:{get:()=>()=>{cache.clear();visible=[];gesture=null;}},shapeEncounters:{get:()=>arrange},encounterTick:{get:()=>tick},encounterDraw:{get:()=>draw},encounterBar:{get:()=>bar},encounterEngaged:{get:()=>!!gesture},encounterDown:{get:()=>down},encounterMove:{get:()=>move},encounterUp:{get:()=>up},encounterSources:{get:()=>sources},encounterJournal:{get:()=>journal},encounterObjects:{get:()=>visible},encounterCacheSize:{get:()=>cache.size}});
+ Object.defineProperties(runtime,{encounterReset:{get:()=>()=>{cache.clear();visible=[];gesture=null;}},shapeEncounters:{get:()=>arrange},encounterTick:{get:()=>tick},encounterDraw:{get:()=>draw},encounterBar:{get:()=>bar},encounterEngaged:{get:()=>!!gesture},encounterBodyGesture:{get:()=>bodyGesture},encounterDown:{get:()=>down},encounterMove:{get:()=>move},encounterUp:{get:()=>up},encounterSources:{get:()=>sources},encounterJournal:{get:()=>journal},encounterObjects:{get:()=>visible},encounterCacheSize:{get:()=>cache.size}});
 }
 function drawShape(c,shape,s,o,runtime){
  const TAU=Math.PI*2;

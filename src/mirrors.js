@@ -1,6 +1,7 @@
 import {claimInstallationBar} from './installations.js';
 import {WORLD_VISUAL,elementInk} from './visual.js';
 import {ROLES} from './journal.js';
+import {segmentDistance,polarDelta} from './body.js';
 const TAU=Math.PI*2,HALF=30;
 const cross=(a,b)=>a.x*b.y-a.y*b.x;
 export const mirrorAngle=a=>((a%Math.PI)+Math.PI)%Math.PI;
@@ -82,7 +83,7 @@ export function initialize(runtime){
  }
  function turn(site,i,angle,persist=true){
   if(!surface()||!site||!Number.isInteger(i)||i<0||i>2||!Number.isFinite(angle)||Math.hypot(site.x-S().wx,site.y-S().wy)>250)return false;
-  site.mirrors[i].angle=mirrorAngle(angle);const route=traceMirrors(site);runtime.stopAutopilot();
+  site.mirrors[i].angle=mirrorAngle(angle);site.touched=true;const route=traceMirrors(site);runtime.stopAutopilot();
   if(persist){remember(site,route.connected);runtime.unlock('espejo1');if(route.connected)runtime.unlock('espejoRuta');const role=runtime.getVoice(`installation:mirror:${i}`,site.region).role;runtime.creativeAction?.(role==='bajo'?'bass':role==='perc'?'groove':'melody','model');}
   const now=performance.now();if(now-site.lastInput>220){site.lastInput=now;runtime.beatSoon(t=>emit(site,i,t,'player'),null,'player');}
   panel();return true;
@@ -131,8 +132,34 @@ export function initialize(runtime){
   if(previous!==S()){cancel();previous=S();cache.clear();S().mirrorSites=normalizeMirrorSites(S().mirrorSites);close();}
   if(selected&&(!surface()||Math.hypot(selected.x-S().wx,selected.y-S().wy)>280))close();
  }
+ // Cuerpo: el cubo empuja el espejo como una puerta giratoria; al soltarlo se guarda.
+ function bodyStep(){
+  const b=runtime.body;if(drag||!b?.ready||!available())return;
+  for(const site of nearby(260)){
+   let touching=-1;
+   site.mirrors.forEach((m,i)=>{if(touching>=0)return;const dx=Math.cos(m.angle)*HALF,dy=Math.sin(m.angle)*HALF;
+    if(segmentDistance({x:b.x,y:b.y},{x:m.x-dx,y:m.y-dy},{x:m.x+dx,y:m.y+dy})<11)touching=i;});
+   if(touching>=0&&!b.jump){const m=site.mirrors[touching],r=Math.hypot(b.x-m.x,b.y-m.y);
+    const d=r<6?b.vx*.0006:polarDelta(m,{x:b.px,y:b.py},{x:b.x,y:b.y})*1.4;
+    if(Math.abs(d)>1e-4){runtime.audio();site.touched=true;turn(site,touching,m.angle+d,false);}
+    site.contact=touching;}
+   else if(site.contact!=null&&site.contact>=0){const i=site.contact;site.contact=-1;turn(site,i,site.mirrors[i].angle);runtime.save();}
+  }
+ }
+ // Conectar la luz al receptor se nota: acorde que sube, bajo, destello de color y una capa que se queda sonando.
+ function celebrate(site){
+  site.glow=1;runtime.colorPulse?.(site.hue,1);
+  runtime.beatSoon(t=>{[0,1,2].forEach((i,j)=>runtime.playVoice(`installation:mirror:${i}`,[0,2,4][j],t+j*runtime.SIX,site.region,false,.55,site.mirrors[i],'player'));
+   runtime.playVoice('installation:mirror:0',7,t+3*runtime.SIX,site.region,true,.5,site.mirrors[0],'player');site.lit=1;},null,'player');
+  runtime.driveInfluence?.(site.region,'space',.8,site.glyph);runtime.toast('<em>Espejos</em> · la luz llegó: el lugar suena distinto');
+ }
  function step(step,bar,time){
-  if(!available()||!S().sound||runtime.ac?.state!=='running'||runtime.currentPocket?.()?.kind==='quiet'||bar%2)return;
+  if(!available()||!S().sound||runtime.ac?.state!=='running'||runtime.currentPocket?.()?.kind==='quiet')return;
+  // Conectado: cada compás suena la figura revelada (más presente que un reflejo suelto).
+  for(const site of nearby(420)){const route=traceMirrors(site);if(!route.connected||!S().mirrorSites[site.id])continue;
+   if(step===0&&claimInstallationBar(runtime,bar)){site.claimedBar=bar;emit(site,bar%3,time);return;}
+   if(step===10&&site.claimedBar===bar){emit(site,(bar+1)%3,time);return;}}
+  if(bar%2)return;
   // One response per two bars, irrespective of how many reflections the beam makes.
   for(const site of nearby(400)){
    if(!S().mirrorSites[site.id])continue;const route=traceMirrors(site);if(!route.hits.length)continue;
@@ -142,16 +169,22 @@ export function initialize(runtime){
  }
  function sources(){return nearby(300).flatMap(site=>site.mirrors.map((m,i)=>({object:m,kind:`installation:mirror:${i}`,name:`Espejo musical ${i+1}`,distance:Math.hypot(m.x-S().wx,m.y-S().wy)})));}
  function draw(t,dt,ox,oy,radius){
-  if(!surface())return;const ctx=runtime.cx;
+  if(!surface())return;bodyStep();const ctx=runtime.cx;
   for(const site of nearby(radius+260)){
-   site.lit=Math.max(0,site.lit-dt*2);const route=traceMirrors(site),color=elementInk('metal',site.hue);
+   site.lit=Math.max(0,site.lit-dt*2);site.glow=Math.max(0,(site.glow||0)-dt*.25);const route=traceMirrors(site),color=elementInk('metal',site.hue);
+   if(route.connected&&site.wasConnected===false&&site.touched)celebrate(site);site.wasConnected=route.connected;
+   if(route.connected){   // ambiente: el lugar se tiñe y la luz corre por el camino
+    const gx=site.target.x+ox,gy=site.target.y+oy,R=140+site.glow*260,g=ctx.createRadialGradient(gx,gy,0,gx,gy,R);
+    g.addColorStop(0,`hsla(${site.hue},85%,62%,${.16+site.glow*.35})`);g.addColorStop(1,'rgba(0,0,0,0)');ctx.save();ctx.fillStyle=g;ctx.fillRect(gx-R,gy-R,R*2,R*2);
+    for(const seg of route.segments)for(let k=0;k<3;k++){const f=((t/900+k/3)%1);ctx.globalAlpha=.8;ctx.fillStyle=WORLD_VISUAL.gold;ctx.beginPath();ctx.arc(seg.from.x+(seg.to.x-seg.from.x)*f+ox,seg.from.y+(seg.to.y-seg.from.y)*f+oy,2+site.glow*2,0,TAU);ctx.fill();}
+    ctx.restore();}
    ctx.save();ctx.lineWidth=WORLD_VISUAL.line;ctx.strokeStyle=route.connected?WORLD_VISUAL.gold:color;ctx.globalAlpha=.22+site.lit*.3;
-   route.segments.forEach((segment,i)=>{ctx.strokeStyle=route.connected?elementInk('glass',site.hue+i*40):elementInk('metal',site.hue+i*25);ctx.beginPath();ctx.moveTo(segment.from.x+ox,segment.from.y+oy);ctx.lineTo(segment.to.x+ox,segment.to.y+oy);ctx.stroke();});
+   ctx.lineWidth=route.connected?2.2+(site.glow||0)*2:WORLD_VISUAL.line;ctx.globalAlpha=route.connected?.6+(site.glow||0)*.3:.22+site.lit*.3;route.segments.forEach((segment,i)=>{ctx.strokeStyle=route.connected?elementInk('glass',site.hue+i*40):elementInk('metal',site.hue+i*25);ctx.beginPath();ctx.moveTo(segment.from.x+ox,segment.from.y+oy);ctx.lineTo(segment.to.x+ox,segment.to.y+oy);ctx.stroke();});
    ctx.globalAlpha=.85;ctx.fillStyle=WORLD_VISUAL.gold;ctx.beginPath();ctx.arc(site.emitter.x+ox,site.emitter.y+oy,4,0,TAU);ctx.fill();
    site.mirrors.forEach((m,i)=>{ctx.strokeStyle=color;ctx.beginPath();const dx=Math.cos(m.angle)*HALF,dy=Math.sin(m.angle)*HALF;ctx.moveTo(m.x+ox-dx,m.y+oy-dy);ctx.lineTo(m.x+ox+dx,m.y+oy+dy);ctx.stroke();ctx.beginPath();ctx.arc(m.x+ox,m.y+oy,8,0,TAU);ctx.stroke();ctx.fillStyle=color;ctx.font='10px monospace';ctx.textAlign='center';ctx.fillText(String(i+1),m.x+ox,m.y+oy-14);});
    const x=site.target.x+ox,y=site.target.y+oy;ctx.strokeStyle=route.connected?WORLD_VISUAL.gold:color;ctx.beginPath();ctx.moveTo(x,y-12);ctx.lineTo(x+12,y);ctx.lineTo(x,y+12);ctx.lineTo(x-12,y);ctx.closePath();ctx.stroke();
    if(route.connected){ctx.globalAlpha=.65;ctx.beginPath();const sides=3+site.glyph;for(let i=0;i<=sides;i++){const a=i*TAU/sides;const px=x+Math.cos(a)*32,py=y+Math.sin(a)*32;if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.stroke();}
-   if(Math.hypot(site.x-S().wx,site.y-S().wy)<250){ctx.globalAlpha=.7;ctx.fillStyle=color;ctx.fillText('Arrastra para girar · toca para ajustes',site.x+ox,site.y+oy+145);}
+   if(Math.hypot(site.x-S().wx,site.y-S().wy)<250){ctx.globalAlpha=.7;ctx.fillStyle=color;ctx.fillText(route.connected?'Conectado · la luz llegó':'Empuja un espejo con el cubo · lleva la luz al rombo',site.x+ox,site.y+oy+145);}
    const wave=runtime.waves.length&&runtime.hitW(site.emitter.x,site.emitter.y);
    if(wave&&site.wave!==wave){site.wave=wave;remember(site,route.connected);runtime.wsoon(wave,time=>emit(site,route.hits[0]??0,time,'player'));}
    ctx.restore();

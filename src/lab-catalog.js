@@ -22,9 +22,7 @@ const BASE=[
  {id:'materia:prism',group:'Materia',name:'Prisma de luz',find:home(...HOME_MATERIA.prism),try:['Arrastra alrededor del triángulo para girarlo.','Busca el ángulo que enciende más cristales (hasta 5).','Suelta: suena el acorde de los cristales encendidos.']},
  {id:'materia:membrane',group:'Materia',name:'Membrana resonante',find:home(...HOME_MATERIA.membrane),try:['Toca el centro (grave) y el borde (agudo).','Mantén el dedo para redoblar; muévelo para cambiar la nota.']},
  {id:'glass',group:'Instalaciones',name:'Vidrios',find:home(1080,900),try:['Gira los aros arrastrando.','Mira el color que toma y escucha el canal que cambia.']},
- {id:'mirrors',group:'Instalaciones',name:'Espejos',find:home(1600,900),try:['Arrastra un espejo para girarlo y llevar la luz al receptor.','Toca para ajustes finos.']},
- {id:'patch',group:'Instalaciones',name:'Jardín modular',find:home(2050,900),try:['Arrastra un cable del núcleo a una raíz.','Mantén el aro para cambiar la fuente (reloj, vidrios, espejos).','Toca una raíz conectada para retirar el cable.']},
- {id:'trail',group:'Instalaciones',name:'Rastro musical',find:{type:'trail'},try:['Escucha la huella.','Responde a su ritmo tocando.','Despierta el instrumento dormido.']}
+ {id:'mirrors',group:'Instalaciones',name:'Espejos',find:home(1600,900),try:['Empuja un espejo con el cubo: gira como una puerta.','Lleva la luz al rombo: suena un acorde, el lugar se tiñe y queda una capa sonando.']},
 ];
 const life=[
  ...Object.entries(SPECIES).map(([kind,s])=>({id:'life:'+kind,group:'Vida',name:s.name,find:{type:'flock',species:kind},

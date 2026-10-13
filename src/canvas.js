@@ -1,7 +1,8 @@
+import {installVivid} from './visual.js';
 // Canvas, input de movimiento y estado visual temporal.
 export function initialize(runtime) {
   /* ---------- canvas ---------- */
-  const cv=document.getElementById("w"),cx=cv.getContext("2d");
+  const cv=document.getElementById("w"),cx=installVivid(cv.getContext("2d"));   // paleta viva: más variedad de color en el mundo
   let W=0,H=0,DPR=1;
   function resize(){DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cx.setTransform(DPR,0,0,DPR,0,0);}
   addEventListener("resize",resize);resize();
@@ -29,7 +30,7 @@ export function initialize(runtime) {
   cv.addEventListener("pointerdown",e=>{fromOverlay=false;start(e);});
   function start(e){
     if(!e.isPrimary||activePointer!==null||runtime.depthEngaged||runtime.encounterEngaged||runtime.trailEngaged||runtime.ecologyEngaged)return;
-    if(!fromOverlay&&!runtime.pinnedAt?.(e.clientX,e.clientY)&&(runtime.glassPointerDown?.(e)||runtime.materiaPointerDown?.(e)||runtime.vidaPointerDown?.(e)||runtime.mirrorPointerDown?.(e)||runtime.patchPointerDown?.(e)||runtime.depthDown?.(e)||runtime.encounterDown?.(e)||runtime.trailDown?.(e)||runtime.ecologyDown?.(e)||runtime.creativePointerDown?.(e)))return;
+    if(!fromOverlay&&runtime.fingerTouch&&!runtime.pinnedAt?.(e.clientX,e.clientY)&&(runtime.glassPointerDown?.(e)||runtime.materiaPointerDown?.(e)||runtime.vidaPointerDown?.(e)||runtime.mirrorPointerDown?.(e)||runtime.patchPointerDown?.(e)||runtime.depthDown?.(e)||runtime.encounterDown?.(e)||runtime.trailDown?.(e)||runtime.ecologyDown?.(e)||runtime.creativePointerDown?.(e)))return;
     if(!fromOverlay)runtime.audio();if(runtime.S.mode==="studio"){runtime.studioTap(e.clientX,e.clientY);return;}
     activePointer=e.pointerId;dragging=held=false;
     runtime.tapStart={t:performance.now(),x:e.clientX,y:e.clientY};ptr=null;if(!fromOverlay)try{cv.setPointerCapture(e.pointerId);}catch(_){}   // sin captura sobre textos: así un toque en la Voz la sigue abriendo
@@ -37,7 +38,7 @@ export function initialize(runtime) {
     else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   }
   addEventListener("pointermove",e=>{
-    if(runtime.glassPointerMove?.(e)||runtime.materiaPointerMove?.(e)||runtime.vidaPointerMove?.(e)||runtime.mirrorPointerMove?.(e)||runtime.patchPointerMove?.(e)||runtime.depthMove?.(e)||runtime.encounterMove?.(e)||runtime.trailMove?.(e)||runtime.ecologyMove?.(e)||runtime.creativePointerMove?.(e))return;
+    if(runtime.fingerTouch&&(runtime.glassPointerMove?.(e)||runtime.materiaPointerMove?.(e)||runtime.vidaPointerMove?.(e)||runtime.mirrorPointerMove?.(e)||runtime.patchPointerMove?.(e)||runtime.depthMove?.(e)||runtime.encounterMove?.(e)||runtime.trailMove?.(e)||runtime.ecologyMove?.(e)||runtime.creativePointerMove?.(e)))return;
     if(e.pointerId!==activePointer||held||!runtime.tapStart)return;
     if(Math.hypot(e.clientX-runtime.tapStart.x,e.clientY-runtime.tapStart.y)>=14){if(!dragging&&fromOverlay)runtime.audio();dragging=true;cancelHold();}
     if(runtime.inWorld()&&dragging){
@@ -48,10 +49,10 @@ export function initialize(runtime) {
     }else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   });
   const up=e=>{
-    if(runtime.glassPointerUp?.(e)||runtime.materiaPointerUp?.(e)||runtime.vidaPointerUp?.(e)||runtime.mirrorPointerUp?.(e)||runtime.patchPointerUp?.(e)||runtime.depthUp?.(e)||runtime.encounterUp?.(e)||runtime.trailUp?.(e)||runtime.ecologyUp?.(e)||runtime.creativePointerUp?.(e))return;
+    if(runtime.fingerTouch&&(runtime.glassPointerUp?.(e)||runtime.materiaPointerUp?.(e)||runtime.vidaPointerUp?.(e)||runtime.mirrorPointerUp?.(e)||runtime.patchPointerUp?.(e)||runtime.depthUp?.(e)||runtime.encounterUp?.(e)||runtime.trailUp?.(e)||runtime.ecologyUp?.(e)||runtime.creativePointerUp?.(e)))return;
     if(e.pointerId!==activePointer)return;
     cancelHold();
-    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!document.querySelector('.modal:not([hidden])')){if(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY)&&!runtime.creativeTap?.(e.clientX,e.clientY))runtime.sonar();}
+    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!document.querySelector('.modal:not([hidden])')){if(!runtime.fingerTouch||(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY)&&!runtime.creativeTap?.(e.clientX,e.clientY)))runtime.sonar();}   // sin modo dedo, un toque siempre es el pulso del cubo
     runtime.stopScanner();runtime.tapStart=null;ptr=null;activePointer=null;held=dragging=fromOverlay=false;
   };
   addEventListener("pointerup",up);addEventListener("pointercancel",up);cv.addEventListener("lostpointercapture",up);

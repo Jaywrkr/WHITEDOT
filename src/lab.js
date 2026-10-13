@@ -2,7 +2,6 @@
 // uno por uno, y anotar qué mejorar. Te pone frente al elemento, dice qué probar, puede callar la música
 // del lugar («Solo») y exporta un informe en Markdown para llevarlo a Claude/ChatGPT.
 import {LAB_ELEMENTS,LAB_GROUPS,LAB_CHECKS,LAB_VERDICTS,labElement,labStep,normalizeLabNotes,labTested,labReport} from './lab-catalog.js';
-import {createSoundTrail} from './sound-trail-model.js';
 import {createPhenomena} from './phenomena.js';
 import {createFlock} from './vida-music.js';
 
@@ -37,7 +36,6 @@ export function initialize(runtime){
   const f=e.find,home=Math.floor(runtime.REG/2)*runtime.WCH;
   if(f.type==='home')return {x:f.x,y:f.y};
   if(f.type==='family')return {x:home+100,y:home};
-  if(f.type==='trail'){const t=createSoundTrail(runtime.regionOfPos(size()/2,size()/2),size(),runtime.seedOf,runtime.rng,true);const stage=Math.min(2,S().soundTrails?.[t?.id]?.stage||0);return t?{x:t.nodes[stage].x,y:t.nodes[stage].y}:null;}
   if(f.type==='toy')return spiral((a,b)=>{const raw=runtime.wchunk(a,b),c=runtime.sceneChunk?.(raw)||raw;return (c.playthings||[]).find(o=>o.kind===f.kind)||null;});
   if(f.type==='phenomenon')return spiral((a,b)=>{const region=runtime.regionOfPos(a*runtime.WCH+1,b*runtime.WCH+1);return createPhenomena(a,b,runtime.WCH,runtime.BIOMES[region.z].id,runtime.seedOf,runtime.rng).find(o=>o.kind===f.kind)||null;});
   if(f.type==='flock'){const R=size(),c=0;let best=null;   // por regiones: las bandadas viven a escala de región
@@ -48,7 +46,7 @@ export function initialize(runtime){
  function closeOverlays(){for(const m of document.querySelectorAll('.modal:not([hidden])'))if(m.id!=='mLab')m.hidden=true;if(runtime.fxState?.open)runtime.fxReset?.();}
  function go(id=book.current){
   const e=labElement(id)||LAB_ELEMENTS[0];book.current=e.id;keep();closeOverlays();
-  runtime.cancelMateria?.();runtime.labEncounter=e.find.type==='family'?e.find.family:null;runtime.labTrail=e.find.type==='trail';runtime.encounterReset?.();runtime.trailReset?.();
+  runtime.cancelMateria?.();runtime.labEncounter=e.find.type==='family'?e.find.family:null;runtime.encounterReset?.();
   const s=S();s.layer='superficie';const p=locate(e);
   // El elemento queda un poco por debajo del pixel, a la vista y lejos de la barra del laboratorio.
   if(p){s.wx=p.x;s.wy=p.y-110;runtime.ptr=null;}

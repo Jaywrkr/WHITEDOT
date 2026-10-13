@@ -20,8 +20,8 @@ assert(count.lira>0&&count.lira<flocks*.1,`lira rare ${count.lira}/${flocks}`);f
 const f=createFlock(origin,size,biome(origin),r.seedOf,r.rng);let ev=[];
 for(let i=0;i<400;i++)ev.push(...stepFlock(f,1/60,i/60,{x:f.hx+60,y:f.hy,speed:0,still:3}));
 assert(ev.includes('gather')&&f.trust>=.6);const close=f.members.every(m=>Math.hypot(m.x-(f.hx+60),m.y-f.hy)<120);assert(close,'members gather around the player');
-ev=stepFlock(f,1/60,7,{x:f.x,y:f.y,speed:400,still:0});assert(ev.includes('scatter')&&f.trust===0&&f.scatter>.9);
-for(let i=0;i<30;i++)stepFlock(f,1/60,7+i/60,{x:f.x,y:f.y,speed:400,still:0});assert(f.members.some(m=>Math.hypot(m.vx,m.vy)>100),'they fly away');
+f.follow=0;ev=stepFlock(f,1/60,7,{x:f.x,y:f.y,speed:300,still:0});assert(ev.includes('scatter')&&f.trust===0&&f.scatter>.9);
+for(let i=0;i<30;i++)stepFlock(f,1/60,7+i/60,{x:f.x,y:f.y,speed:300,still:0});assert(f.members.some(m=>Math.hypot(m.vx,m.vy)>100),'they fly away');
 // Llamadas: dentro del compás, grullas en el bajo, golondrinas con canon; la respuesta conserva tu ritmo.
 for(let bar=0;bar<16;bar++){const c=flockCall(f,bar);assert(c.length>=3&&c.every(n=>n.step>=0&&n.step<16&&n.member<f.members.length&&n.volume<=.12));}
 const learned=[{step:0,degree:2},{step:3,degree:4},{step:6,degree:3}],ans=answerCall(f,learned);assert.deepEqual(ans.map(n=>n.step),[0,3,6]);assert.deepEqual(ans.map(n=>n.degree),[4,6,5]);

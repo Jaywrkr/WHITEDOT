@@ -77,8 +77,18 @@ export function initialize(runtime){
   }
  }
  function sources(){return nearby(250).flatMap(site=>site.plates.map((o,i)=>({object:o,kind:`installation:glass:${i}`,name:o.name,distance:Math.hypot(o.x-S().wx,o.y-S().wy)})));}
+ // Cuerpo: el cubo engancha el aro de un vidrio al pasar por su asa y lo arrastra girando a su alrededor.
+ function bodyStep(){
+  const b=runtime.body;if(state.drag||!b?.ready||document.querySelector('.modal:not([hidden])')||runtime.scanning)return;
+  for(const site of nearby(200)){
+   const cur={x:b.x-site.x,y:b.y-site.y},r=Math.hypot(cur.x,cur.y);
+   if(site.grab!=null){const R=glassHandleRadius(site.grab);if(b.jump||Math.abs(r-R)>12){site.grab=null;remember(site);runtime.save();continue;}turn(site,site.grab,Math.atan2(cur.y,cur.x));continue;}
+   for(let i=0;i<3;i++){const R=glassHandleRadius(i),hx=Math.cos(site.angles[i])*R,hy=Math.sin(site.angles[i])*R;
+    if(Math.hypot(cur.x-hx,cur.y-hy)<14){runtime.audio();if(state.site!==site)open(site,i);state.pane=i;site.grab=i;break;}}
+  }
+ }
  function draw(t,dt,ox,oy,radius){
-  tick();if(!onSurface())return;const ctx=runtime.cx;
+  tick();if(!onSurface())return;bodyStep();const ctx=runtime.cx;
   for(const site of nearby(radius+120)){
    const distance=Math.hypot(site.x-S().wx,site.y-S().wy),x=site.x+ox,y=site.y+oy;site.lit=Math.max(0,site.lit-dt*2);
    const wave=runtime.waves.length&&runtime.hitW(site.x,site.y);if(wave&&site.wave!==wave){site.wave=wave;remember(site);runtime.wsoon(wave,time=>emit(site,0,time,'player'));}
@@ -87,10 +97,10 @@ export function initialize(runtime){
     const color=elementInk('glass',glassColor(site.hue,angle,i));ctx.save();ctx.rotate(angle);ctx.translate((i-1)*12,0);ctx.strokeStyle=color;ctx.fillStyle=color;
     ctx.globalAlpha=.16+site.lit*.12;ctx.globalCompositeOperation='screen';ctx.fillRect(-28,-46,56,92);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=.65;ctx.strokeRect(-28,-46,56,92);
     ctx.beginPath();for(let line=-3;line<=3;line++){ctx.moveTo(-24,line*11);ctx.quadraticCurveTo(Math.sin(site.angles[(i+1)%3]-angle)*18,line*11+Math.cos(site.angles[(i+2)%3]-angle)*8,24,line*11);}ctx.globalAlpha=.24;ctx.stroke();ctx.restore();
-    ctx.globalAlpha=distance<180?.85:.35;ctx.strokeStyle=color;ctx.beginPath();ctx.arc(Math.cos(angle)*glassHandleRadius(i),Math.sin(angle)*glassHandleRadius(i),9,0,TAU);ctx.stroke();
+    ctx.globalAlpha=distance<180?.85:.35;ctx.strokeStyle=site.grab===i?WORLD_VISUAL.gold:color;ctx.lineWidth=site.grab===i?2.4:WORLD_VISUAL.line;ctx.beginPath();ctx.arc(Math.cos(angle)*glassHandleRadius(i),Math.sin(angle)*glassHandleRadius(i),site.grab===i?12:9,0,TAU);ctx.stroke();ctx.lineWidth=WORLD_VISUAL.line;
    });
    const resonance=glassParameters(site.angles).alignment;if(resonance>.65){ctx.strokeStyle=elementInk('glass',site.hue);ctx.globalAlpha=(resonance-.65)*.6;ctx.beginPath();for(let i=0;i<=48;i++){const a=i/48*TAU,r=25+Math.cos(a*3+site.angles[0])*9;ctx[i?'lineTo':'moveTo'](Math.cos(a)*r,Math.sin(a)*r);}ctx.stroke();}
-   if(distance<180){ctx.globalAlpha=.8;ctx.fillStyle=WORLD_VISUAL.gold;ctx.font='10px monospace';ctx.textAlign='center';const channel=glassShape(site.angles,state.site===site?state.pane:0,site.region,runtime.seedOf).channel;ctx.fillText(`Gira los aros · ${CHANNEL_NAMES[channel]}`,0,106);}
+   if(distance<180){ctx.globalAlpha=.8;ctx.fillStyle=WORLD_VISUAL.gold;ctx.font='10px monospace';ctx.textAlign='center';const channel=glassShape(site.angles,state.site===site?state.pane:0,site.region,runtime.seedOf).channel;ctx.fillText(`Pasa el cubo por un asa y arrástrala girando · ${CHANNEL_NAMES[channel]}`,0,106);}
    ctx.restore();
   }
  }
