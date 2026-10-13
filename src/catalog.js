@@ -4,6 +4,7 @@ export const RECIPE_VERSION=1;
 export const MATERIAL_NAMES={wood:'Madera cálida',glass:'Cristal suave',metal:'Metal filtrado',air:'Aire sedoso'};
 const all=['llanura','bosque','lago','ruinas','jardin','dunas','cristales','faros','tormenta','cueva','vacio'];
 export const ELEMENTS=[
+ {id:'installation:patch',name:'Jardín modular',kind:'installation',biomes:all.filter(b=>b!=='vacio'),motion:'static',actions:['connect','disconnect','listen'],materials:['metal','wood'],rarity:.18,home:true},
  {id:'installation:mirror',name:'Espejos musicales',kind:'installation',biomes:all.filter(b=>b!=='vacio'),motion:'rotate',actions:['rotate','pulse','listen'],materials:['metal','glass'],rarity:.22,home:true},
  {id:'installation:glass',name:'Tres vidrios cromáticos',kind:'installation',biomes:all.filter(b=>b!=='vacio'),motion:'rotate',actions:['rotate','pulse','listen'],materials:['glass'],rarity:.32,home:true},
  {id:'toy:spark',name:'Luz fugitiva',kind:'toy',biomes:all.filter(b=>b!=='cueva'),motion:'flight',actions:['touch','pulse'],materials:['glass','air']},

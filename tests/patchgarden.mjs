@@ -1,0 +1,7 @@
+import assert from 'node:assert/strict';import {createPatchSite,normalizePatchSites} from '../src/patchgarden.js';
+import {initialize as data} from '../src/data.js';import {initialize as progress} from '../src/progress.js';import {initialize as world} from '../src/world.js';
+globalThis.localStorage={getItem:()=>null,setItem(){}};const r={};data(r);progress(r);world(r);
+const d=r.regionOfPos(900,900),site=createPatchSite(d,3600,r.seedOf,r.rng);assert(site);assert.deepEqual(site,createPatchSite(d,3600,r.seedOf,r.rng));assert.equal(new Set(site.inputs.map(i=>i.channel)).size,3);assert.equal(site.connections.length,0);
+const saved=normalizePatchSites({'patch:0,0':{connections:[0,0,2,3,'1',-1],amount:10,pattern:20},bad:{connections:[1]}});assert.deepEqual(saved['patch:0,0'],{connections:[0,2],amount:1,pattern:3});assert.equal(Object.keys(saved).length,1);assert.deepEqual(saved,normalizePatchSites(JSON.parse(JSON.stringify(saved))));
+const identities=new Set();let count=0;for(let x=-15;x<=15;x++)for(let y=-15;y<=15;y++){const d=r.regionOfPos((x+.5)*3600,(y+.5)*3600),s=createPatchSite(d,3600,r.seedOf,r.rng);if(s){assert(!d.sea);count++;identities.add(s.inputs.map(i=>i.channel).join()+s.variant);}}
+assert(count>40&&count<250);assert(identities.size>20);console.log(`PASS: ${count} sparse regional patch gardens, diverse ordered channels, no default cables and safe bounded saves`);

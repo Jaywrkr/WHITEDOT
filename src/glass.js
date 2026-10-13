@@ -57,7 +57,7 @@ export function initialize(runtime){
   const roles=site.plates.map((_,i)=>ROLES[runtime.getVoice(`installation:glass:${i}`,site.region).role]);
   $('glassInfo').textContent=roles.join(' · ')+` · ${glassParameters(site.angles).alignment>.75?'Resonancia cercana':'Respuestas espaciadas'}`;
  }
- function open(site,pane){runtime.closeMirrors?.();state.site=site;state.pane=pane;remember(site);$('glassPanel').hidden=false;renderPanel();if(!S().help.glass){S().help.glass=true;runtime.say(runtime.VOZ.glass,'Vidrios musicales');}}
+ function open(site,pane){runtime.closeMirrors?.();runtime.closePatchGarden?.();state.site=site;state.pane=pane;remember(site);$('glassPanel').hidden=false;renderPanel();if(!S().help.glass){S().help.glass=true;runtime.say(runtime.VOZ.glass,'Vidrios musicales');}}
  function close(){state.drag=null;state.site=null;$('glassPanel').hidden=true;runtime.save();}
  const screen=site=>({x:runtime.W/2+site.x-S().wx,y:runtime.H/2+site.y-S().wy});
  function down(e){

@@ -194,3 +194,5 @@ body:has(#fxPanel:not([hidden])) .routehud,body:has(#scanner:not([hidden])) .rou
 body:has(#glassPanel:not([hidden])) .zone,body:has(#glassPanel:not([hidden])) .phrase,body:has(#glassPanel:not([hidden])) .routehud{visibility:hidden}
 
 body:has(#mirrorPanel:not([hidden])) .zone,body:has(#mirrorPanel:not([hidden])) .phrase,body:has(#mirrorPanel:not([hidden])) .routehud{visibility:hidden}
+
+body:has(#patchPanel:not([hidden])) .zone,body:has(#patchPanel:not([hidden])) .phrase,body:has(#patchPanel:not([hidden])) .routehud{visibility:hidden}

@@ -203,6 +203,7 @@ export function initialize(runtime) {
     if(runtime.inWorld()){runtime.loopStep?.(s,MU.step,t);runtime.bandStep?.(s,MU.step>>4,t);}   // ecos en bucle y banda de criaturas
     if(runtime.inWorld()&&MU.nb&&MU.nbW>0){if(s===0||MU.neighborRadio?.key!==MU.nb.key)MU.neighborRadio={...neighborRadio.advance(MU.nb,MU.step>>4),key:MU.nb.key};}else MU.neighborRadio=null;
     if(s===0)applyComfort(t);
+    runtime.patchGardenStep?.(s,MU.step>>4,t);
     if(s===0&&runtime.inWorld()&&MU.dnaA)MU.influenced=runtime.shapeInfluence?.(MU.dnaA,MU.radio)||MU.radio;
     // En zonas vacías la música se adelgaza (subida); en un oasis vuelve completa (drop).
     const vitCap=runtime.inWorld()?.16+.7*Math.min(1,(MU.vit??1)/.7):1;
