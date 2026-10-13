@@ -13,13 +13,13 @@ import { anomalyAt, applyAnomaly } from './wonders.js';
 export function initialize(runtime) {
   const elementCatalog=createElementCatalog();
   const recipeFor=region=>createRegionalRecipe(region,runtime.BIOMES[region.z].id,runtime.seedOf,runtime.rng,elementCatalog);
-  const continents=createContinents(runtime.seedOf,runtime.rng,runtime.GEN),VACIO=runtime.BIOMES.findIndex(b=>b.id==='vacio');
+  const continents=createContinents(runtime.seedOf,runtime.rng,runtime.GEN,{variant:!!runtime.S.worldSeed}),VACIO=runtime.BIOMES.findIndex(b=>b.id==='vacio');
   const regionPx=()=>runtime.REG*runtime.WCH;
   const fillOf=vit=>{const m=continents.densityOf(vit),L=runtime.FILL;return [m,(m<.3?L[0]:m<.7?L[1]:m<1.4?L[2]:m<2.1?L[3]:L[4])[1]];};
   /* ---------- camino ---------- */
   function getChunk(cx,cy){
     const id=cx+","+cy; let c=runtime.chunks.get(id); if(c) return c;
-    const r=runtime.rng(runtime.seedOf(id+"|"+runtime.S.todayKey)); c=[];
+    const r=runtime.rng(runtime.seedOfBase(id+"|"+runtime.S.todayKey)); c=[];
     for(let i=0;i<16;i++){
       const x=cx*runtime.CHUNK+r()*runtime.CHUNK, y=cy*runtime.CHUNK+r()*runtime.CHUNK, d=Math.abs(y-runtime.pathY(x));
       const on=d<46, off=!on && r()<0.035;
@@ -31,7 +31,7 @@ export function initialize(runtime) {
   /* ---------- mundo: regiones de zonas (semilla fija, igual para todos) ---------- */
   function biomeAt(cx,cy){
     const rx=Math.floor(cx/runtime.REG),ry=Math.floor(cy/runtime.REG),d=Math.max(Math.abs(rx),Math.abs(ry))*2;
-    if(d===0)return 0;
+    if(d===0){if(!runtime.S.worldSeed)return 0;const candidates=runtime.BIOMES.map((b,i)=>i).filter(i=>runtime.BIOMES[i].id!=='vacio');return candidates[runtime.seedOf('seed-home-biome')%candidates.length];}
     const key=rx+","+ry;if(runtime.bcache.has(key))return runtime.bcache.get(key);
     if(continents.at(rx,ry).sea){runtime.bcache.set(key,VACIO);return VACIO;}   // mar de silencio
     const r=runtime.rng(runtime.seedOf("zona:"+key));r();
@@ -49,7 +49,7 @@ export function initialize(runtime) {
   function euclid(k,n,rot){const p=[];for(let i=0;i<n;i++)p.push(((i+rot)*k)%n<k?1:0);return p;}
   function regionAt(cx,cy){
     const rx=Math.floor(cx/runtime.REG),ry=Math.floor(cy/runtime.REG),key=rx+","+ry;let d=rcache.get(key);if(d)return d;
-    const z=biomeAt(cx,cy),B=runtime.BIOMES[z],r=runtime.rng(runtime.seedOf("adn:"+key)),origin=rx===0&&ry===0;
+    const z=biomeAt(cx,cy),B=runtime.BIOMES[z],r=runtime.rng(runtime.seedOf("adn:"+key)),origin=rx===0&&ry===0&&!runtime.S.worldSeed;
     const ct=continents.at(rx,ry),cont=ct.continent,rawHue=Math.floor(r()*360);
     // El color del lugar se acerca al del continente: identidad visual a gran escala.
     const hue=cont&&!ct.sea?Math.round((cont.hue+(rawHue-180)*.22+360)%360):rawHue,name=origin?"Origen":pname(r),trait=TRAITS[Math.floor(r()*TRAITS.length)];
