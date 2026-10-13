@@ -3,9 +3,11 @@ import {MAX_THREADS,toggleThread,threadScore,threadArrangement,createBox,paintBo
 import {CHANNEL_NAMES} from './influence.js';
 const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 export function segmentDistance(p,a,b){const dx=b.x-a.x,dy=b.y-a.y,t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy||1)));return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy);}
-export function boxCellAt(x,y){const col=Math.floor((x+80)/40),row=Math.floor((y+60)/40);return col>=0&&col<4&&row>=0&&row<4?row*4+col:null;}
-export function boxLidAt(x,y){return Math.abs(x)<74&&y>-145&&y<-112;}
-export function boxSlotAt(x,y){if(Math.abs(y+87)>19)return null;const index=Math.round((x+54)/54);return index>=0&&index<3&&Math.abs(x-(-54+index*54))<24?index:null;}
+export function boxStepPoint(index){const angle=-Math.PI/2+index*Math.PI/8;return {x:Math.cos(angle)*68,y:Math.sin(angle)*92};}
+export function boxPartPoint(index){return [{x:-28,y:20},{x:28,y:20},{x:0,y:-28}][index];}
+export function boxCellAt(x,y){let best=null,nearest=18;for(let i=0;i<16;i++){const d=distance({x,y},boxStepPoint(i));if(d<nearest){nearest=d;best=i;}}return best;}
+export function boxLidAt(x,y){return Math.hypot(x,y-56)<16;}
+export function boxSlotAt(x,y){for(let i=0;i<3;i++)if(distance({x,y},boxPartPoint(i))<20)return i;return null;}
 export function initialize(runtime){
  let gesture=null,armed=null,previous=runtime.S;const identities=new WeakMap();let nextId=0;
  const playable=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
@@ -115,7 +117,7 @@ export function initialize(runtime){
  }
  function hint(o){
   if(o.kind==='weaver')return armed?.object===o?'Elige otro punto · toca un hilo para retirarlo':'Une dos puntos con el dedo · toca hilos para retirar';
-  if(o.kind==='box')return o.state.a>.65?'Tapa: cerrar · pasos: tocar · piezas: mover/mantener':'Toca para abrir · edita las piezas dentro';
+  if(o.kind==='box')return o.state.a>.65?'Semillas: tocar · núcleos: mover/mantener · brote: cerrar':'Toca para abrir · moldea sus semillas musicales';
   if(o.kind==='animal')return !runtime.S.sound?'Activa Música para enseñarle una frase':o.state.dialogue?.phase==='listening'?'Está escuchando · toca el mundo durante dos compases':o.state.dialogue?.phase==='replying'?'Te responde · mantén para otra frase':'Mantén para enseñar · toca para cambiar papel';
   return FAMILIES[o.kind].hint;
  }
@@ -127,11 +129,24 @@ export function initialize(runtime){
    c.font='8px monospace';c.textAlign='center';c.fillText(`${o.state.weave.edges.length}/${MAX_THREADS} hilos`,0,34);
   }
   if(o.kind==='box'&&o.state.a>.65&&near){
-   c.fillStyle='rgba(0,0,0,.92)';c.fillRect(-82,-146,164,251);c.fillStyle=c.strokeStyle;c.font='9px monospace';c.textAlign='center';
-   c.beginPath();c.moveTo(-74,-118);c.lineTo(0,-137);c.lineTo(74,-118);c.stroke();c.fillText('Cerrar tapa',0,-121);
-   for(let i=0;i<3;i++){const p=o.state.box.parts[i],x=-54+i*54;c.globalAlpha=p.enabled?.9:.3;c.strokeRect(x-25,-105,50,36);c.fillText(CHANNEL_NAMES[p.id],x,-83);if(i===o.state.box.selected)c.strokeRect(x-26,-106,52,38);}
-   const part=o.state.box.parts[o.state.box.selected],beat=runtime.MU.step%16;c.globalAlpha=part.enabled?.8:.3;
-   for(let i=0;i<16;i++){const x=-60+(i%4)*40,y=-40+Math.floor(i/4)*40;c.strokeRect(x-16,y-16,32,32);if(part.steps[i]>=0)c.fillRect(x-4,y-4,8,8);if(i===beat){c.beginPath();c.arc(x,y,12,0,Math.PI*2);c.stroke();}}
+   c.fillStyle=c.strokeStyle;c.font='8px monospace';c.textAlign='center';
+   const part=o.state.box.parts[o.state.box.selected],beat=runtime.MU.step%16,core=boxPartPoint(o.state.box.selected);
+   // The visible contour and the gesture targets share the same geometry.
+   for(let i=0;i<16;i++){
+    const p=boxStepPoint(i),on=part.steps[i]>=0;c.globalAlpha=part.enabled?(on?.65:.22):.16;
+    c.beginPath();c.moveTo(core.x,core.y);c.quadraticCurveTo(p.x*.35,p.y*.65,p.x,p.y);c.stroke();
+    c.save();c.translate(p.x,p.y);c.rotate(Math.atan2(p.y,p.x));c.beginPath();c.ellipse(0,0,on?10:7,4,0,0,Math.PI*2);if(on)c.fill();else c.stroke();c.restore();
+    if(i===beat){c.globalAlpha=.75;c.beginPath();c.arc(p.x,p.y,14,0,Math.PI*2);c.stroke();}
+   }
+   for(let i=0;i<3;i++){
+    const p=o.state.box.parts[i],q=boxPartPoint(i);c.globalAlpha=p.enabled?.9:.3;
+    c.beginPath();c.ellipse(q.x,q.y,18,15,i*Math.PI/3,0,Math.PI*2);c.stroke();
+    if(i===o.state.box.selected){c.beginPath();c.arc(q.x,q.y,3,0,Math.PI*2);c.fill();}
+    c.fillText(CHANNEL_NAMES[p.id],q.x,q.y+5);
+   }
+   c.globalAlpha=.6;c.beginPath();c.moveTo(-9,60);c.quadraticCurveTo(0,38,9,60);c.stroke();
+   c.fillText('cerrar',0,74);
+
   }
   const d=o.state.dialogue;if(o.kind==='animal'&&d&&d.phase!=='idle'){
    const progress=d.phase==='listening'?Math.min(1,d.elapsed/(runtime.SIX*32)):1;c.beginPath();c.arc(0,0,29,-Math.PI/2,-Math.PI/2+progress*Math.PI*2);c.stroke();c.font='9px monospace';c.textAlign='center';c.fillText(d.phase==='listening'?`Escucha · ${d.events.length}`:'Respuesta',0,42);

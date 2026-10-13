@@ -6,6 +6,8 @@ Main `2959313` integra el bloque anterior de veinte entregas. Los cinco grupos f
 
 `feat/deep-musical-encounters`: redes libres de tejedoras, cajas con piezas y pasos editables y animales que aprenden una frase breve. Incluye actualización de pistas, Bitácora y logros. Está preparado para probar; su contenido no debe confundirse con lo ya publicado en main.
 
+La entrega posterior `feat/organic-musical-seedpods`, basada en la rama de dirección visual, sustituye las teclas de la caja por una vaina de semillas. Mantiene su edición musical con menos ruido visual. Pistas y Bitácora actualizadas; sin nuevas culturas ni reliquias históricas todavía.
+
 ## Próximos bloques
 
 1. Profundizar interacciones existentes. Esta rama cubre redes, frases y cajas; otras mejoras se evalúan según su aporte musical.

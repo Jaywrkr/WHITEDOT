@@ -1,7 +1,7 @@
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 // Each family owns its gestures; the world owns tuning, scheduling and density.
 export const FAMILIES={
- box:{name:'Caja de posibilidades',hint:'Abre la caja · edita pasos y mueve piezas',description:'Abre la caja para editar 16 pasos de Bajo, Groove o Motivo; toca la tapa para cerrarla. Toca una pieza para elegirla, arrástrala para cambiar su posición o mantenla para silenciarla.',role:'bass',shape:'box',
+ box:{name:'Caja de posibilidades',hint:'Abre la vaina · toca semillas y mueve núcleos',description:'Una vaina electrónica abre 16 semillas musicales alrededor de tres núcleos: Bajo, Groove y Motivo. Toca semillas para variar la frase; elige, intercambia o mantén un núcleo para silenciarlo. El brote inferior cierra la vaina.',role:'bass',shape:'box',
   tap(s){s.c=(s.c+1)%4;s.a=s.c===0?.15:.85;},drag(s,x,y){s.a=clamp(.5-y/140);s.b=clamp(.5+x/150);},
   influence(s){return {bass:(s.a-.5)*1.6,groove:(s.b-.5)*1.5,space:s.c===3?.5:0};},figure(s){return (Math.floor(s.b*5)+s.c)%8;},
   arrange(track,s){if(s.c===2||s.c===3)track.hook=track.hook.map((n,i)=>i%8===0?n:-1);if(s.b<.3)track.bass=track.bass.map((n,i)=>i%4===0?n:-1);return track;}},

@@ -31,15 +31,15 @@ with sync_playwright() as p:
   page.screenshot(path=f'/tmp/whitedot-depth-weaver-{width}.png')
   center=visit('box');page.touchscreen.tap(center['x'],center['y']);page.wait_for_timeout(80)
   assert page.evaluate('deepObject.state.a>.65');initial=page.evaluate('deepObject.state.box.parts[0].steps[0]')
-  page.touchscreen.tap(center['x']-60,center['y']-40);assert page.evaluate('deepObject.state.box.parts[0].steps[0]')!=initial
+  page.touchscreen.tap(center['x'],center['y']-92);assert page.evaluate('deepObject.state.box.parts[0].steps[0]')!=initial
   original=page.evaluate('JSON.stringify(deepObject.state.box)')
-  a={'x':center['x']-20,'y':center['y']-40};b={'x':center['x']+60,'y':center['y']-40}
+  a={'x':center['x'],'y':center['y']-92};b={'x':center['x']+48,'y':center['y']-65}
   page.mouse.move(a['x'],a['y']);page.mouse.down();page.mouse.move(b['x'],b['y'],steps=8);page.evaluate("document.getElementById('w').dispatchEvent(new PointerEvent('pointercancel',{pointerId:1,bubbles:true}))");page.mouse.up();assert page.evaluate('JSON.stringify(deepObject.state.box)')==original
-  drag({'x':center['x']-54,'y':center['y']-87},{'x':center['x']+54,'y':center['y']-87});assert page.evaluate('deepObject.state.box.parts[2].id')=='bass'
-  page.touchscreen.tap(center['x'],center['y']-87);page.touchscreen.tap(center['x']-20,center['y']-40);assert page.evaluate('!!__testRuntime.S.ach.cajaEditable')
-  page.mouse.move(center['x'],center['y']-87);page.mouse.down();page.wait_for_timeout(600);page.mouse.up();assert not page.evaluate('deepObject.state.box.parts[1].enabled');assert not page.evaluate('__testRuntime.depthGate(2)');assert not page.evaluate('__testRuntime.scanning')
+  drag({'x':center['x']-28,'y':center['y']+20},{'x':center['x'],'y':center['y']-28});assert page.evaluate('deepObject.state.box.parts[2].id')=='bass'
+  page.touchscreen.tap(center['x']+28,center['y']+20);page.touchscreen.tap(center['x']+26,center['y']-85);assert page.evaluate('!!__testRuntime.S.ach.cajaEditable')
+  page.mouse.move(center['x']+28,center['y']+20);page.mouse.down();page.wait_for_timeout(600);page.mouse.up();assert not page.evaluate('deepObject.state.box.parts[1].enabled');assert not page.evaluate('__testRuntime.depthGate(2)');assert not page.evaluate('__testRuntime.scanning')
   page.screenshot(path=f'/tmp/whitedot-depth-box-{width}.png')
-  saved=page.evaluate('JSON.stringify(deepObject.state.box)');page.touchscreen.tap(center['x'],center['y']-125);assert page.evaluate('deepObject.state.a<.65'),page.evaluate('({a:deepObject.state.a,engaged:__testRuntime.depthEngaged,other:__testRuntime.encounterEngaged,target:document.elementFromPoint(innerWidth/2+100,innerHeight/2-125)?.id,point:{x:deepObject.x-__testRuntime.S.wx,y:deepObject.y-__testRuntime.S.wy},near:__testRuntime.encounterObjects.map(o=>({kind:o.kind,x:o.x-__testRuntime.S.wx,y:o.y-__testRuntime.S.wy}))})');page.touchscreen.tap(center['x'],center['y']);assert page.evaluate('JSON.stringify(deepObject.state.box)')==saved
+  saved=page.evaluate('JSON.stringify(deepObject.state.box)');page.touchscreen.tap(center['x'],center['y']+56);assert page.evaluate('deepObject.state.a<.65'),page.evaluate('({a:deepObject.state.a,engaged:__testRuntime.depthEngaged,other:__testRuntime.encounterEngaged,target:document.elementFromPoint(innerWidth/2+100,innerHeight/2+56)?.id,point:{x:deepObject.x-__testRuntime.S.wx,y:deepObject.y-__testRuntime.S.wy},near:__testRuntime.encounterObjects.map(o=>({kind:o.kind,x:o.x-__testRuntime.S.wx,y:o.y-__testRuntime.S.wy}))})');page.touchscreen.tap(center['x'],center['y']);assert page.evaluate('JSON.stringify(deepObject.state.box)')==saved
   center=visit('animal');page.mouse.move(center['x'],center['y']);page.mouse.down();page.wait_for_timeout(650);page.mouse.up();page.wait_for_timeout(100)
   assert page.evaluate('deepObject.state.dialogue.phase')=='listening';assert not page.evaluate('__testRuntime.scanning')
   page.evaluate("const r=__testRuntime;r.playVoice('pulso',0,r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'ambient')")

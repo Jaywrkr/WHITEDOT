@@ -17,13 +17,13 @@ Rama `feat/deep-musical-encounters`, basada en ese main. Incluye:
 
 ### Corrección prioritaria de dirección visual e interacción
 
-Antes de ampliar instalaciones, rediseñar la caja editable: su cuadrícula actual de teclas no representa la dirección deseada. Mantener la capacidad de variar bajo, groove y melodía mediante formas del mundo: raíces que se tensan, pétalos que se desplazan, cuerpos que giran o conexiones entre objetos. Estos son candidatos de diseño, todavía no implementados. El gesto debe producir una decisión musical audible y depender del ambiente, con límites de mezcla y afinación regional.
+Antes de ampliar instalaciones, se ha rediseñado la caja editable en `feat/organic-musical-seedpods`: la cuadrícula se sustituye por una vaina de semillas y núcleos, sin panel opaco. Mantener la capacidad de variar bajo, groove y melodía mediante formas del mundo: raíces que se tensan, pétalos que se desplazan, cuerpos que giran o conexiones entre objetos. Raíces, pétalos y otras formas son candidatos para futuras familias; la vaina ya implementa semillas tocables y núcleos intercambiables. El gesto debe producir una decisión musical audible y depender del ambiente, con límites de mezcla y afinación regional.
 
-Toda incorporación debe compartir el lenguaje natural y electrónico del juego: fondo negro, jugador blanco, color localizado en elementos y efectos. Objetivo de diseño para una interacción activa: ocupar menos del 20 % de pantalla y evitar acercarse al 30 %, comprobando móvil vertical y horizontal. Evaluar también la suma de efectos simultáneos; evitar paneles, cuadrículas de teclado y efectos extensos que tapen el recorrido. Esta es una regla para el próximo diseño, no una garantía ya verificada para todos los elementos existentes.
+Toda incorporación debe compartir el lenguaje natural y electrónico del juego: fondo negro, jugador blanco, color localizado en elementos y efectos. Objetivo de diseño para una interacción activa: ocupar menos del 20 % de pantalla y evitar acercarse al 30 %, comprobando móvil vertical y horizontal. Evaluar también la suma de efectos simultáneos; evitar paneles, cuadrículas de teclado y efectos extensos que tapen el recorrido. La vaina cumple el objetivo en las tres pantallas probadas; sigue siendo necesaria una revisión del resto de elementos y sus efectos simultáneos.
 
 Las culturas y las reliquias históricas específicas siguen pendientes. Japón y México son ejemplos dentro de muchas culturas; cada incorporación debe relacionar música, materiales, comportamiento, flora y fauna mediante investigación concreta. Referencias a compositores, inventores o artistas históricos pueden dar lugar a objetos raros y pistas musicales. Verificar el dominio público de la obra concreta y los derechos de cualquier grabación o imagen utilizada: la antigüedad del personaje no basta. Crear representaciones originales cuando corresponda. No confundir los estilos musicales actuales con esta capa cultural aún inexistente.
 
-Esta actualización de dirección se conserva en `docs/organic-interaction-direction`, dependiente de `feat/deep-musical-encounters`. No modifica el juego; revisar primero la rama de interacciones y después esta documentación.
+Esta actualización de dirección se conserva en `docs/organic-interaction-direction`, dependiente de `feat/deep-musical-encounters`. Esa rama solo modifica documentación. El rediseño del juego está en `feat/organic-musical-seedpods`, basada en ella: revisar interacciones, dirección y después vainas.
 
 Cada paso se implementa, verifica, documenta, commitea y sube en una rama nueva. Jay crea PR y merge. Partir de main actualizado cuando la etapa anterior esté integrada; si se acuerda una dependencia, documentarla y conservar la ascendencia.
 
@@ -36,6 +36,12 @@ Cada paso se implementa, verifica, documenta, commitea y sube en una rama nueva.
 | 5 | Culturas y épocas con música, materiales, flora/fauna y comportamiento relacionados; inventos y observatorios | Pendiente |
 | 6 | Construcción musical, recetas, huertos de ritmo, escenarios/comunidades y maestros de ritmos | Pendiente |
 | 7 | Encuentros de jugadores y composición compartida: red, reloj, armonía, propiedad y mezcla | Pendiente, sin proveedor/backend seleccionado |
+
+### Entrega posterior: vaina de semillas
+
+La rama `feat/organic-musical-seedpods` mantiene los datos musicales y gestos de la caja, pero reemplaza las teclas por 16 semillas sobre un contorno elíptico y tres núcleos orgánicos. Sin fondo opaco ni cuadrículas. El brote inferior permite cerrar; las semillas activas y el pulso actual se distinguen por relleno y halo. La forma cerrada también se reemplaza por una vaina. Geometría compartida para dibujo y contacto; prueba de blancos distintos y envolvente inferior al 20 % en las tres resoluciones probadas. El cambio visual no amplía el catálogo de mundos ni añade culturas.
+
+Verificación específica: lógica de interacciones, gestos de vaina en 390×844, 844×390 y 1280×800, diez familias de encuentros y recarga offline. No se modifican síntesis ni niveles de audio, por lo que las mediciones musicales de la etapa anterior no se presentan como nuevas mediciones de esta entrega.
 
 ## Trabajo musical y técnico que acompaña las etapas
 
