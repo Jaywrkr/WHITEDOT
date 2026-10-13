@@ -141,6 +141,12 @@ export function initialize(runtime) {
     distributePlaythings(c.playthings,c.pockets,runtime.seedOf,runtime.rng,localRecipe,runtime.WCH);
     c.playthings.forEach((o,i)=>{o.snd=q=>runtime.playVoice('toy:'+o.kind,i+(o.personality?.degree||0),q,runtime.regionOfPos(o.x,o.y),false,o.personality?.volume||1,o);});
     attachPersonalities(c,runtime.seedOf,runtime.rng);
+    // A few seeded inhabitants near the testing center make a blob preview playable immediately.
+    if(/^blobs/i.test(runtime.S.worldSeed||'')&&runtime.S.previewSeed&&cx===runtime.REG/2&&cy===runtime.REG/2){
+      const center=regionPx()/2,nr=runtime.rng(runtime.seedOf('blob-nursery:v1'));
+      const nursery=dna.species.slice(0,3).map((sp,i)=>{const angle=i*Math.PI*2/3+nr()*.3,distance=65+nr()*35,o={id:`nursery:${dna.key}:${i}`,x:center+Math.cos(angle)*distance,y:center+Math.sin(angle)*distance,s:sp,ph:nr()*6.28,lit:0,cd:0};o.hx=o.x;o.hy=o.y;o.snd=q=>runtime.speciesSound(sp,q,false,o.personality,o);return o;});
+      attachPersonalities({id:'nursery:'+id,sp:nursery},runtime.seedOf,runtime.rng);c.sp.unshift(...nursery);
+    }
     runtime.wchunks.set(id,c);return c;
   }
   const biomeOfPos=(x,y)=>biomeAt(Math.floor(x/runtime.WCH),Math.floor(y/runtime.WCH));

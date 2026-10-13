@@ -1,6 +1,6 @@
 # WHITEDOT: fases, implementaciones e ideas por decidir
 
-Actualizado tras el pedido de interacción musical, fijación voluntaria, módulos y espacio móvil. Base main `5413d5f`; cadena implementada hasta `fix/12d-contact-intent`, ver RAMAS. Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
+Actualizado tras el pedido de interacción musical, fijación voluntaria, módulos y espacio móvil. Base main `5413d5f`; cadena implementada hasta `feat/15-spacious-blob-worlds`, ver RAMAS. Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
 
 **Una fase = una rama revisable**, implementación, pruebas, commit y push; Jay crea PR/merge. Jay autorizó primero las fases 1–10 en cadena y después borrar ecos con un toque y continuar con espejos (fase 11). Este nuevo pedido autoriza las unidades de influencia, fijación voluntaria, módulos, interfaz y contactos dentro del bloque 12. Lo restante continúa como propuesta. Ver RAMAS.md. Si una fase crece demasiado, dividirla antes de implementar. Las fases 1–10 están implementadas en sus ramas encadenadas; falta el PR/merge de Jay en ese orden. La fase 11 y mejora 10a están implementadas; el bloque 12 tiene estas unidades implementadas; cajas, cuerdas y fases 13–31 siguen pendientes.
 
@@ -242,3 +242,7 @@ Validación: 34 suites de Node, interacción real en móvil/escritorio, ruta con
 ## Prioridad tras esta revisión
 
 Antes de sumar más familias, revisar [DIRECCION_JUEGO.md](DIRECCION_JUEGO.md): unión Camino/Mundo/Estudio, verbos y Voz contextual, qué se conserva, descubrimientos con propósito, progreso, rendimiento/offline y mezcla por familias. Las fases históricas no se eliminan, pero su orden futuro debe responder a esta consolidación. [REVISION_INTERACCIONES.md](REVISION_INTERACCIONES.md) distingue correcciones terminadas y deuda real.
+
+## Pedido de blobs, semillas y calma — implementado
+
+Ramas 13, 14 y 15 de RAMAS.md: interfaz sin notas decorativas, laboratorio de semillas completas, blobs y escenarios más tranquilos. Estos números identifican entregas nuevas; no significan que Conversaciones musicales, Más efectos o Mixer del plan histórico estén terminados. Ver [MUNDOS_SEMILLAS.md](MUNDOS_SEMILLAS.md). Las pruebas tienen mapas Amplio/Clásico y guardados separados; el mapa habitual conserva su escala y usa menor densidad de escena.

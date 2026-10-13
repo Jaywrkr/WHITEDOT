@@ -131,7 +131,7 @@ export function initialize(runtime){
   slots.forEach((sl,i)=>{const x=band.members[sl];if(!x)return;x.lit=Math.max(0,x.lit-dt*2.5);
    const a=Math.PI*.6+i*Math.PI*.27,tx=s.wx+Math.cos(a)*58,ty=s.wy+Math.sin(a)*58+Math.sin(t/400+i)*4;x.x+=(tx-x.x)*Math.min(1,dt*4);x.y+=(ty-x.y)*Math.min(1,dt*4);
    cx.globalAlpha=.5;cx.strokeStyle=WORLD_VISUAL.echo;cx.lineWidth=1;cx.beginPath();cx.arc(x.x+ox,x.y+oy,12,0,Math.PI*2);cx.stroke();
-   cx.globalAlpha=.85;runtime.drawSprite(x.sp.bits,x.x+ox,x.y+oy,(x.sp.cell||2)*(1+x.lit*.5),x.lit>.1?'#fff':x.sp.col);});
+   cx.globalAlpha=.85;if(runtime.blobHabitat?.(x.region))runtime.drawBlob(x.sp,{...x,ph:x.sp.deg||0},x.x+ox,x.y+oy,t,b);else runtime.drawSprite(x.sp.bits,x.x+ox,x.y+oy,(x.sp.cell||2)*(1+x.lit*.5),x.lit>.1?'#fff':x.sp.col);});
   // Ranuras de la banda (abajo, discretas).
   const n=Object.keys(band.members).length;if(n){const panels=['fxPanel','glassPanel','mirrorPanel','patchPanel','scanner','routeHud','autopilotHud'].map(id=>runtime.$(id)).filter(p=>p&&!p.hidden),panelTop=panels.length?Math.min(...panels.map(p=>p.getBoundingClientRect().top)):null;
    const y0=jamHudTop(H,panelTop,runtime.$('toast')?.classList.contains('on')),w=26;
