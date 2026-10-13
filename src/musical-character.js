@@ -24,7 +24,7 @@ export const GENRE_CHARACTERS = Object.freeze(Object.fromEntries(Object.entries(
 }).flatMap(([character,ids])=>ids.split(' ').map(id=>[id,character]))));
 for(const p of Object.values(CHARACTERS)){Object.freeze(p.budget);Object.freeze(p);}
 export function musicalCharacter(genre){return CHARACTERS[GENRE_CHARACTERS[genre]||'warm'];}
-const HOOKS={dub:['organ'],minimal:['keys','clav'],garage:['rhodes','keys'],downtempo:['rhodes','flute'],minimaltechno:['organ'],heart:['organ','flute']};
+const HOOKS={organic:['reed','kalimba'],andean:['reed','flute'],tribal:['membrane','marimba'],idm:['membrane','metalkeys'],ambient:['bowed','flute'],heart:['hollow','organ','flute'],electro:['hollow','metalkeys'],dub:['organ'],minimal:['keys','clav'],garage:['rhodes','keys'],downtempo:['rhodes','flute'],minimaltechno:['organ']};
 for(const pool of Object.values(HOOKS))Object.freeze(pool);
 export function hookInstruments(genre,definition){return HOOKS[genre]||definition.hookP;}
 export function voiceRegister(voice,genre){

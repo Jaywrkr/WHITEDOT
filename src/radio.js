@@ -1,3 +1,4 @@
+import {compositionFrame} from './composition.js';
 import {musicalCharacter,hookInstruments} from './musical-character.js';
 import {REFERENCE_STEPS,REFERENCE_BASS} from './references.js';
 import {createGrammar,shapeMotif} from './grammar.js';
@@ -70,7 +71,7 @@ export function createRadio(seedOf, rng, genres) {
       // Identity changes with the section, rather than swapping instruments every phrase.
       const toneRandom=rng(seedOf(`radio-tone:v1:${region.key}:${section}`));
       const pool = hookInstruments(region.genre,genres[region.genre]);
-      arrangement = { phrase, section, grammar, character, melodyRest:budget===0, bass, hook, hookI: pool[Math.floor(toneRandom() * pool.length)] };
+      arrangement = { phrase, section, grammar, character, expression:compositionFrame(region.genre,phrase,section), melodyRest:budget===0, bass, hook, hookI: pool[Math.floor(toneRandom() * pool.length)] };
       nextPhrase = bar + grammar.phraseBars + (random()<.25?2:0);
     }
     const life = Math.min(.08, (environment.near || 0) * .002 + (environment.singers || 0) * .015);

@@ -1,9 +1,9 @@
 // Real Web Audio render of the scheduler, with a virtual clock and deterministic noise.
-export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false,generation=1,ecology=false}={}) {
+export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false,generation=1,ecology=false,testInstrument=null}={}) {
  const modules=await Promise.all(['data','progress','world','audio','voices','instruments','patches','effects','spatial','influence','blobs'].map(id=>import(`../src/${id}.js`)));
  const r=Object.create(null),duration=10,context=new OfflineAudioContext(2,duration*sampleRate,sampleRate);
  const original={AudioContext:window.AudioContext,setInterval:window.setInterval,setTimeout:window.setTimeout,random:Math.random};
- let clock=0,schedule,trailNotes=0,glassNotes=0,ecologyNotes=0;const glassRoles=new Set();const originalURL=location.href;
+ let instrumentNotes=0;let clock=0,schedule,trailNotes=0,glassNotes=0,ecologyNotes=0;const glassRoles=new Set();const originalURL=location.href;
  const proxy=new Proxy(context,{get(target,key){if(key==='currentTime')return clock;if(key==='state')return 'running';const value=Reflect.get(target,key,target);return typeof value==='function'?value.bind(target):value;}});
  try {
   if(generation===2){const url=new URL(location.href);url.searchParams.set('testSeed',worldSeed||'humedal-01');url.searchParams.set('layout','classic');url.searchParams.set('generation','2');history.replaceState(null,'',url);}
@@ -58,14 +58,14 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   }
   const sources=Array.from({length:8},(_,i)=>({x:(trail?r.S.wx:900)+10*i,y:trail?r.S.wy:900,id:`mix:${i}`}));
   for(let tick=0;tick<duration/.025;tick++){
-   clock=tick*.025;if(trail)r.trailTick(.025,false);if(encounter)r.encounterTick(.025,false);schedule();
+   clock=tick*.025;if(testInstrument&&tick%8===0){const {compositionFrame}=await import('../src/composition.js');r.withInstrumentPatch('track',r.MU.dnaT,{instrument:testInstrument,role:'lead'},null,clock+.13,()=>r.playNewInstrument(testInstrument,60+(tick%3)*2,clock+.13,.035,compositionFrame(genre,Math.floor(tick/40),2)));instrumentNotes++;}if(trail)r.trailTick(.025,false);if(encounter)r.encounterTick(.025,false);schedule();
    if(ecology&&tick%16===0)sources.slice(0,4).forEach((source,i)=>{r.playVoice('ecology:'+['reed','pod','lichen','stone'][i]+':'+['bass','groove','space','groove'][i],i,clock+.13,r.MU.dnaT,false,.5,source,'player');ecologyNotes++;});
    if(dense&&tick%10===0)sources.forEach((source,i)=>r.playVoice(worldSeed?'forma:'+r.MU.dnaT.species[i%r.MU.dnaT.species.length].id:['arbol','cristal','pulso','luz'][i%4],i,clock+.13,r.MU.dnaT,true,.9,source));
   }
   const buffer=await context.startRendering(),data=Array.from({length:2},(_,i)=>buffer.getChannelData(i));
   let peak=0,sum=0,hot=0,n=0;
   for(const samples of data)for(let i=sampleRate;i<samples.length;i++){const value=samples[i];if(!Number.isFinite(value))throw Error('nonfinite rendered audio');peak=Math.max(peak,Math.abs(value));sum+=value*value;hot+=Math.abs(value)>.98;n++;}
-  return {genre,dense,soft,fx,influenced,worldSeed,generation,ecology,ecologyNotes,encounter,deep,installation,trail,glass,trailNotes,glassNotes,glassRoles:[...glassRoles],sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
+  return {testInstrument,instrumentNotes,genre,dense,soft,fx,influenced,worldSeed,generation,ecology,ecologyNotes,encounter,deep,installation,trail,glass,trailNotes,glassNotes,glassRoles:[...glassRoles],sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
  } finally {window.AudioContext=original.AudioContext;window.setInterval=original.setInterval;window.setTimeout=original.setTimeout;Math.random=original.random;history.replaceState(null,'',originalURL);}
 }
 
