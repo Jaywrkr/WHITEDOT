@@ -1,6 +1,6 @@
 # Alcance vigente de V1
 
-El plan vigente es [FASES_UNIVERSO.md](FASES_UNIVERSO.md): diez fases amplias, una rama por fase. La fase 1 actual es `feat/phase-01-universe-foundation`, basada en main `7a0e8ff` (PR #67), y está documentada en [FASE_01.md](FASE_01.md). Fase 1 ya integrada por PR #68. Continúa la fase 2 `feat/phase-02-living-world-recipes`, sobre main `e26ef93`: [FASE_02.md](FASE_02.md). **Las cinco fases del resto de este documento son históricas y ya están integradas.**
+El plan vigente es [FASES_UNIVERSO.md](FASES_UNIVERSO.md): diez bloques amplios. Fases 1–3 y bloque de gestos/color de fase 4 ya integrados en main e27c219 (#73); [estado comprobado](ESTADO_ACTUAL.md) y [handoff](HANDOFF.md). Las cinco fases siguientes describen una agrupación creativa histórica ya integrada, con numeración distinta.
 
 # Estado de integración
 

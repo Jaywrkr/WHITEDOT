@@ -1,3 +1,33 @@
+# Mundos, semillas y retorno · guía vigente
+
+Estado: **main e27c219**. Menú → Explorar mundos permite elegir Original/Paisajes vivos, Amplio/Clásico y semilla/presets; Menú → Prototipo → Semillas conserva el acceso técnico. Humedal/Salinas/Basalto/Micelio y Blobs permiten comparar hábitats, música, criaturas y terreno. [Inventario actual](ESTADO_ACTUAL.md).
+
+| Generación | Versiones generador/catálogo/layout | Clásico | Amplio |
+|---|---|---:|---:|
+| Original | 1 / 1 / 1 | 3.600 | 7.200 |
+| Paisajes vivos | 2 / 2 / 2 | 3.600 | 10.800 |
+
+Las unidades miden el ancho de una región, no el mundo entero. Misma semilla/layout/generación reconstruye la receta; la radio y sus arcos evolucionan, por lo que no regresa una canción congelada. Sin `generation=2` la URL sigue usando Original. La partida habitual permanece en Original/clásico; elegir Paisajes vivos no la migra.
+
+## Probar sin sobrescribir la partida
+
+1. Abrir el selector, elegir generación/layout y un preset o semilla (hasta 40 caracteres).
+2. Se recarga el contexto y comienza en tierra, al centro de la región inicial; las pruebas no requieren completar el Camino. Tocar habilita audio según el navegador.
+3. Probar gestos de elementos y varios minutos de quietud; los estilos incluyen nuevos timbres de fase 3. Prototipo → Ritmos permite viajar a estilos concretos.
+4. Volver al centro reconstruye el contexto de prueba. Mi partida vuelve al guardado habitual. Cada semilla/layout/generación tiene progreso, favoritos y respaldos separados.
+
+Las claves Original conservan `pixel-blanco-v4:preview:<semilla>` (clásico) y `pixel-blanco-v4:preview-wide:<semilla>` (amplio); las vivas añaden el espacio `v2:` mediante `previewKey`. No construirlas manualmente: reutilizar `src/seeds.js`/`src/progress.js`.
+
+## Recordar un lugar
+
+Favoritos conserva hasta 64 direcciones con semilla, layout, versiones, capa y x/y. Orientar y Viajar/autopilot funcionan cuando la identidad es compatible. Cambiar capa requiere un acceso; no hay teletransporte universal ni código compartible completo todavía. Guardar un favorito no guarda la frase temporal, ecos o lección del animal. Exportar respaldo protege progreso local; no sincroniza dispositivos.
+
+La selección visible de objetos mantiene identidades y deja espacio al vacío; las densidades no son iguales en todas las regiones. Blobs y variantes de cuerpos tienen voces regionales bajas/medias/percusivas. Los menús no disparan notas decorativas; crear música corresponde a gestos musicales o al ambiente existente.
+
+Pruebas actuales: semillas/blobs/ecología/favoritos/guardados en `tests/`; resultados y límites en [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md). Safari/Android reales y escucha prolongada siguen pendientes.
+
+<details><summary>Introducción histórica completa de semillas y blobs: tamaños y validaciones de sus entregas originales</summary>
+
 ## Paisajes vivos · Fase 2
 
 **Menú → Explorar mundos** permite elegir Paisajes vivos u Original, Amplio/Clásico y semilla/preset. Humedal, Salinas, Basalto y Micelio proponen hábitats distintos con un elemento musical cercano para aprender. La entrada anterior desde Prototipo permanece.
@@ -37,3 +67,5 @@ Menús, campos y botones no disparan pulsos ni notas decorativas. Se eliminó el
 Pruebas de navegador: `tests/ui_silence_smoke.py`, `tests/seeds_smoke.py`, `tests/blobs_smoke.py`, más regresión de exploración, movimiento móvil, contactos, Eco/banda, influencia, Atlas, interfaz, capas e instalaciones. Audio offline incluye cuatro casos densos con voces de blobs, además de los casos normales y de influencia/FX, a 44,1/48 kHz.
 
 El cálculo histórico de VARIEDAD.md corresponde al mapa original. No se multiplicó por el número de semillas para presentar un total ficticio de experiencias distintas.
+
+</details>

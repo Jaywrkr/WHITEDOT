@@ -1,5 +1,7 @@
 # Archivo del plan histórico
 
+> Estado al 13 de octubre de 2026: Archivo de ideas/estados originales, sin autorización nueva ni lista fiable de funciones pendientes. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).
+
 Este archivo conserva las ideas y el texto de versiones anteriores, incluidas notas de funciones que después se implementaron o se descartaron. **No usar sus estados antiguos como diagnóstico actual.** El seguimiento vigente está en [PENDIENTES.md](PENDIENTES.md) y [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md).
 
 ## Seguimiento vigente

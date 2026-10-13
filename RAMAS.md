@@ -1,18 +1,25 @@
-# Integración y trabajo agrupado
+# Integración y continuación
 
-## Estado vigente
+Estado verificado el 13 de octubre de 2026: **origin/main e27c219**, después del PR #73. Esta entrega documental está en **`docs/claude-handoff-current-main`**, creada desde esa base. No cambia código ni crea una nueva pila de funciones.
 
-Base funcional consolidada: `main` · `f7bcf84`, merge del [PR #70](https://github.com/Jaywrkr/WHITEDOT/pull/70), el 13 de octubre de 2026. Fases 1 y 2, interacciones orgánicas y revisión de registros/atlas ya integradas. No recrear sus PR ni volver a aplicar sus commits.
+| PR | Merge en main | Entrega |
+|---|---|---|
+| [#68](https://github.com/Jaywrkr/WHITEDOT/pull/68) | e26ef93 | Base fiable, fase 1 |
+| [#69](https://github.com/Jaywrkr/WHITEDOT/pull/69) | ffc5578 | Paisajes vivos, fase 2 |
+| [#70](https://github.com/Jaywrkr/WHITEDOT/pull/70) | f7bcf84 | Registros musicales y atlas |
+| [#71](https://github.com/Jaywrkr/WHITEDOT/pull/71) | 0e289b8 | Consolidación y preservación documental |
+| [#72](https://github.com/Jaywrkr/WHITEDOT/pull/72) | df725f6 | Composición e instrumentos, fase 3 |
+| [#73](https://github.com/Jaywrkr/WHITEDOT/pull/73) | e27c219 | Gestos/color de instalaciones, bloque de fase 4 |
 
-- PR #51–#69: integrados salvo #57, cerrado sin merge y sustituido por la cadena posterior. Su recorrido creativo está presente y ampliado en `src/creative.js`; no hacer cherry-pick del commit antiguo.
-- `fix/musical-registers-and-visual-inventory`: integrada mediante #70, sin commits pendientes respecto de main. Conservarla o retirarla después de verificar; no tratarla como trabajo nuevo.
-- #70 pasó lógica, auditorías, navegador y audio en GitHub Actions. Vercel confirmó el despliegue del merge como `success`.
+Estas entregas ya están integradas: no crear PR duplicados ni reaplicar commits. La cadena histórica #51–#69 se conserva abajo; #57 fue sustituido, no debe rescatarse por cherry-pick. La comprobación presente es por Git, no una consulta nueva del estado de CI/Vercel.
 
-## Continuación
+## Flujo de este traspaso
 
-Partir de `origin/main` actualizado. Mantener una rama amplia por bloque y merge normal para conservar ascendencia. Jay autorizó al asistente a integrar los cambios pendientes y continuar la limpieza; las instrucciones antiguas de «Jay crea PR/merge» se conservan abajo únicamente como historial.
+Commit y push de una rama documental para revisión. Jay puede crear el PR hacia main; el asistente no crea PR ni hace merge en este pedido. Claude puede leer la rama antes de integrarla. Después, continuar desde origin/main actualizado y el alcance nuevo de Jay.
 
-Fase 3 integrada por #72 en main `df725f6`, con CI/Vercel aprobados. El bloque vigente es `feat/phase-04-installation-gestures`: [gestos y color](FASE_04.md). Verificar CI antes de integrar. El balance de registros ya existe: reutilizar `src/musical-character.js`, `src/radio.js` y sus pruebas. No rediseñar figuras antes de recibir las elecciones de Jay del atlas. [Secuencia vigente](FASES_UNIVERSO.md) · [Próximos pasos](PROXIMOS_PASOS.md).
+Agrupar código, pruebas y documentación de cada bloque en una rama amplia. Si otra base aún está pendiente, su dependencia debe quedar explícita; al integrarla actualizar al main real. Usar el historial real para evitar comparaciones vacías y commits duplicados. No prometer cero conflictos con cambios independientes o squash/rebase. No trasladar permisos de integración anotados en una sesión histórica al pedido actual.
+
+[Handoff](HANDOFF.md) · [Estado](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Fases](FASES_UNIVERSO.md).
 
 <details><summary>Historial de integración; no usar como lista de trabajo pendiente</summary>
 

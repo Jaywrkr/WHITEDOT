@@ -1,5 +1,7 @@
 # Nota de alcance histórico
 
+> Estado al 13 de octubre de 2026: Revisión histórica: recuperación/cachés y shell offline fueron ampliados posteriormente en fases 1/2. No tratar sus carencias antiguas como diagnóstico actual. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).
+
 Esta revisión describe el bloque anterior a las cinco fases ya integradas. El shell offline y la caché de voces se corrigieron después; las cachés restantes del terreno aún requieren trabajo. Seguimiento actual: [PENDIENTES.md](PENDIENTES.md).
 
 # Revisión: música, interacción y espacio móvil

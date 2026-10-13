@@ -1,5 +1,7 @@
 # Revisión final de la cadena creativa
 
+> Estado al 13 de octubre de 2026: Informe histórico de las cinco fases creativas antiguas; su numeración y resultados no son los diez bloques actuales. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).
+
 La fase 5 revisa la convivencia de los nueve cambios de jugabilidad y las diez familias nuevas. No sustituye una sesión de escucha humana por mediciones ni declara terminadas las propuestas mayores del proyecto.
 
 ## Correcciones aplicadas

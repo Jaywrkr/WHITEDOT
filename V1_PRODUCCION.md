@@ -2,13 +2,11 @@
 
 Revisión del código y planes al 13 de octubre de 2026. Propuesta de alcance para Jay, no anuncio de funciones implementadas ni promesa de perfección absoluta. El objetivo es una V1 publicable con comportamiento comprensible, música cuidada, progreso recuperable y estabilidad comprobada.
 
-La revisión vigente de figuras y agudos está en [REVISION_REGISTROS.md](REVISION_REGISTROS.md). Main `ffc5578` ya integra fases 1/2; las menciones de base de sus entregas siguientes son históricas. La fase 3 sigue pendiente.
-
 ## Estado y forma de trabajar
 
-Base de la fase 1 actual: main `7a0e8ff`, merge del PR #67, con este inventario y las entregas anteriores integradas. Fase 1 implementada en `feat/phase-01-universe-foundation`: [FASE_01.md](FASE_01.md). Al cierre main `e26ef93` ya incluye fase 1 (PR #68). Fase 2 implementada sobre esa base: [Paisajes vivos](FASE_02.md).
+**Main e27c219, #73 integrado**, al 13 de octubre de 2026. Fases 1–3, revisión de registros/atlas y bloque de gestos/color de fase 4 presentes. [Estado comprobado](ESTADO_ACTUAL.md) · [handoff](HANDOFF.md). Esta lista de 64 tareas se conserva para cierre de alcance: una primera implementación no cierra todas sus ampliaciones.
 
-La instrucción más reciente de Jay es una rama amplia por fase, con muchas mejoras relacionadas, commits claros y pruebas. El orden está en [FASES_UNIVERSO.md](FASES_UNIVERSO.md), sustituyendo la propuesta de una única `release/v1`. Jay crea PR y hace merge. El asistente no modifica main ni despliega esta fase directamente.
+Una rama amplia por bloque, con código/pruebas/docs. La entrega documental actual hace commit/push para revisión; las integraciones posteriores deben seguir el pedido vigente de Jay. [Fases y estados](FASES_UNIVERSO.md) · [rama de traspaso](RAMAS.md). No reaplicar entregas integradas ni usar la antigua propuesta de una sola `release/v1` como instrucción actual.
 
 ## Variedad real y cómo interpretar los números
 
@@ -19,7 +17,10 @@ El juego ofrece un mapa continuo generado por coordenadas; las semillas de prueb
 | Biomas | 11 |
 | Estilos musicales definidos | 52 |
 | Identificadores de instrumento en paletas de género | 35 |
-| Instrumentos descritos en Bitácora, incluyendo otros del motor | 38 |
+| IDs en paletas de reproducción actuales | 38 |
+| Instrumentos descritos en Bitácora, incluyendo otros del motor | 42 |
+| Modelos modulares INSTRUMENT_SPECS (subconjunto, no suma adicional) | 15 |
+| Hábitats de Paisajes vivos sobre los 11 biomas | 33 |
 | Regiones muestreadas en el mapa original | 40.000 |
 | Recetas detalladas distintas, contando mar | 39.952 |
 | Perfiles musicales básicos distintos, contando mar | 9.807 |
@@ -28,7 +29,7 @@ El juego ofrece un mapa continuo generado por coordenadas; las semillas de prueb
 
 Comparación controlada: cinco semillas × 1.600 regiones, tamaño clásico de 3.600 unidades. Promedio por semilla en esa muestra: 1.600 recetas detalladas, 947,6 regiones terrestres y 837,4 perfiles musicales terrestres. Son ventanas locales, no el promedio del tamaño total de un mundo ni una muestra representativa de todas las semillas. No equivalen a 837 canciones terminadas o 1.600 experiencias reconociblemente distintas.
 
-Resultados y método en [VARIEDAD.md](VARIEDAD.md) y [scripts/v1-variation-sample.json](scripts/v1-variation-sample.json). Las firmas excluyen coordenadas, nombres, IDs y flotantes continuos. No enumeran el mapa completo y no demuestran millones de experiencias. Las últimas mejoras de interacción no agregaron biomas o géneros; aportaron maneras de transformar la música.
+Resultados y método en [VARIEDAD.md](VARIEDAD.md) y [scripts/v1-variation-sample.json](scripts/v1-variation-sample.json). Las firmas excluyen coordenadas, nombres, IDs y flotantes continuos. No enumeran el mapa completo y no demuestran millones de experiencias. Las fases 3/4 no añadieron biomas ni géneros; fase 3 añadió cuatro voces y composición, fase 4 gestos/color. La auditoría viva de un millón de candidatos mantiene 999.512 firmas detalladas y 586.200 firmas musicales terrestres; ventanas y método en VARIEDAD.md, sin equivalencia a canciones únicas.
 
 ## Coordenadas, guardar y volver
 
@@ -46,12 +47,12 @@ El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Me
 
 ### Base, guardado y producción
 
-1. **P0 — Integración:** reunir cambios pendientes y contrastar lo que se prueba con el commit realmente publicado; no mantener numerosos PR de funciones aisladas.
+1. **P0 — Base funcional integrada hasta #73:** contrastar nuevas entregas con el commit publicado y el estado real de CI/despliegue; no mantener numerosos PR de funciones aisladas.
 2. **P0 — Implementado fase 1:** validación/versiones, corrupción, cuota/lectura bloqueada, aviso y recuperación preservando el original.
 3. **P0 — Implementado fase 1:** exportar/importar con validación/copia previa; aislamiento de partida habitual y semilla/layout de prueba. Probar en equipos reales antes de release.
 4. **P0 — Implementado fases 1–2:** identidad completa, rechazo de direcciones ajenas y conservación del generador Original junto a Paisajes vivos. Migraciones futuras y actualización del habitual siguen pendientes.
 5. **P0 — Implementado fase 1:** cachés regionales/biomas/continentes/chunks acotadas y regeneración determinista. Verificar consumo/batería reales antes de release.
-6. **P0 — Implementado fase 1:** descubrimiento de todas las suites Node con aserciones (49), runner de navegador/audio/offline y workflow CI. El ayudante Web Audio queda excluido del conteo Node. La ejecución remota de GitHub Actions requiere el PR/merge de Jay.
+6. **P0 — Implementado fase 1:** descubrimiento de todas las suites Node con aserciones (51 en la base actual), runner de navegador/audio/offline y workflow CI. El ayudante Web Audio queda excluido del conteo Node. El workflow corre en PR/main; sus resultados remotos deben comprobarse para cada entrega, no inferirse del merge.
 7. **P0 — Dispositivos:** verificar Safari/iPhone, Chrome/Android, escritorio y PWA instalada; memoria, batería, varios tamaños, auriculares, altavoz, cambio de pestaña, suspensión/reanudación y rutas largas. Los ensayos actuales de navegador se hacen en Chromium, no demuestran compatibilidad real con todos esos dispositivos.
 8. **P0 — Actualizaciones:** actualización de caché sin mezclar versiones, restauración offline, vuelta atrás de una publicación y migración de partidas. El shell offline local ya funciona; las fuentes externas aún necesitan decisión de empaquetado.
 9. **P0 — Operación:** versión de release identificable, registro acotado de fallos recuperables, instrucciones de soporte, créditos/licencias de recursos utilizados y política correspondiente a las funciones realmente publicadas.
@@ -62,10 +63,10 @@ El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Me
 11. **P0 — Escucha curada:** sesiones de 10–30 minutos por familias, incluyendo quietud y transiciones; comparar cuerpo, claridad, groove, repetición, fatiga y graves/agudos en equipos reales.
 12. **P0 — Mezcla común:** presupuestos de voces y transitorios para radio, gestos, clima, banda y pistas; subgrave ordenado, balance espectral, mono/estéreo, sidechain suave cuando corresponda, retornos limpios y dinámica; compensar niveles al cambiar instrumentos. Las mediciones actuales controlan picos, no certifican preferencia artística.
 13. **V1 — Mixer real:** rutas separadas para bajo, percusión, acordes, motivo y ambiente, con mute/solo y entradas suaves; presentación compacta y opcional.
-14. **V1 — Timbres nuevos:** modelos de cuerdas pulsadas, membranas, tubos, láminas, síntesis aditiva, FM más expresiva, tablas de onda y ruido articulado; identidades audibles y rangos por papel musical.
-15. **V1 — Instrumentos personales del lugar:** ataque, cuerpo, articulación, resonancia, anchura y modulación según semilla/material/gesto; evitar contar cada preset como un instrumento nuevo.
+14. **V1 — Primera ampliación integrada, fase 3:** reed/membrane/bowed/hollow. Quedan más timbres: modelos de cuerdas pulsadas, membranas, tubos, láminas, síntesis aditiva, FM más expresiva, tablas de onda y ruido articulado; identidades audibles y rangos por papel musical.
+15. **V1 — Parcial, materiales/rasgos/articulaciones ya presentes:** profundizar instrumentos personales del lugar: ataque, cuerpo, articulación, resonancia, anchura y modulación según semilla/material/gesto; evitar contar cada preset como un instrumento nuevo.
 16. **V1 — Expansión de estilos:** avanzar de 52 hacia 80 y después alrededor de 100 estilos solo cuando tengan baterías, bajos, armonía, timbres, swing y evolución propios. Esa cifra es una meta de catálogo, no contenido ya implementado.
-17. **V1 — Desarrollo musical:** frases, silencios, variaciones, entradas, retiradas, tensión/resolución y secciones más largas; alternar comportamiento sin exigir desplazamiento del jugador.
+17. **V1 — Parcial, radio y arcos de ocho frases ya presentes:** profundizar desarrollo musical: frases, silencios, variaciones, entradas, retiradas, tensión/resolución y secciones más largas; alternar comportamiento sin exigir desplazamiento del jugador.
 18. **V1 — Mezcla entre vecinos:** mejorar afinidad de tempo, tonalidad, densidad y timbre; soportar cambios lentos/rápidos con transiciones agradables. Afinidad vecinal ya existe, necesita revisión artística.
 19. **V1 — Escucha accesible:** perfil agradable por defecto, sensibilidad/intensidad opcional y variedad a volumen moderado, conservando estilos con carácter; no depender de más volumen para aparentar calidad.
 20. **V1 — Efectos nuevos:** chorus, phaser, flanger, resonadores, freeze breve y granular con fuente/buffer definidos; bypass, colas, realimentación y coste acotados. Reverb, delay y efectos actuales ya existen.
@@ -73,14 +74,14 @@ El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Me
 
 ### Mundo procedural y nuevas relaciones
 
-22. **V1 — Contrato de contenido:** unir catálogo, encuentros, terrenos, fenómenos, instalaciones y recompensas bajo presencia/compatibilidad/rareza/versiones comunes. Hoy hay familias fuera de la firma de medición y contratos repartidos entre módulos.
-23. **V1 — Identidad regional completa:** asociar sonido, terreno, flora/fauna, materiales, densidad, interacción y evolución; regiones escasas, medias y densas con motivos reales para permanecer.
-24. **V1 — Matices dentro del bioma:** variaciones grandes de suelo y relieve visual, distribución y hábitat, con espacio suficiente para caminar y componer; los mundos de blobs y biomas amplios ya existen.
+22. **V1 — Parcial, directorio de 24/30 contratos y presencia viva ya presentes:** unir catálogo, encuentros, terrenos, fenómenos, instalaciones y recompensas bajo presencia/compatibilidad/rareza/versiones comunes. Hoy hay familias fuera de la firma de medición y contratos repartidos entre módulos.
+23. **V1 — Parcial, recetas y 33 hábitats de fase 2 presentes:** profundizar identidad regional: asociar sonido, terreno, flora/fauna, materiales, densidad, interacción y evolución; regiones escasas, medias y densas con motivos reales para permanecer.
+24. **V1 — Parcial, clima/relieve/hábitats vivos presentes:** ampliar matices dentro del bioma: variaciones grandes de suelo y relieve visual, distribución y hábitat, con espacio suficiente para caminar y componer; los mundos de blobs y biomas amplios ya existen.
 25. **V1 — Individuos distintos:** diferencias en temperamento, respuesta, movimiento y papel musical, con relaciones entre especies; rasgos individuales ya existen, falta más profundidad conductual.
 26. **V1 — Objetos que colaboran:** cableado libre limitado entre vidrios, espejos, módulos y otros elementos; rutas acotadas, control de ciclos y decisiones claras. La conexión regional actual es un primer caso, no una red universal editable.
 27. **V1 — Cuerdas luminosas:** tensar, soltar y sostener para articular graves, cuerdas o ritmos según el lugar; respuestas físicas y musicales, sin convertirlas en teclas.
 28. **V1 — Suelo expresivo ampliado:** presión, fricción, ondas, crecimiento y sustracción; máscaras musicales y materiales diferentes. El suelo resonante ya sustituye las cajas; no reintroducir cajas como objetos.
-29. **V1 — Luz y color:** profundizar vidrios, espejos, prismas y geometrías móviles con interferencias locales que afecten composición. Fondo negro, punto blanco, color localizado; inspiración geométrica y cromática, sin replicar obras específicas.
+29. **V1 — Parcial, giros y color contextual de fase 4 integrados:** profundizar luz y color: vidrios, espejos, prismas y geometrías móviles con interferencias locales que afecten composición. Fondo negro, punto blanco, color localizado; inspiración geométrica y cromática, sin replicar obras específicas.
 30. **V1 — Fenómenos nuevos:** aves especiales, semilleros de snares, descargas y cuerpos que se sacuden o vuelan con función musical diferenciada; varias primeras versiones ya existen, no empezar desde cero.
 31. **V1 — Vida en quietud:** sucesión ambiental, conversaciones, visitas y cambios de arreglos con periodos largos; la radio y la iniciativa tras quietud ya funcionan.
 32. **Expansión — Ecosistemas vivos:** migraciones reales, rutas estacionales, manantiales, gigantes y ciclo día/noche. Clima, lluvia, ríos y estaciones ya existen.
@@ -115,7 +116,7 @@ El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Me
 
 53. **P0 — Gramática de gestos:** aprender sin memorizar manual; tocar/arrastrar/mantener/quedarse tienen respuestas consistentes, con ayudas contextualizadas por familia.
 54. **P0 — Espacio móvil:** orientación vertical/horizontal, zonas seguras, escalado de texto, objetivos táctiles, contraste y cancelación; efectos locales y revisión de la suma de objetos visibles. Objetivo de diseño: cada interacción activa por debajo del 20 % de pantalla, y bastante menos cuando sea posible; auditar escenas completas, no solo un objeto aislado.
-55. **P0 — Menos ruido:** interfaz silenciosa, un acceso principal, ayudas a demanda, notificaciones ordenadas y límites de superposición. Los vidrios ya no tienen panel; decidir cómo simplificar el panel restante de espejos y módulos sin perder control.
+55. **P0 — Parcial, UI silenciosa y giro directo de instalaciones presentes:** menos ruido: interfaz silenciosa, un acceso principal, ayudas a demanda, notificaciones ordenadas y límites de superposición. Los vidrios ya no tienen panel y los espejos permiten arrastre sin abrirlo; mantienen panel alternativo de precisión. Revisar todavía su convivencia y módulos.
 56. **V1 — Accesibilidad:** teclado equivalente a gestos importantes, tamaño de texto, opciones de movimiento, señales visuales para desafíos sonoros y navegación de menús; revisar el bloqueo actual de zoom de la página.
 57. **V1 — Limpieza:** retirar restos del slider de estilo y handlers antiguos, revisar exposición de gravedad/movilidad, textos y documentación que aún mencionan cajas/vainas históricas como si fueran actuales.
 58. **V1 — Retorno comprensible:** favoritos, orientación, autopilot y capa visible; decidir viaje rápido opcional, evitando teletransportes accidentales o atajos que trivialicen búsqueda.
@@ -140,7 +141,7 @@ El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Me
 7. **Componer en el tiempo.** Desarrollo de varios minutos, frases que descansan, estados con pocas voces, transformaciones lentas y respuestas a la intención del jugador. Evolución en quietud ya existe; profundizar forma y memoria breve.
 8. **Dar forma espacial al descubrimiento.** Vecinos emparentados para mezclar, regiones con acentos propios y rarezas más lejanas o condicionadas. Evitar que la variedad sea ruido distribuido uniformemente.
 9. **Medir diferencia útil.** Comparar perfiles de ritmo, espectro, instrumentación, armonía, densidad y verbos jugables; muestrear rutas reales y duración de sesiones. Revisar a oído pares que la firma declare distintos para detectar repetición perceptual.
-10. **Meta verificable, no promesa:** auditar hasta un millón de recetas candidatas en lotes de semillas/regiones con memoria acotada, deduplicación y reglas de calidad; reportar cuántas sobreviven. Hoy hay 39.952 recetas comprobadas en una muestra. Un millón de firmas distintas seguiría requiriendo una evaluación musical y jugable.
+10. **Medición verificable, no promesa:** conservar auditorías por lotes de semillas/regiones, deduplicación y reglas de calidad; medir variación perceptible además de contar recetas. Ya se auditó una muestra viva de 1.000.000 candidatos: 999.512 firmas detalladas. La próxima medición debe cubrir diferencias audibles/jugables y rutas reales; no volver a presentar esa auditoría como una tarea inexistente ni como un millón de canciones.
 
 ### Familias musicales candidatas todavía por evaluar
 

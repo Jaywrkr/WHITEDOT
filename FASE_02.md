@@ -1,5 +1,7 @@
 # Fase 2 · Paisajes vivos
 
+> Estado al 13 de octubre de 2026: Entrega integrada por #69. Las instrucciones originales de abrir/integrar su PR ya no son pasos pendientes. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).
+
 Rama `feat/phase-02-living-world-recipes`, iniciada desde fase 1 (`7bed0ca`) y actualizada a main `e26ef93` al cierre: Jay ya integró fase 1 mediante PR #68. Crear el PR de fase 2 directamente hacia main. Una sola rama agrupa toda la entrega; no hay una rama por objeto.
 
 ## Probar

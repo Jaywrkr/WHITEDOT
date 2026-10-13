@@ -1,5 +1,7 @@
 # Fase 4 · gestos y color de instalaciones
 
+> Estado al 13 de octubre de 2026: Bloque de gestos/color integrado por #73, incluidas restauración fuera de alcance y protección de vistas previas ante ondas. No cierra todas las familias propuestas de fase 4. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).
+
 Bloque desde main `df725f6` (#72). Esta entrega mejora las instalaciones existentes; no declara implementados todos los candidatos de fase 4 ni rediseña las figuras pendientes de elección.
 
 ## Implementado
@@ -16,7 +18,7 @@ Bloque desde main `df725f6` (#72). Esta entrega mejora las instalaciones existen
 
 Las suites Node existentes pasan. `tests/mirrors.mjs` añade giro relativo, continuidad angular y color periódico. `tests/mirrors_smoke.py` añade arrastre directo en móvil/escritorio, jugador inmóvil, panel oculto durante el gesto, rollback de cancelación y cancelación al abrir modal. Las pruebas previas de panel, ruta, audio, guardado, escáner y Bitácora siguen activas.
 
-Antes de integrar: lógica, auditorías, regresión de navegador, shell offline y mezclas de audio en CI. La revisión visual humana y dispositivos reales siguen pendientes.
+La integración ya ocurrió en #73. Para nuevas modificaciones, repetir lógica, auditorías, regresión de navegador, shell offline y mezclas de audio pertinentes en CI. La revisión visual humana y dispositivos reales siguen pendientes.
 
 ## Cómo probar
 

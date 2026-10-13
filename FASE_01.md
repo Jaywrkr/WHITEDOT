@@ -1,5 +1,7 @@
 # Fase 1 · Base fiable para un universo ampliable
 
+> Estado al 13 de octubre de 2026: Entrega integrada por #68. Sus cifras/versiones describen el bloque original; el estado vigente reconoce Original y Paisajes vivos. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).
+
 Esta guía describe la entrega `7bed0ca`. La continuación [fase 2](FASE_02.md) agrega Paisajes vivos y reconoce versiones v1/v2; los límites de esta guía sobre reconocer solo v1 corresponden a su momento de entrega.
 
 Rama `feat/phase-01-universe-foundation`, basada en main `7a0e8ff` (PR #67). Jay crea el PR hacia main y hace merge. Una sola rama reúne guardado, coordenadas, memoria, contratos, auditoría y automatización. No añade biomas, instrumentos o géneros ni cambia el secuenciador/mezcla.
