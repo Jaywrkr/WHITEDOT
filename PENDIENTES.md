@@ -2,7 +2,7 @@
 
 Main `2959313` integra el bloque anterior de veinte entregas. Los cinco grupos fueron integrados juntos mediante el PR #58. El trabajo continúa en ramas nuevas, paso a paso; Jay hace PR y merge.
 
-## En esta rama
+## Entregas de esta secuencia
 
 `feat/deep-musical-encounters`: redes libres de tejedoras, cajas con piezas y pasos editables y animales que aprenden una frase breve. Incluye actualización de pistas, Bitácora y logros. Está preparado para probar; su contenido no debe confundirse con lo ya publicado en main.
 
@@ -12,9 +12,9 @@ La entrega `feat/resonant-ground` sustituye el objeto Caja de posibilidades por 
 
 ## Próximos bloques
 
-1. Profundizar interacciones existentes. Esta rama cubre redes, frases y cajas; otras mejoras se evalúan según su aporte musical.
+1. Profundizar interacciones existentes. La secuencia cubre redes, frases y suelo musical; otras mejoras se evalúan según su aporte musical.
 2. Combinar vidrios, espejos y módulos en instalaciones. `feat/shared-installation-signals` implementa fuentes regionales para el jardín modular; cableado libre y otras combinaciones siguen pendientes.
-3. Pistas encadenadas, puertas musicales, instrumentos dormidos y personajes originales.
+3. Pistas encadenadas, puertas musicales, instrumentos dormidos y personajes originales. `feat/chained-musical-trails` entrega una primera búsqueda de tres huellas y un instrumento dormido; puertas, personajes y otras búsquedas siguen pendientes.
 4. Historia, sentido del recorrido y Voz ligada a creación, constancia y Jay.
 5. Muchas culturas y épocas integradas en música, flora/fauna, materiales y comportamiento; inventos y observatorios.
 6. Construcción musical, recetas, huertos rítmicos, maestros/partituras, escenarios, comunidades y baile.

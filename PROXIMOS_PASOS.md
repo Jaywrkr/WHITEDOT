@@ -2,22 +2,26 @@
 
 El bloque anterior de veinte entregas está integrado en main desde el PR #58 (`2959313`). Se agrupó en cinco fases para revisar; no equivale a haber implementado todo el plan histórico.
 
-## Paso actual: profundizar interacciones
+## Entrega actual
+
+`feat/resonant-ground` reemplaza las cajas por suelo interactivo. Su continuación `feat/chained-musical-trails` añade una búsqueda de tres huellas y un instrumento dormido. Orden completo de ramas nuevas: [RAMAS.md](RAMAS.md). Estas entregas se prueban en Semillas como **Suelo resonante** y **Rastro musical · instrumento dormido**.
+
+## Primera entrega de esta secuencia: profundizar interacciones
 
 Rama `feat/deep-musical-encounters`, basada en ese main. Incluye:
 
 - Tejedoras: redes de hasta seis hilos entre anclas y objetos cercanos; arrastre o dos toques para conectar, tocar un hilo para retirar. Red evaluada como figura finita, incluso si contiene ciclos visuales.
 - Animales: mantener su cuerpo inicia dos compases de escucha. Aprende solo notas causadas por el jugador, conserva ritmo/contorno en una respuesta compacta y responde por turnos. No escucha micrófono ni guarda grabaciones. Tocar sigue cambiando papel y arrastrar sigue acercando criaturas.
-- Cajas: tres piezas y 16 pasos editables; seleccionar, pintar, cambiar posición, silenciar con permanencia y cerrar la tapa. Modifican el arreglo existente; el groove conserva el pulso base y controla sus detalles. No es todavía un constructor libre de máquinas de cualquier tamaño.
+- En la primera versión, cajas (ahora sustituidas por suelo resonante): tres piezas y 16 pasos editables; seleccionar, pintar, cambiar posición, silenciar con permanencia y cerrar la tapa. Modifican el arreglo existente; el groove conserva el pulso base y controla sus detalles. No es todavía un constructor libre de máquinas de cualquier tamaño.
 - Descripciones, pistas, Bitácora y tres logros relacionados. Se conserva la interfaz discreta y el presupuesto compartido de respuestas.
 
-**Cómo probar:** Menú → Prototipo → Semillas → Encuentro de prueba → Criatura tejedora, Animal de intercambio o Caja de posibilidades. Los estados manipulados son temporales; la opción de guardar ideas musicales fue descartada. Descubrimientos/logros sí se conservan.
+**Cómo probar:** Menú → Prototipo → Semillas → Encuentro de prueba → Criatura tejedora, Animal de intercambio o Suelo resonante. Los estados manipulados son temporales; la opción de guardar ideas musicales fue descartada. Descubrimientos/logros sí se conservan.
 
 ## Orden de continuación
 
 ### Corrección prioritaria de dirección visual e interacción
 
-Antes de ampliar instalaciones, se ha rediseñado la caja editable en `feat/organic-musical-seedpods`: la cuadrícula se sustituye por una vaina de semillas y núcleos, sin panel opaco. Mantener la capacidad de variar bajo, groove y melodía mediante formas del mundo: raíces que se tensan, pétalos que se desplazan, cuerpos que giran o conexiones entre objetos. Raíces, pétalos y otras formas son candidatos para futuras familias; la vaina ya implementa semillas tocables y núcleos intercambiables. El gesto debe producir una decisión musical audible y depender del ambiente, con límites de mezcla y afinación regional.
+Antes de ampliar instalaciones, se ha rediseñado la caja editable en `feat/organic-musical-seedpods`: la cuadrícula se sustituye por una vaina de semillas y núcleos, sin panel opaco. Mantener la capacidad de variar bajo, groove y melodía mediante formas del mundo: raíces que se tensan, pétalos que se desplazan, cuerpos que giran o conexiones entre objetos. Raíces, pétalos y otras formas son candidatos para futuras familias; la edición de semillas y núcleos ya existe y ahora se integra en el suelo resonante, sin objeto caja. El gesto debe producir una decisión musical audible y depender del ambiente, con límites de mezcla y afinación regional.
 
 Toda incorporación debe compartir el lenguaje natural y electrónico del juego: fondo negro, jugador blanco, color localizado en elementos y efectos. Objetivo de diseño para una interacción activa: ocupar menos del 20 % de pantalla y evitar acercarse al 30 %, comprobando móvil vertical y horizontal. Evaluar también la suma de efectos simultáneos; evitar paneles, cuadrículas de teclado y efectos extensos que tapen el recorrido. La vaina cumple el objetivo en las tres pantallas probadas; sigue siendo necesaria una revisión del resto de elementos y sus efectos simultáneos.
 
@@ -31,13 +35,13 @@ Cada paso se implementa, verifica, documenta, commitea y sube en una rama nueva.
 |---:|---|---|
 | 1 | Profundizar familias existentes: redes, frases y cajas; después otros gestos si aportan decisiones nuevas | Esta rama implementa tres profundizaciones; ampliaciones restantes por evaluar |
 | 2 | Unir vidrios, espejos y módulos en instalaciones musicales combinadas | Primera conexión regional en `feat/shared-installation-signals`; cableado libre y más combinaciones pendientes |
-| 3 | Búsquedas encadenadas, puertas musicales, instrumentos dormidos y personajes originales | Pendiente |
+| 3 | Búsquedas encadenadas, puertas musicales, instrumentos dormidos y personajes originales | Rastro de tres etapas e instrumento dormido en `feat/chained-musical-trails`; puertas y personajes pendientes |
 | 4 | Historia que una Camino/Mundo/Estudio, constancia y creación; Voz más contextual y referencias a Jay | Guía básica presente; historia completa pendiente |
 | 5 | Culturas y épocas con música, materiales, flora/fauna y comportamiento relacionados; inventos y observatorios | Pendiente |
 | 6 | Construcción musical, recetas, huertos de ritmo, escenarios/comunidades y maestros de ritmos | Pendiente |
 | 7 | Encuentros de jugadores y composición compartida: red, reloj, armonía, propiedad y mezcla | Pendiente, sin proveedor/backend seleccionado |
 
-### Entrega posterior: vaina de semillas
+### Entrega anterior: vaina de semillas, sustituida por suelo resonante
 
 La rama `feat/organic-musical-seedpods` mantiene los datos musicales y gestos de la caja, pero reemplaza las teclas por 16 semillas sobre un contorno elíptico y tres núcleos orgánicos. Sin fondo opaco ni cuadrículas. El brote inferior permite cerrar; las semillas activas y el pulso actual se distinguen por relleno y halo. La forma cerrada también se reemplaza por una vaina. Geometría compartida para dibujo y contacto; prueba de blancos distintos y envolvente inferior al 20 % en las tres resoluciones probadas. El cambio visual no amplía el catálogo de mundos ni añade culturas.
 
@@ -60,6 +64,18 @@ Rama `feat/resonant-ground`, basada en `feat/shared-installation-signals`. La Ca
 Sin caja, tapa ni contenedor; en reposo solo quedan pequeñas curvas sobre el piso. Las formas activas siguen siendo locales y transparentes. El suelo en reposo deja de modificar el arreglo o producir respuestas; la influencia anterior se disipa con el mecanismo existente. Pistas, selector de pruebas, Bitácora y nombre del logro se actualizan. Se conserva la clave interna `box` y el identificador `cajaEditable` para compatibilidad de descubrimientos, sin presentarlos como cajas en el juego.
 
 Probar: Prototipo → Semillas → Encuentro de prueba → **Suelo resonante**. Gestos probados en 390×844, 844×390 y 1280×800, incluyendo despertar por permanencia, respetar reposo, alejarse y volver, edición, cancelación, logros y respuestas de animales. 44 suites Node y regresión de las diez familias.
+
+## Nueva etapa: rastros musicales encadenados
+
+Rama `feat/chained-musical-trails`, basada en `feat/resonant-ground`. Añade una búsqueda opcional de tres huellas sobre el suelo: permanecer quieto dos segundos con música activa en la primera; seguir sus puntos locales y responder a tres golpes en la segunda; mantener la última huella 650 ms para despertar un instrumento. La semilla elige entre cuatro figuras rítmicas de tres golpes; el primer toque captura el tempo local y hay margen para reintentar. Las etapas futuras permanecen ocultas; no se pueden saltar ni resolver con toques rápidos indiscriminados.
+
+Un candidato por región terrestre, con probabilidad de generación de 1/16; posiciones y papel musical dependen de la semilla. En la prueba de 1.600 regiones aparecieron 71 rastros, pues el mar también se excluye. La rareza no garantiza que cada región contenga uno. Su sonido usa instrumentos y afinación de la región, alternando papeles de bajo, groove y motivo. Una pista puede emitir tres notas contenidas cada cuatro compases, compartiendo presupuesto con las otras instalaciones. El instrumento despierto responde a toques, sin sumar una capa ambiental continua ni un sonido de interfaz.
+
+El dibujo usa pequeñas curvas, tres marcas de respuesta y puntos de orientación locales; sin panel ni flecha global. Las etapas se guardan hasta en 64 rastros por partida. Alejarse, silenciar, pausar o cambiar de pestaña limpia la respuesta rítmica parcial; no borra etapas completadas. Bitácora y logro **Algo estaba dormido** muestran el descubrimiento. Las pruebas vuelven a la etapa pendiente o al instrumento ya despierto.
+
+Probar: Prototipo → Semillas → Encuentro de prueba → **Rastro musical · instrumento dormido**. No necesita encontrar primero un rastro raro; la partida habitual permanece separada. Culturas, reliquias históricas, puertas musicales y personajes originales siguen pendientes: esta entrega implementa una primera búsqueda y un instrumento dormido, sin dar por cerrado ese bloque.
+
+Verificación: 45 suites Node; 30 recorridos de regresión de navegador; búsqueda completa mediante gestos reales en móvil vertical, horizontal y escritorio, incluyendo música apagada, orden, reintentos, cancelación, guardado y Bitácora. Recarga offline con 71 módulos. Seis renderizados reales de pistas junto a música regional densa en minimal, tropical, dub, amapiano, nu-disco suave y ambient: pico máximo 0,934887, ninguna muestra por encima de 0,98. La evaluación artística también requiere escucha humana.
 
 ## Trabajo musical y técnico que acompaña las etapas
 

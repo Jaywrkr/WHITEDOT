@@ -48,7 +48,7 @@ export function initialize(runtime) {
     const depth=runtime.S.journal.depth||{},depthCard=Object.values(depth).some(Boolean)?card('Interacciones profundas',`${depth.threads?'Redes tejidas · ':''}${depth.dialogue?'Frases respondidas · ':''}${depth.box?'Suelos transformados':''} Los sonidos aprendidos, redes y patrones de estos encuentros son temporales.`):'';
     const linked=runtime.S.journal.installations||{},linkedCard=Object.values(linked).some(Boolean)?card('Una misma instalación',`${linked.glass?'Vidrios conectados · ':''}${linked.mirror?'Espejos conectados':''} Sus ángulos conducen las partes musicales del jardín regional sin sumar nuevas voces.`):'';
     const installations=linkedCard+depthCard+patchCard+mirrorCard+(Object.keys(runtime.S.glassSites||{}).length?card('Vidrios cromáticos',`${Object.keys(runtime.S.glassSites).length} instalaciones exploradas. Gira sus aros para transformar notas, acentos y figuras; la orientación queda guardada.`):'');
-    return (runtime.creativeCard?.()||'')+(runtime.encounterJournal?.()||'')+saved+installations+(regions.length?regions.map(region=>{
+    return (runtime.trailCard?.()||'')+(runtime.creativeCard?.()||'')+(runtime.encounterJournal?.()||'')+saved+installations+(regions.length?regions.map(region=>{
       const found=region.species.filter(sp=>runtime.S.cat[sp.id]).length,gravity=gravityOf(region,runtime.seedOf),j=data();
       const [rx,ry]=region.key.split(',').map(Number);
       let hasSite=!!j.relics[region.key];
@@ -78,7 +78,7 @@ export function initialize(runtime) {
   function achievements() {
     const groups={Constancia:[],Exploración:[],Música:[],Ocultos:[]};
     for(const [id,name,description,hidden]of runtime.ACH) {
-      const got=runtime.S.ach[id],group=hidden?'Ocultos':/^(r\d|t\d|dia1|tope|regreso|s10)/.test(id)?'Constancia':['instalacionUnida','tejidoVivo','respuestaAnimal','cajaEditable','patch1','fijarSonido','cultivarMusica','espejo1','vidrio1','paseo1','escuchaViva','tiempo','under','faro','banda','jardinero','tambor'].includes(id)?'Música':'Exploración';
+      const got=runtime.S.ach[id],group=hidden?'Ocultos':/^(r\d|t\d|dia1|tope|regreso|s10)/.test(id)?'Constancia':['instrumentoDespierto','instalacionUnida','tejidoVivo','respuestaAnimal','cajaEditable','patch1','fijarSonido','cultivarMusica','espejo1','vidrio1','paseo1','escuchaViva','tiempo','under','faro','banda','jardinero','tambor'].includes(id)?'Música':'Exploración';
       groups[group].push(card(hidden&&!got?'???':name,hidden&&!got?'Logro oculto. Sigue explorando.':description,`<p>${got?'Conseguido':'Pendiente'}</p>`));
     }
     return Object.entries(groups).map(([name,items])=>`<h3>${name}</h3>${items.join('')}`).join('');

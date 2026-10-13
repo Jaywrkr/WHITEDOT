@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-ground-v1';
+const CACHE='whitedot-trails-v1';
 const SHELL=[
  "./",
  "./index.html",
@@ -37,6 +37,8 @@ const SHELL=[
  "./src/influence.js",
  "./src/initiative.js",
  "./src/installations.js",
+ "./src/sound-trail-model.js",
+ "./src/sound-trails.js",
  "./src/installation-signals.js",
  "./src/instruments.js",
  "./src/interactions.js",

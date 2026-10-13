@@ -1,6 +1,17 @@
-# Rama actual
+# Orden actual de ramas nuevas
 
-`feat/deep-musical-encounters`, basada en main `2959313`. Profundiza redes tejidas, frases aprendidas y cajas editables. Jay crea PR y merge; el orden siguiente está en [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md). Las cinco fases anteriores ya están integradas.
+La base verificada es main `2959313`, que integra las cinco fases anteriores. Cada rama siguiente contiene la anterior. Jay crea los PR y hace merge; el trabajo nuevo se documenta en [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md).
+
+| Orden | Rama | Entrega |
+|---:|---|---|
+| 1 | `feat/deep-musical-encounters` | Redes tejidas, aprendizaje de frases y edición musical |
+| 2 | `docs/organic-interaction-direction` | Dirección visual y cultural documentada |
+| 3 | `feat/organic-musical-seedpods` | Primer rediseño orgánico, posteriormente sustituido por suelo |
+| 4 | `feat/shared-installation-signals` | Vidrios y espejos conducen módulos regionales |
+| 5 | `feat/resonant-ground` | Elimina las cajas como objeto; interacción con el piso |
+| 6 | `feat/chained-musical-trails` | Tres huellas encadenadas e instrumento dormido |
+
+Revisar cada PR contra la rama anterior mientras esté pendiente, y contra main después de integrar esa base. Usar merge normal para conservar ascendencia. Squash/rebase merge o cambios nuevos en main pueden requerir reajustar las ramas; una cadena no garantiza ausencia de conflictos ante esos cambios. No recrear PR de las cinco fases históricas ya integradas.
 
 <details><summary>Documentación histórica de ramas</summary>
 
