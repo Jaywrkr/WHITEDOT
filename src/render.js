@@ -32,6 +32,8 @@ export function initialize(runtime) {
     let dx=(runtime.keys.arrowright||runtime.keys.d?1:0)-(runtime.keys.arrowleft||runtime.keys.a?1:0), dy=(runtime.keys.arrowdown||runtime.keys.s?1:0)-(runtime.keys.arrowup||runtime.keys.w?1:0);
     if(runtime.ptr){const jx=runtime.ptr.ox??runtime.W/2,jy=runtime.ptr.oy??runtime.H/2,rad=runtime.ptr.ox!=null?55:80;dx=runtime.ptr.x-jx;dy=runtime.ptr.y-jy;const l=Math.hypot(dx,dy);if(l<6){dx=dy=0;}else{const k=Math.min(1,l/rad);dx=dx/l*k;dy=dy/l*k;}}
     else{const l=Math.hypot(dx,dy);if(l){dx/=l;dy/=l;}}
+    const manual=Math.hypot(dx,dy)>.01,automatic=runtime.autopilotVector?.(dt,manual,modal||runtime.scanning||document.hidden||runtime.S.mode==="studio");
+    if(!manual&&automatic){dx=automatic.dx;dy=automatic.dy;}
     if(modal||runtime.scanning||runtime.S.mode==="studio"){dx=dy=0;}
     const sp=Math.hypot(dx,dy);
     runtime.MU.speed+=(sp-runtime.MU.speed)*Math.min(1,dt*3);

@@ -487,3 +487,7 @@ Rama `feat/07-musical-favorites`. Menú → Favoritos guarda hasta 64 puntos con
 ### Fase 8: Orientación y regreso
 
 Rama `feat/08-return-navigation`. Cada favorito ofrece Orientar y hay retorno guiado al Estudio. Un indicador compacto muestra dirección, distancia en pasos y llegada, con cancelación; sigue disponible tras recarga. Si el destino está en otra capa indica buscar un acceso. No mueve al jugador ni teletransporta. Logro Otra vez aquí al regresar desde cierta distancia. Guardado v4 añade destination; borrar el favorito cancela su ruta. Verificación: 31 suites Node y smoke móvil/escritorio de dirección, llegada, capas y borrado. Dependencia y orden en RAMAS.md.
+
+### Fase 9: Autopilot musical
+
+Rama `feat/09-musical-autopilot`. Paseo musical desde Favoritos y viaje automático al destino de esta capa. Movimiento lento, pausa en menús/Escuchar/Estudio y al ocultar la pestaña, cancelación manual o con Detener/Escape, llegada y salida del Mundo. Consume linterna normalmente y compensa movimiento invertido. No se reanuda solo tras recarga. Logro Dejarse llevar por un minuto de viaje; el control manual siempre tiene prioridad. Verificación: 32 suites Node y smoke de viaje, pausas, linterna, cancelación y llegada incluso con movimiento invertido en móvil/escritorio. Dependencia y orden en RAMAS.md.

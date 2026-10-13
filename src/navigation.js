@@ -13,13 +13,14 @@ export function initialize(runtime){
   if(lastId!==point.id){lastId=point.id;wasAway=direction.distance>90;announced=false;}
   if(direction.distance>90)wasAway=true;
   state={target:point,...direction};$('routeHud').hidden=!runtime.inWorld();
+  $('routeAuto').disabled=!direction.sameLayer||direction.arrived;
   $('routeName').textContent=point.name;
   const directions=['Este','Sureste','Sur','Suroeste','Oeste','Noroeste','Norte','Noreste'],bearing=directions[((Math.round(Math.atan2(direction.dy,direction.dx)/(Math.PI/4))%8)+8)%8];
   $('routeDetail').textContent=!direction.sameLayer?`Destino en ${point.layer==='bajo'?'Subsuelo':point.layer==='cielo'?'Cielo':'Superficie'} · busca un acceso`:direction.arrived?'Llegaste':`${bearing} · ${Math.max(1,Math.round(direction.distance/10))} pasos`;
   $('routeArrow').toggleAttribute('hidden',!direction.sameLayer||direction.arrived);$('routeArrow').style.transform=`rotate(${direction.angle}rad)`;
   if(runtime.inWorld()&&direction.sameLayer&&direction.arrived&&!announced){announced=true;runtime.stopAutopilot?.();if(wasAway&&point.id!=='studio')runtime.unlock('regresoMusical');}
  }
- function actions(point,row){const button=document.createElement('button');button.textContent='Orientar';button.onclick=()=>select(point.id);row.append(button);}
+ function actions(point,row){const button=document.createElement('button');button.textContent='Orientar';button.onclick=()=>select(point.id);row.append(button);runtime.autopilotActions?.(point,row);}
  $('navCancel').onclick=cancel;$('favStudio').onclick=()=>select('studio');
  Object.defineProperties(runtime,{selectDestination:{get:()=>select},cancelDestination:{get:()=>cancel},navigationTick:{get:()=>tick},navigationState:{get:()=>state},favoriteActions:{get:()=>actions},favoriteRemoved:{get:()=>id=>{if(runtime.S.destination===id)cancel();}},refreshDestinations:{get:()=>()=>{$('favStudio').disabled=runtime.S.studio.x==null;}}});
  tick();

@@ -6,7 +6,7 @@ export function initialize(runtime) {
   function resize(){DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cx.setTransform(DPR,0,0,DPR,0,0);}
   addEventListener("resize",resize);resize();
   const keys={};let ptr=null;
-  addEventListener("keydown",e=>{keys[e.key.toLowerCase()]=1;runtime.audio();if(e.key.startsWith("Arrow"))e.preventDefault();if(e.code==="Space"&&!e.repeat&&e.target===document.body){e.preventDefault();runtime.sonar();}});
+  addEventListener("keydown",e=>{if(e.target?.closest?.('input,textarea,select,[contenteditable="true"]'))return;if(e.key==='Escape')runtime.stopAutopilot?.();keys[e.key.toLowerCase()]=1;runtime.audio();if(e.key.startsWith("Arrow"))e.preventDefault();if(e.code==="Space"&&!e.repeat&&e.target===document.body){e.preventDefault();runtime.sonar();}});
   addEventListener("keyup",e=>{keys[e.key.toLowerCase()]=0;});
   let holdTimer=null,activePointer=null,dragging=false,held=false;
   const cancelHold=()=>{clearTimeout(holdTimer);holdTimer=null;};
