@@ -30,7 +30,7 @@ export function initialize(runtime) {
     const region=runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
     document.getElementById('scannerRegion').textContent=`${region.name}${runtime.currentPocket()?.kind?" · "+POCKET_NAMES[runtime.currentPocket().kind]:""} · ${runtime.GEN[region.genre].name} · ${region.bpm} BPM · ${MODES[region.scale.join(",")]||"Escala regional"}`;
     list.replaceChildren();
-    const sources=region.recipe?.layer&&region.recipe.layer!=="superficie"?[]:[...nearbySources(runtime.sceneChunk?new Map([...runtime.wchunks].map(([id,c])=>[id,runtime.sceneChunk(c)])):runtime.wchunks,runtime.S.wx,runtime.S.wy),...(runtime.phenomenonSources?.()||[]),...(runtime.glassSources?.()||[]),...(runtime.mirrorSources?.()||[]),...(runtime.encounterSources?.()||[])].sort((a,b)=>a.distance-b.distance).slice(0,5);
+    const sources=region.recipe?.layer&&region.recipe.layer!=="superficie"?[]:[...nearbySources(runtime.sceneChunk?new Map([...runtime.wchunks].map(([id,c])=>[id,runtime.sceneChunk(c)])):runtime.wchunks,runtime.S.wx,runtime.S.wy),...(runtime.phenomenonSources?.()||[]),...(runtime.glassSources?.()||[]),...(runtime.mirrorSources?.()||[]),...(runtime.encounterSources?.()||[]),...(runtime.ecologySources?.()||[])].sort((a,b)=>a.distance-b.distance).slice(0,5);
     for(const source of sources) {
       const sp=source.object.s;
       const own=sp?runtime.regionOfPos(...sp.id.split(':')[0].split(',').map(n=>+n*runtime.REG*runtime.WCH+1)):runtime.regionOfPos(source.object.x,source.object.y);
@@ -43,7 +43,7 @@ export function initialize(runtime) {
       list.append(item);
     }
     if(!sources.length){const item=document.createElement('li');item.textContent='Sin objetos musicales cercanos. La región sigue componiendo.';list.append(item);}
-    document.getElementById('scannerHint').textContent=runtime.S.sound?`Voces cercanas · ${region.recipe?.name||createGrammar(region,runtime.seedOf,runtime.rng).character}${runtime.initiativeState?.stage?" · El ambiente responde":""}`:'Sonido silenciado · mostrando las voces del lugar';
+    document.getElementById('scannerHint').textContent=runtime.S.sound?`Voces cercanas · ${region.ecology?.name||region.recipe?.name||createGrammar(region,runtime.seedOf,runtime.rng).character}${runtime.initiativeState?.stage?" · El ambiente responde":""}`:'Sonido silenciado · mostrando las voces del lugar';
     if(runtime.RP)document.getElementById('scannerHint').textContent+=' · '+runtime.$('reto').textContent;
     const influence=runtime.influenceState?.values;if(influence&&Object.values(influence).some(v=>Math.abs(v)>.15))document.getElementById('scannerHint').textContent+=' · Tu presencia transforma la composición';
     while(panel.scrollHeight>panel.clientHeight+2&&list.childElementCount>1)list.lastElementChild.remove();

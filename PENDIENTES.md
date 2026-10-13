@@ -2,13 +2,15 @@
 
 La secuencia vigente está en [FASES_UNIVERSO.md](FASES_UNIVERSO.md): diez fases amplias, una rama por fase. El inventario detallado sigue en [V1_PRODUCCION.md](V1_PRODUCCION.md). La lista histórica permanece en [PLAN_HISTORICO.md](PLAN_HISTORICO.md); sus estados antiguos no describen la versión actual.
 
-## Fase 1 implementada, pendiente del PR/merge de Jay
+## Fase 1 integrada; fase 2 implementada, pendiente de revisión/merge
 
 `feat/phase-01-universe-foundation`: identidad de lugares/favoritos, guardado validado, recuperación y respaldo/importación, cachés acotadas, contratos ampliables, auditoría y automatización de pruebas. Detalle y límites: [FASE_01.md](FASE_01.md). No se han ampliado todavía biomas, géneros o instrumentos; no se ha certificado V1 en dispositivos reales.
 
+`feat/phase-02-living-world-recipes` continúa desde fase 1: Paisajes vivos, 33 hábitats, seis familias, vecindad/clima/relieve, selector y registros del juego. [Detalle](FASE_02.md). Sigue sin ampliar el catálogo de 52 estilos/modelos de instrumento; esa es fase 3.
+
 ## Integración verificada
 
-Base remota de esta fase: `7a0e8ff`, PR #67. Incluye el inventario V1 y toda la secuencia anterior, hasta vidrios sin panel y animal por toque.
+Base remota al cierre: `e26ef93`, PR #68; fase 1 ya integrada. Incluye el inventario V1 y toda la secuencia anterior, hasta vidrios sin panel y animal por toque.
 
 ## Regla de trabajo más reciente
 
@@ -16,7 +18,7 @@ Agrupar muchas mejoras relacionadas en una misma rama por fase, con commits y pu
 
 ## Prioridad
 
-1. Cerrar revisión/merge de fase 1 y validar Safari/Android reales, actualizaciones/rollback y conservación de generadores al ampliar el catálogo.
+1. Revisar/merge de fase 2, validar Safari/Android reales y actualizaciones/rollback. El Original v1 ya se conserva junto a Paisajes vivos v2; futuras versiones deberán mantener esa compatibilidad.
 2. Música: escucha larga, balance por rutas, instrumentos más distintos, formas evolutivas, transiciones y primeras tandas de estilos/FX.
 3. Mundo: contratos de contenido comunes, más relaciones/terrenos, cuerdas y suelo, instalaciones, puertas y búsquedas variadas, primeras culturas/personajes/reliquias históricas.
 4. Experiencia: Estudio, retorno y compartir lugares, historia/Voz, accesibilidad, UI silenciosa y pruebas con jugadores nuevos.

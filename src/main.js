@@ -1,4 +1,5 @@
 import {initialize as saveTools} from './save-tools.js';
+import {initialize as ecology} from './ecology.js';
 import { initialize as soundTrails } from './sound-trails.js';
 import { initialize as accessibility } from './accessibility.js';
 import { initialize as encounterDepth } from './encounter-depth.js';
@@ -104,6 +105,7 @@ clues(runtime);
 encounters(runtime);
 encounterDepth(runtime);
 soundTrails(runtime);
+ecology(runtime);
 saveTools(runtime);
 accessibility(runtime);
 

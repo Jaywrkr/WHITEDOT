@@ -1,4 +1,5 @@
 import {glassVoice} from './glass-music.js';
+import {ecologyVoice} from './ecology-model.js';
 import {encounterVoice} from './encounter-families.js';
 import {blobVoice} from './blobs.js';
 // Identidad musical estable por región; el aspecto no fija el instrumento.
@@ -17,7 +18,7 @@ export function createRegionalVoices(region, biomes, genres, seedOf, rng) {
     const j = Math.floor(random() * (i + 1));
     [kinds[i], kinds[j]] = [kinds[j], kinds[i]];
   }
-  const roles = ROLES.slice();
+  const roles = region.ecology?['bajo','perc','acorde','lead','perc']:ROLES.slice();
   for (let i = roles.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
     [roles[i], roles[j]] = [roles[j], roles[i]];
@@ -34,7 +35,7 @@ export function createRegionalVoices(region, biomes, genres, seedOf, rng) {
     voices[kind] = Object.freeze({role, instrument:pool[Math.floor(random()*pool.length)],
       degree:Math.floor(random()*7), response:[2,3,6][Math.floor(random()*3)],
       low:role==='bajo'?36:role==='agudo'?72:role==='acorde'?48:55,
-      high:role==='bajo'?55:role==='agudo'?84:role==='acorde'?72:79});
+      high:role==='bajo'?55:region.ecology?69:role==='agudo'?84:role==='acorde'?72:79});
   });
   return Object.freeze(voices);
 }
@@ -44,6 +45,7 @@ export function initialize(runtime) {
   let voiceOrigin="ambient";
   function withVoiceOrigin(origin,emit){const previous=voiceOrigin;voiceOrigin=origin;try{return emit();}finally{voiceOrigin=previous;}}
   function getVoice(kind, region) {
+    if(kind.startsWith('ecology:')&&region.ecology)return ecologyVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng);
     if(/^installation:glass:[0-2]$/.test(kind))return glassVoice(region,Number(kind.at(-1)),runtime.GEN,runtime.seedOf);
     if(kind.startsWith('encounter:'))return encounterVoice(kind.slice(10),region,runtime.GEN,runtime.seedOf);
     if(kind.startsWith('forma:')&&runtime.blobHabitat?.(region)){const key=region.key+':'+kind;if(!blobCache.has(key)){blobCache.set(key,blobVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng));while(blobCache.size>128)blobCache.delete(blobCache.keys().next().value);}return blobCache.get(key);}

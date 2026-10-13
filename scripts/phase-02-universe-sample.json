@@ -1,0 +1,273 @@
+{
+  "versions": {
+    "generatorVersion": 2,
+    "catalogVersion": 2,
+    "layoutVersion": 2
+  },
+  "layout": "classic",
+  "candidates": 40000,
+  "seeds": 4,
+  "distinctDetailedFingerprints": 39998,
+  "distinctLandMusicalFingerprints": 24371,
+  "neighborPairs": 39600,
+  "changedMusicalNeighborPairs": 39599,
+  "landNeighborPairs": 20988,
+  "sameBiomeNeighbors": 12002,
+  "sameGenreNeighbors": 7145,
+  "genreCounts": {
+    "soulful": 447,
+    "garagehouse": 518,
+    "brokenbeat": 497,
+    "ebm": 421,
+    "acidhouse": 447,
+    "ambient": 16649,
+    "tribal": 364,
+    "electro": 525,
+    "minimaltechno": 451,
+    "robotic": 530,
+    "rominimal": 447,
+    "progressive": 473,
+    "electrofunk": 618,
+    "jazztronica": 330,
+    "cosmic": 405,
+    "minimal": 419,
+    "techhouse": 486,
+    "melodic": 451,
+    "baltimore": 474,
+    "breaks": 428,
+    "garage": 357,
+    "chicago": 458,
+    "microhouse": 514,
+    "ghetto": 505,
+    "acid": 454,
+    "dubstep": 489,
+    "afro": 363,
+    "melodictechno": 481,
+    "idm": 389,
+    "boogie": 598,
+    "tropical": 455,
+    "detroitelectro": 483,
+    "jersey": 416,
+    "amapiano": 385,
+    "andean": 377,
+    "dub": 439,
+    "miamibass": 442,
+    "trap": 418,
+    "downtempo": 434,
+    "detroit": 520,
+    "nudisco": 499,
+    "deep": 467,
+    "algorave": 441,
+    "berlin": 401,
+    "boombap": 454,
+    "organic": 403,
+    "gfunk": 449,
+    "lofi": 607,
+    "heart": 583,
+    "footwork": 442,
+    "dnb": 505,
+    "liquid": 392
+  },
+  "ecologyCounts": {
+    "pradera": 1552,
+    "raices": 800,
+    "canopia": 1113,
+    "constelacion": 5249,
+    "silencio": 5454,
+    "bambu": 873,
+    "fulgurita": 734,
+    "hongos": 484,
+    "estepa": 1475,
+    "micelio": 914,
+    "manglar": 410,
+    "humedal": 459,
+    "tundra": 1415,
+    "escarcha": 774,
+    "sal": 5435,
+    "terrazas": 970,
+    "magnetico": 816,
+    "sedas": 462,
+    "agujas": 707,
+    "subterraneo": 501,
+    "polen": 760,
+    "basalto": 996,
+    "bruma": 886,
+    "salinas": 422,
+    "geodas": 691,
+    "estalactitas": 534,
+    "acantilado": 975,
+    "oasis": 374,
+    "mareas": 1045,
+    "vainas": 649,
+    "laguna": 422,
+    "oxido": 905,
+    "nubes": 744
+  },
+  "rows": [
+    {
+      "seed": "original",
+      "samples": 10000,
+      "land": 6022,
+      "landMusicalFingerprints": 6022,
+      "detailedFingerprints": 10000,
+      "caches": {
+        "regions": {
+          "size": 128,
+          "limit": 128,
+          "evictions": 9874
+        },
+        "biomes": {
+          "size": 256,
+          "limit": 256,
+          "evictions": 9743
+        },
+        "worldChunks": {
+          "size": 0,
+          "limit": 128,
+          "evictions": 0
+        },
+        "pathChunks": {
+          "size": 0,
+          "limit": 128,
+          "evictions": 0
+        },
+        "continents": {
+          "seeds": {
+            "size": 128,
+            "limit": 128,
+            "evictions": 236
+          },
+          "regions": {
+            "size": 256,
+            "limit": 256,
+            "evictions": 13467
+          }
+        }
+      }
+    },
+    {
+      "seed": "foundation-1",
+      "samples": 10000,
+      "land": 6023,
+      "landMusicalFingerprints": 6023,
+      "detailedFingerprints": 10000,
+      "caches": {
+        "regions": {
+          "size": 128,
+          "limit": 128,
+          "evictions": 9875
+        },
+        "biomes": {
+          "size": 256,
+          "limit": 256,
+          "evictions": 9743
+        },
+        "worldChunks": {
+          "size": 0,
+          "limit": 128,
+          "evictions": 0
+        },
+        "pathChunks": {
+          "size": 0,
+          "limit": 128,
+          "evictions": 0
+        },
+        "continents": {
+          "seeds": {
+            "size": 128,
+            "limit": 128,
+            "evictions": 251
+          },
+          "regions": {
+            "size": 256,
+            "limit": 256,
+            "evictions": 13468
+          }
+        }
+      }
+    },
+    {
+      "seed": "foundation-2",
+      "samples": 10000,
+      "land": 6068,
+      "landMusicalFingerprints": 6068,
+      "detailedFingerprints": 10000,
+      "caches": {
+        "regions": {
+          "size": 128,
+          "limit": 128,
+          "evictions": 9876
+        },
+        "biomes": {
+          "size": 256,
+          "limit": 256,
+          "evictions": 9743
+        },
+        "worldChunks": {
+          "size": 0,
+          "limit": 128,
+          "evictions": 0
+        },
+        "pathChunks": {
+          "size": 0,
+          "limit": 128,
+          "evictions": 0
+        },
+        "continents": {
+          "seeds": {
+            "size": 128,
+            "limit": 128,
+            "evictions": 246
+          },
+          "regions": {
+            "size": 256,
+            "limit": 256,
+            "evictions": 13468
+          }
+        }
+      }
+    },
+    {
+      "seed": "foundation-3",
+      "samples": 10000,
+      "land": 6258,
+      "landMusicalFingerprints": 6258,
+      "detailedFingerprints": 10000,
+      "caches": {
+        "regions": {
+          "size": 128,
+          "limit": 128,
+          "evictions": 9872
+        },
+        "biomes": {
+          "size": 256,
+          "limit": 256,
+          "evictions": 9743
+        },
+        "worldChunks": {
+          "size": 0,
+          "limit": 128,
+          "evictions": 0
+        },
+        "pathChunks": {
+          "size": 0,
+          "limit": 128,
+          "evictions": 0
+        },
+        "continents": {
+          "seeds": {
+            "size": 128,
+            "limit": 128,
+            "evictions": 243
+          },
+          "regions": {
+            "size": 256,
+            "limit": 256,
+            "evictions": 13465
+          }
+        }
+      }
+    }
+  ],
+  "notes": "Discrete structural fingerprints, not songs or perceptually unique experiences. Signature differs from world-variation.mjs. Terrain caches stay bounded; aggregate SHA-256 sets grow with sample size. No player save is read or modified."
+}

@@ -18,8 +18,8 @@ const candidatesFor=(ids,genres,tempo)=>{const cost=ids.map(id=>Math.max(genres[
 const WEIGHT_CACHE=new Map();
 // Ajuste iterativo sobre 61×61 regiones: busca pesos tales que cada género ocupe una parte
 // similar del mundo, respetando el tempo local y la preferencia de familia de cada continente.
-export function genreWeights(genres,seedOf,rng,contAt){
- const ids=Object.keys(genres),cacheKey=ids.join('|')+(contAt?'|c':'');if(WEIGHT_CACHE.has(cacheKey))return WEIGHT_CACHE.get(cacheKey);
+export function genreWeights(genres,seedOf,rng,contAt,scope=''){
+ const ids=Object.keys(genres),cacheKey=ids.join('|')+(contAt?'|c':'')+'|'+scope;if(WEIGHT_CACHE.has(cacheKey))return WEIGHT_CACHE.get(cacheKey);
  const fam=ids.map(id=>familyOf(id)),samples=[];
  for(let rx=-30;rx<=30;rx++)for(let ry=-30;ry<=30;ry++){if(!rx&&!ry)continue;const m=musicalContext(rx,ry,seedOf,rng,contAt);if(m.sea)continue;
   const cand=candidatesFor(ids,genres,m.tempo);samples.push(cand.map(i=>[i,m.family&&fam[i]===m.family?AFFINITY:1]));}
@@ -27,16 +27,16 @@ export function genreWeights(genres,seedOf,rng,contAt){
  for(let it=0;it<60;it++){const share=ids.map(()=>0);
   for(const cand of samples){let t=0;for(const [i,a]of cand)t+=w[i]*a;for(const [i,a]of cand)share[i]+=w[i]*a/t;}
   ids.forEach((_,i)=>{if(share[i]>0)w[i]=Math.min(1e3,Math.max(1e-3,w[i]*Math.sqrt(target/share[i])));});}
- const out=Object.fromEntries(ids.map((id,i)=>[id,w[i]]));WEIGHT_CACHE.set(cacheKey,out);return out;
+ const out=Object.fromEntries(ids.map((id,i)=>[id,w[i]]));WEIGHT_CACHE.set(cacheKey,out);while(WEIGHT_CACHE.size>8)WEIGHT_CACHE.delete(WEIGHT_CACHE.keys().next().value);return out;
 }
-export function applyNeighborhood(region,biomes,genres,seedOf,rng,contAt) {
+export function applyNeighborhood(region,biomes,genres,seedOf,rng,contAt,scope='') {
  const [rx,ry]=region.key.split(',').map(Number),field=musicalContext(rx,ry,seedOf,rng,contAt);
  if(rx===0&&ry===0)return region;
- const r=rng(seedOf(`musical-neighbor-choice:v1:${region.key}`));
+ const r=rng(seedOf(scope?`musical-neighbor-choice:v2:${Math.floor(rx/2)},${Math.floor(ry/2)}`:`musical-neighbor-choice:v1:${region.key}`));
  if(biomes[region.z].id!=='vacio'){
   const ids=Object.keys(genres),candidates=candidatesFor(ids,genres,field.tempo).map(i=>ids[i]);
   // Elección ponderada: reparto global parejo, con preferencia por la familia del continente.
-  const weights=genreWeights(genres,seedOf,rng,contAt),wt=id=>weights[id]*(field.family&&familyOf(id)===field.family?AFFINITY:1);
+  const weights=genreWeights(genres,seedOf,rng,contAt,scope),wt=id=>weights[id]*(field.family&&familyOf(id)===field.family?AFFINITY:1);
   const total=candidates.reduce((sum,id)=>sum+wt(id),0);
   let pick=r()*total;region.genre=candidates[candidates.length-1];
   for(const id of candidates){pick-=wt(id);if(pick<=0){region.genre=id;break;}}

@@ -1,3 +1,11 @@
+## Fase 2 · Paisajes vivos y medición grande
+
+Los 11 biomas base y 52 estilos permanecen; se agregan 33 perfiles de hábitat y seis familias de materia musical. La generación Original conserva exactamente las cifras anteriores.
+
+Auditar ambas generaciones con `npm run audit:universe -- 10000 4 1 classic` y `npm run audit:universe -- 10000 4 2 classic`. En 40.000 candidatos, el vivo presenta 39.998 firmas detalladas; vecinos terrestres con bioma coincidente 57,2 % (original 9,7 %), género coincidente 34,0 % (original 14,8 %). [Resultado vivo](scripts/phase-02-universe-sample.json) y [original](scripts/phase-02-original-sample.json).
+
+`npm run audit:universe -- 250000 4 2 classic` muestreó un millón de candidatos: **999.512 recetas detalladas distintas** y **586.200 firmas musicales terrestres**, según [la firma discreta del auditor](scripts/phase-02-million-sample.json). No cuenta canciones, mundos completos ni diferencias perceptuales, y la firma nueva incluye variables ecológicas/arquitecturas ausentes en v1. Mantener cachés acotadas hace viable recorrer nuevas regiones; no declara el universo infinito literal. [Alcance y límites](FASE_02.md).
+
 ## Fase 1: auditoría y conservación del generador
 
 El generador actual se mantiene. Repetir `node scripts/world-variation.mjs 100` conserva exactamente los resultados de 40.000 regiones descritos debajo. La nueva herramienta `npm run audit:universe -- 10000 4` mide otras firmas discretas (incluye patrones/secuencias) entre cuatro semillas: 39.880 firmas detalladas y 24.350 firmas musicales terrestres en 40.000 candidatos. [Resultado reproducible](scripts/phase-01-universe-sample.json) y [método/límites](FASE_01.md).

@@ -1,14 +1,15 @@
 # Integración y trabajo agrupado
 
-Base remota verificada `7a0e8ff` (PR #67). Las ocho filas históricas siguientes y el inventario V1 ya están integrados. No recrear sus PR.
+Base remota verificada `e26ef93` (PR #68); fase 1 ya integrada. Las ocho filas históricas siguientes y el inventario V1 ya están integrados. No recrear sus PR.
 
 ## Rama actual
 
 | Fase vigente | Rama | Base | Entrega |
 |---:|---|---|---|
 | 1 | `feat/phase-01-universe-foundation` | `main` · `7a0e8ff` | Guardado/respaldos, direcciones compatibles, cachés limitadas, contratos y auditoría/pruebas |
+| 2 | `feat/phase-02-living-world-recipes` | `main` · `e26ef93` | Paisajes vivos, 33 hábitats, seis familias, vecindad/clima/relieve, composición regional, selector y descubrimientos |
 
-Jay crea el PR de esta única rama hacia main y hace merge. El asistente prepara, prueba, documenta y sube. Las fases 2–10 siguen pendientes: [FASES_UNIVERSO.md](FASES_UNIVERSO.md). Cada una agrupa muchas mejoras y documentos, sin volver a una rama por objeto. La siguiente se basará en esta si sigue pendiente o en el main actualizado después de integrarla. No se garantiza ausencia de conflictos si main cambia o se reescribe la ascendencia.
+**Fase 1 ya integrada mediante PR #68. Solo fase 2 requiere PR ahora, hacia main.** Se inició sobre fase 1 y se actualizó al main final con el mismo contenido base, sin conflictos. El asistente prepara, prueba, documenta y sube; Jay crea PR/merge. Fases 3–10 siguen pendientes: [FASES_UNIVERSO.md](FASES_UNIVERSO.md). Una rama amplia por fase; no se garantiza ausencia de conflictos ante cambios independientes o reescritura del historial. [Probar fase 2](FASE_02.md).
 
 ## Cadena de referencia
 

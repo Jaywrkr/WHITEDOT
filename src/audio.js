@@ -70,7 +70,7 @@ export function initialize(runtime) {
       fx.verb.buffer=impulse(4.5);fx.verbSend.gain.value=0;fx.delaySend.gain.value=0;fx.fb.gain.value=.45;fx.dtone.type='lowpass';fx.dtone.frequency.value=2600;fx.crushSend.gain.value=0;
       if(fx.crush.curve!==undefined){const n=4096,cv=new Float32Array(n);for(let i=0;i<n;i++){const x=i/(n-1)*2-1;cv[i]=Math.round(x*6)/6;}fx.crush.curve=cv;}
       subsonic=ac.createBiquadFilter();subsonic.type='highpass';subsonic.frequency.value=20;subsonic.Q.value=Math.SQRT1_2;
-      headroom=ac.createGain();headroom.gain.value=.98;
+      headroom=ac.createGain();headroom.gain.value=runtime.worldIdentity?.generatorVersion===2?.96:.98;
       const fxRoom=returnFilters(ac,180,8000),fxEcho=returnFilters(ac,110,8000);
       master.connect(subsonic).connect(mfilt).connect(fx.lp).connect(fx.hp).connect(fx.dry).connect(punch);
       fx.hp.connect(fx.verbSend).connect(fx.verb).connect(fxRoom.input);fxRoom.output.connect(punch);
