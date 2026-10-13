@@ -10,7 +10,7 @@ Jay autorizó completar las primeras diez fases encadenadas. Se parte de la fase
 | 4 | `feat/04-coherent-world-combinations` | rama 3 | Implementada: Combinaciones coherentes |
 | 5 | `polish/05-world-visual-language` | rama 4 | Implementada: Lenguaje gráfico y capas de información |
 | 6 | `feat/06-stationary-environment` | rama 5 | Implementada: El ambiente responde a la quietud |
-| 7 | `feat/07-musical-favorites` | rama 6 | Pendiente |
+| 7 | `feat/07-musical-favorites` | rama 6 | Implementada: Favoritos musicales |
 | 8 | `feat/08-return-navigation` | rama 7 | Pendiente |
 | 9 | `feat/09-musical-autopilot` | rama 8 | Pendiente |
 | 10 | `feat/10-chromatic-glass` | rama 9 | Pendiente |

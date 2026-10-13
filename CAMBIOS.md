@@ -228,3 +228,7 @@ Se inventarían todas las etapas de producto del historial desde `596fa31`, incl
 ### Fase 6 de la cadena: El ambiente responde a la quietud
 
 `feat/06-stationary-environment`. Tras aproximadamente 60 segundos de escucha activa aparecen respuestas espaciadas de fuentes cercanas o un motivo local cuando no hay objetos. La iniciativa desarrolla tres niveles con el tiempo, respeta el compás y baja suavemente al moverte. Menús, Escuchar, pestaña oculta y audio suspendido no suman tiempo; claros de escucha omiten respuestas extras. Logro El lugar te responde y explicación en Escuchar/Bitácora. Estado temporal, sin drone ni grabación de ambiente. Pruebas: 29 suites Node y prueba de iniciativa con síntesis real móvil/escritorio. Ver RAMAS.md.
+
+### Fase 7 de la cadena: Favoritos musicales
+
+`feat/07-musical-favorites`. Menú → Favoritos guarda hasta 64 puntos con nombre, coordenadas, capa y carácter musical; permite renombrar y borrar, y sobrevive a recarga. Bitácora los lista y el mapa marca los de superficie sin revelar terreno adicional. Logro Quiero volver. No es teletransporte ni snapshot del compás; escenas exactas siguen pendientes. Guardado v4 añade favorites versión 1. Pruebas: 30 suites Node y smoke de guardado/renombrado/recarga/Bitácora/borrado en móvil y escritorio. Ver RAMAS.md.

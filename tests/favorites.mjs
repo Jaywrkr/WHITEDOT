@@ -1,0 +1,9 @@
+import assert from 'node:assert/strict';import {normalizeFavorites,storeFavorite,FAVORITE_LIMIT} from '../src/favorites.js';
+const s={},base={name:'Mi lugar',x:-123.5,y:444,layer:'superficie',created:1,genre:'dub',scale:[0,2,3,5,7,8,10]};
+const first=storeFavorite(s,base);assert(first);assert.equal(s.favorites.version,1);assert.equal(first.x,-123.5);
+const same=storeFavorite(s,{...base,name:'Nuevo nombre',x:-124,created:2});assert.equal(same.id,first.id);assert.equal(s.favorites.items.length,1);
+const lower=storeFavorite(s,{...base,layer:'bajo'});assert.notEqual(lower.id,first.id);
+assert.deepEqual(normalizeFavorites(JSON.parse(JSON.stringify(s.favorites))),s.favorites);
+const invalid=normalizeFavorites({items:[{id:'a',layer:'superficie',x:NaN,y:1},{id:'b',layer:'unknown',x:1,y:1},{...first,name:'x'.repeat(100)},first]});assert.equal(invalid.items.length,1);assert.equal(invalid.items[0].name.length,60);
+for(let i=s.favorites.items.length;i<FAVORITE_LIMIT;i++)assert(storeFavorite(s,{...base,x:i*100,created:10+i}));assert.equal(storeFavorite(s,{...base,x:99999,created:100}),null);
+console.log('PASS: persistent named coordinates, layer distinction, local deduplication, safe normalization and bounded favorite list');

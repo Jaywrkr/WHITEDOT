@@ -180,3 +180,7 @@ body:has(#fxPanel:not([hidden])) .toast{bottom:calc(100dvh - var(--fx-panel-top,
 .fxhead{flex-wrap:wrap;letter-spacing:.08em}.fxhead span{min-width:120px}
 .fxpad{height:clamp(110px,22dvh,170px)}
 @media(max-height:620px){.fxpad{height:100px}.fxpanel{gap:5px}.fxbtns button{padding:7px 3px}}
+.favorite-form{display:grid;gap:8px}.favorite-form label{font-size:11px;color:var(--dim)}
+.favorite-form input,.favorite-card input{width:100%;min-width:0;padding:10px;color:var(--ink);background:#000;border:1px solid var(--faint);font:inherit;font-size:12px}
+.favorite-form input:focus,.favorite-card input:focus{outline:1px solid var(--gold)}
+#favoritesBody{max-height:45dvh;overflow:auto;display:grid;gap:10px}.favorite-card .row{flex-wrap:wrap}.favorite-card button{min-height:40px}
