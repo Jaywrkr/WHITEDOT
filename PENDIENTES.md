@@ -54,7 +54,7 @@ Radio y fenómenos ya evolucionan. Añadir respuesta específica a inmovilidad p
 
 ## Segundo bloque: recordar, volver y pasear
 
-### 7. Favoritos musicales
+### 7. Favoritos musicales — implementada en rama 7
 
 Marcar cualquier punto, nombrarlo, guardar coordenadas, capa, región/bioma, carácter musical y fecha; editar/borrar en Bitácora/mapa. Independiente del checkpoint del Estudio. Guardado compatible y límite razonable.
 

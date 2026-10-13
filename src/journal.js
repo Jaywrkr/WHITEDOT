@@ -41,7 +41,8 @@ export function initialize(runtime) {
   const card=(title,description,extra='')=>`<article class="journal-card"><h3>${escape(title)}</h3><p>${escape(description)}</p>${extra}</article>`;
   function places() {
     const regions=Object.keys(runtime.S.places).map(k=>regionFromKey(k,runtime)).filter(Boolean);
-    return regions.length?regions.map(region=>{
+    const favorites=runtime.favorites||[];const saved=favorites.length?'<h3>Favoritos</h3>'+favorites.map(p=>card(p.name,`${p.layer} · ${runtime.GEN[p.genre]?.name||p.genre} · ${p.character}`)).join(''):'';
+    return saved+(regions.length?regions.map(region=>{
       const found=region.species.filter(sp=>runtime.S.cat[sp.id]).length,gravity=gravityOf(region,runtime.seedOf),j=data();
       const [rx,ry]=region.key.split(',').map(Number);
       let hasSite=!!j.relics[region.key];
@@ -49,7 +50,7 @@ export function initialize(runtime) {
       const tasks=[['Formas',found===region.species.length],['Reto',!!runtime.S.retos[region.key]],...(region.name==='Origen'?[]:[['Evento',!!j.events[region.key]]]),...(hasSite?[['Reliquia',!!j.relics[region.key]]]:[])];
       const percent=Math.round((found/region.species.length+tasks.slice(1).filter(t=>t[1]).length)/tasks.length*100);
       return card(region.name,`${runtime.BIOMES[region.z].name} · ${runtime.GEN[region.genre].name} · ${region.bpm} BPM · ${gravity.name} · ${gravity.movement}`,`<p>${escape(region.hab?.[1]||"")} · ${escape(region.fill?.[1]||"")} · ${escape(runtime.AIRTXT[region.air]||"")} · ${escape(region.ground?"Suelo de "+region.ground:"Sin suelo")}</p>${region.recipe?`<p>${escape(region.recipe.name)} · ${escape(region.recipe.materialName)}</p>`:""}<p>Descubrimiento ${percent}% · Formas ${found}/${region.species.length}</p><ul>${tasks.map(([name,done])=>`<li>${name}: ${done?'descubierto':'pendiente'}</li>`).join('')}</ul>`);
-    }).join(''):card('El mapa espera','Completa el Camino y entra al Mundo para descubrir lugares.');
+    }).join(''):card('El mapa espera','Completa el Camino y entra al Mundo para descubrir lugares.'));
   }
   function forms() {
     const groups=Object.fromEntries(Object.keys(ROLES).map(k=>[k,[]]));

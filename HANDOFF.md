@@ -479,3 +479,7 @@ Rama `polish/05-world-visual-language`. Elementos nuevos, fenómenos e hitos com
 ### Fase 6: El ambiente responde a la quietud
 
 Rama `feat/06-stationary-environment`. Tras aproximadamente 60 segundos de escucha activa aparecen respuestas espaciadas de fuentes cercanas o un motivo local cuando no hay objetos. La iniciativa desarrolla tres niveles con el tiempo, respeta el compás y baja suavemente al moverte. Menús, Escuchar, pestaña oculta y audio suspendido no suman tiempo; claros de escucha omiten respuestas extras. Logro El lugar te responde y explicación en Escuchar/Bitácora. Estado temporal, sin drone ni grabación de ambiente. Verificación: 29 suites Node y prueba de iniciativa con síntesis real móvil/escritorio. Dependencia y orden en RAMAS.md.
+
+### Fase 7: Favoritos musicales
+
+Rama `feat/07-musical-favorites`. Menú → Favoritos guarda hasta 64 puntos con nombre, coordenadas, capa y carácter musical; permite renombrar y borrar, y sobrevive a recarga. Bitácora los lista y el mapa marca los de superficie sin revelar terreno adicional. Logro Quiero volver. No es teletransporte ni snapshot del compás; escenas exactas siguen pendientes. Guardado v4 añade favorites versión 1. Verificación: 30 suites Node y smoke de guardado/renombrado/recarga/Bitácora/borrado en móvil y escritorio. Dependencia y orden en RAMAS.md.

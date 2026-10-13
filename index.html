@@ -63,6 +63,7 @@
       <button id="bWorld"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/></svg><span>Mundo</span></button>
       <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Estudio</span></button>
       <button id="bSky"><svg viewBox="0 0 24 24"><path d="M5 17l5-6 4 3 5-8"/><circle cx="5" cy="17" r="1.5"/><circle cx="10" cy="11" r="1.5"/><circle cx="14" cy="14" r="1.5"/><circle cx="19" cy="6" r="1.5"/></svg><span>Constelación</span></button>
+      <button id="bFavorites"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Favoritos</span></button>
       <button id="bMap"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mapa</span></button>
       <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
       <button id="bSound"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg><span>Música</span></button>
@@ -228,6 +229,11 @@
   </div>
 </div>
 
+<div class="modal" id="mFavorites" role="dialog" aria-modal="true" aria-labelledby="favoritesTitle" hidden>
+ <div class="sheet"><h2 id="favoritesTitle">Favoritos musicales</h2>
+ <form id="favForm" class="favorite-form"><label for="favName">Nombre de este punto</label><input id="favName" maxlength="60" autocomplete="off"><button id="favSave" type="submit" class="gold">Guardar aquí</button></form>
+ <p id="favNote"></p><div id="favoritesBody" class="scroll"></div><div class="row"><button id="favoritesClose">Cerrar</button></div></div>
+</div>
 <script type="module" src="./src/main.js"></script>
 
 </body>
