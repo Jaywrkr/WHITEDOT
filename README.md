@@ -2,7 +2,7 @@
 
 Un pixel blanco en un mundo negro. Cada día avanzas un camino corto, y cuando lo terminas se abre un **Mundo infinito y procedural donde todo hace música**: electrónica que va del ambient al minimal tech house. Cada región tiene su género, su paisaje y sus criaturas, y todo lo que tocas suena a tempo.
 
-**Jugar:** https://whitedot-inky.vercel.app (en el móvil, instálalo: Compartir → Añadir a pantalla de inicio) (funciona en móvil y desktop, con audio. Toca la pantalla una vez para activar el sonido.)
+**Jugar:** https://whitedot-inky.vercel.app. En el móvil, instálalo como app: en iPhone, Compartir → Añadir a pantalla de inicio. Funciona en móvil y escritorio; toca la pantalla una vez para activar el sonido.
 
 Por Jay · [@jaywrkr](https://instagram.com/jaywrkr)
 
@@ -77,6 +77,14 @@ Mientras más lejos del Origen, más raro: criaturas más grandes, colores impos
 Muy de vez en cuando aparecen **rarezas** que rompen las reglas (gravedad invertida, regiones en canon, el tiempo que se detiene, la Luna de oro…). La Voz suelta rumores de hacia dónde están, y cada una te da una muestra única para tu Estudio. Los **ríos** cruzan el mundo: síguelos río abajo y la música va subiendo; donde dos ríos se juntan, sus músicas se mezclan. Las **tormentas** viajan con el viento y llueven notas: persíguelas. Cada continente cambia de **estación** cada semana, y el mundo guarda tus **huellas** y tus campamentos antiguos.
 
 Hay **grietas** y **escaleras de luz**: ábrelas lanzando los pulsos que piden, seguidos y en el beat. Abajo, en el **Subsuelo**, cada paso vale ocho de arriba (sales por columnas de luz). Arriba, en el **Cielo**, ves el continente entero y tocas donde quieres bajar.
+
+## Hacer música en el lugar
+
+En el Mundo, el dock tiene dos botones nuevos:
+
+- **⟳ Eco (looper):** grabas 2 compases de lo que tú haces sonar (pulsos, toques, luces) y queda en el mundo como un eco que se repite mientras estás cerca. Puedes tener hasta 4. Junto a un eco, el mismo botón lo borra.
+- **Mesa de efectos (Kaoss pad):** arrastras sobre el pad. Hacia los lados filtras (graves a la izquierda, agudos a la derecha) y hacia arriba das espacio (reverb y eco). Al soltar vuelve a limpio, salvo que actives **Fijar**. También tiene **Eco** (repeticiones largas a tempo), **Robot** (reducción de bits) y **Stop** (frenazo de cinta).
+- **Banda de criaturas (estilo Incredibox):** cada criatura que tocas se une con su papel musical: bajo, percusión, acordes o melodía. Te siguen tocando su parte a tempo. Con la banda completa todo sube, y hay combos secretos.
 
 ## Atlas de ritmos (para probar)
 

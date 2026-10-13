@@ -42,9 +42,16 @@
 <div class="dock" id="dock">
   <button class="ico" id="bPrimary" hidden><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span id="bPrimaryL">Mundo</span></button>
   <div class="sp"></div>
+  <button class="ico round" id="bFx" aria-label="Mesa de efectos" title="Mesa de efectos" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><path d="M6 4v16M12 4v16M18 4v16"/><path d="M4 9h4M10 15h4M16 7h4"/></svg></button>
+  <button class="ico round" id="bLoop" aria-label="Grabar un eco de 2 compases" title="Eco: grabar 2 compases" hidden><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 8v4l3 2"/></svg></button>
   <button class="ico round" id="bDeploy" aria-label="Desplegar Estudio aquí" title="Desplegar Estudio aquí" hidden><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg></button>
   <button class="ico round" id="bMenu" aria-label="Menú"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
 </div>
+<section class="fxpanel" id="fxPanel" aria-label="Mesa de efectos" hidden>
+  <div class="fxhead"><small>Mesa de efectos</small><span id="fxRead">Limpio</span><button id="fxClose" aria-label="Cerrar mesa de efectos">×</button></div>
+  <div class="fxpad" id="fxPad" role="application" aria-label="Pad: horizontal filtro, vertical espacio"><i id="fxDot"></i><em class="l">graves</em><em class="r">agudos</em><em class="t">espacio</em></div>
+  <div class="fxbtns"><button id="fxEco" aria-pressed="false">Eco</button><button id="fxRobot" aria-pressed="false">Robot</button><button id="fxStop">Stop</button><button id="fxHold" aria-pressed="false">Fijar</button></div>
+</section>
 <aside id="scanner" class="scanner" aria-label="Escuchar el Mundo" hidden>
   <h2>Escuchar</h2><p id="scannerRegion"></p><ul id="scannerSources"></ul><small id="scannerHint"></small>
 </aside>

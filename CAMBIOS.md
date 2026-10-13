@@ -172,6 +172,14 @@ Confluencias entre dos familias de ríos con mezcla musical, ríos en el mapa, t
 
 Portales (grietas y escaleras de luz) que se abren con pulsos seguidos en el beat; Subsuelo donde un paso vale ocho de arriba, con salidas en columnas de luz y música grave propia; Cielo con vista del continente para elegir dónde bajar. Logros `bajo1`, `cielo1` y `atajo`. Prueba `tests/layers_smoke.py`; 26 suites y ocho smokes pasan.
 
+### 34. Mezcla limpia — rama `fix/cleaner-loud-mix`
+
+Menos saturación con volumen alto: compresión más suave con ataque más lento, saturación casi lineal, compensación ×5,6. RMS ~−8,4 dB y la mitad de muestras calientes que antes.
+
+### 35. Hacer música en el lugar — rama `feat/looper-band` (incluye la 34)
+
+Looper de ecos de 2 compases que se quedan sonando en el mundo; banda de criaturas por papeles con combos; mesa de efectos estilo Kaoss pad con filtro, espacio, eco, robot y stop de cinta. Pruebas `tests/jam_smoke.py` y `tests/fx_smoke.py`; 26 suites y diez smokes pasan.
+
 ## Persistencia y compatibilidad
 
 Clave `pixel-blanco-v4` conservada; progreso solo en navegador. Añadidos durante etapas: `S.journal`, `S.softMusic`, `S.relicSites`, metadatos de nuevas estrellas, `S.session` y `S.lastSession`. Partidas antiguas se normalizan sin inventar historial. Perfiles de radio, voz, gravedad, personalidad, espacios, efectos, gramática, vecindarios, fenómenos y materiales se reconstruyen o son temporales; no se guarda estado exacto de música. Reacciones/posiciones dinámicas no garantizan persistencia al reconstruir chunk. IDs del mundo físico se han preservado; nuevos géneros/campos sí pueden cambiar identidad musical de coordenadas antiguas.

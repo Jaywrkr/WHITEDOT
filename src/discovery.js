@@ -19,7 +19,7 @@ export function initialize(runtime) {
   function retoDone(){runtime.S.retos[RP.key]=1;runtime.S.retosN=(runtime.S.retosN||0)+1;const ks=Object.keys(runtime.SAMPLES).slice(0,8),k=ks[Math.floor(Math.random()*ks.length)];
     runtime.flash=.8;runtime.pulse=1;burst(runtime.S.wx,runtime.S.wy,30,true);runtime.soon(q=>runtime.chordTones().forEach((n,i)=>runtime.pluck(n+12,q+i*runtime.SIX,runtime.vel(.08),4)));
     runtime.say(runtime.VOZ.reto,"Reto cumplido");runtime.gain(k);runtime.unlock("reto1");if(runtime.S.retosN>=10)runtime.unlock("reto10");if(runtime.S.retosN>=50)runtime.unlock("reto50");retoUI();runtime.save();}
-  function touched(){runtime.sessionAction?.("touch");if(!RP||RP.type!=="compas")return;const n=performance.now();RP.touches=RP.touches.filter(x=>n-x<runtime.SIX*16*1000);RP.touches.push(n);retoSet("compas",RP.touches.length);}
+  function touched(){runtime.sessionAction?.("touch");runtime.markInput?.();if(!RP||RP.type!=="compas")return;const n=performance.now();RP.touches=RP.touches.filter(x=>n-x<runtime.SIX*16*1000);RP.touches.push(n);retoSet("compas",RP.touches.length);}
   function enterRegion(d,z){
     runtime.sessionVisit?.(d);
     runtime.MU.dnaT=d;runtime.MU.timbre=runtime.GEN[d.genre].pt;const newPlace=!runtime.S.places[d.key];

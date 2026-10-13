@@ -75,6 +75,35 @@ Escucha agradable para público amplio: controlar fatiga, disonancia accidental,
 9. **Capas:** bajo tierra 1 paso equivale a 8 arriba (atajo de viaje, dub y graves). La capa del cielo da vista de continente. Se entra con un ritual: tocar el ritmo correcto con pulsos.
 10. **El mundo te recuerda:** tu rastro, lo sembrado, los ecos y los Estudios quedan. Más adelante, rastros de otros jugadores.
 
+## 1d. Plan creativo de música (pedido de Jay, 2026-10-12)
+
+Jay quiere que el juego tenga cada vez más cosas divertidas, siempre ligadas a la música, con lugares donde solo se hace música, cosas que se plantan, efectos de producción y mucha interacción. Referencias: Incredibox, Minecraft, No Man's Sky, Astroneer, Stardew Valley, Endel, Richie Hawtin y la producción electrónica real. Ya hechos: looper de ecos, banda de criaturas y mesa de efectos.
+
+**Prioridad alta (lo más divertido por esfuerzo):**
+1. **Escenarios y pista de baile:** en las ciudades de formas hay un escenario. Si llegas con tu banda, tocas un set: las criaturas del pueblo bailan más cuanto mejor mantienes el groove (pulsos en el beat, transiciones con la mesa de efectos). Al final, puntuación y muestra o color de recompensa.
+2. **Maestros de género (pueblos):** cada pueblo tiene una criatura maestra de un género. Te enseña su ritmo con llamada y respuesta de pulsos, estilo Simón dice. Al aprenderlo, ese patrón queda en tu Estudio como "partitura" y la Bitácora explica sus partes (bombo, hats, bajo). Coleccionar las 52 partituras es la forma de aprender géneros jugando.
+3. **Huertos de ritmo (estilo Stardew):** plantas semillas sonoras en una cuadrícula de 16 casillas, que funciona como secuenciador de pasos. Crecen con los días reales y cambian de timbre. Tu huerto suena cuando vuelves y lo puedes regar con pulsos para darle variación. Es plantar con sentido musical, no un jardín decorativo.
+4. **Máquinas sonoras (estilo Minecraft):** colocas bloques resonadores en el mundo que se disparan entre sí en cadena (dominó o redstone musical). Así armas máquinas que tocan solas y quedan guardadas en el lugar.
+5. **Grabar y compartir el set:** graba 30–60 s de audio y video del juego (MediaRecorder) para subir a Instagram. Es clave para @jaywrkr.
+
+**Prioridad media:**
+6. **Retos de DJ en fronteras:** cruzar de una región a otra usando la mesa de efectos (filtrar, cortar en el compás) puntúa como una mezcla. Hay logros por mezclas perfectas.
+7. **Mixer por capas en cada lugar (Incredibox):** silenciar o dejar solo bajo, percusión, acordes y melodía de la radio del lugar para entender cómo está hecha la canción.
+8. **Crafting de sonidos en el Estudio:** combinar 2 muestras para crear otra (cristal + agua = campana húmeda) con un libro de recetas que se descubre.
+9. **Criaturas que solo aparecen si tocas su ritmo:** coleccionables raros con llamada y respuesta.
+10. **Día y noche real:** de noche, géneros más profundos y otra luz; de día, más brillo.
+11. **Favoritos y escenas:** guardar un lugar con su receta musical y compartir un código.
+
+**Prioridad baja o grande:**
+12. **Sintetizador modular en el Estudio:** perillas por instrumento (ataque, filtro, resonancia) y conexiones.
+13. **Modo Endel / paseo:** autopilot lento con música generativa para concentrarse o dormir, con temporizador.
+14. **Festivales semanales globales:** un continente tiene festival y todos los jugadores lo ven igual (por fecha).
+15. **Multiplayer jam:** dos bandas sincronizadas en el mismo lugar. Requiere servidor.
+16. **Migraciones de criaturas gigantes** según la fecha, y manantiales como origen de los ríos.
+17. **Seguir ampliando la biblioteca a ~100 ritmos**, en tandas por familia: afro y diáspora, latino y andino, industrial, bass y breaks, otras escenas.
+
+**Criterio:** cada idea tiene que sonar bien, entenderse con un gesto en el móvil y respetar las decisiones de HANDOFF (sin drone constante, cuantizado a tempo, UI mínima).
+
 ## 2. Más iniciativa del ambiente tras aproximadamente 60 segundos quieto
 
 **Siguiente etapa de producto propuesta.** Radio ya cambia sin movimiento y fenómenos ya tienen autonomía; falta respuesta específica a quietud prolongada.
@@ -114,7 +143,7 @@ Implementar por grupos pequeños con gesto móvil comprensible; no cada objeto h
 
 **Aceptación:** poder pasar varios minutos haciendo música en un bioma con agencia clara y distintas acciones, sin paredes sonoras ni crecimiento ilimitado de emisores.
 
-## 7. Looper y ecos musicales
+## 7. Looper y ecos musicales — primera versión hecha (`src/jam.js`); falta exportar audio y ecos persistentes
 
 Capturar uno/dos compases de acciones musicales y dejarlos temporalmente en mundo, con entrada/cierre a compás, borrar/silenciar y límite de capas. Elegir representación de eventos musicales antes de asumir grabación de audio. Proximidad y espacio local deben importar.
 
@@ -126,7 +155,7 @@ Guardar una combinación recuperable de patrón, instrumentos/perfiles, armonía
 
 **Aceptación:** reabrir escena reproduce intención musical, distingue reproducción exacta de reconstrucción adaptada y se comporta al cambiar versión. UI y tamaño del guardado acotados. Integrar con looper/Estudio cuando existan.
 
-## 9. Banda de criaturas
+## 9. Banda de criaturas — primera versión hecha (`src/jam.js`); falta turnos, entradas y salidas y más combos
 
 Convertir seguidores/cantantes actuales en roles coordinados: bajo, percusión, melodía/textura y call-response, con turnos, entradas/salidas y combos. No sumar cada criatura encima de todas las demás. Comportamientos y temperamentos propios conservados; interacción musical entre ellas.
 

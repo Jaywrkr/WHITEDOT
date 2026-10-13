@@ -46,6 +46,7 @@ export function initialize(runtime) {
   }
   function playVoice(kind, index, time, region, full=false, volume=1, source=null) {
     if (!runtime.ac || !region) return;
+    runtime.loopTap?.(kind,index,time,region,full,volume);   // el looper guarda lo que causas tú
     const voice = getVoice(kind, region);
     const scale = region.scale, transposition = runtime.BIOMES[region.z].tr + region.trOff;
     const note = degree => {
