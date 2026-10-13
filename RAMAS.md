@@ -1,14 +1,20 @@
 # Integración y trabajo agrupado
 
-Base remota verificada `ffc5578` (PR #69). Fases 1 y 2 y las ocho filas históricas siguientes ya están integradas; no recrear esos PR.
+## Estado vigente
 
-## Rama actual
+Base funcional consolidada: `main` · `f7bcf84`, merge del [PR #70](https://github.com/Jaywrkr/WHITEDOT/pull/70), el 13 de octubre de 2026. Fases 1 y 2, interacciones orgánicas y revisión de registros/atlas ya integradas. No recrear sus PR ni volver a aplicar sus commits.
 
-| Bloque | Rama | Base | Entrega |
-|---|---|---|---|
-| Revisión previa a fase 3 | `fix/musical-registers-and-visual-inventory` | `main` · `ffc5578` | Atlas de 118 vistas nativas, registros/contraste de 52 estilos, frases sin hook obligatorio, control de octavas y margen de salida |
+- PR #51–#69: integrados salvo #57, cerrado sin merge y sustituido por la cadena posterior. Su recorrido creativo está presente y ampliado en `src/creative.js`; no hacer cherry-pick del commit antiguo.
+- `fix/musical-registers-and-visual-inventory`: integrada mediante #70, sin commits pendientes respecto de main. Conservarla o retirarla después de verificar; no tratarla como trabajo nuevo.
+- #70 pasó lógica, auditorías, navegador y audio en GitHub Actions. Vercel confirmó el despliegue del merge como `success`.
 
-Jay crea el PR de esta rama **hacia main** y hace merge. El asistente prepara, prueba, documenta y hace commit/push. [Detalle](REVISION_REGISTROS.md). Fases 3–10 siguen como plan: [FASES_UNIVERSO.md](FASES_UNIVERSO.md). Una rama amplia por bloque; no se garantiza ausencia de conflictos ante cambios independientes o reescrituras del historial.
+## Continuación
+
+Partir de `origin/main` actualizado. Mantener una rama amplia por bloque y merge normal para conservar ascendencia. Jay autorizó al asistente a integrar los cambios pendientes y continuar la limpieza; las instrucciones antiguas de «Jay crea PR/merge» se conservan abajo únicamente como historial.
+
+La expansión de composición e instrumentos de fase 3 sigue pendiente. El balance de registros ya existe: reutilizar `src/musical-character.js`, `src/radio.js` y sus pruebas. No rediseñar figuras antes de recibir las elecciones de Jay del atlas. [Secuencia vigente](FASES_UNIVERSO.md) · [Próximos pasos](PROXIMOS_PASOS.md).
+
+<details><summary>Historial de integración; no usar como lista de trabajo pendiente</summary>
 
 ## Cadena de referencia
 
@@ -75,5 +81,7 @@ Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; el pedido post
 
 </details>
 
+
+</details>
 
 </details>

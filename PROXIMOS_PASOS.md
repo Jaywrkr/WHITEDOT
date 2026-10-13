@@ -1,10 +1,10 @@
 # Próximos pasos: estado real del proyecto
 
-La secuencia vigente está en [FASES_UNIVERSO.md](FASES_UNIVERSO.md); [V1_PRODUCCION.md](V1_PRODUCCION.md) conserva el inventario detallado. Fase 1 implementada en `feat/phase-01-universe-foundation`, basada en main `7a0e8ff`: [qué cambió y cómo probar](FASE_01.md). Fase 2 implementada en `feat/phase-02-living-world-recipes`: [Paisajes vivos y cómo probar](FASE_02.md). Ambas fases ya integradas en main `ffc5578` (PR #69). La entrega vigente es [revisión de figuras y registros](REVISION_REGISTROS.md), en `fix/musical-registers-and-visual-inventory`. Después, fase 3: más síntesis, instrumentos, identidades audibles de estilos y composición evolutiva con escucha curada. La enumeración siguiente se conserva como historial de implementación.
+La secuencia vigente está en [FASES_UNIVERSO.md](FASES_UNIVERSO.md); [V1_PRODUCCION.md](V1_PRODUCCION.md) conserva el inventario detallado. Fase 1 implementada en `feat/phase-01-universe-foundation`, basada en main `7a0e8ff`: [qué cambió y cómo probar](FASE_01.md). Fase 2 implementada en `feat/phase-02-living-world-recipes`: [Paisajes vivos y cómo probar](FASE_02.md). Ambas fases y la [revisión de figuras y registros](REVISION_REGISTROS.md) ya están integradas en main `f7bcf84` (PR #70). No recrear esos cambios. El siguiente bloque funcional es fase 3: más síntesis, instrumentos, identidades audibles de estilos y composición evolutiva con escucha curada. La enumeración siguiente se conserva como historial de implementación.
 
 El bloque anterior de veinte entregas está integrado en main desde el PR #58 (`2959313`). Se agrupó en cinco fases para revisar; no equivale a haber implementado todo el plan histórico.
 
-## Entrega actual
+## Interacciones ya integradas (referencia histórica)
 
 `feat/intuitive-animal-dialogue` hace la enseñanza por toque, espera por la primera nota y muestra turnos con señales pequeñas dentro del mundo.
 
