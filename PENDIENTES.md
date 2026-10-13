@@ -2,7 +2,7 @@
 
 Revisión: 2026-10-13, sobre `main` `5413d5f` (PR #35). Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
 
-**Una fase = una rama revisable**, implementación, pruebas, commit y push; Jay crea PR/merge. Las fases futuras son propuestas para elegir, no autorización automática. Si una fase crece demasiado, dividirla antes de implementar. La fase 1 está implementada en la rama de esta revisión; lo demás sigue pendiente salvo las bases indicadas.
+**Una fase = una rama revisable**, implementación, pruebas, commit y push; Jay crea PR/merge. Jay autorizó en esta sesión las fases 1–10 en cadena; las fases 11–31 siguen como propuestas, no autorización automática. Ver RAMAS.md. Si una fase crece demasiado, dividirla antes de implementar. La fase 1 está implementada en la rama de esta revisión; lo demás sigue pendiente salvo las bases indicadas.
 
 ## Qué quiere Jay y cómo organizar el crecimiento
 
@@ -20,9 +20,9 @@ Dirección musical: electrónica con bajos, medios, groove, motivos, espacio y c
 
 Salida lineal a niveles normales, protección de picos con margen, limpieza de graves en retornos de reverb/eco, corte subsónico y pad neutro sin resonancia elevada. Ritmos, notas, instrumentos, radio, looper/banda y efectos creativos conservados. Medición offline y escucha real cumplen papeles distintos; Jay debe comparar en móvil/auriculares. La revisión técnica y el roadmap también forman parte de esta rama. Detalles/evidencia en REVISION.
 
-### 2. Cruces entre capas, Estudio y jam
+### 2. Cruces entre capas, Estudio y jam — implementada en rama 2
 
-Resolver ecos que reconstruyen claves `bajo:`/`cielo:` como coordenadas de superficie, fuentes de superficie que quedan activas al cambiar de capa, y retorno del Estudio con ADN de superficie mientras continúa en otra capa. Revisar qué se puede tocar/grabar en cada capa y documentar la decisión. Mejorar procedencia de eventos de looper: la ventana temporal actual puede capturar actividad automática. No añadir más mecánicas antes de estabilizar esos cruces.
+Correcciones implementadas (ver RAMAS): ecos que reconstruían claves `bajo:`/`cielo:` como coordenadas de superficie, fuentes de superficie que quedan activas al cambiar de capa, y retorno del Estudio con ADN de superficie mientras continúa en otra capa. Revisar qué se puede tocar/grabar en cada capa y documentar la decisión. Mejorar procedencia de eventos de looper: la ventana temporal actual puede capturar actividad automática. No añadir más mecánicas antes de estabilizar esos cruces.
 
 **Probar:** entrar/grabar/reproducir/salir en superficie/Subsuelo/Cielo, abrir/cerrar Estudio en cada capa, audio suspendido/silenciado, recarga y fin de linterna. Ver hallazgos y casos reproducidos en REVISION.
 

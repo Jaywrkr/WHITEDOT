@@ -116,3 +116,5 @@ El entorno incluye aves de eco que responden a las frases, semilleros que se sac
 Los instrumentos tienen materiales sonoros procedurales —madera cálida, cristal suave, metal filtrado y aire sedoso— y variaciones de ataque, resonancia y armónicos. Cada objeto conserva su timbre al volver; Escuchar muestra su material.
 
 La salida musical conserva sus patrones e instrumentos y reduce la saturación a niveles normales. Los retornos de reverberación y eco dejan más espacio al grave directo. `tests/audio_mix.py` verifica picos, dinámica y coloración con audio renderizado; la calidad perceptiva se valida escuchando.
+
+Capas, Estudio y ecos mantienen su música separada: el looper captura acciones del jugador y conserva el timbre y la capa de origen. Consulta [RAMAS.md](RAMAS.md) para probar e integrar esta sesión en orden. Prueba de integración: `python3 tests/layer_jam_smoke.py`.

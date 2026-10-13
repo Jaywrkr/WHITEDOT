@@ -41,7 +41,9 @@ export function initialize(runtime){
   if(!onBeat)runtime.toast('<em>Ritual</em> · fuera de tiempo. Otra vez, en el beat');
   if(ritual.count>=ritual.need){ritual.count=0;ritual.id=null;enter(p.kind==='grieta'?'bajo':'cielo');}
  }
+ function clearSurfaceSources(){const m=runtime.MU;m.near=[];m.singers=[];m.q8=[];m.queue=[];runtime.waves=[];runtime.inPond=false;if(runtime.mfilt&&runtime.ac)runtime.mfilt.frequency.setTargetAtTime(18000,runtime.ac.currentTime,.2);runtime.cancelLoopRecording?.();}
  function enter(to){
+  clearSurfaceSources();
   const s=S();s.layer=to;runtime.flash=1;runtime.MU.E=Math.max(runtime.MU.E,.6);dnaKey=null;
   if(to==='bajo'){s.under={x:s.wx/UNDER_SCALE,y:s.wy/UNDER_SCALE};trip={x:s.wx,y:s.wy};
    runtime.soon?.(q=>{runtime.kick(q,runtime.vel(.4));runtime.softBass(runtime.root()-12,q,runtime.vel(.2));});
@@ -51,6 +53,7 @@ export function initialize(runtime){
   runtime.MU.layer=to;runtime.save();
  }
  function surface(x,y,msg){
+  clearSurfaceSources();
   const s=S();s.layer='superficie';s.wx=x;s.wy=y;runtime.MU.layer='superficie';runtime.flash=.8;dnaKey=null;runtime.curRegion=null;runtime.resetContinent?.();
   if(trip){const far=Math.hypot(x-trip.x,y-trip.y)/RP();if(far>=40)runtime.unlock('atajo');trip=null;}
   runtime.soon?.(q=>runtime.chordTones().forEach((n,i)=>runtime.pluck(n+12,q+i*runtime.SIX*2,runtime.vel(.06),2)));
@@ -64,16 +67,17 @@ export function initialize(runtime){
  // Música de la capa: una región sintética (no se registra como lugar visitado).
  function layerDNA(){
   const s=S(),base=runtime.regionOfPos(s.wx,s.wy);let key,d;
-  if(layer()==='bajo'){const i=Math.floor(s.under.x/UNDER_CELL),j=Math.floor(s.under.y/UNDER_CELL),r=runtime.rng(runtime.seedOf(`subsuelo:${i},${j}`)),g=UNDER_GENRES[Math.floor(r()*UNDER_GENRES.length)],G=runtime.GEN[g];
+  if(layer()==='bajo'){if(!s.under)s.under={x:s.wx/UNDER_SCALE,y:s.wy/UNDER_SCALE};const i=Math.floor(s.under.x/UNDER_CELL),j=Math.floor(s.under.y/UNDER_CELL),r=runtime.rng(runtime.seedOf(`subsuelo:${i},${j}`)),g=UNDER_GENRES[Math.floor(r()*UNDER_GENRES.length)],G=runtime.GEN[g];
    key=`bajo:${i},${j}`;d={...base,key,genre:g,bpm:Math.round(G.bpm[0]+r()*(G.bpm[1]-G.bpm[0])),name:'Subsuelo bajo '+base.name,z:runtime.BIOMES.findIndex(b=>b.id==='cueva'),track:{...base.track,bassI:G.bassI,hookI:G.hookP[0]},anomaly:null,sea:false,strange:0,tuneCents:0};}
   else{key=`cielo:${base.continent?.id||'mar'}`;const G=runtime.GEN.ambient;d={...base,key,genre:'ambient',bpm:G.bpm[0]+4,name:'Cielo sobre '+(base.continent?.name||'el mar'),z:runtime.BIOMES.findIndex(b=>b.id==='vacio'),track:{...base.track,bassI:G.bassI,hookI:G.hookP[0]},anomaly:null,sea:false};}
-  if(key!==dnaKey){dnaKey=key;runtime.setBiome?.(d.z);runtime.MU.dnaT=d;runtime.MU.nb=null;runtime.MU.nbW=0;runtime.MU.anomaly=null;runtime.MU.river=0;runtime.MU.confNb=null;runtime.MU.storm=0;runtime.MU.tune=0;runtime.MU.vit=.8;runtime.showRegion?.(d,false);}
+  if(key!==dnaKey||runtime.MU.dnaT?.key!==key){dnaKey=key;runtime.setBiome?.(d.z);runtime.MU.dnaT=d;runtime.MU.nb=null;runtime.MU.nbW=0;runtime.MU.anomaly=null;runtime.MU.river=0;runtime.MU.confNb=null;runtime.MU.storm=0;runtime.MU.season=null;runtime.MU.seasonBpm=0;runtime.MU.tune=0;runtime.MU.vit=.8;runtime.showRegion?.(d,false);}
+  return runtime.MU.dnaT;
  }
 
  // Paso de juego en el Subsuelo o el Cielo (reemplaza al del Mundo en superficie).
  function layerStep(t,dt,dx,dy,b,paused,speed){
   const s=S(),cx=runtime.cx,W=runtime.W,H=runtime.H,L=layer(),ds=Math.min(runtime.pxSize(),22);
-  if(L==='bajo'&&!s.under)s.under={x:s.wx/UNDER_SCALE,y:s.wy/UNDER_SCALE};runtime.MU.layer=L;
+  if(L==='bajo'&&!s.under)s.under={x:s.wx/UNDER_SCALE,y:s.wy/UNDER_SCALE};runtime.MU.layer=L;runtime.MU.near=[];runtime.MU.singers=[];
   if(s.lampDay!==s.todayKey){s.lampDay=s.todayKey;s.lampUsed=0;}
   if(!paused)s.lampUsed+=dt*(L==='bajo'?1.5:1);   // el atajo cuesta: la linterna se gasta más rápido abajo
   if(!paused&&!runtime.scanning)runtime.sessionTime(dt);
@@ -126,6 +130,7 @@ export function initialize(runtime){
 
  Object.defineProperties(runtime,{
   layerStep:{get:()=>layerStep},portalPulse:{get:()=>portalPulse},layerPulse:{get:()=>layerPulse},drawPortals:{get:()=>drawPortals},
+  activeLayerRegion:{get:()=>()=>layer()==='superficie'?null:layerDNA()},restoreLayerMusic:{get:()=>()=>{dnaKey=null;return layerDNA();}},
   nearPortals:{get:()=>nearPortals},enterLayer:{get:()=>enter},surfaceLayer:{get:()=>surface}
  });
 }

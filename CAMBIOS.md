@@ -208,3 +208,7 @@ Sin favoritos, orientación a ellos, autopilot, escenas exactas, ecos persistent
 ## Trazabilidad exhaustiva
 
 Se inventarían todas las etapas de producto del historial desde `596fa31`, incluidos correcciones, arquitectura, interfaz, audio, mundo, persistencia y pruebas. Los commits repetidos de radio/voces y resolución de conflictos representan integración de las mismas etapas, no funciones adicionales. Para auditar líneas concretas: `git log --reverse --oneline`, `git show <commit>` y `git diff 596fa31..main`. HANDOFF conserva explicación de los sistemas originales y detalles de ejecución; PENDIENTES separa acuerdos futuros de funciones actuales.
+
+### 37. Fase 2: capas, Estudio y looper — rama encadenada
+
+`feat/02-layer-jam-consistency`, base `fe32566`. Corrige fuentes de superficie en capas, ADN tras Estudio, regiones sintéticas/rasgos/capa de ecos y autoría explícita de eventos. 26 suites y smokes de jam, capas e integración móvil/escritorio aprobados. Sin nuevos logros/campos de partida; se conserva la banda para volver a superficie. Cadena en RAMAS.md.

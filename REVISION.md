@@ -99,3 +99,7 @@ Al sumar hábitat, suelo, aire, escala, BPM, transposición, patrón, track, tip
 ## Orden acordado como propuesta
 
 La música gusta; limpiar antes de expandir. Después estabilizar cruces, definir recetas/catálogo extensibles, probar variedad/compatibilidad con lo actual y unificar lenguaje gráfico. Luego quietud, favoritos/retorno/autopilot, instalaciones de vidrios/espejos, gestos musicales, pistas/personajes, referencias de muchas culturas con flora/fauna congruentes, construcción y escenas, y finalmente red. PENDIENTES contiene 31 fases con implementación y aceptación. Cada aprobación autoriza su fase, no todo el catálogo de ideas.
+
+## Seguimiento: fase 2
+
+Los hallazgos C, D, E y F quedan corregidos en `feat/02-layer-jam-consistency`, basada en `fe32566`; el informe anterior describe la base auditada. Nueva prueba `layer_jam_smoke.py` confirma restauración de Subsuelo/Cielo después del Estudio, aislamiento de fuentes/eco por capa y exclusión de banda/ambiente de grabación. Pendientes PWA offline y refinamiento visual se mantienen separados.

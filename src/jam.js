@@ -22,38 +22,37 @@ export function bandHits(slot,s,bar,motif){
 }
 
 export function initialize(runtime){
- const S=()=>runtime.S,MU=()=>runtime.MU;
+ const S=()=>runtime.S,MU=()=>runtime.MU,layer=()=>S().layer||"superficie";
  const loop={armed:false,rec:null,ecos:[],replaying:false,inputMs:0};
  const band={members:{},combos:{}};
 
  // ---------- looper ----------
  const markInput=()=>{loop.inputMs=performance.now();};
  function loopButton(){
-  if(!runtime.inWorld())return;const s=S(),near=loop.ecos.findIndex(e=>Math.hypot(e.x-s.wx,e.y-s.wy)<90);
+  if(!runtime.inWorld())return;const s=S(),near=loop.ecos.findIndex(e=>(e.layer||"superficie")===layer()&&Math.hypot(e.x-s.wx,e.y-s.wy)<90);
   if(near>=0&&!loop.rec&&!loop.armed){loop.ecos.splice(near,1);runtime.toast('<em>Eco</em> · borrado');ui();return;}
   if(loop.rec||loop.armed){loop.armed=false;loop.rec=null;runtime.toast('<em>Eco</em> · cancelado');ui();return;}
   loop.armed=true;runtime.toast('<em>Eco</em> · graba en el próximo compás: toca, pulsa, junta luces');ui();
   if(!s.help.eco){s.help.eco=true;runtime.say(runtime.VOZ.eco,'Eco');}
  }
  // Llamado por playVoice: guarda lo que suena por acciones del jugador durante la grabación.
- function loopTap(kind,index,time,region,full,volume){
-  const r=loop.rec;if(!r||loop.replaying||kind.startsWith('band:'))return;
-  if(performance.now()-Math.max(loop.inputMs,runtime.lastNoteMs||0)>1300)return;   // solo lo que causaste tú
+ function loopTap(kind,index,time,region,full,volume,source,origin){
+  const r=loop.rec;if(!r||loop.replaying||origin!=='player'||r.layer!==layer())return;   // solo lo que causaste tú
   const step=Math.round((time-r.t0)/runtime.SIX);if(step<0||step>=LOOP_STEPS||r.events.length>=MAX_EVENTS)return;
-  r.events.push({step,kind,index,regionKey:region.key,rx:region.key,full:!!full,volume:volume||1});
+  r.events.push({step,kind,index,regionKey:region.key,region,source:source?{id:source.id,personality:source.personality}:null,full:!!full,volume:volume??1});
  }
  // Cada semicorchea en el Mundo: empezar o terminar la grabación y reproducir los ecos cercanos.
  function loopStep(s,step,t){
   const st=S();
-  if(loop.armed&&s===0){loop.armed=false;loop.rec={t0:t,start:step,events:[],x:st.wx,y:st.wy};ui();}
+  if(loop.armed&&s===0){loop.armed=false;loop.rec={t0:t,start:step,events:[],x:st.wx,y:st.wy,layer:layer()};ui();}
   else if(loop.rec&&step-loop.rec.start>=LOOP_STEPS){const r=loop.rec;loop.rec=null;
    if(!r.events.length)runtime.toast('<em>Eco</em> · no sonó nada tuyo. Toca algo mientras graba');
-   else{if(loop.ecos.length>=MAX_ECOS)loop.ecos.shift();loop.ecos.push({x:st.wx,y:st.wy,start:step,events:r.events,lit:0,id:Math.random().toString(36).slice(2,7)});
+   else{if(loop.ecos.length>=MAX_ECOS)loop.ecos.shift();loop.ecos.push({x:r.x,y:r.y,layer:r.layer,start:step,events:r.events,lit:0,id:Math.random().toString(36).slice(2,7)});
     st.ecosN=(st.ecosN||0)+1;runtime.toast(`<em>Eco</em> · ${r.events.length} sonidos en bucle`);runtime.unlock('eco1');if(loop.ecos.length>=MAX_ECOS)runtime.unlock('eco4');}
    ui();}
-  for(const e of loop.ecos){const d=Math.hypot(e.x-st.wx,e.y-st.wy);if(d>900)continue;const idx=((step-e.start)%LOOP_STEPS+LOOP_STEPS)%LOOP_STEPS;
-   for(const ev of e.events){if(ev.step!==idx)continue;const [x,y]=ev.regionKey.split(',').map(Number),region=runtime.regionOfPos((x+.5)*runtime.REG*runtime.WCH,(y+.5)*runtime.REG*runtime.WCH);
-    loop.replaying=true;try{runtime.playVoice(ev.kind,ev.index,t,region,ev.full,ev.volume,{x:e.x,y:e.y});}finally{loop.replaying=false;}
+  for(const e of loop.ecos){if((e.layer||"superficie")!==layer())continue;const d=Math.hypot(e.x-st.wx,e.y-st.wy);if(d>900)continue;const idx=((step-e.start)%LOOP_STEPS+LOOP_STEPS)%LOOP_STEPS;
+   for(const ev of e.events){if(ev.step!==idx)continue;const region=ev.region;if(!region)continue;
+    loop.replaying=true;try{runtime.playVoice(ev.kind,ev.index,t,region,ev.full,ev.volume,{...ev.source,x:e.x,y:e.y},"echo");}finally{loop.replaying=false;}
     setTimeout(()=>{e.lit=1;},Math.max(0,(t-runtime.ac.currentTime)*1000));}}
  }
 
@@ -75,10 +74,11 @@ export function initialize(runtime){
   if(conts.size===4)runtime.unlock('viajeros');
  }
  function bandStep(s,bar,t){
+  if(layer()!=="superficie")return;
   const m=band.members,list=Object.values(m);if(list.length<2)return;   // con una sola criatura no hay banda todavía
   if(list.length===4)MU().E=Math.max(MU().E,.7);
   for(const x of list){const h=bandHits(x.slot,s,bar,x.sp.motif||[0,2,4]);if(!h)continue;
-   runtime.playVoice('forma:'+x.sp.id,(x.sp.deg||0)+h[0],t,x.region,!!h[2],h[1]*(x.personality?.volume||1),x);
+   runtime.playVoice('forma:'+x.sp.id,(x.sp.deg||0)+h[0],t,x.region,!!h[2],h[1]*(x.personality?.volume||1),x,"band");
    setTimeout(()=>{x.lit=1;},Math.max(0,(t-runtime.ac.currentTime)*1000));}
  }
 
@@ -86,7 +86,7 @@ export function initialize(runtime){
  function draw(t,dt,ox,oy,b){
   const cx=runtime.cx,s=S(),W=runtime.W,H=runtime.H;
   // Ecos: anillos que laten cuando suenan.
-  for(const e of loop.ecos){e.lit=Math.max(0,e.lit-dt*3);const x=e.x+ox,y=e.y+oy;if(x<-60||y<-60||x>W+60||y>H+60)continue;
+  for(const e of loop.ecos){if((e.layer||"superficie")!==layer())continue;e.lit=Math.max(0,e.lit-dt*3);const x=e.x+ox,y=e.y+oy;if(x<-60||y<-60||x>W+60||y>H+60)continue;
    cx.globalAlpha=.35+.5*e.lit;cx.strokeStyle='#9fe8ff';cx.lineWidth=1.5;cx.beginPath();cx.arc(x,y,14+e.lit*8,0,6.283);cx.stroke();
    cx.globalAlpha=.2;cx.beginPath();cx.arc(x,y,26,0,6.283);cx.stroke();cx.globalAlpha=.8;cx.fillStyle='#9fe8ff';cx.font='9px monospace';cx.textAlign='center';cx.fillText('eco',x,y+40);}
   // Banda: siguen al pixel en formación, cada una en su lugar.
@@ -102,11 +102,12 @@ export function initialize(runtime){
   cx.globalAlpha=1;
  }
  function ui(){const btn=runtime.$('bLoop');if(!btn)return;btn.hidden=!runtime.inWorld();btn.classList.toggle('rec',!!loop.rec);btn.classList.toggle('armed',loop.armed);}
+ function cancelRecording(){loop.armed=false;loop.rec=null;ui();}
  function reset(){loop.armed=false;loop.rec=null;loop.ecos=[];band.members={};band.combos={};ui();}
 
  const btn=runtime.$('bLoop');if(btn)btn.onclick=e=>{e.stopPropagation();btn.blur();runtime.audio();loopButton();};
  Object.defineProperties(runtime,{
-  loopTap:{get:()=>loopTap},loopStep:{get:()=>loopStep},markInput:{get:()=>markInput},loopButton:{get:()=>loopButton},
+  cancelLoopRecording:{get:()=>cancelRecording},loopTap:{get:()=>loopTap},loopStep:{get:()=>loopStep},markInput:{get:()=>markInput},loopButton:{get:()=>loopButton},
   bandJoin:{get:()=>bandJoin},bandStep:{get:()=>bandStep},drawJam:{get:()=>draw},jamUI:{get:()=>ui},resetJam:{get:()=>reset},
   jam:{get:()=>({loop,band})}
  });

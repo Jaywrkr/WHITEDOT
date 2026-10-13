@@ -16,7 +16,7 @@
 - Él da feedback por sensación ("suena robótico", "no siento que cambia"). Tradúcelo a cambios concretos y hazlos. No le devuelvas preguntas técnicas.
 - Responde en **español**. Todo el texto del juego está en español.
 - Cuando dice "hazlo", quiere el cambio implementado y probado dentro de la etapa acordada, con commit y push en una rama nueva desde `main` actualizado. **Jay crea el PR y hace el merge.** No hacer push directo a `main`, crear PRs ni hacer merges. El despliegue de producción ocurre después de su merge.
-- La autorización se da por etapa. No ejecutar todo el roadmap por una aprobación de la etapa actual.
+- La autorización habitual es por etapa. En esta sesión Jay autorizó explícitamente las primeras diez fases en ramas encadenadas; ver RAMAS.md. Las fases 11–31 no están autorizadas.
 
 ## 2. Visión
 
@@ -459,3 +459,7 @@ La rama `review/claude-audio-clarity` limpia salida y retornos sin cambiar patro
 Prueba adicional: `python3 tests/audio_mix.py` (helper de navegador `tests/audio_mix.mjs`, no suite Node). 13 renderizaciones de 10 segundos, picos/dinámica a 44,1/48 kHz y distorsión de salida; parámetros y resultados en REVISION.
 
 Jay quiere muchas más combinaciones de lugares mediante un catálogo que relacione flora, fauna, sonidos, comportamientos, acciones, materiales, densidad e influencias culturales opcionales. Primero coordinar reglas/semillas, luego incorporar contenido. Referencias cromáticas/cinéticas a Felipe Pantone mediante vidrios y espejos originales; mantener negro de fondo y punto blanco. Muchas culturas, no solo Japón/México, con flora/fauna y música relacionadas; inventos históricos, personajes/pistas y mecanismos musicales son propuestas. PENDIENTES detalla fases y criterios; aprobación por etapa.
+
+### Fase 2: integración entre capas y jam
+
+Fuentes automáticas de superficie se suspenden en Subsuelo/Cielo; faros/flores y banda se conservan para el retorno pero no se disparan allí. Cambiar de capa cancela grabación y colas de acciones pendientes. Estudio restaura ADN sintético de capa al salir. Ecos guardan referencia de receta, rasgos de fuente y capa; no parsean claves sintéticas como coordenadas ni suenan en otra capa. Eventos de jugador se etiquetan mediante withVoiceOrigin/argumento explícito; banda/ambiente/eco no se graban. Guardado v4 intacto, ecos siguen temporales. Node y smokes jam/layers/layer_jam aprobados. Orden/base en RAMAS.md.
