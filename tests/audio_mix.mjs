@@ -1,6 +1,6 @@
 // Real Web Audio render of the scheduler, with a virtual clock and deterministic noise.
-export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000}={}) {
- const modules=await Promise.all(['data','progress','world','audio','voices','instruments','patches','effects','spatial'].map(id=>import(`../src/${id}.js`)));
+export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false}={}) {
+ const modules=await Promise.all(['data','progress','world','audio','voices','instruments','patches','effects','spatial','influence'].map(id=>import(`../src/${id}.js`)));
  const r=Object.create(null),duration=10,context=new OfflineAudioContext(2,duration*sampleRate,sampleRate);
  const original={AudioContext:window.AudioContext,setInterval:window.setInterval,setTimeout:window.setTimeout,random:Math.random};
  let clock=0,schedule;
@@ -14,6 +14,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   r.S.mode='world';r.S.softMusic=soft;r.S.sound=true;r.S.wx=900;r.S.wy=900;
   r.MU.dnaT={...origin,key:'0,0',genre,bpm:(G.bpm[0]+G.bpm[1])/2,track:{...origin.track,bassI:G.bassI,hookI:G.hookP[0]}};
   r.MU.E=dense?.8:.45;r.MU.vit=1;r.MU.vari=2;r.audio();
+  if(influenced){r.activeLayerRegion=()=>r.MU.dnaT;for(const k of ['bass','groove','melody'])r.driveInfluence(r.MU.dnaT,k,1,3);for(let i=0;i<100;i++)r.influenceTick(.05,false);}
   if(fx){r.fx.verbSend.gain.value=.7;r.fx.delaySend.gain.value=.5;r.fx.fb.gain.value=.72;}
   const sources=Array.from({length:8},(_,i)=>({x:900+10*i,y:900,id:`mix:${i}`}));
   for(let tick=0;tick<duration/.025;tick++){
@@ -23,7 +24,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   const buffer=await context.startRendering(),data=Array.from({length:2},(_,i)=>buffer.getChannelData(i));
   let peak=0,sum=0,hot=0,n=0;
   for(const samples of data)for(let i=sampleRate;i<samples.length;i++){const value=samples[i];if(!Number.isFinite(value))throw Error('nonfinite rendered audio');peak=Math.max(peak,Math.abs(value));sum+=value*value;hot+=Math.abs(value)>.98;n++;}
-  return {genre,dense,soft,fx,sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
+  return {genre,dense,soft,fx,influenced,sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
  } finally {window.AudioContext=original.AudioContext;window.setInterval=original.setInterval;window.setTimeout=original.setTimeout;Math.random=original.random;}
 }
 

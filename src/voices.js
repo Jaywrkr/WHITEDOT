@@ -48,6 +48,7 @@ export function initialize(runtime) {
   }
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
     if (!runtime.ac || !region) return;
+    runtime.influenceInput?.(kind,region,source,origin);
     runtime.loopTap?.(kind,index,time,region,full,volume,source,origin);   // el looper guarda lo que causas tú
     const voice = getVoice(kind, region);
     const scale = region.scale, transposition = runtime.BIOMES[region.z].tr + region.trOff;

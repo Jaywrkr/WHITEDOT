@@ -60,6 +60,7 @@ export function initialize(runtime) {
 
     runtime.navigationTick?.();
     runtime.initiativeTick?.(dt,sp>.01,modal);
+    runtime.influenceTick?.(dt,modal||runtime.scanning);
     runtime.updateScanner();runtime.fxTick?.(dt);
     const b=runtime.beat();
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);

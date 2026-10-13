@@ -203,6 +203,7 @@ export function initialize(runtime) {
     if(runtime.inWorld()){runtime.loopStep?.(s,MU.step,t);runtime.bandStep?.(s,MU.step>>4,t);}   // ecos en bucle y banda de criaturas
     if(runtime.inWorld()&&MU.nb&&MU.nbW>0){if(s===0||MU.neighborRadio?.key!==MU.nb.key)MU.neighborRadio={...neighborRadio.advance(MU.nb,MU.step>>4),key:MU.nb.key};}else MU.neighborRadio=null;
     if(s===0)applyComfort(t);
+    if(s===0&&runtime.inWorld()&&MU.dnaA)MU.influenced=runtime.shapeInfluence?.(MU.dnaA,MU.radio)||MU.radio;
     // En zonas vacías la música se adelgaza (subida); en un oasis vuelve completa (drop).
     const vitCap=runtime.inWorld()?.16+.7*Math.min(1,(MU.vit??1)/.7):1;
     let E=(calm||runtime.S.mode==="camino")?Math.min(MU.E,.2):Math.min(vitCap,Math.max(MU.E,MU.radio?.energy||0));
@@ -220,12 +221,13 @@ export function initialize(runtime) {
     const air=runtime.inWorld()&&MU.dnaA?MU.dnaA.air:null;
     verbIn.gain.setTargetAtTime(vac?1.6:cave||air==="niebla"?1.25:.8,t,1);
     if(air==="esporas"&&s===14&&bar%4===3&&rnd()<.2)pluck(chordTones()[1]+12,t,.012,4);
-    const swA=(s%2)?SIX*(G.sw||0):0,tt=t+swA+jit(),R=root(),ct=chordTones();
+    if(runtime.inWorld())E=runtime.clamp(E+(runtime.influenceState?.values.groove||0)*.09,.05,.9);
+    const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(G.sw||0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
     if(live){
       if(nb){VW=w;const nt=t+((s%2)?SIX*(runtime.GEN[nb.genre].sw||0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }
       VW=1-w;drums(A?A.genre:"ambient",s,bar,t,tt,E,ct,false);
       if(runtime.inWorld()&&A){
-        playTrack(A,s,tt,E,ct);
+        playTrack(A,s,tt,E,ct,MU.influenced||MU.radio);
         const grammar=MU.radio?.grammar;
         if(grammar&&E>.32&&runtime.currentPocket?.()?.kind!=='quiet'&&grammar.accents.includes(s)&&s%4!==0){
           const v=vel(grammar.accentLevel*(MU.radio.section===0?.5:1));
