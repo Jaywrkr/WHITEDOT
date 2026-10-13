@@ -374,6 +374,7 @@ export function initialize(runtime) {
     runtime.drawGlass?.(t,dt,ox,oy,R);
     runtime.drawMirrors?.(t,dt,ox,oy,R);
     runtime.drawMateria?.(t,dt,ox,oy,R);
+    runtime.drawVida?.(t,dt,ox,oy,R);
     runtime.drawPatchGarden?.(t,dt,ox,oy,R);
     runtime.drawPhenomena(t,dt,ox,oy,R);
     runtime.drawJam?.(t,dt,ox,oy,b);

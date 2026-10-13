@@ -350,3 +350,6 @@ Para comparar mundos completos: **Menú → Prototipo → Semillas → Blobs I /
 
 ## Materia y compartir (rama de Claude, pendiente de merge)
 Cuerdas tensables, prisma de luz y membrana resonante con gestos directos; Chorus, Phaser y Freeze en la mesa FX; códigos de lugar `WD1-` en Favoritos; grabar un set de hasta 60 s con audio. Ver `FASE_04_MATERIA.md`.
+
+## Laboratorio y Vida (rama de Claude, pendiente de merge)
+Menú → Prototipo → Laboratorio: un mundo aparte para probar cada elemento interactivo, anotar qué mejorar y copiar el informe. Fase 5: bandadas que te devuelven la llamada, luciérnagas que se sincronizan, ave lira y flora que crece contigo. Ver `LABORATORIO_Y_FASE_05.md`.

@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-materia-produccion-v1';
+const CACHE='whitedot-laboratorio-v1';
 const SHELL=[
  "./",
  "./index.html",
@@ -52,6 +52,8 @@ const SHELL=[
  "./src/interactions.js",
  "./src/jam.js",
  "./src/journal.js",
+ "./src/lab-catalog.js",
+ "./src/lab.js",
  "./src/landmarks.js",
  "./src/layers.js",
  "./src/main.js",
@@ -88,6 +90,8 @@ const SHELL=[
  "./src/studio.js",
  "./src/ui.js",
  "./src/visual.js",
+ "./src/vida-music.js",
+ "./src/vida.js",
  "./src/voices.js",
  "./src/wonders.js",
  "./src/world.js"

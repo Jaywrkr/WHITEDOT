@@ -13,11 +13,11 @@ export function initialize(runtime){
  const cache=new Map();let visible=[],gesture=null,lastBar=-Infinity,previous=runtime.S;
  const active=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])')&&runtime.S.sound&&runtime.ac?.state==='running';
  const playable=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
- const requested=new URLSearchParams(location.search).get('encounter');
+ const requestedParam=new URLSearchParams(location.search).get('encounter'),requestedNow=()=>runtime.labEncounter||requestedParam;   // el laboratorio puede pedir una familia sin recargar
  function chunk(x,y){
   const key=`${x},${y}`;if(!cache.has(key)){
    const region=runtime.regionOfPos((x+.5)*runtime.WCH,(y+.5)*runtime.WCH),items=createEncounters(x,y,runtime.WCH,region,runtime.seedOf,runtime.rng);
-   const home=runtime.REG/2;
+   const home=runtime.REG/2,requested=requestedNow();
    if(runtime.S.previewSeed&&x===home&&y===home&&FAMILIES[requested]){items.length=0;items.push({id:`preview:${requested}`,kind:requested,x:x*runtime.WCH+100,y:y*runtime.WCH,hue:region.hue,variant:runtime.seedOf(requested)%8,state:createFamilyState()});}
    if(items[0]?.kind==='animal'){const first=items[0];items.push({...first,id:first.id+':partner',x:first.x+70,y:first.y+70,state:createFamilyState()});}
    cache.set(key,items);while(cache.size>64)cache.delete(cache.keys().next().value);
@@ -94,7 +94,7 @@ export function initialize(runtime){
  function journal(){return Object.keys(runtime.S.journal.encounters||{}).filter(k=>FAMILIES[k]).map(k=>`<article class="journal-card"><h3>${FAMILIES[k].name}</h3><p>${FAMILIES[k].description||FAMILIES[k].hint}. Su papel y su timbre cambian con la región; los gestos transforman la composición existente.</p></article>`).join('');}
  for(const [kind,f]of Object.entries(FAMILIES)){runtime.VOZ['encounter:'+kind]=f.hint+'. Escucha cómo cambia este lugar.';runtime.ACH.push(['encounter:'+kind,f.name,'Aprende un gesto de este encuentro.']);}
  addEventListener('blur',cancel);
- Object.defineProperties(runtime,{shapeEncounters:{get:()=>arrange},encounterTick:{get:()=>tick},encounterDraw:{get:()=>draw},encounterBar:{get:()=>bar},encounterEngaged:{get:()=>!!gesture},encounterDown:{get:()=>down},encounterMove:{get:()=>move},encounterUp:{get:()=>up},encounterSources:{get:()=>sources},encounterJournal:{get:()=>journal},encounterObjects:{get:()=>visible},encounterCacheSize:{get:()=>cache.size}});
+ Object.defineProperties(runtime,{encounterReset:{get:()=>()=>{cache.clear();visible=[];gesture=null;}},shapeEncounters:{get:()=>arrange},encounterTick:{get:()=>tick},encounterDraw:{get:()=>draw},encounterBar:{get:()=>bar},encounterEngaged:{get:()=>!!gesture},encounterDown:{get:()=>down},encounterMove:{get:()=>move},encounterUp:{get:()=>up},encounterSources:{get:()=>sources},encounterJournal:{get:()=>journal},encounterObjects:{get:()=>visible},encounterCacheSize:{get:()=>cache.size}});
 }
 function drawShape(c,shape,s,o,runtime){
  const TAU=Math.PI*2;
