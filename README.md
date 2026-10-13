@@ -210,3 +210,9 @@ Rama `feat/14-seed-laboratory`. Menú → Prototipo → Semillas permite elegir 
 Rama `feat/15-spacious-blob-worlds`. Las semillas de prueba usan biomas de 7200 unidades de ancho (antes 3600); Espacio → Clásico permite comparar y conserva un guardado distinto. El mapa habitual conserva coordenadas. La escena reduce vegetación/fauna/props/juguetes con selección determinista y referencias a los mismos objetos: no cambia IDs ni consume el RNG original, no afecta reliquias, portales ni instalaciones, y Escuchar usa los objetos visibles. Voces ambientales responden menos a menudo y solo un cantor se superpone. Semillas blobs generan habitantes de cuerpos suaves, rasgos distintos y voces graves/medias/percusivas del género; también hay hábitats de blobs dispersos. Dos o tres habitantes cerca del centro permiten probar de inmediato sin llenar el paisaje. No se fuerza agudo y se conserva afinación/tempo regional. Centro seguro, guardados por semilla y layout, vuelta a Mi partida. Validación de generaciones, aislamiento y síntesis de voces en 23 renders.
 
 Para comparar mundos completos: **Menú → Prototipo → Semillas → Blobs I / Blobs II**, con Espacio Amplio o Clásico. Hay habitantes cerca del centro para probar sus voces; **Mi partida** vuelve a tu guardado habitual. Detalle en [MUNDOS_SEMILLAS.md](MUNDOS_SEMILLAS.md).
+
+### Entrega creativa 1: Primer recorrido creativo
+
+Bitácora muestra el recorrido Camino → escuchar → transformar → Estudio. La guía es breve y fijar sonidos sigue siendo opcional.
+
+Rama: `feat/17-first-creative-journey`. Parte de la entrega anterior; Jay crea el PR y hace merge.

@@ -54,7 +54,7 @@ export function initialize(runtime){
   if(origin!=='player'||!runtime.inWorld()||!region)return;
   const profile=influenceProfile(region,kind,source,runtime.seedOf,runtime.rng),key=`${region.key}:${profile.channel}`,now=performance.now();
   if(now-(recent.get(key)??-Infinity)<400)return;recent.set(key,now);while(recent.size>128)recent.delete(recent.keys().next().value);
-  regionState(region).touch(profile.channel,.22,profile.variant);
+  regionState(region).touch(profile.channel,.22,profile.variant);runtime.creativeAction?.(profile.channel);
  }
  function tick(dt,paused){
   if(previous!==runtime.S){states.clear();recent.clear();previous=runtime.S;}

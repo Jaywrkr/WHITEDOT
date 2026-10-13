@@ -246,3 +246,7 @@ Antes de sumar más familias, revisar [DIRECCION_JUEGO.md](DIRECCION_JUEGO.md): 
 ## Pedido de blobs, semillas y calma — implementado
 
 Ramas 13, 14 y 15 de RAMAS.md: interfaz sin notas decorativas, laboratorio de semillas completas, blobs y escenarios más tranquilos. Estos números identifican entregas nuevas; no significan que Conversaciones musicales, Más efectos o Mixer del plan histórico estén terminados. Ver [MUNDOS_SEMILLAS.md](MUNDOS_SEMILLAS.md). Las pruebas tienen mapas Amplio/Clásico y guardados separados; el mapa habitual conserva su escala y usa menor densidad de escena.
+
+## Cadena creativa de veinte entregas
+
+Jay autorizó las nueve mejoras seleccionadas y las diez familias de elementos, más una revisión final. Su ejecución y límites se documentan en [ENTREGAS_CREATIVAS.md](ENTREGAS_CREATIVAS.md). La opción descartada de guardar ideas musicales sigue fuera de alcance.
