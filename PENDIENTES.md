@@ -60,7 +60,7 @@ Marcar cualquier punto, nombrarlo, guardar coordenadas, capa, región/bioma, car
 
 **Probar:** negativos, fronteras, recarga y cambio de generador. Coordenadas no prometen recuperar el mismo compás; receta exacta requiere escenas.
 
-### 8. Orientación y retorno
+### 8. Orientación y retorno — implementada en rama 8
 
 Seleccionar favorito/Estudio, dirección/distancia y llegada, cancelación discreta. Aprovechar mapa existente: ya muestra exploración, no favoritos ni navegación automática. Decidir costo/alcance de retorno acorde a linterna y exploración, sin introducir teletransporte gratuito por accidente.
 

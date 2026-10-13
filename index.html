@@ -55,6 +55,7 @@
 <aside id="scanner" class="scanner" aria-label="Escuchar el Mundo" hidden>
   <h2>Escuchar</h2><p id="scannerRegion"></p><ul id="scannerSources"></ul><small id="scannerHint"></small>
 </aside>
+<aside class="routehud" id="routeHud" aria-label="Orientación al destino" hidden><svg id="routeArrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l7-9 7 9M12 6v15"/></svg><div><strong id="routeName"></strong><small id="routeDetail"></small></div><button id="navCancel" aria-label="Cancelar destino">×</button></aside>
 <div class="zone" id="zone" aria-live="polite"><small id="zMood"></small><b id="zName"></b><span id="zDo"></span></div>
 
 <div class="modal menu" id="mMenu" hidden>
@@ -232,7 +233,7 @@
 <div class="modal" id="mFavorites" role="dialog" aria-modal="true" aria-labelledby="favoritesTitle" hidden>
  <div class="sheet"><h2 id="favoritesTitle">Favoritos musicales</h2>
  <form id="favForm" class="favorite-form"><label for="favName">Nombre de este punto</label><input id="favName" maxlength="60" autocomplete="off"><button id="favSave" type="submit" class="gold">Guardar aquí</button></form>
- <p id="favNote"></p><div id="favoritesBody" class="scroll"></div><div class="row"><button id="favoritesClose">Cerrar</button></div></div>
+ <p id="favNote"></p><button id="favStudio" disabled>Orientar al Estudio</button><div id="favoritesBody" class="scroll"></div><div class="row"><button id="favoritesClose">Cerrar</button></div></div>
 </div>
 <script type="module" src="./src/main.js"></script>
 

@@ -39,6 +39,7 @@ export function initialize(runtime){
    runtime.favoriteActions?.(point,row);
    card.append(input,details,row);body.append(card);
   }
+  runtime.refreshDestinations?.();
  }
  function open(){const region=runtime.inWorld()?(runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy)):null;$('favName').value=region?.name||'';render();$('mFavorites').hidden=false;}
  $('bFavorites').onclick=open;$('favoritesClose').onclick=()=>{$('mFavorites').hidden=true;};
