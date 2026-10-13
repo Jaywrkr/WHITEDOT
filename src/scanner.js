@@ -42,7 +42,7 @@ export function initialize(runtime) {
       list.append(item);
     }
     if(!sources.length){const item=document.createElement('li');item.textContent='Sin objetos musicales cercanos. La región sigue componiendo.';list.append(item);}
-    document.getElementById('scannerHint').textContent=runtime.S.sound?`Voces cercanas · ${region.recipe?.name||createGrammar(region,runtime.seedOf,runtime.rng).character}`:'Sonido silenciado · mostrando las voces del lugar';
+    document.getElementById('scannerHint').textContent=runtime.S.sound?`Voces cercanas · ${region.recipe?.name||createGrammar(region,runtime.seedOf,runtime.rng).character}${runtime.initiativeState?.stage?" · El ambiente responde":""}`:'Sonido silenciado · mostrando las voces del lugar';
     while(panel.scrollHeight>panel.clientHeight+2&&list.childElementCount>1)list.lastElementChild.remove();
   }
   function startScanner(){if(!runtime.inWorld())return;scanning=true;runtime.ptr=null;panel.hidden=false;updateScanner(true);}

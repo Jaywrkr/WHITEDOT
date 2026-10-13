@@ -73,7 +73,7 @@ export function createRadio(seedOf, rng, genres) {
     const event = environment.event === 'eclipse' ? -.06 : environment.event ? .05 : 0;
     const density = environment.variant === 0 ? -.05 : environment.variant === 4 ? .04 : 0;
     const limit = environment.quiet ? .24 : region.genre === 'ambient' ? .3 : .7;
-    const target = Math.max(.14, Math.min(limit, levels[section] + life + event + density));
+    const target = Math.max(.14, Math.min(limit, levels[section] + life + event + density + Math.min(.06,Math.max(0,environment.initiative||0)*.06)));
     energy += (target - energy) * .25;
     return { ...arrangement, harmonyBar:bar-startBar, energy, genre: region.genre };
   }

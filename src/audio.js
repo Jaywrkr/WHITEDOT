@@ -192,9 +192,10 @@ export function initialize(runtime) {
     if(runtime.inWorld()&&MU.dnaA){
       if(s===0||!MU.radio)MU.radio=radio.advance(MU.dnaA,MU.step>>4,{
         near:MU.near.length,singers:MU.singers.length,variant:MU.vari,quiet:runtime.currentPocket?.()?.kind==='quiet',
-        event:runtime.eventOf(MU.dnaA)?.[0]
+        event:runtime.eventOf(MU.dnaA)?.[0],initiative:runtime.initiativeState?.strength||0
       });
       if(s===0){const degree=harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar);if(MU.harmonyRegion!==MU.dnaA.key||MU.deg!==degree){changeChord(t);MU.harmonyRegion=MU.dnaA.key;}else if(MU.pending){MU.pending=false;MU.dist=0;}}
+      if(s===0)runtime.initiativeBar?.(t,MU.step>>4);
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.horizonBar?.(t,MU.step>>4);
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.riverBar?.(t);
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.stormBar?.(t);   // hitos lejanos: se oyen antes de verse

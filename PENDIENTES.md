@@ -46,7 +46,7 @@ Guía de escalas, grosor, glifos, movimiento, profundidad, brillo, color y reacc
 
 **Probar:** escenas densas/vacías, capas, lluvia y FX con protagonista visible, HUD discreto, sin solapamientos ni rellenos globales de color. No rediseñar todo el juego de golpe.
 
-### 6. Iniciativa ambiental tras ~60 segundos quieto
+### 6. Iniciativa ambiental tras ~60 segundos quieto — implementada en rama 6
 
 Radio y fenómenos ya evolucionan. Añadir respuesta específica a inmovilidad prolongada: criaturas, objetos/texturas y secciones entran poco a poco, a frase, con límites. Definir efecto de pulsar sin moverse. Recuperar agencia suavemente al caminar, excluir menús/Escuchar del tiempo activo, respetar claros/linterna/silencio.
 
