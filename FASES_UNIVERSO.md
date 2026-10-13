@@ -1,6 +1,6 @@
 # Universo ampliable: secuencia vigente
 
-Pedido de Jay: avanzar mucho más en variedad, belleza e interacción, agrupando muchas mejoras relacionadas por fase. **Una fase = una rama amplia**, con pruebas, documentación, commit y push. Jay crea el PR y hace merge. Fases 1 y 2 integradas por PR #68/#69. Antes de ampliar la fase 3, Jay pidió el [atlas visual y balance de registros](REVISION_REGISTROS.md), implementados en una rama amplia desde main `ffc5578`. Fases 3–10 siguen como plan; este ajuste musical no declara terminada la fase 3.
+Pedido de Jay: avanzar mucho más en variedad, belleza e interacción, agrupando muchas mejoras relacionadas por fase. **Una fase = una rama amplia**, con pruebas, documentación, commit y push. Jay autorizó al asistente a integrar los pendientes; usar merge normal con verificación. Fases 1 y 2 integradas por PR #68/#69. Antes de ampliar la fase 3, Jay pidió el [atlas visual y balance de registros](REVISION_REGISTROS.md), integrados en main `f7bcf84` mediante PR #70, con lógica, navegador y audio aprobados. Fases 3–10 siguen como plan; este ajuste musical no declara terminada la fase 3.
 
 Esta secuencia sustituye las propuestas de treinta ramas pequeñas y de una única `release/v1`. Las cinco fases creativas antiguas ya integradas no son las fases de este documento. [V1_PRODUCCION.md](V1_PRODUCCION.md) conserva el inventario detallado de 64 tareas; ninguna idea queda implementada por aparecer en el plan.
 

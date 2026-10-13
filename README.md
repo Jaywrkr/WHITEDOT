@@ -4,13 +4,13 @@ Un punto blanco en un mundo negro que compone música electrónica mientras lo e
 
 ## Entrega actual: revisión visual y registros musicales
 
-Rama **`fix/musical-registers-and-visual-inventory`**, desde main `ffc5578` (PR #69). Fases 1 y 2 ya integradas. [Lámina con 118 vistas numeradas de las figuras reales](docs/images/atlas-visual.png), para elegir qué rediseñar. Incluye muestras de las variantes procedurales, ampliadas para revisión.
+Integrada en **`main` · `f7bcf84`**, mediante PR #70. Fases 1 y 2 también integradas. [Lámina con 118 vistas numeradas de las figuras reales](docs/images/atlas-visual.png), para elegir qué rediseñar. Incluye muestras de las variantes procedurales, ampliadas para revisión.
 
 La radio deja espacio a frases de bajo/percusión sin melodía obligatoria; los 52 estilos usan registros y presencia melódica diferenciados. Voces, vidrios y aves tienen techos audibles controlados, paletas más propias de cada género y mayor margen de salida en escenas densas. Los gestos deliberados siguen respondiendo. [Detalle y pruebas](REVISION_REGISTROS.md).
 
 **Probar: Menú → Explorar mundos → Paisajes vivos → Humedal / Salinas / Basalto / Micelio**, o escuchar la partida Original. La revisión musical funciona en ambas generaciones. Paisajes vivos aporta 33 perfiles sobre los 11 biomas, seis familias pequeñas, clima y vecinos relacionados; Amplio vivo tiene regiones de **10.800 unidades**. [Fase 2](FASE_02.md).
 
-Coordenadas y guardados separados de Original/vivo se conservan. Jay crea el PR de esta revisión hacia main y hace merge. Una rama amplia por bloque: [FASES_UNIVERSO.md](FASES_UNIVERSO.md); la expansión mayor de instrumentos de fase 3 sigue pendiente.
+Coordenadas y guardados separados de Original/vivo se conservan. La revisión ya pasó lógica, navegador y audio; Vercel aprobó el despliegue del merge. Una rama amplia por bloque: [FASES_UNIVERSO.md](FASES_UNIVERSO.md); la expansión mayor de instrumentos de fase 3 sigue pendiente.
 
 ## Jugar y probar
 

@@ -1,8 +1,8 @@
-# Continuar WHITEDOT · revisión visual y musical
+# Continuar WHITEDOT · base consolidada
 
-Rama actual: `fix/musical-registers-and-visual-inventory`, desde main `ffc5578` (PR #69). Fases 1 y 2 integradas. Jay crea PR/merge; el asistente hace commit/push, una rama amplia por bloque. [Entrega actual y pruebas](REVISION_REGISTROS.md). [Imagen numerada](docs/images/atlas-visual.png).
+Base vigente: `main` · `f7bcf84`, PR #70 integrado el 13 de octubre de 2026. Fases 1 y 2 y revisión visual/musical integradas. Verificaciones de lógica, auditorías, navegador y audio aprobadas en GitHub Actions; despliegue del merge aprobado por Vercel. Iniciar el siguiente bloque desde `origin/main`, sin reaplicar ramas históricas. [Estado de integración](RAMAS.md). [Entrega y pruebas](REVISION_REGISTROS.md). [Imagen numerada](docs/images/atlas-visual.png).
 
-Se revisaron los registros de los 52 estilos, sus paletas y frases de descanso. La política vive en `src/musical-character.js`, fuera del generador: no añadir estilos a GEN globalmente sin revisar compatibilidad de mundos. La música en Original y vivo cambia deliberadamente; sus posiciones/guardados no. El nuevo SW incluye ese módulo. No rediseñar figuras antes de recibir las elecciones de Jay sobre la lámina. La fase 3 mayor y las fases 4–10 permanecen pendientes; esta solicitud se resolvió primero.
+Se revisaron los registros de los 52 estilos, sus paletas y frases de descanso. La política vive en `src/musical-character.js`, fuera del generador: no añadir estilos a GEN globalmente sin revisar compatibilidad de mundos. La música en Original y vivo cambia deliberadamente; sus posiciones/guardados no. El nuevo SW incluye ese módulo. No rediseñar figuras antes de recibir las elecciones de Jay sobre la lámina. La fase 3 mayor y las fases 4–10 permanecen pendientes; el balance previo ya está integrado. El PR #57 fue sustituido: su recorrido creativo existe en main y no debe recuperarse mediante cherry-pick.
 
 <details><summary>Entrega de fase 2 e historial anterior (ya integrado)</summary>
 
