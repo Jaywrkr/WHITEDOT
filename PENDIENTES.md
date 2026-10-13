@@ -62,11 +62,11 @@ Escucha agradable para público amplio: controlar fatiga, disonancia accidental,
 2. **Contraste de densidad:** un campo continuo de vitalidad reemplaza los 5 niveles de relleno. El vacío funciona como la subida de un track y el lugar lleno como el drop: la música se adelgaza en lo vacío y entra completa al llegar a un oasis.
 3. **Horizonte sonoro:** hitos grandes (torres, árboles gigantes, ciudades de criaturas, monolitos, faros). Primero se oyen (apagados y desde su dirección), luego se intuyen (brillo en el borde) y luego se ven. Cada uno tiene su motivo musical. Máximo 2 sonando a la vez. Sin flechas ni brújula.
 
-**Fase 2 · Viaje — implementada en `feat/infinite-world-journey` (pendiente de PR). Falta de esta fase: reflejar "ritmos más extraños" lejos del Origen sin romper el reparto global; tarjeta de récord propia si el mapa no basta:**
+**Fase 2 · Viaje — integrada (PR #30). Falta de esta fase: reflejar "ritmos más extraños" lejos del Origen sin romper el reparto global; tarjeta de récord propia si el mapa no basta:**
 5. **Más lejos, más raro, y la distancia cuesta:** afinación torcida, objetos más grandes, colores imposibles y ritmos extraños lejos del origen. Expediciones de varios días con el Estudio como campamento base. Récord de distancia con tarjeta para compartir.
 8. **Mapa dibujado:** solo lo que viste, con símbolos de lo que escuchaste, en zoom de continente y región, exportable como imagen. El mapa recuerda, no revela.
 
-**Fase 3 · Asombro:**
+**Fase 3 · Asombro — implementada (rarezas, rumores y ríos). Falta: confluencias que mezclen géneros, manantiales, ríos en el mapa y caminos marcados por migraciones:**
 4. **Rarezas que rompen reglas:** niveles raro/legendario/mítico con frecuencia real. Cada una deja una muestra o instrumento único para el Estudio. La Voz suelta rumores con pistas. Lo raro se anuncia, no se regala.
 2. **Ríos y caminos:** un río es un set de DJ (la energía sube río abajo). Nacen en manantiales, mueren en mares de silencio, y donde dos se juntan sus géneros se mezclan. Los caminos los marcan las migraciones.
 

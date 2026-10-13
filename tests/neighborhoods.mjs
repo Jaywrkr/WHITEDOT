@@ -6,7 +6,7 @@ let near=0,far=0,n=0;const genres=new Set();
 for(let x=-20;x<20;x++)for(let y=-20;y<20;y++){
  const a=r.regionOfPos(x*3600+900,y*3600+900),b=r.regionOfPos((x+1)*3600+900,y*3600+900),c=r.regionOfPos((x+15)*3600+900,(y+13)*3600+900);
  near+=Math.abs(a.bpm-b.bpm);far+=Math.abs(a.bpm-c.bpm);n++;genres.add(a.genre);
- assert(a.bpm>=r.GEN[a.genre].bpm[0]&&a.bpm<=r.GEN[a.genre].bpm[1]);
+ if(a.anomaly?.type!=="frenesi")assert(a.bpm>=r.GEN[a.genre].bpm[0]&&a.bpm<=r.GEN[a.genre].bpm[1]);   // el Frenesí rompe el tempo a propósito
  assert.deepEqual(musicalField(x,y,r.seedOf,r.rng),musicalField(x,y,r.seedOf,r.rng));
 }
 assert(near/n<12);assert(near<far*.5);assert(genres.size>=18);

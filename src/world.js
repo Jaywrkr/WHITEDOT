@@ -6,6 +6,7 @@ import { attachPersonalities } from './personality.js';
 
 import { createPlaythings } from './playthings.js';
 import { createContinents, strangeness } from './continents.js';
+import { anomalyAt, applyAnomaly } from './wonders.js';
 
 // Generación procedural del camino, regiones y reliquias.
 export function initialize(runtime) {
@@ -84,6 +85,8 @@ export function initialize(runtime) {
       d.pal={main:`hsl(${hue},${sat}%,${Math.round(74-14*st)}%)`,soft:`hsl(${(hue+Math.round(60*st))%360},${Math.round(22+50*st)}%,50%)`,acc:`hsl(${acc},${Math.round(72+25*st)}%,${Math.round(70-10*st)}%)`,sand:`hsl(${(hue+40)%360},${Math.round(35+50*st)}%,68%)`};}}d.sea=ct.sea;d.coast=ct.coast;
     d.fill=origin?runtime.FILL[2]:fillOf(continents.vitality((rx+.5)*regionPx(),(ry+.5)*regionPx(),regionPx()));
     applyNeighborhood(d,runtime.BIOMES,runtime.GEN,runtime.seedOf,runtime.rng,continents.at);
+    d.anomaly=anomalyAt(rx,ry,(a,b)=>continents.at(a,b).sea,runtime.seedOf,runtime.rng);
+    if(d.anomaly)applyAnomaly(d,d.anomaly.type==='espejo'?regionAt(0,0):null);
     rcache.set(key,d);return d;
   }
   const EVENTS=[["lluvia","Lluvia de notas","Caen notas del cielo. Atrápalas."],["eclipse","Eclipse","La luz se achica. Todo se escucha más hondo."],["migracion","Migración","Las formas de aquí están viajando."],["aurora","Aurora","El cielo canta en otro color."]];

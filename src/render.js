@@ -135,6 +135,7 @@ export function initialize(runtime) {
 
   function worldStep(t,dt,dx,dy,b,paused=false,movementSpeed=runtime.SPEED){
     const sz=runtime.pxSize(),ds=Math.min(sz,22);
+    if(runtime.MU.anomaly==='invertida'){dx=-dx;dy=-dy;}   // rareza: arriba es abajo
     if(dx||dy){runtime.S.wx+=dx*movementSpeed*dt;runtime.S.wy+=dy*movementSpeed*dt;}
     runtime.camX=runtime.S.wx;runtime.camY=runtime.S.wy;
     if(runtime.S.lampDay!==runtime.S.todayKey){runtime.S.lampDay=runtime.S.todayKey;runtime.S.lampUsed=0;}
@@ -144,6 +145,7 @@ export function initialize(runtime) {
     const z=runtime.biomeOfPos(runtime.S.wx,runtime.S.wy),rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
     if(rg.key!==runtime.curRegion){runtime.curRegion=rg.key;runtime.enterRegion(rg,z);}
     {// Vitalidad local: el vacío adelgaza la música; llegar a un oasis después de un desierto es un drop.
+     runtime.riverStep?.(dt);
      const MU=runtime.MU,v=runtime.vitalityAt(runtime.S.wx,runtime.S.wy);MU.vit=MU.vit==null?v:MU.vit+(v-MU.vit)*Math.min(1,dt*.8);
      if(MU.vit<.22)MU.lowT=(MU.lowT||0)+dt;
      if(MU.vit>.6&&(MU.lowT||0)>12){MU.lowT=0;MU.E=Math.max(MU.E,.75);runtime.flash=Math.max(runtime.flash,.5);
@@ -164,6 +166,7 @@ export function initialize(runtime) {
       for(let i=runtime.rain.length-1;i>=0;i--){const q=runtime.rain[i];q.y+=q.vy*dt;const d=Math.hypot(q.x-runtime.S.wx,q.y-runtime.S.wy);if(d<runtime.pxSize()/2+14){runtime.rain.splice(i,1);runtime.playerNote(.12);runtime.burst(q.x,q.y,5,true);continue;}
         if(q.y>runtime.S.wy+R*1.4){runtime.rain.splice(i,1);continue;}runtime.cx.globalAlpha=Math.min(1,Math.max(.15,1-d/(R*1.3)));runtime.cx.fillStyle=runtime.GOLD;runtime.cx.fillRect(q.x+ox-1,q.y+oy-6,2,7);}}else if(runtime.rain.length)runtime.rain=[];
     runtime.drawGround(ox,oy,R,t);
+    runtime.drawRivers?.(t,ox,oy);
     runtime.updWaves(dt,ox,oy);
     const span=R*1.8+60;
     const a0=Math.floor((runtime.S.wx-span)/runtime.WCH),a1=Math.floor((runtime.S.wx+span)/runtime.WCH),b0=Math.floor((runtime.S.wy-span)/runtime.WCH),b1=Math.floor((runtime.S.wy+span)/runtime.WCH);

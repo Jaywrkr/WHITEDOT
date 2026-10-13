@@ -39,7 +39,7 @@ export function initialize(runtime) {
     master.gain.setTargetAtTime(musicVolume(),time,.25);
     comfortShelf.gain.setTargetAtTime(soft?-5:-1.5,time,1);
     if(punch){punch.gain.setTargetAtTime(soft?0:3,time,.5);makeup.gain.setTargetAtTime(soft?1.6:3.4,time,.5);}
-    comfortLowpass.frequency.setTargetAtTime(soft?5500:runtime.inWorld()?(MU.radio?.grammar?.brightness||10000):18000,time,1.2);
+    comfortLowpass.frequency.setTargetAtTime(soft?5500:runtime.inWorld()?(MU.anomaly==='detenido'&&MU.still>1?700:MU.radio?.grammar?.brightness||10000):18000,time,1.2);
   }
   function impulse(sec){const n=ac.sampleRate*sec|0,b=ac.createBuffer(2,n,ac.sampleRate);for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);}return b;}
   function audio(){
@@ -166,7 +166,7 @@ export function initialize(runtime) {
     if(s===0){
       if(MU.biome!==MU.biomeT||MU.dnaA!==MU.dnaT){MU.biome=MU.biomeT;MU.dnaA=MU.dnaT;MU.tr=BI().tr+(MU.dnaA?MU.dnaA.trOff:0);MU.pending=true;MU.harmonyRegion=null;}
       const nb=runtime.inWorld()?MU.nb:null,w=nb?MU.nbW:0;
-      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;BPM=Math.round(bA*(1-w)+bB*w);SIX=60/BPM/4;delay.delayTime.setTargetAtTime(SIX*3,t,.2);
+      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;BPM=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)BPM=Math.round(BPM*.55);SIX=60/BPM/4;delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
       if(!runtime.inWorld()&&(MU.pending||(MU.step-MU.lastChange>16*(6+Math.floor(rnd()*4)))))changeChord(t);
       if(BI().id==="tormenta"&&runtime.inWorld()&&(MU.step/16)%2===0&&rnd()<.75)MU.boltAt=t+SIX*(rnd()<.5?0:8);
     }
@@ -176,13 +176,15 @@ export function initialize(runtime) {
         event:runtime.eventOf(MU.dnaA)?.[0]
       });
       if(s===0){const degree=harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar);if(MU.harmonyRegion!==MU.dnaA.key||MU.deg!==degree){changeChord(t);MU.harmonyRegion=MU.dnaA.key;}else if(MU.pending){MU.pending=false;MU.dist=0;}}
-      if(s===0)runtime.horizonBar?.(t,MU.step>>4);   // hitos lejanos: se oyen antes de verse
+      if(s===0)runtime.horizonBar?.(t,MU.step>>4);
+      if(s===0)runtime.riverBar?.(t);   // hitos lejanos: se oyen antes de verse
     }else{MU.radio=null;voiceCurator.clear();}
     if(runtime.inWorld()&&MU.nb&&MU.nbW>0){if(s===0||MU.neighborRadio?.key!==MU.nb.key)MU.neighborRadio={...neighborRadio.advance(MU.nb,MU.step>>4),key:MU.nb.key};}else MU.neighborRadio=null;
     if(s===0)applyComfort(t);
     // En zonas vacías la música se adelgaza (subida); en un oasis vuelve completa (drop).
     const vitCap=runtime.inWorld()?.16+.7*Math.min(1,(MU.vit??1)/.7):1;
-    const E=(calm||runtime.S.mode==="camino")?Math.min(MU.E,.2):Math.min(vitCap,Math.max(MU.E,MU.radio?.energy||0));
+    let E=(calm||runtime.S.mode==="camino")?Math.min(MU.E,.2):Math.min(vitCap,Math.max(MU.E,MU.radio?.energy||0));
+    if(runtime.inWorld()&&!calm){if(MU.river)E=Math.max(E,.3+.45*MU.river);if(MU.anomaly==='luna')E=Math.max(E,.85);}   // río abajo sube la energía; la luna lo abre todo
     const A=live&&MU.dnaA?MU.dnaA:null,G=A?runtime.GEN[A.genre]:runtime.GEN.ambient,nb=runtime.inWorld()&&MU.nb&&MU.nb!==A?MU.nb:null,w=nb?MU.nbW:0;
     if(s%4===0){MU.bq.push(t);if(MU.bq.length>8)MU.bq.shift();}
     MU.sq.push({t,s});if(MU.sq.length>12)MU.sq.shift();
@@ -191,7 +193,7 @@ export function initialize(runtime) {
     padG.gain.setTargetAtTime(.03*(1-E*.4)*padOn+.0001,t,padOn?.6:2.2);
     padF.frequency.setTargetAtTime(380+E*1700-(cave?200:0),t,.9);
     droneG.gain.setTargetAtTime(0,t,1.5);
-    dfb.gain.setTargetAtTime(cave||(A&&A.genre==="dub")?.6:MU.still>3?.5:.36,t,1);
+    dfb.gain.setTargetAtTime(runtime.inWorld()&&MU.anomaly==='canon'?.72:cave||(A&&A.genre==="dub")?.6:MU.still>3?.5:.36,t,1);
     dsend.gain.setTargetAtTime(cave?2.2:MU.vari===3&&runtime.inWorld()?1.8:1,t,.5);
     const air=runtime.inWorld()&&MU.dnaA?MU.dnaA.air:null;
     verbIn.gain.setTargetAtTime(vac?1.6:cave||air==="niebla"?1.25:.8,t,1);

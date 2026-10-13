@@ -57,6 +57,7 @@ python3 tests/atlas_smoke.py
 python3 tests/world_smoke.py
 python3 tests/journey_smoke.py
 python3 tests/mobile_smoke.py
+python3 tests/wonders_smoke.py
 ```
 
 Las pruebas core necesitan Node. Para las pruebas de navegador necesitas Python y Playwright: instala `tests/requirements.txt` en un entorno virtual (`python3 -m pip install -r tests/requirements.txt`) y usa Chromium instalado en el sistema, o instala el navegador con `python3 -m playwright install chromium`. Puedes indicar su ejecutable mediante `CHROMIUM_PATH`. El smoke test levanta su propio servidor y verifica móvil y escritorio; no evalúa la calidad audible de la música.
@@ -70,6 +71,8 @@ Los avisos del sistema ocupan dos líneas; tócalos para leer el mensaje complet
 El Mundo está hecho de **continentes** de tamaños muy distintos, cada uno con su nombre, su tono musical, su familia de géneros y su color. Entre ellos hay **mares de silencio** casi vacíos. La vida no está repartida pareja: hay desiertos largos y oasis llenos; al llegar a un oasis después del vacío, la música entra de golpe. Los **hitos** (torres de luz, árboles madre, ciudades de formas, monolitos y faros) se oyen desde lejos y desde su dirección antes de verse. No hay flechas: sigue el sonido.
 
 Mientras más lejos del Origen, más raro: criaturas más grandes, colores imposibles y música desafinada. Con la linterna diaria no llegas lejos en un día, así que tu Estudio es el campamento base. El **Mapa** (menú) solo muestra lo que viste, marca con "?" los hitos que oíste y no visitaste, y se puede compartir.
+
+Muy de vez en cuando aparecen **rarezas** que rompen las reglas (gravedad invertida, regiones en canon, el tiempo que se detiene, la Luna de oro…). La Voz suelta rumores de hacia dónde están, y cada una te da una muestra única para tu Estudio. Los **ríos** cruzan el mundo: síguelos río abajo y la música va subiendo.
 
 ## Atlas de ritmos (para probar)
 
