@@ -72,6 +72,8 @@ export function initialize(runtime) {
   const PROPK={llanura:"piedra",bosque:"hongo",jardin:"campanilla",dunas:"cactus",tormenta:"antena",cueva:"gota",vacio:"astro"};
   const SPECIES=[["luciernaga","Luciérnagas","Huyen si te acercas. Si las tocas, suenan."],["arbol","Árboles de luz","Crecen en el bosque y brillan cuando pasas."],["estanque","Agua","Bajo el agua todo suena distinto."],["bandada","Bandadas","Cruzan el cielo. Vuela con ellas."],["caminante","Caminantes","Si te quedas cerca, te siguen y cantan contigo."]];
   const ACH=[
+   ["espejo1","Luz que escucha","Orientaste tu primer espejo musical."],
+   ["espejoRuta","Al otro lado del reflejo","Conectaste una ruta de espejos con su receptor.",1],
    ["vidrio1","Color que suena","Giraste tu primer vidrio musical."],
    ["vidrioArmonia","Tres capas de luz","Alineaste los tres vidrios de una instalación.",1],
    ["paseo1","Dejarse llevar","Escuchaste un minuto viajando con autopilot."],
@@ -160,6 +162,9 @@ export function initialize(runtime) {
   const COLORS=[["#ffffff","Blanco",null],["#f0d27a","Ámbar","tope"],["#7fe0b0","Menta","estrella1"],["#6fd3ff","Cian","mundo"],["#ff8a7a","Coral","r3"],["#b9a2ff","Lila","oculto"]];
   // La Voz del sistema: sarcástica, directa, con cariño por debajo. Estas son para que Jay las corrija.
   const VOZ={
+   espejo1:"Un reflejo también puede llevar el compás.",
+   espejoRuta:"La luz encontró su camino. Tú encontraste otra voz.",
+   mirrors:"Toca un espejo y gira sus controles. Sigue la luz desde el punto dorado hasta el rombo. Cada reflejo transforma la respuesta musical.",
    vidrio1:"Mover el color también mueve la música. Ya tienes otro instrumento.",
    vidrioArmonia:"Tres vidrios mirando al mismo lado. Por una vez, se pusieron de acuerdo.",
    glass:"Gira los aros o usa los tres controles. Sus cruces revelan figuras y cada vidrio tiene una voz distinta.",

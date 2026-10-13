@@ -4,6 +4,7 @@ export const RECIPE_VERSION=1;
 export const MATERIAL_NAMES={wood:'Madera cálida',glass:'Cristal suave',metal:'Metal filtrado',air:'Aire sedoso'};
 const all=['llanura','bosque','lago','ruinas','jardin','dunas','cristales','faros','tormenta','cueva','vacio'];
 export const ELEMENTS=[
+ {id:'installation:mirror',name:'Espejos musicales',kind:'installation',biomes:all.filter(b=>b!=='vacio'),motion:'rotate',actions:['rotate','pulse','listen'],materials:['metal','glass'],rarity:.22,home:true},
  {id:'installation:glass',name:'Tres vidrios cromáticos',kind:'installation',biomes:all.filter(b=>b!=='vacio'),motion:'rotate',actions:['rotate','pulse','listen'],materials:['glass'],rarity:.32,home:true},
  {id:'toy:spark',name:'Luz fugitiva',kind:'toy',biomes:all.filter(b=>b!=='cueva'),motion:'flight',actions:['touch','pulse'],materials:['glass','air']},
  {id:'toy:spring',name:'Brote saltarín',kind:'toy',biomes:['llanura','bosque','ruinas','jardin','cueva'],motion:'jump',actions:['touch','pulse'],materials:['wood','air']},

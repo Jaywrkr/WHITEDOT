@@ -1,8 +1,8 @@
 # WHITEDOT: fases, implementaciones e ideas por decidir
 
-Actualizado al cierre de las primeras diez fases de la sesión del 12 de octubre de 2026 (Guayaquil). Base main `5413d5f`; cadena implementada hasta fase 10, ver RAMAS. Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
+Actualizado al cierre de las primeras diez fases de la sesión del 12 de octubre de 2026 (Guayaquil). Base main `5413d5f`; cadena implementada hasta fase 11 y mejora 10a, ver RAMAS. Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
 
-**Una fase = una rama revisable**, implementación, pruebas, commit y push; Jay crea PR/merge. Jay autorizó en esta sesión las fases 1–10 en cadena; las fases 11–31 siguen como propuestas, no autorización automática. Ver RAMAS.md. Si una fase crece demasiado, dividirla antes de implementar. Las fases 1–10 están implementadas en sus ramas encadenadas; falta el PR/merge de Jay en ese orden. Las fases 11–31 siguen pendientes.
+**Una fase = una rama revisable**, implementación, pruebas, commit y push; Jay crea PR/merge. Jay autorizó primero las fases 1–10 en cadena y después borrar ecos con un toque y continuar con espejos (fase 11). Las fases 12–31 siguen propuestas. Ver RAMAS.md. Si una fase crece demasiado, dividirla antes de implementar. Las fases 1–10 están implementadas en sus ramas encadenadas; falta el PR/merge de Jay en ese orden. La fase 11 y mejora 10a están implementadas; las fases 12–31 siguen pendientes.
 
 ## Qué quiere Jay y cómo organizar el crecimiento
 
@@ -80,7 +80,7 @@ Tres piezas translúcidas giratorias/deslizables; superposición revela geometr�
 
 **Probar:** movimiento táctil comprensible, cambio sonoro a tempo, efecto visual local, presupuesto de voces. No teñir todo el fondo.
 
-### 11. Espejos musicales
+### 11. Espejos musicales — implementada en rama 11
 
 Orientar reflejos entre objetos para activar ecos, secuencias o revelar pistas. Rutas acotadas, identidades por región: no todos los espejos hacen lo mismo. Combinar después con vidrios sin exigirlos para la primera versión.
 
@@ -228,3 +228,13 @@ Puntos distintos visibles, verse/encontrarse y hacer música juntos. Diseñar co
 ## Cómo continuar
 
 Leer documentos y código actuales, elegir una fase con Jay y mantener una rama por implementación. Revisar resultados audibles antes de expandir catálogo. Actualizar CAMBIOS solo con trabajo realmente terminado y este archivo con prioridades/decisiones nuevas. Conservar contexto de Claude y del trabajo anterior, sin marcar una propuesta como hecha.
+
+### Fase 11: espejos musicales
+
+Rama `feat/11-musical-mirrors`, basada en `fix/10a-tap-delete-echo`. Un punto dorado emite luz: orienta tres espejos para dirigirla al receptor en forma de rombo. Toca un espejo para abrir sus tres controles (0–180°); el contacto no mueve al jugador. La ruta completa revela una figura local y cambia los grados musicales. El origen ofrece una instalación fácil de aprender, a la derecha del inicio, centro (1600,900); los vidrios continúan en (1080,900).
+
+Presencia dispersa por catálogo, posiciones, orientación inicial, rotación del conjunto, figura y voces regionales deterministas. No aparece en mares ni en Vacío. Los demás conjuntos son más difíciles, pero todos tienen una solución. Rayos con un máximo de cuatro rebotes y 800 unidades de recorrido; no producen realimentación sonora. Vidrios y espejos comparten un máximo de una respuesta ambiental por compás, y cada conjunto de espejos responde como máximo cada dos compases. Respetan silencio, capa superficial y claros de escucha. Los pulsos del jugador también activan el emisor.
+
+Hasta 64 instalaciones guardan sus orientaciones y la conexión descubierta. Menú, cambio de capa y salida mantienen la separación de sistemas; panel y vidrios se excluyen entre sí. Escuchar incluye las voces de espejos. Bitácora muestra instalaciones y rutas completadas. Logros: Luz que escucha y Al otro lado del reflejo. No incluye aún espejos unidos a vidrios, puertas ni pistas encadenadas.
+
+Validación: 34 suites de Node, interacción real en móvil/escritorio, ruta conectada, emisión sonora limitada, persistencia, Bitácora, Escuchar y separación de capas. Detalle de variedad actual y cómo repetir la medición en [VARIEDAD.md](VARIEDAD.md).
