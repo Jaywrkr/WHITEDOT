@@ -62,7 +62,7 @@ export function initialize(runtime){
     if(!runtime.inWorld()&&!runtime.isFree()){if(S.lastDay!==S.todayKey)runtime.onFirstLight();S.totalLight+=runtime.CAP-S.todayLight;S.todayLight=runtime.CAP;S.capShown=true;}
     if(!runtime.inWorld()&&runtime.lampLeft()<=0){runtime.toast("<em>Linterna</em> · Usa +1 día en Prototipo para recargarla");return;}
     $("mAtlas").hidden=true;
-    S.wx=x;S.wy=y;
+    S.wx=x;S.wy=y;S.layer='superficie';
     if(runtime.inWorld()){runtime.toast(`<em>Atlas</em> · ${esc(e.name)}`);} // el loop detecta la región nueva y la inicializa
     else{S.lastWorldDay=S.todayKey;runtime.enterWorld();}
     runtime.save();

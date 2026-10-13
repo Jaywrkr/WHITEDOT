@@ -181,9 +181,9 @@ export function initialize(runtime) {
         event:runtime.eventOf(MU.dnaA)?.[0]
       });
       if(s===0){const degree=harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar);if(MU.harmonyRegion!==MU.dnaA.key||MU.deg!==degree){changeChord(t);MU.harmonyRegion=MU.dnaA.key;}else if(MU.pending){MU.pending=false;MU.dist=0;}}
-      if(s===0)runtime.horizonBar?.(t,MU.step>>4);
-      if(s===0)runtime.riverBar?.(t);
-      if(s===0)runtime.stormBar?.(t);   // hitos lejanos: se oyen antes de verse
+      if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.horizonBar?.(t,MU.step>>4);
+      if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.riverBar?.(t);
+      if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.stormBar?.(t);   // hitos lejanos: se oyen antes de verse
     }else{MU.radio=null;voiceCurator.clear();}
     if(runtime.inWorld()&&MU.nb&&MU.nbW>0){if(s===0||MU.neighborRadio?.key!==MU.nb.key)MU.neighborRadio={...neighborRadio.advance(MU.nb,MU.step>>4),key:MU.nb.key};}else MU.neighborRadio=null;
     if(s===0)applyComfort(t);

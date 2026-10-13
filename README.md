@@ -59,6 +59,7 @@ python3 tests/journey_smoke.py
 python3 tests/mobile_smoke.py
 python3 tests/wonders_smoke.py
 python3 tests/alive_smoke.py
+python3 tests/layers_smoke.py
 ```
 
 Las pruebas core necesitan Node. Para las pruebas de navegador necesitas Python y Playwright: instala `tests/requirements.txt` en un entorno virtual (`python3 -m pip install -r tests/requirements.txt`) y usa Chromium instalado en el sistema, o instala el navegador con `python3 -m playwright install chromium`. Puedes indicar su ejecutable mediante `CHROMIUM_PATH`. El smoke test levanta su propio servidor y verifica móvil y escritorio; no evalúa la calidad audible de la música.
@@ -74,6 +75,8 @@ El Mundo está hecho de **continentes** de tamaños muy distintos, cada uno con 
 Mientras más lejos del Origen, más raro: criaturas más grandes, colores imposibles y música desafinada. Con la linterna diaria no llegas lejos en un día, así que tu Estudio es el campamento base. El **Mapa** (menú) solo muestra lo que viste, marca con "?" los hitos que oíste y no visitaste, y se puede compartir.
 
 Muy de vez en cuando aparecen **rarezas** que rompen las reglas (gravedad invertida, regiones en canon, el tiempo que se detiene, la Luna de oro…). La Voz suelta rumores de hacia dónde están, y cada una te da una muestra única para tu Estudio. Los **ríos** cruzan el mundo: síguelos río abajo y la música va subiendo; donde dos ríos se juntan, sus músicas se mezclan. Las **tormentas** viajan con el viento y llueven notas: persíguelas. Cada continente cambia de **estación** cada semana, y el mundo guarda tus **huellas** y tus campamentos antiguos.
+
+Hay **grietas** y **escaleras de luz**: ábrelas lanzando los pulsos que piden, seguidos y en el beat. Abajo, en el **Subsuelo**, cada paso vale ocho de arriba (sales por columnas de luz). Arriba, en el **Cielo**, ves el continente entero y tocas donde quieres bajar.
 
 ## Atlas de ritmos (para probar)
 
