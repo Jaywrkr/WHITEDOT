@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {MAX_THREADS,toggleThread,threadScore,threadArrangement,createBox,paintBoxStep,boxPart,moveBoxPart,boxArrangement,startDialogue,captureDialogue,finishDialogue,dialogueReply} from '../src/encounter-depth-model.js';
-import {segmentDistance,boxCellAt,boxSlotAt,boxLidAt} from '../src/encounter-depth.js';
+import {segmentDistance,boxCellAt,boxSlotAt,boxLidAt,boxStepPoint,boxPartPoint} from '../src/encounter-depth.js';
 const hash=s=>[...s].reduce((a,c)=>Math.imul(a^c.charCodeAt(0),16777619)>>>0,2166136261);
 const nodes=Array.from({length:8},(_,i)=>({id:'node:'+i,x:i*20,y:(i%3)*15})),net={edges:[]};
 assert(!toggleThread(net,nodes[0],nodes[0]));assert(!toggleThread(net,nodes[0],{id:'far',x:400,y:0}));
@@ -20,6 +20,13 @@ const learning=startDialogue();for(const [step,degree]of [[0,2],[4,4],[12,6],[24
 finishDialogue(learning);assert.equal(learning.phase,'replying');assert.deepEqual(learning.phrase.map(n=>n.step),[0,2,6,12]);assert.deepEqual(learning.phrase.map(n=>n.index),[0,2,4,2]);
 assert.equal(dialogueReply(learning,2).length,4);learning.lastReplyBar=2;assert.equal(dialogueReply(learning,4).length,0);assert.equal(dialogueReply(learning,6).at(-1).index,0);assert(!captureDialogue(learning,{step:2,degree:3}));
 const empty=startDialogue();finishDialogue(empty);assert.equal(empty.phase,'idle');
-assert.equal(boxCellAt(-60,-40),0);assert.equal(boxCellAt(60,80),15);assert.equal(boxCellAt(90,0),null);assert.equal(boxSlotAt(-54,-87),0);assert.equal(segmentDistance({x:5,y:2},{x:0,y:0},{x:10,y:0}),2);
+for(let i=0;i<16;i++){const p=boxStepPoint(i);assert.equal(boxCellAt(p.x,p.y),i);}
+for(let i=0;i<3;i++){const p=boxPartPoint(i);assert.equal(boxSlotAt(p.x,p.y),i);assert.equal(boxCellAt(p.x,p.y),null);}
+assert.equal(boxCellAt(0,0),null);assert.equal(boxCellAt(90,0),null);assert.equal(segmentDistance({x:5,y:2},{x:0,y:0},{x:10,y:0}),2);
 console.log('PASS: free threads, cycle and density limits, editable parts, immutable arrangements, learned contour/rhythm, reply turns and physical hit targets');
-assert(boxLidAt(0,-125));assert(!boxLidAt(0,0));
+assert(boxLidAt(0,56));assert(!boxLidAt(0,0));
+
+// Targets stay distinct; the full seedpod fits the prototype mobile position.
+for(let i=0;i<16;i++)for(let j=i+1;j<16;j++){const a=boxStepPoint(i),b=boxStepPoint(j);assert(Math.hypot(a.x-b.x,a.y-b.y)>26);}
+for(const [width,height]of [[390,844],[844,390],[1280,800]]){assert(172*220/(width*height)<.2);assert(width/2+100+86<width);assert(height/2-110>0);}
+assert.equal(boxCellAt(0,56),null);assert.equal(boxSlotAt(0,56),null);

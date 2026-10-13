@@ -98,7 +98,10 @@ export function initialize(runtime){
 }
 function drawShape(c,shape,s,o,runtime){
  const TAU=Math.PI*2;
- if(shape==='box'){c.strokeRect(-25,-19,50,38);c.beginPath();c.moveTo(-25,-19);c.lineTo(-21,-19-20*s.a);c.lineTo(25,-19-20*s.a);c.stroke();for(let i=0;i<3-s.c;i++){c.save();c.translate(-15+i*15,2);c.rotate(s.phase*(.2+s.b));c.strokeRect(-5,-5,10,10);c.beginPath();c.moveTo(-7,0);c.lineTo(7,0);c.stroke();c.restore();}}
+ if(shape==='box'){
+  if(s.a<=.65){c.beginPath();c.ellipse(0,0,26,19,-.15,0,TAU);c.stroke();c.beginPath();c.moveTo(-22,0);c.quadraticCurveTo(0,-12-12*s.a,22,0);c.stroke();for(let i=0;i<3;i++){c.beginPath();c.ellipse(-12+i*12,4,3,5,i*.4,0,TAU);c.stroke();}c.beginPath();c.moveTo(2,-18);c.quadraticCurveTo(10,-30,16,-23);c.stroke();}
+ }
+
  else if(shape==='shadow'){const a=s.a*TAU;c.beginPath();c.moveTo(-10,12);c.lineTo(0,-17);c.lineTo(12,12);c.closePath();c.stroke();c.beginPath();c.arc(Math.cos(a)*32,Math.sin(a)*32,3,0,TAU);c.fill();for(let i=0;i<8;i++){c.globalAlpha*=.96;const x=-28+i*8,len=((i+Math.floor(s.a*8))%8<1+Math.floor(s.b*3))?18:3;c.beginPath();c.moveTo(x,28);c.lineTo(x+Math.cos(a)*len,28+Math.sin(a)*len);c.stroke();}}
  else if(shape==='flower'){for(let i=0;i<4;i++){const a=i/4*TAU,rr=12+s.charge*13;c.save();c.rotate(a);c.beginPath();c.ellipse(rr,0,7+s.charge*3,4,0,0,TAU);c.stroke();if(i===Math.min(3,Math.floor(s.a*4)))c.fill();c.restore();}c.beginPath();c.arc(0,0,5,0,TAU);c.stroke();}
  else if(shape==='stream'){for(let j=-1;j<=1;j++){c.beginPath();for(let i=0;i<=16;i++){const x=-35+i*70/16,y=j*7+Math.sin(i*.5+s.phase*(s.a<.5?-1:1))*5;c[i?'lineTo':'moveTo'](x,y);}c.stroke();}if(s.c){c.beginPath();c.arc(0,0,12+s.b*8,s.phase,s.phase+TAU*.8);c.stroke();}}

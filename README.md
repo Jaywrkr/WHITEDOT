@@ -1,3 +1,9 @@
+## Nueva etapa: vainas musicales orgánicas
+
+Rama `feat/organic-musical-seedpods`, encadenada después de `feat/deep-musical-encounters` y `docs/organic-interaction-direction`. Sustituye el panel de teclas por una vaina con 16 semillas y tres núcleos musicales. Tocar una semilla cambia su paso; tocar un núcleo elige Bajo, Groove o Motivo; arrastrarlo a otro intercambia posiciones y mantenerlo silencia esa parte. El brote inferior cierra la vaina. Conserva los patrones, límites de densidad, afinación y volumen anteriores; no añade un sonido de interfaz.
+
+Probar en Menú → Prototipo → Semillas → Encuentro de prueba → Caja de posibilidades. Su envolvente visual ocupa aproximadamente el 11 % de las pantallas de prueba de 390×844 y 844×390; las líneas dejan ver el mundo detrás. Se verificaron gestos, cancelación, cierre/reapertura y logros en móvil vertical, horizontal y escritorio, las diez familias de encuentros y recarga sin conexión de los 68 módulos. Actualiza las pistas y la descripción de Bitácora; mantiene el logro existente. Culturas y reliquias históricas específicas siguen pendientes.
+
 ## Nueva etapa: interacciones profundas
 
 Rama `feat/deep-musical-encounters`, basada en main `2959313`. Tejedoras conectan objetos, animales escuchan frases del jugador y cajas permiten editar pasos y piezas. Cómo probar y próximos bloques: [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md). Las cinco fases anteriores ya están integradas; el resto del texto conserva su contexto histórico.
