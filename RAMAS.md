@@ -29,3 +29,5 @@ README/HANDOFF/CAMBIOS/PENDIENTES se actualizan por etapa. Logros/Bitácora se a
 Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; fase 12 en adelante continúa pendiente.
 
 - Siguiente rama encadenada: `feat/12-musical-influence` — Tu presencia transforma la composición. Base: rama inmediatamente anterior; Jay crea PR/merge.
+
+- Siguiente rama encadenada: `feat/12a-optional-sound-pins` — Sonidos libres y fijación voluntaria. Base: rama inmediatamente anterior; Jay crea PR/merge.

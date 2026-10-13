@@ -26,11 +26,12 @@ export function initialize(runtime){
  const S=()=>runtime.S,MU=()=>runtime.MU,layer=()=>S().layer||"superficie";
  const loop={armed:false,rec:null,ecos:[],replaying:false,inputMs:0};
  const band={members:{},combos:{}};
+ const suppressed=new Map();
 
  // ---------- looper ----------
  const markInput=()=>{loop.inputMs=performance.now();};
  function eraseEcho(index){
-  if(index<0)return false;loop.ecos.splice(index,1);runtime.toast('<em>Eco</em> · borrado');ui();return true;
+  if(index<0)return false;const removed=loop.ecos[index];if(removed.auto)suppressed.set(removed.sourceKey,{x:removed.x,y:removed.y,layer:removed.layer});loop.ecos.splice(index,1);runtime.toast('<em>Eco</em> · borrado');ui();return true;
  }
  function tapEcho(x,y){
   if(!runtime.inWorld()||runtime.scanning||[...document.querySelectorAll('.modal')].some(m=>!m.hidden))return false;
@@ -47,7 +48,25 @@ export function initialize(runtime){
   if(!s.help.eco){s.help.eco=true;runtime.say(runtime.VOZ.eco,'Eco');}
  }
  // Llamado por playVoice: guarda lo que suena por acciones del jugador durante la grabación.
+ function autoPin(kind,index,region,volume,source,origin){
+  if(!S().autoPins||origin!=='player'||loop.replaying||loop.armed||loop.rec||!runtime.inWorld()||!region||!source||!Number.isFinite(source.x)||!Number.isFinite(source.y)||kind==='pulso'||kind==='luz')return;
+  const sourceKey=`${layer()}:${kind}:${source.id||`${source.x},${source.y}`}`;
+  if(suppressed.has(sourceKey))return;
+  const voice=runtime.getVoice(kind,region),slot=roleSlot(voice.role),existing=loop.ecos.find(e=>e.auto&&e.slot===slot);
+  const ev={step:0,kind,index,region,full:false,volume:(volume??1)*.5,source:{id:source.id,personality:source.personality}};
+  if(existing?.sourceKey===sourceKey){existing.events=[ev];return;}
+  const replacement=loop.ecos.findIndex(e=>e.auto&&e.slot===slot);if(replacement>=0)loop.ecos.splice(replacement,1);
+  if(loop.ecos.length>=MAX_ECOS)loop.ecos.shift();
+  loop.ecos.push({x:source.x,y:source.y,layer:layer(),start:Math.ceil(runtime.MU.step/16)*16,events:[ev],lit:0,id:Math.random().toString(36).slice(2,7),auto:true,slot,sourceKey});
+  runtime.unlock('fijarSonido');ui();
+ }
+ function togglePins(){
+  S().autoPins=!S().autoPins;suppressed.clear();
+  if(!S().autoPins)loop.ecos=loop.ecos.filter(e=>!e.auto);
+  runtime.toast(S().autoPins?'Sonidos fijos · toca un objeto para fijar su voz':'Sonidos libres · los ecos automáticos se soltaron');ui();runtime.save();
+ }
  function loopTap(kind,index,time,region,full,volume,source,origin){
+  autoPin(kind,index,region,volume,source,origin);
   const r=loop.rec;if(!r||loop.replaying||origin!=='player'||r.layer!==layer())return;   // solo lo que causaste tú
   const step=Math.round((time-r.t0)/runtime.SIX);if(step<0||step>=LOOP_STEPS||r.events.length>=MAX_EVENTS)return;
   r.events.push({step,kind,index,regionKey:region.key,region,source:source?{id:source.id,personality:source.personality}:null,full:!!full,volume:volume??1});
@@ -55,6 +74,8 @@ export function initialize(runtime){
  // Cada semicorchea en el Mundo: empezar o terminar la grabación y reproducir los ecos cercanos.
  function loopStep(s,step,t){
   const st=S();
+  for(const [id,point] of suppressed)if(point.layer!==layer()||Math.hypot(point.x-st.wx,point.y-st.wy)>75)suppressed.delete(id);
+  while(suppressed.size>64)suppressed.delete(suppressed.keys().next().value);
   if(loop.armed&&s===0){loop.armed=false;loop.rec={t0:t,start:step,events:[],x:st.wx,y:st.wy,layer:layer()};ui();}
   else if(loop.rec&&step-loop.rec.start>=LOOP_STEPS){const r=loop.rec;loop.rec=null;
    if(!r.events.length)runtime.toast('<em>Eco</em> · no sonó nada tuyo. Toca algo mientras graba');
@@ -99,7 +120,7 @@ export function initialize(runtime){
   // Ecos: anillos que laten cuando suenan.
   for(const e of loop.ecos){if((e.layer||"superficie")!==layer())continue;e.lit=Math.max(0,e.lit-dt*3);const x=e.x+ox,y=e.y+oy;if(x<-60||y<-60||x>W+60||y>H+60)continue;
    cx.globalAlpha=.35+.5*e.lit;cx.strokeStyle=WORLD_VISUAL.echo;cx.lineWidth=WORLD_VISUAL.line;cx.beginPath();cx.arc(x,y,14+e.lit*8,0,6.283);cx.stroke();
-   cx.globalAlpha=.2;cx.beginPath();cx.arc(x,y,26,0,6.283);cx.stroke();cx.globalAlpha=.8;cx.fillStyle='#9fe8ff';cx.font='9px monospace';cx.textAlign='center';cx.fillText('eco · toca para borrar',x,y+40);cx.beginPath();cx.moveTo(x-4,y-4);cx.lineTo(x+4,y+4);cx.moveTo(x+4,y-4);cx.lineTo(x-4,y+4);cx.stroke();}
+   cx.globalAlpha=.2;cx.beginPath();cx.arc(x,y,26,0,6.283);cx.stroke();cx.globalAlpha=.8;cx.fillStyle='#9fe8ff';cx.font='9px monospace';cx.textAlign='center';cx.fillText(e.auto?'fijo · toca para soltar':'eco · toca para borrar',x,y+40);cx.beginPath();cx.moveTo(x-4,y-4);cx.lineTo(x+4,y+4);cx.moveTo(x+4,y-4);cx.lineTo(x-4,y+4);cx.stroke();}
   // Banda: siguen al pixel en formación, cada una en su lugar.
   const slots=['bajo','perc','acorde','melodia'];
   slots.forEach((sl,i)=>{const x=band.members[sl];if(!x)return;x.lit=Math.max(0,x.lit-dt*2.5);
@@ -113,13 +134,14 @@ export function initialize(runtime){
    if(loop.rec){const k=Math.min(1,(runtime.MU.step-loop.rec.start)/LOOP_STEPS);cx.globalAlpha=.9;cx.fillStyle='#ff6b6b';cx.fillRect(W/2-60,y0-10,120*k,3);cx.globalAlpha=.4;cx.strokeStyle='#ff6b6b';cx.strokeRect(W/2-60,y0-10,120,3);}}
   cx.globalAlpha=1;
  }
- function ui(){const btn=runtime.$('bLoop');if(!btn)return;btn.hidden=!runtime.inWorld();btn.classList.toggle('rec',!!loop.rec);btn.classList.toggle('armed',loop.armed);}
+ function ui(){const option=runtime.$('bAutoPins');if(option){option.setAttribute('aria-pressed',String(!!S().autoPins));option.querySelector('span').textContent=S().autoPins?'Fijar sonidos: sí':'Fijar sonidos: no';}const btn=runtime.$('bLoop');if(!btn)return;btn.hidden=!runtime.inWorld();btn.classList.toggle('rec',!!loop.rec);btn.classList.toggle('armed',loop.armed);}
  function cancelRecording(){loop.armed=false;loop.rec=null;ui();}
- function reset(){loop.armed=false;loop.rec=null;loop.ecos=[];band.members={};band.combos={};ui();}
+ function reset(){suppressed.clear();loop.armed=false;loop.rec=null;loop.ecos=[];band.members={};band.combos={};ui();}
 
+ runtime.$('bAutoPins').onclick=togglePins;ui();
  const btn=runtime.$('bLoop');if(btn)btn.onclick=e=>{e.stopPropagation();btn.blur();runtime.audio();loopButton();};
  Object.defineProperties(runtime,{
-  tapEcho:{get:()=>tapEcho},cancelLoopRecording:{get:()=>cancelRecording},loopTap:{get:()=>loopTap},loopStep:{get:()=>loopStep},markInput:{get:()=>markInput},loopButton:{get:()=>loopButton},
+  toggleSoundPins:{get:()=>togglePins},tapEcho:{get:()=>tapEcho},cancelLoopRecording:{get:()=>cancelRecording},loopTap:{get:()=>loopTap},loopStep:{get:()=>loopStep},markInput:{get:()=>markInput},loopButton:{get:()=>loopButton},
   bandJoin:{get:()=>bandJoin},bandStep:{get:()=>bandStep},drawJam:{get:()=>draw},jamUI:{get:()=>ui},resetJam:{get:()=>reset},
   jam:{get:()=>({loop,band})}
  });

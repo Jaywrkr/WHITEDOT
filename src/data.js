@@ -72,6 +72,7 @@ export function initialize(runtime) {
   const PROPK={llanura:"piedra",bosque:"hongo",jardin:"campanilla",dunas:"cactus",tormenta:"antena",cueva:"gota",vacio:"astro"};
   const SPECIES=[["luciernaga","Luciérnagas","Huyen si te acercas. Si las tocas, suenan."],["arbol","Árboles de luz","Crecen en el bosque y brillan cuando pasas."],["estanque","Agua","Bajo el agua todo suena distinto."],["bandada","Bandadas","Cruzan el cielo. Vuela con ellas."],["caminante","Caminantes","Si te quedas cerca, te siguen y cantan contigo."]];
   const ACH=[
+   ["fijarSonido","Déjalo sonando","Fijaste voluntariamente la voz de un objeto."],
    ["cultivarMusica","Una música que crece","Permaneciste cerca de un aro o prisma hasta transformar su parte musical."],
    ["espejo1","Luz que escucha","Orientaste tu primer espejo musical."],
    ["espejoRuta","Al otro lado del reflejo","Conectaste una ruta de espejos con su receptor.",1],
@@ -163,6 +164,7 @@ export function initialize(runtime) {
   const COLORS=[["#ffffff","Blanco",null],["#f0d27a","Ámbar","tope"],["#7fe0b0","Menta","estrella1"],["#6fd3ff","Cian","mundo"],["#ff8a7a","Coral","r3"],["#b9a2ff","Lila","oculto"]];
   // La Voz del sistema: sarcástica, directa, con cariño por debajo. Estas son para que Jay las corrija.
   const VOZ={
+   fijarSonido:"Elegiste qué se queda. Toca el anillo azul para soltarlo; otro objeto del mismo papel lo reemplaza.",
    cultivarMusica:"Permanecer también es crear. Ese lugar ya responde a tu cuidado.",
    espejo1:"Un reflejo también puede llevar el compás.",
    espejoRuta:"La luz encontró su camino. Tú encontraste otra voz.",
