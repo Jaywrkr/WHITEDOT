@@ -103,6 +103,8 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/wonders.js` | Rarezas que rompen reglas, rumores de la Voz y ríos. |
 | `src/alive.js` | Tormentas que se mueven con el viento, estaciones semanales por continente, huellas y campamentos antiguos. |
 | `src/layers.js` | Capas: portales con ritual de pulsos, Subsuelo 1:8 con salidas y Cielo con vista de continente. |
+| `src/jam.js` | Looper de ecos y banda de criaturas. |
+| `src/fxpad.js` | Mesa de efectos estilo Kaoss pad (filtro, espacio, eco, robot, stop). |
 | `src/atlas.js` | Atlas de ritmos (prototipo): lista todos los géneros, verifica que existen en el mundo y viaja a la región más cercana. |
 | `src/controls.js` | Botones, controles de prototipo y sonido. |
 | `package.json` | Declara módulos ES para Node y `npm test`; no instala dependencias de aplicación. |
@@ -263,7 +265,7 @@ No hay build ni variables de entorno de aplicación: es un sitio estático.
 
 ## 12. Prompt sugerido para arrancar en otra IA
 
-> Soy Jay. Estoy haciendo WHITEDOT / Pixel Blanco, un juego web de música electrónica generativa con Canvas + Web Audio y módulos JavaScript nativos. Lee HANDOFF.md, CAMBIOS.md, PENDIENTES.md y el código actual de `main`. Respeta las decisiones de la sección 3. Quiero que construyas [etapa autorizada del roadmap]. Implementa y verifica los cambios en una rama nueva desde `main` actualizado, haz commit y push y entrégame la rama y los resultados. Yo creo el PR y hago el merge. Háblame en español, directo.
+> Soy Jay. Estoy haciendo WHITEDOT / Pixel Blanco, un juego web de música electrónica generativa con Canvas + Web Audio y módulos JavaScript nativos (PWA en Vercel). Lee HANDOFF.md (sobre todo "Estado general" al final), CAMBIOS.md, PENDIENTES.md ("Plan creativo de música") y el código actual de `main`. Respeta las decisiones de la sección 3. Quiero que construyas [etapa autorizada del roadmap]. Implementa y verifica los cambios en una rama nueva desde `main` actualizado, haz commit y push y entrégame la rama y los resultados. Yo creo el PR y hago el merge. Háblame en español, directo.
 
 ### Sitios raros (octubre de 2026)
 
@@ -429,4 +431,22 @@ Pendiente de la fase 4: migraciones con posición según la fecha y rastros de o
 ### Ajuste de mezcla: fuerte pero limpio (Jay: "está muy saturado")
 
 La segunda subida (compensación ×6,8, saturación tanh 1,9) dejaba ~11 % de las muestras por encima de 0,8: sonaba aplastado. Ahora: compresor −26 dB 3,5:1 con ataque de 12 ms (los golpes respiran), presencia +2,5 dB, graves +2 dB, compensación ×5,6 (`LOUD`), limitador a −1 dB y saturación casi lineal (tanh 1,05, solo redondea picos). Medido: RMS ~−8,4 dB con ~5 % de muestras calientes. Sigue unos 7 dB más fuerte que el original y sin el aplastamiento. Si Jay pide más volumen otra vez, subir `LOUD` de a 0,4 y volver a medir con un analizador después del clipper; por encima de ~6,5 vuelve a saturar.
+
+### Hacer música en el lugar: looper, banda y mesa de efectos
+
+**Looper de ecos** (`src/jam.js`): el botón `#bLoop` del dock se arma; la grabación empieza en el siguiente compás y dura 32 semicorcheas. `playVoice` llama a `runtime.loopTap`, que guarda solo lo que suena dentro de los 1,3 s posteriores a una acción del jugador (`markInput` en pulso y toque, y `lastNoteMs` en luces), con un máximo de 48 eventos. El resultado es un eco en tu posición. `loopStep` lo reproduce a tempo con su posición como fuente, así que se oye más cerca y se apaga lejos (deja de sonar a 900 px). Máximo 4 ecos; el más viejo se reemplaza. Junto a un eco, el botón lo borra. Los ecos son temporales y se borran al salir del Mundo. Logros `eco1` y `eco4`.
+
+**Banda de criaturas:** al tocar una criatura, `bandJoin` la pone en su papel según `getVoice` (bajo, percusión, acordes o melodía; los papeles agudo y lead cuentan como melodía). Cada papel tiene un solo miembro, y una criatura nueva reemplaza a la anterior del mismo papel. Con 2 o más miembros, `bandStep` toca partes coordinadas en cada semicorchea (`bandHits`): bajo en 0, 6, 10 y 14; caja en 4 y 12 con fantasmas; acordes cada 2 compases; melodía con el motivo de la criatura en respuesta en compases impares. Los miembros siguen al pixel en formación y hay 4 ranuras B, P, A, M en pantalla. Con la banda completa la energía sube. Logros `banda4`, `familia` (oculto, los 4 del mismo continente) y `viajeros` (oculto, 4 continentes distintos). La banda se disuelve al salir del Mundo.
+
+**Mesa de efectos** (`src/fxpad.js`, cadena en `audio.js`): `master → mfilt → fx.lp → fx.hp → fx.dry → punch` y, en paralelo desde `fx.hp`, envíos a una reverb propia de 4,5 s, a un delay con realimentación filtrada y a un reductor de bits. Todo vuelve a `punch`, sin bucles con la reverb general. `padParams(x,y)`: con x < 0,45 el paso bajo baja de 20 kHz a 200 Hz; con x > 0,55 el paso alto sube de 10 Hz a ~14 kHz; el centro tiene imán y queda limpio. y controla reverb (0–0,85) y eco (0–0,35). Eco: delay de 3 semicorcheas con realimentación 0,72. Robot: envío a reducción de bits y señal seca a 0,6. Stop: filtro y volumen caen en un tiempo y vuelven. Al soltar el pad vuelve a neutro en 0,12 s, salvo con Fijar. El arrastre en el pad no mueve al pixel. Solo existe en el Mundo y se reinicia al salir. Logros `productor`, `robot` y `cinta`.
+
+Pruebas: `tests/jam_smoke.py` y `tests/fx_smoke.py`.
+
+## Estado general (12 de octubre de 2026, noche)
+
+Ya está en `main`: Camino diario, Mundo con continentes, mares, oasis, hitos sonoros, tierras raras, rarezas, ríos con confluencias, tormentas, estaciones, huellas, Subsuelo y Cielo, mapa, Atlas de 52 ritmos, PWA instalable con joystick flotante, volumen alto. En rama `feat/looper-band` (pendiente de merge): looper, banda, mesa de efectos y mezcla limpia (RMS ~−8,4 dB, sin saturación).
+
+Pruebas: `npm test` (26 suites) y 10 smokes de navegador (`smoke`, `atlas_smoke`, `world_smoke`, `journey_smoke`, `mobile_smoke`, `wonders_smoke`, `alive_smoke`, `layers_smoke`, `jam_smoke`, `fx_smoke`). Ejecutable de Chromium con `CHROMIUM_PATH`.
+
+El plan creativo para seguir está en PENDIENTES ("Plan creativo de música").
 

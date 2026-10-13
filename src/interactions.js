@@ -19,6 +19,7 @@ export function initialize(runtime) {
     for(const w of waves){runtime.cx.globalAlpha=(1-w.r/w.max)*.6;runtime.cx.strokeStyle=runtime.S.color;runtime.cx.lineWidth=1.5;runtime.cx.beginPath();runtime.cx.arc(w.x+ox,w.y+oy,w.r,0,6.283);runtime.cx.stroke();}}
   function sonar(){
     if(runtime.S.mode==="studio")return;runtime.audio();const ms=performance.now();if(ms-lastSonar<700)return;lastSonar=ms;
+    runtime.markInput?.();
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.layerPulse?.();return;}
     if(runtime.inWorld())runtime.portalPulse?.(runtime.onBeatNow());   // ritual de portales: pulsos seguidos en el beat
     if(runtime.inWorld()){runtime.sessionAction("pulse");runtime.pulseRelics();}

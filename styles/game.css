@@ -151,3 +151,24 @@ html,body{position:fixed;inset:0;width:100%;height:100%;overflow:hidden;overscro
 :root{padding-top:0;padding-bottom:0}
 .zone,.toast,.phrase,.hud,.goal,.bar,.reto{pointer-events:none}
 .modal .scroll,.modal .sheet,.voice.expanded span,#atlasBody,.atlas-filters{touch-action:pan-x pan-y;overscroll-behavior:contain}
+
+/* Botón de eco (looper) */
+#bLoop.armed{border-color:var(--gold);color:var(--gold);}
+#bLoop.rec{border-color:#ff6b6b;color:#ff6b6b;animation:recpulse 1s infinite;}
+@keyframes recpulse{50%{opacity:.55}}
+@media (prefers-reduced-motion:reduce){#bLoop.rec{animation:none}}
+
+/* Mesa de efectos (Kaoss pad) */
+.fxpanel{position:fixed;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 78px);max-width:420px;margin:0 auto;background:rgba(0,0,0,.94);border:1px solid var(--faint);padding:10px;display:grid;gap:8px;touch-action:none;z-index:30}
+.fxbtns button{background:var(--void)}
+.fxhead{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.fxhead span{flex:1;color:var(--gold);letter-spacing:.06em}
+.fxhead button{width:30px;height:30px;padding:0;font-size:16px}
+.fxpad{position:relative;height:170px;border:1px solid var(--faint);background:linear-gradient(90deg,rgba(80,120,255,.10),transparent 45%,transparent 55%,rgba(255,160,60,.10)),linear-gradient(0deg,transparent,rgba(255,255,255,.06));touch-action:none;cursor:crosshair}
+.fxpad::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--faint)}
+.fxpad i{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border:2px solid var(--gold);border-radius:50%;left:50%;top:100%;pointer-events:none;box-shadow:0 0 14px rgba(240,210,122,.5)}
+.fxpad em{position:absolute;font-style:normal;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);pointer-events:none}
+.fxpad .l{left:6px;bottom:6px}.fxpad .r{right:6px;bottom:6px}.fxpad .t{left:50%;top:6px;transform:translateX(-50%)}
+.fxbtns{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.fxbtns button{font-size:11px;padding:9px 4px}
+.fxbtns button[aria-pressed="true"],#bFx[aria-pressed="true"]{color:var(--gold);border-color:var(--gold)}
