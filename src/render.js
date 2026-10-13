@@ -138,6 +138,13 @@ export function initialize(runtime) {
     if(runtime.lampLeft()<=0){runtime.exitWorld(true);return ds;}
     const z=runtime.biomeOfPos(runtime.S.wx,runtime.S.wy),rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
     if(rg.key!==runtime.curRegion){runtime.curRegion=rg.key;runtime.enterRegion(rg,z);}
+    {// Vitalidad local: el vacío adelgaza la música; llegar a un oasis después de un desierto es un drop.
+     const MU=runtime.MU,v=runtime.vitalityAt(runtime.S.wx,runtime.S.wy);MU.vit=MU.vit==null?v:MU.vit+(v-MU.vit)*Math.min(1,dt*.8);
+     if(MU.vit<.22)MU.lowT=(MU.lowT||0)+dt;
+     if(MU.vit>.6&&(MU.lowT||0)>12){MU.lowT=0;MU.E=Math.max(MU.E,.75);runtime.flash=Math.max(runtime.flash,.5);
+      if(runtime.S.sound)runtime.soon(q=>runtime.dropHit(q,runtime.chordTones()));
+      runtime.showPhrase("Oasis");if(!runtime.S.help.oasis){runtime.S.help.oasis=true;runtime.say(runtime.VOZ.oasis);}runtime.S.oasisN=(runtime.S.oasisN||0)+1;}
+     else if(MU.vit>.45&&(MU.lowT||0)>0)MU.lowT=Math.max(0,MU.lowT-dt*.5);}
     {const RS=runtime.REG*runtime.WCH,lx=((runtime.S.wx%RS)+RS)%RS,ly=((runtime.S.wy%RS)+RS)%RS,ed=[lx,RS-lx,ly,RS-ly],i=ed.indexOf(Math.min(...ed)),de=ed[i],BAND=900;
      if(de<BAND){runtime.MU.nb=runtime.regionOfPos(runtime.S.wx+[-1,1,0,0][i]*(de+10),runtime.S.wy+[0,0,-1,1][i]*(de+10));runtime.MU.nbW=.5*(1-de/BAND);}else{runtime.MU.nb=null;runtime.MU.nbW=0;}}
     const evt=runtime.eventOf(rg),ev=evt?evt[0]:null;if(runtime.RP&&runtime.RP.type==="quieto"&&runtime.MU.still>0)runtime.retoSet("quieto",runtime.MU.still);
@@ -323,6 +330,7 @@ export function initialize(runtime) {
       for(const q of f.b){const x=f.x+q.ox+Math.sin(t/400+q.ph)*6,y=f.y+q.oy+Math.cos(t/520+q.ph)*5,e=Math.hypot(x-runtime.S.wx,y-runtime.S.wy);if(e>vis)continue;
         const flap=Math.sin(t/90+q.ph)>0;runtime.cx.globalAlpha=Math.min(1,.2+.8*(1-e/vis));runtime.cx.fillRect(x+ox-1,y+oy-(flap?1:0),flap?3:2,flap?1:2);}
     }
+    runtime.drawLandmarks?.(t,dt,ox,oy);
     // Only local clues: no global arrow or player-relative spawning.
     let nd=0;
     runtime.pruneRelics();

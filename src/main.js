@@ -23,6 +23,7 @@ import { initialize as instruments } from './instruments.js';
 import { initialize as spatial } from './spatial.js';
 import { initialize as phenomena } from './phenomena.js';
 import { initialize as patches } from './patches.js';
+import { initialize as landmarks } from './landmarks.js';
 import { initialize as controls } from './controls.js';
 import { initialize as atlas } from './atlas.js';
 
@@ -53,6 +54,7 @@ instruments(runtime);
 spatial(runtime);
 phenomena(runtime);
 patches(runtime);
+landmarks(runtime);
 controls(runtime);
 atlas(runtime);
 
@@ -60,5 +62,7 @@ if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
 runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||runtime.lampLeft()<=0))runtime.S.mode="camino";
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
+// Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.
+setTimeout(()=>{try{runtime.regionOfPos(5*runtime.REG*runtime.WCH,0);}catch(e){}},1200);
 setInterval(()=>{runtime.checkDay();if(!runtime.inWorld())runtime.hud();runtime.S.collected=[...runtime.collected];runtime.save();},2000);
 requestAnimationFrame(runtime.frame);

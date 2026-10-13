@@ -97,12 +97,15 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/phenomena.js` | Aves de eco, semilleros de caja y nubes de pulso; generación y reloj audiovisual. |
 | `src/patches.js` | Perfiles de material y síntesis procedurales por región/instrumento/rol/objeto (PR #25, integrado). |
 | `src/rhythms.js` | Biblioteca ampliada de ritmos por recetas (batería, bajo, frase, instrumentos, escalas, guía) y familias de todos los géneros. |
+| `src/continents.js` | Continentes, mares de silencio y campo de vitalidad (densidad con contraste). |
+| `src/landmarks.js` | Hitos y horizonte sonoro: se oyen, se intuyen y se ven. |
 | `src/atlas.js` | Atlas de ritmos (prototipo): lista todos los géneros, verifica que existen en el mundo y viaja a la región más cercana. |
 | `src/controls.js` | Botones, controles de prototipo y sonido. |
 | `package.json` | Declara módulos ES para Node y `npm test`; no instala dependencias de aplicación. |
 | `tests/core.mjs` | Compatibilidad del guardado, tope diario y mundo determinista. |
 | `tests/smoke.py` | Flujos funcionales del navegador en móvil y escritorio. |
 | `tests/rhythms.mjs` | Recetas completas, baterías distintas, instrumentos explicados y reparto equilibrado de géneros. |
+| `tests/world.mjs` / `tests/world_smoke.py` | Escala del mundo: continentes, mares, vitalidad, hitos y horizonte sonoro. |
 | `tests/atlas.mjs` / `tests/atlas_smoke.py` | Atlas: todos los géneros alcanzables y viaje correcto desde Camino y Mundo. |
 
 ### Estado guardado `S` (localStorage)
@@ -212,7 +215,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Sintaxis:** correr `node --check` sobre los archivos de `src/`. Ya no hay un script inline para extraer.
 - **Visual y funcional:** servir el repositorio por HTTP y usar Playwright headless (Chromium) en 390×844 (móvil) y escritorio. Comprobar entrada y reentrada al Mundo con reto visible, transición de día sin reto residual, pausa de linterna en menús, colocación y persistencia de muestras en el Estudio y generación de tarjetas. Capturar errores JavaScript y screenshots. Los errores de carga de Google Fonts sin red son esperables.
 - **Tope diario:** comprobar que una luz de valor 10 recogida cuando faltaba 1 solo suma 1 tanto a `todayLight` como a `totalLight`.
-- **Pruebas versionadas:** `npm test` (22 suites, inventario en CAMBIOS.md) `python3 tests/smoke.py` y `python3 tests/atlas_smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
+- **Pruebas versionadas:** `npm test` (23 suites, inventario en CAMBIOS.md) `python3 tests/smoke.py`, `python3 tests/atlas_smoke.py` y `python3 tests/world_smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
 - **Audio:** en headless no se oye nada. **Jay valida el sonido en su teléfono** con la URL de Vercel. Es la prueba que importa.
 - **Atajos de prototipo** (menú → Prototipo):
   - `dFill`: llena la barra del día.
@@ -330,3 +333,22 @@ Antes, el género lo decidía en la práctica `applyNeighborhood`: entre los est
 
 **Para añadir una tanda:** agregar recetas en `RHYTHM_GENRES` con `family` (y la familia en `FAMILIES` si es nueva). Audio (`drums`), radio (bajo y frase), voces, Bitácora, Atlas y pesos las recogen solas. Campos de batería admitidos: kick, snare, clap, clapRoll, rim, hat, hatO, hatRoll (ráfaga de tresillos), conga, tom, cowbell, shaker, chord (con `chordI`). `kickTone:[frecuencia final, decaimiento]` da el carácter del bombo (808 largo ≈ `[38,.8]`). `v` permite tres variaciones que rotan cada cuatro compases. `tests/rhythms.mjs` exige receta completa, batería no repetida, instrumentos con explicación y reparto entre 0,5 % y 3,6 %.
 
+### Mundo infinito · fase 1: continentes, contraste y horizonte sonoro
+
+`src/continents.js` añade una escala por encima de las regiones. Semillas de continente en celdas de 10×10 regiones con peso de tamaño muy desigual (pocos gigantes, muchos medianos, islas de 1–6 regiones), diagrama de Voronoi ponderado y deformación del dominio con ruido para que las fronteras sean curvas. El 20 % de las celdas no tiene semilla (océano abierto). Donde dos continentes casi empatan, o lejos de toda semilla, hay **mar de silencio** (~32 % del mundo): la región usa el bioma Vacío, ambient y casi nada de vida. El Origen y sus 2 anillos siempre son tierra ("Tierra de Origen", familia house, tono de Do).
+
+Cada continente tiene nombre, tamaño, familia de géneros (elegida en proporción a cuántos estilos tiene la familia), tonalidad y color. Efectos:
+- **Tono:** todas sus regiones comparten tonalidad (`trOff` sale del continente). Cruzar de continente es un cambio de tono.
+- **Tempo y género:** `musicalContext()` en `neighborhoods.js` centra el campo de tempo en el tempo del continente (el campo suave queda como desviación de ±~25 BPM). Los géneros de su familia pesan ×6. `genreWeights()` incluye esa afinidad en el ajuste, así que el reparto global sigue parejo (en tierra cada estilo ≈ 1–2,3 %) y ~53 % de las regiones de tierra son de la familia de su continente. El cálculo tarda ~250 ms y se hace al cargar, durante el Camino (`main.js`).
+- **Color:** el tono de color de cada región se acerca al del continente.
+- **Aviso:** tarjeta de zona con el continente o "Mar de silencio"; frase grande al entrar a otro continente (espera a que la interfaz esté libre). `S.continents`, `S.continentsN`. Logros `continente3` y `mar1` (oculto, cruzar un mar entero), frases de la Voz.
+
+**Vitalidad** (`continents.vitality`): campo continuo de ruido con contraste fuerte. Sustituye los 5 niveles de relleno en la generación de chunks (`densityOf`: 0,1× a 2,7×); `d.fill` se calcula de la vitalidad del centro de la región solo para etiquetas. En mar casi cero; cerca de la costa baja; el Origen nunca baja de 0,55. En la música, la vitalidad limita la energía (`vitCap` en `audio.js`): en lo vacío queda pulso y poco más. Si pasas más de 12 s en vacío y llegas a una zona llena, suena un **drop** (`dropHit`: bombo largo, platillo filtrado y acorde), la energía sube y aparece "Oasis". `MU.vit`, `MU.lowT`, `S.oasisN`.
+
+**Hitos** (`src/landmarks.js`): torre de luz, árbol madre, ciudad de formas, monolito y faro (solo en el mar). 1 de cada 10 regiones de tierra y 1 de cada 6 de mar; la región (2,0) siempre tiene una torre que se oye desde el Origen. Cada hito tiene motivo propio que se ajusta al acorde actual.
+- **Se oye** hasta 11.000 px: cadena propia con filtro de paso bajo según la distancia (lejos suena apagado), paneo estéreo según la dirección y envío a reverb. Máximo 2 hitos, cada uno cada 4 compases. Deja de sonar de lejos al llegar.
+- **Se intuye** hasta 5.500 px: brillo en el borde de la pantalla, en su dirección, que late con su motivo.
+- **Se ve** en pantalla como silueta grande, incluso fuera del radio de luz.
+- **Llegar** (<170 px) lo registra en `S.landmarks`, con toast, Voz y logros `hito1` y `hito10`. Sin flechas ni brújula.
+
+Cambios de compatibilidad: el paisaje de muchas coordenadas cambia (mares, densidad, color, géneros). Los fixtures de `tests/palettes.mjs` se recapturaron como "mundo continental v2". Nombres, IDs de criaturas y guardado v4 se conservan. Pruebas: `tests/world.mjs` (continentes deterministas, tamaños desiguales, islas, mares, identidad de familia, contraste de vitalidad, hitos) y `tests/world_smoke.py` (paneo del horizonte, mar, oasis y llegada a un hito en móvil/escritorio).

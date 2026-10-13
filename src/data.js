@@ -89,6 +89,10 @@ export function initialize(runtime) {
    ["tambor","Tambor","Tocaste 8 pilares en las ruinas."],
    ["compania","Compañía","Un caminante te siguió."],
    ["vuelo","Vuelo","Volaste con una bandada."],
+   ["hito1","Lo oíste primero","Llegaste a un hito que escuchaste desde lejos."],
+   ["hito10","Coleccionista de horizontes","Llegaste a 10 hitos."],
+   ["continente3","Turista de continentes","Pisaste 3 continentes."],
+   ["mar1","Nadie cruza eso","Cruzaste un mar de silencio entero.",1],
    ["vida","Todo vive","Encontraste las 5 formas de vida."],
    ["under","Underground","Una tormenta a toda energía."],
    ["r3","Racha de 3","3 días seguidos."],
@@ -192,7 +196,15 @@ export function initialize(runtime) {
    deploy:"Estudio desplegado. Mañana empiezas aquí.",
    studioEmpty:"Tu Estudio está vacío. Como un sábado sin plan. Elige una muestra y toca un punto.",
    firstPlace:"Primera pieza colocada. Ya suena a algo. Poco, pero algo.",
-   lampOut:"Se apagó tu linterna. Mañana dura un minuto más si vuelves."
+   lampOut:"Se apagó tu linterna. Mañana dura un minuto más si vuelves.",
+   mar:"Mar de silencio. Aquí no hay nada. Por eso se oye todo lo que viene.",
+   continente:"Otro continente. Otro tono. Si no lo notaste, sube el volumen.",
+   oasis:"Oasis. Te dije que el vacío era la subida.",
+   hito:"Un hito. Lo oíste antes de verlo. Así funciona esto.",
+   hito1:"Llegaste. Ya no es un sonido, es un lugar.",
+   hito10:"Diez hitos. Ya hablas el idioma del horizonte.",
+   continente3:"Tres continentes. Tu pasaporte no existe, pero igual.",
+   mar1:"Cruzaste el silencio entero. Pocos lo hacen. Nadie te aplaudió. Yo tampoco."
   };
 
 
