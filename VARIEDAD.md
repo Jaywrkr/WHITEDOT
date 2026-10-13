@@ -2,7 +2,7 @@
 
 El juego genera regiones de un mismo mapa continuo y compartido. «Mundos» aquí significa variantes de regiones, no partidas ni universos independientes. No existe un contador de experiencias perceptualmente únicas.
 
-Medición actual en `fix/12d-contact-intent`: `node scripts/world-variation.mjs 100`. Examina las 40.000 regiones con índices de -100 a 99 en ambos ejes, incluidos mares. La herramienta no modifica partidas.
+Medición renovada en `feat/intuitive-animal-dialogue` (`991255a`), con comparación separada de tierra y distintas semillas: `node scripts/world-variation.mjs 100`. Examina las 40.000 regiones con índices de -100 a 99 en ambos ejes, incluidos mares. La herramienta no modifica partidas.
 
 | Medida | Resultado |
 |---|---:|
@@ -14,6 +14,8 @@ Medición actual en `fix/12d-contact-intent`: `node scripts/world-variation.mjs 
 | Combinaciones musicales: bioma + género + tempo + escala + instrumentos de bajo/melodía | 9.807 |
 | Variantes detalladas de música, patrones, hábitat, suelo, aire y receta | 39.952 |
 | Regiones terrestres | 23.418 |
+| Recetas terrestres detalladas distintas | 23.418 |
+| Perfiles musicales terrestres básicos | 9.732 |
 | Instalaciones de tres vidrios | 7.218 |
 | Instalaciones de espejos | 4.985 |
 | Jardines modulares | 3.955 |
@@ -24,4 +26,12 @@ La medición histórica de la fase 11 sobre 10.000 regiones tenía 1.517 combina
 
 **Cifra comprobada actual: al menos 39.952 variantes regionales detalladas en esta muestra; el total del mapa no se ha enumerado.** Millones sigue siendo una posibilidad combinatoria y objetivo de diversidad, no un millón de experiencias diferentes ya comprobadas. Los hashes de 32 bits y las correlaciones entre categorías también impiden prometer singularidad absoluta para un mapa ilimitado.
 
-El crecimiento seguirá con familias que cambien las acciones: cajas musicales, cuerdas, mecanismos y encuentros; cada incorporación usará su propio sorteo de presencia y comportamiento. Vidrios, espejos y módulos ya varían por región y conservan orientaciones de jugador. Las culturas, espejos combinados con vidrios, pistas encadenadas y cajas musicales siguen pendientes según PENDIENTES.md.
+## Comparación entre semillas y promedio local
+
+Se midieron `original`, `blobs-01`, `blobs-02`, `bosque-01` y `jay-v1`, cada una en 1.600 regiones (extensión 20), con el mismo tamaño clásico de región: 3.600 unidades. Promedio por muestra: 1.600 recetas detalladas, 947,6 regiones terrestres, 871 perfiles musicales básicos contando mar y 837,4 perfiles musicales terrestres. No es un promedio del total de universos ni una muestra aleatoria de todas las semillas. Tampoco se suman perfiles de muestras distintas sin deduplicarlos.
+
+El catálogo contiene 52 estilos y 35 identificadores de instrumento en sus paletas de género; la Bitácora describe 38 instrumentos incluyendo otros del motor. Presets generativos y parámetros no se cuentan como instrumentos nuevos.
+
+Resultados completos: [scripts/v1-variation-sample.json](scripts/v1-variation-sample.json). Reproducir: `node scripts/world-variation.mjs 100` y `node scripts/world-variation.mjs 20 blobs-01` (repetir con las otras semillas).
+
+El suelo resonante, los rastros encadenados y las conexiones regionales ya existen; esta firma no los utiliza para inflar singularidad. La expansión pendiente y la estrategia para medir diferencias perceptibles están en [V1_PRODUCCION.md](V1_PRODUCCION.md). Millones es un objetivo de validación futura, todavía no una cifra comprobada por esta medición.

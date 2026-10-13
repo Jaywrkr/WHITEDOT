@@ -1,4 +1,8 @@
-# Orden actual de ramas nuevas
+# Integración y trabajo agrupado
+
+Main verificado `e3d3086` (PR #64): filas 1–6 de la tabla siguiente ya integradas; filas 7–8 pendientes. La instrucción actual es agrupar muchas mejoras por rama. La revisión V1 se agrega a la fila 8; el futuro paquete amplio y sus puntos de prueba están en [V1_PRODUCCION.md](V1_PRODUCCION.md). No recrear PR de las filas ya integradas.
+
+## Cadena de referencia
 
 La base verificada es main `2959313`, que integra las cinco fases anteriores. Cada rama siguiente contiene la anterior. Jay crea los PR y hace merge; el trabajo nuevo se documenta en [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md).
 

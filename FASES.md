@@ -1,3 +1,7 @@
+# Alcance vigente de V1
+
+El pedido más reciente reemplaza las ramas por funciones con bloques grandes dentro de una rama. Ver [V1_PRODUCCION.md](V1_PRODUCCION.md) y [RAMAS.md](RAMAS.md). Main ya llegó al PR #64; los textos siguientes conservan el contexto de la agrupación anterior.
+
 # Estado de integración
 
 Las cinco fases que describe este documento ya están integradas en main mediante el PR #58 (`2959313`). No requieren nuevos PR. El trabajo nuevo sigue [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md); la cadena vigente de ocho ramas nuevas está en [RAMAS.md](RAMAS.md), incluyendo suelo resonante y rastros musicales.

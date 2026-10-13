@@ -1,39 +1,29 @@
-# Pendientes: estado actual y orden de trabajo
+# Pendientes vigentes y preparación de V1
 
-Main `2959313` integra el bloque anterior de veinte entregas. Los cinco grupos fueron integrados juntos mediante el PR #58. El trabajo continúa en ramas nuevas, paso a paso; Jay hace PR y merge.
+El inventario completo y actualizado está en [V1_PRODUCCION.md](V1_PRODUCCION.md): 64 tareas agrupadas, criterios de publicación, expansión musical/procedural y reglas para guardar/volver a lugares. La lista histórica permanece en [PLAN_HISTORICO.md](PLAN_HISTORICO.md); sus estados antiguos no describen la versión actual.
 
-## Entregas de esta secuencia
+## Integración verificada
 
-`feat/deep-musical-encounters`: redes libres de tejedoras, cajas con piezas y pasos editables y animales que aprenden una frase breve. Incluye actualización de pistas, Bitácora y logros. Está preparado para probar; su contenido no debe confundirse con lo ya publicado en main.
+Main remoto `e3d3086` incluye el PR #64 y la secuencia hasta suelo resonante y rastros musicales. Vidrios sin panel (`cfeac0c`) y animal por toque (`991255a`) están en sus ramas posteriores. Esta revisión se agrega a la misma rama del animal.
 
-La entrega posterior `feat/organic-musical-seedpods`, basada en la rama de dirección visual, sustituye las teclas de la caja por una vaina de semillas. Mantiene su edición musical con menos ruido visual. Pistas y Bitácora actualizadas; sin nuevas culturas ni reliquias históricas todavía.
+## Regla de trabajo más reciente
 
-La entrega `feat/resonant-ground` sustituye el objeto Caja de posibilidades por interacción con el piso, conservando sus posibilidades musicales y los identificadores del progreso antiguo.
+Agrupar muchas mejoras relacionadas en una misma rama, con commits y puntos de prueba por bloque. Propuesta de V1: una rama `release/v1`, un PR final, Jay hace PR/merge. Esta regla reemplaza la anterior de una función por rama. No crear ramas de documentación adicionales para este plan.
 
-La entrega `feat/expressive-glass-gestures` elimina el panel de los vidrios: solo giros en el mundo, con graves, percusión y armonía/melodía media.
+## Prioridad
 
-La entrega `feat/intuitive-animal-dialogue` simplifica el animal: tocar para enseñar, confirmación de notas, respuesta manual/automática y mantener para cambiar voz.
+1. Base fiable: integración, identidad versionada, guardado recuperable, respaldos, residencia de cachés y pruebas automatizadas completas.
+2. Música: escucha larga, balance por rutas, instrumentos más distintos, formas evolutivas, transiciones y primeras tandas de estilos/FX.
+3. Mundo: contratos de contenido comunes, más relaciones/terrenos, cuerdas y suelo, instalaciones, puertas y búsquedas variadas, primeras culturas/personajes/reliquias históricas.
+4. Experiencia: Estudio, retorno y compartir lugares, historia/Voz, accesibilidad, UI silenciosa y pruebas con jugadores nuevos.
+5. Cierre: candidata de release, dispositivos reales, actualizaciones/migraciones/rollback y correcciones.
 
-## Próximos bloques
+Construcción libre, huertos, crafting, comunidades, observatorios/Leonardo, maestros/partituras, exportación de sets y multijugador siguen presentes en el inventario. Su alcance de V1 debe decidirse; no se declaran implementados ni descartados.
 
-1. Profundizar interacciones existentes. La secuencia cubre redes, frases y suelo musical; otras mejoras se evalúan según su aporte musical.
-2. Combinar vidrios, espejos y módulos en instalaciones. `feat/shared-installation-signals` implementa fuentes regionales para el jardín modular; cableado libre y otras combinaciones siguen pendientes.
-3. Pistas encadenadas, puertas musicales, instrumentos dormidos y personajes originales. `feat/chained-musical-trails` entrega una primera búsqueda de tres huellas y un instrumento dormido; puertas, personajes y otras búsquedas siguen pendientes.
-4. Historia, sentido del recorrido y Voz ligada a creación, constancia y Jay.
-5. Muchas culturas y épocas integradas en música, flora/fauna, materiales y comportamiento; inventos y observatorios.
-6. Construcción musical, recetas, huertos rítmicos, maestros/partituras, escenarios, comunidades y baile.
-7. Multijugador musical con reloj, armonía, propiedad y presupuesto compartidos; todavía no hay backend elegido.
+## Lo que ya existe
 
-En paralelo: ampliar estilos/instrumentos por tandas (52 estilos presentes), efectos nuevos, mixer por rutas reales, conversaciones/bandas más expresivas, migraciones/manantiales/criaturas gigantes/día-noche, exportar sets de audio/vídeo, respaldo del progreso, memoria/cachés y escucha prolongada en dispositivos reales.
+Semillas, 11 biomas, 52 estilos, radio evolutiva, quietud, favoritos/regreso/autopilot, vidrios/espejos/módulos, conexiones regionales, blobs, familias de encuentros, suelo resonante, frases de animales, rastros e instrumento dormido, sustracción, fijación opcional/borrado, modo tranquilo, Bitácora/logros y shell offline local. Parte de lo más reciente espera integración en main.
 
-Los gestos y decisiones de esta etapa están en [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md). El inventario detallado de la primera versión está en [JUGABILIDAD_CREATIVA.md](JUGABILIDAD_CREATIVA.md). Las listas extensas de géneros, culturas e ideas se conservan en [PLAN_HISTORICO.md](PLAN_HISTORICO.md).
+## Decisión preservada
 
-## Ya existe
-
-Semillas/biomas/recetas, 52 estilos, radio que evoluciona sin moverse, iniciativa tras quietud, favoritos, regreso, autopilot, vidrios, espejos, jardines modulares, blobs, diez familias de encuentros, sustracción, fijación opcional y borrado, modo de creación tranquila, interfaz compacta y silenciosa, Bitácora/logros y shell offline de módulos locales.
-
-Son sistemas con alcance concreto y algunas primeras versiones; no equivalen a historia completa, construcción libre, conversación musical general ni multijugador. Las mediciones de salida no certifican un máster artístico universal.
-
-## Descartado por Jay
-
-Añadir guardar escenas/ideas musicales y sus conexiones/ajustes como una función nueva. No reintroducirlo como pendiente automático. Favoritos y guardados existentes siguen presentes; exportar un set es otra propuesta distinta.
+Jay descartó añadir escenas/ideas musicales guardables. Favoritos y guardados existentes permanecen. Exportar un set o una construcción es una función diferente; no convertirlo en guardado automático de escenas.
