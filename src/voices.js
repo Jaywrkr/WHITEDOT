@@ -38,15 +38,17 @@ export function createRegionalVoices(region, biomes, genres, seedOf, rng) {
 
 export function initialize(runtime) {
   const cache = new Map();
+  let voiceOrigin="ambient";
+  function withVoiceOrigin(origin,emit){const previous=voiceOrigin;voiceOrigin=origin;try{return emit();}finally{voiceOrigin=previous;}}
   function getVoice(kind, region) {
     if (!cache.has(region.key)) cache.set(region.key, createRegionalVoices(region, runtime.BIOMES, runtime.GEN, runtime.seedOf, runtime.rng));
     const voices = cache.get(region.key);
     // Legacy or border objects absent from the region's own flora retain a stable voice.
     return voices[kind] || voices[Object.keys(voices)[runtime.seedOf(kind) % Object.keys(voices).length]];
   }
-  function playVoice(kind, index, time, region, full=false, volume=1, source=null) {
+  function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
     if (!runtime.ac || !region) return;
-    runtime.loopTap?.(kind,index,time,region,full,volume);   // el looper guarda lo que causas tú
+    runtime.loopTap?.(kind,index,time,region,full,volume,source,origin);   // el looper guarda lo que causas tú
     const voice = getVoice(kind, region);
     const scale = region.scale, transposition = runtime.BIOMES[region.z].tr + region.trOff;
     const note = degree => {
@@ -86,6 +88,7 @@ export function initialize(runtime) {
     if (full) hit(time+runtime.SIX*voice.response,index%7,strength*.45);
   }
   Object.defineProperties(runtime, {
+    withVoiceOrigin: {get:()=>withVoiceOrigin},
     getVoice: {get:()=>getVoice},
     playVoice: {get:()=>playVoice},
   });

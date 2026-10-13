@@ -245,7 +245,7 @@ export function initialize(runtime) {
       for(const s2 of c.stal){const d=Math.hypot(s2.x-runtime.S.wx,s2.y-runtime.S.wy);if(d>R*1.3)continue;const al=Math.max(0,1-d/(R*1.3));runtime.cx.globalAlpha=al*.5;runtime.cx.fillStyle="#fff";
         for(let i=0;i<s2.h;i+=3)runtime.cx.fillRect(s2.x+ox,s2.y+oy+i,1,1);
         const dp=((t/1000+s2.ph*3)%4)/4;runtime.cx.globalAlpha=al*(1-dp);runtime.cx.fillRect(s2.x+ox,s2.y+oy+s2.h+dp*30,1,2);
-        if(d<R*.8&&dp<.02&&runtime.rnd()<.3)runtime.beatSoon(q=>runtime.playVoice('gota',0,q,runtime.regionOfPos(s2.x,s2.y),false,.3,s2));}
+        if(d<R*.8&&dp<.02&&runtime.rnd()<.3)runtime.beatSoon(q=>runtime.playVoice('gota',0,q,runtime.regionOfPos(s2.x,s2.y),false,.3,s2),null,'ambient');}
       // jardín: flores sembradas
       for(const f of c.flowers){flowersNear.push(f);const d=Math.hypot(f.x-runtime.S.wx,f.y-runtime.S.wy);if(d>R*1.6)continue;
         const k=Math.max(0,1-(ms-(f.hit||0))/400),al=Math.max(0,1-d/(R*1.6))*.7+k*.3,s2=4+k*4;

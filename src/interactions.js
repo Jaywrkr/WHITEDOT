@@ -1,20 +1,20 @@
 // Pulsos, física y respuestas de los objetos.
 export function initialize(runtime) {
   let emptyP=0,waves=[],lastSonar=0,tapStart=null,rain=[],beams=[];
-  function beatSoon(fn,vis){if(runtime.ac)runtime.MU.q8.push({fn,vis});else if(vis)vis();}
+  function beatSoon(fn,vis,origin="player"){if(runtime.ac)runtime.MU.q8.push({fn:q=>runtime.withVoiceOrigin?runtime.withVoiceOrigin(origin,()=>fn(q)):fn(q),vis});else if(vis)vis();}
   function pushO(o,fx,fy,force){const dx=o.x-fx,dy=o.y-fy,d=Math.hypot(dx,dy)||1;o.vx=(o.vx||0)+dx/d*force/(o.personality?.mass||1);o.vy=(o.vy||0)+dy/d*force/(o.personality?.mass||1);}
   function physics(o,dt,list,bound){
     if(!o.vx&&!o.vy)return;o.x+=o.vx*dt;o.y+=o.vy*dt;const f=Math.pow(.15,dt*(o.personality?.drag||1));o.vx*=f;o.vy*=f;
     if(bound){const dx=o.x-bound.x,dy=o.y-bound.y,dd=Math.hypot(dx,dy)||1;if(dd>bound.r-12){o.x=bound.x+dx/dd*(bound.r-12);o.y=bound.y+dy/dd*(bound.r-12);o.vx*=-.6;o.vy*=-.6;}}
     const sp=Math.hypot(o.vx,o.vy);if(sp<8){o.vx=o.vy=0;return;}
-    if(sp>45){const n=performance.now();for(const p of list){if(p===o)continue;if(Math.abs(p.x-o.x)<16&&Math.abs(p.y-o.y)<16&&n>(p.cd||0)){p.cd=n+450;p.vx=(p.vx||0)+o.vx*.6;p.vy=(p.vy||0)+o.vy*.6;o.vx*=.4;o.vy*=.4;if(p.snd)beatSoon(p.snd,()=>{p.lit=1;p.hit=1;});}}}
+    if(sp>45){const n=performance.now();for(const p of list){if(p===o)continue;if(Math.abs(p.x-o.x)<16&&Math.abs(p.y-o.y)<16&&n>(p.cd||0)){p.cd=n+450;p.vx=(p.vx||0)+o.vx*.6;p.vy=(p.vy||0)+o.vy*.6;o.vx*=.4;o.vy*=.4;if(p.snd)beatSoon(p.snd,()=>{p.lit=1;p.hit=1;},"ambient");}}}
   }
   function chain(list,o,depth,seen,maxD){seen.add(o);
     beatSoon(q=>o.snd&&o.snd(q,depth),()=>{o.lit=1;o.hit=1;if(depth>=(maxD||6))return;let best=null,bd=240;
       for(const p of list){if(seen.has(p))continue;const d=Math.hypot(p.x-o.x,p.y-o.y);if(d<bd){bd=d;best=p;}}
       if(best){beams.push({x1:o.x,y1:o.y,x2:best.x,y2:best.y,l:1});chain(list,best,depth+1,seen,maxD);}});}
   function hitW(x,y){for(const w of waves){const d=Math.hypot(x-w.x,y-w.y);if(d<=w.r&&d>w.prev)return w;}return null;}
-  function wsoon(w,fn){if(w.n++<12)runtime.soon(fn);}
+  function wsoon(w,fn){if(w.n++<12)runtime.soon(fn,"player");}
   function updWaves(dt,ox,oy){for(const w of waves){w.prev=w.r;w.r+=dt*420;if(w.r>=w.max&&runtime.inWorld()){if(runtime.RP&&runtime.RP.type==="pulsoGrande")runtime.retoSet("pulsoGrande",Math.max(runtime.RP.val,w.n));if(w.n===0){emptyP++;if(emptyP>=10)runtime.unlock("dj");}else emptyP=0;}}waves=waves.filter(w=>w.r<w.max);
     for(const w of waves){runtime.cx.globalAlpha=(1-w.r/w.max)*.6;runtime.cx.strokeStyle=runtime.S.color;runtime.cx.lineWidth=1.5;runtime.cx.beginPath();runtime.cx.arc(w.x+ox,w.y+oy,w.r,0,6.283);runtime.cx.stroke();}}
   function sonar(){
@@ -22,10 +22,11 @@ export function initialize(runtime) {
     runtime.markInput?.();
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.layerPulse?.();return;}
     if(runtime.inWorld())runtime.portalPulse?.(runtime.onBeatNow());   // ritual de portales: pulsos seguidos en el beat
+    if(runtime.inWorld()&&(runtime.S.layer||"superficie")!=="superficie")return;
     if(runtime.inWorld()){runtime.sessionAction("pulse");runtime.pulseRelics();}
     const x=runtime.inWorld()?runtime.S.wx:runtime.S.px,y=runtime.inWorld()?runtime.S.wy:runtime.S.py;waves.push({x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0});
     if(runtime.inWorld()&&runtime.RP&&runtime.RP.type==="pulsos"){runtime.RP.pst=runtime.onBeatNow()?runtime.RP.pst+1:0;runtime.retoSet("pulsos",runtime.RP.pst);}
-    runtime.MU.act+=.25;runtime.pulse=Math.max(runtime.pulse,.6);runtime.soon(t=>{if(runtime.inWorld())runtime.playVoice('pulso',0,t,runtime.regionOfPos(x,y),true,1,{x,y});else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08),2));}});
+    runtime.MU.act+=.25;runtime.pulse=Math.max(runtime.pulse,.6);runtime.soon(t=>{if(runtime.inWorld())runtime.playVoice('pulso',0,t,runtime.regionOfPos(x,y),true,1,{x,y},"player");else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08),2));}});
   }
   function boing(m,t,v){const o=runtime.ac.createOscillator(),g=runtime.ac.createGain();o.type="sine";o.frequency.setValueAtTime(runtime.hz(m+12),t);o.frequency.exponentialRampToValueAtTime(runtime.hz(m),t+.12);runtime.env(g,t,.004,v,.35);o.connect(g).connect(runtime.bus);const sv=runtime.ac.createGain();sv.gain.value=.3;g.connect(sv).connect(runtime.verbIn);o.start(t);o.stop(t+.5);}
   function propSound(k,i,t,region){runtime.playVoice(k,i,t,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy));}

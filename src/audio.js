@@ -236,7 +236,7 @@ export function initialize(runtime) {
     // tu Estudio: cada pieza suena en su paso
     if(runtime.S.mode==="studio"){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);runtime.studioHit[key]=performance.now()+(t-ac.currentTime)*1000;}}}
     // faros: instrumentos que encendiste
-    if(runtime.inWorld()){
+    if(runtime.inWorld()&&(runtime.S.layer||"superficie")==="superficie"){
       if(MU.layers.has(0)&&s%2===0)runtime.playVoice('faro',0,t+jit(),MU.dnaA,false,.4);
       if(MU.layers.has(1)&&(s===0||s===8))runtime.playVoice('faro',1,t,MU.dnaA,false,.7);
       if(MU.layers.has(2)&&s%4===0&&rnd()<.6)runtime.playVoice('faro',2,t,MU.dnaA,false,.4);
@@ -275,7 +275,7 @@ export function initialize(runtime) {
     if(ob){MU.groove++;MU.act+=.12;grooveFx=1;runtime.offStreak=0;if(runtime.inWorld()&&runtime.RP&&runtime.RP.type==="tiempo")runtime.retoSet("tiempo",runtime.RP.val+1);if(MU.groove>=8)runtime.unlock("tiempo");}else{MU.groove=0;runtime.offStreak++;if(runtime.offStreak>=20)runtime.unlock("contratiempo");}
     const n=nextMel();MU.act+=.22;MU.resp=false;
     MU.motif.push({n,st:MU.step});if(MU.motif.length>8)MU.motif.shift();MU.lastNoteStep=MU.step;
-    MU.queue.push(t=>{if(runtime.inWorld()){runtime.playVoice('luz',n%7,t,runtime.regionOfPos(runtime.S.wx,runtime.S.wy),gold);return;}pluck(n,t,vel(v),MU.timbre);
+    MU.queue.push(t=>{if(runtime.inWorld()){runtime.playVoice('luz',n%7,t,runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy),gold,1,null,'player');return;}pluck(n,t,vel(v),MU.timbre);
       if(ob){const h=snap(n+4,chordTones());pluck(h,t,vel(v*.6),MU.timbre);if(MU.groove>=4)pluck(snap(n+7,chordTones())+12,t+SIX,vel(v*.4),4);}
       if(gold)chordTones().slice(0,4).forEach((c,i)=>pluck(snap(n+3+i*4,chordTones()),t+(i+1)*SIX,vel(.07),MU.timbre));
       if(MU.follower)pluck(n-12,t+SIX*8,vel(.05),2);});
@@ -440,7 +440,7 @@ export function initialize(runtime) {
     let h=tr.hook[s];if(h>=0&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);hookInst(tr.hookI,n,t,vel((.05+.05*E)*(arrangement?.grammar.hookLevel||1)),d);}
   }
   function thunder(t){noise(t,"lowpass",900,.5,.25,.9,true);noise(t,"highpass",3000,.5,.06,.12);}
-  const soon=fn=>{if(ac)MU.queue.push(fn);};
+  const soon=(fn,origin="ambient")=>{if(ac)MU.queue.push(t=>runtime.withVoiceOrigin?runtime.withVoiceOrigin(origin,()=>fn(t)):fn(t));};
   const now=fn=>{if(ac&&ac.state==="running")fn(ac.currentTime+.01);};
   function beat(){if(!ac)return 0;const n=ac.currentTime;while(MU.bq.length>1&&MU.bq[1]<=n)MU.bq.shift();const bt=MU.bq[0];if(bt===undefined||bt>n)return 0;const ph=(n-bt)/(SIX*4);return ph>1?0:Math.pow(1-ph,4)*(.35+MU.E*.65);}
 
