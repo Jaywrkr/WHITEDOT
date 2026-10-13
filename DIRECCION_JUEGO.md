@@ -1,5 +1,21 @@
 # Dirección del juego: una práctica creativa que se vuelve mundo
 
+## Nueve mejoras de jugabilidad seleccionadas por Jay
+
+Propuestas anotadas; todavía no implementadas por esta selección. Jay descartó la opción 7 de la lista presentada: guardar ideas musicales, conexiones y ajustes mientras evoluciona el ambiente. No se añade esa función al nuevo plan; esto no elimina los favoritos ni los guardados que ya existen.
+
+1. Un primer recorrido con sentido: Camino → descubrir un lugar → transformar su música → llevar la experiencia al Estudio, sin exigir una nueva función de guardar ideas.
+2. Gestos descubribles mediante respuestas visuales pequeñas: tocar, permanecer, girar y conectar.
+3. Crear también retirando capas, dejando silencio y reduciendo el groove.
+4. Objetos con varios gestos y posibilidades para jugar un buen rato en un mismo lugar.
+5. Retos musicales abiertos, como un jardín, diálogo con criaturas o ruta luminosa, con varias soluciones.
+6. Hallazgos raros que habiliten una interacción o un instrumento, además de coleccionar.
+7. Orientación mediante sonidos lejanos y pistas, sin consultar un mapa constantemente.
+8. Una Voz contextual que recuerde descubrimientos, ayude cuando haga falta y deje espacio durante la creación.
+9. Separar exploración con recursos de composición tranquila, para poder crear sin que la linterna interrumpa.
+
+Prioridad recomendada: primer recorrido, gestos descubribles y creación por sustracción. La selección no autoriza por sí sola implementarlas todas.
+
 ## Qué une el proyecto
 
 Propuesta para Jay, no una historia ya implementada: **cada día recoges atención en el Camino, en el Mundo la conviertes en música y en el Estudio conservas lo que quieres volver a trabajar**. La constancia abre posibilidades; explorar encuentra materiales; escuchar y quitar también son crear. Eso une lo que Jay ha descrito sobre música, creación y constancia sin inventar una biografía ni convertir el juego en una lista de tareas.
