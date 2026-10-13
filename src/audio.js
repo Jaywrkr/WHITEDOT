@@ -168,10 +168,13 @@ export function initialize(runtime) {
         event:runtime.eventOf(MU.dnaA)?.[0]
       });
       if(s===0){const degree=harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar);if(MU.harmonyRegion!==MU.dnaA.key||MU.deg!==degree){changeChord(t);MU.harmonyRegion=MU.dnaA.key;}else if(MU.pending){MU.pending=false;MU.dist=0;}}
+      if(s===0)runtime.horizonBar?.(t,MU.step>>4);   // hitos lejanos: se oyen antes de verse
     }else{MU.radio=null;voiceCurator.clear();}
     if(runtime.inWorld()&&MU.nb&&MU.nbW>0){if(s===0||MU.neighborRadio?.key!==MU.nb.key)MU.neighborRadio={...neighborRadio.advance(MU.nb,MU.step>>4),key:MU.nb.key};}else MU.neighborRadio=null;
     if(s===0)applyComfort(t);
-    const E=(calm||runtime.S.mode==="camino")?Math.min(MU.E,.2):Math.max(MU.E,MU.radio?.energy||0);
+    // En zonas vacías la música se adelgaza (subida); en un oasis vuelve completa (drop).
+    const vitCap=runtime.inWorld()?.16+.7*Math.min(1,(MU.vit??1)/.7):1;
+    const E=(calm||runtime.S.mode==="camino")?Math.min(MU.E,.2):Math.min(vitCap,Math.max(MU.E,MU.radio?.energy||0));
     const A=live&&MU.dnaA?MU.dnaA:null,G=A?runtime.GEN[A.genre]:runtime.GEN.ambient,nb=runtime.inWorld()&&MU.nb&&MU.nb!==A?MU.nb:null,w=nb?MU.nbW:0;
     if(s%4===0){MU.bq.push(t);if(MU.bq.length>8)MU.bq.shift();}
     MU.sq.push({t,s});if(MU.sq.length>12)MU.sq.shift();
@@ -277,6 +280,8 @@ export function initialize(runtime) {
   function snare(t,v){runtime.phenomenonPercussionCue?.(t);runtime.recordInstrument?.("snare");noise(t,"bandpass",1800,1,v,.14,true);const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=190;env(g,t,.002,v*.6,.08);o.connect(g).connect(bus);o.start(t);o.stop(t+.12);}
   function conga(t,f,v){runtime.recordInstrument?.("conga");const o=ac.createOscillator(),g=ac.createGain(),sv=ac.createGain();o.frequency.setValueAtTime(f*1.4,t);o.frequency.exponentialRampToValueAtTime(f,t+.03);env(g,t,.002,v,.13);sv.gain.value=.25;o.connect(g).connect(bus);g.connect(sv).connect(verbIn);o.start(t);o.stop(t+.2);}
   function clave(t,v){const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=2500;env(g,t,.001,v,.04);o.connect(g).connect(bus);o.start(t);o.stop(t+.08);}
+  // Golpe de llegada a un oasis: bombo largo, platillo filtrado y acorde abierto.
+  function dropHit(t,ct){kick2(t,vel(.4),38,.9);noise(t,"highpass",5000,.7,vel(.05),1.2);ct.slice(0,3).forEach(n=>hookInst('strings',n+12,t,vel(.03)));}
   function cowbell(t,v){runtime.recordInstrument?.("cowbell");const f=ac.createBiquadFilter(),g=ac.createGain();f.type="bandpass";f.frequency.value=800;f.Q.value=3;[540,800].forEach(fr=>{const o=ac.createOscillator();o.type="square";o.frequency.value=fr;o.connect(f);o.start(t);o.stop(t+.2);});env(g,t,.001,v,.12);f.connect(g).connect(bus);}
   function wood(t,v){runtime.recordInstrument?.("wood");noise(t,"bandpass",1100,8,v,.04);const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=820;env(g,t,.001,v*.5,.03);o.connect(g).connect(bus);o.start(t);o.stop(t+.06);}
   const hatC=(t,v)=>hat(t,v,.035),hatO=(t,v)=>hat(t,v,.15);
@@ -420,6 +425,7 @@ export function initialize(runtime) {
     hatHit: { get: () => hatC },
     snare: { get: () => snare },
     cowbell: { get: () => cowbell },
+    dropHit: { get: () => dropHit },
     bassInst: { get: () => bassInst },
     hookInst: { get: () => hookInst },
     kick: { get: () => kick },

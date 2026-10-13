@@ -8,7 +8,7 @@ export function initialize(runtime) {
     const el=document.getElementById("zone");
     document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+" · "+d.bpm+" BPM";
     document.getElementById("zName").textContent=d.name;
-    document.getElementById("zDo").textContent=gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
+    document.getElementById("zDo").textContent=(d.sea?"Mar de silencio":d.continent?d.continent.name:"")+(d.sea||d.continent?" · ":"")+gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
     el.classList.add("on");clearTimeout(zoneT);zoneT=setTimeout(()=>el.classList.remove("on"),first?3200:2200);
   }
 
@@ -28,8 +28,25 @@ export function initialize(runtime) {
     const ev=runtime.eventOf(d);if(ev&&!runtime.S.events[ev[0]+":"+d.key+runtime.S.todayKey]){runtime.S.events[ev[0]+":"+d.key+runtime.S.todayKey]=1;runtime.S.events[ev[0]]=1;runtime.unlock("evento1");if(runtime.EVENTS.every(e=>runtime.S.events[e[0]]))runtime.unlock("eventos4");runtime.say(runtime.VOZ[ev[0]],"Evento · "+ev[1]);}
     if(newPlace){runtime.S.places[d.key]=1;runtime.S.placesN=(runtime.S.placesN||0)+1;if(runtime.S.placesN>=10)runtime.unlock("lugar10");if(runtime.S.placesN>=50)runtime.unlock("lugar50");if(runtime.S.placesN>=200)runtime.unlock("lugar200");}
     if(z!==runtime.curZone){runtime.curZone=z;enterZone(z);}
-    showRegion(d,newPlace);runtime.save();
+    showRegion(d,newPlace);continentChange(d);runtime.save();
   }
+  // Escala grande: aviso al cambiar de continente o entrar a un mar de silencio.
+  let lastLand=null,wasSea=false,annT=null;
+  // El aviso grande espera a que no haya tarjeta, toast ni Voz en pantalla (si no, la interfaz lo oculta).
+  function announce(text,big,tries=30){clearTimeout(annT);const busy=document.querySelector('.toast.on,.voice.on,.zone.on');
+    if(busy&&tries>0){annT=setTimeout(()=>announce(text,big,tries-1),900);return;}runtime.showPhrase(text,big);}
+  function continentChange(d){
+    const S=runtime.S;S.continents||={};
+    if(d.sea){if(!wasSea){wasSea=true;announce("Mar de silencio",false);if(!S.help.mar){S.help.mar=true;runtime.say(runtime.VOZ.mar);}}return;}
+    const crossed=wasSea&&lastLand!==null&&d.continent&&d.continent.id!==lastLand;if(crossed)runtime.unlock('mar1');
+    wasSea=false;const k=d.continent;if(!k||k.id===lastLand)return;
+    const first=lastLand!==null;lastLand=k.id;
+    const isNew=!S.continents[k.id];if(isNew){S.continents[k.id]=S.todayKey;S.continentsN=(S.continentsN||0)+1;}
+    announce(`${k.name} · ${k.size} · ${k.familyName} · tono de ${k.tonic}`,true);
+    if(first&&isNew&&S.continentsN===2)runtime.say(runtime.VOZ.continente);
+    if(S.continentsN>=3)runtime.unlock('continente3');
+  }
+  const resetContinent=()=>{lastLand=null;wasSea=false;clearTimeout(annT);};
   let zoneT;
   function showZone(z,first){
     const B=runtime.BIOMES[z],Z=runtime.ZINFO[B.id],el=document.getElementById("zone");
@@ -92,6 +109,7 @@ export function initialize(runtime) {
     retoSet: { get: () => retoSet },
     touched: { get: () => touched },
     enterRegion: { get: () => enterRegion },
+    resetContinent: { get: () => resetContinent },
     burst: { get: () => burst },
     seen: { get: () => seen },
     collect: { get: () => collect },

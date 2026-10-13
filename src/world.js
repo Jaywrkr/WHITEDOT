@@ -5,9 +5,13 @@ import { createPockets, distributePlaythings } from './pockets.js';
 import { attachPersonalities } from './personality.js';
 
 import { createPlaythings } from './playthings.js';
+import { createContinents } from './continents.js';
 
 // Generación procedural del camino, regiones y reliquias.
 export function initialize(runtime) {
+  const continents=createContinents(runtime.seedOf,runtime.rng,runtime.GEN),VACIO=runtime.BIOMES.findIndex(b=>b.id==='vacio');
+  const regionPx=()=>runtime.REG*runtime.WCH;
+  const fillOf=vit=>{const m=continents.densityOf(vit),L=runtime.FILL;return [m,(m<.3?L[0]:m<.7?L[1]:m<1.4?L[2]:m<2.1?L[3]:L[4])[1]];};
   /* ---------- camino ---------- */
   function getChunk(cx,cy){
     const id=cx+","+cy; let c=runtime.chunks.get(id); if(c) return c;
@@ -25,6 +29,7 @@ export function initialize(runtime) {
     const rx=Math.floor(cx/runtime.REG),ry=Math.floor(cy/runtime.REG),d=Math.max(Math.abs(rx),Math.abs(ry))*2;
     if(d===0)return 0;
     const key=rx+","+ry;if(runtime.bcache.has(key))return runtime.bcache.get(key);
+    if(continents.at(rx,ry).sea){runtime.bcache.set(key,VACIO);return VACIO;}   // mar de silencio
     const r=runtime.rng(runtime.seedOf("zona:"+key));r();
     const el=runtime.BIOMES.map((b,i)=>[i,b]).filter(([,b])=>b.minD<=d);
     let x=r()*el.reduce((s,[,b])=>s+b.w,0),res=0;for(const[i,b]of el){x-=b.w;if(x<=0){res=i;break;}}
@@ -41,7 +46,9 @@ export function initialize(runtime) {
   function regionAt(cx,cy){
     const rx=Math.floor(cx/runtime.REG),ry=Math.floor(cy/runtime.REG),key=rx+","+ry;let d=rcache.get(key);if(d)return d;
     const z=biomeAt(cx,cy),B=runtime.BIOMES[z],r=runtime.rng(runtime.seedOf("adn:"+key)),origin=rx===0&&ry===0;
-    const hue=Math.floor(r()*360),name=origin?"Origen":pname(r),trait=TRAITS[Math.floor(r()*TRAITS.length)];
+    const ct=continents.at(rx,ry),cont=ct.continent,rawHue=Math.floor(r()*360);
+    // El color del lugar se acerca al del continente: identidad visual a gran escala.
+    const hue=cont&&!ct.sea?Math.round((cont.hue+(rawHue-180)*.22+360)%360):rawHue,name=origin?"Origen":pname(r),trait=TRAITS[Math.floor(r()*TRAITS.length)];
     d={key,z,name,trait,hue,scale:origin||r()<.5?B.scale:MODES[Math.floor(r()*MODES.length)],bpmOff:origin?0:Math.round((r()-.5)*16),trOff:origin?0:Math.floor(r()*7)-3,
       pat:euclid(3+Math.floor(r()*5),16,Math.floor(r()*16)),ptype:r()<.5?"tom":"noise",pf:60+r()*120,species:[]};
     const ns=origin?2:2+Math.floor(r()*3);
@@ -52,6 +59,7 @@ export function initialize(runtime) {
     d.reto={type:rt,goal:{cantar:d.species.length,pulsos:3,tiempo:8,quieto:20,compas:5,pulsoGrande:8}[rt]};
     const dist=Math.max(Math.abs(rx),Math.abs(ry))*2;d.mix=null;
     if(!origin&&dist>=2&&r()<.3){const el=runtime.BIOMES.map((b,i)=>i).filter(i=>i!==z&&runtime.BIOMES[i].minD<=dist);d.mix=el[Math.floor(r()*el.length)];}
+    if(ct.sea)d.mix=null;
     d.kOff=origin?0:(r()-.5)*.24;
     {const TP=runtime.TRACKP[runtime.BIOMES[z].id],pick=a=>a.length?a[Math.floor(r()*a.length)]:null,bass=[],hook=[];let deg=Math.floor(r()*5);
      for(let i=0;i<16;i++){bass.push(i===0?0:r()<TP[2]*(i%4===2?1.6:i%2?.5:1)?[0,0,4,0,3,5,7][Math.floor(r()*7)]:-1);
@@ -68,7 +76,9 @@ export function initialize(runtime) {
      d.bpm=Math.round(G.bpm[0]+r()*(G.bpm[1]-G.bpm[0]));const fr=r();d.fill=origin?runtime.FILL[2]:fr<.15?runtime.FILL[0]:fr<.35?runtime.FILL[1]:fr<.65?runtime.FILL[2]:fr<.85?runtime.FILL[3]:runtime.FILL[4];
      d.track.bassI=G.bassI;d.track.hookI=G.hookP[Math.floor(r()*G.hookP.length)];}
     applyPalette(d,runtime.BIOMES[z].id,origin,runtime.seedOf,runtime.rng);
-    applyNeighborhood(d,runtime.BIOMES,runtime.GEN,runtime.seedOf,runtime.rng);
+    d.continent=cont?{id:cont.id,name:cont.name,family:cont.family,familyName:cont.familyName,tonic:cont.tonic,size:cont.size}:null;d.sea=ct.sea;d.coast=ct.coast;
+    d.fill=origin?runtime.FILL[2]:fillOf(continents.vitality((rx+.5)*regionPx(),(ry+.5)*regionPx(),regionPx()));
+    applyNeighborhood(d,runtime.BIOMES,runtime.GEN,runtime.seedOf,runtime.rng,continents.at);
     rcache.set(key,d);return d;
   }
   const EVENTS=[["lluvia","Lluvia de notas","Caen notas del cielo. Atrápalas."],["eclipse","Eclipse","La luz se achica. Todo se escucha más hondo."],["migracion","Migración","Las formas de aquí están viajando."],["aurora","Aurora","El cielo canta en otro color."]];
@@ -78,9 +88,9 @@ export function initialize(runtime) {
   function wchunk(cx,cy){
     const id=cx+","+cy;let c=runtime.wchunks.get(id);if(c)return c;
     const dna0=regionAt(cx,cy),r=runtime.rng(runtime.seedOf("mundo:"+id)),z=dna0.mix!=null&&r()<.5?dna0.mix:biomeAt(cx,cy),B=runtime.BIOMES[z],ox=cx*runtime.WCH,oy=cy*runtime.WCH;
-    const vr=runtime.rng(runtime.seedOf("var:"+id)),vi=Math.floor(vr()*runtime.VARS.length),dens=(vi===1?1.8:vi===0?.5:1)*((dna0.fill||runtime.FILL[2])[0]);
+    const vr=runtime.rng(runtime.seedOf("var:"+id)),vi=Math.floor(vr()*runtime.VARS.length),vit=continents.vitality(ox+runtime.WCH/2,oy+runtime.WCH/2,regionPx()),dens=(vi===1?1.8:vi===0?.5:1)*continents.densityOf(vit);
     const H=dna0.hab||runtime.HAB[0];
-    c={var:vi,dens,pal:dna0.pal,ground:vi===2?"agua":dna0.ground,plants:[],id,z,grass:[],flies:[],walkers:[],ponds:[],pillars:[],motes:[],crystals:[],beacons:[],lotus:[],flowers:[],stal:[],props:[],dunes:B.id==="dunas"};
+    c={var:vi,dens,vit,pal:dna0.pal,ground:vi===2?"agua":dna0.ground,plants:[],id,z,grass:[],flies:[],walkers:[],ponds:[],pillars:[],motes:[],crystals:[],beacons:[],lotus:[],flowers:[],stal:[],props:[],dunes:B.id==="dunas"};
     const P=()=>[ox+r()*runtime.WCH,oy+r()*runtime.WCH];
     const grass=(groups,tallP)=>{groups=Math.round(groups*dens);for(let g=0;g<groups;g++){const[gx,gy]=P(),n=10+Math.floor(r()*14),tall=r()<tallP;
       for(let i=0;i<n;i++){const a=r()*6.28,d=Math.sqrt(r())*(tall?50:70);c.grass.push({x:gx+Math.cos(a)*d,y:gy+Math.sin(a)*d,h:tall?10+r()*26:3+r()*9,tall,ph:r()*6.28,lit:0});}}};
@@ -133,6 +143,8 @@ export function initialize(runtime) {
     eventOf: { get: () => eventOf },
     RETOTXT: { get: () => RETOTXT },
     regionOfPos: { get: () => regionOfPos },
+    continents: { get: () => continents },
+    vitalityAt: { get: () => (x,y)=>continents.vitality(x,y,regionPx()) },
     wchunk: { get: () => wchunk },
     biomeOfPos: { get: () => biomeOfPos },
     todayRelics: { get: () => todayRelics },

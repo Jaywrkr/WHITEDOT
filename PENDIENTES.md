@@ -53,6 +53,28 @@ Escucha agradable para público amplio: controlar fatiga, disonancia accidental,
 
 **Aceptación:** ~100 géneros en `GEN`, todos alcanzables en el Atlas dentro de 30 anillos, reparto sin géneros por encima de ~3 % ni debajo de ~0,5 %, patrones de batería distintos verificados por prueba, y validación audible de Jay por tandas.
 
+## 1c. Plan del mundo infinito (acordado con Jay, 2026-10-12)
+
+**Principio:** el infinito no se siente por cantidad, sino por escala, contraste y promesa de que más allá hay algo distinto. Evitar la "avena procedural" de No Man's Sky: muchas combinaciones que se sienten iguales.
+
+**Fase 1 · Base del mundo — implementada en `feat/infinite-world-foundation` (falta que Jay la escuche y la juegue en móvil):**
+1. **Continentes sonoros:** capa por encima de las regiones, fronteras curvas, tamaños desiguales (pocos gigantes, muchos medianos, archipiélagos). Cada continente tiene nombre, tonalidad, familia de géneros y color. Al cruzar se siente un cambio de tono, como la transición de un DJ. Entre continentes hay **mares de silencio** con faros aislados. Sin cuadrícula visible.
+2. **Contraste de densidad:** un campo continuo de vitalidad reemplaza los 5 niveles de relleno. El vacío funciona como la subida de un track y el lugar lleno como el drop: la música se adelgaza en lo vacío y entra completa al llegar a un oasis.
+3. **Horizonte sonoro:** hitos grandes (torres, árboles gigantes, ciudades de criaturas, monolitos, faros). Primero se oyen (apagados y desde su dirección), luego se intuyen (brillo en el borde) y luego se ven. Cada uno tiene su motivo musical. Máximo 2 sonando a la vez. Sin flechas ni brújula.
+
+**Fase 2 · Viaje:**
+5. **Más lejos, más raro, y la distancia cuesta:** afinación torcida, objetos más grandes, colores imposibles y ritmos extraños lejos del origen. Expediciones de varios días con el Estudio como campamento base. Récord de distancia con tarjeta para compartir.
+8. **Mapa dibujado:** solo lo que viste, con símbolos de lo que escuchaste, en zoom de continente y región, exportable como imagen. El mapa recuerda, no revela.
+
+**Fase 3 · Asombro:**
+4. **Rarezas que rompen reglas:** niveles raro/legendario/mítico con frecuencia real. Cada una deja una muestra o instrumento único para el Estudio. La Voz suelta rumores con pistas. Lo raro se anuncia, no se regala.
+2. **Ríos y caminos:** un río es un set de DJ (la energía sube río abajo). Nacen en manantiales, mueren en mares de silencio, y donde dos se juntan sus géneros se mezclan. Los caminos los marcan las migraciones.
+
+**Fase 4 · Vida:**
+7. **El tiempo cambia el mundo:** clima que se desplaza por el mapa y se puede perseguir, migraciones con posición según la fecha, estaciones semanales por continente. Da razones para volver, nunca castigo por no volver (nada de FOMO).
+9. **Capas:** bajo tierra 1 paso equivale a 8 arriba (atajo de viaje, dub y graves). La capa del cielo da vista de continente. Se entra con un ritual: tocar el ritmo correcto con pulsos.
+10. **El mundo te recuerda:** tu rastro, lo sembrado, los ecos y los Estudios quedan. Más adelante, rastros de otros jugadores.
+
 ## 2. Más iniciativa del ambiente tras aproximadamente 60 segundos quieto
 
 **Siguiente etapa de producto propuesta.** Radio ya cambia sin movimiento y fenómenos ya tienen autonomía; falta respuesta específica a quietud prolongada.

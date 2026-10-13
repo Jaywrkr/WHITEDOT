@@ -25,7 +25,7 @@ Object.assign(runtime,{ac:{},MU:{deg:0},SIX:.125,vel:v=>v,
  bassInst:(instrument,n,t,v)=>calls.push({type:'bass',instrument,n,t,v}),
  hookInst:(instrument,n,t,v)=>calls.push({type:'hook',instrument,n:n+(instrument==='glass'?12:0),t,v}),
 });
-for(const method of ['kick','conga','wood','rim','shaker','tom','guiro','timbale','clap','hatHit'])runtime[method]=(...args)=>calls.push({type:'perc',method,args});
+for(const method of ['kick','conga','wood','rim','shaker','tom','guiro','timbale','clap','hatHit','snare'])runtime[method]=(...args)=>calls.push({type:'perc',method,args});
 voices(runtime);
 for(let x=0;x<30;x++) {
  const region=runtime.regionOfPos(x*3600+900,900);

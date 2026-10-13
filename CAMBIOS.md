@@ -5,7 +5,7 @@ Revisión: 2026-10-12. Leer junto con [HANDOFF.md](HANDOFF.md) y [PENDIENTES.md]
 ## Estado exacto para Claude
 
 - `main` auditado por Claude: `3c58c56` (PR #26). Incluye todo hasta instrumentos procedurales (PR #25) y esta documentación.
-- Ramas pendientes de PR: `feat/rhythm-atlas` (etapa 26) y `feat/rhythms-afro-roots` (etapa 27, construida encima de la 26; integrar esta incluye ambas).
+- `feat/rhythm-atlas` integrada (PR #27). Pendientes de PR: `feat/rhythms-afro-roots` (etapa 27) y `feat/infinite-world-foundation` (etapa 28, construida encima de la 27; integrar esta incluye ambas).
 - Auditoría 2026-10-12: 20 suites Node + smoke móvil/escritorio pasan en `main`; los 34 géneros existen en el mundo; las afirmaciones de README/HANDOFF se comprobaron contra el código. Diferencias encontradas: la documentación aún describía los instrumentos procedurales como rama pendiente (ya integrados) y HANDOFF tenía esa sección duplicada; quedaron corregidas.
 - Flujo obligatorio: rama por etapa, implementar, verificar, commit y push. Jay crea PR y merge. No publicar directamente en main. No ejecutar las fases pendientes sin su autorización.
 
@@ -147,6 +147,10 @@ Síntesis nueva modifica parciales/FM y envolvente; heredada recibe filtro/envol
 - Atlas: filtros por familia y "Sin probar", cuadro de probado guardado en `S.atlasTested`. Todos los géneros tienen familia (`familyOf`).
 - Voces: la caja (`snare`) suena como caja; antes caía en tom. Lo-fi cuenta como estilo calmo en la gramática.
 - Pruebas: `tests/rhythms.mjs` nueva; `tests/atlas_smoke.py` cubre filtros y marca; las 22 suites y el smoke pasan.
+
+### 28. Mundo infinito, fase 1 — rama `feat/infinite-world-foundation`
+
+Continentes sonoros con tamaños desiguales, fronteras curvas, tonalidad, familia de géneros y color propios; mares de silencio (~32 %) entre ellos. Campo de vitalidad que reemplaza los niveles de relleno, con música que se adelgaza en lo vacío y un drop al llegar a un oasis. Hitos (torre, árbol madre, ciudad, monolito, faro) que se oyen desde lejos con filtro y paneo, se intuyen por un brillo en el borde y se ven como siluetas grandes. Logros `hito1`, `hito10`, `continente3`, `mar1`. Detalle en HANDOFF ("Mundo infinito · fase 1"). Cambia el paisaje y la música de muchas coordenadas antiguas; fixtures recapturados. Pruebas nuevas `tests/world.mjs` y `tests/world_smoke.py`; 23 suites y los tres smokes pasan.
 
 ## Persistencia y compatibilidad
 
