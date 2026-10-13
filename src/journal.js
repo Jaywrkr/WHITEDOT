@@ -42,7 +42,8 @@ export function initialize(runtime) {
   function places() {
     const regions=Object.keys(runtime.S.places).map(k=>regionFromKey(k,runtime)).filter(Boolean);
     const favorites=runtime.favorites||[];const saved=favorites.length?'<h3>Favoritos</h3>'+favorites.map(p=>card(p.name,`${p.layer} · ${runtime.GEN[p.genre]?.name||p.genre} · ${p.character}`)).join(''):'';
-    return saved+(regions.length?regions.map(region=>{
+    const installations=Object.keys(runtime.S.glassSites||{}).length?card('Vidrios cromáticos',`${Object.keys(runtime.S.glassSites).length} instalaciones exploradas. Gira sus aros para transformar notas, acentos y figuras; la orientación queda guardada.`):'';
+    return saved+installations+(regions.length?regions.map(region=>{
       const found=region.species.filter(sp=>runtime.S.cat[sp.id]).length,gravity=gravityOf(region,runtime.seedOf),j=data();
       const [rx,ry]=region.key.split(',').map(Number);
       let hasSite=!!j.relics[region.key];
@@ -72,7 +73,7 @@ export function initialize(runtime) {
   function achievements() {
     const groups={Constancia:[],Exploración:[],Música:[],Ocultos:[]};
     for(const [id,name,description,hidden]of runtime.ACH) {
-      const got=runtime.S.ach[id],group=hidden?'Ocultos':/^(r\d|t\d|dia1|tope|regreso|s10)/.test(id)?'Constancia':['paseo1','escuchaViva','tiempo','under','faro','banda','jardinero','tambor'].includes(id)?'Música':'Exploración';
+      const got=runtime.S.ach[id],group=hidden?'Ocultos':/^(r\d|t\d|dia1|tope|regreso|s10)/.test(id)?'Constancia':['vidrio1','paseo1','escuchaViva','tiempo','under','faro','banda','jardinero','tambor'].includes(id)?'Música':'Exploración';
       groups[group].push(card(hidden&&!got?'???':name,hidden&&!got?'Logro oculto. Sigue explorando.':description,`<p>${got?'Conseguido':'Pendiente'}</p>`));
     }
     return Object.entries(groups).map(([name,items])=>`<h3>${name}</h3>${items.join('')}`).join('');

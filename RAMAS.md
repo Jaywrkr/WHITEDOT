@@ -4,16 +4,16 @@ Jay autorizó completar las primeras diez fases encadenadas. Se parte de la fase
 
 | Orden | Rama | Base | Estado |
 |---:|---|---|---|
-| 1 | `review/claude-audio-clarity` | main `5413d5f` | Subida, `fe32566`: revisión, nitidez y plan |
-| 2 | `feat/02-layer-jam-consistency` | rama 1 | Implementada: capas, Estudio y autoría de ecos |
-| 3 | `feat/03-world-recipe-catalog` | rama 2 | Implementada: Catálogo y recetas de lugar |
-| 4 | `feat/04-coherent-world-combinations` | rama 3 | Implementada: Combinaciones coherentes |
-| 5 | `polish/05-world-visual-language` | rama 4 | Implementada: Lenguaje gráfico y capas de información |
-| 6 | `feat/06-stationary-environment` | rama 5 | Implementada: El ambiente responde a la quietud |
-| 7 | `feat/07-musical-favorites` | rama 6 | Implementada: Favoritos musicales |
-| 8 | `feat/08-return-navigation` | rama 7 | Implementada: Orientación y regreso |
-| 9 | `feat/09-musical-autopilot` | rama 8 | Implementada: Autopilot musical |
-| 10 | `feat/10-chromatic-glass` | rama 9 | Pendiente |
+| 1 | `review/claude-audio-clarity` | main `5413d5f` | Subida, `fe32566`: revisión, nitidez y plan · fe32566 |
+| 2 | `feat/02-layer-jam-consistency` | rama 1 | Subida: capas, Estudio y autoría de ecos · eda226a |
+| 3 | `feat/03-world-recipe-catalog` | rama 2 | Subida: Catálogo y recetas de lugar · 35fcd5c |
+| 4 | `feat/04-coherent-world-combinations` | rama 3 | Subida: Combinaciones coherentes · d912160 |
+| 5 | `polish/05-world-visual-language` | rama 4 | Subida: Lenguaje gráfico y capas de información · bacfc98 |
+| 6 | `feat/06-stationary-environment` | rama 5 | Subida: El ambiente responde a la quietud · 45f69ea |
+| 7 | `feat/07-musical-favorites` | rama 6 | Subida: Favoritos musicales · dfda3f3 |
+| 8 | `feat/08-return-navigation` | rama 7 | Subida: Orientación y regreso · a610bd7 |
+| 9 | `feat/09-musical-autopilot` | rama 8 | Subida: Autopilot musical · 55c2701 |
+| 10 | `feat/10-chromatic-glass` | rama 9 | Subida: Tres vidrios cromáticos musicales · HEAD de esta rama |
 
 ## Cómo revisar e integrar
 

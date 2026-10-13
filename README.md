@@ -132,3 +132,16 @@ Favoritos musicales: Menú → Favoritos guarda hasta 64 puntos con nombre, coor
 Orientación y regreso: Cada favorito ofrece Orientar y hay retorno guiado al Estudio. Un indicador compacto muestra dirección, distancia en pasos y llegada, con cancelación; sigue disponible tras recarga. Si el destino está en otra capa indica buscar un acceso. No mueve al jugador ni teletransporta. Logro Otra vez aquí al regresar desde cierta distancia. Guardado v4 añade destination; borrar el favorito cancela su ruta.
 
 Autopilot musical: Paseo musical desde Favoritos y viaje automático al destino de esta capa. Movimiento lento, pausa en menús/Escuchar/Estudio y al ocultar la pestaña, cancelación manual o con Detener/Escape, llegada y salida del Mundo. Consume linterna normalmente y compensa movimiento invertido. No se reanuda solo tras recarga. Logro Dejarse llevar por un minuto de viaje; el control manual siempre tiene prioridad.
+
+Tres vidrios cromáticos musicales: Instalaciones originales de tres piezas translúcidas: arrastrar sus aros o usar controles gira las capas, revela figuras por superposición y cambia notas/acento a tempo. Sus voces dependen de la región. La orientación y el descubrimiento se guardan, aparecen en Escuchar y Bitácora, y hay logros por girar y alinear. Un ejemplo está cerca del punto inicial de Origen; otros se distribuyen por receta sin mares. Color local, fondo negro y jugador blanco. Los espejos y cajas musicales son fases futuras.
+
+## Probar las primeras diez fases de esta sesión
+
+Lee [RAMAS.md](RAMAS.md): las ramas forman una cadena y se integran de la **1 a la 10**. Puedes detenerte y probar cualquiera después de integrar sus anteriores.
+
+- **Favoritos:** menú → Favoritos → Guardar aquí. Renombra o borra puntos; Orientar muestra dirección/distancia y Viajar inicia el recorrido automático en la misma capa. Paseo musical recorre lentamente el mundo. Mover el punto, Detener o Escape devuelve el control; menús pausan y la linterna se consume viajando.
+- **Vidrios:** cerca del punto inicial de Origen hay una instalación unos pasos al este. Acércate y arrastra un aro de color: abre los tres controles. Los giros cambian figuras y respuestas musicales; alinear las piezas revela un logro. Sus orientaciones sobreviven a la recarga.
+- **Escucha quieta:** un minuto de escucha activa invita al ambiente a responder gradualmente. Menús/Escuchar/audio suspendido no suman tiempo; al moverte se retira suavemente.
+- **Eco ⟳:** pulsa para armar, espera al próximo compás y toca objetos/pulsa/recoge luces durante dos compases. Esas acciones se repiten en el lugar. Hasta cuatro ecos; cerca de uno, el mismo botón lo borra. No usa micrófono ni exporta audio/video; los ecos siguen siendo temporales.
+
+Además de `npm test` (33 suites), esta cadena añade `layer_jam_smoke.py`, `initiative_smoke.py`, `favorites_smoke.py`, `navigation_smoke.py`, `autopilot_smoke.py` y `glass_smoke.py` en `tests/`. Son pruebas de navegador con los requisitos habituales de Playwright/Chromium. Las fases siguientes (espejos, cajas musicales, escenas, culturas, etc.) quedan pendientes de elegir.

@@ -4,6 +4,7 @@ export const RECIPE_VERSION=1;
 export const MATERIAL_NAMES={wood:'Madera cálida',glass:'Cristal suave',metal:'Metal filtrado',air:'Aire sedoso'};
 const all=['llanura','bosque','lago','ruinas','jardin','dunas','cristales','faros','tormenta','cueva','vacio'];
 export const ELEMENTS=[
+ {id:'installation:glass',name:'Tres vidrios cromáticos',kind:'installation',biomes:all.filter(b=>b!=='vacio'),motion:'rotate',actions:['rotate','pulse','listen'],materials:['glass'],rarity:.32,home:true},
  {id:'toy:spark',name:'Luz fugitiva',kind:'toy',biomes:all.filter(b=>b!=='cueva'),motion:'flight',actions:['touch','pulse'],materials:['glass','air']},
  {id:'toy:spring',name:'Brote saltarín',kind:'toy',biomes:['llanura','bosque','ruinas','jardin','cueva'],motion:'jump',actions:['touch','pulse'],materials:['wood','air']},
  {id:'toy:kite',name:'Cometa flotante',kind:'toy',biomes:['bosque','lago','dunas','faros','tormenta'],motion:'flight',actions:['touch','pulse'],materials:['air','glass']},
@@ -35,7 +36,7 @@ export function createRegionalRecipe(region,biome,seedOf,rng,catalog=createEleme
  const archetype=quiet?'quiet':region.key==='0,0'?'balanced':styles[Math.floor(r()*styles.length)];
  const materialPool=archetype==='mechanical'?['metal','glass']:archetype==='organic'?['wood','air']:Object.keys(MATERIAL_NAMES);
  const material=materialPool[Math.floor(r()*materialPool.length)],layout=['clusters','scattered','rings'][Math.floor(r()*3)];
- const elements=catalog.compatible(biome).map(e=>{const draw=random(`element:${e.id}`),present=draw()< (e.rarity??1);return {id:e.id,present,weight:present?.4+draw()*1.6:0};});
+ const elements=catalog.compatible(biome).map(e=>{const draw=random(`element:${e.id}`),present=draw()< (e.rarity??1)||Boolean(e.home&&region.key==='0,0');return {id:e.id,present,weight:present?.4+draw()*1.6:0};});
  return Object.freeze({version:RECIPE_VERSION,key:region.key,archetype,name:ARCHETYPES[archetype],biome,layer:region.key.startsWith('bajo:')?'bajo':region.key.startsWith('cielo:')?'cielo':'superficie',
   material,materialName:MATERIAL_NAMES[material],layout,activity:quiet?.3:.65+r()*.35,objectDensity:quiet?.25:.45+r()*1.05,
   elements:Object.freeze(elements.map(Object.freeze)),music:Object.freeze({genre:region.genre,family:familyOf(region.genre),bpm:region.bpm,scale:Object.freeze([...region.scale])}),

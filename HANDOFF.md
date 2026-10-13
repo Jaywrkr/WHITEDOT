@@ -1,7 +1,7 @@
 # HANDOFF · WHITEDOT / Pixel Blanco
 
 > Documento de traspaso para continuar el desarrollo con otra IA (ChatGPT, Claude, etc.) o con otro dev.
-> Lee este archivo junto con [CAMBIOS.md](CAMBIOS.md), [PENDIENTES.md](PENDIENTES.md) y [REVISION.md](REVISION.md). Última revisión: 2026-10-13 sobre `main` `5413d5f` (PR #35). Las funciones de Claude, incluidos looper/banda/FX, están integradas. La limpieza de audio y el nuevo plan pertenecen a `review/claude-audio-clarity`, pendiente del PR/merge de Jay.
+> Contexto: HANDOFF, CAMBIOS, PENDIENTES, REVISION y [RAMAS.md](RAMAS.md). Actualizado al cierre de las primeras diez fases de la sesión (12 de octubre de 2026, Guayaquil). Base remota revisada `5413d5f`; esta copia contiene la cadena hasta `feat/10-chromatic-glass`. Implementado y subido no implica integrado en main: Jay hace PR/merge en orden.
 
 - **Juego en vivo:** https://whitedot-inky.vercel.app
 - **Repo:** https://github.com/Jaywrkr/WHITEDOT (rama `main`). Cada push a `main` despliega solo en Vercel.
@@ -74,7 +74,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/palettes.js` | Paletas tropical, melódica, robótica y disco, asignación regional y patrones. |
 | `src/instruments.js` | Nuevos timbres de parciales, FM y filtros, güiro y timbal electrónicos. |
 | `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros, tracks y ruteo de mezcla. |
-| `src/mix.js` (esta rama) | Protección de salida lineal a nivel normal y filtros de retornos de efectos. |
+| `src/mix.js` (fase 1) | Protección de salida lineal a nivel normal y filtros de retornos de efectos. |
 | `src/session.js` | Resumen de exploración y actividad, conservación de la última sesión y tarjeta PNG. |
 | `src/effects.js` | Procesamiento local por voz, perfiles regionales y liberación de nodos de audio. |
 | `src/relics.js` | Sitios raros estables, resonancia y compatibilidad de reliquias antiguas. |
@@ -108,6 +108,13 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/fxpad.js` | Mesa de efectos estilo Kaoss pad (filtro, espacio, eco, robot, stop). |
 | `src/atlas.js` | Atlas de ritmos (prototipo): lista todos los géneros, verifica que existen en el mundo y viaja a la región más cercana. |
 | `src/pwa.js`, `sw.js`, `manifest.webmanifest`, `icons/` | Instalación web, control de gestos y respaldo de caché; offline completo pendiente de verificar. |
+| `src/catalog.js` | Catálogo de elementos y recetas regionales; validación y semillas independientes. |
+| `src/visual.js` | Jerarquía común de color, trazos, brillo y posiciones de avisos. |
+| `src/initiative.js` | Reloj de escucha quieta y respuestas ambientales acotadas. |
+| `src/favorites.js` | Puntos musicales nombrados, normalización v4 y panel. |
+| `src/navigation.js` | Orientación, distancia/llegada y destinos por capa. |
+| `src/autopilot.js` | Paseo y viaje lento, pausa/cancelación y prioridad manual. |
+| `src/glass.js` | Instalaciones de vidrios, giro, música, dibujo y orientación persistente. |
 | `src/controls.js` | Botones, controles de prototipo y sonido. |
 | `package.json` | Declara módulos ES para Node y `npm test`; no instala dependencias de aplicación. |
 | `tests/core.mjs` | Compatibilidad del guardado, tope diario y mundo determinista. |
@@ -125,7 +132,8 @@ wx, wy (posición en el mundo), lampDay, lampUsed, session, lastSession, journal
 zones{}, bag{muestra:cantidad}, studio{x,y,biome,slots{}}, color, cat{} (catálogo de especies),
 catN, places{}, placesN, retos{}, retosN, events{}, atlasTested{},
 continents{}, continentsN, landmarks{}, landmarksN, heardLm{}, maxRing, oasisN,
-anomalies{}, anomaliesN, storms, confluences, steps[], camps[], layer, under{x,y}, ecosN
+anomalies{}, anomaliesN, storms, confluences, steps[], camps[], layer, under{x,y}, ecosN,
+favorites{version:1,items[]}, destination, glassSites{id:{angles[],seen}}
 ```
 
 Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `v5`) o agrega una migración. `Object.assign(fresh(), saved)` ya rellena los campos nuevos.
@@ -448,7 +456,7 @@ Pruebas: `tests/jam_smoke.py` y `tests/fx_smoke.py`.
 
 ## Estado general revisado (13 de octubre de 2026)
 
-Main `5413d5f` incluye todas las funciones anteriores, looper, banda y mesa de efectos (PR #35). Hay 52 estilos, 11 biomas, continentes, mares, hitos, mapa, rarezas/ríos/confluencias, clima/estaciones/memoria, capas y PWA. No hay favoritos musicales, escenas, autopilot, red ni grabación audio/video. Ecos/banda son temporales; huellas/campamentos y registros sí se guardan.
+Main `5413d5f` incluye todas las funciones anteriores, looper, banda y mesa de efectos (PR #35). Hay 52 estilos, 11 biomas, continentes, mares, hitos, mapa, rarezas/ríos/confluencias, clima/estaciones/memoria, capas y PWA. En ese main todavía no había favoritos/autopilot; esta cadena añade favoritos, orientación y autopilot. Escenas, red y grabación audio/video siguen pendientes. Ecos/banda son temporales; huellas/campamentos y registros sí se guardan.
 
 La rama `review/claude-audio-clarity` limpia salida y retornos sin cambiar patrones/instrumentos. 26 suites Node, diez smokes y render de audio real aprobados; mediciones, alcance y fallos de integración pendientes en REVISION. Los números RMS anteriores son mediciones históricas, no especificaciones del master actual.
 
@@ -491,3 +499,19 @@ Rama `feat/08-return-navigation`. Cada favorito ofrece Orientar y hay retorno gu
 ### Fase 9: Autopilot musical
 
 Rama `feat/09-musical-autopilot`. Paseo musical desde Favoritos y viaje automático al destino de esta capa. Movimiento lento, pausa en menús/Escuchar/Estudio y al ocultar la pestaña, cancelación manual o con Detener/Escape, llegada y salida del Mundo. Consume linterna normalmente y compensa movimiento invertido. No se reanuda solo tras recarga. Logro Dejarse llevar por un minuto de viaje; el control manual siempre tiene prioridad. Verificación: 32 suites Node y smoke de viaje, pausas, linterna, cancelación y llegada incluso con movimiento invertido en móvil/escritorio. Dependencia y orden en RAMAS.md.
+
+### Fase 10: Tres vidrios cromáticos musicales
+
+Rama `feat/10-chromatic-glass`. Instalaciones originales de tres piezas translúcidas: arrastrar sus aros o usar controles gira las capas, revela figuras por superposición y cambia notas/acento a tempo. Sus voces dependen de la región. La orientación y el descubrimiento se guardan, aparecen en Escuchar y Bitácora, y hay logros por girar y alinear. Un ejemplo está cerca del punto inicial de Origen; otros se distribuyen por receta sin mares. Color local, fondo negro y jugador blanco. Los espejos y cajas musicales son fases futuras. Verificación: 33 suites Node y smoke de arrastre sin mover jugador, controles, respuesta sonora, logros, recarga, Escuchar y Bitácora en móvil/escritorio. Dependencia y orden en RAMAS.md.
+
+## Estado final de la cadena autorizada
+
+Fases 1–10 implementadas en ramas dependientes, listadas con base/commit y verificación en RAMAS. Catálogo y recetas ya influyen en juguetes nuevos; se conserva flora/fauna/paisaje anteriores, mientras nuevas familias de flora/fauna y referencias culturales siguen para etapas futuras. Hay seis arquetipos, tres disposiciones y presupuestos por región. Vidrios son una familia nueva de instalación registrada; no hay espejos ni cajas musicales nuevos todavía.
+
+Favoritos v1 (máximo 64), destination y glassSites (máximo 64) viven en v4, con defaults en fresh para reiniciar correctamente. Escenas/compás exacto y ecos persistentes no están implementados. Autopilot es temporal: nunca arranca solo al recargar, se pausa en menús/Estudio/Escuchar/ocultar pestaña y para al cambiar de capa, salir, llegar o recibir entrada manual. Viaje entre capas requiere encontrar acceso, no teletransporte.
+
+Logros nuevos: escuchaViva, favorito1, regresoMusical, paseo1, vidrio1 y vidrioArmonia (oculto). Se muestran mediante Bitácora y Voz. Favoritos e instalaciones exploradas aparecen en Lugares; Escuchar identifica recetas y voces de vidrios. No se añaden muestras grabadas ni cuentas.
+
+La transición de entrada conserva fondo negro y usa anillos discretos en vez de un flash blanco de pantalla completa. El color de vidrios es local a sus piezas. Es una implementación original de superposición/rotación, no una reproducción de una obra concreta.
+
+Verificación final: npm test, smokes de regresión y nuevos flujos, render offline de audio y revisión de capturas. Las mediciones finales conservan margen de salida; el balance artístico lo prueba Jay con sonido real. Fases 11–31 siguen sin autorización en esta sesión. Orden de integración: 1 → 2 → … → 10.

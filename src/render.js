@@ -24,7 +24,7 @@ export function initialize(runtime) {
 
   /* ---------- loop ---------- */
   function frame(t){
-    runtime.syncSession();
+    runtime.syncSession();runtime.glassTick?.();
     if(!runtime.inWorld()||!runtime.S.sound)runtime.clearSoundCues();
     if(!runtime.inWorld())runtime.clearRelicProgress();
     const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;
@@ -81,9 +81,10 @@ export function initialize(runtime) {
     // Joystick visible mientras arrastras.
     if(runtime.ptr?.ox!=null){const c=runtime.cx;c.globalAlpha=.28;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.arc(runtime.ptr.ox,runtime.ptr.oy,55,0,6.283);c.stroke();c.globalAlpha=.5;c.fillStyle='#fff';c.beginPath();c.arc(runtime.ptr.x,runtime.ptr.y,9,0,6.283);c.fill();c.globalAlpha=1;}
     if(runtime.flash>0){runtime.flash=Math.max(0,runtime.flash-dt*2.5);runtime.cx.globalAlpha=runtime.flash*.3;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.fillRect(0,0,runtime.W,runtime.H);}
-    if(runtime.enterFx>0){runtime.enterFx=Math.max(0,runtime.enterFx-dt*.6);const k=1-runtime.enterFx;runtime.cx.globalAlpha=runtime.enterFx;runtime.cx.strokeStyle="#fff";runtime.cx.lineWidth=2;
+    if(runtime.enterFx>0){runtime.enterFx=Math.max(0,runtime.enterFx-dt*.6);const k=1-runtime.enterFx;runtime.cx.globalAlpha=runtime.enterFx*.35;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.2;
       for(let i=0;i<3;i++){const rr=Math.max(0,k-i*.12)*Math.hypot(runtime.W,runtime.H)*.65;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,rr,0,6.283);runtime.cx.stroke();}
-      runtime.cx.globalAlpha=Math.pow(runtime.enterFx,3)*.9;runtime.cx.fillStyle="#fff";runtime.cx.fillRect(0,0,runtime.W,runtime.H);}
+      // Keep the entry response local; the world background stays black.
+    }
     runtime.cx.globalAlpha=1;
     requestAnimationFrame(frame);
   }
@@ -361,6 +362,7 @@ export function initialize(runtime) {
       runtime.cx.globalAlpha=al*.6;runtime.cx.beginPath();runtime.cx.arc(x,y,36,-Math.PI/2,-Math.PI/2+6.283*(progress.dwell/(rl.magical?12:6)));runtime.cx.stroke();
       if(d<100){runtime.cx.globalAlpha=.8;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.font="10px monospace";runtime.cx.textAlign="center";runtime.cx.fillText(rl.name||"Reliquia",x,y-44);runtime.cx.fillText(`Escucha ${Math.floor(progress.dwell)}/${rl.magical?12:6}s · ${progress.pulses}/${need} pulsos`,x,y+52);}
     }
+    runtime.drawGlass?.(t,dt,ox,oy,R);
     runtime.drawPhenomena(t,dt,ox,oy,R);
     runtime.drawJam?.(t,dt,ox,oy,b);
     runtime.drawAlive?.(t,dt,ox,oy,'sky');
