@@ -45,7 +45,8 @@ export function initialize(runtime) {
     const mirrorEntries=Object.values(runtime.S.mirrorSites||{});
     const mirrorCard=mirrorEntries.length?card('Espejos musicales',`${mirrorEntries.length} instalaciones exploradas · ${mirrorEntries.filter(e=>e.solved).length} rutas de luz completadas. Orienta los tres espejos para revelar una figura y cambiar la secuencia.`):'';
     const patchEntries=Object.values(runtime.S.patchSites||{}),patchCard=patchEntries.length?card('Jardines modulares',`${patchEntries.length} conjuntos explorados · ${patchEntries.reduce((n,s)=>n+s.connections.length,0)} cables conectados. Conecta reloj y partes musicales; retira un cable tocando su entrada.`):'';
-    const installations=patchCard+mirrorCard+(Object.keys(runtime.S.glassSites||{}).length?card('Vidrios cromáticos',`${Object.keys(runtime.S.glassSites).length} instalaciones exploradas. Gira sus aros para transformar notas, acentos y figuras; la orientación queda guardada.`):'');
+    const depth=runtime.S.journal.depth||{},depthCard=Object.values(depth).some(Boolean)?card('Interacciones profundas',`${depth.threads?'Redes tejidas · ':''}${depth.dialogue?'Frases respondidas · ':''}${depth.box?'Cajas editadas':''} Los sonidos aprendidos, redes y patrones de estos encuentros son temporales.`):'';
+    const installations=depthCard+patchCard+mirrorCard+(Object.keys(runtime.S.glassSites||{}).length?card('Vidrios cromáticos',`${Object.keys(runtime.S.glassSites).length} instalaciones exploradas. Gira sus aros para transformar notas, acentos y figuras; la orientación queda guardada.`):'');
     return (runtime.creativeCard?.()||'')+(runtime.encounterJournal?.()||'')+saved+installations+(regions.length?regions.map(region=>{
       const found=region.species.filter(sp=>runtime.S.cat[sp.id]).length,gravity=gravityOf(region,runtime.seedOf),j=data();
       const [rx,ry]=region.key.split(',').map(Number);
@@ -76,7 +77,7 @@ export function initialize(runtime) {
   function achievements() {
     const groups={Constancia:[],Exploración:[],Música:[],Ocultos:[]};
     for(const [id,name,description,hidden]of runtime.ACH) {
-      const got=runtime.S.ach[id],group=hidden?'Ocultos':/^(r\d|t\d|dia1|tope|regreso|s10)/.test(id)?'Constancia':['patch1','fijarSonido','cultivarMusica','espejo1','vidrio1','paseo1','escuchaViva','tiempo','under','faro','banda','jardinero','tambor'].includes(id)?'Música':'Exploración';
+      const got=runtime.S.ach[id],group=hidden?'Ocultos':/^(r\d|t\d|dia1|tope|regreso|s10)/.test(id)?'Constancia':['tejidoVivo','respuestaAnimal','cajaEditable','patch1','fijarSonido','cultivarMusica','espejo1','vidrio1','paseo1','escuchaViva','tiempo','under','faro','banda','jardinero','tambor'].includes(id)?'Música':'Exploración';
       groups[group].push(card(hidden&&!got?'???':name,hidden&&!got?'Logro oculto. Sigue explorando.':description,`<p>${got?'Conseguido':'Pendiente'}</p>`));
     }
     return Object.entries(groups).map(([name,items])=>`<h3>${name}</h3>${items.join('')}`).join('');

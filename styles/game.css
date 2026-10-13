@@ -224,3 +224,5 @@ body.world-mode:has(.glasspanel:not([hidden])) .voice{opacity:0;pointer-events:n
 button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 @media(max-height:500px){.tiles button{padding:10px 6px;gap:5px}.modal .scroll{max-height:48dvh}.glasspanel{max-height:48dvh}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+body.encounter-editing .voice{visibility:hidden;pointer-events:none}

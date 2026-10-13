@@ -1,4 +1,8 @@
-## Cadena vigente de cinco fases
+## Nueva etapa: interacciones profundas
+
+Rama `feat/deep-musical-encounters`, basada en main `2959313`. Tejedoras conectan objetos, animales escuchan frases del jugador y cajas permiten editar pasos y piezas. Cómo probar y próximos bloques: [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md). Las cinco fases anteriores ya están integradas; el resto del texto conserva su contexto histórico.
+
+## Cinco fases anteriores: ya integradas
 
 Orden de integración y pruebas: [FASES.md](FASES.md). Esta rama contiene las fases 1–5; base `main` actualizado `63706eb`. Jay crea PR y merge en orden mediante merge normal.
 

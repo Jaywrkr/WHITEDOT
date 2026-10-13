@@ -1,0 +1,63 @@
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+from functools import partial
+from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
+import threading,shutil,os,math
+ROOT=Path(__file__).resolve().parents[1]
+class Handler(SimpleHTTPRequestHandler):
+ def log_message(self,*args):pass
+server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)))
+threading.Thread(target=server.serve_forever,daemon=True).start()
+with sync_playwright() as p:
+ browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
+ for width,height in [(390,844),(844,390),(1280,800)]:
+  context=browser.new_context(viewport={'width':width,'height':height},has_touch=True)
+  page=context.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  def visit(kind):
+   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=deep-lab&encounter={kind}')
+   page.wait_for_function(f'window.__testRuntime?.encounterObjects.some(o=>o.id==="preview:{kind}")')
+   page.evaluate(f"window.deepObject=__testRuntime.encounterObjects.find(o=>o.id==='preview:{kind}');document.querySelectorAll('.modal').forEach(m=>m.hidden=true)")
+   return {'x':width/2+100,'y':height/2}
+  def drag(a,b):page.mouse.move(a['x'],a['y']);page.mouse.down();page.mouse.move(b['x'],b['y'],steps=10);page.mouse.up();page.wait_for_timeout(80)
+  center=visit('weaver');before=page.evaluate('({x:__testRuntime.S.wx,y:__testRuntime.S.wy})')
+  anchors=page.evaluate('__testRuntime.depthAnchors(deepObject).slice(0,3).map(a=>({x:a.x-__testRuntime.S.wx+innerWidth/2,y:a.y-__testRuntime.S.wy+innerHeight/2}))')
+  drag(anchors[0],anchors[1]);assert page.evaluate('deepObject.state.weave.edges.length')==1
+  page.touchscreen.tap(anchors[1]['x'],anchors[1]['y']);page.touchscreen.tap(anchors[2]['x'],anchors[2]['y']);assert page.evaluate('deepObject.state.weave.edges.length')==2
+  assert page.evaluate('!!__testRuntime.S.ach.tejidoVivo')
+  mid={'x':(anchors[0]['x']+anchors[1]['x'])/2,'y':(anchors[0]['y']+anchors[1]['y'])/2};page.touchscreen.tap(mid['x'],mid['y']);assert page.evaluate('deepObject.state.weave.edges.length')==1
+  page.mouse.move(anchors[0]['x'],anchors[0]['y']);page.mouse.down();page.mouse.move(anchors[2]['x'],anchors[2]['y']);page.evaluate("document.getElementById('w').dispatchEvent(new PointerEvent('pointercancel',{pointerId:1,bubbles:true}))");page.mouse.up();assert page.evaluate('deepObject.state.weave.edges.length')==1
+  assert page.evaluate(f'Math.hypot(__testRuntime.S.wx-{before["x"]},__testRuntime.S.wy-{before["y"]})<1')
+  page.screenshot(path=f'/tmp/whitedot-depth-weaver-{width}.png')
+  center=visit('box');page.touchscreen.tap(center['x'],center['y']);page.wait_for_timeout(80)
+  assert page.evaluate('deepObject.state.a>.65');initial=page.evaluate('deepObject.state.box.parts[0].steps[0]')
+  page.touchscreen.tap(center['x']-60,center['y']-40);assert page.evaluate('deepObject.state.box.parts[0].steps[0]')!=initial
+  original=page.evaluate('JSON.stringify(deepObject.state.box)')
+  a={'x':center['x']-20,'y':center['y']-40};b={'x':center['x']+60,'y':center['y']-40}
+  page.mouse.move(a['x'],a['y']);page.mouse.down();page.mouse.move(b['x'],b['y'],steps=8);page.evaluate("document.getElementById('w').dispatchEvent(new PointerEvent('pointercancel',{pointerId:1,bubbles:true}))");page.mouse.up();assert page.evaluate('JSON.stringify(deepObject.state.box)')==original
+  drag({'x':center['x']-54,'y':center['y']-87},{'x':center['x']+54,'y':center['y']-87});assert page.evaluate('deepObject.state.box.parts[2].id')=='bass'
+  page.touchscreen.tap(center['x'],center['y']-87);page.touchscreen.tap(center['x']-20,center['y']-40);assert page.evaluate('!!__testRuntime.S.ach.cajaEditable')
+  page.mouse.move(center['x'],center['y']-87);page.mouse.down();page.wait_for_timeout(600);page.mouse.up();assert not page.evaluate('deepObject.state.box.parts[1].enabled');assert not page.evaluate('__testRuntime.depthGate(2)');assert not page.evaluate('__testRuntime.scanning')
+  page.screenshot(path=f'/tmp/whitedot-depth-box-{width}.png')
+  saved=page.evaluate('JSON.stringify(deepObject.state.box)');page.touchscreen.tap(center['x'],center['y']-125);assert page.evaluate('deepObject.state.a<.65'),page.evaluate('({a:deepObject.state.a,engaged:__testRuntime.depthEngaged,other:__testRuntime.encounterEngaged,target:document.elementFromPoint(innerWidth/2+100,innerHeight/2-125)?.id,point:{x:deepObject.x-__testRuntime.S.wx,y:deepObject.y-__testRuntime.S.wy},near:__testRuntime.encounterObjects.map(o=>({kind:o.kind,x:o.x-__testRuntime.S.wx,y:o.y-__testRuntime.S.wy}))})');page.touchscreen.tap(center['x'],center['y']);assert page.evaluate('JSON.stringify(deepObject.state.box)')==saved
+  center=visit('animal');page.mouse.move(center['x'],center['y']);page.mouse.down();page.wait_for_timeout(650);page.mouse.up();page.wait_for_timeout(100)
+  assert page.evaluate('deepObject.state.dialogue.phase')=='listening';assert not page.evaluate('__testRuntime.scanning')
+  page.evaluate("const r=__testRuntime;r.playVoice('pulso',0,r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'ambient')")
+  assert page.evaluate('deepObject.state.dialogue.events.length')==0,'ambient must not teach'
+  page.mouse.click(30,height/2);page.wait_for_function('deepObject.state.dialogue.events.length>0');page.evaluate('deepObject.state.dialogue.events=[]')
+  for step,degree in [(0,0),(4,2),(12,4),(24,2)]:
+   page.evaluate(f"const r=__testRuntime;deepObject.state.dialogue.elapsed=r.SIX*{step};r.playVoice('pulso',{degree},r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'player')")
+  assert page.evaluate('deepObject.state.dialogue.events.length')==4
+  page.locator('#bMenu').click();frozen=page.evaluate('deepObject.state.dialogue.elapsed');page.wait_for_timeout(300);assert page.evaluate('deepObject.state.dialogue.elapsed')==frozen;page.locator('#mnClose').click()
+  page.evaluate('deepObject.state.dialogue.elapsed=__testRuntime.SIX*32');page.wait_for_function('deepObject.state.dialogue.phase==="replying"')
+  assert page.evaluate('deepObject.state.dialogue.phrase.map(n=>n.index)')==[0,2,4,2]
+  emitted=page.evaluate("""()=>{const r=__testRuntime,ac=r.ac,old=ac.createOscillator.bind(ac);let n=0;ac.createOscillator=()=>{n++;return old();};r.encounterBar(ac.currentTime+.1,2000);ac.createOscillator=old;return n;}""")
+  assert emitted>0,'learned answer must actually emit audio';assert page.evaluate('!!__testRuntime.S.ach.respuestaAnimal')
+  page.screenshot(path=f'/tmp/whitedot-depth-animal-{width}.png')
+  page.locator('#bMenu').click();page.locator('#bAch').click();assert 'Frases respondidas' in page.locator('#journalBody').inner_text()
+  assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
+  assert not errors,errors
+  print(f'PASS {width}x{height}: free threads, removal/cancellation, editable box parts, learned phrase, silent ambient exclusion, pause and real reply audio',flush=True)
+  context.close()
+ browser.close()
+server.shutdown()

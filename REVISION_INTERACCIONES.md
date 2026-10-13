@@ -1,3 +1,7 @@
+# Nota de alcance histórico
+
+Esta revisión describe el bloque anterior a las cinco fases ya integradas. El shell offline y la caché de voces se corrigieron después; las cachés restantes del terreno aún requieren trabajo. Seguimiento actual: [PENDIENTES.md](PENDIENTES.md).
+
 # Revisión: música, interacción y espacio móvil
 
 Esta revisión parte de la versión con espejos y continúa lo autorizado por Jay: transformar más la composición, fijar sonidos solo por elección, conectar módulos y recuperar el espacio de exploración. La cadena va después de la fase 11, no directamente sobre main.

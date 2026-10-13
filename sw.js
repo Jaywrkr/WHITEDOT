@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-creative-v2';
+const CACHE='whitedot-depth-v3';
 const SHELL=[
  "./",
  "./index.html",
@@ -23,6 +23,8 @@ const SHELL=[
  "./src/data.js",
  "./src/discovery.js",
  "./src/effects.js",
+ "./src/encounter-depth-model.js",
+ "./src/encounter-depth.js",
  "./src/encounter-families.js",
  "./src/encounters.js",
  "./src/favorites.js",

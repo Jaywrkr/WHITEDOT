@@ -1,3 +1,7 @@
+## Profundización posterior
+
+La rama `feat/deep-musical-encounters` amplía las tres familias: redes libres, piezas/pasos de cajas y frases aprendidas. Instrucciones actuales en [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md). Lo siguiente describe su primera versión, integrada en main.
+
 # Jugabilidad creativa: guía de las veinte entregas
 
 Las nueve mejoras seleccionadas y los diez elementos nuevos están implementados en una cadena de cinco ramas. La última entrega reúne correcciones y verificación. El orden está en [FASES.md](FASES.md). Jay conserva la creación de PR y los merges.
