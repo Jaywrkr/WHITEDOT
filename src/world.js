@@ -1,3 +1,4 @@
+import {createElementCatalog,createRegionalRecipe} from './catalog.js';
 import {applyNeighborhood} from './neighborhoods.js';
 import {applyPalette} from './palettes.js';
 import { createPockets, distributePlaythings } from './pockets.js';
@@ -10,6 +11,8 @@ import { anomalyAt, applyAnomaly } from './wonders.js';
 
 // Generación procedural del camino, regiones y reliquias.
 export function initialize(runtime) {
+  const elementCatalog=createElementCatalog();
+  const recipeFor=region=>createRegionalRecipe(region,runtime.BIOMES[region.z].id,runtime.seedOf,runtime.rng,elementCatalog);
   const continents=createContinents(runtime.seedOf,runtime.rng,runtime.GEN),VACIO=runtime.BIOMES.findIndex(b=>b.id==='vacio');
   const regionPx=()=>runtime.REG*runtime.WCH;
   const fillOf=vit=>{const m=continents.densityOf(vit),L=runtime.FILL;return [m,(m<.3?L[0]:m<.7?L[1]:m<1.4?L[2]:m<2.1?L[3]:L[4])[1]];};
@@ -87,6 +90,7 @@ export function initialize(runtime) {
     applyNeighborhood(d,runtime.BIOMES,runtime.GEN,runtime.seedOf,runtime.rng,continents.at);
     d.anomaly=anomalyAt(rx,ry,(a,b)=>continents.at(a,b).sea,runtime.seedOf,runtime.rng);
     if(d.anomaly)applyAnomaly(d,d.anomaly.type==='espejo'?regionAt(0,0):null);
+    d.recipe=recipeFor(d);
     rcache.set(key,d);return d;
   }
   const EVENTS=[["lluvia","Lluvia de notas","Caen notas del cielo. Atrápalas."],["eclipse","Eclipse","La luz se achica. Todo se escucha más hondo."],["migracion","Migración","Las formas de aquí están viajando."],["aurora","Aurora","El cielo canta en otro color."]];
@@ -150,6 +154,7 @@ export function initialize(runtime) {
     EVENTS: { get: () => EVENTS },
     eventOf: { get: () => eventOf },
     RETOTXT: { get: () => RETOTXT },
+    elementCatalog: {get:()=>elementCatalog},recipeFor:{get:()=>recipeFor},
     regionOfPos: { get: () => regionOfPos },
     continents: { get: () => continents },
     vitalityAt: { get: () => (x,y)=>continents.vitality(x,y,regionPx()) },

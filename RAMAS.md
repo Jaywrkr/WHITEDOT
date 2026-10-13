@@ -6,7 +6,7 @@ Jay autorizó completar las primeras diez fases encadenadas. Se parte de la fase
 |---:|---|---|---|
 | 1 | `review/claude-audio-clarity` | main `5413d5f` | Subida, `fe32566`: revisión, nitidez y plan |
 | 2 | `feat/02-layer-jam-consistency` | rama 1 | Implementada: capas, Estudio y autoría de ecos |
-| 3 | `feat/03-world-recipe-catalog` | rama 2 | Próxima: catálogo y recetas |
+| 3 | `feat/03-world-recipe-catalog` | rama 2 | Implementada: Catálogo y recetas de lugar |
 | 4 | `feat/04-coherent-world-combinations` | rama 3 | Pendiente |
 | 5 | `polish/05-world-visual-language` | rama 4 | Pendiente |
 | 6 | `feat/06-stationary-environment` | rama 5 | Pendiente |

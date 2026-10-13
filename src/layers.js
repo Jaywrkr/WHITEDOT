@@ -70,6 +70,7 @@ export function initialize(runtime){
   if(layer()==='bajo'){if(!s.under)s.under={x:s.wx/UNDER_SCALE,y:s.wy/UNDER_SCALE};const i=Math.floor(s.under.x/UNDER_CELL),j=Math.floor(s.under.y/UNDER_CELL),r=runtime.rng(runtime.seedOf(`subsuelo:${i},${j}`)),g=UNDER_GENRES[Math.floor(r()*UNDER_GENRES.length)],G=runtime.GEN[g];
    key=`bajo:${i},${j}`;d={...base,key,genre:g,bpm:Math.round(G.bpm[0]+r()*(G.bpm[1]-G.bpm[0])),name:'Subsuelo bajo '+base.name,z:runtime.BIOMES.findIndex(b=>b.id==='cueva'),track:{...base.track,bassI:G.bassI,hookI:G.hookP[0]},anomaly:null,sea:false,strange:0,tuneCents:0};}
   else{key=`cielo:${base.continent?.id||'mar'}`;const G=runtime.GEN.ambient;d={...base,key,genre:'ambient',bpm:G.bpm[0]+4,name:'Cielo sobre '+(base.continent?.name||'el mar'),z:runtime.BIOMES.findIndex(b=>b.id==='vacio'),track:{...base.track,bassI:G.bassI,hookI:G.hookP[0]},anomaly:null,sea:false};}
+  d.recipe=runtime.recipeFor?.(d);
   if(key!==dnaKey||runtime.MU.dnaT?.key!==key){dnaKey=key;runtime.setBiome?.(d.z);runtime.MU.dnaT=d;runtime.MU.nb=null;runtime.MU.nbW=0;runtime.MU.anomaly=null;runtime.MU.river=0;runtime.MU.confNb=null;runtime.MU.storm=0;runtime.MU.season=null;runtime.MU.seasonBpm=0;runtime.MU.tune=0;runtime.MU.vit=.8;runtime.showRegion?.(d,false);}
   return runtime.MU.dnaT;
  }

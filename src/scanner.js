@@ -27,10 +27,10 @@ export function initialize(runtime) {
     if(!scanning)return;
     if(!runtime.inWorld()||[...document.querySelectorAll('.modal')].some(m=>!m.hidden)){stopScanner();return;}
     const now=performance.now();if(!force&&now-lastUpdate<200)return;lastUpdate=now;
-    const region=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
+    const region=runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
     document.getElementById('scannerRegion').textContent=`${region.name}${runtime.currentPocket()?.kind?" · "+POCKET_NAMES[runtime.currentPocket().kind]:""} · ${runtime.GEN[region.genre].name} · ${region.bpm} BPM · ${MODES[region.scale.join(",")]||"Escala regional"}`;
     list.replaceChildren();
-    const sources=[...nearbySources(runtime.wchunks,runtime.S.wx,runtime.S.wy),...(runtime.phenomenonSources?.()||[])].sort((a,b)=>a.distance-b.distance).slice(0,5);
+    const sources=region.recipe?.layer&&region.recipe.layer!=="superficie"?[]:[...nearbySources(runtime.wchunks,runtime.S.wx,runtime.S.wy),...(runtime.phenomenonSources?.()||[])].sort((a,b)=>a.distance-b.distance).slice(0,5);
     for(const source of sources) {
       const sp=source.object.s;
       const own=sp?runtime.regionOfPos(...sp.id.split(':')[0].split(',').map(n=>+n*runtime.REG*runtime.WCH+1)):runtime.regionOfPos(source.object.x,source.object.y);
@@ -42,7 +42,7 @@ export function initialize(runtime) {
       list.append(item);
     }
     if(!sources.length){const item=document.createElement('li');item.textContent='Sin objetos musicales cercanos. La región sigue componiendo.';list.append(item);}
-    document.getElementById('scannerHint').textContent=runtime.S.sound?`Voces cercanas · ${createGrammar(region,runtime.seedOf,runtime.rng).character}`:'Sonido silenciado · mostrando las voces del lugar';
+    document.getElementById('scannerHint').textContent=runtime.S.sound?`Voces cercanas · ${region.recipe?.name||createGrammar(region,runtime.seedOf,runtime.rng).character}`:'Sonido silenciado · mostrando las voces del lugar';
     while(panel.scrollHeight>panel.clientHeight+2&&list.childElementCount>1)list.lastElementChild.remove();
   }
   function startScanner(){if(!runtime.inWorld())return;scanning=true;runtime.ptr=null;panel.hidden=false;updateScanner(true);}

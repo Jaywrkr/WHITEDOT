@@ -118,3 +118,5 @@ Los instrumentos tienen materiales sonoros procedurales —madera cálida, crist
 La salida musical conserva sus patrones e instrumentos y reduce la saturación a niveles normales. Los retornos de reverberación y eco dejan más espacio al grave directo. `tests/audio_mix.py` verifica picos, dinámica y coloración con audio renderizado; la calidad perceptiva se valida escuchando.
 
 Capas, Estudio y ecos mantienen su música separada: el looper captura acciones del jugador y conserva el timbre y la capa de origen. Consulta [RAMAS.md](RAMAS.md) para probar e integrar esta sesión en orden. Prueba de integración: `python3 tests/layer_jam_smoke.py`.
+
+Catálogo y recetas de lugar: Cada región tiene una receta estable de carácter, materiales, distribución, acciones y presupuestos. Bitácora y Escuchar muestran su carácter; también reconocen Subsuelo y Cielo. El catálogo valida entradas y usa semillas independientes por elemento. Esta base conserva paisaje y música existentes; la distribución se aplica en fase 4. No añade culturas ni objetos nuevos todavía.
