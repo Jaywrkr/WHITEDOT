@@ -1,5 +1,7 @@
 # Próximos pasos: estado real del proyecto
 
+El alcance vigente de producción y la nueva regla de agrupar mejoras se definen en [V1_PRODUCCION.md](V1_PRODUCCION.md). La enumeración anterior se conserva como historial de implementación.
+
 El bloque anterior de veinte entregas está integrado en main desde el PR #58 (`2959313`). Se agrupó en cinco fases para revisar; no equivale a haber implementado todo el plan histórico.
 
 ## Entrega actual
@@ -33,7 +35,7 @@ Las culturas y las reliquias históricas específicas siguen pendientes. Japón 
 
 Esta actualización de dirección se conserva en `docs/organic-interaction-direction`, dependiente de `feat/deep-musical-encounters`. Esa rama solo modifica documentación. El rediseño del juego está en `feat/organic-musical-seedpods`, basada en ella: revisar interacciones, dirección y después vainas.
 
-Cada paso se implementa, verifica, documenta, commitea y sube en una rama nueva. Jay crea PR y merge. Partir de main actualizado cuando la etapa anterior esté integrada; si se acuerda una dependencia, documentarla y conservar la ascendencia.
+Regla histórica sustituida por el pedido más reciente: agrupar mejoras relacionadas en una rama amplia, con commits por bloques; no una rama por función. Jay crea PR y merge. Partir de main actualizado cuando la etapa anterior esté integrada; si se acuerda una dependencia, documentarla y conservar la ascendencia.
 
 | Orden | Trabajo | Estado |
 |---:|---|---|

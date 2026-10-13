@@ -1,3 +1,9 @@
+## Revisión de alcance para producción V1
+
+[Inventario V1](V1_PRODUCCION.md): 64 tareas, criterios de publicación, coordenadas/retorno y estrategia de expansión. La instrucción vigente es agrupar muchas mejoras en una misma rama; esta revisión se suma a `feat/intuitive-animal-dialogue` y no crea otra rama. Se propone `release/v1` con commits por bloques y un PR final.
+
+Main remoto verificado al cierre: `93a5323` (PR #66). Suelo/rastros, vidrios sin panel y animal por toque ya están integrados. Medición renovada: 39.952 recetas detalladas en 40.000 regiones; 23.418 recetas terrestres y 9.732 perfiles musicales terrestres. Promedio local de cinco muestras de 1.600 regiones: 1.600 recetas por semilla, no un total de mundos ni prueba de diferencias perceptuales. Detalles en [VARIEDAD.md](VARIEDAD.md).
+
 ## Nueva etapa: animal de respuesta más intuitivo
 
 Rama `feat/intuitive-animal-dialogue`, basada en `feat/expressive-glass-gestures`. Sustituye el gesto oculto de mantener para enseñar por un toque sencillo: tocar el cuerpo inicia la escucha; tocar objetos o el vacío le enseña una frase; volver a tocarlo pide la respuesta. También contesta automáticamente tras una pausa de al menos 1,2 segundos u ocho semicorcheas, o al alcanzar dos compases. El tiempo de la frase comienza con la primera nota, no al activar la escucha. Espera hasta 20 segundos por esa primera nota; si no llega, muestra cómo reintentar. Tocar otra vez sin notas termina la escucha vacía.
