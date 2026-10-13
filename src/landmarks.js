@@ -44,6 +44,7 @@ export function initialize(runtime){
   const list=nearby(runtime.S.wx,runtime.S.wy).slice(0,MAX_AUDIBLE);
   for(const lm of list){
    if((bar+lm.phase)%4||lm.d<160)continue;   // cada cuatro compases; al llegar ya no suena de lejos
+   {const S=runtime.S,h=(S.heardLm||={});if(!h[lm.id]&&!S.landmarks?.[lm.id]&&Object.keys(h).length<600)h[lm.id]=[lm.rx,lm.ry,lm.type];}   // el mapa recuerda lo que oíste
    const near=1-lm.d/HEAR,ct=runtime.chordTones(),six=runtime.SIX;
    const gain=.075*Math.pow(near,1.5),cut=450+6500*near*near,pan=Math.max(-1,Math.min(1,(lm.x-runtime.S.wx)/2600));
    lm.motif.forEach((deg,i)=>{const at=t+lm.steps[i]*six,midi=ct[deg%ct.length]+(lm.type==='monolito'?-12:lm.type==='faro'||lm.type==='torre'?12:0);
@@ -53,7 +54,7 @@ export function initialize(runtime){
  }
  // Timbre propio por tipo de hito; cadena aparte con filtro (lejanía) y paneo (dirección).
  function voice(type,midi,t,v,cut,pan){
-  const ac=runtime.ac,hz=440*Math.pow(2,(midi-69)/12),f=ac.createBiquadFilter(),g=ac.createGain();
+  const ac=runtime.ac,hz=runtime.hz(midi),f=ac.createBiquadFilter(),g=ac.createGain();
   f.type='lowpass';f.frequency.value=cut;
   const partials={torre:[[1,'sine',1],[2.76,'sine',.35],[5.4,'sine',.12]],faro:[[1,'sine',1],[3.01,'sine',.25]],arbol:[[1,'triangle',1],[2,'sine',.3]],ciudad:[[1,'sine',1],[4,'sine',.2]],monolito:[[1,'sine',1],[1.5,'sine',.3]]}[type];
   const dec={torre:2.2,faro:2.6,arbol:1.2,ciudad:.45,monolito:2.8}[type];
@@ -101,6 +102,6 @@ export function initialize(runtime){
  }
 
  Object.defineProperties(runtime,{
-  nearbyLandmarks:{get:()=>nearby},horizonBar:{get:()=>horizonBar},drawLandmarks:{get:()=>drawLandmarks}
+  nearbyLandmarks:{get:()=>nearby},landmarkAt:{get:()=>inRegion},horizonBar:{get:()=>horizonBar},drawLandmarks:{get:()=>drawLandmarks}
  });
 }

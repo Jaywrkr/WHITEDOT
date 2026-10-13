@@ -99,6 +99,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/rhythms.js` | Biblioteca ampliada de ritmos por recetas (batería, bajo, frase, instrumentos, escalas, guía) y familias de todos los géneros. |
 | `src/continents.js` | Continentes, mares de silencio y campo de vitalidad (densidad con contraste). |
 | `src/landmarks.js` | Hitos y horizonte sonoro: se oyen, se intuyen y se ven. |
+| `src/map.js` | Mapa dibujado de lo explorado (dos zooms, hitos oídos como ?, tarjeta para compartir). |
 | `src/atlas.js` | Atlas de ritmos (prototipo): lista todos los géneros, verifica que existen en el mundo y viaja a la región más cercana. |
 | `src/controls.js` | Botones, controles de prototipo y sonido. |
 | `package.json` | Declara módulos ES para Node y `npm test`; no instala dependencias de aplicación. |
@@ -215,7 +216,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Sintaxis:** correr `node --check` sobre los archivos de `src/`. Ya no hay un script inline para extraer.
 - **Visual y funcional:** servir el repositorio por HTTP y usar Playwright headless (Chromium) en 390×844 (móvil) y escritorio. Comprobar entrada y reentrada al Mundo con reto visible, transición de día sin reto residual, pausa de linterna en menús, colocación y persistencia de muestras en el Estudio y generación de tarjetas. Capturar errores JavaScript y screenshots. Los errores de carga de Google Fonts sin red son esperables.
 - **Tope diario:** comprobar que una luz de valor 10 recogida cuando faltaba 1 solo suma 1 tanto a `todayLight` como a `totalLight`.
-- **Pruebas versionadas:** `npm test` (23 suites, inventario en CAMBIOS.md) `python3 tests/smoke.py`, `python3 tests/atlas_smoke.py` y `python3 tests/world_smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
+- **Pruebas versionadas:** `npm test` (24 suites, inventario en CAMBIOS.md) `python3 tests/smoke.py`, `python3 tests/atlas_smoke.py`, `python3 tests/world_smoke.py` y `python3 tests/journey_smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
 - **Audio:** en headless no se oye nada. **Jay valida el sonido en su teléfono** con la URL de Vercel. Es la prueba que importa.
 - **Atajos de prototipo** (menú → Prototipo):
   - `dFill`: llena la barra del día.
@@ -352,3 +353,15 @@ Cada continente tiene nombre, tamaño, familia de géneros (elegida en proporci�
 - **Llegar** (<170 px) lo registra en `S.landmarks`, con toast, Voz y logros `hito1` y `hito10`. Sin flechas ni brújula.
 
 Cambios de compatibilidad: el paisaje de muchas coordenadas cambia (mares, densidad, color, géneros). Los fixtures de `tests/palettes.mjs` se recapturaron como "mundo continental v2". Nombres, IDs de criaturas y guardado v4 se conservan. Pruebas: `tests/world.mjs` (continentes deterministas, tamaños desiguales, islas, mares, identidad de familia, contraste de vitalidad, hitos) y `tests/world_smoke.py` (paneo del horizonte, mar, oasis y llegada a un hito en móvil/escritorio).
+
+### Mundo infinito · fase 2: viaje, tierras raras, mapa y volumen
+
+**Más lejos, más raro** (`strangeness()` en `continents.js`): 0 hasta 8 regiones del Origen, sube suave hasta 1 a 60 regiones. En `regionAt`, con semilla aparte `strange:v1`: criaturas hasta 2,4× más grandes, paleta cada vez más saturada y con acentos de tono imposible, y `tuneCents` de hasta ±55 cents por región. `hz()` en `audio.js` aplica `MU.tune` (solo en el Mundo), así que toda la música de la región, hitos incluidos, queda desafinada de forma consistente. Primer aviso de la Voz al pasar 0,35 de rareza.
+
+**La distancia cuesta y el Estudio es campamento:** la linterna diaria ya limitaba el viaje y el Mundo ya arrancaba desde el Estudio desplegado. Ahora se ve: récord `S.maxRing` con aviso cada 5 regiones, logros `lejos10`, `lejos30` y `lejos60` (oculto), y al entrar desde un Estudio lejano aparece "Campamento · a N regiones del Origen".
+
+**Mapa** (`src/map.js`, menú → Mapa): solo dibuja regiones visitadas (`S.places`), con el color de su continente (más saturado si es tierra rara), mares como puntos, nombres de continentes, hitos visitados con su símbolo, hitos solo oídos como "?" (`S.heardLm`, se registra cuando un hito suena de lejos; máximo 600), Origen, Estudio y tu posición. Dos zooms (todo / cerca, 15×15 regiones) y tarjeta "MI MAPA" para compartir. Logro `mapa1`.
+
+**Volumen (pedido de Jay: "esto debe ser una fiesta"):** cadena de salida nueva: low-shelf +3 dB a 110 Hz, compresor más firme (−24 dB, 4:1), ganancia de compensación ×3,4, limitador a −3 dB y saturación suave tanh final. `musicVolume()` normal pasa de 0,85 a 1. Medido en el navegador en Origen con energía alta: RMS de ~−15,6 dB a ~−9,3 dB (unos 6 dB más fuerte) con picos bajo 0 dB. Escucha suave conserva su nivel bajo (sin realce de graves, compensación ×1,6).
+
+Pruebas: `tests/journey.mjs` y `tests/journey_smoke.py`; fixture de `(-30,-20)` recapturado (ya cae en zona de rareza leve).

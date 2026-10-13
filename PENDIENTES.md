@@ -57,12 +57,12 @@ Escucha agradable para público amplio: controlar fatiga, disonancia accidental,
 
 **Principio:** el infinito no se siente por cantidad, sino por escala, contraste y promesa de que más allá hay algo distinto. Evitar la "avena procedural" de No Man's Sky: muchas combinaciones que se sienten iguales.
 
-**Fase 1 · Base del mundo — implementada en `feat/infinite-world-foundation` (falta que Jay la escuche y la juegue en móvil):**
+**Fase 1 · Base del mundo — integrada (PR #29); falta que Jay la escuche y la juegue en móvil:**
 1. **Continentes sonoros:** capa por encima de las regiones, fronteras curvas, tamaños desiguales (pocos gigantes, muchos medianos, archipiélagos). Cada continente tiene nombre, tonalidad, familia de géneros y color. Al cruzar se siente un cambio de tono, como la transición de un DJ. Entre continentes hay **mares de silencio** con faros aislados. Sin cuadrícula visible.
 2. **Contraste de densidad:** un campo continuo de vitalidad reemplaza los 5 niveles de relleno. El vacío funciona como la subida de un track y el lugar lleno como el drop: la música se adelgaza en lo vacío y entra completa al llegar a un oasis.
 3. **Horizonte sonoro:** hitos grandes (torres, árboles gigantes, ciudades de criaturas, monolitos, faros). Primero se oyen (apagados y desde su dirección), luego se intuyen (brillo en el borde) y luego se ven. Cada uno tiene su motivo musical. Máximo 2 sonando a la vez. Sin flechas ni brújula.
 
-**Fase 2 · Viaje:**
+**Fase 2 · Viaje — implementada en `feat/infinite-world-journey` (pendiente de PR). Falta de esta fase: reflejar "ritmos más extraños" lejos del Origen sin romper el reparto global; tarjeta de récord propia si el mapa no basta:**
 5. **Más lejos, más raro, y la distancia cuesta:** afinación torcida, objetos más grandes, colores imposibles y ritmos extraños lejos del origen. Expediciones de varios días con el Estudio como campamento base. Récord de distancia con tarjeta para compartir.
 8. **Mapa dibujado:** solo lo que viste, con símbolos de lo que escuchaste, en zoom de continente y región, exportable como imagen. El mapa recuerda, no revela.
 

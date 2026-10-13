@@ -93,6 +93,10 @@ export function initialize(runtime) {
    ["hito10","Coleccionista de horizontes","Llegaste a 10 hitos."],
    ["continente3","Turista de continentes","Pisaste 3 continentes."],
    ["mar1","Nadie cruza eso","Cruzaste un mar de silencio entero.",1],
+   ["lejos10","Lejos de casa","Llegaste a 10 regiones del Origen."],
+   ["lejos30","Expedición","Llegaste a 30 regiones del Origen."],
+   ["lejos60","Tierras raras","Llegaste a 60 regiones del Origen. Aquí nada suena afinado.",1],
+   ["mapa1","Cartógrafo","Abriste tu mapa."],
    ["vida","Todo vive","Encontraste las 5 formas de vida."],
    ["under","Underground","Una tormenta a toda energía."],
    ["r3","Racha de 3","3 días seguidos."],
@@ -204,6 +208,12 @@ export function initialize(runtime) {
    hito1:"Llegaste. Ya no es un sonido, es un lugar.",
    hito10:"Diez hitos. Ya hablas el idioma del horizonte.",
    continente3:"Tres continentes. Tu pasaporte no existe, pero igual.",
+   raro:"La afinación se está torciendo. No es tu teléfono. Es que estás lejos.",
+   campamento:"Arrancas desde tu Estudio. Campamento base. Lo lejos ya no es tan lejos.",
+   lejos10:"Diez regiones. Tu casa ya no se oye.",
+   lejos30:"Treinta regiones. Esto ya es una expedición. Lleva agua. Es broma, no hay agua.",
+   lejos60:"Sesenta regiones. Aquí todo está un poco mal afinado. Como tú y yo.",
+   mapa1:"Tu mapa. Solo muestra lo que viste. El resto es negro y es infinito.",
    mar1:"Cruzaste el silencio entero. Pocos lo hacen. Nadie te aplaudió. Yo tampoco."
   };
 

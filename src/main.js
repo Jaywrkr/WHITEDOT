@@ -24,6 +24,7 @@ import { initialize as spatial } from './spatial.js';
 import { initialize as phenomena } from './phenomena.js';
 import { initialize as patches } from './patches.js';
 import { initialize as landmarks } from './landmarks.js';
+import { initialize as map } from './map.js';
 import { initialize as controls } from './controls.js';
 import { initialize as atlas } from './atlas.js';
 
@@ -55,6 +56,7 @@ spatial(runtime);
 phenomena(runtime);
 patches(runtime);
 landmarks(runtime);
+map(runtime);
 controls(runtime);
 atlas(runtime);
 
