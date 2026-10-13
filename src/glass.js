@@ -1,3 +1,4 @@
+import {claimInstallationBar} from './installations.js';
 import {WORLD_VISUAL,elementInk} from './visual.js';
 import {ROLES} from './journal.js';
 const TAU=Math.PI*2;
@@ -56,7 +57,7 @@ export function initialize(runtime){
   const roles=site.plates.map((_,i)=>ROLES[runtime.getVoice(`installation:glass:${i}`,site.region).role]);
   $('glassInfo').textContent=roles.join(' · ')+` · ${glassParameters(site.angles).alignment>.75?'Resonancia cercana':'Respuestas espaciadas'}`;
  }
- function open(site,pane){state.site=site;state.pane=pane;remember(site);$('glassPanel').hidden=false;renderPanel();if(!S().help.glass){S().help.glass=true;runtime.say(runtime.VOZ.glass,'Vidrios musicales');}}
+ function open(site,pane){runtime.closeMirrors?.();state.site=site;state.pane=pane;remember(site);$('glassPanel').hidden=false;renderPanel();if(!S().help.glass){S().help.glass=true;runtime.say(runtime.VOZ.glass,'Vidrios musicales');}}
  function close(){state.drag=null;state.site=null;$('glassPanel').hidden=true;runtime.save();}
  const screen=site=>({x:runtime.W/2+site.x-S().wx,y:runtime.H/2+site.y-S().wy});
  function down(e){
@@ -74,7 +75,7 @@ export function initialize(runtime){
   if(!onSurface()||!S().sound||runtime.ac?.state!=='running'||runtime.currentPocket?.()?.kind==='quiet')return;
   for(const site of nearby(300)){
    if(!S().glassSites[site.id]?.seen)continue;const p=glassParameters(site.angles),pane=Math.floor(bar/p.stride)%3;
-   if(bar%p.stride===0&&step===p.accents[pane]){emit(site,pane,time);break;}
+   if(bar%p.stride===0&&step===p.accents[pane]&&claimInstallationBar(runtime,bar)){emit(site,pane,time);break;}
   }
  }
  function sources(){return nearby(250).flatMap(site=>site.plates.map((o,i)=>({object:o,kind:`installation:glass:${i}`,name:o.name,distance:Math.hypot(o.x-S().wx,o.y-S().wy)})));}

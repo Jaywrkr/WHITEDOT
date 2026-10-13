@@ -142,10 +142,22 @@ Lee [RAMAS.md](RAMAS.md): las ramas forman una cadena y se integran de la **1 a 
 - **Favoritos:** menú → Favoritos → Guardar aquí. Renombra o borra puntos; Orientar muestra dirección/distancia y Viajar inicia el recorrido automático en la misma capa. Paseo musical recorre lentamente el mundo. Mover el punto, Detener o Escape devuelve el control; menús pausan y la linterna se consume viajando.
 - **Vidrios:** cerca del punto inicial de Origen hay una instalación unos pasos al este. Acércate y arrastra un aro de color: abre los tres controles. Los giros cambian figuras y respuestas musicales; alinear las piezas revela un logro. Sus orientaciones sobreviven a la recarga.
 - **Escucha quieta:** un minuto de escucha activa invita al ambiente a responder gradualmente. Menús/Escuchar/audio suspendido no suman tiempo; al moverte se retira suavemente.
-- **Eco ⟳:** pulsa para armar, espera al próximo compás y toca objetos/pulsa/recoge luces durante dos compases. Esas acciones se repiten en el lugar. Hasta cuatro ecos; cerca de uno, el mismo botón lo borra. No usa micrófono ni exporta audio/video; los ecos siguen siendo temporales.
+- **Eco ⟳:** pulsa para armar, espera al próximo compás y toca objetos/pulsa/recoge luces durante dos compases. Esas acciones se repiten en el lugar. Hasta cuatro ecos; toca su anillo azul para borrarlo. Cerca de uno, el mismo botón también lo borra. No usa micrófono ni exporta audio/video; los ecos siguen siendo temporales.
 
 Además de `npm test` (33 suites), esta cadena añade `layer_jam_smoke.py`, `initiative_smoke.py`, `favorites_smoke.py`, `navigation_smoke.py`, `autopilot_smoke.py` y `glass_smoke.py` en `tests/`. Son pruebas de navegador con los requisitos habituales de Playwright/Chromium. Las fases siguientes (espejos, cajas musicales, escenas, culturas, etc.) quedan pendientes de elegir.
 
 ### Borrar ecos con un toque
 
 Rama `fix/10a-tap-delete-echo`, basada en la fase 10. Toca el anillo azul de un eco para borrarlo; un arrastre sigue moviendo al jugador y no borra. Solo afecta al eco tocado en la capa actual. El botón ⟳ junto al eco sigue siendo una alternativa. No borra árboles ni objetos originales.
+
+### Fase 11: espejos musicales
+
+Rama `feat/11-musical-mirrors`, basada en `fix/10a-tap-delete-echo`. Un punto dorado emite luz: orienta tres espejos para dirigirla al receptor en forma de rombo. Toca un espejo para abrir sus tres controles (0–180°); el contacto no mueve al jugador. La ruta completa revela una figura local y cambia los grados musicales. El origen ofrece una instalación fácil de aprender, a la derecha del inicio, centro (1600,900); los vidrios continúan en (1080,900).
+
+Presencia dispersa por catálogo, posiciones, orientación inicial, rotación del conjunto, figura y voces regionales deterministas. No aparece en mares ni en Vacío. Los demás conjuntos son más difíciles, pero todos tienen una solución. Rayos con un máximo de cuatro rebotes y 800 unidades de recorrido; no producen realimentación sonora. Vidrios y espejos comparten un máximo de una respuesta ambiental por compás, y cada conjunto de espejos responde como máximo cada dos compases. Respetan silencio, capa superficial y claros de escucha. Los pulsos del jugador también activan el emisor.
+
+Hasta 64 instalaciones guardan sus orientaciones y la conexión descubierta. Menú, cambio de capa y salida mantienen la separación de sistemas; panel y vidrios se excluyen entre sí. Escuchar incluye las voces de espejos. Bitácora muestra instalaciones y rutas completadas. Logros: Luz que escucha y Al otro lado del reflejo. No incluye aún espejos unidos a vidrios, puertas ni pistas encadenadas.
+
+Validación: 34 suites de Node, interacción real en móvil/escritorio, ruta conectada, emisión sonora limitada, persistencia, Bitácora, Escuchar y separación de capas. Detalle de variedad actual y cómo repetir la medición en [VARIEDAD.md](VARIEDAD.md).
+
+Pruebas de espejos: `node tests/mirrors.mjs` y `python3 tests/mirrors_smoke.py`. Medir variedad: `node scripts/world-variation.mjs 100`.

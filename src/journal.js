@@ -42,7 +42,9 @@ export function initialize(runtime) {
   function places() {
     const regions=Object.keys(runtime.S.places).map(k=>regionFromKey(k,runtime)).filter(Boolean);
     const favorites=runtime.favorites||[];const saved=favorites.length?'<h3>Favoritos</h3>'+favorites.map(p=>card(p.name,`${p.layer} · ${runtime.GEN[p.genre]?.name||p.genre} · ${p.character}`)).join(''):'';
-    const installations=Object.keys(runtime.S.glassSites||{}).length?card('Vidrios cromáticos',`${Object.keys(runtime.S.glassSites).length} instalaciones exploradas. Gira sus aros para transformar notas, acentos y figuras; la orientación queda guardada.`):'';
+    const mirrorEntries=Object.values(runtime.S.mirrorSites||{});
+    const mirrorCard=mirrorEntries.length?card('Espejos musicales',`${mirrorEntries.length} instalaciones exploradas · ${mirrorEntries.filter(e=>e.solved).length} rutas de luz completadas. Orienta los tres espejos para revelar una figura y cambiar la secuencia.`):'';
+    const installations=mirrorCard+(Object.keys(runtime.S.glassSites||{}).length?card('Vidrios cromáticos',`${Object.keys(runtime.S.glassSites).length} instalaciones exploradas. Gira sus aros para transformar notas, acentos y figuras; la orientación queda guardada.`):'');
     return saved+installations+(regions.length?regions.map(region=>{
       const found=region.species.filter(sp=>runtime.S.cat[sp.id]).length,gravity=gravityOf(region,runtime.seedOf),j=data();
       const [rx,ry]=region.key.split(',').map(Number);
@@ -73,7 +75,7 @@ export function initialize(runtime) {
   function achievements() {
     const groups={Constancia:[],Exploración:[],Música:[],Ocultos:[]};
     for(const [id,name,description,hidden]of runtime.ACH) {
-      const got=runtime.S.ach[id],group=hidden?'Ocultos':/^(r\d|t\d|dia1|tope|regreso|s10)/.test(id)?'Constancia':['vidrio1','paseo1','escuchaViva','tiempo','under','faro','banda','jardinero','tambor'].includes(id)?'Música':'Exploración';
+      const got=runtime.S.ach[id],group=hidden?'Ocultos':/^(r\d|t\d|dia1|tope|regreso|s10)/.test(id)?'Constancia':['espejo1','vidrio1','paseo1','escuchaViva','tiempo','under','faro','banda','jardinero','tambor'].includes(id)?'Música':'Exploración';
       groups[group].push(card(hidden&&!got?'???':name,hidden&&!got?'Logro oculto. Sigue explorando.':description,`<p>${got?'Conseguido':'Pendiente'}</p>`));
     }
     return Object.entries(groups).map(([name,items])=>`<h3>${name}</h3>${items.join('')}`).join('');

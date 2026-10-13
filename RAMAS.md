@@ -13,14 +13,17 @@ Jay autorizó completar las primeras diez fases encadenadas. Se parte de la fase
 | 7 | `feat/07-musical-favorites` | rama 6 | Subida: Favoritos musicales · dfda3f3 |
 | 8 | `feat/08-return-navigation` | rama 7 | Subida: Orientación y regreso · a610bd7 |
 | 9 | `feat/09-musical-autopilot` | rama 8 | Subida: Autopilot musical · 55c2701 |
-| 10 | `feat/10-chromatic-glass` | rama 9 | Subida: Tres vidrios cromáticos musicales · HEAD de esta rama |
+| 10 | `feat/10-chromatic-glass` | rama 9 | Subida: Tres vidrios cromáticos musicales · 73567ab |
+
+| 10a | `fix/10a-tap-delete-echo` | rama 10 | Subida · `0bd05ce`: borrar ecos con un toque |
+| 11 | `feat/11-musical-mirrors` | rama 10a | Subida: espejos musicales · commit final de rama 11 |
 
 ## Cómo revisar e integrar
 
-Orden 1 → 2 → 3 → … → 10, de la más antigua a la más nueva. Mientras la base no esté integrada, el diff de una fase se revisa contra la rama anterior; al integrarla, se puede apuntar el siguiente PR a main. No aprobar los diez cambios como un único diff acumulado.
+Orden 1 → 2 → 3 → … → 10 → 10a → 11, de la más antigua a la más nueva. Mientras la base no esté integrada, el diff de una fase se revisa contra la rama anterior; al integrarla, se puede apuntar el siguiente PR a main. No aprobar los diez cambios como un único diff acumulado.
 
 Merge normal conserva los commits antecesores y facilita la cadena. Si Jay usa squash o rebase merge, avisar para reajustar la pila: hay que trasladar solamente los commits propios de cada rama sobre la nueva base y volver a verificar. No prometer cero conflictos si main cambia o si se reescribe el historial. El asistente no hace merges ni publica directamente en main.
 
 README/HANDOFF/CAMBIOS/PENDIENTES se actualizan por etapa. Logros/Bitácora se amplían cuando hay algo nuevo que el jugador pueda descubrir/aprender; una corrección técnica no introduce un logro artificial.
 
-| 10a | `fix/10a-tap-delete-echo` | rama 10 | Borrado directo de ecos; integrar después de 10 y antes de 11 |
+Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; fase 12 en adelante continúa pendiente.

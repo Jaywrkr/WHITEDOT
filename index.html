@@ -236,6 +236,10 @@
  <form id="favForm" class="favorite-form"><label for="favName">Nombre de este punto</label><input id="favName" maxlength="60" autocomplete="off"><button id="favSave" type="submit" class="gold">Guardar aquí</button></form>
  <p id="favNote"></p><div class="row"><button id="favStudio" disabled>Orientar al Estudio</button><button id="favWalk">Paseo musical</button></div><div id="favoritesBody" class="scroll"></div><div class="row"><button id="favoritesClose">Cerrar</button></div></div>
 </div>
+<aside id="mirrorPanel" class="glasspanel" aria-label="Espejos musicales" hidden><div class="fxhead">Espejos musicales <button id="mirrorClose" aria-label="Cerrar espejos">×</button></div>
+ <p>Dirige la luz del punto dorado al rombo.</p><label for="mirrorAngle0">Espejo 1 <output id="mirrorValue0"></output></label><input id="mirrorAngle0" type="range" min="0" max="180" step="1">
+ <label for="mirrorAngle1">Espejo 2 <output id="mirrorValue1"></output></label><input id="mirrorAngle1" type="range" min="0" max="180" step="1">
+ <label for="mirrorAngle2">Espejo 3 <output id="mirrorValue2"></output></label><input id="mirrorAngle2" type="range" min="0" max="180" step="1"><small id="mirrorInfo"></small></aside>
 <aside id="glassPanel" class="glasspanel" aria-label="Vidrios musicales" hidden><div class="fxhead">Tres vidrios <button id="glassClose" aria-label="Cerrar vidrios">×</button></div>
  <p>Gira los aros o mueve estos controles.</p><label for="glassAngle0">Vidrio 1 <output id="glassValue0"></output></label><input id="glassAngle0" type="range" min="0" max="360" step="1">
  <label for="glassAngle1">Vidrio 2 <output id="glassValue1"></output></label><input id="glassAngle1" type="range" min="0" max="360" step="1">
