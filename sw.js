@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-trails-v1';
+const CACHE='whitedot-glass-gestures-v1';
 const SHELL=[
  "./",
  "./index.html",
@@ -32,6 +32,7 @@ const SHELL=[
  "./src/focusui.js",
  "./src/fxpad.js",
  "./src/glass.js",
+ "./src/glass-music.js",
  "./src/grammar.js",
  "./src/gravity.js",
  "./src/influence.js",

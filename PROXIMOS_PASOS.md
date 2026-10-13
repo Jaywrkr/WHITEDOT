@@ -4,6 +4,8 @@ El bloque anterior de veinte entregas está integrado en main desde el PR #58 (`
 
 ## Entrega actual
 
+`feat/expressive-glass-gestures` elimina el panel de vidrios y distribuye sus voces entre graves, percusión y armonía/melodía media mediante movimiento directo.
+
 `feat/resonant-ground` reemplaza las cajas por suelo interactivo. Su continuación `feat/chained-musical-trails` añade una búsqueda de tres huellas y un instrumento dormido. Orden completo de ramas nuevas: [RAMAS.md](RAMAS.md). Estas entregas se prueban en Semillas como **Suelo resonante** y **Rastro musical · instrumento dormido**.
 
 ## Primera entrega de esta secuencia: profundizar interacciones
@@ -76,6 +78,16 @@ El dibujo usa pequeñas curvas, tres marcas de respuesta y puntos de orientació
 Probar: Prototipo → Semillas → Encuentro de prueba → **Rastro musical · instrumento dormido**. No necesita encontrar primero un rastro raro; la partida habitual permanece separada. Culturas, reliquias históricas, puertas musicales y personajes originales siguen pendientes: esta entrega implementa una primera búsqueda y un instrumento dormido, sin dar por cerrado ese bloque.
 
 Verificación: 45 suites Node; 30 recorridos de regresión de navegador; búsqueda completa mediante gestos reales en móvil vertical, horizontal y escritorio, incluyendo música apagada, orden, reintentos, cancelación, guardado y Bitácora. Recarga offline con 71 módulos. Seis renderizados reales de pistas junto a música regional densa en minimal, tropical, dub, amapiano, nu-disco suave y ambient: pico máximo 0,934887, ninguna muestra por encima de 0,98. La evaluación artística también requiere escucha humana.
+
+## Nueva etapa: vidrios sin panel y con música de cuerpo
+
+Rama `feat/expressive-glass-gestures`, basada en `feat/chained-musical-trails`. Elimina completamente el panel de ángulos y sus controles: los vidrios se giran mediante sus aros en el mundo. Los tres aros tienen radios distintos para poder seleccionarlos incluso cuando las placas están alineadas. Cancelar, perder captura o cambiar de pestaña restaura los ángulos del arrastre; salir o pausar cancela el gesto. Se conservan guardados y descubrimientos anteriores.
+
+Cada región asigna los tres vidrios a bajo, percusión y armonía/melodía media. Usa instrumentos del género local, evita la voz aguda y limita las voces con altura a los registros graves y medios. Los giros emplean grados de acorde (0, 2, 4), controlan variantes y fuerza de la parte existente, y sus notas se sincronizan con el pulso. Se reducen los niveles de respuesta respecto a la versión anterior. El movimiento cambia las curvas internas y sus cruces producen una resonancia pequeña de color; no añade efectos que cubran el mundo.
+
+Probar: Prototipo → Semillas → Encuentro de prueba → **Vidrios · movimiento y música**. Entrada directa a los vidrios iniciales en una prueba separada. Pistas y Bitácora actualizadas, sin nuevos botones de exploración. Las conexiones con jardines modulares conservan los ángulos como fuente regional.
+
+Validación: 46 suites Node y 30 recorridos de navegador, incluyendo las tres funciones musicales con instrumentos nativos en los 52 estilos; giros reales, alineación sin sliders, cancelación, influencia, escáner y persistencia en móvil/escritorio. Caché offline con 72 módulos. Seis renderizados reales verifican emisión de las tres funciones musicales en minimal, tropical, dub, amapiano, nu-disco suave y ambient a 44,1 kHz: pico máximo 0,940233, sin muestras por encima de 0,98. Las mediciones técnicas acompañan la escucha artística; no certifican un máster comercial.
 
 ## Trabajo musical y técnico que acompaña las etapas
 

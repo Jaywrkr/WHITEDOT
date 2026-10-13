@@ -10,6 +10,8 @@ La entrega posterior `feat/organic-musical-seedpods`, basada en la rama de direc
 
 La entrega `feat/resonant-ground` sustituye el objeto Caja de posibilidades por interacción con el piso, conservando sus posibilidades musicales y los identificadores del progreso antiguo.
 
+La entrega `feat/expressive-glass-gestures` elimina el panel de los vidrios: solo giros en el mundo, con graves, percusión y armonía/melodía media.
+
 ## Próximos bloques
 
 1. Profundizar interacciones existentes. La secuencia cubre redes, frases y suelo musical; otras mejoras se evalúan según su aporte musical.
