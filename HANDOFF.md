@@ -79,3 +79,7 @@ Primero revisar escucha larga y elegir con Jay las figuras numeradas que se redi
 Texto breve para iniciar en Claude:
 
 > Lee HANDOFF.md, ESTADO_ACTUAL.md, PENDIENTES.md y FASES_UNIVERSO.md de la rama de traspaso o del main donde ya esté integrada. Contrasta con el código y git antes de proponer cambios. Conserva la música agradable, el espacio negro, los gestos orgánicos y la compatibilidad de lugares/guardados. Las fases 1–3 y el bloque de gestos/color de fase 4 ya están integrados; no los rehagas. Usa el inventario de pendientes para continuar el bloque que te pida Jay, agrupándolo en una rama amplia.
+
+
+## Última entrega de Claude
+Rama `feat/phase-04-materia-y-compartir` (pendiente de merge): ver `FASE_04_MATERIA.md`. Reglas que se mantienen: no tocar catálogo/recetas para contenido nuevo (usar flujo de semilla propio), actualizar `sw.js` y su versión de caché al añadir módulos, no persistir estado temporal.

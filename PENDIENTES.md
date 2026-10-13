@@ -6,6 +6,10 @@ Actualizado el 13 de octubre de 2026, después de integrar #73. [Estado comproba
 
 Fases 1/2, revisión de registros/atlas, consolidación, fase 3 y bloque de espejos/vidrios de fase 4 **ya están integrados** (#68–#73). Ya existen guardado recuperable/respaldo, cachés acotadas, favoritos/regreso/autopilot, Original y Paisajes vivos, blobs, radio/quietud, instrumentos nuevos, vidrios por aros, espejos por arrastre, jardín modular, diez encuentros, suelo en vez de cajas, animal intuitivo, rastros e instrumento dormido, fijación voluntaria/borrado, interfaz silenciosa y offline. No listarlos como funciones ausentes.
 
+## Entregado en rama pendiente de merge
+- `feat/phase-04-materia-y-compartir`: cuerdas, prisma y membrana; Chorus/Phaser/Freeze; códigos de lugar `WD1-`; grabar set de 60 s. Detalle en `FASE_04_MATERIA.md`.
+- Siguiente de fase 4: superficies/materiales restantes y escucha larga de las tres familias en teléfono.
+
 ## Prioridad antes de ampliar
 
 1. **Escucha artística y dispositivos:** comparar 10–30 minutos por familia, quietud, transiciones, escenas densas y modo suave; cuerpo/graves, medios, fatiga/agudos, identidad de estilos y variación percibida. Safari/iPhone, Chrome/Android, altavoces/auriculares y mono/estéreo siguen sin aceptación completa.

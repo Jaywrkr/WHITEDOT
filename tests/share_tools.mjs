@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {encodePlace,decodePlace,recordingType} from '../src/share-tools.js';
+import {worldIdentity,placeAddress} from '../src/world-identity.js';
+const a=placeAddress(worldIdentity('ñandú',  'wide',2),123456.7,-98765.2,'bajo');
+const code=encodePlace(a,'Lugar con ñ y espacios');assert(code.startsWith('WD1-')&&code.length<200&&/^[A-Za-z0-9_-]+$/.test(code.slice(4)));
+const back=decodePlace(code);assert.equal(back.address.seed,'ñandú');assert.equal(back.address.layout,'wide');assert.equal(back.address.generatorVersion,2);assert.equal(back.address.layer,'bajo');
+assert.equal(back.address.x,123457);assert.equal(back.address.y,-98765);assert.equal(back.name,'Lugar con ñ y espacios');
+const o=decodePlace(encodePlace(placeAddress(worldIdentity(),1800,1800,'superficie')));assert.equal(o.address.seed,'');assert.equal(o.address.generatorVersion,1);
+for(const bad of ['','hola','WD1-!!!','WD1-'+Buffer.from('{"s":"","l":"classic","g":9,"c":1,"o":1,"x":0,"y":0,"L":0}').toString('base64url'),'WD1-'+Buffer.from('{"s":"","l":"classic","g":1,"c":1,"o":1,"x":1e13,"y":0,"L":0}').toString('base64url')])assert.throws(()=>decodePlace(bad));
+assert.equal(recordingType(t=>t.startsWith('video/webm')),'video/webm;codecs=vp9,opus');assert.equal(recordingType(t=>t==='video/mp4'),'video/mp4');assert.equal(recordingType(()=>false),null);
+console.log('PASS: place codes round-trip seed, versions, layer and coordinates; invalid codes rejected; recording format negotiation');

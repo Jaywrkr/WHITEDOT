@@ -24,6 +24,12 @@ export function initialize(runtime){
   if(!point){runtime.toast('<em>Favoritos</em> · Límite de 64. Borra uno para guardar otro.');return null;}
   runtime.unlock('favorito1');runtime.save();render();return point;
  }
+ // Guarda un lugar recibido por código. Si es del mismo mundo, completa su identidad musical.
+ function addAddress(address,name){
+  const s=runtime.S,same=sameWorld(address,runtime.worldIdentity),region=same&&address.layer==='superficie'?runtime.regionOfPos(address.x,address.y):null;
+  const point=storeFavorite(s,{address,name,x:address.x,y:address.y,layer:address.layer,created:Date.now(),shared:true,region:region?.key||'',regionName:region?.name||'',genre:region?.genre||'',bpm:region?.bpm||0,scale:region?[...region.scale]:[],character:region?.recipe?.name||'',material:region?.recipe?.materialName||''});
+  if(point){runtime.save();render();}return point;
+ }
  function rename(id,name){const point=list().find(p=>p.id===id);if(point){point.name=cleanName(name);runtime.save();}return point;}
  function remove(id){runtime.S.favorites.items=list().filter(p=>p.id!==id);runtime.favoriteRemoved?.(id);runtime.save();render();}
  function render(){
@@ -33,10 +39,11 @@ export function initialize(runtime){
   for(const point of list()){
    const card=document.createElement('article');card.className='journal-card favorite-card';card.dataset.favorite=point.id;
    const input=document.createElement('input');input.value=point.name;input.maxLength=60;input.setAttribute('aria-label','Nombre del favorito');
-   const details=document.createElement('p');details.textContent=`${point.layer==='bajo'?'Subsuelo':point.layer==='cielo'?'Cielo':'Superficie'} · ${runtime.GEN[point.genre]?.name||point.genre} · ${point.bpm} BPM · ${point.character} · (${Math.round(point.x)}, ${Math.round(point.y)})`;
+   const details=document.createElement('p');details.textContent=[point.layer==='bajo'?'Subsuelo':point.layer==='cielo'?'Cielo':'Superficie',point.genre?(runtime.GEN[point.genre]?.name||point.genre):'',point.bpm?`${point.bpm} BPM`:'',point.character,point.shared?'compartido':'',`(${Math.round(point.x)}, ${Math.round(point.y)})`].filter(Boolean).join(' · ');
    const row=document.createElement('div');row.className='row';
    const button=(text,callback)=>{const b=document.createElement('button');b.textContent=text;b.onclick=callback;row.append(b);return b;};
    button('Renombrar',()=>{rename(point.id,input.value);input.value=point.name;});button('Borrar',()=>remove(point.id));
+   button('Código',async()=>{try{const code=runtime.encodeFavorite?.(point);if(code){$('placeCode').value=code;try{await navigator.clipboard.writeText(code);runtime.toast('<em>Código</em> · copiado');}catch(_){runtime.toast('<em>Código</em> · listo para copiar arriba');}}}catch(_){}});
    if(sameWorld(point.address,runtime.worldIdentity))runtime.favoriteActions?.(point,row);else{const note=document.createElement('p');note.textContent='Necesita su semilla y versión originales para regresar.';card.append(note);}
    card.append(input,details,row);body.append(card);
   }
@@ -45,5 +52,5 @@ export function initialize(runtime){
  function open(){const region=runtime.inWorld()?(runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy)):null;$('favName').value=region?.name||'';render();$('mFavorites').hidden=false;}
  $('bFavorites').onclick=open;$('favoritesClose').onclick=()=>{$('mFavorites').hidden=true;};
  $('favForm').onsubmit=e=>{e.preventDefault();add($('favName').value);};
- Object.defineProperties(runtime,{favorites:{get:()=>list()},addFavorite:{get:()=>add},renameFavorite:{get:()=>rename},removeFavorite:{get:()=>remove},openFavorites:{get:()=>open},renderFavorites:{get:()=>render}});
+ Object.defineProperties(runtime,{favorites:{get:()=>list()},addFavorite:{get:()=>add},addFavoriteAddress:{get:()=>addAddress},renameFavorite:{get:()=>rename},removeFavorite:{get:()=>remove},openFavorites:{get:()=>open},renderFavorites:{get:()=>render}});
 }

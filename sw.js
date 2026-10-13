@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-installation-gestures-v4';
+const CACHE='whitedot-materia-produccion-v1';
 const SHELL=[
  "./",
  "./index.html",
@@ -36,6 +36,9 @@ const SHELL=[
  "./src/focusui.js",
  "./src/fxpad.js",
  "./src/glass.js",
+ "./src/materia.js",
+ "./src/share-tools.js",
+ "./src/materia-music.js",
  "./src/glass-music.js",
  "./src/grammar.js",
  "./src/gravity.js",

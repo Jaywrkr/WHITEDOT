@@ -92,3 +92,5 @@ Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; el pedido post
 </details>
 
 </details>
+
+- `feat/phase-04-materia-y-compartir` (Claude): materia (cuerdas, prisma, membrana), FX chorus/phaser/freeze, códigos de lugar y grabar set. Pendiente de merge por Jay. Ver `FASE_04_MATERIA.md`.

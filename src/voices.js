@@ -1,5 +1,6 @@
 import {musicalCharacter,hookInstruments,voiceRegister} from './musical-character.js';
 import {glassVoice} from './glass-music.js';
+import {materiaVoice,materiaKindOf} from './materia-music.js';
 import {ecologyVoice} from './ecology-model.js';
 import {encounterVoice} from './encounter-families.js';
 import {blobVoice} from './blobs.js';
@@ -49,6 +50,7 @@ export function initialize(runtime) {
   function rawVoice(kind, region) {
     if(kind.startsWith('ecology:')&&region.ecology)return ecologyVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng);
     if(/^installation:glass:[0-2]$/.test(kind))return glassVoice(region,Number(kind.at(-1)),runtime.GEN,runtime.seedOf);
+    {const m=materiaKindOf(kind);if(m)return materiaVoice(m.kind,m.index,region,runtime.GEN,runtime.seedOf);}
     if(kind.startsWith('encounter:'))return encounterVoice(kind.slice(10),region,runtime.GEN,runtime.seedOf);
     if(kind.startsWith('forma:')&&runtime.blobHabitat?.(region)){const key=region.key+':'+kind;if(!blobCache.has(key)){blobCache.set(key,blobVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng));while(blobCache.size>128)blobCache.delete(blobCache.keys().next().value);}return blobCache.get(key);}
     if (!cache.has(region.key)){cache.set(region.key, createRegionalVoices(region, runtime.BIOMES, runtime.GEN, runtime.seedOf, runtime.rng));while(cache.size>128)cache.delete(cache.keys().next().value);}
