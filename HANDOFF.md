@@ -365,3 +365,12 @@ Cambios de compatibilidad: el paisaje de muchas coordenadas cambia (mares, densi
 **Volumen (pedido de Jay: "esto debe ser una fiesta"):** cadena de salida nueva: low-shelf +3 dB a 110 Hz, compresor más firme (−24 dB, 4:1), ganancia de compensación ×3,4, limitador a −3 dB y saturación suave tanh final. `musicVolume()` normal pasa de 0,85 a 1. Medido en el navegador en Origen con energía alta: RMS de ~−15,6 dB a ~−9,3 dB (unos 6 dB más fuerte) con picos bajo 0 dB. Escucha suave conserva su nivel bajo (sin realce de graves, compensación ×1,6).
 
 Pruebas: `tests/journey.mjs` y `tests/journey_smoke.py`; fixture de `(-30,-20)` recapturado (ya cae en zona de rareza leve).
+
+### Móvil como app (PWA) y control táctil
+
+- **Instalable:** `manifest.webmanifest` (pantalla completa, vertical, iconos en `icons/`), `sw.js` (red primero, caché como respaldo sin conexión; cada deploy llega sin quedarse con versiones viejas) y metas de Apple. En el teléfono: Compartir → Añadir a pantalla de inicio (iOS) o Instalar app (Android).
+- **Sin gestos del navegador:** `html,body` fijos, `touch-action:none`, `overscroll-behavior:none`, sin zoom (`user-scalable=no`) y `src/pwa.js` bloquea pinza, doble toque y arrastres de página (salvo listas con scroll de los paneles).
+- **Control:** joystick flotante. Arrastrar desde cualquier punto de la pantalla mueve al pixel hacia donde mueves el dedo desde donde empezaste; se dibuja un círculo guía. El arrastre también funciona si empieza sobre textos del HUD o la Voz (antes no: por eso "solo iba para arriba"). Un toque en la Voz la sigue abriendo; un toque en el mundo lanza el pulso.
+- **Visibilidad:** halo y anillo fino alrededor del pixel en el Mundo; densidad máxima de los oasis reducida a ~2× para no tapar al pixel.
+- Prueba: `tests/mobile_smoke.py` (móvil emulado a 3×: sin zoom ni desbordes, arrastre en las cuatro direcciones desde arriba, abajo y centro, manifiesto e iconos).
+

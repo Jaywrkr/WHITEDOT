@@ -80,7 +80,7 @@ export function createContinents(seedOf,rng,genres){
   return vit;
  }
  // Multiplicador de densidad para la generación de un chunk.
- const densityOf=vit=>.1+2.6*Math.pow(vit,1.35);
+ const densityOf=vit=>.1+1.9*Math.pow(vit,1.35);   // tope ~2×: más denso tapaba al pixel en móvil
 
  return {at,vitality,densityOf,seedOfCell,clear(){seeds.clear();regions.clear();}};
 }

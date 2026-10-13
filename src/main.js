@@ -26,6 +26,7 @@ import { initialize as patches } from './patches.js';
 import { initialize as landmarks } from './landmarks.js';
 import { initialize as map } from './map.js';
 import { initialize as controls } from './controls.js';
+import { initialize as pwa } from './pwa.js';
 import { initialize as atlas } from './atlas.js';
 
 // Initialize once, in the same order as the original game. Never expose runtime on window.
@@ -58,6 +59,7 @@ patches(runtime);
 landmarks(runtime);
 map(runtime);
 controls(runtime);
+pwa(runtime);
 atlas(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}

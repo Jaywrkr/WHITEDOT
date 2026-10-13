@@ -30,7 +30,7 @@ export function initialize(runtime) {
     const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;
     const modal=[...document.querySelectorAll(".modal")].some(m=>!m.hidden&&!m.classList.contains("lite"));
     let dx=(runtime.keys.arrowright||runtime.keys.d?1:0)-(runtime.keys.arrowleft||runtime.keys.a?1:0), dy=(runtime.keys.arrowdown||runtime.keys.s?1:0)-(runtime.keys.arrowup||runtime.keys.w?1:0);
-    if(runtime.ptr){dx=runtime.ptr.x-runtime.W/2;dy=runtime.ptr.y-runtime.H/2;const l=Math.hypot(dx,dy);if(l<6){dx=dy=0;}else{const k=Math.min(1,l/80);dx=dx/l*k;dy=dy/l*k;}}
+    if(runtime.ptr){const jx=runtime.ptr.ox??runtime.W/2,jy=runtime.ptr.oy??runtime.H/2,rad=runtime.ptr.ox!=null?55:80;dx=runtime.ptr.x-jx;dy=runtime.ptr.y-jy;const l=Math.hypot(dx,dy);if(l<6){dx=dy=0;}else{const k=Math.min(1,l/rad);dx=dx/l*k;dy=dy/l*k;}}
     else{const l=Math.hypot(dx,dy);if(l){dx/=l;dy/=l;}}
     if(modal||runtime.scanning||runtime.S.mode==="studio"){dx=dy=0;}
     const sp=Math.hypot(dx,dy);
@@ -71,6 +71,11 @@ export function initialize(runtime) {
     if(runtime.grooveFx>0){runtime.grooveFx=Math.max(0,runtime.grooveFx-dt*2.2);runtime.cx.globalAlpha=runtime.grooveFx;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.5;const rr=s+(1-runtime.grooveFx)*40;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,rr,0,6.283);runtime.cx.stroke();
       if(runtime.MU.groove>=2){runtime.cx.fillStyle=runtime.GOLD;runtime.cx.font='600 12px "JetBrains Mono", monospace';runtime.cx.textAlign="center";runtime.cx.fillText("EN TIEMPO ×"+runtime.MU.groove,runtime.W/2,runtime.H/2-s-18-(1-runtime.grooveFx)*10);runtime.cx.textAlign="left";}}
     runtime.cx.globalAlpha=1;runtime.cx.fillStyle="#fff";runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));
+    // El pixel siempre se distingue: halo suave y anillo fino en el Mundo.
+    if(runtime.inWorld()){const c=runtime.cx,hx=runtime.W/2,hy=runtime.H/2,g=c.createRadialGradient(hx,hy,0,hx,hy,s*2.6);g.addColorStop(0,'rgba(255,255,255,.22)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(hx-s*2.6,hy-s*2.6,s*5.2,s*5.2);
+      c.globalAlpha=.55;c.strokeStyle='#fff';c.lineWidth=1;c.strokeRect(Math.round(hx-s/2)-3.5,Math.round(hy-s/2)-3.5,Math.round(s)+7,Math.round(s)+7);c.globalAlpha=1;}
+    // Joystick visible mientras arrastras.
+    if(runtime.ptr?.ox!=null){const c=runtime.cx;c.globalAlpha=.28;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.arc(runtime.ptr.ox,runtime.ptr.oy,55,0,6.283);c.stroke();c.globalAlpha=.5;c.fillStyle='#fff';c.beginPath();c.arc(runtime.ptr.x,runtime.ptr.y,9,0,6.283);c.fill();c.globalAlpha=1;}
     if(runtime.flash>0){runtime.flash=Math.max(0,runtime.flash-dt*2.5);runtime.cx.globalAlpha=runtime.flash*.3;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.fillRect(0,0,runtime.W,runtime.H);}
     if(runtime.enterFx>0){runtime.enterFx=Math.max(0,runtime.enterFx-dt*.6);const k=1-runtime.enterFx;runtime.cx.globalAlpha=runtime.enterFx;runtime.cx.strokeStyle="#fff";runtime.cx.lineWidth=2;
       for(let i=0;i<3;i++){const rr=Math.max(0,k-i*.12)*Math.hypot(runtime.W,runtime.H)*.65;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,rr,0,6.283);runtime.cx.stroke();}
