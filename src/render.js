@@ -145,7 +145,7 @@ export function initialize(runtime) {
     const z=runtime.biomeOfPos(runtime.S.wx,runtime.S.wy),rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
     if(rg.key!==runtime.curRegion){runtime.curRegion=rg.key;runtime.enterRegion(rg,z);}
     {// Vitalidad local: el vacío adelgaza la música; llegar a un oasis después de un desierto es un drop.
-     runtime.riverStep?.(dt);
+     runtime.riverStep?.(dt);runtime.aliveStep?.(dt);
      const MU=runtime.MU,v=runtime.vitalityAt(runtime.S.wx,runtime.S.wy);MU.vit=MU.vit==null?v:MU.vit+(v-MU.vit)*Math.min(1,dt*.8);
      if(MU.vit<.22)MU.lowT=(MU.lowT||0)+dt;
      if(MU.vit>.6&&(MU.lowT||0)>12){MU.lowT=0;MU.E=Math.max(MU.E,.75);runtime.flash=Math.max(runtime.flash,.5);
@@ -154,7 +154,8 @@ export function initialize(runtime) {
      else if(MU.vit>.45&&(MU.lowT||0)>0)MU.lowT=Math.max(0,MU.lowT-dt*.5);}
     {const RS=runtime.REG*runtime.WCH,lx=((runtime.S.wx%RS)+RS)%RS,ly=((runtime.S.wy%RS)+RS)%RS,ed=[lx,RS-lx,ly,RS-ly],i=ed.indexOf(Math.min(...ed)),de=ed[i],BAND=900;
      if(de<BAND){runtime.MU.nb=runtime.regionOfPos(runtime.S.wx+[-1,1,0,0][i]*(de+10),runtime.S.wy+[0,0,-1,1][i]*(de+10));runtime.MU.nbW=.5*(1-de/BAND);}else{runtime.MU.nb=null;runtime.MU.nbW=0;}}
-    const evt=runtime.eventOf(rg),ev=evt?evt[0]:null;if(runtime.RP&&runtime.RP.type==="quieto"&&runtime.MU.still>0)runtime.retoSet("quieto",runtime.MU.still);
+    if(runtime.MU.confNb&&runtime.MU.confNb!==runtime.MU.dnaT){runtime.MU.nb=runtime.MU.confNb;runtime.MU.nbW=Math.max(runtime.MU.nbW,.45);}   // confluencia de ríos
+    const evt=runtime.eventOf(rg),ev=(runtime.MU.storm||0)>.15?'lluvia':evt?evt[0]:null;   // dentro de una tormenta llueven notasif(runtime.RP&&runtime.RP.type==="quieto"&&runtime.MU.still>0)runtime.retoSet("quieto",runtime.MU.still);
     const id=runtime.BIOMES[z].id;
     if(ev==="aurora"){runtime.cx.lineWidth=6;for(let i=0;i<3;i++){runtime.cx.strokeStyle=`hsl(${(rg.hue+i*35)%360},80%,65%)`;runtime.cx.globalAlpha=.16+b*.06;runtime.cx.beginPath();for(let x=0;x<=runtime.W;x+=10){const y=70+i*20+Math.sin(x/130+t/1500+i)*16;x?runtime.cx.lineTo(x,y):runtime.cx.moveTo(x,y);}runtime.cx.stroke();}}
     const R=(ev==="eclipse"?.6:1)*runtime.clamp(runtime.lightR()*1.1,170,360)*(1+Math.min(runtime.shownStreak(),30)/30*.7)*(id==="cueva"?.6:1)*(1+b*.05),ox=runtime.W/2-runtime.S.wx,oy=runtime.H/2-runtime.S.wy,ms=performance.now();
@@ -162,11 +163,11 @@ export function initialize(runtime) {
     g.addColorStop(0,"rgba(255,255,255,"+(.05+b*.04+runtime.MU.E*.03)+")");g.addColorStop(1,"rgba(255,255,255,0)");
     runtime.cx.fillStyle=g;runtime.cx.fillRect(runtime.W/2-R,runtime.H/2-R,R*2,R*2);
     if(ev==="eclipse"){runtime.cx.globalAlpha=.25+b*.35;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.5;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,R*.95,0,6.283);runtime.cx.stroke();}
-    if(ev==="lluvia"){if(Math.random()<dt*7)runtime.rain.push({x:runtime.S.wx+(Math.random()-.5)*R*2.4,y:runtime.S.wy-R*1.3,vy:110+Math.random()*60});
+    if(ev==="lluvia"){if(Math.random()<dt*7*(1+3*(runtime.MU.storm||0)))runtime.rain.push({x:runtime.S.wx+(Math.random()-.5)*R*2.4,y:runtime.S.wy-R*1.3,vy:110+Math.random()*60});
       for(let i=runtime.rain.length-1;i>=0;i--){const q=runtime.rain[i];q.y+=q.vy*dt;const d=Math.hypot(q.x-runtime.S.wx,q.y-runtime.S.wy);if(d<runtime.pxSize()/2+14){runtime.rain.splice(i,1);runtime.playerNote(.12);runtime.burst(q.x,q.y,5,true);continue;}
         if(q.y>runtime.S.wy+R*1.4){runtime.rain.splice(i,1);continue;}runtime.cx.globalAlpha=Math.min(1,Math.max(.15,1-d/(R*1.3)));runtime.cx.fillStyle=runtime.GOLD;runtime.cx.fillRect(q.x+ox-1,q.y+oy-6,2,7);}}else if(runtime.rain.length)runtime.rain=[];
     runtime.drawGround(ox,oy,R,t);
-    runtime.drawRivers?.(t,ox,oy);
+    runtime.drawRivers?.(t,ox,oy);runtime.drawAlive?.(t,dt,ox,oy,'ground');
     runtime.updWaves(dt,ox,oy);
     const span=R*1.8+60;
     const a0=Math.floor((runtime.S.wx-span)/runtime.WCH),a1=Math.floor((runtime.S.wx+span)/runtime.WCH),b0=Math.floor((runtime.S.wy-span)/runtime.WCH),b1=Math.floor((runtime.S.wy+span)/runtime.WCH);
@@ -357,6 +358,7 @@ export function initialize(runtime) {
       if(d<100){runtime.cx.globalAlpha=.8;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.font="10px monospace";runtime.cx.textAlign="center";runtime.cx.fillText(rl.name||"Reliquia",x,y-44);runtime.cx.fillText(`Escucha ${Math.floor(progress.dwell)}/${rl.magical?12:6}s · ${progress.pulses}/${need} pulsos`,x,y+52);}
     }
     runtime.drawPhenomena(t,dt,ox,oy,R);
+    runtime.drawAlive?.(t,dt,ox,oy,'sky');
     runtime.drawSoundCues(ox,oy,R);
     if((runtime.hudT+=dt)>.5){runtime.hudT=0;runtime.hud(nd);}
     return ds;

@@ -31,6 +31,9 @@ export function drawMap(runtime,x,X,Y,W,H,zoom){
  for(const c of m.cells){const [px,py]=P(c.rx,c.ry);
   if(c.sea){x.globalAlpha=.35;x.fillStyle='#7f97a8';const d=Math.max(1.5,s*.12);for(let i=1;i<3;i++)for(let j=1;j<3;j++)x.fillRect(px+s*i/3-d/2,py+s*j/3-d/2,d,d);continue;}
   x.globalAlpha=.55+.25*c.strange;x.fillStyle=`hsl(${c.hue},${Math.round(45+45*c.strange)}%,${Math.round(55+8*c.strange)}%)`;x.fillRect(px+.5,py+.5,Math.max(1,s-1),Math.max(1,s-1));}
+ // Ríos que pasan por lo visitado (muestreo de 6×6 puntos por región).
+ if(runtime.riverAt&&m.cells.length<900){x.fillStyle='#7fd3ff';const n=s>=8?8:5;
+  for(const c of m.cells){if(c.sea)continue;for(let i=0;i<n;i++)for(let j=0;j<n;j++){const q=runtime.riverAt((c.rx+(i+.5)/n)*m.RP,(c.ry+(j+.5)/n)*m.RP);if(q?.on){const [px,py]=P(c.rx+(i+.5)/n,c.ry+(j+.5)/n);x.globalAlpha=.85;x.fillRect(px-1,py-1,Math.max(2,s/n*.6),Math.max(2,s/n*.6));}}}}
  // Nombres de continentes en el centro de lo visitado.
  if(s>=5){const groups=new Map();for(const c of m.cells){if(!c.cont||c.sea)continue;const g=groups.get(c.cont)||{n:0,x:0,y:0,name:c.contName,hue:c.hue};g.n++;g.x+=c.rx+.5;g.y+=c.ry+.5;groups.set(c.cont,g);}
   x.textAlign='center';x.font=`${Math.round(Math.min(30,Math.max(20,s*.9)))}px "JetBrains Mono", monospace`;
