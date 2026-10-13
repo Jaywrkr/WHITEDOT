@@ -1,3 +1,4 @@
+import {musicalCharacter,inRegister} from './musical-character.js';
 import {elementInk,WORLD_VISUAL} from './visual.js';
 // Hitos y horizonte sonoro. Un hito grande primero se OYE (apagado y desde su dirección),
 // luego se INTUYE (brillo en el borde de la pantalla) y por último se VE.
@@ -49,7 +50,8 @@ export function initialize(runtime){
    const near=1-lm.d/HEAR,ct=runtime.chordTones(),six=runtime.SIX;
    const gain=.075*Math.pow(near,1.5),cut=450+6500*near*near,pan=Math.max(-1,Math.min(1,(lm.x-runtime.S.wx)/2600));
    lm.motif.forEach((deg,i)=>{const at=t+lm.steps[i]*six,midi=ct[deg%ct.length]+(lm.type==='monolito'?-12:lm.type==='faro'||lm.type==='torre'?12:0);
-    voice(lm.type,midi,at,gain*(i?0.8:1),cut,pan);
+    const profile=musicalCharacter(runtime.MU.dnaA?.genre||runtime.regionOfPos(runtime.S.wx,runtime.S.wy).genre);
+    voice(lm.type,inRegister(midi,lm.type==='monolito'?36:profile.low,lm.type==='monolito'?55:profile.high),at,gain*(i?0.8:1),cut,pan);
     setTimeout(()=>{lm.ref.lit=1;},Math.max(0,(at-ac.currentTime)*1000));});
   }
  }

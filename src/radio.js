@@ -1,3 +1,4 @@
+import {musicalCharacter,hookInstruments} from './musical-character.js';
 import {REFERENCE_STEPS,REFERENCE_BASS} from './references.js';
 import {createGrammar,shapeMotif} from './grammar.js';
 import {PALETTE_STEPS} from './palettes.js';
@@ -25,7 +26,7 @@ export function createRadio(seedOf, rng, genres) {
       const random = rng(seedOf(`radio:${region.key}:${phrase}`));
       if (bar >= nextSection) {
         // Cada sección lleva a otra; no se vuelve a una grabación en bucle.
-        section = (section + 1 + Math.floor(random() * 3)) % levels.length;
+        section = phrase===0 ? Math.floor(random()*levels.length) : (section+1)%levels.length;
         nextSection = bar + 12 + Math.floor(random() * 4) * 4;
       }
       const sparse = section === 0;
@@ -46,7 +47,8 @@ export function createRadio(seedOf, rng, genres) {
       });
       // Keep a recognisable motif for four phrases; vary space and accents first.
       const motifRandom=rng(seedOf(`radio-motif:v1:${region.key}:${Math.floor(phrase/4)}`));
-      const budget=sparse?2:grammar.hookLimit;
+      const character=musicalCharacter(region.genre);
+      const budget=Math.min(grammar.hookLimit,character.budget[section]);
       const steps=RHYTHM_GENRES[region.genre]?.steps||REFERENCE_STEPS[region.genre]||PALETTE_STEPS[region.genre];
       const recipe=steps?Array.from({length:16},(_,i)=>steps.includes(i)?0:-1):region.track.hook;
       const candidates=shapeMotif(recipe,grammar).map((degree,step)=>({degree,step})).filter(n=>n.degree>=0);
@@ -61,12 +63,14 @@ export function createRadio(seedOf, rng, genres) {
       if(arrangement&&hook.every((n,i)=>n===arrangement.hook[i])){
         const active=hook.findIndex((n,i)=>i!==anchor&&n>=0);
         if(active>=0)hook[active]=-1;
-        else {const alternative=motif.findIndex((n,i)=>i!==anchor&&n>=0);if(alternative>=0)hook[alternative]=motif[alternative];}
+        else if(budget>1){const alternative=motif.findIndex((n,i)=>i!==anchor&&n>=0);if(alternative>=0)hook[alternative]=motif[alternative];}
       }
+      // Silence is part of the arrangement: a whole phrase can belong to bass and drums.
+      if(budget===0)hook.fill(-1);
       // Identity changes with the section, rather than swapping instruments every phrase.
       const toneRandom=rng(seedOf(`radio-tone:v1:${region.key}:${section}`));
-      const pool = genres[region.genre].hookP;
-      arrangement = { phrase, section, grammar, bass, hook, hookI: pool[Math.floor(toneRandom() * pool.length)] };
+      const pool = hookInstruments(region.genre,genres[region.genre]);
+      arrangement = { phrase, section, grammar, character, melodyRest:budget===0, bass, hook, hookI: pool[Math.floor(toneRandom() * pool.length)] };
       nextPhrase = bar + grammar.phraseBars + (random()<.25?2:0);
     }
     const life = Math.min(.08, (environment.near || 0) * .002 + (environment.singers || 0) * .015);

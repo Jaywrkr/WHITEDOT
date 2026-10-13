@@ -1,3 +1,4 @@
+import {musicalCharacter,hookPitch,hookInstruments,inRegister} from './musical-character.js';
 // A separate active-time clock: menus and suspended audio never count as listening.
 export function createStillnessDirector(){
  const state={seconds:0,strength:0,stage:0,key:null,x:null,y:null};
@@ -29,7 +30,10 @@ export function initialize(runtime){
   const nearby=m.near.filter(o=>o.snd&&Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<280);
   const at=time+runtime.SIX*[3,7,11][Math.floor(random()*3)];
   if(nearby.length){const source=nearby[Math.floor(random()*nearby.length)];runtime.withVoiceOrigin('ambient',()=>source.snd(at));setTimeout(()=>{source.lit=1;},Math.max(0,(at-runtime.ac.currentTime)*1000));}
-  else{const note=runtime.chordTones()[(state.stage+Math.floor(random()*3))%4];runtime.hookInst(region.track.hookI,note,at,.022*state.strength,region);}
+  else{const note=runtime.chordTones()[(state.stage+Math.floor(random()*3))%4],g=runtime.GEN[region.genre];
+   if(m.radio?.melodyRest)runtime.bassInst(g.bassI,inRegister(note,38,55),at,.04*state.strength,region);
+   else{const instrument=m.radio?.hookI||hookInstruments(region.genre,g)[0];runtime.hookInst(instrument,hookPitch(instrument,note,musicalCharacter(region.genre)),at,.022*state.strength,region);}
+  }
  }
  Object.defineProperties(runtime,{initiativeLastBar:{get:()=>lastBar},initiativeTick:{get:()=>tick},initiativeBar:{get:()=>bar},initiativeState:{get:()=>director.state}});
 }

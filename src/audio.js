@@ -1,3 +1,4 @@
+import {musicalCharacter,hookPitch,inRegister} from './musical-character.js';
 import {peakGuardCurve,returnFilters} from './mix.js';
 import {REFERENCE_GENRES,referenceRhythm} from './references.js';
 import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
@@ -31,6 +32,7 @@ export function initialize(runtime) {
   const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN);
   const neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN);
   MU.radio = null;MU.neighborRadio=null;
+  let arrangementAir=1;
   const LOUD=5.6;   // ganancia de compensación en modo normal: fuerte pero limpio (6.8 saturaba)
   let ac=null,fx=null,master,mfilt,punch,presence,makeup,limiter,clipper,comfortShelf,comfortLowpass,subsonic,headroom,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
   const voiceCurator=createVoiceCurator();
@@ -41,7 +43,7 @@ export function initialize(runtime) {
     master.gain.setTargetAtTime(musicVolume(),time,.25);
     comfortShelf.gain.setTargetAtTime(soft?-5:0,time,1);
     if(punch){punch.gain.setTargetAtTime(soft?0:2,time,.5);presence.gain.setTargetAtTime(soft?0:2.5,time,.5);makeup.gain.setTargetAtTime(soft?1.6:LOUD,time,.5);}
-    comfortLowpass.frequency.setTargetAtTime(soft?5500:runtime.inWorld()?(MU.anomaly==='detenido'&&MU.still>1?700:(MU.radio?.grammar?.brightness||10000)*(MU.season?.bright||1)*(1-.35*(MU.storm||0))):18000,time,1.2);
+    comfortLowpass.frequency.setTargetAtTime(soft?5500:runtime.inWorld()?(MU.anomaly==='detenido'&&MU.still>1?700:Math.min(MU.radio?.grammar?.brightness||10000,MU.radio?.character?.ceiling||10000)*(MU.season?.bright||1)*(1-.35*(MU.storm||0))):18000,time,1.2);
   }
   function impulse(sec){const n=ac.sampleRate*sec|0,b=ac.createBuffer(2,n,ac.sampleRate);for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);}return b;}
   function audio(){
@@ -70,7 +72,7 @@ export function initialize(runtime) {
       fx.verb.buffer=impulse(4.5);fx.verbSend.gain.value=0;fx.delaySend.gain.value=0;fx.fb.gain.value=.45;fx.dtone.type='lowpass';fx.dtone.frequency.value=2600;fx.crushSend.gain.value=0;
       if(fx.crush.curve!==undefined){const n=4096,cv=new Float32Array(n);for(let i=0;i<n;i++){const x=i/(n-1)*2-1;cv[i]=Math.round(x*6)/6;}fx.crush.curve=cv;}
       subsonic=ac.createBiquadFilter();subsonic.type='highpass';subsonic.frequency.value=20;subsonic.Q.value=Math.SQRT1_2;
-      headroom=ac.createGain();headroom.gain.value=runtime.worldIdentity?.generatorVersion===2?.96:.98;
+      headroom=ac.createGain();headroom.gain.value=.95;   // reserve margin after oversampling, including dense low-register arrangements
       const fxRoom=returnFilters(ac,180,8000),fxEcho=returnFilters(ac,110,8000);
       master.connect(subsonic).connect(mfilt).connect(fx.lp).connect(fx.hp).connect(fx.dry).connect(punch);
       fx.hp.connect(fx.verbSend).connect(fx.verb).connect(fxRoom.input);fxRoom.output.connect(punch);
@@ -213,7 +215,7 @@ export function initialize(runtime) {
     if(s%4===0){MU.bq.push(t);if(MU.bq.length>8)MU.bq.shift();}
     MU.sq.push({t,s});if(MU.sq.length>12)MU.sq.shift();
     const id=BI().id,cave=id==="cueva",vac=id==="vacio",bar=MU.step>>4;
-    const since=MU.step-MU.lastChange,padLv=(G.pad||0)*(1-w)+(nb&&runtime.GEN[nb.genre].pad||0)*w,padOn=since<24?padLv:0;
+    const since=MU.step-MU.lastChange,padLv=(G.pad||0)*(1-w)+(nb&&runtime.GEN[nb.genre].pad||0)*w,padOn=since<24||MU.radio?.melodyRest?padLv:0;
     padG.gain.setTargetAtTime(.03*(1-E*.4)*padOn+.0001,t,padOn?.6:2.2);
     padF.frequency.setTargetAtTime(380+E*1700-(cave?200:0),t,.9);
     droneG.gain.setTargetAtTime(0,t,1.5);
@@ -221,18 +223,18 @@ export function initialize(runtime) {
     dsend.gain.setTargetAtTime(cave?2.2:MU.vari===3&&runtime.inWorld()?1.8:1,t,.5);
     const air=runtime.inWorld()&&MU.dnaA?MU.dnaA.air:null;
     verbIn.gain.setTargetAtTime(vac?1.6:cave||air==="niebla"?1.25:.8,t,1);
-    if(air==="esporas"&&s===14&&bar%4===3&&rnd()<.2)pluck(chordTones()[1]+12,t,.012,4);
+    if(!MU.radio?.melodyRest&&air==="esporas"&&s===14&&bar%4===3&&rnd()<.2)pluck(hookPitch('glass',chordTones()[1],musicalCharacter(MU.dnaA.genre)),t,.012,4);
     if(runtime.inWorld())E=runtime.clamp(E+(runtime.influenceState?.values.groove||0)*.09,.05,.9);
     const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(G.sw||0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
     if(live){
-      if(nb){VW=w;const nt=t+((s%2)?SIX*(runtime.GEN[nb.genre].sw||0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }
+      if(nb){VW=w;const nt=t+((s%2)?SIX*(runtime.GEN[nb.genre].sw||0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true,MU.neighborRadio);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }
       VW=1-w;drums(A?A.genre:"ambient",s,bar,t,tt,E,ct,false);
       if(runtime.inWorld()&&A){
         playTrack(A,s,tt,E,ct,MU.influenced||MU.radio);
         const grammar=MU.radio?.grammar;
         if(grammar&&E>.32&&runtime.currentPocket?.()?.kind!=='quiet'&&grammar.accents.includes(s)&&s%4!==0){
           const v=vel(grammar.accentLevel*(MU.radio.section===0?.5:1));
-          if(grammar.accentInstrument==='wood')wood(tt,v);else if(grammar.accentInstrument==='rim')rim(tt,v);else shaker(tt,v);
+          if(grammar.accentInstrument==='wood')wood(tt,v);else if(grammar.accentInstrument==='rim')rim(tt,v);else shaker(tt,v*(MU.radio?.melodyRest?.25:1));
         }
       }
       VW=1;
@@ -291,7 +293,7 @@ export function initialize(runtime) {
   function tom(t,f,v){runtime.recordInstrument?.("tom");const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(f*1.6,t);o.frequency.exponentialRampToValueAtTime(f,t+.06);env(g,t,.003,v,.28);o.connect(g).connect(bus);const s=ac.createGain();s.gain.value=.4;g.connect(s).connect(verbIn);o.start(t);o.stop(t+.4);}
   function noise(t,type,f,q,v,dec,toVerb){const s=ac.createBufferSource();s.buffer=noiseBuf;const fl=ac.createBiquadFilter();fl.type=type;fl.frequency.value=f;fl.Q.value=q;const g=ac.createGain();env(g,t,.001,v,dec);s.connect(fl).connect(g).connect(bus);if(toVerb)g.connect(verbIn);s.start(t,rnd()*1.5);s.stop(t+dec+.05);}
   const hat=(t,v,dec)=>(runtime.recordInstrument?.("hat"),noise(t,"highpass",7500+rnd()*1500,.7,v,dec));
-  const shaker=(t,v)=>{runtime.recordInstrument?.("shaker");return noise(t,"bandpass",6000,1.5,v,.05);};
+  const shaker=(t,v)=>{runtime.recordInstrument?.("shaker");return noise(t,"bandpass",6000,1.5,v*arrangementAir,.05);};
   const rim=(t,v)=>{runtime.recordInstrument?.("rim");return noise(t,"bandpass",2800,6,v,.03);};
   const clap=(t,v)=>{runtime.phenomenonPercussionCue?.(t);runtime.recordInstrument?.("clap");return noise(t,"bandpass",1500,1.2,v,.14,true);};
   function softBass(m,t,v){const o=ac.createOscillator(),g=ac.createGain();o.type="sine";o.frequency.value=hz(m);env(g,t,.01,v*1.1,.45);o.connect(g).connect(bus);o.start(t);o.stop(t+.6);}
@@ -321,17 +323,21 @@ export function initialize(runtime) {
   function dropHit(t,ct){kick2(t,vel(.4),38,.9);noise(t,"highpass",5000,.7,vel(.05),1.2);ct.slice(0,3).forEach(n=>hookInst('strings',n+12,t,vel(.03)));}
   function cowbell(t,v){runtime.recordInstrument?.("cowbell");const f=ac.createBiquadFilter(),g=ac.createGain();f.type="bandpass";f.frequency.value=800;f.Q.value=3;[540,800].forEach(fr=>{const o=ac.createOscillator();o.type="square";o.frequency.value=fr;o.connect(f);o.start(t);o.stop(t+.2);});env(g,t,.001,v,.12);f.connect(g).connect(bus);}
   function wood(t,v){runtime.recordInstrument?.("wood");noise(t,"bandpass",1100,8,v,.04);const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=820;env(g,t,.001,v*.5,.03);o.connect(g).connect(bus);o.start(t);o.stop(t+.06);}
-  const hatC=(t,v)=>hat(t,v,.035),hatO=(t,v)=>hat(t,v,.15);
+  const hatC=(t,v)=>hat(t,v*arrangementAir,.035),hatO=(t,v)=>hat(t,v*arrangementAir,.15);
   function blip(m,t,v){const o=ac.createOscillator(),g=ac.createGain(),d=ac.createGain();o.type="sine";o.frequency.value=hz(m);env(g,t,.002,v,.06);d.gain.value=.6;o.connect(g).connect(bus);g.connect(d).connect(dsend);o.start(t);o.stop(t+.1);}
-  function dubChord(ct,t){stab(ct.slice(0,3).map(n=>n+12),t,.35);}
-  function organChord(ct,t){ct.slice(0,3).forEach(n=>organ(n+12,t,vel(.05)));}
+  function dubChord(ct,t){stab(ct.slice(0,3).map(n=>inRegister(n,45,65)),t,.35);}
+  function organChord(ct,t){ct.slice(0,3).forEach(n=>organ(inRegister(n,48,71),t,vel(.05)));}
   function reese(m,t,v){runtime.recordInstrument?.("reese");const f=ac.createBiquadFilter(),g=ac.createGain();f.type="lowpass";f.frequency.value=480;[-12,12].forEach(dt=>{const o=ac.createOscillator();o.type="sawtooth";o.frequency.value=hz(m);o.detune.value=dt;o.connect(f);o.start(t);o.stop(t+.45);});env(g,t,.01,v*.7,.35);f.connect(g).connect(bus);}
   function bassInst(ty,m,t,v,region=MU.dnaA||MU.dnaT){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'bajo'},null,t,()=>bassInst(ty,m,t,v,region));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "reese":reese(m,t,v);return;case "organb":organ(m,t,v*1.5);return;case "roll":houseBass(m,t,v*.8,.3);return;}switch(ty){case "sub":softBass(m,t,v);break;case "acid":acid(m,t,v*.85,300+MU.speed*2200);break;case "pluck":houseBass(m,t,v,.5);break;case "fm":fmBass(m,t,v);break;case "boing":runtime.boing(m,t,v);break;}}
   function hookInst(ty,m,t,v,region=MU.dnaA||MU.dnaT){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'lead'},null,t,()=>hookInst(ty,m,t,v,region));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
-  function drums(gid,s,bar,t,tt,E,ct,DO){
+  function drums(gid,s,bar,t,tt,E,ct,DO,arrangement=MU.radio){
+    const previous=arrangementAir;arrangementAir=musicalCharacter(gid).air*(arrangement?.melodyRest?.2:1);
+    try{drumPattern(gid,s,bar,t,tt,E,ct,DO,arrangement);}finally{arrangementAir=previous;}
+  }
+  function drumPattern(gid,s,bar,t,tt,E,ct,DO,arrangement){
     if(runtime.inWorld()&&!DO&&runtime.depthGate?.(s)===false&&s%4!==0)return;
     const reduction=runtime.inWorld()?Math.max(0,-(runtime.influenceState?.values.groove||0)):0;
-    const L1=E>.12,L2=E>.32&&reduction<.4,L3=E>.55&&reduction<.2,variation=(bar>>2)%3;
+    const L1=E>.12,L2=E>.32&&reduction<.4,L3=E>.55&&reduction<.2&&!arrangement?.melodyRest,variation=(bar>>2)%3;
     if(reduction>.7&&s%4!==0)return;
     // Repeat the placement of ghost hits across four bars; velocity still breathes.
     const r=runtime.inWorld()?runtime.rng(runtime.seedOf(`groove:v1:${MU.dnaA?.key}:${gid}:${Math.floor(bar/4)}:${s}`)):rnd;
@@ -355,7 +361,7 @@ export function initialize(runtime) {
       if(L2&&at('tom'))tom(tt,80+(s%3)*20,vel(.09));
       if(L3&&at('cowbell'))cowbell(tt,vel(.02));
       if(L3&&at('shaker'))shaker(tt,vel(.013));
-      if(L3&&at('chord')&&bar%2===0&&!DO)ct.slice(0,3).forEach(n=>hookInst(G.chordI||'rhodes',n+12,tt,vel(.02)));
+      if(L3&&at('chord')&&bar%2===0&&!DO)ct.slice(0,3).forEach(n=>hookInst(G.chordI||'rhodes',hookPitch(G.chordI||'rhodes',n,musicalCharacter(gid)),tt,vel(.02)));
       return;
     }
     if(REFERENCE_GENRES[gid]){
@@ -374,7 +380,7 @@ export function initialize(runtime) {
       return;
     }
     switch(gid){
-      case "ambient":if(L2&&s===0&&bar%2===0&&!DO)pluck(ct[0]+24,t,vel(.035),4);break;
+      case "ambient":if(L2&&!arrangement?.melodyRest&&s===0&&bar%2===0&&!DO)pluck(inRegister(ct[0],45,67)-12,t,vel(.025),4);break;
       case "downtempo":if(L1&&(s===0||s===10))kick2(t,vel(.26),58,.35);if(L2&&s===8)snare(tt,vel(.09));if(L2&&s%4===2)hatC(tt,vel(.03));if(L3&&s%2===1&&r()<.4)hatC(tt,vel(.012));break;
       case "dub":if(L1&&s%4===0)kick2(t,vel(.22),48,.4);if(L2&&s%4===2)hatC(tt,vel(.025));if(L3&&(s===3||s===11)&&r()<.7&&!DO)dubChord(ct,tt);if(L3&&s%2===1&&r()<.3)shaker(tt,vel(.012));break;
       case "deep":if(L1&&s%4===0)kick2(t,vel(.28),52,.32);if(L2&&(s===4||s===12))clap(t,vel(.07));if(L2&&s%4===2)hatO(tt,vel(.035));if(L3&&s%2===1)shaker(tt,vel(.015));if(L3&&(s===6||s===14)&&r()<.6&&!DO)organChord(ct,tt);break;
@@ -400,7 +406,7 @@ export function initialize(runtime) {
         if(L1&&s%4===0&&!(s===12&&variation===2))kick2(t,vel(.22),55,.19);
         if(L2&&[3,variation===1?9:7,14].includes(s))wood(tt,vel(.04));
         if(L2&&s%4===2)hatC(tt,vel(.02));
-        if(L3&&s===13&&!DO)blip(ct[variation]+12,tt,vel(.03));break;
+        if(L3&&s===13&&!DO)blip(inRegister(ct[variation],45,65),tt,vel(.03));break;
       case "minimaltechno":
         if(L1&&s%4===0)kick2(t,vel(.29),47,.24);
         if(L2&&s%4===2)hatC(tt,vel(.025));
@@ -442,11 +448,12 @@ export function initialize(runtime) {
       case "heart":if(s===0||s===3)kick2(t,vel(s?.14:.22),45,.4);if(L3&&s===8&&r()<.4&&!DO)dubChord(ct,tt);break;
     }
   }
+  // Neighbors retain their own groove/timbre/register while sharing the current harmonic center.
   function playTrack(d,s,t,E,ct,arrangement=MU.radio){
-    const base=d&&d.track;if(!base)return;const tr=arrangement?{...base,...arrangement}:base;const sc=MU.dnaA?.scale||d.scale,bar=(MU.step>>4)&1,nt=(dg,base)=>base+MU.tr+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
+    const base=d&&d.track;if(!base)return;const tr=arrangement?{...base,...arrangement}:base;const sc=MU.dnaA?.scale||d.scale,trans=MU.dnaA?MU.tr:runtime.BIOMES[d.z].tr+d.trOff,profile=musicalCharacter(d.genre),bar=(MU.step>>4)&1,nt=(dg,base)=>base+trans+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
     const gid=d.genre,bs=arrangement?tr.bass[s]:gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
     if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel((gid==="rominimal"?.13:.17)*(arrangement?.grammar.bassLevel||1)),d);}
-    let h=tr.hook[s];if(h>=0&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);hookInst(tr.hookI,n,t,vel((.05+.05*E)*(arrangement?.grammar.hookLevel||1)),d);}
+    let h=tr.hook[s];if(h>=0&&!arrangement?.melodyRest&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);n=hookPitch(tr.hookI,n,profile);hookInst(tr.hookI,n,t,vel((.05+.05*E)*(arrangement?.grammar.hookLevel||1)*profile.level),d);}
   }
   function thunder(t){noise(t,"lowpass",900,.5,.25,.9,true);noise(t,"highpass",3000,.5,.06,.12);}
   const soon=(fn,origin="ambient")=>{if(ac)MU.queue.push(t=>runtime.withVoiceOrigin?runtime.withVoiceOrigin(origin,()=>fn(t)):fn(t));};

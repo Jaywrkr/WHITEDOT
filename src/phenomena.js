@@ -1,3 +1,4 @@
+import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js';
 import {WORLD_VISUAL,elementInk,elementAlpha} from './visual.js';
 export const PHENOMENON_NAMES={bird:'Ave de eco',shaker:'Semillero de caja',cloud:'Nube de pulso'};
 const POOLS={llanura:['bird','shaker'],bosque:['bird','shaker'],lago:['bird','shaker'],ruinas:['shaker','cloud'],jardin:['bird','shaker'],dunas:['bird','shaker'],cristales:['shaker','cloud'],faros:['bird','cloud'],tormenta:['cloud','shaker'],cueva:['shaker','cloud'],vacio:['cloud']};
@@ -21,7 +22,7 @@ export function initialize(runtime){
   }
   return items.sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y));
  }
- function phenomenonVoice(o){const region=runtime.regionOfPos(o.hx,o.hy),g=runtime.GEN[region.genre];return {role:o.kind==='bird'?'lead':o.kind==='shaker'?'perc':'bajo',instrument:o.kind==='bird'?g.hookP[o.voiceIndex%g.hookP.length]:o.kind==='shaker'?'snare':g.bassI};}
+ function phenomenonVoice(o){const region=runtime.regionOfPos(o.hx,o.hy),g=runtime.GEN[region.genre];return {role:o.kind==='bird'?'lead':o.kind==='shaker'?'perc':'bajo',instrument:o.kind==='bird'?hookInstruments(region.genre,g)[o.voiceIndex%hookInstruments(region.genre,g).length]:o.kind==='shaker'?'snare':g.bassI};}
  function cue(o,time){if(!o.cues.some(t=>Math.abs(t-time)<.025)){o.cues.push(time);if(o.cues.length>4)o.cues.shift();}}
  const audible=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&runtime.S.sound&&runtime.ac?.state==='running';
  function triggerPhenomenon(o,time){
@@ -31,7 +32,7 @@ export function initialize(runtime){
   function hit(t,index){
    let volume=(o.kind==='bird'?.035:o.kind==='shaker'?.032:.045)*(runtime.curatedVoiceGain?.(t,voice.role)||1);
    const emit=(gain=1)=>{volume*=gain;const sound=()=>{
-    if(o.kind==='bird')runtime.hookInst(voice.instrument,Math.min(76,tones[index%3]),t,volume);
+    if(o.kind==='bird')runtime.hookInst(voice.instrument,hookPitch(voice.instrument,tones[index%3],musicalCharacter(region.genre)),t,volume,region);
     else if(o.kind==='shaker')runtime.snareHit(t,volume);
     else{runtime.bassInst(voice.instrument,runtime.root(),t,volume);runtime.noiseHit(t,'lowpass',700,.7,volume*.4,.3,true);}
    };const patchEmit=()=>{if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(`phenomenon:${o.kind}`,region,voice,o,t,sound);else sound();};if(runtime.withVoiceEffect)runtime.withVoiceEffect(`phenomenon:${o.kind}`,region,voice,t,patchEmit);else patchEmit();};
@@ -44,7 +45,7 @@ export function initialize(runtime){
  function phenomenonPercussionCue(time){if(!audible())return;const o=nearbyPhenomena().find(o=>o.kind==='shaker');if(o)cue(o,time);}
  function phenomenaStep(step,bar,time){
   if(!audible()||autoBar===bar||runtime.initiativeLastBar===bar||runtime.currentPocket?.()?.kind==='quiet')return;
-  const o=nearbyPhenomena().find(o=>o.kind==='bird'?step===14&&bar%4===o.offset%4:o.kind==='cloud'?step===0&&bar%8===o.offset:step===12&&bar%4===o.offset%4);
+  const o=nearbyPhenomena().find(o=>o.kind==='bird'?!runtime.MU.radio?.melodyRest&&step===14&&bar%4===o.offset%4:o.kind==='cloud'?step===0&&bar%8===o.offset:step===12&&bar%4===o.offset%4);
   if(o&&triggerPhenomenon(o,time))autoBar=bar;
  }
  function phenomenonSources(){return nearbyPhenomena(250).map(o=>({object:o,kind:`phenomenon:${o.kind}`,name:PHENOMENON_NAMES[o.kind],voice:phenomenonVoice(o),distance:Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)}));}

@@ -2,6 +2,8 @@
 
 Revisión del código y planes al 13 de octubre de 2026. Propuesta de alcance para Jay, no anuncio de funciones implementadas ni promesa de perfección absoluta. El objetivo es una V1 publicable con comportamiento comprensible, música cuidada, progreso recuperable y estabilidad comprobada.
 
+La revisión vigente de figuras y agudos está en [REVISION_REGISTROS.md](REVISION_REGISTROS.md). Main `ffc5578` ya integra fases 1/2; las menciones de base de sus entregas siguientes son históricas. La fase 3 sigue pendiente.
+
 ## Estado y forma de trabajar
 
 Base de la fase 1 actual: main `7a0e8ff`, merge del PR #67, con este inventario y las entregas anteriores integradas. Fase 1 implementada en `feat/phase-01-universe-foundation`: [FASE_01.md](FASE_01.md). Al cierre main `e26ef93` ya incluye fase 1 (PR #68). Fase 2 implementada sobre esa base: [Paisajes vivos](FASE_02.md).

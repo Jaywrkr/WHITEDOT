@@ -1,5 +1,7 @@
 ## Fase 2 · Paisajes vivos y medición grande
 
+La revisión de [registros musicales y figuras](REVISION_REGISTROS.md) no amplía estos conteos: cambia el arreglo audible de los estilos existentes sin modificar las recetas del generador.
+
 Los 11 biomas base y 52 estilos permanecen; se agregan 33 perfiles de hábitat y seis familias de materia musical. La generación Original conserva exactamente las cifras anteriores.
 
 Auditar ambas generaciones con `npm run audit:universe -- 10000 4 1 classic` y `npm run audit:universe -- 10000 4 2 classic`. En 40.000 candidatos, el vivo presenta 39.998 firmas detalladas; vecinos terrestres con bioma coincidente 57,2 % (original 9,7 %), género coincidente 34,0 % (original 14,8 %). [Resultado vivo](scripts/phase-02-universe-sample.json) y [original](scripts/phase-02-original-sample.json).

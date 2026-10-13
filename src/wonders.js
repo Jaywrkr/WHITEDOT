@@ -1,3 +1,4 @@
+import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js';
 // Asombro: rarezas que rompen las reglas del mundo y ríos que funcionan como un set de DJ.
 // Todo es determinista (igual para todos). Lo raro se anuncia con rumores, no se regala.
 import {valueNoise} from './continents.js';
@@ -115,9 +116,10 @@ export function initialize(runtime){
  }
  // Cada compás en un río: unas gotas descendentes a tempo; más río abajo, más gotas.
  function riverBar(t){
-  if(!riverState.on||!runtime.S.sound)return;
-  const ct=runtime.chordTones(),six=runtime.SIX,n=2+Math.round(riverState.down*3);
-  for(let i=0;i<n;i++)runtime.pluck(ct[(n-i)%ct.length]+24,t+(i*2+1)*six,runtime.vel(.025+.02*riverState.down),4);
+  if(!riverState.on||!runtime.S.sound||runtime.MU.radio?.melodyRest)return;
+  const region=runtime.MU.dnaA||runtime.regionOfPos(runtime.S.wx,runtime.S.wy),profile=musicalCharacter(region.genre),g=runtime.GEN[region.genre];
+  const instrument=runtime.MU.radio?.hookI||hookInstruments(region.genre,g)[0],ct=runtime.chordTones(),six=runtime.SIX,n=Math.min(3,1+Math.round(riverState.down*2));
+  for(let i=0;i<n;i++)runtime.hookInst(instrument,hookPitch(instrument,ct[(n-i)%ct.length],profile),t+(i*2+1)*six,runtime.vel(.018+.012*riverState.down),region);
  }
 
  Object.defineProperties(runtime,{
