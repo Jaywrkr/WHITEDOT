@@ -12,7 +12,7 @@ export function initialize(runtime) {
   const cancelHold=()=>{clearTimeout(holdTimer);holdTimer=null;};
   // El juego escucha toda la pantalla: un arrastre que empieza sobre textos del HUD o la Voz también mueve al pixel.
   // Solo se excluyen botones, paneles abiertos y el Estudio.
-  const blocked=t=>!!t?.closest?.('button,a,input,select,textarea,label,summary,.modal:not([hidden]),#studioPanel,#scanner,#fxPanel');
+  const blocked=t=>!!t?.closest?.('button,a,input,select,textarea,label,summary,.modal:not([hidden]),#studioPanel,#scanner,#fxPanel,#glassPanel');
   let fromOverlay=false;
   addEventListener("pointerdown",e=>{
     if(e.target===cv||blocked(e.target))return;
@@ -22,6 +22,7 @@ export function initialize(runtime) {
   cv.addEventListener("pointerdown",e=>{fromOverlay=false;start(e);});
   function start(e){
     if(!e.isPrimary||activePointer!==null)return;
+    if(!fromOverlay&&runtime.glassPointerDown?.(e))return;
     runtime.audio();if(runtime.S.mode==="studio"){runtime.studioTap(e.clientX,e.clientY);return;}
     activePointer=e.pointerId;dragging=held=false;
     runtime.tapStart={t:performance.now(),x:e.clientX,y:e.clientY};ptr=null;if(!fromOverlay)try{cv.setPointerCapture(e.pointerId);}catch(_){}   // sin captura sobre textos: así un toque en la Voz la sigue abriendo
@@ -29,6 +30,7 @@ export function initialize(runtime) {
     else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   }
   addEventListener("pointermove",e=>{
+    if(runtime.glassPointerMove?.(e))return;
     if(e.pointerId!==activePointer||held||!runtime.tapStart)return;
     if(Math.hypot(e.clientX-runtime.tapStart.x,e.clientY-runtime.tapStart.y)>=14){dragging=true;cancelHold();}
     if(runtime.inWorld()&&dragging){
@@ -39,6 +41,7 @@ export function initialize(runtime) {
     }else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   });
   const up=e=>{
+    if(runtime.glassPointerUp?.(e))return;
     if(e.pointerId!==activePointer)return;
     cancelHold();
     if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240)runtime.sonar();

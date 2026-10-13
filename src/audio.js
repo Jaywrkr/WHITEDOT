@@ -255,6 +255,7 @@ export function initialize(runtime) {
     if(runtime.inWorld()&&s===0&&(MU.step>>4)%2===1)MU.singers.slice(0,2).forEach(o=>{runtime.speciesSound(o.s,t+SIX*2,true,o.personality,o);setTimeout(()=>{o.lit=1;},Math.max(0,(t+SIX*2-ac.currentTime)*1000));});
     // lo que tocas espera la siguiente corchea (con un poco de vida humana)
     if(s%2===0){let m=0;while(MU.q8.length&&m<3){const it=MU.q8.shift(),t2=t+jit()*1.5;it.fn(t2);if(it.vis)setTimeout(it.vis,Math.max(0,(t2-ac.currentTime)*1000));m++;}}
+    runtime.glassStep?.(s,bar,t);
     runtime.phenomenaStep?.(s,bar,t);
     let n=0;while(MU.queue.length&&n<4){MU.queue.shift()(t);n++;}
   }

@@ -103,3 +103,7 @@ La música gusta; limpiar antes de expandir. Después estabilizar cruces, defini
 ## Seguimiento: fase 2
 
 Los hallazgos C, D, E y F quedan corregidos en `feat/02-layer-jam-consistency`, basada en `fe32566`; el informe anterior describe la base auditada. Nueva prueba `layer_jam_smoke.py` confirma restauración de Subsuelo/Cielo después del Estudio, aislamiento de fuentes/eco por capa y exclusión de banda/ambiente de grabación. Pendientes PWA offline y refinamiento visual se mantienen separados.
+
+## Cierre de las primeras diez fases
+
+Además de corregir los cruces revisados, la cadena añade catálogo/recetas, distribución compatible, reglas visuales, quietud, favoritos, orientación, autopilot y vidrios cromáticos. Ya no aplicar las antiguas afirmaciones de ausencia de favoritos/autopilot a la rama 10; describían main 5413d5f. PWA offline completo, escenas y red siguen pendientes. Integración en RAMAS.md.

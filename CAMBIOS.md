@@ -1,12 +1,12 @@
 # WHITEDOT: inventario de cambios y contexto para revisión
 
-Revisión: 2026-10-13. Leer junto con [HANDOFF.md](HANDOFF.md), [PENDIENTES.md](PENDIENTES.md) y [REVISION.md](REVISION.md). Inventario desde prototipo `596fa31` hasta main `5413d5f` (PR #35), más esta rama de revisión/nitidez. Las mediciones de cada etapa se conservan como historia, no nivel actual garantizado.
+Actualizado al cierre de la sesión del 12 de octubre de 2026 (Guayaquil). Leer junto con [HANDOFF.md](HANDOFF.md), [PENDIENTES.md](PENDIENTES.md) y [REVISION.md](REVISION.md). Inventario desde prototipo `596fa31` hasta main `5413d5f` (PR #35), más esta rama de revisión/nitidez. Las mediciones de cada etapa se conservan como historia, no nivel actual garantizado.
 
 ## Estado exacto para revisión
 
 - Main `5413d5f` incluye etapas 1–35: instrumentos procedurales, Atlas, 52 ritmos, continentes, mapas, PWA, rarezas, vida, capas, looper, banda y FX.
 - Ninguna de esas funciones sigue pendiente del PR indicado en textos antiguos. Etapas 26–35 conservan los nombres de sus ramas originales como trazabilidad.
-- Esta rama `review/claude-audio-clarity` añade etapa 36; pendiente de PR/merge de Jay.
+- La rama 1 `review/claude-audio-clarity` añade etapa 36. Sus descendientes implementan fases 2–10 de esta sesión. Todas están subidas en cadena; integración a cargo de Jay, orden/base/commit en RAMAS.
 - 26 suites Node y diez smokes aprobados durante esta revisión. Render de audio real y hallazgos pendientes en REVISION.
 - Flujo: rama por etapa, implementar/verificar, commit/push. Jay crea PR/merge. No publicar directamente en main ni ejecutar todas las propuestas por una aprobación.
 
@@ -240,3 +240,11 @@ Se inventarían todas las etapas de producto del historial desde `596fa31`, incl
 ### Fase 9 de la cadena: Autopilot musical
 
 `feat/09-musical-autopilot`. Paseo musical desde Favoritos y viaje automático al destino de esta capa. Movimiento lento, pausa en menús/Escuchar/Estudio y al ocultar la pestaña, cancelación manual o con Detener/Escape, llegada y salida del Mundo. Consume linterna normalmente y compensa movimiento invertido. No se reanuda solo tras recarga. Logro Dejarse llevar por un minuto de viaje; el control manual siempre tiene prioridad. Pruebas: 32 suites Node y smoke de viaje, pausas, linterna, cancelación y llegada incluso con movimiento invertido en móvil/escritorio. Ver RAMAS.md.
+
+### Fase 10 de la cadena: Tres vidrios cromáticos musicales
+
+`feat/10-chromatic-glass`. Instalaciones originales de tres piezas translúcidas: arrastrar sus aros o usar controles gira las capas, revela figuras por superposición y cambia notas/acento a tempo. Sus voces dependen de la región. La orientación y el descubrimiento se guardan, aparecen en Escuchar y Bitácora, y hay logros por girar y alinear. Un ejemplo está cerca del punto inicial de Origen; otros se distribuyen por receta sin mares. Color local, fondo negro y jugador blanco. Los espejos y cajas musicales son fases futuras. Pruebas: 33 suites Node y smoke de arrastre sin mover jugador, controles, respuesta sonora, logros, recarga, Escuchar y Bitácora en móvil/escritorio. Ver RAMAS.md.
+
+## Cierre de sesión: diez fases
+
+Esta copia corresponde a la fase 10 e incluye todas sus antecesoras. Documentación anterior conserva la historia de main auditado y cada etapa; RAMAS es la referencia vigente de integración. Añadidos favoritos/destinos/vidrios al guardado v4, logros y presentación en Bitácora, pruebas y módulos. Los ecos siguen temporales; espejos, cajas musicales, nuevas culturas, escenas exactas, audio/video exportable y multiplayer no se han implementado en esta tanda.

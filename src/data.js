@@ -72,6 +72,8 @@ export function initialize(runtime) {
   const PROPK={llanura:"piedra",bosque:"hongo",jardin:"campanilla",dunas:"cactus",tormenta:"antena",cueva:"gota",vacio:"astro"};
   const SPECIES=[["luciernaga","Luciérnagas","Huyen si te acercas. Si las tocas, suenan."],["arbol","Árboles de luz","Crecen en el bosque y brillan cuando pasas."],["estanque","Agua","Bajo el agua todo suena distinto."],["bandada","Bandadas","Cruzan el cielo. Vuela con ellas."],["caminante","Caminantes","Si te quedas cerca, te siguen y cantan contigo."]];
   const ACH=[
+   ["vidrio1","Color que suena","Giraste tu primer vidrio musical."],
+   ["vidrioArmonia","Tres capas de luz","Alineaste los tres vidrios de una instalación.",1],
    ["paseo1","Dejarse llevar","Escuchaste un minuto viajando con autopilot."],
    ["regresoMusical","Otra vez aquí","Regresaste a un favorito usando su orientación."],
    ["favorito1","Quiero volver","Guardaste tu primer punto musical favorito."],
@@ -158,6 +160,9 @@ export function initialize(runtime) {
   const COLORS=[["#ffffff","Blanco",null],["#f0d27a","Ámbar","tope"],["#7fe0b0","Menta","estrella1"],["#6fd3ff","Cian","mundo"],["#ff8a7a","Coral","r3"],["#b9a2ff","Lila","oculto"]];
   // La Voz del sistema: sarcástica, directa, con cariño por debajo. Estas son para que Jay las corrija.
   const VOZ={
+   vidrio1:"Mover el color también mueve la música. Ya tienes otro instrumento.",
+   vidrioArmonia:"Tres vidrios mirando al mismo lado. Por una vez, se pusieron de acuerdo.",
+   glass:"Gira los aros o usa los tres controles. Sus cruces revelan figuras y cada vidrio tiene una voz distinta.",
    paseo1:"El mundo sigue tocando. Tú puedes mirar por la ventana.",
    regresoMusical:"Volviste al lugar. La música siguió viviendo mientras no estabas.",
    favorito1:"Encontraste un lugar al que quieres volver. Ahora tiene nombre y dirección.",

@@ -1,8 +1,8 @@
 # WHITEDOT: fases, implementaciones e ideas por decidir
 
-Revisión: 2026-10-13, sobre `main` `5413d5f` (PR #35). Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
+Actualizado al cierre de las primeras diez fases de la sesión del 12 de octubre de 2026 (Guayaquil). Base main `5413d5f`; cadena implementada hasta fase 10, ver RAMAS. Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
 
-**Una fase = una rama revisable**, implementación, pruebas, commit y push; Jay crea PR/merge. Jay autorizó en esta sesión las fases 1–10 en cadena; las fases 11–31 siguen como propuestas, no autorización automática. Ver RAMAS.md. Si una fase crece demasiado, dividirla antes de implementar. La fase 1 está implementada en la rama de esta revisión; lo demás sigue pendiente salvo las bases indicadas.
+**Una fase = una rama revisable**, implementación, pruebas, commit y push; Jay crea PR/merge. Jay autorizó en esta sesión las fases 1–10 en cadena; las fases 11–31 siguen como propuestas, no autorización automática. Ver RAMAS.md. Si una fase crece demasiado, dividirla antes de implementar. Las fases 1–10 están implementadas en sus ramas encadenadas; falta el PR/merge de Jay en ese orden. Las fases 11–31 siguen pendientes.
 
 ## Qué quiere Jay y cómo organizar el crecimiento
 
@@ -74,7 +74,7 @@ Paseo lento para escuchar y viaje a favorito, inicio explícito, cancelación al
 
 ## Tercer bloque: nuevos verbos e instalaciones musicales
 
-### 10. Vidrios de color musicales
+### 10. Vidrios de color musicales — implementada en rama 10
 
 Tres piezas translúcidas giratorias/deslizables; superposición revela geometrías y modifica capas, articulación o timbre. Instalación original con inspiración cinética/cromática; generador varía forma, cantidad, material y rol según receta.
 
@@ -88,7 +88,7 @@ Orientar reflejos entre objetos para activar ecos, secuencias o revelar pistas. 
 
 ### 12. Tocar, sostener, tensar, deslizar y soltar
 
-Cuerdas luminosas, piedras de ritmo, prismas secuenciadores y resonadores estáticos/móviles. Contacto sostenido abre nota/textura; tensión transforma articulación; desplazamiento reorganiza acentos o pasos. Introducir familias pequeñas por rama si hace falta. Individuos conservan rasgos distintos y mismos tipos pueden cambiar de rol entre regiones.
+Cuerdas luminosas, piedras de ritmo, prismas secuenciadores, cajas musicales que se abren/giran/conectan y resonadores estáticos/móviles. Contacto sostenido abre nota/textura; tensión transforma articulación; desplazamiento reorganiza acentos o pasos. Introducir familias pequeñas por rama si hace falta. Individuos conservan rasgos distintos y mismos tipos pueden cambiar de rol entre regiones.
 
 **Probar:** tocar varios minutos sin caminar ni sembrar, gestos compatibles con mover/pulsar/Escuchar, duración acotada y salida clara. Definir cambios temporales/persistentes.
 
@@ -112,7 +112,7 @@ Silenciar/solo bajo, percusión, acordes y melodía de radio con UI breve. Neces
 
 ### 16. Banda más expresiva
 
-Primera versión ya integrada: cuatro papeles, seguimiento y combos. Añadir turnos, entradas/salidas, retirar miembros, conversación y combinaciones sin doblar radio descontroladamente. Adaptación de patrones al carácter del lugar.
+Primera versión presente en main revisado: cuatro papeles, seguimiento y combos. Añadir turnos, entradas/salidas, retirar miembros, conversación y combinaciones sin doblar radio descontroladamente. Adaptación de patrones al carácter del lugar.
 
 **Probar:** se oye organizada, roles claros y agencia del jugador, límite de voces y volumen con banda completa.
 
