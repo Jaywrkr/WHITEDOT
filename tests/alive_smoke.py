@@ -33,7 +33,7 @@ with sync_playwright() as p:
   # Huellas y campamento anterior.
   for i in range(6):page.evaluate(f'()=>{{const r=window.__testRuntime;r.S.wx+=200;}}');page.wait_for_timeout(60)
   assert page.evaluate('window.__testRuntime.S.steps.length')>=5
-  page.evaluate('()=>{const r=window.__testRuntime;r.S.studio.x=0;r.S.studio.y=0;}');page.locator('#bDeploy').click();page.wait_for_timeout(300)
+  page.evaluate('()=>{const r=window.__testRuntime;r.S.studio.x=0;r.S.studio.y=0;}');page.locator('#bMenu').click();page.locator('#bTools').click();page.locator('#bDeploy').click();page.wait_for_timeout(300)
   assert page.evaluate('(window.__testRuntime.S.camps||[]).length')>=1;page.locator('#stExit').click()
   # Confluencia: dos ríos, la música del otro río se mezcla.
   page.evaluate('''()=>{const r=window.__testRuntime;for(let i=0;i<400000;i++){const x=(Math.random()-.5)*60*3600,y=(Math.random()-.5)*60*3600,q=r.riverAt(x,y);if(q&&q.conf){r.S.wx=x;r.S.wy=y;return;}}throw Error('no confluence');}''')

@@ -22,15 +22,16 @@ with sync_playwright() as p:
   point=page.evaluate("""()=>{const r=window.__testRuntime,s=r.nearbyPatches(3000).find(s=>s.id==='patch:0,0');r.S.wx=s.x;r.S.wy=s.y;return {out:{x:r.W/2+s.out.x-s.x,y:r.H/2},input:{x:r.W/2+s.inputs[0].x-s.x,y:r.H/2+s.inputs[0].y-s.y}};}""")
   page.wait_for_timeout(300);before=page.evaluate('[window.__testRuntime.S.wx,window.__testRuntime.S.wy]')
   page.mouse.move(point['out']['x'],point['out']['y']);page.mouse.down();page.mouse.move(point['input']['x'],point['input']['y'],steps=8);page.mouse.up()
-  assert page.locator('#patchPanel').is_visible();assert page.evaluate('window.__testRuntime.S.patchSites["patch:0,0"].connections')==[0]
+  assert not page.locator('#patchPanel').is_visible();assert page.evaluate('window.__testRuntime.S.patchSites["patch:0,0"].connections')==[0]
   assert page.evaluate('[window.__testRuntime.S.wx,window.__testRuntime.S.wy]')==before,'cable moved player'
   page.evaluate("""()=>{const r=window.__testRuntime,s=r.nearbyPatches(300)[0];r.patchGardenStep(0,200,r.ac.currentTime+.1);for(let i=0;i<100;i++)r.influenceTick(.05,false);if(Math.abs(r.influenceState.values[s.inputs[0].channel])<.1)throw Error('patch did not influence composition');}""")
+  page.mouse.click(point['out']['x']-30,point['out']['y']);assert page.locator('#patchPanel').is_visible()
   page.screenshot(path=f'/tmp/whitedot-patchgarden-{label}.png')
   page.locator('#patchClose').click()
   if label=='mobile':page.touchscreen.tap(point['input']['x'],point['input']['y'])
   else:page.mouse.click(point['input']['x'],point['input']['y'])
   assert page.evaluate('window.__testRuntime.S.patchSites["patch:0,0"].connections')==[]
-  page.locator('#patchClose').click()
+  assert not page.locator('#patchPanel').is_visible()
   # Alternative connection: tap the output, then tap the input.
   page.mouse.click(point['out']['x'],point['out']['y']);page.mouse.click(point['input']['x'],point['input']['y'])
   assert page.evaluate('window.__testRuntime.S.patchSites["patch:0,0"].connections')==[0]

@@ -33,3 +33,5 @@ Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; fase 12 en ade
 - Siguiente rama encadenada: `feat/12a-optional-sound-pins` — Sonidos libres y fijación voluntaria. Base: rama inmediatamente anterior; Jay crea PR/merge.
 
 - Siguiente rama encadenada: `feat/12b-patch-gardens` — Jardines modulares con cables. Base: rama inmediatamente anterior; Jay crea PR/merge.
+
+- Siguiente rama encadenada: `polish/12c-mobile-space` — Explorar con más vacío y menos interfaz. Base: rama inmediatamente anterior; Jay crea PR/merge.
