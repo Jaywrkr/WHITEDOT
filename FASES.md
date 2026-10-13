@@ -14,7 +14,7 @@ Las ramas antiguas se retiran de GitHub después de publicar y verificar estas c
 | 4 | `phase/04-living-musical-encounters` | 15–19 · Otros cinco encuentros | Animales de intercambio, corrientes reversibles, flores de presión, esculturas de sombra y cajas de posibilidades. |
 | 5 | `phase/05-music-ui-and-release-polish` | 20–20 · Pulido final | Paletas de 52 estilos, densidad musical, prioridad del borrado, accesibilidad, móvil y shell offline completo. |
 
-Esta copia implementa las fases 1–2. Las fases siguientes añaden contenido y pulido progresivamente.
+Esta copia implementa las fases 1–3. Las fases siguientes añaden contenido y pulido progresivamente.
 
 ## Probar los encuentros
 

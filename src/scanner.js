@@ -30,7 +30,7 @@ export function initialize(runtime) {
     const region=runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
     document.getElementById('scannerRegion').textContent=`${region.name}${runtime.currentPocket()?.kind?" · "+POCKET_NAMES[runtime.currentPocket().kind]:""} · ${runtime.GEN[region.genre].name} · ${region.bpm} BPM · ${MODES[region.scale.join(",")]||"Escala regional"}`;
     list.replaceChildren();
-    const sources=region.recipe?.layer&&region.recipe.layer!=="superficie"?[]:[...nearbySources(runtime.sceneChunk?new Map([...runtime.wchunks].map(([id,c])=>[id,runtime.sceneChunk(c)])):runtime.wchunks,runtime.S.wx,runtime.S.wy),...(runtime.phenomenonSources?.()||[]),...(runtime.glassSources?.()||[]),...(runtime.mirrorSources?.()||[])].sort((a,b)=>a.distance-b.distance).slice(0,5);
+    const sources=region.recipe?.layer&&region.recipe.layer!=="superficie"?[]:[...nearbySources(runtime.sceneChunk?new Map([...runtime.wchunks].map(([id,c])=>[id,runtime.sceneChunk(c)])):runtime.wchunks,runtime.S.wx,runtime.S.wy),...(runtime.phenomenonSources?.()||[]),...(runtime.glassSources?.()||[]),...(runtime.mirrorSources?.()||[]),...(runtime.encounterSources?.()||[])].sort((a,b)=>a.distance-b.distance).slice(0,5);
     for(const source of sources) {
       const sp=source.object.s;
       const own=sp?runtime.regionOfPos(...sp.id.split(':')[0].split(',').map(n=>+n*runtime.REG*runtime.WCH+1)):runtime.regionOfPos(source.object.x,source.object.y);
