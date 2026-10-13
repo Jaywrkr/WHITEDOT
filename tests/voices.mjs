@@ -1,3 +1,4 @@
+import {musicalCharacter} from '../src/musical-character.js';
 import assert from 'node:assert/strict';
 import { initialize as data } from '../src/data.js';
 import { initialize as progress } from '../src/progress.js';
@@ -13,7 +14,7 @@ for(let x=-20;x<=20;x++)for(let y=-10;y<=10;y++) {
  const profile=get();
  assert.deepEqual(profile,get(),'region changed voice assignment on revisit');
  assert.equal(JSON.stringify(region),before,'voice generation mutated map or creatures');
- assert.equal(new Set(Object.values(profile).map(v=>v.role)).size,5);
+ assert.equal(new Set(Object.values(profile).map(v=>v.role)).size,musicalCharacter(region.genre).upper?5:4);
  roles.add(profile.arbol.role);instruments.add(profile.arbol.instrument);
  if(runtime.BIOMES[region.z].id==='bosque')forests.push(profile.arbol.role);
 }

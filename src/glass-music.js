@@ -1,9 +1,10 @@
+import {voiceRegister} from './musical-character.js';
 const CHANNELS=['bass','groove','melody'];
 export function glassChannel(region,pane,seedOf){return CHANNELS[(pane+seedOf(`glass-role:${region.key}`)%3)%3];}
 export function glassVoice(region,pane,genres,seedOf){
  const channel=glassChannel(region,pane,seedOf),g=genres[region.genre],role=channel==='bass'?'bajo':channel==='groove'?'perc':seedOf(`glass-harmony:${region.key}`)%2?'acorde':'lead';
  const pool=channel==='bass'?(g.bassP||[g.bassI]):channel==='groove'?(g.percP||['tom','wood','rim']):g.hookP;
- return {role,instrument:pool[seedOf(`glass-tone:${region.key}:${pane}`)%pool.length],degree:0,response:4,low:channel==='bass'?36:48,high:channel==='bass'?55:67};
+ return voiceRegister({role,instrument:pool[seedOf(`glass-tone:${region.key}:${pane}`)%pool.length],degree:0,response:4,low:channel==='bass'?36:48,high:channel==='bass'?55:67},region.genre);
 }
 export function glassShape(angles,pane,region,seedOf){
  const a=angles.map(x=>((x%(Math.PI*2))+Math.PI*2)%(Math.PI*2));

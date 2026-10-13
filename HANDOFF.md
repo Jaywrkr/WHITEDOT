@@ -1,3 +1,11 @@
+# Continuar WHITEDOT · revisión visual y musical
+
+Rama actual: `fix/musical-registers-and-visual-inventory`, desde main `ffc5578` (PR #69). Fases 1 y 2 integradas. Jay crea PR/merge; el asistente hace commit/push, una rama amplia por bloque. [Entrega actual y pruebas](REVISION_REGISTROS.md). [Imagen numerada](docs/images/atlas-visual.png).
+
+Se revisaron los registros de los 52 estilos, sus paletas y frases de descanso. La política vive en `src/musical-character.js`, fuera del generador: no añadir estilos a GEN globalmente sin revisar compatibilidad de mundos. La música en Original y vivo cambia deliberadamente; sus posiciones/guardados no. El nuevo SW incluye ese módulo. No rediseñar figuras antes de recibir las elecciones de Jay sobre la lámina. La fase 3 mayor y las fases 4–10 permanecen pendientes; esta solicitud se resolvió primero.
+
+<details><summary>Entrega de fase 2 e historial anterior (ya integrado)</summary>
+
 # Continuar WHITEDOT · Fase 2
 
 Rama actual: `feat/phase-02-living-world-recipes`. Comenzó desde fase 1 `7bed0ca`; actualizada al cierre sobre main `e26ef93`, después de que Jay integrara fase 1 mediante PR #68. Crear el PR de fase 2 hacia main. Una rama amplia por fase; el asistente prepara, prueba, hace commit/push; Jay crea PR/merge.
@@ -717,6 +725,8 @@ Estado actual de este pedido: ramas 13 → 14 → 15, separadas de las fases pro
 - **Fase 3: Primeros cinco encuentros.** Nubes, tejedoras, pozos de silencio, semillas orbitales y piedras de capas; selector de pruebas en Semillas.
 - **Fase 4: Otros cinco encuentros.** Animales de intercambio, corrientes reversibles, flores de presión, esculturas de sombra y cajas de posibilidades.
 - **Fase 5: Pulido final.** Paletas de 52 estilos, densidad musical, prioridad del borrado, accesibilidad, móvil y shell offline completo.
+
+</details>
 
 </details>
 

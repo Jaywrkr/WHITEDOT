@@ -2,15 +2,15 @@
 
 Un punto blanco en un mundo negro que compone música electrónica mientras lo exploras. Camino diario, Mundo procedural y Estudio; 11 biomas y 52 estilos actuales. Por Jay · [@jaywrkr](https://instagram.com/jaywrkr).
 
-## Entrega actual: fase 2 · Paisajes vivos
+## Entrega actual: revisión visual y registros musicales
 
-Rama **`feat/phase-02-living-world-recipes`**, basada en main `e26ef93` (PR #68), que ya incluye fase 1. Añade 33 perfiles de hábitat sobre los 11 biomas, campos de clima/fertilidad, seis familias musicales pequeñas, composición regional y vecinos más relacionados. Amplio vivo: regiones de **10.800 unidades**. [Detalle y límites](FASE_02.md).
+Rama **`fix/musical-registers-and-visual-inventory`**, desde main `ffc5578` (PR #69). Fases 1 y 2 ya integradas. [Lámina con 118 vistas numeradas de las figuras reales](docs/images/atlas-visual.png), para elegir qué rediseñar. Incluye muestras de las variantes procedurales, ampliadas para revisión.
 
-**Probar: Menú → Explorar mundos → Paisajes vivos → Humedal / Salinas / Basalto / Micelio.** Toca, modela y permanece cerca de elementos; el color sigue localizado y el menú es el único control permanente. Bitácora y logros registran los descubrimientos nuevos.
+La radio deja espacio a frases de bajo/percusión sin melodía obligatoria; los 52 estilos usan registros y presencia melódica diferenciados. Voces, vidrios y aves tienen techos audibles controlados, paletas más propias de cada género y mayor margen de salida en escenas densas. Los gestos deliberados siguen respondiendo. [Detalle y pruebas](REVISION_REGISTROS.md).
 
-La generación Original, sus coordenadas y guardados se conservan. Ambas generaciones tienen direcciones, favoritos y respaldos separados; elegir otra no migra una partida silenciosamente. La base de recuperación/cachés de [fase 1](FASE_01.md) permanece.
+**Probar: Menú → Explorar mundos → Paisajes vivos → Humedal / Salinas / Basalto / Micelio**, o escuchar la partida Original. La revisión musical funciona en ambas generaciones. Paisajes vivos aporta 33 perfiles sobre los 11 biomas, seis familias pequeñas, clima y vecinos relacionados; Amplio vivo tiene regiones de **10.800 unidades**. [Fase 2](FASE_02.md).
 
-Jay ya integró fase 1. Crear el PR de esta fase 2 **directamente hacia main**; Jay lo revisa y hace merge. Una rama amplia por fase: [FASES_UNIVERSO.md](FASES_UNIVERSO.md). El asistente no publica directamente.
+Coordenadas y guardados separados de Original/vivo se conservan. Jay crea el PR de esta revisión hacia main y hace merge. Una rama amplia por bloque: [FASES_UNIVERSO.md](FASES_UNIVERSO.md); la expansión mayor de instrumentos de fase 3 sigue pendiente.
 
 ## Jugar y probar
 
@@ -48,7 +48,7 @@ Guardado local: borrar los datos del navegador elimina progreso; exporta antes. 
 
 ## Documentación vigente
 
-[Entrega y pruebas](FASE_02.md) · [Base fiable](FASE_01.md) · [Diez fases](FASES_UNIVERSO.md) · [Inventario V1](V1_PRODUCCION.md) · [Pendientes](PENDIENTES.md) · [Rama y merge](RAMAS.md) · [Continuar trabajo](HANDOFF.md) · [Variedad](VARIEDAD.md).
+[Revisión musical y visual](REVISION_REGISTROS.md) · [Paisajes vivos](FASE_02.md) · [Base fiable](FASE_01.md) · [Diez fases](FASES_UNIVERSO.md) · [Inventario V1](V1_PRODUCCION.md) · [Pendientes](PENDIENTES.md) · [Rama y merge](RAMAS.md) · [Continuar trabajo](HANDOFF.md) · [Variedad](VARIEDAD.md).
 
 En el mapa original, la medición antigua mantiene **39.952 recetas detalladas entre 40.000 regiones**; no es el total del universo ni una cifra de canciones únicas. La auditoría de Paisajes vivos mide recetas y vecindad por semilla; esos números no cuentan canciones ni certifican variedad percibida.
 

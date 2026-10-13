@@ -1,15 +1,14 @@
 # Integración y trabajo agrupado
 
-Base remota verificada `e26ef93` (PR #68); fase 1 ya integrada. Las ocho filas históricas siguientes y el inventario V1 ya están integrados. No recrear sus PR.
+Base remota verificada `ffc5578` (PR #69). Fases 1 y 2 y las ocho filas históricas siguientes ya están integradas; no recrear esos PR.
 
 ## Rama actual
 
-| Fase vigente | Rama | Base | Entrega |
-|---:|---|---|---|
-| 1 | `feat/phase-01-universe-foundation` | `main` · `7a0e8ff` | Guardado/respaldos, direcciones compatibles, cachés limitadas, contratos y auditoría/pruebas |
-| 2 | `feat/phase-02-living-world-recipes` | `main` · `e26ef93` | Paisajes vivos, 33 hábitats, seis familias, vecindad/clima/relieve, composición regional, selector y descubrimientos |
+| Bloque | Rama | Base | Entrega |
+|---|---|---|---|
+| Revisión previa a fase 3 | `fix/musical-registers-and-visual-inventory` | `main` · `ffc5578` | Atlas de 118 vistas nativas, registros/contraste de 52 estilos, frases sin hook obligatorio, control de octavas y margen de salida |
 
-**Fase 1 ya integrada mediante PR #68. Solo fase 2 requiere PR ahora, hacia main.** Se inició sobre fase 1 y se actualizó al main final con el mismo contenido base, sin conflictos. El asistente prepara, prueba, documenta y sube; Jay crea PR/merge. Fases 3–10 siguen pendientes: [FASES_UNIVERSO.md](FASES_UNIVERSO.md). Una rama amplia por fase; no se garantiza ausencia de conflictos ante cambios independientes o reescritura del historial. [Probar fase 2](FASE_02.md).
+Jay crea el PR de esta rama **hacia main** y hace merge. El asistente prepara, prueba, documenta y hace commit/push. [Detalle](REVISION_REGISTROS.md). Fases 3–10 siguen como plan: [FASES_UNIVERSO.md](FASES_UNIVERSO.md). Una rama amplia por bloque; no se garantiza ausencia de conflictos ante cambios independientes o reescrituras del historial.
 
 ## Cadena de referencia
 

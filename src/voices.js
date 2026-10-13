@@ -1,3 +1,4 @@
+import {musicalCharacter,hookInstruments,voiceRegister} from './musical-character.js';
 import {glassVoice} from './glass-music.js';
 import {ecologyVoice} from './ecology-model.js';
 import {encounterVoice} from './encounter-families.js';
@@ -18,15 +19,16 @@ export function createRegionalVoices(region, biomes, genres, seedOf, rng) {
     const j = Math.floor(random() * (i + 1));
     [kinds[i], kinds[j]] = [kinds[j], kinds[i]];
   }
-  const roles = region.ecology?['bajo','perc','acorde','lead','perc']:ROLES.slice();
+  const character=musicalCharacter(region.genre);
+  const roles = region.ecology||!character.upper?['bajo','perc','acorde','lead','perc']:ROLES.slice();
   for (let i = roles.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
     [roles[i], roles[j]] = [roles[j], roles[i]];
   }
   const genre = genres[region.genre];
   const calm = ['ambient','heart','downtempo','dub'].includes(region.genre);
-  const bassPool = [...new Set(genre.bassP||[genre.bassI, 'sub', calm ? 'fm' : 'pluck'])];
-  const melodyPool = [...new Set([...genre.hookP,...(genre.bassP?[]:[calm ? 'flute' : 'organ', 'keys'])])];
+  const bassPool = [...new Set(genre.bassP||[genre.bassI])];
+  const melodyPool = [...new Set(hookInstruments(region.genre,genre))];
   const percussionPool = genre.percP || (calm ? ['tom','wood','shaker'] : ['kick','conga','wood','rim','tom','shaker']);
   const voices = Object.create(null);
   kinds.forEach((kind, i) => {
@@ -34,8 +36,8 @@ export function createRegionalVoices(region, biomes, genres, seedOf, rng) {
     const pool = role === 'bajo' ? bassPool : role === 'perc' ? percussionPool : melodyPool;
     voices[kind] = Object.freeze({role, instrument:pool[Math.floor(random()*pool.length)],
       degree:Math.floor(random()*7), response:[2,3,6][Math.floor(random()*3)],
-      low:role==='bajo'?36:role==='agudo'?72:role==='acorde'?48:55,
-      high:role==='bajo'?55:region.ecology?69:role==='agudo'?84:role==='acorde'?72:79});
+      low:role==='bajo'?36:role==='agudo'?64:role==='acorde'?45:character.low,
+      high:role==='bajo'?55:Math.min(region.ecology?69:character.high,role==='acorde'?69:character.high)});
   });
   return Object.freeze(voices);
 }
@@ -44,7 +46,7 @@ export function initialize(runtime) {
   const cache = new Map(),blobCache=new Map();
   let voiceOrigin="ambient";
   function withVoiceOrigin(origin,emit){const previous=voiceOrigin;voiceOrigin=origin;try{return emit();}finally{voiceOrigin=previous;}}
-  function getVoice(kind, region) {
+  function rawVoice(kind, region) {
     if(kind.startsWith('ecology:')&&region.ecology)return ecologyVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng);
     if(/^installation:glass:[0-2]$/.test(kind))return glassVoice(region,Number(kind.at(-1)),runtime.GEN,runtime.seedOf);
     if(kind.startsWith('encounter:'))return encounterVoice(kind.slice(10),region,runtime.GEN,runtime.seedOf);
@@ -53,6 +55,9 @@ export function initialize(runtime) {
     const voices = cache.get(region.key);
     // Legacy or border objects absent from the region's own flora retain a stable voice.
     return voices[kind] || voices[Object.keys(voices)[runtime.seedOf(kind) % Object.keys(voices).length]];
+  }
+  function getVoice(kind,region){
+    return voiceRegister(rawVoice(kind,region),region.genre);
   }
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
     if (!runtime.ac || !region) return;
@@ -68,6 +73,8 @@ export function initialize(runtime) {
       while (n > voice.high) n -= 12;
       return n;
     };
+    // Only automatic upper voices rest; a player's gesture still receives its own response.
+    if(origin==='ambient'&&(voice.role==='lead'||voice.role==='agudo')&&runtime.MU.radio?.genre===region.genre&&runtime.MU.radio?.melodyRest)return;
     function hit(t, degree, strength) {
       runtime.soundCue?.(source,voice.role,t);
       const n = note(degree);let v = runtime.vel(strength * volume)*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
