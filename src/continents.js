@@ -26,7 +26,8 @@ export const STRANGE_START=8,STRANGE_FULL=60;
 export function strangeness(rx,ry){const d=Math.hypot(rx+.5,ry+.5),t=Math.min(1,Math.max(0,(d-STRANGE_START)/(STRANGE_FULL-STRANGE_START)));return t*t*(3-2*t);}
 export const ringOf=(rx,ry)=>Math.max(Math.abs(rx),Math.abs(ry));
 
-export function createContinents(seedOf,rng,genres){
+export function createContinents(seedOf,rng,genres,options={}){
+ const salt=n=>options.variant?seedOf('continent-noise:'+n):n;
  const seeds=new Map(),regions=new Map();
  // Familias de géneros con su tempo central, para dar identidad a cada continente.
  const fams={};for(const [id,g]of Object.entries(genres)){const f=familyOf(id);(fams[f]||=[]).push((g.bpm[0]+g.bpm[1])/2);}
@@ -43,8 +44,8 @@ export function createContinents(seedOf,rng,genres){
    name=name[0].toUpperCase()+name.slice(1);
    // La familia se elige en proporción a cuántos estilos tiene, para no desequilibrar el reparto global.
    let pick=r()*famList.reduce((t,f)=>t+fams[f].length,0),family=famList[0];for(const f of famList){pick-=fams[f].length;if(pick<=0){family=f;break;}}
-   if(home)family='house';
-   const fifths=home?0:Math.floor(r()*7)-3,hue=Math.floor(r()*360),tempo=fams[family][Math.floor(r()*fams[family].length)]+(r()-.5)*6;   // tempo de un estilo de la familia: hay continentes lentos y rápidos
+   if(home&&!options.variant)family='house';
+   const fifths=home&&!options.variant?0:Math.floor(r()*7)-3,hue=Math.floor(r()*360),tempo=fams[family][Math.floor(r()*fams[family].length)]+(r()-.5)*6;   // tempo de un estilo de la familia: hay continentes lentos y rápidos
    const pitch=((fifths*7)%12+12)%12;
    s={id:k,cell:[i,j],x:px,y:py,w,name:home?'Tierra de Origen':name,family,familyName:FAMILIES[family],fifths,tonic:NOTE[pitch],hue,tempo,size:w<.8?'isla':w<1.5?'continente':'continente gigante'};
   }
@@ -55,7 +56,7 @@ export function createContinents(seedOf,rng,genres){
  function at(rx,ry){
   const k=rx+','+ry;if(regions.has(k))return regions.get(k);
   // Deformación del dominio: fronteras curvas en vez de líneas rectas.
-  const wx=rx+.5+(valueNoise(rx/6,ry/6,11)-.5)*5,wy=ry+.5+(valueNoise(rx/6,ry/6,23)-.5)*5;
+  const wx=rx+.5+(valueNoise(rx/6,ry/6,salt(11))-.5)*5,wy=ry+.5+(valueNoise(rx/6,ry/6,salt(23))-.5)*5;
   const ci=Math.floor(wx/CELL),cj=Math.floor(wy/CELL);let best=null,e1=1e9,e2=1e9;
   for(let i=ci-2;i<=ci+2;i++)for(let j=cj-2;j<=cj+2;j++){const s=seedOfCell(i,j);if(!s)continue;
    const e=Math.hypot(wx-s.x,wy-s.y)/s.w;if(e<e1){e2=e1;e1=e;best=s;}else if(e<e2)e2=e;}
@@ -72,7 +73,7 @@ export function createContinents(seedOf,rng,genres){
  // Contraste fuerte a propósito: el vacío es la subida, lo lleno es el drop.
  function vitality(x,y,regionPx){
   const u=x/regionPx,v=y/regionPx;
-  const n=.72*valueNoise(u/3.2,v/3.2,41)+.28*valueNoise(u/1.1,v/1.1,57);
+  const n=.72*valueNoise(u/3.2,v/3.2,salt(41))+.28*valueNoise(u/1.1,v/1.1,salt(57));
   let vit=smooth(Math.min(1,Math.max(0,(n-.34)/.36)));
   const c=at(Math.floor(u),Math.floor(v));
   if(c.sea)vit*=.08;else vit*=.55+.45*Math.min(1,c.coast*2.5);

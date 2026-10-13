@@ -200,3 +200,7 @@ Validación de esta entrega: 37 suites de Node, 22 flujos de navegador y 19 rend
 ### Interfaz sin notas decorativas
 
 Rama `fix/13-silent-interface`. Botones, Voz y campos no activan el teclado de movimiento ni pulsos; un arrastre sobre texto del HUD solo inicia música cuando se convierte en movimiento real. Soltar sobre interfaz no lanza pulso. Se retiró el arpegio automático de entrada al Mundo y activar Prototipo no inicia audio. Los controles de instrumentos/efectos y el lienzo mantienen sus acciones musicales explícitas. Prueba de teclado en botones, cambios de ajustes, entrada sin jingle y pulso desde canvas.
+
+### Laboratorio de semillas completas
+
+Rama `feat/14-seed-laboratory`. Menú → Prototipo → Semillas permite elegir texto, presets, otra semilla, volver al centro o regresar a Mi partida. Cada semilla reconstruye bioma inicial, música, escala, patrones, criaturas, terreno, atmósfera y continentes; no solo teletransporta a otro género. El centro es tierra segura. Se recarga el contexto para no mezclar cachés/sonidos de dos mundos. Las pruebas tienen guardados separados por semilla y no sobrescriben favoritos ni progreso habitual. El Camino diario conserva su generador. Las semillas de prueba entran al Mundo sin completar el día; no es un desbloqueo de la partida principal. Esta rama aún no dibuja blobs nuevos: llegan en la siguiente unidad.

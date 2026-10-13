@@ -28,6 +28,7 @@ import { initialize as map } from './map.js';
 import { initialize as wonders } from './wonders.js';
 import { initialize as alive } from './alive.js';
 import { initialize as layers } from './layers.js';
+import { initialize as seeds } from './seeds.js';
 import { initialize as focusui } from './focusui.js';
 import { initialize as patchgarden } from './patchgarden.js';
 import { initialize as influence } from './influence.js';
@@ -92,6 +93,7 @@ atlas(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
 runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||runtime.lampLeft()<=0))runtime.S.mode="camino";
+seeds(runtime);
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
 // Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.

@@ -33,3 +33,5 @@ README/HANDOFF/CAMBIOS/PENDIENTES se actualizan por etapa. Logros/Bitácora se a
 Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; el pedido posterior autoriza las cinco unidades siguientes; las demás ideas continúan pendientes.
 
 - Siguiente rama encadenada: `fix/13-silent-interface` — Interfaz sin notas decorativas. Base: rama inmediatamente anterior; Jay crea PR/merge.
+
+- Siguiente rama encadenada: `feat/14-seed-laboratory` — Laboratorio de semillas completas. Base: rama inmediatamente anterior; Jay crea PR/merge.
