@@ -1,3 +1,7 @@
+# Estado de integración
+
+Las cinco fases que describe este documento ya están integradas en main mediante el PR #58 (`2959313`). No requieren nuevos PR. El trabajo nuevo sigue [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md).
+
 # Cinco fases para probar e integrar
 
 Esta cadena sustituye las veinte ramas creativas anteriores. Base actualizada: `main` en `63706eb`, que ya incluye semillas, blobs y prioridades. Las cinco ramas nacen consecutivamente de la anterior; cada fase tiene un commit propio. Jay crea los PR y realiza los merges.

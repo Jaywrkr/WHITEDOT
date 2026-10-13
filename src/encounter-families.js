@@ -1,7 +1,7 @@
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 // Each family owns its gestures; the world owns tuning, scheduling and density.
 export const FAMILIES={
- box:{name:'Caja de posibilidades',hint:'Toca para abrir o retirar una pieza · arrastra para frenar sus ruedas',role:'bass',shape:'box',
+ box:{name:'Caja de posibilidades',hint:'Abre la caja · edita pasos y mueve piezas',description:'Abre la caja para editar 16 pasos de Bajo, Groove o Motivo; toca la tapa para cerrarla. Toca una pieza para elegirla, arrástrala para cambiar su posición o mantenla para silenciarla.',role:'bass',shape:'box',
   tap(s){s.c=(s.c+1)%4;s.a=s.c===0?.15:.85;},drag(s,x,y){s.a=clamp(.5-y/140);s.b=clamp(.5+x/150);},
   influence(s){return {bass:(s.a-.5)*1.6,groove:(s.b-.5)*1.5,space:s.c===3?.5:0};},figure(s){return (Math.floor(s.b*5)+s.c)%8;},
   arrange(track,s){if(s.c===2||s.c===3)track.hook=track.hook.map((n,i)=>i%8===0?n:-1);if(s.b<.3)track.bass=track.bass.map((n,i)=>i%4===0?n:-1);return track;}},
@@ -17,7 +17,7 @@ export const FAMILIES={
   tap(s){s.c=s.c?0:1;s.a=s.a>.5?.2:.8;},drag(s,x,y){s.a=clamp(.5+x/140);s.b=clamp(.5-y/140);},
   influence(s){return {melody:(s.a-.5)*1.7,groove:(s.b-.5)*1.4};},figure(s){return (Math.floor(s.a*5)+s.c*2)%8;},
   arrange(track,s){if(s.a<.35)track.hook=[track.hook[0],...track.hook.slice(1).reverse()];if(s.c){const notes=track.hook.filter(n=>n>=0).slice(0,2);if(notes.length)track.hook=track.hook.map((n,i)=>i%4===2?notes[(i>>2)%notes.length]:n);}return track;}},
- animal:{name:'Animal de intercambio',hint:'Toca para cambiar su papel · arrastra para acercarlo a otro',role:'groove',shape:'animal',
+ animal:{name:'Animal de intercambio',hint:'Mantén para enseñar · toca para cambiar papel',description:'Mantén su cuerpo para iniciar dos compases de escucha. Toca objetos o pulsa en el vacío: el animal aprende el ritmo y el contorno de tu frase y responde por turnos. Arrastrarlo permite acercarlo a otro.',role:'groove',shape:'animal',
   tap(s){s.a=(s.a+.26)%1;s.c=1;},drag(s,x,y){s.dx=clamp(x,-100,100);s.dy=clamp(y,-100,100);s.b=clamp(.5+x/200);},
   tick(s,dt,near,context){if(!context)return;const o=context.object;o.homeX??=o.x;o.homeY??=o.y;o.x=o.homeX+(s.dx||0);o.y=o.homeY+(s.dy||0);const peers=context.runtime.encounterObjects||[];s.c=peers.some(p=>p!==o&&p.kind==='animal'&&Math.hypot(p.x-o.x,p.y-o.y)<210)?1:0;},
   voiceRole(s){return ['bass','groove','melody','space'][Math.min(3,Math.floor(s.a*4))];},
@@ -33,7 +33,7 @@ export const FAMILIES={
   tap(s){s.a=(s.a+1/3)%1;},drag(s,x,y){s.a=clamp(.5+x/160);s.b=clamp(.5-y/120);s.c=.65;},
   tick(s,dt,near,context){if(context)s.c=clamp(1-context.distance/(60+s.b*90));},
   influence(s){return {[['bass','groove','melody'][Math.min(2,Math.floor(s.a*3))]]:-s.c,space:s.b*.5};},figure(s){return Math.floor(s.a*7);}},
- weaver:{name:'Criatura tejedora',hint:'Toca para retirar un hilo · arrastra para cambiar sus uniones',role:'groove',shape:'weaver',
+ weaver:{name:'Criatura tejedora',hint:'Une puntos · toca un hilo para retirar',description:'Une sus anclas y objetos cercanos mediante arrastre o dos toques. La red cambia su figura musical; tocar un hilo lo retira. Hasta seis hilos, sin realimentación sonora.',role:'groove',shape:'weaver',
   tap(s){s.a=(s.a+.34)%1;},drag(s,x,y){s.a=clamp(.5+x/140);s.b=clamp(.5-y/140);},
   tick(s,dt,near){if(near)s.c=(s.c+dt*.1)%1;},
   influence(s){return {groove:(s.a-.5)*1.7,space:(.5-s.b)*1.3};},figure(s){return (Math.floor(s.a*3)+Math.floor(s.b*5))%8;}},

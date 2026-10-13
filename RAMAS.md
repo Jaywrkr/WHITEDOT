@@ -1,3 +1,9 @@
+# Rama actual
+
+`feat/deep-musical-encounters`, basada en main `2959313`. Profundiza redes tejidas, frases aprendidas y cajas editables. Jay crea PR y merge; el orden siguiente está en [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md). Las cinco fases anteriores ya están integradas.
+
+<details><summary>Documentación histórica de ramas</summary>
+
 # Orden vigente: cinco fases
 
 Consultar [FASES.md](FASES.md). La cadena antigua de veinte ramas queda sustituida. Main ya incluye las ramas 14, 15 y docs/16.
@@ -40,6 +46,9 @@ Merge normal conserva los commits antecesores y facilita la cadena. Si Jay usa s
 README/HANDOFF/CAMBIOS/PENDIENTES se actualizan por etapa. Logros/Bitácora se amplían cuando hay algo nuevo que el jugador pueda descubrir/aprender; una corrección técnica no introduce un logro artificial.
 
 Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; el pedido posterior autoriza las cinco unidades siguientes; las demás ideas continúan pendientes.
+
+
+</details>
 
 
 </details>

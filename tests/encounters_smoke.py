@@ -22,9 +22,9 @@ with sync_playwright() as p:
   before=page.evaluate(f"(()=>{{const r=__testRuntime,o=r.encounterObjects.find(o=>o.id==='preview:{kind}');window.enc=o;return {{x:r.S.wx,y:r.S.wy,a:o.state.a,b:o.state.b,c:o.state.c}};}})()")
   page.touchscreen.tap(295,422);page.wait_for_timeout(100)
   assert page.evaluate(f"__testRuntime.S.journal.encounters['{kind}']===1"),kind+' not discovered'
-  snapshot=page.evaluate('({a:enc.state.a,b:enc.state.b,c:enc.state.c})')
+  snapshot=page.evaluate('({a:enc.state.a,b:enc.state.b,c:enc.state.c,box:enc.state.box})')
   page.mouse.move(295,422);page.mouse.down();page.mouse.move(350,370,steps=8);page.mouse.up();page.wait_for_timeout(100)
-  after=page.evaluate('({a:enc.state.a,b:enc.state.b,c:enc.state.c})');assert after!=snapshot,(kind,snapshot,after)
+  after=page.evaluate('({a:enc.state.a,b:enc.state.b,c:enc.state.c,box:enc.state.box})');assert after!=snapshot,(kind,snapshot,after)
   assert page.evaluate(f'Math.hypot(__testRuntime.S.wx-{before["x"]},__testRuntime.S.wy-{before["y"]})<1'),kind+' moved player'
   assert page.evaluate('!__testRuntime.scanning')
   page.locator('#bMenu').click();page.wait_for_timeout(100);frozen=page.evaluate('JSON.stringify(enc.state)');page.wait_for_timeout(250);assert page.evaluate('JSON.stringify(enc.state)')==frozen,kind+' changed during menu'

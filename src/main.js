@@ -1,4 +1,5 @@
 import { initialize as accessibility } from './accessibility.js';
+import { initialize as encounterDepth } from './encounter-depth.js';
 import { initialize as encounters } from './encounters.js';
 import { initialize as clues } from './clues.js';
 import { initialize as creative } from './creative.js';
@@ -99,6 +100,7 @@ atlas(runtime);
 creative(runtime);
 clues(runtime);
 encounters(runtime);
+encounterDepth(runtime);
 accessibility(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}

@@ -1,5 +1,5 @@
 // Real Web Audio render of the scheduler, with a virtual clock and deterministic noise.
-export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null}={}) {
+export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false}={}) {
  const modules=await Promise.all(['data','progress','world','audio','voices','instruments','patches','effects','spatial','influence','blobs'].map(id=>import(`../src/${id}.js`)));
  const r=Object.create(null),duration=10,context=new OfflineAudioContext(2,duration*sampleRate,sampleRate);
  const original={AudioContext:window.AudioContext,setInterval:window.setInterval,setTimeout:window.setTimeout,random:Math.random};
@@ -22,9 +22,15 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
    document.querySelectorAll('.modal').forEach(m=>m.hidden=true);
    const url=new URL(location.href);url.searchParams.set('encounter',encounter);history.replaceState(null,'',url);
    r.S.previewSeed='audio-review';r.S.wx=r.S.wy=r.REG*r.WCH/2;
-   const {initialize}=await import('../src/encounters.js');initialize(r);r.unlock=()=>{};r.encounterTick(.05,false);
+   const {initialize}=await import('../src/encounters.js');initialize(r);r.unlock=()=>{};const depth=await import('../src/encounter-depth.js');depth.initialize(r);r.encounterTick(.05,false);
    const object=r.encounterObjects.find(o=>o.id==='preview:'+encounter);if(!object)throw Error('missing audio encounter '+encounter);
    const {FAMILIES}=await import('../src/encounter-families.js');FAMILIES[encounter].drag(object.state,70,-60,200);object.state.used=true;object.state.active=999;
+   if(deep){
+    const model=await import('../src/encounter-depth-model.js');
+    if(encounter==='weaver'){const nodes=r.depthAnchors(object);r.depthConnect(object,nodes[0],nodes[1]);r.depthConnect(object,nodes[1],nodes[2]);}
+    if(encounter==='box'){object.state.a=.9;for(const part of object.state.box.parts){part.enabled=true;part.steps.fill(0);}}
+    if(encounter==='animal'){object.state.dialogue=model.startDialogue();for(const [step,degree]of [[0,0],[4,2],[12,4],[24,2]])model.captureDialogue(object.state.dialogue,{step,degree});model.finishDialogue(object.state.dialogue);}
+   }
   }
   const sources=Array.from({length:8},(_,i)=>({x:900+10*i,y:900,id:`mix:${i}`}));
   for(let tick=0;tick<duration/.025;tick++){
@@ -34,7 +40,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   const buffer=await context.startRendering(),data=Array.from({length:2},(_,i)=>buffer.getChannelData(i));
   let peak=0,sum=0,hot=0,n=0;
   for(const samples of data)for(let i=sampleRate;i<samples.length;i++){const value=samples[i];if(!Number.isFinite(value))throw Error('nonfinite rendered audio');peak=Math.max(peak,Math.abs(value));sum+=value*value;hot+=Math.abs(value)>.98;n++;}
-  return {genre,dense,soft,fx,influenced,worldSeed,encounter,sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
+  return {genre,dense,soft,fx,influenced,worldSeed,encounter,deep,sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
  } finally {window.AudioContext=original.AudioContext;window.setInterval=original.setInterval;window.setTimeout=original.setTimeout;Math.random=original.random;history.replaceState(null,'',originalURL);}
 }
 
