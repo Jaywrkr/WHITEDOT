@@ -102,6 +102,7 @@ export function initialize(runtime) {
     const dna0=regionAt(cx,cy),r=runtime.rng(runtime.seedOf("mundo:"+id)),z=dna0.mix!=null&&r()<.5?dna0.mix:biomeAt(cx,cy),B=runtime.BIOMES[z],ox=cx*runtime.WCH,oy=cy*runtime.WCH;
     const vr=runtime.rng(runtime.seedOf("var:"+id)),vi=Math.floor(vr()*runtime.VARS.length),vit=continents.vitality(ox+runtime.WCH/2,oy+runtime.WCH/2,regionPx()),dens=(vi===1?1.8:vi===0?.5:1)*continents.densityOf(vit);
     const H=dna0.hab||runtime.HAB[0];
+    const localRecipe=dna0.recipe.biome===B.id?dna0.recipe:{...recipeFor({...dna0,z}),budgets:dna0.recipe.budgets};
     c={var:vi,dens,vit,pal:dna0.pal,ground:vi===2?"agua":dna0.ground,plants:[],id,z,grass:[],flies:[],walkers:[],ponds:[],pillars:[],motes:[],crystals:[],beacons:[],lotus:[],flowers:[],stal:[],props:[],dunes:B.id==="dunas"};
     const P=()=>[ox+r()*runtime.WCH,oy+r()*runtime.WCH];
     const grass=(groups,tallP)=>{groups=Math.round(groups*dens);for(let g=0;g<groups;g++){const[gx,gy]=P(),n=10+Math.floor(r()*14),tall=r()<tallP;
@@ -135,9 +136,9 @@ export function initialize(runtime) {
     c.sp.forEach(o=>o.snd=q=>runtime.speciesSound(o.s,q,false,o.personality,o));
     const rd=runtime.rng(runtime.seedOf("notas:"+id+runtime.S.todayKey));
     for(let i=0;i<(B.id==="vacio"?6:18);i++)c.motes.push({x:ox+rd()*runtime.WCH,y:oy+rd()*runtime.WCH,ph:rd()*6});
-    c.playthings=createPlaythings(cx,cy,runtime.WCH,dens,B.id,runtime.seedOf,runtime.rng);
+    c.playthings=createPlaythings(cx,cy,runtime.WCH,dens,B.id,runtime.seedOf,runtime.rng,{recipe:localRecipe,catalog:elementCatalog});
     c.pockets=createPockets(cx,cy,runtime.WCH,runtime.seedOf,runtime.rng);
-    distributePlaythings(c.playthings,c.pockets,runtime.seedOf,runtime.rng);
+    distributePlaythings(c.playthings,c.pockets,runtime.seedOf,runtime.rng,localRecipe,runtime.WCH);
     c.playthings.forEach((o,i)=>{o.snd=q=>runtime.playVoice('toy:'+o.kind,i+(o.personality?.degree||0),q,runtime.regionOfPos(o.x,o.y),false,o.personality?.volume||1,o);});
     attachPersonalities(c,runtime.seedOf,runtime.rng);
     runtime.wchunks.set(id,c);return c;

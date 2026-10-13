@@ -1,12 +1,15 @@
+import {chooseRecipeElement} from './catalog.js';
 // Nuevos elementos con generación separada del paisaje existente.
 export const TOY_NAMES={spark:'Luz fugitiva',spring:'Brote saltarín',kite:'Cometa flotante',rotor:'Prisma giratorio',resonator:'Aro resonante'};
 const POOLS={llanura:['spark','spring','resonator'],bosque:['spring','kite','spark'],lago:['kite','resonator','spark'],ruinas:['rotor','resonator','spring'],jardin:['spring','rotor','spark'],dunas:['kite','rotor','spark'],cristales:['rotor','spark','resonator'],faros:['resonator','kite','spark'],tormenta:['spark','rotor','kite'],cueva:['resonator','spring','rotor'],vacio:['spark','resonator']};
-export function createPlaythings(cx,cy,size,density,biome,seedOf,rng) {
+export function createPlaythings(cx,cy,size,density,biome,seedOf,rng,config=null) {
   const random=rng(seedOf(`playthings:v1:${cx},${cy}`)),pool=POOLS[biome];
-  const count=Math.max(2,Math.min(40,Math.round((biome==='vacio'?4:18)*density)));
+  const recipe=config?.recipe,catalog=config?.catalog;
+  const count=recipe?Math.max(0,Math.min(recipe.budgets.objects,Math.round(18*density*recipe.objectDensity))):Math.max(2,Math.min(40,Math.round((biome==='vacio'?4:18)*density)));
   return Array.from({length:count},(_,i)=>{
     const x=cx*size+random()*size,y=cy*size+random()*size;
-    return {id:`${cx},${cy}:${i}`,kind:pool[Math.floor(random()*pool.length)],x,y,hx:x,hy:y,size:5+random()*5,phase:random()*Math.PI*2,rotation:0,lit:0,jump:0,vx:0,vy:0,cd:0};
+    const definition=recipe&&catalog?chooseRecipeElement(recipe,catalog,'toy',random):null;
+    return {id:`${cx},${cy}:${i}`,kind:definition?.id.slice(4)||pool[Math.floor(random()*pool.length)],...(definition?{name:definition.name,motion:definition.motion,material:definition.materials.includes(recipe.material)?recipe.material:definition.materials[0]}:{}),x,y,hx:x,hy:y,size:5+random()*5,phase:random()*Math.PI*2,rotation:0,lit:0,jump:0,vx:0,vy:0,cd:0};
   });
 }
 export function reactPlaything(o,x,y) {
@@ -16,7 +19,7 @@ export function reactPlaything(o,x,y) {
   if(o.kind==='spark'||o.kind==='kite'){o.vx=dx/d*170*p.speed/p.mass+(d===1?80*p.speed/p.mass:0);o.vy=dy/d*170*p.speed/p.mass;o.jump=1;}
   else if(o.kind==='spring'){o.jump=1;o.vx=dx/d*60/p.mass;o.vy=dy/d*60/p.mass;}
   else if(o.kind==='rotor')o.spin=p.spin;
-  else o.ring=1;
+  else if(o.motion==='flight'){o.vx=dx/d*150*p.speed/p.mass;o.vy=dy/d*150*p.speed/p.mass;}else o.ring=1;
 }
 export function stepPlaything(o,dt) {
   const p=o.personality||{recovery:1,home:.7,drag:1,speed:1};
@@ -47,8 +50,9 @@ export function initialize(runtime) {
       if(o.kind==='spark'){ctx.rotate(o.rotation);ctx.fillRect(-2,-2,4,4);ctx.strokeRect(-o.size,-o.size,o.size*2,o.size*2);}
       else if(o.kind==='spring'){ctx.beginPath();ctx.arc(0,0,o.size,Math.PI,0);ctx.stroke();ctx.fillRect(-1,0,2,7);}
       else if(o.kind==='kite'){ctx.rotate(Math.sin(t/(o.personality?.period||1100)+o.phase)*.3);ctx.beginPath();ctx.moveTo(0,-o.size);ctx.lineTo(o.size,0);ctx.lineTo(0,o.size);ctx.lineTo(-o.size,0);ctx.closePath();ctx.stroke();ctx.beginPath();ctx.moveTo(0,o.size);ctx.lineTo(Math.sin(t/300+o.phase)*8,o.size+15);ctx.stroke();}
-      else if(o.kind==='rotor'){ctx.rotate(o.rotation);ctx.strokeRect(-o.size,-o.size,o.size*2,o.size*2);ctx.fillRect(-1,-1,2,2);}
+      else if(o.kind==='rotor'||o.motion==='spin'){ctx.rotate(o.rotation);ctx.strokeRect(-o.size,-o.size,o.size*2,o.size*2);ctx.fillRect(-1,-1,2,2);}
       else {ctx.beginPath();ctx.arc(0,0,o.size+3,0,Math.PI*2);ctx.stroke();if(o.ring>0){ctx.beginPath();ctx.arc(0,0,o.size+3+(1-o.ring)*35,0,Math.PI*2);ctx.stroke();}}
+      if(!TOY_NAMES[o.kind]){ctx.beginPath();ctx.moveTo(0,-o.size);ctx.lineTo(o.size,0);ctx.lineTo(0,o.size);ctx.lineTo(-o.size,0);ctx.closePath();ctx.stroke();}
       ctx.restore();
     }
   }

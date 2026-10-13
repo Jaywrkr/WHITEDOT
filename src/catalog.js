@@ -42,3 +42,13 @@ export function createRegionalRecipe(region,biome,seedOf,rng,catalog=createEleme
   visual:Object.freeze({hue:region.hue,material,background:'#000',motion:archetype==='mechanical'?'precise':'breathing'}),
   budgets:Object.freeze({objects:quiet?8:40,ambientPerBar:1,activeVoices:4}),influences:Object.freeze([])});
 }
+
+export function chooseRecipeElement(recipe,catalog,kind,random){
+ const pool=recipe.elements.filter(e=>e.present&&catalog.get(e.id)?.kind===kind).map(e=>{
+  const definition=catalog.get(e.id),motion=definition.motion;
+  const affinity=recipe.archetype==='mechanical'?(['spin','static'].includes(motion)?2:.6):recipe.archetype==='organic'?(['jump','flight','sway'].includes(motion)?1.8:.6):recipe.archetype==='rhythmic'?(['jump','static','shake'].includes(motion)?1.8:.8):1;
+  return {definition,weight:e.weight*affinity};
+ });
+ if(!pool.length)return null;let pick=random()*pool.reduce((n,e)=>n+e.weight,0);
+ for(const e of pool){pick-=e.weight;if(pick<=0)return e.definition;}return pool.at(-1).definition;
+}

@@ -34,7 +34,7 @@ Semillas independientes para no desplazar todo el RNG al añadir un elemento. Di
 
 **Probar:** incorporar un elemento al catálogo sin modificar múltiples generadores; volver reconstruye identidad, los límites se cumplen, antiguos descubrimientos siguen utilizables. Usar módulos/semillas actuales como base, no crear una abstracción enorme vacía.
 
-### 4. Combinaciones coherentes y variedad perceptible
+### 4. Combinaciones coherentes y variedad perceptible — implementada en rama 4
 
 Reglas de compatibilidad, distribución y rareza; transiciones entre vecinos; presupuestos gráficos/sonoros. Probar primero con contenido existente: lugares mínimos, densos, orgánicos, mecánicos, rítmicos, melódicos, con/sin personajes o instalación. Controlar repetición de recetas y qué diferencias se oyen/juegan, además de contar semillas distintas.
 

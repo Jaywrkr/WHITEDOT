@@ -7,7 +7,7 @@ export function createInstrumentPatch(region,instrument,role,identity,seedOf,rng
  const r=rng(seedOf(`instrument-patch:v1:${region.key}:${region.genre}:${instrument}:${role}:${identity}`));
  const robotic=['robotic','electro','ebm','acid','idm','algorave'].includes(region.genre),organic=['tropical','andean','organic','afro','tribal'].includes(region.genre);
  const pool=role==='bajo'?['wood','metal']:robotic?['metal','metal','glass','air']:organic?['wood','wood','air','glass']:['wood','glass','air'];
- const material=pool[Math.floor(r()*pool.length)],m=MATERIALS[material],bass=role==='bajo',toneScale=m.tone*(.85+r()*.3);
+ const native=pool[Math.floor(r()*pool.length)],preferred=region.recipe?.material,material=preferred&&pool.includes(preferred)&&r()<.35?preferred:native,m=MATERIALS[material],bass=role==='bajo',toneScale=m.tone*(.85+r()*.3);
  return Object.freeze({material,name:m.name,toneScale,cutoff:(bass?900:4200)*toneScale,resonance:.65+r()*.25,
   attackScale:m.attack*(.9+r()*.2),decayScale:m.tail*(.9+r()*.15),legacyDecay:.72+r()*.25,
   harmonics:m.harmonics*(.85+r()*.15),fmIndex:.65+r()*.35,widthCents:bass?0:2+r()*5,

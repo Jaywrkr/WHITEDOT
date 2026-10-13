@@ -7,19 +7,21 @@ export function createPockets(cx,cy,size,seedOf,rng) {
 }
 export const POCKET_NAMES={quiet:'Claro de escucha',ensemble:'Espacio de ensamble',discovery:'Rincón de descubrimiento'};
 export function pocketAt(pockets,x,y) {return pockets.find(p=>Math.hypot(x-p.x,y-p.y)<=p.radius)||null;}
-export function distributePlaythings(objects,pockets,seedOf,rng) {
+export function distributePlaythings(objects,pockets,seedOf,rng,recipe=null,size=900) {
   if(!objects.length)return;
   const r=rng(seedOf(`pocket-layout:v1:${objects[0].id}`));
   const ensemble=pockets.find(p=>p.kind==='ensemble'),discovery=pockets.find(p=>p.kind==='discovery');
+  const quiet=pockets.find(p=>p.kind==='quiet');
   objects.forEach((o,i)=>{
     const pocket=i<Math.max(1,Math.min(objects.length-1,Math.ceil(objects.length*.7)))?ensemble:discovery;
-    const a=r()*Math.PI*2,d=25+Math.sqrt(r())*(pocket.radius-45);
+    if(recipe?.layout==='scattered'){const ox=Math.floor(o.x/size)*size,oy=Math.floor(o.y/size)*size;for(let attempt=0;attempt<24;attempt++){const x=ox+size*.045+r()*size*.91,y=oy+size*.045+r()*size*.91;if(Math.hypot(x-quiet.x,y-quiet.y)>quiet.radius+12){o.x=o.hx=x;o.y=o.hy=y;return;}}}
+    const a=recipe?.layout==='rings'?i/Math.max(1,objects.length)*Math.PI*2:r()*Math.PI*2,d=recipe?.layout==='rings'?pocket.radius*.6:25+Math.sqrt(r())*(pocket.radius-45);
     o.x=o.hx=pocket.x+Math.cos(a)*d;o.y=o.hy=pocket.y+Math.sin(a)*d;
   });
 }
 export function initialize(runtime) {
   function currentPocket() {
-    if(!runtime.inWorld())return null;
+    if(!runtime.inWorld()||(runtime.S.layer||"superficie")!=="superficie")return null;
     const chunk=runtime.wchunks.get(`${Math.floor(runtime.S.wx/runtime.WCH)},${Math.floor(runtime.S.wy/runtime.WCH)}`);
     return chunk?pocketAt(chunk.pockets||[],runtime.S.wx,runtime.S.wy):null;
   }
