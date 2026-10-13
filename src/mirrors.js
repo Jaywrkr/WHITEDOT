@@ -65,6 +65,7 @@ export function initialize(runtime){
   }return out;
  }
  function remember(site,solved=false){
+  if(drag?.site===site)return; // Ambient waves must not commit a gesture preview.
   const saved=S().mirrorSites;if(!saved[site.id]&&Object.keys(saved).length>=64)delete saved[Object.keys(saved)[0]];
   saved[site.id]={angles:site.mirrors.map(m=>m.angle),solved:solved||!!saved[site.id]?.solved};
  }
