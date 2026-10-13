@@ -1,5 +1,5 @@
 // Real Web Audio render of the scheduler, with a virtual clock and deterministic noise.
-export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false}={}) {
+export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null}={}) {
  const modules=await Promise.all(['data','progress','world','audio','voices','instruments','patches','effects','spatial','influence','blobs'].map(id=>import(`../src/${id}.js`)));
  const r=Object.create(null),duration=10,context=new OfflineAudioContext(2,duration*sampleRate,sampleRate);
  const original={AudioContext:window.AudioContext,setInterval:window.setInterval,setTimeout:window.setTimeout,random:Math.random};
@@ -15,6 +15,15 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   r.MU.dnaT={...origin,key:'0,0',genre,bpm:(G.bpm[0]+G.bpm[1])/2,track:{...origin.track,bassI:G.bassI,hookI:G.hookP[0]}};
   r.MU.E=dense?.8:.45;r.MU.vit=1;r.MU.vari=2;r.audio();
   if(influenced){r.activeLayerRegion=()=>r.MU.dnaT;for(const k of ['bass','groove','melody'])r.driveInfluence(r.MU.dnaT,k,1,3);for(let i=0;i<100;i++)r.influenceTick(.05,false);}
+  if(installation){
+   origin.genre=genre;origin.track={...r.MU.dnaT.track};r.unlock=()=>{};r.$=id=>document.getElementById(id);document.querySelectorAll('.modal').forEach(m=>m.hidden=true);
+   const garden=await import('../src/patchgarden.js');garden.initialize(r);
+   const site=r.nearbyPatches(5000).find(s=>s.id==='patch:0,0');if(!site)throw Error('missing patch render site');
+   site.source=installation;site.connections=[0,1,2];site.amount=1;r.S.wx=site.x;r.S.wy=site.y;
+   r.S.glassSites['glass:0,0']={seen:true,angles:[0,0,0]};
+   const {createMirrorSite}=await import('../src/mirrors.js'),mirror=createMirrorSite(site.region,r.REG*r.WCH,r.seedOf,r.rng);
+   r.S.mirrorSites['mirror:0,0']={angles:mirror.solution,solved:true};
+  }
   if(fx){r.fx.verbSend.gain.value=.7;r.fx.delaySend.gain.value=.5;r.fx.fb.gain.value=.72;}
   if(encounter){
    // The actual encounter scheduler asks the world for its region, so its cached region must match the tested genre.
@@ -40,7 +49,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   const buffer=await context.startRendering(),data=Array.from({length:2},(_,i)=>buffer.getChannelData(i));
   let peak=0,sum=0,hot=0,n=0;
   for(const samples of data)for(let i=sampleRate;i<samples.length;i++){const value=samples[i];if(!Number.isFinite(value))throw Error('nonfinite rendered audio');peak=Math.max(peak,Math.abs(value));sum+=value*value;hot+=Math.abs(value)>.98;n++;}
-  return {genre,dense,soft,fx,influenced,worldSeed,encounter,deep,sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
+  return {genre,dense,soft,fx,influenced,worldSeed,encounter,deep,installation,sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
  } finally {window.AudioContext=original.AudioContext;window.setInterval=original.setInterval;window.setTimeout=original.setTimeout;Math.random=original.random;history.replaceState(null,'',originalURL);}
 }
 

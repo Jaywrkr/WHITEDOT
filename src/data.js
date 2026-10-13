@@ -166,7 +166,7 @@ export function initialize(runtime) {
   // La Voz del sistema: sarcástica, directa, con cariño por debajo. Estas son para que Jay las corrija.
   const VOZ={
    patch1:"Una conexión cambia la música. Retirar un cable también es una decisión creativa.",
-   patch:"Arrastra del aro del reloj a una entrada. También puedes tocar el reloj y luego la entrada. Toca una entrada conectada para retirar el cable. La música cambia al compás.",
+   patch:"Arrastra del núcleo a una raíz, o toca ambos. Mantén el núcleo para elegir reloj, vidrios o espejos descubiertos en esta región. Toca una raíz conectada para retirar el cable. La música cambia al compás.",
    fijarSonido:"Elegiste qué se queda. Toca el anillo azul para soltarlo; otro objeto del mismo papel lo reemplaza.",
    cultivarMusica:"Permanecer también es crear. Ese lugar ya responde a tu cuidado.",
    espejo1:"Un reflejo también puede llevar el compás.",

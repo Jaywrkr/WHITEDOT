@@ -28,6 +28,10 @@ with sync_playwright() as p:
   page.evaluate('window.__testRuntime.S.wx+=400');page.locator('#bMenu').click();page.locator('summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('#seedCenter').click();page.wait_for_function('window.__testRuntime && window.__testRuntime.S.wx===window.__testRuntime.REG*window.__testRuntime.WCH/2')
   page.locator('#bMenu').click();page.locator('summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('[data-seed="blobs-02"]').click();page.wait_for_url('**testSeed=blobs-02*');page.wait_for_function('window.__testRuntime?.S.previewSeed==="blobs-02"')
   second=page.evaluate('()=>{const r=window.__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy);return JSON.stringify([d.z,d.genre,d.track,d.species,d.ground,d.air]);}');assert first!=second
+  page.locator('#bMenu').click();page.locator('summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.select_option('#seedEncounter','installation');page.locator('#seedForm button[type="submit"]').click()
+  page.wait_for_function('window.__testRuntime?.S.mode==="world" && __testRuntime.S.wx===2050 && __testRuntime.S.wy===900')
+  assert page.evaluate('__testRuntime.nearbyPatches(300).some(s=>s.id==="patch:0,0")')
+  assert page.evaluate('localStorage.getItem("pixel-blanco-v4")')==baseline
   page.locator('#bMenu').click();page.locator('summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('#seedOriginal').click();page.wait_for_function('window.__testRuntime && !window.__testRuntime.S.previewSeed');assert page.evaluate('localStorage.getItem("pixel-blanco-v4")')==baseline
   assert not errors,errors
   print(label+': prototype seed switching, whole-world variation, center, preview save isolation and return to main save PASS',flush=True);c.close()

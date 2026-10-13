@@ -35,9 +35,29 @@ with sync_playwright() as p:
   # Alternative connection: tap the output, then tap the input.
   page.mouse.click(point['out']['x'],point['out']['y']);page.mouse.click(point['input']['x'],point['input']['y'])
   assert page.evaluate('window.__testRuntime.S.patchSites["patch:0,0"].connections')==[0]
+  # A held output selects a real regional control source without opening a panel.
+  def hold_output():
+   page.mouse.move(point['out']['x'],point['out']['y']);page.mouse.down();page.wait_for_timeout(650);page.mouse.up()
+  page.mouse.move(point['out']['x'],point['out']['y']);page.mouse.down();page.wait_for_timeout(600);page.evaluate("document.getElementById('w').dispatchEvent(new PointerEvent('pointercancel',{pointerId:1,bubbles:true}))");page.mouse.up()
+  assert page.evaluate('__testRuntime.S.patchSites["patch:0,0"].source')=='clock'
+  hold_output();assert page.evaluate('__testRuntime.S.patchSites["patch:0,0"].source')=='glass'
+  assert not page.locator('#patchPanel').is_visible()
+  page.evaluate("""()=>{const r=__testRuntime;r.S.glassSites['glass:1,0']={seen:true,angles:[0,0,0]};const before=JSON.stringify(r.influenceState);r.patchGardenStep(0,400,r.ac.currentTime+.1);if(JSON.stringify(r.influenceState)!==before)throw Error('unvisited regional glass must not drive patch');}""")
+  assert not page.evaluate('!!__testRuntime.S.ach.instalacionUnida'),'missing glass must not unlock installation'
+  page.evaluate("""()=>{const r=__testRuntime,patch=r.nearbyPatches(300)[0],g=r.nearbyGlass(5000).find(s=>s.id==='glass:0,0');r.S.wx=g.x;r.S.wy=g.y;for(let i=0;i<3;i++)r.turnGlass(g,i,0);r.S.wx=patch.x;r.S.wy=patch.y;r.patchGardenStep(0,400,r.ac.currentTime+.1);}""")
+  assert page.evaluate('!!__testRuntime.S.ach.instalacionUnida')
+  first=page.evaluate('__testRuntime.influenceState.variant')
+  page.evaluate("""()=>{const r=__testRuntime,patch=r.nearbyPatches(300)[0],g=r.nearbyGlass(5000).find(s=>s.id==='glass:0,0');r.S.wx=g.x;r.S.wy=g.y;r.turnGlass(g,0,Math.PI);r.S.wx=patch.x;r.S.wy=patch.y;r.patchGardenStep(0,400,r.ac.currentTime+.1);}""")
+  assert page.evaluate('__testRuntime.influenceState.variant')!=first,'glass orientation must change modular pattern'
+  hold_output();assert page.evaluate('__testRuntime.S.patchSites["patch:0,0"].source')=='mirror'
+  page.evaluate("""()=>{const r=__testRuntime,patch=r.nearbyPatches(300)[0],m=r.nearbyMirrors(5000).find(s=>s.id==='mirror:0,0');r.S.wx=m.x;r.S.wy=m.y;for(let i=0;i<3;i++)r.turnMirror(m,i,m.solution[i]);r.S.wx=patch.x;r.S.wy=patch.y;r.patchGardenStep(0,404,r.ac.currentTime+.1);}""")
+  assert page.evaluate('!!__testRuntime.S.journal.installations.mirror')
+  assert page.evaluate('[__testRuntime.S.wx,__testRuntime.S.wy]')==before
+  page.screenshot(path=f'/tmp/whitedot-shared-installation-{label}.png')
   page.reload(wait_until='domcontentloaded');page.wait_for_function('window.__testRuntime?.S.patchSites["patch:0,0"]?.connections.length===1')
-  page.locator('#bMenu').click();page.locator('#bAch').click();assert 'Jardines modulares' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
+  assert page.evaluate('__testRuntime.S.patchSites["patch:0,0"].source')=='mirror'
+  page.locator('#bMenu').click();page.locator('#bAch').click();assert 'Una misma instalación' in page.locator('#journalBody').inner_text();assert 'Jardines modulares' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
   assert not errors,errors
-  print(label+': drag and tap cables, no player movement, musical influence, disconnect, persistence and journal PASS',flush=True);c.close()
+  print(label+': drag and tap cables, no player movement, musical influence, disconnect, regional glass/mirror control, persistence and journal PASS',flush=True);c.close()
  b.close()
 server.shutdown()

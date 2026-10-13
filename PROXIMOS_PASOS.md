@@ -30,7 +30,7 @@ Cada paso se implementa, verifica, documenta, commitea y sube en una rama nueva.
 | Orden | Trabajo | Estado |
 |---:|---|---|
 | 1 | Profundizar familias existentes: redes, frases y cajas; después otros gestos si aportan decisiones nuevas | Esta rama implementa tres profundizaciones; ampliaciones restantes por evaluar |
-| 2 | Unir vidrios, espejos y módulos en instalaciones musicales combinadas | Pendiente |
+| 2 | Unir vidrios, espejos y módulos en instalaciones musicales combinadas | Primera conexión regional en `feat/shared-installation-signals`; cableado libre y más combinaciones pendientes |
 | 3 | Búsquedas encadenadas, puertas musicales, instrumentos dormidos y personajes originales | Pendiente |
 | 4 | Historia que una Camino/Mundo/Estudio, constancia y creación; Voz más contextual y referencias a Jay | Guía básica presente; historia completa pendiente |
 | 5 | Culturas y épocas con música, materiales, flora/fauna y comportamiento relacionados; inventos y observatorios | Pendiente |
@@ -42,6 +42,16 @@ Cada paso se implementa, verifica, documenta, commitea y sube en una rama nueva.
 La rama `feat/organic-musical-seedpods` mantiene los datos musicales y gestos de la caja, pero reemplaza las teclas por 16 semillas sobre un contorno elíptico y tres núcleos orgánicos. Sin fondo opaco ni cuadrículas. El brote inferior permite cerrar; las semillas activas y el pulso actual se distinguen por relleno y halo. La forma cerrada también se reemplaza por una vaina. Geometría compartida para dibujo y contacto; prueba de blancos distintos y envolvente inferior al 20 % en las tres resoluciones probadas. El cambio visual no amplía el catálogo de mundos ni añade culturas.
 
 Verificación específica: lógica de interacciones, gestos de vaina en 390×844, 844×390 y 1280×800, diez familias de encuentros y recarga offline. No se modifican síntesis ni niveles de audio, por lo que las mediciones musicales de la etapa anterior no se presentan como nuevas mediciones de esta entrega.
+
+## Nueva etapa: instalaciones que comparten una señal
+
+Rama `feat/shared-installation-signals`, basada en `feat/organic-musical-seedpods`. El jardín modular conserva sus cables y suma tres fuentes de control: reloj, vidrios descubiertos o espejos descubiertos en su misma región. Mantener el aro del núcleo durante medio segundo cambia la fuente; arrastrar a una raíz o tocar núcleo y raíz conecta, y tocar una raíz conectada retira el cable. Los ángulos de vidrio cambian variante, fuerza y cadencia; las rutas reales de espejo distinguen reflejos parciales y conexión completa. Sin fuente descubierta o sin reflejos válidos, espera. Los datos de fuente se guardan con los cables; guardados antiguos usan reloj.
+
+Se transforma el arreglo existente mediante influencia regional, sin sumar osciladores ni crear realimentación de audio. El reloj conserva el comportamiento anterior. Núcleos y hojas reemplazan los rectángulos dibujados; controles de detalle siguen disponibles al tocar sus cuerpos. Pistas, Bitácora y logro **Una misma instalación** reflejan la conexión efectiva. Esto no es aún cableado libre entre cualquier objeto ni una simulación eléctrica completa.
+
+Para probar: Menú → Prototipo → Semillas → Encuentro de prueba → **Instalaciones conectadas · jardín modular**. La prueba coloca al jugador en el jardín inicial (2050, 900), en una partida separada. En esa región, los vidrios están en (1080, 900) y los espejos en (1600, 900): explorarlos y orientarlos antes de volver al módulo. Otras regiones conservan su distribución y rareza; no todas tienen los tres elementos.
+
+Validación: 44 suites Node; conexiones por toque/arrastre, cancelación, selección por permanencia, ángulos reales, influencia, logro y persistencia en móvil y escritorio. Diez renderizados del secuenciador real con módulos conducidos por vidrios/espejos, minimal, tropical, dub, amapiano, nu-disco suave y ambient a 44,1 kHz: pico máximo 0,954510, sin muestras por encima de 0,98. Recarga offline con 69 módulos. Estas mediciones no sustituyen la escucha artística en equipos reales.
 
 ## Trabajo musical y técnico que acompaña las etapas
 

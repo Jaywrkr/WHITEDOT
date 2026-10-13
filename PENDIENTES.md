@@ -11,7 +11,7 @@ La entrega posterior `feat/organic-musical-seedpods`, basada en la rama de direc
 ## Próximos bloques
 
 1. Profundizar interacciones existentes. Esta rama cubre redes, frases y cajas; otras mejoras se evalúan según su aporte musical.
-2. Combinar vidrios, espejos y módulos en instalaciones.
+2. Combinar vidrios, espejos y módulos en instalaciones. `feat/shared-installation-signals` implementa fuentes regionales para el jardín modular; cableado libre y otras combinaciones siguen pendientes.
 3. Pistas encadenadas, puertas musicales, instrumentos dormidos y personajes originales.
 4. Historia, sentido del recorrido y Voz ligada a creación, constancia y Jay.
 5. Muchas culturas y épocas integradas en música, flora/fauna, materiales y comportamiento; inventos y observatorios.
