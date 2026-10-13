@@ -60,7 +60,7 @@ export function initialize(runtime) {
     const b=runtime.beat();
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);ambient(t,dt,b);}
-    const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?worldStep(t,dt,dx,dy,b,modal,movementSpeed):caminoStep(t,dt,dx,dy,b);
+    const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.GOLD:runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
@@ -339,7 +339,7 @@ export function initialize(runtime) {
       for(const q of f.b){const x=f.x+q.ox+Math.sin(t/400+q.ph)*6,y=f.y+q.oy+Math.cos(t/520+q.ph)*5,e=Math.hypot(x-runtime.S.wx,y-runtime.S.wy);if(e>vis)continue;
         const flap=Math.sin(t/90+q.ph)>0;runtime.cx.globalAlpha=Math.min(1,.2+.8*(1-e/vis));runtime.cx.fillRect(x+ox-1,y+oy-(flap?1:0),flap?3:2,flap?1:2);}
     }
-    runtime.drawLandmarks?.(t,dt,ox,oy);
+    runtime.drawLandmarks?.(t,dt,ox,oy);runtime.drawPortals?.(t,ox,oy,b);
     // Only local clues: no global arrow or player-relative spawning.
     let nd=0;
     runtime.pruneRelics();

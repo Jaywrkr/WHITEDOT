@@ -102,6 +102,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/map.js` | Mapa dibujado de lo explorado (dos zooms, hitos oídos como ?, tarjeta para compartir). |
 | `src/wonders.js` | Rarezas que rompen reglas, rumores de la Voz y ríos. |
 | `src/alive.js` | Tormentas que se mueven con el viento, estaciones semanales por continente, huellas y campamentos antiguos. |
+| `src/layers.js` | Capas: portales con ritual de pulsos, Subsuelo 1:8 con salidas y Cielo con vista de continente. |
 | `src/atlas.js` | Atlas de ritmos (prototipo): lista todos los géneros, verifica que existen en el mundo y viaja a la región más cercana. |
 | `src/controls.js` | Botones, controles de prototipo y sonido. |
 | `package.json` | Declara módulos ES para Node y `npm test`; no instala dependencias de aplicación. |
@@ -411,4 +412,17 @@ Pruebas: `tests/wonders.mjs` y `tests/wonders_smoke.py`.
 Pruebas: `tests/alive.mjs` y `tests/alive_smoke.py`.
 
 Pendiente de la fase 4: capas bajo tierra (1 paso = 8 arriba) y del cielo con ritual de entrada, migraciones con posición por fecha y rastros de otros jugadores.
+
+### Mundo infinito · fase 4 (parte 2): capas
+
+`src/layers.js`. `S.layer` puede ser `superficie`, `bajo` o `cielo`; fuera de la superficie, `layerStep` reemplaza a `worldStep`.
+
+- **Portales y ritual:** grietas al Subsuelo en 1 de cada 14 regiones de tierra (siempre una en la región 1,1, cerca del Origen) y escaleras de luz junto a cada torre de luz (la de la región 2,0 se oye desde el Origen). Cada portal muestra cuántos pulsos necesita (3–5). Hay que lanzarlos seguidos y en el beat (`onBeatNow`) estando a menos de 150 px; uno fuera de tiempo reinicia la cuenta.
+- **Subsuelo:** coordenadas propias `S.under`; 1 paso abajo equivale a 8 arriba (`S.wx = under.x × 8`), así que es un atajo para viajar lejos. La linterna se gasta 1,5× más rápido. Visual de cueva con vetas de oro que laten con el beat. Música de región sintética por celda de 1.400 px: dub, dub profundo, dubstep, Berlin School o minimal techno. Se sale por columnas de luz (≈55 % de las celdas, solo donde arriba hay tierra). Se ven de lejos como brillo en el borde. Logros `bajo1` y `atajo` (salir a más de 40 regiones de donde entraste).
+- **Cielo:** vista del continente desde arriba (1 región = 60 px): tierra con el color del continente (más clara si la visitaste), mares, hitos, nombres de continentes y nubes. Se mueve 6× más rápido. Un toque baja en ese punto si es tierra. Música ambient. Logro `cielo1`.
+- En capas no suenan hitos, ríos ni tormentas, y no se registran lugares (las regiones sintéticas no cuentan como visitadas). Salir del Mundo vuelve a la superficie.
+
+Pruebas: `tests/layers_smoke.py`.
+
+Pendiente de la fase 4: migraciones con posición según la fecha y rastros de otros jugadores (requiere multiplayer).
 

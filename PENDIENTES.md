@@ -70,7 +70,7 @@ Escucha agradable para público amplio: controlar fatiga, disonancia accidental,
 4. **Rarezas que rompen reglas:** niveles raro/legendario/mítico con frecuencia real. Cada una deja una muestra o instrumento único para el Estudio. La Voz suelta rumores con pistas. Lo raro se anuncia, no se regala.
 2. **Ríos y caminos:** un río es un set de DJ (la energía sube río abajo). Nacen en manantiales, mueren en mares de silencio, y donde dos se juntan sus géneros se mezclan. Los caminos los marcan las migraciones.
 
-**Fase 4 · Vida — parte 1 en `feat/infinite-world-alive` (tormentas, estaciones, huellas). Falta: capas, migraciones con posición por fecha, rastros de otros jugadores:**
+**Fase 4 · Vida — tormentas, estaciones y huellas integradas (PR #33); capas en `feat/world-layers`. Falta: migraciones con posición por fecha y rastros de otros jugadores:**
 7. **El tiempo cambia el mundo:** clima que se desplaza por el mapa y se puede perseguir, migraciones con posición según la fecha, estaciones semanales por continente. Da razones para volver, nunca castigo por no volver (nada de FOMO).
 9. **Capas:** bajo tierra 1 paso equivale a 8 arriba (atajo de viaje, dub y graves). La capa del cielo da vista de continente. Se entra con un ritual: tocar el ritmo correcto con pulsos.
 10. **El mundo te recuerda:** tu rastro, lo sembrado, los ecos y los Estudios quedan. Más adelante, rastros de otros jugadores.
