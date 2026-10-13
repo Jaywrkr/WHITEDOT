@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {BoundedMap,CACHE_LIMITS} from '../src/cache.js';
+import {initialize as data} from '../src/data.js';import {initialize as progress} from '../src/progress.js';import {initialize as world} from '../src/world.js';
+globalThis.localStorage={getItem:()=>null,setItem(){}};globalThis.location={search:''};
+const c=new BoundedMap(2);c.set('a',1).set('b',2);c.get('a');c.set('c',3);assert(c.has('a'));assert(!c.has('b'));assert.equal(c.evictions,1);
+const r={};data(r);progress(r);world(r);const first=JSON.stringify(r.regionOfPos(1800,1800));
+for(let i=0;i<1500;i++)r.regionOfPos((i+.5)*3600,((i%19)-9+.5)*3600);
+assert.equal(JSON.stringify(r.regionOfPos(1800,1800)),first,'region changed after eviction and return');
+const stats=r.worldCacheStats();assert(stats.regions.evictions>0);assert(stats.continents.regions.evictions>0);for(const s of [stats.regions,stats.biomes,stats.continents.seeds,stats.continents.regions])assert(s.size<=s.limit);
+const firstWorldChunk=JSON.stringify(r.wchunk(1,1)),firstPathChunk=JSON.stringify(r.getChunk(1,1));
+for(let i=0;i<180;i++){r.getChunk(i+10,2);r.wchunk(i+10,2);}assert.equal(r.chunks.size,CACHE_LIMITS.pathChunks);assert.equal(r.wchunks.size,CACHE_LIMITS.worldChunks);
+assert.equal(JSON.stringify(r.wchunk(1,1)),firstWorldChunk);assert.equal(JSON.stringify(r.getChunk(1,1)),firstPathChunk);
+console.log('PASS: recency eviction, bounded long-distance region/continent/chunk caches and deterministic return');

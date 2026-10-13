@@ -1,3 +1,11 @@
+# Fase 1 · Base del universo ampliable
+
+Rama `feat/phase-01-universe-foundation`, base `7a0e8ff`. Implementa guardado/respaldos recuperables, dirección completa de favoritos, cachés acotadas, contratos versionados, auditoría multisemilla y runners/CI de lógica, navegador, audio y offline. Mantiene la generación y música existentes. Panel opcional en Menú → Progreso y respaldo, sin ruido sonoro de UI ni botones adicionales sobre el mundo.
+
+Detalle, criterios y límites: [FASE_01.md](FASE_01.md). Secuencia vigente: [FASES_UNIVERSO.md](FASES_UNIVERSO.md). No modifica Bitácora/logros porque este bloque no agrega descubrimientos de juego.
+
+<details><summary>Historial de cambios anteriores</summary>
+
 ## Revisión de alcance para producción V1
 
 [Inventario V1](V1_PRODUCCION.md): 64 tareas, criterios de publicación, coordenadas/retorno y estrategia de expansión. La instrucción vigente es agrupar muchas mejoras en una misma rama; esta revisión se suma a `feat/intuitive-animal-dialogue` y no crea otra rama. Se propone `release/v1` con commits por bloques y un PR final.
@@ -376,3 +384,5 @@ Rama `feat/15-spacious-blob-worlds`. Las semillas de prueba usan biomas de 7200 
 - **Fase 3: Primeros cinco encuentros.** Nubes, tejedoras, pozos de silencio, semillas orbitales y piedras de capas; selector de pruebas en Semillas.
 - **Fase 4: Otros cinco encuentros.** Animales de intercambio, corrientes reversibles, flores de presión, esculturas de sombra y cajas de posibilidades.
 - **Fase 5: Pulido final.** Paletas de 52 estilos, densidad musical, prioridad del borrado, accesibilidad, móvil y shell offline completo.
+
+</details>

@@ -1,8 +1,33 @@
-## Revisión de alcance para producción V1
+# Continuar WHITEDOT · Fase 1
 
-[Inventario V1](V1_PRODUCCION.md): 64 tareas, criterios de publicación, coordenadas/retorno y estrategia de expansión. La instrucción vigente es agrupar muchas mejoras en una misma rama; esta revisión se suma a `feat/intuitive-animal-dialogue` y no crea otra rama. Se propone `release/v1` con commits por bloques y un PR final.
+Rama actual: `feat/phase-01-universe-foundation`. Base: main remoto `7a0e8ff` (PR #67). Una sola rama con código, pruebas y documentación; Jay crea PR y hace merge, el asistente no crea PR ni hace push directo a main.
 
-Main remoto verificado al cierre: `93a5323` (PR #66). Suelo/rastros, vidrios sin panel y animal por toque ya están integrados. Medición renovada: 39.952 recetas detalladas en 40.000 regiones; 23.418 recetas terrestres y 9.732 perfiles musicales terrestres. Promedio local de cinco muestras de 1.600 regiones: 1.600 recetas por semilla, no un total de mundos ni prueba de diferencias perceptuales. Detalles en [VARIEDAD.md](VARIEDAD.md).
+## Qué quedó preparado
+
+- Identidad `{seed, layout, generatorVersion, catalogVersion, layoutVersion}` y dirección de favorito con capa/x/y. Migración de favoritos antiguos y bloqueo de rutas/versiones ajenas, también tras varias recargas.
+- `save-store.js`: migración del JSON local existente, validación de estructuras/tamaño UTF-8, avisos de cuota/lectura, copia previa a sobrescritura/restauración, recuperación explícita con original protegido.
+- `save-tools.js`: Menú → Progreso y respaldo; descarga JSON, selección/validación y confirmación separada. No añade controles al HUD ni sonidos de UI. Semilla/layout y partida habitual aislados.
+- `BoundedMap`: límites de 128/256 entradas para regiones/biomas/chunks/continentes, estadísticas y regeneración determinista. Estados temporales no se vuelven persistentes por estar en caché.
+- `contentDirectory`: 24 contratos versionados y API de expansión con flujos aleatorios independientes. Generadores existentes conservados para no redistribuir lugares actuales; el registro no dibuja contenido automáticamente.
+- Runners para todas las suites Node, navegador/offline y cinco programas de audio; Playwright fijado en `requirements-dev.txt`; CI de PR/main y auditoría multisemilla.
+
+## Cómo seguir
+
+Leer [FASE_01.md](FASE_01.md), [FASES_UNIVERSO.md](FASES_UNIVERSO.md) y [V1_PRODUCCION.md](V1_PRODUCCION.md). Solo fase 1 autorizada en esta entrega. La siguiente reúne muchas variables de mundo y reglas de convivencia, preservando la versión actual o migrando explícitamente los lugares. No ampliar arrays de géneros/biomas sin verificar qué mapas y favoritos cambia.
+
+No reintroducir escenas/ideas musicales guardables: Jay las descartó. Relación entre gráfica, música y mundo; fondo negro, punto blanco, colores locales, electrónica/naturaleza y UI silenciosa. Culturas/reliquias históricas, más instrumentos y gestos, construcción y multijugador siguen pendientes; [las diez fases](FASES_UNIVERSO.md) conservan esas ideas.
+
+## Validación de cierre
+
+Pasaron 48 suites Node, los 31 recorridos Chromium y offline con 77 módulos. Revisión final de respaldos en 390×844, 844×390 y 1280×800: descarga/importación, cuota, original corrupto/futuro protegido y favorito futuro sin ruta; favoritos/autopilot también revalidados en móvil/escritorio. Se comprobó el regreso determinista tras expulsión de regiones y chunks reales del Camino/Mundo.
+
+Los cinco programas de audio completaron **113 renders**, incluidos los 52 estilos y las interacciones. Pico máximo **0,954512**, sin muestras por encima de 0,98. Medidas resumidas en [scripts/phase-01-validation.json](scripts/phase-01-validation.json); no certifican calidad artística de master.
+
+Auditoría multisemilla: 40.000 candidatos, 39.880 firmas detalladas y 24.350 firmas musicales terrestres. Auditoría antigua del original sin cambios: 39.952 recetas detalladas y 9.732 perfiles musicales terrestres. Las firmas y ventanas son distintas: no compararlas como aumento de diversidad. Comandos en [FASE_01.md](FASE_01.md).
+
+Pendientes: dispositivos reales Safari/iPhone/Android/PWA, escucha curada larga, ejecución remota de CI al abrir el PR, rollback de publicación y compatibilidad de futuras versiones del generador. La rama permite probar fase 1; no declara lista toda la V1.
+
+<details><summary>Handoff histórico de entregas anteriores</summary>
 
 ## Nueva etapa: animal de respuesta más intuitivo
 
@@ -653,3 +678,5 @@ Estado actual de este pedido: ramas 13 → 14 → 15, separadas de las fases pro
 - **Fase 3: Primeros cinco encuentros.** Nubes, tejedoras, pozos de silencio, semillas orbitales y piedras de capas; selector de pruebas en Semillas.
 - **Fase 4: Otros cinco encuentros.** Animales de intercambio, corrientes reversibles, flores de presión, esculturas de sombra y cajas de posibilidades.
 - **Fase 5: Pulido final.** Paletas de 52 estilos, densidad musical, prioridad del borrado, accesibilidad, móvil y shell offline completo.
+
+</details>

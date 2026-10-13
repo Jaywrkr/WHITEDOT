@@ -25,7 +25,7 @@ export function initialize(runtime) {
 
   /* ---------- loop ---------- */
   function frame(t){
-    runtime.focusUITick?.();runtime.syncSession();runtime.glassTick?.();runtime.mirrorTick?.();runtime.patchGardenTick?.();
+    runtime.saveToolsTick?.();runtime.focusUITick?.();runtime.syncSession();runtime.glassTick?.();runtime.mirrorTick?.();runtime.patchGardenTick?.();
     if(!runtime.inWorld()||!runtime.S.sound)runtime.clearSoundCues();
     if(!runtime.inWorld())runtime.clearRelicProgress();
     const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;

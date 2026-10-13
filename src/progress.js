@@ -1,3 +1,6 @@
+import {worldIdentity} from './world-identity.js';
+import {createSaveStore,SAVE_VERSION} from './save-store.js';
+import {BoundedMap,CACHE_LIMITS} from './cache.js';
 import {normalizeSeed,previewKey} from './seeds.js';
 // Partida v4, progreso diario y utilidades deterministas.
 export function initialize(runtime) {
@@ -5,12 +8,14 @@ export function initialize(runtime) {
   const requested=new URLSearchParams(globalThis.location?.search||'').get('testSeed'),preview=requested===null?null:normalizeSeed(requested);
   const layout=preview?(new URLSearchParams(globalThis.location?.search||'').get('layout')==='classic'?'classic':'wide'):null;
   const KEY=preview?previewKey(preview,layout):'pixel-blanco-v4';
-  const fresh=()=>({offset:0,lastDay:null,streak:0,best:0,totalDays:0,totalLight:0,todayKey:null,todayLight:0,capShown:false,collected:[],trail:[],px:0,py:0,ach:{},sound:true,softMusic:false,style:.3,
+  const identity=worldIdentity(preview&&preview!=='original'?preview:'',layout||'classic'),scope={kind:preview?'preview':'main',seed:preview||'',layout:layout||'classic'};
+  const fresh=()=>({saveVersion:SAVE_VERSION,worldIdentity:{...identity},offset:0,lastDay:null,streak:0,best:0,totalDays:0,totalLight:0,todayKey:null,todayLight:0,capShown:false,collected:[],trail:[],px:0,py:0,ach:{},sound:true,softMusic:false,style:.3,
     worldSeed:"",previewSeed:null,previewLayout:null,session:null,lastSession:null,favorites:{version:1,items:[]},destination:null,glassSites:{},mirrorSites:{},autoPins:false,patchSites:{},worldDetails:false,mode:"camino",wx:900,wy:900,lampDay:null,lampUsed:0,species:{},rel:null,relicSites:{},stars:[],help:{},zones:{},drums:0,bag:{luz:8},studio:{x:null,y:null,biome:0,slots:{}},color:"#ffffff",lastWorldDay:null,prevMode:null,capPlusDay:null,voiceStart:false,luzN:0,cat:{},catN:0,catRecent:[],places:{},placesN:0,retos:{},retosN:0,events:{},journal:{events:{},relics:{},music:{genres:{},instruments:{},scales:{}}}});
-  let S=fresh();
-  try{const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(fresh(),JSON.parse(raw));}catch(e){}
-  S.previewSeed=preview;S.previewLayout=layout;S.worldSeed=preview&&preview!=='original'?preview:'';
-  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
+  const storage=(()=>{try{return globalThis.localStorage;}catch(_){return {getItem(){throw Error('Unavailable');},setItem(){throw Error('Unavailable');}};}})();
+  const store=createSaveStore(storage,KEY,fresh(),identity);let S=store.load();
+  const applyScope=state=>Object.assign(state,{previewSeed:preview,previewLayout:layout,worldSeed:identity.seed,worldIdentity:{...identity},saveVersion:SAVE_VERSION});
+  applyScope(S);
+  const save=()=>store.save(S);
 
   const pad2=n=>String(n).padStart(2,"0");
   function dayKey(){const d=new Date();d.setDate(d.getDate()+S.offset);return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate());}
@@ -19,7 +24,7 @@ export function initialize(runtime) {
   if(!S.trail.length){S.px=0;S.py=pathY(0);}
 
   let collected=new Set(S.collected);
-  const chunks=new Map(), wchunks=new Map(), bcache=new Map();
+  const chunks=new BoundedMap(CACHE_LIMITS.pathChunks), wchunks=new BoundedMap(CACHE_LIMITS.worldChunks), bcache=new BoundedMap(CACHE_LIMITS.biomes);
   function seedOfBase(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
   function seedOf(s){return seedOfBase(S.worldSeed?`world:${S.worldSeed}|${s}`:s);}
   function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
@@ -58,8 +63,9 @@ export function initialize(runtime) {
 
 
   Object.defineProperties(runtime, {
+    worldIdentity:{get:()=>identity},saveScope:{get:()=>scope},saveStore:{get:()=>store},storageStatus:{get:()=>store.status},
     fresh: { get: () => fresh },
-    S: { get: () => S, set: value => { S = value; } },
+    S: { get: () => S, set: value => { S = applyScope(value); } },
     save: { get: () => save },
     pad2: { get: () => pad2 },
     pathY: { get: () => pathY },

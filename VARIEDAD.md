@@ -1,3 +1,9 @@
+## Fase 1: auditoría y conservación del generador
+
+El generador actual se mantiene. Repetir `node scripts/world-variation.mjs 100` conserva exactamente los resultados de 40.000 regiones descritos debajo. La nueva herramienta `npm run audit:universe -- 10000 4` mide otras firmas discretas (incluye patrones/secuencias) entre cuatro semillas: 39.880 firmas detalladas y 24.350 firmas musicales terrestres en 40.000 candidatos. [Resultado reproducible](scripts/phase-01-universe-sample.json) y [método/límites](FASE_01.md).
+
+Son muestras y firmas distintas: no compararlas como crecimiento de variedad ni como canciones únicas. El auditor admite hasta un millón de candidatos; todavía no se ha añadido ningún bioma o género nuevo en fase 1.
+
 # Variedad actual: medición reproducible
 
 El juego genera regiones de un mismo mapa continuo y compartido. «Mundos» aquí significa variantes de regiones, no partidas ni universos independientes. No existe un contador de experiencias perceptualmente únicas.

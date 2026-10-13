@@ -1,3 +1,5 @@
+import {foundationContent} from './content-contracts.js';
+import {BoundedMap,CACHE_LIMITS} from './cache.js';
 import {createElementCatalog,createRegionalRecipe} from './catalog.js';
 import {applyNeighborhood} from './neighborhoods.js';
 import {applyPalette} from './palettes.js';
@@ -11,7 +13,7 @@ import { anomalyAt, applyAnomaly } from './wonders.js';
 
 // Generación procedural del camino, regiones y reliquias.
 export function initialize(runtime) {
-  const elementCatalog=createElementCatalog();
+  const elementCatalog=createElementCatalog(),contentDirectory=foundationContent(runtime.BIOMES);
   const recipeFor=region=>createRegionalRecipe(region,runtime.BIOMES[region.z].id,runtime.seedOf,runtime.rng,elementCatalog);
   const continents=createContinents(runtime.seedOf,runtime.rng,runtime.GEN,{variant:!!runtime.S.worldSeed}),VACIO=runtime.BIOMES.findIndex(b=>b.id==='vacio');
   const regionPx=()=>runtime.REG*runtime.WCH;
@@ -44,7 +46,7 @@ export function initialize(runtime) {
   const TRAITS=["de niebla","de cristal","de eco","de ceniza","de sal","de humo","del norte","del sur","de vidrio","de arena","de hierro","de agua","de seda","de polvo","de luz baja","de medianoche","de cobre","de lluvia","de ámbar","de hielo"];
   const SYL=["ka","lu","mi","sor","vel","tan","ri","zo","ne","dra","om","is","ur","fe","lia","qua","bel","no","ash","ti","mar","en","yo","sil","ro","ve","xu","len","ai","dun"];
   const ROLES=["campana","bajo","perc","lead","acorde","voz"],MOBS=["orbita","salta","timida","deriva"];
-  const rcache=new Map();
+  const rcache=new BoundedMap(CACHE_LIMITS.regions);
   function pname(r){const n=2+(r()<.4?1:0);let w="",prev=-1;for(let i=0;i<n;i++){let j=Math.floor(r()*SYL.length);if(j===prev)j=(j+7)%SYL.length;prev=j;w+=SYL[j];}return w.charAt(0).toUpperCase()+w.slice(1);}
   function euclid(k,n,rot){const p=[];for(let i=0;i<n;i++)p.push(((i+rot)*k)%n<k?1:0);return p;}
   function regionAt(cx,cy){
@@ -162,6 +164,8 @@ export function initialize(runtime) {
     eventOf: { get: () => eventOf },
     RETOTXT: { get: () => RETOTXT },
     elementCatalog: {get:()=>elementCatalog},recipeFor:{get:()=>recipeFor},
+    contentDirectory:{get:()=>contentDirectory},
+    worldCacheStats:{get:()=>()=>({regions:rcache.stats(),biomes:runtime.bcache.stats(),worldChunks:runtime.wchunks.stats(),pathChunks:runtime.chunks.stats(),continents:continents.stats()})},
     regionOfPos: { get: () => regionOfPos },
     continents: { get: () => continents },
     vitalityAt: { get: () => (x,y)=>continents.vitality(x,y,regionPx()) },

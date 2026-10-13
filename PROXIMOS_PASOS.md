@@ -1,6 +1,6 @@
 # Próximos pasos: estado real del proyecto
 
-El alcance vigente de producción y la nueva regla de agrupar mejoras se definen en [V1_PRODUCCION.md](V1_PRODUCCION.md). La enumeración anterior se conserva como historial de implementación.
+La secuencia vigente está en [FASES_UNIVERSO.md](FASES_UNIVERSO.md); [V1_PRODUCCION.md](V1_PRODUCCION.md) conserva el inventario detallado. Fase 1 implementada en `feat/phase-01-universe-foundation`, basada en main `7a0e8ff`: [qué cambió y cómo probar](FASE_01.md). Después de probar/integrar, fase 2: multiplicar recetas/ambientes compatibles con favoritos antiguos. La enumeración siguiente se conserva como historial de implementación.
 
 El bloque anterior de veinte entregas está integrado en main desde el PR #58 (`2959313`). Se agrupó en cinco fases para revisar; no equivale a haber implementado todo el plan histórico.
 

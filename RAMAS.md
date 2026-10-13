@@ -1,6 +1,14 @@
 # Integración y trabajo agrupado
 
-Main verificado al cierre `93a5323` (PR #66): las ocho filas de la tabla siguiente ya están integradas. Lo nuevo de esta revisión es el plan V1 y su auditoría. La instrucción actual es agrupar muchas mejoras por rama. La revisión V1 se agrega a la fila 8; el futuro paquete amplio y sus puntos de prueba están en [V1_PRODUCCION.md](V1_PRODUCCION.md). No recrear PR de las filas ya integradas.
+Base remota verificada `7a0e8ff` (PR #67). Las ocho filas históricas siguientes y el inventario V1 ya están integrados. No recrear sus PR.
+
+## Rama actual
+
+| Fase vigente | Rama | Base | Entrega |
+|---:|---|---|---|
+| 1 | `feat/phase-01-universe-foundation` | `main` · `7a0e8ff` | Guardado/respaldos, direcciones compatibles, cachés limitadas, contratos y auditoría/pruebas |
+
+Jay crea el PR de esta única rama hacia main y hace merge. El asistente prepara, prueba, documenta y sube. Las fases 2–10 siguen pendientes: [FASES_UNIVERSO.md](FASES_UNIVERSO.md). Cada una agrupa muchas mejoras y documentos, sin volver a una rama por objeto. La siguiente se basará en esta si sigue pendiente o en el main actualizado después de integrarla. No se garantiza ausencia de conflictos si main cambia o se reescribe la ascendencia.
 
 ## Cadena de referencia
 

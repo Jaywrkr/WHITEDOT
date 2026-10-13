@@ -1,8 +1,52 @@
-## Revisión de alcance para producción V1
+# WHITEDOT · Pixel Blanco
 
-[Inventario V1](V1_PRODUCCION.md): 64 tareas, criterios de publicación, coordenadas/retorno y estrategia de expansión. La instrucción vigente es agrupar muchas mejoras en una misma rama; esta revisión se suma a `feat/intuitive-animal-dialogue` y no crea otra rama. Se propone `release/v1` con commits por bloques y un PR final.
+Un punto blanco en un mundo negro que compone música electrónica mientras lo exploras. Camino diario, Mundo procedural y Estudio; 11 biomas y 52 estilos actuales. Por Jay · [@jaywrkr](https://instagram.com/jaywrkr).
 
-Main remoto verificado al cierre: `93a5323` (PR #66). Suelo/rastros, vidrios sin panel y animal por toque ya están integrados. Medición renovada: 39.952 recetas detalladas en 40.000 regiones; 23.418 recetas terrestres y 9.732 perfiles musicales terrestres. Promedio local de cinco muestras de 1.600 regiones: 1.600 recetas por semilla, no un total de mundos ni prueba de diferencias perceptuales. Detalles en [VARIEDAD.md](VARIEDAD.md).
+## Entrega actual: fase 1
+
+Rama **`feat/phase-01-universe-foundation`**, basada en main `7a0e8ff` (PR #67). Guardado validado y recuperable, exportación/importación, favoritos con identidad completa, cachés limitadas para viajes largos, contratos ampliables y auditoría/pruebas automáticas. [Detalle y límites](FASE_01.md).
+
+Jay prueba, crea el PR y hace merge hacia main. Esta rama no publica directamente. La secuencia vigente es [FASES_UNIVERSO.md](FASES_UNIVERSO.md): una rama amplia por fase. La ampliación musical/procedural empieza después de esta base; la fase 1 conserva el mapa y la música actuales.
+
+## Jugar y probar
+
+- Mueve el punto con arrastre o WASD/flechas. El Camino recoge luz y abre el Mundo; explora, toca, pulsa y escucha. Menú → Instrumentos abre las herramientas; el mundo mantiene el fondo negro y su UI mínima.
+- La música evoluciona incluso en quietud. Los gestos cambian bajo, groove, motivo o espacio según la región. La fijación de sonidos es opcional y los ecos se borran tocando su anillo.
+- Vidrios: gira sus aros directamente. Espejos: orienta la luz. Jardines: conecta entradas y retira cables tocándolas. Suelo resonante: toca el piso o permanece cerca. Animal de respuesta: tócalo, toca el mundo para enseñarle y vuelve a tocarlo para escuchar su respuesta.
+- Menú → Favoritos guarda hasta 64 puntos; Orientar/Viajar funcionan en su mundo/capa compatibles. El audio del instante no se congela como una escena.
+- **Menú → Progreso y respaldo** exporta esta partida. Elegir un JSON valida primero; Restaurar conserva una copia previa y recarga. Cada semilla/layout de prueba tiene su propio guardado y respaldo.
+- Menú → Prototipo → Semillas permite comparar mundos y encuentros sin reemplazar la partida habitual. Mi partida regresa al guardado principal.
+
+## Desarrollo y verificación
+
+Aplicación estática con módulos ES, Canvas y Web Audio. Sin dependencias de aplicación ni build; no hace falta `npm install`. Sirve por HTTP:
+
+```bash
+python3 -m http.server 8000
+```
+
+Abre `http://localhost:8000`. Para probar:
+
+```bash
+python3 -m pip install -r requirements-dev.txt
+python3 -m playwright install chromium
+npm test
+npm run test:browser
+npm run test:audio
+npm run audit:universe -- 10000 4
+```
+
+Node >=18; Python/Playwright para navegador y audio. `CHROMIUM_PATH` permite elegir navegador; los runners detectan Chromium del sistema o el de Playwright y levantan sus propios servidores. GitHub Actions ejecuta lógica, auditoría, navegador, offline y audio en PR/main. No despliega desde ese workflow.
+
+Guardado local: borrar los datos del navegador elimina progreso; exporta antes. La identidad reconoce el generador/catálogo/layout actuales (v1); mantener versiones antiguas o migrarlas al ampliar sigue pendiente. Los ensayos Chromium y renders no sustituyen pruebas en Safari/Android ni escucha curada real.
+
+## Documentación vigente
+
+[Entrega y pruebas](FASE_01.md) · [Diez fases](FASES_UNIVERSO.md) · [Inventario V1](V1_PRODUCCION.md) · [Pendientes](PENDIENTES.md) · [Rama y merge](RAMAS.md) · [Continuar trabajo](HANDOFF.md) · [Variedad](VARIEDAD.md).
+
+En el mapa original, la medición antigua mantiene **39.952 recetas detalladas entre 40.000 regiones**; no es el total del universo ni una cifra de canciones únicas. El nuevo auditor permite muestras de hasta un millón de candidatos, sin convertir esa capacidad en una promesa de variedad percibida.
+
+<details><summary>Historial de entregas y documentación anterior (estados de rama y conteos históricos)</summary>
 
 ## Nueva etapa: animal de respuesta más intuitivo
 
@@ -290,3 +334,5 @@ Para comparar mundos completos: **Menú → Prototipo → Semillas → Blobs I /
 - **Fase 3: Primeros cinco encuentros.** Nubes, tejedoras, pozos de silencio, semillas orbitales y piedras de capas; selector de pruebas en Semillas.
 - **Fase 4: Otros cinco encuentros.** Animales de intercambio, corrientes reversibles, flores de presión, esculturas de sombra y cajas de posibilidades.
 - **Fase 5: Pulido final.** Paletas de 52 estilos, densidad musical, prioridad del borrado, accesibilidad, móvil y shell offline completo.
+
+</details>
