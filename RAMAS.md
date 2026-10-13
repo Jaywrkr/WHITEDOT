@@ -10,6 +10,7 @@ La base verificada es main `2959313`, que integra las cinco fases anteriores. Ca
 | 4 | `feat/shared-installation-signals` | Vidrios y espejos conducen módulos regionales |
 | 5 | `feat/resonant-ground` | Elimina las cajas como objeto; interacción con el piso |
 | 6 | `feat/chained-musical-trails` | Tres huellas encadenadas e instrumento dormido |
+| 7 | `feat/expressive-glass-gestures` | Vidrios sin panel, voces equilibradas y movimiento expresivo |
 
 Revisar cada PR contra la rama anterior mientras esté pendiente, y contra main después de integrar esa base. Usar merge normal para conservar ascendencia. Squash/rebase merge o cambios nuevos en main pueden requerir reajustar las ramas; una cadena no garantiza ausencia de conflictos ante esos cambios. No recrear PR de las cinco fases históricas ya integradas.
 

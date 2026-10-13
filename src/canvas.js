@@ -19,7 +19,7 @@ export function initialize(runtime) {
   const cancelHold=()=>{clearTimeout(holdTimer);holdTimer=null;};
   // El juego escucha toda la pantalla: un arrastre que empieza sobre textos del HUD o la Voz también mueve al pixel.
   // Solo se excluyen botones, paneles abiertos y el Estudio.
-  const blocked=t=>!!t?.closest?.('button,a,input,select,textarea,label,summary,.modal:not([hidden]),#studioPanel,#scanner,#fxPanel,#glassPanel,#mirrorPanel,#patchPanel,[role="button"]');
+  const blocked=t=>!!t?.closest?.('button,a,input,select,textarea,label,summary,.modal:not([hidden]),#studioPanel,#scanner,#fxPanel,#mirrorPanel,#patchPanel,[role="button"]');
   let fromOverlay=false;
   addEventListener("pointerdown",e=>{
     if(e.target===cv||blocked(e.target))return;

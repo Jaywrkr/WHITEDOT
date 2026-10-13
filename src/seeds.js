@@ -6,7 +6,7 @@ export function initialize(runtime){
  const $=runtime.$;
  const select=document.createElement('select');select.id='seedEncounter';select.setAttribute('aria-label','Encuentro para probar');
  const label=document.createElement('label');label.textContent='Encuentro de prueba';label.htmlFor=select.id;
- select.add(new Option('Distribución natural',''));select.add(new Option('Instalaciones conectadas · jardín modular','installation'));select.add(new Option('Rastro musical · instrumento dormido','trail'));for(const [id,f]of Object.entries(FAMILIES))select.add(new Option(f.name,id));
+ select.add(new Option('Distribución natural',''));select.add(new Option('Vidrios · movimiento y música','glass'));select.add(new Option('Instalaciones conectadas · jardín modular','installation'));select.add(new Option('Rastro musical · instrumento dormido','trail'));for(const [id,f]of Object.entries(FAMILIES))select.add(new Option(f.name,id));
  const submit=$('seedForm').querySelector('button[type="submit"]');$('seedForm').insertBefore(label,submit);$('seedForm').insertBefore(select,submit);
 
  function open(){
@@ -24,7 +24,7 @@ export function initialize(runtime){
  $('seedPresets').onclick=e=>{const button=e.target.closest('[data-seed]');if(button)visit(button.dataset.seed);};
  if(runtime.S.previewSeed){
   const s=runtime.S;s.todayKey=runtime.dayKey();s.todayLight=runtime.CAP;s.capShown=true;s.lampDay=s.todayKey;s.lampUsed=0;s.lastWorldDay=s.todayKey;
-  s.layer='superficie';s.wx=s.wy=runtime.REG*runtime.WCH/2;if(select.value==='installation'||new URLSearchParams(location.search).get('encounter')==='installation'){s.wx=2050;s.wy=900;}if(new URLSearchParams(location.search).get('encounter')==='trail'){const size=runtime.REG*runtime.WCH,t=createSoundTrail(runtime.regionOfPos(size/2,size/2),size,runtime.seedOf,runtime.rng,true);if(t){const node=t.nodes[Math.min(2,s.soundTrails?.[t.id]?.stage||0)];s.wx=node.x;s.wy=node.y;}}s.help.camino=true;s.help.mundo=true;s.helpV2=true;
+  s.layer='superficie';s.wx=s.wy=runtime.REG*runtime.WCH/2;if(select.value==='installation'||new URLSearchParams(location.search).get('encounter')==='installation'){s.wx=2050;s.wy=900;}if(new URLSearchParams(location.search).get('encounter')==='glass'){s.wx=1080;s.wy=900;}if(new URLSearchParams(location.search).get('encounter')==='trail'){const size=runtime.REG*runtime.WCH,t=createSoundTrail(runtime.regionOfPos(size/2,size/2),size,runtime.seedOf,runtime.rng,true);if(t){const node=t.nodes[Math.min(2,s.soundTrails?.[t.id]?.stage||0)];s.wx=node.x;s.wy=node.y;}}s.help.camino=true;s.help.mundo=true;s.helpV2=true;
   s.ach.mundo??=s.todayKey;s.mode='camino';runtime.enterWorld();runtime.save();
  }
  Object.defineProperties(runtime,{openSeedLab:{get:()=>open}});

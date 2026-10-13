@@ -32,6 +32,9 @@ with sync_playwright() as p:
   page.wait_for_function('window.__testRuntime?.S.mode==="world" && __testRuntime.S.wx===2050 && __testRuntime.S.wy===900')
   assert page.evaluate('__testRuntime.nearbyPatches(300).some(s=>s.id==="patch:0,0")')
   assert page.evaluate('localStorage.getItem("pixel-blanco-v4")')==baseline
+  page.locator('#bMenu').click();page.locator('summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.select_option('#seedEncounter','glass');page.locator('#seedForm button[type="submit"]').click()
+  page.wait_for_function('window.__testRuntime?.S.mode==="world" && __testRuntime.S.wx===1080 && __testRuntime.S.wy===900')
+  assert page.evaluate('__testRuntime.nearbyGlass(300).some(s=>s.id==="glass:0,0")');assert page.locator('#glassPanel').count()==0
   page.locator('#bMenu').click();page.locator('summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('#seedOriginal').click();page.wait_for_function('window.__testRuntime && !window.__testRuntime.S.previewSeed');assert page.evaluate('localStorage.getItem("pixel-blanco-v4")')==baseline
   assert not errors,errors
   print(label+': prototype seed switching, whole-world variation, center, preview save isolation and return to main save PASS',flush=True);c.close()

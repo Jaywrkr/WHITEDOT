@@ -137,7 +137,7 @@ export function initialize(runtime){
    cx.globalAlpha=.5;cx.strokeStyle=WORLD_VISUAL.echo;cx.lineWidth=1;cx.beginPath();cx.arc(x.x+ox,x.y+oy,12,0,Math.PI*2);cx.stroke();
    cx.globalAlpha=.85;if(runtime.blobHabitat?.(x.region))runtime.drawBlob(x.sp,{...x,ph:x.sp.deg||0},x.x+ox,x.y+oy,t,b);else runtime.drawSprite(x.sp.bits,x.x+ox,x.y+oy,(x.sp.cell||2)*(1+x.lit*.5),x.lit>.1?'#fff':x.sp.col);});
   // Ranuras de la banda (abajo, discretas).
-  const n=Object.keys(band.members).length;if(n){const panels=['fxPanel','glassPanel','mirrorPanel','patchPanel','scanner','routeHud','autopilotHud'].map(id=>runtime.$(id)).filter(p=>p&&!p.hidden),panelTop=panels.length?Math.min(...panels.map(p=>p.getBoundingClientRect().top)):null;
+  const n=Object.keys(band.members).length;if(n){const panels=['fxPanel','mirrorPanel','patchPanel','scanner','routeHud','autopilotHud'].map(id=>runtime.$(id)).filter(p=>p&&!p.hidden),panelTop=panels.length?Math.min(...panels.map(p=>p.getBoundingClientRect().top)):null;
    const y0=jamHudTop(H,panelTop,runtime.$('toast')?.classList.contains('on')),w=26;
    BAND_ROLES.forEach(([sl,l],i)=>{const x=W/2+(i-1.5)*(w+6),on=!!band.members[sl];cx.globalAlpha=on?.9:.3;cx.strokeStyle=on?runtime.GOLD:'#fff';cx.lineWidth=1;cx.strokeRect(x-w/2,y0,w,18);
     cx.fillStyle=on?runtime.GOLD:'#fff';cx.font='10px monospace';cx.textAlign='center';cx.fillText(l,x,y0+13);});

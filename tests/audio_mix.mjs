@@ -1,9 +1,9 @@
 // Real Web Audio render of the scheduler, with a virtual clock and deterministic noise.
-export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false}={}) {
+export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false}={}) {
  const modules=await Promise.all(['data','progress','world','audio','voices','instruments','patches','effects','spatial','influence','blobs'].map(id=>import(`../src/${id}.js`)));
  const r=Object.create(null),duration=10,context=new OfflineAudioContext(2,duration*sampleRate,sampleRate);
  const original={AudioContext:window.AudioContext,setInterval:window.setInterval,setTimeout:window.setTimeout,random:Math.random};
- let clock=0,schedule,trailNotes=0;const originalURL=location.href;
+ let clock=0,schedule,trailNotes=0,glassNotes=0;const glassRoles=new Set();const originalURL=location.href;
  const proxy=new Proxy(context,{get(target,key){if(key==='currentTime')return clock;if(key==='state')return 'running';const value=Reflect.get(target,key,target);return typeof value==='function'?value.bind(target):value;}});
  try {
   window.AudioContext=function(){return proxy;};window.setInterval=fn=>{schedule=fn;return 0;};window.setTimeout=()=>0;
@@ -32,6 +32,12 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
    const route=r.nearbyTrails(10000).find(t=>t.id==='trail:0,0');if(!route)throw Error('missing audio trail');
    r.S.soundTrails[route.id]={stage:1,seen:true};r.S.wx=route.nodes[1].x;r.S.wy=route.nodes[1].y;
   }
+  if(glass){
+   r.soundCue=(source,role)=>{if(source?.id?.startsWith('glass:')){glassNotes++;glassRoles.add(role);}};
+   origin.genre=genre;origin.track={...r.MU.dnaT.track};r.$=id=>document.getElementById(id);r.unlock=()=>{};r.stopAutopilot=()=>{};document.querySelectorAll('.modal').forEach(m=>m.hidden=true);
+   const interactions=await import('../src/interactions.js');interactions.initialize(r);const {initialize}=await import('../src/glass.js');initialize(r);const site=r.nearbyGlass(5000).find(s=>s.id==='glass:0,0');if(!site)throw Error('missing glass mix site');
+   r.S.wx=site.x;r.S.wy=site.y;for(let i=0;i<3;i++){site.lastInput=-Infinity;r.turnGlass(site,i,i*.3);}r.S.glassSites[site.id]={seen:true,angles:site.angles};
+  }
   if(fx){r.fx.verbSend.gain.value=.7;r.fx.delaySend.gain.value=.5;r.fx.fb.gain.value=.72;}
   if(encounter){
    // The actual encounter scheduler asks the world for its region, so its cached region must match the tested genre.
@@ -57,7 +63,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   const buffer=await context.startRendering(),data=Array.from({length:2},(_,i)=>buffer.getChannelData(i));
   let peak=0,sum=0,hot=0,n=0;
   for(const samples of data)for(let i=sampleRate;i<samples.length;i++){const value=samples[i];if(!Number.isFinite(value))throw Error('nonfinite rendered audio');peak=Math.max(peak,Math.abs(value));sum+=value*value;hot+=Math.abs(value)>.98;n++;}
-  return {genre,dense,soft,fx,influenced,worldSeed,encounter,deep,installation,trail,trailNotes,sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
+  return {genre,dense,soft,fx,influenced,worldSeed,encounter,deep,installation,trail,glass,trailNotes,glassNotes,glassRoles:[...glassRoles],sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
  } finally {window.AudioContext=original.AudioContext;window.setInterval=original.setInterval;window.setTimeout=original.setTimeout;Math.random=original.random;history.replaceState(null,'',originalURL);}
 }
 

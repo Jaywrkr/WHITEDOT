@@ -174,7 +174,7 @@ export function initialize(runtime) {
    mirrors:"Toca un espejo y gira sus controles. Sigue la luz desde el punto dorado hasta el rombo. Cada reflejo transforma la respuesta musical.",
    vidrio1:"Mover el color también mueve la música. Ya tienes otro instrumento.",
    vidrioArmonia:"Tres vidrios mirando al mismo lado. Por una vez, se pusieron de acuerdo.",
-   glass:"Gira los aros o usa los tres controles. Sus cruces revelan figuras y cada vidrio tiene una voz distinta.",
+   glass:"Gira los aros directamente. Sus cruces dibujan resonancias y transforman bajo, groove y armonía; cada lugar tiene sus instrumentos.",
    paseo1:"El mundo sigue tocando. Tú puedes mirar por la ventana.",
    regresoMusical:"Volviste al lugar. La música siguió viviendo mientras no estabas.",
    favorito1:"Encontraste un lugar al que quieres volver. Ahora tiene nombre y dirección.",
