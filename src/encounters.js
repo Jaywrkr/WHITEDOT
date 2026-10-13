@@ -1,6 +1,6 @@
-import {FAMILIES,createFamilyState,familyInfluence,familyArrange} from './encounter-families.js';
+import {FAMILIES,createFamilyState,familyInfluence,familyArrange,regionalFamilyInfluence,encounterRole} from './encounter-families.js';
 import {claimInstallationBar} from './installations.js';
-export function createEncounters(cx,cy,size,region,seedOf,rng,preview=null){
+export function createEncounters(cx,cy,size,region,seedOf,rng){
  if(region.sea)return [];
  const candidates=[];
  for(const kind of Object.keys(FAMILIES)){
@@ -24,12 +24,12 @@ export function initialize(runtime){
   }return cache.get(key);
  }
  function record(o,verb='model'){
-  o.state.active=16;o.state.used=true;const f=FAMILIES[o.kind];runtime.creativeAction?.(f.voiceRole?f.voiceRole(o.state):f.role,verb);
+  o.state.active=16;o.state.used=true;const f=FAMILIES[o.kind];runtime.creativeAction?.(f.voiceRole?f.voiceRole(o.state):encounterRole(o.kind,runtime.regionOfPos(o.x,o.y),runtime.seedOf),verb);
   runtime.S.journal.encounters||={};runtime.S.journal.encounters[o.kind]=1;
   runtime.unlock('encounter:'+o.kind);
  }
  function tick(dt,paused){
-  if(previous!==runtime.S){cache.clear();visible=[];gesture=null;previous=runtime.S;}
+  if(previous!==runtime.S){cache.clear();visible=[];gesture=null;previous=runtime.S;lastBar=-Infinity;}
   if(!playable()||paused){if(gesture)cancel();return;}
   const x=Math.floor(runtime.S.wx/runtime.WCH),y=Math.floor(runtime.S.wy/runtime.WCH);visible=[];
   for(let a=x-1;a<=x+1;a++)for(let b=y-1;b<=y+1;b++)visible.push(...chunk(a,b));
@@ -38,17 +38,17 @@ export function initialize(runtime){
   if(!active())return;
   const combined={};
   for(const o of visible){const s=o.state,f=FAMILIES[o.kind],d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),near=d<75;
-   s.phase+=dt*(.5+s.b*1.5);s.active=Math.max(0,s.active-dt);s.charge=Math.max(0,Math.min(1,s.charge+dt*(near&&runtime.MU.speed<.06?1/5:-1/10)));
+   s.phase+=dt*(.5+s.b*1.5)*(.75+o.variant*.07);s.active=Math.max(0,s.active-dt);s.charge=Math.max(0,Math.min(1,s.charge+dt*(near&&runtime.MU.speed<.06?1/5:-1/10)));
    f.tick?.(s,dt,near,{runtime,object:o,distance:d});
    if(s.charge>.9&&!s.held){s.held=true;record(o,'cultivate');}if(s.charge<.2)s.held=false;
-   if(closest.includes(o)&&d<150&&(s.active>0||near))for(const [channel,value]of Object.entries(familyInfluence(o.kind,s))){combined[channel]??={level:0,variant:0};combined[channel].level+=value*Math.max(0,1-d/180);combined[channel].variant=f.figure(s)%8;}
+   if(closest.includes(o)&&d<150&&(s.active>0||near))for(const [channel,value]of Object.entries(regionalFamilyInfluence(o.kind,s,runtime.regionOfPos(o.x,o.y),runtime.seedOf))){if(!s.used&&Math.abs(value)<.02)continue;combined[channel]??={level:0,variant:0};combined[channel].level+=value*Math.max(0,1-d/180);combined[channel].variant=(f.figure(s)+o.variant)%8;}
   }
   const region=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
   for(const [channel,input]of Object.entries(combined))runtime.driveInfluence?.(region,channel,Math.max(-1,Math.min(1,input.level)),input.variant);
  }
- function cancel(){if(gesture)Object.assign(gesture.object.state,gesture.initial);gesture=null;}
+ function cancel(){if(gesture){for(const k of Object.keys(gesture.object.state))delete gesture.object.state[k];Object.assign(gesture.object.state,gesture.initial);}gesture=null;}
  function down(e){
-  if(!e.isPrimary||!playable())return false;const x=runtime.S.wx+e.clientX-runtime.W/2,y=runtime.S.wy+e.clientY-runtime.H/2;
+  if(!e.isPrimary||gesture||!playable())return false;const x=runtime.S.wx+e.clientX-runtime.W/2,y=runtime.S.wy+e.clientY-runtime.H/2;
   const o=visible.find(o=>Math.hypot(o.x-x,o.y-y)<36);if(!o)return false;
   runtime.audio();gesture={id:e.pointerId,object:o,initial:{...o.state},x:e.clientX,y:e.clientY,t:performance.now(),moved:false};
   try{runtime.$('w').setPointerCapture(e.pointerId);}catch(_){}return true;
@@ -66,10 +66,11 @@ export function initialize(runtime){
  }
  function bar(time,bar){
   if(!active()||bar-lastBar<2||runtime.currentPocket?.()?.kind==='quiet')return;
-  const o=visible.filter(o=>o.state.active>0&&o.state.used&&!FAMILIES[o.kind].silent&&Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<150).sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy))[0];
-  if(!o||!claimInstallationBar(runtime,bar))return;lastBar=bar;
-  const region=runtime.regionOfPos(o.x,o.y),f=FAMILIES[o.kind],at=time+runtime.SIX*[2,6,10,14][(f.figure(o.state)+bar)%4];
-  runtime.playVoice('encounter:'+o.kind+(f.voiceRole?':'+f.voiceRole(o.state):''),f.figure(o.state),at,region,false,.25,o,'ambient');
+  let o=visible.filter(o=>o.state.active>0&&o.state.used&&!FAMILIES[o.kind].silent&&Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<150).sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy))[0];
+  if(!o)return;if(o.kind==='animal'&&bar%4===2){const partner=visible.find(p=>p!==o&&p.kind==='animal'&&Math.hypot(p.x-o.x,p.y-o.y)<210&&Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy)<200);if(partner)o=partner;}
+  if(!claimInstallationBar(runtime,bar))return;lastBar=bar;
+  const region=runtime.regionOfPos(o.x,o.y),f=FAMILIES[o.kind],at=time+runtime.SIX*[2,6,10,14][(f.figure(o.state)+o.variant+bar)%4];
+  runtime.playVoice('encounter:'+o.kind+(f.voiceRole?':'+f.voiceRole(o.state):''),(f.figure(o.state)+o.variant)%7,at,region,false,.25,o,'ambient');
  }
  function arrange(region,track){
   if(!active()||region.key!==runtime.regionOfPos(runtime.S.wx,runtime.S.wy).key)return track;
@@ -89,7 +90,7 @@ export function initialize(runtime){
  }
  function sources(){return visible.map(o=>({object:o,kind:'encounter:'+o.kind+(FAMILIES[o.kind].voiceRole?':'+FAMILIES[o.kind].voiceRole(o.state):''),name:FAMILIES[o.kind].name,distance:Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)})).filter(s=>s.distance<250);}
  function journal(){return Object.keys(runtime.S.journal.encounters||{}).filter(k=>FAMILIES[k]).map(k=>`<article class="journal-card"><h3>${FAMILIES[k].name}</h3><p>${FAMILIES[k].hint}. Su papel y su timbre cambian con la región; los gestos transforman la composición existente.</p></article>`).join('');}
- for(const [kind,f]of Object.entries(FAMILIES))runtime.ACH.push(['encounter:'+kind,f.name,'Aprende un gesto de este encuentro.']);
+ for(const [kind,f]of Object.entries(FAMILIES)){runtime.VOZ['encounter:'+kind]=f.hint+'. Escucha cómo cambia este lugar.';runtime.ACH.push(['encounter:'+kind,f.name,'Aprende un gesto de este encuentro.']);}
  addEventListener('blur',cancel);
  Object.defineProperties(runtime,{shapeEncounters:{get:()=>arrange},encounterTick:{get:()=>tick},encounterDraw:{get:()=>draw},encounterBar:{get:()=>bar},encounterDown:{get:()=>down},encounterMove:{get:()=>move},encounterUp:{get:()=>up},encounterSources:{get:()=>sources},encounterJournal:{get:()=>journal},encounterObjects:{get:()=>visible},encounterCacheSize:{get:()=>cache.size}});
 }
@@ -97,7 +98,7 @@ function drawShape(c,shape,s,o,runtime){
  const TAU=Math.PI*2;
  if(shape==='box'){c.strokeRect(-25,-19,50,38);c.beginPath();c.moveTo(-25,-19);c.lineTo(-21,-19-20*s.a);c.lineTo(25,-19-20*s.a);c.stroke();for(let i=0;i<3-s.c;i++){c.save();c.translate(-15+i*15,2);c.rotate(s.phase*(.2+s.b));c.strokeRect(-5,-5,10,10);c.beginPath();c.moveTo(-7,0);c.lineTo(7,0);c.stroke();c.restore();}}
  else if(shape==='shadow'){const a=s.a*TAU;c.beginPath();c.moveTo(-10,12);c.lineTo(0,-17);c.lineTo(12,12);c.closePath();c.stroke();c.beginPath();c.arc(Math.cos(a)*32,Math.sin(a)*32,3,0,TAU);c.fill();for(let i=0;i<8;i++){c.globalAlpha*=.96;const x=-28+i*8,len=((i+Math.floor(s.a*8))%8<1+Math.floor(s.b*3))?18:3;c.beginPath();c.moveTo(x,28);c.lineTo(x+Math.cos(a)*len,28+Math.sin(a)*len);c.stroke();}}
- else if(shape==='flower'){for(let i=0;i<4;i++){const a=i/4*TAU,rr=12+s.charge*13;c.save();c.rotate(a);c.beginPath();c.ellipse(rr,0,7+s.charge*3,4,0,0,TAU);c.stroke();if(i===Math.floor(s.a*4))c.fill();c.restore();}c.beginPath();c.arc(0,0,5,0,TAU);c.stroke();}
+ else if(shape==='flower'){for(let i=0;i<4;i++){const a=i/4*TAU,rr=12+s.charge*13;c.save();c.rotate(a);c.beginPath();c.ellipse(rr,0,7+s.charge*3,4,0,0,TAU);c.stroke();if(i===Math.min(3,Math.floor(s.a*4)))c.fill();c.restore();}c.beginPath();c.arc(0,0,5,0,TAU);c.stroke();}
  else if(shape==='stream'){for(let j=-1;j<=1;j++){c.beginPath();for(let i=0;i<=16;i++){const x=-35+i*70/16,y=j*7+Math.sin(i*.5+s.phase*(s.a<.5?-1:1))*5;c[i?'lineTo':'moveTo'](x,y);}c.stroke();}if(s.c){c.beginPath();c.arc(0,0,12+s.b*8,s.phase,s.phase+TAU*.8);c.stroke();}}
  else if(shape==='animal'){c.rotate(Math.sin(s.phase)*.2);c.beginPath();c.ellipse(0,0,17,12,0,0,TAU);c.stroke();c.fillRect(-6,-3,2,2);c.fillRect(4,-3,2,2);for(let i=-1;i<=1;i+=2){c.beginPath();c.moveTo(i*10,9);c.lineTo(i*14,17+Math.sin(s.phase+i)*3);c.stroke();}if(s.c){c.beginPath();c.arc(0,0,25,-.7,.7);c.stroke();}}
  else if(shape==='peel'){c.rotate(s.b-.5);for(let i=0;i<3;i++){const open=Math.floor(s.a*3);c.beginPath();c.arc(0,0,14+i*6,i<open?.35:0,i<open?TAU-.35:TAU);c.stroke();}c.strokeRect(-4,-4,8,8);}

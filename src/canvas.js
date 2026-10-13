@@ -7,7 +7,8 @@ export function initialize(runtime) {
   addEventListener("resize",resize);resize();
   const keys={};let ptr=null;
   addEventListener("keydown",e=>{
-    if(e.target!==document.body&&e.target!==cv)return;
+    const focusedMenu=e.target===document.getElementById('bMenu')&&runtime.inWorld();
+    if(e.target!==document.body&&e.target!==cv&&!(focusedMenu&&['arrowright','arrowleft','arrowup','arrowdown','w','a','s','d'].includes(e.key.toLowerCase())))return;
     if(document.querySelector('.modal:not([hidden])'))return;
     if(e.key==='Escape'){runtime.stopAutopilot?.();return;}
     const key=e.key.toLowerCase();if(['arrowright','arrowleft','arrowup','arrowdown','w','a','s','d'].includes(key)){keys[key]=1;runtime.audio();if(e.key.startsWith('Arrow'))e.preventDefault();}
@@ -55,7 +56,7 @@ export function initialize(runtime) {
   };
   addEventListener("pointerup",up);addEventListener("pointercancel",up);cv.addEventListener("lostpointercapture",up);
   cv.addEventListener("contextmenu",e=>e.preventDefault());
-  addEventListener("keydown",e=>{if(e.code==="KeyE"&&!e.repeat&&e.target===document.body)runtime.startScanner();});
+  addEventListener("keydown",e=>{if(e.code==="KeyE"&&!e.repeat&&(e.target===document.body||e.target===cv||e.target===document.getElementById('bMenu'))&&!document.querySelector('.modal:not([hidden])'))runtime.startScanner();});
   addEventListener("keyup",e=>{if(e.code==="KeyE")runtime.stopScanner();});
   addEventListener("blur",()=>{cancelHold();activePointer=null;ptr=null;runtime.tapStart=null;for(const key in keys)keys[key]=0;runtime.stopScanner();});
 

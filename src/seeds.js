@@ -6,7 +6,7 @@ export function initialize(runtime){
  const select=document.createElement('select');select.id='seedEncounter';select.setAttribute('aria-label','Encuentro para probar');
  const label=document.createElement('label');label.textContent='Encuentro de prueba';label.htmlFor=select.id;
  select.add(new Option('Distribución natural',''));for(const [id,f]of Object.entries(FAMILIES))select.add(new Option(f.name,id));
- $('seedForm').append(label,select);
+ const submit=$('seedForm').querySelector('button[type="submit"]');$('seedForm').insertBefore(label,submit);$('seedForm').insertBefore(select,submit);
 
  function open(){
   select.value=new URLSearchParams(location.search).get('encounter')||'';$('seedValue').value=runtime.S.previewSeed||'original';$('seedLayout').value=runtime.S.previewLayout||'wide';

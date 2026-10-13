@@ -45,9 +45,25 @@ export const FAMILIES={
 export function createFamilyState(){return {a:.5,b:.5,c:0,charge:0,phase:0,active:0,used:false};}
 export function familyInfluence(kind,state){const values=FAMILIES[kind]?.influence(state)||{};return Object.fromEntries(Object.entries(values).filter(([,v])=>Number.isFinite(v)).map(([k,v])=>[k,clamp(v,-1,1)]));}
 export function encounterVoice(kind,region,genres,seedOf){
- const [id,override]=kind.split(':'),family=FAMILIES[id],g=genres[region.genre],index=seedOf(`encounter-voice:${region.key}:${id}`),channel=['bass','groove','melody','space'].includes(override)?override:family?.role||'melody';
- const roles={bass:'bajo',groove:'perc',melody:'lead',space:'acorde'},pool=channel==='bass'?(g.bassP||[g.bassI]):channel==='groove'?['tom','conga','wood','rim']:g.hookP;
+ const [id,override]=kind.split(':'),g=genres[region.genre],index=seedOf(`encounter-voice:${region.key}:${id}`),channel=encounterRole(id,region,seedOf,override);
+ const roles={bass:'bajo',groove:'perc',melody:'lead',space:'acorde'},pool=channel==='bass'?(g.bassP||[g.bassI]):channel==='groove'?(g.percP||['tom','conga','wood','rim']):g.hookP;
  return {role:roles[channel],instrument:pool[index%pool.length],degree:index%7,response:4,low:channel==='bass'?36:48,high:channel==='bass'?55:72};
 }
 
-export function familyArrange(kind,track,state){const f=FAMILIES[kind];if(!f?.arrange)return track;return f.arrange({...track,bass:[...track.bass],hook:[...track.hook],grammar:{...track.grammar}},state);}
+export function familyArrange(kind,track,state){
+ const f=FAMILIES[kind];if(!f?.arrange)return track;
+ const out=f.arrange({...track,bass:[...track.bass],hook:[...track.hook],grammar:{...track.grammar}},state);
+ for(const [part,limit]of [['bass',8],['hook',Math.min(6,out.grammar.hookLimit||5)]]){let n=0;out[part]=out[part].map(value=>value>=0&&++n>limit?-1:value);}
+ return out;
+}
+export function encounterRole(kind,region,seedOf,override){
+ if(['bass','groove','melody','space'].includes(override))return override;
+ const base=FAMILIES[kind]?.role||'melody';if(kind==='cloud'||kind==='well'||kind==='animal')return base;
+ const channels=['bass','groove','melody','space'],offset=seedOf(`encounter-role:${region.key}:${kind}`)%4;
+ return channels[(channels.indexOf(base)+offset)%4];
+}
+export function regionalFamilyInfluence(kind,state,region,seedOf){
+ const values=familyInfluence(kind,state);if(['cloud','well','animal','flower'].includes(kind))return values;
+ const channels=['bass','groove','melody','space'],base=FAMILIES[kind].role,target=encounterRole(kind,region,seedOf),offset=(channels.indexOf(target)-channels.indexOf(base)+4)%4;
+ return Object.fromEntries(Object.entries(values).map(([channel,value])=>[channels[(channels.indexOf(channel)+offset)%4],value]));
+}

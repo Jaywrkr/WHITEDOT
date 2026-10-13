@@ -2,7 +2,7 @@
 
 ## Nueve mejoras de jugabilidad seleccionadas por Jay
 
-Propuestas anotadas; todavía no implementadas por esta selección. Jay descartó la opción 7 de la lista presentada: guardar ideas musicales, conexiones y ajustes mientras evoluciona el ambiente. No se añade esa función al nuevo plan; esto no elimina los favoritos ni los guardados que ya existen.
+Las nueve mejoras seleccionadas ya están implementadas; ver [JUGABILIDAD_CREATIVA.md](JUGABILIDAD_CREATIVA.md) y su cadena de entregas. Jay descartó la opción 7 de la lista presentada: guardar ideas musicales, conexiones y ajustes mientras evoluciona el ambiente. No se añade esa función al nuevo plan; esto no elimina los favoritos ni los guardados que ya existen.
 
 1. Un primer recorrido con sentido: Camino → descubrir un lugar → transformar su música → llevar la experiencia al Estudio, sin exigir una nueva función de guardar ideas.
 2. Gestos descubribles mediante respuestas visuales pequeñas: tocar, permanecer, girar y conectar.
@@ -14,7 +14,7 @@ Propuestas anotadas; todavía no implementadas por esta selección. Jay descart�
 8. Una Voz contextual que recuerde descubrimientos, ayude cuando haga falta y deje espacio durante la creación.
 9. Separar exploración con recursos de composición tranquila, para poder crear sin que la linterna interrumpa.
 
-Prioridad recomendada: primer recorrido, gestos descubribles y creación por sustracción. La selección no autoriza por sí sola implementarlas todas.
+Prioridad recomendada: primer recorrido, gestos descubribles y creación por sustracción. Jay autorizó posteriormente las nueve mejoras, las diez familias nuevas y una revisión final.
 
 ## Qué une el proyecto
 
@@ -38,7 +38,7 @@ Eso no implementa aún cajas musicales, cuerdas tensables, conversaciones con pe
 
 1. **Unir el primer recorrido.** Afinar la transición Camino → Mundo → Estudio, con una introducción breve en la que tocar, permanecer, conectar y retirar tengan un resultado audible. No añadir cinco tutoriales seguidos ni exigir grabar. Una primera visita puede terminar guardando un lugar o una idea; no necesita conseguir una reliquia.
 2. **Ordenar los verbos y la Voz.** Un vocabulario: tocar = responder, permanecer = cultivar, conectar = transformar, fijar = repetir por elección, retirar = hacer espacio, guardar = recordar. Una Voz que observa el contexto y ofrece la siguiente posibilidad solo cuando hace falta. Mantener humor, pero revisar burlas al empezar, por fallar un día o por tocar fuera del beat. Dar mensajes relacionados con lo que ocurre, evitar acumulaciones de logros/anuncios/rumores que compiten por pantalla.
-3. **Definir qué se conserva.** Distinguir claramente identidad del lugar, objetos/cables guardados, favoritos, sonidos temporales y composición del Estudio. Diseñar una «idea musical» guardable que recuerde parámetros y ruta, sin prometer congelar el audio de una radio viva. Al regresar, debe reconocerse la idea y a la vez sentir que el mundo siguió viviendo.
+3. **Definir qué se conserva.** Distinguir claramente identidad del lugar, objetos/cables guardados, favoritos, sonidos temporales y composición del Estudio. Jay descartó añadir una «idea musical» guardable. Mantener favoritos y las reglas actuales de objetos/cables guardados; no añadir persistencia de escenas musicales en esta cadena.
 4. **Hacer la exploración significativa.** Pistas sonoras, señales locales y rutas a rarezas; hallazgos que enseñan una interacción o desbloquean una herramienta expresiva. Preferir pequeñas cadenas de descubrimiento frente a recoger cantidades grandes de objetos equivalentes. Evitar que una reliquia rara sea solo un nombre y color distintos.
 5. **Revisar el ritmo de progreso.** Separar escuchar/crear de perseguir rachas. Evaluar un modo de escucha tranquila que no corte una composición por linterna, conservando la exploración con sus reglas. Considerar cambiar recompensas repetitivas y logros arbitrarios por descubrimientos, retornos y decisiones musicales. Estas son propuestas: no se ha eliminado la linterna ni alterado el crecimiento diario.
 6. **Consolidar antes de ampliar.** Límites de memoria/cachés en viajes largos, recuperación de guardados, offline correcto, límites compartidos de sonido y una prueba móvil prolongada. Revisar mezcla por familias de bajo/batería/motivo/ambiente, no corregir todos los casos con más volumen. Comparar grabaciones de varios minutos y fatiga en dispositivos reales.

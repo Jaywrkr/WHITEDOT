@@ -20,7 +20,7 @@ export function initialize(runtime) {
     else if(runtime.inWorld()){const l=runtime.lampLeft();fill.style.width=(l/runtime.lampMax()*100)+"%";
       goal.textContent=dist?"Eco cercano · escucha y pulsa":"Lugares "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
       gr.textContent=runtime.S.relaxedCreate?"Crear ∞":fmt(l);}
-    else if(runtime.isFree()){const l=runtime.lampLeft();fill.style.width="100%";goal.textContent=l>0?"Camino completo · entra al Mundo":"Vuelve mañana";gr.textContent=l>0?"Linterna "+fmt(l):"";}
+    else if(runtime.isFree()){const l=runtime.lampLeft();fill.style.width="100%";goal.textContent=runtime.S.relaxedCreate?"Camino completo · crea sin prisa":l>0?"Camino completo · entra al Mundo":"Vuelve mañana";gr.textContent=runtime.S.relaxedCreate?"Crear ∞":l>0?"Linterna "+fmt(l):"";}
     else{fill.style.width=(runtime.S.todayLight/runtime.CAP*100)+"%";goal.textContent="Recoge luz · "+runtime.S.todayLight+" / "+runtime.CAP;gr.textContent="Toca en el beat";}
     const canWorld=runtime.S.mode==="camino"&&runtime.isFree()&&(runtime.S.relaxedCreate||runtime.lampLeft()>0),bp=$("bPrimary");$("bWorld").querySelector("span").textContent=runtime.inWorld()?"Camino":"Mundo";
     bp.hidden=!(canWorld||runtime.inWorld());$("bPrimaryL").textContent=runtime.inWorld()?"Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=runtime.inWorld()?"scaleX(-1)":"";

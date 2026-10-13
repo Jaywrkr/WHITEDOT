@@ -1,6 +1,6 @@
 ## Cadena vigente de cinco fases
 
-Orden de integración y pruebas: [FASES.md](FASES.md). Esta rama contiene las fases 1–4; base `main` actualizado `63706eb`. Jay crea PR y merge en orden mediante merge normal.
+Orden de integración y pruebas: [FASES.md](FASES.md). Esta rama contiene las fases 1–5; base `main` actualizado `63706eb`. Jay crea PR y merge en orden mediante merge normal.
 
 # HANDOFF · WHITEDOT / Pixel Blanco
 
@@ -584,3 +584,4 @@ Estado actual de este pedido: ramas 13 → 14 → 15, separadas de las fases pro
 - **Fase 2: Exploración con sentido.** Retos abiertos, capacidades de reliquias, pistas, Voz contextual y modo de creación sin gasto de linterna.
 - **Fase 3: Primeros cinco encuentros.** Nubes, tejedoras, pozos de silencio, semillas orbitales y piedras de capas; selector de pruebas en Semillas.
 - **Fase 4: Otros cinco encuentros.** Animales de intercambio, corrientes reversibles, flores de presión, esculturas de sombra y cajas de posibilidades.
+- **Fase 5: Pulido final.** Paletas de 52 estilos, densidad musical, prioridad del borrado, accesibilidad, móvil y shell offline completo.

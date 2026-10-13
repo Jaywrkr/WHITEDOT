@@ -214,3 +214,13 @@ body.world-mode .tiles button[aria-pressed="true"]{color:var(--gold);border-colo
 .glasspanel .fxhead button,.routehud button{min-width:44px}
 body.world-mode:has(.modal:not([hidden])) .dock,body.world-mode:has(.modal:not([hidden])) .voice,body.world-mode:has(.modal:not([hidden])) .zone{visibility:hidden}
 body.world-mode:has(.glasspanel:not([hidden])) .voice{opacity:0;pointer-events:none}
+
+/* Release review: accessible menus on short screens without covering the world permanently. */
+.modal .sheet{overflow-y:auto;overscroll-behavior:contain;max-height:calc(100dvh - 48px);padding:2px 4px 8px;scrollbar-width:thin}
+.modal .sheet>*{flex-shrink:0}
+#seedForm{display:grid;gap:10px}
+#seedForm input,#seedForm select{width:100%;min-height:44px;min-width:0;background:#101010;color:var(--ink);border:1px solid var(--faint);padding:8px;font:inherit}
+#seedForm label{font-size:11px;color:var(--dim)}
+button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(max-height:500px){.tiles button{padding:10px 6px;gap:5px}.modal .scroll{max-height:48dvh}.glasspanel{max-height:48dvh}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}

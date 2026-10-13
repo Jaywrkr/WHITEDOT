@@ -1,9 +1,9 @@
 // Real Web Audio render of the scheduler, with a virtual clock and deterministic noise.
-export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed=''}={}) {
+export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null}={}) {
  const modules=await Promise.all(['data','progress','world','audio','voices','instruments','patches','effects','spatial','influence','blobs'].map(id=>import(`../src/${id}.js`)));
  const r=Object.create(null),duration=10,context=new OfflineAudioContext(2,duration*sampleRate,sampleRate);
  const original={AudioContext:window.AudioContext,setInterval:window.setInterval,setTimeout:window.setTimeout,random:Math.random};
- let clock=0,schedule;
+ let clock=0,schedule;const originalURL=location.href;
  const proxy=new Proxy(context,{get(target,key){if(key==='currentTime')return clock;if(key==='state')return 'running';const value=Reflect.get(target,key,target);return typeof value==='function'?value.bind(target):value;}});
  try {
   window.AudioContext=function(){return proxy;};window.setInterval=fn=>{schedule=fn;return 0;};window.setTimeout=()=>0;
@@ -16,16 +16,26 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   r.MU.E=dense?.8:.45;r.MU.vit=1;r.MU.vari=2;r.audio();
   if(influenced){r.activeLayerRegion=()=>r.MU.dnaT;for(const k of ['bass','groove','melody'])r.driveInfluence(r.MU.dnaT,k,1,3);for(let i=0;i<100;i++)r.influenceTick(.05,false);}
   if(fx){r.fx.verbSend.gain.value=.7;r.fx.delaySend.gain.value=.5;r.fx.fb.gain.value=.72;}
+  if(encounter){
+   // The actual encounter scheduler asks the world for its region, so its cached region must match the tested genre.
+   origin.genre=genre;origin.track={...r.MU.dnaT.track};
+   document.querySelectorAll('.modal').forEach(m=>m.hidden=true);
+   const url=new URL(location.href);url.searchParams.set('encounter',encounter);history.replaceState(null,'',url);
+   r.S.previewSeed='audio-review';r.S.wx=r.S.wy=r.REG*r.WCH/2;
+   const {initialize}=await import('../src/encounters.js');initialize(r);r.unlock=()=>{};r.encounterTick(.05,false);
+   const object=r.encounterObjects.find(o=>o.id==='preview:'+encounter);if(!object)throw Error('missing audio encounter '+encounter);
+   const {FAMILIES}=await import('../src/encounter-families.js');FAMILIES[encounter].drag(object.state,70,-60,200);object.state.used=true;object.state.active=999;
+  }
   const sources=Array.from({length:8},(_,i)=>({x:900+10*i,y:900,id:`mix:${i}`}));
   for(let tick=0;tick<duration/.025;tick++){
-   clock=tick*.025;schedule();
+   clock=tick*.025;if(encounter)r.encounterTick(.025,false);schedule();
    if(dense&&tick%10===0)sources.forEach((source,i)=>r.playVoice(worldSeed?'forma:'+r.MU.dnaT.species[i%r.MU.dnaT.species.length].id:['arbol','cristal','pulso','luz'][i%4],i,clock+.13,r.MU.dnaT,true,.9,source));
   }
   const buffer=await context.startRendering(),data=Array.from({length:2},(_,i)=>buffer.getChannelData(i));
   let peak=0,sum=0,hot=0,n=0;
   for(const samples of data)for(let i=sampleRate;i<samples.length;i++){const value=samples[i];if(!Number.isFinite(value))throw Error('nonfinite rendered audio');peak=Math.max(peak,Math.abs(value));sum+=value*value;hot+=Math.abs(value)>.98;n++;}
-  return {genre,dense,soft,fx,influenced,worldSeed,sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
- } finally {window.AudioContext=original.AudioContext;window.setInterval=original.setInterval;window.setTimeout=original.setTimeout;Math.random=original.random;}
+  return {genre,dense,soft,fx,influenced,worldSeed,encounter,sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
+ } finally {window.AudioContext=original.AudioContext;window.setInterval=original.setInterval;window.setTimeout=original.setTimeout;Math.random=original.random;history.replaceState(null,'',originalURL);}
 }
 
 // Measure added distortion with a sine wave below the protection knee.

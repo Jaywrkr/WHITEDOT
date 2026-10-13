@@ -75,7 +75,7 @@ export function initialize(runtime){
   const r=runtime.rng(runtime.seedOf(`patch-mod:v1:${site.id}:${site.pattern}:${Math.floor(bar/4)}`));
   const variant=(site.variant+site.pattern*2+Math.floor(r()*3))%8;
   // One modulation update on the bar; no new oscillators or feedback graph.
-  for(const i of site.connections)runtime.driveInfluence(site.region,site.inputs[i].channel,site.amount,variant);
+  for(const i of site.connections){runtime.driveInfluence(site.region,site.inputs[i].channel,site.amount,variant);runtime.creativeAction?.(site.inputs[i].channel,'connect');}
   setTimeout(()=>site.lit=1,Math.max(0,(time-runtime.ac.currentTime)*1000));
  }
  function draw(t,dt,ox,oy,radius){

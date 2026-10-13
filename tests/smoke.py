@@ -46,7 +46,8 @@ with sync_playwright() as p:
   assert abs(after['x']-before['x'])<.001 and abs(after['y']-before['y'])<.001
   page.mouse.up();assert not page.locator('#scanner').is_visible()
   page.wait_for_timeout(800);page.mouse.click(center['x'],center['y'])
-  assert page.evaluate('window.__testRuntime.waves.length > 0')
+  assert page.evaluate('window.__testRuntime.influenceState.targets.melody<0'), 'white point reduces a layer'
+  page.mouse.click(30,300);assert page.evaluate('window.__testRuntime.waves.length > 0'), 'empty world still emits a pulse'
   page.mouse.move(center['x'],center['y']);before=page.evaluate('window.__testRuntime.S.wx');page.mouse.down();page.mouse.move(center['x']+80,center['y']);page.wait_for_timeout(650)
   assert not page.locator('#scanner').is_visible();assert page.evaluate('window.__testRuntime.S.wx')>before;page.mouse.up()
   page.keyboard.down('e');assert page.locator('#scanner').is_visible();page.keyboard.up('e');assert not page.locator('#scanner').is_visible()
@@ -89,7 +90,7 @@ with sync_playwright() as p:
    page.wait_for_timeout(130);page.screenshot(path='/tmp/whitedot-phenomenon-'+kind+'-'+label+'.png')
   page.evaluate('''()=>{const r=window.__testRuntime;r.S.wx=window.__phenRestore.x;r.S.wy=window.__phenRestore.y;r.frame.l=performance.now();}''')
   page.evaluate('''()=>{const r=window.__testRuntime,region=r.regionOfPos(r.S.wx,r.S.wy),o={id:'patch-probe',x:r.S.wx+20,y:r.S.wy},voice=r.getVoice('arbol',region),before=[r.bus,r.verbIn,r.dsend],patch=r.getInstrumentPatch('arbol',region,voice,o);r.playVoice('arbol',0,r.ac.currentTime+.05,region,true,.25,o);o.x+=80;if(JSON.stringify(r.getInstrumentPatch('arbol',region,voice,o))!==JSON.stringify(patch))throw Error('Moving object changed timbre');if(r.activeInstrumentPatch!==null||r.bus!==before[0]||r.verbIn!==before[1]||r.dsend!==before[2]||r.activePatchCount>32)throw Error('Patch routing leaked');}''')
-  page.keyboard.press('Space')
+  page.locator('#w').focus();page.keyboard.press('Space')
   page.keyboard.down('d');page.wait_for_timeout(300);page.keyboard.up('d')
   page.locator('#bMenu').click();page.locator('#bWorld').click();page.locator('#bMenu').click();page.locator('#bWorld').click();assert page.evaluate('!document.getElementById("reto").hidden') == page.evaluate('!window.__testRuntime.S.retos[window.__testRuntime.regionOfPos(window.__testRuntime.S.wx,window.__testRuntime.S.wy).key]')
   page.locator('#bMenu').click();page.wait_for_timeout(2200);before=page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4")).lampUsed');page.wait_for_timeout(2200);after=page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4")).lampUsed');assert abs(after-before)<.1,(before,after)
