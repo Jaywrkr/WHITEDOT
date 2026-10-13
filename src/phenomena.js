@@ -1,3 +1,4 @@
+import {WORLD_VISUAL,elementInk,elementAlpha} from './visual.js';
 export const PHENOMENON_NAMES={bird:'Ave de eco',shaker:'Semillero de caja',cloud:'Nube de pulso'};
 const POOLS={llanura:['bird','shaker'],bosque:['bird','shaker'],lago:['bird','shaker'],ruinas:['shaker','cloud'],jardin:['bird','shaker'],dunas:['bird','shaker'],cristales:['shaker','cloud'],faros:['bird','cloud'],tormenta:['cloud','shaker'],cueva:['shaker','cloud'],vacio:['cloud']};
 export function createPhenomena(cx,cy,size,biome,seedOf,rng){
@@ -55,7 +56,7 @@ export function initialize(runtime){
    if(o.kind==='bird'){o.x=o.hx+Math.sin(t/o.period+o.phase)*18;o.y=o.hy+Math.cos(t/(o.period*1.3)+o.phase)*10-pulse*24;}
    const wave=runtime.waves.length&&runtime.hitW(o.x,o.y),distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);
    if(now>o.cd&&(wave||distance<22)){o.cd=now+1700;runtime.touched();runtime.beatSoon(q=>triggerPhenomenon(o,q));}
-   ctx.save();ctx.translate(o.x+ox,o.y+oy);ctx.globalAlpha=Math.max(0,1-distance/radius)*(.55+pulse*.45);ctx.strokeStyle=runtime.GOLD;ctx.fillStyle=runtime.GOLD;ctx.lineWidth=1;
+   ctx.save();ctx.translate(o.x+ox,o.y+oy);ctx.globalAlpha=elementAlpha(distance,radius,pulse);ctx.strokeStyle=elementInk(o.kind==='shaker'?'wood':'air',runtime.regionOfPos(o.hx,o.hy).hue,pulse>0);ctx.fillStyle=ctx.strokeStyle;ctx.lineWidth=WORLD_VISUAL.line;
    if(o.kind==='bird'){
     const wing=5+Math.sin(t/(o.period*.1)+o.phase)*3+pulse*5;ctx.beginPath();ctx.moveTo(-10,-wing);ctx.lineTo(0,0);ctx.lineTo(10,-wing);ctx.stroke();ctx.fillRect(-1,-2,2,3);
     if(pulse>0){ctx.globalAlpha*=pulse;ctx.beginPath();ctx.arc(0,0,12+(1-pulse)*20,0,6.283);ctx.stroke();}

@@ -1,3 +1,4 @@
+import {WORLD_VISUAL,elementInk,elementAlpha} from './visual.js';
 import {chooseRecipeElement} from './catalog.js';
 // Nuevos elementos con generación separada del paisaje existente.
 export const TOY_NAMES={spark:'Luz fugitiva',spring:'Brote saltarín',kite:'Cometa flotante',rotor:'Prisma giratorio',resonator:'Aro resonante'};
@@ -44,8 +45,8 @@ export function initialize(runtime) {
       if(distance<radius)near.push(o);
       if(distance>radius*1.3&&!o.lit)continue;
       const x=o.x+ox,y=o.y+oy-Math.sin(o.jump*Math.PI)*(o.personality?.jump||22);
-      ctx.globalAlpha=Math.min(1,Math.max(0,1-distance/(radius*1.3))*.8+o.lit*.7);
-      ctx.strokeStyle=o.lit>0?runtime.GOLD:chunk.pal.acc;ctx.fillStyle=ctx.strokeStyle;ctx.lineWidth=1.2;
+      ctx.globalAlpha=elementAlpha(distance,radius,o.lit);
+      ctx.strokeStyle=elementInk(o.material,runtime.regionOfPos(o.hx,o.hy).hue,o.lit>0);ctx.fillStyle=ctx.strokeStyle;ctx.lineWidth=WORLD_VISUAL.line;
       ctx.save();ctx.translate(x,y);
       if(o.kind==='spark'){ctx.rotate(o.rotation);ctx.fillRect(-2,-2,4,4);ctx.strokeRect(-o.size,-o.size,o.size*2,o.size*2);}
       else if(o.kind==='spring'){ctx.beginPath();ctx.arc(0,0,o.size,Math.PI,0);ctx.stroke();ctx.fillRect(-1,0,2,7);}

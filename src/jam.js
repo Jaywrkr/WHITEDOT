@@ -1,3 +1,4 @@
+import {WORLD_VISUAL,jamHudTop} from './visual.js';
 // Hacer música en un lugar: looper de ecos y banda de criaturas (estilo Incredibox).
 // - Looper: el botón ⟳ graba 2 compases de lo que TÚ haces sonar (pulsos, toques, luces) y lo deja
 //   en el mundo como un "eco" que se repite mientras estás cerca. Máximo 4 ecos. Junto a un eco, el
@@ -87,7 +88,7 @@ export function initialize(runtime){
   const cx=runtime.cx,s=S(),W=runtime.W,H=runtime.H;
   // Ecos: anillos que laten cuando suenan.
   for(const e of loop.ecos){if((e.layer||"superficie")!==layer())continue;e.lit=Math.max(0,e.lit-dt*3);const x=e.x+ox,y=e.y+oy;if(x<-60||y<-60||x>W+60||y>H+60)continue;
-   cx.globalAlpha=.35+.5*e.lit;cx.strokeStyle='#9fe8ff';cx.lineWidth=1.5;cx.beginPath();cx.arc(x,y,14+e.lit*8,0,6.283);cx.stroke();
+   cx.globalAlpha=.35+.5*e.lit;cx.strokeStyle=WORLD_VISUAL.echo;cx.lineWidth=WORLD_VISUAL.line;cx.beginPath();cx.arc(x,y,14+e.lit*8,0,6.283);cx.stroke();
    cx.globalAlpha=.2;cx.beginPath();cx.arc(x,y,26,0,6.283);cx.stroke();cx.globalAlpha=.8;cx.fillStyle='#9fe8ff';cx.font='9px monospace';cx.textAlign='center';cx.fillText('eco',x,y+40);}
   // Banda: siguen al pixel en formación, cada una en su lugar.
   const slots=['bajo','perc','acorde','melodia'];
@@ -95,7 +96,8 @@ export function initialize(runtime){
    const a=Math.PI*.6+i*Math.PI*.27,tx=s.wx+Math.cos(a)*58,ty=s.wy+Math.sin(a)*58+Math.sin(t/400+i)*4;x.x+=(tx-x.x)*Math.min(1,dt*4);x.y+=(ty-x.y)*Math.min(1,dt*4);
    cx.globalAlpha=.85;runtime.drawSprite(x.sp.bits,x.x+ox,x.y+oy,(x.sp.cell||2)*(1+x.lit*.5),x.lit>.1?'#fff':x.sp.col);});
   // Ranuras de la banda (abajo, discretas).
-  const n=Object.keys(band.members).length;if(n||loop.rec||loop.armed){const y0=H-118,w=26;
+  const n=Object.keys(band.members).length;if(n||loop.rec||loop.armed){const fx=runtime.$('fxPanel'),scanner=runtime.$('scanner'),panel=fx&&!fx.hidden?fx:scanner&&!scanner.hidden?scanner:null;
+   const y0=jamHudTop(H,panel?.getBoundingClientRect().top,runtime.$('toast')?.classList.contains('on')),w=26;
    BAND_ROLES.forEach(([sl,l],i)=>{const x=W/2+(i-1.5)*(w+6),on=!!band.members[sl];cx.globalAlpha=on?.9:.3;cx.strokeStyle=on?runtime.GOLD:'#fff';cx.lineWidth=1;cx.strokeRect(x-w/2,y0,w,18);
     cx.fillStyle=on?runtime.GOLD:'#fff';cx.font='10px monospace';cx.textAlign='center';cx.fillText(l,x,y0+13);});
    if(loop.rec){const k=Math.min(1,(runtime.MU.step-loop.rec.start)/LOOP_STEPS);cx.globalAlpha=.9;cx.fillStyle='#ff6b6b';cx.fillRect(W/2-60,y0-10,120*k,3);cx.globalAlpha=.4;cx.strokeStyle='#ff6b6b';cx.strokeRect(W/2-60,y0-10,120,3);}}
