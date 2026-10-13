@@ -90,7 +90,7 @@ export function initialize(runtime) {
 
   function takeRelic(rl){
     if(rl.got||rl.id&&runtime.S.relicSites?.[rl.id])return;
-    rl.got=true;
+    rl.got=true;runtime.rareCreativeFind?.(rl);
     if(rl.id){runtime.S.relicSites||={};runtime.S.relicSites[rl.id]={day:runtime.S.todayKey,name:rl.name};}
     const idx=runtime.S.stars.length;runtime.S.stars.push({d:runtime.S.todayKey,s:rl.s,name:rl.name,id:rl.id,magical:!!rl.magical,p:idx%runtime.ECOS.length,region:runtime.regionOfPos(rl.x,rl.y).key});
     runtime.flash=1;runtime.pulse=1;burst(rl.x,rl.y,40,true);

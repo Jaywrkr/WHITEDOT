@@ -1,6 +1,6 @@
 // App instalable y sin gestos del navegador: evita zoom, rebote y arrastres que muevan la página.
 export function initialize(runtime){
- const scrollable=el=>el?.closest?.('.scroll,#atlasBody,.atlas-filters,.voice.expanded,.journal-tabs,#fxPad');
+ const scrollable=el=>el?.closest?.('.scroll,.modal .sheet,.glasspanel,#atlasBody,.atlas-filters,.voice.expanded,.journal-tabs,#fxPad');
  document.addEventListener('touchmove',e=>{if(e.touches.length>1||!scrollable(e.target))e.preventDefault();},{passive:false});
  for(const ev of ['gesturestart','gesturechange','gestureend'])document.addEventListener(ev,e=>e.preventDefault(),{passive:false});
  document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});

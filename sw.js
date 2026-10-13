@@ -1,10 +1,86 @@
-// Service worker: red primero (siempre la última versión tras un deploy) y caché como respaldo sin conexión.
-const CACHE='whitedot-v1';
-const SHELL=['./','./index.html','./styles/game.css','./manifest.webmanifest','./icons/icon-192.png'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()));});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+// Complete local shell; UI controls do not trigger musical events.
+const CACHE='whitedot-creative-v2';
+const SHELL=[
+ "./",
+ "./index.html",
+ "./styles/game.css",
+ "./manifest.webmanifest",
+ "./icons/icon-192.png",
+ "./icons/icon-512.png",
+ "./src/accessibility.js",
+ "./src/alive.js",
+ "./src/atlas.js",
+ "./src/audio.js",
+ "./src/autopilot.js",
+ "./src/blobs.js",
+ "./src/canvas.js",
+ "./src/catalog.js",
+ "./src/clues.js",
+ "./src/contact.js",
+ "./src/continents.js",
+ "./src/controls.js",
+ "./src/creative.js",
+ "./src/data.js",
+ "./src/discovery.js",
+ "./src/effects.js",
+ "./src/encounter-families.js",
+ "./src/encounters.js",
+ "./src/favorites.js",
+ "./src/feedback.js",
+ "./src/focusui.js",
+ "./src/fxpad.js",
+ "./src/glass.js",
+ "./src/grammar.js",
+ "./src/gravity.js",
+ "./src/influence.js",
+ "./src/initiative.js",
+ "./src/installations.js",
+ "./src/instruments.js",
+ "./src/interactions.js",
+ "./src/jam.js",
+ "./src/journal.js",
+ "./src/landmarks.js",
+ "./src/layers.js",
+ "./src/main.js",
+ "./src/map.js",
+ "./src/messages.js",
+ "./src/mirrors.js",
+ "./src/mix.js",
+ "./src/navigation.js",
+ "./src/neighborhoods.js",
+ "./src/palettes.js",
+ "./src/patches.js",
+ "./src/patchgarden.js",
+ "./src/personality.js",
+ "./src/phenomena.js",
+ "./src/playthings.js",
+ "./src/pockets.js",
+ "./src/progress.js",
+ "./src/pwa.js",
+ "./src/radio.js",
+ "./src/references.js",
+ "./src/relics.js",
+ "./src/render.js",
+ "./src/rhythms.js",
+ "./src/scanner.js",
+ "./src/seeds.js",
+ "./src/session.js",
+ "./src/sharing.js",
+ "./src/spatial.js",
+ "./src/studio.js",
+ "./src/ui.js",
+ "./src/visual.js",
+ "./src/voices.js",
+ "./src/wonders.js",
+ "./src/world.js"
+];
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting())));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('whitedot-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',e=>{
-  const req=e.request;if(req.method!=='GET')return;
-  const url=new URL(req.url);if(url.origin!==location.origin)return;
-  e.respondWith(fetch(req).then(res=>{if(res.ok){const copy=res.clone();caches.open(CACHE).then(c=>c.put(req,copy));}return res;}).catch(()=>caches.match(req).then(r=>r||caches.match('./index.html'))));
+ const req=e.request;if(req.method!=='GET'||new URL(req.url).origin!==self.location.origin)return;
+ e.respondWith(fetch(req).then(res=>{if(res.ok){const copy=res.clone();caches.open(CACHE).then(c=>c.put(req,copy)).catch(()=>{});}return res;}).catch(async()=>{
+  const hit=await caches.match(req);if(hit)return hit;
+  if(req.mode==='navigate')return (await caches.match('./index.html'))||Response.error();
+  return Response.error();
+ }));
 });

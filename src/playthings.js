@@ -49,7 +49,7 @@ export function initialize(runtime) {
         const active=runtime.S.sound&&runtime.ac?.state==='running'&&!runtime.scanning&&!document.hidden&&!document.querySelector('.modal:not([hidden])');
         const tending=active&&distance<48&&runtime.MU.speed<.08;
         if(active)o.growth=Math.max(0,Math.min(1,(o.growth||0)+dt*(tending?1/6:-1/12)));
-        if(tending){const region=runtime.regionOfPos(o.hx,o.hy),p=influenceProfile(region,'toy:'+o.kind,o,runtime.seedOf,runtime.rng);runtime.driveInfluence?.(region,p.channel,o.growth,p.variant);o.influenceName=CHANNEL_NAMES[p.channel];if(o.growth>.95)runtime.unlock('cultivarMusica');}
+        if(tending){const region=runtime.regionOfPos(o.hx,o.hy),p=influenceProfile(region,'toy:'+o.kind,o,runtime.seedOf,runtime.rng);runtime.driveInfluence?.(region,p.channel,o.growth,p.variant);if(o.growth>.5)runtime.creativeAction?.(p.channel,'cultivate');o.influenceName=CHANNEL_NAMES[p.channel];if(o.growth>.95)runtime.unlock('cultivarMusica');}
       }
       if(distance<radius)near.push(o);
       if(distance>radius*1.3&&!o.lit)continue;

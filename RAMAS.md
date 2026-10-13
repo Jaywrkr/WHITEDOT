@@ -1,3 +1,9 @@
+# Orden vigente: cinco fases
+
+Consultar [FASES.md](FASES.md). La cadena antigua de veinte ramas queda sustituida. Main ya incluye las ramas 14, 15 y docs/16.
+
+<details><summary>Historial de etapas anteriores, ya integrado o sustituido</summary>
+
 # Orden de ramas de la sesión
 
 Jay autorizó completar las primeras diez fases encadenadas. Se parte de la fase 1 pendiente, cada fase nueva nace del commit final de la anterior. El asistente implementa, prueba, hace commit y push; Jay crea PR y merge.
@@ -34,3 +40,6 @@ Merge normal conserva los commits antecesores y facilita la cadena. Si Jay usa s
 README/HANDOFF/CAMBIOS/PENDIENTES se actualizan por etapa. Logros/Bitácora se amplían cuando hay algo nuevo que el jugador pueda descubrir/aprender; una corrección técnica no introduce un logro artificial.
 
 Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; el pedido posterior autoriza las cinco unidades siguientes; las demás ideas continúan pendientes.
+
+
+</details>

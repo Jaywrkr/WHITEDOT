@@ -62,11 +62,14 @@ export function initialize(runtime) {
     runtime.navigationTick?.();
     runtime.initiativeTick?.(dt,sp>.01,modal);
     runtime.influenceTick?.(dt,modal||runtime.scanning);
+    runtime.creativeTick?.(dt,modal||runtime.scanning||document.hidden);
+    runtime.encounterTick?.(dt,modal||runtime.scanning||document.hidden);
     runtime.updateScanner();runtime.fxTick?.(dt);
     const b=runtime.beat();
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);ambient(t,dt,b);}
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
+    runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.GOLD:runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
@@ -146,9 +149,9 @@ export function initialize(runtime) {
     if(dx||dy){runtime.S.wx+=dx*movementSpeed*dt;runtime.S.wy+=dy*movementSpeed*dt;}
     runtime.camX=runtime.S.wx;runtime.camY=runtime.S.wy;
     if(runtime.S.lampDay!==runtime.S.todayKey){runtime.S.lampDay=runtime.S.todayKey;runtime.S.lampUsed=0;}
-    if(!paused)runtime.S.lampUsed+=dt;
+    if(!paused&&!runtime.S.relaxedCreate)runtime.S.lampUsed+=dt;
     if(!paused&&!runtime.scanning)runtime.sessionTime(dt);
-    if(runtime.lampLeft()<=0){runtime.exitWorld(true);return ds;}
+    if(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0){runtime.exitWorld(true);return ds;}
     const z=runtime.biomeOfPos(runtime.S.wx,runtime.S.wy),rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
     if(rg.key!==runtime.curRegion){runtime.curRegion=rg.key;runtime.enterRegion(rg,z);}
     {// Vitalidad local: el vacío adelgaza la música; llegar a un oasis después de un desierto es un drop.

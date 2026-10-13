@@ -1,3 +1,4 @@
+import {encounterVoice} from './encounter-families.js';
 import {blobVoice} from './blobs.js';
 // Identidad musical estable por región; el aspecto no fija el instrumento.
 const ROLES = ['bajo', 'perc', 'acorde', 'lead', 'agudo'];
@@ -42,8 +43,9 @@ export function initialize(runtime) {
   let voiceOrigin="ambient";
   function withVoiceOrigin(origin,emit){const previous=voiceOrigin;voiceOrigin=origin;try{return emit();}finally{voiceOrigin=previous;}}
   function getVoice(kind, region) {
+    if(kind.startsWith('encounter:'))return encounterVoice(kind.slice(10),region,runtime.GEN,runtime.seedOf);
     if(kind.startsWith('forma:')&&runtime.blobHabitat?.(region)){const key=region.key+':'+kind;if(!blobCache.has(key)){blobCache.set(key,blobVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng));while(blobCache.size>128)blobCache.delete(blobCache.keys().next().value);}return blobCache.get(key);}
-    if (!cache.has(region.key)) cache.set(region.key, createRegionalVoices(region, runtime.BIOMES, runtime.GEN, runtime.seedOf, runtime.rng));
+    if (!cache.has(region.key)){cache.set(region.key, createRegionalVoices(region, runtime.BIOMES, runtime.GEN, runtime.seedOf, runtime.rng));while(cache.size>128)cache.delete(cache.keys().next().value);}
     const voices = cache.get(region.key);
     // Legacy or border objects absent from the region's own flora retain a stable voice.
     return voices[kind] || voices[Object.keys(voices)[runtime.seedOf(kind) % Object.keys(voices).length]];

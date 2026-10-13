@@ -14,3 +14,5 @@ const frozen=JSON.stringify(state.state);for(let i=0;i<100;i++)state.tick(.05,fa
 for(let i=0;i<5000;i++)state.tick(.05);assert(Object.values(state.state.values).every(v=>Math.abs(v)<.001));
 const profiles=new Set();for(let x=-10;x<10;x++){const region=r.regionOfPos(x*3600+1800,1800),p=influenceProfile(region,'toy:resonator',{id:'same'},r.seedOf,r.rng);assert.deepEqual(p,influenceProfile(region,'toy:resonator',{id:'same'},r.seedOf,r.rng));profiles.add(p.channel+':'+p.variant);}assert(profiles.size>8);
 console.log('PASS: regional influence, real bass replacement, bounded motif/levels, pause, decay and immutable radio recipes');
+
+const minus=shapeInfluencedTrack(d,base,{values:{bass:-1,groove:-1,melody:-1,space:0},variant:0},r.GEN);assert(minus.grammar.bassLevel<.5);assert(minus.grammar.hookLevel<.5);assert(minus.bass.filter(n=>n>=0).length<=2);

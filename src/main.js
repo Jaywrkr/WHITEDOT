@@ -1,3 +1,7 @@
+import { initialize as accessibility } from './accessibility.js';
+import { initialize as encounters } from './encounters.js';
+import { initialize as clues } from './clues.js';
+import { initialize as creative } from './creative.js';
 import { initialize as data } from './data.js';
 import { initialize as progress } from './progress.js';
 import { initialize as world } from './world.js';
@@ -92,9 +96,13 @@ controls(runtime);
 focusui(runtime);
 pwa(runtime);
 atlas(runtime);
+creative(runtime);
+clues(runtime);
+encounters(runtime);
+accessibility(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
-runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||runtime.lampLeft()<=0))runtime.S.mode="camino";
+runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0)))runtime.S.mode="camino";
 seeds(runtime);
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;

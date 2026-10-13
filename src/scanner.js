@@ -30,7 +30,7 @@ export function initialize(runtime) {
     const region=runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
     document.getElementById('scannerRegion').textContent=`${region.name}${runtime.currentPocket()?.kind?" · "+POCKET_NAMES[runtime.currentPocket().kind]:""} · ${runtime.GEN[region.genre].name} · ${region.bpm} BPM · ${MODES[region.scale.join(",")]||"Escala regional"}`;
     list.replaceChildren();
-    const sources=region.recipe?.layer&&region.recipe.layer!=="superficie"?[]:[...nearbySources(runtime.sceneChunk?new Map([...runtime.wchunks].map(([id,c])=>[id,runtime.sceneChunk(c)])):runtime.wchunks,runtime.S.wx,runtime.S.wy),...(runtime.phenomenonSources?.()||[]),...(runtime.glassSources?.()||[]),...(runtime.mirrorSources?.()||[])].sort((a,b)=>a.distance-b.distance).slice(0,5);
+    const sources=region.recipe?.layer&&region.recipe.layer!=="superficie"?[]:[...nearbySources(runtime.sceneChunk?new Map([...runtime.wchunks].map(([id,c])=>[id,runtime.sceneChunk(c)])):runtime.wchunks,runtime.S.wx,runtime.S.wy),...(runtime.phenomenonSources?.()||[]),...(runtime.glassSources?.()||[]),...(runtime.mirrorSources?.()||[]),...(runtime.encounterSources?.()||[])].sort((a,b)=>a.distance-b.distance).slice(0,5);
     for(const source of sources) {
       const sp=source.object.s;
       const own=sp?runtime.regionOfPos(...sp.id.split(':')[0].split(',').map(n=>+n*runtime.REG*runtime.WCH+1)):runtime.regionOfPos(source.object.x,source.object.y);
@@ -39,6 +39,7 @@ export function initialize(runtime) {
       const effect=runtime.getEffectProfile?.(source.kind,own,voice);
       const name=sp&&runtime.blobHabitat?.(own)?(runtime.S.cat[sp.id]?'Blob · '+sp.name:'Blob desconocido'):sp&&!runtime.S.cat[sp.id]?'Forma desconocida':source.object.name||source.name;
       item.textContent=`${name} · ${ROLES[voice.role]} · ${INSTRUMENTS[voice.instrument]?.[0]||voice.instrument}${patch?" · "+patch.name:""} · ${own.name}${effect&&effect.type!=="dry"?" · "+effect.name:""}${source.object.personality?" · "+source.object.personality.name:""}`;
+      if(runtime.gestureHint)item.textContent+=' · '+runtime.gestureHint(source.kind);
       list.append(item);
     }
     if(!sources.length){const item=document.createElement('li');item.textContent='Sin objetos musicales cercanos. La región sigue componiendo.';list.append(item);}

@@ -41,8 +41,8 @@ export function shapeInfluencedTrack(region,arrangement,state,genres){
   out.hookI=g.hookP[variant%g.hookP.length];
  }
  if(v.space>.15||v.melody<-.15){let count=0;out.hook=out.hook.map(n=>n>=0&&++count>(v.space>.6?2:3)?-1:n);}
- out.grammar.hookLevel=(out.grammar.hookLevel||1)*(1-.22*Math.max(0,v.bass)-.3*Math.max(0,v.space)-.2*Math.max(0,-v.space));
- out.grammar.bassLevel=(out.grammar.bassLevel||1)*(1+.08*Math.max(0,v.bass)-.15*Math.max(0,v.space));
+ out.grammar.hookLevel=(out.grammar.hookLevel||1)*(1+.75*Math.min(0,v.melody))*(1-.22*Math.max(0,v.bass)-.3*Math.max(0,v.space)-.2*Math.max(0,-v.space));
+ out.grammar.bassLevel=(out.grammar.bassLevel||1)*(1+.65*Math.min(0,v.bass))*(1+.08*Math.max(0,v.bass)-.15*Math.max(0,v.space));
  return out;
 }
 export function initialize(runtime){
@@ -54,7 +54,7 @@ export function initialize(runtime){
   if(origin!=='player'||!runtime.inWorld()||!region)return;
   const profile=influenceProfile(region,kind,source,runtime.seedOf,runtime.rng),key=`${region.key}:${profile.channel}`,now=performance.now();
   if(now-(recent.get(key)??-Infinity)<400)return;recent.set(key,now);while(recent.size>128)recent.delete(recent.keys().next().value);
-  regionState(region).touch(profile.channel,.22,profile.variant);
+  regionState(region).touch(profile.channel,.22,profile.variant);runtime.creativeAction?.(profile.channel);
  }
  function tick(dt,paused){
   if(previous!==runtime.S){states.clear();recent.clear();previous=runtime.S;}
@@ -62,6 +62,7 @@ export function initialize(runtime){
   for(const state of states.values())state.tick(dt,!paused&&!document.hidden&&runtime.S.sound&&runtime.ac?.state==='running');
  }
  function drive(region,channel,level,variant){if(runtime.inWorld()&&region)regionState(region).drive(channel,level,variant);}
- function track(region,arrangement){return region?shapeInfluencedTrack(region,arrangement,states.get(region.key)?.state,runtime.GEN):arrangement;}
- Object.defineProperties(runtime,{influenceInput:{get:()=>input},influenceTick:{get:()=>tick},driveInfluence:{get:()=>drive},shapeInfluence:{get:()=>track},influenceState:{get:()=>current?.state||null}});
+ function subtract(region,channel){if(!region||!CHANNELS.includes(channel))return false;regionState(region).drive(channel,-1);runtime.creativeAction?.(channel,'subtract');return true;}
+ function track(region,arrangement){const shaped=region?shapeInfluencedTrack(region,arrangement,states.get(region.key)?.state,runtime.GEN):arrangement;return region&&shaped?(runtime.shapeEncounters?.(region,shaped)||shaped):shaped;}
+ Object.defineProperties(runtime,{influenceInput:{get:()=>input},influenceTick:{get:()=>tick},subtractInfluence:{get:()=>subtract},driveInfluence:{get:()=>drive},shapeInfluence:{get:()=>track},influenceState:{get:()=>current?.state||null}});
 }

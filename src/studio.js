@@ -79,7 +79,7 @@ export function initialize(runtime) {
     runtime.save();runtime.hud();
   }
   function exitStudio(){
-    const back=runtime.S.prevMode==="world"&&runtime.isFree()&&runtime.lampLeft()>0?"world":"camino";runtime.S.mode=back;
+    const back=runtime.S.prevMode==="world"&&runtime.isFree()&&(runtime.S.relaxedCreate||runtime.lampLeft()>0)?"world":"camino";runtime.S.mode=back;
     if(back==="world"&&(runtime.S.layer||"superficie")!=="superficie"){runtime.restoreLayerMusic?.();}else if(back==="world"){runtime.curZone=runtime.biomeOfPos(runtime.S.wx,runtime.S.wy);runtime.setBiome(runtime.curZone);const rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);runtime.MU.dnaT=rg;runtime.curRegion=rg.key;}else{runtime.setBiome(0);runtime.MU.dnaT=null;}
     runtime.parts=[];document.getElementById("dock").hidden=false;document.getElementById("studioPanel").hidden=true;runtime.retoUI();runtime.save();runtime.hud();
   }

@@ -1,3 +1,7 @@
+## Seguimiento vigente
+
+Las veinte entregas autorizadas se agruparon en cinco ramas: [FASES.md](FASES.md). La agrupación conserva el alcance y el resto de propuestas sigue pendiente según este documento.
+
 # WHITEDOT: fases, implementaciones e ideas por decidir
 
 Actualizado tras el pedido de interacción musical, fijación voluntaria, módulos y espacio móvil. Base main `5413d5f`; cadena implementada hasta `feat/15-spacious-blob-worlds`, ver RAMAS. Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
@@ -246,3 +250,11 @@ Antes de sumar más familias, revisar [DIRECCION_JUEGO.md](DIRECCION_JUEGO.md): 
 ## Pedido de blobs, semillas y calma — implementado
 
 Ramas 13, 14 y 15 de RAMAS.md: interfaz sin notas decorativas, laboratorio de semillas completas, blobs y escenarios más tranquilos. Estos números identifican entregas nuevas; no significan que Conversaciones musicales, Más efectos o Mixer del plan histórico estén terminados. Ver [MUNDOS_SEMILLAS.md](MUNDOS_SEMILLAS.md). Las pruebas tienen mapas Amplio/Clásico y guardados separados; el mapa habitual conserva su escala y usa menor densidad de escena.
+
+## Cadena creativa agrupada en cinco fases
+
+Jay autorizó las nueve mejoras seleccionadas y las diez familias de elementos, más una revisión final. Su ejecución y límites se documentan en [ENTREGAS_CREATIVAS.md](ENTREGAS_CREATIVAS.md). La opción descartada de guardar ideas musicales sigue fuera de alcance.
+
+## Resultado de la cadena creativa
+
+Las nueve mejoras y diez familias ya tienen implementación. La guía exacta, gestos, límites, persistencia y pruebas están en [JUGABILIDAD_CREATIVA.md](JUGABILIDAD_CREATIVA.md); el orden está en [ENTREGAS_CREATIVAS.md](ENTREGAS_CREATIVAS.md). La revisión final amplía cobertura a los 52 estilos, controla densidad de los motivos, conserva UI silenciosa y corrige el shell offline. No convierte automáticamente en hechos las propuestas mayores de historia, culturas o multijugador.

@@ -15,9 +15,10 @@ try:
   browser=p.chromium.launch(executable_path=chromium,args=['--no-sandbox'])
   page=browser.new_page();page.goto(f'http://127.0.0.1:{server.server_port}/',wait_until='domcontentloaded')
   results=page.evaluate('''async()=>{const {renderMix}=await import('/tests/audio_mix.mjs');const out=[];
-   for(const genre of ['minimal','dub','ambient','tropical','nudisco','amapiano','trap','dnb'])out.push(await renderMix(genre));
+   const {initialize}=await import('/src/data.js');const data={};initialize(data);for(const genre of Object.keys(data.GEN))out.push(await renderMix(genre));
    for(const genre of ['nudisco','amapiano','dub','dnb'])out.push(await renderMix(genre,{dense:true,influenced:true}));
    for(const genre of ['minimal','dub','nudisco','amapiano'])out.push(await renderMix(genre,{dense:true,influenced:true,worldSeed:'blobs-01'}));
+   const {FAMILIES}=await import('/src/encounter-families.js');for(const encounter of Object.keys(FAMILIES))out.push(await renderMix(['tropical','dub','nudisco','amapiano'][out.length%4],{dense:true,influenced:true,encounter}));
    for(const options of [{dense:true},{dense:true,fx:true},{soft:true},{dense:true,soft:true},{dense:true,sampleRate:44100},{dense:true,influenced:true},{dense:true,influenced:true,soft:true}])out.push(await renderMix('minimal',options));return out;}''')
   for result in results:
    assert 0 < result['peak'] < .96 and result['hotFraction']==0,result

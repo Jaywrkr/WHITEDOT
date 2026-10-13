@@ -19,10 +19,10 @@ export function initialize(runtime) {
     if(runtime.S.mode==="studio"){const n=Object.keys(runtime.S.studio.slots).length;$("era").textContent="Estudio · "+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/64*100)+"%";goal.textContent="Estudio · "+n+" sonando";gr.textContent="Toca un punto";}
     else if(runtime.inWorld()){const l=runtime.lampLeft();fill.style.width=(l/runtime.lampMax()*100)+"%";
       goal.textContent=dist?"Eco cercano · escucha y pulsa":"Lugares "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
-      gr.textContent=fmt(l);}
-    else if(runtime.isFree()){const l=runtime.lampLeft();fill.style.width="100%";goal.textContent=l>0?"Camino completo · entra al Mundo":"Vuelve mañana";gr.textContent=l>0?"Linterna "+fmt(l):"";}
+      gr.textContent=runtime.S.relaxedCreate?"Crear ∞":fmt(l);}
+    else if(runtime.isFree()){const l=runtime.lampLeft();fill.style.width="100%";goal.textContent=runtime.S.relaxedCreate?"Camino completo · crea sin prisa":l>0?"Camino completo · entra al Mundo":"Vuelve mañana";gr.textContent=runtime.S.relaxedCreate?"Crear ∞":l>0?"Linterna "+fmt(l):"";}
     else{fill.style.width=(runtime.S.todayLight/runtime.CAP*100)+"%";goal.textContent="Recoge luz · "+runtime.S.todayLight+" / "+runtime.CAP;gr.textContent="Toca en el beat";}
-    const canWorld=runtime.S.mode==="camino"&&runtime.isFree()&&runtime.lampLeft()>0,bp=$("bPrimary");$("bWorld").querySelector("span").textContent=runtime.inWorld()?"Camino":"Mundo";
+    const canWorld=runtime.S.mode==="camino"&&runtime.isFree()&&(runtime.S.relaxedCreate||runtime.lampLeft()>0),bp=$("bPrimary");$("bWorld").querySelector("span").textContent=runtime.inWorld()?"Camino":"Mundo";
     bp.hidden=!(canWorld||runtime.inWorld());$("bPrimaryL").textContent=runtime.inWorld()?"Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=runtime.inWorld()?"scaleX(-1)":"";
   }
   let phT;function showPhrase(t,big){const p=$("phrase");p.textContent=t;p.classList.toggle("big",!!big);p.classList.add("on");clearTimeout(phT);phT=setTimeout(()=>p.classList.remove("on"),big?5000:3200);}
@@ -34,7 +34,7 @@ export function initialize(runtime) {
 
   function enterWorld(){
     if(!runtime.isFree()){toast("<em>Mundo</em> · Primero completa el camino de hoy");return;}
-    if(runtime.lampLeft()<=0){toast("<em>Linterna</em> · Vuelve mañana");return;}
+    if(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0){toast("<em>Linterna</em> · Vuelve mañana");return;}
     runtime.beginSession();runtime.audio();if(runtime.S.lastWorldDay!==runtime.S.todayKey){if(runtime.S.studio.x!=null){runtime.S.wx=runtime.S.studio.x;runtime.S.wy=runtime.S.studio.y;{const rp=runtime.REG*runtime.WCH,ring=Math.max(Math.abs(Math.floor(runtime.S.wx/rp)),Math.abs(Math.floor(runtime.S.wy/rp)));if(ring>=3)setTimeout(()=>runtime.toast(`<em>Campamento</em> · a ${ring} regiones del Origen`),2600);if(ring>=3&&!runtime.S.help.camp){runtime.S.help.camp=true;setTimeout(()=>runtime.say(runtime.VOZ.campamento),4000);}}}runtime.S.lastWorldDay=runtime.S.todayKey;}runtime.zoneHops=0;runtime.S.mode="world";runtime.curZone=-1;{const rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);runtime.curRegion=rg.key;runtime.enterRegion(rg,rg.z);}runtime.MU.layers=new Set();
     runtime.todayRelics();runtime.enterFx=1;runtime.flocks=[];
     runtime.jamUI?.();

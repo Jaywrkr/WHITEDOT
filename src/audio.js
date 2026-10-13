@@ -195,7 +195,7 @@ export function initialize(runtime) {
         event:runtime.eventOf(MU.dnaA)?.[0],initiative:runtime.initiativeState?.strength||0
       });
       if(s===0){const degree=harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar);if(MU.harmonyRegion!==MU.dnaA.key||MU.deg!==degree){changeChord(t);MU.harmonyRegion=MU.dnaA.key;}else if(MU.pending){MU.pending=false;MU.dist=0;}}
-      if(s===0)runtime.initiativeBar?.(t,MU.step>>4);
+      if(s===0){runtime.initiativeBar?.(t,MU.step>>4);runtime.clueBar?.(t,MU.step>>4);runtime.encounterBar?.(t,MU.step>>4);}
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.horizonBar?.(t,MU.step>>4);
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.riverBar?.(t);
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.stormBar?.(t);   // hitos lejanos: se oyen antes de verse
@@ -329,7 +329,9 @@ export function initialize(runtime) {
   function bassInst(ty,m,t,v,region=MU.dnaA||MU.dnaT){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'bajo'},null,t,()=>bassInst(ty,m,t,v,region));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "reese":reese(m,t,v);return;case "organb":organ(m,t,v*1.5);return;case "roll":houseBass(m,t,v*.8,.3);return;}switch(ty){case "sub":softBass(m,t,v);break;case "acid":acid(m,t,v*.85,300+MU.speed*2200);break;case "pluck":houseBass(m,t,v,.5);break;case "fm":fmBass(m,t,v);break;case "boing":runtime.boing(m,t,v);break;}}
   function hookInst(ty,m,t,v,region=MU.dnaA||MU.dnaT){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'lead'},null,t,()=>hookInst(ty,m,t,v,region));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
   function drums(gid,s,bar,t,tt,E,ct,DO){
-    const L1=E>.12,L2=E>.32,L3=E>.55,variation=(bar>>2)%3;
+    const reduction=runtime.inWorld()?Math.max(0,-(runtime.influenceState?.values.groove||0)):0;
+    const L1=E>.12,L2=E>.32&&reduction<.4,L3=E>.55&&reduction<.2,variation=(bar>>2)%3;
+    if(reduction>.7&&s%4!==0)return;
     // Repeat the placement of ghost hits across four bars; velocity still breathes.
     const r=runtime.inWorld()?runtime.rng(runtime.seedOf(`groove:v1:${MU.dnaA?.key}:${gid}:${Math.floor(bar/4)}:${s}`)):rnd;
     if(L3&&s===15&&bar%4===3&&variation===2&&!["ambient","heart","downtempo","dub"].includes(gid)&&r()<.35){

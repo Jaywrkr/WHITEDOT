@@ -1,3 +1,7 @@
+## Cadena vigente de cinco fases
+
+Orden de integración y pruebas: [FASES.md](FASES.md). Esta rama contiene las fases 1–5; base `main` actualizado `63706eb`. Jay crea PR y merge en orden mediante merge normal.
+
 # WHITEDOT · Pixel Blanco
 
 Un pixel blanco en un mundo negro. Cada día avanzas un camino corto, y cuando lo terminas se abre un **Mundo procedural que compone mientras lo exploras**: 52 géneros electrónicos y once biomas, del ambient al house, techno, bass y otros lenguajes. Cada región tiene su género, su paisaje y sus criaturas, y todo lo que tocas suena a tempo.
@@ -210,3 +214,11 @@ Rama `feat/14-seed-laboratory`. Menú → Prototipo → Semillas permite elegir 
 Rama `feat/15-spacious-blob-worlds`. Las semillas de prueba usan biomas de 7200 unidades de ancho (antes 3600); Espacio → Clásico permite comparar y conserva un guardado distinto. El mapa habitual conserva coordenadas. La escena reduce vegetación/fauna/props/juguetes con selección determinista y referencias a los mismos objetos: no cambia IDs ni consume el RNG original, no afecta reliquias, portales ni instalaciones, y Escuchar usa los objetos visibles. Voces ambientales responden menos a menudo y solo un cantor se superpone. Semillas blobs generan habitantes de cuerpos suaves, rasgos distintos y voces graves/medias/percusivas del género; también hay hábitats de blobs dispersos. Dos o tres habitantes cerca del centro permiten probar de inmediato sin llenar el paisaje. No se fuerza agudo y se conserva afinación/tempo regional. Centro seguro, guardados por semilla y layout, vuelta a Mi partida. Validación de generaciones, aislamiento y síntesis de voces en 23 renders.
 
 Para comparar mundos completos: **Menú → Prototipo → Semillas → Blobs I / Blobs II**, con Espacio Amplio o Clásico. Hay habitantes cerca del centro para probar sus voces; **Mi partida** vuelve a tu guardado habitual. Detalle en [MUNDOS_SEMILLAS.md](MUNDOS_SEMILLAS.md).
+
+## Contenido de esta agrupación
+
+- **Fase 1: Base creativa.** Recorrido Camino → Mundo → Estudio, pistas de gestos, sustracción y aros/prismas modelables.
+- **Fase 2: Exploración con sentido.** Retos abiertos, capacidades de reliquias, pistas, Voz contextual y modo de creación sin gasto de linterna.
+- **Fase 3: Primeros cinco encuentros.** Nubes, tejedoras, pozos de silencio, semillas orbitales y piedras de capas; selector de pruebas en Semillas.
+- **Fase 4: Otros cinco encuentros.** Animales de intercambio, corrientes reversibles, flores de presión, esculturas de sombra y cajas de posibilidades.
+- **Fase 5: Pulido final.** Paletas de 52 estilos, densidad musical, prioridad del borrado, accesibilidad, móvil y shell offline completo.
