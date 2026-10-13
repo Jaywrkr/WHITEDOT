@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-laboratorio-v1';
+const CACHE='whitedot-cubo-expansion-v1';
 const SHELL=[
  "./",
  "./index.html",
@@ -45,9 +45,6 @@ const SHELL=[
  "./src/influence.js",
  "./src/initiative.js",
  "./src/installations.js",
- "./src/sound-trail-model.js",
- "./src/sound-trails.js",
- "./src/installation-signals.js",
  "./src/instruments.js",
  "./src/interactions.js",
  "./src/jam.js",
@@ -65,7 +62,6 @@ const SHELL=[
  "./src/neighborhoods.js",
  "./src/palettes.js",
  "./src/patches.js",
- "./src/patchgarden.js",
  "./src/personality.js",
  "./src/phenomena.js",
  "./src/playthings.js",
@@ -90,6 +86,11 @@ const SHELL=[
  "./src/studio.js",
  "./src/ui.js",
  "./src/visual.js",
+ "./src/body.js",
+ "./src/cajas.js",
+ "./src/expansion-music.js",
+ "./src/experimental.js",
+ "./src/quietud.js",
  "./src/vida-music.js",
  "./src/vida.js",
  "./src/voices.js",

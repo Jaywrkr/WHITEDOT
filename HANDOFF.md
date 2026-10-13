@@ -85,3 +85,5 @@ Texto breve para iniciar en Claude:
 Rama `feat/phase-04-materia-y-compartir` (pendiente de merge): ver `FASE_04_MATERIA.md`. Reglas que se mantienen: no tocar catálogo/recetas para contenido nuevo (usar flujo de semilla propio), actualizar `sw.js` y su versión de caché al añadir módulos, no persistir estado temporal.
 
 Siguiente entrega: `feat/laboratorio-y-fase-05` (incluye la anterior). Para mejorar elementos, pedir a Jay el informe del Laboratorio (Notas → Copiar informe) y trabajar desde esas notas. Ver `LABORATORIO_Y_FASE_05.md`.
+
+Última entrega: `feat/expansion-fase-06` (incluye las anteriores). **Regla nueva de Jay: el cubo es el único elemento de interacción**; el dedo solo mueve y lanza el pulso. Siguiente trabajo y orden en `CUBO_Y_EXPANSION.md` → «PENDIENTE para Codex».

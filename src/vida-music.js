@@ -36,13 +36,13 @@ export function flockAnchor(f,t){const s=SPECIES[f.species].speed;return {x:f.hx
 // Un paso de conducta. player = {x,y,speed (px/s),still (s quieto)}. Devuelve eventos nuevos.
 export function stepFlock(f,dt,t,player){
  const spec=SPECIES[f.species],d=Math.hypot(player.x-f.x,player.y-f.y),events=[];
- if(player.speed>150&&d<130&&f.scatter<.2){f.scatter=1;f.trust=0;events.push('scatter');}
+ if(player.speed>((f.follow||0)>0?400:230)&&d<130&&f.scatter<.2){f.scatter=1;f.trust=0;f.follow=0;events.push('scatter');}
  const before=f.trust;
  if(player.still>1.5&&d<220&&f.scatter<.1)f.trust=Math.min(1,f.trust+dt/5);else if(d>320)f.trust=Math.max(0,f.trust-dt/12);
  if(before<.6&&f.trust>=.6)events.push('gather');
  if(f.species==='luciernaga'){const before2=f.sync;f.sync=clamp(f.sync+dt*(player.still>1.5&&d<220?.07:-.02),.1,1);if(before2<.9&&f.sync>=.9)events.push('sync');}
  f.scatter=Math.max(0,f.scatter-dt*.35);
- const anchor=flockAnchor(f,t),gather=f.trust>=.6&&d<320,cx=gather?player.x:anchor.x,cy=gather?player.y:anchor.y,n=f.members.length;
+ const anchor=flockAnchor(f,t),gather=(f.trust>=.6&&d<320)||(f.follow||0)>0,cx=gather?player.x:anchor.x,cy=gather?player.y:anchor.y,n=f.members.length;
  let mx=0,my=0;
  f.members.forEach((m,i)=>{
   const a=i/n*TAU+t*spec.speed*.6,orbit=gather?52:34+12*Math.sin(t*.7+i),tx=cx+Math.cos(a)*orbit,ty=cy+Math.sin(a)*orbit*.7;

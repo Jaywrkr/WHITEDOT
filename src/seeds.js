@@ -1,4 +1,3 @@
-import {createSoundTrail} from './sound-trail-model.js';
 import {FAMILIES} from './encounter-families.js';
 export function normalizeSeed(value){return String(value??'original').trim().replace(/[^\p{L}\p{N}_ -]/gu,'').slice(0,40)||'original';}
 export function previewKey(seed,layout='classic',generation=1){return `pixel-blanco-v4:${layout==='wide'?'preview-wide':'preview'}:${generation===2?'v2:':''}${encodeURIComponent(normalizeSeed(seed))}`;}
@@ -6,7 +5,7 @@ export function initialize(runtime){
  const $=runtime.$;
  const select=document.createElement('select');select.id='seedEncounter';select.setAttribute('aria-label','Encuentro para probar');
  const label=document.createElement('label');label.textContent='Encuentro de prueba';label.htmlFor=select.id;
- select.add(new Option('Distribución natural',''));select.add(new Option('Vidrios · movimiento y música','glass'));select.add(new Option('Instalaciones conectadas · jardín modular','installation'));select.add(new Option('Materia · cuerdas, prisma y membrana','materia'));select.add(new Option('Rastro musical · instrumento dormido','trail'));for(const [id,f]of Object.entries(FAMILIES))select.add(new Option(f.name,id));
+ select.add(new Option('Distribución natural',''));select.add(new Option('Vidrios · movimiento y música','glass'));select.add(new Option('Materia · cuerdas, prisma y membrana','materia'));for(const [id,f]of Object.entries(FAMILIES))select.add(new Option(f.name,id));
  const submit=$('seedForm').querySelector('button[type="submit"]');$('seedForm').insertBefore(label,submit);$('seedForm').insertBefore(select,submit);
 
  function open(){

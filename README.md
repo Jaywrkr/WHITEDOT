@@ -353,3 +353,6 @@ Cuerdas tensables, prisma de luz y membrana resonante con gestos directos; Choru
 
 ## Laboratorio y Vida (rama de Claude, pendiente de merge)
 Menú → Prototipo → Laboratorio: un mundo aparte para probar cada elemento interactivo, anotar qué mejorar y copiar el informe. Fase 5: bandadas que te devuelven la llamada, luciérnagas que se sincronizan, ave lira y flora que crece contigo. Ver `LABORATORIO_Y_FASE_05.md`.
+
+## El cubo toca el mundo + expansión (rama de Claude, pendiente de merge)
+Solo el cubo interactúa; más colores, quietud que cambia el lugar, zonas de música experimental y cajas misteriosas con poderes. Pendientes para Codex (fase 6, mundo vasto, modo auto): `CUBO_Y_EXPANSION.md`.
