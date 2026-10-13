@@ -1,5 +1,7 @@
 ## Profundización posterior
 
+> Estado al 13 de octubre de 2026: Documento histórico de encuentros; las cajas visibles fueron sustituidas por suelo resonante. Consultar el inventario vigente antes de reutilizar propuestas. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).
+
 La rama `feat/deep-musical-encounters` amplía las tres familias: redes libres, piezas/pasos de cajas y frases aprendidas. Instrucciones actuales en [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md). Lo siguiente describe su primera versión, integrada en main.
 
 # Jugabilidad creativa: guía de las veinte entregas

@@ -1,3 +1,17 @@
+# Próximos pasos · estado vigente
+
+**Main e27c219, #73 integrado.** Fases 1–3 y bloque de gestos/color de fase 4 ya presentes. [HANDOFF.md](HANDOFF.md) es la entrada para Claude; [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md) contrasta capacidades/cifras con código; [PENDIENTES.md](PENDIENTES.md) reúne lo que falta y [FASES_UNIVERSO.md](FASES_UNIVERSO.md) lo ordena.
+
+1. Escucha prolongada por familias y pruebas en dispositivos reales; revisar repetición, claridad y fatiga, sin repetir el ajuste de registros ni los cuatro motores existentes.
+2. Recibir la selección visual de Jay del atlas y completar gesto/materia de fase 4: pocas familias con profundidad, variantes y relaciones, sin llenar el HUD.
+3. Profundizar vida/intercambio musical; búsqueda, muchas culturas y reliquias históricas coherentes.
+4. Creación/instalaciones, Estudio, retorno/códigos de lugar, Voz/historia y primera sesión comprensible.
+5. Cierre de alcance y aceptación de V1: rendimiento, accesibilidad, dispositivos, actualización/rollback y soporte. Multijugador sigue como bloque de arquitectura separado.
+
+Se conserva la lista de 64 tareas en [V1_PRODUCCION.md](V1_PRODUCCION.md). No reintroducir escenas/ideas guardables ni marcar como ausentes respaldos, favoritos, radio, espejos o suelo que ya existen.
+
+<details><summary>Texto completo anterior: historial de propuestas y entregas, no estado vigente</summary>
+
 # Próximos pasos: estado real del proyecto
 
 La secuencia vigente está en [FASES_UNIVERSO.md](FASES_UNIVERSO.md); [V1_PRODUCCION.md](V1_PRODUCCION.md) conserva el inventario detallado. Fase 1 implementada en `feat/phase-01-universe-foundation`, basada en main `7a0e8ff`: [qué cambió y cómo probar](FASE_01.md). Fase 2 implementada en `feat/phase-02-living-world-recipes`: [Paisajes vivos y cómo probar](FASE_02.md). Ambas fases y la [revisión de figuras y registros](REVISION_REGISTROS.md) ya están integradas en main `f7bcf84` (PR #70). No recrear esos cambios. [Fase 3](FASE_03.md) integrada mediante #72:  más síntesis, instrumentos, identidades audibles de estilos y composición evolutiva con escucha curada. El bloque vigente es [gestos y color de fase 4](FASE_04.md). La enumeración siguiente se conserva como historial de implementación.
@@ -128,3 +142,5 @@ No marcar como pendientes lo que ya existe: favoritos, regreso, autopilot, espej
 42 suites de lógica. Gestos nuevos probados en móvil vertical, horizontal y escritorio: conectar y retirar hilos, cancelar, pintar, reordenar/silenciar piezas, cerrar/reabrir tapa, aprender de un pulso real del canvas, ignorar ambiente y responder con audio. 29 recorridos de regresión de navegador y recarga offline con 68 módulos.
 
 14 renderizados reales de audio ejercitan redes, cajas densas y respuestas aprendidas en minimal, tropical, dub y amapiano, más modo suave y 44,1 kHz. Pico máximo medido 0,954511 y ninguna muestra por encima de 0,98. Conserva presupuestos y afinación regional; la evaluación artística también requiere escucha humana.
+
+</details>

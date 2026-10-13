@@ -1,3 +1,19 @@
+# Cambios integrados hasta main e27c219
+
+Actualizado el 13 de octubre de 2026. [Estado completo](ESTADO_ACTUAL.md) · [handoff](HANDOFF.md).
+
+- **#73, bloque de fase 4:** espejos por arrastre directo, panel opcional por toque, cancelación/rollback al salir de alcance o pausar, y protección frente a ondas ambientales que pudieran confirmar una vista previa; color de vidrios/reflejos ligado al giro. [FASE_04.md](FASE_04.md).
+- **#72, fase 3:** cuatro motores reed/membrane/bowed/hollow, paletas de reproducción, articulaciones por carácter, arco de ocho frases y acentos armónicos con volumen repartido; Bitácora y SW correspondientes. [FASE_03.md](FASE_03.md).
+- **#71:** consolidación y preservación íntegra de documentación histórica.
+- **#70:** atlas nativo numerado y corrección de agudos: registros/pausas/paletas por estilo, octava del vidrio compensada, ríos/aves/quietud y margen final .95. [REVISION_REGISTROS.md](REVISION_REGISTROS.md).
+- **#69:** Original conservado y Paisajes vivos separado: 33 hábitats, seis familias, clima/relieve/vecindad, selector y descubrimientos. [FASE_02.md](FASE_02.md).
+- **#68:** guardado recuperable, respaldo/importación, direcciones compatibles, cachés, contratos y automatización. [FASE_01.md](FASE_01.md).
+- **Traspaso documental actual:** estados/pendientes actualizados, inventario y mapa de módulos, handoff breve más archivo íntegro, cifras comprobadas y atlas regenerado con los colores actuales. No modifica funciones.
+
+El historial completo de bloques anteriores permanece a continuación. Sus validaciones/ramas/planes corresponden a cada entrega, no al estado actual. Cajas/vainas históricas fueron sustituidas por suelo; no recuperarlas como elementos pendientes.
+
+<details><summary>Registro completo anterior de cambios</summary>
+
 # Fase 2 · Paisajes vivos
 
 `feat/phase-02-living-world-recipes`, iniciada desde fase 1 `7bed0ca` y actualizada sobre main `e26ef93` al integrarse PR #68. Generación original conservada; nueva identidad v2 y guardados separados, selector directo en el menú, 33 perfiles de hábitat, clima/fertilidad/relieve visual, vecindad coherente, regiones amplias de 10.800 unidades, seis familias con gestos y cultivo, arquitectura de frases, registros medios/graves, Bitácora y tres logros. Catálogo real de 30 contratos; caché de pesos musicales acotada/separada por semilla; dos módulos nuevos en offline. No añade géneros ni modelos de síntesis.
@@ -390,5 +406,7 @@ Rama `feat/15-spacious-blob-worlds`. Las semillas de prueba usan biomas de 7200 
 - **Fase 3: Primeros cinco encuentros.** Nubes, tejedoras, pozos de silencio, semillas orbitales y piedras de capas; selector de pruebas en Semillas.
 - **Fase 4: Otros cinco encuentros.** Animales de intercambio, corrientes reversibles, flores de presión, esculturas de sombra y cajas de posibilidades.
 - **Fase 5: Pulido final.** Paletas de 52 estilos, densidad musical, prioridad del borrado, accesibilidad, móvil y shell offline completo.
+
+</details>
 
 </details>

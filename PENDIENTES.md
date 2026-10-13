@@ -1,35 +1,47 @@
-# Pendientes vigentes y preparación de V1
+# Pendientes vigentes · desde main e27c219
 
-La secuencia vigente está en [FASES_UNIVERSO.md](FASES_UNIVERSO.md): diez fases amplias, una rama por fase. El inventario detallado sigue en [V1_PRODUCCION.md](V1_PRODUCCION.md). La lista histórica permanece en [PLAN_HISTORICO.md](PLAN_HISTORICO.md); sus estados antiguos no describen la versión actual.
+Actualizado el 13 de octubre de 2026, después de integrar #73. [Estado comprobado](ESTADO_ACTUAL.md) · [handoff para Claude](HANDOFF.md) · [diez fases](FASES_UNIVERSO.md) · [64 tareas conservadas](V1_PRODUCCION.md).
 
-## Fases 1 y 2 integradas; revisión visual y musical integrada
+## Qué no se debe repetir
 
-`feat/phase-01-universe-foundation`: identidad de lugares/favoritos, guardado validado, recuperación y respaldo/importación, cachés acotadas, contratos ampliables, auditoría y automatización de pruebas. Detalle y límites: [FASE_01.md](FASE_01.md). No se han ampliado todavía biomas, géneros o instrumentos; no se ha certificado V1 en dispositivos reales.
+Fases 1/2, revisión de registros/atlas, consolidación, fase 3 y bloque de espejos/vidrios de fase 4 **ya están integrados** (#68–#73). Ya existen guardado recuperable/respaldo, cachés acotadas, favoritos/regreso/autopilot, Original y Paisajes vivos, blobs, radio/quietud, instrumentos nuevos, vidrios por aros, espejos por arrastre, jardín modular, diez encuentros, suelo en vez de cajas, animal intuitivo, rastros e instrumento dormido, fijación voluntaria/borrado, interfaz silenciosa y offline. No listarlos como funciones ausentes.
 
-`feat/phase-02-living-world-recipes` continúa desde fase 1: Paisajes vivos, 33 hábitats, seis familias, vecindad/clima/relieve, selector y registros del juego. [Detalle](FASE_02.md). Sigue sin ampliar el catálogo de 52 estilos/modelos de instrumento; esa es fase 3.
+## Prioridad antes de ampliar
 
-## Integración verificada
+1. **Escucha artística y dispositivos:** comparar 10–30 minutos por familia, quietud, transiciones, escenas densas y modo suave; cuerpo/graves, medios, fatiga/agudos, identidad de estilos y variación percibida. Safari/iPhone, Chrome/Android, altavoces/auriculares y mono/estéreo siguen sin aceptación completa.
+2. **Revisión visual con Jay:** elegir las figuras del [atlas actualizado de 118 vistas](docs/images/atlas-visual.png) que se rediseñarán. Fondo negro/punto blanco, color local, naturaleza/electrónica, gestos pequeños; auditar también la suma visible y el espacio en móvil. Aún no hay lista de números seleccionados.
+3. **Completar gesto/materia, sin dar fase 4 por agotada:** cuerdas tensables, prismas y membranas físicas, superficies de presión/fricción y relaciones con suelo/instalaciones. Un timbre `membrane` ya existe; un objeto membrana jugable nuevo todavía no. Cada familia debe ofrecer varios usos regionales y retirada/cancelación intuitiva.
+4. **Coherencia y primera sesión:** revisar Camino → Mundo → Estudio, Voz y aprendizaje de acciones; probar con personas nuevas entrar, transformar dos partes, deshacer y guardar/volver sin instrucciones externas. La narrativa completa ligada a creación/constancia sigue pendiente.
 
-Base funcional: `f7bcf84`, PR #70; fases 1 y 2 y revisión de registros/atlas ya integradas. Incluye el inventario V1 y toda la secuencia anterior, hasta vidrios sin panel y animal por toque.
+## Música que aún puede profundizarse
 
-## Regla de trabajo más reciente
+- Más instrumentos con identidades reales: cuerdas pulsadas, tubos, láminas, resonadores, aditiva/tablas de onda/ruido articulado. Fase 3 añadió cuatro motores y articulaciones; no equivale a todos los candidatos ni a una canción de forma ilimitada.
+- Ampliar de 52 hacia 80/100 estilos solo si cambian realmente batería, bajo, armonía, timbre, swing y evolución; contrastar duplicados con el catálogo presente. Muchos géneros culturales solicitados aún son candidatos.
+- Transiciones, tensión/resolución, memoria breve, formas más largas y diferencias audibles por material/gesto. El arco de ocho frases ya existe y se repite con variaciones; no venderlo como ausencia total de repetición.
+- Mixer con rutas reales por bajo/percusión/acordes/motivo/ambiente, mute/solo y control compacto; sustracción/influencia no son ese mixer.
+- Chorus, phaser, flanger, resonadores, freeze breve y granular con fuentes/buffers y costes definidos. Reverb, delay y los FX actuales ya existen.
+- Conversaciones/bandas más expresivas y presupuestos conjuntos. El animal aprende una frase corta de gestos; no escucha micrófono ni improvisa diálogo general.
 
-Agrupar muchas mejoras relacionadas en una misma rama por fase, con commits y puntos de prueba por bloque. Jay autorizó al asistente a integrar lo pendiente; conservar merge normal y verificar el resultado. Las próximas fases parten de la anterior si está pendiente o del main actualizado después del merge. No crear ramas de documentación separadas.
+## Mundo, vida y búsqueda
 
-## Prioridad
+- Más relaciones de ecosistema, fauna/flora con conducta e instrumentos propios, visitantes y llamadas/respuestas; ya hay diferencias individuales, aves, semilleros, lluvia, estaciones y ríos.
+- Contratos/versiones/presencia aplicados más uniformemente a sistemas históricos; recetar compatibilidad y rareza antes de multiplicar contenido. Paisajes vivos ya aplica contratos a sus seis familias.
+- Cadenas de búsqueda variadas, puertas musicales, despertar instrumentos de distintas maneras y rarezas con capacidades expresivas; no confundir el rastro existente con un sistema completo de aventuras.
+- **Culturas e historia:** muchas culturas, épocas y referencias originales relacionadas con música/materiales/biología/movimiento/gráfica; no solo Japón/México. Personajes, reliquias/compositores históricos y mecanismos inspirados en Leonardo siguen pendientes. Revisar dominio público/licencias por recurso concreto, separando una obra antigua de una grabación o imagen moderna.
+- Jardines/cableado más profundos y acotados, mecanismos musicales, huertos de ritmo, construcción/crafting y comunidades/escenarios: propuestas, todavía sin arquitectura/persistencia completa ni alcance cerrado de V1.
+- Migraciones con rutas, gigantes, manantiales, ciclo día/noche y consecuencias ecológicas persistentes: ampliación. No reintroducir cajas rectangulares como sustituto del suelo.
 
-1. Revisión de registros/atlas integrada en #70; no repetir su implementación: [118 vistas reales y contraste de registros](REVISION_REGISTROS.md). Elegir con Jay las figuras a mejorar; escuchar especialmente dub, minimal, ambient, amapiano, disco y melodic durante varios minutos. Validar Safari/Android reales y actualizaciones/rollback. El Original v1 ya se conserva junto a Paisajes vivos v2; futuras versiones deberán mantener esa compatibilidad.
-2. Música: escuchar [fase 3 ya integrada por #72](FASE_03.md), con cuatro voces nuevas y arcos/articulaciones por estilo. Escucha larga, dispositivos reales y futuras tandas de estilos/FX permanecen pendientes.
-3. Mundo: integrar [gestos/color de fase 4](FASE_04.md); el rediseño de figuras espera elecciones de Jay. Contratos de contenido comunes, más relaciones/terrenos, cuerdas y suelo, instalaciones, puertas y búsquedas variadas, primeras culturas/personajes/reliquias históricas.
-4. Experiencia: Estudio, retorno y compartir lugares, historia/Voz, accesibilidad, UI silenciosa y pruebas con jugadores nuevos.
-5. Cierre: candidata de release, dispositivos reales, actualizaciones/migraciones/rollback y correcciones.
+## Recorrer, crear y compartir
 
-Construcción libre, huertos, crafting, comunidades, observatorios/Leonardo, maestros/partituras, exportación de sets y multijugador siguen presentes en el inventario. Su alcance de V1 debe decidirse; no se declaran implementados ni descartados.
+- Profundizar el Estudio, edición/retirada, relación con la banda, aprendizajes y materiales; explicar qué se conserva.
+- Códigos compartibles de lugar completos (semilla/versiones/layout/capa/coordenadas) y apertura compatible. Hoy existen favoritos y tarjetas PNG; no hay ese código ni sincronización entre dispositivos.
+- Exportación de sets de audio/vídeo opcional, separada de publicar o congelar escenas; límites móviles por definir.
+- Multijugador sigue sin implementar: backend/proveedor, reloj/armonía común, papeles, latencia, reconexión y guardados/propiedad requieren un bloque propio. Dos puntos compartiendo un mundo no aparecen por tener semillas iguales.
 
-## Lo que ya existe
+## Cierre de V1 aún pendiente
 
-Semillas, 11 biomas, 52 estilos, radio evolutiva, quietud, favoritos/regreso/autopilot, vidrios/espejos/módulos, conexiones regionales, blobs, familias de encuentros, suelo resonante, frases de animales, rastros e instrumento dormido, sustracción, fijación opcional/borrado, modo tranquilo, Bitácora/logros y shell offline local. La secuencia de ocho entregas ya está integrada; este nuevo inventario V1 espera revisión.
+Pruebas reales de batería/memoria en rutas largas, PWA instalada, suspensión/reanudación y tamaños; actualización de caché sin mezcla, migraciones futuras/rollback; primera sesión humana; auditar accesibilidad/zoom/teclado y controles heredados, movilidad/gravedad y notificaciones; créditos/licencias, versión visible, soporte y candidata congelada. La existencia de CI y un merge no certifica aceptación musical o producción.
 
-## Decisión preservada
+## Decisiones y flujo preservados
 
-Jay descartó añadir escenas/ideas musicales guardables. Favoritos y guardados existentes permanecen. Exportar un set o una construcción es una función diferente; no convertirlo en guardado automático de escenas.
+No añadir escenas/ideas musicales guardables: opción descartada por Jay. La fijación es voluntaria; favorecer crear sin grabar. No añadir logros por una operación técnica. Mantenimiento de README/pendientes/entrega en una rama amplia por bloque, con pruebas pertinentes; no volver a treinta ramas pequeñas. Esta rama de traspaso es solo documentación. La siguiente implementación debe seguir el alcance que Jay pida en la nueva sesión.

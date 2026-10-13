@@ -1,5 +1,7 @@
 # Fase 3 · composición e instrumentos
 
+> Estado al 13 de octubre de 2026: Entrega integrada por #72. No volver a implementar las cuatro voces ni el arco; sus ampliaciones y escucha siguen pendientes. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).
+
 Bloque desde `main` · `0e289b8`, después de #70/#71. Amplía la reproducción musical; conserva los 11 biomas, 52 estilos, identidades de mundo, coordenadas y guardados.
 
 ## Implementación

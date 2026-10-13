@@ -2,23 +2,17 @@
 
 Un punto blanco en un mundo negro que compone música electrónica mientras lo exploras. Camino diario, Mundo procedural y Estudio; 11 biomas y 52 estilos actuales. Por Jay · [@jaywrkr](https://instagram.com/jaywrkr).
 
-## Entrega actual: gestos y color de instalaciones
+## Estado integrado y traspaso a Claude
 
-Espejos girables por arrastre directo, cancelación con restauración del guardado y color de vidrios/reflejos ligado a la orientación. El toque breve conserva ajustes precisos. [Entrega y cómo probar](FASE_04.md).
+**Main `e27c219` (PR #73)** incluye fases 1–3, revisión de registros/atlas y el bloque de gestos/color de fase 4. [Estado completo y cifras](ESTADO_ACTUAL.md) · [handoff para Claude](HANDOFF.md) · [pendientes](PENDIENTES.md). La actualización documental está en `docs/claude-handoff-current-main`; leer esa rama mientras no esté integrada.
 
-## Base integrada: composición e instrumentos de fase 3
+- Base fiable: guardado recuperable, respaldo/importación, identidad de lugares y cachés acotadas. [Fase 1](FASE_01.md).
+- Paisajes vivos: 33 hábitats, seis familias pequeñas, clima/materiales, vecinos relacionados y regiones amplias de 10.800 unidades. Original conserva su mapa y guardado. [Fase 2](FASE_02.md).
+- Música: frases sin melodía aguda obligatoria, registros por género, nuevas voces reed/membrane/bowed/hollow, articulaciones y arcos de ocho frases. Los 52 estilos y el ADN del generador se conservan. [Registros](REVISION_REGISTROS.md) · [Fase 3](FASE_03.md).
+- Instalaciones: espejos por arrastre con rollback, alternativa de precisión por toque y color de vidrios/reflejos ligado al movimiento. [Bloque de fase 4](FASE_04.md). Las nuevas familias propuestas de fase 4 siguen pendientes.
+- [Atlas de 118 vistas numeradas](docs/images/atlas-visual.png), actualizado con los colores actuales: muestras procedurales ampliadas para elegir qué rediseñar. Jay aún no ha seleccionado las figuras.
 
-Cuatro voces nuevas, articulaciones por estilo y arcos de ocho frases con exposición, respuesta, desarrollo y retirada. El desarrollo puede reforzar un acento armónico sin aumentar su presupuesto de volumen. [Implementación, pruebas y cómo escuchar](FASE_03.md). Semillas y guardados conservados; la revisión visual permanece a la espera de las elecciones de Jay.
-
-## Base anterior integrada: revisión visual y registros musicales
-
-Integrada en **`main` · `f7bcf84`**, mediante PR #70. Fases 1 y 2 también integradas. [Lámina con 118 vistas numeradas de las figuras reales](docs/images/atlas-visual.png), para elegir qué rediseñar. Incluye muestras de las variantes procedurales, ampliadas para revisión.
-
-La radio deja espacio a frases de bajo/percusión sin melodía obligatoria; los 52 estilos usan registros y presencia melódica diferenciados. Voces, vidrios y aves tienen techos audibles controlados, paletas más propias de cada género y mayor margen de salida en escenas densas. Los gestos deliberados siguen respondiendo. [Detalle y pruebas](REVISION_REGISTROS.md).
-
-**Probar: Menú → Explorar mundos → Paisajes vivos → Humedal / Salinas / Basalto / Micelio**, o escuchar la partida Original. La revisión musical funciona en ambas generaciones. Paisajes vivos aporta 33 perfiles sobre los 11 biomas, seis familias pequeñas, clima y vecinos relacionados; Amplio vivo tiene regiones de **10.800 unidades**. [Fase 2](FASE_02.md).
-
-Coordenadas y guardados separados de Original/vivo se conservan. La revisión ya pasó lógica, navegador y audio; Vercel aprobó el despliegue del merge. Una rama amplia por bloque: [FASES_UNIVERSO.md](FASES_UNIVERSO.md); la expansión mayor de instrumentos de fase 3 sigue pendiente.
+**Probar: Menú → Explorar mundos → Paisajes vivos**, presets Humedal/Salinas/Basalto/Micelio, o la partida Original. Para escuchar estilos concretos: Prototipo → Ritmos. Una rama amplia por bloque, con documentación y pruebas; no reaplicar entregas ya integradas.
 
 ## Jugar y probar
 
@@ -56,7 +50,9 @@ Guardado local: borrar los datos del navegador elimina progreso; exporta antes. 
 
 ## Documentación vigente
 
-[Revisión musical y visual](REVISION_REGISTROS.md) · [Paisajes vivos](FASE_02.md) · [Base fiable](FASE_01.md) · [Diez fases](FASES_UNIVERSO.md) · [Inventario V1](V1_PRODUCCION.md) · [Pendientes](PENDIENTES.md) · [Rama y merge](RAMAS.md) · [Continuar trabajo](HANDOFF.md) · [Variedad](VARIEDAD.md).
+Esta revisión documental confirmó 51 suites Node y recarga offline con 81 módulos. La batería completa de navegador/audio no se repitió; [evidencias históricas y pruebas disponibles](ESTADO_ACTUAL.md).
+
+[Estado actual](ESTADO_ACTUAL.md) · [Composición](FASE_03.md) · [Gestos y color](FASE_04.md) · [Revisión musical y visual](REVISION_REGISTROS.md) · [Paisajes vivos](FASE_02.md) · [Base fiable](FASE_01.md) · [Diez fases](FASES_UNIVERSO.md) · [Inventario V1](V1_PRODUCCION.md) · [Pendientes](PENDIENTES.md) · [Rama y merge](RAMAS.md) · [Continuar trabajo](HANDOFF.md) · [Variedad](VARIEDAD.md).
 
 En el mapa original, la medición antigua mantiene **39.952 recetas detalladas entre 40.000 regiones**; no es el total del universo ni una cifra de canciones únicas. La auditoría de Paisajes vivos mide recetas y vecindad por semilla; esos números no cuentan canciones ni certifican variedad percibida.
 

@@ -1,5 +1,7 @@
 # Revisión visual y musical · 13 de octubre de 2026
 
+> Estado al 13 de octubre de 2026: Entrega integrada por #70; fase 3 amplió posteriormente sus paletas/composición. Sus 125 renders son evidencia histórica, no medición del main actual. El atlas se regeneró en el traspaso con los colores de #73. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).
+
 Entrega en `fix/musical-registers-and-visual-inventory`, desde main `ffc5578` (PR #69: Paisajes vivos ya integrado). Jay pidió revisar las figuras antes de rediseñarlas y corregir la repetición de voces agudas. Este bloque precede a la ampliación de instrumentos de fase 3; no declara terminadas las fases futuras.
 
 ## Lámina para elegir qué mejorar

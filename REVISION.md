@@ -1,5 +1,7 @@
 # Revisión de Claude, nitidez musical y dirección del proyecto
 
+> Estado al 13 de octubre de 2026: Informe histórico de la revisión de Claude y nitidez inicial. Fallos/pendientes y permisos anotados corresponden a esa base, no al main vigente. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).
+
 Fecha: 2026-10-13. Base revisada: `origin/main` `5413d5f`, PR #35. Rama de esta entrega: `review/claude-audio-clarity`. Flujo: commit/push; Jay PR/merge. Este informe acompaña [HANDOFF.md](HANDOFF.md), [CAMBIOS.md](CAMBIOS.md) y [PENDIENTES.md](PENDIENTES.md).
 
 ## Resultado principal

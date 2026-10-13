@@ -1,3 +1,7 @@
+# Variedad: mediciones y alcance vigente
+
+Main e27c219 mantiene 11 biomas y 52 estilos. Fase 3 añadió cuatro timbres/arcos de reproducción y fase 4 gestos/color, sin cambiar el ADN del generador. Los conteos de abajo son auditorías históricas de recetas: no canciones únicas ni mediciones nuevas de diferencia audible. [Cifras del código y evidencias](ESTADO_ACTUAL.md).
+
 ## Fase 2 · Paisajes vivos y medición grande
 
 La revisión de [registros musicales y figuras](REVISION_REGISTROS.md) no amplía estos conteos: cambia el arreglo audible de los estilos existentes sin modificar las recetas del generador.
