@@ -30,14 +30,15 @@ export function initialize(runtime) {
   const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN);
   const neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN);
   MU.radio = null;MU.neighborRadio=null;
-  let ac=null,master,mfilt,comfortShelf,comfortLowpass,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
+  let ac=null,master,mfilt,punch,makeup,limiter,clipper,comfortShelf,comfortLowpass,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
   const voiceCurator=createVoiceCurator();
-  const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:.85):0;
+  const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:1):0;
   function applyComfort(time=ac?.currentTime||0){
     if(!ac)return;
     const soft=!!runtime.S.softMusic;
     master.gain.setTargetAtTime(musicVolume(),time,.25);
     comfortShelf.gain.setTargetAtTime(soft?-5:-1.5,time,1);
+    if(punch){punch.gain.setTargetAtTime(soft?0:3,time,.5);makeup.gain.setTargetAtTime(soft?1.6:3.4,time,.5);}
     comfortLowpass.frequency.setTargetAtTime(soft?5500:runtime.inWorld()?(MU.radio?.grammar?.brightness||10000):18000,time,1.2);
   }
   function impulse(sec){const n=ac.sampleRate*sec|0,b=ac.createBuffer(2,n,ac.sampleRate);for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);}return b;}
@@ -47,10 +48,16 @@ export function initialize(runtime) {
       master=ac.createGain();master.gain.value=musicVolume();
       mfilt=ac.createBiquadFilter();mfilt.type="lowpass";mfilt.frequency.value=18000;
       const comp=ac.createDynamicsCompressor();
-      if(comp.threshold){comp.threshold.value=-18;comp.knee.value=18;comp.ratio.value=3;comp.attack.value=.008;comp.release.value=.25;}
+      if(comp.threshold){comp.threshold.value=-24;comp.knee.value=12;comp.ratio.value=4;comp.attack.value=.006;comp.release.value=.2;}
+      // Volumen de fiesta: graves con más cuerpo, ganancia de compensación y un limitador final que evita saturar.
+      punch=ac.createBiquadFilter();punch.type='lowshelf';punch.frequency.value=110;punch.gain.value=runtime.S.softMusic?0:3;
+      makeup=ac.createGain();makeup.gain.value=runtime.S.softMusic?1.6:3.4;
+      // Saturación suave final (tanh): los picos que escapan al limitador se redondean en vez de recortarse.
+      if(ac.createWaveShaper){clipper=ac.createWaveShaper();const n=2048,cv=new Float32Array(n);for(let i=0;i<n;i++){const x=i/(n-1)*2-1;cv[i]=Math.tanh(1.15*x)/Math.tanh(1.15);}clipper.curve=cv;clipper.oversample='2x';}else clipper=ac.createGain();
+      limiter=ac.createDynamicsCompressor();if(limiter.threshold){limiter.threshold.value=-3;limiter.knee.value=0;limiter.ratio.value=20;limiter.attack.value=.002;limiter.release.value=.12;}
       comfortShelf=ac.createBiquadFilter();comfortShelf.type='highshelf';comfortShelf.frequency.value=3500;comfortShelf.gain.value=runtime.S.softMusic?-5:-1.5;
       comfortLowpass=ac.createBiquadFilter();comfortLowpass.type='lowpass';comfortLowpass.Q.value=.7;comfortLowpass.frequency.value=runtime.S.softMusic?5500:18000;
-      master.connect(mfilt).connect(comfortShelf).connect(comfortLowpass).connect(comp).connect(ac.destination);
+      master.connect(mfilt).connect(punch).connect(comfortShelf).connect(comfortLowpass).connect(comp).connect(makeup).connect(limiter).connect(clipper).connect(ac.destination);
       bus=ac.createGain();bus.connect(master);
       verb=ac.createConvolver();verb.buffer=impulse(3.2);verbIn=ac.createGain();verbIn.gain.value=.8;verbIn.connect(verb).connect(master);
       delay=ac.createDelay(1.5);delay.delayTime.value=SIX*3;dfb=ac.createGain();dfb.gain.value=.38;const dl=ac.createBiquadFilter();dl.type="lowpass";dl.frequency.value=2000;
@@ -67,7 +74,8 @@ export function initialize(runtime) {
     }
     if(ac.state==="suspended")ac.resume();
   }
-  const hz=m=>440*Math.pow(2,(m-69)/12);
+  // Afinación: en las tierras raras la región entera se desafina unos cents (MU.tune).
+  const hz=m=>440*Math.pow(2,(m-69)/12+((runtime.inWorld?.()&&MU.tune)||0)/1200);
   let VW=1;const rnd=Math.random, vel=v=>v*VW*(.82+rnd()*.3), jit=()=>(rnd()-.5)*.008;
   const BI=()=>runtime.BIOMES[MU.biome];
   function chordTones(){const sc=MU.dnaA?MU.dnaA.scale:BI().scale,d=MU.deg;return [0,2,4,6,8].map(k=>{const i=d+k;return A+MU.tr+sc[i%7]+12*Math.floor(i/7);});}
@@ -419,6 +427,8 @@ export function initialize(runtime) {
     applyComfort: { get: () => applyComfort },
     curatedVoiceGain: { get: () => (time,role)=>voiceCurator.gain(time,SIX,role,runtime.S.softMusic) },
     comfortLowpass: { get: () => comfortLowpass },
+    limiter: { get: () => limiter },
+    outputStage: { get: () => ({punch,makeup,limiter,clipper,master}) },
     noiseHit: { get: () => noise },
     snareHit: { get: () => snare },
     clap: { get: () => clap },

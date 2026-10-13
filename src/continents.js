@@ -21,6 +21,11 @@ export function valueNoise(x,y,salt){
 const SYL=['ka','lu','mi','sor','vel','tan','ri','zo','ne','dra','om','is','ur','fe','lia','qua','bel','no','ash','ti','mar','en','yo','sil','ro','ve','len','ai','dun','ma','ko','sa'];
 const NOTE=['Do','Do♯','Re','Mi♭','Mi','Fa','Fa♯','Sol','La♭','La','Si♭','Si'];
 
+// Rareza por distancia al Origen (en regiones): 0 cerca de casa, 1 en las tierras raras.
+export const STRANGE_START=8,STRANGE_FULL=60;
+export function strangeness(rx,ry){const d=Math.hypot(rx+.5,ry+.5),t=Math.min(1,Math.max(0,(d-STRANGE_START)/(STRANGE_FULL-STRANGE_START)));return t*t*(3-2*t);}
+export const ringOf=(rx,ry)=>Math.max(Math.abs(rx),Math.abs(ry));
+
 export function createContinents(seedOf,rng,genres){
  const seeds=new Map(),regions=new Map();
  // Familias de géneros con su tempo central, para dar identidad a cada continente.

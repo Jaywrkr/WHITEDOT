@@ -28,7 +28,7 @@ export function initialize(runtime) {
     const ev=runtime.eventOf(d);if(ev&&!runtime.S.events[ev[0]+":"+d.key+runtime.S.todayKey]){runtime.S.events[ev[0]+":"+d.key+runtime.S.todayKey]=1;runtime.S.events[ev[0]]=1;runtime.unlock("evento1");if(runtime.EVENTS.every(e=>runtime.S.events[e[0]]))runtime.unlock("eventos4");runtime.say(runtime.VOZ[ev[0]],"Evento · "+ev[1]);}
     if(newPlace){runtime.S.places[d.key]=1;runtime.S.placesN=(runtime.S.placesN||0)+1;if(runtime.S.placesN>=10)runtime.unlock("lugar10");if(runtime.S.placesN>=50)runtime.unlock("lugar50");if(runtime.S.placesN>=200)runtime.unlock("lugar200");}
     if(z!==runtime.curZone){runtime.curZone=z;enterZone(z);}
-    showRegion(d,newPlace);continentChange(d);runtime.save();
+    showRegion(d,newPlace);continentChange(d);farLands(d);runtime.save();
   }
   // Escala grande: aviso al cambiar de continente o entrar a un mar de silencio.
   let lastLand=null,wasSea=false,annT=null;
@@ -46,7 +46,16 @@ export function initialize(runtime) {
     if(first&&isNew&&S.continentsN===2)runtime.say(runtime.VOZ.continente);
     if(S.continentsN>=3)runtime.unlock('continente3');
   }
-  const resetContinent=()=>{lastLand=null;wasSea=false;clearTimeout(annT);};
+  // Distancia: récord, afinación torcida y aviso al entrar a las tierras raras.
+  function farLands(d){
+    const S=runtime.S,[rx,ry]=d.key.split(',').map(Number),ring=Math.max(Math.abs(rx),Math.abs(ry));
+    runtime.MU.tune=d.tuneCents||0;
+    if(ring>(S.maxRing||0)){S.maxRing=ring;S.maxRingDay=S.todayKey;
+      if(ring>=10)runtime.unlock('lejos10');if(ring>=30)runtime.unlock('lejos30');if(ring>=60)runtime.unlock('lejos60');
+      if(ring>=5&&ring%5===0)runtime.toast(`<em>Récord</em> · ${ring} regiones del Origen`);}
+    if((d.strange||0)>.35&&!S.help.raro){S.help.raro=true;runtime.say(runtime.VOZ.raro,'Tierras raras');}
+  }
+  const resetContinent=()=>{lastLand=null;wasSea=false;clearTimeout(annT);runtime.MU.tune=0;};
   let zoneT;
   function showZone(z,first){
     const B=runtime.BIOMES[z],Z=runtime.ZINFO[B.id],el=document.getElementById("zone");

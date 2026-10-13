@@ -74,7 +74,7 @@ with sync_playwright() as p:
   page.wait_for_timeout(150);assert page.evaluate('window.__testRuntime.comfortLowpass.frequency.value < 18000')
   page.locator('#bMenu').click();page.locator('#bSound').click();assert page.evaluate('window.__testRuntime.musicVolume()===0')
   page.locator('#bMenu').click();page.locator('#bSound').click();assert page.evaluate('window.__testRuntime.musicVolume()===.65')
-  page.locator('#bMenu').click();page.locator('#bSoft').click();assert page.evaluate('!window.__testRuntime.S.softMusic && window.__testRuntime.musicVolume()===.85')
+  page.locator('#bMenu').click();page.locator('#bSoft').click();assert page.evaluate('!window.__testRuntime.S.softMusic && window.__testRuntime.musicVolume()===1')
   page.wait_for_function('!!window.__testRuntime.MU.radio?.grammar && window.__testRuntime.MU.radio.grammar.hookLimit<=5')
   page.evaluate('''()=>{const r=window.__testRuntime,region=r.regionOfPos(r.S.wx,r.S.wy),source={x:r.S.wx+150,y:r.S.wy},original=[r.bus,r.verbIn,r.dsend];let local;r.withSpatialVoice(source,r.ac.currentTime+.05,()=>{local=r.bus;r.hookInst('strings',60,r.ac.currentTime+.05,.02);});if(r.bus!==original[0]||r.verbIn!==original[1]||r.dsend!==original[2])throw Error('Spatial routing leaked');source.x=r.S.wx;source.y=r.S.wy;r.spatialTick();if(r.activeSpatialCount>32)throw Error('Spatial voices unbounded');r.playVoice('arbol',0,r.ac.currentTime+.1,region,true,.3,source);}''')
 

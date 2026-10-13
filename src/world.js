@@ -5,7 +5,7 @@ import { createPockets, distributePlaythings } from './pockets.js';
 import { attachPersonalities } from './personality.js';
 
 import { createPlaythings } from './playthings.js';
-import { createContinents } from './continents.js';
+import { createContinents, strangeness } from './continents.js';
 
 // Generación procedural del camino, regiones y reliquias.
 export function initialize(runtime) {
@@ -76,7 +76,12 @@ export function initialize(runtime) {
      d.bpm=Math.round(G.bpm[0]+r()*(G.bpm[1]-G.bpm[0]));const fr=r();d.fill=origin?runtime.FILL[2]:fr<.15?runtime.FILL[0]:fr<.35?runtime.FILL[1]:fr<.65?runtime.FILL[2]:fr<.85?runtime.FILL[3]:runtime.FILL[4];
      d.track.bassI=G.bassI;d.track.hookI=G.hookP[Math.floor(r()*G.hookP.length)];}
     applyPalette(d,runtime.BIOMES[z].id,origin,runtime.seedOf,runtime.rng);
-    d.continent=cont?{id:cont.id,name:cont.name,family:cont.family,familyName:cont.familyName,tonic:cont.tonic,size:cont.size}:null;d.sea=ct.sea;d.coast=ct.coast;
+    d.continent=cont?{id:cont.id,name:cont.name,family:cont.family,familyName:cont.familyName,tonic:cont.tonic,size:cont.size,hue:cont.hue}:null;
+    // Más lejos, más raro: criaturas más grandes, colores imposibles y afinación torcida (semilla aparte).
+    {const st=strangeness(rx,ry),sr=runtime.rng(runtime.seedOf("strange:v1:"+key));d.strange=st;d.tuneCents=st>.05?Math.round((sr()-.5)*2*55*st):0;
+     if(st>0){d.species.forEach(sp=>{sp.cell*=1+1.4*st;});
+      const sat=Math.round(32+60*st),acc=(hue+28+Math.round(150*st*sr()))%360;
+      d.pal={main:`hsl(${hue},${sat}%,${Math.round(74-14*st)}%)`,soft:`hsl(${(hue+Math.round(60*st))%360},${Math.round(22+50*st)}%,50%)`,acc:`hsl(${acc},${Math.round(72+25*st)}%,${Math.round(70-10*st)}%)`,sand:`hsl(${(hue+40)%360},${Math.round(35+50*st)}%,68%)`};}}d.sea=ct.sea;d.coast=ct.coast;
     d.fill=origin?runtime.FILL[2]:fillOf(continents.vitality((rx+.5)*regionPx(),(ry+.5)*regionPx(),regionPx()));
     applyNeighborhood(d,runtime.BIOMES,runtime.GEN,runtime.seedOf,runtime.rng,continents.at);
     rcache.set(key,d);return d;

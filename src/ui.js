@@ -35,7 +35,7 @@ export function initialize(runtime) {
   function enterWorld(){
     if(!runtime.isFree()){toast("<em>Mundo</em> · Primero completa el camino de hoy");return;}
     if(runtime.lampLeft()<=0){toast("<em>Linterna</em> · Vuelve mañana");return;}
-    runtime.beginSession();runtime.audio();if(runtime.S.lastWorldDay!==runtime.S.todayKey){if(runtime.S.studio.x!=null){runtime.S.wx=runtime.S.studio.x;runtime.S.wy=runtime.S.studio.y;}runtime.S.lastWorldDay=runtime.S.todayKey;}runtime.zoneHops=0;runtime.S.mode="world";runtime.curZone=-1;{const rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);runtime.curRegion=rg.key;runtime.enterRegion(rg,rg.z);}runtime.MU.layers=new Set();
+    runtime.beginSession();runtime.audio();if(runtime.S.lastWorldDay!==runtime.S.todayKey){if(runtime.S.studio.x!=null){runtime.S.wx=runtime.S.studio.x;runtime.S.wy=runtime.S.studio.y;{const rp=runtime.REG*runtime.WCH,ring=Math.max(Math.abs(Math.floor(runtime.S.wx/rp)),Math.abs(Math.floor(runtime.S.wy/rp)));if(ring>=3)setTimeout(()=>runtime.toast(`<em>Campamento</em> · a ${ring} regiones del Origen`),2600);if(ring>=3&&!runtime.S.help.camp){runtime.S.help.camp=true;setTimeout(()=>runtime.say(runtime.VOZ.campamento),4000);}}}runtime.S.lastWorldDay=runtime.S.todayKey;}runtime.zoneHops=0;runtime.S.mode="world";runtime.curZone=-1;{const rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);runtime.curRegion=rg.key;runtime.enterRegion(rg,rg.z);}runtime.MU.layers=new Set();
     runtime.todayRelics();runtime.enterFx=1;runtime.flocks=[];
     runtime.soon(q=>[0,7,12,15,19,24].forEach((k,i)=>runtime.pluck(45+runtime.BIOMES[runtime.curZone].tr+k,q+i*runtime.SIX*2,.07,2)));
     unlock("mundo");
