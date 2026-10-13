@@ -45,6 +45,9 @@ export function drawMap(runtime,x,X,Y,W,H,zoom){
   else if(lm.type==='ciudad'){x.strokeRect(px-z*.7,py-z*.7,z*1.4,z*1.4);x.fillRect(px-z*.2,py-z*.2,z*.4,z*.4);}
   else if(lm.type==='monolito'){x.lineWidth=1.5;x.strokeRect(px-z*.3,py-z*1.4,z*.6,z*1.4);}
   else{x.beginPath();x.moveTo(px,py-z);x.lineTo(px+z*.7,py+z*.4);x.lineTo(px-z*.7,py+z*.4);x.closePath();x.fill();}}
+ // Rarezas encontradas: estrella con el color de su nivel.
+ for(const [key,a] of Object.entries(runtime.S.anomalies||{})){const [rx,ry]=key.split(',').map(Number),[px,py]=P(rx+.5,ry+.5),z=Math.max(6,Math.min(13,s*.45)),col=a.tier==='mitico'?runtime.GOLD:a.tier==='legendario'?'#c9a2ff':'#9fe8ff';
+  x.globalAlpha=1;x.fillStyle=col;x.beginPath();for(let i=0;i<10;i++){const r=i%2?z*.45:z,an=i/10*6.283-Math.PI/2;i?x.lineTo(px+Math.cos(an)*r,py+Math.sin(an)*r):x.moveTo(px+Math.cos(an)*r,py+Math.sin(an)*r);}x.closePath();x.fill();}
  // Origen, campamento y tú.
  {const [px,py]=P(.5,.5);x.globalAlpha=.8;x.strokeStyle='#fff';x.lineWidth=1.5;x.beginPath();x.arc(px,py,Math.max(5,s*.35),0,6.283);x.stroke();}
  if(m.camp){const [px,py]=P(m.camp[0],m.camp[1]),z=Math.max(6,Math.min(12,s*.45));x.globalAlpha=1;x.strokeStyle=runtime.GOLD;x.lineWidth=2;x.beginPath();x.moveTo(px-z,py);x.lineTo(px,py-z);x.lineTo(px+z,py);x.lineTo(px+z,py+z);x.lineTo(px-z,py+z);x.closePath();x.stroke();}
@@ -59,7 +62,7 @@ export function initialize(runtime){
   const c=$("mapCv"),x=c.getContext("2d"),m=drawMap(runtime,x,0,0,c.width,c.height,zoom);
   $("mRegions").textContent=m.cells.length;$("mConts").textContent=m.continents;$("mRecord").textContent=m.record;
   $("mapZoom").textContent=zoom==='mundo'?'Ver cerca':'Ver todo';
-  $("mapNote").textContent=`${m.reached.length} hitos visitados · ${m.heard.length} oídos sin visitar (?)${m.camp?' · ⌂ tu Estudio':''}`;
+  $("mapNote").textContent=`${m.reached.length} hitos visitados · ${m.heard.length} oídos sin visitar (?) · ${Object.keys(runtime.S.anomalies||{}).length} rarezas (✶)${m.camp?' · ⌂ tu Estudio':''}`;
  }
  function open(){$("mMap").hidden=false;render();runtime.unlock('mapa1');}
  function share(){

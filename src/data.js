@@ -93,6 +93,10 @@ export function initialize(runtime) {
    ["hito10","Coleccionista de horizontes","Llegaste a 10 hitos."],
    ["continente3","Turista de continentes","Pisaste 3 continentes."],
    ["mar1","Nadie cruza eso","Cruzaste un mar de silencio entero.",1],
+   ["rareza1","Esto no es normal","Encontraste una rareza."],
+   ["leyenda1","Leyenda","Encontraste una rareza legendaria."],
+   ["mito1","Mito","Encontraste la Luna de oro.",1],
+   ["rio1","Siguiendo el agua","Seguiste un río un minuto entero."],
    ["lejos10","Lejos de casa","Llegaste a 10 regiones del Origen."],
    ["lejos30","Expedición","Llegaste a 30 regiones del Origen."],
    ["lejos60","Tierras raras","Llegaste a 60 regiones del Origen. Aquí nada suena afinado.",1],
@@ -133,7 +137,7 @@ export function initialize(runtime) {
    ["esquivador","Esquivador","45 s moviéndote en el Mundo sin tocar ninguna luz.",1],
    ["insistente","Insistente","Golpeaste el mismo pilar 25 veces.",1]
   ];
-  const SAMPLES={luz:"Luz",cristal:"Cristal",pilar:"Pilar",loto:"Loto",arbol:"Árbol",luciernaga:"Luciérnaga",flor:"Flor",faro:"Faro"};
+  const SAMPLES={luz:"Luz",cristal:"Cristal",pilar:"Pilar",loto:"Loto",arbol:"Árbol",luciernaga:"Luciérnaga",flor:"Flor",faro:"Faro",reverso:"Reverso",canon:"Canon",frenesi:"Frenesí",detenido:"Tiempo quieto",espejo:"Espejo",luna:"Luna de oro"};
   const COLORS=[["#ffffff","Blanco",null],["#f0d27a","Ámbar","tope"],["#7fe0b0","Menta","estrella1"],["#6fd3ff","Cian","mundo"],["#ff8a7a","Coral","r3"],["#b9a2ff","Lila","oculto"]];
   // La Voz del sistema: sarcástica, directa, con cariño por debajo. Estas son para que Jay las corrija.
   const VOZ={
@@ -208,6 +212,11 @@ export function initialize(runtime) {
    hito1:"Llegaste. Ya no es un sonido, es un lugar.",
    hito10:"Diez hitos. Ya hablas el idioma del horizonte.",
    continente3:"Tres continentes. Tu pasaporte no existe, pero igual.",
+   rio:"Un río. Síguelo hacia donde baja: la música sube. Como un set, pero mojado.",
+   rareza1:"Una rareza. Aquí las reglas no aplican. Las mías tampoco, por si acaso.",
+   leyenda1:"Legendaria. Esto lo ve muy poca gente. Tómale foto. Ah, no puedes.",
+   mito1:"La Luna de oro. No sé qué decir. Primera vez que no sé qué decir.",
+   rio1:"Un minuto siguiendo el agua. Ya eres parte del caudal.",
    raro:"La afinación se está torciendo. No es tu teléfono. Es que estás lejos.",
    campamento:"Arrancas desde tu Estudio. Campamento base. Lo lejos ya no es tan lejos.",
    lejos10:"Diez regiones. Tu casa ya no se oye.",

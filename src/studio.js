@@ -1,4 +1,6 @@
 // Secuenciador, muestras, colores y checkpoint.
+// Las muestras únicas de rarezas solo aparecen en la bolsa cuando ya las tienes.
+const SPECIAL=new Set(['reverso','canon','frenesi','detenido','espejo','luna']);
 export function initialize(runtime) {
   const colorOk=c=>!c[2]||(c[2]==="oculto"?runtime.ACH.some(a=>a[3]&&runtime.S.ach[a[0]]):!!runtime.S.ach[c[2]]);
   function gain(type){const before=runtime.S.bag[type]||0,n=Math.min(9,before+1);if(n===before)return;runtime.S.bag[type]=n;runtime.toast("<em>Muestra</em> · "+runtime.SAMPLES[type]+" · "+n);runtime.save();}
@@ -10,7 +12,14 @@ export function initialize(runtime) {
     case "arbol":runtime.pluck(n+12,t,runtime.vel(.08),1);break;
     case "luciernaga":runtime.pluck(n+36,t,runtime.vel(.035),4);break;
     case "flor":runtime.pluck(n+12,t,runtime.vel(.08),3);break;
-    case "faro":runtime.softBass(Rt+[0,7,12,5][r],t,runtime.vel(.16));break;}}
+    case "faro":runtime.softBass(Rt+[0,7,12,5][r],t,runtime.vel(.16));break;
+    // Muestras únicas de las rarezas.
+    case "reverso":runtime.hookInst("strings",n+12,t,runtime.vel(.07));break;
+    case "canon":[0,1,2].forEach(i=>runtime.pluck(n+12+[0,4,7][i],t+i*runtime.SIX*2,runtime.vel(.07-i*.015),2));break;
+    case "frenesi":[0,1,2,3].forEach(i=>runtime.pluck(n+12+(i%2?7:0),t+i*runtime.SIX/2,runtime.vel(.05),0));break;
+    case "detenido":runtime.pluck(n+24,t,runtime.vel(.06),4);runtime.softBass(Rt,t,runtime.vel(.1));break;
+    case "espejo":runtime.pluck(n+12,t,runtime.vel(.06),1);runtime.pluck(n,t,runtime.vel(.05),1);break;
+    case "luna":ct.slice(0,4).forEach((k,i)=>runtime.pluck(k+12+(i>2?12:0),t+i*.012,runtime.vel(.05),4));break;}}
   function drawSample(ty,x,y,s,col){runtime.cx.fillStyle=col;runtime.cx.strokeStyle=col;runtime.cx.lineWidth=1.5;runtime.cx.beginPath();
     switch(ty){
       case "luz":runtime.cx.fillRect(x-s/2,y-s/2,s,s);break;
@@ -20,7 +29,13 @@ export function initialize(runtime) {
       case "arbol":runtime.cx.fillRect(x-.75,y-s,1.5,s*2);runtime.cx.fillRect(x-s*.45,y-s,s*.9,s*.5);break;
       case "luciernaga":runtime.cx.fillRect(x-s*.6,y-1.5,3,3);runtime.cx.fillRect(x+s*.3,y-1.5,3,3);break;
       case "flor":runtime.cx.fillRect(x-s,y-.75,s*2,1.5);runtime.cx.fillRect(x-.75,y-s,1.5,s*2);break;
-      case "faro":runtime.cx.fillRect(x-.75,y-s*.2,1.5,s*1.2);runtime.cx.fillRect(x-s*.45,y-s,s*.9,s*.8);break;}}
+      case "faro":runtime.cx.fillRect(x-.75,y-s*.2,1.5,s*1.2);runtime.cx.fillRect(x-s*.45,y-s,s*.9,s*.8);break;
+      case "reverso":runtime.cx.moveTo(x-s,y+s*.6);runtime.cx.lineTo(x,y-s*.6);runtime.cx.lineTo(x+s,y+s*.6);runtime.cx.stroke();break;
+      case "canon":for(let i=0;i<3;i++){runtime.cx.moveTo(x-s+i*s*.8+s*.3,y);runtime.cx.arc(x-s+i*s*.8,y,s*.3,0,6.283);}runtime.cx.stroke();break;
+      case "frenesi":for(let i=0;i<4;i++)runtime.cx.fillRect(x-s+i*s*.6,y-s*.5,1.5,s);break;
+      case "detenido":runtime.cx.arc(x,y,s*.8,0,6.283);runtime.cx.moveTo(x,y);runtime.cx.lineTo(x,y-s*.6);runtime.cx.moveTo(x,y);runtime.cx.lineTo(x+s*.4,y);runtime.cx.stroke();break;
+      case "espejo":runtime.cx.fillRect(x-s,y-s*.5,s*.8,s);runtime.cx.strokeRect(x+s*.2,y-s*.5,s*.8,s);break;
+      case "luna":runtime.cx.arc(x,y,s*.85,0,6.283);runtime.cx.fill();break;}}
   const geo=()=>{const m=Math.min(runtime.W,runtime.H-260);return{X:runtime.W/2,Y:runtime.H/2,base:m*.13,gap:m*.095};};
   function visStep(){if(!runtime.ac)return -1;const n=runtime.ac.currentTime;let s=-1;for(const q of runtime.MU.sq)if(q.t<=n)s=q.s;return s;}
   function studioStep(t,dt,b){
@@ -54,7 +69,7 @@ export function initialize(runtime) {
     renderBag();runtime.save();runtime.hud();
   }
   function renderBag(){
-    document.getElementById("bag").innerHTML=Object.keys(runtime.SAMPLES).map(k=>`<button data-s="${k}" class="${k===runtime.selSample?"on":""} ${(runtime.S.bag[k]||0)?"":"zero"}">${runtime.SAMPLES[k]} ${runtime.S.bag[k]||0}</button>`).join("");
+    document.getElementById("bag").innerHTML=Object.keys(runtime.SAMPLES).filter(k=>!SPECIAL.has(k)||(runtime.S.bag[k]||0)>0||Object.values(runtime.S.studio.slots||{}).includes(k)).map(k=>`<button data-s="${k}" class="${k===runtime.selSample?"on":""} ${(runtime.S.bag[k]||0)?"":"zero"}">${runtime.SAMPLES[k]} ${runtime.S.bag[k]||0}</button>`).join("");
     document.getElementById("swatches").innerHTML='<span>COLOR</span>'+runtime.COLORS.map((c,i)=>`<button data-c="${i}" title="${c[1]}${colorOk(c)?"":" · se gana con un logro"}" aria-label="${c[1]}" style="background:${c[0]}" class="${runtime.S.color===c[0]?"on":""}" ${colorOk(c)?"":"disabled"}></button>`).join("");
   }
   function enterStudio(){

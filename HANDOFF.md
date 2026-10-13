@@ -100,6 +100,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/continents.js` | Continentes, mares de silencio y campo de vitalidad (densidad con contraste). |
 | `src/landmarks.js` | Hitos y horizonte sonoro: se oyen, se intuyen y se ven. |
 | `src/map.js` | Mapa dibujado de lo explorado (dos zooms, hitos oídos como ?, tarjeta para compartir). |
+| `src/wonders.js` | Rarezas que rompen reglas, rumores de la Voz y ríos. |
 | `src/atlas.js` | Atlas de ritmos (prototipo): lista todos los géneros, verifica que existen en el mundo y viaja a la región más cercana. |
 | `src/controls.js` | Botones, controles de prototipo y sonido. |
 | `package.json` | Declara módulos ES para Node y `npm test`; no instala dependencias de aplicación. |
@@ -216,7 +217,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Sintaxis:** correr `node --check` sobre los archivos de `src/`. Ya no hay un script inline para extraer.
 - **Visual y funcional:** servir el repositorio por HTTP y usar Playwright headless (Chromium) en 390×844 (móvil) y escritorio. Comprobar entrada y reentrada al Mundo con reto visible, transición de día sin reto residual, pausa de linterna en menús, colocación y persistencia de muestras en el Estudio y generación de tarjetas. Capturar errores JavaScript y screenshots. Los errores de carga de Google Fonts sin red son esperables.
 - **Tope diario:** comprobar que una luz de valor 10 recogida cuando faltaba 1 solo suma 1 tanto a `todayLight` como a `totalLight`.
-- **Pruebas versionadas:** `npm test` (24 suites, inventario en CAMBIOS.md) `python3 tests/smoke.py`, `python3 tests/atlas_smoke.py`, `python3 tests/world_smoke.py` y `python3 tests/journey_smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
+- **Pruebas versionadas:** `npm test` (25 suites, inventario en CAMBIOS.md) `python3 tests/smoke.py`, `python3 tests/atlas_smoke.py`, `python3 tests/world_smoke.py` y `python3 tests/journey_smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
 - **Audio:** en headless no se oye nada. **Jay valida el sonido en su teléfono** con la URL de Vercel. Es la prueba que importa.
 - **Atajos de prototipo** (menú → Prototipo):
   - `dFill`: llena la barra del día.
@@ -373,4 +374,26 @@ Pruebas: `tests/journey.mjs` y `tests/journey_smoke.py`; fixture de `(-30,-20)` 
 - **Control:** joystick flotante. Arrastrar desde cualquier punto de la pantalla mueve al pixel hacia donde mueves el dedo desde donde empezaste; se dibuja un círculo guía. El arrastre también funciona si empieza sobre textos del HUD o la Voz (antes no: por eso "solo iba para arriba"). Un toque en la Voz la sigue abriendo; un toque en el mundo lanza el pulso.
 - **Visibilidad:** halo y anillo fino alrededor del pixel en el Mundo; densidad máxima de los oasis reducida a ~2× para no tapar al pixel.
 - Prueba: `tests/mobile_smoke.py` (móvil emulado a 3×: sin zoom ni desbordes, arrastre en las cuatro direcciones desde arriba, abajo y centro, manifiesto e iconos).
+
+### Mundo infinito · fase 3: rarezas y ríos
+
+`src/wonders.js`.
+
+**Rarezas que rompen reglas** (`anomalyAt`, semilla `anomaly:v1`, solo en tierra y desde 4 regiones del Origen):
+
+| Nivel | Frecuencia (por región de tierra) | Rarezas |
+|---|---|---|
+| Raro | 1/250 | **Gravedad invertida** (los controles van al revés), **Región en canon** (eco de un tiempo con mucha realimentación), **Frenesí** (tempo ×1,5) |
+| Legendario | 1/1.200 | **El tiempo se detiene** (quieto, el tempo baja a 0,55 y el sonido se oscurece), **Espejo del Origen** (la música del Origen con colores invertidos) |
+| Mítico | 1/6.000 | **Luna de oro** (todo dorado, todas las capas abiertas) |
+
+Al entrar, la Voz dice la regla. La primera vez se registra en `S.anomalies`, da 3 unidades de una **muestra única** para el Estudio (reverso, canon, frenesí, tiempo quieto, espejo, luna de oro; solo aparecen en la bolsa cuando las tienes; los retos no las regalan) y logros `rareza1`, `leyenda1` y `mito1` (oculto). El mapa las marca con una estrella del color de su nivel.
+
+**Rumores:** `rumor()` busca la rareza no descubierta más cercana (hasta 45 anillos) y la Voz dice dirección y distancia aproximada ("Dicen que al noreste, a unas 15 regiones, todo lo que tocas te responde en canon"). Salta al llegar a un continente nuevo y cada 15 lugares nuevos, como máximo cada 3 minutos (`S.rumorAt`).
+
+**Ríos** (`riverAt`): curvas de nivel de un campo de ruido (escala 7 regiones), así que son infinitos, continuos y curvos. Miden ~180 px de ancho, ocupan ~0,6 % de la tierra y no entran al mar. Un segundo campo de "altura" define río abajo. El agua se dibuja como trazos que corren río abajo, más brillantes y rápidos donde baja más. En la música, estar en un río sube la energía mínima (más río abajo, más energía) y cada compás caen gotas descendentes a tempo. Primera vez: Voz; un minuto siguiendo el agua: logro `rio1`.
+
+Pendiente de esta fase: confluencias que mezclen géneros, manantiales como hitos de origen, ríos en el mapa y muestras/encuentros raros ligados a fenómenos.
+
+Pruebas: `tests/wonders.mjs` y `tests/wonders_smoke.py`.
 

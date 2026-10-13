@@ -16,7 +16,7 @@ export function initialize(runtime) {
   function retoUI(){const el=document.getElementById("reto");if(!RP||!runtime.inWorld()||runtime.S.retos[RP.key]){el.hidden=true;return;}el.hidden=false;
     el.textContent="Reto · "+runtime.RETOTXT[RP.type](RP.goal)+" · "+Math.min(RP.goal,Math.floor(RP.val))+" / "+RP.goal;}
   function retoSet(type,v){if(!RP||RP.type!==type||runtime.S.retos[RP.key])return;RP.val=v;retoUI();if(RP.val>=RP.goal)retoDone();}
-  function retoDone(){runtime.S.retos[RP.key]=1;runtime.S.retosN=(runtime.S.retosN||0)+1;const ks=Object.keys(runtime.SAMPLES),k=ks[Math.floor(Math.random()*ks.length)];
+  function retoDone(){runtime.S.retos[RP.key]=1;runtime.S.retosN=(runtime.S.retosN||0)+1;const ks=Object.keys(runtime.SAMPLES).slice(0,8),k=ks[Math.floor(Math.random()*ks.length)];
     runtime.flash=.8;runtime.pulse=1;burst(runtime.S.wx,runtime.S.wy,30,true);runtime.soon(q=>runtime.chordTones().forEach((n,i)=>runtime.pluck(n+12,q+i*runtime.SIX,runtime.vel(.08),4)));
     runtime.say(runtime.VOZ.reto,"Reto cumplido");runtime.gain(k);runtime.unlock("reto1");if(runtime.S.retosN>=10)runtime.unlock("reto10");if(runtime.S.retosN>=50)runtime.unlock("reto50");retoUI();runtime.save();}
   function touched(){runtime.sessionAction?.("touch");if(!RP||RP.type!=="compas")return;const n=performance.now();RP.touches=RP.touches.filter(x=>n-x<runtime.SIX*16*1000);RP.touches.push(n);retoSet("compas",RP.touches.length);}
@@ -28,7 +28,9 @@ export function initialize(runtime) {
     const ev=runtime.eventOf(d);if(ev&&!runtime.S.events[ev[0]+":"+d.key+runtime.S.todayKey]){runtime.S.events[ev[0]+":"+d.key+runtime.S.todayKey]=1;runtime.S.events[ev[0]]=1;runtime.unlock("evento1");if(runtime.EVENTS.every(e=>runtime.S.events[e[0]]))runtime.unlock("eventos4");runtime.say(runtime.VOZ[ev[0]],"Evento · "+ev[1]);}
     if(newPlace){runtime.S.places[d.key]=1;runtime.S.placesN=(runtime.S.placesN||0)+1;if(runtime.S.placesN>=10)runtime.unlock("lugar10");if(runtime.S.placesN>=50)runtime.unlock("lugar50");if(runtime.S.placesN>=200)runtime.unlock("lugar200");}
     if(z!==runtime.curZone){runtime.curZone=z;enterZone(z);}
-    showRegion(d,newPlace);continentChange(d);farLands(d);runtime.save();
+    showRegion(d,newPlace);continentChange(d);farLands(d);runtime.enterAnomaly?.(d);
+    if(newPlace&&runtime.S.placesN%15===0)setTimeout(()=>runtime.rumor?.(),6000);
+    runtime.save();
   }
   // Escala grande: aviso al cambiar de continente o entrar a un mar de silencio.
   let lastLand=null,wasSea=false,annT=null;
@@ -44,6 +46,7 @@ export function initialize(runtime) {
     const isNew=!S.continents[k.id];if(isNew){S.continents[k.id]=S.todayKey;S.continentsN=(S.continentsN||0)+1;}
     announce(`${k.name} · ${k.size} · ${k.familyName} · tono de ${k.tonic}`,true);
     if(first&&isNew&&S.continentsN===2)runtime.say(runtime.VOZ.continente);
+    if(first&&isNew)setTimeout(()=>runtime.rumor?.(),9000);
     if(S.continentsN>=3)runtime.unlock('continente3');
   }
   // Distancia: récord, afinación torcida y aviso al entrar a las tierras raras.
