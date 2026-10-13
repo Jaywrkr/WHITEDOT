@@ -85,7 +85,7 @@ Hay **grietas** y **escaleras de luz**: ábrelas lanzando los pulsos que piden, 
 
 En el Mundo, el dock tiene dos botones nuevos:
 
-- **⟳ Eco (looper):** grabas 2 compases de lo que tú haces sonar (pulsos, toques, luces) y queda en el mundo como un eco que se repite mientras estás cerca. Puedes tener hasta 4. Junto a un eco, el mismo botón lo borra.
+- **⟳ Eco (looper):** grabas 2 compases de lo que tú haces sonar (pulsos, toques, luces) y queda en el mundo como un eco que se repite mientras estás cerca. Puedes tener hasta 4. Toca el anillo azul para borrarlo; junto a él, el mismo botón también sirve.
 - **Mesa de efectos (Kaoss pad):** arrastras sobre el pad. Hacia los lados filtras (graves a la izquierda, agudos a la derecha) y hacia arriba das espacio (reverb y eco). Al soltar vuelve a limpio, salvo que actives **Fijar**. También tiene **Eco** (repeticiones largas a tempo), **Robot** (reducción de bits) y **Stop** (frenazo de cinta).
 - **Banda de criaturas (estilo Incredibox):** cada criatura que tocas se une con su papel musical: bajo, percusión, acordes o melodía. Te siguen tocando su parte a tempo. Con la banda completa todo sube, y hay combos secretos.
 
@@ -145,3 +145,7 @@ Lee [RAMAS.md](RAMAS.md): las ramas forman una cadena y se integran de la **1 a 
 - **Eco ⟳:** pulsa para armar, espera al próximo compás y toca objetos/pulsa/recoge luces durante dos compases. Esas acciones se repiten en el lugar. Hasta cuatro ecos; cerca de uno, el mismo botón lo borra. No usa micrófono ni exporta audio/video; los ecos siguen siendo temporales.
 
 Además de `npm test` (33 suites), esta cadena añade `layer_jam_smoke.py`, `initiative_smoke.py`, `favorites_smoke.py`, `navigation_smoke.py`, `autopilot_smoke.py` y `glass_smoke.py` en `tests/`. Son pruebas de navegador con los requisitos habituales de Playwright/Chromium. Las fases siguientes (espejos, cajas musicales, escenas, culturas, etc.) quedan pendientes de elegir.
+
+### Borrar ecos con un toque
+
+Rama `fix/10a-tap-delete-echo`, basada en la fase 10. Toca el anillo azul de un eco para borrarlo; un arrastre sigue moviendo al jugador y no borra. Solo afecta al eco tocado en la capa actual. El botón ⟳ junto al eco sigue siendo una alternativa. No borra árboles ni objetos originales.

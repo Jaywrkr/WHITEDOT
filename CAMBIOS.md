@@ -248,3 +248,7 @@ Se inventarían todas las etapas de producto del historial desde `596fa31`, incl
 ## Cierre de sesión: diez fases
 
 Esta copia corresponde a la fase 10 e incluye todas sus antecesoras. Documentación anterior conserva la historia de main auditado y cada etapa; RAMAS es la referencia vigente de integración. Añadidos favoritos/destinos/vidrios al guardado v4, logros y presentación en Bitácora, pruebas y módulos. Los ecos siguen temporales; espejos, cajas musicales, nuevas culturas, escenas exactas, audio/video exportable y multiplayer no se han implementado en esta tanda.
+
+### Borrar ecos con un toque
+
+Rama `fix/10a-tap-delete-echo`, basada en la fase 10. Toca el anillo azul de un eco para borrarlo; un arrastre sigue moviendo al jugador y no borra. Solo afecta al eco tocado en la capa actual. El botón ⟳ junto al eco sigue siendo una alternativa. No borra árboles ni objetos originales.

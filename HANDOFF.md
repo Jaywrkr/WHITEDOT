@@ -515,3 +515,7 @@ Logros nuevos: escuchaViva, favorito1, regresoMusical, paseo1, vidrio1 y vidrioA
 La transición de entrada conserva fondo negro y usa anillos discretos en vez de un flash blanco de pantalla completa. El color de vidrios es local a sus piezas. Es una implementación original de superposición/rotación, no una reproducción de una obra concreta.
 
 Verificación final: npm test, smokes de regresión y nuevos flujos, render offline de audio y revisión de capturas. Las mediciones finales conservan margen de salida; el balance artístico lo prueba Jay con sonido real. Fases 11–31 siguen sin autorización en esta sesión. Orden de integración: 1 → 2 → … → 10.
+
+### Borrar ecos con un toque
+
+Rama `fix/10a-tap-delete-echo`, basada en la fase 10. Toca el anillo azul de un eco para borrarlo; un arrastre sigue moviendo al jugador y no borra. Solo afecta al eco tocado en la capa actual. El botón ⟳ junto al eco sigue siendo una alternativa. No borra árboles ni objetos originales.
