@@ -467,3 +467,7 @@ Fuentes automáticas de superficie se suspenden en Subsuelo/Cielo; faros/flores 
 ### Fase 3: Catálogo y recetas de lugar
 
 Rama `feat/03-world-recipe-catalog`. Cada región tiene una receta estable de carácter, materiales, distribución, acciones y presupuestos. Bitácora y Escuchar muestran su carácter; también reconocen Subsuelo y Cielo. El catálogo valida entradas y usa semillas independientes por elemento. Esta base conserva paisaje y música existentes; la distribución se aplica en fase 4. No añade culturas ni objetos nuevos todavía. Verificación: 27 suites Node y smoke móvil/escritorio. Dependencia y orden en RAMAS.md.
+
+### Fase 4: Combinaciones coherentes
+
+Rama `feat/04-coherent-world-combinations`. Las recetas ya distribuyen los elementos nuevos: tres disposiciones, 35 tamaños de población observados, afinidad de movimiento y materiales, y claros de escucha libres. En fronteras se usa el bioma real del chunk con el presupuesto regional. Flora, criaturas, suelo, reliquias y sus IDs anteriores se conservan; las posiciones y tipos de juguetes se regeneran según receta. Se mantiene la música y sus límites, con afinidad suave de material. Verificación: 28 suites Node (fixtures de paisaje excluyen juguetes), combinaciones y smoke móvil/escritorio. Dependencia y orden en RAMAS.md.

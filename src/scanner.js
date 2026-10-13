@@ -37,7 +37,7 @@ export function initialize(runtime) {
       const voice=source.voice||runtime.getVoice(source.kind,own),item=document.createElement('li');
       const patch=runtime.getInstrumentPatch?.(source.kind,own,voice,source.object);
       const effect=runtime.getEffectProfile?.(source.kind,own,voice);
-      const name=sp&&!runtime.S.cat[sp.id]?'Forma desconocida':source.name;
+      const name=sp&&!runtime.S.cat[sp.id]?'Forma desconocida':source.object.name||source.name;
       item.textContent=`${name} · ${ROLES[voice.role]} · ${INSTRUMENTS[voice.instrument]?.[0]||voice.instrument}${patch?" · "+patch.name:""} · ${own.name}${effect&&effect.type!=="dry"?" · "+effect.name:""}${source.object.personality?" · "+source.object.personality.name:""}`;
       list.append(item);
     }

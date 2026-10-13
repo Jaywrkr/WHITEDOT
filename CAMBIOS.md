@@ -216,3 +216,7 @@ Se inventarían todas las etapas de producto del historial desde `596fa31`, incl
 ### Fase 3 de la cadena: Catálogo y recetas de lugar
 
 `feat/03-world-recipe-catalog`. Cada región tiene una receta estable de carácter, materiales, distribución, acciones y presupuestos. Bitácora y Escuchar muestran su carácter; también reconocen Subsuelo y Cielo. El catálogo valida entradas y usa semillas independientes por elemento. Esta base conserva paisaje y música existentes; la distribución se aplica en fase 4. No añade culturas ni objetos nuevos todavía. Pruebas: 27 suites Node y smoke móvil/escritorio. Ver RAMAS.md.
+
+### Fase 4 de la cadena: Combinaciones coherentes
+
+`feat/04-coherent-world-combinations`. Las recetas ya distribuyen los elementos nuevos: tres disposiciones, 35 tamaños de población observados, afinidad de movimiento y materiales, y claros de escucha libres. En fronteras se usa el bioma real del chunk con el presupuesto regional. Flora, criaturas, suelo, reliquias y sus IDs anteriores se conservan; las posiciones y tipos de juguetes se regeneran según receta. Se mantiene la música y sus límites, con afinidad suave de material. Pruebas: 28 suites Node (fixtures de paisaje excluyen juguetes), combinaciones y smoke móvil/escritorio. Ver RAMAS.md.
