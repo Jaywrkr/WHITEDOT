@@ -76,7 +76,7 @@ export function initialize(runtime) {
   function achievements() {
     const groups={Constancia:[],Exploración:[],Música:[],Ocultos:[]};
     for(const [id,name,description,hidden]of runtime.ACH) {
-      const got=runtime.S.ach[id],group=hidden?'Ocultos':/^(r\d|t\d|dia1|tope|regreso|s10)/.test(id)?'Constancia':['espejo1','vidrio1','paseo1','escuchaViva','tiempo','under','faro','banda','jardinero','tambor'].includes(id)?'Música':'Exploración';
+      const got=runtime.S.ach[id],group=hidden?'Ocultos':/^(r\d|t\d|dia1|tope|regreso|s10)/.test(id)?'Constancia':['patch1','fijarSonido','cultivarMusica','espejo1','vidrio1','paseo1','escuchaViva','tiempo','under','faro','banda','jardinero','tambor'].includes(id)?'Música':'Exploración';
       groups[group].push(card(hidden&&!got?'???':name,hidden&&!got?'Logro oculto. Sigue explorando.':description,`<p>${got?'Conseguido':'Pendiente'}</p>`));
     }
     return Object.entries(groups).map(([name,items])=>`<h3>${name}</h3>${items.join('')}`).join('');

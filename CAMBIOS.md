@@ -1,6 +1,6 @@
 # WHITEDOT: inventario de cambios y contexto para revisión
 
-Actualizado al cierre de la sesión del 12 de octubre de 2026 (Guayaquil). Leer junto con [HANDOFF.md](HANDOFF.md), [PENDIENTES.md](PENDIENTES.md) y [REVISION.md](REVISION.md). Inventario desde prototipo `596fa31` hasta main `5413d5f` (PR #35), más esta rama de revisión/nitidez. Las mediciones de cada etapa se conservan como historia, no nivel actual garantizado.
+Actualizado al cierre de la sesión del 12 de octubre de 2026 (Guayaquil). Leer junto con [HANDOFF.md](HANDOFF.md), [PENDIENTES.md](PENDIENTES.md) y [REVISION.md](REVISION.md). Inventario desde prototipo `596fa31` hasta main `5413d5f` (PR #35), más la cadena encadenada hasta `fix/12d-contact-intent`, con nitidez, espejos, influencia musical, fijación voluntaria, módulos y espacio móvil. Las mediciones de cada etapa se conservan como historia, no nivel actual garantizado.
 
 ## Estado exacto para revisión
 
@@ -278,3 +278,9 @@ Rama `feat/12b-patch-gardens`. Conjuntos dispersos de un reloj y tres entradas d
 ### Explorar con más vacío y menos interfaz
 
 Rama `polish/12c-mobile-space`. En el Mundo queda un solo botón permanente (Menú), lugar y linterna discretos. Menú → Instrumentos muestra efectos, Eco, Estudio y regreso; tocar mundo o elegir herramienta guarda la barra. Mostrar detalles recupera contadores/retos, guardado como preferencia; Escuchar incluye el reto. Voz breve ampliable, tarjetas más discretas, controles de 44 px y paneles acotados/desplazables. Grabación muestra un pequeño anillo, no ranuras vacías. Los flashes son locales y mantienen fondo negro. En jardines modulares los cables se manipulan sin abrir parámetros; tocar el cuerpo del módulo abre su panel. Revisión y límites en REVISION_INTERACCIONES.md. Verificado en móvil pequeño, vertical, horizontal y escritorio, con pruebas de acceso real a todas las herramientas.
+
+### Contactos intencionales y dirección común
+
+Rama `fix/12d-contact-intent`. Plantas, árboles, lotos, pilares, cristales y props responden una vez al entrar; salir rearma y pulsar sigue siendo una acción explícita. Menús y Escuchar no consumen el contacto inicial. No se elimina el ambiente ni la radio en quietud. El jardín inicial ofrece Bajo/Groove/Motivo para escuchar la diferencia inmediatamente; los demás conservan sus entradas regionales variadas. DIRECCION_JUEGO.md propone unir Camino, Mundo y Estudio mediante descubrir, componer, retirar y conservar, con Voz contextual y progreso significativo. Es una propuesta posterior, no una historia ya implementada. README, HANDOFF, PENDIENTES, RAMAS y revisión quedan actualizados.
+
+Las criaturas ya no se unen a la banda automáticamente con fijación apagada. Fijar sonidos permite acompañantes musicales; tocar una figura de la banda con aro azul suelta esa voz. Desactivar fijación también suelta la banda. Las voces de criaturas no se duplican en un eco automático y la banda. Su contacto distingue entrar de permanecer; pueden responder espontáneamente como parte del ambiente sin convertirse en acompañantes.

@@ -14,24 +14,20 @@ Jay autorizó completar las primeras diez fases encadenadas. Se parte de la fase
 | 8 | `feat/08-return-navigation` | rama 7 | Subida: Orientación y regreso · a610bd7 |
 | 9 | `feat/09-musical-autopilot` | rama 8 | Subida: Autopilot musical · 55c2701 |
 | 10 | `feat/10-chromatic-glass` | rama 9 | Subida: Tres vidrios cromáticos musicales · 73567ab |
-
 | 10a | `fix/10a-tap-delete-echo` | rama 10 | Subida · `0bd05ce`: borrar ecos con un toque |
-| 11 | `feat/11-musical-mirrors` | rama 10a | Subida: espejos musicales · commit final de rama 11 |
+| 11 | `feat/11-musical-mirrors` | rama 10a | Subida: espejos musicales · 77bec9d |
+| 12 | `feat/12-musical-influence` | rama 11 | Subida · `6da3dc5`: influencia y cultivo |
+| 12a | `feat/12a-optional-sound-pins` | rama 12 | Subida · `4c9089a`: fijación voluntaria |
+| 12b | `feat/12b-patch-gardens` | rama 12a | Subida · `545a7e9`: módulos y cables |
+| 12c | `polish/12c-mobile-space` | rama 12b | Subida · `9a19b0c`: espacio móvil |
+| 12d | `fix/12d-contact-intent` | rama 12c | Subida: contactos intencionales y dirección de juego · commit final de rama |
 
 ## Cómo revisar e integrar
 
-Orden 1 → 2 → 3 → … → 10 → 10a → 11, de la más antigua a la más nueva. Mientras la base no esté integrada, el diff de una fase se revisa contra la rama anterior; al integrarla, se puede apuntar el siguiente PR a main. No aprobar los diez cambios como un único diff acumulado.
+Orden 1 → 2 → 3 → … → 10 → 10a → 11 → 12 → 12a → 12b → 12c → 12d, de la más antigua a la más nueva. Mientras la base no esté integrada, el diff de una fase se revisa contra la rama anterior; al integrarla, se puede apuntar el siguiente PR a main. No aprobar los diez cambios como un único diff acumulado.
 
 Merge normal conserva los commits antecesores y facilita la cadena. Si Jay usa squash o rebase merge, avisar para reajustar la pila: hay que trasladar solamente los commits propios de cada rama sobre la nueva base y volver a verificar. No prometer cero conflictos si main cambia o si se reescribe el historial. El asistente no hace merges ni publica directamente en main.
 
 README/HANDOFF/CAMBIOS/PENDIENTES se actualizan por etapa. Logros/Bitácora se amplían cuando hay algo nuevo que el jugador pueda descubrir/aprender; una corrección técnica no introduce un logro artificial.
 
-Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; fase 12 en adelante continúa pendiente.
-
-- Siguiente rama encadenada: `feat/12-musical-influence` — Tu presencia transforma la composición. Base: rama inmediatamente anterior; Jay crea PR/merge.
-
-- Siguiente rama encadenada: `feat/12a-optional-sound-pins` — Sonidos libres y fijación voluntaria. Base: rama inmediatamente anterior; Jay crea PR/merge.
-
-- Siguiente rama encadenada: `feat/12b-patch-gardens` — Jardines modulares con cables. Base: rama inmediatamente anterior; Jay crea PR/merge.
-
-- Siguiente rama encadenada: `polish/12c-mobile-space` — Explorar con más vacío y menos interfaz. Base: rama inmediatamente anterior; Jay crea PR/merge.
+Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; el pedido posterior autoriza las cinco unidades siguientes; las demás ideas continúan pendientes.

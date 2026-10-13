@@ -1,8 +1,8 @@
 # WHITEDOT: fases, implementaciones e ideas por decidir
 
-Actualizado al cierre de las primeras diez fases de la sesión del 12 de octubre de 2026 (Guayaquil). Base main `5413d5f`; cadena implementada hasta fase 11 y mejora 10a, ver RAMAS. Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
+Actualizado tras el pedido de interacción musical, fijación voluntaria, módulos y espacio móvil. Base main `5413d5f`; cadena implementada hasta `fix/12d-contact-intent`, ver RAMAS. Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
 
-**Una fase = una rama revisable**, implementación, pruebas, commit y push; Jay crea PR/merge. Jay autorizó primero las fases 1–10 en cadena y después borrar ecos con un toque y continuar con espejos (fase 11). Las fases 12–31 siguen propuestas. Ver RAMAS.md. Si una fase crece demasiado, dividirla antes de implementar. Las fases 1–10 están implementadas en sus ramas encadenadas; falta el PR/merge de Jay en ese orden. La fase 11 y mejora 10a están implementadas; las fases 12–31 siguen pendientes.
+**Una fase = una rama revisable**, implementación, pruebas, commit y push; Jay crea PR/merge. Jay autorizó primero las fases 1–10 en cadena y después borrar ecos con un toque y continuar con espejos (fase 11). Este nuevo pedido autoriza las unidades de influencia, fijación voluntaria, módulos, interfaz y contactos dentro del bloque 12. Lo restante continúa como propuesta. Ver RAMAS.md. Si una fase crece demasiado, dividirla antes de implementar. Las fases 1–10 están implementadas en sus ramas encadenadas; falta el PR/merge de Jay en ese orden. La fase 11 y mejora 10a están implementadas; el bloque 12 tiene estas unidades implementadas; cajas, cuerdas y fases 13–31 siguen pendientes.
 
 ## Qué quiere Jay y cómo organizar el crecimiento
 
@@ -86,7 +86,7 @@ Orientar reflejos entre objetos para activar ecos, secuencias o revelar pistas. 
 
 **Probar:** rayos legibles, feedback de conexión, impedir bucles sonoros sin límite, variar rol musical manteniendo coherencia.
 
-### 12. Tocar, sostener, tensar, deslizar y soltar
+### 12. Tocar, sostener, tensar, deslizar y soltar — implementación parcial
 
 Cuerdas luminosas, piedras de ritmo, prismas secuenciadores, cajas musicales que se abren/giran/conectan y resonadores estáticos/móviles. Contacto sostenido abre nota/textura; tensión transforma articulación; desplazamiento reorganiza acentos o pasos. Introducir familias pequeñas por rama si hace falta. Individuos conservan rasgos distintos y mismos tipos pueden cambiar de rol entre regiones.
 
@@ -238,3 +238,7 @@ Presencia dispersa por catálogo, posiciones, orientación inicial, rotación de
 Hasta 64 instalaciones guardan sus orientaciones y la conexión descubierta. Menú, cambio de capa y salida mantienen la separación de sistemas; panel y vidrios se excluyen entre sí. Escuchar incluye las voces de espejos. Bitácora muestra instalaciones y rutas completadas. Logros: Luz que escucha y Al otro lado del reflejo. No incluye aún espejos unidos a vidrios, puertas ni pistas encadenadas.
 
 Validación: 34 suites de Node, interacción real en móvil/escritorio, ruta conectada, emisión sonora limitada, persistencia, Bitácora, Escuchar y separación de capas. Detalle de variedad actual y cómo repetir la medición en [VARIEDAD.md](VARIEDAD.md).
+
+## Prioridad tras esta revisión
+
+Antes de sumar más familias, revisar [DIRECCION_JUEGO.md](DIRECCION_JUEGO.md): unión Camino/Mundo/Estudio, verbos y Voz contextual, qué se conserva, descubrimientos con propósito, progreso, rendimiento/offline y mezcla por familias. Las fases históricas no se eliminan, pero su orden futuro debe responder a esta consolidación. [REVISION_INTERACCIONES.md](REVISION_INTERACCIONES.md) distingue correcciones terminadas y deuda real.
