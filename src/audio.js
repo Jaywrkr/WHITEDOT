@@ -79,6 +79,15 @@ export function initialize(runtime) {
       fx.hp.connect(fx.verbSend).connect(fx.verb).connect(fxRoom.input);fxRoom.output.connect(punch);
       fx.hp.connect(fx.delaySend).connect(fx.delay).connect(fx.dtone).connect(fx.fb).connect(fx.delay);fx.dtone.connect(fxEcho.input);fxEcho.output.connect(punch);
       fx.hp.connect(fx.crushSend).connect(fx.crush).connect(punch);
+      // Modulación y congelado (mesa de efectos): chorus, phaser y freeze de un tiempo. Envíos en 0 por defecto.
+      {const lfo=(rate,depth,target)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=rate;g.gain.value=depth;o.connect(g).connect(target);o.start();return o;};
+       fx.chorusSend=ac.createGain();fx.chorusSend.gain.value=0;fx.chorus=ac.createDelay(.05);fx.chorus.delayTime.value=.014;lfo(.8,.004,fx.chorus.delayTime);
+       fx.hp.connect(fx.chorusSend).connect(fx.chorus).connect(punch);
+       fx.phaserSend=ac.createGain();fx.phaserSend.gain.value=0;let node=fx.phaserSend;fx.phaserStages=[];
+       for(let i=0;i<4;i++){const ap=ac.createBiquadFilter();ap.type='allpass';ap.frequency.value=900;ap.Q.value=.7;lfo(.25,700,ap.frequency);node.connect(ap);node=ap;fx.phaserStages.push(ap);}
+       fx.hp.connect(fx.phaserSend);node.connect(punch);
+       fx.freezeIn=ac.createGain();fx.freezeIn.gain.value=1;fx.freeze=ac.createDelay(2);fx.freeze.delayTime.value=.5;fx.freezeFb=ac.createGain();fx.freezeFb.gain.value=0;fx.freezeOut=ac.createGain();fx.freezeOut.gain.value=0;
+       fx.hp.connect(fx.freezeIn).connect(fx.freeze).connect(fx.freezeFb).connect(fx.freeze);fx.freeze.connect(fx.freezeOut).connect(punch);}
       punch.connect(comfortShelf).connect(comfortLowpass).connect(presence).connect(comp).connect(makeup).connect(limiter).connect(clipper).connect(headroom).connect(ac.destination);
       bus=ac.createGain();bus.connect(master);
       verb=ac.createConvolver();verb.buffer=impulse(3.2);verbIn=ac.createGain();verbIn.gain.value=.8;const room=returnFilters(ac);verbIn.connect(verb).connect(room.input);room.output.connect(master);
@@ -263,6 +272,7 @@ export function initialize(runtime) {
     if(s%2===0){let m=0;while(MU.q8.length&&m<3){const it=MU.q8.shift(),t2=t+jit()*1.5;it.fn(t2);if(it.vis)setTimeout(it.vis,Math.max(0,(t2-ac.currentTime)*1000));m++;}}
     runtime.glassStep?.(s,bar,t);
     runtime.mirrorStep?.(s,bar,t);
+    runtime.materiaStep?.(s,bar,t);
     runtime.phenomenaStep?.(s,bar,t);
     let n=0;while(MU.queue.length&&n<4){MU.queue.shift()(t);n++;}
   }

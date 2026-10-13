@@ -346,3 +346,7 @@ Para comparar mundos completos: **Menú → Prototipo → Semillas → Blobs I /
 - **Fase 5: Pulido final.** Paletas de 52 estilos, densidad musical, prioridad del borrado, accesibilidad, móvil y shell offline completo.
 
 </details>
+
+
+## Materia y compartir (rama de Claude, pendiente de merge)
+Cuerdas tensables, prisma de luz y membrana resonante con gestos directos; Chorus, Phaser y Freeze en la mesa FX; códigos de lugar `WD1-` en Favoritos; grabar un set de hasta 60 s con audio. Ver `FASE_04_MATERIA.md`.
