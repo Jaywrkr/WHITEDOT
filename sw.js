@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-composition-v3';
+const CACHE='whitedot-installation-gestures-v4';
 const SHELL=[
  "./",
  "./index.html",

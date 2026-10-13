@@ -2,7 +2,11 @@
 
 Un punto blanco en un mundo negro que compone música electrónica mientras lo exploras. Camino diario, Mundo procedural y Estudio; 11 biomas y 52 estilos actuales. Por Jay · [@jaywrkr](https://instagram.com/jaywrkr).
 
-## Entrega actual: composición e instrumentos de fase 3
+## Entrega actual: gestos y color de instalaciones
+
+Espejos girables por arrastre directo, cancelación con restauración del guardado y color de vidrios/reflejos ligado a la orientación. El toque breve conserva ajustes precisos. [Entrega y cómo probar](FASE_04.md).
+
+## Base integrada: composición e instrumentos de fase 3
 
 Cuatro voces nuevas, articulaciones por estilo y arcos de ocho frases con exposición, respuesta, desarrollo y retirada. El desarrollo puede reforzar un acento armónico sin aumentar su presupuesto de volumen. [Implementación, pruebas y cómo escuchar](FASE_03.md). Semillas y guardados conservados; la revisión visual permanece a la espera de las elecciones de Jay.
 

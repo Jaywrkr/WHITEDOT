@@ -1,6 +1,6 @@
 import {claimInstallationBar} from './installations.js';
 import {WORLD_VISUAL,elementInk} from './visual.js';
-import {glassShape} from './glass-music.js';
+import {glassShape,glassColor} from './glass-music.js';
 import {CHANNEL_NAMES} from './influence.js';
 const TAU=Math.PI*2;
 export const glassHandleRadius=pane=>50+pane*16;
@@ -84,7 +84,7 @@ export function initialize(runtime){
    const wave=runtime.waves.length&&runtime.hitW(site.x,site.y);if(wave&&site.wave!==wave){site.wave=wave;remember(site);runtime.wsoon(wave,time=>emit(site,0,time,'player'));}
    ctx.save();ctx.translate(x,y);ctx.lineWidth=WORLD_VISUAL.line;
    site.angles.forEach((angle,i)=>{
-    const color=elementInk('glass',site.hue+i*120);ctx.save();ctx.rotate(angle);ctx.translate((i-1)*12,0);ctx.strokeStyle=color;ctx.fillStyle=color;
+    const color=elementInk('glass',glassColor(site.hue,angle,i));ctx.save();ctx.rotate(angle);ctx.translate((i-1)*12,0);ctx.strokeStyle=color;ctx.fillStyle=color;
     ctx.globalAlpha=.16+site.lit*.12;ctx.globalCompositeOperation='screen';ctx.fillRect(-28,-46,56,92);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=.65;ctx.strokeRect(-28,-46,56,92);
     ctx.beginPath();for(let line=-3;line<=3;line++){ctx.moveTo(-24,line*11);ctx.quadraticCurveTo(Math.sin(site.angles[(i+1)%3]-angle)*18,line*11+Math.cos(site.angles[(i+2)%3]-angle)*8,24,line*11);}ctx.globalAlpha=.24;ctx.stroke();ctx.restore();
     ctx.globalAlpha=distance<180?.85:.35;ctx.strokeStyle=color;ctx.beginPath();ctx.arc(Math.cos(angle)*glassHandleRadius(i),Math.sin(angle)*glassHandleRadius(i),9,0,TAU);ctx.stroke();
