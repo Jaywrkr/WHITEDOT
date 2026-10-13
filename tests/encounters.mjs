@@ -17,7 +17,7 @@ const voices=new Set();for(const role of ['bass','groove','melody','space'])voic
 
 const {familyArrange}=await import('../src/encounter-families.js');const track={bass:Array(16).fill(0),hook:Array.from({length:16},(_,i)=>i%7),grammar:{}},original=JSON.stringify(track);const reversed=familyArrange('stream',track,{a:.1,b:.5,c:0});assert.notDeepEqual(reversed.hook,track.hook);assert.equal(reversed.hook[0],track.hook[0]);assert.equal(JSON.stringify(track),original);
 
-const gated=familyArrange('shadow',track,{a:.5,b:.2,c:0});assert(gated.bass.filter(n=>n>=0).length<track.bass.length);const emptyBox=familyArrange('box',track,{a:.5,b:.1,c:3});assert(emptyBox.hook.filter(n=>n>=0).length<=2);assert.equal(JSON.stringify(track),original);
+const gated=familyArrange('shadow',track,{a:.5,b:.2,c:0});assert(gated.bass.filter(n=>n>=0).length<track.bass.length);const ground=familyArrange('box',track,{a:.85,b:.1,c:0});assert(ground.bass.filter(n=>n>=0).length<=4);assert.deepEqual(familyInfluence('box',{a:.15,b:.1}),{});assert.equal(JSON.stringify(track),original);
 
 const {encounterRole,regionalFamilyInfluence}=await import('../src/encounter-families.js');
 const roles=new Set();for(let x=-10;x<10;x++){const region=r.regionOfPos(x*3600+1800,1800);roles.add(encounterRole('weaver',region,r.seedOf));const mapped=regionalFamilyInfluence('weaver',{a:.8,b:.2,c:0,charge:1},region,r.seedOf);assert(Object.values(mapped).every(v=>Math.abs(v)<=1));}assert.equal(roles.size,4,'regional role variety lost');

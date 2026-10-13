@@ -62,7 +62,7 @@ export function initialize(runtime){
    else if(armed?.object===o&&armed.node.id!==g.node.id){connect(o,armed.node,g.node);armed=null;}
    else armed={object:o,node:g.node};
   }else if(g.type==='thread'&&!g.moved){o.state.weave.edges=o.state.weave.edges.filter(edge=>edge.key!==g.edgeKey);mark(o,'subtract');}
-  else if(g.type==='lid'&&!g.moved){o.state.a=.15;mark(o,'subtract');}
+  else if(g.type==='lid'&&!g.moved){o.state.a=.15;o.state.rested=true;mark(o,'subtract');}
   else if(g.type==='cell'){
    if(!g.moved)paintBoxStep(o.state.box,g.cell,g.on);mark(o,'model');o.state.box.edited||=[];const id=o.state.box.parts[o.state.box.selected].id;if(!o.state.box.edited.includes(id))o.state.box.edited.push(id);runtime.S.journal.depth||={};runtime.S.journal.depth.box=true;if(o.state.box.edited.length>=2)runtime.unlock('cajaEditable');
   }else if(g.type==='part'){
@@ -80,6 +80,11 @@ export function initialize(runtime){
  function tick(o,dt){
   if(previous!==runtime.S){cancel();previous=runtime.S;}
   ensure(o);if(!active())return;
+  if(o.kind==='box'){
+   const d=distance(o,{x:runtime.S.wx,y:runtime.S.wy});if(d>75)o.state.rested=false;
+   if(d>180)o.state.a=.15;
+   else if(d<60&&runtime.MU.speed<.06&&o.state.charge>.45&&!o.state.rested&&o.state.a<=.65){o.state.a=.85;mark(o,'cultivate');}
+  }
   if(o.kind==='weaver'){const nodes=anchors(o);for(const edge of o.state.weave.edges){const a=nodes.find(n=>n.id===edge.from),b=nodes.find(n=>n.id===edge.to);if(a)edge.a={x:a.x,y:a.y};if(b)edge.b={x:b.x,y:b.y};}}
   if(armed&&(distance(armed.object,{x:runtime.S.wx,y:runtime.S.wy})>190||!objects().includes(armed.object)))armed=null;
   const d=o.state.dialogue;if(!d)return;
@@ -117,7 +122,7 @@ export function initialize(runtime){
  }
  function hint(o){
   if(o.kind==='weaver')return armed?.object===o?'Elige otro punto · toca un hilo para retirarlo':'Une dos puntos con el dedo · toca hilos para retirar';
-  if(o.kind==='box')return o.state.a>.65?'Semillas: tocar · núcleos: mover/mantener · brote: cerrar':'Toca para abrir · moldea sus semillas musicales';
+  if(o.kind==='box')return o.state.a>.65?'Raíces: tocar · núcleos: mover/mantener · arco: reposar':'Toca el suelo o permanece cerca para despertarlo';
   if(o.kind==='animal')return !runtime.S.sound?'Activa Música para enseñarle una frase':o.state.dialogue?.phase==='listening'?'Está escuchando · toca el mundo durante dos compases':o.state.dialogue?.phase==='replying'?'Te responde · mantén para otra frase':'Mantén para enseñar · toca para cambiar papel';
   return FAMILIES[o.kind].hint;
  }
@@ -145,14 +150,14 @@ export function initialize(runtime){
     c.fillText(CHANNEL_NAMES[p.id],q.x,q.y+5);
    }
    c.globalAlpha=.6;c.beginPath();c.moveTo(-9,60);c.quadraticCurveTo(0,38,9,60);c.stroke();
-   c.fillText('cerrar',0,74);
+   c.fillText('reposar',0,74);
 
   }
   const d=o.state.dialogue;if(o.kind==='animal'&&d&&d.phase!=='idle'){
    const progress=d.phase==='listening'?Math.min(1,d.elapsed/(runtime.SIX*32)):1;c.beginPath();c.arc(0,0,29,-Math.PI/2,-Math.PI/2+progress*Math.PI*2);c.stroke();c.font='9px monospace';c.textAlign='center';c.fillText(d.phase==='listening'?`Escucha · ${d.events.length}`:'Respuesta',0,42);
   }
  }
- for(const [id,title,description]of [['tejidoVivo','Tejer un groove','Une dos pares de puntos en una red musical.'],['respuestaAnimal','Te escuché','Enseña una frase a un animal y escucha su respuesta.'],['cajaEditable','Una máquina propia','Edita dos partes de una caja musical.']]){runtime.ACH.push([id,title,description]);runtime.VOZ[id]=description;}
+ for(const [id,title,description]of [['tejidoVivo','Tejer un groove','Une dos pares de puntos en una red musical.'],['respuestaAnimal','Te escuché','Enseña una frase a un animal y escucha su respuesta.'],['cajaEditable','Un suelo propio','Transforma dos partes musicales de un suelo resonante.']]){runtime.ACH.push([id,title,description]);runtime.VOZ[id]=description;}
  addEventListener('blur',cancel);document.addEventListener('visibilitychange',()=>{if(document.hidden)cancel();});
  Object.defineProperties(runtime,{depthUI:{get:()=>ui},depthPause:{get:()=>cancel},depthDown:{get:()=>down},depthMove:{get:()=>move},depthUp:{get:()=>up},depthTap:{get:()=>tap},depthTick:{get:()=>tick},depthHear:{get:()=>hear},depthPhrase:{get:()=>phrase},depthReplied:{get:()=>replied},depthArrangement:{get:()=>arrangement},depthGate:{get:()=>gate},depthDraw:{get:()=>draw},depthHint:{get:()=>hint},depthEngaged:{get:()=>!!gesture},depthHasPhrase:{get:()=>o=>['listening','replying'].includes(o.state.dialogue?.phase)},depthAnchors:{get:()=>anchors},depthConnect:{get:()=>connect}});
 }

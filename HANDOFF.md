@@ -1,3 +1,11 @@
+## Nueva etapa: suelo resonante en lugar de cajas
+
+Rama `feat/resonant-ground`, basada en `feat/shared-installation-signals`. La Caja de posibilidades se elimina como objeto visible y pasa a ser una huella del terreno: tocarla o permanecer quieto cerca despierta sus raíces musicales. Se conservan los gestos de edición de Bajo, Groove y Motivo. El arco inferior permite dejarla reposar; ese reposo se respeta mientras permanezcas cerca, y el terreno vuelve a estar disponible al salir y regresar. Alejarse más de 180 unidades lo deja reposar automáticamente.
+
+Sin caja, tapa ni contenedor; en reposo solo quedan pequeñas curvas sobre el piso. Las formas activas siguen siendo locales y transparentes. El suelo en reposo deja de modificar el arreglo o producir respuestas; la influencia anterior se disipa con el mecanismo existente. Pistas, selector de pruebas, Bitácora y nombre del logro se actualizan. Se conserva la clave interna `box` y el identificador `cajaEditable` para compatibilidad de descubrimientos, sin presentarlos como cajas en el juego.
+
+Probar: Prototipo → Semillas → Encuentro de prueba → **Suelo resonante**. Gestos probados en 390×844, 844×390 y 1280×800, incluyendo despertar por permanencia, respetar reposo, alejarse y volver, edición, cancelación, logros y respuestas de animales. 44 suites Node y regresión de las diez familias.
+
 ## Nueva etapa: instalaciones que comparten una señal
 
 Rama `feat/shared-installation-signals`, basada en `feat/organic-musical-seedpods`. El jardín modular conserva sus cables y suma tres fuentes de control: reloj, vidrios descubiertos o espejos descubiertos en su misma región. Mantener el aro del núcleo durante medio segundo cambia la fuente; arrastrar a una raíz o tocar núcleo y raíz conecta, y tocar una raíz conectada retira el cable. Los ángulos de vidrio cambian variante, fuerza y cadencia; las rutas reales de espejo distinguen reflejos parciales y conexión completa. Sin fuente descubierta o sin reflejos válidos, espera. Los datos de fuente se guardan con los cables; guardados antiguos usan reloj.

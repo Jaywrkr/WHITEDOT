@@ -66,7 +66,7 @@ export function initialize(runtime){
  }
  function bar(time,bar){
   if(!active()||bar-lastBar<2||runtime.currentPocket?.()?.kind==='quiet')return;
-  let o=visible.filter(o=>o.state.active>0&&o.state.used&&!FAMILIES[o.kind].silent&&Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<150).sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy))[0];
+  let o=visible.filter(o=>o.state.active>0&&o.state.used&&(o.kind!=='box'||o.state.a>.65)&&!FAMILIES[o.kind].silent&&Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<150).sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy))[0];
   if(!o)return;if(o.kind==='animal'&&bar%4===2&&!runtime.depthHasPhrase?.(o)){const partner=visible.find(p=>p!==o&&p.kind==='animal'&&Math.hypot(p.x-o.x,p.y-o.y)<210&&Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy)<200);if(partner)o=partner;}
   const phrase=runtime.depthPhrase?.(o,bar);if(phrase&&phrase.length===0)return;
   if(!claimInstallationBar(runtime,bar))return;lastBar=bar;
@@ -76,7 +76,7 @@ export function initialize(runtime){
  }
  function arrange(region,track){
   if(!active()||region.key!==runtime.regionOfPos(runtime.S.wx,runtime.S.wy).key)return track;
-  const o=visible.filter(o=>o.state.used&&o.state.active>0&&(FAMILIES[o.kind].arrange||o.state.weave?.edges.length)&&Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<140).sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy))[0];
+  const o=visible.filter(o=>o.state.used&&o.state.active>0&&(o.kind!=='box'||o.state.a>.65)&&(FAMILIES[o.kind].arrange||o.state.weave?.edges.length)&&Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<140).sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy))[0];
   if(!o)return track;const shaped=familyArrange(o.kind,track,o.state);return runtime.depthArrangement?.(o,shaped,region)||shaped;
  }
  function draw(){
@@ -98,8 +98,8 @@ export function initialize(runtime){
 }
 function drawShape(c,shape,s,o,runtime){
  const TAU=Math.PI*2;
- if(shape==='box'){
-  if(s.a<=.65){c.beginPath();c.ellipse(0,0,26,19,-.15,0,TAU);c.stroke();c.beginPath();c.moveTo(-22,0);c.quadraticCurveTo(0,-12-12*s.a,22,0);c.stroke();for(let i=0;i<3;i++){c.beginPath();c.ellipse(-12+i*12,4,3,5,i*.4,0,TAU);c.stroke();}c.beginPath();c.moveTo(2,-18);c.quadraticCurveTo(10,-30,16,-23);c.stroke();}
+ if(shape==='ground'){
+  if(s.a<=.65){c.beginPath();c.ellipse(0,0,25,12,0,0,TAU);c.stroke();c.beginPath();c.ellipse(0,0,12,5,0,0,TAU);c.stroke();for(let i=-1;i<=1;i++){c.beginPath();c.moveTo(i*9,9);c.quadraticCurveTo(i*14,17,i*18,20);c.stroke();}}
  }
 
  else if(shape==='shadow'){const a=s.a*TAU;c.beginPath();c.moveTo(-10,12);c.lineTo(0,-17);c.lineTo(12,12);c.closePath();c.stroke();c.beginPath();c.arc(Math.cos(a)*32,Math.sin(a)*32,3,0,TAU);c.fill();for(let i=0;i<8;i++){c.globalAlpha*=.96;const x=-28+i*8,len=((i+Math.floor(s.a*8))%8<1+Math.floor(s.b*3))?18:3;c.beginPath();c.moveTo(x,28);c.lineTo(x+Math.cos(a)*len,28+Math.sin(a)*len);c.stroke();}}
