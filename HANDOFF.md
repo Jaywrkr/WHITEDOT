@@ -1,7 +1,7 @@
 # HANDOFF · WHITEDOT / Pixel Blanco
 
 > Documento de traspaso para continuar el desarrollo con otra IA (ChatGPT, Claude, etc.) o con otro dev.
-> Contexto: HANDOFF, CAMBIOS, PENDIENTES, REVISION y [RAMAS.md](RAMAS.md). Actualizado con espejos y el pedido posterior de música, fijación voluntaria, módulos e interfaz (ver RAMAS.md). Base remota revisada `5413d5f`; esta copia contiene la cadena hasta `fix/12d-contact-intent`. Implementado y subido no implica integrado en main: Jay hace PR/merge en orden.
+> Contexto: HANDOFF, CAMBIOS, PENDIENTES, REVISION y [RAMAS.md](RAMAS.md). Actualizado con espejos y el pedido posterior de música, fijación voluntaria, módulos e interfaz (ver RAMAS.md). Base remota revisada `5413d5f`; esta copia contiene la cadena hasta `feat/15-spacious-blob-worlds`. Implementado y subido no implica integrado en main: Jay hace PR/merge en orden.
 
 - **Juego en vivo:** https://whitedot-inky.vercel.app
 - **Repo:** https://github.com/Jaywrkr/WHITEDOT (rama `main`). Cada push a `main` despliega solo en Vercel.
@@ -567,3 +567,9 @@ Rama `fix/13-silent-interface`. Botones, Voz y campos no activan el teclado de m
 ### Laboratorio de semillas completas
 
 Rama `feat/14-seed-laboratory`. Menú → Prototipo → Semillas permite elegir texto, presets, otra semilla, volver al centro o regresar a Mi partida. Cada semilla reconstruye bioma inicial, música, escala, patrones, criaturas, terreno, atmósfera y continentes; no solo teletransporta a otro género. El centro es tierra segura. Se recarga el contexto para no mezclar cachés/sonidos de dos mundos. Las pruebas tienen guardados separados por semilla y no sobrescriben favoritos ni progreso habitual. El Camino diario conserva su generador. Las semillas de prueba entran al Mundo sin completar el día; no es un desbloqueo de la partida principal. Esta rama aún no dibuja blobs nuevos: llegan en la siguiente unidad.
+
+### Blobs y espacios que respiran
+
+Rama `feat/15-spacious-blob-worlds`. Las semillas de prueba usan biomas de 7200 unidades de ancho (antes 3600); Espacio → Clásico permite comparar y conserva un guardado distinto. El mapa habitual conserva coordenadas. La escena reduce vegetación/fauna/props/juguetes con selección determinista y referencias a los mismos objetos: no cambia IDs ni consume el RNG original, no afecta reliquias, portales ni instalaciones, y Escuchar usa los objetos visibles. Voces ambientales responden menos a menudo y solo un cantor se superpone. Semillas blobs generan habitantes de cuerpos suaves, rasgos distintos y voces graves/medias/percusivas del género; también hay hábitats de blobs dispersos. Dos o tres habitantes cerca del centro permiten probar de inmediato sin llenar el paisaje. No se fuerza agudo y se conserva afinación/tempo regional. Centro seguro, guardados por semilla y layout, vuelta a Mi partida. Validación de generaciones, aislamiento y síntesis de voces en 23 renders.
+
+Estado actual de este pedido: ramas 13 → 14 → 15, separadas de las fases propuestas con esos números en el plan histórico. `seeds.js` controla pruebas por URL; `progress.js` usa guardados separados y hash de mundo, manteniendo hash base para Camino. `REG` vale 8 solo en pruebas Amplio; 4 en mapa habitual/Clásico. `blobs.js` crea rasgos/voces y vistas de chunks calmadas sin mutar el generador. No reinicializar módulos al cambiar semilla: se recarga el contexto. Guía: [MUNDOS_SEMILLAS.md](MUNDOS_SEMILLAS.md).

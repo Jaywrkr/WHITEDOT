@@ -1,0 +1,9 @@
+import assert from 'node:assert/strict';import {blobHabitat,blobTraits,blobVoice,calmField} from '../src/blobs.js';import {initialize as data} from '../src/data.js';import {initialize as progress} from '../src/progress.js';import {initialize as world} from '../src/world.js';import {previewKey} from '../src/seeds.js';
+globalThis.localStorage={getItem:()=>null,setItem(){}};globalThis.location={search:'?testSeed=blobs-01'};const r={};data(r);progress(r);world(r);assert.equal(r.REG,8);const region=r.regionOfPos(3600,3600);assert(blobHabitat(region,r.S.worldSeed,r.seedOf));assert(!blobHabitat({...region,sea:true},r.S.worldSeed,r.seedOf));
+const inhabitants=r.wchunk(4,4).sp.filter(o=>o.id?.startsWith('nursery:'));assert(inhabitants.length>=2);assert(inhabitants.every(o=>Math.hypot(o.x-3600,o.y-3600)<120&&typeof o.snd==='function'));
+const sp=region.species[0];assert.deepEqual(blobTraits(sp,r.seedOf,r.rng),blobTraits(sp,r.seedOf,r.rng));
+const roles=new Set();for(let i=0;i<100;i++){const v=blobVoice('forma:'+i,region,r.GEN,r.seedOf,r.rng);roles.add(v.role);assert(v.high<=72);assert(v.high>=v.low);assert(v.instrument);}
+assert(roles.has('bajo')&&roles.has('perc')&&!roles.has('agudo'));
+const items=Array.from({length:100},(_,i)=>({id:i,x:i,y:i})),reduced=calmField(items,'grass','0,0',r.seedOf);assert(reduced.length<35&&reduced.length>10);assert(reduced.every(o=>items.includes(o)));assert.equal(items.length,100);assert.deepEqual(reduced,calmField(items,'grass','0,0',r.seedOf));assert.notEqual(previewKey('blobs-01','wide'),previewKey('blobs-01','classic'));
+globalThis.location={search:'?testSeed=blobs-01&layout=classic'};const classic={};data(classic);progress(classic);world(classic);assert.equal(classic.REG,4);
+console.log('PASS: double-width preview biomes, isolated layouts, stable low/mid blob voices and nonmutating sparse scenery');

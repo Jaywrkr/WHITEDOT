@@ -21,17 +21,16 @@ Jay autorizó completar las primeras diez fases encadenadas. Se parte de la fase
 | 12b | `feat/12b-patch-gardens` | rama 12a | Subida · `545a7e9`: módulos y cables |
 | 12c | `polish/12c-mobile-space` | rama 12b | Subida · `9a19b0c`: espacio móvil |
 | 12d | `fix/12d-contact-intent` | rama 12c | Subida: contactos intencionales y dirección de juego · commit final de rama |
+| 13 | `fix/13-silent-interface` | rama 12d | Subida · f1b18b5: interfaz silenciosa |
+| 14 | `feat/14-seed-laboratory` | rama 13 | Subida · c00c27d: semillas completas |
+| 15 | `feat/15-spacious-blob-worlds` | rama 14 | Subida: blobs, biomas amplios y calma · commit final de rama |
 
 ## Cómo revisar e integrar
 
-Orden 1 → 2 → 3 → … → 10 → 10a → 11 → 12 → 12a → 12b → 12c → 12d, de la más antigua a la más nueva. Mientras la base no esté integrada, el diff de una fase se revisa contra la rama anterior; al integrarla, se puede apuntar el siguiente PR a main. No aprobar los diez cambios como un único diff acumulado.
+Orden 1 → 2 → 3 → … → 10 → 10a → 11 → 12 → 12a → 12b → 12c → 12d → 13 → 14 → 15, de la más antigua a la más nueva. Mientras la base no esté integrada, el diff de una fase se revisa contra la rama anterior; al integrarla, se puede apuntar el siguiente PR a main. No aprobar los diez cambios como un único diff acumulado.
 
 Merge normal conserva los commits antecesores y facilita la cadena. Si Jay usa squash o rebase merge, avisar para reajustar la pila: hay que trasladar solamente los commits propios de cada rama sobre la nueva base y volver a verificar. No prometer cero conflictos si main cambia o si se reescribe el historial. El asistente no hace merges ni publica directamente en main.
 
 README/HANDOFF/CAMBIOS/PENDIENTES se actualizan por etapa. Logros/Bitácora se amplían cuando hay algo nuevo que el jugador pueda descubrir/aprender; una corrección técnica no introduce un logro artificial.
 
 Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; el pedido posterior autoriza las cinco unidades siguientes; las demás ideas continúan pendientes.
-
-- Siguiente rama encadenada: `fix/13-silent-interface` — Interfaz sin notas decorativas. Base: rama inmediatamente anterior; Jay crea PR/merge.
-
-- Siguiente rama encadenada: `feat/14-seed-laboratory` — Laboratorio de semillas completas. Base: rama inmediatamente anterior; Jay crea PR/merge.

@@ -23,8 +23,8 @@ with sync_playwright() as p:
    const frame=()=>{r.frame.l=performance.now();r.frame(performance.now()+16);};
    try{frame();if(p.hits!==1)throw Error('first pillar contact missing');p.cd=0;frame();frame();if(p.hits!==1)throw Error('held pillar retriggered');
     const x=r.S.wx;r.S.wx=x+150;frame();r.S.wx=x;p.cd=0;frame();if(p.hits!==2)throw Error('pillar did not rearm after leaving');
-    const original=c.sp,pref=r.S.autoPins;r.jam.band.members={};const creature={...original[0],x:r.S.wx,y:r.S.wy,hx:r.S.wx,hy:r.S.wy,cd:0};c.sp=[creature];
-    try{r.S.autoPins=false;frame();if(Object.keys(r.jam.band.members).length||creature.follow>0)throw Error('creature joined without opt in');const x=r.S.wx;r.S.wx=x+150;frame();r.S.wx=x;creature.cd=0;r.S.autoPins=true;frame();if(Object.keys(r.jam.band.members).length!==1)throw Error('opted in creature did not join');}finally{c.sp=original;r.S.autoPins=pref;r.jam.band.members={};}
+    const original=c.sp,pref=r.S.autoPins;r.jam.band.members={};const creature={...original[0],s:{...original[0].s,mob:null},touching:false,vx:0,vy:0,x:r.S.wx,y:r.S.wy,hx:r.S.wx,hy:r.S.wy,cd:0};c.sp=[creature];
+    try{r.S.autoPins=false;frame();if(Object.keys(r.jam.band.members).length||creature.follow>0)throw Error('creature joined without opt in');const x=r.S.wx;r.S.wx=x+150;frame();r.S.wx=x;creature.cd=0;r.S.autoPins=true;frame();if(!Object.values(r.jam.band.members).some(m=>m.sp.id===creature.s.id))throw Error('opted in creature did not join');}finally{c.sp=original;r.S.autoPins=pref;r.jam.band.members={};}
    }finally{c.pillars=old;}
   }""")
   assert not errors,errors

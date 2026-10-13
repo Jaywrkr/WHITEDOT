@@ -2,7 +2,7 @@
 
 Un pixel blanco en un mundo negro. Cada día avanzas un camino corto, y cuando lo terminas se abre un **Mundo procedural que compone mientras lo exploras**: 52 géneros electrónicos y once biomas, del ambient al house, techno, bass y otros lenguajes. Cada región tiene su género, su paisaje y sus criaturas, y todo lo que tocas suena a tempo.
 
-**Esta entrega:** cadena hasta `fix/12d-contact-intent`; ramas en [RAMAS.md](RAMAS.md). Música que responde a tus acciones, fijación voluntaria, módulos con cables y una interfaz de exploración más despejada. El sitio publicado cambia cuando Jay integra en main. Dirección propuesta: [DIRECCION_JUEGO.md](DIRECCION_JUEGO.md); revisión: [REVISION_INTERACCIONES.md](REVISION_INTERACCIONES.md).
+**Esta entrega:** cadena hasta `feat/15-spacious-blob-worlds`; ramas en [RAMAS.md](RAMAS.md). Música que responde a tus acciones, fijación voluntaria, módulos con cables y una interfaz de exploración más despejada. El sitio publicado cambia cuando Jay integra en main. Dirección propuesta: [DIRECCION_JUEGO.md](DIRECCION_JUEGO.md); revisión: [REVISION_INTERACCIONES.md](REVISION_INTERACCIONES.md).
 
 **Jugar:** https://whitedot-inky.vercel.app. En el móvil, instálalo como app: en iPhone, Compartir → Añadir a pantalla de inicio. Funciona en móvil y escritorio; toca la pantalla una vez para activar el sonido.
 
@@ -204,3 +204,9 @@ Rama `fix/13-silent-interface`. Botones, Voz y campos no activan el teclado de m
 ### Laboratorio de semillas completas
 
 Rama `feat/14-seed-laboratory`. Menú → Prototipo → Semillas permite elegir texto, presets, otra semilla, volver al centro o regresar a Mi partida. Cada semilla reconstruye bioma inicial, música, escala, patrones, criaturas, terreno, atmósfera y continentes; no solo teletransporta a otro género. El centro es tierra segura. Se recarga el contexto para no mezclar cachés/sonidos de dos mundos. Las pruebas tienen guardados separados por semilla y no sobrescriben favoritos ni progreso habitual. El Camino diario conserva su generador. Las semillas de prueba entran al Mundo sin completar el día; no es un desbloqueo de la partida principal. Esta rama aún no dibuja blobs nuevos: llegan en la siguiente unidad.
+
+### Blobs y espacios que respiran
+
+Rama `feat/15-spacious-blob-worlds`. Las semillas de prueba usan biomas de 7200 unidades de ancho (antes 3600); Espacio → Clásico permite comparar y conserva un guardado distinto. El mapa habitual conserva coordenadas. La escena reduce vegetación/fauna/props/juguetes con selección determinista y referencias a los mismos objetos: no cambia IDs ni consume el RNG original, no afecta reliquias, portales ni instalaciones, y Escuchar usa los objetos visibles. Voces ambientales responden menos a menudo y solo un cantor se superpone. Semillas blobs generan habitantes de cuerpos suaves, rasgos distintos y voces graves/medias/percusivas del género; también hay hábitats de blobs dispersos. Dos o tres habitantes cerca del centro permiten probar de inmediato sin llenar el paisaje. No se fuerza agudo y se conserva afinación/tempo regional. Centro seguro, guardados por semilla y layout, vuelta a Mi partida. Validación de generaciones, aislamiento y síntesis de voces en 23 renders.
+
+Para comparar mundos completos: **Menú → Prototipo → Semillas → Blobs I / Blobs II**, con Espacio Amplio o Clásico. Hay habitantes cerca del centro para probar sus voces; **Mi partida** vuelve a tu guardado habitual. Detalle en [MUNDOS_SEMILLAS.md](MUNDOS_SEMILLAS.md).

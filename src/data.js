@@ -288,7 +288,7 @@ export function initialize(runtime) {
     CHUNK: { get: () => CHUNK },
     SPEED: { get: () => SPEED },
     WCH: { get: () => WCH },
-    REG: { get: () => REG },
+    REG: { get: () => runtime.S?.previewLayout==='wide'?8:REG },
     GOLD: { get: () => GOLD },
     PHRASES: { get: () => PHRASES },
     ECOS: { get: () => ECOS },

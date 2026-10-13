@@ -3,12 +3,13 @@ import {normalizeSeed,previewKey} from './seeds.js';
 export function initialize(runtime) {
   /* ---------- estado ---------- */
   const requested=new URLSearchParams(globalThis.location?.search||'').get('testSeed'),preview=requested===null?null:normalizeSeed(requested);
-  const KEY=preview?previewKey(preview):'pixel-blanco-v4';
+  const layout=preview?(new URLSearchParams(globalThis.location?.search||'').get('layout')==='classic'?'classic':'wide'):null;
+  const KEY=preview?previewKey(preview,layout):'pixel-blanco-v4';
   const fresh=()=>({offset:0,lastDay:null,streak:0,best:0,totalDays:0,totalLight:0,todayKey:null,todayLight:0,capShown:false,collected:[],trail:[],px:0,py:0,ach:{},sound:true,softMusic:false,style:.3,
-    worldSeed:"",previewSeed:null,session:null,lastSession:null,favorites:{version:1,items:[]},destination:null,glassSites:{},mirrorSites:{},autoPins:false,patchSites:{},worldDetails:false,mode:"camino",wx:900,wy:900,lampDay:null,lampUsed:0,species:{},rel:null,relicSites:{},stars:[],help:{},zones:{},drums:0,bag:{luz:8},studio:{x:null,y:null,biome:0,slots:{}},color:"#ffffff",lastWorldDay:null,prevMode:null,capPlusDay:null,voiceStart:false,luzN:0,cat:{},catN:0,catRecent:[],places:{},placesN:0,retos:{},retosN:0,events:{},journal:{events:{},relics:{},music:{genres:{},instruments:{},scales:{}}}});
+    worldSeed:"",previewSeed:null,previewLayout:null,session:null,lastSession:null,favorites:{version:1,items:[]},destination:null,glassSites:{},mirrorSites:{},autoPins:false,patchSites:{},worldDetails:false,mode:"camino",wx:900,wy:900,lampDay:null,lampUsed:0,species:{},rel:null,relicSites:{},stars:[],help:{},zones:{},drums:0,bag:{luz:8},studio:{x:null,y:null,biome:0,slots:{}},color:"#ffffff",lastWorldDay:null,prevMode:null,capPlusDay:null,voiceStart:false,luzN:0,cat:{},catN:0,catRecent:[],places:{},placesN:0,retos:{},retosN:0,events:{},journal:{events:{},relics:{},music:{genres:{},instruments:{},scales:{}}}});
   let S=fresh();
   try{const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(fresh(),JSON.parse(raw));}catch(e){}
-  S.previewSeed=preview;S.worldSeed=preview&&preview!=='original'?preview:'';
+  S.previewSeed=preview;S.previewLayout=layout;S.worldSeed=preview&&preview!=='original'?preview:'';
   const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
 
   const pad2=n=>String(n).padStart(2,"0");
