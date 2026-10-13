@@ -559,3 +559,7 @@ Rama `fix/12d-contact-intent`. Plantas, árboles, lotos, pilares, cristales y pr
 El jardín de Origen ahora ofrece Bajo/Groove/Motivo como demostración inmediata; los demás siguen sorteando sus entradas. La influencia de bajo conserva pasos fuertes y varía contratiempos/notas compatibles también en géneros nativos. El ciclo propuesto en DIRECCION_JUEGO.md y sus cambios de progreso/linterna siguen siendo recomendaciones.
 
 Las criaturas ya no se unen a la banda automáticamente con fijación apagada. Fijar sonidos permite acompañantes musicales; tocar una figura de la banda con aro azul suelta esa voz. Desactivar fijación también suelta la banda. Las voces de criaturas no se duplican en un eco automático y la banda. Su contacto distingue entrar de permanecer; pueden responder espontáneamente como parte del ambiente sin convertirse en acompañantes.
+
+### Interfaz sin notas decorativas
+
+Rama `fix/13-silent-interface`. Botones, Voz y campos no activan el teclado de movimiento ni pulsos; un arrastre sobre texto del HUD solo inicia música cuando se convierte en movimiento real. Soltar sobre interfaz no lanza pulso. Se retiró el arpegio automático de entrada al Mundo y activar Prototipo no inicia audio. Los controles de instrumentos/efectos y el lienzo mantienen sus acciones musicales explícitas. Prueba de teclado en botones, cambios de ajustes, entrada sin jingle y pulso desde canvas.

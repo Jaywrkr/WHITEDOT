@@ -31,3 +31,5 @@ Merge normal conserva los commits antecesores y facilita la cadena. Si Jay usa s
 README/HANDOFF/CAMBIOS/PENDIENTES se actualizan por etapa. Logros/Bitácora se amplían cuando hay algo nuevo que el jugador pueda descubrir/aprender; una corrección técnica no introduce un logro artificial.
 
 Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; el pedido posterior autoriza las cinco unidades siguientes; las demás ideas continúan pendientes.
+
+- Siguiente rama encadenada: `fix/13-silent-interface` — Interfaz sin notas decorativas. Base: rama inmediatamente anterior; Jay crea PR/merge.

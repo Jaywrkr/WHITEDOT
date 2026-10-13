@@ -6,13 +6,19 @@ export function initialize(runtime) {
   function resize(){DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cx.setTransform(DPR,0,0,DPR,0,0);}
   addEventListener("resize",resize);resize();
   const keys={};let ptr=null;
-  addEventListener("keydown",e=>{if(e.target?.closest?.('input,textarea,select,[contenteditable="true"]'))return;if(e.key==='Escape')runtime.stopAutopilot?.();keys[e.key.toLowerCase()]=1;runtime.audio();if(e.key.startsWith("Arrow"))e.preventDefault();if(e.code==="Space"&&!e.repeat&&e.target===document.body){e.preventDefault();runtime.sonar();}});
+  addEventListener("keydown",e=>{
+    if(e.target!==document.body&&e.target!==cv)return;
+    if(document.querySelector('.modal:not([hidden])'))return;
+    if(e.key==='Escape'){runtime.stopAutopilot?.();return;}
+    const key=e.key.toLowerCase();if(['arrowright','arrowleft','arrowup','arrowdown','w','a','s','d'].includes(key)){keys[key]=1;runtime.audio();if(e.key.startsWith('Arrow'))e.preventDefault();}
+    if(e.code==='Space'&&!e.repeat){e.preventDefault();runtime.sonar();}
+  });
   addEventListener("keyup",e=>{keys[e.key.toLowerCase()]=0;});
   let holdTimer=null,activePointer=null,dragging=false,held=false;
   const cancelHold=()=>{clearTimeout(holdTimer);holdTimer=null;};
   // El juego escucha toda la pantalla: un arrastre que empieza sobre textos del HUD o la Voz también mueve al pixel.
   // Solo se excluyen botones, paneles abiertos y el Estudio.
-  const blocked=t=>!!t?.closest?.('button,a,input,select,textarea,label,summary,.modal:not([hidden]),#studioPanel,#scanner,#fxPanel,#glassPanel,#mirrorPanel,#patchPanel');
+  const blocked=t=>!!t?.closest?.('button,a,input,select,textarea,label,summary,.modal:not([hidden]),#studioPanel,#scanner,#fxPanel,#glassPanel,#mirrorPanel,#patchPanel,[role="button"]');
   let fromOverlay=false;
   addEventListener("pointerdown",e=>{
     if(e.target===cv||blocked(e.target))return;
@@ -23,7 +29,7 @@ export function initialize(runtime) {
   function start(e){
     if(!e.isPrimary||activePointer!==null)return;
     if(!fromOverlay&&(runtime.glassPointerDown?.(e)||runtime.patchPointerDown?.(e)))return;
-    runtime.audio();if(runtime.S.mode==="studio"){runtime.studioTap(e.clientX,e.clientY);return;}
+    if(!fromOverlay)runtime.audio();if(runtime.S.mode==="studio"){runtime.studioTap(e.clientX,e.clientY);return;}
     activePointer=e.pointerId;dragging=held=false;
     runtime.tapStart={t:performance.now(),x:e.clientX,y:e.clientY};ptr=null;if(!fromOverlay)try{cv.setPointerCapture(e.pointerId);}catch(_){}   // sin captura sobre textos: así un toque en la Voz la sigue abriendo
     if(runtime.inWorld()&&!fromOverlay)holdTimer=setTimeout(()=>{held=true;runtime.startScanner();},500);
@@ -32,7 +38,7 @@ export function initialize(runtime) {
   addEventListener("pointermove",e=>{
     if(runtime.glassPointerMove?.(e)||runtime.patchPointerMove?.(e))return;
     if(e.pointerId!==activePointer||held||!runtime.tapStart)return;
-    if(Math.hypot(e.clientX-runtime.tapStart.x,e.clientY-runtime.tapStart.y)>=14){dragging=true;cancelHold();}
+    if(Math.hypot(e.clientX-runtime.tapStart.x,e.clientY-runtime.tapStart.y)>=14){if(!dragging&&fromOverlay)runtime.audio();dragging=true;cancelHold();}
     if(runtime.inWorld()&&dragging){
       // Joystick flotante: la dirección es hacia donde mueves el dedo desde donde empezaste, en cualquier parte de la pantalla.
       let ox=ptr?.ox??runtime.tapStart.x,oy=ptr?.oy??runtime.tapStart.y;const ddx=e.clientX-ox,ddy=e.clientY-oy,l=Math.hypot(ddx,ddy),MAXR=70;
@@ -44,7 +50,7 @@ export function initialize(runtime) {
     if(runtime.glassPointerUp?.(e)||runtime.patchPointerUp?.(e))return;
     if(e.pointerId!==activePointer)return;
     cancelHold();
-    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240){if(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY))runtime.sonar();}
+    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!document.querySelector('.modal:not([hidden])')){if(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY))runtime.sonar();}
     runtime.stopScanner();runtime.tapStart=null;ptr=null;activePointer=null;held=dragging=fromOverlay=false;
   };
   addEventListener("pointerup",up);addEventListener("pointercancel",up);cv.addEventListener("lostpointercapture",up);
