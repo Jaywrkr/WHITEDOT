@@ -1,6 +1,6 @@
 ## Cadena vigente de cinco fases
 
-Orden de integración y pruebas: [FASES.md](FASES.md). Esta rama contiene las fases 1–1; base `main` actualizado `63706eb`. Jay crea PR y merge en orden mediante merge normal.
+Orden de integración y pruebas: [FASES.md](FASES.md). Esta rama contiene las fases 1–2; base `main` actualizado `63706eb`. Jay crea PR y merge en orden mediante merge normal.
 
 # WHITEDOT: inventario de cambios y contexto para revisión
 
@@ -304,3 +304,4 @@ Rama `feat/15-spacious-blob-worlds`. Las semillas de prueba usan biomas de 7200 
 ## Contenido de esta agrupación
 
 - **Fase 1: Base creativa.** Recorrido Camino → Mundo → Estudio, pistas de gestos, sustracción y aros/prismas modelables.
+- **Fase 2: Exploración con sentido.** Retos abiertos, capacidades de reliquias, pistas, Voz contextual y modo de creación sin gasto de linterna.
