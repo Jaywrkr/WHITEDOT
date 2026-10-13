@@ -21,6 +21,7 @@ export function initialize(runtime){
   draw();
  }
  function draw(){
+  if(state.open)document.documentElement.style.setProperty('--fx-panel-top',`${$('fxPanel').getBoundingClientRect().top}px`);
   const dot=$('fxDot');if(!dot)return;dot.style.left=(state.x*100)+'%';dot.style.top=((1-state.y)*100)+'%';
   $('fxEco').setAttribute('aria-pressed',String(state.eco));$('fxRobot').setAttribute('aria-pressed',String(state.robot));$('fxHold').setAttribute('aria-pressed',String(state.hold));
   const p=padParams(state.x,state.y);$('fxRead').textContent=`${state.x<.45?'Filtro graves':state.x>.55?'Filtro agudos':'Limpio'} · espacio ${Math.round(state.y*100)} %`;

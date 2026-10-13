@@ -40,7 +40,7 @@ Reglas de compatibilidad, distribución y rareza; transiciones entre vecinos; pr
 
 **Probar:** muestra reproducible de regiones con diversidad de acciones, roles y siluetas, continuidad musical y casos extremos estables. Actualmente una muestra de 10.000 regiones dio 1.517 combinaciones bioma/género/gravedad y 10.000 recetas detalladas distintas: identidad técnica no equivale a 10.000 experiencias totalmente diferentes. Mundo actual comparte semilla; mapas independientes por jugador no están implementados.
 
-### 5. Lenguaje gráfico común
+### 5. Lenguaje gráfico común — implementada en rama 5
 
 Guía de escalas, grosor, glifos, movimiento, profundidad, brillo, color y reacción al beat para flora/fauna, nuevos hitos, ríos, portales, ecos y capas. Reconciliar trazos/píxeles originales con curvas, halos y cuadrícula del Cielo. Evitar blanco brillante que confunda objetos con jugador. Corregir legibilidad de textos y barras de banda/looper simultáneas en móvil.
 

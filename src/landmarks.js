@@ -1,3 +1,4 @@
+import {elementInk,WORLD_VISUAL} from './visual.js';
 // Hitos y horizonte sonoro. Un hito grande primero se OYE (apagado y desde su dirección),
 // luego se INTUYE (brillo en el borde de la pantalla) y por último se VE.
 // Posiciones fijas por semilla, iguales para todos. Sin flechas ni brújula.
@@ -70,7 +71,7 @@ export function initialize(runtime){
   const cx=runtime.cx,W=runtime.W,H=runtime.H,S=runtime.S;
   for(const lm of nearby(S.wx,S.wy,SENSE)){
    const ref=lm.ref;ref.lit=Math.max(0,(ref.lit||0)-dt*1.6);
-   const sx=lm.x+ox,sy=lm.y+oy,on=sx>-260&&sx<W+260&&sy>-120&&sy<H+420,col=`hsl(${lm.hue},70%,72%)`,near=1-lm.d/SENSE;
+   const sx=lm.x+ox,sy=lm.y+oy,on=sx>-260&&sx<W+260&&sy>-120&&sy<H+420,col=elementInk(lm.type==='arbol'?'wood':'glass',lm.hue),near=1-lm.d/SENSE;
    if(on)shape(cx,lm,sx,sy,t,Math.min(1,.25+near*.9),col,ref.lit);
    else{const a=Math.atan2(lm.y-S.wy,lm.x-S.wx),ex=W/2+Math.cos(a)*W*.48,ey=H/2+Math.sin(a)*H*.48;
     const g=cx.createRadialGradient(ex,ey,0,ex,ey,150);g.addColorStop(0,`hsla(${lm.hue},70%,70%,${(.16+ref.lit*.22)*(.35+.65*near)})`);g.addColorStop(1,'rgba(0,0,0,0)');
@@ -89,7 +90,7 @@ export function initialize(runtime){
     for(let i=0;i<7;i++){const a=i/7*6.283+Math.sin(t/3000)*.05,r=55*s,px=x+Math.cos(a)*r*.9,py=y-130*s+Math.sin(a)*r*.6;cx.globalAlpha=al*(.18+lit*.25);cx.beginPath();cx.arc(px,py,34*s,0,6.283);cx.fill();}break;}
    case 'ciudad':{for(let i=0;i<26;i++){const a=i*2.4,r=24+i*5.5,px=x+Math.cos(a)*r,py=y+Math.sin(a)*r*.6,w=6+(i%4)*3;cx.globalAlpha=al*(.45+((i+Math.floor(t/400))%5===0?lit*.5:0));cx.strokeRect(px-w/2,py-w,w,w);}
     cx.globalAlpha=al*.6;cx.fillRect(x-3,y-3,6,6);break;}
-   case 'monolito':{cx.globalAlpha=al;cx.fillStyle='#000';cx.fillRect(x-18*s,y-170*s,36*s,170*s);cx.lineWidth=1.5;cx.strokeStyle=runtime.GOLD;cx.globalAlpha=al*(.5+lit*.5);cx.strokeRect(x-18*s,y-170*s,36*s,170*s);break;}
+   case 'monolito':{cx.globalAlpha=al;cx.fillStyle='#000';cx.fillRect(x-18*s,y-170*s,36*s,170*s);cx.lineWidth=WORLD_VISUAL.line;cx.strokeStyle=runtime.GOLD;cx.globalAlpha=al*(.5+lit*.5);cx.strokeRect(x-18*s,y-170*s,36*s,170*s);break;}
    case 'faro':{cx.globalAlpha=al;cx.fillRect(x-5,y-60,10,60);const a=t/1400;cx.globalAlpha=al*(.12+lit*.2);cx.beginPath();cx.moveTo(x,y-58);cx.arc(x,y-58,420,a-.12,a+.12);cx.closePath();cx.fill();break;}
   }
   cx.restore();

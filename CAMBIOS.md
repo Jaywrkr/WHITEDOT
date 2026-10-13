@@ -220,3 +220,7 @@ Se inventarían todas las etapas de producto del historial desde `596fa31`, incl
 ### Fase 4 de la cadena: Combinaciones coherentes
 
 `feat/04-coherent-world-combinations`. Las recetas ya distribuyen los elementos nuevos: tres disposiciones, 35 tamaños de población observados, afinidad de movimiento y materiales, y claros de escucha libres. En fronteras se usa el bioma real del chunk con el presupuesto regional. Flora, criaturas, suelo, reliquias y sus IDs anteriores se conservan; las posiciones y tipos de juguetes se regeneran según receta. Se mantiene la música y sus límites, con afinidad suave de material. Pruebas: 28 suites Node (fixtures de paisaje excluyen juguetes), combinaciones y smoke móvil/escritorio. Ver RAMAS.md.
+
+### Fase 5 de la cadena: Lenguaje gráfico y capas de información
+
+`polish/05-world-visual-language`. Elementos nuevos, fenómenos e hitos comparten trazos, materiales y límites de brillo; el jugador conserva el blanco principal. Subsuelo y Cielo usan fondo negro, y el Cielo muestra contornos en vez de llenar regiones de color. La banda desplaza sus ranuras cuando hay FX, Escuchar o avisos; la mesa adapta su altura en pantallas cortas. Guía reutilizable en visual.js, sin alterar música. Pruebas: 28 suites Node; smokes FX, jam, capas y táctil; capturas móvil/escritorio revisadas. Ver RAMAS.md.

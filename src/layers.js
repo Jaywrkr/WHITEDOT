@@ -1,3 +1,4 @@
+import {WORLD_VISUAL} from './visual.js';
 // Capas del mundo: el Subsuelo (1 paso abajo = 8 arriba: atajo para viajar lejos, con graves y dub)
 // y el Cielo (vista del continente desde arriba, para elegir dónde bajar).
 // Se entra con un ritual: tocar el ritmo correcto con pulsos en el beat junto a un portal.
@@ -87,7 +88,7 @@ export function initialize(runtime){
    if(dx||dy){s.under.x+=dx*speed*dt;s.under.y+=dy*speed*dt;}s.wx=s.under.x*UNDER_SCALE;s.wy=s.under.y*UNDER_SCALE;
    runtime.camX=s.under.x;runtime.camY=s.under.y;const ox=W/2-s.under.x,oy=H/2-s.under.y;layerDNA();
    // Cueva: vetas que brillan con el beat, gotas y columnas de luz que son salidas.
-   cx.globalAlpha=1;cx.fillStyle='#0b0805';cx.fillRect(0,0,W,H);
+   cx.globalAlpha=1;cx.fillStyle=WORLD_VISUAL.background;cx.fillRect(0,0,W,H);
    const step=16,x0=Math.floor((s.under.x-W/2)/step)*step,y0=Math.floor((s.under.y-H/2)/step)*step;
    for(let x=x0;x<s.under.x+W/2+step;x+=step)for(let y=y0;y<s.under.y+H/2+step;y+=step){const n=valueNoise(x/260,y/260,131),m=valueNoise(x/170,y/170,139);
     if(Math.abs(n-.5)<.05){cx.globalAlpha=(.3+.45*b)*(1-Math.abs(n-.5)/.05);cx.fillStyle='#e0a85c';cx.fillRect(x+ox-1.5,y+oy-1.5,4,4);}        // vetas de oro que laten con el beat
@@ -101,11 +102,13 @@ export function initialize(runtime){
   }else{
    if(dx||dy){s.wx+=dx*speed*6*dt;s.wy+=dy*speed*6*dt;}runtime.camX=s.wx;runtime.camY=s.wy;layerDNA();
    // Vista del continente: cada región es un cuadro; mares oscuros, tierra con el color del continente.
-   cx.globalAlpha=1;cx.fillStyle='#03040a';cx.fillRect(0,0,W,H);
+   cx.globalAlpha=1;cx.fillStyle=WORLD_VISUAL.background;cx.fillRect(0,0,W,H);
    const k=1/SKY_SCALE,rp=RP(),cell=rp*k,rx0=Math.floor((s.wx-W/2/k)/rp),ry0=Math.floor((s.wy-H/2/k)/rp),rx1=Math.ceil((s.wx+W/2/k)/rp),ry1=Math.ceil((s.wy+H/2/k)/rp),labels=new Map();
    for(let i=rx0;i<=rx1;i++)for(let j=ry0;j<=ry1;j++){const c=runtime.continents.at(i,j),px=W/2+(i*rp-s.wx)*k,py=H/2+(j*rp-s.wy)*k;
     if(c.sea){cx.globalAlpha=.25;cx.fillStyle='#24405a';cx.fillRect(px+cell/2-1,py+cell/2-1,2,2);continue;}
-    const visited=!!s.places?.[i+','+j];cx.globalAlpha=visited?.55:.28;cx.fillStyle=`hsl(${c.continent.hue},45%,${visited?58:40}%)`;cx.fillRect(px+1,py+1,cell-2,cell-2);
+    const visited=!!s.places?.[i+','+j];cx.globalAlpha=visited?.55:.28;cx.fillStyle=`hsl(${c.continent.hue},45%,${visited?58:40}%)`;cx.strokeStyle=cx.fillStyle;cx.lineWidth=WORLD_VISUAL.line;cx.beginPath();
+    for(const [di,dj,ax,ay,bx,by] of [[-1,0,0,0,0,cell],[1,0,cell,0,cell,cell],[0,-1,0,0,cell,0],[0,1,0,cell,cell,cell]]){const edge=runtime.continents.at(i+di,j+dj);if(edge.sea||edge.continent?.id!==c.continent.id){cx.moveTo(px+ax,py+ay);cx.lineTo(px+bx,py+by);}}cx.stroke();
+    if(visited){cx.globalAlpha=.45;cx.fillRect(px+cell/2-1,py+cell/2-1,2,2);}
     const L2=labels.get(c.continent.id)||{n:0,x:0,y:0,name:c.continent.name,hue:c.continent.hue};L2.n++;L2.x+=px+cell/2;L2.y+=py+cell/2;labels.set(c.continent.id,L2);
     const lm=runtime.landmarkAt?.(i,j);if(lm){cx.globalAlpha=.9;cx.fillStyle='#fff';cx.fillRect(W/2+(lm.x-s.wx)*k-2,H/2+(lm.y-s.wy)*k-2,4,4);}}
    cx.textAlign='center';cx.font='12px "JetBrains Mono", monospace';for(const g of labels.values()){if(g.n<6)continue;cx.globalAlpha=.85;cx.fillStyle=`hsl(${g.hue},80%,82%)`;cx.fillText(g.name,g.x/g.n,g.y/g.n);}
@@ -121,7 +124,7 @@ export function initialize(runtime){
  function drawPortals(t,ox,oy,b){
   if(layer()!=='superficie')return;const cx=runtime.cx;
   for(const p of nearPortals()){if(p.d>700)break;const x=p.x+ox,y=p.y+oy,al=Math.min(1,(700-p.d)/300),done=ritual.id===p.id?ritual.count:0;
-   cx.globalAlpha=al;cx.strokeStyle=p.kind==='grieta'?'#d9a25a':'#cfe6ff';cx.lineWidth=2;
+   cx.globalAlpha=al;cx.strokeStyle=p.kind==='grieta'?'#d9a25a':'#cfe6ff';cx.lineWidth=WORLD_VISUAL.line;
    if(p.kind==='grieta'){cx.beginPath();cx.moveTo(x-22,y-4);cx.lineTo(x-8,y+3);cx.lineTo(x+2,y-5);cx.lineTo(x+12,y+4);cx.lineTo(x+24,y-2);cx.stroke();}
    else{for(let i=0;i<5;i++){cx.globalAlpha=al*(.25+.15*i);cx.strokeRect(x-10+i*2,y-12-i*14,20-i*4,8);}}
    for(let i=0;i<p.need;i++){const a=-Math.PI/2+i/p.need*6.283;cx.globalAlpha=al*(i<done?1:.3);cx.fillStyle=cx.strokeStyle;cx.beginPath();cx.arc(x+Math.cos(a)*34,y+Math.sin(a)*34,3+(i<done?b*2:0),0,6.283);cx.fill();}
