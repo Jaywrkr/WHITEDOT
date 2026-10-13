@@ -10,3 +10,12 @@ a.start('wander','superficie');a.vector(.05,{...base,active:false,studio:true});
 a.start('wander','bajo');a.vector(.05,base);assert.equal(a.state.mode,null,'layer transition must stop');
 a.start('destination','cielo');v=a.vector(.05,{...base,layer:'cielo',x:0,target:{x:31,y:0,layer:'cielo'}});assert(v.dx*190*6*.05<=11+.001,'sky overshot arrival');
 console.log('PASS: opt-in slow travel, paused active clock, manual cancellation, arrival, layer transitions and sky speed limit');
+const turns=createAutopilot(()=>.75);turns.start('wander','superficie',0);
+for(let i=0;i<1900;i++)turns.vector(.05,base);
+assert(turns.state.angle>.1,'wander never chose another direction');
+const avoid=createAutopilot(()=>.5);avoid.start('wander','superficie',0);
+for(let i=0;i<100;i++){
+ const v=avoid.vector(.05,{...base,seaAhead:angle=>Math.cos(angle)>.8});
+ if(v&&Math.hypot(v.dx,v.dy)>0)assert(Math.cos(avoid.state.angle)<=.8,'wander entered the sea during its turn');
+}
+assert(avoid.state.angle>.5,'wander failed to turn away from the sea');

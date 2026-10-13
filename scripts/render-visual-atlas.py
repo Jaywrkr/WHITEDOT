@@ -14,7 +14,7 @@ try:
   # Test instrumentation only: no private drawing methods are exposed by the shipped game.
   page.add_init_script("""window.requestAnimationFrame=()=>0;window.setInterval=()=>0;window.setTimeout=()=>0;
    const define=Object.defineProperties;Object.defineProperties=(target,descriptors)=>define(target,Object.fromEntries(Object.entries(descriptors).map(([k,d])=>[k,{...d,configurable:true}])));""")
-  exports={'render':'{glyph,worldStep,drawAir}','landmarks':'{shape}','phenomena':'{cache}','layers':'{nearPortals,drawPortals}','studio':'{drawSample}','alive':'{drawMemory,weather}','sound-trails':'{cache}','encounters':'{cache}'}
+  exports={'render':'{glyph,worldStep,drawAir}','landmarks':'{shape}','phenomena':'{cache}','layers':'{nearPortals,drawPortals}','studio':'{drawSample}','alive':'{drawMemory,weather}','encounters':'{cache}'}
   def source(route):
    name=route.request.url.rsplit('/',1)[-1][:-3];text=(ROOT/'src'/f'{name}.js').read_text()
    if name=='main':text+='\nwindow.__atlasRuntime=runtime;'

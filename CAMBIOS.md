@@ -1,3 +1,7 @@
+# Revisión de Claude y fase 6 actual
+
+Main 8096c8d incluye #74–#77; esta rama incorpora culturas/guardianes/huellas/puertas/recuerdos, Vasto, paseo visible, laboratorio 54 y golondrinas. También corrige pausas/registros, velocidad de Cometa y verificaciones obsoletas. [Detalle](FASE_06.md). Claude retiró jardín modular/rastro; el historial de abajo conserva sus versiones originales, no su disponibilidad actual.
+
 # Cambios integrados hasta main e27c219
 
 Actualizado el 13 de octubre de 2026. [Estado completo](ESTADO_ACTUAL.md) · [handoff](HANDOFF.md).
@@ -8,7 +12,7 @@ Actualizado el 13 de octubre de 2026. [Estado completo](ESTADO_ACTUAL.md) · [ha
 - **#70:** atlas nativo numerado y corrección de agudos: registros/pausas/paletas por estilo, octava del vidrio compensada, ríos/aves/quietud y margen final .95. [REVISION_REGISTROS.md](REVISION_REGISTROS.md).
 - **#69:** Original conservado y Paisajes vivos separado: 33 hábitats, seis familias, clima/relieve/vecindad, selector y descubrimientos. [FASE_02.md](FASE_02.md).
 - **#68:** guardado recuperable, respaldo/importación, direcciones compatibles, cachés, contratos y automatización. [FASE_01.md](FASE_01.md).
-- **Traspaso documental actual:** estados/pendientes actualizados, inventario y mapa de módulos, handoff breve más archivo íntegro, cifras comprobadas y atlas regenerado con los colores actuales. No modifica funciones.
+- **Traspaso documental anterior (#74):** estados/pendientes actualizados, inventario y mapa de módulos, handoff breve más archivo íntegro, cifras comprobadas y atlas regenerado con los colores actuales. No modifica funciones.
 
 El historial completo de bloques anteriores permanece a continuación. Sus validaciones/ramas/planes corresponden a cada entrega, no al estado actual. Cajas/vainas históricas fueron sustituidas por suelo; no recuperarlas como elementos pendientes.
 

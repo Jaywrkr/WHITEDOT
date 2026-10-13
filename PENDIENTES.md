@@ -1,23 +1,27 @@
-# Pendientes vigentes · desde main e27c219
+# Pendientes vigentes · desde main 8096c8d y rama fase 6
 
-Actualizado el 13 de octubre de 2026, después de integrar #73. [Estado comprobado](ESTADO_ACTUAL.md) · [handoff para Claude](HANDOFF.md) · [diez fases](FASES_UNIVERSO.md) · [64 tareas conservadas](V1_PRODUCCION.md).
+Actualizado el 13 de octubre de 2026, tras integrar #74–#77 y preparar esta rama. [Estado comprobado](ESTADO_ACTUAL.md) · [handoff para Claude](HANDOFF.md) · [diez fases](FASES_UNIVERSO.md) · [64 tareas conservadas](V1_PRODUCCION.md).
 
-## Qué no se debe repetir
+## Estado del regreso desde Claude
 
-Fases 1/2, revisión de registros/atlas, consolidación, fase 3 y bloque de espejos/vidrios de fase 4 **ya están integrados** (#68–#73). Ya existen guardado recuperable/respaldo, cachés acotadas, favoritos/regreso/autopilot, Original y Paisajes vivos, blobs, radio/quietud, instrumentos nuevos, vidrios por aros, espejos por arrastre, jardín modular, diez encuentros, suelo en vez de cajas, animal intuitivo, rastros e instrumento dormido, fijación voluntaria/borrado, interfaz silenciosa y offline. No listarlos como funciones ausentes.
+Main 8096c8d integra #74–#77: materia, FX nuevos, códigos/set, laboratorio, vida, cubo, quietud, cajas y experimental. Jardín modular/rastro retirados. Esta rama implementa [FASE_06.md](FASE_06.md): primer bloque cultural, Vasto, paseo visible, laboratorio 54 y golondrinas, con regresión completa. No repetir la lista antigua de funciones ausentes.
 
-## Entregado en rama pendiente de merge
-- `feat/expansion-fase-06` (incluye las anteriores): solo el cubo interactúa, colores, quietud, música experimental, cajas/poderes. **Siguiente: fase 6, mundo vasto, modo auto** → `CUBO_Y_EXPANSION.md`.
-- `feat/laboratorio-y-fase-05` (incluye la anterior): Laboratorio para probar y anotar cada elemento; fase 5 con bandadas, luciérnagas, ave lira y flora que crece. Detalle en `LABORATORIO_Y_FASE_05.md`.
-- `feat/phase-04-materia-y-compartir`: cuerdas, prisma y membrana; Chorus/Phaser/Freeze; códigos de lugar `WD1-`; grabar set de 60 s. Detalle en `FASE_04_MATERIA.md`.
-- Siguiente de fase 4: superficies/materiales restantes y escucha larga de las tres familias en teléfono.
+## Lista que dejó Claude: resultado y límite
 
-## Prioridad antes de ampliar
+1. Culturas/búsquedas: ocho estudios, guardianes/llamadas, huellas, puertas y tres recuerdos por estudio implementados. Pendientes personajes/obras históricas investigadas y relación más profunda con flora/fauna/materiales; no se declara agotada toda la fase 6.
+2. Mundo más grande: Vasto de 18.000, guardado/identidad aislados y selector, implementado.
+3. Auto visible: botón compacto, giro suave, 40–90 s activos y prevención de entrada al mar, implementado. Refugios complejos/rutas largas pueden ampliarse.
+4. Laboratorio: 54 casos incluyendo culturas, poderes, quietud y experimental; textos del cubo y tarjeta acotada, implementado.
+5. Teléfono real: **pendiente**. Se prueban Chromium emulado/WebAudio offline; faltan escuchar altavoces/auriculares, Safari real, volumen/fatiga, batería y grabación del set en esos equipos.
+6. Golondrinas: formación con regalo, permanencia entre regiones, señales de cajas y cruces con respuesta por turnos, implementados como primer bloque; más conductas siguen posibles.
+7. Regresión de navegador: ejecutada al cierre y resultados en FASE_06.md; no afirmar que pruebas de dedo equivalen a control normal. Las nuevas búsquedas se prueban con webdriver desactivado.
 
-1. **Escucha artística y dispositivos:** comparar 10–30 minutos por familia, quietud, transiciones, escenas densas y modo suave; cuerpo/graves, medios, fatiga/agudos, identidad de estilos y variación percibida. Safari/iPhone, Chrome/Android, altavoces/auriculares y mono/estéreo siguen sin aceptación completa.
-2. **Revisión visual con Jay:** elegir las figuras del [atlas actualizado de 118 vistas](docs/images/atlas-visual.png) que se rediseñarán. Fondo negro/punto blanco, color local, naturaleza/electrónica, gestos pequeños; auditar también la suma visible y el espacio en móvil. Aún no hay lista de números seleccionados.
-3. **Completar gesto/materia, sin dar fase 4 por agotada:** cuerdas tensables, prismas y membranas físicas, superficies de presión/fricción y relaciones con suelo/instalaciones. Un timbre `membrane` ya existe; un objeto membrana jugable nuevo todavía no. Cada familia debe ofrecer varios usos regionales y retirada/cancelación intuitiva.
-4. **Coherencia y primera sesión:** revisar Camino → Mundo → Estudio, Voz y aprendizaje de acciones; probar con personas nuevas entrar, transformar dos partes, deshacer y guardar/volver sin instrucciones externas. La narrativa completa ligada a creación/constancia sigue pendiente.
+## Prioridad siguiente
+
+- Escucha física y elecciones visuales de Jay, especialmente atmósfera nueva, conectados, grullas, cajas y experimental; revisar la suma de capas y no solo un objeto.
+- Gramática de acciones del cubo y edición fina de suelos/hilos sin depender de ?dedo; primera sesión sin instrucciones externas.
+- Profundidad cultural/ecológica y búsqueda con recompensas expresivas; evitar convertir todos los paisajes en la misma cadena de cuatro piedras.
+- Unir Camino/Mundo/Estudio, Voz y constancia; rendimiento/actualización/rollback y cierre de alcance de V1.
 
 ## Música que aún puede profundizarse
 
@@ -25,14 +29,14 @@ Fases 1/2, revisión de registros/atlas, consolidación, fase 3 y bloque de espe
 - Ampliar de 52 hacia 80/100 estilos solo si cambian realmente batería, bajo, armonía, timbre, swing y evolución; contrastar duplicados con el catálogo presente. Muchos géneros culturales solicitados aún son candidatos.
 - Transiciones, tensión/resolución, memoria breve, formas más largas y diferencias audibles por material/gesto. El arco de ocho frases ya existe y se repite con variaciones; no venderlo como ausencia total de repetición.
 - Mixer con rutas reales por bajo/percusión/acordes/motivo/ambiente, mute/solo y control compacto; sustracción/influencia no son ese mixer.
-- Chorus, phaser, flanger, resonadores, freeze breve y granular con fuentes/buffers y costes definidos. Reverb, delay y los FX actuales ya existen.
+- Flanger, resonadores y granular con fuentes/buffers y costes definidos. Reverb, delay, chorus, phaser y freeze breve ya existen; revisar sus resultados en teléfono.
 - Conversaciones/bandas más expresivas y presupuestos conjuntos. El animal aprende una frase corta de gestos; no escucha micrófono ni improvisa diálogo general.
 
 ## Mundo, vida y búsqueda
 
 - Más relaciones de ecosistema, fauna/flora con conducta e instrumentos propios, visitantes y llamadas/respuestas; ya hay diferencias individuales, aves, semilleros, lluvia, estaciones y ríos.
 - Contratos/versiones/presencia aplicados más uniformemente a sistemas históricos; recetar compatibilidad y rareza antes de multiplicar contenido. Paisajes vivos ya aplica contratos a sus seis familias.
-- Cadenas de búsqueda variadas, puertas musicales, despertar instrumentos de distintas maneras y rarezas con capacidades expresivas; no confundir el rastro existente con un sistema completo de aventuras.
+- Cadenas de búsqueda variadas, puertas musicales, despertar instrumentos de distintas maneras y rarezas con capacidades expresivas; la nueva cadena cultural es un primer bloque, sin constituir un sistema completo de aventuras.
 - **Culturas e historia:** muchas culturas, épocas y referencias originales relacionadas con música/materiales/biología/movimiento/gráfica; no solo Japón/México. Personajes, reliquias/compositores históricos y mecanismos inspirados en Leonardo siguen pendientes. Revisar dominio público/licencias por recurso concreto, separando una obra antigua de una grabación o imagen moderna.
 - Jardines/cableado más profundos y acotados, mecanismos musicales, huertos de ritmo, construcción/crafting y comunidades/escenarios: propuestas, todavía sin arquitectura/persistencia completa ni alcance cerrado de V1.
 - Migraciones con rutas, gigantes, manantiales, ciclo día/noche y consecuencias ecológicas persistentes: ampliación. No reintroducir cajas rectangulares como sustituto del suelo.
@@ -40,8 +44,8 @@ Fases 1/2, revisión de registros/atlas, consolidación, fase 3 y bloque de espe
 ## Recorrer, crear y compartir
 
 - Profundizar el Estudio, edición/retirada, relación con la banda, aprendizajes y materiales; explicar qué se conserva.
-- Códigos compartibles de lugar completos (semilla/versiones/layout/capa/coordenadas) y apertura compatible. Hoy existen favoritos y tarjetas PNG; no hay ese código ni sincronización entre dispositivos.
-- Exportación de sets de audio/vídeo opcional, separada de publicar o congelar escenas; límites móviles por definir.
+- Códigos WD1 ya implementados por Claude: revisar UX/intercambio/compatibilidad, incluidos Vasto y mundos ajenos. Favoritos no sincroniza entre dispositivos.
+- Grabar set de pantalla/audio hasta 60s ya existe por Claude; verificar formatos y descarga/compartir en teléfonos reales. No equivale a sincronización ni publicación automática.
 - Multijugador sigue sin implementar: backend/proveedor, reloj/armonía común, papeles, latencia, reconexión y guardados/propiedad requieren un bloque propio. Dos puntos compartiendo un mundo no aparecen por tener semillas iguales.
 
 ## Cierre de V1 aún pendiente
@@ -50,4 +54,4 @@ Pruebas reales de batería/memoria en rutas largas, PWA instalada, suspensión/r
 
 ## Decisiones y flujo preservados
 
-No añadir escenas/ideas musicales guardables: opción descartada por Jay. La fijación es voluntaria; favorecer crear sin grabar. No añadir logros por una operación técnica. Mantenimiento de README/pendientes/entrega en una rama amplia por bloque, con pruebas pertinentes; no volver a treinta ramas pequeñas. Esta rama de traspaso es solo documentación. La siguiente implementación debe seguir el alcance que Jay pida en la nueva sesión.
+No añadir escenas/ideas musicales guardables: opción descartada por Jay. La fijación es voluntaria; favorecer crear sin grabar. No añadir logros por una operación técnica. Mantenimiento de README/pendientes/entrega en una rama amplia por bloque, con pruebas pertinentes; no volver a treinta ramas pequeñas. Esta rama contiene código, pruebas y documentación. La próxima entrega debe apoyarse en su integración y seguir el alcance que Jay pida.

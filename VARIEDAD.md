@@ -1,3 +1,5 @@
+> Estado tras Claude/fase 6: el generador mantiene 11 biomas, 33 hábitats y 52 estilos; Vasto cambia la extensión, y los ocho estudios culturales son encuentros nuevos. Esta medición anterior no los contabiliza. Claude retiró el jardín modular/rastro anteriores. Para el inventario vigente, ver [FASE_06.md](FASE_06.md) y [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md).
+
 # Variedad: mediciones y alcance vigente
 
 Main e27c219 mantiene 11 biomas y 52 estilos. Fase 3 añadió cuatro timbres/arcos de reproducción y fase 4 gestos/color, sin cambiar el ADN del generador. Los conteos de abajo son auditorías históricas de recetas: no canciones únicas ni mediciones nuevas de diferencia audible. [Cifras del código y evidencias](ESTADO_ACTUAL.md).

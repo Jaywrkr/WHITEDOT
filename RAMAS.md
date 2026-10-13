@@ -1,25 +1,10 @@
 # Integración y continuación
 
-Estado verificado el 13 de octubre de 2026: **origin/main e27c219**, después del PR #73. Esta entrega documental está en **`docs/claude-handoff-current-main`**, creada desde esa base. No cambia código ni crea una nueva pila de funciones.
+Base verificada **main 8096c8d, #77**. #74 integró el handoff, #75 materia/FX/códigos/set, #76 laboratorio/vida y #77 cubo/expansión. Las fases 1–3 y entregas anteriores también están integradas. No reaplicar sus ramas.
 
-| PR | Merge en main | Entrega |
-|---|---|---|
-| [#68](https://github.com/Jaywrkr/WHITEDOT/pull/68) | e26ef93 | Base fiable, fase 1 |
-| [#69](https://github.com/Jaywrkr/WHITEDOT/pull/69) | ffc5578 | Paisajes vivos, fase 2 |
-| [#70](https://github.com/Jaywrkr/WHITEDOT/pull/70) | f7bcf84 | Registros musicales y atlas |
-| [#71](https://github.com/Jaywrkr/WHITEDOT/pull/71) | 0e289b8 | Consolidación y preservación documental |
-| [#72](https://github.com/Jaywrkr/WHITEDOT/pull/72) | df725f6 | Composición e instrumentos, fase 3 |
-| [#73](https://github.com/Jaywrkr/WHITEDOT/pull/73) | e27c219 | Gestos/color de instalaciones, bloque de fase 4 |
+Rama actual: **feat/phase-06-cultural-exploration**, basada directamente en main 8096c8d. Una sola rama para revisión/primer bloque cultural/exploración/laboratorio/golondrinas; [detalle](FASE_06.md). Commit/push; Jay crea PR hacia main y hace merge. No genera una cadena nueva de muchas ramas pequeñas.
 
-Estas entregas ya están integradas: no crear PR duplicados ni reaplicar commits. La cadena histórica #51–#69 se conserva abajo; #57 fue sustituido, no debe rescatarse por cherry-pick. La comprobación presente es por Git, no una consulta nueva del estado de CI/Vercel.
-
-## Flujo de este traspaso
-
-Commit y push de una rama documental para revisión. Jay puede crear el PR hacia main; el asistente no crea PR ni hace merge en este pedido. Claude puede leer la rama antes de integrarla. Después, continuar desde origin/main actualizado y el alcance nuevo de Jay.
-
-Agrupar código, pruebas y documentación de cada bloque en una rama amplia. Si otra base aún está pendiente, su dependencia debe quedar explícita; al integrarla actualizar al main real. Usar el historial real para evitar comparaciones vacías y commits duplicados. No prometer cero conflictos con cambios independientes o squash/rebase. No trasladar permisos de integración anotados en una sesión histórica al pedido actual.
-
-[Handoff](HANDOFF.md) · [Estado](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Fases](FASES_UNIVERSO.md).
+Los registros siguientes son historia de las integraciones previas; no usarlos como pendientes actuales. [Handoff](HANDOFF.md) · [Estado](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md).
 
 <details><summary>Historial de integración; no usar como lista de trabajo pendiente</summary>
 
@@ -93,6 +78,6 @@ Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; el pedido post
 
 </details>
 
-- `feat/phase-04-materia-y-compartir` (Claude): materia (cuerdas, prisma, membrana), FX chorus/phaser/freeze, códigos de lugar y grabar set. Pendiente de merge por Jay. Ver `FASE_04_MATERIA.md`.
-- `feat/laboratorio-y-fase-05` (Claude, creada sobre la anterior): Laboratorio + fase 5 Vida. Pendiente de merge por Jay; hacer merge de esta incluye la anterior. Ver `LABORATORIO_Y_FASE_05.md`.
-- `feat/expansion-fase-06` (Claude, sobre las dos anteriores): el cubo toca el mundo, quitados jardín modular y rastro, colores, quietud, música experimental, cajas y poderes. Pendiente de merge. Ver `CUBO_Y_EXPANSION.md`.
+- `feat/phase-04-materia-y-compartir` (Claude): materia (cuerdas, prisma, membrana), FX chorus/phaser/freeze, códigos de lugar y grabar set. Integrada en #75. Ver `FASE_04_MATERIA.md`.
+- `feat/laboratorio-y-fase-05` (Claude, creada sobre la anterior): Laboratorio + fase 5 Vida. Integrada en #76. Ver `LABORATORIO_Y_FASE_05.md`.
+- `feat/expansion-fase-06` (Claude, sobre las dos anteriores): el cubo toca el mundo, quitados jardín modular y rastro, colores, quietud, música experimental, cajas y poderes. Integrada en #77. Ver `CUBO_Y_EXPANSION.md`.

@@ -1,3 +1,5 @@
+import {CULTURES} from './culture-model.js';
+import {POWERS,EXPERIMENTAL_NAMES} from './expansion-music.js';
 // Laboratorio: lista de elementos interactivos para probarlos uno por uno y anotar qué mejorar.
 // Puro (sin DOM): se prueba en Node. Cada elemento dice dónde encontrarlo y qué probar.
 import {FAMILIES} from './encounter-families.js';
@@ -9,7 +11,7 @@ import {SPECIES,HOME_PLANTS} from './vida-music.js';
 // Preguntas iguales para todos: así las notas se comparan entre elementos.
 export const LAB_CHECKS=[
  {id:'clear',label:'Se entiende qué hacer'},
- {id:'responds',label:'Responde bien al dedo'},
+ {id:'responds',label:'Responde bien al cubo'},
  {id:'sound',label:'Suena bien con la música'},
  {id:'look',label:'Se ve bien'},
  {id:'fun',label:'Dan ganas de repetir'}
@@ -18,21 +20,21 @@ export const LAB_VERDICTS={ok:'Bien',fix:'Mejorar',cut:'Quitar'};
 
 const home=(x,y)=>({type:'home',x,y});
 const BASE=[
- {id:'materia:strings',group:'Materia',name:'Cuerdas tensables',find:home(...HOME_MATERIA.strings),try:['Arrastra una cuerda hacia arriba o abajo y suéltala: más tensión, nota más alta.','Cruza las cuatro cuerdas de un trazo para rasguear.','Comprueba que el pixel no se mueve mientras tocas.']},
- {id:'materia:prism',group:'Materia',name:'Prisma de luz',find:home(...HOME_MATERIA.prism),try:['Arrastra alrededor del triángulo para girarlo.','Busca el ángulo que enciende más cristales (hasta 5).','Suelta: suena el acorde de los cristales encendidos.']},
- {id:'materia:membrane',group:'Materia',name:'Membrana resonante',find:home(...HOME_MATERIA.membrane),try:['Toca el centro (grave) y el borde (agudo).','Mantén el dedo para redoblar; muévelo para cambiar la nota.']},
- {id:'glass',group:'Instalaciones',name:'Vidrios',find:home(1080,900),try:['Gira los aros arrastrando.','Mira el color que toma y escucha el canal que cambia.']},
+ {id:'materia:strings',group:'Materia',name:'Cuerdas tensables',find:home(...HOME_MATERIA.strings),try:['Cruza despacio con el cubo para enganchar una cuerda; empuja para tensarla.','Sal por un lado para soltarla, o cruza rápido para rasguear.']},
+ {id:'materia:prism',group:'Materia',name:'Prisma de luz',find:home(...HOME_MATERIA.prism),try:['Rodea el prisma con el cubo para girar el abanico.','Busca el ángulo que enciende más cristales (hasta 5).','Sal del anillo: responde el acorde de los cristales encendidos.']},
+ {id:'materia:membrane',group:'Materia',name:'Membrana resonante',find:home(...HOME_MATERIA.membrane),try:['Entra con el cubo: la velocidad cambia el golpe.','Permanece encima para redoblar; sal para detenerlo.']},
+ {id:'glass',group:'Instalaciones',name:'Vidrios',find:home(1080,900),try:['Pasa el cubo por el asa de un aro; rodea el centro para girarlo.','Mira el color que toma y escucha el canal que cambia.']},
  {id:'mirrors',group:'Instalaciones',name:'Espejos',find:home(1600,900),try:['Empuja un espejo con el cubo: gira como una puerta.','Lleva la luz al rombo: suena un acorde, el lugar se tiñe y queda una capa sonando.']},
 ];
 const life=[
  ...Object.entries(SPECIES).map(([kind,s])=>({id:'life:'+kind,group:'Vida',name:s.name,find:{type:'flock',species:kind},
-  try:kind==='luciernaga'?['Quédate quieto cerca: se van sincronizando (mira el %).','Al sincronizarse, sus destellos caen en un groove.','Toca una: te contesta.']
-   :['Toca un ave (más arriba, más agudo). En dos compases la bandada te devuelve tu llamada.','Quédate quieto unos segundos: confían y se acercan.','Entra corriendo: se dispersan.']})),
- {id:'life:plant',group:'Vida',name:'Flora que crece',find:{type:'home',x:HOME_PLANTS[0][0],y:HOME_PLANTS[0][1]},try:['Quédate cerca y quieto: crece y suma notas a su arpegio.','Tócala para regarla: suena y crece un poco.','Si no vuelves, se seca con las horas.']}
+  try:kind==='luciernaga'?['Quédate quieto cerca: se van sincronizando (mira el %).','Al sincronizarse, sus destellos caen en un groove.','Pasa el cubo por una: te contesta.']
+   :['Pasa el cubo por un ave; en dos compases la bandada responde.','Quédate quieto unos segundos: confían y se acercan.','Entra corriendo: se dispersan.']})),
+ {id:'life:plant',group:'Vida',name:'Flora que crece',find:{type:'home',x:HOME_PLANTS[0][0],y:HOME_PLANTS[0][1]},try:['Quédate cerca y quieto: crece y suma notas a su arpegio.','Pasa el cubo por ella para regarla.','Si no vuelves, se seca con las horas.']}
 ];
-const families=Object.entries(FAMILIES).map(([id,f])=>({id:'family:'+id,group:'Encuentros',name:f.name,find:{type:'family',family:id},try:f.hint.split(' · ').map(s=>s[0].toUpperCase()+s.slice(1)+'.')}));
+const families=Object.entries(FAMILIES).map(([id,f])=>({id:'family:'+id,group:'Encuentros',name:f.name,find:{type:'family',family:id},try:['Entra con el cubo para responder; muévete dentro para modelar.','Sal para soltar. La edición fina de partes/hilos permanece solo en modo dedo (?dedo=1).']}));
 const toys=Object.entries(TOY_NAMES).map(([kind,name])=>({id:'toy:'+kind,group:'Juguetes',name,find:{type:'toy',kind},
- try:kind==='rotor'?['Arrastra para girarlo.','Quédate cerca para cultivar.']:kind==='resonator'?['Arrastra para modelar el aro.','Quédate cerca para cultivar.']:['Pasa a través o tócalo.','Escucha cómo responde.']}));
+ try:kind==='rotor'?['Pasa con el cubo para hacerlo girar.','Quédate cerca para cultivar.']:kind==='resonator'?['Entra con el cubo para responder.','Quédate cerca para cultivar.']:['Pasa a través o tócalo.','Escucha cómo responde.']}));
 const phenomena=Object.entries(PHENOMENON_NAMES).map(([kind,name])=>({id:'phenomenon:'+kind,group:'Fenómenos',name,find:{type:'phenomenon',kind},try:['Acércate y escucha.','Toca cerca y espera su respuesta.']}));
 const tools=[
  {id:'tool:fx',group:'Herramientas',name:'Mesa de efectos',find:{type:'tool',tool:'fx'},try:['Arrastra en el pad: horizontal filtro, vertical espacio.','Prueba Eco, Robot, Chorus, Phaser, Freeze y Stop.','Activa Fijar y suelta el dedo.']},
@@ -40,7 +42,11 @@ const tools=[
  {id:'tool:place-code',group:'Herramientas',name:'Código de lugar',find:{type:'tool',tool:'favorites'},try:['Copia el código de aquí.','Muévete, pégalo y ábrelo: debe orientarte.']},
  {id:'tool:record',group:'Herramientas',name:'Grabar set',find:{type:'tool',tool:'record'},try:['Graba 10–20 s tocando algo.','Revisa video, audio y que se pueda compartir.']}
 ];
-export const LAB_ELEMENTS=[...BASE,...life,...families,...toys,...phenomena,...tools];
+const exploration=[...Object.entries(CULTURES).map(([id,c])=>({id:'culture:'+id,group:'Guardianes',name:c.name,find:{type:'culture',culture:id},try:['Quédate junto al guardián para escuchar su llamada completa.','Sigue las dos huellas; recorre las cuatro piedras con el cubo en el orden que escuchaste.','Alcanza el instrumento y vuelve: hay tres recuerdos por estudio.']})),
+ ...Object.entries(POWERS).map(([id,p])=>({id:'power:'+id,group:'Poderes',name:p.name,find:{type:'box',power:id},try:['Acércate con el cubo a la caja para abrirla.',p.text,'Cambiar elemento en el laboratorio limpia los poderes anteriores.']})),
+ ...[20,90,200,300].map(seconds=>({id:'quiet:'+seconds,group:'Quietud',name:'Quietud · '+seconds+' s',find:{type:'quiet',seconds},try:['La prueba empieza en esta etapa sin esperar todo el tiempo.','Permanece, muévete y abre un menú: revisa pausa y retorno.']})),
+ ...Object.entries(EXPERIMENTAL_NAMES).map(([mode,name])=>({id:'experimental:'+mode,group:'Experimental',name,find:{type:'experimental',mode},try:['Escucha el modo sin llenar el paisaje de objetos.','Compara normal y suave; anota si fatiga o tapa otras voces.']}))];
+export const LAB_ELEMENTS=[...BASE,...life,...families,...toys,...phenomena,...tools,...exploration];
 export const LAB_GROUPS=[...new Set(LAB_ELEMENTS.map(e=>e.group))];
 export const labElement=id=>LAB_ELEMENTS.find(e=>e.id===id)||null;
 export function labStep(id,delta){const i=Math.max(0,LAB_ELEMENTS.findIndex(e=>e.id===id));return LAB_ELEMENTS[(i+delta+LAB_ELEMENTS.length)%LAB_ELEMENTS.length];}

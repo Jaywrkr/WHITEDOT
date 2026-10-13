@@ -11,6 +11,9 @@ const TAU=Math.PI*2,FOLLOW_SECONDS=45;
 
 export function initialize(runtime){
  const S=()=>runtime.S,$=runtime.$,cache=new Map();let previousState=S(),tap=null,clock=0;
+ const traveling=new Set();
+ const normalizeGifts=()=>{S().formationGifts=Object.fromEntries(Object.entries(S().formationGifts||{}).filter(([id,v])=>/^flock:-?\d+,-?\d+$/.test(id)&&v===true).slice(-96));};
+ normalizeGifts();
  const heard=[];   // últimas notas que causó el jugador (para el ave lira)
  S().vida=normalizeVida(S().vida);
  const surface=()=>runtime.inWorld()&&(S().layer||'superficie')==='superficie';
@@ -25,7 +28,7 @@ export function initialize(runtime){
  }
  function around(){if(!surface())return [];const size=runtime.REG*runtime.WCH,rx=Math.floor(S().wx/size),ry=Math.floor(S().wy/size),out=[];for(let x=rx-1;x<=rx+1;x++)for(let y=ry-1;y<=ry+1;y++)out.push(region(x,y));return out;}
  const dist=o=>Math.hypot(o.x-S().wx,o.y-S().wy);
- const nearbyFlocks=(radius=500)=>around().map(e=>e.flock).filter(f=>f&&dist(f)<radius);
+ const nearbyFlocks=(radius=500)=>[...new Set([...around().map(e=>e.flock),...traveling])].filter(f=>f&&dist(f)<radius);
  const nearbyPlants=(radius=400)=>around().flatMap(e=>e.plants).filter(p=>dist(p)<radius);
  const growth=p=>plantGrowth(S().vida.plants[p.id],Date.now());
  function see(kind){if(S().vida.seen[kind])return;S().vida.seen[kind]=true;
@@ -35,7 +38,7 @@ export function initialize(runtime){
  function voice(kind,index,degree,time,volume,region,source,origin='ambient',full=false){played.push(`vida:${kind}:${index}`);if(played.length>64)played.shift();runtime.playVoice(`vida:${kind}:${index}`,degree,time,region,full,volume,source,origin);}
  const at=(time,fn)=>setTimeout(fn,Math.max(0,(time-(runtime.ac?.currentTime||0))*1000));
  const fx=(f,m,kind)=>{m.flash=1;m.burst=1;(f.notes||=[]).push({x:m.x,y:m.y,a:1,kind});if(f.notes.length>24)f.notes.shift();if(f.species==='grulla')(f.ripples||=[]).push({x:m.x,y:m.y+18,r:6,a:1});};
- function sing(f,notes,time,origin='ambient',toCube=false){for(const n of notes){const t=time+n.step*runtime.SIX;voice(f.species,Math.min(9,n.member),n.degree,t,n.volume*(f.species==='grulla'?1.4:1),f.region,f,origin,f.species==='grulla');const m=f.members[n.member];if(m)at(t,()=>{fx(f,m,toCube?'answer':'call');if(toCube)f.toCube=1;});}}
+ function sing(f,notes,time,origin='ambient',toCube=false){const local=runtime.regionOfPos(f.x,f.y);for(const n of notes){const t=time+n.step*runtime.SIX;voice(f.species,Math.min(9,n.member),n.degree,t,n.volume*(f.species==='grulla'?1.4:1),local,f,origin,f.species==='grulla');const m=f.members[n.member];if(m)at(t,()=>{fx(f,m,toCube?'answer':'call');if(toCube)f.toCube=1;});}}
  // ---------- tocar (cubo; el dedo solo en modo de prueba) ----------
  function touchBird(f,i){
   const m=f.members[i],now=performance.now();if(now-(m.touched||0)<380)return;m.touched=now;
@@ -63,14 +66,19 @@ export function initialize(runtime){
  function hear(kind,index,time){if(String(kind).startsWith('vida:lira'))return;heard.push({index,time});while(heard.length>8)heard.shift();}
  // ---------- conducta (cada cuadro) ----------
  function tick(dt){
-  if(previousState!==S()){cache.clear();tap=null;previousState=S();S().vida=normalizeVida(S().vida);}
-  clock+=dt;if(!surface())return;
+  if(previousState!==S()){cache.clear();traveling.clear();heard.length=0;played.length=0;tap=null;previousState=S();S().vida=normalizeVida(S().vida);normalizeGifts();}
+  if(!available())return;clock+=dt;for(const f of traveling)if(!(f.follow>0))traveling.delete(f);
   const b=runtime.body||{speed:0,still:0},player={x:S().wx,y:S().wy,speed:b.jump?0:b.speed,still:b.still};
   for(const f of nearbyFlocks(900)){
    if(dist(f)<260)see(f.species);
    // Formación: si confían y te mueves, te siguen; se refresca mientras vayan contigo.
-   if(f.trust>=.6&&player.speed>20&&dist(f)<200){if(!(f.follow>0)&&!S().help.vidaFormacion){S().help.vidaFormacion=true;runtime.toast('<em>Bandada</em> · te siguen en formación y repiten tu llamada');}f.follow=FOLLOW_SECONDS;}
+   if(f.trust>=.6&&player.speed>20&&dist(f)<200){if(!(f.follow>0)&&!S().help.vidaFormacion){S().help.vidaFormacion=true;runtime.toast('<em>Bandada</em> · te siguen en formación y repiten tu llamada');}f.follow=FOLLOW_SECONDS;traveling.add(f);while(traveling.size>2)traveling.delete(traveling.values().next().value);}
    if(f.follow>0){f.follow-=dt;f.followTime=(f.followTime||0)+dt;if(f.followTime>30)runtime.unlock('formacion');}else f.followTime=0;
+   if(f.species==='golondrina'){
+    f.formation=(f.follow>0&&f.trust>=.6&&player.speed>20&&dist(f)<180)?(f.formation||0)+dt:0;
+    if(f.formation>=120&&!S().formationGifts[f.id]){if(Object.keys(S().formationGifts).length>=96)delete S().formationGifts[Object.keys(S().formationGifts)[0]];S().formationGifts[f.id]=true;runtime.spawnBox?.(S().wx+65,S().wy-40,'brujula');runtime.unlock('formacionDosMinutos');runtime.save();}
+    f.hintBox=f.trust>=.6?runtime.boxesNear?.(650).sort((a,b)=>dist(a)-dist(b))[0]:null;
+   }
    for(const ev of stepFlock(f,dt,clock,player)){
     if(ev==='scatter'&&audible()){runtime.beatSoon(t=>sing(f,[0,1,2].map(i=>({step:i,degree:4-i*2,volume:.07,member:i%f.members.length})),t),null,'ambient');}
     if(ev==='gather'){runtime.unlock('bandadaAmiga');if(!S().help.vidaConfianza){S().help.vidaConfianza=true;runtime.toast('<em>Bandada</em> · confían en ti: se acercan y cantan más');}}
@@ -95,6 +103,9 @@ export function initialize(runtime){
     let notes=answerCall(f,f.learned);
     if(f.species==='lira'&&heard.length){notes=heard.slice(-6).flatMap((h,i)=>[{step:i*2,degree:h.index,volume:.12,member:0},...(i%2?[{step:i*2+1,degree:h.index+1,volume:.06,member:0}]:[])]).filter(n=>n.step<16);f.copying=1;runtime.unlock('liraCopia');}
     sing(f,notes,time,'ambient',true);f.phrase=f.learned.slice();f.learned=[];f.answerBar=-1;f.waiting=0;runtime.unlock('bandada1');continue;}
+   // A trusted crossing answers the other flock on alternating bars, within the shared budget.
+   const partner=nearbyFlocks(400).find(other=>other!==f&&other.trust>=.6&&f.trust>=.6&&other.phrase?.length&&Math.hypot(other.x-f.x,other.y-f.y)<180);
+   if(partner&&s===0&&bar%4===2&&claimInstallationBar(runtime,bar)){sing(f,answerCall(f,partner.phrase).slice(0,3).map(n=>({...n,volume:.045})),time);return;}
    // En formación repiten tu llamada cada dos compases mientras viajan contigo.
    if(s===0&&f.follow>0&&f.phrase?.length&&bar%2===0&&claimInstallationBar(runtime,bar)){sing(f,answerCall(f,f.phrase).map(n=>({...n,volume:.07})),time);return;}
    const every=callEvery(season(),f.trust);
@@ -140,12 +151,14 @@ export function initialize(runtime){
      if(m.flash>.2||f.copying>0){ctx.fillStyle=WORLD_VISUAL.gold;for(let k=0;k<4;k++){ctx.globalAlpha=.6;ctx.fillRect(-s*(1+k*.7)+Math.sin(t/90+k)*3,Math.cos(t/70+k)*s,2,2);}}}
     ctx.restore();}
    f.copying=Math.max(0,(f.copying||0)-dt*.25);f.waiting=Math.max(0,(f.waiting||0)-dt*.05);
+   if(f.hintBox){const a=Math.atan2(f.hintBox.y-f.y,f.hintBox.x-f.x);ctx.save();ctx.translate(f.x+ox,f.y+oy);ctx.rotate(a);ctx.strokeStyle=runtime.GOLD;ctx.globalAlpha=.5;ctx.beginPath();ctx.moveTo(30,-4);ctx.lineTo(38,0);ctx.lineTo(30,4);ctx.stroke();ctx.restore();}
    if(dist(f)<220){
-    const text=f.copying>0?'Ave lira · copia lo que tocaste':f.answerBar>=0?'Te contestan en dos compases…':f.follow>0?`${spec.name} · vuelan contigo`:f.trust>=.6?`${spec.name} · confían en ti · muévete y te siguen`:f.species==='luciernaga'?`Quieto: se sincronizan · ${Math.round(f.sync*100)} %`:'Pasa el cubo por un ave · quieto, se acercan';
+    const text=f.copying>0?'Ave lira · copia lo que tocaste':f.answerBar>=0?'Te contestan en dos compases…':f.follow>0?`${spec.name} · vuelan contigo${f.species==='golondrina'?' · '+Math.min(120,Math.floor(f.formation||0))+'/120 s':''}`:f.trust>=.6?`${spec.name} · confían en ti · muévete y te siguen`:f.species==='luciernaga'?`Quieto: se sincronizan · ${Math.round(f.sync*100)} %`:'Pasa el cubo por un ave · quieto, se acercan';
     label(ctx,text,f.x+ox,f.y+oy+64);}
    ctx.restore();
   }
  }
+ runtime.ACH.push(['formacionDosMinutos','Viajar juntos','Mantén una formación de golondrinas en movimiento durante dos minutos.']);
  Object.defineProperties(runtime,{vidaPointerDown:{get:()=>down},vidaPointerMove:{get:()=>move},vidaPointerUp:{get:()=>up},drawVida:{get:()=>draw},vidaStep:{get:()=>step},vidaSources:{get:()=>sources},vidaHear:{get:()=>hear},
   nearbyFlocks:{get:()=>nearbyFlocks},nearbyPlants:{get:()=>nearbyPlants},vidaPlayed:{get:()=>played},touchBird:{get:()=>touchBird},waterPlant:{get:()=>waterPlant}});
 }

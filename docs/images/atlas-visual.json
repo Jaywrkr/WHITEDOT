@@ -1,6 +1,6 @@
 {
   "width": 2112,
-  "height": 4928,
+  "height": 5456,
   "items": [
     {
       "number": 1,
@@ -460,255 +460,291 @@
     },
     {
       "number": 77,
-      "group": "INSTALACIONES",
-      "name": "Jardín modular / cables",
-      "source": "src/patchgarden.js"
-    },
-    {
-      "number": 78,
       "group": "HITOS GRANDES",
       "name": "Torre de luz",
       "source": "src/landmarks.js"
     },
     {
-      "number": 79,
+      "number": 78,
       "group": "HITOS GRANDES",
       "name": "Árbol madre",
       "source": "src/landmarks.js"
     },
     {
-      "number": 80,
+      "number": 79,
       "group": "HITOS GRANDES",
       "name": "Ciudad de formas",
       "source": "src/landmarks.js"
     },
     {
-      "number": 81,
+      "number": 80,
       "group": "HITOS GRANDES",
       "name": "Monolito",
       "source": "src/landmarks.js"
     },
     {
-      "number": 82,
+      "number": 81,
       "group": "HITOS GRANDES",
       "name": "Faro de horizonte",
       "source": "src/landmarks.js"
     },
     {
-      "number": 83,
+      "number": 82,
       "group": "CAPAS Y RASTROS",
       "name": "Grieta al Subsuelo",
       "source": "src/layers.js"
     },
     {
-      "number": 84,
+      "number": 83,
       "group": "CAPAS Y RASTROS",
       "name": "Escalera al Cielo",
       "source": "src/layers.js"
     },
     {
-      "number": 85,
-      "group": "CAPAS Y RASTROS",
-      "name": "Huella de escucha",
-      "source": "src/sound-trails.js"
-    },
-    {
-      "number": 86,
-      "group": "CAPAS Y RASTROS",
-      "name": "Huella rítmica",
-      "source": "src/sound-trails.js"
-    },
-    {
-      "number": 87,
-      "group": "CAPAS Y RASTROS",
-      "name": "Instrumento dormido",
-      "source": "src/sound-trails.js"
-    },
-    {
-      "number": 88,
-      "group": "CAPAS Y RASTROS",
-      "name": "Instrumento despierto",
-      "source": "src/sound-trails.js"
-    },
-    {
-      "number": 89,
+      "number": 84,
       "group": "CAPAS Y RASTROS",
       "name": "Subsuelo · vetas y salidas",
       "source": "src/layers.js"
     },
     {
-      "number": 90,
+      "number": 85,
       "group": "CAPAS Y RASTROS",
       "name": "Cielo · continentes y nubes",
       "source": "src/layers.js"
     },
     {
-      "number": 91,
+      "number": 86,
       "group": "FENÓMENOS Y RESPUESTAS",
       "name": "Ave de eco",
       "source": "src/phenomena.js"
     },
     {
-      "number": 92,
+      "number": 87,
       "group": "FENÓMENOS Y RESPUESTAS",
       "name": "Semillero de caja",
       "source": "src/phenomena.js"
     },
     {
-      "number": 93,
+      "number": 88,
       "group": "FENÓMENOS Y RESPUESTAS",
       "name": "Nube de pulso",
       "source": "src/phenomena.js"
     },
     {
-      "number": 94,
+      "number": 89,
       "group": "FENÓMENOS Y RESPUESTAS",
       "name": "Pulso / onda",
       "source": "src/interactions.js"
     },
     {
-      "number": 95,
+      "number": 90,
       "group": "FENÓMENOS Y RESPUESTAS",
       "name": "Eco fijado",
       "source": "src/jam.js"
     },
     {
-      "number": 96,
+      "number": 91,
       "group": "FENÓMENOS Y RESPUESTAS",
       "name": "Conexión luminosa",
       "source": "src/render.js"
     },
     {
-      "number": 97,
+      "number": 92,
       "group": "FENÓMENOS Y RESPUESTAS",
       "name": "Relámpago",
       "source": "src/render.js"
     },
     {
-      "number": 98,
+      "number": 93,
       "group": "FENÓMENOS Y RESPUESTAS",
       "name": "Lluvia de tormenta",
       "source": "src/alive.js"
     },
     {
-      "number": 99,
+      "number": 94,
       "group": "FENÓMENOS Y RESPUESTAS",
       "name": "Estación: nieve",
       "source": "src/alive.js"
     },
     {
-      "number": 100,
+      "number": 95,
       "group": "FENÓMENOS Y RESPUESTAS",
       "name": "Estación: hojas",
       "source": "src/alive.js"
     },
     {
-      "number": 101,
+      "number": 96,
       "group": "FENÓMENOS Y RESPUESTAS",
       "name": "Estación: polen",
       "source": "src/alive.js"
     },
     {
-      "number": 102,
+      "number": 97,
       "group": "FENÓMENOS Y RESPUESTAS",
       "name": "Estación: brillo",
       "source": "src/alive.js"
     },
     {
-      "number": 103,
+      "number": 98,
       "group": "SUELOS Y AIRE",
       "name": "Río / corriente",
       "source": "src/wonders.js"
     },
     {
-      "number": 104,
+      "number": 99,
       "group": "SUELOS Y AIRE",
       "name": "Musgo",
       "source": "src/interactions.js"
     },
     {
-      "number": 105,
+      "number": 100,
       "group": "SUELOS Y AIRE",
       "name": "Arena",
       "source": "src/interactions.js"
     },
     {
-      "number": 106,
+      "number": 101,
       "group": "SUELOS Y AIRE",
       "name": "Piedra",
       "source": "src/interactions.js"
     },
     {
-      "number": 107,
+      "number": 102,
       "group": "SUELOS Y AIRE",
       "name": "Agua",
       "source": "src/interactions.js"
     },
     {
-      "number": 108,
+      "number": 103,
       "group": "SUELOS Y AIRE",
       "name": "Cristal",
       "source": "src/interactions.js"
     },
     {
-      "number": 109,
+      "number": 104,
       "group": "SUELOS Y AIRE",
       "name": "Ceniza",
       "source": "src/interactions.js"
     },
     {
-      "number": 110,
+      "number": 105,
       "group": "SUELOS Y AIRE",
       "name": "Aire: niebla",
       "source": "src/render.js"
     },
     {
-      "number": 111,
+      "number": 106,
       "group": "SUELOS Y AIRE",
       "name": "Aire: polvo",
       "source": "src/render.js"
     },
     {
-      "number": 112,
+      "number": 107,
       "group": "SUELOS Y AIRE",
       "name": "Aire: esporas",
       "source": "src/render.js"
     },
     {
-      "number": 113,
+      "number": 108,
       "group": "SUELOS Y AIRE",
       "name": "Aire: ceniza",
       "source": "src/render.js"
     },
     {
-      "number": 114,
+      "number": 109,
       "group": "SUELOS Y AIRE",
       "name": "Relieve: raíces",
       "source": "src/ecology.js"
     },
     {
-      "number": 115,
+      "number": 110,
       "group": "SUELOS Y AIRE",
       "name": "Relieve: estratos",
       "source": "src/ecology.js"
     },
     {
-      "number": 116,
+      "number": 111,
       "group": "SUELOS Y AIRE",
       "name": "Relieve: celdas",
       "source": "src/ecology.js"
     },
     {
-      "number": 117,
+      "number": 112,
       "group": "SUELOS Y AIRE",
       "name": "Relieve: ondas",
       "source": "src/ecology.js"
     },
     {
-      "number": 118,
+      "number": 113,
       "group": "SUELOS Y AIRE",
       "name": "Relieve: marcas",
       "source": "src/ecology.js"
+    },
+    {
+      "number": 114,
+      "group": "GUARDIANES CULTURALES",
+      "name": "Jardines del Altiplano",
+      "source": "src/cultures.js"
+    },
+    {
+      "number": 115,
+      "group": "GUARDIANES CULTURALES",
+      "name": "Islas de bronce",
+      "source": "src/cultures.js"
+    },
+    {
+      "number": 116,
+      "group": "GUARDIANES CULTURALES",
+      "name": "Campanas de sabana",
+      "source": "src/cultures.js"
+    },
+    {
+      "number": 117,
+      "group": "GUARDIANES CULTURALES",
+      "name": "Patios del horizonte",
+      "source": "src/cultures.js"
+    },
+    {
+      "number": 118,
+      "group": "GUARDIANES CULTURALES",
+      "name": "Voces del norte",
+      "source": "src/cultures.js"
+    },
+    {
+      "number": 119,
+      "group": "GUARDIANES CULTURALES",
+      "name": "Río de cinco notas",
+      "source": "src/cultures.js"
+    },
+    {
+      "number": 120,
+      "group": "GUARDIANES CULTURALES",
+      "name": "Jardines de tinta",
+      "source": "src/cultures.js"
+    },
+    {
+      "number": 121,
+      "group": "GUARDIANES CULTURALES",
+      "name": "Cauces de cobre",
+      "source": "src/cultures.js"
+    },
+    {
+      "number": 122,
+      "group": "MATERIA",
+      "name": "Cuerdas tensables",
+      "source": "src/materia.js"
+    },
+    {
+      "number": 123,
+      "group": "MATERIA",
+      "name": "Prisma de luz",
+      "source": "src/materia.js"
+    },
+    {
+      "number": 124,
+      "group": "MATERIA",
+      "name": "Membrana resonante",
+      "source": "src/materia.js"
     }
   ],
   "note": "Drawn from the actual renderer, enlarged for inspection. Representative procedural shapes, not an enumeration of all seeds or animation frames."

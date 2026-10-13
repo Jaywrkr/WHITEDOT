@@ -1,6 +1,6 @@
 # El cubo toca el mundo + expansión (rama `feat/expansion-fase-06`)
 
-Entrega de Claude. Pendiente de merge por Jay. **Incluye las dos ramas anteriores** (`feat/phase-04-materia-y-compartir` y `feat/laboratorio-y-fase-05`): basta con hacer merge de esta.
+Entrega de Claude **integrada por #77 en main8096c8d**. **Incluye las dos ramas anteriores** (`feat/phase-04-materia-y-compartir` y `feat/laboratorio-y-fase-05`): basta con hacer merge de esta.
 
 ## 1. El cubo es lo único que interactúa (hecho)
 - El dedo solo **mueve el cubo** y, con un toque, **lanza el pulso desde el cubo**. Ya no se manipulan objetos con el dedo.
@@ -40,7 +40,9 @@ Entrega de Claude. Pendiente de merge por Jay. **Incluye las dos ramas anteriore
 - `tests/offline_smoke.py`: cobertura de módulos OK; la última aserción falla igual en `main` (entorno).
 - **No se corrió la suite completa de navegador** en esta entrega (falta de tiempo). Hacerlo antes de V1.
 
-## PENDIENTE para Codex (siguiente rama, en orden)
+## Lista original para Codex (estado actualizado en FASE_06.md)
+
+Esta rama resuelve los primeros bloques culturales, Vasto, auto visible, laboratorio y golondrinas. Teléfono real sigue pendiente; resultados y límites en [FASE_06.md](FASE_06.md). El texto siguiente conserva lo solicitado al cerrar Claude, no una lista de funciones que aún falten todas.
 1. **Fase 6 · Culturas y búsquedas** (no empezada): 6–8 culturas originales inspiradas en tradiciones reales (andina pentatónica, gamelan/pelog, campana africana 12/8, maqam hijaz, joik nórdico, raga, in japonés, cumbia), cada una con escala, instrumentos, ritmo, colores y glifo. Santuarios (~12 % de regiones, semilla propia) con **guardianes** originales que te enseñan una canción-llave; **pistas encadenadas** hacia una **puerta musical** en una región vecina que se abre tocando con el cubo sus piedras en orden; dentro, **reliquias / instrumentos dormidos** que se coleccionan (cadena de 3 por cultura). La brújula ya acepta `runtime.cultureTargets()`.
 2. **Mundo más grande**: añadir layout `vasto` (REG 20 → regiones de 18 000) en `world-identity.js` (layouts permitidos), `progress.js` (parámetro layout), `data.js` (getter REG), `seeds.js` (opción y por defecto en «Otra semilla»), `previewKey`. La partida principal no se toca.
 3. **Modo auto visible**: botón en el dock que activa el paseo con dirección aleatoria (hoy está escondido en Favoritos: `startAutopilot('wander')`), que gire suave, esquive el mar y cambie de rumbo cada 40–90 s; tocar el joystick devuelve el control.

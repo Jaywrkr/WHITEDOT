@@ -1,11 +1,11 @@
 // Review artifact only. Called by render-visual-atlas.py with isolated, instrumented game modules.
 export async function renderAtlas(r){
- const [{FAMILIES,createFamilyState},{drawShape},{createPlaythings},{ECOLOGY_CONTENT},{personalityOf},{ECOLOGIES},{createBox},{createSoundTrail}]=await Promise.all([
-  import('../src/encounter-families.js'),import('../src/encounters.js'),import('../src/playthings.js'),import('../src/ecology-model.js'),import('../src/personality.js'),import('../src/ecology-model.js'),import('../src/encounter-depth-model.js'),import('../src/sound-trail-model.js')]);
+ const [{FAMILIES,createFamilyState},{drawShape},{createPlaythings},{ECOLOGY_CONTENT},{personalityOf},{ECOLOGIES},{createBox}]=await Promise.all([
+  import('../src/encounter-families.js'),import('../src/encounters.js'),import('../src/playthings.js'),import('../src/ecology-model.js'),import('../src/personality.js'),import('../src/ecology-model.js'),import('../src/encounter-depth-model.js')]);
  const methods={};for(const name of Object.getOwnPropertyNames(r))try{methods[name]=r[name];}catch(_){}
  const set=(name,value)=>Object.defineProperty(r,name,{value,writable:true,configurable:true});
  const work=document.getElementById('w'),c=work.getContext('2d');work.width=work.height=320;set('W',320);set('H',320);set('cx',c);
- for(const name of ['drawRivers','drawAlive','drawLandmarks','drawPortals','drawGlass','drawMirrors','drawPatchGarden','drawPhenomena','drawJam','drawSoundCues','drawEcology','drawPlaythings','drawPocketHints','riverStep','aliveStep','save','hud','toast','say','showPhrase','unlock','pruneRelics'])set(name,()=>{});
+ for(const name of ['drawRivers','drawAlive','drawLandmarks','drawPortals','drawGlass','drawMirrors','drawPhenomena','drawJam','drawSoundCues','drawEcology','drawPlaythings','drawPocketHints','drawMateria','drawVida','drawQuietud','drawCajas','drawCultures','bodyTick','quietTick','cajasTick','cultureTick','riverStep','aliveStep','save','hud','toast','say','showPhrase','unlock','pruneRelics'])set(name,()=>{});
  set('eventOf',()=>null);set('nearbyRelics',()=>[]);set('sceneChunk',x=>x);set('blobHabitat',()=>false);set('vitalityAt',()=>.6);
  r.S.mode='world';r.S.layer='superficie';r.S.sound=false;r.S.wx=r.S.wy=1350;r.S.todayLight=r.CAP;r.S.relaxedCreate=true;r.MU.vit=.6;r.MU.speed=0;r.MU.E=.2;r.MU.layers=new Set();
  document.querySelectorAll('.modal').forEach(m=>m.hidden=true);
@@ -59,15 +59,12 @@ export async function renderAtlas(r){
  relicNames.forEach((name,i)=>card('RELIQUIAS · DOCE GLIFOS',name,'src/render.js',simple(()=>{c.fillStyle=c.strokeStyle=r.GOLD;r.__atlas_render.glyph(c,i,0,0,12);},2.7)));
  card('INSTALACIONES','Vidrios cromáticos','src/glass.js',()=>{r.S.wx=1080;r.S.wy=900;methods.drawGlass(1000,0,160-1080,150-900,250);});
  card('INSTALACIONES','Espejos y receptor','src/mirrors.js',()=>{r.S.wx=1600;r.S.wy=900;methods.drawMirrors(1000,0,160-1600,150-900,250);});
- card('INSTALACIONES','Jardín modular / cables','src/patchgarden.js',()=>{r.S.wx=2050;r.S.wy=900;const site=methods.nearbyPatches(300).find(s=>s.id==='patch:0,0');site.connections=[0,1,2];methods.drawPatchGarden(1000,0,160-2050,120-900,250);});
+
  for(const [type,name] of [['torre','Torre de luz'],['arbol','Árbol madre'],['ciudad','Ciudad de formas'],['monolito','Monolito'],['faro','Faro de horizonte']])card('HITOS GRANDES',name,'src/landmarks.js',simple(()=>r.__atlas_landmarks.shape(c,{type,size:.7,d:500,name:''},0,70,1700,1,'#b6d5c5',.1),.85));
  for(const kind of ['grieta','escalera']){const names={grieta:'Grieta al Subsuelo',escalera:'Escalera al Cielo'};card('CAPAS Y RASTROS',names[kind],'src/layers.js',()=>{
   r.S.layer='superficie';let portal;for(let x=1;x<80&&!portal;x++)for(let y=1;y<15&&!portal;y++){r.S.wx=x*3600+1800;r.S.wy=y*3600+1800;portal=r.__atlas_layers.nearPortals().find(p=>p.kind===kind);}
   if(!portal)throw Error('Missing portal '+kind);r.S.wx=portal.x;r.S.wy=portal.y;methods.drawPortals(0,160-portal.x,175-portal.y,.3);
  });}
- for(const stage of [0,1,2,3])card('CAPAS Y RASTROS',['Huella de escucha','Huella rítmica','Instrumento dormido','Instrumento despierto'][stage],'src/sound-trails.js',()=>{
-  r.S.layer='superficie';r.S.wx=r.S.wy=1800;const trail=createSoundTrail(region,3600,r.seedOf,r.rng,true);r.__atlas_sound_trails.cache.clear();r.__atlas_sound_trails.cache.set('0,0',trail);r.S.soundTrails[trail.id]={stage,seen:true};const node=trail.nodes[Math.min(2,stage)];r.S.wx=node.x;r.S.wy=node.y;methods.trailDraw();
- });
  for(const [kind,name] of [['bird','Ave de eco'],['shaker','Semillero de caja'],['cloud','Nube de pulso']])card('FENÓMENOS Y RESPUESTAS',name,'src/phenomena.js',simple(()=>{
   r.S.wx=r.S.wy=0;r.__atlas_phenomena.cache.clear();for(let x=-2;x<=2;x++)for(let y=-2;y<=2;y++)r.__atlas_phenomena.cache.set(x+','+y,[]);
   r.__atlas_phenomena.cache.set('0,0',[{kind,id:'atlas:'+kind,x:0,y:0,hx:0,hy:0,phase:0,period:1500,cues:[],cd:Infinity,next:Infinity}]);methods.drawPhenomena(0,0,0,0,600);
@@ -87,6 +84,9 @@ export async function renderAtlas(r){
  for(const terrain of ['roots','ridges','cells','ripples','flecks'])card('SUELOS Y AIRE','Relieve: '+({roots:'raíces',ridges:'estratos',cells:'celdas',ripples:'ondas',flecks:'marcas'}[terrain]),'src/ecology.js',()=>{
   r.S.wx=r.S.wy=450;const ecology={terrain,terrainScale:44,density:.7,material:'wood'};methods.drawEcology({id:'0,0',pal:palette,ecology,ecologyObjects:[]},1700,-290,-290,180);
  });
+ const {CULTURES}=await import('../src/culture-model.js');
+ for(const [id,culture] of Object.entries(CULTURES))card('GUARDIANES CULTURALES',culture.name,'src/cultures.js',()=>{r.labCulture=id;methods.cultureReset();const site=methods.cultureHome();r.S.wx=site.x;r.S.wy=site.y;methods.drawCultures();});
+ for(const [kind,name] of [['strings','Cuerdas tensables'],['prism','Prisma de luz'],['membrane','Membrana resonante']])card('MATERIA',name,'src/materia.js',()=>{const positions={strings:[1100,2550],prism:[1800,2700],membrane:[2500,2550]},[x,y]=positions[kind];r.S.wx=x;r.S.wy=y;methods.drawMateria(1000,0,160-x,155-y,250);});
  // Same native draw code, fixed snapshots. No assets are redesigned by this review tool.
  const groups=[...new Set(items.map(x=>x.group))];items.sort((a,b)=>groups.indexOf(a.group)-groups.indexOf(b.group));
  const cols=8,cellW=256,cellH=220,margin=32,sectionH=44,header=140;let y=header,previous=null,column=0;

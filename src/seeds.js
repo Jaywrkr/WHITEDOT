@@ -1,6 +1,6 @@
 import {FAMILIES} from './encounter-families.js';
 export function normalizeSeed(value){return String(value??'original').trim().replace(/[^\p{L}\p{N}_ -]/gu,'').slice(0,40)||'original';}
-export function previewKey(seed,layout='classic',generation=1){return `pixel-blanco-v4:${layout==='wide'?'preview-wide':'preview'}:${generation===2?'v2:':''}${encodeURIComponent(normalizeSeed(seed))}`;}
+export function previewKey(seed,layout='classic',generation=1){return `pixel-blanco-v4:${layout==='vasto'?'preview-vasto':layout==='wide'?'preview-wide':'preview'}:${generation===2?'v2:':''}${encodeURIComponent(normalizeSeed(seed))}`;}
 export function initialize(runtime){
  const $=runtime.$;
  const select=document.createElement('select');select.id='seedEncounter';select.setAttribute('aria-label','Encuentro para probar');
@@ -18,13 +18,13 @@ export function initialize(runtime){
  $('dSeeds').onclick=open;$('seedClose').onclick=()=>$('mSeeds').hidden=true;
  $('bWorlds').onclick=()=>{open();$('seedGeneration').value='2';};
  $('seedForm').onsubmit=e=>{e.preventDefault();visit($('seedValue').value);};
- $('seedNext').onclick=()=>visit('mundo-'+Date.now().toString(36));
+ $('seedNext').onclick=()=>{$('seedLayout').value='vasto';visit('mundo-'+Date.now().toString(36));};
  $('seedCenter').onclick=()=>visit(runtime.S.previewSeed||'original');
  $('seedOriginal').onclick=()=>{const url=new URL(location.href);for(const key of ['testSeed','layout','encounter','generation'])url.searchParams.delete(key);location.assign(url.href);};
  $('seedPresets').onclick=e=>{const button=e.target.closest('[data-seed]');if(button)visit(button.dataset.seed);};
  if(runtime.S.previewSeed){
   const s=runtime.S;s.todayKey=runtime.dayKey();s.todayLight=runtime.CAP;s.capShown=true;s.lampDay=s.todayKey;s.lampUsed=0;s.lastWorldDay=s.todayKey;
-  s.layer='superficie';s.wx=s.wy=runtime.REG*runtime.WCH/2;if(select.value==='installation'||new URLSearchParams(location.search).get('encounter')==='installation'){s.wx=2050;s.wy=900;}if(new URLSearchParams(location.search).get('encounter')==='glass'){s.wx=1080;s.wy=900;}if(select.value==='materia'||new URLSearchParams(location.search).get('encounter')==='materia'){s.wx=1800;s.wy=2450;}if(new URLSearchParams(location.search).get('encounter')==='trail'){const size=runtime.REG*runtime.WCH,t=createSoundTrail(runtime.regionOfPos(size/2,size/2),size,runtime.seedOf,runtime.rng,true);if(t){const node=t.nodes[Math.min(2,s.soundTrails?.[t.id]?.stage||0)];s.wx=node.x;s.wy=node.y;}}s.help.camino=true;s.help.mundo=true;s.helpV2=true;
+  s.layer='superficie';s.wx=s.wy=runtime.REG*runtime.WCH/2;if(select.value==='installation'||new URLSearchParams(location.search).get('encounter')==='installation'){s.wx=2050;s.wy=900;}if(new URLSearchParams(location.search).get('encounter')==='glass'){s.wx=1080;s.wy=900;}if(select.value==='materia'||new URLSearchParams(location.search).get('encounter')==='materia'){s.wx=1800;s.wy=2450;}s.help.camino=true;s.help.mundo=true;s.helpV2=true;
   s.ach.mundo??=s.todayKey;s.mode='camino';runtime.enterWorld();runtime.save();
  }
  Object.defineProperties(runtime,{openSeedLab:{get:()=>open}});

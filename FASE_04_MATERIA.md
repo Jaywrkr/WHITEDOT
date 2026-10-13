@@ -1,6 +1,6 @@
 # Fase 4 · Materia + Fase 8 · Compartir (rama `feat/phase-04-materia-y-compartir`)
 
-Entrega de Claude. Pendiente de merge por Jay.
+Entrega de Claude **integrada por #75**. El control de dedo descrito originalmente fue sustituido por el cubo en #77; revisión vigente en [FASE_06.md](FASE_06.md).
 
 ## Materia (fase 4, familias nuevas)
 Tres instalaciones con gestos directos, sin paneles. Todo cuantizado a tempo y en la escala del lugar.

@@ -1,3 +1,7 @@
+# Vasto y laboratorio actuales
+
+Esta rama añade Vasto: regiones de 18.000 unidades (REG20), con clave de prueba/dirección separadas para Original/vivo. Clásico y Amplio mantienen las medidas y guardados de abajo. Otra semilla propone Vasto. El laboratorio permanece independiente y permite54 casos de cubo/culturas/poderes/quietud/experimental. WD1 comparte direcciones; no sincroniza progreso ni congela música. [Entrega](FASE_06.md).
+
 # Mundos, semillas y retorno · guía vigente
 
 Estado: **main e27c219**. Menú → Explorar mundos permite elegir Original/Paisajes vivos, Amplio/Clásico y semilla/presets; Menú → Prototipo → Semillas conserva el acceso técnico. Humedal/Salinas/Basalto/Micelio y Blobs permiten comparar hábitats, música, criaturas y terreno. [Inventario actual](ESTADO_ACTUAL.md).

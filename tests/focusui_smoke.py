@@ -20,17 +20,17 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
   page.wait_for_function("window.__testRuntime.MU.dnaA && window.__testRuntime.ac.state==='running'")
   page.wait_for_function('document.body.classList.contains("world-focus")')
-  assert page.locator('#dock button:visible').count()==1
+  assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bMenu']
   assert not page.locator('#goal').is_visible()
   page.locator('#bMenu').click();page.locator('#bTools').click();assert page.locator('#bFx').is_visible()
-  page.locator('#bFx').click();assert page.locator('#fxPanel').is_visible();assert page.locator('#dock button:visible').count()==1;page.locator('#fxClose').click()
+  page.locator('#bFx').click();assert page.locator('#fxPanel').is_visible();assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bMenu'];page.locator('#fxClose').click()
   page.locator('#bMenu').click();page.locator('#bDetails').click();assert page.locator('#goal').is_visible()
   page.locator('#bMenu').click();page.locator('#bDetails').click();assert not page.locator('#goal').is_visible()
-  page.locator('#bMenu').click();page.locator('#bTools').click();page.mouse.click(30,300);assert page.locator('#dock button:visible').count()==1
+  page.locator('#bMenu').click();page.locator('#bTools').click();page.mouse.click(30,300);assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bMenu']
   page.evaluate('window.__testRuntime.startScanner()');assert page.locator('#scanner').is_visible();page.evaluate('window.__testRuntime.stopScanner()')
   dims=page.evaluate('({vw:innerWidth,sw:document.documentElement.scrollWidth,sh:document.documentElement.scrollHeight,vh:innerHeight})');assert dims['sw']<=dims['vw'] and dims['sh']<=dims['vh'],dims
   page.wait_for_timeout(700);page.screenshot(path=f'/tmp/whitedot-focus-{label}.png')
   assert not errors,errors
-  print(label+': one permanent control, explicit tool access, readable details, gesture dismissal and no overflow PASS',flush=True);c.close()
+  print(label+': compact menu and auto controls, explicit tool access, readable details, gesture dismissal and no overflow PASS',flush=True);c.close()
  b.close()
 server.shutdown()

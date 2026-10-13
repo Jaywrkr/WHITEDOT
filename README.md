@@ -2,23 +2,20 @@
 
 Un punto blanco en un mundo negro que compone música electrónica mientras lo exploras. Camino diario, Mundo procedural y Estudio; 11 biomas y 52 estilos actuales. Por Jay · [@jaywrkr](https://instagram.com/jaywrkr).
 
-## Estado integrado y traspaso a Claude
+## Entrega actual · culturas y exploración
 
-**Main `e27c219` (PR #73)** incluye fases 1–3, revisión de registros/atlas y el bloque de gestos/color de fase 4. [Estado completo y cifras](ESTADO_ACTUAL.md) · [handoff para Claude](HANDOFF.md) · [pendientes](PENDIENTES.md). La actualización documental está en `docs/claude-handoff-current-main`; leer esa rama mientras no esté integrada.
+Base **main 8096c8d (#77)** incorpora los cambios de Claude: materia, bandadas/flora, laboratorio, códigos/grabación, cubo como interacción, quietud, cajas y experimentación. El jardín modular y el rastro anteriores fueron retirados. Los detalles antiguos bajo Historial describen sus versiones, no funciones actuales.
 
-- Base fiable: guardado recuperable, respaldo/importación, identidad de lugares y cachés acotadas. [Fase 1](FASE_01.md).
-- Paisajes vivos: 33 hábitats, seis familias pequeñas, clima/materiales, vecinos relacionados y regiones amplias de 10.800 unidades. Original conserva su mapa y guardado. [Fase 2](FASE_02.md).
-- Música: frases sin melodía aguda obligatoria, registros por género, nuevas voces reed/membrane/bowed/hollow, articulaciones y arcos de ocho frases. Los 52 estilos y el ADN del generador se conservan. [Registros](REVISION_REGISTROS.md) · [Fase 3](FASE_03.md).
-- Instalaciones: espejos por arrastre con rollback, alternativa de precisión por toque y color de vidrios/reflejos ligado al movimiento. [Bloque de fase 4](FASE_04.md). Las nuevas familias propuestas de fase 4 siguen pendientes.
-- [Atlas de 118 vistas numeradas](docs/images/atlas-visual.png), actualizado con los colores actuales: muestras procedurales ampliadas para elegir qué rediseñar. Jay aún no ha seleccionado las figuras.
+La nueva rama **`feat/phase-06-cultural-exploration`** reúne ocho estudios con guardianes, huellas/puertas y 24 recuerdos, regiones **Vasto de 18.000 unidades**, paseo visible, laboratorio de **54 casos**, golondrinas y correcciones de mezcla/pausa. [Entrega y cómo probar](FASE_06.md). Los 11 biomas, 33 hábitats y 52 estilos del generador se conservan. Verificación: 53 suites de lógica, 36 recorridos de navegador + offline, 143 mezclas de audio; escucha física en teléfono pendiente.
 
-**Probar: Menú → Explorar mundos → Paisajes vivos**, presets Humedal/Salinas/Basalto/Micelio, o la partida Original. Para escuchar estilos concretos: Prototipo → Ritmos. Una rama amplia por bloque, con documentación y pruebas; no reaplicar entregas ya integradas.
+**Probar: Menú → Prototipo → Laboratorio → Notas → Guardianes**, o recorrer los casos con ‹ ›. Para espacios grandes: Explorar mundos → Vasto. En el Mundo, el botón junto al menú inicia/detiene el paseo. [Estado completo](ESTADO_ACTUAL.md) · [Continuar](HANDOFF.md) · [Pendientes](PENDIENTES.md).
 
 ## Jugar y probar
 
 - Mueve el punto con arrastre o WASD/flechas. El Camino recoge luz y abre el Mundo; explora, toca, pulsa y escucha. Menú → Instrumentos abre las herramientas; el mundo mantiene el fondo negro y su UI mínima.
 - La música evoluciona incluso en quietud. Los gestos cambian bajo, groove, motivo o espacio según la región. La fijación de sonidos es opcional y los ecos se borran tocando su anillo.
-- Vidrios: gira sus aros directamente. Espejos: orienta la luz. Jardines: conecta entradas y retira cables tocándolas. Suelo resonante: toca el piso o permanece cerca. Animal de respuesta: tócalo, toca el mundo para enseñarle y vuelve a tocarlo para escuchar su respuesta.
+- El dedo mueve el cubo o lanza su pulso. El cubo engancha cuerdas/aros, rodea prismas, empuja espejos, cruza membranas, aves y flora. Los encuentros responden al contacto, recorrido y quietud. `?dedo=1` es un modo de pruebas, también activado por la automatización heredada; no representa el control normal.
+- Los guardianes enseñan una llamada; cruza huellas y recorre piedras para despertar recuerdos. Códigos WD1 y Grabar set están en Favoritos/menú. No se exige grabar para hacer música.
 - Menú → Favoritos guarda hasta 64 puntos; Orientar/Viajar funcionan en su mundo/capa compatibles. El audio del instante no se congela como una escena.
 - **Menú → Progreso y respaldo** exporta esta partida. Elegir un JSON valida primero; Restaurar conserva una copia previa y recarga. Cada semilla/layout de prueba tiene su propio guardado y respaldo.
 - Menú → Prototipo → Semillas permite comparar mundos y encuentros sin reemplazar la partida habitual. Mi partida regresa al guardado principal.
@@ -50,9 +47,9 @@ Guardado local: borrar los datos del navegador elimina progreso; exporta antes. 
 
 ## Documentación vigente
 
-Esta revisión documental confirmó 51 suites Node y recarga offline con 81 módulos. La batería completa de navegador/audio no se repitió; [evidencias históricas y pruebas disponibles](ESTADO_ACTUAL.md).
+La base y los escenarios nuevos se contrastan con las suites de lógica, navegador completo y audio real. [Verificación de esta entrega](FASE_06.md) y [evidencias históricas](ESTADO_ACTUAL.md).
 
-[Estado actual](ESTADO_ACTUAL.md) · [Composición](FASE_03.md) · [Gestos y color](FASE_04.md) · [Revisión musical y visual](REVISION_REGISTROS.md) · [Paisajes vivos](FASE_02.md) · [Base fiable](FASE_01.md) · [Diez fases](FASES_UNIVERSO.md) · [Inventario V1](V1_PRODUCCION.md) · [Pendientes](PENDIENTES.md) · [Rama y merge](RAMAS.md) · [Continuar trabajo](HANDOFF.md) · [Variedad](VARIEDAD.md).
+[Estado actual](ESTADO_ACTUAL.md) · [Guardianes/exploración](FASE_06.md) · [Cubo/expansión de Claude](CUBO_Y_EXPANSION.md) · [Materia](FASE_04_MATERIA.md) · [Laboratorio/vida](LABORATORIO_Y_FASE_05.md) · [Composición](FASE_03.md) · [Gestos y color](FASE_04.md) · [Revisión musical y visual](REVISION_REGISTROS.md) · [Paisajes vivos](FASE_02.md) · [Base fiable](FASE_01.md) · [Diez fases](FASES_UNIVERSO.md) · [Inventario V1](V1_PRODUCCION.md) · [Pendientes](PENDIENTES.md) · [Rama y merge](RAMAS.md) · [Continuar trabajo](HANDOFF.md) · [Variedad](VARIEDAD.md).
 
 En el mapa original, la medición antigua mantiene **39.952 recetas detalladas entre 40.000 regiones**; no es el total del universo ni una cifra de canciones únicas. La auditoría de Paisajes vivos mide recetas y vecindad por semilla; esos números no cuentan canciones ni certifican variedad percibida.
 
