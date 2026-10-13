@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-seedpods-v1';
+const CACHE='whitedot-signals-v1';
 const SHELL=[
  "./",
  "./index.html",
@@ -37,6 +37,7 @@ const SHELL=[
  "./src/influence.js",
  "./src/initiative.js",
  "./src/installations.js",
+ "./src/installation-signals.js",
  "./src/instruments.js",
  "./src/interactions.js",
  "./src/jam.js",

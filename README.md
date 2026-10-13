@@ -1,3 +1,13 @@
+## Nueva etapa: instalaciones que comparten una señal
+
+Rama `feat/shared-installation-signals`, basada en `feat/organic-musical-seedpods`. El jardín modular conserva sus cables y suma tres fuentes de control: reloj, vidrios descubiertos o espejos descubiertos en su misma región. Mantener el aro del núcleo durante medio segundo cambia la fuente; arrastrar a una raíz o tocar núcleo y raíz conecta, y tocar una raíz conectada retira el cable. Los ángulos de vidrio cambian variante, fuerza y cadencia; las rutas reales de espejo distinguen reflejos parciales y conexión completa. Sin fuente descubierta o sin reflejos válidos, espera. Los datos de fuente se guardan con los cables; guardados antiguos usan reloj.
+
+Se transforma el arreglo existente mediante influencia regional, sin sumar osciladores ni crear realimentación de audio. El reloj conserva el comportamiento anterior. Núcleos y hojas reemplazan los rectángulos dibujados; controles de detalle siguen disponibles al tocar sus cuerpos. Pistas, Bitácora y logro **Una misma instalación** reflejan la conexión efectiva. Esto no es aún cableado libre entre cualquier objeto ni una simulación eléctrica completa.
+
+Para probar: Menú → Prototipo → Semillas → Encuentro de prueba → **Instalaciones conectadas · jardín modular**. La prueba coloca al jugador en el jardín inicial (2050, 900), en una partida separada. En esa región, los vidrios están en (1080, 900) y los espejos en (1600, 900): explorarlos y orientarlos antes de volver al módulo. Otras regiones conservan su distribución y rareza; no todas tienen los tres elementos.
+
+Validación: 44 suites Node; conexiones por toque/arrastre, cancelación, selección por permanencia, ángulos reales, influencia, logro y persistencia en móvil y escritorio. Diez renderizados del secuenciador real con módulos conducidos por vidrios/espejos, minimal, tropical, dub, amapiano, nu-disco suave y ambient a 44,1 kHz: pico máximo 0,954510, sin muestras por encima de 0,98. Recarga offline con 69 módulos. Estas mediciones no sustituyen la escucha artística en equipos reales.
+
 ## Nueva etapa: vainas musicales orgánicas
 
 Rama `feat/organic-musical-seedpods`, encadenada después de `feat/deep-musical-encounters` y `docs/organic-interaction-direction`. Sustituye el panel de teclas por una vaina con 16 semillas y tres núcleos musicales. Tocar una semilla cambia su paso; tocar un núcleo elige Bajo, Groove o Motivo; arrastrarlo a otro intercambia posiciones y mantenerlo silencia esa parte. El brote inferior cierra la vaina. Conserva los patrones, límites de densidad, afinación y volumen anteriores; no añade un sonido de interfaz.

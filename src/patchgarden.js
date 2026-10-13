@@ -1,3 +1,5 @@
+import {SIGNAL_NAMES,normalizeSignalSource,nextSignalSource,installationSignal} from './installation-signals.js';
+import {createMirrorSite} from './mirrors.js';
 import {CHANNEL_NAMES} from './influence.js';
 import {elementInk,WORLD_VISUAL} from './visual.js';
 const CHANNELS=['bass','groove','melody','space'];
@@ -5,7 +7,7 @@ export function normalizePatchSites(saved){
  const out={};for(const [id,s] of Object.entries(saved||{})){
   if(Object.keys(out).length>=64)break;
   if(!/^patch:-?\d+,-?\d+$/.test(id)||!Array.isArray(s?.connections))continue;
-  out[id]={connections:[...new Set(s.connections.filter(n=>Number.isInteger(n)&&n>=0&&n<3))],pattern:Number.isInteger(s.pattern)?Math.max(0,Math.min(3,s.pattern)):0,amount:Number.isFinite(s.amount)?Math.max(-1,Math.min(1,s.amount)):.8};
+  out[id]={source:normalizeSignalSource(s.source),connections:[...new Set(s.connections.filter(n=>Number.isInteger(n)&&n>=0&&n<3))],pattern:Number.isInteger(s.pattern)?Math.max(0,Math.min(3,s.pattern)):0,amount:Number.isFinite(s.amount)?Math.max(-1,Math.min(1,s.amount)):.8};
  }return out;
 }
 export function createPatchSite(region,size,seedOf,rng){
@@ -13,7 +15,7 @@ export function createPatchSite(region,size,seedOf,rng){
  const [rx,ry]=region.key.split(',').map(Number),r=rng(seedOf(`patch:v1:${region.key}`)),home=region.key==='0,0';
  const x=home?2050:(rx+.28+r()*.44)*size,y=home?900:(ry+.28+r()*.44)*size;
  const pool=CHANNELS.slice();for(let i=pool.length-1;i;i--){const j=Math.floor(r()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
- return {id:`patch:${region.key}`,x,y,region,hue:region.hue,variant:Math.floor(r()*8),connections:[],pattern:0,amount:.8,out:{x:x-68,y},inputs:(home?['bass','groove','melody']:pool.slice(0,3)).map((channel,i)=>({x:x+52,y:y+(i-1)*60,channel})),lit:0};
+ return {id:`patch:${region.key}`,x,y,region,hue:region.hue,variant:Math.floor(r()*8),source:'clock',connections:[],pattern:0,amount:.8,out:{x:x-68,y},inputs:(home?['bass','groove','melody']:pool.slice(0,3)).map((channel,i)=>({x:x+52,y:y+(i-1)*60,channel})),lit:0};
 }
 export function initialize(runtime){
  const $=runtime.$,S=()=>runtime.S,cache=new Map();let previous=S(),selected=null,armed=null,drag=null;
@@ -29,8 +31,14 @@ export function initialize(runtime){
    }if(site&&Math.hypot(site.x-S().wx,site.y-S().wy)<radius)out.push(site);
   }return out;
  }
- function remember(site){const saved=S().patchSites;if(!saved[site.id]&&Object.keys(saved).length>=64)delete saved[Object.keys(saved)[0]];saved[site.id]={connections:[...site.connections],pattern:site.pattern,amount:site.amount};}
- function panel(){if(!selected)return;$('patchPattern').value=selected.pattern;$('patchAmount').value=Math.round(selected.amount*100);$('patchValue').textContent=`${Math.round(selected.amount*100)} %`;$('patchInfo').textContent=selected.connections.length?selected.connections.map(i=>CHANNEL_NAMES[selected.inputs[i].channel]).join(' · ')+' conectado':'Sin cables · conecta el reloj a una entrada';}
+ function remember(site){const saved=S().patchSites;if(!saved[site.id]&&Object.keys(saved).length>=64)delete saved[Object.keys(saved)[0]];saved[site.id]={source:site.source,connections:[...site.connections],pattern:site.pattern,amount:site.amount};}
+ function signal(site){
+  const key=site.region.key,glass=S().glassSites?.[`glass:${key}`],saved=S().mirrorSites?.[`mirror:${key}`];let mirror=null;
+  if(site.source==='mirror'&&saved){mirror=createMirrorSite(site.region,runtime.REG*runtime.WCH,runtime.seedOf,runtime.rng);if(mirror)mirror.mirrors.forEach((m,i)=>m.angle=saved.angles[i]);}
+  return installationSignal(site.source,{glass,mirror});
+ }
+ function changeSource(site){site.source=nextSignalSource(site.source);remember(site);armed=null;runtime.stopAutopilot();panel();runtime.save();}
+ function panel(){if(!selected)return;$('patchPattern').value=selected.pattern;$('patchAmount').value=Math.round(selected.amount*100);$('patchValue').textContent=`${Math.round(selected.amount*100)} %`;$('patchInfo').textContent=selected.connections.length?selected.connections.map(i=>CHANNEL_NAMES[selected.inputs[i].channel]).join(' · ')+` · ${SIGNAL_NAMES[selected.source]}${signal(selected)?'':' · busca su instalación en esta región'}`:'Sin cables · conecta el núcleo a una raíz';}
  function close(){selected=armed=drag=null;$('patchPanel').hidden=true;runtime.save();}
  function open(site){runtime.closeGlass?.();runtime.closeMirrors?.();selected=site;$('patchPanel').hidden=false;panel();if(!S().help.patch){S().help.patch=true;runtime.say(runtime.VOZ.patch,'Jardín modular');}}
  function connect(site,i){
@@ -49,11 +57,12 @@ export function initialize(runtime){
   }return null;
  }
  function down(e){const hit=at(e.clientX,e.clientY);if(!hit||hit.index!==-1||e.target!==$('w'))return false;
-  runtime.audio();runtime.stopAutopilot();runtime.closeGlass?.();runtime.closeMirrors?.();close();armed=hit.site;drag={pointer:e.pointerId,x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY};runtime.ptr=null;runtime.tapStart=null;try{$('w').setPointerCapture(e.pointerId);}catch(_){}e.preventDefault();return true;
+  runtime.audio();runtime.stopAutopilot();runtime.closeGlass?.();runtime.closeMirrors?.();close();armed=hit.site;drag={pointer:e.pointerId,x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY,time:performance.now()};runtime.ptr=null;runtime.tapStart=null;try{$('w').setPointerCapture(e.pointerId);}catch(_){}e.preventDefault();return true;
  }
  function move(e){if(drag?.pointer!==e.pointerId)return false;drag.x=e.clientX;drag.y=e.clientY;e.preventDefault();return true;}
  function up(e){if(drag?.pointer!==e.pointerId)return false;const hit=at(e.clientX,e.clientY);
-  if(e.type==='pointerup'&&hit?.site===armed&&hit.index>=0){connect(armed,hit.index);armed=null;}
+  if(e.type==='pointerup'&&hit?.site===armed&&hit.index===-1&&performance.now()-drag.time>=550&&Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)<12){changeSource(armed);}
+  else if(e.type==='pointerup'&&hit?.site===armed&&hit.index>=0){connect(armed,hit.index);armed=null;}
   if(!hit&&Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)>14)armed=null;
   if(e.type==='pointercancel'||e.type==='lostpointercapture')armed=null;drag=null;return true;
  }
@@ -71,25 +80,27 @@ export function initialize(runtime){
  function step(step,bar,time){
   if(!surface()||!S().sound||runtime.ac?.state!=='running'||document.hidden||document.querySelector('.modal:not([hidden])')||runtime.currentPocket?.()?.kind==='quiet'||step!==0)return;
   const sites=nearby(300).filter(s=>s.connections.length).sort((a,b)=>Math.hypot(a.x-S().wx,a.y-S().wy)-Math.hypot(b.x-S().wx,b.y-S().wy));
-  const site=sites[0];if(!site)return;
+  const site=sites[0];if(!site)return;const control=signal(site);if(!control||bar%control.stride)return;
   const r=runtime.rng(runtime.seedOf(`patch-mod:v1:${site.id}:${site.pattern}:${Math.floor(bar/4)}`));
-  const variant=(site.variant+site.pattern*2+Math.floor(r()*3))%8;
+  const variant=(site.variant+site.pattern*2+Math.floor(r()*3)+control.variant)%8;
   // One modulation update on the bar; no new oscillators or feedback graph.
-  for(const i of site.connections){runtime.driveInfluence(site.region,site.inputs[i].channel,site.amount,variant);runtime.creativeAction?.(site.inputs[i].channel,'connect');}
+  for(const i of site.connections){runtime.driveInfluence(site.region,site.inputs[i].channel,site.amount*control.amount,variant);runtime.creativeAction?.(site.inputs[i].channel,'connect');}
+  if(site.source!=='clock'){S().journal.installations||={};S().journal.installations[site.source]=true;runtime.unlock('instalacionUnida');}
   setTimeout(()=>site.lit=1,Math.max(0,(time-runtime.ac.currentTime)*1000));
  }
  function draw(t,dt,ox,oy,radius){
   if(!surface())return;const c=runtime.cx;
   for(const site of nearby(radius+160)){
    site.lit=Math.max(0,site.lit-dt*2);const ink=elementInk('metal',site.hue);c.save();c.strokeStyle=ink;c.fillStyle=ink;c.lineWidth=WORLD_VISUAL.line;c.globalAlpha=.6+site.lit*.2;
-   c.strokeRect(site.out.x+ox-48,site.out.y+oy-22,48,44);c.font='9px monospace';c.textAlign='center';c.fillText('Reloj',site.out.x+ox-24,site.out.y+oy+3);
-   site.inputs.forEach((input,i)=>{c.strokeRect(input.x+ox,input.y+oy-22,65,44);c.fillText(CHANNEL_NAMES[input.channel],input.x+ox+32,input.y+oy+3);c.beginPath();c.arc(input.x+ox,input.y+oy,8,0,Math.PI*2);c.stroke();if(site.connections.includes(i)){c.strokeStyle=WORLD_VISUAL.gold;c.beginPath();c.moveTo(site.out.x+ox,site.out.y+oy);c.bezierCurveTo(site.x+ox,site.out.y+oy+20,site.x+ox,input.y+oy+20,input.x+ox,input.y+oy);c.stroke();c.strokeStyle=ink;}});
+   c.beginPath();c.ellipse(site.out.x+ox-24,site.out.y+oy,25,18,-.2,0,Math.PI*2);c.stroke();c.font='9px monospace';c.textAlign='center';c.fillText(SIGNAL_NAMES[site.source],site.out.x+ox-24,site.out.y+oy+3);
+   site.inputs.forEach((input,i)=>{c.beginPath();c.ellipse(input.x+ox+32,input.y+oy,33,17,(i-1)*.2,0,Math.PI*2);c.stroke();c.fillText(CHANNEL_NAMES[input.channel],input.x+ox+32,input.y+oy+3);c.beginPath();c.arc(input.x+ox,input.y+oy,8,0,Math.PI*2);c.stroke();if(site.connections.includes(i)){c.strokeStyle=WORLD_VISUAL.gold;c.beginPath();c.moveTo(site.out.x+ox,site.out.y+oy);c.bezierCurveTo(site.x+ox,site.out.y+oy+20,site.x+ox,input.y+oy+20,input.x+ox,input.y+oy);c.stroke();c.strokeStyle=ink;}});
    c.beginPath();c.arc(site.out.x+ox,site.out.y+oy,8,0,Math.PI*2);c.stroke();
    if(drag&&armed===site){c.strokeStyle=WORLD_VISUAL.gold;c.beginPath();c.moveTo(site.out.x+ox,site.out.y+oy);c.lineTo(drag.x,drag.y);c.stroke();}
-   if(Math.hypot(site.x-S().wx,site.y-S().wy)<230){c.globalAlpha=.65;c.fillText(armed===site?'Toca una entrada':'Arrastra del reloj a una entrada',site.x+ox,site.y+oy+105);}
+   if(Math.hypot(site.x-S().wx,site.y-S().wy)<230){c.globalAlpha=.65;c.fillText(armed===site?'Toca una raíz':`Arrastra a una raíz · mantén el núcleo: ${SIGNAL_NAMES[site.source]}`,site.x+ox,site.y+oy+105,Math.min(300,runtime.W-32));if(!signal(site))c.fillText(`Busca ${SIGNAL_NAMES[site.source].toLowerCase()} en esta región`,site.x+ox,site.y+oy+120,Math.min(300,runtime.W-32));}
    c.restore();
   }
  }
+ runtime.ACH.push(['instalacionUnida','Una misma instalación','Haz que vidrios o espejos descubiertos conduzcan una raíz modular.']);runtime.VOZ.instalacionUnida='Los objetos de este lugar ya hacen música juntos.';
  $('patchClose').onclick=close;
  $('patchPattern').onchange=e=>{if(!selected)return;selected.pattern=Number(e.target.value);remember(selected);panel();runtime.save();};
  $('patchAmount').oninput=e=>{if(!selected)return;selected.amount=Number(e.target.value)/100;remember(selected);panel();};$('patchAmount').onchange=()=>runtime.save();
