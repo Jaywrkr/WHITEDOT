@@ -1,3 +1,4 @@
+import { initialize as creative } from './creative.js';
 import { initialize as data } from './data.js';
 import { initialize as progress } from './progress.js';
 import { initialize as world } from './world.js';
@@ -92,6 +93,7 @@ controls(runtime);
 focusui(runtime);
 pwa(runtime);
 atlas(runtime);
+creative(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
 runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||runtime.lampLeft()<=0))runtime.S.mode="camino";

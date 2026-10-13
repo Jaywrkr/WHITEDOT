@@ -28,7 +28,7 @@ export function initialize(runtime) {
   cv.addEventListener("pointerdown",e=>{fromOverlay=false;start(e);});
   function start(e){
     if(!e.isPrimary||activePointer!==null)return;
-    if(!fromOverlay&&(runtime.glassPointerDown?.(e)||runtime.patchPointerDown?.(e)))return;
+    if(!fromOverlay&&!runtime.pinnedAt?.(e.clientX,e.clientY)&&(runtime.glassPointerDown?.(e)||runtime.patchPointerDown?.(e)||runtime.creativePointerDown?.(e)))return;
     if(!fromOverlay)runtime.audio();if(runtime.S.mode==="studio"){runtime.studioTap(e.clientX,e.clientY);return;}
     activePointer=e.pointerId;dragging=held=false;
     runtime.tapStart={t:performance.now(),x:e.clientX,y:e.clientY};ptr=null;if(!fromOverlay)try{cv.setPointerCapture(e.pointerId);}catch(_){}   // sin captura sobre textos: así un toque en la Voz la sigue abriendo
@@ -36,7 +36,7 @@ export function initialize(runtime) {
     else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   }
   addEventListener("pointermove",e=>{
-    if(runtime.glassPointerMove?.(e)||runtime.patchPointerMove?.(e))return;
+    if(runtime.glassPointerMove?.(e)||runtime.patchPointerMove?.(e)||runtime.creativePointerMove?.(e))return;
     if(e.pointerId!==activePointer||held||!runtime.tapStart)return;
     if(Math.hypot(e.clientX-runtime.tapStart.x,e.clientY-runtime.tapStart.y)>=14){if(!dragging&&fromOverlay)runtime.audio();dragging=true;cancelHold();}
     if(runtime.inWorld()&&dragging){
@@ -47,10 +47,10 @@ export function initialize(runtime) {
     }else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   });
   const up=e=>{
-    if(runtime.glassPointerUp?.(e)||runtime.patchPointerUp?.(e))return;
+    if(runtime.glassPointerUp?.(e)||runtime.patchPointerUp?.(e)||runtime.creativePointerUp?.(e))return;
     if(e.pointerId!==activePointer)return;
     cancelHold();
-    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!document.querySelector('.modal:not([hidden])')){if(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY))runtime.sonar();}
+    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!document.querySelector('.modal:not([hidden])')){if(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY)&&!runtime.creativeTap?.(e.clientX,e.clientY))runtime.sonar();}
     runtime.stopScanner();runtime.tapStart=null;ptr=null;activePointer=null;held=dragging=fromOverlay=false;
   };
   addEventListener("pointerup",up);addEventListener("pointercancel",up);cv.addEventListener("lostpointercapture",up);

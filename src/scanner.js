@@ -39,6 +39,7 @@ export function initialize(runtime) {
       const effect=runtime.getEffectProfile?.(source.kind,own,voice);
       const name=sp&&runtime.blobHabitat?.(own)?(runtime.S.cat[sp.id]?'Blob · '+sp.name:'Blob desconocido'):sp&&!runtime.S.cat[sp.id]?'Forma desconocida':source.object.name||source.name;
       item.textContent=`${name} · ${ROLES[voice.role]} · ${INSTRUMENTS[voice.instrument]?.[0]||voice.instrument}${patch?" · "+patch.name:""} · ${own.name}${effect&&effect.type!=="dry"?" · "+effect.name:""}${source.object.personality?" · "+source.object.personality.name:""}`;
+      if(runtime.gestureHint)item.textContent+=' · '+runtime.gestureHint(source.kind);
       list.append(item);
     }
     if(!sources.length){const item=document.createElement('li');item.textContent='Sin objetos musicales cercanos. La región sigue componiendo.';list.append(item);}

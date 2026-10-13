@@ -33,6 +33,10 @@ export function initialize(runtime){
  function eraseEcho(index){
   if(index<0)return false;const removed=loop.ecos[index];if(removed.auto)suppressed.set(removed.sourceKey,{x:removed.x,y:removed.y,layer:removed.layer});loop.ecos.splice(index,1);runtime.toast('<em>Eco</em> · borrado');ui();return true;
  }
+ function pinnedAt(x,y){
+  if(!runtime.inWorld())return false;const wx=S().wx+x-runtime.W/2,wy=S().wy+y-runtime.H/2;
+  return loop.ecos.some(e=>(e.layer||'superficie')===layer()&&Math.hypot(e.x-wx,e.y-wy)<32)||(layer()==='superficie'&&Object.values(band.members).some(m=>Math.hypot(m.x-wx,m.y-wy)<24));
+ }
  function tapEcho(x,y){
   if(!runtime.inWorld()||runtime.scanning||[...document.querySelectorAll('.modal')].some(m=>!m.hidden))return false;
   const wx=S().wx+x-runtime.W/2,wy=S().wy+y-runtime.H/2;
@@ -148,7 +152,7 @@ export function initialize(runtime){
  runtime.$('bAutoPins').onclick=togglePins;ui();
  const btn=runtime.$('bLoop');if(btn)btn.onclick=e=>{e.stopPropagation();btn.blur();runtime.audio();loopButton();};
  Object.defineProperties(runtime,{
-  toggleSoundPins:{get:()=>togglePins},tapEcho:{get:()=>tapEcho},cancelLoopRecording:{get:()=>cancelRecording},loopTap:{get:()=>loopTap},loopStep:{get:()=>loopStep},markInput:{get:()=>markInput},loopButton:{get:()=>loopButton},
+  pinnedAt:{get:()=>pinnedAt},toggleSoundPins:{get:()=>togglePins},tapEcho:{get:()=>tapEcho},cancelLoopRecording:{get:()=>cancelRecording},loopTap:{get:()=>loopTap},loopStep:{get:()=>loopStep},markInput:{get:()=>markInput},loopButton:{get:()=>loopButton},
   bandJoin:{get:()=>bandJoin},bandStep:{get:()=>bandStep},drawJam:{get:()=>draw},jamUI:{get:()=>ui},resetJam:{get:()=>reset},
   jam:{get:()=>({loop,band})}
  });
