@@ -1,3 +1,4 @@
+import {BoundedMap,CACHE_LIMITS} from './cache.js';
 // Escala del mundo: continentes sonoros, mares de silencio y campo de vitalidad.
 // Funciones puras y deterministas (misma semilla para todos). Unidades: regiones
 // (una región = REG×WCH px). Se calculan bajo demanda y se guardan en caché.
@@ -28,7 +29,7 @@ export const ringOf=(rx,ry)=>Math.max(Math.abs(rx),Math.abs(ry));
 
 export function createContinents(seedOf,rng,genres,options={}){
  const salt=n=>options.variant?seedOf('continent-noise:'+n):n;
- const seeds=new Map(),regions=new Map();
+ const seeds=new BoundedMap(CACHE_LIMITS.continentSeeds),regions=new BoundedMap(CACHE_LIMITS.continentRegions);
  // Familias de géneros con su tempo central, para dar identidad a cada continente.
  const fams={};for(const [id,g]of Object.entries(genres)){const f=familyOf(id);(fams[f]||=[]).push((g.bpm[0]+g.bpm[1])/2);}
  const famList=Object.keys(fams).filter(f=>FAMILIES[f]);
@@ -83,5 +84,5 @@ export function createContinents(seedOf,rng,genres,options={}){
  // Multiplicador de densidad para la generación de un chunk.
  const densityOf=vit=>.1+1.9*Math.pow(vit,1.35);   // tope ~2×: más denso tapaba al pixel en móvil
 
- return {at,vitality,densityOf,seedOfCell,clear(){seeds.clear();regions.clear();}};
+ return {at,vitality,densityOf,seedOfCell,stats:()=>({seeds:seeds.stats(),regions:regions.stats()}),clear(){seeds.clear();regions.clear();}};
 }

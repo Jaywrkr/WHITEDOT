@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import {worldIdentity,sameWorld,placeAddress} from '../src/world-identity.js';
+import {createSaveStore,makeBackup,readBackup,validateSave,checkSaveSize,MAX_SAVE_BYTES} from '../src/save-store.js';
+import {initialize as data} from '../src/data.js';import {initialize as progress} from '../src/progress.js';
+const map=new Map();let fail=false;const storage={getItem:k=>map.get(k)||null,setItem(k,v){if(fail)throw Error('Quota');map.set(k,v);}};
+globalThis.localStorage=storage;globalThis.location={search:''};const r={};data(r);progress(r);const identity=worldIdentity(),defaults=r.fresh();
+const legacy={todayLight:123,ach:{keep:'2026-10-12'},studio:{x:900,y:900,biome:0,slots:{'0,0':'luz'}}};map.set('legacy',JSON.stringify(legacy));
+const store=createSaveStore(storage,'legacy',defaults,identity),state=store.load();assert.deepEqual(state.ach,legacy.ach);assert.equal(state.worldIdentity.generatorVersion,1);state.totalLight=200;assert(store.save(state));assert.equal(JSON.parse(map.get('legacy:backup')).todayLight,123);
+const before=map.get('legacy');fail=true;assert(!store.save({...state,totalLight:300}));assert.equal(map.get('legacy'),before);assert.equal(store.status.kind,'write-error');fail=false;
+map.set('legacy','broken');const damaged=createSaveStore(storage,'legacy',defaults,identity),recovered=damaged.load();assert.equal(recovered.todayLight,123);assert(damaged.status.locked);assert(!damaged.save(recovered));assert.equal(map.get('legacy'),'broken');damaged.recover();assert.equal(map.get('legacy:before-restore'),'broken');assert(!damaged.status.locked);
+map.set('future',JSON.stringify({...state,worldIdentity:{...identity,generatorVersion:2}}));const future=createSaveStore(storage,'future',defaults,identity);future.load();assert(future.status.locked);assert(!future.save(state));assert.equal(JSON.parse(map.get('future')).worldIdentity.generatorVersion,2);
+const file=makeBackup(state,defaults,identity,r.saveScope);assert.deepEqual(readBackup(JSON.stringify(file),defaults,identity,r.saveScope).studio,legacy.studio);
+assert.throws(()=>readBackup(JSON.stringify(file),defaults,worldIdentity('other'),r.saveScope));assert.throws(()=>readBackup(JSON.stringify({...file,scope:{kind:'preview',seed:'original',layout:'classic'}}),defaults,identity,r.saveScope));assert.throws(()=>validateSave(JSON.parse('{"__proto__":{"polluted":true}}'),defaults,identity));assert.equal({}.polluted,undefined);
+assert.throws(()=>validateSave({...state,session:{version:1}},defaults,identity));assert.throws(()=>validateSave({...state,wx:NaN},defaults,identity));assert.throws(()=>validateSave({...state,journal:{music:[]}},defaults,identity));
+assert.throws(()=>validateSave({...state,journal:{music:{genres:[]}}},defaults,identity));assert.throws(()=>validateSave({...state,stars:[null]},defaults,identity));assert.throws(()=>validateSave({...state,rel:{}},defaults,identity));assert.throws(()=>readBackup('null',defaults,identity,r.saveScope));
+assert.throws(()=>checkSaveSize('é'.repeat(MAX_SAVE_BYTES/2+1)));assert.deepEqual(validateSave({studio:{x:10},journal:{music:{genres:{dub:1}}}},defaults,identity).studio.slots,{});
+const partial=validateSave({studio:{x:10},journal:{music:{genres:{dub:1}}}},defaults,identity);partial.studio.slots['0,0']='luz';partial.journal.music.instruments.sub=1;assert.deepEqual(defaults.studio.slots,{});assert.deepEqual(defaults.journal.music.instruments,{});
+assert(sameWorld(placeAddress(identity,-200,300),identity));assert(!sameWorld(identity,worldIdentity('different')));assert(!sameWorld(identity,worldIdentity('','wide')));
+// A prototype reset must not silently turn into the main world's seed/layout.
+globalThis.location={search:'?testSeed=blobs-01&layout=wide'};const preview={};data(preview);progress(preview);preview.S=preview.fresh();assert.equal(preview.S.worldSeed,'blobs-01');assert.equal(preview.S.worldIdentity.layout,'wide');
+console.log('PASS: legacy save migration, rollback-safe recovery/import, quota errors, foreign and future-world isolation, malformed data and preview reset identity');

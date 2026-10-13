@@ -1,18 +1,22 @@
 # Pendientes vigentes y preparación de V1
 
-El inventario completo y actualizado está en [V1_PRODUCCION.md](V1_PRODUCCION.md): 64 tareas agrupadas, criterios de publicación, expansión musical/procedural y reglas para guardar/volver a lugares. La lista histórica permanece en [PLAN_HISTORICO.md](PLAN_HISTORICO.md); sus estados antiguos no describen la versión actual.
+La secuencia vigente está en [FASES_UNIVERSO.md](FASES_UNIVERSO.md): diez fases amplias, una rama por fase. El inventario detallado sigue en [V1_PRODUCCION.md](V1_PRODUCCION.md). La lista histórica permanece en [PLAN_HISTORICO.md](PLAN_HISTORICO.md); sus estados antiguos no describen la versión actual.
+
+## Fase 1 implementada, pendiente del PR/merge de Jay
+
+`feat/phase-01-universe-foundation`: identidad de lugares/favoritos, guardado validado, recuperación y respaldo/importación, cachés acotadas, contratos ampliables, auditoría y automatización de pruebas. Detalle y límites: [FASE_01.md](FASE_01.md). No se han ampliado todavía biomas, géneros o instrumentos; no se ha certificado V1 en dispositivos reales.
 
 ## Integración verificada
 
-Main remoto `93a5323` incluye el PR #66 y toda la secuencia hasta vidrios sin panel (`cfeac0c`) y animal por toque (`991255a`). Esta revisión se agrega a la misma rama del animal.
+Base remota de esta fase: `7a0e8ff`, PR #67. Incluye el inventario V1 y toda la secuencia anterior, hasta vidrios sin panel y animal por toque.
 
 ## Regla de trabajo más reciente
 
-Agrupar muchas mejoras relacionadas en una misma rama, con commits y puntos de prueba por bloque. Propuesta de V1: una rama `release/v1`, un PR final, Jay hace PR/merge. Esta regla reemplaza la anterior de una función por rama. No crear ramas de documentación adicionales para este plan.
+Agrupar muchas mejoras relacionadas en una misma rama por fase, con commits y puntos de prueba por bloque. Jay hace PR/merge. Las próximas fases parten de la anterior si está pendiente o del main actualizado después del merge. No crear ramas de documentación separadas.
 
 ## Prioridad
 
-1. Base fiable: integración, identidad versionada, guardado recuperable, respaldos, residencia de cachés y pruebas automatizadas completas.
+1. Cerrar revisión/merge de fase 1 y validar Safari/Android reales, actualizaciones/rollback y conservación de generadores al ampliar el catálogo.
 2. Música: escucha larga, balance por rutas, instrumentos más distintos, formas evolutivas, transiciones y primeras tandas de estilos/FX.
 3. Mundo: contratos de contenido comunes, más relaciones/terrenos, cuerdas y suelo, instalaciones, puertas y búsquedas variadas, primeras culturas/personajes/reliquias históricas.
 4. Experiencia: Estudio, retorno y compartir lugares, historia/Voz, accesibilidad, UI silenciosa y pruebas con jugadores nuevos.

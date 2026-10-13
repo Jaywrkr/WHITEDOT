@@ -4,9 +4,9 @@ Revisión del código y planes al 13 de octubre de 2026. Propuesta de alcance pa
 
 ## Estado y forma de trabajar
 
-Main remoto verificado al cerrar la revisión: `93a5323`, merge del PR #66. Ya incluye rastros/suelo, vidrios (`cfeac0c`) y animal (`991255a`). Este inventario se añade a la misma rama del animal; no abre otra rama de documentación.
+Base de la fase 1 actual: main `7a0e8ff`, merge del PR #67, con este inventario y las entregas anteriores integradas. Fase 1 implementada en `feat/phase-01-universe-foundation`: [FASE_01.md](FASE_01.md).
 
-La instrucción más reciente de Jay reemplaza «una función = una rama»: agrupar muchas mejoras relacionadas. Propuesta: una rama `release/v1`, varios commits de alcance claro, puntos de prueba por bloque y un PR final. Debe partir del main actualizado, que ya incluye vidrios y animal, y reunir el trabajo nuevo. Conservar ascendencia, incorporar main actualizado y resolver conflictos antes de pedir revisión. Jay sigue creando PR y haciendo merge. No se modifica main ni se despliega producción desde esta revisión.
+La instrucción más reciente de Jay es una rama amplia por fase, con muchas mejoras relacionadas, commits claros y pruebas. El orden está en [FASES_UNIVERSO.md](FASES_UNIVERSO.md), sustituyendo la propuesta de una única `release/v1`. Jay crea PR y hace merge. El asistente no modifica main ni despliega esta fase directamente.
 
 ## Variedad real y cómo interpretar los números
 
@@ -34,9 +34,9 @@ Ya existen coordenadas `wx/wy`, regiones y capas. Favoritos guarda hasta 64 punt
 
 El lugar conserva su identidad en la versión actual; la radio sigue evolucionando. Favoritos no conserva el audio exacto que sonaba ni la frase temporal del animal. Jay descartó añadir escenas/ideas musicales guardables: no se reintroducen aquí. Exportar un set es una función separada, todavía pendiente.
 
-Para V1 propongo una dirección completa de lugar: `{worldSeed, generatorVersion, layoutVersion, layer, x, y}`; además, nombre y fecha. El objeto favorito actual no contiene todos esos campos, aunque semilla/layout están implícitos en la partida. Agregar una etiqueta de versión no basta: hay que conservar el generador/catálogo correspondiente o una migración explícita. Añadir géneros cambia probabilidades y puede cambiar identidades antiguas; proteger favoritos antes de expandir.
+Fase 1 agrega `address: {seed, layout, generatorVersion, catalogVersion, layoutVersion, layer, x, y}` a favoritos y completa los antiguos en su partida. Versiones actuales: `1`. Favoritos de otra identidad no activan orientación/autopilot. Agregar etiquetas no basta para futuros generadores: antes de cambiar catálogo/generación hay que conservar la versión antigua o migrarla explícitamente; ese trabajo continúa en fase 2.
 
-El guardado hoy es localStorage. Se puede perder al borrar datos del navegador y no sincroniza dispositivos. Exportación/importación y recuperación deben preceder a una promesa de guardado fiable. Un código compartible de lugar debe incluir semilla/versiones/capa/coordenadas, sin publicar automáticamente datos del jugador.
+El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Menú → Progreso y respaldo, exportación/importación validada, copia antes de restaurar, recuperación explícita y avisos de almacenamiento. Borrar los datos del navegador sigue borrando el guardado: exportar antes. El código compartible de lugar con semilla/versiones/capa/coordenadas sigue pendiente.
 
 ## Inventario completo de trabajo
 
@@ -45,11 +45,11 @@ El guardado hoy es localStorage. Se puede perder al borrar datos del navegador y
 ### Base, guardado y producción
 
 1. **P0 — Integración:** reunir cambios pendientes y contrastar lo que se prueba con el commit realmente publicado; no mantener numerosos PR de funciones aisladas.
-2. **P0 — Guardado fiable:** validar estructura y versiones, detectar datos corruptos, fallos de cuota y almacenamiento bloqueado; avisar y recuperar sin borrar silenciosamente.
-3. **P0 — Respaldo:** exportar/importar progreso con validación, copia previa y pruebas de recuperación; distinguir guardado habitual y pruebas de semillas.
-4. **P0 — Identidad de mundo:** versionar generador, catálogo y layout, proteger favoritos y decisiones guardadas al ampliar contenido.
-5. **P0 — Viajes largos:** residencia limitada de cachés regionales, biomas, continentes y chunks; regeneración determinista al regresar. Voces y encuentros ya tienen límites, el resto no está resuelto.
-6. **P0 — Pruebas reproducibles:** automatizar lógica, navegador, audio y offline. `npm test` enumera 42 scripts y omite `glass_music`, `installation_signals` y `sound_trails`. Hay 45 scripts Node con aserciones y un ayudante Web Audio (`audio_mix.mjs`); el conteo histórico de 46 incluía ese ayudante, que no constituye una suite Node.
+2. **P0 — Implementado fase 1:** validación/versiones, corrupción, cuota/lectura bloqueada, aviso y recuperación preservando el original.
+3. **P0 — Implementado fase 1:** exportar/importar con validación/copia previa; aislamiento de partida habitual y semilla/layout de prueba. Probar en equipos reales antes de release.
+4. **P0 — Parcial, fase 1:** identidad completa y rechazo de direcciones/versiones ajenas. Conservar generadores anteriores o migrar al ampliar sigue pendiente.
+5. **P0 — Implementado fase 1:** cachés regionales/biomas/continentes/chunks acotadas y regeneración determinista. Verificar consumo/batería reales antes de release.
+6. **P0 — Implementado fase 1:** descubrimiento de todas las suites Node con aserciones (48), runner de navegador/audio/offline y workflow CI. El ayudante Web Audio queda excluido del conteo Node. La ejecución remota de GitHub Actions requiere el PR/merge de Jay.
 7. **P0 — Dispositivos:** verificar Safari/iPhone, Chrome/Android, escritorio y PWA instalada; memoria, batería, varios tamaños, auriculares, altavoz, cambio de pestaña, suspensión/reanudación y rutas largas. Los ensayos actuales de navegador se hacen en Chromium, no demuestran compatibilidad real con todos esos dispositivos.
 8. **P0 — Actualizaciones:** actualización de caché sin mezclar versiones, restauración offline, vuelta atrás de una publicación y migración de partidas. El shell offline local ya funciona; las fuentes externas aún necesitan decisión de empaquetado.
 9. **P0 — Operación:** versión de release identificable, registro acotado de fallos recuperables, instrucciones de soporte, créditos/licencias de recursos utilizados y política correspondiente a las funciones realmente publicadas.

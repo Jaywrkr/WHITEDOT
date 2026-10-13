@@ -60,6 +60,7 @@
 <div class="zone" id="zone" aria-live="polite"><small id="zMood"></small><b id="zName"></b><span id="zDo"></span></div>
 
 <div class="modal" id="mSeeds" hidden><div class="sheet"><h2>Semillas de prueba</h2><p>Compara mundos completos desde su centro. Tu partida habitual queda separada.</p><p id="seedInfo"></p><label for="seedLayout">Espacio</label><select id="seedLayout"><option value="wide">Amplio · doble ancho</option><option value="classic">Clásico · comparar</option></select><form id="seedForm" class="row"><label for="seedValue">Semilla</label><input id="seedValue" maxlength="40" autocomplete="off"><button type="submit">Probar</button></form><div class="row" id="seedPresets"><button data-seed="blobs-01">Blobs I</button><button data-seed="blobs-02">Blobs II</button><button data-seed="bosque-01">Otra tierra</button></div><div class="row"><button id="seedNext">Otra semilla</button><button id="seedCenter">Volver al centro</button><button id="seedOriginal">Mi partida</button><button id="seedClose">Cerrar</button></div></div></div>
+<div class="modal" id="mSaveTools" hidden><div class="sheet"><h2>Progreso y respaldo</h2><p>Esta copia incluye tu progreso y lugares guardados de la partida actual. Las semillas de prueba tienen copias separadas.</p><p id="saveStatus" role="status"></p><div class="row"><button id="saveExport">Exportar esta partida</button><button id="saveOriginal" hidden>Exportar original conservado</button><button id="saveRecover" hidden>Recuperar copia válida</button></div><label for="saveImportFile">Elegir copia de esta partida</label><input id="saveImportFile" type="file" accept="application/json,.json"><p>Restaurar reemplaza esta partida y conserva una copia previa. Se recargará el juego.</p><div class="row"><button id="saveImportApply" disabled>Restaurar copia elegida</button><button id="saveToolsClose">Cerrar</button></div></div></div>
 <div class="modal menu" id="mMenu" hidden>
   <div class="sheet">
     <div class="tiles">
@@ -76,6 +77,7 @@
       <button id="bSoft" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 5v14M16 7v10M20 10v4"/></svg><span>Escucha suave</span></button>
       <button id="bAutoPins" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 8v8M8 12h8"/></svg><span>Fijar sonidos: no</span></button>
       <button id="bSession"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>Sesión</span></button>
+      <button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Progreso y respaldo</span></button>
       <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
     </div>
     <details class="devbox"><summary>Prototipo</summary><div class="row">

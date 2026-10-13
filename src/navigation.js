@@ -1,3 +1,4 @@
+import {sameWorld} from './world-identity.js';
 export function directionTo(x,y,target,layer='superficie'){
  if(!target)return null;const scale=layer==='bajo'?8:1,dx=(target.x-x)/scale,dy=(target.y-y)/scale,distance=Math.hypot(dx,dy);
  return {distance,dx:distance?dx/distance:0,dy:distance?dy/distance:0,angle:Math.atan2(dx,-dy),sameLayer:layer===(target.layer||'superficie'),arrived:distance<=30};
@@ -6,9 +7,10 @@ export function initialize(runtime){
  const $=runtime.$;let state=null,lastId=null,wasAway=false,announced=false;
  const target=()=>runtime.S.destination==='studio'?(runtime.S.studio.x==null?null:{id:'studio',name:'Tu Estudio',x:runtime.S.studio.x,y:runtime.S.studio.y,layer:'superficie'}):(runtime.favorites||[]).find(p=>p.id===runtime.S.destination)||null;
  function cancel(){runtime.S.destination=null;state=null;lastId=null;runtime.stopAutopilot?.();$('routeHud').hidden=true;runtime.save();}
- function select(id){const point=id==='studio'?(runtime.S.studio.x==null?null:{id}):(runtime.favorites||[]).find(p=>p.id===id);if(!point)return false;runtime.stopAutopilot?.();runtime.S.destination=id;lastId=null;runtime.save();$('mFavorites').hidden=true;tick();return true;}
+ function select(id){const point=id==='studio'?(runtime.S.studio.x==null?null:{id}):(runtime.favorites||[]).find(p=>p.id===id);if(!point)return false;if(id!=='studio'&&!sameWorld(point.address,runtime.worldIdentity)){runtime.toast?.('Este favorito pertenece a otro mundo o versión');return false;}runtime.stopAutopilot?.();runtime.S.destination=id;lastId=null;runtime.save();$('mFavorites').hidden=true;tick();return true;}
  function tick(){
   const point=target();if(!point){if(runtime.S.destination)cancel();else $('routeHud').hidden=true;return;}
+  if(point.id!=='studio'&&!sameWorld(point.address,runtime.worldIdentity)){cancel();return;}
   const direction=directionTo(runtime.S.wx,runtime.S.wy,point,runtime.S.layer||'superficie');
   if(lastId!==point.id){lastId=point.id;wasAway=direction.distance>90;announced=false;}
   if(direction.distance>90)wasAway=true;

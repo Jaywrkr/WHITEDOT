@@ -1,6 +1,6 @@
 # Alcance vigente de V1
 
-El pedido más reciente reemplaza las ramas por funciones con bloques grandes dentro de una rama. Ver [V1_PRODUCCION.md](V1_PRODUCCION.md) y [RAMAS.md](RAMAS.md). Main ya llegó al PR #66; los textos siguientes conservan el contexto de la agrupación anterior.
+El plan vigente es [FASES_UNIVERSO.md](FASES_UNIVERSO.md): diez fases amplias, una rama por fase. La fase 1 actual es `feat/phase-01-universe-foundation`, basada en main `7a0e8ff` (PR #67), y está documentada en [FASE_01.md](FASE_01.md). **Las cinco fases del resto de este documento son históricas y ya están integradas.**
 
 # Estado de integración
 
