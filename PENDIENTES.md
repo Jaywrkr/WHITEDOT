@@ -1,215 +1,230 @@
-# WHITEDOT: plan vigente y trabajo pendiente
+# WHITEDOT: fases, implementaciones e ideas por decidir
 
-Revisión: 2026-10-12. Contexto y arquitectura en [HANDOFF.md](HANDOFF.md); inventario de lo implementado en [CAMBIOS.md](CAMBIOS.md). Esta es la lista vigente, que sustituye los roadmaps superpuestos anteriores. Son etapas propuestas/acordadas, no autorización para ejecutarlas todas. Cada etapa ocupa una rama; Jay autoriza, prueba, crea PR y merge.
+Revisión: 2026-10-13, sobre `main` `5413d5f` (PR #35). Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
 
-## Dirección que debe guiar todas las ramas
+**Una fase = una rama revisable**, implementación, pruebas, commit y push; Jay crea PR/merge. Las fases futuras son propuestas para elegir, no autorización automática. Si una fase crece demasiado, dividirla antes de implementar. La fase 1 está implementada en la rama de esta revisión; lo demás sigue pendiente salvo las bases indicadas.
 
-Jay quiere un mundo musical que se sienta enorme, diverso y vivo, en el que también valga la pena quedarse bastante tiempo en un mismo bioma haciendo música. Explorar no debe reducirse a caminar ni sembrar sonidos. Objetos móviles/estáticos, criaturas, luces, clima y acciones deben ofrecer funciones distintas; los individuos tampoco deben reaccionar todos igual.
+## Qué quiere Jay y cómo organizar el crecimiento
 
-La música debe tener groove, bajos, medios, espacio, motivos y evolución con sensación de electrónica cuidada; evitar agudos constantes, arpegios/fanfarrias de videojuego y variación aleatoria sin intención. La misma clase de objeto puede ser bajo en un mundo y agudo/percusión/acorde en otro. Endel, sintetizadores, moduladores/secuenciadores, Richie Hawtin y curaduría electrónica de distintas épocas orientan la intención; no son instrucciones de copiar temas. No Man's Sky, Astroneer, Minecraft y Stardew Valley orientan exploración, descubrimiento y permanencia en el mundo.
+La música actual le encanta. Ganar nitidez y profundidad de interacción conservando su identidad. Busca mundos muy distintos: escasos, densos, con mezclas diferentes de flora/fauna, máquinas, fenómenos, pistas, sonidos e influencias culturales; algunos culturales, otros no. Pasar tiempo haciendo música en un lugar debe ser tan interesante como viajar. Cambiar números sin cambiar la experiencia no basta.
 
-Las referencias ambient, minimal techno, tech house, deep house, andina, cosmic disco, nu-disco, melodic techno, microhouse, organic house/downtempo, dub techno, afro house, amapiano, jazztronica, Berlin School, IDM, progressive house, liquid DnB, darkwave/EBM y algorave ya tienen base implementada. Tropical, melódico, robótico y disco eran ejemplos, no categorías únicas. La sensación de infinitud debe venir de combinaciones con identidad, continuidad y descubrimiento, no solo de añadir nombres de géneros.
+Primero preparar reglas para multiplicar contenido, después ampliar el catálogo. Ya existen semillas, biomas, ADN regional, continentes y gramáticas musicales; falta coordinar mejor los catálogos y sus compatibilidades. No construir un mundo artesanal por cada cultura/objeto. Tampoco reescribir todo antes de aprovechar lo actual.
 
-Escucha agradable para público amplio: controlar fatiga, disonancia accidental, subgrave, acumulación y brillo, conservando variedad. Escucha suave ya existe; todavía hace falta curaduría audible. Jay ama la lluvia; conservar su sensación. Viento de dunas ya reducido. Gravedad ya existe, pero Jay duda de su percepción: revisar antes de intensificarla o eliminarla. UI compacta y móvil como prioridad continua.
+Mantener fondo negro y protagonista blanco. Color localizado en elementos, instalaciones, luz y señales musicales. Referencias a Felipe Pantone: explorar originales con superposición, movimiento, geometría, reflejo y color/sonido. Las referencias culturales deben relacionar música, flora, fauna, material, arquitectura, movimiento y acciones; no solo añadir un traje o etiqueta. Japón y México fueron ejemplos: interesan muchas culturas y épocas. Leonardo da Vinci, instrumentos históricos y composiciones de dominio público son otras fuentes posibles, no incorporaciones ya aprobadas.
 
-## 0. Revisión e integración de lo ya implementado
+Dirección musical: electrónica con bajos, medios, groove, motivos, espacio y cambios graduales; agudos y disonancias intencionales/acotadas. Endel, Hawtin, sintetizadores, modulación, secuenciadores y curaduría de distintas épocas orientan el proyecto. No copiar temas ni cambiar lo que Jay disfruta por una mezcla genérica. Lluvia debe conservar su sensación; viento de dunas ya reducido. Gravedad regional existe pero su percepción sigue por evaluar. UI móvil compacta y coherencia visual acompañan cada fase.
 
-**Estado (auditoría 2026-10-12):** `main` `3c58c56` contiene todas las etapas 1–25, incluidos los instrumentos procedurales (PR #25). Pruebas en verde. Pendiente de PR: `feat/rhythm-atlas` (Atlas de ritmos y correcciones de documentación).
+## Primer bloque: consolidar y multiplicar lo existente
 
-- Jay escucha en móvil la mezcla actual (instrumentos procedurales + proximidad + efectos) usando el Atlas para saltar entre ritmos.
-- Seguir con una rama por etapa; no asumir que una rama está integrada sin verlo en `main`.
+### 1. Nitidez de mezcla — implementada en esta revisión, pendiente del PR de Jay
 
-## 1. Curaduría perceptiva de la base actual
+Salida lineal a niveles normales, protección de picos con margen, limpieza de graves en retornos de reverb/eco, corte subsónico y pad neutro sin resonancia elevada. Ritmos, notas, instrumentos, radio, looper/banda y efectos creativos conservados. Medición offline y escucha real cumplen papeles distintos; Jay debe comparar en móvil/auriculares. La revisión técnica y el roadmap también forman parte de esta rama. Detalles/evidencia en REVISION.
 
-**Ya hay:** motivos contenidos, gramática, perfiles materiales (en rama), filtro/shelf/compresor, atenuación por densidad, Escucha suave, efectos locales y vecindarios.
+### 2. Cruces entre capas, Estudio y jam
 
-**Falta:** escuchar regiones representativas de los 52 estilos, tanto quieto como interactuando y cruzando fronteras. Afinar grave/medio/agudo, dinámica, swing, articulación, envíos y claridad de roles. Evitar que todos los sonidos se vuelvan apagados o iguales al contener brillo. Comparar auriculares/altavoz móvil, volumen bajo y sesiones prolongadas. Revisar mezcla de familias con tempos muy distintos sin volverlas genéricas.
+Resolver ecos que reconstruyen claves `bajo:`/`cielo:` como coordenadas de superficie, fuentes de superficie que quedan activas al cambiar de capa, y retorno del Estudio con ADN de superficie mientras continúa en otra capa. Revisar qué se puede tocar/grabar en cada capa y documentar la decisión. Mejorar procedencia de eventos de looper: la ventana temporal actual puede capturar actividad automática. No añadir más mecánicas antes de estabilizar esos cruces.
 
-**Aceptación:** pulso/groove reconocible, bajo legible, capas diferenciadas, sin saturación ni fatiga marcada en pruebas humanas. Registrar coordenadas/casos problemáticos y correcciones. No prometer agrado universal ni tratar tests de scheduler como validación artística. Puede acompañar todas las etapas; no exige paralizar el siguiente paso si Jay lo autoriza.
+**Probar:** entrar/grabar/reproducir/salir en superficie/Subsuelo/Cielo, abrir/cerrar Estudio en cada capa, audio suspendido/silenciado, recarga y fin de linterna. Ver hallazgos y casos reproducidos en REVISION.
 
-## 1b. Biblioteca de ~100 ritmos (pedido de Jay)
+### 3. Recetas de lugar y catálogo ampliable
 
-**Ya hay (rama `feat/rhythms-afro-roots`):** 52 estilos. Tanda 1 hecha: 18 de raíz afroamericana. Reparto ponderado (máx. ≈ 3,4 %, mín. ≈ 0,7 %). Atlas con filtro por familia y marca de probado.
+Definir un esquema versionado que coordine geografía, vitalidad, distribución, familias de flora/fauna/objetos, materiales, rasgos físicos, acciones, roles/timbres, colores, clima, rareza e influencias culturales opcionales. Cada elemento nuevo declara afinidades, variaciones y presupuesto de apariciones/sonido; no un bloque de condiciones dispersas por cada bioma.
 
-**Siguientes tandas, en este orden propuesto:** 2) afro y diáspora, 3) latino y andino, 4) industrial y oscuro, 5) bass y breaks, 6) otras escenas. Cada tanda en su propia rama, siguiendo la receta descrita en HANDOFF ("Biblioteca de ritmos y reparto equilibrado"). Ya no hace falta separar EBM clásico de darkwave/EBM si Jay no lo pide.
+Semillas independientes para no desplazar todo el RNG al añadir un elemento. Diferenciar identidad persistente y estado temporal. Mantener versiones/registros previos o migrar conscientemente; cambios de generador pueden alterar coordenadas antiguas. Las influencias pueden faltar o combinarse con reglas. No generar todas las piezas en todos los lugares.
 
-**Pendiente de esta etapa:** Jay escucha la tanda 1 con el Atlas y marca cuáles suenan bien; ajustar las que no. Dar a cada familia una afinidad suave por bioma si se quiere que el paisaje y el ritmo se correspondan más (hoy el campo de tempo decide casi todo, salvo Origen y Vacío).
+**Probar:** incorporar un elemento al catálogo sin modificar múltiples generadores; volver reconstruye identidad, los límites se cumplen, antiguos descubrimientos siguen utilizables. Usar módulos/semillas actuales como base, no crear una abstracción enorme vacía.
 
-**Objetivo:** llegar a unos 100 ritmos agradables y distintos entre sí, con muchas raíces afro/afrolatinas/afroamericanas, industriales, latinas, asiáticas y de todas las épocas de la electrónica. Cada uno con patrón de batería propio, bajo, hook, swing, tempo y escala; no un renombre de otro.
+### 4. Combinaciones coherentes y variedad perceptible
 
-**Lista propuesta de ~66 nuevos** (agrupados; ajustar con Jay):
-- Raíz afroamericana / house y techno clásicos: Chicago house, Detroit techno, acid house, deep/soulful house, gospel house, garage house (NY), ghetto house, juke/footwork, Baltimore club, Jersey club, Miami bass, electro-funk, boogie, hip hop instrumental (boom bap), lo-fi hip hop, trap, G-funk, R&B alternativo, Detroit electro, broken beat.
-- Afro y diáspora: afrobeat electrónico, gqom, kuduro, baile funk, afro tech, 3-step, kwaito, Afro-Cuban house, highlife electrónico, Ethio-groove.
-- Latinas y andinas: cumbia digital, tribal guarachero, reggaetón/dembow, moombahton, bossa electrónica, salsa house, latin house, dancehall, champeta electrónica, pasillo/sanjuanito electrónico.
-- Industrial y oscuro: industrial techno, EBM clásico (ya está darkwave/EBM; separar), hard techno, Berlin minimal oscuro, noise ambient, dark ambient, witch house, coldwave.
-- Bass y breaks: UK funky, grime, 2-step, jungle, footwork jungle, halftime, future garage, bassline, big beat.
-- Otras escenas: trance clásico, psytrance, goa, Balearic, Italo disco, synthwave, French house, electroclash, glitch, chillwave, vaporwave, city pop electrónico, J-ambient (kankyō ongaku), Bollywood/Asian underground, Arabic/maqam house, Balkan electro, krautrock motorik, dub reggae, ambient techno.
+Reglas de compatibilidad, distribución y rareza; transiciones entre vecinos; presupuestos gráficos/sonoros. Probar primero con contenido existente: lugares mínimos, densos, orgánicos, mecánicos, rítmicos, melódicos, con/sin personajes o instalación. Controlar repetición de recetas y qué diferencias se oyen/juegan, además de contar semillas distintas.
 
-**Cómo construirlo:**
-- Hacerlo en tandas de ~15–20 por rama (por ejemplo: raíz afroamericana primero), cada una con prueba en `tests/atlas.mjs` de que todos aparecen y con patrones distintos (como `tests/references.mjs`).
-- Mover la elección de género de "pools por bioma + probabilidades sueltas" a una tabla única con peso por género y afinidad por bioma, para que el reparto sea parejo (hoy IDM ≈ 13 % y deep house ≈ 1 %).
-- Tempos > 150 BPM (jungle, footwork, psytrance) y < 80 BPM necesitan revisar la mezcla de fronteras y el campo de vecindarios.
-- Atlas con filtro por familia y marca de "probado" para que Jay valide uno por uno.
+**Probar:** muestra reproducible de regiones con diversidad de acciones, roles y siluetas, continuidad musical y casos extremos estables. Actualmente una muestra de 10.000 regiones dio 1.517 combinaciones bioma/género/gravedad y 10.000 recetas detalladas distintas: identidad técnica no equivale a 10.000 experiencias totalmente diferentes. Mundo actual comparte semilla; mapas independientes por jugador no están implementados.
 
-**Aceptación:** ~100 géneros en `GEN`, todos alcanzables en el Atlas dentro de 30 anillos, reparto sin géneros por encima de ~3 % ni debajo de ~0,5 %, patrones de batería distintos verificados por prueba, y validación audible de Jay por tandas.
+### 5. Lenguaje gráfico común
 
-## 1c. Plan del mundo infinito (acordado con Jay, 2026-10-12)
+Guía de escalas, grosor, glifos, movimiento, profundidad, brillo, color y reacción al beat para flora/fauna, nuevos hitos, ríos, portales, ecos y capas. Reconciliar trazos/píxeles originales con curvas, halos y cuadrícula del Cielo. Evitar blanco brillante que confunda objetos con jugador. Corregir legibilidad de textos y barras de banda/looper simultáneas en móvil.
 
-**Principio:** el infinito no se siente por cantidad, sino por escala, contraste y promesa de que más allá hay algo distinto. Evitar la "avena procedural" de No Man's Sky: muchas combinaciones que se sienten iguales.
+**Probar:** escenas densas/vacías, capas, lluvia y FX con protagonista visible, HUD discreto, sin solapamientos ni rellenos globales de color. No rediseñar todo el juego de golpe.
 
-**Fase 1 · Base del mundo — integrada (PR #29); falta que Jay la escuche y la juegue en móvil:**
-1. **Continentes sonoros:** capa por encima de las regiones, fronteras curvas, tamaños desiguales (pocos gigantes, muchos medianos, archipiélagos). Cada continente tiene nombre, tonalidad, familia de géneros y color. Al cruzar se siente un cambio de tono, como la transición de un DJ. Entre continentes hay **mares de silencio** con faros aislados. Sin cuadrícula visible.
-2. **Contraste de densidad:** un campo continuo de vitalidad reemplaza los 5 niveles de relleno. El vacío funciona como la subida de un track y el lugar lleno como el drop: la música se adelgaza en lo vacío y entra completa al llegar a un oasis.
-3. **Horizonte sonoro:** hitos grandes (torres, árboles gigantes, ciudades de criaturas, monolitos, faros). Primero se oyen (apagados y desde su dirección), luego se intuyen (brillo en el borde) y luego se ven. Cada uno tiene su motivo musical. Máximo 2 sonando a la vez. Sin flechas ni brújula.
+### 6. Iniciativa ambiental tras ~60 segundos quieto
 
-**Fase 2 · Viaje — integrada (PR #30). Falta de esta fase: reflejar "ritmos más extraños" lejos del Origen sin romper el reparto global; tarjeta de récord propia si el mapa no basta:**
-5. **Más lejos, más raro, y la distancia cuesta:** afinación torcida, objetos más grandes, colores imposibles y ritmos extraños lejos del origen. Expediciones de varios días con el Estudio como campamento base. Récord de distancia con tarjeta para compartir.
-8. **Mapa dibujado:** solo lo que viste, con símbolos de lo que escuchaste, en zoom de continente y región, exportable como imagen. El mapa recuerda, no revela.
+Radio y fenómenos ya evolucionan. Añadir respuesta específica a inmovilidad prolongada: criaturas, objetos/texturas y secciones entran poco a poco, a frase, con límites. Definir efecto de pulsar sin moverse. Recuperar agencia suavemente al caminar, excluir menús/Escuchar del tiempo activo, respetar claros/linterna/silencio.
 
-**Fase 3 · Asombro — integrada (PR #32); confluencias y ríos en el mapa en `feat/infinite-world-alive`. Falta: manantiales y caminos marcados por migraciones:**
-4. **Rarezas que rompen reglas:** niveles raro/legendario/mítico con frecuencia real. Cada una deja una muestra o instrumento único para el Estudio. La Voz suelta rumores con pistas. Lo raro se anuncia, no se regala.
-2. **Ríos y caminos:** un río es un set de DJ (la energía sube río abajo). Nacen en manantiales, mueren en mares de silencio, y donde dos se juntan sus géneros se mezclan. Los caminos los marcan las migraciones.
+**Probar:** 0/60/120 s en punto con pocas/muchas fuentes, variedad audible sin acumulación creciente ni reinicios bruscos. Camino/Estudio separados.
 
-**Fase 4 · Vida — tormentas, estaciones y huellas integradas (PR #33); capas en `feat/world-layers`. Falta: migraciones con posición por fecha y rastros de otros jugadores:**
-7. **El tiempo cambia el mundo:** clima que se desplaza por el mapa y se puede perseguir, migraciones con posición según la fecha, estaciones semanales por continente. Da razones para volver, nunca castigo por no volver (nada de FOMO).
-9. **Capas:** bajo tierra 1 paso equivale a 8 arriba (atajo de viaje, dub y graves). La capa del cielo da vista de continente. Se entra con un ritual: tocar el ritmo correcto con pulsos.
-10. **El mundo te recuerda:** tu rastro, lo sembrado, los ecos y los Estudios quedan. Más adelante, rastros de otros jugadores.
+## Segundo bloque: recordar, volver y pasear
 
-## 1d. Plan creativo de música (pedido de Jay, 2026-10-12)
+### 7. Favoritos musicales
 
-Jay quiere que el juego tenga cada vez más cosas divertidas, siempre ligadas a la música, con lugares donde solo se hace música, cosas que se plantan, efectos de producción y mucha interacción. Referencias: Incredibox, Minecraft, No Man's Sky, Astroneer, Stardew Valley, Endel, Richie Hawtin y la producción electrónica real. Ya hechos: looper de ecos, banda de criaturas y mesa de efectos.
+Marcar cualquier punto, nombrarlo, guardar coordenadas, capa, región/bioma, carácter musical y fecha; editar/borrar en Bitácora/mapa. Independiente del checkpoint del Estudio. Guardado compatible y límite razonable.
 
-**Prioridad alta (lo más divertido por esfuerzo):**
-1. **Escenarios y pista de baile:** en las ciudades de formas hay un escenario. Si llegas con tu banda, tocas un set: las criaturas del pueblo bailan más cuanto mejor mantienes el groove (pulsos en el beat, transiciones con la mesa de efectos). Al final, puntuación y muestra o color de recompensa.
-2. **Maestros de género (pueblos):** cada pueblo tiene una criatura maestra de un género. Te enseña su ritmo con llamada y respuesta de pulsos, estilo Simón dice. Al aprenderlo, ese patrón queda en tu Estudio como "partitura" y la Bitácora explica sus partes (bombo, hats, bajo). Coleccionar las 52 partituras es la forma de aprender géneros jugando.
-3. **Huertos de ritmo (estilo Stardew):** plantas semillas sonoras en una cuadrícula de 16 casillas, que funciona como secuenciador de pasos. Crecen con los días reales y cambian de timbre. Tu huerto suena cuando vuelves y lo puedes regar con pulsos para darle variación. Es plantar con sentido musical, no un jardín decorativo.
-4. **Máquinas sonoras (estilo Minecraft):** colocas bloques resonadores en el mundo que se disparan entre sí en cadena (dominó o redstone musical). Así armas máquinas que tocan solas y quedan guardadas en el lugar.
-5. **Grabar y compartir el set:** graba 30–60 s de audio y video del juego (MediaRecorder) para subir a Instagram. Es clave para @jaywrkr.
+**Probar:** negativos, fronteras, recarga y cambio de generador. Coordenadas no prometen recuperar el mismo compás; receta exacta requiere escenas.
 
-**Prioridad media:**
-6. **Retos de DJ en fronteras:** cruzar de una región a otra usando la mesa de efectos (filtrar, cortar en el compás) puntúa como una mezcla. Hay logros por mezclas perfectas.
-7. **Mixer por capas en cada lugar (Incredibox):** silenciar o dejar solo bajo, percusión, acordes y melodía de la radio del lugar para entender cómo está hecha la canción.
-8. **Crafting de sonidos en el Estudio:** combinar 2 muestras para crear otra (cristal + agua = campana húmeda) con un libro de recetas que se descubre.
-9. **Criaturas que solo aparecen si tocas su ritmo:** coleccionables raros con llamada y respuesta.
-10. **Día y noche real:** de noche, géneros más profundos y otra luz; de día, más brillo.
-11. **Favoritos y escenas:** guardar un lugar con su receta musical y compartir un código.
+### 8. Orientación y retorno
 
-**Prioridad baja o grande:**
-12. **Sintetizador modular en el Estudio:** perillas por instrumento (ataque, filtro, resonancia) y conexiones.
-13. **Modo Endel / paseo:** autopilot lento con música generativa para concentrarse o dormir, con temporizador.
-14. **Festivales semanales globales:** un continente tiene festival y todos los jugadores lo ven igual (por fecha).
-15. **Multiplayer jam:** dos bandas sincronizadas en el mismo lugar. Requiere servidor.
-16. **Migraciones de criaturas gigantes** según la fecha, y manantiales como origen de los ríos.
-17. **Seguir ampliando la biblioteca a ~100 ritmos**, en tandas por familia: afro y diáspora, latino y andino, industrial, bass y breaks, otras escenas.
+Seleccionar favorito/Estudio, dirección/distancia y llegada, cancelación discreta. Aprovechar mapa existente: ya muestra exploración, no favoritos ni navegación automática. Decidir costo/alcance de retorno acorde a linterna y exploración, sin introducir teletransporte gratuito por accidente.
 
-**Criterio:** cada idea tiene que sonar bien, entenderse con un gesto en el móvil y respetar las decisiones de HANDOFF (sin drone constante, cuantizado a tempo, UI mínima).
+**Probar:** destinos en distintas regiones/capas y coordenadas negativas, ubicación del campamento conservada.
 
-## 2. Más iniciativa del ambiente tras aproximadamente 60 segundos quieto
+### 9. Autopilot
 
-**Siguiente etapa de producto propuesta.** Radio ya cambia sin movimiento y fenómenos ya tienen autonomía; falta respuesta específica a quietud prolongada.
+Paseo lento para escuchar y viaje a favorito, inicio explícito, cancelación al mover o por botón, pausa en menús, consumo normal de linterna y respeto a movilidad/capas. Temporizador opcional para enfoque/descanso.
 
-- Medir inmovilidad real del jugador; al llegar al umbral introducir lentamente iniciativa de criaturas/objetos/texturas y nuevas secciones.
-- Mantener estilo, armonía y tempo; usar momentos de frase y límites de densidad. No convertir quietud en festival de sonidos aleatorios.
-- Al volver a moverse, recuperar agencia sin salto brusco ni reiniciar todo cada frame. Definir qué ocurre al pulsar/interactuar sin desplazarse.
-- Excluir menús y Escuchar del tiempo de quietud activa, respetar silencio/linterna y claros de escucha; mantener Camino y Estudio.
+**Probar:** llegada, cancelación táctil/teclado, linterna, salida/recarga y suspensión del navegador. No garantizar reproducción en segundo plano.
 
-**Aceptación:** comparar 0–60–120 s en mismo punto, sin fuentes y con muchas. Cambios perceptibles y musicales, sin repetición fija infinita ni acumulación creciente, retorno suave a movimiento. Umbral de 60 s es aproximado y afinable.
+## Tercer bloque: nuevos verbos e instalaciones musicales
 
-## 3. Favoritos musicales en cualquier coordenada
+### 10. Vidrios de color musicales
 
-Marcar el punto que guste, independiente del Estudio/checkpoint: nombre, coordenadas, región/bioma, género, escala, carácter/materiales y fecha. Acceso compacto desde menú/Bitácora, con edición y borrado. Guardado local compatible, límite razonable y registros antiguos normalizados.
+Tres piezas translúcidas giratorias/deslizables; superposición revela geometrías y modifica capas, articulación o timbre. Instalación original con inspiración cinética/cromática; generador varía forma, cantidad, material y rol según receta.
 
-**Aceptación:** favorito sobrevive recarga, funciona en negativos/fronteras y distingue ubicación de escena exacta. Coordenadas recuperan entorno/identidad, pero radio puede estar en otra frase y versiones futuras pueden cambiar música. No prometer reproducción exacta todavía.
+**Probar:** movimiento táctil comprensible, cambio sonoro a tempo, efecto visual local, presupuesto de voces. No teñir todo el fondo.
 
-## 4. Orientación y retorno a lugares guardados
+### 11. Espejos musicales
 
-Seleccionar favorito o Estudio, mostrar distancia/dirección de forma discreta y permitir cancelar selección. Mapa o lista inicial según alcance de rama; no llenar pantalla con indicadores. Definir retorno compatible con linterna y exploración, evitar perder el punto de regreso al usar Estudio.
+Orientar reflejos entre objetos para activar ecos, secuencias o revelar pistas. Rutas acotadas, identidades por región: no todos los espejos hacen lo mismo. Combinar después con vidrios sin exigirlos para la primera versión.
 
-**Aceptación:** orientar correctamente desde distintas regiones/negativos, actualizar distancia y reconocer llegada. Viaje automático se implementa en la etapa siguiente; no confundir orientación con teletransporte gratuito.
+**Probar:** rayos legibles, feedback de conexión, impedir bucles sonoros sin límite, variar rol musical manteniendo coherencia.
 
-## 5. Autopilot
+### 12. Tocar, sostener, tensar, deslizar y soltar
 
-Paseo lento para explorar/escuchar y desplazamiento hacia favorito seleccionado. Controles claros de empezar/parar, cancelación inmediata por movimiento manual y botón; pausa con menús, consume linterna normalmente. Respetar velocidad/gravedad regional, límites de interacción y transición musical. Definir conducta al llegar, agotar linterna o salir del Mundo.
+Cuerdas luminosas, piedras de ritmo, prismas secuenciadores y resonadores estáticos/móviles. Contacto sostenido abre nota/textura; tensión transforma articulación; desplazamiento reorganiza acentos o pasos. Introducir familias pequeñas por rama si hace falta. Individuos conservan rasgos distintos y mismos tipos pueden cambiar de rol entre regiones.
 
-**Aceptación:** no toma control sin acción del jugador, no bloquea salida/cancelación ni genera pulsos automáticos ilimitados. Recorrido musical continuo y sesión larga estable. No promete audio en segundo plano del navegador. Validar táctil y teclado.
+**Probar:** tocar varios minutos sin caminar ni sembrar, gestos compatibles con mover/pulsar/Escuchar, duración acotada y salida clara. Definir cambios temporales/persistentes.
 
-## 6. Interacciones musicales profundas
+### 13. Conversaciones musicales
 
-**Ya hay:** contacto, pulso, ensamble autónomo, choques/cadenas, nuevos objetos físicos, personalidad y reparto de roles.
+Objeto/criatura responde a frase, ritmo o secuencia del jugador; turnos y silencios, respuestas entre vecinos y cambios locales. Call-response original existe, ampliar agencia y reconocimiento en lugar de sumar sonidos al azar.
 
-**Falta:** acciones que permitan componer y desarrollar un lugar sin caminar siempre: sostener un acorde, activar/desactivar una secuencia, cambiar acentos/divisiones, intercambiar respuestas entre vecinos o transformar temporalmente un objeto. Más elementos/luz y diferencias individuales donde aporten un verbo nuevo.
+**Probar:** jugador percibe relación causa/respuesta, armonía y densidad protegidas, ventana de escucha visible.
 
-Implementar por grupos pequeños con gesto móvil comprensible; no cada objeto hace todo. Roles distintos según región, resultados a tempo y limitados armónicamente. Escuchar/feedback explican acción sin tutorial técnico invasivo. Decidir qué cambios son temporales y cuáles persistentes.
+### 14. Efectos de producción ampliados
 
-**Aceptación:** poder pasar varios minutos haciendo música en un bioma con agencia clara y distintas acciones, sin paredes sonoras ni crecimiento ilimitado de emisores.
+Por tandas: chorus, phaser, flanger discreto, resonadores, dub delay, congelación breve de reverb, texturas granulares. Mantener FX actuales y nitidez, asignaciones por objetos/lugares y controles simples. Granular necesita definir fuente/buffer y costo, no asumir banco de grabaciones.
 
-## 7. Looper y ecos musicales — primera versión hecha (`src/jam.js`); falta exportar audio y ecos persistentes
+**Probar:** cada efecto distingue función y carácter, bypass limpio, colas/picos/feedback acotados, móvil estable.
 
-Capturar uno/dos compases de acciones musicales y dejarlos temporalmente en mundo, con entrada/cierre a compás, borrar/silenciar y límite de capas. Elegir representación de eventos musicales antes de asumir grabación de audio. Proximidad y espacio local deben importar.
+### 15. Mixer por capas
 
-**Aceptación:** reproducción sincronizada, sin deriva ni duplicación de disparos; editar/parar claro en móvil; capas respetan armonía/densidad y se limpian al salir o según duración definida. Exportación de audio es alcance separado, no existe ahora.
+Silenciar/solo bajo, percusión, acordes y melodía de radio con UI breve. Necesita separación de rutas real; el bus actual no distingue todas esas familias.
 
-## 8. Escenas y memoria musical
+**Probar:** cada solo/mute afecta únicamente capa elegida, transición suave y mantiene interacción/efectos/silencio global.
 
-Guardar una combinación recuperable de patrón, instrumentos/perfiles, armonía, tempo y capas, junto con ubicación y versión del generador. Resolver qué significa recuperar exactamente una música que gustó; favorito solo no lo hace. Evitar persistir nodos Web Audio; serializar recetas/eventos con migración.
+### 16. Banda más expresiva
 
-**Aceptación:** reabrir escena reproduce intención musical, distingue reproducción exacta de reconstrucción adaptada y se comporta al cambiar versión. UI y tamaño del guardado acotados. Integrar con looper/Estudio cuando existan.
+Primera versión ya integrada: cuatro papeles, seguimiento y combos. Añadir turnos, entradas/salidas, retirar miembros, conversación y combinaciones sin doblar radio descontroladamente. Adaptación de patrones al carácter del lugar.
 
-## 9. Banda de criaturas — primera versión hecha (`src/jam.js`); falta turnos, entradas y salidas y más combos
+**Probar:** se oye organizada, roles claros y agencia del jugador, límite de voces y volumen con banda completa.
 
-Convertir seguidores/cantantes actuales en roles coordinados: bajo, percusión, melodía/textura y call-response, con turnos, entradas/salidas y combos. No sumar cada criatura encima de todas las demás. Comportamientos y temperamentos propios conservados; interacción musical entre ellas.
+### 17. Escenas, memoria musical y ecos persistentes
 
-**Aceptación:** una pequeña banda se oye organizada, jugador entiende aportes y puede alterar composición; límites de voces y sincronía claros. No es todavía sesión multiplayer.
+Looper temporal ya existe. Guardar receta/versiones de patrones, armonía, instrumentos/materiales, tempo, ubicación/capa y capas activas; serializar eventos, no nodos Web Audio. Recuperar intención musical tras recarga y cambios de versión. También guardar/borrar ecos con límite, sin fantasmas ilimitados en mundo.
 
-## 10. Vida ambiental y encuentros mágicos más variados
+**Probar:** recuperación reproducible y distinción entre favorito, escena y grabación; tamaño del guardado y migración controlados.
 
-**Ya hay:** reliquias raras fijas y de obtención única, aves de eco, semilleros de caja y nubes de pulso, además de eventos originales.
+## Cuarto bloque: búsqueda y significado
 
-**Falta:** ampliar encuentros únicos y difíciles de conseguir, familias bioma-dependientes, comportamientos emergentes y relaciones entre objetos/criaturas/clima. Nuevos fenómenos pueden revelar capas musicales, responder a acciones/contexto o aparecer excepcionalmente. Considerar muestras/descubrimientos/logros para fenómenos: hoy no se registran como colección nueva.
+### 18. Pistas encadenadas
 
-**Aceptación:** rareza real por mundo/condiciones, identidad estable donde proceda, señales descubribles y recompensa musical significativa. No volver a generar premios alrededor del jugador ni cuotas fáciles. No añadir un evento por frame o más sonido solo por añadir objetos. Mantener lluvia y contener viento; ampliar efectos locales si la escucha lo justifica.
+Sonidos lejanos, geometrías, rumores y señales conducen a pequeños recorridos de hallazgo. Lo raro se anuncia discretamente sin flecha permanente ni aparición de premios alrededor del jugador. Persistir progreso de pistas cuando convenga.
 
-## 11. Estudio, mapa y descubrimientos
+**Probar:** pistas comprensibles y solvibles, variaciones por semilla, hallazgo excepcional con recompensa musical significativa.
 
-Ampliar Estudio con combinación de muestras/escenas, decoración y nombres; integrar favoritos y retorno. Nombrar especies/lugares y reflejar esos nombres en Bitácora/tarjetas. Mapa que ayude a explorar sin revelar todo ni borrar sensación de hallazgo. Revisar flujo de checkpoint y Estudio portátil.
+### 19. Puertas musicales e instrumentos dormidos
 
-**Aceptación:** conserva secuenciador/bolsa/colores/guardado existente, integra nuevas funciones sin saturar HUD móvil. Hacer varias ramas si el conjunto deja de ser revisable; no introducir todo en una sola etapa.
+Comprender un ritmo o relación entre elementos para abrir/despertar algo; portales por pulsos ya existen, esta fase profundiza los enigmas. Encuentros raros con condiciones variadas, no solo más pulsos acumulados.
 
-## 12. Interfaz y feedback continuos
+**Probar:** descubrible por oído/feedback, sin castigo por ausentarse ni condición imposible al mutear; alternativas visuales pertinentes.
 
-Revisar cuánto ocupa información simultánea de lugar, gravedad, espacio, reto, mensajes, Escuchar y sesiones. Priorizar información contextual/ampliable, controles táctiles y legibilidad. Evaluar percepción de gravedad: aviso existe y velocidad cambia; Jay decidirá si se afina o retira tras probar. No sumar un panel permanente para cada nueva función.
+### 20. Personajes originales
 
-**Aceptación:** pantalla útil para explorar, sin superposición ni interferencias entre pulsar, arrastrar, escuchar y autopilot; comprobar 390×844 y escritorio. Mostrar lenguaje musical que ayude al jugador, no detalles internos del motor.
+Viajeros, guardianes, coleccionistas y maestros con gesto, motivo, función y encuentros propios, integrados en fauna/receta. Distinguir personajes de criaturas genéricas sin ocupar HUD ni convertirlo en diálogo continuo.
 
-## 13. Escucha, rendimiento y robustez en sesiones largas
+**Probar:** apariciones/rareza estables donde corresponda, aporte jugable/musical, conducta individual y memoria.
 
-Profiling de audio/render y memoria con radio, fenómenos, criaturas, materiales, efectos/proximidad, bordes, looper y autopilot. Medir cachés/grupos activos y limpieza, energía/linterna/recarga, suspensión/reanudación de audio y errores. Ampliar tests solo donde verifiquen comportamiento relevante.
+### 21. Primer conjunto de inspiración cultural
 
-Evaluar AudioWorklet u otra separación de audio si mediciones detectan timing deficiente; no migración automática por preferencia técnica. Limpiar restos del slider musical eliminado (`mMusic`, `rStyle`, `S.style`, handlers) sin cambiar intensidad por región. Revisar interfaces runtime si cambios lo requieren.
+Elegir con Jay una referencia concreta e investigar música, materiales, geometría, flora/fauna y prácticas pertinentes. Crear contenido propio: una pequeña familia de elementos, articulaciones y encuentros que alimente catálogo/recetas. Evitar que cada cultura equivalga a un único género o que un instrumento represente toda una tradición.
 
-**Aceptación:** sesiones largas estables en dispositivos reales, sin crecimiento de nodos/cachés ni deriva audible; compatibilidad v4 preservada o migración explícita. No hay CI hoy: añadirlo puede ser una rama técnica acotada si Jay lo acuerda.
+**Probar:** coherencia entre forma/sonido/acción, referencia explicada en Bitácora, conjunto reutilizable en múltiples regiones. No diseñar un mapa artesanal exclusivo.
 
-## 14. Encuentros entre jugadores y música compartida
+### 22. Ampliación multicultural
 
-Jay quiere que otra persona entre como punto distinguible, puedan verse/encontrarse y hacer música juntos. Es funcionalidad pendiente, no basta compartir tarjeta o coordenadas.
+Muchas culturas y épocas; algunas regiones sin referencia cultural, otras con una o combinaciones compatibles. Japón/México son ejemplos abiertos. Nuevos ingredientes en tandas usando el sistema, no nuevos sistemas completos por cultura. Investigar y contextualizar cada incorporación.
 
-- Diseñar backend/salas/conexión y presencia antes de implementar. Hoy no hay servicio de red ni cuentas.
-- Compartir semilla/versión de mundo, posición e interacciones musicales necesarias; no enviar nodos Web Audio ni asumir relojes locales iguales.
-- Coordinar reloj, cuantización, armonía/tempo, capas y presupuesto de voces para evitar desastre musical.
-- Definir quién conduce composición y cómo entran/salen aportes, latencia, desconexión/reconexión, llegada y visibilidad; no imponer experiencia de combate/chat no solicitada.
-- Separar cuentas/guardado remoto de requisito mínimo para encontrarse: arquitectura por decidir, Supabase fue idea futura, no dependencia instalada.
+**Probar:** diferencias perceptibles, combinaciones con sentido, flora/fauna relacionadas y variantes individuales; no solo nuevos nombres o trajes.
 
-**Aceptación:** dos dispositivos ven puntos distintos, se encuentran y colaboran con sincronía tolerable y mezcla controlada; reconexión no duplica eventos. Pruebas con red real y límites de sesión. Proponer implementación concreta antes de contratar/desplegar servicios.
+### 23. Inventos, observatorios y archivos musicales
 
-## Después o sujeto a prioridad de Jay
+Mecanismos inspirados en Leonardo: engranajes, péndulos, dibujos y ruedas secuenciadoras. Observatorios de constelaciones/movimiento que revelan frases. Estructuras o motivos históricos de dominio público reinterpretados con síntesis electrónica; seleccionar referencias con Jay, incluidas las de compositores que mencionó. Cada familia puede ser una subrama.
 
-- Portar frases de Voz corregidas por Jay desde tabla del diseño; texto actual no debe darse por versión editorial final. Voz hablada/robotizada sería una función adicional, no está hecha.
-- Guardado en nube/cuentas/exportar-importar progreso; hoy localStorage puede perderse al borrar datos. Proveedor por decidir.
-- Empaquetar Capacitor para móvil y Tauri para escritorio; hoy web estática. No Godot ni promesa de consolas.
-- Visitas a Estudios y tarjetas con nombres/escenas; depende de sistemas previos.
-- Exportar/grabar audio, sintetizador modular editable o live coding real: no están implementados ni se consideran automáticamente autorizados por las referencias musicales. Consultar alcance si Jay los pide.
-- Seguir ampliando vocabulario musical sin convertirlo en lista cerrada: nuevos timbres, articulaciones, ritmos y relaciones armónicas, solo cuando aporten diferencias audibles y mantengan continuidad.
+**Probar:** resolver/tocar produce música, objetos originales y coherentes; material histórico/composición y grabación existente no se confunden.
 
-## Cómo continuar con Claude
+### 24. Maestros de ritmos y partituras
 
-Primero leer los tres Markdown y el código de `main`. Revisar/escuchar lo actual, presentar hallazgos concretos, y acordar una etapa. Si se implementa: main actualizado, rama nueva, cambio acotado, pruebas, commit/push; Jay PR/merge. Registrar en CAMBIOS lo que realmente terminó y actualizar esta lista. No marcar como hecha una propuesta ni borrar contexto de decisiones al reorganizar documentos.
+Llamada/respuesta de pulsos, aprender patrón y llevar partitura al Estudio; Bitácora explica bombo/hats/bajo. 52 estilos actuales, colección ampliable, no promesa de 52 minijuegos idénticos. Criaturas que solo aparecen al tocar cierto ritmo pueden entrar aquí o en búsquedas.
+
+**Probar:** aprender escuchando/jugando, dificultad razonable, puntuación a tempo y guía accesible.
+
+## Quinto bloque: construir, actuar y compartir
+
+### 25. Máquinas sonoras
+
+Bloques resonadores conectables que se activan en cadena, como una red musical. Persistir construcción/receta y limitar tamaño, ciclos y simultaneidad. El sistema de cadenas actual es una base, no construcción editable/persistente.
+
+**Probar:** montar/parar/desmontar en móvil, secuencias sincronizadas, límite de activaciones y compatibilidad con escenas.
+
+### 26. Huertos de ritmo
+
+Semillas en cuadrícula de 16 pasos; crecer/transformar timbre y regar con pulso. Jardín como uno de muchos verbos y lugares, no tema único del juego. Definir papel del tiempo real sin penalizar no volver.
+
+**Probar:** secuencia musical legible, persistencia, transformación con acciones, sin obligación diaria adicional.
+
+### 27. Escenarios, pueblos y baile
+
+Tocar un set con banda; comunidades responden a groove y transiciones con efectos. Retos de DJ en fronteras pueden ser subrama: puntuación clara sin premiar simplemente apilar sonidos. Recompensas de muestras/colores justificadas.
+
+**Probar:** baile y respuesta sincronizados, música agradable, evaluación comprensible y no repetitiva.
+
+### 28. Crafting, nombres y Estudio
+
+Combinar muestras mediante recetas descubribles, decoración y nombres de especies/lugares reflejados en Bitácora/tarjetas. Integrar favoritos/escenas/mapa preservando bolsa, colores, secuenciador y checkpoint actuales.
+
+**Probar:** compatibilidad de partidas, recetas y consumo coherentes, UI compacta. Sintetizador modular editable con perillas/conexiones es ampliación posterior grande, a elegir.
+
+### 29. Grabar y compartir sets
+
+Exportar 30–60 s de audio/video con MediaRecorder cuando soportado, compartir escenas/códigos y nombres. Hoy tarjetas PNG sí, grabación de audio/video no. Definir privacidad/alcance si hay red o jugadores invitados; no publicar automáticamente.
+
+**Probar:** archivo utilizable, sincronía audio/video, limitación de memoria, compatibilidad móvil y fallback explícito.
+
+## Sexto bloque: vida y expansión continua
+
+### 30. Tiempo, fenómenos y biblioteca ampliada
+
+Ya hay tormentas móviles, estaciones semanales, huellas, campamentos, rarezas, ríos/confluencias y fenómenos. Falta migración con posición según fecha, caminos de migración, manantiales, criaturas gigantes, día/noche y encuentros con nuevos descubrimientos/muestras. Festivales semanales compartidos por fecha son propuesta, sin FOMO. Más formas de rareza/efectos si aportan función nueva.
+
+Biblioteca hacia ~100 ritmos, en tandas y con validación audible. Tanda afroamericana de 18 ya integrada: no repetirla. Propuestas restantes: afrobeat electrónico, gqom, kuduro, baile funk, afro tech, 3-step, kwaito, Afro-Cuban house, highlife, Ethio-groove; cumbia digital, tribal guarachero, dembow/reggaetón, moombahton, bossa electrónica, salsa/latin house, dancehall, champeta, pasillo/sanjuanito; industrial/hard techno, Berlin minimal oscuro, noise/dark ambient, witch house, coldwave; UK funky, grime, 2-step, jungle, footwork jungle, halftime, future garage, bassline, big beat; trance, psytrance/goa, Balearic, Italo disco, synthwave, French house, electroclash, glitch, chillwave, vaporwave, city pop electrónico, J-ambient, Asian underground, Bollywood, maqam/Arabic house, Balkan electro, motorik, dub reggae, ambient techno; R&B alternativo y otros propuestos. Separar EBM clásico/deep/soulful/gospel solo si Jay lo quiere, pues ya hay familias cercanas.
+
+**Probar por tanda:** recetas completas/patrones distintos, alcance en Atlas, reparto medido con generador continental actual (última prueba 0,8–2,3 %), transiciones de estilos lentos/rápidos y afinidad visual/cultural razonable. Nombre nuevo no basta. Los ~100 son orientación de catálogo, no límite de infinitud ni trabajo en una sola rama.
+
+### 31. Encuentros y multiplayer jam
+
+Puntos distintos visibles, verse/encontrarse y hacer música juntos. Diseñar conexión/backend/salas y reloj/armonía/tempo compartidos, latencia, dueño de composición, entradas/salidas y presupuesto de voces. Versiones/semillas del mundo compatibles. Visitas a Estudios, rastros de otros y bandas compartidas pueden venir después.
+
+**Probar:** dos dispositivos en red real, eventos sin duplicar, reconexión, sincronía tolerable y mezcla ordenada. Hoy no hay servidor, cuentas ni multiplayer. Supabase fue idea futura, no proveedor elegido ni instalado.
+
+## Trabajo transversal y opciones posteriores
+
+- Escucha real en móvil/auriculares, fatiga, subgrave/agudo, transiciones y densidad en cada etapa. Tests técnicos no certifican gusto o master artístico.
+- Rendimiento de sesiones largas, límites/cachés, memoria/nodos, batería y suspensión de audio. Evaluar AudioWorklet por mediciones; no migrar por preferencia.
+- Revisar PWA offline real: precarga incompleta de módulos y fallback HTML para recursos pendientes; ver REVISION. Añadir pruebas/CI donde aporten evidencia, no solo cobertura nominal.
+- Limpiar restos de slider `mMusic`, `rStyle`, `S.style` y handlers sin alterar intensidad por lugar.
+- Portar frases finales de Voz que Jay corrija. Voz hablada robótica no existe; bitcrusher sí.
+- Exportar/importar progreso, cuentas y guardado nube por decidir. LocalStorage se pierde al borrar datos. Ninguna contratación/deploy implícitos.
+- Capacitor/Tauri siguen opciones posteriores; hoy web/PWA, no Godot ni promesa de consolas.
+- Grabación de audio, editor modular y live coding real son funciones separadas; algorave actual es receta generativa.
+
+## Cómo continuar
+
+Leer documentos y código actuales, elegir una fase con Jay y mantener una rama por implementación. Revisar resultados audibles antes de expandir catálogo. Actualizar CAMBIOS solo con trabajo realmente terminado y este archivo con prioridades/decisiones nuevas. Conservar contexto de Claude y del trabajo anterior, sin marcar una propuesta como hecha.

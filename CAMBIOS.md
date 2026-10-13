@@ -1,13 +1,14 @@
 # WHITEDOT: inventario de cambios y contexto para revisión
 
-Revisión: 2026-10-12. Leer junto con [HANDOFF.md](HANDOFF.md) y [PENDIENTES.md](PENDIENTES.md). Este inventario compara el prototipo `596fa31` con `main` revisado `a4746bb` y, por separado, con la última implementación `6bf69f6`. El historial Git y las pruebas son las referencias para verificar detalles de implementación. Las mejoras futuras no se presentan como terminadas.
+Revisión: 2026-10-13. Leer junto con [HANDOFF.md](HANDOFF.md), [PENDIENTES.md](PENDIENTES.md) y [REVISION.md](REVISION.md). Inventario desde prototipo `596fa31` hasta main `5413d5f` (PR #35), más esta rama de revisión/nitidez. Las mediciones de cada etapa se conservan como historia, no nivel actual garantizado.
 
-## Estado exacto para Claude
+## Estado exacto para revisión
 
-- `main` auditado por Claude: `3c58c56` (PR #26). Incluye todo hasta instrumentos procedurales (PR #25) y esta documentación.
-- Integradas en `main`: etapas 26 (PR #27), 27 (PR #28) y 28 (PR #29). Pendiente de PR: `feat/infinite-world-journey` (etapa 29).
-- Auditoría 2026-10-12: 20 suites Node + smoke móvil/escritorio pasan en `main`; los 34 géneros existen en el mundo; las afirmaciones de README/HANDOFF se comprobaron contra el código. Diferencias encontradas: la documentación aún describía los instrumentos procedurales como rama pendiente (ya integrados) y HANDOFF tenía esa sección duplicada; quedaron corregidas.
-- Flujo obligatorio: rama por etapa, implementar, verificar, commit y push. Jay crea PR y merge. No publicar directamente en main. No ejecutar las fases pendientes sin su autorización.
+- Main `5413d5f` incluye etapas 1–35: instrumentos procedurales, Atlas, 52 ritmos, continentes, mapas, PWA, rarezas, vida, capas, looper, banda y FX.
+- Ninguna de esas funciones sigue pendiente del PR indicado en textos antiguos. Etapas 26–35 conservan los nombres de sus ramas originales como trazabilidad.
+- Esta rama `review/claude-audio-clarity` añade etapa 36; pendiente de PR/merge de Jay.
+- 26 suites Node y diez smokes aprobados durante esta revisión. Render de audio real y hallazgos pendientes en REVISION.
+- Flujo: rama por etapa, implementar/verificar, commit/push. Jay crea PR/merge. No publicar directamente en main ni ejecutar todas las propuestas por una aprobación.
 
 ## Lo que ya existía en el prototipo
 
@@ -180,29 +181,29 @@ Menos saturación con volumen alto: compresión más suave con ataque más lento
 
 Looper de ecos de 2 compases que se quedan sonando en el mundo; banda de criaturas por papeles con combos; mesa de efectos estilo Kaoss pad con filtro, espacio, eco, robot y stop de cinta. Pruebas `tests/jam_smoke.py` y `tests/fx_smoke.py`; 26 suites y diez smokes pasan.
 
+### 36. Revisión, nitidez y plan consolidado — esta rama
+
+Revisados Markdown, historial y código de Claude, ejecutadas 26 suites y diez smokes. `mix.js` + cambios en audio/FX: salida lineal hasta 0,9, rodilla de protección y margen, corte subsónico, filtrado de retornos reverb/eco y resonancia neutra moderada. Composición/instrumentos actuales conservados. Prueba real `tests/audio_mix.py`/helper mjs: 13 casos y distorsión de salida; resultados en REVISION. Actualizados documentos y organizado plan de 31 fases con nuevas ideas y prioridad de generador ampliable. No se implementan vidrios/espejos, culturas, favoritos ni otras fases futuras. Fallos de cruces documentados, pendientes de rama propia.
+
 ## Persistencia y compatibilidad
 
-Clave `pixel-blanco-v4` conservada; progreso solo en navegador. Añadidos durante etapas: `S.journal`, `S.softMusic`, `S.relicSites`, metadatos de nuevas estrellas, `S.session` y `S.lastSession`. Partidas antiguas se normalizan sin inventar historial. Perfiles de radio, voz, gravedad, personalidad, espacios, efectos, gramática, vecindarios, fenómenos y materiales se reconstruyen o son temporales; no se guarda estado exacto de música. Reacciones/posiciones dinámicas no garantizan persistencia al reconstruir chunk. IDs del mundo físico se han preservado; nuevos géneros/campos sí pueden cambiar identidad musical de coordenadas antiguas.
+Clave `pixel-blanco-v4` conservada, progreso local. Además de campos originales: journal, softMusic, relicSites y estrellas con metadatos, session/lastSession, atlasTested, continents/continentsN, landmarks/landmarksN/heardLm, maxRing/oasisN, anomalies/anomaliesN, storms/confluences, steps/camps, layer/under y ecosN. Muchos se inicializan al usarse, no todos aparecen en fresh(). Partidas previas conservan datos disponibles, sin inventar historial. Esta rama no añade guardado nuevo.
 
-Favoritos con versión exacta de una composición necesitarán escenas/versión del generador: volver a coordenadas no basta para repetir el mismo compás. No hay cuentas, guardado remoto ni multiplayer.
+Ecos son temporales (máximo cuatro), banda y estado de FX también; ecosN conserva contador, no eventos. Radio y receta exacta del compás no se guardan. Reacciones/posiciones móviles pueden perderse al reconstruir chunk. Continentes cambiaron paisaje, densidad, color y música de coordenadas antiguas; fixtures se recapturaron. IDs/nombres/registros anteriores se mantienen donde aplica: no afirmar conservación visual total tras esos cambios.
 
-## Pruebas y cómo reproducir la revisión
+Favoritos/escenas/versiones para recuperar música exacta siguen pendientes. Sin cuentas/guardado remoto/multiplayer.
 
-Aplicación: `python3 -m http.server 8000`, abrir por HTTP. Node >=18, sin npm install para aplicación. `npm test` ejecuta todas las suites Node. `python3 tests/smoke.py` necesita Playwright Python y Chromium; requisitos en `tests/requirements.txt`, ejecutable configurable con `CHROMIUM_PATH`. Smoke abre servidor propio, prueba móvil 390×844 y escritorio 1280×800, captura errores y no usa partida personal.
+## Pruebas y reproducción
 
-Suites de main: core, radio, voices, gravity, journal, scanner, playthings, personality, pockets, feedback, relics, effects, session, palettes, grammar, spatial, neighborhoods, references y phenomena. Rama pendiente suma patches y extiende radio/palettes/smoke para comprobar estabilidad al mover fuentes, límites/restauración y cambios reales de grafo sin cambiar frecuencia base. Core cubre guardado/tope/determinismo; otras verifican condiciones, compatibilidad y audio programado. `node --check` sirve para sintaxis.
+Servir por HTTP (`python3 -m http.server 8000`); Node >=18 sin npm install para aplicación. `npm test` ejecuta 26 suites: core, radio, voices, gravity, journal, scanner, playthings, personality, pockets, feedback, relics, effects, session, palettes, grammar, spatial, neighborhoods, references, phenomena, patches, atlas, rhythms, world, journey, wonders y alive.
 
-En `main` `3c58c56`: 20 suites Node y smoke móvil/escritorio aprobados. Con `feat/rhythm-atlas`: 21 suites, smoke y `tests/atlas_smoke.py`. Este cambio documental no modifica código y se verifica por diff, enlaces, inventario de archivos y coherencia con historial. No hay CI configurado. Headless no evalúa escucha humana: balance, groove, fatiga, transiciones y sensación profesional requieren probar con sonido real.
+Diez smokes Python: smoke, atlas_smoke, world_smoke, journey_smoke, mobile_smoke, wonders_smoke, alive_smoke, layers_smoke, jam_smoke, fx_smoke. Requieren Playwright/Chromium (`CHROMIUM_PATH` opcional), servidor propio y contexto de prueba, no partida personal. Esta rama añade audio_mix.py, con módulo de navegador audio_mix.mjs; no es suite Node ni test artístico. Pasaron las pruebas indicadas; casos cruzados aún faltan (REVISION).
 
-## Límites y revisión recomendada
+## Límites actuales
 
-- Mundo combinatorio y procedural grande, no infinitud literal de instrumentos/estilos: 34 familias base y reglas acotadas.
-- Audio/simulación/render aún comparten hilo principal y runtime acoplado; evaluar móvil antes de migrar a AudioWorklet.
-- Linterna limita tiempo de exploración; modales pausan consumo, no necesariamente mundo/audio. Navegador puede suspender audio; requiere gesto al iniciar, especialmente iOS.
-- Sin snapshot de música, favoritos, mapa navegable, viaje automático, autopilot, looper, escenas, banda coordinada ni sesión de red.
-- Restos históricos de slider: `mMusic`, `rStyle`, `S.style` y handlers; intensidad actual depende de modo/bioma, no slider. Limpieza pendiente.
-- Diseño externo y textos de Voz pueden estar desactualizados. Usar repo/documentos actuales y decisiones de Jay.
-- Revisar combinación de proximidad + efectos + materiales, densidad real, graves/agudos y transición de familias. Las pruebas acotan rutas, no sustituyen escucha ni profiling de sesiones largas.
+52 estilos y 11 biomas con gramáticas/catálogos acotados, gran espacio procedural compartido, no infinitud literal de tipos. Muestra de 10.000 regiones: 1.517 combinaciones bioma/género/gravedad, 10.000 recetas detalladas diferentes; no certifica diferencias perceptivas equivalentes.
+
+Sin favoritos, orientación a ellos, autopilot, escenas exactas, ecos persistentes, grabación audio/video ni red. Mapa sí existe y puede compartirse; looper/banda/FX también. Audio/render comparten hilo, cacheado/profiling de sesiones largas pendiente. Linterna/gesto inicial/suspensión y localStorage condicionan uso. PWA instalable no equivale a offline completo probado. Restos de slider/diseño externo/editorial de Voz pendientes. Ver REVISION para cruces de capas/Estudio/jam y PENDIENTES para orden de mejoras.
 
 ## Trazabilidad exhaustiva
 

@@ -14,7 +14,8 @@ export function initialize(runtime){
  const neutral=()=>state.x===.5&&state.y===0&&!state.eco&&!state.robot;
  function apply(glide=.04){
   const fx=runtime.fx,ac=runtime.ac;if(!fx||!ac)return;const t=ac.currentTime,p=padParams(state.x,state.y,state.eco,state.robot);
-  fx.lp.frequency.setTargetAtTime(p.lp,t,glide);fx.hp.frequency.setTargetAtTime(p.hp,t,glide);fx.verbSend.gain.setTargetAtTime(p.verb,t,glide);
+  fx.lp.frequency.setTargetAtTime(p.lp,t,glide);fx.hp.frequency.setTargetAtTime(p.hp,t,glide);
+  fx.lp.Q.setTargetAtTime(state.x<.45?4:Math.SQRT1_2,t,glide);fx.hp.Q.setTargetAtTime(state.x>.55?4:Math.SQRT1_2,t,glide);fx.verbSend.gain.setTargetAtTime(p.verb,t,glide);
   fx.delaySend.gain.setTargetAtTime(p.delay,t,glide);fx.fb.gain.setTargetAtTime(p.fb,t,glide);fx.delay.delayTime.setTargetAtTime(runtime.SIX*(state.eco?3:2),t,.05);
   fx.crushSend.gain.setTargetAtTime(p.crush,t,glide);fx.dry.gain.setTargetAtTime(p.dry,t,glide);
   draw();

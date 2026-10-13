@@ -1,7 +1,7 @@
 # HANDOFF · WHITEDOT / Pixel Blanco
 
 > Documento de traspaso para continuar el desarrollo con otra IA (ChatGPT, Claude, etc.) o con otro dev.
-> Lee este archivo junto con [CAMBIOS.md](CAMBIOS.md) y [PENDIENTES.md](PENDIENTES.md). Última revisión: 2026-10-12 (auditoría de Claude sobre `main` `3c58c56`, PR #26). Todo lo descrito aquí está integrado en `main`; ya no hay ramas de producto pendientes de merge salvo la que se indique en CAMBIOS.
+> Lee este archivo junto con [CAMBIOS.md](CAMBIOS.md), [PENDIENTES.md](PENDIENTES.md) y [REVISION.md](REVISION.md). Última revisión: 2026-10-13 sobre `main` `5413d5f` (PR #35). Las funciones de Claude, incluidos looper/banda/FX, están integradas. La limpieza de audio y el nuevo plan pertenecen a `review/claude-audio-clarity`, pendiente del PR/merge de Jay.
 
 - **Juego en vivo:** https://whitedot-inky.vercel.app
 - **Repo:** https://github.com/Jaywrkr/WHITEDOT (rama `main`). Cada push a `main` despliega solo en Vercel.
@@ -46,9 +46,9 @@ Un pixel blanco en un mundo negro que va creciendo. **El centro de todo es la M�
 | Drone constante | **Prohibido.** No debe quedar nada sonando todo el tiempo. El pad "respira": solo crece después de un cambio de acorde y se apaga solo. |
 | Sincronía | Todo lo que toca el jugador se cuantiza al beat (8vos o 16vos), con un poco de jitter para que suene humano y no 100% estricto. |
 | Biomas | Cada región tiene un **género real distinto**. Las transiciones son **graduales**, mezcladas en el espacio (como bajar de la sierra a la costa). Las regiones son anchas y tienen mini-biomas adentro. |
-| Densidad | Hay lugares muy llenos y otros casi vacíos (nivel FILL). |
-| Jardín | Es solo un verbo (sembrar). No es el tema del juego. |
-| UI móvil | Mínima, con íconos. Un dock de 3 botones y un menú modal para lo demás. |
+| Densidad | Vitalidad continua, mares casi vacíos y oasis densos. FILL es etiqueta regional, no el único control de cantidades. |
+| Jardín | Es solo un verbo (sembrar), no el tema del juego. Huertos de ritmo son propuesta futura, junto con otros verbos. |
+| UI móvil | Compacta y contextual. Dock con controles del modo; Mundo añadió Eco y FX. Evitar nuevas barras permanentes y solapamientos. |
 | Objetos | Tienen autonomía: hacen cosas, no solo suenan. Están en armonía visual y musical con su región. |
 
 ## 4. Arquitectura
@@ -73,7 +73,8 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/neighborhoods.js` | Campo de tempo/afinación y selección compatible de regiones vecinas. |
 | `src/palettes.js` | Paletas tropical, melódica, robótica y disco, asignación regional y patrones. |
 | `src/instruments.js` | Nuevos timbres de parciales, FM y filtros, güiro y timbal electrónicos. |
-| `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros y tracks. |
+| `src/audio.js` | Web Audio, scheduler, armonía, síntesis, géneros, tracks y ruteo de mezcla. |
+| `src/mix.js` (esta rama) | Protección de salida lineal a nivel normal y filtros de retornos de efectos. |
 | `src/session.js` | Resumen de exploración y actividad, conservación de la última sesión y tarjeta PNG. |
 | `src/effects.js` | Procesamiento local por voz, perfiles regionales y liberación de nodos de audio. |
 | `src/relics.js` | Sitios raros estables, resonancia y compatibilidad de reliquias antiguas. |
@@ -106,6 +107,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/jam.js` | Looper de ecos y banda de criaturas. |
 | `src/fxpad.js` | Mesa de efectos estilo Kaoss pad (filtro, espacio, eco, robot, stop). |
 | `src/atlas.js` | Atlas de ritmos (prototipo): lista todos los géneros, verifica que existen en el mundo y viaja a la región más cercana. |
+| `src/pwa.js`, `sw.js`, `manifest.webmanifest`, `icons/` | Instalación web, control de gestos y respaldo de caché; offline completo pendiente de verificar. |
 | `src/controls.js` | Botones, controles de prototipo y sonido. |
 | `package.json` | Declara módulos ES para Node y `npm test`; no instala dependencias de aplicación. |
 | `tests/core.mjs` | Compatibilidad del guardado, tope diario y mundo determinista. |
@@ -121,7 +123,9 @@ offset, lastDay, streak, best, totalDays, totalLight, todayKey, todayLight, capS
 collected[], trail[], px, py, ach{}, sound, mode("camino"|"world"|"studio"),
 wx, wy (posición en el mundo), lampDay, lampUsed, session, lastSession, journal{}, softMusic, species{}, rel, relicSites{}, stars[], help{},
 zones{}, bag{muestra:cantidad}, studio{x,y,biome,slots{}}, color, cat{} (catálogo de especies),
-catN, places{}, placesN, retos{}, retosN, events{}
+catN, places{}, placesN, retos{}, retosN, events{}, atlasTested{},
+continents{}, continentsN, landmarks{}, landmarksN, heardLm{}, maxRing, oasisN,
+anomalies{}, anomaliesN, storms, confluences, steps[], camps[], layer, under{x,y}, ecosN
 ```
 
 Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `v5`) o agrega una migración. `Object.assign(fresh(), saved)` ya rellena los campos nuevos.
@@ -221,7 +225,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Sintaxis:** correr `node --check` sobre los archivos de `src/`. Ya no hay un script inline para extraer.
 - **Visual y funcional:** servir el repositorio por HTTP y usar Playwright headless (Chromium) en 390×844 (móvil) y escritorio. Comprobar entrada y reentrada al Mundo con reto visible, transición de día sin reto residual, pausa de linterna en menús, colocación y persistencia de muestras en el Estudio y generación de tarjetas. Capturar errores JavaScript y screenshots. Los errores de carga de Google Fonts sin red son esperables.
 - **Tope diario:** comprobar que una luz de valor 10 recogida cuando faltaba 1 solo suma 1 tanto a `todayLight` como a `totalLight`.
-- **Pruebas versionadas:** `npm test` (26 suites, inventario en CAMBIOS.md) `python3 tests/smoke.py`, `python3 tests/atlas_smoke.py`, `python3 tests/world_smoke.py` y `python3 tests/journey_smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
+- **Pruebas versionadas:** `npm test` (26 suites) y diez smokes de navegador (comandos en README). Esta rama añade `python3 tests/audio_mix.py`; resultados e inventario en REVISION. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
 - **Audio:** en headless no se oye nada. **Jay valida el sonido en su teléfono** con la URL de Vercel. Es la prueba que importa.
 - **Atajos de prototipo** (menú → Prototipo):
   - `dFill`: llena la barra del día.
@@ -232,9 +236,9 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 ## 9. Limitaciones conocidas
 
 - **Acoplamiento entre módulos:** la separación usa un contexto compartido para conservar el comportamiento. El loop mezcla simulación y render; todavía no hay interfaces independientes entre todos los sistemas.
-- **Audio en el hilo principal:** con mucho en pantalla, en móviles viejos el timing puede variar. La solución futura es AudioWorklet.
+- **Audio en el hilo principal:** con mucho en pantalla, en móviles viejos el timing puede variar. Evaluar AudioWorklet si mediciones de timing lo justifican.
 - **Progreso solo en `localStorage`:** se pierde si borras datos del navegador. No hay cuentas ni nube.
-- **Audio en iOS:** requiere un gesto del usuario para arrancar, y el modo silencio del iPhone puede mutear Web Audio.
+- **Audio en iOS:** requiere gesto para arrancar. Se solicita `navigator.audioSession.type=playback` cuando disponible; comportamiento al suspender/usar silencio depende del dispositivo y navegador.
 - **El documento de diseño está desactualizado** en: motor de géneros, ADN de región, eliminación del slider y la propuesta de Bitácora.
 - **Restos del slider eliminado:** siguen presentes el modal `mMusic`, `rStyle`, `S.style` y sus handlers, pero el botón Música del menú solo activa/desactiva sonido. `style()` calcula la intensidad según el modo y el bioma, no según `S.style`. La limpieza de esos restos es trabajo pendiente.
 - **Bitácora implementada:** botón Bitácora del menú y cuatro pestañas. Lugares recupera el ADN por ID e incluye gravedad, género y progreso en formas/reto/evento/reliquia; Origen no exige evento porque no puede generarlo. Formas agrupa los IDs descubiertos usando `getVoice()`, sin mostrar criaturas no descubiertas. Música registra los instrumentos programados con sonido activo en el Mundo, géneros y escalas; Logros organiza categorías y oculta los secretos pendientes.
@@ -244,7 +248,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 
 La lista única, ordenada y con criterios de aceptación está en **[PENDIENTES.md](PENDIENTES.md)**. El historial completo de etapas terminadas está en **[CAMBIOS.md](CAMBIOS.md)**. No tratar las etapas terminadas como nuevas tareas ni asumir que una primera versión agota la visión.
 
-La siguiente etapa de producto propuesta es dar mayor iniciativa al ambiente tras unos 60 segundos de quietud, después de escuchar en móvil la mezcla con los instrumentos procedurales ya integrados. Jay pidió además ampliar la biblioteca a ~100 ritmos (ver PENDIENTES, etapa 1b). Favoritos, retorno, autopilot, looper, escenas y multiplayer siguen pendientes. Jay autoriza cada rama por separado.
+Prioridad nueva: nitidez (esta rama), estabilizar cruces de capas/jam, recetas y catálogo ampliables, variedad coherente y lenguaje gráfico común. Después iniciativa en quietud, favoritos/retorno/autopilot y nuevas interacciones. Looper, banda, mapa y FX ya tienen primera versión; escenas, persistencia de ecos y multiplayer faltan. Ampliación a ~100 ritmos e influencias culturales son catálogo futuro, no cambios automáticamente autorizados. Orden completo: PENDIENTES.
 
 ## 11. Flujo de ramas y deploy
 
@@ -329,7 +333,7 @@ Las familias nuevas modifican su síntesis de parciales/FM y envolvente. Las ant
 
 ### Atlas de ritmos (prototipo)
 
-Menú → Prototipo → **Ritmos**. `src/atlas.js` recorre 61 × 61 regiones alrededor del origen (3.721, unos 200 ms; se calcula al abrir y queda en caché) y lista cada género de `GEN` ordenado por tempo: BPM, origen (Base / Paleta / Referencia), cuántas regiones lo tienen, la región más cercana y si ya se escuchó (`S.journal.music.genres`). **Ir** pone al jugador en el centro de esa región; si estaba en el Camino sin completar, completa el día (herramienta de prueba) y entra al Mundo. No agrega campos al guardado. Sirve para probar cada ritmo y para verificar que todo género nuevo es alcanzable: `tests/atlas.mjs` falla si algún género no aparece en el área.
+Menú → Prototipo → **Ritmos**. `src/atlas.js` recorre 61 × 61 regiones alrededor del origen (3.721, unos 200 ms; se calcula al abrir y queda en caché) y lista cada género de `GEN` ordenado por tempo: BPM, familia musical, cuántas regiones lo tienen, la región más cercana y si ya se escuchó (`S.journal.music.genres`). **Ir** pone al jugador en el centro de esa región; si estaba en el Camino sin completar, completa el día (herramienta de prueba) y entra al Mundo. La primera versión no agregaba campos; la marca de probado actual usa `S.atlasTested`. Sirve para probar cada ritmo y para verificar que todo género nuevo es alcanzable: `tests/atlas.mjs` falla si algún género no aparece en el área.
 
 El Atlas tiene filtros por familia y "Sin probar", y un cuadro para marcar cada ritmo como probado (`S.atlasTested`, dentro de v4, solo herramienta de prueba).
 
@@ -349,7 +353,7 @@ Cada continente tiene nombre, tamaño, familia de géneros (elegida en proporci�
 - **Color:** el tono de color de cada región se acerca al del continente.
 - **Aviso:** tarjeta de zona con el continente o "Mar de silencio"; frase grande al entrar a otro continente (espera a que la interfaz esté libre). `S.continents`, `S.continentsN`. Logros `continente3` y `mar1` (oculto, cruzar un mar entero), frases de la Voz.
 
-**Vitalidad** (`continents.vitality`): campo continuo de ruido con contraste fuerte. Sustituye los 5 niveles de relleno en la generación de chunks (`densityOf`: 0,1× a 2,7×); `d.fill` se calcula de la vitalidad del centro de la región solo para etiquetas. En mar casi cero; cerca de la costa baja; el Origen nunca baja de 0,55. En la música, la vitalidad limita la energía (`vitCap` en `audio.js`): en lo vacío queda pulso y poco más. Si pasas más de 12 s en vacío y llegas a una zona llena, suena un **drop** (`dropHit`: bombo largo, platillo filtrado y acorde), la energía sube y aparece "Oasis". `MU.vit`, `MU.lowT`, `S.oasisN`.
+**Vitalidad** (`continents.vitality`): campo continuo de ruido con contraste fuerte. Sustituye los 5 niveles de relleno en la generación de chunks (`densityOf`: 0,1× a 2×); `d.fill` se calcula de la vitalidad del centro de la región solo para etiquetas. En mar casi cero; cerca de la costa baja; el Origen nunca baja de 0,55. En la música, la vitalidad limita la energía (`vitCap` en `audio.js`): en lo vacío queda pulso y poco más. Si pasas más de 12 s en vacío y llegas a una zona llena, suena un **drop** (`dropHit`: bombo largo, platillo filtrado y acorde), la energía sube y aparece "Oasis". `MU.vit`, `MU.lowT`, `S.oasisN`.
 
 **Hitos** (`src/landmarks.js`): torre de luz, árbol madre, ciudad de formas, monolito y faro (solo en el mar). 1 de cada 10 regiones de tierra y 1 de cada 6 de mar; la región (2,0) siempre tiene una torre que se oye desde el Origen. Cada hito tiene motivo propio que se ajusta al acorde actual.
 - **Se oye** hasta 11.000 px: cadena propia con filtro de paso bajo según la distancia (lejos suena apagado), paneo estéreo según la dirección y envío a reverb. Máximo 2 hitos, cada uno cada 4 compases. Deja de sonar de lejos al llegar.
@@ -442,11 +446,16 @@ La segunda subida (compensación ×6,8, saturación tanh 1,9) dejaba ~11 % de la
 
 Pruebas: `tests/jam_smoke.py` y `tests/fx_smoke.py`.
 
-## Estado general (12 de octubre de 2026, noche)
+## Estado general revisado (13 de octubre de 2026)
 
-Ya está en `main`: Camino diario, Mundo con continentes, mares, oasis, hitos sonoros, tierras raras, rarezas, ríos con confluencias, tormentas, estaciones, huellas, Subsuelo y Cielo, mapa, Atlas de 52 ritmos, PWA instalable con joystick flotante, volumen alto. En rama `feat/looper-band` (pendiente de merge): looper, banda, mesa de efectos y mezcla limpia (RMS ~−8,4 dB, sin saturación).
+Main `5413d5f` incluye todas las funciones anteriores, looper, banda y mesa de efectos (PR #35). Hay 52 estilos, 11 biomas, continentes, mares, hitos, mapa, rarezas/ríos/confluencias, clima/estaciones/memoria, capas y PWA. No hay favoritos musicales, escenas, autopilot, red ni grabación audio/video. Ecos/banda son temporales; huellas/campamentos y registros sí se guardan.
 
-Pruebas: `npm test` (26 suites) y 10 smokes de navegador (`smoke`, `atlas_smoke`, `world_smoke`, `journey_smoke`, `mobile_smoke`, `wonders_smoke`, `alive_smoke`, `layers_smoke`, `jam_smoke`, `fx_smoke`). Ejecutable de Chromium con `CHROMIUM_PATH`.
+La rama `review/claude-audio-clarity` limpia salida y retornos sin cambiar patrones/instrumentos. 26 suites Node, diez smokes y render de audio real aprobados; mediciones, alcance y fallos de integración pendientes en REVISION. Los números RMS anteriores son mediciones históricas, no especificaciones del master actual.
 
-El plan creativo para seguir está en PENDIENTES ("Plan creativo de música").
+### Nitidez musical y nueva dirección
 
+`mix.js` construye un shaper lineal hasta 0,9 con rodilla final suave, sobremuestreo 4× y trim 0,98. Se añade corte de 20 Hz y se filtran retornos de reverb/eco para evitar acumulación grave, conservando directo y tiempos/feedback. Pad neutro vuelve a Q moderada, con Q=4 durante barridos. No hay realce nuevo de volumen ni cambio de notas/ritmos. Robot sigue disponible como efecto intencional. No garantiza un master profesional final: Jay escucha y afina.
+
+Prueba adicional: `python3 tests/audio_mix.py` (helper de navegador `tests/audio_mix.mjs`, no suite Node). 13 renderizaciones de 10 segundos, picos/dinámica a 44,1/48 kHz y distorsión de salida; parámetros y resultados en REVISION.
+
+Jay quiere muchas más combinaciones de lugares mediante un catálogo que relacione flora, fauna, sonidos, comportamientos, acciones, materiales, densidad e influencias culturales opcionales. Primero coordinar reglas/semillas, luego incorporar contenido. Referencias cromáticas/cinéticas a Felipe Pantone mediante vidrios y espejos originales; mantener negro de fondo y punto blanco. Muchas culturas, no solo Japón/México, con flora/fauna y música relacionadas; inventos históricos, personajes/pistas y mecanismos musicales son propuestas. PENDIENTES detalla fases y criterios; aprobación por etapa.

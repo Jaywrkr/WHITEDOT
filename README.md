@@ -60,6 +60,9 @@ python3 tests/mobile_smoke.py
 python3 tests/wonders_smoke.py
 python3 tests/alive_smoke.py
 python3 tests/layers_smoke.py
+python3 tests/jam_smoke.py
+python3 tests/fx_smoke.py
+python3 tests/audio_mix.py
 ```
 
 Las pruebas core necesitan Node. Para las pruebas de navegador necesitas Python y Playwright: instala `tests/requirements.txt` en un entorno virtual (`python3 -m pip install -r tests/requirements.txt`) y usa Chromium instalado en el sistema, o instala el navegador con `python3 -m playwright install chromium`. Puedes indicar su ejecutable mediante `CHROMIUM_PATH`. El smoke test levanta su propio servidor y verifica móvil y escritorio; no evalúa la calidad audible de la música.
@@ -96,7 +99,7 @@ Las reliquias pertenecen a sitios fijos del mundo, sin flecha global ni generaci
 
 ## Para seguir desarrollando
 
-Lee **[HANDOFF.md](HANDOFF.md)**. Se complementa con **[CAMBIOS.md](CAMBIOS.md)** (inventario de todo lo añadido respecto al prototipo, referencias y estado de ramas) y **[PENDIENTES.md](PENDIENTES.md)** (plan vigente ordenado y criterios de aceptación). HANDOFF explica visión, decisiones, arquitectura, sistemas y pruebas. Está pensado para pegarlo en otra IA (ChatGPT, Claude, etc.) y seguir sin perder nada.
+Lee **[HANDOFF.md](HANDOFF.md)**. Se complementa con **[CAMBIOS.md](CAMBIOS.md)** (inventario de todo lo añadido respecto al prototipo, referencias y estado de ramas) y **[PENDIENTES.md](PENDIENTES.md)** (plan vigente ordenado y criterios de aceptación). **[REVISION.md](REVISION.md)** recoge la revisión de Claude, mediciones de nitidez y problemas pendientes. HANDOFF explica visión, decisiones, arquitectura, sistemas y pruebas. Está pensado para pegarlo en otra IA (ChatGPT, Claude, etc.) y seguir sin perder nada.
 
 La variedad musical incluye paletas tropicales, melódicas, robóticas y disco, con grooves y escalas propios. Sus instrumentos electrónicos incluyen steel pan, kalimba FM, teclas cálidas, cuerdas, metales, clavinet, bajos filtrados o FM, formantes, güiro y timbal. Escuchar y Bitácora muestran qué aporta cada fuente.
 
@@ -111,3 +114,5 @@ La biblioteca incluye 52 estilos. La tanda de raíz afroamericana suma Chicago h
 El entorno incluye aves de eco que responden a las frases, semilleros que se sacuden con cajas/claps y nubes que lanzan relámpagos graves. También reaccionan al contacto y al pulso; Escuchar identifica su función musical.
 
 Los instrumentos tienen materiales sonoros procedurales —madera cálida, cristal suave, metal filtrado y aire sedoso— y variaciones de ataque, resonancia y armónicos. Cada objeto conserva su timbre al volver; Escuchar muestra su material.
+
+La salida musical conserva sus patrones e instrumentos y reduce la saturación a niveles normales. Los retornos de reverberación y eco dejan más espacio al grave directo. `tests/audio_mix.py` verifica picos, dinámica y coloración con audio renderizado; la calidad perceptiva se valida escuchando.

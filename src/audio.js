@@ -1,3 +1,4 @@
+import {peakGuardCurve,returnFilters} from './mix.js';
 import {REFERENCE_GENRES,referenceRhythm} from './references.js';
 import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
 import {chooseNearbySource} from './spatial.js';
@@ -31,7 +32,7 @@ export function initialize(runtime) {
   const neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN);
   MU.radio = null;MU.neighborRadio=null;
   const LOUD=5.6;   // ganancia de compensación en modo normal: fuerte pero limpio (6.8 saturaba)
-  let ac=null,fx=null,master,mfilt,punch,presence,makeup,limiter,clipper,comfortShelf,comfortLowpass,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
+  let ac=null,fx=null,master,mfilt,punch,presence,makeup,limiter,clipper,comfortShelf,comfortLowpass,subsonic,headroom,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
   const voiceCurator=createVoiceCurator();
   const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:1):0;
   function applyComfort(time=ac?.currentTime||0){
@@ -57,25 +58,29 @@ export function initialize(runtime) {
       makeup=ac.createGain();makeup.gain.value=runtime.S.softMusic?1.6:LOUD;
       // Presencia: los parlantes del teléfono casi no dan graves; el cuerpo que se oye está en los medios.
       presence=ac.createBiquadFilter();presence.type='peaking';presence.frequency.value=2400;presence.Q.value=.8;presence.gain.value=runtime.S.softMusic?0:2.5;
-      // Saturación suave final (tanh): los picos que escapan al limitador se redondean en vez de recortarse.
-      if(ac.createWaveShaper){clipper=ac.createWaveShaper();const n=2048,cv=new Float32Array(n);for(let i=0;i<n;i++){const x=i/(n-1)*2-1;cv[i]=Math.tanh(1.05*x)/Math.tanh(1.05);}clipper.curve=cv;clipper.oversample='2x';}else clipper=ac.createGain();
+      // Protección de picos: señal lineal hasta 0,9; solo redondea los últimos picos.
+      // La reducción de bits del jugador permanece en su ruta de efecto explícita.
+      if(ac.createWaveShaper){clipper=ac.createWaveShaper();clipper.curve=peakGuardCurve();clipper.oversample='4x';}else clipper=ac.createGain();
       limiter=ac.createDynamicsCompressor();if(limiter.threshold){limiter.threshold.value=-1;limiter.knee.value=0;limiter.ratio.value=20;limiter.attack.value=.002;limiter.release.value=.2;}
       comfortShelf=ac.createBiquadFilter();comfortShelf.type='highshelf';comfortShelf.frequency.value=3500;comfortShelf.gain.value=runtime.S.softMusic?-5:0;
       comfortLowpass=ac.createBiquadFilter();comfortLowpass.type='lowpass';comfortLowpass.Q.value=.7;comfortLowpass.frequency.value=runtime.S.softMusic?5500:18000;
       // Mesa de efectos del jugador (Kaoss pad): filtros, espacio, eco, robot. Neutra por defecto.
       fx={lp:ac.createBiquadFilter(),hp:ac.createBiquadFilter(),dry:ac.createGain(),verb:ac.createConvolver(),verbSend:ac.createGain(),delay:ac.createDelay(2),fb:ac.createGain(),delaySend:ac.createGain(),dtone:ac.createBiquadFilter(),crushSend:ac.createGain(),crush:ac.createWaveShaper?ac.createWaveShaper():ac.createGain()};
-      fx.lp.type='lowpass';fx.lp.frequency.value=20000;fx.lp.Q.value=4;fx.hp.type='highpass';fx.hp.frequency.value=10;fx.hp.Q.value=4;
+      fx.lp.type='lowpass';fx.lp.frequency.value=20000;fx.lp.Q.value=Math.SQRT1_2;fx.hp.type='highpass';fx.hp.frequency.value=10;fx.hp.Q.value=Math.SQRT1_2;
       fx.verb.buffer=impulse(4.5);fx.verbSend.gain.value=0;fx.delaySend.gain.value=0;fx.fb.gain.value=.45;fx.dtone.type='lowpass';fx.dtone.frequency.value=2600;fx.crushSend.gain.value=0;
       if(fx.crush.curve!==undefined){const n=4096,cv=new Float32Array(n);for(let i=0;i<n;i++){const x=i/(n-1)*2-1;cv[i]=Math.round(x*6)/6;}fx.crush.curve=cv;}
-      master.connect(mfilt).connect(fx.lp).connect(fx.hp).connect(fx.dry).connect(punch);
-      fx.hp.connect(fx.verbSend).connect(fx.verb).connect(punch);
-      fx.hp.connect(fx.delaySend).connect(fx.delay).connect(fx.dtone).connect(fx.fb).connect(fx.delay);fx.dtone.connect(punch);
+      subsonic=ac.createBiquadFilter();subsonic.type='highpass';subsonic.frequency.value=20;subsonic.Q.value=Math.SQRT1_2;
+      headroom=ac.createGain();headroom.gain.value=.98;
+      const fxRoom=returnFilters(ac,180,8000),fxEcho=returnFilters(ac,110,8000);
+      master.connect(subsonic).connect(mfilt).connect(fx.lp).connect(fx.hp).connect(fx.dry).connect(punch);
+      fx.hp.connect(fx.verbSend).connect(fx.verb).connect(fxRoom.input);fxRoom.output.connect(punch);
+      fx.hp.connect(fx.delaySend).connect(fx.delay).connect(fx.dtone).connect(fx.fb).connect(fx.delay);fx.dtone.connect(fxEcho.input);fxEcho.output.connect(punch);
       fx.hp.connect(fx.crushSend).connect(fx.crush).connect(punch);
-      punch.connect(comfortShelf).connect(comfortLowpass).connect(presence).connect(comp).connect(makeup).connect(limiter).connect(clipper).connect(ac.destination);
+      punch.connect(comfortShelf).connect(comfortLowpass).connect(presence).connect(comp).connect(makeup).connect(limiter).connect(clipper).connect(headroom).connect(ac.destination);
       bus=ac.createGain();bus.connect(master);
-      verb=ac.createConvolver();verb.buffer=impulse(3.2);verbIn=ac.createGain();verbIn.gain.value=.8;verbIn.connect(verb).connect(master);
+      verb=ac.createConvolver();verb.buffer=impulse(3.2);verbIn=ac.createGain();verbIn.gain.value=.8;const room=returnFilters(ac);verbIn.connect(verb).connect(room.input);room.output.connect(master);
       delay=ac.createDelay(1.5);delay.delayTime.value=SIX*3;dfb=ac.createGain();dfb.gain.value=.38;const dl=ac.createBiquadFilter();dl.type="lowpass";dl.frequency.value=2000;
-      delay.connect(dl).connect(dfb).connect(delay);dl.connect(master);dl.connect(verbIn);
+      delay.connect(dl).connect(dfb).connect(delay);const echo=returnFilters(ac,110,8000);dl.connect(echo.input);echo.output.connect(master);echo.output.connect(verbIn);
       dsend=ac.createGain();dsend.gain.value=1;dsend.connect(delay);
       padF=ac.createBiquadFilter();padF.type="lowpass";padF.frequency.value=600;padF.Q.value=.5;padG=ac.createGain();padG.gain.value=0;
       padF.connect(padG);padG.connect(master);padG.connect(verbIn);
@@ -447,7 +452,7 @@ export function initialize(runtime) {
     comfortLowpass: { get: () => comfortLowpass },
     limiter: { get: () => limiter },
     fx: { get: () => fx },
-    outputStage: { get: () => ({punch,presence,makeup,limiter,clipper,master}) },
+    outputStage: { get: () => ({punch,presence,makeup,limiter,clipper,master,subsonic,headroom}) },
     noiseHit: { get: () => noise },
     snareHit: { get: () => snare },
     clap: { get: () => clap },
