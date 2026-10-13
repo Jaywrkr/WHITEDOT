@@ -483,3 +483,7 @@ Rama `feat/06-stationary-environment`. Tras aproximadamente 60 segundos de escuc
 ### Fase 7: Favoritos musicales
 
 Rama `feat/07-musical-favorites`. Menú → Favoritos guarda hasta 64 puntos con nombre, coordenadas, capa y carácter musical; permite renombrar y borrar, y sobrevive a recarga. Bitácora los lista y el mapa marca los de superficie sin revelar terreno adicional. Logro Quiero volver. No es teletransporte ni snapshot del compás; escenas exactas siguen pendientes. Guardado v4 añade favorites versión 1. Verificación: 30 suites Node y smoke de guardado/renombrado/recarga/Bitácora/borrado en móvil y escritorio. Dependencia y orden en RAMAS.md.
+
+### Fase 8: Orientación y regreso
+
+Rama `feat/08-return-navigation`. Cada favorito ofrece Orientar y hay retorno guiado al Estudio. Un indicador compacto muestra dirección, distancia en pasos y llegada, con cancelación; sigue disponible tras recarga. Si el destino está en otra capa indica buscar un acceso. No mueve al jugador ni teletransporta. Logro Otra vez aquí al regresar desde cierta distancia. Guardado v4 añade destination; borrar el favorito cancela su ruta. Verificación: 31 suites Node y smoke móvil/escritorio de dirección, llegada, capas y borrado. Dependencia y orden en RAMAS.md.

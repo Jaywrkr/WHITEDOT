@@ -232,3 +232,7 @@ Se inventarían todas las etapas de producto del historial desde `596fa31`, incl
 ### Fase 7 de la cadena: Favoritos musicales
 
 `feat/07-musical-favorites`. Menú → Favoritos guarda hasta 64 puntos con nombre, coordenadas, capa y carácter musical; permite renombrar y borrar, y sobrevive a recarga. Bitácora los lista y el mapa marca los de superficie sin revelar terreno adicional. Logro Quiero volver. No es teletransporte ni snapshot del compás; escenas exactas siguen pendientes. Guardado v4 añade favorites versión 1. Pruebas: 30 suites Node y smoke de guardado/renombrado/recarga/Bitácora/borrado en móvil y escritorio. Ver RAMAS.md.
+
+### Fase 8 de la cadena: Orientación y regreso
+
+`feat/08-return-navigation`. Cada favorito ofrece Orientar y hay retorno guiado al Estudio. Un indicador compacto muestra dirección, distancia en pasos y llegada, con cancelación; sigue disponible tras recarga. Si el destino está en otra capa indica buscar un acceso. No mueve al jugador ni teletransporta. Logro Otra vez aquí al regresar desde cierta distancia. Guardado v4 añade destination; borrar el favorito cancela su ruta. Pruebas: 31 suites Node y smoke móvil/escritorio de dirección, llegada, capas y borrado. Ver RAMAS.md.
