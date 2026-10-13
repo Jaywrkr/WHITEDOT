@@ -37,15 +37,25 @@ export function applyAnomaly(d,origin){
 // Un río es una curva de nivel de un campo de ruido: infinito, continuo y sin cuadrícula.
 // Río abajo = donde baja la "altura" (otro campo). En el mar mueren.
 const RIVER_SCALE=7,RIVER_WIDTH=.025;   // en regiones: ~90 px a cada lado, un río de ~180 px
-export function riverAt(x,y,regionPx,isSeaPx){
- const u=x/regionPx,v=y/regionPx,f=(a,b)=>valueNoise(a/RIVER_SCALE+.37,b/RIVER_SCALE+.11,71);
- const n=f(u,v),e=.02,gx=(f(u+e,v)-f(u-e,v))/(2*e),gy=(f(u,v+e)-f(u,v-e))/(2*e),g=Math.hypot(gx,gy)||1e-6;
+// Dos familias de ríos (campos distintos) que sí se cruzan: donde se juntan hay una confluencia.
+const FAMILIES=[{scale:RIVER_SCALE,salt:71,ox:.37,oy:.11},{scale:RIVER_SCALE*1.35,salt:97,ox:.71,oy:.53}];
+function riverOf(F,u,v,e){
+ const f=(a,b)=>valueNoise(a/F.scale+F.ox,b/F.scale+F.oy,F.salt);
+ const n=f(u,v),gx=(f(u+e,v)-f(u-e,v))/(2*e),gy=(f(u,v+e)-f(u,v-e))/(2*e),g=Math.hypot(gx,gy)||1e-6;
  const dist=Math.abs(n-.5)/g;if(dist>RIVER_WIDTH*2.2||Math.abs(n-.5)>.006)return null;   // tope absoluto: en zonas planas no se vuelve un lago enorme
+ return {dist,gx,gy,g};
+}
+export function riverAt(x,y,regionPx,isSeaPx){
+ const u=x/regionPx,v=y/regionPx,e=.02,hits=FAMILIES.map(F=>riverOf(F,u,v,e)).filter(Boolean);
+ if(!hits.length)return null;
  if(isSeaPx&&isSeaPx(x,y))return null;
  const h=(a,b)=>valueNoise(a/11,b/11,83),hu=h(u,v),hx=(h(u+e,v)-h(u-e,v))/(2*e),hy=(h(u,v+e)-h(u,v-e))/(2*e);
  // Dirección del agua: a lo largo del río (perpendicular al gradiente), hacia donde baja la altura.
- let fx=-gy/g,fy=gx/g;if(fx*hx+fy*hy>0){fx=-fx;fy=-fy;}
- return {on:dist<RIVER_WIDTH,edge:dist/RIVER_WIDTH,down:1-hu,fx,fy};
+ const flow=k=>{let fx=-k.gy/k.g,fy=k.gx/k.g;if(fx*hx+fy*hy>0){fx=-fx;fy=-fy;}return [fx,fy];};
+ hits.sort((a,b)=>a.dist-b.dist);const [fx,fy]=flow(hits[0]),on=hits.filter(k=>k.dist<RIVER_WIDTH);
+ const out={on:on.length>0,edge:hits[0].dist/RIVER_WIDTH,down:1-hu,fx,fy,conf:on.length>1};
+ if(out.conf){const [ax,ay]=flow(on[1]);out.other=[ax,ay];}   // dirección del otro río, para saber de dónde viene su música
+ return out;
 }
 
 export function initialize(runtime){
@@ -97,6 +107,10 @@ export function initialize(runtime){
  function riverStep(dt){
   const S=runtime.S,r=riverAt(S.wx,S.wy,RP(),isSeaPx),on=!!(r&&r.on);
   riverState.on=on;riverState.down=on?r.down:0;runtime.MU.river=on?r.down:0;
+  // Confluencia: el otro río trae la música de río arriba; se mezcla como en una frontera.
+  if(on&&r.conf){runtime.MU.confNb=runtime.regionOfPos(S.wx-r.other[0]*2*RP(),S.wy-r.other[1]*2*RP());
+   if(!riverState.inConf){riverState.inConf=true;S.confluences=(S.confluences||0)+1;runtime.toast('<em>Confluencia</em> · dos ríos, dos músicas');runtime.unlock('confluencia');}}
+  else{runtime.MU.confNb=null;riverState.inConf=false;}
   if(on){riverState.time+=dt;if(!S.help.rio){S.help.rio=true;runtime.say(runtime.VOZ.rio,'Río');}if(riverState.time>60)runtime.unlock('rio1');}
  }
  // Cada compás en un río: unas gotas descendentes a tempo; más río abajo, más gotas.

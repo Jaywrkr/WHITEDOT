@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/core.mjs && node tests/radio.mjs && node tests/voices.mjs && node tests/gravity.mjs && node tests/journal.mjs && node tests/scanner.mjs && node tests/playthings.mjs && node tests/personality.mjs && node tests/pockets.mjs && node tests/feedback.mjs && node tests/relics.mjs && node tests/effects.mjs && node tests/session.mjs && node tests/palettes.mjs && node tests/grammar.mjs && node tests/spatial.mjs && node tests/neighborhoods.mjs && node tests/references.mjs && node tests/phenomena.mjs && node tests/patches.mjs && node tests/atlas.mjs && node tests/rhythms.mjs && node tests/world.mjs && node tests/journey.mjs && node tests/wonders.mjs"
+    "test": "node tests/core.mjs && node tests/radio.mjs && node tests/voices.mjs && node tests/gravity.mjs && node tests/journal.mjs && node tests/scanner.mjs && node tests/playthings.mjs && node tests/personality.mjs && node tests/pockets.mjs && node tests/feedback.mjs && node tests/relics.mjs && node tests/effects.mjs && node tests/session.mjs && node tests/palettes.mjs && node tests/grammar.mjs && node tests/spatial.mjs && node tests/neighborhoods.mjs && node tests/references.mjs && node tests/phenomena.mjs && node tests/patches.mjs && node tests/atlas.mjs && node tests/rhythms.mjs && node tests/world.mjs && node tests/journey.mjs && node tests/wonders.mjs && node tests/alive.mjs"
   },
   "engines": {
     "node": ">=18"

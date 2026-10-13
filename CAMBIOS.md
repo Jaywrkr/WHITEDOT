@@ -164,6 +164,10 @@ Instalable con manifiesto, iconos y service worker; sin zoom, rebote ni gestos d
 
 Rarezas en tres niveles con reglas propias (gravedad invertida, canon, frenesí, tiempo detenido, espejo del Origen, luna de oro), muestras únicas para el Estudio, logros y estrellas en el mapa; rumores de la Voz con dirección y distancia; ríos infinitos que corren río abajo con energía creciente y gotas a tempo. Detalle en HANDOFF ("fase 3"). Pruebas `tests/wonders.mjs` y `tests/wonders_smoke.py`; 25 suites y seis smokes pasan.
 
+### 32. Mundo vivo y volumen de fiesta — rama `feat/infinite-world-alive`
+
+Confluencias entre dos familias de ríos con mezcla musical, ríos en el mapa, tormentas que viajan con el viento (lluvia de notas, truenos, se pueden perseguir), estaciones semanales por continente con tempo, color de sonido y partículas, huellas y campamentos antiguos. Segunda subida de volumen (RMS ~−5,7 dB) y sesión de audio de iPhone en modo música. Pruebas `tests/alive.mjs` y `tests/alive_smoke.py`; 26 suites y siete smokes pasan.
+
 ## Persistencia y compatibilidad
 
 Clave `pixel-blanco-v4` conservada; progreso solo en navegador. Añadidos durante etapas: `S.journal`, `S.softMusic`, `S.relicSites`, metadatos de nuevas estrellas, `S.session` y `S.lastSession`. Partidas antiguas se normalizan sin inventar historial. Perfiles de radio, voz, gravedad, personalidad, espacios, efectos, gramática, vecindarios, fenómenos y materiales se reconstruyen o son temporales; no se guarda estado exacto de música. Reacciones/posiciones dinámicas no garantizan persistencia al reconstruir chunk. IDs del mundo físico se han preservado; nuevos géneros/campos sí pueden cambiar identidad musical de coordenadas antiguas.

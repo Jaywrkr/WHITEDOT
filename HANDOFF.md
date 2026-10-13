@@ -101,6 +101,7 @@ La separación conserva las relaciones originales entre sistemas. Todavía hay a
 | `src/landmarks.js` | Hitos y horizonte sonoro: se oyen, se intuyen y se ven. |
 | `src/map.js` | Mapa dibujado de lo explorado (dos zooms, hitos oídos como ?, tarjeta para compartir). |
 | `src/wonders.js` | Rarezas que rompen reglas, rumores de la Voz y ríos. |
+| `src/alive.js` | Tormentas que se mueven con el viento, estaciones semanales por continente, huellas y campamentos antiguos. |
 | `src/atlas.js` | Atlas de ritmos (prototipo): lista todos los géneros, verifica que existen en el mundo y viaja a la región más cercana. |
 | `src/controls.js` | Botones, controles de prototipo y sonido. |
 | `package.json` | Declara módulos ES para Node y `npm test`; no instala dependencias de aplicación. |
@@ -217,7 +218,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 - **Sintaxis:** correr `node --check` sobre los archivos de `src/`. Ya no hay un script inline para extraer.
 - **Visual y funcional:** servir el repositorio por HTTP y usar Playwright headless (Chromium) en 390×844 (móvil) y escritorio. Comprobar entrada y reentrada al Mundo con reto visible, transición de día sin reto residual, pausa de linterna en menús, colocación y persistencia de muestras en el Estudio y generación de tarjetas. Capturar errores JavaScript y screenshots. Los errores de carga de Google Fonts sin red son esperables.
 - **Tope diario:** comprobar que una luz de valor 10 recogida cuando faltaba 1 solo suma 1 tanto a `todayLight` como a `totalLight`.
-- **Pruebas versionadas:** `npm test` (25 suites, inventario en CAMBIOS.md) `python3 tests/smoke.py`, `python3 tests/atlas_smoke.py`, `python3 tests/world_smoke.py` y `python3 tests/journey_smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
+- **Pruebas versionadas:** `npm test` (26 suites, inventario en CAMBIOS.md) `python3 tests/smoke.py`, `python3 tests/atlas_smoke.py`, `python3 tests/world_smoke.py` y `python3 tests/journey_smoke.py`. El smoke test inicia y detiene su propio servidor en un puerto libre, usa Chromium y no modifica las partidas del navegador personal. Requiere Python Playwright (ver README); las pruebas core solo requieren Node. No hay CI configurado.
 - **Audio:** en headless no se oye nada. **Jay valida el sonido en su teléfono** con la URL de Vercel. Es la prueba que importa.
 - **Atajos de prototipo** (menú → Prototipo):
   - `dFill`: llena la barra del día.
@@ -396,4 +397,18 @@ Al entrar, la Voz dice la regla. La primera vez se registra en `S.anomalies`, da
 Pendiente de esta fase: confluencias que mezclen géneros, manantiales como hitos de origen, ríos en el mapa y muestras/encuentros raros ligados a fenómenos.
 
 Pruebas: `tests/wonders.mjs` y `tests/wonders_smoke.py`.
+
+### Mundo infinito · fase 4 (parte 1): vida en el tiempo real + volumen
+
+`src/alive.js` y cambios en `wonders.js`.
+
+- **Confluencias:** ahora hay dos familias de ríos (campos de ruido distintos) que se cruzan. En una confluencia la música del otro río (dos regiones río arriba) se mezcla como en una frontera (`MU.confNb`, peso ≥ 0,45), con aviso y logro `confluencia`. Los ríos aparecen en el mapa sobre las regiones visitadas.
+- **Tormentas que se mueven:** celdas de 12×12 regiones; en cada ventana de 40 min hay 38 % de probabilidad de tormenta, que vive 80 min, crece y se apaga, y viaja ~2,3 regiones cada 10 min con el viento del día (`windOf`), así que el jugador puede perseguirla. Dependen del reloj real y la semilla, así que son iguales para todos. Dentro: cielo oscuro, cortina de lluvia inclinada, lluvia de notas que se recogen (la misma mecánica que le gusta a Jay, más intensa), sonido más oscuro y truenos. Cerca pero fuera: masa gris en el borde de la pantalla, en su dirección, con relámpagos. Logro `tormenta3`.
+- **Estaciones:** cada continente cambia de estación cada semana real, desfasado del resto (`seasonOf`). Primavera +1 BPM y polen; verano +3 BPM y destellos; otoño −1 BPM, hojas y sonido más cálido; invierno −4 BPM, nieve y sonido más oscuro. La estación aparece en la tarjeta del lugar.
+- **El mundo te recuerda:** huellas cada 160 px recorridos (`S.steps`, hasta 4.000), dibujadas tenues; al mover el Estudio, el campamento anterior queda como casa apagada (`S.camps`, hasta 30).
+- **Volumen (segunda subida, pedida por Jay):** compresor −30 dB 5:1, realce de presencia +3,5 dB a 2,4 kHz (los parlantes del teléfono no dan graves), shelf de agudos en 0, compensación ×6,8 (`LOUD`), limitador a −2 dB y saturación tanh más fuerte. Medido: RMS ~−5,7 dB (antes −9,3; originalmente ~−15,6), picos bajo 0. En iPhone, `navigator.audioSession.type='playback'` hace que suene con el volumen multimedia y aunque esté activo el interruptor de silencio. Escucha suave sigue baja.
+
+Pruebas: `tests/alive.mjs` y `tests/alive_smoke.py`.
+
+Pendiente de la fase 4: capas bajo tierra (1 paso = 8 arriba) y del cielo con ritual de entrada, migraciones con posición por fecha y rastros de otros jugadores.
 

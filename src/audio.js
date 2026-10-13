@@ -30,34 +30,39 @@ export function initialize(runtime) {
   const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN);
   const neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN);
   MU.radio = null;MU.neighborRadio=null;
-  let ac=null,master,mfilt,punch,makeup,limiter,clipper,comfortShelf,comfortLowpass,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
+  const LOUD=6.8;   // ganancia de compensación en modo normal: volumen de fiesta
+  let ac=null,master,mfilt,punch,presence,makeup,limiter,clipper,comfortShelf,comfortLowpass,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
   const voiceCurator=createVoiceCurator();
   const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:1):0;
   function applyComfort(time=ac?.currentTime||0){
     if(!ac)return;
     const soft=!!runtime.S.softMusic;
     master.gain.setTargetAtTime(musicVolume(),time,.25);
-    comfortShelf.gain.setTargetAtTime(soft?-5:-1.5,time,1);
-    if(punch){punch.gain.setTargetAtTime(soft?0:3,time,.5);makeup.gain.setTargetAtTime(soft?1.6:3.4,time,.5);}
-    comfortLowpass.frequency.setTargetAtTime(soft?5500:runtime.inWorld()?(MU.anomaly==='detenido'&&MU.still>1?700:MU.radio?.grammar?.brightness||10000):18000,time,1.2);
+    comfortShelf.gain.setTargetAtTime(soft?-5:0,time,1);
+    if(punch){punch.gain.setTargetAtTime(soft?0:3,time,.5);presence.gain.setTargetAtTime(soft?0:3.5,time,.5);makeup.gain.setTargetAtTime(soft?1.6:LOUD,time,.5);}
+    comfortLowpass.frequency.setTargetAtTime(soft?5500:runtime.inWorld()?(MU.anomaly==='detenido'&&MU.still>1?700:(MU.radio?.grammar?.brightness||10000)*(MU.season?.bright||1)*(1-.35*(MU.storm||0))):18000,time,1.2);
   }
   function impulse(sec){const n=ac.sampleRate*sec|0,b=ac.createBuffer(2,n,ac.sampleRate);for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);}return b;}
   function audio(){
     if(!ac){
       try{ac=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return;}
+      // iPhone: sonar como música (volumen multimedia y aunque el interruptor de silencio esté activo).
+      try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch(e){}
       master=ac.createGain();master.gain.value=musicVolume();
       mfilt=ac.createBiquadFilter();mfilt.type="lowpass";mfilt.frequency.value=18000;
       const comp=ac.createDynamicsCompressor();
-      if(comp.threshold){comp.threshold.value=-24;comp.knee.value=12;comp.ratio.value=4;comp.attack.value=.006;comp.release.value=.2;}
+      if(comp.threshold){comp.threshold.value=-30;comp.knee.value=8;comp.ratio.value=5;comp.attack.value=.005;comp.release.value=.18;}
       // Volumen de fiesta: graves con más cuerpo, ganancia de compensación y un limitador final que evita saturar.
       punch=ac.createBiquadFilter();punch.type='lowshelf';punch.frequency.value=110;punch.gain.value=runtime.S.softMusic?0:3;
-      makeup=ac.createGain();makeup.gain.value=runtime.S.softMusic?1.6:3.4;
+      makeup=ac.createGain();makeup.gain.value=runtime.S.softMusic?1.6:LOUD;
+      // Presencia: los parlantes del teléfono casi no dan graves; el cuerpo que se oye está en los medios.
+      presence=ac.createBiquadFilter();presence.type='peaking';presence.frequency.value=2400;presence.Q.value=.8;presence.gain.value=runtime.S.softMusic?0:3.5;
       // Saturación suave final (tanh): los picos que escapan al limitador se redondean en vez de recortarse.
-      if(ac.createWaveShaper){clipper=ac.createWaveShaper();const n=2048,cv=new Float32Array(n);for(let i=0;i<n;i++){const x=i/(n-1)*2-1;cv[i]=Math.tanh(1.15*x)/Math.tanh(1.15);}clipper.curve=cv;clipper.oversample='2x';}else clipper=ac.createGain();
-      limiter=ac.createDynamicsCompressor();if(limiter.threshold){limiter.threshold.value=-3;limiter.knee.value=0;limiter.ratio.value=20;limiter.attack.value=.002;limiter.release.value=.12;}
-      comfortShelf=ac.createBiquadFilter();comfortShelf.type='highshelf';comfortShelf.frequency.value=3500;comfortShelf.gain.value=runtime.S.softMusic?-5:-1.5;
+      if(ac.createWaveShaper){clipper=ac.createWaveShaper();const n=2048,cv=new Float32Array(n);for(let i=0;i<n;i++){const x=i/(n-1)*2-1;cv[i]=Math.tanh(1.9*x)/Math.tanh(1.9);}clipper.curve=cv;clipper.oversample='2x';}else clipper=ac.createGain();
+      limiter=ac.createDynamicsCompressor();if(limiter.threshold){limiter.threshold.value=-2;limiter.knee.value=0;limiter.ratio.value=20;limiter.attack.value=.002;limiter.release.value=.12;}
+      comfortShelf=ac.createBiquadFilter();comfortShelf.type='highshelf';comfortShelf.frequency.value=3500;comfortShelf.gain.value=runtime.S.softMusic?-5:0;
       comfortLowpass=ac.createBiquadFilter();comfortLowpass.type='lowpass';comfortLowpass.Q.value=.7;comfortLowpass.frequency.value=runtime.S.softMusic?5500:18000;
-      master.connect(mfilt).connect(punch).connect(comfortShelf).connect(comfortLowpass).connect(comp).connect(makeup).connect(limiter).connect(clipper).connect(ac.destination);
+      master.connect(mfilt).connect(punch).connect(comfortShelf).connect(comfortLowpass).connect(presence).connect(comp).connect(makeup).connect(limiter).connect(clipper).connect(ac.destination);
       bus=ac.createGain();bus.connect(master);
       verb=ac.createConvolver();verb.buffer=impulse(3.2);verbIn=ac.createGain();verbIn.gain.value=.8;verbIn.connect(verb).connect(master);
       delay=ac.createDelay(1.5);delay.delayTime.value=SIX*3;dfb=ac.createGain();dfb.gain.value=.38;const dl=ac.createBiquadFilter();dl.type="lowpass";dl.frequency.value=2000;
@@ -166,7 +171,7 @@ export function initialize(runtime) {
     if(s===0){
       if(MU.biome!==MU.biomeT||MU.dnaA!==MU.dnaT){MU.biome=MU.biomeT;MU.dnaA=MU.dnaT;MU.tr=BI().tr+(MU.dnaA?MU.dnaA.trOff:0);MU.pending=true;MU.harmonyRegion=null;}
       const nb=runtime.inWorld()?MU.nb:null,w=nb?MU.nbW:0;
-      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;BPM=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)BPM=Math.round(BPM*.55);SIX=60/BPM/4;delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
+      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;BPM=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld())BPM+=MU.seasonBpm||0;if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)BPM=Math.round(BPM*.55);SIX=60/BPM/4;delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
       if(!runtime.inWorld()&&(MU.pending||(MU.step-MU.lastChange>16*(6+Math.floor(rnd()*4)))))changeChord(t);
       if(BI().id==="tormenta"&&runtime.inWorld()&&(MU.step/16)%2===0&&rnd()<.75)MU.boltAt=t+SIX*(rnd()<.5?0:8);
     }
@@ -177,7 +182,8 @@ export function initialize(runtime) {
       });
       if(s===0){const degree=harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar);if(MU.harmonyRegion!==MU.dnaA.key||MU.deg!==degree){changeChord(t);MU.harmonyRegion=MU.dnaA.key;}else if(MU.pending){MU.pending=false;MU.dist=0;}}
       if(s===0)runtime.horizonBar?.(t,MU.step>>4);
-      if(s===0)runtime.riverBar?.(t);   // hitos lejanos: se oyen antes de verse
+      if(s===0)runtime.riverBar?.(t);
+      if(s===0)runtime.stormBar?.(t);   // hitos lejanos: se oyen antes de verse
     }else{MU.radio=null;voiceCurator.clear();}
     if(runtime.inWorld()&&MU.nb&&MU.nbW>0){if(s===0||MU.neighborRadio?.key!==MU.nb.key)MU.neighborRadio={...neighborRadio.advance(MU.nb,MU.step>>4),key:MU.nb.key};}else MU.neighborRadio=null;
     if(s===0)applyComfort(t);
@@ -430,7 +436,7 @@ export function initialize(runtime) {
     curatedVoiceGain: { get: () => (time,role)=>voiceCurator.gain(time,SIX,role,runtime.S.softMusic) },
     comfortLowpass: { get: () => comfortLowpass },
     limiter: { get: () => limiter },
-    outputStage: { get: () => ({punch,makeup,limiter,clipper,master}) },
+    outputStage: { get: () => ({punch,presence,makeup,limiter,clipper,master}) },
     noiseHit: { get: () => noise },
     snareHit: { get: () => snare },
     clap: { get: () => clap },
