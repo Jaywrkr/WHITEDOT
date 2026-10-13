@@ -1,6 +1,6 @@
 # Alcance vigente de V1
 
-El pedido más reciente reemplaza las ramas por funciones con bloques grandes dentro de una rama. Ver [V1_PRODUCCION.md](V1_PRODUCCION.md) y [RAMAS.md](RAMAS.md). Main ya llegó al PR #64; los textos siguientes conservan el contexto de la agrupación anterior.
+El pedido más reciente reemplaza las ramas por funciones con bloques grandes dentro de una rama. Ver [V1_PRODUCCION.md](V1_PRODUCCION.md) y [RAMAS.md](RAMAS.md). Main ya llegó al PR #66; los textos siguientes conservan el contexto de la agrupación anterior.
 
 # Estado de integración
 

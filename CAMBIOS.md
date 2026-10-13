@@ -2,7 +2,7 @@
 
 [Inventario V1](V1_PRODUCCION.md): 64 tareas, criterios de publicación, coordenadas/retorno y estrategia de expansión. La instrucción vigente es agrupar muchas mejoras en una misma rama; esta revisión se suma a `feat/intuitive-animal-dialogue` y no crea otra rama. Se propone `release/v1` con commits por bloques y un PR final.
 
-Main remoto verificado: `e3d3086` (PR #64). Incluye suelo/rastros; los últimos cambios de vidrios y animal siguen pendientes de integración. Medición renovada: 39.952 recetas detalladas en 40.000 regiones; 23.418 recetas terrestres y 9.732 perfiles musicales terrestres. Promedio local de cinco muestras de 1.600 regiones: 1.600 recetas por semilla, no un total de mundos ni prueba de diferencias perceptuales. Detalles en [VARIEDAD.md](VARIEDAD.md).
+Main remoto verificado al cierre: `93a5323` (PR #66). Suelo/rastros, vidrios sin panel y animal por toque ya están integrados. Medición renovada: 39.952 recetas detalladas en 40.000 regiones; 23.418 recetas terrestres y 9.732 perfiles musicales terrestres. Promedio local de cinco muestras de 1.600 regiones: 1.600 recetas por semilla, no un total de mundos ni prueba de diferencias perceptuales. Detalles en [VARIEDAD.md](VARIEDAD.md).
 
 ## Nueva etapa: animal de respuesta más intuitivo
 

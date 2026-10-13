@@ -4,9 +4,9 @@ Revisión del código y planes al 13 de octubre de 2026. Propuesta de alcance pa
 
 ## Estado y forma de trabajar
 
-Main remoto verificado: `e3d3086`, merge del PR #64, incluye rastros musicales y suelo resonante. Los cambios posteriores de vidrios (`cfeac0c`) y animal (`991255a`) todavía no están en ese main. Este inventario se añade a la misma rama del animal; no abre otra rama de documentación.
+Main remoto verificado al cerrar la revisión: `93a5323`, merge del PR #66. Ya incluye rastros/suelo, vidrios (`cfeac0c`) y animal (`991255a`). Este inventario se añade a la misma rama del animal; no abre otra rama de documentación.
 
-La instrucción más reciente de Jay reemplaza «una función = una rama»: agrupar muchas mejoras relacionadas. Propuesta: una rama `release/v1`, varios commits de alcance claro, puntos de prueba por bloque y un PR final. Puede reunir vidrios y animal pendientes además del trabajo nuevo. Conservar ascendencia, incorporar main actualizado y resolver conflictos antes de pedir revisión. Jay sigue creando PR y haciendo merge. No se modifica main ni se despliega producción desde esta revisión.
+La instrucción más reciente de Jay reemplaza «una función = una rama»: agrupar muchas mejoras relacionadas. Propuesta: una rama `release/v1`, varios commits de alcance claro, puntos de prueba por bloque y un PR final. Debe partir del main actualizado, que ya incluye vidrios y animal, y reunir el trabajo nuevo. Conservar ascendencia, incorporar main actualizado y resolver conflictos antes de pedir revisión. Jay sigue creando PR y haciendo merge. No se modifica main ni se despliega producción desde esta revisión.
 
 ## Variedad real y cómo interpretar los números
 

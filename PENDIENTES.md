@@ -4,7 +4,7 @@ El inventario completo y actualizado está en [V1_PRODUCCION.md](V1_PRODUCCION.m
 
 ## Integración verificada
 
-Main remoto `e3d3086` incluye el PR #64 y la secuencia hasta suelo resonante y rastros musicales. Vidrios sin panel (`cfeac0c`) y animal por toque (`991255a`) están en sus ramas posteriores. Esta revisión se agrega a la misma rama del animal.
+Main remoto `93a5323` incluye el PR #66 y toda la secuencia hasta vidrios sin panel (`cfeac0c`) y animal por toque (`991255a`). Esta revisión se agrega a la misma rama del animal.
 
 ## Regla de trabajo más reciente
 
@@ -22,7 +22,7 @@ Construcción libre, huertos, crafting, comunidades, observatorios/Leonardo, mae
 
 ## Lo que ya existe
 
-Semillas, 11 biomas, 52 estilos, radio evolutiva, quietud, favoritos/regreso/autopilot, vidrios/espejos/módulos, conexiones regionales, blobs, familias de encuentros, suelo resonante, frases de animales, rastros e instrumento dormido, sustracción, fijación opcional/borrado, modo tranquilo, Bitácora/logros y shell offline local. Parte de lo más reciente espera integración en main.
+Semillas, 11 biomas, 52 estilos, radio evolutiva, quietud, favoritos/regreso/autopilot, vidrios/espejos/módulos, conexiones regionales, blobs, familias de encuentros, suelo resonante, frases de animales, rastros e instrumento dormido, sustracción, fijación opcional/borrado, modo tranquilo, Bitácora/logros y shell offline local. La secuencia de ocho entregas ya está integrada; este nuevo inventario V1 espera revisión.
 
 ## Decisión preservada
 

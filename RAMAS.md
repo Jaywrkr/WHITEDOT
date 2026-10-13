@@ -1,6 +1,6 @@
 # Integración y trabajo agrupado
 
-Main verificado `e3d3086` (PR #64): filas 1–6 de la tabla siguiente ya integradas; filas 7–8 pendientes. La instrucción actual es agrupar muchas mejoras por rama. La revisión V1 se agrega a la fila 8; el futuro paquete amplio y sus puntos de prueba están en [V1_PRODUCCION.md](V1_PRODUCCION.md). No recrear PR de las filas ya integradas.
+Main verificado al cierre `93a5323` (PR #66): las ocho filas de la tabla siguiente ya están integradas. Lo nuevo de esta revisión es el plan V1 y su auditoría. La instrucción actual es agrupar muchas mejoras por rama. La revisión V1 se agrega a la fila 8; el futuro paquete amplio y sus puntos de prueba están en [V1_PRODUCCION.md](V1_PRODUCCION.md). No recrear PR de las filas ya integradas.
 
 ## Cadena de referencia
 
