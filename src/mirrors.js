@@ -113,7 +113,7 @@ export function initialize(runtime){
  }
  function up(e){
   if(drag?.pointer!==e.pointerId)return false;
-  if(e.type!=='pointerup'||!available()){cancel();runtime.save();return true;}
+  if(e.type!=='pointerup'||!available()||!S().sound||Math.hypot(drag.site.x-S().wx,drag.site.y-S().wy)>250){cancel();runtime.save();return true;}
   const gesture=drag;drag=null;
   if(gesture.moved){turn(gesture.site,gesture.i,gesture.site.mirrors[gesture.i].angle);runtime.save();}
   else open(gesture.site);
@@ -126,7 +126,7 @@ export function initialize(runtime){
   return false;
  }
  function tick(){
-  if(drag&&(!available()||!S().sound))cancel();
+  if(drag&&(!available()||!S().sound||Math.hypot(drag.site.x-S().wx,drag.site.y-S().wy)>250))cancel();
   if(previous!==S()){cancel();previous=S();cache.clear();S().mirrorSites=normalizeMirrorSites(S().mirrorSites);close();}
   if(selected&&(!surface()||Math.hypot(selected.x-S().wx,selected.y-S().wy)>280))close();
  }

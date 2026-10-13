@@ -49,6 +49,9 @@ with sync_playwright() as p:
   page.evaluate("()=>{const r=window.__testRuntime,site=r.nearbyMirrors(300)[0],m=site.mirrors[0],x=r.W/2+m.x-r.S.wx,y=r.H/2+m.y-r.S.wy,w=document.getElementById('w');const event=(type,dx,dy)=>new PointerEvent(type,{pointerId:910,isPrimary:true,clientX:x+dx,clientY:y+dy,bubbles:true});w.dispatchEvent(event('pointerdown',20,0));w.dispatchEvent(event('pointermove',0,20));document.getElementById('mMenu').hidden=false;r.mirrorTick();w.dispatchEvent(event('pointerup',0,20));document.getElementById('mMenu').hidden=true;}")
   assert page.evaluate('window.__testRuntime.nearbyMirrors(300)[0].mirrors.map(m=>m.angle)')==angles
   assert page.evaluate('JSON.stringify(window.__testRuntime.S.mirrorSites["mirror:0,0"])')==saved
+  page.evaluate("()=>{const r=window.__testRuntime,site=r.nearbyMirrors(300)[0],m=site.mirrors[0],x=r.W/2+m.x-r.S.wx,y=r.H/2+m.y-r.S.wy,w=document.getElementById('w'),wx=r.S.wx;const event=(type,dx,dy)=>new PointerEvent(type,{pointerId:911,isPrimary:true,clientX:x+dx,clientY:y+dy,bubbles:true});w.dispatchEvent(event('pointerdown',20,0));w.dispatchEvent(event('pointermove',0,20));r.S.wx=site.x+300;r.mirrorTick();w.dispatchEvent(event('pointerup',0,20));r.S.wx=wx;}")
+  assert page.evaluate('window.__testRuntime.nearbyMirrors(300)[0].mirrors.map(m=>m.angle)')==angles
+  assert page.evaluate('JSON.stringify(window.__testRuntime.S.mirrorSites["mirror:0,0"])')==saved
   page.evaluate("()=>{const r=window.__testRuntime,m=r.nearbyMirrors(300)[0].mirrors[0];r.S.wx=m.x;r.S.wy=m.y;}")
   page.locator('#w').click(position={'x':30,'y':200});page.keyboard.down('e');page.wait_for_timeout(250);assert 'Espejo musical' in page.locator('#scannerSources').inner_text();page.keyboard.up('e')
   page.reload(wait_until='domcontentloaded');page.wait_for_function('window.__testRuntime?.S.mirrorSites["mirror:0,0"]?.solved')
