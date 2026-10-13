@@ -475,3 +475,7 @@ Rama `feat/04-coherent-world-combinations`. Las recetas ya distribuyen los eleme
 ### Fase 5: Lenguaje gráfico y capas de información
 
 Rama `polish/05-world-visual-language`. Elementos nuevos, fenómenos e hitos comparten trazos, materiales y límites de brillo; el jugador conserva el blanco principal. Subsuelo y Cielo usan fondo negro, y el Cielo muestra contornos en vez de llenar regiones de color. La banda desplaza sus ranuras cuando hay FX, Escuchar o avisos; la mesa adapta su altura en pantallas cortas. Guía reutilizable en visual.js, sin alterar música. Verificación: 28 suites Node; smokes FX, jam, capas y táctil; capturas móvil/escritorio revisadas. Dependencia y orden en RAMAS.md.
+
+### Fase 6: El ambiente responde a la quietud
+
+Rama `feat/06-stationary-environment`. Tras aproximadamente 60 segundos de escucha activa aparecen respuestas espaciadas de fuentes cercanas o un motivo local cuando no hay objetos. La iniciativa desarrolla tres niveles con el tiempo, respeta el compás y baja suavemente al moverte. Menús, Escuchar, pestaña oculta y audio suspendido no suman tiempo; claros de escucha omiten respuestas extras. Logro El lugar te responde y explicación en Escuchar/Bitácora. Estado temporal, sin drone ni grabación de ambiente. Verificación: 29 suites Node y prueba de iniciativa con síntesis real móvil/escritorio. Dependencia y orden en RAMAS.md.

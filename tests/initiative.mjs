@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';import {createStillnessDirector} from '../src/initiative.js';
+const d=createStillnessDirector(),context={x:900,y:900,key:'superficie:0,0',active:true};
+for(let i=0;i<1190;i++)d.tick(.05,context);assert.equal(d.state.stage,0);
+for(let i=0;i<6000;i++)d.tick(.05,{...context,active:false});assert(d.state.seconds<60,'menus counted toward quiet listening');
+for(let i=0;i<420;i++)d.tick(.05,context);assert(d.state.stage>0&&d.state.strength>.5);
+const before=d.state.strength;d.tick(.05,{...context,x:910,moving:true});assert.equal(d.state.seconds,0);assert.equal(d.state.stage,0);assert(d.state.strength>0&&d.state.strength<before,'movement must fade rather than snap');
+for(let i=0;i<200;i++)d.tick(.05,{...context,x:910+i,moving:true});assert(d.state.strength<.01);
+d.tick(.05,{...context,key:'bajo:0,0'});assert(d.state.seconds<1&&d.state.strength===0,'layer change leaked initiative');
+for(let i=0;i<4000;i++)d.tick(.05,{...context,key:'bajo:0,0'});assert.equal(d.state.stage,3);assert(d.state.strength<=1);
+console.log('PASS: active listening threshold, excluded paused time, bounded development, movement fade and layer reset');

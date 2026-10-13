@@ -23,7 +23,7 @@ export function initialize(runtime){
  }
  function phenomenonVoice(o){const region=runtime.regionOfPos(o.hx,o.hy),g=runtime.GEN[region.genre];return {role:o.kind==='bird'?'lead':o.kind==='shaker'?'perc':'bajo',instrument:o.kind==='bird'?g.hookP[o.voiceIndex%g.hookP.length]:o.kind==='shaker'?'snare':g.bassI};}
  function cue(o,time){if(!o.cues.some(t=>Math.abs(t-time)<.025)){o.cues.push(time);if(o.cues.length>4)o.cues.shift();}}
- const audible=()=>runtime.inWorld()&&runtime.S.sound&&runtime.ac?.state==='running';
+ const audible=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&runtime.S.sound&&runtime.ac?.state==='running';
  function triggerPhenomenon(o,time){
   if(!audible()||time<o.next)return false;
   o.next=time+runtime.SIX*8;
@@ -43,7 +43,7 @@ export function initialize(runtime){
  }
  function phenomenonPercussionCue(time){if(!audible())return;const o=nearbyPhenomena().find(o=>o.kind==='shaker');if(o)cue(o,time);}
  function phenomenaStep(step,bar,time){
-  if(!audible()||autoBar===bar||runtime.currentPocket?.()?.kind==='quiet')return;
+  if(!audible()||autoBar===bar||runtime.initiativeLastBar===bar||runtime.currentPocket?.()?.kind==='quiet')return;
   const o=nearbyPhenomena().find(o=>o.kind==='bird'?step===14&&bar%4===o.offset%4:o.kind==='cloud'?step===0&&bar%8===o.offset:step===12&&bar%4===o.offset%4);
   if(o&&triggerPhenomenon(o,time))autoBar=bar;
  }
