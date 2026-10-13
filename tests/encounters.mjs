@@ -12,3 +12,9 @@ for(const [kind,f]of Object.entries(FAMILIES)){
 }
 const region=r.regionOfPos(900,900);let found=0;for(let x=-15;x<15;x++){const a=createEncounters(x,2,900,region,r.seedOf,r.rng);assert.deepEqual(a,createEncounters(x,2,900,region,r.seedOf,r.rng));assert(a.length<=1);found+=a.length;}assert(found>0);assert.equal(createEncounters(0,0,900,{...region,sea:true},r.seedOf,r.rng).length,0);
 console.log('PASS: encounter gestures, bounded modulation, deterministic sparse generation and regional instrument coverage');
+
+const voices=new Set();for(const role of ['bass','groove','melody','space'])voices.add(encounterVoice('animal:'+role,region,r.GEN,r.seedOf).role);assert.equal(voices.size,4);
+
+const {familyArrange}=await import('../src/encounter-families.js');const track={bass:Array(16).fill(0),hook:Array.from({length:16},(_,i)=>i%7),grammar:{}},original=JSON.stringify(track);const reversed=familyArrange('stream',track,{a:.1,b:.5,c:0});assert.notDeepEqual(reversed.hook,track.hook);assert.equal(reversed.hook[0],track.hook[0]);assert.equal(JSON.stringify(track),original);
+
+const gated=familyArrange('shadow',track,{a:.5,b:.2,c:0});assert(gated.bass.filter(n=>n>=0).length<track.bass.length);const emptyBox=familyArrange('box',track,{a:.5,b:.1,c:3});assert(emptyBox.hook.filter(n=>n>=0).length<=2);assert.equal(JSON.stringify(track),original);

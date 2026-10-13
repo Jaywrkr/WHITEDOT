@@ -63,6 +63,6 @@ export function initialize(runtime){
  }
  function drive(region,channel,level,variant){if(runtime.inWorld()&&region)regionState(region).drive(channel,level,variant);}
  function subtract(region,channel){if(!region||!CHANNELS.includes(channel))return false;regionState(region).drive(channel,-1);runtime.creativeAction?.(channel,'subtract');return true;}
- function track(region,arrangement){return region?shapeInfluencedTrack(region,arrangement,states.get(region.key)?.state,runtime.GEN):arrangement;}
+ function track(region,arrangement){const shaped=region?shapeInfluencedTrack(region,arrangement,states.get(region.key)?.state,runtime.GEN):arrangement;return region&&shaped?(runtime.shapeEncounters?.(region,shaped)||shaped):shaped;}
  Object.defineProperties(runtime,{influenceInput:{get:()=>input},influenceTick:{get:()=>tick},subtractInfluence:{get:()=>subtract},driveInfluence:{get:()=>drive},shapeInfluence:{get:()=>track},influenceState:{get:()=>current?.state||null}});
 }
