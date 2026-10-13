@@ -1,3 +1,42 @@
+# Continuar WHITEDOT · Fase 2
+
+Rama actual: `feat/phase-02-living-world-recipes`. Comenzó desde fase 1 `7bed0ca`; actualizada al cierre sobre main `e26ef93`, después de que Jay integrara fase 1 mediante PR #68. Crear el PR de fase 2 hacia main. Una rama amplia por fase; el asistente prepara, prueba, hace commit/push; Jay crea PR/merge.
+
+## Entrega actual
+
+[FASE_02.md](FASE_02.md) documenta todo el bloque. Acceso: **Menú → Explorar mundos → Paisajes vivos**, Amplio, presets Humedal/Salinas/Basalto/Micelio. El selector anterior en Prototipo también funciona. El generador original permanece disponible; claves y coordenadas antiguas conservadas.
+
+- 33 perfiles de hábitat sobre los 11 biomas; campos de humedad/temperatura/elevación/fertilidad, terreno visual pequeño, flora/fauna/materiales/densidad regionales y eventos diarios acordes al clima.
+- Amplio vivo: REG 12 × WCH 900 = 10.800 unidades; Amplio original: REG 8 = 7.200; Clásico de ambos: REG 4 = 3.600. La generación nueva usa identidad `{generatorVersion:2,catalogVersion:2,layoutVersion:2}` y claves de prueba `v2:`.
+- Seis familias (`ecology:reed/pod/lichen/stone/filament/coral`) aplican contratos reales: compatibilidad, presencia regional/local, papel, material y variante. Máximo cuatro por chunk; centro de prueba garantiza uno compatible. Modelos/gestos son temporales y no exportan audio.
+- Tocar/contacto/pulso responde a tempo; arrastrar cambia carga y variante, sin mover al jugador; permanencia cultiva una parte durante 6–14 segundos según familia. Vaina vuela/regresa, otras figuras tienen siluetas/movimientos distintos. Menú, mute, Escuchar, ocultación y cambio de capa pausan o cancelan; cancelación restaura el gesto.
+- Funciones graves/medias/percusivas con instrumentos actuales; conducción de partes existentes. Arquitecturas de frase afectan progresión, rotación, acentos, duración y número de notas. Radio/quietud anteriores permanecen; margen de salida vivo .96 frente al .98 original (aproximadamente −0,18 dB adicionales).
+- Biomas vecinos por clima/bloques; estilo comparte contexto en bloques de dos regiones y tonalidad/tempo continental. Pesos musicales v2 separados por semilla y caché máxima ocho entradas; los límites de caché de fase 1 permanecen.
+- Bitácora registra hábitats/familias; logros Materia que escucha, Un lugar contigo y Cuatro maneras de tocar. Registry de logros mantiene referencias mutables para que los módulos registren sus logros posteriores; los tres nuevos no aparecen en Original.
+- Dos módulos nuevos en SW; runner de audio añade `ecology_mix.py`; CI audita Original y vivo. 52 estilos y 35 identificadores de instrumentos en paletas conservados; no agregar a sus conteos las seis familias de objetos.
+
+## Auditoría reproducible
+
+[40.000 candidatos vivos](scripts/phase-02-universe-sample.json): 39.998 firmas detalladas y 24.371 firmas musicales terrestres; aparecieron los 33 perfiles y los 52 estilos. Vecinos terrestres con igual bioma: 57,2 % frente al 9,7 % [original](scripts/phase-02-original-sample.json); igual género: 34,0 % frente al 14,8 %.
+
+[Un millón de candidatos](scripts/phase-02-million-sample.json): **999.512 firmas detalladas** y **586.200 firmas musicales terrestres** entre cuatro semillas. Los caches de terreno permanecen dentro de 128/256 entradas. El auditor acumula sets de firmas proporcionalmente a la muestra; no confundir esa memoria de investigación con la residencia del juego.
+
+Son recetas/fingerprints discretos, no mundos completos ni canciones terminadas ni diferencias perceptuales garantizadas. La firma viva incorpora ecología y arquitectura; la muestra grande tiene otra ventana, no se compara directamente con la de 40.000. La medición antigua del Original sigue siendo exactamente 39.952 recetas detalladas / 9.732 perfiles musicales terrestres en 40.000 regiones. Captura dorada de fase 1 comprueba también posiciones reales de chunks; no usar la implementación nueva como su propia referencia.
+
+## Verificación de cierre
+
+Pasaron **49 suites Node**, **32 recorridos Chromium** y offline con **79 módulos**. Los gestos finales se revalidaron en 390×844, 844×390 y 1280×800, incluyendo arrastre/cancelación, cultivo, pausa/mute, Bitácora, favoritos y respaldo aislado entre Original/vivo. Se verificaron los 33 hábitats en 1.200 regiones y el regreso determinista después de expulsión de caché.
+
+Audio: **12 renders vivos** densos en minimal/tropical/dub/amapiano/nu-disco/ambient, normal/suave a 44,1/48 kHz; pico máximo **0.941087**, sin muestras por encima de 0,98. Otros **6 renders del Original** conservan sus voces de vidrios; pico máximo **0.940234**. [Resumen medido](scripts/phase-02-validation.json). Estos renders no certifican preferencia artística ni master profesional.
+
+Comandos en [FASE_02.md](FASE_02.md). Dispositivos reales, escucha curada larga y ejecución remota de CI siguen pendientes.
+
+## Siguiente fase
+
+[Fase 3](FASES_UNIVERSO.md): más instrumentos/síntesis, estilos con identidades audibles, secuencias moduladas y escucha curada prolongada. Solo fase 2 está autorizada en este turno; no continuar automáticamente a la 3. Antes de agregar géneros o cambiar síntesis, conservar catálogos/modelos correspondientes a v1/v2 y verificar capturas doradas: ampliar GEN globalmente puede redistribuir géneros antiguos. No reintroducir escenas guardables; mantener UI silenciosa, fondo negro, punto blanco y elementos pequeños. Migrar voluntariamente el habitual a un mundo vivo requiere un bloque explícito de compatibilidad/actualización, sin mover favoritos silenciosamente.
+
+<details><summary>Handoff de fase 1 e historial anterior</summary>
+
 # Continuar WHITEDOT · Fase 1
 
 Rama actual: `feat/phase-01-universe-foundation`. Base: main remoto `7a0e8ff` (PR #67). Una sola rama con código, pruebas y documentación; Jay crea PR y hace merge, el asistente no crea PR ni hace push directo a main.
@@ -678,5 +717,7 @@ Estado actual de este pedido: ramas 13 → 14 → 15, separadas de las fases pro
 - **Fase 3: Primeros cinco encuentros.** Nubes, tejedoras, pozos de silencio, semillas orbitales y piedras de capas; selector de pruebas en Semillas.
 - **Fase 4: Otros cinco encuentros.** Animales de intercambio, corrientes reversibles, flores de presión, esculturas de sombra y cajas de posibilidades.
 - **Fase 5: Pulido final.** Paletas de 52 estilos, densidad musical, prioridad del borrado, accesibilidad, móvil y shell offline completo.
+
+</details>
 
 </details>

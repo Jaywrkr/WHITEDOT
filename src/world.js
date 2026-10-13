@@ -1,4 +1,5 @@
 import {foundationContent} from './content-contracts.js';
+import {ECOLOGY_CONTENT,homeEcologyBiome,chooseEcologyBiome,applyEcology,ecologyRecipe,createEcologyObjects} from './ecology-model.js';
 import {BoundedMap,CACHE_LIMITS} from './cache.js';
 import {createElementCatalog,createRegionalRecipe} from './catalog.js';
 import {applyNeighborhood} from './neighborhoods.js';
@@ -13,8 +14,9 @@ import { anomalyAt, applyAnomaly } from './wonders.js';
 
 // Generación procedural del camino, regiones y reliquias.
 export function initialize(runtime) {
-  const elementCatalog=createElementCatalog(),contentDirectory=foundationContent(runtime.BIOMES);
-  const recipeFor=region=>createRegionalRecipe(region,runtime.BIOMES[region.z].id,runtime.seedOf,runtime.rng,elementCatalog);
+  const expanded=runtime.worldIdentity.generatorVersion===2,elementCatalog=createElementCatalog(),contentDirectory=foundationContent(runtime.BIOMES);
+  if(expanded)ECOLOGY_CONTENT.forEach(contentDirectory.register);
+  const recipeFor=region=>{const biome=runtime.BIOMES[region.z].id,base=createRegionalRecipe(region,biome,runtime.seedOf,runtime.rng,elementCatalog);return expanded&&region.ecology?ecologyRecipe(base,region,contentDirectory,biome,runtime.seedOf,runtime.rng):base;};
   const continents=createContinents(runtime.seedOf,runtime.rng,runtime.GEN,{variant:!!runtime.S.worldSeed}),VACIO=runtime.BIOMES.findIndex(b=>b.id==='vacio');
   const regionPx=()=>runtime.REG*runtime.WCH;
   const fillOf=vit=>{const m=continents.densityOf(vit),L=runtime.FILL;return [m,(m<.3?L[0]:m<.7?L[1]:m<1.4?L[2]:m<2.1?L[3]:L[4])[1]];};
@@ -33,11 +35,12 @@ export function initialize(runtime) {
   /* ---------- mundo: regiones de zonas (semilla fija, igual para todos) ---------- */
   function biomeAt(cx,cy){
     const rx=Math.floor(cx/runtime.REG),ry=Math.floor(cy/runtime.REG),d=Math.max(Math.abs(rx),Math.abs(ry))*2;
-    if(d===0){if(!runtime.S.worldSeed)return 0;const candidates=runtime.BIOMES.map((b,i)=>i).filter(i=>runtime.BIOMES[i].id!=='vacio');return candidates[runtime.seedOf('seed-home-biome')%candidates.length];}
+    if(d===0){if(!runtime.S.worldSeed)return 0;const home=expanded&&homeEcologyBiome(runtime.S.worldSeed);if(home)return runtime.BIOMES.findIndex(b=>b.id===home);const candidates=runtime.BIOMES.map((b,i)=>i).filter(i=>runtime.BIOMES[i].id!=='vacio');return candidates[runtime.seedOf('seed-home-biome')%candidates.length];}
     const key=rx+","+ry;if(runtime.bcache.has(key))return runtime.bcache.get(key);
     if(continents.at(rx,ry).sea){runtime.bcache.set(key,VACIO);return VACIO;}   // mar de silencio
     const r=runtime.rng(runtime.seedOf("zona:"+key));r();
     const el=runtime.BIOMES.map((b,i)=>[i,b]).filter(([,b])=>b.minD<=d);
+    if(expanded){const res=chooseEcologyBiome(rx,ry,el,runtime.seedOf,runtime.rng);runtime.bcache.set(key,res);return res;}
     let x=r()*el.reduce((s,[,b])=>s+b.w,0),res=0;for(const[i,b]of el){x-=b.w;if(x<=0){res=i;break;}}
     runtime.bcache.set(key,res);return res;
   }
@@ -89,20 +92,22 @@ export function initialize(runtime) {
       const sat=Math.round(32+60*st),acc=(hue+28+Math.round(150*st*sr()))%360;
       d.pal={main:`hsl(${hue},${sat}%,${Math.round(74-14*st)}%)`,soft:`hsl(${(hue+Math.round(60*st))%360},${Math.round(22+50*st)}%,50%)`,acc:`hsl(${acc},${Math.round(72+25*st)}%,${Math.round(70-10*st)}%)`,sand:`hsl(${(hue+40)%360},${Math.round(35+50*st)}%,68%)`};}}d.sea=ct.sea;d.coast=ct.coast;
     d.fill=origin?runtime.FILL[2]:fillOf(continents.vitality((rx+.5)*regionPx(),(ry+.5)*regionPx(),regionPx()));
-    applyNeighborhood(d,runtime.BIOMES,runtime.GEN,runtime.seedOf,runtime.rng,continents.at);
+    applyNeighborhood(d,runtime.BIOMES,runtime.GEN,runtime.seedOf,runtime.rng,continents.at,expanded?`v2:${runtime.S.worldSeed}`:'');
     d.anomaly=anomalyAt(rx,ry,(a,b)=>continents.at(a,b).sea,runtime.seedOf,runtime.rng);
     if(d.anomaly)applyAnomaly(d,d.anomaly.type==='espejo'?regionAt(0,0):null);
+    if(expanded){applyEcology(d,B.id,runtime.seedOf,runtime.rng,runtime.S.worldSeed);d.tuneCents=Math.max(-12,Math.min(12,d.tuneCents));}
     d.recipe=recipeFor(d);
     rcache.set(key,d);return d;
   }
   const EVENTS=[["lluvia","Lluvia de notas","Caen notas del cielo. Atrápalas."],["eclipse","Eclipse","La luz se achica. Todo se escucha más hondo."],["migracion","Migración","Las formas de aquí están viajando."],["aurora","Aurora","El cielo canta en otro color."]];
-  function eventOf(d){if(d.evDay!==runtime.S.todayKey){const r=runtime.rng(runtime.seedOf("ev:"+d.key+runtime.S.todayKey));d.ev=d.name!=="Origen"&&r()<.15?EVENTS[Math.floor(r()*4)]:null;d.evDay=runtime.S.todayKey;}return d.ev;}
+  function eventOf(d){if(d.evDay!==runtime.S.todayKey){const r=runtime.rng(runtime.seedOf("ev:"+d.key+runtime.S.todayKey));d.ev=d.name!=="Origen"&&r()<.15?EVENTS[Math.floor(r()*4)]:null;
+      if(expanded){const er=runtime.rng(runtime.seedOf('ecology:v2:weather:'+d.key+runtime.S.todayKey)),weather=d.ecology.weather;d.ev=d.sea?null:er()<(weather==='rain'?.28:.08)?EVENTS[weather==='rain'?0:weather==='mist'?3:Math.floor(er()*4)]:null;}d.evDay=runtime.S.todayKey;}return d.ev;}
   const RETOTXT={cantar:g=>"Haz cantar las "+g+" formas de aquí",pulsos:()=>"3 pulsos seguidos en el beat",tiempo:()=>"8 luces en tiempo",quieto:()=>"Quieto 20 s, escucha",compas:()=>"5 toques en un compás",pulsoGrande:()=>"8 sonidos con un pulso"};
   const regionOfPos=(x,y)=>regionAt(Math.floor(x/runtime.WCH),Math.floor(y/runtime.WCH));
   function wchunk(cx,cy){
     const id=cx+","+cy;let c=runtime.wchunks.get(id);if(c)return c;
     const dna0=regionAt(cx,cy),r=runtime.rng(runtime.seedOf("mundo:"+id)),z=dna0.mix!=null&&r()<.5?dna0.mix:biomeAt(cx,cy),B=runtime.BIOMES[z],ox=cx*runtime.WCH,oy=cy*runtime.WCH;
-    const vr=runtime.rng(runtime.seedOf("var:"+id)),vi=Math.floor(vr()*runtime.VARS.length),vit=continents.vitality(ox+runtime.WCH/2,oy+runtime.WCH/2,regionPx()),dens=(vi===1?1.8:vi===0?.5:1)*continents.densityOf(vit);
+    const vr=runtime.rng(runtime.seedOf("var:"+id)),vi=Math.floor(vr()*runtime.VARS.length),vit=continents.vitality(ox+runtime.WCH/2,oy+runtime.WCH/2,regionPx()),dens=(vi===1?1.8:vi===0?.5:1)*continents.densityOf(vit)*(expanded?.25+(dna0.ecology?.density||0)*.55:1);
     const H=dna0.hab||runtime.HAB[0];
     const localRecipe=dna0.recipe.biome===B.id?dna0.recipe:{...recipeFor({...dna0,z}),budgets:dna0.recipe.budgets};
     c={var:vi,dens,vit,pal:dna0.pal,ground:vi===2?"agua":dna0.ground,plants:[],id,z,grass:[],flies:[],walkers:[],ponds:[],pillars:[],motes:[],crystals:[],beacons:[],lotus:[],flowers:[],stal:[],props:[],dunes:B.id==="dunas"};
@@ -141,6 +146,8 @@ export function initialize(runtime) {
     c.playthings=createPlaythings(cx,cy,runtime.WCH,dens,B.id,runtime.seedOf,runtime.rng,{recipe:localRecipe,catalog:elementCatalog});
     c.pockets=createPockets(cx,cy,runtime.WCH,runtime.seedOf,runtime.rng);
     distributePlaythings(c.playthings,c.pockets,runtime.seedOf,runtime.rng,localRecipe,runtime.WCH);
+    if(expanded){c.ecology=dna0.ecology;c.ecologyObjects=createEcologyObjects(cx,cy,runtime.WCH,dna0,B.id,contentDirectory,runtime.seedOf,runtime.rng,c.pockets,!!runtime.S.previewSeed&&cx===runtime.REG/2&&cy===runtime.REG/2);}
+    if(expanded&&dna0.ecology.density===0)for(const field of ['grass','flies','plants','sp','props','playthings'])c[field]=[];
     c.playthings.forEach((o,i)=>{o.snd=q=>runtime.playVoice('toy:'+o.kind,i+(o.personality?.degree||0),q,runtime.regionOfPos(o.x,o.y),false,o.personality?.volume||1,o);});
     attachPersonalities(c,runtime.seedOf,runtime.rng);
     // A few seeded inhabitants near the testing center make a blob preview playable immediately.

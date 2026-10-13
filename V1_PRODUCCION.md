@@ -4,7 +4,7 @@ Revisión del código y planes al 13 de octubre de 2026. Propuesta de alcance pa
 
 ## Estado y forma de trabajar
 
-Base de la fase 1 actual: main `7a0e8ff`, merge del PR #67, con este inventario y las entregas anteriores integradas. Fase 1 implementada en `feat/phase-01-universe-foundation`: [FASE_01.md](FASE_01.md).
+Base de la fase 1 actual: main `7a0e8ff`, merge del PR #67, con este inventario y las entregas anteriores integradas. Fase 1 implementada en `feat/phase-01-universe-foundation`: [FASE_01.md](FASE_01.md). Al cierre main `e26ef93` ya incluye fase 1 (PR #68). Fase 2 implementada sobre esa base: [Paisajes vivos](FASE_02.md).
 
 La instrucción más reciente de Jay es una rama amplia por fase, con muchas mejoras relacionadas, commits claros y pruebas. El orden está en [FASES_UNIVERSO.md](FASES_UNIVERSO.md), sustituyendo la propuesta de una única `release/v1`. Jay crea PR y hace merge. El asistente no modifica main ni despliega esta fase directamente.
 
@@ -34,7 +34,7 @@ Ya existen coordenadas `wx/wy`, regiones y capas. Favoritos guarda hasta 64 punt
 
 El lugar conserva su identidad en la versión actual; la radio sigue evolucionando. Favoritos no conserva el audio exacto que sonaba ni la frase temporal del animal. Jay descartó añadir escenas/ideas musicales guardables: no se reintroducen aquí. Exportar un set es una función separada, todavía pendiente.
 
-Fase 1 agrega `address: {seed, layout, generatorVersion, catalogVersion, layoutVersion, layer, x, y}` a favoritos y completa los antiguos en su partida. Versiones actuales: `1`. Favoritos de otra identidad no activan orientación/autopilot. Agregar etiquetas no basta para futuros generadores: antes de cambiar catálogo/generación hay que conservar la versión antigua o migrarla explícitamente; ese trabajo continúa en fase 2.
+Fase 1 agrega `address: {seed, layout, generatorVersion, catalogVersion, layoutVersion, layer, x, y}` a favoritos y completa los antiguos en su partida. Original: versiones `1`; Paisajes vivos: versiones `2`. Favoritos de otra identidad no activan orientación/autopilot. Fase 2 conserva ambos generadores con guardados separados y no migra automáticamente el habitual. Agregar etiquetas no basta para futuros generadores: antes de cambiar catálogo/generación hay que conservar la versión antigua o migrarla explícitamente; esta regla sigue vigente para futuras versiones.
 
 El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Menú → Progreso y respaldo, exportación/importación validada, copia antes de restaurar, recuperación explícita y avisos de almacenamiento. Borrar los datos del navegador sigue borrando el guardado: exportar antes. El código compartible de lugar con semilla/versiones/capa/coordenadas sigue pendiente.
 
@@ -47,9 +47,9 @@ El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Me
 1. **P0 — Integración:** reunir cambios pendientes y contrastar lo que se prueba con el commit realmente publicado; no mantener numerosos PR de funciones aisladas.
 2. **P0 — Implementado fase 1:** validación/versiones, corrupción, cuota/lectura bloqueada, aviso y recuperación preservando el original.
 3. **P0 — Implementado fase 1:** exportar/importar con validación/copia previa; aislamiento de partida habitual y semilla/layout de prueba. Probar en equipos reales antes de release.
-4. **P0 — Parcial, fase 1:** identidad completa y rechazo de direcciones/versiones ajenas. Conservar generadores anteriores o migrar al ampliar sigue pendiente.
+4. **P0 — Implementado fases 1–2:** identidad completa, rechazo de direcciones ajenas y conservación del generador Original junto a Paisajes vivos. Migraciones futuras y actualización del habitual siguen pendientes.
 5. **P0 — Implementado fase 1:** cachés regionales/biomas/continentes/chunks acotadas y regeneración determinista. Verificar consumo/batería reales antes de release.
-6. **P0 — Implementado fase 1:** descubrimiento de todas las suites Node con aserciones (48), runner de navegador/audio/offline y workflow CI. El ayudante Web Audio queda excluido del conteo Node. La ejecución remota de GitHub Actions requiere el PR/merge de Jay.
+6. **P0 — Implementado fase 1:** descubrimiento de todas las suites Node con aserciones (49), runner de navegador/audio/offline y workflow CI. El ayudante Web Audio queda excluido del conteo Node. La ejecución remota de GitHub Actions requiere el PR/merge de Jay.
 7. **P0 — Dispositivos:** verificar Safari/iPhone, Chrome/Android, escritorio y PWA instalada; memoria, batería, varios tamaños, auriculares, altavoz, cambio de pestaña, suspensión/reanudación y rutas largas. Los ensayos actuales de navegador se hacen en Chromium, no demuestran compatibilidad real con todos esos dispositivos.
 8. **P0 — Actualizaciones:** actualización de caché sin mezclar versiones, restauración offline, vuelta atrás de una publicación y migración de partidas. El shell offline local ya funciona; las fuentes externas aún necesitan decisión de empaquetado.
 9. **P0 — Operación:** versión de release identificable, registro acotado de fallos recuperables, instrucciones de soporte, créditos/licencias de recursos utilizados y política correspondiente a las funciones realmente publicadas.

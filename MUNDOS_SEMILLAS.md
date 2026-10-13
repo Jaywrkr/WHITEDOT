@@ -1,3 +1,11 @@
+## Paisajes vivos · Fase 2
+
+**Menú → Explorar mundos** permite elegir Paisajes vivos u Original, Amplio/Clásico y semilla/preset. Humedal, Salinas, Basalto y Micelio proponen hábitats distintos con un elemento musical cercano para aprender. La entrada anterior desde Prototipo permanece.
+
+Paisajes vivos usa versiones de generador/catálogo/layout `2`; su Amplio mide 10.800 unidades. Original conserva versión `1` y Amplio 7.200; Clásico mide 3.600 en ambos. Una URL sin `generation=2` sigue abriendo Original. Cada combinación de semilla/layout/generación conserva su partida, favoritos y respaldos propios; cambiar una no migra el habitual. **Mi partida** regresa a ese guardado.
+
+[Alcance completo](FASE_02.md). El resto del documento describe la introducción original de semillas/blobs y sus medidas históricas.
+
 # Probar mundos, blobs y espacios
 
 ## Cómo probar

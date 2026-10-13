@@ -64,6 +64,7 @@ export function initialize(runtime) {
     runtime.influenceTick?.(dt,modal||runtime.scanning);
     runtime.creativeTick?.(dt,modal||runtime.scanning||document.hidden);
     runtime.encounterTick?.(dt,modal||runtime.scanning||document.hidden);runtime.trailTick?.(dt,modal||runtime.scanning||document.hidden);
+    runtime.ecologyTick?.(dt,modal||runtime.scanning||document.hidden);
     runtime.updateScanner();runtime.fxTick?.(dt);
     const b=runtime.beat();
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);
@@ -185,6 +186,7 @@ export function initialize(runtime) {
     // suelo
     for(let a=a0;a<=a1;a++)for(let bb=b0;bb<=b1;bb++){
       const raw=runtime.wchunk(a,bb),c=runtime.sceneChunk?.(raw)||raw;
+      runtime.drawEcology?.(c,t,ox,oy,R);
       runtime.drawPocketHints(c,ox,oy,R);
       runtime.drawPlaythings(c,t,dt,ox,oy,R,nearO);
       if(c.dunes){runtime.cx.fillStyle="#fff";const y0=Math.floor((runtime.S.wy-R)/38)*38;

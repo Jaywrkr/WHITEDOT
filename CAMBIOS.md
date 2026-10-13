@@ -1,3 +1,9 @@
+# Fase 2 · Paisajes vivos
+
+`feat/phase-02-living-world-recipes`, iniciada desde fase 1 `7bed0ca` y actualizada sobre main `e26ef93` al integrarse PR #68. Generación original conservada; nueva identidad v2 y guardados separados, selector directo en el menú, 33 perfiles de hábitat, clima/fertilidad/relieve visual, vecindad coherente, regiones amplias de 10.800 unidades, seis familias con gestos y cultivo, arquitectura de frases, registros medios/graves, Bitácora y tres logros. Catálogo real de 30 contratos; caché de pesos musicales acotada/separada por semilla; dos módulos nuevos en offline. No añade géneros ni modelos de síntesis.
+
+[Entrega, prueba y límites](FASE_02.md) · [Fases siguientes](FASES_UNIVERSO.md). Resultados finales en [HANDOFF.md](HANDOFF.md).
+
 # Fase 1 · Base del universo ampliable
 
 Rama `feat/phase-01-universe-foundation`, base `7a0e8ff`. Implementa guardado/respaldos recuperables, dirección completa de favoritos, cachés acotadas, contratos versionados, auditoría multisemilla y runners/CI de lógica, navegador, audio y offline. Mantiene la generación y música existentes. Panel opcional en Menú → Progreso y respaldo, sin ruido sonoro de UI ni botones adicionales sobre el mundo.

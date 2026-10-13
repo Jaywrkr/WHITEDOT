@@ -72,6 +72,9 @@ export function initialize(runtime) {
   const PROPK={llanura:"piedra",bosque:"hongo",jardin:"campanilla",dunas:"cactus",tormenta:"antena",cueva:"gota",vacio:"astro"};
   const SPECIES=[["luciernaga","Luciérnagas","Huyen si te acercas. Si las tocas, suenan."],["arbol","Árboles de luz","Crecen en el bosque y brillan cuando pasas."],["estanque","Agua","Bajo el agua todo suena distinto."],["bandada","Bandadas","Cruzan el cielo. Vuela con ellas."],["caminante","Caminantes","Si te quedas cerca, te siguen y cantan contigo."]];
   const ACH=[
+   ["ecologyTouch","Materia que escucha","Hiciste responder un elemento de un Paisaje vivo."],
+   ["ecologyGrow","Un lugar contigo","Cultivaste una parte musical permaneciendo cerca de un elemento vivo."],
+   ["ecologyFour","Cuatro maneras de tocar","Descubriste cuatro familias de elementos de los Paisajes vivos."],
    ["patch1","Conecta tu idea","Uniste un reloj con una parte musical de un jardín modular."],
    ["fijarSonido","Déjalo sonando","Fijaste voluntariamente la voz de un objeto."],
    ["cultivarMusica","Una música que crece","Permaneciste cerca de un aro o prisma hasta transformar su parte musical."],
@@ -282,13 +285,14 @@ export function initialize(runtime) {
   };
 
 
+  const legacyACH=ACH.filter(a=>!a[0].startsWith('ecology'));
   Object.defineProperties(runtime, {
     CAP: { get: () => CAP },
     PER_LEVEL: { get: () => PER_LEVEL },
     CHUNK: { get: () => CHUNK },
     SPEED: { get: () => SPEED },
     WCH: { get: () => WCH },
-    REG: { get: () => runtime.S?.previewLayout==='wide'?8:REG },
+    REG: { get: () => runtime.S?.previewLayout==='wide'?(runtime.S.worldIdentity?.generatorVersion===2?12:8):REG },
     GOLD: { get: () => GOLD },
     PHRASES: { get: () => PHRASES },
     ECOS: { get: () => ECOS },
@@ -309,7 +313,7 @@ export function initialize(runtime) {
     FILL: { get: () => FILL },
     PROPK: { get: () => PROPK },
     SPECIES: { get: () => SPECIES },
-    ACH: { get: () => ACH },
+    ACH: { get: () => runtime.worldIdentity?.generatorVersion===2?ACH:legacyACH },
     SAMPLES: { get: () => SAMPLES },
     COLORS: { get: () => COLORS },
     VOZ: { get: () => VOZ },

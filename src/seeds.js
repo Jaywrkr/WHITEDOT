@@ -1,7 +1,7 @@
 import {createSoundTrail} from './sound-trail-model.js';
 import {FAMILIES} from './encounter-families.js';
 export function normalizeSeed(value){return String(value??'original').trim().replace(/[^\p{L}\p{N}_ -]/gu,'').slice(0,40)||'original';}
-export function previewKey(seed,layout='classic'){return `pixel-blanco-v4:${layout==='wide'?'preview-wide':'preview'}:${encodeURIComponent(normalizeSeed(seed))}`;}
+export function previewKey(seed,layout='classic',generation=1){return `pixel-blanco-v4:${layout==='wide'?'preview-wide':'preview'}:${generation===2?'v2:':''}${encodeURIComponent(normalizeSeed(seed))}`;}
 export function initialize(runtime){
  const $=runtime.$;
  const select=document.createElement('select');select.id='seedEncounter';select.setAttribute('aria-label','Encuentro para probar');
@@ -10,17 +10,18 @@ export function initialize(runtime){
  const submit=$('seedForm').querySelector('button[type="submit"]');$('seedForm').insertBefore(label,submit);$('seedForm').insertBefore(select,submit);
 
  function open(){
-  select.value=new URLSearchParams(location.search).get('encounter')||'';$('seedValue').value=runtime.S.previewSeed||'original';$('seedLayout').value=runtime.S.previewLayout||'wide';
+  select.value=new URLSearchParams(location.search).get('encounter')||'';$('seedValue').value=runtime.S.previewSeed||'original';$('seedLayout').value=runtime.S.previewLayout||'wide';$('seedGeneration').value=runtime.S.previewSeed?String(runtime.worldIdentity.generatorVersion):'2';
   const d=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
-  $('seedInfo').textContent=`${runtime.S.previewSeed?'Prueba: '+runtime.S.previewSeed:'Partida habitual'} · ${runtime.BIOMES[d.z].name} · ${runtime.GEN[d.genre].name} · ${d.bpm} BPM · Biomas de ${runtime.REG*runtime.WCH} unidades`;
+  $('seedInfo').textContent=`${runtime.S.previewSeed?'Prueba: '+runtime.S.previewSeed:'Partida habitual'} · ${d.ecology?.name||runtime.BIOMES[d.z].name} · ${runtime.GEN[d.genre].name} · ${d.bpm} BPM · Biomas de ${runtime.REG*runtime.WCH} unidades`;
   $('mSeeds').hidden=false;
  }
- function visit(value){const url=new URL(location.href);url.searchParams.set('testSeed',normalizeSeed(value));url.searchParams.set('layout',$('seedLayout').value);if(select.value)url.searchParams.set('encounter',select.value);else url.searchParams.delete('encounter');location.assign(url.href);}
+ function visit(value){const url=new URL(location.href);url.searchParams.set('testSeed',normalizeSeed(value));url.searchParams.set('layout',$('seedLayout').value);url.searchParams.set('generation',$('seedGeneration').value);if(select.value)url.searchParams.set('encounter',select.value);else url.searchParams.delete('encounter');location.assign(url.href);}
  $('dSeeds').onclick=open;$('seedClose').onclick=()=>$('mSeeds').hidden=true;
+ $('bWorlds').onclick=()=>{open();$('seedGeneration').value='2';};
  $('seedForm').onsubmit=e=>{e.preventDefault();visit($('seedValue').value);};
  $('seedNext').onclick=()=>visit('mundo-'+Date.now().toString(36));
  $('seedCenter').onclick=()=>visit(runtime.S.previewSeed||'original');
- $('seedOriginal').onclick=()=>{const url=new URL(location.href);url.searchParams.delete('testSeed');url.searchParams.delete('layout');url.searchParams.delete('encounter');location.assign(url.href);};
+ $('seedOriginal').onclick=()=>{const url=new URL(location.href);for(const key of ['testSeed','layout','encounter','generation'])url.searchParams.delete(key);location.assign(url.href);};
  $('seedPresets').onclick=e=>{const button=e.target.closest('[data-seed]');if(button)visit(button.dataset.seed);};
  if(runtime.S.previewSeed){
   const s=runtime.S;s.todayKey=runtime.dayKey();s.todayLight=runtime.CAP;s.capShown=true;s.lampDay=s.todayKey;s.lampUsed=0;s.lastWorldDay=s.todayKey;

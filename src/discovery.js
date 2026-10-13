@@ -7,7 +7,7 @@ export function initialize(runtime) {
   function showRegion(d,first){
     const el=document.getElementById("zone");
     const se=!d.sea&&d.continent?runtime.seasonOf?.(d.continent.id):null;document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+" · "+d.bpm+" BPM"+(se?" · "+se.name:"");
-    document.getElementById("zName").textContent=d.name;
+    document.getElementById("zName").textContent=d.ecology?.name||d.name;
     document.getElementById("zDo").textContent=(d.sea?"Mar de silencio":d.continent?d.continent.name:"")+(d.sea||d.continent?" · ":"")+gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
     el.classList.add("on");clearTimeout(zoneT);zoneT=setTimeout(()=>el.classList.remove("on"),first?3200:2200);
   }
@@ -21,6 +21,7 @@ export function initialize(runtime) {
     runtime.say(runtime.VOZ.reto,"Reto cumplido");runtime.gain(k);runtime.unlock("reto1");if(runtime.S.retosN>=10)runtime.unlock("reto10");if(runtime.S.retosN>=50)runtime.unlock("reto50");retoUI();runtime.save();}
   function touched(){runtime.sessionAction?.("touch");runtime.markInput?.();if(!RP||RP.type!=="compas")return;const n=performance.now();RP.touches=RP.touches.filter(x=>n-x<runtime.SIX*16*1000);RP.touches.push(n);retoSet("compas",RP.touches.length);}
   function enterRegion(d,z){
+    if(d.ecology){runtime.S.journal.ecologies||={};runtime.S.journal.ecologies[d.ecology.id]=1;}
     runtime.sessionVisit?.(d);
     runtime.MU.dnaT=d;runtime.MU.timbre=runtime.GEN[d.genre].pt;const newPlace=!runtime.S.places[d.key];
     RP=runtime.S.retos[d.key]?null:{key:d.key,type:d.reto.type,goal:d.reto.goal,val:0,set:new Set(),touches:[],pst:0};retoUI();

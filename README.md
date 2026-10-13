@@ -2,11 +2,15 @@
 
 Un punto blanco en un mundo negro que compone música electrónica mientras lo exploras. Camino diario, Mundo procedural y Estudio; 11 biomas y 52 estilos actuales. Por Jay · [@jaywrkr](https://instagram.com/jaywrkr).
 
-## Entrega actual: fase 1
+## Entrega actual: fase 2 · Paisajes vivos
 
-Rama **`feat/phase-01-universe-foundation`**, basada en main `7a0e8ff` (PR #67). Guardado validado y recuperable, exportación/importación, favoritos con identidad completa, cachés limitadas para viajes largos, contratos ampliables y auditoría/pruebas automáticas. [Detalle y límites](FASE_01.md).
+Rama **`feat/phase-02-living-world-recipes`**, basada en main `e26ef93` (PR #68), que ya incluye fase 1. Añade 33 perfiles de hábitat sobre los 11 biomas, campos de clima/fertilidad, seis familias musicales pequeñas, composición regional y vecinos más relacionados. Amplio vivo: regiones de **10.800 unidades**. [Detalle y límites](FASE_02.md).
 
-Jay prueba, crea el PR y hace merge hacia main. Esta rama no publica directamente. La secuencia vigente es [FASES_UNIVERSO.md](FASES_UNIVERSO.md): una rama amplia por fase. La ampliación musical/procedural empieza después de esta base; la fase 1 conserva el mapa y la música actuales.
+**Probar: Menú → Explorar mundos → Paisajes vivos → Humedal / Salinas / Basalto / Micelio.** Toca, modela y permanece cerca de elementos; el color sigue localizado y el menú es el único control permanente. Bitácora y logros registran los descubrimientos nuevos.
+
+La generación Original, sus coordenadas y guardados se conservan. Ambas generaciones tienen direcciones, favoritos y respaldos separados; elegir otra no migra una partida silenciosamente. La base de recuperación/cachés de [fase 1](FASE_01.md) permanece.
+
+Jay ya integró fase 1. Crear el PR de esta fase 2 **directamente hacia main**; Jay lo revisa y hace merge. Una rama amplia por fase: [FASES_UNIVERSO.md](FASES_UNIVERSO.md). El asistente no publica directamente.
 
 ## Jugar y probar
 
@@ -36,15 +40,17 @@ npm run test:audio
 npm run audit:universe -- 10000 4
 ```
 
+Para auditar Paisajes vivos: `npm run audit:universe -- 10000 4 2 classic`.
+
 Node >=18; Python/Playwright para navegador y audio. `CHROMIUM_PATH` permite elegir navegador; los runners detectan Chromium del sistema o el de Playwright y levantan sus propios servidores. GitHub Actions ejecuta lógica, auditoría, navegador, offline y audio en PR/main. No despliega desde ese workflow.
 
-Guardado local: borrar los datos del navegador elimina progreso; exporta antes. La identidad reconoce el generador/catálogo/layout actuales (v1); mantener versiones antiguas o migrarlas al ampliar sigue pendiente. Los ensayos Chromium y renders no sustituyen pruebas en Safari/Android ni escucha curada real.
+Guardado local: borrar los datos del navegador elimina progreso; exporta antes. La identidad reconoce el Original (v1) y Paisajes vivos (v2); las versiones futuras requieren conservar el generador o una migración probada. Los ensayos Chromium y renders no sustituyen pruebas en Safari/Android ni escucha curada real.
 
 ## Documentación vigente
 
-[Entrega y pruebas](FASE_01.md) · [Diez fases](FASES_UNIVERSO.md) · [Inventario V1](V1_PRODUCCION.md) · [Pendientes](PENDIENTES.md) · [Rama y merge](RAMAS.md) · [Continuar trabajo](HANDOFF.md) · [Variedad](VARIEDAD.md).
+[Entrega y pruebas](FASE_02.md) · [Base fiable](FASE_01.md) · [Diez fases](FASES_UNIVERSO.md) · [Inventario V1](V1_PRODUCCION.md) · [Pendientes](PENDIENTES.md) · [Rama y merge](RAMAS.md) · [Continuar trabajo](HANDOFF.md) · [Variedad](VARIEDAD.md).
 
-En el mapa original, la medición antigua mantiene **39.952 recetas detalladas entre 40.000 regiones**; no es el total del universo ni una cifra de canciones únicas. El nuevo auditor permite muestras de hasta un millón de candidatos, sin convertir esa capacidad en una promesa de variedad percibida.
+En el mapa original, la medición antigua mantiene **39.952 recetas detalladas entre 40.000 regiones**; no es el total del universo ni una cifra de canciones únicas. La auditoría de Paisajes vivos mide recetas y vecindad por semilla; esos números no cuentan canciones ni certifican variedad percibida.
 
 <details><summary>Historial de entregas y documentación anterior (estados de rama y conteos históricos)</summary>
 

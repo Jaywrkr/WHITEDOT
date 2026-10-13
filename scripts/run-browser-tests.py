@@ -9,7 +9,7 @@ if not os.environ.get('CHROMIUM_PATH'):
   with sync_playwright() as p:executable=p.chromium.executable_path
  os.environ['CHROMIUM_PATH']=executable
 mode=sys.argv[1] if len(sys.argv)>1 else 'browser'
-flows={'browser':['creative_regression.py','offline_smoke.py'],'audio':['audio_mix.py','depth_mix.py','installation_mix.py','trail_mix.py','glass_mix.py']}
+flows={'browser':['creative_regression.py','offline_smoke.py'],'audio':['audio_mix.py','depth_mix.py','installation_mix.py','trail_mix.py','glass_mix.py','ecology_mix.py']}
 if mode not in flows:raise SystemExit('Use browser or audio')
 for flow in flows[mode]:
  result=subprocess.run([sys.executable,str(ROOT/'tests'/flow)],cwd=ROOT,timeout=900)

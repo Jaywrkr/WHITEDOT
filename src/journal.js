@@ -1,3 +1,4 @@
+import {ECOLOGIES,ECOLOGY_CONTENT} from './ecology-model.js';
 import { relicAt } from './relics.js';
 import { gravityOf } from './gravity.js';
 import { RHYTHM_GENRES } from './rhythms.js';
@@ -48,14 +49,15 @@ export function initialize(runtime) {
     const depth=runtime.S.journal.depth||{},depthCard=Object.values(depth).some(Boolean)?card('Interacciones profundas',`${depth.threads?'Redes tejidas · ':''}${depth.dialogue?'Frases respondidas · ':''}${depth.box?'Suelos transformados':''} Los sonidos aprendidos, redes y patrones de estos encuentros son temporales.`):'';
     const linked=runtime.S.journal.installations||{},linkedCard=Object.values(linked).some(Boolean)?card('Una misma instalación',`${linked.glass?'Vidrios conectados · ':''}${linked.mirror?'Espejos conectados':''} Sus ángulos conducen las partes musicales del jardín regional sin sumar nuevas voces.`):'';
     const installations=linkedCard+depthCard+patchCard+mirrorCard+(Object.keys(runtime.S.glassSites||{}).length?card('Vidrios cromáticos',`${Object.keys(runtime.S.glassSites).length} instalaciones exploradas. Gira sus aros directamente para transformar bajo, groove y armonía sin panel; la orientación queda guardada.`):'');
-    return (runtime.trailCard?.()||'')+(runtime.creativeCard?.()||'')+(runtime.encounterJournal?.()||'')+saved+installations+(regions.length?regions.map(region=>{
+    const living=data().ecologies||{},elements=data().ecologyObjects||{};const ecologyCard=Object.keys(living).length?card('Paisajes vivos',Object.values(ECOLOGIES).flat().filter(e=>living[e.id]).map(e=>e.name).join(' · '),Object.keys(elements).length?'<p>'+escape(ECOLOGY_CONTENT.filter(e=>elements[e.id.slice(8)]).map(e=>e.name).join(' · '))+'</p><p>Tocar, modelar y permanecer cerca transforma partes del género del lugar. El estado de los gestos es temporal.</p>':''):'';
+    return ecologyCard+(runtime.trailCard?.()||'')+(runtime.creativeCard?.()||'')+(runtime.encounterJournal?.()||'')+saved+installations+(regions.length?regions.map(region=>{
       const found=region.species.filter(sp=>runtime.S.cat[sp.id]).length,gravity=gravityOf(region,runtime.seedOf),j=data();
       const [rx,ry]=region.key.split(',').map(Number);
       let hasSite=!!j.relics[region.key];
       for(let x=0;x<runtime.REG&&!hasSite;x++)for(let y=0;y<runtime.REG&&!hasSite;y++)hasSite=!!relicAt(rx*runtime.REG+x,ry*runtime.REG+y,runtime.WCH,runtime.seedOf,runtime.rng);
       const tasks=[['Formas',found===region.species.length],['Reto',!!runtime.S.retos[region.key]],...(region.name==='Origen'?[]:[['Evento',!!j.events[region.key]]]),...(hasSite?[['Reliquia',!!j.relics[region.key]]]:[])];
       const percent=Math.round((found/region.species.length+tasks.slice(1).filter(t=>t[1]).length)/tasks.length*100);
-      return card(region.name,`${runtime.BIOMES[region.z].name} · ${runtime.GEN[region.genre].name} · ${region.bpm} BPM · ${gravity.name} · ${gravity.movement}`,`<p>${escape(region.hab?.[1]||"")} · ${escape(region.fill?.[1]||"")} · ${escape(runtime.AIRTXT[region.air]||"")} · ${escape(region.ground?"Suelo de "+region.ground:"Sin suelo")}</p>${region.recipe?`<p>${escape(region.recipe.name)} · ${escape(region.recipe.materialName)}</p>`:""}<p>Descubrimiento ${percent}% · Formas ${found}/${region.species.length}</p><ul>${tasks.map(([name,done])=>`<li>${name}: ${done?'descubierto':'pendiente'}</li>`).join('')}</ul>`);
+      return card(region.name,`${region.ecology?.name||runtime.BIOMES[region.z].name} · ${runtime.GEN[region.genre].name} · ${region.bpm} BPM · ${gravity.name} · ${gravity.movement}`,`<p>${escape(region.hab?.[1]||"")} · ${escape(region.fill?.[1]||"")} · ${escape(runtime.AIRTXT[region.air]||"")} · ${escape(region.ground?"Suelo de "+region.ground:"Sin suelo")}</p>${region.recipe?`<p>${escape(region.recipe.name)} · ${escape(region.recipe.materialName)}</p>`:""}<p>Descubrimiento ${percent}% · Formas ${found}/${region.species.length}</p><ul>${tasks.map(([name,done])=>`<li>${name}: ${done?'descubierto':'pendiente'}</li>`).join('')}</ul>`);
     }).join(''):card('El mapa espera','Completa el Camino y entra al Mundo para descubrir lugares.'));
   }
   function forms() {

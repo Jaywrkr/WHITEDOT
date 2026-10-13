@@ -9,10 +9,17 @@ export function createGrammar(region,seedOf,rng) {
  const accents=cell.map(step=>(step+rotation)%16).sort((a,b)=>a-b);
  const progression=PROGRESSIONS[Math.floor(r()*PROGRESSIONS.length)].slice();
  const brightness=6000+r()*4500,accentInstrument=['wood','rim','shaker'][Math.floor(r()*3)];
- return {version:1,key:region.key,accents,accentInstrument,accentLevel:calm?0:.012+r()*.009,
+ const grammar={version:1,key:region.key,accents,accentInstrument,accentLevel:calm?0:.012+r()*.009,
   progression,harmonyBars:lean?16:calm?12:8,motifRotation:2*Math.floor(r()*4),hookLimit:lean?3:4+Math.floor(r()*2),
   phraseBars:4+Math.floor(r()*3)*2,hookLevel:.75+r()*.2,bassLevel:.8+r()*.15,brightness,
   character:`${brightness<7500?'Cálido':brightness>9500?'Aéreo':'Equilibrado'} · ${accentInstrument==='wood'?'madera':accentInstrument==='rim'?'acentos secos':'textura rítmica'}`};
+ if(region.ecology){const s=region.ecology.score;Object.assign(grammar,{version:2,phraseBars:s.phraseBars,hookLimit:Math.min(grammar.hookLimit,s.hookLimit),brightness:s.brightness,hookLevel:grammar.hookLevel*.85,accentLevel:grammar.accentLevel*.8,character:region.ecology.name});
+  if(s.architecture==='breathing'){grammar.hookLimit=Math.min(2,grammar.hookLimit);grammar.phraseBars=16;grammar.harmonyBars=16;grammar.hookLevel*=.85;}
+  else if(s.architecture==='rooted'){grammar.progression=[0,0,3,0];grammar.motifRotation=0;grammar.harmonyBars=16;}
+  else if(s.architecture==='interlocking'){grammar.accents=[2,6,10,14];grammar.motifRotation=2;grammar.phraseBars=8;grammar.hookLimit=Math.min(3,grammar.hookLimit);}
+  else if(s.architecture==='floating'){grammar.harmonyBars=24;grammar.bassLevel*=.8;grammar.hookLimit=Math.min(3,grammar.hookLimit);grammar.phraseBars=Math.max(12,grammar.phraseBars);}
+ }
+ return grammar;
 }
 export function shapeMotif(recipe,grammar) {
  const shifted=Array(16).fill(-1);let anchor=recipe.findIndex((n,i)=>n>=0&&i%4===0);if(anchor<0)anchor=0;

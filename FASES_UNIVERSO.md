@@ -1,13 +1,13 @@
 # Universo ampliable: secuencia vigente
 
-Pedido de Jay: avanzar mucho más en variedad, belleza e interacción, agrupando muchas mejoras relacionadas por fase. **Una fase = una rama amplia**, con pruebas, documentación, commit y push. Jay crea el PR y hace merge. Solo la fase 1 está autorizada para esta entrega; las siguientes son el plan, no funciones terminadas.
+Pedido de Jay: avanzar mucho más en variedad, belleza e interacción, agrupando muchas mejoras relacionadas por fase. **Una fase = una rama amplia**, con pruebas, documentación, commit y push. Jay crea el PR y hace merge. Jay autorizó continuar con fase 2. Fase 1 ya integrada por PR #68; fase 2 implementada sobre main `e26ef93`; fases 3–10 siguen como plan, no funciones terminadas.
 
 Esta secuencia sustituye las propuestas de treinta ramas pequeñas y de una única `release/v1`. Las cinco fases creativas antiguas ya integradas no son las fases de este documento. [V1_PRODUCCION.md](V1_PRODUCCION.md) conserva el inventario detallado de 64 tareas; ninguna idea queda implementada por aparecer en el plan.
 
 | Fase | Bloque amplio | Resultado buscado |
 |---:|---|---|
 | 1 | Base fiable y ampliable | Identidad/versiones de lugar, guardado recuperable, respaldos, favoritos compatibles, cachés limitadas, contratos de contenido y medición reproducible. Implementada en `feat/phase-01-universe-foundation`; detalle en [FASE_01.md](FASE_01.md). |
-| 2 | Multiplicar mundos con coherencia | Recetas con variables independientes de relieve, clima, humedad, densidad, materiales, flora/fauna y arquitectura musical; barrios vecinos relacionados, claros y grandes espacios. Generación compatible con lugares antiguos, contratos aplicados a nuevos elementos y herramientas para explorar semillas. |
+| 2 | Multiplicar mundos con coherencia | Recetas con variables independientes de relieve, clima, humedad, densidad, materiales, flora/fauna y arquitectura musical; barrios vecinos relacionados, claros y grandes espacios. Generación compatible con lugares antiguos, contratos aplicados a nuevos elementos y herramientas para explorar semillas. Implementada en `feat/phase-02-living-world-recipes`: [FASE_02.md](FASE_02.md). |
 | 3 | Composición e instrumentos | Familias de síntesis realmente distintas, articulaciones regionales, bajos/grooves/armonías expresivos, estilos con patrones y timbres propios, frases largas y transiciones. Variedad en quietud y escucha curada para evitar fatiga. |
 | 4 | Gesto, color y materia | Vidrios móviles y espejos más expresivos, superposición de color, prismas, cuerdas, membranas, superficies y objetos que giran/vuelan/reaccionan de maneras distintas. Referencias geométricas y cromáticas inspiradas en el interés de Jay por Felipe Pantone, manteniendo el fondo negro y el punto blanco. |
 | 5 | Vida e intercambio musical | Criaturas con conducta e instrumentos propios, aves raras, agrupaciones, llamadas y respuestas, flora que crece/decrece, estaciones y fenómenos que conducen partes musicales sin saturar. |
