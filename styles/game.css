@@ -145,3 +145,9 @@ body:has(.scanner:not([hidden])) .voice,body:has(.scanner:not([hidden])) .toast{
 .atlas-check{flex:none;width:28px;height:28px;padding:0;display:grid;place-items:center;font-size:14px;line-height:1;}
 .atlas-row.got .atlas-check{color:var(--gold);border-color:var(--gold);}
 .atlas-txt strong em{font-style:normal;color:var(--gold);font-weight:400;text-transform:none;letter-spacing:0;}
+
+/* Móvil como app: sin zoom, sin rebote, sin gestos del navegador sobre el juego. */
+html,body{position:fixed;inset:0;width:100%;height:100%;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;}
+:root{padding-top:0;padding-bottom:0}
+.zone,.toast,.phrase,.hud,.goal,.bar,.reto{pointer-events:none}
+.modal .scroll,.modal .sheet,.voice.expanded span,#atlasBody,.atlas-filters{touch-action:pan-x pan-y;overscroll-behavior:contain}

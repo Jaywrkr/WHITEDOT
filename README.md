@@ -2,7 +2,7 @@
 
 Un pixel blanco en un mundo negro. Cada día avanzas un camino corto, y cuando lo terminas se abre un **Mundo infinito y procedural donde todo hace música**: electrónica que va del ambient al minimal tech house. Cada región tiene su género, su paisaje y sus criaturas, y todo lo que tocas suena a tempo.
 
-**Jugar:** https://whitedot-inky.vercel.app (funciona en móvil y desktop, con audio. Toca la pantalla una vez para activar el sonido.)
+**Jugar:** https://whitedot-inky.vercel.app (en el móvil, instálalo: Compartir → Añadir a pantalla de inicio) (funciona en móvil y desktop, con audio. Toca la pantalla una vez para activar el sonido.)
 
 Por Jay · [@jaywrkr](https://instagram.com/jaywrkr)
 
@@ -56,6 +56,7 @@ python3 tests/smoke.py
 python3 tests/atlas_smoke.py
 python3 tests/world_smoke.py
 python3 tests/journey_smoke.py
+python3 tests/mobile_smoke.py
 ```
 
 Las pruebas core necesitan Node. Para las pruebas de navegador necesitas Python y Playwright: instala `tests/requirements.txt` en un entorno virtual (`python3 -m pip install -r tests/requirements.txt`) y usa Chromium instalado en el sistema, o instala el navegador con `python3 -m playwright install chromium`. Puedes indicar su ejecutable mediante `CHROMIUM_PATH`. El smoke test levanta su propio servidor y verifica móvil y escritorio; no evalúa la calidad audible de la música.

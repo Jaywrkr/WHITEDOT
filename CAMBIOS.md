@@ -156,6 +156,10 @@ Continentes sonoros con tamaños desiguales, fronteras curvas, tonalidad, famili
 
 Tierras raras por distancia (criaturas más grandes, colores imposibles, afinación torcida por región), récord de distancia con logros y aviso de campamento, mapa dibujado con hitos oídos como "?" y tarjeta para compartir, y cadena de salida más fuerte (+~6 dB RMS con limitador y saturación suave). Detalle en HANDOFF ("Mundo infinito · fase 2"). Pruebas `tests/journey.mjs` y `tests/journey_smoke.py`; 24 suites y cuatro smokes pasan.
 
+### 30. Móvil como app (PWA) y control táctil — rama `fix/mobile-pwa`
+
+Instalable con manifiesto, iconos y service worker; sin zoom, rebote ni gestos del navegador; joystick flotante que funciona desde cualquier punto de la pantalla (corrige que el arrastre no respondiera al empezar sobre el HUD); halo del pixel y oasis algo menos densos. Prueba `tests/mobile_smoke.py`.
+
 ## Persistencia y compatibilidad
 
 Clave `pixel-blanco-v4` conservada; progreso solo en navegador. Añadidos durante etapas: `S.journal`, `S.softMusic`, `S.relicSites`, metadatos de nuevas estrellas, `S.session` y `S.lastSession`. Partidas antiguas se normalizan sin inventar historial. Perfiles de radio, voz, gravedad, personalidad, espacios, efectos, gramática, vecindarios, fenómenos y materiales se reconstruyen o son temporales; no se guarda estado exacto de música. Reacciones/posiciones dinámicas no garantizan persistencia al reconstruir chunk. IDs del mundo físico se han preservado; nuevos géneros/campos sí pueden cambiar identidad musical de coordenadas antiguas.

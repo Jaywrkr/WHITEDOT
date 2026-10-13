@@ -10,26 +10,41 @@ export function initialize(runtime) {
   addEventListener("keyup",e=>{keys[e.key.toLowerCase()]=0;});
   let holdTimer=null,activePointer=null,dragging=false,held=false;
   const cancelHold=()=>{clearTimeout(holdTimer);holdTimer=null;};
-  cv.addEventListener("pointerdown",e=>{
+  // El juego escucha toda la pantalla: un arrastre que empieza sobre textos del HUD o la Voz también mueve al pixel.
+  // Solo se excluyen botones, paneles abiertos y el Estudio.
+  const blocked=t=>!!t?.closest?.('button,a,input,select,textarea,label,summary,.modal:not([hidden]),#studioPanel,#scanner');
+  let fromOverlay=false;
+  addEventListener("pointerdown",e=>{
+    if(e.target===cv||blocked(e.target))return;
+    if(!e.isPrimary||activePointer!==null||runtime.S.mode==="studio")return;
+    fromOverlay=true;start(e);
+  },true);
+  cv.addEventListener("pointerdown",e=>{fromOverlay=false;start(e);});
+  function start(e){
     if(!e.isPrimary||activePointer!==null)return;
     runtime.audio();if(runtime.S.mode==="studio"){runtime.studioTap(e.clientX,e.clientY);return;}
     activePointer=e.pointerId;dragging=held=false;
-    runtime.tapStart={t:performance.now(),x:e.clientX,y:e.clientY};ptr=null;cv.setPointerCapture(e.pointerId);
-    if(runtime.inWorld())holdTimer=setTimeout(()=>{held=true;runtime.startScanner();},500);
-    else ptr={x:e.clientX,y:e.clientY};
-  });
-  cv.addEventListener("pointermove",e=>{
+    runtime.tapStart={t:performance.now(),x:e.clientX,y:e.clientY};ptr=null;if(!fromOverlay)try{cv.setPointerCapture(e.pointerId);}catch(_){}   // sin captura sobre textos: así un toque en la Voz la sigue abriendo
+    if(runtime.inWorld()&&!fromOverlay)holdTimer=setTimeout(()=>{held=true;runtime.startScanner();},500);
+    else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
+  }
+  addEventListener("pointermove",e=>{
     if(e.pointerId!==activePointer||held||!runtime.tapStart)return;
     if(Math.hypot(e.clientX-runtime.tapStart.x,e.clientY-runtime.tapStart.y)>=14){dragging=true;cancelHold();}
-    if(dragging||!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
+    if(runtime.inWorld()&&dragging){
+      // Joystick flotante: la dirección es hacia donde mueves el dedo desde donde empezaste, en cualquier parte de la pantalla.
+      let ox=ptr?.ox??runtime.tapStart.x,oy=ptr?.oy??runtime.tapStart.y;const ddx=e.clientX-ox,ddy=e.clientY-oy,l=Math.hypot(ddx,ddy),MAXR=70;
+      if(l>MAXR){ox+=ddx/l*(l-MAXR);oy+=ddy/l*(l-MAXR);}
+      ptr={x:e.clientX,y:e.clientY,ox,oy};
+    }else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   });
   const up=e=>{
     if(e.pointerId!==activePointer)return;
     cancelHold();
-    if(e.type==="pointerup"&&!held&&!dragging&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240)runtime.sonar();
-    runtime.stopScanner();runtime.tapStart=null;ptr=null;activePointer=null;held=dragging=false;
+    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240)runtime.sonar();
+    runtime.stopScanner();runtime.tapStart=null;ptr=null;activePointer=null;held=dragging=fromOverlay=false;
   };
-  cv.addEventListener("pointerup",up);cv.addEventListener("pointercancel",up);cv.addEventListener("lostpointercapture",up);
+  addEventListener("pointerup",up);addEventListener("pointercancel",up);cv.addEventListener("lostpointercapture",up);
   cv.addEventListener("contextmenu",e=>e.preventDefault());
   addEventListener("keydown",e=>{if(e.code==="KeyE"&&!e.repeat&&e.target===document.body)runtime.startScanner();});
   addEventListener("keyup",e=>{if(e.code==="KeyE")runtime.stopScanner();});
