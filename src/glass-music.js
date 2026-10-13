@@ -11,3 +11,8 @@ export function glassShape(angles,pane,region,seedOf){
  const alignment=(3+Math.cos(a[0]-a[1])+Math.cos(a[1]-a[2])+Math.cos(a[2]-a[0]))/6;
  return {channel:glassChannel(region,pane,seedOf),degree:[0,2,4][Math.floor(a[pane]/(Math.PI*2)*3)],amount:.3+alignment*.3,variant:(Math.floor(a[pane]/(Math.PI*2)*8)+Math.floor(a[(pane+1)%3]/(Math.PI*2)*8))%8};
 }
+
+export function glassColor(hue,angle,pane){
+ const normalized=((angle%(Math.PI*2))+Math.PI*2)%(Math.PI*2);
+ return ((hue+pane*120+Math.sin(normalized)*30)%360+360)%360;
+}

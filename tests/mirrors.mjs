@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {createMirrorSite,traceMirrors,normalizeMirrorSites,mirrorAngle} from '../src/mirrors.js';
+import {createMirrorSite,traceMirrors,normalizeMirrorSites,mirrorAngle,mirrorDragAngle} from '../src/mirrors.js';
 import {claimInstallationBar} from '../src/installations.js';
 import {initialize as data} from '../src/data.js';import {initialize as progress} from '../src/progress.js';import {initialize as world} from '../src/world.js';
 globalThis.localStorage={getItem:()=>null,setItem(){}};const r={};data(r);progress(r);world(r);
@@ -24,3 +24,11 @@ let sites=0;for(let x=-15;x<=15;x++)for(let y=-15;y<=15;y++){
 }
 assert(sites>40&&sites<300);assert.deepEqual(r.fresh().mirrorSites,{});
 console.log(`PASS: ${sites} sparse seeded mirror sites, solvable rotated routes, finite rays and shared musical budget`);
+
+const pivot={x:10,y:20,angle:.3};
+assert(Math.abs(mirrorDragAngle(pivot,{x:30,y:20},{x:10,y:40})-mirrorAngle(.3+Math.PI/2))<1e-9);
+assert(Math.abs(mirrorDragAngle(pivot,{x:30,y:20},{x:30,y:20})-.3)<1e-9);
+for(let a=-20;a<20;a++){const angle=mirrorDragAngle(pivot,{x:30,y:20},{x:10+Math.cos(a)*20,y:20+Math.sin(a)*20});assert(angle>=0&&angle<Math.PI);}
+const {glassColor}=await import('../src/glass-music.js');
+assert.equal(glassColor(340,0,1),100);assert(Math.abs(glassColor(340,.7,1)-glassColor(340,.7+2*Math.PI,1))<1e-9);
+assert.notEqual(glassColor(30,0,0),glassColor(30,Math.PI/2,0));

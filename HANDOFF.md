@@ -1,4 +1,8 @@
-# Continuar WHITEDOT · composición e instrumentos
+# Continuar WHITEDOT · gestos y color
+
+Bloque vigente: `feat/phase-04-installation-gestures`, desde main `df725f6` (#72). [Detalle](FASE_04.md). Fase 3 ya integrada y aprobada por CI/Vercel. Esta entrega conserva siluetas y guardados, añade gesto directo a espejos y color contextual. Verificar CI antes de integrar; las elecciones del atlas siguen pendientes.
+
+## Historial: composición e instrumentos
 
 Bloque vigente: `feat/phase-03-musical-composition`, desde main `0e289b8` (#71). [Entrega de fase 3](FASE_03.md). No reaplicar #70/#71. El bloque amplía síntesis y composición de reproducción, sin cambiar el generador. 51 suites Node aprobadas; esperar navegador/audio/offline de CI antes de integrar. Las elecciones de figuras siguen pendientes de Jay.
 
