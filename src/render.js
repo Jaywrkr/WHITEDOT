@@ -24,7 +24,7 @@ export function initialize(runtime) {
 
   /* ---------- loop ---------- */
   function frame(t){
-    runtime.syncSession();runtime.glassTick?.();runtime.mirrorTick?.();
+    runtime.syncSession();runtime.glassTick?.();runtime.mirrorTick?.();runtime.patchGardenTick?.();
     if(!runtime.inWorld()||!runtime.S.sound)runtime.clearSoundCues();
     if(!runtime.inWorld())runtime.clearRelicProgress();
     const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;
@@ -365,6 +365,7 @@ export function initialize(runtime) {
     }
     runtime.drawGlass?.(t,dt,ox,oy,R);
     runtime.drawMirrors?.(t,dt,ox,oy,R);
+    runtime.drawPatchGarden?.(t,dt,ox,oy,R);
     runtime.drawPhenomena(t,dt,ox,oy,R);
     runtime.drawJam?.(t,dt,ox,oy,b);
     runtime.drawAlive?.(t,dt,ox,oy,'sky');

@@ -44,7 +44,8 @@ export function initialize(runtime) {
     const favorites=runtime.favorites||[];const saved=favorites.length?'<h3>Favoritos</h3>'+favorites.map(p=>card(p.name,`${p.layer} · ${runtime.GEN[p.genre]?.name||p.genre} · ${p.character}`)).join(''):'';
     const mirrorEntries=Object.values(runtime.S.mirrorSites||{});
     const mirrorCard=mirrorEntries.length?card('Espejos musicales',`${mirrorEntries.length} instalaciones exploradas · ${mirrorEntries.filter(e=>e.solved).length} rutas de luz completadas. Orienta los tres espejos para revelar una figura y cambiar la secuencia.`):'';
-    const installations=mirrorCard+(Object.keys(runtime.S.glassSites||{}).length?card('Vidrios cromáticos',`${Object.keys(runtime.S.glassSites).length} instalaciones exploradas. Gira sus aros para transformar notas, acentos y figuras; la orientación queda guardada.`):'');
+    const patchEntries=Object.values(runtime.S.patchSites||{}),patchCard=patchEntries.length?card('Jardines modulares',`${patchEntries.length} conjuntos explorados · ${patchEntries.reduce((n,s)=>n+s.connections.length,0)} cables conectados. Conecta reloj y partes musicales; retira un cable tocando su entrada.`):'';
+    const installations=patchCard+mirrorCard+(Object.keys(runtime.S.glassSites||{}).length?card('Vidrios cromáticos',`${Object.keys(runtime.S.glassSites).length} instalaciones exploradas. Gira sus aros para transformar notas, acentos y figuras; la orientación queda guardada.`):'');
     return saved+installations+(regions.length?regions.map(region=>{
       const found=region.species.filter(sp=>runtime.S.cat[sp.id]).length,gravity=gravityOf(region,runtime.seedOf),j=data();
       const [rx,ry]=region.key.split(',').map(Number);

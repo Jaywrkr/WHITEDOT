@@ -37,7 +37,7 @@ export function shapeInfluencedTrack(region,arrangement,state,genres){
   out.hookI=g.hookP[variant%g.hookP.length];
  }
  if(v.space>.15||v.melody<-.15){let count=0;out.hook=out.hook.map(n=>n>=0&&++count>(v.space>.6?2:3)?-1:n);}
- out.grammar.hookLevel=(out.grammar.hookLevel||1)*(1-.22*Math.max(0,v.bass)-.3*Math.max(0,v.space));
+ out.grammar.hookLevel=(out.grammar.hookLevel||1)*(1-.22*Math.max(0,v.bass)-.3*Math.max(0,v.space)-.2*Math.max(0,-v.space));
  out.grammar.bassLevel=(out.grammar.bassLevel||1)*(1+.08*Math.max(0,v.bass)-.15*Math.max(0,v.space));
  return out;
 }

@@ -31,3 +31,5 @@ Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; fase 12 en ade
 - Siguiente rama encadenada: `feat/12-musical-influence` — Tu presencia transforma la composición. Base: rama inmediatamente anterior; Jay crea PR/merge.
 
 - Siguiente rama encadenada: `feat/12a-optional-sound-pins` — Sonidos libres y fijación voluntaria. Base: rama inmediatamente anterior; Jay crea PR/merge.
+
+- Siguiente rama encadenada: `feat/12b-patch-gardens` — Jardines modulares con cables. Base: rama inmediatamente anterior; Jay crea PR/merge.

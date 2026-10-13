@@ -82,7 +82,7 @@ export function initialize(runtime){
   const now=performance.now();if(now-site.lastInput>220){site.lastInput=now;runtime.beatSoon(t=>emit(site,i,t,'player'),null,'player');}
   panel();return true;
  }
- function open(site){runtime.closeGlass?.();selected=site;remember(site);$('mirrorPanel').hidden=false;panel();if(!S().help.mirrors){S().help.mirrors=true;runtime.say(runtime.VOZ.mirrors,'Espejos musicales');}}
+ function open(site){runtime.closeGlass?.();runtime.closePatchGarden?.();selected=site;remember(site);$('mirrorPanel').hidden=false;panel();if(!S().help.mirrors){S().help.mirrors=true;runtime.say(runtime.VOZ.mirrors,'Espejos musicales');}}
  function close(){selected=null;$('mirrorPanel').hidden=true;runtime.save();}
  function tap(x,y){
   if(!surface()||runtime.scanning||[...document.querySelectorAll('.modal')].some(m=>!m.hidden))return false;
