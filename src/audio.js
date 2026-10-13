@@ -226,7 +226,7 @@ export function initialize(runtime) {
     MU.sq.push({t,s});if(MU.sq.length>12)MU.sq.shift();
     const id=BI().id,cave=id==="cueva",vac=id==="vacio",bar=MU.step>>4;
     const since=MU.step-MU.lastChange,padLv=(G.pad||0)*(1-w)+(nb&&runtime.GEN[nb.genre].pad||0)*w,padOn=since<24||MU.radio?.melodyRest?padLv:0;
-    padG.gain.setTargetAtTime(.03*(1-E*.4)*padOn+.0001,t,padOn?.6:2.2);
+    padG.gain.setTargetAtTime(.03*(1-E*.4)*padOn*(runtime.labSolo?0:1)+.0001,t,padOn?.6:2.2);
     padF.frequency.setTargetAtTime(380+E*1700-(cave?200:0),t,.9);
     droneG.gain.setTargetAtTime(0,t,1.5);
     dfb.gain.setTargetAtTime(runtime.inWorld()&&MU.anomaly==='canon'?.72:cave||(A&&A.genre==="dub")?.6:MU.still>3?.5:.36,t,1);
@@ -236,7 +236,7 @@ export function initialize(runtime) {
     if(!MU.radio?.melodyRest&&air==="esporas"&&s===14&&bar%4===3&&rnd()<.2)pluck(hookPitch('glass',chordTones()[1],musicalCharacter(MU.dnaA.genre)),t,.012,4);
     if(runtime.inWorld())E=runtime.clamp(E+(runtime.influenceState?.values.groove||0)*.09,.05,.9);
     const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(G.sw||0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
-    if(live){
+    if(live&&!runtime.labSolo){   // laboratorio: «Solo» calla la música del lugar para oír el elemento
       if(nb){VW=w;const nt=t+((s%2)?SIX*(runtime.GEN[nb.genre].sw||0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true,MU.neighborRadio);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }
       VW=1-w;drums(A?A.genre:"ambient",s,bar,t,tt,E,ct,false);
       if(runtime.inWorld()&&A){
@@ -273,6 +273,7 @@ export function initialize(runtime) {
     runtime.glassStep?.(s,bar,t);
     runtime.mirrorStep?.(s,bar,t);
     runtime.materiaStep?.(s,bar,t);
+    runtime.vidaStep?.(s,bar,t);
     runtime.phenomenaStep?.(s,bar,t);
     let n=0;while(MU.queue.length&&n<4){MU.queue.shift()(t);n++;}
   }

@@ -44,7 +44,9 @@ import { initialize as influence } from './influence.js';
 import { initialize as mirrors } from './mirrors.js';
 import { initialize as glass } from './glass.js';
 import { initialize as materia } from './materia.js';
+import { initialize as vida } from './vida.js';
 import { initialize as shareTools } from './share-tools.js';
+import { initialize as lab } from './lab.js';
 import { initialize as autopilot } from './autopilot.js';
 import { initialize as navigation } from './navigation.js';
 import { initialize as favorites } from './favorites.js';
@@ -95,6 +97,7 @@ navigation(runtime);
 autopilot(runtime);
 glass(runtime);
 materia(runtime);
+vida(runtime);
 mirrors(runtime);
 patchgarden(runtime);
 blobs(runtime);
@@ -116,6 +119,7 @@ accessibility(runtime);
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
 runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0)))runtime.S.mode="camino";
 seeds(runtime);
+lab(runtime);
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
 // Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.

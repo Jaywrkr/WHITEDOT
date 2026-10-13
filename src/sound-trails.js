@@ -3,7 +3,7 @@ import {claimInstallationBar} from './installations.js';
 import {elementInk,WORLD_VISUAL} from './visual.js';
 const LABELS=['Escucha la huella','Responde al ritmo','Despierta el instrumento','Instrumento despierto'];
 export function initialize(runtime){
- const S=()=>runtime.S,cache=new Map(),forced=new URLSearchParams(location.search).get('encounter')==='trail';let previous=S(),gesture=null,elapsed=0,sequence=null,sequenceTrail=null,focus=null,lastBar=-Infinity;
+ const S=()=>runtime.S,cache=new Map(),forcedParam=new URLSearchParams(location.search).get('encounter')==='trail',forced=()=>forcedParam||!!runtime.labTrail;let previous=S(),gesture=null,elapsed=0,sequence=null,sequenceTrail=null,focus=null,lastBar=-Infinity;
  S().soundTrails=normalizeSoundTrails(S().soundTrails);
  const available=()=>runtime.inWorld()&&(S().layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
  const audible=()=>available()&&S().sound&&runtime.ac?.state==='running';
@@ -12,7 +12,7 @@ export function initialize(runtime){
   if(!runtime.inWorld()||(S().layer||'superficie')!=='superficie')return [];
   const size=runtime.REG*runtime.WCH,rx=Math.floor(S().wx/size),ry=Math.floor(S().wy/size),out=[];
   for(let x=rx-1;x<=rx+1;x++)for(let y=ry-1;y<=ry+1;y++){
-   const key=`${x},${y}`;if(!cache.has(key)){cache.set(key,createSoundTrail(runtime.regionOfPos((x+.5)*size,(y+.5)*size),size,runtime.seedOf,runtime.rng,forced&&!!S().previewSeed&&key==='0,0'));while(cache.size>64)cache.delete(cache.keys().next().value);}
+   const key=`${x},${y}`;if(!cache.has(key)){cache.set(key,createSoundTrail(runtime.regionOfPos((x+.5)*size,(y+.5)*size),size,runtime.seedOf,runtime.rng,forced()&&!!S().previewSeed&&key==='0,0'));while(cache.size>64)cache.delete(cache.keys().next().value);}
    const trail=cache.get(key);if(trail&&trail.nodes.some(p=>distance(p)<radius))out.push(trail);
   }return out;
  }
@@ -67,5 +67,5 @@ export function initialize(runtime){
  function card(){const entries=Object.values(S().soundTrails||{});return entries.some(e=>e.seen)?`<article class="journal-card"><h3>Rastros musicales</h3><p>${entries.filter(e=>e.seen).length} rastros encontrados · ${entries.filter(e=>e.stage===3).length} instrumentos despertados. Escucha la primera huella, sigue sus puntos, responde al ritmo y mantén la última. Las etapas se conservan; las respuestas a medias se reinician al alejarte o pausar.</p></article>`:'';}
  runtime.ACH.push(['instrumentoDespierto','Algo estaba dormido','Sigue tres huellas musicales y despierta su instrumento.']);runtime.VOZ.instrumentoDespierto='Escuchar, responder y cuidar: este lugar vuelve a tener voz.';
  addEventListener('blur',pause);document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});
- Object.defineProperties(runtime,{trailTick:{get:()=>tick},trailDraw:{get:()=>draw},trailBar:{get:()=>bar},trailDown:{get:()=>down},trailMove:{get:()=>move},trailUp:{get:()=>up},trailEngaged:{get:()=>!!gesture},nearbyTrails:{get:()=>nearby},trailCard:{get:()=>card}});
+ Object.defineProperties(runtime,{trailReset:{get:()=>()=>{cache.clear();}},trailTick:{get:()=>tick},trailDraw:{get:()=>draw},trailBar:{get:()=>bar},trailDown:{get:()=>down},trailMove:{get:()=>move},trailUp:{get:()=>up},trailEngaged:{get:()=>!!gesture},nearbyTrails:{get:()=>nearby},trailCard:{get:()=>card}});
 }
