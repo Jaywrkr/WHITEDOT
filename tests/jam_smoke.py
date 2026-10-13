@@ -28,7 +28,15 @@ with sync_playwright() as p:
    for(let i=0;i<32;i++)r.loopStep(i%16,e.start+32+i,ac.currentTime+.05);ac.createOscillator=o;return k;}''')
   assert calls>0,'eco replays'
   page.wait_for_timeout(300);page.screenshot(path=f'/tmp/whitedot-eco-{label}.png')
-  # Junto al eco, el botón lo borra.
+  # Arrastrar sobre el anillo mueve al jugador; no borra. Un toque breve sí borra.
+  page.mouse.move(size['width']/2,size['height']/2);page.mouse.down();page.mouse.move(size['width']/2+35,size['height']/2,steps=5);page.mouse.up()
+  assert page.evaluate('window.__testRuntime.jam.loop.ecos.length')==1
+  point=page.evaluate('()=>{const r=window.__testRuntime,e=r.jam.loop.ecos[0];return {x:r.W/2+e.x-r.S.wx,y:r.H/2+e.y-r.S.wy};}')
+  if label=='mobile':page.touchscreen.tap(point['x'],point['y'])
+  else:page.mouse.click(point['x'],point['y'])
+  assert page.evaluate('window.__testRuntime.jam.loop.ecos.length')==0
+  # El botón junto a otro eco sigue sirviendo de alternativa.
+  page.evaluate('()=>{const r=window.__testRuntime;r.jam.loop.ecos.push({x:r.S.wx,y:r.S.wy,layer:r.S.layer||"superficie",events:[],start:r.MU.step});}')
   page.locator('#bLoop').click();assert page.evaluate('window.__testRuntime.jam.loop.ecos.length')==0
   # Banda: unir criaturas de distintos papeles y comprobar que tocan a tempo.
   roles=page.evaluate('''()=>{const r=window.__testRuntime,got=new Set();for(let x=-3;x<=3&&got.size<4;x++)for(let y=-3;y<=3&&got.size<4;y++){const d=r.regionOfPos(x*3600+1800,y*3600+1800);

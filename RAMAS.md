@@ -22,3 +22,5 @@ Orden 1 → 2 → 3 → … → 10, de la más antigua a la más nueva. Mientras
 Merge normal conserva los commits antecesores y facilita la cadena. Si Jay usa squash o rebase merge, avisar para reajustar la pila: hay que trasladar solamente los commits propios de cada rama sobre la nueva base y volver a verificar. No prometer cero conflictos si main cambia o si se reescribe el historial. El asistente no hace merges ni publica directamente en main.
 
 README/HANDOFF/CAMBIOS/PENDIENTES se actualizan por etapa. Logros/Bitácora se amplían cuando hay algo nuevo que el jugador pueda descubrir/aprender; una corrección técnica no introduce un logro artificial.
+
+| 10a | `fix/10a-tap-delete-echo` | rama 10 | Borrado directo de ecos; integrar después de 10 y antes de 11 |

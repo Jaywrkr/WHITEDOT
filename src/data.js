@@ -245,7 +245,7 @@ export function initialize(runtime) {
    productor:"Treinta segundos girando perillas. Ya puedes decir que produces.",
    robot:"Robot activado. Ahora todo suena como yo.",
    cinta:"Frenaste la cinta. Clásico. Funciona siempre.",
-   eco:"Eco. Toca algo en los próximos dos compases y se queda sonando aquí. Junto al eco, el mismo botón lo borra.",
+   eco:"Eco. Toca algo en los próximos dos compases y se queda sonando aquí. Toca su anillo azul para borrarlo. También sirve el mismo botón si estás junto al eco.",
    banda:"Se te unió una criatura. Junta bajo, percusión, acordes y melodía. Ya sabes cómo termina esto.",
    eco1:"Tu primer bucle. El mundo ahora suena un poco a ti.",
    eco4:"Cuatro ecos. Esto ya es un set.",

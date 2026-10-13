@@ -44,7 +44,7 @@ export function initialize(runtime) {
     if(runtime.glassPointerUp?.(e))return;
     if(e.pointerId!==activePointer)return;
     cancelHold();
-    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240)runtime.sonar();
+    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240){if(!runtime.tapEcho?.(e.clientX,e.clientY))runtime.sonar();}
     runtime.stopScanner();runtime.tapStart=null;ptr=null;activePointer=null;held=dragging=fromOverlay=false;
   };
   addEventListener("pointerup",up);addEventListener("pointercancel",up);cv.addEventListener("lostpointercapture",up);

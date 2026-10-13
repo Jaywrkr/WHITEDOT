@@ -29,9 +29,19 @@ export function initialize(runtime){
 
  // ---------- looper ----------
  const markInput=()=>{loop.inputMs=performance.now();};
+ function eraseEcho(index){
+  if(index<0)return false;loop.ecos.splice(index,1);runtime.toast('<em>Eco</em> · borrado');ui();return true;
+ }
+ function tapEcho(x,y){
+  if(!runtime.inWorld()||runtime.scanning||[...document.querySelectorAll('.modal')].some(m=>!m.hidden))return false;
+  const wx=S().wx+x-runtime.W/2,wy=S().wy+y-runtime.H/2;
+  let nearest=-1,distance=32;
+  loop.ecos.forEach((e,i)=>{if((e.layer||'superficie')!==layer())return;const d=Math.hypot(e.x-wx,e.y-wy);if(d<distance){nearest=i;distance=d;}});
+  return eraseEcho(nearest);
+ }
  function loopButton(){
   if(!runtime.inWorld())return;const s=S(),near=loop.ecos.findIndex(e=>(e.layer||"superficie")===layer()&&Math.hypot(e.x-s.wx,e.y-s.wy)<90);
-  if(near>=0&&!loop.rec&&!loop.armed){loop.ecos.splice(near,1);runtime.toast('<em>Eco</em> · borrado');ui();return;}
+  if(near>=0&&!loop.rec&&!loop.armed){eraseEcho(near);return;}
   if(loop.rec||loop.armed){loop.armed=false;loop.rec=null;runtime.toast('<em>Eco</em> · cancelado');ui();return;}
   loop.armed=true;runtime.toast('<em>Eco</em> · graba en el próximo compás: toca, pulsa, junta luces');ui();
   if(!s.help.eco){s.help.eco=true;runtime.say(runtime.VOZ.eco,'Eco');}
@@ -89,7 +99,7 @@ export function initialize(runtime){
   // Ecos: anillos que laten cuando suenan.
   for(const e of loop.ecos){if((e.layer||"superficie")!==layer())continue;e.lit=Math.max(0,e.lit-dt*3);const x=e.x+ox,y=e.y+oy;if(x<-60||y<-60||x>W+60||y>H+60)continue;
    cx.globalAlpha=.35+.5*e.lit;cx.strokeStyle=WORLD_VISUAL.echo;cx.lineWidth=WORLD_VISUAL.line;cx.beginPath();cx.arc(x,y,14+e.lit*8,0,6.283);cx.stroke();
-   cx.globalAlpha=.2;cx.beginPath();cx.arc(x,y,26,0,6.283);cx.stroke();cx.globalAlpha=.8;cx.fillStyle='#9fe8ff';cx.font='9px monospace';cx.textAlign='center';cx.fillText('eco',x,y+40);}
+   cx.globalAlpha=.2;cx.beginPath();cx.arc(x,y,26,0,6.283);cx.stroke();cx.globalAlpha=.8;cx.fillStyle='#9fe8ff';cx.font='9px monospace';cx.textAlign='center';cx.fillText('eco · toca para borrar',x,y+40);cx.beginPath();cx.moveTo(x-4,y-4);cx.lineTo(x+4,y+4);cx.moveTo(x+4,y-4);cx.lineTo(x-4,y+4);cx.stroke();}
   // Banda: siguen al pixel en formación, cada una en su lugar.
   const slots=['bajo','perc','acorde','melodia'];
   slots.forEach((sl,i)=>{const x=band.members[sl];if(!x)return;x.lit=Math.max(0,x.lit-dt*2.5);
@@ -109,7 +119,7 @@ export function initialize(runtime){
 
  const btn=runtime.$('bLoop');if(btn)btn.onclick=e=>{e.stopPropagation();btn.blur();runtime.audio();loopButton();};
  Object.defineProperties(runtime,{
-  cancelLoopRecording:{get:()=>cancelRecording},loopTap:{get:()=>loopTap},loopStep:{get:()=>loopStep},markInput:{get:()=>markInput},loopButton:{get:()=>loopButton},
+  tapEcho:{get:()=>tapEcho},cancelLoopRecording:{get:()=>cancelRecording},loopTap:{get:()=>loopTap},loopStep:{get:()=>loopStep},markInput:{get:()=>markInput},loopButton:{get:()=>loopButton},
   bandJoin:{get:()=>bandJoin},bandStep:{get:()=>bandStep},drawJam:{get:()=>draw},jamUI:{get:()=>ui},resetJam:{get:()=>reset},
   jam:{get:()=>({loop,band})}
  });
