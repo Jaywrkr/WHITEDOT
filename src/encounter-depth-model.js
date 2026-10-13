@@ -52,12 +52,12 @@ export function threadArrangement(track,network,channel,seedOf){
  if(channel==='space')return boundedTrack(track,track.bass,track.hook.map((n,i)=>score.mask[i]?n:-1));
  return track;
 }
-export function startDialogue(){return {phase:'listening',elapsed:0,events:[],phrase:[],lastReplyBar:-Infinity,age:0};}
+export function startDialogue(){return {phase:'listening',elapsed:0,waitingAge:0,sinceInput:0,events:[],phrase:[],lastReplyBar:-Infinity,age:0};}
 export function captureDialogue(dialogue,event){
  if(dialogue.phase!=='listening'||!Number.isFinite(event.step)||!Number.isFinite(event.degree))return false;
  const step=clamp(Math.round(event.step/2)*2,0,30),degree=((Math.round(event.degree)%7)+7)%7;
- if(dialogue.events.some(e=>e.step===step)||dialogue.events.length>=8)return false;
- dialogue.events.push({step,degree});return true;
+ if(dialogue.events.some(e=>e.step===step)||dialogue.events.length>=4)return false;
+ dialogue.events.push({step,degree});dialogue.sinceInput=0;return true;
 }
 export function finishDialogue(dialogue){
  if(dialogue.phase!=='listening')return;

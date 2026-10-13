@@ -9,7 +9,7 @@ export function boxCellAt(x,y){let best=null,nearest=18;for(let i=0;i<16;i++){co
 export function boxLidAt(x,y){return Math.hypot(x,y-56)<16;}
 export function boxSlotAt(x,y){for(let i=0;i<3;i++)if(distance({x,y},boxPartPoint(i))<20)return i;return null;}
 export function initialize(runtime){
- let gesture=null,armed=null,previous=runtime.S;const identities=new WeakMap();let nextId=0;
+ let gesture=null,armed=null,guidedAnimal=null,previous=runtime.S;const identities=new WeakMap();let nextId=0;
  const playable=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
  const active=()=>playable()&&runtime.S.sound&&runtime.ac?.state==='running';
  const point=e=>({x:runtime.S.wx+e.clientX-runtime.W/2,y:runtime.S.wy+e.clientY-runtime.H/2});
@@ -74,8 +74,13 @@ export function initialize(runtime){
   return true;
  }
  function tap(o,duration){
-  if(o.kind!=='animal'||duration<500)return false;
-  o.state.dialogue=startDialogue();mark(o,'listen');runtime.stopAutopilot?.();return true;
+  if(o.kind!=='animal')return false;guidedAnimal=o;
+  if(duration>=500){FAMILIES.animal.tap(o.state);o.state.voiceFeedback={channel:FAMILIES.animal.voiceRole(o.state),until:performance.now()+1600};mark(o,'model');return true;}
+  const d=o.state.dialogue;
+  if(d?.phase==='listening'){
+   if(d.events.length)finishDialogue(d);else{d.phase='idle';d.empty=true;}
+  }else{o.state.dialogue=startDialogue();mark(o,'listen');}
+  runtime.stopAutopilot?.();return true;
  }
  function tick(o,dt){
   if(previous!==runtime.S){cancel();previous=runtime.S;}
@@ -89,7 +94,11 @@ export function initialize(runtime){
   if(armed&&(distance(armed.object,{x:runtime.S.wx,y:runtime.S.wy})>190||!objects().includes(armed.object)))armed=null;
   const d=o.state.dialogue;if(!d)return;
   if(distance(o,{x:runtime.S.wx,y:runtime.S.wy})>200){d.phase='idle';return;}
-  if(d.phase==='listening'){d.elapsed+=dt;o.state.active=16;if(d.elapsed>=runtime.SIX*32)finishDialogue(d);}
+  if(d.phase==='listening'){
+   o.state.active=16;
+   if(!d.events.length){d.waitingAge=(d.waitingAge||0)+dt;if(d.waitingAge>20){d.phase='idle';d.empty=true;}}
+   else{d.elapsed+=dt;d.sinceInput=(d.sinceInput||0)+dt;if(d.elapsed>=runtime.SIX*32||d.sinceInput>=Math.max(1.2,runtime.SIX*8))finishDialogue(d);}
+  }
   if(d.phase==='replying'){d.age+=dt;o.state.active=16;if(d.age>90)d.phase='idle';}
  }
  function hear(event){
@@ -106,7 +115,7 @@ export function initialize(runtime){
   if(o.kind==='box'&&o.state.box&&o.state.a>.65){const out=[];for(const channel of ['bass','groove','melody']){const part=boxPart(o.state.box,channel);if(!part?.enabled)continue;const notes=part.steps.map((index,step)=>({step,index})).filter(n=>n.index>=0);if(notes.length)out.push({...notes[Math.floor(bar/2)%notes.length],channel});}return out;}
   return null;
  }
- function replied(o,bar){if(o.state.dialogue?.phase==='replying'){o.state.dialogue.lastReplyBar=bar;runtime.S.journal.depth||={};runtime.S.journal.depth.dialogue=true;runtime.unlock('respuestaAnimal');}}
+ function replied(o,bar,time=runtime.ac.currentTime){if(o.state.dialogue?.phase==='replying'){o.state.dialogue.lastReplyBar=bar;o.state.dialogue.replyAt=time;o.state.dialogue.replyEnd=time+runtime.SIX*((o.state.dialogue.phrase.at(-1)?.step||0)+3);runtime.S.journal.depth||={};runtime.S.journal.depth.dialogue=true;runtime.unlock('respuestaAnimal');}}
  function arrangement(o,track,region){
   if(o.kind==='weaver'&&o.state.weave?.edges.length)return threadArrangement(track,o.state.weave,encounterRole('weaver',region,runtime.seedOf),runtime.seedOf);
   if(o.kind==='box'&&o.state.box&&o.state.a>.65)return boxArrangement(track,o.state.box);
@@ -123,7 +132,7 @@ export function initialize(runtime){
  function hint(o){
   if(o.kind==='weaver')return armed?.object===o?'Elige otro punto · toca un hilo para retirarlo':'Une dos puntos con el dedo · toca hilos para retirar';
   if(o.kind==='box')return o.state.a>.65?'Raíces: tocar · núcleos: mover/mantener · arco: reposar':'Toca el suelo o permanece cerca para despertarlo';
-  if(o.kind==='animal')return !runtime.S.sound?'Activa Música para enseñarle una frase':o.state.dialogue?.phase==='listening'?'Está escuchando · toca el mundo durante dos compases':o.state.dialogue?.phase==='replying'?'Te responde · mantén para otra frase':'Mantén para enseñar · toca para cambiar papel';
+  if(o.kind==='animal')return !runtime.S.sound?'Activa Música para enseñarle una frase':o.state.dialogue?.phase==='listening'?'Te escucho · toca objetos o el vacío · tócame para responder':o.state.dialogue?.phase==='replying'?'Toca para enseñarme otra frase · mantén para cambiar voz':'Toca para enseñarme · mantén para cambiar voz · arrastra para acercar';
   return FAMILIES[o.kind].hint;
  }
  function draw(o){
@@ -153,9 +162,24 @@ export function initialize(runtime){
    c.fillText('reposar',0,74);
 
   }
-  const d=o.state.dialogue;if(o.kind==='animal'&&d&&d.phase!=='idle'){
-   const progress=d.phase==='listening'?Math.min(1,d.elapsed/(runtime.SIX*32)):1;c.beginPath();c.arc(0,0,29,-Math.PI/2,-Math.PI/2+progress*Math.PI*2);c.stroke();c.font='9px monospace';c.textAlign='center';c.fillText(d.phase==='listening'?`Escucha · ${d.events.length}`:'Respuesta',0,42);
+  const d=o.state.dialogue;if(o.kind==='animal'&&near){
+   const listening=d?.phase==='listening',speaking=d?.phase==='replying'&&Number.isFinite(d.replyAt)&&runtime.ac.currentTime>=d.replyAt&&runtime.ac.currentTime<d.replyEnd;
+   c.font='9px monospace';c.textAlign='center';
+   const width=Math.min(220,runtime.W-24),sx=runtime.W/2+o.x-runtime.S.wx,sy=runtime.H/2+o.y-runtime.S.wy,lx=Math.max(width/2+12,Math.min(runtime.W-width/2-12,sx))-sx,ly=sy>runtime.H-70?-38:48;
+   const guide=guidedAnimal&&objects().includes(guidedAnimal)&&distance(guidedAnimal,{x:runtime.S.wx,y:runtime.S.wy})<180?guidedAnimal:objects().filter(a=>a.kind==='animal').sort((a,b)=>distance(a,{x:runtime.S.wx,y:runtime.S.wy})-distance(b,{x:runtime.S.wx,y:runtime.S.wy}))[0];
+   const label=(text,y=ly)=>{if(guide===o)c.fillText(text,lx,y,width);};
+   if(o.state.voiceFeedback?.until>performance.now())label(`Voz: ${CHANNEL_NAMES[o.state.voiceFeedback.channel]}`,ly>0?-34:-56);
+   if(!runtime.S.sound)label('Activa Música para que te escuche');
+   else if(listening){
+    c.beginPath();c.arc(-14,-11,9,Math.PI,Math.PI*1.8);c.arc(14,-11,9,Math.PI*1.2,Math.PI*2);c.stroke();
+    for(let i=0;i<4;i++){c.beginPath();c.arc(-15+i*10,31,i<d.events.length?3:1,0,Math.PI*2);c.fill();}
+    label(d.events.length?`${d.events.length} notas · tócame para responder`:'Te escucho · toca objetos o el vacío');
+   }else if(speaking){c.beginPath();c.arc(0,0,26+(Math.sin(o.state.phase*6)+1)*2,-.8,.8);c.stroke();label('Mi turno');}
+   else if(d?.phase==='replying')label(d.replyAt?'Tócame para enseñarme otra frase':'Espera · respondo con la música');
+   else if(d?.empty)label('No escuché notas · tócame otra vez');
+   else label('Tócame para empezar');
   }
+
  }
  for(const [id,title,description]of [['tejidoVivo','Tejer un groove','Une dos pares de puntos en una red musical.'],['respuestaAnimal','Te escuché','Enseña una frase a un animal y escucha su respuesta.'],['cajaEditable','Un suelo propio','Transforma dos partes musicales de un suelo resonante.']]){runtime.ACH.push([id,title,description]);runtime.VOZ[id]=description;}
  addEventListener('blur',cancel);document.addEventListener('visibilitychange',()=>{if(document.hidden)cancel();});

@@ -1,3 +1,15 @@
+## Nueva etapa: animal de respuesta más intuitivo
+
+Rama `feat/intuitive-animal-dialogue`, basada en `feat/expressive-glass-gestures`. Sustituye el gesto oculto de mantener para enseñar por un toque sencillo: tocar el cuerpo inicia la escucha; tocar objetos o el vacío le enseña una frase; volver a tocarlo pide la respuesta. También contesta automáticamente tras una pausa de al menos 1,2 segundos u ocho semicorcheas, o al alcanzar dos compases. El tiempo de la frase comienza con la primera nota, no al activar la escucha. Espera hasta 20 segundos por esa primera nota; si no llega, muestra cómo reintentar. Tocar otra vez sin notas termina la escucha vacía.
+
+Mantener el cuerpo cambia su voz y muestra brevemente Bajo/Groove/Motivo/Espacio; no borra una lección en curso. Arrastrar conserva el acercamiento. Orejas abiertas y cuatro puntos confirman las notas recibidas; textos locales distinguen escucha, espera, respuesta sonora real y frase aprendida. “Mi turno” se muestra durante el intervalo programado de audio, evitando anunciar una respuesta antes de que suene. Las pistas locales se ajustan a los bordes de la pantalla.
+
+No escucha micrófono, ambiente ni grabaciones: solo sonidos causados por el jugador en esa región. Mantiene afinación regional, máximo de cuatro notas aprendidas, turnos espaciados, volumen compartido y pausa por menú/ocultación. El aprendizaje es temporal; el logro y la Bitácora conservan descubrimientos. El nombre visible pasa a **Animal de respuesta**.
+
+Probar: Prototipo → Semillas → Encuentro de prueba → **Animal de respuesta**. Un toque al animal, unos toques al mundo y otro toque al animal; o dejar de tocar para recibir la respuesta automática.
+
+Validación: 46 suites Node; gestos reales en móvil vertical, horizontal y escritorio; diez familias de encuentros; recarga offline con 72 módulos. Catorce renderizados reales de redes, suelos y respuestas aprendidas mantienen el pico en 0,954511, sin muestras por encima de 0,98. Se conserva la música anterior; el cambio central es cómo se enseña y cómo se muestran los turnos.
+
 ## Nueva etapa: vidrios sin panel y con música de cuerpo
 
 Rama `feat/expressive-glass-gestures`, basada en `feat/chained-musical-trails`. Elimina completamente el panel de ángulos y sus controles: los vidrios se giran mediante sus aros en el mundo. Los tres aros tienen radios distintos para poder seleccionarlos incluso cuando las placas están alineadas. Cancelar, perder captura o cambiar de pestaña restaura los ángulos del arrastre; salir o pausar cancela el gesto. Se conservan guardados y descubrimientos anteriores.

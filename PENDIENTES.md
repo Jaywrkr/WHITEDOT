@@ -12,6 +12,8 @@ La entrega `feat/resonant-ground` sustituye el objeto Caja de posibilidades por 
 
 La entrega `feat/expressive-glass-gestures` elimina el panel de los vidrios: solo giros en el mundo, con graves, percusión y armonía/melodía media.
 
+La entrega `feat/intuitive-animal-dialogue` simplifica el animal: tocar para enseñar, confirmación de notas, respuesta manual/automática y mantener para cambiar voz.
+
 ## Próximos bloques
 
 1. Profundizar interacciones existentes. La secuencia cubre redes, frases y suelo musical; otras mejoras se evalúan según su aporte musical.

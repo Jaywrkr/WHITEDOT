@@ -18,7 +18,7 @@ export const FAMILIES={
   tap(s){s.c=s.c?0:1;s.a=s.a>.5?.2:.8;},drag(s,x,y){s.a=clamp(.5+x/140);s.b=clamp(.5-y/140);},
   influence(s){return {melody:(s.a-.5)*1.7,groove:(s.b-.5)*1.4};},figure(s){return (Math.floor(s.a*5)+s.c*2)%8;},
   arrange(track,s){if(s.a<.35)track.hook=[track.hook[0],...track.hook.slice(1).reverse()];if(s.c){const notes=track.hook.filter(n=>n>=0).slice(0,2);if(notes.length)track.hook=track.hook.map((n,i)=>i%4===2?notes[(i>>2)%notes.length]:n);}return track;}},
- animal:{name:'Animal de intercambio',hint:'Mantén para enseñar · toca para cambiar papel',description:'Mantén su cuerpo para iniciar dos compases de escucha. Toca objetos o pulsa en el vacío: el animal aprende el ritmo y el contorno de tu frase y responde por turnos. Arrastrarlo permite acercarlo a otro.',role:'groove',shape:'animal',
+ animal:{name:'Animal de respuesta',hint:'Tócame · toca el mundo · escucha mi respuesta',description:'Toca mi cuerpo para enseñarme una frase. Escucho los objetos que tocas y tus pulsos en el vacío: cuatro puntos muestran las notas que recibo. Vuelve a tocarme para responder, o deja de tocar y contestaré automáticamente. Mantén mi cuerpo para cambiar voz; arrástrame para acercarme. No uso micrófono ni guardo grabaciones.',role:'groove',shape:'animal',
   tap(s){s.a=(s.a+.26)%1;s.c=1;},drag(s,x,y){s.dx=clamp(x,-100,100);s.dy=clamp(y,-100,100);s.b=clamp(.5+x/200);},
   tick(s,dt,near,context){if(!context)return;const o=context.object;o.homeX??=o.x;o.homeY??=o.y;o.x=o.homeX+(s.dx||0);o.y=o.homeY+(s.dy||0);const peers=context.runtime.encounterObjects||[];s.c=peers.some(p=>p!==o&&p.kind==='animal'&&Math.hypot(p.x-o.x,p.y-o.y)<210)?1:0;},
   voiceRole(s){return ['bass','groove','melody','space'][Math.min(3,Math.floor(s.a*4))];},
