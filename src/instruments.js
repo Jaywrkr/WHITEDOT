@@ -1,5 +1,9 @@
 // Synthesized families: resonant partials, FM keys and filtered subtractive voices.
 export const INSTRUMENT_SPECS={
+ reed:{fm:.5,index:.25,partials:[[1,'triangle',.55],[2,'sine',.12]],cut:1350,formant:true,attack:.035,dec:.55,send:.1},
+ membrane:{partials:[[1,'sine',.6],[1.59,'sine',.13],[2.14,'sine',.07]],cut:1700,attack:.004,dec:.22,send:.06},
+ bowed:{partials:[[.999,'sawtooth',.2],[1.001,'triangle',.3]],cut:1100,attack:.11,dec:.85,tremolo:4.2,send:.12},
+ hollow:{partials:[[1,'square',.25],[2,'triangle',.12]],cut:950,formant:true,attack:.015,dec:.36,send:.08},
  logdrum:{fm:.5,index:2.2,partials:[[1,'sine',.9]],cut:500,dec:.24,send:0},
  steel:{partials:[[1,'sine',.65],[2.02,'sine',.2],[3.1,'sine',.08]],cut:2400,dec:.48,send:.16},
  kalimba:{fm:3,index:.7,partials:[[1,'sine',.8]],cut:2200,dec:.32,send:.12},
@@ -13,13 +17,14 @@ export const INSTRUMENT_SPECS={
  metalkeys:{fm:2.4,index:.45,partials:[[1,'sine',.65]],cut:2000,dec:.2,send:.07}
 };
 export function initialize(runtime) {
- function playNewInstrument(id,m,time,volume) {
+ function playNewInstrument(id,m,time,volume,articulation=null) {
   const spec=INSTRUMENT_SPECS[id],ac=runtime.ac;if(!spec)return false;if(!ac)return true;
-  const patch=runtime.activeInstrumentPatch,attack=Math.min(.12,(spec.attack||.008)*(patch?.attackScale||1)),decay=Math.min(1.3,spec.dec*(patch?.decayScale||1)),cut=spec.cut*(patch?.toneScale||1);
+  const patch=runtime.activeInstrumentPatch,attack=Math.min(.12,(spec.attack||.008)*(patch?.attackScale||1)*(articulation?.attackScale||1)),decay=Math.min(1.3,spec.dec*(patch?.decayScale||1)*(articulation?.decayScale||1)),cut=spec.cut*(patch?.toneScale||1)*(articulation?.toneScale||1);
   const hz=runtime.hz(m),end=time+attack+decay+.12,f=ac.createBiquadFilter(),gain=ac.createGain();
   f.type=spec.formant?'bandpass':'lowpass';f.Q.value=spec.formant?2.2:patch?.resonance||.7;
   f.frequency.setValueAtTime(cut,time);f.frequency.exponentialRampToValueAtTime(cut*(spec.formant?.55:.45),time+Math.min(.25,decay));
   runtime.env(gain,time,attack,volume*(patch?.level||1),decay,true);f.connect(gain).connect(runtime.bus);
+  if(spec.tremolo){const lfo=ac.createOscillator(),depth=ac.createGain();lfo.frequency.value=spec.tremolo;depth.gain.value=volume*.035;lfo.connect(depth).connect(gain.gain);lfo.start(time);lfo.stop(end);}
   if(spec.send){const send=ac.createGain();send.gain.value=spec.send;gain.connect(send).connect(runtime.verbIn);}
   spec.partials.forEach(([ratio,type,level],i)=>{
    const osc=ac.createOscillator(),levelGain=ac.createGain();osc.type=type;osc.frequency.value=hz*ratio;levelGain.gain.value=level*(i>0?(patch?.harmonics||1):1);if(i>0&&patch)osc.detune.value=(i%2?1:-1)*patch.widthCents;osc.connect(levelGain).connect(f);

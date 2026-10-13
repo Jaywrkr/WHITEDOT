@@ -1,3 +1,4 @@
+import {phraseAccent} from './composition.js';
 import {musicalCharacter,hookPitch,inRegister} from './musical-character.js';
 import {peakGuardCurve,returnFilters} from './mix.js';
 import {REFERENCE_GENRES,referenceRhythm} from './references.js';
@@ -329,7 +330,7 @@ export function initialize(runtime) {
   function organChord(ct,t){ct.slice(0,3).forEach(n=>organ(inRegister(n,48,71),t,vel(.05)));}
   function reese(m,t,v){runtime.recordInstrument?.("reese");const f=ac.createBiquadFilter(),g=ac.createGain();f.type="lowpass";f.frequency.value=480;[-12,12].forEach(dt=>{const o=ac.createOscillator();o.type="sawtooth";o.frequency.value=hz(m);o.detune.value=dt;o.connect(f);o.start(t);o.stop(t+.45);});env(g,t,.01,v*.7,.35);f.connect(g).connect(bus);}
   function bassInst(ty,m,t,v,region=MU.dnaA||MU.dnaT){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'bajo'},null,t,()=>bassInst(ty,m,t,v,region));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "reese":reese(m,t,v);return;case "organb":organ(m,t,v*1.5);return;case "roll":houseBass(m,t,v*.8,.3);return;}switch(ty){case "sub":softBass(m,t,v);break;case "acid":acid(m,t,v*.85,300+MU.speed*2200);break;case "pluck":houseBass(m,t,v,.5);break;case "fm":fmBass(m,t,v);break;case "boing":runtime.boing(m,t,v);break;}}
-  function hookInst(ty,m,t,v,region=MU.dnaA||MU.dnaT){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'lead'},null,t,()=>hookInst(ty,m,t,v,region));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
+  function hookInst(ty,m,t,v,region=MU.dnaA||MU.dnaT,articulation=null){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'lead'},null,t,()=>hookInst(ty,m,t,v,region,articulation));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v,articulation))return;switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
   function drums(gid,s,bar,t,tt,E,ct,DO,arrangement=MU.radio){
     const previous=arrangementAir;arrangementAir=musicalCharacter(gid).air*(arrangement?.melodyRest?.2:1);
     try{drumPattern(gid,s,bar,t,tt,E,ct,DO,arrangement);}finally{arrangementAir=previous;}
@@ -453,7 +454,11 @@ export function initialize(runtime) {
     const base=d&&d.track;if(!base)return;const tr=arrangement?{...base,...arrangement}:base;const sc=MU.dnaA?.scale||d.scale,trans=MU.dnaA?MU.tr:runtime.BIOMES[d.z].tr+d.trOff,profile=musicalCharacter(d.genre),bar=(MU.step>>4)&1,nt=(dg,base)=>base+trans+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
     const gid=d.genre,bs=arrangement?tr.bass[s]:gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
     if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel((gid==="rominimal"?.13:.17)*(arrangement?.grammar.bassLevel||1)),d);}
-    let h=tr.hook[s];if(h>=0&&!arrangement?.melodyRest&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);n=hookPitch(tr.hookI,n,profile);hookInst(tr.hookI,n,t,vel((.05+.05*E)*(arrangement?.grammar.hookLevel||1)*profile.level),d);}
+    let h=tr.hook[s];if(h>=0&&!arrangement?.melodyRest&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);n=hookPitch(tr.hookI,n,profile);const expression=arrangement?.expression,accent=expression?phraseAccent(expression,s):1;
+      const level=vel((.05+.05*E)*(arrangement?.grammar.hookLevel||1)*profile.level*accent);
+      const harmony=expression?.harmony&&s===0&&((MU.step>>4)%4===0);
+      hookInst(tr.hookI,n,t,level*(harmony?.7:1),d,expression);
+      if(harmony){const companion=hookPitch(tr.hookI,snap(n+4+(tr.hookI==='glass'?12:0),ct),profile);if(companion!==n)hookInst(tr.hookI,companion,t,level*.3,d,expression);}}
   }
   function thunder(t){noise(t,"lowpass",900,.5,.25,.9,true);noise(t,"highpass",3000,.5,.06,.12);}
   const soon=(fn,origin="ambient")=>{if(ac)MU.queue.push(t=>runtime.withVoiceOrigin?runtime.withVoiceOrigin(origin,()=>fn(t)):fn(t));};

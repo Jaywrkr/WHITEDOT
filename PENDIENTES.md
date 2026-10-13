@@ -19,7 +19,7 @@ Agrupar muchas mejoras relacionadas en una misma rama por fase, con commits y pu
 ## Prioridad
 
 1. Revisión de registros/atlas integrada en #70; no repetir su implementación: [118 vistas reales y contraste de registros](REVISION_REGISTROS.md). Elegir con Jay las figuras a mejorar; escuchar especialmente dub, minimal, ambient, amapiano, disco y melodic durante varios minutos. Validar Safari/Android reales y actualizaciones/rollback. El Original v1 ya se conserva junto a Paisajes vivos v2; futuras versiones deberán mantener esa compatibilidad.
-2. Música: escucha larga, balance por rutas, instrumentos más distintos, formas evolutivas, transiciones y primeras tandas de estilos/FX.
+2. Música: integrar y escuchar [fase 3](FASE_03.md), con cuatro voces nuevas y arcos/articulaciones por estilo. Escucha larga, dispositivos reales y futuras tandas de estilos/FX permanecen pendientes.
 3. Mundo: contratos de contenido comunes, más relaciones/terrenos, cuerdas y suelo, instalaciones, puertas y búsquedas variadas, primeras culturas/personajes/reliquias históricas.
 4. Experiencia: Estudio, retorno y compartir lugares, historia/Voz, accesibilidad, UI silenciosa y pruebas con jugadores nuevos.
 5. Cierre: candidata de release, dispositivos reales, actualizaciones/migraciones/rollback y correcciones.

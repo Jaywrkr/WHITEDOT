@@ -12,7 +12,7 @@ Base funcional consolidada: `main` · `f7bcf84`, merge del [PR #70](https://gith
 
 Partir de `origin/main` actualizado. Mantener una rama amplia por bloque y merge normal para conservar ascendencia. Jay autorizó al asistente a integrar los cambios pendientes y continuar la limpieza; las instrucciones antiguas de «Jay crea PR/merge» se conservan abajo únicamente como historial.
 
-La expansión de composición e instrumentos de fase 3 sigue pendiente. El balance de registros ya existe: reutilizar `src/musical-character.js`, `src/radio.js` y sus pruebas. No rediseñar figuras antes de recibir las elecciones de Jay del atlas. [Secuencia vigente](FASES_UNIVERSO.md) · [Próximos pasos](PROXIMOS_PASOS.md).
+La expansión de composición e instrumentos se implementa en `feat/phase-03-musical-composition`, desde main `0e289b8`: [fase 3](FASE_03.md). Verificar CI antes de integrar. El balance de registros ya existe: reutilizar `src/musical-character.js`, `src/radio.js` y sus pruebas. No rediseñar figuras antes de recibir las elecciones de Jay del atlas. [Secuencia vigente](FASES_UNIVERSO.md) · [Próximos pasos](PROXIMOS_PASOS.md).
 
 <details><summary>Historial de integración; no usar como lista de trabajo pendiente</summary>
 
