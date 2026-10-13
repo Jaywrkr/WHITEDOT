@@ -26,7 +26,7 @@ Correcciones implementadas (ver RAMAS): ecos que reconstruían claves `bajo:`/`c
 
 **Probar:** entrar/grabar/reproducir/salir en superficie/Subsuelo/Cielo, abrir/cerrar Estudio en cada capa, audio suspendido/silenciado, recarga y fin de linterna. Ver hallazgos y casos reproducidos en REVISION.
 
-### 3. Recetas de lugar y catálogo ampliable
+### 3. Recetas de lugar y catálogo ampliable — implementada en rama 3
 
 Definir un esquema versionado que coordine geografía, vitalidad, distribución, familias de flora/fauna/objetos, materiales, rasgos físicos, acciones, roles/timbres, colores, clima, rareza e influencias culturales opcionales. Cada elemento nuevo declara afinidades, variaciones y presupuesto de apariciones/sonido; no un bloque de condiciones dispersas por cada bioma.
 

@@ -212,3 +212,7 @@ Se inventarían todas las etapas de producto del historial desde `596fa31`, incl
 ### 37. Fase 2: capas, Estudio y looper — rama encadenada
 
 `feat/02-layer-jam-consistency`, base `fe32566`. Corrige fuentes de superficie en capas, ADN tras Estudio, regiones sintéticas/rasgos/capa de ecos y autoría explícita de eventos. 26 suites y smokes de jam, capas e integración móvil/escritorio aprobados. Sin nuevos logros/campos de partida; se conserva la banda para volver a superficie. Cadena en RAMAS.md.
+
+### Fase 3 de la cadena: Catálogo y recetas de lugar
+
+`feat/03-world-recipe-catalog`. Cada región tiene una receta estable de carácter, materiales, distribución, acciones y presupuestos. Bitácora y Escuchar muestran su carácter; también reconocen Subsuelo y Cielo. El catálogo valida entradas y usa semillas independientes por elemento. Esta base conserva paisaje y música existentes; la distribución se aplica en fase 4. No añade culturas ni objetos nuevos todavía. Pruebas: 27 suites Node y smoke móvil/escritorio. Ver RAMAS.md.

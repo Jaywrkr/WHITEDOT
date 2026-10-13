@@ -463,3 +463,7 @@ Jay quiere muchas más combinaciones de lugares mediante un catálogo que relaci
 ### Fase 2: integración entre capas y jam
 
 Fuentes automáticas de superficie se suspenden en Subsuelo/Cielo; faros/flores y banda se conservan para el retorno pero no se disparan allí. Cambiar de capa cancela grabación y colas de acciones pendientes. Estudio restaura ADN sintético de capa al salir. Ecos guardan referencia de receta, rasgos de fuente y capa; no parsean claves sintéticas como coordenadas ni suenan en otra capa. Eventos de jugador se etiquetan mediante withVoiceOrigin/argumento explícito; banda/ambiente/eco no se graban. Guardado v4 intacto, ecos siguen temporales. Node y smokes jam/layers/layer_jam aprobados. Orden/base en RAMAS.md.
+
+### Fase 3: Catálogo y recetas de lugar
+
+Rama `feat/03-world-recipe-catalog`. Cada región tiene una receta estable de carácter, materiales, distribución, acciones y presupuestos. Bitácora y Escuchar muestran su carácter; también reconocen Subsuelo y Cielo. El catálogo valida entradas y usa semillas independientes por elemento. Esta base conserva paisaje y música existentes; la distribución se aplica en fase 4. No añade culturas ni objetos nuevos todavía. Verificación: 27 suites Node y smoke móvil/escritorio. Dependencia y orden en RAMAS.md.
