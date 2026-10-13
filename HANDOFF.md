@@ -426,3 +426,7 @@ Pruebas: `tests/layers_smoke.py`.
 
 Pendiente de la fase 4: migraciones con posición según la fecha y rastros de otros jugadores (requiere multiplayer).
 
+### Ajuste de mezcla: fuerte pero limpio (Jay: "está muy saturado")
+
+La segunda subida (compensación ×6,8, saturación tanh 1,9) dejaba ~11 % de las muestras por encima de 0,8: sonaba aplastado. Ahora: compresor −26 dB 3,5:1 con ataque de 12 ms (los golpes respiran), presencia +2,5 dB, graves +2 dB, compensación ×5,6 (`LOUD`), limitador a −1 dB y saturación casi lineal (tanh 1,05, solo redondea picos). Medido: RMS ~−8,4 dB con ~5 % de muestras calientes. Sigue unos 7 dB más fuerte que el original y sin el aplastamiento. Si Jay pide más volumen otra vez, subir `LOUD` de a 0,4 y volver a medir con un analizador después del clipper; por encima de ~6,5 vuelve a saturar.
+
