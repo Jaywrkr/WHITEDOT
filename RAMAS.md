@@ -12,7 +12,7 @@ Jay autorizó completar las primeras diez fases encadenadas. Se parte de la fase
 | 6 | `feat/06-stationary-environment` | rama 5 | Implementada: El ambiente responde a la quietud |
 | 7 | `feat/07-musical-favorites` | rama 6 | Implementada: Favoritos musicales |
 | 8 | `feat/08-return-navigation` | rama 7 | Implementada: Orientación y regreso |
-| 9 | `feat/09-musical-autopilot` | rama 8 | Pendiente |
+| 9 | `feat/09-musical-autopilot` | rama 8 | Implementada: Autopilot musical |
 | 10 | `feat/10-chromatic-glass` | rama 9 | Pendiente |
 
 ## Cómo revisar e integrar

@@ -236,3 +236,7 @@ Se inventarían todas las etapas de producto del historial desde `596fa31`, incl
 ### Fase 8 de la cadena: Orientación y regreso
 
 `feat/08-return-navigation`. Cada favorito ofrece Orientar y hay retorno guiado al Estudio. Un indicador compacto muestra dirección, distancia en pasos y llegada, con cancelación; sigue disponible tras recarga. Si el destino está en otra capa indica buscar un acceso. No mueve al jugador ni teletransporta. Logro Otra vez aquí al regresar desde cierta distancia. Guardado v4 añade destination; borrar el favorito cancela su ruta. Pruebas: 31 suites Node y smoke móvil/escritorio de dirección, llegada, capas y borrado. Ver RAMAS.md.
+
+### Fase 9 de la cadena: Autopilot musical
+
+`feat/09-musical-autopilot`. Paseo musical desde Favoritos y viaje automático al destino de esta capa. Movimiento lento, pausa en menús/Escuchar/Estudio y al ocultar la pestaña, cancelación manual o con Detener/Escape, llegada y salida del Mundo. Consume linterna normalmente y compensa movimiento invertido. No se reanuda solo tras recarga. Logro Dejarse llevar por un minuto de viaje; el control manual siempre tiene prioridad. Pruebas: 32 suites Node y smoke de viaje, pausas, linterna, cancelación y llegada incluso con movimiento invertido en móvil/escritorio. Ver RAMAS.md.

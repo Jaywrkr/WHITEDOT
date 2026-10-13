@@ -66,7 +66,7 @@ Seleccionar favorito/Estudio, dirección/distancia y llegada, cancelación discr
 
 **Probar:** destinos en distintas regiones/capas y coordenadas negativas, ubicación del campamento conservada.
 
-### 9. Autopilot
+### 9. Autopilot — implementada en rama 9
 
 Paseo lento para escuchar y viaje a favorito, inicio explícito, cancelación al mover o por botón, pausa en menús, consumo normal de linterna y respeto a movilidad/capas. Temporizador opcional para enfoque/descanso.
 
