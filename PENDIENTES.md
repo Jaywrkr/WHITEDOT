@@ -8,6 +8,8 @@ Main `2959313` integra el bloque anterior de veinte entregas. Los cinco grupos f
 
 La entrega posterior `feat/organic-musical-seedpods`, basada en la rama de dirección visual, sustituye las teclas de la caja por una vaina de semillas. Mantiene su edición musical con menos ruido visual. Pistas y Bitácora actualizadas; sin nuevas culturas ni reliquias históricas todavía.
 
+La entrega `feat/resonant-ground` sustituye el objeto Caja de posibilidades por interacción con el piso, conservando sus posibilidades musicales y los identificadores del progreso antiguo.
+
 ## Próximos bloques
 
 1. Profundizar interacciones existentes. Esta rama cubre redes, frases y cajas; otras mejoras se evalúan según su aporte musical.

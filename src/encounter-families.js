@@ -1,10 +1,11 @@
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 // Each family owns its gestures; the world owns tuning, scheduling and density.
 export const FAMILIES={
- box:{name:'Caja de posibilidades',hint:'Abre la vaina · toca semillas y mueve núcleos',description:'Una vaina electrónica abre 16 semillas musicales alrededor de tres núcleos: Bajo, Groove y Motivo. Toca semillas para variar la frase; elige, intercambia o mantén un núcleo para silenciarlo. El brote inferior cierra la vaina.',role:'bass',shape:'box',
-  tap(s){s.c=(s.c+1)%4;s.a=s.c===0?.15:.85;},drag(s,x,y){s.a=clamp(.5-y/140);s.b=clamp(.5+x/150);},
-  influence(s){return {bass:(s.a-.5)*1.6,groove:(s.b-.5)*1.5,space:s.c===3?.5:0};},figure(s){return (Math.floor(s.b*5)+s.c)%8;},
-  arrange(track,s){if(s.c===2||s.c===3)track.hook=track.hook.map((n,i)=>i%8===0?n:-1);if(s.b<.3)track.bass=track.bass.map((n,i)=>i%4===0?n:-1);return track;}},
+ // Keep the legacy key for old discovery IDs; this is a stationary ground gesture.
+ box:{name:'Suelo resonante',hint:'Toca el suelo o permanece cerca · moldea sus raíces',description:'Una huella del terreno despierta al tocarla o permanecer quieto cerca. Sus raíces controlan Bajo, Groove y Motivo; toca marcas para variar la frase, intercambia núcleos o mantén uno para silenciarlo. El arco inferior deja reposar el suelo. No hay caja ni tapa.',role:'bass',shape:'ground',
+  tap(s){s.a=s.a>.65?.15:.85;s.rested=s.a<=.65;},drag(s,x,y){s.b=clamp(.5+x/150);},
+  influence(s){return s.a>.65?{bass:(s.a-.5)*1.6,groove:(s.b-.5)*1.5,space:0}:{};},figure(s){return Math.floor(s.b*7)%8;},
+  arrange(track,s){if(s.b<.3)track.bass=track.bass.map((n,i)=>i%4===0?n:-1);return track;}},
  shadow:{name:'Escultura de sombra',hint:'Arrastra la luz · toca para cambiar el ángulo de proyección',role:'groove',shape:'shadow',
   tap(s){s.a=(s.a+.25)%1;},drag(s,x,y){s.a=clamp(.5+x/160);s.b=clamp(.5-y/150);},
   influence(s){return {groove:(s.a-.5)*1.5,space:(s.b-.5)*1.1};},figure(s){return Math.floor(s.a*7);},
