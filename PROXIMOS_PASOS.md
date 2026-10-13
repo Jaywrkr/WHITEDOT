@@ -4,6 +4,8 @@ El bloque anterior de veinte entregas está integrado en main desde el PR #58 (`
 
 ## Entrega actual
 
+`feat/intuitive-animal-dialogue` hace la enseñanza por toque, espera por la primera nota y muestra turnos con señales pequeñas dentro del mundo.
+
 `feat/expressive-glass-gestures` elimina el panel de vidrios y distribuye sus voces entre graves, percusión y armonía/melodía media mediante movimiento directo.
 
 `feat/resonant-ground` reemplaza las cajas por suelo interactivo. Su continuación `feat/chained-musical-trails` añade una búsqueda de tres huellas y un instrumento dormido. Orden completo de ramas nuevas: [RAMAS.md](RAMAS.md). Estas entregas se prueban en Semillas como **Suelo resonante** y **Rastro musical · instrumento dormido**.
@@ -88,6 +90,18 @@ Cada región asigna los tres vidrios a bajo, percusión y armonía/melodía medi
 Probar: Prototipo → Semillas → Encuentro de prueba → **Vidrios · movimiento y música**. Entrada directa a los vidrios iniciales en una prueba separada. Pistas y Bitácora actualizadas, sin nuevos botones de exploración. Las conexiones con jardines modulares conservan los ángulos como fuente regional.
 
 Validación: 46 suites Node y 30 recorridos de navegador, incluyendo las tres funciones musicales con instrumentos nativos en los 52 estilos; giros reales, alineación sin sliders, cancelación, influencia, escáner y persistencia en móvil/escritorio. Caché offline con 72 módulos. Seis renderizados reales verifican emisión de las tres funciones musicales en minimal, tropical, dub, amapiano, nu-disco suave y ambient a 44,1 kHz: pico máximo 0,940233, sin muestras por encima de 0,98. Las mediciones técnicas acompañan la escucha artística; no certifican un máster comercial.
+
+## Nueva etapa: animal de respuesta más intuitivo
+
+Rama `feat/intuitive-animal-dialogue`, basada en `feat/expressive-glass-gestures`. Sustituye el gesto oculto de mantener para enseñar por un toque sencillo: tocar el cuerpo inicia la escucha; tocar objetos o el vacío le enseña una frase; volver a tocarlo pide la respuesta. También contesta automáticamente tras una pausa de al menos 1,2 segundos u ocho semicorcheas, o al alcanzar dos compases. El tiempo de la frase comienza con la primera nota, no al activar la escucha. Espera hasta 20 segundos por esa primera nota; si no llega, muestra cómo reintentar. Tocar otra vez sin notas termina la escucha vacía.
+
+Mantener el cuerpo cambia su voz y muestra brevemente Bajo/Groove/Motivo/Espacio; no borra una lección en curso. Arrastrar conserva el acercamiento. Orejas abiertas y cuatro puntos confirman las notas recibidas; textos locales distinguen escucha, espera, respuesta sonora real y frase aprendida. “Mi turno” se muestra durante el intervalo programado de audio, evitando anunciar una respuesta antes de que suene. Las pistas locales se ajustan a los bordes de la pantalla.
+
+No escucha micrófono, ambiente ni grabaciones: solo sonidos causados por el jugador en esa región. Mantiene afinación regional, máximo de cuatro notas aprendidas, turnos espaciados, volumen compartido y pausa por menú/ocultación. El aprendizaje es temporal; el logro y la Bitácora conservan descubrimientos. El nombre visible pasa a **Animal de respuesta**.
+
+Probar: Prototipo → Semillas → Encuentro de prueba → **Animal de respuesta**. Un toque al animal, unos toques al mundo y otro toque al animal; o dejar de tocar para recibir la respuesta automática.
+
+Validación: 46 suites Node; gestos reales en móvil vertical, horizontal y escritorio; diez familias de encuentros; recarga offline con 72 módulos. Catorce renderizados reales de redes, suelos y respuestas aprendidas mantienen el pico en 0,954511, sin muestras por encima de 0,98. Se conserva la música anterior; el cambio central es cómo se enseña y cómo se muestran los turnos.
 
 ## Trabajo musical y técnico que acompaña las etapas
 

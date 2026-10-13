@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-glass-gestures-v1';
+const CACHE='whitedot-animal-dialogue-v1';
 const SHELL=[
  "./",
  "./index.html",

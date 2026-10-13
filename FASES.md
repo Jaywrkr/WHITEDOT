@@ -1,6 +1,6 @@
 # Estado de integración
 
-Las cinco fases que describe este documento ya están integradas en main mediante el PR #58 (`2959313`). No requieren nuevos PR. El trabajo nuevo sigue [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md); la cadena vigente de siete ramas nuevas está en [RAMAS.md](RAMAS.md), incluyendo suelo resonante y rastros musicales.
+Las cinco fases que describe este documento ya están integradas en main mediante el PR #58 (`2959313`). No requieren nuevos PR. El trabajo nuevo sigue [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md); la cadena vigente de ocho ramas nuevas está en [RAMAS.md](RAMAS.md), incluyendo suelo resonante y rastros musicales.
 
 # Cinco fases para probar e integrar
 

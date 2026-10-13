@@ -44,7 +44,12 @@ with sync_playwright() as p:
   page.evaluate("""()=>{const r=__testRuntime,o=deepObject;r.S.wx=o.x+10;r.S.wy=o.y;r.MU.speed=0;o.state.a=.15;o.state.rested=false;o.state.charge=.6;r.depthTick(o,.1);if(o.state.a<.65)throw Error('standing did not awaken ground');}""")
   page.touchscreen.tap(width/2-10,height/2+56)
   page.evaluate("""()=>{const r=__testRuntime,o=deepObject;r.depthTick(o,.1);if(o.state.a>.65||!o.state.rested)throw Error('rest reopened while standing');r.S.wx=o.x+210;r.depthTick(o,.1);if(o.state.a>.65||o.state.rested)throw Error('ground must rest after leaving');r.S.wx=o.x+10;o.state.charge=.6;r.depthTick(o,.1);if(o.state.a<.65)throw Error('return did not awaken ground');}""")
-  center=visit('animal');page.mouse.move(center['x'],center['y']);page.mouse.down();page.wait_for_timeout(650);page.mouse.up();page.wait_for_timeout(100)
+  center=visit('animal');page.touchscreen.tap(center['x'],center['y']);page.wait_for_timeout(100)
+  before_voice=page.evaluate('deepObject.state.a')
+  page.mouse.move(center['x'],center['y']);page.mouse.down();page.wait_for_timeout(600);page.mouse.up()
+  assert page.evaluate('deepObject.state.a')!=before_voice
+  assert page.evaluate('deepObject.state.dialogue.phase')=='listening','changing voice should preserve lesson'
+  page.wait_for_timeout(1800);assert page.evaluate('deepObject.state.dialogue.elapsed')==0,'lesson timer must wait for first player note'
   assert page.evaluate('deepObject.state.dialogue.phase')=='listening';assert not page.evaluate('__testRuntime.scanning')
   page.evaluate("const r=__testRuntime;r.playVoice('pulso',0,r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'ambient')")
   assert page.evaluate('deepObject.state.dialogue.events.length')==0,'ambient must not teach'
@@ -53,10 +58,14 @@ with sync_playwright() as p:
    page.evaluate(f"const r=__testRuntime;deepObject.state.dialogue.elapsed=r.SIX*{step};r.playVoice('pulso',{degree},r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'player')")
   assert page.evaluate('deepObject.state.dialogue.events.length')==4
   page.locator('#bMenu').click();frozen=page.evaluate('deepObject.state.dialogue.elapsed');page.wait_for_timeout(300);assert page.evaluate('deepObject.state.dialogue.elapsed')==frozen;page.locator('#mnClose').click()
-  page.evaluate('deepObject.state.dialogue.elapsed=__testRuntime.SIX*32');page.wait_for_function('deepObject.state.dialogue.phase==="replying"')
+  page.touchscreen.tap(center['x'],center['y']);page.wait_for_function('deepObject.state.dialogue.phase==="replying"')
   assert page.evaluate('deepObject.state.dialogue.phrase.map(n=>n.index)')==[0,2,4,2]
   emitted=page.evaluate("""()=>{const r=__testRuntime,ac=r.ac,old=ac.createOscillator.bind(ac);let n=0;ac.createOscillator=()=>{n++;return old();};r.encounterBar(ac.currentTime+.1,2000);ac.createOscillator=old;return n;}""")
   assert emitted>0,'learned answer must actually emit audio';assert page.evaluate('!!__testRuntime.S.ach.respuestaAnimal')
+  page.touchscreen.tap(center['x'],center['y']);assert page.evaluate('deepObject.state.dialogue.phase')=='listening'
+  page.mouse.click(30,height/2);page.wait_for_function('deepObject.state.dialogue.events.length>0')
+  page.wait_for_function('deepObject.state.dialogue.phase==="replying"')
+  page.touchscreen.tap(center['x'],center['y']);page.touchscreen.tap(center['x'],center['y']);assert page.evaluate('deepObject.state.dialogue.phase')=='idle';assert page.evaluate('deepObject.state.dialogue.empty')
   page.screenshot(path=f'/tmp/whitedot-depth-animal-{width}.png')
   page.locator('#bMenu').click();page.locator('#bAch').click();assert 'Frases respondidas' in page.locator('#journalBody').inner_text()
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')

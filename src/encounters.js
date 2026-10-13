@@ -71,7 +71,7 @@ export function initialize(runtime){
   const phrase=runtime.depthPhrase?.(o,bar);if(phrase&&phrase.length===0)return;
   if(!claimInstallationBar(runtime,bar))return;lastBar=bar;
   const region=runtime.regionOfPos(o.x,o.y),f=FAMILIES[o.kind];
-  if(phrase){const notes=phrase.slice(0,4);for(const n of notes){const kind='encounter:'+o.kind+(n.channel?':'+n.channel:f.voiceRole?':'+f.voiceRole(o.state):''),voice=runtime.getVoice(kind,region),index=n.relative?n.index-voice.degree:n.index;runtime.playVoice(kind,index,time+runtime.SIX*n.step,region,false,.25/notes.length,o,'ambient');}runtime.depthReplied?.(o,bar);}
+  if(phrase){const notes=phrase.slice(0,4);for(const n of notes){const kind='encounter:'+o.kind+(n.channel?':'+n.channel:f.voiceRole?':'+f.voiceRole(o.state):''),voice=runtime.getVoice(kind,region),index=n.relative?n.index-voice.degree:n.index;runtime.playVoice(kind,index,time+runtime.SIX*n.step,region,false,.25/notes.length,o,'ambient');}runtime.depthReplied?.(o,bar,time);}
   else{const at=time+runtime.SIX*[2,6,10,14][(f.figure(o.state)+o.variant+bar)%4];runtime.playVoice('encounter:'+o.kind+(f.voiceRole?':'+f.voiceRole(o.state):''),(f.figure(o.state)+o.variant)%7,at,region,false,.25,o,'ambient');}
  }
  function arrange(region,track){

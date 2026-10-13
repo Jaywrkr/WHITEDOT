@@ -17,6 +17,7 @@ box.selected=2;paintBoxStep(box,10,true);assert.equal(box.parts[2].steps[10],4);
 const bassBefore=boxPart(box,'bass').steps;assert(moveBoxPart(box,0,2));assert.notDeepEqual(boxPart(box,'bass').steps,bassBefore);assert(!moveBoxPart(box,0,9));
 box.parts.find(p=>p.id==='melody').enabled=false;assert(boxArrangement(track,box).hook.every(n=>n===-1));assert.equal(JSON.stringify(track),original);
 const learning=startDialogue();for(const [step,degree]of [[0,2],[4,4],[12,6],[24,4]])assert(captureDialogue(learning,{step,degree}));assert(!captureDialogue(learning,{step:4,degree:1}));assert(!captureDialogue(learning,{step:NaN,degree:0}));
+assert(!captureDialogue(learning,{step:28,degree:0}),'four accepted notes should fill the lesson');
 finishDialogue(learning);assert.equal(learning.phase,'replying');assert.deepEqual(learning.phrase.map(n=>n.step),[0,2,6,12]);assert.deepEqual(learning.phrase.map(n=>n.index),[0,2,4,2]);
 assert.equal(dialogueReply(learning,2).length,4);learning.lastReplyBar=2;assert.equal(dialogueReply(learning,4).length,0);assert.equal(dialogueReply(learning,6).at(-1).index,0);assert(!captureDialogue(learning,{step:2,degree:3}));
 const empty=startDialogue();finishDialogue(empty);assert.equal(empty.phase,'idle');
