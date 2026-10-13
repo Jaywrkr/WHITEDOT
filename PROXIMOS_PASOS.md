@@ -15,6 +15,16 @@ Rama `feat/deep-musical-encounters`, basada en ese main. Incluye:
 
 ## Orden de continuación
 
+### Corrección prioritaria de dirección visual e interacción
+
+Antes de ampliar instalaciones, rediseñar la caja editable: su cuadrícula actual de teclas no representa la dirección deseada. Mantener la capacidad de variar bajo, groove y melodía mediante formas del mundo: raíces que se tensan, pétalos que se desplazan, cuerpos que giran o conexiones entre objetos. Estos son candidatos de diseño, todavía no implementados. El gesto debe producir una decisión musical audible y depender del ambiente, con límites de mezcla y afinación regional.
+
+Toda incorporación debe compartir el lenguaje natural y electrónico del juego: fondo negro, jugador blanco, color localizado en elementos y efectos. Objetivo de diseño para una interacción activa: ocupar menos del 20 % de pantalla y evitar acercarse al 30 %, comprobando móvil vertical y horizontal. Evaluar también la suma de efectos simultáneos; evitar paneles, cuadrículas de teclado y efectos extensos que tapen el recorrido. Esta es una regla para el próximo diseño, no una garantía ya verificada para todos los elementos existentes.
+
+Las culturas y las reliquias históricas específicas siguen pendientes. Japón y México son ejemplos dentro de muchas culturas; cada incorporación debe relacionar música, materiales, comportamiento, flora y fauna mediante investigación concreta. Referencias a compositores, inventores o artistas históricos pueden dar lugar a objetos raros y pistas musicales. Verificar el dominio público de la obra concreta y los derechos de cualquier grabación o imagen utilizada: la antigüedad del personaje no basta. Crear representaciones originales cuando corresponda. No confundir los estilos musicales actuales con esta capa cultural aún inexistente.
+
+Esta actualización de dirección se conserva en `docs/organic-interaction-direction`, dependiente de `feat/deep-musical-encounters`. No modifica el juego; revisar primero la rama de interacciones y después esta documentación.
+
 Cada paso se implementa, verifica, documenta, commitea y sube en una rama nueva. Jay crea PR y merge. Partir de main actualizado cuando la etapa anterior esté integrada; si se acuerda una dependencia, documentarla y conservar la ascendencia.
 
 | Orden | Trabajo | Estado |
