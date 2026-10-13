@@ -1,6 +1,8 @@
 # WHITEDOT · Pixel Blanco
 
-Un pixel blanco en un mundo negro. Cada día avanzas un camino corto, y cuando lo terminas se abre un **Mundo infinito y procedural donde todo hace música**: electrónica que va del ambient al minimal tech house. Cada región tiene su género, su paisaje y sus criaturas, y todo lo que tocas suena a tempo.
+Un pixel blanco en un mundo negro. Cada día avanzas un camino corto, y cuando lo terminas se abre un **Mundo procedural que compone mientras lo exploras**: 52 géneros electrónicos y once biomas, del ambient al house, techno, bass y otros lenguajes. Cada región tiene su género, su paisaje y sus criaturas, y todo lo que tocas suena a tempo.
+
+**Esta entrega:** cadena hasta `fix/12d-contact-intent`; ramas en [RAMAS.md](RAMAS.md). Música que responde a tus acciones, fijación voluntaria, módulos con cables y una interfaz de exploración más despejada. El sitio publicado cambia cuando Jay integra en main. Dirección propuesta: [DIRECCION_JUEGO.md](DIRECCION_JUEGO.md); revisión: [REVISION_INTERACCIONES.md](REVISION_INTERACCIONES.md).
 
 **Jugar:** https://whitedot-inky.vercel.app. En el móvil, instálalo como app: en iPhone, Compartir → Añadir a pantalla de inicio. Funciona en móvil y escritorio; toca la pantalla una vez para activar el sonido.
 
@@ -177,3 +179,20 @@ Rama `feat/12b-patch-gardens`. Conjuntos dispersos de un reloj y tres entradas d
 ### Explorar con más vacío y menos interfaz
 
 Rama `polish/12c-mobile-space`. En el Mundo queda un solo botón permanente (Menú), lugar y linterna discretos. Menú → Instrumentos muestra efectos, Eco, Estudio y regreso; tocar mundo o elegir herramienta guarda la barra. Mostrar detalles recupera contadores/retos, guardado como preferencia; Escuchar incluye el reto. Voz breve ampliable, tarjetas más discretas, controles de 44 px y paneles acotados/desplazables. Grabación muestra un pequeño anillo, no ranuras vacías. Los flashes son locales y mantienen fondo negro. En jardines modulares los cables se manipulan sin abrir parámetros; tocar el cuerpo del módulo abre su panel. Revisión y límites en REVISION_INTERACCIONES.md. Verificado en móvil pequeño, vertical, horizontal y escritorio, con pruebas de acceso real a todas las herramientas.
+
+### Contactos intencionales y dirección común
+
+Rama `fix/12d-contact-intent`. Plantas, árboles, lotos, pilares, cristales y props responden una vez al entrar; salir rearma y pulsar sigue siendo una acción explícita. Menús y Escuchar no consumen el contacto inicial. No se elimina el ambiente ni la radio en quietud. El jardín inicial ofrece Bajo/Groove/Motivo para escuchar la diferencia inmediatamente; los demás conservan sus entradas regionales variadas. DIRECCION_JUEGO.md propone unir Camino, Mundo y Estudio mediante descubrir, componer, retirar y conservar, con Voz contextual y progreso significativo. Es una propuesta posterior, no una historia ya implementada. README, HANDOFF, PENDIENTES, RAMAS y revisión quedan actualizados.
+
+### Probar esta entrega
+
+1. Entra al Mundo y camina: el menú es el único control permanente. Menú → Instrumentos abre Eco, efectos y Estudio; Mostrar detalles recupera contadores.
+2. Quédate cerca de un aro/prisma unos seis segundos para cultivar su parte. Al salir se reduce; no necesitas grabar.
+3. En Origen, sigue a la derecha: vidrios (1080,900), espejos (1600,900), jardín modular (2050,900). En este último conecta reloj con Bajo, Groove o Motivo y escucha el cambio al compás. Toca el cuerpo del módulo para ajustar figura/cantidad; la entrada conectada retira el cable.
+4. Fijar sonidos está apagado. Actívalo desde el menú si quieres repetición; tocar el anillo la suelta. Otro objeto del mismo papel reemplaza su voz.
+
+Las variantes de bajo también alteran acentos compatibles en géneros con patrones nativos, conservando su ancla. No se cambió el nivel de salida para aparentar más calidad. Pruebas nuevas: `node tests/influence.mjs`, `node tests/patchgarden.mjs`, `node tests/contact.mjs`; navegador: `tests/influence_smoke.py`, `tests/pins_smoke.py`, `tests/patchgarden_smoke.py`, `tests/focusui_smoke.py`, `tests/contact_smoke.py`.
+
+Las criaturas ya no se unen a la banda automáticamente con fijación apagada. Fijar sonidos permite acompañantes musicales; tocar una figura de la banda con aro azul suelta esa voz. Desactivar fijación también suelta la banda. Las voces de criaturas no se duplican en un eco automático y la banda. Su contacto distingue entrar de permanecer; pueden responder espontáneamente como parte del ambiente sin convertirse en acompañantes.
+
+Validación de esta entrega: 37 suites de Node, 22 flujos de navegador y 19 renders de mezcla. Evidencia y límites en [REVISION_INTERACCIONES.md](REVISION_INTERACCIONES.md).

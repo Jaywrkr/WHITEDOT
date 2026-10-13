@@ -16,6 +16,7 @@ try:
   page=browser.new_page();page.goto(f'http://127.0.0.1:{server.server_port}/',wait_until='domcontentloaded')
   results=page.evaluate('''async()=>{const {renderMix}=await import('/tests/audio_mix.mjs');const out=[];
    for(const genre of ['minimal','dub','ambient','tropical','nudisco','amapiano','trap','dnb'])out.push(await renderMix(genre));
+   for(const genre of ['nudisco','amapiano','dub','dnb'])out.push(await renderMix(genre,{dense:true,influenced:true}));
    for(const options of [{dense:true},{dense:true,fx:true},{soft:true},{dense:true,soft:true},{dense:true,sampleRate:44100},{dense:true,influenced:true},{dense:true,influenced:true,soft:true}])out.push(await renderMix('minimal',options));return out;}''')
   for result in results:
    assert 0 < result['peak'] < .96 and result['hotFraction']==0,result

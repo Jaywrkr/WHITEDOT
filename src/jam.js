@@ -38,7 +38,10 @@ export function initialize(runtime){
   const wx=S().wx+x-runtime.W/2,wy=S().wy+y-runtime.H/2;
   let nearest=-1,distance=32;
   loop.ecos.forEach((e,i)=>{if((e.layer||'superficie')!==layer())return;const d=Math.hypot(e.x-wx,e.y-wy);if(d<distance){nearest=i;distance=d;}});
-  return eraseEcho(nearest);
+  if(eraseEcho(nearest))return true;
+  if(layer()!=='superficie')return false;
+  let slot=null;distance=24;for(const [key,member] of Object.entries(band.members)){const d=Math.hypot(member.x-wx,member.y-wy);if(d<distance){slot=key;distance=d;}}
+  if(slot){if(band.members[slot].source)band.members[slot].source.follow=0;delete band.members[slot];runtime.toast('Banda · voz soltada');ui();return true;}return false;
  }
  function loopButton(){
   if(!runtime.inWorld())return;const s=S(),near=loop.ecos.findIndex(e=>(e.layer||"superficie")===layer()&&Math.hypot(e.x-s.wx,e.y-s.wy)<90);
@@ -49,7 +52,7 @@ export function initialize(runtime){
  }
  // Llamado por playVoice: guarda lo que suena por acciones del jugador durante la grabación.
  function autoPin(kind,index,region,volume,source,origin){
-  if(!S().autoPins||origin!=='player'||loop.replaying||loop.armed||loop.rec||!runtime.inWorld()||!region||!source||!Number.isFinite(source.x)||!Number.isFinite(source.y)||kind==='pulso'||kind==='luz')return;
+  if(!S().autoPins||origin!=='player'||loop.replaying||loop.armed||loop.rec||!runtime.inWorld()||!region||!source||!Number.isFinite(source.x)||!Number.isFinite(source.y)||kind==='pulso'||kind==='luz'||kind.startsWith('forma:'))return;
   const sourceKey=`${layer()}:${kind}:${source.id||`${source.x},${source.y}`}`;
   if(suppressed.has(sourceKey))return;
   const voice=runtime.getVoice(kind,region),slot=roleSlot(voice.role),existing=loop.ecos.find(e=>e.auto&&e.slot===slot);
@@ -62,7 +65,7 @@ export function initialize(runtime){
  }
  function togglePins(){
   S().autoPins=!S().autoPins;suppressed.clear();
-  if(!S().autoPins)loop.ecos=loop.ecos.filter(e=>!e.auto);
+  if(!S().autoPins){loop.ecos=loop.ecos.filter(e=>!e.auto);for(const member of Object.values(band.members))if(member.source)member.source.follow=0;band.members={};band.combos={};runtime.MU.singers=[];}
   runtime.toast(S().autoPins?'Sonidos fijos · toca un objeto para fijar su voz':'Sonidos libres · los ecos automáticos se soltaron');ui();runtime.save();
  }
  function loopTap(kind,index,time,region,full,volume,source,origin){
@@ -90,10 +93,12 @@ export function initialize(runtime){
 
  // ---------- banda ----------
  function bandJoin(o,sp){
+  if(!S().autoPins)return;
   const s=S(),key=sp.id.split(':')[0].split(',').map(Number),region=runtime.regionOfPos((key[0]+.5)*runtime.REG*runtime.WCH,(key[1]+.5)*runtime.REG*runtime.WCH);
   const voice=runtime.getVoice?.('forma:'+sp.id,region);if(!voice)return;const slot=roleSlot(voice.role);
   const prev=band.members[slot];if(prev&&prev.sp.id===sp.id)return;
-  band.members[slot]={sp,region,slot,personality:o.personality,x:o.x,y:o.y,lit:0,continent:region.continent?.id||null};
+  if(prev?.source)prev.source.follow=0;
+  band.members[slot]={source:o,sp,region,slot,personality:o.personality,x:o.x,y:o.y,lit:0,continent:region.continent?.id||null};
   runtime.toast(`<em>Banda</em> · ${sp.name} toca ${BAND_ROLES.find(r=>r[0]===slot)[2].toLowerCase()}`);
   if(!s.help.banda){s.help.banda=true;runtime.say(runtime.VOZ.banda,'Banda');}
   checkCombos();
@@ -106,7 +111,7 @@ export function initialize(runtime){
   if(conts.size===4)runtime.unlock('viajeros');
  }
  function bandStep(s,bar,t){
-  if(layer()!=="superficie")return;
+  if(layer()!=="superficie"||!S().autoPins)return;
   const m=band.members,list=Object.values(m);if(list.length<2)return;   // con una sola criatura no hay banda todavía
   if(list.length===4)MU().E=Math.max(MU().E,.7);
   for(const x of list){const h=bandHits(x.slot,s,bar,x.sp.motif||[0,2,4]);if(!h)continue;
@@ -125,6 +130,7 @@ export function initialize(runtime){
   const slots=['bajo','perc','acorde','melodia'];
   slots.forEach((sl,i)=>{const x=band.members[sl];if(!x)return;x.lit=Math.max(0,x.lit-dt*2.5);
    const a=Math.PI*.6+i*Math.PI*.27,tx=s.wx+Math.cos(a)*58,ty=s.wy+Math.sin(a)*58+Math.sin(t/400+i)*4;x.x+=(tx-x.x)*Math.min(1,dt*4);x.y+=(ty-x.y)*Math.min(1,dt*4);
+   cx.globalAlpha=.5;cx.strokeStyle=WORLD_VISUAL.echo;cx.lineWidth=1;cx.beginPath();cx.arc(x.x+ox,x.y+oy,12,0,Math.PI*2);cx.stroke();
    cx.globalAlpha=.85;runtime.drawSprite(x.sp.bits,x.x+ox,x.y+oy,(x.sp.cell||2)*(1+x.lit*.5),x.lit>.1?'#fff':x.sp.col);});
   // Ranuras de la banda (abajo, discretas).
   const n=Object.keys(band.members).length;if(n){const panels=['fxPanel','glassPanel','mirrorPanel','patchPanel','scanner','routeHud','autopilotHud'].map(id=>runtime.$(id)).filter(p=>p&&!p.hidden),panelTop=panels.length?Math.min(...panels.map(p=>p.getBoundingClientRect().top)):null;
@@ -137,7 +143,7 @@ export function initialize(runtime){
  }
  function ui(){const option=runtime.$('bAutoPins');if(option){option.setAttribute('aria-pressed',String(!!S().autoPins));option.querySelector('span').textContent=S().autoPins?'Fijar sonidos: sí':'Fijar sonidos: no';}const btn=runtime.$('bLoop');if(!btn)return;btn.hidden=!runtime.inWorld();btn.classList.toggle('rec',!!loop.rec);btn.classList.toggle('armed',loop.armed);}
  function cancelRecording(){loop.armed=false;loop.rec=null;ui();}
- function reset(){suppressed.clear();loop.armed=false;loop.rec=null;loop.ecos=[];band.members={};band.combos={};ui();}
+ function reset(){for(const member of Object.values(band.members))if(member.source)member.source.follow=0;suppressed.clear();loop.armed=false;loop.rec=null;loop.ecos=[];band.members={};band.combos={};ui();}
 
  runtime.$('bAutoPins').onclick=togglePins;ui();
  const btn=runtime.$('bLoop');if(btn)btn.onclick=e=>{e.stopPropagation();btn.blur();runtime.audio();loopButton();};

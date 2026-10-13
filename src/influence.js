@@ -29,7 +29,11 @@ export function shapeInfluencedTrack(region,arrangement,state,genres){
   const native=RHYTHM_GENRES[region.genre]?.bass;
   const positions=native?native.map((n,i)=>n>=0?i:-1).filter(i=>i>=0):REFERENCE_BASS[region.genre]||BASS_CELLS[variant];
   out.bass=Array(16).fill(-1);
-  positions.slice(0,v.bass>.6?8:5).forEach((step,i)=>out.bass[step]=native?native[step]:[0,0,4,2][(i+variant)%4]);out.bass[0]=0;
+  positions.slice(0,v.bass>.6?8:5).forEach((step,i)=>{
+   const at=step%4===0?step:(step+(variant%3===2?2:0))%16;
+   let degree=native?native[step]:[0,0,4,2][(i+variant)%4];
+   if(i&&variant%4===3&&degree===0)degree=4;out.bass[at]=degree;
+  });out.bass[0]=0;
   const pool=g.bassP||[g.bassI];out.bassI=pool[variant%pool.length];
  }else if(v.bass<-.15)out.bass=out.bass.map((n,i)=>i%8===0?n:-1);
  if(v.melody>.15){

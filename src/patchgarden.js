@@ -13,7 +13,7 @@ export function createPatchSite(region,size,seedOf,rng){
  const [rx,ry]=region.key.split(',').map(Number),r=rng(seedOf(`patch:v1:${region.key}`)),home=region.key==='0,0';
  const x=home?2050:(rx+.28+r()*.44)*size,y=home?900:(ry+.28+r()*.44)*size;
  const pool=CHANNELS.slice();for(let i=pool.length-1;i;i--){const j=Math.floor(r()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
- return {id:`patch:${region.key}`,x,y,region,hue:region.hue,variant:Math.floor(r()*8),connections:[],pattern:0,amount:.8,out:{x:x-68,y},inputs:pool.slice(0,3).map((channel,i)=>({x:x+52,y:y+(i-1)*60,channel})),lit:0};
+ return {id:`patch:${region.key}`,x,y,region,hue:region.hue,variant:Math.floor(r()*8),connections:[],pattern:0,amount:.8,out:{x:x-68,y},inputs:(home?['bass','groove','melody']:pool.slice(0,3)).map((channel,i)=>({x:x+52,y:y+(i-1)*60,channel})),lit:0};
 }
 export function initialize(runtime){
  const $=runtime.$,S=()=>runtime.S,cache=new Map();let previous=S(),selected=null,armed=null,drag=null;

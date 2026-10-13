@@ -1,3 +1,4 @@
+import {contactEntry} from './contact.js';
 import { movementMultiplier } from './gravity.js';
 
 // Loop, simulación y dibujo del juego.
@@ -193,18 +194,20 @@ export function initialize(runtime) {
           for(let i=0;i<3;i++){const q=(ph+i/3)%1;runtime.cx.globalAlpha=Math.min(1,(.25+b*.3)*(1-q)*fall);runtime.cx.beginPath();runtime.cx.arc(p.x+ox,p.y+oy,p.r*q,0,6.283);runtime.cx.stroke();}}}
       for(const l of c.lotus){l.vx=(l.vx||0)+Math.sin(t/3000+l.deg)*dt*6;l.vy=(l.vy||0)+Math.cos(t/3500+l.deg)*dt*6;runtime.physics(l,dt,c.lotus,l.pond);const d=Math.hypot(l.x-runtime.S.wx,l.y-runtime.S.wy);if(d<R)nearO.push(l);
         const lw=runtime.waves.length&&runtime.hitW(l.x,l.y);if(lw){l.lit=1;runtime.wsoon(lw,l.snd);}
-        if(d<ds/2+14&&ms>l.cd){l.cd=ms+1500;runtime.MU.act+=.3;runtime.touched();if(!l.given){l.given=1;runtime.gain("loto");}runtime.pushO(l,runtime.S.wx,runtime.S.wy,140);runtime.beatSoon(q=>runtime.playVoice('loto',l.deg,q,runtime.regionOfPos(l.x,l.y),true,1,l),()=>{l.lit=1;runtime.burst(l.x,l.y,8,true);});}
+        if(contactEntry(l,d<ds/2+14,!paused&&!runtime.scanning)&&ms>l.cd){l.cd=ms+1500;runtime.MU.act+=.3;runtime.touched();if(!l.given){l.given=1;runtime.gain("loto");}runtime.pushO(l,runtime.S.wx,runtime.S.wy,140);runtime.beatSoon(q=>runtime.playVoice('loto',l.deg,q,runtime.regionOfPos(l.x,l.y),true,1,l),()=>{l.lit=1;runtime.burst(l.x,l.y,8,true);});}
         l.lit=Math.max(0,l.lit-dt*.4);if(d>R*1.3)continue;const al=Math.max(Math.max(0,1-d/(R*1.3))*.6,l.lit);
         runtime.cx.globalAlpha=Math.min(1,al);runtime.cx.strokeStyle=l.lit>.1?runtime.GOLD:(c.pal?c.pal.main:"#fff");runtime.cx.lineWidth=1.5;runtime.cx.beginPath();runtime.cx.arc(l.x+ox,l.y+oy,7+l.lit*6+b*2,0,6.283);runtime.cx.stroke();if(l.lit<.1)runtime.touchRing(l.x+ox,l.y+oy,d,R,b);}
       for(const o of c.plants){const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),w=runtime.waves.length&&runtime.hitW(o.x,o.y);
-        if(ms>o.cd&&(d<14||w)){o.cd=ms+(o.personality?.cooldown||1600);o.lit=1;o.sw=1;if(o.pt.t!=="hierba"&&runtime.rnd()<(w?.5:.4))runtime.beatSoon(q=>runtime.plantSound(o.pt,q,runtime.regionOfPos(o.x,o.y),o.personality,o));}
+        const plantEntered=contactEntry(o,d<14,!paused&&!runtime.scanning);
+        if(ms>o.cd&&(plantEntered||w)){o.cd=ms+(o.personality?.cooldown||1600);o.lit=1;o.sw=1;if(o.pt.t!=="hierba"&&runtime.rnd()<(w?.5:.4))runtime.beatSoon(q=>runtime.plantSound(o.pt,q,runtime.regionOfPos(o.x,o.y),o.personality,o));}
         o.lit=Math.max(0,o.lit-dt/4);o.sw=Math.max(0,o.sw-dt*1.5*(o.personality?.recovery||1));if(d>R+20&&o.lit<=0)continue;
         runtime.cx.globalAlpha=Math.min(1,Math.max(Math.pow(Math.max(0,1-d/R),.7)*.95,o.lit*.9));runtime.drawPlant(o,o.x+ox,o.y+oy,t,b);}
       for(const gr of c.grass){
         const d=Math.hypot(gr.x-runtime.S.wx,gr.y-runtime.S.wy);
+        const treeEntered=contactEntry(gr,d<(gr.tall?34:26),!paused&&!runtime.scanning);
         const treeWave=gr.tall&&runtime.waves.length&&runtime.hitW(gr.x,gr.y);
         if(treeWave&&ms>(gr.cd||0)){gr.cd=ms+(gr.personality?.cooldown||1500);gr.lit=1;runtime.wsoon(treeWave,q=>runtime.playVoice('arbol',gr.personality?.degree||0,q,runtime.regionOfPos(gr.x,gr.y),false,.5*(gr.personality?.volume||1),gr));}
-        if(d<(gr.tall?34:26)){if(gr.tall&&!gr.given&&runtime.rnd()<.04){gr.given=1;runtime.gain("arbol");}if(gr.tall&&ms>(gr.cd||0)){gr.cd=ms+(gr.personality?.cooldown||1500);runtime.beatSoon(q=>runtime.playVoice('arbol',gr.personality?.degree||0,q,runtime.regionOfPos(gr.x,gr.y),false,.5*(gr.personality?.volume||1),gr));};gr.lit=1;}else if(gr.lit>0)gr.lit=Math.max(0,gr.lit-dt*(gr.personality?.recovery||1)/9);
+        if(d<(gr.tall?34:26)){if(gr.tall&&!gr.given&&runtime.rnd()<.04){gr.given=1;runtime.gain("arbol");}if(gr.tall&&treeEntered&&ms>(gr.cd||0)){gr.cd=ms+(gr.personality?.cooldown||1500);runtime.beatSoon(q=>runtime.playVoice('arbol',gr.personality?.degree||0,q,runtime.regionOfPos(gr.x,gr.y),false,.5*(gr.personality?.volume||1),gr));};gr.lit=1;}else if(gr.lit>0)gr.lit=Math.max(0,gr.lit-dt*(gr.personality?.recovery||1)/9);
         if(d>R+30&&gr.lit<=0)continue;
         if(gr.tall&&d<R)runtime.seen("arbol");
         const al=Math.max(Math.max(0,1-d/R)*(gr.tall?.5:.4),gr.lit*.6);if(al<.02)continue;
@@ -216,14 +219,14 @@ export function initialize(runtime) {
       // pilares: tambores
       for(const p of c.pillars){const d=Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy);
         const pw=runtime.waves.length&&runtime.hitW(p.x,p.y);if(pw){p.hit=1;runtime.wsoon(pw,p.snd);}
-        if(d<p.w/2+ds/2+6&&ms>p.cd){p.cd=ms+(p.personality?.cooldown||600);runtime.MU.act+=.35;runtime.touched();p.hits=(p.hits||0)+1;if(p.hits>=25)runtime.unlock("insistente");if(!p.given){p.given=1;runtime.gain("pilar");}runtime.chain(c.pillars,p,0,new Set(),5);runtime.S.drums++;if(runtime.S.drums>=8)runtime.unlock("tambor");runtime.burst(p.x,p.y-p.h/2,6,false);}
+        if(contactEntry(p,d<p.w/2+ds/2+6,!paused&&!runtime.scanning)&&ms>p.cd){p.cd=ms+(p.personality?.cooldown||600);runtime.MU.act+=.35;runtime.touched();p.hits=(p.hits||0)+1;if(p.hits>=25)runtime.unlock("insistente");if(!p.given){p.given=1;runtime.gain("pilar");}runtime.chain(c.pillars,p,0,new Set(),5);runtime.S.drums++;if(runtime.S.drums>=8)runtime.unlock("tambor");runtime.burst(p.x,p.y-p.h/2,6,false);}
         if(d<R)nearO.push(p);p.hit=Math.max(0,p.hit-dt*3);if(d>R+80&&!p.hit)continue;const al=Math.max(0,1-d/(R+80));
         runtime.cx.globalAlpha=Math.min(1,al*.5+p.hit*.6);runtime.cx.strokeStyle=p.hit>.1?runtime.GOLD:(c.pal?c.pal.main:"#fff");runtime.cx.lineWidth=1;runtime.cx.strokeRect(p.x+ox-p.w/2,p.y+oy-p.h,p.w,p.h);
         runtime.cx.globalAlpha=Math.min(1,al*.12+p.hit*.4);runtime.cx.fillStyle=p.hit>.1?runtime.GOLD:"#fff";runtime.cx.fillRect(p.x+ox-p.w/2,p.y+oy-p.h,p.w,p.h);if(p.hit<.1)runtime.touchRing(p.x+ox,p.y+oy-p.h/2,d,R,b);}
       // cristales: arpegios
       for(const k of c.crystals){const d=Math.hypot(k.x-runtime.S.wx,k.y-runtime.S.wy);
         const kw=runtime.waves.length&&runtime.hitW(k.x,k.y);if(kw){k.lit=1;runtime.wsoon(kw,k.snd);}
-        if(d<k.s+ds/2+4&&ms>k.cd){k.cd=ms+(k.personality?.cooldown||1500);runtime.MU.act+=.3;runtime.touched();if(!k.given){k.given=1;runtime.gain("cristal");}runtime.chain(c.crystals,k,0,new Set(),7);runtime.burst(k.x,k.y,6,true);}
+        if(contactEntry(k,d<k.s+ds/2+4,!paused&&!runtime.scanning)&&ms>k.cd){k.cd=ms+(k.personality?.cooldown||1500);runtime.MU.act+=.3;runtime.touched();if(!k.given){k.given=1;runtime.gain("cristal");}runtime.chain(c.crystals,k,0,new Set(),7);runtime.burst(k.x,k.y,6,true);}
         if(d<R)nearO.push(k);
         k.lit=Math.max(0,k.lit-dt*.25);if(d>R*1.2&&k.lit<=0)continue;const al=Math.max(Math.max(0,1-d/(R*1.2))*.55,k.lit);
         runtime.cx.save();runtime.cx.translate(k.x+ox,k.y+oy);runtime.cx.rotate(k.rot+b*.1);runtime.cx.globalAlpha=Math.min(1,al);runtime.cx.strokeStyle=k.lit>.1?runtime.GOLD:(c.pal?c.pal.acc:"#fff");runtime.cx.lineWidth=1.2;
@@ -231,7 +234,7 @@ export function initialize(runtime) {
         if(k.lit>.1){runtime.cx.globalAlpha=k.lit*.35;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.fill();}runtime.cx.restore();if(k.lit<.1)runtime.touchRing(k.x+ox,k.y+oy,d,R,b);}
       for(const p2 of c.props){runtime.physics(p2,dt,c.props);const d=Math.hypot(p2.x-runtime.S.wx,p2.y-runtime.S.wy),w=runtime.waves.length&&runtime.hitW(p2.x,p2.y);
         if(w){p2.lit=1;runtime.wsoon(w,p2.snd);}
-        if(d<ds/2+12&&ms>p2.cd){p2.cd=ms+(p2.personality?.cooldown||700);runtime.MU.act+=.3;runtime.touched();runtime.burst(p2.x,p2.y,6,true);
+        if(contactEntry(p2,d<ds/2+12,!paused&&!runtime.scanning)&&ms>p2.cd){p2.cd=ms+(p2.personality?.cooldown||700);runtime.MU.act+=.3;runtime.touched();runtime.burst(p2.x,p2.y,6,true);
           if(p2.k==="campanilla"||p2.k==="antena"||p2.k==="astro")runtime.chain(c.props,p2,0,new Set(),5);
           else if(p2.k==="hongo")runtime.beatSoon(q=>{runtime.playVoice(p2.k,p2.i,q,runtime.regionOfPos(p2.x,p2.y),true,1,p2);},()=>{p2.lit=1;p2.jump=1;for(let k=0;k<3;k++)runtime.parts.push({x:p2.x,y:p2.y-8,vx:(Math.random()-.5)*60,vy:-60-Math.random()*40,l:1.4,g:true});});
           else{runtime.pushO(p2,runtime.S.wx,runtime.S.wy,170);runtime.beatSoon(p2.snd,()=>{p2.lit=1;});}}
@@ -291,14 +294,14 @@ export function initialize(runtime) {
         if(sp.mob==="orbita"){o.x=o.hx+Math.cos(t/1000*sp.spd*(o.personality?.speed||1)+o.ph)*50;o.y=o.hy+Math.sin(t/1000*sp.spd*(o.personality?.speed||1)+o.ph)*50;}
         else if(sp.mob==="salta"){o.x=o.hx+Math.sin(t/2000*sp.spd*(o.personality?.speed||1)+o.ph)*30;o.y=o.hy-b*(o.personality?.jump||12);}
         else if(sp.mob==="deriva"){o.x=o.hx+Math.sin(t/3000*sp.spd*(o.personality?.speed||1)+o.ph)*120;o.y=o.hy+Math.cos(t/3700*sp.spd*(o.personality?.speed||1)+o.ph)*90;}
-        if(o.follow>0){o.follow-=dt;const tx=runtime.S.wx+Math.cos(o.ph+t/900)*40,ty=runtime.S.wy+Math.sin(o.ph+t/900)*40;o.hx+=(tx-o.hx)*Math.min(1,dt*2*(o.personality?.speed||1));o.hy+=(ty-o.hy)*Math.min(1,dt*2*(o.personality?.speed||1));if(sp.mob==='timida'){o.x=o.hx;o.y=o.hy;}singers.push(o);}
+        if(o.follow>0){o.follow-=dt;const tx=runtime.S.wx+Math.cos(o.ph+t/900)*40,ty=runtime.S.wy+Math.sin(o.ph+t/900)*40;o.hx+=(tx-o.hx)*Math.min(1,dt*2*(o.personality?.speed||1));o.hy+=(ty-o.hy)*Math.min(1,dt*2*(o.personality?.speed||1));if(sp.mob==='timida'){o.x=o.hx;o.y=o.hy;}if(!Object.values(runtime.jam?.band.members||{}).some(m=>m.sp.id===sp.id))singers.push(o);}
         else if(!sp.mob)runtime.physics(o,dt,c.sp);
         if(sp.mob==="timida"&&o.follow>0){}
         else if(sp.mob==="timida"){const ax=o.x-runtime.S.wx,ay=o.y-runtime.S.wy,dd=Math.hypot(ax,ay)||1;if(dd<110){o.x+=ax/dd*dt*120*(o.personality?.speed||1);o.y+=ay/dd*dt*120*(o.personality?.speed||1);}else{o.x+=(o.hx-o.x)*dt*.3;o.y+=(o.hy-o.y)*dt*.3;}}
         const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),w=runtime.waves.length&&runtime.hitW(o.x,o.y);
         if(w){o.lit=1;runtime.wsoon(w,q=>runtime.speciesSound(sp,q,false,o.personality,o));}
-        if(d<ds/2+12&&ms>o.cd){o.cd=ms+(o.personality?.cooldown||1100);runtime.MU.act+=.3;runtime.touched();runtime.burst(o.x,o.y,8,true);runtime.discover(sp);runtime.bandJoin?.(o,sp);
-          if(sp.mob){o.follow=o.personality?.stamina||20;runtime.beatSoon(q=>runtime.speciesSound(sp,q,true,o.personality,o),()=>{o.lit=1;});}
+        if(contactEntry(o,d<ds/2+12,!paused&&!runtime.scanning)&&ms>o.cd){o.cd=ms+(o.personality?.cooldown||1100);runtime.MU.act+=.3;runtime.touched();runtime.burst(o.x,o.y,8,true);runtime.discover(sp);if(runtime.S.autoPins)runtime.bandJoin?.(o,sp);
+          if(sp.mob){o.follow=runtime.S.autoPins?(o.personality?.stamina||20):0;runtime.beatSoon(q=>runtime.speciesSound(sp,q,true,o.personality,o),()=>{o.lit=1;});}
           else{runtime.pushO(o,runtime.S.wx,runtime.S.wy,120);let mate=null,md=320;for(const x of c.sp){if(x!==o&&x.s===sp){const dd=Math.hypot(x.x-o.x,x.y-o.y);if(dd<md){md=dd;mate=x;}}}
             runtime.beatSoon(q=>{runtime.speciesSound(sp,q,true,o.personality,o);if(mate){runtime.speciesSound(sp,q+runtime.SIX*16,true,mate.personality,mate);setTimeout(()=>{mate.lit=1;runtime.beams.push({x1:o.x,y1:o.y,x2:mate.x,y2:mate.y,l:1});},Math.max(0,(q+runtime.SIX*16-runtime.ac.currentTime)*1000));}},()=>{o.lit=1;});}if(runtime.RP&&runtime.RP.type==="cantar"&&sp.id.startsWith(runtime.RP.key+":")){runtime.RP.set.add(sp.id);runtime.retoSet("cantar",runtime.RP.set.size);}}
         if(d<R)nearO.push(o);o.lit=Math.max(0,o.lit-dt*.8);const vis=sp.mob?R*1.6:R*1.2;if(d>vis&&o.lit<=0)continue;

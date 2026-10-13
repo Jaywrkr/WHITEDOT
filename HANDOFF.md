@@ -1,7 +1,7 @@
 # HANDOFF · WHITEDOT / Pixel Blanco
 
 > Documento de traspaso para continuar el desarrollo con otra IA (ChatGPT, Claude, etc.) o con otro dev.
-> Contexto: HANDOFF, CAMBIOS, PENDIENTES, REVISION y [RAMAS.md](RAMAS.md). Actualizado al cierre de las primeras diez fases de la sesión (12 de octubre de 2026, Guayaquil). Base remota revisada `5413d5f`; esta copia contiene la cadena hasta `feat/10-chromatic-glass`. Implementado y subido no implica integrado en main: Jay hace PR/merge en orden.
+> Contexto: HANDOFF, CAMBIOS, PENDIENTES, REVISION y [RAMAS.md](RAMAS.md). Actualizado con espejos y el pedido posterior de música, fijación voluntaria, módulos e interfaz (ver RAMAS.md). Base remota revisada `5413d5f`; esta copia contiene la cadena hasta `fix/12d-contact-intent`. Implementado y subido no implica integrado en main: Jay hace PR/merge en orden.
 
 - **Juego en vivo:** https://whitedot-inky.vercel.app
 - **Repo:** https://github.com/Jaywrkr/WHITEDOT (rama `main`). Cada push a `main` despliega solo en Vercel.
@@ -545,3 +545,17 @@ Rama `feat/12b-patch-gardens`. Conjuntos dispersos de un reloj y tres entradas d
 ### Explorar con más vacío y menos interfaz
 
 Rama `polish/12c-mobile-space`. En el Mundo queda un solo botón permanente (Menú), lugar y linterna discretos. Menú → Instrumentos muestra efectos, Eco, Estudio y regreso; tocar mundo o elegir herramienta guarda la barra. Mostrar detalles recupera contadores/retos, guardado como preferencia; Escuchar incluye el reto. Voz breve ampliable, tarjetas más discretas, controles de 44 px y paneles acotados/desplazables. Grabación muestra un pequeño anillo, no ranuras vacías. Los flashes son locales y mantienen fondo negro. En jardines modulares los cables se manipulan sin abrir parámetros; tocar el cuerpo del módulo abre su panel. Revisión y límites en REVISION_INTERACCIONES.md. Verificado en móvil pequeño, vertical, horizontal y escritorio, con pruebas de acceso real a todas las herramientas.
+
+## Estado del pedido posterior
+
+Las unidades 12 → 12a → 12b → 12c → 12d siguen la rama 11; Jay las integra en orden. `influence.js` transforma el arreglo de radio, `patchgarden.js` dirige esa influencia desde cables físicos, `focusui.js` determina la presentación de exploración y `contact.js` distingue entrar de sostener contacto. Estado nuevo de partida: `autoPins` y `worldDetails` (preferencias), `patchSites` (máximo 64). La influencia musical y los ecos siguen temporales. Nunca marcar cajas/cuerdas/historia/multijugador como implementados.
+
+Revisión técnica/UX: [REVISION_INTERACCIONES.md](REVISION_INTERACCIONES.md). Propuesta narrativa y de consolidación: [DIRECCION_JUEGO.md](DIRECCION_JUEGO.md). Lo recomendado allí no se ha implementado automáticamente.
+
+### Contactos intencionales y dirección común
+
+Rama `fix/12d-contact-intent`. Plantas, árboles, lotos, pilares, cristales y props responden una vez al entrar; salir rearma y pulsar sigue siendo una acción explícita. Menús y Escuchar no consumen el contacto inicial. No se elimina el ambiente ni la radio en quietud. El jardín inicial ofrece Bajo/Groove/Motivo para escuchar la diferencia inmediatamente; los demás conservan sus entradas regionales variadas. DIRECCION_JUEGO.md propone unir Camino, Mundo y Estudio mediante descubrir, componer, retirar y conservar, con Voz contextual y progreso significativo. Es una propuesta posterior, no una historia ya implementada. README, HANDOFF, PENDIENTES, RAMAS y revisión quedan actualizados.
+
+El jardín de Origen ahora ofrece Bajo/Groove/Motivo como demostración inmediata; los demás siguen sorteando sus entradas. La influencia de bajo conserva pasos fuertes y varía contratiempos/notas compatibles también en géneros nativos. El ciclo propuesto en DIRECCION_JUEGO.md y sus cambios de progreso/linterna siguen siendo recomendaciones.
+
+Las criaturas ya no se unen a la banda automáticamente con fijación apagada. Fijar sonidos permite acompañantes musicales; tocar una figura de la banda con aro azul suelta esa voz. Desactivar fijación también suelta la banda. Las voces de criaturas no se duplican en un eco automático y la banda. Su contacto distingue entrar de permanecer; pueden responder espontáneamente como parte del ambiente sin convertirse en acompañantes.

@@ -1,3 +1,4 @@
+import {contactEntry} from './contact.js';
 import {influenceProfile,CHANNEL_NAMES} from './influence.js';
 import {WORLD_VISUAL,elementInk,elementAlpha} from './visual.js';
 import {chooseRecipeElement} from './catalog.js';
@@ -38,7 +39,7 @@ export function initialize(runtime) {
     for(const o of chunk.playthings||[]) {
       stepPlaything(o,dt);
       const distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),wave=runtime.waves.length&&runtime.hitW(o.x,o.y);
-      const contact=distance<Math.min(runtime.pxSize(),22)/2+o.size+6,entered=contact&&!o.contact;o.contact=contact;
+      const contact=distance<Math.min(runtime.pxSize(),22)/2+o.size+6,entered=contactEntry(o,contact,!runtime.scanning&&!document.hidden&&!document.querySelector('.modal:not([hidden])'));
       if(now>o.cd&&(entered||wave)) {
         o.cd=now+(o.personality?.cooldown||850);reactPlaything(o,runtime.S.wx,runtime.S.wy);runtime.MU.act+=.15;runtime.touched();
         if(wave)runtime.wsoon(wave,o.snd);else runtime.beatSoon(o.snd);
