@@ -1,3 +1,4 @@
+import {influenceProfile,CHANNEL_NAMES} from './influence.js';
 import {WORLD_VISUAL,elementInk,elementAlpha} from './visual.js';
 import {chooseRecipeElement} from './catalog.js';
 // Nuevos elementos con generación separada del paisaje existente.
@@ -37,22 +38,30 @@ export function initialize(runtime) {
     for(const o of chunk.playthings||[]) {
       stepPlaything(o,dt);
       const distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),wave=runtime.waves.length&&runtime.hitW(o.x,o.y);
-      if(now>o.cd&&(distance<Math.min(runtime.pxSize(),22)/2+o.size+6||wave)) {
+      const contact=distance<Math.min(runtime.pxSize(),22)/2+o.size+6,entered=contact&&!o.contact;o.contact=contact;
+      if(now>o.cd&&(entered||wave)) {
         o.cd=now+(o.personality?.cooldown||850);reactPlaything(o,runtime.S.wx,runtime.S.wy);runtime.MU.act+=.15;runtime.touched();
         if(wave)runtime.wsoon(wave,o.snd);else runtime.beatSoon(o.snd);
         runtime.burst(o.x,o.y,5,true);
+      }
+      if(o.kind==='resonator'||o.kind==='rotor'){
+        const active=runtime.S.sound&&runtime.ac?.state==='running'&&!runtime.scanning&&!document.hidden&&!document.querySelector('.modal:not([hidden])');
+        const tending=active&&distance<48&&runtime.MU.speed<.08;
+        if(active)o.growth=Math.max(0,Math.min(1,(o.growth||0)+dt*(tending?1/6:-1/12)));
+        if(tending){const region=runtime.regionOfPos(o.hx,o.hy),p=influenceProfile(region,'toy:'+o.kind,o,runtime.seedOf,runtime.rng);runtime.driveInfluence?.(region,p.channel,o.growth,p.variant);o.influenceName=CHANNEL_NAMES[p.channel];if(o.growth>.95)runtime.unlock('cultivarMusica');}
       }
       if(distance<radius)near.push(o);
       if(distance>radius*1.3&&!o.lit)continue;
       const x=o.x+ox,y=o.y+oy-Math.sin(o.jump*Math.PI)*(o.personality?.jump||22);
       ctx.globalAlpha=elementAlpha(distance,radius,o.lit);
       ctx.strokeStyle=elementInk(o.material,runtime.regionOfPos(o.hx,o.hy).hue,o.lit>0);ctx.fillStyle=ctx.strokeStyle;ctx.lineWidth=WORLD_VISUAL.line;
-      ctx.save();ctx.translate(x,y);
+      ctx.save();ctx.translate(x,y);ctx.scale(1+(o.growth||0)*.4,1+(o.growth||0)*.4);
       if(o.kind==='spark'){ctx.rotate(o.rotation);ctx.fillRect(-2,-2,4,4);ctx.strokeRect(-o.size,-o.size,o.size*2,o.size*2);}
       else if(o.kind==='spring'){ctx.beginPath();ctx.arc(0,0,o.size,Math.PI,0);ctx.stroke();ctx.fillRect(-1,0,2,7);}
       else if(o.kind==='kite'){ctx.rotate(Math.sin(t/(o.personality?.period||1100)+o.phase)*.3);ctx.beginPath();ctx.moveTo(0,-o.size);ctx.lineTo(o.size,0);ctx.lineTo(0,o.size);ctx.lineTo(-o.size,0);ctx.closePath();ctx.stroke();ctx.beginPath();ctx.moveTo(0,o.size);ctx.lineTo(Math.sin(t/300+o.phase)*8,o.size+15);ctx.stroke();}
       else if(o.kind==='rotor'||o.motion==='spin'){ctx.rotate(o.rotation);ctx.strokeRect(-o.size,-o.size,o.size*2,o.size*2);ctx.fillRect(-1,-1,2,2);}
       else {ctx.beginPath();ctx.arc(0,0,o.size+3,0,Math.PI*2);ctx.stroke();if(o.ring>0){ctx.beginPath();ctx.arc(0,0,o.size+3+(1-o.ring)*35,0,Math.PI*2);ctx.stroke();}}
+      if(o.growth>.04){ctx.globalAlpha=.5;ctx.beginPath();ctx.arc(0,0,o.size+10,-Math.PI/2,-Math.PI/2+o.growth*Math.PI*2);ctx.stroke();if(distance<48){ctx.font='9px monospace';ctx.textAlign='center';ctx.fillText(o.influenceName||'',0,o.size+24);}}
       if(!TOY_NAMES[o.kind]){ctx.beginPath();ctx.moveTo(0,-o.size);ctx.lineTo(o.size,0);ctx.lineTo(0,o.size);ctx.lineTo(-o.size,0);ctx.closePath();ctx.stroke();}
       ctx.restore();
     }

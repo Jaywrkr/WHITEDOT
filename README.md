@@ -161,3 +161,7 @@ Hasta 64 instalaciones guardan sus orientaciones y la conexión descubierta. Men
 Validación: 34 suites de Node, interacción real en móvil/escritorio, ruta conectada, emisión sonora limitada, persistencia, Bitácora, Escuchar y separación de capas. Detalle de variedad actual y cómo repetir la medición en [VARIEDAD.md](VARIEDAD.md).
 
 Pruebas de espejos: `node tests/mirrors.mjs` y `python3 tests/mirrors_smoke.py`. Medir variedad: `node scripts/world-variation.mjs 100`.
+
+### Tu presencia transforma la composición
+
+Rama `feat/12-musical-influence`. Las acciones del jugador alimentan bajo, groove, motivo o espacio según identidad de objeto y receta regional. Transforman las partes existentes a compás, sin sumar una melodía infinita. Bajo con hasta ocho ataques por compás, motivos afinados a la escala y timbres del género, compensación de capas y cambios suaves. Aros/prismas crecen al permanecer cerca seis segundos y se reducen al alejarse; el contacto dispara una vez al entrar, los pulsos siguen activándolos. La influencia es temporal y se desvanece, pausada en menús, Escuchar y audio suspendido. Logro Una música que crece; feedback local y explicación en Escuchar. Pruebas de patrones, crecimiento real y renders de audio con influencia máxima; no equivale a certificar calidad artística de master.

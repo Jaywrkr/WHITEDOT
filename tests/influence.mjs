@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {createInfluenceState,influenceProfile,shapeInfluencedTrack} from '../src/influence.js';
+import {initialize as data} from '../src/data.js';import {initialize as progress} from '../src/progress.js';import {initialize as world} from '../src/world.js';import {createRadio} from '../src/radio.js';
+globalThis.localStorage={getItem:()=>null,setItem(){}};const r={};data(r);progress(r);world(r);
+const d=r.regionOfPos(900,900),radio=createRadio(r.seedOf,r.rng,r.GEN),base=radio.advance(d,0),copy=JSON.stringify(base),state=createInfluenceState();
+assert.equal(shapeInfluencedTrack(d,base,state.state,r.GEN),base);
+state.drive('bass',1,1);state.drive('groove',1,1);for(let i=0;i<150;i++)state.tick(.05);
+const changed=shapeInfluencedTrack(d,base,state.state,r.GEN);assert.notDeepEqual(changed.bass,base.bass);assert.equal(JSON.stringify(base),copy);assert(changed.bass.filter(n=>n>=0).length<=8);
+state.drive('space',1);for(let i=0;i<150;i++)state.tick(.05);assert(shapeInfluencedTrack(d,base,state.state,r.GEN).hook.filter(n=>n>=0).length<=3);
+const frozen=JSON.stringify(state.state);for(let i=0;i<100;i++)state.tick(.05,false);assert.equal(JSON.stringify(state.state),frozen);
+for(let i=0;i<5000;i++)state.tick(.05);assert(Object.values(state.state.values).every(v=>Math.abs(v)<.001));
+const profiles=new Set();for(let x=-10;x<10;x++){const region=r.regionOfPos(x*3600+1800,1800),p=influenceProfile(region,'toy:resonator',{id:'same'},r.seedOf,r.rng);assert.deepEqual(p,influenceProfile(region,'toy:resonator',{id:'same'},r.seedOf,r.rng));profiles.add(p.channel+':'+p.variant);}assert(profiles.size>8);
+console.log('PASS: regional influence, real bass replacement, bounded motif/levels, pause, decay and immutable radio recipes');
