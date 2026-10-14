@@ -54,8 +54,8 @@ with sync_playwright() as p:
   page.evaluate("const r=__testRuntime;r.playVoice('pulso',0,r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'ambient')")
   assert page.evaluate('deepObject.state.dialogue.events.length')==0,'ambient must not teach'
   page.mouse.click(30,height/2);page.wait_for_function('deepObject.state.dialogue.events.length>0');page.evaluate('deepObject.state.dialogue.events=[]')
-  for step,degree in [(0,0),(4,2),(12,4),(24,2)]:
-   page.evaluate(f"const r=__testRuntime;deepObject.state.dialogue.elapsed=r.SIX*{step};r.playVoice('pulso',{degree},r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'player')")
+  # One event-loop turn keeps the harmonic center stable for this exact interval assertion.
+  page.evaluate("()=>{const r=__testRuntime;for(const [step,degree]of [[0,0],[4,2],[12,4],[24,2]]){deepObject.state.dialogue.elapsed=r.SIX*step;r.playVoice('pulso',degree,r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'player');}}")
   assert page.evaluate('deepObject.state.dialogue.events.length')==4
   page.locator('#bMenu').click();frozen=page.evaluate('deepObject.state.dialogue.elapsed');page.wait_for_timeout(300);assert page.evaluate('deepObject.state.dialogue.elapsed')==frozen;page.locator('#mnClose').click()
   page.touchscreen.tap(center['x'],center['y']);page.wait_for_function('deepObject.state.dialogue.phase==="replying"')

@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import {createSaveStore} from '../src/save-store.js';
+import {worldIdentity} from '../src/world-identity.js';
+import {initialize as data} from '../src/data.js';
+import {initialize as progress} from '../src/progress.js';
+import {decodePlace,encodePlace} from '../src/share-tools.js';
+const values=new Map(),storage={getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,v)};
+globalThis.localStorage=storage;globalThis.location={search:''};const r={};data(r);progress(r);
+const defaults=r.fresh(),identity=worldIdentity(),a=createSaveStore(storage,'tabs',defaults,identity),b=createSaveStore(storage,'tabs',defaults,identity),sa=a.load(),sb=b.load();
+sa.totalLight=42;assert(a.save(sa));sb.totalLight=7;assert(!b.save(sb));assert.equal(b.status.kind,'conflict');assert(b.status.locked);assert.equal(JSON.parse(values.get('tabs')).totalLight,42);
+const reopened=createSaveStore(storage,'tabs',defaults,identity),s=reopened.load();s.totalLight=43;assert(reopened.save(s));assert(!a.save(sa),'stale writer must not overwrite a newer save');
+const restored=b.restore({...sb,totalLight:99});assert(b.save(restored),'explicit restore advances the known baseline');assert.equal(JSON.parse(values.get('tabs:before-restore')).totalLight,43);
+const valid={s:'',l:'classic',g:1,c:1,o:1,x:10,y:20,L:0};const code=v=>'WD1-'+Buffer.from(JSON.stringify(v)).toString('base64url');
+for(const v of [null,[],{...valid,L:99},{...valid,x:null},{...valid,y:'20'},{...valid,s:{}},{...valid,L:'0'}])assert.throws(()=>decodePlace(code(v)));
+assert.equal(decodePlace(encodePlace({...identity,x:10,y:20,layer:'superficie'})).address.x,10);
+console.log('PASS V1 closure: competing tabs preserve the persisted writer, explicit recovery/restore, and malformed place-code payload rejection');
+// A new worker must not interrupt an active set; applying an update first saves.
+const events={},workerEvents={},update={hidden:true},messages=[];let reloads=0,savable=true;
+globalThis.document={addEventListener(){}};globalThis.addEventListener=(k,f)=>events[k]=f;globalThis.matchMedia=()=>({matches:false});globalThis.location={protocol:'https:',reload:()=>reloads++};
+const registration={active:{},waiting:{postMessage:m=>messages.push(m)},addEventListener(){}};
+Object.defineProperty(globalThis,'navigator',{configurable:true,value:{serviceWorker:{controller:{},addEventListener:(k,f)=>workerEvents[k]=f,register:async()=>registration}}});
+const ui={S:{},collected:new Set(['1,2']),$:()=>update,save:()=>savable,toast(){},setRecording:false,stopAutopilot(){}};
+const {initialize:pwa}=await import('../src/pwa.js');pwa(ui);await events.load();assert(!update.hidden);
+ui.setRecording=true;update.onclick();assert.equal(messages.length,0);workerEvents.controllerchange();assert.equal(reloads,0,'foreign update must preserve active recording');
+ui.setRecording=false;savable=false;update.onclick();assert.equal(reloads,0,'unsaved progress must not be discarded');savable=true;update.onclick();assert.equal(reloads,1);assert.deepEqual(ui.S.collected,['1,2']);
+console.log('PASS V1 PWA update controls: save guard, active-recording deferral and explicit reload');

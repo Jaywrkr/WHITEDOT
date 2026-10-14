@@ -13,10 +13,9 @@
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
 
-<title>Pixel Blanco</title>
+<title>WHITEDOT · V1 RC1</title>
 <link rel="stylesheet" href="./styles/game.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="./assets/fonts/fonts.css">
 
 
 </head>
@@ -86,6 +85,7 @@
       <button id="bAutoPins" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 8v8M8 12h8"/></svg><span>Fijar sonidos: no</span></button>
       <button id="bSession"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>Sesión</span></button>
       <button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Progreso y respaldo</span></button>
+      <button id="pwaUpdate" hidden><span>Actualizar versión disponible</span></button>
       <button id="bRecord"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="9"/></svg><span>Grabar set</span></button>
       <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
     </div>
@@ -98,7 +98,8 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="row"><button id="mnClose">Cerrar</button></div>
+    <div class="row"><small class="release-id">WHITEDOT · V1 RC1</small>
+    <button id="mnClose">Cerrar</button></div>
   </div>
 </div>
 
@@ -275,9 +276,6 @@
  <p>Video con el audio real del juego. Descárgalo o compártelo.</p>
  <div class="row"><a id="setDownload" class="btn gold" download>Descargar</a><button id="setShare" hidden>Compartir</button><button id="setClose">Cerrar</button></div></div>
 </div>
-<aside id="patchPanel" class="glasspanel" aria-label="Jardín modular" hidden><div class="fxhead">Jardín modular <button id="patchClose" aria-label="Cerrar jardín modular">×</button></div>
- <p>Conecta el núcleo a una raíz. Mantén su aro para elegir reloj, vidrios o espejos descubiertos. Toca una raíz conectada para retirar el cable.</p><label for="patchPattern">Figura</label><select id="patchPattern"><option value="0">I · Raíz</option><option value="1">II · Desvío</option><option value="2">III · Variación</option><option value="3">IV · Respuesta</option></select>
- <label for="patchAmount">Influencia <output id="patchValue"></output></label><input id="patchAmount" type="range" min="-100" max="100" step="5"><small>Positivo transforma · negativo reduce la presencia.</small><small id="patchInfo"></small><button id="patchClear">Retirar todos los cables</button></aside>
 <aside id="mirrorPanel" class="glasspanel" aria-label="Espejos musicales" hidden><div class="fxhead">Espejos musicales <button id="mirrorClose" aria-label="Cerrar espejos">×</button></div>
  <p>Dirige la luz del punto dorado al rombo.</p><label for="mirrorAngle0">Espejo 1 <output id="mirrorValue0"></output></label><input id="mirrorAngle0" type="range" min="0" max="180" step="1">
  <label for="mirrorAngle1">Espejo 2 <output id="mirrorValue1"></output></label><input id="mirrorAngle1" type="range" min="0" max="180" step="1">

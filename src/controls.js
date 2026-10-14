@@ -26,7 +26,7 @@ export function initialize(runtime) {
   runtime.$("bSoft").setAttribute('aria-pressed',String(!!runtime.S.softMusic));
   const rs=runtime.$("rStyle");
   const styleName=I=>I<.2?"Ambiente":I<.45?"Minimal":I<.72?"Deep":"Underground";
-  function styleUI(){const I=runtime.style();rs.value=Math.round(I*100);runtime.$("styleNow").textContent=styleName(I);runtime.$("muMute").textContent=runtime.S.sound?"Silenciar":"Activar sonido";runtime.$("bSound").querySelector("span").textContent=runtime.S.sound?"Música":"Silencio";}
+  function styleUI(){runtime.$("bSoft").setAttribute("aria-pressed",String(!!runtime.S.softMusic));const I=runtime.style();rs.value=Math.round(I*100);runtime.$("styleNow").textContent=styleName(I);runtime.$("muMute").textContent=runtime.S.sound?"Silenciar":"Activar sonido";runtime.$("bSound").querySelector("span").textContent=runtime.S.sound?"Música":"Silencio";}
   rs.oninput=()=>{runtime.S.style=rs.value/100;styleUI();runtime.audio();if(runtime.S.style>=.9)runtime.unlock("under");};
   rs.onchange=()=>{const n=Date.now();runtime.styleMoves=runtime.styleMoves.filter(x=>n-x<60000);runtime.styleMoves.push(n);if(runtime.styleMoves.length>=12)runtime.unlock("dj");runtime.save();};
   runtime.$("bSound").onclick=()=>{runtime.S.sound=!runtime.S.sound;styleUI();runtime.audio();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);runtime.toast(runtime.S.sound?"<em>Música</em> · activada":"<em>Música</em> · en silencio");runtime.save();};
@@ -35,7 +35,7 @@ export function initialize(runtime) {
   runtime.$("dFill").onclick=()=>{if(runtime.isFree())return;if(runtime.S.lastDay!==runtime.S.todayKey)runtime.onFirstLight();const add=runtime.CAP-runtime.S.todayLight;runtime.S.todayLight=runtime.CAP;runtime.S.totalLight+=add;runtime.S.capShown=true;runtime.unlock("tope");runtime.hud();runtime.openCap();};
   runtime.$("dNext").onclick=()=>{runtime.S.offset+=1;runtime.checkDay();runtime.hud();runtime.showPhrase("Nuevo día. Tu luz se recargó.");};
   runtime.$("dSkip").onclick=()=>{runtime.S.offset+=2;runtime.checkDay();runtime.hud();runtime.showPhrase("Fallaste un día. Tu crecimiento sigue aquí.");};
-  let armed=false;runtime.$("dReset").onclick=e=>{if(!armed){armed=true;e.target.textContent="¿Seguro?";setTimeout(()=>{armed=false;e.target.textContent="Reiniciar";},2500);return;}const snd=runtime.S.sound,st=runtime.S.style;runtime.S=runtime.fresh();runtime.S.sound=snd;runtime.S.style=st;runtime.S.help={camino:true,mundo:false};runtime.S.py=runtime.pathY(0);runtime.collected=new Set();runtime.chunks.clear();runtime.wchunks.clear();runtime.checkDay();runtime.hud();runtime.save();e.target.textContent="Reiniciar";armed=false;};
+  let armed=false;runtime.$("dReset").onclick=e=>{if(!armed){armed=true;e.target.textContent="¿Seguro?";setTimeout(()=>{armed=false;e.target.textContent="Reiniciar";},2500);return;}const snd=runtime.S.sound,st=runtime.S.style;runtime.stopAutopilot?.();runtime.resetJam?.();runtime.clearPowers?.();runtime.quietReset?.();runtime.fxReset?.();runtime.MU.q8=[];runtime.MU.queue=[];runtime.S=runtime.fresh();runtime.S.sound=snd;runtime.S.style=st;runtime.S.help={camino:true,mundo:false};runtime.S.py=runtime.pathY(0);runtime.jamUI?.();runtime.creativeModeUI?.();styleUI();runtime.collected=new Set();runtime.chunks.clear();runtime.wchunks.clear();runtime.checkDay();runtime.hud();runtime.save();e.target.textContent="Reiniciar";armed=false;};
 
 
   Object.defineProperties(runtime, {

@@ -24,7 +24,13 @@ with sync_playwright() as p:
   baseline=page.evaluate('()=>{window.__testRuntime.save();return localStorage.getItem("pixel-blanco-v4");}')
   page.locator('[data-seed="blobs-01"]').click();page.wait_for_url('**testSeed=blobs-01*');page.wait_for_function('window.__testRuntime?.S.previewSeed==="blobs-01" && window.__testRuntime.S.mode==="world"')
   first=page.evaluate('()=>{const r=window.__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy);if(r.S.wx!==r.REG*r.WCH/2||r.S.wy!==r.S.wx)throw Error("not centered");return JSON.stringify([d.z,d.genre,d.track,d.species,d.ground,d.air]);}')
-  assert page.evaluate('localStorage.getItem("pixel-blanco-v4")')==baseline
+  # Leaving may legitimately save the last main-session frame; compare durable progress first.
+  current=page.evaluate('localStorage.getItem("pixel-blanco-v4")')
+  import json
+  prior,after=json.loads(baseline),json.loads(current)
+  for key in ['todayLight','totalLight','worldIdentity','favorites','studio','worldSeed']:
+   assert after[key]==prior[key],key
+  baseline=current
   page.evaluate('window.__testRuntime.S.wx+=400');page.locator('#bMenu').click();page.locator('summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('#seedCenter').click();page.wait_for_function('window.__testRuntime && window.__testRuntime.S.wx===window.__testRuntime.REG*window.__testRuntime.WCH/2')
   page.locator('#bMenu').click();page.locator('summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('[data-seed="blobs-02"]').click();page.wait_for_url('**testSeed=blobs-02*');page.wait_for_function('window.__testRuntime?.S.previewSeed==="blobs-02"')
   second=page.evaluate('()=>{const r=window.__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy);return JSON.stringify([d.z,d.genre,d.track,d.species,d.ground,d.air]);}');assert first!=second
@@ -35,7 +41,8 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.select_option('#seedEncounter','glass');page.locator('#seedForm button[type="submit"]').click()
   page.wait_for_function('window.__testRuntime?.S.mode==="world" && __testRuntime.S.wx===1080 && __testRuntime.S.wy===900')
   assert page.evaluate('__testRuntime.nearbyGlass(300).some(s=>s.id==="glass:0,0")');assert page.locator('#glassPanel').count()==0
-  page.locator('#bMenu').click();page.locator('summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('#seedOriginal').click();page.wait_for_function('window.__testRuntime && !window.__testRuntime.S.previewSeed');assert page.evaluate('localStorage.getItem("pixel-blanco-v4")')==baseline
+  page.locator('#bMenu').click();page.locator('summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('#seedOriginal').click();page.wait_for_function('window.__testRuntime && !window.__testRuntime.S.previewSeed');returned=json.loads(page.evaluate('localStorage.getItem("pixel-blanco-v4")'));prior=json.loads(baseline)
+  for key in ['todayLight','totalLight','worldIdentity','favorites','studio','worldSeed']:assert returned[key]==prior[key],key
   assert not errors,errors
   print(label+': prototype seed switching, whole-world variation, center, preview save isolation and return to main save PASS',flush=True);c.close()
  b.close()

@@ -1,3 +1,9 @@
+# Alcance vigente · cierre V1 RC1
+
+Esta candidata se cierra en [AUDITORIA_V1.md](AUDITORIA_V1.md). Solo A01–A04 y correcciones de aceptación quedan para publicar. El inventario anterior de fases/64 tareas se conserva como historia y candidatos de [V2](PLAN_V2.md), no como nuevas funciones obligatorias de V1. [Estado](ESTADO_ACTUAL.md).
+
+<details><summary>Plan anterior íntegro; consultar la auditoría para el estado vigente</summary>
+
 > Entrega adicional autorizada: **mascota y Tu cubo**, en `feat/pet-and-cube`, basada en la rama cultural `165c376` todavía pendiente de merge. No cambia la numeración del plan ni cierra su ampliación cultural. [Detalle](MASCOTA_Y_CUBO.md).
 
 # Universo ampliable: secuencia vigente
@@ -29,3 +35,5 @@ Esta secuencia sustituye las propuestas de treinta ramas pequeñas y de una úni
 - Cada rama mantiene README, entrega, pendientes y pruebas. Bitácora/logros cambian cuando hay descubrimientos reales, sin premiar artificialmente una operación técnica.
 - No garantizar millones de experiencias perceptualmente únicas ni un mapa infinito literal. Medir muestras reproducibles y escuchar antes de afirmar crecimiento.
 - Cuando una fase esté pendiente, la siguiente puede basarse en ella; después del merge se actualiza la base. Cambios independientes en main o squash/rebase pueden requerir reajustes.
+
+</details>

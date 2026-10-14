@@ -50,7 +50,10 @@ export function createSaveStore(storage,key,defaults,identity){
  }
  function save(state){
   if(status.locked)return false;
-  let raw;try{raw=checkSaveSize(JSON.stringify(validateSave(state,defaults,identity)));
+  let raw;try{
+   const current=storage.getItem(key);
+   if(current!==lastGood){original=current;setStatus('conflict','Otra pestaña cambió esta partida. Exporta tu avance si lo necesitas y recarga para continuar con el progreso guardado.',true);return false;}
+   raw=checkSaveSize(JSON.stringify(validateSave(state,defaults,identity)));
    // Reserve a last-known-good copy before the first overwrite in this session.
    if(lastGood&&!backupWritten){storage.setItem(backupKey,lastGood);backupWritten=true;}
    storage.setItem(key,raw);lastGood=raw;setStatus('ok','Progreso guardado');return true;

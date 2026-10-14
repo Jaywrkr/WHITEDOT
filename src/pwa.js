@@ -5,6 +5,22 @@ export function initialize(runtime){
  for(const ev of ['gesturestart','gesturechange','gestureend'])document.addEventListener(ev,e=>e.preventDefault(),{passive:false});
  document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
  let lastTouch=0;document.addEventListener('touchend',e=>{const now=Date.now();if(now-lastTouch<300&&!scrollable(e.target)&&e.target.id==='w')e.preventDefault();lastTouch=now;},{passive:false});
- if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+ const update=runtime.$('pwaUpdate');let registration=null,reloading=false,pendingReload=false,hadController=!!navigator.serviceWorker?.controller;
+ const offer=()=>{if(update)update.hidden=!(registration?.waiting||pendingReload);};
+ if('serviceWorker' in navigator){
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+   if(!hadController){hadController=true;return;}
+   if(!reloading&&registration?.active){if(runtime.setRecording){pendingReload=true;offer();runtime.toast('Termina la grabación antes de recargar la nueva versión.');return;}runtime.S.collected=[...runtime.collected];if(!runtime.save()){pendingReload=true;offer();runtime.toast('Hay progreso sin guardar. Exporta una copia antes de recargar la nueva versión.');return;}reloading=true;location.reload();}
+  });
+  if(location.protocol==='https:')addEventListener('load',async()=>{try{
+   registration=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});offer();
+   registration.addEventListener('updatefound',()=>registration.installing?.addEventListener('statechange',offer));
+  }catch(_){} });
+ }
+ if(update)update.onclick=()=>{
+  if(runtime.setRecording){runtime.toast('Termina la grabación antes de actualizar.');return;}
+  runtime.S.collected=[...runtime.collected];if(!runtime.save()){runtime.toast('Exporta tu progreso y revisa Progreso y respaldo antes de actualizar.');return;}
+  runtime.stopAutopilot?.();if(pendingReload){location.reload();return;}registration?.waiting?.postMessage({type:'APPLY_UPDATE'});
+ };
  runtime.standalone=matchMedia?.('(display-mode: standalone), (display-mode: fullscreen)').matches||navigator.standalone===true;
 }

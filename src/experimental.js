@@ -6,15 +6,16 @@ import {musicalCharacter,inRegister} from './musical-character.js';
 import {experimentalZone,experimentalLevel,EXPERIMENTAL_NAMES,euclid,ODD_CYCLES,microCents} from './expansion-music.js';
 
 export function initialize(runtime){
- const S=()=>runtime.S;let zoneKey=null,zone={level:0,mode:null},level=0,cycle=0,announced=new Set();
+ const S=()=>runtime.S;let owner=runtime.S,zoneKey=null,zone={level:0,mode:null},level=0,cycle=0,announced=new Set();
  function current(){
-  const d=runtime.MU.dnaT;if(runtime.labMode&&runtime.labExperimental){zone={...runtime.labExperimental};return zone;}if(!runtime.inWorld()||!d||(S().layer||'superficie')!=='superficie'){zone={level:0,mode:null};zoneKey=null;return zone;}
+  if(owner!==S()){owner=S();zoneKey=null;announced.clear();cycle=level=0;}
+  const d=runtime.MU.dnaT;if(!runtime.inWorld()||(S().layer||'superficie')!=='superficie'){zone={level:0,mode:null};zoneKey=null;return zone;}if(runtime.labMode&&runtime.labExperimental){zone={...runtime.labExperimental};return zone;}if(!d){zone={level:0,mode:null};zoneKey=null;return zone;}
   if(d.key!==zoneKey){zoneKey=d.key;zone=experimentalZone(d,runtime.BIOMES[d.z]?.id,runtime.seedOf,runtime.rng);cycle=0;
    if(zone.level>=.4&&!announced.has(d.key)){announced.add(d.key);while(announced.size>128)announced.delete(announced.values().next().value);runtime.toast(`<em>Zona experimental</em> · ${EXPERIMENTAL_NAMES[zone.mode]}`);
     if(!S().help.experimental){S().help.experimental=true;runtime.say(runtime.VOZ.experimental,'Zona experimental');}runtime.unlock('experimental1');}}
   return zone;
  }
- function compute(){const z=current();level=experimentalLevel(z,{hour:new Date().getHours(),quietStage:runtime.quietState?.stage||0});return level;}
+ function compute(){const z=current();if(!runtime.inWorld()||(S().layer||'superficie')!=='superficie')return level=0;level=experimentalLevel(z,{hour:new Date().getHours(),quietStage:runtime.quietState?.stage||0});return level;}
  // ---------- síntesis propia (corta, sin drones) ----------
  const hzOf=(midi,cents=0)=>440*Math.pow(2,(midi-69)/12+cents/1200);
  function tone(t,midi,cents,dur,v,{type='sine',swell=false,pan=0}={}){
@@ -27,7 +28,7 @@ export function initialize(runtime){
  }
  const scaleNote=(d,i,oct=0)=>{const sc=d.scale||[0,2,4,5,7,9,11],tr=(runtime.BIOMES[d.z]?.tr||0)+(d.trOff||0);return 57+tr+sc[((i%sc.length)+sc.length)%sc.length]+12*(oct+Math.floor(i/sc.length));};
  function step(s,bar,time){
-  if(!S().sound||runtime.ac?.state!=='running'||document.hidden||document.querySelector('.modal:not([hidden])'))return;const x=compute(),d=runtime.MU.dnaT;if(x<.3||!d)return;
+  if(!runtime.inWorld()||(S().layer||'superficie')!=='superficie'||!S().sound||runtime.ac?.state!=='running'||document.hidden||document.querySelector('.modal:not([hidden])'))return;const x=compute(),d=runtime.MU.dnaT;if(x<.3||!d)return;
   const r=Math.random,six=runtime.SIX,seed=runtime.seedOf(`exp:${d.key}`),v=.025+x*.035;
   if(zone.mode==='libre'){   // sin rejilla: cuándo suena no depende del compás
    if(r()<.1*x){const t=time+r()*six*3,n=Math.floor(r()*7);tone(t,scaleNote(d,n,r()<.3?1:0),microCents(seed,n,x*.4),.6+r()*2.4,v,{type:r()<.5?'sine':'triangle',swell:r()<.4,pan:r()*1.6-.8});}
@@ -43,5 +44,5 @@ export function initialize(runtime){
    if(r()<.05*x)tone(time+r()*six*2,scaleNote(d,Math.floor(r()*7),1),microCents(seed,7,x)+50,.8,v*.6,{type:'triangle'});
   }
  }
- Object.defineProperties(runtime,{experimentalLevel:{get:()=>()=>level},experimentalZone:{get:()=>zone},experimentalStep:{get:()=>step}});
+ Object.defineProperties(runtime,{experimentalLevel:{get:()=>compute},experimentalZone:{get:()=>zone},experimentalStep:{get:()=>step}});
 }

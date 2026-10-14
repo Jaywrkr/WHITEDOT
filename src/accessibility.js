@@ -1,6 +1,6 @@
 // Menus trap keyboard focus; closing them returns to the control that opened them.
 export function initialize(runtime){
- const canvas=runtime.$('w');canvas.tabIndex=0;canvas.setAttribute('aria-label','Mundo musical: arrastra para caminar, toca objetos para responder');
+ const canvas=runtime.$('w');canvas.tabIndex=0;canvas.setAttribute('aria-label','Mundo musical: arrastra para caminar; el cubo toca los objetos. Un toque vacío lanza el pulso.');
  const dialogs=[...document.querySelectorAll('.modal')],returnFocus=new WeakMap();
  for(const dialog of dialogs){
   dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');

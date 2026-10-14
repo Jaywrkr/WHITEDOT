@@ -1,3 +1,9 @@
+# Alcance vigente · cierre V1 RC1
+
+Esta candidata se cierra en [AUDITORIA_V1.md](AUDITORIA_V1.md). Solo A01–A04 y correcciones de aceptación quedan para publicar. El inventario anterior de fases/64 tareas se conserva como historia y candidatos de [V2](PLAN_V2.md), no como nuevas funciones obligatorias de V1. [Estado](ESTADO_ACTUAL.md).
+
+<details><summary>Plan anterior íntegro; consultar la auditoría para el estado vigente</summary>
+
 > Nueva entrega: [mascota y Tu cubo](MASCOTA_Y_CUBO.md), persistentes, ganados y sin controles permanentes extra; rama `feat/pet-and-cube` sobre la cultural pendiente `165c376`. Main sigue en `8096c8d`. La siguiente revisión de V1 debe incluir escucha/legibilidad de la mascota y el nuevo panel en teléfonos físicos.
 
 # WHITEDOT V1: inventario, expansión y criterios de publicación
@@ -170,3 +176,5 @@ Cada bloque puede tener muchos commits; no necesita una rama por objeto. Guardar
 - Escucha curada de géneros, transiciones y lugares quietos, junto a jugadores nuevos capaces de entender sus gestos.
 - Interfaz consistente, silenciosa y discreta; documentación/Bitácora/ayudas coinciden con el comportamiento publicado.
 - Un commit de candidata, versión y plan de actualización/rollback claros. Publicar la web no equivale a haber verificado todos esos criterios.
+
+</details>
