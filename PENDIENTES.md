@@ -1,13 +1,26 @@
-# Universo vivo · 1.1.0-alpha.10
+# Pendientes vigentes · Universo vivo
 
-Diez fases acumuladas en `feat/universe-10-server-duets-validation`, listas para revisar en orden; **main no fue modificado en esta entrega**. Flora/fauna/construcciones nativas, música más variada, Voz opcional, ciclos, mundos grandes, libro ampliado, retorno entre semillas y servidor/duetos experimental.
+Estado vigente: **1.1.0-alpha.10**, con diez fases acumuladas en `feat/universe-10-server-duets-validation` (código `57fb5d2`). Este handoff añade documentación en `docs/claude-handoff-universe-alpha`. Main remoto comprobado: `704ae07`; las fases aún no estaban integradas. Volver a verificar antes de continuar.
 
+- [Empezar aquí: handoff para Claude](HANDOFF_CLAUDE.md)
 - [Entrega, ramas y límites](ENTREGA_UNIVERSO_VIVO.md)
 - [Cómo probar](PROBAR_UNIVERSO_VIVO.md)
-- [Cobertura honesta de las 150 ideas](COBERTURA_150_UNIVERSO.md)
+- [Cobertura de las 150 ideas](COBERTURA_150_UNIVERSO.md)
 - [Servidor y duetos](SERVIDOR_Y_DUETOS.md)
 
-52 géneros y 11 biomas de base; 28 linajes nuevos, 109 familias registrables, 91 entradas del laboratorio y 49 tipos de tarjeta. Regiones nuevas de 50.400 y 100.800 por lado, sin reescalar partidas anteriores. La muestra de 10.000 regiones demuestra recetas distintas; no mide canciones perceptiblemente diferentes. No se presenta esta alpha como V1 de producción ni como servidor ya publicado.
+**105 base jugable, 40 parciales, 2 pendientes y 3 externas**. Una base jugable todavía requiere aceptación humana. La [matriz completa](COBERTURA_150_UNIVERSO.md) es la lista exhaustiva por idea; el [handoff](HANDOFF_CLAUDE.md) explica dependencias y fuentes.
+
+Orden recomendado para la siguiente iteración:
+
+1. Escucha y juego de lo integrado: variedad perceptible, exceso de agudos, percusión, quietud, densidad y limpieza visual; retirar o afinar lo que no aporta.
+2. Gestos intuitivos, anticipación por especie, recorrido de aprendizaje, deshacer general y comparación de variantes en laboratorio.
+3. Transiciones musicales, tensión/resolución, conducción de las voces anteriores y control continuo de viento/agua.
+4. Redes y colonización persistentes, poblaciones/migraciones, bordes, jardines y rutas de costa/cielo; los nuevos movimientos actuales son locales.
+5. Arquitectura acústica, residentes, rutas físicas, laberintos ópticos, pistas/expediciones ecológicas y colecciones detalladas.
+6. Investigación cultural/histórica: fuentes y representaciones cuidadas. **Pendientes no iniciados:** idea 101 (más alturas) e idea 114 (réplicas/partituras históricas funcionales documentadas).
+7. **Aceptación externa:** teléfonos reales (141), host HTTPS/deploy (143) y playtest/escucha/publicación gradual (150). Completar operación de cuentas, copias, salas y calibración por Internet según parciales 144–149.
+
+No borrar mascotas ganadas, partidas ni coordenadas para ampliar contenido. El servidor nuevo tiene una base funcional; faltan recuperación/borrado de cuentas, operación, respaldos, monitorización y escalado antes de abrir registro público. Mantener el modo local/offline.
 
 <details>
 <summary>Historial de planes y entregas anteriores</summary>

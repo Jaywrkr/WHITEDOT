@@ -1,13 +1,32 @@
-# Universo vivo · 1.1.0-alpha.10
+# Ramas y orden de integración · Universo vivo
 
-Diez fases acumuladas en `feat/universe-10-server-duets-validation`, listas para revisar en orden; **main no fue modificado en esta entrega**. Flora/fauna/construcciones nativas, música más variada, Voz opcional, ciclos, mundos grandes, libro ampliado, retorno entre semillas y servidor/duetos experimental.
+Estado vigente: **1.1.0-alpha.10**, con diez fases acumuladas en `feat/universe-10-server-duets-validation` (código `57fb5d2`). Este handoff añade documentación en `docs/claude-handoff-universe-alpha`. Main remoto comprobado: `704ae07`; las fases aún no estaban integradas. Volver a verificar antes de continuar.
 
+- [Empezar aquí: handoff para Claude](HANDOFF_CLAUDE.md)
 - [Entrega, ramas y límites](ENTREGA_UNIVERSO_VIVO.md)
 - [Cómo probar](PROBAR_UNIVERSO_VIVO.md)
-- [Cobertura honesta de las 150 ideas](COBERTURA_150_UNIVERSO.md)
+- [Cobertura de las 150 ideas](COBERTURA_150_UNIVERSO.md)
 - [Servidor y duetos](SERVIDOR_Y_DUETOS.md)
 
-52 géneros y 11 biomas de base; 28 linajes nuevos, 109 familias registrables, 91 entradas del laboratorio y 49 tipos de tarjeta. Regiones nuevas de 50.400 y 100.800 por lado, sin reescalar partidas anteriores. La muestra de 10.000 regiones demuestra recetas distintas; no mide canciones perceptiblemente diferentes. No se presenta esta alpha como V1 de producción ni como servidor ya publicado.
+Jay crea los PR y hace merge. La última rama de código contiene las diez fases; esta rama documental añade el handoff. El plan de 150 ideas ya está incluido en la primera fase.
+
+| Orden | Rama |
+|---|---|
+| 01 | `feat/universe-01-active-time-voice` |
+| 02 | `feat/universe-02-lineages-grammar` |
+| 03 | `feat/universe-03-living-flora` |
+| 04 | `feat/universe-04-responsive-fauna` |
+| 05 | `feat/universe-05-production-composition` |
+| 06 | `feat/universe-06-ecological-cycles` |
+| 07 | `feat/universe-07-large-territories` |
+| 08 | `feat/universe-08-resonant-architecture` |
+| 09 | `feat/universe-09-discovery-book-routes` |
+| 10 | `feat/universe-10-server-duets-validation` |
+| Documentación final | `docs/claude-handoff-universe-alpha` |
+
+Si se revisan por fases: **merge normal preservando commits, 01 → 10 → documentación**. Evitar squash/rebase de los padres mientras existan dependencias. PR simultáneos pueden apuntar a la rama anterior y retargetearse a main tras integrarla. Si se decide integrar todo junto, la rama de documentación contiene la cadena completa; no repetir luego sus padres. Comprobar diferencias y ascendencia contra el main real antes de abrir PR.
+
+No hay PR creados por esta entrega ni merge automático a main. Las ramas archivadas de antes del universo vivo y los estados de abajo se conservan como historia; no reaplicarlos.
 
 <details>
 <summary>Historial de planes y entregas anteriores</summary>

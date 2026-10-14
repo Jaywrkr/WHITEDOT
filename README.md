@@ -1,13 +1,18 @@
-# Universo vivo · 1.1.0-alpha.10
+# WHITEDOT · Universo vivo
 
-Diez fases acumuladas en `feat/universe-10-server-duets-validation`, listas para revisar en orden; **main no fue modificado en esta entrega**. Flora/fauna/construcciones nativas, música más variada, Voz opcional, ciclos, mundos grandes, libro ampliado, retorno entre semillas y servidor/duetos experimental.
+Estado vigente: **1.1.0-alpha.10**, con diez fases acumuladas en `feat/universe-10-server-duets-validation` (código `57fb5d2`). Este handoff añade documentación en `docs/claude-handoff-universe-alpha`. Main remoto comprobado: `704ae07`; las fases aún no estaban integradas. Volver a verificar antes de continuar.
 
+- [Empezar aquí: handoff para Claude](HANDOFF_CLAUDE.md)
 - [Entrega, ramas y límites](ENTREGA_UNIVERSO_VIVO.md)
 - [Cómo probar](PROBAR_UNIVERSO_VIVO.md)
-- [Cobertura honesta de las 150 ideas](COBERTURA_150_UNIVERSO.md)
+- [Cobertura de las 150 ideas](COBERTURA_150_UNIVERSO.md)
 - [Servidor y duetos](SERVIDOR_Y_DUETOS.md)
 
-52 géneros y 11 biomas de base; 28 linajes nuevos, 109 familias registrables, 91 entradas del laboratorio y 49 tipos de tarjeta. Regiones nuevas de 50.400 y 100.800 por lado, sin reescalar partidas anteriores. La muestra de 10.000 regiones demuestra recetas distintas; no mide canciones perceptiblemente diferentes. No se presenta esta alpha como V1 de producción ni como servidor ya publicado.
+Exploración musical procedural con fondo negro, cubo y objetos naturales/electrónicos. 52 géneros, 11 biomas, 33 hábitats; 28 linajes nuevos; 109 familias registrables, 91 entradas del laboratorio y 49 tipos de tarjeta. Radio evolutiva, relaciones ecológicas, arquitectura sonora, Voz opcional, libro, favoritos y retorno entre semillas. Cuentas y duetos son opcionales y experimentales.
+
+Aplicación de módulos JS nativos, Canvas y Web Audio: no requiere build ni dependencias npm. Para servir juego/API opcionales: `python3 server/app.py --host 127.0.0.1 --port 8080`. Pruebas: `npm test`, `npm run audit:release`, `npm run test:browser` y `npm run test:audio`; requisitos y límites en el handoff.
+
+Entrega alpha: **105 ideas con base jugable, 40 parciales, 2 pendientes y 3 externas**. Pruebas registradas: 71 suites Node, 49 recorridos de navegador más offline y 253 renders de audio. Aceptación en teléfonos, escucha humana y publicación HTTPS siguen pendientes. No hay deploy nuevo registrado.
 
 <details>
 <summary>Historial de planes y entregas anteriores</summary>

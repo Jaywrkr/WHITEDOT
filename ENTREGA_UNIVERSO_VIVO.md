@@ -38,7 +38,7 @@ Ocho construcciones pequeñas naturales: casas de raíces, molinos, catedrales, 
 
 ## Fase 9 · Hallazgos, tarjetas y rutas
 
-Libro ampliado a 48 tipos de tarjetas y contador honesto de 109 familias. Ejemplares raros y construcciones guardan hábitat, clima, fase y gesto; relaciones y memorias activadas registran rareza conjunta sin inventar probabilidades. Las observaciones posteriores se añaden sin renombrar la tarjeta ni alterar sus odds originales. Exportación PNG y código de retorno. Favoritos admiten una nota y momento del lugar. Paseo automático con intención de paisaje, vida o hallazgos, interrumpible al mover el cubo. Mascotas ganadas en formación permanecen; visitas de caja expiran. Expediciones culturales previas y rutas de favoritos siguen siendo opcionales. No se garantiza que un animal viajero o un evento temporal siga en el punto al regresar.
+Libro ampliado a 49 tipos de tarjetas (incluida la convergencia añadida en la integración final) y contador honesto de 109 familias. Ejemplares raros y construcciones guardan hábitat, clima, fase y gesto; relaciones y memorias activadas registran rareza conjunta sin inventar probabilidades. Las observaciones posteriores se añaden sin renombrar la tarjeta ni alterar sus odds originales. Exportación PNG y código de retorno. Favoritos admiten una nota y momento del lugar. Paseo automático con intención de paisaje, vida o hallazgos, interrumpible al mover el cubo. Mascotas ganadas en formación permanecen; visitas de caja expiran. Expediciones culturales previas y rutas de favoritos siguen siendo opcionales. No se garantiza que un animal viajero o un evento temporal siga en el punto al regresar.
 
 ## Fase 10 · Servidor opcional, duetos y aceptación
 
@@ -97,3 +97,9 @@ Guía: [PROBAR_UNIVERSO_VIVO.md](PROBAR_UNIVERSO_VIVO.md). Servicio: [SERVIDOR_Y
 - Auditoría de módulos/UI/fonts/docs/shell sin errores ni avisos.
 
 [Evidencia de cierre](scripts/universe-phase-validation.json), [audio de linajes](scripts/living-audio-validation.json), [muestra de regiones](scripts/living-universe-validation.json). No se realizaron pruebas en teléfonos físicos ni publicación pública.
+
+## Continuidad documental para Claude
+
+Actualización en `docs/claude-handoff-universe-alpha`, hija de la fase 10, sin cambios de código, versión o deploy. [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md) reúne estado, mapa técnico, requisitos, reglas creativas, pruebas y próximos pasos; README, estado, pendientes y ramas tienen cabeceras vigentes específicas. Se conservan los documentos históricos y se enlaza el handoff desde los planes heredados. Main remoto verificado en `704ae07`, fase 10 en `57fb5d2`. Esta rama puede integrarse después de la fase 10; su historia incluye la cadena completa.
+
+Validación de esta actualización documental: `npm run audit:release` sin errores ni avisos, `git diff --check`, enlaces locales del handoff y recuento de las 150 filas comprobados. No se volvió a ejecutar la suite completa: las cifras de navegador/audio/Node pertenecen a la entrega de código indicada.
