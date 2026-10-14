@@ -58,7 +58,7 @@ export function livingChunk(cx,cy,size,region,biome,seedOf,rng,groups=['flora','
   if(d.group==='architecture'&&variant%8!==0)continue;
   out.push({id:`living:v1:${cx},${cy}:${i}`,kind:d.id,group:d.group,shape:d.shape,variant,x:(cx+.15+random()*.7)*size,y:(cy+.15+random()*.7)*size,
    homeX:0,homeY:0,hue:(region.hue+variant%50)%360,size:d.group==='architecture'?30+variant%14:9+variant%12,
-   personality:['timida','curiosa','social'][variant%3],activeAt:variant%4,rare:variant===255||d.id==='whale',lit:0,phase:variant/256*Math.PI*2,energy:0,phrase:[],touching:false});
+   studyVariant:seedOf(`living:study:v1:${cx},${cy}:${i}`)%12,personality:['timida','curiosa','social'][variant%3],activeAt:variant%4,rare:variant===(d.group==='architecture'?248:255)||d.id==='whale',lit:0,phase:variant/256*Math.PI*2,energy:0,phrase:[],touching:false});
  }
  for(const o of out){o.homeX=o.x;o.homeY=o.y;}return out.filter(o=>groups.includes(o.group));
 }

@@ -1,3 +1,4 @@
+import {LIVING_CATALOG} from './living-catalog.js';
 import {TOY_NAMES} from './playthings.js';
 import {PHENOMENON_NAMES} from './phenomena.js';
 import {RHYTHM_ELEMENTS} from './percussion-model.js';
@@ -7,6 +8,7 @@ import {CULTURES} from './culture-model.js';
 import {SPECIES} from './vida-music.js';
 const rows=(group,entries,prefix='')=>Object.entries(entries).map(([id,value])=>({id:prefix+id,name:typeof value==='string'?value:value.name,group}));
 export const DISCOVERY_ELEMENTS=Object.freeze([
+ ...LIVING_CATALOG.map(d=>({id:'living:'+d.id,name:d.name,group:d.group==='architecture'?'Arquitectura viva':'Universo vivo'})),
  ...rows('Paisaje',{piedra:'Piedra',hongo:'Hongo',campanilla:'Campanilla',cactus:'Cactus',antena:'Antena',gota:'Gota',astro:'Astro',arbol:'Árbol de luz',loto:'Loto',cristal:'Cristal',pilar:'Pilar',faro:'Faro pequeño',luz:'Mota de luz',pulso:'Luz de pulso',luciernaga:'Luciérnaga',agua:'Agua',caminante:'Caminante',bandada:'Bandada',form:'Forma procedural',blob:'Blob'}),
  ...rows('Flora',{hierba:'Hierba',flor:'Flor',arbusto:'Arbusto',helecho:'Helecho',junco:'Junco',coral:'Coral'},'planta:'),
  ...rows('Juguetes',TOY_NAMES,'toy:'),...rows('Fenómenos',PHENOMENON_NAMES,'phenomenon:'),
@@ -42,6 +44,7 @@ export function migrateElementBook(state){
  for(const [k,v]of Object.entries(state.materiaSites||{}))if(v?.seen)add('installation:'+k.split(':')[0]);
  for(const [k,v]of Object.entries(state.cultures?.collections||{}))if(v>0)add('culture:'+k);
  for(const [k,v]of Object.entries(state.vida?.seen||{}))if(v)add('life:'+k);
+ for(const kind of Object.keys(state.livingSeen||{}))add('living:'+kind);
  if(state.boxesOpened>0)add('box');if(['golondrina','grulla','luciernaga'].includes(state.pet?.species))add('pet');if((state.stars||[]).length)add('relic');if(state.landmarksN>0)add('landmark');
  return b;
 }

@@ -13,7 +13,7 @@ export const LIVING_STUDIES=Object.freeze([
  {id:'mecanismo',name:'Molino de memoria',reference:'Inspiración en mecanismos de transmisión dibujados por Leonardo da Vinci; mecanismo sonoro original',rhythm:[0,3,8,11],flora:'lichen',fauna:'beetle'},
  {id:'respiracion',name:'Cámara modal',reference:'Estudio original de continuidad y modo inspirado en repertorios históricos como los de Hildegard',rhythm:[0,8],flora:'breath-tree',fauna:'whale'}
 ]);
-export function studyOf(o){return LIVING_STUDIES[o.variant%LIVING_STUDIES.length];}
+export function studyOf(o){return LIVING_STUDIES[(o.studyVariant??o.variant)%LIVING_STUDIES.length];}
 export const JAY_STORY=[
  {id:'atencion',need:1,text:'Tu primer instrumento fue la atención. El Camino te trae hasta aquí; ahora el lugar responde.'},
  {id:'gesto',need:4,text:'Crear no necesita llenar el vacío. Un gesto, una respuesta y espacio para escuchar.'},
