@@ -1,8 +1,8 @@
-# WHITEDOT · V1 RC2
+# WHITEDOT · V1 RC3
 
 Un cubo blanco en un mundo negro que crea música electrónica al explorarlo. Por Jay · [@jaywrkr](https://instagram.com/jaywrkr). Blanco disponible y personalización ganada; criaturas, materia, búsquedas culturales y una mascota que aprende tus gestos.
 
-**Expansión 1.0.0-rc.2 · `feat/percussion-landscapes`**, encadenada sobre `audit/v1-closure`. Jay autorizó continuar después de la auditoría: se abre un bloque de tres fases amplias, sin servidor/cuentas. Ocho familias de percusión se tocan con el cubo y cambian de timbre/patrón según región y género. [Fases y pruebas](EXPANSION_RITMICA.md) · [Auditoría anterior](AUDITORIA_V1.md) · [Handoff](HANDOFF.md).
+**Expansión 1.0.0-rc.3 · `feat/release-identity`**, encadenada sobre `audit/v1-closure`. Jay autorizó continuar después de la auditoría: se abre un bloque de tres fases amplias, sin servidor/cuentas. Ocho familias de percusión se tocan con el cubo y cambian de timbre/patrón según región y género. [Fases y pruebas](EXPANSION_RITMICA.md) · [Auditoría anterior](AUDITORIA_V1.md) · [Handoff](HANDOFF.md).
 
 La auditoría RC1 conserva su evidencia histórica (55 suites, 39 recorridos + offline y 164 renders). Las pruebas nuevas se registran por fase; teléfono real, primera sesión humana y host/CI remoto siguen pendientes.
 
