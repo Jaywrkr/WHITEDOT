@@ -32,12 +32,12 @@ export function initialize(runtime){
  function open(b){if(!b.gift)runtime.collectRareCard?.('box:'+b.power,b);runtime.recordElement?.('box',runtime.regionOfPos(b.x,b.y));
   const book=S().boxes;if(!b.gift){if(Object.keys(book).length>=400)delete book[Object.keys(book)[0]];book[b.id]=1;}else spawned.splice(spawned.indexOf(b),1);
   S().boxesOpened=(S().boxesOpened||0)+1;runtime.petBox?.(b);give(b.power);runtime.colorPulse?.(b.hue,1);runtime.burst?.(b.x,b.y,14,true);
-  runtime.beatSoon(t=>{const ct=runtime.chordTones?.()||[60,64,67];ct.slice(0,3).forEach((n,i)=>melody(n,t+i*runtime.SIX*2,.025));},null,'player');
+  if(runtime.celebrateBox)runtime.celebrateBox(b);else runtime.beatSoon(t=>{const ct=runtime.chordTones?.()||[60,64,67];ct.slice(0,3).forEach((n,i)=>melody(n,t+i*runtime.SIX*2,.025));},null,'player');
   runtime.unlock('caja1');if(S().boxesOpened>=5)runtime.unlock('caja5');runtime.unlock('poder_'+b.power);runtime.save();
  }
  function give(id,visitor=null){
-  const p=POWERS[id];if(!p)return;clock.give(id);runtime.toast(`<em>${p.name}</em> · ${p.text}`);
-  if(!S().help['poder_'+id]){S().help['poder_'+id]=true;runtime.say(p.text,p.name);}
+  const p=POWERS[id];if(!p)return;clock.give(id);if(!runtime.celebrateBox)runtime.toast(`<em>${p.name}</em> · ${p.text}`);
+  if(!runtime.celebrateBox&&!S().help['poder_'+id]){S().help['poder_'+id]=true;runtime.say(p.text,p.name);}
   if(id==='cometa')runtime.speedBoost=2.2;if(id==='campo')runtime.fieldSolo=true;
   if(id==='companero'){if(PET_SPECIES[visitor])companion.species=visitor;companion.on=true;companion.x=S().wx+30;companion.y=S().wy+30;}
   if(id==='pincel')marks.length=0;
@@ -92,12 +92,12 @@ export function initialize(runtime){
  // ---------- dibujo ----------
  function draw(t,dt,ox,oy){
   if(!surface())return;const c=runtime.cx,cx=runtime.W/2,cy=runtime.H/2;c.save();
-  for(const b of boxesNear(700)){const [H,Sat,L]=swatchOf(b.hue),x=b.x+ox,y=b.y+oy+Math.sin(t/500+b.spin)*5,col=`hsl(${H},${Sat}%,${L}%)`,rot=t/900+b.spin;
-   const g=c.createRadialGradient(x,y,0,x,y,46);g.addColorStop(0,`hsla(${H},${Sat}%,${L}%,.35)`);g.addColorStop(1,'rgba(0,0,0,0)');c.globalAlpha=1;c.fillStyle=g;c.fillRect(x-46,y-46,92,92);
-   c.translate(x,y);for(const [k,s] of [[0,10],[Math.PI/4,10]]){c.save();c.rotate(rot+k);c.globalAlpha=.9;c.strokeStyle=col;c.lineWidth=1.6;c.strokeRect(-s,-s,s*2,s*2);c.restore();}
-   c.globalAlpha=.9;c.fillStyle=WORLD_VISUAL.gold;c.beginPath();c.arc(0,0,2.5+Math.sin(t/200)*1,0,TAU);c.fill();
-   for(let i=0;i<3;i++){const a=t/600+i*TAU/3;c.globalAlpha=.7;c.fillRect(Math.cos(a)*18-1,Math.sin(a)*18-1,2,2);}
-   c.translate(-x,-y);if(Math.hypot(b.x-S().wx,b.y-S().wy)<160){c.globalAlpha=.8;c.fillStyle=WORLD_VISUAL.gold;c.font='10px monospace';c.textAlign='center';c.fillText('Caja misteriosa · tócala con el cubo',x,y+34);}}
+  for(const b of boxesNear(700)){const fade=runtime.worldOpacity?.(Math.hypot(b.x-S().wx,b.y-S().wy),700)??1;const [H,Sat,L]=swatchOf(b.hue),x=b.x+ox,y=b.y+oy+Math.sin(t/500+b.spin)*5,col=`hsl(${H},${Sat}%,${L}%)`,rot=t/900+b.spin;
+   const g=c.createRadialGradient(x,y,0,x,y,46);g.addColorStop(0,`hsla(${H},${Sat}%,${L}%,.35)`);g.addColorStop(1,'rgba(0,0,0,0)');c.globalAlpha=(1)*fade;c.fillStyle=g;c.fillRect(x-46,y-46,92,92);
+   c.translate(x,y);for(const [k,s] of [[0,10],[Math.PI/4,10]]){c.save();c.rotate(rot+k);c.globalAlpha=(.9)*fade;c.strokeStyle=col;c.lineWidth=1.6;c.strokeRect(-s,-s,s*2,s*2);c.restore();}
+   c.globalAlpha=(.9)*fade;c.fillStyle=WORLD_VISUAL.gold;c.beginPath();c.arc(0,0,2.5+Math.sin(t/200)*1,0,TAU);c.fill();
+   for(let i=0;i<3;i++){const a=t/600+i*TAU/3;c.globalAlpha=(.7)*fade;c.fillRect(Math.cos(a)*18-1,Math.sin(a)*18-1,2,2);}
+   c.translate(-x,-y);if(Math.hypot(b.x-S().wx,b.y-S().wy)<160){c.globalAlpha=(.8)*fade;c.fillStyle=WORLD_VISUAL.gold;c.font='10px monospace';c.textAlign='center';c.fillText('Caja misteriosa · tócala con el cubo',x,y+34);}}
   if(has('campo')){const R=fieldRadius(left('campo'),POWERS.campo.seconds),arm=((runtime.MU.step%16)+((runtime.ac?.currentTime||0)%runtime.SIX)/runtime.SIX)/16*TAU-Math.PI/2,hue=runtime.MU.dnaT?.hue||0,[H]=swatchOf(hue);
    c.globalAlpha=.08;c.fillStyle=`hsl(${H},80%,60%)`;c.beginPath();c.arc(cx,cy,R,0,TAU);c.fill();c.globalAlpha=.5;c.strokeStyle=`hsl(${H},80%,64%)`;c.lineWidth=1.4;c.stroke();
    c.globalAlpha=.6;c.strokeStyle=runtime.cubeColor?.()||WORLD_VISUAL.gold;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+Math.cos(arm)*R,cy+Math.sin(arm)*R);c.stroke();}
@@ -112,5 +112,5 @@ export function initialize(runtime){
   c.restore();
  }
  function clear(){clock.clear();spawned.length=0;trail.length=0;marks.length=0;companion.on=false;companion.heard=[];companion.species=null;lastMark=null;runtime.fieldSolo=false;runtime.speedBoost=1;}
- Object.defineProperties(runtime,{clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
+ Object.defineProperties(runtime,{powerSecondsLeft:{get:()=>left},clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
 }

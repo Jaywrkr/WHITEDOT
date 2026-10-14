@@ -1,3 +1,13 @@
+# 2.0 · Fase 2 · Celebración y caja mágica
+
+Rama `v2/f2-celebracion`, hija de fase 1 `88aeab1`. Apertura de caja con fragmentos pequeños, remate grave/medio del género y acorde local a tempo. Tarjeta propia para cada poder: arte, rareza, efecto, segundos de juego y exportación PNG 4:5 (512×640). Poderes temporales y acumulación máxima anteriores conservados; no se pierde progreso.
+
+Cola única de momentos: comunes dos segundos, raros cinco, épicos/míticos cuatro y firma Simple. No aparecen dos revelaciones juntas; menús, herramientas y lectura pausan el momento. La caja ocupa menos del 30 % en las pruebas móviles; Voz/avisos no se superponen. Compartir y cerrar permanecen silenciosos. Las tarjetas naturales siguen en el libro; los regalos conservan su condición original. El libro explica efecto y duración base/máxima de cada poder.
+
+Validación: auditoría sin errores/avisos, 75 suites Node, 52/52 recorridos más offline con 130 módulos, 259 renders en diez programas aprobados. Seis remates con scheduler real a 44,1/48 kHz (pico 0,909099). [Evidencia](scripts/v2-f2-validation.json). La Voz permanece accesible junto a la tarjeta; lectura expandida la pausa. La prueba del animal separa respuesta automática y manual para evitar reiniciar la lección por una carrera de tiempo, manteniendo contorno y emisión de audio. No se considera una aceptación artística o física de teléfono.
+
+Probar: abre una caja con el cubo, observa la apertura y la duración. Abre el menú y vuelve: tarjeta y poder deben pausar. Comparte la tarjeta y verifica su formato 4:5. Revisa la caja natural en Bitácora → Hallazgos. El laboratorio permite probar poderes; no reinicies tu partida.
+
 # 2.0 · Fase 1 · El universo se ve real
 
 Rama `v2/f1-universo-visual`, hija de fase 0 `f8af7c4`. Niebla negra de bordes suaves y ruido oscuro, densidad por bioma/clima/hora, cambios de luz suavizados y linterna sutil al agotarse. Desvanecimiento por distancia de linajes, flora, bandadas, percusión y fenómenos; transición figura/punto continua. Precarga de sectores fuera de pantalla, dos sectores heredados por cuadro y caché de vida limitada a 48.

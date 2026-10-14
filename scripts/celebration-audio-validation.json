@@ -1,0 +1,256 @@
+{
+  "renders": 6,
+  "maxPeak": 0.9090994000434875,
+  "sampleRates": [
+    44100,
+    48000
+  ],
+  "rows": [
+    {
+      "celebrationNotes": [
+        {
+          "at": 1.8461538461538463,
+          "genre": "minimaltechno",
+          "bass": 45,
+          "notes": [
+            57,
+            60
+          ]
+        }
+      ],
+      "scene": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "minimaltechno",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.901292085647583,
+      "rmsDb": -12.114055171585159,
+      "hotFraction": 0
+    },
+    {
+      "celebrationNotes": [
+        {
+          "at": 1.75,
+          "genre": "deep",
+          "bass": 45,
+          "notes": [
+            57,
+            60
+          ]
+        }
+      ],
+      "scene": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "deep",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.7815964818000793,
+      "rmsDb": -19.96903543932557,
+      "hotFraction": 0
+    },
+    {
+      "celebrationNotes": [
+        {
+          "at": 1.75,
+          "genre": "afro",
+          "bass": 45,
+          "notes": [
+            57,
+            60
+          ]
+        }
+      ],
+      "scene": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "afro",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.9025885462760925,
+      "rmsDb": -9.036858505806286,
+      "hotFraction": 0
+    },
+    {
+      "celebrationNotes": [
+        {
+          "at": 1.9230769230769231,
+          "genre": "ambient",
+          "bass": 45,
+          "notes": [
+            57,
+            60
+          ]
+        }
+      ],
+      "scene": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "ambient",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.498507559299469,
+      "rmsDb": -19.432569619151593,
+      "hotFraction": 0
+    },
+    {
+      "celebrationNotes": [
+        {
+          "at": 1.7647058823529413,
+          "genre": "dnb",
+          "bass": 45,
+          "notes": [
+            57,
+            60
+          ]
+        }
+      ],
+      "scene": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "dnb",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.9090994000434875,
+      "rmsDb": -12.805607237007962,
+      "hotFraction": 0
+    },
+    {
+      "celebrationNotes": [
+        {
+          "at": 1.7948717948717947,
+          "genre": "nudisco",
+          "bass": 45,
+          "notes": [
+            57,
+            60
+          ]
+        }
+      ],
+      "scene": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "nudisco",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.7733985185623169,
+      "rmsDb": -20.261184749722226,
+      "hotFraction": 0
+    }
+  ]
+}

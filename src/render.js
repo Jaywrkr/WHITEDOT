@@ -29,7 +29,7 @@ export function initialize(runtime) {
     if(!runtime.inWorld()||!runtime.S.sound)runtime.clearSoundCues();
     if(!runtime.inWorld())runtime.clearRelicProgress();
     runtime.activeFrameSeconds=Math.max(0,Math.min(1,(t-(frame.l||t))/1000));
-    const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;runtime.worldVisualBegin?.(dt,runtime.activeFrameSeconds);runtime.rareCardTick?.(runtime.activeFrameSeconds);
+    const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;runtime.worldVisualBegin?.(dt,runtime.activeFrameSeconds);runtime.celebrationTick?.(runtime.activeFrameSeconds);runtime.rareCardTick?.(runtime.activeFrameSeconds);
     const modal=[...document.querySelectorAll(".modal")].some(m=>!m.hidden&&!m.classList.contains("lite"));
     let dx=(runtime.keys.arrowright||runtime.keys.d?1:0)-(runtime.keys.arrowleft||runtime.keys.a?1:0), dy=(runtime.keys.arrowdown||runtime.keys.s?1:0)-(runtime.keys.arrowup||runtime.keys.w?1:0);
     if(runtime.ptr){const jx=runtime.ptr.ox??runtime.W/2,jy=runtime.ptr.oy??runtime.H/2,rad=runtime.ptr.ox!=null?55:80;dx=runtime.ptr.x-jx;dy=runtime.ptr.y-jy;const l=Math.hypot(dx,dy);if(l<6){dx=dy=0;}else{const k=Math.min(1,l/rad);dx=dx/l*k;dy=dy/l*k;}}
@@ -75,7 +75,7 @@ export function initialize(runtime) {
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.drawDuet?.();runtime.petTick?.(dt);runtime.drawPet?.(t);
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
-    runtime.drawWorldFog?.(t);
+    runtime.drawCelebration?.();runtime.drawWorldFog?.(t);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.GOLD:runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
