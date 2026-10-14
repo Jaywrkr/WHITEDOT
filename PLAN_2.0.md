@@ -1,6 +1,6 @@
 # Plan WHITEDOT 2.0
 
-Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0** (`4ed00ce`), con CI en verde. La 1.1.0 se publica tal cual. La 2.0 se construye en ramas y no toca producción hasta estar lista.
+Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0** (`4ed00ce`), con CI en verde. La 2.0 se construye en ramas. Por excepción explícita de Jay, se integran en `main` las fases 0–2 y la reparación de Vercel; las siguientes conservan el flujo de PR y merge de Jay.
 
 **Hilo común:** encontrar cosas en el universo debe darte algo visible, que se celebre y que puedas usar. Por eso cubo, casa y logros comparten una base (fase 0) en vez de ser sistemas separados.
 
@@ -17,9 +17,9 @@ Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0**
 
 | Fase | Rama | Estado |
 |---|---|---|
-| 0 · Base de colección | `v2/f0-coleccion` | Implementada y probada; pendiente de PR/merge de Jay |
-| 1 · El universo se ve real | `v2/f1-universo-visual` | Implementada y probada; PR/merge y 60 FPS físicos por aceptar |
-| 2 · Celebración y caja mágica | `v2/f2-celebracion` | Implementada y probada; pendiente de PR/merge de Jay |
+| 0 · Base de colección | `v2/f0-coleccion` | Integrada en main por excepción de Jay; pruebas aprobadas |
+| 1 · El universo se ve real | `v2/f1-universo-visual` | Integrada en main y probada; 60 FPS físicos por aceptar |
+| 2 · Celebración y caja mágica | `v2/f2-celebracion` | Integrada en main por excepción de Jay; pruebas aprobadas |
 | 3 · Cubo con 50 personalizaciones | `v2/f3-cubo-50` | Pendiente |
 | 7 · Menú principal limpio | `v2/f7-menu` | Pendiente |
 | 6 · Bitácora perfeccionada | `v2/f6-bitacora` | Pendiente |
@@ -31,9 +31,9 @@ Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0**
 
 ## Prioridad adicional · 14 de octubre · Despliegue e interacción
 
-Esta reparación contiene solo la fase 0 y el arreglo de deploy. Las fases siguientes tienen ramas propias; su código no se incluye aquí. Las fases 1 y 2 ya están subidas; 3, 7, 6, 4 y 5 tienen trabajo local pendiente de validación. La tabla conserva el alcance de esta rama base.
+Esta integración excepcional reúne las fases 0, 1 y 2 y el arreglo de deploy. Las fases 3, 7, 6, 4 y 5 tienen trabajo local pendiente de validación y no forman parte de esta publicación.
 
-Antes de continuar las fases: corregir Vercel, que intenta servir una carpeta `public` inexistente. Rama de reparación `fix/vercel-static-output`, desde fase 0. Mantener el sello de revisión/hora y el SW sin caché HTTP. No publicar ni integrar `main` desde Codex.
+Reparación incluida: `fix/vercel-static-output` (`6feac66`) sirve la raíz del juego en lugar de la carpeta `public` inexistente. Conserva el sello de revisión/hora y el SW sin caché HTTP. Jay autorizó a Codex integrar y publicar `main` solo en este caso; las próximas fases vuelven al flujo habitual.
 
 Las siguientes peticiones de Jay quedan **pendientes de implementación**, sin eliminar fases ni progreso:
 

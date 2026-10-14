@@ -1,3 +1,7 @@
+# Integración excepcional · Fases 0–2 y Vercel
+
+Jay autorizó integrar y publicar `main` solo en este caso. Conserva commits de colección, visibilidad gradual y celebraciones; incorpora salida estática de Vercel y los cuatro pendientes nuevos de interacción/percusión. No incluye fases todavía pendientes de validación. Pruebas conjuntas aprobadas: auditoría sin errores/avisos, 75 suites Node, 52/52 recorridos de navegador y recarga offline de 130 módulos; 259 renders de audio en diez programas, pico 0.957608700 y cero muestras calientes. [Evidencia](scripts/main-integration-validation.json). Build de sellado probado sobre un artefacto temporal. El deploy remoto queda por confirmar; las consultas HTTPS/API están bloqueadas por el entorno. Aceptación artística y física de teléfono pendiente. Las siguientes entregas vuelven al flujo de rama y PR/merge de Jay.
+
 # 2.0 · Fase 2 · Celebración y caja mágica
 
 Rama `v2/f2-celebracion`, hija de fase 1 `88aeab1`. Apertura de caja con fragmentos pequeños, remate grave/medio del género y acorde local a tempo. Tarjeta propia para cada poder: arte, rareza, efecto, segundos de juego y exportación PNG 4:5 (512×640). Poderes temporales y acumulación máxima anteriores conservados; no se pierde progreso.
