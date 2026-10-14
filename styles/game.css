@@ -266,3 +266,8 @@ body:not(.world-mode) #bAuto{display:none} #bAuto[aria-pressed="true"]{border-co
 .release-badge small{font-size:8px;color:#77777e;white-space:nowrap}
 .hud-right .stats{justify-content:flex-end}
 @media(max-width:420px){.hud>.day,.hud>.era{max-width:45%}.release-badge{font-size:8px}.release-badge small{font-size:7px}}
+/* Keep the lamp clock out of the release badge, including the focused world HUD. */
+.hud>div:first-child{min-width:0;max-width:46%}
+.hud .era{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.world-focus .goal{top:calc(env(safe-area-inset-top,0px) + 32px);left:16px;right:auto;width:auto}
+body.world-focus .voice{top:calc(env(safe-area-inset-top,0px) + 64px)}

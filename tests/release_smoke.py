@@ -18,6 +18,7 @@ try:
    assert page.locator('#releaseDeploy').inner_text()=='deploy sin registrar'
    rect=page.locator('#releaseBadge').bounding_box();assert rect['x']>=size['width']/2 and rect['x']+rect['width']<=size['width'] and rect['y']<40,rect
    assert page.locator('#releaseBadge').evaluate('(e)=>getComputedStyle(e).pointerEvents')=='none'
+   clock=page.locator('.goal').bounding_box();assert not (rect['x']<clock['x']+clock['width'] and clock['x']<rect['x']+rect['width'] and rect['y']<clock['y']+clock['height'] and clock['y']<rect['y']+rect['height']),('release overlaps clock',rect,clock)
    assert page.locator('#releaseBadge').is_visible();assert not errors,errors;page.close()
   page=b.new_page(viewport={'width':390,'height':844})
   stamp={'version':version,'deployedAt':'2026-10-14T12:04:00.000Z','revision':'abcdef0'}
