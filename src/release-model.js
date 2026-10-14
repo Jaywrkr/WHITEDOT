@@ -1,4 +1,4 @@
-export const releaseVersion=value=>typeof value==='string'&&/^\d+\.\d+\.\d+(?:-rc\.\d+)?$/.test(value);
+export const releaseVersion=value=>typeof value==='string'&&/^\d+\.\d+\.\d+(?:-(?:rc|alpha)\.\d+)?$/.test(value);
 export function deploymentTime(value){
  if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(value))return null;
  const n=Date.parse(value);if(!Number.isFinite(n))return null;
