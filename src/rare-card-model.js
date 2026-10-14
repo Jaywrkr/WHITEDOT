@@ -1,3 +1,4 @@
+import {LIVING_CATALOG} from './living-catalog.js';
 import {RHYTHM_EMPTY_CHANCE,FOSSIL_DENOMINATOR} from './percussion-model.js';
 import {RELIC_RATE,MAGICAL_RELIC_RATE} from './relics.js';
 import {ANOMALIES,TIERS} from './wonders.js';
@@ -9,6 +10,9 @@ export const RARE_BOOK_LIMIT=512,RARE_PAGE_SIZE=12;
 export const CARD_TIERS={raro:{name:'Raro',ink:'#9fe8ff'},singular:{name:'Singular',ink:'#bda5f5'},legendario:{name:'Legendario',ink:'#bda5f5'},mitico:{name:'Mítico',ink:'#f0d27a'}};
 const boxChance=NATURAL_BOX_RATE/POWER_IDS.length;
 export const RARE_CARDS=Object.freeze({
+ ...Object.fromEntries(LIVING_CATALOG.map(d=>['living:'+d.id,{name:d.name,tier:d.id==='whale'?'singular':'raro',probability:d.id==='whale'||d.group==='architecture'?1/32:1/256,unit:'individuos elegibles',condition:d.id==='whale'?'Una variante de 32 candidatos de este linaje llega a manifestarse. No es una probabilidad por distancia.':d.group==='architecture'?'Variante 248 entre las 32 variantes admitidas de esta construcción. Condicionado a que el tipo esté presente; no es frecuencia por sector.':'Una variante entre 256 de este linaje, condicionado a su hábitat y presencia. No estima la frecuencia total por sector.',text:'Un ejemplar singular del universo vivo. El lugar queda guardado; la criatura o el momento pueden cambiar.',art:'living'}])),
+ 'living:relation':{name:'Encuentro entre voces',tier:'singular',probability:null,unit:'encuentros elegibles',condition:'Una relación local real incluye al menos un individuo raro. La frecuencia conjunta no se ha estimado; no multiplicamos probabilidades correlacionadas.',text:'Dos presencias encontraron una frase en común.',art:'living'},
+ 'living:study':{name:'Memoria de una construcción',tier:'singular',probability:null,unit:'encuentros elegibles',condition:'Se activó una construcción de variante rara. La frecuencia conjunta de presencia y resolución no está estimada.',text:'Una forma, una afinidad y una manera de escuchar quedaron vinculadas.',art:'living'},
  fossil:{name:'Fósil de ritmo',tier:'raro',probability:RHYTHM_EMPTY_CHANCE/FOSSIL_DENOMINATOR,unit:'sectores de tierra',condition:'Solo en un sector sin percusión ordinaria. Es una frecuencia teórica, no una garantía por distancia.',text:'Una espiral guardó un pulso antiguo. Tócala; permanece para escuchar cómo cambia.',art:'fossil'},
  'relic:ordinary':{name:'Eco antiguo',tier:'raro',probability:RELIC_RATE-MAGICAL_RELIC_RATE,unit:'sectores elegibles',condition:'Fuera de los nueve sectores centrales. Esta cifra corresponde al Eco antiguo, sin incluir la constelación.',text:'Escucha seis segundos y responde con tres pulsos. La reliquia permanece en tu colección.',art:'relic'},
  'relic:magical':{name:'Constelación dormida',tier:'singular',probability:MAGICAL_RELIC_RATE,unit:'sectores elegibles',condition:'Fuera de los nueve sectores centrales. Parte del conjunto de reliquias, no una tirada adicional.',text:'Doce segundos de escucha y cinco pulsos despiertan una constelación.',art:'relic'},
@@ -17,7 +21,7 @@ export const RARE_CARDS=Object.freeze({
  ...Object.fromEntries(Object.entries(PET_SPECIES).map(([id,p])=>['petbox:'+id,{name:p.name,tier:'singular',probability:1/PET_BOX_DENOMINATOR,unit:'cajas naturales',condition:'Probabilidad de que una caja natural origine compañía, como visita temporal. No es la probabilidad de esta especie: no multiplicamos tasas sin demostrar su independencia.',text:'Una voz rara te acompaña durante unos minutos de juego; el encuentro permanece en esta tarjeta.',art:'pet'}]))
 });
 export const rareDefinition=type=>Object.hasOwn(RARE_CARDS,type)?RARE_CARDS[type]:null;
-export function rarityLabel(type,recorded=null){const d=recorded||rareDefinition(type);if(!d)return '';return `≈1/${Math.round(1/d.probability).toLocaleString('es-EC')} ${d.unit}`;}
+export function rarityLabel(type,recorded=null){const d=recorded||rareDefinition(type);if(!d)return '';if(d.probability===null)return 'Frecuencia conjunta sin estimar';return `≈1/${Math.round(1/d.probability).toLocaleString('es-EC')} ${d.unit}`;}
 const clean=(v,n)=>typeof v==='string'?v.slice(0,n):'';
 export const cardKey=(type,sourceId,world)=>JSON.stringify([type,sourceId,world.seed,world.layout,world.generatorVersion,world.catalogVersion,world.layoutVersion]);
 export function cardSerial(key){let h=2166136261;for(const ch of key)h=Math.imul(h^ch.charCodeAt(0),16777619);return (h>>>0).toString(16).padStart(8,'0').toUpperCase();}
@@ -26,12 +30,14 @@ export function makeRareCard(raw){
  const world={seed:raw.world.seed,layout:raw.world.layout,generatorVersion:raw.world.generatorVersion,catalogVersion:raw.world.catalogVersion,layoutVersion:raw.world.layoutVersion};
  let address=null;
  if(raw.address){try{if(!supportedWorld(raw.address)||cardKey('', '',raw.address)!==cardKey('', '',world))return null;address=placeAddress(world,raw.address.x,raw.address.y,raw.address.layer);}catch(_){return null;}}
- const def=rareDefinition(raw.type),o=raw.odds,units=new Set(['sectores de tierra','sectores elegibles','regiones elegibles','cajas naturales']);
- const valid=o?.version===1&&Number.isFinite(o.probability)&&o.probability>=1e-12&&o.probability<=1&&units.has(o.unit)&&Object.hasOwn(CARD_TIERS,o.tier)&&typeof o.condition==='string';
+ const def=rareDefinition(raw.type),o=raw.odds,units=new Set(['sectores de tierra','sectores elegibles','regiones elegibles','cajas naturales','individuos elegibles','encuentros elegibles']);
+ const valid=o?.version===1&&(o.probability===null&&def.probability===null||Number.isFinite(o.probability)&&o.probability>=1e-12&&o.probability<=1)&&units.has(o.unit)&&Object.hasOwn(CARD_TIERS,o.tier)&&typeof o.condition==='string';
  const odds={version:1,probability:valid?o.probability:def.probability,unit:valid?o.unit:def.unit,tier:valid?o.tier:def.tier,condition:clean(valid?o.condition:def.condition,600)};
+ const context={};for(const key of ['habitat','weather','phase','gesture','study','relation']){const value=clean(raw.context?.[key],100);if(value)context[key]=value;}
+ const observations=Array.isArray(raw.observations)?raw.observations.filter(o=>o&&typeof o==='object'&&deploymentTime(o.at)).slice(-8).map(o=>({at:deploymentTime(o.at),phase:clean(o.phase,40),weather:clean(o.weather,40)})):[];
  const date=clean(raw.day,10);return {id:cardKey(raw.type,raw.sourceId,world),type:raw.type,name:clean(raw.name,64)||def.name,odds,sourceId:raw.sourceId,world,address,
   precision:address?(raw.precision==='region'?'region':'point'):'unknown',regionName:clean(raw.regionName,64)||'Lugar no registrado',biome:clean(raw.biome,40),genre:clean(raw.genre,40),
-  firstSeen:deploymentTime(raw.firstSeen),day:deploymentTime(date+'T00:00:00Z')?date:'',artVariant:Number.isInteger(raw.artVariant)?Math.abs(raw.artVariant)%12:0,forced:raw.forced===true,legacy:raw.legacy===true};
+  firstSeen:deploymentTime(raw.firstSeen),day:deploymentTime(date+'T00:00:00Z')?date:'',artVariant:Number.isInteger(raw.artVariant)?Math.abs(raw.artVariant)%12:0,forced:raw.forced===true,legacy:raw.legacy===true,context,observations};
 }
 export function normalizeRareBook(raw){
  const items=[],seen=new Set();if(Array.isArray(raw?.items))for(const value of raw.items){if(items.length>=RARE_BOOK_LIMIT)break;const c=makeRareCard(value);if(!c||seen.has(c.id))continue;seen.add(c.id);items.push(c);}

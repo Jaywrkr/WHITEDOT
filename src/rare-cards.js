@@ -43,6 +43,7 @@ export function initialize(runtime){
   const card=descriptor(type,source,extra);if(!card)return false;
   const result=storeRareCard(book,card);
   if(result==='full'){if(!fullNoticed){fullNoticed=true;runtime.toast?.('Libro completo · conserva tus tarjetas con Progreso y respaldo.');}return false;}
+  if(result==='duplicate'&&card.context?.phase){const original=book.items.find(c=>c.id===card.id);const next={at:new Date().toISOString(),phase:card.context.phase,weather:card.context.weather||''};if(!original.observations.some(o=>o.phase===next.phase&&o.weather===next.weather)){original.observations.push(next);if(original.observations.length>8)original.observations.shift();runtime.save();}}
   if(result!=='added')return false;
   // Collection never starts audio, touches the cube, changes a beat or opens a modal.
   runtime.unlock?.('tarjeta1');runtime.save();
@@ -69,9 +70,10 @@ export function initialize(runtime){
    <div class="rare-odds"><b>${escape(rarityLabel(card.type,card.odds))}</b><small>Aparición teórica · ${card.type.startsWith('petbox:')?'de compañía, no de esta especie':'de este tipo'}</small></div>
    <p class="rare-location">${escape(location(card))}</p><p class="rare-biome">${escape([card.biome,runtime.GEN[card.genre]?.name||card.genre,date].filter(Boolean).join(' · '))}</p>
    <p class="rare-biome">Semilla ${escape(card.world.seed||'original')} · ${escape(card.world.layout)} · ${escape(card.address?.layer||'capa no registrada')}</p>
+   ${Object.keys(card.context||{}).length?'<p class="rare-biome">'+escape(Object.values(card.context).join(' · '))+'</p>':''}${card.observations?.length?'<p class="rare-biome">'+card.observations.length+' observaciones posteriores</p>':''}
    ${card.forced?'<p class="rare-provenance">Muestra forzada; no demuestra un encuentro natural.</p>':''}${card.legacy?'<p class="rare-provenance">Recuperada del progreso anterior; sin hora original.</p>':''}
    <details><summary>Cómo de raro es</summary><p>${escape(card.odds.condition)}</p></details>
-   ${address?`<div class="rare-actions"><button data-rare-copy="${index}">Copiar lugar</button><button data-rare-return="${index}" ${canReturn?'':'disabled'}>Orientar</button></div>${canReturn?'':'<p class="rare-provenance">Para regresar, abre su semilla y versión desde Explorar mundos.</p>'}`:''}
+   ${address?`<div class="rare-actions"><button data-rare-png="${index}">Imagen</button><button data-rare-copy="${index}">Copiar lugar</button><button data-rare-return="${index}" ${canReturn?'':'disabled'}>Orientar</button></div>${canReturn?'':'<p class="rare-provenance">Para regresar, abre su semilla y versión desde Explorar mundos.</p>'}`:''}
   </article>`;
  }
  function cards(){
@@ -81,10 +83,18 @@ export function initialize(runtime){
   return `<div class="rare-book-head"><h3>Libro de hallazgos · ${items.length}</h3><p>Cada encuentro tiene su tarjeta. Volver al mismo ejemplar no duplica; otro lugar sí. El código conserva semilla, versiones, capa y coordenadas.</p></div><div class="rare-grid">${list.map(({c,index})=>cardHTML(c,index)).join('')}</div>
    <div class="rare-pager"><button data-rare-page="-1" ${page?'':'disabled'} aria-label="Página anterior de hallazgos">‹</button><span>${page+1} / ${pages}</span><button data-rare-page="1" ${page+1<pages?'':'disabled'} aria-label="Página siguiente de hallazgos">›</button></div>`;
  }
+ async function exportPNG(card){
+  const canvas=document.createElement('canvas');canvas.width=512;canvas.height=720;const c=canvas.getContext('2d');c.fillStyle='#080b0e';c.fillRect(0,0,512,720);c.strokeStyle=CARD_TIERS[card.odds.tier].ink;c.lineWidth=2;c.strokeRect(24,24,464,672);
+  const svg=rarePortrait(card).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ').replace('class="rare-glyph"','stroke="#d7c497" fill="none" stroke-width="1.3"').replace('class="rare-orbit"','stroke="#596268" fill="none"').replace('class="rare-sparks"','stroke="#d7c497" fill="none"');
+  const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));try{const img=new Image();img.src=url;await img.decode();c.drawImage(img,96,110,320,240);c.fillStyle='#e5e9e9';c.font='22px monospace';c.textAlign='center';c.fillText(card.name.slice(0,33),256,395);c.font='14px monospace';[location(card),rarityLabel(card.type,card.odds),'Semilla '+(card.world.seed||'original'),card.world.layout+' · '+(card.address?.layer||'sin ubicación'),'WHITEDOT · #'+cardSerial(card.id)].forEach((text,i)=>c.fillText(text.slice(0,49),256,450+i*35));
+   const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw Error('Imagen no disponible');const out=URL.createObjectURL(blob),a=document.createElement('a');a.href=out;a.download='whitedot-'+cardSerial(card.id)+'.png';a.click();setTimeout(()=>URL.revokeObjectURL(out),1000);
+  }catch(_){runtime.toast('No se pudo exportar la imagen. El código del lugar sigue disponible.');}finally{URL.revokeObjectURL(url);}
+ }
  async function action(event){
-  const button=event.target.closest('button[data-rare-copy],button[data-rare-return],button[data-rare-page]');if(!button||button.disabled)return;
+  const button=event.target.closest('button[data-rare-copy],button[data-rare-return],button[data-rare-page],button[data-rare-png]');if(!button||button.disabled)return;
   if(button.dataset.rarePage){const delta=Number(button.dataset.rarePage);if(![-1,1].includes(delta))return;page+=delta;runtime.refreshJournal?.();(document.querySelector('[data-rare-page="'+button.dataset.rarePage+'"]:not(:disabled)')||document.querySelector('[data-rare-page]:not(:disabled)'))?.focus();return;}
-  const index=Number(button.dataset.rareCopy??button.dataset.rareReturn),book=ensure(),card=Number.isInteger(index)&&book.items[index];if(!card?.address)return;
+  const index=Number(button.dataset.rareCopy??button.dataset.rareReturn??button.dataset.rarePng),book=ensure(),card=Number.isInteger(index)&&book.items[index];if(!card)return;
+  if(button.dataset.rarePng!==undefined){await exportPNG(card);return;}if(!card.address)return;
   if(button.dataset.rareCopy!==undefined){
    const code=encodePlace(card.address,card.name);try{await navigator.clipboard.writeText(code);button.textContent='Copiado';}
    catch(_){$('rarePlaceCode').value=code;$('rareCodeFallback').hidden=false;$('rarePlaceCode').focus();$('rarePlaceCode').select();}return;
