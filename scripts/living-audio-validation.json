@@ -1,6 +1,6 @@
 {
   "renders": 28,
-  "maxPeak": 0.9118529558181763,
+  "maxPeak": 0.9118527770042419,
   "sampleRates": [
     44100,
     48000
@@ -41,8 +41,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9014719128608704,
-      "rmsDb": -12.363144195373113,
+      "peak": 0.9014719724655151,
+      "rmsDb": -12.363165822894167,
       "hotFraction": 0
     },
     {
@@ -80,8 +80,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.7913066744804382,
-      "rmsDb": -20.148672896401848,
+      "peak": 0.7913089394569397,
+      "rmsDb": -20.148458227665014,
       "hotFraction": 0
     },
     {
@@ -119,8 +119,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9030886888504028,
-      "rmsDb": -9.344747144293668,
+      "peak": 0.9030885100364685,
+      "rmsDb": -9.344734280389028,
       "hotFraction": 0
     },
     {
@@ -155,8 +155,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.47656428813934326,
-      "rmsDb": -20.217585760532025,
+      "peak": 0.47655174136161804,
+      "rmsDb": -20.217582744043163,
       "hotFraction": 0
     },
     {
@@ -193,8 +193,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9117434620857239,
-      "rmsDb": -13.222007268424667,
+      "peak": 0.9117437601089478,
+      "rmsDb": -13.221963041683637,
       "hotFraction": 0
     },
     {
@@ -233,8 +233,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.7883487343788147,
-      "rmsDb": -20.87160971404426,
+      "peak": 0.7883513569831848,
+      "rmsDb": -20.87160603139139,
       "hotFraction": 0
     },
     {
@@ -272,8 +272,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9014719128608704,
-      "rmsDb": -12.346264648883396,
+      "peak": 0.9014717936515808,
+      "rmsDb": -12.346252251137393,
       "hotFraction": 0
     },
     {
@@ -311,8 +311,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.7913050651550293,
-      "rmsDb": -20.14528251775261,
+      "peak": 0.7913050055503845,
+      "rmsDb": -20.145286974945392,
       "hotFraction": 0
     },
     {
@@ -350,8 +350,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9030326008796692,
-      "rmsDb": -9.309213697281285,
+      "peak": 0.9030328989028931,
+      "rmsDb": -9.309229340830674,
       "hotFraction": 0
     },
     {
@@ -386,8 +386,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.47645750641822815,
-      "rmsDb": -20.212584603099195,
+      "peak": 0.4764569401741028,
+      "rmsDb": -20.212586550882797,
       "hotFraction": 0
     },
     {
@@ -424,8 +424,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9117903113365173,
-      "rmsDb": -13.265282126793867,
+      "peak": 0.9117904901504517,
+      "rmsDb": -13.265355956210916,
       "hotFraction": 0
     },
     {
@@ -464,8 +464,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.7877857685089111,
-      "rmsDb": -20.83601320270401,
+      "peak": 0.7877790331840515,
+      "rmsDb": -20.836014961500467,
       "hotFraction": 0
     },
     {
@@ -504,7 +504,7 @@
       "glassRoles": [],
       "sampleRate": 48000,
       "peak": 0.9014718532562256,
-      "rmsDb": -12.369745121005106,
+      "rmsDb": -12.369729633542226,
       "hotFraction": 0
     },
     {
@@ -542,8 +542,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.7913053035736084,
-      "rmsDb": -20.14727332367689,
+      "peak": 0.7913050055503845,
+      "rmsDb": -20.147057489739836,
       "hotFraction": 0
     },
     {
@@ -581,8 +581,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9030328989028931,
-      "rmsDb": -9.313015371982674,
+      "peak": 0.9030324220657349,
+      "rmsDb": -9.313002030892518,
       "hotFraction": 0
     },
     {
@@ -617,8 +617,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.47657686471939087,
-      "rmsDb": -20.19915556395041,
+      "peak": 0.47659000754356384,
+      "rmsDb": -20.199121107127574,
       "hotFraction": 0
     },
     {
@@ -655,8 +655,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9118529558181763,
-      "rmsDb": -13.193102012480146,
+      "peak": 0.9118527770042419,
+      "rmsDb": -13.193123318096154,
       "hotFraction": 0
     },
     {
@@ -695,8 +695,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.7880153059959412,
-      "rmsDb": -20.847010442024757,
+      "peak": 0.7880151867866516,
+      "rmsDb": -20.84699869212305,
       "hotFraction": 0
     },
     {
@@ -734,8 +734,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9014718532562256,
-      "rmsDb": -12.353801963276377,
+      "peak": 0.9014719128608704,
+      "rmsDb": -12.353800108211486,
       "hotFraction": 0
     },
     {
@@ -773,8 +773,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.7913047671318054,
-      "rmsDb": -20.146464289621964,
+      "peak": 0.7913066744804382,
+      "rmsDb": -20.146470152171204,
       "hotFraction": 0
     },
     {
@@ -812,8 +812,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9031755924224854,
-      "rmsDb": -9.334990526283555,
+      "peak": 0.9031766057014465,
+      "rmsDb": -9.334961989395225,
       "hotFraction": 0
     },
     {
@@ -848,8 +848,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.4764416515827179,
-      "rmsDb": -20.223089357783795,
+      "peak": 0.47647517919540405,
+      "rmsDb": -20.223090563055703,
       "hotFraction": 0
     },
     {
@@ -886,8 +886,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9089046716690063,
-      "rmsDb": -13.12620312909927,
+      "peak": 0.9089028835296631,
+      "rmsDb": -13.126219105769096,
       "hotFraction": 0
     },
     {
@@ -926,8 +926,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.7585640549659729,
-      "rmsDb": -20.809933870401608,
+      "peak": 0.7585764527320862,
+      "rmsDb": -20.809928655993268,
       "hotFraction": 0
     },
     {
@@ -965,8 +965,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9025443196296692,
-      "rmsDb": -12.412327921017095,
+      "peak": 0.9025386571884155,
+      "rmsDb": -12.412324502368655,
       "hotFraction": 0
     },
     {
@@ -1004,8 +1004,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.7912530899047852,
-      "rmsDb": -20.11768236389247,
+      "peak": 0.7912514209747314,
+      "rmsDb": -20.11767327129028,
       "hotFraction": 0
     },
     {
@@ -1043,8 +1043,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9031161069869995,
-      "rmsDb": -9.281129606717885,
+      "peak": 0.90311598777771,
+      "rmsDb": -9.28106068342226,
       "hotFraction": 0
     },
     {
@@ -1079,8 +1079,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.476449191570282,
-      "rmsDb": -20.20895485346734,
+      "peak": 0.4764333963394165,
+      "rmsDb": -20.208955354808566,
       "hotFraction": 0
     }
   ]

@@ -1,3 +1,4 @@
+import {POWERS} from './expansion-music.js';
 import {livingDefinition} from './living-catalog.js';
 import {RARE_BOOK_LIMIT,RARE_PAGE_SIZE,CARD_TIERS,rareDefinition,rarityLabel,cardSerial,makeRareCard,normalizeRareBook,storeRareCard} from './rare-card-model.js';
 import {rarePortrait} from './rare-card-art.js';
@@ -48,7 +49,7 @@ export function initialize(runtime){
   if(result!=='added')return false;
   // Collection never starts audio, touches the cube, changes a beat or opens a modal.
   runtime.unlock?.('tarjeta1');runtime.save();
-  if(queue.length<4)queue.push(card); // All cards are saved, even if a burst exceeds the notice queue.
+  if(!runtime.boxCardCelebration?.(card)&&queue.length<4)queue.push(card); // All cards are saved, even if a burst exceeds the notice queue.
   return true;
  }
  function reveal(card){
@@ -59,11 +60,12 @@ export function initialize(runtime){
  }
  function tick(dt){
   ensure();if(!runtime.inWorld()){queue=[];dismiss();return;}
-  if(!active()){hide();return;}
+  if(!active()||runtime.celebrationActive){hide();return;}
   if(shown){$('rareNotice').hidden=false;document.body.classList.add('rare-reveal');remaining-=Math.max(0,Math.min(.1,dt));if(remaining<=0)dismiss();}
   else if(queue.length)reveal(queue.shift());
  }
  function cardHTML(card,index){
+  const power=card.type.startsWith('box:')?POWERS[card.type.slice(4)]:null;const powerInfo=power?'<p>'+escape(power.text)+'</p><p>'+power.seconds+' s por caja · máximo '+(power.seconds*2)+' s</p>':'';
   const def=rareDefinition(card.type),tier=CARD_TIERS[card.odds.tier],address=card.address,canReturn=address&&sameWorld(address,runtime.worldIdentity),serial=cardSerial(card.id);
   const date=card.firstSeen?new Intl.DateTimeFormat('es-EC',{day:'numeric',month:'short',year:'numeric'}).format(new Date(card.firstSeen)):card.day||'Fecha original no registrada';
   return `<article class="rare-card" style="--rare-ink:${tier.ink}"><header><span>${escape(card.forced?'Laboratorio':tier.name)}</span><small>#${serial}</small></header>
@@ -74,7 +76,7 @@ export function initialize(runtime){
    ${Object.keys(card.context||{}).length?'<p class="rare-biome">'+escape(Object.values(card.context).join(' · '))+'</p>':''}${card.observations?.length?'<p class="rare-biome">'+card.observations.length+' observaciones posteriores</p>':''}
    ${card.forced?'<p class="rare-provenance">Muestra forzada; no demuestra un encuentro natural.</p>':''}${card.legacy?'<p class="rare-provenance">Recuperada del progreso anterior; sin hora original.</p>':''}
    <details><summary>Cómo de raro es</summary><p>${escape(card.odds.condition)}</p></details>
-   ${address?`<div class="rare-actions"><button data-rare-png="${index}">Imagen</button><button data-rare-copy="${index}">Copiar lugar</button><button data-rare-return="${index}" ${canReturn?'':'disabled'}>Orientar</button></div>${canReturn?'':'<p class="rare-provenance">Para volver: Menú → Otros mundos.</p>'}`:''}
+   ${powerInfo}${address?`<div class="rare-actions"><button data-rare-png="${index}">Imagen</button><button data-rare-copy="${index}">Copiar lugar</button><button data-rare-return="${index}" ${canReturn?'':'disabled'}>Orientar</button></div>${canReturn?'':'<p class="rare-provenance">Para volver: Menú → Otros mundos.</p>'}`:''}
   </article>`;
  }
  function cards(){

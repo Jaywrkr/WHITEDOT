@@ -58,10 +58,16 @@ with sync_playwright() as p:
   page.evaluate("()=>{const r=__testRuntime;for(const [step,degree]of [[0,0],[4,2],[12,4],[24,2]]){deepObject.state.dialogue.elapsed=r.SIX*step;r.playVoice('pulso',degree,r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'player');}}")
   assert page.evaluate('deepObject.state.dialogue.events.length')==4
   page.locator('#bMenu').click();frozen=page.evaluate('deepObject.state.dialogue.elapsed');page.wait_for_timeout(300);assert page.evaluate('deepObject.state.dialogue.elapsed')==frozen;page.locator('#mnClose').click()
-  page.touchscreen.tap(center['x'],center['y']);page.wait_for_function('deepObject.state.dialogue.phase==="replying"')
+  # Waiting is the automatic-response gesture. A late tap may start a new lesson.
+  page.wait_for_function('deepObject.state.dialogue.phase==="replying"')
   assert page.evaluate('deepObject.state.dialogue.phrase.map(n=>n.index)')==[0,2,4,2]
   emitted=page.evaluate("""()=>{const r=__testRuntime,ac=r.ac,old=ac.createOscillator.bind(ac);let n=0;ac.createOscillator=()=>{n++;return old();};r.encounterBar(ac.currentTime+.1,2000);ac.createOscillator=old;return n;}""")
   assert emitted>0,'learned answer must actually emit audio';assert page.evaluate('!!__testRuntime.S.ach.respuestaAnimal')
+  page.touchscreen.tap(center['x'],center['y']);assert page.evaluate('deepObject.state.dialogue.phase')=='listening'
+  # Test the manual reply handler atomically, before its independent idle timer.
+  page.evaluate("()=>{const r=__testRuntime,d=deepObject.state.dialogue;for(const [step,index]of [[0,0],[4,2]]){d.elapsed=r.SIX*step;r.playVoice('pulso',index,r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'player');}if(!r.depthTap(deepObject,0))throw Error('manual reply gesture rejected');}")
+  assert page.evaluate('deepObject.state.dialogue.phase')=='replying'
+  assert page.evaluate('deepObject.state.dialogue.phrase.map(n=>n.index)')==[0,2]
   page.touchscreen.tap(center['x'],center['y']);assert page.evaluate('deepObject.state.dialogue.phase')=='listening'
   page.mouse.click(30,height/2);page.wait_for_function('deepObject.state.dialogue.events.length>0')
   page.wait_for_function('deepObject.state.dialogue.phase==="replying"')

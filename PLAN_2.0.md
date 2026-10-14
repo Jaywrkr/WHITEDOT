@@ -18,8 +18,8 @@ Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0**
 | Fase | Rama | Estado |
 |---|---|---|
 | 0 · Base de colección | `v2/f0-coleccion` | Implementada y probada; pendiente de PR/merge de Jay |
-| 1 · El universo se ve real | `v2/f1-universo-visual` | Pendiente |
-| 2 · Celebración y caja mágica | `v2/f2-celebracion` | Pendiente |
+| 1 · El universo se ve real | `v2/f1-universo-visual` | Implementada y probada; PR/merge y 60 FPS físicos por aceptar |
+| 2 · Celebración y caja mágica | `v2/f2-celebracion` | Implementada y probada; pendiente de PR/merge de Jay |
 | 3 · Cubo con 50 personalizaciones | `v2/f3-cubo-50` | Pendiente |
 | 7 · Menú principal limpio | `v2/f7-menu` | Pendiente |
 | 6 · Bitácora perfeccionada | `v2/f6-bitacora` | Pendiente |
