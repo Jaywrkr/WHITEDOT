@@ -1,0 +1,126 @@
+/* Estilo J: simple, negro, blanco y un solo acento para lo ganado.
+   Last layer: it only restyles the interface; the world drawn in Canvas is untouched.
+   Rules: square corners (pixel), one big phrase per sheet in Silkscreen, mono for the rest,
+   gold only for what the player earns (light completed, rare finds, new colors). */
+:root{
+  --surface:#000;--surface-raised:#000;--line:#ffffff26;--faint:#ffffff26;--dim:#ffffff99;
+  --radius:0;--control-radius:0;--earned:var(--gold);
+}
+
+/* Square everything: the world is made of pixels. */
+button,a.btn,input:not([type="range"]),select,textarea,.modal .sheet,.cube-sheet,.journal-card,.place-code,.list,
+.rare-card,.voice,.toast,.routehud,.scanner,.fxpanel,.glasspanel,.fxpad,.rare-notice,.lab-bar,.sky,.card img,#mSet video,
+.bag button,.ico,.ico.round,.list .px,.cube-options .cube-swatch,.swatches button{border-radius:0}
+
+/* Controls: white line, white state. Pressed or primary = an inverted pixel. */
+button,a.btn{border-color:var(--line);color:var(--ink);font-size:13px;letter-spacing:0}
+.goal span,.voice span,.toast,.phrase,label,summary,.sheet p,.steps div,.menu-heading small{letter-spacing:0}
+.sheet-close,.fxhead button{font-size:26px;color:var(--ink)}
+@media(hover:hover){button:hover:not(:disabled),a.btn:hover{background:#ffffff0d;border-color:#ffffff66}}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex="0"]:focus-visible,.voice:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+button.gold,a.btn.gold,body.world-mode .tiles button.gold{background:var(--ink);color:var(--void);border-color:var(--ink);font-weight:600}
+@media(hover:hover){button.gold:hover:not(:disabled),a.btn.gold:hover{background:#e6e6e6;border-color:#e6e6e6}}
+button[aria-pressed="true"],body.world-mode .tiles button[aria-pressed="true"],.journal-tabs button[aria-pressed="true"],
+#labSolo[aria-pressed="true"],#labVerdicts [aria-pressed="true"],.bag button.on{color:var(--ink);border-color:var(--ink);background:#ffffff14}
+input[type="range"]{accent-color:var(--ink)}
+input:not([type="range"]):not([type="file"]),select,textarea{background:var(--void);border-color:var(--line);font-size:13px}
+label,summary{font-size:13px}
+
+/* Sheets: pure black, one hook phrase on top. */
+.modal{background:#000c}
+.modal .sheet,.cube-sheet{background:var(--void);border-color:#ffffff33}
+.sheet h2,.cube-sheet h2,.menu-heading h2{font-family:var(--display);font-weight:400;font-size:26px;line-height:1.15;letter-spacing:.01em}
+.sheet p{font-size:13px;line-height:1.65;color:var(--dim)}
+.sheet p b{color:var(--ink)}
+.panel-heading,.menu-heading{background:var(--void)}
+.steps i{font-family:var(--display);color:var(--ink)}
+.steps div{font-size:14px}
+.kv b,.style-now{font-family:var(--display);font-weight:400}
+.style-now{color:var(--ink)}
+.sub,.kv span,.ends{color:var(--dim)}
+.journal-card h3,#journalBody>h3{color:var(--ink)}
+.list .got .px{background:var(--ink);border-color:var(--ink)}
+.list .life.got .px,.list .q .px{background:var(--earned);border-color:var(--earned)}
+
+/* HUD: the day and its light. Version, counters and streak live in the menu and the journal. */
+.hud-right{display:none}
+.day{font-size:22px;letter-spacing:.02em}
+.era,body.world-focus .era{color:var(--dim)}
+.bar{height:2px;background:#ffffff1f}
+.goal b{font-weight:500}
+.goal span{color:var(--dim)}
+.reto{color:var(--ink)}
+
+/* In the World only the place speaks: its name in the pixel font. */
+body.world-focus .era{font-family:var(--display);font-size:12px;letter-spacing:.02em;color:var(--ink);max-width:calc(100vw - 120px)}
+body.world-focus .goal{color:var(--dim)}
+.zone b,body.world-focus .zone b{font-family:var(--display);font-weight:400;font-size:22px;line-height:1.15}
+.zone small{color:var(--dim)}
+
+/* Dock: two square keys. */
+.ico{background:#000c;border-color:#ffffff40}
+.ico svg{stroke-width:1.5}
+#bAuto[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);background:#ffffff14}
+
+/* Voice: one line, no label, white edge. */
+.voice,body.world-focus .voice{background:#000e;border:1px solid var(--line);border-left:2px solid var(--ink)}
+.voice small{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.voice span{font-size:13px;line-height:1.5}
+.toast{background:var(--void);border-color:var(--ink);font-size:12px}
+.toast em{color:var(--earned)}
+.phrase{font-size:14px}
+.phrase.big{font-family:var(--display);font-size:24px;line-height:1.2;color:var(--earned)}
+
+/* Menu: six big keys to play, then a quiet list. */
+.modal .menu-sheet{max-width:560px}
+.menu-heading small{color:var(--dim)}
+.menu-sections{grid-template-columns:1fr;gap:18px}
+.menu-group h3{font:400 12px/1.5 var(--display);color:var(--dim);letter-spacing:.04em;margin:0 0 8px}
+.menu-group.primary .tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.menu-group.primary .tiles button{flex-direction:column;justify-content:center;text-align:center;gap:10px;min-height:88px;padding:12px 6px;border-color:var(--line);font:400 12px/1.3 var(--display);letter-spacing:.02em}
+.menu-group.primary .tiles svg{width:24px;height:24px;color:var(--ink)}
+.menu-group:not(.primary) .tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
+.menu-group:not(.primary) .tiles button{border:0;border-bottom:1px solid var(--line);padding:8px 2px;font-size:13px}
+.menu-group:not(.primary) .tiles svg{width:16px;height:16px}
+.menu-foot{display:flex;align-items:flex-end;gap:12px;border-top:1px solid var(--line);padding-top:12px}
+.menu-foot .release-badge{position:static;text-align:left;pointer-events:none}
+.menu-foot .release-badge,.menu-foot .release-badge small{display:block;font-size:11px;color:var(--dim)}
+.menu-footnote{font-family:var(--display);font-size:12px;color:var(--ink)}
+
+/* The prototype tools exist only for development (localhost, ?dev=1 or automated tests). */
+.devbox{display:none}
+body.dev .devbox{display:block}
+
+/* Discoveries keep their own ink; everything else stays black and white. */
+.rare-card{background:var(--void)}
+.rare-notice{background:var(--void);border-color:#ffffff33}
+.rare-notice-copy strong{font-family:var(--display);font-weight:400;font-size:14px}
+.rare-notice-copy small{font-size:10px}
+.scanner{background:var(--void);border-color:var(--line)}
+.scanner h2{font:400 14px/1.4 var(--display);color:var(--ink)}
+.fxpanel,.glasspanel,.lab-bar,.routehud{background:var(--void)}
+.fxpad i{box-shadow:none;border-color:var(--ink)}
+.studio{background:linear-gradient(transparent,#000 24%)}
+.swatches button{border-width:8px}
+.cube-options .cube-swatch{border-width:5px}
+
+@media(max-width:600px){
+ .sheet h2,.cube-sheet h2,.menu-heading h2{font-size:22px}
+ .menu-group.primary .tiles button{min-height:80px}
+}
+@media(max-width:360px){
+ .menu-group.primary .tiles button{font-size:11px;min-height:72px}
+ .menu-group:not(.primary) .tiles button{font-size:12px}
+}
+@media(max-height:500px){
+ .menu-sections{grid-template-columns:1fr 1fr}
+ .menu-group.primary{grid-column:1/-1}
+ .menu-group.primary .tiles{grid-template-columns:repeat(6,minmax(0,1fr))}
+ .menu-group.primary .tiles button{min-height:64px}
+ .sheet h2{font-size:20px}
+}
+
+/* Preferences inside Más: quiet labelled selects. */
+.menu-prefs{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-top:12px;align-items:center}
+.menu-prefs label{font-size:12px;color:var(--dim)}
+@media(max-width:360px){.menu-prefs{grid-template-columns:1fr}}

@@ -24,7 +24,7 @@ try:
    page.wait_for_function('!document.getElementById("w").inert')
    page.locator('#bMenu').click()
    assert page.locator('#w').evaluate('(e)=>e.inert'), 'canvas cannot receive focus behind a modal'
-   assert page.locator('.menu-group h3').all_text_contents()==['Recorrer','Crear y escuchar','Tu viaje','Preferencias']
+   assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Música','Más']
    page.locator('#mMenu .sheet').evaluate('e=>e.scrollTop=e.scrollHeight')
    close=page.locator('#mnClose').bounding_box()
    assert close['y']>=0 and close['y']+close['height']<=height, 'close stays visible while menu scrolls'

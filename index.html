@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="./styles/game.css">
 <link rel="stylesheet" href="./styles/interface.css">
 <link rel="stylesheet" href="./assets/fonts/fonts.css">
+<link rel="stylesheet" href="./styles/estilo-j.css">
 
 
 </head>
@@ -26,7 +27,6 @@
 <div class="hud">
   <div><div class="day" id="day">DÍA 1</div><div class="era" id="era">Era I · Pixel</div></div>
   <div class="hud-right">
-  <div class="release-badge" id="releaseBadge"><span id="releaseVersion">v1.1.0-alpha.10</span><small id="releaseDeploy">deploy sin registrar</small></div>
   <small class="element-count" id="elementCount">Elementos 0</small>
   <div class="stats">
     <div title="Racha">RACHA <b id="streak">0</b></div>
@@ -81,15 +81,16 @@
   <div class="sheet menu-sheet">
     <header class="menu-heading"><div><small>WHITEDOT · Tu espacio</small><h2 id="menuTitle">Explorar y crear</h2></div><button id="mnClose" class="sheet-close" aria-label="Cerrar menú">×</button></header>
     <div class="menu-sections">
-    <section class="menu-group"><h3>Recorrer</h3><div class="tiles">
+    <section class="menu-group primary"><h3>Jugar</h3><div class="tiles">
       <button id="bWorld"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/></svg><span>Mundo</span></button>
-      <button id="bFavorites"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Favoritos</span></button>
-      <button id="bMap"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mapa</span></button>
-      <button id="bWorlds"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c5 4 5 12 0 16M12 4c-5 4-5 12 0 16"/></svg><span>Explorar mundos</span></button>
-    </div></section>
-    <section class="menu-group"><h3>Crear y escuchar</h3><div class="tiles">
-      <button id="bTools" aria-expanded="false" title="Efectos, eco de 2 compases y desplegar Estudio" hidden><svg viewBox="0 0 24 24"><path d="M6 4v16M12 4v16M18 4v16M4 9h4M10 15h4M16 7h4"/></svg><span>Herramientas</span></button>
       <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Estudio</span></button>
+      <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
+      <button id="bMap"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mapa</span></button>
+      <button id="bFavorites"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Favoritos</span></button>
+      <button id="bCube"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/><path d="M3 3h3M18 21h3"/></svg><span>Tu cubo</span></button>
+    </div></section>
+    <section class="menu-group"><h3>Música</h3><div class="tiles">
+      <button id="bTools" aria-expanded="false" title="Efectos, eco de 2 compases y desplegar Estudio" hidden><svg viewBox="0 0 24 24"><path d="M6 4v16M12 4v16M18 4v16M4 9h4M10 15h4M16 7h4"/></svg><span>Herramientas</span></button>
       <button id="bMusicSettings"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h14M9 3v6M15 9v6M11 15v6"/></svg><span>Intensidad musical</span></button>
       <button id="bSound"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg><span>Música</span></button>
       <button id="bSoft" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 5v14M16 7v10M20 10v4"/></svg><span>Escucha suave</span></button>
@@ -97,18 +98,16 @@
       <button id="bCreateMode" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg><span>Modo: explorar</span></button>
       <button id="bRecord"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="9"/></svg><span>Grabar set</span></button>
     </div></section>
-    <section class="menu-group"><h3>Tu viaje</h3><div class="tiles">
-      <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
-      <button id="bCube"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/><path d="M3 3h3M18 21h3"/></svg><span>Tu cubo</span></button>
+    <section class="menu-group"><h3>Más</h3><div class="tiles">
+      <button id="bWorlds"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c5 4 5 12 0 16M12 4c-5 4-5 12 0 16"/></svg><span>Explorar mundos</span></button>
       <button id="bSky"><svg viewBox="0 0 24 24"><path d="M5 17l5-6 4 3 5-8"/><circle cx="5" cy="17" r="1.5"/><circle cx="10" cy="11" r="1.5"/><circle cx="14" cy="14" r="1.5"/><circle cx="19" cy="6" r="1.5"/></svg><span>Constelación</span></button>
       <button id="bSession"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>Sesión</span></button>
       <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
-    </div></section>
-    <section class="menu-group"><h3>Preferencias</h3><label for="autoIntent">Paseo automático</label><select id="autoIntent"><option value="paisaje">Paisaje y descanso</option><option value="vida">Vida y relaciones</option><option value="hallazgos">Encuentros y hallazgos</option></select><label for="voiceMode">La Voz · solo texto</label><select id="voiceMode"><option value="discreta">Discreta</option><option value="guia">Guía de gestos</option><option value="poetica">Poética</option></select><div class="tiles">
+      <button id="bConnection"><span>Cuenta y duetos</span></button>
       <button id="bDetails" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v1M12 11v6"/></svg><span>Mostrar detalles</span></button>
-      <button id="bConnection"><span>Cuenta y duetos</span></button><button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Progreso y respaldo</span></button>
+      <button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Progreso y respaldo</span></button>
       <button id="pwaUpdate" hidden><span>Actualizar versión disponible</span></button>
-    </div></section>
+    </div><div class="menu-prefs"><label for="autoIntent">Paseo automático</label><select id="autoIntent"><option value="paisaje">Paisaje y descanso</option><option value="vida">Vida y relaciones</option><option value="hallazgos">Encuentros y hallazgos</option></select><label for="voiceMode">La Voz · solo texto</label><select id="voiceMode"><option value="discreta">Discreta</option><option value="guia">Guía de gestos</option><option value="poetica">Poética</option></select></div></section>
     </div>
     <details class="devbox"><summary>Prototipo</summary><div class="row">
       <button id="dFill">Completar día</button>
@@ -119,8 +118,8 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="row"><small class="release-id">WHITEDOT · Universo vivo alpha 10</small>
-    <span class="menu-footnote">Arrastra · toca · escucha</span></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v1.1.0-alpha.10</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>
 

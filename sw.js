@@ -24,6 +24,7 @@ const SHELL=[
  "./index.html",
  "./styles/game.css",
  "./styles/interface.css",
+ "./styles/estilo-j.css",
  "./assets/fonts/fonts.css",
  "./assets/fonts/silkscreen.ttf",
  "./assets/fonts/jetbrains-mono.ttf",
