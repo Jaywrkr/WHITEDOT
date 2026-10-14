@@ -27,7 +27,7 @@ export function initialize(runtime) {
 
   /* ---------- tarjetas ---------- */
   async function shareCard(kind){
-    await Promise.all([document.fonts.load('400 14px "Geist Mono"'),document.fonts.load('600 14px "Geist Mono"'),document.fonts.load('400 24px Silkscreen')]);
+    await Promise.all([document.fonts.load('400 14px "Geist Mono"'),document.fonts.load('600 14px "Geist Mono"'),document.fonts.load('400 24px "Geist Mono"')]);
     const c=document.createElement("canvas");c.width=1080;c.height=1350;const x=c.getContext("2d");
     x.fillStyle="#000";x.fillRect(0,0,1080,1350);
     if(kind==="sky")drawSky(x,100,300,880,700);
@@ -40,12 +40,12 @@ export function initialize(runtime) {
       const last=tr[tr.length-1],ps=Math.max(14,runtime.pxSize()*1.4);x.globalAlpha=1;x.fillRect(offx+(last[0]-a)*s-ps/2,offy+(last[1]-b)*s-ps/2,ps,ps);
     }
     x.globalAlpha=1;x.textBaseline="top";x.fillStyle="#fff";
-    x.font='96px Silkscreen, monospace';x.fillText(kind==="sky"?runtime.S.stars.length+" ESTRELLAS":"DÍA "+runtime.displayDay(),100,96);
+    x.font='96px "Geist Mono", monospace';x.fillText(kind==="sky"?runtime.S.stars.length+" ESTRELLAS":"DÍA "+runtime.displayDay(),100,96);
     x.font='28px "Geist Mono", monospace';x.fillStyle="#8a8a8f";x.fillText((kind==="sky"?"MI CONSTELACIÓN · "+Object.keys(runtime.S.zones).length+" ZONAS":"ERA "+runtime.era(runtime.displayDay())).toUpperCase(),104,216);
     x.fillStyle="#fff";x.font='600 34px "Geist Mono", monospace';
     x.fillText("RACHA "+runtime.shownStreak(),100,1040);x.fillText("ESTRELLAS "+runtime.S.stars.length,430,1040);x.fillText("TAMAÑO "+runtime.level(),800,1040);
     x.font='40px "Geist Mono", monospace';x.fillText(runtime.shownStreak()>1?"No fallé. "+runtime.shownStreak()+" días seguidos.":"Hoy sumé.",100,1120);
-    x.fillStyle="#8a8a8f";x.font='26px "Geist Mono", monospace';x.fillText("WHITEDOT  ·  @jaywrkr",100,1236);x.fillStyle="#fff";x.font='30px Silkscreen, monospace';x.textAlign="right";x.fillText("SIMPLE.",980,1232);x.textAlign="left";
+    x.fillStyle="#8a8a8f";x.font='26px "Geist Mono", monospace';x.fillText("WHITEDOT  ·  @jaywrkr",100,1236);x.fillStyle="#fff";x.font='30px "Geist Mono", monospace';x.textAlign="right";x.fillText("SIMPLE.",980,1232);x.textAlign="left";
     runtime.$("shareImg").alt=kind==="sky"?"Mi constelación en WHITEDOT":"Mi día en WHITEDOT";
     runtime.$("shareImg").src=c.toDataURL("image/png");runtime.$("mShare").hidden=false;
   }

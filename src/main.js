@@ -1,4 +1,5 @@
 import {initialize as celebration} from './celebration.js';
+import {initialize as practiceTravel} from './practice-travel.js';
 import {initialize as worldVisibility} from './world-visibility.js';
 import {initialize as rewards} from './rewards.js';
 import {initialize as connection} from './connection.js';
@@ -152,6 +153,7 @@ runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMod
 seeds(runtime);
 lab(runtime);
 worldVisibility(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
+practiceTravel(runtime);
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
 // Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.

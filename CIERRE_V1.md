@@ -1,5 +1,7 @@
 # WHITEDOT · Cierre V1
 
+> **Tipografía vigente:** Jay pidió Geist Mono en todo, incluidos títulos, Canvas y exportaciones. Las propuestas de Silkscreen/JetBrains de abajo son históricas; prevalece [AGENTS.md](AGENTS.md).
+
 > **Actualización (14 oct, tarde):** mientras se preparaban las fases, `main` integró el universo vivo (#85–#98, 1.1.0-alpha.10): 28 linajes, voz contextual, cajas temporales, cuentas y duetos opcionales. Las ramas `cierre/*` se rehicieron sobre ese `main`. Cambios respecto al plan de abajo:
 > - **Versión de cierre: 1.1.0**, no 1.0.0 (main ya estaba en 1.1.0-alpha.10).
 > - **Mascota de caja:** ya resuelta en main (visita temporal); solo se ajustó su texto.

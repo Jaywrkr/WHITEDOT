@@ -25,7 +25,9 @@ export function createFlock(region,regionSize,biome,seedOf,rng){
  if(region.sea||!keyOk(region.key)||biome==='vacio')return null;
  const home=region.key==='0,0';if(!home&&rng(seedOf(`vida:flock:presence:v1:${region.key}`))()>=FLOCK_RARITY)return null;
  const r=rng(seedOf(`vida:flock:v1:${region.key}`)),pool=POOLS[biome]||['golondrina'];
- const species=home?'golondrina':r()<LIRA_SHARE?'lira':pool[Math.floor(r()*pool.length)],spec=SPECIES[species];
+ const [zx,zy]=region.key.split(',').map(v=>Math.floor(Number(v)/3)),dominant=seedOf(`population:flock:v1:${zx},${zy}:${biome}`)%pool.length;
+ // Keep the legacy presence/rare roll and coordinate draws; only common species are biased by territory.
+ const species=home?'golondrina':r()<LIRA_SHARE?'lira':pool[(dominant+(r()<.8?0:1))%pool.length],spec=SPECIES[species];
  const [rx,ry]=region.key.split(',').map(Number),x=home?HOME_FLOCK[0]:(rx+.2+r()*.6)*regionSize,y=home?HOME_FLOCK[1]:(ry+.2+r()*.6)*regionSize;
  const n=spec.count[0]+Math.floor(r()*(spec.count[1]-spec.count[0]+1)),phase=r()*TAU;
  const members=Array.from({length:n},(_,i)=>{const a=i/n*TAU;return {x:x+Math.cos(a)*40,y:y+Math.sin(a)*30,vx:0,vy:0,phase:r()*TAU,flash:0};});

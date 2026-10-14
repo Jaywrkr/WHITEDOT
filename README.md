@@ -8,6 +8,20 @@ Un pixel blanco en un mundo negro. Cada día recorres un Camino corto. Al termin
 
 Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Versión **1.1.0** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
+## Fase musical M1 · rama de prueba
+
+`feat/m1-musical-identity` parte de `main 08d1833`. Añade 16 recetas versionadas de composición sobre los 52 géneros: cambia motivo, articulación, paleta, bajo, acentos, brillo, swing y espacios; conserva tempo, escala y batería nativa. No es todavía el motor de híbridos libres de M2.
+
+Los 28 linajes vivos reciben un perfil individual estable al activarse: intención, cautela, curiosidad, paciencia, sociabilidad, actividad y preferencias musicales. Las plantas y construcciones expresan decisiones mediante apertura/resonancia; las tortugas pueden caminar despacio. El resto de las familias conserva su sistema anterior; el 100 % global y su aceptación perceptiva siguen en M5.
+
+**Saltar**, visible en el Mundo durante esta etapa de práctica, busca otro lugar con contraste de género, receta y bioma y habitantes cercanos. **Menú → Volver al salto** recupera el punto anterior. Guarda progreso y dirección WD1, conserva favoritos y evita saltar durante grabaciones o escaneo. Los botones son silenciosos; la música sigue el destino.
+
+Los territorios agrupan flora y fauna compatibles: una especie dominante, mezclas de dos o tres y cuatro densidades. Las bandadas comunes también favorecen especies locales. Se mantienen coordenadas del terreno, construcciones, ejemplares raros antiguos y progreso; las nuevas poblaciones usan semillas independientes. No sustituye todavía todos los sistemas ecológicos antiguos.
+
+Hay ocho familias nuevas: pad analógico, teclas de fase, cristal FM, coro, cuerda resonante, bajo aterciopelado, aire granular y órgano orbital. Dieciséis programas originales añaden filtros móviles de paso bajo, banda y muesca; el paso bajo utiliza pendientes reales de 12/24/36/48 dB por octava. Gesto y clima modulan la apertura. Los bajos conservan filtros suaves; arcos pequeños señalan el filtro en su fuente. No contiene muestras ni presets comerciales.
+
+Para comparar en teléfono: **Menú → Prototipo → Laboratorio → Notas → Música / Síntesis / Filtros**. El catálogo conserva las 91 entradas anteriores y añade 40: 16 lugares musicales reales, ocho instrumentos y 16 filtros (131 entradas, 18 grupos). Acerca el cubo al objeto; **Solo** permite escucharlo sin la pista. Las notas antiguas se conservan; la Bitácora registra instrumentos y programas escuchados. [Plan, alcance y pendientes](PLAN_MEZCLAS_MUSICALES.md) · [Verificación](scripts/m1-validation.json) · [Probar en teléfono](PROBAR_UNIVERSO_VIVO.md).
+
 ## Cómo se juega
 
 1. **Camino.** Arrastra. Cada luz es una nota. Llena la barra del día.
@@ -38,7 +52,7 @@ npm run test:audio      # mezclas renderizadas con Web Audio offline
 python3 tests/server_api.py && python3 tests/duet_smoke.py   # servidor opcional
 ```
 
-`CHROMIUM_PATH` indica el navegador si no está en el sistema. En ramas se ejecutan auditoría/lógica completas y navegador/audio enfocados en cambios. Antes de integrar/publicar `main`, se validan las suites completas una vez sobre el conjunto final. CI conserva los recorridos completos en cada PR (`.github/workflows/checks.yml`); ver [AGENTS.md](AGENTS.md). Guía manual: [PROBAR_UNIVERSO_VIVO.md](PROBAR_UNIVERSO_VIVO.md).
+`CHROMIUM_PATH` indica el navegador si no está en el sistema. En ramas se ejecutan auditoría/lógica completas y navegador/audio enfocados en cambios. Antes de integrar/publicar `main`, se validan las suites completas una vez sobre el conjunto final. CI conserva los recorridos completos en cada PR, con navegador separado y audio repartido en tres grupos (`.github/workflows/checks.yml`); ver [AGENTS.md](AGENTS.md). Guía manual: [PROBAR_UNIVERSO_VIVO.md](PROBAR_UNIVERSO_VIVO.md).
 
 ## Publicar
 

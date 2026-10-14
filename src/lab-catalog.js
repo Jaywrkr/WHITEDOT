@@ -1,4 +1,6 @@
 import {LIVING_CATALOG} from './living-catalog.js';
+import {MUSIC_IDENTITIES} from './musical-recipes.js';
+import {SYNTH_PROGRAMS} from './synth-colors.js';
 import {RHYTHM_ELEMENTS} from './percussion-model.js';
 import {CULTURES} from './culture-model.js';
 import {POWERS,EXPERIMENTAL_NAMES} from './expansion-music.js';
@@ -48,7 +50,11 @@ const exploration=[...Object.entries(CULTURES).map(([id,c])=>({id:'culture:'+id,
  ...Object.entries(POWERS).map(([id,p])=>({id:'power:'+id,group:'Poderes',name:p.name,find:{type:'box',power:id},try:['Acércate con el cubo a la caja para abrirla.',p.text,'Cambiar elemento en el laboratorio limpia los poderes anteriores.']})),
  ...[20,90,200,300].map(seconds=>({id:'quiet:'+seconds,group:'Quietud',name:'Quietud · '+seconds+' s',find:{type:'quiet',seconds},try:['La prueba empieza en esta etapa sin esperar todo el tiempo.','Permanece, muévete y abre un menú: revisa pausa y retorno.']})),
  ...Object.entries(EXPERIMENTAL_NAMES).map(([mode,name])=>({id:'experimental:'+mode,group:'Experimental',name,find:{type:'experimental',mode},try:['Escucha el modo sin llenar el paisaje de objetos.','Compara normal y suave; anota si fatiga o tapa otras voces.']}))];
-export const LAB_ELEMENTS=[...BASE,...life,...families,...toys,...phenomena,...tools,...exploration,...Object.entries(RHYTHM_ELEMENTS).map(([kind,e])=>({id:'rhythm:'+kind,group:'Percusión',name:e.name,find:{type:'rhythm',kind},try:[e.hint,'Prueba Solo para escuchar el golpe; vuelve a la mezcla para oírlo con el género.']})),...LIVING_CATALOG.filter(d=>['flora','fauna','architecture'].includes(d.group)).map(d=>({id:'living:'+d.id,group:d.group==='flora'?'Flora viva':d.group==='fauna'?'Fauna viva':'Arquitectura viva',name:d.name,find:{type:'living',kind:d.id},try:['Acércate con el cubo: '+d.gesture+'.','Escucha el material y su respuesta en Solo y en la mezcla.']}))];
+export const LAB_ELEMENTS=[...BASE,...life,...families,...toys,...phenomena,...tools,...exploration,...Object.entries(RHYTHM_ELEMENTS).map(([kind,e])=>({id:'rhythm:'+kind,group:'Percusión',name:e.name,find:{type:'rhythm',kind},try:[e.hint,'Prueba Solo para escuchar el golpe; vuelve a la mezcla para oírlo con el género.']})),...LIVING_CATALOG.filter(d=>['flora','fauna','architecture'].includes(d.group)).map(d=>({id:'living:'+d.id,group:d.group==='flora'?'Flora viva':d.group==='fauna'?'Fauna viva':'Arquitectura viva',name:d.name,find:{type:'living',kind:d.id},try:['Acércate con el cubo: '+d.gesture+'.','Escucha el material y su respuesta en Solo y en la mezcla.']})),
+ ...MUSIC_IDENTITIES.map(r=>({id:'music:'+r.id,group:'Música',name:r.name,find:{type:'music',identity:r.id},
+  try:['Escucha dos minutos; deja que la frase respire.','Compara bajo, groove, instrumentos y silencios.','Camina para tocar; vuelve aquí para comparar.']})),
+ ...[['analogpad','Pad analógico'],['phasekeys','Teclas de fase'],['fmglass','Cristal FM'],['choir','Coro sintético'],['resonantpluck','Cuerda resonante'],['velvetbass','Bajo de terciopelo'],['granularair','Aire granular'],['orbitorgan','Órgano orbital']].map(([instrument,name])=>({id:'synth:'+instrument,group:'Síntesis',name,find:{type:'synth',instrument},try:['Toca la rama con el cubo; escucha su timbre.','Prueba Solo para comparar sin la música del lugar.']})),
+ ...SYNTH_PROGRAMS.map(p=>({id:'filter:'+p.id,group:'Filtros',name:p.name+(p.slope?' · '+p.slope+' dB':p.type==='bandpass'?' · Banda':' · Muesca'),find:{type:'filter',program:p.id},try:['Toca la rama; escucha cómo abre o cierra.','Mira los aros del filtro junto al elemento.','Compara Solo y mezcla.']}))];
 export const LAB_GROUPS=[...new Set(LAB_ELEMENTS.map(e=>e.group))];
 export const labElement=id=>LAB_ELEMENTS.find(e=>e.id===id)||null;
 export function labStep(id,delta){const i=Math.max(0,LAB_ELEMENTS.findIndex(e=>e.id===id));return LAB_ELEMENTS[(i+delta+LAB_ELEMENTS.length)%LAB_ELEMENTS.length];}

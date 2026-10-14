@@ -1,6 +1,6 @@
 /* Estilo J: simple, negro, blanco y un solo acento para lo ganado.
    Last layer: it only restyles the interface; the world drawn in Canvas is untouched.
-   Rules: square corners (pixel), one big phrase per sheet in Silkscreen, mono for the rest,
+   Rules: square corners (pixel), one big phrase per sheet in Geist Mono, the same family throughout,
    gold only for what the player earns (light completed, rare finds, new colors). */
 :root{
   --surface:#000;--surface-raised:#000;--line:#ffffff26;--faint:#ffffff26;--dim:#ffffff99;
@@ -51,7 +51,7 @@ label,summary{font-size:13px}
 .goal span{color:var(--dim)}
 .reto{color:var(--ink)}
 
-/* In the World only the place speaks: its name in the pixel font. */
+/* In the World only the place speaks: its name in Geist Mono. */
 body.world-focus .era{font-family:var(--display);font-size:12px;letter-spacing:.02em;color:var(--ink);max-width:calc(100vw - 120px)}
 body.world-focus .goal{color:var(--dim)}
 .zone b,body.world-focus .zone b{font-family:var(--display);font-weight:400;font-size:22px;line-height:1.15}
@@ -61,6 +61,9 @@ body.world-focus .goal{color:var(--dim)}
 .ico{background:#000c;border-color:#ffffff40}
 .ico svg{stroke-width:1.5}
 #bAuto[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);background:#ffffff14}
+body.world-mode #bPrimary{padding:0 6px}
+#bJump{padding:0 10px;min-width:72px;min-height:44px;font-family:var(--mono);flex-shrink:0}
+body.world-mode .dock{flex-wrap:wrap}
 
 /* Voice: one line, no label, white edge. */
 .voice,body.world-focus .voice{background:#000e;border:1px solid var(--line);border-left:2px solid var(--ink)}

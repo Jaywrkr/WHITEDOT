@@ -71,10 +71,10 @@ export function initialize(runtime){
  }
  function open(){$("mMap").hidden=false;render();runtime.unlock('mapa1');}
  async function share(){
-  await Promise.all([document.fonts.load('400 14px "Geist Mono"'),document.fonts.load('600 14px "Geist Mono"'),document.fonts.load('400 24px Silkscreen')]);
+  await Promise.all([document.fonts.load('400 14px "Geist Mono"'),document.fonts.load('600 14px "Geist Mono"'),document.fonts.load('400 24px "Geist Mono"')]);
   const c=document.createElement("canvas");c.width=1080;c.height=1350;const x=c.getContext("2d");x.fillStyle="#000";x.fillRect(0,0,1080,1350);
   const m=drawMap(runtime,x,100,250,880,880,'mundo');
-  x.textBaseline="top";x.fillStyle="#fff";x.font='96px Silkscreen, monospace';x.fillText("MI MAPA",100,96);
+  x.textBaseline="top";x.fillStyle="#fff";x.font='96px "Geist Mono", monospace';x.fillText("MI MAPA",100,96);
   x.font='28px "Geist Mono", monospace';x.fillStyle="#8a8a8f";x.fillText(`DÍA ${runtime.displayDay()} · SOLO LO QUE VI`,104,206);
   x.fillStyle="#fff";x.font='600 34px "Geist Mono", monospace';x.fillText(`REGIONES ${m.cells.length}`,100,1160);x.fillText(`CONTINENTES ${m.continents}`,440,1160);x.fillText(`RÉCORD ${m.record}`,820,1160);
   x.fillStyle="#8a8a8f";x.font='26px "Geist Mono", monospace';x.fillText("PIXEL BLANCO  ·  @jaywrkr",100,1250);

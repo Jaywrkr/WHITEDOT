@@ -1,10 +1,15 @@
 // Real Web Audio render of the scheduler, with a virtual clock and deterministic noise.
-export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false,generation=1,ecology=false,testInstrument=null,scene=null,celebration=false}={}) {
+export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false,generation=1,ecology=false,testInstrument=null,scene=null,celebration=false,identityKey='0,0'}={}) {
  const modules=await Promise.all(['data','progress','world','audio','voices','instruments','patches','effects','spatial','influence','blobs','living-composition'].map(id=>import(`../src/${id}.js`)));
  const r=Object.create(null),duration=10,context=new OfflineAudioContext(2,duration*sampleRate,sampleRate);
  const original={AudioContext:window.AudioContext,setInterval:window.setInterval,setTimeout:window.setTimeout,random:Math.random};
- const instrumentHits={},petNotes=[],percussionNotes=[],celebrationNotes=[];let instrumentNotes=0;let clock=0,schedule,trailNotes=0,glassNotes=0,ecologyNotes=0;const glassRoles=new Set();const originalURL=location.href;
- const proxy=new Proxy(context,{get(target,key){if(key==='currentTime')return clock;if(key==='state')return 'running';const value=Reflect.get(target,key,target);return typeof value==='function'?value.bind(target):value;}});
+ const instrumentHits={},petNotes=[],percussionNotes=[],celebrationNotes=[];let instrumentNotes=0;let clock=0,schedule,trailNotes=0,glassNotes=0,ecologyNotes=0,rendering=false,deferredDisconnects=0;const glassRoles=new Set();const originalURL=location.href;
+ // The scheduler advances virtually before offline rendering starts. Its expired
+ // patches must leave the bookkeeping cache, but their graph must survive until
+ // those earlier notes have actually rendered. Live AudioContext needs no override.
+ const proxy=new Proxy(context,{get(target,key){if(key==='currentTime')return clock;if(key==='state')return 'running';const value=Reflect.get(target,key,target);
+  if(typeof value==='function'&&String(key).startsWith('create'))return (...args)=>{const node=value.apply(target,args);if(node?.disconnect){const disconnect=node.disconnect.bind(node);node.disconnect=(...ports)=>{if(rendering)disconnect(...ports);else deferredDisconnects++;};}return node;};
+  return typeof value==='function'?value.bind(target):value;}});
  try {
   if(generation===2){const url=new URL(location.href);url.searchParams.set('testSeed',worldSeed||'humedal-01');url.searchParams.set('layout','classic');url.searchParams.set('generation','2');history.replaceState(null,'',url);}
   window.AudioContext=function(){return proxy;};window.setInterval=fn=>{schedule=fn;return 0;};window.setTimeout=()=>0;
@@ -13,7 +18,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   for(const m of modules.slice(3))m.initialize(r);
   const origin=r.regionOfPos(900,900),G=r.GEN[genre];
   r.S.mode='world';r.S.softMusic=soft;r.S.sound=true;r.S.wx=900;r.S.wy=900;
-  r.MU.dnaT={...origin,key:'0,0',genre,bpm:(G.bpm[0]+G.bpm[1])/2,track:{...origin.track,bassI:G.bassI,hookI:G.hookP[0]}};
+  r.MU.dnaT={...origin,key:identityKey,genre,bpm:(G.bpm[0]+G.bpm[1])/2,track:{...origin.track,bassI:G.bassI,hookI:G.hookP[0]}};
   r.MU.E=dense?.8:.45;r.MU.vit=1;r.MU.vari=2;r.audio();
   if(influenced){r.activeLayerRegion=()=>r.MU.dnaT;for(const k of ['bass','groove','melody'])r.driveInfluence(r.MU.dnaT,k,1,3);for(let i=0;i<100;i++)r.influenceTick(.05,false);}
   if(glass){
@@ -44,7 +49,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
    origin.genre=genre;origin.track={...r.MU.dnaT.track};
    if(!r.beatSoon){const m=await import('../src/interactions.js');m.initialize(r);}
    const {initialize:body}=await import('../src/body.js');body(r);r.bodyTick(.025);
-   if(scene.startsWith('living:')){r.labLiving=scene.slice(7);const synth=await import('../src/living-synthesis.js'),life=await import('../src/living.js');synth.initialize(r);life.initialize(r);const o=r.livingNear(1000)[0];r.S.wx=o.x;r.S.wy=o.y;r.livingNoteCue=n=>{instrumentHits['living:'+n.role]=(instrumentHits['living:'+n.role]||0)+1;};}
+   if(['living:','synth:','filter:'].some(prefix=>scene.startsWith(prefix))){r.labLiving=scene.startsWith('living:')?scene.slice(7):'breath-tree';r.labSynth=scene.startsWith('synth:')?scene.slice(6):null;r.labFilter=scene.startsWith('filter:')?scene.slice(7):null;const synth=await import('../src/living-synthesis.js'),life=await import('../src/living.js');synth.initialize(r);life.initialize(r);const o=r.livingNear(1000)[0];r.S.wx=o.x;r.S.wy=o.y;r.livingNoteCue=n=>{instrumentHits['living:'+n.role]=(instrumentHits['living:'+n.role]||0)+1;};}
    if(scene.startsWith('rhythm:')){r.labRhythm=scene.slice(7);const m=await import('../src/percussion.js');m.initialize(r);const o=r.nearbyPercussion(1e6)[0];r.S.wx=o.x-70;r.S.wy=o.y;r.percussionCue=n=>percussionNotes.push(n);}
    if(scene.startsWith('pet:')){const {createPet}=await import('../src/pet-model.js');r.S.pet=createPet(scene.split(':')[1],123);r.S.pet.seconds=6000;r.S.pet.places=Array.from({length:20},(_,i)=>i+',0');const m=await import('../src/pet.js');m.initialize(r);r.petState.ready=true;r.petState.x=r.S.wx+50;r.petState.y=r.S.wy+24;if(scene.endsWith(':idle'))r.petState.sleep=30;r.petNoteCue=n=>petNotes.push(n);}
    if(scene.startsWith('culture:')){r.labCulture=scene.slice(8);const m=await import('../src/cultures.js');m.initialize(r);const site=r.cultureHome();r.S.wx=site.x;r.S.wy=site.y;}
@@ -60,10 +65,11 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
    if(ecology&&tick%16===0)sources.slice(0,4).forEach((source,i)=>{r.playVoice('ecology:'+['reed','pod','lichen','stone'][i]+':'+['bass','groove','space','groove'][i],i,clock+.13,r.MU.dnaT,false,.5,source,'player');ecologyNotes++;});
    if(dense&&tick%10===0)sources.forEach((source,i)=>r.playVoice(worldSeed?'forma:'+r.MU.dnaT.species[i%r.MU.dnaT.species.length].id:['arbol','cristal','pulso','luz'][i%4],i,clock+.13,r.MU.dnaT,true,.9,source,scene?'player':'ambient'));
   }
-  const buffer=await context.startRendering(),data=Array.from({length:2},(_,i)=>buffer.getChannelData(i));
+  rendering=true;const buffer=await context.startRendering(),data=Array.from({length:2},(_,i)=>buffer.getChannelData(i));
   let peak=0,sum=0,hot=0,n=0;
   for(const samples of data)for(let i=sampleRate;i<samples.length;i++){const value=samples[i];if(!Number.isFinite(value))throw Error('nonfinite rendered audio');peak=Math.max(peak,Math.abs(value));sum+=value*value;hot+=Math.abs(value)>.98;n++;}
-  return {...(celebration?{celebrationNotes}:{}),scene,instrumentHits,petNotes,percussionNotes,cultureHeard:Object.values(r.S.cultures?.sites||{}).some(e=>e.heard),testInstrument,instrumentNotes,genre,dense,soft,fx,influenced,worldSeed,generation,ecology,ecologyNotes,encounter,deep,installation,trail,glass,trailNotes,glassNotes,glassRoles:[...glassRoles],sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
+  if(window.__mixProgress)await window.__mixProgress({genre,scene,identity:r.MU.radio?.identity?.id,dense,soft,peak});
+  return {identity:r.MU.radio?.identity?.id,deferredDisconnects,...(celebration?{celebrationNotes}:{}),scene,filterMotion:r.livingNear?.(1000)[0]?.filterMotion,instrumentHits,petNotes,percussionNotes,cultureHeard:Object.values(r.S.cultures?.sites||{}).some(e=>e.heard),testInstrument,instrumentNotes,genre,dense,soft,fx,influenced,worldSeed,generation,ecology,ecologyNotes,encounter,deep,installation,trail,glass,trailNotes,glassNotes,glassRoles:[...glassRoles],sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
  } finally {window.AudioContext=original.AudioContext;window.setInterval=original.setInterval;window.setTimeout=original.setTimeout;Math.random=original.random;history.replaceState(null,'',originalURL);}
 }
 

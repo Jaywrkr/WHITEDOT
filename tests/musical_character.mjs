@@ -17,7 +17,8 @@ for(const genre of Object.keys(r.GEN)){
   for(let bar=0;bar<400;bar++){
     const a=radio.advance(region,bar);sections.add(a.section);
     assert(a.hook.filter(n=>n>=0).length<=p.budget[a.section]);
-    assert(hookInstruments(genre,r.GEN[genre]).includes(a.hookI));
+    assert(a.identity.hooks.includes(a.hookI));
+    assert(interactionInstruments(genre,r.GEN[genre],'lead').includes(a.hookI));
     if(a.melodyRest){resting++;assert(a.hook.every(n=>n===-1));if(genre!=='ambient')assert(a.bass.some(n=>n>=0),'melody rest also erased the genre bass');}
     else {playing++;assert(a.hook.some(n=>n>=0));}
   }

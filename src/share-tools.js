@@ -56,7 +56,7 @@ export function initialize(runtime){
    const w=game.width,h=game.height,area=1080/1250,cw=w/h>area?h*area:w,ch=w/h>area?h:w/area;
    if(w&&h)x.drawImage(game,(w-cw)/2,(h-ch)/2,cw,ch,0,0,1080,1250);
    x.fillStyle='#000';x.fillRect(0,1250,1080,100);x.textBaseline='middle';
-   x.fillStyle='#fff';x.font='34px Silkscreen, monospace';x.fillText('WHITEDOT',56,1300);
+   x.fillStyle='#fff';x.font='34px "Geist Mono", monospace';x.fillText('WHITEDOT',56,1300);
    x.fillStyle='#ffffff99';x.font='26px "Geist Mono", monospace';x.textAlign='right';x.fillText('@jaywrkr',1024,1300);x.textAlign='left';
   };
   draw();return {canvas:c,timer:setInterval(draw,1000/30)};

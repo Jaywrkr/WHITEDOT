@@ -35,18 +35,18 @@ Esta integración excepcional reúne las fases 0, 1 y 2 y el arreglo de deploy. 
 
 Reparación incluida: `fix/vercel-static-output` (`6feac66`) sirve la raíz del juego en lugar de la carpeta `public` inexistente. Conserva el sello de revisión/hora y el SW sin caché HTTP. Jay autorizó a Codex integrar y publicar `main` solo en este caso; las próximas fases vuelven al flujo habitual.
 
-Las siguientes peticiones de Jay quedan **pendientes de implementación**, sin eliminar fases ni progreso:
+Estado de las peticiones adicionales de Jay, sin eliminar fases ni progreso:
 
-1. **Saltar por el universo.** Botón temporal y discreto en la pantalla principal: “Otro lugar”. Saltos aleatorios para comparar biomas, criaturas, ambiente y música. Guardar el lugar previo y ofrecer retorno; conservar progreso, semillas y capas. Evitar destinos vacíos repetidos. El botón permanece silencioso; la música cambia con la transición normal del destino. Integrar en fase 7, con destino/dirección en la Bitácora de fase 6.
+1. **Saltar por el universo · implementado en M1.** Botón «Saltar» visible en Mundo y «Volver al salto» en menú. Selecciona candidatos con contraste y habitantes, conserva progreso/capa, guarda lugar previo y dirección WD1 para recarga. Silencioso; bloqueado durante grabación/escaneo. Pendiente de aceptación en teléfono físico y de integrar mediante PR de Jay.
 2. **Toques que se entiendan.** Revisar qué recibe cada clic/tap: mostrar una respuesta local inmediata del objeto y un efecto musical identificable, a tempo. Cambiar movimiento, pulso o textura según especie y gesto; alternar graves, medios, percusión y melodía según ambiente. No convertir menús ni tarjetas en instrumentos. Integrar y probar en fase 8, con objetivos táctiles adecuados para móvil.
 3. **Percusión natural con diversidad real.** Ya existen nueve familias en `src/percussion-model.js` y `src/percussion.js`; su presencia actual no garantiza que se perciban durante la exploración. Revisar distribución, gestos, alcance, contraste y señales antes de añadir más familias. Variar el rayo: articulación, registro, patrón y eco según clima/género, evitando que toda caja sea el mismo golpe. Explorar gotas sobre hojas, semillas que traquetean, cañas que golpean, piedras huecas, insectos y aleteos como funciones diferenciadas: bombo, rim, tom, shaker, clap y percusión suave. Cada golpe debe tener una señal visual pequeña en su fuente; distribuir apariciones con semillas independientes. Mantener pausas, presupuesto de voces y margen de mezcla. Integrar como trabajo musical de fase 8; comparar géneros y lluvia en teléfono.
 4. **Reconocer quién está tocando.** Todo elemento que modifique la música debe indicar cuándo actúa, qué cambió y cuánto dura, mediante animación o rastro local sincronizado. Distinguir escucha por cercanía, contacto, conexión y quietud. Mayor claridad no implica subir todos los volúmenes: contrastar timbre, ritmo y registro sin saturar. Integrar en fase 8; comprobar que las señales respetan fondo negro y espacio libre.
 
-Aceptación: probar tap y arrastre con una mano; identificar fuentes musicales sin leer un panel; escuchar bajos/percusión distintos en varios destinos; volver al lugar anterior sin perder progreso. Validar UI silenciosa, guardados, offline, mezclas densas y movimiento reducido. Son pendientes nuevos; no se presentan como entregados.
+Aceptación: probar tap y arrastre con una mano; identificar fuentes musicales sin leer un panel; escuchar bajos/percusión distintos en varios destinos; volver al lugar anterior sin perder progreso. Validar UI silenciosa, guardados, offline, mezclas densas y movimiento reducido. Saltar y las señales de filtros están implementados en M1; los demás criterios globales de tap/percusión/feedback siguen pendientes.
 
 ## Reglas de diseño (estilo J)
 
-- Capa visual: [styles/estilo-j.css](styles/estilo-j.css). Negro puro, esquinas rectas, blanco para estados, **dorado solo para lo ganado**, Silkscreen para una frase por pantalla, Geist Mono para el resto.
+- Capa visual: [styles/estilo-j.css](styles/estilo-j.css). Negro puro, esquinas rectas, blanco para estados, **dorado solo para lo ganado**, Geist Mono en toda la interfaz, Canvas y exportaciones (100–900).
 - Textos: máximo 12 palabras, una idea, imperativo. Recurso tachado-corrección en la Voz (`"~~antes~~ después"`). Firma *Simple.* solo en momentos importantes.
 - UI silenciosa: menús y botones no hacen sonido musical. Las celebraciones son eventos del mundo, a tempo y en la tonalidad del lugar.
 - Nunca quitar progreso ganado. Nunca pagar por nada.
@@ -184,9 +184,18 @@ Las fases 0–2 y la reparación están en `main d16e695`. Confirmar el deploy e
 5. **Fase 5:** cerrar casa vista desde arriba, 40 objetos musicales, cuatro habitaciones/acústicas, visitas, set y código de visita. Conservar el Taller radial y los guardados.
 6. **Fase 8:** respuesta de toque/contacto/quietud más clara; percusión natural fácil de encontrar y rayos menos repetitivos; bajos, medios, cuerdas y pads; pulido gráfico y móvil; guía/storytelling, Voz congruente, rendimiento, migraciones, escucha humana y lanzamiento. El cambio de Geist y la primera mejora de colores/instrumentos tienen una rama conjunta; no completan por sí solos esta fase.
 
+### Fases musicales autorizadas
+
+| Fase | Rama | Estado |
+|---|---|---|
+| M1 · Identidad musical y ADN individual | `feat/m1-musical-identity` | Implementada desde `main 08d1833`; pruebas aprobadas, escucha física pendiente |
+| M2–M6 · Mezclas, distribución, viajes, diversidad y juego | Por crear | Pendientes; no iniciadas |
+
+M1 es una fase musical nueva; no renumera la fase visual 1 integrada. [Plan y alcance](PLAN_MEZCLAS_MUSICALES.md). El criterio de escucha humana sigue pendiente hasta probar en teléfono. No iniciar las fases restantes sin la siguiente instrucción de Jay.
+
 ### Ampliaciones posteriores, pendientes de elegir y calendarizar
 
-- **Diversidad musical y descubrimiento:** [PLAN_MEZCLAS_MUSICALES.md](PLAN_MEZCLAS_MUSICALES.md). Solo propuesta de diseño, solicitada por Jay; incluye cobertura de personalidad/semilla activa en el 100 % de familias. No implementar las mezclas híbridas ni este motor de conducta todavía.
+- **Diversidad musical y descubrimiento:** [PLAN_MEZCLAS_MUSICALES.md](PLAN_MEZCLAS_MUSICALES.md). M1 autorizada e implementada: 16 recetas y perfil activo de los 28 linajes nuevos. M1 también incorpora Saltar, base territorial, ocho familias y 16 filtros por petición posterior de Jay. Híbridos libres, ecología global, vínculos persistentes y cobertura perceptiva del 100 % siguen en M2–M6.
 - **Vida y territorios:** redes editables de enredaderas/hongos, colonias persistentes, migraciones entre regiones, jardines, costas variables, fronteras híbridas y nuevas rutas/alturas. Incluye tormentas explorables y figuras trazadas con el camino.
 - **Búsqueda e historia:** pistas encadenadas, puertas musicales, laberintos de color/espejos, puentes que abran rutas, tradiciones investigadas y reliquias históricas funcionales documentadas. Fósiles de canciones, jardines de semillas, radio pirata, noche de la ballena y botellas con ecos siguen como ideas para seleccionar.
 - **Control y memoria:** deshacer general, recorrido natural que enseñe gestos, comparador de variantes, colección instrumental/cultural y constelación de mundos. Unir Camino, atención, creación y constancia de Jay sin llenar la pantalla.

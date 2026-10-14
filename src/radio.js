@@ -4,11 +4,12 @@ import {REFERENCE_STEPS,REFERENCE_BASS} from './references.js';
 import {createGrammar,shapeMotif} from './grammar.js';
 import {PALETTE_STEPS} from './palettes.js';
 import {RHYTHM_GENRES} from './rhythms.js';
+import {musicIdentity,identityGrammar,identityExpression,identityBass} from './musical-recipes.js';
 // Composición por frases: el reloj musical avanza sin necesitar movimiento.
 // No modifica el ADN de la región ni guarda estado en la partida.
 export function createRadio(seedOf, rng, genres) {
   let transportKey=null,lastBar=-1,regionKey = null, phrase = -1, nextPhrase = 0, nextSection = 0;
-  let section = 0, energy = .25, arrangement = null,grammar,startBar=0;
+  let section = 0, energy = .25, arrangement = null,grammar,identity,startBar=0;
   const levels = [.24, .43, .62, .3];
 
   function advance(region, bar, environment = {}) {
@@ -22,7 +23,8 @@ export function createRadio(seedOf, rng, genres) {
       section = 0;
       energy = region.genre === 'ambient' ? .16 : .25;
       arrangement = null;
-      grammar=createGrammar(region,seedOf,rng);
+      identity=musicIdentity(region,seedOf,rng,genres);
+      grammar=identityGrammar(createGrammar(region,seedOf,rng),identity);
     }
     if (bar >= nextPhrase) {
       phrase=environment.room?Math.floor(bar/grammar.phraseBars):phrase+1;
@@ -55,7 +57,8 @@ export function createRadio(seedOf, rng, genres) {
       const character=musicalCharacter(region.genre);
       const budget=Math.min(grammar.hookLimit,character.budget[section]);
       const steps=RHYTHM_GENRES[region.genre]?.steps||REFERENCE_STEPS[region.genre]||PALETTE_STEPS[region.genre];
-      const recipe=steps?Array.from({length:16},(_,i)=>steps.includes(i)?0:-1):region.track.hook;
+      const motifSteps=identity?.motif||steps;
+      const recipe=motifSteps?Array.from({length:16},(_,i)=>motifSteps.includes(i)?0:-1):region.track.hook;
       const candidates=shapeMotif(recipe,grammar).map((degree,step)=>({degree,step})).filter(n=>n.degree>=0);
       const anchor=candidates.find(n=>n.step%4===0)?.step??0;
       const positions=[anchor,...candidates.filter(n=>n.step!==anchor).map(n=>n.step)];
@@ -74,15 +77,19 @@ export function createRadio(seedOf, rng, genres) {
       if(budget===0)hook.fill(-1);
       // Identity changes with the section, rather than swapping instruments every phrase.
       const toneRandom=rng(seedOf(`radio-tone:v1:${region.key}:${section}`));
-      const pool = hookInstruments(region.genre,genres[region.genre]);
-      arrangement = { phrase, section, grammar, character, expression:compositionFrame(region.genre,phrase,section), melodyRest:budget===0, bass, hook, hookI: pool[Math.floor(toneRandom() * pool.length)] };
+      const pool = identity?.hooks||hookInstruments(region.genre,genres[region.genre]);
+      arrangement = { phrase, section, grammar, character, identity,
+        expression:identityExpression(compositionFrame(region.genre,phrase,section),identity),
+        melodyRest:budget===0, bass:identityBass(bass,identity,region.genre,section,phrase), hook,
+        bassI:identity?.bassI||region.track.bassI,hookI: pool[Math.floor(toneRandom() * pool.length)] };
       nextPhrase = environment.room?(phrase+1)*grammar.phraseBars:bar + grammar.phraseBars + (random()<.25?2:0);
     }
     const life = Math.min(.08, (environment.near || 0) * .002 + (environment.singers || 0) * .015);
     const event = environment.event === 'eclipse' ? -.06 : environment.event ? .05 : 0;
     const density = environment.variant === 0 ? -.05 : environment.variant === 4 ? .04 : 0;
-    const limit = environment.quiet ? .24 : region.genre === 'ambient' ? .3 : .7;
-    const target = Math.max(.14, Math.min(limit, levels[section] + life + event + density + Math.min(.06,Math.max(0,environment.initiative||0)*.06)));
+    const limit = environment.quiet ? .24 : identity?.energyCap??(region.genre === 'ambient' ? .3 : .7);
+    const sectionEnergy=levels[section]*Math.min(1,(limit-.06)/.62);
+    const target = Math.max(.14, Math.min(limit, sectionEnergy + life + event + density + Math.min(.06,Math.max(0,environment.initiative||0)*.06)));
     energy += (target - energy) * .25;
     return { ...arrangement, harmonyBar:bar-startBar, energy, genre: region.genre };
   }

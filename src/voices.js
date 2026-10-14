@@ -1,5 +1,6 @@
 import {livingVoice} from './living-catalog.js';
-import {musicalCharacter,interactionInstruments,voiceRegister} from './musical-character.js';
+import {INSTRUMENT_SPECS} from './instruments.js';
+import {musicalCharacter,interactionInstruments,voiceRegister,expressiveBassInstruments} from './musical-character.js';
 import {glassVoice} from './glass-music.js';
 import {materiaVoice,materiaKindOf} from './materia-music.js';
 import {vidaVoice,vidaKindOf} from './vida-music.js';
@@ -31,7 +32,7 @@ export function createRegionalVoices(region, biomes, genres, seedOf, rng) {
   }
   const genre = genres[region.genre];
   const calm = ['ambient','heart','downtempo','dub'].includes(region.genre);
-  const bassPool = [...new Set(genre.bassP||[genre.bassI])];
+  const bassPool = expressiveBassInstruments(region.genre,genre);
   const melodyPool = interactionInstruments(region.genre,genre,'lead');
   const chordPool = interactionInstruments(region.genre,genre,'acorde');
   const percussionPool = genre.percP || (calm ? ['tom','wood','shaker'] : ['kick','conga','wood','rim','tom','shaker']);
@@ -51,8 +52,8 @@ export function initialize(runtime) {
   const cache = new Map(),blobCache=new Map();
   let voiceOrigin="ambient";
   function withVoiceOrigin(origin,emit){const previous=voiceOrigin;voiceOrigin=origin;try{return emit();}finally{voiceOrigin=previous;}}
-  function rawVoice(kind, region) {
-    if(kind.startsWith('living:')){const v=livingVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng);if(v)return v;}
+  function rawVoice(kind, region, source) {
+    if(kind.startsWith('living:')){const v=livingVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng,source);if(v)return v;}
     if(kind.startsWith('rhythm:')){const v=rhythmVoice(kind,region,runtime.seedOf);if(v)return v;}
     if(kind.startsWith('ecology:')&&region.ecology)return ecologyVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng);
     if(/^installation:glass:[0-2]$/.test(kind))return glassVoice(region,Number(kind.at(-1)),runtime.GEN,runtime.seedOf);
@@ -65,8 +66,13 @@ export function initialize(runtime) {
     // Legacy or border objects absent from the region's own flora retain a stable voice.
     return voices[kind] || voices[Object.keys(voices)[runtime.seedOf(kind) % Object.keys(voices).length]];
   }
-  function getVoice(kind,region){
-    return voiceRegister(rawVoice(kind,region),region.genre);
+  function getVoice(kind,region,source=null){
+    let raw=rawVoice(kind,region,source);
+    if(source?.id?.startsWith('living:lab:')&&INSTRUMENT_SPECS[source.labSynth]){
+      const role=source.labSynth==='velvetbass'?'bajo':['analogpad','choir','orbitorgan'].includes(source.labSynth)?'acorde':'lead';
+      raw={...raw,role,instrument:source.labSynth,low:role==='bajo'?36:45,high:role==='bajo'?54:69};
+    }
+    return voiceRegister(raw,region.genre);
   }
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
     if (!runtime.ac || !region) return;
@@ -75,10 +81,11 @@ export function initialize(runtime) {
     runtime.loopTap?.(kind,index,time,region,full,volume,source,origin);
     if(origin==='player')runtime.recordElement?.(kind,region);
     if(origin==='player'){runtime.vidaHear?.(kind,index,time);runtime.powerHear?.(index);}   // el ave lira escucha lo que tocas   // el looper guarda lo que causas tú
-    const raw=getVoice(kind,region),voice=origin==='duet'?runtime.duetVoice?.(raw,source?.duetSlot,region)||raw:raw;
+    const raw=getVoice(kind,region,source),voice=origin==='duet'?runtime.duetVoice?.(raw,source?.duetSlot,region)||raw:raw;
     if(origin==='player')runtime.petHear?.({degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,source});
     if(origin==='player'&&(!source||Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<360))runtime.depthHear?.({origin,degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,layer:runtime.S.layer||'superficie'});
-    const scale = region.scale, transposition = runtime.BIOMES[region.z].tr + region.trOff;
+    const harmonicRegion=origin==='band'?(runtime.MU.dnaA||region):region;
+    const scale = harmonicRegion.scale, transposition = runtime.BIOMES[harmonicRegion.z].tr + harmonicRegion.trOff;
     const note = degree => {
       const d = ((runtime.MU.deg + voice.degree + degree) % 7 + 7) % 7;
       let n = 57 + transposition + scale[d];

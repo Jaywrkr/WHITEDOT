@@ -1,0 +1,215 @@
+{
+  "validatedAt": "2026-10-14T23:28:43.154267+00:00",
+  "branch": "feat/m1-musical-identity",
+  "baseMain": "08d1833",
+  "productionFingerprint": "9368af1ba7c605329eb325418f2a1ae0fe07103aa8d316ff53a287d55cf21e09",
+  "scope": "M1: curated playback identities, individual living minds, territorial populations, original synths/filters, practice jumps and Geist Mono throughout.",
+  "checks": {
+    "releaseAudit": {
+      "version": "1.1.0",
+      "sourceModules": 135,
+      "htmlIDs": 274,
+      "staticImports": 331,
+      "shellAssets": 155,
+      "errors": [],
+      "warnings": [],
+      "notes": [
+        "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+        "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+      ]
+    },
+    "nodeSuites": 80,
+    "browserFlows": 13,
+    "audioPrograms": 5,
+    "audioRenders": 183,
+    "maxPeak": 0.933925211429596,
+    "hotSamples": 0
+  },
+  "commands": [
+    {
+      "command": "npm run audit:release",
+      "exitCode": 0
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 tests/interface_smoke.py",
+      "exitCode": 0,
+      "seconds": 26.17,
+      "log": "/tmp/wd-m1-final-interface_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/pwa_updates_smoke.py",
+      "exitCode": 0,
+      "seconds": 6.49,
+      "log": "/tmp/wd-m1-final-pwa_updates_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/music_response_smoke.py",
+      "exitCode": 0,
+      "seconds": 2.34,
+      "log": "/tmp/wd-m1-final-music_response_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/lab_smoke.py",
+      "exitCode": 0,
+      "seconds": 46.84,
+      "log": "/tmp/wd-m1-final-lab_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/ui_silence_smoke.py",
+      "exitCode": 0,
+      "seconds": 11.6,
+      "log": "/tmp/wd-m1-final-ui_silence_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/living_smoke.py",
+      "exitCode": 0,
+      "seconds": 10.55,
+      "log": "/tmp/wd-m1-final-living_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/vida_smoke.py",
+      "exitCode": 0,
+      "seconds": 23.64,
+      "log": "/tmp/wd-m1-final-vida_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/seeds_smoke.py",
+      "exitCode": 0,
+      "seconds": 23.98,
+      "log": "/tmp/wd-m1-final-seeds_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/world-return_smoke.py",
+      "exitCode": 0,
+      "seconds": 2.68,
+      "log": "/tmp/wd-m1-final-world-return_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/jam_smoke.py",
+      "exitCode": 0,
+      "seconds": 22.33,
+      "log": "/tmp/wd-m1-final-jam_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/music_identity_smoke.py",
+      "exitCode": 0,
+      "seconds": 39.06,
+      "log": "/tmp/wd-m1-final-music_identity_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/practice_travel_smoke.py",
+      "exitCode": 0,
+      "seconds": 7.21,
+      "log": "/tmp/wd-m1-final-practice_travel_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/synth_bank_smoke.py",
+      "exitCode": 0,
+      "seconds": 8.6,
+      "log": "/tmp/wd-m1-final-synth_bank_smoke.py.log"
+    },
+    {
+      "command": "python3 tests/synth_bank_mix.py",
+      "exitCode": 0,
+      "seconds": 562.83,
+      "log": "/tmp/wd-m1-final-synth_bank_mix.py.log"
+    },
+    {
+      "command": "python3 tests/music_identity_mix.py",
+      "exitCode": 0,
+      "seconds": 97.28,
+      "log": "/tmp/wd-m1-final-music_identity_mix.py.log"
+    },
+    {
+      "command": "python3 tests/living_mix.py",
+      "exitCode": 0,
+      "seconds": 568.88,
+      "log": "/tmp/wd-m1-final-living_mix.py.log"
+    },
+    {
+      "command": "python3 tests/composition_mix.py",
+      "exitCode": 0,
+      "seconds": 269.62,
+      "log": "/tmp/wd-m1-final-composition_mix.py.log"
+    },
+    {
+      "command": "python3 tests/audio_mix.py",
+      "exitCode": 0,
+      "seconds": 443.71,
+      "log": "/tmp/wd-m1-final-audio_mix.py.log"
+    }
+  ],
+  "audio": [
+    {
+      "program": "synthBank",
+      "renders": 32,
+      "maxPeak": 0.9063271880149841,
+      "sampleRates": [
+        44100,
+        48000
+      ],
+      "report": "m1-synth-audio-validation.json"
+    },
+    {
+      "program": "identities",
+      "renders": 32,
+      "maxPeak": 0.9097736477851868,
+      "sampleRates": [
+        44100,
+        48000
+      ],
+      "report": "m1-identity-audio-validation.json"
+    },
+    {
+      "program": "living",
+      "renders": 28,
+      "maxPeak": 0.9092466235160828,
+      "sampleRates": [
+        44100,
+        48000
+      ],
+      "report": "m1-living-audio-validation.json"
+    },
+    {
+      "program": "composition",
+      "renders": 14,
+      "maxPeak": 0.9080698490142822,
+      "sampleRates": [
+        44100,
+        48000
+      ],
+      "report": null
+    },
+    {
+      "program": "nativeMix",
+      "renders": 77,
+      "maxPeak": 0.933925211429596,
+      "sampleRates": [
+        44100,
+        48000
+      ],
+      "report": null
+    }
+  ],
+  "outputColor": {
+    "oldDistortionDb": -33.35069100928071,
+    "distortionDb": -85.34256864753736,
+    "returnBassDb": -22.614913069876366,
+    "returnMidDb": 0.1860854075397847
+  },
+  "offlineHarness": "Expired graph nodes remain connected while scheduling virtually, so earlier notes and filters render correctly. Pre-correction renders and intentionally interrupted attempts are excluded.",
+  "fullSuites": "Affected flows were run sequentially. Full npm run test:browser and npm run test:audio remain required in PR CI/before main integration, per AGENTS.md.",
+  "manualAcceptance": "Listen on a physical phone: recipe contrast, timbre, filters, density, jump/return and frame rate. Automated headroom does not certify artistic mastering or 100% perceptible biodiversity.",
+  "ciRouting": {
+    "audioPrograms": 12,
+    "shards": 3,
+    "unshardedDefault": "complete sequential suite",
+    "requiredAggregateCheck": "browser-audio",
+    "actualEntryPointRoutingTest": "passed: each program once, complete default, invalid indices rejected",
+    "workflowYamlParse": "passed"
+  }
+}

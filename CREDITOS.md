@@ -4,11 +4,11 @@ Proyecto de Jay · [@jaywrkr](https://instagram.com/jaywrkr). Juego, gráficos p
 
 ## Tipografías empaquetadas
 
-- **Silkscreen**, copyright de los autores indicados en [su licencia](assets/fonts/silkscreen-OFL.txt).
+- **Silkscreen**, archivo histórico conservado con [su licencia](assets/fonts/silkscreen-OFL.txt), fuera de la interfaz y del shell activo.
 - **Geist Mono**, nueve pesos enviados por Jay, copyright 2024 The Geist Project Authors; [licencia oficial](assets/fonts/geistmono-OFL.txt).
 - **JetBrains Mono**, archivo anterior conservado con [su licencia](assets/fonts/jetbrainsmono-OFL.txt), fuera de la interfaz y del shell activo.
 
-Las tres bajo **SIL Open Font License 1.1**, conservada íntegramente junto a los archivos. Geist Mono se incorporó sin modificar desde los archivos proporcionados; su licencia se obtuvo del repositorio oficial de Vercel. Los archivos anteriores proceden de Google Fonts. [Procedencia y hashes](assets/fonts/sources.json). Se sirven localmente y funcionan offline.
+Las tres bajo **SIL Open Font License 1.1**, conservada íntegramente junto a los archivos. Geist Mono se incorporó sin modificar desde los archivos proporcionados; su licencia se obtuvo del repositorio oficial de Vercel. Los archivos anteriores proceden de Google Fonts. [Procedencia y hashes](assets/fonts/sources.json). Los nueve pesos activos de Geist Mono se sirven localmente y funcionan offline.
 
 ## Licencia del juego
 

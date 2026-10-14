@@ -1,3 +1,5 @@
+import {musicIdentity} from './musical-recipes.js';
+import {interactionInstruments,expressiveBassInstruments} from './musical-character.js';
 // Independent namespaces: additions do not consume the legacy generator's RNG.
 export const LIVING_VERSION=1;
 const plant=(id,name,gesture,role,shape,material,affinity)=>({id,name,group:'flora',gesture,role,shape,material,affinity});
@@ -62,11 +64,14 @@ export function livingChunk(cx,cy,size,region,biome,seedOf,rng,groups=['flora','
  }
  for(const o of out){o.homeX=o.x;o.homeY=o.y;}return out.filter(o=>groups.includes(o.group));
 }
-export function livingVoice(kind,region,genres,seedOf,rng){
+export function livingVoice(kind,region,genres,seedOf,rng,source=null){
  const id=kind.replace(/^living:/,''),d=livingDefinition(id);if(!d)return null;
  const score=musicRecipe(region,seedOf,rng),h=seedOf(`living:voice:v1:${region.key}:${id}`),role=score.palette%4===0?(d.role==='bajo'?'perc':d.role==='perc'?'bajo':d.role):d.role;
- const genre=genres[region.genre],pool=role==='bajo'?(genre.bassP||[genre.bassI]):role==='perc'?['tom','wood','rim','conga','shaker','kick']:(genre.hookP||['rhodes']);
- return {role,instrument:pool[h%pool.length],degree:h%7,response:[2,3,6][h%3],low:role==='bajo'?36:45,high:role==='bajo'?54:69,score,material:d.material};
+ const genre=genres[region.genre],mind=source?.mind,identity=mind&&musicIdentity(region,seedOf,rng,genres);
+ const pool=role==='bajo'?(mind?expressiveBassInstruments(region.genre,genre):(genre.bassP||[genre.bassI])):role==='perc'?['tom','wood','rim','conga','shaker','kick']:
+  mind?(role==='acorde'?interactionInstruments(region.genre,genre,role):identity?.hooks||interactionInstruments(region.genre,genre,role)):(genre.hookP||['rhodes']);
+ return {role,instrument:pool[(h+(mind?.instrumentChoice||0))%pool.length],degree:(h+(mind?.degree||0))%7,response:mind?2+Math.round(mind.patience*4):[2,3,6][h%3],low:role==='bajo'?36:45,high:role==='bajo'?54:69,
+  score:mind?{...score,attack:score.attack*(.8+mind.patience*.8),decay:Math.min(1.1,score.decay*(.7+mind.energy*.5))}:score,material:d.material};
 }
 // Expanded oceans keep wide empty spaces; aquatic encounters use a separate sparse stream.
 export function aquaticChunk(cx,cy,size,region,seedOf,rng){

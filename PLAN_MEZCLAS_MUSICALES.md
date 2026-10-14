@@ -1,8 +1,32 @@
 # Música nueva como descubrimiento · propuesta de Jay
 
-**Estado: solo diseño.** Jay pidió este plan y expresamente indicó no implementar las mezclas híbridas ahora. Las mejoras de fuente, color al tocar e instrumentos de interacción son trabajos anteriores; no equivalen a este motor de mezclas.
+**Estado: M1 autorizada por Jay e implementada en `feat/m1-musical-identity`, desde `main 08d1833`.** M2–M6 siguen como plan. Las primeras 16 recetas son arreglos curados sobre géneros existentes, no un mezclador libre de culturas/géneros.
 
-## Estado de conducta comprobado · 14 de octubre
+| Fase | Rama | Estado |
+|---|---|---|
+| M1 · Identidad musical y ADN individual | `feat/m1-musical-identity` | Implementada y validada; escucha física pendiente |
+| M2 · Híbridos y temperamento audible | Por crear | Pendiente |
+| M3 · Distribución y sorpresa cercana | Por crear | Base territorial adelantada en M1; fase completa pendiente |
+| M4 · Viajes y vínculos recordados | Por crear | Saltos de práctica adelantados en M1; vínculos durables pendientes |
+| M5 · Diversidad y cobertura del 100 % | Por crear | Pendiente |
+| M6 · Descubrimiento con vida y control | Por crear | Pendiente |
+
+**Alcance M1:** `musical-recipes.js` selecciona receta estable sin tocar RNG visual; `radio.js` aplica motivo, bajo, gramática y expresión; `audio.js` consume swing, aire y tono de pad. Los 52 estilos conservan su batería, tempo y escala; géneros con más de una receta tienen selección regional. Hay silencios, presupuesto melódico y registro acotado. El laboratorio incorpora 16 destinos reales y conserva los 91 anteriores y sus notas.
+
+`living-mind.js` crea perfiles para los 28 linajes activados en `living.js`: decisiones periódicas, límites de territorio, plantas/estructuras inmóviles con apertura/cierre, mirada local y expresiones de sonido. `livingVoice` utiliza preferencias de instrumento/grado, paciencia y energía. Rasgos de actividad se consumen en ecología; las tortugas reciben movimiento lento. El perfil se reconstruye por ID con semilla independiente y sesgos de personalidad anteriores; no requiere reemplazar ni borrar guardados. Frases y estados temporales conservan su duración actual; memoria de vínculos durable corresponde a M4.
+
+Esto **no** es cobertura del 100 % del universo: bandadas, mascota y criaturas procedurales antiguas mantienen sus motores. La prueba de M1 recorre 32 perfiles por cada linaje y exige al menos tres decisiones compatibles; percepción y cobertura global se auditan en M5. Geist Mono pasa a ser la única fuente activa, incluidos títulos y exportaciones; fuentes antiguas y licencias se conservan como archivo.
+
+### Ampliaciones autorizadas durante M1
+
+- **Exploración:** «Saltar» a mano en Mundo; comparar género/receta/bioma y acercar al jugador a habitantes. Retorno desde menú, dirección WD1 persistente, historial acotado, guardado previo y bloqueo durante grabaciones/escaneo. No completa el Camino; los hallazgos del destino se registran normalmente.
+- **Territorios:** agrupaciones de flora/fauna compatibles, una a tres dominantes, cuatro densidades, zonas vacías y bandadas comunes con preferencia local. Mantener RNG/coords del terreno y raros/estructuras antiguos; no repartir todas las especies con igual peso. Las frecuencias raras nuevas no están medidas; tarjetas anteriores conservan sus datos.
+- **Síntesis creativa:** ocho familias nuevas y 16 programas propios, pasos bajos reales de 12/24/36/48 dB por octava, banda y muesca, barridos acotados por gesto/clima. Señal pequeña en la fuente y programas oídos en Bitácora. Bajos, silencios y presupuesto siguen protegidos; referencia a riqueza de sintetizadores comerciales sin incorporar sus presets/muestras.
+- **Pruebas prácticas:** laboratorio de 131 entradas/18 grupos, con 16 destinos, ocho demos de instrumentos y 16 filtros además de los 91 previos. Contacto del cubo y Solo; botones silenciosos.
+
+Estas bases adelantan aspectos de M3/M4 por petición de Jay; no dan por completados híbridos libres, ecología global, vínculos durables ni cobertura perceptiva del 100 %.
+
+## Diagnóstico anterior a M1 · 14 de octubre
 
 Alcance: catálogo nuevo de 28 linajes (10 flora, 10 fauna y 8 construcciones), no todas las familias procedurales del universo.
 
