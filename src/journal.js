@@ -89,12 +89,14 @@ export function initialize(runtime) {
   }
   function render() {
     ensureJournal(runtime.S);
-    runtime.$('journalBody').innerHTML=({places,forms,music,achievements,elements:()=>runtime.elementBookCards?.()||''})[tab]();
+    runtime.$('rareCodeFallback').hidden=true;
+    runtime.$('journalBody').innerHTML=({places,forms,music,achievements,elements:()=>runtime.elementBookCards?.()||'',rares:()=>runtime.rareBookCards?.()||''})[tab]();
     runtime.$('journalBody').scrollTop=0;
     document.querySelectorAll('[data-journal-tab]').forEach(button=>{const active=button.dataset.journalTab===tab;button.setAttribute('aria-pressed',String(active));button.classList.toggle('gold',active);});
   }
-  function openJournal() {render();runtime.$('mJournal').hidden=false;}
+  function openJournal(nextTab) {if(['places','forms','music','achievements','elements','rares'].includes(nextTab))tab=nextTab;render();runtime.$('mJournal').hidden=false;}
   document.querySelectorAll('[data-journal-tab]').forEach(button=>button.onclick=()=>{tab=button.dataset.journalTab;render();});
   document.getElementById('journalClose').onclick=()=>{runtime.$('mJournal').hidden=true;runtime.save();};
-  Object.defineProperties(runtime,{openJournal:{get:()=>openJournal},recordInstrument:{get:()=>recordInstrument}});
+  runtime.$('journalBody').addEventListener('click',event=>runtime.rareBookAction?.(event));
+  Object.defineProperties(runtime,{refreshJournal:{get:()=>render},openJournal:{get:()=>openJournal},recordInstrument:{get:()=>recordInstrument}});
 }

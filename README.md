@@ -1,3 +1,11 @@
+# Libro de hallazgos · V1 RC5
+
+**1.0.0-rc.5 · feat/rare-discovery-cards**, hija de **feat/minimal-discoveries (30d337f)**. Un cubo blanco en un mundo negro que crea música electrónica. Tarjetas discretas para hallazgos raros con nombre, ilustración, lugar, rareza contextual, fecha y coordenadas. **Bitácora → Hallazgos** guarda cada ejemplar y ofrece código/Orientar. 18 tipos de tarjeta; el contador de 81 familias permanece aparte. [Detalle y pruebas](HALLAZGOS_RAROS.md).
+
+**59 suites de lógica, 43 recorridos de navegador + offline aprobados**, con rechecks de los flujos afectados. Las 225 mezclas pertenecen a RC4: esta entrega añade UI/registro y conserva la música. Versión/deploy visible actualizado a RC5; fecha de publicación aún sin registrar. Main comprobado: 8096c8d. Un PR de esta rama hacia main contiene todas las anteriores pendientes; Jay crea PR/merge.
+
+Los estados RC4/RC1 siguientes son fotografías históricas; la entrega vigente está arriba.
+
 # WHITEDOT · V1 RC4
 
 Un cubo blanco en un mundo negro que crea música electrónica al explorarlo. Por Jay · [@jaywrkr](https://instagram.com/jaywrkr). Blanco disponible y personalización ganada; criaturas, materia, búsquedas culturales y una mascota que aprende tus gestos.

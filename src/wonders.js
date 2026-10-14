@@ -67,6 +67,7 @@ export function initialize(runtime){
  function enterAnomaly(d){
   const a=d.anomaly,MU=runtime.MU,S=runtime.S;MU.anomaly=a?a.type:null;
   if(!a)return;
+  runtime.collectRareCard?.('anomaly:'+a.type,{id:'anomaly:'+a.key,x:S.wx,y:S.wy}, {regionName:d.name,genre:d.genre});
   S.anomalies||={};const isNew=!S.anomalies[a.key];
   runtime.say(`${a.rule}${isNew?' Te llevas una muestra que no existe en ningún otro lado.':''}`,`${TIERS[a.tier].name} · ${a.name}`);
   if(!isNew)return;

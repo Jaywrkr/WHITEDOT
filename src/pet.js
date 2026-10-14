@@ -14,6 +14,7 @@ export function initialize(runtime){
  function born(species,source,phrase=[]){
   if(ensure()||!Object.hasOwn(PET_SPECIES,species)||!active())return false;
   S().pet=createPet(species,runtime.seedOf(`pet:birth:v1:${source}`),phrase);reset();state.x=S().wx+50;state.y=S().wy+25;
+  if(/^caja:/.test(source))runtime.collectRareCard?.('petbox:'+species,{id:source,x:S().wx,y:S().wy});
   runtime.recordElement?.('pet',runtime.regionOfPos(S().wx,S().wy));runtime.unlock('mascota1');runtime.toast(`<em>Alguien se queda</em> · ${PET_SPECIES[species].name}. Pasa el cubo cerca; escucha cómo aprende.`);runtime.save();return true;
  }
  function formation(f,dt){

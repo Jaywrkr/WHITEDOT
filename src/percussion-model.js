@@ -1,3 +1,4 @@
+export const RHYTHM_EMPTY_CHANCE=.3,FOSSIL_DENOMINATOR=192;
 // An additive stream: existing terrain, flora, genres and favourite coordinates never move.
 export const RHYTHM_ELEMENTS=Object.freeze({
  stone:{name:'Piedra de bombo',material:'metal',voices:['kick','tom'],gesture:'hold',hint:'Pasa para golpear; permanece para sostener el pulso grave.'},
@@ -29,8 +30,8 @@ export function rhythmPattern(kind,genre,variant=0){
 export function createRhythmElements(cx,cy,size,region,seedOf,rng){
  if(region.sea)return [];
  const random=rng(seedOf(`rhythm:placement:v1:${cx},${cy}`));
- if(random()<.3){
-  if(seedOf(`rhythm:fossil:v1:${cx},${cy}`)%192!==0)return [];
+ if(random()<RHYTHM_EMPTY_CHANCE){
+  if(seedOf(`rhythm:fossil:v1:${cx},${cy}`)%FOSSIL_DENOMINATOR!==0)return [];
   const rare=rng(seedOf(`rhythm:fossil-position:v1:${cx},${cy}`));
   return [{id:`rhythm:fossil:v1:${cx},${cy}`,kind:'fossil',x:(cx+.25+rare()*.5)*size,y:(cy+.25+rare()*.5)*size,variant:Math.floor(rare()*8),phase:rare()*6.283,touching:false,lit:0,cooldown:0,turn:0}];
  }

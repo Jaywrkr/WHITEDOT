@@ -1,3 +1,4 @@
+export const PET_BOX_DENOMINATOR=128;
 // Persistent companionship. No offline decay, feeding, payment or species menu.
 export const PET_SPECIES={
  golondrina:{name:'Golondrina de eco',role:'melody',pool:['reed','kalimba','flute'],hue:30},
@@ -17,5 +18,5 @@ export function petStage(p){if(!p)return 0;return p.seconds>=5400&&p.places.leng
 export const petCapacity=p=>4+petStage(p);
 export function learnPet(p,degree){if(!p||!Number.isFinite(degree))return;degree=((Math.round(degree)%7)+7)%7;const last=p.phrase.at(-1);if(last?.degree===degree)return;p.phrase.push({degree,step:0});p.phrase=p.phrase.slice(-petCapacity(p)).map((n,i)=>({degree:n.degree,step:i*2}));}
 export function growPet(p,dt,key){if(!p)return;dt=Number.isFinite(dt)?clamp(dt,0,.1):0;p.seconds=Math.min(1e8,p.seconds+dt);if(/^(-?\d+),(-?\d+)$/.test(key)&&!p.places.includes(key)){p.places.push(key);if(p.places.length>128)p.places.shift();}}
-export function petFromBox(id,seedOf){if(!/^caja:/.test(id))return null;const seed=seedOf(`pet:box:v1:${id}`);return seed%128===0?Object.keys(PET_SPECIES)[(seed>>>8)%3]:null;}
+export function petFromBox(id,seedOf){if(!/^caja:/.test(id))return null;const seed=seedOf(`pet:box:v1:${id}`);return seed%PET_BOX_DENOMINATOR===0?Object.keys(PET_SPECIES)[(seed>>>8)%3]:null;}
 export function petFormationEligible(f){return ['golondrina','grulla'].includes(f.species)&&f.trust>=.6&&f.follow>0&&f.followTime>=30;}

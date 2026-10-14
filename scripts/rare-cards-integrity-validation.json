@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0-rc.5",
+  "sourceModules": 105,
+  "htmlIDs": 238,
+  "staticImports": 245,
+  "shellAssets": 116,
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+    "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+  ]
+}
