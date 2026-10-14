@@ -78,15 +78,15 @@ export function initialize(runtime) {
     runtime.drawCelebration?.();runtime.drawWorldFog?.(t);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);
-    for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.GOLD:runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
+    for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
     runtime.pulse=Math.max(0,runtime.pulse-dt*1.5);
     const s=ds*(1+runtime.pulse*.6+b*.08);
     runtime.drawCubeStyle?.(t,dt,b,s);
     const playerColor=runtime.inWorld()?(runtime.cubeColor?.()||'#fff'):'#fff';
     if(runtime.pulse){runtime.cx.globalAlpha=runtime.pulse*.5;runtime.cx.strokeStyle=playerColor;runtime.cx.lineWidth=1;const rr=s*(1+(1-runtime.pulse)*4);runtime.cx.strokeRect(runtime.W/2-rr/2,runtime.H/2-rr/2,rr,rr);}
-    // en tiempo: anillo dorado y contador
-    if(runtime.grooveFx>0){runtime.grooveFx=Math.max(0,runtime.grooveFx-dt*2.2);runtime.cx.globalAlpha=runtime.grooveFx;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.5;const rr=s+(1-runtime.grooveFx)*40;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,rr,0,6.283);runtime.cx.stroke();
-      if(runtime.MU.groove>=2){runtime.cx.fillStyle=runtime.GOLD;runtime.cx.font='600 12px "JetBrains Mono", monospace';runtime.cx.textAlign="center";runtime.cx.fillText("EN TIEMPO ×"+runtime.MU.groove,runtime.W/2,runtime.H/2-s-18-(1-runtime.grooveFx)*10);runtime.cx.textAlign="left";}}
+    // En tiempo: respuesta musical local y contador.
+    if(runtime.grooveFx>0){runtime.grooveFx=Math.max(0,runtime.grooveFx-dt*2.2);runtime.cx.globalAlpha=runtime.grooveFx;runtime.cx.strokeStyle=runtime.musicInk?.(null,'perc')||'#fff';runtime.cx.lineWidth=1.5;const rr=s+(1-runtime.grooveFx)*40;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,rr,0,6.283);runtime.cx.stroke();
+      if(runtime.MU.groove>=2){runtime.cx.fillStyle=runtime.musicInk?.(null,'perc')||'#fff';runtime.cx.font='600 12px "Geist Mono", monospace';runtime.cx.textAlign="center";runtime.cx.fillText("EN TIEMPO ×"+runtime.MU.groove,runtime.W/2,runtime.H/2-s-18-(1-runtime.grooveFx)*10);runtime.cx.textAlign="left";}}
     runtime.cx.save();runtime.cx.globalAlpha=1;runtime.cx.fillStyle=playerColor;
     const ritual=runtime.inWorld()&&(runtime.quietState?.stage>=6||runtime.hasPower?.('cometa'));
     if(ritual){runtime.cx.translate(runtime.W/2,runtime.H/2);runtime.cx.rotate(Math.sin(t/600)*.12);runtime.cx.fillRect(-s/2,-s/2,s,s);}else runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));runtime.cx.restore();
@@ -210,7 +210,7 @@ export function initialize(runtime) {
         const lw=runtime.waves.length&&runtime.hitW(l.x,l.y);if(lw){l.lit=1;runtime.wsoon(lw,l.snd);}
         if(contactEntry(l,d<ds/2+14,!paused&&!runtime.scanning)&&ms>l.cd){l.cd=ms+1500;runtime.MU.act+=.3;runtime.touched();if(!l.given){l.given=1;runtime.gain("loto");}runtime.pushO(l,runtime.S.wx,runtime.S.wy,140);runtime.beatSoon(q=>runtime.playVoice('loto',l.deg,q,runtime.regionOfPos(l.x,l.y),true,1,l),()=>{l.lit=1;runtime.burst(l.x,l.y,8,true);});}
         l.lit=Math.max(0,l.lit-dt*.4);if(d>R*1.3)continue;const al=Math.max(Math.max(0,1-d/(R*1.3))*.6,l.lit);
-        runtime.cx.globalAlpha=Math.min(1,al)*(runtime.worldOpacity?.(d,R*1.3)??1);runtime.cx.strokeStyle=l.lit>.1?runtime.GOLD:(c.pal?c.pal.main:"#fff");runtime.cx.lineWidth=1.5;runtime.cx.beginPath();runtime.cx.arc(l.x+ox,l.y+oy,7+l.lit*6+b*2,0,6.283);runtime.cx.stroke();if(l.lit<.1)runtime.touchRing(l.x+ox,l.y+oy,d,R,b);}
+        runtime.cx.globalAlpha=Math.min(1,al)*(runtime.worldOpacity?.(d,R*1.3)??1);runtime.cx.strokeStyle=l.lit>.1?runtime.musicInk?.(l)||'#fff':(c.pal?c.pal.main:"#fff");runtime.cx.lineWidth=1.5;runtime.cx.beginPath();runtime.cx.arc(l.x+ox,l.y+oy,7+l.lit*6+b*2,0,6.283);runtime.cx.stroke();if(l.lit<.1)runtime.touchRing(l.x+ox,l.y+oy,d,R,b);}
       for(const o of c.plants){const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),w=runtime.waves.length&&runtime.hitW(o.x,o.y);
         const plantEntered=contactEntry(o,d<14,!paused&&!runtime.scanning);
         if(ms>o.cd&&(plantEntered||w)){o.cd=ms+(o.personality?.cooldown||1600);o.lit=1;o.sw=1;if(o.pt.t!=="hierba"&&runtime.rnd()<(w?.5:.4))runtime.beatSoon(q=>runtime.plantSound(o.pt,q,runtime.regionOfPos(o.x,o.y),o.personality,o));}
@@ -226,7 +226,7 @@ export function initialize(runtime) {
         if(gr.tall&&d<R)runtime.seen("arbol");
         const al=Math.max(Math.max(0,1-d/R)*(gr.tall?.5:.4),gr.lit*.6);if(al<.02)continue;
         const sw=Math.sin(t/(gr.personality?.period||(gr.tall?1300:800))+gr.ph)*gr.h*(gr.personality?.sway||(gr.tall?.15:.3))+(gr.lit>0?b*2:0);
-        runtime.cx.globalAlpha=Math.min(1,al)*(runtime.worldOpacity?.(d,R+30)??1);runtime.cx.fillStyle=gr.lit>.6?(gr.tall?runtime.GOLD:"#fff"):c.pal?c.pal.soft:"#c9c9cf";
+        runtime.cx.globalAlpha=Math.min(1,al)*(runtime.worldOpacity?.(d,R+30)??1);runtime.cx.fillStyle=gr.lit>.6?(gr.tall?runtime.musicInk?.(gr)||'#fff':"#fff"):c.pal?c.pal.soft:"#c9c9cf";
         runtime.cx.fillRect(gr.x+ox,gr.y+oy-gr.h,1,gr.h);runtime.cx.fillRect(gr.x+ox+sw,gr.y+oy-gr.h-2,1,2);
         if(gr.tall&&gr.lit>.2){runtime.cx.globalAlpha=gr.lit*.5*(runtime.worldOpacity?.(d,R+30)??1);runtime.cx.fillRect(gr.x+ox+sw-1,gr.y+oy-gr.h-3,3,3);}
       }
@@ -235,17 +235,17 @@ export function initialize(runtime) {
         const pw=runtime.waves.length&&runtime.hitW(p.x,p.y);if(pw){p.hit=1;runtime.wsoon(pw,p.snd);}
         if(contactEntry(p,d<p.w/2+ds/2+6,!paused&&!runtime.scanning)&&ms>p.cd){p.cd=ms+(p.personality?.cooldown||600);runtime.MU.act+=.35;runtime.touched();p.hits=(p.hits||0)+1;if(p.hits>=25)runtime.unlock("insistente");if(!p.given){p.given=1;runtime.gain("pilar");}runtime.chain(c.pillars,p,0,new Set(),5);runtime.S.drums++;if(runtime.S.drums>=8)runtime.unlock("tambor");runtime.burst(p.x,p.y-p.h/2,6,false);}
         if(d<soundR)nearO.push(p);p.hit=Math.max(0,p.hit-dt*3);if(d>R+80&&!p.hit)continue;const al=Math.max(0,1-d/(R+80));
-        runtime.cx.globalAlpha=Math.min(1,al*.5+p.hit*.6)*(runtime.worldOpacity?.(d,R+80)??1);runtime.cx.strokeStyle=p.hit>.1?runtime.GOLD:(c.pal?c.pal.main:"#fff");runtime.cx.lineWidth=1;runtime.cx.strokeRect(p.x+ox-p.w/2,p.y+oy-p.h,p.w,p.h);
-        runtime.cx.globalAlpha=Math.min(1,al*.12+p.hit*.4)*(runtime.worldOpacity?.(d,R+80)??1);runtime.cx.fillStyle=p.hit>.1?runtime.GOLD:"#fff";runtime.cx.fillRect(p.x+ox-p.w/2,p.y+oy-p.h,p.w,p.h);if(p.hit<.1)runtime.touchRing(p.x+ox,p.y+oy-p.h/2,d,R,b);}
+        runtime.cx.globalAlpha=Math.min(1,al*.5+p.hit*.6)*(runtime.worldOpacity?.(d,R+80)??1);runtime.cx.strokeStyle=p.hit>.1?runtime.musicInk?.(p,'perc')||'#fff':(c.pal?c.pal.main:"#fff");runtime.cx.lineWidth=1;runtime.cx.strokeRect(p.x+ox-p.w/2,p.y+oy-p.h,p.w,p.h);
+        runtime.cx.globalAlpha=Math.min(1,al*.12+p.hit*.4)*(runtime.worldOpacity?.(d,R+80)??1);runtime.cx.fillStyle=p.hit>.1?runtime.musicInk?.(p,'perc')||'#fff':"#fff";runtime.cx.fillRect(p.x+ox-p.w/2,p.y+oy-p.h,p.w,p.h);if(p.hit<.1)runtime.touchRing(p.x+ox,p.y+oy-p.h/2,d,R,b);}
       // cristales: arpegios
       for(const k of c.crystals){const d=Math.hypot(k.x-runtime.S.wx,k.y-runtime.S.wy);
         const kw=runtime.waves.length&&runtime.hitW(k.x,k.y);if(kw){k.lit=1;runtime.wsoon(kw,k.snd);}
         if(contactEntry(k,d<k.s+ds/2+4,!paused&&!runtime.scanning)&&ms>k.cd){k.cd=ms+(k.personality?.cooldown||1500);runtime.MU.act+=.3;runtime.touched();if(!k.given){k.given=1;runtime.gain("cristal");}runtime.chain(c.crystals,k,0,new Set(),7);runtime.burst(k.x,k.y,6,true);}
         if(d<soundR)nearO.push(k);
         k.lit=Math.max(0,k.lit-dt*.25);if(d>R*1.2&&k.lit<=0)continue;const al=Math.max(Math.max(0,1-d/(R*1.2))*.55,k.lit);
-        runtime.cx.save();runtime.cx.translate(k.x+ox,k.y+oy);runtime.cx.rotate(k.rot+b*.1);runtime.cx.globalAlpha=Math.min(1,al)*(runtime.worldOpacity?.(d,R*1.2)??1);runtime.cx.strokeStyle=k.lit>.1?runtime.GOLD:(c.pal?c.pal.acc:"#fff");runtime.cx.lineWidth=1.2;
+        runtime.cx.save();runtime.cx.translate(k.x+ox,k.y+oy);runtime.cx.rotate(k.rot+b*.1);runtime.cx.globalAlpha=Math.min(1,al)*(runtime.worldOpacity?.(d,R*1.2)??1);runtime.cx.strokeStyle=k.lit>.1?runtime.musicInk?.(k,'acorde')||'#fff':(c.pal?c.pal.acc:"#fff");runtime.cx.lineWidth=1.2;
         runtime.cx.beginPath();runtime.cx.moveTo(0,-k.s*1.6);runtime.cx.lineTo(k.s*.5,0);runtime.cx.lineTo(0,k.s*.6);runtime.cx.lineTo(-k.s*.5,0);runtime.cx.closePath();runtime.cx.stroke();
-        if(k.lit>.1){runtime.cx.globalAlpha=k.lit*.35*(runtime.worldOpacity?.(d,R*1.2)??1);runtime.cx.fillStyle=runtime.GOLD;runtime.cx.fill();}runtime.cx.restore();if(k.lit<.1)runtime.touchRing(k.x+ox,k.y+oy,d,R,b);}
+        if(k.lit>.1){runtime.cx.globalAlpha=k.lit*.35*(runtime.worldOpacity?.(d,R*1.2)??1);runtime.cx.fillStyle=runtime.musicInk?.(k,'acorde')||'#fff';runtime.cx.fill();}runtime.cx.restore();if(k.lit<.1)runtime.touchRing(k.x+ox,k.y+oy,d,R,b);}
       for(const p2 of c.props){runtime.physics(p2,dt,c.props);const d=Math.hypot(p2.x-runtime.S.wx,p2.y-runtime.S.wy),w=runtime.waves.length&&runtime.hitW(p2.x,p2.y);
         if(w){p2.lit=1;runtime.wsoon(w,p2.snd);}
         if(contactEntry(p2,d<ds/2+12,!paused&&!runtime.scanning)&&ms>p2.cd){p2.cd=ms+(p2.personality?.cooldown||700);runtime.MU.act+=.3;runtime.touched();runtime.burst(p2.x,p2.y,6,true);
@@ -262,7 +262,7 @@ export function initialize(runtime) {
         if(d<ds/2+16&&!f.on&&runtime.MU.layers.has(f.layer))f.on=true;
         if(d>R*2.2)continue;const al=Math.max(0,1-d/(R*2.2)),on=f.on||runtime.MU.layers.has(f.layer);
         runtime.cx.globalAlpha=al*.6;runtime.cx.fillStyle="#fff";runtime.cx.fillRect(f.x+ox-1,f.y+oy-46,2,46);
-        runtime.cx.globalAlpha=Math.min(1,al*(on?1:.5)+(on?b*.3:0))*(runtime.worldOpacity?.(d,R*2.2)??1);runtime.cx.fillStyle=on?runtime.GOLD:"#fff";runtime.cx.fillRect(f.x+ox-4,f.y+oy-54,8,8);
+        runtime.cx.globalAlpha=Math.min(1,al*(on?1:.5)+(on?b*.3:0))*(runtime.worldOpacity?.(d,R*2.2)??1);runtime.cx.fillStyle=on?runtime.musicInk?.(f)||'#fff':"#fff";runtime.cx.fillRect(f.x+ox-4,f.y+oy-54,8,8);
         if(on){runtime.cx.globalAlpha=al*.15;runtime.cx.beginPath();runtime.cx.arc(f.x+ox,f.y+oy-50,24+b*20,0,6.283);runtime.cx.fill();}}
       // cueva: estalactitas que gotean
       for(const s2 of c.stal){const d=Math.hypot(s2.x-runtime.S.wx,s2.y-runtime.S.wy);if(d>R*1.3)continue;const al=Math.max(0,1-d/(R*1.3));runtime.cx.globalAlpha=al*.5;runtime.cx.fillStyle="#fff";
@@ -340,10 +340,10 @@ export function initialize(runtime) {
       for(let i=c.motes.length-1;i>=0;i--){const m=c.motes[i],d=Math.hypot(m.x-runtime.S.wx,m.y-runtime.S.wy);
         if(d<ds/2+10){c.motes.splice(i,1);runtime.playerNote(.13);runtime.burst(m.x,m.y,5,runtime.grooveFx>.9);continue;}
         const mw=runtime.waves.length&&runtime.hitW(m.x,m.y);if(mw){m.fl=1;runtime.wsoon(mw,q=>runtime.playVoice('luz',Math.floor(d/30),q,runtime.regionOfPos(m.x,m.y),false,1,m));}m.fl=Math.max(0,(m.fl||0)-dt*2);
-        if(d>R&&!m.fl)continue;runtime.cx.globalAlpha=Math.min(1,Math.max(m.fl,Math.pow(Math.max(0,1-d/R),1.3)*(.5+.25*Math.sin(t/400+m.ph)+b*.35)))*(runtime.worldOpacity?.(d,R)??1);runtime.cx.fillStyle=m.fl>.1?runtime.GOLD:"#fff";runtime.cx.fillRect(m.x+ox-1.5,m.y+oy-1.5,3,3);}
+        if(d>R&&!m.fl)continue;runtime.cx.globalAlpha=Math.min(1,Math.max(m.fl,Math.pow(Math.max(0,1-d/R),1.3)*(.5+.25*Math.sin(t/400+m.ph)+b*.35)))*(runtime.worldOpacity?.(d,R)??1);runtime.cx.fillStyle=m.fl>.1?runtime.musicInk?.(m)||'#fff':"#fff";runtime.cx.fillRect(m.x+ox-1.5,m.y+oy-1.5,3,3);}
     }
     runtime.MU.follower=follow;if(followers>=2)runtime.unlock("fiesta");runtime.MU.near=runtime.currentPocket()?.kind==='quiet'?[]:nearO;runtime.MU.singers=singers;
-    runtime.beams=runtime.beams.filter(be=>(be.l-=dt*1.6)>0);runtime.cx.lineWidth=1.2;for(const be of runtime.beams){runtime.cx.globalAlpha=be.l*.8;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.beginPath();runtime.cx.moveTo(be.x1+ox,be.y1+oy);runtime.cx.lineTo(be.x2+ox,be.y2+oy);runtime.cx.stroke();}
+    runtime.beams=runtime.beams.filter(be=>(be.l-=dt*1.6)>0);runtime.cx.lineWidth=1.2;for(const be of runtime.beams){runtime.cx.globalAlpha=be.l*.8;runtime.cx.strokeStyle=runtime.musicInk?.({x:be.x1,y:be.y1},'acorde')||'#fff';runtime.cx.beginPath();runtime.cx.moveTo(be.x1+ox,be.y1+oy);runtime.cx.lineTo(be.x2+ox,be.y2+oy);runtime.cx.stroke();}
     {const cc=runtime.wchunk(Math.floor(runtime.S.wx/runtime.WCH),Math.floor(runtime.S.wy/runtime.WCH));if(cc.var!==runtime.MU.vari){runtime.MU.vari=cc.var;}}
     // tu Estudio en el mapa
     if(runtime.S.studio.x!=null){const d=Math.hypot(runtime.S.studio.x-runtime.S.wx,runtime.S.studio.y-runtime.S.wy);if(d<R*2.5){const x=runtime.S.studio.x+ox,y=runtime.S.studio.y+oy;runtime.cx.globalAlpha=Math.min(1,1.2-d/(R*2.5))*(runtime.worldOpacity?.(d,R*2.5)??1);runtime.cx.strokeStyle=runtime.S.color;runtime.cx.lineWidth=1.5;runtime.cx.strokeRect(x-8,y-8,16,16);runtime.cx.beginPath();runtime.cx.moveTo(x-11,y-8);runtime.cx.lineTo(x,y-17);runtime.cx.lineTo(x+11,y-8);runtime.cx.stroke();}}
@@ -378,7 +378,7 @@ export function initialize(runtime) {
       glyph(runtime.cx,rl.s,x,y,size*(1+b*.2));
       for(let i=0;i<need;i++){const a=i/need*6.283+t/6000;runtime.cx.globalAlpha=al*(i<progress.pulses ? .9 : .25);runtime.cx.beginPath();runtime.cx.arc(x+Math.cos(a)*28,y+Math.sin(a)*28,2,0,6.283);runtime.cx.stroke();}
       runtime.cx.globalAlpha=al*.6;runtime.cx.beginPath();runtime.cx.arc(x,y,36,-Math.PI/2,-Math.PI/2+6.283*(progress.dwell/(rl.magical?12:6)));runtime.cx.stroke();
-      if(d<100){runtime.cx.globalAlpha=.8;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.font="10px monospace";runtime.cx.textAlign="center";runtime.cx.fillText(rl.name||"Reliquia",x,y-44);runtime.cx.fillText(`Escucha ${Math.floor(progress.dwell)}/${rl.magical?12:6}s · ${progress.pulses}/${need} pulsos`,x,y+52);}
+      if(d<100){runtime.cx.globalAlpha=.8;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.font="10px 'Geist Mono', monospace";runtime.cx.textAlign="center";runtime.cx.fillText(rl.name||"Reliquia",x,y-44);runtime.cx.fillText(`Escucha ${Math.floor(progress.dwell)}/${rl.magical?12:6}s · ${progress.pulses}/${need} pulsos`,x,y+52);}
     }
     runtime.bodyTick?.(dt);runtime.quietTick?.(dt);runtime.cajasTick?.(dt);runtime.cultureTick?.(dt);   // el cubo primero: los objetos leen su contacto en este cuadro
     runtime.drawGlass?.(t,dt,ox,oy,R);

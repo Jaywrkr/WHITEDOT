@@ -8,7 +8,7 @@ export function initialize(runtime) {
   }
   function drawSky(x,X,Y,Wd,Hd){
     const P=starPos();
-    if(!P.length){x.fillStyle="#8a8a8f";x.font='24px "JetBrains Mono", monospace';x.textAlign="center";x.fillText("Tu primera estrella está en el Mundo.",X+Wd/2,Y+Hd/2);x.textAlign="left";return;}
+    if(!P.length){x.fillStyle="#8a8a8f";x.font='24px "Geist Mono", monospace';x.textAlign="center";x.fillText("Tu primera estrella está en el Mundo.",X+Wd/2,Y+Hd/2);x.textAlign="left";return;}
     let a=Infinity,b=Infinity,e=-Infinity,f=-Infinity;P.forEach(p=>{a=Math.min(a,p.x);b=Math.min(b,p.y);e=Math.max(e,p.x);f=Math.max(f,p.y);});
     const s=Math.min(Wd/Math.max(1,e-a),Hd/Math.max(1,f-b),Wd/4),ox=X+(Wd-(e-a)*s)/2-a*s,oy=Y+(Hd-(f-b)*s)/2-b*s;
     const r2=runtime.rng(7);x.fillStyle="#fff";for(let i=0;i<160;i++){x.globalAlpha=.05+r2()*.15;x.fillRect(X+r2()*Wd,Y+r2()*Hd,1.5,1.5);}
@@ -26,7 +26,8 @@ export function initialize(runtime) {
   }
 
   /* ---------- tarjetas ---------- */
-  function shareCard(kind){
+  async function shareCard(kind){
+    await Promise.all([document.fonts.load('400 14px "Geist Mono"'),document.fonts.load('600 14px "Geist Mono"'),document.fonts.load('400 24px Silkscreen')]);
     const c=document.createElement("canvas");c.width=1080;c.height=1350;const x=c.getContext("2d");
     x.fillStyle="#000";x.fillRect(0,0,1080,1350);
     if(kind==="sky")drawSky(x,100,300,880,700);
@@ -40,11 +41,11 @@ export function initialize(runtime) {
     }
     x.globalAlpha=1;x.textBaseline="top";x.fillStyle="#fff";
     x.font='96px Silkscreen, monospace';x.fillText(kind==="sky"?runtime.S.stars.length+" ESTRELLAS":"DÍA "+runtime.displayDay(),100,96);
-    x.font='28px "JetBrains Mono", monospace';x.fillStyle="#8a8a8f";x.fillText((kind==="sky"?"MI CONSTELACIÓN · "+Object.keys(runtime.S.zones).length+" ZONAS":"ERA "+runtime.era(runtime.displayDay())).toUpperCase(),104,216);
-    x.fillStyle="#fff";x.font='600 34px "JetBrains Mono", monospace';
+    x.font='28px "Geist Mono", monospace';x.fillStyle="#8a8a8f";x.fillText((kind==="sky"?"MI CONSTELACIÓN · "+Object.keys(runtime.S.zones).length+" ZONAS":"ERA "+runtime.era(runtime.displayDay())).toUpperCase(),104,216);
+    x.fillStyle="#fff";x.font='600 34px "Geist Mono", monospace';
     x.fillText("RACHA "+runtime.shownStreak(),100,1040);x.fillText("ESTRELLAS "+runtime.S.stars.length,430,1040);x.fillText("TAMAÑO "+runtime.level(),800,1040);
-    x.font='40px "JetBrains Mono", monospace';x.fillText(runtime.shownStreak()>1?"No fallé. "+runtime.shownStreak()+" días seguidos.":"Hoy sumé.",100,1120);
-    x.fillStyle="#8a8a8f";x.font='26px "JetBrains Mono", monospace';x.fillText("WHITEDOT  ·  @jaywrkr",100,1236);x.fillStyle="#fff";x.font='30px Silkscreen, monospace';x.textAlign="right";x.fillText("SIMPLE.",980,1232);x.textAlign="left";
+    x.font='40px "Geist Mono", monospace';x.fillText(runtime.shownStreak()>1?"No fallé. "+runtime.shownStreak()+" días seguidos.":"Hoy sumé.",100,1120);
+    x.fillStyle="#8a8a8f";x.font='26px "Geist Mono", monospace';x.fillText("WHITEDOT  ·  @jaywrkr",100,1236);x.fillStyle="#fff";x.font='30px Silkscreen, monospace';x.textAlign="right";x.fillText("SIMPLE.",980,1232);x.textAlign="left";
     runtime.$("shareImg").alt=kind==="sky"?"Mi constelación en WHITEDOT":"Mi día en WHITEDOT";
     runtime.$("shareImg").src=c.toDataURL("image/png");runtime.$("mShare").hidden=false;
   }

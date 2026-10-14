@@ -1,5 +1,5 @@
 import {livingVoice} from './living-catalog.js';
-import {musicalCharacter,hookInstruments,voiceRegister} from './musical-character.js';
+import {musicalCharacter,interactionInstruments,voiceRegister} from './musical-character.js';
 import {glassVoice} from './glass-music.js';
 import {materiaVoice,materiaKindOf} from './materia-music.js';
 import {vidaVoice,vidaKindOf} from './vida-music.js';
@@ -32,12 +32,13 @@ export function createRegionalVoices(region, biomes, genres, seedOf, rng) {
   const genre = genres[region.genre];
   const calm = ['ambient','heart','downtempo','dub'].includes(region.genre);
   const bassPool = [...new Set(genre.bassP||[genre.bassI])];
-  const melodyPool = [...new Set(hookInstruments(region.genre,genre))];
+  const melodyPool = interactionInstruments(region.genre,genre,'lead');
+  const chordPool = interactionInstruments(region.genre,genre,'acorde');
   const percussionPool = genre.percP || (calm ? ['tom','wood','shaker'] : ['kick','conga','wood','rim','tom','shaker']);
   const voices = Object.create(null);
   kinds.forEach((kind, i) => {
     const role = roles[i % roles.length];
-    const pool = role === 'bajo' ? bassPool : role === 'perc' ? percussionPool : melodyPool;
+    const pool = role === 'bajo' ? bassPool : role === 'perc' ? percussionPool : role==='acorde'?chordPool:melodyPool;
     voices[kind] = Object.freeze({role, instrument:pool[Math.floor(random()*pool.length)],
       degree:Math.floor(random()*7), response:[2,3,6][Math.floor(random()*3)],
       low:role==='bajo'?36:role==='agudo'?64:role==='acorde'?45:character.low,

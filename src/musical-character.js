@@ -27,6 +27,24 @@ export function musicalCharacter(genre){return CHARACTERS[GENRE_CHARACTERS[genre
 const HOOKS={organic:['reed','kalimba'],andean:['reed','flute'],tribal:['membrane','marimba'],idm:['membrane','metalkeys'],ambient:['bowed','flute'],heart:['hollow','organ','flute'],electro:['hollow','metalkeys'],dub:['organ'],minimal:['keys','clav'],garage:['rhodes','keys'],downtempo:['rhodes','flute'],minimaltechno:['organ']};
 for(const pool of Object.values(HOOKS))Object.freeze(pool);
 export function hookInstruments(genre,definition){return HOOKS[genre]||definition.hookP;}
+// Interaction palettes are separate from the radio: each object keeps its role and register.
+const INTERACTIONS={
+ floor:{acorde:['organ','hollow','pad'],lead:['clav','plucked','hollow']},
+ bass:{acorde:['pad','rhodes'],lead:['plucked','machine','rhodes']},
+ warm:{acorde:['rhodes','strings','pad'],lead:['rhodes','plucked','reed']},
+ organic:{acorde:['bowed','strings','pad'],lead:['reed','plucked','kalimba','steel']},
+ melodic:{acorde:['strings','bowed','pad'],lead:['saw','plucked','strings','reed']},
+ disco:{acorde:['rhodes','strings','organ'],lead:['clav','brass','plucked','strings']},
+ calm:{acorde:['pad','bowed','strings'],lead:['bowed','plucked','hollow','flute']},
+ machine:{acorde:['hollow','pad','strings'],lead:['machine','hollow','metalkeys','plucked']},
+ broken:{acorde:['pad','rhodes','bowed'],lead:['membrane','metalkeys','plucked','reed']}
+};
+for(const p of Object.values(INTERACTIONS)){Object.freeze(p.acorde);Object.freeze(p.lead);Object.freeze(p);}
+Object.freeze(INTERACTIONS);
+export function interactionInstruments(genre,definition,role){
+ const profile=INTERACTIONS[GENRE_CHARACTERS[genre]||'warm'];
+ return role==='acorde'?profile.acorde:[...new Set([...hookInstruments(genre,definition),...profile.lead])];
+}
 export function voiceRegister(voice,genre){
   if(voice.role==='bajo'||voice.role==='perc')return voice;
   const high=Math.min(voice.high,musicalCharacter(genre).high),low=Math.min(voice.low,high-12);

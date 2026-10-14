@@ -1,3 +1,4 @@
+import {musicalInk} from './visual.js';
 // Audio onset uses the audio clock; drawing uses the monotonic display clock.
 export function createCueBuffer(limit=32) {
   const cues=[];
@@ -16,6 +17,10 @@ export function createCueBuffer(limit=32) {
 }
 export function initialize(runtime) {
   const buffer=createCueBuffer();
+  function musicInk(source,role='lead'){
+    const region=runtime.regionOfPos?.(source?.x??runtime.S.wx,source?.y??runtime.S.wy);
+    return musicalInk(region?.hue??190,role);
+  }
   function soundCue(source,role,time) {
     if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running')return;
     buffer.add(source,role,performance.now()+Math.max(0,time-runtime.ac.currentTime)*1000);
@@ -28,7 +33,7 @@ export function initialize(runtime) {
       if(Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)>radius)continue;
       const r=8+age*(role==='bajo'?38:18);
       ctx.save();ctx.translate(source.x+ox,source.y+oy);
-      ctx.strokeStyle=runtime.GOLD;ctx.lineWidth=role==='bajo'?2:1;ctx.globalAlpha=(1-age)*.65;
+      ctx.strokeStyle=musicInk(source,role);ctx.lineWidth=role==='bajo'?2:1;ctx.globalAlpha=(1-age)*.65;
       ctx.beginPath();
       if(role==='perc')for(let i=0;i<4;i++){const a=i*Math.PI/2;ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r);ctx.lineTo(Math.cos(a)*(r+5),Math.sin(a)*(r+5));}
       else if(role==='lead'){ctx.moveTo(-r/2,0);ctx.lineTo(0,-r);ctx.lineTo(r/2,-r/2);}
@@ -37,5 +42,5 @@ export function initialize(runtime) {
       ctx.stroke();ctx.restore();
     }
   }
-  Object.defineProperties(runtime,{clearSoundCues:{get:()=>()=>buffer.clear()},soundCue:{get:()=>soundCue},drawSoundCues:{get:()=>drawSoundCues}});
+  Object.defineProperties(runtime,{musicInk:{get:()=>musicInk},clearSoundCues:{get:()=>()=>buffer.clear()},soundCue:{get:()=>soundCue},drawSoundCues:{get:()=>drawSoundCues}});
 }

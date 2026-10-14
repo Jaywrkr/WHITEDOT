@@ -97,7 +97,7 @@ export function initialize(runtime){
    c.translate(x,y);for(const [k,s] of [[0,10],[Math.PI/4,10]]){c.save();c.rotate(rot+k);c.globalAlpha=(.9)*fade;c.strokeStyle=col;c.lineWidth=1.6;c.strokeRect(-s,-s,s*2,s*2);c.restore();}
    c.globalAlpha=(.9)*fade;c.fillStyle=WORLD_VISUAL.gold;c.beginPath();c.arc(0,0,2.5+Math.sin(t/200)*1,0,TAU);c.fill();
    for(let i=0;i<3;i++){const a=t/600+i*TAU/3;c.globalAlpha=(.7)*fade;c.fillRect(Math.cos(a)*18-1,Math.sin(a)*18-1,2,2);}
-   c.translate(-x,-y);if(Math.hypot(b.x-S().wx,b.y-S().wy)<160){c.globalAlpha=(.8)*fade;c.fillStyle=WORLD_VISUAL.gold;c.font='10px monospace';c.textAlign='center';c.fillText('Caja misteriosa · tócala con el cubo',x,y+34);}}
+   c.translate(-x,-y);if(Math.hypot(b.x-S().wx,b.y-S().wy)<160){c.globalAlpha=(.8)*fade;c.fillStyle=WORLD_VISUAL.gold;c.font='10px "Geist Mono", monospace';c.textAlign='center';c.fillText('Caja misteriosa · tócala con el cubo',x,y+34);}}
   if(has('campo')){const R=fieldRadius(left('campo'),POWERS.campo.seconds),arm=((runtime.MU.step%16)+((runtime.ac?.currentTime||0)%runtime.SIX)/runtime.SIX)/16*TAU-Math.PI/2,hue=runtime.MU.dnaT?.hue||0,[H]=swatchOf(hue);
    c.globalAlpha=.08;c.fillStyle=`hsl(${H},80%,60%)`;c.beginPath();c.arc(cx,cy,R,0,TAU);c.fill();c.globalAlpha=.5;c.strokeStyle=`hsl(${H},80%,64%)`;c.lineWidth=1.4;c.stroke();
    c.globalAlpha=.6;c.strokeStyle=runtime.cubeColor?.()||WORLD_VISUAL.gold;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+Math.cos(arm)*R,cy+Math.sin(arm)*R);c.stroke();}
@@ -106,9 +106,9 @@ export function initialize(runtime){
   if(companion.on){const x=companion.x+ox,y=companion.y+oy,g=c.createRadialGradient(x,y,0,x,y,22);g.addColorStop(0,`rgba(255,255,255,${.5+companion.lit*.4})`);g.addColorStop(1,'rgba(0,0,0,0)');c.globalAlpha=1;c.fillStyle=g;c.fillRect(x-22,y-22,44,44);}
   if(has('brujula')||companion.on)for(const tg of rareTargets().slice(0,has('brujula')?4:1)){const a=Math.atan2(tg.y-S().wy,tg.x-S().wx),r=Math.min(cx,cy)-46,x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;
    c.save();c.translate(x,y);c.rotate(a);c.globalAlpha=.85;c.fillStyle=WORLD_VISUAL.gold;c.beginPath();c.moveTo(10,0);c.lineTo(-6,-6);c.lineTo(-6,6);c.closePath();c.fill();c.restore();
-   c.globalAlpha=.75;c.fillStyle=WORLD_VISUAL.gold;c.font='9px monospace';c.textAlign='center';c.fillText(`${tg.name} · ${Math.round(tg.d/10)} m`,x-Math.cos(a)*22,y-Math.sin(a)*22+3);}
+   c.globalAlpha=.75;c.fillStyle=WORLD_VISUAL.gold;c.font='9px "Geist Mono", monospace';c.textAlign='center';c.fillText(`${tg.name} · ${Math.round(tg.d/10)} m`,x-Math.cos(a)*22,y-Math.sin(a)*22+3);}
   // Poderes activos: un renglón discreto arriba.
-  const active=activePowers(powers,now());if(active.length){c.globalAlpha=.75;c.fillStyle=WORLD_VISUAL.gold;c.font='10px monospace';c.textAlign='center';c.fillText(active.map(p=>`${POWERS[p.id].name} ${Math.ceil(p.left)} s`).join(' · '),cx,Math.min(runtime.H-60,180));}
+  const active=activePowers(powers,now());if(active.length){c.globalAlpha=.75;c.fillStyle=WORLD_VISUAL.gold;c.font='10px "Geist Mono", monospace';c.textAlign='center';c.fillText(active.map(p=>`${POWERS[p.id].name} ${Math.ceil(p.left)} s`).join(' · '),cx,Math.min(runtime.H-60,180));}
   c.restore();
  }
  function clear(){clock.clear();spawned.length=0;trail.length=0;marks.length=0;companion.on=false;companion.heard=[];companion.species=null;lastMark=null;runtime.fieldSolo=false;runtime.speedBoost=1;}

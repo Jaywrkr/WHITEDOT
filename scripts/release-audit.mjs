@@ -22,7 +22,7 @@ for(const file of shell)if(!existsSync(resolve(root,file)))errors.push('Missing 
 for(const file of files)if(!shell.includes('./src/'+file))errors.push('Uncached module: '+file);
 const manifest=JSON.parse(read('manifest.webmanifest'));
 for(const icon of manifest.icons)if(!shell.includes('./'+icon.src))errors.push('Uncached manifest icon: '+icon.src);
-for(const name of ['silkscreen-OFL.txt','jetbrainsmono-OFL.txt'])if(!read('assets/fonts/'+name).includes('SIL OPEN FONT LICENSE'))errors.push('Missing font license: '+name);
+for(const name of ['silkscreen-OFL.txt','jetbrainsmono-OFL.txt','geistmono-OFL.txt'])if(!read('assets/fonts/'+name).includes('SIL OPEN FONT LICENSE'))errors.push('Missing font license: '+name);
 for(const item of JSON.parse(read('assets/fonts/sources.json'))){const digest=createHash('sha256').update(readFileSync(join(root,'assets/fonts',item.file))).digest('hex');if(item.sha256!==digest)errors.push('Font/source hash mismatch: '+item.file);}
 if(/https:\/\/fonts\./.test(html))errors.push('External font dependency remains');
 for(const file of readdirSync(root).filter(n=>n.endsWith('.md'))){for(const m of read(file).matchAll(/\]\(([^)]+)\)/g)){const href=m[1].replace(/^<|>$/g,'').split('#')[0];if(href&&!href.includes('://')&&!existsSync(resolve(root,href)))warnings.push('Markdown reference: '+file+' → '+href);}}

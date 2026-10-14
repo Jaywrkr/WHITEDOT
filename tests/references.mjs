@@ -1,4 +1,4 @@
-import {hookInstruments} from '../src/musical-character.js';
+import {interactionInstruments} from '../src/musical-character.js';
 import assert from 'node:assert/strict';
 import {REFERENCE_GENRES,REFERENCE_STEPS,REFERENCE_BASS,referenceRhythm} from '../src/references.js';
 import {createRegionalVoices} from '../src/voices.js';import {INSTRUMENTS} from '../src/journal.js';
@@ -10,7 +10,7 @@ for(const [id,g]of Object.entries(REFERENCE_GENRES)){
  const d=found.get(id);assert(g.bpm[0]<=d.bpm&&d.bpm<=g.bpm[1]);assert(g.scales.some(s=>JSON.stringify(s)===JSON.stringify(d.scale)));
  const voices=createRegionalVoices(d,r.BIOMES,r.GEN,r.seedOf,r.rng);for(const v of Object.values(voices)){
   assert(INSTRUMENTS[v.instrument],`missing instrument explanation: ${v.instrument}`);
-  if(v.role==='bajo')assert(g.bassP.includes(v.instrument));else if(v.role==='perc')assert(g.percP.includes(v.instrument));else assert(hookInstruments(id,g).includes(v.instrument));
+  if(v.role==='bajo')assert(g.bassP.includes(v.instrument));else if(v.role==='perc')assert(g.percP.includes(v.instrument));else assert(interactionInstruments(id,g,v.role).includes(v.instrument));
  }
  assert(REFERENCE_STEPS[id].includes(0)&&REFERENCE_BASS[id].includes(0));
  const pattern=referenceRhythm(id,0);assert(pattern.kick.length>0);Object.values(pattern).forEach(steps=>steps.forEach(s=>assert(Number.isInteger(s)&&s>=0&&s<16)));

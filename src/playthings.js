@@ -63,7 +63,7 @@ export function initialize(runtime) {
       else if(o.kind==='kite'){ctx.rotate(Math.sin(t/(o.personality?.period||1100)+o.phase)*.3);ctx.beginPath();ctx.moveTo(0,-o.size);ctx.lineTo(o.size,0);ctx.lineTo(0,o.size);ctx.lineTo(-o.size,0);ctx.closePath();ctx.stroke();ctx.beginPath();ctx.moveTo(0,o.size);ctx.lineTo(Math.sin(t/300+o.phase)*8,o.size+15);ctx.stroke();}
       else if(o.kind==='rotor'||o.motion==='spin'){ctx.rotate(o.rotation);ctx.strokeRect(-o.size,-o.size,o.size*2,o.size*2);ctx.fillRect(-1,-1,2,2);}
       else {ctx.beginPath();ctx.arc(0,0,o.size+3,0,Math.PI*2);ctx.stroke();if(o.ring>0){ctx.beginPath();ctx.arc(0,0,o.size+3+(1-o.ring)*35,0,Math.PI*2);ctx.stroke();}}
-      if(o.growth>.04){ctx.globalAlpha=.5;ctx.beginPath();ctx.arc(0,0,o.size+10,-Math.PI/2,-Math.PI/2+o.growth*Math.PI*2);ctx.stroke();if(distance<48){ctx.font='9px monospace';ctx.textAlign='center';ctx.fillText(o.influenceName||'',0,o.size+24);}}
+      if(o.growth>.04){ctx.globalAlpha=.5;ctx.beginPath();ctx.arc(0,0,o.size+10,-Math.PI/2,-Math.PI/2+o.growth*Math.PI*2);ctx.stroke();if(distance<48){ctx.font='9px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText(o.influenceName||'',0,o.size+24);}}
       if(!TOY_NAMES[o.kind]){ctx.beginPath();ctx.moveTo(0,-o.size);ctx.lineTo(o.size,0);ctx.lineTo(0,o.size);ctx.lineTo(-o.size,0);ctx.closePath();ctx.stroke();}
       ctx.restore();
     }

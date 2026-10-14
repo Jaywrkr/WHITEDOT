@@ -98,10 +98,10 @@ export function initialize(runtime){
     // Three light blades: no filled panels or dense internal grid.
     ctx.globalAlpha=.5+site.lit*.15;ctx.beginPath();ctx.ellipse(0,0,16,38,0,0,TAU);ctx.stroke();
     ctx.globalAlpha=.28;ctx.beginPath();ctx.moveTo(0,-34);ctx.quadraticCurveTo(Math.sin(site.angles[(i+1)%3]-angle)*12,0,0,34);ctx.stroke();ctx.restore();
-    ctx.globalAlpha=distance<180?.85:.35;ctx.strokeStyle=site.grab===i?WORLD_VISUAL.gold:color;ctx.lineWidth=site.grab===i?2.4:WORLD_VISUAL.line;ctx.beginPath();ctx.arc(Math.cos(angle)*glassHandleRadius(i),Math.sin(angle)*glassHandleRadius(i),site.grab===i?10:7,0,TAU);ctx.stroke();ctx.lineWidth=WORLD_VISUAL.line;
+    ctx.globalAlpha=distance<180?.85:.35;ctx.strokeStyle=site.grab===i?elementInk('glass',site.hue,true):color;ctx.lineWidth=site.grab===i?2.4:WORLD_VISUAL.line;ctx.beginPath();ctx.arc(Math.cos(angle)*glassHandleRadius(i),Math.sin(angle)*glassHandleRadius(i),site.grab===i?10:7,0,TAU);ctx.stroke();ctx.lineWidth=WORLD_VISUAL.line;
    });
    const resonance=glassParameters(site.angles).alignment;if(resonance>.65){ctx.strokeStyle=elementInk('glass',site.hue);ctx.globalAlpha=(resonance-.65)*.6;ctx.beginPath();for(let i=0;i<=48;i++){const a=i/48*TAU,r=25+Math.cos(a*3+site.angles[0])*9;ctx[i?'lineTo':'moveTo'](Math.cos(a)*r,Math.sin(a)*r);}ctx.stroke();}
-   if(distance<180){ctx.globalAlpha=.8;ctx.fillStyle=WORLD_VISUAL.gold;ctx.font='10px monospace';ctx.textAlign='center';const channel=glassShape(site.angles,state.site===site?state.pane:0,site.region,runtime.seedOf).channel;ctx.fillText(`Rodea un asa · ${CHANNEL_NAMES[channel]}`,0,106);}
+   if(distance<180){ctx.globalAlpha=.8;ctx.fillStyle=elementInk('glass',site.hue,true);ctx.font='10px "Geist Mono", monospace';ctx.textAlign='center';const channel=glassShape(site.angles,state.site===site?state.pane:0,site.region,runtime.seedOf).channel;ctx.fillText(`Rodea un asa · ${CHANNEL_NAMES[channel]}`,0,106);}
    ctx.restore();
   }
  }

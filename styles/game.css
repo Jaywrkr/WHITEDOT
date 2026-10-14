@@ -8,7 +8,7 @@ html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom
   --faint:#2a2a2e;
   --gold:#f0d27a;
   --display:"Silkscreen","Courier New",monospace;
-  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --mono:"Geist Mono",ui-monospace,Menlo,monospace;
   color-scheme:dark;
 }
 html,body{height:100%;}

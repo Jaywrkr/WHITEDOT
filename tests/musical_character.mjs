@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {GENRE_CHARACTERS,musicalCharacter,hookInstruments,hookPitch} from '../src/musical-character.js';
+import {GENRE_CHARACTERS,musicalCharacter,hookInstruments,interactionInstruments,hookPitch} from '../src/musical-character.js';
 import {createRadio} from '../src/radio.js';
 import {createRegionalVoices,initialize as voices} from '../src/voices.js';
 import {initialize as data} from '../src/data.js';
@@ -26,7 +26,7 @@ for(const genre of Object.keys(r.GEN)){
   assert(Object.values(profile).some(v=>v.role==='bajo'));assert(Object.values(profile).some(v=>v.role==='perc'));
   for(const v of Object.values(profile))if(v.role!=='bajo'&&v.role!=='perc'){
     assert(v.high<=p.high&&v.high-v.low>=12);
-    assert(hookInstruments(genre,r.GEN[genre]).includes(v.instrument),'objects reintroduced the generic keys/flute pool');
+    assert(interactionInstruments(genre,r.GEN[genre],v.role).includes(v.instrument),'object instrument escaped its genre and role palette');
   }
   for(const instrument of hookInstruments(genre,r.GEN[genre]))for(let n=30;n<=95;n++){
     const audible=hookPitch(instrument,n,p)+(instrument==='glass'?12:0);
