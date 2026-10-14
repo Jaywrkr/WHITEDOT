@@ -42,7 +42,8 @@ try:
    assert page.evaluate('__petNotes[0].role')=={'golondrina':'melody','grulla':'bass','luciernaga':'groove'}[species]
    if species=='grulla':assert page.evaluate('__petNotes[0].note>=36&&__petNotes[0].note<=52')
    # Only the cube touching it queues its phrase, without teaching that phrase back to itself.
-   page.evaluate('()=>{const r=__testRuntime,p=r.petState;window.__phrase=JSON.stringify(r.S.pet.phrase);window.__count=__petNotes.length;r.S.wx=p.x;r.S.wy=p.y;}')
+   # The pet comes to a still cube. Moving the cube, a following flock or a travelling pulse would play player notes that may teach it legitimately.
+   page.evaluate('()=>{const r=__testRuntime,p=r.petState;r.waves.length=0;const x=r.S.wx;for(let i=1;i<40&&(r.nearbyFlocks(900).length||r.currentPocket()?.kind==="quiet"||r.regionOfPos(r.S.wx,r.S.wy).sea);i++)r.S.wx=x+i*1500;if(r.nearbyFlocks(900).length)throw Error("no quiet test spot");window.__phrase=JSON.stringify(r.S.pet.phrase);window.__count=__petNotes.length;p.x=r.S.wx;p.y=r.S.wy;}')
    page.wait_for_function('__petNotes.length>__count',timeout=12000)
    assert page.evaluate('JSON.stringify(__testRuntime.S.pet.phrase)')==page.evaluate('__phrase')
    page.evaluate('()=>{__testRuntime.S.sound=false;window.__silentCount=__petNotes.length;}');page.wait_for_timeout(300);assert page.evaluate('__petNotes.length')==page.evaluate('__silentCount');page.evaluate('__testRuntime.S.sound=true')

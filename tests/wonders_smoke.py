@@ -35,9 +35,10 @@ with sync_playwright() as p:
   before=page.evaluate('window.__testRuntime.S.wx');page.keyboard.down('d');page.wait_for_timeout(400);page.keyboard.up('d')
   assert page.evaluate('window.__testRuntime.S.wx')<before-20
   # Río: energía y gotas a tempo.
-  page.evaluate('''()=>{const r=window.__testRuntime;for(let i=0;i<40000;i++){const x=(Math.random()-.5)*30*3600,y=(Math.random()-.5)*30*3600,q=r.riverAt(x,y);if(q&&q.on&&q.edge<.3){r.S.wx=x;r.S.wy=y;return;}}throw Error('no river');}''')
+  page.evaluate('''()=>{const r=window.__testRuntime;let seed=12345;const rand=()=>(seed=(seed*16807)%2147483647)/2147483647;for(let i=0;i<40000;i++){const x=(rand()-.5)*30*3600,y=(rand()-.5)*30*3600,q=r.riverAt(x,y);if(q&&q.on&&q.edge<.3){r.S.wx=x;r.S.wy=y;return;}}throw Error('no river');}''')
   page.wait_for_function('window.__testRuntime.MU.river>0')
-  n=page.evaluate('()=>{const r=window.__testRuntime,orig=r.pluck;let k=0;const ac=r.ac;const o=ac.createOscillator.bind(ac);let made=0;ac.createOscillator=()=>{made++;return o();};try{r.riverBar(ac.currentTime+.1);}finally{ac.createOscillator=o;}return made;}')
+  # Count every voice source (synth or sample) and probe outside a melodic rest, which silences the river on purpose.
+  n=page.evaluate('()=>{const r=window.__testRuntime,ac=r.ac,o=ac.createOscillator.bind(ac),bs=ac.createBufferSource.bind(ac),radio=r.MU.radio,rest=radio?.melodyRest;let made=0;ac.createOscillator=()=>{made++;return o();};ac.createBufferSource=()=>{made++;return bs();};if(radio)radio.melodyRest=false;try{r.riverBar(ac.currentTime+.1);}finally{ac.createOscillator=o;ac.createBufferSource=bs;if(radio)radio.melodyRest=rest;}return made;}')
   assert n>0,n
   page.wait_for_timeout(500);page.screenshot(path=f'/tmp/whitedot-river-{label}.png')
   # Mapa con estrellas de rarezas y Estudio con la muestra única.

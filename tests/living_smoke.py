@@ -3,14 +3,14 @@ from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
-import threading,shutil
+import threading,shutil,os
 ROOT=Path(__file__).resolve().parents[1]
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*a):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
 try:
  with sync_playwright() as p:
-  browser=p.chromium.launch(executable_path=shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
+  browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
   page=browser.new_page(viewport={'width':390,'height':844},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
@@ -24,7 +24,8 @@ try:
    try:page.wait_for_function('__notes.length>0',timeout=5000)
    except Exception:
     print(kind,errors,page.evaluate('({S:{mode:__testRuntime.S.mode,x:__testRuntime.S.wx,y:__testRuntime.S.wy},ac:__testRuntime.ac?.state,body:__testRuntime.body,objects:__testRuntime.livingNear(),step:__testRuntime.MU.step,q:__testRuntime.MU.q8.length})'),flush=True);raise
-   assert page.evaluate('__testRuntime.S.livingSeen[__testRuntime.labLiving]!==undefined')
+   # Ambient notes can arrive before the cube contact registers; wait for the contact itself.
+   page.wait_for_function('__testRuntime.S.livingSeen[__testRuntime.labLiving]!==undefined',timeout=5000)
   page.evaluate('()=>{const r=__testRuntime;r.givePower("cometa");document.getElementById("mMenu").hidden=false;window.__until=r.powers.cometa;}')
   page.wait_for_timeout(600);assert page.evaluate('__testRuntime.hasPower("cometa")')
   page.evaluate('()=>{const r=__testRuntime;for(let i=0;i<300;i++)r.cajasTick(.1);if(r.powers.cometa!==__until)throw Error("modal power deadline changed");}')
