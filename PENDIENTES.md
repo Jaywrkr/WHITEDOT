@@ -1,3 +1,26 @@
+# Pendientes tras el cierre de V1 RC1
+
+Desarrollo funcional congelado en **audit/v1-closure**. [Auditoría completa](AUDITORIA_V1.md) contiene cada hallazgo, evidencia y solución. La candidata incluye culturas y mascota; no se solicitan más ramas pequeñas ni se consideran ausentes sistemas presentes.
+
+## Antes de publicación
+
+1. A01: escuchar/controlar en iPhone y Android reales, auriculares/altavoz, sesiones largas y grabar set.
+2. A02: PWA instalada, suspensión/reanudación, memoria/FPS/batería y ruta larga.
+3. A03: primera sesión de alguien nuevo; ajustar solo las ayudas que no entienda.
+4. A04: revisar **un PR de esta rama hacia main**, checks verdes y elegir después host HTTPS; probar backup/cambio de origen y update/rollback.
+
+Solo las correcciones de hallazgos de esa aceptación entran a V1. No se publica ni se configura un servidor desde esta auditoría. Consulta de CI remoto bloqueada por 403; no es una certificación de su estado.
+
+## Límites conocidos
+
+Protección entre pestañas optimista; históricos largos sin compactación general; texto/zoom y presupuesto visual no aprobados en hardware; algunas ediciones finas dependen del modo dedo; codecs de grabación dependientes del navegador; prototipo visible. Soluciones y prioridades explícitas en la auditoría. No se borran hallazgos previos para simular que estos límites desaparecieron.
+
+## Después: V2
+
+Publicar V1 individual → identidad/progreso sincronizado → dueto musical → control/historia/memoria → variedad perceptible/culturas/ecosistemas. [Plan por bloques](PLAN_V2.md). Construcción/cableado, mixer y más motores/géneros no son funciones obligatorias nuevas de esta V1. Mantener blanco disponible, mascota ganada, música cuidada y UI mínima. No reintroducir escenas guardables descartadas.
+
+<details><summary>Ideas e inventario previos; conservados para V2, no una lista nueva de obligaciones de V1</summary>
+
 # Actualización · mascota y cubo
 
 Rama `feat/pet-and-cube` sobre la entrega cultural pendiente (`165c376`): mascota ganada/persistente con tres roles musicales, crecimiento, contacto y búsqueda local; colores ganados/estelas/halo en Tu cubo, sin sonidos de UI. [Inventario y límites](MASCOTA_Y_CUBO.md). Main sigue en `8096c8d`; no afirmar que estas ramas ya están integradas. Teléfono real y restantes ampliaciones de V1 siguen pendientes.
@@ -59,3 +82,5 @@ Pruebas reales de batería/memoria en rutas largas, PWA instalada, suspensión/r
 ## Decisiones y flujo preservados
 
 No añadir escenas/ideas musicales guardables: opción descartada por Jay. La fijación es voluntaria; favorecer crear sin grabar. No añadir logros por una operación técnica. Mantenimiento de README/pendientes/entrega en una rama amplia por bloque, con pruebas pertinentes; no volver a treinta ramas pequeñas. Esta rama contiene código, pruebas y documentación. La próxima entrega debe apoyarse en su integración y seguir el alcance que Jay pida.
+
+</details>

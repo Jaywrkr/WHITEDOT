@@ -12,7 +12,8 @@ export function createBody(){
   if(b.jump){b.vx=b.vy=b.speed=0;b.still=0;return b;}
   b.vx=b.vx*.7+dx/dt*.3;b.vy=b.vy*.7+dy/dt*.3;b.speed=Math.hypot(b.vx,b.vy);b.still=b.speed<12?b.still+dt:0;return b;
  }
- return {state:b,step};
+ function reset(){Object.assign(b,{x:0,y:0,px:0,py:0,vx:0,vy:0,speed:0,still:0,jump:false,ready:false});}
+ return {state:b,step,reset};
 }
 // ¿El segmento recorrido por el cubo cruzó la línea y=lineY dentro de |x|<=half? (coordenadas locales)
 export function crossedLine(prev,cur,lineY,half){
@@ -27,9 +28,10 @@ export function polarDelta(center,prev,cur){
  if(d>Math.PI)d-=Math.PI*2;if(d<-Math.PI)d+=Math.PI*2;return d;
 }
 export function initialize(runtime){
+ let owner=runtime.S;
  const body=createBody(),params=new URLSearchParams(location.search);
  // Modo dedo: solo para pruebas automáticas o si se pide explícitamente.
  let finger=params.has('dedo')||navigator.webdriver===true;
- function tick(dt){if(!runtime.inWorld())return;body.step(runtime.S.wx,runtime.S.wy,dt);}
+ function tick(dt){if(owner!==runtime.S){owner=runtime.S;body.reset();}if(!runtime.inWorld())return;body.step(runtime.S.wx,runtime.S.wy,dt);}
  Object.defineProperties(runtime,{body:{get:()=>body.state},bodyTick:{get:()=>tick},fingerTouch:{get:()=>finger,set:v=>{finger=!!v;}}});
 }

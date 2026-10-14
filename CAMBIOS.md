@@ -1,3 +1,7 @@
+# Cierre V1 RC1 · auditoría y correcciones
+
+Rama **audit/v1-closure**, incluye culturas + mascota. SW de versión coherente, fuentes locales/OFL, guardado protegido entre pestañas, reset completo, aislamiento experimental, grabación con salida final/limpieza/error recuperable, códigos validados, ayudas sin sistemas retirados, guardado al cambiar semilla y firma de variedad sin flags retirados. **55 suites, 39 recorridos + offline y 164 mezclas aprobadas.** [Informe con hallazgos y límites](AUDITORIA_V1.md). Un PR a main; Jay integra. V1 congelada, aceptación física/publicación pendientes, [V2 planificada](PLAN_V2.md).
+
 # Entrega nueva · mascota y cubo
 
 Rama `feat/pet-and-cube` sobre la entrega cultural pendiente (`165c376`): mascota ganada/persistente con tres roles musicales, crecimiento, contacto y búsqueda local; colores ganados/estelas/halo en Tu cubo, sin sonidos de UI. [Inventario y límites](MASCOTA_Y_CUBO.md). Main sigue en `8096c8d`; no afirmar que estas ramas ya están integradas. Teléfono real y restantes ampliaciones de V1 siguen pendientes.

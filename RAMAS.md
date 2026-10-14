@@ -1,3 +1,11 @@
+# Integración final · V1 RC1
+
+**audit/v1-closure** parte de **f4c112b** y contiene culturas (`165c376`), mascota (`d597b54`/`f4c112b`) y auditoría/correcciones. Main remoto comprobado sigue en **8096c8d (#77)**. **Un PR de esta rama hacia main integra todo**: no hace falta crear tres PR ni aplicar ramas previas de nuevo. Jay crea PR y hace merge.
+
+Si se integran padres antes, volver a comparar la rama final con main y conservar ascendencia mediante merge normal. Cambios paralelos/squash pueden requerir ajuste; no se promete ausencia de conflictos si main cambia. [Auditoría](AUDITORIA_V1.md) · [Handoff](HANDOFF.md). Desarrollo V1 congelado; la siguiente etapa es aceptación/publicación y después V2.
+
+<details><summary>Órdenes de integración anteriores, conservados como historia</summary>
+
 # Rama actual · mascota y cubo
 
 Main remoto sigue en **8096c8d (#77)**. Orden pendiente: **1. feat/phase-06-cultural-exploration (`165c376`); 2. feat/pet-and-cube (basada en esa)**. Esta segunda rama agrupa mascota, personalización, pruebas, atlas y documentos; [detalle](MASCOTA_Y_CUBO.md). Jay crea PR/merge. Revisar contra la rama cultural mientras esté pendiente; tras integrarla, contra main.
@@ -87,3 +95,5 @@ Jay autorizó la mejora 10a y la fase 11 en el siguiente mensaje; el pedido post
 - `feat/phase-04-materia-y-compartir` (Claude): materia (cuerdas, prisma, membrana), FX chorus/phaser/freeze, códigos de lugar y grabar set. Integrada en #75. Ver `FASE_04_MATERIA.md`.
 - `feat/laboratorio-y-fase-05` (Claude, creada sobre la anterior): Laboratorio + fase 5 Vida. Integrada en #76. Ver `LABORATORIO_Y_FASE_05.md`.
 - `feat/expansion-fase-06` (Claude, sobre las dos anteriores): el cubo toca el mundo, quitados jardín modular y rastro, colores, quietud, música experimental, cajas y poderes. Integrada en #77. Ver `CUBO_Y_EXPANSION.md`.
+
+</details>

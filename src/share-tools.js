@@ -15,9 +15,10 @@ export function encodePlace(address,name=''){
 export function decodePlace(code){
  const text=String(code||'').trim();if(!text.startsWith(PREFIX)||text.length>400)throw Error('Código no reconocido');
  let v;try{v=JSON.parse(unb64url(text.slice(PREFIX.length)));}catch(_){throw Error('Código dañado');}
- const identity={seed:String(v.s??''),layout:v.l,generatorVersion:v.g,catalogVersion:v.c,layoutVersion:v.o};
+ if(!v||typeof v!=='object'||Array.isArray(v)||typeof v.s!=='string'||!Number.isFinite(v.x)||!Number.isFinite(v.y)||![0,1,2].includes(v.L))throw Error('Dirección de lugar inválida');
+ const identity={seed:v.s,layout:v.l,generatorVersion:v.g,catalogVersion:v.c,layoutVersion:v.o};
  if(!supportedWorld(identity))throw Error('Mundo o versión no compatible');
- const address=placeAddress(identity,Number(v.x),Number(v.y),['superficie','bajo','cielo'][v.L]||'superficie');
+ const address=placeAddress(identity,v.x,v.y,['superficie','bajo','cielo'][v.L]);
  return {address,name:typeof v.n==='string'?v.n.slice(0,40):''};
 }
 // Formato de grabación que el navegador soporte (Safari prefiere mp4; Chrome/Android webm).
@@ -46,30 +47,41 @@ export function initialize(runtime){
  $('placeShare').onclick=shareHere;
  $('placeOpen').onclick=()=>openCode($('placeCode').value);
  // ---------- grabar set ----------
- const rec={recorder:null,chunks:[],dest:null,stop:null,started:0,timer:null};
+ const rec={recorder:null,chunks:[],dest:null,stop:null,started:0,timer:null,stream:null,out:null,url:null};
  function setUI(){const on=!!rec.recorder;$('bRecord').classList.toggle('rec',on);$('bRecord').querySelector('span').textContent=on?'Detener grabación':'Grabar set';$('recBadge').hidden=!on;}
  function start(){
   if(rec.recorder)return stop();
   const type=recordingType(),cv=$('w');
   if(!type||!cv.captureStream){runtime.toast('<em>Grabar</em> · este navegador no permite grabar el juego');return false;}
-  runtime.audio();const out=runtime.outputStage?.clipper,ac=runtime.ac;if(!out||!ac?.createMediaStreamDestination){runtime.toast('<em>Grabar</em> · activa el sonido primero');return false;}
-  rec.dest=ac.createMediaStreamDestination();out.connect(rec.dest);
-  const stream=new MediaStream([...cv.captureStream(30).getVideoTracks(),...rec.dest.stream.getAudioTracks()]);
-  rec.chunks=[];rec.recorder=new MediaRecorder(stream,{mimeType:type,videoBitsPerSecond:4e6});rec.recorder.ondataavailable=e=>{if(e.data.size)rec.chunks.push(e.data);};
-  rec.recorder.onstop=()=>finish(type);rec.recorder.start(1000);rec.started=Date.now();
+  runtime.audio();const out=runtime.outputStage?.headroom,ac=runtime.ac;if(!out||!ac?.createMediaStreamDestination){runtime.toast('<em>Grabar</em> · activa el sonido primero');return false;}
+  try{
+   rec.out=out;rec.dest=ac.createMediaStreamDestination();out.connect(rec.dest);
+   rec.stream=new MediaStream([...cv.captureStream(30).getVideoTracks(),...rec.dest.stream.getAudioTracks()]);
+   rec.chunks=[];rec.recorder=new MediaRecorder(rec.stream,{mimeType:type,videoBitsPerSecond:4e6});
+   rec.recorder.ondataavailable=e=>{if(e.data.size)rec.chunks.push(e.data);};
+   rec.recorder.onstop=()=>finish(type);rec.recorder.onerror=()=>{stop();runtime.toast('No se pudo completar la grabación en este navegador.');};
+   rec.recorder.start(1000);rec.started=Date.now();
+  }catch(_){releaseCapture();rec.recorder=null;setUI();runtime.toast('Este navegador no pudo iniciar la grabación.');return false;}
   rec.timer=setInterval(()=>{const left=MAX_SET_SECONDS-Math.floor((Date.now()-rec.started)/1000);$('recBadge').textContent=`● ${left} s`;if(left<=0)stop();},250);
   $('mMenu').hidden=true;setUI();runtime.toast('<em>Grabando</em> · hasta 60 s. Toca el punto rojo para terminar');return true;
  }
  function stop(){if(!rec.recorder)return false;clearInterval(rec.timer);try{rec.recorder.stop();}catch(_){finish(rec.recorder.mimeType);}return true;}
+ function releaseCapture(){
+  clearInterval(rec.timer);try{rec.out?.disconnect(rec.dest);}catch(_){}
+  for(const track of rec.stream?.getTracks()||[])track.stop();rec.stream=null;rec.dest=null;rec.out=null;
+ }
  function finish(type){
-  try{runtime.outputStage?.clipper?.disconnect(rec.dest);}catch(_){}
+  if(!rec.recorder)return;
+  releaseCapture();
   const blob=new Blob(rec.chunks,{type:type.split(';')[0]}),ext=type.includes('mp4')?'mp4':'webm',name=`whitedot-set-${new Date().toISOString().slice(0,16).replace(/[:T]/g,'-')}.${ext}`;
   rec.recorder=null;rec.dest=null;setUI();if(!blob.size){runtime.toast('<em>Grabar</em> · no se grabó nada');return;}
-  const url=URL.createObjectURL(blob),file=new File([blob],name,{type:blob.type});runtime.lastSet={url,name,size:blob.size,type:blob.type,file};
+  if(rec.url)URL.revokeObjectURL(rec.url);
+  const url=rec.url=URL.createObjectURL(blob),file=new File([blob],name,{type:blob.type});runtime.lastSet={url,name,size:blob.size,type:blob.type,file};
   $('setVideo').src=url;$('setDownload').href=url;$('setDownload').download=name;$('setShare').hidden=!(navigator.canShare?.({files:[file]}));$('mSet').hidden=false;runtime.unlock('set1');
  }
  $('bRecord').onclick=e=>{e.stopPropagation();start();};$('recBadge').onclick=stop;
  $('setShare').onclick=async()=>{const f=runtime.lastSet?.file;if(f)try{await navigator.share({files:[f],title:'Mi set en WHITEDOT',text:'@jaywrkr'});}catch(_){}};
  $('setClose').onclick=()=>{$('mSet').hidden=true;};
+ addEventListener('pagehide',()=>{if(rec.recorder)stop();});
  Object.defineProperties(runtime,{encodeFavorite:{get:()=>point=>encodePlace(point.address,point.name)},placeCode:{get:()=>currentCode},openPlaceCode:{get:()=>openCode},startSet:{get:()=>start},stopSet:{get:()=>stop},setRecording:{get:()=>!!rec.recorder}});
 }

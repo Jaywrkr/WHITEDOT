@@ -1,3 +1,43 @@
+# WHITEDOT · V1 RC1
+
+Un cubo blanco en un mundo negro que crea música electrónica al explorarlo. Por Jay · [@jaywrkr](https://instagram.com/jaywrkr). Blanco disponible y personalización ganada; criaturas, materia, búsquedas culturales y una mascota que aprende tus gestos.
+
+**Candidata 1.0.0-rc.1** en **audit/v1-closure**. Incluye culturas, mascota y correcciones de cierre; **un PR hacia main** integra todo lo pendiente. Main remoto comprobado: 8096c8d (#77). [Auditoría y dictamen](AUDITORIA_V1.md) · [Estado](ESTADO_ACTUAL.md) · [Continuar](HANDOFF.md) · [Aceptación pendiente](PENDIENTES.md) · [Después, V2](PLAN_V2.md).
+
+Desarrollo funcional de V1 congelado. **55 suites de lógica, 39 recorridos de navegador + offline, 164 mezclas de audio y auditoría de integridad aprobados.** Falta aceptación en teléfono real, primera sesión humana y comprobación del host/CI al publicar; no se declara perfección artística ni se implementa servidor/cuentas ahora.
+
+## Jugar
+
+Arrastra o usa WASD/flechas para caminar; el **cubo** toca los objetos. Un toque en vacío lanza el pulso. Camino abre Mundo; allí puedes escuchar/modelar, encontrar instrumentos y volver al Estudio. La música también evoluciona en quietud. Menú → Favoritos guarda lugares, Menú → Tu cubo usa colores ganados; Menú → Prototipo → Laboratorio prueba 54 casos. La fijación de sonidos es opcional y el eco se borra por su anillo.
+
+Mascota se gana por formación/quietud o caja rara, conserva crecimiento/frase y acompaña con melodía, bajo o ritmo. Guardianes enseñan llamadas para huellas/puertas/recuerdos. Códigos WD1 comparten coordenadas completas; Grabar set descarga audio/vídeo con la salida del juego. [Culturas](FASE_06.md) · [Mascota/cubo](MASCOTA_Y_CUBO.md).
+
+## Ejecutar y verificar
+
+Aplicación estática, sin build ni dependencias npm:
+
+```bash
+python3 -m http.server 8000
+```
+
+Abre `http://localhost:8000`. Node >=18, Python y Playwright/Chromium para pruebas:
+
+```bash
+python3 -m pip install -r requirements-dev.txt
+python3 -m playwright install chromium
+npm run audit:release
+npm test
+npm run test:browser
+npm run test:audio
+npm run audit:universe -- 4000 3 2 vasto
+```
+
+Los runners arrancan servidores propios; `CHROMIUM_PATH` selecciona el navegador. Fonts locales con [créditos/licencias](CREDITOS.md). Publicación futura necesita HTTPS para PWA; cambiar origen exige exportar/importar la partida. V1 recomienda una pestaña activa. La caché nueva espera antes de actualizar; el menú ofrece aplicar una versión disponible sin interrumpir un set.
+
+[Mediciones de cierre](scripts/v1-closure-validation.json) · [Atlas visual](docs/images/atlas-visual.png) · [Variedad y límites](VARIEDAD.md). Histórico preservado a continuación.
+
+<details><summary>README de entregas anteriores: contexto, pruebas e ideas históricas</summary>
+
 # WHITEDOT · Pixel Blanco
 
 Un punto blanco en un mundo negro que compone música electrónica mientras lo exploras. Camino diario, Mundo procedural y Estudio; 11 biomas y 52 estilos actuales. Por Jay · [@jaywrkr](https://instagram.com/jaywrkr).
@@ -357,3 +397,5 @@ Menú → Prototipo → Laboratorio: un mundo aparte para probar cada elemento i
 
 ## El cubo toca el mundo + expansión (rama de Claude, pendiente de merge)
 Solo el cubo interactúa; más colores, quietud que cambia el lugar, zonas de música experimental y cajas misteriosas con poderes. Pendientes para Codex (fase 6, mundo vasto, modo auto): `CUBO_Y_EXPANSION.md`.
+
+</details>

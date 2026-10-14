@@ -1,12 +1,17 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-pet-and-cube-v1';
+const CACHE='whitedot-v1-rc1';
 const SHELL=[
  "./",
  "./index.html",
  "./styles/game.css",
+ "./assets/fonts/fonts.css",
+ "./assets/fonts/silkscreen.ttf",
+ "./assets/fonts/jetbrains-mono.ttf",
  "./manifest.webmanifest",
  "./icons/icon-192.png",
  "./icons/icon-512.png",
+ "./icons/icon-maskable-512.png",
+ "./icons/apple-touch-icon.png",
  "./src/accessibility.js",
  "./src/alive.js",
  "./src/atlas.js",
@@ -103,13 +108,21 @@ const SHELL=[
  "./src/wonders.js",
  "./src/world.js"
 ];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting())));
+// Precache a whole release. The new worker waits while an older game is open.
+const shellURLs=new Set(SHELL.map(path=>new URL(path,self.registration.scope).href));
+const indexURL=new URL('./index.html',self.registration.scope).href;
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL.map(path=>new Request(new URL(path,self.registration.scope),{cache:'reload'}))))));
+self.addEventListener('message',e=>{if(e.data?.type==='APPLY_UPDATE')self.skipWaiting();});
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('whitedot-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',e=>{
- const req=e.request;if(req.method!=='GET'||new URL(req.url).origin!==self.location.origin)return;
- e.respondWith(fetch(req).then(res=>{if(res.ok){const copy=res.clone();caches.open(CACHE).then(c=>c.put(req,copy)).catch(()=>{});}return res;}).catch(async()=>{
-  const hit=await caches.match(req);if(hit)return hit;
-  if(req.mode==='navigate')return (await caches.match('./index.html'))||Response.error();
-  return Response.error();
- }));
+ const req=e.request,url=new URL(req.url);if(req.method!=='GET'||url.origin!==self.location.origin)return;
+ const scopeURL=new URL(self.registration.scope);
+ const navigation=req.mode==='navigate'&&(url.pathname===scopeURL.pathname||url.pathname===new URL(indexURL).pathname);
+ e.respondWith((async()=>{
+  const cache=await caches.open(CACHE);
+  if(navigation){const index=await cache.match(indexURL);if(index)return index;}
+  if(shellURLs.has(url.href)){const cached=await cache.match(req);if(cached)return cached;}
+  // Never add query previews, missing JS, or arbitrary user URLs to the shell cache.
+  try{return await fetch(req);}catch(_){return Response.error();}
+ })());
 });

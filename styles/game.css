@@ -194,7 +194,6 @@ body:has(#fxPanel:not([hidden])) .routehud,body:has(#scanner:not([hidden])) .rou
 
 body:has(#mirrorPanel:not([hidden])) .zone,body:has(#mirrorPanel:not([hidden])) .phrase,body:has(#mirrorPanel:not([hidden])) .routehud{visibility:hidden}
 
-body:has(#patchPanel:not([hidden])) .zone,body:has(#patchPanel:not([hidden])) .phrase,body:has(#patchPanel:not([hidden])) .routehud{visibility:hidden}
 
 /* Compact paseo/menu controls while exploring. Restore counters explicitly from the menu. */
 body.world-mode:not(.tools-open) .dock>button:not(#bMenu):not(#bAuto){display:none}

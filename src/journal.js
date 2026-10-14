@@ -78,6 +78,7 @@ export function initialize(runtime) {
   function achievements() {
     const groups={Constancia:[],Exploración:[],Música:[],Ocultos:[]};
     for(const [id,name,description,hidden]of runtime.ACH) {
+      if(['patch1','instalacionUnida','instrumentoDespierto'].includes(id)&&!runtime.S.ach[id])continue;
       const got=runtime.S.ach[id],group=hidden?'Ocultos':/^(r\d|t\d|dia1|tope|regreso|s10)/.test(id)?'Constancia':['instrumentoDespierto','instalacionUnida','tejidoVivo','respuestaAnimal','cajaEditable','patch1','fijarSonido','cultivarMusica','espejo1','vidrio1','paseo1','escuchaViva','tiempo','under','faro','banda','jardinero','tambor'].includes(id)?'Música':'Exploración';
       groups[group].push(card(hidden&&!got?'???':name,hidden&&!got?'Logro oculto. Sigue explorando.':description,`<p>${got?'Conseguido':'Pendiente'}</p>`));
     }

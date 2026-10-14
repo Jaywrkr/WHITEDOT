@@ -9,8 +9,11 @@ import {swatchOf} from './visual.js';
 const TAU=Math.PI*2;
 
 export function initialize(runtime){
+ let owner=runtime.S;
  const S=()=>runtime.S,state={seconds:0,stage:0,anchor:null,key:null,visitors:[],bloom:0,pulse:0,pulseHue:0,gifted:new Set()};
- S().listened=typeof S().listened==='object'&&S().listened?S().listened:{};
+ function normalizeBook(){S().listened=Object.fromEntries(Object.entries(S().listened||{}).filter(([key,n])=>/^-?\d+,-?\d+$/.test(key)&&Number.isInteger(n)&&n>=0&&n<=6).slice(-200));}
+ normalizeBook();
+ function ensureOwner(){if(owner!==S()){owner=S();normalizeBook();reset();state.gifted.clear();state.bloom=state.pulse=0;state.key=null;}}
  const surface=()=>runtime.inWorld()&&(S().layer||'superficie')==='superficie';
  function reset(){state.seconds=0;state.stage=0;state.anchor=null;state.visitors=[];}
  function enterStage(k){
@@ -19,12 +22,13 @@ export function initialize(runtime){
   if(!S().help['quiet_'+st.id]){S().help['quiet_'+st.id]=true;if(runtime.VOZ['quiet_'+st.id])runtime.say(runtime.VOZ['quiet_'+st.id],st.name);}
   if(st.id==='visita'){state.visitors=Array.from({length:5},(_,i)=>({a:i/5*TAU,r:90+i*8,lit:0,hue:(d?.hue||0)+i*40}));for(const f of runtime.nearbyFlocks?.(700)||[])f.trust=1;}
   if(st.id==='giro'){runtime.MU.vari=((runtime.MU.vari||0)+2)%4;sweep();}
-  if(st.id==='regalo'&&d){const k=`${d.key}:${runtime.dayKey?.()}`;if(!state.gifted.has(k)){state.gifted.add(k);runtime.spawnBox?.(S().wx+70,S().wy-40);}}
+  if(st.id==='regalo'&&d){const k=`${d.key}:${runtime.dayKey?.()}`;if(!state.gifted.has(k)){state.gifted.add(k);while(state.gifted.size>200)state.gifted.delete(state.gifted.values().next().value);runtime.spawnBox?.(S().wx+70,S().wy-40);}}
   if(st.id==='ritual'&&d){runtime.unlock('quietud5');}
   if(st.id==='giro')runtime.unlock('quietud3');
   if(d){const book=S().listened;if(!book[d.key]&&Object.keys(book).length>=200)delete book[Object.keys(book)[0]];book[d.key]=Math.max(book[d.key]||0,k);}
  }
  function tick(dt){
+  ensureOwner();
   if(!surface()||document.hidden){reset();return;}
   const b=runtime.body,d=runtime.MU.dnaT;if(!b?.ready)return;
   if(b.jump||!state.anchor||Math.hypot(S().wx-state.anchor.x,S().wy-state.anchor.y)>90||d?.key!==state.key){
@@ -66,6 +70,6 @@ export function initialize(runtime){
   for(const v of state.visitors){const [H0,S0,L0]=swatchOf(v.hue),x=cx+Math.cos(v.a)*v.r,y=cy+Math.sin(v.a)*v.r*.7;c.globalAlpha=.45+v.lit*.5;c.fillStyle=`hsl(${H0},${S0}%,${L0}%)`;c.beginPath();c.arc(x,y,2+v.lit*3,0,TAU);c.fill();if(v.lit>.2){c.globalAlpha=v.lit*.2;c.beginPath();c.arc(x,y,12,0,TAU);c.fill();}}
   c.restore();
  }
- function preview(seconds){if(!runtime.labMode)return;reset();state.anchor={x:S().wx,y:S().wy};state.key=runtime.MU.dnaT?.key;state.seconds=seconds;for(let i=1;i<=quietStage(seconds);i++)enterStage(i);}
- Object.defineProperties(runtime,{quietPreview:{get:()=>preview},quietState:{get:()=>state},quietTick:{get:()=>tick},quietStep:{get:()=>step},drawQuietud:{get:()=>draw},drawAtmosphere:{get:()=>drawAtmosphere},colorPulse:{get:()=>colorPulse}});
+ function preview(seconds){ensureOwner();if(!runtime.labMode)return;reset();state.anchor={x:S().wx,y:S().wy};state.key=runtime.MU.dnaT?.key;state.seconds=seconds;for(let i=1;i<=quietStage(seconds);i++)enterStage(i);}
+ Object.defineProperties(runtime,{quietReset:{get:()=>reset},quietPreview:{get:()=>preview},quietState:{get:()=>state},quietTick:{get:()=>tick},quietStep:{get:()=>step},drawQuietud:{get:()=>draw},drawAtmosphere:{get:()=>drawAtmosphere},colorPulse:{get:()=>colorPulse}});
 }
