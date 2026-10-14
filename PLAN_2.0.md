@@ -186,7 +186,7 @@ Las fases 0–2 y la reparación están en `main d16e695`. Confirmar el deploy e
 
 ### Ampliaciones posteriores, pendientes de elegir y calendarizar
 
-- **Diversidad musical y descubrimiento:** [PLAN_MEZCLAS_MUSICALES.md](PLAN_MEZCLAS_MUSICALES.md). Solo propuesta de diseño, solicitada por Jay; no implementar las mezclas híbridas todavía.
+- **Diversidad musical y descubrimiento:** [PLAN_MEZCLAS_MUSICALES.md](PLAN_MEZCLAS_MUSICALES.md). Solo propuesta de diseño, solicitada por Jay; incluye cobertura de personalidad/semilla activa en el 100 % de familias. No implementar las mezclas híbridas ni este motor de conducta todavía.
 - **Vida y territorios:** redes editables de enredaderas/hongos, colonias persistentes, migraciones entre regiones, jardines, costas variables, fronteras híbridas y nuevas rutas/alturas. Incluye tormentas explorables y figuras trazadas con el camino.
 - **Búsqueda e historia:** pistas encadenadas, puertas musicales, laberintos de color/espejos, puentes que abran rutas, tradiciones investigadas y reliquias históricas funcionales documentadas. Fósiles de canciones, jardines de semillas, radio pirata, noche de la ballena y botellas con ecos siguen como ideas para seleccionar.
 - **Control y memoria:** deshacer general, recorrido natural que enseñe gestos, comparador de variantes, colección instrumental/cultural y constelación de mundos. Unir Camino, atención, creación y constancia de Jay sin llenar la pantalla.

@@ -1,3 +1,7 @@
+# Plan musical y conducta individual · ampliación documental
+
+M1–M6 reúnen mezcla musical y diversidad de comportamiento. Auditoría read-only: 28/28 linajes nuevos tienen rasgos declarados; 9/10 de fauna cambian trayectoria con personalidad tímida/curiosa; tortuga excluida de la rutina de movilidad. No equivale a un porcentaje global de criaturas con conducta profundamente única. [Plan final y criterios del 100 %](PLAN_MEZCLAS_MUSICALES.md). Solo documentación; no se implementa el motor híbrido ni de decisiones.
+
 # Geist Mono, respuestas musicales y plan de continuación
 
 Rama `feat/geist-and-phase-plan`, desde `main d16e695`. Nueve pesos TTF originales enviados por Jay, licencia Geist OFL oficial y hashes; interfaz, etiquetas Canvas y exportaciones usan Geist Mono. Silkscreen permanece para la frase principal; archivos JetBrains anteriores quedan fuera del shell activo. Nuevo cache SW incluye cada fuente una vez; exportaciones esperan a las fuentes utilizadas.
