@@ -38,7 +38,7 @@ Implementada sobre `feat/release-identity` (67aef5f). La rama final contiene las
 
 Vidrios: tres hojas de luz curvas, una línea interior, sin rectángulos rellenos ni siete franjas por pane. Conservan radios/ángulos de las asas y las voces graves/medias/groove originales. Espejos: un punto viajero por segmento, luz de llegada local y líneas más finas; números solo junto al cubo. Prisma: rayos finos en lugar de abanico relleno, receptores y halos más pequeños. Hitos: torre como filamento, árbol de tres ramas, ciudad de ocho marcas, monolito fino y faro de alcance visual local; el punto de llegada/música/posiciones se conserva. Halo decorativo limitado al 18% del lado corto y máximo 72 px de radio; esto no certifica automáticamente que toda la escena esté bajo un porcentaje de pantalla. Sonar, lluvia y otras respuestas siguen siendo efectos del mundo.
 
-Atlas real actualizado: **139 vistas numeradas**, con las nueve percusiones y rediseños en [la imagen](docs/images/atlas-visual.png). No imágenes generadas sustituyendo la geometría nativa. Los gestos de materia/vidrios/espejos pasan sus recorridos existentes.
+Atlas real actualizado: **139 vistas numeradas**, con las nueve percusiones y rediseños en [la imagen](../images/atlas-visual.png). No imágenes generadas sustituyendo la geometría nativa. Los gestos de materia/vidrios/espejos pasan sus recorridos existentes.
 
 ### Colección
 
@@ -56,13 +56,13 @@ El golden hash de 1.600 chunks comprueba que posiciones/clases de la percusión 
 
 ### Variedad medible y límite
 
-[Auditoría de percusión](scripts/percussion-world-validation.json): **12.000 chunks / tres semillas Vasto**, 9.721 elementos, 9 fósiles naturales, nueve instrumentos percutidos, los 52 géneros representados y **4.810 recetas discretas de percusión** distintas (sin coordenadas/IDs/semilla en la firma). 7.097 chunks vacíos incluyen mar. Otra muestra del laboratorio, distinta, encontró 22 fósiles en 10.000 chunks de tierra; no confundir denominadores.
+[Auditoría de percusión](../../scripts/percussion-world-validation.json): **12.000 chunks / tres semillas Vasto**, 9.721 elementos, 9 fósiles naturales, nueve instrumentos percutidos, los 52 géneros representados y **4.810 recetas discretas de percusión** distintas (sin coordenadas/IDs/semilla en la firma). 7.097 chunks vacíos incluyen mar. Otra muestra del laboratorio, distinta, encontró 22 fósiles en 10.000 chunks de tierra; no confundir denominadores.
 
 No son 4.810 mundos ni canciones perceptiblemente únicas. Se mantienen 11 biomas, 33 hábitats, 52 estilos, terreno Original/Vivo/Vasto y códigos de coordenadas WD1. Esta entrega amplía combinaciones de objetos, timbre, gesto, patrón y evolución; **no declara millones nuevos de mundos distintos a oído**. Para seguir creciendo conviene crear varios motores percutivos con diferencias espectrales/temporales, curarlos por género y luego más ecosistemas/eventos con streams versionados. Ampliar etiquetas sin esas diferencias no aporta infinidad real.
 
 ### Verificación y aceptación
 
-**58/58 suites Node, 42/42 recorridos de navegador + offline y 225 renders reales de audio** (164 del proyecto + 61 nuevos de percusión). Pico máximo global **0,95759**, nuevo lote rítmico **0,94354**, ninguna muestra >0,98. Los 52 estilos están cubiertos; 44,1/48 kHz, normal/suave y escenas densas. Integridad: 102 módulos, 228 IDs HTML, 232 imports, 113 assets de shell, sin faltantes. Muestreo de 12.000 regiones Vasto: 12.000 firmas detalladas y 7.536 firmas musicales terrestres; no se cuentan como canciones únicas. [Registro consolidado](scripts/expansion-validation.json) · [universo](scripts/expansion-universe-validation.json) · [audio rítmico](scripts/percussion-audio-validation.json). Después del presupuesto final se repiten los recorridos afectados de percusión/descubrimientos; no se repite toda la suite sin necesidad.
+**58/58 suites Node, 42/42 recorridos de navegador + offline y 225 renders reales de audio** (164 del proyecto + 61 nuevos de percusión). Pico máximo global **0,95759**, nuevo lote rítmico **0,94354**, ninguna muestra >0,98. Los 52 estilos están cubiertos; 44,1/48 kHz, normal/suave y escenas densas. Integridad: 102 módulos, 228 IDs HTML, 232 imports, 113 assets de shell, sin faltantes. Muestreo de 12.000 regiones Vasto: 12.000 firmas detalladas y 7.536 firmas musicales terrestres; no se cuentan como canciones únicas. [Registro consolidado](../../scripts/expansion-validation.json) · [universo](../../scripts/expansion-universe-validation.json) · [audio rítmico](../../scripts/percussion-audio-validation.json). Después del presupuesto final se repiten los recorridos afectados de percusión/descubrimientos; no se repite toda la suite sin necesidad.
 
 Pendientes reales: teléfono físico (auriculares/altavoz, fatiga, controles, FPS/batería), primera sesión humana, host HTTPS, sello del deploy servido y CI remoto del PR. Las medidas de salida detectan saturación/valores inválidos, no certifican gusto artístico ni master profesional percibido. No se publica ni hace merge desde aquí.
 
@@ -76,7 +76,7 @@ Pendientes reales: teléfono físico (auriculares/altavoz, fatiga, controles, FP
 
 ## Siguiente orden recomendado después de probar RC4
 
-Estos son candidatos, todavía **sin implementar**: (1) aceptación/ajustes de esta versión y publicación con sello real; (2) lote pequeño de nuevos motores de percusión con diferencias de cuerpo, ataque y textura, escuchados antes de añadir etiquetas de estilos; (3) búsquedas que combinan percusión, color y guardianes sin subir densidad; (4) ecosistemas/eventos temporales con reglas de descanso y relaciones entre criaturas; (5) infraestructura de usuario/progreso/dueto según [PLAN_V2.md](PLAN_V2.md). Mantener una rama amplia por bloque y datos independientes para no mover mundos anteriores.
+Estos son candidatos, todavía **sin implementar**: (1) aceptación/ajustes de esta versión y publicación con sello real; (2) lote pequeño de nuevos motores de percusión con diferencias de cuerpo, ataque y textura, escuchados antes de añadir etiquetas de estilos; (3) búsquedas que combinan percusión, color y guardianes sin subir densidad; (4) ecosistemas/eventos temporales con reglas de descanso y relaciones entre criaturas; (5) infraestructura de usuario/progreso/dueto según [PLAN_V2.md](../../PLAN_V2.md). Mantener una rama amplia por bloque y datos independientes para no mover mundos anteriores.
 
 ## Orden de integración
 

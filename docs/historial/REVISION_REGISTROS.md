@@ -6,7 +6,7 @@ Entrega en `fix/musical-registers-and-visual-inventory`, desde main `ffc5578` (P
 
 ## Lámina para elegir qué mejorar
 
-[Imagen completa: atlas visual](docs/images/atlas-visual.png) · [Índice numerado y archivos de origen](docs/images/atlas-visual.json).
+[Imagen completa: atlas visual](../images/atlas-visual.png) · [Índice numerado y archivos de origen](../images/atlas-visual.json).
 
 118 vistas dibujadas con los renderizadores del juego: punto/luz/Estudio/campamento; seis formas de plantas; siete objetos pequeños; árboles, pilares, cristales, faros, agua, lotos, estalactitas y flores sembradas; caminantes, luciérnagas, bandadas, seis criaturas procedurales y cuatro blobs; cinco juguetes; seis familias de Paisajes vivos; diez encuentros y suelo desplegado; doce glifos de reliquia; vidrios/espejos/jardín modular; cinco hitos; portales, rastros y capas Subsuelo/Cielo; ave, semillero, nube, pulso, eco, cable de luz, relámpago, lluvia y cuatro partículas estacionales; río, seis suelos, cuatro atmósferas y cinco relieves vivos.
 
@@ -55,7 +55,7 @@ No cambia el mapa, las coordenadas, las semillas, los guardados, los 11 biomas, 
 
 Pasaron **50 suites Node**, **32 recorridos Chromium** y recarga offline con **80 módulos**. Tras el último ajuste de ríos/iniciativa/hitos se revalidaron también sus recorridos afectados en móvil y escritorio. La lámina genera **118 vistas** con nombres y archivos de origen.
 
-Pasaron **125 renders Web Audio**: los 52 estilos, escenas densas, encuentros, conexiones, rastros, vidrios y Paisajes vivos, normal/suave a 44,1/48 kHz. Pico máximo **0.957476**, ninguna muestra por encima de 0,98. [Resultados completos](scripts/register-review-validation.json). Comandos: `npm test`, `npm run test:browser`, `npm run test:audio`, `python3 scripts/render-visual-atlas.py`.
+Pasaron **125 renders Web Audio**: los 52 estilos, escenas densas, encuentros, conexiones, rastros, vidrios y Paisajes vivos, normal/suave a 44,1/48 kHz. Pico máximo **0.957476**, ninguna muestra por encima de 0,98. [Resultados completos](../../scripts/register-review-validation.json). Comandos: `npm test`, `npm run test:browser`, `npm run test:audio`, `python3 scripts/render-visual-atlas.py`.
 
 Las pruebas comprueban que todos los estilos alternen base/melodía sin borrar su bajo, que los gestos deliberados se escuchen, que los registros incluyan la octava audible real y que el mapa anterior conserve su captura dorada. La prueba de mezcla de vecinos escucha un ciclo más largo para incluir sus frases de descanso. Los fixtures de navegador aíslan el evento de ave de sus emisiones anteriores y silencian la partida de origen antes de fotografiar el guardado, evitando confundir nuevos instrumentos escuchados con corrupción por cambio de semilla.
 

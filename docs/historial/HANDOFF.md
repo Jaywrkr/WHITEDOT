@@ -2,13 +2,13 @@
 
 Estado vigente: **1.1.0-alpha.10**, con diez fases acumuladas en `feat/universe-10-server-duets-validation` (código `57fb5d2`). Este handoff añade documentación en `docs/claude-handoff-universe-alpha`. Main remoto comprobado: `704ae07`; las fases aún no estaban integradas. Volver a verificar antes de continuar.
 
-- [Empezar aquí: handoff para Claude](HANDOFF_CLAUDE.md)
+- [Empezar aquí: handoff para Claude](../../HANDOFF_CLAUDE.md)
 - [Entrega, ramas y límites](ENTREGA_UNIVERSO_VIVO.md)
-- [Cómo probar](PROBAR_UNIVERSO_VIVO.md)
-- [Cobertura de las 150 ideas](COBERTURA_150_UNIVERSO.md)
-- [Servidor y duetos](SERVIDOR_Y_DUETOS.md)
+- [Cómo probar](../../PROBAR_UNIVERSO_VIVO.md)
+- [Cobertura de las 150 ideas](../../COBERTURA_150_UNIVERSO.md)
+- [Servidor y duetos](../../SERVIDOR_Y_DUETOS.md)
 
-El documento de continuidad completo es [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md): identidad de la rama, cambios, mapa de código, reglas creativas, migraciones, pruebas, pendientes y límites del servicio. La rama de documentación incluye toda la fase 10; trabajar desde ella si main todavía conserva la entrega anterior.
+El documento de continuidad completo es [HANDOFF_CLAUDE.md](../../HANDOFF_CLAUDE.md): identidad de la rama, cambios, mapa de código, reglas creativas, migraciones, pruebas, pendientes y límites del servicio. La rama de documentación incluye toda la fase 10; trabajar desde ella si main todavía conserva la entrega anterior.
 
 Leer la matriz antes de desarrollar: las diez fases tienen una base integrada, pero no las 150 propuestas terminadas. No reaplicar ramas archivadas ni tomar los planes de abajo como estado vigente. Jay hace los PR y merges; continuar en ramas nuevas sin reescribir historia publicada.
 
@@ -23,7 +23,7 @@ Implementación en curso: **fase 10/10 · 1.1.0-alpha.10**. Cambios, pruebas, ra
 
 **1.0.0-rc.6 · polish/coherent-game-ui**, basada en **main 2a7dce0 (#84)**, que ya integra `feat/rare-discovery-cards` (14e6862). Mejora conjunta de menú, HUD, hojas, Bitácora, favoritos, mapas, Estudio, efectos, mensajes, prototipo y accesibilidad. Fondo negro y cubo siguen como centro de la experiencia. **Menú → Herramientas** muestra Efectos, Eco y Estudio; **Intensidad musical** vuelve accesible el control existente. [Auditoría, capturas y decisiones](AUDITORIA_INTERFAZ.md).
 
-**59 suites de lógica, 45 recorridos de navegador y offline aprobados**, además de la auditoría de integridad sin errores ni avisos. Las pruebas y sus límites se registran en [evidencia RC6](scripts/interface-validation.json). Se mantienen 11 biomas, 33 hábitats, 52 géneros, 81 familias y 18 tipos de tarjeta. Sin cambios de generación/DSP ni nueva publicación. **RC6 integrada y subida a main en 9b5fe00**, por autorización explícita de Jay. La rama de interfaz y sus padres ya están integrados; no requieren otro PR. Teléfono real, CI remoto y deploy HTTPS siguen pendientes.
+**59 suites de lógica, 45 recorridos de navegador y offline aprobados**, además de la auditoría de integridad sin errores ni avisos. Las pruebas y sus límites se registran en [evidencia RC6](../../scripts/interface-validation.json). Se mantienen 11 biomas, 33 hábitats, 52 géneros, 81 familias y 18 tipos de tarjeta. Sin cambios de generación/DSP ni nueva publicación. **RC6 integrada y subida a main en 9b5fe00**, por autorización explícita de Jay. La rama de interfaz y sus padres ya están integrados; no requieren otro PR. Teléfono real, CI remoto y deploy HTTPS siguen pendientes.
 
 Para continuar: leer `UNIVERSO_150_IDEAS_FASES.md` para el plan y `AUDITORIA_INTERFAZ.md` para la base implementada. UI común en `styles/interface.css`, cargada después de la base y precacheada en SW RC6 (117 assets). Se preservan IDs y handlers de cierre; las cabeceras se montan en accesibilidad. El fondo se vuelve inerte solo con modal; cambios repetidos de `hidden` no roban foco. La Voz separa anuncio completo de escritura visual, conserva lectura expandida y no recibe Tab al ocultarse. Las tarjetas pausan su reloj con herramientas o lectura. El pad acepta flechas (Shift = paso mayor) e Inicio; al soltar vuelve a limpio salvo Fijar. No exponer runtime en producción; tests lo instrumentan al servir main.
 
@@ -45,7 +45,7 @@ Los estados RC4/RC1 siguientes son fotografías históricas; la entrega vigente 
 
 Estado actual: **1.0.0-rc.4 · feat/minimal-discoveries**, hija de **feat/release-identity (67aef5f)**. La petición nueva de Jay reabre desarrollo: percusión jugable, versión/deploy visible, minimalismo y registro de elementos en tres ramas amplias. [Entrega vigente y orden](EXPANSION_RITMICA.md). Main sigue en **8096c8d**; Jay crea PR/merge. La auditoría y los pendientes de teléfono/host/CI siguen vigentes.
 
-Actualización RC4: **nueve familias de percusión (incluido fósil raro), contador de 81 familias, versión/deploy visible, instalaciones simplificadas y atlas de 139 vistas**. Laboratorio de 63 casos. Generador base preservado: 11 biomas, 33 hábitats y 52 estilos. No hay deploy nuevo registrado ni cambios en main desde esta sesión. **58 suites de lógica, 42 recorridos + offline y 225 renders de audio aprobados**; [evidencias de esta entrega](scripts/expansion-validation.json). Un PR de la rama final hacia main incluye las tres fases y todos sus padres pendientes; puedes probar cada rama por separado.
+Actualización RC4: **nueve familias de percusión (incluido fósil raro), contador de 81 familias, versión/deploy visible, instalaciones simplificadas y atlas de 139 vistas**. Laboratorio de 63 casos. Generador base preservado: 11 biomas, 33 hábitats y 52 estilos. No hay deploy nuevo registrado ni cambios en main desde esta sesión. **58 suites de lógica, 42 recorridos + offline y 225 renders de audio aprobados**; [evidencias de esta entrega](../../scripts/expansion-validation.json). Un PR de la rama final hacia main incluye las tres fases y todos sus padres pendientes; puedes probar cada rama por separado.
 
 Los datos RC1 siguientes son la fotografía anterior, conservada como historia; su congelación queda sustituida por este alcance nuevo.
 
@@ -53,7 +53,7 @@ Los datos RC1 siguientes son la fotografía anterior, conservada como historia; 
 
 **Candidata `1.0.0-rc.1` · rama `audit/v1-closure` · base f4c112b.** Main remoto observado: **8096c8d (#77)**. Esta rama contiene culturas + mascota + auditoría/correcciones: **un único PR hacia main integra todo**. Jay crea PR/merge; no volver a aplicar ramas padres ni declarar main actualizado hasta comprobarlo.
 
-Leer [AUDITORIA_V1.md](AUDITORIA_V1.md), [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md), [PENDIENTES.md](PENDIENTES.md) y [PLAN_V2.md](PLAN_V2.md). Handoffs/inventarios previos conservados íntegramente en [HANDOFF_HISTORICO.md](HANDOFF_HISTORICO.md).
+Leer [AUDITORIA_V1.md](AUDITORIA_V1.md), [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md), [PENDIENTES.md](PENDIENTES.md) y [PLAN_V2.md](../../PLAN_V2.md). Handoffs/inventarios previos conservados íntegramente en [HANDOFF_HISTORICO.md](HANDOFF_HISTORICO.md).
 
 ## Cierre y reglas
 
@@ -69,7 +69,7 @@ SW de RC1: shell completo en caché propia, espera y actualiza explícitamente; 
 
 Estático sin build/npm install: `python3 -m http.server 8000`. Node >=18 y Python/Playwright/Chromium. `npm run audit:release`, `npm test`, `npm run test:browser`, `npm run test:audio`; auditor de universo admite classic/wide/vasto.
 
-**55 suites Node; 39/39 recorridos + offline; 164 mezclas en 52 estilos; 95 módulos y 106 assets de shell; integridad sin faltantes.** [Registro global](scripts/v1-closure-validation.json) · [audio](scripts/v1-audio-audit.json). Las consultas de CI remoto devolvieron 403: comprobar workflow al crear PR, no inventar aprobación remota.
+**55 suites Node; 39/39 recorridos + offline; 164 mezclas en 52 estilos; 95 módulos y 106 assets de shell; integridad sin faltantes.** [Registro global](../../scripts/v1-closure-validation.json) · [audio](../../scripts/v1-audio-audit.json). Las consultas de CI remoto devolvieron 403: comprobar workflow al crear PR, no inventar aprobación remota.
 
 Nuevo auditor usa firma v2 y excluye flags retirados de patch/trail; las recetas de los mapas permanecen intactas. Las auditorías históricas de millones usan otra firma y no son canciones únicas. Original/Vivo/Vasto: 12.000 candidatos por perfil, datos en el informe.
 

@@ -1,3 +1,5 @@
+> **Actualización 14 oct · cierre 1.1.0 con estilo J.** Las ramas `cierre/f1`→`f6` (ver [CAMBIOS.md](CAMBIOS.md)) parten de `main` 959e95e, que ya integra las diez fases. Añaden la capa `styles/estilo-j.css`, textos J, licencia, Open Graph, sets 4:5, sello de deploy en Vercel, ocultan "Cuenta y duetos" sin servidor y estabilizan tres pruebas de navegador. Producción: https://whitedot-inky.vercel.app (Vercel estático; el servidor opcional no corre ahí). Lo que sigue es la [aceptación](ACEPTACION_V1.md). El resto de este documento describe el estado alpha.10.
+
 # Handoff para Claude · Universo vivo
 
 Estado del juego: **1.1.0-alpha.10**. Esta actualización modifica documentación; conserva el código y la versión de la entrega probada. Leer este documento primero: los estados RC y los planes antiguos se conservan como historia y no describen el alcance actual.
@@ -11,7 +13,7 @@ Estado del juego: **1.1.0-alpha.10**. Esta actualización modifica documentació
 
 Si main sigue en esa revisión, partir de esta rama de documentación para conservar todo lo nuevo. No partir de un main antiguo y recrear funcionalidades ya implementadas. No resetear cambios de Jay ni reescribir las ramas publicadas.
 
-[RAMAS.md](RAMAS.md) contiene el orden. Merge normal que conserve los commits: 01 → 10 → este handoff. Evitar squash/rebase de los padres mientras existan ramas dependientes. Las ramas archivadas de entregas anteriores no se vuelven a integrar. El plan `docs/universe-150-phases` ya está incluido en la fase 01.
+[RAMAS.md](docs/historial/RAMAS.md) contiene el orden. Merge normal que conserve los commits: 01 → 10 → este handoff. Evitar squash/rebase de los padres mientras existan ramas dependientes. Las ramas archivadas de entregas anteriores no se vuelven a integrar. El plan `docs/universe-150-phases` ya está incluido en la fase 01.
 
 ## 2. Qué se entregó realmente
 
@@ -129,9 +131,9 @@ Faltan recuperación/borrado de cuentas, operación/respaldos/monitorización, r
 
 ## 9. Lectura recomendada y actualización al devolverlo
 
-1. Este handoff y [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md).
-2. [PROBAR_UNIVERSO_VIVO.md](PROBAR_UNIVERSO_VIVO.md) y [ENTREGA_UNIVERSO_VIVO.md](ENTREGA_UNIVERSO_VIVO.md).
-3. [COBERTURA_150_UNIVERSO.md](COBERTURA_150_UNIVERSO.md), [PENDIENTES.md](PENDIENTES.md) y [SERVIDOR_Y_DUETOS.md](SERVIDOR_Y_DUETOS.md).
-4. [UNIVERSO_150_IDEAS_FASES.md](UNIVERSO_150_IDEAS_FASES.md) como visión de diseño; [CUBO_Y_EXPANSION.md](CUBO_Y_EXPANSION.md) como contexto heredado de Claude. Sus estados originales son históricos.
+1. Este handoff y [ESTADO_ACTUAL.md](docs/historial/ESTADO_ACTUAL.md).
+2. [PROBAR_UNIVERSO_VIVO.md](PROBAR_UNIVERSO_VIVO.md) y [ENTREGA_UNIVERSO_VIVO.md](docs/historial/ENTREGA_UNIVERSO_VIVO.md).
+3. [COBERTURA_150_UNIVERSO.md](COBERTURA_150_UNIVERSO.md), [PENDIENTES.md](docs/historial/PENDIENTES.md) y [SERVIDOR_Y_DUETOS.md](SERVIDOR_Y_DUETOS.md).
+4. [UNIVERSO_150_IDEAS_FASES.md](docs/historial/UNIVERSO_150_IDEAS_FASES.md) como visión de diseño; [CUBO_Y_EXPANSION.md](docs/historial/CUBO_Y_EXPANSION.md) como contexto heredado de Claude. Sus estados originales son históricos.
 
 Al terminar en Claude, actualizar estado, pendientes, matriz afectada, guía de prueba, entrega/ramas y handoff. Anotar rama/commit, comportamiento cambiado, migraciones, pruebas realmente ejecutadas y pendientes. Mantener evidencias históricas separadas de las nuevas; no declarar main actualizado ni un deploy sin comprobarlo.

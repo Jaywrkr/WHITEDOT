@@ -59,7 +59,7 @@ C02 es una **protección optimista**, no una transacción distribuida: dos escri
 - Integridad: **95 módulos, 224 IDs HTML, 209 referencias de importación, 106 assets del shell**, sin imports/IDs/archivos faltantes; fonts/avisos OFL verificados por hash. `npm run audit:release` pasa y se añade a CI.
 - CI remoto: su consulta devolvió **403 Forbidden**. No se atribuye un resultado de GitHub a estas pruebas locales. El workflow solo corre en PR/main: debe aprobarse al crear el PR de esta candidata.
 
-[Resultados de audio](scripts/v1-audio-audit.json) · [integridad](scripts/v1-repository-audit.json) · [registro global](scripts/v1-closure-validation.json).
+[Resultados de audio](../../scripts/v1-audio-audit.json) · [integridad](../../scripts/v1-repository-audit.json) · [registro global](../../scripts/v1-closure-validation.json).
 
 ## Variedad comprobada ahora
 
@@ -71,7 +71,7 @@ Nueva firma v2, tres semillas y 4.000 candidatos por semilla:
 | Vivo/Clásico | 12.000 | 12.000 | 7.536 |
 | Vivo/Vasto | 12.000 | 12.000 | 7.536 |
 
-[Original](scripts/v1-original-audit.json) · [Vivo](scripts/v1-living-audit.json) · [Vasto](scripts/v1-vast-audit.json). Son muestras estructurales, no el número de mundos completos ni canciones. Las cachés permanecen acotadas. Los conteos históricos de un millón de candidatos usaban otra firma: se conservan como historia, sin extrapolarlos a experiencias únicas de V1.
+[Original](../../scripts/v1-original-audit.json) · [Vivo](../../scripts/v1-living-audit.json) · [Vasto](../../scripts/v1-vast-audit.json). Son muestras estructurales, no el número de mundos completos ni canciones. Las cachés permanecen acotadas. Los conteos históricos de un millón de candidatos usaban otra firma: se conservan como historia, sin extrapolarlos a experiencias únicas de V1.
 
 ## Pendientes reales, solución y prioridad
 
@@ -96,7 +96,7 @@ Nueva firma v2, tres semillas y 4.000 candidatos por semilla:
 
 ## Qué no está y se pasa a V2
 
-Cuentas/servidor/sincronización y multijugador; historia completa; ecosistema cultural profundo y reliquias históricas investigadas; construir/cablear/crafting; mixer por buses; nuevos estilos con diferencias reales; nuevos motores y formas largas; edición avanzada del Estudio y sesiones compartidas. No se reintroducen escenas musicales guardables descartadas por Jay. [Plan de V2](PLAN_V2.md).
+Cuentas/servidor/sincronización y multijugador; historia completa; ecosistema cultural profundo y reliquias históricas investigadas; construir/cablear/crafting; mixer por buses; nuevos estilos con diferencias reales; nuevos motores y formas largas; edición avanzada del Estudio y sesiones compartidas. No se reintroducen escenas musicales guardables descartadas por Jay. [Plan de V2](../../PLAN_V2.md).
 
 ## Integración y operación de esta candidata
 

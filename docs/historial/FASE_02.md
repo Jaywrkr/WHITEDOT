@@ -82,7 +82,7 @@ Comparación de cuatro semillas y 40.000 regiones: original 39.880 firmas detall
 
 El original mantiene exactamente la medición antigua de 39.952 recetas detalladas y 9.732 perfiles musicales terrestres en 40.000 regiones. Una captura del código de fase 1 verifica además recetas y posiciones reales de chunks seleccionados mediante SHA-256; esa comprobación no usa una copia del nuevo algoritmo como referencia.
 
-La auditoría de un millón de candidatos entre cuatro semillas registró **999.512 firmas detalladas** y **586.200 firmas musicales terrestres**: [resultado](scripts/phase-02-million-sample.json). Las cachés de terreno respetaron sus límites. El auditor acumula conjuntos de firmas en memoria proporcionalmente al tamaño de la muestra; el juego mantiene residencia acotada. Resultados finales en [HANDOFF.md](HANDOFF.md). Mantener la distinción entre **regiones muestreadas**, **recetas estructurales distintas** y **experiencias que se sienten diferentes**. El mapa no tiene un total de mundos completos enumerado ni promete infinito literal.
+La auditoría de un millón de candidatos entre cuatro semillas registró **999.512 firmas detalladas** y **586.200 firmas musicales terrestres**: [resultado](../../scripts/phase-02-million-sample.json). Las cachés de terreno respetaron sus límites. El auditor acumula conjuntos de firmas en memoria proporcionalmente al tamaño de la muestra; el juego mantiene residencia acotada. Resultados finales en [HANDOFF.md](HANDOFF.md). Mantener la distinción entre **regiones muestreadas**, **recetas estructurales distintas** y **experiencias que se sienten diferentes**. El mapa no tiene un total de mundos completos enumerado ni promete infinito literal.
 
 ## Pendiente después de esta fase
 
@@ -90,4 +90,4 @@ Más modelos de instrumento, identidades audibles de estilos, secuencias modulad
 
 ## Validación final
 
-49 suites Node, 32 recorridos Chromium, shell offline con 79 módulos y gestos finales en móvil vertical/horizontal/escritorio. Doce renders del paisaje vivo y seis del Original verifican audio real, densidad, modo suave y margen de salida a 44,1/48 kHz: [mediciones](scripts/phase-02-validation.json). No sustituyen Safari/Android/PWA reales ni escucha artística prolongada. GitHub Actions quedó preparado; su ejecución remota depende del PR/merge de Jay.
+49 suites Node, 32 recorridos Chromium, shell offline con 79 módulos y gestos finales en móvil vertical/horizontal/escritorio. Doce renders del paisaje vivo y seis del Original verifican audio real, densidad, modo suave y margen de salida a 44,1/48 kHz: [mediciones](../../scripts/phase-02-validation.json). No sustituyen Safari/Android/PWA reales ni escucha artística prolongada. GitHub Actions quedó preparado; su ejecución remota depende del PR/merge de Jay.

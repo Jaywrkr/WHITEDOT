@@ -1,6 +1,6 @@
 # Probar el universo vivo
 
-La última rama contiene acumuladas las diez fases. Para revisar cada avance, sigue el orden de [ENTREGA_UNIVERSO_VIVO.md](ENTREGA_UNIVERSO_VIVO.md). No necesitas una cuenta ni un servidor para probar flora, fauna, música, construcciones y tarjetas.
+La última rama contiene acumuladas las diez fases. Para revisar cada avance, sigue el orden de [ENTREGA_UNIVERSO_VIVO.md](docs/historial/ENTREGA_UNIVERSO_VIVO.md). No necesitas una cuenta ni un servidor para probar flora, fauna, música, construcciones y tarjetas.
 
 - **Menú → Prototipo → Laboratorio:** 91 entradas, incluidas diez familias de flora, diez de fauna y ocho construcciones. «Solo» permite comparar su cuerpo sonoro; volver a la mezcla prueba cómo encaja con el género. Las notas e informes se guardan por separado de tu partida habitual.
 - **Menú → Explorar mundos:** semillas y cinco tamaños. Gran territorio tiene regiones de 50.400 por lado; Inmenso, de 100.800. Los mapas clásicos, amplios y vastos conservan su escala.

@@ -1,4 +1,4 @@
-> Estado posterior: **1.1.0-alpha.10**, diez ramas del universo vivo. [Entrega y validación](ENTREGA_UNIVERSO_VIVO.md), [cobertura y pendientes](COBERTURA_150_UNIVERSO.md). El contenido que sigue conserva el contexto original de este documento; sus cifras/pendientes históricos no sustituyen el estado nuevo. Para continuar en Claude, leer primero [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md).
+> Estado posterior: **1.1.0-alpha.10**, diez ramas del universo vivo. [Entrega y validación](ENTREGA_UNIVERSO_VIVO.md), [cobertura y pendientes](../../COBERTURA_150_UNIVERSO.md). El contenido que sigue conserva el contexto original de este documento; sus cifras/pendientes históricos no sustituyen el estado nuevo. Para continuar en Claude, leer primero [HANDOFF_CLAUDE.md](../../HANDOFF_CLAUDE.md).
 
 > **Ampliación vigente:** [150 propuestas en diez fases](UNIVERSO_150_IDEAS_FASES.md), de menor a mayor complejidad. Una rama amplia por fase al implementarla. Este turno solo actualiza el plan; las fases históricas y la evidencia de la aplicación conservan su numeración/fecha.
 
@@ -12,7 +12,7 @@
 
 # Alcance vigente · cierre V1 RC1
 
-Esta candidata se cierra en [AUDITORIA_V1.md](AUDITORIA_V1.md). Solo A01–A04 y correcciones de aceptación quedan para publicar. El inventario anterior de fases/64 tareas se conserva como historia y candidatos de [V2](PLAN_V2.md), no como nuevas funciones obligatorias de V1. [Estado](ESTADO_ACTUAL.md).
+Esta candidata se cierra en [AUDITORIA_V1.md](AUDITORIA_V1.md). Solo A01–A04 y correcciones de aceptación quedan para publicar. El inventario anterior de fases/64 tareas se conserva como historia y candidatos de [V2](../../PLAN_V2.md), no como nuevas funciones obligatorias de V1. [Estado](ESTADO_ACTUAL.md).
 
 <details><summary>Plan anterior íntegro; consultar la auditoría para el estado vigente</summary>
 

@@ -163,4 +163,4 @@ El objetivo de la entrega fue materializar las diez fases con un núcleo común,
 
 Primero: escuchar y jugar las diez fases, comprobar qué aporta variedad perceptible y retirar lo que distraiga. Después: afinar gestos/anticipación y timbres repetitivos; desarrollar redes, poblaciones, rutas verticales y arquitectura en profundidad; investigar las referencias culturales/históricas. El servicio público y la aceptación física se hacen cuando exista alojamiento y acceso a dispositivos, con conservación de partidas.
 
-Pruebas y orden de ramas: [ENTREGA_UNIVERSO_VIVO.md](ENTREGA_UNIVERSO_VIVO.md).
+Pruebas y orden de ramas: [ENTREGA_UNIVERSO_VIVO.md](docs/historial/ENTREGA_UNIVERSO_VIVO.md).

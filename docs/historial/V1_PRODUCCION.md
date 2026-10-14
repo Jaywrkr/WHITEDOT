@@ -8,7 +8,7 @@
 
 # Alcance vigente · cierre V1 RC1
 
-Esta candidata se cierra en [AUDITORIA_V1.md](AUDITORIA_V1.md). Solo A01–A04 y correcciones de aceptación quedan para publicar. El inventario anterior de fases/64 tareas se conserva como historia y candidatos de [V2](PLAN_V2.md), no como nuevas funciones obligatorias de V1. [Estado](ESTADO_ACTUAL.md).
+Esta candidata se cierra en [AUDITORIA_V1.md](AUDITORIA_V1.md). Solo A01–A04 y correcciones de aceptación quedan para publicar. El inventario anterior de fases/64 tareas se conserva como historia y candidatos de [V2](../../PLAN_V2.md), no como nuevas funciones obligatorias de V1. [Estado](ESTADO_ACTUAL.md).
 
 <details><summary>Plan anterior íntegro; consultar la auditoría para el estado vigente</summary>
 
@@ -45,7 +45,7 @@ El juego ofrece un mapa continuo generado por coordenadas; las semillas de prueb
 
 Comparación controlada: cinco semillas × 1.600 regiones, tamaño clásico de 3.600 unidades. Promedio por semilla en esa muestra: 1.600 recetas detalladas, 947,6 regiones terrestres y 837,4 perfiles musicales terrestres. Son ventanas locales, no el promedio del tamaño total de un mundo ni una muestra representativa de todas las semillas. No equivalen a 837 canciones terminadas o 1.600 experiencias reconociblemente distintas.
 
-Resultados y método en [VARIEDAD.md](VARIEDAD.md) y [scripts/v1-variation-sample.json](scripts/v1-variation-sample.json). Las firmas excluyen coordenadas, nombres, IDs y flotantes continuos. No enumeran el mapa completo y no demuestran millones de experiencias. Las fases 3/4 no añadieron biomas ni géneros; fase 3 añadió cuatro voces y composición, fase 4 gestos/color. La auditoría viva de un millón de candidatos mantiene 999.512 firmas detalladas y 586.200 firmas musicales terrestres; ventanas y método en VARIEDAD.md, sin equivalencia a canciones únicas.
+Resultados y método en [VARIEDAD.md](VARIEDAD.md) y [scripts/v1-variation-sample.json](../../scripts/v1-variation-sample.json). Las firmas excluyen coordenadas, nombres, IDs y flotantes continuos. No enumeran el mapa completo y no demuestran millones de experiencias. Las fases 3/4 no añadieron biomas ni géneros; fase 3 añadió cuatro voces y composición, fase 4 gestos/color. La auditoría viva de un millón de candidatos mantiene 999.512 firmas detalladas y 586.200 firmas musicales terrestres; ventanas y método en VARIEDAD.md, sin equivalencia a canciones únicas.
 
 ## Coordenadas, guardar y volver
 

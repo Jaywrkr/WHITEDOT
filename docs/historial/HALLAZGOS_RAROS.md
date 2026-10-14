@@ -14,7 +14,7 @@ El aviso evita apilarse con Voz/toasts. Por burst se muestran hasta cuatro aviso
 
 La tarjeta conserva nombre y probabilidad/unidad/nivel/condiciones del momento de registro (snapshot versionado), glifo/variante, número de colección determinista, nivel de rareza, texto musical, región, bioma, género, semilla, layout, capa, coordenadas, fecha/hora UTC de encuentro y versiones del mundo. La fecha se muestra en hora local; un hallazgo anterior sin hora conserva únicamente su fecha conocida. No se reutiliza la fecha de deploy ni la de un commit.
 
-Los retratos parten de las formas del mundo: espiral del fósil, doce glifos de reliquias, aves/luciérnaga y marcas de anomalías/poderes. Fondo negro, trazos de color local y marcos discretos; ninguna figura/personaje/logo externo. [Aviso móvil real](docs/images/hallazgo-aviso.png) · [libro en laboratorio](docs/images/hallazgos-libro.png).
+Los retratos parten de las formas del mundo: espiral del fósil, doce glifos de reliquias, aves/luciérnaga y marcas de anomalías/poderes. Fondo negro, trazos de color local y marcos discretos; ninguna figura/personaje/logo externo. [Aviso móvil real](../images/hallazgo-aviso.png) · [libro en laboratorio](../images/hallazgos-libro.png).
 
 ## Rareza con contexto
 
@@ -49,4 +49,4 @@ Se recuperan reliquias con ID/flags verificables: el generador reconstruye su ub
 
 59 suites Node, incluidos probabilidades de los 18 tipos, exclusión de constelaciones en tasa del Eco, direcciones/códigos, datos inválidos, deduplicación por ejemplar/semilla y límite de 512. 43 recorridos de navegador + offline aprobados. Recorrido nuevo en 390×844, 844×390 y 1280×800: contacto real con fósil, muestra forzada y fósil natural, reliquia con escucha/pulsos, aviso compacto/pausa, libro silencioso, coordenadas, retorno, persistencia y migración. Rechecks de paginación, portapapeles bloqueado, otras semillas, cajas/mascota y anomalías con aserciones de tarjeta.
 
-[Integridad](scripts/rare-cards-integrity-validation.json) · [registro](scripts/rare-cards-validation.json). La mezcla no cambia; la batería de 225 renders de RC4 conserva su evidencia histórica, no se anuncia como repetida en RC5. Teléfono físico, gustos de escucha y publicación/CI remoto siguen pendientes.
+[Integridad](../../scripts/rare-cards-integrity-validation.json) · [registro](../../scripts/rare-cards-validation.json). La mezcla no cambia; la batería de 225 renders de RC4 conserva su evidencia histórica, no se anuncia como repetida en RC5. Teléfono físico, gustos de escucha y publicación/CI remoto siguen pendientes.

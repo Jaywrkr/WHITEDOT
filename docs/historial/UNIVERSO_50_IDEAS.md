@@ -10,7 +10,7 @@ V1 RC6 está integrada y subida a main en `9b5fe00`, por autorización explícit
 
 Se conservan 11 biomas base, 33 hábitats, 52 géneros, 81 familias de elementos, 18 tipos de tarjeta y coordenadas con identidad completa WD1. Hay favoritos, navegación, paseo, varias capas, evolución en quietud, criaturas, culturas, Estudio, efectos y libro local. Las propuestas amplían/profundizan esos sistemas; no se consideran ausentes.
 
-Verificación de la aplicación integrada: 59 suites de lógica, 45 recorridos de navegador y offline; [evidencia RC6](scripts/interface-validation.json). Publicación y aceptación física siguen separadas del merge.
+Verificación de la aplicación integrada: 59 suites de lógica, 45 recorridos de navegador y offline; [evidencia RC6](../../scripts/interface-validation.json). Publicación y aceptación física siguen separadas del merge.
 
 ## Regla prioritaria: cajas por tiempo
 

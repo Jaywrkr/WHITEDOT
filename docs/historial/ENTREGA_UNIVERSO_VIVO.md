@@ -75,17 +75,17 @@ La reparación del shell offline se propagó mediante commits/merges a todas las
 
 ## Tamaño y variedad comprobada
 
-[Auditoría de 10.000 regiones](scripts/living-universe-validation.json): 20 semillas de generación 2, tamaño Inmenso. Se encontraron 10.000 huellas estructurales detalladas distintas; 6.327 regiones de tierra con 6.327 huellas musicales distintas; los 52 géneros, 11 biomas y los 28 linajes nuevos aparecieron en la muestra. Son recetas, no un número de canciones diferentes ni un conteo total de mundos. No se extrapola esa muestra a millones ni se multiplican variables correlacionadas.
+[Auditoría de 10.000 regiones](../../scripts/living-universe-validation.json): 20 semillas de generación 2, tamaño Inmenso. Se encontraron 10.000 huellas estructurales detalladas distintas; 6.327 regiones de tierra con 6.327 huellas musicales distintas; los 52 géneros, 11 biomas y los 28 linajes nuevos aparecieron en la muestra. Son recetas, no un número de canciones diferentes ni un conteo total de mundos. No se extrapola esa muestra a millones ni se multiplican variables correlacionadas.
 
 El catálogo suma 109 familias coleccionables, 91 pruebas del laboratorio y 49 tipos de tarjeta. Los tamaños son **regiones**, no el límite del mapa. Las direcciones admiten valores de magnitud menor de 10^12 por eje, con semillas/versiones/capas estables. El espacio es muy amplio y procedural; tiene límites numéricos y de contenido, por lo que no es infinito matemático.
 
 ## Qué se entrega y qué sigue abierto
 
-Se entrega una **alpha jugable de las diez fases**, no la certificación de que las 150 ideas estén completas en toda su profundidad. La matriz de [COBERTURA_150_UNIVERSO.md](COBERTURA_150_UNIVERSO.md) distingue implementación/base jugable, ampliación pendiente y aceptación externa. El plan original se conserva como visión, sin marcar propuestas pendientes como realizadas.
+Se entrega una **alpha jugable de las diez fases**, no la certificación de que las 150 ideas estén completas en toda su profundidad. La matriz de [COBERTURA_150_UNIVERSO.md](../../COBERTURA_150_UNIVERSO.md) distingue implementación/base jugable, ampliación pendiente y aceptación externa. El plan original se conserva como visión, sin marcar propuestas pendientes como realizadas.
 
 Los pendientes principales son nuevos niveles verticales y rutas de islas, comunidades y migraciones más profundas, cámaras acústicas/laberintos mayores, investigación cultural y réplicas/partituras históricas documentadas, deshacer general más allá de ecos y refinamiento perceptivo de algunos timbres. El servidor sigue experimental: faltan alojamiento, dominio, operación de cuentas y pruebas sobre redes/teléfonos reales. No hay fecha de deploy inventada ni grabación de altavoces presentada como escucha humana.
 
-Guía: [PROBAR_UNIVERSO_VIVO.md](PROBAR_UNIVERSO_VIVO.md). Servicio: [SERVIDOR_Y_DUETOS.md](SERVIDOR_Y_DUETOS.md).
+Guía: [PROBAR_UNIVERSO_VIVO.md](../../PROBAR_UNIVERSO_VIVO.md). Servicio: [SERVIDOR_Y_DUETOS.md](../../SERVIDOR_Y_DUETOS.md).
 
 ## Validación de cierre
 
@@ -96,10 +96,10 @@ Guía: [PROBAR_UNIVERSO_VIVO.md](PROBAR_UNIVERSO_VIVO.md). Servicio: [SERVIDOR_Y
 - Dos navegadores separados se ven y reproducen un gesto en el mismo paso y armonía, con slots complementarios. El envío por cursor evita retransmitir todos los eventos en cada pulso de presencia. Prueba de API y dueto repetida tras esa optimización.
 - Auditoría de módulos/UI/fonts/docs/shell sin errores ni avisos.
 
-[Evidencia de cierre](scripts/universe-phase-validation.json), [audio de linajes](scripts/living-audio-validation.json), [muestra de regiones](scripts/living-universe-validation.json). No se realizaron pruebas en teléfonos físicos ni publicación pública.
+[Evidencia de cierre](../../scripts/universe-phase-validation.json), [audio de linajes](../../scripts/living-audio-validation.json), [muestra de regiones](../../scripts/living-universe-validation.json). No se realizaron pruebas en teléfonos físicos ni publicación pública.
 
 ## Continuidad documental para Claude
 
-Actualización en `docs/claude-handoff-universe-alpha`, hija de la fase 10, sin cambios de código, versión o deploy. [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md) reúne estado, mapa técnico, requisitos, reglas creativas, pruebas y próximos pasos; README, estado, pendientes y ramas tienen cabeceras vigentes específicas. Se conservan los documentos históricos y se enlaza el handoff desde los planes heredados. Main remoto verificado en `704ae07`, fase 10 en `57fb5d2`. Esta rama puede integrarse después de la fase 10; su historia incluye la cadena completa.
+Actualización en `docs/claude-handoff-universe-alpha`, hija de la fase 10, sin cambios de código, versión o deploy. [HANDOFF_CLAUDE.md](../../HANDOFF_CLAUDE.md) reúne estado, mapa técnico, requisitos, reglas creativas, pruebas y próximos pasos; README, estado, pendientes y ramas tienen cabeceras vigentes específicas. Se conservan los documentos históricos y se enlaza el handoff desde los planes heredados. Main remoto verificado en `704ae07`, fase 10 en `57fb5d2`. Esta rama puede integrarse después de la fase 10; su historia incluye la cadena completa.
 
 Validación de esta actualización documental: `npm run audit:release` sin errores ni avisos, `git diff --check`, enlaces locales del handoff y recuento de las 150 filas comprobados. No se volvió a ejecutar la suite completa: las cifras de navegador/audio/Node pertenecen a la entrega de código indicada.

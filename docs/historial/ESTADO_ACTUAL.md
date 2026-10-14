@@ -2,11 +2,11 @@
 
 Estado vigente: **1.1.0-alpha.10**, con diez fases acumuladas en `feat/universe-10-server-duets-validation` (código `57fb5d2`). Este handoff añade documentación en `docs/claude-handoff-universe-alpha`. Main remoto comprobado: `704ae07`; las fases aún no estaban integradas. Volver a verificar antes de continuar.
 
-- [Empezar aquí: handoff para Claude](HANDOFF_CLAUDE.md)
+- [Empezar aquí: handoff para Claude](../../HANDOFF_CLAUDE.md)
 - [Entrega, ramas y límites](ENTREGA_UNIVERSO_VIVO.md)
-- [Cómo probar](PROBAR_UNIVERSO_VIVO.md)
-- [Cobertura de las 150 ideas](COBERTURA_150_UNIVERSO.md)
-- [Servidor y duetos](SERVIDOR_Y_DUETOS.md)
+- [Cómo probar](../../PROBAR_UNIVERSO_VIVO.md)
+- [Cobertura de las 150 ideas](../../COBERTURA_150_UNIVERSO.md)
+- [Servidor y duetos](../../SERVIDOR_Y_DUETOS.md)
 
 | Aspecto | Estado comprobado |
 |---|---|
@@ -20,7 +20,7 @@ Estado vigente: **1.1.0-alpha.10**, con diez fases acumuladas en `feat/universe-
 | Servicio | Backend/duetos experimental, sin alojamiento público ni aceptación física |
 | Publicación | `deployedAt` y `revision` nulos; no se registra un deploy por hacer commit |
 
-Los estados RC anteriores son fotografías históricas. La evidencia vigente está en [scripts/universe-phase-validation.json](scripts/universe-phase-validation.json); la actualización documental no cambia el juego ni equivale a volver a ejecutar toda la suite.
+Los estados RC anteriores son fotografías históricas. La evidencia vigente está en [scripts/universe-phase-validation.json](../../scripts/universe-phase-validation.json); la actualización documental no cambia el juego ni equivale a volver a ejecutar toda la suite.
 
 <details>
 <summary>Historial de planes y entregas anteriores</summary>
@@ -33,7 +33,7 @@ Implementación en curso: **fase 10/10 · 1.1.0-alpha.10**. Cambios, pruebas, ra
 
 **1.0.0-rc.6 · polish/coherent-game-ui**, basada en **main 2a7dce0 (#84)**, que ya integra `feat/rare-discovery-cards` (14e6862). Mejora conjunta de menú, HUD, hojas, Bitácora, favoritos, mapas, Estudio, efectos, mensajes, prototipo y accesibilidad. Fondo negro y cubo siguen como centro de la experiencia. **Menú → Herramientas** muestra Efectos, Eco y Estudio; **Intensidad musical** vuelve accesible el control existente. [Auditoría, capturas y decisiones](AUDITORIA_INTERFAZ.md).
 
-**59 suites de lógica, 45 recorridos de navegador y offline aprobados**, además de la auditoría de integridad sin errores ni avisos. Las pruebas y sus límites se registran en [evidencia RC6](scripts/interface-validation.json). Se mantienen 11 biomas, 33 hábitats, 52 géneros, 81 familias y 18 tipos de tarjeta. Sin cambios de generación/DSP ni nueva publicación. **RC6 integrada y subida a main en 9b5fe00**, por autorización explícita de Jay. La rama de interfaz y sus padres ya están integrados; no requieren otro PR. Teléfono real, CI remoto y deploy HTTPS siguen pendientes.
+**59 suites de lógica, 45 recorridos de navegador y offline aprobados**, además de la auditoría de integridad sin errores ni avisos. Las pruebas y sus límites se registran en [evidencia RC6](../../scripts/interface-validation.json). Se mantienen 11 biomas, 33 hábitats, 52 géneros, 81 familias y 18 tipos de tarjeta. Sin cambios de generación/DSP ni nueva publicación. **RC6 integrada y subida a main en 9b5fe00**, por autorización explícita de Jay. La rama de interfaz y sus padres ya están integrados; no requieren otro PR. Teléfono real, CI remoto y deploy HTTPS siguen pendientes.
 
 Los estados RC5/RC4/RC1 siguientes son fotografías históricas; la entrega vigente está arriba.
 
@@ -51,13 +51,13 @@ Los estados RC4/RC1 siguientes son fotografías históricas; la entrega vigente 
 
 Estado actual: **1.0.0-rc.4 · feat/minimal-discoveries**, hija de **feat/release-identity (67aef5f)**. La petición nueva de Jay reabre desarrollo: percusión jugable, versión/deploy visible, minimalismo y registro de elementos en tres ramas amplias. [Entrega vigente y orden](EXPANSION_RITMICA.md). Main sigue en **8096c8d**; Jay crea PR/merge. La auditoría y los pendientes de teléfono/host/CI siguen vigentes.
 
-Actualización RC4: **nueve familias de percusión (incluido fósil raro), contador de 81 familias, versión/deploy visible, instalaciones simplificadas y atlas de 139 vistas**. Laboratorio de 63 casos. Generador base preservado: 11 biomas, 33 hábitats y 52 estilos. No hay deploy nuevo registrado ni cambios en main desde esta sesión. **58 suites de lógica, 42 recorridos + offline y 225 renders de audio aprobados**; [evidencias de esta entrega](scripts/expansion-validation.json). Un PR de la rama final hacia main incluye las tres fases y todos sus padres pendientes; puedes probar cada rama por separado.
+Actualización RC4: **nueve familias de percusión (incluido fósil raro), contador de 81 familias, versión/deploy visible, instalaciones simplificadas y atlas de 139 vistas**. Laboratorio de 63 casos. Generador base preservado: 11 biomas, 33 hábitats y 52 estilos. No hay deploy nuevo registrado ni cambios en main desde esta sesión. **58 suites de lógica, 42 recorridos + offline y 225 renders de audio aprobados**; [evidencias de esta entrega](../../scripts/expansion-validation.json). Un PR de la rama final hacia main incluye las tres fases y todos sus padres pendientes; puedes probar cada rama por separado.
 
 Los datos RC1 siguientes son la fotografía anterior, conservada como historia; su congelación queda sustituida por este alcance nuevo.
 
 # Estado vigente · V1 RC1
 
-Rama **audit/v1-closure**, candidata **1.0.0-rc.1**, sobre f4c112b. Main remoto sigue en 8096c8d (#77). La rama incluye las dos entregas pendientes y las correcciones de cierre, para **un PR**. [Auditoría y dictamen](AUDITORIA_V1.md) · [Continuar](HANDOFF.md) · [Pendientes de aceptación](PENDIENTES.md) · [V2](PLAN_V2.md).
+Rama **audit/v1-closure**, candidata **1.0.0-rc.1**, sobre f4c112b. Main remoto sigue en 8096c8d (#77). La rama incluye las dos entregas pendientes y las correcciones de cierre, para **un PR**. [Auditoría y dictamen](AUDITORIA_V1.md) · [Continuar](HANDOFF.md) · [Pendientes de aceptación](PENDIENTES.md) · [V2](../../PLAN_V2.md).
 
 | Dimensión | Estado comprobado |
 |---|---|

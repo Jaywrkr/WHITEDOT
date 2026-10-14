@@ -12,7 +12,7 @@ Bloque vigente: `feat/phase-03-musical-composition`, desde main `0e289b8` (#71).
 
 ## Base consolidada
 
-Base vigente: `main` · `f7bcf84`, PR #70 integrado el 13 de octubre de 2026. Fases 1 y 2 y revisión visual/musical integradas. Verificaciones de lógica, auditorías, navegador y audio aprobadas en GitHub Actions; despliegue del merge aprobado por Vercel. Iniciar el siguiente bloque desde `origin/main`, sin reaplicar ramas históricas. [Estado de integración](RAMAS.md). [Entrega y pruebas](REVISION_REGISTROS.md). [Imagen numerada](docs/images/atlas-visual.png).
+Base vigente: `main` · `f7bcf84`, PR #70 integrado el 13 de octubre de 2026. Fases 1 y 2 y revisión visual/musical integradas. Verificaciones de lógica, auditorías, navegador y audio aprobadas en GitHub Actions; despliegue del merge aprobado por Vercel. Iniciar el siguiente bloque desde `origin/main`, sin reaplicar ramas históricas. [Estado de integración](RAMAS.md). [Entrega y pruebas](REVISION_REGISTROS.md). [Imagen numerada](../images/atlas-visual.png).
 
 Se revisaron los registros de los 52 estilos, sus paletas y frases de descanso. La política vive en `src/musical-character.js`, fuera del generador: no añadir estilos a GEN globalmente sin revisar compatibilidad de mundos. La música en Original y vivo cambia deliberadamente; sus posiciones/guardados no. El nuevo SW incluye ese módulo. No rediseñar figuras antes de recibir las elecciones de Jay sobre la lámina. La fase 3 se implementa en el bloque indicado arriba; las fases 4–10 permanecen pendientes; el balance previo ya está integrado. El PR #57 fue sustituido: su recorrido creativo existe en main y no debe recuperarse mediante cherry-pick.
 
@@ -37,9 +37,9 @@ Rama actual: `feat/phase-02-living-world-recipes`. Comenzó desde fase 1 `7bed0c
 
 ## Auditoría reproducible
 
-[40.000 candidatos vivos](scripts/phase-02-universe-sample.json): 39.998 firmas detalladas y 24.371 firmas musicales terrestres; aparecieron los 33 perfiles y los 52 estilos. Vecinos terrestres con igual bioma: 57,2 % frente al 9,7 % [original](scripts/phase-02-original-sample.json); igual género: 34,0 % frente al 14,8 %.
+[40.000 candidatos vivos](../../scripts/phase-02-universe-sample.json): 39.998 firmas detalladas y 24.371 firmas musicales terrestres; aparecieron los 33 perfiles y los 52 estilos. Vecinos terrestres con igual bioma: 57,2 % frente al 9,7 % [original](../../scripts/phase-02-original-sample.json); igual género: 34,0 % frente al 14,8 %.
 
-[Un millón de candidatos](scripts/phase-02-million-sample.json): **999.512 firmas detalladas** y **586.200 firmas musicales terrestres** entre cuatro semillas. Los caches de terreno permanecen dentro de 128/256 entradas. El auditor acumula sets de firmas proporcionalmente a la muestra; no confundir esa memoria de investigación con la residencia del juego.
+[Un millón de candidatos](../../scripts/phase-02-million-sample.json): **999.512 firmas detalladas** y **586.200 firmas musicales terrestres** entre cuatro semillas. Los caches de terreno permanecen dentro de 128/256 entradas. El auditor acumula sets de firmas proporcionalmente a la muestra; no confundir esa memoria de investigación con la residencia del juego.
 
 Son recetas/fingerprints discretos, no mundos completos ni canciones terminadas ni diferencias perceptuales garantizadas. La firma viva incorpora ecología y arquitectura; la muestra grande tiene otra ventana, no se compara directamente con la de 40.000. La medición antigua del Original sigue siendo exactamente 39.952 recetas detalladas / 9.732 perfiles musicales terrestres en 40.000 regiones. Captura dorada de fase 1 comprueba también posiciones reales de chunks; no usar la implementación nueva como su propia referencia.
 
@@ -47,7 +47,7 @@ Son recetas/fingerprints discretos, no mundos completos ni canciones terminadas 
 
 Pasaron **49 suites Node**, **32 recorridos Chromium** y offline con **79 módulos**. Los gestos finales se revalidaron en 390×844, 844×390 y 1280×800, incluyendo arrastre/cancelación, cultivo, pausa/mute, Bitácora, favoritos y respaldo aislado entre Original/vivo. Se verificaron los 33 hábitats en 1.200 regiones y el regreso determinista después de expulsión de caché.
 
-Audio: **12 renders vivos** densos en minimal/tropical/dub/amapiano/nu-disco/ambient, normal/suave a 44,1/48 kHz; pico máximo **0.941087**, sin muestras por encima de 0,98. Otros **6 renders del Original** conservan sus voces de vidrios; pico máximo **0.940234**. [Resumen medido](scripts/phase-02-validation.json). Estos renders no certifican preferencia artística ni master profesional.
+Audio: **12 renders vivos** densos en minimal/tropical/dub/amapiano/nu-disco/ambient, normal/suave a 44,1/48 kHz; pico máximo **0.941087**, sin muestras por encima de 0,98. Otros **6 renders del Original** conservan sus voces de vidrios; pico máximo **0.940234**. [Resumen medido](../../scripts/phase-02-validation.json). Estos renders no certifican preferencia artística ni master profesional.
 
 Comandos en [FASE_02.md](FASE_02.md). Dispositivos reales, escucha curada larga y ejecución remota de CI siguen pendientes.
 
@@ -80,7 +80,7 @@ No reintroducir escenas/ideas musicales guardables: Jay las descartó. Relación
 
 Pasaron 48 suites Node, los 31 recorridos Chromium y offline con 77 módulos. Revisión final de respaldos en 390×844, 844×390 y 1280×800: descarga/importación, cuota, original corrupto/futuro protegido y favorito futuro sin ruta; favoritos/autopilot también revalidados en móvil/escritorio. Se comprobó el regreso determinista tras expulsión de regiones y chunks reales del Camino/Mundo.
 
-Los cinco programas de audio completaron **113 renders**, incluidos los 52 estilos y las interacciones. Pico máximo **0,954512**, sin muestras por encima de 0,98. Medidas resumidas en [scripts/phase-01-validation.json](scripts/phase-01-validation.json); no certifican calidad artística de master.
+Los cinco programas de audio completaron **113 renders**, incluidos los 52 estilos y las interacciones. Pico máximo **0,954512**, sin muestras por encima de 0,98. Medidas resumidas en [scripts/phase-01-validation.json](../../scripts/phase-01-validation.json); no certifican calidad artística de master.
 
 Auditoría multisemilla: 40.000 candidatos, 39.880 firmas detalladas y 24.350 firmas musicales terrestres. Auditoría antigua del original sin cambios: 39.952 recetas detalladas y 9.732 perfiles musicales terrestres. Las firmas y ventanas son distintas: no compararlas como aumento de diversidad. Comandos en [FASE_01.md](FASE_01.md).
 
@@ -410,7 +410,7 @@ Si cambias la forma de `S` de forma incompatible, sube la `KEY` (por ejemplo a `
 
 ## 10. Roadmap vigente
 
-La lista única, ordenada y con criterios de aceptación está en **[PENDIENTES.md](PENDIENTES.md)**. El historial completo de etapas terminadas está en **[CAMBIOS.md](CAMBIOS.md)**. No tratar las etapas terminadas como nuevas tareas ni asumir que una primera versión agota la visión.
+La lista única, ordenada y con criterios de aceptación está en **[PENDIENTES.md](PENDIENTES.md)**. El historial completo de etapas terminadas está en **[CAMBIOS.md](../../CAMBIOS.md)**. No tratar las etapas terminadas como nuevas tareas ni asumir que una primera versión agota la visión.
 
 Prioridad nueva: nitidez (esta rama), estabilizar cruces de capas/jam, recetas y catálogo ampliables, variedad coherente y lenguaje gráfico común. Después iniciativa en quietud, favoritos/retorno/autopilot y nuevas interacciones. Looper, banda, mapa y FX ya tienen primera versión; escenas, persistencia de ecos y multiplayer faltan. Ampliación a ~100 ritmos e influencias culturales son catálogo futuro, no cambios automáticamente autorizados. Orden completo: PENDIENTES.
 
@@ -759,7 +759,7 @@ Si este traspaso aún no está integrado, leer esta rama. Después de integrarlo
 2. [PENDIENTES.md](PENDIENTES.md): lo que falta, prioridades y decisiones abiertas.
 3. [FASES_UNIVERSO.md](FASES_UNIVERSO.md): diez bloques, con estados parciales explícitos.
 4. [V1_PRODUCCION.md](V1_PRODUCCION.md): las 64 tareas conservadas y alcance de publicación.
-5. [RAMAS.md](RAMAS.md): integración y forma de continuar. [README.md](README.md): uso y arranque.
+5. [RAMAS.md](RAMAS.md): integración y forma de continuar. [README.md](../../README.md): uso y arranque.
 
 Los informes FASE_01–04 describen sus entregas. [HANDOFF_HISTORICO.md](HANDOFF_HISTORICO.md) conserva **todo** el handoff anterior; [PLAN_HISTORICO.md](PLAN_HISTORICO.md) conserva ideas antiguas. No tomar instrucciones de esos archivos como nuevos pedidos de Jay.
 
@@ -819,7 +819,7 @@ npm run audit:universe -- 2000 2 2 classic
 
 Node >=18 (CI:20), Python (CI:3.12), Playwright fijado en `requirements-dev.txt`. `CHROMIUM_PATH` selecciona un navegador disponible. No se requieren secretos para ejecutar el juego local. GitHub usa la autenticación ya proporcionada por el entorno; no copiar credenciales al repo.
 
-En este traspaso **pasaron 51 suites Node y recarga offline con 81 módulos**; se regeneró el atlas con 118 vistas y los colores actuales. No se repitió la batería completa de navegador/audio porque no se cambió código. El runner actual define 32 recorridos más offline y siete programas de audio (133 renders previstos). Ese total disponible **no es un resultado ejecutado en este turno**. Detalle de evidencias en [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md) y [registro del traspaso](docs/handoff-validation.json).
+En este traspaso **pasaron 51 suites Node y recarga offline con 81 módulos**; se regeneró el atlas con 118 vistas y los colores actuales. No se repitió la batería completa de navegador/audio porque no se cambió código. El runner actual define 32 recorridos más offline y siete programas de audio (133 renders previstos). Ese total disponible **no es un resultado ejecutado en este turno**. Detalle de evidencias en [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md) y [registro del traspaso](../handoff-validation.json).
 
 ## Dónde retomar
 
@@ -878,7 +878,7 @@ python3 scripts/render-visual-atlas.py
 
 `CHROMIUM_PATH` selecciona navegador. SW debe incluir cada módulo nuevo y renovar caché. Mantener referencia mutable de ACH. Pausar gestos/escucha con menús, ocultación, escáner y mute según el módulo; no confirmar vistas previas por un evento ambiental.
 
-Resultados: **53 suites Node, 36/36 recorridos de navegador + offline (91 módulos), 143 renderizados de audio en 52 estilos**. Pruebas de reinicio cultural/vida y Bitácora repetidas tras los ajustes finales. [Detalle](FASE_06.md) y [mediciones](scripts/phase-06-validation.json). No interpretar aprobación de Chromium/offline como escucha física del teléfono. Pendientes inmediatos: probar allí espejos, grullas, poderes y experimental; relación cultura/biología más profunda, edición fina por cubo y coherencia narrativa/primera sesión. La selección de figuras de Jay sigue pendiente. Una rama amplia por bloque; esta entrega hace commit/push y Jay crea PR/merge.
+Resultados: **53 suites Node, 36/36 recorridos de navegador + offline (91 módulos), 143 renderizados de audio en 52 estilos**. Pruebas de reinicio cultural/vida y Bitácora repetidas tras los ajustes finales. [Detalle](FASE_06.md) y [mediciones](../../scripts/phase-06-validation.json). No interpretar aprobación de Chromium/offline como escucha física del teléfono. Pendientes inmediatos: probar allí espejos, grullas, poderes y experimental; relación cultura/biología más profunda, edición fina por cubo y coherencia narrativa/primera sesión. La selección de figuras de Jay sigue pendiente. Una rama amplia por bloque; esta entrega hace commit/push y Jay crea PR/merge.
 
 
 ## Handoff previo al cierre V1 RC1 · f4c112b
@@ -1006,20 +1006,20 @@ La partida habitual sigue en Original/clásico (`pixel-blanco-v4`). Los ensayos 
 
 ## Verificación y límites de esta fotografía
 
-[Registro reproducible del traspaso](docs/handoff-validation.json).
+[Registro reproducible del traspaso](../handoff-validation.json).
 
 - **Ejecutado en este traspaso sobre e27c219:** `npm test`, 51 suites aprobadas; `python3 tests/offline_smoke.py`, recarga real sin conexión con 81 módulos y error correcto para JS inexistente; `python3 scripts/render-visual-atlas.py`, 118 vistas con los colores de fase 4.
-- **Evidencia histórica conservada:** [fase 1](scripts/phase-01-validation.json), [fase 2](scripts/phase-02-validation.json), [registros/atlas](scripts/register-review-validation.json). La revisión de registros midió 125 renders, pico máximo 0,957476 y ninguna muestra >0,98, **antes** de fase 3.
+- **Evidencia histórica conservada:** [fase 1](../../scripts/phase-01-validation.json), [fase 2](../../scripts/phase-02-validation.json), [registros/atlas](../../scripts/register-review-validation.json). La revisión de registros midió 125 renders, pico máximo 0,957476 y ninguna muestra >0,98, **antes** de fase 3.
 - **Disponibles, no repetidos en este traspaso documental:** batería de 32 recorridos más offline; siete programas de audio (77 + 14 + 10 + 6 + 6 + 12 + 8 = 133 renders previstos); auditorías de ambos generadores. Las ocho mezclas de composición incluyen 50 notas de cada voz nueva, normal/suave, 48/44,1 kHz.
 - **CI/despliegue:** el repo conserva workflow de PR/main. Se verificó la integración por Git; esta sesión no consultó el estado remoto actual de Actions/Vercel. Los informes anteriores registran aprobaciones en su momento. No presentarlas como certificación nueva de este commit.
 - **Aceptación pendiente:** escucha humana de 10–30 min, claridad/groove/fatiga, Safari/iOS/Android reales, PWA instalada, mono/estéreo, batería/memoria en viajes largos, actualización y rollback. V1 aún no está certificada para producción.
 
 ## Mapa documental
 
-- Continuación y estado: [HANDOFF](HANDOFF.md), [README](README.md), [RAMAS](RAMAS.md).
+- Continuación y estado: [HANDOFF](HANDOFF.md), [README](../../README.md), [RAMAS](RAMAS.md).
 - Pendientes y dirección: [PENDIENTES](PENDIENTES.md), [FASES_UNIVERSO](FASES_UNIVERSO.md), [inventario de 64 tareas](V1_PRODUCCION.md), [PROXIMOS_PASOS](PROXIMOS_PASOS.md), [dirección narrativa](DIRECCION_JUEGO.md).
-- Entregas integradas: [FASE_01](FASE_01.md), [FASE_02](FASE_02.md), [FASE_03](FASE_03.md), [bloque FASE_04](FASE_04.md), [REVISION_REGISTROS](REVISION_REGISTROS.md), [CAMBIOS](CAMBIOS.md).
-- Uso/medición: [MUNDOS_SEMILLAS](MUNDOS_SEMILLAS.md), [VARIEDAD](VARIEDAD.md), [atlas PNG](docs/images/atlas-visual.png), [índice de figuras](docs/images/atlas-visual.json).
+- Entregas integradas: [FASE_01](FASE_01.md), [FASE_02](FASE_02.md), [FASE_03](FASE_03.md), [bloque FASE_04](FASE_04.md), [REVISION_REGISTROS](REVISION_REGISTROS.md), [CAMBIOS](../../CAMBIOS.md).
+- Uso/medición: [MUNDOS_SEMILLAS](MUNDOS_SEMILLAS.md), [VARIEDAD](VARIEDAD.md), [atlas PNG](../images/atlas-visual.png), [índice de figuras](../images/atlas-visual.json).
 - Archivo íntegro: [HANDOFF_HISTORICO](HANDOFF_HISTORICO.md), [PLAN_HISTORICO](PLAN_HISTORICO.md), [FASES históricas](FASES.md), [ENTREGAS_CREATIVAS](ENTREGAS_CREATIVAS.md), [JUGABILIDAD_CREATIVA](JUGABILIDAD_CREATIVA.md), [REVISION](REVISION.md), [REVISION_CREATIVA](REVISION_CREATIVA.md), [REVISION_INTERACCIONES](REVISION_INTERACCIONES.md).
 
 </details>

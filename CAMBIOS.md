@@ -1,25 +1,37 @@
+# 1.1.0 · Cierre con estilo J
+
+14 de octubre de 2026. Cierra el universo vivo (1.1.0-alpha.10) como versión estable. Ramas en orden, sobre `main` 959e95e: `cierre/f1-estilo-j-base` → `cierre/f2-estilo-j-voz` → `cierre/f3-cierre-funcional` → `cierre/f4-publicacion` → `cierre/f6-release`. Decisiones y auditoría en [CIERRE_V1.md](CIERRE_V1.md).
+
+- **Estilo J visual:** capa `styles/estilo-j.css`. Negro puro, esquinas rectas, blanco para estados y dorado solo para lo ganado. Silkscreen para una frase por hoja. HUD con día y luz; versión y deploy al pie del menú. Menú de seis teclas grandes (Mundo, Estudio, Bitácora, Mapa, Favoritos, Tu cubo) y listas Música y Más, con Paseo y Voz como preferencias. Prototipo solo en local, `?dev=1` o pruebas.
+- **Estilo J en textos:** la Voz cabe en 12 palabras y usa tachado-corrección (~~Fallaste un día~~ Volviste.). Bienvenida y ayuda con un verbo por línea. Firma *Simple.* en cierres. Menú sin jerga: Energía, Calma, Repetir, Otros mundos, Más info, Guardar copia.
+- **Compartir:** etiquetas Open Graph con imagen J; los sets se graban en 4:5 firmados `WHITEDOT · @jaywrkr`.
+- **Licencia:** todos los derechos reservados ([LICENSE](LICENSE)); las fuentes siguen bajo OFL.
+- **Publicación:** el build de Vercel sella revisión y hora reales; `sw.js` sin caché HTTP. "Cuenta y duetos" se oculta cuando no hay servidor opcional (Vercel es estático).
+- **Pruebas:** tres pruebas de navegador con carreras (`wonders`, `pet`, `living`) que dejaban CI en rojo en `main` quedan deterministas.
+- **Documentación:** README de una página; [ACEPTACION_V1.md](ACEPTACION_V1.md), [LANZAMIENTO.md](LANZAMIENTO.md); histórico en [docs/historial/](docs/historial).
+
 # Cierre V1 RC1 · auditoría y correcciones
 
-Rama **audit/v1-closure**, incluye culturas + mascota. SW de versión coherente, fuentes locales/OFL, guardado protegido entre pestañas, reset completo, aislamiento experimental, grabación con salida final/limpieza/error recuperable, códigos validados, ayudas sin sistemas retirados, guardado al cambiar semilla y firma de variedad sin flags retirados. **55 suites, 39 recorridos + offline y 164 mezclas aprobadas.** [Informe con hallazgos y límites](AUDITORIA_V1.md). Un PR a main; Jay integra. V1 congelada, aceptación física/publicación pendientes, [V2 planificada](PLAN_V2.md).
+Rama **audit/v1-closure**, incluye culturas + mascota. SW de versión coherente, fuentes locales/OFL, guardado protegido entre pestañas, reset completo, aislamiento experimental, grabación con salida final/limpieza/error recuperable, códigos validados, ayudas sin sistemas retirados, guardado al cambiar semilla y firma de variedad sin flags retirados. **55 suites, 39 recorridos + offline y 164 mezclas aprobadas.** [Informe con hallazgos y límites](docs/historial/AUDITORIA_V1.md). Un PR a main; Jay integra. V1 congelada, aceptación física/publicación pendientes, [V2 planificada](PLAN_V2.md).
 
 # Entrega nueva · mascota y cubo
 
-Rama `feat/pet-and-cube` sobre la entrega cultural pendiente (`165c376`): mascota ganada/persistente con tres roles musicales, crecimiento, contacto y búsqueda local; colores ganados/estelas/halo en Tu cubo, sin sonidos de UI. [Inventario y límites](MASCOTA_Y_CUBO.md). Main sigue en `8096c8d`; no afirmar que estas ramas ya están integradas. Teléfono real y restantes ampliaciones de V1 siguen pendientes.
+Rama `feat/pet-and-cube` sobre la entrega cultural pendiente (`165c376`): mascota ganada/persistente con tres roles musicales, crecimiento, contacto y búsqueda local; colores ganados/estelas/halo en Tu cubo, sin sonidos de UI. [Inventario y límites](docs/historial/MASCOTA_Y_CUBO.md). Main sigue en `8096c8d`; no afirmar que estas ramas ya están integradas. Teléfono real y restantes ampliaciones de V1 siguen pendientes.
 
 # Revisión de Claude y fase 6 actual
 
-Main 8096c8d incluye #74–#77; esta rama incorpora culturas/guardianes/huellas/puertas/recuerdos, Vasto, paseo visible, laboratorio 54 y golondrinas. También corrige pausas/registros, velocidad de Cometa y verificaciones obsoletas. [Detalle](FASE_06.md). Claude retiró jardín modular/rastro; el historial de abajo conserva sus versiones originales, no su disponibilidad actual.
+Main 8096c8d incluye #74–#77; esta rama incorpora culturas/guardianes/huellas/puertas/recuerdos, Vasto, paseo visible, laboratorio 54 y golondrinas. También corrige pausas/registros, velocidad de Cometa y verificaciones obsoletas. [Detalle](docs/historial/FASE_06.md). Claude retiró jardín modular/rastro; el historial de abajo conserva sus versiones originales, no su disponibilidad actual.
 
 # Cambios integrados hasta main e27c219
 
-Actualizado el 13 de octubre de 2026. [Estado completo](ESTADO_ACTUAL.md) · [handoff](HANDOFF.md).
+Actualizado el 13 de octubre de 2026. [Estado completo](docs/historial/ESTADO_ACTUAL.md) · [handoff](docs/historial/HANDOFF.md).
 
-- **#73, bloque de fase 4:** espejos por arrastre directo, panel opcional por toque, cancelación/rollback al salir de alcance o pausar, y protección frente a ondas ambientales que pudieran confirmar una vista previa; color de vidrios/reflejos ligado al giro. [FASE_04.md](FASE_04.md).
-- **#72, fase 3:** cuatro motores reed/membrane/bowed/hollow, paletas de reproducción, articulaciones por carácter, arco de ocho frases y acentos armónicos con volumen repartido; Bitácora y SW correspondientes. [FASE_03.md](FASE_03.md).
+- **#73, bloque de fase 4:** espejos por arrastre directo, panel opcional por toque, cancelación/rollback al salir de alcance o pausar, y protección frente a ondas ambientales que pudieran confirmar una vista previa; color de vidrios/reflejos ligado al giro. [FASE_04.md](docs/historial/FASE_04.md).
+- **#72, fase 3:** cuatro motores reed/membrane/bowed/hollow, paletas de reproducción, articulaciones por carácter, arco de ocho frases y acentos armónicos con volumen repartido; Bitácora y SW correspondientes. [FASE_03.md](docs/historial/FASE_03.md).
 - **#71:** consolidación y preservación íntegra de documentación histórica.
-- **#70:** atlas nativo numerado y corrección de agudos: registros/pausas/paletas por estilo, octava del vidrio compensada, ríos/aves/quietud y margen final .95. [REVISION_REGISTROS.md](REVISION_REGISTROS.md).
-- **#69:** Original conservado y Paisajes vivos separado: 33 hábitats, seis familias, clima/relieve/vecindad, selector y descubrimientos. [FASE_02.md](FASE_02.md).
-- **#68:** guardado recuperable, respaldo/importación, direcciones compatibles, cachés, contratos y automatización. [FASE_01.md](FASE_01.md).
+- **#70:** atlas nativo numerado y corrección de agudos: registros/pausas/paletas por estilo, octava del vidrio compensada, ríos/aves/quietud y margen final .95. [REVISION_REGISTROS.md](docs/historial/REVISION_REGISTROS.md).
+- **#69:** Original conservado y Paisajes vivos separado: 33 hábitats, seis familias, clima/relieve/vecindad, selector y descubrimientos. [FASE_02.md](docs/historial/FASE_02.md).
+- **#68:** guardado recuperable, respaldo/importación, direcciones compatibles, cachés, contratos y automatización. [FASE_01.md](docs/historial/FASE_01.md).
 - **Traspaso documental anterior (#74):** estados/pendientes actualizados, inventario y mapa de módulos, handoff breve más archivo íntegro, cifras comprobadas y atlas regenerado con los colores actuales. No modifica funciones.
 
 El historial completo de bloques anteriores permanece a continuación. Sus validaciones/ramas/planes corresponden a cada entrega, no al estado actual. Cajas/vainas históricas fueron sustituidas por suelo; no recuperarlas como elementos pendientes.
@@ -30,21 +42,21 @@ El historial completo de bloques anteriores permanece a continuación. Sus valid
 
 `feat/phase-02-living-world-recipes`, iniciada desde fase 1 `7bed0ca` y actualizada sobre main `e26ef93` al integrarse PR #68. Generación original conservada; nueva identidad v2 y guardados separados, selector directo en el menú, 33 perfiles de hábitat, clima/fertilidad/relieve visual, vecindad coherente, regiones amplias de 10.800 unidades, seis familias con gestos y cultivo, arquitectura de frases, registros medios/graves, Bitácora y tres logros. Catálogo real de 30 contratos; caché de pesos musicales acotada/separada por semilla; dos módulos nuevos en offline. No añade géneros ni modelos de síntesis.
 
-[Entrega, prueba y límites](FASE_02.md) · [Fases siguientes](FASES_UNIVERSO.md). Resultados finales en [HANDOFF.md](HANDOFF.md).
+[Entrega, prueba y límites](docs/historial/FASE_02.md) · [Fases siguientes](docs/historial/FASES_UNIVERSO.md). Resultados finales en [HANDOFF.md](docs/historial/HANDOFF.md).
 
 # Fase 1 · Base del universo ampliable
 
 Rama `feat/phase-01-universe-foundation`, base `7a0e8ff`. Implementa guardado/respaldos recuperables, dirección completa de favoritos, cachés acotadas, contratos versionados, auditoría multisemilla y runners/CI de lógica, navegador, audio y offline. Mantiene la generación y música existentes. Panel opcional en Menú → Progreso y respaldo, sin ruido sonoro de UI ni botones adicionales sobre el mundo.
 
-Detalle, criterios y límites: [FASE_01.md](FASE_01.md). Secuencia vigente: [FASES_UNIVERSO.md](FASES_UNIVERSO.md). No modifica Bitácora/logros porque este bloque no agrega descubrimientos de juego.
+Detalle, criterios y límites: [FASE_01.md](docs/historial/FASE_01.md). Secuencia vigente: [FASES_UNIVERSO.md](docs/historial/FASES_UNIVERSO.md). No modifica Bitácora/logros porque este bloque no agrega descubrimientos de juego.
 
 <details><summary>Historial de cambios anteriores</summary>
 
 ## Revisión de alcance para producción V1
 
-[Inventario V1](V1_PRODUCCION.md): 64 tareas, criterios de publicación, coordenadas/retorno y estrategia de expansión. La instrucción vigente es agrupar muchas mejoras en una misma rama; esta revisión se suma a `feat/intuitive-animal-dialogue` y no crea otra rama. Se propone `release/v1` con commits por bloques y un PR final.
+[Inventario V1](docs/historial/V1_PRODUCCION.md): 64 tareas, criterios de publicación, coordenadas/retorno y estrategia de expansión. La instrucción vigente es agrupar muchas mejoras en una misma rama; esta revisión se suma a `feat/intuitive-animal-dialogue` y no crea otra rama. Se propone `release/v1` con commits por bloques y un PR final.
 
-Main remoto verificado al cierre: `93a5323` (PR #66). Suelo/rastros, vidrios sin panel y animal por toque ya están integrados. Medición renovada: 39.952 recetas detalladas en 40.000 regiones; 23.418 recetas terrestres y 9.732 perfiles musicales terrestres. Promedio local de cinco muestras de 1.600 regiones: 1.600 recetas por semilla, no un total de mundos ni prueba de diferencias perceptuales. Detalles en [VARIEDAD.md](VARIEDAD.md).
+Main remoto verificado al cierre: `93a5323` (PR #66). Suelo/rastros, vidrios sin panel y animal por toque ya están integrados. Medición renovada: 39.952 recetas detalladas en 40.000 regiones; 23.418 recetas terrestres y 9.732 perfiles musicales terrestres. Promedio local de cinco muestras de 1.600 regiones: 1.600 recetas por semilla, no un total de mundos ni prueba de diferencias perceptuales. Detalles en [VARIEDAD.md](docs/historial/VARIEDAD.md).
 
 ## Nueva etapa: animal de respuesta más intuitivo
 
@@ -106,15 +118,15 @@ Probar en Menú → Prototipo → Semillas → Encuentro de prueba → Caja de p
 
 ## Nueva etapa: interacciones profundas
 
-Rama `feat/deep-musical-encounters`, basada en main `2959313`. Tejedoras conectan objetos, animales escuchan frases del jugador y cajas permiten editar pasos y piezas. Cómo probar y próximos bloques: [PROXIMOS_PASOS.md](PROXIMOS_PASOS.md). Las cinco fases anteriores ya están integradas; el resto del texto conserva su contexto histórico.
+Rama `feat/deep-musical-encounters`, basada en main `2959313`. Tejedoras conectan objetos, animales escuchan frases del jugador y cajas permiten editar pasos y piezas. Cómo probar y próximos bloques: [PROXIMOS_PASOS.md](docs/historial/PROXIMOS_PASOS.md). Las cinco fases anteriores ya están integradas; el resto del texto conserva su contexto histórico.
 
 ## Cinco fases anteriores: ya integradas
 
-Orden de integración y pruebas: [FASES.md](FASES.md). Esta rama contiene las fases 1–5; base `main` actualizado `63706eb`. Jay crea PR y merge en orden mediante merge normal.
+Orden de integración y pruebas: [FASES.md](docs/historial/FASES.md). Esta rama contiene las fases 1–5; base `main` actualizado `63706eb`. Jay crea PR y merge en orden mediante merge normal.
 
 # WHITEDOT: inventario de cambios y contexto para revisión
 
-Actualizado al cierre de la sesión del 12 de octubre de 2026 (Guayaquil). Leer junto con [HANDOFF.md](HANDOFF.md), [PENDIENTES.md](PENDIENTES.md) y [REVISION.md](REVISION.md). Inventario desde prototipo `596fa31` hasta main `5413d5f` (PR #35), más la cadena encadenada hasta `fix/12d-contact-intent`, con nitidez, espejos, influencia musical, fijación voluntaria, módulos y espacio móvil. Las mediciones de cada etapa se conservan como historia, no nivel actual garantizado.
+Actualizado al cierre de la sesión del 12 de octubre de 2026 (Guayaquil). Leer junto con [HANDOFF.md](docs/historial/HANDOFF.md), [PENDIENTES.md](docs/historial/PENDIENTES.md) y [REVISION.md](docs/historial/REVISION.md). Inventario desde prototipo `596fa31` hasta main `5413d5f` (PR #35), más la cadena encadenada hasta `fix/12d-contact-intent`, con nitidez, espejos, influencia musical, fijación voluntaria, módulos y espacio móvil. Las mediciones de cada etapa se conservan como historia, no nivel actual garantizado.
 
 ## Estado exacto para revisión
 
@@ -375,7 +387,7 @@ Presencia dispersa por catálogo, posiciones, orientación inicial, rotación de
 
 Hasta 64 instalaciones guardan sus orientaciones y la conexión descubierta. Menú, cambio de capa y salida mantienen la separación de sistemas; panel y vidrios se excluyen entre sí. Escuchar incluye las voces de espejos. Bitácora muestra instalaciones y rutas completadas. Logros: Luz que escucha y Al otro lado del reflejo. No incluye aún espejos unidos a vidrios, puertas ni pistas encadenadas.
 
-Validación: 34 suites de Node, interacción real en móvil/escritorio, ruta conectada, emisión sonora limitada, persistencia, Bitácora, Escuchar y separación de capas. Detalle de variedad actual y cómo repetir la medición en [VARIEDAD.md](VARIEDAD.md).
+Validación: 34 suites de Node, interacción real en móvil/escritorio, ruta conectada, emisión sonora limitada, persistencia, Bitácora, Escuchar y separación de capas. Detalle de variedad actual y cómo repetir la medición en [VARIEDAD.md](docs/historial/VARIEDAD.md).
 
 ### Tu presencia transforma la composición
 

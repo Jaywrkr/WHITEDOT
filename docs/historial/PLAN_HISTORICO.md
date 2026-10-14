@@ -10,7 +10,7 @@ Las veinte entregas autorizadas se agruparon en cinco ramas: [FASES.md](FASES.md
 
 # WHITEDOT: fases, implementaciones e ideas por decidir
 
-Actualizado tras el pedido de interacción musical, fijación voluntaria, módulos y espacio móvil. Base main `5413d5f`; cadena implementada hasta `feat/15-spacious-blob-worlds`, ver RAMAS. Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
+Actualizado tras el pedido de interacción musical, fijación voluntaria, módulos y espacio móvil. Base main `5413d5f`; cadena implementada hasta `feat/15-spacious-blob-worlds`, ver RAMAS. Contexto en [HANDOFF.md](HANDOFF.md), historial en [CAMBIOS.md](../../CAMBIOS.md) y resultados de esta revisión en [REVISION.md](REVISION.md).
 
 **Una fase = una rama revisable**, implementación, pruebas, commit y push; Jay crea PR/merge. Jay autorizó primero las fases 1–10 en cadena y después borrar ecos con un toque y continuar con espejos (fase 11). Este nuevo pedido autoriza las unidades de influencia, fijación voluntaria, módulos, interfaz y contactos dentro del bloque 12. Lo restante continúa como propuesta. Ver RAMAS.md. Si una fase crece demasiado, dividirla antes de implementar. Las fases 1–10 están implementadas en sus ramas encadenadas; falta el PR/merge de Jay en ese orden. La fase 11 y mejora 10a están implementadas; el bloque 12 tiene estas unidades implementadas; cajas, cuerdas y fases 13–31 siguen pendientes.
 

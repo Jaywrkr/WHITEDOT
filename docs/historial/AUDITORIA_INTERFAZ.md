@@ -1,4 +1,4 @@
-> Estado posterior: **1.1.0-alpha.10**, diez ramas del universo vivo. [Entrega y validación](ENTREGA_UNIVERSO_VIVO.md), [cobertura y pendientes](COBERTURA_150_UNIVERSO.md). El contenido que sigue conserva el contexto original de este documento; sus cifras/pendientes históricos no sustituyen el estado nuevo. Para continuar en Claude, leer primero [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md).
+> Estado posterior: **1.1.0-alpha.10**, diez ramas del universo vivo. [Entrega y validación](ENTREGA_UNIVERSO_VIVO.md), [cobertura y pendientes](../../COBERTURA_150_UNIVERSO.md). El contenido que sigue conserva el contexto original de este documento; sus cifras/pendientes históricos no sustituyen el estado nuevo. Para continuar en Claude, leer primero [HANDOFF_CLAUDE.md](../../HANDOFF_CLAUDE.md).
 
 # Interfaz integrada · V1 RC6
 
@@ -48,19 +48,19 @@ El mundo conserva dos controles persistentes: paseo y menú. Las herramientas se
 
 Capturadas en Chromium desde la aplicación, sin dibujos simulados. Semilla `bosque-01`, Vasto, generador 2. La fecha de deploy desconocida se muestra como desconocida.
 
-![Mundo en móvil](docs/images/interfaz-mundo-movil.png)
+![Mundo en móvil](../images/interfaz-mundo-movil.png)
 
-![Menú en móvil](docs/images/interfaz-menu-movil.png)
+![Menú en móvil](../images/interfaz-menu-movil.png)
 
-![Menú en escritorio](docs/images/interfaz-menu-escritorio.png)
+![Menú en escritorio](../images/interfaz-menu-escritorio.png)
 
-![Bitácora en móvil](docs/images/interfaz-bitacora-movil.png)
+![Bitácora en móvil](../images/interfaz-bitacora-movil.png)
 
-![Efectos en móvil](docs/images/interfaz-efectos-movil.png)
+![Efectos en móvil](../images/interfaz-efectos-movil.png)
 
 ## Validación y aceptación restante
 
-**59 suites de lógica, 45/45 recorridos de navegador y offline aprobados. Integridad: 105 módulos, 242 IDs, 245 imports, 117 assets; cero errores y avisos.** La evidencia final queda en [registro RC6](scripts/interface-validation.json) y [auditoría de integridad](scripts/interface-integrity-validation.json). Los ensayos nuevos recorren ocho hojas reales en 320×568, 360×640, 390×844, 844×390 y 1280×800: límites de pantalla, desplazamiento interno, botones de 44 px, foco, acceso a intensidad y pad por teclado. Se verifica además la pausa de tarjetas detrás de herramientas y la lectura/expiración de mensajes. La suite general cubre Camino, Mundo, Estudio, audio, criaturas, registro, guardado, grabación y PWA/offline.
+**59 suites de lógica, 45/45 recorridos de navegador y offline aprobados. Integridad: 105 módulos, 242 IDs, 245 imports, 117 assets; cero errores y avisos.** La evidencia final queda en [registro RC6](../../scripts/interface-validation.json) y [auditoría de integridad](../../scripts/interface-integrity-validation.json). Los ensayos nuevos recorren ocho hojas reales en 320×568, 360×640, 390×844, 844×390 y 1280×800: límites de pantalla, desplazamiento interno, botones de 44 px, foco, acceso a intensidad y pad por teclado. Se verifica además la pausa de tarjetas detrás de herramientas y la lectura/expiración de mensajes. La suite general cubre Camino, Mundo, Estudio, audio, criaturas, registro, guardado, grabación y PWA/offline.
 
 No hay cambios de DSP, secuenciador, géneros o generación. Las 225 mezclas de RC4 siguen siendo evidencia previa; no son un ensayo de audio nuevo de RC6. Ajustar un efecto o la intensidad cambia deliberadamente la música existente; navegar no añade notas, pulsos ni jingles.
 

@@ -1,5 +1,13 @@
 # WHITEDOT · Cierre V1
 
+> **Actualización (14 oct, tarde):** mientras se preparaban las fases, `main` integró el universo vivo (#85–#98, 1.1.0-alpha.10): 28 linajes, voz contextual, cajas temporales, cuentas y duetos opcionales. Las ramas `cierre/*` se rehicieron sobre ese `main`. Cambios respecto al plan de abajo:
+> - **Versión de cierre: 1.1.0**, no 1.0.0 (main ya estaba en 1.1.0-alpha.10).
+> - **Mascota de caja:** ya resuelta en main (visita temporal); solo se ajustó su texto.
+> - **Nuevo hallazgo A:** en Vercel no existe el servidor de cuentas y duetos; la entrada del menú se oculta si `/api` no responde.
+> - **Nuevo hallazgo B:** CI de `main` en rojo por `living_smoke` (carrera); corregido junto con `wonders` y `pet`.
+> - **Estado:** bloques 0–4 y 6 implementados. Pendientes: bloque 5, [aceptación real](ACEPTACION_V1.md), y bloque 7, [lanzamiento](LANZAMIENTO.md).
+
+
 14 de octubre de 2026 · base `main 704ae07` (V1 RC6). Dos partes: **1. Estilo J** y **2. Auditoría y plan de cierre**. Este documento reemplaza a las listas anteriores de pendientes de V1. Lo que no está aquí pasa a V2.
 
 ---
