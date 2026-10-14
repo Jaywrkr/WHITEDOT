@@ -16,7 +16,7 @@ export function initialize(runtime){
   $('seedInfo').textContent=`${runtime.S.previewSeed?'Prueba: '+runtime.S.previewSeed:'Partida habitual'} · ${d.ecology?.name||runtime.BIOMES[d.z].name} · ${runtime.GEN[d.genre].name} · ${d.bpm} BPM · Biomas de ${runtime.REG*runtime.WCH} unidades`;
   $('mSeeds').hidden=false;
  }
- function saveBeforeLeaving(){runtime.S.collected=[...runtime.collected];if(runtime.save())return true;runtime.toast('No se pudo guardar. Revisa Progreso y respaldo antes de cambiar de mundo.');return false;}
+ function saveBeforeLeaving(){runtime.S.collected=[...runtime.collected];if(runtime.save())return true;runtime.toast('No se pudo guardar. Menú → Guardar copia antes de cambiar.');return false;}
  function visit(value){if(!saveBeforeLeaving())return;const url=new URL(location.href);url.searchParams.set('testSeed',normalizeSeed(value));url.searchParams.set('layout',$('seedLayout').value);url.searchParams.set('generation',$('seedGeneration').value);if(select.value)url.searchParams.set('encounter',select.value);else url.searchParams.delete('encounter');location.assign(url.href);}
  $('dSeeds').onclick=open;$('seedClose').onclick=()=>$('mSeeds').hidden=true;
  $('bWorlds').onclick=()=>{open();$('seedGeneration').value='2';};

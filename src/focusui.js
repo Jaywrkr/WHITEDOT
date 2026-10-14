@@ -6,7 +6,7 @@ export function initialize(runtime){
   const world=runtime.inWorld(),show=!!runtime.S.worldDetails;
   if(mode===world&&details===show)return;mode=world;details=show;
   document.body.classList.toggle('world-mode',world);document.body.classList.toggle('world-focus',world&&!show);
-  $('bTools').hidden=!world;$('bDetails').hidden=!world;$('bDetails').setAttribute('aria-pressed',String(show));$('bDetails').querySelector('span').textContent=show?'Ocultar detalles':'Mostrar detalles';
+  $('bTools').hidden=!world;$('bDetails').hidden=!world;$('bDetails').setAttribute('aria-pressed',String(show));$('bDetails').querySelector('span').textContent=show?'Menos info':'Más info';
   if(!world)closeTools();
  }
  $('bTools').onclick=()=>{const open=document.body.classList.toggle('tools-open');$('bTools').setAttribute('aria-expanded',String(open));if(open)queueMicrotask(()=>$('bFx').focus({preventScroll:true}));};

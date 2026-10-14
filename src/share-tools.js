@@ -41,7 +41,7 @@ export function initialize(runtime){
   const same=sameWorld(place.address,runtime.worldIdentity);
   const point=runtime.addFavoriteAddress?.(place.address,place.name||'Lugar compartido');
   if(!point){$('placeCodeInfo').textContent='No se pudo guardar: ¿Favoritos está lleno?';return null;}
-  $('placeCodeInfo').textContent=same?'Guardado en Favoritos. Te oriento hacia allá.':`Guardado. Es de otro mundo (semilla “${place.address.seed||'original'}”): ábrelo desde Explorar mundos.`;
+  $('placeCodeInfo').textContent=same?'Guardado en Favoritos. Te oriento hacia allá.':`Guardado. Es de otro mundo (semilla “${place.address.seed||'original'}”): ábrelo desde Otros mundos.`;
   if(same)runtime.selectDestination?.(point.id);runtime.unlock('codigoAbierto');return point;
  }
  $('placeShare').onclick=shareHere;

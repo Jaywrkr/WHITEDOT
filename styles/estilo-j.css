@@ -65,7 +65,8 @@ body.world-focus .goal{color:var(--dim)}
 /* Voice: one line, no label, white edge. */
 .voice,body.world-focus .voice{background:#000e;border:1px solid var(--line);border-left:2px solid var(--ink)}
 .voice small{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-.voice span{font-size:13px;line-height:1.5}
+.voice span{font-size:13px;line-height:1.5;color:var(--ink)}
+.voice s{font-size:12px;line-height:1.4;color:var(--dim);text-decoration-thickness:1px}
 .toast{background:var(--void);border-color:var(--ink);font-size:12px}
 .toast em{color:var(--earned)}
 .phrase{font-size:14px}
@@ -124,3 +125,8 @@ body.dev .devbox{display:block}
 .menu-prefs{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-top:12px;align-items:center}
 .menu-prefs label{font-size:12px;color:var(--dim)}
 @media(max-width:360px){.menu-prefs{grid-template-columns:1fr}}
+
+/* Firma de cierre, como en los posts: una palabra, al final de los momentos importantes. */
+.sheet p.firma{font-family:var(--display);font-size:14px;color:var(--ink);letter-spacing:.02em;margin-top:4px}
+.sheet p s{color:var(--dim)}
+.steps b{color:var(--ink);font-weight:600}

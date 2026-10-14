@@ -145,7 +145,7 @@ export function initialize(runtime){
   if(loop.rec||loop.armed){const progress=loop.rec?Math.min(1,(runtime.MU.step-loop.rec.start)/LOOP_STEPS):1;cx.globalAlpha=.8;cx.strokeStyle=loop.rec?'#ff6b6b':runtime.GOLD;cx.lineWidth=2;cx.beginPath();cx.arc(W/2,H/2,30,-Math.PI/2,-Math.PI/2+progress*Math.PI*2);cx.stroke();}
   cx.globalAlpha=1;
  }
- function ui(){const option=runtime.$('bAutoPins');if(option){option.setAttribute('aria-pressed',String(!!S().autoPins));option.querySelector('span').textContent=S().autoPins?'Fijar sonidos: sí':'Fijar sonidos: no';}const btn=runtime.$('bLoop');if(!btn)return;btn.hidden=!runtime.inWorld();btn.classList.toggle('rec',!!loop.rec);btn.classList.toggle('armed',loop.armed);}
+ function ui(){const option=runtime.$('bAutoPins');if(option){option.setAttribute('aria-pressed',String(!!S().autoPins));option.querySelector('span').textContent=S().autoPins?'Repetir: sí':'Repetir: no';}const btn=runtime.$('bLoop');if(!btn)return;btn.hidden=!runtime.inWorld();btn.classList.toggle('rec',!!loop.rec);btn.classList.toggle('armed',loop.armed);}
  function cancelRecording(){loop.armed=false;loop.rec=null;ui();}
  function reset(){for(const member of Object.values(band.members))if(member.source)member.source.follow=0;suppressed.clear();loop.armed=false;loop.rec=null;loop.ecos=[];band.members={};band.combos={};ui();}
 

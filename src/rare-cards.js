@@ -43,7 +43,7 @@ export function initialize(runtime){
   const book=ensure();if(!runtime.inWorld()||!rareDefinition(type))return false;
   const card=descriptor(type,source,extra);if(!card)return false;
   const result=storeRareCard(book,card);
-  if(result==='full'){if(!fullNoticed){fullNoticed=true;runtime.toast?.('Libro completo · conserva tus tarjetas con Progreso y respaldo.');}return false;}
+  if(result==='full'){if(!fullNoticed){fullNoticed=true;runtime.toast?.('Libro completo. Guarda tus tarjetas: Menú → Guardar copia.');}return false;}
   if(result==='duplicate'&&card.context?.phase){const original=book.items.find(c=>c.id===card.id);const next={at:new Date().toISOString(),phase:card.context.phase,weather:card.context.weather||''};if(!original.observations.some(o=>o.phase===next.phase&&o.weather===next.weather)){original.observations.push(next);if(original.observations.length>8)original.observations.shift();runtime.save();}}
   if(result!=='added')return false;
   // Collection never starts audio, touches the cube, changes a beat or opens a modal.
@@ -74,7 +74,7 @@ export function initialize(runtime){
    ${Object.keys(card.context||{}).length?'<p class="rare-biome">'+escape(Object.values(card.context).join(' · '))+'</p>':''}${card.observations?.length?'<p class="rare-biome">'+card.observations.length+' observaciones posteriores</p>':''}
    ${card.forced?'<p class="rare-provenance">Muestra forzada; no demuestra un encuentro natural.</p>':''}${card.legacy?'<p class="rare-provenance">Recuperada del progreso anterior; sin hora original.</p>':''}
    <details><summary>Cómo de raro es</summary><p>${escape(card.odds.condition)}</p></details>
-   ${address?`<div class="rare-actions"><button data-rare-png="${index}">Imagen</button><button data-rare-copy="${index}">Copiar lugar</button><button data-rare-return="${index}" ${canReturn?'':'disabled'}>Orientar</button></div>${canReturn?'':'<p class="rare-provenance">Para regresar, abre su semilla y versión desde Explorar mundos.</p>'}`:''}
+   ${address?`<div class="rare-actions"><button data-rare-png="${index}">Imagen</button><button data-rare-copy="${index}">Copiar lugar</button><button data-rare-return="${index}" ${canReturn?'':'disabled'}>Orientar</button></div>${canReturn?'':'<p class="rare-provenance">Para volver: Menú → Otros mundos.</p>'}`:''}
   </article>`;
  }
  function cards(){
@@ -109,7 +109,7 @@ export function initialize(runtime){
  runtime.$('journalBody').addEventListener('change',event=>{if(event.target.id!=='rareFilter')return;filter=event.target.value;page=0;runtime.refreshJournal?.();document.getElementById('rareFilter')?.focus();});
  $('rareNoticeDismiss').onclick=dismiss;
  $('rareNoticeOpen').onclick=()=>{if(!shown)return;const index=ensure().items.findIndex(c=>c.id===shown.id);page=Math.floor(Math.max(0,ensure().items.length-1-index)/RARE_PAGE_SIZE);dismiss();runtime.openJournal('rares');};
- runtime.VOZ.tarjeta1='Un hallazgo merece memoria. Su tarjeta conserva el lugar y la voz de este mundo.';
+ runtime.VOZ.tarjeta1='Un hallazgo merece memoria. Su tarjeta guarda el lugar.';
  runtime.ACH.push(['tarjeta1','Un hallazgo tiene memoria','Guardaste una tarjeta de un encuentro poco común.']);
  ensure();
  Object.defineProperties(runtime,{collectRareCard:{get:()=>collect},rareCardTick:{get:()=>tick},rareBookCards:{get:()=>cards},rareBookAction:{get:()=>action},rareCards:{get:()=>ensure().items},rareNoticeState:{get:()=>({shown:shown?.id||null,remaining,pending:queue.length})}});

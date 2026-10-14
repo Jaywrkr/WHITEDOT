@@ -19,7 +19,7 @@ export function initialize(runtime){
  }
  if(update)update.onclick=()=>{
   if(runtime.setRecording){runtime.toast('Termina la grabación antes de actualizar.');return;}
-  runtime.S.collected=[...runtime.collected];if(!runtime.save()){runtime.toast('Exporta tu progreso y revisa Progreso y respaldo antes de actualizar.');return;}
+  runtime.S.collected=[...runtime.collected];if(!runtime.save()){runtime.toast('Antes de actualizar: Menú → Guardar copia.');return;}
   runtime.stopAutopilot?.();if(pendingReload){location.reload();return;}registration?.waiting?.postMessage({type:'APPLY_UPDATE'});
  };
  runtime.standalone=matchMedia?.('(display-mode: standalone), (display-mode: fullscreen)').matches||navigator.standalone===true;

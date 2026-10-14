@@ -22,7 +22,7 @@ export function initialize(runtime) {
   runtime.$("oSky").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openSky();};runtime.$("oClose").onclick=()=>{runtime.$("mOut").hidden=true;};
   runtime.$("bAch").onclick=runtime.openJournal;runtime.$("aClose").onclick=()=>{runtime.$("mAch").hidden=true;};
   runtime.$("sClose").onclick=()=>{runtime.$("mShare").hidden=true;};
-  runtime.$("bSoft").onclick=()=>{runtime.S.softMusic=!runtime.S.softMusic;runtime.$("bSoft").setAttribute('aria-pressed',String(runtime.S.softMusic));runtime.audio();runtime.applyComfort();runtime.toast(runtime.S.softMusic?'Escucha suave · activada':'Escucha suave · desactivada');runtime.save();};
+  runtime.$("bSoft").onclick=()=>{runtime.S.softMusic=!runtime.S.softMusic;runtime.$("bSoft").setAttribute('aria-pressed',String(runtime.S.softMusic));runtime.audio();runtime.applyComfort();runtime.toast(runtime.S.softMusic?'Calma · sí':'Calma · no');runtime.save();};
   runtime.$("bSoft").setAttribute('aria-pressed',String(!!runtime.S.softMusic));
   runtime.$("bMusicSettings").onclick=()=>{styleUI();runtime.$("mMusic").hidden=false;};
   const rs=runtime.$("rStyle");
