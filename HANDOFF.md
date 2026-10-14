@@ -1,13 +1,16 @@
-# Universo vivo · 1.1.0-alpha.10
+# Continuar en Claude · 1.1.0-alpha.10
 
-Diez fases acumuladas en `feat/universe-10-server-duets-validation`, listas para revisar en orden; **main no fue modificado en esta entrega**. Flora/fauna/construcciones nativas, música más variada, Voz opcional, ciclos, mundos grandes, libro ampliado, retorno entre semillas y servidor/duetos experimental.
+Estado vigente: **1.1.0-alpha.10**, con diez fases acumuladas en `feat/universe-10-server-duets-validation` (código `57fb5d2`). Este handoff añade documentación en `docs/claude-handoff-universe-alpha`. Main remoto comprobado: `704ae07`; las fases aún no estaban integradas. Volver a verificar antes de continuar.
 
+- [Empezar aquí: handoff para Claude](HANDOFF_CLAUDE.md)
 - [Entrega, ramas y límites](ENTREGA_UNIVERSO_VIVO.md)
 - [Cómo probar](PROBAR_UNIVERSO_VIVO.md)
-- [Cobertura honesta de las 150 ideas](COBERTURA_150_UNIVERSO.md)
+- [Cobertura de las 150 ideas](COBERTURA_150_UNIVERSO.md)
 - [Servidor y duetos](SERVIDOR_Y_DUETOS.md)
 
-52 géneros y 11 biomas de base; 28 linajes nuevos, 109 familias registrables, 91 entradas del laboratorio y 49 tipos de tarjeta. Regiones nuevas de 50.400 y 100.800 por lado, sin reescalar partidas anteriores. La muestra de 10.000 regiones demuestra recetas distintas; no mide canciones perceptiblemente diferentes. No se presenta esta alpha como V1 de producción ni como servidor ya publicado.
+El documento de continuidad completo es [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md): identidad de la rama, cambios, mapa de código, reglas creativas, migraciones, pruebas, pendientes y límites del servicio. La rama de documentación incluye toda la fase 10; trabajar desde ella si main todavía conserva la entrega anterior.
+
+Leer la matriz antes de desarrollar: las diez fases tienen una base integrada, pero no las 150 propuestas terminadas. No reaplicar ramas archivadas ni tomar los planes de abajo como estado vigente. Jay hace los PR y merges; continuar en ramas nuevas sin reescribir historia publicada.
 
 <details>
 <summary>Historial de planes y entregas anteriores</summary>
