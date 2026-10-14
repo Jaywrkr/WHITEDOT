@@ -15,6 +15,7 @@ export function initialize(runtime){
   if(paused||!runtime.inWorld())return;seconds+=dt;if(seconds<75)return;seconds=0;
   const d=runtime.regionOfPos(runtime.S.wx,runtime.S.wy),key=d.key+':'+(runtime.body?.still>15?'quietud':'caminar');
   if(key===lastKey||runtime.S.voiceMode==='discreta'||!runtime.S.voiceMode)return;lastKey=key;
+  if(runtime.S.voiceMode==='guia'&&runtime.livingEnvironment?.migration){runtime.say('La luz de '+runtime.livingEnvironment.name+' trae movimiento: las criaturas activas pueden guiarte hacia otras voces.','El ambiente cambia');return;}
   if(runtime.S.voiceMode==='poetica')runtime.say(runtime.body?.still>15?'La constancia también es quedarse: escucha cómo el lugar encuentra otra voz.':'Crear es caminar con atención. El próximo encuentro puede responder distinto.','El Camino');
   else runtime.say(runtime.body?.still>15?'El ambiente sigue variando a compás. Muévete lentamente por una criatura o un tallo para escuchar su papel musical.':'Acércate con el cubo: cada objeto tiene una voz. Alejarte suelta el gesto; Fijar sonidos es opcional.','Escuchar aquí');
  }

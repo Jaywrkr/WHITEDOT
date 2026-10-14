@@ -9,7 +9,8 @@ export function behavior(o,dt,clock,d,player,neighbors=[]){
  if(o.kind==='blob'&&o.personality==='social'){
   const peer=neighbors.find(p=>p!==o&&p.kind==='blob'&&Math.hypot(p.homeX-o.homeX,p.homeY-o.homeY)<160);if(peer){tx+=(peer.x-tx)*.22;ty+=(peer.y-ty)*.22;}
  }
- const pace=o.kind==='turtle'?.25:o.kind==='deer'?1.3:.7;o.x+=(tx-o.x)*Math.min(1,dt*pace);o.y+=(ty-o.y)*Math.min(1,dt*pace);
+ if(o.ecology?.migration){tx+=Math.sin(clock/80+o.variant)*18;ty+=Math.cos(clock/80+o.variant)*18;}
+ const pace=(o.kind==='turtle'?.25:o.kind==='deer'?1.3:.7)*(o.awake||1);o.x+=(tx-o.x)*Math.min(1,dt*pace);o.y+=(ty-o.y)*Math.min(1,dt*pace);
  // Excited motion never pushes the creature beyond a small radius of its address.
  const dx=o.x-o.homeX,dy=o.y-o.homeY,r=Math.hypot(dx,dy);if(r>75){o.x=o.homeX+dx/r*75;o.y=o.homeY+dy/r*75;}
  o.expression=player.speed<12?'legato':player.speed>100?'staccato':o.variant%2?'glide':'tremolo';
