@@ -6,7 +6,7 @@ import {normalizeSeed,previewKey} from './seeds.js';
 export function initialize(runtime) {
   /* ---------- estado ---------- */
   const requested=new URLSearchParams(globalThis.location?.search||'').get('testSeed'),preview=requested===null?null:normalizeSeed(requested);
-  const layout=preview?(new URLSearchParams(globalThis.location?.search||'').get('layout')==='classic'?'classic':'wide'):null;
+  const layout=preview?(['classic','vasto'].includes(new URLSearchParams(globalThis.location?.search||'').get('layout'))?new URLSearchParams(globalThis.location?.search||'').get('layout'):'wide'):null;
   const generation=preview&&new URLSearchParams(globalThis.location?.search||'').get('generation')==='2'?2:1;
   const KEY=preview?previewKey(preview,layout,generation):'pixel-blanco-v4';
   const identity=worldIdentity(preview&&preview!=='original'?preview:'',layout||'classic',generation),scope={kind:preview?'preview':'main',seed:preview||'',layout:layout||'classic'};

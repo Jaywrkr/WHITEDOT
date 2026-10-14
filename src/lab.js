@@ -34,6 +34,8 @@ export function initialize(runtime){
  }
  function locate(e){
   const f=e.find,home=Math.floor(runtime.REG/2)*runtime.WCH;
+  if(f.type==='culture'){const site=runtime.cultureHome();return site?{x:site.x,y:site.y}:null;}
+  if(['box','quiet','experimental'].includes(f.type))return {x:home+80,y:home};
   if(f.type==='home')return {x:f.x,y:f.y};
   if(f.type==='family')return {x:home+100,y:home};
   if(f.type==='toy')return spiral((a,b)=>{const raw=runtime.wchunk(a,b),c=runtime.sceneChunk?.(raw)||raw;return (c.playthings||[]).find(o=>o.kind===f.kind)||null;});
@@ -46,10 +48,14 @@ export function initialize(runtime){
  function closeOverlays(){for(const m of document.querySelectorAll('.modal:not([hidden])'))if(m.id!=='mLab')m.hidden=true;if(runtime.fxState?.open)runtime.fxReset?.();}
  function go(id=book.current){
   const e=labElement(id)||LAB_ELEMENTS[0];book.current=e.id;keep();closeOverlays();
-  runtime.cancelMateria?.();runtime.labEncounter=e.find.type==='family'?e.find.family:null;runtime.encounterReset?.();
+  runtime.stopAutopilot?.();runtime.clearPowers?.();runtime.cancelMateria?.();
+  runtime.labCulture=e.find.type==='culture'?e.find.culture:null;runtime.cultureReset?.();runtime.labExperimental=e.find.type==='experimental'?{level:.8,mode:e.find.mode}:null;runtime.labEncounter=e.find.type==='family'?e.find.family:null;runtime.encounterReset?.();
   const s=S();s.layer='superficie';const p=locate(e);
   // El elemento queda un poco por debajo del pixel, a la vista y lejos de la barra del laboratorio.
   if(p){s.wx=p.x;s.wy=p.y-110;runtime.ptr=null;}
+  runtime.MU.dnaT=runtime.regionOfPos(s.wx,s.wy);
+  if(e.find.type==='box')runtime.spawnBox(p.x,p.y,e.find.power);
+  if(e.find.type==='quiet')runtime.quietPreview?.(e.find.seconds);
   if(e.find.tool==='fx'){if(!runtime.fxState?.open)$('bFx').click();}
   else if(e.find.tool==='favorites')$('bFavorites').click();
   runtime.audio?.();draw();

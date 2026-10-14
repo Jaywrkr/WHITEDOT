@@ -1,3 +1,4 @@
+import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js';
 // Quietud viva y atmósfera de color.
 // Si te quedas en un sitio, el lugar cambia por etapas: sube el color, entra una voz nueva, llegan visitas,
 // la música gira (y se vuelve más experimental), te dejan un regalo (una caja misteriosa) y a los 5 minutos
@@ -28,7 +29,7 @@ export function initialize(runtime){
   const b=runtime.body,d=runtime.MU.dnaT;if(!b?.ready)return;
   if(b.jump||!state.anchor||Math.hypot(S().wx-state.anchor.x,S().wy-state.anchor.y)>90||d?.key!==state.key){
    state.anchor={x:S().wx,y:S().wy};state.key=d?.key;state.seconds=quietStart(S().listened[d?.key]);state.stage=quietStage(state.seconds);state.visitors=[];return;}
-  if(document.querySelector('.modal:not([hidden])'))return;
+  if(document.querySelector('.modal:not([hidden])')||runtime.scanning||!S().sound||runtime.ac?.state!=='running'||b.speed>12)return;
   state.seconds+=dt;const k=quietStage(state.seconds);if(k>state.stage)enterStage(k);
   state.bloom+=((state.stage>=1?Math.min(1,.35+state.stage*.13):0)-state.bloom)*Math.min(1,dt*.4);
   state.pulse=Math.max(0,state.pulse-dt*.35);
@@ -36,11 +37,11 @@ export function initialize(runtime){
  }
  // Voz del lugar (etapa 2+): una línea lenta con el instrumento del lugar; las visitas puntean.
  function step(s,bar,time){
-  if(!surface()||!S().sound||runtime.ac?.state!=='running'||state.stage<2)return;const d=runtime.MU.dnaA;if(!d)return;
-  const ct=runtime.chordTones?.()||[60,64,67],inst=d.track?.hookI||'keys';
-  if(s===0&&bar%2===0)runtime.hookInst?.(inst,ct[(bar/2)%ct.length]+12,time,runtime.vel?.(.045)||.045,d);
-  if(s===8&&bar%4===1&&state.stage>=4)runtime.hookInst?.(inst,ct[(bar+1)%ct.length]+19,time,runtime.vel?.(.03)||.03,d);
-  if(state.visitors.length&&s%4===2&&Math.random()<.25){const v=state.visitors[Math.floor(Math.random()*state.visitors.length)];runtime.pluck?.(ct[Math.floor(Math.random()*ct.length)]+24,time,.02,4);setTimeout(()=>{v.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
+  if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])')||runtime.scanning||!S().sound||runtime.ac?.state!=='running'||state.stage<2)return;const d=runtime.MU.dnaA;if(!d)return;
+  const ct=runtime.chordTones?.()||[60,64,67],inst=runtime.MU.radio?.hookI||hookInstruments(d.genre,runtime.GEN[d.genre])[0],profile=musicalCharacter(d.genre);
+  if(s===0&&bar%2===0)runtime.hookInst?.(inst,hookPitch(inst,ct[(bar/2)%ct.length],profile),time,runtime.vel?.(.045)||.045,d);
+  if(s===8&&bar%4===1&&state.stage>=4)runtime.hookInst?.(inst,hookPitch(inst,ct[(bar+1)%ct.length],profile),time,runtime.vel?.(.03)||.03,d);
+  if(state.visitors.length&&s%4===2&&Math.random()<.25){const v=state.visitors[Math.floor(Math.random()*state.visitors.length)];runtime.hookInst?.(inst,hookPitch(inst,ct[Math.floor(Math.random()*ct.length)],profile),time,.015,d);setTimeout(()=>{v.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
  }
  // Giro: el filtro baja y vuelve a abrir en dos compases (se oye que algo cambió).
  function sweep(){const fx=runtime.fx,ac=runtime.ac;if(!fx||!ac)return;const t=ac.currentTime,f=fx.lp.frequency;f.cancelScheduledValues(t);f.setValueAtTime(Math.max(200,f.value),t);f.exponentialRampToValueAtTime(420,t+runtime.SIX*16);f.exponentialRampToValueAtTime(20000,t+runtime.SIX*32);}
@@ -65,5 +66,6 @@ export function initialize(runtime){
   for(const v of state.visitors){const [H0,S0,L0]=swatchOf(v.hue),x=cx+Math.cos(v.a)*v.r,y=cy+Math.sin(v.a)*v.r*.7;c.globalAlpha=.45+v.lit*.5;c.fillStyle=`hsl(${H0},${S0}%,${L0}%)`;c.beginPath();c.arc(x,y,2+v.lit*3,0,TAU);c.fill();if(v.lit>.2){c.globalAlpha=v.lit*.2;c.beginPath();c.arc(x,y,12,0,TAU);c.fill();}}
   c.restore();
  }
- Object.defineProperties(runtime,{quietState:{get:()=>state},quietTick:{get:()=>tick},quietStep:{get:()=>step},drawQuietud:{get:()=>draw},drawAtmosphere:{get:()=>drawAtmosphere},colorPulse:{get:()=>colorPulse}});
+ function preview(seconds){if(!runtime.labMode)return;reset();state.anchor={x:S().wx,y:S().wy};state.key=runtime.MU.dnaT?.key;state.seconds=seconds;for(let i=1;i<=quietStage(seconds);i++)enterStage(i);}
+ Object.defineProperties(runtime,{quietPreview:{get:()=>preview},quietState:{get:()=>state},quietTick:{get:()=>tick},quietStep:{get:()=>step},drawQuietud:{get:()=>draw},drawAtmosphere:{get:()=>drawAtmosphere},colorPulse:{get:()=>colorPulse}});
 }

@@ -25,7 +25,7 @@ export function initialize(runtime) {
 
   /* ---------- loop ---------- */
   function frame(t){
-    runtime.saveToolsTick?.();runtime.focusUITick?.();runtime.syncSession();runtime.glassTick?.();runtime.mirrorTick?.();runtime.patchGardenTick?.();
+    runtime.saveToolsTick?.();runtime.focusUITick?.();runtime.syncSession();runtime.glassTick?.();runtime.mirrorTick?.();
     if(!runtime.inWorld()||!runtime.S.sound)runtime.clearSoundCues();
     if(!runtime.inWorld())runtime.clearRelicProgress();
     const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;
@@ -63,14 +63,14 @@ export function initialize(runtime) {
     runtime.initiativeTick?.(dt,sp>.01,modal);
     runtime.influenceTick?.(dt,modal||runtime.scanning);
     runtime.creativeTick?.(dt,modal||runtime.scanning||document.hidden);
-    runtime.encounterTick?.(dt,modal||runtime.scanning||document.hidden);runtime.trailTick?.(dt,modal||runtime.scanning||document.hidden);
+    runtime.encounterTick?.(dt,modal||runtime.scanning||document.hidden);
     runtime.ecologyTick?.(dt,modal||runtime.scanning||document.hidden);
     runtime.updateScanner();runtime.fxTick?.(dt);
     const b=runtime.beat();
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
-    runtime.clueTick?.();runtime.clueDraw?.();runtime.trailDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
+    runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.GOLD:runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
@@ -371,14 +371,13 @@ export function initialize(runtime) {
       runtime.cx.globalAlpha=al*.6;runtime.cx.beginPath();runtime.cx.arc(x,y,36,-Math.PI/2,-Math.PI/2+6.283*(progress.dwell/(rl.magical?12:6)));runtime.cx.stroke();
       if(d<100){runtime.cx.globalAlpha=.8;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.font="10px monospace";runtime.cx.textAlign="center";runtime.cx.fillText(rl.name||"Reliquia",x,y-44);runtime.cx.fillText(`Escucha ${Math.floor(progress.dwell)}/${rl.magical?12:6}s · ${progress.pulses}/${need} pulsos`,x,y+52);}
     }
-    runtime.bodyTick?.(dt);runtime.quietTick?.(dt);runtime.cajasTick?.(dt);   // el cubo primero: los objetos leen su contacto en este cuadro
+    runtime.bodyTick?.(dt);runtime.quietTick?.(dt);runtime.cajasTick?.(dt);runtime.cultureTick?.(dt);   // el cubo primero: los objetos leen su contacto en este cuadro
     runtime.drawGlass?.(t,dt,ox,oy,R);
     runtime.drawMirrors?.(t,dt,ox,oy,R);
     runtime.drawMateria?.(t,dt,ox,oy,R);
     runtime.drawVida?.(t,dt,ox,oy,R);
     runtime.drawQuietud?.();
-    runtime.drawCajas?.(t,dt,ox,oy);
-    runtime.drawPatchGarden?.(t,dt,ox,oy,R);
+    runtime.drawCajas?.(t,dt,ox,oy);runtime.drawCultures?.();
     runtime.drawPhenomena(t,dt,ox,oy,R);
     runtime.drawJam?.(t,dt,ox,oy,b);
     runtime.drawAlive?.(t,dt,ox,oy,'sky');

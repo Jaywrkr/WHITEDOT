@@ -4,9 +4,9 @@ Revisión del código y planes al 13 de octubre de 2026. Propuesta de alcance pa
 
 ## Estado y forma de trabajar
 
-**Main e27c219, #73 integrado**, al 13 de octubre de 2026. Fases 1–3, revisión de registros/atlas y bloque de gestos/color de fase 4 presentes. [Estado comprobado](ESTADO_ACTUAL.md) · [handoff](HANDOFF.md). Esta lista de 64 tareas se conserva para cierre de alcance: una primera implementación no cierra todas sus ampliaciones.
+**Base main 8096c8d, #77 integrado; rama actual fase 6**, al 13 de octubre de 2026. Fases 1–3, revisión de registros/atlas y bloque de gestos/color de fase 4 presentes. [Estado comprobado](ESTADO_ACTUAL.md) · [handoff](HANDOFF.md). Esta lista de 64 tareas se conserva para cierre de alcance: una primera implementación no cierra todas sus ampliaciones.
 
-Una rama amplia por bloque, con código/pruebas/docs. La entrega documental actual hace commit/push para revisión; las integraciones posteriores deben seguir el pedido vigente de Jay. [Fases y estados](FASES_UNIVERSO.md) · [rama de traspaso](RAMAS.md). No reaplicar entregas integradas ni usar la antigua propuesta de una sola `release/v1` como instrucción actual.
+Una rama amplia por bloque, con código/pruebas/docs. Esta entrega contiene implementación, pruebas y documentación, con commit/push para revisión; Jay crea PR/merge. [Fases y estados](FASES_UNIVERSO.md) · [rama de traspaso](RAMAS.md). No reaplicar entregas integradas ni usar la antigua propuesta de una sola `release/v1` como instrucción actual.
 
 ## Variedad real y cómo interpretar los números
 
@@ -35,11 +35,11 @@ Resultados y método en [VARIEDAD.md](VARIEDAD.md) y [scripts/v1-variation-sampl
 
 Ya existen coordenadas `wx/wy`, regiones y capas. Favoritos guarda hasta 64 puntos con nombre, x/y, capa, región, género y datos de receta. Orientar y autopilot permiten viajar a ellos; entre capas hay que encontrar un acceso. No existe teletransporte universal. La partida habitual y cada combinación de semilla/layout de prueba tienen claves de almacenamiento separadas.
 
-El lugar conserva su identidad en la versión actual; la radio sigue evolucionando. Favoritos no conserva el audio exacto que sonaba ni la frase temporal del animal. Jay descartó añadir escenas/ideas musicales guardables: no se reintroducen aquí. Exportar un set es una función separada, todavía pendiente.
+El lugar conserva su identidad en la versión actual; la radio sigue evolucionando. Favoritos no conserva el audio exacto que sonaba ni la frase temporal del animal. Jay descartó añadir escenas/ideas musicales guardables: no se reintroducen aquí. Grabar set de audio/vídeo hasta 60 s ya está implementado por Claude; su compatibilidad y escucha en dispositivos reales siguen pendientes.
 
 Fase 1 agrega `address: {seed, layout, generatorVersion, catalogVersion, layoutVersion, layer, x, y}` a favoritos y completa los antiguos en su partida. Original: versiones `1`; Paisajes vivos: versiones `2`. Favoritos de otra identidad no activan orientación/autopilot. Fase 2 conserva ambos generadores con guardados separados y no migra automáticamente el habitual. Agregar etiquetas no basta para futuros generadores: antes de cambiar catálogo/generación hay que conservar la versión antigua o migrarla explícitamente; esta regla sigue vigente para futuras versiones.
 
-El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Menú → Progreso y respaldo, exportación/importación validada, copia antes de restaurar, recuperación explícita y avisos de almacenamiento. Borrar los datos del navegador sigue borrando el guardado: exportar antes. El código compartible de lugar con semilla/versiones/capa/coordenadas sigue pendiente.
+El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Menú → Progreso y respaldo, exportación/importación validada, copia antes de restaurar, recuperación explícita y avisos de almacenamiento. Borrar los datos del navegador sigue borrando el guardado: exportar antes. El código compartible WD1 ya existe; verificar UX/intercambio y dispositivos.
 
 ## Inventario completo de trabajo
 
@@ -52,7 +52,7 @@ El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Me
 3. **P0 — Implementado fase 1:** exportar/importar con validación/copia previa; aislamiento de partida habitual y semilla/layout de prueba. Probar en equipos reales antes de release.
 4. **P0 — Implementado fases 1–2:** identidad completa, rechazo de direcciones ajenas y conservación del generador Original junto a Paisajes vivos. Migraciones futuras y actualización del habitual siguen pendientes.
 5. **P0 — Implementado fase 1:** cachés regionales/biomas/continentes/chunks acotadas y regeneración determinista. Verificar consumo/batería reales antes de release.
-6. **P0 — Implementado fase 1:** descubrimiento de todas las suites Node con aserciones (51 en la base actual), runner de navegador/audio/offline y workflow CI. El ayudante Web Audio queda excluido del conteo Node. El workflow corre en PR/main; sus resultados remotos deben comprobarse para cada entrega, no inferirse del merge.
+6. **P0 — Implementado fase 1:** descubrimiento de todas las suites Node con aserciones (53 en la base actual), runner de navegador/audio/offline y workflow CI. El ayudante Web Audio queda excluido del conteo Node. El workflow corre en PR/main; sus resultados remotos deben comprobarse para cada entrega, no inferirse del merge.
 7. **P0 — Dispositivos:** verificar Safari/iPhone, Chrome/Android, escritorio y PWA instalada; memoria, batería, varios tamaños, auriculares, altavoz, cambio de pestaña, suspensión/reanudación y rutas largas. Los ensayos actuales de navegador se hacen en Chromium, no demuestran compatibilidad real con todos esos dispositivos.
 8. **P0 — Actualizaciones:** actualización de caché sin mezclar versiones, restauración offline, vuelta atrás de una publicación y migración de partidas. El shell offline local ya funciona; las fuentes externas aún necesitan decisión de empaquetado.
 9. **P0 — Operación:** versión de release identificable, registro acotado de fallos recuperables, instrucciones de soporte, créditos/licencias de recursos utilizados y política correspondiente a las funciones realmente publicadas.
@@ -89,13 +89,13 @@ El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Me
 
 ### Búsqueda, culturas y sentido
 
-34. **V1 — Búsquedas variadas:** varias clases de rastros y maneras de resolverlas, pistas de oído/forma/comportamiento, recompensas que abren capacidades. El rastro de tres huellas ya existe; no equivale a todo un sistema de aventuras.
-35. **V1 — Puertas musicales:** resolver ritmo, tensión o relación entre objetos para abrir un acceso, con ayuda local y alternativas visuales pertinentes.
+34. **V1 — Parcial, guardianes/huellas/puertas ya presentes:** ampliar búsquedas variadas: varias clases de rastros y maneras de resolverlas, pistas de oído/forma/comportamiento, recompensas que abren capacidades. El rastro de tres huellas ya existe; no equivale a todo un sistema de aventuras.
+35. **V1 — Primera puerta de cuatro piedras implementada:** ampliar puertas musicales: resolver ritmo, tensión o relación entre objetos para abrir un acceso, con ayuda local y alternativas visuales pertinentes.
 36. **V1 — Instrumentos dormidos ampliados:** distintas condiciones de despertar, funciones regionales y regreso; un primer instrumento dormido ya existe.
 37. **V1 — Rarezas valiosas:** reliquias difíciles de encontrar, condiciones variadas y rareza verificable, con recompensas expresivas; evitar premios que solo cambian nombre/color o se consiguen por repetir sin intención.
 38. **V1 — Personajes originales:** viajeros, guardianes, coleccionistas y maestros, con conducta, función musical y recuerdos claros; diferenciarlos de la fauna genérica.
 39. **V1 — Historia y Voz:** unir Camino → Mundo → Estudio con escuchar, crear y constancia, relacionado con la dirección de Jay; introducción breve, lenguaje coherente y menos avisos repetidos o burlas.
-40. **V1 — Primeras culturas:** conjuntos investigados que relacionen música, materiales, flora/fauna, símbolos y acciones. Japón y México son ejemplos dentro de muchas culturas, sin asignar una tradición completa a un solo género.
+40. **V1 — Ocho estudios sonoros originales implementados:** ampliar primeras culturas: conjuntos investigados que relacionen música, materiales, flora/fauna, símbolos y acciones. Japón y México son ejemplos dentro de muchas culturas, sin asignar una tradición completa a un solo género.
 41. **Expansión — Ampliación multicultural:** influencias andinas, afrodiásporas, distintas tradiciones asiáticas, mediterráneas y otras referencias concretas, incluyendo regiones sin influencia cultural; combinar con reglas justificadas, no decoración aleatoria.
 42. **V1 — Historia musical y reliquias:** compositores, inventores y motivos históricos en representaciones originales; comprobar la obra concreta de dominio público y distinguirla de grabaciones/imágenes actuales con otros derechos.
 43. **Expansión — Leonardo y mecanismos:** péndulos, ruedas, engranajes y dibujos que secuencien/modulen, además de observatorios y archivos que revelen música.
@@ -108,8 +108,8 @@ El guardado sigue en localStorage y no sincroniza dispositivos. Fase 1 agrega Me
 47. **Expansión — Huertos de ritmo:** semillas crecen y cambian articulación por pulso/gesto, con secuencias legibles en el suelo, sin panel cuadrado ni obligación diaria.
 48. **Expansión — Crafting:** recetas de materiales/sonidos descubribles, decoración, nombres de especies/lugares y conexión con Bitácora/Estudio.
 49. **Expansión — Escenarios y comunidades:** lugares para actuaciones, baile y criaturas que reaccionen al groove; retos de mezcla que valoren composición y retirada de capas.
-50. **V1 opcional — Exportar sets:** audio y vídeo cortos, archivos utilizables, límites de memoria y compatibilidad móvil. PNG ya existe. Exportar no publica automáticamente.
-51. **V1 — Compartir lugares:** códigos con semilla, versión, layout, capa y coordenadas; identidad compatible al abrirlos y explicación si falta una versión. No transportar por defecto una composición congelada.
+50. **V1 opcional — Exportar sets:** audio y vídeo cortos, archivos utilizables, límites de memoria y compatibilidad móvil. PNG y Grabar set hasta 60 s ya existen; revisar formatos/dispositivos. Exportar no publica automáticamente.
+51. **V1 — WD1 implementado por Claude:** verificar/ampliar compartir lugares: códigos con semilla, versión, layout, capa y coordenadas; identidad compatible al abrirlos y explicación si falta una versión. No transportar por defecto una composición congelada.
 52. **Expansión — Sintetizador modular avanzado:** conexiones y modulaciones de síntesis editables, más allá de influencia regional; coste, fuentes y bucles claramente acotados.
 
 ### Interfaz y cierre de la experiencia

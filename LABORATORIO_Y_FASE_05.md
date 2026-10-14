@@ -1,6 +1,6 @@
 # Laboratorio de pruebas + Fase 5 · Vida (rama `feat/laboratorio-y-fase-05`)
 
-Entrega de Claude. Pendiente de merge por Jay. **Incluye la rama anterior `feat/phase-04-materia-y-compartir`** (se creó encima): basta con hacer merge de esta.
+Entrega de Claude **integrada por #76**. El control de dedo descrito originalmente fue sustituido por el cubo en #77; revisión vigente en [FASE_06.md](FASE_06.md). **Incluye la rama anterior `feat/phase-04-materia-y-compartir`** (se creó encima): basta con hacer merge de esta.
 
 ## Laboratorio (para mejorar cada elemento)
 Un mundo de prueba aparte (semilla `laboratorio`): **no toca tu partida**.

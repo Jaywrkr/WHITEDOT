@@ -1,3 +1,4 @@
+import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js';
 // Cajas misteriosas: raras, flotan y brillan; el cubo las abre al tocarlas y te dan un poder por un rato.
 // - Campo de escucha: un círculo te sigue; la música del lugar calla y un brazo gira en el campo tocando
 //   a tempo solo lo que está dentro. Moverte = cambiar la canción.
@@ -29,12 +30,13 @@ export function initialize(runtime){
  function open(b){
   const book=S().boxes;if(!b.gift){if(Object.keys(book).length>=400)delete book[Object.keys(book)[0]];book[b.id]=1;}else spawned.splice(spawned.indexOf(b),1);
   S().boxesOpened=(S().boxesOpened||0)+1;give(b.power);runtime.colorPulse?.(b.hue,1);runtime.burst?.(b.x,b.y,14,true);
-  runtime.beatSoon(t=>{const ct=runtime.chordTones?.()||[60,64,67];ct.concat(ct.map(n=>n+12)).forEach((n,i)=>runtime.pluck?.(n+12,t+i*runtime.SIX*.5,.05,2));},null,'player');
+  runtime.beatSoon(t=>{const ct=runtime.chordTones?.()||[60,64,67];ct.slice(0,3).forEach((n,i)=>melody(n,t+i*runtime.SIX*2,.025));},null,'player');
   runtime.unlock('caja1');if(S().boxesOpened>=5)runtime.unlock('caja5');runtime.unlock('poder_'+b.power);runtime.save();
  }
  function give(id){
   const p=POWERS[id];if(!p)return;powers[id]=Math.max(powers[id]||0,now())+p.seconds*1000;runtime.toast(`<em>${p.name}</em> · ${p.text}`);
   if(!S().help['poder_'+id]){S().help['poder_'+id]=true;runtime.say(p.text,p.name);}
+  if(id==='cometa')runtime.speedBoost=2.2;if(id==='campo')runtime.fieldSolo=true;
   if(id==='companero'){companion.on=true;companion.x=S().wx+30;companion.y=S().wy+30;}
   if(id==='pincel')marks.length=0;
  }
@@ -42,7 +44,7 @@ export function initialize(runtime){
  function tick(dt){
   if(previous!==S()){previous=S();S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};spawned.length=0;}
   runtime.speedBoost=has('cometa')?2.2:1;runtime.fieldSolo=has('campo');
-  if(!surface())return;const b=runtime.body;
+  if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])'))return;const b=runtime.body;
   for(const box of boxesNear(400))if(Math.hypot(box.x-S().wx,box.y-S().wy)<22)open(box);
   if(has('cometa')&&b?.speed>40){trail.push({x:S().wx,y:S().wy,a:1});if(trail.length>60)trail.shift();}
   for(const p of trail)p.a-=dt*.8;while(trail.length&&trail[0].a<=0)trail.shift();
@@ -59,19 +61,20 @@ export function initialize(runtime){
   for(const fn of ['materiaSources','vidaSources','glassSources','mirrorSources','encounterSources'])for(const s of runtime[fn]?.()||[]){const ob=s.object;if(ob?.x==null)continue;list.push({x:ob.x,y:ob.y,o:ob,play:t=>{runtime.playVoice(s.kind,Math.floor(Math.hypot(ob.x-S().wx,ob.y-S().wy)/30)%7,t,runtime.regionOfPos(ob.x,ob.y),false,.35,ob,'player');ob.lit=1;}});}
   return list;
  }
+ function melody(n,t,v){const d=runtime.MU.dnaA||runtime.MU.dnaT;if(!d)return;const inst=runtime.MU.radio?.hookI||hookInstruments(d.genre,runtime.GEN[d.genre])[0];runtime.hookInst(inst,hookPitch(inst,n,musicalCharacter(d.genre)),t,v,d);}
  function step(s,bar,time){
-  if(!surface()||!S().sound||runtime.ac?.state!=='running')return;
+  if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])')||!S().sound||runtime.ac?.state!=='running')return;
   // Campo: el brazo gira una vuelta por compás y toca lo que cruza dentro del círculo.
   if(has('campo')){const R=fieldRadius(left('campo'),POWERS.campo.seconds);let n=0;
    for(const src of sources()){const dx=src.x-S().wx,dy=src.y-S().wy;if(Math.hypot(dx,dy)>R||n>=3)continue;const a=((Math.atan2(dy,dx)+Math.PI/2)%TAU+TAU)%TAU;if(Math.floor(a/TAU*16)===s){src.play(time);n++;}}}
   // Cometa: la estela suena en corcheas mientras corres.
-  if(has('cometa')&&s%2===0&&(runtime.body?.speed||0)>80){const ct=runtime.chordTones?.()||[60,64,67];runtime.pluck?.(ct[(s/2)%ct.length]+24,time,.025,4);}
+  if(has('cometa')&&s%2===0&&(runtime.body?.speed||0)>80){const ct=runtime.chordTones?.()||[60,64,67];melody(ct[(s/2)%ct.length],time,.02);}
   // Pincel: tus marcas suenan cada dos compases, en el orden en que las dejaste.
-  if(has('pincel')&&bar%2===0)for(const m of marks)if(m.step===s){const ct=runtime.chordTones?.()||[60,64,67];runtime.hookInst?.(runtime.MU.dnaA?.track?.hookI||'keys',ct[m.degree%ct.length]+12+(m.degree>=3?12:0),time,runtime.vel?.(.05)||.05,runtime.MU.dnaA);setTimeout(()=>{m.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
+  if(has('pincel')&&bar%2===0)for(const m of marks)if(m.step===s){const ct=runtime.chordTones?.()||[60,64,67];melody(ct[m.degree%ct.length],time,.025);setTimeout(()=>{m.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
   // Imán: los que te siguen tocan cada uno su parte.
   if(has('iman')&&s%4===0){const o=(runtime.MU.near||[]).filter(o=>typeof o.snd==='function')[(bar*4+s/4)%Math.max(1,(runtime.MU.near||[]).length)];if(o&&typeof o.snd==='function'){o.snd(time);o.hit=1;}}
   // Compañero: contesta lo último que tocaste una tercera arriba.
-  if(companion.on&&companion.heard.length&&s%4===2){const h=companion.heard.shift(),ct=runtime.chordTones?.()||[60,64,67];runtime.pluck?.(ct[(h+2)%ct.length]+24,time,.035,2);setTimeout(()=>{companion.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
+  if(companion.on&&companion.heard.length&&s%4===2){const h=companion.heard.shift(),ct=runtime.chordTones?.()||[60,64,67];melody(ct[(h+2)%ct.length],time,.025);setTimeout(()=>{companion.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
  }
  function hear(index){if(companion.on){companion.heard.push(index||0);if(companion.heard.length>4)companion.heard.shift();}}
  // Brújula y compañero: lo raro cerca (dirección y nombre).
@@ -105,5 +108,6 @@ export function initialize(runtime){
   const active=activePowers(powers,now());if(active.length){c.globalAlpha=.75;c.fillStyle=WORLD_VISUAL.gold;c.font='10px monospace';c.textAlign='center';c.fillText(active.map(p=>`${POWERS[p.id].name} ${Math.ceil(p.left)} s`).join(' · '),cx,140);}
   c.restore();
  }
- Object.defineProperties(runtime,{boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
+ function clear(){for(const key of Object.keys(powers))delete powers[key];spawned.length=0;trail.length=0;marks.length=0;companion.on=false;companion.heard=[];lastMark=null;runtime.fieldSolo=false;runtime.speedBoost=1;}
+ Object.defineProperties(runtime,{clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
 }

@@ -158,7 +158,7 @@ export function initialize(runtime){
   // Conectado: cada compás suena la figura revelada (más presente que un reflejo suelto).
   for(const site of nearby(420)){const route=traceMirrors(site);if(!route.connected||!S().mirrorSites[site.id])continue;
    if(step===0&&claimInstallationBar(runtime,bar)){site.claimedBar=bar;emit(site,bar%3,time);return;}
-   if(step===10&&site.claimedBar===bar){emit(site,(bar+1)%3,time);return;}}
+   if(step===10&&site.claimedBar===bar&&site.secondBar!==bar){site.secondBar=bar;emit(site,(bar+1)%3,time);return;}}
   if(bar%2)return;
   // One response per two bars, irrespective of how many reflections the beam makes.
   for(const site of nearby(400)){

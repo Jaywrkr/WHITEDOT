@@ -207,7 +207,7 @@ export function initialize(runtime) {
         event:runtime.eventOf(MU.dnaA)?.[0],initiative:runtime.initiativeState?.strength||0
       });
       if(s===0){const degree=harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar);if(MU.harmonyRegion!==MU.dnaA.key||MU.deg!==degree){changeChord(t);MU.harmonyRegion=MU.dnaA.key;}else if(MU.pending){MU.pending=false;MU.dist=0;}}
-      if(s===0){runtime.initiativeBar?.(t,MU.step>>4);runtime.trailBar?.(t,MU.step>>4);runtime.clueBar?.(t,MU.step>>4);runtime.encounterBar?.(t,MU.step>>4);}
+      if(s===0){runtime.initiativeBar?.(t,MU.step>>4);runtime.clueBar?.(t,MU.step>>4);runtime.encounterBar?.(t,MU.step>>4);}
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.horizonBar?.(t,MU.step>>4);
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.riverBar?.(t);
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.stormBar?.(t);   // hitos lejanos: se oyen antes de verse
@@ -215,7 +215,6 @@ export function initialize(runtime) {
     if(runtime.inWorld()){runtime.loopStep?.(s,MU.step,t);runtime.bandStep?.(s,MU.step>>4,t);}   // ecos en bucle y banda de criaturas
     if(runtime.inWorld()&&MU.nb&&MU.nbW>0){if(s===0||MU.neighborRadio?.key!==MU.nb.key)MU.neighborRadio={...neighborRadio.advance(MU.nb,MU.step>>4),key:MU.nb.key};}else MU.neighborRadio=null;
     if(s===0)applyComfort(t);
-    runtime.patchGardenStep?.(s,MU.step>>4,t);
     if(s===0&&runtime.inWorld()&&MU.dnaA)MU.influenced=runtime.shapeInfluence?.(MU.dnaA,MU.radio)||MU.radio;
     // En zonas vacías la música se adelgaza (subida); en un oasis vuelve completa (drop).
     const vitCap=runtime.inWorld()?.16+.7*Math.min(1,(MU.vit??1)/.7):1;
@@ -226,7 +225,7 @@ export function initialize(runtime) {
     MU.sq.push({t,s});if(MU.sq.length>12)MU.sq.shift();
     const id=BI().id,cave=id==="cueva",vac=id==="vacio",bar=MU.step>>4;
     const since=MU.step-MU.lastChange,padLv=(G.pad||0)*(1-w)+(nb&&runtime.GEN[nb.genre].pad||0)*w,padOn=since<24||MU.radio?.melodyRest?padLv:0;
-    padG.gain.setTargetAtTime(.03*(1-E*.4)*padOn*(runtime.labSolo||runtime.fieldSolo?0:1)+.0001,t,padOn?.6:2.2);
+    padG.gain.setTargetAtTime(.03*(1-E*.4)*padOn*(runtime.labSolo||(runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie')?0:1)+.0001,t,padOn?.6:2.2);
     padF.frequency.setTargetAtTime(380+E*1700-(cave?200:0),t,.9);
     droneG.gain.setTargetAtTime(0,t,1.5);
     dfb.gain.setTargetAtTime(runtime.inWorld()&&MU.anomaly==='canon'?.72:cave||(A&&A.genre==="dub")?.6:MU.still>3?.5:.36,t,1);
@@ -237,7 +236,7 @@ export function initialize(runtime) {
     if(runtime.inWorld())E=runtime.clamp(E+(runtime.influenceState?.values.groove||0)*.09,.05,.9);
     const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(G.sw||0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
     const xp=runtime.inWorld()?(runtime.experimentalLevel?.()||0):0;   // zonas experimentales: ≥0.7 sin batería ni pista
-    if(live&&!runtime.labSolo&&!runtime.fieldSolo&&xp<.7){   // Campo de escucha: solo suena lo que está dentro   // laboratorio: «Solo» calla la música del lugar para oír el elemento
+    if(live&&!runtime.labSolo&&!(runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie')&&xp<.7){   // Campo de escucha: solo suena lo que está dentro   // laboratorio: «Solo» calla la música del lugar para oír el elemento
       if(nb){VW=w;const nt=t+((s%2)?SIX*(runtime.GEN[nb.genre].sw||0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true,MU.neighborRadio);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }
       VW=1-w;if(!(xp>.4&&rnd()<(xp-.4)*2.2))drums(A?A.genre:"ambient",s,bar,t,tt,E,ct,false);   // entre 0.4 y 0.7 la batería se deshace
       if(runtime.inWorld()&&A){
@@ -469,7 +468,7 @@ export function initialize(runtime) {
     const base=d&&d.track;if(!base)return;const tr=arrangement?{...base,...arrangement}:base;const sc=MU.dnaA?.scale||d.scale,trans=MU.dnaA?MU.tr:runtime.BIOMES[d.z].tr+d.trOff,profile=musicalCharacter(d.genre),bar=(MU.step>>4)&1,nt=(dg,base)=>base+trans+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
     const gid=d.genre,bs=arrangement?tr.bass[s]:gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
     if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel((gid==="rominimal"?.13:.17)*(arrangement?.grammar.bassLevel||1)),d);}
-    let h=tr.hook[s];if(h>=0&&!arrangement?.melodyRest&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);n=hookPitch(tr.hookI,n,profile);const expression=arrangement?.expression,accent=expression?phraseAccent(expression,s):1;
+    let h=tr.hook[s];if(h>=0&&!runtime.cultureListening&&!arrangement?.melodyRest&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);n=hookPitch(tr.hookI,n,profile);const expression=arrangement?.expression,accent=expression?phraseAccent(expression,s):1;
       const level=vel((.05+.05*E)*(arrangement?.grammar.hookLevel||1)*profile.level*accent);
       const harmony=expression?.harmony&&s===0&&((MU.step>>4)%4===0);
       hookInst(tr.hookI,n,t,level*(harmony?.7:1),d,expression);

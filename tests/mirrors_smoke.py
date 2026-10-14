@@ -57,6 +57,8 @@ with sync_playwright() as p:
   page.reload(wait_until='domcontentloaded');page.wait_for_function('window.__testRuntime?.S.mirrorSites["mirror:0,0"]?.solved')
   page.locator('#bMenu').click();page.locator('#bAch').click();assert 'Espejos musicales' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
   page.evaluate('window.__testRuntime.audio()');page.wait_for_function('window.__testRuntime.ac.state==="running"')
+  # Exercise the connected route explicitly; the preceding drag changed its angles.
+  page.evaluate("()=>{const r=window.__testRuntime,site=r.nearbyMirrors(500)[0];site.mirrors.forEach((m,i)=>m.angle=site.solution[i]);}")
   page.evaluate("()=>{const r=window.__testRuntime,ac=r.ac,o=ac.createOscillator.bind(ac),b=ac.createBufferSource.bind(ac);let count=0;ac.createOscillator=()=>{count++;return o();};ac.createBufferSource=()=>{count++;return b();};try{for(let s=0;s<16;s++)r.mirrorStep(s,102,ac.currentTime+.1);if(!count)throw Error('mirror sequence silent');const before=count;for(let s=0;s<16;s++)r.mirrorStep(s,102,ac.currentTime+.2);if(count!==before)throw Error('mirror exceeded budget');}finally{ac.createOscillator=o;ac.createBufferSource=b;}}")
   page.evaluate('window.__testRuntime.enterLayer("bajo")');page.wait_for_timeout(200);assert not page.locator('#mirrorPanel').is_visible()
   assert not errors,errors

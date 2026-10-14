@@ -357,9 +357,9 @@ export function initialize(runtime) {
     CAP: { get: () => CAP },
     PER_LEVEL: { get: () => PER_LEVEL },
     CHUNK: { get: () => CHUNK },
-    SPEED: { get: () => SPEED*(runtime.speedBoost||1) },   // Cometa: más velocidad mientras dure
+    SPEED: { get: () => SPEED*(runtime.inWorld?.()&&(runtime.S.layer||'superficie')==='superficie'?(runtime.speedBoost||1):1) },   // Cometa: más velocidad mientras dure
     WCH: { get: () => WCH },
-    REG: { get: () => runtime.S?.previewLayout==='wide'?(runtime.S.worldIdentity?.generatorVersion===2?12:8):REG },
+    REG: { get: () => runtime.S?.previewLayout==='vasto'?20:runtime.S?.previewLayout==='wide'?(runtime.S.worldIdentity?.generatorVersion===2?12:8):REG },
     GOLD: { get: () => GOLD },
     PHRASES: { get: () => PHRASES },
     ECOS: { get: () => ECOS },

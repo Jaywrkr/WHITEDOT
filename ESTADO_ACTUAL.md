@@ -1,3 +1,24 @@
+# Estado vigente tras Claude y primer bloque cultural
+
+Base main 8096c8d (#77); rama `feat/phase-06-cultural-exploration`. [Inventario de la entrega actual](FASE_06.md) · [Handoff](HANDOFF.md).
+
+| Cambio vigente | Estado |
+|---|---|
+| Interacción | Cubo/contacto/recorrido/quietud; dedo solo movimiento/pulso |
+| Materia, vida, nuevos FX, códigos WD1 y Grabar set | Integrados por Claude #75–#77 |
+| Jardín modular y rastro anterior | Retirados; datos anteriores históricos/ignorados |
+| Estudios/guardianes/puertas | Ocho estudios y 24 recuerdos en esta rama |
+| Laboratorio | 54 casos; notas/informe aislados de la partida |
+| Mundos | Original/vivo, Clásico/Amplio/Vasto (18.000); identidad y guardado aislados |
+| Paseo | Visible, dirección variable y prevención de mar |
+| Golondrinas | Viajan, señalan cajas, formación con regalo y cruces por turnos |
+| Catálogos | 11 biomas, 33 hábitats, 52 estilos; nuevos estudios no son géneros nuevos |
+| Verificación disponible | 53 suites Node, 36 recorridos+offline, 91 módulos; resultados reales en FASE_06.md |
+
+Los conteos de recetas anteriores no cuentan los nuevos encuentros como canciones únicas. Teléfono real, escucha curada y cierre de V1 siguen pendientes. El atlas actualizado es una muestra de familias, no todas las semillas.
+
+<details><summary>Fotografía íntegra anterior a Claude (#73): inventario, números y persistencia en aquella base</summary>
+
 # Estado actual comprobado · WHITEDOT
 
 **13 de octubre de 2026. Main `e27c219` (PR #73).** Esta fotografía incorpora fases 1–3, revisión musical/visual y el bloque de instalaciones de fase 4. La rama `docs/claude-handoff-current-main` actualiza documentación y atlas; no introduce funciones del juego. Entrada para continuar: [HANDOFF.md](HANDOFF.md).
@@ -94,3 +115,5 @@ La partida habitual sigue en Original/clásico (`pixel-blanco-v4`). Los ensayos 
 - Entregas integradas: [FASE_01](FASE_01.md), [FASE_02](FASE_02.md), [FASE_03](FASE_03.md), [bloque FASE_04](FASE_04.md), [REVISION_REGISTROS](REVISION_REGISTROS.md), [CAMBIOS](CAMBIOS.md).
 - Uso/medición: [MUNDOS_SEMILLAS](MUNDOS_SEMILLAS.md), [VARIEDAD](VARIEDAD.md), [atlas PNG](docs/images/atlas-visual.png), [índice de figuras](docs/images/atlas-visual.json).
 - Archivo íntegro: [HANDOFF_HISTORICO](HANDOFF_HISTORICO.md), [PLAN_HISTORICO](PLAN_HISTORICO.md), [FASES históricas](FASES.md), [ENTREGAS_CREATIVAS](ENTREGAS_CREATIVAS.md), [JUGABILIDAD_CREATIVA](JUGABILIDAD_CREATIVA.md), [REVISION](REVISION.md), [REVISION_CREATIVA](REVISION_CREATIVA.md), [REVISION_INTERACCIONES](REVISION_INTERACCIONES.md).
+
+</details>

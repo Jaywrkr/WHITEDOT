@@ -196,8 +196,8 @@ body:has(#mirrorPanel:not([hidden])) .zone,body:has(#mirrorPanel:not([hidden])) 
 
 body:has(#patchPanel:not([hidden])) .zone,body:has(#patchPanel:not([hidden])) .phrase,body:has(#patchPanel:not([hidden])) .routehud{visibility:hidden}
 
-/* A single persistent button while exploring. Restore counters explicitly from the menu. */
-body.world-mode:not(.tools-open) .dock>button:not(#bMenu){display:none}
+/* Compact paseo/menu controls while exploring. Restore counters explicitly from the menu. */
+body.world-mode:not(.tools-open) .dock>button:not(#bMenu):not(#bAuto){display:none}
 body.world-mode .hud .day{display:none}
 body.world-focus .hud .stats,body.world-focus .bar,body.world-focus .goal b,body.world-focus .reto{display:none}
 body.world-focus .hud{padding-top:calc(env(safe-area-inset-top,0px) + 14px)}
@@ -250,3 +250,7 @@ body.lab #dock{bottom:calc(env(safe-area-inset-bottom,0px) + 170px)}
 #labList{display:flex;flex-wrap:wrap;gap:4px;max-height:34vh;overflow:auto}.lab-group{width:100%;margin:6px 0 0;color:#888;font-size:11px}
 #labList button{font-size:11px;padding:4px 6px}#labList .here{outline:1px solid #fff}#labList .v-ok{color:#9be29b}#labList .v-fix{color:#f0d27a}#labList .v-cut{color:#ff8b8b}#labList .v-seen{color:#bbb}
 body.lab .toast{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 104px)}
+
+body:not(.world-mode) #bAuto{display:none} #bAuto[aria-pressed="true"]{border-color:var(--gold);color:var(--gold)}
+/* Keep the developer laboratory card clear of the two-button dock on small phones. */
+.lab-bar{max-height:150px;overflow:auto}body.lab #autopilotHud{display:none}
