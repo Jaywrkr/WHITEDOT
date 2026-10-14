@@ -15,6 +15,7 @@ export function initialize(runtime){
   for(let x=cx-1;x<=cx+1;x++)for(let y=cy-1;y<=cy+1;y++)out.push(...chunk(x,y));return out.filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<radius);
  }
  function emit(o,time,full=false,origin='ambient'){
+  if(!active()||!runtime.S.sound||runtime.ac?.state!=='running')return;
   const d=runtime.regionOfPos(o.homeX,o.homeY);runtime.playVoice('living:'+o.kind,(o.phrase.at(-1)??o.variant)%7,time,d,full,origin==='player'?.48:.23,o,origin);o.lit=1;
  }
  function interact(o){const def=livingDefinition(o.kind);o.energy=Math.min(1,o.energy+.5);o.phrase.push(runtime.MU.deg||0);if(o.phrase.length>6)o.phrase.shift();runtime.livingFound?.(o);runtime.unlock('vidaNueva');runtime.beatSoon(t=>emit(o,t,true,'player'),null,'player');
