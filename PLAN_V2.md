@@ -1,4 +1,4 @@
-> **Ampliación vigente:** [100 propuestas en diez fases](UNIVERSO_100_IDEAS_FASES.md), de menor a mayor complejidad. Una rama amplia por fase al implementarla. Este turno solo actualiza el plan; las fases históricas y la evidencia de la aplicación conservan su numeración/fecha.
+> **Ampliación vigente:** [150 propuestas en diez fases](UNIVERSO_150_IDEAS_FASES.md), de menor a mayor complejidad. Una rama amplia por fase al implementarla. Este turno solo actualiza el plan; las fases históricas y la evidencia de la aplicación conservan su numeración/fecha.
 
 > **RC6 ya integrada:** main incluye `9b5fe00`. [Nuevo plan: 50 propuestas](UNIVERSO_50_IDEAS.md), con beneficios temporales de cajas como prioridad. Estas ideas aún no se implementaron; el historial de abajo conserva su fecha.
 

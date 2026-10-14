@@ -1,3 +1,5 @@
+> **Ampliación posterior vigente:** [150 propuestas en diez fases](UNIVERSO_150_IDEAS_FASES.md), con treinta ideas musicales, diez funciones de la Voz y diez de tarjetas añadidas. Este documento conserva la lista de cien y su numeración histórica.
+
 # Universo vivo: 100 propuestas en 10 fases
 
 Ampliación solicitada por Jay el 14 de octubre de 2026. Duplica el plan de [50 propuestas](UNIVERSO_50_IDEAS.md), preserva su alcance y añade especialmente vida, biodiversidad y relaciones entre elementos. **Estado: planificación; ninguna de estas diez fases se implementó en este documento.**

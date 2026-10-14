@@ -1,4 +1,4 @@
-> **Ampliado por petición posterior:** [100 propuestas en diez fases](UNIVERSO_100_IDEAS_FASES.md). Esta lista de 50 se conserva íntegra como origen; la nueva contiene una tabla de correspondencia.
+> **Ampliado por petición posterior:** [150 propuestas en diez fases](UNIVERSO_150_IDEAS_FASES.md). Esta lista de 50 se conserva íntegra como origen; la nueva contiene una tabla de correspondencia.
 
 # Próximo universo: 50 propuestas
 

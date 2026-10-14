@@ -6,11 +6,11 @@
 
 Culturas, mascota/cubo, auditoría RC1, percusión RC2, versión RC3, minimalismo/elementos RC4 y tarjetas RC5 ya están integradas en main (#78–#84). La rama `polish/coherent-game-ui` también está integrada en main (9b5fe00). No reaplicar los padres ni las ramas locales históricas sustituidas por las cinco fases de #58. Conservar ascendencia mediante merge normal; cambios paralelos o squash pueden requerir ajuste.
 
-**Plan actual:** `docs/universe-100-phases`, sobre main `704ae07`, agrupa las cien propuestas y referencias en una rama. Las diez ramas futuras corresponderán a las fases completas, no a cada idea. Esta rama de documentación no inicia la fase 1 ni modifica la release RC6.
+**Plan actual:** `docs/universe-150-phases`, hija del plan de cien (`219750a`), agrupa las ciento cincuenta propuestas y referencias en una rama. Main observado sigue en `704ae07`; un PR de esta rama incluye ambos planes pendientes. Las diez ramas futuras corresponderán a las fases completas, no a cada idea. Esta rama de documentación no inicia la fase 1 ni modifica la release RC6.
 
 Los estados RC5/RC4/RC1 siguientes son fotografías históricas; la entrega vigente está arriba.
 
-**Plan ampliado vigente:** [100 propuestas en 10 fases](UNIVERSO_100_IDEAS_FASES.md), desde ajustes del juego actual hasta biodiversidad, ecosistemas, territorio, arquitectura y conexión entre jugadores. Son propuestas; el plan de 50 queda como historia. Primera prioridad: beneficios temporales de cajas, techo de acumulación y revisar la compañía permanente procedente de una caja; no borrar progreso ya ganado.
+**Plan ampliado vigente:** [150 propuestas en 10 fases](UNIVERSO_150_IDEAS_FASES.md): las cien anteriores, treinta musicales, diez funciones de la Voz y diez propuestas de tarjetas. Son propuestas; los planes de 50/100 quedan como historia. Primera prioridad: beneficios temporales de cajas, techo de acumulación y revisar la compañía permanente procedente de una caja; no borrar progreso ya ganado.
 
 # Libro de hallazgos · V1 RC5
 
