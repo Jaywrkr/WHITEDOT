@@ -124,7 +124,6 @@ const SHELL=[
  "./src/vida.js",
  "./src/voices.js",
  "./src/wonders.js",
- "./src/world.js"
 ];
 // Precache a whole release. The new worker waits while an older game is open.
 const shellURLs=new Set(SHELL.map(path=>new URL(path,self.registration.scope).href));
