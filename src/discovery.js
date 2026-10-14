@@ -91,6 +91,7 @@ export function initialize(runtime) {
 
   function takeRelic(rl){runtime.recordElement?.('relic',runtime.regionOfPos(rl.x,rl.y));
     if(rl.got||rl.id&&runtime.S.relicSites?.[rl.id])return;
+    if(rl.id)runtime.collectRareCard?.(rl.magical?'relic:magical':'relic:ordinary',rl);
     rl.got=true;runtime.rareCreativeFind?.(rl);
     if(rl.id){runtime.S.relicSites||={};runtime.S.relicSites[rl.id]={day:runtime.S.todayKey,name:rl.name};}
     const idx=runtime.S.stars.length;runtime.S.stars.push({d:runtime.S.todayKey,s:rl.s,name:rl.name,id:rl.id,magical:!!rl.magical,p:idx%runtime.ECOS.length,region:runtime.regionOfPos(rl.x,rl.y).key});

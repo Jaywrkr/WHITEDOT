@@ -52,8 +52,9 @@ export const POWERS={
 };
 export const POWER_IDS=Object.keys(POWERS);
 export const BOX_RARITY=.16;   // fracción de chunks de tierra con una caja (más en mundos vastos por tamaño)
+export const NATURAL_BOX_RATE=BOX_RARITY/4;
 export function boxAt(cx,cy,size,seedOf,rng){
- const r=rng(seedOf(`caja:v1:${cx},${cy}`));if(r()>=BOX_RARITY/4)return null;   // ~4 % de chunks
+ const r=rng(seedOf(`caja:v1:${cx},${cy}`));if(r()>=NATURAL_BOX_RATE)return null;   // ~4 % de chunks
  const power=POWER_IDS[Math.floor(r()*POWER_IDS.length)];
  return {id:`caja:${cx},${cy}`,x:(cx+.15+r()*.7)*size,y:(cy+.15+r()*.7)*size,power,hue:Math.floor(r()*360),spin:r()*6.283};
 }

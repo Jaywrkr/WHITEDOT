@@ -1,3 +1,5 @@
+> **RC5 vigente:** libro de hallazgos y tarjetas en `feat/rare-discovery-cards`, sobre la rama RC4 final. [Inventario, rarezas y pruebas](HALLAZGOS_RAROS.md). Los estados de versiones anteriores abajo son históricos.
+
 > **Actualización autorizada tras la auditoría:** candidata **1.0.0-rc.4**, tres ramas amplias descritas en [EXPANSION_RITMICA.md](EXPANSION_RITMICA.md). La congelación RC1 citada abajo es histórica: se implementaron percusión, versión/deploy, minimalismo y registro de elementos por la petición posterior de Jay. No hay servidor/deploy confirmado; los límites de aceptación siguen vigentes.
 
 # Alcance vigente de V1

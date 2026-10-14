@@ -63,6 +63,8 @@ try:
    # A genuinely rare natural-box seed uses the same opening/contact route, without a species menu.
    page.evaluate('async()=>{const r=__testRuntime,{boxAt}=await import("/src/expansion-music.js");document.querySelectorAll(".modal").forEach(m=>m.hidden=true);let box;outer:for(let x=-200;x<=200;x++)for(let y=-100;y<=100;y++){const id="caja:"+x+","+y;if(r.seedOf("pet:box:v1:"+id)%128!==0||r.S.boxes[id])continue;const b=boxAt(x,y,r.WCH,r.seedOf,r.rng);if(b&&!r.regionOfPos(b.x,b.y).sea){box=b;break outer;}}if(!box)throw Error("no rare natural box fixture");window.__rareBox=box;r.S.wx=box.x;r.S.wy=box.y;}')
    page.wait_for_function('__testRuntime.S.pet!==null',timeout=8000);assert page.evaluate('__testRuntime.S.boxes[__rareBox.id]')==1
+   assert page.evaluate('__testRuntime.rareCards.some(c=>c.type.startsWith("petbox:")&&c.sourceId===__rareBox.id)'),"rare-box birth must save a companion card"
+   assert page.evaluate('__testRuntime.rareCards.some(c=>c.type.startsWith("box:")&&c.sourceId===__rareBox.id)'),"natural box must save its power card"
    assert not errors,errors;print(f'PASS {species}: earned birth, role reply, cube contact, phrase persistence, quiet UI, earned customization and reset at {size}',flush=True);context.close()
   browser.close()
 finally:server.shutdown()

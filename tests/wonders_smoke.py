@@ -26,6 +26,8 @@ with sync_playwright() as p:
   page.wait_for_function('window.__testRuntime.MU.anomaly==="canon"')
   assert page.evaluate(f'window.__testRuntime.S.anomalies["{x},{y}"].type')=='canon' and page.evaluate('window.__testRuntime.S.bag.canon')>=3
   assert page.evaluate('!!window.__testRuntime.S.ach.rareza1')
+  assert page.evaluate('__testRuntime.rareCards.some(c=>c.type==="anomaly:canon"&&c.address&&!c.forced)'),"natural anomaly must save its card"
+  page.evaluate('__testRuntime.openJournal("rares")');page.screenshot(path=f'/tmp/whitedot-natural-card-book-{label}.png');page.locator('#journalClose').click()
   page.wait_for_timeout(600);page.screenshot(path=f'/tmp/whitedot-anomaly-{label}.png')
   # Gravedad invertida: la tecla derecha mueve a la izquierda.
   x,y=page.evaluate(FIND,'invertida');page.evaluate(f'()=>{{const r=window.__testRuntime;r.S.wx={x}*3600+1800;r.S.wy={y}*3600+1800;}}')

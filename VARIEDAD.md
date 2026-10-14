@@ -1,3 +1,5 @@
+> **RC5 vigente:** libro de hallazgos y tarjetas en `feat/rare-discovery-cards`, sobre la rama RC4 final. [Inventario, rarezas y pruebas](HALLAZGOS_RAROS.md). Los estados de versiones anteriores abajo son históricos.
+
 > **Actualización autorizada tras la auditoría:** candidata **1.0.0-rc.4**, tres ramas amplias descritas en [EXPANSION_RITMICA.md](EXPANSION_RITMICA.md). La congelación RC1 citada abajo es histórica: se implementaron percusión, versión/deploy, minimalismo y registro de elementos por la petición posterior de Jay. No hay servidor/deploy confirmado; los límites de aceptación siguen vigentes.
 
 > **Auditoría V1 RC1:** firma v2 excluye flags retirados patch/trail. Tres semillas, 12.000 candidatos por perfil: Original 11.989 firmas detalladas/7.535 musicales terrestres; Vivo y Vasto 12.000/7.536. Vasto cambia espacio, conserva catálogo/perfiles en esa muestra. [Datos y límites](AUDITORIA_V1.md). Las cifras de abajo usan firmas anteriores; no compararlas como si midieran canciones únicas.

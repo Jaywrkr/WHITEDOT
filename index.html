@@ -13,7 +13,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
 
-<title>WHITEDOT · V1 RC4</title>
+<title>WHITEDOT · V1 RC5</title>
 <link rel="stylesheet" href="./styles/game.css">
 <link rel="stylesheet" href="./assets/fonts/fonts.css">
 
@@ -25,7 +25,7 @@
 <div class="hud">
   <div><div class="day" id="day">DÍA 1</div><div class="era" id="era">Era I · Pixel</div></div>
   <div class="hud-right">
-  <div class="release-badge" id="releaseBadge"><span id="releaseVersion">v1.0.0-rc.4</span><small id="releaseDeploy">deploy sin registrar</small></div>
+  <div class="release-badge" id="releaseBadge"><span id="releaseVersion">v1.0.0-rc.5</span><small id="releaseDeploy">deploy sin registrar</small></div>
   <small class="element-count" id="elementCount">Elementos 0</small>
   <div class="stats">
     <div title="Racha">RACHA <b id="streak">0</b></div>
@@ -36,6 +36,12 @@
 <div class="bar" id="bar"><i id="barfill"></i></div>
 <div class="goal"><b id="goal">Recoge luz · 0 / 120</b><span id="goalR"></span></div>
 
+<aside id="rareNotice" class="rare-notice" role="status" aria-live="polite" aria-atomic="true" hidden>
+  <div id="rareNoticeArt" class="rare-notice-art" aria-hidden="true"></div>
+  <div class="rare-notice-copy"><small id="rareNoticeTier"></small><strong id="rareNoticeName"></strong><span id="rareNoticeWhere"></span><small id="rareNoticeOdds"></small></div>
+  <button id="rareNoticeDismiss" class="rare-dismiss" aria-label="Ocultar tarjeta de hallazgo">×</button>
+  <button id="rareNoticeOpen" class="rare-open">Abrir libro</button>
+</aside>
 <div class="phrase" id="phrase"></div>
 <div class="reto" id="reto" hidden></div>
 <div class="toast" id="toast"></div>
@@ -101,7 +107,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="row"><small class="release-id">WHITEDOT · V1 RC4</small>
+    <div class="row"><small class="release-id">WHITEDOT · V1 RC5</small>
     <button id="mnClose">Cerrar</button></div>
   </div>
 </div>
@@ -201,9 +207,10 @@
     <h2 id="journalTitle">Bitácora</h2>
     <div class="journal-tabs" aria-label="Secciones de la Bitácora">
       <button data-journal-tab="places">Lugares</button><button data-journal-tab="forms">Formas</button>
-      <button data-journal-tab="elements">Elementos</button><button data-journal-tab="music">Música</button><button data-journal-tab="achievements">Logros</button>
+      <button data-journal-tab="rares">Hallazgos</button><button data-journal-tab="elements">Elementos</button><button data-journal-tab="music">Música</button><button data-journal-tab="achievements">Logros</button>
     </div>
     <div class="scroll" id="journalBody" aria-live="polite"></div>
+    <label id="rareCodeFallback" hidden>Código del hallazgo · selecciónalo y copia<textarea id="rarePlaceCode" readonly aria-label="Código de lugar del hallazgo"></textarea></label>
     <button id="journalClose">Cerrar</button>
   </div>
 </div>

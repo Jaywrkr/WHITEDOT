@@ -1,9 +1,10 @@
+export const RELIC_RATE=1/48,MAGICAL_RELIC_RATE=1/384;
 // A separate seed keeps terrain and existing object identities unchanged.
 export function relicAt(cx,cy,size,seedOf,rng) {
   if(Math.max(Math.abs(cx),Math.abs(cy))<2)return null;
   const r=rng(seedOf(`relic-site:v1:${cx},${cy}`)),roll=r();
-  if(roll>=1/48)return null;
-  const magical=roll<1/384;
+  if(roll>=RELIC_RATE)return null;
+  const magical=roll<MAGICAL_RELIC_RATE;
   return {id:`site:v1:${cx},${cy}`,x:(cx+.2+r()*.6)*size,y:(cy+.2+r()*.6)*size,s:Math.floor(r()*12),magical,name:magical?'Constelación dormida':'Eco antiguo',got:false};
 }
 export function advanceRelic(state,site,dt,distance,pulse=false) {

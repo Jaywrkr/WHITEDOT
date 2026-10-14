@@ -36,6 +36,7 @@ export function initialize(runtime){
  }
  function gesture(o){
   const first=!runtime.S.rhythmFound?.[o.kind];
+  if(o.kind==='fossil')runtime.collectRareCard?.('fossil',o);
   runtime.recordElement?.('rhythm:'+o.kind,runtime.regionOfPos(o.x,o.y));runtime.S.rhythmFound||={};runtime.S.rhythmFound[o.kind]=1;
   if(first&&o.kind==='fossil'){runtime.unlock?.('fosilRitmo');runtime.toast?.('<em>Fósil de ritmo</em> · Un pulso antiguo. Quédate para despertarlo.');}
   runtime.unlock?.('percusion1');if(Object.keys(runtime.S.rhythmFound).length>=4)runtime.unlock?.('percusion4');

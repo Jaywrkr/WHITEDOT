@@ -1,3 +1,5 @@
+> **Continuación RC5:** tarjetas y libro de hallazgos en `feat/rare-discovery-cards`, hija de la rama RC4 final. [Entrega vigente](HALLAZGOS_RAROS.md). El inventario y evidencia siguientes describen RC2–RC4 y permanecen como historia.
+
 # Expansión rítmica · tres fases amplias
 
 Autorizada por Jay después de la auditoría V1. No publicar ni hacer merge automáticamente: commit/push y Jay revisa. Base pendiente `audit/v1-closure` (797595c), que ya contiene culturas, mascota y cierre. Main observado 8096c8d.
