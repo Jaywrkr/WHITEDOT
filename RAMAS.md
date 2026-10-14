@@ -1,3 +1,9 @@
+# Rama actual · mascota y cubo
+
+Main remoto sigue en **8096c8d (#77)**. Orden pendiente: **1. feat/phase-06-cultural-exploration (`165c376`); 2. feat/pet-and-cube (basada en esa)**. Esta segunda rama agrupa mascota, personalización, pruebas, atlas y documentos; [detalle](MASCOTA_Y_CUBO.md). Jay crea PR/merge. Revisar contra la rama cultural mientras esté pendiente; tras integrarla, contra main.
+
+La sección siguiente corresponde a la entrega cultural y a integraciones anteriores.
+
 # Integración y continuación
 
 Base verificada **main 8096c8d, #77**. #74 integró el handoff, #75 materia/FX/códigos/set, #76 laboratorio/vida y #77 cubo/expansión. Las fases 1–3 y entregas anteriores también están integradas. No reaplicar sus ramas.
