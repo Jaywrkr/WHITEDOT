@@ -1,3 +1,4 @@
+import {livingVoice} from './living-catalog.js';
 import {musicalCharacter,hookInstruments,voiceRegister} from './musical-character.js';
 import {glassVoice} from './glass-music.js';
 import {materiaVoice,materiaKindOf} from './materia-music.js';
@@ -50,6 +51,7 @@ export function initialize(runtime) {
   let voiceOrigin="ambient";
   function withVoiceOrigin(origin,emit){const previous=voiceOrigin;voiceOrigin=origin;try{return emit();}finally{voiceOrigin=previous;}}
   function rawVoice(kind, region) {
+    if(kind.startsWith('living:')){const v=livingVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng);if(v)return v;}
     if(kind.startsWith('rhythm:')){const v=rhythmVoice(kind,region,runtime.seedOf);if(v)return v;}
     if(kind.startsWith('ecology:')&&region.ecology)return ecologyVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng);
     if(/^installation:glass:[0-2]$/.test(kind))return glassVoice(region,Number(kind.at(-1)),runtime.GEN,runtime.seedOf);
@@ -88,6 +90,7 @@ export function initialize(runtime) {
       runtime.soundCue?.(source,voice.role,t);
       const n = note(degree);let v = runtime.vel(strength * volume)*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
       const emit=()=>{
+        if(kind.startsWith('living:')&&runtime.livingSynthesis?.(voice,n,t,v,source))return;
         if (voice.role === 'bajo') runtime.bassInst(voice.instrument,n,t,v);
         else if (voice.role === 'perc') {
           if (voice.instrument === 'kick') runtime.kick(t,v);

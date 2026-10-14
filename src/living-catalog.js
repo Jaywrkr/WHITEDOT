@@ -50,7 +50,7 @@ export function livingChunk(cx,cy,size,region,biome,seedOf,rng,groups=['flora','
  if(region.sea||random()<.24)return [];
  const density=Math.floor(random()*4),out=[];
  for(let i=0;i<density;i++){
-  const group=groups[Math.floor(random()*groups.length)];
+  const group=['flora','fauna','architecture'][Math.floor(random()*3)];
   let pool=LIVING_CATALOG.filter(d=>d.group===group&&d.affinity.includes(biome));
   if(!pool.length)pool=LIVING_CATALOG.filter(d=>d.group===group);if(!pool.length)continue;
   const d=pool[Math.floor(random()*pool.length)],variant=Math.floor(random()*256);
@@ -60,7 +60,7 @@ export function livingChunk(cx,cy,size,region,biome,seedOf,rng,groups=['flora','
    homeX:0,homeY:0,hue:(region.hue+variant%50)%360,size:d.group==='architecture'?30+variant%14:9+variant%12,
    personality:['timida','curiosa','social'][variant%3],activeAt:variant%4,rare:variant===255||d.id==='whale',lit:0,phase:variant/256*Math.PI*2,energy:0,phrase:[],touching:false});
  }
- for(const o of out){o.homeX=o.x;o.homeY=o.y;}return out;
+ for(const o of out){o.homeX=o.x;o.homeY=o.y;}return out.filter(o=>groups.includes(o.group));
 }
 export function livingVoice(kind,region,genres,seedOf,rng){
  const id=kind.replace(/^living:/,''),d=livingDefinition(id);if(!d)return null;
