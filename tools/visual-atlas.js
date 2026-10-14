@@ -5,7 +5,7 @@ export async function renderAtlas(r){
  const methods={};for(const name of Object.getOwnPropertyNames(r))try{methods[name]=r[name];}catch(_){}
  const set=(name,value)=>Object.defineProperty(r,name,{value,writable:true,configurable:true});
  const work=document.getElementById('w'),c=work.getContext('2d');work.width=work.height=320;set('W',320);set('H',320);set('cx',c);
- for(const name of ['drawRivers','drawAlive','drawLandmarks','drawPortals','drawGlass','drawMirrors','drawPhenomena','drawJam','drawSoundCues','drawEcology','drawPlaythings','drawPocketHints','drawMateria','drawVida','drawQuietud','drawCajas','drawCultures','drawPet','petTick','drawCubeStyle','bodyTick','quietTick','cajasTick','cultureTick','riverStep','aliveStep','save','hud','toast','say','showPhrase','unlock','pruneRelics'])set(name,()=>{});
+ for(const name of ['drawRivers','drawAlive','drawLandmarks','drawPortals','drawGlass','drawMirrors','drawPhenomena','drawPercussion','percussionTick','drawJam','drawSoundCues','drawEcology','drawPlaythings','drawPocketHints','drawMateria','drawVida','drawQuietud','drawCajas','drawCultures','drawPet','petTick','drawCubeStyle','bodyTick','quietTick','cajasTick','cultureTick','riverStep','aliveStep','save','hud','toast','say','showPhrase','unlock','pruneRelics'])set(name,()=>{});
  set('eventOf',()=>null);set('nearbyRelics',()=>[]);set('sceneChunk',x=>x);set('blobHabitat',()=>false);set('vitalityAt',()=>.6);
  r.S.mode='world';r.S.layer='superficie';r.S.sound=false;r.S.wx=r.S.wy=1350;r.S.todayLight=r.CAP;r.S.relaxedCreate=true;r.MU.vit=.6;r.MU.speed=0;r.MU.E=.2;r.MU.layers=new Set();
  document.querySelectorAll('.modal').forEach(m=>m.hidden=true);
@@ -69,6 +69,8 @@ export async function renderAtlas(r){
   r.S.wx=r.S.wy=0;r.__atlas_phenomena.cache.clear();for(let x=-2;x<=2;x++)for(let y=-2;y<=2;y++)r.__atlas_phenomena.cache.set(x+','+y,[]);
   r.__atlas_phenomena.cache.set('0,0',[{kind,id:'atlas:'+kind,x:0,y:0,hx:0,hy:0,phase:0,period:1500,cues:[],cd:Infinity,next:Infinity}]);methods.drawPhenomena(0,0,0,0,600);
  },3));
+ const {RHYTHM_ELEMENTS}=await import('../src/percussion-model.js');
+ for(const [kind,spec]of Object.entries(RHYTHM_ELEMENTS))card('PERCUSIÓN DEL PAISAJE',spec.name,'src/percussion.js',()=>{r.labRhythm=kind;const o=methods.nearbyPercussion(1e6)[0];r.S.wx=o.x;r.S.wy=o.y;methods.drawPercussion(1000,0,160-o.x,155-o.y,250);r.labRhythm=null;},2.4);
  card('FENÓMENOS Y RESPUESTAS','Pulso / onda','src/interactions.js',simple(()=>{r.waves=[{x:0,y:0,r:24,prev:0,max:100}];methods.updWaves(0,0,0);r.waves=[];},2));
  card('FENÓMENOS Y RESPUESTAS','Eco fijado','src/jam.js',()=>{r.S.wx=r.S.wy=0;r.jam.loop.ecos=[{id:'atlas',x:0,y:0,layer:'superficie',events:[],start:0,lit:.3}];methods.drawJam(0,0,160,160,.3);r.jam.loop.ecos=[];});
  card('FENÓMENOS Y RESPUESTAS','Conexión luminosa','src/render.js',native('beams',{x1:1410,y1:1310,x2:1470,y2:1380,l:1}));

@@ -31,7 +31,7 @@ export function initialize(runtime){
  const nearbyFlocks=(radius=500)=>[...new Set([...around().map(e=>e.flock),...traveling])].filter(f=>f&&dist(f)<radius);
  const nearbyPlants=(radius=400)=>around().flatMap(e=>e.plants).filter(p=>dist(p)<radius);
  const growth=p=>plantGrowth(S().vida.plants[p.id],Date.now());
- function see(kind){if(S().vida.seen[kind])return;S().vida.seen[kind]=true;
+ function see(kind){runtime.recordElement?.('life:'+kind,runtime.regionOfPos(S().wx,S().wy));if(S().vida.seen[kind])return;S().vida.seen[kind]=true;
   if(kind==='plant')runtime.say(runtime.VOZ.vida_plant,'Flora que crece');else runtime.say(runtime.VOZ['vida_'+kind]||runtime.VOZ.vida_flock,SPECIES[kind].name);
   if(kind==='lira')runtime.unlock('aveLira');runtime.save();}
  const played=[];

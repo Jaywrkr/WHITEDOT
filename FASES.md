@@ -1,3 +1,5 @@
+> **Actualización autorizada tras la auditoría:** candidata **1.0.0-rc.4**, tres ramas amplias descritas en [EXPANSION_RITMICA.md](EXPANSION_RITMICA.md). La congelación RC1 citada abajo es histórica: se implementaron percusión, versión/deploy, minimalismo y registro de elementos por la petición posterior de Jay. No hay servidor/deploy confirmado; los límites de aceptación siguen vigentes.
+
 # Alcance vigente de V1
 
 El plan vigente es [FASES_UNIVERSO.md](FASES_UNIVERSO.md): diez bloques amplios. Fases 1–3 y bloque de gestos/color de fase 4 ya integrados en main e27c219 (#73); [estado comprobado](ESTADO_ACTUAL.md) y [handoff](HANDOFF.md). Las cinco fases siguientes describen una agrupación creativa histórica ya integrada, con numeración distinta.

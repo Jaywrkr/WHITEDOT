@@ -1,0 +1,104 @@
+{
+  "version": "1.0.0-rc.4",
+  "branch": "feat/minimal-discoveries",
+  "parent": "67aef5f",
+  "mainObserved": "8096c8d",
+  "verifiedAt": "2026-10-14T01:54:21.614814+00:00",
+  "deployedAt": null,
+  "node": {
+    "suites": 58,
+    "passed": 58
+  },
+  "browser": {
+    "flows": 42,
+    "passed": 42,
+    "offline": true,
+    "affectedRechecks": [
+      "percussion_smoke.py",
+      "discoveries_smoke.py",
+      "ui_silence_smoke.py"
+    ]
+  },
+  "audio": {
+    "programs": 8,
+    "realRenders": 225,
+    "newPercussionRenders": 61,
+    "genresCovered": 52,
+    "peakMaximum": 0.95759117603302,
+    "hotFractionMaximum": 0,
+    "newPercussionPeak": 0.9435436129570007
+  },
+  "content": {
+    "discoveryFamilies": 81,
+    "percussionFamilies": 9,
+    "labCases": 63,
+    "atlasViews": 139,
+    "baseBiomes": 11,
+    "ecologies": 33,
+    "genreIDs": 52
+  },
+  "integrity": {
+    "version": "1.0.0-rc.4",
+    "sourceModules": 102,
+    "htmlIDs": 228,
+    "staticImports": 232,
+    "shellAssets": 113,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "universe": {
+    "candidates": 12000,
+    "distinctDetailedFingerprints": 12000,
+    "distinctLandMusicalFingerprints": 7536
+  },
+  "percussionSample": {
+    "version": "1.0.0-rc.4",
+    "sampledChunks": 12000,
+    "emptyChunks": 7097,
+    "totalElements": 9721,
+    "fossils": 9,
+    "discretePercussionRecipes": 4810,
+    "representedGenres": 52,
+    "families": {
+      "reeds": 1210,
+      "pool": 1252,
+      "pods": 1232,
+      "stone": 1207,
+      "shell": 1266,
+      "dust": 1207,
+      "hollow": 1190,
+      "roots": 1148,
+      "fossil": 9
+    },
+    "instruments": {
+      "wood": 1976,
+      "tom": 1932,
+      "shaker": 1059,
+      "rim": 1299,
+      "clap": 562,
+      "kick": 556,
+      "conga": 1168,
+      "guiro": 594,
+      "timbale": 575
+    },
+    "notes": "Three Vasto/Vivo preview seeds. Empty sea/land chunks included. Recipes exclude coordinates, IDs and world seed; this counts musical/object structures, not perceptually unique worlds or songs. Base terrain generator, 11 biomes, 33 ecologies and 52 genre IDs are unchanged."
+  },
+  "pending": [
+    "Listening and controls on real iPhone/Android",
+    "Long-session fatigue, memory/FPS/battery and PWA on hardware",
+    "First-session human usability",
+    "HTTPS host and genuine deployment timestamp",
+    "Remote PR CI confirmation"
+  ],
+  "notes": [
+    "All phases contain the audit/culture/pet parent commits; Jay creates PR and merge.",
+    "verifiedAt is an audit time, never a deployment time.",
+    "Recipe fingerprints do not certify perceptually distinct worlds or songs.",
+    "Existing ordinary percussion placement golden hash preserved across 1600 chunks.",
+    "Node and affected browser flows rechecked after final musical-bar budgeting."
+  ]
+}

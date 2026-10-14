@@ -2,7 +2,7 @@ import { gravityOf } from './gravity.js';
 
 // Catálogo, retos y recompensas de exploración.
 export function initialize(runtime) {
-  function discover(sp){if(runtime.S.cat[sp.id])return;runtime.S.cat[sp.id]=1;runtime.S.catN=(runtime.S.catN||0)+1;runtime.S.catRecent=[{n:sp.name,r:sp.region,d:runtime.S.todayKey}].concat(runtime.S.catRecent||[]).slice(0,40);
+  function discover(sp){runtime.recordElement?.('forma:'+sp.id,runtime.regionOfPos(runtime.S.wx,runtime.S.wy));if(runtime.S.cat[sp.id])return;runtime.S.cat[sp.id]=1;runtime.S.catN=(runtime.S.catN||0)+1;runtime.S.catRecent=[{n:sp.name,r:sp.region,d:runtime.S.todayKey}].concat(runtime.S.catRecent||[]).slice(0,40);
     runtime.toast("<em>Forma nueva</em> · "+sp.name+" · "+runtime.S.catN);runtime.unlock("forma1");if(runtime.S.catN>=25)runtime.unlock("cat25");if(runtime.S.catN>=100)runtime.unlock("cat100");if(runtime.S.catN>=500)runtime.unlock("cat500");runtime.save();}
   function showRegion(d,first){
     const el=document.getElementById("zone");
@@ -89,7 +89,7 @@ export function initialize(runtime) {
     runtime.hud();
   }
 
-  function takeRelic(rl){
+  function takeRelic(rl){runtime.recordElement?.('relic',runtime.regionOfPos(rl.x,rl.y));
     if(rl.got||rl.id&&runtime.S.relicSites?.[rl.id])return;
     rl.got=true;runtime.rareCreativeFind?.(rl);
     if(rl.id){runtime.S.relicSites||={};runtime.S.relicSites[rl.id]={day:runtime.S.todayKey,name:rl.name};}

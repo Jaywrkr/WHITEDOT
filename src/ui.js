@@ -14,6 +14,7 @@ export function initialize(runtime) {
     $("day").textContent="DÍA "+d;$("era").textContent=runtime.inWorld()?(runtime.MU.dnaT?runtime.MU.dnaT.name+" · "+(pocket?POCKET_NAMES[pocket.kind]:gravityOf(runtime.MU.dnaT,runtime.seedOf).name):"El Mundo"):"Era "+era(d);
     $("streak").textContent=runtime.shownStreak();$("starsN").textContent=runtime.S.stars.length;$("size").textContent=runtime.level();
     $("bar").classList.toggle("free",runtime.isFree());
+    runtime.elementBookUI?.();
     const fill=$("barfill"),goal=$("goal"),gr=$("goalR");
     $("bDeploy").hidden=!runtime.inWorld();
     if(runtime.S.mode==="studio"){const n=Object.keys(runtime.S.studio.slots).length;$("era").textContent="Estudio · "+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/64*100)+"%";goal.textContent="Estudio · "+n+" sonando";gr.textContent="Toca un punto";}

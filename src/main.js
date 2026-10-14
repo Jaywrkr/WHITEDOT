@@ -1,3 +1,4 @@
+import {initialize as elementBook} from './element-book.js';
 import {initialize as releaseUI} from './release-ui.js';
 import {initialize as saveTools} from './save-tools.js';
 import {initialize as ecology} from './ecology.js';
@@ -133,7 +134,7 @@ if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
 runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0)))runtime.S.mode="camino";
 seeds(runtime);
 lab(runtime);
-releaseUI(runtime);
+releaseUI(runtime);elementBook(runtime);
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
 // Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.

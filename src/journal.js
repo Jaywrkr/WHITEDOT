@@ -89,7 +89,7 @@ export function initialize(runtime) {
   }
   function render() {
     ensureJournal(runtime.S);
-    runtime.$('journalBody').innerHTML=({places,forms,music,achievements})[tab]();
+    runtime.$('journalBody').innerHTML=({places,forms,music,achievements,elements:()=>runtime.elementBookCards?.()||''})[tab]();
     runtime.$('journalBody').scrollTop=0;
     document.querySelectorAll('[data-journal-tab]').forEach(button=>{const active=button.dataset.journalTab===tab;button.setAttribute('aria-pressed',String(active));button.classList.toggle('gold',active);});
   }

@@ -58,7 +58,7 @@ export function initialize(runtime){
      lesson.elapsed+=dt;
      if(lesson.elapsed>=1&&!lesson.started){lesson.started=true;const learning=lesson;
       runtime.beatSoon(t=>{if(lesson!==learning||!audible()||dist(site)>55)return;playLesson(site,progress,t);learning.onsets=cultureNotes(site,progress).map(n=>({...n,time:t+n.step*runtime.SIX}));learning.end=t+runtime.SIX*16;},null,'player');}
-     if(lesson.started&&runtime.ac.currentTime>=lesson.end){e.heard=true;lesson=null;runtime.unlock('guardian1');runtime.toast(`<em>${c.name}</em> · Sigue las dos huellas; sus notas son la llave.`);runtime.save();}
+     if(lesson.started&&runtime.ac.currentTime>=lesson.end){runtime.recordElement?.('culture:'+site.culture,site.region);e.heard=true;lesson=null;runtime.unlock('guardian1');runtime.toast(`<em>${c.name}</em> · Sigue las dos huellas; sus notas son la llave.`);runtime.save();}
     }
    }else if(lesson?.site===site)lesson=null;
    const e=S().cultures.sites[site.id];if(!e||!e.heard||e.chapter!==progress||progress===3)continue;

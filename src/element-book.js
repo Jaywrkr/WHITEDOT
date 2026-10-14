@@ -1,0 +1,25 @@
+import {DISCOVERY_ELEMENTS,elementFamily,discoveryElement,migrateElementBook} from './element-book-model.js';
+const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export function initialize(runtime){
+ let owner=null;
+ const ensure=()=>{if(owner!==runtime.S){runtime.S.elementBook=migrateElementBook(runtime.S);owner=runtime.S;}return runtime.S.elementBook;};
+ function ui(){const n=Object.keys(ensure().found).length,e=runtime.$('elementCount');e.textContent=`Elementos ${n}/${DISCOVERY_ELEMENTS.length}`;e.title=`${n} familias descubiertas de ${DISCOVERY_ELEMENTS.length}; los ejemplares repetidos no suman.`;}
+ function record(kind,region){
+  if(typeof kind!=='string'||!runtime.inWorld()||document.hidden||runtime.scanning||document.querySelector('.modal:not([hidden])'))return false;
+  const id=elementFamily(kind,kind.startsWith('forma:')&&runtime.blobHabitat?.(region));if(!discoveryElement(id))return false;
+  const b=ensure();if(b.found[id])return false;
+  b.found[id]={day:runtime.S.todayKey||'',genre:region?.genre||''};ui();
+  const n=Object.keys(b.found).length;if(n>=10)runtime.unlock?.('elementos10');if(n>=30)runtime.unlock?.('elementos30');
+  // Save runs normally; collecting never plays a note or displays a modal/toast.
+  return true;
+ }
+ function cards(){
+  const found=ensure().found,n=Object.keys(found).length;
+  let html=`<article class="journal-card"><h3>${n} de ${DISCOVERY_ELEMENTS.length} familias</h3><p>Registra lo que tocas, modelas o encuentras. Otro ejemplar de la misma familia no suma. Las formas individuales conservan su catálogo aparte.</p><p>${DISCOVERY_ELEMENTS.length-n} familias por descubrir. No es un contador de mundos ni de canciones únicas.</p></article>`;
+  const groups=[...new Set(DISCOVERY_ELEMENTS.filter(e=>found[e.id]).map(e=>e.group))];
+  for(const group of groups){html+='<h3>'+escape(group)+'</h3>';for(const e of DISCOVERY_ELEMENTS.filter(e=>e.group===group&&found[e.id])){const entry=found[e.id];html+=`<article class="journal-card"><h3>${escape(e.name)}</h3><p>${escape(entry.genre?(runtime.GEN[entry.genre]?.name||entry.genre):'Hallazgo conservado')}${entry.day?' · '+escape(entry.day):''}</p></article>`;}}
+  return html;
+ }
+ ensure();ui();
+ Object.defineProperties(runtime,{recordElement:{get:()=>record},elementBookUI:{get:()=>ui},elementBookCards:{get:()=>cards},elementFamilyCount:{get:()=>Object.keys(ensure().found).length}});
+}

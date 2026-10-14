@@ -41,7 +41,8 @@ export function initialize(runtime) {
       const distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),wave=runtime.waves.length&&runtime.hitW(o.x,o.y);
       const contact=distance<Math.min(runtime.pxSize(),22)/2+o.size+6,entered=contactEntry(o,contact,!runtime.scanning&&!document.hidden&&!document.querySelector('.modal:not([hidden])'));
       if(now>o.cd&&(entered||wave)) {
-        o.cd=now+(o.personality?.cooldown||850);reactPlaything(o,runtime.S.wx,runtime.S.wy);runtime.MU.act+=.15;runtime.touched();
+        o.cd=now+(o.personality?.cooldown||850);runtime.recordElement?.('toy:'+o.kind,runtime.regionOfPos(o.hx,o.hy));
+        reactPlaything(o,runtime.S.wx,runtime.S.wy);runtime.MU.act+=.15;runtime.touched();
         if(wave)runtime.wsoon(wave,o.snd);else runtime.beatSoon(o.snd);
         runtime.burst(o.x,o.y,5,true);
       }

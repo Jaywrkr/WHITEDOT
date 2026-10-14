@@ -43,3 +43,9 @@ export function elementInk(material,hue=190,active=false){
 }
 export function elementAlpha(distance,radius,activity=0){return Math.max(0,Math.min(WORLD_VISUAL.maxElementAlpha,(1-distance/(radius*1.3))*.7+activity*.5));}
 export function jamHudTop(height,panelTop=null,notice=false){return Math.max(120,Math.min(height-140,panelTop==null?height-140:panelTop-44)-(notice?34:0));}
+
+// Decorative light is local; collision handles and persisted world coordinates stay intact.
+export function localGlowRadius(width,height,requested){
+ const shortest=Math.min(Number.isFinite(width)?width:390,Number.isFinite(height)?height:844);
+ return Math.max(8,Math.min(requested,shortest*.18,72));
+}

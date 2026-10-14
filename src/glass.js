@@ -48,7 +48,7 @@ export function initialize(runtime){
  }
  function turn(site,pane,angle){
   if(!Number.isFinite(angle)||!Number.isInteger(pane)||pane<0||pane>2||!onSurface()||!site||Math.hypot(site.x-S().wx,site.y-S().wy)>180)return false;
-  site.angles[pane]=((angle%TAU)+TAU)%TAU;remember(site);runtime.stopAutopilot();runtime.unlock('vidrio1');
+  site.angles[pane]=((angle%TAU)+TAU)%TAU;remember(site);runtime.stopAutopilot();runtime.recordElement?.('installation:glass',site.region);runtime.unlock('vidrio1');
   if(glassParameters(site.angles).alignment>.985)runtime.unlock('vidrioArmonia');
   const now=performance.now();if(now-site.lastInput>220){site.lastInput=now;runtime.beatSoon(t=>emit(site,pane,t,'player'),null,'player');}
   const shape=glassShape(site.angles,pane,site.region,runtime.seedOf);runtime.driveInfluence?.(site.region,shape.channel,shape.amount,shape.variant);runtime.creativeAction?.(shape.channel,'model');return true;
@@ -95,12 +95,13 @@ export function initialize(runtime){
    ctx.save();ctx.translate(x,y);ctx.lineWidth=WORLD_VISUAL.line;
    site.angles.forEach((angle,i)=>{
     const color=elementInk('glass',glassColor(site.hue,angle,i));ctx.save();ctx.rotate(angle);ctx.translate((i-1)*12,0);ctx.strokeStyle=color;ctx.fillStyle=color;
-    ctx.globalAlpha=.16+site.lit*.12;ctx.globalCompositeOperation='screen';ctx.fillRect(-28,-46,56,92);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=.65;ctx.strokeRect(-28,-46,56,92);
-    ctx.beginPath();for(let line=-3;line<=3;line++){ctx.moveTo(-24,line*11);ctx.quadraticCurveTo(Math.sin(site.angles[(i+1)%3]-angle)*18,line*11+Math.cos(site.angles[(i+2)%3]-angle)*8,24,line*11);}ctx.globalAlpha=.24;ctx.stroke();ctx.restore();
-    ctx.globalAlpha=distance<180?.85:.35;ctx.strokeStyle=site.grab===i?WORLD_VISUAL.gold:color;ctx.lineWidth=site.grab===i?2.4:WORLD_VISUAL.line;ctx.beginPath();ctx.arc(Math.cos(angle)*glassHandleRadius(i),Math.sin(angle)*glassHandleRadius(i),site.grab===i?12:9,0,TAU);ctx.stroke();ctx.lineWidth=WORLD_VISUAL.line;
+    // Three light blades: no filled panels or dense internal grid.
+    ctx.globalAlpha=.5+site.lit*.15;ctx.beginPath();ctx.ellipse(0,0,16,38,0,0,TAU);ctx.stroke();
+    ctx.globalAlpha=.28;ctx.beginPath();ctx.moveTo(0,-34);ctx.quadraticCurveTo(Math.sin(site.angles[(i+1)%3]-angle)*12,0,0,34);ctx.stroke();ctx.restore();
+    ctx.globalAlpha=distance<180?.85:.35;ctx.strokeStyle=site.grab===i?WORLD_VISUAL.gold:color;ctx.lineWidth=site.grab===i?2.4:WORLD_VISUAL.line;ctx.beginPath();ctx.arc(Math.cos(angle)*glassHandleRadius(i),Math.sin(angle)*glassHandleRadius(i),site.grab===i?10:7,0,TAU);ctx.stroke();ctx.lineWidth=WORLD_VISUAL.line;
    });
    const resonance=glassParameters(site.angles).alignment;if(resonance>.65){ctx.strokeStyle=elementInk('glass',site.hue);ctx.globalAlpha=(resonance-.65)*.6;ctx.beginPath();for(let i=0;i<=48;i++){const a=i/48*TAU,r=25+Math.cos(a*3+site.angles[0])*9;ctx[i?'lineTo':'moveTo'](Math.cos(a)*r,Math.sin(a)*r);}ctx.stroke();}
-   if(distance<180){ctx.globalAlpha=.8;ctx.fillStyle=WORLD_VISUAL.gold;ctx.font='10px monospace';ctx.textAlign='center';const channel=glassShape(site.angles,state.site===site?state.pane:0,site.region,runtime.seedOf).channel;ctx.fillText(`Pasa el cubo por un asa y arrástrala girando · ${CHANNEL_NAMES[channel]}`,0,106);}
+   if(distance<180){ctx.globalAlpha=.8;ctx.fillStyle=WORLD_VISUAL.gold;ctx.font='10px monospace';ctx.textAlign='center';const channel=glassShape(site.angles,state.site===site?state.pane:0,site.region,runtime.seedOf).channel;ctx.fillText(`Rodea un asa · ${CHANNEL_NAMES[channel]}`,0,106);}
    ctx.restore();
   }
  }
