@@ -44,7 +44,7 @@ export function initialize(runtime){
  // ---------- cada cuadro ----------
  function tick(dt){
   if(previous!==S()){previous=S();S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};clear();}
-  clock.tick(dt,surface()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])'));
+  clock.tick(runtime.activeFrameSeconds??dt,surface()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])'));
   runtime.speedBoost=has('cometa')?2.2:1;runtime.fieldSolo=has('campo');
   if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])'))return;const b=runtime.body;
   for(const box of boxesNear(400))if(Math.hypot(box.x-S().wx,box.y-S().wy)<22)open(box);
