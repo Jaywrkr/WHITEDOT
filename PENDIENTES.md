@@ -1,3 +1,7 @@
+# Actualización · mascota y cubo
+
+Rama `feat/pet-and-cube` sobre la entrega cultural pendiente (`165c376`): mascota ganada/persistente con tres roles musicales, crecimiento, contacto y búsqueda local; colores ganados/estelas/halo en Tu cubo, sin sonidos de UI. [Inventario y límites](MASCOTA_Y_CUBO.md). Main sigue en `8096c8d`; no afirmar que estas ramas ya están integradas. Teléfono real y restantes ampliaciones de V1 siguen pendientes.
+
 # Pendientes vigentes · desde main 8096c8d y rama fase 6
 
 Actualizado el 13 de octubre de 2026, tras integrar #74–#77 y preparar esta rama. [Estado comprobado](ESTADO_ACTUAL.md) · [handoff para Claude](HANDOFF.md) · [diez fases](FASES_UNIVERSO.md) · [64 tareas conservadas](V1_PRODUCCION.md).

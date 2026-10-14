@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-13",
+  "branch": "feat/pet-and-cube",
+  "base": "165c376",
+  "nodeSuites": 54,
+  "browser": {
+    "passed": 37,
+    "total": 37,
+    "flows": [
+      "accessibility_smoke.py",
+      "alive_smoke.py",
+      "atlas_smoke.py",
+      "autopilot_smoke.py",
+      "contact_smoke.py",
+      "blobs_smoke.py",
+      "creative_smoke.py",
+      "cuerpo_smoke.py",
+      "ecology_smoke.py",
+      "cultures_smoke.py",
+      "encounters_smoke.py",
+      "expansion_smoke.py",
+      "encounter_depth_smoke.py",
+      "favorites_smoke.py",
+      "foundation_smoke.py",
+      "focusui_smoke.py",
+      "fx_smoke.py",
+      "glass_smoke.py",
+      "influence_smoke.py",
+      "initiative_smoke.py",
+      "journey_smoke.py",
+      "jam_smoke.py",
+      "layer_jam_smoke.py",
+      "layers_smoke.py",
+      "lab_smoke.py",
+      "mirrors_smoke.py",
+      "mobile_smoke.py",
+      "materia_smoke.py",
+      "navigation_smoke.py",
+      "pins_smoke.py",
+      "seeds_smoke.py",
+      "pet_smoke.py",
+      "ui_silence_smoke.py",
+      "vida_smoke.py",
+      "wonders_smoke.py",
+      "world_smoke.py",
+      "smoke.py"
+    ],
+    "offlineModules": 95,
+    "extra": "Earned birth through a real rare natural box after reset, verified separately on 390x844."
+  },
+  "audio": {
+    "renders": 21,
+    "maxSamplePeak": 0.9510934948921204,
+    "hotFraction": 0,
+    "results": "pet-audio-validation.json"
+  },
+  "atlasViews": 130,
+  "limits": [
+    "Physical phone listening pending.",
+    "Offline sample peaks are not true peak/LUFS or artistic acceptance."
+  ]
+}

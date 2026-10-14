@@ -29,7 +29,7 @@ export function initialize(runtime) {
   let toastQ=[],toasting=false;
   function toast(html){toastQ.push(html);nextToast();}
   function unlock(id){if(runtime.S.ach[id])return;const prev=new Set(runtime.COLORS.filter(runtime.colorOk).map(c=>c[0]));runtime.S.ach[id]=runtime.S.todayKey;const a=runtime.ACH.find(x=>x[0]===id);runtime.say(runtime.VOZ[id]||"Bien. Sigue.","Logro · "+a[1]);
-    runtime.COLORS.forEach(c=>{if(runtime.colorOk(c)&&!prev.has(c[0]))toast("<em>Color nuevo</em> · "+c[1]+" · úsalo en tu Estudio");});runtime.save();}
+    runtime.COLORS.forEach(c=>{if(runtime.colorOk(c)&&!prev.has(c[0]))toast("<em>Color nuevo</em> · "+c[1]+" · Menú → Tu cubo o Estudio");});runtime.save();}
   function nextToast(){if(toasting||!toastQ.length)return;toasting=true;const el=$("toast");el.innerHTML=toastQ.shift();el.classList.add("on");setTimeout(()=>{el.classList.remove("on");setTimeout(()=>{toasting=false;nextToast();},350);},2200);}
 
   function enterWorld(){

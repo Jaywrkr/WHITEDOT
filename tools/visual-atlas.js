@@ -5,7 +5,7 @@ export async function renderAtlas(r){
  const methods={};for(const name of Object.getOwnPropertyNames(r))try{methods[name]=r[name];}catch(_){}
  const set=(name,value)=>Object.defineProperty(r,name,{value,writable:true,configurable:true});
  const work=document.getElementById('w'),c=work.getContext('2d');work.width=work.height=320;set('W',320);set('H',320);set('cx',c);
- for(const name of ['drawRivers','drawAlive','drawLandmarks','drawPortals','drawGlass','drawMirrors','drawPhenomena','drawJam','drawSoundCues','drawEcology','drawPlaythings','drawPocketHints','drawMateria','drawVida','drawQuietud','drawCajas','drawCultures','bodyTick','quietTick','cajasTick','cultureTick','riverStep','aliveStep','save','hud','toast','say','showPhrase','unlock','pruneRelics'])set(name,()=>{});
+ for(const name of ['drawRivers','drawAlive','drawLandmarks','drawPortals','drawGlass','drawMirrors','drawPhenomena','drawJam','drawSoundCues','drawEcology','drawPlaythings','drawPocketHints','drawMateria','drawVida','drawQuietud','drawCajas','drawCultures','drawPet','petTick','drawCubeStyle','bodyTick','quietTick','cajasTick','cultureTick','riverStep','aliveStep','save','hud','toast','say','showPhrase','unlock','pruneRelics'])set(name,()=>{});
  set('eventOf',()=>null);set('nearbyRelics',()=>[]);set('sceneChunk',x=>x);set('blobHabitat',()=>false);set('vitalityAt',()=>.6);
  r.S.mode='world';r.S.layer='superficie';r.S.sound=false;r.S.wx=r.S.wy=1350;r.S.todayLight=r.CAP;r.S.relaxedCreate=true;r.MU.vit=.6;r.MU.speed=0;r.MU.E=.2;r.MU.layers=new Set();
  document.querySelectorAll('.modal').forEach(m=>m.hidden=true);
@@ -87,6 +87,8 @@ export async function renderAtlas(r){
  const {CULTURES}=await import('../src/culture-model.js');
  for(const [id,culture] of Object.entries(CULTURES))card('GUARDIANES CULTURALES',culture.name,'src/cultures.js',()=>{r.labCulture=id;methods.cultureReset();const site=methods.cultureHome();r.S.wx=site.x;r.S.wy=site.y;methods.drawCultures();});
  for(const [kind,name] of [['strings','Cuerdas tensables'],['prism','Prisma de luz'],['membrane','Membrana resonante']])card('MATERIA',name,'src/materia.js',()=>{const positions={strings:[1100,2550],prism:[1800,2700],membrane:[2500,2550]},[x,y]=positions[kind];r.S.wx=x;r.S.wy=y;methods.drawMateria(1000,0,160-x,155-y,250);});
+ const {createPet}=await import('../src/pet-model.js');
+ for(const [kind,name] of [['golondrina','Golondrina de eco'],['grulla','Grulla de tierra'],['luciernaga','Luciérnaga de pulso']])for(const grown of [false,true])card('MASCOTAS',name+(grown?' · crecida':' · recién nacida'),'src/pet.js',()=>{r.S.pet=createPet(kind,123);if(grown){r.S.pet.seconds=6000;r.S.pet.places=Array.from({length:20},(_,i)=>i+',0');}methods.petState.ready=true;methods.petState.x=r.S.wx;methods.petState.y=r.S.wy;methods.petState.sleep=0;methods.drawPet(1000);});
  // Same native draw code, fixed snapshots. No assets are redesigned by this review tool.
  const groups=[...new Set(items.map(x=>x.group))];items.sort((a,b)=>groups.indexOf(a.group)-groups.indexOf(b.group));
  const cols=8,cellW=256,cellH=220,margin=32,sectionH=44,header=140;let y=header,previous=null,column=0;

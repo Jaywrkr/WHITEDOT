@@ -1,3 +1,7 @@
+# Estado vigente · mascota y cubo
+
+Rama `feat/pet-and-cube` sobre la entrega cultural pendiente (`165c376`): mascota ganada/persistente con tres roles musicales, crecimiento, contacto y búsqueda local; colores ganados/estelas/halo en Tu cubo, sin sonidos de UI. [Inventario y límites](MASCOTA_Y_CUBO.md). Main sigue en `8096c8d`; no afirmar que estas ramas ya están integradas. Teléfono real y restantes ampliaciones de V1 siguen pendientes.
+
 # Estado vigente tras Claude y primer bloque cultural
 
 Base main 8096c8d (#77); rama `feat/phase-06-cultural-exploration`. [Inventario de la entrega actual](FASE_06.md) · [Handoff](HANDOFF.md).
@@ -13,7 +17,7 @@ Base main 8096c8d (#77); rama `feat/phase-06-cultural-exploration`. [Inventario 
 | Paseo | Visible, dirección variable y prevención de mar |
 | Golondrinas | Viajan, señalan cajas, formación con regalo y cruces por turnos |
 | Catálogos | 11 biomas, 33 hábitats, 52 estilos; nuevos estudios no son géneros nuevos |
-| Verificación disponible | 53 suites Node, 36 recorridos+offline, 91 módulos; resultados reales en FASE_06.md |
+| Verificación disponible | 54 suites Node, 37 recorridos+offline, 95 módulos; audio nuevo y resultados en MASCOTA_Y_CUBO.md |
 
 Los conteos de recetas anteriores no cuentan los nuevos encuentros como canciones únicas. Teléfono real, escucha curada y cierre de V1 siguen pendientes. El atlas actualizado es una muestra de familias, no todas las semillas.
 

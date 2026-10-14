@@ -84,6 +84,7 @@ export function initialize(runtime){
     if(ev==='gather'){runtime.unlock('bandadaAmiga');if(!S().help.vidaConfianza){S().help.vidaConfianza=true;runtime.toast('<em>Bandada</em> · confían en ti: se acercan y cantan más');}}
     if(ev==='sync')runtime.unlock('luciernagasSync');
    }
+   runtime.petBond?.(f,dt);
    // Cuerpo: el cubo pasa por un ave.
    if(!runtime.fingerTouch||!tap)f.members.forEach((m,i)=>{if(Math.hypot(m.x-S().wx,m.y-S().wy)<15)touchBird(f,i);});
   }

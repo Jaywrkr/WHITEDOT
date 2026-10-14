@@ -1,3 +1,5 @@
+> Nueva entrega: [mascota y Tu cubo](MASCOTA_Y_CUBO.md), persistentes, ganados y sin controles permanentes extra; rama `feat/pet-and-cube` sobre la cultural pendiente `165c376`. Main sigue en `8096c8d`. La siguiente revisión de V1 debe incluir escucha/legibilidad de la mascota y el nuevo panel en teléfonos físicos.
+
 # WHITEDOT V1: inventario, expansión y criterios de publicación
 
 Revisión del código y planes al 13 de octubre de 2026. Propuesta de alcance para Jay, no anuncio de funciones implementadas ni promesa de perfección absoluta. El objetivo es una V1 publicable con comportamiento comprensible, música cuidada, progreso recuperable y estabilidad comprobada.
