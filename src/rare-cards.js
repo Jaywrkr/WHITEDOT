@@ -42,7 +42,7 @@ export function initialize(runtime){
  function collect(type,source,extra={}){
   const book=ensure();if(!runtime.inWorld()||!rareDefinition(type))return false;
   const card=descriptor(type,source,extra);if(!card)return false;
-  const result=storeRareCard(book,card);
+  const result=storeRareCard(book,card);if(result==='added')runtime.recordRewardSource?.('finding',card.tier==='legendario'?'singular':card.tier);
   if(result==='full'){if(!fullNoticed){fullNoticed=true;runtime.toast?.('Libro completo. Guarda tus tarjetas: Menú → Guardar copia.');}return false;}
   if(result==='duplicate'&&card.context?.phase){const original=book.items.find(c=>c.id===card.id);const next={at:new Date().toISOString(),phase:card.context.phase,weather:card.context.weather||''};if(!original.observations.some(o=>o.phase===next.phase&&o.weather===next.weather)){original.observations.push(next);if(original.observations.length>8)original.observations.shift();runtime.save();}}
   if(result!=='added')return false;

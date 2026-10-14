@@ -1,3 +1,13 @@
+# 2.0 · Fase 0 · Base de colección
+
+Rama `v2/f0-coleccion`, desde `main c8d286e`. Catálogo común para cubo, materiales, recuerdos y logros. Cinco rarezas con presentación monocroma y niveles de celebración; dorado reservado a piezas ganadas. API única `awardReward`/`recordRewardSource`, fuentes persistentes y colección visible en Bitácora → Lugares. No cambia audio ni generación.
+
+Migración de los 13 cosméticos anteriores, fechas conocidas, logros ocultos y selección ganada; conservación de piezas futuras y separación entre partidas. Fuentes: biomas, linajes, cajas, constancia, estudios, clima, capas, tarjetas y logros. Los materiales/recuerdos son piezas de colección para las próximas fases; no hay casa ni vestidor de 50 piezas todavía.
+
+Simulador: `node scripts/rewards-audit.mjs`; [resultado y supuestos](scripts/rewards-validation.json). 160 recorridos hipotéticos de 365 sesiones de 20 minutos: primeras piezas por rareza, percentiles y colección por día. No son tiempos medidos de jugadores ni las probabilidades del universo; el ritmo de los 50 cosméticos se afina en fase 3.
+
+Validación: `audit:release` sin errores/avisos; 72 suites Node, 50/50 recorridos de navegador y recarga offline con 125 módulos aprobados. Audio sin cambios; no se repitió la suite de mezcla. Teléfono físico pendiente. Prueba manual: abre Tu cubo, conserva tu apariencia; en Bitácora → Lugares revisa Tu colección. Explora un bioma/linaje, despierta un estudio o abre una caja y vuelve a revisar; recarga para comprobar conservación. Exporta una copia antes de comparar partidas.
+
 # 1.1.0 · Cierre con estilo J
 
 14 de octubre de 2026. Cierra el universo vivo (1.1.0-alpha.10) como versión estable. Ramas en orden, sobre `main` 959e95e: `cierre/f1-estilo-j-base` → `cierre/f2-estilo-j-voz` → `cierre/f3-cierre-funcional` → `cierre/f4-publicacion` → `cierre/f6-release`. Decisiones y auditoría en [CIERRE_V1.md](CIERRE_V1.md).

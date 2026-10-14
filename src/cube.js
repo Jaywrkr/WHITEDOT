@@ -1,18 +1,18 @@
 import {CUBE_TRAILS,CUBE_HALOS,normalizeCube,cosmeticUnlocked} from './cube-model.js';
 export function initialize(runtime){
  const S=()=>runtime.S,$=runtime.$;let owner=null,path=[],last=null;
- function settings(){if(owner!==S()){owner=S();S().cube=normalizeCube(S().cube||{color:S().color},S().ach);path=[];last=null;}
+ function settings(){if(owner!==S()){owner=S();S().cube=normalizeCube(S().cube||{color:S().color},S().ach,S().rewards);path=[];last=null;}
   const item=runtime.COLORS.find(c=>c[0]===S().cube.color);if(!item||!runtime.colorOk(item))S().cube.color='#ffffff';
   return S().cube;
  }
  function color(){return settings().color;}
  function choose(type,id){const s=settings();if(type==='color'){const c=runtime.COLORS.find(c=>c[0]===id);if(!c||!runtime.colorOk(c))return;s.color=c[0];S().color=c[0];}
-  else {const pool=type==='trail'?CUBE_TRAILS:type==='halo'?CUBE_HALOS:[];if(!pool.some(p=>p.id===id&&cosmeticUnlocked(p,S().ach)))return;s[type]=id;}
+  else {const pool=type==='trail'?CUBE_TRAILS:type==='halo'?CUBE_HALOS:[];if(!pool.some(p=>p.id===id&&cosmeticUnlocked(p,S().ach,S().rewards)))return;s[type]=id;}
   runtime.save();drawPanel();
  }
  function drawPanel(){const s=settings();$('cubeColors').replaceChildren();
   for(const [hex,name,ach]of runtime.COLORS){const b=document.createElement('button');b.className='cube-swatch';b.style.background=hex;b.setAttribute('aria-label',name);b.setAttribute('aria-pressed',String(s.color===hex));b.title=name;b.disabled=!runtime.colorOk([hex,name,ach]);b.onclick=()=>choose('color',hex);$('cubeColors').append(b);}
-  for(const [id,pool,type]of [['cubeTrails',CUBE_TRAILS,'trail'],['cubeHalos',CUBE_HALOS,'halo']]){$(id).replaceChildren();for(const p of pool){const b=document.createElement('button');b.textContent=p.name;b.disabled=!cosmeticUnlocked(p,S().ach);b.setAttribute('aria-pressed',String(s[type]===p.id));b.title=b.disabled?`Se descubre con: ${runtime.ACH.find(a=>a[0]===p.ach)?.[1]||p.ach}`:p.name;b.onclick=()=>choose(type,p.id);$(id).append(b);}}
+  for(const [id,pool,type]of [['cubeTrails',CUBE_TRAILS,'trail'],['cubeHalos',CUBE_HALOS,'halo']]){$(id).replaceChildren();for(const p of pool){const b=document.createElement('button');b.textContent=p.name;b.disabled=!cosmeticUnlocked(p,S().ach,S().rewards);b.setAttribute('aria-pressed',String(s[type]===p.id));b.title=b.disabled?`Se descubre con: ${runtime.ACH.find(a=>a[0]===p.ach)?.[1]||p.ach}`:p.name;b.onclick=()=>choose(type,p.id);$(id).append(b);}}
   const preview=$('cubePreview');preview.style.setProperty('--cube-ink',s.color);preview.dataset.trail=s.trail;preview.dataset.halo=s.halo;
  }
  $('bCube').onclick=()=>{$('mMenu').hidden=true;drawPanel();$('mCube').hidden=false;};$('cubeClose').onclick=()=>$('mCube').hidden=true;

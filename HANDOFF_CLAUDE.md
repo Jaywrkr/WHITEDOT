@@ -1,3 +1,7 @@
+> **Continuidad 2.0:** fase 0 en `v2/f0-coleccion`, desde `main c8d286e`. Reglas y estado vigente en [PLAN_2.0.md](PLAN_2.0.md) y [CAMBIOS.md](CAMBIOS.md). Las referencias alpha que siguen son históricas.
+>
+> **Colección:** [src/rewards-model.js](src/rewards-model.js) define catálogo, rarezas, migración y concesión idempotente. [src/rewards.js](src/rewards.js) integra `awardReward`, `recordRewardSource`, `rewardPieces`, `ownsReward` y resumen de Bitácora. `progress.js` reconcilia al cargar/cambiar ámbito/guardar; el guardado conserva fechas y piezas futuras. Los 13 cosméticos salen de `cube-model.js`; `data.js` comparte sus colores. [scripts/rewards-audit.mjs](scripts/rewards-audit.mjs) estima ritmo bajo supuestos explícitos, sin telemetría ni promesa de rareza.
+
 > **Trabajo actual: [PLAN_2.0.md](PLAN_2.0.md)** (fases de la 2.0) y reglas de agentes en [AGENTS.md](AGENTS.md).
 
 > **Actualización 14 oct · cierre 1.1.0 con estilo J.** Las ramas `cierre/f1`→`f6` (ver [CAMBIOS.md](CAMBIOS.md)) parten de `main` 959e95e, que ya integra las diez fases. Añaden la capa `styles/estilo-j.css`, textos J, licencia, Open Graph, sets 4:5, sello de deploy en Vercel, ocultan "Cuenta y duetos" sin servidor y estabilizan tres pruebas de navegador. Producción: https://whitedot-inky.vercel.app (Vercel estático; el servidor opcional no corre ahí). Lo que sigue es la [aceptación](ACEPTACION_V1.md). El resto de este documento describe el estado alpha.10.

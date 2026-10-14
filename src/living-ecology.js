@@ -15,6 +15,7 @@ export function initialize(runtime){
  let frame=null,lastSave=0;
  function cycle(dt){const s=runtime.S;s.livingSeconds=Number.isFinite(s.livingSeconds)?Math.min(1e9,Math.max(0,s.livingSeconds)+dt):dt;
   const region=runtime.regionOfPos(s.wx,s.wy);frame=ecologyFrame(region,s.livingSeconds,runtime.seedOf,runtime.weather?.i||0,runtime.MU.season?.id);
+  if(runtime.weather?.i>.15)runtime.recordRewardSource?.('weather','lluvia');if(runtime.weather?.i>.4)runtime.recordRewardSource?.('weather','tormenta');if(frame.convergence)runtime.recordRewardSource?.('weather','convergencia');
   const near=runtime.livingNear(500);
   for(const o of near){o.ecology=frame;o.awake=o.activeAt===frame.phase||o.energy>.3||runtime.labLiving?1:.45;
    o.growth=o.group==='flora'?.75+frame.humidity*.3+Math.sin(s.livingSeconds/120+o.variant)*.07:1;

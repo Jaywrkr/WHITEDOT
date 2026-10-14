@@ -2,7 +2,7 @@
 // Las muestras únicas de rarezas solo aparecen en la bolsa cuando ya las tienes.
 const SPECIAL=new Set(['reverso','canon','frenesi','detenido','espejo','luna']);
 export function initialize(runtime) {
-  const colorOk=c=>!c[2]||(c[2]==="oculto"?runtime.ACH.some(a=>a[3]&&runtime.S.ach[a[0]]):!!runtime.S.ach[c[2]]);
+  const colorOk=c=>!c[2]||Object.hasOwn(runtime.S.rewards?.items||{},'cube:color:'+c[0].slice(1))||(c[2]==="oculto"?runtime.ACH.some(a=>a[3]&&runtime.S.ach[a[0]]):!!runtime.S.ach[c[2]]);
   function gain(type){const before=runtime.S.bag[type]||0,n=Math.min(9,before+1);if(n===before)return;runtime.S.bag[type]=n;runtime.toast("<em>Muestra</em> · "+runtime.SAMPLES[type]+" · "+n);runtime.save();}
   function playSample(ty,r,t,ct,Rt){const n=ct[r];switch(ty){
     case "luz":runtime.pluck(n+12,t,runtime.vel(.08),0);break;

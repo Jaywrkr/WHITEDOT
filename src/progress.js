@@ -1,3 +1,4 @@
+import {createRewardsCatalog,migrateRewards} from './rewards-model.js';
 import {normalizeLivingState} from './living-state.js';
 import {worldIdentity} from './world-identity.js';
 import {createSaveStore,SAVE_VERSION} from './save-store.js';
@@ -15,9 +16,10 @@ export function initialize(runtime) {
     worldSeed:"",previewSeed:null,previewLayout:null,session:null,lastSession:null,favorites:{version:1,items:[]},destination:null,glassSites:{},mirrorSites:{},autoPins:false,patchSites:{},worldDetails:false,mode:"camino",wx:900,wy:900,lampDay:null,lampUsed:0,species:{},rel:null,relicSites:{},stars:[],help:{},zones:{},drums:0,bag:{luz:8},studio:{x:null,y:null,biome:0,slots:{}},color:"#ffffff",lastWorldDay:null,prevMode:null,capPlusDay:null,voiceStart:false,luzN:0,cat:{},catN:0,catRecent:[],places:{},placesN:0,retos:{},retosN:0,events:{},journal:{events:{},relics:{},music:{genres:{},instruments:{},scales:{}}}});
   const storage=(()=>{try{return globalThis.localStorage;}catch(_){return {getItem(){throw Error('Unavailable');},setItem(){throw Error('Unavailable');}};}})();
   const store=createSaveStore(storage,KEY,fresh(),identity);let S=store.load();
-  const applyScope=state=>Object.assign(normalizeLivingState(state),{previewSeed:preview,previewLayout:layout,worldSeed:identity.seed,worldIdentity:{...identity},saveVersion:SAVE_VERSION});
+  const fallbackCatalog=createRewardsCatalog(runtime.ACH),hiddenAchievements=(runtime.ACH||[]).filter(a=>a[3]).map(a=>a[0]);
+  const applyScope=state=>{state.rewards=migrateRewards(state,runtime.rewardCatalog||fallbackCatalog,{hiddenAchievements});return Object.assign(normalizeLivingState(state),{previewSeed:preview,previewLayout:layout,worldSeed:identity.seed,worldIdentity:{...identity},saveVersion:SAVE_VERSION});};
   applyScope(S);
-  const save=()=>store.save(S);
+  const save=()=>{const before=new Set(Object.keys(S.rewards?.items||{}));S.rewards=migrateRewards(S,runtime.rewardCatalog||fallbackCatalog,{at:S.todayKey,legacy:false,hiddenAchievements});const saved=store.save(S);if(saved)for(const id of Object.keys(S.rewards.items))if(!before.has(id))runtime.rewardEarned?.((runtime.rewardCatalog||fallbackCatalog).find(p=>p.id===id));return saved;};
 
   const pad2=n=>String(n).padStart(2,"0");
   function dayKey(){const d=new Date();d.setDate(d.getDate()+S.offset);return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate());}

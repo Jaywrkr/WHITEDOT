@@ -30,7 +30,7 @@ export function initialize(runtime){
  const audible=()=>playable()&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&runtime.S.sound&&runtime.ac?.state==='running';
  function triggerPhenomenon(o,time,origin='player'){
   if(!audible()||time<o.next)return false;
-  o.next=time+runtime.SIX*8;if(origin==='player')runtime.recordElement?.('phenomenon:'+o.kind,runtime.regionOfPos(o.hx,o.hy));
+  o.next=time+runtime.SIX*8;if(origin==='player'){runtime.recordElement?.('phenomenon:'+o.kind,runtime.regionOfPos(o.hx,o.hy));if(o.kind==='lightning')runtime.recordRewardSource?.('weather','tormenta');}
   const region=runtime.regionOfPos(o.hx,o.hy),voice=phenomenonVoice(o),tones=runtime.chordTones();
   function hit(t,index){
    let volume=(o.kind==='bird'?.035:o.kind==='shaker'?.032:.045)*(runtime.curatedVoiceGain?.(t,voice.role)||1);

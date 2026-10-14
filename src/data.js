@@ -1,3 +1,4 @@
+import {CUBE_COLORS} from './cube-model.js';
 import {REFERENCE_GENRES} from './references.js';
 import {WORLD_GENRES} from './palettes.js';
 import {RHYTHM_GENRES} from './rhythms.js';
@@ -201,7 +202,7 @@ export function initialize(runtime) {
    ["insistente","Insistente","Golpeaste el mismo pilar 25 veces.",1]
   ];
   const SAMPLES={luz:"Luz",cristal:"Cristal",pilar:"Pilar",loto:"Loto",arbol:"Árbol",luciernaga:"Luciérnaga",flor:"Flor",faro:"Faro",reverso:"Reverso",canon:"Canon",frenesi:"Frenesí",detenido:"Tiempo quieto",espejo:"Espejo",luna:"Luna de oro"};
-  const COLORS=[["#ffffff","Blanco",null],["#f0d27a","Ámbar","tope"],["#7fe0b0","Menta","estrella1"],["#6fd3ff","Cian","mundo"],["#ff8a7a","Coral","r3"],["#b9a2ff","Lila","oculto"]];
+  const COLORS=CUBE_COLORS;
   // La Voz: estilo J. Directa, con cariño por debajo, máximo 12 palabras.
   // "~~antes~~ después" se muestra tachado y corregido, como en los posts de Jay.
   const VOZ={
