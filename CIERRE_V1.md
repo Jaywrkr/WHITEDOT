@@ -94,7 +94,7 @@ Prioridad: **B** = bloquea publicar · **A** = necesario para 1.0 · **C** = con
 
 | # | Hallazgo | Evidencia | P |
 |---|---|---|---|
-| 1 | No hay URL pública HTTPS | El HUD muestra "deploy sin registrar"; no hay host elegido | **B** |
+| 1 | El deploy de Vercel no registra fecha ni revisión | El HUD muestra "deploy sin registrar" aunque producción está en Vercel | **A** |
 | 2 | No se ha probado en un iPhone ni un Android reales | A01/A02 pendientes desde RC1 | **B** |
 | 3 | No ha jugado una persona nueva sin instrucciones | A03 pendiente desde RC1 | **B** |
 | 4 | El CI en GitHub nunca se confirmó en verde | Consultas devolvieron 403; existe `checks.yml` | **B** |
@@ -109,11 +109,19 @@ Prioridad: **B** = bloquea publicar · **A** = necesario para 1.0 · **C** = con
 | 13 | El Canvas no es accesible con lector de pantalla | Ya documentado; los menús sí son accesibles | **C**, V2 |
 | 14 | El historial de guardado no se compacta en partidas muy largas | `HANDOFF.md` | **C**, vigilar en la prueba real |
 
-### Tres decisiones tuyas antes de empezar
+### Decisiones de Jay (14 oct 2026)
 
-1. **Host:** recomiendo **Vercel** (ya tienes el conector, es estático y no necesita build) o GitHub Pages. Con cualquiera de los dos, `scripts/stamp-deploy.mjs` registra la fecha real.
-2. **Licencia del código:** "Todos los derechos reservados" (recomendado si WHITEDOT es marca personal) o MIT.
-3. **Hallazgo 7 (mascota de caja):** recomiendo aplicarlo en V1. Es pequeño y coherente con tu regla: la caja rara da una *visita* temporal y el vínculo permanente se gana jugando. No se borra ninguna mascota ya ganada.
+1. **Host: Vercel, ya activo.** Proyecto `whitedot`, producción en https://whitedot-inky.vercel.app. Cada merge a `main` despliega solo, y cada rama tiene su vista previa. Lo pendiente del hallazgo 1 no es el host: es que el badge diga la fecha y la revisión reales (bloque 4).
+2. **Licencia del código: todos los derechos reservados.**
+3. **Mascota de caja: se corrige en V1.** La caja rara da una *visita* temporal. El vínculo permanente se gana jugando con criaturas. No se borra ninguna mascota ya ganada.
+
+### Ramas
+
+Cada bloque es una rama que sale de la anterior. Jay crea el PR y hace el merge **en este orden**, con *merge commit* (si se usa squash, la siguiente rama necesita actualizarse primero):
+
+`release/v1.0.0` (este documento) → `cierre/f1-estilo-j-base` → `cierre/f2-estilo-j-voz` → `cierre/f3-cierre-funcional` → `cierre/f4-publicacion` → `cierre/f6-release`
+
+El bloque 5 (aceptación real) no es código: lo hacen Jay y tres personas con teléfonos, con la lista de `ACEPTACION_V1.md`.
 
 ### Plan de cierre
 
@@ -125,7 +133,7 @@ Una rama `release/v1.0.0` con un PR por bloque, en orden. **Regla del cierre: so
 | **1. Estilo J: base** | Tokens (color, forma, tipografía), nuevo HUD, menú de seis entradas, Prototipo fuera de producción (#5, #6) | Capturas a 390×844 y 1280×800 aprobadas por ti; 45 recorridos de navegador en verde con IDs actualizados | 2 días |
 | **2. Estilo J: voz** | Reescribir todos los textos con las reglas J, nueva bienvenida, cierre de día, Voz con tachado, firma *Simple.* | Ningún texto supera 12 palabras salvo la Bitácora; revisado por ti en una lista única | 1–2 días |
 | **3. Cierre funcional** | Mascota de caja temporal (#7), `LICENSE` (#8), `og:` e imagen de compartir J (#11), salida de Grabar set como post 4:5 | Pruebas de cajas/mascota nuevas en verde; enlace con vista previa en WhatsApp/IG | 1 día |
-| **4. Publicación técnica** | Host HTTPS, `stamp-deploy`, CI de GitHub en verde en `main` (#1, #4) | URL pública abre offline tras la primera visita; badge con fecha real; check verde visible | ½ día |
+| **4. Publicación técnica** | `stamp-deploy` en el build de Vercel, CI de GitHub en verde en `main` (#1, #4) | Producción muestra fecha y revisión reales; check verde visible | ½ día |
 | **5. Aceptación real** | iPhone y Android: 30 min con audífonos y altavoz, instalar PWA, suspender y volver, grabar set. **Tres personas nuevas** juegan 10 min sin explicación (#2, #3) | Lista de fallos; se corrigen **solo los que bloquean** jugar, oír o guardar | 3 días |
 | **6. Release** | Versión `1.0.0`, tag, release notes, consolidar docs (#9, #10) | README de una página; histórico en `docs/historial/`; `CAMBIOS.md` con la entrada 1.0.0 | 1 día |
 | **7. Lanzamiento** | Contenido para @jaywrkr: un reel (hook "Un pixel blanco. Un mundo que suena.") y un carrusel con capturas J | Publicado con el enlace | ½ día |
@@ -145,7 +153,8 @@ docs/historial/    → FASE_*, REVISION_*, HANDOFF_HISTORICO, PLAN_HISTORICO, RA
 
 ### Definición de "V1 terminada"
 
-- [ ] URL pública HTTPS con fecha de deploy real
+- [x] URL pública HTTPS (Vercel)
+- [ ] Fecha y revisión reales del deploy visibles
 - [ ] CI verde en `main`
 - [ ] UI con estilo J aprobada por Jay en móvil y escritorio
 - [ ] Probado en iPhone y Android reales, sin fallos bloqueantes
