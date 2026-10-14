@@ -1,13 +1,13 @@
 """Two independent browsers see each other and play actual clocked, allocated voices."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-import importlib.util,tempfile,threading,shutil
+import importlib.util,tempfile,threading,shutil,os
 ROOT=Path(__file__).resolve().parents[1];spec=importlib.util.spec_from_file_location('wd_service',ROOT/'server/app.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 with tempfile.TemporaryDirectory() as tmp:
  server=m.create_server(port=0,database=Path(tmp)/'duets.sqlite');threading.Thread(target=server.serve_forever,daemon=True).start()
  try:
   with sync_playwright() as p:
-   browser=p.chromium.launch(executable_path=shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required']);contexts=[browser.new_context(viewport={'width':390,'height':844},has_touch=True) for _ in range(2)];pages=[c.new_page() for c in contexts];errors=[]
+   browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required']);contexts=[browser.new_context(viewport={'width':390,'height':844},has_touch=True) for _ in range(2)];pages=[c.new_page() for c in contexts];errors=[]
    for page in pages:
     page.on('pageerror',lambda e:errors.append(str(e)));page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})");page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
     page.goto(server.origin+'/?testSeed=duet-test&layout=wide&generation=2');page.wait_for_function('()=>window.__testRuntime?.duetTransport!==undefined');page.evaluate('()=>{document.querySelectorAll(".modal").forEach(m=>m.hidden=true);document.getElementById("bConnection").click()}');page.locator('#accountGuest').click();page.wait_for_function('()=>!document.getElementById("roomCreate").disabled')

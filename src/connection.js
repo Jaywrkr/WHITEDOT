@@ -41,6 +41,8 @@ export function initialize(runtime){
  function voice(v,slot,d){return duetVoice(v,slot,runtime.GEN[d.genre]);}
  function draw(){if(!room||!runtime.inWorld())return;const c=runtime.cx;c.save();for(const m of room.members){if(m.id===user?.id)continue;const x=m.x+runtime.W/2-runtime.S.wx,y=m.y+runtime.H/2-runtime.S.wy;if(x<0||y<0||x>runtime.W||y>runtime.H)continue;c.globalAlpha=.85;c.strokeStyle=m.color;c.lineWidth=1.2;c.strokeRect(x-4,y-4,8,8);c.beginPath();c.arc(x,y,10,0,Math.PI*2);c.stroke();}c.restore();}
  function edit(o){if(room)api('rooms/'+room.code+'/edit','PATCH',{id:o.id}).catch(error=>status(error.message));}
+ // Static hosting (Vercel) has no optional server: hide the entry instead of offering a dead end.
+ fetch('/api/session',{credentials:'same-origin',cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject()).catch(()=>{$('bConnection').hidden=true;});
  $('bConnection').onclick=()=>{$('mMenu').hidden=true;$('mConnection').hidden=false;bootstrap();};$('connectionClose').onclick=()=>{$('mConnection').hidden=true;};
  $('accountForm').onsubmit=e=>{e.preventDefault();auth('login');};$('accountRegister').onclick=()=>auth('register');$('accountGuest').onclick=()=>auth('guest');$('accountLogout').onclick=async()=>{await leave();try{await api('logout','POST',{});user=null;revision.clear();status('Sesión cerrada; tu avance local permanece.');}catch(error){status(error.message);}ui();};
  $('cloudPush').onclick=push;$('cloudPull').onclick=()=>pull();$('cloudDownload').onclick=()=>pull(false);$('roomCreate').onclick=()=>join(true);$('roomJoin').onclick=()=>join(false);$('roomLeave').onclick=leave;

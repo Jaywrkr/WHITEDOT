@@ -25,6 +25,8 @@ try:
    page.locator('#bMenu').click()
    assert page.locator('#w').evaluate('(e)=>e.inert'), 'canvas cannot receive focus behind a modal'
    assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Música','Más']
+   # This static server has no optional /api: the account entry stays out of the menu (duet_smoke covers it with a server).
+   page.wait_for_function('document.getElementById("bConnection").hidden')
    page.locator('#mMenu .sheet').evaluate('e=>e.scrollTop=e.scrollHeight')
    close=page.locator('#mnClose').bounding_box()
    assert close['y']>=0 and close['y']+close['height']<=height, 'close stays visible while menu scrolls'
@@ -37,7 +39,7 @@ try:
    page.locator('#mMenu summary').click()
    page.keyboard.press('Escape');page.wait_for_function('document.activeElement.id==="bMenu"')
    assert not page.locator('#w').evaluate('(e)=>e.inert')
-   for control,modal in [('bMusicSettings','mMusic'),('bCube','mCube'),('bFavorites','mFavorites'),('bAch','mJournal'),('bMap','mMap'),('bSky','mSky'),('bSession','mSession'),('bSaveTools','mSaveTools'),('bConnection','mConnection')]:
+   for control,modal in [('bMusicSettings','mMusic'),('bCube','mCube'),('bFavorites','mFavorites'),('bAch','mJournal'),('bMap','mMap'),('bSky','mSky'),('bSession','mSession'),('bSaveTools','mSaveTools')]:
     page.locator('#bMenu').click();page.locator('#'+control).click()
     page.wait_for_function('(id)=>!document.getElementById(id).hidden',arg=modal)
     metrics=page.locator('#'+modal+' .sheet').evaluate('e=>({x:e.getBoundingClientRect().x,right:e.getBoundingClientRect().right,y:e.getBoundingClientRect().y,bottom:e.getBoundingClientRect().bottom,sw:e.scrollWidth,cw:e.clientWidth})')
@@ -73,7 +75,7 @@ try:
    assert page.evaluate('document.activeElement.id')=='bMenu'
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth&&document.documentElement.scrollHeight<=innerHeight')
    assert not errors,errors
-   print(f'PASS UI {width}×{height}: nine real sheets, touch targets, no overflow, summary/focus return, silent settings and keyboard effects',flush=True)
+   print(f'PASS UI {width}×{height}: eight real sheets, account entry hidden without server, touch targets, no overflow, summary/focus return, silent settings and keyboard effects',flush=True)
    page.close()
   browser.close()
 finally: server.shutdown()
