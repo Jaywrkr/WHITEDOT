@@ -19,3 +19,7 @@ Diez linajes de flora ya aparecen con distribución natural y responden al cubo:
 ## Fase 4 · Fauna con respuesta y movimiento
 
 Diez linajes de fauna ya son jugables: mantas, ciervos, tortugas, escarabajos, medusas, gusanos, fragmentos de ballena, polillas, crustáceos y blobs. Glifos pequeños originales, movimiento limitado al hábitat, individuos tímidos/curiosos/sociales y articulación según el gesto. Polillas, gusanos y cactus escuchan frases cercanas y las devuelven. Todos se prueban por separado en el laboratorio. La fauna usa el presupuesto de instalación compartido para no saturar la música. Prueba determinista de 500 segundos de movimiento.
+
+## Fase 5 · Composición y producción
+
+La radio añade capítulos a compás durante escuchas largas, bancos de bajo propios del género y variaciones de mezcla cálidas/limpias/texturales. Los nuevos objetos alteran la función musical que realmente tocan, con influencia que decae. Patrones ambientales regionales, swing, pequeños fills espaciados; musgo permite restar melodía. Acordes nuevos usan las notas del acorde real, no intervalos mayores fijos. Se amplían timbres de sub, FM, ácido, Reese y log drum, más granos suaves acotados. Se mantienen los 52 géneros. Escucha profesional y aceptación humana siguen pendientes de escuchar la entrega; ninguna prueba automática certifica gusto o masterización profesional.
