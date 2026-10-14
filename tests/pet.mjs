@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {PET_SPECIES,normalizePet,createPet,petStage,learnPet,growPet,petFromBox,petFormationEligible} from '../src/pet-model.js';
+import {CUBE_TRAILS,CUBE_HALOS,normalizeCube,cosmeticUnlocked} from '../src/cube-model.js';
+assert.equal(normalizePet({species:'bad',seed:1}),null);assert.equal(normalizePet({species:'__proto__',seed:1}),null);assert.equal(normalizePet({species:'grulla',seed:NaN}),null);
+let p=createPet('golondrina',123);assert.equal(petStage(p),0);const before=p.seconds;growPet(p,NaN,'0,0');assert.equal(p.seconds,before);growPet(p,999,'0,0');assert.equal(p.seconds,.1);
+for(let i=0;i<30;i++)learnPet(p,i);assert.equal(p.phrase.length,4);assert(p.phrase.every(n=>n.step<16));
+p.seconds=600;p.places=['0,0','1,0','2,0'];assert.equal(petStage(p),1);p.seconds=5400;assert.equal(petStage(p),1,'time alone does not finish growth');p.places=Array.from({length:20},(_,i)=>`${i},0`);assert.equal(petStage(p),3);
+for(let i=0;i<30;i++)learnPet(p,i);assert.equal(p.phrase.length,7);assert.deepEqual(normalizePet(JSON.parse(JSON.stringify(p))),p);
+for(let i=0;i<300;i++)growPet(p,.05,`${i},1`);assert.equal(p.places.length,128);assert.equal(normalizePet({...p,seconds:-1}).seconds,0);assert.equal(normalizePet({...p,phrase:[{degree:99,step:0}]}).phrase.length,0);
+assert(petFormationEligible({species:'grulla',trust:1,follow:20,followTime:30}));assert(!petFormationEligible({species:'golondrina',trust:.2,follow:40,followTime:99}));
+let n=0;for(let i=0;i<8192;i++)if(petFromBox('caja:'+i,s=>{let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;}))n++;assert(n>20&&n<120);assert.equal(petFromBox('regalo:1',()=>0),null,'gifts do not farm permanent pets');
+assert.deepEqual(Object.values(PET_SPECIES).map(s=>s.role),['melody','bass','groove']);
+assert.deepEqual(normalizeCube({trail:'line',halo:'pulse'},{}),{version:1,color:'#ffffff',trail:'none',halo:'soft'});
+assert.equal(normalizeCube({trail:'line',halo:'pulse'},{poder_cometa:true,tiempo:true}).trail,'line');assert(CUBE_TRAILS.every(t=>cosmeticUnlocked(t,{mundo:1,poder_cometa:1,bandada1:1})));assert(CUBE_HALOS.every(t=>cosmeticUnlocked(t,{quietud5:1,tiempo:1})));
+console.log('PASS persistent pet validation, contextual species, bounded phrases/places, rare natural-box births, earned growth and cube unlocks');

@@ -1,3 +1,5 @@
+> Entrega adicional autorizada: **mascota y Tu cubo**, en `feat/pet-and-cube`, basada en la rama cultural `165c376` todavía pendiente de merge. No cambia la numeración del plan ni cierra su ampliación cultural. [Detalle](MASCOTA_Y_CUBO.md).
+
 # Universo ampliable: secuencia vigente
 
 Estado actual: main 8096c8d integra #74–#77 de Claude: materia/compartir, laboratorio/vida y cubo/expansión. La rama nueva `feat/phase-06-cultural-exploration` reúne el primer bloque cultural y exploración: [FASE_06.md](FASE_06.md). No confundir el nombre expansión-fase-06 de Claude con haber implementado culturas; llegaron en este bloque.

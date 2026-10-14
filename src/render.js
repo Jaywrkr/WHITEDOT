@@ -70,17 +70,22 @@ export function initialize(runtime) {
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
+    runtime.petTick?.(dt);runtime.drawPet?.(t);
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.GOLD:runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
     runtime.pulse=Math.max(0,runtime.pulse-dt*1.5);
     const s=ds*(1+runtime.pulse*.6+b*.08);
-    if(runtime.pulse){runtime.cx.globalAlpha=runtime.pulse*.5;runtime.cx.strokeStyle="#fff";runtime.cx.lineWidth=1;const rr=s*(1+(1-runtime.pulse)*4);runtime.cx.strokeRect(runtime.W/2-rr/2,runtime.H/2-rr/2,rr,rr);}
+    runtime.drawCubeStyle?.(t,dt,b,s);
+    const playerColor=runtime.inWorld()?(runtime.cubeColor?.()||'#fff'):'#fff';
+    if(runtime.pulse){runtime.cx.globalAlpha=runtime.pulse*.5;runtime.cx.strokeStyle=playerColor;runtime.cx.lineWidth=1;const rr=s*(1+(1-runtime.pulse)*4);runtime.cx.strokeRect(runtime.W/2-rr/2,runtime.H/2-rr/2,rr,rr);}
     // en tiempo: anillo dorado y contador
     if(runtime.grooveFx>0){runtime.grooveFx=Math.max(0,runtime.grooveFx-dt*2.2);runtime.cx.globalAlpha=runtime.grooveFx;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.5;const rr=s+(1-runtime.grooveFx)*40;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,rr,0,6.283);runtime.cx.stroke();
       if(runtime.MU.groove>=2){runtime.cx.fillStyle=runtime.GOLD;runtime.cx.font='600 12px "JetBrains Mono", monospace';runtime.cx.textAlign="center";runtime.cx.fillText("EN TIEMPO ×"+runtime.MU.groove,runtime.W/2,runtime.H/2-s-18-(1-runtime.grooveFx)*10);runtime.cx.textAlign="left";}}
-    runtime.cx.globalAlpha=1;runtime.cx.fillStyle="#fff";runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));
+    runtime.cx.save();runtime.cx.globalAlpha=1;runtime.cx.fillStyle=playerColor;
+    const ritual=runtime.inWorld()&&(runtime.quietState?.stage>=6||runtime.hasPower?.('cometa'));
+    if(ritual){runtime.cx.translate(runtime.W/2,runtime.H/2);runtime.cx.rotate(Math.sin(t/600)*.12);runtime.cx.fillRect(-s/2,-s/2,s,s);}else runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));runtime.cx.restore();
     // El pixel siempre se distingue: halo suave y anillo fino en el Mundo.
     if(runtime.inWorld()){const c=runtime.cx,hx=runtime.W/2,hy=runtime.H/2,g=c.createRadialGradient(hx,hy,0,hx,hy,s*2.6);g.addColorStop(0,'rgba(255,255,255,.22)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(hx-s*2.6,hy-s*2.6,s*5.2,s*5.2);
       c.globalAlpha=.55;c.strokeStyle='#fff';c.lineWidth=1;c.strokeRect(Math.round(hx-s/2)-3.5,Math.round(hy-s/2)-3.5,Math.round(s)+7,Math.round(s)+7);c.globalAlpha=1;}

@@ -199,6 +199,8 @@ export function initialize(runtime) {
   const COLORS=[["#ffffff","Blanco",null],["#f0d27a","Ámbar","tope"],["#7fe0b0","Menta","estrella1"],["#6fd3ff","Cian","mundo"],["#ff8a7a","Coral","r3"],["#b9a2ff","Lila","oculto"]];
   // La Voz del sistema: sarcástica, directa, con cariño por debajo. Estas son para que Jay las corrija.
   const VOZ={
+   mascota1:"Algo aprendió tu ritmo y decidió quedarse. La compañía también se crea.",
+   mascotaCrece:"Los lugares que recorren juntos le van cambiando la voz.",
    patch1:"Una conexión cambia la música. Retirar un cable también es una decisión creativa.",
    patch:"Arrastra del núcleo a una raíz, o toca ambos. Mantén el núcleo para elegir reloj, vidrios o espejos descubiertos en esta región. Toca una raíz conectada para retirar el cable. La música cambia al compás.",
    fijarSonido:"Elegiste qué se queda. Toca el anillo azul para soltarlo; otro objeto del mismo papel lo reemplaza.",

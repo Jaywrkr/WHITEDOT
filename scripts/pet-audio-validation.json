@@ -1,0 +1,1412 @@
+[
+  {
+    "scene": "pet:golondrina",
+    "instrumentHits": {
+      "kick": 21,
+      "pluck": 21,
+      "clav": 651,
+      "wood": 330,
+      "hat": 21,
+      "rim": 14,
+      "reed": 5
+    },
+    "petNotes": [
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 2.277419354838711,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 4.212903225806454,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 6.148387096774198,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 8.083870967741941,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 10.019354838709685,
+        "role": "melody"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "minimal",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9013364315032959,
+    "rmsDb": -13.996069299153397,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:golondrina",
+    "instrumentHits": {
+      "kick": 21,
+      "pluck": 21,
+      "clav": 651,
+      "wood": 330,
+      "hat": 21,
+      "rim": 14,
+      "reed": 5
+    },
+    "petNotes": [
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 2.277419354838711,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 4.212903225806454,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 6.148387096774198,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 8.083870967741941,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 10.019354838709685,
+        "role": "melody"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "minimal",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.8663199543952942,
+    "rmsDb": -21.306239985990487,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:golondrina",
+    "instrumentHits": {
+      "kick": 19,
+      "rubber": 20,
+      "kalimba": 658,
+      "guiro": 330,
+      "shaker": 37,
+      "rim": 19,
+      "conga": 19,
+      "reed": 4,
+      "timbale": 1,
+      "tom": 1
+    },
+    "petNotes": [
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 2.510714285714286,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 4.65357142857143,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 6.796428571428569,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 8.939285714285708,
+        "role": "melody"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "tropical",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9436264038085938,
+    "rmsDb": -11.11956154060309,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:golondrina",
+    "instrumentHits": {
+      "kick": 19,
+      "rubber": 20,
+      "kalimba": 658,
+      "guiro": 330,
+      "shaker": 37,
+      "rim": 19,
+      "conga": 19,
+      "reed": 4,
+      "timbale": 1,
+      "tom": 1
+    },
+    "petNotes": [
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 2.510714285714286,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 4.65357142857143,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 6.796428571428569,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 8.939285714285708,
+        "role": "melody"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "tropical",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.6231068968772888,
+    "rmsDb": -20.646204421771838,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:golondrina",
+    "instrumentHits": {
+      "kick": 20,
+      "sub": 20,
+      "organ": 1300,
+      "wood": 330,
+      "shaker": 19,
+      "hat": 20,
+      "reed": 4
+    },
+    "petNotes": [
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 2.36890756302521,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 4.385714285714284,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 6.402521008403353,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 8.419327731092421,
+        "role": "melody"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "dub",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9019468426704407,
+    "rmsDb": -10.240420162991857,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:golondrina",
+    "instrumentHits": {
+      "kick": 20,
+      "sub": 20,
+      "organ": 1300,
+      "wood": 330,
+      "shaker": 19,
+      "hat": 20,
+      "reed": 4
+    },
+    "petNotes": [
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 2.36890756302521,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 4.385714285714284,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 6.402521008403353,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 5,
+        "note": 65,
+        "time": 8.419327731092421,
+        "role": "melody"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "dub",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.6999509930610657,
+    "rmsDb": -18.980562026924986,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:golondrina:idle",
+    "instrumentHits": {
+      "glass": 2,
+      "flute": 14,
+      "shaker": 13,
+      "reed": 3
+    },
+    "petNotes": [
+      {
+        "species": "golondrina",
+        "degree": 2,
+        "note": 60,
+        "time": 6.638461538461543,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 4,
+        "note": 64,
+        "time": 7.023076923076928,
+        "role": "melody"
+      },
+      {
+        "species": "golondrina",
+        "degree": 6,
+        "note": 67,
+        "time": 7.4076923076923125,
+        "role": "melody"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ambient",
+    "dense": false,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.900841236114502,
+    "rmsDb": -9.394056642314352,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:grulla",
+    "instrumentHits": {
+      "kick": 21,
+      "pluck": 21,
+      "clav": 651,
+      "wood": 330,
+      "hat": 21,
+      "rim": 14,
+      "sub": 5
+    },
+    "petNotes": [
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 2.277419354838711,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 4.212903225806454,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 6.148387096774198,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 8.083870967741941,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 10.019354838709685,
+        "role": "bass"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "minimal",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9013363718986511,
+    "rmsDb": -13.865728419133937,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:grulla",
+    "instrumentHits": {
+      "kick": 21,
+      "pluck": 21,
+      "clav": 651,
+      "wood": 330,
+      "hat": 21,
+      "rim": 14,
+      "sub": 5
+    },
+    "petNotes": [
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 2.277419354838711,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 4.212903225806454,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 6.148387096774198,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 8.083870967741941,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 10.019354838709685,
+        "role": "bass"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "minimal",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.8663190603256226,
+    "rmsDb": -21.29904641551142,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:grulla",
+    "instrumentHits": {
+      "kick": 19,
+      "rubber": 20,
+      "kalimba": 658,
+      "guiro": 330,
+      "shaker": 37,
+      "rim": 19,
+      "conga": 19,
+      "sub": 4,
+      "timbale": 1,
+      "tom": 1
+    },
+    "petNotes": [
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 2.510714285714286,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 4.65357142857143,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 6.796428571428569,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 8.939285714285708,
+        "role": "bass"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "tropical",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9436269998550415,
+    "rmsDb": -11.093034385493565,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:grulla",
+    "instrumentHits": {
+      "kick": 19,
+      "rubber": 20,
+      "kalimba": 658,
+      "guiro": 330,
+      "shaker": 37,
+      "rim": 19,
+      "conga": 19,
+      "sub": 4,
+      "timbale": 1,
+      "tom": 1
+    },
+    "petNotes": [
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 2.510714285714286,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 4.65357142857143,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 6.796428571428569,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 8.939285714285708,
+        "role": "bass"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "tropical",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.623114824295044,
+    "rmsDb": -20.64491125474627,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:grulla",
+    "instrumentHits": {
+      "kick": 20,
+      "sub": 24,
+      "organ": 1300,
+      "wood": 330,
+      "shaker": 19,
+      "hat": 20
+    },
+    "petNotes": [
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 2.36890756302521,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 4.385714285714284,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 6.402521008403353,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 8.419327731092421,
+        "role": "bass"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "dub",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9019469618797302,
+    "rmsDb": -10.196618693300469,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:grulla",
+    "instrumentHits": {
+      "kick": 20,
+      "sub": 24,
+      "organ": 1300,
+      "wood": 330,
+      "shaker": 19,
+      "hat": 20
+    },
+    "petNotes": [
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 2.36890756302521,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 4.385714285714284,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 6.402521008403353,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 5,
+        "note": 41,
+        "time": 8.419327731092421,
+        "role": "bass"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "dub",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.6999257206916809,
+    "rmsDb": -18.975749541809527,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:grulla:idle",
+    "instrumentHits": {
+      "glass": 2,
+      "flute": 14,
+      "shaker": 13,
+      "sub": 3
+    },
+    "petNotes": [
+      {
+        "species": "grulla",
+        "degree": 2,
+        "note": 48,
+        "time": 6.638461538461543,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 4,
+        "note": 52,
+        "time": 7.023076923076928,
+        "role": "bass"
+      },
+      {
+        "species": "grulla",
+        "degree": 6,
+        "note": 43,
+        "time": 7.4076923076923125,
+        "role": "bass"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ambient",
+    "dense": false,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9008411765098572,
+    "rmsDb": -9.394033119874935,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:luciernaga",
+    "instrumentHits": {
+      "kick": 21,
+      "pluck": 21,
+      "clav": 651,
+      "wood": 335,
+      "hat": 21,
+      "rim": 14
+    },
+    "petNotes": [
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 2.277419354838711,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 4.212903225806454,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 6.148387096774198,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 8.083870967741941,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 10.019354838709685,
+        "role": "groove"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "minimal",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9017289280891418,
+    "rmsDb": -13.991270123315491,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:luciernaga",
+    "instrumentHits": {
+      "kick": 21,
+      "pluck": 21,
+      "clav": 651,
+      "wood": 335,
+      "hat": 21,
+      "rim": 14
+    },
+    "petNotes": [
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 2.277419354838711,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 4.212903225806454,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 6.148387096774198,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 8.083870967741941,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 10.019354838709685,
+        "role": "groove"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "minimal",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.793921709060669,
+    "rmsDb": -21.541170591577913,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:luciernaga",
+    "instrumentHits": {
+      "kick": 19,
+      "rubber": 20,
+      "kalimba": 658,
+      "guiro": 330,
+      "shaker": 37,
+      "rim": 19,
+      "conga": 19,
+      "wood": 4,
+      "timbale": 1,
+      "tom": 1
+    },
+    "petNotes": [
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 2.510714285714286,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 4.65357142857143,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 6.796428571428569,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 8.939285714285708,
+        "role": "groove"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "tropical",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9510934948921204,
+    "rmsDb": -11.206234983879472,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:luciernaga",
+    "instrumentHits": {
+      "kick": 19,
+      "rubber": 20,
+      "kalimba": 658,
+      "guiro": 330,
+      "shaker": 37,
+      "rim": 19,
+      "conga": 19,
+      "wood": 4,
+      "timbale": 1,
+      "tom": 1
+    },
+    "petNotes": [
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 2.510714285714286,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 4.65357142857143,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 6.796428571428569,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 8.939285714285708,
+        "role": "groove"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "tropical",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.6194463968276978,
+    "rmsDb": -20.63108565922052,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:luciernaga",
+    "instrumentHits": {
+      "kick": 20,
+      "sub": 20,
+      "organ": 1300,
+      "wood": 334,
+      "shaker": 19,
+      "hat": 20
+    },
+    "petNotes": [
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 2.36890756302521,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 4.385714285714284,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 6.402521008403353,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 8.419327731092421,
+        "role": "groove"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "dub",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9016501903533936,
+    "rmsDb": -10.227432320734861,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:luciernaga",
+    "instrumentHits": {
+      "kick": 20,
+      "sub": 20,
+      "organ": 1300,
+      "wood": 334,
+      "shaker": 19,
+      "hat": 20
+    },
+    "petNotes": [
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 2.36890756302521,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 4.385714285714284,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 6.402521008403353,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 5,
+        "note": 65,
+        "time": 8.419327731092421,
+        "role": "groove"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "dub",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.7206621170043945,
+    "rmsDb": -19.00751580857401,
+    "hotFraction": 0
+  },
+  {
+    "scene": "pet:luciernaga:idle",
+    "instrumentHits": {
+      "glass": 2,
+      "flute": 14,
+      "shaker": 13,
+      "wood": 3
+    },
+    "petNotes": [
+      {
+        "species": "luciernaga",
+        "degree": 2,
+        "note": 60,
+        "time": 6.638461538461543,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 4,
+        "note": 64,
+        "time": 7.023076923076928,
+        "role": "groove"
+      },
+      {
+        "species": "luciernaga",
+        "degree": 6,
+        "note": 67,
+        "time": 7.4076923076923125,
+        "role": "groove"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ambient",
+    "dense": false,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9008410573005676,
+    "rmsDb": -9.364356061924905,
+    "hotFraction": 0
+  }
+]

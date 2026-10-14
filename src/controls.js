@@ -12,7 +12,7 @@ export function initialize(runtime) {
   runtime.$("bStudio").onclick=runtime.enterStudio;runtime.$("bDeploy").onclick=runtime.deployStudio;runtime.$("stExit").onclick=runtime.exitStudio;
   runtime.$("oDeploy").onclick=()=>{runtime.$("mOut").hidden=true;runtime.deployStudio();};
   runtime.$("bag").onclick=e=>{const b=e.target.closest("button");if(!b)return;runtime.selSample=b.dataset.s;runtime.renderBag();};
-  runtime.$("swatches").onclick=e=>{const b=e.target.closest("button");if(!b||b.disabled)return;runtime.S.color=runtime.COLORS[+b.dataset.c][0];runtime.renderBag();runtime.save();};
+  runtime.$("swatches").onclick=e=>{const b=e.target.closest("button");if(!b||b.disabled)return;runtime.S.color=runtime.COLORS[+b.dataset.c][0];runtime.S.cube={...runtime.cubeSettings?.(),color:runtime.S.color};runtime.renderBag();runtime.save();};
   let armC=false;runtime.$("stClear").onclick=e=>{if(!armC){armC=true;e.target.textContent="¿Seguro?";setTimeout(()=>{armC=false;e.target.textContent="Vaciar";},2500);return;}for(const k in runtime.S.studio.slots){const t=runtime.S.studio.slots[k];runtime.S.bag[t]=Math.min(9,(runtime.S.bag[t]||0)+1);}runtime.S.studio.slots={};armC=false;e.target.textContent="Vaciar";runtime.renderBag();runtime.save();runtime.hud();};
   runtime.$("hwGo").onclick=()=>{runtime.S.help.mundo=true;runtime.save();runtime.$("mHelpW").hidden=true;runtime.showRegion(runtime.regionOfPos(runtime.S.wx,runtime.S.wy),true);};
   runtime.$("bShare").onclick=()=>runtime.shareCard(runtime.inWorld()||runtime.S.stars.length?"sky":"day");runtime.$("cShare").onclick=()=>{runtime.$("mCap").hidden=true;runtime.shareCard("day");};

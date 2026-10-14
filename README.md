@@ -2,7 +2,11 @@
 
 Un punto blanco en un mundo negro que compone música electrónica mientras lo exploras. Camino diario, Mundo procedural y Estudio; 11 biomas y 52 estilos actuales. Por Jay · [@jaywrkr](https://instagram.com/jaywrkr).
 
-## Entrega actual · culturas y exploración
+## Entrega actual · mascota y Tu cubo
+
+`feat/pet-and-cube` parte de la rama cultural `165c376`, todavía pendiente de merge. Una criatura se gana por formación, quietud con luciérnagas o una caja natural rara; aprende tus gestos, crece y acompaña con melodía, bajo o ritmo. **Menú → Tu cubo** permite usar colores ganados, estelas y halos con vista previa. No agrega controles al mundo ni sonidos de UI. [Detalle y pruebas](MASCOTA_Y_CUBO.md). Verificación de esta entrega: **54 suites de lógica, 37 recorridos de navegador + offline y 21 nuevas mezclas de audio**; la escucha física en teléfono sigue pendiente.
+
+## Entrega cultural incluida
 
 Base **main 8096c8d (#77)** incorpora los cambios de Claude: materia, bandadas/flora, laboratorio, códigos/grabación, cubo como interacción, quietud, cajas y experimentación. El jardín modular y el rastro anteriores fueron retirados. Los detalles antiguos bajo Historial describen sus versiones, no funciones actuales.
 

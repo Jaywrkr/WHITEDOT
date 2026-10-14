@@ -1,3 +1,7 @@
+# Entrega nueva · mascota y cubo
+
+Rama `feat/pet-and-cube` sobre la entrega cultural pendiente (`165c376`): mascota ganada/persistente con tres roles musicales, crecimiento, contacto y búsqueda local; colores ganados/estelas/halo en Tu cubo, sin sonidos de UI. [Inventario y límites](MASCOTA_Y_CUBO.md). Main sigue en `8096c8d`; no afirmar que estas ramas ya están integradas. Teléfono real y restantes ampliaciones de V1 siguen pendientes.
+
 # Revisión de Claude y fase 6 actual
 
 Main 8096c8d incluye #74–#77; esta rama incorpora culturas/guardianes/huellas/puertas/recuerdos, Vasto, paseo visible, laboratorio 54 y golondrinas. También corrige pausas/registros, velocidad de Cometa y verificaciones obsoletas. [Detalle](FASE_06.md). Claude retiró jardín modular/rastro; el historial de abajo conserva sus versiones originales, no su disponibilidad actual.

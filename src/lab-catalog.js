@@ -28,8 +28,8 @@ const BASE=[
 ];
 const life=[
  ...Object.entries(SPECIES).map(([kind,s])=>({id:'life:'+kind,group:'Vida',name:s.name,find:{type:'flock',species:kind},
-  try:kind==='luciernaga'?['Quédate quieto cerca: se van sincronizando (mira el %).','Al sincronizarse, sus destellos caen en un groove.','Pasa el cubo por una: te contesta.']
-   :['Pasa el cubo por un ave; en dos compases la bandada responde.','Quédate quieto unos segundos: confían y se acercan.','Entra corriendo: se dispersan.']})),
+  try:kind==='luciernaga'?['Quédate quieto cerca: se van sincronizando (mira el %).','Al sincronizarse, sus destellos caen en un groove.','Pasa el cubo por una: te contesta.','Sin mascota todavía, comparte 20 s adicionales con la bandada sincronizada: una se queda.']
+   :['Pasa el cubo por un ave; en dos compases la bandada responde.','Quédate quieto unos segundos: confían y se acercan.','Entra corriendo: se dispersan.',...(kind==='golondrina'||kind==='grulla'?['Si aún no tienes mascota, viaja en formación 30 s: una puede quedarse.']:[])]})),
  {id:'life:plant',group:'Vida',name:'Flora que crece',find:{type:'home',x:HOME_PLANTS[0][0],y:HOME_PLANTS[0][1]},try:['Quédate cerca y quieto: crece y suma notas a su arpegio.','Pasa el cubo por ella para regarla.','Si no vuelves, se seca con las horas.']}
 ];
 const families=Object.entries(FAMILIES).map(([id,f])=>({id:'family:'+id,group:'Encuentros',name:f.name,find:{type:'family',family:id},try:['Entra con el cubo para responder; muévete dentro para modelar.','Sal para soltar. La edición fina de partes/hilos permanece solo en modo dedo (?dedo=1).']}));

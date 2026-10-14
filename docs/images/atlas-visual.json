@@ -1,6 +1,6 @@
 {
   "width": 2112,
-  "height": 5456,
+  "height": 5720,
   "items": [
     {
       "number": 1,
@@ -745,6 +745,42 @@
       "group": "MATERIA",
       "name": "Membrana resonante",
       "source": "src/materia.js"
+    },
+    {
+      "number": 125,
+      "group": "MASCOTAS",
+      "name": "Golondrina de eco · recién nacida",
+      "source": "src/pet.js"
+    },
+    {
+      "number": 126,
+      "group": "MASCOTAS",
+      "name": "Golondrina de eco · crecida",
+      "source": "src/pet.js"
+    },
+    {
+      "number": 127,
+      "group": "MASCOTAS",
+      "name": "Grulla de tierra · recién nacida",
+      "source": "src/pet.js"
+    },
+    {
+      "number": 128,
+      "group": "MASCOTAS",
+      "name": "Grulla de tierra · crecida",
+      "source": "src/pet.js"
+    },
+    {
+      "number": 129,
+      "group": "MASCOTAS",
+      "name": "Luciérnaga de pulso · recién nacida",
+      "source": "src/pet.js"
+    },
+    {
+      "number": 130,
+      "group": "MASCOTAS",
+      "name": "Luciérnaga de pulso · crecida",
+      "source": "src/pet.js"
     }
   ],
   "note": "Drawn from the actual renderer, enlarged for inspection. Representative procedural shapes, not an enumeration of all seeds or animation frames."

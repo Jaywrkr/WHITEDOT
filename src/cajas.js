@@ -29,7 +29,7 @@ export function initialize(runtime){
  function spawnBox(x,y,power=POWER_IDS[Math.floor(Math.random()*POWER_IDS.length)]){const b={id:`regalo:${Math.round(x)},${Math.round(y)}:${Date.now()}`,x,y,power,hue:Math.floor(Math.random()*360),spin:0,gift:true};spawned.push(b);if(spawned.length>6)spawned.shift();return b;}
  function open(b){
   const book=S().boxes;if(!b.gift){if(Object.keys(book).length>=400)delete book[Object.keys(book)[0]];book[b.id]=1;}else spawned.splice(spawned.indexOf(b),1);
-  S().boxesOpened=(S().boxesOpened||0)+1;give(b.power);runtime.colorPulse?.(b.hue,1);runtime.burst?.(b.x,b.y,14,true);
+  S().boxesOpened=(S().boxesOpened||0)+1;runtime.petBox?.(b);give(b.power);runtime.colorPulse?.(b.hue,1);runtime.burst?.(b.x,b.y,14,true);
   runtime.beatSoon(t=>{const ct=runtime.chordTones?.()||[60,64,67];ct.slice(0,3).forEach((n,i)=>melody(n,t+i*runtime.SIX*2,.025));},null,'player');
   runtime.unlock('caja1');if(S().boxesOpened>=5)runtime.unlock('caja5');runtime.unlock('poder_'+b.power);runtime.save();
  }
@@ -97,7 +97,7 @@ export function initialize(runtime){
    c.translate(-x,-y);if(Math.hypot(b.x-S().wx,b.y-S().wy)<160){c.globalAlpha=.8;c.fillStyle=WORLD_VISUAL.gold;c.font='10px monospace';c.textAlign='center';c.fillText('Caja misteriosa · tócala con el cubo',x,y+34);}}
   if(has('campo')){const R=fieldRadius(left('campo'),POWERS.campo.seconds),arm=((runtime.MU.step%16)+((runtime.ac?.currentTime||0)%runtime.SIX)/runtime.SIX)/16*TAU-Math.PI/2,hue=runtime.MU.dnaT?.hue||0,[H]=swatchOf(hue);
    c.globalAlpha=.08;c.fillStyle=`hsl(${H},80%,60%)`;c.beginPath();c.arc(cx,cy,R,0,TAU);c.fill();c.globalAlpha=.5;c.strokeStyle=`hsl(${H},80%,64%)`;c.lineWidth=1.4;c.stroke();
-   c.globalAlpha=.6;c.strokeStyle=WORLD_VISUAL.gold;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+Math.cos(arm)*R,cy+Math.sin(arm)*R);c.stroke();}
+   c.globalAlpha=.6;c.strokeStyle=runtime.cubeColor?.()||WORLD_VISUAL.gold;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+Math.cos(arm)*R,cy+Math.sin(arm)*R);c.stroke();}
   if(trail.length){for(const p of trail){const [H]=swatchOf((p.x+p.y)/7);c.globalAlpha=p.a*.6;c.fillStyle=`hsl(${H},85%,62%)`;c.fillRect(p.x+ox-2,p.y+oy-2,4,4);}}
   for(const m of marks){m.lit=Math.max(0,m.lit-dt*1.5);const [H]=swatchOf(m.degree*51);c.globalAlpha=.5+m.lit*.5;c.fillStyle=m.lit>.3?WORLD_VISUAL.gold:`hsl(${H},80%,64%)`;c.beginPath();c.arc(m.x+ox,m.y+oy,3+m.lit*4,0,TAU);c.fill();}
   if(companion.on){const x=companion.x+ox,y=companion.y+oy,g=c.createRadialGradient(x,y,0,x,y,22);g.addColorStop(0,`rgba(255,255,255,${.5+companion.lit*.4})`);g.addColorStop(1,'rgba(0,0,0,0)');c.globalAlpha=1;c.fillStyle=g;c.fillRect(x-22,y-22,44,44);}

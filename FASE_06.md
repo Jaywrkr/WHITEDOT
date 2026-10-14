@@ -68,7 +68,7 @@ El espejo conectado limita su segunda respuesta a una vez por compás, incluso s
 
 Resultados de la entrega: **53 suites Node**; audio de los seis programas: **143 renderizados**, incluidos los **52 estilos** y 26 mezclas nuevas de exploración. Pico máximo de muestra **0,9576** y fracción de muestras ≥0,995 **cero** en estos escenarios. Los datos incluyen registro de instrumentos y escucha cultural realmente completada; [mediciones](scripts/phase-06-validation.json). La salida y retornos existentes también pasan sus comprobaciones de distorsión/filtro. No es una medición de true peak, loudness LUFS ni una escucha artística.
 
-La lámina de referencia actualizada contiene **124 vistas** de familias, incluyendo los guardianes y materia. [Atlas](docs/images/atlas-visual.png). Es una muestra, no todas las variantes ni todo encuentro generado.
+Esta entrega generó **124 vistas** de familias, incluyendo los guardianes y materia; la ampliación posterior de [mascota y cubo](MASCOTA_Y_CUBO.md) lleva el atlas vigente a **130**. [Atlas](docs/images/atlas-visual.png). Es una muestra, no todas las variantes ni todo encuentro generado.
 
 Navegador: **36/36 recorridos aprobados**, más recarga offline con **91 módulos** y rechazo correcto de JavaScript ausente. Pruebas adicionales de guardianes/reinicio en 390×844 y 844×390 y de Bitácora móvil/escritorio también aprobadas tras los ajustes finales. Comandos: `npm test`, `npm run test:browser`, `npm run test:audio`, `python3 scripts/render-visual-atlas.py`.
 
