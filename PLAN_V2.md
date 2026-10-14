@@ -1,3 +1,5 @@
+> **RC6 ya integrada:** main incluye `9b5fe00`. [Nuevo plan: 50 propuestas](UNIVERSO_50_IDEAS.md), con beneficios temporales de cajas como prioridad. Estas ideas aún no se implementaron; el historial de abajo conserva su fecha.
+
 > **RC6 vigente:** interfaz integrada en `polish/coherent-game-ui`. [Auditoría, decisiones y capturas](AUDITORIA_INTERFAZ.md). Los catálogos y límites musicales se mantienen; el contenido anterior conserva su fecha histórica.
 
 > **Registro RC5 implementado:** libro local de hallazgos raros con coordenadas/WD1, doce cartas por página y límite de 512 por partida. [Detalle](HALLAZGOS_RAROS.md). Archivo ampliable, biblioteca entre dispositivos y sincronización de libros quedan para el bloque de progreso de V2.

@@ -1,6 +1,6 @@
 # Interfaz integrada · V1 RC6
 
-**1.0.0-rc.6 · polish/coherent-game-ui**, basada en **main `2a7dce0` (#84)**, que ya integra `feat/rare-discovery-cards` (`14e6862`) y todos sus padres. Una rama amplia con auditoría, diseño, navegación y correcciones; Jay crea PR y hace merge. El PR contiene solamente este bloque de interfaz. No hay publicación nueva registrada.
+**1.0.0-rc.6 · polish/coherent-game-ui**, basada en **main `2a7dce0` (#84)**, que ya integra `feat/rare-discovery-cards` (`14e6862`) y todos sus padres. Una rama amplia con auditoría, diseño, navegación y correcciones; Jay crea PR y hace merge. Este bloque fue integrado y subido a main en `9b5fe00`, por autorización explícita posterior de Jay. No hay publicación nueva registrada. [Siguiente plan de 50 propuestas](UNIVERSO_50_IDEAS.md).
 
 ## Dirección y diagnóstico
 
