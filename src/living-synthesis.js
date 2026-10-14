@@ -21,14 +21,16 @@ export function initialize(runtime){
    if(!cache.has(key)){cache.set(key,materialSamples(ac,voice.material,variant%8));if(cache.size>32)cache.delete(cache.keys().next().value);}
    const b=ac.createBufferSource();b.buffer=cache.get(key);b.playbackRate.value=.75+variant%8*.06;b.connect(filter);sources.push(b);nodes.push(b);
   }else{
-   const hz=runtime.hz(n),ratios=voice.role==='acorde'?[1,1.25,1.5]:[1,1.002];
+   const chord=voice.role==='acorde'?(runtime.chordTones?.()||[n,n+3,n+7]).slice(0,3):null;
+   const hz=runtime.hz(chord?.[0]??n),ratios=chord?chord.map(note=>runtime.hz(note)/hz):voice.instrument==='reese'?[.997,1.003]:[1,1.002];
    for(const [i,ratio]of ratios.entries()){const osc=ac.createOscillator(),level=ac.createGain();osc.frequency.value=hz*ratio;level.gain.value=(voice.role==='acorde'?.25:.42);
     if(variant%3===0){const real=new Float32Array([0,0,0,0,0]),imag=new Float32Array([0,1,.14,.06,.02]);osc.setPeriodicWave(ac.createPeriodicWave(real,imag));}
-    else osc.type=voice.role==='bajo'?'triangle':variant%3===1?'sine':'triangle';
+    else osc.type=voice.instrument==='sub'?'sine':['acid','reese','strings'].includes(voice.instrument)?'sawtooth':variant%3===1?'sine':'triangle';
     osc.connect(level).connect(filter);sources.push(osc);nodes.push(osc,level);
-    if(spec.signature==='robotica'&&i===0){const mod=ac.createOscillator(),depth=ac.createGain();mod.frequency.value=hz*.5;depth.gain.setValueAtTime(hz*.08,time);depth.gain.exponentialRampToValueAtTime(.1,end);mod.connect(depth).connect(osc.frequency);sources.push(mod);nodes.push(mod,depth);}
+    if((spec.signature==='robotica'||['fm','rhodes','logdrum','machine'].includes(voice.instrument))&&i===0){const mod=ac.createOscillator(),depth=ac.createGain();mod.frequency.value=hz*.5;depth.gain.setValueAtTime(hz*(voice.instrument==='logdrum'?1.2:voice.instrument==='fm'?.7:.08),time);depth.gain.exponentialRampToValueAtTime(.1,end);mod.connect(depth).connect(osc.frequency);sources.push(mod);nodes.push(mod,depth);}
    }
   }
+  if(voice.material==='tela'&&voice.role!=='bajo'&&variant%4===0){for(let i=0;i<2;i++){const grain=ac.createBufferSource(),level=ac.createGain();grain.buffer=materialSamples(ac,'tela',variant%8);level.gain.value=.025;grain.connect(level).connect(filter);grain.start(time+i*.035);grain.stop(end);nodes.push(grain,level);}}
   runtime.livingNoteCue?.({id:source?.id,role:voice.role,note:n,time,material:voice.material});
   const [main]=sources;main.onended=()=>nodes.forEach(node=>node.disconnect());for(const source of sources){source.start(time);source.stop(end+.01);}return true;
  }

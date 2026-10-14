@@ -1,5 +1,5 @@
 import {BoundedMap} from './cache.js';
-import {LIVING_CATALOG,livingChunk,livingDefinition} from './living-catalog.js';
+import {LIVING_CATALOG,livingChunk,livingDefinition,musicRecipe} from './living-catalog.js';
 import {livingGlyph} from './living-art.js';
 import {elementInk} from './visual.js';
 import {contactEntry} from './contact.js';
@@ -22,7 +22,7 @@ export function initialize(runtime){
   const seen=runtime.S.livingSeen||={};if(!seen[o.kind]){seen[o.kind]={day:runtime.S.todayKey,variant:o.variant};runtime.say(def.name+' · '+HINTS[def.gesture]+'.','Una voz nueva');}runtime.save();
  }
  function tick(dt){
-  if(owner!==runtime.S){owner=runtime.S;chunks.clear();lab=null;clock=0;}if(!active())return;clock+=Math.min(.05,dt);
+  if(owner!==runtime.S){owner=runtime.S;chunks.clear();lab=null;clock=0;}if(!active())return;clock+=Math.min(.05,dt);runtime.livingEcologyTick?.(dt);
   for(const o of near()){const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),def=livingDefinition(o.kind);o.lit=Math.max(0,o.lit-dt*2);o.energy=Math.max(0,o.energy-dt*.028);o.phase+=dt*(.2+o.variant%5*.06);
    const angle=Math.atan2(runtime.S.wy-o.y,runtime.S.wx-o.x),old=o.angle??angle;let delta=Math.atan2(Math.sin(angle-old),Math.cos(angle-old));o.angle=angle;
    o.orbit=(o.orbit||0)+(d<o.size+60?Math.abs(delta):0);o.dwell=d<o.size+32&&(runtime.body?.speed||0)<16?(o.dwell||0)+dt:0;
@@ -30,15 +30,19 @@ export function initialize(runtime){
    if(def.gesture==='orbita'&&o.orbit>Math.PI){o.orbit=0;interact(o);}
    if((def.gesture==='quietud'||def.gesture==='presion')&&o.dwell>8&&clock-(o.last||-100)>8){o.last=clock;interact(o);}
    if(o.kind==='seed'){o.x=o.homeX+Math.sin(clock*.13+o.variant)*35;o.y=o.homeY+Math.cos(clock*.11+o.variant)*20;if(o.dwell>12)o.size=Math.min(24,o.size+dt*.2);}
+   if(o.dwell>3&&o.kind==='moss'){const region=runtime.regionOfPos(o.x,o.y);runtime.driveInfluence?.(region,'space',.6,o.variant%8);runtime.subtractInfluence?.(region,'melody');}
    runtime.livingBehavior?.(o,dt,clock,d);
   }
  }
  function step(s,bar,time){if(!active()||!runtime.S.sound||runtime.ac?.state!=='running'||runtime.labSolo&&!runtime.labLiving)return;
-  const objects=near(280).filter(o=>o.energy>.2);if(!objects.length||barPlayed===bar)return;const o=objects[bar%objects.length];if(s!==2||!claimInstallationBar(runtime,bar))return;barPlayed=bar;emit(o,time);
+  const objects=near(280).filter(o=>o.energy>.2&&(!o.ecology||o.awake>.5));if(!objects.length||barPlayed===bar)return;const o=objects[bar%objects.length];const region=runtime.regionOfPos(o.homeX,o.homeY),score=musicRecipe(region,runtime.seedOf,runtime.rng),steps=o.relation&&bar%4===3?[0,5,10]:score.steps;
+  const at=steps[(bar+score.rotation)%steps.length];if(s!==at||!claimInstallationBar(runtime,bar)||runtime.currentPocket?.()?.kind==='quiet')return;barPlayed=bar;
+  const shifted=time+(s%2?runtime.SIX*score.swing:0);emit(o,shifted);
+  if(bar%8===7&&score.family!=='free'&&o.energy>.75)emit(o,shifted+runtime.SIX*2,false,'ambient');
  }
  function draw(t){if(!runtime.inWorld()||(runtime.S.layer||'superficie')!=='superficie')return;const c=runtime.cx,objects=near(Math.min(850,Math.max(runtime.W,runtime.H)*.7));let label=null;
   c.save();for(const o of objects){const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);if(d<110&&(!label||d<label.d))label={o,d};if(d>500&&o.group!=='architecture'){c.globalAlpha=.18;c.fillStyle=elementInk('glass',o.hue);c.fillRect(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy,2,2);continue;}
-   c.save();c.translate(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy);c.globalAlpha=Math.max(.16,1-d/800)*(.55+o.lit*.35);c.strokeStyle=elementInk('glass',o.hue);c.lineWidth=1.1;livingGlyph(c,o,t);if(o.lit){c.globalAlpha=o.lit*.2;c.beginPath();c.arc(0,0,o.size+6,0,Math.PI*2);c.stroke();}c.restore();}
+   c.save();c.translate(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy);c.globalAlpha=Math.max(.16,1-d/800)*(.55+o.lit*.35);c.strokeStyle=elementInk('glass',o.hue);c.lineWidth=1.1;c.globalAlpha*=o.awake||1;c.scale(o.growth||1,o.growth||1);livingGlyph(c,o,t);if(o.lit){c.globalAlpha=o.lit*.2;c.beginPath();c.arc(0,0,o.size+6,0,Math.PI*2);c.stroke();}c.restore();}
   if(label){const {o}=label;c.globalAlpha=.7;c.fillStyle=elementInk('glass',o.hue);c.font='9px monospace';c.textAlign='center';c.fillText(livingDefinition(o.kind).name,o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy+o.size+20);}c.restore();
  }
  function sources(){return near(250).map(o=>({kind:'living:'+o.kind,name:livingDefinition(o.kind).name,object:o,distance:Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),hint:HINTS[livingDefinition(o.kind).gesture]}));}

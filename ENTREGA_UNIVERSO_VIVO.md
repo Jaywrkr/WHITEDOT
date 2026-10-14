@@ -19,3 +19,11 @@ Diez linajes de flora ya aparecen con distribución natural y responden al cubo:
 ## Fase 4 · Fauna con respuesta y movimiento
 
 Diez linajes de fauna ya son jugables: mantas, ciervos, tortugas, escarabajos, medusas, gusanos, fragmentos de ballena, polillas, crustáceos y blobs. Glifos pequeños originales, movimiento limitado al hábitat, individuos tímidos/curiosos/sociales y articulación según el gesto. Polillas, gusanos y cactus escuchan frases cercanas y las devuelven. Todos se prueban por separado en el laboratorio. La fauna usa el presupuesto de instalación compartido para no saturar la música. Prueba determinista de 500 segundos de movimiento.
+
+## Fase 5 · Composición y producción
+
+La radio añade capítulos a compás durante escuchas largas, bancos de bajo propios del género y variaciones de mezcla cálidas/limpias/texturales. Los nuevos objetos alteran la función musical que realmente tocan, con influencia que decae. Patrones ambientales regionales, swing, pequeños fills espaciados; musgo permite restar melodía. Acordes nuevos usan las notas del acorde real, no intervalos mayores fijos. Se amplían timbres de sub, FM, ácido, Reese y log drum, más granos suaves acotados. Se mantienen los 52 géneros. Escucha profesional y aceptación humana siguen pendientes de escuchar la entrega; ninguna prueba automática certifica gusto o masterización profesional.
+
+## Fase 6 · Ciclos, afinidades y descanso
+
+Día/noche de juego con cuatro fases, humedad, mareas y viento suaves, conectados al clima y las estaciones existentes. Flora crece visualmente; actividad y desplazamientos de fauna varían sin alejarla de su dirección. Polinización, simbiosis y colonias se producen por proximidad real, no por anuncios inventados. Relaciones activas generan respuestas entrelazadas 3:4 contenidas. El tiempo se guarda y se pausa con el juego. Dormir o alejarse no castiga criaturas ni exige mantenimiento. No se simula una cadena alimentaria completa.

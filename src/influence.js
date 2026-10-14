@@ -1,9 +1,11 @@
+import {livingVoice} from './living-catalog.js';
 import {RHYTHM_GENRES} from './rhythms.js';
 import {REFERENCE_BASS} from './references.js';
 export const CHANNELS=['bass','groove','melody','space'];
 export const CHANNEL_NAMES={bass:'Bajo',groove:'Groove',melody:'Motivo',space:'Espacio'};
 const clamp=n=>Math.max(-1,Math.min(1,n));
 export function influenceProfile(region,kind,source,seedOf,rng){
+ if(kind.startsWith('living:')){const voice=livingVoice(kind,region,{[region.genre]:{bassP:['sub'],hookP:['rhodes']}},seedOf,rng);if(voice)return {channel:{bajo:'bass',perc:'groove',lead:'melody',acorde:'space'}[voice.role],variant:source?.variant%8||0,speed:.85};}
  if(kind.startsWith('rhythm:'))return {channel:kind.startsWith('rhythm:stone:')?'bass':'groove',variant:source?.variant%8||0,speed:.7};
  if(kind.startsWith('ecology:')&&region.ecology){const channel=kind.split(':').at(-1);if(CHANNELS.includes(channel))return {channel,variant:source?.variant%8||0,speed:.7};}
  const id=source?.id||`${source?.hx??source?.x??0},${source?.hy??source?.y??0}`;
