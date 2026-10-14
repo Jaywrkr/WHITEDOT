@@ -28,7 +28,8 @@ export function initialize(runtime) {
     runtime.saveToolsTick?.();runtime.focusUITick?.();runtime.syncSession();runtime.glassTick?.();runtime.mirrorTick?.();
     if(!runtime.inWorld()||!runtime.S.sound)runtime.clearSoundCues();
     if(!runtime.inWorld())runtime.clearRelicProgress();
-    const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;runtime.rareCardTick?.(dt);
+    runtime.activeFrameSeconds=Math.max(0,Math.min(1,(t-(frame.l||t))/1000));
+    const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;runtime.rareCardTick?.(runtime.activeFrameSeconds);
     const modal=[...document.querySelectorAll(".modal")].some(m=>!m.hidden&&!m.classList.contains("lite"));
     let dx=(runtime.keys.arrowright||runtime.keys.d?1:0)-(runtime.keys.arrowleft||runtime.keys.a?1:0), dy=(runtime.keys.arrowdown||runtime.keys.s?1:0)-(runtime.keys.arrowup||runtime.keys.w?1:0);
     if(runtime.ptr){const jx=runtime.ptr.ox??runtime.W/2,jy=runtime.ptr.oy??runtime.H/2,rad=runtime.ptr.ox!=null?55:80;dx=runtime.ptr.x-jx;dy=runtime.ptr.y-jy;const l=Math.hypot(dx,dy);if(l<6){dx=dy=0;}else{const k=Math.min(1,l/rad);dx=dx/l*k;dy=dy/l*k;}}
@@ -394,6 +395,7 @@ export function initialize(runtime) {
   }
 
 
+  document.addEventListener('visibilitychange',()=>{frame.l=performance.now();runtime.activeFrameSeconds=0;});
   Object.defineProperties(runtime, {
     frame: { get: () => frame },
   });
