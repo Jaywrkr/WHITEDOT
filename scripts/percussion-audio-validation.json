@@ -1,0 +1,4169 @@
+[
+  {
+    "scene": "rhythm:stone",
+    "instrumentHits": {
+      "glass": 2,
+      "flute": 14,
+      "shaker": 13,
+      "tom": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 0.48477311017306957,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 3.171403956333248,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 6.250705523942745,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 9.333428136165471,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ambient",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9008357524871826,
+    "rmsDb": -9.90356535472391,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:hollow",
+    "instrumentHits": {
+      "kick": 8,
+      "sub": 15,
+      "flute": 16,
+      "hat": 23,
+      "conga": 6,
+      "snare": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 0.41777216702940007,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 3.320485065986221,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 5.261290322580643,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 6.874193548387094,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 7.841935483870963,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 9.454838709677414,
+        "origin": "ambient"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "downtempo",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9041309952735901,
+    "rmsDb": -12.17807961842195,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:roots",
+    "instrumentHits": {
+      "kick": 20,
+      "sub": 20,
+      "organ": 20,
+      "shaker": 19,
+      "hat": 20,
+      "wood": 14
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "roots",
+        "instrument": "wood",
+        "time": 0.34921110437293884,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "wood",
+        "time": 3.129156317297784,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "wood",
+        "time": 6.1464715998479,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "wood",
+        "time": 9.175754689785014,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "dub",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.90102618932724,
+    "rmsDb": -11.067020264206224,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:reeds",
+    "instrumentHits": {
+      "kick": 20,
+      "pluck": 20,
+      "organ": 45,
+      "shaker": 40,
+      "hat": 20,
+      "wood": 4,
+      "clap": 10
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 0.34914345539640634,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 3.1017130834683777,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 6.104645276827737,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 9.095452845793217,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "deep",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.906061589717865,
+    "rmsDb": -13.535537375501765,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pods",
+    "instrumentHits": {
+      "kick": 20,
+      "sub": 20,
+      "flute": 40,
+      "shaker": 44,
+      "conga": 34,
+      "wood": 20,
+      "clap": 10
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pods",
+        "instrument": "shaker",
+        "time": 0.34484229295421387,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "shaker",
+        "time": 3.1055361643740906,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "shaker",
+        "time": 6.1048064043987535,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "shaker",
+        "time": 9.097613454187288,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "afro",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9032065868377686,
+    "rmsDb": -12.317717460697345,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:shell",
+    "instrumentHits": {
+      "kick": 21,
+      "pluck": 21,
+      "clav": 11,
+      "hat": 21,
+      "rim": 18,
+      "wood": 10
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 0.3367777768251816,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 3.2423058529059996,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 6.14721691344063,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 9.292204381749551,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "minimal",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9010451436042786,
+    "rmsDb": -15.260720793196722,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:dust",
+    "instrumentHits": {
+      "kick": 20,
+      "keys": 22,
+      "shaker": 42,
+      "roll": 38,
+      "wood": 42,
+      "clap": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 0.33520550213204253,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 3.1932027567366497,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 6.2892495734565586,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 9.145232501806317,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "rominimal",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9011334776878357,
+    "rmsDb": -14.403051482888644,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pool",
+    "instrumentHits": {
+      "kick": 23,
+      "acid": 50,
+      "saw": 12,
+      "hat": 67,
+      "shaker": 22,
+      "conga": 8,
+      "clap": 11
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 0.3260672858236497,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 3.2368711738439386,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 4.353731343283586,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 5.249253731343288,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 6.146684393362525,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 7.935820895522399,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 8.8313432835821,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 9.280887481427403,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "acid",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9038866758346558,
+    "rmsDb": -14.58401883165753,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:stone",
+    "instrumentHits": {
+      "kick": 11,
+      "hat": 44,
+      "reese": 42,
+      "organ": 34,
+      "tom": 6,
+      "wood": 11,
+      "snare": 15
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 0.3299126861656372,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 1.9461538461538466,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 2.638461538461539,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 6.100885342724615,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 7.484615384615373,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 8.176923076923066,
+        "origin": "ambient"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "breaks",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9126635789871216,
+    "rmsDb": -16.87450812437095,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:hollow",
+    "instrumentHits": {
+      "kick": 16,
+      "organb": 21,
+      "organ": 21,
+      "keys": 44,
+      "hat": 66,
+      "conga": 8,
+      "snare": 11
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 0.32641618266913364,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 3.2854620374672288,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 4.418181818181818,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 5.327272727272727,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 6.232748550795352,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 8.054545454545444,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 8.963636363636352,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 9.193456741250953,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "garage",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9095702171325684,
+    "rmsDb": -15.839451191715632,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:roots",
+    "instrumentHits": {
+      "kick": 5,
+      "tom": 27,
+      "fm": 20,
+      "marimba": 30,
+      "shaker": 40,
+      "conga": 10,
+      "wood": 20,
+      "rim": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 0.3512442957325408,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 3.1249471106337805,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 6.15423589507107,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 9.170777166128453,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "tribal",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9010823965072632,
+    "rmsDb": -13.319920562636398,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:reeds",
+    "instrumentHits": {
+      "kick": 17,
+      "hat": 44,
+      "fm": 21,
+      "metalkeys": 17,
+      "shaker": 22,
+      "wood": 4,
+      "rim": 5,
+      "snare": 11
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 0.33128445530983697,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 3.1046320782331756,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 6.103052071821869,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 9.105291340082868,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "electro",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9191502928733826,
+    "rmsDb": -16.060409131245233,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pods",
+    "instrumentHits": {
+      "kick": 21,
+      "pluck": 37,
+      "organ": 67,
+      "shaker": 41,
+      "hat": 21,
+      "wood": 4,
+      "clap": 10,
+      "rim": 15
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 0.3410789392673741,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 3.24349841796622,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 6.144927975759275,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 9.293741530224267,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "progressive",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9027754068374634,
+    "rmsDb": -12.999687752271312,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:shell",
+    "instrumentHits": {
+      "kick": 21,
+      "roll": 21,
+      "keys": 22,
+      "hat": 20,
+      "shaker": 15,
+      "timbale": 4,
+      "tom": 4,
+      "wood": 15
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "shell",
+        "instrument": "timbale",
+        "time": 0.34101270306119463,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "timbale",
+        "time": 3.2673053573949917,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "timbale",
+        "time": 6.1964825579835505,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "timbale",
+        "time": 9.124426195717984,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "microhouse",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9009774923324585,
+    "rmsDb": -16.56888467649237,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:dust",
+    "instrumentHits": {
+      "kick": 22,
+      "fm": 21,
+      "organ": 24,
+      "hat": 22,
+      "clap": 4,
+      "rim": 6,
+      "wood": 10,
+      "tom": 5
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 0.32741127782802176,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 3.1020565053243194,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 6.101840316701674,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 9.104503293629719,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "minimaltechno",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9011263847351074,
+    "rmsDb": -14.098391339807145,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pool",
+    "instrumentHits": {
+      "kick": 12,
+      "reese": 56,
+      "saw": 16,
+      "hat": 29,
+      "conga": 8,
+      "wood": 12,
+      "snare": 6
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 0.3109277613445052,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 3.095895262401552,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 4.171428571428573,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 5.028571428571429,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 6.104895494122053,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 7.599999999999989,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 8.457142857142847,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 9.10105589567031,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "dubstep",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9057999849319458,
+    "rmsDb": -14.742223355184432,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:stone",
+    "instrumentHits": {
+      "kick": 15,
+      "hat": 85,
+      "reese": 84,
+      "organ": 42,
+      "wood": 28,
+      "tom": 12,
+      "snare": 21
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 0.27865727704401844,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 1.5117647058823527,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 2.041176470588235,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 3.096907000325621,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 4.33529411764706,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 4.8647058823529425,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 6.098302871366958,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 7.158823529411756,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 7.688235294117638,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 9.10337783814034,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 9.982352941176453,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 10.511764705882335,
+        "origin": "ambient"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "dnb",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9082303047180176,
+    "rmsDb": -16.79701772045113,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:hollow",
+    "instrumentHits": {
+      "kick": 6,
+      "sub": 12,
+      "flute": 12,
+      "tom": 4,
+      "rim": 6
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 0.5108344584178801,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 3.4354609676472228,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 6.355239222906528,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 9.264018044231149,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "heart",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9009280204772949,
+    "rmsDb": -12.449314694664475,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:roots",
+    "instrumentHits": {
+      "kick": 19,
+      "rubber": 20,
+      "kalimba": 18,
+      "shaker": 37,
+      "rim": 23,
+      "guiro": 10,
+      "conga": 19,
+      "timbale": 1,
+      "tom": 1
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 0.36286610169974826,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 3.318794932976633,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 6.263574165343971,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 9.204720597739458,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "tropical",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9012114405632019,
+    "rmsDb": -13.71364894348551,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:reeds",
+    "instrumentHits": {
+      "kick": 21,
+      "strings": 22,
+      "rubber": 21,
+      "rim": 15,
+      "hat": 20,
+      "guiro": 4,
+      "clap": 10
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "reeds",
+        "instrument": "guiro",
+        "time": 0.34844910883812685,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "guiro",
+        "time": 3.3202850584511836,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "guiro",
+        "time": 6.299175270853204,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "guiro",
+        "time": 9.275101786535146,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "melodic",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9030291438102722,
+    "rmsDb": -13.289523673318905,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pods",
+    "instrumentHits": {
+      "kick": 16,
+      "hat": 43,
+      "machine": 23,
+      "metalkeys": 15,
+      "shaker": 14,
+      "timbale": 5,
+      "tom": 5,
+      "snare": 11
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pods",
+        "instrument": "shaker",
+        "time": 0.33351845539640634,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "shaker",
+        "time": 3.145651658611372,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "shaker",
+        "time": 6.192523382980376,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "shaker",
+        "time": 9.239996567505411,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "robotic",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9138900637626648,
+    "rmsDb": -15.7341765569546,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:shell",
+    "instrumentHits": {
+      "kick": 20,
+      "rubber": 25,
+      "rhodes": 18,
+      "hat": 19,
+      "rim": 4,
+      "wood": 19,
+      "clap": 10,
+      "brass": 27,
+      "guiro": 5
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 0.3530523034690473,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 3.174887738421631,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 6.2586525582449,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 9.330480910781967,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "nudisco",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9038129448890686,
+    "rmsDb": -14.875494347750474,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:dust",
+    "instrumentHits": {
+      "kick": 21,
+      "roll": 22,
+      "keys": 24,
+      "hat": 21,
+      "clap": 14,
+      "rim": 11,
+      "wood": 21
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 0.33473728515402906,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 3.1964372878719476,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 6.291361533200804,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 9.145667171666958,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "techhouse",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9017309546470642,
+    "rmsDb": -14.353806081862093,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pool",
+    "instrumentHits": {
+      "kick": 9,
+      "wood": 22,
+      "sub": 13,
+      "flute": 38,
+      "shaker": 17,
+      "rim": 9,
+      "conga": 15
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 0.3871630457784407,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 0.9653846153846151,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 3.274002119029799,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 6.163310499857464,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 7.888461538461535,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 9.04230769230769,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 9.32937015503853,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "andean",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9026219844818115,
+    "rmsDb": -15.939205071966063,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:stone",
+    "instrumentHits": {
+      "kick": 19,
+      "rubber": 20,
+      "rhodes": 19,
+      "hat": 18,
+      "tom": 6,
+      "clap": 9,
+      "rim": 9,
+      "guiro": 5,
+      "strings": 3
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 0.37679808739530896,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 2.3018348623853213,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 3.402752293577982,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 4.503669724770641,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 5.604587155963301,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 9.188468482527105,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "cosmic",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9010030031204224,
+    "rmsDb": -14.183925523758065,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:hollow",
+    "instrumentHits": {
+      "kick": 22,
+      "roll": 27,
+      "strings": 17,
+      "hat": 21,
+      "tom": 6,
+      "clap": 11,
+      "rim": 5
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 0.3333307364777493,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 3.17450938315267,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 4.588188976377949,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 5.5330708661417285,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 6.237783715245241,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 9.308406913739052,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "melodictechno",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9024648070335388,
+    "rmsDb": -13.91165315134225,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:roots",
+    "instrumentHits": {
+      "kick": 9,
+      "sub": 17,
+      "kalimba": 14,
+      "shaker": 17,
+      "rim": 17,
+      "wood": 17,
+      "conga": 8
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "roots",
+        "instrument": "wood",
+        "time": 0.3893091689269333,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "wood",
+        "time": 3.3372392632130743,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "wood",
+        "time": 6.278310904936979,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "wood",
+        "time": 9.221511843639814,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "organic",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9009117484092712,
+    "rmsDb": -15.902123293600418,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:reeds",
+    "instrumentHits": {
+      "kick": 14,
+      "logdrum": 24,
+      "keys": 38,
+      "shaker": 37,
+      "hat": 18,
+      "rim": 19,
+      "wood": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 0.36897177758717253,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 3.3461085793577827,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 6.319076095845901,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 9.28362900576189,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "amapiano",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9009006023406982,
+    "rmsDb": -15.490155430409638,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pods",
+    "instrumentHits": {
+      "kick": 9,
+      "rhodes": 6,
+      "rubber": 19,
+      "clav": 18,
+      "hat": 17,
+      "shaker": 18,
+      "wood": 9,
+      "rim": 9
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 0.38216034436477175,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 3.2142183083143814,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 6.325220137802289,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 9.158318556721646,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "jazztronica",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9010068774223328,
+    "rmsDb": -17.47346173704877,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:shell",
+    "instrumentHits": {
+      "kick": 5,
+      "fm": 31,
+      "strings": 13,
+      "timbale": 4,
+      "tom": 4,
+      "wood": 9,
+      "hat": 8
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "shell",
+        "instrument": "timbale",
+        "time": 0.39141986148001495,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "timbale",
+        "time": 3.3055943071266296,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "timbale",
+        "time": 6.222447816009592,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "timbale",
+        "time": 9.124038914667208,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "berlin",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.900910496711731,
+    "rmsDb": -17.006658228231593,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:dust",
+    "instrumentHits": {
+      "kick": 21,
+      "machine": 23,
+      "metalkeys": 20,
+      "shaker": 21,
+      "hat": 16,
+      "clap": 4,
+      "timbale": 11,
+      "tom": 11,
+      "snare": 10
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 0.3371102640368044,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 3.2255361643740925,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 6.096051431780685,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 9.21540981884673,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "idm",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9042346477508545,
+    "rmsDb": -13.3607998128267,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pool",
+    "instrumentHits": {
+      "kick": 22,
+      "hat": 58,
+      "rhodes": 6,
+      "sub": 40,
+      "strings": 30,
+      "rim": 15,
+      "tom": 10,
+      "shaker": 28,
+      "snare": 14
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 0.27784286946586745,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 2.01860465116279,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 2.7162790697674413,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 3.2417953787689484,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 4.809302325581395,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 5.506976744186047,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 6.1995490957820785,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 7.599999999999991,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 8.297674418604641,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 9.169193986008926,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "liquid",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9073632955551147,
+    "rmsDb": -13.995184709235025,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:stone",
+    "instrumentHits": {
+      "kick": 22,
+      "machine": 38,
+      "organ": 24,
+      "hat": 21,
+      "tom": 6,
+      "snare": 11,
+      "rim": 10
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 0.3314852640368044,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 1.975,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 2.9125,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 6.192579816666432,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 7.6,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 8.5375,
+        "origin": "ambient"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ebm",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9026874899864197,
+    "rmsDb": -13.973642156943967,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:hollow",
+    "instrumentHits": {
+      "kick": 12,
+      "wood": 50,
+      "fm": 24,
+      "clav": 24,
+      "hat": 22,
+      "conga": 8,
+      "timbale": 5,
+      "tom": 5
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 0.3209908610517298,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 3.2353245734350864,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 4.353731343283586,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 5.249253731343288,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 6.149096906054217,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 7.935820895522399,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 8.8313432835821,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 9.284268216644065,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "algorave",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9011318683624268,
+    "rmsDb": -15.971291721680434,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:roots",
+    "instrumentHits": {
+      "kick": 21,
+      "pluck": 21,
+      "organ": 32,
+      "hat": 41,
+      "rim": 14,
+      "clap": 10,
+      "rhodes": 18,
+      "conga": 10
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 0.3430458944207966,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 3.2738122278296116,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 6.192389651676121,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 9.120969087063902,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "chicago",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9019408226013184,
+    "rmsDb": -13.57003527267155,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:reeds",
+    "instrumentHits": {
+      "kick": 22,
+      "hat": 109,
+      "fm": 28,
+      "saw": 27,
+      "rim": 34,
+      "guiro": 4,
+      "clap": 11
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "reeds",
+        "instrument": "guiro",
+        "time": 0.3249370225204442,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "guiro",
+        "time": 3.1057746976278726,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "guiro",
+        "time": 6.095710657438257,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "guiro",
+        "time": 9.101872426616012,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "detroit",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9094801545143127,
+    "rmsDb": -13.73746392134028,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pods",
+    "instrumentHits": {
+      "kick": 21,
+      "acid": 51,
+      "keys": 24,
+      "shaker": 41,
+      "wood": 15,
+      "hat": 20,
+      "clap": 10
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 0.3389113978669956,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 3.2684722475151258,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 6.199649225953448,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 9.124739972581722,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "acidhouse",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9009848833084106,
+    "rmsDb": -14.3482477309907,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:shell",
+    "instrumentHits": {
+      "kick": 21,
+      "rubber": 26,
+      "strings": 21,
+      "shaker": 41,
+      "hat": 20,
+      "organ": 36,
+      "timbale": 4,
+      "tom": 4,
+      "conga": 20,
+      "clap": 10,
+      "wood": 10
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "shell",
+        "instrument": "timbale",
+        "time": 0.3409105981868677,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "timbale",
+        "time": 3.2999064370414954,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "timbale",
+        "time": 6.244081862591636,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "timbale",
+        "time": 9.195075691568327,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "soulful",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9149497151374817,
+    "rmsDb": -12.971343681982654,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:dust",
+    "instrumentHits": {
+      "kick": 21,
+      "organb": 26,
+      "organ": 62,
+      "rhodes": 21,
+      "shaker": 24,
+      "hat": 35,
+      "wood": 20,
+      "clap": 10
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "dust",
+        "instrument": "shaker",
+        "time": 0.3450441483343251,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "shaker",
+        "time": 3.3267843515168134,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "shaker",
+        "time": 6.29943236171325,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "shaker",
+        "time": 9.27610136935013,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "garagehouse",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9038186073303223,
+    "rmsDb": -14.298673360223582,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pool",
+    "instrumentHits": {
+      "kick": 27,
+      "hat": 44,
+      "machine": 22,
+      "clav": 22,
+      "rim": 44,
+      "conga": 8,
+      "clap": 21
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 0.32228168611533264,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 3.286978369192051,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 4.418181818181818,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 5.327272727272727,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 6.234636625854632,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 8.054545454545444,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 8.963636363636352,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "conga",
+        "time": 9.188164035376063,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ghetto",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9017972350120544,
+    "rmsDb": -14.93995496868825,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:stone",
+    "instrumentHits": {
+      "kick": 44,
+      "sub": 28,
+      "rhodes": 21,
+      "hat": 66,
+      "shaker": 13,
+      "clap": 7,
+      "tom": 12
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 0.2841420470587909,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 1.6,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 2.35,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 3.1031851255660876,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 4.6,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 5.35,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 6.1018413777360685,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 7.6,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 8.35,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 9.09525465261098,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "footwork",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9025459289550781,
+    "rmsDb": -8.493617563175642,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:hollow",
+    "instrumentHits": {
+      "kick": 28,
+      "hat": 44,
+      "machine": 18,
+      "brass": 17,
+      "rim": 28,
+      "conga": 9,
+      "snare": 11,
+      "clap": 15
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 0.32952285812839244,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 3.3037462191131195,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 4.451145038167937,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 5.3671755725190815,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 6.27895846338549,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 8.115267175572514,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 9.03129770992366,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 9.266198320787339,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 9.947328244274816,
+        "origin": "ambient"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "baltimore",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9017928242683411,
+    "rmsDb": -13.320298993689397,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:roots",
+    "instrumentHits": {
+      "kick": 31,
+      "sub": 25,
+      "brass": 20,
+      "hat": 23,
+      "wood": 23,
+      "rim": 10,
+      "clap": 12
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 0.3113959783225187,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 3.099737026600168,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 6.099869754042471,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 9.098553795493201,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "jersey",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9040860533714294,
+    "rmsDb": -11.912166319497516,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:reeds",
+    "instrumentHits": {
+      "kick": 17,
+      "hat": 49,
+      "sub": 17,
+      "vocalform": 16,
+      "cowbell": 11,
+      "wood": 21,
+      "snare": 11,
+      "clap": 11
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 0.3337612721717272,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 3.0979646614985548,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 6.095313799737014,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 9.09412497248592,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "miamibass",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9058974981307983,
+    "rmsDb": -9.41336847749863,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pods",
+    "instrumentHits": {
+      "kick": 15,
+      "hat": 38,
+      "machine": 25,
+      "saw": 18,
+      "shaker": 4,
+      "rim": 9,
+      "wood": 9,
+      "clap": 9,
+      "cowbell": 5
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pods",
+        "instrument": "shaker",
+        "time": 0.36463018106012324,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "shaker",
+        "time": 3.2894860835516475,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "shaker",
+        "time": 6.205554663936401,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "shaker",
+        "time": 9.127051746585588,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "electrofunk",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9020901322364807,
+    "rmsDb": -13.67713710581622,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:shell",
+    "instrumentHits": {
+      "kick": 19,
+      "rubber": 33,
+      "rhodes": 18,
+      "shaker": 50,
+      "hat": 18,
+      "rim": 4,
+      "snare": 9,
+      "clap": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 0.37437083423840856,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 3.131168311366862,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 6.152001209664263,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 9.185169646556643,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "boogie",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.909064769744873,
+    "rmsDb": -14.91303811529707,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:dust",
+    "instrumentHits": {
+      "kick": 12,
+      "hat": 31,
+      "sub": 12,
+      "keys": 22,
+      "wood": 15,
+      "clap": 4,
+      "snare": 8,
+      "rim": 3
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 0.4288118061105731,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 3.4012125153942128,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 6.359787695516948,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "clap",
+        "time": 9.33462087367776,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "boombap",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9066913723945618,
+    "rmsDb": -15.200843853118965,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pool",
+    "instrumentHits": {
+      "kick": 7,
+      "hat": 26,
+      "rhodes": 6,
+      "sub": 7,
+      "kalimba": 11,
+      "tom": 7,
+      "snare": 6,
+      "shaker": 6,
+      "rim": 3
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 0.4844992696916542,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 1.2538461538461538,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 3.176918218330553,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 4.330769230769233,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 6.25725838038992,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 7.407692307692313,
+        "origin": "ambient"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 9.332358592082963,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "lofi",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9036171436309814,
+    "rmsDb": -17.536121522629234,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:stone",
+    "instrumentHits": {
+      "kick": 24,
+      "hat": 90,
+      "sub": 18,
+      "metalkeys": 18,
+      "wood": 24,
+      "snare": 6,
+      "clap": 6
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 0.3104110610302092,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 1.790140845070423,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 2.6352112676056345,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 5.170422535211266,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 6.015492957746477,
+        "origin": "ambient"
+      },
+      {
+        "kind": "stone",
+        "instrument": "kick",
+        "time": 9.186699068764351,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "trap",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9047202467918396,
+    "rmsDb": -8.420128234262277,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:hollow",
+    "instrumentHits": {
+      "kick": 12,
+      "hat": 31,
+      "rubber": 16,
+      "rhodes": 16,
+      "conga": 5,
+      "shaker": 8,
+      "snare": 8,
+      "clap": 8,
+      "wood": 8
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 0.4212821524781926,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 1.0677419354838709,
+        "origin": "ambient"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 3.3270166699027692,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 6.229860421479707,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "conga",
+        "time": 9.134225153155866,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "gfunk",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9058325886726379,
+    "rmsDb": -14.207007538373402,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:roots",
+    "instrumentHits": {
+      "kick": 22,
+      "hat": 89,
+      "machine": 35,
+      "strings": 20,
+      "wood": 26,
+      "rim": 11,
+      "clap": 11
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "roots",
+        "instrument": "wood",
+        "time": 0.3289881745891407,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "wood",
+        "time": 3.258019273687008,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "wood",
+        "time": 6.187477094083945,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "wood",
+        "time": 9.12062151050194,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "detroitelectro",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9011756181716919,
+    "rmsDb": -13.093033189167556,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:reeds",
+    "instrumentHits": {
+      "kick": 15,
+      "rubber": 21,
+      "clav": 19,
+      "shaker": 15,
+      "hat": 20,
+      "guiro": 4,
+      "wood": 10,
+      "snare": 10,
+      "rim": 10
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "reeds",
+        "instrument": "guiro",
+        "time": 0.3471102640368044,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "guiro",
+        "time": 3.102302250596695,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "guiro",
+        "time": 6.098829816666432,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "guiro",
+        "time": 9.096804793588817,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "brokenbeat",
+    "dense": true,
+    "soft": false,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 48000,
+    "peak": 0.9064475297927856,
+    "rmsDb": -15.338383543733938,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:stone",
+    "instrumentHits": {
+      "glass": 2,
+      "flute": 14,
+      "shaker": 13,
+      "tom": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 0.4861164883220426,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 3.1819724267032727,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 6.254598131947367,
+        "origin": "player"
+      },
+      {
+        "kind": "stone",
+        "instrument": "tom",
+        "time": 9.330047963762873,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ambient",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.3316318988800049,
+    "rmsDb": -22.477585001516474,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:hollow",
+    "instrumentHits": {
+      "glass": 2,
+      "flute": 14,
+      "shaker": 13,
+      "tom": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 0.4861164883220426,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 3.1819724267032727,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 6.254598131947367,
+        "origin": "player"
+      },
+      {
+        "kind": "hollow",
+        "instrument": "tom",
+        "time": 9.330047963762873,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ambient",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.331669420003891,
+    "rmsDb": -22.475532041004264,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:roots",
+    "instrumentHits": {
+      "glass": 2,
+      "flute": 14,
+      "shaker": 13,
+      "rim": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 0.4861164883220426,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 3.180932419631703,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 6.258735193858071,
+        "origin": "player"
+      },
+      {
+        "kind": "roots",
+        "instrument": "rim",
+        "time": 9.333351083905653,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ambient",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.3316229581832886,
+    "rmsDb": -22.475435561149375,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:reeds",
+    "instrumentHits": {
+      "glass": 2,
+      "flute": 14,
+      "shaker": 13,
+      "wood": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 0.4861164883220426,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 3.180932419631703,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 6.258735193858071,
+        "origin": "player"
+      },
+      {
+        "kind": "reeds",
+        "instrument": "wood",
+        "time": 9.333351083905653,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ambient",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.33161017298698425,
+    "rmsDb": -22.47495686323601,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pods",
+    "instrumentHits": {
+      "glass": 2,
+      "flute": 14,
+      "shaker": 13,
+      "wood": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 0.4861164883220426,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 3.180932419631703,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 6.258735193858071,
+        "origin": "player"
+      },
+      {
+        "kind": "pods",
+        "instrument": "wood",
+        "time": 9.333351083905653,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ambient",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.3316256105899811,
+    "rmsDb": -22.47507678674314,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:shell",
+    "instrumentHits": {
+      "glass": 2,
+      "flute": 14,
+      "shaker": 13,
+      "rim": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 0.4861164883220426,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 3.180932419631703,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 6.258735193858071,
+        "origin": "player"
+      },
+      {
+        "kind": "shell",
+        "instrument": "rim",
+        "time": 9.333351083905653,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ambient",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.33163049817085266,
+    "rmsDb": -22.47536396502597,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:dust",
+    "instrumentHits": {
+      "glass": 2,
+      "flute": 14,
+      "shaker": 13,
+      "wood": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "dust",
+        "instrument": "wood",
+        "time": 0.4861164883220426,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "wood",
+        "time": 3.180932419631703,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "wood",
+        "time": 6.258735193858071,
+        "origin": "player"
+      },
+      {
+        "kind": "dust",
+        "instrument": "wood",
+        "time": 9.333351083905653,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ambient",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.3316434919834137,
+    "rmsDb": -22.475058675461025,
+    "hotFraction": 0
+  },
+  {
+    "scene": "rhythm:pool",
+    "instrumentHits": {
+      "glass": 2,
+      "flute": 14,
+      "shaker": 13,
+      "tom": 4
+    },
+    "petNotes": [],
+    "percussionNotes": [
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 0.4861164883220426,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 3.1819724267032727,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 6.254598131947367,
+        "origin": "player"
+      },
+      {
+        "kind": "pool",
+        "instrument": "tom",
+        "time": 9.330047963762873,
+        "origin": "player"
+      }
+    ],
+    "cultureHeard": false,
+    "testInstrument": null,
+    "instrumentNotes": 0,
+    "genre": "ambient",
+    "dense": true,
+    "soft": true,
+    "fx": false,
+    "influenced": false,
+    "worldSeed": "",
+    "generation": 1,
+    "ecology": false,
+    "ecologyNotes": 0,
+    "encounter": null,
+    "deep": false,
+    "installation": null,
+    "trail": false,
+    "glass": false,
+    "trailNotes": 0,
+    "glassNotes": 0,
+    "glassRoles": [],
+    "sampleRate": 44100,
+    "peak": 0.33164992928504944,
+    "rmsDb": -22.476249178850075,
+    "hotFraction": 0
+  }
+]

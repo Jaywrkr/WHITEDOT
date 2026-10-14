@@ -4,6 +4,7 @@ import {materiaVoice,materiaKindOf} from './materia-music.js';
 import {vidaVoice,vidaKindOf} from './vida-music.js';
 import {ecologyVoice} from './ecology-model.js';
 import {encounterVoice} from './encounter-families.js';
+import {rhythmVoice} from './percussion-model.js';
 import {blobVoice} from './blobs.js';
 // Identidad musical estable por región; el aspecto no fija el instrumento.
 const ROLES = ['bajo', 'perc', 'acorde', 'lead', 'agudo'];
@@ -49,6 +50,7 @@ export function initialize(runtime) {
   let voiceOrigin="ambient";
   function withVoiceOrigin(origin,emit){const previous=voiceOrigin;voiceOrigin=origin;try{return emit();}finally{voiceOrigin=previous;}}
   function rawVoice(kind, region) {
+    if(kind.startsWith('rhythm:')){const v=rhythmVoice(kind,region,runtime.seedOf);if(v)return v;}
     if(kind.startsWith('ecology:')&&region.ecology)return ecologyVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng);
     if(/^installation:glass:[0-2]$/.test(kind))return glassVoice(region,Number(kind.at(-1)),runtime.GEN,runtime.seedOf);
     {const m=materiaKindOf(kind);if(m)return materiaVoice(m.kind,m.index,region,runtime.GEN,runtime.seedOf);}

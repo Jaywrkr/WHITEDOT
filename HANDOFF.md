@@ -1,3 +1,9 @@
+# Expansión autorizada después de la auditoría
+
+Estado actual: **1.0.0-rc.2 · feat/percussion-landscapes**, hija de **audit/v1-closure (797595c)**. La petición nueva de Jay reabre desarrollo: percusión jugable, versión/deploy visible, minimalismo y registro de elementos en tres ramas amplias. [Entrega vigente y orden](EXPANSION_RITMICA.md). Main sigue en **8096c8d**; Jay crea PR/merge. La auditoría y los pendientes de teléfono/host/CI siguen vigentes.
+
+Los datos RC1 siguientes son la fotografía anterior, conservada como historia; su congelación queda sustituida por este alcance nuevo.
+
 # Continuar desde WHITEDOT V1 RC1
 
 **Candidata `1.0.0-rc.1` · rama `audit/v1-closure` · base f4c112b.** Main remoto observado: **8096c8d (#77)**. Esta rama contiene culturas + mascota + auditoría/correcciones: **un único PR hacia main integra todo**. Jay crea PR/merge; no volver a aplicar ramas padres ni declarar main actualizado hasta comprobarlo.

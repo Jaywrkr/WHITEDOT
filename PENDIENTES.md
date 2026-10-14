@@ -1,3 +1,9 @@
+# Expansión autorizada después de la auditoría
+
+Estado actual: **1.0.0-rc.2 · feat/percussion-landscapes**, hija de **audit/v1-closure (797595c)**. La petición nueva de Jay reabre desarrollo: percusión jugable, versión/deploy visible, minimalismo y registro de elementos en tres ramas amplias. [Entrega vigente y orden](EXPANSION_RITMICA.md). Main sigue en **8096c8d**; Jay crea PR/merge. La auditoría y los pendientes de teléfono/host/CI siguen vigentes.
+
+Los datos RC1 siguientes son la fotografía anterior, conservada como historia; su congelación queda sustituida por este alcance nuevo.
+
 # Pendientes tras el cierre de V1 RC1
 
 Desarrollo funcional congelado en **audit/v1-closure**. [Auditoría completa](AUDITORIA_V1.md) contiene cada hallazgo, evidencia y solución. La candidata incluye culturas y mascota; no se solicitan más ramas pequeñas ni se consideran ausentes sistemas presentes.

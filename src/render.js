@@ -383,6 +383,7 @@ export function initialize(runtime) {
     runtime.drawVida?.(t,dt,ox,oy,R);
     runtime.drawQuietud?.();
     runtime.drawCajas?.(t,dt,ox,oy);runtime.drawCultures?.();
+    runtime.percussionTick?.(dt);runtime.drawPercussion?.(t,dt,ox,oy,R);
     runtime.drawPhenomena(t,dt,ox,oy,R);
     runtime.drawJam?.(t,dt,ox,oy,b);
     runtime.drawAlive?.(t,dt,ox,oy,'sky');

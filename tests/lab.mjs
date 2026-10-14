@@ -11,8 +11,8 @@ for(const f of Object.keys(FAMILIES))assert.ok(ids.includes('family:'+f),'every 
 for(const k of Object.keys(TOY_NAMES))assert.ok(ids.includes('toy:'+k),'every toy: '+k);
 for(const k of Object.keys(PHENOMENON_NAMES))assert.ok(ids.includes('phenomenon:'+k),'every phenomenon: '+k);
 for(const k of ['life:golondrina','life:grulla','life:luciernaga','life:lira','life:plant','materia:strings','materia:prism','materia:membrane','glass','mirrors','tool:fx'])assert.ok(ids.includes(k),k);
-for(const e of LAB_ELEMENTS){assert.ok(e.name&&e.group&&e.try.length>=1&&e.try.every(t=>t.length>3),e.id);assert.ok(['home','family','toy','phenomenon','tool','flock','culture','box','quiet','experimental'].includes(e.find.type),e.id);}
-assert.deepEqual(LAB_GROUPS,['Materia','Instalaciones','Vida','Encuentros','Juguetes','Fenómenos','Herramientas','Guardianes','Poderes','Quietud','Experimental']);
+for(const e of LAB_ELEMENTS){assert.ok(e.name&&e.group&&e.try.length>=1&&e.try.every(t=>t.length>3),e.id);assert.ok(['home','family','toy','phenomenon','tool','flock','culture','box','quiet','experimental','rhythm'].includes(e.find.type),e.id);}
+assert.deepEqual(LAB_GROUPS,['Materia','Instalaciones','Vida','Encuentros','Juguetes','Fenómenos','Herramientas','Guardianes','Poderes','Quietud','Experimental','Percusión']);
 // Navegación circular.
 assert.equal(labStep(ids[0],-1).id,ids.at(-1));assert.equal(labStep(ids.at(-1),1).id,ids[0]);assert.equal(labStep('nope',1).id,ids[1]);
 // Notas: descarta ids desconocidos, veredictos inválidos, preguntas no booleanas y texto excesivo.
@@ -22,7 +22,7 @@ assert.deepEqual(notes['materia:prism'].checks,{clear:false,sound:true});assert.
 assert.ok(labTested(notes['materia:prism']));assert.ok(!labTested(notes.glass));assert.deepEqual(normalizeLabNotes('basura'),{});
 // Informe legible, agrupado y con lo que falta por probar.
 const report=labReport({'materia:prism':{verdict:'fix',checks:{clear:false,sound:true},text:'gira lento\nen móvil'},'family:cloud':{verdict:'ok'}},{date:'2026-10-13'});
-assert.match(report,/^# Laboratorio WHITEDOT · 2026-10-13/);assert.match(report,/Probados: 2 de 54 · Bien 1 · Mejorar 1 · Quitar 0/);
+assert.match(report,/^# Laboratorio WHITEDOT · 2026-10-13/);assert.match(report,/Probados: 2 de 62 · Bien 1 · Mejorar 1 · Quitar 0/);
 assert.match(report,/### Prisma de luz — Mejorar\n- Falla: Se entiende qué hacer\n- Funciona: Suena bien con la música\n- Nota: gira lento \/ en móvil/);
 assert.ok(report.indexOf('## Materia')<report.indexOf('## Encuentros'));assert.match(report,/## Sin probar\n\nCuerdas tensables, /);
 assert.equal(LAB_CHECKS.length,5);

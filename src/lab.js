@@ -35,7 +35,7 @@ export function initialize(runtime){
  function locate(e){
   const f=e.find,home=Math.floor(runtime.REG/2)*runtime.WCH;
   if(f.type==='culture'){const site=runtime.cultureHome();return site?{x:site.x,y:site.y}:null;}
-  if(['box','quiet','experimental'].includes(f.type))return {x:home+80,y:home};
+  if(['box','quiet','experimental','rhythm'].includes(f.type))return {x:home+80,y:home};
   if(f.type==='home')return {x:f.x,y:f.y};
   if(f.type==='family')return {x:home+100,y:home};
   if(f.type==='toy')return spiral((a,b)=>{const raw=runtime.wchunk(a,b),c=runtime.sceneChunk?.(raw)||raw;return (c.playthings||[]).find(o=>o.kind===f.kind)||null;});
@@ -49,6 +49,7 @@ export function initialize(runtime){
  function go(id=book.current){
   const e=labElement(id)||LAB_ELEMENTS[0];book.current=e.id;keep();closeOverlays();
   runtime.stopAutopilot?.();runtime.clearPowers?.();runtime.cancelMateria?.();
+  runtime.labRhythm=e.find.type==='rhythm'?e.find.kind:null;
   runtime.labCulture=e.find.type==='culture'?e.find.culture:null;runtime.cultureReset?.();runtime.labExperimental=e.find.type==='experimental'?{level:.8,mode:e.find.mode}:null;runtime.labEncounter=e.find.type==='family'?e.find.family:null;runtime.encounterReset?.();
   const s=S();s.layer='superficie';const p=locate(e);
   // El elemento queda un poco por debajo del pixel, a la vista y lejos de la barra del laboratorio.

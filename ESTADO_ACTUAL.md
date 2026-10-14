@@ -1,3 +1,9 @@
+# Expansión autorizada después de la auditoría
+
+Estado actual: **1.0.0-rc.2 · feat/percussion-landscapes**, hija de **audit/v1-closure (797595c)**. La petición nueva de Jay reabre desarrollo: percusión jugable, versión/deploy visible, minimalismo y registro de elementos en tres ramas amplias. [Entrega vigente y orden](EXPANSION_RITMICA.md). Main sigue en **8096c8d**; Jay crea PR/merge. La auditoría y los pendientes de teléfono/host/CI siguen vigentes.
+
+Los datos RC1 siguientes son la fotografía anterior, conservada como historia; su congelación queda sustituida por este alcance nuevo.
+
 # Estado vigente · V1 RC1
 
 Rama **audit/v1-closure**, candidata **1.0.0-rc.1**, sobre f4c112b. Main remoto sigue en 8096c8d (#77). La rama incluye las dos entregas pendientes y las correcciones de cierre, para **un PR**. [Auditoría y dictamen](AUDITORIA_V1.md) · [Continuar](HANDOFF.md) · [Pendientes de aceptación](PENDIENTES.md) · [V2](PLAN_V2.md).
