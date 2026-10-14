@@ -72,6 +72,7 @@ export function initialize(runtime) {
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
+    if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.petTick?.(dt);runtime.drawPet?.(t);
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
@@ -384,7 +385,7 @@ export function initialize(runtime) {
     runtime.drawMateria?.(t,dt,ox,oy,R);
     runtime.drawVida?.(t,dt,ox,oy,R);
     runtime.drawQuietud?.();
-    runtime.livingTick?.(dt);runtime.drawLiving?.(t);
+    runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);
     runtime.drawCajas?.(t,dt,ox,oy);runtime.drawCultures?.();
     runtime.percussionTick?.(dt);runtime.drawPercussion?.(t,dt,ox,oy,R);
     runtime.drawPhenomena(t,dt,ox,oy,R);

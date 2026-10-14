@@ -1,6 +1,6 @@
 import {FAMILIES} from './encounter-families.js';
 export function normalizeSeed(value){return String(value??'original').trim().replace(/[^\p{L}\p{N}_ -]/gu,'').slice(0,40)||'original';}
-export function previewKey(seed,layout='classic',generation=1){return `pixel-blanco-v4:${layout==='vasto'?'preview-vasto':layout==='wide'?'preview-wide':'preview'}:${generation===2?'v2:':''}${encodeURIComponent(normalizeSeed(seed))}`;}
+export function previewKey(seed,layout='classic',generation=1){return `pixel-blanco-v4:${layout==='immense'?'preview-immense':layout==='grand'?'preview-grand':layout==='vasto'?'preview-vasto':layout==='wide'?'preview-wide':'preview'}:${generation===2?'v2:':''}${encodeURIComponent(normalizeSeed(seed))}`;}
 export function initialize(runtime){
  const $=runtime.$;
  const select=document.createElement('select');select.id='seedEncounter';select.setAttribute('aria-label','Encuentro para probar');

@@ -1,0 +1,4 @@
+import assert from 'node:assert/strict';import {worldIdentity,placeAddress,sameWorld} from '../src/world-identity.js';import {previewKey} from '../src/seeds.js';import {encodePlace,decodePlace} from '../src/share-tools.js';import {microhabitat} from '../src/living-terrain.js';
+for(const layout of ['classic','wide','vasto','grand','immense']){const world=worldIdentity('lugar',layout,2),a=placeAddress(world,-1e9,1e9,'cielo');assert.deepEqual(decodePlace(encodePlace(a)).address,a);assert(sameWorld(world,decodePlace(encodePlace(a)).address));}
+assert.notEqual(previewKey('lugar','immense',2),previewKey('lugar','vasto',2));assert.deepEqual(microhabitat(-999,1900,900,s=>s.length),microhabitat(-999,1900,900,s=>s.length));
+console.log('PASS five isolated layouts, large negative/positive coordinates, return codes and stable microhabitats');
