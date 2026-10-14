@@ -12,7 +12,7 @@ export function initialize(runtime){
  const caches=new WeakMap();
  function emit(voice,n,time,volume,source){
   const ac=runtime.ac;if(!ac||ac.state!=='running')return true;
-  const spec=voice.score,variant=source?.variant||0;volume=Math.min(.085,Math.max(0,volume));const end=time+Math.min(1.4,spec.decay+.22);
+  const spec=voice.score,variant=source?.variant||0;volume=Math.min(.085,Math.max(0,volume));const end=time+Math.min(1.4,(spec.decay+.22)*(source?.expression==='staccato'?.55:source?.expression==='legato'?1.2:1));
   const gain=ac.createGain(),filter=ac.createBiquadFilter();filter.type='lowpass';filter.frequency.value=voice.role==='bajo'?900:spec.signature==='robotica'?2500:1700;filter.Q.value=.65;
   filter.connect(gain).connect(runtime.bus);gain.gain.setValueAtTime(0,time);gain.gain.linearRampToValueAtTime(volume,time+spec.attack);gain.gain.exponentialRampToValueAtTime(.00001,end);
   const nodes=[gain,filter],sources=[];
