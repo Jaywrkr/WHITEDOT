@@ -1,6 +1,8 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-1.1.0-v2-f0';
+const CACHE='whitedot-1.1.0-v2-f1';
 const SHELL=[
+ "./src/world-visibility-model.js",
+ "./src/world-visibility.js",
  "./src/rewards-model.js",
  "./src/rewards.js",
  "./src/living-voicing.js",

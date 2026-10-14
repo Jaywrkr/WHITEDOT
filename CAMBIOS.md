@@ -1,3 +1,13 @@
+# 2.0 · Fase 1 · El universo se ve real
+
+Rama `v2/f1-universo-visual`, hija de fase 0 `f8af7c4`. Niebla negra de bordes suaves y ruido oscuro, densidad por bioma/clima/hora, cambios de luz suavizados y linterna sutil al agotarse. Desvanecimiento por distancia de linajes, flora, bandadas, percusión y fenómenos; transición figura/punto continua. Precarga de sectores fuera de pantalla, dos sectores heredados por cuadro y caché de vida limitada a 48.
+
+Tres planos decorativos con paralaje, textura por ambiente, vegetación con viento, sombras/reflejos contenidos, humedad, huellas temporales y brillo nocturno local. Nivel de detalle por dispositivo, reducción adaptativa gradual y sin cambios de posiciones, generación, UI o progreso. Radio de escucha conservado separado del radio visual; audio verificado por precaución.
+
+Validación: 73 suites Node y prueba específica de cinco cruces en 390×844, 844×390 y 1280×800 aprobadas; auditoría sin errores/avisos. 51/51 recorridos más recarga offline con 127 módulos y 253 renders de audio en nueve programas aprobados. [Evidencia](scripts/v2-f1-validation.json). Las muestras iniciales de Chromium rondaron 17–21 ms/cuadro; **60 FPS en gama media física no están aceptados** y no se afirman como comprobados.
+
+En el teléfono, usa la vista previa de esta rama: entra al Mundo, camina despacio hacia objetos y gira/regresa; comprueba aparición suave, viento, agua y huellas. Cruza cinco regiones; compara día/noche y lluvia. Prueba vertical/horizontal y linterna próxima a agotarse. Si algo salta o baja el rendimiento, anota semilla, lugar y teléfono. No uses Reiniciar: conserva una copia de tu partida.
+
 # 2.0 · Fase 0 · Base de colección
 
 Rama `v2/f0-coleccion`, desde `main c8d286e`. Catálogo común para cubo, materiales, recuerdos y logros. Cinco rarezas con presentación monocroma y niveles de celebración; dorado reservado a piezas ganadas. API única `awardReward`/`recordRewardSource`, fuentes persistentes y colección visible en Bitácora → Lugares. No cambia audio ni generación.

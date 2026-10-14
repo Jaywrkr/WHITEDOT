@@ -1,3 +1,4 @@
+import {initialize as worldVisibility} from './world-visibility.js';
 import {initialize as rewards} from './rewards.js';
 import {initialize as connection} from './connection.js';
 import {initialize as livingDiscoveries} from './living-discoveries.js';
@@ -149,7 +150,7 @@ if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
 runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0)))runtime.S.mode="camino";
 seeds(runtime);
 lab(runtime);
-rewards(runtime);releaseUI(runtime);elementBook(runtime);
+worldVisibility(runtime);rewards(runtime);releaseUI(runtime);elementBook(runtime);
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
 // Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.

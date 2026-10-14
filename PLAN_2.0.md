@@ -18,7 +18,7 @@ Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0**
 | Fase | Rama | Estado |
 |---|---|---|
 | 0 · Base de colección | `v2/f0-coleccion` | Implementada y probada; pendiente de PR/merge de Jay |
-| 1 · El universo se ve real | `v2/f1-universo-visual` | Pendiente |
+| 1 · El universo se ve real | `v2/f1-universo-visual` | Implementada y probada; PR/merge y 60 FPS físicos por aceptar |
 | 2 · Celebración y caja mágica | `v2/f2-celebracion` | Pendiente |
 | 3 · Cubo con 50 personalizaciones | `v2/f3-cubo-50` | Pendiente |
 | 7 · Menú principal limpio | `v2/f7-menu` | Pendiente |
@@ -93,8 +93,8 @@ Situación actual: la tarjeta de caja es mínima (`src/rare-cards.js`, `src/rare
 
 Situación actual: secuenciador radial (`src/studio.js`).
 
-- **Casa en pixeles vista de frente** (pendiente de confirmar por Jay):
-  - Piso = graves, paredes = medios, techo = agudos.
+- **Casa en pixeles vista desde arriba** (confirmada por Jay el 14 de octubre de 2026):
+  - Zonas del plano = registros: graves, medios y agudos.
   - Izquierda a derecha = momento del compás.
   - Cerca del cubo = más fuerte.
 - **Unos 40 objetos que suenan**, ganados con logros, hallazgos y linajes.
@@ -152,8 +152,8 @@ Arte final, sonido de celebraciones, prueba en teléfonos ([ACEPTACION_V1.md](AC
 
 ## Decisiones pendientes de Jay
 
-1. Casa: vista de frente (recomendado) o desde arriba.
+1. **Resuelta:** casa vista desde arriba, confirmada por Jay.
 2. Arte: ilustrador de pixel (recomendado para 50 piezas, 40 objetos y 6 tarjetas) o arte procedural.
 3. Qué 3–4 ideas creativas van en la primera ronda.
 
-Mientras no estén decididas, las fases 0–3, 6 y 7 pueden avanzar. La 5 necesita la decisión 1.
+Mientras no estén decididas, las fases 0–3, 6 y 7 pueden avanzar. La vista de la fase 5 ya está decidida; se implementa después de la 4.

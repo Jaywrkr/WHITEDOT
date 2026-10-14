@@ -1,3 +1,4 @@
+import {distanceOpacity,detailBlend} from './world-visibility-model.js';
 import {studyOf} from './living-studies.js';
 import {BoundedMap} from './cache.js';
 import {LIVING_CATALOG,livingChunk,livingDefinition,musicRecipe,aquaticChunk} from './living-catalog.js';
@@ -11,9 +12,9 @@ export function initialize(runtime){
  const chunks=new BoundedMap(48);let owner=runtime.S,clock=0,barPlayed=-1,lab=null;
  const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
  function chunk(x,y){const layer=runtime.S.layer||'superficie',key=layer+':'+x+','+y;if(!chunks.has(key)){const d=runtime.regionOfPos((x+.5)*runtime.WCH,(y+.5)*runtime.WCH);chunks.set(key,(layer==='superficie'&&d.sea&&runtime.worldIdentity.generatorVersion===2?aquaticChunk(x,y,runtime.WCH,d,runtime.seedOf,runtime.rng):livingChunk(x,y,runtime.WCH,layer==='cielo'?{...d,sea:false}:d,runtime.BIOMES[d.z].id,layer==='superficie'?runtime.seedOf:s=>runtime.seedOf(layer+':'+s),runtime.rng,LIVING_GROUPS)).filter(o=>layer==='superficie'||(layer==='cielo'?['seed','manta','whale','jelly','moth'].includes(o.kind):['fungal-net','lichen','moss','turtle','worm','beetle'].includes(o.kind))).map(o=>({...o,id:layer==='superficie'?o.id:o.id+':'+layer})));}return chunks.get(key);}
- function near(radius=750){if(!runtime.inWorld())return [];if(runtime.labLiving){if(lab?.kind!==runtime.labLiving){const def=livingDefinition(runtime.labLiving);lab=def?{id:'living:lab:'+def.id,kind:def.id,shape:def.shape,group:def.group,size:18,variant:25,hue:200,x:runtime.S.wx,y:runtime.S.wy+110,homeX:runtime.S.wx,homeY:runtime.S.wy+110,phase:1,energy:0,lit:0,phrase:[],personality:'curiosa',activeAt:0}:null;}return lab?[lab]:[];}lab=null;
+ function near(radius=750){if(!runtime.inWorld())return [];if(owner!==runtime.S){owner=runtime.S;chunks.clear();lab=null;clock=0;}if(runtime.labLiving){if(lab?.kind!==runtime.labLiving){const def=livingDefinition(runtime.labLiving);lab=def?{id:'living:lab:'+def.id,kind:def.id,shape:def.shape,group:def.group,size:18,variant:25,hue:200,x:runtime.S.wx,y:runtime.S.wy+110,homeX:runtime.S.wx,homeY:runtime.S.wy+110,phase:1,energy:0,lit:0,phrase:[],personality:'curiosa',activeAt:0}:null;}return lab?[lab]:[];}lab=null;
   const cx=Math.floor(runtime.S.wx/runtime.WCH),cy=Math.floor(runtime.S.wy/runtime.WCH),out=[];
-  for(let x=cx-1;x<=cx+1;x++)for(let y=cy-1;y<=cy+1;y++)out.push(...chunk(x,y));return out.filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<radius);
+  const n=Math.min(2,Math.ceil((radius+75)/runtime.WCH));for(let x=cx-n;x<=cx+n;x++)for(let y=cy-n;y<=cy+n;y++)out.push(...chunk(x,y));return out.filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<radius);
  }
  function emit(o,time,full=false,origin='ambient'){
   if(!active()||!runtime.S.sound||runtime.ac?.state!=='running')return;
@@ -42,13 +43,19 @@ export function initialize(runtime){
   const shifted=time+(s%2?runtime.SIX*score.swing:0);emit(o,shifted);
   if(bar%8===7&&score.family!=='free'&&o.energy>.75)emit(o,shifted+runtime.SIX*2,false,'ambient');
  }
- function draw(t){if(!runtime.inWorld())return;const c=runtime.cx,objects=near(Math.min(850,Math.max(runtime.W,runtime.H)*.7));let label=null;
-  c.save();for(const o of objects){const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);if(d<110&&(!label||d<label.d))label={o,d};if(d>500&&o.group!=='architecture'){c.globalAlpha=.18;c.fillStyle=elementInk('glass',o.hue);c.fillRect(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy,2,2);continue;}
-   c.save();c.translate(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy);c.globalAlpha=Math.max(.16,1-d/800)*(.55+o.lit*.35);c.strokeStyle=elementInk('glass',o.hue);c.lineWidth=1.1;c.globalAlpha*=o.awake||1;c.scale(o.growth||1,o.growth||1);livingGlyph(c,o,t);if(o.lit){c.globalAlpha=o.lit*.2;c.beginPath();c.arc(0,0,o.size+6,0,Math.PI*2);c.stroke();}c.restore();}
+ function preload(radius){near(radius);}
+ function draw(t){if(!runtime.inWorld())return;const c=runtime.cx,radius=runtime.worldVisibility?.radius||750,objects=near(radius+80);let label=null;
+  c.save();for(const o of objects){const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),fade=distanceOpacity(d,radius);if(!fade)continue;if(d<110&&(!label||d<label.d))label={o,d};
+   const detail=o.group==='architecture'?1:detailBlend(d,runtime.visualDetail?.detailQuality??1),alpha=fade*(.55+o.lit*.35)*(o.awake||1);
+   if(detail<1){c.globalAlpha=alpha*(1-detail)*.33;c.fillStyle=elementInk('glass',o.hue);c.fillRect(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy,2,2);}
+   if(detail>0){c.save();c.translate(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy);c.globalAlpha=alpha*detail;c.strokeStyle=elementInk('glass',o.hue);c.lineWidth=1.1;c.scale(o.growth||1,o.growth||1);livingGlyph(c,o,t);
+    if(o.lit){c.globalAlpha=o.lit*.2*fade*detail;c.beginPath();c.arc(0,0,o.size+6,0,Math.PI*2);c.stroke();}
+    if((runtime.worldVisibility?.day??1)<.45&&['moth','jelly','lichen'].includes(o.kind)){c.globalAlpha=.08*fade*detail*(1-runtime.worldVisibility.day);c.fillStyle=elementInk('glass',o.hue);c.beginPath();c.arc(0,0,Math.min(12,o.size),0,Math.PI*2);c.fill();}c.restore();}
+  }
   if(label){const {o}=label;c.globalAlpha=.7;c.fillStyle=elementInk('glass',o.hue);c.font='9px monospace';c.textAlign='center';c.fillText(livingDefinition(o.kind).name,o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy+o.size+20);}c.restore();
  }
  function sources(){return near(250).map(o=>({kind:'living:'+o.kind,name:livingDefinition(o.kind).name,object:o,distance:Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),hint:o.kind==='bridge'?'Cruza las tres piedras de izquierda a derecha':o.kind==='observatory'?'Rodea y permanece junto a la estrella':HINTS[livingDefinition(o.kind).gesture]}));}
  function card(){const found=Object.keys(runtime.S.livingSeen||{});return '<article class="journal-card"><h3>Universo vivo</h3><p>'+found.length+' / '+LIVING_CATALOG.length+' linajes escuchados. Los individuos cambian de voz, forma y conducta según el lugar.</p><p>'+found.map(id=>livingDefinition(id)?.name).filter(Boolean).join(' · ')+'</p></article>';}
  runtime.ACH.push(['vidaNueva','El lugar responde','Escuchaste un nuevo linaje con el cubo.']);
- Object.defineProperties(runtime,{livingTick:{get:()=>tick},livingStep:{get:()=>step},drawLiving:{get:()=>draw},livingNear:{get:()=>near},livingSources:{get:()=>sources},livingCard:{get:()=>card},livingCache:{get:()=>chunks},livingInteract:{get:()=>interact}});
+ Object.defineProperties(runtime,{preloadLiving:{get:()=>preload},livingTick:{get:()=>tick},livingStep:{get:()=>step},drawLiving:{get:()=>draw},livingNear:{get:()=>near},livingSources:{get:()=>sources},livingCard:{get:()=>card},livingCache:{get:()=>chunks},livingInteract:{get:()=>interact}});
 }
