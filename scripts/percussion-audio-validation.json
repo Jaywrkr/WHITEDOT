@@ -56,7 +56,7 @@
     "glassRoles": [],
     "sampleRate": 48000,
     "peak": 0.9008358716964722,
-    "rmsDb": -9.936873754659253,
+    "rmsDb": -9.940154487761157,
     "hotFraction": 0
   },
   {
@@ -142,8 +142,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9041287899017334,
-    "rmsDb": -12.054072751798097,
+    "peak": 0.9041301608085632,
+    "rmsDb": -12.06506489105908,
     "hotFraction": 0
   },
   {
@@ -206,7 +206,7 @@
     "glassRoles": [],
     "sampleRate": 48000,
     "peak": 0.9009297490119934,
-    "rmsDb": -11.125928747723698,
+    "rmsDb": -11.1316839272094,
     "hotFraction": 0
   },
   {
@@ -269,8 +269,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9060624837875366,
-    "rmsDb": -13.436462284423028,
+    "peak": 0.9027600288391113,
+    "rmsDb": -13.476145534569966,
     "hotFraction": 0
   },
   {
@@ -333,8 +333,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9027817249298096,
-    "rmsDb": -12.433500405211316,
+    "peak": 0.9027132987976074,
+    "rmsDb": -12.441188549003597,
     "hotFraction": 0
   },
   {
@@ -396,8 +396,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9011079668998718,
-    "rmsDb": -15.135941981982484,
+    "peak": 0.9009230732917786,
+    "rmsDb": -15.14054584098966,
     "hotFraction": 0
   },
   {
@@ -459,8 +459,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9009429216384888,
-    "rmsDb": -14.701516691013307,
+    "peak": 0.9009615182876587,
+    "rmsDb": -14.698904735004206,
     "hotFraction": 0
   },
   {
@@ -546,8 +546,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9435436129570007,
-    "rmsDb": -14.805822720302924,
+    "peak": 0.9327309727668762,
+    "rmsDb": -14.810173951359772,
     "hotFraction": 0
   },
   {
@@ -634,8 +634,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9126635789871216,
-    "rmsDb": -16.789643791226887,
+    "peak": 0.9126636385917664,
+    "rmsDb": -16.794074869804405,
     "hotFraction": 0
   },
   {
@@ -721,8 +721,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9065642356872559,
-    "rmsDb": -15.891286605545334,
+    "peak": 0.905441164970398,
+    "rmsDb": -15.942273467740197,
     "hotFraction": 0
   },
   {
@@ -785,8 +785,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.901064395904541,
-    "rmsDb": -13.48482267919019,
+    "peak": 0.9010643362998962,
+    "rmsDb": -13.48464487544176,
     "hotFraction": 0
   },
   {
@@ -850,8 +850,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9191504716873169,
-    "rmsDb": -16.08656662747093,
+    "peak": 0.9128909111022949,
+    "rmsDb": -16.07690697647127,
     "hotFraction": 0
   },
   {
@@ -915,8 +915,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9047980904579163,
-    "rmsDb": -13.010289998896559,
+    "peak": 0.9033524990081787,
+    "rmsDb": -13.015482575970099,
     "hotFraction": 0
   },
   {
@@ -981,7 +981,7 @@
     "glassRoles": [],
     "sampleRate": 48000,
     "peak": 0.9009243845939636,
-    "rmsDb": -16.50545496533914,
+    "rmsDb": -16.50690772859836,
     "hotFraction": 0
   },
   {
@@ -1044,8 +1044,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9010201096534729,
-    "rmsDb": -14.090879938831868,
+    "peak": 0.9009912014007568,
+    "rmsDb": -14.093655700012457,
     "hotFraction": 0
   },
   {
@@ -1132,8 +1132,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9061967134475708,
-    "rmsDb": -14.847398678798434,
+    "peak": 0.90614914894104,
+    "rmsDb": -14.851828067789265,
     "hotFraction": 0
   },
   {
@@ -1244,8 +1244,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.909041166305542,
-    "rmsDb": -17.009423670086726,
+    "peak": 0.909015953540802,
+    "rmsDb": -17.04483684067445,
     "hotFraction": 0
   },
   {
@@ -1305,8 +1305,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9009281396865845,
-    "rmsDb": -12.435598916643205,
+    "peak": 0.9009280204772949,
+    "rmsDb": -12.453717464069971,
     "hotFraction": 0
   },
   {
@@ -1371,8 +1371,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9010981917381287,
-    "rmsDb": -13.747433034074469,
+    "peak": 0.9010981321334839,
+    "rmsDb": -13.750694395122123,
     "hotFraction": 0
   },
   {
@@ -1435,8 +1435,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9023846983909607,
-    "rmsDb": -13.108309135056832,
+    "peak": 0.9027478694915771,
+    "rmsDb": -13.15122267457734,
     "hotFraction": 0
   },
   {
@@ -1500,22 +1500,23 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.913880467414856,
-    "rmsDb": -15.95396818679211,
+    "peak": 0.9138778448104858,
+    "rmsDb": -15.965378636049918,
     "hotFraction": 0
   },
   {
     "scene": "rhythm:shell",
     "instrumentHits": {
       "kick": 20,
-      "rubber": 21,
+      "pluck": 10,
       "rhodes": 8,
       "hat": 19,
       "rim": 4,
       "wood": 19,
       "clap": 10,
       "brass": 35,
-      "guiro": 5
+      "guiro": 5,
+      "rubber": 11
     },
     "petNotes": [],
     "percussionNotes": [
@@ -1565,20 +1566,21 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9019215703010559,
-    "rmsDb": -15.143076800613901,
+    "peak": 0.9018558859825134,
+    "rmsDb": -15.14386749159363,
     "hotFraction": 0
   },
   {
     "scene": "rhythm:dust",
     "instrumentHits": {
       "kick": 21,
-      "roll": 25,
+      "pluck": 8,
       "keys": 8,
       "hat": 21,
       "clap": 14,
       "rim": 11,
       "wood": 21,
+      "roll": 17,
       "clav": 8
     },
     "petNotes": [],
@@ -1629,8 +1631,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9017308950424194,
-    "rmsDb": -14.3351692775935,
+    "peak": 0.9017310738563538,
+    "rmsDb": -14.330009857680121,
     "hotFraction": 0
   },
   {
@@ -1638,11 +1640,12 @@
     "instrumentHits": {
       "kick": 9,
       "wood": 22,
-      "sub": 13,
+      "rubber": 6,
       "flute": 34,
       "shaker": 17,
       "rim": 9,
-      "conga": 16
+      "conga": 16,
+      "sub": 7
     },
     "petNotes": [],
     "percussionNotes": [
@@ -1716,8 +1719,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9016870260238647,
-    "rmsDb": -16.074345212918544,
+    "peak": 0.9010723233222961,
+    "rmsDb": -16.131848863787653,
     "hotFraction": 0
   },
   {
@@ -1806,8 +1809,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9010030031204224,
-    "rmsDb": -14.443917732923964,
+    "peak": 0.9010028839111328,
+    "rmsDb": -14.452033065853167,
     "hotFraction": 0
   },
   {
@@ -1882,8 +1885,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9024381041526794,
-    "rmsDb": -13.804049119260801,
+    "peak": 0.9013500213623047,
+    "rmsDb": -13.811816429214627,
     "hotFraction": 0
   },
   {
@@ -1946,8 +1949,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9327799081802368,
-    "rmsDb": -15.819523833283428,
+    "peak": 0.9328634738922119,
+    "rmsDb": -15.88879076025259,
     "hotFraction": 0
   },
   {
@@ -2010,8 +2013,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9009861946105957,
-    "rmsDb": -15.297428086240865,
+    "peak": 0.9009280800819397,
+    "rmsDb": -15.318680766582485,
     "hotFraction": 0
   },
   {
@@ -2074,20 +2077,21 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9010069370269775,
-    "rmsDb": -16.84126016736495,
+    "peak": 0.9010070562362671,
+    "rmsDb": -16.944572097607995,
     "hotFraction": 0
   },
   {
     "scene": "rhythm:shell",
     "instrumentHits": {
       "kick": 5,
-      "fm": 25,
+      "sub": 7,
       "strings": 3,
       "timbale": 4,
       "tom": 4,
       "wood": 9,
       "hat": 8,
+      "fm": 18,
       "organ": 20
     },
     "petNotes": [],
@@ -2138,8 +2142,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.900819718837738,
-    "rmsDb": -17.341501938601777,
+    "peak": 0.9008234143257141,
+    "rmsDb": -17.35876802696507,
     "hotFraction": 0
   },
   {
@@ -2203,8 +2207,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9052250981330872,
-    "rmsDb": -13.346489802872751,
+    "peak": 0.9052251577377319,
+    "rmsDb": -13.352633063196283,
     "hotFraction": 0
   },
   {
@@ -2304,20 +2308,21 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9074602127075195,
-    "rmsDb": -14.42177943164874,
+    "peak": 0.9074602723121643,
+    "rmsDb": -14.499021663622813,
     "hotFraction": 0
   },
   {
     "scene": "rhythm:stone",
     "instrumentHits": {
       "kick": 22,
-      "machine": 32,
+      "acid": 14,
       "organ": 8,
       "hat": 21,
       "tom": 8,
       "snare": 11,
       "rim": 10,
+      "machine": 18,
       "vocalform": 8
     },
     "petNotes": [],
@@ -2392,8 +2397,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9018519520759583,
-    "rmsDb": -14.092183292521145,
+    "peak": 0.9018515348434448,
+    "rmsDb": -14.092464930520203,
     "hotFraction": 0
   },
   {
@@ -2481,8 +2486,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9012472629547119,
-    "rmsDb": -15.785574012539406,
+    "peak": 0.9013242721557617,
+    "rmsDb": -15.786397157933463,
     "hotFraction": 0
   },
   {
@@ -2545,8 +2550,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9019829630851746,
-    "rmsDb": -13.557618546873492,
+    "peak": 0.9015519022941589,
+    "rmsDb": -13.562355531856841,
     "hotFraction": 0
   },
   {
@@ -2554,11 +2559,12 @@
     "instrumentHits": {
       "kick": 22,
       "hat": 109,
-      "fm": 28,
+      "roll": 10,
       "saw": 10,
       "rim": 34,
       "guiro": 4,
       "clap": 11,
+      "fm": 18,
       "strings": 11
     },
     "petNotes": [],
@@ -2609,20 +2615,21 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9079453945159912,
-    "rmsDb": -13.826905253238856,
+    "peak": 0.9077562689781189,
+    "rmsDb": -13.852702981219903,
     "hotFraction": 0
   },
   {
     "scene": "rhythm:pods",
     "instrumentHits": {
       "kick": 21,
-      "acid": 36,
+      "machine": 20,
       "keys": 8,
       "shaker": 41,
       "wood": 15,
       "hat": 20,
       "clap": 10,
+      "acid": 16,
       "organ": 16
     },
     "petNotes": [],
@@ -2673,15 +2680,15 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9015070796012878,
-    "rmsDb": -14.537716710071475,
+    "peak": 0.9015105962753296,
+    "rmsDb": -14.534896649838934,
     "hotFraction": 0
   },
   {
     "scene": "rhythm:shell",
     "instrumentHits": {
       "kick": 21,
-      "rubber": 26,
+      "sub": 10,
       "strings": 8,
       "shaker": 41,
       "hat": 20,
@@ -2691,6 +2698,7 @@
       "conga": 20,
       "clap": 10,
       "wood": 10,
+      "rubber": 16,
       "rhodes": 10
     },
     "petNotes": [],
@@ -2741,21 +2749,22 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.914890706539154,
-    "rmsDb": -12.833378277714313,
+    "peak": 0.9148908257484436,
+    "rmsDb": -12.860429702054127,
     "hotFraction": 0
   },
   {
     "scene": "rhythm:dust",
     "instrumentHits": {
       "kick": 21,
-      "organb": 26,
-      "organ": 82,
+      "rubber": 10,
       "rhodes": 8,
       "shaker": 24,
       "hat": 35,
+      "organ": 72,
       "wood": 20,
-      "clap": 10
+      "clap": 10,
+      "organb": 16
     },
     "petNotes": [],
     "percussionNotes": [
@@ -2805,8 +2814,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9009734988212585,
-    "rmsDb": -14.781496606135573,
+    "peak": 0.9010540246963501,
+    "rmsDb": -14.791031025404768,
     "hotFraction": 0
   },
   {
@@ -2894,19 +2903,20 @@
     "glassRoles": [],
     "sampleRate": 48000,
     "peak": 0.9017386436462402,
-    "rmsDb": -14.934944098156302,
+    "rmsDb": -14.934248167553068,
     "hotFraction": 0
   },
   {
     "scene": "rhythm:stone",
     "instrumentHits": {
       "kick": 44,
-      "sub": 32,
+      "machine": 8,
       "rhodes": 6,
       "hat": 66,
       "shaker": 13,
       "clap": 7,
       "tom": 12,
+      "sub": 24,
       "vocalform": 15
     },
     "petNotes": [],
@@ -2993,8 +3003,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9021549820899963,
-    "rmsDb": -8.51568357153698,
+    "peak": 0.9021534323692322,
+    "rmsDb": -8.50927315324903,
     "hotFraction": 0
   },
   {
@@ -3094,8 +3104,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9017927050590515,
-    "rmsDb": -13.331160695565421,
+    "peak": 0.9019582867622375,
+    "rmsDb": -13.325447433666,
     "hotFraction": 0
   },
   {
@@ -3158,8 +3168,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9040865302085876,
-    "rmsDb": -11.919569951093196,
+    "peak": 0.903333306312561,
+    "rmsDb": -11.913710374269273,
     "hotFraction": 0
   },
   {
@@ -3167,12 +3177,13 @@
     "instrumentHits": {
       "kick": 17,
       "hat": 49,
-      "sub": 17,
+      "machine": 6,
       "vocalform": 6,
       "cowbell": 11,
       "wood": 21,
       "snare": 11,
       "clap": 11,
+      "sub": 11,
       "saw": 10
     },
     "petNotes": [],
@@ -3223,8 +3234,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9058973789215088,
-    "rmsDb": -9.418127702216884,
+    "peak": 0.9058969020843506,
+    "rmsDb": -9.405248040766363,
     "hotFraction": 0
   },
   {
@@ -3289,21 +3300,22 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9020909070968628,
-    "rmsDb": -13.731182203500145,
+    "peak": 0.9016252756118774,
+    "rmsDb": -13.724837657475055,
     "hotFraction": 0
   },
   {
     "scene": "rhythm:shell",
     "instrumentHits": {
       "kick": 19,
-      "rubber": 29,
+      "pluck": 14,
       "rhodes": 8,
       "shaker": 50,
       "hat": 18,
       "rim": 4,
       "snare": 9,
       "clap": 4,
+      "rubber": 15,
       "brass": 8
     },
     "petNotes": [],
@@ -3354,8 +3366,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9048086404800415,
-    "rmsDb": -15.452703519264979,
+    "peak": 0.9045106172561646,
+    "rmsDb": -15.471378718321107,
     "hotFraction": 0
   },
   {
@@ -3363,12 +3375,13 @@
     "instrumentHits": {
       "kick": 12,
       "hat": 31,
-      "sub": 12,
+      "rubber": 3,
       "keys": 6,
       "wood": 15,
       "clap": 4,
       "snare": 8,
       "rim": 3,
+      "sub": 9,
       "rhodes": 8
     },
     "petNotes": [],
@@ -3419,8 +3432,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9066915512084961,
-    "rmsDb": -15.114855843309146,
+    "peak": 0.9070870876312256,
+    "rmsDb": -15.13028613763897,
     "hotFraction": 0
   },
   {
@@ -3520,8 +3533,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9022189378738403,
-    "rmsDb": -17.257309454310963,
+    "peak": 0.9036567807197571,
+    "rmsDb": -17.318430718628555,
     "hotFraction": 0
   },
   {
@@ -3529,11 +3542,12 @@
     "instrumentHits": {
       "kick": 26,
       "hat": 90,
-      "sub": 18,
+      "machine": 6,
       "metalkeys": 6,
       "wood": 24,
       "snare": 6,
       "clap": 6,
+      "sub": 12,
       "strings": 12
     },
     "petNotes": [],
@@ -3608,8 +3622,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9023252129554749,
-    "rmsDb": -8.366164494787974,
+    "peak": 0.9023335576057434,
+    "rmsDb": -8.357346341810794,
     "hotFraction": 0
   },
   {
@@ -3686,8 +3700,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9082360863685608,
-    "rmsDb": -14.662973988269547,
+    "peak": 0.9082357287406921,
+    "rmsDb": -14.677642366494458,
     "hotFraction": 0
   },
   {
@@ -3750,15 +3764,15 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.90123450756073,
-    "rmsDb": -13.364434114909042,
+    "peak": 0.9011854529380798,
+    "rmsDb": -13.363629655032376,
     "hotFraction": 0
   },
   {
     "scene": "rhythm:reeds",
     "instrumentHits": {
       "kick": 15,
-      "rubber": 23,
+      "sub": 8,
       "clav": 8,
       "shaker": 15,
       "hat": 20,
@@ -3766,6 +3780,7 @@
       "wood": 10,
       "snare": 10,
       "rim": 10,
+      "rubber": 15,
       "rhodes": 9
     },
     "petNotes": [],
@@ -3816,8 +3831,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9063999652862549,
-    "rmsDb": -15.351472853195173,
+    "peak": 0.9064009785652161,
+    "rmsDb": -15.362250468901838,
     "hotFraction": 0
   },
   {
@@ -3876,8 +3891,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.3316098749637604,
-    "rmsDb": -22.500341540940788,
+    "peak": 0.33160632848739624,
+    "rmsDb": -22.503708334337883,
     "hotFraction": 0
   },
   {
@@ -3936,8 +3951,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.3316163420677185,
-    "rmsDb": -22.498539226932767,
+    "peak": 0.33161357045173645,
+    "rmsDb": -22.501873737671495,
     "hotFraction": 0
   },
   {
@@ -3996,8 +4011,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.3316567540168762,
-    "rmsDb": -22.50116727406686,
+    "peak": 0.3316713273525238,
+    "rmsDb": -22.505378981184943,
     "hotFraction": 0
   },
   {
@@ -4056,8 +4071,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.33166176080703735,
-    "rmsDb": -22.50069003986129,
+    "peak": 0.33166566491127014,
+    "rmsDb": -22.504899586978357,
     "hotFraction": 0
   },
   {
@@ -4116,8 +4131,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.3316485583782196,
-    "rmsDb": -22.500813985611686,
+    "peak": 0.33167126774787903,
+    "rmsDb": -22.505033859762772,
     "hotFraction": 0
   },
   {
@@ -4176,8 +4191,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.33167698979377747,
-    "rmsDb": -22.501096104956098,
+    "peak": 0.3316539525985718,
+    "rmsDb": -22.505316731168058,
     "hotFraction": 0
   },
   {
@@ -4236,8 +4251,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.33166295289993286,
-    "rmsDb": -22.500785795880933,
+    "peak": 0.33167511224746704,
+    "rmsDb": -22.50500321706369,
     "hotFraction": 0
   },
   {
@@ -4296,8 +4311,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.331617534160614,
-    "rmsDb": -22.49816694493137,
+    "peak": 0.3316081166267395,
+    "rmsDb": -22.501630746207674,
     "hotFraction": 0
   },
   {
@@ -4356,8 +4371,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.3316725790500641,
-    "rmsDb": -22.500770031296,
+    "peak": 0.331682026386261,
+    "rmsDb": -22.50498668462128,
     "hotFraction": 0
   }
 ]

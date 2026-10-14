@@ -19,7 +19,7 @@ server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)))
 try:
  with sync_playwright() as p:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox']);context=b.new_context();page=context.new_page();url=f'http://127.0.0.1:{server.server_port}/';page.goto(url)
-  page.evaluate('async()=>{window.__reg=await navigator.serviceWorker.register("/sw.js",{updateViaCache:"none"});await navigator.serviceWorker.ready;}');page.wait_for_function('navigator.serviceWorker.controller!==null')
+  page.evaluate('async()=>{window.__reg=await navigator.serviceWorker.register("/sw.js",{updateViaCache:"none"});await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(Error("Worker did not install within 20 seconds")),20000))]);}');page.wait_for_function('navigator.serviceWorker.controller!==null')
   assert page.evaluate('fetch("/src/catalog.js").then(r=>r.text()).then(s=>s.includes("release-A"))')
   version='B';page.evaluate('__reg.update()');page.wait_for_function('__reg.waiting!==null')
   page.reload();assert page.locator('meta[name="audit-version"]').get_attribute('content')=='A'

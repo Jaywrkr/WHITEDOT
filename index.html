@@ -13,7 +13,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
 
-<title>WHITEDOT · V1 RC6</title>
+<title>WHITEDOT · Universo vivo alpha 10</title>
 <link rel="stylesheet" href="./styles/game.css">
 <link rel="stylesheet" href="./styles/interface.css">
 <link rel="stylesheet" href="./assets/fonts/fonts.css">
@@ -26,7 +26,7 @@
 <div class="hud">
   <div><div class="day" id="day">DÍA 1</div><div class="era" id="era">Era I · Pixel</div></div>
   <div class="hud-right">
-  <div class="release-badge" id="releaseBadge"><span id="releaseVersion">v1.1.0-alpha.9</span><small id="releaseDeploy">deploy sin registrar</small></div>
+  <div class="release-badge" id="releaseBadge"><span id="releaseVersion">v1.1.0-alpha.10</span><small id="releaseDeploy">deploy sin registrar</small></div>
   <small class="element-count" id="elementCount">Elementos 0</small>
   <div class="stats">
     <div title="Racha">RACHA <b id="streak">0</b></div>
@@ -106,7 +106,7 @@
     </div></section>
     <section class="menu-group"><h3>Preferencias</h3><label for="autoIntent">Paseo automático</label><select id="autoIntent"><option value="paisaje">Paisaje y descanso</option><option value="vida">Vida y relaciones</option><option value="hallazgos">Encuentros y hallazgos</option></select><label for="voiceMode">La Voz · solo texto</label><select id="voiceMode"><option value="discreta">Discreta</option><option value="guia">Guía de gestos</option><option value="poetica">Poética</option></select><div class="tiles">
       <button id="bDetails" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v1M12 11v6"/></svg><span>Mostrar detalles</span></button>
-      <button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Progreso y respaldo</span></button>
+      <button id="bConnection"><span>Cuenta y duetos</span></button><button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Progreso y respaldo</span></button>
       <button id="pwaUpdate" hidden><span>Actualizar versión disponible</span></button>
     </div></section>
     </div>
@@ -119,7 +119,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="row"><small class="release-id">WHITEDOT · V1 RC6</small>
+    <div class="row"><small class="release-id">WHITEDOT · Universo vivo alpha 10</small>
     <span class="menu-footnote">Arrastra · toca · escucha</span></div>
   </div>
 </div>
@@ -304,6 +304,7 @@
  <label for="mirrorAngle1">Espejo 2 <output id="mirrorValue1"></output></label><input id="mirrorAngle1" type="range" min="0" max="180" step="1">
  <label for="mirrorAngle2">Espejo 3 <output id="mirrorValue2"></output></label><input id="mirrorAngle2" type="range" min="0" max="180" step="1"><small id="mirrorInfo"></small></aside>
 
+<div class="modal" id="mConnection" hidden><div class="sheet"><h2>Cuenta y duetos</h2><p id="accountState"></p><p id="connectionStatus" role="status"></p><form id="accountForm"><label for="accountName">Nombre de cuenta</label><input id="accountName" autocomplete="username" minlength="3" maxlength="32" pattern="[A-Za-z0-9_-]{3,32}" required><label for="accountPassword">Clave · al menos 12 caracteres</label><input id="accountPassword" type="password" autocomplete="current-password" minlength="12" maxlength="128" required><div class="row"><button type="submit">Entrar</button><button id="accountRegister" type="button">Crear cuenta</button><button id="accountGuest" type="button">Invitado</button><button id="accountLogout" type="button">Salir de cuenta</button></div></form><h3>Tu copia</h3><p>La copia local sigue disponible. Recuperar conserva el estado anterior como respaldo; una copia remota diferente se valida antes de reemplazar.</p><div class="row"><button id="cloudPush">Subir copia</button><button id="cloudPull">Recuperar copia</button><button id="cloudDownload">Descargar respaldo remoto</button></div><h3>Dos voces</h3><p id="roomStatus"></p><p>Unirte te sitúa junto al anfitrión. Comparte el código con una persona; cada voz tiene su espacio musical. La sala cubre un entorno local y termina si queda vacía.</p><label for="roomCode">Código de invitación</label><input id="roomCode" maxlength="12" autocomplete="off"><div class="row"><button id="roomCreate">Crear sala</button><button id="roomJoin">Unirme</button><button id="roomLeave">Salir de sala</button></div><button id="connectionClose">Volver al mundo</button></div></div>
 <script type="module" src="./src/main.js"></script>
 
 </body>

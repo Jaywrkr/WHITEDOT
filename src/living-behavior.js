@@ -10,6 +10,7 @@ export function behavior(o,dt,clock,d,player,neighbors=[]){
   const peer=neighbors.find(p=>p!==o&&p.kind==='blob'&&Math.hypot(p.homeX-o.homeX,p.homeY-o.homeY)<160);if(peer){tx+=(peer.x-tx)*.22;ty+=(peer.y-ty)*.22;}
  }
  if(o.ecology?.migration){tx+=Math.sin(clock/80+o.variant)*18;ty+=Math.cos(clock/80+o.variant)*18;}
+ if(o.aquatic)ty+=(o.ecology?.tide||0)*12;
  const pace=(o.kind==='turtle'?.25:o.kind==='deer'?1.3:.7)*(o.awake||1);o.x+=(tx-o.x)*Math.min(1,dt*pace);o.y+=(ty-o.y)*Math.min(1,dt*pace);
  // Excited motion never pushes the creature beyond a small radius of its address.
  const dx=o.x-o.homeX,dy=o.y-o.homeY,r=Math.hypot(dx,dy);if(r>75){o.x=o.homeX+dx/r*75;o.y=o.homeY+dy/r*75;}
@@ -17,8 +18,9 @@ export function behavior(o,dt,clock,d,player,neighbors=[]){
 }
 export function initialize(runtime){
  function tick(o,dt,clock,d){behavior(o,dt,clock,d,{x:runtime.S.wx,y:runtime.S.wy,speed:runtime.body?.speed||0},runtime.livingNear(350));}
- function hear(kind,index,region,source,origin){if(origin!=='player'||kind.startsWith('living:'))return;
-  for(const o of runtime.livingNear(240)){if(!['moth','cactus','worm'].includes(o.kind))continue;o.phrase.push(((index%7)+7)%7);if(o.phrase.length>6)o.phrase.shift();o.energy=Math.min(1,o.energy+.1);}
+ function hear(kind,index,region,source,origin){if(origin!=='player')return;
+  for(const o of runtime.livingNear(240)){if(o.id===source?.id||!['moth','cactus','worm'].includes(o.kind))continue;o.phrase.push(((index%7)+7)%7);if(o.phrase.length>6)o.phrase.shift();o.energy=Math.min(1,o.energy+.1);}
  }
- Object.defineProperties(runtime,{livingBehavior:{get:()=>tick},livingHear:{get:()=>hear}});
+ function link(o){if(!['vine','fungal-net'].includes(o.kind))return;const peer=runtime.livingNear(400).find(p=>p!==o&&p.group!=='architecture'&&Math.hypot(o.x-p.x,o.y-p.y)<180);if(!peer)return;o.links=[peer.id];peer.phrase=o.phrase.slice(-4);peer.energy=Math.max(peer.energy,.4);peer.lit=.4;}
+ Object.defineProperties(runtime,{livingBehavior:{get:()=>tick},livingHear:{get:()=>hear},livingLink:{get:()=>link}});
 }

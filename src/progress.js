@@ -1,3 +1,4 @@
+import {normalizeLivingState} from './living-state.js';
 import {worldIdentity} from './world-identity.js';
 import {createSaveStore,SAVE_VERSION} from './save-store.js';
 import {BoundedMap,CACHE_LIMITS} from './cache.js';
@@ -14,7 +15,7 @@ export function initialize(runtime) {
     worldSeed:"",previewSeed:null,previewLayout:null,session:null,lastSession:null,favorites:{version:1,items:[]},destination:null,glassSites:{},mirrorSites:{},autoPins:false,patchSites:{},worldDetails:false,mode:"camino",wx:900,wy:900,lampDay:null,lampUsed:0,species:{},rel:null,relicSites:{},stars:[],help:{},zones:{},drums:0,bag:{luz:8},studio:{x:null,y:null,biome:0,slots:{}},color:"#ffffff",lastWorldDay:null,prevMode:null,capPlusDay:null,voiceStart:false,luzN:0,cat:{},catN:0,catRecent:[],places:{},placesN:0,retos:{},retosN:0,events:{},journal:{events:{},relics:{},music:{genres:{},instruments:{},scales:{}}}});
   const storage=(()=>{try{return globalThis.localStorage;}catch(_){return {getItem(){throw Error('Unavailable');},setItem(){throw Error('Unavailable');}};}})();
   const store=createSaveStore(storage,KEY,fresh(),identity);let S=store.load();
-  const applyScope=state=>Object.assign(state,{previewSeed:preview,previewLayout:layout,worldSeed:identity.seed,worldIdentity:{...identity},saveVersion:SAVE_VERSION});
+  const applyScope=state=>Object.assign(normalizeLivingState(state),{previewSeed:preview,previewLayout:layout,worldSeed:identity.seed,worldIdentity:{...identity},saveVersion:SAVE_VERSION});
   applyScope(S);
   const save=()=>store.save(S);
 

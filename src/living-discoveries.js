@@ -1,8 +1,9 @@
 import {livingDefinition} from './living-catalog.js';import {studyOf} from './living-studies.js';
 export function initialize(runtime){
  let route=null,routeAt=0,avoid=new Map();
- function context(o,gesture='contacto'){const e=runtime.livingEnvironment;return {habitat:runtime.microhabitat?.().id||'',weather:runtime.weather?.i>.4?'tormenta':'calma',phase:e?.name||'',gesture,study:o.group==='architecture'?studyOf(o).name:''};}
+ function context(o,gesture='contacto'){const e=runtime.livingEnvironment,d=runtime.regionOfPos(o.x,o.y),v=runtime.getVoice('living:'+o.kind,d);return {habitat:runtime.microhabitat?.().id||'',weather:runtime.weather?.i>.4?'tormenta':'calma',phase:e?.name||'',gesture,role:v.role,instrument:v.material+' · '+v.instrument,character:v.score?.signature||'',study:o.group==='architecture'?studyOf(o).name:''};}
  function found(o){runtime.recordElement?.('living:'+o.kind,runtime.regionOfPos(o.x,o.y));
+  if(o.rare&&runtime.livingEnvironment?.convergence)runtime.collectRareCard?.('event:convergence',{...o,id:'convergence:'+o.id+':'+Math.floor(runtime.S.livingSeconds/150)},{context:context(o,'escucha')});
   if(o.rare)runtime.collectRareCard?.('living:'+o.kind,o,{name:livingDefinition(o.kind).name+' · '+(o.variant%2?'pulso velado':'voz profunda'),context:context(o),forced:o.id.startsWith('living:lab:')});
  }
  function relation(o,peer,type){if(!o.rare&&!peer.rare)return;const ids=[o.id,peer.id].sort();runtime.collectRareCard?.('living:relation',{...o,id:'relation:'+ids.join('|').slice(0,95)},{context:{...context(o,'escucha'),relation:type}});}

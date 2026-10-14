@@ -1,0 +1,21 @@
+{
+  "version": "1.1.0-alpha.10",
+  "nodeSuites": 71,
+  "browserFlows": 49,
+  "browserFailures": 0,
+  "offlineModules": 123,
+  "shellAssets": 135,
+  "audioPrograms": 9,
+  "audioRenders": 253,
+  "maxPeak": 0.9576108455657959,
+  "hotSamplesObserved": 0,
+  "sampleRates": [
+    44100,
+    48000
+  ],
+  "server": "real HTTP/SQLite auth, CAS, isolation, two slots, cursor and persistent edit tests passed",
+  "duets": "two independent browsers shared actual played step and harmony; late-join phrase unit test passed",
+  "manualPhoneAcceptance": false,
+  "publicDeployment": false,
+  "notes": "Measurements verify finite audio and headroom, not perceived diversity or professional artistic mastering. 49-flow suite plus offline passed after propagated corrections; API/duet tests rerun after event cursor optimization. Physical phones and public networking remain external acceptance."
+}

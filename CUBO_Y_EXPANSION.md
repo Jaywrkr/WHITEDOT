@@ -1,3 +1,5 @@
+> Estado posterior: **1.1.0-alpha.10**, diez ramas del universo vivo. [Entrega y validación](ENTREGA_UNIVERSO_VIVO.md), [cobertura y pendientes](COBERTURA_150_UNIVERSO.md). El contenido que sigue conserva el contexto original de este documento; sus cifras/pendientes históricos no sustituyen el estado nuevo.
+
 # El cubo toca el mundo + expansión (rama `feat/expansion-fase-06`)
 
 Entrega de Claude **integrada por #77 en main8096c8d**. **Incluye las dos ramas anteriores** (`feat/phase-04-materia-y-compartir` y `feat/laboratorio-y-fase-05`): basta con hacer merge de esta.

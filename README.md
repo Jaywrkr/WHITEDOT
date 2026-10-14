@@ -1,5 +1,19 @@
+# Universo vivo · 1.1.0-alpha.10
+
+Diez fases acumuladas en `feat/universe-10-server-duets-validation`, listas para revisar en orden; **main no fue modificado en esta entrega**. Flora/fauna/construcciones nativas, música más variada, Voz opcional, ciclos, mundos grandes, libro ampliado, retorno entre semillas y servidor/duetos experimental.
+
+- [Entrega, ramas y límites](ENTREGA_UNIVERSO_VIVO.md)
+- [Cómo probar](PROBAR_UNIVERSO_VIVO.md)
+- [Cobertura honesta de las 150 ideas](COBERTURA_150_UNIVERSO.md)
+- [Servidor y duetos](SERVIDOR_Y_DUETOS.md)
+
+52 géneros y 11 biomas de base; 28 linajes nuevos, 109 familias registrables, 91 entradas del laboratorio y 49 tipos de tarjeta. Regiones nuevas de 50.400 y 100.800 por lado, sin reescalar partidas anteriores. La muestra de 10.000 regiones demuestra recetas distintas; no mide canciones perceptiblemente diferentes. No se presenta esta alpha como V1 de producción ni como servidor ya publicado.
+
+<details>
+<summary>Historial de planes y entregas anteriores</summary>
+
 <!-- universo-vivo -->
-Implementación en curso: **fase 9/10 · 1.1.0-alpha.9**. Cambios, pruebas, ramas y límites en [ENTREGA_UNIVERSO_VIVO.md](ENTREGA_UNIVERSO_VIVO.md). Plan: [150 ideas](UNIVERSO_150_IDEAS_FASES.md). Las secciones anteriores se conservan como historial.
+Implementación en curso: **fase 10/10 · 1.1.0-alpha.10**. Cambios, pruebas, ramas y límites en [ENTREGA_UNIVERSO_VIVO.md](ENTREGA_UNIVERSO_VIVO.md). Plan: [150 ideas](UNIVERSO_150_IDEAS_FASES.md). Las secciones anteriores se conservan como historial.
 <!-- /universo-vivo -->
 
 # Interfaz integrada · V1 RC6
@@ -421,5 +435,7 @@ Menú → Prototipo → Laboratorio: un mundo aparte para probar cada elemento i
 
 ## El cubo toca el mundo + expansión (rama de Claude, pendiente de merge)
 Solo el cubo interactúa; más colores, quietud que cambia el lugar, zonas de música experimental y cajas misteriosas con poderes. Pendientes para Codex (fase 6, mundo vasto, modo auto): `CUBO_Y_EXPANSION.md`.
+
+</details>
 
 </details>

@@ -24,10 +24,10 @@ export function initialize(runtime) {
   f.type=spec.formant?'bandpass':'lowpass';f.Q.value=spec.formant?2.2:patch?.resonance||.7;
   f.frequency.setValueAtTime(cut,time);f.frequency.exponentialRampToValueAtTime(cut*(spec.formant?.55:.45),time+Math.min(.25,decay));
   runtime.env(gain,time,attack,volume*(patch?.level||1),decay,true);f.connect(gain).connect(runtime.bus);
-  if(spec.tremolo){const lfo=ac.createOscillator(),depth=ac.createGain();lfo.frequency.value=spec.tremolo;depth.gain.value=volume*.035;lfo.connect(depth).connect(gain.gain);lfo.start(time);lfo.stop(end);}
+  const tremolo=articulation?.tremolo||spec.tremolo;if(tremolo){const lfo=ac.createOscillator(),depth=ac.createGain();lfo.frequency.value=Math.max(.5,Math.min(8,tremolo));depth.gain.value=volume*.035;lfo.connect(depth).connect(gain.gain);lfo.start(time);lfo.stop(end);}
   if(spec.send){const send=ac.createGain();send.gain.value=spec.send;gain.connect(send).connect(runtime.verbIn);}
   spec.partials.forEach(([ratio,type,level],i)=>{
-   const osc=ac.createOscillator(),levelGain=ac.createGain();osc.type=type;osc.frequency.value=hz*ratio;levelGain.gain.value=level*(i>0?(patch?.harmonics||1):1);if(i>0&&patch)osc.detune.value=(i%2?1:-1)*patch.widthCents;osc.connect(levelGain).connect(f);
+   const osc=ac.createOscillator(),levelGain=ac.createGain();osc.type=type;osc.frequency.value=hz*ratio;if(Number.isFinite(articulation?.glide)){osc.frequency.setValueAtTime(hz*ratio*Math.pow(2,Math.max(-1,Math.min(1,articulation.glide))/12),time);osc.frequency.exponentialRampToValueAtTime(hz*ratio,time+.07);}levelGain.gain.value=level*(i>0?(patch?.harmonics||1):1);if(i>0&&patch)osc.detune.value=(i%2?1:-1)*patch.widthCents;osc.connect(levelGain).connect(f);
    if(spec.fm&&i===0){const mod=ac.createOscillator(),depth=ac.createGain();mod.frequency.value=hz*spec.fm;depth.gain.setValueAtTime(hz*spec.index*(patch?.fmIndex||1),time);depth.gain.exponentialRampToValueAtTime(.1,time+decay*.75);mod.connect(depth).connect(osc.frequency);mod.start(time);mod.stop(end);}
    osc.start(time);osc.stop(end);
   });

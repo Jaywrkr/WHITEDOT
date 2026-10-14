@@ -69,11 +69,12 @@ export function initialize(runtime) {
   }
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
     if (!runtime.ac || !region) return;
+    if(origin==='player'&&runtime.duetCapture?.(kind,index,time,region,source))return;
     runtime.influenceInput?.(kind,region,source,origin);runtime.voiceGuideHear?.(kind,region,source,origin);runtime.livingHear?.(kind,index,region,source,origin);
     runtime.loopTap?.(kind,index,time,region,full,volume,source,origin);
     if(origin==='player')runtime.recordElement?.(kind,region);
     if(origin==='player'){runtime.vidaHear?.(kind,index,time);runtime.powerHear?.(index);}   // el ave lira escucha lo que tocas   // el looper guarda lo que causas tú
-    const voice = getVoice(kind, region);
+    const raw=getVoice(kind,region),voice=origin==='duet'?runtime.duetVoice?.(raw,source?.duetSlot,region)||raw:raw;
     if(origin==='player')runtime.petHear?.({degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,source});
     if(origin==='player'&&(!source||Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<360))runtime.depthHear?.({origin,degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,layer:runtime.S.layer||'superficie'});
     const scale = region.scale, transposition = runtime.BIOMES[region.z].tr + region.trOff;

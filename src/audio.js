@@ -133,6 +133,8 @@ export function initialize(runtime) {
     runtime.spatialTick?.();
     runtime.patchTick?.();
     if(!ac||ac.state!=="running")return;
+    const roomRegion=runtime.duetRegion?.();if(roomRegion){MU.dnaA=MU.dnaT=roomRegion;MU.biomeT=roomRegion.z;MU.nb=null;MU.nbW=0;}
+    const synchronized=runtime.duetTransport?.(ac.currentTime);if(synchronized){SIX=synchronized.six;MU.step=synchronized.step;MU.next=synchronized.next;}
     if(MU.next<ac.currentTime){const n=Math.ceil((ac.currentTime-MU.next)/SIX);MU.next+=n*SIX;MU.step+=n;}
     while(MU.next<ac.currentTime+.12){playStep(MU.next);MU.next+=SIX;MU.step++;}
   }
@@ -197,13 +199,13 @@ export function initialize(runtime) {
     if(s===0){
       if(MU.biome!==MU.biomeT||MU.dnaA!==MU.dnaT){MU.biome=MU.biomeT;MU.dnaA=MU.dnaT;MU.tr=BI().tr+(MU.dnaA?MU.dnaA.trOff:0);MU.pending=true;MU.harmonyRegion=null;}
       const nb=runtime.inWorld()?MU.nb:null,w=nb?MU.nbW:0;
-      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;BPM=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld())BPM+=MU.seasonBpm||0;if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)BPM=Math.round(BPM*.55);SIX=60/BPM/4;delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
+      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;BPM=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld())BPM+=MU.seasonBpm||0;if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)BPM=Math.round(BPM*.55);BPM=runtime.duetBPM?.()||BPM;SIX=60/BPM/4;delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
       if(!runtime.inWorld()&&(MU.pending||(MU.step-MU.lastChange>16*(6+Math.floor(rnd()*4)))))changeChord(t);
       if(BI().id==="tormenta"&&runtime.inWorld()&&(MU.step/16)%2===0&&rnd()<.75)MU.boltAt=t+SIX*(rnd()<.5?0:8);
     }
     if(runtime.inWorld()&&MU.dnaA){
       if(s===0||!MU.radio)MU.radio=radio.advance(MU.dnaA,MU.step>>4,{
-        near:MU.near.length,singers:MU.singers.length,variant:MU.vari,quiet:runtime.currentPocket?.()?.kind==='quiet',
+        room:runtime.duetRoom?.code||null,near:MU.near.length,singers:MU.singers.length,variant:MU.vari,quiet:runtime.currentPocket?.()?.kind==='quiet',
         event:runtime.eventOf(MU.dnaA)?.[0],initiative:runtime.initiativeState?.strength||0
       });
       if(s===0&&runtime.composeLivingArrangement)MU.radio=runtime.composeLivingArrangement(MU.dnaA,MU.radio);
@@ -271,7 +273,7 @@ export function initialize(runtime) {
     if(runtime.inWorld()&&s===0&&(MU.step>>4)%2===1)MU.singers.slice(0,1).forEach(o=>{runtime.speciesSound(o.s,t+SIX*2,true,o.personality,o);setTimeout(()=>{o.lit=1;},Math.max(0,(t+SIX*2-ac.currentTime)*1000));});
     // lo que tocas espera la siguiente corchea (con un poco de vida humana)
     if(s%2===0){let m=0;while(MU.q8.length&&m<3){const it=MU.q8.shift(),t2=t+jit()*1.5;it.fn(t2);if(it.vis)setTimeout(it.vis,Math.max(0,(t2-ac.currentTime)*1000));m++;}}
-    runtime.livingStep?.(s,bar,t);
+    runtime.duetStep?.(s,bar,t);runtime.livingStep?.(s,bar,t);
     runtime.percussionStep?.(s,bar,t);
     runtime.petStep?.(s,bar,t);
     runtime.glassStep?.(s,bar,t);

@@ -1,3 +1,5 @@
+> Estado posterior: **1.1.0-alpha.10**, diez ramas del universo vivo. [Entrega y validación](ENTREGA_UNIVERSO_VIVO.md), [cobertura y pendientes](COBERTURA_150_UNIVERSO.md). El contenido que sigue conserva el contexto original de este documento; sus cifras/pendientes históricos no sustituyen el estado nuevo.
+
 # Universo más diverso: 150 propuestas en diez fases
 
 Ampliación solicitada por Jay el 14 de octubre de 2026: conservar las cien propuestas anteriores y sumar diversidad musical, funciones de la Voz y tarjetas especiales. **150 propuestas: las 100 anteriores + 30 musicales + 10 de Voz + 10 de tarjetas. Estado: planificación, sin cambios del juego en este turno.**

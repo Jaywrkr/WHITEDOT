@@ -68,3 +68,9 @@ export function livingVoice(kind,region,genres,seedOf,rng){
  const genre=genres[region.genre],pool=role==='bajo'?(genre.bassP||[genre.bassI]):role==='perc'?['tom','wood','rim','conga','shaker','kick']:(genre.hookP||['rhodes']);
  return {role,instrument:pool[h%pool.length],degree:h%7,response:[2,3,6][h%3],low:role==='bajo'?36:45,high:role==='bajo'?54:69,score,material:d.material};
 }
+// Expanded oceans keep wide empty spaces; aquatic encounters use a separate sparse stream.
+export function aquaticChunk(cx,cy,size,region,seedOf,rng){
+ const r=rng(seedOf(`living:water:v1:${cx},${cy}`));if(r()>.12)return [];
+ const kinds=['jelly','manta','turtle','reeds'],kind=kinds[Math.floor(r()*kinds.length)],def=livingDefinition(kind),variant=Math.floor(r()*256),x=(cx+.2+r()*.6)*size,y=(cy+.2+r()*.6)*size;
+ return [{id:`living:v1:${cx},${cy}:9`,kind,shape:def.shape,group:def.group,variant,x,y,homeX:x,homeY:y,hue:region.hue,size:10+variant%10,phase:variant/256*Math.PI*2,lit:0,energy:0,phrase:[],personality:['timida','curiosa','social'][variant%3],activeAt:variant%4,rare:variant===255,studyVariant:0,aquatic:true}];
+}
