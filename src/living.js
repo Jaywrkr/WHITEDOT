@@ -4,7 +4,7 @@ import {livingGlyph} from './living-art.js';
 import {elementInk} from './visual.js';
 import {contactEntry} from './contact.js';
 import {claimInstallationBar} from './installations.js';
-export const LIVING_GROUPS=['flora','fauna'];
+export const LIVING_GROUPS=['flora','fauna','architecture'];
 const HINTS={contacto:'Pasa el cubo para tocar',quietud:'Escucha quieto a su lado',orbita:'Rodea con el cubo',presion:'Entra despacio y permanece',cruce:'Cruza despacio',respuesta:'Toca y escucha la respuesta',seguir:'Camina a su lado'};
 export function initialize(runtime){
  const chunks=new BoundedMap(48);let owner=runtime.S,clock=0,barPlayed=-1,lab=null;
@@ -30,7 +30,7 @@ export function initialize(runtime){
    if((def.gesture==='quietud'||def.gesture==='presion')&&o.dwell>8&&clock-(o.last||-100)>8){o.last=clock;interact(o);}
    if(o.kind==='seed'){o.x=o.homeX+Math.sin(clock*.13+o.variant)*35;o.y=o.homeY+Math.cos(clock*.11+o.variant)*20;if(o.dwell>12)o.size=Math.min(24,o.size+dt*.2);}
    if(o.dwell>3&&o.kind==='moss'){const region=runtime.regionOfPos(o.x,o.y);runtime.driveInfluence?.(region,'space',.6,o.variant%8);runtime.subtractInfluence?.(region,'melody');}
-   runtime.livingBehavior?.(o,dt,clock,d);
+   runtime.livingBuildingTick?.(o,dt,clock,d);runtime.livingBehavior?.(o,dt,clock,d);
   }
  }
  function step(s,bar,time){if(!active()||!runtime.S.sound||runtime.ac?.state!=='running'||runtime.labSolo&&!runtime.labLiving)return;

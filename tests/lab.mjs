@@ -12,7 +12,7 @@ for(const k of Object.keys(TOY_NAMES))assert.ok(ids.includes('toy:'+k),'every to
 for(const k of Object.keys(PHENOMENON_NAMES))assert.ok(ids.includes('phenomenon:'+k),'every phenomenon: '+k);
 for(const k of ['life:golondrina','life:grulla','life:luciernaga','life:lira','life:plant','materia:strings','materia:prism','materia:membrane','glass','mirrors','tool:fx'])assert.ok(ids.includes(k),k);
 for(const e of LAB_ELEMENTS){assert.ok(e.name&&e.group&&e.try.length>=1&&e.try.every(t=>t.length>3),e.id);assert.ok(['home','family','toy','phenomenon','tool','flock','culture','box','quiet','experimental','rhythm','living'].includes(e.find.type),e.id);}
-assert.deepEqual(LAB_GROUPS,['Materia','Instalaciones','Vida','Encuentros','Juguetes','Fenómenos','Herramientas','Guardianes','Poderes','Quietud','Experimental','Percusión','Flora viva','Fauna viva']);
+assert.deepEqual(LAB_GROUPS,['Materia','Instalaciones','Vida','Encuentros','Juguetes','Fenómenos','Herramientas','Guardianes','Poderes','Quietud','Experimental','Percusión','Flora viva','Fauna viva','Arquitectura viva']);
 // Navegación circular.
 assert.equal(labStep(ids[0],-1).id,ids.at(-1));assert.equal(labStep(ids.at(-1),1).id,ids[0]);assert.equal(labStep('nope',1).id,ids[1]);
 // Notas: descarta ids desconocidos, veredictos inválidos, preguntas no booleanas y texto excesivo.
