@@ -3,7 +3,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
  const modules=await Promise.all(['data','progress','world','audio','voices','instruments','patches','effects','spatial','influence','blobs'].map(id=>import(`../src/${id}.js`)));
  const r=Object.create(null),duration=10,context=new OfflineAudioContext(2,duration*sampleRate,sampleRate);
  const original={AudioContext:window.AudioContext,setInterval:window.setInterval,setTimeout:window.setTimeout,random:Math.random};
- const instrumentHits={},petNotes=[];let instrumentNotes=0;let clock=0,schedule,trailNotes=0,glassNotes=0,ecologyNotes=0;const glassRoles=new Set();const originalURL=location.href;
+ const instrumentHits={},petNotes=[],percussionNotes=[];let instrumentNotes=0;let clock=0,schedule,trailNotes=0,glassNotes=0,ecologyNotes=0;const glassRoles=new Set();const originalURL=location.href;
  const proxy=new Proxy(context,{get(target,key){if(key==='currentTime')return clock;if(key==='state')return 'running';const value=Reflect.get(target,key,target);return typeof value==='function'?value.bind(target):value;}});
  try {
   if(generation===2){const url=new URL(location.href);url.searchParams.set('testSeed',worldSeed||'humedal-01');url.searchParams.set('layout','classic');url.searchParams.set('generation','2');history.replaceState(null,'',url);}
@@ -44,6 +44,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
    origin.genre=genre;origin.track={...r.MU.dnaT.track};
    if(!r.beatSoon){const m=await import('../src/interactions.js');m.initialize(r);}
    const {initialize:body}=await import('../src/body.js');body(r);r.bodyTick(.025);
+   if(scene.startsWith('rhythm:')){r.labRhythm=scene.slice(7);const m=await import('../src/percussion.js');m.initialize(r);const o=r.nearbyPercussion(1e6)[0];r.S.wx=o.x-70;r.S.wy=o.y;r.percussionCue=n=>percussionNotes.push(n);}
    if(scene.startsWith('pet:')){const {createPet}=await import('../src/pet-model.js');r.S.pet=createPet(scene.split(':')[1],123);r.S.pet.seconds=6000;r.S.pet.places=Array.from({length:20},(_,i)=>i+',0');const m=await import('../src/pet.js');m.initialize(r);r.petState.ready=true;r.petState.x=r.S.wx+50;r.petState.y=r.S.wy+24;if(scene.endsWith(':idle'))r.petState.sleep=30;r.petNoteCue=n=>petNotes.push(n);}
    if(scene.startsWith('culture:')){r.labCulture=scene.slice(8);const m=await import('../src/cultures.js');m.initialize(r);const site=r.cultureHome();r.S.wx=site.x;r.S.wy=site.y;}
    if(scene==='mirror'){const m=await import('../src/mirrors.js');m.initialize(r);const site=r.nearbyMirrors(5000).find(s=>s.id==='mirror:0,0');r.S.wx=site.x;r.S.wy=site.y;site.solution.forEach((a,i)=>r.turnMirror(site,i,a));}
@@ -54,14 +55,14 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   }
   const sources=Array.from({length:8},(_,i)=>({x:(trail?r.S.wx:900)+10*i,y:trail?r.S.wy:900,id:`mix:${i}`}));
   for(let tick=0;tick<duration/.025;tick++){
-   clock=tick*.025;if(scene==='power:pincel')r.S.wx+=4;if(scene){r.bodyTick(.025);r.cajasTick?.(.025);r.cultureTick?.(.025);r.petTick?.(.025);if(scene==='power:cometa')r.body.speed=120;}if(testInstrument&&tick%8===0){const {compositionFrame}=await import('../src/composition.js');r.withInstrumentPatch('track',r.MU.dnaT,{instrument:testInstrument,role:'lead'},null,clock+.13,()=>r.playNewInstrument(testInstrument,60+(tick%3)*2,clock+.13,.035,compositionFrame(genre,Math.floor(tick/40),2)));instrumentNotes++;}if(trail)r.trailTick(.025,false);if(encounter)r.encounterTick(.025,false);schedule();
+   clock=tick*.025;if(scene?.startsWith('rhythm:')){const o=r.nearbyPercussion(1e6)[0];r.S.wx=o.x+(tick%120<90?0:-70);r.S.wy=o.y;}if(scene==='power:pincel')r.S.wx+=4;if(scene){r.bodyTick(.025);r.percussionTick?.(.025);r.cajasTick?.(.025);r.cultureTick?.(.025);r.petTick?.(.025);if(scene==='power:cometa')r.body.speed=120;}if(testInstrument&&tick%8===0){const {compositionFrame}=await import('../src/composition.js');r.withInstrumentPatch('track',r.MU.dnaT,{instrument:testInstrument,role:'lead'},null,clock+.13,()=>r.playNewInstrument(testInstrument,60+(tick%3)*2,clock+.13,.035,compositionFrame(genre,Math.floor(tick/40),2)));instrumentNotes++;}if(trail)r.trailTick(.025,false);if(encounter)r.encounterTick(.025,false);schedule();
    if(ecology&&tick%16===0)sources.slice(0,4).forEach((source,i)=>{r.playVoice('ecology:'+['reed','pod','lichen','stone'][i]+':'+['bass','groove','space','groove'][i],i,clock+.13,r.MU.dnaT,false,.5,source,'player');ecologyNotes++;});
    if(dense&&tick%10===0)sources.forEach((source,i)=>r.playVoice(worldSeed?'forma:'+r.MU.dnaT.species[i%r.MU.dnaT.species.length].id:['arbol','cristal','pulso','luz'][i%4],i,clock+.13,r.MU.dnaT,true,.9,source,scene?'player':'ambient'));
   }
   const buffer=await context.startRendering(),data=Array.from({length:2},(_,i)=>buffer.getChannelData(i));
   let peak=0,sum=0,hot=0,n=0;
   for(const samples of data)for(let i=sampleRate;i<samples.length;i++){const value=samples[i];if(!Number.isFinite(value))throw Error('nonfinite rendered audio');peak=Math.max(peak,Math.abs(value));sum+=value*value;hot+=Math.abs(value)>.98;n++;}
-  return {scene,instrumentHits,petNotes,cultureHeard:Object.values(r.S.cultures?.sites||{}).some(e=>e.heard),testInstrument,instrumentNotes,genre,dense,soft,fx,influenced,worldSeed,generation,ecology,ecologyNotes,encounter,deep,installation,trail,glass,trailNotes,glassNotes,glassRoles:[...glassRoles],sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
+  return {scene,instrumentHits,petNotes,percussionNotes,cultureHeard:Object.values(r.S.cultures?.sites||{}).some(e=>e.heard),testInstrument,instrumentNotes,genre,dense,soft,fx,influenced,worldSeed,generation,ecology,ecologyNotes,encounter,deep,installation,trail,glass,trailNotes,glassNotes,glassRoles:[...glassRoles],sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
  } finally {window.AudioContext=original.AudioContext;window.setInterval=original.setInterval;window.setTimeout=original.setTimeout;Math.random=original.random;history.replaceState(null,'',originalURL);}
 }
 

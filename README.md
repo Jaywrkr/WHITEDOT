@@ -1,14 +1,14 @@
-# WHITEDOT · V1 RC1
+# WHITEDOT · V1 RC2
 
 Un cubo blanco en un mundo negro que crea música electrónica al explorarlo. Por Jay · [@jaywrkr](https://instagram.com/jaywrkr). Blanco disponible y personalización ganada; criaturas, materia, búsquedas culturales y una mascota que aprende tus gestos.
 
-**Candidata 1.0.0-rc.1** en **audit/v1-closure**. Incluye culturas, mascota y correcciones de cierre; **un PR hacia main** integra todo lo pendiente. Main remoto comprobado: 8096c8d (#77). [Auditoría y dictamen](AUDITORIA_V1.md) · [Estado](ESTADO_ACTUAL.md) · [Continuar](HANDOFF.md) · [Aceptación pendiente](PENDIENTES.md) · [Después, V2](PLAN_V2.md).
+**Expansión 1.0.0-rc.2 · `feat/percussion-landscapes`**, encadenada sobre `audit/v1-closure`. Jay autorizó continuar después de la auditoría: se abre un bloque de tres fases amplias, sin servidor/cuentas. Ocho familias de percusión se tocan con el cubo y cambian de timbre/patrón según región y género. [Fases y pruebas](EXPANSION_RITMICA.md) · [Auditoría anterior](AUDITORIA_V1.md) · [Handoff](HANDOFF.md).
 
-Desarrollo funcional de V1 congelado. **55 suites de lógica, 39 recorridos de navegador + offline, 164 mezclas de audio y auditoría de integridad aprobados.** Falta aceptación en teléfono real, primera sesión humana y comprobación del host/CI al publicar; no se declara perfección artística ni se implementa servidor/cuentas ahora.
+La auditoría RC1 conserva su evidencia histórica (55 suites, 39 recorridos + offline y 164 renders). Las pruebas nuevas se registran por fase; teléfono real, primera sesión humana y host/CI remoto siguen pendientes.
 
 ## Jugar
 
-Arrastra o usa WASD/flechas para caminar; el **cubo** toca los objetos. Un toque en vacío lanza el pulso. Camino abre Mundo; allí puedes escuchar/modelar, encontrar instrumentos y volver al Estudio. La música también evoluciona en quietud. Menú → Favoritos guarda lugares, Menú → Tu cubo usa colores ganados; Menú → Prototipo → Laboratorio prueba 54 casos. La fijación de sonidos es opcional y el eco se borra por su anillo.
+Arrastra o usa WASD/flechas para caminar; el **cubo** toca los objetos. Un toque en vacío lanza el pulso. Camino abre Mundo; allí puedes escuchar/modelar, encontrar instrumentos y volver al Estudio. La música también evoluciona en quietud. Menú → Favoritos guarda lugares, Menú → Tu cubo usa colores ganados; Menú → Prototipo → Laboratorio prueba 62 casos. La fijación de sonidos es opcional y el eco se borra por su anillo.
 
 Mascota se gana por formación/quietud o caja rara, conserva crecimiento/frase y acompaña con melodía, bajo o ritmo. Guardianes enseñan llamadas para huellas/puertas/recuerdos. Códigos WD1 comparten coordenadas completas; Grabar set descarga audio/vídeo con la salida del juego. [Culturas](FASE_06.md) · [Mascota/cubo](MASCOTA_Y_CUBO.md).
 

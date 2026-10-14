@@ -1,3 +1,4 @@
+import {RHYTHM_ELEMENTS} from './percussion-model.js';
 import {ECOLOGIES,ECOLOGY_CONTENT} from './ecology-model.js';
 import { relicAt } from './relics.js';
 import { gravityOf } from './gravity.js';
@@ -48,7 +49,9 @@ export function initialize(runtime) {
     const depth=runtime.S.journal.depth||{},depthCard=Object.values(depth).some(Boolean)?card('Interacciones profundas',`${depth.threads?'Redes tejidas · ':''}${depth.dialogue?'Frases respondidas · ':''}${depth.box?'Suelos transformados':''} Los sonidos aprendidos, redes y patrones de estos encuentros son temporales.`):'';
     const installations=depthCard+mirrorCard+(Object.keys(runtime.S.glassSites||{}).length?card('Vidrios cromáticos',`${Object.keys(runtime.S.glassSites).length} instalaciones exploradas. Gira sus aros directamente para transformar bajo, groove y armonía sin panel; la orientación queda guardada.`):'');
     const living=data().ecologies||{},elements=data().ecologyObjects||{};const ecologyCard=Object.keys(living).length?card('Paisajes vivos',Object.values(ECOLOGIES).flat().filter(e=>living[e.id]).map(e=>e.name).join(' · '),Object.keys(elements).length?'<p>'+escape(ECOLOGY_CONTENT.filter(e=>elements[e.id.slice(8)]).map(e=>e.name).join(' · '))+'</p><p>Tocar, modelar y permanecer cerca transforma partes del género del lugar. El estado de los gestos es temporal.</p>':''):'';
-    return (runtime.petCard?.()||'')+(runtime.cultureCard?.()||'')+ecologyCard+(runtime.creativeCard?.()||'')+(runtime.encounterJournal?.()||'')+saved+installations+(regions.length?regions.map(region=>{
+    const rhythm=Object.keys(runtime.S.rhythmFound||{}).filter(k=>RHYTHM_ELEMENTS[k]);
+    const rhythmCard=rhythm.length?card('Paisaje de percusión',rhythm.map(k=>RHYTHM_ELEMENTS[k].name).join(' · '),''):'';
+    return rhythmCard+(runtime.petCard?.()||'')+(runtime.cultureCard?.()||'')+ecologyCard+(runtime.creativeCard?.()||'')+(runtime.encounterJournal?.()||'')+saved+installations+(regions.length?regions.map(region=>{
       const found=region.species.filter(sp=>runtime.S.cat[sp.id]).length,gravity=gravityOf(region,runtime.seedOf),j=data();
       const [rx,ry]=region.key.split(',').map(Number);
       let hasSite=!!j.relics[region.key];
