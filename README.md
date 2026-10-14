@@ -44,7 +44,7 @@ python3 tests/server_api.py && python3 tests/duet_smoke.py   # servidor opcional
 
 El repo está conectado a Vercel (proyecto `whitedot`). Cada rama tiene vista previa; el merge a `main` publica producción. El build (`scripts/vercel-build.mjs`) sella la revisión y la hora de publicación, que se ven al pie del menú. Vercel sirve solo la parte estática: el servidor de cuentas y duetos no corre ahí.
 
-Flujo: rama nueva desde `main`, commit y push. **Jay crea el PR y hace el merge.**
+Flujo: una rama por fase de [PLAN_2.0.md](PLAN_2.0.md), commit y push. **Jay crea el PR y hace el merge.**
 
 ## Mapa del repositorio
 
@@ -54,6 +54,8 @@ Flujo: rama nueva desde `main`, commit y push. **Jay crea el PR y hace el merge.
 | `sw.js`, `manifest.webmanifest`, `icons/` | PWA offline |
 | `server/` | Servicio opcional (Python + SQLite): cuentas, copias y salas de dueto |
 | `tests/`, `scripts/` | Pruebas, auditorías y evidencias JSON |
+| [PLAN_2.0.md](PLAN_2.0.md) | **Trabajo actual:** fases de la 2.0, ramas y criterios |
+| [AGENTS.md](AGENTS.md) | Reglas para agentes (Codex, Claude): flujo de ramas, pruebas y estilo |
 | [CIERRE_V1.md](CIERRE_V1.md) | Estilo J, auditoría de cierre y decisiones |
 | [ACEPTACION_V1.md](ACEPTACION_V1.md) | Prueba con teléfonos y personas reales |
 | [LANZAMIENTO.md](LANZAMIENTO.md) | Contenido de lanzamiento para @jaywrkr |

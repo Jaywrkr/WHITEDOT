@@ -1,3 +1,5 @@
+> **Reemplazado por [PLAN_2.0.md](PLAN_2.0.md)** como plan vigente. Lo de abajo queda como contexto.
+
 > **Versión cerrada: 1.1.0** ([CIERRE_V1.md](CIERRE_V1.md)). Producción en Vercel. Entra aquí todo lo que surja de la [aceptación](ACEPTACION_V1.md) y no bloquee jugar, oír o guardar, más los 40 parciales y 2 pendientes de [COBERTURA_150_UNIVERSO.md](COBERTURA_150_UNIVERSO.md). Duetos públicos necesitan un host propio para `server/app.py`.
 
 > Estado posterior: **1.1.0-alpha.10**, diez ramas del universo vivo. [Entrega y validación](docs/historial/ENTREGA_UNIVERSO_VIVO.md), [cobertura y pendientes](COBERTURA_150_UNIVERSO.md). El contenido que sigue conserva el contexto original de este documento; sus cifras/pendientes históricos no sustituyen el estado nuevo. Para continuar en Claude, leer primero [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md).
