@@ -1,0 +1,4 @@
+import assert from 'node:assert/strict';import {initialize as data} from '../src/data.js';import {initialize as progress} from '../src/progress.js';import {initialize as world} from '../src/world.js';import {createRadio} from '../src/radio.js';
+globalThis.localStorage={getItem:()=>null,setItem(){}};const r={};data(r);progress(r);world(r);const d=r.regionOfPos(1800,1800),host=createRadio(r.seedOf,r.rng,r.GEN),guest=createRadio(r.seedOf,r.rng,r.GEN);
+for(let bar=0;bar<=80;bar++){const a=host.advance(d,bar,{room:'same-room'});if(bar===80){const b=guest.advance(d,bar,{room:'same-room'});for(const key of ['phrase','section','harmonyBar','hookI','hook','bass'])assert.deepEqual(a[key],b[key],key);}}
+console.log('PASS late duet join shares phrase, harmony, bass, motif and instrument on the room timeline');

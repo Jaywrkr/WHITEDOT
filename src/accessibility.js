@@ -2,7 +2,7 @@
 export function initialize(runtime){
  const canvas=runtime.$('w');canvas.tabIndex=0;canvas.setAttribute('aria-label','Mundo musical: arrastra para caminar; el cubo toca los objetos. Un toque vacío lanza el pulso.');
  const dialogs=[...document.querySelectorAll('.modal')],returnFocus=new WeakMap(),opened=[],managedInert=new Set(),hiddenState=new Map(dialogs.map(d=>[d,d.hidden]));
- const closers={mCube:'cubeClose',mSeeds:'seedClose',mSaveTools:'saveToolsClose',mSky:'kClose',mMap:'mapClose',mJournal:'journalClose',mAch:'aClose',mMusic:'muClose',mSession:'sessionClose',mShare:'sClose',mAtlas:'atlasClose',mFavorites:'favoritesClose',mLab:'labClose',mSet:'setClose',mOut:'oClose'};
+ const closers={mConnection:'connectionClose',mCube:'cubeClose',mSeeds:'seedClose',mSaveTools:'saveToolsClose',mSky:'kClose',mMap:'mapClose',mJournal:'journalClose',mAch:'aClose',mMusic:'muClose',mSession:'sessionClose',mShare:'sClose',mAtlas:'atlasClose',mFavorites:'favoritesClose',mLab:'labClose',mSet:'setClose',mOut:'oClose'};
  for(const dialog of dialogs){
   dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');
   const heading=dialog.querySelector('h2');if(heading){heading.id||=dialog.id+'Title';dialog.setAttribute('aria-labelledby',heading.id);heading.tabIndex=-1;

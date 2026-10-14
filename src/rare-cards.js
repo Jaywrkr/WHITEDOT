@@ -1,3 +1,4 @@
+import {livingDefinition} from './living-catalog.js';
 import {RARE_BOOK_LIMIT,RARE_PAGE_SIZE,CARD_TIERS,rareDefinition,rarityLabel,cardSerial,makeRareCard,normalizeRareBook,storeRareCard} from './rare-card-model.js';
 import {rarePortrait} from './rare-card-art.js';
 import {relicAt} from './relics.js';
@@ -5,7 +6,7 @@ import {encodePlace} from './share-tools.js';
 import {sameWorld} from './world-identity.js';
 const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function initialize(runtime){
- const $=runtime.$;let owner=null,queue=[],shown=null,remaining=0,page=0,fullNoticed=false;
+ const $=runtime.$;let owner=null,queue=[],shown=null,remaining=0,page=0,fullNoticed=false,filter='todo';
  const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!$('voice').classList.contains('expanded')&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function hide(){ $('rareNotice').hidden=true;document.body.classList.remove('rare-reveal'); }
  function dismiss(){const focused=$('rareNotice').contains(document.activeElement);shown=null;remaining=0;hide();if(focused)$('w').focus({preventScroll:true});}
@@ -77,10 +78,10 @@ export function initialize(runtime){
   </article>`;
  }
  function cards(){
-  const items=ensure().items,pages=Math.max(1,Math.ceil(items.length/RARE_PAGE_SIZE));page=Math.max(0,Math.min(page,pages-1));$('rareCodeFallback').hidden=true;
+  const items=ensure().items,mapped=items.map((c,index)=>({c,index})).filter(({c})=>filter==='todo'||(filter==='vida'?c.type.startsWith('living:'):filter==='culturas'?c.type==='living:study':filter==='fenomenos'?c.type.startsWith('anomaly:')||c.type.startsWith('event:'):filter==='cajas'?c.type.startsWith('box:')||c.type.startsWith('petbox:'):livingDefinition(c.type.slice(7))?.group===filter)),pages=Math.max(1,Math.ceil(mapped.length/RARE_PAGE_SIZE));page=Math.max(0,Math.min(page,pages-1));$('rareCodeFallback').hidden=true;
   if(!items.length)return '<article class="journal-card"><h3>Libro de hallazgos</h3><p>Lo raro deja una tarjeta: fósiles, reliquias, anomalías, cajas naturales y compañía de caja. Encuentra algo y el libro guardará su lugar.</p></article>';
-  const list=items.map((c,index)=>({c,index})).reverse().slice(page*RARE_PAGE_SIZE,(page+1)*RARE_PAGE_SIZE);
-  return `<div class="rare-book-head"><h3>Libro de hallazgos · ${items.length}</h3><p>Cada encuentro tiene su tarjeta. Volver al mismo ejemplar no duplica; otro lugar sí. El código conserva semilla, versiones, capa y coordenadas.</p></div><div class="rare-grid">${list.map(({c,index})=>cardHTML(c,index)).join('')}</div>
+  const list=mapped.reverse().slice(page*RARE_PAGE_SIZE,(page+1)*RARE_PAGE_SIZE);
+  return `<div class="rare-book-head"><label for="rareFilter">Colección</label><select id="rareFilter">${[['todo','Todos'],['vida','Universo vivo'],['flora','Flora'],['fauna','Fauna'],['architecture','Construcciones'],['culturas','Estudios'],['fenomenos','Fenómenos'],['cajas','Cajas y visitas']].map(([id,name])=>'<option value="'+id+'" '+(filter===id?'selected':'')+'>'+name+'</option>').join('')}</select><h3>Libro de hallazgos · ${items.length}</h3><p>Cada encuentro tiene su tarjeta. Volver al mismo ejemplar no duplica; otro lugar sí. El código conserva semilla, versiones, capa y coordenadas.</p></div><div class="rare-grid">${list.map(({c,index})=>cardHTML(c,index)).join('')}</div>
    <div class="rare-pager"><button data-rare-page="-1" ${page?'':'disabled'} aria-label="Página anterior de hallazgos">‹</button><span>${page+1} / ${pages}</span><button data-rare-page="1" ${page+1<pages?'':'disabled'} aria-label="Página siguiente de hallazgos">›</button></div>`;
  }
  async function exportPNG(card){
@@ -105,6 +106,7 @@ export function initialize(runtime){
   if(point&&runtime.selectDestination?.(point.id))$('mJournal').hidden=true;
   else if(!point)runtime.toast?.('Favoritos lleno · libera un lugar para orientarte.');
  }
+ runtime.$('journalBody').addEventListener('change',event=>{if(event.target.id!=='rareFilter')return;filter=event.target.value;page=0;runtime.refreshJournal?.();document.getElementById('rareFilter')?.focus();});
  $('rareNoticeDismiss').onclick=dismiss;
  $('rareNoticeOpen').onclick=()=>{if(!shown)return;const index=ensure().items.findIndex(c=>c.id===shown.id);page=Math.floor(Math.max(0,ensure().items.length-1-index)/RARE_PAGE_SIZE);dismiss();runtime.openJournal('rares');};
  runtime.VOZ.tarjeta1='Un hallazgo merece memoria. Su tarjeta conserva el lugar y la voz de este mundo.';

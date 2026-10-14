@@ -27,7 +27,7 @@ export function shapeMotif(recipe,grammar) {
  recipe.forEach((n,i)=>{if(n>=0&&i!==anchor){let step=(i+grammar.motifRotation)%16;if(step===anchor)step=(step+2)%16;shifted[step]=n;}});
  return shifted;
 }
-export function harmonicDegree(grammar,bar) {return grammar.progression[Math.floor(bar/grammar.harmonyBars)%grammar.progression.length];}
+export function harmonicDegree(grammar,bar) {return grammar.progression[Math.floor(Math.max(0,bar)/grammar.harmonyBars)%grammar.progression.length];}
 export function createVoiceCurator() {
  const buckets=new Map();
  return {

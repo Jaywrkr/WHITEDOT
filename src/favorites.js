@@ -45,7 +45,7 @@ export function initialize(runtime){
    const button=(text,callback)=>{const b=document.createElement('button');b.textContent=text;b.onclick=callback;row.append(b);return b;};
    button('Renombrar',()=>{rename(point.id,input.value);input.value=point.name;});button('Borrar',()=>remove(point.id));
    button('Código',async()=>{try{const code=runtime.encodeFavorite?.(point);if(code){$('placeCode').value=code;try{await navigator.clipboard.writeText(code);runtime.toast('<em>Código</em> · copiado');}catch(_){runtime.toast('<em>Código</em> · listo para copiar arriba');}}}catch(_){}});
-   if(sameWorld(point.address,runtime.worldIdentity))runtime.favoriteActions?.(point,row);else{const note=document.createElement('p');note.textContent='Necesita su semilla y versión originales para regresar.';card.append(note);}
+   if(sameWorld(point.address,runtime.worldIdentity))runtime.favoriteActions?.(point,row);else{button('Abrir lugar',()=>runtime.visitWorldAddress?.(point.address));const note=document.createElement('p');note.textContent='Abrir lugar carga su semilla y versión originales en el punto guardado.';card.append(note);}
    card.append(input,details,notes,row);body.append(card);
   }
   runtime.refreshDestinations?.();

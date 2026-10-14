@@ -1,3 +1,4 @@
+import {livingPortrait} from './living-portraits.js';
 // Original small vector portraits, inspired by the world's own glyphs and materials.
 // No external images, logos, recordings or characters.
 const RELICS=[
@@ -8,7 +9,8 @@ const RELICS=[
 ];
 export function rarePortrait(card){
  const art=card.type.split(':')[0],v=card.artVariant||0;let path;
- if(art==='living')path='M-27 0Q-15 -25 0 -12Q15 -25 27 0Q15 25 0 12Q-15 25 -27 0M-8 0H8M0 -8V8';
+ if(art==='living')path=livingPortrait(card.type);
+ else if(art==='event')path='M-29 0Q-40 -22 -15 -18Q0 -38 17 -17Q41 -18 30 0M-20 10L-25 25M0 10L-5 25M20 10L15 25';
  else if(art==='fossil')path='M23 5C29 -24 -10 -33 -25 -10C-38 16 -7 36 15 19C34 3 15 -18 -1 -12C-17 -8 -16 13 -2 14C10 15 13 2 4 -1';
  else if(art==='relic')path=RELICS[v%RELICS.length];
  else if(art==='petbox')path=card.type.endsWith('luciernaga')?'M-7 0C-7 -25 7 -25 7 0C7 21 -7 21 -7 0M-23 -8Q0 -35 23 -8M0 17V24':card.type.endsWith('grulla')?'M-30 -5Q-12 -25 0 0Q16 -22 29 -5M0 0Q14 -28 20 -24L25 -19':'M-30 -6Q-12 -27 0 0Q14 -25 30 -6M-9 8Q0 15 9 8';

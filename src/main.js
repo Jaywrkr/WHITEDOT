@@ -1,3 +1,4 @@
+import {initialize as connection} from './connection.js';
 import {initialize as livingDiscoveries} from './living-discoveries.js';
 import {initialize as livingBuildings} from './living-buildings.js';
 import {initialize as livingTerrain} from './living-terrain.js';
@@ -141,7 +142,7 @@ saveTools(runtime);
 accessibility(runtime);
 rareCards(runtime);
 voiceGuide(runtime);
-livingSynthesis(runtime);living(runtime);livingBehavior(runtime);livingComposition(runtime);livingEcology(runtime);livingTerrain(runtime);livingBuildings(runtime);livingDiscoveries(runtime);
+livingSynthesis(runtime);living(runtime);livingBehavior(runtime);livingComposition(runtime);livingEcology(runtime);livingTerrain(runtime);livingBuildings(runtime);livingDiscoveries(runtime);connection(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
 runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0)))runtime.S.mode="camino";

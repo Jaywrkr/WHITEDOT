@@ -1,3 +1,4 @@
+import {PET_SPECIES} from './pet-model.js';
 import {createPowerClock} from './power-clock.js';
 import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js';
 // Cajas misteriosas: raras, flotan y brillan; el cubo las abre al tocarlas y te dan un poder por un rato.
@@ -13,7 +14,7 @@ import {swatchOf,WORLD_VISUAL} from './visual.js';
 const TAU=Math.PI*2;
 
 export function initialize(runtime){
- const clock=createPowerClock(POWERS),S=()=>runtime.S,powers=clock.powers,spawned=[],trail=[],marks=[],companion={x:0,y:0,on:false,lit:0,heard:[]};let previous=S(),lastMark=null;
+ const clock=createPowerClock(POWERS),S=()=>runtime.S,powers=clock.powers,spawned=[],trail=[],marks=[],companion={x:0,y:0,on:false,lit:0,heard:[],species:null};let previous=S(),lastMark=null;
  S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};
  const surface=()=>runtime.inWorld()&&(S().layer||'superficie')==='superficie';
  const now=clock.now;
@@ -34,11 +35,11 @@ export function initialize(runtime){
   runtime.beatSoon(t=>{const ct=runtime.chordTones?.()||[60,64,67];ct.slice(0,3).forEach((n,i)=>melody(n,t+i*runtime.SIX*2,.025));},null,'player');
   runtime.unlock('caja1');if(S().boxesOpened>=5)runtime.unlock('caja5');runtime.unlock('poder_'+b.power);runtime.save();
  }
- function give(id){
+ function give(id,visitor=null){
   const p=POWERS[id];if(!p)return;clock.give(id);runtime.toast(`<em>${p.name}</em> · ${p.text}`);
   if(!S().help['poder_'+id]){S().help['poder_'+id]=true;runtime.say(p.text,p.name);}
   if(id==='cometa')runtime.speedBoost=2.2;if(id==='campo')runtime.fieldSolo=true;
-  if(id==='companero'){companion.on=true;companion.x=S().wx+30;companion.y=S().wy+30;}
+  if(id==='companero'){if(PET_SPECIES[visitor])companion.species=visitor;companion.on=true;companion.x=S().wx+30;companion.y=S().wy+30;}
   if(id==='pincel')marks.length=0;
  }
  // ---------- cada cuadro ----------
@@ -76,7 +77,7 @@ export function initialize(runtime){
   // Imán: los que te siguen tocan cada uno su parte.
   if(has('iman')&&s%4===0){const o=(runtime.MU.near||[]).filter(o=>typeof o.snd==='function')[(bar*4+s/4)%Math.max(1,(runtime.MU.near||[]).length)];if(o&&typeof o.snd==='function'){o.snd(time);o.hit=1;}}
   // Compañero: contesta lo último que tocaste una tercera arriba.
-  if(companion.on&&companion.heard.length&&s%4===2){const h=companion.heard.shift(),ct=runtime.chordTones?.()||[60,64,67];melody(ct[(h+2)%ct.length],time,.025);setTimeout(()=>{companion.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
+  if(companion.on&&companion.heard.length&&s%4===2){const h=companion.heard.shift(),ct=runtime.chordTones?.()||[60,64,67];const n=ct[(h+2)%ct.length],spec=PET_SPECIES[companion.species];if(spec?.role==='bass'){let pitch=n;while(pitch>52)pitch-=12;while(pitch<36)pitch+=12;runtime.bassInst(spec.pool[0],pitch,time,.025);}else if(spec?.role==='groove')runtime.wood(time,.025);else melody(n,time,.025);setTimeout(()=>{companion.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
  }
  function hear(index){if(companion.on){companion.heard.push(index||0);if(companion.heard.length>4)companion.heard.shift();}}
  // Brújula y compañero: lo raro cerca (dirección y nombre).
@@ -110,6 +111,6 @@ export function initialize(runtime){
   const active=activePowers(powers,now());if(active.length){c.globalAlpha=.75;c.fillStyle=WORLD_VISUAL.gold;c.font='10px monospace';c.textAlign='center';c.fillText(active.map(p=>`${POWERS[p.id].name} ${Math.ceil(p.left)} s`).join(' · '),cx,Math.min(runtime.H-60,180));}
   c.restore();
  }
- function clear(){clock.clear();spawned.length=0;trail.length=0;marks.length=0;companion.on=false;companion.heard=[];lastMark=null;runtime.fieldSolo=false;runtime.speedBoost=1;}
+ function clear(){clock.clear();spawned.length=0;trail.length=0;marks.length=0;companion.on=false;companion.heard=[];companion.species=null;lastMark=null;runtime.fieldSolo=false;runtime.speedBoost=1;}
  Object.defineProperties(runtime,{clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
 }

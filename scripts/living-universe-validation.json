@@ -1,0 +1,17 @@
+{
+  "sampledRegions": 10000,
+  "seeds": 20,
+  "generation": 2,
+  "layout": "immense",
+  "regionSide": 100800,
+  "landRegions": 6327,
+  "detailedSignatures": 10000,
+  "landMusicSignatures": 6327,
+  "genres": 52,
+  "biomes": 11,
+  "catalogFamilies": 28,
+  "foundFamilies": 28,
+  "objects": 45560,
+  "rare": 246,
+  "notes": "A sample of structural recipes, not a count of songs, total worlds or perceptually distinct experiences. No extrapolation to millions and no multiplication of correlated variables. Additional content uses independent namespaces; old favorites keep their layout and versions."
+}

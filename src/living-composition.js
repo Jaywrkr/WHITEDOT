@@ -10,13 +10,15 @@ export function productionFrame(region,arrangement,seedOf,rng,context={}){
  if(chapter>1&&['warm','organic','melodic','disco'].includes(context.character))grammar.progression=score.progression;
  const hook=arrangement.hook.map((n,i)=>rest&&i%8!==0?-1:n),out={...arrangement,grammar,hook,
   energy:Math.min(arrangement.energy,rest?.28:.65),production:{chapter,stage,signature:score.signature,score,soft},expression:{...arrangement.expression,toneScale:(arrangement.expression?.toneScale||1)*(rest?.8:1)}};
- const pool=context.genre?.bassP||[context.genre?.bassI];if(pool[0])out.bassI=pool[(score.palette+chapter)%pool.length];
+ const crosses={dub:'organic',organic:'dub',afro:'minimal',minimal:'afro',deep:'jazztronica',jazztronica:'deep',nudisco:'cosmic',cosmic:'nudisco',melodic:'progressive',progressive:'melodic'};
+ const partner=score.palette%8===0&&stage===2?crosses[region.genre]:null;out.production.partner=partner;
+ const native=partner&&context.genres?.[partner];const pool=native?.bassP||context.genre?.bassP||[context.genre?.bassI];if(pool[0])out.bassI=pool[(score.palette+chapter)%pool.length];
  return out;
 }
 export function initialize(runtime){
  function compose(region,arrangement){
   const close=runtime.livingNear?.(110)||[],silence=close.some(o=>['moss','cathedral'].includes(o.kind)&&o.dwell>3);
-  return productionFrame(region,arrangement,runtime.seedOf,runtime.rng,{genre:runtime.GEN[region.genre],silence,character:GENRE_CHARACTERS[region.genre]});
+  return productionFrame(region,arrangement,runtime.seedOf,runtime.rng,{genre:runtime.GEN[region.genre],genres:runtime.GEN,silence,character:GENRE_CHARACTERS[region.genre]});
  }
  Object.defineProperty(runtime,'composeLivingArrangement',{get:()=>compose});
 }

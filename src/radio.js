@@ -7,14 +7,16 @@ import {RHYTHM_GENRES} from './rhythms.js';
 // Composición por frases: el reloj musical avanza sin necesitar movimiento.
 // No modifica el ADN de la región ni guarda estado en la partida.
 export function createRadio(seedOf, rng, genres) {
-  let regionKey = null, phrase = -1, nextPhrase = 0, nextSection = 0;
+  let transportKey=null,lastBar=-1,regionKey = null, phrase = -1, nextPhrase = 0, nextSection = 0;
   let section = 0, energy = .25, arrangement = null,grammar,startBar=0;
   const levels = [.24, .43, .62, .3];
 
   function advance(region, bar, environment = {}) {
-    if (region.key !== regionKey) {
+    if(bar<lastBar)regionKey=null;lastBar=bar;
+    if (region.key !== regionKey||transportKey!==(environment.room||null)) {
+      transportKey=environment.room||null;
       regionKey = region.key;
-      startBar=bar;
+      startBar=environment.room?0:bar;
       phrase = -1;
       nextPhrase = nextSection = bar;
       section = 0;
@@ -23,13 +25,15 @@ export function createRadio(seedOf, rng, genres) {
       grammar=createGrammar(region,seedOf,rng);
     }
     if (bar >= nextPhrase) {
-      phrase++;
+      phrase=environment.room?Math.floor(bar/grammar.phraseBars):phrase+1;
       const random = rng(seedOf(`radio:${region.key}:${phrase}`));
-      if (bar >= nextSection) {
+      if(environment.room){section=Math.floor(bar/32)%levels.length;nextSection=(Math.floor(bar/32)+1)*32;}
+      else if (bar >= nextSection) {
         // Cada sección lleva a otra; no se vuelve a una grabación en bucle.
         section = phrase===0 ? Math.floor(random()*levels.length) : (section+1)%levels.length;
         nextSection = bar + 12 + Math.floor(random() * 4) * 4;
       }
+      if(environment.room)section=Math.floor(bar/32)%levels.length;
       const sparse = section === 0;
       const bass = region.track.bass.map((degree, step) => {
         if (region.genre === 'rominimal') degree = step % 2 ? (step % 8 === 7 ? 4 : 0) : -1;
@@ -61,7 +65,7 @@ export function createRadio(seedOf, rng, genres) {
       const hook=motif.map((degree,step)=>degree<0||step!==anchor&&(random()<.25)?-1:degree);
       let notes=1;hook.forEach((degree,step)=>{if(step!==anchor&&degree>=0&&++notes>budget)hook[step]=-1;});
       hook[anchor]=motif[anchor];
-      if(arrangement&&hook.every((n,i)=>n===arrangement.hook[i])){
+      if(!environment.room&&arrangement&&hook.every((n,i)=>n===arrangement.hook[i])){
         const active=hook.findIndex((n,i)=>i!==anchor&&n>=0);
         if(active>=0)hook[active]=-1;
         else if(budget>1){const alternative=motif.findIndex((n,i)=>i!==anchor&&n>=0);if(alternative>=0)hook[alternative]=motif[alternative];}
@@ -72,7 +76,7 @@ export function createRadio(seedOf, rng, genres) {
       const toneRandom=rng(seedOf(`radio-tone:v1:${region.key}:${section}`));
       const pool = hookInstruments(region.genre,genres[region.genre]);
       arrangement = { phrase, section, grammar, character, expression:compositionFrame(region.genre,phrase,section), melodyRest:budget===0, bass, hook, hookI: pool[Math.floor(toneRandom() * pool.length)] };
-      nextPhrase = bar + grammar.phraseBars + (random()<.25?2:0);
+      nextPhrase = environment.room?(phrase+1)*grammar.phraseBars:bar + grammar.phraseBars + (random()<.25?2:0);
     }
     const life = Math.min(.08, (environment.near || 0) * .002 + (environment.singers || 0) * .015);
     const event = environment.event === 'eclipse' ? -.06 : environment.event ? .05 : 0;
