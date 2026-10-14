@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="theme-color" content="#000000">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -13,8 +13,9 @@
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
 
-<title>WHITEDOT · V1 RC5</title>
+<title>WHITEDOT · V1 RC6</title>
 <link rel="stylesheet" href="./styles/game.css">
+<link rel="stylesheet" href="./styles/interface.css">
 <link rel="stylesheet" href="./assets/fonts/fonts.css">
 
 
@@ -25,7 +26,7 @@
 <div class="hud">
   <div><div class="day" id="day">DÍA 1</div><div class="era" id="era">Era I · Pixel</div></div>
   <div class="hud-right">
-  <div class="release-badge" id="releaseBadge"><span id="releaseVersion">v1.0.0-rc.5</span><small id="releaseDeploy">deploy sin registrar</small></div>
+  <div class="release-badge" id="releaseBadge"><span id="releaseVersion">v1.0.0-rc.6</span><small id="releaseDeploy">deploy sin registrar</small></div>
   <small class="element-count" id="elementCount">Elementos 0</small>
   <div class="stats">
     <div title="Racha">RACHA <b id="streak">0</b></div>
@@ -44,8 +45,9 @@
 </aside>
 <div class="phrase" id="phrase"></div>
 <div class="reto" id="reto" hidden></div>
-<div class="toast" id="toast"></div>
-<div class="voice" id="voice" aria-live="polite" role="button" tabindex="0" aria-expanded="false" aria-label="Ampliar mensaje del sistema"><small id="vT">Sistema</small><span id="vX"></span></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="voice" id="voice" role="button" tabindex="-1" aria-expanded="false" aria-label="Ampliar mensaje del sistema" title="Toca para leer el mensaje completo"><small id="vT">Sistema</small><span id="vX"></span></div>
+<div id="voiceAnnouncement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
 <div class="dock" id="dock">
   <button class="ico" id="bPrimary" hidden><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span id="bPrimaryL">Mundo</span></button>
@@ -63,7 +65,7 @@
 </div></div>
 <section class="fxpanel" id="fxPanel" aria-label="Mesa de efectos" hidden>
   <div class="fxhead"><small>Mesa de efectos</small><span id="fxRead">Limpio</span><button id="fxClose" aria-label="Cerrar mesa de efectos">×</button></div>
-  <div class="fxpad" id="fxPad" role="application" aria-label="Pad: horizontal filtro, vertical espacio"><i id="fxDot"></i><em class="l">graves</em><em class="r">agudos</em><em class="t">espacio</em></div>
+  <div class="fxpad" id="fxPad" role="group" tabindex="0" aria-label="Filtro y espacio: flechas izquierda y derecha cambian el filtro; arriba y abajo cambian el espacio; Inicio limpia" aria-describedby="fxRead"><i id="fxDot"></i><em class="l">graves</em><em class="r">agudos</em><em class="t">espacio</em></div>
   <div class="fxbtns"><button id="fxEco" aria-pressed="false">Eco</button><button id="fxRobot" aria-pressed="false">Robot</button><button id="fxStop">Stop</button><button id="fxHold" aria-pressed="false">Fijar</button><button id="fxChorus" aria-pressed="false">Chorus</button><button id="fxPhaser" aria-pressed="false">Phaser</button><button id="fxFreeze" aria-pressed="false">Freeze</button></div>
 </section>
 <aside id="scanner" class="scanner" aria-label="Escuchar el Mundo" hidden>
@@ -76,27 +78,37 @@
 <div class="modal" id="mSeeds" hidden><div class="sheet"><h2>Semillas de prueba</h2><p>Compara mundos completos desde su centro. Tu partida habitual queda separada.</p><p id="seedInfo"></p><label for="seedGeneration">Paisaje</label><select id="seedGeneration"><option value="2">Paisajes vivos · explorar</option><option value="1">Original · volver y comparar</option></select><label for="seedLayout">Espacio</label><select id="seedLayout"><option value="vasto">Vasto · regiones de 18.000</option><option value="wide">Amplio · más espacio</option><option value="classic">Clásico · comparar</option></select><form id="seedForm" class="row"><label for="seedValue">Semilla</label><input id="seedValue" maxlength="40" autocomplete="off"><button type="submit">Probar</button></form><div class="row" id="seedPresets"><button data-seed="blobs-01">Blobs I</button><button data-seed="blobs-02">Blobs II</button><button data-seed="bosque-01">Otra tierra</button><button data-seed="humedal-01">Humedal</button><button data-seed="salinas-01">Salinas</button><button data-seed="basalto-01">Basalto</button><button data-seed="micelio-01">Micelio</button></div><div class="row"><button id="seedNext">Otra semilla</button><button id="seedCenter">Volver al centro</button><button id="seedOriginal">Mi partida</button><button id="seedClose">Cerrar</button></div></div></div>
 <div class="modal" id="mSaveTools" hidden><div class="sheet"><h2>Progreso y respaldo</h2><p>Esta copia incluye tu progreso y lugares guardados de la partida actual. Las semillas de prueba tienen copias separadas.</p><p id="saveStatus" role="status"></p><div class="row"><button id="saveExport">Exportar esta partida</button><button id="saveOriginal" hidden>Exportar original conservado</button><button id="saveRecover" hidden>Recuperar copia válida</button></div><label for="saveImportFile">Elegir copia de esta partida</label><input id="saveImportFile" type="file" accept="application/json,.json"><p>Restaurar reemplaza esta partida y conserva una copia previa. Se recargará el juego.</p><div class="row"><button id="saveImportApply" disabled>Restaurar copia elegida</button><button id="saveToolsClose">Cerrar</button></div></div></div>
 <div class="modal menu" id="mMenu" hidden>
-  <div class="sheet">
-    <div class="tiles">
-      <button id="bTools" aria-expanded="false" hidden><svg viewBox="0 0 24 24"><path d="M6 4v16M12 4v16M18 4v16M4 9h4M10 15h4M16 7h4"/></svg><span>Instrumentos</span></button>
-      <button id="bDetails" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v1M12 11v6"/></svg><span>Mostrar detalles</span></button>
+  <div class="sheet menu-sheet">
+    <header class="menu-heading"><div><small>WHITEDOT · Tu espacio</small><h2 id="menuTitle">Explorar y crear</h2></div><button id="mnClose" class="sheet-close" aria-label="Cerrar menú">×</button></header>
+    <div class="menu-sections">
+    <section class="menu-group"><h3>Recorrer</h3><div class="tiles">
       <button id="bWorld"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/></svg><span>Mundo</span></button>
-      <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Estudio</span></button>
-      <button id="bSky"><svg viewBox="0 0 24 24"><path d="M5 17l5-6 4 3 5-8"/><circle cx="5" cy="17" r="1.5"/><circle cx="10" cy="11" r="1.5"/><circle cx="14" cy="14" r="1.5"/><circle cx="19" cy="6" r="1.5"/></svg><span>Constelación</span></button>
       <button id="bFavorites"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Favoritos</span></button>
-      <button id="bWorlds"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c5 4 5 12 0 16M12 4c-5 4-5 12 0 16"/></svg><span>Explorar mundos</span></button>
       <button id="bMap"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mapa</span></button>
-      <button id="bCube"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/><path d="M3 3h3M18 21h3"/></svg><span>Tu cubo</span></button>
-      <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
+      <button id="bWorlds"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c5 4 5 12 0 16M12 4c-5 4-5 12 0 16"/></svg><span>Explorar mundos</span></button>
+    </div></section>
+    <section class="menu-group"><h3>Crear y escuchar</h3><div class="tiles">
+      <button id="bTools" aria-expanded="false" title="Efectos, eco de 2 compases y desplegar Estudio" hidden><svg viewBox="0 0 24 24"><path d="M6 4v16M12 4v16M18 4v16M4 9h4M10 15h4M16 7h4"/></svg><span>Herramientas</span></button>
+      <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Estudio</span></button>
+      <button id="bMusicSettings"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h14M9 3v6M15 9v6M11 15v6"/></svg><span>Intensidad musical</span></button>
       <button id="bSound"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg><span>Música</span></button>
-      <button id="bCreateMode" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg><span>Modo: explorar</span></button>
       <button id="bSoft" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 5v14M16 7v10M20 10v4"/></svg><span>Escucha suave</span></button>
       <button id="bAutoPins" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 8v8M8 12h8"/></svg><span>Fijar sonidos: no</span></button>
+      <button id="bCreateMode" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg><span>Modo: explorar</span></button>
+      <button id="bRecord"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="9"/></svg><span>Grabar set</span></button>
+    </div></section>
+    <section class="menu-group"><h3>Tu viaje</h3><div class="tiles">
+      <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
+      <button id="bCube"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/><path d="M3 3h3M18 21h3"/></svg><span>Tu cubo</span></button>
+      <button id="bSky"><svg viewBox="0 0 24 24"><path d="M5 17l5-6 4 3 5-8"/><circle cx="5" cy="17" r="1.5"/><circle cx="10" cy="11" r="1.5"/><circle cx="14" cy="14" r="1.5"/><circle cx="19" cy="6" r="1.5"/></svg><span>Constelación</span></button>
       <button id="bSession"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>Sesión</span></button>
+      <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
+    </div></section>
+    <section class="menu-group"><h3>Preferencias</h3><div class="tiles">
+      <button id="bDetails" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v1M12 11v6"/></svg><span>Mostrar detalles</span></button>
       <button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Progreso y respaldo</span></button>
       <button id="pwaUpdate" hidden><span>Actualizar versión disponible</span></button>
-      <button id="bRecord"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="9"/></svg><span>Grabar set</span></button>
-      <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
+    </div></section>
     </div>
     <details class="devbox"><summary>Prototipo</summary><div class="row">
       <button id="dFill">Completar día</button>
@@ -107,8 +119,8 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="row"><small class="release-id">WHITEDOT · V1 RC5</small>
-    <button id="mnClose">Cerrar</button></div>
+    <div class="row"><small class="release-id">WHITEDOT · V1 RC6</small>
+    <span class="menu-footnote">Arrastra · toca · escucha</span></div>
   </div>
 </div>
 
@@ -139,7 +151,7 @@
       <div><i>2</i><span>Toca la pantalla para lanzar un pulso. Mantén presionado sin arrastrar para escuchar las voces cercanas.</span></div>
       <div><i>3</i><span>Lo que late en dorado se puede tocar. Choca con todo.</span></div>
       <div><i>4</i><span>Cada zona tiene su ánimo, su ritmo y su forma de tocar.</span></div>
-      <div><i>5</i><span>Menú → Instrumentos abre efectos, Eco y Estudio. Los detalles y tus lugares guardados viven en el menú.</span></div>
+      <div><i>5</i><span>Menú → Herramientas abre efectos, Eco y Estudio. Los detalles y tus lugares guardados viven en el menú.</span></div>
     </div>
     <div class="row"><button id="hwGo" class="gold">Entendido</button></div>
   </div>
@@ -225,10 +237,11 @@
 
 <div class="modal lite" id="mMusic" hidden>
   <div class="sheet">
+    <h2 id="musicTitle">Intensidad musical</h2>
     <div class="style-now" id="styleNow">Minimal</div>
-    <p>La música sigue lo que haces. Quieto: calma. En movimiento: ritmo. Tus notas forman la melodía. Este control define hasta dónde llega cuando te mueves.</p>
+    <p>La música sigue lo que haces. Quieto: calma. En movimiento: ritmo. Tus notas forman la melodía. Este control define hasta dónde llega cuando te mueves. El género pertenece al lugar.</p>
     <input type="range" id="rStyle" min="0" max="100" value="30" aria-label="Estilo de la música">
-    <div class="ends"><span>Minimal</span><span>House underground</span></div>
+    <div class="ends"><span>Ambiente</span><span>Underground</span></div>
     <div class="row"><button id="muClose" class="gold">Listo</button><button id="muMute">Silenciar</button></div>
   </div>
 </div>

@@ -1,9 +1,10 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-v1-rc5';
+const CACHE='whitedot-v1-rc6';
 const SHELL=[
  "./",
  "./index.html",
  "./styles/game.css",
+ "./styles/interface.css",
  "./assets/fonts/fonts.css",
  "./assets/fonts/silkscreen.ttf",
  "./assets/fonts/jetbrains-mono.ttf",

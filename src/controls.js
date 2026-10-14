@@ -24,9 +24,10 @@ export function initialize(runtime) {
   runtime.$("sClose").onclick=()=>{runtime.$("mShare").hidden=true;};
   runtime.$("bSoft").onclick=()=>{runtime.S.softMusic=!runtime.S.softMusic;runtime.$("bSoft").setAttribute('aria-pressed',String(runtime.S.softMusic));runtime.audio();runtime.applyComfort();runtime.toast(runtime.S.softMusic?'Escucha suave · activada':'Escucha suave · desactivada');runtime.save();};
   runtime.$("bSoft").setAttribute('aria-pressed',String(!!runtime.S.softMusic));
+  runtime.$("bMusicSettings").onclick=()=>{styleUI();runtime.$("mMusic").hidden=false;};
   const rs=runtime.$("rStyle");
   const styleName=I=>I<.2?"Ambiente":I<.45?"Minimal":I<.72?"Deep":"Underground";
-  function styleUI(){runtime.$("bSoft").setAttribute("aria-pressed",String(!!runtime.S.softMusic));const I=runtime.style();rs.value=Math.round(I*100);runtime.$("styleNow").textContent=styleName(I);runtime.$("muMute").textContent=runtime.S.sound?"Silenciar":"Activar sonido";runtime.$("bSound").querySelector("span").textContent=runtime.S.sound?"Música":"Silencio";}
+  function styleUI(){runtime.$("bSoft").setAttribute("aria-pressed",String(!!runtime.S.softMusic));const I=runtime.style();rs.value=Math.round(I*100);runtime.$("styleNow").textContent=styleName(I);runtime.$("muMute").textContent=runtime.S.sound?"Silenciar":"Activar sonido";runtime.$("bSound").querySelector("span").textContent=runtime.S.sound?"Sonido: sí":"Sonido: no";runtime.$("bSound").setAttribute('aria-pressed',String(!!runtime.S.sound));}
   rs.oninput=()=>{runtime.S.style=rs.value/100;styleUI();runtime.audio();if(runtime.S.style>=.9)runtime.unlock("under");};
   rs.onchange=()=>{const n=Date.now();runtime.styleMoves=runtime.styleMoves.filter(x=>n-x<60000);runtime.styleMoves.push(n);if(runtime.styleMoves.length>=12)runtime.unlock("dj");runtime.save();};
   runtime.$("bSound").onclick=()=>{runtime.S.sound=!runtime.S.sound;styleUI();runtime.audio();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);runtime.toast(runtime.S.sound?"<em>Música</em> · activada":"<em>Música</em> · en silencio");runtime.save();};

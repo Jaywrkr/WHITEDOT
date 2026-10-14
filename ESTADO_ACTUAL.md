@@ -1,3 +1,11 @@
+# Interfaz integrada · V1 RC6
+
+**1.0.0-rc.6 · polish/coherent-game-ui**, basada en **main 2a7dce0 (#84)**, que ya integra `feat/rare-discovery-cards` (14e6862). Mejora conjunta de menú, HUD, hojas, Bitácora, favoritos, mapas, Estudio, efectos, mensajes, prototipo y accesibilidad. Fondo negro y cubo siguen como centro de la experiencia. **Menú → Herramientas** muestra Efectos, Eco y Estudio; **Intensidad musical** vuelve accesible el control existente. [Auditoría, capturas y decisiones](AUDITORIA_INTERFAZ.md).
+
+**59 suites de lógica, 45 recorridos de navegador y offline aprobados**, además de la auditoría de integridad sin errores ni avisos. Las pruebas y sus límites se registran en [evidencia RC6](scripts/interface-validation.json). Se mantienen 11 biomas, 33 hábitats, 52 géneros, 81 familias y 18 tipos de tarjeta. Sin cambios de generación/DSP ni nueva publicación. Main comprobado: **2a7dce0 (#84)**; todas las entregas anteriores ya están integradas. Un PR de esta rama hacia main revisa solamente la mejora de interfaz; Jay crea PR/merge. Teléfono real, CI remoto y deploy HTTPS siguen pendientes.
+
+Los estados RC5/RC4/RC1 siguientes son fotografías históricas; la entrega vigente está arriba.
+
 # Libro de hallazgos · V1 RC5
 
 **1.0.0-rc.5 · feat/rare-discovery-cards**, hija de **feat/minimal-discoveries (30d337f)**. Tarjetas discretas para hallazgos raros con nombre, ilustración, lugar, rareza contextual, fecha y coordenadas. **Bitácora → Hallazgos** guarda cada ejemplar y ofrece código/Orientar. 18 tipos de tarjeta; el contador de 81 familias permanece aparte. [Detalle y pruebas](HALLAZGOS_RAROS.md).

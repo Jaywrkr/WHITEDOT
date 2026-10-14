@@ -28,6 +28,11 @@ try:
    page.locator('#bMenu').click();page.wait_for_timeout(150);assert page.locator('#rareNotice').is_hidden()
    remaining=page.evaluate('__testRuntime.rareNoticeState.remaining');page.wait_for_timeout(800);assert page.evaluate('__testRuntime.rareNoticeState.remaining')==remaining
    page.locator('#mnClose').click();page.wait_for_function('!document.getElementById("rareNotice").hidden')
+   # Tools pause the reveal, so the finding is never lost behind another panel.
+   page.evaluate('document.getElementById("bFx").click()');page.wait_for_function('document.getElementById("rareNotice").hidden')
+   remaining=page.evaluate('__testRuntime.rareNoticeState.remaining');page.wait_for_timeout(400)
+   assert page.evaluate('__testRuntime.rareNoticeState.remaining')==remaining
+   page.locator('#fxClose').click();page.wait_for_function('!document.getElementById("rareNotice").hidden')
    page.locator('#rareNoticeOpen').click();assert page.locator('#mJournal').is_visible();assert 'Fósil de ritmo' in page.locator('#journalBody').inner_text();assert 'Muestra forzada' in page.locator('#journalBody').inner_text()
    page.screenshot(path=f'/tmp/whitedot-rare-book-{size["width"]}.png')
    before=page.evaluate('({q:__testRuntime.MU.q8.length,w:__testRuntime.waves.length})')

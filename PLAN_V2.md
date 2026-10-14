@@ -1,3 +1,5 @@
+> **RC6 vigente:** interfaz integrada en `polish/coherent-game-ui`. [Auditoría, decisiones y capturas](AUDITORIA_INTERFAZ.md). Los catálogos y límites musicales se mantienen; el contenido anterior conserva su fecha histórica.
+
 > **Registro RC5 implementado:** libro local de hallazgos raros con coordenadas/WD1, doce cartas por página y límite de 512 por partida. [Detalle](HALLAZGOS_RAROS.md). Archivo ampliable, biblioteca entre dispositivos y sincronización de libros quedan para el bloque de progreso de V2.
 
 > **Actualización autorizada tras la auditoría:** candidata **1.0.0-rc.4**, tres ramas amplias descritas en [EXPANSION_RITMICA.md](EXPANSION_RITMICA.md). La congelación RC1 citada abajo es histórica: se implementaron percusión, versión/deploy, minimalismo y registro de elementos por la petición posterior de Jay. No hay servidor/deploy confirmado; los límites de aceptación siguen vigentes.

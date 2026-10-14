@@ -29,16 +29,26 @@ export function initialize(runtime){
   $('fxEco').setAttribute('aria-pressed',String(state.eco));for(const k of ['Chorus','Phaser','Freeze'])$('fx'+k).setAttribute('aria-pressed',String(state[k.toLowerCase()]));$('fxRobot').setAttribute('aria-pressed',String(state.robot));$('fxHold').setAttribute('aria-pressed',String(state.hold));
   const p=padParams(state.x,state.y);$('fxRead').textContent=`${state.x<.45?'Filtro graves':state.x>.55?'Filtro agudos':'Limpio'} · espacio ${Math.round(state.y*100)} %`;
  }
- function toggle(){runtime.audio();state.open=!state.open;$('fxPanel').hidden=!state.open;$('bFx').setAttribute('aria-pressed',String(state.open));
-  if(state.open&&!runtime.S.help.fx){runtime.S.help.fx=true;runtime.say(runtime.VOZ.fx,'Mesa de efectos');}draw();}
+ function toggle(){const focused=$('fxPanel').contains(document.activeElement);runtime.audio();state.open=!state.open;$('fxPanel').hidden=!state.open;$('bFx').setAttribute('aria-pressed',String(state.open));
+  if(state.open&&!runtime.S.help.fx){runtime.S.help.fx=true;runtime.say(runtime.VOZ.fx,'Mesa de efectos');}draw();
+  if(state.open)$('fxPad').focus({preventScroll:true});else if(focused)$('bMenu').focus({preventScroll:true});}
  function fromEvent(e){const r=$('fxPad').getBoundingClientRect();state.x=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width));state.y=Math.min(1,Math.max(0,1-(e.clientY-r.top)/r.height));
   if(Math.abs(state.x-.5)<.05)state.x=.5;}   // imán al centro: fácil volver a limpio
  const pad=$('fxPad');
+ pad.addEventListener('keydown',e=>{
+  if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home'].includes(e.key))return;
+  e.preventDefault();e.stopPropagation();const step=e.shiftKey?.1:.025;
+  if(e.key==='Home'){state.x=.5;state.y=0;}
+  else{state.active=true;if(e.key==='ArrowLeft')state.x=Math.max(0,state.x-step);if(e.key==='ArrowRight')state.x=Math.min(1,state.x+step);if(e.key==='ArrowUp')state.y=Math.min(1,state.y+step);if(e.key==='ArrowDown')state.y=Math.max(0,state.y-step);}
+  apply();
+ });
+ pad.addEventListener('keyup',e=>{if(e.key.startsWith('Arrow'))up();});
+ pad.addEventListener('blur',()=>up());
  pad.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();pad.setPointerCapture(e.pointerId);state.active=true;fromEvent(e);apply();});
  pad.addEventListener('pointermove',e=>{if(!state.active)return;fromEvent(e);apply();});
  const up=()=>{if(!state.active)return;state.active=false;if(!state.hold){state.x=.5;state.y=0;apply(.12);}};
  pad.addEventListener('pointerup',up);pad.addEventListener('pointercancel',up);
- $('bFx').onclick=e=>{e.stopPropagation();e.currentTarget.blur();toggle();};
+ $('bFx').onclick=e=>{e.stopPropagation();toggle();};
  $('fxClose').onclick=()=>{if(state.open)toggle();};
  $('fxEco').onclick=()=>{state.eco=!state.eco;apply();};
  $('fxRobot').onclick=()=>{state.robot=!state.robot;apply();if(state.robot)runtime.unlock('robot');};

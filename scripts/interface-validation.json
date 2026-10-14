@@ -1,0 +1,83 @@
+{
+  "version": "1.0.0-rc.6",
+  "branch": "polish/coherent-game-ui",
+  "base": "2a7dce0",
+  "mainObserved": "2a7dce0 (#84)",
+  "status": "verified",
+  "verifiedAt": "2026-10-14T03:22:54.687975+00:00",
+  "deployedAt": null,
+  "node": {
+    "passed": 59,
+    "suites": 59
+  },
+  "browser": {
+    "passed": 45,
+    "flows": 45,
+    "offline": true,
+    "fullRunnerExitCode": 0,
+    "interfaceSizes": [
+      "320x568",
+      "360x640",
+      "390x844",
+      "844x390",
+      "1280x800"
+    ],
+    "mainSheetsPerSize": 8,
+    "minimumInteractiveTargetPx": 44,
+    "newFlows": [
+      "interface_smoke.py",
+      "messages_smoke.py"
+    ],
+    "checks": [
+      "scroll bounds and persistent close",
+      "summary and modal focus containment",
+      "inert background and focus return",
+      "silent musical settings navigation",
+      "keyboard FX pad without walking",
+      "rare reveal clock pauses behind FX",
+      "expanded message persists and announces complete text",
+      "mobile drag and offline shell"
+    ],
+    "affectedRechecks": [
+      "interface_smoke.py after sticky header and 16 px mobile fields",
+      "percussion_smoke.py: wait for a new actual held-stone groove, not a fixed 2600 ms delay"
+    ],
+    "resolvedFailure": "The fixed percussion delay failed under concurrent rendering; the isolated original test passed. The final test now requires a new stone ambient hit within 12 s; the complete final runner passed."
+  },
+  "integrity": {
+    "sourceModules": 105,
+    "htmlIDs": 242,
+    "staticImports": 245,
+    "shellAssets": 117,
+    "errors": 0,
+    "warnings": 0
+  },
+  "audio": {
+    "newDSPOrSchedulerChanges": false,
+    "fullMixSuiteRerun": false,
+    "uiSilenceVerified": true,
+    "previousEvidence": "scripts/expansion-validation.json",
+    "previousRealRenders": 225
+  },
+  "world": {
+    "baseBiomes": 11,
+    "ecologies": 33,
+    "genres": 52,
+    "elementFamilies": 81,
+    "rareCardTypes": 18,
+    "generatorChanged": false
+  },
+  "pending": [
+    "iPhone/Android physical acceptance and virtual keyboard",
+    "first human session",
+    "Canvas world accessibility beyond dialog/keyboard support",
+    "remote PR CI confirmation",
+    "HTTPS publication and real deployment timestamp"
+  ],
+  "notes": [
+    "RC2 through RC5 and earlier parents already merged into main via #78–#84; new PR contains only UI RC6.",
+    "No PR, main merge or deployment performed in this task.",
+    "Runtime test helpers are injected by Playwright routes only.",
+    "Screenshots are captured from the native application; interface layer is precached."
+  ]
+}

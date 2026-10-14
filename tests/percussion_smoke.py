@@ -29,8 +29,10 @@ try:
   assert page.evaluate('Object.keys(__testRuntime.S.rhythmFound).length')==9
   assert page.evaluate('!!__testRuntime.S.ach.percusion4')
   page.evaluate('__testRuntime.labGo("rhythm:stone")');page.wait_for_timeout(350)
-  page.evaluate('()=>{const r=__testRuntime,o=r.nearbyPercussion()[0];r.S.wx=o.x;r.S.wy=o.y;}');page.wait_for_timeout(2600)
-  assert page.evaluate('__hits.some(h=>h.origin==="ambient")'),'held stone has a groove'
+  stone_from=page.evaluate('__hits.length')
+  page.evaluate('()=>{const r=__testRuntime,o=r.nearbyPercussion()[0];r.S.wx=o.x;r.S.wy=o.y;}')
+  # Hold warm-up plus the next musical bar can exceed 2.6 s, especially under parallel rendering.
+  page.wait_for_function('(start)=>__hits.slice(start).some(h=>h.kind==="stone"&&h.origin==="ambient")',arg=stone_from,timeout=12000)
   page.locator('#bMenu').click();count=page.evaluate('__hits.length');page.wait_for_timeout(2300);assert page.evaluate('__hits.length')==count,'menu does not create percussion'
   page.locator('#mnClose').click();page.evaluate('__testRuntime.S.sound=false');count=page.evaluate('__hits.length');page.wait_for_timeout(2400);assert page.evaluate('__hits.length')==count
   page.evaluate('__testRuntime.save()');page.reload();page.wait_for_function('__testRuntime?.labMode');assert page.evaluate('Object.keys(__testRuntime.S.rhythmFound).length')==9

@@ -1,0 +1,192 @@
+/* Interface layer: one vocabulary for Camino, Mundo, Estudio and every tool.
+   World drawing lives in Canvas. Color is reserved for discoveries and states. */
+:root{
+  --surface:#090b0d;--surface-raised:#101316;--dim:#a5a9ad;--faint:#2b3035;
+  --line:#ffffff14;--radius:16px;--control-radius:10px;--gutter:16px;
+  --safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;pointer-events:none}
+button,a.btn{min-height:44px;border-radius:var(--control-radius);font-size:12px;letter-spacing:.015em;text-transform:none;line-height:1.4;padding:10px 12px;transition:background .15s,border-color .15s}
+button:disabled,a.btn:not([href]){opacity:.4;cursor:default}
+button[aria-pressed="true"],button.gold,a.btn.gold{color:var(--gold);border-color:#f0d27a66;background:#f0d27a08}
+@media(hover:hover){button:hover:not(:disabled),a.btn:hover{background:#ffffff08;border-color:#ffffff50}}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex="0"]:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+input:not([type="range"]):not([type="file"]),select,textarea{width:100%;min-width:0;min-height:44px;padding:10px 12px;background:#050607;color:var(--ink);border:1px solid var(--faint);border-radius:var(--control-radius);font:12px/1.5 var(--mono);user-select:text}
+input[type="file"]{width:100%;min-width:0;font:11px var(--mono);color:var(--dim)}
+input[type="file"]::file-selector-button{min-height:44px;margin-right:8px;background:var(--surface-raised);color:var(--ink);border:1px solid var(--faint);border-radius:var(--control-radius);padding:8px;font:inherit}
+input[type="range"]{min-height:44px;margin:0;touch-action:pan-y}
+label{font-size:12px;color:var(--dim)}
+summary{min-height:44px;cursor:pointer;align-content:center;font-size:12px;color:var(--dim)}
+.row{gap:8px;align-items:center}
+.row>*{min-width:0;max-width:100%}
+.row button,.row a.btn{flex:1 1 auto}
+
+/* The world has just two persistent controls; everything else is deliberate. */
+.hud{padding:calc(var(--safe-top) + 16px) var(--gutter) 0;gap:16px}
+.hud>div:first-child{max-width:46%}
+.day{font-size:20px;line-height:1.25;letter-spacing:0}
+.era,body.world-focus .era{font-size:11px;letter-spacing:.015em;line-height:1.5;text-transform:none}
+.hud-right{max-width:50%}
+.release-badge,.release-badge small{font-size:10px;color:var(--dim);letter-spacing:0;line-height:1.3}
+.release-badge small{font-size:9px;color:#90969b;white-space:normal}
+.element-count{font-size:10px;line-height:1.4;margin-top:4px}
+.stats{font-size:10px;gap:10px;letter-spacing:.03em}
+.bar{top:calc(var(--safe-top) + 84px)}
+.goal{top:calc(var(--safe-top) + 95px);font-size:11px;letter-spacing:0;line-height:1.5;text-transform:none}
+.reto{top:calc(var(--safe-top) + 123px);font-size:11px;letter-spacing:0;text-transform:none}
+body.world-focus .goal{top:calc(var(--safe-top) + 38px);left:var(--gutter);right:auto;font-size:10px;letter-spacing:0}
+.dock{gap:10px;padding:0 var(--gutter) calc(var(--safe-bottom) + 16px);z-index:20}
+.ico{height:48px;min-height:48px;background:#090b0dcc;border:1px solid #ffffff26;border-radius:24px}
+.ico.round{width:48px;min-width:48px}
+.ico svg{width:19px;height:19px;stroke-width:1.3}
+body.world-mode.tools-open #bPrimary{display:none}
+body.world-mode.tools-open .dock{flex-wrap:wrap;row-gap:8px}
+body.world-mode.tools-open .dock #bFx,body.world-mode.tools-open .dock #bLoop,body.world-mode.tools-open .dock #bDeploy{position:relative}
+body.world-mode.tools-open #bFx::after,body.world-mode.tools-open #bLoop::after,body.world-mode.tools-open #bDeploy::after{position:absolute;bottom:52px;font:10px/1.2 var(--mono);color:var(--dim);pointer-events:none}
+body.world-mode.tools-open #bFx::after{content:"Efectos"}body.world-mode.tools-open #bLoop::after{content:"Eco"}body.world-mode.tools-open #bDeploy::after{content:"Estudio"}
+
+/* Every modal is an intentional sheet, with a calm, consistent surface. */
+.modal,.modal.menu,.modal.lite{z-index:60;align-items:center;padding:calc(var(--safe-top) + 16px) var(--gutter) calc(var(--safe-bottom) + 16px);background:#0009;overflow:hidden}
+.modal .sheet,.cube-sheet{position:relative;max-width:520px;width:100%;max-height:calc(100dvh - var(--safe-top) - var(--safe-bottom) - 32px);padding:22px;background:var(--surface);border:1px solid #ffffff21;border-radius:var(--radius);gap:16px;overflow:auto;scrollbar-width:thin;scrollbar-color:#42484d transparent;overscroll-behavior:contain}
+.sheet h2,.cube-sheet h2{font-family:var(--mono);font-size:22px;line-height:1.3;letter-spacing:-.04em;font-weight:500}
+.sheet p{font-size:12px;line-height:1.7;letter-spacing:0;overflow-wrap:anywhere}
+.panel-heading,.menu-heading{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;min-width:0;position:sticky;top:0;z-index:2;background:var(--surface)}
+.panel-heading h2,.menu-heading h2{flex:1;min-width:0;margin:8px 0}
+.panel-heading h2:focus,.menu-heading h2:focus{outline:none}
+.sheet-close{flex:none!important;width:44px;min-width:44px;font-size:22px;padding:0;background:transparent;border-color:transparent;color:var(--dim)}
+.sheet>.row:last-child{padding-top:12px;border-top:1px solid var(--line)}
+.sheet>.scroll{max-height:52dvh;min-height:0;gap:12px;padding:2px}
+.steps,.kv{background:transparent;border:0;gap:0}
+.steps div{background:transparent;border-bottom:1px solid var(--line);padding:12px 0;font-size:12px;align-items:flex-start;gap:12px}
+.steps div:last-child{border:0}.steps i{font-family:var(--mono);font-size:12px;line-height:1.5;min-width:16px}
+.kv div{background:transparent;padding:12px;border-left:1px solid var(--line)}
+.kv div:first-child{border-left:0;padding-left:0}.kv b{font-family:var(--mono);font-size:24px;line-height:1.4}.kv span{letter-spacing:.03em;font-size:10px}
+.sky{border-radius:var(--control-radius)}
+canvas.sky{max-height:45dvh;object-fit:contain;background:#030405;border-color:var(--line)}
+.card img{border-radius:var(--control-radius);max-height:60dvh;object-fit:contain;user-select:auto;-webkit-touch-callout:default}
+.style-now{font-family:var(--mono);font-size:16px;color:var(--gold)}
+.ends{font-size:11px;letter-spacing:0;text-transform:none}
+#seedForm{gap:8px}#seedPresets{gap:6px}#seedPresets button{font-size:11px}
+#mSet video{border-radius:var(--control-radius);max-height:45dvh}
+
+/* A compact directory, not a wall of unrelated squares. */
+.modal .menu-sheet{max-width:700px;padding:20px}
+.menu-heading small{font-size:10px;letter-spacing:.05em;color:var(--dim)}
+.menu-heading h2{margin:6px 0 0;font-size:21px}
+.menu-sections{display:grid;grid-template-columns:1fr 1fr;gap:20px 24px}
+.menu-group{min-width:0}
+.menu-group h3{font:11px/1.5 var(--mono);color:var(--gold);letter-spacing:.03em;margin:0 0 6px}
+.tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+.tiles button{display:flex;align-items:center;justify-content:flex-start;text-align:left;gap:9px;padding:8px;min-height:48px;font-size:11px;border-color:transparent;background:transparent;border-radius:var(--control-radius)}
+.tiles button[aria-pressed="true"]{border-color:#f0d27a44;background:#f0d27a08}
+.tiles svg{width:17px;height:17px;stroke-width:1.2;color:var(--dim)}
+.tiles button span{line-height:1.45;overflow-wrap:anywhere}
+.devbox{border-top:1px solid var(--line);padding-top:4px}
+.devbox summary{font-size:11px;letter-spacing:0;text-transform:none}
+.devbox button{font-size:11px;min-height:44px;letter-spacing:0;padding:8px 12px}
+.release-id,.menu-footnote{font-size:10px;color:var(--dim);letter-spacing:0}
+.menu-footnote{margin-left:auto}
+
+/* Places and the book share the same card and segmented navigation. */
+.journal-tabs{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.journal-tabs button{flex:1 1 auto;min-width:74px;min-height:44px;font-size:11px;border-color:transparent;background:transparent;padding:8px}
+.journal-tabs button[aria-pressed="true"]{border-color:#f0d27a55;background:#f0d27a08}
+.journal-card,.place-code{border:1px solid var(--line);border-radius:var(--control-radius);padding:14px;background:#ffffff02}
+.journal-card h3,#journalBody>h3{font-size:13px;line-height:1.5;font-weight:500;margin:0 0 8px;letter-spacing:0}
+.journal-card p,.journal-card li{font-size:12px;line-height:1.7}
+.list{background:transparent;gap:0;border:1px solid var(--line);border-radius:var(--control-radius);overflow:hidden}
+.list div{background:transparent;border-bottom:1px solid var(--line)}.list>div:last-child{border-bottom:0}
+.list strong{letter-spacing:0;text-transform:none;font-size:12px;line-height:1.5}.list small{font-size:11px;line-height:1.5}
+.list .px{width:8px;height:8px;border-radius:50%}
+.list .atlas-txt{border:0;padding:0}
+.atlas-filters{gap:6px}.atlas-filters button{min-height:44px;font-size:11px;letter-spacing:0;padding:8px 12px}
+.atlas-check{width:44px;height:44px;min-width:44px}
+.atlas-row button{min-height:44px;padding:8px 12px}
+.favorite-form{gap:8px}.favorite-card button{min-height:44px;font-size:11px}
+#favoritesBody{max-height:42dvh;gap:12px}#favForm input{font-size:16px}
+.cube-preview{height:70px;border-color:var(--line)}.cube-options{gap:8px;margin-top:6px}
+.cube-options button{font-size:11px;min-height:44px}.cube-options button:disabled{opacity:.4}
+.cube-options .cube-swatch{border:5px solid var(--surface);border-radius:50%}
+.rare-card{border-radius:var(--radius);background:radial-gradient(ellipse at 50% 28%,color-mix(in srgb,var(--rare-ink) 5%,transparent),transparent 65%),#080a0d;box-shadow:none}
+.rare-card h3{font:500 16px/1.5 var(--mono)}.rare-card header,.rare-card header small{font-size:10px}
+.rare-card p{font-size:12px;color:var(--dim)}.rare-card .rare-biome,.rare-card .rare-provenance,.rare-odds small{font-size:10px;color:var(--dim)}
+.rare-actions button,.rare-card summary{font-size:11px;min-height:44px}.rare-card summary{display:list-item;padding-top:12px}
+#rarePlaceCode{font-size:12px;user-select:text}
+
+/* One context surface at a time. Critical recording control stays available. */
+.voice,body.world-focus .voice{top:calc(var(--safe-top) + 148px);left:var(--gutter);right:var(--gutter);border:1px solid var(--line);border-left:1px solid #f0d27a66;border-radius:var(--control-radius);background:#050709ed;padding:10px 12px;gap:4px;max-width:380px;min-height:44px;z-index:5}
+.voice small{font-size:10px;letter-spacing:.03em}.voice span{font-size:12px;line-height:1.5}
+body.world-focus .voice{top:calc(var(--safe-top) + 80px)}
+body.world-focus .voice:not(.expanded) span{-webkit-line-clamp:1}
+.voice.expanded span{max-height:23dvh;user-select:text}
+.zone{bottom:calc(var(--safe-bottom) + 84px);gap:4px}
+.zone b,body.world-focus .zone b{font:500 16px/1.4 var(--mono)}
+.zone small{font-size:10px;letter-spacing:.03em}.zone span{font-size:11px}
+.toast{border:1px solid var(--line);border-radius:var(--control-radius);background:#080a0dee;bottom:calc(var(--safe-bottom) + 84px);font-size:11px;line-height:1.5;padding:10px 12px;letter-spacing:0;text-transform:none;white-space:normal;text-align:center;max-width:min(420px,calc(100vw - 32px));width:max-content;z-index:25}
+.phrase,body.world-focus .phrase{font-size:12px;line-height:1.6;max-width:300px;margin-left:auto;margin-right:auto}
+.routehud{bottom:calc(var(--safe-bottom) + 84px);padding:8px 10px;border-color:var(--line);border-radius:var(--radius);background:#080a0dee;gap:8px}
+.routehud strong{font-size:12px;font-weight:500}.routehud small{font-size:10px;line-height:1.5}
+.routehud button{width:44px;min-width:44px;height:44px;border-color:transparent}
+body:has(.toast.on) .routehud{bottom:calc(var(--safe-bottom) + 150px)}
+body:has(.routehud:not([hidden])) .zone,body:has(.routehud:not([hidden])) .phrase{visibility:hidden}
+.scanner{max-height:28dvh;border-radius:var(--radius);border-color:#f0d27a44;bottom:calc(var(--safe-bottom) + 84px);padding:12px 14px;background:#080a0dee}
+.scanner h2{font:500 13px/1.5 var(--mono);margin-bottom:6px}
+.scanner p,.scanner li{font-size:11px;line-height:1.5;margin:4px 0}.scanner small{font-size:10px;line-height:1.4}
+.fxpanel,.glasspanel{border-radius:var(--radius);border-color:#ffffff26;background:var(--surface);padding:14px;gap:10px;z-index:30}
+.fxhead{letter-spacing:0;text-transform:none;font-size:11px;flex-wrap:nowrap;line-height:1.5}
+.fxhead small{font-size:11px}.fxhead span{font-size:10px;min-width:0;overflow-wrap:anywhere}
+.fxhead button{min-width:44px;height:44px;font-size:22px;border-color:transparent}
+.fxpad{height:clamp(96px,16dvh,150px);border-radius:var(--control-radius);border-color:var(--line);overflow:hidden;touch-action:none}
+.fxpad i{width:14px;height:14px;margin:-7px;border-width:1px;box-shadow:0 0 12px #f0d27a33}
+.fxpad em{font-size:10px;letter-spacing:0;text-transform:none}
+.fxbtns{gap:6px}.fxbtns button{font-size:11px;min-height:44px;padding:8px 4px}
+.glasspanel input{height:44px}.glasspanel label,.glasspanel p{font-size:12px}
+body:has(#fxPanel:not([hidden])) .voice,body:has(#fxPanel:not([hidden])) .rare-notice{visibility:hidden;pointer-events:none}
+body:has(#fxPanel:not([hidden])) .toast{top:calc(var(--safe-top) + 80px);bottom:auto}
+.rare-notice{top:calc(var(--safe-top) + 80px);border-radius:var(--radius);background:#080a0df5}
+.rare-notice-copy small{font-size:9px;letter-spacing:0}.rare-notice-copy strong{font-size:12px}
+.rare-notice-copy span{font-size:10px}.rare-notice button{font-size:11px}
+.rec-badge{left:var(--gutter);top:auto;bottom:calc(var(--safe-bottom) + 84px);transform:none;min-height:44px;background:#100809f2;z-index:40;font-size:11px;animation:none;max-width:calc(100vw - 32px)}
+body:has(#recBadge:not([hidden])) .routehud,body:has(#recBadge:not([hidden])) .toast,body:has(#recBadge:not([hidden])) .zone{bottom:calc(var(--safe-bottom) + 150px)}
+body:has(.modal:not([hidden])) .dock,body:has(.modal:not([hidden])) .studio,body:has(.modal:not([hidden])) .voice,body:has(.modal:not([hidden])) .toast,body:has(.modal:not([hidden])) .zone,body:has(.modal:not([hidden])) .phrase,body:has(.modal:not([hidden])) .fxpanel,body:has(.modal:not([hidden])) .glasspanel,body:has(.modal:not([hidden])) .rec-badge{visibility:hidden;pointer-events:none}
+
+/* The Studio and developer lab use the same language as the world. */
+.studio{padding:12px var(--gutter) calc(var(--safe-bottom) + 16px);background:linear-gradient(transparent,#000e 24%);gap:10px;z-index:20}
+.bag{gap:6px;touch-action:pan-x;scrollbar-width:thin}.bag button{min-height:44px;border-radius:22px;font-size:11px;letter-spacing:0}
+.swatches{gap:8px}.swatches span{font-size:10px;letter-spacing:.03em}.swatches button{width:44px;height:44px;border:10px solid #000}
+.lab-bar{left:var(--gutter);right:var(--gutter);border-radius:var(--radius);border-color:var(--line);background:#080a0dee;font-size:11px;max-height:150px}
+.lab-title strong{font:500 12px/1.5 var(--mono)}.lab-head button{min-width:44px;min-height:44px;border-color:transparent}
+.lab-actions button{font-size:11px;min-height:44px;letter-spacing:0}
+#labTry{font-size:11px;margin:4px 0;line-height:1.5}#labList button{font-size:11px;min-height:44px;letter-spacing:0}#labList{gap:6px}
+#labSolo[aria-pressed="true"],#labVerdicts [aria-pressed="true"]{background:#f0d27a08;color:var(--gold);border-color:#f0d27a66}
+
+@media(max-width:600px){
+ input:not([type="range"]):not([type="file"]),select,textarea,#rarePlaceCode{font-size:16px}
+ .modal,.modal.menu,.modal.lite{align-items:flex-end;padding:calc(var(--safe-top) + 12px) 12px calc(var(--safe-bottom) + 12px)}
+ .modal .sheet{padding:16px;max-height:calc(100dvh - var(--safe-top) - var(--safe-bottom) - 24px)}
+ .sheet h2{font-size:20px}.menu-sections{grid-template-columns:1fr;gap:14px}
+ .tiles button{min-height:44px;font-size:11px;padding:8px}
+ .menu-heading h2{font-size:20px}.menu-footnote{font-size:9px}
+ .release-badge{font-size:10px}.release-badge small{font-size:9px}.element-count{font-size:10px}
+ #mJournal:has(.rare-grid) .sheet{width:100%}
+ .journal-tabs button{min-width:76px;flex-basis:28%}
+}
+@media(max-width:360px){
+ :root{--gutter:12px}.dock{gap:8px}.ico.round{width:48px;min-width:48px}
+ .tiles button{gap:6px;font-size:10px}.menu-heading h2{font-size:18px}
+ .menu-footnote{display:none}.routehud{left:12px;right:12px}.routehud small{font-size:9px}
+}
+@media(max-height:500px){
+ .modal,.modal.menu,.modal.lite{align-items:center;padding:calc(var(--safe-top) + 8px) 12px calc(var(--safe-bottom) + 8px)}
+ .modal .sheet{max-height:calc(100dvh - var(--safe-top) - var(--safe-bottom) - 16px);padding:14px;gap:12px}
+ .sheet>.scroll{max-height:43dvh}.sheet h2{font-size:19px}
+ .menu-sections{grid-template-columns:1fr 1fr;gap:14px 18px}
+ .fxpanel{max-height:calc(100dvh - var(--safe-top) - var(--safe-bottom) - 96px);bottom:calc(var(--safe-bottom) + 76px);padding:10px;gap:6px}
+ .fxpad{height:84px}.fxbtns{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+ .fxbtns button{font-size:10px;padding:5px 2px}
+ .scanner{max-height:30dvh}.scanner p,.scanner li{font-size:10px}
+ .rare-notice{top:calc(var(--safe-top) + 68px)}
+ .studio{max-width:620px;margin:auto}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}

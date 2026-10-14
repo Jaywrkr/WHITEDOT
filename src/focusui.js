@@ -9,11 +9,11 @@ export function initialize(runtime){
   $('bTools').hidden=!world;$('bDetails').hidden=!world;$('bDetails').setAttribute('aria-pressed',String(show));$('bDetails').querySelector('span').textContent=show?'Ocultar detalles':'Mostrar detalles';
   if(!world)closeTools();
  }
- $('bTools').onclick=()=>{document.body.classList.toggle('tools-open');$('bTools').setAttribute('aria-expanded',String(document.body.classList.contains('tools-open')));};
+ $('bTools').onclick=()=>{const open=document.body.classList.toggle('tools-open');$('bTools').setAttribute('aria-expanded',String(open));if(open)queueMicrotask(()=>$('bFx').focus({preventScroll:true}));};
  $('bDetails').onclick=()=>{runtime.S.worldDetails=!runtime.S.worldDetails;sync();runtime.save();};
  $('bMenu').addEventListener('click',closeTools);
  for(const id of ['bFx','bLoop','bDeploy'])$(id).addEventListener('click',closeTools);
  addEventListener('pointerdown',e=>{if(e.target===$('w'))closeTools();});
- addEventListener('keydown',e=>{if(e.key==='Escape')closeTools();});
+ addEventListener('keydown',e=>{if(e.key==='Escape'){closeTools();if(!document.querySelector('.modal:not([hidden])')){if(runtime.fxState?.open)$('fxClose').click();runtime.closeMirrors?.();runtime.stopScanner?.();}}});
  sync();Object.defineProperties(runtime,{focusUITick:{get:()=>sync},closeWorldTools:{get:()=>closeTools}});
 }
