@@ -27,3 +27,7 @@ La radio añade capítulos a compás durante escuchas largas, bancos de bajo pro
 ## Fase 6 · Ciclos, afinidades y descanso
 
 Día/noche de juego con cuatro fases, humedad, mareas y viento suaves, conectados al clima y las estaciones existentes. Flora crece visualmente; actividad y desplazamientos de fauna varían sin alejarla de su dirección. Polinización, simbiosis y colonias se producen por proximidad real, no por anuncios inventados. Relaciones activas generan respuestas entrelazadas 3:4 contenidas. El tiempo se guarda y se pausa con el juego. Dormir o alejarse no castiga criaturas ni exige mantenimiento. No se simula una cadena alimentaria completa.
+
+## Fase 7 · Territorios grandes y microhábitats
+
+Explorar mundos ofrece regiones Gran territorio (50.400 por lado) e Inmenso (100.800), además de los tamaños anteriores. No se reescalan las partidas existentes. Coordenadas y códigos WD1 guardan semilla, versión, tamaño y capa. Microhábitats con cauces, anillos, fracturas, valles, deltas, islas, claros y crestas; fauna/flora apropiada en superficie, bajo y cielo. Caché de vida limitada a 48 sectores y glifos distantes reducidos a puntos. Son tamaños de regiones, no un límite total del universo. El dominio práctico de direcciones sigue limitado a magnitudes menores de 10^12 unidades por eje; no es infinito matemático. Nuevas alturas adicionales más allá de las tres capas quedan pendientes de una propuesta específica.
