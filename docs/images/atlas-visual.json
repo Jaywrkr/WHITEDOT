@@ -1,6 +1,6 @@
 {
   "width": 2112,
-  "height": 5720,
+  "height": 6204,
   "items": [
     {
       "number": 1,
@@ -586,198 +586,252 @@
     },
     {
       "number": 98,
+      "group": "PERCUSIÓN DEL PAISAJE",
+      "name": "Piedra de bombo",
+      "source": "src/percussion.js"
+    },
+    {
+      "number": 99,
+      "group": "PERCUSIÓN DEL PAISAJE",
+      "name": "Tronco hueco",
+      "source": "src/percussion.js"
+    },
+    {
+      "number": 100,
+      "group": "PERCUSIÓN DEL PAISAJE",
+      "name": "Raíces de clave",
+      "source": "src/percussion.js"
+    },
+    {
+      "number": 101,
+      "group": "PERCUSIÓN DEL PAISAJE",
+      "name": "Juncos de raspado",
+      "source": "src/percussion.js"
+    },
+    {
+      "number": 102,
+      "group": "PERCUSIÓN DEL PAISAJE",
+      "name": "Vainas de ritmo",
+      "source": "src/percussion.js"
+    },
+    {
+      "number": 103,
+      "group": "PERCUSIÓN DEL PAISAJE",
+      "name": "Concha de timbal",
+      "source": "src/percussion.js"
+    },
+    {
+      "number": 104,
+      "group": "PERCUSIÓN DEL PAISAJE",
+      "name": "Polvo de palmas",
+      "source": "src/percussion.js"
+    },
+    {
+      "number": 105,
+      "group": "PERCUSIÓN DEL PAISAJE",
+      "name": "Fósil de ritmo",
+      "source": "src/percussion.js"
+    },
+    {
+      "number": 106,
+      "group": "PERCUSIÓN DEL PAISAJE",
+      "name": "Charco de toms",
+      "source": "src/percussion.js"
+    },
+    {
+      "number": 107,
       "group": "SUELOS Y AIRE",
       "name": "Río / corriente",
       "source": "src/wonders.js"
     },
     {
-      "number": 99,
+      "number": 108,
       "group": "SUELOS Y AIRE",
       "name": "Musgo",
       "source": "src/interactions.js"
     },
     {
-      "number": 100,
+      "number": 109,
       "group": "SUELOS Y AIRE",
       "name": "Arena",
       "source": "src/interactions.js"
     },
     {
-      "number": 101,
+      "number": 110,
       "group": "SUELOS Y AIRE",
       "name": "Piedra",
       "source": "src/interactions.js"
     },
     {
-      "number": 102,
+      "number": 111,
       "group": "SUELOS Y AIRE",
       "name": "Agua",
       "source": "src/interactions.js"
     },
     {
-      "number": 103,
+      "number": 112,
       "group": "SUELOS Y AIRE",
       "name": "Cristal",
       "source": "src/interactions.js"
     },
     {
-      "number": 104,
+      "number": 113,
       "group": "SUELOS Y AIRE",
       "name": "Ceniza",
       "source": "src/interactions.js"
     },
     {
-      "number": 105,
+      "number": 114,
       "group": "SUELOS Y AIRE",
       "name": "Aire: niebla",
       "source": "src/render.js"
     },
     {
-      "number": 106,
+      "number": 115,
       "group": "SUELOS Y AIRE",
       "name": "Aire: polvo",
       "source": "src/render.js"
     },
     {
-      "number": 107,
+      "number": 116,
       "group": "SUELOS Y AIRE",
       "name": "Aire: esporas",
       "source": "src/render.js"
     },
     {
-      "number": 108,
+      "number": 117,
       "group": "SUELOS Y AIRE",
       "name": "Aire: ceniza",
       "source": "src/render.js"
     },
     {
-      "number": 109,
+      "number": 118,
       "group": "SUELOS Y AIRE",
       "name": "Relieve: raíces",
       "source": "src/ecology.js"
     },
     {
-      "number": 110,
+      "number": 119,
       "group": "SUELOS Y AIRE",
       "name": "Relieve: estratos",
       "source": "src/ecology.js"
     },
     {
-      "number": 111,
+      "number": 120,
       "group": "SUELOS Y AIRE",
       "name": "Relieve: celdas",
       "source": "src/ecology.js"
     },
     {
-      "number": 112,
+      "number": 121,
       "group": "SUELOS Y AIRE",
       "name": "Relieve: ondas",
       "source": "src/ecology.js"
     },
     {
-      "number": 113,
+      "number": 122,
       "group": "SUELOS Y AIRE",
       "name": "Relieve: marcas",
       "source": "src/ecology.js"
     },
     {
-      "number": 114,
+      "number": 123,
       "group": "GUARDIANES CULTURALES",
       "name": "Jardines del Altiplano",
       "source": "src/cultures.js"
     },
     {
-      "number": 115,
+      "number": 124,
       "group": "GUARDIANES CULTURALES",
       "name": "Islas de bronce",
       "source": "src/cultures.js"
     },
     {
-      "number": 116,
+      "number": 125,
       "group": "GUARDIANES CULTURALES",
       "name": "Campanas de sabana",
       "source": "src/cultures.js"
     },
     {
-      "number": 117,
+      "number": 126,
       "group": "GUARDIANES CULTURALES",
       "name": "Patios del horizonte",
       "source": "src/cultures.js"
     },
     {
-      "number": 118,
+      "number": 127,
       "group": "GUARDIANES CULTURALES",
       "name": "Voces del norte",
       "source": "src/cultures.js"
     },
     {
-      "number": 119,
+      "number": 128,
       "group": "GUARDIANES CULTURALES",
       "name": "Río de cinco notas",
       "source": "src/cultures.js"
     },
     {
-      "number": 120,
+      "number": 129,
       "group": "GUARDIANES CULTURALES",
       "name": "Jardines de tinta",
       "source": "src/cultures.js"
     },
     {
-      "number": 121,
+      "number": 130,
       "group": "GUARDIANES CULTURALES",
       "name": "Cauces de cobre",
       "source": "src/cultures.js"
     },
     {
-      "number": 122,
+      "number": 131,
       "group": "MATERIA",
       "name": "Cuerdas tensables",
       "source": "src/materia.js"
     },
     {
-      "number": 123,
+      "number": 132,
       "group": "MATERIA",
       "name": "Prisma de luz",
       "source": "src/materia.js"
     },
     {
-      "number": 124,
+      "number": 133,
       "group": "MATERIA",
       "name": "Membrana resonante",
       "source": "src/materia.js"
     },
     {
-      "number": 125,
+      "number": 134,
       "group": "MASCOTAS",
       "name": "Golondrina de eco · recién nacida",
       "source": "src/pet.js"
     },
     {
-      "number": 126,
+      "number": 135,
       "group": "MASCOTAS",
       "name": "Golondrina de eco · crecida",
       "source": "src/pet.js"
     },
     {
-      "number": 127,
+      "number": 136,
       "group": "MASCOTAS",
       "name": "Grulla de tierra · recién nacida",
       "source": "src/pet.js"
     },
     {
-      "number": 128,
+      "number": 137,
       "group": "MASCOTAS",
       "name": "Grulla de tierra · crecida",
       "source": "src/pet.js"
     },
     {
-      "number": 129,
+      "number": 138,
       "group": "MASCOTAS",
       "name": "Luciérnaga de pulso · recién nacida",
       "source": "src/pet.js"
     },
     {
-      "number": 130,
+      "number": 139,
       "group": "MASCOTAS",
       "name": "Luciérnaga de pulso · crecida",
       "source": "src/pet.js"

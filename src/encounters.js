@@ -24,6 +24,7 @@ export function initialize(runtime){
   }return cache.get(key);
  }
  function record(o,verb='model'){
+  runtime.recordElement?.('encounter:'+o.kind,runtime.regionOfPos(o.x,o.y));
   o.state.active=16;o.state.used=true;const f=FAMILIES[o.kind];runtime.creativeAction?.(f.voiceRole?f.voiceRole(o.state):encounterRole(o.kind,runtime.regionOfPos(o.x,o.y),runtime.seedOf),verb);
   runtime.S.journal.encounters||={};runtime.S.journal.encounters[o.kind]=1;
   runtime.unlock('encounter:'+o.kind);

@@ -27,7 +27,7 @@ export function initialize(runtime){
  }
  function findBoxes(range=6){const W=runtime.WCH,cx=Math.floor(S().wx/W),cy=Math.floor(S().wy/W),out=[];for(let x=cx-range;x<=cx+range;x++)for(let y=cy-range;y<=cy+range;y++){const b=boxAt(x,y,W,runtime.seedOf,runtime.rng);if(b&&!S().boxes[b.id])out.push(b);}return out;}
  function spawnBox(x,y,power=POWER_IDS[Math.floor(Math.random()*POWER_IDS.length)]){const b={id:`regalo:${Math.round(x)},${Math.round(y)}:${Date.now()}`,x,y,power,hue:Math.floor(Math.random()*360),spin:0,gift:true};spawned.push(b);if(spawned.length>6)spawned.shift();return b;}
- function open(b){
+ function open(b){runtime.recordElement?.('box',runtime.regionOfPos(b.x,b.y));
   const book=S().boxes;if(!b.gift){if(Object.keys(book).length>=400)delete book[Object.keys(book)[0]];book[b.id]=1;}else spawned.splice(spawned.indexOf(b),1);
   S().boxesOpened=(S().boxesOpened||0)+1;runtime.petBox?.(b);give(b.power);runtime.colorPulse?.(b.hue,1);runtime.burst?.(b.x,b.y,14,true);
   runtime.beatSoon(t=>{const ct=runtime.chordTones?.()||[60,64,67];ct.slice(0,3).forEach((n,i)=>melody(n,t+i*runtime.SIX*2,.025));},null,'player');

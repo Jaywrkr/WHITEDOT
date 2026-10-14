@@ -10,7 +10,7 @@ export function initialize(runtime){
  function visible(){if(!surface()||runtime.worldIdentity.generatorVersion!==2)return [];const a=Math.floor(runtime.S.wx/runtime.WCH),b=Math.floor(runtime.S.wy/runtime.WCH),out=[];
   for(let x=a-1;x<=a+1;x++)for(let y=b-1;y<=b+1;y++)out.push(...(runtime.wchunk(x,y).ecologyObjects||[]));return out.filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<450);
  }
- function record(o){runtime.S.journal.ecologies||={};runtime.S.journal.ecologyObjects||={};runtime.S.journal.ecologyObjects[o.kind]=1;
+ function record(o){runtime.recordElement?.(kind(o),runtime.regionOfPos(o.hx,o.hy));runtime.S.journal.ecologies||={};runtime.S.journal.ecologyObjects||={};runtime.S.journal.ecologyObjects[o.kind]=1;
   const e=runtime.regionOfPos(o.hx,o.hy).ecology;if(e)runtime.S.journal.ecologies[e.id]=1;
   runtime.creativeAction?.(o.channel,'touch');runtime.unlock('ecologyTouch');if(Object.keys(runtime.S.journal.ecologyObjects).length>=4)runtime.unlock('ecologyFour');runtime.save();
  }

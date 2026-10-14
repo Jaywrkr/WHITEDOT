@@ -47,6 +47,7 @@
         "role": "melody"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -68,8 +69,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9013364315032959,
-    "rmsDb": -13.996099687023168,
+    "peak": 0.9013364911079407,
+    "rmsDb": -13.9960657860358,
     "hotFraction": 0
   },
   {
@@ -120,6 +121,7 @@
         "role": "melody"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -141,8 +143,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.8663186430931091,
-    "rmsDb": -21.3062397470514,
+    "peak": 0.8663194179534912,
+    "rmsDb": -21.30622897206697,
     "hotFraction": 0
   },
   {
@@ -189,6 +191,7 @@
         "role": "melody"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -210,8 +213,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9436305165290833,
-    "rmsDb": -11.119600827915281,
+    "peak": 0.9436296224594116,
+    "rmsDb": -11.119588093663948,
     "hotFraction": 0
   },
   {
@@ -258,6 +261,7 @@
         "role": "melody"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -279,8 +283,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.6231173872947693,
-    "rmsDb": -20.646202122666907,
+    "peak": 0.6230992078781128,
+    "rmsDb": -20.64619638517524,
     "hotFraction": 0
   },
   {
@@ -324,6 +328,7 @@
         "role": "melody"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -345,8 +350,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9019460678100586,
-    "rmsDb": -10.240443651427334,
+    "peak": 0.9019458889961243,
+    "rmsDb": -10.240450152468918,
     "hotFraction": 0
   },
   {
@@ -390,6 +395,7 @@
         "role": "melody"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -411,8 +417,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.6999562382698059,
-    "rmsDb": -18.98058629183128,
+    "peak": 0.6999608278274536,
+    "rmsDb": -18.98057498296747,
     "hotFraction": 0
   },
   {
@@ -446,6 +452,7 @@
         "role": "melody"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -467,8 +474,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9008411765098572,
-    "rmsDb": -9.394088594652297,
+    "peak": 0.9008411169052124,
+    "rmsDb": -9.394027924747034,
     "hotFraction": 0
   },
   {
@@ -519,6 +526,7 @@
         "role": "bass"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -540,8 +548,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9013364911079407,
-    "rmsDb": -13.865742442205406,
+    "peak": 0.9013363718986511,
+    "rmsDb": -13.86573234049889,
     "hotFraction": 0
   },
   {
@@ -592,6 +600,7 @@
         "role": "bass"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -613,8 +622,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.8663191199302673,
-    "rmsDb": -21.29904393802715,
+    "peak": 0.8663201928138733,
+    "rmsDb": -21.29905217479933,
     "hotFraction": 0
   },
   {
@@ -661,6 +670,7 @@
         "role": "bass"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -682,8 +692,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9436259269714355,
-    "rmsDb": -11.093034648556014,
+    "peak": 0.943625271320343,
+    "rmsDb": -11.093023533164242,
     "hotFraction": 0
   },
   {
@@ -730,6 +740,7 @@
         "role": "bass"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -751,8 +762,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.6231181025505066,
-    "rmsDb": -20.644914643061824,
+    "peak": 0.6231077909469604,
+    "rmsDb": -20.644887578966568,
     "hotFraction": 0
   },
   {
@@ -795,6 +806,7 @@
         "role": "bass"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -816,8 +828,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9019467830657959,
-    "rmsDb": -10.196627996964425,
+    "peak": 0.9019469022750854,
+    "rmsDb": -10.19662220372773,
     "hotFraction": 0
   },
   {
@@ -860,6 +872,7 @@
         "role": "bass"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -881,8 +894,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.6999155282974243,
-    "rmsDb": -18.97574188024975,
+    "peak": 0.6999136209487915,
+    "rmsDb": -18.97574523085937,
     "hotFraction": 0
   },
   {
@@ -916,6 +929,7 @@
         "role": "bass"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -938,7 +952,7 @@
     "glassRoles": [],
     "sampleRate": 48000,
     "peak": 0.9008410573005676,
-    "rmsDb": -9.394060317596779,
+    "rmsDb": -9.394025322518269,
     "hotFraction": 0
   },
   {
@@ -988,6 +1002,7 @@
         "role": "groove"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -1009,8 +1024,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.901728630065918,
-    "rmsDb": -13.991225304352465,
+    "peak": 0.9017285704612732,
+    "rmsDb": -13.99127474727277,
     "hotFraction": 0
   },
   {
@@ -1060,6 +1075,7 @@
         "role": "groove"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -1081,8 +1097,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.7939222455024719,
-    "rmsDb": -21.541178297974714,
+    "peak": 0.7939213514328003,
+    "rmsDb": -21.540901697678972,
     "hotFraction": 0
   },
   {
@@ -1129,6 +1145,7 @@
         "role": "groove"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -1150,8 +1167,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9510939717292786,
-    "rmsDb": -11.206255770618094,
+    "peak": 0.9510923624038696,
+    "rmsDb": -11.206227229335799,
     "hotFraction": 0
   },
   {
@@ -1198,6 +1215,7 @@
         "role": "groove"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -1219,8 +1237,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.6194393038749695,
-    "rmsDb": -20.63107207439053,
+    "peak": 0.619445264339447,
+    "rmsDb": -20.631077510039106,
     "hotFraction": 0
   },
   {
@@ -1263,6 +1281,7 @@
         "role": "groove"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -1285,7 +1304,7 @@
     "glassRoles": [],
     "sampleRate": 48000,
     "peak": 0.9016504287719727,
-    "rmsDb": -10.227519746650774,
+    "rmsDb": -10.227419598449107,
     "hotFraction": 0
   },
   {
@@ -1328,6 +1347,7 @@
         "role": "groove"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -1349,8 +1369,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 44100,
-    "peak": 0.7206523418426514,
-    "rmsDb": -19.007499168629693,
+    "peak": 0.720651388168335,
+    "rmsDb": -19.00748420139245,
     "hotFraction": 0
   },
   {
@@ -1384,6 +1404,7 @@
         "role": "groove"
       }
     ],
+    "percussionNotes": [],
     "cultureHeard": false,
     "testInstrument": null,
     "instrumentNotes": 0,
@@ -1405,8 +1426,8 @@
     "glassNotes": 0,
     "glassRoles": [],
     "sampleRate": 48000,
-    "peak": 0.9008410573005676,
-    "rmsDb": -9.36433754864839,
+    "peak": 0.9008411765098572,
+    "rmsDb": -9.364382648972278,
     "hotFraction": 0
   }
 ]

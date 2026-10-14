@@ -271,3 +271,7 @@ body:not(.world-mode) #bAuto{display:none} #bAuto[aria-pressed="true"]{border-co
 .hud .era{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 body.world-focus .goal{top:calc(env(safe-area-inset-top,0px) + 32px);left:16px;right:auto;width:auto}
 body.world-focus .voice{top:calc(env(safe-area-inset-top,0px) + 64px)}
+
+.element-count{display:block;margin-top:5px;color:var(--dim);font-size:9px;line-height:1.2;font-variant-numeric:tabular-nums;pointer-events:none}
+body.world-mode .element-count{color:#aaaab1}
+@media(max-width:420px){.element-count{font-size:8px}}

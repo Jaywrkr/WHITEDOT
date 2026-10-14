@@ -3,7 +3,7 @@
 // Todo cuantizado a tempo con la escala del lugar; presupuesto ambiental compartido con otras instalaciones.
 import {claimInstallationBar} from './installations.js';
 import {crossedLine,polarDelta} from './body.js';
-import {WORLD_VISUAL,elementInk} from './visual.js';
+import {WORLD_VISUAL,elementInk,localGlowRadius} from './visual.js';
 import {MATERIA_KINDS,MATERIA_NAMES,STRING_COUNT,STRING_HALF,STRING_MAX_BEND,stringY,stringNote,stringAt,stringsCrossed,
  PRISM_RECEPTORS,PRISM_RADIUS,prismFan,prismLit,receptorAngle,PRISM_DEGREES,MEMBRANE_RADIUS,membraneHit,createMateriaSite,normalizeMateriaSites} from './materia-music.js';
 const TAU=Math.PI*2;
@@ -23,7 +23,7 @@ export function initialize(runtime){
    for(const site of sites)if(Math.hypot(site.x-S().wx,site.y-S().wy)<radius)out.push(site);
   }return out;
  }
- function remember(site){
+ function remember(site){runtime.recordElement?.('installation:'+site.kind,site.region);
   if(drag?.site===site&&site.kind==='prism')return;   // una vista previa no se guarda hasta soltar
   const saved=S().materiaSites;if(!saved[site.id]&&Object.keys(saved).length>=96)delete saved[Object.keys(saved)[0]];
   const first=!saved[site.id]?.seen;saved[site.id]={seen:true,...(site.kind==='prism'?{angle:site.angle}:{})};
@@ -148,19 +148,19 @@ export function initialize(runtime){
     for(let i=0;i<STRING_COUNT;i++){const sy=stringY(i),bend=site.bends[i],vib=(site.vib[i]||0)*7*Math.sin(t/18+i);
      ctx.strokeStyle=elementInk('metal',site.hue+i*18,(site.vib[i]||0)>.4);ctx.globalAlpha=.55+(site.vib[i]||0)*.4;ctx.lineWidth=i<2?2:1.2;
      ctx.beginPath();ctx.moveTo(-STRING_HALF,sy);ctx.quadraticCurveTo(site.att?.i===i?Math.max(-STRING_HALF+8,Math.min(STRING_HALF-8,S().wx-site.x)):drag?.site===site&&drag.string===i?drag.x0:0,sy+bend*2+vib,STRING_HALF,sy);ctx.stroke();}
-    if(near){ctx.globalAlpha=.8;ctx.fillStyle=WORLD_VISUAL.gold;ctx.font='10px monospace';ctx.textAlign='center';ctx.fillText('Empuja una cuerda con el cubo · o crúzalas rápido',0,72);}
+    if(near){ctx.globalAlpha=.8;ctx.fillStyle=WORLD_VISUAL.gold;ctx.font='10px monospace';ctx.textAlign='center';ctx.fillText('Empuja o cruza las cuerdas',0,72);}
    }else if(site.kind==='prism'){
     // Haz blanco que entra por el oeste y sale abierto en colores que se superponen (mezcla aditiva).
     ctx.globalAlpha=.5;ctx.strokeStyle='#fff';ctx.beginPath();ctx.moveTo(-PRISM_RADIUS-20,0);ctx.lineTo(0,0);ctx.stroke();
     const rays=prismFan(site.angle),lit=prismLit(site.angle,site.offset);ctx.globalCompositeOperation='screen';
-    for(const ray of rays){ctx.globalAlpha=.18+site.lit*.2;ctx.fillStyle=`hsl(${(ray.hue+site.hue)%360},80%,60%)`;ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,PRISM_RADIUS+10,ray.angle-.07,ray.angle+.07);ctx.closePath();ctx.fill();}
+    for(const ray of rays){ctx.globalAlpha=.2+site.lit*.15;ctx.strokeStyle=`hsl(${(ray.hue+site.hue)%360},80%,60%)`;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(Math.cos(ray.angle)*(PRISM_RADIUS+10),Math.sin(ray.angle)*(PRISM_RADIUS+10));ctx.stroke();}
     ctx.globalCompositeOperation='source-over';
     site.flash=(site.flash||[]).map(f=>Math.max(0,(f||0)-dt*1.2));
     for(let k=0;k<PRISM_RECEPTORS;k++){const a=receptorAngle(k,site.offset),rx=Math.cos(a)*PRISM_RADIUS,ry=Math.sin(a)*PRISM_RADIUS,on=lit.includes(k),f=site.flash[k]||0,col=`hsl(${(site.hue+k*72)%360},85%,62%)`;
      if(on){   // cristal encendido: haz que llega, halo y rombo lleno; destello al encenderse
-      ctx.globalAlpha=.35+f*.4;ctx.strokeStyle=col;ctx.lineWidth=2+f*2;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(rx,ry);ctx.stroke();ctx.lineWidth=WORLD_VISUAL.line;
-      const g=ctx.createRadialGradient(rx,ry,0,rx,ry,26+f*20);g.addColorStop(0,`hsla(${(site.hue+k*72)%360},85%,62%,${.45+f*.4})`);g.addColorStop(1,'rgba(0,0,0,0)');ctx.globalAlpha=1;ctx.fillStyle=g;ctx.fillRect(rx-50,ry-50,100,100);}
-     const sz=on?11+f*6+Math.sin(t/180+k)*1.5:7;ctx.globalAlpha=on?.95:.3;ctx.strokeStyle=on?WORLD_VISUAL.gold:elementInk('glass',site.hue+k*40);ctx.fillStyle=col;
+      ctx.globalAlpha=.35+f*.4;ctx.strokeStyle=col;ctx.lineWidth=1.2+f*.5;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(rx,ry);ctx.stroke();ctx.lineWidth=WORLD_VISUAL.line;
+      const g=ctx.createRadialGradient(rx,ry,0,rx,ry,localGlowRadius(runtime.W,runtime.H,12+f*10));g.addColorStop(0,`hsla(${(site.hue+k*72)%360},85%,62%,${.18+f*.2})`);g.addColorStop(1,'rgba(0,0,0,0)');ctx.globalAlpha=1;ctx.fillStyle=g;ctx.fillRect(rx-22,ry-22,44,44);}
+     const sz=on?7+f*2+Math.sin(t/180+k)*.5:5;ctx.globalAlpha=on?.95:.3;ctx.strokeStyle=on?WORLD_VISUAL.gold:elementInk('glass',site.hue+k*40);ctx.fillStyle=col;
      ctx.beginPath();ctx.moveTo(rx,ry-sz);ctx.lineTo(rx+sz*.7,ry);ctx.lineTo(rx,ry+sz);ctx.lineTo(rx-sz*.7,ry);ctx.closePath();if(on){ctx.globalAlpha=.75;ctx.fill();ctx.globalAlpha=.95;}ctx.stroke();}
     ctx.rotate(site.angle);ctx.globalAlpha=.85;ctx.strokeStyle=ink;ctx.beginPath();for(let i=0;i<3;i++){const a=i/3*TAU-Math.PI/2;ctx[i?'lineTo':'moveTo'](Math.cos(a)*26,Math.sin(a)*26);}ctx.closePath();ctx.stroke();ctx.globalAlpha=.12;ctx.fillStyle=ink;ctx.fill();ctx.rotate(-site.angle);
     if(near){ctx.globalAlpha=.8;ctx.fillStyle=WORLD_VISUAL.gold;ctx.font='10px monospace';ctx.textAlign='center';ctx.fillText(`Rodéalo con el cubo para girarlo · ${lit.length} de ${PRISM_RECEPTORS} cristales`,0,PRISM_RADIUS+30);}

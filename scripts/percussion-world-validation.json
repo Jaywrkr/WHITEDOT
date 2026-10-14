@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0-rc.4",
+  "sampledChunks": 12000,
+  "emptyChunks": 7097,
+  "totalElements": 9721,
+  "fossils": 9,
+  "discretePercussionRecipes": 4810,
+  "representedGenres": 52,
+  "families": {
+    "reeds": 1210,
+    "pool": 1252,
+    "pods": 1232,
+    "stone": 1207,
+    "shell": 1266,
+    "dust": 1207,
+    "hollow": 1190,
+    "roots": 1148,
+    "fossil": 9
+  },
+  "instruments": {
+    "wood": 1976,
+    "tom": 1932,
+    "shaker": 1059,
+    "rim": 1299,
+    "clap": 562,
+    "kick": 556,
+    "conga": 1168,
+    "guiro": 594,
+    "timbale": 575
+  },
+  "notes": "Three Vasto/Vivo preview seeds. Empty sea/land chunks included. Recipes exclude coordinates, IDs and world seed; this counts musical/object structures, not perceptually unique worlds or songs. Base terrain generator, 11 biomes, 33 ecologies and 52 genre IDs are unchanged."
+}

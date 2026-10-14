@@ -1,5 +1,5 @@
 import {musicalCharacter,inRegister} from './musical-character.js';
-import {elementInk,WORLD_VISUAL} from './visual.js';
+import {elementInk,WORLD_VISUAL,localGlowRadius} from './visual.js';
 // Hitos y horizonte sonoro. Un hito grande primero se OYE (apagado y desde su dirección),
 // luego se INTUYE (brillo en el borde de la pantalla) y por último se VE.
 // Posiciones fijas por semilla, iguales para todos. Sin flechas ni brújula.
@@ -76,29 +76,25 @@ export function initialize(runtime){
    const sx=lm.x+ox,sy=lm.y+oy,on=sx>-260&&sx<W+260&&sy>-120&&sy<H+420,col=elementInk(lm.type==='arbol'?'wood':'glass',lm.hue),near=1-lm.d/SENSE;
    if(on)shape(cx,lm,sx,sy,t,Math.min(1,.25+near*.9),col,ref.lit);
    else{const a=Math.atan2(lm.y-S.wy,lm.x-S.wx),ex=W/2+Math.cos(a)*W*.48,ey=H/2+Math.sin(a)*H*.48;
-    const g=cx.createRadialGradient(ex,ey,0,ex,ey,150);g.addColorStop(0,`hsla(${lm.hue},70%,70%,${(.16+ref.lit*.22)*(.35+.65*near)})`);g.addColorStop(1,'rgba(0,0,0,0)');
-    cx.globalAlpha=1;cx.fillStyle=g;cx.fillRect(ex-150,ey-150,300,300);}
+    const glow=localGlowRadius(W,H,60),g=cx.createRadialGradient(ex,ey,0,ex,ey,glow);g.addColorStop(0,`hsla(${lm.hue},70%,70%,${(.16+ref.lit*.22)*(.35+.65*near)})`);g.addColorStop(1,'rgba(0,0,0,0)');
+    cx.globalAlpha=1;cx.fillStyle=g;cx.fillRect(ex-glow,ey-glow,glow*2,glow*2);}
    if(lm.d<170&&!S.landmarks?.[lm.id])reach(lm);
   }
   cx.globalAlpha=1;
  }
  function shape(cx,lm,x,y,t,al,col,lit){
-  const s=lm.size;cx.save();cx.strokeStyle=col;cx.fillStyle=col;
+  const maxSize=Math.min(runtime.W,runtime.H)*.28/280,s=Math.min(lm.size,maxSize);cx.save();cx.strokeStyle=col;cx.fillStyle=col;cx.lineWidth=WORLD_VISUAL.line;cx.globalAlpha=al*(.5+lit*.3);
   switch(lm.type){
-   case 'torre':{const h=280*s;const g=cx.createLinearGradient(x,y-h,x,y);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,col);
-    cx.globalAlpha=al*(.55+lit*.45);cx.fillStyle=g;cx.fillRect(x-7,y-h,14,h);cx.globalAlpha=al*(.2+lit*.3);cx.fillRect(x-16,y-h,32,h);cx.globalAlpha=al;cx.fillStyle=col;cx.fillRect(x-10,y-8,20,8);
-    cx.globalAlpha=al*(.15+lit*.3);cx.beginPath();cx.arc(x,y-h*.9,18+lit*16,0,6.283);cx.fill();break;}
-   case 'arbol':{cx.globalAlpha=al*.8;cx.lineWidth=5*s;cx.beginPath();cx.moveTo(x,y);cx.lineTo(x,y-110*s);cx.stroke();
-    for(let i=0;i<7;i++){const a=i/7*6.283+Math.sin(t/3000)*.05,r=55*s,px=x+Math.cos(a)*r*.9,py=y-130*s+Math.sin(a)*r*.6;cx.globalAlpha=al*(.18+lit*.25);cx.beginPath();cx.arc(px,py,34*s,0,6.283);cx.fill();}break;}
-   case 'ciudad':{for(let i=0;i<26;i++){const a=i*2.4,r=24+i*5.5,px=x+Math.cos(a)*r,py=y+Math.sin(a)*r*.6,w=6+(i%4)*3;cx.globalAlpha=al*(.45+((i+Math.floor(t/400))%5===0?lit*.5:0));cx.strokeRect(px-w/2,py-w,w,w);}
-    cx.globalAlpha=al*.6;cx.fillRect(x-3,y-3,6,6);break;}
-   case 'monolito':{cx.globalAlpha=al;cx.fillStyle='#000';cx.fillRect(x-18*s,y-170*s,36*s,170*s);cx.lineWidth=WORLD_VISUAL.line;cx.strokeStyle=runtime.GOLD;cx.globalAlpha=al*(.5+lit*.5);cx.strokeRect(x-18*s,y-170*s,36*s,170*s);break;}
-   case 'faro':{cx.globalAlpha=al;cx.fillRect(x-5,y-60,10,60);const a=t/1400;cx.globalAlpha=al*(.12+lit*.2);cx.beginPath();cx.moveTo(x,y-58);cx.arc(x,y-58,420,a-.12,a+.12);cx.closePath();cx.fill();break;}
+   case 'torre':{const h=280*s;cx.beginPath();cx.moveTo(x,y);cx.lineTo(x,y-h);cx.moveTo(x-5,y-h*.9);cx.lineTo(x+5,y-h*.9);cx.stroke();break;}
+   case 'arbol':{cx.beginPath();cx.moveTo(x,y);cx.lineTo(x,y-110*s);for(let i=0;i<3;i++){const a=(i-1)*.8-Math.PI/2;cx.moveTo(x,y-80*s);cx.quadraticCurveTo(x+Math.cos(a)*40*s,y-100*s,x+Math.cos(a)*70*s,y-110*s+Math.sin(a)*40*s);}cx.stroke();break;}
+   case 'ciudad':{for(let i=0;i<8;i++){const a=i*2.4,r=(20+i*9)*s,px=x+Math.cos(a)*r,py=y+Math.sin(a)*r*.6;cx.beginPath();cx.arc(px,py,2+(i%3),0,6.283);cx.stroke();}break;}
+   case 'monolito':{cx.strokeRect(x-12*s,y-170*s,24*s,170*s);cx.beginPath();cx.moveTo(x,y-135*s);cx.lineTo(x,y-110*s);cx.stroke();break;}
+   case 'faro':{const a=t/1400,R=localGlowRadius(runtime.W,runtime.H,65);cx.beginPath();cx.moveTo(x,y);cx.lineTo(x,y-35);cx.moveTo(x,y-35);cx.lineTo(x+Math.cos(a)*R,y-35+Math.sin(a)*R);cx.stroke();break;}
   }
   cx.restore();
   if(lm.d<420){cx.globalAlpha=Math.min(1,(420-lm.d)/200);cx.fillStyle=col;cx.font='10px monospace';cx.textAlign='center';cx.fillText(lm.name,x,y+22);cx.globalAlpha=1;}
  }
- function reach(lm){
+ function reach(lm){runtime.recordElement?.('landmark',runtime.regionOfPos(lm.x,lm.y));
   const S=runtime.S;S.landmarks||={};S.landmarks[lm.id]=S.todayKey;S.landmarksN=(S.landmarksN||0)+1;
   runtime.toast(`<em>Hito</em> · ${lm.name}`);if(S.landmarksN===1)runtime.say(runtime.VOZ.hito);
   runtime.unlock('hito1');if(S.landmarksN>=10)runtime.unlock('hito10');runtime.save();

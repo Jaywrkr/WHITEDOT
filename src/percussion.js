@@ -23,9 +23,9 @@ export function initialize(runtime){
   }return out.sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y));
  }
  const kindOf=o=>`rhythm:${o.kind}:${o.variant}`;
- function emit(o,time,strength=.55,origin='player'){
+ function emit(o,time,strength=.55,origin='player',musicalBar=null){
   if(owner!==runtime.S||!audible()||Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)>120)return false;
-  const bar=Math.floor(time/Math.max(.001,runtime.SIX*16));if(budget.bar!==bar)budget={bar,hits:0,manual:0};
+  const bar=musicalBar??Math.max(0,Math.floor((runtime.MU?.step||0)/16));if(budget.bar!==bar)budget={bar,hits:0,manual:0};
   const counter=origin==='player'?'manual':'hits',limit=origin==='player'?4:2;
   if(budget[counter]>=limit)return false;budget[counter]++;
   const region=runtime.regionOfPos(o.x,o.y);
@@ -35,7 +35,9 @@ export function initialize(runtime){
   return true;
  }
  function gesture(o){
-  runtime.recordElement?.('rhythm:'+o.kind);runtime.S.rhythmFound||={};runtime.S.rhythmFound[o.kind]=1;
+  const first=!runtime.S.rhythmFound?.[o.kind];
+  runtime.recordElement?.('rhythm:'+o.kind,runtime.regionOfPos(o.x,o.y));runtime.S.rhythmFound||={};runtime.S.rhythmFound[o.kind]=1;
+  if(first&&o.kind==='fossil'){runtime.unlock?.('fosilRitmo');runtime.toast?.('<em>Fósil de ritmo</em> · Un pulso antiguo. Quédate para despertarlo.');}
   runtime.unlock?.('percusion1');if(Object.keys(runtime.S.rhythmFound).length>=4)runtime.unlock?.('percusion4');
   runtime.creativeAction?.('groove','model');runtime.touched?.();
   if(!audible())return;
@@ -58,12 +60,12 @@ export function initialize(runtime){
  }
  function step(s,bar,time){
   if(owner!==runtime.S){reset();return;}
-  if(!active||!audible()||active.held<.8||runtime.currentPocket?.()?.kind==='quiet')return;
-  const o=active,region=runtime.regionOfPos(o.x,o.y),pattern=rhythmPattern(o.kind,region.genre,o.variant);
+  if(!active||!audible()||active.held<.8||runtime.currentPocket?.()?.kind==='quiet'||runtime.cultureListening)return;
+  const o=active,region=runtime.regionOfPos(o.x,o.y),pattern=rhythmPattern(o.kind,region.genre,o.variant+(o.kind==='fossil'?Math.floor(bar/4):0));
   if(s!==pattern[0]||!claimInstallationBar(runtime,bar))return;
   const swing=(runtime.GEN[region.genre].sw||0)*runtime.SIX;
-  emit(o,time+((s%2)?swing:0),.28,'ambient');
-  emit(o,time+(pattern[1]-pattern[0])*runtime.SIX+((pattern[1]%2)?swing:0),.2,'ambient');
+  emit(o,time+((s%2)?swing:0),.28,'ambient',bar);
+  emit(o,time+(pattern[1]-pattern[0])*runtime.SIX+((pattern[1]%2)?swing:0),.2,'ambient',bar);
  }
  function draw(t,dt,ox,oy,radius){
   const c=runtime.cx;
@@ -72,7 +74,8 @@ export function initialize(runtime){
    const spec=RHYTHM_ELEMENTS[o.kind],d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);
    c.save();c.translate(o.x+ox,o.y+oy);c.globalAlpha=elementAlpha(d,radius,lit*.4);c.strokeStyle=elementInk(spec.material,runtime.regionOfPos(o.x,o.y).hue,lit>.1);c.fillStyle=c.strokeStyle;c.lineWidth=WORLD_VISUAL.line;
    c.beginPath();
-   if(o.kind==='stone'){c.ellipse(0,0,13+lit*2,9+lit*2,.2,0,6.283);c.moveTo(-5,0);c.lineTo(5,0);}
+   if(o.kind==='fossil'){c.arc(0,0,13,.3,5.8);c.moveTo(8,0);c.arc(0,0,8,0,5.5);c.moveTo(3,0);c.arc(0,0,3,0,4);}
+   else if(o.kind==='stone'){c.ellipse(0,0,13+lit*2,9+lit*2,.2,0,6.283);c.moveTo(-5,0);c.lineTo(5,0);}
    else if(o.kind==='hollow'){c.ellipse(0,0,7,12,1,0,6.283);c.moveTo(-15,-8);c.lineTo(-9,-12);c.moveTo(9,12);c.lineTo(15,8);}
    else if(o.kind==='roots'){for(let i=0;i<3;i++){c.moveTo(-15,6-i*6);c.quadraticCurveTo(0,-5+lit*3,15,-6+i*6);}}
    else if(o.kind==='reeds'){for(let i=0;i<3;i++){c.moveTo((i-1)*9,12);c.quadraticCurveTo((i-1)*9+lit*4,-2,(i-1)*9+4,-14+i*3);}}

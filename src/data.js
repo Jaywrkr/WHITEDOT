@@ -72,6 +72,9 @@ export function initialize(runtime) {
   const PROPK={llanura:"piedra",bosque:"hongo",jardin:"campanilla",dunas:"cactus",tormenta:"antena",cueva:"gota",vacio:"astro"};
   const SPECIES=[["luciernaga","Luciérnagas","Huyen si te acercas. Si las tocas, suenan."],["arbol","Árboles de luz","Crecen en el bosque y brillan cuando pasas."],["estanque","Agua","Bajo el agua todo suena distinto."],["bandada","Bandadas","Cruzan el cielo. Vuela con ellas."],["caminante","Caminantes","Si te quedas cerca, te siguen y cantan contigo."]];
   const ACH=[
+   ["fosilRitmo","Un pulso antiguo","Despertaste un fósil de ritmo raro.",1],
+   ["elementos10","Diez maneras de escuchar","Descubriste diez familias de elementos."],
+   ["elementos30","Atlas de encuentros","Descubriste treinta familias de elementos."],
    ["percusion1","El suelo tiene pulso","Tocaste tu primer elemento de percusión."],
    ["percusion4","Tu paisaje rítmico","Descubriste cuatro familias de percusión."],
    ["ecologyTouch","Materia que escucha","Hiciste responder un elemento de un Paisaje vivo."],

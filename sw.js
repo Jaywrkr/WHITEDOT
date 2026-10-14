@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-v1-rc3';
+const CACHE='whitedot-v1-rc4';
 const SHELL=[
  "./",
  "./index.html",
@@ -59,6 +59,8 @@ const SHELL=[
  "./src/landmarks.js",
  "./src/layers.js",
  "./src/main.js",
+ "./src/element-book.js",
+ "./src/element-book-model.js",
  "./src/release-ui.js",
  "./src/release-info.js",
  "./src/release-model.js",

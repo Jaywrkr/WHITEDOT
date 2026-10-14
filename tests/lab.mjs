@@ -22,7 +22,7 @@ assert.deepEqual(notes['materia:prism'].checks,{clear:false,sound:true});assert.
 assert.ok(labTested(notes['materia:prism']));assert.ok(!labTested(notes.glass));assert.deepEqual(normalizeLabNotes('basura'),{});
 // Informe legible, agrupado y con lo que falta por probar.
 const report=labReport({'materia:prism':{verdict:'fix',checks:{clear:false,sound:true},text:'gira lento\nen móvil'},'family:cloud':{verdict:'ok'}},{date:'2026-10-13'});
-assert.match(report,/^# Laboratorio WHITEDOT · 2026-10-13/);assert.match(report,/Probados: 2 de 62 · Bien 1 · Mejorar 1 · Quitar 0/);
+assert.match(report,/^# Laboratorio WHITEDOT · 2026-10-13/);assert.match(report,/Probados: 2 de 63 · Bien 1 · Mejorar 1 · Quitar 0/);
 assert.match(report,/### Prisma de luz — Mejorar\n- Falla: Se entiende qué hacer\n- Funciona: Suena bien con la música\n- Nota: gira lento \/ en móvil/);
 assert.ok(report.indexOf('## Materia')<report.indexOf('## Encuentros'));assert.match(report,/## Sin probar\n\nCuerdas tensables, /);
 assert.equal(LAB_CHECKS.length,5);

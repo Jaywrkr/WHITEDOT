@@ -4,6 +4,7 @@ export const CHANNELS=['bass','groove','melody','space'];
 export const CHANNEL_NAMES={bass:'Bajo',groove:'Groove',melody:'Motivo',space:'Espacio'};
 const clamp=n=>Math.max(-1,Math.min(1,n));
 export function influenceProfile(region,kind,source,seedOf,rng){
+ if(kind.startsWith('rhythm:'))return {channel:kind.startsWith('rhythm:stone:')?'bass':'groove',variant:source?.variant%8||0,speed:.7};
  if(kind.startsWith('ecology:')&&region.ecology){const channel=kind.split(':').at(-1);if(CHANNELS.includes(channel))return {channel,variant:source?.variant%8||0,speed:.7};}
  const id=source?.id||`${source?.hx??source?.x??0},${source?.hy??source?.y??0}`;
  const r=rng(seedOf(`influence:v1:${region.key}:${kind}:${id}`));

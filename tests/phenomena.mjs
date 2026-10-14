@@ -30,4 +30,5 @@ for(let x=0;x<30&&!percussionVisual;x++){
 }
 assert(percussionVisual);
 for(let x=0;x<100;x++){r.S.wx=x*900;r.nearbyPhenomena();}assert(r.phenomenonCacheSize<=64);
+globalThis.document={hidden:false,querySelector:()=>({})};assert(!r.triggerPhenomenon({...examples.get('bird'),next:0},20),'open menu must not trigger a phenomenon');document.querySelector=()=>null;document.hidden=true;assert(!r.triggerPhenomenon({...examples.get('bird'),next:0},20),'hidden tab must not trigger');document.hidden=false;
 console.log('PASS: seeded sparse phenomena, rare birds, audio-onset visuals, melodic answers/snare/cloud voices, mute, quiet clearings and bounded cache');

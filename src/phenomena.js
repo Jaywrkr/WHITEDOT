@@ -1,3 +1,5 @@
+import {contactEntry} from './contact.js';
+import {claimInstallationBar} from './installations.js';
 import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js';
 import {WORLD_VISUAL,elementInk,elementAlpha} from './visual.js';
 export const PHENOMENON_NAMES={bird:'Ave de eco',shaker:'Semillero de caja',cloud:'Nube de pulso'};
@@ -24,10 +26,11 @@ export function initialize(runtime){
  }
  function phenomenonVoice(o){const region=runtime.regionOfPos(o.hx,o.hy),g=runtime.GEN[region.genre];return {role:o.kind==='bird'?'lead':o.kind==='shaker'?'perc':'bajo',instrument:o.kind==='bird'?hookInstruments(region.genre,g)[o.voiceIndex%hookInstruments(region.genre,g).length]:o.kind==='shaker'?'snare':g.bassI};}
  function cue(o,time){if(!o.cues.some(t=>Math.abs(t-time)<.025)){o.cues.push(time);if(o.cues.length>4)o.cues.shift();}}
- const audible=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&runtime.S.sound&&runtime.ac?.state==='running';
- function triggerPhenomenon(o,time){
+ const playable=()=>typeof document==='undefined'||(!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])'));
+ const audible=()=>playable()&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&runtime.S.sound&&runtime.ac?.state==='running';
+ function triggerPhenomenon(o,time,origin='player'){
   if(!audible()||time<o.next)return false;
-  o.next=time+runtime.SIX*8;
+  o.next=time+runtime.SIX*8;if(origin==='player')runtime.recordElement?.('phenomenon:'+o.kind,runtime.regionOfPos(o.hx,o.hy));
   const region=runtime.regionOfPos(o.hx,o.hy),voice=phenomenonVoice(o),tones=runtime.chordTones();
   function hit(t,index){
    let volume=(o.kind==='bird'?.035:o.kind==='shaker'?.032:.045)*(runtime.curatedVoiceGain?.(t,voice.role)||1);
@@ -46,7 +49,7 @@ export function initialize(runtime){
  function phenomenaStep(step,bar,time){
   if(!audible()||autoBar===bar||runtime.initiativeLastBar===bar||runtime.currentPocket?.()?.kind==='quiet')return;
   const o=nearbyPhenomena().find(o=>o.kind==='bird'?!runtime.MU.radio?.melodyRest&&step===14&&bar%4===o.offset%4:o.kind==='cloud'?step===0&&bar%8===o.offset:step===12&&bar%4===o.offset%4);
-  if(o&&triggerPhenomenon(o,time))autoBar=bar;
+  if(o&&time>=o.next&&claimInstallationBar(runtime,bar)&&triggerPhenomenon(o,time,'ambient'))autoBar=bar;
  }
  function phenomenonSources(){return nearbyPhenomena(250).map(o=>({object:o,kind:`phenomenon:${o.kind}`,name:PHENOMENON_NAMES[o.kind],voice:phenomenonVoice(o),distance:Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)}));}
  function drawPhenomena(t,dt,ox,oy,radius){
@@ -56,7 +59,8 @@ export function initialize(runtime){
    const pulse=audible()?cueIntensity(o.cues,audioTime):0;
    if(o.kind==='bird'){o.x=o.hx+Math.sin(t/o.period+o.phase)*18;o.y=o.hy+Math.cos(t/(o.period*1.3)+o.phase)*10-pulse*24;}
    const wave=runtime.waves.length&&runtime.hitW(o.x,o.y),distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);
-   if(now>o.cd&&(wave||distance<22)){o.cd=now+1700;runtime.touched();runtime.beatSoon(q=>triggerPhenomenon(o,q));}
+   const entered=contactEntry(o,distance<22,playable()),waveEntry=wave&&wave!==o.wave;o.wave=wave;
+   if(playable()&&now>o.cd&&(waveEntry||entered)){o.cd=now+1700;runtime.touched();runtime.beatSoon(q=>triggerPhenomenon(o,q));}
    ctx.save();ctx.translate(o.x+ox,o.y+oy);ctx.globalAlpha=elementAlpha(distance,radius,pulse);ctx.strokeStyle=elementInk(o.kind==='shaker'?'wood':'air',runtime.regionOfPos(o.hx,o.hy).hue,pulse>0);ctx.fillStyle=ctx.strokeStyle;ctx.lineWidth=WORLD_VISUAL.line;
    if(o.kind==='bird'){
     const wing=5+Math.sin(t/(o.period*.1)+o.phase)*3+pulse*5;ctx.beginPath();ctx.moveTo(-10,-wing);ctx.lineTo(0,0);ctx.lineTo(10,-wing);ctx.stroke();ctx.fillRect(-1,-2,2,3);

@@ -1,3 +1,5 @@
+> **Actualización autorizada tras la auditoría:** candidata **1.0.0-rc.4**, tres ramas amplias descritas en [EXPANSION_RITMICA.md](EXPANSION_RITMICA.md). La congelación RC1 citada abajo es histórica: se implementaron percusión, versión/deploy, minimalismo y registro de elementos por la petición posterior de Jay. No hay servidor/deploy confirmado; los límites de aceptación siguen vigentes.
+
 # Después de V1 · publicar y abrir V2
 
 La auditoría de [V1 RC1](AUDITORIA_V1.md) congela las funciones actuales. Este documento es un plan, no funciones ya implementadas. Una rama amplia por bloque, commit/push; Jay revisa PR/merge. No se inicia ninguna integración de servidor en esta sesión.
