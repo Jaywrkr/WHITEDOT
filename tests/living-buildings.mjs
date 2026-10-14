@@ -1,0 +1,2 @@
+import assert from 'node:assert/strict';import {bridgeContact} from '../src/living-buildings.js';import {LIVING_STUDIES,studyOf,JAY_STORY} from '../src/living-studies.js';
+let p=0;for(const index of [0,1,2])p=bridgeContact(p,index);assert.equal(p,3);assert.equal(bridgeContact(1,2),0);assert.equal(bridgeContact(2,0),1);assert.equal(studyOf({variant:12}).id,LIVING_STUDIES[0].id);assert.equal(LIVING_STUDIES.length,12);assert(JAY_STORY.every(f=>f.text.length<240));console.log('PASS readable three-stone musical route, twelve original studies and compact optional story');

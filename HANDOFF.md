@@ -1,5 +1,5 @@
 <!-- universo-vivo -->
-Implementación en curso: **fase 7/10 · 1.1.0-alpha.7**. Cambios, pruebas, ramas y límites en [ENTREGA_UNIVERSO_VIVO.md](ENTREGA_UNIVERSO_VIVO.md). Plan: [150 ideas](UNIVERSO_150_IDEAS_FASES.md). Las secciones anteriores se conservan como historial.
+Implementación en curso: **fase 8/10 · 1.1.0-alpha.8**. Cambios, pruebas, ramas y límites en [ENTREGA_UNIVERSO_VIVO.md](ENTREGA_UNIVERSO_VIVO.md). Plan: [150 ideas](UNIVERSO_150_IDEAS_FASES.md). Las secciones anteriores se conservan como historial.
 <!-- /universo-vivo -->
 
 # Interfaz integrada · V1 RC6

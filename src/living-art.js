@@ -18,6 +18,13 @@ export function livingGlyph(c,o,t){
  case 'jelly':c.ellipse(0,0,s,s*.5,0,Math.PI,Math.PI*2);for(let i=-1;i<=1;i++){c.moveTo(i*s*.6,0);c.quadraticCurveTo(i*s*.6+Math.sin(p)*5,s*.5,i*s*.6,s);}break;
  case 'whale':c.moveTo(-s,0);c.quadraticCurveTo(0,-s*.6,s,0);c.moveTo(s*.4,0);c.lineTo(s*.7,s*.5);break;
  case 'blob':for(let i=0;i<=24;i++){const a=i*Math.PI/12,r=s*(.75+.1*Math.sin(a*3+p));if(!i)c.moveTo(Math.cos(a)*r,Math.sin(a)*r);else c.lineTo(Math.cos(a)*r,Math.sin(a)*r);}break;
+ case 'mill':c.arc(0,0,s*.25,0,Math.PI*2);for(let i=0;i<4;i++){const a=p+i*Math.PI/2;c.moveTo(Math.cos(a)*s*.25,Math.sin(a)*s*.25);c.lineTo(Math.cos(a)*s*.85,Math.sin(a)*s*.85);}break;
+ case 'arches':for(let i=-1;i<=1;i++){c.moveTo(i*s*.55-s*.25,s*.6);c.quadraticCurveTo(i*s*.55,-s,i*s*.55+s*.25,s*.6);}break;
+ case 'orbit':c.ellipse(0,0,s,s*.45,p,0,Math.PI*2);c.moveTo(Math.cos(p)*s+2,Math.sin(p)*s*.45);c.arc(Math.cos(p)*s,Math.sin(p)*s*.45,2,0,Math.PI*2);break;
+ case 'plaza':for(let i=0;i<5;i++){const a=i*Math.PI*2/5;c.moveTo(Math.cos(a)*s*.8+3,Math.sin(a)*s*.8);c.arc(Math.cos(a)*s*.8,Math.sin(a)*s*.8,3,0,Math.PI*2);}break;
+ case 'mirrors':for(let i=-1;i<=1;i++){c.moveTo(i*s*.4-s*.15,-s*.7);c.lineTo(i*s*.4+s*.15,-s*.5);c.lineTo(i*s*.4+s*.15,s*.7);c.lineTo(i*s*.4-s*.15,s*.5);c.closePath();}break;
+ case 'bridge':c.moveTo(-s,s*.3);c.quadraticCurveTo(0,-s*.3,s,s*.3);for(let i=-1;i<=1;i++){c.moveTo(i*22+3,0);c.arc(i*22,0,3,0,Math.PI*2);}break;
+ case 'shelter':c.moveTo(-s,s*.5);c.quadraticCurveTo(0,-s,s,s*.5);c.moveTo(-s,s*.5);c.quadraticCurveTo(0,-s*.3,s,s*.5);break;
  default:c.ellipse(0,0,s,s*.6,p,0,Math.PI*2);
  }
  c.stroke();
