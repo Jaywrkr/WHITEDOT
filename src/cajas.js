@@ -1,3 +1,4 @@
+import {createPowerClock} from './power-clock.js';
 import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js';
 // Cajas misteriosas: raras, flotan y brillan; el cubo las abre al tocarlas y te dan un poder por un rato.
 // - Campo de escucha: un círculo te sigue; la música del lugar calla y un brazo gira en el campo tocando
@@ -12,10 +13,10 @@ import {swatchOf,WORLD_VISUAL} from './visual.js';
 const TAU=Math.PI*2;
 
 export function initialize(runtime){
- const S=()=>runtime.S,powers={},spawned=[],trail=[],marks=[],companion={x:0,y:0,on:false,lit:0,heard:[]};let previous=S(),lastMark=null;
+ const clock=createPowerClock(POWERS),S=()=>runtime.S,powers=clock.powers,spawned=[],trail=[],marks=[],companion={x:0,y:0,on:false,lit:0,heard:[]};let previous=S(),lastMark=null;
  S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};
  const surface=()=>runtime.inWorld()&&(S().layer||'superficie')==='superficie';
- const now=()=>performance.now();
+ const now=clock.now;
  const has=id=>(powers[id]||0)>now();
  const left=id=>Math.max(0,((powers[id]||0)-now())/1000);
  // ---------- cajas ----------
@@ -34,7 +35,7 @@ export function initialize(runtime){
   runtime.unlock('caja1');if(S().boxesOpened>=5)runtime.unlock('caja5');runtime.unlock('poder_'+b.power);runtime.save();
  }
  function give(id){
-  const p=POWERS[id];if(!p)return;powers[id]=Math.max(powers[id]||0,now())+p.seconds*1000;runtime.toast(`<em>${p.name}</em> · ${p.text}`);
+  const p=POWERS[id];if(!p)return;clock.give(id);runtime.toast(`<em>${p.name}</em> · ${p.text}`);
   if(!S().help['poder_'+id]){S().help['poder_'+id]=true;runtime.say(p.text,p.name);}
   if(id==='cometa')runtime.speedBoost=2.2;if(id==='campo')runtime.fieldSolo=true;
   if(id==='companero'){companion.on=true;companion.x=S().wx+30;companion.y=S().wy+30;}
@@ -43,6 +44,7 @@ export function initialize(runtime){
  // ---------- cada cuadro ----------
  function tick(dt){
   if(previous!==S()){previous=S();S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};clear();}
+  clock.tick(runtime.activeFrameSeconds??dt,surface()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])'));
   runtime.speedBoost=has('cometa')?2.2:1;runtime.fieldSolo=has('campo');
   if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])'))return;const b=runtime.body;
   for(const box of boxesNear(400))if(Math.hypot(box.x-S().wx,box.y-S().wy)<22)open(box);
@@ -105,9 +107,9 @@ export function initialize(runtime){
    c.save();c.translate(x,y);c.rotate(a);c.globalAlpha=.85;c.fillStyle=WORLD_VISUAL.gold;c.beginPath();c.moveTo(10,0);c.lineTo(-6,-6);c.lineTo(-6,6);c.closePath();c.fill();c.restore();
    c.globalAlpha=.75;c.fillStyle=WORLD_VISUAL.gold;c.font='9px monospace';c.textAlign='center';c.fillText(`${tg.name} · ${Math.round(tg.d/10)} m`,x-Math.cos(a)*22,y-Math.sin(a)*22+3);}
   // Poderes activos: un renglón discreto arriba.
-  const active=activePowers(powers,now());if(active.length){c.globalAlpha=.75;c.fillStyle=WORLD_VISUAL.gold;c.font='10px monospace';c.textAlign='center';c.fillText(active.map(p=>`${POWERS[p.id].name} ${Math.ceil(p.left)} s`).join(' · '),cx,140);}
+  const active=activePowers(powers,now());if(active.length){c.globalAlpha=.75;c.fillStyle=WORLD_VISUAL.gold;c.font='10px monospace';c.textAlign='center';c.fillText(active.map(p=>`${POWERS[p.id].name} ${Math.ceil(p.left)} s`).join(' · '),cx,Math.min(runtime.H-60,180));}
   c.restore();
  }
- function clear(){for(const key of Object.keys(powers))delete powers[key];spawned.length=0;trail.length=0;marks.length=0;companion.on=false;companion.heard=[];lastMark=null;runtime.fieldSolo=false;runtime.speedBoost=1;}
+ function clear(){clock.clear();spawned.length=0;trail.length=0;marks.length=0;companion.on=false;companion.heard=[];lastMark=null;runtime.fieldSolo=false;runtime.speedBoost=1;}
  Object.defineProperties(runtime,{clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
 }

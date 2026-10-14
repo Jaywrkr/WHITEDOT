@@ -1,3 +1,4 @@
+import {initialize as voiceGuide} from './voice-guide.js';
 import {initialize as rareCards} from './rare-cards.js';
 import {initialize as elementBook} from './element-book.js';
 import {initialize as releaseUI} from './release-ui.js';
@@ -131,6 +132,7 @@ ecology(runtime);
 saveTools(runtime);
 accessibility(runtime);
 rareCards(runtime);
+voiceGuide(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
 runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0)))runtime.S.mode="camino";

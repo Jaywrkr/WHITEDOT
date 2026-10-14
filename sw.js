@@ -1,6 +1,9 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-v1-rc6';
+const CACHE='whitedot-1.1.0-alpha.1';
 const SHELL=[
+ "./src/world.js",
+ "./src/voice-guide.js",
+ "./src/power-clock.js",
  "./",
  "./index.html",
  "./styles/game.css",
@@ -117,7 +120,6 @@ const SHELL=[
  "./src/vida.js",
  "./src/voices.js",
  "./src/wonders.js",
- "./src/world.js"
 ];
 // Precache a whole release. The new worker waits while an older game is open.
 const shellURLs=new Set(SHELL.map(path=>new URL(path,self.registration.scope).href));
