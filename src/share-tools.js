@@ -47,7 +47,20 @@ export function initialize(runtime){
  $('placeShare').onclick=shareHere;
  $('placeOpen').onclick=()=>openCode($('placeCode').value);
  // ---------- grabar set ----------
- const rec={recorder:null,chunks:[],dest:null,stop:null,started:0,timer:null,stream:null,out:null,url:null};
+ const rec={recorder:null,chunks:[],dest:null,stop:null,started:0,timer:null,stream:null,out:null,url:null,frame:null};
+ // Estilo J: the set is recorded as a ready-to-post 4:5 frame (1080×1350) with a quiet signature.
+ function postFrame(game){
+  const c=document.createElement('canvas');c.width=1080;c.height=1350;const x=c.getContext('2d');
+  const draw=()=>{
+   x.fillStyle='#000';x.fillRect(0,0,1080,1350);
+   const w=game.width,h=game.height,area=1080/1250,cw=w/h>area?h*area:w,ch=w/h>area?h:w/area;
+   if(w&&h)x.drawImage(game,(w-cw)/2,(h-ch)/2,cw,ch,0,0,1080,1250);
+   x.fillStyle='#000';x.fillRect(0,1250,1080,100);x.textBaseline='middle';
+   x.fillStyle='#fff';x.font='34px Silkscreen, monospace';x.fillText('WHITEDOT',56,1300);
+   x.fillStyle='#ffffff99';x.font='26px "JetBrains Mono", monospace';x.textAlign='right';x.fillText('@jaywrkr',1024,1300);x.textAlign='left';
+  };
+  draw();return {canvas:c,timer:setInterval(draw,1000/30)};
+ }
  function setUI(){const on=!!rec.recorder;$('bRecord').classList.toggle('rec',on);$('bRecord').querySelector('span').textContent=on?'Detener grabación':'Grabar set';$('recBadge').hidden=!on;}
  function start(){
   if(rec.recorder)return stop();
@@ -56,7 +69,7 @@ export function initialize(runtime){
   runtime.audio();const out=runtime.outputStage?.headroom,ac=runtime.ac;if(!out||!ac?.createMediaStreamDestination){runtime.toast('<em>Grabar</em> · activa el sonido primero');return false;}
   try{
    rec.out=out;rec.dest=ac.createMediaStreamDestination();out.connect(rec.dest);
-   rec.stream=new MediaStream([...cv.captureStream(30).getVideoTracks(),...rec.dest.stream.getAudioTracks()]);
+   rec.frame=postFrame(cv);rec.stream=new MediaStream([...rec.frame.canvas.captureStream(30).getVideoTracks(),...rec.dest.stream.getAudioTracks()]);
    rec.chunks=[];rec.recorder=new MediaRecorder(rec.stream,{mimeType:type,videoBitsPerSecond:4e6});
    rec.recorder.ondataavailable=e=>{if(e.data.size)rec.chunks.push(e.data);};
    rec.recorder.onstop=()=>finish(type);rec.recorder.onerror=()=>{stop();runtime.toast('No se pudo completar la grabación en este navegador.');};
@@ -67,7 +80,7 @@ export function initialize(runtime){
  }
  function stop(){if(!rec.recorder)return false;clearInterval(rec.timer);try{rec.recorder.stop();}catch(_){finish(rec.recorder.mimeType);}return true;}
  function releaseCapture(){
-  clearInterval(rec.timer);try{rec.out?.disconnect(rec.dest);}catch(_){}
+  clearInterval(rec.timer);clearInterval(rec.frame?.timer);rec.frame=null;try{rec.out?.disconnect(rec.dest);}catch(_){}
   for(const track of rec.stream?.getTracks()||[])track.stop();rec.stream=null;rec.dest=null;rec.out=null;
  }
  function finish(type){

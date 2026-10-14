@@ -44,7 +44,7 @@ export function initialize(runtime) {
     x.fillStyle="#fff";x.font='600 34px "JetBrains Mono", monospace';
     x.fillText("RACHA "+runtime.shownStreak(),100,1040);x.fillText("ESTRELLAS "+runtime.S.stars.length,430,1040);x.fillText("TAMAÑO "+runtime.level(),800,1040);
     x.font='40px "JetBrains Mono", monospace';x.fillText(runtime.shownStreak()>1?"No fallé. "+runtime.shownStreak()+" días seguidos.":"Hoy sumé.",100,1120);
-    x.fillStyle="#8a8a8f";x.font='26px "JetBrains Mono", monospace';x.fillText("PIXEL BLANCO  ·  @jaywrkr",100,1236);
+    x.fillStyle="#8a8a8f";x.font='26px "JetBrains Mono", monospace';x.fillText("WHITEDOT  ·  @jaywrkr",100,1236);x.fillStyle="#fff";x.font='30px Silkscreen, monospace';x.textAlign="right";x.fillText("SIMPLE.",980,1232);x.textAlign="left";
     runtime.$("shareImg").alt=kind==="sky"?"Mi constelación en WHITEDOT":"Mi día en WHITEDOT";
     runtime.$("shareImg").src=c.toDataURL("image/png");runtime.$("mShare").hidden=false;
   }

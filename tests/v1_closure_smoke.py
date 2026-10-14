@@ -29,11 +29,12 @@ try:
   page.evaluate('__testRuntime.quietState.stage=6;__testRuntime.enterStudio()');assert page.evaluate('__testRuntime.experimentalLevel()')==0
   page.evaluate('__testRuntime.exitStudio();document.querySelectorAll(".modal").forEach(m=>m.hidden=true);__testRuntime.audio()');page.wait_for_function('__testRuntime.ac.state==="running"')
   # Instrument the actual output connections and video tracks, then use native MediaRecorder.
-  page.evaluate('()=>{const r=__testRuntime,cv=document.getElementById("w"),capture=cv.captureStream.bind(cv);window.__captures=[];cv.captureStream=(...a)=>{const stream=capture(...a);__captures.push(stream);return stream;};window.__revoked=[];const revoke=URL.revokeObjectURL.bind(URL);URL.revokeObjectURL=url=>{__revoked.push(url);revoke(url);};window.__head=0;window.__clip=0;for(const [key,counter]of [["headroom","__head"],["clipper","__clip"]]){const node=r.outputStage[key],connect=node.connect.bind(node);node.connect=(...a)=>{window[counter]++;return connect(...a);};}}')
+  page.evaluate('()=>{const r=__testRuntime,proto=HTMLCanvasElement.prototype,capture=proto.captureStream;window.__captures=[];window.__frames=[];proto.captureStream=function(...a){const stream=capture.apply(this,a);__captures.push(stream);__frames.push([this.width,this.height]);return stream;};window.__revoked=[];const revoke=URL.revokeObjectURL.bind(URL);URL.revokeObjectURL=url=>{__revoked.push(url);revoke(url);};window.__head=0;window.__clip=0;for(const [key,counter]of [["headroom","__head"],["clipper","__clip"]]){const node=r.outputStage[key],connect=node.connect.bind(node);node.connect=(...a)=>{window[counter]++;return connect(...a);};}}')
   for i in range(2):
    assert page.evaluate('__testRuntime.startSet()');page.wait_for_timeout(450);assert page.evaluate('__testRuntime.stopSet()')
    page.wait_for_function('!__testRuntime.setRecording&&__testRuntime.lastSet?.size>0');assert page.locator('#mSet').is_visible()
    assert page.evaluate('__captures.every(s=>s.getTracks().every(t=>t.readyState==="ended"))')
+   assert page.evaluate('__frames.at(-1)')==[1080,1350],'sets are recorded as 4:5 posts'
    page.locator('#setClose').click()
   assert page.evaluate('__head')==2;assert page.evaluate('__clip')==0;assert page.evaluate('__revoked.length')==1
   page.evaluate('()=>{window.__Recorder=MediaRecorder;const Fake=function(){throw Error("codec unavailable")};Fake.isTypeSupported=__Recorder.isTypeSupported.bind(__Recorder);window.MediaRecorder=Fake;}')
