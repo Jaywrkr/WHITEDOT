@@ -6,7 +6,7 @@
 
 Los estados RC5/RC4/RC1 siguientes son fotografías históricas; la entrega vigente está arriba.
 
-**Siguiente dirección:** [50 propuestas y orden de bloques](UNIVERSO_50_IDEAS.md): 20 mejoras del sistema y 30 ampliaciones de territorio, vida y arquitectura. Son propuestas. Primera prioridad: beneficios temporales de cajas, techo de acumulación y revisar la compañía permanente procedente de una caja; no borrar progreso ya ganado.
+**Plan ampliado vigente:** [100 propuestas en 10 fases](UNIVERSO_100_IDEAS_FASES.md), desde ajustes del juego actual hasta biodiversidad, ecosistemas, territorio, arquitectura y conexión entre jugadores. Son propuestas; el plan de 50 queda como historia. Primera prioridad: beneficios temporales de cajas, techo de acumulación y revisar la compañía permanente procedente de una caja; no borrar progreso ya ganado.
 
 # Libro de hallazgos · V1 RC5
 
