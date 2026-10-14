@@ -1,3 +1,7 @@
+<!-- universo-vivo -->
+Implementación en curso: **fase 1/10 · 1.1.0-alpha.1**. Cambios, pruebas, ramas y límites en [ENTREGA_UNIVERSO_VIVO.md](ENTREGA_UNIVERSO_VIVO.md). Plan: [150 ideas](UNIVERSO_150_IDEAS_FASES.md). Las secciones anteriores se conservan como historial.
+<!-- /universo-vivo -->
+
 # Interfaz integrada · V1 RC6
 
 **1.0.0-rc.6 · polish/coherent-game-ui**, basada en **main 2a7dce0 (#84)**, que ya integra `feat/rare-discovery-cards` (14e6862). Mejora conjunta de menú, HUD, hojas, Bitácora, favoritos, mapas, Estudio, efectos, mensajes, prototipo y accesibilidad. Fondo negro y cubo siguen como centro de la experiencia. **Menú → Herramientas** muestra Efectos, Eco y Estudio; **Intensidad musical** vuelve accesible el control existente. [Auditoría, capturas y decisiones](AUDITORIA_INTERFAZ.md).

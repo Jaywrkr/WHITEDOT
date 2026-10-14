@@ -65,6 +65,7 @@ export function initialize(runtime) {
     runtime.creativeTick?.(dt,modal||runtime.scanning||document.hidden);
     runtime.encounterTick?.(dt,modal||runtime.scanning||document.hidden);
     runtime.ecologyTick?.(dt,modal||runtime.scanning||document.hidden);
+    runtime.voiceGuideTick?.(dt,modal||runtime.scanning||document.hidden);
     runtime.updateScanner();runtime.fxTick?.(dt);
     const b=runtime.beat();
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);

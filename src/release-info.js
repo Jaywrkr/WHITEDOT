@@ -1,2 +1,2 @@
-// Generated only by the publishing process. A commit timestamp is not a deployment.
-export const RELEASE=Object.freeze({version:'1.0.0-rc.6',deployedAt:null,revision:null});
+// A build is not a deployment. Stamp the published artifact with scripts/stamp-deploy.mjs.
+export const RELEASE=Object.freeze({version:'1.1.0-alpha.1',deployedAt:null,revision:null});
