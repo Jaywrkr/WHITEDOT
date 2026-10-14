@@ -17,6 +17,7 @@ for(const name of files){const source=read('src/'+name);
 }
 if(missingIDs.length)errors.push(...missingIDs.map(s=>'Missing UI ID: '+s));
 const sw=read('sw.js'),shell=[...sw.match(/const SHELL=\[([\s\S]*?)\];/)[1].matchAll(/"([^"]+)"/g)].map(m=>m[1]);
+if(new Set(shell).size!==shell.length)errors.push('Duplicate shell assets prevent atomic installation');
 for(const file of shell)if(!existsSync(resolve(root,file)))errors.push('Missing shell asset: '+file);
 for(const file of files)if(!shell.includes('./src/'+file))errors.push('Uncached module: '+file);
 const manifest=JSON.parse(read('manifest.webmanifest'));
