@@ -42,7 +42,7 @@ python3 tests/server_api.py && python3 tests/duet_smoke.py   # servidor opcional
 
 ## Publicar
 
-El repo está conectado a Vercel (proyecto `whitedot`). Cada rama tiene vista previa; el merge a `main` publica producción. El build (`scripts/vercel-build.mjs`) sella la revisión y la hora de publicación, que se ven al pie del menú. Vercel sirve solo la parte estática: el servidor de cuentas y duetos no corre ahí.
+El repo está conectado a Vercel (proyecto `whitedot`). Cada rama tiene vista previa; el merge a `main` publica producción. `vercel.json` fija Framework **Other** (`null`), Output Directory **`.`** y el build `node scripts/vercel-build.mjs`. El juego vive en la raíz: no genera `public`. La configuración del repo evita que Vercel busque esa carpeta inexistente. El build sella la revisión y la hora de publicación, que se ven al pie del menú. Vercel sirve solo la parte estática: el servidor de cuentas y duetos no corre ahí.
 
 Flujo: una rama por fase de [PLAN_2.0.md](PLAN_2.0.md), commit y push. **Jay crea el PR y hace el merge.**
 

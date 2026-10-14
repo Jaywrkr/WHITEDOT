@@ -27,6 +27,9 @@ for(const item of JSON.parse(read('assets/fonts/sources.json'))){const digest=cr
 if(/https:\/\/fonts\./.test(html))errors.push('External font dependency remains');
 for(const file of readdirSync(root).filter(n=>n.endsWith('.md'))){for(const m of read(file).matchAll(/\]\(([^)]+)\)/g)){const href=m[1].replace(/^<|>$/g,'').split('#')[0];if(href&&!href.includes('://')&&!existsSync(resolve(root,href)))warnings.push('Markdown reference: '+file+' → '+href);}}
 const packageVersion=JSON.parse(read('package.json')).version;
+const vercel=JSON.parse(read('vercel.json'));
+if(vercel.framework!==null||vercel.outputDirectory!=='.')errors.push('Vercel must serve the native static root, not an absent public directory');
+if(vercel.buildCommand!=='node scripts/vercel-build.mjs')errors.push('Vercel must stamp the publication artifact before serving it');
 if(RELEASE.version!==packageVersion)errors.push('Package and visible release versions disagree');
 if(normalizeRelease(RELEASE).deployedAt!==RELEASE.deployedAt)errors.push('Invalid deployment timestamp');
 if(!html.includes('v'+packageVersion))errors.push('HTML fallback release disagrees');

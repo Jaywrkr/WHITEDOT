@@ -29,6 +29,21 @@ Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0**
 
 **Orden de trabajo:** 0 → 1 → 2 → 3 → 7 → 6 → 4 → 5 → 8. Primero la base y que el mundo se vea profesional; luego celebración y cubo; después menú y bitácora; al final logros y casa, las fases más grandes.
 
+## Prioridad adicional · 14 de octubre · Despliegue e interacción
+
+Esta reparación contiene solo la fase 0 y el arreglo de deploy. Las fases siguientes tienen ramas propias; su código no se incluye aquí. Las fases 1 y 2 ya están subidas; 3, 7, 6, 4 y 5 tienen trabajo local pendiente de validación. La tabla conserva el alcance de esta rama base.
+
+Antes de continuar las fases: corregir Vercel, que intenta servir una carpeta `public` inexistente. Rama de reparación `fix/vercel-static-output`, desde fase 0. Mantener el sello de revisión/hora y el SW sin caché HTTP. No publicar ni integrar `main` desde Codex.
+
+Las siguientes peticiones de Jay quedan **pendientes de implementación**, sin eliminar fases ni progreso:
+
+1. **Saltar por el universo.** Botón temporal y discreto en la pantalla principal: “Otro lugar”. Saltos aleatorios para comparar biomas, criaturas, ambiente y música. Guardar el lugar previo y ofrecer retorno; conservar progreso, semillas y capas. Evitar destinos vacíos repetidos. El botón permanece silencioso; la música cambia con la transición normal del destino. Integrar en fase 7, con destino/dirección en la Bitácora de fase 6.
+2. **Toques que se entiendan.** Revisar qué recibe cada clic/tap: mostrar una respuesta local inmediata del objeto y un efecto musical identificable, a tempo. Cambiar movimiento, pulso o textura según especie y gesto; alternar graves, medios, percusión y melodía según ambiente. No convertir menús ni tarjetas en instrumentos. Integrar y probar en fase 8, con objetivos táctiles adecuados para móvil.
+3. **Percusión natural con diversidad real.** Ya existen nueve familias en `src/percussion-model.js` y `src/percussion.js`; su presencia actual no garantiza que se perciban durante la exploración. Revisar distribución, gestos, alcance, contraste y señales antes de añadir más familias. Variar el rayo: articulación, registro, patrón y eco según clima/género, evitando que toda caja sea el mismo golpe. Explorar gotas sobre hojas, semillas que traquetean, cañas que golpean, piedras huecas, insectos y aleteos como funciones diferenciadas: bombo, rim, tom, shaker, clap y percusión suave. Cada golpe debe tener una señal visual pequeña en su fuente; distribuir apariciones con semillas independientes. Mantener pausas, presupuesto de voces y margen de mezcla. Integrar como trabajo musical de fase 8; comparar géneros y lluvia en teléfono.
+4. **Reconocer quién está tocando.** Todo elemento que modifique la música debe indicar cuándo actúa, qué cambió y cuánto dura, mediante animación o rastro local sincronizado. Distinguir escucha por cercanía, contacto, conexión y quietud. Mayor claridad no implica subir todos los volúmenes: contrastar timbre, ritmo y registro sin saturar. Integrar en fase 8; comprobar que las señales respetan fondo negro y espacio libre.
+
+Aceptación: probar tap y arrastre con una mano; identificar fuentes musicales sin leer un panel; escuchar bajos/percusión distintos en varios destinos; volver al lugar anterior sin perder progreso. Validar UI silenciosa, guardados, offline, mezclas densas y movimiento reducido. Son pendientes nuevos; no se presentan como entregados.
+
 ## Reglas de diseño (estilo J)
 
 - Capa visual: [styles/estilo-j.css](styles/estilo-j.css). Negro puro, esquinas rectas, blanco para estados, **dorado solo para lo ganado**, Silkscreen para una frase por pantalla, JetBrains Mono para el resto.
@@ -93,8 +108,8 @@ Situación actual: la tarjeta de caja es mínima (`src/rare-cards.js`, `src/rare
 
 Situación actual: secuenciador radial (`src/studio.js`).
 
-- **Casa en pixeles vista de frente** (pendiente de confirmar por Jay):
-  - Piso = graves, paredes = medios, techo = agudos.
+- **Casa en pixeles vista desde arriba** (confirmada por Jay el 14 de octubre de 2026):
+  - Zonas del plano = registros: graves, medios y agudos.
   - Izquierda a derecha = momento del compás.
   - Cerca del cubo = más fuerte.
 - **Unos 40 objetos que suenan**, ganados con logros, hallazgos y linajes.
@@ -152,8 +167,8 @@ Arte final, sonido de celebraciones, prueba en teléfonos ([ACEPTACION_V1.md](AC
 
 ## Decisiones pendientes de Jay
 
-1. Casa: vista de frente (recomendado) o desde arriba.
+1. **Resuelta:** casa vista desde arriba, confirmada por Jay.
 2. Arte: ilustrador de pixel (recomendado para 50 piezas, 40 objetos y 6 tarjetas) o arte procedural.
 3. Qué 3–4 ideas creativas van en la primera ronda.
 
-Mientras no estén decididas, las fases 0–3, 6 y 7 pueden avanzar. La 5 necesita la decisión 1.
+Mientras no estén decididas, las fases 0–3, 6 y 7 pueden avanzar. La vista de la fase 5 ya está decidida; se implementa después de la 4.

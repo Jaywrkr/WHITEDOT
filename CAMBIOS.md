@@ -444,3 +444,13 @@ Rama `feat/15-spacious-blob-worlds`. Las semillas de prueba usan biomas de 7200 
 </details>
 
 </details>
+
+# Reparación prioritaria · Vercel estático
+
+Rama `fix/vercel-static-output`, hija de `v2/f0-coleccion` (`f8af7c4`). El preview fallaba porque Vercel buscaba `public`, una carpeta que este juego estático no genera. `vercel.json` declara Framework Other y salida en la raíz (`.`); conserva el build de sellado y la cabecera sin caché de `sw.js`. La auditoría detecta una regresión de estas opciones. No cambia música, guardados ni generación.
+
+[PLAN_2.0.md](PLAN_2.0.md) incorpora los pendientes nuevos: saltos aleatorios en pantalla principal, interacción táctil más perceptible, percusión natural variada y señales locales de actividad musical. No están implementados en esta reparación.
+
+Validación: `npm run audit:release` sin errores ni avisos; `npm test`, 72 suites aprobadas; `npm run test:browser`, 50/50 recorridos y recarga offline con 125 módulos aprobados. Build probado sobre un artefacto temporal: revisión, hora y caché SW selladas; sin SHA de Vercel no altera metadatos locales. Audio sin cambios; no se repitió su suite. El deploy remoto se confirma tras la publicación de Vercel; las pruebas locales no lo certifican.
+
+En el teléfono: abre el Preview de `fix/vercel-static-output` en Vercel, entra al juego, revisa el menú y recarga. Reintentar el commit antiguo `f8af7c4` no incluye la reparación. Jay crea el PR y hace merge.

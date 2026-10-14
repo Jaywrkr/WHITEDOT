@@ -143,3 +143,7 @@ Faltan recuperación/borrado de cuentas, operación/respaldos/monitorización, r
 4. [UNIVERSO_150_IDEAS_FASES.md](docs/historial/UNIVERSO_150_IDEAS_FASES.md) como visión de diseño; [CUBO_Y_EXPANSION.md](docs/historial/CUBO_Y_EXPANSION.md) como contexto heredado de Claude. Sus estados originales son históricos.
 
 Al terminar en Claude, actualizar estado, pendientes, matriz afectada, guía de prueba, entrega/ramas y handoff. Anotar rama/commit, comportamiento cambiado, migraciones, pruebas realmente ejecutadas y pendientes. Mantener evidencias históricas separadas de las nuevas; no declarar main actualizado ni un deploy sin comprobarlo.
+
+## 10. Reparación prioritaria de Vercel
+
+> **Reparación de Vercel · 14 oct:** `fix/vercel-static-output` parte de fase 0 `f8af7c4`, la rama del preview fallido. `vercel.json` fija `framework: null` y `outputDirectory: "."`; mantiene el sello de build y el SW sin caché HTTP. La auditoría protege esa configuración. Jay crea el PR y hace merge; no hay cambio de `main` ni deploy remoto confirmado. Al continuar las fases dependientes, conservar estas opciones. Las cuatro nuevas peticiones de interacción/percusión figuran como pendientes en [PLAN_2.0.md](PLAN_2.0.md).
