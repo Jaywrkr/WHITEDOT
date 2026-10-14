@@ -11,3 +11,7 @@ Poderes de cajas descontados solo mientras se juega, con acumulación máxima de
 ## Fase 2 · Linajes y gramática musical
 
 Catálogo ampliable de 28 linajes: 10 de flora, 10 de fauna y 8 construcciones. Distribución con afinidades, personalidad individual, períodos, variantes y rareza; semillas independientes del generador anterior. Recetas regionales con ritmo, swing, articulación, medio/doble tiempo y paleta. El catálogo se conecta al mundo en las siguientes fases; tener una definición no equivale todavía a un encuentro jugable. Prueba de 1.000 sectores y gramáticas en tests/living-catalog.mjs.
+
+## Fase 3 · Flora nativa y cuerpos sonoros
+
+Diez linajes de flora ya aparecen con distribución natural y responden al cubo: contacto, quietud, presión, órbita o seguimiento. Escáner, Bitácora y laboratorio los reconocen. Síntesis propia con material percutido, wavetable suave y FM contenida; registro grave/medio, caché acotada y presupuesto ambiental compartido. Semillas móviles germinan al permanecer. Musgo y redes participan en los siguientes perfiles de mezcla/ecología. Actualizado el contrato de prueba de compañía temporal de caja.
