@@ -1,6 +1,12 @@
 import {distanceOpacity} from './world-visibility-model.js';
-// Shared hierarchy: black space, local colored ink, gold audio response, white player.
+// Shared hierarchy: black space, source-colored music, earned gold, white player.
 export const WORLD_VISUAL=Object.freeze({background:'#000',line:1.2,maxElementAlpha:.88,gold:'#f0d27a',echo:'#9fe8ff'});
+const MUSIC_COLORS=Object.freeze(['#88d9eb','#b5a0ed','#96d7b0','#e9a5cb','#91b9ec','#dddded']);
+const MUSIC_ROLES=Object.freeze({bajo:0,perc:1,acorde:2,lead:3,agudo:4});
+export function musicalInk(hue=190,role='lead'){
+ const h=Number.isFinite(hue)?hue:190;
+ return MUSIC_COLORS[((Math.floor(h/60)+(MUSIC_ROLES[role]??3))%MUSIC_COLORS.length+MUSIC_COLORS.length)%MUSIC_COLORS.length];
+}
 // Paleta viva: 36 muestras (una cada 10° del tono de un lugar). Reparte rojos, naranjas, rosas, blancos,
 // cianes, violetas y verdes; el amarillo queda como una muestra más. Solo cambia cómo se pinta: los datos
 // del lugar (tono, recetas, guardado) no cambian.
@@ -38,7 +44,7 @@ export function installVivid(ctx){
  return ctx;
 }
 export function elementInk(material,hue=190,active=false){
- if(active)return WORLD_VISUAL.gold;
+ if(active)return musicalInk(hue,material==='wood'?'perc':material==='air'?'acorde':'lead');
  const saturation={wood:38,glass:65,metal:42,air:28}[material]||42;
  return `hsl(${((hue%360)+360)%360},${saturation}%,68%)`;
 }

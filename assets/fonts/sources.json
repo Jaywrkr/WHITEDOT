@@ -18,5 +18,73 @@
     "file": "jetbrainsmono-OFL.txt",
     "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/jetbrainsmono/OFL.txt",
     "sha256": "b2fe5e8987594e9ffd1d2ca52a2f5d73eb8335243893c5d6254b5ad69269591d"
+  },
+  {
+    "file": "GeistMono-Thin.ttf",
+    "source": "User-provided GeistMono-Thin.ttf",
+    "upstream": "https://github.com/vercel/geist-font",
+    "weight": 100,
+    "sha256": "d64ea850a435389f76a46b36b5cba8e91c757dc0c2b5304de9755acdb5312156"
+  },
+  {
+    "file": "GeistMono-ExtraLight.ttf",
+    "source": "User-provided GeistMono-ExtraLight.ttf",
+    "upstream": "https://github.com/vercel/geist-font",
+    "weight": 200,
+    "sha256": "a8d4ab3cbf7e10a2c49cfa147e3cca47aecfc596d8acf9d133f994c7ccb777bb"
+  },
+  {
+    "file": "GeistMono-Light.ttf",
+    "source": "User-provided GeistMono-Light.ttf",
+    "upstream": "https://github.com/vercel/geist-font",
+    "weight": 300,
+    "sha256": "c4096d0a2b0522902b262d1123dee5f9bbd20eb020d1812ca89f2ff11d365b71"
+  },
+  {
+    "file": "GeistMono-Regular.ttf",
+    "source": "User-provided GeistMono-Regular.ttf",
+    "upstream": "https://github.com/vercel/geist-font",
+    "weight": 400,
+    "sha256": "a55c1b51cda4afeab9e471e7947b85a20f7c8831d7e6b1470c1b7fbdc0f0f15e"
+  },
+  {
+    "file": "GeistMono-Medium.ttf",
+    "source": "User-provided GeistMono-Medium.ttf",
+    "upstream": "https://github.com/vercel/geist-font",
+    "weight": 500,
+    "sha256": "c3abe0505993f3b3747ed05fffd124d110b46f96fd8b17ac69b77ad09302b970"
+  },
+  {
+    "file": "GeistMono-SemiBold.ttf",
+    "source": "User-provided GeistMono-SemiBold.ttf",
+    "upstream": "https://github.com/vercel/geist-font",
+    "weight": 600,
+    "sha256": "44f04aaabab09d4ea9473cad55ca3d0129e885c333dede4bc97328b7c267e450"
+  },
+  {
+    "file": "GeistMono-Bold.ttf",
+    "source": "User-provided GeistMono-Bold.ttf",
+    "upstream": "https://github.com/vercel/geist-font",
+    "weight": 700,
+    "sha256": "75c0828d5c1ee44b9ef9f4df577bf41595ec362e2ea3f1e558590c9e92c7949d"
+  },
+  {
+    "file": "GeistMono-ExtraBold.ttf",
+    "source": "User-provided GeistMono-ExtraBold.ttf",
+    "upstream": "https://github.com/vercel/geist-font",
+    "weight": 800,
+    "sha256": "ac4a97ecf88b14c3284b96ccb1fe39aeb6e627c5e10fb613eb3d378d299b709f"
+  },
+  {
+    "file": "GeistMono-Black.ttf",
+    "source": "User-provided GeistMono-Black.ttf",
+    "upstream": "https://github.com/vercel/geist-font",
+    "weight": 900,
+    "sha256": "5e39e016a7f0c8690f01fb1eb779ea71eab866c9670189dbdcd195cf2f049af7"
+  },
+  {
+    "file": "geistmono-OFL.txt",
+    "source": "https://raw.githubusercontent.com/vercel/geist-font/main/OFL.txt",
+    "sha256": "c683bfbcc7e087f5d37a54ef628f10387c451a83ddc459b151403a164ac46c90"
   }
 ]

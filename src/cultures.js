@@ -96,7 +96,7 @@ export function initialize(runtime){
   if(!active())return;const ctx=runtime.cx,ox=runtime.W/2-S().wx,oy=runtime.H/2-S().wy;
   const mark=(p,size,col,kind=0)=>{if(dist(p)>450)return;ctx.save();ctx.translate(p.x+ox,p.y+oy);ctx.strokeStyle=ctx.fillStyle=col;ctx.lineWidth=1.2;ctx.globalAlpha=Math.max(.15,1-dist(p)/600);
    ctx.beginPath();if(kind===0){ctx.ellipse(0,0,size,size*.6,0,0,TAU);ctx.moveTo(-size*.4,0);ctx.quadraticCurveTo(0,-size*1.8,size*.4,0);}else if(kind===1){ctx.moveTo(-size,0);ctx.quadraticCurveTo(0,-size,size,0);}else {ctx.moveTo(0,-size);ctx.lineTo(size,0);ctx.lineTo(0,size);ctx.lineTo(-size,0);ctx.closePath();}ctx.stroke();ctx.restore();};
-  const label=(p,text)=>{if(dist(p)>100)return;ctx.save();ctx.font='10px monospace';ctx.textAlign='center';ctx.fillStyle='#e2ded1';ctx.globalAlpha=.85;ctx.fillText(text,p.x+ox,p.y+oy+40,Math.min(280,runtime.W-28));ctx.restore();};
+  const label=(p,text)=>{if(dist(p)>100)return;ctx.save();ctx.font='10px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillStyle='#e2ded1';ctx.globalAlpha=.85;ctx.fillText(text,p.x+ox,p.y+oy+40,Math.min(280,runtime.W-28));ctx.restore();};
   for(const site of nearby(650)){
    const c=CULTURES[site.culture],col=elementInk('glass',c.hue),chapter=S().cultures.collections[site.culture]||0,e=S().cultures.sites[site.id];
    mark(site,18,col); // Original compact guardian; glyph details distinguish the eight studies.

@@ -19,16 +19,15 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 - Al terminar una fase: actualizar `CAMBIOS.md`, la tabla de estado de `PLAN_2.0.md` y, si cambia el mapa técnico, `HANDOFF_CLAUDE.md`.
 - Vercel Hobby limita los deploys diarios: no hacer pushes innecesarios.
 
-## Verificación antes de cada push
+## Verificación proporcional (acordada con Jay)
 
-```sh
-npm run audit:release
-npm test
-npm run test:browser        # CHROMIUM_PATH si Chromium no está en el PATH
-npm run test:audio          # si se toca sonido o música
-```
-
-CI (`.github/workflows/checks.yml`) corre lo mismo. Si una prueba falla de forma intermitente, encontrar la causa; nunca desactivarla.
+- Durante la fase: pruebas enfocadas en los sistemas modificados.
+- Antes del push de una rama: `npm run audit:release`, `npm test` completos y recorridos de navegador de los sistemas afectados. Si cambia música, renders de audio afectados. Para documentación sola no se necesitan navegador ni audio.
+- Antes de integrar/publicar `main`: suite completa de navegador y audio sobre el conjunto final, además de auditoría y lógica. Ejecutarla una vez por conjunto; repetir tras cambios funcionales relevantes o fallos.
+- CI (`.github/workflows/checks.yml`) conserva las suites completas. Un PR con comprobaciones pendientes o fallidas no se integra; que GitHub las imponga depende de las reglas de protección del repositorio.
+- Registrar comandos ejecutados, resultados y qué queda para CI o aceptación manual. No presentar pruebas enfocadas como una ejecución completa.
+- Si falla una prueba intermitentemente, arreglar la causa; nunca desactivarla.
+- No ejecutar varias suites pesadas de audio/navegador simultáneamente en este entorno.
 
 ## Reglas técnicas
 
@@ -41,7 +40,7 @@ CI (`.github/workflows/checks.yml`) corre lo mismo. Si una prueba falla de forma
 
 ## Reglas de diseño (estilo J)
 
-- Capa visual final: `styles/estilo-j.css`. Negro puro, esquinas rectas, blanco para estados, **dorado solo para lo ganado**, Silkscreen para una frase por pantalla, JetBrains Mono para el resto.
+- Capa visual final: `styles/estilo-j.css`. Negro puro, esquinas rectas, blanco para estados, **dorado solo para lo ganado**, Silkscreen para una frase por pantalla, Geist Mono para el resto.
 - Textos en español: máximo 12 palabras, una idea, imperativo. Tachado-corrección en la Voz con `"~~antes~~ después"`. Firma *Simple.* solo en momentos importantes.
 - UI silenciosa: menús y botones no hacen sonido musical.
 - Menos, pero mejor: antes de añadir controles, ordenar lo que existe.

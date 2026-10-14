@@ -52,7 +52,7 @@ export function initialize(runtime){
     if(o.lit){c.globalAlpha=o.lit*.2*fade*detail;c.beginPath();c.arc(0,0,o.size+6,0,Math.PI*2);c.stroke();}
     if((runtime.worldVisibility?.day??1)<.45&&['moth','jelly','lichen'].includes(o.kind)){c.globalAlpha=.08*fade*detail*(1-runtime.worldVisibility.day);c.fillStyle=elementInk('glass',o.hue);c.beginPath();c.arc(0,0,Math.min(12,o.size),0,Math.PI*2);c.fill();}c.restore();}
   }
-  if(label){const {o}=label;c.globalAlpha=.7;c.fillStyle=elementInk('glass',o.hue);c.font='9px monospace';c.textAlign='center';c.fillText(livingDefinition(o.kind).name,o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy+o.size+20);}c.restore();
+  if(label){const {o}=label;c.globalAlpha=.7;c.fillStyle=elementInk('glass',o.hue);c.font='9px "Geist Mono", monospace';c.textAlign='center';c.fillText(livingDefinition(o.kind).name,o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy+o.size+20);}c.restore();
  }
  function sources(){return near(250).map(o=>({kind:'living:'+o.kind,name:livingDefinition(o.kind).name,object:o,distance:Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),hint:o.kind==='bridge'?'Cruza las tres piedras de izquierda a derecha':o.kind==='observatory'?'Rodea y permanece junto a la estrella':HINTS[livingDefinition(o.kind).gesture]}));}
  function card(){const found=Object.keys(runtime.S.livingSeen||{});return '<article class="journal-card"><h3>Universo vivo</h3><p>'+found.length+' / '+LIVING_CATALOG.length+' linajes escuchados. Los individuos cambian de voz, forma y conducta según el lugar.</p><p>'+found.map(id=>livingDefinition(id)?.name).filter(Boolean).join(' · ')+'</p></article>';}

@@ -8,7 +8,7 @@ Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0**
 
 - **Una rama por fase**, desde `main` actualizado o desde la fase anterior si depende de ella: `v2/f0-coleccion`, `v2/f1-universo-visual`, etc.
 - Commit y push. **Jay crea el PR y hace el merge.** No hacer push a `main` salvo que Jay lo pida en ese momento.
-- Antes de push: `npm run audit:release`, `npm test` y `npm run test:browser` (y `npm run test:audio` si se toca sonido). No dejar CI en rojo.
+- Validación acordada: durante la fase, pruebas afectadas. Antes de push de rama, auditoría y lógica completas más navegador/audio enfocados según cambios. Antes de integrar/publicar `main`, navegador y audio completos una vez sobre el conjunto final. CI completo debe estar aprobado antes de merge; nunca desactivar pruebas.
 - No crear decenas de ramas pequeñas. No reabrir funciones retiradas (ver [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md), sección 3).
 - Cada fase actualiza [CAMBIOS.md](CAMBIOS.md) y marca su estado en la tabla de abajo.
 - Vercel Hobby tiene límite diario de deploys: evitar pushes innecesarios.
@@ -20,11 +20,11 @@ Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0**
 | 0 · Base de colección | `v2/f0-coleccion` | Integrada en main por excepción de Jay; pruebas aprobadas |
 | 1 · El universo se ve real | `v2/f1-universo-visual` | Integrada en main y probada; 60 FPS físicos por aceptar |
 | 2 · Celebración y caja mágica | `v2/f2-celebracion` | Integrada en main por excepción de Jay; pruebas aprobadas |
-| 3 · Cubo con 50 personalizaciones | `v2/f3-cubo-50` | Pendiente |
-| 7 · Menú principal limpio | `v2/f7-menu` | Pendiente |
-| 6 · Bitácora perfeccionada | `v2/f6-bitacora` | Pendiente |
-| 4 · Logros 2.0 | `v2/f4-logros` | Pendiente |
-| 5 · La casa del cubo | `v2/f5-casa` | Pendiente |
+| 3 · Cubo con 50 personalizaciones | `v2/f3-cubo-50` | Trabajo local preparado; validación final e integración pendientes |
+| 7 · Menú principal limpio | `v2/f7-menu` | Trabajo local preparado; validación final e integración pendientes |
+| 6 · Bitácora perfeccionada | `v2/f6-bitacora` | Trabajo local preparado; validación final e integración pendientes |
+| 4 · Logros 2.0 | `v2/f4-logros` | Trabajo local preparado; validación final e integración pendientes |
+| 5 · La casa del cubo | `v2/f5-casa` | Trabajo local preparado; validación final e integración pendientes |
 | 8 · Pulido y lanzamiento 2.0 | `v2/f8-lanzamiento` | Pendiente |
 
 **Orden de trabajo:** 0 → 1 → 2 → 3 → 7 → 6 → 4 → 5 → 8. Primero la base y que el mundo se vea profesional; luego celebración y cubo; después menú y bitácora; al final logros y casa, las fases más grandes.
@@ -46,7 +46,7 @@ Aceptación: probar tap y arrastre con una mano; identificar fuentes musicales s
 
 ## Reglas de diseño (estilo J)
 
-- Capa visual: [styles/estilo-j.css](styles/estilo-j.css). Negro puro, esquinas rectas, blanco para estados, **dorado solo para lo ganado**, Silkscreen para una frase por pantalla, JetBrains Mono para el resto.
+- Capa visual: [styles/estilo-j.css](styles/estilo-j.css). Negro puro, esquinas rectas, blanco para estados, **dorado solo para lo ganado**, Silkscreen para una frase por pantalla, Geist Mono para el resto.
 - Textos: máximo 12 palabras, una idea, imperativo. Recurso tachado-corrección en la Voz (`"~~antes~~ después"`). Firma *Simple.* solo en momentos importantes.
 - UI silenciosa: menús y botones no hacen sonido musical. Las celebraciones son eventos del mundo, a tempo y en la tonalidad del lugar.
 - Nunca quitar progreso ganado. Nunca pagar por nada.
@@ -172,3 +172,24 @@ Arte final, sonido de celebraciones, prueba en teléfonos ([ACEPTACION_V1.md](AC
 3. Qué 3–4 ideas creativas van en la primera ronda.
 
 Mientras no estén decididas, las fases 0–3, 6 y 7 pueden avanzar. La vista de la fase 5 ya está decidida; se implementa después de la 4.
+
+## Pendientes agrupados y orden de cierre
+
+Las fases 0–2 y la reparación están en `main d16e695`. Confirmar el deploy en Vercel y probar en teléfono sigue pendiente. Las fases 3, 7, 6, 4 y 5 tienen implementación local; necesitan integrar la base actual, resolver incidencias de prueba y cerrar su entrega. No están publicadas.
+
+1. **Fase 3:** cerrar vestidor de 50 piezas, pistas, apariencia en el mundo y voces del pulso; conservar las 13 piezas anteriores. Validar voces y guardar/reabrir.
+2. **Fase 7:** cerrar menú compacto y sonido en una hoja; viajes reales entre semillas, más botón provisional “Otro lugar” en pantalla principal y regreso al destino anterior. No confundir viajes con el laboratorio.
+3. **Fase 6:** cerrar cinco secciones de Bitácora: Hoy, Colección, Lugares, Música y Logros; búsqueda, filtros, siluetas, coordenadas/WD1, fechas, sets y sugerencias de Voz.
+4. **Fase 4:** cerrar 250 logros con siete categorías y recompensas reales; conservar los antiguos ganados y retirar incentivos de repetición vacía.
+5. **Fase 5:** cerrar casa vista desde arriba, 40 objetos musicales, cuatro habitaciones/acústicas, visitas, set y código de visita. Conservar el Taller radial y los guardados.
+6. **Fase 8:** respuesta de toque/contacto/quietud más clara; percusión natural fácil de encontrar y rayos menos repetitivos; bajos, medios, cuerdas y pads; pulido gráfico y móvil; guía/storytelling, Voz congruente, rendimiento, migraciones, escucha humana y lanzamiento. El cambio de Geist y la primera mejora de colores/instrumentos tienen una rama conjunta; no completan por sí solos esta fase.
+
+### Ampliaciones posteriores, pendientes de elegir y calendarizar
+
+- **Diversidad musical y descubrimiento:** [PLAN_MEZCLAS_MUSICALES.md](PLAN_MEZCLAS_MUSICALES.md). Solo propuesta de diseño, solicitada por Jay; no implementar las mezclas híbridas todavía.
+- **Vida y territorios:** redes editables de enredaderas/hongos, colonias persistentes, migraciones entre regiones, jardines, costas variables, fronteras híbridas y nuevas rutas/alturas. Incluye tormentas explorables y figuras trazadas con el camino.
+- **Búsqueda e historia:** pistas encadenadas, puertas musicales, laberintos de color/espejos, puentes que abran rutas, tradiciones investigadas y reliquias históricas funcionales documentadas. Fósiles de canciones, jardines de semillas, radio pirata, noche de la ballena y botellas con ecos siguen como ideas para seleccionar.
+- **Control y memoria:** deshacer general, recorrido natural que enseñe gestos, comparador de variantes, colección instrumental/cultural y constelación de mundos. Unir Camino, atención, creación y constancia de Jay sin llenar la pantalla.
+- **Servicio público:** alojamiento del backend opcional, recuperación/borrado de cuentas, copias entre dispositivos, reconexión por Internet, latencia y duetos en teléfonos reales; respaldos y operación. Vercel estático no aloja este backend.
+
+La matriz histórica conserva 40 propuestas parciales, 2 pendientes y 3 externas: [COBERTURA_150_UNIVERSO.md](COBERTURA_150_UNIVERSO.md). Esta agrupación las organiza; no las declara terminadas ni exige implementar todas antes de cerrar 2.0.

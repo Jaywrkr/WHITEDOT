@@ -140,10 +140,10 @@ export function initialize(runtime){
   if(o.kind==='weaver'){
    for(const edge of o.state.weave.edges){const nodes=anchors(o),a=nodes.find(n=>n.id===edge.from)||edge.a,b=nodes.find(n=>n.id===edge.to)||edge.b;c.beginPath();c.moveTo(a.x-o.x,a.y-o.y);c.lineTo(b.x-o.x,b.y-o.y);c.stroke();}
    if(near){for(const a of anchors(o)){c.beginPath();c.arc(a.x-o.x,a.y-o.y,armed?.node.id===a.id?7:4,0,Math.PI*2);c.stroke();}if(gesture?.object===o&&gesture.type==='anchor'){c.beginPath();c.moveTo(gesture.node.x-o.x,gesture.node.y-o.y);c.lineTo(gesture.now.x-o.x,gesture.now.y-o.y);c.stroke();}}
-   c.font='8px monospace';c.textAlign='center';c.fillText(`${o.state.weave.edges.length}/${MAX_THREADS} hilos`,0,34);
+   c.font='8px "Geist Mono", monospace';c.textAlign='center';c.fillText(`${o.state.weave.edges.length}/${MAX_THREADS} hilos`,0,34);
   }
   if(o.kind==='box'&&o.state.a>.65&&near){
-   c.fillStyle=c.strokeStyle;c.font='8px monospace';c.textAlign='center';
+   c.fillStyle=c.strokeStyle;c.font='8px "Geist Mono", monospace';c.textAlign='center';
    const part=o.state.box.parts[o.state.box.selected],beat=runtime.MU.step%16,core=boxPartPoint(o.state.box.selected);
    // The visible contour and the gesture targets share the same geometry.
    for(let i=0;i<16;i++){
@@ -164,7 +164,7 @@ export function initialize(runtime){
   }
   const d=o.state.dialogue;if(o.kind==='animal'&&near){
    const listening=d?.phase==='listening',speaking=d?.phase==='replying'&&Number.isFinite(d.replyAt)&&runtime.ac.currentTime>=d.replyAt&&runtime.ac.currentTime<d.replyEnd;
-   c.font='9px monospace';c.textAlign='center';
+   c.font='9px "Geist Mono", monospace';c.textAlign='center';
    const width=Math.min(220,runtime.W-24),sx=runtime.W/2+o.x-runtime.S.wx,sy=runtime.H/2+o.y-runtime.S.wy,lx=Math.max(width/2+12,Math.min(runtime.W-width/2-12,sx))-sx,ly=sy>runtime.H-70?-38:48;
    const guide=guidedAnimal&&objects().includes(guidedAnimal)&&distance(guidedAnimal,{x:runtime.S.wx,y:runtime.S.wy})<180?guidedAnimal:objects().filter(a=>a.kind==='animal').sort((a,b)=>distance(a,{x:runtime.S.wx,y:runtime.S.wy})-distance(b,{x:runtime.S.wx,y:runtime.S.wy}))[0];
    const label=(text,y=ly)=>{if(guide===o)c.fillText(text,lx,y,width);};

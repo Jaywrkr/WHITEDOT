@@ -111,10 +111,10 @@ export function initialize(runtime){
     if(visited){cx.globalAlpha=.45;cx.fillRect(px+cell/2-1,py+cell/2-1,2,2);}
     const L2=labels.get(c.continent.id)||{n:0,x:0,y:0,name:c.continent.name,hue:c.continent.hue};L2.n++;L2.x+=px+cell/2;L2.y+=py+cell/2;labels.set(c.continent.id,L2);
     const lm=runtime.landmarkAt?.(i,j);if(lm){cx.globalAlpha=.9;cx.fillStyle='#fff';cx.fillRect(W/2+(lm.x-s.wx)*k-2,H/2+(lm.y-s.wy)*k-2,4,4);}}
-   cx.textAlign='center';cx.font='12px "JetBrains Mono", monospace';for(const g of labels.values()){if(g.n<6)continue;cx.globalAlpha=.85;cx.fillStyle=`hsl(${g.hue},80%,82%)`;cx.fillText(g.name,g.x/g.n,g.y/g.n);}
+   cx.textAlign='center';cx.font='12px "Geist Mono", monospace';for(const g of labels.values()){if(g.n<6)continue;cx.globalAlpha=.85;cx.fillStyle=`hsl(${g.hue},80%,82%)`;cx.fillText(g.name,g.x/g.n,g.y/g.n);}
    // Nubes que pasan.
    for(let q=0;q<7;q++){const x=((q*173+t*.012*(1+q%3)-s.wx*k*.4)%(W+300)+W+300)%(W+300)-150,y=((q*251-s.wy*k*.4)%(H+200)+H+200)%(H+200)-100;cx.globalAlpha=.06;cx.fillStyle='#fff';cx.beginPath();cx.ellipse(x,y,140,40,0,0,6.283);cx.fill();}
-   cx.globalAlpha=.8;cx.fillStyle='#fff';cx.font='11px "JetBrains Mono", monospace';cx.fillText('Toca para bajar aquí',W/2,H/2+46);
+   cx.globalAlpha=.8;cx.fillStyle='#fff';cx.font='11px "Geist Mono", monospace';cx.fillText('Toca para bajar aquí',W/2,H/2+46);
   }
   cx.globalAlpha=1;if((runtime.hudT+=dt)>.5){runtime.hudT=0;runtime.hud();}
   return ds;
@@ -128,7 +128,7 @@ export function initialize(runtime){
    if(p.kind==='grieta'){cx.beginPath();cx.moveTo(x-22,y-4);cx.lineTo(x-8,y+3);cx.lineTo(x+2,y-5);cx.lineTo(x+12,y+4);cx.lineTo(x+24,y-2);cx.stroke();}
    else{for(let i=0;i<5;i++){cx.globalAlpha=al*(.25+.15*i);cx.strokeRect(x-10+i*2,y-12-i*14,20-i*4,8);}}
    for(let i=0;i<p.need;i++){const a=-Math.PI/2+i/p.need*6.283;cx.globalAlpha=al*(i<done?1:.3);cx.fillStyle=cx.strokeStyle;cx.beginPath();cx.arc(x+Math.cos(a)*34,y+Math.sin(a)*34,3+(i<done?b*2:0),0,6.283);cx.fill();}
-   if(p.d<220){cx.globalAlpha=al;cx.fillStyle=cx.strokeStyle;cx.font='10px monospace';cx.textAlign='center';cx.fillText(`${p.kind==='grieta'?'Grieta al Subsuelo':'Escalera al Cielo'} · ${p.need} pulsos en el beat`,x,y+54);}}
+   if(p.d<220){cx.globalAlpha=al;cx.fillStyle=cx.strokeStyle;cx.font='10px "Geist Mono", monospace';cx.textAlign='center';cx.fillText(`${p.kind==='grieta'?'Grieta al Subsuelo':'Escalera al Cielo'} · ${p.need} pulsos en el beat`,x,y+54);}}
   cx.globalAlpha=1;
  }
 

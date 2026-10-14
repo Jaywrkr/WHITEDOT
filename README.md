@@ -38,7 +38,7 @@ npm run test:audio      # mezclas renderizadas con Web Audio offline
 python3 tests/server_api.py && python3 tests/duet_smoke.py   # servidor opcional
 ```
 
-`CHROMIUM_PATH` indica el navegador si no está en el sistema. CI corre lo mismo en cada PR (`.github/workflows/checks.yml`). Guía manual: [PROBAR_UNIVERSO_VIVO.md](PROBAR_UNIVERSO_VIVO.md).
+`CHROMIUM_PATH` indica el navegador si no está en el sistema. En ramas se ejecutan auditoría/lógica completas y navegador/audio enfocados en cambios. Antes de integrar/publicar `main`, se validan las suites completas una vez sobre el conjunto final. CI conserva los recorridos completos en cada PR (`.github/workflows/checks.yml`); ver [AGENTS.md](AGENTS.md). Guía manual: [PROBAR_UNIVERSO_VIVO.md](PROBAR_UNIVERSO_VIVO.md).
 
 ## Publicar
 

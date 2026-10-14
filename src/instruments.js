@@ -1,5 +1,7 @@
 // Synthesized families: resonant partials, FM keys and filtered subtractive voices.
 export const INSTRUMENT_SPECS={
+ pad:{partials:[[.998,'triangle',.35],[1.002,'sine',.45],[2,'sine',.06]],cut:900,attack:.12,dec:1.2,send:.08},
+ plucked:{partials:[[1,'triangle',.5],[2,'sine',.18],[3,'sine',.05]],cut:1700,attack:.006,dec:.65,send:.09},
  reed:{fm:.5,index:.25,partials:[[1,'triangle',.55],[2,'sine',.12]],cut:1350,formant:true,attack:.035,dec:.55,send:.1},
  membrane:{partials:[[1,'sine',.6],[1.59,'sine',.13],[2.14,'sine',.07]],cut:1700,attack:.004,dec:.22,send:.06},
  bowed:{partials:[[.999,'sawtooth',.2],[1.001,'triangle',.3]],cut:1100,attack:.11,dec:.85,tremolo:4.2,send:.12},

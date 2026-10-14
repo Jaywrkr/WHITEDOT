@@ -92,7 +92,7 @@ export function initialize(runtime){
    case 'faro':{const a=t/1400,R=localGlowRadius(runtime.W,runtime.H,65);cx.beginPath();cx.moveTo(x,y);cx.lineTo(x,y-35);cx.moveTo(x,y-35);cx.lineTo(x+Math.cos(a)*R,y-35+Math.sin(a)*R);cx.stroke();break;}
   }
   cx.restore();
-  if(lm.d<420){cx.globalAlpha=Math.min(1,(420-lm.d)/200);cx.fillStyle=col;cx.font='10px monospace';cx.textAlign='center';cx.fillText(lm.name,x,y+22);cx.globalAlpha=1;}
+  if(lm.d<420){cx.globalAlpha=Math.min(1,(420-lm.d)/200);cx.fillStyle=col;cx.font='10px "Geist Mono", monospace';cx.textAlign='center';cx.fillText(lm.name,x,y+22);cx.globalAlpha=1;}
  }
  function reach(lm){runtime.recordElement?.('landmark',runtime.regionOfPos(lm.x,lm.y));
   const S=runtime.S;S.landmarks||={};S.landmarks[lm.id]=S.todayKey;S.landmarksN=(S.landmarksN||0)+1;

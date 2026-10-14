@@ -1,3 +1,13 @@
+# Geist Mono, respuestas musicales y plan de continuación
+
+Rama `feat/geist-and-phase-plan`, desde `main d16e695`. Nueve pesos TTF originales enviados por Jay, licencia Geist OFL oficial y hashes; interfaz, etiquetas Canvas y exportaciones usan Geist Mono. Silkscreen permanece para la frase principal; archivos JetBrains anteriores quedan fuera del shell activo. Nuevo cache SW incluye cada fuente una vez; exportaciones esperan a las fuentes utilizadas.
+
+Dorado reservado a recompensas: ondas, notas, contactos, conexiones, vidrios, materia y percusión usan colores locales por función/hue. Nuevos pad cálido y cuerda pulsada; paletas de interacción por carácter y función incorporan cuerdas frotadas/analógicas, pads, aire, metales y teclas. Conserva la generación del terreno, roles, límites de registro y presupuesto de voces. No hay cambios de guardado ni nuevos géneros híbridos.
+
+AGENTS y PLAN adoptan la validación proporcional aprobada por Jay. Pendientes agrupados por fases y ampliaciones posteriores. [Plan de mezclas](PLAN_MEZCLAS_MUSICALES.md) solo documental, pendiente de autorización de implementación. Verificación: auditoría sin errores/avisos, 75 suites Node, ocho recorridos afectados (interfaz en cinco tamaños y nueve pesos offline), 20 renders en dos programas; pico 0.957892537, sin clipping. [Evidencia](scripts/geist-interaction-validation.json). No es una ejecución completa de navegador/audio: CI y la validación del conjunto antes de main siguen pendientes. Se corrigió la sintaxis de dos expresiones de las pruebas nuevas y se repitieron las afectadas.
+
+Teléfono: abre el Preview de esta rama, revisa Menú/Bitácora y exporta una tarjeta. Toca objetos en varios lugares: compara colores y los instrumentos de interacción. No reinicies la partida. La propuesta de híbridos está en el plan; no aparecerá todavía en el juego.
+
 # Integración excepcional · Fases 0–2 y Vercel
 
 Jay autorizó integrar y publicar `main` solo en este caso. Conserva commits de colección, visibilidad gradual y celebraciones; incorpora salida estática de Vercel y los cuatro pendientes nuevos de interacción/percusión. No incluye fases todavía pendientes de validación. Pruebas conjuntas aprobadas: auditoría sin errores/avisos, 75 suites Node, 52/52 recorridos de navegador y recarga offline de 130 módulos; 259 renders de audio en diez programas, pico 0.957608700 y cero muestras calientes. [Evidencia](scripts/main-integration-validation.json). Build de sellado probado sobre un artefacto temporal. El deploy remoto queda por confirmar; las consultas HTTPS/API están bloqueadas por el entorno. Aceptación artística y física de teléfono pendiente. Las siguientes entregas vuelven al flujo de rama y PR/merge de Jay.

@@ -30,7 +30,7 @@ export function initialize(runtime) {
   }
   function boing(m,t,v){const o=runtime.ac.createOscillator(),g=runtime.ac.createGain();o.type="sine";o.frequency.setValueAtTime(runtime.hz(m+12),t);o.frequency.exponentialRampToValueAtTime(runtime.hz(m),t+.12);runtime.env(g,t,.004,v,.35);o.connect(g).connect(runtime.bus);const sv=runtime.ac.createGain();sv.gain.value=.3;g.connect(sv).connect(runtime.verbIn);o.start(t);o.stop(t+.5);}
   function propSound(k,i,t,region){runtime.playVoice(k,i,t,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy));}
-  function drawProp(p,x,y,base){const s=6+p.lit*3,c=p.lit>.1?runtime.GOLD:(base||"#fff");runtime.cx.strokeStyle=c;runtime.cx.fillStyle=c;runtime.cx.lineWidth=1.3;runtime.cx.beginPath();
+  function drawProp(p,x,y,base){const s=6+p.lit*3,c=p.lit>.1?runtime.musicInk?.(p)||'#fff':(base||"#fff");runtime.cx.strokeStyle=c;runtime.cx.fillStyle=c;runtime.cx.lineWidth=1.3;runtime.cx.beginPath();
     switch(p.k){
       case "piedra":runtime.cx.arc(x,y,s*.7,0,6.283);runtime.cx.stroke();break;
       case "hongo":runtime.cx.arc(x,y,s,Math.PI,0);runtime.cx.closePath();runtime.cx.stroke();runtime.cx.fillRect(x-.75,y,1.5,s*.8);break;
@@ -40,11 +40,11 @@ export function initialize(runtime) {
       case "gota":runtime.cx.moveTo(x,y-s);runtime.cx.quadraticCurveTo(x+s*.8,y+s*.3,x,y+s*.6);runtime.cx.quadraticCurveTo(x-s*.8,y+s*.3,x,y-s);runtime.cx.stroke();break;
       case "astro":runtime.cx.fillRect(x-s,y-.75,s*2,1.5);runtime.cx.fillRect(x-.75,y-s,1.5,s*2);runtime.cx.fillRect(x-1.5,y-1.5,3,3);break;}}
   function plantSound(pt,q,region,traits,source){runtime.playVoice('planta:'+pt.t,traits?.degree||0,q,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy),false,traits?.volume||1,source);}
-  function drawPlant(o,x,y,t,b){const pt=o.pt,h=o.h,sw=Math.sin(t/(o.personality?.period||1100)+o.ph)*h*(o.personality?.sway||.08)+o.sw*Math.sin(t/60)*3,lit=o.lit>.1,c=lit?runtime.GOLD:`hsl(${pt.hue},28%,${lit?70:52}%)`,c2=lit?"#fff":`hsl(${pt.hue},60%,70%)`;
+  function drawPlant(o,x,y,t,b){const pt=o.pt,h=o.h,sw=Math.sin(t/(o.personality?.period||1100)+o.ph)*h*(o.personality?.sway||.08)+o.sw*Math.sin(t/60)*3,lit=o.lit>.1,c=lit?runtime.musicInk?.(o)||'#fff':`hsl(${pt.hue},28%,${lit?70:52}%)`,c2=lit?"#fff":`hsl(${pt.hue},60%,70%)`;
     runtime.cx.fillStyle=c;runtime.cx.strokeStyle=c;runtime.cx.lineWidth=1;
     switch(pt.t){
       case "hierba":runtime.cx.fillRect(x,y-h*.5,1,h*.5);runtime.cx.fillRect(x+sw*.5,y-h*.5-2,1,2);break;
-      case "flor":runtime.cx.beginPath();runtime.cx.moveTo(x,y);runtime.cx.quadraticCurveTo(x,y-h*.6,x+sw,y-h);runtime.cx.stroke();runtime.cx.fillStyle=c2;for(let i=0;i<pt.pet;i++){const a=i/pt.pet*6.283+o.ph;runtime.cx.fillRect(x+sw+Math.cos(a)*3-1,y-h+Math.sin(a)*3-1,2,2);}runtime.cx.fillStyle=lit?runtime.GOLD:"#fff";runtime.cx.fillRect(x+sw-1,y-h-1,2,2);break;
+      case "flor":runtime.cx.beginPath();runtime.cx.moveTo(x,y);runtime.cx.quadraticCurveTo(x,y-h*.6,x+sw,y-h);runtime.cx.stroke();runtime.cx.fillStyle=c2;for(let i=0;i<pt.pet;i++){const a=i/pt.pet*6.283+o.ph;runtime.cx.fillRect(x+sw+Math.cos(a)*3-1,y-h+Math.sin(a)*3-1,2,2);}runtime.cx.fillStyle=lit?runtime.musicInk?.(o)||'#fff':"#fff";runtime.cx.fillRect(x+sw-1,y-h-1,2,2);break;
       case "arbusto":for(let i=0;i<5;i++){const a=-Math.PI/2+(i-2)*.38,l=h*.55*(i%2?.8:1);runtime.cx.beginPath();runtime.cx.moveTo(x,y);runtime.cx.lineTo(x+Math.cos(a)*l+sw*.5,y+Math.sin(a)*l);runtime.cx.stroke();runtime.cx.fillStyle=c2;runtime.cx.fillRect(x+Math.cos(a)*l+sw*.5-1,y+Math.sin(a)*l-1,2,2);runtime.cx.fillStyle=c;}break;
       case "helecho":runtime.cx.beginPath();runtime.cx.moveTo(x,y);runtime.cx.quadraticCurveTo(x+h*.3,y-h*.6,x+sw+h*.15,y-h);runtime.cx.stroke();for(let i=1;i<6;i++){const k=i/6,px=x+(sw+h*.15)*k*k+h*.3*k*(1-k)*2,py=y-h*k;runtime.cx.fillRect(px-3,py,3,1);runtime.cx.fillRect(px+1,py-1,3,1);}break;
       case "junco":runtime.cx.fillRect(x+sw*.3,y-h*1.3,1,h*1.3);runtime.cx.fillStyle=c2;runtime.cx.fillRect(x+sw*.3-1,y-h*1.3-4,3,5);break;
@@ -64,7 +64,7 @@ export function initialize(runtime) {
         case "ceniza":if(h<.4){runtime.cx.globalAlpha=al*.42;runtime.cx.fillStyle="#8d8d92";runtime.cx.fillRect(gx,gy,1,1);}break;
         case "cristal":if(h<.3){runtime.cx.globalAlpha=al*.42;runtime.cx.strokeStyle=pal.acc;runtime.cx.lineWidth=1;runtime.cx.beginPath();runtime.cx.moveTo(gx,gy-3);runtime.cx.lineTo(gx+3,gy+2);runtime.cx.lineTo(gx-3,gy+2);runtime.cx.closePath();runtime.cx.stroke();}break;
         case "agua":{const sh=Math.sin(t/700+h*12);runtime.cx.globalAlpha=al*(.22+.15*sh);runtime.cx.fillStyle=pal.main;runtime.cx.fillRect(gx,gy,6+sh*3,1);break;}}}}
-  function touchRing(x,y,d,R,b){if(d<R&&b>.25){runtime.cx.globalAlpha=b*.3*(1-d/R);runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1;runtime.cx.beginPath();runtime.cx.arc(x,y,13+b*5,0,6.283);runtime.cx.stroke();}}
+  function touchRing(x,y,d,R,b){if(d<R&&b>.25){runtime.cx.globalAlpha=b*.3*(1-d/R);runtime.cx.strokeStyle=runtime.musicInk?.({x:x-runtime.W/2+runtime.S.wx,y:y-runtime.H/2+runtime.S.wy})||'#fff';runtime.cx.lineWidth=1;runtime.cx.beginPath();runtime.cx.arc(x,y,13+b*5,0,6.283);runtime.cx.stroke();}}
   function drawSprite(bits,x,y,c,col){runtime.cx.fillStyle=col;for(let row=0;row<5;row++)for(let k=0;k<3;k++)if(bits>>(row*3+k)&1){runtime.cx.fillRect(x+(k-2)*c,y+(row-2.5)*c,c,c);if(k<2)runtime.cx.fillRect(x+(2-k)*c,y+(row-2.5)*c,c,c);}}
   function speciesSound(sp,t,full,traits,source){
     const key=sp.id.split(':')[0],coords=key.split(',').map(Number);
