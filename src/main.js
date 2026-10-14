@@ -1,3 +1,4 @@
+import {initialize as livingBehavior} from './living-behavior.js';
 import {initialize as living} from './living.js';
 import {initialize as livingSynthesis} from './living-synthesis.js';
 import {initialize as voiceGuide} from './voice-guide.js';
@@ -135,7 +136,7 @@ saveTools(runtime);
 accessibility(runtime);
 rareCards(runtime);
 voiceGuide(runtime);
-livingSynthesis(runtime);living(runtime);
+livingSynthesis(runtime);living(runtime);livingBehavior(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
 runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0)))runtime.S.mode="camino";

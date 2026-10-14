@@ -4,7 +4,7 @@ import {livingGlyph} from './living-art.js';
 import {elementInk} from './visual.js';
 import {contactEntry} from './contact.js';
 import {claimInstallationBar} from './installations.js';
-export const LIVING_GROUPS=['flora'];
+export const LIVING_GROUPS=['flora','fauna'];
 const HINTS={contacto:'Pasa el cubo para tocar',quietud:'Escucha quieto a su lado',orbita:'Rodea con el cubo',presion:'Entra despacio y permanece',cruce:'Cruza despacio',respuesta:'Toca y escucha la respuesta',seguir:'Camina a su lado'};
 export function initialize(runtime){
  const chunks=new BoundedMap(48);let owner=runtime.S,clock=0,barPlayed=-1,lab=null;
@@ -16,7 +16,7 @@ export function initialize(runtime){
  }
  function emit(o,time,full=false,origin='ambient'){
   if(!active()||!runtime.S.sound||runtime.ac?.state!=='running')return;
-  const d=runtime.regionOfPos(o.homeX,o.homeY);runtime.playVoice('living:'+o.kind,o.variant%7,time,d,full,origin==='player'?.48:.23,o,origin);o.lit=1;
+  const d=runtime.regionOfPos(o.homeX,o.homeY);runtime.playVoice('living:'+o.kind,(o.phrase.at(-1)??o.variant)%7,time,d,full,origin==='player'?.48:.23,o,origin);o.lit=1;
  }
  function interact(o){const def=livingDefinition(o.kind);o.energy=Math.min(1,o.energy+.5);o.phrase.push(runtime.MU.deg||0);if(o.phrase.length>6)o.phrase.shift();runtime.livingFound?.(o);runtime.unlock('vidaNueva');runtime.beatSoon(t=>emit(o,t,true,'player'),null,'player');
   const seen=runtime.S.livingSeen||={};if(!seen[o.kind]){seen[o.kind]={day:runtime.S.todayKey,variant:o.variant};runtime.say(def.name+' · '+HINTS[def.gesture]+'.','Una voz nueva');}runtime.save();

@@ -15,3 +15,7 @@ Catálogo ampliable de 28 linajes: 10 de flora, 10 de fauna y 8 construcciones. 
 ## Fase 3 · Flora nativa y cuerpos sonoros
 
 Diez linajes de flora ya aparecen con distribución natural y responden al cubo: contacto, quietud, presión, órbita o seguimiento. Escáner, Bitácora y laboratorio los reconocen. Síntesis propia con material percutido, wavetable suave y FM contenida; registro grave/medio, caché acotada y presupuesto ambiental compartido. Semillas móviles germinan al permanecer. Musgo y redes participan en los siguientes perfiles de mezcla/ecología. Actualizado el contrato de prueba de compañía temporal de caja.
+
+## Fase 4 · Fauna con respuesta y movimiento
+
+Diez linajes de fauna ya son jugables: mantas, ciervos, tortugas, escarabajos, medusas, gusanos, fragmentos de ballena, polillas, crustáceos y blobs. Glifos pequeños originales, movimiento limitado al hábitat, individuos tímidos/curiosos/sociales y articulación según el gesto. Polillas, gusanos y cactus escuchan frases cercanas y las devuelven. Todos se prueban por separado en el laboratorio. La fauna usa el presupuesto de instalación compartido para no saturar la música. Prueba determinista de 500 segundos de movimiento.
