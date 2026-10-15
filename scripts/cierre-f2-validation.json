@@ -1,0 +1,82 @@
+{
+  "validatedAt": "2026-10-15T01:01:32.300881+00:00",
+  "phase": "cierre-f2",
+  "branch": "feat/cierre-f2-especies",
+  "sourceFingerprint": "62f87905e5b59bf0a3e83d675047020f8d4e05f8af2d10ba303de245ac375a13",
+  "nodeSuites": 82,
+  "browserFlows": 5,
+  "checks": [
+    {
+      "check": "audit",
+      "command": [
+        "npm",
+        "run",
+        "audit:release"
+      ],
+      "exitCode": 0,
+      "seconds": 0.16,
+      "result": "\n> whitedot@1.1.0 audit:release\n> node scripts/release-audit.mjs\n\n{\n  \"version\": \"1.1.0\",\n  \"sourceModules\": 139,\n  \"htmlIDs\": 274,\n  \"staticImports\": 349,\n  \"shellAssets\": 159,\n  \"errors\": [],\n  \"warnings\": [],\n  \"notes\": [\n    \"Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.\",\n    \"Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems.\"\n  ]\n}\n"
+    },
+    {
+      "check": "node",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 14.23,
+      "result": "d codes rejected; recording format negotiation\nPASS: smooth distance curve, nearby selection, live moving-source gain, effect isolation, bounded routing and cleanup\nPASS 16 original programs, genuine 12/24/36/48 cascades, open/close automation, bounded climate/gesture response and protected mono bass\nPASS V1 closure: competing tabs preserve the persisted writer, explicit recovery/restore, and malformed place-code payload rejection\nPASS V1 PWA update controls: save guard, active-recording deferral and explicit reload\nPASS: 728 flocks in 2428 land regions (golondrina 247, grulla 260, luciernaga 184, lira 37), 647 gardens; trust gathers, running scatters, calls answered in rhythm, fireflies sync into groove, flora grows and withers\nPASS: stable regional voices, five tree roles within one biome, varied instruments, bounded emitted registers and groove responses\nPASS: 97 raro / 16 legendario / 2 mítico rarities with visible rules and unique samples; rivers 1.0 % of land, followable 6000 px downstream\nPASS eight real families, 52 retained genres, distinct spatial fields/contours, matched materials/music/populations, protected bass, raw DNA and rare specimens\nPASS continuous fog/day/LOD, zero-opacity cutoff, negative-coordinate preload margin, three decor-only parallax planes and independent visual hash\nPASS actual lineage rendering fades bright sources and blends the former 500px cutoff\nPASS: 35 continents (largest 310, smallest 1 regions), 32 % seas, 53 % family identity, density contrast, 447 landmarks of 5 types\nPASS: 82 Node suites with assertions (Web Audio helper excluded)\n"
+    },
+    {
+      "check": "living_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/living_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 10.5,
+      "result": "PASS 28 native living contacts, real musical replies, scoped discoveries, modal pause and no browser errors\n"
+    },
+    {
+      "check": "living-cards_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/living-cards_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 2.89,
+      "result": "PASS natural rare individual via cube, original conditional odds, ecological/instrument context, filtered silent book and genuine PNG export\n"
+    },
+    {
+      "check": "world_family_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/world_family_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 15.87,
+      "result": "PASS eight real World destinations, visible distinct contours, inhabitants, exact WD1 return/progress, three phone sizes, reduced motion and scoped layers\n"
+    },
+    {
+      "check": "world_visibility_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/world_visibility_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 23.48,
+      "result": "PASS visual depth 390x844: {\"crossings\": 5, \"maxJump\": 0.5543004514786389, \"cache\": 48, \"quality\": {\"quality\": 1, \"detailQuality\": 1, \"hardware\": 1, \"averageMs\": 16.666745223576548, \"frames\": 332, \"pending\": 0, \"footprints\": 80}, \"blackEdge\": 0, \"near\": 1, \"shell\": 86}\nPASS visual depth 844x390: {\"crossings\": 5, \"maxJump\": 0.5510226154534621, \"cache\": 48, \"quality\": {\"quality\": 1, \"detailQuality\": 1, \"hardware\": 1, \"averageMs\": 16.667748823758636, \"frames\": 334, \"pending\": 0, \"footprints\": 80}, \"blackEdge\": 0, \"near\": 1, \"shell\": 86}\nPASS visual depth 1280x800: {\"crossings\": 5, \"maxJump\": 1.4040779313555731, \"cache\": 48, \"quality\": {\"quality\": 1, \"detailQuality\": 1, \"hardware\": 1, \"averageMs\": 20.036649002898567, \"frames\": 334, \"pending\": 0, \"footprints\": 80}, \"blackEdge\": 0, \"near\": 1, \"shell\": 88}\n"
+    },
+    {
+      "check": "offline_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/offline_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 1.93,
+      "result": "PASS offline reload with all 139 modules cached and no HTML fallback for missing JavaScript\n"
+    }
+  ],
+  "scope": "Affected browser flows. Full browser/audio CI and physical-phone acceptance remain required before release."
+}

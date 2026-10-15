@@ -17,6 +17,7 @@ try:
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=laboratorio&lab=1&layout=wide&generation=2');page.wait_for_function('__testRuntime?.labMode')
   # The deliberate lab list is generated only when opened; use the exported catalog and available groups instead.
   ids=page.evaluate('async()=>{const {LIVING_GROUPS}=await import("/src/living.js"),{LIVING_CATALOG}=await import("/src/living-catalog.js");return LIVING_CATALOG.filter(d=>LIVING_GROUPS.includes(d.group)).map(d=>d.id)}')
+  anatomies=[]
   for kind in ids:
    page.evaluate('(kind)=>{const r=__testRuntime;r.labGo("living:"+kind);document.querySelectorAll(".modal").forEach(m=>m.hidden=true);r.audio();window.__notes=[];r.livingNoteCue=n=>__notes.push(n);}',kind)
    page.wait_for_function('__testRuntime.livingNear().length>0');page.wait_for_timeout(120)
@@ -26,6 +27,9 @@ try:
     print(kind,errors,page.evaluate('({S:{mode:__testRuntime.S.mode,x:__testRuntime.S.wx,y:__testRuntime.S.wy},ac:__testRuntime.ac?.state,body:__testRuntime.body,objects:__testRuntime.livingNear(),step:__testRuntime.MU.step,q:__testRuntime.MU.q8.length})'),flush=True);raise
    # Ambient notes can arrive before the cube contact registers; wait for the contact itself.
    page.wait_for_function('__testRuntime.S.livingSeen[__testRuntime.labLiving]!==undefined',timeout=5000)
+   anatomies.append(page.evaluate('async()=>{const {anatomyPath}=await import("/src/anatomy.js");return anatomyPath(__testRuntime.livingNear()[0].anatomy);}'))
+   if kind in ['breath-tree','moth','crab','cathedral']:page.screenshot(path='/tmp/whitedot-f2-'+kind+'.png')
+  assert len(set(anatomies))==28,'each lineage must render its own topology'
   page.evaluate('()=>{const r=__testRuntime;r.givePower("cometa");document.getElementById("mMenu").hidden=false;window.__until=r.powers.cometa;}')
   page.wait_for_timeout(600);assert page.evaluate('__testRuntime.hasPower("cometa")')
   page.evaluate('()=>{const r=__testRuntime;for(let i=0;i<300;i++)r.cajasTick(.1);if(r.powers.cometa!==__until)throw Error("modal power deadline changed");}')

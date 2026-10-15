@@ -1,13 +1,13 @@
 # Cierre 2.0 · diez fases
 
-Orden acordado con Jay después de M1. Consolida los planes anteriores: no son diez fases más encima de cada lista histórica. F1 autorizada para implementar, commit y push. Jay crea PR y merge. No publicar main desde estas ramas.
+Orden acordado con Jay después de M1. Consolida los planes anteriores: no son diez fases más encima de cada lista histórica. Jay autoriza implementar F1–F10 consecutivamente, con commit y push por fase. Jay crea PR y merge. No publicar main desde estas ramas.
 
 ## Estado y ramas
 
 | Fase | Rama | Estado |
 |---|---|---|
 | 1 · Identidades completas de mundos | `feat/cierre-f1-identidades` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 2 · Formas y especies generadas | `feat/cierre-f2-especies` | Pendiente |
+| 2 · Formas y especies generadas | `feat/cierre-f2-especies` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 3 · Ecosistemas y territorios vivos | `feat/cierre-f3-ecosistemas` | Pendiente |
 | 4 · Instrumentos y síntesis modular | `feat/cierre-f4-sintesis` | Pendiente |
 | 5 · Composición, géneros y mezclas | `feat/cierre-f5-composicion` | Pendiente |
@@ -79,4 +79,4 @@ Cerrar cuando se reconocen lugares al verlos/escucharlos, se entiende cada gesto
 - `PLAN_MEZCLAS_MUSICALES.md` conserva M1 implementada. Sus pendientes se reparten entre F3–F6 y F8–F10; F1 no completa híbridos, síntesis modular ni cobertura global del 100 %.
 - La lista histórica de 150 ideas conserva sus parciales; no se convierte automáticamente en requisito de lanzamiento.
 
-Cada fase actualiza CAMBIOS, estados y handoff con pruebas ejecutadas y límites. Esta entrega termina en F1; la siguiente necesita su instrucción correspondiente.
+Cada fase actualiza CAMBIOS, estados y handoff con pruebas ejecutadas y límites. Jay autorizó continuar F2–F10 en orden sin confirmaciones intermedias. Entregar cada rama sin hacer merges.

@@ -1,5 +1,12 @@
 # Probar el universo vivo
 
+## Novedad F2 · Anatomías reproducibles
+
+1. Abre Mundo y usa Saltar: compara cuerpos, ramas y movimientos.
+2. En Laboratorio compara Polilla, Manta, Crustáceo, Escarabajo y construcciones.
+3. Encuentra un ejemplar raro, abre su tarjeta y recarga: conserva su forma.
+4. Comprueba dibujo fluido y figuras contenidas; los gestos musicales se conservan.
+
 La rama vigente es `feat/cierre-f1-identidades`, desde `main 6702093` (M1 integrada). [Plan consolidado](PLAN_CIERRE_2.0.md). No necesitas cuenta ni servidor para probar el juego.
 
 ## Comparar paisajes · fase 1 del cierre

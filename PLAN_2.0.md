@@ -2,10 +2,18 @@
 
 **Continuación acordada:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida las siguientes diez fases. No confundir F1 de cierre con la fase visual 1 histórica. Cubo/menú/Bitácora/logros/casa locales mantienen sus estados pendientes; se recuperarán en F9.
 
-| Fase de cierre | Rama | Estado |
+| Fase | Rama | Estado |
 |---|---|---|
-| F1 · Identidades completas | `feat/cierre-f1-identidades` | Implementada y probada desde `main 6702093`; lista para PR; aceptación física pendiente |
-| F2–F10 | Ver plan consolidado | Pendientes |
+| 1 · Identidades completas de mundos | `feat/cierre-f1-identidades` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
+| 2 · Formas y especies generadas | `feat/cierre-f2-especies` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
+| 3 · Ecosistemas y territorios vivos | `feat/cierre-f3-ecosistemas` | Pendiente |
+| 4 · Instrumentos y síntesis modular | `feat/cierre-f4-sintesis` | Pendiente |
+| 5 · Composición, géneros y mezclas | `feat/cierre-f5-composicion` | Pendiente |
+| 6 · Interacciones que hacen música | `feat/cierre-f6-interacciones` | Pendiente |
+| 7 · Exploración y hallazgos con sentido | `feat/cierre-f7-hallazgos` | Pendiente |
+| 8 · Memoria, regreso y vínculos | `feat/cierre-f8-memoria` | Pendiente |
+| 9 · Juego, interfaz e historia unidos | `feat/cierre-f9-juego` | Pendiente |
+| 10 · Mezcla, auditoría y lanzamiento | `feat/cierre-f10-lanzamiento` | Pendiente |
 
 Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0** (`4ed00ce`), con CI en verde. La 2.0 se construye en ramas. Por excepción explícita de Jay, se integran en `main` las fases 0–2 y la reparación de Vercel; las siguientes conservan el flujo de PR y merge de Jay.
 

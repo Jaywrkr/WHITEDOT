@@ -320,7 +320,7 @@ export function initialize(runtime) {
             runtime.beatSoon(q=>{runtime.speciesSound(sp,q,true,o.personality,o);if(mate){runtime.speciesSound(sp,q+runtime.SIX*16,true,mate.personality,mate);setTimeout(()=>{mate.lit=1;runtime.beams.push({x1:o.x,y1:o.y,x2:mate.x,y2:mate.y,l:1});},Math.max(0,(q+runtime.SIX*16-runtime.ac.currentTime)*1000));}},()=>{o.lit=1;});}if(runtime.RP&&runtime.RP.type==="cantar"&&sp.id.startsWith(runtime.RP.key+":")){runtime.RP.set.add(sp.id);runtime.retoSet("cantar",runtime.RP.set.size);}}
         if(d<soundR)nearO.push(o);o.lit=Math.max(0,o.lit-dt*.8);const vis=sp.mob?R*1.6:R*1.2;if(d>vis&&o.lit<=0)continue;
         runtime.cx.globalAlpha=Math.min(1,Math.max(Math.max(0,1-d/vis)*.9,o.lit))*(runtime.worldOpacity?.(d,vis)??1);
-        if(runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)))runtime.drawBlob(sp,o,o.x+ox,o.y+oy,t,b);else runtime.drawSprite(sp.bits,o.x+ox,o.y+oy,sp.cell*(1+o.lit*.4+(sp.mob?b*.15:0)),o.lit>.1?"#fff":sp.col);
+        if(runtime.drawNativeSpecies)runtime.drawNativeSpecies(sp,o,o.x+ox,o.y+oy,t,b,!!runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)));else if(runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)))runtime.drawBlob(sp,o,o.x+ox,o.y+oy,t,b);else runtime.drawSprite(sp.bits,o.x+ox,o.y+oy,sp.cell*(1+o.lit*.4+(sp.mob?b*.15:0)),o.lit>.1?"#fff":sp.col);
         if(o.lit<.1&&!runtime.S.cat[sp.id])runtime.touchRing(o.x+ox,o.y+oy,d,R,b);}
       for(const k of c.walkers){
         const d=Math.hypot(k.x-runtime.S.wx,k.y-runtime.S.wy)||1;
