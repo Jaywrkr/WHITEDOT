@@ -21,6 +21,8 @@ Trabajo en `feat/cierre-f10-lanzamiento`, hija de F9. Main no se modifica. Este 
 | A13 | Una luz al pie del jugador podía completar automáticamente el nuevo acceso diario. | La primera recogida exige movimiento o una luz atraída mediante un pulso; las siguientes conservan la mecánica habitual. Regresión de siguiente día y recarga en tres tamaños de pantalla. |
 | A14 | El registro del regalo de quietud vive en un Set de sesión: recargar permite repetir la misma concesión diaria. | Pendiente en pulido F5: conservar la concesión por lugar/día, separarla de las probabilidades de caja natural y probar recarga. |
 | A15 | Los segundos restantes de los poderes no se guardan: una recarga conserva la caja consumida, pero pierde el beneficio activo. | Pendiente en pulido F5: instantánea versionada de tiempo de juego restante, sin gastar tiempo con la app cerrada ni reiniciar duración al abrir. |
+| A16 | IDs de favoritos podían coincidir al guardar dos mundos simultáneamente. | Corregido en pulido F3: sufijo único, sin cambiar IDs existentes; prueba de ambos registros. |
+| A17 | Un duplicado inválido podía ocultar otro favorito válido. | Corregido en pulido F3: validar antes de reservar ID; prueba de normalización. |
 
 Los selectores de Prototipo de las pruebas se acotan a su menú: añadir un glosario plegable no debe hacer ambiguo un clic de una regresión ajena. La prueba de paseo verifica ahora reloj activo de sesión y ausencia de consumo de exploración; conserva movimiento, pausa y cancelación.
 

@@ -10,3 +10,6 @@ const invalid=normalizeFavorites({items:[{id:'a',layer:'superficie',x:NaN,y:1},{
 for(let i=s.favorites.items.length;i<FAVORITE_LIMIT;i++)assert(storeFavorite(s,{...base,x:i*100,created:10+i}));assert.equal(storeFavorite(s,{...base,x:99999,created:100}),null);
 const larger=normalizeFavorites({items:Array.from({length:80},(_,i)=>({...first,id:'old:'+i,x:i*100}))});assert.equal(larger.items.length,80,'a new admission cap never truncates existing saved places');
 console.log('PASS: persistent named coordinates, layer distinction, local deduplication, safe normalization and bounded favorite list');
+
+const worlds={worldIdentity:first.address};const a=storeFavorite(worlds,{...base,address:first.address}),b=storeFavorite(worlds,{...base,address:{...first.address,seed:'otro'}});assert.notEqual(a.id,b.id);assert.equal(normalizeFavorites(worlds.favorites).items.length,2,'simultaneous foreign places never share an ID');
+assert.equal(normalizeFavorites({items:[{...first,x:null},first]}).items.length,1,'invalid duplicate cannot shadow a later valid place');

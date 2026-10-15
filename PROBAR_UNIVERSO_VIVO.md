@@ -1,5 +1,13 @@
 # Probar el universo vivo
 
+## Pulido F3 · Guardar y regresar sin rodeos
+
+1. Entra al Mundo y toca el marcador junto al nombre del lugar.
+2. Toca el nombre: aparece tu lugar. Abre Editar y compartir para nombrarlo.
+3. Muévete, abre tus lugares y toca Ir a este lugar. Comprueba el punto y la capa.
+4. Abre tus lugares y toca Volver al punto anterior. Comprueba el regreso.
+5. Repite Guardar estando junto al favorito: conserva su nombre y evita duplicados.
+
 ## Pulido F2 · Primer nivel jugable y guía mínima
 
 1. Abre una partida nueva o usa Menú → Tu recorrido → Practicar. No borres tu partida.

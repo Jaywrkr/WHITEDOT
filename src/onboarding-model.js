@@ -5,7 +5,7 @@ export const FIRST_JOURNEY_STEPS=[
  ['world','Entra al Mundo con el botón de abajo.'],
  ['voice','Descubre una voz. Acerca tu cubo a un elemento.'],
  ['pulse','Toca un espacio vacío para lanzar un pulso.'],
- ['save','Guarda este lugar: Menú → Favoritos → Guardar aquí.']
+ ['save','Guarda este lugar: toca el marcador junto a su nombre.']
 ];
 export function normalizeFirstJourney(raw,{experienced=false}={}){
  if(!raw||typeof raw!=='object'||Array.isArray(raw))raw=null;
