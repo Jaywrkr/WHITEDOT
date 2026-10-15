@@ -1,3 +1,13 @@
+# Experiencia · fase 1
+
+Rama `feat/experiencia-01-base`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Auditoría inicial y plan de catorce ramas; mapa de fricciones y criterios verificables. Main observado e351584 ya integra L7. Sin cambios de audio ni guardados.
+
+Validación: npm run audit:release aprobado sin advertencias; npm test aprobado, 104 suites; navegador/audio no requeridos para documentación. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Handoff vigente · Laboratorio Vivo L7
 
 Rama `feat/lab-l7-curaduria`, versión 2.1.0-alpha.7. L1–L7 entregadas. El ciclo de código está completo; no reiniciar planes anteriores. Jay mantiene PR/merge. [Plan](PLAN_LABORATORIO_VIVO.md).

@@ -1,3 +1,9 @@
+# Experiencia 1 · Auditoría y experiencia coherente
+
+Rama `feat/experiencia-01-base`. Auditoría inicial y plan de catorce ramas; mapa de fricciones y criterios verificables. Main observado e351584 ya integra L7. Sin cambios de audio ni guardados.
+
+Validación: npm run audit:release aprobado sin advertencias; npm test aprobado, 104 suites; navegador/audio no requeridos para documentación. Jay mantiene PR/merge.
+
 # Laboratorio Vivo L7 · 2.1.0-alpha.7
 
 Rama `feat/lab-l7-curaduria`. Jay mantiene PR/merge.
