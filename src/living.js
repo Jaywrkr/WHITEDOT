@@ -29,7 +29,7 @@ export function initialize(runtime){
   const cx=Math.floor(runtime.S.wx/runtime.WCH),cy=Math.floor(runtime.S.wy/runtime.WCH),out=[];
   const n=Math.min(2,Math.ceil((radius+75)/runtime.WCH));for(let x=cx-n;x<=cx+n;x++)for(let y=cy-n;y<=cy+n;y++)out.push(...chunk(x,y));return out.filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<radius);
  }
- function ensureMind(o){o.mind||=mindProfile(o,runtime.seedOf,runtime.rng);return o;}
+ function ensureMind(o){if(!o.mind){o.mind=mindProfile(o,runtime.seedOf,runtime.rng);o.worldFamily=runtime.regionOfPos(o.homeX,o.homeY).worldFamily;}return o;}
  function emit(o,time,full=false,origin='ambient'){
   if(!active()||!runtime.S.sound||runtime.ac?.state!=='running')return;
   const d=runtime.regionOfPos(o.homeX,o.homeY);runtime.playVoice('living:'+o.kind,((o.phrase.length?o.phrase[(barPlayed<0?0:barPlayed)%o.phrase.length]:o.variant)+(origin==='ambient'?(o.degreeOffset||0):0))%7,time,d,full,origin==='player'?.48:.23,o,origin);o.lit=1;
@@ -60,9 +60,9 @@ export function initialize(runtime){
  function preload(radius){near(radius);}
  function draw(t){if(!runtime.inWorld())return;const c=runtime.cx,radius=runtime.worldVisibility?.radius||750,objects=near(radius+80);let label=null;
   c.save();for(const o of objects){const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),fade=distanceOpacity(d,radius);if(!fade)continue;if(d<110&&(!label||d<label.d))label={o,d};
-   const detail=o.group==='architecture'?1:detailBlend(d,runtime.visualDetail?.detailQuality??1),alpha=fade*(.55+o.lit*.35)*(o.awake||1);
+   const family=o.worldFamily,detail=o.group==='architecture'?1:detailBlend(d,runtime.visualDetail?.detailQuality??1),alpha=fade*(.55+o.lit*.35)*(o.awake||1);
    if(detail<1){c.globalAlpha=alpha*(1-detail)*.33;c.fillStyle=elementInk('glass',o.hue);c.fillRect(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy,2,2);}
-   if(detail>0){c.save();c.translate(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy);c.globalAlpha=alpha*detail;c.strokeStyle=elementInk('glass',o.hue);c.lineWidth=1.1;const growth=(o.growth||1)*(o.openness??1);c.scale(growth,growth);livingGlyph(c,o,t);
+   if(detail>0){c.save();c.translate(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy);c.globalAlpha=alpha*detail;c.strokeStyle=elementInk(family?.material||'glass',family?.hue??o.hue);c.lineWidth=family?.material==='metal'?1.3:family?.material==='air'?.85:1.1;const growth=(o.growth||1)*(o.openness??1);c.scale(growth,growth);livingGlyph(c,o,t);
     if(o.group==='fauna'&&o.mind&&d<180){c.fillStyle=elementInk('glass',o.hue);const a=o.attentionAngle||0;c.fillRect(Math.cos(a)*o.size*.45,Math.sin(a)*o.size*.45,2,2);}
     if(o.lit){c.globalAlpha=o.lit*.2*fade*detail;c.beginPath();c.arc(0,0,o.size+6,0,Math.PI*2);c.stroke();}
     if((runtime.worldVisibility?.day??1)<.45&&['moth','jelly','lichen'].includes(o.kind)){c.globalAlpha=.08*fade*detail*(1-runtime.worldVisibility.day);c.fillStyle=elementInk('glass',o.hue);c.beginPath();c.arc(0,0,Math.min(12,o.size),0,Math.PI*2);c.fill();}c.restore();}

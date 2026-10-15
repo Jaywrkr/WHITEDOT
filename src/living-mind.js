@@ -44,6 +44,6 @@ export function updateMind(o,dt,clock,d,player,neighbors=[]){
  else if(intent==='retreat'){tx=o.homeX-Math.cos(targetAngle)*p.territory;ty=o.homeY-Math.sin(targetAngle)*p.territory;}
  else if(intent==='cooperate'){const peer=neighbors.find(n=>n!==o&&n.group==='fauna'&&Math.hypot(n.x-o.x,n.y-o.y)<150);if(peer){tx+=(peer.x-tx)*.5;ty+=(peer.y-ty)*.5;}}
  const dx=tx-o.homeX,dy=ty-o.homeY,r=Math.hypot(dx,dy);if(r>p.territory){tx=o.homeX+dx/r*p.territory;ty=o.homeY+dy/r*p.territory;}
- const pace=(o.kind==='turtle'?.22:o.kind==='deer'?1.1:.65)*p.energy*(o.awake??1);
+ const pace=(o.kind==='turtle'?.22:o.kind==='deer'?1.1:.65)*p.energy*(o.awake??1)*(o.worldFamily?.pace||1);
  o.x+=(tx-o.x)*Math.min(1,dt*pace);o.y+=(ty-o.y)*Math.min(1,dt*pace);
 }

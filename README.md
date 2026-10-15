@@ -8,7 +8,17 @@ Un pixel blanco en un mundo negro. Cada día recorres un Camino corto. Al termin
 
 Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Versión **1.1.0** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
-## Fase musical M1 · rama de prueba
+## Cierre · fase 1 · identidades completas
+
+`feat/cierre-f1-identidades` parte de `main 6702093`, que ya integra M1. Ocho gramáticas de paisaje unen contornos, espacio vacío, materiales, habitantes comunes y carácter musical: cauces, raíces, terrazas, órbitas, arrecifes, bóvedas, estratos e islas. Variantes deterministas, no ocho mapas cerrados ni nuevos géneros: permanecen los 11 biomas y 52 estilos.
+
+**Saltar** favorece otra familia. El aviso de llegada y la Bitácora muestran su nombre. En **Menú → Prototipo → Laboratorio → Notas → Paisajes**, compara ocho lugares reales; siguen existiendo fuera del laboratorio. Hay 139 entradas/19 grupos, con notas anteriores conservadas. [Prueba en teléfono](PROBAR_UNIVERSO_VIVO.md).
+
+El material guía trazo, paleta instrumental y filtros; el arreglo cambia articulación, aire y brillo conservando género, tempo, escala y batería. La fauna adapta su ritmo de movimiento; generar anatomías nuevas corresponde a F2. Terreno, rarezas anteriores, construcciones, coordenadas WD1 y progreso conservados. La proyección de habitantes comunes puede cambiar qué ejemplares ordinarios se ven.
+
+[Plan de diez fases](PLAN_CIERRE_2.0.md): consolida las listas anteriores sin dar por terminados sus pendientes. Síntesis modular profunda, mezclas libres y respuesta musical más evidente de todos los objetos quedan en sus fases. [Verificación de F1](scripts/f1-validation.json): 81 suites Node, 14 recorridos afectados y 48 renders. Aceptación artística y rendimiento en teléfono físico pendientes.
+
+## Fase musical M1 · integrada como base
 
 `feat/m1-musical-identity` parte de `main 08d1833`. Añade 16 recetas versionadas de composición sobre los 52 géneros: cambia motivo, articulación, paleta, bajo, acentos, brillo, swing y espacios; conserva tempo, escala y batería nativa. No es todavía el motor de híbridos libres de M2.
 
@@ -58,7 +68,7 @@ python3 tests/server_api.py && python3 tests/duet_smoke.py   # servidor opcional
 
 El repo está conectado a Vercel (proyecto `whitedot`). Cada rama tiene vista previa; el merge a `main` publica producción. `vercel.json` fija Framework **Other** (`null`), Output Directory **`.`** y el build `node scripts/vercel-build.mjs`. El juego vive en la raíz: no genera `public`. La configuración del repo evita que Vercel busque esa carpeta inexistente. El build sella la revisión y la hora de publicación, que se ven al pie del menú. Vercel sirve solo la parte estática: el servidor de cuentas y duetos no corre ahí.
 
-Flujo: una rama por fase de [PLAN_2.0.md](PLAN_2.0.md), commit y push. **Jay crea el PR y hace el merge.**
+Flujo: una rama por fase de [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md), desde main actualizado o desde la fase anterior pendiente de merge; commit y push. **Jay crea el PR y hace el merge.** [PLAN_2.0.md](PLAN_2.0.md) conserva los estados anteriores.
 
 ## Mapa del repositorio
 

@@ -15,9 +15,9 @@ export function choosePracticePlace(runtime,random,history=[]){
   const identity=musicIdentity(d,runtime.seedOf,runtime.rng,runtime.GEN),profile=populationProfile(d,runtime.BIOMES[d.z].id,runtime.seedOf,runtime.rng),
    inhabitants=populatedChunk(livingChunk(cx,cy,runtime.WCH,d,runtime.BIOMES[d.z].id,runtime.seedOf,runtime.rng),cx,cy,runtime.WCH,d,profile,runtime.seedOf,runtime.rng);
   if(!inhabitants.length)continue;
-  const animal=inhabitants.find(o=>o.group==='fauna')||inhabitants[0],score=(d.genre!==current.genre?6:0)+(identity?.id!==previous?.id?4:0)+(d.z!==current.z?2:0)+(history.includes(identity?.id)?-5:0);
-  candidates.push({x:animal.x,y:animal.y-75,layer:'superficie',region:d,identity,population:profile,score});
-  if(score>=12&&i>=7)break;
+  const animal=inhabitants.find(o=>o.group==='fauna')||inhabitants[0],score=(d.genre!==current.genre?6:0)+(identity?.id!==previous?.id?4:0)+(d.z!==current.z?2:0)+(history.includes(identity?.id)?-5:0)+(d.worldFamily?.id!==current.worldFamily?.id?5:0);
+  candidates.push({x:animal.x,y:animal.y+(animal.y-75<ry*R?75:-75),layer:'superficie',region:d,identity,population:profile,score});
+  if(score>=17&&i>=7)break;
  }return candidates.sort((a,b)=>b.score-a.score)[0]||null;
 }
 export function initialize(runtime){
@@ -38,7 +38,7 @@ export function initialize(runtime){
   if(!point){runtime.toast('No encontré otro lugar. Intenta otra vez.');return false;}
   state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.recent.push(point.identity.id);state.recent=state.recent.slice(-8);
   if(runtime.labMode)runtime.labGo('music:'+point.identity.id);
-  move(point);runtime.toast(`${point.identity.name} · ${runtime.BIOMES[point.region.z].name}`);return true;
+  move(point);runtime.toast(`${point.region.worldFamily?.name||runtime.BIOMES[point.region.z].name} · ${point.identity.name}`);return true;
  }
  function back(){const p=runtime.S.practiceTravel?.previous;if(!runtime.inWorld()||blocked()||!validPoint(p)||!runtime.save())return false;
   const here={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};runtime.S.practiceTravel.previous=here;$('mMenu').hidden=true;move(p);return true;}

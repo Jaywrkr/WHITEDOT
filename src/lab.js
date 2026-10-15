@@ -5,6 +5,8 @@ import {LAB_ELEMENTS,LAB_GROUPS,LAB_CHECKS,LAB_VERDICTS,labElement,labStep,norma
 import {createPhenomena} from './phenomena.js';
 import {createFlock} from './vida-music.js';
 import {musicIdentity} from './musical-recipes.js';
+import {livingChunk} from './living-catalog.js';
+import {populationProfile,populatedChunk} from './living-populations.js';
 
 const KEY='whitedot-lab-v1',LAB_SEED='laboratorio';
 export const labURL=href=>{const url=new URL(href);url.searchParams.set('testSeed',LAB_SEED);url.searchParams.set('layout','wide');url.searchParams.set('generation','2');url.searchParams.set('lab','1');url.searchParams.delete('encounter');return url.href;};
@@ -35,6 +37,20 @@ export function initialize(runtime){
  }
  function locate(e){
   const f=e.find,home=Math.floor(runtime.REG/2)*runtime.WCH;
+  if(f.type==='landscape'){
+   const R=size();for(let radius=0;radius<=32;radius++)for(let x=-radius;x<=radius;x++)for(let y=-radius;y<=radius;y++){
+    if(Math.max(Math.abs(x),Math.abs(y))!==radius)continue;
+    const d=runtime.regionOfPos((x+.5)*R,(y+.5)*R);if(d.sea||d.worldFamily?.id!==f.family)continue;
+    // Locate an actual inhabitant, using exactly the same population as the World.
+    for(let a=0;a<runtime.REG;a++)for(let b=0;b<runtime.REG;b++){
+     const cx=x*runtime.REG+a,cy=y*runtime.REG+b,biome=runtime.BIOMES[d.z].id,
+      profile=populationProfile(d,biome,runtime.seedOf,runtime.rng),
+      objects=populatedChunk(livingChunk(cx,cy,runtime.WCH,d,biome,runtime.seedOf,runtime.rng),cx,cy,runtime.WCH,d,profile,runtime.seedOf,runtime.rng);
+     const object=objects.find(o=>runtime.regionOfPos(o.x,o.y-110).key===d.key);
+     if(object)return {x:object.x,y:object.y};
+    }
+   }return null;
+  }
   if(f.type==='music'){
    const R=size();for(let radius=0;radius<=32;radius++)for(let x=-radius;x<=radius;x++)for(let y=-radius;y<=radius;y++){
     if(Math.max(Math.abs(x),Math.abs(y))!==radius)continue;

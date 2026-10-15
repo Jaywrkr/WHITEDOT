@@ -1,5 +1,7 @@
 # Música nueva como descubrimiento · propuesta de Jay
 
+**Continuación:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida el trabajo posterior en diez fases. M1 ya está en `main 6702093`. F1 de cierre une paisaje, material, poblaciones y carácter sonoro; no completa los híbridos, síntesis modular ni el 100 % global. Los alcances y criterios musicales de este documento se conservan en F3–F6/F8–F10.
+
 **Estado: M1 autorizada por Jay e implementada en `feat/m1-musical-identity`, desde `main 08d1833`.** M2–M6 siguen como plan. Las primeras 16 recetas son arreglos curados sobre géneros existentes, no un mezclador libre de culturas/géneros.
 
 | Fase | Rama | Estado |

@@ -1,4 +1,5 @@
 import {GENRE_CHARACTERS} from './musical-character.js';
+import {activeWorldFamily} from './world-families.js';
 // Original synth programs, not recordings or presets imported from commercial instruments.
 // Slopes are real cascades: each biquad low-pass contributes 12 dB/octave.
 export const SYNTH_PROGRAMS=Object.freeze([
@@ -24,8 +25,10 @@ export function synthProgram(region,role,identity,seedOf){
  const choices={floor:[0,1,3,4,7,12,15],bass:[1,2,5,7,12,15],warm:[0,1,4,5,8,14,15],organic:[0,1,4,5,8,9,14,15],
   melodic:[0,5,6,11,13,14],disco:[0,4,8,11,13,15],calm:[0,1,2,5,7,14],machine:[6,7,10,11,12,13],broken:[5,8,9,10,12,13]};
  const palette=(choices[GENRE_CHARACTERS[region.genre]]||choices.warm).map(i=>SYNTH_PROGRAMS[i]);
- const pool=role==='bajo'?SYNTH_PROGRAMS.filter(p=>p.type==='lowpass'&&p.stages<=2):
+ const nativePool=role==='bajo'?SYNTH_PROGRAMS.filter(p=>p.type==='lowpass'&&p.stages<=2):
   role==='perc'?SYNTH_PROGRAMS.filter(p=>p.type==='lowpass'&&p.stages===1):palette;
+ const f=activeWorldFamily(region),preferences={wood:['madera','resina','fibra','junco'],glass:['respira','marea','cristal'],metal:['sombra','pliegue','modulo','cavidad'],air:['nube','terciopelo','amanecer','orbita']};
+ const compatible=f?nativePool.filter(p=>preferences[f.material].includes(p.id)):[],pool=compatible.length?compatible:nativePool;
  return pool[h%pool.length];
 }
 export function filterMovement(program,cutoff,role,time,six=.125,gesture=0,weather=0){

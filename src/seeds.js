@@ -13,7 +13,7 @@ export function initialize(runtime){
  function open(){
   select.value=new URLSearchParams(location.search).get('encounter')||'';$('seedValue').value=runtime.S.previewSeed||'original';$('seedLayout').value=runtime.S.previewLayout||'wide';$('seedGeneration').value=runtime.S.previewSeed?String(runtime.worldIdentity.generatorVersion):'2';
   const d=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
-  $('seedInfo').textContent=`${runtime.S.previewSeed?'Prueba: '+runtime.S.previewSeed:'Partida habitual'} · ${d.ecology?.name||runtime.BIOMES[d.z].name} · ${runtime.GEN[d.genre].name} · ${d.bpm} BPM · Biomas de ${runtime.REG*runtime.WCH} unidades`;
+  $('seedInfo').textContent=`${runtime.S.previewSeed?'Prueba: '+runtime.S.previewSeed:'Partida habitual'} · ${d.worldFamily?.name||d.ecology?.name||runtime.BIOMES[d.z].name} · ${runtime.GEN[d.genre].name} · ${d.bpm} BPM · Biomas de ${runtime.REG*runtime.WCH} unidades`;
   $('mSeeds').hidden=false;
  }
  function saveBeforeLeaving(){runtime.S.collected=[...runtime.collected];if(runtime.save())return true;runtime.toast('No se pudo guardar. Menú → Guardar copia antes de cambiar.');return false;}
