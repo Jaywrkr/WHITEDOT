@@ -15,6 +15,8 @@ Continuación solicitada durante la auditoría de cierre: auditar, guardar halla
 
 Cada sucesora sale de su padre si aún no está en main. No reescribir ramas publicadas. Conservar commits de padres al integrar reduce conflictos; squash/rebase o cambios paralelos pueden exigir resolverlos.
 
+Verificación del 15 de octubre: las ocho referencias remotas coinciden con sus commits de entrega. Todas las fases de esta tabla están implementadas y subidas. Continuar las fases autorizadas sin esperar confirmación entre ramas; la aceptación física y la publicación conservan sus requisitos propios.
+
 Cada bloque debe resolver los hallazgos de su área, tener pruebas de aceptación y actualizar este plan, CAMBIOS, README y handoff. Auditoría/lógica completas antes del push y navegador/audio afectados según AGENTS. El conjunto final necesita navegador/audio completos; registrar alcance exacto, conservar evidencias históricas y no desactivar pruebas.
 
 ## Criterios por bloque
