@@ -4,6 +4,7 @@
 import {LAB_ELEMENTS,LAB_GROUPS,LAB_CHECKS,LAB_VERDICTS,labElement,labStep,normalizeLabNotes,labTested,labReport} from './lab-catalog.js';
 import {createPhenomena} from './phenomena.js';
 import {createFlock} from './vida-music.js';
+import {musicIdentity} from './musical-recipes.js';
 
 const KEY='whitedot-lab-v1',LAB_SEED='laboratorio';
 export const labURL=href=>{const url=new URL(href);url.searchParams.set('testSeed',LAB_SEED);url.searchParams.set('layout','wide');url.searchParams.set('generation','2');url.searchParams.set('lab','1');url.searchParams.delete('encounter');return url.href;};
@@ -34,8 +35,15 @@ export function initialize(runtime){
  }
  function locate(e){
   const f=e.find,home=Math.floor(runtime.REG/2)*runtime.WCH;
+  if(f.type==='music'){
+   const R=size();for(let radius=0;radius<=32;radius++)for(let x=-radius;x<=radius;x++)for(let y=-radius;y<=radius;y++){
+    if(Math.max(Math.abs(x),Math.abs(y))!==radius)continue;
+    const d=runtime.regionOfPos((x+.5)*R,(y+.5)*R);if(d.sea)continue;
+    if(musicIdentity(d,runtime.seedOf,runtime.rng,runtime.GEN)?.id===f.identity)return {x:(x+.5)*R,y:(y+.5)*R};
+   }return null;
+  }
   if(f.type==='culture'){const site=runtime.cultureHome();return site?{x:site.x,y:site.y}:null;}
-  if(['box','quiet','experimental','rhythm','living'].includes(f.type))return {x:home+80,y:home};
+  if(['box','quiet','experimental','rhythm','living','synth','filter'].includes(f.type))return {x:home+80,y:home};
   if(f.type==='home')return {x:f.x,y:f.y};
   if(f.type==='family')return {x:home+100,y:home};
   if(f.type==='toy')return spiral((a,b)=>{const raw=runtime.wchunk(a,b),c=runtime.sceneChunk?.(raw)||raw;return (c.playthings||[]).find(o=>o.kind===f.kind)||null;});
@@ -49,7 +57,7 @@ export function initialize(runtime){
  function go(id=book.current){
   const e=labElement(id)||LAB_ELEMENTS[0];book.current=e.id;keep();closeOverlays();
   runtime.stopAutopilot?.();runtime.clearPowers?.();runtime.cancelMateria?.();
-  runtime.labLiving=e.find.type==='living'?e.find.kind:null;
+  runtime.labLiving=e.find.type==='living'?e.find.kind:['synth','filter'].includes(e.find.type)?'breath-tree':null;runtime.labSynth=e.find.type==='synth'?e.find.instrument:null;runtime.labFilter=e.find.type==='filter'?e.find.program:null;
   runtime.labRhythm=e.find.type==='rhythm'?e.find.kind:null;
   runtime.labCulture=e.find.type==='culture'?e.find.culture:null;runtime.cultureReset?.();runtime.labExperimental=e.find.type==='experimental'?{level:.8,mode:e.find.mode}:null;runtime.labEncounter=e.find.type==='family'?e.find.family:null;runtime.encounterReset?.();
   const s=S();s.layer='superficie';const p=locate(e);

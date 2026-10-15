@@ -87,6 +87,7 @@ export function initialize(runtime){
    <div class="rare-pager"><button data-rare-page="-1" ${page?'':'disabled'} aria-label="Página anterior de hallazgos">‹</button><span>${page+1} / ${pages}</span><button data-rare-page="1" ${page+1<pages?'':'disabled'} aria-label="Página siguiente de hallazgos">›</button></div>`;
  }
  async function exportPNG(card){
+  await document.fonts.load('400 22px "Geist Mono"');
   const canvas=document.createElement('canvas');canvas.width=512;canvas.height=720;const c=canvas.getContext('2d');c.fillStyle='#080b0e';c.fillRect(0,0,512,720);c.strokeStyle=CARD_TIERS[card.odds.tier].ink;c.lineWidth=2;c.strokeRect(24,24,464,672);
   const svg=rarePortrait(card).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ').replace('class="rare-glyph"','stroke="#d7c497" fill="none" stroke-width="1.3"').replace('class="rare-orbit"','stroke="#596268" fill="none"').replace('class="rare-sparks"','stroke="#d7c497" fill="none"');
   const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));try{const img=new Image();img.src=url;await img.decode();c.drawImage(img,96,110,320,240);c.fillStyle='#e5e9e9';c.font='22px "Geist Mono", monospace';c.textAlign='center';c.fillText(card.name.slice(0,33),256,395);c.font='14px "Geist Mono", monospace';[location(card),rarityLabel(card.type,card.odds),'Semilla '+(card.world.seed||'original'),card.world.layout+' · '+(card.address?.layer||'sin ubicación'),'WHITEDOT · #'+cardSerial(card.id)].forEach((text,i)=>c.fillText(text.slice(0,49),256,450+i*35));

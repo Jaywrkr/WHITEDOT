@@ -6,34 +6,48 @@ import {livingGlyph} from './living-art.js';
 import {elementInk} from './visual.js';
 import {contactEntry} from './contact.js';
 import {claimInstallationBar} from './installations.js';
+import {mindProfile} from './living-mind.js';
+import {populationProfile,populatedChunk} from './living-populations.js';
 export const LIVING_GROUPS=['flora','fauna','architecture'];
 const HINTS={contacto:'Pasa el cubo para tocar',quietud:'Escucha quieto a su lado',orbita:'Rodea con el cubo',presion:'Entra despacio y permanece',cruce:'Cruza despacio',respuesta:'Toca y escucha la respuesta',seguir:'Camina a su lado'};
 export function initialize(runtime){
  const chunks=new BoundedMap(48);let owner=runtime.S,clock=0,barPlayed=-1,lab=null;
  const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
- function chunk(x,y){const layer=runtime.S.layer||'superficie',key=layer+':'+x+','+y;if(!chunks.has(key)){const d=runtime.regionOfPos((x+.5)*runtime.WCH,(y+.5)*runtime.WCH);chunks.set(key,(layer==='superficie'&&d.sea&&runtime.worldIdentity.generatorVersion===2?aquaticChunk(x,y,runtime.WCH,d,runtime.seedOf,runtime.rng):livingChunk(x,y,runtime.WCH,layer==='cielo'?{...d,sea:false}:d,runtime.BIOMES[d.z].id,layer==='superficie'?runtime.seedOf:s=>runtime.seedOf(layer+':'+s),runtime.rng,LIVING_GROUPS)).filter(o=>layer==='superficie'||(layer==='cielo'?['seed','manta','whale','jelly','moth'].includes(o.kind):['fungal-net','lichen','moss','turtle','worm','beetle'].includes(o.kind))).map(o=>({...o,id:layer==='superficie'?o.id:o.id+':'+layer})));}return chunks.get(key);}
- function near(radius=750){if(!runtime.inWorld())return [];if(owner!==runtime.S){owner=runtime.S;chunks.clear();lab=null;clock=0;}if(runtime.labLiving){if(lab?.kind!==runtime.labLiving){const def=livingDefinition(runtime.labLiving);lab=def?{id:'living:lab:'+def.id,kind:def.id,shape:def.shape,group:def.group,size:18,variant:25,hue:200,x:runtime.S.wx,y:runtime.S.wy+110,homeX:runtime.S.wx,homeY:runtime.S.wy+110,phase:1,energy:0,lit:0,phrase:[],personality:'curiosa',activeAt:0}:null;}return lab?[lab]:[];}lab=null;
+ function chunk(x,y){
+  const layer=runtime.S.layer||'superficie',key=layer+':'+x+','+y;
+  if(!chunks.has(key)){
+   const d=runtime.regionOfPos((x+.5)*runtime.WCH,(y+.5)*runtime.WCH),biome=runtime.BIOMES[d.z].id,
+    seed=layer==='superficie'?runtime.seedOf:s=>runtime.seedOf(layer+':'+s),region=layer==='cielo'?{...d,sea:false}:d;
+   const base=layer==='superficie'&&d.sea&&runtime.worldIdentity.generatorVersion===2?
+    aquaticChunk(x,y,runtime.WCH,d,seed,runtime.rng):livingChunk(x,y,runtime.WCH,region,biome,seed,runtime.rng,LIVING_GROUPS);
+   const profile=populationProfile(region,biome,seed,runtime.rng);
+   const inhabitants=populatedChunk(base,x,y,runtime.WCH,region,profile,seed,runtime.rng);
+   chunks.set(key,inhabitants.filter(o=>layer==='superficie'||(layer==='cielo'?['seed','manta','whale','jelly','moth'].includes(o.kind):['fungal-net','lichen','moss','turtle','worm','beetle'].includes(o.kind))).map(o=>({...o,id:layer==='superficie'?o.id:o.id+':'+layer})));
+  }return chunks.get(key);
+ }
+ function near(radius=750){if(!runtime.inWorld())return [];if(owner!==runtime.S){owner=runtime.S;chunks.clear();lab=null;clock=0;}if(runtime.labLiving){if(lab?.kind!==runtime.labLiving||lab?.labSynth!==(runtime.labSynth||null)||lab?.labFilter!==(runtime.labFilter||null)){const def=livingDefinition(runtime.labLiving);lab=def?{id:'living:lab:'+def.id,kind:def.id,shape:def.shape,group:def.group,size:18,variant:25,hue:200,x:runtime.S.wx,y:runtime.S.wy+110,homeX:runtime.S.wx,homeY:runtime.S.wy+110,phase:1,energy:0,lit:0,phrase:[],personality:'curiosa',activeAt:0,labSynth:runtime.labSynth||null,labFilter:runtime.labFilter||null}:null;}return lab?[lab]:[];}lab=null;
   const cx=Math.floor(runtime.S.wx/runtime.WCH),cy=Math.floor(runtime.S.wy/runtime.WCH),out=[];
   const n=Math.min(2,Math.ceil((radius+75)/runtime.WCH));for(let x=cx-n;x<=cx+n;x++)for(let y=cy-n;y<=cy+n;y++)out.push(...chunk(x,y));return out.filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<radius);
  }
+ function ensureMind(o){o.mind||=mindProfile(o,runtime.seedOf,runtime.rng);return o;}
  function emit(o,time,full=false,origin='ambient'){
   if(!active()||!runtime.S.sound||runtime.ac?.state!=='running')return;
   const d=runtime.regionOfPos(o.homeX,o.homeY);runtime.playVoice('living:'+o.kind,((o.phrase.length?o.phrase[(barPlayed<0?0:barPlayed)%o.phrase.length]:o.variant)+(origin==='ambient'?(o.degreeOffset||0):0))%7,time,d,full,origin==='player'?.48:.23,o,origin);o.lit=1;
  }
- function interact(o){const def=livingDefinition(o.kind);o.energy=Math.min(1,o.energy+.5);o.phrase.push(runtime.MU.deg||0);if(o.phrase.length>6)o.phrase.shift();runtime.livingLink?.(o);runtime.livingFound?.(o);runtime.unlock('vidaNueva');runtime.beatSoon(t=>emit(o,t,true,'player'),null,'player');
+ function interact(o){ensureMind(o);const def=livingDefinition(o.kind);o.stimulusAt=clock;o.energy=Math.min(1,o.energy+.5);o.phrase.push(runtime.MU.deg||0);if(o.phrase.length>o.mind.memorySpan)o.phrase.shift();runtime.livingLink?.(o);runtime.livingFound?.(o);runtime.unlock('vidaNueva');runtime.beatSoon(t=>emit(o,t,true,'player'),null,'player');
   const seen=runtime.S.livingSeen||={};if(!seen[o.kind]){seen[o.kind]={day:runtime.S.todayKey,variant:o.variant};runtime.say(def.name+' · '+HINTS[def.gesture]+'.','Una voz nueva');}runtime.save();
  }
  function tick(dt){
   if(owner!==runtime.S){owner=runtime.S;chunks.clear();lab=null;clock=0;}if(!active())return;clock+=Math.min(.05,dt);runtime.livingEcologyTick?.(dt);
-  for(const o of near()){const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),def=livingDefinition(o.kind);o.lit=Math.max(0,o.lit-dt*2);o.energy=Math.max(0,o.energy-dt*.028);o.phase+=dt*(.2+o.variant%5*.06);
+  const neighbors=near();for(const o of neighbors){ensureMind(o);const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),def=livingDefinition(o.kind);o.lit=Math.max(0,o.lit-dt*2);o.energy=Math.max(0,o.energy-dt*.028);o.phase+=dt*o.mind.phaseRate;
    const angle=Math.atan2(runtime.S.wy-o.y,runtime.S.wx-o.x),old=o.angle??angle;let delta=Math.atan2(Math.sin(angle-old),Math.cos(angle-old));o.angle=angle;
    o.orbit=(o.orbit||0)+(d<o.size+60?Math.abs(delta):0);o.dwell=d<o.size+32&&(runtime.body?.speed||0)<16?(o.dwell||0)+dt:0;
-   if(contactEntry(o,d<o.size*.6+13)&&clock-(o.last||-100)>1){o.last=clock;interact(o);}
+   if(contactEntry(o,d<o.size*.6+13)&&clock-(o.last??-100)>.8+o.mind.patience*.6){o.last=clock;interact(o);}
    if(def.gesture==='orbita'&&o.orbit>Math.PI){o.orbit=0;interact(o);}
-   if((def.gesture==='quietud'||def.gesture==='presion')&&o.dwell>8&&clock-(o.last||-100)>8){o.last=clock;interact(o);}
+   const patience=5+o.mind.patience*6;if((def.gesture==='quietud'||def.gesture==='presion')&&o.dwell>patience&&clock-(o.last??-100)>patience){o.last=clock;interact(o);}
    if(o.kind==='seed'){o.x=o.homeX+Math.sin(clock*.13+o.variant)*35;o.y=o.homeY+Math.cos(clock*.11+o.variant)*20;if(o.dwell>12)o.size=Math.min(24,o.size+dt*.2);}
    if(o.dwell>3&&o.kind==='moss'){const region=runtime.regionOfPos(o.x,o.y);runtime.driveInfluence?.(region,'space',.6,o.variant%8);runtime.subtractInfluence?.(region,'melody');}
-   runtime.livingBuildingTick?.(o,dt,clock,d);runtime.livingBehavior?.(o,dt,clock,d);
+   runtime.livingBuildingTick?.(o,dt,clock,d);runtime.livingBehavior?.(o,dt,clock,d,neighbors);
   }
  }
  function step(s,bar,time){if(!active()||!runtime.S.sound||runtime.ac?.state!=='running'||runtime.labSolo&&!runtime.labLiving)return;
@@ -48,7 +62,8 @@ export function initialize(runtime){
   c.save();for(const o of objects){const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),fade=distanceOpacity(d,radius);if(!fade)continue;if(d<110&&(!label||d<label.d))label={o,d};
    const detail=o.group==='architecture'?1:detailBlend(d,runtime.visualDetail?.detailQuality??1),alpha=fade*(.55+o.lit*.35)*(o.awake||1);
    if(detail<1){c.globalAlpha=alpha*(1-detail)*.33;c.fillStyle=elementInk('glass',o.hue);c.fillRect(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy,2,2);}
-   if(detail>0){c.save();c.translate(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy);c.globalAlpha=alpha*detail;c.strokeStyle=elementInk('glass',o.hue);c.lineWidth=1.1;c.scale(o.growth||1,o.growth||1);livingGlyph(c,o,t);
+   if(detail>0){c.save();c.translate(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy);c.globalAlpha=alpha*detail;c.strokeStyle=elementInk('glass',o.hue);c.lineWidth=1.1;const growth=(o.growth||1)*(o.openness??1);c.scale(growth,growth);livingGlyph(c,o,t);
+    if(o.group==='fauna'&&o.mind&&d<180){c.fillStyle=elementInk('glass',o.hue);const a=o.attentionAngle||0;c.fillRect(Math.cos(a)*o.size*.45,Math.sin(a)*o.size*.45,2,2);}
     if(o.lit){c.globalAlpha=o.lit*.2*fade*detail;c.beginPath();c.arc(0,0,o.size+6,0,Math.PI*2);c.stroke();}
     if((runtime.worldVisibility?.day??1)<.45&&['moth','jelly','lichen'].includes(o.kind)){c.globalAlpha=.08*fade*detail*(1-runtime.worldVisibility.day);c.fillStyle=elementInk('glass',o.hue);c.beginPath();c.arc(0,0,Math.min(12,o.size),0,Math.PI*2);c.fill();}c.restore();}
   }
@@ -57,5 +72,5 @@ export function initialize(runtime){
  function sources(){return near(250).map(o=>({kind:'living:'+o.kind,name:livingDefinition(o.kind).name,object:o,distance:Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),hint:o.kind==='bridge'?'Cruza las tres piedras de izquierda a derecha':o.kind==='observatory'?'Rodea y permanece junto a la estrella':HINTS[livingDefinition(o.kind).gesture]}));}
  function card(){const found=Object.keys(runtime.S.livingSeen||{});return '<article class="journal-card"><h3>Universo vivo</h3><p>'+found.length+' / '+LIVING_CATALOG.length+' linajes escuchados. Los individuos cambian de voz, forma y conducta según el lugar.</p><p>'+found.map(id=>livingDefinition(id)?.name).filter(Boolean).join(' · ')+'</p></article>';}
  runtime.ACH.push(['vidaNueva','El lugar responde','Escuchaste un nuevo linaje con el cubo.']);
- Object.defineProperties(runtime,{preloadLiving:{get:()=>preload},livingTick:{get:()=>tick},livingStep:{get:()=>step},drawLiving:{get:()=>draw},livingNear:{get:()=>near},livingSources:{get:()=>sources},livingCard:{get:()=>card},livingCache:{get:()=>chunks},livingInteract:{get:()=>interact}});
+ Object.defineProperties(runtime,{livingClock:{get:()=>clock},preloadLiving:{get:()=>preload},livingTick:{get:()=>tick},livingStep:{get:()=>step},drawLiving:{get:()=>draw},livingNear:{get:()=>near},livingSources:{get:()=>sources},livingCard:{get:()=>card},livingCache:{get:()=>chunks},livingInteract:{get:()=>interact}});
 }

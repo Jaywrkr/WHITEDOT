@@ -17,7 +17,7 @@ export function initialize(runtime){
   const region=runtime.regionOfPos(s.wx,s.wy);frame=ecologyFrame(region,s.livingSeconds,runtime.seedOf,runtime.weather?.i||0,runtime.MU.season?.id);
   if(runtime.weather?.i>.15)runtime.recordRewardSource?.('weather','lluvia');if(runtime.weather?.i>.4)runtime.recordRewardSource?.('weather','tormenta');if(frame.convergence)runtime.recordRewardSource?.('weather','convergencia');
   const near=runtime.livingNear(500);
-  for(const o of near){o.ecology=frame;o.awake=o.activeAt===frame.phase||o.energy>.3||runtime.labLiving?1:.45;
+  for(const o of near){o.ecology=frame;o.awake=(o.mind?.activity??o.activeAt)===frame.phase||o.energy>.3||runtime.labLiving?1:.45;
    o.growth=o.group==='flora'?.75+frame.humidity*.3+Math.sin(s.livingSeconds/120+o.variant)*.07:1;
    o.relation=null;for(const peer of near){if(peer===o)continue;const relation=ecologyRelation(o,peer,frame);if(relation){o.relation={type:relation,peer:peer.id};o.energy=Math.max(o.energy,.26);peer.energy=Math.max(peer.energy,.26);runtime.livingRelationFound?.(o,peer,relation,frame);break;}}
   }

@@ -32,7 +32,7 @@ try:
   page.evaluate('async()=>{for(let i=0;i<40;i++)await fetch("/index.html?testSeed=test"+i);}')
   assert page.evaluate('caches.open("whitedot-test-B").then(c=>c.keys()).then(k=>k.length)')==before
   context.set_offline(True);page.goto(url+'?lab=1&testSeed=offline&layout=vasto&generation=2');page.wait_for_function('document.body.classList.contains("lab")')
-  assert page.evaluate('document.fonts.ready.then(()=>document.fonts.check("12px Silkscreen")&&document.fonts.check("12px \'Geist Mono\'"))')
+  assert page.evaluate('document.fonts.ready.then(()=>document.fonts.check("12px \'Geist Mono\'"))')
   assert page.evaluate('async()=>{for(const w of [100,200,300,400,500,600,700,800,900]){const faces=await document.fonts.load(`${w} 14px "Geist Mono"`);if(faces.length!==1||faces[0].status!=="loaded")return false;}return true;}'), 'all nine supplied font weights must load offline'
   assert page.evaluate('fetch("/missing.js").then(r=>!r.ok).catch(()=>true)')
   print(f'PASS real PWA: waiting upgrade A→B, coherent shell/assets, explicit activation, {before} bounded cached assets, query previews offline and local fonts',flush=True);b.close()

@@ -229,7 +229,7 @@ export function initialize(runtime) {
     const id=BI().id,cave=id==="cueva",vac=id==="vacio",bar=MU.step>>4;
     const since=MU.step-MU.lastChange,padLv=(G.pad||0)*(1-w)+(nb&&runtime.GEN[nb.genre].pad||0)*w,padOn=since<24||MU.radio?.melodyRest?padLv:0;
     padG.gain.setTargetAtTime(.03*(1-E*.4)*padOn*(runtime.labSolo||(runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie')?0:1)+.0001,t,padOn?.6:2.2);
-    padF.frequency.setTargetAtTime(380+E*1700-(cave?200:0),t,.9);
+    padF.frequency.setTargetAtTime((380+E*1700-(cave?200:0))*(MU.radio?.identity?.tone??1),t,.9);
     droneG.gain.setTargetAtTime(0,t,1.5);
     dfb.gain.setTargetAtTime(runtime.inWorld()&&MU.anomaly==='canon'?.72:cave||(A&&A.genre==="dub")?.6:MU.still>3?.5:.36,t,1);
     dsend.gain.setTargetAtTime(cave?2.2:MU.vari===3&&runtime.inWorld()?1.8:1,t,.5);
@@ -237,10 +237,10 @@ export function initialize(runtime) {
     verbIn.gain.setTargetAtTime(vac?1.6:cave||air==="niebla"?1.25:.8,t,1);
     if(!MU.radio?.melodyRest&&air==="esporas"&&s===14&&bar%4===3&&rnd()<.2)pluck(hookPitch('glass',chordTones()[1],musicalCharacter(MU.dnaA.genre)),t,.012,4);
     if(runtime.inWorld())E=runtime.clamp(E+(runtime.influenceState?.values.groove||0)*.09,.05,.9);
-    const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(G.sw||0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
+    const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(MU.radio?.identity?.swing??G.sw??0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
     const xp=runtime.inWorld()?(runtime.experimentalLevel?.()||0):0;   // zonas experimentales: ≥0.7 sin batería ni pista
     if(live&&!runtime.labSolo&&!(runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie')&&xp<.7){   // Campo de escucha: solo suena lo que está dentro   // laboratorio: «Solo» calla la música del lugar para oír el elemento
-      if(nb){VW=w;const nt=t+((s%2)?SIX*(runtime.GEN[nb.genre].sw||0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true,MU.neighborRadio);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }
+      if(nb){VW=w;const nt=t+((s%2)?SIX*(MU.neighborRadio?.identity?.swing??runtime.GEN[nb.genre].sw??0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true,MU.neighborRadio);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }
       VW=1-w;if(!(xp>.4&&rnd()<(xp-.4)*2.2))drums(A?A.genre:"ambient",s,bar,t,tt,E,ct,false);   // entre 0.4 y 0.7 la batería se deshace
       if(runtime.inWorld()&&A){
         playTrack(A,s,tt,E,ct,MU.influenced||MU.radio);
@@ -352,7 +352,7 @@ export function initialize(runtime) {
   function bassInst(ty,m,t,v,region=MU.dnaA||MU.dnaT){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'bajo'},null,t,()=>bassInst(ty,m,t,v,region));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "reese":reese(m,t,v);return;case "organb":organ(m,t,v*1.5);return;case "roll":houseBass(m,t,v*.8,.3);return;}switch(ty){case "sub":softBass(m,t,v);break;case "acid":acid(m,t,v*.85,300+MU.speed*2200);break;case "pluck":houseBass(m,t,v,.5);break;case "fm":fmBass(m,t,v);break;case "boing":runtime.boing(m,t,v);break;}}
   function hookInst(ty,m,t,v,region=MU.dnaA||MU.dnaT,articulation=null){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'lead'},null,t,()=>hookInst(ty,m,t,v,region,articulation));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v,articulation))return;switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
   function drums(gid,s,bar,t,tt,E,ct,DO,arrangement=MU.radio){
-    const previous=arrangementAir;arrangementAir=musicalCharacter(gid).air*(arrangement?.melodyRest?.2:1);
+    const previous=arrangementAir;arrangementAir=(arrangement?.identity?.air??musicalCharacter(gid).air)*(arrangement?.melodyRest?.2:1);
     try{drumPattern(gid,s,bar,t,tt,E,ct,DO,arrangement);}finally{arrangementAir=previous;}
   }
   function drumPattern(gid,s,bar,t,tt,E,ct,DO,arrangement){

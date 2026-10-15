@@ -3,9 +3,9 @@ import {musicalInk} from './visual.js';
 export function createCueBuffer(limit=32) {
   const cues=[];
   return {
-    add(source,role,onset) {
+    add(source,role,onset,filter=null) {
       if(!source||!Number.isFinite(source.x)||!Number.isFinite(source.y)||!Number.isFinite(onset))return;
-      cues.push({source,role,onset});
+      cues.push({source,role,onset,filter});
       if(cues.length>limit)cues.splice(0,cues.length-limit);
     },
     active(now) {
@@ -25,6 +25,10 @@ export function initialize(runtime) {
     if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running')return;
     buffer.add(source,role,performance.now()+Math.max(0,time-runtime.ac.currentTime)*1000);
   }
+  function filterCue(source,role,filter,time){
+    if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running')return;
+    buffer.add(source,role,performance.now()+Math.max(0,time-runtime.ac.currentTime)*1000,{...filter});
+  }
   function drawSoundCues(ox,oy,radius) {
     if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running'){buffer.clear();return;}
     const ctx=runtime.cx;
@@ -39,8 +43,13 @@ export function initialize(runtime) {
       else if(role==='lead'){ctx.moveTo(-r/2,0);ctx.lineTo(0,-r);ctx.lineTo(r/2,-r/2);}
       else if(role==='agudo'){ctx.moveTo(-r/2,0);ctx.lineTo(r/2,0);ctx.moveTo(0,-r/2);ctx.lineTo(0,r/2);}
       else {ctx.arc(0,0,r,0,Math.PI*2);if(role==='acorde')for(let i=1;i<3;i++){ctx.moveTo(r+i*4,0);ctx.arc(0,0,r+i*4,0,Math.PI*2);}}
-      ctx.stroke();ctx.restore();
+      ctx.stroke();
+      const filter=cue.filter;
+      if(filter){
+       const phase=filter.end>filter.start?age:1-age;ctx.lineWidth=.8;for(let i=0;i<filter.stages;i++){ctx.beginPath();ctx.arc(0,0,9+i*3,-Math.PI/2,-Math.PI/2+Math.PI*2*(.2+phase*.7));ctx.stroke();}
+       if(Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<90){ctx.fillStyle=ctx.strokeStyle;ctx.font='9px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText(filter.slope?'Filtro '+filter.slope+' dB':filter.type==='bandpass'?'Filtro de banda':'Filtro de muesca',0,-24);}
+      }ctx.restore();
     }
   }
-  Object.defineProperties(runtime,{musicInk:{get:()=>musicInk},clearSoundCues:{get:()=>()=>buffer.clear()},soundCue:{get:()=>soundCue},drawSoundCues:{get:()=>drawSoundCues}});
+  Object.defineProperties(runtime,{musicInk:{get:()=>musicInk},clearSoundCues:{get:()=>()=>buffer.clear()},soundCue:{get:()=>soundCue},filterCue:{get:()=>filterCue},drawSoundCues:{get:()=>drawSoundCues}});
 }

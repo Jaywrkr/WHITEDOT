@@ -13,7 +13,7 @@ chromium=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium') or shutil.w
 try:
  with sync_playwright() as p:
   browser=p.chromium.launch(executable_path=chromium,args=['--no-sandbox'])
-  page=browser.new_page();page.goto(f'http://127.0.0.1:{server.server_port}/',wait_until='domcontentloaded')
+  page=browser.new_page();page.expose_function('__mixProgress',lambda row:print('Rendered '+str(row),flush=True));page.goto(f'http://127.0.0.1:{server.server_port}/',wait_until='domcontentloaded')
   results=page.evaluate('''async()=>{const {renderMix}=await import('/tests/audio_mix.mjs');const out=[];
    const {initialize}=await import('/src/data.js');const data={};initialize(data);for(const genre of Object.keys(data.GEN))out.push(await renderMix(genre));
    for(const genre of ['nudisco','amapiano','dub','dnb'])out.push(await renderMix(genre,{dense:true,influenced:true}));

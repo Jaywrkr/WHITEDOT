@@ -36,7 +36,7 @@ for (const genre of Object.keys(runtime.GEN)) {
     if(music.melodyRest)assert(music.hook.every(n=>n<0),'rest section kept a mandatory melody');
     else assert(music.hook.some((note, step) => step % 4 === 0 && note >= 0));
     assert(music.energy >= .14 && music.energy <= (genre === 'ambient' ? .3 : .7));
-    assert(hookInstruments(genre,runtime.GEN[genre]).includes(music.hookI));
+    assert(music.identity.hooks.includes(music.hookI));
   }
   assert(melodies.size>2&&compositions.size>10,`${genre}: stopped developing melody, bass and harmony while stationary`);
   assert(sections.size > 1, `${genre}: no section changes`);
@@ -91,10 +91,11 @@ try {
     runtime.MU.dnaT={...origin,key:`audio-test:${genre}`,genre,bpm:runtime.GEN[genre].bpm[0],track:{...origin.track,bassI:runtime.GEN[genre].bassI}};
     const start=runtime.ac.currentTime,previous=started,heard=new Set();
     runtime.recordInstrument=id=>heard.add(id);
-    for(let tick=1;tick<=2400;tick++){runtime.ac.currentTime=start+tick*.025;schedule();}
+    for(let tick=1;tick<=9600;tick++){runtime.ac.currentTime=start+tick*.025;schedule();}
+    // Cover a complete foundation/melody cycle, including slow, deliberate rests.
     assert(started>previous+20,`${genre}: no sustained audio while stationary`);
     assert(heard.size>0,`${genre}: no instruments scheduled`);
-    if(runtime.GEN[genre].bassP){assert(heard.has('kick'),`${genre}: groove has no kick`);assert(heard.has(runtime.GEN[genre].bassI));assert(hookInstruments(genre,runtime.GEN[genre]).some(id=>heard.has(id)));}
+    if(runtime.GEN[genre].bassP){assert(heard.has('kick'),`${genre}: groove has no kick`);assert(heard.has(runtime.MU.radio.identity.bassI)||runtime.GEN[genre].bassP.some(id=>heard.has(id)));assert(runtime.MU.radio.identity.hooks.some(id=>heard.has(id)),`${genre}: recipe hooks ${runtime.MU.radio.identity.hooks} not in ${[...heard]}; final ${JSON.stringify({section:runtime.MU.radio.section,phrase:runtime.MU.radio.phrase,rest:runtime.MU.radio.melodyRest,hook:runtime.MU.radio.hook,step:runtime.MU.step,vari:runtime.MU.vari})}`);}
     assert.equal(runtime.MU.radio.genre,genre);
   }
   const mixed=new Set();runtime.recordInstrument=id=>mixed.add(id);
@@ -102,7 +103,7 @@ try {
   runtime.MU.nb={...origin,key:'mix:neighbor',genre:'robotic',bpm:126,track:{...origin.track,bassI:'machine'}};runtime.MU.nbW=.5;
   for(let tick=0;tick<4800;tick++){runtime.ac.currentTime+=.025;schedule();}
   assert(mixed.has('rubber')&&mixed.has('machine'),'border failed to mix both bass voices');
-  assert(['steel','kalimba'].some(id=>mixed.has(id))&&['vocalform','metalkeys'].some(id=>mixed.has(id)),'border failed to mix both melodic palettes');
+  assert(runtime.MU.radio.identity.hooks.some(id=>mixed.has(id))&&runtime.MU.neighborRadio.identity.hooks.some(id=>mixed.has(id)),'border failed to mix both melodic palettes');
   assert.equal(runtime.MU.neighborRadio.key,'mix:neighbor');runtime.MU.nb=null;runtime.MU.nbW=0;
   runtime.S.softMusic=true;runtime.applyComfort();assert.equal(runtime.musicVolume(),.65);
   runtime.S.sound=false;runtime.applyComfort();assert.equal(runtime.musicVolume(),0);runtime.S.sound=true;runtime.S.softMusic=false;

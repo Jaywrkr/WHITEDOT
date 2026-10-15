@@ -1,5 +1,7 @@
+import {updateMind} from './living-mind.js';
 // Deliberately bounded individual motion: organisms remain attached to their original habitat.
 export function behavior(o,dt,clock,d,player,neighbors=[]){
+ if(o.mind){updateMind(o,dt,clock,d,player,neighbors);return;}
  const moving=['manta','deer','beetle','jelly','worm','moth','crab','blob','whale'].includes(o.kind);
  if(!moving)return;
  const shy=o.personality==='timida',curious=o.personality==='curiosa',amplitude=o.kind==='whale'?45:o.kind==='beetle'?12:26;
@@ -17,9 +19,9 @@ export function behavior(o,dt,clock,d,player,neighbors=[]){
  o.expression=player.speed<12?'legato':player.speed>100?'staccato':o.variant%2?'glide':'tremolo';
 }
 export function initialize(runtime){
- function tick(o,dt,clock,d){behavior(o,dt,clock,d,{x:runtime.S.wx,y:runtime.S.wy,speed:runtime.body?.speed||0},runtime.livingNear(350));}
+ function tick(o,dt,clock,d,neighbors){behavior(o,dt,clock,d,{x:runtime.S.wx,y:runtime.S.wy,speed:runtime.body?.speed||0},neighbors||runtime.livingNear(350));}
  function hear(kind,index,region,source,origin){if(origin!=='player')return;
-  for(const o of runtime.livingNear(240)){if(o.id===source?.id||!['moth','cactus','worm'].includes(o.kind))continue;o.phrase.push(((index%7)+7)%7);if(o.phrase.length>6)o.phrase.shift();o.energy=Math.min(1,o.energy+.1);}
+  for(const o of runtime.livingNear(240)){if(o.id===source?.id||!['moth','cactus','worm'].includes(o.kind))continue;o.stimulusAt=runtime.livingClock;o.phrase.push(((index%7)+7)%7);if(o.phrase.length>(o.mind?.memorySpan||6))o.phrase.shift();o.energy=Math.min(1,o.energy+.1);}
  }
  function link(o){if(!['vine','fungal-net'].includes(o.kind))return;const peer=runtime.livingNear(400).find(p=>p!==o&&p.group!=='architecture'&&Math.hypot(o.x-p.x,o.y-p.y)<180);if(!peer)return;o.links=[peer.id];peer.phrase=o.phrase.slice(-4);peer.energy=Math.max(peer.energy,.4);peer.lit=.4;}
  Object.defineProperties(runtime,{livingBehavior:{get:()=>tick},livingHear:{get:()=>hear},livingLink:{get:()=>link}});

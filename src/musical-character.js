@@ -29,21 +29,25 @@ for(const pool of Object.values(HOOKS))Object.freeze(pool);
 export function hookInstruments(genre,definition){return HOOKS[genre]||definition.hookP;}
 // Interaction palettes are separate from the radio: each object keeps its role and register.
 const INTERACTIONS={
- floor:{acorde:['organ','hollow','pad'],lead:['clav','plucked','hollow']},
- bass:{acorde:['pad','rhodes'],lead:['plucked','machine','rhodes']},
- warm:{acorde:['rhodes','strings','pad'],lead:['rhodes','plucked','reed']},
- organic:{acorde:['bowed','strings','pad'],lead:['reed','plucked','kalimba','steel']},
- melodic:{acorde:['strings','bowed','pad'],lead:['saw','plucked','strings','reed']},
- disco:{acorde:['rhodes','strings','organ'],lead:['clav','brass','plucked','strings']},
- calm:{acorde:['pad','bowed','strings'],lead:['bowed','plucked','hollow','flute']},
- machine:{acorde:['hollow','pad','strings'],lead:['machine','hollow','metalkeys','plucked']},
- broken:{acorde:['pad','rhodes','bowed'],lead:['membrane','metalkeys','plucked','reed']}
+ floor:{acorde:['organ','hollow','pad','orbitorgan'],lead:['clav','plucked','hollow','resonantpluck','phasekeys']},
+ bass:{acorde:['pad','rhodes','analogpad'],lead:['plucked','machine','rhodes','phasekeys','resonantpluck']},
+ warm:{acorde:['rhodes','strings','pad','analogpad','choir'],lead:['rhodes','plucked','reed','phasekeys','resonantpluck']},
+ organic:{acorde:['bowed','strings','pad','choir'],lead:['reed','plucked','kalimba','steel','resonantpluck','granularair']},
+ melodic:{acorde:['strings','bowed','pad','analogpad'],lead:['saw','plucked','strings','reed','fmglass','phasekeys']},
+ disco:{acorde:['rhodes','strings','organ','orbitorgan'],lead:['clav','brass','plucked','strings','phasekeys','orbitorgan']},
+ calm:{acorde:['pad','bowed','strings','analogpad','choir'],lead:['bowed','plucked','hollow','flute','granularair','choir']},
+ machine:{acorde:['hollow','pad','strings','analogpad'],lead:['machine','hollow','metalkeys','plucked','phasekeys','fmglass']},
+ broken:{acorde:['pad','rhodes','bowed','analogpad'],lead:['membrane','metalkeys','plucked','reed','phasekeys','granularair']}
 };
 for(const p of Object.values(INTERACTIONS)){Object.freeze(p.acorde);Object.freeze(p.lead);Object.freeze(p);}
 Object.freeze(INTERACTIONS);
 export function interactionInstruments(genre,definition,role){
  const profile=INTERACTIONS[GENRE_CHARACTERS[genre]||'warm'];
  return role==='acorde'?profile.acorde:[...new Set([...hookInstruments(genre,definition),...profile.lead])];
+}
+export function expressiveBassInstruments(genre,definition){
+ const native=definition.bassP||[definition.bassI];
+ return ['deep','dub','ambient','downtempo','organic','liquid','lofi'].includes(genre)?[...new Set([...native,'velvetbass'])]:native;
 }
 export function voiceRegister(voice,genre){
   if(voice.role==='bajo'||voice.role==='perc')return voice;

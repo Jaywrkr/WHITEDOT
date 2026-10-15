@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-1.1.0-geist';
+const CACHE='whitedot-1.1.0-m1-creative';
 const SHELL=[
  "./src/celebration-model.js",
  "./src/celebration-audio.js",
@@ -33,7 +33,6 @@ const SHELL=[
  "./styles/interface.css",
  "./styles/estilo-j.css",
  "./assets/fonts/fonts.css",
- "./assets/fonts/silkscreen.ttf",
  "./assets/fonts/GeistMono-Thin.ttf",
  "./assets/fonts/GeistMono-ExtraLight.ttf",
  "./assets/fonts/GeistMono-Light.ttf",
@@ -125,6 +124,11 @@ const SHELL=[
  "./src/content-contracts.js",
  "./src/pwa.js",
  "./src/radio.js",
+ "./src/musical-recipes.js",
+ "./src/living-mind.js",
+ "./src/living-populations.js",
+ "./src/synth-colors.js",
+ "./src/practice-travel.js",
  "./src/references.js",
  "./src/relics.js",
  "./src/render.js",
