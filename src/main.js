@@ -1,3 +1,4 @@
+import {initialize as collectionGarden} from './collection-garden.js';
 import {initialize as atlasPlay} from './atlas-play.js';
 import {initialize as labLearning} from './lab-learning.js';
 import {initialize as walkers} from './walker-forms.js';
@@ -156,7 +157,7 @@ encounterDepth(runtime);worldMemory(runtime);
 ecology(runtime);
 saveTools(runtime);
 accessibility(runtime);
-rareCards(runtime);atlasPlay(runtime);
+rareCards(runtime);atlasPlay(runtime);collectionGarden(runtime);
 voiceGuide(runtime);
 livingSynthesis(runtime);living(runtime);livingBehavior(runtime);livingComposition(runtime);livingEcology(runtime);livingTerrain(runtime);livingBuildings(runtime);livingDiscoveries(runtime);connection(runtime);
 
