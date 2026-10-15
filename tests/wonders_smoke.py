@@ -43,7 +43,7 @@ with sync_playwright() as p:
   page.wait_for_timeout(500);page.screenshot(path=f'/tmp/whitedot-river-{label}.png')
   # Mapa con estrellas de rarezas y Estudio con la muestra única.
   page.locator('#bMenu').click();page.locator('#bMap').click();assert 'rarezas' in page.locator('#mapNote').inner_text();page.locator('#mapClose').click()
-  page.locator('#bMenu').click();page.locator('#bStudio').click();assert page.locator('#bag button[data-s="canon"]').count()==1 and page.locator('#bag button[data-s="luna"]').count()==0
+  page.locator('#bMenu').click();page.locator('#bStudio').click();page.locator('#houseWorkshop').click();assert page.locator('#bag button[data-s="canon"]').count()==1 and page.locator('#bag button[data-s="luna"]').count()==0
   page.locator('#stExit').click()
   assert not errors,errors
   print(label+': rumors, canon rule and unique sample, inverted gravity, river energy and notes, map and studio PASS',flush=True);c.close()

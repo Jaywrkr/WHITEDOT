@@ -17,7 +17,7 @@ export function initialize(runtime) {
     runtime.elementBookUI?.();
     const fill=$("barfill"),goal=$("goal"),gr=$("goalR");
     $("bDeploy").hidden=!runtime.inWorld();
-    if(runtime.S.mode==="studio"){const n=Object.keys(runtime.S.studio.slots).length;$("era").textContent="Estudio · "+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/64*100)+"%";goal.textContent="Estudio · "+n+" sonando";gr.textContent="Toca un punto";}
+    if(runtime.S.mode==="studio"){const house=runtime.houseActive?.(),n=house?runtime.currentHouse().objects.length:Object.keys(runtime.S.studio.slots).length;$("era").textContent=house?"Casa":"Taller · "+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/(house?40:64)*100)+"%";goal.textContent=(house?"Casa · ":"Taller · ")+n+" sonando";gr.textContent=house?"Camina. Coloca. Escucha.":"Toca un punto";}
     else if(runtime.inWorld()){const l=runtime.lampLeft();fill.style.width=(l/runtime.lampMax()*100)+"%";
       goal.textContent=dist?"Eco cercano · escucha y pulsa":"Lugares "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
       gr.textContent=runtime.S.relaxedCreate?"Crear ∞":fmt(l);}
@@ -29,7 +29,7 @@ export function initialize(runtime) {
   let phT;function showPhrase(t,big){const p=$("phrase");p.textContent=t;p.classList.toggle("big",!!big);p.classList.add("on");clearTimeout(phT);phT=setTimeout(()=>p.classList.remove("on"),big?5000:3200);}
   let toastQ=[],toasting=false;
   function toast(html){if(toastQ.at(-1)===html)return;if(toastQ.length>=4)toastQ.shift();toastQ.push(html);nextToast();}
-  function unlock(id){if(runtime.S.ach[id])return;const prev=new Set(runtime.COLORS.filter(runtime.colorOk).map(c=>c[0]));runtime.S.ach[id]=runtime.S.todayKey;const a=runtime.ACH.find(x=>x[0]===id);runtime.say(runtime.VOZ[id]||"Bien. Sigue.","Logro · "+a[1]);
+  function unlock(id){if(runtime.S.ach[id]||runtime.achievementRetired?.(id))return;const prev=new Set(runtime.COLORS.filter(runtime.colorOk).map(c=>c[0]));runtime.S.ach[id]=runtime.S.todayKey;const a=runtime.ACH.find(x=>x[0]===id);runtime.say(runtime.VOZ[id]||"Bien. Sigue.","Logro · "+a[1]);
     runtime.COLORS.forEach(c=>{if(runtime.colorOk(c)&&!prev.has(c[0]))toast("<em>Color nuevo</em> · "+c[1]+" · Menú → Tu cubo o Estudio");});runtime.save();}
   function nextToast(){if(toasting||!toastQ.length)return;toasting=true;const el=$("toast");el.innerHTML=toastQ.shift();el.classList.add("on");setTimeout(()=>{el.classList.remove("on");setTimeout(()=>{toasting=false;nextToast();},350);},2200);}
 

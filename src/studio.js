@@ -39,6 +39,7 @@ export function initialize(runtime) {
   const geo=()=>{const m=Math.min(runtime.W,runtime.H-260);return{X:runtime.W/2,Y:runtime.H/2,base:m*.13,gap:m*.095};};
   function visStep(){if(!runtime.ac)return -1;const n=runtime.ac.currentTime;let s=-1;for(const q of runtime.MU.sq)if(q.t<=n)s=q.s;return s;}
   function studioStep(t,dt,b){
+    if(runtime.houseActive?.())return runtime.houseStep(t,dt,b);
     runtime.camX=0;runtime.camY=0;
     const {X,Y,base,gap}=geo(),col=runtime.S.color,cur=visStep(),ms=performance.now();
     runtime.cx.strokeStyle=col;runtime.cx.lineWidth=1;
@@ -55,6 +56,7 @@ export function initialize(runtime) {
     return 10;
   }
   function studioTap(px,py){
+    if(runtime.houseActive?.())return runtime.houseTap(px,py);
     const {X,Y,base,gap}=geo(),dx=px-X,dy=py-Y,d=Math.hypot(dx,dy),r=Math.round((d-base)/gap);
     if(r<0||r>3||Math.abs(d-(base+gap*r))>gap*.5)return;
     let a=Math.atan2(dy,dx)+Math.PI/2;if(a<0)a+=6.283;

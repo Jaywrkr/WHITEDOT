@@ -15,8 +15,8 @@ export const LIVING_STUDIES=Object.freeze([
 ]);
 export function studyOf(o){return LIVING_STUDIES[(o.studyVariant??o.variant)%LIVING_STUDIES.length];}
 export const JAY_STORY=[
- {id:'atencion',need:1,text:'Tu primer instrumento fue la atención. El Camino te trae hasta aquí; ahora el lugar responde.'},
- {id:'gesto',need:4,text:'Crear no necesita llenar el vacío. Un gesto, una respuesta y espacio para escuchar.'},
- {id:'constancia',need:8,text:'Jay dejó una pregunta en estos lugares: ¿qué cambia cuando volvemos? La constancia encuentra detalles que la prisa no oye.'},
- {id:'compartir',need:16,text:'Una voz puede iniciar una canción. Otra puede dejarle espacio. Crear juntos también es escuchar.'}
+ {id:'atencion',need:1,text:'Tu primer instrumento es la atención. El lugar responde.'},
+ {id:'gesto',need:4,text:'Un gesto, una respuesta y espacio para escuchar.'},
+ {id:'constancia',need:8,text:'Jay pregunta: ¿qué cambia cuando volvemos? La constancia encuentra nuevas voces.'},
+ {id:'compartir',need:16,text:'Crear juntos también es escuchar. Deja espacio para otra voz.'}
 ];

@@ -75,8 +75,8 @@
   <button class="ico round" id="bMenu" aria-label="Menú"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
 </div>
 <div class="modal lite" id="mCube" role="dialog" aria-modal="true" aria-labelledby="cubeTitle" hidden><div class="sheet cube-sheet">
- <h2 id="cubeTitle">Tu cubo</h2><div id="cubePreview" class="cube-preview" aria-label="Vista previa del cubo"><i></i></div>
- <div><p>Color</p><div id="cubeColors" class="cube-options"></div></div><div><p>Estela</p><div id="cubeTrails" class="cube-options"></div></div><div><p>Halo</p><div id="cubeHalos" class="cube-options"></div></div>
+ <h2 id="cubeTitle">Tu cubo</h2><div id="cubePreview" class="cube-preview" role="img" aria-label="Vista previa de tu cubo"><canvas id="cubePreviewCanvas" aria-hidden="true"></canvas><i></i></div>
+ <p id="cubeCount"></p><p id="cubeHint" role="status"></p><div><p>Material</p><div id="cubeMaterials" class="cube-options"></div></div><div><p>Borde</p><div id="cubeForms" class="cube-options"></div></div><div><p>Aura</p><div id="cubeAuras" class="cube-options"></div></div><div><p>Voz del pulso</p><div id="cubeVoices" class="cube-options"></div></div><div><p>Color</p><div id="cubeColors" class="cube-options"></div></div><div><p>Estela</p><div id="cubeTrails" class="cube-options"></div></div><div><p>Halo</p><div id="cubeHalos" class="cube-options"></div></div>
  <p>El blanco siempre está contigo. Los demás detalles se descubren jugando.</p><button id="cubeClose">Volver</button>
 </div></div>
 <section class="fxpanel" id="fxPanel" aria-label="Mesa de efectos" hidden>
@@ -91,7 +91,7 @@
 <aside class="routehud" id="autopilotHud" aria-label="Paseo musical" hidden><div><strong id="autoStatus">Paseo musical</strong><small>Mueve el punto para recuperar el control</small></div><button id="autoStop" aria-label="Detener paseo">■</button></aside>
 <div class="zone" id="zone" aria-live="polite"><small id="zMood"></small><b id="zName"></b><span id="zDo"></span></div>
 
-<div class="modal" id="mSeeds" hidden><div class="sheet"><h2>Semillas de prueba</h2><p>Compara mundos completos desde su centro. Tu partida habitual queda separada.</p><p id="seedInfo"></p><label for="seedGeneration">Paisaje</label><select id="seedGeneration"><option value="2">Paisajes vivos · explorar</option><option value="1">Original · volver y comparar</option></select><label for="seedLayout">Espacio</label><select id="seedLayout"><option value="immense">Inmenso · regiones de 100.800</option><option value="grand">Gran territorio · regiones de 50.400</option><option value="vasto">Vasto · regiones de 18.000</option><option value="wide">Amplio · más espacio</option><option value="classic">Clásico · comparar</option></select><form id="seedForm" class="row"><label for="seedValue">Semilla</label><input id="seedValue" maxlength="40" autocomplete="off"><button type="submit">Probar</button></form><div class="row" id="seedPresets"><button data-seed="blobs-01">Blobs I</button><button data-seed="blobs-02">Blobs II</button><button data-seed="bosque-01">Otra tierra</button><button data-seed="humedal-01">Humedal</button><button data-seed="salinas-01">Salinas</button><button data-seed="basalto-01">Basalto</button><button data-seed="micelio-01">Micelio</button></div><div class="row"><button id="seedNext">Otra semilla</button><button id="seedCenter">Volver al centro</button><button id="seedOriginal">Mi partida</button><button id="seedClose">Cerrar</button></div></div></div>
+<div class="modal" id="mSeeds" hidden><div class="sheet"><h2>Semillas de prueba</h2><p id="seedSummary">Tu progreso de cada semilla se conserva.</p><p id="seedInfo"></p><label for="seedGeneration">Paisaje</label><select id="seedGeneration"><option value="2">Paisajes vivos · explorar</option><option value="1">Original · volver y comparar</option></select><label for="seedLayout">Espacio</label><select id="seedLayout"><option value="immense">Inmenso · regiones de 100.800</option><option value="grand">Gran territorio · regiones de 50.400</option><option value="vasto">Vasto · regiones de 18.000</option><option value="wide">Amplio · más espacio</option><option value="classic">Clásico · comparar</option></select><form id="seedForm" class="row"><label for="seedValue">Semilla</label><input id="seedValue" maxlength="40" autocomplete="off"><button type="submit">Probar</button></form><div class="row" id="seedPresets"><button data-seed="blobs-01">Blobs I</button><button data-seed="blobs-02">Blobs II</button><button data-seed="bosque-01">Otra tierra</button><button data-seed="humedal-01">Humedal</button><button data-seed="salinas-01">Salinas</button><button data-seed="basalto-01">Basalto</button><button data-seed="micelio-01">Micelio</button></div><div class="row"><button id="seedNext">Otra semilla</button><button id="seedCenter">Volver al centro</button><button id="seedOriginal">Mi partida</button><button id="seedClose">Cerrar</button></div></div></div>
 <div class="modal" id="mSaveTools" hidden><div class="sheet"><h2>Guardar copia</h2><p>Tu progreso y tus lugares, en un archivo. Guárdalo.</p><p id="saveStatus" role="status"></p><div class="row"><button id="saveExport">Exportar esta partida</button><button id="saveOriginal" hidden>Exportar original conservado</button><button id="saveRecover" hidden>Recuperar copia válida</button></div><label for="saveImportFile">Elegir copia de esta partida</label><input id="saveImportFile" type="file" accept="application/json,.json"><p>Restaurar reemplaza esta partida. Antes se guarda una copia.</p><div class="row"><button id="saveImportApply" disabled>Restaurar copia elegida</button><button id="saveToolsClose">Cerrar</button></div></div></div>
 <div class="modal menu" id="mMenu" hidden>
   <div class="sheet menu-sheet">
@@ -99,32 +99,26 @@
     <div class="menu-sections">
     <section class="menu-group primary"><h3>Jugar</h3><div class="tiles">
       <button id="bWorld"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/></svg><span>Mundo</span></button>
-      <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Estudio</span></button>
+      <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Casa</span></button>
       <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
       <button id="bMap"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mapa</span></button>
       <button id="bFavorites"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Favoritos</span></button>
       <button id="bCube"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/><path d="M3 3h3M18 21h3"/></svg><span>Tu cubo</span></button>
     </div></section>
-    <section class="menu-group"><h3>Música</h3><div class="tiles">
+    <section class="menu-group"><h3>Crear</h3><div class="tiles">
       <button id="bTools" aria-expanded="false" title="Efectos, eco de 2 compases y desplegar Estudio" hidden><svg viewBox="0 0 24 24"><path d="M6 4v16M12 4v16M18 4v16M4 9h4M10 15h4M16 7h4"/></svg><span>Herramientas</span></button>
-      <button id="bMusicSettings"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h14M9 3v6M15 9v6M11 15v6"/></svg><span>Energía</span></button>
-      <button id="bSound"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg><span>Música</span></button>
-      <button id="bSoft" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 5v14M16 7v10M20 10v4"/></svg><span>Calma</span></button>
-      <button id="bAutoPins" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 8v8M8 12h8"/></svg><span>Repetir: no</span></button>
-      <button id="bCreateMode" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg><span>Modo: explorar</span></button>
       <button id="bRecord"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="9"/></svg><span>Grabar set</span></button>
     </div></section>
+    <section class="menu-group"><h3>Sonido</h3><div class="tiles"><button id="bMusicSettings"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h14M9 3v6M15 9v6M11 15v6"/></svg><span>Sonido</span></button></div></section>
     <section class="menu-group"><h3>Más</h3><div class="tiles">
-      <button id="bWorlds"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c5 4 5 12 0 16M12 4c-5 4-5 12 0 16"/></svg><span>Otros mundos</span></button>
-      <button id="bJumpBack" hidden><span>Volver al salto</span></button>
-      <button id="bSky"><svg viewBox="0 0 24 24"><path d="M5 17l5-6 4 3 5-8"/><circle cx="5" cy="17" r="1.5"/><circle cx="10" cy="11" r="1.5"/><circle cx="14" cy="14" r="1.5"/><circle cx="19" cy="6" r="1.5"/></svg><span>Constelación</span></button>
-      <button id="bSession"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>Sesión</span></button>
+      <button id="bWorlds"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c5 4 5 12 0 16M12 4c-5 4-5 12 0 16"/></svg><span>Viajar a otra semilla</span></button>
       <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
+      <button id="bJumpBack" hidden><span>Volver al salto</span></button>
+      <button id="bSettings"><span>Ajustes</span></button>
       <button id="bConnection"><span>Cuenta y duetos</span></button>
-      <button id="bDetails" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v1M12 11v6"/></svg><span>Más info</span></button>
       <button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Guardar copia</span></button>
       <button id="pwaUpdate" hidden><span>Actualizar versión disponible</span></button>
-    </div><div class="menu-prefs"><label for="autoIntent">Paseo automático</label><select id="autoIntent"><option value="paisaje">Paisaje y descanso</option><option value="vida">Vida y relaciones</option><option value="hallazgos">Encuentros y hallazgos</option><option value="afinidad">Afinidad entre favoritos</option><option value="contraste">Contraste entre favoritos</option></select><label for="voiceMode">La Voz</label><select id="voiceMode"><option value="discreta">Discreta</option><option value="guia">Guía de gestos</option><option value="poetica">Poética</option></select></div></section>
+    </div></section>
     </div>
     <details class="devbox"><summary>Prototipo</summary><div class="row">
       <button id="dFill">Completar día</button>
@@ -234,13 +228,12 @@
 <div class="modal" id="mJournal" role="dialog" aria-modal="true" aria-labelledby="journalTitle" hidden>
   <div class="sheet">
     <h2 id="journalTitle">Bitácora</h2>
-    <div class="journal-tabs" aria-label="Secciones de la Bitácora">
-      <button data-journal-tab="places">Lugares</button><button data-journal-tab="forms">Formas</button>
-      <button data-journal-tab="rares">Hallazgos</button><button data-journal-tab="elements">Elementos</button><button data-journal-tab="music">Música</button><button data-journal-tab="achievements">Logros</button>
-    </div>
+    <div class="journal-tabs" aria-label="Secciones de la Bitácora"><button data-journal-tab="today">Hoy</button><button data-journal-tab="collection">Colección</button><button data-journal-tab="places">Lugares</button><button data-journal-tab="music">Música</button><button data-journal-tab="achievements">Logros</button></div>
+    <div id="journalFilters" hidden><input id="journalSearch" type="search" placeholder="Busca una pieza" aria-label="Buscar colección"><select id="journalGroup" aria-label="Tipo de colección"><option value="todo">Todo</option><option value="cubo">Cubo</option><option value="casa">Casa</option><option value="elementos">109 elementos</option><option value="linajes">28 linajes</option><option value="tarjetas">Tarjetas</option><option value="formas">Formas</option></select><select id="journalOwnership" aria-label="Piezas ganadas o pendientes"><option value="todo">Todo</option><option value="ganado">Ganado</option><option value="pendiente">Pendiente</option></select></div>
+    <button id="sessionShare">Compartir sesión</button><button id="journalNext">Lo próximo</button><button id="journalMore" hidden>Ver más</button>
     <div class="scroll" id="journalBody" aria-live="polite"></div>
     <label id="rareCodeFallback" hidden>Código del hallazgo · selecciónalo y copia<textarea id="rarePlaceCode" readonly aria-label="Código de lugar del hallazgo"></textarea></label>
-    <button id="journalClose">Cerrar</button>
+    <button id="bSky"><svg viewBox="0 0 24 24"><path d="M5 17l5-6 4 3 5-8"/><circle cx="5" cy="17" r="1.5"/><circle cx="10" cy="11" r="1.5"/><circle cx="14" cy="14" r="1.5"/><circle cx="19" cy="6" r="1.5"/></svg><span>Constelación</span></button><button id="bSession"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>Sesión</span></button><button id="journalClose">Cerrar</button>
   </div>
 </div>
 
@@ -254,12 +247,15 @@
 
 <div class="modal lite" id="mMusic" hidden>
   <div class="sheet">
-    <h2 id="musicTitle">Energía</h2>
+    <h2 id="musicTitle">Sonido</h2>
+    <label for="rVolume">Volumen</label><input type="range" id="rVolume" min="0" max="100" value="100">
+    <label for="rStyle">Energía</label>
     <div class="style-now" id="styleNow">Minimal</div>
     <p>Quieto: calma. En movimiento: ritmo. Esto marca hasta dónde llega.</p>
     <input type="range" id="rStyle" min="0" max="100" value="30" aria-label="Estilo de la música">
     <div class="ends"><span>Ambiente</span><span>Underground</span></div>
-    <div class="row"><button id="muClose" class="gold">Listo</button><button id="muMute">Silenciar</button></div>
+    <div class="tiles"><button id="bSound"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg><span>Música</span></button><button id="bSoft" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 5v14M16 7v10M20 10v4"/></svg><span>Calma</span></button><button id="bAutoPins" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 8v8M8 12h8"/></svg><span>Repetir: no</span></button></div>
+    <div class="row"><button id="muClose" class="gold">Listo</button><button id="muMute" hidden>Silenciar</button></div>
   </div>
 </div>
 
@@ -267,7 +263,7 @@
   <div class="sheet">
     <h2>Tu sesión</h2>
     <div class="scroll" id="sessionBody" aria-live="polite"></div>
-    <div class="row"><button id="sessionShare">Compartir sesión</button><button id="sessionClose">Cerrar</button></div>
+    <div class="row"><button id="sessionClose">Cerrar</button></div>
   </div>
 </div>
 
@@ -325,5 +321,10 @@
 <div class="modal" id="mConnection" hidden><div class="sheet"><h2>Cuenta y duetos</h2><p id="accountState"></p><p id="connectionStatus" role="status"></p><form id="accountForm"><label for="accountName">Nombre de cuenta</label><input id="accountName" autocomplete="username" minlength="3" maxlength="32" pattern="[A-Za-z0-9_-]{3,32}" required><label for="accountPassword">Clave · al menos 12 caracteres</label><input id="accountPassword" type="password" autocomplete="current-password" minlength="12" maxlength="128" required><div class="row"><button type="submit">Entrar</button><button id="accountRegister" type="button">Crear cuenta</button><button id="accountGuest" type="button">Invitado</button><button id="accountLogout" type="button">Salir de cuenta</button></div></form><h3>Tu copia</h3><p>La copia local sigue disponible. Recuperar conserva el estado anterior como respaldo; una copia remota diferente se valida antes de reemplazar.</p><div class="row"><button id="cloudPush">Subir copia</button><button id="cloudPull">Recuperar copia</button><button id="cloudDownload">Descargar respaldo remoto</button></div><h3>Dos voces</h3><p id="roomStatus"></p><p>Unirte te sitúa junto al anfitrión. Comparte el código con una persona; cada voz tiene su espacio musical. La sala cubre un entorno local y termina si queda vacía.</p><label for="roomCode">Código de invitación</label><input id="roomCode" maxlength="12" autocomplete="off"><div class="row"><button id="roomCreate">Crear sala</button><button id="roomJoin">Unirme</button><button id="roomLeave">Salir de sala</button></div><button id="connectionClose">Volver al mundo</button></div></div>
 <script type="module" src="./src/main.js"></script>
 
+
+<div class="modal" id="mSettings" hidden><div class="sheet"><h2>Ajustes</h2><div class="menu-prefs"><label for="autoIntent">Paseo automático</label><select id="autoIntent"><option value="paisaje">Paisaje y descanso</option><option value="vida">Vida y relaciones</option><option value="hallazgos">Encuentros y hallazgos</option><option value="afinidad">Afinidad entre favoritos</option><option value="contraste">Contraste entre favoritos</option></select><label for="voiceMode">La Voz</label><select id="voiceMode"><option value="discreta">Discreta</option><option value="guia">Guía de gestos</option><option value="poetica">Poética</option></select></div><div class="tiles"><button id="bCreateMode" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg><span>Modo: explorar</span></button><button id="bDetails" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v1M12 11v6"/></svg><span>Más info</span></button></div><div class="row"><button id="settingsClose">Volver</button></div></div></div>
+
+<div id="housePanel" class="house-panel" hidden><span id="houseCount"></span><label for="houseObjects">Objeto</label><select id="houseObjects"></select><p id="houseHint"></p><div class="row"><button id="houseWalk">Camina</button><button id="housePlace">Coloca</button><button id="houseErase">Retira</button><button id="houseWorkshop">Taller</button><button id="houseShare">Código</button><button id="houseExit">Volver</button></div></div>
+<div class="modal" id="mHouseCode" hidden><div class="sheet"><h2>Comparte tu casa</h2><p>Visita con un código. Tu colección sigue contigo.</p><textarea id="houseCode" aria-label="Código de casa" maxlength="16000"></textarea><p id="houseCodeInfo"></p><div class="row"><button id="houseVisit">Visita</button><button id="houseCodeClose">Volver</button></div></div></div>
 </body>
 </html>

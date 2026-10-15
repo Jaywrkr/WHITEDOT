@@ -1,6 +1,18 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-1.1.0-cierre-f8';
+const CACHE='whitedot-1.1.0-cierre-f9';
 const SHELL=[
+ "./src/cube-art.js",
+ "./src/cube-voice.js",
+ "./src/wardrobe-model.js",
+ "./src/achievement-metadata.js",
+ "./src/album-art.js",
+ "./src/journal-model.js",
+ "./src/achievements-model.js",
+ "./src/achievements.js",
+ "./src/house.js",
+ "./src/house-model.js",
+ "./src/house-audio.js",
+
  "./src/musical-hybrids.js",
  "./src/modular-synth.js",
  "./src/modular-routing.js",

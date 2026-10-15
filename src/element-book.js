@@ -6,6 +6,7 @@ export function initialize(runtime){
  function ui(){const n=Object.keys(ensure().found).length,e=runtime.$('elementCount');e.textContent=`Elementos ${n}/${DISCOVERY_ELEMENTS.length}`;e.title=`${n} familias descubiertas de ${DISCOVERY_ELEMENTS.length}; los ejemplares repetidos no suman.`;}
  function record(kind,region){
   if(typeof kind!=='string'||!runtime.inWorld()||document.hidden||runtime.scanning||document.querySelector('.modal:not([hidden])'))return false;
+  if(runtime.realTravel&&runtime.S.lastDay!==runtime.S.todayKey)runtime.onFirstLight();
   const id=elementFamily(kind,kind.startsWith('forma:')&&runtime.blobHabitat?.(region));if(!discoveryElement(id))return false;
   const b=ensure();if(b.found[id])return false;
   b.found[id]={day:runtime.S.todayKey||'',genre:region?.genre||''};ui();

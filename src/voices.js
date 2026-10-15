@@ -1,3 +1,4 @@
+import {cubePulseVoice} from './cube-voice.js';
 import {heritageVoice,relicVoice} from './heritage.js';
 import {playMaterialStrike} from './percussion-material.js';
 import {livingVoice} from './living-catalog.js';
@@ -77,6 +78,7 @@ export function initialize(runtime) {
       const role=source.labSynth==='velvetbass'?'bajo':['analogpad','choir','orbitorgan'].includes(source.labSynth)?'acorde':'lead';
       raw={...raw,role,instrument:source.labSynth,low:role==='bajo'?36:45,high:role==='bajo'?54:69};
     }
+    if(kind==='pulso')raw=cubePulseVoice(raw,runtime.S.cube?.voice);
     return hybridRegister(voiceRegister(raw,region.genre),hybridIdentity(region,runtime.seedOf,runtime.rng));
   }
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
@@ -103,7 +105,7 @@ export function initialize(runtime) {
     function hit(t, degree, strength) {
       if(origin==='player')runtime.focusGesture?.(t,source,voice.role);
       runtime.soundCue?.(source,voice.role,t);
-      const n = note(degree);let v = runtime.vel(strength * volume)*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
+      const n = note(degree);let v = runtime.vel(strength * volume*(voice.volume??1))*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
       const emit=()=>{
         if(kind.startsWith('living:')&&runtime.livingSynthesis?.(voice,n,t,v,source))return;
         if(kind.startsWith('rhythm:')&&playMaterialStrike(runtime,kind.split(':')[1],source?.variant||0,t,v)){runtime.recordInstrument?.(voice.instrument);return;}

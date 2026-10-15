@@ -1,5 +1,14 @@
 # Probar el universo vivo
 
+## Novedad F9 · Cubo, Bitácora, logros y casa unidos
+
+1. Menú → Tu cubo: inspecciona piezas, elige las ganadas y vuelve al Mundo.
+2. Abre Bitácora: busca en Colección, revisa cruces, favoritos y Logros.
+3. Menú → Sonido: cambia volumen sin generar notas nuevas.
+4. Entra en Casa. Coloca Pulso de casa en el plano y camina cerca.
+5. Código comparte una visita; Taller abre tu secuenciador anterior. Recarga y verifica lo guardado.
+6. Prueba vertical y horizontal; compara un viaje a otra semilla y su regreso.
+
 ## Novedad F8 · Memoria de instrumentos y encuentros
 
 1. Une dos anclas de una red; sal del lugar y recarga. Vuelve: conserva los hilos.

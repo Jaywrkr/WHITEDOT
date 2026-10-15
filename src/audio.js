@@ -37,7 +37,7 @@ export function initialize(runtime) {
   const LOUD=5.6;   // ganancia de compensación en modo normal: fuerte pero limpio (6.8 saturaba)
   let ac=null,fx=null,master,mfilt,punch,presence,makeup,limiter,clipper,comfortShelf,comfortLowpass,subsonic,headroom,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
   const voiceCurator=createVoiceCurator();
-  const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:1):0;
+  const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:1)*(Number.isFinite(runtime.S.outputVolume)?Math.max(0,Math.min(1,runtime.S.outputVolume)):1):0;
   function applyComfort(time=ac?.currentTime||0){
     if(!ac)return;
     const soft=!!runtime.S.softMusic;
@@ -255,7 +255,7 @@ export function initialize(runtime) {
       };if(runtime.withAccompaniment)runtime.withAccompaniment(accompany);else accompany();
     }
     // tu Estudio: cada pieza suena en su paso
-    if(runtime.S.mode==="studio"){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);runtime.studioHit[key]=performance.now()+(t-ac.currentTime)*1000;}}}
+    runtime.houseMusicStep?.(s,t);if(runtime.S.mode==="studio"&&!runtime.houseActive?.()){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);runtime.studioHit[key]=performance.now()+(t-ac.currentTime)*1000;}}}
     // faros: instrumentos que encendiste
     if(runtime.inWorld()&&(runtime.S.layer||"superficie")==="superficie"){
       if(MU.layers.has(0)&&s%2===0)runtime.playVoice('faro',0,t+jit(),MU.dnaA,false,.4);

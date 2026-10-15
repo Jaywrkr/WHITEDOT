@@ -14,7 +14,7 @@ Orden acordado con Jay después de M1. Consolida los planes anteriores: no son d
 | 6 · Interacciones que hacen música | `feat/cierre-f6-interacciones` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 7 · Exploración y hallazgos con sentido | `feat/cierre-f7-hallazgos` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 8 · Memoria, regreso y vínculos | `feat/cierre-f8-memoria` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 9 · Juego, interfaz e historia unidos | `feat/cierre-f9-juego` | Pendiente |
+| 9 · Juego, interfaz e historia unidos | `feat/cierre-f9-juego` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 10 · Mezcla, auditoría y lanzamiento | `feat/cierre-f10-lanzamiento` | Pendiente |
 
 F1 sale de `main 6702093`, que integra M1. La siguiente parte de F1 si aún no tiene merge. Si main ya la contiene, comprobar ascendencia y partir de main actualizado. No reescribir ramas publicadas ni hacer merges sin instrucción de Jay. Conservar commits de los padres al integrar ramas dependientes reduce conflictos; cambios paralelos o squash/rebase pueden exigir resolverlos. No prometer ausencia absoluta de conflictos.

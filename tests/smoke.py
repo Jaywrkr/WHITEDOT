@@ -29,9 +29,9 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('#bAch').click()
   assert page.locator('#mJournal').is_visible()
   assert 'Gravedad' in page.locator('#journalBody').inner_text()
-  page.locator('[data-journal-tab="forms"]').click()
+  page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('formas')
   page.evaluate('''()=>{const r=window.__testRuntime;r.discover(r.regionOfPos(900,900).species[0]);}''')
-  page.locator('[data-journal-tab="places"]').click();page.locator('[data-journal-tab="forms"]').click()
+  page.locator('[data-journal-tab="places"]').click();page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('formas')
   assert 'Sin formas descubiertas' not in page.locator('#journalBody').inner_text()
   page.locator('[data-journal-tab="music"]').click();assert 'Instrumentos' in page.locator('#journalBody').inner_text()
   assert page.evaluate('Object.keys(window.__testRuntime.S.journal.music.instruments).length > 0')
@@ -60,22 +60,22 @@ with sync_playwright() as p:
   page.evaluate('''()=>{const r=window.__testRuntime,oldX=r.S.wx,oldY=r.S.wy,c=r.wchunk(Math.floor(r.S.wx/900),Math.floor(r.S.wy/900));for(const p of c.pockets){r.S.wx=p.x;r.S.wy=p.y;r.frame.l=1000;r.frame(1050);r.hud();if(r.currentPocket()?.kind!==p.kind)throw Error('Pocket not recognized');if(p.kind==='quiet'&&r.MU.near.length)throw Error('Listening center has automatic object ensemble');}r.S.wx=oldX;r.S.wy=oldY;r.frame.l=performance.now();}''')
   page.evaluate('''async()=>{const r=window.__testRuntime,{relicAt}=await import('/src/relics.js');let site;for(let x=2;x<100&&!site;x++)for(let y=2;y<100&&!site;y++){const q=relicAt(x,y,r.WCH,r.seedOf,r.rng);if(q?.magical)site=q;}if(!site)throw Error('No magical site');window.__relicRestore={x:r.S.wx,y:r.S.wy,stars:r.S.stars.slice(),sites:structuredClone(r.S.relicSites||{})};r.S.wx=site.x;r.S.wy=site.y;r.frame.l=performance.now();r.frame(performance.now()+16);if(r.S.stars.length!==window.__relicRestore.stars.length)throw Error('Relic collected by contact');r.pulseRelics();r.pulseRelics();r.pulseRelics();r.pulseRelics();r.pulseRelics();if(r.S.stars.length!==window.__relicRestore.stars.length)throw Error('Relic collected without listening');for(let i=0;i<250;i++)r.visitRelic(site,.05);if(r.S.stars.length!==window.__relicRestore.stars.length+1||!r.S.stars.at(-1).magical)throw Error('Magical awakening failed');r.takeRelic({...site});if(r.S.stars.length!==window.__relicRestore.stars.length+1)throw Error('Repeated reward');if(r.nearbyRelics().some(q=>q.id===site.id))throw Error('Claimed site remains');r.S.wx=window.__relicRestore.x;r.S.wy=window.__relicRestore.y;r.S.stars=window.__relicRestore.stars;r.S.relicSites=window.__relicRestore.sites;r.clearRelicProgress();r.frame.l=performance.now();r.save();}''')
   page.evaluate('''()=>{const r=window.__testRuntime,region=r.regionOfPos(r.S.wx,r.S.wy),bus=r.bus,verb=r.verbIn,send=r.dsend;const names=new Set();for(let i=0;i<100;i++){const kind='effect-probe:'+i,p=r.getEffectProfile(kind,region,{role:'lead'});if(names.has(p.type)||p.type==='dry')continue;names.add(p.type);r.withVoiceEffect(kind,region,{role:'lead'},r.ac.currentTime+.05,()=>r.hookInst('keys',60,r.ac.currentTime+.05,.02));if(r.bus!==bus||r.verbIn!==verb||r.dsend!==send)throw Error('Effect routing leaked');}if(names.size!==4||r.activeEffectCount>12)throw Error('Effects unavailable or unbounded');}''')
-  page.locator('#bMenu').click();page.locator('#bSession').click();assert page.locator('#mSession').is_visible()
-  assert 'Sesión en curso' in page.locator('#sessionBody').inner_text()
+  page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-tab="today"]').click();assert page.locator('#mJournal').is_visible()
+  assert 'Sesión en curso' in page.locator('#journalBody').inner_text()
   elapsed=page.evaluate('window.__testRuntime.S.session.seconds');page.wait_for_timeout(250);assert page.evaluate('window.__testRuntime.S.session.seconds')==elapsed
   page.screenshot(path='/tmp/whitedot-session-'+label+'.png')
   page.locator('#sessionShare').click();assert page.locator('#mShare').is_visible()
   page.wait_for_function('document.getElementById("shareImg").naturalWidth === 1080 && document.getElementById("shareImg").naturalHeight === 1350')
   page.locator('#sClose').click();page.locator('#bMenu').click();page.locator('#bWorld').click()
   assert page.evaluate('window.__testRuntime.S.session===null && window.__testRuntime.S.lastSession!==null')
-  page.locator('#bMenu').click();page.locator('#bSession').click();assert 'Última sesión' in page.locator('#sessionBody').inner_text();page.locator('#sessionClose').click();page.locator('#bMenu').click();page.locator('#bWorld').click()
+  page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-tab="today"]').click();assert 'Última sesión' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click();page.locator('#bMenu').click();page.locator('#bWorld').click()
   page.evaluate('''async()=>{const r=window.__testRuntime,{INSTRUMENT_SPECS}=await import('/src/instruments.js');for(const id of Object.keys(INSTRUMENT_SPECS)){const t=r.ac.currentTime+.05;r.hookInst(id,id==='rubber'||id==='machine'?43:60,t,.012);}r.guiro(r.ac.currentTime+.05,.01);r.timbale(r.ac.currentTime+.05,.01);const seen=new Map();for(let x=-20;x<=20;x++)for(let y=-20;y<=20;y++){const region=r.regionOfPos(x*3600+900,y*3600+900);if(['tropical','melodic','robotic','nudisco'].includes(region.genre))seen.set(region.genre,region);}if(seen.size!==4)throw Error('Missing electronic palette');for(const region of seen.values()){for(const kind of ['arbol','luz','pulso'])r.playVoice(kind,0,r.ac.currentTime+.1,region,true,.25);}}''')
-  page.locator('#bMenu').click();page.locator('#bSoft').click();assert page.locator('#bSoft').get_attribute('aria-pressed')=='true'
+  page.locator('#bMenu').click();page.locator('#bMusicSettings').click();page.locator('#bSoft').click();page.locator('#muClose').click();assert page.locator('#bSoft').get_attribute('aria-pressed')=='true'
   assert page.evaluate('window.__testRuntime.S.softMusic && window.__testRuntime.musicVolume()===.65')
   page.wait_for_timeout(150);assert page.evaluate('window.__testRuntime.comfortLowpass.frequency.value < 18000')
-  page.locator('#bMenu').click();page.locator('#bSound').click();assert page.evaluate('window.__testRuntime.musicVolume()===0')
-  page.locator('#bMenu').click();page.locator('#bSound').click();assert page.evaluate('window.__testRuntime.musicVolume()===.65')
-  page.locator('#bMenu').click();page.locator('#bSoft').click();assert page.evaluate('!window.__testRuntime.S.softMusic && window.__testRuntime.musicVolume()===1')
+  page.locator('#bMenu').click();page.locator('#bMusicSettings').click();page.locator('#bSound').click();page.locator('#muClose').click();assert page.evaluate('window.__testRuntime.musicVolume()===0')
+  page.locator('#bMenu').click();page.locator('#bMusicSettings').click();page.locator('#bSound').click();page.locator('#muClose').click();assert page.evaluate('window.__testRuntime.musicVolume()===.65')
+  page.locator('#bMenu').click();page.locator('#bMusicSettings').click();page.locator('#bSoft').click();page.locator('#muClose').click();assert page.evaluate('!window.__testRuntime.S.softMusic && window.__testRuntime.musicVolume()===1')
   page.wait_for_function('!!window.__testRuntime.MU.radio?.grammar && window.__testRuntime.MU.radio.grammar.hookLimit<=5')
   page.evaluate('''()=>{const r=window.__testRuntime,region=r.regionOfPos(r.S.wx,r.S.wy),source={x:r.S.wx+150,y:r.S.wy},original=[r.bus,r.verbIn,r.dsend];let local;r.withSpatialVoice(source,r.ac.currentTime+.05,()=>{local=r.bus;r.hookInst('strings',60,r.ac.currentTime+.05,.02);});if(r.bus!==original[0]||r.verbIn!==original[1]||r.dsend!==original[2])throw Error('Spatial routing leaked');source.x=r.S.wx;source.y=r.S.wy;r.spatialTick();if(r.activeSpatialCount>32)throw Error('Spatial voices unbounded');r.playVoice('arbol',0,r.ac.currentTime+.1,region,true,.3,source);}''')
 
@@ -96,7 +96,7 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.wait_for_timeout(2200);before=page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4")).lampUsed');page.wait_for_timeout(2200);after=page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4")).lampUsed');assert abs(after-before)<.1,(before,after)
   page.locator('#dNext').click();assert not page.locator('#reto').is_visible();assert not page.locator('#mCap').is_visible()
   page.wait_for_timeout(2100);assert page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4")).mode')=='camino'
-  page.locator('#bMenu').click();page.locator('#bStudio').click();page.locator('#w').click(position={'x':size['width']/2,'y':size['height']/2-min(size['width'],size['height']-260)*.13});assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).studio.slots).length')==1
+  page.locator('#bMenu').click();page.locator('#bStudio').click();page.locator('#houseWorkshop').click();page.locator('#w').click(position={'x':size['width']/2,'y':size['height']/2-min(size['width'],size['height']-260)*.13});assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).studio.slots).length')==1
   page.locator('#stExit').click();page.reload(wait_until='domcontentloaded');page.wait_for_function('document.getElementById("bMenu").onclick !== null');assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).studio.slots).length')==1
   assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).journal.music.instruments).length > 0')
   page.locator('#bMenu').click();page.locator('#bShare').click();assert page.locator('#shareImg').evaluate('(i)=>i.naturalWidth>0');assert not errors,errors

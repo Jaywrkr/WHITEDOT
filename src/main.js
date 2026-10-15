@@ -1,5 +1,8 @@
 import {initialize as worldMemory} from './world-memory.js';
 import {initialize as foreground} from './foreground.js';
+import {initialize as house} from './house.js';
+import {initialize as houseAudio} from './house-audio.js';
+import {initialize as achievementsV2} from './achievements.js';
 import {initialize as celebration} from './celebration.js';
 import {initialize as practiceTravel} from './practice-travel.js';
 import {initialize as worldVisibility} from './world-visibility.js';
@@ -157,8 +160,9 @@ if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
 runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0)))runtime.S.mode="camino";
 seeds(runtime);
 lab(runtime);
-worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
+achievementsV2(runtime);worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
 practiceTravel(runtime);
+houseAudio(runtime);house(runtime);
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
 // Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.

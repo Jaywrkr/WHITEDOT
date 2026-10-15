@@ -1,6 +1,6 @@
 # Plan WHITEDOT 2.0
 
-**Continuación acordada:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida las siguientes diez fases. No confundir F1 de cierre con la fase visual 1 histórica. Cubo/menú/Bitácora/logros/casa locales mantienen sus estados pendientes; se recuperarán en F9.
+**Continuación acordada:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida las siguientes diez fases. No confundir F1 de cierre con la fase visual 1 histórica. Cubo/menú/Bitácora/logros/casa locales recuperados y probados en F9; listos para PR de Jay, sin integrar main.
 
 | Fase | Rama | Estado |
 |---|---|---|
@@ -12,7 +12,7 @@
 | 6 · Interacciones que hacen música | `feat/cierre-f6-interacciones` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 7 · Exploración y hallazgos con sentido | `feat/cierre-f7-hallazgos` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 8 · Memoria, regreso y vínculos | `feat/cierre-f8-memoria` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 9 · Juego, interfaz e historia unidos | `feat/cierre-f9-juego` | Pendiente |
+| 9 · Juego, interfaz e historia unidos | `feat/cierre-f9-juego` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 10 · Mezcla, auditoría y lanzamiento | `feat/cierre-f10-lanzamiento` | Pendiente |
 
 Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0** (`4ed00ce`), con CI en verde. La 2.0 se construye en ramas. Por excepción explícita de Jay, se integran en `main` las fases 0–2 y la reparación de Vercel; las siguientes conservan el flujo de PR y merge de Jay.
@@ -35,11 +35,11 @@ Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0**
 | 0 · Base de colección | `v2/f0-coleccion` | Integrada en main por excepción de Jay; pruebas aprobadas |
 | 1 · El universo se ve real | `v2/f1-universo-visual` | Integrada en main y probada; 60 FPS físicos por aceptar |
 | 2 · Celebración y caja mágica | `v2/f2-celebracion` | Integrada en main por excepción de Jay; pruebas aprobadas |
-| 3 · Cubo con 50 personalizaciones | `v2/f3-cubo-50` | Trabajo local preparado; validación final e integración pendientes |
-| 7 · Menú principal limpio | `v2/f7-menu` | Trabajo local preparado; validación final e integración pendientes |
-| 6 · Bitácora perfeccionada | `v2/f6-bitacora` | Trabajo local preparado; validación final e integración pendientes |
-| 4 · Logros 2.0 | `v2/f4-logros` | Trabajo local preparado; validación final e integración pendientes |
-| 5 · La casa del cubo | `v2/f5-casa` | Trabajo local preparado; validación final e integración pendientes |
+| 3 · Cubo con 50 personalizaciones | `v2/f3-cubo-50` | Recuperada y probada en cierre F9; lista para PR de Jay |
+| 7 · Menú principal limpio | `v2/f7-menu` | Recuperada y probada en cierre F9; lista para PR de Jay |
+| 6 · Bitácora perfeccionada | `v2/f6-bitacora` | Recuperada y probada en cierre F9; lista para PR de Jay |
+| 4 · Logros 2.0 | `v2/f4-logros` | Recuperada y probada en cierre F9; lista para PR de Jay |
+| 5 · La casa del cubo | `v2/f5-casa` | Recuperada y probada en cierre F9; lista para PR de Jay |
 | 8 · Pulido y lanzamiento 2.0 | `v2/f8-lanzamiento` | Pendiente |
 
 **Orden de trabajo:** 0 → 1 → 2 → 3 → 7 → 6 → 4 → 5 → 8. Primero la base y que el mundo se vea profesional; luego celebración y cubo; después menú y bitácora; al final logros y casa, las fases más grandes.

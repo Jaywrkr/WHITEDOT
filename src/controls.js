@@ -2,7 +2,7 @@
 export function initialize(runtime) {
   /* ---------- botones ---------- */
   runtime.$("bSession").onclick=runtime.openSession;
-  runtime.$("oSession").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openSession();};
+  runtime.$("oSession").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openJournal("today");};
   runtime.$("sessionClose").onclick=()=>{runtime.$("mSession").hidden=true;};
   runtime.$("sessionShare").onclick=runtime.shareSession;
   runtime.$("hcGo").onclick=()=>{runtime.S.help.camino=true;runtime.$("mHelpC").hidden=true;runtime.audio();if(!runtime.S.voiceStart){runtime.S.voiceStart=true;setTimeout(()=>runtime.say(runtime.VOZ.start),900);}runtime.save();};
@@ -19,7 +19,7 @@ export function initialize(runtime) {
   runtime.$("cExplore").onclick=()=>{runtime.$("mCap").hidden=true;runtime.enterWorld();};
   runtime.$("bWorld").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else runtime.enterWorld();};
   runtime.$("bSky").onclick=runtime.openSky;runtime.$("kClose").onclick=()=>{runtime.$("mSky").hidden=true;};runtime.$("kShare").onclick=()=>{runtime.$("mSky").hidden=true;runtime.shareCard("sky");};
-  runtime.$("oSky").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openSky();};runtime.$("oClose").onclick=()=>{runtime.$("mOut").hidden=true;};
+  runtime.$("oSky").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openJournal("places");};runtime.$("oClose").onclick=()=>{runtime.$("mOut").hidden=true;};
   runtime.$("bAch").onclick=runtime.openJournal;runtime.$("aClose").onclick=()=>{runtime.$("mAch").hidden=true;};
   runtime.$("sClose").onclick=()=>{runtime.$("mShare").hidden=true;};
   runtime.$("bSoft").onclick=()=>{runtime.S.softMusic=!runtime.S.softMusic;runtime.$("bSoft").setAttribute('aria-pressed',String(runtime.S.softMusic));runtime.audio();runtime.applyComfort();runtime.toast(runtime.S.softMusic?'Calma · sí':'Calma · no');runtime.save();};
@@ -27,10 +27,15 @@ export function initialize(runtime) {
   runtime.$("bMusicSettings").onclick=()=>{styleUI();runtime.$("mMusic").hidden=false;};
   const rs=runtime.$("rStyle");
   const styleName=I=>I<.2?"Ambiente":I<.45?"Minimal":I<.72?"Deep":"Underground";
-  function styleUI(){runtime.$("bSoft").setAttribute("aria-pressed",String(!!runtime.S.softMusic));const I=runtime.style();rs.value=Math.round(I*100);runtime.$("styleNow").textContent=styleName(I);runtime.$("muMute").textContent=runtime.S.sound?"Silenciar":"Activar sonido";runtime.$("bSound").querySelector("span").textContent=runtime.S.sound?"Sonido: sí":"Sonido: no";runtime.$("bSound").setAttribute('aria-pressed',String(!!runtime.S.sound));}
+  function styleUI(){runtime.$("bSoft").setAttribute("aria-pressed",String(!!runtime.S.softMusic));runtime.$("rVolume").value=Math.round((runtime.S.outputVolume??1)*100);const I=runtime.style();rs.value=Math.round(I*100);runtime.$("styleNow").textContent=styleName(I);runtime.$("muMute").textContent=runtime.S.sound?"Silenciar":"Activar sonido";runtime.$("bSound").querySelector("span").textContent=runtime.S.sound?"Sonido: sí":"Sonido: no";runtime.$("bSound").setAttribute('aria-pressed',String(!!runtime.S.sound));}
   rs.oninput=()=>{runtime.S.style=rs.value/100;styleUI();runtime.audio();if(runtime.S.style>=.9)runtime.unlock("under");};
-  rs.onchange=()=>{const n=Date.now();runtime.styleMoves=runtime.styleMoves.filter(x=>n-x<60000);runtime.styleMoves.push(n);if(runtime.styleMoves.length>=12)runtime.unlock("dj");runtime.save();};
+  rs.onchange=()=>runtime.save();
   runtime.$("bSound").onclick=()=>{runtime.S.sound=!runtime.S.sound;styleUI();runtime.audio();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);runtime.toast(runtime.S.sound?"<em>Música</em> · activada":"<em>Música</em> · en silencio");runtime.save();};
+  runtime.$("bSettings").onclick=()=>{runtime.$("mMenu").hidden=true;runtime.$("mSettings").hidden=false;};
+  runtime.$("settingsClose").onclick=()=>runtime.$("mSettings").hidden=true;
+  runtime.$("rVolume").oninput=e=>{runtime.S.outputVolume=Math.max(0,Math.min(1,+e.target.value/100));if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);};
+  runtime.$("rVolume").onchange=()=>runtime.save();
+  for(const id of ['bSky','bSession'])runtime.$(id).addEventListener('click',()=>runtime.$('mJournal').hidden=true);
   runtime.$("muClose").onclick=()=>{runtime.$("mMusic").hidden=true;runtime.save();};
   runtime.$("muMute").onclick=()=>{runtime.S.sound=!runtime.S.sound;styleUI();runtime.audio();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);runtime.save();};
   runtime.$("dFill").onclick=()=>{if(runtime.isFree())return;if(runtime.S.lastDay!==runtime.S.todayKey)runtime.onFirstLight();const add=runtime.CAP-runtime.S.todayLight;runtime.S.todayLight=runtime.CAP;runtime.S.totalLight+=add;runtime.S.capShown=true;runtime.unlock("tope");runtime.hud();runtime.openCap();};

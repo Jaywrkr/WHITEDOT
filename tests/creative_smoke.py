@@ -21,7 +21,7 @@ with sync_playwright() as p:
   # First challenge can be completed in several orders, without recording.
   page.evaluate("__testRuntime.creativeAction('bass','touch');__testRuntime.creativeAction('groove','model')")
   assert page.evaluate("!!__testRuntime.S.ach.composicionAbierta")
-  page.locator('#bMenu').click();page.locator('#bCreateMode').click()
+  page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bCreateMode').click();page.locator('#settingsClose').click()
   assert page.evaluate('__testRuntime.S.relaxedCreate')
   if page.locator('#mMenu').is_visible():page.locator('#mnClose').click()
   page.evaluate('__testRuntime.S.lampUsed=__testRuntime.lampMax()+1')

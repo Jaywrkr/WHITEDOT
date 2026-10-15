@@ -24,8 +24,10 @@ export function initialize(runtime) {
   }
 
   /* ---------- loop ---------- */
+  let scheduledFrame=null;
   function frame(t){
-    runtime.connectionTick?.();runtime.saveToolsTick?.();runtime.focusUITick?.();runtime.syncSession();runtime.glassTick?.();runtime.mirrorTick?.();
+    if(scheduledFrame!==null)cancelAnimationFrame(scheduledFrame);
+    runtime.achievementsTick?.(Math.min(.1,Math.max(0,(t-(frame.l||t))/1000)));runtime.connectionTick?.();runtime.saveToolsTick?.();runtime.focusUITick?.();runtime.syncSession();runtime.glassTick?.();runtime.mirrorTick?.();
     if(!runtime.inWorld()||!runtime.S.sound)runtime.clearSoundCues();
     if(!runtime.inWorld())runtime.clearRelicProgress();
     runtime.activeFrameSeconds=Math.max(0,Math.min(1,(t-(frame.l||t))/1000));
@@ -68,7 +70,7 @@ export function initialize(runtime) {
     runtime.ecologyTick?.(dt,modal||runtime.scanning||document.hidden);
     runtime.voiceGuideTick?.(dt,modal||runtime.scanning||document.hidden);
     runtime.updateScanner();runtime.fxTick?.(dt);
-    const b=runtime.beat();
+    const b=runtime.beat();runtime.drawCubePreview?.(t,b);
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
@@ -90,6 +92,7 @@ export function initialize(runtime) {
     runtime.cx.save();runtime.cx.globalAlpha=1;runtime.cx.fillStyle=playerColor;
     const ritual=runtime.inWorld()&&(runtime.quietState?.stage>=6||runtime.hasPower?.('cometa'));
     if(ritual){runtime.cx.translate(runtime.W/2,runtime.H/2);runtime.cx.rotate(Math.sin(t/600)*.12);runtime.cx.fillRect(-s/2,-s/2,s,s);}else runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));runtime.cx.restore();
+    runtime.drawCubeSurface?.(t,b,s);
     // El pixel siempre se distingue: halo suave y anillo fino en el Mundo.
     if(runtime.inWorld()){const c=runtime.cx,hx=runtime.W/2,hy=runtime.H/2,g=c.createRadialGradient(hx,hy,0,hx,hy,s*2.6);g.addColorStop(0,'rgba(255,255,255,.22)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(hx-s*2.6,hy-s*2.6,s*5.2,s*5.2);
       c.globalAlpha=.55;c.strokeStyle='#fff';c.lineWidth=1;c.strokeRect(Math.round(hx-s/2)-3.5,Math.round(hy-s/2)-3.5,Math.round(s)+7,Math.round(s)+7);c.globalAlpha=1;}
@@ -101,7 +104,7 @@ export function initialize(runtime) {
       // Keep the entry response local; the world background stays black.
     }
     runtime.cx.globalAlpha=1;
-    requestAnimationFrame(frame);
+    scheduledFrame=requestAnimationFrame(frame);
   }
 
   function ambient(t,dt,b){

@@ -20,7 +20,7 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
   page.wait_for_function("window.__testRuntime.MU.dnaA && window.__testRuntime.ac.state==='running'")
   page.evaluate("""()=>{const r=window.__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy);r.playVoice('arbol',0,r.ac.currentTime+.05,d,false,1,{id:'pin:a',x:r.S.wx+30,y:r.S.wy},'player');if(r.jam.loop.ecos.length)throw Error('default pinned a sound');}""")
-  page.locator('#bMenu').click();page.locator('#bAutoPins').click()
+  page.locator('#bMenu').click();page.locator('#bMusicSettings').click();page.locator('#bAutoPins').click();page.locator('#muClose').click()
   page.evaluate("""()=>{const r=window.__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy),play=(id,origin)=>r.playVoice('arbol',2,r.ac.currentTime+.05,d,false,1,{id,x:r.S.wx+30,y:r.S.wy},origin);
    play('pin:a','ambient');if(r.jam.loop.ecos.length)throw Error('ambient pinned');
    play('pin:a','player');if(r.jam.loop.ecos.length!==1||!r.jam.loop.ecos[0].auto)throw Error('pin missing');
@@ -31,7 +31,7 @@ with sync_playwright() as p:
   assert page.evaluate('window.__testRuntime.jam.loop.ecos.length')==0
   page.evaluate("""()=>{const r=window.__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy);r.loopStep(0,r.MU.step,r.ac.currentTime+.05);r.playVoice('arbol',2,r.ac.currentTime+.05,d,false,1,{id:'pin:b',x:r.S.wx+30,y:r.S.wy},'player');if(r.jam.loop.ecos.length)throw Error('released pin restarted while standing here');r.save();}""")
   page.reload(wait_until='domcontentloaded');page.wait_for_function('window.__testRuntime?.S.autoPins===true');assert page.evaluate('window.__testRuntime.jam.loop.ecos.length')==0
-  page.locator('#bMenu').click();page.locator('#bAutoPins').click();assert page.evaluate('window.__testRuntime.S.autoPins')==False
+  page.locator('#bMenu').click();page.locator('#bMusicSettings').click();page.locator('#bAutoPins').click();page.locator('#muClose').click();assert page.evaluate('window.__testRuntime.S.autoPins')==False
   assert not errors,errors
   print(label+': sound pins opt in only, ignore ambient, replace same role, release by touch and stay released PASS',flush=True);c.close()
  b.close()

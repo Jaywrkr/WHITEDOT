@@ -4,12 +4,13 @@ import {CUBE_COLORS,CUBE_TRAILS,CUBE_HALOS,normalizeCube} from '../src/cube-mode
 const catalog=createRewardsCatalog([['oculto1','Secreto','Descubre',true],['mundo','Mundo','Explora']]);
 const recoveredTier=migrateRewards({rareBook:{items:[{type:'culture:artifact',odds:{tier:'singular'},day:'2026-10-15'}]}},catalog);assert(recoveredTier.items['finding:singular'],'saved card odds must restore the earned rarity reward');
 assert.equal(Object.keys(REWARD_RARITIES).length,5);
-assert.equal(REWARDS_CATALOG.filter(p=>['color','trail','halo'].includes(p.type)).length,13);
+assert.equal(REWARDS_CATALOG.filter(p=>['color','trail','halo'].includes(p.type)).length,26);
 assert(catalog.every(p=>p.id&&p.type&&p.rarity&&p.source&&p.hint));
 let old={ach:{},cube:{color:'#ff8a7a',trail:'line',halo:'pulse'},color:'#ff8a7a',totalDays:180,livingSeen:{moth:{day:'2026-10-13'}},zones:{bosque:'2026-10-12'}};
-for(const p of [...CUBE_COLORS.map(c=>({ach:c[2]})),...CUBE_TRAILS,...CUBE_HALOS])if(p.ach)old.ach[p.ach]='2026-10-01';delete old.ach.oculto;old.ach.oculto1='2026-10-02';
+for(const p of [...CUBE_COLORS.slice(0,6).map(c=>({ach:c[2]})),...CUBE_TRAILS.slice(0,4),...CUBE_HALOS.slice(0,3)])if(p.ach)old.ach[p.ach]='2026-10-01';delete old.ach.oculto;old.ach.oculto1='2026-10-02';
 let b=migrateRewards(old,catalog,{hiddenAchievements:['oculto1']});
-assert.equal(catalog.filter(p=>['color','trail','halo'].includes(p.type)&&b.items[p.id]).length,13);
+assert.equal(CUBE_COLORS.slice(0,6).filter(c=>b.items['cube:color:'+c[0].slice(1)]).length,6);
+assert(CUBE_TRAILS.slice(0,4).every(t=>b.items['cube:trail:'+t.id]));assert(CUBE_HALOS.slice(0,3).every(t=>b.items['cube:halo:'+t.id]));
 assert.equal(b.items['cube:color:b9a2ff'].obtainedAt,'2026-10-02');
 assert.equal(b.items['lineage:moth'].obtainedAt,'2026-10-13');
 assert.equal(b.items['days:180'].obtainedAt,null,'do not invent historic acquisition dates');

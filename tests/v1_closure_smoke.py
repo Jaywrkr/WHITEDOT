@@ -42,8 +42,12 @@ try:
   page.evaluate('()=>{window.MediaRecorder=__Recorder;}')
   # Two pages share localStorage. The stale page must preserve the newer disk save.
   assert page.evaluate('__testRuntime.S.totalLight=100;__testRuntime.save()')
+  # Freeze the first writer while opening the second; its active-world autosave
+  # can otherwise win between load and the deliberately newer write.
+  lifecycle=context.new_cdp_session(page);lifecycle.send('Page.setWebLifecycleState',{'state':'frozen'})
   other=context.new_page();other.goto(url);other.wait_for_function('__testRuntime?.labMode')
   assert other.evaluate('__testRuntime.S.totalLight=101;__testRuntime.save()')
+  lifecycle.send('Page.setWebLifecycleState',{'state':'active'})
   assert not page.evaluate('__testRuntime.S.totalLight=3;__testRuntime.save()')
   assert page.evaluate('__testRuntime.storageStatus.kind')=='conflict';assert page.evaluate('JSON.parse(localStorage.getItem(__testRuntime.saveStore.key)).totalLight')==101
   assert not errors,errors;print('PASS V1: native reset/quiet/powers/loop, experimental scope, real repeated recording and failure cleanup, final audio output, and two-tab stale-save protection',flush=True)

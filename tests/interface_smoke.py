@@ -24,7 +24,7 @@ try:
    page.wait_for_function('!document.getElementById("w").inert')
    page.locator('#bMenu').click()
    assert page.locator('#w').evaluate('(e)=>e.inert'), 'canvas cannot receive focus behind a modal'
-   assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Música','Más']
+   assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Crear','Sonido','Más']
    # This static server has no optional /api: the account entry stays out of the menu (duet_smoke covers it with a server).
    page.wait_for_function('document.getElementById("bConnection").hidden')
    page.locator('#mMenu .sheet').evaluate('e=>e.scrollTop=e.scrollHeight')
@@ -39,8 +39,10 @@ try:
    page.locator('#mMenu summary').click()
    page.keyboard.press('Escape');page.wait_for_function('document.activeElement.id==="bMenu"')
    assert not page.locator('#w').evaluate('(e)=>e.inert')
-   for control,modal in [('bMusicSettings','mMusic'),('bCube','mCube'),('bFavorites','mFavorites'),('bAch','mJournal'),('bMap','mMap'),('bSky','mSky'),('bSession','mSession'),('bSaveTools','mSaveTools')]:
-    page.locator('#bMenu').click();page.locator('#'+control).click()
+   for control,modal in [('bMusicSettings','mMusic'),('bCube','mCube'),('bFavorites','mFavorites'),('bAch','mJournal'),('bMap','mMap'),('bSettings','mSettings'),('bSaveTools','mSaveTools')]:
+    page.locator('#bMenu').click()
+    if control in ['bSky','bSession']:page.locator('#bAch').click()
+    page.locator('#'+control).click()
     page.wait_for_function('(id)=>!document.getElementById(id).hidden',arg=modal)
     metrics=page.locator('#'+modal+' .sheet').evaluate('e=>({x:e.getBoundingClientRect().x,right:e.getBoundingClientRect().right,y:e.getBoundingClientRect().y,bottom:e.getBoundingClientRect().bottom,sw:e.scrollWidth,cw:e.clientWidth})')
     assert metrics['x']>=0 and metrics['right']<=width+1 and metrics['y']>=0 and metrics['bottom']<=height+1, (modal,metrics)
