@@ -21,6 +21,7 @@ export function initialize(runtime){
  const now=clock.now;
  const has=id=>(powers[id]||0)>now();
  const left=id=>Math.max(0,((powers[id]||0)-now())/1000);
+ const listeningRadius=()=>fieldRadius(left('campo'),POWERS.campo.seconds,clock.age('campo'));
  // ---------- cajas ----------
  function boxesNear(radius=700){
   if(!surface())return [];const W=runtime.WCH,cx=Math.floor(S().wx/W),cy=Math.floor(S().wy/W),out=[];
@@ -66,12 +67,12 @@ export function initialize(runtime){
   for(const fn of ['materiaSources','vidaSources','glassSources','mirrorSources','encounterSources'])for(const s of runtime[fn]?.()||[]){const ob=s.object;if(ob?.x==null)continue;list.push({x:ob.x,y:ob.y,o:ob,play:t=>{runtime.playVoice(s.kind,Math.floor(Math.hypot(ob.x-S().wx,ob.y-S().wy)/30)%7,t,runtime.regionOfPos(ob.x,ob.y),false,.35,ob,'field');ob.lit=1;}});}
   return list;
  }
- function melody(n,t,v,source=null,front=false){const d=runtime.MU.dnaA||runtime.MU.dnaT;if(!d)return;const inst=runtime.MU.radio?.hookI||hookInstruments(d.genre,runtime.GEN[d.genre])[0],cue=source?{...source,id:source.id||'power:pincel:'+Math.round(source.x)+','+Math.round(source.y)}:{id:'power:cometa',x:S().wx,y:S().wy},voice={instrument:inst,role:'lead'},emit=()=>runtime.hookInst(inst,hookPitch(inst,n,musicalCharacter(d.genre)),t,v,d);if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(front?'power:pincel':'power:voice',d,voice,cue,t,emit);else emit();if(front)runtime.focusGesture?.(t,cue,'lead');runtime.soundCue?.(cue,'lead',t);}
+ function melody(n,t,v,source=null,front=false){const d=runtime.MU.dnaA||runtime.MU.dnaT;if(!d)return;const inst=runtime.MU.radio?.hookI||hookInstruments(d.genre,runtime.GEN[d.genre])[0],cue=source?{...source,id:source.id||(front?'power:pincel:':'power:cometa:')+Math.round(source.x)+','+Math.round(source.y)}:{id:'power:cometa',x:S().wx,y:S().wy},voice={instrument:inst,role:'lead'},emit=()=>runtime.hookInst(inst,hookPitch(inst,n,musicalCharacter(d.genre)),t,v,d);if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(front?'power:pincel':'power:voice',d,voice,cue,t,emit);else emit();if(front)runtime.focusGesture?.(t,cue,'lead');runtime.soundCue?.(cue,'lead',t);}
 
  function step(s,bar,time){
   if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])')||!S().sound||runtime.ac?.state!=='running')return;
   // Campo: el brazo gira una vuelta por compás y toca lo que cruza dentro del círculo.
-  if(has('campo')){const R=fieldRadius(left('campo'),POWERS.campo.seconds);let n=0;
+  if(has('campo')){const R=listeningRadius();let n=0;
    for(const src of sources()){const dx=src.x-S().wx,dy=src.y-S().wy;if(Math.hypot(dx,dy)>R||n>=3)continue;const a=((Math.atan2(dy,dx)+Math.PI/2)%TAU+TAU)%TAU;if(Math.floor(a/TAU*16)===s){src.play(time);n++;}}}
   // Cometa: la estela suena en corcheas mientras corres.
   if(has('cometa')&&s%2===0&&(runtime.body?.speed||0)>80){const ct=runtime.chordTones?.()||[60,64,67];melody(ct[(s/2)%ct.length],time,.02,trail.at(-1));}
@@ -98,10 +99,10 @@ export function initialize(runtime){
   for(const b of boxesNear(700)){const fade=runtime.worldOpacity?.(Math.hypot(b.x-S().wx,b.y-S().wy),700)??1;const [H,Sat,L]=swatchOf(b.hue),x=b.x+ox,y=b.y+oy+Math.sin(t/500+b.spin)*5,col=`hsl(${H},${Sat}%,${L}%)`,rot=t/900+b.spin;
    const g=c.createRadialGradient(x,y,0,x,y,46);g.addColorStop(0,`hsla(${H},${Sat}%,${L}%,.35)`);g.addColorStop(1,'rgba(0,0,0,0)');c.globalAlpha=(1)*fade;c.fillStyle=g;c.fillRect(x-46,y-46,92,92);
    c.translate(x,y);for(const [k,s] of [[0,10],[Math.PI/4,10]]){c.save();c.rotate(rot+k);c.globalAlpha=(.9)*fade;c.strokeStyle=col;c.lineWidth=1.6;c.strokeRect(-s,-s,s*2,s*2);c.restore();}
-   c.globalAlpha=(.9)*fade;c.fillStyle=WORLD_VISUAL.gold;c.beginPath();c.arc(0,0,2.5+Math.sin(t/200)*1,0,TAU);c.fill();
+   c.globalAlpha=(.9)*fade;c.fillStyle=col;c.beginPath();c.arc(0,0,2.5+Math.sin(t/200)*1,0,TAU);c.fill();
    for(let i=0;i<3;i++){const a=t/600+i*TAU/3;c.globalAlpha=(.7)*fade;c.fillRect(Math.cos(a)*18-1,Math.sin(a)*18-1,2,2);}
-   c.translate(-x,-y);if(Math.hypot(b.x-S().wx,b.y-S().wy)<160){c.globalAlpha=(.8)*fade;c.fillStyle=WORLD_VISUAL.gold;c.font='10px "Geist Mono", monospace';c.textAlign='center';c.fillText('Caja misteriosa · tócala con el cubo',x,y+34);}}
-  if(has('campo')){const R=fieldRadius(left('campo'),POWERS.campo.seconds),arm=((runtime.MU.step%16)+((runtime.ac?.currentTime||0)%runtime.SIX)/runtime.SIX)/16*TAU-Math.PI/2,hue=runtime.MU.dnaT?.hue||0,[H]=swatchOf(hue);
+   c.translate(-x,-y);if(Math.hypot(b.x-S().wx,b.y-S().wy)<160){c.globalAlpha=(.8)*fade;c.fillStyle=col;c.font='10px "Geist Mono", monospace';c.textAlign='center';c.fillText('Caja misteriosa · tócala con el cubo',x,y+34);}}
+  if(has('campo')){const R=listeningRadius(),arm=((runtime.MU.step%16)+((runtime.ac?.currentTime||0)%runtime.SIX)/runtime.SIX)/16*TAU-Math.PI/2,hue=runtime.MU.dnaT?.hue||0,[H]=swatchOf(hue);
    c.globalAlpha=.08;c.fillStyle=`hsl(${H},80%,60%)`;c.beginPath();c.arc(cx,cy,R,0,TAU);c.fill();c.globalAlpha=.5;c.strokeStyle=`hsl(${H},80%,64%)`;c.lineWidth=1.4;c.stroke();
    c.globalAlpha=.6;c.strokeStyle=runtime.cubeColor?.()||WORLD_VISUAL.gold;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+Math.cos(arm)*R,cy+Math.sin(arm)*R);c.stroke();}
   if(trail.length){for(const p of trail){const [H]=swatchOf((p.x+p.y)/7);c.globalAlpha=p.a*.6;c.fillStyle=`hsl(${H},85%,62%)`;c.fillRect(p.x+ox-2,p.y+oy-2,4,4);}}
@@ -117,7 +118,7 @@ export function initialize(runtime){
  function clear(){clock.clear();spawned.length=0;trail.length=0;marks.length=0;companion.on=false;companion.heard=[];companion.species=null;lastMark=null;runtime.fieldSolo=false;runtime.speedBoost=1;}
  function restore(){clock.restore(S().boxPowers);spawned.push(...normalizeGiftBoxes(S().giftBoxes));if(has('companero')){companion.on=true;companion.x=S().wx+30;companion.y=S().wy+30;const saved=S().boxPowers?.companion;companion.species=PET_SPECIES[saved?.species]?saved.species:null;companion.heard=Array.isArray(saved?.heard)?saved.heard.filter(Number.isFinite).slice(-4):[];}if(has('pincel')&&Array.isArray(S().boxPowers?.marks))for(const m of S().boxPowers.marks.slice(-16))if(Number.isFinite(m.x)&&Number.isFinite(m.y)&&Number.isInteger(m.degree)&&m.degree>=0&&m.degree<7&&Number.isInteger(m.step)&&m.step>=0&&m.step<16)marks.push({...m,lit:0});lastMark=marks.at(-1)||null;runtime.speedBoost=has('cometa')?2.2:1;runtime.fieldSolo=has('campo');}
  function ensureOwner(){if(previous!==S()){previous=S();clear();S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};restore();}}
- function snapshot(){ensureOwner();const raw=S().boxPowers;if(raw?.version>1)return raw;const data=clock.snapshot();return {...raw,...data,remaining:{...raw?.remaining,...data.remaining},companion:{...raw?.companion,species:companion.species,heard:[...companion.heard]},marks:marks.map(m=>({x:m.x,y:m.y,degree:m.degree,step:m.step}))};}
+ function snapshot(){ensureOwner();const raw=S().boxPowers;if(raw?.version>1)return raw;const data=clock.snapshot();return {...raw,...data,remaining:{...raw?.remaining,...data.remaining},elapsed:{...raw?.elapsed,...data.elapsed},companion:{...raw?.companion,species:companion.species,heard:[...companion.heard]},marks:marks.map(m=>({x:m.x,y:m.y,degree:m.degree,step:m.step}))};}
  restore();
- Object.defineProperties(runtime,{snapshotPowers:{get:()=>snapshot},powerSecondsLeft:{get:()=>left},clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
+ Object.defineProperties(runtime,{powerFieldRadius:{get:()=>listeningRadius},snapshotPowers:{get:()=>snapshot},powerSecondsLeft:{get:()=>left},clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
 }

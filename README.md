@@ -6,15 +6,15 @@ Un pixel blanco en un mundo negro. Descubre cómo suena el universo y crea tu pr
 
 **Jugar:** https://whitedot-inky.vercel.app. En el teléfono puedes instalarlo como app (en iPhone: Compartir → Añadir a pantalla de inicio). Toca la pantalla una vez para activar el sonido.
 
-Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama **2.0.0-rc.7** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
+Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama **2.0.0-rc.8** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
 Main no se publica desde estas ramas. Jay integra mediante PR. [Auditoría y soluciones](AUDITORIA_CIERRE_2.0.md) · [Pulido final autorizado](PLAN_PULIDO_FINAL.md).
 
 ## Pulido actual
 
-**F7 · Cada sonido vuelve a su fuente.** Poderes y quietud con señales locales, filtros que respetan el corte previo y un Imán que no pierde golpes. [Plan y ramas](PLAN_PULIDO_FINAL.md) · [Evidencia](scripts/pulido-f7-validation.json).
+**F8 · Cierre integrado y revisión final.** Bitácora por demanda, guía sin superposiciones y validación completa de la candidata. [Plan y ramas](PLAN_PULIDO_FINAL.md) · [Evidencia](scripts/pulido-f8-validation.json).
 
-## Cierre · fase 10 · Auditoría y candidata 2.0.0-rc.1
+## Base anterior · auditoría F10
 
 `feat/cierre-f10-lanzamiento` continúa la fase anterior. Corrige retorno WD1, pérdidas de progreso persistente, silencio y señales; simplifica el acceso diario y documenta el pulido final autorizado. [Plan vigente](PLAN_CIERRE_2.0.md) · [Pruebas](scripts/cierre-f10-validation.json).
 
@@ -23,7 +23,7 @@ Main no se publica desde estas ramas. Jay integra mediante PR. [Auditoría y sol
 | Área | Alcance integrado |
 |---|---|
 | Paisajes | Ocho familias espaciales sobre 11 biomas y 33 hábitats |
-| Vida | 28 linajes, anatomías individuales y comportamiento territorial cercano |
+| Vida | 28 linajes, cincuenta caminantes explícitos, anatomías y comportamiento territorial |
 | Composición | 52 estilos, dieciséis influencias compatibles y regiones sin cruce |
 | Instrumentos | 32 especificaciones, siete motores avanzados originales y dieciséis programas de filtro |
 | Interacción | Percusión natural de nueve materiales, prioridad del gesto y señales locales |
@@ -37,7 +37,7 @@ Main no se publica desde estas ramas. Jay integra mediante PR. [Auditoría y sol
 
 El juego conserva terreno, coordenadas y progreso anteriores. Las poblaciones comunes pueden reorganizarse en nichos; las rarezas anteriores conservan sus direcciones. La simulación es local y acotada. Las recetas distintas no prueban canciones perceptualmente únicas.
 
-[Plan de cierre y ramas](PLAN_CIERRE_2.0.md) · [Cambios por entrega](CAMBIOS.md) · [Prueba en teléfono](PROBAR_UNIVERSO_VIVO.md). La auditoría distingue las funciones integradas de las mejoras de tutorial, viajes, Bitácora y personajes que continúan en las ramas de pulido.
+[Plan de cierre y ramas](PLAN_CIERRE_2.0.md) · [Cambios por entrega](CAMBIOS.md) · [Prueba en teléfono](PROBAR_UNIVERSO_VIVO.md). Los ocho bloques de pulido están implementados; aceptación física, CI y deploy real siguen separados en el cierre.
 
 ## Cómo se juega
 
@@ -49,6 +49,10 @@ El juego conserva terreno, coordenadas y progreso anteriores. Las poblaciones co
 6. **Comparte.** Tarjetas 4:5 de tu día y sets grabados de hasta 60 s, listos para publicar.
 
 Conserva los lugares que te importan. Vuelve para escuchar qué cambia.
+
+**Guardar y volver:** toca el marcador junto al nombre del lugar. Toca el nombre para abrir tus destinos, viajar o volver al punto anterior. El tutorial puede repetirse desde Menú → Tu recorrido → Practicar, sin borrar progreso.
+
+Auditoría sin errores ni advertencias; 97 suites Node, 75 recorridos de navegador incluidos offline, y 455 renders de audio en 22 programas aprobados. Ambas generaciones y diversidad verificadas. CI del PR, deploy real y aceptación física pendientes. [Informe final](scripts/pulido-f8-validation.json) · [Cierre e integración](CIERRE_2.0.md).
 
 ## Correr local
 

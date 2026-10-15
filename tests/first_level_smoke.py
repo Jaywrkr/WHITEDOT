@@ -28,7 +28,7 @@ try:
    page.evaluate('''()=>{const r=__testRuntime,near=r.sceneChunk(r.wchunk(Math.floor(r.S.wx/r.WCH),Math.floor(r.S.wy/r.WCH)));const o=near.playthings[0];if(!o)throw Error('No native source fixture');o.x=o.hx=r.S.wx+65;o.y=o.hy=r.S.wy;o.cd=0;o.touching=false;window.__lessonSource=o;}''')
    page.mouse.move(width/2,height/2);page.mouse.down();page.mouse.move(width/2+80,height/2,steps=8);page.wait_for_function('__testRuntime.firstJourneyState.next==="pulse"');page.mouse.up()
    assert page.evaluate('Object.keys(__testRuntime.S.voiceLearned).length')>0
-   panel=page.locator('#firstJourney').bounding_box();assert panel['width']*panel['height']<width*height*.12,panel
+   assert page.locator('#zone').evaluate('e=>getComputedStyle(e).visibility')=='hidden';assert page.locator('.goal').is_hidden();assert page.locator('#quickSave svg').is_visible();panel=page.locator('#firstJourney').bounding_box();assert panel['width']*panel['height']<width*height*.12,panel
    page.screenshot(path=f'/tmp/whitedot-first-level-{width}.png')
    page.mouse.click(22,height/2-120);page.wait_for_function('__testRuntime.firstJourneyState.next==="save"')
    page.locator('#quickSave').click();page.locator('#era').click();assert page.locator('#firstJourney').is_hidden();page.locator('[data-favorite] summary').click();page.locator('[data-favorite] input').fill('Mi primera voz');page.get_by_role('button',name='Renombrar',exact=True).click();page.locator('#favoritesClose').click();page.locator('#quickSave').click();assert page.locator('#mFavorites').is_visible();assert page.evaluate('__testRuntime.favorites.length===1&&__testRuntime.favorites[0].name==="Mi primera voz"');page.locator('#favoritesClose').click()

@@ -1,70 +1,62 @@
-# WHITEDOT 2.0.0-rc.1 · cierre técnico
+# WHITEDOT 2.0.0-rc.8 · cierre integrado
 
-Candidata de revisión en `feat/cierre-f10-lanzamiento`. Las diez ramas contienen sus padres; Jay crea PRs y hace merge en orden. Main no se modificó. Esta revisión local no acredita un deploy ni sustituye la escucha en un teléfono físico.
+Los ocho bloques están implementados en ramas encadenadas; Jay crea PR y merge. Esta candidata reúne auditoría, reparaciones, primer nivel, viajes, Bitácora, tarjetas, cincuenta caminantes y revisión musical. No se publicó main.
 
-## Ascendencia de la candidata
+## Ramas de revisión
 
-| Fase | Rama | Commit de entrega |
-|---|---|---|
-| 1 | `feat/cierre-f1-identidades` | `4a819c9` |
-| 2 | `feat/cierre-f2-especies` | `08521cd` |
-| 3 | `feat/cierre-f3-ecosistemas` | `9164122` |
-| 4 | `feat/cierre-f4-sintesis` | `35ffe3c` |
-| 5 | `feat/cierre-f5-composicion` | `d64e7c0` |
-| 6 | `feat/cierre-f6-interacciones` | `a00e3a6` |
-| 7 | `feat/cierre-f7-hallazgos` | `d38c8a5` |
-| 8 | `feat/cierre-f8-memoria` | `0ddecb8` |
-| 9 | `feat/cierre-f9-juego` | `2dd4a23` |
-| 10 | `feat/cierre-f10-lanzamiento` | HEAD de esta rama |
+| Bloque | Rama | Estado | Referencia |
+|---|---|---|---|
+| 1 · Auditoría y defectos comprobados | `feat/cierre-f10-lanzamiento` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `25732e6` |
+| 2 · Primer nivel y guía mínima | `feat/pulido-f2-primer-nivel` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `2e45cc0` |
+| 3 · Guardar, volver y viajar | `feat/pulido-f3-viajes` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `e5d2da5` |
+| 4 · Bitácora visual | `feat/pulido-f4-bitacora` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `e1a0897` |
+| 5 · Tarjetas y ritmo de descubrimiento | `feat/pulido-f5-tarjetas` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `4cdc59a` |
+| 6 · Cincuenta variantes de personajes | `feat/pulido-f6-personajes` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `1637aed` |
+| 7 · Interacciones musicales coherentes | `feat/pulido-f7-interacciones` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `7af93e2` |
+| 8 · Limpieza y aceptación del conjunto | `feat/pulido-f8-cierre` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | HEAD de esta rama |
 
-Para integrar la base auditada, el PR de F10 reúne F1–F9 y sus reparaciones. No hace falta abrir de nuevo PRs de padres que queden incluidos. Si revisas los padres por separado, exige su CI antes de merge. Después continúa con las ramas hijas de PLAN_PULIDO_FINAL.md.
+Main observado en `15bbe77` ya contiene F1 y F2; no reabrir esas ramas eliminadas tras sus merges. F10 contiene F1–F9 y las reparaciones de su auditoría: puede revisarse como una sola base. Después, F2 a F8 son hijas sucesivas. También puede revisarse el diff acumulado de F8; no abrir PRs duplicados de padres ya incluidos. Conservar commits de padres al integrar reduce conflictos; squash/rebase y cambios paralelos pueden requerir resolverlos. Ninguna pila garantiza cero conflictos.
 
-Si una fase ya está integrada, comprobar ascendencia antes de abrir su sucesora. Conservar los commits de los padres reduce conflictos. Un squash/rebase o cambios paralelos pueden requerir resolverlos; ninguna pila garantiza cero conflictos. No crear PRs de trabajos locales históricos que ya se recuperaron en F9.
+## Pruebas de la candidata
 
-## Qué reúne esta candidata
+Auditoría sin errores ni advertencias; 97 suites Node, 75 recorridos de navegador incluidos offline, y 455 renders de audio en 22 programas aprobados. Ambas generaciones y diversidad verificadas. CI del PR, deploy real y aceptación física pendientes.
 
-- Ocho familias coherentes de paisaje; anatomías individuales en 28 linajes y flora/fauna anteriores. Nichos, clima, vecinos y excursiones locales acotadas; no se simula toda la galaxia.
-- Treinta y dos especificaciones de síntesis, siete motores avanzados originales y dieciséis programas de filtro. Redes con señal/CV real, máximo seis cables, polifonía/nodos acotados.
-- Cincuenta y dos estilos conservados y dieciséis influencias compositivas compatibles, con zonas puras. Armonía, fraseo, descansos y registros evolucionan estando quieto. No todo se mezcla con todo.
-- Nueve cuerpos de percusión natural con articulaciones individuales; semilleros y truenos variados. El acompañamiento deja espacio al gesto sin aumentar el máster. Señales locales sincronizadas y una etiqueta musical cercana.
-- Guardianes, pistas ordenadas y puertas culturales; dos habitantes relacionados por santuario. Recuerdos ganados utilizables y reliquias que puedes volver a tocar en su punto. Cincuenta tipos de tarjeta con condiciones y lugares reales; sin probabilidades inventadas.
-- Memoria de conexiones, suelo editado y frases; vínculos por individuo. Límites de nuevas entradas sin expulsar ediciones existentes. Favoritos, WD1, regreso y paseo por afinidad/contraste; el tiempo continúa.
-- Cincuenta personalizaciones ganadas, cinco secciones de Bitácora, doscientos cincuenta logros y casa desde arriba con cuarenta objetos/cuatro habitaciones. Taller radial conservado y visitas WH1 sin editar la colección propia.
-- Geist Mono, interfaz silenciosa, fondo negro, blanco original y oro ganado. Volumen y ajustes persistentes, voz breve y contextual. Las selecciones y previsualizaciones de menús no generan notas.
+Pico máximo de audio renderizado: 0.945446670; fracción caliente cero. Los renders comprueban señal/margen; no certifican gusto musical, altavoces físicos ni masterización profesional.
 
-## Verificación local
+[Informe final](scripts/pulido-f8-validation.json) · [Audio por caso](scripts/pulido-f8-audio-suite.json) · [Hallazgos resueltos](AUDITORIA_CIERRE_2.0.md) · [Rutas musicales](MATRIZ_INTERACCIONES.md) · [Reporte anterior conservado](docs/historial/CIERRE_2.0_RC1.md).
 
-- Auditoría de release sin errores ni advertencias y 93 suites Node aprobadas.
-- Suite completa: 68 recorridos de navegador y offline, 69 en total.
-- Suite completa de audio: 445 renders en 21 programas; pico máximo 0,9454471469 y fracción caliente cero.
-- Ambas generaciones del universo, muestra de diversidad y 49.152 sectores de frecuencia espacial.
-- API opcional con HTTP/SQLite temporal: cuentas, copias, concurrencia y salas locales.
+## Qué probar en teléfono
 
-[Evidencia consolidada](scripts/cierre-f10-validation.json) · [Casos de audio](scripts/cierre-f10-audio-suite.json) · [Navegador final](scripts/cierre-f10-final-browser.json) · [Auditoría y soluciones](AUDITORIA_CIERRE_2.0.md). La candidata conserva pendientes de experiencia autorizados en [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md); esta pasada técnica no los presenta como terminados.
+1. Menú → Tu recorrido → Practicar: aprende sin borrar tu partida.
+2. Guarda con el marcador, abre el nombre del lugar, viaja y vuelve.
+3. Abre Bitácora; despliega una región y revisa música/colección.
+4. Escucha percusión, una reliquia, un caminante y tus marcas de Pincel.
+5. Recarga con un poder y un regalo pendiente; conserva beneficio/progreso.
+6. Prueba ambas orientaciones, suspensión/reanudación y PWA offline.
 
-## Diversidad comprobada
+[Guía ampliada](PROBAR_UNIVERSO_VIVO.md). Si algo falla: WD1, gesto, navegador, orientación y teléfono; esos datos permiten una regresión reproducible.
 
-La muestra del informe examina 4096 regiones reales del mundo original: 2816 terrestres, 597 sin cruce, los 52 estilos, ocho familias y dieciséis influencias. Contiene 1606 combinaciones estructurales de género/familia/influencia y 2798 recetas distintas al comparar tres momentos. Son datos de una muestra concreta; no son un total de mundos ni prueba de canciones perceptualmente únicas. No se multiplican variables correlacionadas para afirmar millones.
+## Diversidad y memoria
 
-Las coordenadas prácticas son muy amplias, con cinco tamaños y guardado por semilla/versiones/capa. Aumentar dimensiones no equivale a aumentar contenido reconocible. La aceptación creativa consiste en distinguir lugares al verlos y escucharlos y disfrutar sesiones largas.
+Se conservan 11 biomas, 33 hábitats, ocho familias espaciales, 52 estilos y dieciséis influencias compatibles, con zonas puras. Hay 28 linajes procedurales y cincuenta variantes explícitas de caminantes. La muestra de 4096 regiones conserva 1606 combinaciones estructurales y 2798 recetas en tres momentos; no es un total de mundos ni una medición de canciones perceptualmente únicas. No afirmamos millones multiplicando variables correlacionadas.
 
-## Guardados y publicación
+WD1 guarda semilla, versiones, tamaño, capa y coordenadas. Las semillas guardan progreso separado. Los nuevos flujos no desplazan mapas antiguos. Favoritos admiten 256 sin truncar anteriores; tarjetas admiten 512 sin expulsar una colección existente mayor. El guardado global mantiene límites de 8 MiB/complejidad y conserva el último archivo válido ante error. El almacenamiento del navegador no es infinito.
 
-Se conserva la partida habitual `pixel-blanco-v4`, respaldo/recuperación, premios anteriores y fechas. Las semillas mantienen sus espacios separados; WD1 conserva generación, catálogo, distribución, tamaño, capa y coordenadas. Las adiciones usan flujos de semilla independientes. Los datos futuros de memoria se conservan sin reescribirlos.
+## Antes de declarar estable
 
-Vercel sirve la raíz estática y ejecuta `scripts/vercel-build.mjs`. El sello registra la revisión y hora UTC del artefacto construido en Vercel; localmente no se inventa un deploy. El código está marcado `2.0.0-rc.1`; nuevas candidatas incrementan `rc.N`. La versión estable se decide tras aceptación física y CI. No se publicó main desde estas ramas.
-
-## Aceptación pendiente antes de producción estable
-
-| Comprobación | Cómo cerrarla |
+| Pendiente externo | Cómo cerrarlo |
 |---|---|
-| CI del PR | Exigir lógica, navegador y los tres grupos de audio en verde. |
-| Vercel real | Abrir el preview de F10; verificar carga, versión, revisión y sello. |
-| Teléfono físico | Safari iPhone y Chrome Android: vertical/horizontal, tocar, mantener, orbitar, conectar, volver y restaurar una copia. |
-| Escucha artística | Sesión de 20–30 minutos a volumen habitual y equivalente: graves/medios/agudos, descansos, timbres, percusión, cruces y quietud. Anotar lugar/WD1 y gesto si algo fatiga o se enmascara. |
-| Rendimiento físico | Recorrer lugares densos, cambiar de capa y volver; comprobar tacto, audio sin cortes y temperatura. |
-| PWA física | Abrir offline, actualizar con partida guardada y volver sin perder progreso; comprobar audio tras suspensión. |
+| CI del PR | Lógica, navegador y los tres grupos de audio aprobados. |
+| Vercel real | Abrir el preview de la rama final y comprobar versión, revisión y hora del artefacto. |
+| iPhone y Android físicos | Tacto, orientación, teclado, audio tras suspensión y restauración de copia. |
+| Escucha humana | 20–30 minutos con volumen equivalente; anotar fuentes enmascaradas o fatiga. |
+| Personas nuevas | Ver si entienden explorar, crear y conservar sin explicaciones externas. |
+| Rendimiento y PWA físicos | Zonas densas, cambios de capa, temperatura, offline y actualización segura. |
 
-Estos puntos requieren navegador/host/hardware reales o juicio auditivo humano; no se presentan como aprobados por renders ni emulación. Los defectos reproducibles se corrigen con regresión afectada. Jay añadió el pulido de tutorial, viajes, Bitácora, tarjetas y personajes al alcance actual; siguen en ramas hijas según PLAN_PULIDO_FINAL.md.
+Estos puntos no se presentan como aprobados mediante emulación. No se necesita otra expansión de contenido para ejecutar esta aceptación.
 
-Servidor, cuentas y duetos públicos por Internet quedan fuera de este cierre. Los experimentos locales de conexión no equivalen a un servicio público multiusuario. El próximo ciclo debe definir autenticación, persistencia, sincronía, moderación operativa y costes antes de publicar ese servicio.
+## Próximo ciclo: servicio público
+
+Servidor, cuentas públicas y duetos por Internet quedan fuera de este cierre. Existe un servidor opcional local probado; no equivale a un servicio público desplegado. Vercel sirve el juego estático.
+
+El siguiente ciclo debe definir host/SQLite o base gestionada, autenticación, copias por usuario y recuperación, concurrencia entre dispositivos, salas/sincronía con latencia real, límites operativos y costes. La colección de largo plazo necesita archivo/migración antes de superar el almacenamiento local. Priorizar esas decisiones y la evidencia de sesiones reales sobre añadir más catálogos.

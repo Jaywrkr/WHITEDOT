@@ -8,3 +8,5 @@ let strikes=0;r.MU.near=[{x:0,y:0},{x:10,y:10,snd:()=>{assert.equal(origin,'fiel
 quiet(r);r.quietState.stage=4;const previous=sounds.length;r.quietStep(0,0,2);assert(sounds.length>previous,'the place voice has a source cue');r.quietPreview(140);assert.equal(freq.at(-1)[0],900,'quiet filter returns to the prior cutoff, not a fixed bright value');assert(sounds.some(v=>v[0].id==='quiet:filter'));
 r.body.speed=0;r.quietState.anchor={x:0,y:0};r.quietState.key=d.key;const seconds=r.quietState.seconds;muted=true;r.quietTick(.05);assert.equal(r.quietState.seconds,seconds,'zero-volume quiet time never earns listening');
 console.log('PASS source-linked power/quiet notes, creative patches, sparse magnet playback, prior-filter restoration and inaudible quiet guard');
+
+r.givePower('campo');for(let i=0;i<30;i++)r.cajasTick(.05);assert.equal(r.powerFieldRadius(),170);r.givePower('campo');assert.equal(r.powerFieldRadius(),170);for(let i=0;i<151;i++)r.cajasTick(1);assert.equal(r.powerFieldRadius(),170,'the actual field used by audio and drawing stays open when stacked');

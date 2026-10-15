@@ -1,5 +1,16 @@
 # Probar el universo vivo
 
+## Pulido F8 · Cierre integrado y revisión final
+
+1. En el preview final, abre Menú → Tu recorrido → Practicar. Aprende con el cubo sin borrar progreso.
+2. Guarda desde el marcador; toca el nombre del lugar, viaja y vuelve al punto anterior.
+3. Abre Bitácora: revisa resúmenes, despliega una región y compara Música y Colección.
+4. Escucha Pincel, Campo, un caminante, una reliquia y materiales de percusión con volumen constante.
+5. Recarga con un poder activo y un regalo pendiente: comprueba tiempo y progreso conservados.
+6. Renueva un Campo de escucha activo: su círculo permanece abierto, también al recargar.
+7. Prueba vertical/horizontal, suspender/reanudar audio y abrir offline después de una carga completa.
+8. Anota WD1, gesto y teléfono si algo se enmascara, fatiga o falla.
+
 ## Pulido F7 · Cada sonido vuelve a su fuente
 
 1. Con Pincel activo, dibuja caminando. Observa qué marca suena y escucha su instrumento.
