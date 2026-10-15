@@ -17,7 +17,7 @@ try:
   url=f'http://127.0.0.1:{server.server_port}/?testSeed=memory-patch&encounter=weaver'
   page.goto(url);page.wait_for_function('__testRuntime?.encounterObjects.some(o=>o.id==="preview:weaver")')
   page.evaluate('''()=>{const r=__testRuntime,o=r.encounterObjects.find(o=>o.id==='preview:weaver');document.querySelectorAll('.modal').forEach(m=>m.hidden=true);const a=r.depthAnchors(o);r.depthConnect(o,a[0],a[1]);r.depthConnect(o,a[1],a[2]);r.addFavorite('Mi tejido');r.save();}''')
-  saved=page.evaluate('JSON.stringify(__testRuntime.S.worldMemory.patches["preview:weaver"])');stamp=page.evaluate('__testRuntime.favorites[0].musicStamp');assert stamp['version']==1
+  saved=page.evaluate('JSON.stringify(__testRuntime.S.worldMemory.patches["preview:weaver"])');stamp=page.evaluate('__testRuntime.favorites[0].musicStamp');assert stamp['version']==2 and stamp['musicVersion']==1 and stamp['mode']=='live'
   page.reload();page.wait_for_function('__testRuntime?.encounterObjects.some(o=>o.id==="preview:weaver"&&o.state.weave?.edges.length===2)')
   assert page.evaluate('JSON.stringify(__testRuntime.S.worldMemory.patches["preview:weaver"])')==saved
   page.evaluate('''()=>{const r=__testRuntime,o=r.encounterObjects.find(o=>o.id==='preview:weaver');document.querySelectorAll('.modal').forEach(m=>m.hidden=true);const a=r.depthAnchors(o);r.depthConnect(o,a[0],a[1]);r.save();}''')

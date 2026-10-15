@@ -12,7 +12,7 @@
 | L3 · Músicos, ritmos y frases | `feat/lab-l3-interpretacion` | Implementada y probada; subida para PR de Jay |
 | L4 · Paisaje como instrumento | `feat/lab-l4-paisaje` | Implementada y probada; subida para PR de Jay |
 | L5 · Aprender jugando | `feat/lab-l5-aprendizaje` | Implementada y probada; subida para PR de Jay |
-| L6 · Evolución, viajes y memoria | `feat/lab-l6-exploracion` | Pendiente |
+| L6 · Evolución, viajes y memoria | `feat/lab-l6-exploracion` | Implementada y probada; subida para PR de Jay |
 | L7 · Curaduría y cierre | `feat/lab-l7-curaduria` | Pendiente |
 <!-- /laboratorio-vivo -->
 

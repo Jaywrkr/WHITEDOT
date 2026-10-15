@@ -10,3 +10,6 @@ export function placeAddress(identity,x,y,layer='superficie'){
  if(!supportedWorld(identity)||!Number.isFinite(x)||!Number.isFinite(y)||Math.abs(x)>=1e12||Math.abs(y)>=1e12||!['superficie','bajo','cielo'].includes(layer))throw Error('Dirección de lugar inválida');
  return {...identity,x,y,layer};
 }
+
+// Music is optional address metadata; it never changes geography or save scope.
+export function supportedMusic(value){return value?.musicVersion===undefined||value.musicVersion===1&&['live','classic'].includes(value.musicMode);}

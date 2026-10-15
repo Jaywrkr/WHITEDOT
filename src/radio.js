@@ -98,7 +98,7 @@ export function createRadio(seedOf, rng, genres, {living=()=>false}={}) {
     energy += (target - energy) * .25;
     const frame={ ...arrangement, harmonyBar:bar-startBar, energy, genre: region.genre };
     const native=hybridArrangement(frame,region,bar-startBar,environment.room?null:hybridIdentity(region,seedOf,rng),genres);
-    return alive?labArrangement(native,labScore(region,seedOf,rng)):native;
+    return alive?labArrangement(native,labScore(region,seedOf,rng),environment):native;
   }
   return { advance };
 }

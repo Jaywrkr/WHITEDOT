@@ -25,11 +25,12 @@ export function initialize(runtime) {
   runtime.$("bSoft").onclick=()=>{runtime.S.softMusic=!runtime.S.softMusic;runtime.$("bSoft").setAttribute('aria-pressed',String(runtime.S.softMusic));runtime.audio();runtime.applyComfort();runtime.toast(runtime.S.softMusic?'Calma · sí':'Calma · no');runtime.save();};
   runtime.$("bSoft").setAttribute('aria-pressed',String(!!runtime.S.softMusic));
   const livingUI=()=>{runtime.$('bLivingMusic').setAttribute('aria-pressed',String(runtime.S.livingMusic!==false));runtime.$('bLivingMusic').textContent=runtime.S.livingMusic===false?'Paisaje clásico':'Paisaje vivo';};
+  Object.defineProperty(runtime,'refreshLivingMusic',{get:()=>livingUI});
   runtime.$('bLivingMusic').onclick=()=>{runtime.S.livingMusic=runtime.S.livingMusic===false;livingUI();runtime.save();};livingUI();
   runtime.$("bMusicSettings").onclick=()=>{styleUI();runtime.$("mMusic").hidden=false;};
   const rs=runtime.$("rStyle");
   const styleName=I=>I<.2?"Ambiente":I<.45?"Minimal":I<.72?"Deep":"Underground";
-  function styleUI(){runtime.$("bSoft").setAttribute("aria-pressed",String(!!runtime.S.softMusic));runtime.$("rVolume").value=Math.round((runtime.S.outputVolume??1)*100);const I=runtime.style();rs.value=Math.round(I*100);runtime.$("styleNow").textContent=styleName(I);runtime.$("muMute").textContent=runtime.S.sound?"Silenciar":"Activar sonido";runtime.$("bSound").querySelector("span").textContent=runtime.S.sound?"Sonido: sí":"Sonido: no";runtime.$("bSound").setAttribute('aria-pressed',String(!!runtime.S.sound));}
+  function styleUI(){livingUI();runtime.$("bSoft").setAttribute("aria-pressed",String(!!runtime.S.softMusic));runtime.$("rVolume").value=Math.round((runtime.S.outputVolume??1)*100);const I=runtime.style();rs.value=Math.round(I*100);runtime.$("styleNow").textContent=styleName(I);runtime.$("muMute").textContent=runtime.S.sound?"Silenciar":"Activar sonido";runtime.$("bSound").querySelector("span").textContent=runtime.S.sound?"Sonido: sí":"Sonido: no";runtime.$("bSound").setAttribute('aria-pressed',String(!!runtime.S.sound));}
   rs.oninput=()=>{runtime.S.style=rs.value/100;styleUI();runtime.audio();if(runtime.S.style>=.9)runtime.unlock("under");};
   rs.onchange=()=>runtime.save();
   runtime.$("bSound").onclick=()=>{runtime.S.sound=!runtime.S.sound;styleUI();runtime.audio();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);runtime.toast(runtime.S.sound?"<em>Música</em> · activada":"<em>Música</em> · en silencio");runtime.save();};
