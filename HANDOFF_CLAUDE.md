@@ -1,3 +1,15 @@
+# Handoff vigente · Laboratorio Vivo L3
+
+Rama `feat/lab-l3-interpretacion`, versión 2.1.0-alpha.3. L1–L7 autorizadas consecutivamente; continuar desde esta rama sin esperar confirmación. Jay mantiene PR/merge. [Plan](PLAN_LABORATORIO_VIVO.md).
+
+- La interpretación añade golpes 3:2 contra el bombo binario, articulaciones propias y pequeños pickups. Las membranas y caja acústica sustituyen golpes anteriores sin duplicar capas.
+- Bajos y motivos alternan pregunta, respuesta, resolución y descanso durante ocho compases; se mantienen escala, tempo, registro y límites de eventos. Los offsets fraccionarios llegan al reloj real de Web Audio.
+- Validación: 100 suites Node, dos recorridos afectados y doce mezclas territoriales densas en 44.1/48 kHz. El modo clásico y transporte de duetos conservan su contrato anterior.
+
+Auditoría aprobada; 100 suites Node, 2 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l3-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+
+## Entregas anteriores
+
 # Handoff vigente · Laboratorio Vivo L2
 
 Rama `feat/lab-l2-instrumentos`, versión 2.1.0-alpha.2. L1–L7 autorizadas consecutivamente; continuar desde esta rama sin esperar confirmación. Jay mantiene PR/merge. [Plan](PLAN_LABORATORIO_VIVO.md).

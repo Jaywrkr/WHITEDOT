@@ -1,3 +1,13 @@
+# Laboratorio Vivo L3 · 2.1.0-alpha.3
+
+Rama `feat/lab-l3-interpretacion`. Jay mantiene PR/merge.
+
+- La interpretación añade golpes 3:2 contra el bombo binario, articulaciones propias y pequeños pickups. Las membranas y caja acústica sustituyen golpes anteriores sin duplicar capas.
+- Bajos y motivos alternan pregunta, respuesta, resolución y descanso durante ocho compases; se mantienen escala, tempo, registro y límites de eventos. Los offsets fraccionarios llegan al reloj real de Web Audio.
+- Validación: 100 suites Node, dos recorridos afectados y doce mezclas territoriales densas en 44.1/48 kHz. El modo clásico y transporte de duetos conservan su contrato anterior.
+
+Auditoría aprobada; 100 suites Node, 2 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l3-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+
 # Laboratorio Vivo L2 · 2.1.0-alpha.2
 
 Rama `feat/lab-l2-instrumentos`. Jay mantiene PR/merge.

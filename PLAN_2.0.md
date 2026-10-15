@@ -9,7 +9,7 @@
 |---|---|---|
 | L1 · Identidad completa del territorio | `feat/lab-l1-adn-territorial` | Implementada y probada; subida para PR de Jay |
 | L2 · Instrumentos y técnicas | `feat/lab-l2-instrumentos` | Implementada y probada; subida para PR de Jay |
-| L3 · Músicos, ritmos y frases | `feat/lab-l3-interpretacion` | Pendiente |
+| L3 · Músicos, ritmos y frases | `feat/lab-l3-interpretacion` | Implementada y probada; subida para PR de Jay |
 | L4 · Paisaje como instrumento | `feat/lab-l4-paisaje` | Pendiente |
 | L5 · Aprender jugando | `feat/lab-l5-aprendizaje` | Pendiente |
 | L6 · Evolución, viajes y memoria | `feat/lab-l6-exploracion` | Pendiente |
