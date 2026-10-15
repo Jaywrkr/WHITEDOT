@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {createRewardsCatalog,REWARDS_CATALOG,REWARD_RARITIES,migrateRewards,normalizeRewards,awardReward,rewardSource,rewardDate} from '../src/rewards-model.js';
 import {CUBE_COLORS,CUBE_TRAILS,CUBE_HALOS,normalizeCube} from '../src/cube-model.js';
 const catalog=createRewardsCatalog([['oculto1','Secreto','Descubre',true],['mundo','Mundo','Explora']]);
+const recoveredTier=migrateRewards({rareBook:{items:[{type:'culture:artifact',odds:{tier:'singular'},day:'2026-10-15'}]}},catalog);assert(recoveredTier.items['finding:singular'],'saved card odds must restore the earned rarity reward');
 assert.equal(Object.keys(REWARD_RARITIES).length,5);
 assert.equal(REWARDS_CATALOG.filter(p=>['color','trail','halo'].includes(p.type)).length,13);
 assert(catalog.every(p=>p.id&&p.type&&p.rarity&&p.source&&p.hint));

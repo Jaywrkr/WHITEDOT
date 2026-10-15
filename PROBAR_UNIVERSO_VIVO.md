@@ -1,5 +1,13 @@
 # Probar el universo vivo
 
+## Novedad F7 · Hallazgos que puedes volver a tocar
+
+1. En Laboratorio → Culturas, escucha un guardián y sigue sus huellas.
+2. Completa una puerta y regresa al guardián: toca el resonador ganado.
+3. Busca sus dos habitantes: tienen formas, conductas y voces propias.
+4. Recupera una reliquia; al volver al punto, toca su marca pequeña.
+5. Revisa su tarjeta y código en el Libro. Recargar conserva el hallazgo.
+
 ## Novedad F6 · Percusión y gestos en primer plano
 
 1. Abre Laboratorio → Percusión; recorre piedra, vainas, tronco y charco.

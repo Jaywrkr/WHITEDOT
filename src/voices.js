@@ -1,3 +1,4 @@
+import {heritageVoice,relicVoice} from './heritage.js';
 import {playMaterialStrike} from './percussion-material.js';
 import {livingVoice} from './living-catalog.js';
 import {INSTRUMENT_SPECS} from './instruments.js';
@@ -55,6 +56,8 @@ export function initialize(runtime) {
   let voiceOrigin="ambient";
   function withVoiceOrigin(origin,emit){const previous=voiceOrigin;voiceOrigin=origin;try{return emit();}finally{voiceOrigin=previous;}}
   function rawVoice(kind, region, source) {
+    if(kind==='reliquia')return relicVoice(region,source,runtime.seedOf);
+    if(kind.startsWith('heritage:')){const v=heritageVoice(kind);if(v)return v;}
     if(kind.startsWith('living:')){const v=livingVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng,source);if(v)return v;}
     if(kind.startsWith('rhythm:')){const v=rhythmVoice(kind,region,runtime.seedOf);if(v)return v;}
     if(kind.startsWith('ecology:')&&region.ecology)return ecologyVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng);

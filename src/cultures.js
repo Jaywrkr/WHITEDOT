@@ -1,3 +1,4 @@
+import {culturalResidents,culturalResonators} from './heritage.js';
 import {CULTURES,ARTIFACTS,createSanctuary,normalizeCultureBook,captureStone,cultureNotes} from './culture-model.js';
 import {musicalCharacter,hookPitch} from './musical-character.js';
 import {segmentDistance} from './body.js';
@@ -15,7 +16,7 @@ export function initialize(runtime){
   if(!cache.has(key)){const d=runtime.regionOfPos((rx+.5)*size,(ry+.5)*size);
    cache.set(key,createSanctuary(d,size,runtime.regionOfPos,runtime.seedOf,runtime.rng,key==='0,0'?runtime.labCulture:null));
    while(cache.size>128)cache.delete(cache.keys().next().value);
-  }return cache.get(key);
+  }const site=cache.get(key);if(site&&!site.residents)site.residents=culturalResidents(site,runtime.seedOf);return site;
  }
  function nearby(radius=700){
   ensureOwner();
@@ -39,7 +40,8 @@ export function initialize(runtime){
   const c=CULTURES[site.culture],d=runtime.regionOfPos(S().wx,S().wy),profile=musicalCharacter(d.genre);
   // Shared root and quiet accompaniment; cultural phrase uses its own interval palette.
   const note=runtime.chordTones()[0]+interval;
-  runtime.hookInst(c.instrument,hookPitch(c.instrument,note,profile),time,volume,d);
+  const voice={instrument:c.instrument,role:'lead'},emit=()=>runtime.hookInst(c.instrument,hookPitch(c.instrument,note,profile),time,volume,d);
+  if(runtime.withInstrumentPatch)runtime.withInstrumentPatch('culture:'+site.culture,d,voice,site,time,emit);else emit();runtime.focusGesture?.(time,site,'lead');runtime.soundCue?.(site,'lead',time);runtime.cultureNoteCue?.({culture:site.culture,time,interval});
  }
  function playLesson(site,chapter,time){cultureNotes(site,chapter).forEach(n=>sound(site,n.interval,time+n.step*runtime.SIX,.032));}
  function reset(){cache.clear();lesson=null;sequence=[];door=null;contacts.clear();}
@@ -50,6 +52,7 @@ export function initialize(runtime){
   const touching=new Set();
   for(const site of nearby(650)){
    const progress=S().cultures.collections[site.culture]||0,c=CULTURES[site.culture];
+   for(const resonator of culturalResonators(site,progress))if(dist(resonator)<17){touching.add(resonator.id);if(!contacts.has(resonator.id)){const state=S();runtime.beatSoon(t=>{if(state!==S()||!audible()||dist(resonator)>55)return;runtime.playVoice(resonator.voice,0,t,site.region,true,.6,resonator,'player');},null,'player');}}
    if(dist(site)<55){
     if(progress===3){if(clock-lastReplay>12){lastReplay=clock;runtime.beatSoon(t=>playLesson(site,2,t),null,'player');}continue;}
     const e=entry(site);
@@ -74,7 +77,7 @@ export function initialize(runtime){
     });
    }
    if(e.open&&dist(route.relic)<23){
-    S().cultures.collections[site.culture]=progress+1;lesson=null;door=null;sequence=[];
+    S().cultures.collections[site.culture]=progress+1;runtime.collectRareCard?.('culture:artifact',{...route.relic,id:site.id+':artifact:'+progress},{name:ARTIFACTS[progress]+' · '+c.name,artVariant:progress,context:{study:c.reference,gesture:'llamada y puerta',role:['lead','perc','acorde'][progress]}});lesson=null;door=null;sequence=[];
     runtime.beatSoon(t=>playLesson(site,progress,t),null,'player');runtime.unlock('reliquiaCultural');
     if(progress===2)runtime.unlock('culturaCompleta');runtime.save();
     runtime.toast(`<em>${ARTIFACTS[progress]}</em> · ${c.name} · ${progress+1}/3. Vuelve al guardián para la próxima llamada.`);
@@ -99,6 +102,7 @@ export function initialize(runtime){
   const label=(p,text)=>{if(dist(p)>100)return;ctx.save();ctx.font='10px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillStyle='#e2ded1';ctx.globalAlpha=.85;ctx.fillText(text,p.x+ox,p.y+oy+40,Math.min(280,runtime.W-28));ctx.restore();};
   for(const site of nearby(650)){
    const c=CULTURES[site.culture],col=elementInk('glass',c.hue),chapter=S().cultures.collections[site.culture]||0,e=S().cultures.sites[site.id];
+   for(const r of culturalResonators(site,chapter)){mark(r,6,runtime.GOLD,2);label(r,['Toca tu voz recuperada','Toca tu ritmo recuperado','Toca tu armonía recuperada'][r.index]);}
    mark(site,18,col); // Original compact guardian; glyph details distinguish the eight studies.
    if(dist(site)<450){ctx.save();ctx.strokeStyle=col;ctx.globalAlpha=.5;ctx.beginPath();for(let i=0;i<3+c.glyph%4;i++){const a=i/(3+c.glyph%4)*TAU;ctx.moveTo(site.x+ox+Math.cos(a)*24,site.y+oy+Math.sin(a)*24);ctx.lineTo(site.x+ox+Math.cos(a)*29,site.y+oy+Math.sin(a)*29);}ctx.stroke();ctx.restore();}
    if(lesson?.site===site&&lesson.onsets){ctx.save();ctx.fillStyle=col;for(let i=0;i<4;i++){const on=lesson.onsets.find(n=>n.stone===i),lit=on&&Math.abs(runtime.ac.currentTime-on.time)<.22;ctx.globalAlpha=lit?1:.25;ctx.beginPath();ctx.arc(site.x+ox+(i-1.5)*10,site.y+oy+19,lit?3:1.5,0,TAU);ctx.fill();}ctx.restore();}
@@ -112,8 +116,8 @@ export function initialize(runtime){
  }
  function card(){ensureOwner();const entries=Object.entries(S().cultures.collections);const heard=Object.values(S().cultures.sites).filter(e=>e.heard).length;
   if(!entries.length&&!heard)return '';
-  return `<article class="journal-card"><h3>Guardianes y recuerdos</h3><p>${heard} llamadas escuchadas. ${entries.map(([id,n])=>`${CULTURES[id].name}: ${n}/3`).join(' · ')}</p><p>Escucha al guardián, cruza dos huellas, recorre las cuatro piedras en el orden de su llamada y alcanza el instrumento. Los recuerdos quedan; puedes regresar para escucharlos.</p></article>`;
+  return `<article class="journal-card"><h3>Guardianes y recuerdos</h3><p>${heard} llamadas escuchadas. ${entries.map(([id,n])=>`${CULTURES[id].name}: ${n}/3`).join(' · ')}</p><p>Escucha al guardián, cruza dos huellas, recorre las cuatro piedras en el orden de su llamada y alcanza el instrumento. Los recuerdos quedan; puedes regresar para tocarlos junto al guardián.</p></article>`;
  }
  runtime.ACH.push(['guardian1','Otra voz del mundo','Escucha una llamada completa de un guardián.'],['puertaMusical','Una llamada es una llave','Abre una puerta recorriendo sus piedras.'],['reliquiaCultural','Un recuerdo despierto','Recupera un instrumento del santuario.'],['culturaCompleta','Tres recuerdos','Recupera los tres recuerdos de un estudio cultural.']);
- Object.defineProperties(runtime,{cultureTick:{get:()=>tick},drawCultures:{get:()=>draw},cultureTargets:{get:()=>targets},cultureCard:{get:()=>card},cultureHome:{get:()=>()=>siteIn(0,0)},nearbyCultures:{get:()=>nearby},cultureReset:{get:()=>reset},cultureListening:{get:()=>!!lesson}});
+ Object.defineProperties(runtime,{cultureTick:{get:()=>tick},drawCultures:{get:()=>draw},cultureTargets:{get:()=>targets},cultureCard:{get:()=>card},cultureHome:{get:()=>()=>siteIn(0,0)},nearbyCultures:{get:()=>nearby},cultureResidents:{get:()=>radius=>nearby(radius+120).flatMap(s=>s.residents||[]).filter(o=>dist(o)<radius)},cultureReset:{get:()=>reset},cultureListening:{get:()=>!!lesson}});
 }

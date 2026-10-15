@@ -28,6 +28,10 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Versión **1.1.0** · [C
 
 `feat/cierre-f6-interacciones` continúa la fase anterior. Los gestos dejan espacio en el acompañamiento; nueve materiales tienen golpes propios y señales locales más legibles. [Plan vigente](PLAN_CIERRE_2.0.md) · [Pruebas](scripts/cierre-f6-validation.json).
 
+## Cierre · fase 7 · Hallazgos que puedes volver a tocar
+
+`feat/cierre-f7-hallazgos` continúa la fase anterior. Las reliquias recuperadas conservan una voz en su punto; los santuarios reúnen habitantes coherentes y tres recuerdos utilizables. [Plan vigente](PLAN_CIERRE_2.0.md) · [Pruebas](scripts/cierre-f7-validation.json).
+
 ## Cierre · fase 1 · identidades completas
 
 `feat/cierre-f1-identidades` parte de `main 6702093`, que ya integra M1. Ocho gramáticas de paisaje unen contornos, espacio vacío, materiales, habitantes comunes y carácter musical: cauces, raíces, terrazas, órbitas, arrecifes, bóvedas, estratos e islas. Variantes deterministas, no ocho mapas cerrados ni nuevos géneros: permanecen los 11 biomas y 52 estilos.

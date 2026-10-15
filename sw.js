@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-1.1.0-cierre-f6';
+const CACHE='whitedot-1.1.0-cierre-f7';
 const SHELL=[
  "./src/musical-hybrids.js",
  "./src/modular-synth.js",
@@ -82,6 +82,7 @@ const SHELL=[
  "./src/favorites.js",
  "./src/feedback.js",
  "./src/foreground.js",
+ "./src/heritage.js",
  "./src/percussion-material.js",
  "./src/focusui.js",
  "./src/fxpad.js",

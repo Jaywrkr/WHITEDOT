@@ -43,7 +43,7 @@ export function initialize(runtime){
  function collect(type,source,extra={}){
   const book=ensure();if(!runtime.inWorld()||!rareDefinition(type))return false;
   const card=descriptor(type,source,extra);if(!card)return false;
-  const result=storeRareCard(book,card);if(result==='added')runtime.recordRewardSource?.('finding',card.tier==='legendario'?'singular':card.tier);
+  const result=storeRareCard(book,card);if(result==='added')runtime.recordRewardSource?.('finding',card.odds.tier==='legendario'?'singular':card.odds.tier);
   if(result==='full'){if(!fullNoticed){fullNoticed=true;runtime.toast?.('Libro completo. Guarda tus tarjetas: Menú → Guardar copia.');}return false;}
   if(result==='duplicate'&&card.context?.phase){const original=book.items.find(c=>c.id===card.id);const next={at:new Date().toISOString(),phase:card.context.phase,weather:card.context.weather||''};if(!original.observations.some(o=>o.phase===next.phase&&o.weather===next.weather)){original.observations.push(next);if(original.observations.length>8)original.observations.shift();runtime.save();}}
   if(result!=='added')return false;
@@ -80,7 +80,7 @@ export function initialize(runtime){
   </article>`;
  }
  function cards(){
-  const items=ensure().items,mapped=items.map((c,index)=>({c,index})).filter(({c})=>filter==='todo'||(filter==='vida'?c.type.startsWith('living:'):filter==='culturas'?c.type==='living:study':filter==='fenomenos'?c.type.startsWith('anomaly:')||c.type.startsWith('event:'):filter==='cajas'?c.type.startsWith('box:')||c.type.startsWith('petbox:'):livingDefinition(c.type.slice(7))?.group===filter)),pages=Math.max(1,Math.ceil(mapped.length/RARE_PAGE_SIZE));page=Math.max(0,Math.min(page,pages-1));$('rareCodeFallback').hidden=true;
+  const items=ensure().items,mapped=items.map((c,index)=>({c,index})).filter(({c})=>filter==='todo'||(filter==='vida'?c.type.startsWith('living:'):filter==='culturas'?(c.type==='living:study'||c.type==='culture:artifact'):filter==='fenomenos'?c.type.startsWith('anomaly:')||c.type.startsWith('event:'):filter==='cajas'?c.type.startsWith('box:')||c.type.startsWith('petbox:'):livingDefinition(c.type.slice(7))?.group===filter)),pages=Math.max(1,Math.ceil(mapped.length/RARE_PAGE_SIZE));page=Math.max(0,Math.min(page,pages-1));$('rareCodeFallback').hidden=true;
   if(!items.length)return '<article class="journal-card"><h3>Libro de hallazgos</h3><p>Lo raro deja una tarjeta: fósiles, reliquias, anomalías, cajas naturales y compañía de caja. Encuentra algo y el libro guardará su lugar.</p></article>';
   const list=mapped.reverse().slice(page*RARE_PAGE_SIZE,(page+1)*RARE_PAGE_SIZE);
   return `<div class="rare-book-head"><label for="rareFilter">Colección</label><select id="rareFilter">${[['todo','Todos'],['vida','Universo vivo'],['flora','Flora'],['fauna','Fauna'],['architecture','Construcciones'],['culturas','Estudios'],['fenomenos','Fenómenos'],['cajas','Cajas y visitas']].map(([id,name])=>'<option value="'+id+'" '+(filter===id?'selected':'')+'>'+name+'</option>').join('')}</select><h3>Libro de hallazgos · ${items.length}</h3><p>Cada encuentro tiene su tarjeta. Volver al mismo ejemplar no duplica; otro lugar sí. El código conserva semilla, versiones, capa y coordenadas.</p></div><div class="rare-grid">${list.map(({c,index})=>cardHTML(c,index)).join('')}</div>

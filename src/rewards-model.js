@@ -69,7 +69,7 @@ export function migrateRewards(state,catalog=REWARDS_CATALOG,{at=null,legacy=tru
  if(state.ach?.bajo1)give('layer','bajo',rewardDate(state.ach.bajo1));
  if(state.ach?.cielo1)give('layer','cielo',rewardDate(state.ach.cielo1));
  for(const [id,date]of Object.entries(state.ach||{}))if(date&&id.startsWith('poder_'))give('box',id.slice(6),rewardDate(date));
- for(const card of state.rareBook?.items||[])if(card&&typeof card.type==='string'){give('finding',card.tier==='legendario'?'singular':card.tier,rewardDate(card.firstSeen)||rewardDate(card.day));if(card.type==='event:convergence')give('weather','convergencia',rewardDate(card.firstSeen));}
+ for(const card of state.rareBook?.items||[])if(card&&typeof card.type==='string'){give('finding',(card.odds?.tier||card.tier)==='legendario'?'singular':(card.odds?.tier||card.tier),rewardDate(card.firstSeen)||rewardDate(card.day));if(card.type==='event:convergence')give('weather','convergencia',rewardDate(card.firstSeen));}
  // A selected legacy cosmetic is evidence of ownership even if its old flag is absent.
  for(const [type,value]of [['color',state.cube?.color||state.color],['trail',state.cube?.trail],['halo',state.cube?.halo]]){
   const p=catalog.find(p=>p.type===type&&p.value===value);if(p)awardReward(book,p.id,catalog,{source:'legacy:selection',legacy:true});

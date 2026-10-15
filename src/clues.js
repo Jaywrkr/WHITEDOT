@@ -8,7 +8,7 @@ export function initialize(runtime){
  function tick(){direction=runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'?clueDirection(runtime.S.wx,runtime.S.wy,runtime.nearbyRelics()):null;}
  function draw(){
   if(!direction||direction.distance<100||direction.distance>900||runtime.scanning||document.querySelector('.modal:not([hidden])'))return;
-  const c=runtime.cx;c.save();c.globalAlpha=.16;c.fillStyle=runtime.GOLD;
+  const c=runtime.cx;c.save();c.globalAlpha=.16;c.fillStyle='#9fe8ff';
   for(let i=0;i<3;i++){const r=85+i*9;c.beginPath();c.arc(runtime.W/2+Math.cos(direction.angle)*r,runtime.H/2+Math.sin(direction.angle)*r,1.4,0,Math.PI*2);c.fill();}c.restore();
  }
  function bar(time,bar){
