@@ -1,3 +1,13 @@
+# Experiencia · fase 9
+
+Rama `feat/experiencia-09-creacion`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Hasta cuatro tarjetas forman voces físicas en casa: función e instrumento del encuentro, posición editable y hasta ocho jardines conservados. Las tarjetas no se consumen; visitas quedan separadas y se comparte el presupuesto de cuatro voces por paso.
+
+Validación: Auditoría/Node completos; experience_garden_smoke y house_v2_smoke; experience_garden_mix y house_mix. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 8
 
 Rama `feat/experiencia-08-atlas`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.

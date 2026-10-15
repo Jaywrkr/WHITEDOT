@@ -1,3 +1,9 @@
+# Experiencia 9 · Coleccionar para crear
+
+Rama `feat/experiencia-09-creacion`. Hasta cuatro tarjetas forman voces físicas en casa: función e instrumento del encuentro, posición editable y hasta ocho jardines conservados. Las tarjetas no se consumen; visitas quedan separadas y se comparte el presupuesto de cuatro voces por paso.
+
+Validación: Auditoría/Node completos; experience_garden_smoke y house_v2_smoke; experience_garden_mix y house_mix. Jay mantiene PR/merge.
+
 # Experiencia 8 · Atlas y expediciones sonoras
 
 Rama `feat/experiencia-08-atlas`. Atlas visual con búsquedas optativas de voces complementarias, pistas locales discretas y relaciones conservadas al interactuar con otro habitante real. Sin flechas, premios artificiales ni sonido de botones. Estudios culturales previos conservan su identificación como creaciones originales.

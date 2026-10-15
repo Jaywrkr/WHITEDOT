@@ -1,0 +1,17 @@
+import {normalizeGarden,addGardenCard,gardenScore,saveGardenSet} from './garden-model.js';
+import {livingDefinition} from './living-catalog.js';
+import {INSTRUMENT_SPECS} from './instruments.js';
+export function initialize(runtime){let owner=null,signature='',builtAt=-Infinity,objects=[],definitions=new Map();
+ function book(){if(owner!==runtime.S){owner=runtime.S;owner.collectionGarden=normalizeGarden(owner.collectionGarden);signature='';}return owner.collectionGarden;}
+ function build(h){const b=book();if(h!==runtime.S.house||h.readOnly)return [];const now=performance.now();if(signature&&now-builtAt<16)return objects;builtAt=now;const key=JSON.stringify([b.cards,b.positions,b.cards.slice(0,4).map(id=>{const c=runtime.rareCards.find(c=>c.id===id);return [c?.id,c?.learning?.selected];})]);if(signature===key)return objects;signature=key;definitions.clear();objects=[];
+  for(const [i,id]of b.cards.slice(0,4).entries()){const card=runtime.rareCards.find(c=>c.id===id);if(!card)continue;const score=gardenScore(card,i,b.positions[id]),candidate=card.context?.instrument?.split(' · ').at(-1),fallback={bajo:'reedbass',perc:'handslap',acorde:'duskpad',lead:'silkpluck'},instrument=INSTRUMENT_SPECS[candidate]?candidate:fallback[score.role],shape=livingDefinition(card.type.slice(7))?.shape||['seed','pods','wave','branch'][i];objects.push({...score,gardenCard:true});definitions.set(score.kind,{name:card.name,instrument,role:score.role,shape,technique:card.learning?.selected||'normal'});}
+  return objects;
+ }
+ function definition(o){build(runtime.currentHouse());return definitions.get(o.kind)||null;}
+ function move(kind,point){const b=book();if(b.readOnly)return false;const o=build(runtime.currentHouse()).find(o=>o.kind===kind);if(!o)return false;b.positions[o.cardId]={...point};signature='';return true;}
+ function add(card){if(addGardenCard(book(),card)){runtime.save();runtime.toast('Una voz espera en tu casa.');runtime.refreshJournal?.();}else runtime.toast(book().cards.includes(card.id)?'Esta voz ya vive en tu jardín.':'Tu jardín reúne hasta cuatro voces.');}
+ function ui(){const b=book(),area=runtime.$('gardenSlots');area.replaceChildren();for(const id of b.cards){const card=runtime.rareCards.find(c=>c.id===id),button=document.createElement('button');button.textContent=(card?.name||'Recuerdo conservado')+' ×';button.disabled=!!b.readOnly;button.onclick=()=>{b.cards=b.cards.filter(c=>c!==id);runtime.save();signature='';ui();};area.append(button);}runtime.$('gardenSave').disabled=!!b.readOnly||!b.cards.length||b.sets.length>=8;const select=runtime.$('gardenSets');select.replaceChildren(new Option('Tus jardines',''));b.sets.forEach((s,i)=>select.add(new Option(s.name||'Jardín '+(i+1),String(i))));select.disabled=!!b.readOnly;}
+ runtime.$('journalBody').addEventListener('click',e=>{const button=e.target.closest('[data-garden-add]');if(button){const card=runtime.rareCards[Number(button.dataset.gardenAdd)];if(card)add(card);}});
+ runtime.$('houseGardenTools').addEventListener('toggle',ui);runtime.$('gardenSave').onclick=()=>{if(saveGardenSet(book())){runtime.save();ui();}};runtime.$('gardenSets').onchange=e=>{const b=book(),s=b.sets[Number(e.target.value)];if(e.target.value===''||!s||!Array.isArray(s.cards)||!s.positions||b.readOnly)return;b.cards=[...s.cards];b.positions=structuredClone(s.positions);signature='';runtime.save();ui();};
+ Object.defineProperties(runtime,{gardenObjects:{get:()=>build},gardenDefinition:{get:()=>definition},moveGardenObject:{get:()=>move},gardenState:{get:()=>book()}});
+}

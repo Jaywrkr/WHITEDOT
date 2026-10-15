@@ -12,7 +12,7 @@ Jay autorizó las catorce fases. Una rama por fase, encadenadas. Codex commit/pu
 | 6 | Tarjetas ganadas en encuentros | `feat/experiencia-06-hallazgos` | Implementada; validación registrada abajo |
 | 7 | Rareza y observaciones útiles | `feat/experiencia-07-rareza` | Implementada; validación registrada abajo |
 | 8 | Atlas y expediciones sonoras | `feat/experiencia-08-atlas` | Implementada; validación registrada abajo |
-| 9 | Coleccionar para crear | `feat/experiencia-09-creacion` | Pendiente |
+| 9 | Coleccionar para crear | `feat/experiencia-09-creacion` | Implementada; validación registrada abajo |
 | 10 | Profundidad musical | `feat/experiencia-10-musica` | Pendiente |
 | 11 | Espejos y percepción | `feat/experiencia-11-optica` | Pendiente |
 | 12 | Biodiversidad territorial | `feat/experiencia-12-ecosistemas` | Pendiente |
@@ -90,3 +90,9 @@ Validación: Auditoría/Node completos; living-cards_smoke y discovery_pacing_sm
 Atlas visual con búsquedas optativas de voces complementarias, pistas locales discretas y relaciones conservadas al interactuar con otro habitante real. Sin flechas, premios artificiales ni sonido de botones. Estudios culturales previos conservan su identificación como creaciones originales.
 
 Validación: Auditoría/Node completos; living-cards_smoke y journal_v2_smoke; audio sin cambios. Aceptación física y CI del PR, separados.
+
+## Entrega 9 · Coleccionar para crear
+
+Hasta cuatro tarjetas forman voces físicas en casa: función e instrumento del encuentro, posición editable y hasta ocho jardines conservados. Las tarjetas no se consumen; visitas quedan separadas y se comparte el presupuesto de cuatro voces por paso.
+
+Validación: Auditoría/Node completos; experience_garden_smoke y house_v2_smoke; experience_garden_mix y house_mix. Aceptación física y CI del PR, separados.
