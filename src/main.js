@@ -1,3 +1,4 @@
+import {initialize as identityPlay} from './identity-play.js';
 import {initialize as performancePlay} from './performance.js';
 import {initialize as collectionGarden} from './collection-garden.js';
 import {initialize as atlasPlay} from './atlas-play.js';
@@ -158,7 +159,7 @@ encounterDepth(runtime);worldMemory(runtime);
 ecology(runtime);
 saveTools(runtime);
 accessibility(runtime);
-rareCards(runtime);atlasPlay(runtime);collectionGarden(runtime);performancePlay(runtime);
+rareCards(runtime);atlasPlay(runtime);collectionGarden(runtime);performancePlay(runtime);identityPlay(runtime);
 voiceGuide(runtime);
 livingSynthesis(runtime);living(runtime);livingBehavior(runtime);livingComposition(runtime);livingEcology(runtime);livingTerrain(runtime);livingBuildings(runtime);livingDiscoveries(runtime);connection(runtime);
 

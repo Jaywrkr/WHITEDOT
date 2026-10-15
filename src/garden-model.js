@@ -9,3 +9,5 @@ export function gardenScore(card,index,position={}){
  return {kind:'garden:'+card.id,cardId:card.id,room:['sala','jardin','azotea','sotano'].includes(p.room)?p.room:'sala',x:Number.isFinite(p.x)?Math.max(.05,Math.min(.95,p.x)):.22+(index%2)*.56,y:Number.isFinite(p.y)?Math.max(.1,Math.min(.9,p.y)):.3+Math.floor(index/2)*.4,role,seed,step:[0,6,10,14][index%4]};
 }
 export function saveGardenSet(garden){if(garden.readOnly||!garden.cards.length||garden.sets.length>=8)return false;garden.sets.push({name:'Jardín '+(garden.sets.length+1),cards:[...garden.cards],positions:structuredClone(garden.positions)});return true;}
+
+export function gardenBirth(garden,cards){return !garden.readOnly&&garden.sets.length>0&&cards.length>=3&&new Set(cards.map(c=>gardenScore(c,0).role)).size>=3;}

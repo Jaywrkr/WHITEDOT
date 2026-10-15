@@ -1,3 +1,9 @@
+# Experiencia 13 · Identidad y constelaciones
+
+Rama `feat/experiencia-13-identidad`. Constelaciones de fuentes realmente tocadas, guardado independiente, imagen 1080×1350 y regreso por dirección completa. Las voces coleccionadas pueden llevarse a casa. Un jardín guardado con tres funciones diferentes origina un brote musical local; sigue al cubo y comparte el presupuesto de voces.
+
+Validación: Auditoría/Node completos; experience_identity_smoke, experience_garden_smoke, house_v2_smoke y ui_silence_smoke; experience_garden_mix. Jay mantiene PR/merge.
+
 # Experiencia 12 · Biodiversidad territorial
 
 Rama `feat/experiencia-12-ecosistemas`. Se incorporan veinte linajes y doce familias acústicas: 48 linajes, 21 percusiones, 70 tarjetas y 243 destinos de laboratorio. Veintidós ecorregiones se distribuyen sobre los once biomas originales; no cambian sus posiciones ni generadores. Rasgos, anatomías, agrupaciones y semillas nuevas independientes.

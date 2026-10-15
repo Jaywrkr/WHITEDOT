@@ -1,6 +1,6 @@
 {
   "name": "whitedot",
-  "version": "2.2.0-alpha.12",
+  "version": "2.2.0-alpha.13",
   "private": true,
   "type": "module",
   "scripts": {

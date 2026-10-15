@@ -216,3 +216,5 @@ body.world-focus .goal{display:none}
 #houseGardenTools{font-size:10px;max-width:100%;margin:4px 0}#houseGardenTools summary{padding:8px;cursor:pointer}#houseGardenTools p{font-size:10px}#gardenSlots{display:flex;flex-wrap:wrap;gap:4px}#gardenSlots button{font-size:9px;min-height:44px}#gardenSave,#gardenSets{font-size:10px;min-height:40px}
 
 #mirrorPanel{max-width:min(280px,calc(100vw - 24px));background:#000}#mirrorPanel label,#mirrorInfo{font-size:10px;line-height:1.6}#mirrorPanel h3{font-size:12px}
+
+.musical-constellation svg{display:block;width:100%;max-width:240px;height:120px;stroke:#ffffff55;fill:#fff;stroke-width:.7}.musical-constellation svg path{fill:none}.musical-constellation summary{padding:12px 0;font-size:11px}.constellation-summary p,.constellation-summary small{font-size:10px;line-height:1.7}
