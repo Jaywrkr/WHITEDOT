@@ -1,4 +1,15 @@
-# Estado documental vigente · continuación automática
+# Handoff vigente · auditoría de aceptación 2.0.0-rc.9
+
+Rama `audit/cierre-2-validacion`, desde `10b74ed`. [Dictamen](AUDITORIA_ACEPTACION_2.0.md). No reiniciar fases ni pedir confirmación entre ramas autorizadas; Jay mantiene PR/merge.
+
+- A29: Favoritos verificaba tarde la escritura; podía confirmar éxito, otorgar logro y completar la guía con almacenamiento lleno o conflicto de pestaña. La regresión nativa reprodujo el fallo antes de corregirlo.
+- favorites.js confirma persistencia antes de logro/guía. Conserva el lugar en sesión y permite reintentar el mismo marcador sin duplicarlo. share-tools/rare-cards distinguen fallo de almacenamiento de límite de favoritos.
+- No cambian esquema de guardado, música, semillas ni coordenadas. Release y caché PWA pasan a rc.9.
+- Producción avanzó durante los merges de Jay: última instantánea 2.0.0-rc.2, revisión `52fec80`. Cierre F1–F10 y pulido F2 ya integrados; los checks de esa revisión están en cola. Preview F8 construido, pero protegido por login Vercel. No equivale a RC9 público ni a CI final aprobado.
+- Auditoría, 97 suites Node, 76 recorridos incluido offline y prueba HTTP/SQLite aprobados.
+- La evidencia actual está en `scripts/auditoria-cierre-rc9-validation.json`; los renders F8 se reutilizan con su alcance explícito porque no cambia el audio. Aceptación física/artística sigue separada.
+
+# Estado documental anterior · continuación automática
 
 Rama `docs/cierre-estado-unificado`, hija de `feat/pulido-f8-cierre` en `5d02c08`. Las ocho referencias de entrega están verificadas en remoto. PLAN_2.0 distingue ahora pendientes históricos de soluciones ya incluidas. No reiniciar fases ni esperar confirmación entre ramas autorizadas. Jay mantiene PR/merge.
 

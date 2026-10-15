@@ -1,0 +1,179 @@
+{
+  "observedAt": "2026-10-15T12:54:58.182594+00:00",
+  "auditedPreviewCommit": "5d02c08522d37a9c945706cea307567ee762e9fa",
+  "production": {
+    "url": "https://whitedot-inky.vercel.app/src/release-info.js",
+    "status": 200,
+    "contentType": "application/javascript; charset=utf-8",
+    "release": {
+      "version": "1.1.0",
+      "deployedAt": "2026-10-15T12:53:57.000Z",
+      "revision": "6e65fe0f648bc072080b8b96a8e1665161b64ea0"
+    }
+  },
+  "previewAccess": {
+    "requested": "https://whitedot-git-feat-pulido-f8-cierre-jaywrkr-1498s-projects.vercel.app/src/release-info.js",
+    "finalWithoutQuery": "https://vercel.com/login",
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "gameAccepted": false
+  },
+  "deployments": [
+    {
+      "id": 7084984532,
+      "environment": "Preview",
+      "createdAt": "2026-10-15T05:49:30Z"
+    }
+  ],
+  "deploymentStatuses": [
+    {
+      "state": "success",
+      "description": "Deployment has completed",
+      "environmentUrl": "https://whitedot-nfhrvdfhs-jaywrkr-1498s-projects.vercel.app",
+      "createdAt": "2026-10-15T05:49:31Z"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Vercel Preview Comments",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "openPullRequests": [],
+  "scope": "Read-only observations. Preview metadata is for F8, not RC9. Redirect status 200 is login HTML, not a game acceptance. No authorization protection was disabled.",
+  "latestIntegrationSnapshot": {
+    "observedAt": "2026-10-15T13:00:02.314297+00:00",
+    "main": "52fec80cfd9d0d8329d81ce876306b5505b77be6",
+    "subject": "Merge pull request #114 from Jaywrkr/feat/pulido-f2-primer-nivel",
+    "phases": [
+      {
+        "branch": "feat/cierre-f1-identidades",
+        "commit": "4a819c999e916fc070495ebfb963cc3fe71c9347",
+        "integrated": true
+      },
+      {
+        "branch": "feat/cierre-f2-especies",
+        "commit": "08521cd02d658280c80a3c8e702a4ef67b1c7531",
+        "integrated": true
+      },
+      {
+        "branch": "feat/cierre-f3-ecosistemas",
+        "commit": "9164122b9556d6b658a8e3db61db48e3e1e985a5",
+        "integrated": true
+      },
+      {
+        "branch": "feat/cierre-f4-sintesis",
+        "commit": "35ffe3c8728c4ac29d98ce21a8e82b459b6b1467",
+        "integrated": true
+      },
+      {
+        "branch": "feat/cierre-f5-composicion",
+        "commit": "d64e7c0f1fae5eff415a9e53d9a28fad92b50b51",
+        "integrated": true
+      },
+      {
+        "branch": "feat/cierre-f6-interacciones",
+        "commit": "a00e3a62b93eccfc2b4875cc6d261db158b5ee63",
+        "integrated": true
+      },
+      {
+        "branch": "feat/cierre-f7-hallazgos",
+        "commit": "d38c8a5affc732c4c9b716961a78fcbb6f5e50f8",
+        "integrated": true
+      },
+      {
+        "branch": "feat/cierre-f8-memoria",
+        "commit": "0ddecb8ede04a2623149490c94a05de971ca9ae6",
+        "integrated": true
+      },
+      {
+        "branch": "feat/cierre-f9-juego",
+        "commit": "2dd4a23ad3b2346206a6beca12d2e5d584fe2b4d",
+        "integrated": true
+      },
+      {
+        "branch": "feat/cierre-f10-lanzamiento",
+        "commit": "25732e69e2258914db01fa86cbedf4a02e0361c5",
+        "integrated": true
+      },
+      {
+        "branch": "feat/pulido-f2-primer-nivel",
+        "commit": "2e45cc0bacdbdabb5e3b19cefd489967b76330d7",
+        "integrated": true
+      },
+      {
+        "branch": "feat/pulido-f3-viajes",
+        "commit": "e5d2da5c7ae6835dc949d8d3dcf5a560b1e41e27",
+        "integrated": false
+      },
+      {
+        "branch": "feat/pulido-f4-bitacora",
+        "commit": "e1a08970c0ceb8acff0d4f22facbffe52763512f",
+        "integrated": false
+      },
+      {
+        "branch": "feat/pulido-f5-tarjetas",
+        "commit": "4cdc59a825d4d4d2b6c23aa42b03afce653d9dd8",
+        "integrated": false
+      },
+      {
+        "branch": "feat/pulido-f6-personajes",
+        "commit": "1637aed91532c5d0dafda28ae5cbbabf293c030e",
+        "integrated": false
+      },
+      {
+        "branch": "feat/pulido-f7-interacciones",
+        "commit": "7af93e21226fd382d38df86f3e9963d5407ad5aa",
+        "integrated": false
+      },
+      {
+        "branch": "feat/pulido-f8-cierre",
+        "commit": "5d02c08522d37a9c945706cea307567ee762e9fa",
+        "integrated": false
+      },
+      {
+        "branch": "docs/cierre-estado-unificado",
+        "commit": "10b74edfc19a30bf1e58dc812f3bdd6ffb9da607",
+        "integrated": false
+      }
+    ],
+    "production": {
+      "url": "https://whitedot-inky.vercel.app/src/release-info.js",
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "release": {
+        "version": "2.0.0-rc.2",
+        "deployedAt": "2026-10-15T12:58:34.000Z",
+        "revision": "52fec80cfd9d0d8329d81ce876306b5505b77be6"
+      }
+    },
+    "mainChecks": [
+      {
+        "name": "audio (2)",
+        "status": "queued",
+        "conclusion": null
+      },
+      {
+        "name": "logic",
+        "status": "queued",
+        "conclusion": null
+      },
+      {
+        "name": "audio (3)",
+        "status": "queued",
+        "conclusion": null
+      },
+      {
+        "name": "audio (1)",
+        "status": "queued",
+        "conclusion": null
+      },
+      {
+        "name": "browser",
+        "status": "queued",
+        "conclusion": null
+      }
+    ]
+  }
+}

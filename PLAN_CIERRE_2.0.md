@@ -6,16 +6,16 @@ Orden acordado con Jay después de M1. Consolida los planes anteriores: no son d
 
 | Fase | Rama | Estado |
 |---|---|---|
-| 1 · Identidades completas de mundos | `feat/cierre-f1-identidades` | Integrada en main; aceptación física pendiente |
-| 2 · Formas y especies generadas | `feat/cierre-f2-especies` | Integrada en main; aceptación física pendiente |
-| 3 · Ecosistemas y territorios vivos | `feat/cierre-f3-ecosistemas` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 4 · Instrumentos y síntesis modular | `feat/cierre-f4-sintesis` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 5 · Composición, géneros y mezclas | `feat/cierre-f5-composicion` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 6 · Interacciones que hacen música | `feat/cierre-f6-interacciones` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 7 · Exploración y hallazgos con sentido | `feat/cierre-f7-hallazgos` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 8 · Memoria, regreso y vínculos | `feat/cierre-f8-memoria` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 9 · Juego, interfaz e historia unidos | `feat/cierre-f9-juego` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 10 · Mezcla, auditoría y lanzamiento | `feat/cierre-f10-lanzamiento` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
+| 1 · Identidades completas de mundos | `feat/cierre-f1-identidades` | En main; aceptación física pendiente |
+| 2 · Formas y especies generadas | `feat/cierre-f2-especies` | En main; aceptación física pendiente |
+| 3 · Ecosistemas y territorios vivos | `feat/cierre-f3-ecosistemas` | En main; aceptación física pendiente |
+| 4 · Instrumentos y síntesis modular | `feat/cierre-f4-sintesis` | En main; aceptación física pendiente |
+| 5 · Composición, géneros y mezclas | `feat/cierre-f5-composicion` | En main; aceptación física pendiente |
+| 6 · Interacciones que hacen música | `feat/cierre-f6-interacciones` | En main; aceptación física pendiente |
+| 7 · Exploración y hallazgos con sentido | `feat/cierre-f7-hallazgos` | En main; aceptación física pendiente |
+| 8 · Memoria, regreso y vínculos | `feat/cierre-f8-memoria` | En main; aceptación física pendiente |
+| 9 · Juego, interfaz e historia unidos | `feat/cierre-f9-juego` | En main; aceptación física pendiente |
+| 10 · Mezcla, auditoría y lanzamiento | `feat/cierre-f10-lanzamiento` | En main; aceptación física pendiente |
 
 F1 sale de `main 6702093`, que integra M1. La siguiente parte de F1 si aún no tiene merge. Si main ya la contiene, comprobar ascendencia y partir de main actualizado. No reescribir ramas publicadas ni hacer merges sin instrucción de Jay. Conservar commits de los padres al integrar ramas dependientes reduce conflictos; cambios paralelos o squash/rebase pueden exigir resolverlos. No prometer ausencia absoluta de conflictos.
 
