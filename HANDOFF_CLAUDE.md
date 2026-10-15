@@ -1,3 +1,13 @@
+# Experiencia · fase 13
+
+Rama `feat/experiencia-13-identidad`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Constelaciones de fuentes realmente tocadas, guardado independiente, imagen 1080×1350 y regreso por dirección completa. Las voces coleccionadas pueden llevarse a casa. Un jardín guardado con tres funciones diferentes origina un brote musical local; sigue al cubo y comparte el presupuesto de voces.
+
+Validación: Auditoría/Node completos; experience_identity_smoke, experience_garden_smoke, house_v2_smoke y ui_silence_smoke; experience_garden_mix. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 12
 
 Rama `feat/experiencia-12-ecosistemas`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
