@@ -24,6 +24,8 @@ try:
    page.locator('#houseShare').click();code=page.locator('#houseCode').input_value();assert code.startswith('WH1-');page.locator('#houseVisit').click();assert page.locator('#houseObjects').is_disabled();assert page.evaluate('JSON.stringify(window.__testRuntime.S.house.objects)')==before
    page.locator('#houseExit').click();page.reload();page.wait_for_function('!!window.__testRuntime?.enterHouse');assert page.evaluate('JSON.stringify(window.__testRuntime.S.house.objects)')==before;assert page.evaluate('window.__testRuntime.S.studio.slots["0,4"]')=='canon'
    page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true);window.__testRuntime.enterHouse()');page.locator('#houseWorkshop').click();assert page.locator('#studioPanel').is_visible();assert not page.evaluate('window.__testRuntime.houseActive()')
+   page.evaluate("()=>{const r=__testRuntime;r.S.house={version:9,objects:[{kind:'future:voice',room:'future',x:.2,y:.3}],unlocked:['sala'],playerRoom:'future',x:.2,y:.3,knownVisitors:{},earned:{secret:true}};r.enterHouse();}")
+   future=page.evaluate('JSON.stringify(__testRuntime.S.house)');assert page.locator('#houseShare').is_disabled();rect=page.evaluate('__testRuntime.houseRoomRect("sala")');page.locator('#w').click(position={'x':rect['x']+rect['size']*.4,'y':rect['y']+rect['size']*.5});assert page.evaluate('JSON.stringify(__testRuntime.S.house)')==future,'future save is never edited by tapping'
    assert not errors,errors;print('PASS earned placement, native room drawing, read-only visit, reload and preserved radial workshop at '+str(width),flush=True);page.close()
   b.close()
 finally:server.shutdown()

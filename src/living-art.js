@@ -1,6 +1,7 @@
 // Original, small line glyphs. All color belongs to the encounter, never the background.
-import {drawAnatomy} from './anatomy.js';
+import {drawAnatomy,anatomyOf} from './anatomy.js';
 export function livingGlyph(c,o,t){
+ if(!o.anatomy&&'frond chime cap fan cluster kite ribbon spinner spiral hare lantern centipede harp cairn gate nest wheel'.split(' ').includes(o.shape))o={...o,anatomy:anatomyOf(o)};
  if(o.anatomy){drawAnatomy(c,o.anatomy,o.size,globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches?0:o.phase);return;}
  const s=o.size,p=o.phase+Math.sin(t/1200+o.phase)*.12;c.beginPath();
  switch(o.shape){

@@ -1,3 +1,47 @@
+# Handoff vigente · Experiencia viva 2.2.0-rc.1
+
+[Cierre y pruebas](CIERRE_EXPERIENCIA.md) · [Plan actual](PLAN_EXPERIENCIA.md). Catorce fases autorizadas; no reiniciar las anteriores. Fases 1–13 en main `88c96b0` por Jay (PR #142). F14 continúa desde F13 `4625f2f` y reúne el cierre validado. El agente no crea PR ni integra main.
+
+Auditoría sin errores ni advertencias, 113 suites Node, 86 recorridos de navegador incluido offline y 789 renders de 31 programas de audio: aprobados. Prueba HTTP/SQLite aprobada. Pico máximo medido 0.945447. [Evidencia final](scripts/experience-14-validation.json).
+
+## Mapa técnico incorporado
+
+- `atlas-model.js` / `atlas-play.js`: búsquedas optativas entre tarjetas y otras fuentes reales; relaciones persistentes, sin inventar apariciones.
+- `garden-model.js` / `collection-garden.js`: hasta cuatro tarjetas producen voces físicas en casa; ocho jardines nuevos guardables, sin consumir tarjetas ni expulsar guardados antiguos. Tres roles y un jardín conservado originan un brote local; no reemplaza la mascota.
+- `constellation-model.js` / `identity-play.js`: figura de hasta 32 fuentes tocadas por sesión, hasta 24 recuerdos nuevos, exportación Geist y dirección completa para volver. No es una grabación ni congela la música.
+- `performance-instruments.js` / `performance.js`: 32 instrumentos nuevos, 24 gramáticas de respuesta. Dos notas máximas cada cuatro compases; misma capa, máximo 360 px; cancelación al pausar o silenciar. Duetos conservan su transporte anterior.
+- `expanded-content.js` / `ecoregions.js`: veinte linajes y doce cuerpos acústicos adicionales; 22 perfiles locales sobre once biomas. Flujos `living:expansion:v1` independientes del generador antiguo.
+- `house.js` / `house-audio.js`: selección/arrastre/anticipación, señales efímeras de onset y cuatro voces por paso compartidas con el jardín. Datos futuros no se editan, comparten ni reproducen; objetos desconocidos se conservan sin sonar.
+- `rare-card-model.js` / `rare-cards.js`: habilidades, técnicas aprendidas y avisos repetidos espaciados. Tipos desconocidos archivados se recuperan cuando el catálogo los reconoce. Versiones futuras permanecen de solo lectura.
+- `living-discoveries.js`: gestos reales contacto/órbita/quietud enseñan interpretaciones distintas; escenario y clima aportan contexto.
+- `synth-colors.js` / `patches.js`: posición óptica cambia filtros de la fuente, pendientes reales hasta cuatro etapas; graves protegidos.
+- `practice-travel.js` / `favorites.js`: llegada nueva diaria excepto retornos explícitos/continuación; favoritos buscables y herramientas secundarias plegadas.
+- `messages.js`: Voz por introducción, solicitud o excepcionalidad; conserva diario. UI silenciosa, sin tocar el máster al abrir paneles.
+
+Todos los módulos nuevos están una vez en `sw.js`. Candidata rc.1 y caché actualizados; el build Vercel sella fecha/revisión reales. No usar la fecha de las pruebas como fecha de deploy.
+
+La petición adicional de fiesta feliz se entrega en F14: `lab-score.js` añade Patio tropical, Jardín disco y Verbena eléctrica; `practice-travel.js` prioriza un territorio festivo cada tercer salto. Semilla independiente en regiones bailables compatibles, sin cambiar el género ni los destinos guardados. `living.js` añade un movimiento local de máximo 1,8 px, respetando movimiento reducido.
+
+## Alcance y revisión
+
+48 linajes, 75 instrumentos, 21 familias de percusión, 70 tarjetas y 246 destinos del laboratorio. Se mantienen 52 géneros, dieciséis cruces de radio, once biomas y 33 hábitats previos. Las 24 gramáticas de encuentro no son géneros adicionales. Los 22 perfiles ecológicos no son 22 biomas nuevos.
+
+Leer `scripts/experience-14-validation.json` para comandos y resultados finales. Evidencia por fase en `scripts/experience-XX-validation.json`; los JSON previos conservan el estado del momento de entrega. Aceptación en Android/iPhone físicos, CI y artefacto desplegado pendientes de comprobar por sus propios medios.
+
+## Historial conservado
+
+Lo que sigue conserva las notas de cada entrega y planes anteriores; sus encabezados históricos no cambian la prioridad vigente.
+
+# Experiencia · fase 14
+
+Rama `feat/experiencia-14-cierre`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Auditoría integrada: migraciones de tarjetas recuperables, guardados futuros protegidos y respuestas musicales locales; catálogo y tutorial conservados.
+
+Validación: Auditoría, Node y suites completas de navegador/audio; resultados en CIERRE_EXPERIENCIA.md.. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 13
 
 Rama `feat/experiencia-13-identidad`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.

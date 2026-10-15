@@ -25,8 +25,8 @@ export function initialize(runtime){let owner=null,queue=[],last=-Infinity;
  function tick(){if(owner!==runtime.S){owner=runtime.S;queue=[];last=-Infinity;}if(!active())queue=[];}
  function reply(o,time,region){tick();if(!active()||!runtime.MU.radio?.labScore||o.id?.startsWith('living:lab:')||runtime.MU.step-last<64)return;last=runtime.MU.step;const f=fieldFusion(region,o,runtime.seedOf);if(!f)return;
   const role=runtime.getVoice('living:'+o.kind,region,o).role,pool=pools[role]||pools.lead;
-  queue=f.steps.slice(0,2).map((offset,i)=>({at:runtime.MU.step+offset,source:{...o,performanceInstrument:'p_'+(role==='lead'||role==='acorde'?f.keys[i%f.keys.length]:pool[(o.variant+i)%pool.length])},region,index:(runtime.MU.deg+f.degrees[i])%7,fusion:f.id}));
+  queue=f.steps.slice(0,2).map((offset,i)=>({at:runtime.MU.step+offset,layer:runtime.S.layer||'superficie',source:{...o,performanceInstrument:'p_'+(role==='lead'||role==='acorde'?f.keys[i%f.keys.length]:pool[(o.variant+i)%pool.length])},region,index:(runtime.MU.deg+f.degrees[i])%7,fusion:f.id}));
  }
- function step(s,bar,time){tick();if(!active())return;const due=queue.filter(n=>n.at<=runtime.MU.step);queue=queue.filter(n=>n.at>runtime.MU.step);for(const n of due){runtime.playVoice('living:'+n.source.kind,n.index,time,n.region,false,.28,n.source,'field');runtime.performanceCue?.({fusion:n.fusion,instrument:n.source.performanceInstrument,time});}}
+ function step(s,bar,time){tick();if(!active())return;const due=queue.filter(n=>n.at<=runtime.MU.step);queue=queue.filter(n=>n.at>runtime.MU.step);for(const n of due){if(n.layer!==(runtime.S.layer||'superficie')||Math.hypot(n.source.x-runtime.S.wx,n.source.y-runtime.S.wy)>360)continue;runtime.playVoice('living:'+n.source.kind,n.index,time,n.region,false,.28,n.source,'field');runtime.performanceCue?.({fusion:n.fusion,instrument:n.source.performanceInstrument,time});}}
  Object.defineProperties(runtime,{performanceTick:{get:()=>tick},performanceReply:{get:()=>reply},performanceStep:{get:()=>step},performanceIdentity:{get:()=>((o,d)=>fieldFusion(d,o,runtime.seedOf))}});
 }

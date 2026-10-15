@@ -24,12 +24,12 @@ with sync_playwright() as p:
  assert page.evaluate("window.__testRuntime.S.previewSeed")=='laboratorio'
  assert page.evaluate("document.querySelectorAll('.modal:not([hidden])').length")==0,'lab starts without blocking modals'
  ids=page.evaluate("import('./src/lab-catalog.js').then(m=>m.LAB_ELEMENTS.map(e=>[e.id,e.find.type,e.find.tool||'']))")
- assert len(ids)==243,len(ids)
+ assert len(ids)==246,len(ids)
  page.screenshot(path='/tmp/whitedot-lab-first.png')
  found={}
  for i,(eid,kind,tool) in enumerate(ids):
   if i: page.locator('#labNext').click()
-  page.wait_for_timeout(250)
+  page.wait_for_function("id=>window.__testRuntime.labBook.current===id&&document.querySelectorAll('#labTry li').length>0",arg=eid)
   st=page.evaluate("(()=>{const r=window.__testRuntime;return {cur:r.labBook.current,x:r.S.wx,y:r.S.wy,name:document.getElementById('labName').textContent,tries:document.querySelectorAll('#labTry li').length}})()")
   assert st['cur']==eid and st['tries']>=1,(eid,st)
   if kind in ("toy","phenomenon","trail","home","family","flock"):
@@ -60,6 +60,6 @@ with sync_playwright() as p:
  assert page.evaluate('window.__testRuntime.S.previewSeed') in (None,'',False) and page.locator('#labBar').is_hidden()
  assert page.evaluate("localStorage.getItem('pixel-blanco-v4')")==normal or normal is None
  assert not errors,errors
- print('lab: 243 entries located, solo, notes/report persisted, exit to own save PASS',flush=True)
+ print('lab: 246 entries located, solo, notes/report persisted, exit to own save PASS',flush=True)
  b.close()
 server.shutdown()

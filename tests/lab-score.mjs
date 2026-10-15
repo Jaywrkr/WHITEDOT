@@ -26,4 +26,4 @@ for(const [id,d]of found){
 }
 assert.equal(signatures.size,LAB_BANDS.length);
 assert.deepEqual(labDrumEvents(null,0,0,.8),[]);
-console.log('PASS six audible territorial bands, coordinated actual drum patterns/bass/phrases, bounded gain, immutable maps and unchanged classic/room transport');
+console.log('PASS nine audible territorial bands, coordinated actual drum patterns/bass/phrases, bounded gain, immutable maps and unchanged classic/room transport');

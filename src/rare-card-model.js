@@ -44,9 +44,12 @@ export function makeRareCard(raw){
 }
 export function normalizeRareBook(raw){
  if(Number.isInteger(raw?.version)&&raw.version>1)return {...raw,readOnly:true,items:Array.isArray(raw.items)?raw.items:[]};
- const unknown=[...(Array.isArray(raw?.unrecognizedItems)?raw.unrecognizedItems:[])];for(const value of Array.isArray(raw?.items)?raw.items:[])if(value&&typeof value.type==='string'&&!rareDefinition(value.type))unknown.push(value);
- const items=[],seen=new Set();if(Array.isArray(raw?.items))for(const value of raw.items){const c=makeRareCard(value);if(!c||seen.has(c.id))continue;seen.add(c.id);items.push(c);}
- return {...raw,version:1,items,...(unknown.length?{unrecognizedItems:unknown}:{})};
+ const items=[],unknown=[],seen=new Set(),unseen=new Set();
+ for(const value of [...(Array.isArray(raw?.items)?raw.items:[]),...(Array.isArray(raw?.unrecognizedItems)?raw.unrecognizedItems:[])]){
+  const c=makeRareCard(value);if(c){if(!seen.has(c.id)){seen.add(c.id);items.push(c);}continue;}
+  if(value&&typeof value.type==='string'){const key=JSON.stringify(value);if(!unseen.has(key)){unseen.add(key);unknown.push(value);}}
+ }
+ return {...raw,version:1,items,unrecognizedItems:unknown};
 }
 export function storeRareCard(book,card){
  if(book.readOnly)return 'readonly';if(!card||book.items.some(c=>c.id===card.id))return 'duplicate';if(book.items.length>=RARE_BOOK_LIMIT)return 'full';book.items.push(card);return 'added';

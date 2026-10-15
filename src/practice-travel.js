@@ -8,7 +8,7 @@ import {hybridIdentity} from './musical-hybrids.js';
 const validPoint=p=>p&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&Math.abs(p.x)<1e12&&Math.abs(p.y)<1e12&&['superficie','bajo','cielo'].includes(p.layer);
 export function normalizePracticeTravel(raw){return {version:1,previous:validPoint(raw?.previous)?{x:raw.previous.x,y:raw.previous.y,layer:raw.previous.layer}:null,
  recent:Array.isArray(raw?.recent)?raw.recent.filter(s=>typeof s==='string').slice(-8).map(s=>s.slice(0,80)):[]};}
-export function choosePracticePlace(runtime,random,history=[]){
+export function choosePracticePlace(runtime,random,history=[],festive=false){
  const R=runtime.REG*runtime.WCH,s=runtime.S,current=runtime.regionOfPos(s.wx,s.wy),previous=musicIdentity(current,runtime.seedOf,runtime.rng,runtime.GEN),previousHybrid=hybridIdentity(current,runtime.seedOf,runtime.rng),previousBand=labScore(current,runtime.seedOf,runtime.rng),candidates=[];
  for(let i=0;i<24;i++){
   const rx=Math.floor(s.wx/R)+Math.floor((random()-.5)*160),ry=Math.floor(s.wy/R)+Math.floor((random()-.5)*160),
@@ -17,9 +17,9 @@ export function choosePracticePlace(runtime,random,history=[]){
   const identity=musicIdentity(d,runtime.seedOf,runtime.rng,runtime.GEN),profile=populationProfile(d,runtime.BIOMES[d.z].id,runtime.seedOf,runtime.rng),
    inhabitants=populatedChunk(livingChunk(cx,cy,runtime.WCH,d,runtime.BIOMES[d.z].id,runtime.seedOf,runtime.rng),cx,cy,runtime.WCH,d,profile,runtime.seedOf,runtime.rng);
   if(!inhabitants.length)continue;
-  const band=labScore(d,runtime.seedOf,runtime.rng),hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng),animal=inhabitants.find(o=>o.group==='fauna')||inhabitants[0],score=(d.genre!==current.genre?6:0)+(identity?.id!==previous?.id?4:0)+(d.z!==current.z?2:0)+(history.some(s=>s===identity?.id||s.startsWith(identity?.id+'~'))?-5:0)+(d.worldFamily?.id!==current.worldFamily?.id?5:0)+(hybrid?.id!==previousHybrid?.id?4:0)+(band?.id!==previousBand?.id?6:0)+(band?.leads.join(',')!==previousBand?.leads.join(',')?4:0)+(JSON.stringify(band?.kick)!==JSON.stringify(previousBand?.kick)?3:0);
+  const band=labScore(d,runtime.seedOf,runtime.rng),hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng),animal=inhabitants.find(o=>o.group==='fauna')||inhabitants[0],score=(d.genre!==current.genre?6:0)+(identity?.id!==previous?.id?4:0)+(d.z!==current.z?2:0)+(history.some(s=>s===identity?.id||s.startsWith(identity?.id+'~'))?-5:0)+(d.worldFamily?.id!==current.worldFamily?.id?5:0)+(hybrid?.id!==previousHybrid?.id?4:0)+(band?.id!==previousBand?.id?6:0)+(band?.leads.join(',')!==previousBand?.leads.join(',')?4:0)+(JSON.stringify(band?.kick)!==JSON.stringify(previousBand?.kick)?3:0)+(festive&&band?.festive?25:0);
   candidates.push({x:animal.x,y:animal.y+(animal.y-75<ry*R?75:-75),layer:'superficie',region:d,identity,hybrid,band,population:profile,score});
-  if(score>=21&&i>=7)break;
+  if(score>=21&&i>=7&&(!festive||band?.festive))break;
  }return candidates.sort((a,b)=>b.score-a.score)[0]||null;
 }
 export function initialize(runtime){
@@ -36,11 +36,11 @@ export function initialize(runtime){
  function jump(){if(!runtime.inWorld()||blocked()||document.querySelector('.modal:not([hidden])'))return false;
   // Commit the current place/progress before replacing coordinates. UI itself emits no note.
   if(!runtime.save())return false;
-  const state=runtime.S.practiceTravel=normalizePracticeTravel(runtime.S.practiceTravel),random=runtime.rng(runtime.seedOf(`travel:practice:v1:${Date.now()}:${counter++}`)),point=choosePracticePlace(runtime,random,state.recent);
+  const state=runtime.S.practiceTravel=normalizePracticeTravel(runtime.S.practiceTravel),random=runtime.rng(runtime.seedOf(`travel:practice:v1:${Date.now()}:${counter++}`)),point=choosePracticePlace(runtime,random,state.recent,counter%3===0);
   if(!point){runtime.toast('No encontré otro lugar. Intenta otra vez.');return false;}
   state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.recent.push(point.identity.id+'~'+(point.hybrid?.id||'native'));state.recent=state.recent.slice(-8);
   if(runtime.labMode)runtime.labGo(point.band?'band:'+point.band.id:'music:'+point.identity.id);
-  move(point);runtime.toast(`${point.region.worldFamily?.name||runtime.BIOMES[point.region.z].name} · ${point.identity.name}`);return true;
+  move(point);runtime.toast(`${point.region.worldFamily?.name||runtime.BIOMES[point.region.z].name} · ${point.band?.festive?point.band.name:point.identity.name}`);return true;
  }
  function back(){const p=runtime.S.practiceTravel?.previous;if(!runtime.inWorld()||blocked()||!validPoint(p)||!runtime.save())return false;
   const here={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};runtime.S.practiceTravel.previous=here;$('mMenu').hidden=true;move(p);return true;}

@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.2.0-alpha.13-experiencia';
+const CACHE='whitedot-2.2.0-rc.1-experiencia';
 const SHELL=[
  "./src/constellation-model.js", "./src/identity-play.js",
  "./src/expanded-content.js", "./src/ecoregions.js",

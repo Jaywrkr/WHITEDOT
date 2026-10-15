@@ -16,5 +16,8 @@ try:
   page.wait_for_function('__testRuntime.S.session.constellation?.length>0');page.evaluate('__testRuntime.openJournal("music")');page.locator('[data-constellation-save]').click();assert page.evaluate('__testRuntime.constellationBook.items.length')==1
   memory=page.evaluate('__testRuntime.constellationBook.items[0]');assert memory['points'] and isinstance(memory['address']['x'],(int,float))
   page.locator('.musical-constellation summary').click();page.locator('[data-constellation-image]').click();page.wait_for_function('document.getElementById("shareImg").naturalWidth===1080');assert page.locator('#mShare').is_visible();page.locator('#sClose').click();page.reload();page.wait_for_function('!!window.__testRuntime?.constellationBook');assert page.evaluate('__testRuntime.constellationBook.items.length')==1
+  page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true);__testRuntime.S.wx+=500;__testRuntime.openJournal("music")');page.locator('.musical-constellation summary').click()
+  with page.expect_navigation(wait_until='domcontentloaded'):page.locator('[data-constellation-return]').click()
+  page.wait_for_function('!!window.__testRuntime?.constellationBook');address=page.evaluate('({x:__testRuntime.S.wx,y:__testRuntime.S.wy,layer:__testRuntime.S.layer||"superficie"})');assert abs(address['x']-memory['address']['x'])<1 and abs(address['y']-memory['address']['y'])<1 and address['layer']==memory['address']['layer'],address
   assert not errors,errors;print('PASS actual played-source figure, independent memory, 1080px Geist export and exact saved return address');b.close()
 finally:server.shutdown()
