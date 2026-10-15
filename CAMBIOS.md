@@ -1,3 +1,9 @@
+# Experiencia 2 · Primer encuentro jugable
+
+Rama `feat/experiencia-02-bienvenida`. Bienvenida gráfica Explora/Escucha/Crea y símbolos locales del primer recorrido. Se conservan los seis gestos reales, omitir/repetir y progreso; controles iniciales blancos y silenciosos.
+
+Validación: Auditoría y suites Node; first_level_smoke y ui_silence_smoke (resultados en registro de fase). Jay mantiene PR/merge.
+
 # Experiencia 1 · Auditoría y experiencia coherente
 
 Rama `feat/experiencia-01-base`. Auditoría inicial y plan de catorce ramas; mapa de fricciones y criterios verificables. Main observado e351584 ya integra L7. Sin cambios de audio ni guardados.
