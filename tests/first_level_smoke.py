@@ -31,7 +31,7 @@ try:
    panel=page.locator('#firstJourney').bounding_box();assert panel['width']*panel['height']<width*height*.12,panel
    page.screenshot(path=f'/tmp/whitedot-first-level-{width}.png')
    page.mouse.click(22,height/2-120);page.wait_for_function('__testRuntime.firstJourneyState.next==="save"')
-   page.locator('#bMenu').click();assert page.locator('#firstJourney').is_hidden();page.locator('#bFavorites').click();page.locator('#favName').fill('Mi primera voz');page.locator('#favSave').click();page.locator('#favoritesClose').click()
+   page.locator('#quickSave').click();page.locator('#era').click();assert page.locator('#firstJourney').is_hidden();page.locator('[data-favorite] summary').click();page.locator('[data-favorite] input').fill('Mi primera voz');page.get_by_role('button',name='Renombrar',exact=True).click();page.locator('#favoritesClose').click();page.locator('#quickSave').click();assert page.locator('#mFavorites').is_visible();assert page.evaluate('__testRuntime.favorites.length===1&&__testRuntime.favorites[0].name==="Mi primera voz"');page.locator('#favoritesClose').click()
    page.wait_for_function('__testRuntime.firstJourneyState.next===null');assert page.locator('#firstJourney').is_hidden()
    page.locator('#bMenu').click();page.locator('#bGuide').click();page.evaluate('window.__lessonContext=__testRuntime.ac;window.__lessonPulses=__testRuntime.S.session.pulses');page.locator('#guidePractice').click()
    # A live source may already answer a previous wave after closing the menu.

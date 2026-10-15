@@ -1,10 +1,11 @@
 import {decodePlace,encodePlace} from './share-tools.js';
-import {sameWorld,supportedWorld} from './world-identity.js';
+import {sameWorld,supportedWorld,placeAddress} from './world-identity.js';
 import {FAMILIES} from './encounter-families.js';
 export function normalizeSeed(value){return String(value??'original').trim().replace(/[^\p{L}\p{N}_ -]/gu,'').slice(0,40)||'original';}
 export function previewKey(seed,layout='classic',generation=1){return `pixel-blanco-v4:${layout==='immense'?'preview-immense':layout==='grand'?'preview-grand':layout==='vasto'?'preview-vasto':layout==='wide'?'preview-wide':'preview'}:${generation===2?'v2:':''}${encodeURIComponent(normalizeSeed(seed))}`;}
 export function initialize(runtime){
- const $=runtime.$;
+ const $=runtime.$;const returnKey='whitedot:previous-place:v1';
+ function previousAddress(){try{const code=sessionStorage.getItem(returnKey);return code?decodePlace(code).address:null;}catch(_){return null;}}
  const select=document.createElement('select');select.id='seedEncounter';select.setAttribute('aria-label','Encuentro para probar');
  const label=document.createElement('label');label.textContent='Encuentro de prueba';label.htmlFor=select.id;
  select.add(new Option('Distribución natural',''));select.add(new Option('Vidrios · movimiento y música','glass'));select.add(new Option('Materia · cuerdas, prisma y membrana','materia'));for(const [id,f]of Object.entries(FAMILIES))select.add(new Option(f.name,id));
@@ -32,7 +33,7 @@ export function initialize(runtime){
   s.layer='superficie';s.wx=s.wy=runtime.REG*runtime.WCH/2;if(select.value==='installation'||new URLSearchParams(location.search).get('encounter')==='installation'){s.wx=2050;s.wy=900;}if(new URLSearchParams(location.search).get('encounter')==='glass'){s.wx=1080;s.wy=900;}if(select.value==='materia'||new URLSearchParams(location.search).get('encounter')==='materia'){s.wx=1800;s.wy=2450;}s.help.camino=true;s.help.mundo=true;s.helpV2=true;
   s.ach.mundo??=s.todayKey;s.mode='camino';runtime.enterWorld();if(keep){s.wx=position.x;s.wy=position.y;s.layer=position.layer;if(s.layer!=='superficie')runtime.restoreLayerMusic?.();}if(realTravel)s.travelReady=true;runtime.save();if(new URLSearchParams(location.search).has('center')){const url=new URL(location.href);url.searchParams.delete('center');history.replaceState(null,'',url);}
  }
- function visitAddress(address){if(!supportedWorld(address)||address.seed&&normalizeSeed(address.seed)!==address.seed)return false;if(!saveBeforeLeaving())return false;const url=new URL(location.href);for(const key of ['lab','encounter'])url.searchParams.delete(key);if(!address.seed&&address.layout==='classic'&&address.generatorVersion===1)url.searchParams.delete('testSeed');else url.searchParams.set('testSeed',address.seed||'original');url.searchParams.set('layout',address.layout);url.searchParams.set('generation',String(address.generatorVersion));url.searchParams.set('travel','1');url.searchParams.set('addr',encodePlace(address));location.assign(url.href);return true;}
+ function visitAddress(address){if(!supportedWorld(address)||address.seed&&normalizeSeed(address.seed)!==address.seed)return false;if(!saveBeforeLeaving())return false;try{sessionStorage.setItem(returnKey,encodePlace(placeAddress(runtime.worldIdentity,runtime.S.wx,runtime.S.wy,runtime.S.layer||'superficie')));}catch(_){}const url=new URL(location.href);for(const key of ['lab','encounter'])url.searchParams.delete(key);if(!address.seed&&address.layout==='classic'&&address.generatorVersion===1)url.searchParams.delete('testSeed');else url.searchParams.set('testSeed',address.seed||'original');url.searchParams.set('layout',address.layout);url.searchParams.set('generation',String(address.generatorVersion));url.searchParams.set('travel','1');url.searchParams.set('addr',encodePlace(address));location.assign(url.href);return true;}
  const code=new URLSearchParams(location.search).get('addr');if(code)try{const {address}=decodePlace(code);if(sameWorld(address,runtime.worldIdentity)){runtime.S.wx=address.x;runtime.S.wy=address.y;runtime.S.layer=address.layer;runtime.S.travelReady=true;runtime.ptr=null;if(address.layer!=='superficie')runtime.restoreLayerMusic?.();runtime.save();const url=new URL(location.href);url.searchParams.delete('addr');url.searchParams.set('travel','1');history.replaceState(null,'',url);}else runtime.toast('El código necesita su semilla y versión originales.');}catch(_){runtime.toast('No se pudo abrir el código de regreso.');}
- Object.defineProperties(runtime,{openSeedLab:{get:()=>open},visitWorldAddress:{get:()=>visitAddress}});
+ Object.defineProperties(runtime,{openSeedLab:{get:()=>open},visitWorldAddress:{get:()=>visitAddress},previousWorldAddress:{get:()=>previousAddress}});
 }

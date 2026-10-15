@@ -21,14 +21,14 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('#bFavorites').click();assert page.locator('#mFavorites').is_visible()
   page.locator('#favName').fill('Mi música <favorita>');page.locator('#favSave').click()
   assert page.locator('[data-favorite]').count()==1
-  page.locator('[data-favorite] input').fill('Rincón de dub');page.locator('[data-favorite] button').filter(has_text='Renombrar').click()
+  page.locator('[data-favorite] summary').click();page.locator('[data-favorite] input').fill('Rincón de dub');page.locator('[data-favorite] button').filter(has_text='Renombrar').click()
   point=page.evaluate('window.__testRuntime.favorites[0]');assert point['name']=='Rincón de dub' and point['layer']=='superficie'
   page.locator('#favoritesClose').click();page.reload(wait_until='domcontentloaded')
   page.wait_for_function('window.__testRuntime && window.__testRuntime.favorites.length===1')
   assert page.evaluate('window.__testRuntime.favorites[0].name')=='Rincón de dub'
   page.locator('#bMenu').click();page.locator('#bAch').click();assert 'Rincón de dub' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
   page.locator('#bMenu').click();page.locator('#bFavorites').click();page.screenshot(path=f'/tmp/whitedot-favorites-{label}.png')
-  page.locator('[data-favorite] button').filter(has_text='Borrar').click();assert page.evaluate('window.__testRuntime.favorites.length')==0
+  page.locator('[data-favorite] summary').click();page.locator('[data-favorite] button').filter(has_text='Borrar').click();assert page.evaluate('window.__testRuntime.favorites.length')==0
   page.locator('#favoritesClose').click()
   assert not errors,errors
   print(label+': named favorite save, rename, reload, journal, safe text and removal PASS',flush=True);c.close()

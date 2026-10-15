@@ -1,27 +1,27 @@
 import {placeAddress,worldIdentity,supportedWorld,sameWorld} from './world-identity.js';
-export const FAVORITE_LIMIT=64;
+export const FAVORITE_LIMIT=256;
 const layers=new Set(['superficie','bajo','cielo']);
 const cleanName=name=>String(name||'Lugar musical').trim().slice(0,60)||'Lugar musical';
 export function normalizeFavorites(saved,identity=worldIdentity()){
  const items=Array.isArray(saved?.items)?saved.items:[],seen=new Set();
- return {version:1,items:items.filter(p=>p&&typeof p.id==='string'&&!seen.has(p.id)&&seen.add(p.id)&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&Math.abs(p.x)<1e12&&Math.abs(p.y)<1e12&&layers.has(p.layer)).map(p=>({...p,name:cleanName(p.name),...(Object.hasOwn(p,'notes')?{notes:typeof p.notes==='string'?p.notes.slice(0,280):''}:{}),address:Object.hasOwn(p,'address')?(supportedWorld(p.address)?placeAddress(p.address,p.x,p.y,p.layer):p.address??null):placeAddress(identity,p.x,p.y,p.layer)}))};
+ return {version:1,items:items.filter(p=>p&&typeof p.id==='string'&&!seen.has(p.id)&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&Math.abs(p.x)<1e12&&Math.abs(p.y)<1e12&&layers.has(p.layer)&&seen.add(p.id)).map(p=>({...p,name:cleanName(p.name),...(Object.hasOwn(p,'notes')?{notes:typeof p.notes==='string'?p.notes.slice(0,280):''}:{}),address:Object.hasOwn(p,'address')?(supportedWorld(p.address)?placeAddress(p.address,p.x,p.y,p.layer):p.address??null):placeAddress(identity,p.x,p.y,p.layer)}))};
 }
 export function storeFavorite(state,point){
  state.favorites=normalizeFavorites(state.favorites,state.worldIdentity||worldIdentity());const items=state.favorites.items;
  const existing=items.find(p=>p.layer===point.layer&&sameWorld(p.address,point.address||state.worldIdentity||worldIdentity())&&Math.hypot(p.x-point.x,p.y-point.y)<8);
  if(existing){Object.assign(existing,point,{id:existing.id,name:cleanName(point.name),address:placeAddress(point.address||state.worldIdentity||worldIdentity(),point.x,point.y,point.layer)});return existing;}
  if(items.length>=FAVORITE_LIMIT)return null;
- const id=`favorite:${point.created}:${point.layer}:${Math.round(point.x)}:${Math.round(point.y)}`;
+ const stem=`favorite:${point.created}:${point.layer}:${Math.round(point.x)}:${Math.round(point.y)}`;let id=stem,serial=0;while(items.some(p=>p.id===id))id=`${stem}:${++serial}`;
  const result={...point,id,name:cleanName(point.name),address:point.address||placeAddress(state.worldIdentity||worldIdentity(),point.x,point.y,point.layer)};items.push(result);return result;
 }
 export function initialize(runtime){
  runtime.S.favorites=normalizeFavorites(runtime.S.favorites,runtime.worldIdentity);
- const list=()=>runtime.S.favorites.items,$=runtime.$;
+ const list=()=>runtime.S.favorites.items,$=runtime.$;let shown=20;
  function add(name){
   if(!runtime.inWorld())return null;
   const s=runtime.S,region=runtime.activeLayerRegion?.()||runtime.regionOfPos(s.wx,s.wy);
   const point=storeFavorite(s,{address:placeAddress(runtime.worldIdentity,s.wx,s.wy,s.layer||'superficie'),name:name||region.name,x:s.wx,y:s.wy,layer:s.layer||'superficie',created:Date.now(),region:region.key,regionName:region.name,genre:region.genre,bpm:region.bpm,scale:[...region.scale],phase:runtime.livingEnvironment?.name||'',notes:'',character:region.recipe?.name||'',material:region.recipe?.materialName||'',recipeVersion:region.recipe?.version||1,musicStamp:runtime.musicStamp?.(region)});
-  if(!point){runtime.toast('<em>Favoritos</em> · Límite de 64. Borra uno para guardar otro.');return null;}
+  if(!point){runtime.toast(`<em>Favoritos</em> · Límite de ${FAVORITE_LIMIT}. Exporta tu copia.`);return null;}
   runtime.firstJourneyEvent?.('save');runtime.unlock('favorito1');runtime.save();render();return point;
  }
  // Guarda un lugar recibido por código. Si es del mismo mundo, completa su identidad musical.
@@ -34,24 +34,27 @@ export function initialize(runtime){
  function remove(id){runtime.S.favorites.items=list().filter(p=>p.id!==id);runtime.favoriteRemoved?.(id);runtime.save();render();}
  function render(){
   const body=$('favoritesBody');body.replaceChildren();$('favSave').disabled=!runtime.inWorld();
-  $('favNote').textContent=runtime.inWorld()?'Guarda este punto. La región conserva su identidad; la música sigue evolucionando.':'Entra al Mundo para guardar un punto. Tus favoritos permanecen aquí.';
+  $('favNote').textContent=runtime.inWorld()?'Guarda el lugar. Su música sigue viviendo.':'Entra al Mundo. Tus lugares siguen guardados.';
   if(!list().length){const p=document.createElement('p');p.textContent='Todavía no hay lugares guardados.';body.append(p);}
-  for(const point of list()){
+  for(const point of list().slice().reverse().slice(0,shown)){
    const card=document.createElement('article');card.className='journal-card favorite-card';card.dataset.favorite=point.id;
-   const input=document.createElement('input');input.value=point.name;input.maxLength=60;input.setAttribute('aria-label','Nombre del favorito');
+   const title=document.createElement('h3');title.textContent=point.name;const input=document.createElement('input');input.value=point.name;input.maxLength=60;input.setAttribute('aria-label','Nombre del favorito');
    const details=document.createElement('p');details.textContent=[point.layer==='bajo'?'Subsuelo':point.layer==='cielo'?'Cielo':'Superficie',point.genre?(runtime.GEN[point.genre]?.name||point.genre):'',point.bpm?`${point.bpm} BPM`:'',point.character,point.shared?'compartido':'',`(${Math.round(point.x)}, ${Math.round(point.y)})`].filter(Boolean).join(' · ');
    const notes=document.createElement('textarea');notes.rows=2;notes.maxLength=280;notes.value=point.notes||'';notes.setAttribute('aria-label','Recuerdo del lugar');notes.placeholder='Qué te gusta de este lugar';notes.onchange=()=>{point.notes=notes.value.slice(0,280);runtime.save();};
-   const row=document.createElement('div');row.className='row';
+   const edit=document.createElement('details'),summary=document.createElement('summary');summary.textContent='Editar y compartir';edit.append(summary);const row=document.createElement('div');row.className='row';
    const button=(text,callback)=>{const b=document.createElement('button');b.textContent=text;b.onclick=callback;row.append(b);return b;};
-   button('Renombrar',()=>{rename(point.id,input.value);input.value=point.name;});button('Borrar',()=>remove(point.id));
+   button('Renombrar',()=>{rename(point.id,input.value);input.value=point.name;title.textContent=point.name;});button('Borrar',()=>remove(point.id));
    button('Código',async()=>{try{const code=runtime.encodeFavorite?.(point);if(code){$('placeCode').value=code;try{await navigator.clipboard.writeText(code);runtime.toast('<em>Código</em> · copiado');}catch(_){runtime.toast('<em>Código</em> · listo para copiar arriba');}}}catch(_){}});
-   if(sameWorld(point.address,runtime.worldIdentity))runtime.favoriteActions?.(point,row);else{button('Abrir lugar',()=>runtime.visitWorldAddress?.(point.address));const note=document.createElement('p');note.textContent='Abrir lugar carga su semilla y versión originales en el punto guardado.';card.append(note);}
-   card.append(input,details,notes,row);body.append(card);
+   const visit=document.createElement('button');visit.textContent='Ir a este lugar';visit.disabled=!supportedWorld(point.address);visit.onclick=()=>runtime.visitWorldAddress?.(point.address);
+   const route=document.createElement('div');route.className='row';if(sameWorld(point.address,runtime.worldIdentity))runtime.favoriteActions?.(point,route);
+   edit.append(input,notes,row,route);card.append(title,details,visit,edit);body.append(card);
   }
+  if(shown<list().length){const more=document.createElement('button');more.textContent='Ver más lugares';more.onclick=()=>{shown+=20;render();};body.append(more);}
+  $('favReturn').hidden=!runtime.previousWorldAddress?.();
   runtime.refreshDestinations?.();
  }
- function open(){const region=runtime.inWorld()?(runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy)):null;$('favName').value=region?.name||'';render();$('mFavorites').hidden=false;}
- $('bFavorites').onclick=open;$('favoritesClose').onclick=()=>{$('mFavorites').hidden=true;};
+ function open(){runtime.stopScanner?.();shown=20;const region=runtime.inWorld()?(runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy)):null;$('favName').value=region?.name||'';render();$('mFavorites').hidden=false;}
+ $('bFavorites').onclick=open;$('era').onclick=()=>{if(runtime.inWorld())open();};$('quickSave').onclick=()=>{if(!runtime.inWorld())return;const s=runtime.S,existing=list().find(p=>p.layer===(s.layer||'superficie')&&sameWorld(p.address,runtime.worldIdentity)&&Math.hypot(p.x-s.wx,p.y-s.wy)<8);if(existing){open();return;}const point=add();if(point)runtime.toast('<em>Lugar guardado</em> · Toca su nombre para volver.');};$('favReturn').onclick=()=>{const address=runtime.previousWorldAddress?.();if(address)runtime.visitWorldAddress?.(address);};$('favoritesClose').onclick=()=>{$('mFavorites').hidden=true;};
  $('favForm').onsubmit=e=>{e.preventDefault();add($('favName').value);};
  Object.defineProperties(runtime,{favorites:{get:()=>list()},addFavorite:{get:()=>add},addFavoriteAddress:{get:()=>addAddress},renameFavorite:{get:()=>rename},removeFavorite:{get:()=>remove},openFavorites:{get:()=>open},renderFavorites:{get:()=>render}});
 }

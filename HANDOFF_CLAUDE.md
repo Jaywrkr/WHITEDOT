@@ -1,3 +1,19 @@
+# Handoff vigente · pulido F3 · Guardar y regresar sin rodeos
+
+Rama `feat/pulido-f3-viajes`, desde `2e45cc0`. Continuar [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) sin pedir otra autorización; Jay crea PR/merge. Main permanece fuera de estos pushes.
+
+- Marcador junto al lugar: guarda con un toque. Tocar su nombre abre tus destinos; repetir no pisa nombres personalizados.
+- Ir a este lugar conserva semilla, versiones, capa y coordenadas. Volver al punto anterior conserva la salida en la pestaña; cerrar la pestaña termina ese retorno temporal.
+- Editar y compartir quedan plegados; veinte lugares por página y admisión de 256 sin truncar registros anteriores.
+- Corregidos IDs coincidentes entre mundos y normalización donde un duplicado inválido ocultaba un destino válido. Ningún RNG histórico cambia.
+- Encabezado muestra el nombre; gravedad sigue disponible en detalles. Todos los controles permanecen silenciosos.
+
+Auditoría aprobada; 94 suites Node y 7 recorridos afectados aprobados. Sin cambios de DSP; interfaz silenciosa comprobada. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f3-validation.json).
+
+## Entregas anteriores
+
+Los siguientes encabezados conservan evidencia histórica; prevalece el estado actual.
+
 # Handoff vigente · pulido F2 · Primer nivel jugable y guía mínima
 
 Rama `feat/pulido-f2-primer-nivel`, desde `25732e6`. Continuar [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) sin pedir otra autorización; Jay crea PR/merge. Main permanece fuera de estos pushes.
