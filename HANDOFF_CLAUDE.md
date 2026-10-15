@@ -1,3 +1,28 @@
+# Handoff vigente · pulido F8 · Cierre integrado y revisión final
+
+Rama `feat/pulido-f8-cierre`, desde `7af93e2`. Los ocho bloques de [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) están implementados; no reiniciarlos. Jay crea PR/merge. Main permanece fuera de estos pushes. Main observado: `15bbe77`, con F1/F2 integradas; sus ramas remotas ya no existen.
+
+- Lugares construye veinte resúmenes por página; los detalles de región y sus búsquedas de reliquias se calculan al desplegarlos. Mil lugares guardados se conservan en la prueba móvil.
+- Los caminantes encontrados aparecen primero en su álbum. El primer nivel oculta título de región y frase competidores, conservando una indicación clara.
+- Marcador de guardar reconocible; el estado redundante Sin reloj deja libre el nombre del lugar. Se repite la revisión de interfaz del ajuste final.
+- Geist Mono y blancos/negros coherentes; opciones del cubo legibles, indicaciones de guardado actualizadas y párrafos estáticos breves. La Voz mantiene constancia sin castigar pausas.
+- Lluvia, blobs, cajas sin abrir y quietud usan colores de fuente. El oro permanece para lo conseguido; brumas y pulsos se contienen para dejar respirar el vacío.
+- La estela usa su identificador de Cometa en sus señales musicales. No se alteran coordenadas ni flujos de generación antiguos.
+- README, planes, hallazgos y handoff se consolidan. Las pruebas finales distinguen automatización, CI, deploy real y aceptación física; servidor público queda para el siguiente ciclo.
+- Corregido Campo acumulado: su apertura depende del tiempo desde la activación, no de la duración restante; renovar o recargar conserva el radio, incluido el paso por la duración original.
+- Las formas registradas también se paginan. Búsqueda/propiedad se ocultan donde no aplican, evitando controles sin efecto; siguen disponibles en las colecciones compatibles.
+
+Auditoría sin errores ni advertencias; 97 suites Node, 75 recorridos de navegador incluidos offline, y 455 renders de audio en 22 programas aprobados. Ambas generaciones y diversidad verificadas. CI del PR, deploy real y aceptación física pendientes. [Evidencia](scripts/pulido-f8-validation.json).
+
+
+Leer [CIERRE_2.0.md](CIERRE_2.0.md) para integración y pendientes externos, [AUDITORIA_CIERRE_2.0.md](AUDITORIA_CIERRE_2.0.md) para hallazgos y [MATRIZ_INTERACCIONES.md](MATRIZ_INTERACCIONES.md) para rutas musicales. Las tablas y pendientes siguientes son historia de entregas anteriores.
+
+Mapa nuevo: onboarding-model/onboarding (primer nivel), favorites/seeds (guardar/viajar), journal (lectura por demanda), power-clock/cajas/quietud (poderes/regalos), walker-forms (cincuenta variantes), foreground/voices/feedback (prioridad y señales). Guardados, versiones y RNG históricos se preservan.
+
+## Entregas anteriores
+
+Los siguientes encabezados conservan evidencia histórica; prevalece el estado actual.
+
 # Handoff vigente · pulido F7 · Cada sonido vuelve a su fuente
 
 Rama `feat/pulido-f7-interacciones`, desde `1637aed`. Continuar [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) sin pedir otra autorización; Jay crea PR/merge. Main permanece fuera de estos pushes.

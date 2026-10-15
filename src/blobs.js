@@ -28,7 +28,7 @@ export function initialize(runtime){
  function draw(species,object,x,y,t,beat){
   if(!traits.has(species.id)){traits.set(species.id,blobTraits(species,runtime.seedOf,runtime.rng));while(traits.size>128)traits.delete(traits.keys().next().value);}
   const p=traits.get(species.id),d=runtime.regionOfPos(object.x,object.y),c=runtime.cx,r=p.size*(1+object.lit*.12)*Math.max(.8,Math.min(2,(species.cell||2)/2)),bounce=Math.sin(t/p.period+object.ph)*p.bounce;
-  c.save();c.translate(x,y-bounce);c.strokeStyle=object.lit>.1?runtime.GOLD:elementInk('air',d.hue+p.hueOffset);c.fillStyle=c.strokeStyle;c.lineWidth=1.2;c.beginPath();
+  c.save();c.translate(x,y-bounce);c.strokeStyle=object.lit>.1?(runtime.musicInk?.(object)||'#fff'):elementInk('air',d.hue+p.hueOffset);c.fillStyle=c.strokeStyle;c.lineWidth=1.2;c.beginPath();
   for(let i=0;i<=40;i++){const a=i/40*Math.PI*2,rad=r*(1+.1*Math.sin(a*p.lobes+t/p.period+object.ph));const px=Math.cos(a)*rad,py=Math.sin(a)*rad*.84;if(i)c.lineTo(px,py);else c.moveTo(px,py);}
   c.closePath();const alpha=c.globalAlpha;c.globalAlpha=alpha*.12;c.fill();c.globalAlpha=alpha;c.stroke();
   c.globalAlpha=alpha*.6;const eye=2+beat*.4;c.fillRect(-4,-eye,1.5,1.5);c.fillRect(3,-eye,1.5,1.5);c.restore();

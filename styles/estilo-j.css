@@ -193,3 +193,10 @@ body:has(#celebration:not([hidden])) .voice:not(.expanded){top:auto;bottom:calc(
 .favorite-card h3{margin:0;font-size:14px;overflow-wrap:anywhere}.favorite-card>p{font-size:12px}.favorite-card details{margin-top:8px}.favorite-card summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:#ffffff99}.favorite-card details input,.favorite-card details textarea{width:100%;box-sizing:border-box}.favorite-card>button{min-height:44px}
 
 .journal-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.journal-summary span{display:flex;flex-direction:column;font:11px/1.6 var(--mono);color:#ffffff99}.journal-summary b{font-size:22px;font-weight:400;color:#fff}.journal-section{border-top:1px solid #ffffff22;margin:8px 0}.journal-section>summary,.music-entry>summary{min-height:44px;display:flex;align-items:center;gap:12px;font-size:12px;cursor:pointer;list-style:none}.journal-section>summary:before,.music-entry>summary:after{content:'+';color:#ffffff88}.journal-section[open]>summary:before,.music-entry[open]>summary:after{content:'−'}.music-entry>summary:after{margin-left:auto}.music-entry{padding:4px 10px}.music-entry>summary span{font-size:20px}.music-entry p{padding:4px 0 8px;margin:0}.journal-card p{overflow-wrap:anywhere}
+
+/* The first lesson gets one clear message over the empty world. */
+body.first-journey .zone,body.first-journey .phrase{visibility:hidden}
+.cube-options button{font-size:12px;min-height:44px}
+
+body.world-focus .goal{display:none}
+.place-shortcuts #quickSave{display:inline-flex;align-items:center;justify-content:center}

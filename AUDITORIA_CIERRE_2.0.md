@@ -27,6 +27,13 @@ Base auditada en F10, con soluciones continuadas en las ramas de PLAN_PULIDO_FIN
 | A19 | El Imán usaba la longitud sin filtrar para seleccionar una fuente musical filtrada y perdía golpes. | Corregido en pulido F7: índice sobre la lista musical; cuatro golpes comprobados con una lista mixta. |
 | A20 | El giro de quietud devolvía siempre el filtro a 20 kHz, pisando un corte previo más suave. | Corregido en pulido F7: cerrar y regresar al valor previo; prueba de automatización y renders. |
 | A21 | Pincel, estela, compañero y quietud emitían notas sin la señal común de su fuente. | Corregido en pulido F7: onsets locales y prioridad del Pincel; gesto nativo y audio comprobados. |
+| A22 | Abrir Lugares reconstruía todas las regiones y buscaba reliquias aun con fichas plegadas. | F8: veinte resúmenes y detalle por demanda; mil registros conservados en tres tamaños. |
+| A23 | Título de región y frase podían competir con el primer nivel. | F8: una indicación, con título/frase ocultos durante la guía; recorridos táctiles y revisión visual. |
+| A24 | Un caminante encontrado podía quedar al fondo del álbum. | F8: ordenar encontrados primero; aserción en el recorrido nativo. |
+| A25 | Quedaban oro de interacción en lluvia/blobs/cajas no abiertas y brumas extensas. | F8: color musical local, oro ganado y pulsos/brumas contenidos. |
+| A26 | La estela heredaba un identificador de Pincel en su señal técnica tras F7. | F8: distinguir Cometa y Pincel; renders completos del conjunto final. |
+| A27 | Acumular duración de Campo hacía colapsar su radio y repetir apertura a mitad del beneficio. | F8: edad de activación separada, guardada y restaurada; regresiones de acumulación y paso de duración original. |
+| A28 | Formas generaba todos los registros; búsqueda/propiedad no se aplicaban a algunas colecciones. | F8: paginar formas y ocultar controles sin efecto; prueba de carga/paginación y retorno a filtros válidos. |
 
 Los selectores de Prototipo de las pruebas se acotan a su menú: añadir un glosario plegable no debe hacer ambiguo un clic de una regresión ajena. La prueba de paseo verifica ahora reloj activo de sesión y ausencia de consumo de exploración; conserva movimiento, pausa y cancelación.
 
@@ -58,7 +65,7 @@ Antes de cambiar tasas: medir recorridos a pie, quietud y saltos por separado; d
 | Tarjetas | Hay arte y condiciones, pero avisos de ejemplares de una misma familia compiten por atención. | Implementado en F5: jerarquía de novedades, repeticiones discretas y presentación según contexto/rareza. |
 | Personajes | Anatomías procedurales existentes no equivalen a cincuenta variantes explícitas de los pequeños personajes pedidos. | Implementado en F6: catálogo de cincuenta, siluetas/comportamientos/roles comprobables y distribución territorial. |
 | Respuesta musical | Hay prioridades y percusión variada; queda verificar perceptibilidad por gesto y fuente en uso real. | Implementado en F7: matriz de interacciones y ajustes de integración sin subir el máster. |
-| Cierre de interfaz | Herramientas históricas y explicaciones pueden confundir. | F8: retirar duplicados visibles, revisar primer uso, acceso táctil y actualizar documentación. |
+| Cierre de interfaz | Herramientas históricas y explicaciones pueden confundir. | Implementado en F8: retirar duplicados visibles, revisar primer uso, acceso táctil y actualizar documentación. |
 
 ## Límites conservados y aceptación
 
@@ -67,3 +74,8 @@ Las cachés de render, nodos/voz, trazas efímeras y diario reciente permanecen 
 No certificar por emulación: escucha artística, tacto/latencia/temperatura en iPhone y Android, comprensión de personas nuevas y deploy real de Vercel. Registrar cada incidencia con WD1, gesto, navegador y orientación. Servidor público y cuentas siguen fuera de este cierre.
 
 Orden y ramas del trabajo solicitado: `PLAN_PULIDO_FINAL.md`.
+
+
+## Resultado automatizado final
+
+Auditoría sin errores ni advertencias; 97 suites Node, 75 recorridos de navegador incluidos offline, y 455 renders de audio en 22 programas aprobados. Ambas generaciones y diversidad verificadas. CI del PR, deploy real y aceptación física pendientes. [Informe](scripts/pulido-f8-validation.json) · [Audio por caso](scripts/pulido-f8-audio-suite.json). La prueba de frecuencia espacial de F10 se conserva: no se cambiaron las probabilidades naturales.

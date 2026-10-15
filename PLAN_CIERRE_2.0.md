@@ -6,8 +6,8 @@ Orden acordado con Jay después de M1. Consolida los planes anteriores: no son d
 
 | Fase | Rama | Estado |
 |---|---|---|
-| 1 · Identidades completas de mundos | `feat/cierre-f1-identidades` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 2 · Formas y especies generadas | `feat/cierre-f2-especies` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
+| 1 · Identidades completas de mundos | `feat/cierre-f1-identidades` | Integrada en main; aceptación física pendiente |
+| 2 · Formas y especies generadas | `feat/cierre-f2-especies` | Integrada en main; aceptación física pendiente |
 | 3 · Ecosistemas y territorios vivos | `feat/cierre-f3-ecosistemas` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 4 · Instrumentos y síntesis modular | `feat/cierre-f4-sintesis` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 5 · Composición, géneros y mezclas | `feat/cierre-f5-composicion` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |

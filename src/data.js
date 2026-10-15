@@ -5,8 +5,8 @@ import {RHYTHM_GENRES} from './rhythms.js';
 // Tablas y constantes del juego.
 export function initialize(runtime) {
   const CAP=120, PER_LEVEL=40, CHUNK=320, SPEED=190, WCH=900, REG=4, GOLD="#f0d27a";
-  const PHRASES=["Hoy cuenta.","Un día más. Eso es todo.","No tienes que ganar. Tienes que volver.","Lo que haces cada día es lo que eres.","Constancia antes que intensidad.","Pequeño también es avanzar.","Nadie te ve crecer. Igual creces.","Hazlo aunque no tengas ganas.","Caer no borra lo que construiste.","Hoy sumaste."];
-  const ECOS=["Hoy no tenías ganas. Igual viniste.","Nadie aplaude la constancia. Hazlo igual.","Un mal día no es una mala vida.","Lo difícil se vuelve normal si lo repites.","Disciplina es hacerlo cuando nadie mira.","Empezar de nuevo también cuenta.","No compitas con nadie. Compite con ayer.","Si fallaste ayer, hoy vuelves.","Poco todos los días gana a mucho una vez.","Tu yo de mañana te lo va a agradecer.","No necesitas motivación. Necesitas rutina.","Lo que repites, se queda.","Haz la parte aburrida.","Cumplirte a ti mismo es lo primero.","Paso pequeño. Paso real.","Sin atajos.","Volver es la habilidad.","Hoy también.","Nadie lo va a hacer por ti.","El progreso no se siente. Se acumula.","Termina lo que empiezas.","Primero hazlo. Luego mejóralo.","Tu racha es tu palabra.","Llegar tarde es mejor que no llegar.","Hazlo simple. Hazlo hoy.","Un día a la vez.","Lo pequeño suma.","No esperes el momento perfecto.","Hoy es suficiente.","Sigue aunque sea lento.","Menos excusas. Más pasos.","Hoy decides tú.","Constancia es respeto propio.","Llegaste. Mañana otra vez."];
+  const PHRASES=["Hoy cuenta.","Un día más. Eso es todo.","Explora a tu ritmo. Volver también cuenta.","Lo que haces cada día es lo que eres.","Constancia antes que intensidad.","Pequeño también es avanzar.","Nadie te ve crecer. Igual creces.","Crea cuando puedas. Tu música te espera.","Caer no borra lo que construiste.","Hoy sumaste."];
+  const ECOS=["Hoy no tenías ganas. Igual viniste.","Nadie aplaude la constancia. Hazlo igual.","Un mal día no es una mala vida.","Lo difícil se vuelve normal si lo repites.","Disciplina es hacerlo cuando nadie mira.","Empezar de nuevo también cuenta.","No compitas con nadie. Compite con ayer.","Tu regreso abre otra posibilidad.","Poco todos los días gana a mucho una vez.","Tu yo de mañana te lo va a agradecer.","Una pequeña escucha puede abrir otro camino.","Lo que repites, se queda.","Escucha el detalle que antes pasaste por alto.","Cumplirte a ti mismo es lo primero.","Paso pequeño. Paso real.","Sin atajos.","Volver es la habilidad.","Hoy también.","Tu manera de crear tiene un lugar.","El progreso no se siente. Se acumula.","Termina lo que empiezas.","Primero hazlo. Luego mejóralo.","Tus encuentros dejan memoria.","Llegar tarde es mejor que no llegar.","Hazlo simple. Hazlo hoy.","Un día a la vez.","Lo pequeño suma.","No esperes el momento perfecto.","Hoy es suficiente.","Sigue aunque sea lento.","Un paso abre otra escucha.","Hoy decides tú.","Constancia es respeto propio.","Llegaste. Mañana otra vez."];
   const ERAS=[[30,"I · Pixel"],[90,"II · Línea"],[180,"III · Forma"],[270,"IV · Luz"],[365,"V · Constelación"],[1e9,"∞ · Sin final"]];
   // Cada zona: escala, ritmo, timbre y una forma propia de tocar música.
   const BIOMES=[
@@ -172,7 +172,7 @@ export function initialize(runtime) {
    ["r30","Racha de 30","Un mes completo."],
    ["r100","Racha de 100","100 días seguidos."],
    ["r365","Racha de 365","Un año entero."],
-   ["regreso","Volviste","Fallaste un día y regresaste."],
+   ["regreso","Volviste","Regresaste después de una pausa."],
    ["t10","10 días totales","10 días jugados, con o sin racha."],
    ["t30","30 días totales","30 días jugados."],
    ["t100","100 días totales","100 días jugados."],

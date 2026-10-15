@@ -62,4 +62,4 @@ export function boxAt(cx,cy,size,seedOf,rng){
 export function activePowers(powers,now){return Object.entries(powers||{}).filter(([,until])=>until>now).map(([id,until])=>({id,left:(until-now)/1000}));}
 export const powerSpeed=(powers,now)=>activePowers(powers,now).some(p=>p.id==='cometa')?2.2:1;
 // Campo: radio que crece al abrirse y se encoge al final.
-export function fieldRadius(left,total){const open=clamp((total-left)/1.2,0,1),close=clamp(left/4,0,1);return 150*Math.min(open,close)+20*open;}
+export function fieldRadius(left,total,age=total-left){const open=clamp(age/1.2,0,1),close=clamp(left/4,0,1);return 150*Math.min(open,close)+20*open;}
