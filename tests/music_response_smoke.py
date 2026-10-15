@@ -30,11 +30,12 @@ try:
     r.drawSoundCues(0,0,100);}finally{r.cx.stroke=stroke;r.clearSoundCues();}
    const {createRegionalVoices}=await import('/src/voices.js');const base=r.regionOfPos(r.S.wx,r.S.wy);
    for(const id of ['pad','plucked','strings','bowed'])delete r.S.journal.music.instruments[id];
+   const pending=new Set(['pad','plucked','strings','bowed']),source={x:r.S.wx,y:r.S.wy};
    for(const genre of ['minimal','ambient','organic','nudisco','robotic']){
-    for(let i=0;i<8;i++){const region={...base,genre,key:'touch-'+genre+'-'+i};
+    for(let i=0;i<96&&pending.size;i++){const region={...base,genre,key:'touch-'+genre+'-'+i};
      const profile=createRegionalVoices(region,r.BIOMES,r.GEN,r.seedOf,r.rng);
-     const entry=Object.entries(profile).find(([,v])=>['pad','plucked','strings','bowed'].includes(v.instrument));
-     if(entry)r.playVoice(entry[0],0,r.ac.currentTime+.02,region,false,.12,{x:r.S.wx,y:r.S.wy},'player');}}
+     for(const kind of Object.keys(profile)){const voice=r.getVoice(kind,region,source);if(!pending.has(voice.instrument))continue;
+      r.playVoice(kind,0,r.ac.currentTime+.02,region,false,.12,source,'player');pending.delete(voice.instrument);}}}
    return {fonts,inks,gold:r.GOLD,heard:Object.keys(r.S.journal.music.instruments),family:getComputedStyle(document.body).fontFamily,overflow:document.documentElement.scrollWidth>innerWidth};
   }''')
   assert all(result['fonts']) and 'Geist Mono' in result['family'],result

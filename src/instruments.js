@@ -1,5 +1,7 @@
 // Synthesized families: resonant partials, FM keys and filtered subtractive voices.
+import {ADVANCED_INSTRUMENTS,createAdvancedPlayer} from './modular-synth.js';
 export const INSTRUMENT_SPECS={
+ ...ADVANCED_INSTRUMENTS,
  analogpad:{partials:[[.996,'sawtooth',.18],[1.004,'triangle',.28],[2,'sine',.06]],cut:1800,attack:.11,dec:1.2,send:.12},
  phasekeys:{partials:[[1,'triangle',.6],[2,'sine',.09]],periodic:true,cut:2500,attack:.009,dec:.48,send:.08},
  fmglass:{fm:2,index:1.1,partials:[[1,'sine',.7]],cut:2100,attack:.008,dec:.7,send:.1},
@@ -27,9 +29,11 @@ export const INSTRUMENT_SPECS={
  metalkeys:{fm:2.4,index:.45,partials:[[1,'sine',.65]],cut:2000,dec:.2,send:.07}
 };
 export function initialize(runtime) {
+ const advanced=createAdvancedPlayer(runtime);
  const noiseBuffers=new WeakMap();
  function playNewInstrument(id,m,time,volume,articulation=null) {
   const spec=INSTRUMENT_SPECS[id],ac=runtime.ac;if(!spec)return false;if(!ac)return true;
+  if(spec.engine)return advanced(id,m,time,volume,articulation||{});
   const patch=runtime.activeInstrumentPatch,attack=Math.min(.12,(spec.attack||.008)*(patch?.attackScale||1)*(articulation?.attackScale||1)),decay=Math.min(1.3,spec.dec*(patch?.decayScale||1)*(articulation?.decayScale||1)),cut=spec.cut*(patch?.toneScale||1)*(articulation?.toneScale||1);
   const hz=runtime.hz(m),end=time+attack+decay+.12,f=ac.createBiquadFilter(),gain=ac.createGain(),nodes=[f,gain],sources=[];
   f.type=spec.formant?'bandpass':'lowpass';f.Q.value=spec.formant?2.2:patch?.resonance||.7;

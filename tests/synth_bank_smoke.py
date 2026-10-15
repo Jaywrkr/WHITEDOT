@@ -30,9 +30,9 @@ try:
     state=page.evaluate('()=>__testRuntime.livingNear()[0].filterMotion');assert state and state['start']!=state['end'],state
     if state['slope']:slopes.add(state['slope'])
     programs.add(find['program'])
-  assert len(entries)==24 and len(programs)==16 and slopes=={12,24,36,48}
+  assert len(entries)==31 and len(programs)==16 and slopes=={12,24,36,48}
   page.screenshot(path='/tmp/whitedot-m1-filter-phone.png')
   assert not errors,errors
-  print('PASS eight audible native synth families, journal registration, sixteen real filter programs, four slopes, moving sweeps and local phone cues',flush=True)
+  print('PASS fifteen audible native synth families, journal registration, sixteen real filter programs, four slopes, moving sweeps and local phone cues',flush=True)
   b.close()
 finally:server.shutdown()

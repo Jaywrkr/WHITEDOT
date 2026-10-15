@@ -4,7 +4,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
  if(!Number.isFinite(renderSeconds)||renderSeconds<5||renderSeconds>30)throw Error('Invalid render duration');
  const r=Object.create(null),duration=renderSeconds,context=new OfflineAudioContext(2,duration*sampleRate,sampleRate);
  const original={AudioContext:window.AudioContext,setInterval:window.setInterval,setTimeout:window.setTimeout,random:Math.random};
- const instrumentHits={},petNotes=[],percussionNotes=[],celebrationNotes=[];let instrumentNotes=0;let clock=0,schedule,trailNotes=0,glassNotes=0,ecologyNotes=0,rendering=false,deferredDisconnects=0;const glassRoles=new Set();const originalURL=location.href;
+ const instrumentHits={},petNotes=[],percussionNotes=[],celebrationNotes=[],advancedNotes=[],modularGraphs=[];let instrumentNotes=0;let clock=0,schedule,trailNotes=0,glassNotes=0,ecologyNotes=0,rendering=false,deferredDisconnects=0;const glassRoles=new Set();const originalURL=location.href;
  // The scheduler advances virtually before offline rendering starts. Its expired
  // patches must leave the bookkeeping cache, but their graph must survive until
  // those earlier notes have actually rendered. Live AudioContext needs no override.
@@ -17,6 +17,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   for(const m of modules.slice(0,2))m.initialize(r);r.S.worldSeed=worldSeed;modules[2].initialize(r);
   Math.random=r.rng(r.seedOf('mix-render:v1'));
   for(const m of modules.slice(3))m.initialize(r);
+  r.advancedNoteCue=n=>advancedNotes.push(n);r.modularGraphCue=signature=>modularGraphs.push(signature);
   const origin=r.regionOfPos(worldPoint?.x??900,worldPoint?.y??900),G=r.GEN[genre];
   if(worldPoint&&origin.genre!==genre)throw Error('Audio destination does not match its native genre');
   r.S.mode='world';r.S.softMusic=soft;r.S.sound=true;r.S.wx=worldPoint?.x??900;r.S.wy=worldPoint?.y??900;
@@ -71,7 +72,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   let peak=0,sum=0,hot=0,n=0;
   for(const samples of data)for(let i=sampleRate;i<samples.length;i++){const value=samples[i];if(!Number.isFinite(value))throw Error('nonfinite rendered audio');peak=Math.max(peak,Math.abs(value));sum+=value*value;hot+=Math.abs(value)>.98;n++;}
   if(window.__mixProgress)await window.__mixProgress({genre,scene,identity:r.MU.radio?.identity?.id,dense,soft,peak});
-  return {actorSeconds:r.S.livingSeconds||0,ecologyPhase:r.livingEnvironment?.phase,actorIntent:r.livingNear?.(1000)[0]?.intent,identity:r.MU.radio?.identity?.id,worldFamily:r.MU.radio?.identity?.worldFamily,hookI:r.MU.radio?.hookI,brightness:r.MU.radio?.grammar?.brightness,deferredDisconnects,...(celebration?{celebrationNotes}:{}),scene,filterMotion:r.livingNear?.(1000)[0]?.filterMotion,instrumentHits,petNotes,percussionNotes,cultureHeard:Object.values(r.S.cultures?.sites||{}).some(e=>e.heard),testInstrument,instrumentNotes,genre,dense,soft,fx,influenced,worldSeed,generation,ecology,ecologyNotes,encounter,deep,installation,trail,glass,trailNotes,glassNotes,glassRoles:[...glassRoles],sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
+  return {advancedNotes,modularGraphs,actorSeconds:r.S.livingSeconds||0,ecologyPhase:r.livingEnvironment?.phase,actorIntent:r.livingNear?.(1000)[0]?.intent,identity:r.MU.radio?.identity?.id,worldFamily:r.MU.radio?.identity?.worldFamily,hookI:r.MU.radio?.hookI,brightness:r.MU.radio?.grammar?.brightness,deferredDisconnects,...(celebration?{celebrationNotes}:{}),scene,filterMotion:r.livingNear?.(1000)[0]?.filterMotion,instrumentHits,petNotes,percussionNotes,cultureHeard:Object.values(r.S.cultures?.sites||{}).some(e=>e.heard),testInstrument,instrumentNotes,genre,dense,soft,fx,influenced,worldSeed,generation,ecology,ecologyNotes,encounter,deep,installation,trail,glass,trailNotes,glassNotes,glassRoles:[...glassRoles],sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
  } finally {window.AudioContext=original.AudioContext;window.setInterval=original.setInterval;window.setTimeout=original.setTimeout;Math.random=original.random;history.replaceState(null,'',originalURL);}
 }
 

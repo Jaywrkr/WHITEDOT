@@ -1,5 +1,12 @@
 # Probar el universo vivo
 
+## Novedad F4 · Síntesis y conexiones de señal
+
+1. En Laboratorio → Síntesis, compara piano, flauta, cuerdas y nube de granos.
+2. Toca la rama con el cubo; alterna Solo y mezcla.
+3. En Tejedora, pasa el cubo por Fuente, Filtro y Modulador.
+4. Escucha el cambio; permanece sobre un hilo entre anclas para retirarlo.
+
 ## Novedad F3 · Hábitats y conducta local
 
 1. Entra al Mundo; alterna caminar rápido, acercarte despacio y permanecer.

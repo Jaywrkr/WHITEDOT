@@ -1,3 +1,15 @@
+# Cierre F4 · Síntesis y conexiones de señal
+
+Rama `feat/cierre-f4-sintesis`, hija de la fase anterior. Jay crea PR/merge.
+
+- `modular-synth.js`: siete motores originales; 32 especificaciones totales. Piano modal, viento con respiración/vibrato, ensamble sostenido, mezcla entre tablas armónicas, catorce granos afinados con ventanas, cuerda de retardo fraccional/amortiguación y membrana modal. Sin grabaciones ni presets comerciales.
+- Presupuesto de 24 voces avanzadas, buffers y tablas acotados; limpieza de nodos mediante un centinela que espera a todos los granos. Rutas de instrumentos avanzados duran 2,9 s, evitando cortar sus colas. La cuerda física se comprueba por amortiguación y autocorrelación, no solo metadatos.
+- `modular-routing.js`, `patches.js` y tejedora: hasta seis conexiones tipadas, filtros/CV y resonancia paralela reales, sin evaluación recursiva ni feedback libre. Pasar dos anclas conecta; permanecer entre puertos sobre un hilo lo retira. Se mantienen notas/patrones anteriores y edición con dedo. Identidades externas estables por fuente/coordenadas.
+- Paletas, familias y Bitácora incluyen los instrumentos; laboratorio suma siete demos orgánicas: 146 entradas/19 grupos, 15 instrumentos de Síntesis y 16 filtros. Geist Mono, UI silenciosa y controles anteriores conservados.
+- Pruebas de nodos incorporan las APIs nuevas en sus dobles. La comprobación de instrumentos antiguos conserva todas sus aserciones y busca voces reales en más recetas; no presupone el reparto anterior en ocho fixtures. SW añade los dos módulos una vez. La expansión de composición corresponde a F5.
+
+Auditoría limpia; 84 suites Node y 5 recorridos afectados aprobados. 18 renders de los siete motores y cables conectados/desconectados aprobados; pico 0.907871, cero muestras calientes, 44,1/48 kHz. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f4-validation.json).
+
 # Cierre F3 · Hábitats y conducta local
 
 Rama `feat/cierre-f3-ecosistemas`, hija de la fase anterior. Jay crea PR/merge.

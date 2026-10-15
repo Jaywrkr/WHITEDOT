@@ -1,6 +1,7 @@
 import {FAMILIES,encounterRole} from './encounter-families.js';
 import {MAX_THREADS,toggleThread,threadScore,threadArrangement,createBox,paintBoxStep,moveBoxPart,boxPart,boxArrangement,startDialogue,captureDialogue,finishDialogue,dialogueReply} from './encounter-depth-model.js';
 import {CHANNEL_NAMES} from './influence.js';
+import {compileThreadGraph} from './modular-routing.js';
 const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 export function segmentDistance(p,a,b){const dx=b.x-a.x,dy=b.y-a.y,t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy||1)));return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy);}
 export function boxStepPoint(index){const angle=-Math.PI/2+index*Math.PI/8;return {x:Math.cos(angle)*68,y:Math.sin(angle)*92};}
@@ -9,14 +10,14 @@ export function boxCellAt(x,y){let best=null,nearest=18;for(let i=0;i<16;i++){co
 export function boxLidAt(x,y){return Math.hypot(x,y-56)<16;}
 export function boxSlotAt(x,y){for(let i=0;i<3;i++)if(distance({x,y},boxPartPoint(i))<20)return i;return null;}
 export function initialize(runtime){
- let gesture=null,armed=null,guidedAnimal=null,previous=runtime.S;const identities=new WeakMap();let nextId=0;
+ let gesture=null,armed=null,guidedAnimal=null,previous=runtime.S;const identities=new WeakMap();
  const playable=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
  const active=()=>playable()&&runtime.S.sound&&runtime.ac?.state==='running';
  const point=e=>({x:runtime.S.wx+e.clientX-runtime.W/2,y:runtime.S.wy+e.clientY-runtime.H/2});
  const objects=()=>runtime.encounterObjects||[];
  function anchors(o){
   const out=Array.from({length:3},(_,i)=>{const a=-Math.PI/2+i*Math.PI*2/3;return {id:o.id+':anchor:'+i,x:o.x+Math.cos(a)*54,y:o.y+Math.sin(a)*54};});
-  for(const source of runtime.MU.near||[]){if(distance(source,o)>145||distance(source,o)<32)continue;if(!identities.has(source))identities.set(source,'source:'+nextId++);out.push({id:identities.get(source),x:source.x,y:source.y});if(out.length>=8)break;}
+  for(const source of runtime.MU.near||[]){if(distance(source,o)>145||distance(source,o)<32)continue;if(!identities.has(source))identities.set(source,source.id||`source:${source.s?.id||source.kind||'voice'}:${source.hx??source.x},${source.hy??source.y}`);out.push({id:identities.get(source),x:source.x,y:source.y});if(out.length>=8)break;}
   for(const other of objects()){if(other===o||distance(other,o)>145||out.length>=10)continue;out.push({id:other.id,x:other.x,y:other.y});}
   return out;
  }
@@ -90,7 +91,14 @@ export function initialize(runtime){
    if(d>180)o.state.a=.15;
    else if(d<60&&runtime.MU.speed<.06&&o.state.charge>.45&&!o.state.rested&&o.state.a<=.65){o.state.a=.85;mark(o,'cultivate');}
   }
-  if(o.kind==='weaver'){const nodes=anchors(o);for(const edge of o.state.weave.edges){const a=nodes.find(n=>n.id===edge.from),b=nodes.find(n=>n.id===edge.to);if(a)edge.a={x:a.x,y:a.y};if(b)edge.b={x:b.x,y:b.y};}}
+  if(o.kind==='weaver'){const nodes=anchors(o);for(const edge of o.state.weave.edges){const a=nodes.find(n=>n.id===edge.from),b=nodes.find(n=>n.id===edge.to);if(a)edge.a={x:a.x,y:a.y};if(b)edge.b={x:b.x,y:b.y};}
+   // Cube-first patching: pass one anchor, then another. Dwell cuts a nearby thread.
+   const p={x:runtime.S.wx,y:runtime.S.wy},at=nodes.find(n=>distance(n,p)<15);
+   if(at&&o.state.cubeAnchor!==at.id){if(o.state.cubeAnchor){const from=nodes.find(n=>n.id===o.state.cubeAnchor);if(from)connect(o,from,at);}o.state.cubeAnchor=at.id;}
+   if(!at&&nodes.every(n=>distance(n,p)>80))o.state.cubeAnchor=null;
+   const edge=nodes.every(n=>distance(n,p)>18)&&o.state.weave.edges.find(e=>segmentDistance(p,e.a,e.b)<9);o.state.threadDwell=edge&&runtime.MU.speed<.03?(o.state.threadDwell||0)+dt:0;
+   if(edge&&o.state.threadDwell>1.3){o.state.weave.edges=o.state.weave.edges.filter(e=>e!==edge);o.state.threadDwell=0;mark(o,'subtract');}
+  }
   if(armed&&(distance(armed.object,{x:runtime.S.wx,y:runtime.S.wy})>190||!objects().includes(armed.object)))armed=null;
   const d=o.state.dialogue;if(!d)return;
   if(distance(o,{x:runtime.S.wx,y:runtime.S.wy})>200){d.phase='idle';return;}
@@ -130,7 +138,7 @@ export function initialize(runtime){
   }return true;
  }
  function hint(o){
-  if(o.kind==='weaver')return armed?.object===o?'Elige otro punto · toca un hilo para retirarlo':'Une dos puntos con el dedo · toca hilos para retirar';
+  if(o.kind==='weaver')return 'Cruza dos anclas · permanece sobre un hilo para retirarlo';
   if(o.kind==='box')return o.state.a>.65?'Raíces: tocar · núcleos: mover/mantener · arco: reposar':'Toca el suelo o permanece cerca para despertarlo';
   if(o.kind==='animal')return !runtime.S.sound?'Activa Música para enseñarle una frase':o.state.dialogue?.phase==='listening'?'Te escucho · toca objetos o el vacío · tócame para responder':o.state.dialogue?.phase==='replying'?'Toca para enseñarme otra frase · mantén para cambiar voz':'Toca para enseñarme · mantén para cambiar voz · arrastra para acercar';
   return FAMILIES[o.kind].hint;
@@ -139,7 +147,7 @@ export function initialize(runtime){
   ensure(o);const c=runtime.cx,near=distance(o,{x:runtime.S.wx,y:runtime.S.wy})<180;
   if(o.kind==='weaver'){
    for(const edge of o.state.weave.edges){const nodes=anchors(o),a=nodes.find(n=>n.id===edge.from)||edge.a,b=nodes.find(n=>n.id===edge.to)||edge.b;c.beginPath();c.moveTo(a.x-o.x,a.y-o.y);c.lineTo(b.x-o.x,b.y-o.y);c.stroke();}
-   if(near){for(const a of anchors(o)){c.beginPath();c.arc(a.x-o.x,a.y-o.y,armed?.node.id===a.id?7:4,0,Math.PI*2);c.stroke();}if(gesture?.object===o&&gesture.type==='anchor'){c.beginPath();c.moveTo(gesture.node.x-o.x,gesture.node.y-o.y);c.lineTo(gesture.now.x-o.x,gesture.now.y-o.y);c.stroke();}}
+   if(near){for(const [index,a]of anchors(o).entries()){const x=a.x-o.x,y=a.y-o.y;c.beginPath();if(index===1){c.moveTo(x,y-5);c.lineTo(x+4,y);c.lineTo(x,y+5);c.lineTo(x-4,y);c.closePath();}else if(index===2){c.moveTo(x-5,y);c.bezierCurveTo(x-2,y-7,x+2,y+7,x+5,y);}else c.arc(x,y,armed?.node.id===a.id?7:4,0,Math.PI*2);c.stroke();if(index<3&&o.state.cubeAnchor===a.id){c.font='9px "Geist Mono", monospace';c.fillText(['Fuente','Filtro','Modulador'][index],x-20,y+16);}}if(gesture?.object===o&&gesture.type==='anchor'){c.beginPath();c.moveTo(gesture.node.x-o.x,gesture.node.y-o.y);c.lineTo(gesture.now.x-o.x,gesture.now.y-o.y);c.stroke();}}
    c.font='8px "Geist Mono", monospace';c.textAlign='center';c.fillText(`${o.state.weave.edges.length}/${MAX_THREADS} hilos`,0,34);
   }
   if(o.kind==='box'&&o.state.a>.65&&near){
@@ -183,5 +191,9 @@ export function initialize(runtime){
  }
  for(const [id,title,description]of [['tejidoVivo','Tejer un groove','Une dos pares de puntos en una red musical.'],['respuestaAnimal','Te escuché','Enseña una frase a un animal y escucha su respuesta.'],['cajaEditable','Un suelo propio','Transforma dos partes musicales de un suelo resonante.']]){runtime.ACH.push([id,title,description]);runtime.VOZ[id]=description;}
  addEventListener('blur',cancel);document.addEventListener('visibilitychange',()=>{if(document.hidden)cancel();});
- Object.defineProperties(runtime,{depthUI:{get:()=>ui},depthPause:{get:()=>cancel},depthDown:{get:()=>down},depthMove:{get:()=>move},depthUp:{get:()=>up},depthTap:{get:()=>tap},depthTick:{get:()=>tick},depthHear:{get:()=>hear},depthPhrase:{get:()=>phrase},depthReplied:{get:()=>replied},depthArrangement:{get:()=>arrangement},depthGate:{get:()=>gate},depthDraw:{get:()=>draw},depthHint:{get:()=>hint},depthEngaged:{get:()=>!!gesture},depthHasPhrase:{get:()=>o=>['listening','replying'].includes(o.state.dialogue?.phase)},depthAnchors:{get:()=>anchors},depthConnect:{get:()=>connect}});
+ function modularForSource(kind,region,source){const p=source||{x:runtime.S.wx,y:runtime.S.wy};
+  const o=objects().find(o=>o.kind==='weaver'&&o.state.weave?.edges.length&&runtime.regionOfPos(o.x,o.y).key===region.key&&distance(o,p)<180&&(!source||source===o||o.state.weave.edges.some(e=>distance(e.a,p)<28||distance(e.b,p)<28)));
+  if(!o)return null;const graph=compileThreadGraph(o.state.weave,runtime.seedOf);return graph.routes.length?graph:null;
+ }
+ Object.defineProperties(runtime,{modularForSource:{get:()=>modularForSource},depthUI:{get:()=>ui},depthPause:{get:()=>cancel},depthDown:{get:()=>down},depthMove:{get:()=>move},depthUp:{get:()=>up},depthTap:{get:()=>tap},depthTick:{get:()=>tick},depthHear:{get:()=>hear},depthPhrase:{get:()=>phrase},depthReplied:{get:()=>replied},depthArrangement:{get:()=>arrangement},depthGate:{get:()=>gate},depthDraw:{get:()=>draw},depthHint:{get:()=>hint},depthEngaged:{get:()=>!!gesture},depthHasPhrase:{get:()=>o=>['listening','replying'].includes(o.state.dialogue?.phase)},depthAnchors:{get:()=>anchors},depthConnect:{get:()=>connect}});
 }

@@ -7,21 +7,21 @@ const family=(id,name,terrain,material,biomes,genres,flora,fauna,hooks,music,lif
 });
 export const WORLD_FAMILIES=[
  family('tidal','Cauces de seda','currents','glass','lago faros vacio','ambient liquid downtempo heart dub',
-  'reeds moss','jelly manta turtle','choir bowed rhodes granularair',{attack:1.18,decay:1.12,tone:.82,air:.8,brightness:6100},{pace:.7,density:.7,flora:.8,fauna:1.2}),
+  'reeds moss','jelly manta turtle','choir bowed rhodes granularair silkstrings graincloud',{attack:1.18,decay:1.12,tone:.82,air:.8,brightness:6100},{pace:.7,density:.7,flora:.8,fauna:1.2}),
  family('grove','Raíces entrelazadas','roots','wood','bosque jardin llanura','organic andean afro tropical microhouse',
-  'breath-tree vine fungal-net pulse-fruit','deer moth','resonantpluck reed kalimba rhodes',{attack:.95,decay:1.05,tone:.88,air:.9,brightness:6700},{pace:.8,density:1,flora:1.2,fauna:.8}),
+  'breath-tree vine fungal-net pulse-fruit','deer moth','resonantpluck reed kalimba rhodes pluckbody airflute',{attack:.95,decay:1.05,tone:.88,air:.9,brightness:6700},{pace:.8,density:1,flora:1.2,fauna:.8}),
  family('terraces','Terrazas de cobre','terraces','metal','ruinas faros tormenta','techhouse electro ebm robotic detroit',
-  'lichen cactus','beetle worm','phasekeys hollow machine metalkeys',{attack:.8,decay:.8,tone:.84,air:.8,brightness:6200},{pace:.85,density:.85,flora:.7,fauna:1.1}),
+  'lichen cactus','beetle worm','phasekeys hollow machine metalkeys wavetable',{attack:.8,decay:.8,tone:.84,air:.8,brightness:6200},{pace:.85,density:.85,flora:.7,fauna:1.1}),
  family('orbital','Jardines orbitales','orbits','air','jardin llanura faros','nudisco cosmic boogie soulful chicago',
-  'seed pressure-flower','blob moth','phasekeys orbitorgan brass clav',{attack:.85,decay:.95,tone:.96,air:.95,brightness:7600},{pace:1.1,density:.9,flora:.9,fauna:1.1}),
+  'seed pressure-flower','blob moth','phasekeys orbitorgan brass clav feltpiano',{attack:.85,decay:.95,tone:.96,air:.95,brightness:7600},{pace:1.1,density:.9,flora:.9,fauna:1.1}),
  family('prism','Arrecifes de cristal','facets','glass','cristales tormenta lago','melodic melodictechno progressive berlin idm',
-  'lichen reeds','crab worm','fmglass strings phasekeys resonantpluck',{attack:1.1,decay:1.05,tone:.91,air:.75,brightness:7100},{pace:.75,density:.7,flora:.8,fauna:1}),
+  'lichen reeds','crab worm','fmglass strings phasekeys resonantpluck wavetable silkstrings',{attack:1.1,decay:1.05,tone:.91,air:.75,brightness:7100},{pace:.75,density:.7,flora:.8,fauna:1}),
  family('vault','Bóvedas de eco','vaults','metal','cueva ruinas','dub minimal minimaltechno dubstep acid acidhouse',
-  'fungal-net moss lichen','turtle worm','hollow orbitorgan resonantpluck bowed',{attack:1.15,decay:1.2,tone:.7,air:.65,brightness:4900},{pace:.55,density:.65,flora:1,fauna:.7}),
+  'fungal-net moss lichen','turtle worm','hollow orbitorgan resonantpluck bowed pluckbody',{attack:1.15,decay:1.2,tone:.7,air:.65,brightness:4900},{pace:.55,density:.65,flora:1,fauna:.7}),
  family('dunes','Estratos de aire','ridges','air','dunas llanura vacio','ambient downtempo lofi jazztronica deep rominimal',
-  'cactus seed reeds','beetle deer','rhodes granularair reed choir',{attack:1.2,decay:1.1,tone:.76,air:.7,brightness:5400},{pace:.6,density:.55,flora:.7,fauna:.7}),
+  'cactus seed reeds','beetle deer','rhodes granularair reed choir airflute graincloud',{attack:1.2,decay:1.1,tone:.76,air:.7,brightness:5400},{pace:.6,density:.55,flora:.7,fauna:.7}),
  family('marsh','Islas de membranas','islands','wood','lago bosque tormenta','amapiano tribal breaks brokenbeat garage garagehouse dnb footwork algorave',
-  'pulse-fruit reeds moss','turtle blob crab','membrane rhodes resonantpluck phasekeys',{attack:.85,decay:.85,tone:.85,air:.85,brightness:6400},{pace:1,density:.85,flora:1,fauna:1.1}),
+  'pulse-fruit reeds moss','turtle blob crab','membrane rhodes resonantpluck phasekeys feltpiano',{attack:.85,decay:.85,tone:.85,air:.85,brightness:6400},{pace:1,density:.85,flora:1,fauna:1.1}),
 ];
 for(const f of WORLD_FAMILIES){for(const v of Object.values(f))if(v&&typeof v==='object')Object.freeze(v);Object.freeze(f);}Object.freeze(WORLD_FAMILIES);
 export const worldFamilyDefinition=id=>WORLD_FAMILIES.find(f=>f.id===id);
