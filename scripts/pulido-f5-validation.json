@@ -1,0 +1,127 @@
+{
+  "validatedAt": "2026-10-15T04:26:29.592456+00:00",
+  "phase": "pulido-f5",
+  "branch": "feat/pulido-f5-tarjetas",
+  "sourceFingerprint": "cca21936d67bc110004ce6f9ae361a64a1bb24d737009cd6045a3ed9e6489d7b",
+  "nodeSuites": 95,
+  "browserFlows": 7,
+  "audioPrograms": 2,
+  "audioEvidence": [
+    "scripts/pulido-f5-celebration-audio-validation.json",
+    "scripts/pulido-f5-powers-audio.json"
+  ],
+  "checks": [
+    {
+      "check": "audit",
+      "command": [
+        "npm",
+        "run",
+        "audit:release"
+      ],
+      "exitCode": 0,
+      "seconds": 0.16,
+      "result": "\n> whitedot@2.0.0-rc.5 audit:release\n> node scripts/release-audit.mjs\n\n{\n  \"version\": \"2.0.0-rc.5\",\n  \"sourceModules\": 161,\n  \"htmlIDs\": 323,\n  \"staticImports\": 407,\n  \"shellAssets\": 181,\n  \"errors\": [],\n  \"warnings\": [],\n  \"notes\": [\n    \"Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.\",\n    \"Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems.\"\n  ]\n}\n"
+    },
+    {
+      "check": "node",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 15.29,
+      "result": "ass\nPASS V1 closure: competing tabs preserve the persisted writer, explicit recovery/restore, and malformed place-code payload rejection\nPASS V1 PWA update controls: save guard, active-recording deferral and explicit reload\nPASS: 728 flocks in 2428 land regions (golondrina 247, grulla 260, luciernaga 184, lira 37), 647 gardens; trust gathers, running scatters, calls answered in rhythm, fireflies sync into groove, flora grows and withers\nPASS: stable regional voices, five tree roles within one biome, varied instruments, bounded emitted registers and groove responses\nPASS exact 50-style/rarity counts, earned gates, six-month myths, legacy dates/defaults, safe material selection and five actual pulse instruments\nPASS: 97 raro / 16 legendario / 2 mítico rarities with visible rules and unique samples; rivers 1.0 % of land, followable 6000 px downstream\nPASS eight real families, 52 retained genres, distinct spatial fields/contours, matched materials/music/populations, protected bass, raw DNA and rare specimens\nPASS edit/phrase roundtrips, persistent removals, non-evicting limits, future-data preservation, bounded bonds, familiar approach and musical affinity\nPASS continuous fog/day/LOD, zero-opacity cutoff, negative-coordinate preload margin, three decor-only parallax planes and independent visual hash\nPASS actual lineage rendering fades bright sources and blends the former 500px cutoff\nPASS: 35 continents (largest 310, smallest 1 regions), 32 % seas, 53 % family identity, density contrast, 447 landmarks of 5 types\nPASS: 95 Node suites with assertions (Web Audio helper excluded)\n"
+    },
+    {
+      "check": "power_persistence_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/power_persistence_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 3.88,
+      "result": "PASS reload keeps remaining active powers, pauses menus, restores unclaimed gifts and prevents repeat daily quiet gifts\n"
+    },
+    {
+      "check": "celebration_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/celebration_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 10.0,
+      "result": "PASS timed box card, paused power/queue, silent 512x640 export and earned memory at 390\nPASS timed box card, paused power/queue, silent 512x640 export and earned memory at 844\n"
+    },
+    {
+      "check": "expansion_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/expansion_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 7.1,
+      "result": "expansion: box opens with cube, listening field, comet speed, stillness stages, no errors PASS\n"
+    },
+    {
+      "check": "rare_cards_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/rare_cards_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 28.35,
+      "result": "PASS rare cards at {'width': 390, 'height': 844}: native contact, truthful forced label, compact notice, paused clock, silent book, return code, dedupe and persistence\nPASS rare cards at {'width': 844, 'height': 390}: native contact, truthful forced label, compact notice, paused clock, silent book, return code, dedupe and persistence\nPASS rare cards at {'width': 1280, 'height': 800}: native contact, truthful forced label, compact notice, paused clock, silent book, return code, dedupe and persistence\n"
+    },
+    {
+      "check": "living-cards_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/living-cards_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 2.98,
+      "result": "PASS natural rare individual via cube, original conditional odds, ecological/instrument context, filtered silent book and genuine PNG export\n"
+    },
+    {
+      "check": "wonders_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/wonders_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 10.0,
+      "result": "mobile: rumors, canon rule and unique sample, inverted gravity, river energy and notes, map and studio PASS\ndesktop: rumors, canon rule and unique sample, inverted gravity, river energy and notes, map and studio PASS\n"
+    },
+    {
+      "check": "exploration_mix.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/exploration_mix.py"
+      ],
+      "exitCode": 0,
+      "seconds": 99.8,
+      "result": "ud\",\n        \"time\": 9.88,\n        \"end\": 12.530000000000001,\n        \"engine\": \"granular\",\n        \"sources\": 14\n      },\n      {\n        \"instrument\": \"graincloud\",\n        \"time\": 10.605806451612905,\n        \"end\": 13.255806451612905,\n        \"engine\": \"granular\",\n        \"sources\": 14\n      },\n      {\n        \"instrument\": \"graincloud\",\n        \"time\": 10.605806451612905,\n        \"end\": 13.255806451612905,\n        \"engine\": \"granular\",\n        \"sources\": 14\n      }\n    ],\n    \"modularGraphs\": [],\n    \"actorSeconds\": 0,\n    \"ecologyPhase\": null,\n    \"actorIntent\": null,\n    \"identity\": \"minimal-hush\",\n    \"worldFamily\": \"orbital\",\n    \"hookI\": \"hollow\",\n    \"brightness\": 3400,\n    \"deferredDisconnects\": 582,\n    \"scene\": \"experimental:micro\",\n    \"filterMotion\": null,\n    \"instrumentHits\": {\n      \"graincloud\": 480,\n      \"pluckbody\": 160,\n      \"wood\": 320\n    },\n    \"petNotes\": [],\n    \"percussionNotes\": [],\n    \"cultureHeard\": false,\n    \"testInstrument\": null,\n    \"instrumentNotes\": 0,\n    \"genre\": \"minimal\",\n    \"dense\": true,\n    \"soft\": true,\n    \"fx\": false,\n    \"influenced\": false,\n    \"worldSeed\": \"\",\n    \"generation\": 1,\n    \"ecology\": false,\n    \"ecologyNotes\": 0,\n    \"encounter\": null,\n    \"deep\": false,\n    \"installation\": null,\n    \"trail\": false,\n    \"glass\": false,\n    \"trailNotes\": 0,\n    \"glassNotes\": 0,\n    \"glassRoles\": [],\n    \"sampleRate\": 44100,\n    \"peak\": 0.35567706823349,\n    \"rmsDb\": -28.399518932202383,\n    \"hotFraction\": 0\n  }\n]\nPASS cultural calls, mirrors, cranes, powers, stillness and experimental layers: finite dense audio with headroom\n"
+    },
+    {
+      "check": "celebration_mix.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/celebration_mix.py"
+      ],
+      "exitCode": 0,
+      "seconds": 49.85,
+      "result": "PASS six box remates over dense native genres at 44.1/48 kHz; peak 0.90779048204422\n"
+    },
+    {
+      "check": "discovery_pacing_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/discovery_pacing_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 2.56,
+      "result": "PASS related findings coalesce without record loss, repeat notices shorten and UI stays silent with focus return\n"
+    }
+  ],
+  "scope": "Affected browser flows. Full browser/audio CI and physical-phone acceptance remain required before release."
+}

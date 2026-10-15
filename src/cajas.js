@@ -13,6 +13,7 @@ import {boxAt,POWERS,POWER_IDS,activePowers,fieldRadius} from './expansion-music
 import {swatchOf,WORLD_VISUAL} from './visual.js';
 const TAU=Math.PI*2;
 
+export function normalizeGiftBoxes(items){const seen=new Set();return (Array.isArray(items)?items:[]).filter(b=>b&&typeof b.id==='string'&&b.id.startsWith('regalo:')&&!seen.has(b.id)&&Number.isFinite(b.x)&&Number.isFinite(b.y)&&Math.abs(b.x)<1e12&&Math.abs(b.y)<1e12&&Object.hasOwn(POWERS,b.power)&&seen.add(b.id)).map(b=>({...b,gift:true,hue:Number.isFinite(b.hue)?b.hue:0,spin:0}));}
 export function initialize(runtime){
  const clock=createPowerClock(POWERS),S=()=>runtime.S,powers=clock.powers,spawned=[],trail=[],marks=[],companion={x:0,y:0,on:false,lit:0,heard:[],species:null};let previous=S(),lastMark=null;
  S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};
@@ -28,15 +29,16 @@ export function initialize(runtime){
   return out.filter(b=>Math.hypot(b.x-S().wx,b.y-S().wy)<radius);
  }
  function findBoxes(range=6){const W=runtime.WCH,cx=Math.floor(S().wx/W),cy=Math.floor(S().wy/W),out=[];for(let x=cx-range;x<=cx+range;x++)for(let y=cy-range;y<=cy+range;y++){const b=boxAt(x,y,W,runtime.seedOf,runtime.rng);if(b&&!S().boxes[b.id])out.push(b);}return out;}
- function spawnBox(x,y,power=POWER_IDS[Math.floor(Math.random()*POWER_IDS.length)]){const b={id:`regalo:${Math.round(x)},${Math.round(y)}:${Date.now()}`,x,y,power,hue:Math.floor(Math.random()*360),spin:0,gift:true};spawned.push(b);if(spawned.length>6)spawned.shift();return b;}
+ function spawnBox(x,y,power=POWER_IDS[Math.floor(Math.random()*POWER_IDS.length)]){ensureOwner();if(!Number.isFinite(x)||!Number.isFinite(y)||!Object.hasOwn(POWERS,power))return null;const stem=`regalo:${Math.round(x)},${Math.round(y)}:${Date.now()}`;let id=stem,n=0;while(spawned.some(b=>b.id===id))id=stem+':'+(++n);const b={id,x,y,power,hue:Math.floor(Math.random()*360),spin:0,gift:true};spawned.push(b);S().giftBoxes=[...(Array.isArray(S().giftBoxes)?S().giftBoxes:[]),{...b}];return b;}
+
  function open(b){if(!b.gift)runtime.collectRareCard?.('box:'+b.power,b);runtime.recordElement?.('box',runtime.regionOfPos(b.x,b.y));
-  const book=S().boxes;if(!b.gift)book[b.id]=1;else spawned.splice(spawned.indexOf(b),1);
+  const book=S().boxes;if(!b.gift)book[b.id]=1;else{const i=spawned.indexOf(b);if(i>=0)spawned.splice(i,1);S().giftBoxes=(Array.isArray(S().giftBoxes)?S().giftBoxes:[]).filter(item=>item?.id!==b.id);}
   S().boxesOpened=(S().boxesOpened||0)+1;runtime.petBox?.(b);give(b.power);runtime.colorPulse?.(b.hue,1);runtime.burst?.(b.x,b.y,14,true);
   if(runtime.celebrateBox)runtime.celebrateBox(b);else runtime.beatSoon(t=>{const ct=runtime.chordTones?.()||[60,64,67];ct.slice(0,3).forEach((n,i)=>melody(n,t+i*runtime.SIX*2,.025));},null,'player');
   runtime.unlock('caja1');if(S().boxesOpened>=5)runtime.unlock('caja5');runtime.unlock('poder_'+b.power);runtime.save();
  }
  function give(id,visitor=null){
-  const p=POWERS[id];if(!p)return;clock.give(id);if(!runtime.celebrateBox)runtime.toast(`<em>${p.name}</em> · ${p.text}`);
+  ensureOwner();const p=Object.hasOwn(POWERS,id)&&POWERS[id];if(!p)return;clock.give(id);if(!runtime.celebrateBox)runtime.toast(`<em>${p.name}</em> · ${p.text}`);
   if(!runtime.celebrateBox&&!S().help['poder_'+id]){S().help['poder_'+id]=true;runtime.say(p.text,p.name);}
   if(id==='cometa')runtime.speedBoost=2.2;if(id==='campo')runtime.fieldSolo=true;
   if(id==='companero'){if(PET_SPECIES[visitor])companion.species=visitor;companion.on=true;companion.x=S().wx+30;companion.y=S().wy+30;}
@@ -44,7 +46,7 @@ export function initialize(runtime){
  }
  // ---------- cada cuadro ----------
  function tick(dt){
-  if(previous!==S()){previous=S();S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};clear();}
+  ensureOwner();
   clock.tick(runtime.activeFrameSeconds??dt,surface()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])'));
   runtime.speedBoost=has('cometa')?2.2:1;runtime.fieldSolo=has('campo');
   if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])'))return;const b=runtime.body;
@@ -112,5 +114,9 @@ export function initialize(runtime){
   c.restore();
  }
  function clear(){clock.clear();spawned.length=0;trail.length=0;marks.length=0;companion.on=false;companion.heard=[];companion.species=null;lastMark=null;runtime.fieldSolo=false;runtime.speedBoost=1;}
- Object.defineProperties(runtime,{powerSecondsLeft:{get:()=>left},clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
+ function restore(){clock.restore(S().boxPowers);spawned.push(...normalizeGiftBoxes(S().giftBoxes));if(has('companero')){companion.on=true;companion.x=S().wx+30;companion.y=S().wy+30;const saved=S().boxPowers?.companion;companion.species=PET_SPECIES[saved?.species]?saved.species:null;companion.heard=Array.isArray(saved?.heard)?saved.heard.filter(Number.isFinite).slice(-4):[];}if(has('pincel')&&Array.isArray(S().boxPowers?.marks))for(const m of S().boxPowers.marks.slice(-16))if(Number.isFinite(m.x)&&Number.isFinite(m.y)&&Number.isInteger(m.degree)&&m.degree>=0&&m.degree<7&&Number.isInteger(m.step)&&m.step>=0&&m.step<16)marks.push({...m,lit:0});lastMark=marks.at(-1)||null;runtime.speedBoost=has('cometa')?2.2:1;runtime.fieldSolo=has('campo');}
+ function ensureOwner(){if(previous!==S()){previous=S();clear();S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};restore();}}
+ function snapshot(){ensureOwner();const raw=S().boxPowers;if(raw?.version>1)return raw;const data=clock.snapshot();return {...raw,...data,remaining:{...raw?.remaining,...data.remaining},companion:{...raw?.companion,species:companion.species,heard:[...companion.heard]},marks:marks.map(m=>({x:m.x,y:m.y,degree:m.degree,step:m.step}))};}
+ restore();
+ Object.defineProperties(runtime,{snapshotPowers:{get:()=>snapshot},powerSecondsLeft:{get:()=>left},clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
 }

@@ -1,5 +1,14 @@
 # Probar el universo vivo
 
+## Pulido F5 · Hallazgos con valor y poderes que se conservan
+
+1. Encuentra una caja o usa Prototipo local: comprueba su poder y el tiempo indicado.
+2. Abre el menú unos segundos. El tiempo del poder queda pausado.
+3. Recarga y comprueba que conserva lo restante; no vuelve a su duración inicial.
+4. Quédate unos minutos en un lugar. Si llega un regalo, recarga antes de recogerlo: permanece.
+5. Recoge el regalo. Volver a esperar allí ese día no repite la concesión.
+6. Encuentra otro ejemplar de un tipo conocido: queda en el libro con aviso breve.
+
 ## Pulido F4 · Bitácora con lectura por capas
 
 1. Abre Bitácora → Lugares. Comprueba el resumen y tus destinos recientes.

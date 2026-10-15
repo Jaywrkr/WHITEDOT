@@ -7,3 +7,5 @@ for(let i=0;i<40;i++)c.tick(.1,true);assert.equal(c.powers.gift-c.now(),0);c.cle
 console.log('Active time, suspension, stacking cap and expiry verified');
 
 c.give('gift');c.tick(.4,true);assert.equal(c.powers.gift-c.now(),1600,'active power time must follow elapsed time at low frame rates');
+
+const saved=c.snapshot(),restored=createPowerClock({gift:{seconds:2}});assert(restored.restore(saved));assert.equal(restored.powers.gift-restored.now(),1600);restored.tick(1,false);assert.equal(restored.snapshot().remaining.gift,1600);restored.tick(.5,true);assert.equal(restored.snapshot().remaining.gift,1100);restored.restore({version:1,remaining:{gift:999999,constructor:99}});assert.equal(restored.snapshot().remaining.gift,4000);assert.equal(restored.give('constructor'),false);assert.equal(restored.give('__proto__'),false);assert(!restored.restore({version:2,remaining:{gift:99}}));assert(!Object.keys(restored.powers).length);

@@ -43,20 +43,20 @@ export function initialize(runtime){
  function collect(type,source,extra={}){
   const book=ensure();if(!runtime.inWorld()||!rareDefinition(type))return false;
   const card=descriptor(type,source,extra);if(!card)return false;
-  const result=storeRareCard(book,card);if(result==='added')runtime.recordRewardSource?.('finding',card.odds.tier==='legendario'?'singular':card.odds.tier);
+  const repeated=book.items.some(c=>c.type===type&&!c.forced);const result=storeRareCard(book,card);if(result==='added')runtime.recordRewardSource?.('finding',card.odds.tier==='legendario'?'singular':card.odds.tier);
   if(result==='full'){if(!fullNoticed){fullNoticed=true;runtime.toast?.('Libro completo. Guarda tus tarjetas: Menú → Guardar copia.');}return false;}
   if(result==='duplicate'&&card.context?.phase){const original=book.items.find(c=>c.id===card.id);const next={at:new Date().toISOString(),phase:card.context.phase,weather:card.context.weather||''};if(!original.observations.some(o=>o.phase===next.phase&&o.weather===next.weather)){original.observations.push(next);if(original.observations.length>8)original.observations.shift();runtime.save();}}
   if(result!=='added')return false;
   // Collection never starts audio, touches the cube, changes a beat or opens a modal.
   runtime.unlock?.('tarjeta1');runtime.save();
-  if(!runtime.boxCardCelebration?.(card)&&queue.length<4)queue.push(card); // All cards are saved, even if a burst exceeds the notice queue.
+  if(!runtime.boxCardCelebration?.(card)){const tier=c=>['raro','singular','legendario','mitico'].indexOf(c.odds.tier),near=queue.findIndex(e=>e.card.address&&card.address&&sameWorld(e.card.address,card.address)&&e.card.address.layer===card.address.layer&&Math.hypot(e.card.address.x-card.address.x,e.card.address.y-card.address.y)<3);const event={card,repeated};if(near>=0){if(tier(card)>=tier(queue[near].card))queue[near]=event;}else if(queue.length<4)queue.push(event);} // All cards are saved, even if a burst exceeds the notice queue.
   return true;
  }
- function reveal(card){
+ function reveal({card,repeated}){
   const def=rareDefinition(card.type),notice=$('rareNotice');notice.style.setProperty('--rare-ink',CARD_TIERS[card.odds.tier].ink);
   $('rareNoticeArt').innerHTML=rarePortrait(card);$('rareNoticeTier').textContent=card.forced?'Muestra de laboratorio':CARD_TIERS[card.odds.tier].name+' · Hallazgo';
   $('rareNoticeName').textContent=card.name;$('rareNoticeWhere').textContent=location(card);$('rareNoticeWhere').title=location(card);$('rareNoticeOdds').textContent=rarityLabel(card.type,card.odds);
-  shown=card;remaining=8;notice.hidden=false;document.body.classList.add('rare-reveal');
+  shown=card;remaining=repeated?3:8;notice.dataset.repeat=String(repeated);notice.hidden=false;document.body.classList.add('rare-reveal');
  }
  function tick(dt){
   ensure();if(!runtime.inWorld()){queue=[];dismiss();return;}
