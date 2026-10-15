@@ -1,7 +1,22 @@
 # Plan WHITEDOT 2.0
 
+## Prioridad vigente · Cubo, colección y música
+
+[Plan de seis fases](PLAN_PULIDO_CUBO_MUSICA.md), nuevo alcance autorizado por Jay. Base main `d7ea883`, PR #143 integra Experiencia viva completa.
+
+| Fase | Rama | Estado |
+|---|---|---|
+| 1 · Medición y escucha | `feat/pulido-01-medicion` | Implementada y probada; entrega en esta rama |
+| 2 · Tu cubo | `feat/pulido-02-cubo` | Pendiente |
+| 3 · Tarjetas y álbum | `feat/pulido-03-tarjetas` | Pendiente |
+| 4 · Explorar con intención | `feat/pulido-04-exploracion` | Pendiente |
+| 5 · Dirección musical | `feat/pulido-05-curaduria` | Pendiente |
+| 6 · Validación conjunta | `feat/pulido-06-cierre` | Pendiente |
+
+Las secciones siguientes conservan estados históricos; no sustituyen este plan.
+
 <!-- experiencia-actual -->
-## Prioridad vigente · Experiencia viva
+## Ciclo integrado · Experiencia viva
 
 [Plan de catorce fases](PLAN_EXPERIENCIA.md), autorizado por Jay. Ciclo de fases 1–14 implementado; cierre y validación en CIERRE_EXPERIENCIA.md. Fases 1–13 integradas por Jay (main 88c96b0, PR #142); F14 continúa esa ascendencia y está validada. Una rama por fase; Jay crea PR y merge. L7 anterior integrado por Jay en PR #129.
 <!-- /experiencia-actual -->

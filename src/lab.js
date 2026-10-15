@@ -1,5 +1,6 @@
 import {hybridIdentity} from './musical-hybrids.js';
 import {labScore} from './lab-score.js';
+import {LISTENING_REFERENCES,listeningReference,listeningReport} from './listening-reference.js';
 // Laboratorio: un mundo de prueba aparte (no toca tu partida) para probar cada elemento interactivo,
 // uno por uno, y anotar qué mejorar. Te pone frente al elemento, dice qué probar, puede callar la música
 // del lugar («Solo») y exporta un informe en Markdown para llevarlo a Claude/ChatGPT.
@@ -116,12 +117,19 @@ export function initialize(runtime){
  $('labSolo').onclick=()=>{book.solo=!book.solo;runtime.labSolo=book.solo;keep();draw();runtime.toast(book.solo?'<em>Solo</em> · la música del lugar calla; oyes el elemento':'<em>Solo</em> · vuelve la música del lugar');};
  $('labNotes').onclick=()=>{$('mLab').hidden=false;drawSheet();};
  $('labClose').onclick=()=>{$('mLab').hidden=true;};
+ // Optional comparison lives inside Notes: no extra HUD or playback from menu selection.
+ const references=$('labReference');
+ for(const r of LISTENING_REFERENCES){const option=document.createElement('option');option.value=r.id;option.textContent=r.name;references.append(option);}
+ function reference(){const r=listeningReference(references.value)||LISTENING_REFERENCES[0];$('labReferenceGoal').textContent=r.goal;return r;}
+ references.onchange=reference;reference();
+ function compare(side){const r=reference();$('mLab').hidden=true;go(r[side]);}
+ $('labReferenceA').onclick=()=>compare('a');$('labReferenceB').onclick=()=>compare('b');
  $('labVerdicts').onclick=e=>{const b=e.target.closest('[data-verdict]');if(!b)return;const n=note(book.current);n.verdict=n.verdict===b.dataset.verdict?'':b.dataset.verdict;touch();drawSheet();draw();};
  // Cada pregunta rota: sin marcar → sí → no → sin marcar.
  $('labChecks').onclick=e=>{const b=e.target.closest('[data-check]');if(!b)return;const n=note(book.current),v=n.checks[b.dataset.check];if(v===undefined)n.checks[b.dataset.check]=true;else if(v===true)n.checks[b.dataset.check]=false;else delete n.checks[b.dataset.check];touch();drawSheet();};
  $('labText').oninput=()=>{note(book.current).text=$('labText').value.slice(0,1200);touch();};
  $('labList').onclick=e=>{const b=e.target.closest('[data-go]');if(!b)return;$('mLab').hidden=true;go(b.dataset.go);};
- const report=()=>labReport(book.notes,{date:new Date().toISOString().slice(0,10)});
+ const report=()=>labReport(book.notes,{date:new Date().toISOString().slice(0,10)})+listeningReport(book.notes,id=>labElement(id)?.name||id);
  $('labCopy').onclick=async()=>{let ok=false;try{await navigator.clipboard.writeText(report());ok=true;}catch(_){}
   if(!ok){$('labText').value=report();$('labText').select();}runtime.toast(ok?'<em>Informe</em> · copiado. Pégalo en el chat':'<em>Informe</em> · selecciónalo y cópialo');};
  $('labDownload').onclick=()=>{const url=URL.createObjectURL(new Blob([report()],{type:'text/markdown'})),a=document.createElement('a');a.href=url;a.download=`laboratorio-${new Date().toISOString().slice(0,10)}.md`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);};

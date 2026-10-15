@@ -1,0 +1,70 @@
+{
+  "phase": 1,
+  "plan": "PLAN_PULIDO_CUBO_MUSICA.md",
+  "branch": "feat/pulido-01-medicion",
+  "baseMain": "d7ea883aa6b48ac2262d1a14030f28b4d8ac0cd5",
+  "validatedAtUTC": "2026-10-15T21:58:47.142245+00:00",
+  "checks": [
+    {
+      "command": "npm run audit:release",
+      "result": "passed",
+      "errors": 0,
+      "warnings": 0,
+      "sourceModules": 177,
+      "shellAssets": 197
+    },
+    {
+      "command": "npm test",
+      "result": "passed",
+      "suites": 115
+    },
+    {
+      "command": "python3 tests/listening_reference_smoke.py",
+      "result": "passed"
+    },
+    {
+      "command": "python3 tests/lab_smoke.py",
+      "result": "passed",
+      "destinations": 246
+    },
+    {
+      "command": "python3 tests/ui_silence_smoke.py",
+      "result": "passed",
+      "viewports": [
+        "mobile",
+        "desktop"
+      ]
+    },
+    {
+      "command": "python3 tests/offline_smoke.py",
+      "result": "passed",
+      "cachedModules": 177
+    },
+    {
+      "command": "npm run audit:encounters -- --routes 192 --output scripts/pulido-01-encounters.json",
+      "result": "passed",
+      "profiles": [
+        "explore",
+        "still"
+      ],
+      "routesPerProfile": 192,
+      "totalRoutes": 384,
+      "artifact": "scripts/pulido-01-encounters.json"
+    }
+  ],
+  "testCorrection": "The initial mobile test treated inaudible background oscillator scheduling after A/B travel as UI notes. It now verifies preserved mute, silent selection and absence of queued gestures/sonar; existing UI silence checks also pass.",
+  "notRun": [
+    "Full browser regression: affected flows only in this branch.",
+    "Audio renders: no synthesis, arrangement or mixing code changed.",
+    "CI, deployed artifact and physical-phone listening."
+  ],
+  "notes": [
+    "No PR or merge by Codex.",
+    "Spatial model estimates potential proximity; no player telemetry or cards-earned estimate.",
+    "No player-save migration or rarity changes.",
+    "Source SHA-256 in encounter report makes the sampled implementation identifiable."
+  ],
+  "issuesResolved": [
+    "Exact Wilson endpoints preserve zero/all-success observations despite floating-point rounding."
+  ]
+}
