@@ -4,18 +4,20 @@ Continuación solicitada durante la auditoría de cierre: auditar, guardar halla
 
 | Bloque | Rama | Estado | Referencia |
 |---|---|---|---|
-| 1 · Auditoría y defectos comprobados | `feat/cierre-f10-lanzamiento` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `25732e6` |
-| 2 · Primer nivel y guía mínima | `feat/pulido-f2-primer-nivel` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `2e45cc0` |
+| 1 · Auditoría y defectos comprobados | `feat/cierre-f10-lanzamiento` | En main; aceptación física pendiente | `25732e6` |
+| 2 · Primer nivel y guía mínima | `feat/pulido-f2-primer-nivel` | En main; aceptación física pendiente | `2e45cc0` |
 | 3 · Guardar, volver y viajar | `feat/pulido-f3-viajes` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `e5d2da5` |
 | 4 · Bitácora visual | `feat/pulido-f4-bitacora` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `e1a0897` |
 | 5 · Tarjetas y ritmo de descubrimiento | `feat/pulido-f5-tarjetas` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `4cdc59a` |
 | 6 · Cincuenta variantes de personajes | `feat/pulido-f6-personajes` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `1637aed` |
 | 7 · Interacciones musicales coherentes | `feat/pulido-f7-interacciones` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `7af93e2` |
-| 8 · Limpieza y aceptación del conjunto | `feat/pulido-f8-cierre` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | HEAD de esta rama |
+| 8 · Limpieza y aceptación del conjunto | `feat/pulido-f8-cierre` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `5d02c08` |
 
 Cada sucesora sale de su padre si aún no está en main. No reescribir ramas publicadas. Conservar commits de padres al integrar reduce conflictos; squash/rebase o cambios paralelos pueden exigir resolverlos.
 
 Verificación del 15 de octubre: las ocho referencias remotas coinciden con sus commits de entrega. Todas las fases de esta tabla están implementadas y subidas. Continuar las fases autorizadas sin esperar confirmación entre ramas; la aceptación física y la publicación conservan sus requisitos propios.
+
+Auditoría posterior de cierre: `audit/cierre-2-validacion`, candidata 2.0.0-rc.9, corrige una confirmación falsa de guardado (A29). El [dictamen de aceptación](AUDITORIA_ACEPTACION_2.0.md) distingue desarrollo, integración y publicación; no crea otra expansión de contenido.
 
 Cada bloque debe resolver los hallazgos de su área, tener pruebas de aceptación y actualizar este plan, CAMBIOS, README y handoff. Auditoría/lógica completas antes del push y navegador/audio afectados según AGENTS. El conjunto final necesita navegador/audio completos; registrar alcance exacto, conservar evidencias históricas y no desactivar pruebas.
 

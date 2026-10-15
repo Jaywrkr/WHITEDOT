@@ -1,33 +1,35 @@
 # Plan WHITEDOT 2.0
 
-**Continuación acordada:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida las siguientes diez fases. No confundir F1 de cierre con la fase visual 1 histórica. Cubo/menú/Bitácora/logros/casa locales recuperados y probados en F9; listos para PR de Jay, sin integrar main.
+**Auditoría de aceptación vigente:** [AUDITORIA_ACEPTACION_2.0.md](AUDITORIA_ACEPTACION_2.0.md), rama `audit/cierre-2-validacion`, candidata 2.0.0-rc.9. Incluye A29 y las condiciones externas para cerrar la publicación; las fases de implementación siguientes conservan su entrega.
+
+**Continuación acordada:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida las siguientes diez fases. No confundir F1 de cierre con la fase visual 1 histórica. Cubo/menú/Bitácora/logros/casa recuperados y probados en F9, ya integrado. Instantánea de main `52fec80`: cierre F1–F10 y pulido F2 integrados; aceptación física pendiente.
 
 | Fase | Rama | Estado |
 |---|---|---|
-| 1 · Identidades completas de mundos | `feat/cierre-f1-identidades` | Integrada en main; aceptación física pendiente |
-| 2 · Formas y especies generadas | `feat/cierre-f2-especies` | Integrada en main; aceptación física pendiente |
-| 3 · Ecosistemas y territorios vivos | `feat/cierre-f3-ecosistemas` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 4 · Instrumentos y síntesis modular | `feat/cierre-f4-sintesis` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 5 · Composición, géneros y mezclas | `feat/cierre-f5-composicion` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 6 · Interacciones que hacen música | `feat/cierre-f6-interacciones` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 7 · Exploración y hallazgos con sentido | `feat/cierre-f7-hallazgos` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 8 · Memoria, regreso y vínculos | `feat/cierre-f8-memoria` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 9 · Juego, interfaz e historia unidos | `feat/cierre-f9-juego` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 10 · Mezcla, auditoría y lanzamiento | `feat/cierre-f10-lanzamiento` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
+| 1 · Identidades completas de mundos | `feat/cierre-f1-identidades` | En main; aceptación física pendiente |
+| 2 · Formas y especies generadas | `feat/cierre-f2-especies` | En main; aceptación física pendiente |
+| 3 · Ecosistemas y territorios vivos | `feat/cierre-f3-ecosistemas` | En main; aceptación física pendiente |
+| 4 · Instrumentos y síntesis modular | `feat/cierre-f4-sintesis` | En main; aceptación física pendiente |
+| 5 · Composición, géneros y mezclas | `feat/cierre-f5-composicion` | En main; aceptación física pendiente |
+| 6 · Interacciones que hacen música | `feat/cierre-f6-interacciones` | En main; aceptación física pendiente |
+| 7 · Exploración y hallazgos con sentido | `feat/cierre-f7-hallazgos` | En main; aceptación física pendiente |
+| 8 · Memoria, regreso y vínculos | `feat/cierre-f8-memoria` | En main; aceptación física pendiente |
+| 9 · Juego, interfaz e historia unidos | `feat/cierre-f9-juego` | En main; aceptación física pendiente |
+| 10 · Mezcla, auditoría y lanzamiento | `feat/cierre-f10-lanzamiento` | En main; aceptación física pendiente |
 
 
 ## Continuación de pulido
 
 | Bloque | Rama | Estado | Referencia |
 |---|---|---|---|
-| 1 · Auditoría y defectos comprobados | `feat/cierre-f10-lanzamiento` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `25732e6` |
-| 2 · Primer nivel y guía mínima | `feat/pulido-f2-primer-nivel` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `2e45cc0` |
+| 1 · Auditoría y defectos comprobados | `feat/cierre-f10-lanzamiento` | En main; aceptación física pendiente | `25732e6` |
+| 2 · Primer nivel y guía mínima | `feat/pulido-f2-primer-nivel` | En main; aceptación física pendiente | `2e45cc0` |
 | 3 · Guardar, volver y viajar | `feat/pulido-f3-viajes` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `e5d2da5` |
 | 4 · Bitácora visual | `feat/pulido-f4-bitacora` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `e1a0897` |
 | 5 · Tarjetas y ritmo de descubrimiento | `feat/pulido-f5-tarjetas` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `4cdc59a` |
 | 6 · Cincuenta variantes de personajes | `feat/pulido-f6-personajes` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `1637aed` |
 | 7 · Interacciones musicales coherentes | `feat/pulido-f7-interacciones` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `7af93e2` |
-| 8 · Limpieza y aceptación del conjunto | `feat/pulido-f8-cierre` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | HEAD de esta rama |
+| 8 · Limpieza y aceptación del conjunto | `feat/pulido-f8-cierre` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `5d02c08` |
 
 Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0** (`4ed00ce`), con CI en verde. La 2.0 se construye en ramas. Por excepción explícita de Jay, se integran en `main` las fases 0–2 y la reparación de Vercel; las siguientes conservan el flujo de PR y merge de Jay.
 
@@ -51,18 +53,18 @@ La continuación autorizada durante esta auditoría se organiza en [PLAN_PULIDO_
 | 0 · Base de colección | `v2/f0-coleccion` | Integrada en main por excepción de Jay; pruebas aprobadas |
 | 1 · El universo se ve real | `v2/f1-universo-visual` | Integrada en main y probada; 60 FPS físicos por aceptar |
 | 2 · Celebración y caja mágica | `v2/f2-celebracion` | Integrada en main por excepción de Jay; pruebas aprobadas |
-| 3 · Cubo con 50 personalizaciones | `v2/f3-cubo-50` | Recuperada y probada en cierre F9; lista para PR de Jay |
-| 7 · Menú principal limpio | `v2/f7-menu` | Recuperada y probada en cierre F9; lista para PR de Jay |
-| 6 · Bitácora perfeccionada | `v2/f6-bitacora` | Recuperada y probada en cierre F9; lista para PR de Jay |
-| 4 · Logros 2.0 | `v2/f4-logros` | Recuperada y probada en cierre F9; lista para PR de Jay |
-| 5 · La casa del cubo | `v2/f5-casa` | Recuperada y probada en cierre F9; lista para PR de Jay |
+| 3 · Cubo con 50 personalizaciones | `v2/f3-cubo-50` | Recuperada y probada en cierre F9, ya integrado; aceptación física pendiente |
+| 7 · Menú principal limpio | `v2/f7-menu` | Recuperada y probada en cierre F9, ya integrado; aceptación física pendiente |
+| 6 · Bitácora perfeccionada | `v2/f6-bitacora` | Recuperada y probada en cierre F9, ya integrado; aceptación física pendiente |
+| 4 · Logros 2.0 | `v2/f4-logros` | Recuperada y probada en cierre F9, ya integrado; aceptación física pendiente |
+| 5 · La casa del cubo | `v2/f5-casa` | Recuperada y probada en cierre F9, ya integrado; aceptación física pendiente |
 | 8 · Pulido y lanzamiento 2.0 | `v2/f8-lanzamiento` | Automatización y pulido cubiertos por cierre F10/pulido F8; aceptación física, CI y publicación pendientes |
 
 **Orden de trabajo:** 0 → 1 → 2 → 3 → 7 → 6 → 4 → 5 → 8. Primero la base y que el mundo se vea profesional; luego celebración y cubo; después menú y bitácora; al final logros y casa, las fases más grandes.
 
 ## Prioridad adicional · 14 de octubre · Despliegue e interacción
 
-Esta integración excepcional reunió las fases 0, 1 y 2 y el arreglo de deploy. Las fases 3, 7, 6, 4 y 5 quedaron fuera de aquella publicación; posteriormente se recuperaron y probaron en cierre F9. Están incluidas en la candidata actual, todavía sin merge.
+Esta integración excepcional reunió las fases 0, 1 y 2 y el arreglo de deploy. Las fases 3, 7, 6, 4 y 5 quedaron fuera de aquella publicación; posteriormente se recuperaron y probaron en cierre F9. Están incluidas en cierre F9, ya integrado; la candidata conserva las mejoras de pulido posteriores.
 
 Reparación incluida: `fix/vercel-static-output` (`6feac66`) sirve la raíz del juego en lugar de la carpeta `public` inexistente. Conserva el sello de revisión/hora y el SW sin caché HTTP. Jay autorizó a Codex integrar y publicar `main` solo en este caso; las próximas fases vuelven al flujo habitual.
 
@@ -206,7 +208,7 @@ Mientras no estén decididas, las fases 0–3, 6 y 7 pueden avanzar. La vista de
 
 ## Agrupación histórica del cierre
 
-La siguiente lista documenta el alcance que se agrupó para el cierre. Las fases 3, 7, 6, 4 y 5 ya se recuperaron, integraron y probaron en cierre F9; F10 y pulido F2–F8 completan las soluciones posteriores. Todas están publicadas en ramas. No volver a ejecutarlas por estos verbos históricos. Consultar CIERRE_2.0 para los pendientes externos actuales.
+La siguiente lista documenta el alcance que se agrupó para el cierre. Las fases 3, 7, 6, 4 y 5 ya se recuperaron, integraron y probaron en cierre F9; F10 y pulido F2–F8 completan las soluciones posteriores. La recuperación F9 ya está integrada; los bloques posteriores conservan sus estados en las tablas iniciales. No volver a ejecutarlas por estos verbos históricos. Consultar CIERRE_2.0 para los pendientes externos actuales.
 
 1. **Fase 3:** cerrar vestidor de 50 piezas, pistas, apariencia en el mundo y voces del pulso; conservar las 13 piezas anteriores. Validar voces y guardar/reabrir.
 2. **Fase 7:** cerrar menú compacto y sonido en una hoja; viajes reales entre semillas, más botón provisional “Otro lugar” en pantalla principal y regreso al destino anterior. No confundir viajes con el laboratorio.

@@ -1,3 +1,15 @@
+# Auditoría de aceptación · 2.0.0-rc.9
+
+Rama `audit/cierre-2-validacion`, desde `10b74ed`. Jay mantiene PR y merge.
+
+- A29 reproducido: un fallo de localStorage podía confirmar un favorito, otorgar logro y completar la guía sin escritura exitosa.
+- Favoritos exige confirmación real; conserva el trabajo en sesión y permite reintentar sin duplicar. Códigos y tarjetas distinguen fallo de almacenamiento de lista llena.
+- Nueva regresión de navegador con cuota, importación, recuperación y otro escritor. No cambia esquema de guardado, mapas ni audio; versión y caché PWA pasan a rc.9.
+- Dictamen en AUDITORIA_ACEPTACION_2.0: desarrollo, integración, artefacto publicado y aceptación física tienen evidencia separada. Producción y main se observaron mientras Jay integraba ramas; conservar fecha/revisión en los informes.
+- Evidencia actual: `scripts/auditoria-cierre-rc9-validation.json` y `scripts/auditoria-cierre-rc9-remote.json`. Los 455 renders F8 se conservan y se verifica su integridad; no se presentan como un nuevo render RC9.
+
+Validación: auditoría sin errores/advertencias, 97 suites Node, 76 recorridos de navegador incluido offline y API HTTP/SQLite aprobados. Estado remoto fechado: main y producción avanzaron a `52fec80` / 2.0.0-rc.2; RC9 conserva su rama independiente.
+
 # Estado unificado · documentación de cierre
 
 Rama `docs/cierre-estado-unificado`, desde `5d02c08`. Jay mantiene PR y merge.

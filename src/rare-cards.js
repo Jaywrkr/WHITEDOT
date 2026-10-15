@@ -107,7 +107,7 @@ export function initialize(runtime){
   const existing=(runtime.favorites||[]).find(p=>sameWorld(p.address,card.address)&&p.layer===card.address.layer&&Math.hypot(p.x-card.address.x,p.y-card.address.y)<8);
   const point=existing||runtime.addFavoriteAddress?.(card.address,card.name);
   if(point&&runtime.selectDestination?.(point.id))$('mJournal').hidden=true;
-  else if(!point)runtime.toast?.('Favoritos lleno · libera un lugar para orientarte.');
+  else if(!point)runtime.toast?.(runtime.storageStatus.kind==='ok'?'Favoritos lleno · libera un lugar para orientarte.':'No se pudo guardar. Menú → Guardar copia.');
  }
  runtime.$('journalBody').addEventListener('change',event=>{if(event.target.id!=='rareFilter')return;filter=event.target.value;page=0;runtime.refreshJournal?.();document.getElementById('rareFilter')?.focus();});
  $('rareNoticeDismiss').onclick=dismiss;

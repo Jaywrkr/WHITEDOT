@@ -34,6 +34,7 @@ Base auditada en F10, con soluciones continuadas en las ramas de PLAN_PULIDO_FIN
 | A26 | La estela heredaba un identificador de Pincel en su señal técnica tras F7. | F8: distinguir Cometa y Pincel; renders completos del conjunto final. |
 | A27 | Acumular duración de Campo hacía colapsar su radio y repetir apertura a mitad del beneficio. | F8: edad de activación separada, guardada y restaurada; regresiones de acumulación y paso de duración original. |
 | A28 | Formas generaba todos los registros; búsqueda/propiedad no se aplicaban a algunas colecciones. | F8: paginar formas y ocultar controles sin efecto; prueba de carga/paginación y retorno a filtros válidos. |
+| A29 | Favoritos podía confirmar guardado, completar la guía y otorgar logro aunque la escritura fallara. Los códigos importados también podían indicar éxito. | RC9: exigir escritura confirmada, conservar cambios en sesión para exportar/reintentar y distinguir fallo de almacenamiento de límite. Regresión nativa con cuota, reintento y otro escritor; [dictamen](AUDITORIA_ACEPTACION_2.0.md). |
 
 Los selectores de Prototipo de las pruebas se acotan a su menú: añadir un glosario plegable no debe hacer ambiguo un clic de una regresión ajena. La prueba de paseo verifica ahora reloj activo de sesión y ausencia de consumo de exploración; conserva movimiento, pausa y cancelación.
 

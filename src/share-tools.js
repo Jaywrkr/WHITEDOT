@@ -40,7 +40,7 @@ export function initialize(runtime){
   let place;try{place=decodePlace(text);}catch(error){$('placeCodeInfo').textContent=error.message;return null;}
   const same=sameWorld(place.address,runtime.worldIdentity);
   const point=runtime.addFavoriteAddress?.(place.address,place.name||'Lugar compartido');
-  if(!point){$('placeCodeInfo').textContent='No se pudo guardar: ¿Favoritos está lleno?';return null;}
+  if(!point){$('placeCodeInfo').textContent=runtime.storageStatus.kind==='ok'?'Favoritos lleno. Exporta tu copia.':'No se pudo guardar. Menú → Guardar copia.';return null;}
   $('placeCodeInfo').textContent=same?'Guardado en Favoritos. Te oriento hacia allá.':`Guardado. Es de otro mundo (semilla “${place.address.seed||'original'}”): ábrelo desde Otros mundos.`;
   if(same)runtime.selectDestination?.(point.id);runtime.unlock('codigoAbierto');return point;
  }

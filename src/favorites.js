@@ -17,18 +17,23 @@ export function storeFavorite(state,point){
 export function initialize(runtime){
  runtime.S.favorites=normalizeFavorites(runtime.S.favorites,runtime.worldIdentity);
  const list=()=>runtime.S.favorites.items,$=runtime.$;let shown=20;
+ function persist(point,learn=false){
+  if(!runtime.save()){runtime.toast('Lugar pendiente. Menú → Guardar copia.');render();return null;}
+  if(learn){runtime.unlock('favorito1');runtime.firstJourneyEvent?.('save');}
+  render();return point;
+ }
  function add(name){
   if(!runtime.inWorld())return null;
   const s=runtime.S,region=runtime.activeLayerRegion?.()||runtime.regionOfPos(s.wx,s.wy);
   const point=storeFavorite(s,{address:placeAddress(runtime.worldIdentity,s.wx,s.wy,s.layer||'superficie'),name:name||region.name,x:s.wx,y:s.wy,layer:s.layer||'superficie',created:Date.now(),region:region.key,regionName:region.name,genre:region.genre,bpm:region.bpm,scale:[...region.scale],phase:runtime.livingEnvironment?.name||'',notes:'',character:region.recipe?.name||'',material:region.recipe?.materialName||'',recipeVersion:region.recipe?.version||1,musicStamp:runtime.musicStamp?.(region)});
   if(!point){runtime.toast(`<em>Favoritos</em> · Límite de ${FAVORITE_LIMIT}. Exporta tu copia.`);return null;}
-  runtime.firstJourneyEvent?.('save');runtime.unlock('favorito1');runtime.save();render();return point;
+  return persist(point,true);
  }
  // Guarda un lugar recibido por código. Si es del mismo mundo, completa su identidad musical.
  function addAddress(address,name){
   const s=runtime.S,same=sameWorld(address,runtime.worldIdentity),region=same&&address.layer==='superficie'?runtime.regionOfPos(address.x,address.y):null;
   const point=storeFavorite(s,{address,name,x:address.x,y:address.y,layer:address.layer,created:Date.now(),shared:true,region:region?.key||'',regionName:region?.name||'',genre:region?.genre||'',bpm:region?.bpm||0,scale:region?[...region.scale]:[],character:region?.recipe?.name||'',material:region?.recipe?.materialName||'',...(region?{musicStamp:runtime.musicStamp?.(region)}:{})});
-  if(point){runtime.save();render();}return point;
+  return point?persist(point):null;
  }
  function rename(id,name){const point=list().find(p=>p.id===id);if(point){point.name=cleanName(name);runtime.save();}return point;}
  function remove(id){runtime.S.favorites.items=list().filter(p=>p.id!==id);runtime.favoriteRemoved?.(id);runtime.save();render();}
@@ -54,7 +59,7 @@ export function initialize(runtime){
   runtime.refreshDestinations?.();
  }
  function open(){runtime.stopScanner?.();shown=20;const region=runtime.inWorld()?(runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy)):null;$('favName').value=region?.name||'';render();$('mFavorites').hidden=false;}
- $('bFavorites').onclick=open;$('era').onclick=()=>{if(runtime.inWorld())open();};$('quickSave').onclick=()=>{if(!runtime.inWorld())return;const s=runtime.S,existing=list().find(p=>p.layer===(s.layer||'superficie')&&sameWorld(p.address,runtime.worldIdentity)&&Math.hypot(p.x-s.wx,p.y-s.wy)<8);if(existing){open();return;}const point=add();if(point)runtime.toast('<em>Lugar guardado</em> · Toca su nombre para volver.');};$('favReturn').onclick=()=>{const address=runtime.previousWorldAddress?.();if(address)runtime.visitWorldAddress?.(address);};$('favoritesClose').onclick=()=>{$('mFavorites').hidden=true;};
+ $('bFavorites').onclick=open;$('era').onclick=()=>{if(runtime.inWorld())open();};$('quickSave').onclick=()=>{if(!runtime.inWorld())return;const s=runtime.S,existing=list().find(p=>p.layer===(s.layer||'superficie')&&sameWorld(p.address,runtime.worldIdentity)&&Math.hypot(p.x-s.wx,p.y-s.wy)<8);if(existing){persist(existing,true);open();return;}const point=add();if(point)runtime.toast('<em>Lugar guardado</em> · Toca su nombre para volver.');};$('favReturn').onclick=()=>{const address=runtime.previousWorldAddress?.();if(address)runtime.visitWorldAddress?.(address);};$('favoritesClose').onclick=()=>{$('mFavorites').hidden=true;};
  $('favForm').onsubmit=e=>{e.preventDefault();add($('favName').value);};
  Object.defineProperties(runtime,{favorites:{get:()=>list()},addFavorite:{get:()=>add},addFavoriteAddress:{get:()=>addAddress},renameFavorite:{get:()=>rename},removeFavorite:{get:()=>remove},openFavorites:{get:()=>open},renderFavorites:{get:()=>render}});
 }
