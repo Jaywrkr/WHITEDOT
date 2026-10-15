@@ -2,16 +2,19 @@
 
 ## Prioridad vigente · Cubo, colección y música
 
-[Plan de seis fases](PLAN_PULIDO_CUBO_MUSICA.md), nuevo alcance autorizado por Jay. Base main `d7ea883`, PR #143 integra Experiencia viva completa.
+[Plan detallado de nueve fases](PLAN_PULIDO_CUBO_MUSICA.md), autorizado por Jay. Sustituye la organización inicial de seis fases. Fase 1 integrada por Jay en main `30b2df8` (PR #144); fase 2 parte de ese main.
 
-| Fase | Rama | Estado |
-|---|---|---|
-| 1 · Medición y escucha | `feat/pulido-01-medicion` | Implementada y probada; entrega en esta rama |
-| 2 · Tu cubo | `feat/pulido-02-cubo` | Pendiente |
-| 3 · Tarjetas y álbum | `feat/pulido-03-tarjetas` | Pendiente |
-| 4 · Explorar con intención | `feat/pulido-04-exploracion` | Pendiente |
-| 5 · Dirección musical | `feat/pulido-05-curaduria` | Pendiente |
-| 6 · Validación conjunta | `feat/pulido-06-cierre` | Pendiente |
+| Fase | Rama | Alcance | Estado |
+|---|---|---|---|
+| 1 · Base de evaluación | `feat/pulido-01-medicion` | Medición y referencias internas | En main, PR #144 |
+| 2 · Dirección musical | `feat/pulido-02-direccion-musical` | Identidades, articulación y espacios musicales | Implementada y probada; entrega en esta rama |
+| 3 · Territorios coherentes | `feat/pulido-03-territorios` | Música, materiales, color, habitantes y fusiones | Pendiente |
+| 4 · Interacciones musicales | `feat/pulido-04-interacciones` | Gestos con causa visual y aporte audible | Pendiente |
+| 5 · Ambiente vivo | `feat/pulido-05-ambiente` | Clima, percusión natural, vida y quietud | Pendiente |
+| 6 · Cubo e interfaz | `feat/pulido-06-cubo-ui` | Personalización, claridad y móvil | Pendiente |
+| 7 · Colección y tarjetas | `feat/pulido-07-coleccion` | Hallazgos, utilidad, procedencia y regreso | Pendiente |
+| 8 · Exploración y aprendizaje | `feat/pulido-08-exploracion` | Pistas, memoria reciente y contraste | Pendiente |
+| 9 · Curaduría y cierre | `feat/pulido-09-cierre` | Auditoría conjunta y escucha | Pendiente |
 
 Las secciones siguientes conservan estados históricos; no sustituyen este plan.
 

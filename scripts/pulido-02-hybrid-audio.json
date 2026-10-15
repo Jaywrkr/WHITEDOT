@@ -1,0 +1,3029 @@
+{
+  "renders": 16,
+  "maxPeak": 0.9069629311561584,
+  "rows": [
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "minimal",
+          "room": 0.265,
+          "space": 0,
+          "echo": 0.18,
+          "feedback": 0.22
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "acid-dub",
+      "advancedNotes": [
+        {
+          "instrument": "pluckbody",
+          "time": 0.09643202307261527,
+          "end": 2.7464320230726154,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8677049180327868,
+          "end": 3.517704918032787,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8677049180327868,
+          "end": 3.517704918032787,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8677049180327868,
+          "end": 3.517704918032787,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8677049180327868,
+          "end": 3.517704918032787,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8677049180327868,
+          "end": 3.517704918032787,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8677049180327868,
+          "end": 3.517704918032787,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.117704918032787,
+          "end": 3.767704918032787,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.117704918032787,
+          "end": 3.767704918032787,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.117704918032787,
+          "end": 3.767704918032787,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.117704918032787,
+          "end": 3.767704918032787,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.117704918032787,
+          "end": 3.767704918032787,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.8677049180327865,
+          "end": 6.517704918032786,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.8677049180327865,
+          "end": 6.517704918032786,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.8677049180327865,
+          "end": 6.517704918032786,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.1177049180327865,
+          "end": 6.767704918032786,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.1177049180327865,
+          "end": 6.767704918032786,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.1177049180327865,
+          "end": 6.767704918032786,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.6177049180327865,
+          "end": 7.267704918032786,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.6177049180327865,
+          "end": 7.267704918032786,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.6177049180327865,
+          "end": 7.267704918032786,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.036568727090555,
+          "end": 6.686568727090554,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.8677049180327865,
+          "end": 7.517704918032786,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 6.005206586638803,
+          "end": 8.655206586638803,
+          "engine": "string",
+          "sources": 1
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "micro-wood",
+      "worldFamily": "grove",
+      "hookI": "pluckbody",
+      "brightness": 4700,
+      "deferredDisconnects": 384,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "minimal",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.5855319499969482,
+      "rmsDb": -19.60860486514824,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "soulful",
+          "room": 0.36,
+          "space": 0.04,
+          "echo": 0.2,
+          "feedback": 0.24
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "liquid-soul",
+      "advancedNotes": [
+        {
+          "instrument": "feltpiano",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.505,
+          "end": 3.155,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.505,
+          "end": 3.155,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.755,
+          "end": 3.405,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.755,
+          "end": 3.405,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.63,
+          "end": 3.28,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 1.005,
+          "end": 3.655,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.63,
+          "end": 3.28,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 1.005,
+          "end": 3.655,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.8494364509172737,
+          "end": 3.4994364509172735,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.88,
+          "end": 3.53,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 1.255,
+          "end": 3.905,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.88,
+          "end": 3.53,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 1.255,
+          "end": 3.905,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 1.13,
+          "end": 3.78,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 1.505,
+          "end": 4.154999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 1.13,
+          "end": 3.78,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 1.505,
+          "end": 4.154999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.505,
+          "end": 6.154999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.505,
+          "end": 6.154999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.755,
+          "end": 6.404999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.755,
+          "end": 6.404999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.63,
+          "end": 6.279999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.005,
+          "end": 6.654999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.63,
+          "end": 6.279999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.005,
+          "end": 6.654999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.255,
+          "end": 6.904999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.255,
+          "end": 6.904999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.097934702936559,
+          "end": 6.7479347029365595,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.505,
+          "end": 7.154999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.505,
+          "end": 7.154999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.38,
+          "end": 7.029999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.755,
+          "end": 7.404999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.38,
+          "end": 7.029999999999999,
+          "engine": "modal",
+          "sources": 5
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "deep-soul",
+      "worldFamily": "orbital",
+      "hookI": "feltpiano",
+      "brightness": 5600,
+      "deferredDisconnects": 351,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "soulful",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.9062079191207886,
+      "rmsDb": -8.856577910159977,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "tropical",
+          "room": 0.34,
+          "space": 0.03,
+          "echo": 0.2,
+          "feedback": 0.25
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "dub-roots",
+      "advancedNotes": [
+        {
+          "instrument": "pluckbody",
+          "time": 0.09643202307261527,
+          "end": 2.7464320230726154,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.9330374423054355,
+          "end": 3.5830374423054354,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 2.3246589719915964,
+          "end": 4.974658971991596,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.156357265246617,
+          "end": 5.806357265246617,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.5470206601418965,
+          "end": 7.197020660141897,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 5.380197453427855,
+          "end": 8.030197453427855,
+          "engine": "string",
+          "sources": 1
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "afro-roots",
+      "worldFamily": "marsh",
+      "hookI": "pluckbody",
+      "brightness": 4300,
+      "deferredDisconnects": 293,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "tropical",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.5855575203895569,
+      "rmsDb": -18.276261370133685,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "idm",
+          "room": 0.28,
+          "space": 0.02,
+          "echo": 0.16,
+          "feedback": 0.22
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "garage-soul",
+      "advancedNotes": [
+        {
+          "instrument": "feltpiano",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.5722059917690605,
+          "end": 3.2222059917690604,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 2.497112211255356,
+          "end": 5.147112211255356,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 2.964946760177462,
+          "end": 5.614946760177462,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.897275824198499,
+          "end": 7.547275824198499,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 5.3662810664082325,
+          "end": 8.016281066408233,
+          "engine": "modal",
+          "sources": 5
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "broken-thread",
+      "worldFamily": "grove",
+      "hookI": "feltpiano",
+      "brightness": 5800,
+      "deferredDisconnects": 350,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "idm",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.9049028158187866,
+      "rmsDb": -9.340309483179425,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "tropical",
+          "room": 0.34,
+          "space": 0.03,
+          "echo": 0.2,
+          "feedback": 0.25
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "modal-wind",
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "afro-roots",
+      "worldFamily": "orbital",
+      "hookI": "reed",
+      "brightness": 5100,
+      "deferredDisconnects": 357,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "tropical",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.5855462551116943,
+      "rmsDb": -18.351487170920585,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "garagehouse",
+          "room": 0.36,
+          "space": 0.04,
+          "echo": 0.2,
+          "feedback": 0.24
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "funk-orbit",
+      "advancedNotes": [
+        {
+          "instrument": "feltpiano",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.5008812802262226,
+          "end": 3.1508812802262227,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 2.13316181909312,
+          "end": 4.78316181909312,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 2.540744746470604,
+          "end": 5.190744746470604,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.1692001194622454,
+          "end": 6.819200119462245,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.574150140872196,
+          "end": 7.2241501408721955,
+          "engine": "modal",
+          "sources": 5
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "deep-soul",
+      "worldFamily": "tidal",
+      "hookI": "feltpiano",
+      "brightness": 6100,
+      "deferredDisconnects": 394,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "garagehouse",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.9022707939147949,
+      "rmsDb": -11.465374158734974,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "andean",
+          "room": 0.34,
+          "space": 0.03,
+          "echo": 0.2,
+          "feedback": 0.25
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "afro-poly",
+      "advancedNotes": [
+        {
+          "instrument": "pluckbody",
+          "time": 0.09643202307261527,
+          "end": 2.7464320230726154,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.59875,
+          "end": 3.24875,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.59875,
+          "end": 3.24875,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.59875,
+          "end": 3.24875,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.59875,
+          "end": 3.24875,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.59875,
+          "end": 3.24875,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.59875,
+          "end": 3.24875,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.84875,
+          "end": 3.49875,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.84875,
+          "end": 3.49875,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.84875,
+          "end": 3.49875,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.84875,
+          "end": 3.49875,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.84875,
+          "end": 3.49875,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.0814096762128176,
+          "end": 5.7314096762128175,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.59875,
+          "end": 6.248749999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.59875,
+          "end": 6.248749999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.59875,
+          "end": 6.248749999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.84875,
+          "end": 6.498749999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.84875,
+          "end": 6.498749999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.84875,
+          "end": 6.498749999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.63,
+          "end": 6.279999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.63,
+          "end": 6.279999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.63,
+          "end": 6.279999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.09875,
+          "end": 6.748749999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.09875,
+          "end": 6.748749999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.09875,
+          "end": 6.748749999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.34875,
+          "end": 6.998749999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.34875,
+          "end": 6.998749999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 5.88,
+          "end": 8.53,
+          "engine": "granular",
+          "sources": 14
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "afro-roots",
+      "worldFamily": "grove",
+      "hookI": "pluckbody",
+      "brightness": 5800,
+      "deferredDisconnects": 331,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "andean",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.5844460725784302,
+      "rmsDb": -19.412314569313494,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "cosmic",
+          "room": 0.72,
+          "space": 0.78,
+          "echo": 0.55,
+          "feedback": 0.39
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "soul-glow",
+      "advancedNotes": [
+        {
+          "instrument": "silkstrings",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.0123529411764705,
+          "end": 3.6623529411764704,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.0123529411764705,
+          "end": 3.6623529411764704,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.2623529411764705,
+          "end": 3.9123529411764704,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.2623529411764705,
+          "end": 3.9123529411764704,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.63,
+          "end": 3.28,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.5123529411764705,
+          "end": 4.16235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.63,
+          "end": 3.28,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.5123529411764705,
+          "end": 4.16235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.88,
+          "end": 3.53,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.7623529411764705,
+          "end": 4.41235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.88,
+          "end": 3.53,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.7623529411764705,
+          "end": 4.41235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.13,
+          "end": 3.78,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 2.0123529411764705,
+          "end": 4.66235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.13,
+          "end": 3.78,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 2.0123529411764705,
+          "end": 4.66235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.38,
+          "end": 4.029999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 2.2623529411764705,
+          "end": 4.91235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.01235294117647,
+          "end": 6.66235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.01235294117647,
+          "end": 6.66235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.26235294117647,
+          "end": 6.91235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.63,
+          "end": 6.279999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.51235294117647,
+          "end": 7.16235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.76235294117647,
+          "end": 7.41235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.76235294117647,
+          "end": 7.41235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 5.01235294117647,
+          "end": 7.66235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 5.01235294117647,
+          "end": 7.66235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.38,
+          "end": 7.029999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 5.26235294117647,
+          "end": 7.91235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.38,
+          "end": 7.029999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.63,
+          "end": 7.279999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 5.51235294117647,
+          "end": 8.16235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.88,
+          "end": 7.529999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 5.76235294117647,
+          "end": 8.41235294117647,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 5.13,
+          "end": 7.779999999999999,
+          "engine": "string",
+          "sources": 1
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "disco-orbit",
+      "worldFamily": "orbital",
+      "hookI": "rhodes",
+      "brightness": 5700,
+      "deferredDisconnects": 341,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "cosmic",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.905573844909668,
+      "rmsDb": -8.79787254717128,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "microhouse",
+          "room": 0.25,
+          "space": 0,
+          "echo": 0.18,
+          "feedback": 0.22
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "blues-machine",
+      "advancedNotes": [
+        {
+          "instrument": "pluckbody",
+          "time": 0.09643202307261527,
+          "end": 2.7464320230726154,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.4973632729977369,
+          "end": 3.1473632729977368,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 2.1028380836639555,
+          "end": 4.752838083663955,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 2.4961617694210263,
+          "end": 5.146161769421026,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.102142497582361,
+          "end": 6.75214249758236,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.49191393335089,
+          "end": 7.1419139333508905,
+          "engine": "string",
+          "sources": 1
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "micro-wood",
+      "worldFamily": "vault",
+      "hookI": "pluckbody",
+      "brightness": 4900,
+      "deferredDisconnects": 410,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "microhouse",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.5850464105606079,
+      "rmsDb": -16.456818673885827,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "progressive",
+          "room": 0.43,
+          "space": 0.12,
+          "echo": 0.26,
+          "feedback": 0.28
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "cosmic-drift",
+      "advancedNotes": [
+        {
+          "instrument": "silkstrings",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 0.6030801605693996,
+          "end": 3.2530801605693993,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 1.3516588088832797,
+          "end": 4.001658808883279,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 2.0964633932225407,
+          "end": 4.746463393222541,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 2.6027224217131737,
+          "end": 5.252722421713173,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 3.3496721496060493,
+          "end": 5.999672149606049,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 4.101666470751166,
+          "end": 6.751666470751166,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 4.6013736794684075,
+          "end": 7.251373679468408,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 5.349039665553718,
+          "end": 7.999039665553719,
+          "engine": "ensemble",
+          "sources": 4
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "melodic-flow",
+      "worldFamily": "dunes",
+      "hookI": "silkstrings",
+      "brightness": 5400,
+      "deferredDisconnects": 354,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "progressive",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.9069629311561584,
+      "rmsDb": -11.595282339987577,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "brokenbeat",
+          "room": 0.28,
+          "space": 0.02,
+          "echo": 0.16,
+          "feedback": 0.22
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "jazz-tide",
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "broken-thread",
+      "worldFamily": "vault",
+      "hookI": "phasekeys",
+      "brightness": 4900,
+      "deferredDisconnects": 386,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "brokenbeat",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.5855161547660828,
+      "rmsDb": -15.826076055459254,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "trap",
+          "room": 0.22,
+          "space": 0,
+          "echo": 0.12,
+          "feedback": 0.2
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "silence-bass",
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "half-earth",
+      "worldFamily": "marsh",
+      "hookI": "rhodes",
+      "brightness": 3400,
+      "deferredDisconnects": 391,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "trap",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.9017964005470276,
+      "rmsDb": -6.777800726999019,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "detroitelectro",
+          "room": 0.23320000000000002,
+          "space": 0,
+          "echo": 0.2,
+          "feedback": 0.24
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "industrial-soft",
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "machine-dialogue",
+      "worldFamily": "marsh",
+      "hookI": "phasekeys",
+      "brightness": 4700,
+      "deferredDisconnects": 376,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "detroitelectro",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.5855234265327454,
+      "rmsDb": -15.709118395057256,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "jersey",
+          "room": 0.23320000000000002,
+          "space": 0,
+          "echo": 0.2,
+          "feedback": 0.24
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "berlin-evolve",
+      "advancedNotes": [
+        {
+          "instrument": "wavetable",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "wavetable",
+          "sources": 2
+        },
+        {
+          "instrument": "wavetable",
+          "time": 0.3113175366868576,
+          "end": 2.9613175366868574,
+          "engine": "wavetable",
+          "sources": 2
+        },
+        {
+          "instrument": "wavetable",
+          "time": 1.7672319872534528,
+          "end": 4.4172319872534525,
+          "engine": "wavetable",
+          "sources": 2
+        },
+        {
+          "instrument": "wavetable",
+          "time": 1.9767163624390964,
+          "end": 4.626716362439097,
+          "engine": "wavetable",
+          "sources": 2
+        },
+        {
+          "instrument": "wavetable",
+          "time": 3.436560531062383,
+          "end": 6.086560531062383,
+          "engine": "wavetable",
+          "sources": 2
+        },
+        {
+          "instrument": "wavetable",
+          "time": 3.6455963187372915,
+          "end": 6.295596318737291,
+          "engine": "wavetable",
+          "sources": 2
+        },
+        {
+          "instrument": "wavetable",
+          "time": 5.102504553493113,
+          "end": 7.752504553493113,
+          "engine": "wavetable",
+          "sources": 2
+        },
+        {
+          "instrument": "wavetable",
+          "time": 5.3073530104675655,
+          "end": 7.957353010467566,
+          "engine": "wavetable",
+          "sources": 2
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "broken-thread",
+      "worldFamily": "marsh",
+      "hookI": "wavetable",
+      "brightness": 6100,
+      "deferredDisconnects": 310,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "jersey",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.9020708203315735,
+      "rmsDb": -8.10408881180816,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "jazztronica",
+          "room": 0.36,
+          "space": 0.04,
+          "echo": 0.2,
+          "feedback": 0.24
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "ambient-tape",
+      "advancedNotes": [
+        {
+          "instrument": "feltpiano",
+          "time": 0.09643202307261527,
+          "end": 2.7464320230726154,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 0.09643202307261527,
+          "end": 2.7464320230726154,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "silkstrings",
+          "time": 0.09643202307261527,
+          "end": 2.7464320230726154,
+          "engine": "ensemble",
+          "sources": 4
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.0773684210526315,
+          "end": 3.727368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.0773684210526315,
+          "end": 3.727368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.0773684210526315,
+          "end": 3.727368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.0773684210526315,
+          "end": 3.727368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.0773684210526315,
+          "end": 3.727368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.0773684210526315,
+          "end": 3.727368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.3273684210526315,
+          "end": 3.977368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.3273684210526315,
+          "end": 3.977368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.3273684210526315,
+          "end": 3.977368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.077368421052632,
+          "end": 6.727368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.077368421052632,
+          "end": 6.727368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.077368421052632,
+          "end": 6.727368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.327368421052632,
+          "end": 6.977368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.327368421052632,
+          "end": 6.977368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.327368421052632,
+          "end": 6.977368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.827368421052632,
+          "end": 7.477368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.827368421052632,
+          "end": 7.477368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.827368421052632,
+          "end": 7.477368421052631,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "jazz-shadow",
+      "worldFamily": "dunes",
+      "hookI": "feltpiano",
+      "brightness": 3900,
+      "deferredDisconnects": 356,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "jazztronica",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.5850167870521545,
+      "rmsDb": -21.319206864287032,
+      "hotFraction": 0
+    },
+    {
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "andean",
+          "room": 0.36040000000000005,
+          "space": 0.03,
+          "echo": 0.2,
+          "feedback": 0.25
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "folk-grain",
+      "advancedNotes": [
+        {
+          "instrument": "pluckbody",
+          "time": 0.09879914845339954,
+          "end": 2.7487991484533993,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.569080899295256,
+          "end": 3.219080899295256,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 2.5204594564812655,
+          "end": 5.170459456481265,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 2.9976346883932976,
+          "end": 5.647634688393298,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.947868546629774,
+          "end": 7.597868546629774,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 5.41577048330878,
+          "end": 8.06577048330878,
+          "engine": "string",
+          "sources": 1
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "organic-strings",
+      "worldFamily": "marsh",
+      "hookI": "pluckbody",
+      "brightness": 5500,
+      "deferredDisconnects": 383,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "andean",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.9008398056030273,
+      "rmsDb": -9.000070315175925,
+      "hotFraction": 0
+    }
+  ]
+}

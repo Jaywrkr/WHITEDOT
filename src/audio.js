@@ -7,6 +7,7 @@ import {chooseNearbySource} from './spatial.js';
 import {harmonicDegree,createVoiceCurator} from './grammar.js';
 import { createRadio } from './radio.js';
 import {labDrumEvents,labNoteEvents} from './lab-score.js';
+import {productionSpace,createProductionRooms} from './music-direction.js';
 
 // Motor musical, síntesis y programación de Web Audio.
 export function initialize(runtime) {
@@ -35,9 +36,9 @@ export function initialize(runtime) {
   const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN,{living});
   const neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN,{living});
   MU.radio = null;MU.neighborRadio=null;
-  let arrangementAir=1;
-  const LOUD=5.6;   // ganancia de compensación en modo normal: fuerte pero limpio (6.8 saturaba)
-  let ac=null,fx=null,master,mfilt,punch,presence,makeup,limiter,clipper,comfortShelf,comfortLowpass,subsonic,headroom,bus,delay,dfb,dsend,verb,verbIn,padF,padG,padOsc=[],drone,droneG,noiseBuf,windG,windF;
+  let arrangementAir=1,productionRooms=null;
+  const OUTPUT_BOOST=1.5,LOUD=5.6*OUTPUT_BOOST;   // requested lift before limiter/peak guard
+  let ac=null,fx=null,master,mixInput,mfilt,punch,presence,makeup,limiter,clipper,comfortShelf,comfortLowpass,subsonic,headroom,bus,delay,dfb,dsend,verbIn,drone,droneG,noiseBuf,windG,windF;
   const voiceCurator=createVoiceCurator();
   const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:1)*(Number.isFinite(runtime.S.outputVolume)?Math.max(0,Math.min(1,runtime.S.outputVolume)):1):0;
   function applyComfort(time=ac?.currentTime||0){
@@ -45,7 +46,7 @@ export function initialize(runtime) {
     const soft=!!runtime.S.softMusic;
     master.gain.setTargetAtTime(musicVolume(),time,.25);
     comfortShelf.gain.setTargetAtTime(soft?-5:0,time,1);
-    if(punch){punch.gain.setTargetAtTime(soft?0:2,time,.5);presence.gain.setTargetAtTime(soft?0:2.5,time,.5);makeup.gain.setTargetAtTime(soft?1.6:LOUD,time,.5);}
+    if(punch){punch.gain.setTargetAtTime(soft?0:2,time,.5);presence.gain.setTargetAtTime(soft?0:2.5,time,.5);makeup.gain.setTargetAtTime(soft?1.6*OUTPUT_BOOST:LOUD,time,.5);}
     comfortLowpass.frequency.setTargetAtTime(soft?5500:runtime.inWorld()?(MU.anomaly==='detenido'&&MU.still>1?700:Math.min(MU.radio?.grammar?.brightness||10000,MU.radio?.character?.ceiling||10000)*(MU.season?.bright||1)*(1-.35*(MU.storm||0))):18000,time,1.2);
   }
   function impulse(sec){const n=ac.sampleRate*sec|0,b=ac.createBuffer(2,n,ac.sampleRate);for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);}return b;}
@@ -54,13 +55,13 @@ export function initialize(runtime) {
       try{ac=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return;}
       // iPhone: sonar como música (volumen multimedia y aunque el interruptor de silencio esté activo).
       try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch(e){}
-      master=ac.createGain();master.gain.value=musicVolume();
+      master=ac.createGain();master.gain.value=musicVolume();mixInput=ac.createGain();
       mfilt=ac.createBiquadFilter();mfilt.type="lowpass";mfilt.frequency.value=18000;
       const comp=ac.createDynamicsCompressor();
       if(comp.threshold){comp.threshold.value=-26;comp.knee.value=10;comp.ratio.value=3.5;comp.attack.value=.012;comp.release.value=.22;}   // ataque más lento: los golpes respiran
       // Volumen de fiesta: graves con más cuerpo, ganancia de compensación y un limitador final que evita saturar.
       punch=ac.createBiquadFilter();punch.type='lowshelf';punch.frequency.value=110;punch.gain.value=runtime.S.softMusic?0:2;
-      makeup=ac.createGain();makeup.gain.value=runtime.S.softMusic?1.6:LOUD;
+      makeup=ac.createGain();makeup.gain.value=runtime.S.softMusic?1.6*OUTPUT_BOOST:LOUD;
       // Presencia: los parlantes del teléfono casi no dan graves; el cuerpo que se oye está en los medios.
       presence=ac.createBiquadFilter();presence.type='peaking';presence.frequency.value=2400;presence.Q.value=.8;presence.gain.value=runtime.S.softMusic?0:2.5;
       // Protección de picos: señal lineal hasta 0,9; solo redondea los últimos picos.
@@ -77,7 +78,7 @@ export function initialize(runtime) {
       subsonic=ac.createBiquadFilter();subsonic.type='highpass';subsonic.frequency.value=20;subsonic.Q.value=Math.SQRT1_2;
       headroom=ac.createGain();headroom.gain.value=.95;   // reserve margin after oversampling, including dense low-register arrangements
       const fxRoom=returnFilters(ac,180,8000),fxEcho=returnFilters(ac,110,8000);
-      master.connect(subsonic).connect(mfilt).connect(fx.lp).connect(fx.hp).connect(fx.dry).connect(punch);
+      mixInput.connect(subsonic).connect(mfilt).connect(fx.lp).connect(fx.hp).connect(fx.dry).connect(punch);
       fx.hp.connect(fx.verbSend).connect(fx.verb).connect(fxRoom.input);fxRoom.output.connect(punch);
       fx.hp.connect(fx.delaySend).connect(fx.delay).connect(fx.dtone).connect(fx.fb).connect(fx.delay);fx.dtone.connect(fxEcho.input);fxEcho.output.connect(punch);
       fx.hp.connect(fx.crushSend).connect(fx.crush).connect(punch);
@@ -90,19 +91,16 @@ export function initialize(runtime) {
        fx.hp.connect(fx.phaserSend);node.connect(punch);
        fx.freezeIn=ac.createGain();fx.freezeIn.gain.value=1;fx.freeze=ac.createDelay(2);fx.freeze.delayTime.value=.5;fx.freezeFb=ac.createGain();fx.freezeFb.gain.value=0;fx.freezeOut=ac.createGain();fx.freezeOut.gain.value=0;
        fx.hp.connect(fx.freezeIn).connect(fx.freeze).connect(fx.freezeFb).connect(fx.freeze);fx.freeze.connect(fx.freezeOut).connect(punch);}
-      punch.connect(comfortShelf).connect(comfortLowpass).connect(presence).connect(comp).connect(makeup).connect(limiter).connect(clipper).connect(headroom).connect(ac.destination);
-      bus=ac.createGain();bus.connect(master);
-      verb=ac.createConvolver();verb.buffer=impulse(3.2);verbIn=ac.createGain();verbIn.gain.value=.8;const room=returnFilters(ac);verbIn.connect(verb).connect(room.input);room.output.connect(master);
+      punch.connect(comfortShelf).connect(comfortLowpass).connect(presence).connect(comp).connect(makeup).connect(limiter).connect(clipper).connect(headroom).connect(master).connect(ac.destination);
+      bus=ac.createGain();bus.connect(mixInput);
+      verbIn=ac.createGain();verbIn.gain.value=.8;const room=returnFilters(ac);productionRooms=createProductionRooms(ac,impulse,room.input);productionRooms.connect(verbIn);productionRooms.set(1,ac.currentTime);room.output.connect(mixInput);
       delay=ac.createDelay(1.5);delay.delayTime.value=SIX*3;dfb=ac.createGain();dfb.gain.value=.38;const dl=ac.createBiquadFilter();dl.type="lowpass";dl.frequency.value=2000;
-      delay.connect(dl).connect(dfb).connect(delay);const echo=returnFilters(ac,110,8000);dl.connect(echo.input);echo.output.connect(master);echo.output.connect(verbIn);
+      delay.connect(dl).connect(dfb).connect(delay);const echo=returnFilters(ac,110,8000);dl.connect(echo.input);echo.output.connect(mixInput);echo.output.connect(verbIn);
       dsend=ac.createGain();dsend.gain.value=1;dsend.connect(delay);
-      padF=ac.createBiquadFilter();padF.type="lowpass";padF.frequency.value=600;padF.Q.value=.5;padG=ac.createGain();padG.gain.value=0;
-      padF.connect(padG);padG.connect(runtime.accompanimentStage?.()?.inputs[0]||master);padG.connect(runtime.accompanimentStage?.()?.inputs[1]||verbIn);
-      MU.voices.forEach((m,i)=>{[-5,5].forEach(det=>{const o=ac.createOscillator();o.type=i%2?"triangle":"sine";o.frequency.value=hz(m);o.detune.value=det+(Math.random()*4-2);const g=ac.createGain();g.gain.value=i%2?.5:1;o.connect(g).connect(padF);o.start();padOsc.push({o,i});});});
-      drone=ac.createOscillator();drone.type="sine";drone.frequency.value=hz(33);droneG=ac.createGain();droneG.gain.value=0;drone.connect(droneG).connect(master);drone.start();
+      drone=ac.createOscillator();drone.type="sine";drone.frequency.value=hz(33);droneG=ac.createGain();droneG.gain.value=0;drone.connect(droneG).connect(mixInput);drone.start();
       noiseBuf=ac.createBuffer(1,ac.sampleRate*2|0,ac.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
       const wn=ac.createBufferSource();wn.buffer=noiseBuf;wn.loop=true;windF=ac.createBiquadFilter();windF.type="bandpass";windF.frequency.value=700;windF.Q.value=.8;windG=ac.createGain();windG.gain.value=0;
-      wn.connect(windF).connect(windG).connect(master);wn.start();
+      wn.connect(windF).connect(windG).connect(mixInput);wn.start();
       MU.next=ac.currentTime+.1;setInterval(sched,25);
     }
     if(ac.state==="suspended")ac.resume();
@@ -126,7 +124,6 @@ export function initialize(runtime) {
     if(pref){const f=opts.filter(o=>pref.includes(o));if(f.length&&rnd()<.7)opts=f;}
     MU.deg=runtime.inWorld()&&MU.radio?.grammar?harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar):opts[Math.floor(rnd()*opts.length)];MU.pending=false;MU.dist=0;MU.lastChange=MU.step;
     voiceLead();
-    padOsc.forEach(p=>p.o.frequency.setTargetAtTime(hz(MU.voices[p.i]),t,.35+rnd()*.4));
     drone.frequency.setTargetAtTime(hz(root()-12),t,.6);
   }
   function setBiome(z){MU.biomeT=z;MU.timbre=runtime.S.mode==="camino"?2:MU.dnaT?runtime.GEN[MU.dnaT.genre].pt:runtime.BIOMES[z].tim;}
@@ -229,15 +226,14 @@ export function initialize(runtime) {
     const A=live&&MU.dnaA?MU.dnaA:null,G=A?runtime.GEN[A.genre]:runtime.GEN.ambient,nb=runtime.inWorld()&&MU.nb&&MU.nb!==A?MU.nb:null,w=nb?MU.nbW:0;
     if(s%4===0){MU.bq.push(t);if(MU.bq.length>8)MU.bq.shift();}
     MU.sq.push({t,s});if(MU.sq.length>12)MU.sq.shift();
-    const id=BI().id,cave=id==="cueva",vac=id==="vacio",bar=MU.step>>4;
-    const since=MU.step-MU.lastChange,padLv=(G.pad||0)*(1-w)+(nb&&runtime.GEN[nb.genre].pad||0)*w,padOn=since<24||MU.radio?.melodyRest?padLv:0;
-    padG.gain.setTargetAtTime(.03*(1-E*.4)*padOn*(runtime.labSolo||(runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie')?0:1)+.0001,t,padOn?.6:2.2);
-    padF.frequency.setTargetAtTime((380+E*1700-(cave?200:0))*(MU.radio?.identity?.tone??1),t,.9);
+    const id=BI().id,cave=id==="cueva",bar=MU.step>>4;
+    const space=runtime.inWorld()&&!runtime.duetRoom?productionSpace(A?.genre||'ambient',{cave,fog:A?.air==='niebla',canon:MU.anomaly==='canon'}):null;
     droneG.gain.setTargetAtTime(0,t,1.5);
-    dfb.gain.setTargetAtTime(runtime.inWorld()&&MU.anomaly==='canon'?.72:cave||(A&&A.genre==="dub")?.6:MU.still>3?.5:.36,t,1);
-    dsend.gain.setTargetAtTime(cave?2.2:MU.vari===3&&runtime.inWorld()?1.8:1,t,.5);
+    dfb.gain.setTargetAtTime(space?.feedback??.36,t,.4);
+    dsend.gain.setTargetAtTime(space?.echo??1,t,.4);
     const air=runtime.inWorld()&&MU.dnaA?MU.dnaA.air:null;
-    verbIn.gain.setTargetAtTime(vac?1.6:cave||air==="niebla"?1.25:.8,t,1);
+    verbIn.gain.setTargetAtTime(space?.room??.8,t,.6);productionRooms?.set(space?.space??1,t);
+    runtime.productionSpaceCue?.({time:t,genre:A?.genre,...space});
     if(!MU.radio?.melodyRest&&air==="esporas"&&s===14&&bar%4===3&&rnd()<.2)pluck(hookPitch('glass',chordTones()[1],musicalCharacter(MU.dnaA.genre)),t,.012,4);
     if(runtime.inWorld())E=runtime.clamp(E+(runtime.influenceState?.values.groove||0)*.09,.05,.9);
     const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(MU.radio?.identity?.swing??G.sw??0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();

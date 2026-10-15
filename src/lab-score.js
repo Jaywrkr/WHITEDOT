@@ -1,6 +1,7 @@
 import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
 import {REFERENCE_GENRES,REFERENCE_STEPS,referenceRhythm} from './references.js';
 import {hybridIdentity} from './musical-hybrids.js';
+import {directedLeads} from './music-direction.js';
 // Playback-only musical territories. Independent seeds never move existing objects.
 const pattern=s=>Object.freeze([...s].map(n=>n==='.'?-1:Number(n)));
 const band=(id,name,characters,leads,bass,hook,drums,ceiling,swing,progression)=>Object.freeze({
@@ -46,7 +47,7 @@ export function labScore(region,seedOf,rng){
  const hybrid=hybridIdentity(region,seedOf,rng),native=RHYTHM_GENRES[region.genre]||REFERENCE_GENRES[region.genre],variant=Math.floor(individual()*16),
   nativeDrums=RHYTHM_GENRES[region.genre]?rhythmPattern(region.genre,variant%3):referenceRhythm(region.genre,variant%3)||BASE_DRUMS[region.genre],
   bassPool=native?.bassP||[region.track?.bassI||'hollow','reedbass','velvetbass'];
- return Object.freeze({...base,leads:Object.freeze([...new Set([...leads,...(hybrid?.instruments||[])])]),
+ return Object.freeze({...base,leads:Object.freeze(base.festive?[...new Set([...leads,...(hybrid?.instruments||[])])]:directedLeads(region.genre,leads,hybrid?.instruments||[])),
   nativeDrums:nativeDrums?Object.freeze(Object.fromEntries(Object.entries(nativeDrums).map(([id,steps])=>[id,Object.freeze([...steps])]))):null,hook:Object.freeze([...(base.festive?base.hook:hybrid?.steps||native?.steps||REFERENCE_STEPS[region.genre]||base.hook)]),
   bass:Object.freeze([...(native?.bass||region.track?.bass||base.bass)]),version:4,territory,variant,genre:region.genre,
   bassI:bassPool[Math.floor(individual()*bassPool.length)],

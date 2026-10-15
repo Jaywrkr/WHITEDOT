@@ -1,7 +1,9 @@
+import {musicDirection} from './music-direction.js';
 export const EFFECT_NAMES={dry:'Natural',filter:'Filtro suave',echo:'Eco rítmico',space:'Espacio profundo',metal:'Modulación metálica'};
 export function effectProfile(kind,region,role,seedOf,rng) {
   const r=rng(seedOf(`effect:v1:${region.key}:${kind}`));
-  const pool=role==='bajo'?['dry']:role==='perc'?['dry','dry','filter']:['dry','dry','filter','echo','space','metal'];
+  const spacious=!region.genre||musicDirection(region.genre).space>.5;
+  const pool=role==='bajo'?['dry']:role==='perc'?['dry','dry','filter']:spacious?['dry','dry','filter','echo','space','metal']:['dry','dry','dry','filter','echo','metal'];
   const type=pool[Math.floor(r()*pool.length)];
   return {type,name:EFFECT_NAMES[type],cutoff:1100+r()*900,rate:32+r()*26};
 }

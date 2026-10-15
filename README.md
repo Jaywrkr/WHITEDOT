@@ -10,13 +10,13 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) ·
 
 ## Cubo, colección y música · ciclo actual
 
-[Seis fases, ramas y aceptación](PLAN_PULIDO_CUBO_MUSICA.md). Fase 1: mediciones reproducibles de oportunidades y diez comparaciones de escucha en Laboratorio → Notas → Escucha comparada. Las notas se conservan aparte de tu partida; los controles permanecen silenciosos. El modelo no estima tarjetas ganadas ni sustituye la escucha humana.
+[Nueve fases, ramas y aceptación](PLAN_PULIDO_CUBO_MUSICA.md). Fase 1 integrada por Jay (PR #144). Fase 2: once perfiles de producción distinguen pulso seco, cuerpo grave, teclas cálidas, madera/piel, máquina, síncopa, cuerdas, disco, cinta, dub y espacio abierto. Se elimina el órgano/pad automático de fondo. Menú ofrece volumen directo 0–100%, conservando el control de Sonido y el guardado. Ganancia general 1,5× antes del limitador. La quietud no aumenta el eco automáticamente; salas cortas y largas se mezclan según el estilo. Las notas se conservan aparte de tu partida; los controles permanecen silenciosos. El modelo no estima tarjetas ganadas ni sustituye la escucha humana.
 
 ```bash
 npm run audit:encounters -- --routes 192 --output /tmp/whitedot-encounters.json
 ```
 
-Explorar y quietud se informan por separado, con sus supuestos e intervalos. El ciclo parte de main `d7ea883`, donde Jay integró Experiencia viva completa (PR #143).
+Explorar y quietud se informan por separado, con sus supuestos e intervalos. El ciclo parte de main `d7ea883`, donde Jay integró Experiencia viva completa (PR #143). La fase 2 parte de main `30b2df8`, con fase 1 ya integrada. Las comparaciones del laboratorio son herramientas internas opcionales; no una tarea del jugador.
 
 ## Experiencia viva · ciclo integrado
 

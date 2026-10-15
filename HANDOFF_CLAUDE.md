@@ -1,3 +1,18 @@
+# Handoff · Dirección musical, fase 2
+
+Plan vigente: [nueve fases integrales](PLAN_PULIDO_CUBO_MUSICA.md). Sustituye el esquema inicial de seis fases por petición de Jay. Rama `feat/pulido-02-direccion-musical` desde main `30b2df8` (PR #144 integra F1). F3 sigue con territorios; cubo pasa a F6 y tarjetas a F7. Codex commit/push; Jay PR/merge.
+
+- `src/music-direction.js`: once perfiles de producción con instrumentos, articulación, pads y tratamiento propios. Son perfiles, no géneros nuevos.
+- `audio.js`: dos salas persistentes (0,32/3,2 s), transición suave, retornos y eco según estilo. Quietud ya no aumenta feedback; niebla/cueva aportan un cambio acotado. Canon conserva eco explícito. Efectos voluntarios siguen disponibles.
+- `lab-score.js` / `radio.js`: paletas protagonistas y articulaciones para radio viva; patrones nativos, familias festivas y transporte de duetos conservados.
+- `effects.js`: espacios profundos aleatorios reservados a caracteres abiertos; bajos y percusión conservan sus restricciones.
+- Petición adicional: se elimina el banco continuo de órgano/pad; slider de volumen directo en menú, sincronizado y persistido con Sonido. Compensación general 1,5× antes de limitador y peak guard. Los instrumentos de órgano/pad tocados deliberadamente siguen disponibles. El fader pasa al final de la cadena para incluir colas y FX; la grabación toma esa misma salida protegida. F3 incluye fondos geométricos por zonas, con claros.
+- No se cambia la semilla, posiciones, escala, tempo nativo ni propiedad del jugador. Las comparaciones del laboratorio son herramientas internas opcionales.
+
+Validación F2: auditoría sin errores/advertencias, 116 suites Node, ocho recorridos de navegador y 84 renders de audio aprobados. Pico máximo 0,932219. Evidencia en `scripts/pulido-02-validation.json`. Escucha física, CI y deploy se verifican aparte.
+
+## Antecedentes conservados
+
 # Handoff vigente · Pulido de cubo, colección y música
 
 [Plan de seis fases](PLAN_PULIDO_CUBO_MUSICA.md). Base main `d7ea883`: Jay integró Experiencia viva F14 en PR #143. Primera rama: `feat/pulido-01-medicion`. Codex commit/push; Jay PR/merge; las fases siguientes parten de la anterior si aún no está integrada.
