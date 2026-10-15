@@ -1,5 +1,13 @@
 # Probar el universo vivo
 
+## Novedad F6 · Percusión y gestos en primer plano
+
+1. Abre Laboratorio → Percusión; recorre piedra, vainas, tronco y charco.
+2. Entra con el cubo y quédate donde se indica: escucha golpe y frase.
+3. Compara tu gesto con el fondo; debe distinguirse sin subir volumen.
+4. Busca tormentas y semilleros: compara articulaciones entre lugares.
+5. Abre el menú o silencia: no deben aparecer golpes nuevos.
+
 ## Novedad F5 · Cruces musicales y espacio
 
 1. Abre el preview de esta rama en el teléfono; entra al laboratorio desde el menú.

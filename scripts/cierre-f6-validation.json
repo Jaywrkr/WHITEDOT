@@ -1,0 +1,106 @@
+{
+  "validatedAt": "2026-10-15T01:52:00.870839+00:00",
+  "phase": "cierre-f6",
+  "branch": "feat/cierre-f6-interacciones",
+  "sourceFingerprint": "67f7baad70c46b7461841754a77a625fadf8cb5dd3c22a1dad3dad8af196df0c",
+  "nodeSuites": 86,
+  "browserFlows": 6,
+  "audioPrograms": 1,
+  "audioEvidence": [
+    "scripts/cierre-f6-foreground-audio-validation.json"
+  ],
+  "checks": [
+    {
+      "check": "audit",
+      "command": [
+        "npm",
+        "run",
+        "audit:release"
+      ],
+      "exitCode": 0,
+      "seconds": 0.21,
+      "result": "\n> whitedot@1.1.0 audit:release\n> node scripts/release-audit.mjs\n\n{\n  \"version\": \"1.1.0\",\n  \"sourceModules\": 145,\n  \"htmlIDs\": 274,\n  \"staticImports\": 370,\n  \"shellAssets\": 165,\n  \"errors\": [],\n  \"warnings\": [],\n  \"notes\": [\n    \"Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.\",\n    \"Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems.\"\n  ]\n}\n"
+    },
+    {
+      "check": "node",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 15.14,
+      "result": "d codes rejected; recording format negotiation\nPASS: smooth distance curve, nearby selection, live moving-source gain, effect isolation, bounded routing and cleanup\nPASS 16 original programs, genuine 12/24/36/48 cascades, open/close automation, bounded climate/gesture response and protected mono bass\nPASS V1 closure: competing tabs preserve the persisted writer, explicit recovery/restore, and malformed place-code payload rejection\nPASS V1 PWA update controls: save guard, active-recording deferral and explicit reload\nPASS: 728 flocks in 2428 land regions (golondrina 247, grulla 260, luciernaga 184, lira 37), 647 gardens; trust gathers, running scatters, calls answered in rhythm, fireflies sync into groove, flora grows and withers\nPASS: stable regional voices, five tree roles within one biome, varied instruments, bounded emitted registers and groove responses\nPASS: 97 raro / 16 legendario / 2 mítico rarities with visible rules and unique samples; rivers 1.0 % of land, followable 6000 px downstream\nPASS eight real families, 52 retained genres, distinct spatial fields/contours, matched materials/music/populations, protected bass, raw DNA and rare specimens\nPASS continuous fog/day/LOD, zero-opacity cutoff, negative-coordinate preload margin, three decor-only parallax planes and independent visual hash\nPASS actual lineage rendering fades bright sources and blends the former 500px cutoff\nPASS: 35 continents (largest 310, smallest 1 regions), 32 % seas, 53 % family identity, density contrast, 447 landmarks of 5 types\nPASS: 86 Node suites with assertions (Web Audio helper excluded)\n"
+    },
+    {
+      "check": "percussion_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/percussion_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 13.98,
+      "result": "PASS nine native percussion gestures, held groove, menu/mute pause, discovery persistence, silent UI and mobile rendering\n"
+    },
+    {
+      "check": "music_response_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/music_response_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 2.22,
+      "result": "PASS all nine Geist weights, mobile layout, five colored musical roles and native pad/plucked/strings/bowed routing\n"
+    },
+    {
+      "check": "glass_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/glass_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 12.48,
+      "result": "mobile: glass handle drag, independent player movement, panel-free movement and native bass/groove/harmony, alignment achievements, persistence, scanner and journal PASS\ndesktop: glass handle drag, independent player movement, panel-free movement and native bass/groove/harmony, alignment achievements, persistence, scanner and journal PASS\n"
+    },
+    {
+      "check": "modular_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/modular_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 5.68,
+      "result": "PASS cube-only typed connections, actual signal/CV playback, local phone graphics and dwell removal\n"
+    },
+    {
+      "check": "ui_silence_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/ui_silence_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 11.07,
+      "result": "mobile: UI keyboard does not move or pulse, settings do not pin notes, entry has no jingle and canvas still plays PASS\ndesktop: UI keyboard does not move or pulse, settings do not pin notes, entry has no jingle and canvas still plays PASS\n"
+    },
+    {
+      "check": "offline_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/offline_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 2.03,
+      "result": "PASS offline reload with all 145 modules cached and no HTML fallback for missing JavaScript\n"
+    },
+    {
+      "check": "foreground_mix.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/foreground_mix.py"
+      ],
+      "exitCode": 0,
+      "seconds": 15.28,
+      "result": ":stone', 'identity': 'minimal-hush', 'dense': True, 'soft': True, 'peak': 0.47062045335769653}\nRendered {'genre': 'organic', 'scene': 'rhythm:hollow', 'identity': 'organic-strings', 'dense': True, 'soft': False, 'peak': 0.9008105397224426}\nRendered {'genre': 'deep', 'scene': 'rhythm:roots', 'identity': 'jazz-shadow', 'dense': True, 'soft': True, 'peak': 0.6360801458358765}\nRendered {'genre': 'minimal', 'scene': 'rhythm:reeds', 'identity': 'minimal-hush', 'dense': True, 'soft': False, 'peak': 0.9009194374084473}\nRendered {'genre': 'organic', 'scene': 'rhythm:pods', 'identity': 'organic-strings', 'dense': True, 'soft': True, 'peak': 0.4866524934768677}\nRendered {'genre': 'deep', 'scene': 'rhythm:shell', 'identity': 'jazz-shadow', 'dense': True, 'soft': False, 'peak': 0.9014297127723694}\nRendered {'genre': 'minimal', 'scene': 'rhythm:dust', 'identity': 'minimal-hush', 'dense': True, 'soft': True, 'peak': 0.49082639813423157}\nRendered {'genre': 'organic', 'scene': 'rhythm:fossil', 'identity': 'organic-strings', 'dense': True, 'soft': False, 'peak': 0.900813639163971}\nRendered {'genre': 'deep', 'scene': 'rhythm:pool', 'identity': 'jazz-shadow', 'dense': True, 'soft': True, 'peak': 0.636080265045166}\nRendered {'genre': 'minimal', 'scene': 'phenomenon:shaker', 'identity': 'minimal-hush', 'dense': True, 'soft': False, 'peak': 0.9008444547653198}\nRendered {'genre': 'minimal', 'scene': 'storm', 'identity': 'minimal-hush', 'dense': True, 'soft': False, 'peak': 0.9014050960540771}\nPASS 11 material/weather renders and isolated backing reduction with unchanged player stem; peak 0.901430\n"
+    }
+  ],
+  "scope": "Affected browser flows. Full browser/audio CI and physical-phone acceptance remain required before release."
+}

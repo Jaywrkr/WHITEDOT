@@ -15,7 +15,7 @@ try:
   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?lab=1&testSeed=laboratorio&layout=wide&generation=2');page.wait_for_function('__testRuntime?.labMode')
-  page.evaluate('()=>{const r=__testRuntime;document.querySelectorAll(".modal").forEach(m=>m.hidden=true);window.__hits=[];r.percussionCue=n=>__hits.push(n);r.audio();}')
+  page.evaluate('()=>{const r=__testRuntime;document.querySelectorAll(".modal").forEach(m=>m.hidden=true);window.__materials=[];window.__foreground=[];r.materialStrikeCue=n=>__materials.push(n);r.foregroundNoteCue=n=>__foreground.push(n);window.__hits=[];r.percussionCue=n=>__hits.push(n);r.audio();}')
   page.wait_for_function('__testRuntime.ac?.state==="running"')
   for kind in ['stone','hollow','roots','reeds','pods','shell','dust','pool','fossil']:
    page.evaluate('(kind)=>{const r=__testRuntime;r.labGo("rhythm:"+kind);}',kind);page.wait_for_timeout(350)
@@ -27,6 +27,8 @@ try:
    assert page.evaluate('__hits.at(-1).kind')==kind
    assert page.evaluate('__testRuntime.percussionSources()[0].voice.role')=='perc'
   assert page.evaluate('Object.keys(__testRuntime.S.rhythmFound).length')==9
+  assert page.evaluate('new Set(__materials.map(n=>n.kind)).size')==9
+  assert page.evaluate('__foreground.length>0&&__testRuntime.accompanimentStage().inputs.length===3')
   assert page.evaluate('!!__testRuntime.S.ach.percusion4')
   page.evaluate('__testRuntime.labGo("rhythm:stone")');page.wait_for_timeout(350)
   stone_from=page.evaluate('__hits.length')

@@ -24,7 +24,7 @@ export function initialize(runtime){
   }
   return items.sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y));
  }
- function phenomenonVoice(o){const region=runtime.regionOfPos(o.hx,o.hy),g=runtime.GEN[region.genre];return {role:o.kind==='bird'?'lead':o.kind==='shaker'?'perc':'bajo',instrument:o.kind==='bird'?hookInstruments(region.genre,g)[o.voiceIndex%hookInstruments(region.genre,g).length]:o.kind==='shaker'?'snare':g.bassI};}
+ function phenomenonVoice(o){const region=runtime.regionOfPos(o.hx,o.hy),g=runtime.GEN[region.genre];return {role:o.kind==='bird'?'lead':o.kind==='shaker'?'perc':'bajo',instrument:o.kind==='bird'?hookInstruments(region.genre,g)[o.voiceIndex%hookInstruments(region.genre,g).length]:o.kind==='shaker'?['wood','conga','rim','shaker','tom'][runtime.seedOf('phenomenon:material:v1:'+region.key+':'+o.voiceIndex)%5]:g.bassI};}
  function cue(o,time){if(!o.cues.some(t=>Math.abs(t-time)<.025)){o.cues.push(time);if(o.cues.length>4)o.cues.shift();}}
  const playable=()=>typeof document==='undefined'||(!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])'));
  const audible=()=>playable()&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&runtime.S.sound&&runtime.ac?.state==='running';
@@ -36,11 +36,11 @@ export function initialize(runtime){
    let volume=(o.kind==='bird'?.035:o.kind==='shaker'?.032:.045)*(runtime.curatedVoiceGain?.(t,voice.role)||1);
    const emit=(gain=1)=>{volume*=gain;const sound=()=>{
     if(o.kind==='bird')runtime.hookInst(voice.instrument,hookPitch(voice.instrument,tones[index%3],musicalCharacter(region.genre)),t,volume,region);
-    else if(o.kind==='shaker')runtime.snareHit(t,volume);
+    else if(o.kind==='shaker'){if(voice.instrument==='conga')runtime.conga(t,115+o.voiceIndex*5,volume);else if(voice.instrument==='tom')runtime.tom(t,80+o.voiceIndex*5,volume);else runtime[voice.instrument](t,volume);}
     else{runtime.bassInst(voice.instrument,runtime.root(),t,volume);runtime.noiseHit(t,'lowpass',700,.7,volume*.4,.3,true);}
    };const patchEmit=()=>{if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(`phenomenon:${o.kind}`,region,voice,o,t,sound);else sound();};if(runtime.withVoiceEffect)runtime.withVoiceEffect(`phenomenon:${o.kind}`,region,voice,t,patchEmit);else patchEmit();};
    if(runtime.withSpatialVoice)runtime.withSpatialVoice(o,t,emit);else emit();
-   cue(o,t);runtime.soundCue?.(o,voice.role,t);
+   if(origin==='player')runtime.focusGesture?.(t,o,voice.role);cue(o,t);runtime.soundCue?.(o,voice.role,t);
   }
   hit(time,o.voiceIndex);if(o.kind==='bird')hit(time+runtime.SIX*2,o.voiceIndex+1);
   return true;

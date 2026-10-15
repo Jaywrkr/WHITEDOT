@@ -1,3 +1,4 @@
+import {playMaterialStrike} from './percussion-material.js';
 import {livingVoice} from './living-catalog.js';
 import {INSTRUMENT_SPECS} from './instruments.js';
 import {musicalCharacter,interactionInstruments,voiceRegister,expressiveBassInstruments} from './musical-character.js';
@@ -97,10 +98,12 @@ export function initialize(runtime) {
     // Only automatic upper voices rest; a player's gesture still receives its own response.
     if(origin==='ambient'&&(voice.role==='lead'||voice.role==='agudo')&&runtime.MU.radio?.genre===region.genre&&runtime.MU.radio?.melodyRest)return;
     function hit(t, degree, strength) {
+      if(origin==='player')runtime.focusGesture?.(t,source,voice.role);
       runtime.soundCue?.(source,voice.role,t);
       const n = note(degree);let v = runtime.vel(strength * volume)*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
       const emit=()=>{
         if(kind.startsWith('living:')&&runtime.livingSynthesis?.(voice,n,t,v,source))return;
+        if(kind.startsWith('rhythm:')&&playMaterialStrike(runtime,kind.split(':')[1],source?.variant||0,t,v)){runtime.recordInstrument?.(voice.instrument);return;}
         if (voice.role === 'bajo') runtime.bassInst(voice.instrument,n,t,v);
         else if (voice.role === 'perc') {
           if (voice.instrument === 'kick') runtime.kick(t,v);

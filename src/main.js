@@ -1,3 +1,4 @@
+import {initialize as foreground} from './foreground.js';
 import {initialize as celebration} from './celebration.js';
 import {initialize as practiceTravel} from './practice-travel.js';
 import {initialize as worldVisibility} from './world-visibility.js';
@@ -88,6 +89,7 @@ data(runtime);
 progress(runtime);
 world(runtime);
 audio(runtime);
+foreground(runtime);
 voices(runtime);
 canvas(runtime);
 body(runtime);
