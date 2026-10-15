@@ -36,7 +36,7 @@ try:
    legacy={**backup,'worldIdentity':{**backup['worldIdentity'],'generatorVersion':1,'catalogVersion':1,'layoutVersion':1}}
    page.locator('#saveImportFile').set_input_files({'name':'legacy.json','mimeType':'application/json','buffer':json.dumps(legacy).encode()});page.wait_for_function('document.getElementById("saveStatus").textContent.includes("otra partida")');assert page.locator('#saveImportApply').is_disabled()
    page.locator('#saveToolsClose').click();page.reload();page.wait_for_function('window.__testRuntime?.favorites?.length===1');assert page.evaluate('!!__testRuntime.S.ach.ecologyGrow');assert page.evaluate('__testRuntime.favorites[0].address.generatorVersion')==2
-   page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true);__testRuntime.openJournal()");assert 'Paisajes vivos' in page.locator('#journalBody').inner_text();assert 'Junco de pulso' in page.locator('#journalBody').inner_text()
+   page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true);__testRuntime.openJournal()");page.locator('[data-journal-detail="Paisajes vivos"] > summary').click();assert 'Paisajes vivos' in page.locator('#journalBody').inner_text();assert 'Junco de pulso' in page.locator('#journalBody').inner_text()
    page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)");page.screenshot(path=f'/tmp/whitedot-phase2-humedal-{width}.png')
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');assert not errors,errors
    page.locator('#bMenu').click();page.locator('#bWorlds').click();assert page.locator('#seedGeneration').input_value()=='2'

@@ -28,7 +28,7 @@ with sync_playwright() as p:
   page.screenshot(path='/tmp/whitedot-polish-'+label+'.png')
   page.locator('#bMenu').click();page.locator('#bAch').click()
   assert page.locator('#mJournal').is_visible()
-  assert 'Gravedad' in page.locator('#journalBody').inner_text()
+  page.locator('[data-journal-detail^="region:"] > summary').first.click();assert 'Gravedad' in page.locator('#journalBody').inner_text()
   page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('formas')
   page.evaluate('''()=>{const r=window.__testRuntime;r.discover(r.regionOfPos(900,900).species[0]);}''')
   page.locator('[data-journal-tab="places"]').click();page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('formas')
@@ -36,7 +36,7 @@ with sync_playwright() as p:
   page.locator('[data-journal-tab="music"]').click();assert 'Instrumentos' in page.locator('#journalBody').inner_text()
   assert page.evaluate('Object.keys(window.__testRuntime.S.journal.music.instruments).length > 0')
   page.evaluate('''()=>{const r=window.__testRuntime,old=r.S.sound;r.S.sound=false;r.recordInstrument('muted-test');r.S.sound=old;if(r.S.journal.music.instruments['muted-test'])throw Error('Muted music incorrectly recorded');}''')
-  page.locator('[data-journal-tab="achievements"]').click();assert '???' in page.locator('#journalBody').inner_text()
+  page.locator('[data-journal-tab="achievements"]').click();page.locator('[data-journal-detail="achievement:Secretos"] > summary').click();assert '???' in page.locator('#journalBody').inner_text()
   page.locator('#journalClose').click()
   # Real pointer gestures: hold scans, drag moves, a short tap pulses.
   center={'x':size['width']/2,'y':size['height']/2}

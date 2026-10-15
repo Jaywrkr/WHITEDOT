@@ -1,5 +1,13 @@
 # Probar el universo vivo
 
+## Pulido F4 · Bitácora con lectura por capas
+
+1. Abre Bitácora → Lugares. Comprueba el resumen y tus destinos recientes.
+2. Despliega una región para leer sus detalles y una sección de recuerdos.
+3. Abre Música: toca un nombre para ver su explicación, sin sonido añadido.
+4. En Logros, despliega Música, desplázate y cambia de pestaña. Vuelve: conserva tu posición.
+5. Busca una pieza en Colección y comprueba que tu progreso anterior sigue ahí.
+
 ## Pulido F3 · Guardar y regresar sin rodeos
 
 1. Entra al Mundo y toca el marcador junto al nombre del lugar.

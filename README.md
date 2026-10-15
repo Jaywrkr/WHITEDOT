@@ -6,13 +6,13 @@ Un pixel blanco en un mundo negro. Descubre cómo suena el universo y crea tu pr
 
 **Jugar:** https://whitedot-inky.vercel.app. En el teléfono puedes instalarlo como app (en iPhone: Compartir → Añadir a pantalla de inicio). Toca la pantalla una vez para activar el sonido.
 
-Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama **2.0.0-rc.3** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
+Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama **2.0.0-rc.4** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
 Main no se publica desde estas ramas. Jay integra mediante PR. [Auditoría y soluciones](AUDITORIA_CIERRE_2.0.md) · [Pulido final autorizado](PLAN_PULIDO_FINAL.md).
 
 ## Pulido actual
 
-**F3 · Guardar y regresar sin rodeos.** Marcador directo, lugares compactos, viaje exacto y regreso al punto anterior. [Plan y ramas](PLAN_PULIDO_FINAL.md) · [Evidencia](scripts/pulido-f3-validation.json).
+**F4 · Bitácora con lectura por capas.** Resumen de lugares, acceso directo a favoritos y detalles opcionales para música, regiones y logros. [Plan y ramas](PLAN_PULIDO_FINAL.md) · [Evidencia](scripts/pulido-f4-validation.json).
 
 ## Cierre · fase 10 · Auditoría y candidata 2.0.0-rc.1
 
