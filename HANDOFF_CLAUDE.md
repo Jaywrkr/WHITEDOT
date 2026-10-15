@@ -1,3 +1,13 @@
+# Experiencia · fase 7
+
+Rama `feat/experiencia-07-rareza`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Reencuentros en condiciones diferentes enseñan interpretaciones reales: apagada, susurro, acento, deslizamiento o respirada. Elección silenciosa desde la tarjeta; sin duplicar premios ni descartar observaciones. Avisos repetidos del mismo tipo respetan un minuto de separación.
+
+Validación: Auditoría/Node completos; living-cards_smoke y discovery_pacing_smoke; experience_learning_mix a 44.1/48 kHz. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 6
 
 Rama `feat/experiencia-06-hallazgos`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.

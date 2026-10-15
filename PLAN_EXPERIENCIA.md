@@ -10,7 +10,7 @@ Jay autorizó las catorce fases. Una rama por fase, encadenadas. Codex commit/pu
 | 4 | Llegadas y favoritos claros | `feat/experiencia-04-viajes` | Implementada; validación registrada abajo |
 | 5 | Casa viva y edición táctil | `feat/experiencia-05-casa` | Implementada; validación registrada abajo |
 | 6 | Tarjetas ganadas en encuentros | `feat/experiencia-06-hallazgos` | Implementada; validación registrada abajo |
-| 7 | Rareza y observaciones útiles | `feat/experiencia-07-rareza` | Pendiente |
+| 7 | Rareza y observaciones útiles | `feat/experiencia-07-rareza` | Implementada; validación registrada abajo |
 | 8 | Atlas y expediciones sonoras | `feat/experiencia-08-atlas` | Pendiente |
 | 9 | Coleccionar para crear | `feat/experiencia-09-creacion` | Pendiente |
 | 10 | Profundidad musical | `feat/experiencia-10-musica` | Pendiente |
@@ -78,3 +78,9 @@ Validación: Auditoría/Node completos; house_v2_smoke y ui_silence_smoke; house
 Las tarjetas explican su función musical y celebran el encuentro con señales locales contenidas. El atlas conserva campos desconocidos; libros futuros quedan de solo lectura. La UI no inicia audio.
 
 Validación: Auditoría/Node completos; living-cards_smoke y rare_cards_smoke; audio sin cambios. Aceptación física y CI del PR, separados.
+
+## Entrega 7 · Rareza y observaciones útiles
+
+Reencuentros en condiciones diferentes enseñan interpretaciones reales: apagada, susurro, acento, deslizamiento o respirada. Elección silenciosa desde la tarjeta; sin duplicar premios ni descartar observaciones. Avisos repetidos del mismo tipo respetan un minuto de separación.
+
+Validación: Auditoría/Node completos; living-cards_smoke y discovery_pacing_smoke; experience_learning_mix a 44.1/48 kHz. Aceptación física y CI del PR, separados.

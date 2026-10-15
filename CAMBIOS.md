@@ -1,3 +1,9 @@
+# Experiencia 7 · Rareza y observaciones útiles
+
+Rama `feat/experiencia-07-rareza`. Reencuentros en condiciones diferentes enseñan interpretaciones reales: apagada, susurro, acento, deslizamiento o respirada. Elección silenciosa desde la tarjeta; sin duplicar premios ni descartar observaciones. Avisos repetidos del mismo tipo respetan un minuto de separación.
+
+Validación: Auditoría/Node completos; living-cards_smoke y discovery_pacing_smoke; experience_learning_mix a 44.1/48 kHz. Jay mantiene PR/merge.
+
 # Experiencia 6 · Tarjetas ganadas en encuentros
 
 Rama `feat/experiencia-06-hallazgos`. Las tarjetas explican su función musical y celebran el encuentro con señales locales contenidas. El atlas conserva campos desconocidos; libros futuros quedan de solo lectura. La UI no inicia audio.
