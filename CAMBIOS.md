@@ -1,3 +1,16 @@
+# Pulido F7 · Cada sonido vuelve a su fuente
+
+Rama `feat/pulido-f7-interacciones`, desde `1637aed`. Jay crea PR y merge.
+
+- MATRIZ_INTERACCIONES.md relaciona quince rutas de gesto, función, señal y evidencia: flora, percusión, vida, reliquias, redes, poderes, casa e interfaz.
+- Notas del Pincel, Cometa, Compañero y quietud reciben su señal en el punto de origen. El Pincel usa un patch creativo del género y deja espacio en la base sin subir el máster.
+- Campo e Imán reproducen con prioridad, mediante un origen separado: las notas automáticas no se graban ni enseñan como nuevos toques del jugador.
+- Corregido el Imán: el índice se calcula sobre fuentes musicales filtradas, evitando silencios por posiciones vacías.
+- El giro de quietud restaura el corte anterior del filtro, en lugar de abrirlo siempre a 20 kHz. Añade señal de filtro y no acumula escucha con volumen cero.
+- Los cincuenta caminantes combinan su forma con velocidad y grado individuales anteriores. Mantienen los mapas y responden dentro de la escala local.
+
+Auditoría aprobada; 97 suites Node y 6 recorridos afectados aprobados. Tres programas musicales afectados: 47 renders de poderes/quietud/culturas, caminantes y materiales/tiempo; picos menores de 0,96 y cero muestras calientes. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f7-validation.json).
+
 # Pulido F6 · Cincuenta caminantes con identidad
 
 Rama `feat/pulido-f6-personajes`, desde `4cdc59a`. Jay crea PR y merge.

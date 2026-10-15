@@ -1,5 +1,14 @@
 # Probar el universo vivo
 
+## Pulido F7 · Cada sonido vuelve a su fuente
+
+1. Con Pincel activo, dibuja caminando. Observa qué marca suena y escucha su instrumento.
+2. Con Imán, recorre una zona con elementos mixtos; escucha cada golpe a compás.
+3. Con Campo, mueve el cubo: el círculo selecciona voces sin fijarlas automáticamente.
+4. Quédate quieto: las voces y el giro de filtro tienen señal local.
+5. Baja el filtro con Efectos; comprueba que quietud vuelve a ese corte, sin forzar brillo.
+6. Compara percusión natural, un caminante y una reliquia con volumen constante.
+
 ## Pulido F6 · Cincuenta caminantes con identidad
 
 1. Camina despacio junto a un caminante pequeño; espera su gesto de confianza.

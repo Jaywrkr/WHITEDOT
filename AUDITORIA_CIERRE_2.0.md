@@ -1,6 +1,6 @@
 # Auditoría y soluciones · cierre 2.0
 
-Trabajo en `feat/cierre-f10-lanzamiento`, hija de F9. Main no se modifica. Este registro distingue defectos corregidos, mejoras de experiencia y aceptación externa; una propuesta no equivale a una función terminada.
+Base auditada en F10, con soluciones continuadas en las ramas de PLAN_PULIDO_FINAL.md. Main no se modifica. Este registro distingue defectos corregidos, mejoras de experiencia y aceptación externa; una propuesta no equivale a una función terminada.
 
 ## Hallazgos reproducibles
 
@@ -24,6 +24,9 @@ Trabajo en `feat/cierre-f10-lanzamiento`, hija de F9. Main no se modifica. Este 
 | A16 | IDs de favoritos podían coincidir al guardar dos mundos simultáneamente. | Corregido en pulido F3: sufijo único, sin cambiar IDs existentes; prueba de ambos registros. |
 | A17 | Un duplicado inválido podía ocultar otro favorito válido. | Corregido en pulido F3: validar antes de reservar ID; prueba de normalización. |
 | A18 | La respuesta del caminante estaba después del retorno anticipado de audio del Mundo y podía no sonar. | Corregido en pulido F6: respuesta desde playVoice con fuente, escala y reloj reales; pruebas nativas y diez renders. |
+| A19 | El Imán usaba la longitud sin filtrar para seleccionar una fuente musical filtrada y perdía golpes. | Corregido en pulido F7: índice sobre la lista musical; cuatro golpes comprobados con una lista mixta. |
+| A20 | El giro de quietud devolvía siempre el filtro a 20 kHz, pisando un corte previo más suave. | Corregido en pulido F7: cerrar y regresar al valor previo; prueba de automatización y renders. |
+| A21 | Pincel, estela, compañero y quietud emitían notas sin la señal común de su fuente. | Corregido en pulido F7: onsets locales y prioridad del Pincel; gesto nativo y audio comprobados. |
 
 Los selectores de Prototipo de las pruebas se acotan a su menú: añadir un glosario plegable no debe hacer ambiguo un clic de una regresión ajena. La prueba de paseo verifica ahora reloj activo de sesión y ausencia de consumo de exploración; conserva movimiento, pausa y cancelación.
 
@@ -45,16 +48,16 @@ Las tiradas de variante rara ordinaria son 1/256; la distribución y filtrado te
 
 Antes de cambiar tasas: medir recorridos a pie, quietud y saltos por separado; distinguir repetición de ejemplar, de familia y de recompensa. El objetivo de UX es registrar lo cotidiano discretamente, celebrar novedades relevantes y reservar mayor protagonismo para lo excepcional. No cambiar semillas existentes ni inventar minutos medios a partir de densidad espacial.
 
-## Revisión de experiencia pendiente de implementación
+## Revisión de experiencia y avance
 
 | Área | Diagnóstico | Solución siguiente |
 |---|---|---|
-| Primer nivel | Las hojas de ayuda no sustituyen aprender haciendo. | F2: una acción breve, respuesta visible, avance por hechos y salida opcional. |
-| Guardar y viajar | Requiere buscar Favoritos dentro del menú. | F3: guardar desde el lugar, fichas compactas y regreso sencillo. Conservar escucha prolongada como gesto existente. |
-| Bitácora | Cinco secciones útiles; Lugares y Música aún presentan demasiadas tarjetas de texto. | F4: resumen visual, fichas desplegables y conservación de filtro/desplazamiento. |
-| Tarjetas | Hay arte y condiciones, pero avisos de ejemplares de una misma familia compiten por atención. | F5: jerarquía de novedades, repeticiones discretas y presentación según contexto/rareza. |
-| Personajes | Anatomías procedurales existentes no equivalen a cincuenta variantes explícitas de los pequeños personajes pedidos. | F6: catálogo de cincuenta, siluetas/comportamientos/roles comprobables y distribución territorial. |
-| Respuesta musical | Hay prioridades y percusión variada; queda verificar perceptibilidad por gesto y fuente en uso real. | F7: matriz de interacciones y ajustes de integración sin subir el máster. |
+| Primer nivel | Las hojas de ayuda no sustituyen aprender haciendo. | Implementado en F2: una acción breve, respuesta visible, avance por hechos y salida opcional. |
+| Guardar y viajar | Requiere buscar Favoritos dentro del menú. | Implementado en F3: guardar desde el lugar, fichas compactas y regreso sencillo. Conservar escucha prolongada como gesto existente. |
+| Bitácora | Cinco secciones útiles; Lugares y Música aún presentan demasiadas tarjetas de texto. | Implementado en F4: resumen visual, fichas desplegables y conservación de filtro/desplazamiento. |
+| Tarjetas | Hay arte y condiciones, pero avisos de ejemplares de una misma familia compiten por atención. | Implementado en F5: jerarquía de novedades, repeticiones discretas y presentación según contexto/rareza. |
+| Personajes | Anatomías procedurales existentes no equivalen a cincuenta variantes explícitas de los pequeños personajes pedidos. | Implementado en F6: catálogo de cincuenta, siluetas/comportamientos/roles comprobables y distribución territorial. |
+| Respuesta musical | Hay prioridades y percusión variada; queda verificar perceptibilidad por gesto y fuente en uso real. | Implementado en F7: matriz de interacciones y ajustes de integración sin subir el máster. |
 | Cierre de interfaz | Herramientas históricas y explicaciones pueden confundir. | F8: retirar duplicados visibles, revisar primer uso, acceso táctil y actualizar documentación. |
 
 ## Límites conservados y aceptación

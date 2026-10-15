@@ -33,7 +33,7 @@ export function initialize(runtime){
   const b=runtime.body,d=runtime.MU.dnaT;if(!b?.ready)return;
   if(b.jump||!state.anchor||Math.hypot(S().wx-state.anchor.x,S().wy-state.anchor.y)>90||d?.key!==state.key){
    state.anchor={x:S().wx,y:S().wy};state.key=d?.key;state.seconds=quietStart(S().listened[d?.key]);state.stage=quietStage(state.seconds);state.visitors=[];return;}
-  if(document.querySelector('.modal:not([hidden])')||runtime.scanning||!S().sound||runtime.ac?.state!=='running'||b.speed>12)return;
+  if(document.querySelector('.modal:not([hidden])')||runtime.scanning||!S().sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running'||b.speed>12)return;
   state.seconds+=dt;const k=quietStage(state.seconds);if(k>state.stage)enterStage(k);
   state.bloom+=((state.stage>=1?Math.min(1,.35+state.stage*.13):0)-state.bloom)*Math.min(1,dt*.4);
   state.pulse=Math.max(0,state.pulse-dt*.35);
@@ -42,13 +42,13 @@ export function initialize(runtime){
  // Voz del lugar (etapa 2+): una línea lenta con el instrumento del lugar; las visitas puntean.
  function step(s,bar,time){
   if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])')||runtime.scanning||!S().sound||runtime.ac?.state!=='running'||state.stage<2)return;const d=runtime.MU.dnaA;if(!d)return;
-  const ct=runtime.chordTones?.()||[60,64,67],inst=runtime.MU.radio?.hookI||hookInstruments(d.genre,runtime.GEN[d.genre])[0],profile=musicalCharacter(d.genre);
-  if(s===0&&bar%2===0)runtime.hookInst?.(inst,hookPitch(inst,ct[(bar/2)%ct.length],profile),time,runtime.vel?.(.045)||.045,d);
-  if(s===8&&bar%4===1&&state.stage>=4)runtime.hookInst?.(inst,hookPitch(inst,ct[(bar+1)%ct.length],profile),time,runtime.vel?.(.03)||.03,d);
-  if(state.visitors.length&&s%4===2&&Math.random()<.25){const v=state.visitors[Math.floor(Math.random()*state.visitors.length)];runtime.hookInst?.(inst,hookPitch(inst,ct[Math.floor(Math.random()*ct.length)],profile),time,.015,d);setTimeout(()=>{v.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
+  const ct=runtime.chordTones?.()||[60,64,67],inst=runtime.MU.radio?.hookI||hookInstruments(d.genre,runtime.GEN[d.genre])[0],profile=musicalCharacter(d.genre),anchor={id:'quiet:'+d.key,x:S().wx,y:S().wy},emit=(n,v,source=anchor)=>{runtime.hookInst?.(inst,hookPitch(inst,n,profile),time,v,d);runtime.soundCue?.(source,'lead',time);};
+  if(s===0&&bar%2===0)emit(ct[(bar/2)%ct.length],runtime.vel?.(.045)||.045);
+  if(s===8&&bar%4===1&&state.stage>=4)emit(ct[(bar+1)%ct.length],runtime.vel?.(.03)||.03);
+  if(state.visitors.length&&s%4===2&&Math.random()<.25){const v=state.visitors[Math.floor(Math.random()*state.visitors.length)];v.x=S().wx+Math.cos(v.a)*v.r;v.y=S().wy+Math.sin(v.a)*v.r*.7;emit(ct[Math.floor(Math.random()*ct.length)],.015,v);setTimeout(()=>{v.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
  }
  // Giro: el filtro baja y vuelve a abrir en dos compases (se oye que algo cambió).
- function sweep(){const fx=runtime.fx,ac=runtime.ac;if(!fx||!ac)return;const t=ac.currentTime,f=fx.lp.frequency;f.cancelScheduledValues(t);f.setValueAtTime(Math.max(200,f.value),t);f.exponentialRampToValueAtTime(420,t+runtime.SIX*16);f.exponentialRampToValueAtTime(20000,t+runtime.SIX*32);}
+ function sweep(){const fx=runtime.fx,ac=runtime.ac;if(!fx||!ac)return;const t=ac.currentTime,f=fx.lp.frequency,original=Math.max(200,f.value),closed=Math.min(420,original);f.cancelScheduledValues(t);f.setValueAtTime(original,t);f.exponentialRampToValueAtTime(closed,t+runtime.SIX*16);f.exponentialRampToValueAtTime(original,t+runtime.SIX*32);runtime.filterCue?.({id:'quiet:filter',x:S().wx,y:S().wy},'acorde',{start:original,end:closed,stages:1,slope:12},t);}
  function colorPulse(hue,amount=1){state.pulseHue=hue;state.pulse=Math.min(1.2,state.pulse+amount);}
  // ---------- atmósfera de color (fondo) ----------
  function drawAtmosphere(t){

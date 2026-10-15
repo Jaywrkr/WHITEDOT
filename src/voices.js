@@ -105,7 +105,7 @@ export function initialize(runtime) {
     // Only automatic upper voices rest; a player's gesture still receives its own response.
     if(origin==='ambient'&&(voice.role==='lead'||voice.role==='agudo')&&runtime.MU.radio?.genre===region.genre&&runtime.MU.radio?.melodyRest)return;
     function hit(t, degree, strength) {
-      if(origin==='player')runtime.focusGesture?.(t,source,voice.role);
+      if(origin==='player'||origin==='field')runtime.focusGesture?.(t,source,voice.role);
       runtime.soundCue?.(source,voice.role,t);
       const n = note(degree);let v = runtime.vel(strength * volume*(voice.volume??1))*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
       const emit=()=>{
