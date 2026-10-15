@@ -1,3 +1,7 @@
+<!-- pulido-viajes -->
+Estilos permite viajar a un género, una voz, una banda completa o redes musicales. Volver al lugar anterior conserva coordenadas y capa. Saltar busca contraste entre recetas existentes, sin cambiar rarezas ni otorgar hallazgos por menú.
+<!-- /pulido-viajes -->
+
 # WHITEDOT
 
 **Un pixel. Un mundo que suena.**

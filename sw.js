@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.2.0-rc.1-pulido-07';
+const CACHE='whitedot-2.2.0-rc.1-pulido-08';
 const SHELL=[
  "./src/electronic-ensemble.js",
  "./src/connection-groves.js",

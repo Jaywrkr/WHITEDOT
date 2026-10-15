@@ -1,3 +1,12 @@
+# Pulido · fase 8: contraste y regreso directo
+
+- Estilos ofrece lugares reales de una voz, banda completa y redes conectables; acceso directo al lugar anterior, sin abrir otro menú. La llegada a una red explica el gesto con una sola frase.
+- Saltar penaliza combinaciones recientes de timbres, densidad y carácter de caja. Selecciona lugares existentes; no altera mapas, probabilidades ni premios.
+- El traslado guarda destino y memoria antes de cambiar URL, colas y navegación. Si falla la segunda escritura, restaura coordenadas, capa y memoria completa; nunca declara éxito falso.
+- El historial conserva campos desconocidos. Una versión futura permanece exacta y bloquea cambios incompatibles. Grabación, escáner y dueto bloquean viajes.
+
+Validación: auditoría, 120 suites Node y siete programas de navegador afectados. Evidencia: `scripts/pulido-08-validation.json`. Síntesis y mezcla sin cambios. CI, deploy y teléfono físico separados.
+
 # Pulido · fase 7: tarjetas con función y memoria
 
 - Frente compacto: retrato, función musical y acceso al jardín/búsqueda complementaria. Lugar, historia, rareza, interpretación y exportación se despliegan a pedido.

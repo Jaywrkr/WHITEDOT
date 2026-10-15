@@ -1,3 +1,15 @@
+# Handoff · Exploración, fase 8
+
+Rama `feat/pulido-08-exploracion` desde F7 `556ad5e`. Jay crea PR/merge.
+
+`music-travel.js`: ruta solo busca `electronic.count===1` de generadores reales; full conserva diez partes. Volver desde Estilos reutiliza el retorno exacto previo. No concede escuchado ni reproduce notas. La búsqueda sigue cediendo el hilo y cancela al cerrar.
+
+`practice-travel.js`: historial conserva ocho identidades y ocho firmas tímbricas (leads, cantidad de partes y banda del ataque de caja). Penaliza recetas recientes entre candidatos existentes sin cambiar mapas/RNG previos. Normalización conserva extras, también del punto previo; versión futura exacta y bloqueada. `move` realiza la escritura final antes de cambiar URL, colas, destino y autopilot. Fallar esa escritura restaura coordenadas/capa/destino/historial. Las pruebas cubren la primera escritura exitosa y segunda fallida, además del fallo inicial.
+
+Evidencia: `scripts/pulido-08-validation.json`. No cambia síntesis/mezcla. F9 ejecuta navegador/audio completos sobre el conjunto. CI, deploy y escucha física separados.
+
+## Antecedentes
+
 # Handoff · Colección, fase 7
 
 Rama `feat/pulido-07-coleccion` desde F6 `5fe2538`. Jay crea PR/merge.
