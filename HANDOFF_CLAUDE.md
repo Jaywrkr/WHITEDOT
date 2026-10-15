@@ -1,3 +1,16 @@
+# Handoff vigente · Pulido de cubo, colección y música
+
+[Plan de seis fases](PLAN_PULIDO_CUBO_MUSICA.md). Base main `d7ea883`: Jay integró Experiencia viva F14 en PR #143. Primera rama: `feat/pulido-01-medicion`. Codex commit/push; Jay PR/merge; las fases siguientes parten de la anterior si aún no está integrada.
+
+- `scripts/encounter-model.mjs` y `scripts/encounter-audit.mjs`: simulación reproducible de oportunidades en una hora. Explorar y quietud, seis semillas, intervalos y límites explícitos. No lee guardados de jugadores ni entrega tarjetas.
+- `src/listening-reference.js`: diez parejas de destinos reales, objetivos breves y exportación de evaluaciones parciales.
+- `src/lab.js` / `index.html`: Escucha comparada dentro de Notas, sin controles nuevos en el Mundo. Selección silenciosa; A/B usa el viaje existente del laboratorio. Notas separadas de la partida.
+- F1 no modifica la síntesis, las tasas de aparición ni los desbloqueos. La próxima fase corresponde al cubo; no repetir los catorce bloques anteriores.
+
+Validación: auditoría sin errores/advertencias, 115 suites Node, navegador de comparación/laboratorio/UI silenciosa/offline y 384 rutas simuladas aprobados. Evidencia en `scripts/pulido-01-validation.json`. Sin cambios de audio; escucha física, CI y deploy conservan su comprobación separada.
+
+## Antecedentes conservados
+
 # Handoff vigente · Experiencia viva 2.2.0-rc.1
 
 [Cierre y pruebas](CIERRE_EXPERIENCIA.md) · [Plan actual](PLAN_EXPERIENCIA.md). Catorce fases autorizadas; no reiniciar las anteriores. Fases 1–13 en main `88c96b0` por Jay (PR #142). F14 continúa desde F13 `4625f2f` y reúne el cierre validado. El agente no crea PR ni integra main.

@@ -1,3 +1,10 @@
+# Pulido · fase 1: medición y escucha
+
+- Plan de seis ramas desde main `d7ea883`, que integra Experiencia viva completa.
+- Modelo reproducible de una hora: explorar o quietud, fuentes reales, rutas deduplicadas e incertidumbre explícita. No accede a partidas ni promete tarjetas ganadas.
+- Diez comparaciones de escucha en las notas del laboratorio. A/B reutiliza destinos; exportación distingue evaluaciones parciales. Sin controles nuevos en el Mundo ni sonido de interfaz.
+- Validación: auditoría sin errores/advertencias, 115 suites Node y cuatro programas de navegador afectados aprobados. Modelo: 384 rutas simuladas. Evidencia en `scripts/pulido-01-validation.json`; escucha física y CI separados.
+
 # Experiencia 14 · Auditoría integrada
 
 Auditoría sin errores ni advertencias, 113 suites Node, 86 recorridos de navegador incluido offline y 789 renders de 31 programas de audio: aprobados. Prueba HTTP/SQLite aprobada. Pico máximo medido 0.945447. [Evidencia final](scripts/experience-14-validation.json).

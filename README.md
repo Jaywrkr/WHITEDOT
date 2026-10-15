@@ -8,11 +8,21 @@ Explora para descubrir sonidos, crear tu música y conservar tus encuentros. Un 
 
 Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
-## Experiencia viva · entrega actual
+## Cubo, colección y música · ciclo actual
+
+[Seis fases, ramas y aceptación](PLAN_PULIDO_CUBO_MUSICA.md). Fase 1: mediciones reproducibles de oportunidades y diez comparaciones de escucha en Laboratorio → Notas → Escucha comparada. Las notas se conservan aparte de tu partida; los controles permanecen silenciosos. El modelo no estima tarjetas ganadas ni sustituye la escucha humana.
+
+```bash
+npm run audit:encounters -- --routes 192 --output /tmp/whitedot-encounters.json
+```
+
+Explorar y quietud se informan por separado, con sus supuestos e intervalos. El ciclo parte de main `d7ea883`, donde Jay integró Experiencia viva completa (PR #143).
+
+## Experiencia viva · ciclo integrado
 
 [Catorce fases y sus ramas](PLAN_EXPERIENCIA.md) · [Auditoría, pruebas y recorrido móvil](CIERRE_EXPERIENCIA.md) · [Mapa técnico](HANDOFF_CLAUDE.md).
 
-Fases 1–13 integradas por Jay en main `88c96b0` (PR #142). F14 contiene el conjunto final sobre esa ascendencia. Codex entrega commits y pushes; Jay crea PR y merge. La aceptación física y CI se registran separadamente de las pruebas locales.
+Fases 1–14 integradas por Jay en main `d7ea883` (PR #143). Codex entrega commits y pushes; Jay crea PR y merge. La aceptación física y CI se registran separadamente de las pruebas locales.
 
 Auditoría sin errores ni advertencias, 113 suites Node, 86 recorridos de navegador incluido offline y 789 renders de 31 programas de audio: aprobados. Prueba HTTP/SQLite aprobada. Pico máximo medido 0.945447. [Evidencia final](scripts/experience-14-validation.json).
 
@@ -73,7 +83,7 @@ python3 tests/server_api.py && python3 tests/duet_smoke.py   # servidor opcional
 
 El repo está conectado a Vercel (proyecto `whitedot`). Cada rama tiene vista previa; el merge a `main` publica producción. `vercel.json` fija Framework **Other** (`null`), Output Directory **`.`** y el build `node scripts/vercel-build.mjs`. El juego vive en la raíz: no genera `public`. La configuración del repo evita que Vercel busque esa carpeta inexistente. El build sella la revisión y la hora de publicación, que se ven al pie del menú. Vercel sirve solo la parte estática: el servidor de cuentas y duetos no corre ahí.
 
-Flujo: una rama por fase de [Experiencia viva](PLAN_EXPERIENCIA.md), desde main actualizado o desde la fase anterior pendiente de merge; commit y push. **Jay crea el PR y hace el merge.** [PLAN_2.0.md](PLAN_2.0.md) conserva los estados anteriores.
+Flujo: una rama por fase del [pulido actual](PLAN_PULIDO_CUBO_MUSICA.md), desde main actualizado o desde la fase anterior pendiente de merge; commit y push. **Jay crea el PR y hace el merge.** [PLAN_2.0.md](PLAN_2.0.md) conserva los estados anteriores.
 
 ## Mapa del repositorio
 

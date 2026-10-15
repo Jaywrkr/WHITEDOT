@@ -8,7 +8,8 @@
     "audit:release": "node scripts/release-audit.mjs",
     "test:browser": "python3 scripts/run-browser-tests.py browser",
     "test:audio": "python3 scripts/run-browser-tests.py audio",
-    "audit:universe": "node scripts/universe-audit.mjs"
+    "audit:universe": "node scripts/universe-audit.mjs",
+    "audit:encounters": "node scripts/encounter-audit.mjs"
   },
   "engines": {
     "node": ">=18"
