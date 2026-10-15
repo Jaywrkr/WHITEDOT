@@ -1,0 +1,70 @@
+{
+  "phase": 2,
+  "branch": "feat/pulido-02-direccion-musical",
+  "baseMain": "30b2df8",
+  "validatedAtUTC": "2026-10-15T22:35:28.159241+00:00",
+  "audit": {
+    "result": "passed",
+    "errors": 0,
+    "warnings": 0,
+    "modules": 178
+  },
+  "node": {
+    "command": "npm test",
+    "suites": 116,
+    "result": "passed"
+  },
+  "browser": {
+    "result": "passed",
+    "flows": [
+      "volume_control_smoke.py",
+      "menu_v2_smoke.py",
+      "lab_score_smoke.py",
+      "synth_bank_smoke.py",
+      "listening_reference_smoke.py",
+      "ui_silence_smoke.py",
+      "offline_smoke.py",
+      "v1_closure_smoke.py"
+    ]
+  },
+  "audio": {
+    "result": "passed",
+    "renders": 84,
+    "maxPeak": 0.9322187304496765,
+    "artifacts": [
+      {
+        "path": "scripts/pulido-02-direction-audio.json",
+        "sha256": "c34d3dbf6394e3c0f6e75f0ddd058a2bf9aee75701bd668254d0bbc9e489f73e"
+      },
+      {
+        "path": "scripts/pulido-02-band-audio.json",
+        "sha256": "2d6951ba006ebc7d63e528bcd852af4a659b8ed01f53b647d49133bb51001c8f"
+      },
+      {
+        "path": "scripts/pulido-02-hybrid-audio.json",
+        "sha256": "b5cceadacf3c2dc88169bd0491a21165a55ef74519bcf1a627890dc956d7b93d"
+      },
+      {
+        "path": "scripts/pulido-02-foreground-audio.json",
+        "sha256": "1acf998a2639ff202180a4904555b2d408662c5a5328ad38925afd798b654c7c"
+      }
+    ],
+    "zeroVolumePeak": 0,
+    "halfVolumePeakRatio": 0.49999996697279364,
+    "shortToOpenLateTailEnergy": 0.0
+  },
+  "scope": [
+    "Eleven production profiles, native styles and map positions retained.",
+    "Automatic continuous pad oscillator bank removed.",
+    "1.5x makeup gain before limiter; final fader covers music and effects.",
+    "Recording captures that final protected output.",
+    "UI controls do not emit music."
+  ],
+  "supersededChecks": "Earlier partial audio runs were superseded after Jay requested removal of organ, volume control and 1.5x lift; only final results count.",
+  "external": [
+    "Physical-phone listening",
+    "Full browser/audio regression in F9 and CI",
+    "Deployment verification"
+  ],
+  "notClaimed": "Numerical tests do not certify artistic taste or a professional master."
+}

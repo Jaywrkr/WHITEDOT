@@ -7,6 +7,7 @@ import {RHYTHM_GENRES} from './rhythms.js';
 import {musicIdentity,identityGrammar,identityExpression,identityBass} from './musical-recipes.js';
 import {hybridIdentity,hybridArrangement} from './musical-hybrids.js';
 import {labScore,labArrangement} from './lab-score.js';
+import {directedFrame} from './music-direction.js';
 // Composición por frases: el reloj musical avanza sin necesitar movimiento.
 // No modifica el ADN de la región ni guarda estado en la partida.
 export function createRadio(seedOf, rng, genres, {living=()=>false}={}) {
@@ -98,7 +99,7 @@ export function createRadio(seedOf, rng, genres, {living=()=>false}={}) {
     energy += (target - energy) * .25;
     const frame={ ...arrangement, harmonyBar:bar-startBar, energy, genre: region.genre };
     const native=hybridArrangement(frame,region,bar-startBar,environment.room?null:hybridIdentity(region,seedOf,rng),genres);
-    return alive?labArrangement(native,labScore(region,seedOf,rng),environment):native;
+    return alive?directedFrame(labArrangement(native,labScore(region,seedOf,rng),environment),region.genre):native;
   }
   return { advance };
 }

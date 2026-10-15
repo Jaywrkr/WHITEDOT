@@ -1,17 +1,20 @@
 # Pulido de identidad, colección y música
 
-Nuevo alcance solicitado por Jay después de integrar Experiencia viva. Base: main `d7ea883`, PR #143, con F14 `b2faf63`. No reiniciar los planes anteriores.
+Nuevo alcance solicitado por Jay después de integrar Experiencia viva. Base inicial: main `d7ea883`, PR #143, con F14 `b2faf63`. Jay integró fase 1 en main `30b2df8`, PR #144. El plan de nueve fases sustituye la organización inicial de seis, por petición expresa de Jay. No reiniciar los planes anteriores.
 
 Una rama por fase; la siguiente parte de la anterior si todavía no está integrada. Codex hace commit y push; Jay crea PR y hace merge. Mantener la ascendencia reduce conflictos; un squash, rebase o cambio externo puede exigir resolverlos. Entregar y probar fase a fase.
 
-| Fase | Rama | Qué se implementa | Estado |
+| Fase | Rama | Alcance | Estado |
 |---|---|---|---|
-| 1 · Medición y escucha | `feat/pulido-01-medicion` | Recorridos reproducibles, incertidumbre y diez comparaciones en laboratorio | Implementada y probada; entrega en esta rama |
-| 2 · Tu cubo | `feat/pulido-02-cubo` | Apariencia/Movimiento/Voz, vista previa fiel, estados y prueba reversible | Pendiente |
-| 3 · Tarjetas y álbum | `feat/pulido-03-tarjetas` | Retratos, celebración proporcional, procedencia y uso musical claros | Pendiente |
-| 4 · Explorar con intención | `feat/pulido-04-exploracion` | Memoria reciente, pistas y contraste de gestos y lugares | Pendiente |
-| 5 · Dirección musical | `feat/pulido-05-curaduria` | Recetas, fraseo, percusión, registros y espacio para la interacción | Pendiente |
-| 6 · Validación conjunta | `feat/pulido-06-cierre` | Integración, migraciones, offline, móvil y auditoría musical | Pendiente |
+| 1 · Base de evaluación | `feat/pulido-01-medicion` | Medición y referencias internas | En main, PR #144 |
+| 2 · Dirección musical | `feat/pulido-02-direccion-musical` | Identidades, articulación y espacios musicales | Implementada y probada; entrega en esta rama |
+| 3 · Territorios coherentes | `feat/pulido-03-territorios` | Música, materiales, color, habitantes y fusiones | Pendiente |
+| 4 · Interacciones musicales | `feat/pulido-04-interacciones` | Gestos con causa visual y aporte audible | Pendiente |
+| 5 · Ambiente vivo | `feat/pulido-05-ambiente` | Clima, percusión natural, vida y quietud | Pendiente |
+| 6 · Cubo e interfaz | `feat/pulido-06-cubo-ui` | Personalización, claridad y móvil | Pendiente |
+| 7 · Colección y tarjetas | `feat/pulido-07-coleccion` | Hallazgos, utilidad, procedencia y regreso | Pendiente |
+| 8 · Exploración y aprendizaje | `feat/pulido-08-exploracion` | Pistas, memoria reciente y contraste | Pendiente |
+| 9 · Curaduría y cierre | `feat/pulido-09-cierre` | Auditoría conjunta y escucha | Pendiente |
 
 ## Contrato común
 
@@ -38,7 +41,9 @@ Una rama por fase; la siguiente parte de la anterior si todavía no está integr
 
 Las fuentes se muestrean en su posición inicial. No se simulan movimientos de criaturas, clima, niebla, atención humana, mezcla audible o resolución de reliquias. Los inicios son lugares terrestres aleatorios, no el tutorial. Las claves del informe mezclan funciones de diagnóstico, géneros y familias; su cantidad no cuenta nuevos elementos del juego. No se modelan Saltar, poderes ni modificadores de velocidad. El resultado representa oportunidades potenciales; no tarjetas ganadas ni probabilidades universales por hora.
 
-### Probar en teléfono
+### Herramienta opcional de revisión
+
+No es tarea del jugador ni requisito para continuar. Las siguientes fases se prueban jugando; estas comparaciones permiten investigar diferencias concretas.
 
 1. Abre el preview con `?dev=1` y entra en Prototipo → Laboratorio.
 2. Abre Notas → Escucha comparada. Elige Golpe y raspado.
@@ -54,32 +59,116 @@ Aprobados: `npm run audit:release` (0 errores y 0 advertencias), `npm test` (115
 
 No se modifica síntesis ni mezcla; no se repite audio para esta fase. Suite completa de navegador, CI, deploy y escucha física no se presentan como ejecutados. La revisión de móvil físico conserva el procedimiento anterior.
 
-## Fase 2 · Tu cubo
+## Fase 2 · Dirección musical
 
-Agrupar las siete categorías en Apariencia, Movimiento y Voz. Mostrar la apariencia real también al inspeccionar bloqueos, manteniendo explícito que no se puede equipar. Vista previa, aplicación y restauración coherentes, estados accesibles y piezas ganadas primero. Revisar rutas alternativas a requisitos largos sin retirar propiedad ni convertir cosméticos en mejoras de poder.
+**Objetivo:** electrónica con cuerpo, groove y personalidades reconocibles. Lo etéreo queda como una posibilidad concreta del universo.
 
-Lista cuando una persona identifica qué lleva, qué ganó y cómo consigue lo siguiente; puede probar y deshacer en móvil sin perder su configuración.
+**Implementación:**
+- Auditar instrumentos, registros, colas, eco, reverberación, pads y mezcla acumulada.
+- Definir perfiles de producción: pulso seco, grave, cálido, orgánico, mecánico, quebrado, cuerdas, disco, cinta, dub y espacios abiertos compatibles.
+- Quitar el órgano/pad automático de fondo. Los instrumentos sostenidos siguen disponibles mediante fuentes musicales concretas.
+- Volumen directo en menú, sincronizado con Sonido, con guardado de 0–100%. Aumentar ganancia general 1,5× antes del limitador; fader final para música, colas y FX, compartido por la grabación. UI silenciosa.
+- Dar protagonistas distintos a cada carácter. Mantener las 52 etiquetas y sus ritmos; profundizar su interpretación.
+- Ajustar ataque y duración del arreglo, con límites de registro, preservando pausas y tempo.
+- Reemplazar aumentos genéricos de eco/niebla/quietud por decisiones acotadas del estilo. Mantener efectos voluntarios y anomalías explícitas.
+- Compartir decisiones de tratamiento entre radio y fuentes locales sin tocar el máster.
 
-## Fase 3 · Tarjetas y álbum
+**Aceptación:** diferencias de ritmo, timbre, articulación y acústica; los gestos siguen siendo audibles y las mezclas densas conservan margen. Renderizar perfiles y comprobar colas cortas frente a espacios abiertos. Escucha física se declara aparte.
 
-Separar retrato/nombre/función del detalle de procedencia y probabilidad. Celebración local proporcional al primer hallazgo; repeticiones discretas y registro completo. Distinguir nuevo tipo, nuevo ejemplar e interpretación. Integrar volver al sitio y usar voces mediante las capacidades de jardín y técnicas ya existentes; no consumir tarjetas.
+**Prueba como jugador:** abre el preview, entra al Mundo y usa Saltar para recorrer distintos lugares. Escucha el cuerpo del ritmo, el ataque de instrumentos y el espacio entre notas. Permanecer quieto ya no debe convertir automáticamente todo en eco. Tocar objetos sigue aportando voces. Ambient/cosmic pueden conservar amplitud. No necesitas comparar A/B ni escribir informes para jugar.
 
-Lista cuando se entiende cómo despertar una reliquia, por qué el hallazgo importa y qué se puede hacer con él. Los avisos no bloquean explorar ni reproducen una fanfarria de interfaz.
+**Entrega técnica:** `music-direction.js`, salas de 0,32/3,2 s, retornos por estilo, once paletas y articulación de radio viva. No incorpora nuevos géneros ni mueve fuentes del mundo.
 
-## Fase 4 · Explorar con intención
+**Validación:** auditoría sin errores/advertencias, 116 suites Node, ocho programas de navegador afectados y 84 renders de cuatro programas de audio aprobados. Pico máximo 0,932219; 0% produce silencio y 50% reduce la señal a la mitad. Evidencia: `scripts/pulido-02-validation.json`. Escucha física, CI y deploy separados.
 
-Usar memoria reciente de timbres, funciones, acciones y territorios para sugerir contraste en destinos existentes. Enseñar gestos mediante señales de sus fuentes, relaciones y posibilidades opcionales. Regresar a lugares desde sus fichas y mantener el vacío, la calma y las coordenadas.
+## Fase 3 · Territorios coherentes
 
-Lista cuando un jugador descubre tres acciones diferentes sin manual y reconoce sus consecuencias. La quietud desarrolla una identidad musical, no fuerza cambios arbitrarios de canción.
+**Objetivo:** que un lugar se vea, se comporte y suene como un ecosistema.
 
-## Fase 5 · Dirección musical
+**Implementación:**
+- Vincular el carácter musical a las familias visuales existentes, sus materiales, color localizado y densidades.
+- Reducir los fondos geométricos repetidos: zonas despejadas y zonas de textura tenue con transición gradual, sin eliminar elementos interactivos.
+- Combinar una identidad principal con aportes secundarios compatibles; usar voces, ritmos y fraseos existentes antes de sumar etiquetas.
+- Favorecer agrupaciones de especies afines y diferencias individuales; mantener vacío y refugios.
+- Mantener rasgos compartidos entre vecinos y transiciones suaves; conservar semilla, coordenadas, reliquias y ejemplares raros.
+- Expresar las fusiones mediante comportamiento y respuesta musical, sin superponer dos canciones completas.
 
-Escuchar recetas completas con volumen comparable; seleccionar, ajustar o retirar de la selección activa sin borrar el historial. Distinguir fusiones por fraseo, ritmo, armonía y articulación. Proteger graves y medios, variar percusión y dejar espacio audible al gesto del jugador. Relacionar la respuesta visual con el sonido que realmente modifica cada fuente.
+**Aceptación:** reconocer territorios por imagen y sonido; no convertir todo el mapa en una mezcla uniforme. Mapas anteriores y direcciones regresan al mismo sitio.
 
-Lista cuando se reconocen familias sin ver sus etiquetas y se identifica la contribución de cada gesto. Medidas de audio y escucha física se complementan; ningún puntaje automático acredita buen gusto ni un máster profesional.
+## Fase 4 · Interacciones musicales
 
-## Fase 6 · Cierre verificable
+**Objetivo:** entender la acción, identificar su fuente y disfrutar su aporte.
 
-Recorrer tutorial, cubo, hallazgos, jardín, guardado, vuelta y escucha larga en conjunto. Auditoría, Node, navegador/offline y audio completos; comprobar archivos de evidencia y pendientes reales. Mantener visibles las condiciones externas: CI, artefacto desplegado y escucha en teléfonos físicos.
+**Implementación:**
+- Revisar por familia pasar, permanecer, rodear, tensar, soltar y responder.
+- Distribuir bajo, percusión, acordes, melodía y transformación según territorio y ejemplar.
+- Respuesta visual inmediata pequeña; respuesta audible coordinada con el reloj musical.
+- Reservar espacio selectivo en el acompañamiento, sin elevar todo el volumen.
+- Mostrar tensión para cuerdas, deformación para membranas y respiración para sostenidos.
 
-Lista cuando la implementación y sus pruebas están cerradas, y cada pendiente externo tiene un procedimiento concreto de comprobación. No declarar perfección ni aceptación física sin evidencia.
+**Aceptación:** identificar el aporte del gesto sin manual; contacto sostenido no provoca ráfagas accidentales, ni atraviesa pausas/menús/cambios de capa.
+
+## Fase 5 · Ambiente vivo
+
+**Objetivo:** un entorno que participa musicalmente y deja respirar.
+
+**Implementación:**
+- Relacionar lluvia, agua, viento, semillas y aleteos con cuerpos y articulaciones diferenciadas.
+- Ampliar la percepción de percusión grave/media y respuestas naturales existentes.
+- Alternar escucha, llamada, respuesta y descanso de habitantes.
+- Evolucionar en quietud mediante fraseo, retirada de capas y pequeños cambios del arreglo.
+- Acotar fuentes simultáneas, repetición y actividad; no llenar las zonas tranquilas.
+
+**Aceptación:** permanecer varios minutos y reconocer desarrollo; cambiar de ambiente sin saltos de volumen ni acumulación de agudos.
+
+## Fase 6 · Cubo e interfaz
+
+**Objetivo:** una identidad personal clara que convive con el paisaje.
+
+**Implementación:**
+- Organizar Apariencia, Movimiento y Voz; conservar IDs y propiedad.
+- Vista previa real, prueba reversible y aplicación coherente.
+- Diferenciar equipado, ganado y bloqueado; condiciones breves y piezas ganadas primero.
+- Conservar el blanco y la silueta del cubo; cosméticos sin ventajas de poder.
+- Revisar móvil, foco, objetivos táctiles, contraste y movimiento reducido. Sin sonido de interfaz.
+
+**Aceptación:** probar, comparar, restaurar y salir sin pérdida de configuración; acceder con teclado, lector y teléfono pequeño.
+
+## Fase 7 · Colección y tarjetas
+
+**Objetivo:** encuentros con significado, recuerdo y utilidad musical.
+
+**Implementación:**
+- Frente con retrato, nombre, rareza y función; detalle con procedencia, condiciones y vuelta.
+- Celebración local proporcional; repeticiones discretas y registro íntegro.
+- Diferenciar tipo nuevo, ejemplar distinto e interpretación aprendida.
+- Mejorar álbum y conexión con jardín/técnicas existentes; nunca consumir tarjetas.
+- Distinguir presencia, despertar y premio; probabilidades con su unidad real.
+
+**Aceptación:** entender qué se encontró, por qué importa y qué hacer con ello. Los avisos permiten seguir jugando; versiones futuras y datos desconocidos sobreviven.
+
+## Fase 8 · Exploración y aprendizaje
+
+**Objetivo:** descubrir nuevas maneras de hacer música sin tareas obligatorias.
+
+**Implementación:**
+- Enseñar un gesto mediante señales y situaciones; instrucciones breves solo cuando hagan falta.
+- Memoria reciente de timbres, funciones y paisajes para sugerir contraste.
+- Saltar selecciona destinos existentes; no modifica rarezas ni crea premios por menú.
+- Pistas y relaciones optativas entre habitantes, objetos y lugares.
+- Guardar y volver desde el contexto, con direcciones completas y controles sencillos.
+
+**Aceptación:** descubrir tres acciones distintas sin manual y volver al lugar deseado conservando progresión.
+
+## Fase 9 · Curaduría y cierre
+
+**Objetivo:** comprobar la experiencia integrada, no declarar perfección por cantidad de contenido.
+
+**Implementación:**
+- Seleccionar recetas mediante escucha comparable: groove, fraseo, fatiga, claridad, espacio y deseo de quedarse.
+- Ajustar mezclas débiles o repetitivas conservando historial y descubrimientos.
+- Recorrer tutorial, mundo, cubo, tarjetas, jardín, guardar y regresar.
+- Auditoría y Node completos; suites completas de navegador/offline y audio sobre el conjunto.
+- Registrar CI, artefacto desplegado, teléfonos y escucha larga por separado.
+
+**Aceptación:** pruebas verdes, límites explícitos, progreso conservado y procedimiento para cada comprobación externa. Una métrica automática no acredita gusto musical ni masterización profesional.

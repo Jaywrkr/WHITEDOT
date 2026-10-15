@@ -1,3 +1,12 @@
+# Pulido · fase 2: dirección musical
+
+- Plan integral actualizado a nueve fases por petición de Jay; fase 1 ya integrada en PR #144.
+- Once perfiles de producción dan protagonistas, articulaciones y espacios distintos a los caracteres musicales existentes.
+- Salas persistentes corta/larga con transición; menos pad y eco en música seca. La quietud deja de aumentar el eco automáticamente.
+- Bajo, percusión y melodía mantienen sus funciones y patrones. Canon y efectos voluntarios conservados; mapas y progreso intactos.
+- Quitado el banco de órgano/pad automático. Volumen directo en menú y sincronizado con Sonido; ganancia general 1,5× antes de la protección de picos. UI silenciosa.
+- Validación: auditoría, 116 suites Node, ocho programas de navegador afectados y 84 renders de audio aprobados. Pico máximo 0,932219. Evidencia en `scripts/pulido-02-validation.json`; escucha física/CI/deploy separados.
+
 # Pulido · fase 1: medición y escucha
 
 - Plan de seis ramas desde main `d7ea883`, que integra Experiencia viva completa.

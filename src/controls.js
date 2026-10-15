@@ -6,7 +6,7 @@ export function initialize(runtime) {
   runtime.$("sessionClose").onclick=()=>{runtime.$("mSession").hidden=true;};
   runtime.$("sessionShare").onclick=runtime.shareSession;
   runtime.$("hcGo").onclick=()=>{runtime.S.help.camino=true;runtime.$("mHelpC").hidden=true;runtime.audio();if(!runtime.S.voiceStart){runtime.S.voiceStart=true;setTimeout(()=>runtime.say(runtime.VOZ.start),900);}runtime.save();};
-  runtime.$("bMenu").onclick=()=>{runtime.$("mMenu").hidden=false;};runtime.$("mnClose").onclick=()=>{runtime.$("mMenu").hidden=true;};
+  runtime.$("bMenu").onclick=()=>{volumeUI();runtime.$("mMenu").hidden=false;};runtime.$("mnClose").onclick=()=>{runtime.$("mMenu").hidden=true;};
   document.querySelectorAll("#mMenu .tiles button,#mMenu .devbox button").forEach(b=>b.addEventListener("click",()=>{if(b.id!=="dReset")runtime.$("mMenu").hidden=true;}));
   runtime.$("bPrimary").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else runtime.enterWorld();};
   runtime.$("bStudio").onclick=runtime.enterStudio;runtime.$("bDeploy").onclick=runtime.deployStudio;runtime.$("stExit").onclick=runtime.exitStudio;
@@ -36,8 +36,8 @@ export function initialize(runtime) {
   runtime.$("bSound").onclick=()=>{runtime.S.sound=!runtime.S.sound;styleUI();runtime.audio();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);runtime.toast(runtime.S.sound?"<em>Música</em> · activada":"<em>Música</em> · en silencio");runtime.save();};
   runtime.$("bSettings").onclick=()=>{runtime.$("mMenu").hidden=true;runtime.$("mSettings").hidden=false;};
   runtime.$("settingsClose").onclick=()=>runtime.$("mSettings").hidden=true;
-  runtime.$("rVolume").oninput=e=>{runtime.S.outputVolume=Math.max(0,Math.min(1,+e.target.value/100));if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);};
-  runtime.$("rVolume").onchange=()=>runtime.save();
+  function volumeUI(){const value=Math.round(Math.max(0,Math.min(1,Number.isFinite(runtime.S.outputVolume)?runtime.S.outputVolume:1))*100);for(const id of ['rVolume','rMenuVolume']){runtime.$(id).value=value;runtime.$(id).setAttribute('aria-valuetext',value+'%');}for(const id of ['volumeNow','menuVolumeNow'])runtime.$(id).textContent=value+'%';}
+  for(const id of ['rVolume','rMenuVolume']){runtime.$(id).oninput=e=>{const value=Number(e.target.value);if(!Number.isFinite(value))return;runtime.S.outputVolume=Math.max(0,Math.min(1,value/100));volumeUI();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);};runtime.$(id).onchange=()=>runtime.save();}volumeUI();
   for(const id of ['bSky','bSession'])runtime.$(id).addEventListener('click',()=>runtime.$('mJournal').hidden=true);
   runtime.$("muClose").onclick=()=>{runtime.$("mMusic").hidden=true;runtime.save();};
   runtime.$("muMute").onclick=()=>{runtime.S.sound=!runtime.S.sound;styleUI();runtime.audio();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);runtime.save();};
