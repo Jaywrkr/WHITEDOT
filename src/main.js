@@ -12,6 +12,7 @@ import {initialize as achievementsV2} from './achievements.js';
 import {initialize as celebration} from './celebration.js';
 import {initialize as practiceTravel} from './practice-travel.js';
 import {initialize as musicTravel} from './music-travel.js';
+import {initialize as distantColors} from './distant-colors.js';
 import {initialize as worldVisibility} from './world-visibility.js';
 import {initialize as worldFamilyArt} from './world-family-art.js';
 import {initialize as anatomyView} from './anatomy-view.js';
@@ -97,6 +98,7 @@ import { initialize as atlas } from './atlas.js';
 
 // Initialize once, in the same order as the original game. Never expose runtime on window.
 const runtime = Object.create(null);
+Object.defineProperty(runtime,'unifiedMusic',{value:true});
 data(runtime);
 progress(runtime);
 world(runtime);
@@ -172,6 +174,7 @@ lab(runtime);
 achievementsV2(runtime);worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
 practiceTravel(runtime);
 musicTravel(runtime);
+distantColors(runtime);
 houseAudio(runtime);house(runtime);
 onboarding(runtime);labLearning(runtime);
 runtime.styleUI();runtime.hud();

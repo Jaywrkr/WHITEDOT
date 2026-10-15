@@ -10,7 +10,7 @@ Una rama por fase; la siguiente parte de la anterior si todavía no está integr
 | 2 · Dirección musical | `feat/pulido-02-direccion-musical` | Identidades, articulación y espacios musicales | Implementada y probada; entrega en esta rama |
 | 3 · Territorios coherentes | `feat/pulido-03-territorios` | Música, materiales, color, habitantes y fusiones | Implementada y probada; entrega en esta rama |
 | 4 · Interacciones musicales | `feat/pulido-04-interacciones` | Gestos, estilos y paseo opcional | Implementada y probada; entrega en esta rama |
-| 5 · Ambiente vivo | `feat/pulido-05-ambiente` | Clima, percusión natural, vida y quietud | Pendiente |
+| 5 · Ambiente vivo | `feat/pulido-05-ambiente` | Ensambles, redes y color distante | Implementada y probada; entrega en esta rama |
 | 6 · Cubo e interfaz | `feat/pulido-06-cubo-ui` | Personalización, claridad y móvil | Pendiente |
 | 7 · Colección y tarjetas | `feat/pulido-07-coleccion` | Hallazgos, utilidad, procedencia y regreso | Pendiente |
 | 8 · Exploración y aprendizaje | `feat/pulido-08-exploracion` | Pistas, memoria reciente y contraste | Pendiente |
@@ -131,7 +131,11 @@ No se modifica síntesis ni mezcla; no se repite audio para esta fase. Suite com
 
 **Aceptación:** permanecer varios minutos y reconocer desarrollo; cambiar de ambiente sin saltos de volumen ni acumulación de agudos.
 
+**Dirección definitiva pedida por Jay:** un solo motor electrónico de producción, sin elegir vivo/clásico. Semillas con bandas de 1–10 partes y baterías nativas reconocibles, kits diferentes, progresión compartida y fraseo estable. La rareza o el movimiento no son requisitos para escuchar una banda completa. Mantener lugares sutiles y silencio deliberado; Campo de escucha atenúa la base y las zonas experimentales ya no eliminan su batería. El selector ofrece un viaje a un ensamble completo existente. Escucha física separada de métricas automáticas.
+
 **Peticiones incorporadas a F5:** manchas multicolor tenues, localizadas y graduales como galaxias lejanas; territorios ricos en redes conectables sin alterar los elementos anteriores. Ensambles complementarios en algunos territorios, conservando otros mínimos. Motivos reconocibles y desarrollo por frases: sorpresa armónica y tímbrica, evitando punteos automáticos sin continuidad.
+
+**Validación F5:** auditoría sin errores/advertencias, 120 suites Node, doce programas de navegador y 87 renders de audio aprobados. Incluye los 52 estilos, un acompañamiento de un instrumento y bandas con diez partes que emiten al menos diez timbres sin tocar objetos, también drum & bass rápido. Pico máximo 0,933802. Evidencia: `scripts/pulido-05-validation.json`. En teléfono: Mundo → Estilos → Escucha un ensamble completo; prueba también Explora redes musicales y Paseo. No requiere modo desarrollador. CI/deploy/escucha física separados.
 
 ## Fase 6 · Cubo e interfaz
 

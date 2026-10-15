@@ -24,9 +24,9 @@ export function initialize(runtime) {
   runtime.$("sClose").onclick=()=>{runtime.$("mShare").hidden=true;};
   runtime.$("bSoft").onclick=()=>{runtime.S.softMusic=!runtime.S.softMusic;runtime.$("bSoft").setAttribute('aria-pressed',String(runtime.S.softMusic));runtime.audio();runtime.applyComfort();runtime.toast(runtime.S.softMusic?'Calma · sí':'Calma · no');runtime.save();};
   runtime.$("bSoft").setAttribute('aria-pressed',String(!!runtime.S.softMusic));
-  const livingUI=()=>{runtime.$('bLivingMusic').setAttribute('aria-pressed',String(runtime.S.livingMusic!==false));runtime.$('bLivingMusic').textContent=runtime.S.livingMusic===false?'Paisaje clásico':'Paisaje vivo';};
+  const livingUI=()=>{runtime.$('bLivingMusic').hidden=true;runtime.$('bLivingMusic').textContent='Música electrónica generativa';};
   Object.defineProperty(runtime,'refreshLivingMusic',{get:()=>livingUI});
-  runtime.$('bLivingMusic').onclick=()=>{runtime.S.livingMusic=runtime.S.livingMusic===false;livingUI();runtime.save();};livingUI();
+  runtime.$('bLivingMusic').onclick=()=>{};livingUI();
   runtime.$("bMusicSettings").onclick=()=>{styleUI();runtime.$("mMusic").hidden=false;};
   const rs=runtime.$("rStyle");
   const styleName=I=>I<.2?"Ambiente":I<.45?"Minimal":I<.72?"Deep":"Underground";

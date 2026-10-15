@@ -1,3 +1,20 @@
+# Pulido · fase 5: una base electrónica, redes y color distante
+
+Auditoría, 120 suites Node, doce programas de navegador y 87 renders aprobados, incluyendo los 52 estilos. Pico máximo 0,933802. Evidencia: `scripts/pulido-05-validation.json`. CI/deploy/escucha física separados.
+
+- Se retira la elección Paisaje vivo/clásico de producción. Un solo motor interpreta las semillas; las preferencias y direcciones antiguas permanecen guardadas y compatibles.
+- Bandas de una a diez partes: bombo, caja/clap, hats, percusión, bajo, motivo, acordes, respuesta, secuencia y color sostenido.
+- Baterías nativas de cada género, sin convertir todas las cajas/claps en la misma caja acústica ni todos los hats en shaker. Kit electrónico con cuerpo, ataque y cola propios por territorio.
+- Margen adicional de 0,28 dB tras sobremuestreo para las nuevas mezclas densas; conserva la compensación 1,5×, volumen final y salida de grabación.
+- Bajo y motivos siguen la progresión compartida; los apoyos fuertes se resuelven sobre el acorde.
+- Territorios mínimos, medios y completos. En los completos: batería, bajo, motivo, acompañamiento armónico y voz complementaria. Acordes desde el primer compás; respuesta en los siguientes, con retirada cada cuarto compás. No espera a una sección avanzada ni se adelgaza automáticamente por permanecer quieto.
+- Se respetan refugios de silencio, ambient/heart, descansos y duetos. Campo de escucha reduce la base en producción en lugar de silenciarla. Las zonas experimentales conservan también su batería. Los acordes son articulados y breves; no vuelve el órgano continuo.
+- Los objetos automáticos conservan un solista durante ocho compases, con respuestas pautadas y descansos; se retira la elección por probabilidad en cada pulso. Quietud conserva frases por ventanas de dieciséis compases.
+- Territorios de redes conectables: cadenas, jardines armónicos y relevos. Hasta dieciséis nodos por chunk elegible, cuatro funciones; regiones agrupadas con semilla independiente. Fuentes anteriores, rarezas y coordenadas conservadas.
+- Pasar/tocar un nodo conecta con un vecino y hace sonar su función; el pulso activa hasta tres. Hilos persistentes, filtros/modulación reales y señal visual al tempo. Reentrar no borra conexiones.
+- Estilos → Explora redes musicales permite encontrar una agrupación real. La hoja ahora pausa el paseo. Escucha un ensamble completo busca un territorio real con diez partes.
+- Gradientes multicolor como galaxias: detalle de fondo localizado, lento, de bajo contraste y con movimiento reducido. Hasta dos campos visibles, también fuera de la luz; sin sonido asociado ni cambios musicales por mostrarse.
+
 # Pulido · fase 4: estilos, paseo y respuesta
 
 Auditoría, 118 suites Node, seis programas de navegador y 29 renders aprobados. Pico máximo 0,904554; evidencia `scripts/pulido-04-validation.json`. CI, deploy y escucha física separados.

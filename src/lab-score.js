@@ -3,6 +3,7 @@ import {REFERENCE_GENRES,REFERENCE_STEPS,referenceRhythm} from './references.js'
 import {hybridIdentity} from './musical-hybrids.js';
 import {directedLeads} from './music-direction.js';
 import {territorialOrchestra,territoryInstrument} from './territory-presentation.js';
+import {electronicEnsemble,ensembleVoices} from './electronic-ensemble.js';
 // Playback-only musical territories. Independent seeds never move existing objects.
 const pattern=s=>Object.freeze([...s].map(n=>n==='.'?-1:Number(n)));
 const band=(id,name,characters,leads,bass,hook,drums,ceiling,swing,progression)=>Object.freeze({
@@ -48,11 +49,14 @@ export function labScore(region,seedOf,rng){
  const hybrid=hybridIdentity(region,seedOf,rng),native=RHYTHM_GENRES[region.genre]||REFERENCE_GENRES[region.genre],variant=Math.floor(individual()*16),
   nativeDrums=RHYTHM_GENRES[region.genre]?rhythmPattern(region.genre,variant%3):referenceRhythm(region.genre,variant%3)||BASE_DRUMS[region.genre],
   bassPool=native?.bassP||[region.track?.bassI||'hollow','reedbass','velvetbass'],
-  primary=base.festive?[...leads]:directedLeads(region.genre,leads),
-  orchestra=territorialOrchestra(region,primary,base.festive?hybrid?.instruments||[]:directedLeads(region.genre,leads,hybrid?.instruments||[]),seedOf);
- return Object.freeze({...base,orchestra,leads:Object.freeze([...orchestra.primary,...orchestra.secondary]),
+  primary=base.festive?[...leads]:directedLeads(region.genre,leads,[],native?.hookP||[]),
+  orchestra=territorialOrchestra(region,primary,base.festive?hybrid?.instruments||[]:directedLeads(region.genre,leads,hybrid?.instruments||[],native?.hookP||[]),seedOf);
+ const ensembleSeed=seedOf('territory:ensemble:v1:'+territory+':'+region.genre)>>>0,
+  ensemble=['ambient','heart'].includes(region.genre)?1:1+ensembleSeed%3;
+ const electronic=electronicEnsemble(region,kind,ensemble,seedOf);
+ return Object.freeze({...base,orchestra,ensemble,electronic,leads:Object.freeze([...orchestra.primary,...orchestra.secondary]),
   nativeDrums:nativeDrums?Object.freeze(Object.fromEntries(Object.entries(nativeDrums).map(([id,steps])=>[id,Object.freeze([...steps])]))):null,hook:Object.freeze([...(base.festive?base.hook:hybrid?.steps||native?.steps||REFERENCE_STEPS[region.genre]||base.hook)]),
-  bass:Object.freeze([...(native?.bass||region.track?.bass||base.bass)]),version:4,territory,variant,genre:region.genre,
+  bass:Object.freeze([...(native?.bass||region.track?.bass||base.bass)]),version:5,territory,variant,genre:region.genre,
   bassI:bassPool[Math.floor(individual()*bassPool.length)],
   ceiling:region.genre==='ambient'?Math.min(3000,base.ceiling):base.ceiling,
   swing:Math.min(.28,native?.sw??region.track?.swing??base.swing),
@@ -63,10 +67,13 @@ export function labArrangement(frame,score,environment={}){
  if(!score)return frame;
  const chapter=Math.floor(Math.max(0,frame.harmonyBar||0)/16),quiet=(environment.initiative||0)>.35,
   scene=chapter%6,orchestra=(score.variant+chapter+(quiet?1:0))%score.leads.length,
-  evolved={...score,scene,quiet},rest=frame.melodyRest||scene===5,cycle=Math.floor(Math.max(0,frame.phrase)/2)%4,hook=Array(16).fill(-1),budget=Math.min(4,frame.grammar.hookLimit);
+  evolved={...score,scene,quiet,listenQuiet:environment.quiet===true},
+  foundation=frame.section===0&&(score.ensemble>1||score.electronic?.count===1)&&!environment.quiet,
+  rest=frame.melodyRest&&!foundation||scene===5,cycle=Math.floor(Math.max(0,frame.phrase)/2)%4,hook=Array(16).fill(-1),budget=Math.min(4,frame.grammar.hookLimit);
  if(!rest)score.hook.slice(0,budget).forEach((s,i)=>{if(cycle!==3||i===0)hook[s]=(frame.hybrid?.tones||[0,2,4,3])[(i+(cycle===2?1:0)+score.variant)%(frame.hybrid?.tones?.length||4)];});
  const bass=score.bass.map((n,s)=>frame.section===0&&s!==0&&s%8!==0?-1:n);
- return {...frame,labScore:evolved,labEvolution:{chapter,scene,quiet},hybrid:frame.hybrid||null,melodyRest:rest,hook,bass,bassI:score.bassI,hookI:score.orchestra?territoryInstrument(score.orchestra,Math.floor(Math.max(0,frame.harmonyBar||0)/4),chapter+(quiet?1:0)):score.leads[orchestra],
+ const floor=environment.quiet||scene===5?.16:(score.electronic?.count||0)>=8?.48:(score.electronic?.count||0)>=6?.38:.22;
+ return {...frame,energy:Math.max(frame.energy??.25,floor),labScore:evolved,labEvolution:{chapter,scene,quiet},hybrid:frame.hybrid||null,melodyRest:rest,hook,bass,bassI:score.bassI,hookI:score.orchestra?territoryInstrument(score.orchestra,Math.floor(Math.max(0,frame.harmonyBar||0)/4),chapter+(quiet?1:0)):score.leads[orchestra],
   identity:{...frame.identity,id:`lab:${score.id}`,name:score.name,hooks:score.leads,bassI:score.bassI,swing:score.swing,air:Math.min(.5,frame.identity?.air??.5)},
   grammar:{...frame.grammar,progression:frame.hybrid?.progression||score.progression,harmonyBars:frame.hybrid?.harmonyBars||8,brightness:Math.min(frame.grammar.brightness,score.ceiling),hookLevel:frame.grammar.hookLevel*(scene===1?.55:.85),accents:[]},
   expression:{...frame.expression,harmony:false,toneScale:Math.min(1,frame.expression.toneScale),attackScale:frame.expression.attackScale*(score.id==='breath'?1.4:1)},
@@ -77,7 +84,7 @@ export function labNoteEvents(frame,step,bar){
  if(!frame?.labScore||!Number.isInteger(step)||step<0||step>15)return [];
  const score=frame.labScore,cycle=Math.floor(Math.max(0,bar))%8,answer=cycle%4===2,rest=cycle%4===3,
   events=[],bass=frame.bass[step],hook=frame.hook[step],variant=score.variant;
- if(bass>=0&&(!rest||step===0||step===8))events.push({role:'bajo',degree:answer&&step!==0?Math.min(7,bass+2):bass,
+ if((!score.electronic||score.electronic.layers.includes('bass'))&&bass>=0&&(!rest||step===0||step===8))events.push({role:'bajo',degree:answer&&step!==0?Math.min(7,bass+2):bass,
   instrument:frame.bassI,offset:0,level:step%4===0?1:.8,technique:cycle%2?'muted':'normal'});
  if(!frame.melodyRest&&hook>=0&&(!rest||step===0)){
   const degree=rest?0:answer?[4,2,0][(hook+variant)%3]:hook;
@@ -86,24 +93,51 @@ export function labNoteEvents(frame,step,bar){
  }
  // Sparse voiced harmony belongs to the arrangement, never a continuous organ bed.
  const kind=character(score.genre);
- if(step===0&&bar%8===0&&frame.section>0&&!frame.melodyRest&&score.scene!==5&&(frame.hybrid?.harmony||['warm','disco'].includes(kind)))
+ if(!score.electronic&&step===0&&bar%8===0&&frame.section>0&&!frame.melodyRest&&score.scene!==5&&(frame.hybrid?.harmony||['warm','disco'].includes(kind)))
   events.push({role:'acorde',degree:0,instrument:['warm','disco'].includes(kind)?'p_tinepiano':'p_cellobody',offset:0,level:.45,technique:'muted'});
+ // Rich territories are full ensembles from arrival, with a deliberate release each fourth bar.
+ // Complementary voices share harmony; no new random pitch is generated per hit.
+ const localBar=Math.floor(Math.max(0,frame.harmonyBar??bar)),position=localBar%4,
+  answerSteps=score.ensemble===3?[4,12]:[12],voices=(score.leads||[]).filter(id=>id!==frame.hookI),
+  harmonyPools={warm:['p_tinepiano','p_cellobody','p_gutguitar'],disco:['rhodes','p_softhorn','p_cellobody'],organic:['p_cellobody','p_tinepiano','p_gutguitar'],machine:['p_barkkeys','p_feltmallet','phasekeys'],broken:['p_tinepiano','p_gutguitar','p_cellobody'],bass:['p_cellobody','p_barkkeys','p_tinepiano'],melodic:['p_cellobody','p_tinepiano','p_gutguitar'],floor:['rhodes','p_gutguitar','p_cellobody']},
+  harmony=(harmonyPools[kind]||harmonyPools.floor).filter(id=>id!==frame.hookI),
+  group=score.electronic?ensembleVoices(score.electronic,frame.hookI,score.variant):null,
+  comp=group?.chords||harmony[score.variant%harmony.length],answerVoice=group?.counter||voices.find(id=>id!==comp),
+  enriched=(score.electronic?score.electronic.layers.includes('chords'):score.ensemble>1)&&!frame.melodyRest&&score.scene!==5&&!score.listenQuiet;
+ if(enriched&&position!==3){
+  if(step===0&&(score.ensemble===3||position%2===0)||score.ensemble===3&&step===8&&position===1){
+   // Replace the sparse harmonic entry when it coincides with this comping part.
+   const existing=events.findIndex(e=>e.role==='acorde');if(existing>=0)events.splice(existing,1);
+   events.push({role:'acorde',part:'comp',degree:0,instrument:comp,offset:0,level:score.ensemble===3?.85:.7,technique:'muted'});
+  }
+  if(answerVoice&&(!score.electronic||score.electronic.layers.includes('counter'))&&position>0&&answerSteps.includes(step)&&hook<0){
+   const index=answerSteps.indexOf(step),degree=[2,4,2,0][((position-1)*2+index)%4];
+   events.push({role:'lead',part:'answer',degree,instrument:answerVoice,offset:0,level:score.ensemble===3?.62:.5,technique:'muted'});
+  }
+ }
+ if(group&&!frame.melodyRest&&!score.listenQuiet&&score.scene!==5&&position!==3){
+  if(score.electronic.layers.includes('sequence')&&[2,6,10,14].includes(step)&&hook<0)
+   events.push({role:'lead',part:'sequence',degree:[0,2,4,2][(step-2)/4],instrument:group.sequence,offset:0,level:.38,technique:position===2?'slide':'muted'});
+  if(score.electronic.layers.includes('air')&&step===8&&position===0)
+   events.push({role:'lead',part:'air',degree:4,instrument:group.air,offset:0,level:.52,technique:'normal'});
+ }
  return events;
 }
 export function labDrumEvents(score,step,bar,energy){
  if(!score||!Number.isInteger(step)||step<0||step>15||!Number.isFinite(energy)||energy<=.12)return [];
  const out=[],cycle=((Math.floor(bar)%8)+8)%8,rest=cycle===7||score.scene===5,
-  push=(instrument,gain,pitch,offset=0,technique='normal')=>out.push({instrument,gain,pitch,offset,technique});
+  layer=instrument=>instrument==='kick'?'kick':instrument==='rim'||/snare|clap/i.test(instrument)?'snare':/hat|shaker/.test(instrument)?'hats':'percussion',
+  push=(instrument,gain,pitch,offset=0,technique='normal')=>{if(!score.electronic||score.electronic.layers.includes(layer(instrument)))out.push({instrument,gain,pitch,offset,technique});};
  if(score.kick.includes(step)&&(!rest||step===0||step===8))push('kick',score.id==='heavy'?.2:.16,48);
  if(energy>.24&&!rest&&score.scene!==1)for(const [original,steps]of Object.entries(score.nativeDrums||score.drums))if(steps.includes(step)){
   if(original==='kick'||original==='chord')continue;
   if(energy<.4&&step%4!==0&&(step+bar)%2)continue;
-  const instrument=original==='conga'?'handslap':original==='tom'?'skinbass':['snare','clap','clapRoll'].includes(original)?'acousticsnare':['hat','hatO','hatRoll'].includes(original)?'shaker':original;
-  push(instrument,instrument==='shaker'?.009:instrument==='acousticsnare'?.048:.035,
-   instrument==='handslap'?48+(step%3)*3:instrument==='skinbass'?40+step%3*2:instrument==='acousticsnare'?48+step%2*2:72+step%3*18,0,step%4?'ghost':'accent');
+  const instrument=score.electronic?original:original==='conga'?'handslap':original==='tom'?'skinbass':['snare','clap','clapRoll'].includes(original)?'acousticsnare':['hat','hatO','hatRoll'].includes(original)?'shaker':original;
+  push(instrument,/hat|shaker/.test(instrument)?.011:/snare|clap/.test(instrument)?.046:.035,
+   ['handslap','conga'].includes(instrument)?48+(step%3)*3:['skinbass','tom'].includes(instrument)?40+step%3*2:/snare|clap/.test(instrument)?48+step%2*2:72+step%3*18,0,step%4?'ghost':'accent');
  }
  if(score.nativeDrums&&energy>.32&&!rest&&score.scene!==1)for(const [original,steps]of Object.entries(score.drums)){
-  const instrument=original==='conga'?'handslap':original==='tom'?'skinbass':original==='snare'?'acousticsnare':original;
+  const instrument=score.electronic?original:original==='conga'?'handslap':original==='tom'?'skinbass':original==='snare'?'acousticsnare':original;
   if(steps.includes(step)&&!out.some(e=>e.instrument===instrument))push(instrument,.022,instrument==='handslap'?50:instrument==='skinbass'?43:instrument==='acousticsnare'?48:72);
  }
  // Three hand strokes span two beats against the binary kick (3:2).

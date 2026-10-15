@@ -1,3 +1,22 @@
+# Handoff · Ambiente, fase 5
+
+Rama `feat/pulido-05-ambiente` desde F4 `845e8fc`. Jay crea PR/merge. Plan vigente: nueve fases.
+
+- `electronic-ensemble.js`: motor de orquestación y DSP de baterías. Diez funciones posibles con 1–10 partes por territorio; escalas de densidad independientes de los mapas. `electronicDrum` interpreta kick/caja/clap/hats con parámetros propios del lugar. Patrones nativos e instrumentos de cada estilo vuelven a tener prioridad, en vez de una sustitución acústica uniforme.
+- Producción marca `runtime.unifiedMusic=true` antes de audio: ignora la preferencia antigua vivo/clásico y oculta su botón. No borra `S.livingMusic` ni metadatos/direcciones anteriores. Laboratorio conserva la comparación histórica deliberada. Campo de escucha atenúa a 0,32 la base; las zonas experimentales conservan también batería y acompañamiento en producción. Solo de laboratorio conserva aislamiento.
+- `audio.js` hace seguir la progresión a bajo y melodías, con apoyos fuertes sobre el acorde. Los retornos y la ganancia 1,5× de F2 se mantienen. El margen tras sobremuestreo pasa de 0,95 a 0,92: reserva 0,28 dB adicional para picos de reconstrucción observados en mezclas electrónicas densas.
+- `lab-score.js` v5 asigna ensamble 1/2/3 por territorio y género, con otra semilla. Ambient/heart usan bandas de 1–3 partes. Desde seis partes entra comping de tres notas; desde ocho, una segunda voz diferente. Secuencia y color completan nueve/diez partes, registro 48–64, mismo reloj/armonía y silencios. Las bandas más ricas incorporan secuencia y voz de color, todas distintas del motivo. Su energía base no depende de caminar. Los ricos pueden tocar durante la introducción: se elimina el silencio melódico global de sección cero solo para esos ensambles. Refugios reales y escena de descanso siguen callando. La iniciativa en quietud ya no elimina esas voces.
+- `ambient-score.js` reemplaza la selección probabilística de objetos en cada pulso por un solista de ocho compases, tres entradas y un descanso por cada cuatro. `initiative.js` estabiliza sus respuestas en ventanas de dieciséis compases.
+- `connection-groves.js`: zonas 2×2 regiones, elegibilidad terrestre fuera de familias tranquilas, 1/7 del hash de zonas elegibles. Esto no representa una probabilidad horaria. Dieciséis nodos por chunk, roles alternados. `createEncounters` antiguo permanece intacto; la incorporación ocurre en la caché de encuentros.
+- `encounters.js` activa conexiones al tocar/pasar o con hasta tres nodos por pulso. Se usan redes de `encounter-depth.js`, memoria existente y compilador DSP sin ciclos de audio. Las conexiones restauradas no se alternan al entrar. Jardines cambian vocabulario armónico; relevos desplazan pulsos; cadenas prefieren continuidad lateral. Presencia automática comparte presupuesto de instalaciones.
+- `music-travel.js` ofrece acceso de producción a redes reales; conserva estilos y registro audible. La hoja pausa el paseo; Escucha un ensamble completo busca un plan real de diez partes.
+- `distant-colors.js`: tres gradientes por campo, máximo dos visibles, paralaje 0,14 y aparición gradual. Semilla visual independiente, caché de 64, movimiento reducido estable. Se conserva también una capa tenue fuera de la luz, después de la niebla y con recorte para no teñir los actores. No implica síntesis espacial.
+- Los catálogos siguen con 52 géneros/75 instrumentos/48 linajes: se desarrollan interpretaciones y poblaciones, no se inventan géneros para inflar cifras. El modelo espacial de F1 conserva sus generadores listados; no estima estas nuevas redes.
+
+Validación detallada en `scripts/pulido-05-validation.json`. Escucha física, CI y deploy se declaran aparte.
+
+## Antecedentes
+
 # Handoff · Interacciones, fase 4
 
 Rama `feat/pulido-04-interacciones` desde F3 `2a60dea`. Plan vigente de nueve fases; Jay crea PR y merge.

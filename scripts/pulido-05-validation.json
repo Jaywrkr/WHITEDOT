@@ -1,0 +1,73 @@
+{
+  "phase": 5,
+  "branch": "feat/pulido-05-ambiente",
+  "base": "845e8fc",
+  "testedAt": "2026-10-15T23:32:30.752820+00:00",
+  "audit": {
+    "command": "npm run audit:release",
+    "result": "passed",
+    "errors": 0,
+    "warnings": 0,
+    "sourceModules": 184,
+    "htmlIDs": 351,
+    "shellAssets": 204
+  },
+  "node": {
+    "command": "npm test",
+    "result": "passed",
+    "suites": 120
+  },
+  "browser": {
+    "result": "passed",
+    "programs": [
+      "lab_score_smoke.py",
+      "lab_memory_smoke.py",
+      "music_travel_smoke.py",
+      "ambient_world_smoke.py",
+      "lab_performance_smoke.py",
+      "modular_smoke.py",
+      "initiative_smoke.py",
+      "ui_silence_smoke.py",
+      "volume_control_smoke.py",
+      "offline_smoke.py",
+      "world_visibility_smoke.py",
+      "territory_presentation_smoke.py"
+    ],
+    "checks": [
+      "one production music engine despite preserved retired preferences",
+      "legacy address return and progress",
+      "direct travel to actual ten-part territory",
+      "electronic backing remains audible during Campo and experimental terrain",
+      "style hearing only from actual instrument emission",
+      "natural connected groves and persistent threads",
+      "gradual color outside light without changing actors",
+      "silent UI, volume, active-time paseo and offline"
+    ]
+  },
+  "audio": {
+    "result": "passed",
+    "programs": [
+      "ensemble_mix.py",
+      "lab_genres_mix.py",
+      "lab_evolution_mix.py",
+      "modular_mix.py"
+    ],
+    "renders": 87,
+    "maxPeak": 0.9338016510009766,
+    "genreCoverage": 52,
+    "completeBackingWithoutPlayerInput": true,
+    "soloBackingWithOneInstrument": true,
+    "reports": [
+      "pulido-05-ensemble-audio.json",
+      "pulido-05-genres-audio.json",
+      "pulido-05-evolution-audio.json",
+      "pulido-05-modular-audio.json"
+    ]
+  },
+  "external": {
+    "physicalListening": "pending",
+    "CI": "pending",
+    "deployment": "pending"
+  },
+  "scope": "Focused browser/audio checks above; full integrated suites remain phase 9. Acoustic metrics do not certify taste or professional mastering."
+}

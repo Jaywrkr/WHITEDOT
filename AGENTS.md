@@ -4,7 +4,7 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 
 ## Prioridad actual
 
-Jay autorizó [PLAN_PULIDO_CUBO_MUSICA.md](PLAN_PULIDO_CUBO_MUSICA.md): nueve fases, entregadas fase a fase. Fase 1 integrada en main `30b2df8` (PR #144). Fase 2 subida en `a3a5fa7`. Fase 3 subida en `2a60dea`. Actual: fase 4, `feat/pulido-04-interacciones`, desde F3. Leer el plan nuevo antes de cambiar código; las tablas de planes históricos no reabren trabajo cerrado.
+Jay autorizó [PLAN_PULIDO_CUBO_MUSICA.md](PLAN_PULIDO_CUBO_MUSICA.md): nueve fases, entregadas fase a fase. Fase 1 integrada en main `30b2df8` (PR #144). Fase 2 subida en `a3a5fa7`. Fase 3 subida en `2a60dea`. Fase 4 subida en `845e8fc`. Actual: fase 5, `feat/pulido-05-ambiente`, desde F4. Leer el plan nuevo antes de cambiar código; las tablas de planes históricos no reabren trabajo cerrado.
 
 El ciclo anterior [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md) queda integrado por Jay. [CIERRE_EXPERIENCIA.md](CIERRE_EXPERIENCIA.md) conserva su evidencia y condiciones externas. Codex solo commit/push; Jay PR/merge. Escucha física, CI y deploy se verifican separadamente.
 
