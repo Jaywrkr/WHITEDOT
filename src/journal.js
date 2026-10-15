@@ -1,3 +1,4 @@
+import {HYBRID_STYLES} from './musical-hybrids.js';
 import {RHYTHM_ELEMENTS} from './percussion-model.js';
 import {SYNTH_PROGRAMS} from './synth-colors.js';
 import {ECOLOGIES,ECOLOGY_CONTENT} from './ecology-model.js';
@@ -20,7 +21,7 @@ export function ensureJournal(state) {
   state.journal.events ||= {};
   state.journal.relics ||= {};
   state.journal.music ||= {};
-  for(const kind of ['genres','instruments','scales','programs'])state.journal.music[kind] ||= {};
+  for(const kind of ['genres','instruments','scales','programs','hybrids'])state.journal.music[kind] ||= {};
   // Old stars have no location. Restore only entries that actually record one.
   for(const star of state.stars||[])if(star.region)state.journal.relics[star.region]=1;
   for(const key of Object.keys(state.events||{})) {
@@ -31,12 +32,12 @@ export function ensureJournal(state) {
 }
 export function initialize(runtime) {
   ensureJournal(runtime.S);
-  const data=()=>runtime.S.journal?.music?.programs?runtime.S.journal:ensureJournal(runtime.S);
+  const data=()=>runtime.S.journal?.music?.hybrids?runtime.S.journal:ensureJournal(runtime.S);
   let tab='places';
   function recordInstrument(id) {
     if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running')return;
     const music=data().music;
-    music.instruments[id]=1;
+    music.instruments[id]=1;const hybrid=runtime.MU.radio?.hybrid;if(hybrid&&HYBRID_STYLES.some(h=>h.id===hybrid.id))music.hybrids[hybrid.id]=1;
     const program=runtime.activeInstrumentPatch?.program;if(program)music.programs[program.id]=1;
     const region=runtime.MU.dnaA;
     runtime.sessionInstrument?.(id,region);
@@ -75,7 +76,7 @@ export function initialize(runtime) {
   }
   function music() {
     const heard=data().music;
-    return '<h3>Colores de síntesis</h3>'+SYNTH_PROGRAMS.filter(p=>heard.programs?.[p.id]).map(p=>card(p.name,`Filtro ${p.type==='lowpass'?'grave':p.type==='bandpass'?'de banda':'de muesca'} · ${p.slope?p.slope+' dB':''}`)).join('')+
+    return '<h3>Cruces musicales</h3>'+HYBRID_STYLES.filter(h=>heard.hybrids?.[h.id]).map(h=>card(h.name,'Una influencia transforma frases, armonía, registro e instrumentos.')).join('')+'<h3>Colores de síntesis</h3>'+SYNTH_PROGRAMS.filter(p=>heard.programs?.[p.id]).map(p=>card(p.name,`Filtro ${p.type==='lowpass'?'grave':p.type==='bandpass'?'de banda':'de muesca'} · ${p.slope?p.slope+' dB':''}`)).join('')+
       '<h3>Géneros</h3>'+Object.keys(heard.genres).map(id=>card(runtime.GEN[id]?.name||id,GENRE_GUIDE[id]||RHYTHM_GENRES[id]?.guide||'Identidad musical de una región escuchada.')).join('')+
       '<h3>Escalas</h3>'+Object.keys(heard.scales).map(id=>card(MODES[id]||'Escala regional','Conjunto de intervalos que organiza las notas y acordes del lugar.')).join('')+
       '<h3>Instrumentos</h3>'+Object.keys(heard.instruments).map(id=>card(...(INSTRUMENTS[id]||[id,'Instrumento sintetizado del Mundo.']))).join('')+

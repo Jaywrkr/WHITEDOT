@@ -1,3 +1,16 @@
+# Cierre F5 · Cruces musicales y espacio
+
+Rama `feat/cierre-f5-composicion`, hija de la fase anterior. Jay crea PR/merge.
+
+- musical-hybrids.js: 16 gramáticas compatibles por carácter; blues solo sobre escala menor, jazz/soul con armonía espaciada, dub, funk, vientos y propuestas graves. No son grabaciones ni mezclas arbitrarias de etiquetas.
+- El arreglo comparte batería, tempo, escala y bajo nativos. Motivos diatónicos, respuesta/desarrollo/descanso, progresión y swing acotados; máximo cuatro ataques del motivo, dos en cinta y uno en Grave y espacio. Blues usa doce posiciones armónicas a dos compases por posición.
+- Paletas de instrumentos avanzados diferenciadas por carácter. Registros y brillo contenidos, descansos respetados; zonas puras conservadas. El contrato armónico de las salas compartidas sigue sin híbridos.
+- Laboratorio: 16 destinos Cruces en regiones reales, 162 entradas y 20 grupos. Saltar valora contraste de cruce además del paisaje; historial acotado y compatible.
+- Bitácora registra cruces al sonar realmente. La llegada los identifica sin añadir controles. Guardados y ADN histórico de colocación conservados.
+- Pruebas de vidrios y voces comparan la ruta completa de registro/caracter/cruce; conservan comprobaciones de instrumentos, roles y notas emitidas. Los 16 cruces evolucionan en 128 compases sin alterar la receta.
+
+Auditoría limpia; 85 suites Node y 6 recorridos afectados aprobados. 16 renders de regiones reales, densos/alternando suave y 44,1/48 kHz; valores exactos en cierre-f5-hybrid-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f5-validation.json).
+
 # Cierre F4 · Síntesis y conexiones de señal
 
 Rama `feat/cierre-f4-sintesis`, hija de la fase anterior. Jay crea PR/merge.

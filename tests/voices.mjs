@@ -1,3 +1,5 @@
+import {hybridIdentity,hybridRegister} from '../src/musical-hybrids.js';
+import {voiceRegister} from '../src/musical-character.js';
 import {musicalCharacter} from '../src/musical-character.js';
 import assert from 'node:assert/strict';
 import { initialize as data } from '../src/data.js';
@@ -31,7 +33,8 @@ voices(runtime);
 for(let x=0;x<30;x++) {
  const region=runtime.regionOfPos(x*3600+900,900);
  const profile=createRegionalVoices(region,runtime.BIOMES,runtime.GEN,runtime.seedOf,runtime.rng);
- for(const [kind,voice]of Object.entries(profile)) {
+ for(const [kind,rawVoice]of Object.entries(profile)) {
+  const voice=hybridRegister(voiceRegister(rawVoice,region.genre),hybridIdentity(region,runtime.seedOf,runtime.rng));
   calls.length=0;runtime.playVoice(kind,3,1,region,true);
   assert(calls.length>0);
   for(const call of calls)if(call.n!==undefined) {

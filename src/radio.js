@@ -5,6 +5,7 @@ import {createGrammar,shapeMotif} from './grammar.js';
 import {PALETTE_STEPS} from './palettes.js';
 import {RHYTHM_GENRES} from './rhythms.js';
 import {musicIdentity,identityGrammar,identityExpression,identityBass} from './musical-recipes.js';
+import {hybridIdentity,hybridArrangement} from './musical-hybrids.js';
 // Composición por frases: el reloj musical avanza sin necesitar movimiento.
 // No modifica el ADN de la región ni guarda estado en la partida.
 export function createRadio(seedOf, rng, genres) {
@@ -32,7 +33,8 @@ export function createRadio(seedOf, rng, genres) {
       if(environment.room){section=Math.floor(bar/32)%levels.length;nextSection=(Math.floor(bar/32)+1)*32;}
       else if (bar >= nextSection) {
         // Cada sección lleva a otra; no se vuelve a una grabación en bucle.
-        section = phrase===0 ? Math.floor(random()*levels.length) : (section+1)%levels.length;
+        const opening=hybridIdentity(region,seedOf,rng);
+        section = phrase===0 ? opening&&!['ambient','heart'].includes(region.genre)?opening.id==='blues-machine'?2:1:Math.floor(random()*levels.length) : (section+1)%levels.length;
         nextSection = bar + 12 + Math.floor(random() * 4) * 4;
       }
       if(environment.room)section=Math.floor(bar/32)%levels.length;
@@ -91,7 +93,8 @@ export function createRadio(seedOf, rng, genres) {
     const sectionEnergy=levels[section]*Math.min(1,(limit-.06)/.62);
     const target = Math.max(.14, Math.min(limit, sectionEnergy + life + event + density + Math.min(.06,Math.max(0,environment.initiative||0)*.06)));
     energy += (target - energy) * .25;
-    return { ...arrangement, harmonyBar:bar-startBar, energy, genre: region.genre };
+    const frame={ ...arrangement, harmonyBar:bar-startBar, energy, genre: region.genre };
+    return hybridArrangement(frame,region,bar-startBar,environment.room?null:hybridIdentity(region,seedOf,rng),genres);
   }
   return { advance };
 }

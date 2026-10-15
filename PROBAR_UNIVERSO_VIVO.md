@@ -1,5 +1,13 @@
 # Probar el universo vivo
 
+## Novedad F5 · Cruces musicales y espacio
+
+1. Abre el preview de esta rama en el teléfono; entra al laboratorio desde el menú.
+2. Busca Cruces: compara Blues modular, Jazz entre mareas y Grave y espacio.
+3. Quédate dos minutos: comprueba desarrollo, silencios y diferencias musicales.
+4. Toca habitantes y vuelve con Saltar/Regresar. La interfaz permanece silenciosa.
+5. Revisa Cruces musicales en Bitácora. Indica qué registros o arreglos fatigan.
+
 ## Novedad F4 · Síntesis y conexiones de señal
 
 1. En Laboratorio → Síntesis, compara piano, flauta, cuerdas y nube de granos.

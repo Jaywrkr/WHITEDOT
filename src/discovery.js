@@ -1,3 +1,4 @@
+import {hybridIdentity} from './musical-hybrids.js';
 import { gravityOf } from './gravity.js';
 
 // Catálogo, retos y recompensas de exploración.
@@ -6,7 +7,7 @@ export function initialize(runtime) {
     runtime.toast("<em>Forma nueva</em> · "+sp.name+" · "+runtime.S.catN);runtime.unlock("forma1");if(runtime.S.catN>=25)runtime.unlock("cat25");if(runtime.S.catN>=100)runtime.unlock("cat100");if(runtime.S.catN>=500)runtime.unlock("cat500");runtime.save();}
   function showRegion(d,first){
     const el=document.getElementById("zone");
-    const se=!d.sea&&d.continent?runtime.seasonOf?.(d.continent.id):null;document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+" · "+d.bpm+" BPM"+(se?" · "+se.name:"");
+    const hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng);const se=!d.sea&&d.continent?runtime.seasonOf?.(d.continent.id):null;document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+(hybrid?" × "+hybrid.name:"")+" · "+d.bpm+" BPM"+(se?" · "+se.name:"");
     document.getElementById("zName").textContent=d.worldFamily?.name||d.ecology?.name||d.name;
     document.getElementById("zDo").textContent=(d.sea?"Mar de silencio":d.continent?d.continent.name:"")+(d.sea||d.continent?" · ":"")+gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
     el.classList.add("on");clearTimeout(zoneT);zoneT=setTimeout(()=>el.classList.remove("on"),first?3200:2200);
