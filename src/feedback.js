@@ -32,6 +32,7 @@ export function initialize(runtime) {
   function drawSoundCues(ox,oy,radius) {
     if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running'){buffer.clear();return;}
     const ctx=runtime.cx;let named=false;
+    runtime.drawLabLearning?.(ox,oy);
     const held=runtime.heldContact;
     if(held?.source){const source=held.source,x=source.x+ox,y=source.y+oy,r=Math.min(30,(source.size||18)+8);
       ctx.save();ctx.strokeStyle=musicInk(source,held.role);ctx.globalAlpha=.7;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(x,y,r,-Math.PI/2,Math.PI*1.1);ctx.stroke();ctx.restore();

@@ -131,7 +131,7 @@ export function initialize(runtime) {
   }
   function setBiome(z){MU.biomeT=z;MU.timbre=runtime.S.mode==="camino"?2:MU.dnaT?runtime.GEN[MU.dnaT.genre].pt:runtime.BIOMES[z].tim;}
   function sched(){
-    runtime.techniqueTick?.();
+    runtime.techniqueTick?.();runtime.labLearningTick?.();
     runtime.effectsTick?.();
     runtime.spatialTick?.();
     runtime.patchTick?.();
@@ -213,7 +213,7 @@ export function initialize(runtime) {
       });
       if(s===0&&runtime.composeLivingArrangement)MU.radio=runtime.composeLivingArrangement(MU.dnaA,MU.radio);
       if(s===0){const degree=harmonicDegree(MU.radio.grammar,MU.radio.harmonyBar);if(MU.harmonyRegion!==MU.dnaA.key||MU.deg!==degree){changeChord(t);MU.harmonyRegion=MU.dnaA.key;}else if(MU.pending){MU.pending=false;MU.dist=0;}}
-      if(s===0){runtime.initiativeBar?.(t,MU.step>>4);runtime.clueBar?.(t,MU.step>>4);runtime.encounterBar?.(t,MU.step>>4);}
+      if(s===0){runtime.labLearningBar?.(t,MU.step>>4);runtime.initiativeBar?.(t,MU.step>>4);runtime.clueBar?.(t,MU.step>>4);runtime.encounterBar?.(t,MU.step>>4);}
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.horizonBar?.(t,MU.step>>4);
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.riverBar?.(t);
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.stormBar?.(t);   // hitos lejanos: se oyen antes de verse

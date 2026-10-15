@@ -1,0 +1,66 @@
+{
+  "validatedAt": "2026-10-15T15:47:26.021063+00:00",
+  "phase": "lab-l5",
+  "branch": "feat/lab-l5-aprendizaje",
+  "sourceFingerprint": "cc8a4e939a971218dbe2550035b8f1f71368b46a3ab6ee6623303a0f3fe0b4ac",
+  "nodeSuites": 102,
+  "browserFlows": 2,
+  "audioPrograms": 1,
+  "audioEvidence": [
+    "scripts/lab-l5-learning-audio-validation.json"
+  ],
+  "checks": [
+    {
+      "check": "audit",
+      "command": [
+        "npm",
+        "run",
+        "audit:release"
+      ],
+      "exitCode": 0,
+      "seconds": 0.21,
+      "result": "\n> whitedot@2.1.0-alpha.5 audit:release\n> node scripts/release-audit.mjs\n\n{\n  \"version\": \"2.1.0-alpha.5\",\n  \"sourceModules\": 166,\n  \"htmlIDs\": 325,\n  \"staticImports\": 424,\n  \"shellAssets\": 186,\n  \"errors\": [],\n  \"warnings\": [],\n  \"notes\": [\n    \"Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.\",\n    \"Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems.\"\n  ]\n}\n"
+    },
+    {
+      "check": "node",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 20.27,
+      "result": "\nPASS V1 PWA update controls: save guard, active-recording deferral and explicit reload\nPASS: 728 flocks in 2428 land regions (golondrina 247, grulla 260, luciernaga 184, lira 37), 647 gardens; trust gathers, running scatters, calls answered in rhythm, fireflies sync into groove, flora grows and withers\nPASS: stable regional voices, five tree roles within one biome, varied instruments, bounded emitted registers and groove responses\nPASS fifty reachable distinct silhouettes, territorial identity, bounded divergent movement, diatonic replies and preserved collection\nPASS exact 50-style/rarity counts, earned gates, six-month myths, legacy dates/defaults, safe material selection and five actual pulse instruments\nPASS: 97 raro / 16 legendario / 2 m\u00edtico rarities with visible rules and unique samples; rivers 1.0 % of land, followable 6000 px downstream\nPASS eight real families, 52 retained genres, distinct spatial fields/contours, matched materials/music/populations, protected bass, raw DNA and rare specimens\nPASS edit/phrase roundtrips, persistent removals, non-evicting limits, future-data preservation, bounded bonds, familiar approach and musical affinity\nPASS continuous fog/day/LOD, zero-opacity cutoff, negative-coordinate preload margin, three decor-only parallax planes and independent visual hash\nPASS actual lineage rendering fades bright sources and blends the former 500px cutoff\nPASS: 35 continents (largest 310, smallest 1 regions), 32 % seas, 53 % family identity, density contrast, 447 landmarks of 5 types\nPASS: 102 Node suites with assertions (Web Audio helper excluded)\n"
+    },
+    {
+      "check": "lab_learning_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/lab_learning_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 8.76,
+      "result": "PASS optional guide arming is silent, native source calls, two player taps and durable learning\n"
+    },
+    {
+      "check": "lab_landscape_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/lab_landscape_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 11.37,
+      "result": "PASS native territory inhabitants, spatial held voice beyond three seconds and cube-leave release\n"
+    },
+    {
+      "check": "lab_learning_mix.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/lab_learning_mix.py"
+      ],
+      "exitCode": 0,
+      "seconds": 6.79,
+      "result": "Rendered {'genre': 'minimaltechno', 'scene': 'lesson:breath-tree', 'identity': 'lab:silk', 'dense': True, 'soft': False, 'peak': 0.90090411901474}\nRendered {'genre': 'deep', 'scene': 'lesson:reeds', 'identity': 'lab:warm', 'dense': True, 'soft': True, 'peak': 0.351642906665802}\nPASS 2 living species/structures with actual dense scheduler, audible native notes, 44.1/48 kHz and peak 0.900904\n"
+    }
+  ],
+  "scope": "Affected browser flows. Full browser/audio CI and physical-phone acceptance remain required before release."
+}

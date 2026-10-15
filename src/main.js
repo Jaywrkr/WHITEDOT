@@ -1,3 +1,4 @@
+import {initialize as labLearning} from './lab-learning.js';
 import {initialize as walkers} from './walker-forms.js';
 import {initialize as worldMemory} from './world-memory.js';
 import {initialize as foreground} from './foreground.js';
@@ -166,7 +167,7 @@ lab(runtime);
 achievementsV2(runtime);worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
 practiceTravel(runtime);
 houseAudio(runtime);house(runtime);
-onboarding(runtime);
+onboarding(runtime);labLearning(runtime);
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
 // Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.

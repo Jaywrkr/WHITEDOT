@@ -1,3 +1,13 @@
+# Laboratorio Vivo L5 · 2.1.0-alpha.5
+
+Rama `feat/lab-l5-aprendizaje`. Jay mantiene PR/merge.
+
+- Tu recorrido ofrece Escuchar y responder: eliges una voz tocándola, escuchas dos llamadas y respondes con dos pulsos espaciados. Es opcional, sin examen, castigo ni control permanente.
+- Una indicación local enseña cada acción. La práctica se pausa con las hojas, ocultación o silencio y permite volver a escuchar. El progreso aditivo conserva versiones futuras y aparece en Música de la Bitácora.
+- Los sonidos secundarios de una onda no se confunden con gestos nuevos. Auditoría, 102 suites Node, dos recorridos reales y dos mezclas de lección aprobados.
+
+Auditoría aprobada; 102 suites Node, 2 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l5-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+
 # Laboratorio Vivo L4 · 2.1.0-alpha.4
 
 Rama `feat/lab-l4-paisaje`. Jay mantiene PR/merge.
