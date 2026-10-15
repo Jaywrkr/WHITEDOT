@@ -22,3 +22,9 @@ r.S.mode='world';for(let i=0;i<80;i++)p.play('handslap',55,ac.currentTime,.08);a
 assert.equal(p.play('unknown',60,ac.currentTime,.1),false);
 assert.equal(p.hold('lowbow',NaN,ac.currentTime,.04),null);
 console.log('PASS eleven original articulated voices, distinct techniques, preserved pitch, sixteen-voice/four-hold budgets and release on pause');
+
+ac.currentTime+=4;r.currentVoiceOrigin='ambient';let events=0;r.techniqueNoteCue=()=>events++;for(let i=0;i<16;i++)p.play('handslap',48,ac.currentTime,.04);const before=events;
+r.currentVoiceOrigin='player';p.play('feltkeys',55,ac.currentTime+.1,.04);assert.equal(events,before+1,'a player note must displace ambient pressure');assert.equal(p.active,16);
+ac.currentTime+=4;r.currentVoiceOrigin='ambient';let builds=0;r.techniqueBufferBuilt=()=>builds++;p.play('silkpluck',58,ac.currentTime,.04);ac.currentTime+=4;p.play('silkpluck',58,ac.currentTime,.04);assert.equal(builds,1,'same string pitch should reuse its excitation');
+for(let n=48;n<61;n++){ac.currentTime+=4;p.play('silkpluck',n,ac.currentTime,.04);assert(p.stringCacheSize<=8);}
+console.log('PASS foreground voice reservation and eight-buffer per-context physical-string cache');

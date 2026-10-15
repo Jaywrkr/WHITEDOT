@@ -1,3 +1,25 @@
+# Handoff vigente · Laboratorio Vivo L7
+
+Rama `feat/lab-l7-curaduria`, versión 2.1.0-alpha.7. L1–L7 entregadas. El ciclo de código está completo; no reiniciar planes anteriores. Jay mantiene PR/merge. [Plan](PLAN_LABORATORIO_VIVO.md).
+
+- La curaduría integra seis bandas con los 52 estilos y los dieciséis cruces previos. La muestra por género verificó 51 gramáticas de batería distintas; las membranas y cajas usan cuerpos graves/medios.
+- Las voces articuladas reservan espacio para los gestos y la práctica. Las cuerdas nuevas reutilizan excitaciones con una caché de ocho buffers por contexto; las voces sostenidas tienen liberación suave y límites explícitos.
+- El cierre conserva mundos, progreso, códigos anteriores y modo clásico. CIERRE_LABORATORIO_VIVO.md reúne hallazgos, soluciones, orden de ramas y aceptación física/artística pendiente.
+
+Validación completa aprobada: auditoría, 104 suites Node, 82 recorridos incluido offline y 581 renders de 28 programas de audio. Pico máximo medido: 0.945447; señal finita y límites aprobados por cada programa. [Evidencia](scripts/lab-l7-validation.json). CI de los PR y aceptación física/artística conservan su alcance propio.
+
+## Mapa técnico del ciclo
+
+- `src/lab-score.js`: bandas, patrones nativos, frases, evolución y voces territoriales. `src/radio.js` aplica el arreglo; `src/audio.js` programa los offsets reales.
+- `src/instrument-techniques.js`: once voces originales, articulaciones, prioridades, sostén y caché acotada. `src/instruments.js` conecta el contacto del cubo; `spatial.js` y `patches.js` mantienen las rutas largas.
+- `src/lab-learning-model.js` y `src/lab-learning.js`: progreso aditivo y práctica optativa. `feedback.js`, `voice-guide.js`, `journal.js` e HTML conservan UI contextual y silenciosa.
+- `src/world-memory.js`, `memory-model.js`, `favorites.js`, `world-identity.js`, `share-tools.js`, `seeds.js`, `navigation.js`: huella, contraste y regreso musical versionado, separado del generador.
+- `scripts/lab-lN-validation.json`: evidencia por fase. L7 ejecuta el conjunto completo; los reportes anteriores conservan su fecha y alcance. `CIERRE_LABORATORIO_VIVO.md` explica hallazgos, soluciones y prueba física.
+
+La versión musical 1 identifica el intérprete final de este ciclo (receta interna 4). Mantenerlo si una versión futura cambia las recetas. Un Favorito guarda carácter y dirección; no congela una canción ni la simulación. La prueba en Chromium no sustituye escuchar y jugar en teléfonos físicos.
+
+## Entregas anteriores
+
 # Handoff vigente · Laboratorio Vivo L6
 
 Rama `feat/lab-l6-exploracion`, versión 2.1.0-alpha.6. L1–L7 autorizadas consecutivamente; continuar desde esta rama sin esperar confirmación. Jay mantiene PR/merge. [Plan](PLAN_LABORATORIO_VIVO.md).

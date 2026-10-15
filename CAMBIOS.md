@@ -1,3 +1,13 @@
+# Laboratorio Vivo L7 · 2.1.0-alpha.7
+
+Rama `feat/lab-l7-curaduria`. Jay mantiene PR/merge.
+
+- La curaduría integra seis bandas con los 52 estilos y los dieciséis cruces previos. La muestra por género verificó 51 gramáticas de batería distintas; las membranas y cajas usan cuerpos graves/medios.
+- Las voces articuladas reservan espacio para los gestos y la práctica. Las cuerdas nuevas reutilizan excitaciones con una caché de ocho buffers por contexto; las voces sostenidas tienen liberación suave y límites explícitos.
+- El cierre conserva mundos, progreso, códigos anteriores y modo clásico. CIERRE_LABORATORIO_VIVO.md reúne hallazgos, soluciones, orden de ramas y aceptación física/artística pendiente.
+
+Validación completa aprobada: auditoría, 104 suites Node, 82 recorridos incluido offline y 581 renders de 28 programas de audio. Pico máximo medido: 0.945447; señal finita y límites aprobados por cada programa. [Evidencia](scripts/lab-l7-validation.json). CI de los PR y aceptación física/artística conservan su alcance propio.
+
 # Laboratorio Vivo L6 · 2.1.0-alpha.6
 
 Rama `feat/lab-l6-exploracion`. Jay mantiene PR/merge.

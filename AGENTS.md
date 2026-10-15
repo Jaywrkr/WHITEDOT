@@ -4,11 +4,11 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 
 ## Leer primero
 
-**Estado de entrega:** `feat/lab-l6-exploracion`, 2.1.0-alpha.6, L6 de [PLAN_LABORATORIO_VIVO.md](PLAN_LABORATORIO_VIVO.md). Ese es el ciclo vigente: L1–L7 autorizadas consecutivamente, una rama hija por fase, sin confirmaciones intermedias. No reiniciar fases históricas. Jay mantiene PR/merge. La auditoría 2.0 anterior conserva su aceptación externa pendiente.
+**Estado de entrega:** `feat/lab-l7-curaduria`, 2.1.0-alpha.7. L1–L7 de [PLAN_LABORATORIO_VIVO.md](PLAN_LABORATORIO_VIVO.md) están implementadas, probadas y subidas. El ciclo de código autorizado está completo; no reiniciar fases históricas. Jay mantiene PR/merge. [Cierre y condiciones externas](CIERRE_LABORATORIO_VIVO.md).
 
-**Prioridad vigente:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida el cierre por decisión de Jay. No confundir su F1 con la fase visual 1 histórica ni con M1. Conservar estados y trabajos locales de PLAN_2.0; Jay autorizó F2–F10 consecutivamente; una rama anidada por fase, con pruebas y push.
+**Prioridad vigente:** el ciclo musical L1–L7 está entregado. Revisar [CIERRE_LABORATORIO_VIVO.md](CIERRE_LABORATORIO_VIVO.md) y la escucha física pendiente; empezar alcance nuevo solo cuando Jay lo solicite. PLAN_CIERRE_2.0 y PLAN_PULIDO_FINAL conservan sus entregas anteriores.
 
-**Continuación autorizada durante la auditoría:** [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) organiza los ocho bloques de auditoría y soluciones. Su primer bloque es F10, no una auditoría duplicada. Seguir después con las ramas hijas de pulido, sin volver a pedir autorización. [AUDITORIA_CIERRE_2.0.md](AUDITORIA_CIERRE_2.0.md) conserva hallazgos, soluciones y límites. Jay mantiene PR/merge; nunca prometer perfección ni certificar aceptación física mediante emulación.
+**Antecedentes de auditoría:** [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) y [AUDITORIA_CIERRE_2.0.md](AUDITORIA_CIERRE_2.0.md) conservan los ocho bloques anteriores y sus hallazgos. Son entregas históricas, no fases nuevas pendientes. La aceptación física/artística permanece separada de la validación automática.
 
 1. [PLAN_2.0.md](PLAN_2.0.md): **trabajo actual**. Fases, orden, ramas, criterios de "listo" y decisiones pendientes.
 2. [README.md](README.md): cómo correr, verificar y publicar.
@@ -19,7 +19,7 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 
 ## Flujo de ramas (obligatorio)
 
-- Una rama por fase del plan vigente; para el cierre, nombres de `PLAN_CIERRE_2.0.md`, desde `main` actualizado o desde la fase de la que dependa.
+- Una rama por fase del plan vigente. Para Laboratorio Vivo, nombres de `PLAN_LABORATORIO_VIVO.md`, desde `main` actualizado o desde la fase de la que dependa.
 - Commit y push de la rama. **Jay crea el PR y hace el merge.** No hacer push a `main` ni merges salvo que Jay lo pida explícitamente en ese momento.
 - Continuar con todas las fases ya autorizadas sin esperar confirmación entre ramas. Entregar una rama no detiene la siguiente; un bloqueo externo solo detiene las acciones que dependen de él.
 - Mensajes de commit en inglés, en imperativo, explicando el porqué. Sin identificadores de modelos.

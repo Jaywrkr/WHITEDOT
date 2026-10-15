@@ -20,7 +20,7 @@ try:
    page.evaluate('(id)=>{const r=__testRuntime;r.labGo("synth:"+id);const o=r.livingNear(500)[0];r.playVoice("living:"+o.kind,0,r.ac.currentTime+.02,r.regionOfPos(o.x,o.y),false,1,o,"player");}',id)
    page.wait_for_function('(id)=>__techNotes.some(n=>n.instrument===id)',arg=id)
   page.evaluate('__testRuntime.labGo("synth:bamboowind")')
-  page.mouse.move(195,422);page.mouse.down();page.mouse.move(195,534,steps=8);page.wait_for_function('__techNotes.some(n=>n.instrument==="bamboowind"&&n.held)');page.mouse.up()
+  page.mouse.move(195,422);page.mouse.down();page.mouse.move(195,534,steps=8);page.wait_for_function('(()=>{const r=__testRuntime,o=r.livingNear(90)[0];return o&&Math.hypot(o.x-r.S.wx,o.y-r.S.wy)<28;})()');page.mouse.up();page.wait_for_function('__techNotes.some(n=>n.instrument==="bamboowind"&&n.held)')
   assert page.evaluate('__testRuntime.activeTechniqueCount')<=16
   page.locator('#bMenu').click();page.wait_for_timeout(400)
   page.evaluate('window.__heldBefore=__techNotes.filter(n=>n.held).length')

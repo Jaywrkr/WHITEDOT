@@ -107,7 +107,7 @@ export function initialize(runtime) {
     // Only automatic upper voices rest; a player's gesture still receives its own response.
     if(origin==='ambient'&&(voice.role==='lead'||voice.role==='agudo')&&runtime.MU.radio?.genre===region.genre&&runtime.MU.radio?.melodyRest)return;
     function hit(t, degree, strength) {
-      if(origin==='player'||origin==='field')runtime.focusGesture?.(t,source,voice.role);
+      if(['player','field','lesson'].includes(origin))runtime.focusGesture?.(t,source,voice.role);
       runtime.soundCue?.(source,voice.role,t);
       const n = note(degree);let v = runtime.vel(strength * volume*(voice.volume??1))*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
       const articulation={technique:source?.expression==='staccato'?'muted':source?.expression==='glide'?'slide':voice.technique||'normal'};
@@ -133,7 +133,7 @@ export function initialize(runtime) {
           [0,2,4].forEach(d=>runtime.hookInst(voice.instrument,note(degree+d)-(voice.instrument==='glass'?12:0),t,v*.4,region,articulation));
         } else runtime.hookInst(voice.instrument,n-(voice.instrument==='glass'?12:0),t,v,region,articulation);
       };
-      const patchEmit=()=>{if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(kind,region,voice,source,t,emit);else emit();};
+      const patchEmit=()=>{const produce=()=>withVoiceOrigin(origin,emit);if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(kind,region,voice,source,t,produce);else produce();};
       const spatialEmit=(gain=1)=>{v*=gain;if(runtime.withVoiceEffect)runtime.withVoiceEffect(kind,region,voice,t,patchEmit);else patchEmit();};
       if(runtime.withSpatialVoice)runtime.withSpatialVoice(source,t,spatialEmit);else spatialEmit();
     }
@@ -143,6 +143,7 @@ export function initialize(runtime) {
     if (full) hit(time+runtime.SIX*voice.response,index%7,strength*.45);
   }
   Object.defineProperties(runtime, {
+    currentVoiceOrigin:{get:()=>voiceOrigin},
     withVoiceOrigin: {get:()=>withVoiceOrigin},
     getVoice: {get:()=>getVoice},
     playVoice: {get:()=>playVoice},

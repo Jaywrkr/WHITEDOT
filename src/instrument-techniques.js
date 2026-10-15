@@ -24,27 +24,35 @@ export function techniqueShape(spec,expression={}){
   level:ghost?.4:mode==='accent'?1.12:1,bend:mode==='slide'?1.5:0,noise:spec.noise*(mode==='breathy'?1.8:muted?.5:1)};
 }
 export function createTechniquePlayer(runtime){
- const buffers=new WeakMap();let active=[];
+ const buffers=new WeakMap(),strings=new WeakMap();let active=[];
  function prune(){const now=runtime.ac?.currentTime||0;active=active.filter(h=>h.end>now);}
  function noiseBuffer(ac){if(!buffers.has(ac)){const b=ac.createBuffer(1,Math.ceil(ac.sampleRate*.2),ac.sampleRate),data=b.getChannelData(0);let s=721;
   for(let i=0;i<data.length;i++){s=(Math.imul(s,1664525)+1013904223)>>>0;data[i]=s/2147483648-1;}buffers.set(ac,b);}return buffers.get(ac);}
+ function stringBuffer(ac,hz){
+  let cache=strings.get(ac);if(!cache){cache=new Map();strings.set(ac,cache);}const key=String(hz);
+  if(cache.has(key)){const b=cache.get(key);cache.delete(key);cache.set(key,b);return b;}
+  const b=ac.createBuffer(1,Math.ceil(ac.sampleRate*2),ac.sampleRate);b.copyToChannel(physicalString(ac.sampleRate,hz,2,Math.round(hz*37)),0);
+  cache.set(key,b);if(cache.size>8)cache.delete(cache.keys().next().value);runtime.techniqueBufferBuilt?.({size:cache.size});return b;
+ }
  function start(id,note,time,volume,expression={},held=false){
   const spec=TECHNIQUE_INSTRUMENTS[id],ac=runtime.ac;
   if(!spec||!ac||!Number.isFinite(note)||!Number.isFinite(time)||!Number.isFinite(volume)||volume<=0||held&&!spec.sustain)return null;
-  prune();if(active.length>=16||held&&active.filter(h=>h.held).length>=4)return null;
+  prune();const priority=held||['player','field'].includes(runtime.currentVoiceOrigin)?2:runtime.currentVoiceOrigin==='lesson'?1:0;
+  if(held&&active.filter(h=>h.held&&!h.released).length>=4)return null;
+  if(active.length>=16){const victim=active.find(h=>!h.held&&h.priority<priority);if(!victim)return null;victim.release(Math.max(ac.currentTime,time),.025);active=active.filter(h=>h!==victim);}
   const shape=techniqueShape(spec,expression),at=Math.max(ac.currentTime||0,time),hz=runtime.hz(Math.max(30,Math.min(84,note))),
    level=Math.min(.065,volume)*shape.level*(runtime.activeInstrumentPatch?.level||1),duration=held?24:Math.min(2.65,shape.attack+shape.decay+.08),
    nodes=[],sources=[],oscillators=[],make=method=>{const n=ac[method]();nodes.push(n);return n;},filter=make('createBiquadFilter'),gain=make('createGain');
   filter.type='lowpass';filter.frequency.value=shape.cut;filter.Q.value=.65;filter.connect(gain).connect(runtime.bus);
   gain.gain.setValueAtTime(0,at);gain.gain.linearRampToValueAtTime(level,at+shape.attack);
   if(!held)gain.gain.exponentialRampToValueAtTime(.00001,at+duration);
-  const voice={id,held,end:at+duration,level,released:false,sources,nodes};
+  const voice={id,held,end:at+duration,level,released:false,sources,nodes,priority};
   const oscillator=(ratio,type,amount)=>{const o=make('createOscillator'),g=make('createGain');o.type=type;o.frequency.setValueAtTime(hz*ratio*2**(shape.bend/12),at);
    if(shape.bend)o.frequency.exponentialRampToValueAtTime(hz*ratio,at+.12);
    if(spec.kind==='membrane'){o.frequency.setValueAtTime(hz*ratio*1.6,at);o.frequency.exponentialRampToValueAtTime(hz*ratio,at+.045);}
    g.gain.setValueAtTime(amount,at);if(!held)g.gain.exponentialRampToValueAtTime(.0001,at+duration*(spec.kind==='struck'?.8:1));
    o.connect(g).connect(filter);o.start(at);o.stop(voice.end+.02);sources.push(o);oscillators.push({o,ratio});};
-  if(spec.kind==='string'&&!held){const source=make('createBufferSource'),b=ac.createBuffer(1,Math.ceil(ac.sampleRate*2),ac.sampleRate);b.copyToChannel(physicalString(ac.sampleRate,hz,2,Math.round(hz*37)),0);source.buffer=b;
+  if(spec.kind==='string'&&!held){const source=make('createBufferSource');source.buffer=stringBuffer(ac,hz);
    if(shape.bend){source.playbackRate.setValueAtTime(2**(shape.bend/12),at);source.playbackRate.exponentialRampToValueAtTime(1,at+.12);}source.connect(filter);source.start(at);source.stop(voice.end+.02);sources.push(source);
    // The skin bridge adds a short, inharmonic rattle distinct from the silk body.
    if(id==='skinpluck')oscillator(2.02,'triangle',.1);
@@ -55,8 +63,8 @@ export function createTechniquePlayer(runtime){
    for(const {o}of oscillators)lfo.connect(depth).connect(o.frequency);lfo.start(at);lfo.stop(voice.end+.02);sources.push(lfo);}
   const sentinel=make('createConstantSource'),silent=make('createGain');silent.gain.value=0;sentinel.connect(silent).connect(gain);sentinel.start(at);sentinel.stop(voice.end+.04);sources.push(sentinel);
   sentinel.onended=()=>{for(const n of nodes)n.disconnect?.();active=active.filter(h=>h!==voice);};
-  voice.release=(when=ac.currentTime)=>{if(voice.released)return;voice.released=true;const t=Math.max(ac.currentTime,Number.isFinite(when)?when:ac.currentTime),end=t+.18;
-   gain.gain.cancelScheduledValues?.(t);gain.gain.setValueAtTime(Math.max(.00001,voice.level),t);gain.gain.exponentialRampToValueAtTime(.00001,end);voice.end=end;
+  voice.release=(when=ac.currentTime,fade=.18)=>{if(voice.released)return;voice.released=true;const t=Math.max(ac.currentTime,Number.isFinite(when)?when:ac.currentTime),end=t+Math.max(.02,Math.min(.18,fade));
+   if(gain.gain.cancelAndHoldAtTime)gain.gain.cancelAndHoldAtTime(t);else{gain.gain.cancelScheduledValues?.(t);gain.gain.setValueAtTime(Math.max(.00001,gain.gain.value||voice.level),t);}gain.gain.exponentialRampToValueAtTime(.00001,end);voice.end=end;
    for(const s of sources)try{s.stop(end+.03);}catch(_){}
   };
   voice.update=(values={},when=ac.currentTime)=>{if(voice.released)return;const t=Math.max(ac.currentTime||0,Number.isFinite(when)?when:ac.currentTime||0),pressure=Number.isFinite(values.pressure)?Math.max(0,Math.min(1,values.pressure)):1,bend=Number.isFinite(values.bend)?Math.max(-2,Math.min(2,values.bend)):0;
@@ -69,5 +77,5 @@ export function createTechniquePlayer(runtime){
  globalThis.window?.addEventListener?.('blur',releaseHeld);
  return {play(id,n,t,v,e){if(!TECHNIQUE_INSTRUMENTS[id])return false;start(id,n,t,v,e);return true;},hold:(id,n,t,v,e)=>start(id,n,t,v,e,true),
   tick(){prune();if(globalThis.document?.hidden||!['world','studio'].includes(runtime.S.mode)||globalThis.document?.querySelector?.('.modal:not([hidden])'))releaseHeld();},
-  releaseHeld,get active(){prune();return active.length;}};
+  releaseHeld,get stringCacheSize(){return strings.get(runtime.ac)?.size||0;},get active(){prune();return active.length;}};
 }
