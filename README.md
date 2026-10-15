@@ -6,18 +6,18 @@ Un pixel blanco en un mundo negro. Descubre cómo suena el universo y crea tu pr
 
 **Jugar:** https://whitedot-inky.vercel.app. En el teléfono puedes instalarlo como app (en iPhone: Compartir → Añadir a pantalla de inicio). Toca la pantalla una vez para activar el sonido.
 
-Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama **2.1.0-alpha.4** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
+Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama **2.1.0-alpha.5** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
 Main no se publica desde estas ramas. Jay integra mediante PR. [Auditoría y soluciones](AUDITORIA_CIERRE_2.0.md) · [Pulido final autorizado](PLAN_PULIDO_FINAL.md).
 
 Las ocho fases están subidas; no se espera confirmación entre fases autorizadas. Los pendientes históricos de PLAN_2.0 se distinguen de la aceptación externa actual en [CIERRE_2.0.md](CIERRE_2.0.md).
 
 <!-- laboratorio-vivo -->
-## Laboratorio Vivo · L4
+## Laboratorio Vivo · L5
 
-El paisaje como instrumento. Los habitantes y objetos conservan su papel musical; territorio e individuo eligen cuerdas, vientos, teclas, pads, bajos y membranas. Las voces patrimoniales, reliquias, pulso personal y materiales de percusión conservan su identidad.
+Aprender jugando. Tu recorrido ofrece Escuchar y responder: eliges una voz tocándola, escuchas dos llamadas y respondes con dos pulsos espaciados. Es opcional, sin examen, castigo ni control permanente.
 
-[Plan y ramas](PLAN_LABORATORIO_VIVO.md) · [Validación](scripts/lab-l4-validation.json). Sonido → Paisaje vivo/clásico. Para comparar bandas en el teléfono: abre el preview con `?dev=1`, Menú → Prototipo → Laboratorio → Paisaje vivo.
+[Plan y ramas](PLAN_LABORATORIO_VIVO.md) · [Validación](scripts/lab-l5-validation.json). Sonido → Paisaje vivo/clásico. Para comparar bandas en el teléfono: abre el preview con `?dev=1`, Menú → Prototipo → Laboratorio → Paisaje vivo.
 <!-- /laboratorio-vivo -->
 
 ## Cierre anterior

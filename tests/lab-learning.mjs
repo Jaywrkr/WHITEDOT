@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {normalizeLabLearning,responseMatches} from '../src/lab-learning-model.js';
+import {initialize} from '../src/lab-learning.js';
+assert.deepEqual(normalizeLabLearning({completed:-7,roles:['lead','lead','evil'],instruments:['feltkeys','feltkeys','bad id'],other:123}),{version:1,completed:0,roles:['lead'],instruments:['feltkeys'],other:123});
+const future={version:7,alien:['keep']};assert.equal(normalizeLabLearning(future),future);
+assert(responseMatches([1,2],.5));assert(!responseMatches([1,1.1],.5));assert(!responseMatches([],0));
+let hidden=false,modal=false,saves=0;globalThis.document={get hidden(){return hidden;},querySelector:()=>modal?{}:null};
+const dom=new Map(),calls=[],r={S:{mode:'world',sound:true},ac:{state:'running',currentTime:0},SIX:.125,inWorld:()=>true,musicVolume:()=>1,$:id=>{if(!dom.has(id))dom.set(id,{});return dom.get(id);},getVoice:()=>({role:'perc',instrument:'handslap'}),playVoice:(...v)=>calls.push(v),save:()=>++saves};
+initialize(r);assert(r.beginLabLearning());assert.equal(calls.length,0,'arming UI is silent');
+r.labLearningHear('pulso',0,0,{},null,'player');assert.equal(r.labLearningState.stage,'choose');
+const source={x:0,y:0};r.S.wx=r.S.wy=0;r.labLearningHear('living:reeds',0,0,{},source,'player');r.labLearningBar(0);assert.equal(calls.length,2);assert.equal(calls[1][2]-calls[0][2],1);
+r.ac.currentTime=2;r.labLearningTick();assert.equal(r.labLearningState.stage,'reply');
+r.labLearningHear('pulso',0,2,{},null,'ambient');assert.equal(r.labLearningState.times.length,0);
+r.labLearningHear('luz',0,2.05,{},null,'player');assert.equal(r.labLearningState.times.length,0,'wave echoes are not new gestures');r.labLearningHear('pulso',0,2.1,{},null,'player');r.labLearningHear('pulso',0,3.1,{},null,'player');assert.equal(r.labLearningState.stage,'done');assert.equal(saves,1);assert.deepEqual(r.S.labLearning.roles,['perc']);
+assert(r.beginLabLearning());r.labLearningHear('living:reeds',0,0,{},source,'player');r.labLearningBar(4);hidden=true;r.labLearningTick();assert.equal(r.labLearningState.stage,'call');r.labLearningBar(5);assert.equal(calls.length,4);hidden=false;
+r.S={labLearning:future};assert(!r.beginLabLearning());assert.equal(r.S.labLearning,future);
+console.log('PASS optional silent arming, actual spaced calls, audible player-only response, pause/retry and additive future-safe learning');
