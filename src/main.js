@@ -19,6 +19,7 @@ import {initialize as livingBehavior} from './living-behavior.js';
 import {initialize as living} from './living.js';
 import {initialize as livingSynthesis} from './living-synthesis.js';
 import {initialize as voiceGuide} from './voice-guide.js';
+import {initialize as onboarding} from './onboarding.js';
 import {initialize as rareCards} from './rare-cards.js';
 import {initialize as elementBook} from './element-book.js';
 import {initialize as releaseUI} from './release-ui.js';
@@ -164,6 +165,7 @@ lab(runtime);
 achievementsV2(runtime);worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
 practiceTravel(runtime);
 houseAudio(runtime);house(runtime);
+onboarding(runtime);
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
 // Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.

@@ -62,6 +62,7 @@
 <div class="reto" id="reto" hidden></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="voice" id="voice" role="button" tabindex="-1" aria-expanded="false" aria-label="Ampliar mensaje del sistema" title="Toca para leer el mensaje completo"><small id="vT">Sistema</small><span id="vX"></span></div>
+<aside id="firstJourney" class="first-journey-hint" hidden><span id="firstJourneyText" role="status" aria-live="polite" aria-atomic="true"></span><button id="firstJourneySkip" aria-label="Omitir guía">×</button></aside>
 <div id="voiceAnnouncement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
 <div class="dock" id="dock">
@@ -130,7 +131,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.0.0-rc.1</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.0.0-rc.2</span><small id="releaseDeploy">deploy sin registrar</small></div>
     <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>
@@ -145,11 +146,7 @@
   <div class="sheet">
     <h2>Descubre cómo suena el universo.</h2>
     <p>Explora. Crea tu música. Conserva lo que encuentres.</p>
-    <div class="steps">
-      <div><i>1</i><span><b>Recorre el Camino.</b> Arrastra hacia una luz.</span></div>
-      <div><i>2</i><span><b>Escucha.</b> Tu primera luz abre el Mundo de hoy.</span></div>
-      <div><i>3</i><span><b>Explora sin reloj.</b> Lo ganado siempre sigue contigo.</span></div>
-    </div>
+    <p>Arrastra hacia una luz. Tu primer sonido abre el Mundo.</p>
     <div class="row"><button id="hcGo" class="gold">Empezar</button></div>
   </div>
 </div>
@@ -158,11 +155,7 @@
   <div class="sheet">
     <h2>Encuentra tu propia música.</h2>
     <p>Descubre voces. Despierta reliquias. Crea tu espacio en casa.</p>
-    <div class="steps">
-      <div><i>1</i><span><b>Acércate con el cubo.</b> Toca una criatura o planta.</span></div>
-      <div><i>2</i><span><b>Escucha el cambio.</b> Quédate cerca o lanza un pulso.</span></div>
-      <div><i>3</i><span><b>Conserva el lugar.</b> Menú → Favoritos → Guardar aquí.</span></div>
-    </div>
+    <p>Camina con el cubo. Cada encuentro puede transformar la música.</p>
     <div class="row"><button id="hwGo" class="gold">A jugar</button></div>
   </div>
 </div>
@@ -181,7 +174,7 @@
  <p><b>Favoritos.</b> Guarda un lugar y regresa mediante su dirección.</p>
  <p><b>Camino.</b> Recoge una luz al empezar el día. Después, explora libremente.</p>
  </div>
- <div class="row"><button id="guideClose">Seguir jugando</button></div>
+ <div class="row"><button id="guidePractice">Practicar</button><button id="guideClose">Seguir jugando</button></div>
 </div></div>
 
 <div class="modal" id="mCap" hidden>

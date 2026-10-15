@@ -1,3 +1,21 @@
+# Handoff vigente · pulido F2 · Primer nivel jugable y guía mínima
+
+Rama `feat/pulido-f2-primer-nivel`, desde `25732e6`. Continuar [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) sin pedir otra autorización; Jay crea PR/merge. Main permanece fuera de estos pushes.
+
+- onboarding-model.js define seis hechos del primer recorrido; onboarding.js los observa sin imponer objetivos ni entregar rarezas artificiales. Las partidas previas conservan progreso; los datos futuros quedan intactos.
+- Una franja pequeña enseña una acción cada vez. La ayuda se retira al terminar y puede omitirse o repetirse desde Menú → Tu recorrido → Practicar, sin reiniciar el juego.
+- Movimiento y primera luz, entrada al Mundo, respuesta real de una fuente, pulso y guardado completan la guía mediante acciones. Marcas locales pequeñas sugieren un elemento cercano; los menús y celebraciones tienen prioridad visual.
+- La introducción terminada no se repite en otras semillas; una lección incompleta continúa tras recargar. Los visitantes nuevos de un lugar compartido reciben ayuda breve. El modo laboratorio conserva su acceso de pruebas.
+- La Voz resuelve el papel musical usando la fuente real. Un sonido ambiente, volumen cero, audio suspendido o un pulso vacío no completa la lección de encuentro. Esto corrige A12 de la auditoría.
+- Bienvenida más corta, objetivos táctiles de 44 px, foco restaurado al omitir y Geist Mono. No se añadió sonido a ningún control ni se modificó la síntesis.
+- Versión 2.0.0-rc.2 y shell offline con los dos módulos nuevos una sola vez.
+
+Auditoría aprobada; 94 suites Node y 7 recorridos afectados aprobados. Sin cambios de DSP; interfaz silenciosa comprobada. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f2-validation.json).
+
+## Entregas anteriores
+
+Los siguientes encabezados conservan evidencia histórica; prevalece el estado actual.
+
 # Handoff vigente · cierre F10 · Auditoría y candidata 2.0.0-rc.1
 
 Rama `feat/cierre-f10-lanzamiento`, basada en F9. F1–F10 están reunidas en esta candidata. Jay autorizó continuar el pulido de PLAN_PULIDO_FINAL.md sin pedir de nuevo autorización. Commit/push por fase; Jay crea PR/merge. No reescribir ramas publicadas. Ver [plan vigente](PLAN_CIERRE_2.0.md).

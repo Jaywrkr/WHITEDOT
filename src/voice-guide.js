@@ -24,7 +24,7 @@ export function initialize(runtime){
  runtime.$('guideGlossary').onclick=()=>{const content=runtime.$('guideDefinitions');content.hidden=!content.hidden;runtime.$('guideGlossary').setAttribute('aria-expanded',String(!content.hidden));};
  function tick(dt,paused){
   if(owner!==runtime.S){owner=runtime.S;seconds=0;lastKey='';select.value=owner.voiceMode||'discreta';}
-  if(paused||!runtime.inWorld())return;seconds+=dt;if(seconds<75)return;seconds=0;
+  if(paused||!runtime.inWorld()||runtime.firstJourneyState?.next)return;seconds+=dt;if(seconds<75)return;seconds=0;
   const d=runtime.regionOfPos(runtime.S.wx,runtime.S.wy),key=d.key+':'+(runtime.body?.still>15?'quietud':'caminar');
   if(key===lastKey||runtime.S.voiceMode==='discreta'||!runtime.S.voiceMode)return;lastKey=key;
   if(runtime.S.voiceMode==='guia'&&runtime.livingEnvironment?.migration){runtime.say('La luz de '+runtime.livingEnvironment.name+' trae movimiento: las criaturas activas pueden guiarte hacia otras voces.','El ambiente cambia');return;}
@@ -32,7 +32,9 @@ export function initialize(runtime){
   else runtime.say(runtime.body?.still>15?'El ambiente sigue variando a compás. Muévete lentamente por una criatura o un tallo para escuchar su papel musical.':'Acércate con el cubo: cada objeto tiene una voz. Alejarte suelta el gesto; Fijar sonidos es opcional.','Escuchar aquí');
  }
  function heard(kind,region,source,origin){
-  if(origin!=='player'||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running')return;const help=runtime.S.voiceLearned||={};const v=runtime.getVoice(kind,region);if(help[v.role])return;help[v.role]=true;
+  if(origin!=='player'||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running')return;
+  if(kind!=='pulso'&&Number.isFinite(source?.x)&&Number.isFinite(source?.y))runtime.firstJourneyEvent?.('voice');
+  const help=runtime.S.voiceLearned||={};const v=runtime.getVoice(kind,region,source);if(help[v.role])return;help[v.role]=true;
   if(runtime.S.voiceMode==='guia')runtime.say(`Este encuentro aporta ${ {bajo:'graves',perc:'percusión',acorde:'armonía',lead:'una frase',agudo:'detalle melódico'}[v.role]||v.role}. Su voz cambia entre ambientes.`, 'El lugar responde');
  }
  function diary(){return '<article class="journal-card"><h3>La Voz · recuerdos</h3>'+((runtime.S.voiceDiary||[]).slice(-12).reverse().map(v=>`<p><b>${escape(v.title)}</b> · ${escape(v.text)}</p>`).join('')||'<p>Los mensajes completos se conservan aquí.</p>')+'</article>';}

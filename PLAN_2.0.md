@@ -15,6 +15,20 @@
 | 9 · Juego, interfaz e historia unidos | `feat/cierre-f9-juego` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 10 · Mezcla, auditoría y lanzamiento | `feat/cierre-f10-lanzamiento` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 
+
+## Continuación de pulido
+
+| Bloque | Rama | Estado | Referencia |
+|---|---|---|---|
+| 1 · Auditoría y defectos comprobados | `feat/cierre-f10-lanzamiento` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `25732e6` |
+| 2 · Primer nivel y guía mínima | `feat/pulido-f2-primer-nivel` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | HEAD de esta rama |
+| 3 · Guardar, volver y viajar | `feat/pulido-f3-viajes` | Pendiente | — |
+| 4 · Bitácora visual | `feat/pulido-f4-bitacora` | Pendiente | — |
+| 5 · Tarjetas y ritmo de descubrimiento | `feat/pulido-f5-tarjetas` | Pendiente | — |
+| 6 · Cincuenta variantes de personajes | `feat/pulido-f6-personajes` | Pendiente | — |
+| 7 · Interacciones musicales coherentes | `feat/pulido-f7-interacciones` | Pendiente | — |
+| 8 · Limpieza y aceptación del conjunto | `feat/pulido-f8-cierre` | Pendiente | — |
+
 Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0** (`4ed00ce`), con CI en verde. La 2.0 se construye en ramas. Por excepción explícita de Jay, se integran en `main` las fases 0–2 y la reparación de Vercel; las siguientes conservan el flujo de PR y merge de Jay.
 
 **Hilo común:** encontrar cosas en el universo debe darte algo visible, que se celebre y que puedas usar. Por eso cubo, casa y logros comparten una base (fase 0) en vez de ser sistemas separados.

@@ -56,7 +56,7 @@ export function initialize(runtime){
    if(hintClock>180&&runtime.MU.speed>.1){hintClock=0;runtime.say(state().transformed?'Ya cambiaste este lugar. Puedes seguir una pista, retirar una capa o entrar al Estudio.':'Quédate cerca de un aro para cultivar una parte; arrastrarlo también cambia su figura.','Una posibilidad');}
   }
   if(runtime.S.mode==='studio'&&state().transformed)state().studio=true;
-  if(previousMode!==runtime.S.mode){previousMode=runtime.S.mode;runtime.S.help.creativeVisit??=false;if(runtime.inWorld()&&!runtime.S.help.creativeVisit){runtime.S.help.creativeVisit=true;runtime.say('Acerca el cubo a una criatura. Escucha cómo cambia la música.','Tu primera voz');}}
+  if(previousMode!==runtime.S.mode){previousMode=runtime.S.mode;runtime.S.help.creativeVisit??=false;if(runtime.inWorld()&&!runtime.S.help.creativeVisit){runtime.S.help.creativeVisit=true;if(!runtime.firstJourneyState?.next)runtime.say('Acerca el cubo a una criatura. Escucha cómo cambia la música.','Tu primera voz');}}
  }
  function action(channel,verb='touch'){
   if(!runtime.inWorld())return;lastAction=performance.now();hintClock=0;state().transformed=true;

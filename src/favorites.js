@@ -22,7 +22,7 @@ export function initialize(runtime){
   const s=runtime.S,region=runtime.activeLayerRegion?.()||runtime.regionOfPos(s.wx,s.wy);
   const point=storeFavorite(s,{address:placeAddress(runtime.worldIdentity,s.wx,s.wy,s.layer||'superficie'),name:name||region.name,x:s.wx,y:s.wy,layer:s.layer||'superficie',created:Date.now(),region:region.key,regionName:region.name,genre:region.genre,bpm:region.bpm,scale:[...region.scale],phase:runtime.livingEnvironment?.name||'',notes:'',character:region.recipe?.name||'',material:region.recipe?.materialName||'',recipeVersion:region.recipe?.version||1,musicStamp:runtime.musicStamp?.(region)});
   if(!point){runtime.toast('<em>Favoritos</em> · Límite de 64. Borra uno para guardar otro.');return null;}
-  runtime.unlock('favorito1');runtime.save();render();return point;
+  runtime.firstJourneyEvent?.('save');runtime.unlock('favorito1');runtime.save();render();return point;
  }
  // Guarda un lugar recibido por código. Si es del mismo mundo, completa su identidad musical.
  function addAddress(address,name){
