@@ -30,6 +30,7 @@ export function initialize(runtime) {
   cv.addEventListener("pointerdown",e=>{fromOverlay=false;start(e);});
   function start(e){
     if(!e.isPrimary||activePointer!==null||runtime.depthEngaged||runtime.encounterEngaged||runtime.ecologyEngaged)return;
+    if(!fromOverlay&&runtime.housePointerDown?.(e))return;
     if(!fromOverlay&&runtime.fingerTouch&&!runtime.pinnedAt?.(e.clientX,e.clientY)&&(runtime.glassPointerDown?.(e)||runtime.materiaPointerDown?.(e)||runtime.vidaPointerDown?.(e)||runtime.mirrorPointerDown?.(e)||runtime.depthDown?.(e)||runtime.encounterDown?.(e)||runtime.ecologyDown?.(e)||runtime.creativePointerDown?.(e)))return;
     if(!fromOverlay)runtime.audio();if(runtime.S.mode==="studio"){runtime.studioTap(e.clientX,e.clientY);return;}
     activePointer=e.pointerId;dragging=held=false;
@@ -38,6 +39,7 @@ export function initialize(runtime) {
     else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   }
   addEventListener("pointermove",e=>{
+    if(runtime.housePointerMove?.(e))return;
     if(runtime.fingerTouch&&(runtime.glassPointerMove?.(e)||runtime.materiaPointerMove?.(e)||runtime.vidaPointerMove?.(e)||runtime.mirrorPointerMove?.(e)||runtime.depthMove?.(e)||runtime.encounterMove?.(e)||runtime.ecologyMove?.(e)||runtime.creativePointerMove?.(e)))return;
     if(e.pointerId!==activePointer||held||!runtime.tapStart)return;
     if(Math.hypot(e.clientX-runtime.tapStart.x,e.clientY-runtime.tapStart.y)>=14){if(!dragging&&fromOverlay)runtime.audio();dragging=true;cancelHold();}
@@ -49,6 +51,7 @@ export function initialize(runtime) {
     }else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   });
   const up=e=>{
+    if(runtime.housePointerUp?.(e))return;
     if(runtime.fingerTouch&&(runtime.glassPointerUp?.(e)||runtime.materiaPointerUp?.(e)||runtime.vidaPointerUp?.(e)||runtime.mirrorPointerUp?.(e)||runtime.depthUp?.(e)||runtime.encounterUp?.(e)||runtime.ecologyUp?.(e)||runtime.creativePointerUp?.(e)))return;
     if(e.pointerId!==activePointer)return;
     cancelHold();

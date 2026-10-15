@@ -1,3 +1,9 @@
+# Experiencia 5 · Casa viva y edición táctil
+
+Rama `feat/experiencia-05-casa`. Casa con colocación anticipada, selección y arrastre directo de objetos; señales locales cuando suenan. Conserva Taller y visitas; versiones futuras quedan protegidas contra edición.
+
+Validación: Auditoría/Node completos; house_v2_smoke y ui_silence_smoke; house_mix Web Audio. Jay mantiene PR/merge.
+
 # Experiencia 4 · Llegadas y favoritos claros
 
 Rama `feat/experiencia-04-viajes`. Favoritos prioriza destinos con búsqueda, fichas compactas y códigos/opciones plegados. Una llegada nueva diaria conserva el punto anterior; continuar, direcciones explícitas y partidas de prueba respetan coordenadas. Guardar sigue a un toque.
