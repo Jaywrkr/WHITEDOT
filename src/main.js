@@ -1,3 +1,4 @@
+import {initialize as atlasPlay} from './atlas-play.js';
 import {initialize as labLearning} from './lab-learning.js';
 import {initialize as walkers} from './walker-forms.js';
 import {initialize as worldMemory} from './world-memory.js';
@@ -155,7 +156,7 @@ encounterDepth(runtime);worldMemory(runtime);
 ecology(runtime);
 saveTools(runtime);
 accessibility(runtime);
-rareCards(runtime);
+rareCards(runtime);atlasPlay(runtime);
 voiceGuide(runtime);
 livingSynthesis(runtime);living(runtime);livingBehavior(runtime);livingComposition(runtime);livingEcology(runtime);livingTerrain(runtime);livingBuildings(runtime);livingDiscoveries(runtime);connection(runtime);
 

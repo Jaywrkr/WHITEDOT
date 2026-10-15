@@ -1,3 +1,9 @@
+# Experiencia 8 · Atlas y expediciones sonoras
+
+Rama `feat/experiencia-08-atlas`. Atlas visual con búsquedas optativas de voces complementarias, pistas locales discretas y relaciones conservadas al interactuar con otro habitante real. Sin flechas, premios artificiales ni sonido de botones. Estudios culturales previos conservan su identificación como creaciones originales.
+
+Validación: Auditoría/Node completos; living-cards_smoke y journal_v2_smoke; audio sin cambios. Jay mantiene PR/merge.
+
 # Experiencia 7 · Rareza y observaciones útiles
 
 Rama `feat/experiencia-07-rareza`. Reencuentros en condiciones diferentes enseñan interpretaciones reales: apagada, susurro, acento, deslizamiento o respirada. Elección silenciosa desde la tarjeta; sin duplicar premios ni descartar observaciones. Avisos repetidos del mismo tipo respetan un minuto de separación.

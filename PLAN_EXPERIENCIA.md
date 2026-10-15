@@ -11,7 +11,7 @@ Jay autorizó las catorce fases. Una rama por fase, encadenadas. Codex commit/pu
 | 5 | Casa viva y edición táctil | `feat/experiencia-05-casa` | Implementada; validación registrada abajo |
 | 6 | Tarjetas ganadas en encuentros | `feat/experiencia-06-hallazgos` | Implementada; validación registrada abajo |
 | 7 | Rareza y observaciones útiles | `feat/experiencia-07-rareza` | Implementada; validación registrada abajo |
-| 8 | Atlas y expediciones sonoras | `feat/experiencia-08-atlas` | Pendiente |
+| 8 | Atlas y expediciones sonoras | `feat/experiencia-08-atlas` | Implementada; validación registrada abajo |
 | 9 | Coleccionar para crear | `feat/experiencia-09-creacion` | Pendiente |
 | 10 | Profundidad musical | `feat/experiencia-10-musica` | Pendiente |
 | 11 | Espejos y percepción | `feat/experiencia-11-optica` | Pendiente |
@@ -84,3 +84,9 @@ Validación: Auditoría/Node completos; living-cards_smoke y rare_cards_smoke; a
 Reencuentros en condiciones diferentes enseñan interpretaciones reales: apagada, susurro, acento, deslizamiento o respirada. Elección silenciosa desde la tarjeta; sin duplicar premios ni descartar observaciones. Avisos repetidos del mismo tipo respetan un minuto de separación.
 
 Validación: Auditoría/Node completos; living-cards_smoke y discovery_pacing_smoke; experience_learning_mix a 44.1/48 kHz. Aceptación física y CI del PR, separados.
+
+## Entrega 8 · Atlas y expediciones sonoras
+
+Atlas visual con búsquedas optativas de voces complementarias, pistas locales discretas y relaciones conservadas al interactuar con otro habitante real. Sin flechas, premios artificiales ni sonido de botones. Estudios culturales previos conservan su identificación como creaciones originales.
+
+Validación: Auditoría/Node completos; living-cards_smoke y journal_v2_smoke; audio sin cambios. Aceptación física y CI del PR, separados.

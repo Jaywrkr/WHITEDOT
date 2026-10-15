@@ -21,8 +21,10 @@ try:
   page.evaluate('()=>{const r=__testRuntime,c=r.rareCards.find(c=>c.sourceId===__rareLiving.id);r.collectRareCard(c.type,__rareLiving,{context:{...c.context,phase:"otra fase"}});}')
   page.evaluate('__testRuntime.openJournal("rares")');page.wait_for_timeout(150);count=page.evaluate('__livingNotes.length');page.locator('#rareFilter').select_option(page.evaluate('__rareLiving.group'));page.wait_for_timeout(350);assert page.evaluate('__livingNotes.length')==count
   page.locator('[data-rare-technique]').first.click();assert page.evaluate('__testRuntime.cardTechnique(__rareLiving)')!='normal'
+  page.locator('[data-atlas-start]').first.click();assert page.evaluate('!!__testRuntime.atlasState.active')
   assert card['name'] in page.locator('#journalBody').inner_text();assert page.locator('.rare-portrait svg').count()>=1
   with page.expect_download() as info:page.locator('[data-rare-png]').first.click()
   target=info.value.path();assert Path(target).read_bytes().startswith(b'\x89PNG\r\n\x1a\n');assert page.evaluate('__livingNotes.length')==count
+  page.evaluate('''()=>{const r=__testRuntime;document.getElementById('mJournal').hidden=true;const goal=r.atlasState.active.role;let found;outer:for(let x=-8;x<=8;x++)for(let y=-8;y<=8;y++){r.S.wx=x*r.WCH;r.S.wy=y*r.WCH;found=r.livingNear(750).find(o=>o.id!==r.atlasState.active.fromSource&&r.getVoice('living:'+o.kind,r.regionOfPos(o.x,o.y),o).role===goal);if(found)break outer;}if(!found)throw Error('No complementary voice');window.__atlasTarget=found;r.S.wx=found.x-70;r.S.wy=found.y;}''');page.wait_for_timeout(150);page.evaluate('__testRuntime.S.wx=__atlasTarget.x;__testRuntime.S.wy=__atlasTarget.y');page.wait_for_function('__testRuntime.atlasState.completed.length>0&&!__testRuntime.atlasState.active')
   assert not errors,errors;print('PASS natural rare individual via cube, original conditional odds, ecological/instrument context, filtered silent book and genuine PNG export');browser.close()
 finally:server.shutdown()
