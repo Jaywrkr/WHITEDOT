@@ -1,0 +1,3330 @@
+{
+  "renders": 6,
+  "maxPeak": 0.943414032459259,
+  "rows": [
+    {
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.10327110107429326,
+          "role": "perc",
+          "source": "glass:0,0:0"
+        },
+        {
+          "time": 0.09587106199748814,
+          "role": "lead",
+          "source": "glass:0,0:1"
+        },
+        {
+          "time": 0.0985000691562891,
+          "role": "bajo",
+          "source": "glass:0,0:2"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": "silence-bass",
+      "advancedNotes": [
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8558064516129033,
+          "end": 3.5058064516129033,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8558064516129033,
+          "end": 3.5058064516129033,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8558064516129033,
+          "end": 3.5058064516129033,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.8558064516129033,
+          "end": 3.5058064516129033,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8558064516129033,
+          "end": 3.5058064516129033,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8558064516129033,
+          "end": 3.5058064516129033,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8558064516129033,
+          "end": 3.5058064516129033,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.8558064516129033,
+          "end": 3.5058064516129033,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.1058064516129034,
+          "end": 3.7558064516129033,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.1058064516129034,
+          "end": 3.7558064516129033,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.1058064516129034,
+          "end": 3.7558064516129033,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.1058064516129034,
+          "end": 3.7558064516129033,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.855806451612903,
+          "end": 6.505806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.855806451612903,
+          "end": 6.505806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.855806451612903,
+          "end": 6.505806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.855806451612903,
+          "end": 6.505806451612903,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.105806451612903,
+          "end": 6.755806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.605806451612903,
+          "end": 7.255806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.605806451612903,
+          "end": 7.255806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.605806451612903,
+          "end": 7.255806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.605806451612903,
+          "end": 7.255806451612903,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.855806451612903,
+          "end": 7.505806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.855806451612903,
+          "end": 9.505806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.605806451612903,
+          "end": 10.255806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.605806451612903,
+          "end": 10.255806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.605806451612903,
+          "end": 10.255806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 7.605806451612903,
+          "end": 10.255806451612903,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.855806451612903,
+          "end": 10.505806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 8.355806451612903,
+          "end": 11.005806451612903,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.88,
+          "end": 10.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 10.605806451612905,
+          "end": 13.255806451612905,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 10.605806451612905,
+          "end": 13.255806451612905,
+          "engine": "granular",
+          "sources": 14
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "minimal-hush",
+      "worldFamily": "orbital",
+      "hookI": "hollow",
+      "brightness": 3400,
+      "deferredDisconnects": 621,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "minimal",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": true,
+      "trailNotes": 0,
+      "glassNotes": 6,
+      "glassRoles": [
+        "perc",
+        "lead",
+        "bajo"
+      ],
+      "sampleRate": 48000,
+      "peak": 0.901625394821167,
+      "rmsDb": -14.018641354068478,
+      "hotFraction": 0
+    },
+    {
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.10327110107429326,
+          "role": "perc",
+          "source": "glass:0,0:0"
+        },
+        {
+          "time": 0.10262594069261105,
+          "role": "lead",
+          "source": "glass:0,0:1"
+        },
+        {
+          "time": 0.09577387534733862,
+          "role": "bajo",
+          "source": "glass:0,0:2"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.9335714285714286,
+          "end": 3.5835714285714286,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.9335714285714286,
+          "end": 3.5835714285714286,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.9335714285714286,
+          "end": 3.5835714285714286,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "airflute",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "wind",
+          "sources": 4
+        },
+        {
+          "instrument": "airflute",
+          "time": 0.9335714285714286,
+          "end": 3.5835714285714286,
+          "engine": "wind",
+          "sources": 4
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.9335714285714286,
+          "end": 3.5835714285714286,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.9335714285714286,
+          "end": 3.5835714285714286,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.9335714285714286,
+          "end": 3.5835714285714286,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "airflute",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "wind",
+          "sources": 4
+        },
+        {
+          "instrument": "airflute",
+          "time": 0.9335714285714286,
+          "end": 3.5835714285714286,
+          "engine": "wind",
+          "sources": 4
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.1835714285714287,
+          "end": 3.8335714285714286,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.1835714285714287,
+          "end": 3.8335714285714286,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.1835714285714287,
+          "end": 3.8335714285714286,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "airflute",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "wind",
+          "sources": 4
+        },
+        {
+          "instrument": "airflute",
+          "time": 1.1835714285714287,
+          "end": 3.8335714285714286,
+          "engine": "wind",
+          "sources": 4
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.9335714285714287,
+          "end": 6.583571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.9335714285714287,
+          "end": 6.583571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.9335714285714287,
+          "end": 6.583571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "airflute",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "wind",
+          "sources": 4
+        },
+        {
+          "instrument": "airflute",
+          "time": 3.9335714285714287,
+          "end": 6.583571428571428,
+          "engine": "wind",
+          "sources": 4
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.183571428571429,
+          "end": 6.833571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.683571428571429,
+          "end": 7.333571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.683571428571429,
+          "end": 7.333571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.683571428571429,
+          "end": 7.333571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "airflute",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "wind",
+          "sources": 4
+        },
+        {
+          "instrument": "airflute",
+          "time": 4.683571428571429,
+          "end": 7.333571428571428,
+          "engine": "wind",
+          "sources": 4
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.933571428571429,
+          "end": 7.583571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.933571428571429,
+          "end": 9.583571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.683571428571429,
+          "end": 10.333571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.683571428571429,
+          "end": 10.333571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.683571428571429,
+          "end": 10.333571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "airflute",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "wind",
+          "sources": 4
+        },
+        {
+          "instrument": "airflute",
+          "time": 7.683571428571429,
+          "end": 10.333571428571428,
+          "engine": "wind",
+          "sources": 4
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.933571428571429,
+          "end": 10.583571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 8.433571428571428,
+          "end": 11.083571428571428,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.88,
+          "end": 10.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 10.68357142857143,
+          "end": 13.33357142857143,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 10.68357142857143,
+          "end": 13.33357142857143,
+          "engine": "granular",
+          "sources": 14
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "afro-roots",
+      "worldFamily": null,
+      "hookI": "resonantpluck",
+      "brightness": 7104,
+      "deferredDisconnects": 641,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "tropical",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": true,
+      "trailNotes": 0,
+      "glassNotes": 6,
+      "glassRoles": [
+        "perc",
+        "lead",
+        "bajo"
+      ],
+      "sampleRate": 48000,
+      "peak": 0.943414032459259,
+      "rmsDb": -13.333596639704357,
+      "hotFraction": 0
+    },
+    {
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.10327110107429326,
+          "role": "perc",
+          "source": "glass:0,0:0"
+        },
+        {
+          "time": 0.09587106199748814,
+          "role": "lead",
+          "source": "glass:0,0:1"
+        },
+        {
+          "time": 0.0985000691562891,
+          "role": "bajo",
+          "source": "glass:0,0:2"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8863025210084033,
+          "end": 3.536302521008403,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8863025210084033,
+          "end": 3.536302521008403,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8863025210084033,
+          "end": 3.536302521008403,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.8863025210084033,
+          "end": 3.536302521008403,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8863025210084033,
+          "end": 3.536302521008403,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8863025210084033,
+          "end": 3.536302521008403,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8863025210084033,
+          "end": 3.536302521008403,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.8863025210084033,
+          "end": 3.536302521008403,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.1363025210084032,
+          "end": 3.786302521008403,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.1363025210084032,
+          "end": 3.786302521008403,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.1363025210084032,
+          "end": 3.786302521008403,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 1.1363025210084032,
+          "end": 3.786302521008403,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.8863025210084032,
+          "end": 6.536302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.8863025210084032,
+          "end": 6.536302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.8863025210084032,
+          "end": 6.536302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.8863025210084032,
+          "end": 6.536302521008404,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.136302521008403,
+          "end": 6.786302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.636302521008403,
+          "end": 7.286302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.636302521008403,
+          "end": 7.286302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.636302521008403,
+          "end": 7.286302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 4.636302521008403,
+          "end": 7.286302521008404,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.886302521008403,
+          "end": 7.536302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.886302521008403,
+          "end": 9.536302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.636302521008403,
+          "end": 10.286302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.636302521008403,
+          "end": 10.286302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.636302521008403,
+          "end": 10.286302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "pluckbody",
+          "time": 7.636302521008403,
+          "end": 10.286302521008404,
+          "engine": "string",
+          "sources": 1
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.886302521008403,
+          "end": 10.536302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 8.386302521008403,
+          "end": 11.036302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.88,
+          "end": 10.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 10.636302521008403,
+          "end": 13.286302521008404,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 10.636302521008403,
+          "end": 13.286302521008404,
+          "engine": "granular",
+          "sources": 14
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "dub-space",
+      "worldFamily": null,
+      "hookI": "hollow",
+      "brightness": 6244.273871183395,
+      "deferredDisconnects": 668,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "dub",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": true,
+      "trailNotes": 0,
+      "glassNotes": 6,
+      "glassRoles": [
+        "perc",
+        "lead",
+        "bajo"
+      ],
+      "sampleRate": 48000,
+      "peak": 0.9010274410247803,
+      "rmsDb": -10.335127842038144,
+      "hotFraction": 0
+    },
+    {
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.10327110107429326,
+          "role": "perc",
+          "source": "glass:0,0:0"
+        },
+        {
+          "time": 0.09587106199748814,
+          "role": "lead",
+          "source": "glass:0,0:1"
+        },
+        {
+          "time": 0.0985000691562891,
+          "role": "bajo",
+          "source": "glass:0,0:2"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.9408108108108109,
+          "end": 3.5908108108108108,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.9408108108108109,
+          "end": 3.5908108108108108,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.9408108108108109,
+          "end": 3.5908108108108108,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.9408108108108109,
+          "end": 3.5908108108108108,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.9408108108108109,
+          "end": 3.5908108108108108,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.9408108108108109,
+          "end": 3.5908108108108108,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.9408108108108109,
+          "end": 3.5908108108108108,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.9408108108108109,
+          "end": 3.5908108108108108,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.1908108108108109,
+          "end": 3.8408108108108108,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.1908108108108109,
+          "end": 3.8408108108108108,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.1908108108108109,
+          "end": 3.8408108108108108,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 1.1908108108108109,
+          "end": 3.8408108108108108,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.940810810810811,
+          "end": 6.590810810810811,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.940810810810811,
+          "end": 6.590810810810811,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.940810810810811,
+          "end": 6.590810810810811,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.940810810810811,
+          "end": 6.590810810810811,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.19081081081081,
+          "end": 6.84081081081081,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.69081081081081,
+          "end": 7.34081081081081,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.69081081081081,
+          "end": 7.34081081081081,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.69081081081081,
+          "end": 7.34081081081081,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.69081081081081,
+          "end": 7.34081081081081,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.94081081081081,
+          "end": 7.59081081081081,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.94081081081081,
+          "end": 9.59081081081081,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.69081081081081,
+          "end": 10.34081081081081,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.69081081081081,
+          "end": 10.34081081081081,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.69081081081081,
+          "end": 10.34081081081081,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 7.69081081081081,
+          "end": 10.34081081081081,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.94081081081081,
+          "end": 10.59081081081081,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 8.440810810810811,
+          "end": 11.090810810810812,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.88,
+          "end": 10.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 10.690810810810811,
+          "end": 13.340810810810812,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 10.690810810810811,
+          "end": 13.340810810810812,
+          "engine": "granular",
+          "sources": 14
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "half-earth",
+      "worldFamily": null,
+      "hookI": "resonantpluck",
+      "brightness": 6675,
+      "deferredDisconnects": 671,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "amapiano",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": true,
+      "trailNotes": 0,
+      "glassNotes": 6,
+      "glassRoles": [
+        "perc",
+        "lead",
+        "bajo"
+      ],
+      "sampleRate": 48000,
+      "peak": 0.9380992650985718,
+      "rmsDb": -14.182315573367728,
+      "hotFraction": 0
+    },
+    {
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.10327110107429326,
+          "role": "perc",
+          "source": "glass:0,0:0"
+        },
+        {
+          "time": 0.09577387534733862,
+          "role": "lead",
+          "source": "glass:0,0:1"
+        },
+        {
+          "time": 0.10276486148405821,
+          "role": "bajo",
+          "source": "glass:0,0:2"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8992307692307692,
+          "end": 3.549230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8992307692307692,
+          "end": 3.549230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8992307692307692,
+          "end": 3.549230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.8992307692307692,
+          "end": 3.549230769230769,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8992307692307692,
+          "end": 3.549230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8992307692307692,
+          "end": 3.549230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.8992307692307692,
+          "end": 3.549230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.13,
+          "end": 2.78,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.8992307692307692,
+          "end": 3.549230769230769,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.149230769230769,
+          "end": 3.799230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.149230769230769,
+          "end": 3.799230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 1.149230769230769,
+          "end": 3.799230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 0.38,
+          "end": 3.03,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 1.149230769230769,
+          "end": 3.799230769230769,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.899230769230769,
+          "end": 6.549230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.899230769230769,
+          "end": 6.549230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.899230769230769,
+          "end": 6.549230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.13,
+          "end": 5.779999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.899230769230769,
+          "end": 6.549230769230769,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.38,
+          "end": 6.029999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.149230769230769,
+          "end": 6.799230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.649230769230769,
+          "end": 7.299230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.649230769230769,
+          "end": 7.299230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.649230769230769,
+          "end": 7.299230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 3.88,
+          "end": 6.529999999999999,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 4.649230769230769,
+          "end": 7.299230769230769,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.13,
+          "end": 6.779999999999999,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 4.899230769230769,
+          "end": 7.549230769230769,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.13,
+          "end": 8.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.899230769230769,
+          "end": 9.54923076923077,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.38,
+          "end": 9.03,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.649230769230769,
+          "end": 10.29923076923077,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.649230769230769,
+          "end": 10.29923076923077,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.649230769230769,
+          "end": 10.29923076923077,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 6.88,
+          "end": 9.53,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "feltpiano",
+          "time": 7.649230769230769,
+          "end": 10.29923076923077,
+          "engine": "modal",
+          "sources": 5
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.13,
+          "end": 9.78,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.899230769230769,
+          "end": 10.54923076923077,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.63,
+          "end": 10.28,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 8.399230769230769,
+          "end": 11.04923076923077,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 7.88,
+          "end": 10.53,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.13,
+          "end": 11.780000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.38,
+          "end": 12.030000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 9.88,
+          "end": 12.530000000000001,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 10.649230769230769,
+          "end": 13.29923076923077,
+          "engine": "granular",
+          "sources": 14
+        },
+        {
+          "instrument": "graincloud",
+          "time": 10.649230769230769,
+          "end": 13.29923076923077,
+          "engine": "granular",
+          "sources": 14
+        }
+      ],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "disco-orbit",
+      "worldFamily": null,
+      "hookI": "orbitorgan",
+      "brightness": 6361.952467239462,
+      "deferredDisconnects": 672,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "nudisco",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": true,
+      "trailNotes": 0,
+      "glassNotes": 6,
+      "glassRoles": [
+        "perc",
+        "lead",
+        "bajo"
+      ],
+      "sampleRate": 48000,
+      "peak": 0.6858658790588379,
+      "rmsDb": -21.92430416620615,
+      "hotFraction": 0
+    },
+    {
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.09879773955605925,
+          "role": "perc",
+          "source": "glass:0,0:0"
+        },
+        {
+          "time": 0.10302499314770103,
+          "role": "lead",
+          "source": "glass:0,0:1"
+        },
+        {
+          "time": 0.09885940599162132,
+          "role": "bajo",
+          "source": "glass:0,0:2"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "ambient-string",
+      "worldFamily": null,
+      "hookI": "bowed",
+      "brightness": 6510,
+      "deferredDisconnects": 47,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {},
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "ambient",
+      "dense": false,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": true,
+      "trailNotes": 0,
+      "glassNotes": 5,
+      "glassRoles": [
+        "perc",
+        "lead",
+        "bajo"
+      ],
+      "sampleRate": 44100,
+      "peak": 0.9008435010910034,
+      "rmsDb": -9.170563859277758,
+      "hotFraction": 0
+    }
+  ]
+}

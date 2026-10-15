@@ -1,0 +1,8482 @@
+{
+  "renders": 6,
+  "maxPeak": 0.9010202288627625,
+  "sampleRates": [
+    44100,
+    48000
+  ],
+  "rows": [
+    {
+      "labEvolution": {
+        "chapter": 0,
+        "scene": 0,
+        "quiet": false
+      },
+      "labPerformance": [
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.1,
+          "bar": 0,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 0.1003471820987761,
+          "bar": 0,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 2,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 0.1003471820987761,
+          "bar": 0,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.33276392503756175,
+          "bar": 0,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.4541405687716146,
+          "bar": 0,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.5615384615384617,
+          "bar": 0,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.7930467537322011,
+          "bar": 0,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.7930467537322011,
+          "bar": 0,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 0.9093576725178328,
+          "bar": 0,
+          "step": 7
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.0230769230769232,
+          "bar": 0,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 1.020359391135092,
+          "bar": 0,
+          "step": 8
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 1.2566955083107147,
+          "bar": 0,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 1.2566955083107147,
+          "bar": 0,
+          "step": 10
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 1.3750431276877915,
+          "bar": 0,
+          "step": 11,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.484615384615385,
+          "bar": 0,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 1.712911150426246,
+          "bar": 0,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.712911150426246,
+          "bar": 0,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 1.712911150426246,
+          "bar": 0,
+          "step": 14
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.9461538461538466,
+          "bar": 1,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 1.9475438508203686,
+          "bar": 1,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 2,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 1.9475438508203686,
+          "bar": 1,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.1783603570638945,
+          "bar": 1,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.298339247283598,
+          "bar": 1,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.407692307692308,
+          "bar": 1,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.642048525953236,
+          "bar": 1,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.642048525953236,
+          "bar": 1,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 2.759996372192669,
+          "bar": 1,
+          "step": 7
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.8692307692307697,
+          "bar": 1,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 2.8718615914068835,
+          "bar": 1,
+          "step": 8
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.098643107665703,
+          "bar": 1,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "muted",
+          "time": 3.098643107665703,
+          "bar": 1,
+          "step": 10
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.217959518086166,
+          "bar": 1,
+          "step": 11,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.3307692307692314,
+          "bar": 1,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.5575621215258373,
+          "bar": 1,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.5575621215258373,
+          "bar": 1,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "muted",
+          "time": 3.5575621215258373,
+          "bar": 1,
+          "step": 14
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.792307692307693,
+          "bar": 2,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 3.7899875871200983,
+          "bar": 2,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 2,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "slide",
+          "time": 3.7899875871200983,
+          "bar": 2,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.024201676809158,
+          "bar": 2,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.144302108553166,
+          "bar": 2,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.253846153846154,
+          "bar": 2,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.486456522950329,
+          "bar": 2,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.486456522950329,
+          "bar": 2,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "slide",
+          "time": 4.60458709776344,
+          "bar": 2,
+          "step": 7
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.715384615384614,
+          "bar": 2,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 4.715929671604758,
+          "bar": 2,
+          "step": 8
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.942206094158667,
+          "bar": 2,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 4.942206094158667,
+          "bar": 2,
+          "step": 10
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.066945220364111,
+          "bar": 2,
+          "step": 11,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.176923076923074,
+          "bar": 2,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.40799376332043,
+          "bar": 2,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.40799376332043,
+          "bar": 2,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 2,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 5.40799376332043,
+          "bar": 2,
+          "step": 14
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.6384615384615335,
+          "bar": 3,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "fm",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 5.637804934987363,
+          "bar": 3,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 5.637804934987363,
+          "bar": 3,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.871206717989187,
+          "bar": 3,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.991802219013462,
+          "bar": 3,
+          "step": 3,
+          "role": "perc"
+        }
+      ],
+      "lessonNotes": [],
+      "labBand": "silk",
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.10327110107429326,
+          "role": "acorde",
+          "source": "living:lab:breath-tree"
+        },
+        {
+          "time": 0.33404033184352405,
+          "role": "acorde",
+          "source": "living:lab:breath-tree"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.8223076923076923,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.8223076923076923,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.3607692307692308,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.47615384615384615,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.8223076923076923,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.8223076923076923,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.3607692307692308,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.47615384615384615,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.0723076923076924,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.0723076923076924,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.6107692307692307,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.7261538461538461,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.0723076923076924,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.0723076923076924,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.6107692307692307,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.7261538461538461,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.41000000000000003,
+          "role": "acorde",
+          "source": "living:lab:breath-tree"
+        },
+        {
+          "time": 0.43500000000000005,
+          "role": "acorde",
+          "source": "living:lab:breath-tree"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.3223076923076924,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.3223076923076924,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.8607692307692307,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.9761538461538461,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.3223076923076924,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.3223076923076924,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.8607692307692307,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.9761538461538461,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.5723076923076924,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.5723076923076924,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.1107692307692307,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.2261538461538461,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.5723076923076924,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.5723076923076924,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.1107692307692307,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.2261538461538461,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.8223076923076922,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.8223076923076922,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.3607692307692307,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.4761538461538461,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.8223076923076922,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.8223076923076922,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.3607692307692307,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.4761538461538461,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.0723076923076924,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.0723076923076924,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.6107692307692307,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.7261538461538461,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.0723076923076924,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.0723076923076924,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.6107692307692307,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.7261538461538461,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.3223076923076924,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.3223076923076924,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.8607692307692307,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.9761538461538461,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.3223076923076924,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.3223076923076924,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.8607692307692307,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.9761538461538461,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.5723076923076924,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.5723076923076924,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.1107692307692307,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.226153846153846,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.5723076923076924,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.5723076923076924,
+          "role": "lead",
+          "source": "mix:5"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "lab:silk",
+      "worldFamily": null,
+      "hookI": "lowbow",
+      "brightness": 3600,
+      "deferredDisconnects": 358,
+      "scene": "living:breath-tree",
+      "filterMotion": {
+        "start": 3589.0186598726546,
+        "end": 789.584105171984,
+        "duration": 0.34615384615384615,
+        "type": "lowpass",
+        "stages": 4,
+        "slope": 48,
+        "time": 0.1,
+        "onset": 636.2999999821186
+      },
+      "instrumentHits": {
+        "kick": 13,
+        "fm": 13,
+        "lowbow": 60,
+        "living:acorde": 5,
+        "feltkeys": 144,
+        "skinpluck": 48,
+        "wood": 103,
+        "handslap": 48,
+        "duskpad": 144,
+        "skinbass": 48,
+        "shaker": 13,
+        "rim": 6
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "minimaltechno",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.9008352160453796,
+      "rmsDb": -12.24534401387145,
+      "hotFraction": 0
+    },
+    {
+      "labEvolution": {
+        "chapter": 0,
+        "scene": 0,
+        "quiet": false
+      },
+      "labPerformance": [
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.1,
+          "bar": 0,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "pluck",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 0.10011963280476631,
+          "bar": 0,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 0.10011963280476631,
+          "bar": 0,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.34635128289088607,
+          "bar": 0,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.6,
+          "bar": 0,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 0.6038373270779848,
+          "bar": 0,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.6038373270779848,
+          "bar": 0,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.8461499458905309,
+          "bar": 0,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 3,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 0.8461499458905309,
+          "bar": 0,
+          "step": 6
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.9936913168448954,
+          "bar": 0,
+          "step": 7,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.1,
+          "bar": 0,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "pluck",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 1.102264987424016,
+          "bar": 0,
+          "step": 8
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 1.3531618595384063,
+          "bar": 0,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "pluck",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 1.3531618595384063,
+          "bar": 0,
+          "step": 10
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 1.3531618595384063,
+          "bar": 0,
+          "step": 10
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.6,
+          "bar": 0,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 1.5979070041105152,
+          "bar": 0,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.5979070041105152,
+          "bar": 0,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 1.8465834405235948,
+          "bar": 0,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "pluck",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 1.8465834405235948,
+          "bar": 0,
+          "step": 14
+        },
+        {
+          "role": "lead",
+          "degree": 2,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 1.8465834405235948,
+          "bar": 0,
+          "step": 14
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.1,
+          "bar": 1,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "pluck",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 2.1009365871436896,
+          "bar": 1,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 2.1009365871436896,
+          "bar": 1,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.347877420820296,
+          "bar": 1,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.6,
+          "bar": 1,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 2.5980284219477325,
+          "bar": 1,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.5980284219477325,
+          "bar": 1,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.8461807139851154,
+          "bar": 1,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 3,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 2.8461807139851154,
+          "bar": 1,
+          "step": 6
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.9921827004626396,
+          "bar": 1,
+          "step": 7,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.1,
+          "bar": 1,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "pluck",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 3.102981052007526,
+          "bar": 1,
+          "step": 8
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.349936247061938,
+          "bar": 1,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "pluck",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "muted",
+          "time": 3.349936247061938,
+          "bar": 1,
+          "step": 10
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 3.349936247061938,
+          "bar": 1,
+          "step": 10
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.6,
+          "bar": 1,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 3.597254516836256,
+          "bar": 1,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.597254516836256,
+          "bar": 1,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.8523427261412144,
+          "bar": 1,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "pluck",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "muted",
+          "time": 3.8523427261412144,
+          "bar": 1,
+          "step": 14
+        },
+        {
+          "role": "lead",
+          "degree": 2,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 3.8523427261412144,
+          "bar": 1,
+          "step": 14
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.1,
+          "bar": 2,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "pluck",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 4.096355089293793,
+          "bar": 2,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 4.096355089293793,
+          "bar": 2,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.352479640748351,
+          "bar": 2,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.6,
+          "bar": 2,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 4.596869114501401,
+          "bar": 2,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.596869114501401,
+          "bar": 2,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.853511743873358,
+          "bar": 2,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 2,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 4.853511743873358,
+          "bar": 2,
+          "step": 6
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.993241063645109,
+          "bar": 2,
+          "step": 7,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.1,
+          "bar": 2,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "pluck",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 5.099629832280799,
+          "bar": 2,
+          "step": 8
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.352889704121276,
+          "bar": 2,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "pluck",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 5.352889704121276,
+          "bar": 2,
+          "step": 10
+        },
+        {
+          "role": "lead",
+          "degree": 2,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 5.352889704121276,
+          "bar": 2,
+          "step": 10
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.6,
+          "bar": 2,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 5.597691736292093,
+          "bar": 2,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.597691736292093,
+          "bar": 2,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.852753904456272,
+          "bar": 2,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 2,
+          "instrument": "pluck",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 5.852753904456272,
+          "bar": 2,
+          "step": 14
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 5.852753904456272,
+          "bar": 2,
+          "step": 14
+        }
+      ],
+      "lessonNotes": [],
+      "labBand": "warm",
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.0995031550116837,
+          "role": "perc",
+          "source": "living:lab:reeds"
+        },
+        {
+          "time": 0.5995031550116837,
+          "role": "perc",
+          "source": "living:lab:reeds"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.505,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.505,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.755,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.755,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.005,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.005,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.255,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.255,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.505,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.505,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.755,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.755,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.005,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.005,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.255,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 2.13,
+          "role": "perc",
+          "source": "mix:6"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "lab:warm",
+      "worldFamily": null,
+      "hookI": "lowbow",
+      "brightness": 4200,
+      "deferredDisconnects": 297,
+      "scene": "living:reeds",
+      "filterMotion": {
+        "start": 893.9316539728269,
+        "end": 2979.772179909423,
+        "duration": 0.375,
+        "type": "lowpass",
+        "stages": 1,
+        "slope": 12,
+        "time": 0.1,
+        "onset": 3369
+      },
+      "instrumentHits": {
+        "kick": 12,
+        "pluck": 12,
+        "lowbow": 204,
+        "handslap": 53,
+        "living:perc": 5,
+        "duskpad": 144,
+        "feltkeys": 48,
+        "wood": 147,
+        "shaker": 12,
+        "rim": 6
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "deep",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.459829181432724,
+      "rmsDb": -26.01914607051426,
+      "hotFraction": 0
+    },
+    {
+      "labEvolution": {
+        "chapter": 0,
+        "scene": 0,
+        "quiet": false
+      },
+      "labPerformance": [
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.1,
+          "bar": 0,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 0.1003471820987761,
+          "bar": 0,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 50,
+          "offset": 0,
+          "technique": "accent",
+          "time": 0.1003471820987761,
+          "bar": 0,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "sub",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 0.1003471820987761,
+          "bar": 0,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 3,
+          "instrument": "handslap",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 0.1003471820987761,
+          "bar": 0,
+          "step": 0
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.3514577925391495,
+          "bar": 0,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 50,
+          "offset": 0.6666666666666665,
+          "technique": "normal",
+          "time": 0.4347911258724828,
+          "bar": 0,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.48315804029256104,
+          "bar": 0,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.48315804029256104,
+          "bar": 0,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.6,
+          "bar": 0,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 50,
+          "offset": 0.33333333333333304,
+          "technique": "normal",
+          "time": 0.7708989474276701,
+          "bar": 0,
+          "step": 5,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.8504218382202089,
+          "bar": 0,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "handslap",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 0.8504218382202089,
+          "bar": 0,
+          "step": 6
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.9833242291472851,
+          "bar": 0,
+          "step": 7,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.1,
+          "bar": 0,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.0995402451176197,
+          "bar": 0,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 50,
+          "offset": 0,
+          "technique": "accent",
+          "time": 1.0995402451176197,
+          "bar": 0,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "sub",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 1.0995402451176197,
+          "bar": 0,
+          "step": 8
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 51,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 1.348976756926626,
+          "bar": 0,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 50,
+          "offset": 0.6666666666666665,
+          "technique": "normal",
+          "time": 1.4323100902599593,
+          "bar": 0,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "sub",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 1.348976756926626,
+          "bar": 0,
+          "step": 10
+        },
+        {
+          "role": "lead",
+          "degree": 2,
+          "instrument": "handslap",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 1.348976756926626,
+          "bar": 0,
+          "step": 10
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 1.482996038876474,
+          "bar": 0,
+          "step": 11,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.6,
+          "bar": 0,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 1.6007907850947232,
+          "bar": 0,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 50,
+          "offset": 0.33333333333333304,
+          "technique": "normal",
+          "time": 1.7717197251829009,
+          "bar": 0,
+          "step": 13,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.8469928192161025,
+          "bar": 0,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "sub",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 1.8469928192161025,
+          "bar": 0,
+          "step": 14
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 1.9846681854519994,
+          "bar": 0,
+          "step": 15,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.1,
+          "bar": 1,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 2.101346459358931,
+          "bar": 1,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 51,
+          "offset": 0,
+          "technique": "accent",
+          "time": 2.101346459358931,
+          "bar": 1,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "sub",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 2.101346459358931,
+          "bar": 1,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 3,
+          "instrument": "handslap",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 2.101346459358931,
+          "bar": 1,
+          "step": 0
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.347509763021022,
+          "bar": 1,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 51,
+          "offset": 0.6666666666666665,
+          "technique": "normal",
+          "time": 2.4308430963543555,
+          "bar": 1,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.4851308221761137,
+          "bar": 1,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.4851308221761137,
+          "bar": 1,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.6,
+          "bar": 1,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 51,
+          "offset": 0.33333333333333304,
+          "technique": "normal",
+          "time": 2.7748308101507524,
+          "bar": 1,
+          "step": 5,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.850487918077037,
+          "bar": 1,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "handslap",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 2.850487918077037,
+          "bar": 1,
+          "step": 6
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.9818245180547236,
+          "bar": 1,
+          "step": 7,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.1,
+          "bar": 1,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.0966990930773317,
+          "bar": 1,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 51,
+          "offset": 0,
+          "technique": "accent",
+          "time": 3.0966990930773317,
+          "bar": 1,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "sub",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 3.0966990930773317,
+          "bar": 1,
+          "step": 8
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 51,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.347070562431589,
+          "bar": 1,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 51,
+          "offset": 0.6666666666666665,
+          "technique": "normal",
+          "time": 3.4304038957649223,
+          "bar": 1,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "sub",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "muted",
+          "time": 3.347070562431589,
+          "bar": 1,
+          "step": 10
+        },
+        {
+          "role": "lead",
+          "degree": 2,
+          "instrument": "handslap",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 3.347070562431589,
+          "bar": 1,
+          "step": 10
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.485605379410088,
+          "bar": 1,
+          "step": 11,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.6,
+          "bar": 1,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 3.601827158784494,
+          "bar": 1,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 51,
+          "offset": 0.33333333333333304,
+          "technique": "normal",
+          "time": 3.777539026275898,
+          "bar": 1,
+          "step": 13,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.846226739499718,
+          "bar": 1,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "sub",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "muted",
+          "time": 3.846226739499718,
+          "bar": 1,
+          "step": 14
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.9856412630770355,
+          "bar": 1,
+          "step": 15,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.1,
+          "bar": 2,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 4.096684144785628,
+          "bar": 2,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 52,
+          "offset": 0,
+          "technique": "accent",
+          "time": 4.096684144785628,
+          "bar": 2,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "sub",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 4.096684144785628,
+          "bar": 2,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "handslap",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 4.096684144785628,
+          "bar": 2,
+          "step": 0
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.3505450562201435,
+          "bar": 2,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 52,
+          "offset": 0.6666666666666665,
+          "technique": "normal",
+          "time": 4.433878389553477,
+          "bar": 2,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.479835237981751,
+          "bar": 2,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.479835237981751,
+          "bar": 2,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.6,
+          "bar": 2,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 52,
+          "offset": 0.33333333333333304,
+          "technique": "normal",
+          "time": 4.775771048080797,
+          "bar": 2,
+          "step": 5,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.85131651093997,
+          "bar": 2,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.983052108943462,
+          "bar": 2,
+          "step": 7,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.1,
+          "bar": 2,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.099635619187727,
+          "bar": 2,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 52,
+          "offset": 0,
+          "technique": "accent",
+          "time": 5.099635619187727,
+          "bar": 2,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "sub",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 5.099635619187727,
+          "bar": 2,
+          "step": 8
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 51,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.349982691872865,
+          "bar": 2,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 52,
+          "offset": 0.6666666666666665,
+          "technique": "normal",
+          "time": 5.433316025206198,
+          "bar": 2,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "sub",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 5.349982691872865,
+          "bar": 2,
+          "step": 10
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.4791683983244,
+          "bar": 2,
+          "step": 11,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.6,
+          "bar": 2,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.035,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 5.600971746286377,
+          "bar": 2,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "handslap",
+          "gain": 0.028,
+          "pitch": 52,
+          "offset": 0.33333333333333304,
+          "technique": "normal",
+          "time": 5.771353316832955,
+          "bar": 2,
+          "step": 13,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.853890517570078,
+          "bar": 2,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 2,
+          "instrument": "sub",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 5.853890517570078,
+          "bar": 2,
+          "step": 14
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.980405331533402,
+          "bar": 2,
+          "step": 15,
+          "role": "perc"
+        }
+      ],
+      "lessonNotes": [],
+      "labBand": "interlock",
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.09587106199748814,
+          "role": "acorde",
+          "source": "living:lab:moss"
+        },
+        {
+          "time": 0.4708710619974881,
+          "role": "acorde",
+          "source": "living:lab:moss"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.505,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.505,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.755,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.755,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.41000000000000003,
+          "role": "acorde",
+          "source": "living:lab:moss"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.005,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.005,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.255,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.255,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.505,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.505,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.755,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.755,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.005,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.005,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.255,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "lab:interlock",
+      "worldFamily": null,
+      "hookI": "handslap",
+      "brightness": 4400,
+      "deferredDisconnects": 300,
+      "scene": "living:moss",
+      "filterMotion": {
+        "start": 3562.6377224195753,
+        "end": 1781.3188612097877,
+        "duration": 0.375,
+        "type": "lowpass",
+        "stages": 2,
+        "slope": 24,
+        "time": 0.4708710619974881,
+        "onset": 5786.171061979607
+      },
+      "instrumentHits": {
+        "kick": 12,
+        "sub": 12,
+        "handslap": 103,
+        "lowbow": 149,
+        "living:acorde": 5,
+        "duskpad": 144,
+        "wood": 153,
+        "silkpluck": 48,
+        "shaker": 12
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "afro",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.9010202288627625,
+      "rmsDb": -12.487154275662087,
+      "hotFraction": 0
+    },
+    {
+      "labEvolution": {
+        "chapter": 0,
+        "scene": 0,
+        "quiet": false
+      },
+      "labPerformance": [
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "accent",
+          "time": 0.10011963280476631,
+          "bar": 0,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 0.10011963280476631,
+          "bar": 0,
+          "step": 0
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.6866230231704047,
+          "bar": 0,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.2500036515427324,
+          "bar": 0,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 3,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 1.4517041323298159,
+          "bar": 0,
+          "step": 7
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.225922769675891,
+          "bar": 0,
+          "step": 11,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.7894109838043275,
+          "bar": 0,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "accent",
+          "time": 3.178676461790761,
+          "bar": 1,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 3.178676461790761,
+          "bar": 1,
+          "step": 0
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.757952130798682,
+          "bar": 1,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.331088820415767,
+          "bar": 1,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 3,
+          "instrument": "lowbow",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 4.531751706493305,
+          "bar": 1,
+          "step": 7
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.302479640748355,
+          "bar": 1,
+          "step": 11,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.868015981205528,
+          "bar": 1,
+          "step": 14,
+          "role": "perc"
+        }
+      ],
+      "lessonNotes": [],
+      "labBand": "silk",
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.0995031550116837,
+          "role": "perc",
+          "source": "living:lab:turtle"
+        },
+        {
+          "time": 0.6764262319347607,
+          "role": "perc",
+          "source": "living:lab:turtle"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.283846153846154,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.283846153846154,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.5146153846153847,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.706923076923077,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.283846153846154,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.283846153846154,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.5146153846153847,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.706923076923077,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.533846153846154,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.533846153846154,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.7646153846153847,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.956923076923077,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.533846153846154,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.533846153846154,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.7646153846153847,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.956923076923077,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.783846153846154,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.783846153846154,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.0146153846153847,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.206923076923077,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.783846153846154,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.783846153846154,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.0146153846153847,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.206923076923077,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.033846153846154,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.033846153846154,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.2646153846153847,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.456923076923077,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.033846153846154,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.033846153846154,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.2646153846153847,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.456923076923077,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.283846153846154,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.283846153846154,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.5146153846153845,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.706923076923077,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.283846153846154,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.283846153846154,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.5146153846153845,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.706923076923077,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.533846153846154,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.533846153846154,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.7646153846153845,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.956923076923077,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.533846153846154,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.533846153846154,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.7646153846153845,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.956923076923077,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.783846153846154,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.783846153846154,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.0146153846153845,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.206923076923077,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.783846153846154,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.783846153846154,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 2.0146153846153845,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.206923076923077,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 3.033846153846154,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 3.033846153846154,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.2646153846153845,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.456923076923077,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 3.033846153846154,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 3.033846153846154,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 2.2646153846153845,
+          "role": "perc",
+          "source": "mix:6"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "lab:silk",
+      "worldFamily": null,
+      "hookI": "lowbow",
+      "brightness": 3000,
+      "deferredDisconnects": 293,
+      "scene": "living:turtle",
+      "filterMotion": {
+        "start": 854.2276690087001,
+        "end": 2847.425563362334,
+        "duration": 0.576923076923077,
+        "type": "lowpass",
+        "stages": 1,
+        "slope": 12,
+        "time": 0.1,
+        "onset": 7872.5999999940395
+      },
+      "instrumentHits": {
+        "wood": 102,
+        "lowbow": 52,
+        "skinbass": 52,
+        "living:perc": 4,
+        "feltkeys": 144,
+        "skinpluck": 48,
+        "handslap": 48,
+        "duskpad": 144,
+        "rim": 4
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "ambient",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.2545616924762726,
+      "rmsDb": -24.17992667214751,
+      "hotFraction": 0
+    },
+    {
+      "labEvolution": {
+        "chapter": 0,
+        "scene": 0,
+        "quiet": false
+      },
+      "labPerformance": [
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.1,
+          "bar": 0,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "accent",
+          "time": 0.1003471820987761,
+          "bar": 0,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 0.1003471820987761,
+          "bar": 0,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "skinpluck",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 0.1003471820987761,
+          "bar": 0,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.2768140712623649,
+          "bar": 0,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 3,
+          "instrument": "skinpluck",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 0.36298077912365695,
+          "bar": 0,
+          "step": 3
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 0.45376482568516896,
+          "bar": 0,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "accent",
+          "time": 0.45376482568516896,
+          "bar": 0,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.6294117647058824,
+          "bar": 0,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.6287824988219449,
+          "bar": 0,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "instrument": "skinbass",
+          "gain": 0.022,
+          "pitch": 43,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.7182157917948551,
+          "bar": 0,
+          "step": 7,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "accent",
+          "time": 0.8026146337021801,
+          "bar": 0,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 0.8026146337021801,
+          "bar": 0,
+          "step": 8
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.9823529411764708,
+          "bar": 0,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.9817001218093452,
+          "bar": 0,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 0.9817001218093452,
+          "bar": 0,
+          "step": 10
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "skinpluck",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 0.9817001218093452,
+          "bar": 0,
+          "step": 10
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.0708180847853863,
+          "bar": 0,
+          "step": 11,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 1.1563791494823117,
+          "bar": 0,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "accent",
+          "time": 1.1563791494823117,
+          "bar": 0,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 1.3342708745736847,
+          "bar": 0,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "instrument": "skinbass",
+          "gain": 0.022,
+          "pitch": 43,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.3342708745736847,
+          "bar": 0,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 1.3342708745736847,
+          "bar": 0,
+          "step": 14
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.5117647058823527,
+          "bar": 1,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "accent",
+          "time": 1.5122607447588265,
+          "bar": 1,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 1.5122607447588265,
+          "bar": 1,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "skinpluck",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 1.5122607447588265,
+          "bar": 1,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 1.6854634081041984,
+          "bar": 1,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 3,
+          "instrument": "skinpluck",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 1.773463407451396,
+          "bar": 1,
+          "step": 3
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 1.8655587397899254,
+          "bar": 1,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "accent",
+          "time": 1.8655587397899254,
+          "bar": 1,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.0411764705882347,
+          "bar": 1,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.041462069870246,
+          "bar": 1,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "instrument": "skinbass",
+          "gain": 0.022,
+          "pitch": 43,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.132578970726908,
+          "bar": 1,
+          "step": 7,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "accent",
+          "time": 2.2209903484409783,
+          "bar": 1,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 2.2209903484409783,
+          "bar": 1,
+          "step": 8
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.3941176470588235,
+          "bar": 1,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.3977046345505206,
+          "bar": 1,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "muted",
+          "time": 2.3977046345505206,
+          "bar": 1,
+          "step": 10
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "skinpluck",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 2.3977046345505206,
+          "bar": 1,
+          "step": 10
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.4847817687900626,
+          "bar": 1,
+          "step": 11,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 2.5712620760571654,
+          "bar": 1,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "accent",
+          "time": 2.5712620760571654,
+          "bar": 1,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.7494890739207762,
+          "bar": 1,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "instrument": "skinbass",
+          "gain": 0.022,
+          "pitch": 43,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.7494890739207762,
+          "bar": 1,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "muted",
+          "time": 2.7494890739207762,
+          "bar": 1,
+          "step": 14
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.9235294117647066,
+          "bar": 2,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "accent",
+          "time": 2.9268614363930032,
+          "bar": 2,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 2.9268614363930032,
+          "bar": 2,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "skinpluck",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 2.9268614363930032,
+          "bar": 2,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.1038606971967977,
+          "bar": 2,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "skinpluck",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 3.1874166170927323,
+          "bar": 2,
+          "step": 3
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 3.273308390541113,
+          "bar": 2,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "accent",
+          "time": 3.273308390541113,
+          "bar": 2,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.4529411764705897,
+          "bar": 2,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.4563495955637067,
+          "bar": 2,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "instrument": "skinbass",
+          "gain": 0.022,
+          "pitch": 43,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.5386173294235914,
+          "bar": 2,
+          "step": 7,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "accent",
+          "time": 3.6324695864006458,
+          "bar": 2,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 3.6324695864006458,
+          "bar": 2,
+          "step": 8
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.8058823529411785,
+          "bar": 2,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.80925471255041,
+          "bar": 2,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 3.80925471255041,
+          "bar": 2,
+          "step": 10
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "skinpluck",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 3.80925471255041,
+          "bar": 2,
+          "step": 10
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.8964432927980384,
+          "bar": 2,
+          "step": 11,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 3.985845756447493,
+          "bar": 2,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "accent",
+          "time": 3.985845756447493,
+          "bar": 2,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.157567342714135,
+          "bar": 2,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "instrument": "skinbass",
+          "gain": 0.022,
+          "pitch": 43,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.157567342714135,
+          "bar": 2,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 2,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 4.157567342714135,
+          "bar": 2,
+          "step": 14
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.33529411764706,
+          "bar": 3,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "accent",
+          "time": 4.335839173867204,
+          "bar": 3,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 4.335839173867204,
+          "bar": 3,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "skinpluck",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 4.335839173867204,
+          "bar": 3,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.513902987354381,
+          "bar": 3,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 4.691980755561087,
+          "bar": 3,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "accent",
+          "time": 4.691980755561087,
+          "bar": 3,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.864705882352941,
+          "bar": 3,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.866544654938556,
+          "bar": 3,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "instrument": "skinbass",
+          "gain": 0.022,
+          "pitch": 43,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.952222231386448,
+          "bar": 3,
+          "step": 7,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "accent",
+          "time": 5.038983135809463,
+          "bar": 3,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 5.038983135809463,
+          "bar": 3,
+          "step": 8
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.217647058823528,
+          "bar": 3,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.217220374604137,
+          "bar": 3,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.303829658937145,
+          "bar": 3,
+          "step": 11,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 5.395509813954613,
+          "bar": 3,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "accent",
+          "time": 5.395509813954613,
+          "bar": 3,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.567375826973136,
+          "bar": 3,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "instrument": "skinbass",
+          "gain": 0.022,
+          "pitch": 43,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.567375826973136,
+          "bar": 3,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.2,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.747058823529408,
+          "bar": 4,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "accent",
+          "time": 5.748010161388443,
+          "bar": 4,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 5.748010161388443,
+          "bar": 4,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "skinpluck",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 5.748010161388443,
+          "bar": 4,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.920977964728957,
+          "bar": 4,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 3,
+          "instrument": "skinpluck",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 6.00967003741575,
+          "bar": 4,
+          "step": 3
+        }
+      ],
+      "lessonNotes": [],
+      "labBand": "heavy",
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.09587106199748814,
+          "role": "lead",
+          "source": "living:lab:moth"
+        },
+        {
+          "time": 0.5370475325857235,
+          "role": "lead",
+          "source": "living:lab:moth"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.6594117647058824,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.6594117647058824,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.30647058823529416,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.3947058823529412,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.6594117647058824,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.6594117647058824,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.30647058823529416,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.3947058823529412,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.9094117647058824,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.9094117647058824,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.5564705882352942,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.6447058823529412,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.9094117647058824,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.9094117647058824,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.5564705882352942,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.6447058823529412,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.41000000000000003,
+          "role": "lead",
+          "source": "living:lab:moth"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.1594117647058824,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.1594117647058824,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.8064705882352942,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.8947058823529412,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.1594117647058824,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.1594117647058824,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.8064705882352942,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.8947058823529412,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.4094117647058824,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.4094117647058824,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.056470588235294,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.1447058823529412,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.4094117647058824,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.4094117647058824,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.056470588235294,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.1447058823529412,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.6594117647058821,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.6594117647058821,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.306470588235294,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.394705882352941,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.6594117647058821,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.6594117647058821,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.306470588235294,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.394705882352941,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.9094117647058821,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.9094117647058821,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.556470588235294,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.644705882352941,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.9094117647058821,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.9094117647058821,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.556470588235294,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.644705882352941,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.159411764705882,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.159411764705882,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.806470588235294,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.894705882352941,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.159411764705882,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.159411764705882,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.806470588235294,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.894705882352941,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.409411764705882,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.409411764705882,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.056470588235294,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.144705882352941,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.409411764705882,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.409411764705882,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "lab:heavy",
+      "worldFamily": null,
+      "hookI": "skinpluck",
+      "brightness": 3900,
+      "deferredDisconnects": 319,
+      "scene": "living:moth",
+      "filterMotion": {
+        "start": 3216.0717146815846,
+        "end": 707.5357772299486,
+        "duration": 0.2647058823529412,
+        "type": "lowpass",
+        "stages": 3,
+        "slope": 36,
+        "time": 3.1896559870192753,
+        "onset": 10079.455987001395
+      },
+      "instrumentHits": {
+        "kick": 13,
+        "shaker": 34,
+        "velvetbass": 15,
+        "skinpluck": 60,
+        "lowbow": 54,
+        "living:lead": 6,
+        "duskpad": 144,
+        "wood": 100,
+        "acousticsnare": 48,
+        "feltkeys": 144,
+        "skinbass": 48
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "dnb",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.9008950591087341,
+      "rmsDb": -11.81835790981248,
+      "hotFraction": 0
+    },
+    {
+      "labEvolution": {
+        "chapter": 0,
+        "scene": 0,
+        "quiet": false
+      },
+      "labPerformance": [
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.1,
+          "bar": 0,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 0.10011963280476631,
+          "bar": 0,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "duskpad",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 0.10011963280476631,
+          "bar": 0,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.3589970329294506,
+          "bar": 0,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.497492058539763,
+          "bar": 0,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.6128205128205128,
+          "bar": 0,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 0.6116873170440204,
+          "bar": 0,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 0.6116873170440204,
+          "bar": 0,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 0.8719238738555174,
+          "bar": 0,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 3,
+          "instrument": "duskpad",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 0.8719238738555174,
+          "bar": 0,
+          "step": 6
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.1256410256410256,
+          "bar": 0,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 1.1254390702536567,
+          "bar": 0,
+          "step": 8
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 1.3840759228889663,
+          "bar": 0,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 1.3840759228889663,
+          "bar": 0,
+          "step": 10
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "duskpad",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 1.3840759228889663,
+          "bar": 0,
+          "step": 10
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.6384615384615384,
+          "bar": 0,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 1.6352374107535355,
+          "bar": 0,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 1.6352374107535355,
+          "bar": 0,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 1.8966076529676046,
+          "bar": 0,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 1.8966076529676046,
+          "bar": 0,
+          "step": 14
+        },
+        {
+          "role": "lead",
+          "degree": 2,
+          "instrument": "duskpad",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 1.8966076529676046,
+          "bar": 0,
+          "step": 14
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.0376869030497393,
+          "bar": 0,
+          "step": 15,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.151282051282051,
+          "bar": 1,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 2.1495004855171325,
+          "bar": 1,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "duskpad",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 2.1495004855171325,
+          "bar": 1,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.4051067098195733,
+          "bar": 1,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.552029636258307,
+          "bar": 1,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.664102564102564,
+          "bar": 1,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 2.661203966094706,
+          "bar": 1,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 2.661203966094706,
+          "bar": 1,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 2.923062353546564,
+          "bar": 1,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 3,
+          "instrument": "duskpad",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 2.923062353546564,
+          "bar": 1,
+          "step": 6
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.1769230769230767,
+          "bar": 1,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "muted",
+          "time": 3.174448642770831,
+          "bar": 1,
+          "step": 8
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.433615133413424,
+          "bar": 1,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "muted",
+          "time": 3.433615133413424,
+          "bar": 1,
+          "step": 10
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "duskpad",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 3.433615133413424,
+          "bar": 1,
+          "step": 10
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.6897435897435895,
+          "bar": 1,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 3.692880744507154,
+          "bar": 1,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 3.692880744507154,
+          "bar": 1,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 3.948260325118756,
+          "bar": 1,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "muted",
+          "time": 3.948260325118756,
+          "bar": 1,
+          "step": 14
+        },
+        {
+          "role": "lead",
+          "degree": 2,
+          "instrument": "duskpad",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 3.948260325118756,
+          "bar": 1,
+          "step": 14
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.091245148459067,
+          "bar": 1,
+          "step": 15,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.202564102564102,
+          "bar": 2,
+          "step": 0,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 0,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 4.206134258478975,
+          "bar": 2,
+          "step": 0
+        },
+        {
+          "role": "lead",
+          "degree": 4,
+          "instrument": "duskpad",
+          "offset": 0,
+          "level": 0.85,
+          "technique": "normal",
+          "time": 4.206134258478975,
+          "bar": 2,
+          "step": 0
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.458393311081787,
+          "bar": 2,
+          "step": 2,
+          "role": "perc"
+        },
+        {
+          "instrument": "wood",
+          "gain": 0.035,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.605568757291977,
+          "bar": 2,
+          "step": 3,
+          "role": "perc"
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.715384615384613,
+          "bar": 2,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 4.716313730791781,
+          "bar": 2,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 4.716313730791781,
+          "bar": 2,
+          "step": 4,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 4.968269740559969,
+          "bar": 2,
+          "step": 6,
+          "role": "perc"
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "duskpad",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 4.968269740559969,
+          "bar": 2,
+          "step": 6
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.228205128205124,
+          "bar": 2,
+          "step": 8,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 1,
+          "technique": "normal",
+          "time": 5.228204539175261,
+          "bar": 2,
+          "step": 8
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 90,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.481616186949777,
+          "bar": 2,
+          "step": 10,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 7,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 5.481616186949777,
+          "bar": 2,
+          "step": 10
+        },
+        {
+          "role": "lead",
+          "degree": 0,
+          "instrument": "duskpad",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 5.481616186949777,
+          "bar": 2,
+          "step": 10
+        },
+        {
+          "instrument": "kick",
+          "gain": 0.16,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.741025641025635,
+          "bar": 2,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "acousticsnare",
+          "gain": 0.048,
+          "pitch": 48,
+          "offset": 0,
+          "technique": "accent",
+          "time": 5.737894755527036,
+          "bar": 2,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "rim",
+          "gain": 0.022,
+          "pitch": 72,
+          "offset": 0,
+          "technique": "normal",
+          "time": 5.737894755527036,
+          "bar": 2,
+          "step": 12,
+          "role": "perc"
+        },
+        {
+          "instrument": "shaker",
+          "gain": 0.009,
+          "pitch": 108,
+          "offset": 0,
+          "technique": "ghost",
+          "time": 5.9960148766449555,
+          "bar": 2,
+          "step": 14,
+          "role": "perc"
+        },
+        {
+          "role": "bajo",
+          "degree": 2,
+          "instrument": "velvetbass",
+          "offset": 0,
+          "level": 0.8,
+          "technique": "normal",
+          "time": 5.9960148766449555,
+          "bar": 2,
+          "step": 14
+        },
+        {
+          "role": "lead",
+          "degree": 2,
+          "instrument": "duskpad",
+          "offset": 0,
+          "level": 0.68,
+          "technique": "ghost",
+          "time": 5.9960148766449555,
+          "bar": 2,
+          "step": 14
+        }
+      ],
+      "lessonNotes": [],
+      "labBand": "warm",
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.0995031550116837,
+          "role": "bajo",
+          "source": "living:lab:bridge"
+        },
+        {
+          "time": 0.4841185396270683,
+          "role": "bajo",
+          "source": "living:lab:bridge"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.8992307692307692,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.8992307692307692,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.3864102564102564,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.5146153846153846,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.8992307692307692,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.8992307692307692,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.3864102564102564,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.5146153846153846,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.149230769230769,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.149230769230769,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.6364102564102564,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.7646153846153846,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.149230769230769,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.149230769230769,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.6364102564102564,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.7646153846153846,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.399230769230769,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.399230769230769,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.8864102564102564,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.0146153846153845,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.399230769230769,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.399230769230769,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.8864102564102564,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.0146153846153845,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.649230769230769,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.649230769230769,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.1364102564102563,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.2646153846153845,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.649230769230769,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.649230769230769,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.1364102564102563,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.2646153846153845,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.899230769230769,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.899230769230769,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.3864102564102563,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.5146153846153845,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.899230769230769,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.899230769230769,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.3864102564102563,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.5146153846153845,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.149230769230769,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.149230769230769,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.6364102564102563,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.7646153846153845,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.149230769230769,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.149230769230769,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.6364102564102563,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.7646153846153845,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.399230769230769,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.399230769230769,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.8864102564102563,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.0146153846153845,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.399230769230769,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.399230769230769,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.8864102564102563,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.0146153846153845,
+          "role": "agudo",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.649230769230769,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.649230769230769,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.1364102564102563,
+          "role": "agudo",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.2646153846153845,
+          "role": "agudo",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.649230769230769,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.649230769230769,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "agudo",
+          "source": "mix:6"
+        },
+        {
+          "time": 2.1364102564102563,
+          "role": "agudo",
+          "source": "mix:6"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "lab:warm",
+      "worldFamily": null,
+      "hookI": "duskpad",
+      "brightness": 4200,
+      "deferredDisconnects": 309,
+      "scene": "living:bridge",
+      "filterMotion": {
+        "start": 672.3315701772356,
+        "end": 150,
+        "duration": 0.2564102564102564,
+        "type": "lowpass",
+        "stages": 1,
+        "slope": 12,
+        "time": 5.618016042612422,
+        "onset": 12885.91604258858
+      },
+      "instrumentHits": {
+        "kick": 12,
+        "velvetbass": 12,
+        "duskpad": 204,
+        "hollow": 5,
+        "living:bajo": 5,
+        "feltkeys": 48,
+        "strings": 96,
+        "lowbow": 240,
+        "shaker": 12,
+        "wood": 5,
+        "rim": 6
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "nudisco",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.35395607352256775,
+      "rmsDb": -25.508070526623285,
+      "hotFraction": 0
+    }
+  ]
+}

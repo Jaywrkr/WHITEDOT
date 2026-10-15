@@ -370,6 +370,7 @@ export function initialize(runtime) {
         if(runtime.playNewInstrument?.(hit.instrument,hit.pitch,at,v,{technique:hit.technique}))continue;
         if(hit.instrument==='kick')kick(at,v);else if(hit.instrument==='snare')snare(at,v);
         else if(hit.instrument==='conga')conga(at,hit.pitch,v);else if(hit.instrument==='tom')tom(at,hit.pitch,v);
+        else if(hit.instrument==='cowbell')cowbell(at,v);else if(hit.instrument==='guiro')runtime.guiro(at,v);else if(hit.instrument==='timbale')runtime.timbale(at,v);
         else if(hit.instrument==='rim')rim(at,v);else if(hit.instrument==='wood')wood(at,v);else shaker(at,v);
       }return;
     }

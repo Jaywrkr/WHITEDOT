@@ -7,18 +7,18 @@
 
 | Fase | Rama | Estado |
 |---|---|---|
-| L1 · Identidad completa del territorio | `feat/lab-l1-adn-territorial` | Implementada y probada; subida para PR de Jay |
-| L2 · Instrumentos y técnicas | `feat/lab-l2-instrumentos` | Implementada y probada; subida para PR de Jay |
-| L3 · Músicos, ritmos y frases | `feat/lab-l3-interpretacion` | Implementada y probada; subida para PR de Jay |
-| L4 · Paisaje como instrumento | `feat/lab-l4-paisaje` | Implementada y probada; subida para PR de Jay |
-| L5 · Aprender jugando | `feat/lab-l5-aprendizaje` | Implementada y probada; subida para PR de Jay |
-| L6 · Evolución, viajes y memoria | `feat/lab-l6-exploracion` | Implementada y probada; subida para PR de Jay |
-| L7 · Curaduría y cierre | `feat/lab-l7-curaduria` | Pendiente |
+| L1 · Identidad completa del territorio | `feat/lab-l1-adn-territorial` | En main · integrado por Jay, PR #123 |
+| L2 · Instrumentos y técnicas | `feat/lab-l2-instrumentos` | En main · integrado por Jay, PR #124 |
+| L3 · Músicos, ritmos y frases | `feat/lab-l3-interpretacion` | En main · integrado por Jay, PR #125 |
+| L4 · Paisaje como instrumento | `feat/lab-l4-paisaje` | En main · integrado por Jay, PR #126 |
+| L5 · Aprender jugando | `feat/lab-l5-aprendizaje` | En main · integrado por Jay, PR #127 |
+| L6 · Evolución, viajes y memoria | `feat/lab-l6-exploracion` | En main · integrado por Jay, PR #128 |
+| L7 · Curaduría y cierre | `feat/lab-l7-curaduria` | Implementada y probada; subida para PR de Jay |
 <!-- /laboratorio-vivo -->
 
-**Auditoría de aceptación vigente:** [AUDITORIA_ACEPTACION_2.0.md](AUDITORIA_ACEPTACION_2.0.md), rama `audit/cierre-2-validacion`, candidata 2.0.0-rc.9. Incluye A29 y las condiciones externas para cerrar la publicación; las fases de implementación siguientes conservan su entrega.
+**Revisión integrada vigente:** [CIERRE_LABORATORIO_VIVO.md](CIERRE_LABORATORIO_VIVO.md), candidata 2.1.0-alpha.7. [AUDITORIA_ACEPTACION_2.0.md](AUDITORIA_ACEPTACION_2.0.md) conserva el antecedente RC9, A29 y sus condiciones externas. No reiniciar cierres anteriores.
 
-**Continuación acordada:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida las siguientes diez fases. No confundir F1 de cierre con la fase visual 1 histórica. Cubo/menú/Bitácora/logros/casa recuperados y probados en F9, ya integrado. Instantánea de main `52fec80`: cierre F1–F10 y pulido F2 integrados; aceptación física pendiente.
+**Continuación acordada:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida las siguientes diez fases. No confundir F1 de cierre con la fase visual 1 histórica. Cubo/menú/Bitácora/logros/casa recuperados y probados en F9, ya integrado. Instantánea histórica de main `52fec80`: cierre F1–F10 y pulido F2 integrados; aceptación física pendiente.
 
 | Fase | Rama | Estado |
 |---|---|---|
