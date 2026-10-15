@@ -29,7 +29,7 @@ label,summary{font-size:13px}
 /* Sheets: pure black, one hook phrase on top. */
 .modal{background:#000c}
 .modal .sheet,.cube-sheet{background:var(--void);border-color:#ffffff33}
-.sheet h2,.cube-sheet h2,.menu-heading h2{font-family:var(--display);font-weight:400;font-size:26px;line-height:1.15;letter-spacing:.01em}
+.sheet h2,.cube-sheet h2,.menu-heading h2{font-family:var(--display);font-weight:400;font-size:22px;line-height:1.25;letter-spacing:.01em}
 .sheet p{font-size:13px;line-height:1.65;color:var(--dim)}
 .sheet p b{color:var(--ink)}
 .panel-heading,.menu-heading{background:var(--void)}
@@ -54,7 +54,7 @@ label,summary{font-size:13px}
 /* In the World only the place speaks: its name in Geist Mono. */
 body.world-focus .era{font-family:var(--display);font-size:12px;letter-spacing:.02em;color:var(--ink);max-width:calc(100vw - 120px)}
 body.world-focus .goal{color:var(--dim)}
-.zone b,body.world-focus .zone b{font-family:var(--display);font-weight:400;font-size:22px;line-height:1.15}
+.zone b,body.world-focus .zone b{font-family:var(--display);font-weight:400;font-size:18px;line-height:1.25}
 .zone small{color:var(--dim)}
 
 /* Dock: two square keys. */
@@ -73,7 +73,7 @@ body.world-mode .dock{flex-wrap:wrap}
 .toast{background:var(--void);border-color:var(--ink);font-size:12px}
 .toast em{color:var(--earned)}
 .phrase{font-size:14px}
-.phrase.big{font-family:var(--display);font-size:24px;line-height:1.2;color:var(--earned)}
+.phrase.big{font-family:var(--display);font-size:20px;line-height:1.3;color:var(--earned)}
 
 /* Menu: six big keys to play, then a quiet list. */
 .modal .menu-sheet{max-width:560px}
@@ -111,7 +111,7 @@ body.dev .devbox{display:block}
 .cube-options .cube-swatch{border-width:5px}
 
 @media(max-width:600px){
- .sheet h2,.cube-sheet h2,.menu-heading h2{font-size:22px}
+ .sheet h2,.cube-sheet h2,.menu-heading h2{font-size:20px}
  .menu-group.primary .tiles button{min-height:80px}
 }
 @media(max-width:360px){
@@ -137,11 +137,16 @@ body.dev .devbox{display:block}
 .steps b{color:var(--ink);font-weight:600}
 
 /* Earned world moments: one compact, straight-edged card, never a menu sound. */
-.celebration{position:fixed;z-index:19;right:16px;top:calc(var(--safe-top) + 64px);width:260px;max-width:calc(100vw - 32px);max-height:28vh;overflow:auto;padding:12px;background:#000;border:1px solid #f0d27a;display:grid;grid-template-columns:48px 1fr;gap:4px 10px;box-sizing:border-box;pointer-events:none}
-.celebration[hidden]{display:none}.celebration>div{grid-row:1/5;color:#f0d27a;align-self:center}.celebration svg{width:48px;height:48px}.celebration .rare-glyph,.celebration .rare-sparks{stroke:currentColor;fill:none}.celebration .rare-orbit{stroke:#ffffff44;fill:none}
-.celebration strong{font-family:var(--display);font-size:16px;font-weight:400;padding-right:24px;line-height:1.3}.celebration p{font:12px/1.5 var(--mono);margin:0}.celebration small{font:11px/1.4 var(--mono);color:#f0d27a}.celebration span{font:12px var(--mono)}
-.celebration button{pointer-events:auto;min-height:44px;font:12px var(--mono);border:0;background:#000;color:#fff}.celebration #celebrationDismiss{position:absolute;right:0;top:0;min-width:44px;width:44px;font-size:18px}.celebration #celebrationShare{grid-column:1/-1;text-align:right}.celebration[data-level="0"]>div,.celebration[data-level="0"] p{display:none}.celebration[data-level="2"] strong{font-size:20px}
-@media(max-height:440px){.celebration{width:300px;max-height:35vh;top:16px;padding:8px;gap:2px 8px}.celebration p{font-size:11px}.celebration strong{font-size:14px}}
+.celebration{position:fixed;z-index:19;right:16px;top:calc(var(--safe-top) + 64px);width:280px;max-width:calc(100vw - 32px);max-height:26vh;overflow:auto;padding:10px;background:#000;border:1px solid #f0d27a66;border-left:2px solid #f0d27a;display:grid;grid-template-columns:64px minmax(0,1fr);gap:3px 10px;box-sizing:border-box;pointer-events:none;animation:find-reveal .38s ease-out}
+.celebration[hidden]{display:none}.celebration>div{grid-row:1/6;color:#f0d27a;align-self:center}.celebration svg{width:64px;height:64px}.celebration .rare-glyph,.celebration .rare-sparks{stroke:currentColor;fill:none}.celebration .rare-orbit{stroke:#ffffff44;fill:none}
+.celebration strong{font-family:var(--display);font-size:14px;font-weight:500;padding-right:24px;line-height:1.3}.celebration p{font:12px/1.4 var(--mono);margin:0}.celebration small{font:10px/1.4 var(--mono);color:#f0d27a}.celebration span{font:12px var(--mono)}
+#celebrationPlace{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--dim)}#celebrationSerial{grid-column:1;color:var(--dim)}#celebrationSignature:empty{display:none}
+.celebration button{pointer-events:auto;min-height:44px;font:12px var(--mono);border:0;background:#000;color:#fff}.celebration #celebrationDismiss{position:absolute;right:0;top:0;min-width:44px;width:44px;font-size:18px}.celebration #celebrationShare{grid-column:2;text-align:right}.celebration[data-level="0"]>div,.celebration[data-level="0"] p,.celebration[data-level="0"] #celebrationSerial{display:none}.celebration[data-level="2"] strong{font-size:16px}
+.celebration[data-power="campo"] .rare-orbit{stroke:#f0d27a66;stroke-dasharray:2 5}.celebration[data-power="cometa"] .rare-orbit{stroke-dasharray:50 190}.celebration[data-power="brujula"] .rare-orbit{stroke-dasharray:1 19}.celebration[data-power="iman"] .rare-orbit{stroke-dasharray:90 29}.celebration[data-power="pincel"] .rare-orbit{stroke-dasharray:4 8}.celebration[data-power="companero"] .rare-orbit{stroke-dasharray:10 20}
+@keyframes find-reveal{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.celebration{animation:none}}
+@media(max-height:440px){.celebration{width:300px;max-height:32vh;top:16px;padding:8px;gap:2px 8px;grid-template-columns:48px minmax(0,1fr)}.celebration svg{width:48px;height:48px}.celebration p{font-size:11px}.celebration strong{font-size:14px}body.lab .celebration{left:16px;right:auto}}
+.guide-sheet #guideGlossary{border-top:1px solid var(--line);margin-top:12px;width:100%;text-align:left}.guide-sheet h3{font-size:13px;font-weight:500}.guide-sheet small{font-size:11px;color:var(--dim)}
 
 body:has(#celebration:not([hidden])) .toast{visibility:hidden;pointer-events:none}
 body:has(#celebration:not([hidden])) .voice:not(.expanded){top:auto;bottom:calc(var(--safe-bottom) + 84px);left:16px;width:min(280px,calc(100vw - 32px));max-width:calc(100vw - 32px)}

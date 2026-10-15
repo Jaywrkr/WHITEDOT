@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-1.1.0-cierre-f9';
+const CACHE='whitedot-2.0.0-rc.1-cierre-f10';
 const SHELL=[
  "./src/cube-art.js",
  "./src/cube-voice.js",

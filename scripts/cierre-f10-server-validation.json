@@ -1,0 +1,11 @@
+{
+  "validatedAt": "2026-10-15T03:35:00.074772+00:00",
+  "command": [
+    "python3",
+    "tests/server_api.py"
+  ],
+  "exitCode": 0,
+  "serverFingerprint": "88965304a2002e57e7923597588508bafe4a360d64f710be0d7545c7fc4dadd2",
+  "result": "PASS HTTP accounts/guests, protected files, origin/CSRF, concurrent CAS, save isolation, 2-slot rooms, clocked events, validation and persistent edits",
+  "scope": "Temporary local HTTP/SQLite tests. Does not deploy or certify an Internet service."
+}

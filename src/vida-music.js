@@ -115,6 +115,6 @@ export const vidaKindOf=kind=>{const m=/^vida:(golondrina|grulla|luciernaga|lira
 export function normalizeVida(saved){
  const out={seen:{},plants:{}};if(!saved||typeof saved!=='object')return out;
  for(const k of SPECIES_IDS)if(saved.seen?.[k])out.seen[k]=true;if(saved.seen?.plant)out.seen.plant=true;
- for(const [id,e] of Object.entries(saved.plants||{})){if(Object.keys(out.plants).length>=96)break;if(!/^plant:-?\d+,-?\d+:\d$/.test(id)||!e||typeof e!=='object')continue;const g=Number(e.g),t=Number(e.t);if(Number.isFinite(g)&&Number.isFinite(t))out.plants[id]={g:clamp(g,0,4),t};}
+ for(const [id,e] of Object.entries(saved.plants||{})){if(!/^plant:-?\d+,-?\d+:\d$/.test(id)||!e||typeof e!=='object')continue;const g=Number(e.g),t=Number(e.t);if(Number.isFinite(g)&&Number.isFinite(t))out.plants[id]={g:clamp(g,0,4),t};}
  return out;
 }

@@ -46,10 +46,10 @@
   </div></div>
 </div>
 <div class="bar" id="bar"><i id="barfill"></i></div>
-<div class="goal"><b id="goal">Recoge luz · 0 / 120</b><span id="goalR"></span></div>
+<div class="goal"><b id="goal">Recoge una luz para abrir el Mundo</b><span id="goalR"></span></div>
 
 <aside id="celebration" class="celebration" role="status" aria-live="polite" hidden>
- <div id="celebrationArt" aria-hidden="true"></div><small id="celebrationTier"></small><strong id="celebrationName"></strong><p id="celebrationEffect"></p><small id="celebrationTime"></small><span id="celebrationSignature"></span>
+ <div id="celebrationArt" aria-hidden="true"></div><small id="celebrationTier"></small><strong id="celebrationName"></strong><p id="celebrationEffect"></p><small id="celebrationTime"></small><small id="celebrationPlace"></small><small id="celebrationSerial"></small><span id="celebrationSignature"></span>
  <button id="celebrationDismiss" aria-label="Ocultar celebración">×</button><button id="celebrationShare" hidden>Compartir</button>
 </aside>
 <aside id="rareNotice" class="rare-notice" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -115,6 +115,7 @@
       <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
       <button id="bJumpBack" hidden><span>Volver al salto</span></button>
       <button id="bSettings"><span>Ajustes</span></button>
+      <button id="bGuide"><span>Tu recorrido</span></button>
       <button id="bConnection"><span>Cuenta y duetos</span></button>
       <button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Guardar copia</span></button>
       <button id="pwaUpdate" hidden><span>Actualizar versión disponible</span></button>
@@ -129,7 +130,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v1.1.0</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.0.0-rc.1</span><small id="releaseDeploy">deploy sin registrar</small></div>
     <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>
@@ -142,12 +143,12 @@
 
 <div class="modal" id="mHelpC" hidden>
   <div class="sheet">
-    <h2>Un pixel.<br>Un mundo que suena.</h2>
+    <h2>Descubre cómo suena el universo.</h2>
+    <p>Explora. Crea tu música. Conserva lo que encuentres.</p>
     <div class="steps">
-      <div><i>1</i><span><b>Arrastra.</b> Cada luz es una nota.</span></div>
-      <div><i>2</i><span><b>Toca.</b> Tu pulso atrae la luz.</span></div>
-      <div><i>3</i><span><b>Llena la barra.</b> Se abre el Mundo.</span></div>
-      <div><i>4</i><span><b>Vuelve mañana.</b> Creces.</span></div>
+      <div><i>1</i><span><b>Recorre el Camino.</b> Arrastra hacia una luz.</span></div>
+      <div><i>2</i><span><b>Escucha.</b> Tu primera luz abre el Mundo de hoy.</span></div>
+      <div><i>3</i><span><b>Explora sin reloj.</b> Lo ganado siempre sigue contigo.</span></div>
     </div>
     <div class="row"><button id="hcGo" class="gold">Empezar</button></div>
   </div>
@@ -155,27 +156,43 @@
 
 <div class="modal" id="mHelpW" hidden>
   <div class="sheet">
-    <h2>El Mundo</h2>
+    <h2>Encuentra tu propia música.</h2>
+    <p>Descubre voces. Despierta reliquias. Crea tu espacio en casa.</p>
     <div class="steps">
-      <div><i>1</i><span><b>Toca.</b> Lanzas un pulso.</span></div>
-      <div><i>2</i><span><b>Mantén.</b> Escuchas las voces cercanas.</span></div>
-      <div><i>3</i><span><b>Choca.</b> Lo dorado se puede tocar.</span></div>
-      <div><i>4</i><span><b>Quédate.</b> Cada lugar tiene su ritmo.</span></div>
-      <div><i>5</i><span><b>Menú → Herramientas.</b> Efectos, Eco y Estudio.</span></div>
+      <div><i>1</i><span><b>Acércate con el cubo.</b> Toca una criatura o planta.</span></div>
+      <div><i>2</i><span><b>Escucha el cambio.</b> Quédate cerca o lanza un pulso.</span></div>
+      <div><i>3</i><span><b>Conserva el lugar.</b> Menú → Favoritos → Guardar aquí.</span></div>
     </div>
     <div class="row"><button id="hwGo" class="gold">A jugar</button></div>
   </div>
 </div>
 
+<div class="modal" id="mGuide" role="dialog" aria-modal="true" aria-labelledby="guideTitle" hidden><div class="sheet guide-sheet">
+ <h2 id="guideTitle">Tu recorrido</h2>
+ <p>Descubre cómo suena el universo. Crea tu propia identidad musical.</p>
+ <article class="journal-card"><h3>Tu siguiente paso</h3><p id="guideNext"></p><small id="guideProgress"></small></article>
+ <p>Elige tu camino. Puedes explorar sin completar esta guía.</p>
+ <button id="guideGlossary" aria-expanded="false" aria-controls="guideDefinitions">Qué puedes encontrar</button><div id="guideDefinitions" hidden>
+ <p><b>Voces.</b> Criaturas y plantas aportan instrumentos, ritmos o cambios musicales.</p>
+ <p><b>Reliquias.</b> Despierta recuerdos musicales escuchando cerca y lanzando pulsos.</p>
+ <p>Consérvalas en la Bitácora. Vuelve a tocarlas donde las encontraste.</p>
+ <p><b>Cajas.</b> Descubre poderes temporales. Su tarjeta conserva el encuentro.</p>
+ <p><b>Casa.</b> Coloca objetos ganados y compón caminando entre ellos.</p>
+ <p><b>Favoritos.</b> Guarda un lugar y regresa mediante su dirección.</p>
+ <p><b>Camino.</b> Recoge una luz al empezar el día. Después, explora libremente.</p>
+ </div>
+ <div class="row"><button id="guideClose">Seguir jugando</button></div>
+</div></div>
+
 <div class="modal" id="mCap" hidden>
   <div class="sheet">
-    <h2>Hoy creciste.<br>Mañana sigues.</h2>
+    <h2>Hoy compartiste luz.</h2>
     <div class="kv">
       <div><b id="cDay">1</b><span>Día</span></div>
       <div><b id="cStreak">1</b><span>Racha</span></div>
       <div><b id="cSize">1</b><span>Tamaño</span></div>
     </div>
-    <p><b>El Mundo está abierto.</b> Tu linterna dura <b id="cLamp">11 min</b>.</p>
+    <p><b>El Mundo está abierto.</b> <span id="cLamp">Explora sin límite de tiempo.</span></p>
     <p class="firma">Simple.</p>
     <div class="row"><button id="cExplore" class="gold">Entrar al Mundo</button><button id="cShare">Compartir mi día</button></div>
   </div>
@@ -183,13 +200,13 @@
 
 <div class="modal" id="mOut" hidden>
   <div class="sheet">
-    <h2>Tu linterna<br>se apagó.</h2>
+    <h2>Conserva lo que descubriste.</h2>
     <div class="kv">
       <div><b id="oToday">0</b><span>Hoy</span></div>
       <div><b id="oStars">0</b><span>Estrellas</span></div>
       <div><b id="oStreak">0</b><span>Racha</span></div>
     </div>
-    <p><s>Se acabó.</s> Mañana sigues.</p>
+    <p>El Mundo sigue abierto. Vuelve cuando quieras.</p>
     <div class="row"><button id="oDeploy" class="gold">Desplegar Estudio aquí</button><button id="oSky">Ver constelación</button><button id="oSession">Resumen</button><button id="oClose">Cerrar</button></div>
   </div>
 </div>

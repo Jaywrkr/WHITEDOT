@@ -1,0 +1,193 @@
+{
+  "sampledRegions": 4096,
+  "land": 2816,
+  "pure": 597,
+  "genres": 52,
+  "families": 8,
+  "influences": 16,
+  "structuralCombinations": 1606,
+  "threeFrameRecipes": 2798,
+  "examples": [
+    {
+      "region": "-30,-32",
+      "x": -106200,
+      "y": -113400,
+      "genre": "techhouse",
+      "family": "dunes",
+      "hybrid": "industrial-soft",
+      "bpm": 128
+    },
+    {
+      "region": "-29,-32",
+      "x": -102600,
+      "y": -113400,
+      "genre": "tribal",
+      "family": "grove",
+      "hybrid": "pure",
+      "bpm": 121
+    },
+    {
+      "region": "-28,-32",
+      "x": -99000,
+      "y": -113400,
+      "genre": "microhouse",
+      "family": "orbital",
+      "hybrid": "acid-dub",
+      "bpm": 120
+    },
+    {
+      "region": "-27,-32",
+      "x": -95400,
+      "y": -113400,
+      "genre": "melodic",
+      "family": "orbital",
+      "hybrid": "modal-wind",
+      "bpm": 118
+    },
+    {
+      "region": "-23,-32",
+      "x": -81000,
+      "y": -113400,
+      "genre": "idm",
+      "family": "dunes",
+      "hybrid": "afro-poly",
+      "bpm": 100
+    },
+    {
+      "region": "-21,-32",
+      "x": -73800,
+      "y": -113400,
+      "genre": "afro",
+      "family": "terraces",
+      "hybrid": "dub-roots",
+      "bpm": 122
+    },
+    {
+      "region": "-19,-32",
+      "x": -66600,
+      "y": -113400,
+      "genre": "melodictechno",
+      "family": "vault",
+      "hybrid": "cosmic-drift",
+      "bpm": 129
+    },
+    {
+      "region": "-18,-32",
+      "x": -63000,
+      "y": -113400,
+      "genre": "rominimal",
+      "family": "marsh",
+      "hybrid": "afro-poly",
+      "bpm": 124
+    },
+    {
+      "region": "-17,-32",
+      "x": -59400,
+      "y": -113400,
+      "genre": "ebm",
+      "family": "terraces",
+      "hybrid": "blues-machine",
+      "bpm": 119
+    },
+    {
+      "region": "-13,-32",
+      "x": -45000,
+      "y": -113400,
+      "genre": "breaks",
+      "family": "marsh",
+      "hybrid": "liquid-soul",
+      "bpm": 130
+    },
+    {
+      "region": "-10,-32",
+      "x": -34200,
+      "y": -113400,
+      "genre": "melodic",
+      "family": "grove",
+      "hybrid": "berlin-evolve",
+      "bpm": 118
+    },
+    {
+      "region": "1,-32",
+      "x": 5400,
+      "y": -113400,
+      "genre": "miamibass",
+      "family": "terraces",
+      "hybrid": "silence-bass",
+      "bpm": 126
+    },
+    {
+      "region": "2,-32",
+      "x": 9000,
+      "y": -113400,
+      "genre": "ambient",
+      "family": "tidal",
+      "hybrid": "pure",
+      "bpm": 84
+    },
+    {
+      "region": "4,-32",
+      "x": 16200,
+      "y": -113400,
+      "genre": "electrofunk",
+      "family": "orbital",
+      "hybrid": "funk-orbit",
+      "bpm": 108
+    },
+    {
+      "region": "5,-32",
+      "x": 19800,
+      "y": -113400,
+      "genre": "amapiano",
+      "family": "orbital",
+      "hybrid": "ambient-tape",
+      "bpm": 108
+    },
+    {
+      "region": "9,-32",
+      "x": 34200,
+      "y": -113400,
+      "genre": "jazztronica",
+      "family": "tidal",
+      "hybrid": "garage-soul",
+      "bpm": 105
+    },
+    {
+      "region": "10,-32",
+      "x": 37800,
+      "y": -113400,
+      "genre": "cosmic",
+      "family": "orbital",
+      "hybrid": "soul-glow",
+      "bpm": 105
+    },
+    {
+      "region": "12,-32",
+      "x": 45000,
+      "y": -113400,
+      "genre": "boogie",
+      "family": "prism",
+      "hybrid": "soul-glow",
+      "bpm": 106
+    },
+    {
+      "region": "14,-32",
+      "x": 52200,
+      "y": -113400,
+      "genre": "brokenbeat",
+      "family": "orbital",
+      "hybrid": "jazz-tide",
+      "bpm": 116
+    },
+    {
+      "region": "-16,-31",
+      "x": -55800,
+      "y": -109800,
+      "genre": "afro",
+      "family": "dunes",
+      "hybrid": "folk-grain",
+      "bpm": 118
+    }
+  ],
+  "interpretation": "Real sampled addresses and composition data. Correlated traits are not multiplied. Distinct recipes do not certify perceptually distinct worlds or songs; no estimate of millions is asserted."
+}

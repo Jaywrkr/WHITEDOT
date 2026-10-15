@@ -1,0 +1,8508 @@
+{
+  "renders": 12,
+  "maxPeak": 0.9008683562278748,
+  "rows": [
+    {
+      "cultureNotes": [
+        {
+          "culture": "altiplano",
+          "time": 1.11352501462569,
+          "interval": 2
+        },
+        {
+          "culture": "altiplano",
+          "time": 1.4916762751298918,
+          "interval": 7
+        },
+        {
+          "culture": "altiplano",
+          "time": 1.8698275356340934,
+          "interval": 0
+        },
+        {
+          "culture": "altiplano",
+          "time": 2.3740292163063623,
+          "interval": 4
+        }
+      ],
+      "foregroundNotes": [
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.11352501462569,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.4916762751298918,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.8698275356340934,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.3740292163063623,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "dub-space",
+      "worldFamily": null,
+      "hookI": "hollow",
+      "brightness": 6244.273871183395,
+      "deferredDisconnects": 52,
+      "scene": "culture:altiplano",
+      "filterMotion": null,
+      "instrumentHits": {
+        "kick": 12,
+        "sub": 12,
+        "hollow": 2,
+        "shaker": 12,
+        "hat": 12,
+        "wood": 6,
+        "reed": 4
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": true,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "dub",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.9008683562278748,
+      "rmsDb": -11.438827047809887,
+      "hotFraction": 0
+    },
+    {
+      "cultureNotes": [
+        {
+          "culture": "islas",
+          "time": 1.11352501462569,
+          "interval": 1
+        },
+        {
+          "culture": "islas",
+          "time": 1.617726695297959,
+          "interval": 7
+        },
+        {
+          "culture": "islas",
+          "time": 2.121928375970228,
+          "interval": 0
+        },
+        {
+          "culture": "islas",
+          "time": 2.6261300566424968,
+          "interval": 3
+        }
+      ],
+      "foregroundNotes": [
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.11352501462569,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.617726695297959,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.121928375970228,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.6261300566424968,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "dub-space",
+      "worldFamily": null,
+      "hookI": "hollow",
+      "brightness": 6244.273871183395,
+      "deferredDisconnects": 60,
+      "scene": "culture:islas",
+      "filterMotion": null,
+      "instrumentHits": {
+        "kick": 12,
+        "sub": 12,
+        "hollow": 2,
+        "shaker": 12,
+        "hat": 12,
+        "wood": 6,
+        "steel": 4
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": true,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "dub",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.900849461555481,
+      "rmsDb": -11.467817388920027,
+      "hotFraction": 0
+    },
+    {
+      "cultureNotes": [
+        {
+          "culture": "sabana",
+          "time": 1.11352501462569,
+          "interval": 3
+        },
+        {
+          "culture": "sabana",
+          "time": 1.617726695297959,
+          "interval": 7
+        },
+        {
+          "culture": "sabana",
+          "time": 2.247978796138295,
+          "interval": 0
+        },
+        {
+          "culture": "sabana",
+          "time": 2.752180476810564,
+          "interval": 5
+        }
+      ],
+      "foregroundNotes": [
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.11352501462569,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.617726695297959,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.247978796138295,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.752180476810564,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "dub-space",
+      "worldFamily": null,
+      "hookI": "hollow",
+      "brightness": 6244.273871183395,
+      "deferredDisconnects": 48,
+      "scene": "culture:sabana",
+      "filterMotion": null,
+      "instrumentHits": {
+        "kick": 12,
+        "sub": 12,
+        "hollow": 2,
+        "shaker": 12,
+        "hat": 12,
+        "wood": 6,
+        "membrane": 4
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": true,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "dub",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.9008495211601257,
+      "rmsDb": -11.440375330748553,
+      "hotFraction": 0
+    },
+    {
+      "cultureNotes": [
+        {
+          "culture": "oasis",
+          "time": 1.11352501462569,
+          "interval": 1
+        },
+        {
+          "culture": "oasis",
+          "time": 1.4916762751298918,
+          "interval": 5
+        },
+        {
+          "culture": "oasis",
+          "time": 2.121928375970228,
+          "interval": 0
+        },
+        {
+          "culture": "oasis",
+          "time": 2.5000796364744295,
+          "interval": 4
+        }
+      ],
+      "foregroundNotes": [
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.11352501462569,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.4916762751298918,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.121928375970228,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.5000796364744295,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "dub-space",
+      "worldFamily": null,
+      "hookI": "hollow",
+      "brightness": 6244.273871183395,
+      "deferredDisconnects": 52,
+      "scene": "culture:oasis",
+      "filterMotion": null,
+      "instrumentHits": {
+        "kick": 12,
+        "sub": 12,
+        "hollow": 6,
+        "shaker": 12,
+        "hat": 12,
+        "wood": 6
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": true,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "dub",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.9008480906486511,
+      "rmsDb": -11.43974172879103,
+      "hotFraction": 0
+    },
+    {
+      "cultureNotes": [
+        {
+          "culture": "norte",
+          "time": 1.11352501462569,
+          "interval": 2
+        },
+        {
+          "culture": "norte",
+          "time": 1.7437771154660262,
+          "interval": 7
+        },
+        {
+          "culture": "norte",
+          "time": 2.247978796138295,
+          "interval": 0
+        },
+        {
+          "culture": "norte",
+          "time": 2.878230896978631,
+          "interval": 5
+        }
+      ],
+      "foregroundNotes": [
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.11352501462569,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.7437771154660262,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.247978796138295,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.878230896978631,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "dub-space",
+      "worldFamily": null,
+      "hookI": "hollow",
+      "brightness": 6244.273871183395,
+      "deferredDisconnects": 60,
+      "scene": "culture:norte",
+      "filterMotion": null,
+      "instrumentHits": {
+        "kick": 12,
+        "sub": 12,
+        "hollow": 2,
+        "shaker": 12,
+        "hat": 12,
+        "wood": 6,
+        "bowed": 4
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": true,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "dub",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.9008462429046631,
+      "rmsDb": -11.411258872725007,
+      "hotFraction": 0
+    },
+    {
+      "cultureNotes": [
+        {
+          "culture": "corriente",
+          "time": 1.11352501462569,
+          "interval": 2
+        },
+        {
+          "culture": "corriente",
+          "time": 1.3656258549618245,
+          "interval": 7
+        },
+        {
+          "culture": "corriente",
+          "time": 1.9958779558021607,
+          "interval": 0
+        },
+        {
+          "culture": "corriente",
+          "time": 2.6261300566424968,
+          "interval": 4
+        }
+      ],
+      "foregroundNotes": [
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.11352501462569,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.3656258549618245,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.9958779558021607,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.6261300566424968,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "dub-space",
+      "worldFamily": null,
+      "hookI": "hollow",
+      "brightness": 6244.273871183395,
+      "deferredDisconnects": 52,
+      "scene": "culture:corriente",
+      "filterMotion": null,
+      "instrumentHits": {
+        "kick": 12,
+        "sub": 12,
+        "hollow": 2,
+        "shaker": 12,
+        "hat": 12,
+        "wood": 6,
+        "kalimba": 4
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": true,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "dub",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.9008495807647705,
+      "rmsDb": -11.402269904085273,
+      "hotFraction": 0
+    },
+    {
+      "cultureNotes": [
+        {
+          "culture": "tinta",
+          "time": 1.11352501462569,
+          "interval": 1
+        },
+        {
+          "culture": "tinta",
+          "time": 1.8698275356340934,
+          "interval": 7
+        },
+        {
+          "culture": "tinta",
+          "time": 2.3740292163063623,
+          "interval": 0
+        },
+        {
+          "culture": "tinta",
+          "time": 2.878230896978631,
+          "interval": 5
+        }
+      ],
+      "foregroundNotes": [
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.11352501462569,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.8698275356340934,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.3740292163063623,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.878230896978631,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "dub-space",
+      "worldFamily": null,
+      "hookI": "hollow",
+      "brightness": 6244.273871183395,
+      "deferredDisconnects": 52,
+      "scene": "culture:tinta",
+      "filterMotion": null,
+      "instrumentHits": {
+        "kick": 12,
+        "sub": 12,
+        "hollow": 2,
+        "shaker": 12,
+        "hat": 12,
+        "wood": 6,
+        "flute": 8
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": true,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "dub",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.9008463621139526,
+      "rmsDb": -11.142469694623745,
+      "hotFraction": 0
+    },
+    {
+      "cultureNotes": [
+        {
+          "culture": "cauce",
+          "time": 1.11352501462569,
+          "interval": 2
+        },
+        {
+          "culture": "cauce",
+          "time": 1.4916762751298918,
+          "interval": 5
+        },
+        {
+          "culture": "cauce",
+          "time": 1.9958779558021607,
+          "interval": 0
+        },
+        {
+          "culture": "cauce",
+          "time": 2.3740292163063623,
+          "interval": 3
+        }
+      ],
+      "foregroundNotes": [
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.8863025210084033,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38210084033613445,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.5081512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.6321008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.7581512605042017,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.8821008403361345,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.1321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.2581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.11352501462569,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.4916762751298918,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.9958779558021607,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 2.3740292163063623,
+          "role": "lead",
+          "source": "sanctuary:0,0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.8863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.3821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.5081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.1363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.6321008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.7581512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.3863025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.8821008403361343,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.0081512605042016,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.1321008403361343,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.2581512605042016,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.6363025210084032,
+          "role": "lead",
+          "source": "mix:5"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "dub-space",
+      "worldFamily": null,
+      "hookI": "hollow",
+      "brightness": 6244.273871183395,
+      "deferredDisconnects": 52,
+      "scene": "culture:cauce",
+      "filterMotion": null,
+      "instrumentHits": {
+        "kick": 12,
+        "sub": 12,
+        "hollow": 2,
+        "shaker": 12,
+        "hat": 12,
+        "wood": 6,
+        "clav": 4
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": true,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "dub",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.9008467197418213,
+      "rmsDb": -11.425211453373713,
+      "hotFraction": 0
+    },
+    {
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.505,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.505,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.35059954065550114,
+          "role": "lead",
+          "source": "sanctuary:0,0:artifact:0"
+        },
+        {
+          "time": 1.1005995406555011,
+          "role": "lead",
+          "source": "sanctuary:0,0:artifact:0"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.755,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.755,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.005,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.005,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.255,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.255,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.505,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.505,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.755,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.755,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.005,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.005,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.255,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 2.13,
+          "role": "perc",
+          "source": "mix:6"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "jazz-shadow",
+      "worldFamily": null,
+      "hookI": "reed",
+      "brightness": 6675,
+      "deferredDisconnects": 60,
+      "scene": "heritage:tinta:0",
+      "filterMotion": null,
+      "instrumentHits": {
+        "kick": 12,
+        "pluck": 12,
+        "reed": 9,
+        "shaker": 24,
+        "hat": 12,
+        "flute": 4,
+        "clap": 6,
+        "organ": 9,
+        "wood": 6
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "deep",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.5450653433799744,
+      "rmsDb": -22.54993345052509,
+      "hotFraction": 0
+    },
+    {
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.505,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.505,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.35059954065550114,
+          "role": "perc",
+          "source": "sanctuary:0,0:artifact:1"
+        },
+        {
+          "time": 1.1005995406555011,
+          "role": "perc",
+          "source": "sanctuary:0,0:artifact:1"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.755,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.755,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.005,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.005,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.255,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.255,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.505,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.505,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.755,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.755,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.005,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.005,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.255,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 2.13,
+          "role": "perc",
+          "source": "mix:6"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "jazz-shadow",
+      "worldFamily": null,
+      "hookI": "reed",
+      "brightness": 6675,
+      "deferredDisconnects": 60,
+      "scene": "heritage:tinta:1",
+      "filterMotion": null,
+      "instrumentHits": {
+        "kick": 12,
+        "pluck": 12,
+        "reed": 9,
+        "shaker": 24,
+        "hat": 12,
+        "wood": 8,
+        "clap": 6,
+        "organ": 9
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "deep",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.5119578242301941,
+      "rmsDb": -22.901920394192963,
+      "hotFraction": 0
+    },
+    {
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.505,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.505,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.35059954065550114,
+          "role": "acorde",
+          "source": "sanctuary:0,0:artifact:2"
+        },
+        {
+          "time": 1.1005995406555011,
+          "role": "acorde",
+          "source": "sanctuary:0,0:artifact:2"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.755,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.755,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.005,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.005,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.255,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.255,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.505,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.505,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.755,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.755,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.005,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.005,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.255,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 2.13,
+          "role": "perc",
+          "source": "mix:6"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "jazz-shadow",
+      "worldFamily": null,
+      "hookI": "reed",
+      "brightness": 6675,
+      "deferredDisconnects": 70,
+      "scene": "heritage:tinta:2",
+      "filterMotion": null,
+      "instrumentHits": {
+        "kick": 12,
+        "pluck": 12,
+        "reed": 9,
+        "shaker": 24,
+        "hat": 12,
+        "flute": 12,
+        "clap": 6,
+        "organ": 9,
+        "wood": 6
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "deep",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.5450661182403564,
+      "rmsDb": -22.556615229243775,
+      "hotFraction": 0
+    },
+    {
+      "cultureNotes": [],
+      "foregroundNotes": [
+        {
+          "time": 0.0995031550116837,
+          "role": "bajo",
+          "source": "site:v1:88,1"
+        },
+        {
+          "time": 0.8495031550116837,
+          "role": "bajo",
+          "source": "site:v1:88,1"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.505,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.505,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.755,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.755,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.005,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.005,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.255,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 0.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 0.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 0.88,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.255,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.505,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.13,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.505,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.13,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.13,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.755,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.13,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.13,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.38,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.755,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.38,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.38,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.005,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.38,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.38,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 1.63,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 2.005,
+          "role": "perc",
+          "source": "mix:7"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 2.63,
+          "role": "acorde",
+          "source": "mix:0"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 2.63,
+          "role": "lead",
+          "source": "mix:1"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 2.13,
+          "role": "perc",
+          "source": "mix:2"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 2.255,
+          "role": "perc",
+          "source": "mix:3"
+        },
+        {
+          "time": 1.88,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 2.63,
+          "role": "acorde",
+          "source": "mix:4"
+        },
+        {
+          "time": 1.88,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 2.63,
+          "role": "lead",
+          "source": "mix:5"
+        },
+        {
+          "time": 1.88,
+          "role": "perc",
+          "source": "mix:6"
+        },
+        {
+          "time": 2.13,
+          "role": "perc",
+          "source": "mix:6"
+        }
+      ],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "jazz-shadow",
+      "worldFamily": null,
+      "hookI": "reed",
+      "brightness": 6675,
+      "deferredDisconnects": 60,
+      "scene": "relic",
+      "filterMotion": null,
+      "instrumentHits": {
+        "kick": 12,
+        "pluck": 12,
+        "reed": 9,
+        "sub": 2,
+        "shaker": 24,
+        "hat": 12,
+        "clap": 6,
+        "organ": 9,
+        "wood": 6
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "deep",
+      "dense": true,
+      "soft": true,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": null,
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 44100,
+      "peak": 0.5450668334960938,
+      "rmsDb": -22.561929651825277,
+      "hotFraction": 0
+    }
+  ]
+}

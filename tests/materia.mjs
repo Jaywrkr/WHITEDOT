@@ -21,7 +21,7 @@ assert.equal(membraneHit(0,0).zone,0);assert.equal(membraneHit(40,0).zone,1);ass
 // Voces: cada una tiene explicación en la Bitácora y registros sensatos.
 for(const [k,n] of [['strings',4],['prism',5],['membrane',2]])for(let i=0;i<n;i++){const v=materiaVoice(k,i,origin,r.GEN,r.seedOf);assert(v&&INSTRUMENTS[v.instrument],`${k}:${i} ${v?.instrument}`);assert(v.low<v.high);}
 assert.deepEqual(materiaKindOf('installation:prism:3'),{kind:'prism',index:3});assert.equal(materiaKindOf('installation:glass:1'),null);
-// Guardado: solo campos válidos, ángulo del prisma normalizado, límite de 96.
-const many=Object.fromEntries(Array.from({length:120},(_,i)=>[`strings:${i},0`,{seen:true}]));assert.equal(Object.keys(normalizeMateriaSites(many)).length,96);
+// Guardado: campos válidos, ángulo normalizado y todas las ediciones previas.
+const many=Object.fromEntries(Array.from({length:120},(_,i)=>[`strings:${i},0`,{seen:true}]));assert.equal(Object.keys(normalizeMateriaSites(many)).length,120);
 assert.deepEqual(normalizeMateriaSites({'prism:1,2':{seen:1,angle:7},'bad':{seen:true},'membrane:0,0':{seen:true,angle:3}}),{'prism:1,2':{seen:true,angle:7-Math.PI*2},'membrane:0,0':{seen:true}});
 console.log(`PASS: materia families (strings ${count.strings}, prism ${count.prism}, membrane ${count.membrane} in ${land} land regions), gestures, voices and saves`);

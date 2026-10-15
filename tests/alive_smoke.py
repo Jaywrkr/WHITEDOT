@@ -17,7 +17,7 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
   # Tormenta: buscar el centro de una tormenta activa ahora mismo y entrar.
   page.evaluate('''async()=>{const r=window.__testRuntime,{stormsNear}=await import('/src/alive.js');let best=null;for(let u=-40;u<=40;u+=10)for(let v=-40;v<=40;v+=10){for(const s of stormsNear(u,v,Date.now()))if(s.life>.5&&(!best||s.r>best.r))best=s;}
    if(!best)throw Error('no storm');r.S.wx=best.x*3600;r.S.wy=best.y*3600;}''')
@@ -36,7 +36,7 @@ with sync_playwright() as p:
   page.evaluate('()=>{const r=window.__testRuntime;r.S.studio.x=0;r.S.studio.y=0;}');page.locator('#bMenu').click();page.locator('#bTools').click();page.locator('#bDeploy').click();page.wait_for_timeout(300)
   assert page.evaluate('(window.__testRuntime.S.camps||[]).length')>=1;page.locator('#stExit').click()
   # Confluencia: dos ríos, la música del otro río se mezcla.
-  page.evaluate('''()=>{const r=window.__testRuntime;for(let i=0;i<400000;i++){const x=(Math.random()-.5)*60*3600,y=(Math.random()-.5)*60*3600,q=r.riverAt(x,y);if(q&&q.conf){r.S.wx=x;r.S.wy=y;return;}}throw Error('no confluence');}''')
+  page.evaluate('''()=>{const r=window.__testRuntime;const size=r.REG*r.WCH,x=-298777.2998213768/3600*size,y=-89475.62042623758/3600*size,q=r.riverAt(x,y);if(!q?.conf)throw Error('verified native confluence changed');r.S.wx=x;r.S.wy=y;}''')
   page.wait_for_function('!!window.__testRuntime.MU.confNb && !!window.__testRuntime.S.ach.confluencia')
   page.locator('#bMenu').click();page.locator('#bMap').click();page.locator('#mapClose').click()
   assert not errors,errors

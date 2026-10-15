@@ -80,10 +80,7 @@ export function initialize(runtime){
  function layerStep(t,dt,dx,dy,b,paused,speed){
   const s=S(),cx=runtime.cx,W=runtime.W,H=runtime.H,L=layer(),ds=Math.min(runtime.pxSize(),22);
   if(L==='bajo'&&!s.under)s.under={x:s.wx/UNDER_SCALE,y:s.wy/UNDER_SCALE};runtime.MU.layer=L;runtime.MU.near=[];runtime.MU.singers=[];
-  if(s.lampDay!==s.todayKey){s.lampDay=s.todayKey;s.lampUsed=0;}
-  if(!paused&&!s.relaxedCreate)s.lampUsed+=dt*(L==='bajo'?1.5:1);   // el atajo cuesta: la linterna se gasta más rápido abajo
   if(!paused&&!runtime.scanning)runtime.sessionTime(dt);
-  if(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0){surface(s.wx,s.wy);runtime.exitWorld(true);return ds;}
   if(L==='bajo'){
    if(dx||dy){s.under.x+=dx*speed*dt;s.under.y+=dy*speed*dt;}s.wx=s.under.x*UNDER_SCALE;s.wy=s.under.y*UNDER_SCALE;
    runtime.camX=s.under.x;runtime.camY=s.under.y;const ox=W/2-s.under.x,oy=H/2-s.under.y;layerDNA();

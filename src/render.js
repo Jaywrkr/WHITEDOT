@@ -148,7 +148,7 @@ export function initialize(runtime) {
         if(runtime.waves.length&&runtime.hitW(m.x,m.y))m.pull=1;
         if(m.pull){const ax=runtime.S.px-m.x,ay=runtime.S.py-m.y,dd=Math.hypot(ax,ay)||1,v=Math.min(dd,dt*520);m.x+=ax/dd*v;m.y+=ay/dd*v;}
         const d=Math.hypot(m.x-runtime.S.px,m.y-runtime.S.py);
-        if(d<sz/2+10){runtime.collect(m);continue;}
+        if(d<sz/2+10&&(runtime.worldReady()||dx||dy||m.pull)){runtime.collect(m);continue;}
         if(d>R)continue;
         runtime.cx.globalAlpha=Math.min(1,Math.pow(1-d/R,1.3)*(.6+.25*Math.sin(t/400+m.ph)+b*.3)*(free?.45:1));
         runtime.cx.fillStyle=m.off?runtime.GOLD:"#fff";runtime.cx.fillRect(m.x+ox-1.5,m.y+oy-1.5,3,3);}
@@ -161,10 +161,7 @@ export function initialize(runtime) {
     if(runtime.MU.anomaly==='invertida'){dx=-dx;dy=-dy;}   // rareza: arriba es abajo
     if(dx||dy){runtime.S.wx+=dx*movementSpeed*dt;runtime.S.wy+=dy*movementSpeed*dt;}
     runtime.camX=runtime.S.wx;runtime.camY=runtime.S.wy;
-    if(runtime.S.lampDay!==runtime.S.todayKey){runtime.S.lampDay=runtime.S.todayKey;runtime.S.lampUsed=0;}
-    if(!paused&&!runtime.S.relaxedCreate)runtime.S.lampUsed+=dt;
     if(!paused&&!runtime.scanning)runtime.sessionTime(dt);
-    if(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0){runtime.exitWorld(true);return ds;}
     const z=runtime.biomeOfPos(runtime.S.wx,runtime.S.wy),rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
     if(rg.key!==runtime.curRegion){runtime.curRegion=rg.key;runtime.enterRegion(rg,z);}
     {// Vitalidad local: el vacío adelgaza la música; llegar a un oasis después de un desierto es un drop.
@@ -377,13 +374,13 @@ export function initialize(runtime) {
       if(runtime.visitRelic(rl,paused||runtime.scanning?0:dt))continue;
       if(d>R)continue;
       nd=nd?Math.min(nd,d):d;
-      const al=Math.max(0,1-d/R),progress=runtime.relicProgress(rl),need=rl.magical?5:3;
-      runtime.cx.globalAlpha=al;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1;
+      const al=Math.max(0,1-d/R),progress=runtime.relicProgress(rl),need=rl.magical?5:3,ink=rl.magical?'#c9b9ff':'#c8e9ee';
+      runtime.cx.globalAlpha=al;runtime.cx.strokeStyle=runtime.cx.fillStyle=ink;runtime.cx.lineWidth=1;
       const x=rl.x+ox,y=rl.y+oy,size=rl.magical?16:10;
       glyph(runtime.cx,rl.s,x,y,size*(1+b*.2));
       for(let i=0;i<need;i++){const a=i/need*6.283+t/6000;runtime.cx.globalAlpha=al*(i<progress.pulses ? .9 : .25);runtime.cx.beginPath();runtime.cx.arc(x+Math.cos(a)*28,y+Math.sin(a)*28,2,0,6.283);runtime.cx.stroke();}
       runtime.cx.globalAlpha=al*.6;runtime.cx.beginPath();runtime.cx.arc(x,y,36,-Math.PI/2,-Math.PI/2+6.283*(progress.dwell/(rl.magical?12:6)));runtime.cx.stroke();
-      if(d<100){runtime.cx.globalAlpha=.8;runtime.cx.fillStyle=runtime.GOLD;runtime.cx.font="10px 'Geist Mono', monospace";runtime.cx.textAlign="center";runtime.cx.fillText(rl.name||"Reliquia",x,y-44);runtime.cx.fillText(`Escucha ${Math.floor(progress.dwell)}/${rl.magical?12:6}s · ${progress.pulses}/${need} pulsos`,x,y+52);}
+      if(d<100){runtime.cx.globalAlpha=.8;runtime.cx.fillStyle=ink;runtime.cx.font="10px 'Geist Mono', monospace";runtime.cx.textAlign="center";runtime.cx.fillText(rl.name||"Reliquia",x,y-44);runtime.cx.fillText(`Escucha ${Math.floor(progress.dwell)}/${rl.magical?12:6}s · ${progress.pulses}/${need} pulsos`,x,y+52);}
     }
     runtime.bodyTick?.(dt);runtime.quietTick?.(dt);runtime.cajasTick?.(dt);runtime.cultureTick?.(dt);   // el cubo primero: los objetos leen su contacto en este cuadro
     runtime.drawGlass?.(t,dt,ox,oy,R);

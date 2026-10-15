@@ -31,7 +31,6 @@ export function initialize(runtime){
  function entry(site){
   const chapter=S().cultures.collections[site.culture]||0,book=S().cultures.sites;
   if(!book[site.id]||book[site.id].chapter!==chapter){
-   if(!book[site.id]&&Object.keys(book).length>=96)delete book[Object.keys(book)[0]];
    book[site.id]={chapter,heard:false,clues:0,open:false};
   }return book[site.id];
  }

@@ -12,7 +12,7 @@ const TAU=Math.PI*2,FOLLOW_SECONDS=45;
 export function initialize(runtime){
  const S=()=>runtime.S,$=runtime.$,cache=new Map();let previousState=S(),tap=null,clock=0;
  const traveling=new Set();
- const normalizeGifts=()=>{S().formationGifts=Object.fromEntries(Object.entries(S().formationGifts||{}).filter(([id,v])=>/^flock:-?\d+,-?\d+$/.test(id)&&v===true).slice(-96));};
+ const normalizeGifts=()=>{S().formationGifts=Object.fromEntries(Object.entries(S().formationGifts||{}).filter(([id,v])=>/^flock:-?\d+,-?\d+$/.test(id)&&v===true));};
  normalizeGifts();
  const heard=[];   // últimas notas que causó el jugador (para el ave lira)
  S().vida=normalizeVida(S().vida);
@@ -76,7 +76,7 @@ export function initialize(runtime){
    if(f.follow>0){f.follow-=dt;f.followTime=(f.followTime||0)+dt;if(f.followTime>30)runtime.unlock('formacion');}else f.followTime=0;
    if(f.species==='golondrina'){
     f.formation=(f.follow>0&&f.trust>=.6&&player.speed>20&&dist(f)<180)?(f.formation||0)+dt:0;
-    if(f.formation>=120&&!S().formationGifts[f.id]){if(Object.keys(S().formationGifts).length>=96)delete S().formationGifts[Object.keys(S().formationGifts)[0]];S().formationGifts[f.id]=true;runtime.spawnBox?.(S().wx+65,S().wy-40,'brujula');runtime.unlock('formacionDosMinutos');runtime.save();}
+    if(f.formation>=120&&!S().formationGifts[f.id]){S().formationGifts[f.id]=true;runtime.spawnBox?.(S().wx+65,S().wy-40,'brujula');runtime.unlock('formacionDosMinutos');runtime.save();}
     f.hintBox=f.trust>=.6?runtime.boxesNear?.(650).sort((a,b)=>dist(a)-dist(b))[0]:null;
    }
    for(const ev of stepFlock(f,dt,clock,player)){

@@ -29,6 +29,7 @@ export function initialize(runtime) {
   function visitRelic(site,dt,pulse=false) {
     if(!site.id)return false;
     const distance=Math.hypot(site.x-runtime.S.wx,site.y-runtime.S.wy);
+    if(distance<=100&&dt>0&&!runtime.S.help.relicInstructions){runtime.S.help.relicInstructions=true;runtime.say('Reliquia: un recuerdo musical. Quédate cerca y lanza '+(site.magical?'cinco':'tres')+' pulsos.','Despierta un recuerdo');}
     let state=states.get(site.id);
     if(!state){if(distance>140)return false;state={dwell:0,pulses:0};states.set(site.id,state);}
     const ready=advanceRelic(state,site,dt,distance,pulse);

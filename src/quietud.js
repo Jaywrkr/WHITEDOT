@@ -11,7 +11,7 @@ const TAU=Math.PI*2;
 export function initialize(runtime){
  let owner=runtime.S;
  const S=()=>runtime.S,state={seconds:0,stage:0,anchor:null,key:null,visitors:[],bloom:0,pulse:0,pulseHue:0,gifted:new Set()};
- function normalizeBook(){S().listened=Object.fromEntries(Object.entries(S().listened||{}).filter(([key,n])=>/^-?\d+,-?\d+$/.test(key)&&Number.isInteger(n)&&n>=0&&n<=6).slice(-200));}
+ function normalizeBook(){S().listened=Object.fromEntries(Object.entries(S().listened||{}).filter(([key,n])=>/^-?\d+,-?\d+$/.test(key)&&Number.isInteger(n)&&n>=0&&n<=6));}
  normalizeBook();
  function ensureOwner(){if(owner!==S()){owner=S();normalizeBook();reset();state.gifted.clear();state.bloom=state.pulse=0;state.key=null;}}
  const surface=()=>runtime.inWorld()&&(S().layer||'superficie')==='superficie';
@@ -25,7 +25,7 @@ export function initialize(runtime){
   if(st.id==='regalo'&&d){const k=`${d.key}:${runtime.dayKey?.()}`;if(!state.gifted.has(k)){state.gifted.add(k);while(state.gifted.size>200)state.gifted.delete(state.gifted.values().next().value);runtime.spawnBox?.(S().wx+70,S().wy-40);}}
   if(st.id==='ritual'&&d){runtime.unlock('quietud5');}
   if(st.id==='giro')runtime.unlock('quietud3');
-  if(d){const book=S().listened;if(!book[d.key]&&Object.keys(book).length>=200)delete book[Object.keys(book)[0]];book[d.key]=Math.max(book[d.key]||0,k);}
+  if(d){const book=S().listened;book[d.key]=Math.max(book[d.key]||0,k);}
  }
  function tick(dt){
   ensureOwner();

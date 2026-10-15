@@ -1,0 +1,53 @@
+{
+  "checkedAt": "2026-10-15T03:38:32.025030+00:00",
+  "sourceFingerprint": "abd2ba5fc625dcdf779c4ac66d49e91565b30e9cfd7fa76550fa6c4076a2e61d",
+  "scope": "Complete browser, release audit and Node after the audit fixes, audio parked between programs.",
+  "checks": [
+    {
+      "check": "guide",
+      "command": [
+        "python3",
+        "tests/guide_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 9.79,
+      "result": "PASS daily first light, no expiry, same-day return, next-day Camino, saved rewards and silent optional guide at 320\nPASS daily first light, no expiry, same-day return, next-day Camino, saved rewards and silent optional guide at 390\nPASS daily first light, no expiry, same-day return, next-day Camino, saved rewards and silent optional guide at 844\n",
+      "log": "/tmp/wd-final-guide-updated.log"
+    },
+    {
+      "check": "audit",
+      "command": [
+        "npm",
+        "run",
+        "audit:release"
+      ],
+      "exitCode": 0,
+      "seconds": 0.16,
+      "result": "\n> whitedot@2.0.0-rc.1 audit:release\n> node scripts/release-audit.mjs\n\n{\n  \"version\": \"2.0.0-rc.1\",\n  \"sourceModules\": 159,\n  \"htmlIDs\": 317,\n  \"staticImports\": 405,\n  \"shellAssets\": 179,\n  \"errors\": [],\n  \"warnings\": [],\n  \"notes\": [\n    \"Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.\",\n    \"Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems.\"\n  ]\n}\n",
+      "log": "/tmp/wd-final-audit-updated.log"
+    },
+    {
+      "check": "node",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 15.4,
+      "result": "es and flight responses, bounded recovery, real chunk attachment\nPASS persistent pet validation, contextual species, bounded phrases/places, rare natural-box births, earned growth and cube unlocks\nPASS: seeded sparse phenomena, rare birds, audio-onset visuals, melodic answers/material percussion/cloud voices, mute, quiet clearings and bounded cache\nPASS: deterministic generation, density cap, flight/jump/rotation/static response, return home and real chunk sound hooks\nPASS: stable local spaces, negative coordinates, compact groups, empty listening centers, quieter radio and actual chunk integration\nActive time, suspension, stacking cap and expiry verified\nPASS contrasting populated destinations, bounded history, exact coordinate/layer return, progress preservation and blocked travel on save failure\nPASS: 52 genres evolve at rest, environment affects composition, real scheduler plays without movement, path/studio remain separate\nPASS 50 rare card types with sourced conditional odds, place-code roundtrip, invalid-save normalization, encounter/seed dedupe, bounded book and original safe portraits\nPASS: twelve reachable reference families, distinct drum grammars, characteristic palettes, pentatonic/extended melody vocabulary and log drum\nPASS version and genuine UTC deployment metadata, local label, invalid inputs, artifact stamping and unique PWA publication cache\nPASS: stable rare sites (836/40000, 101 magical), awakening, repeat prevention, reload and legacy save\nPASS 13-cosmetic migration, hidden colors, preserved dates/future pieces, idempotent awards, durable sources and scope isolation\nPASS: 18 new rhythms with complete recipes, distinct drums, 52 styles balanced (max 2.3 %, min 0.8 %)\nPASS: nearby musical sources sorted, silent grass excluded, range and display limit respected\nPASS: distinct complete seeded homes, stable reconstruction, separate preview keys and unchanged daily path\nPASS: session-only discoveries, distinct visits, activity, reload, frozen summary and next session baseline\nPASS: place codes round-trip seed, versions, layer and coordinates; invalid codes rejected; recording format negotiation\nPASS: smooth distance curve, nearby selection, live moving-source gain, effect isolation, bounded routing and cleanup\nPASS 16 original programs, genuine 12/24/36/48 cascades, open/close automation, bounded climate/gesture response and protected mono bass\nPASS V1 closure: competing tabs preserve the persisted writer, explicit recovery/restore, and malformed place-code payload rejection\nPASS V1 PWA update controls: save guard, active-recording deferral and explicit reload\nPASS: 728 flocks in 2428 land regions (golondrina 247, grulla 260, luciernaga 184, lira 37), 647 gardens; trust gathers, running scatters, calls answered in rhythm, fireflies sync into groove, flora grows and withers\nPASS: stable regional voices, five tree roles within one biome, varied instruments, bounded emitted registers and groove responses\nPASS exact 50-style/rarity counts, earned gates, six-month myths, legacy dates/defaults, safe material selection and five actual pulse instruments\nPASS: 97 raro / 16 legendario / 2 mítico rarities with visible rules and unique samples; rivers 1.0 % of land, followable 6000 px downstream\nPASS eight real families, 52 retained genres, distinct spatial fields/contours, matched materials/music/populations, protected bass, raw DNA and rare specimens\nPASS edit/phrase roundtrips, persistent removals, non-evicting limits, future-data preservation, bounded bonds, familiar approach and musical affinity\nPASS continuous fog/day/LOD, zero-opacity cutoff, negative-coordinate preload margin, three decor-only parallax planes and independent visual hash\nPASS actual lineage rendering fades bright sources and blends the former 500px cutoff\nPASS: 35 continents (largest 310, smallest 1 regions), 32 % seas, 53 % family identity, density contrast, 447 landmarks of 5 types\nPASS: 93 Node suites with assertions (Web Audio helper excluded)\n",
+      "log": "/tmp/wd-final-node-updated.log"
+    },
+    {
+      "check": "browser",
+      "command": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "exitCode": 0,
+      "seconds": 563.31,
+      "result": "\n> whitedot@2.0.0-rc.1 test:browser\n> python3 scripts/run-browser-tests.py browser\n\nPASS achievements_v2_smoke.py\nPASS accessibility_smoke.py\nPASS alive_smoke.py\nPASS atlas_smoke.py\nPASS autopilot_smoke.py\nPASS celebration_smoke.py\nPASS blobs_smoke.py\nPASS contact_smoke.py\nPASS creative_smoke.py\nPASS cuerpo_smoke.py\nPASS discoveries_smoke.py\nPASS duet_smoke.py\nPASS cultures_smoke.py\nPASS ecology_smoke.py\nPASS encounters_smoke.py\nPASS expansion_smoke.py\nPASS encounter_depth_smoke.py\nPASS favorites_smoke.py\nPASS focusui_smoke.py\nPASS foundation_smoke.py\nPASS fx_smoke.py\nPASS glass_smoke.py\nPASS heritage_smoke.py\nPASS guide_smoke.py\nPASS house_v2_smoke.py\nPASS influence_smoke.py\nPASS initiative_smoke.py\nPASS hybrid_smoke.py\nPASS interface_smoke.py\nPASS journal_v2_smoke.py\nPASS journey_smoke.py\nPASS jam_smoke.py\nPASS layer_jam_smoke.py\nPASS layers_smoke.py\nPASS living-cards_smoke.py\nPASS living_smoke.py\nPASS materia_smoke.py\nPASS lab_smoke.py\nPASS memory_smoke.py\nPASS menu_v2_smoke.py\nPASS messages_smoke.py\nPASS mirrors_smoke.py\nPASS modular_smoke.py\nPASS mobile_smoke.py\nPASS music_response_smoke.py\nPASS navigation_smoke.py\nPASS percussion_smoke.py\nPASS music_identity_smoke.py\nPASS pins_smoke.py\nPASS practice_travel_smoke.py\nPASS pwa_updates_smoke.py\nPASS pet_smoke.py\nPASS release_smoke.py\nPASS rewards_smoke.py\nPASS rare_cards_smoke.py\nPASS seeds_smoke.py\nPASS synth_bank_smoke.py\nPASS travel_v2_smoke.py\nPASS ui_silence_smoke.py\nPASS v1_closure_smoke.py\nPASS smoke.py\nPASS wardrobe_smoke.py\nPASS wonders_smoke.py\nPASS vida_smoke.py\nPASS world-return_smoke.py\nPASS world_smoke.py\nPASS world_family_smoke.py\nPASS world_visibility_smoke.py\n68/68 browser flows passed\nPASS offline reload with all 159 modules cached and no HTML fallback for missing JavaScript\n",
+      "log": "/tmp/wd-final-browser-updated.log"
+    }
+  ]
+}

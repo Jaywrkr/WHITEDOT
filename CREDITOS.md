@@ -1,4 +1,4 @@
-# Créditos de WHITEDOT V1
+# Créditos de WHITEDOT
 
 Proyecto de Jay · [@jaywrkr](https://instagram.com/jaywrkr). Juego, gráficos procedurales y música sintetizada por el código del repositorio; no se distribuyen grabaciones de los artistas citados como referencias musicales. Los estudios culturales usan frases sintéticas originales inspiradas en tradiciones, no obras históricas importadas.
 
@@ -15,3 +15,5 @@ Las tres bajo **SIL Open Font License 1.1**, conservada íntegramente junto a lo
 **Todos los derechos reservados.** El código, los gráficos, los textos y la música generada son de Jay; ver [LICENSE](LICENSE). La OFL solo aplica a las tipografías.
 
 El juego actual guarda la partida en el navegador y permite descargar respaldos/sets explícitamente. No incluye cuentas, micrófono ni backend de usuarios; eso requiere el alcance y las condiciones de la siguiente versión.
+
+Los siete motores avanzados, tablas, granos y modelos de cuerda/membrana son síntesis original. No incluyen presets de Arturia ni nuevas grabaciones externas. Las referencias culturales describen inspiración, no autoría ni interpretación auténtica de una tradición.

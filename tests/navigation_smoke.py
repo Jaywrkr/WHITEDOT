@@ -17,7 +17,7 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
   point=page.evaluate("()=>{const r=window.__testRuntime;return r.addFavorite('Regreso de prueba');}")
   page.evaluate("window.__testRuntime.S.wx+=500;window.__testRuntime.S.wy-=300")
   page.locator('#bMenu').click();page.locator('#bFavorites').click();page.locator('[data-favorite] button').filter(has_text='Orientar').click()

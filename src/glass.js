@@ -11,7 +11,6 @@ export function glassParameters(angles){
 }
 export function normalizeGlassSites(saved){
  const out={};for(const [id,entry] of Object.entries(saved||{})){
-  if(Object.keys(out).length>=64)break;
   if(!/^glass:-?\d+,-?\d+$/.test(id)||!Array.isArray(entry?.angles)||entry.angles.length!==3||!entry.angles.every(Number.isFinite))continue;
   out[id]={angles:entry.angles.map(x=>((x%TAU)+TAU)%TAU),seen:!!entry.seen};
  }return out;
@@ -38,7 +37,7 @@ export function initialize(runtime){
   }return out;
  }
  function remember(site){
-  const saved=S().glassSites;if(!saved[site.id]&&Object.keys(saved).length>=64)delete saved[Object.keys(saved)[0]];
+  const saved=S().glassSites;
   saved[site.id]={angles:[...site.angles],seen:true};
  }
  function emit(site,pane,time,origin='ambient'){

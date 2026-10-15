@@ -17,7 +17,7 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(8000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
   page.wait_for_function('window.__testRuntime.ac && window.__testRuntime.ac.state==="running"')
   # Horizonte: desde el Origen se oye la torre de la región (2,0), paneada a la derecha.
   res=page.evaluate('''()=>{const r=window.__testRuntime,lm=r.nearbyLandmarks(r.S.wx,r.S.wy).find(l=>l.id==='lm:2,0');if(!lm)throw Error('tower not audible from origin');

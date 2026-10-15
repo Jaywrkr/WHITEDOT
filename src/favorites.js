@@ -4,7 +4,7 @@ const layers=new Set(['superficie','bajo','cielo']);
 const cleanName=name=>String(name||'Lugar musical').trim().slice(0,60)||'Lugar musical';
 export function normalizeFavorites(saved,identity=worldIdentity()){
  const items=Array.isArray(saved?.items)?saved.items:[],seen=new Set();
- return {version:1,items:items.filter(p=>p&&typeof p.id==='string'&&!seen.has(p.id)&&seen.add(p.id)&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&Math.abs(p.x)<1e12&&Math.abs(p.y)<1e12&&layers.has(p.layer)).slice(0,FAVORITE_LIMIT).map(p=>({...p,name:cleanName(p.name),...(Object.hasOwn(p,'notes')?{notes:typeof p.notes==='string'?p.notes.slice(0,280):''}:{}),address:Object.hasOwn(p,'address')?(supportedWorld(p.address)?placeAddress(p.address,p.x,p.y,p.layer):p.address??null):placeAddress(identity,p.x,p.y,p.layer)}))};
+ return {version:1,items:items.filter(p=>p&&typeof p.id==='string'&&!seen.has(p.id)&&seen.add(p.id)&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&Math.abs(p.x)<1e12&&Math.abs(p.y)<1e12&&layers.has(p.layer)).map(p=>({...p,name:cleanName(p.name),...(Object.hasOwn(p,'notes')?{notes:typeof p.notes==='string'?p.notes.slice(0,280):''}:{}),address:Object.hasOwn(p,'address')?(supportedWorld(p.address)?placeAddress(p.address,p.x,p.y,p.layer):p.address??null):placeAddress(identity,p.x,p.y,p.layer)}))};
 }
 export function storeFavorite(state,point){
  state.favorites=normalizeFavorites(state.favorites,state.worldIdentity||worldIdentity());const items=state.favorites.items;

@@ -38,7 +38,7 @@ export function initialize(runtime) {
   const data=()=>runtime.S.journal?.music?.hybrids?runtime.S.journal:ensureJournal(runtime.S);
   let tab='places',group='todo',query='',ownership='todo',limit=60;
   function recordInstrument(id) {
-    if(!(runtime.inWorld()||runtime.houseActive?.())||!runtime.S.sound||runtime.ac?.state!=='running')return;
+    if(!(runtime.inWorld()||runtime.houseActive?.())||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running')return;
     const music=data().music;
     music.instruments[id]=1;const hybrid=runtime.MU.radio?.hybrid;if(hybrid&&HYBRID_STYLES.some(h=>h.id===hybrid.id))music.hybrids[hybrid.id]=1;
     const program=runtime.activeInstrumentPatch?.program;if(program)music.programs[program.id]=1;

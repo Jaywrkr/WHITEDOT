@@ -34,7 +34,6 @@ export function traceMirrors(site,maxBounces=4){
 }
 export function normalizeMirrorSites(saved){
  const out={};for(const [id,e] of Object.entries(saved||{})){
-  if(Object.keys(out).length>=64)break;
   if(!/^mirror:-?\d+,-?\d+$/.test(id)||!Array.isArray(e?.angles)||e.angles.length!==3||!e.angles.every(Number.isFinite))continue;
   out[id]={angles:e.angles.map(mirrorAngle),solved:!!e.solved};
  }return out;
@@ -67,7 +66,7 @@ export function initialize(runtime){
  }
  function remember(site,solved=false){
   if(drag?.site===site)return; // Ambient waves must not commit a gesture preview.
-  const saved=S().mirrorSites;if(!saved[site.id]&&Object.keys(saved).length>=64)delete saved[Object.keys(saved)[0]];
+  const saved=S().mirrorSites;
   saved[site.id]={angles:site.mirrors.map(m=>m.angle),solved:solved||!!saved[site.id]?.solved};
  }
  function emit(site,i,time,origin='ambient'){

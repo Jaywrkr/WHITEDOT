@@ -1,5 +1,7 @@
 # Cobertura de las 150 ideas · entrega alpha
 
+> Matriz histórica de la entrega alpha, anterior al cierre 2.0. Las mejoras posteriores se registran en [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md), [AUDITORIA_CIERRE_2.0.md](AUDITORIA_CIERRE_2.0.md) y [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md). Esta matriz no se presenta como un recuento actualizado de toda la candidata.
+
 Esta matriz documenta el estado concreto; **no declara las 150 ideas terminadas**. «Base jugable» significa que existe un comportamiento integrado y revisable, todavía sujeto a escucha/prueba humana. «Parcial» señala ampliaciones de la idea que esta implementación no cubre. «Pendiente» y «Externa» identifican trabajo que falta.
 
 El objetivo de la entrega fue materializar las diez fases con un núcleo común, contenido jugable y pruebas, manteniendo semillas y estética. Algunas propuestas de la visión necesitan una segunda iteración; quedan explícitas para evitar que sumar definiciones o prototipos se confunda con terminar todo el diseño. Ninguna limitación se oculta como un flag o una característica habilitada sin comportamiento.

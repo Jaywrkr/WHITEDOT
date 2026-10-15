@@ -1,4 +1,4 @@
-# Navegador: mesa de efectos. El pad filtra y da espacio, vuelve a limpio al soltar, Fijar lo mantiene, Stop frena y no mueve al pixel.
+# Navegador: paseo automático, reloj de sesión, exploración sin límite y cancelación.
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 import os, shutil, threading
@@ -17,11 +17,12 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
   page.evaluate("()=>{const r=window.__testRuntime;r.startAutopilot('wander');}")
-  before=page.evaluate('[window.__testRuntime.S.wx,window.__testRuntime.S.wy]');lamp=page.evaluate('window.__testRuntime.S.lampUsed');page.wait_for_timeout(600)
+  before=page.evaluate('[window.__testRuntime.S.wx,window.__testRuntime.S.wy]');lamp=page.evaluate('window.__testRuntime.S.lampUsed');elapsed=page.evaluate('window.__testRuntime.S.session.seconds');page.wait_for_timeout(600)
   after=page.evaluate('[window.__testRuntime.S.wx,window.__testRuntime.S.wy]');assert ((after[0]-before[0])**2+(after[1]-before[1])**2)**.5>10
-  assert page.evaluate('window.__testRuntime.S.lampUsed')>lamp
+  assert page.evaluate('window.__testRuntime.S.lampUsed')==lamp,'exploration must not consume a legacy time allowance'
+  assert page.evaluate('window.__testRuntime.S.session.seconds')>elapsed,'the active session clock must still advance'
   page.locator('#bMenu').click();page.wait_for_timeout(200);pos=page.evaluate('[window.__testRuntime.S.wx,window.__testRuntime.S.wy]');page.wait_for_timeout(300)
   assert page.evaluate('[window.__testRuntime.S.wx,window.__testRuntime.S.wy]')==pos
   page.locator('#mnClose').click();page.keyboard.down('d');page.wait_for_timeout(150);page.keyboard.up('d');assert page.evaluate('window.__testRuntime.autopilotState.mode') is None
@@ -33,6 +34,6 @@ with sync_playwright() as p:
   page.evaluate("window.__testRuntime.startAutopilot('wander')");page.locator('#autoStop').click();assert page.evaluate('window.__testRuntime.autopilotState.mode') is None
   page.evaluate("window.__testRuntime.startAutopilot('wander')");page.locator('#bMenu').click();page.locator('#bWorld').click();assert page.evaluate('window.__testRuntime.autopilotState.mode') is None
   assert not errors,errors
-  print(label+': slow autopilot, lamp consumption, menu pause, manual/stop cancellation and destination arrival PASS',flush=True);c.close()
+  print(label+': slow autopilot, unlimited exploration, active session clock, menu pause, manual/stop cancellation and destination arrival PASS',flush=True);c.close()
  b.close()
 server.shutdown()

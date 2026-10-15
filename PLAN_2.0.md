@@ -13,11 +13,13 @@
 | 7 · Exploración y hallazgos con sentido | `feat/cierre-f7-hallazgos` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 8 · Memoria, regreso y vínculos | `feat/cierre-f8-memoria` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 9 · Juego, interfaz e historia unidos | `feat/cierre-f9-juego` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 10 · Mezcla, auditoría y lanzamiento | `feat/cierre-f10-lanzamiento` | Pendiente |
+| 10 · Mezcla, auditoría y lanzamiento | `feat/cierre-f10-lanzamiento` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 
 Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0** (`4ed00ce`), con CI en verde. La 2.0 se construye en ramas. Por excepción explícita de Jay, se integran en `main` las fases 0–2 y la reparación de Vercel; las siguientes conservan el flujo de PR y merge de Jay.
 
 **Hilo común:** encontrar cosas en el universo debe darte algo visible, que se celebre y que puedas usar. Por eso cubo, casa y logros comparten una base (fase 0) en vez de ser sistemas separados.
+
+La continuación autorizada durante esta auditoría se organiza en [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md). F10 entrega la base auditada; los siete bloques siguientes permanecen separados y pendientes hasta implementarse.
 
 ## Flujo de trabajo (obligatorio)
 

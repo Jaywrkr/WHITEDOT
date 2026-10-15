@@ -19,6 +19,11 @@ try:
    page.evaluate('()=>{const r=__testRuntime;document.querySelectorAll(".modal").forEach(m=>m.hidden=true);r.S.sound=false;r.S.relaxedCreate=true;r.spawnBox(r.S.wx,r.S.wy,"cometa");}')
    page.wait_for_function('__testRuntime.hasPower("cometa")');page.wait_for_function('!document.getElementById("celebration").hidden&&document.getElementById("celebrationName").textContent==="Cometa"')
    assert page.locator('#celebrationTime').inner_text()=='90 s de juego'
+   assert page.locator('#celebration').get_attribute('data-power')=='cometa'
+   assert page.locator('#celebrationSerial').inner_text().startswith('#')
+   assert page.locator('#celebrationPlace').inner_text()
+   first_art=page.locator('#celebrationArt').inner_html();first_serial=page.locator('#celebrationSerial').inner_text()
+   assert page.locator('#celebrationName').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')<=16
    rect=page.locator('#celebration').bounding_box();assert rect['width']*rect['height']<width*height*.3,rect
    assert page.locator('#rareNotice').is_hidden()
    page.evaluate('__testRuntime.say("Escucha tu nueva voz.","Colección")');page.wait_for_function('document.getElementById("voice").classList.contains("on")')
@@ -36,6 +41,11 @@ try:
    page.locator('#celebrationDismiss').click();page.wait_for_function('document.getElementById("celebration").hidden')
    assert page.evaluate('__testRuntime.S.ach.poder_cometa')
    assert page.evaluate('__testRuntime.ownsReward("box:cometa")')
+   page.evaluate('''()=>{const r=__testRuntime;r.celebrateBox({id:'second-native-opening',power:'campo',x:r.S.wx,y:r.S.wy});}''')
+   page.wait_for_function('document.getElementById("celebration").dataset.power==="campo" && !document.getElementById("celebration").hidden')
+   assert page.locator('#celebrationArt').inner_html()!=first_art
+   assert page.locator('#celebrationSerial').inner_text()!=first_serial
+   page.emulate_media(reduced_motion='reduce');assert page.locator('#celebration').evaluate('e=>getComputedStyle(e).animationName')=='none'
    assert not errors,errors;print('PASS timed box card, paused power/queue, silent 512x640 export and earned memory at '+str(width),flush=True);page.close()
   browser.close()
 finally:server.shutdown()
