@@ -1,3 +1,4 @@
+import {labScore,labInteractionVoice} from './lab-score.js';
 import {walkerVoice} from './walker-forms.js';
 import {cubePulseVoice} from './cube-voice.js';
 import {heritageVoice,relicVoice} from './heritage.js';
@@ -80,6 +81,7 @@ export function initialize(runtime) {
       const role=source.labSynth==='velvetbass'?'bajo':['analogpad','choir','orbitorgan'].includes(source.labSynth)?'acorde':'lead';
       raw={...raw,role,instrument:source.labSynth,low:role==='bajo'?36:45,high:role==='bajo'?54:69};
     }
+    if(runtime.MU?.radio?.labScore&&!source?.labSynth)raw=labInteractionVoice(raw,labScore(region,runtime.seedOf,runtime.rng),kind,source,runtime.seedOf);
     if(kind==='pulso')raw=cubePulseVoice(raw,runtime.S.cube?.voice);
     return hybridRegister(voiceRegister(raw,region.genre),hybridIdentity(region,runtime.seedOf,runtime.rng));
   }
@@ -108,7 +110,10 @@ export function initialize(runtime) {
       if(origin==='player'||origin==='field')runtime.focusGesture?.(t,source,voice.role);
       runtime.soundCue?.(source,voice.role,t);
       const n = note(degree);let v = runtime.vel(strength * volume*(voice.volume??1))*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
+      const articulation={technique:source?.expression==='staccato'?'muted':source?.expression==='glide'?'slide':voice.technique||'normal'};
+      if(source){source.musicRole=voice.role;source.musicInstrument=voice.instrument;}
       const emit=()=>{
+        if(voice.labTerritory&&voice.role==='perc'&&runtime.playNewInstrument?.(voice.instrument,n,t,v,articulation)){runtime.recordInstrument?.(voice.instrument);if(kind.startsWith('living:'))runtime.livingNoteCue?.({id:source?.id,role:voice.role,note:n,time:t,material:voice.material,instrument:voice.instrument});return;}
         if(kind.startsWith('living:')&&runtime.livingSynthesis?.(voice,n,t,v,source))return;
         if(kind.startsWith('rhythm:')&&playMaterialStrike(runtime,kind.split(':')[1],source?.variant||0,t,v)){runtime.recordInstrument?.(voice.instrument);return;}
         if (voice.role === 'bajo') runtime.bassInst(voice.instrument,n,t,v);
@@ -125,8 +130,8 @@ export function initialize(runtime) {
           else if (voice.instrument === 'snare') runtime.snare(t,v*.8);
           else runtime.tom(t,55+voice.degree*15,v);
         } else if (voice.role === 'acorde') {
-          [0,2,4].forEach(d=>runtime.hookInst(voice.instrument,note(degree+d)-(voice.instrument==='glass'?12:0),t,v*.4));
-        } else runtime.hookInst(voice.instrument,n-(voice.instrument==='glass'?12:0),t,v);
+          [0,2,4].forEach(d=>runtime.hookInst(voice.instrument,note(degree+d)-(voice.instrument==='glass'?12:0),t,v*.4,region,articulation));
+        } else runtime.hookInst(voice.instrument,n-(voice.instrument==='glass'?12:0),t,v,region,articulation);
       };
       const patchEmit=()=>{if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(kind,region,voice,source,t,emit);else emit();};
       const spatialEmit=(gain=1)=>{v*=gain;if(runtime.withVoiceEffect)runtime.withVoiceEffect(kind,region,voice,t,patchEmit);else patchEmit();};

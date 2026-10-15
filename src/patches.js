@@ -34,7 +34,7 @@ export function initialize(runtime){
   const movement=filterMovement(patch.program,patch.cutoff,voice.role,time,runtime.SIX,source?.energy||runtime.body?.speed/180||0,runtime.weather?.i||0);
   for(let i=0;i<movement.stages;i++){const f=ac.createBiquadFilter();f.type=movement.type;f.frequency.value=patch.cutoff;f.Q.value=movement.type==='bandpass'?.85:.55;
    f.frequency.setValueAtTime?.(movement.start,time);f.frequency.exponentialRampToValueAtTime?.(movement.end,time+movement.duration);filters.push(f);if(i)filters[i-1].connect(f);}
-  const lifetime=voiceLifetime(voice.instrument),modularNodes=[];
+  const lifetime=voice.sustained?24.3:voiceLifetime(voice.instrument),modularNodes=[];
   if(graph){modularNodes.push(...routeThreadGraph(ac,filters.at(-1),original[0],graph,time,time+lifetime));runtime.modularGraphCue?.(graph.signature,time);if(source)source.modularSignal={signature:graph.signature,routes:graph.routes.length};}else filters.at(-1).connect(original[0]);
   verb.gain.value=patch.sendScale;verb.connect(original[1]);delay.gain.value=patch.sendScale;delay.connect(original[2]);
   if(source){source.filterMotion={...movement,onset:performance.now()+Math.max(0,time-ac.currentTime)*1000};}

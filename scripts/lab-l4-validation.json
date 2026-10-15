@@ -1,0 +1,77 @@
+{
+  "validatedAt": "2026-10-15T15:41:12.313724+00:00",
+  "phase": "lab-l4",
+  "branch": "feat/lab-l4-paisaje",
+  "sourceFingerprint": "10fba11b99ebbb68fa00aa580bd544aadc5fecef120e45fcbd48967af9bc4d2b",
+  "nodeSuites": 101,
+  "browserFlows": 2,
+  "audioPrograms": 2,
+  "audioEvidence": [
+    "scripts/lab-l4-lab-music-audio-validation.json",
+    "scripts/lab-l4-landscape-audio-validation.json"
+  ],
+  "checks": [
+    {
+      "check": "audit",
+      "command": [
+        "npm",
+        "run",
+        "audit:release"
+      ],
+      "exitCode": 0,
+      "seconds": 0.27,
+      "result": "\n> whitedot@2.1.0-alpha.4 audit:release\n> node scripts/release-audit.mjs\n\n{\n  \"version\": \"2.1.0-alpha.4\",\n  \"sourceModules\": 164,\n  \"htmlIDs\": 324,\n  \"staticImports\": 422,\n  \"shellAssets\": 184,\n  \"errors\": [],\n  \"warnings\": [],\n  \"notes\": [\n    \"Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.\",\n    \"Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems.\"\n  ]\n}\n"
+    },
+    {
+      "check": "node",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 20.04,
+      "result": "\nPASS V1 PWA update controls: save guard, active-recording deferral and explicit reload\nPASS: 728 flocks in 2428 land regions (golondrina 247, grulla 260, luciernaga 184, lira 37), 647 gardens; trust gathers, running scatters, calls answered in rhythm, fireflies sync into groove, flora grows and withers\nPASS: stable regional voices, five tree roles within one biome, varied instruments, bounded emitted registers and groove responses\nPASS fifty reachable distinct silhouettes, territorial identity, bounded divergent movement, diatonic replies and preserved collection\nPASS exact 50-style/rarity counts, earned gates, six-month myths, legacy dates/defaults, safe material selection and five actual pulse instruments\nPASS: 97 raro / 16 legendario / 2 m\u00edtico rarities with visible rules and unique samples; rivers 1.0 % of land, followable 6000 px downstream\nPASS eight real families, 52 retained genres, distinct spatial fields/contours, matched materials/music/populations, protected bass, raw DNA and rare specimens\nPASS edit/phrase roundtrips, persistent removals, non-evicting limits, future-data preservation, bounded bonds, familiar approach and musical affinity\nPASS continuous fog/day/LOD, zero-opacity cutoff, negative-coordinate preload margin, three decor-only parallax planes and independent visual hash\nPASS actual lineage rendering fades bright sources and blends the former 500px cutoff\nPASS: 35 continents (largest 310, smallest 1 regions), 32 % seas, 53 % family identity, density contrast, 447 landmarks of 5 types\nPASS: 101 Node suites with assertions (Web Audio helper excluded)\n"
+    },
+    {
+      "check": "lab_landscape_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/lab_landscape_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 11.32,
+      "result": "PASS native territory inhabitants, spatial held voice beyond three seconds and cube-leave release\n"
+    },
+    {
+      "check": "instrument_techniques_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/instrument_techniques_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 4.35,
+      "result": "PASS eleven lab voices, real held wind from cube contact, bounded nodes and release/no restart in menu\n"
+    },
+    {
+      "check": "landscape_gestures_mix.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/landscape_gestures_mix.py"
+      ],
+      "exitCode": 0,
+      "seconds": 18.95,
+      "result": "Rendered {'genre': 'minimaltechno', 'scene': 'living:breath-tree', 'identity': 'lab:silk', 'dense': True, 'soft': False, 'peak': 0.9010976552963257}\nRendered {'genre': 'deep', 'scene': 'living:reeds', 'identity': 'lab:warm', 'dense': True, 'soft': True, 'peak': 0.3395358622074127}\nRendered {'genre': 'afro', 'scene': 'living:moss', 'identity': 'lab:interlock', 'dense': True, 'soft': False, 'peak': 0.9010206460952759}\nRendered {'genre': 'ambient', 'scene': 'living:turtle', 'identity': 'lab:silk', 'dense': True, 'soft': True, 'peak': 0.2438727617263794}\nRendered {'genre': 'dnb', 'scene': 'living:moth', 'identity': 'lab:heavy', 'dense': True, 'soft': False, 'peak': 0.9008212089538574}\nRendered {'genre': 'nudisco', 'scene': 'living:bridge', 'identity': 'lab:warm', 'dense': True, 'soft': True, 'peak': 0.31399911642074585}\nPASS 6 living species/structures with actual dense scheduler, audible native notes, 44.1/48 kHz and peak 0.901098\n"
+    },
+    {
+      "check": "lab_music_mix.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/lab_music_mix.py"
+      ],
+      "exitCode": 0,
+      "seconds": 55.9,
+      "result": "nre': 'soulful', 'scene': None, 'identity': 'lab:warm', 'dense': True, 'soft': False, 'peak': 0.9009326696395874}\nRendered {'genre': 'soulful', 'scene': None, 'identity': 'lab:warm', 'dense': True, 'soft': True, 'peak': 0.48315006494522095}\nRendered {'genre': 'dnb', 'scene': None, 'identity': 'lab:pulse', 'dense': True, 'soft': False, 'peak': 0.9009125232696533}\nRendered {'genre': 'dnb', 'scene': None, 'identity': 'lab:pulse', 'dense': True, 'soft': True, 'peak': 0.4874565601348877}\nRendered {'genre': 'dnb', 'scene': None, 'identity': 'lab:heavy', 'dense': True, 'soft': False, 'peak': 0.9009714126586914}\nRendered {'genre': 'dnb', 'scene': None, 'identity': 'lab:heavy', 'dense': True, 'soft': True, 'peak': 0.5977859497070312}\nRendered {'genre': 'baltimore', 'scene': None, 'identity': 'lab:interlock', 'dense': True, 'soft': False, 'peak': 0.9008798003196716}\nRendered {'genre': 'baltimore', 'scene': None, 'identity': 'lab:interlock', 'dense': True, 'soft': True, 'peak': 0.48278579115867615}\nRendered {'genre': 'ambient', 'scene': None, 'identity': 'lab:silk', 'dense': True, 'soft': False, 'peak': 0.9012215733528137}\nRendered {'genre': 'ambient', 'scene': None, 'identity': 'lab:silk', 'dense': True, 'soft': True, 'peak': 0.4591176509857178}\nRendered {'genre': 'melodic', 'scene': None, 'identity': 'lab:breath', 'dense': True, 'soft': False, 'peak': 0.9214555621147156}\nRendered {'genre': 'melodic', 'scene': None, 'identity': 'lab:breath', 'dense': True, 'soft': True, 'peak': 0.49684029817581177}\nPASS 12 live territorial mixes at 44.1/48 kHz, dense/soft, finite signal and headroom\n"
+    }
+  ],
+  "scope": "Affected browser flows. Full browser/audio CI and physical-phone acceptance remain required before release."
+}

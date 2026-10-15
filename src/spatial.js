@@ -24,7 +24,7 @@ export function initialize(runtime) {
    if(Math.abs(gain-rig.gain)>.005){rig.nodes.forEach(n=>n.gain.setTargetAtTime(gain,now,.12));rig.gain=gain;}
   }
  }
- function withSpatialVoice(source,time,emit){
+ function withSpatialVoice(source,time,emit,duration=3){
   if(!runtime.inWorld()||!source||!Number.isFinite(source.x)||!Number.isFinite(source.y))return emit(1);
   const gain=proximityGain(source,runtime.S.wx,runtime.S.wy);
   if(gain<=0)return;
@@ -32,7 +32,7 @@ export function initialize(runtime) {
   const ac=runtime.ac;
   if(!runtime.S.sound||ac?.state!=='running'||!runtime.bus||!runtime.verbIn||!runtime.dsend||active.length>=32)return emit(gain);
   const original=[runtime.bus,runtime.verbIn,runtime.dsend],nodes=original.map(destination=>{const node=ac.createGain();node.gain.value=gain;node.connect(destination);return node;});
-  active.push({source,nodes,gain,end:time+3});
+  active.push({source,nodes,gain,end:time+Math.max(3,Math.min(24.3,Number.isFinite(duration)?duration:3))});
   [runtime.bus,runtime.verbIn,runtime.dsend]=nodes;
   try{return emit(1);}finally{[runtime.bus,runtime.verbIn,runtime.dsend]=original;}
  }
