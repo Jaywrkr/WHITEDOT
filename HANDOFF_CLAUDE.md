@@ -1,3 +1,13 @@
+# Experiencia · fase 8
+
+Rama `feat/experiencia-08-atlas`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Atlas visual con búsquedas optativas de voces complementarias, pistas locales discretas y relaciones conservadas al interactuar con otro habitante real. Sin flechas, premios artificiales ni sonido de botones. Estudios culturales previos conservan su identificación como creaciones originales.
+
+Validación: Auditoría/Node completos; living-cards_smoke y journal_v2_smoke; audio sin cambios. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 7
 
 Rama `feat/experiencia-07-rareza`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
