@@ -15,16 +15,16 @@ export function walkerGeometry(form,phase=0){
 export function drawWalker(c,form,x,y,time,reduced=false){const g=walkerGeometry(form,reduced?0:time/(form.gait?150:320));c.save();c.translate(x,y);c.lineWidth=1;c.beginPath();g.body.forEach(([a,b],i)=>i?c.lineTo(a,b):c.moveTo(a,b));c.closePath();c.stroke();for(const points of [g.heads,g.legs,g.arms]){c.beginPath();for(let i=0;i<points.length;i+=2){c.moveTo(...points[i]);if(points[i+1])c.lineTo(...points[i+1]);}c.stroke();}c.restore();}
 export function walkerPortrait(form){const g=walkerGeometry(form);return '<path d="M'+g.body.map(p=>p.join(' ')).join('L')+'Z"/><path d="'+[g.heads,g.legs,g.arms].map(points=>points.map((p,i)=>(i%2?'L':'M')+p.join(' ')).join('')).join('')+'"/>';}
 
-export function walkerVoice(source,region,genres,seedOf){const f=source.walkerForm||walkerForm(source,region,seedOf),shift=seedOf('walker:role:v1:'+region.key)%5,role=['lead','acorde','perc','bajo','lead'][(f.body+shift)%5],g=genres[region.genre],pool=role==='bajo'?expressiveBassInstruments(region.genre,g):role==='perc'?(g.percP||['tom','wood','conga','rim','shaker']):interactionInstruments(region.genre,g,role);return {role,instrument:pool[f.head%pool.length],degree:f.head%7,response:f.gait?3:6,low:role==='bajo'?36:45,high:role==='bajo'?52:69};}
+export function walkerVoice(source,region,genres,seedOf){const f=source.walkerForm||walkerForm(source,region,seedOf),shift=seedOf('walker:role:v1:'+region.key)%5,role=['lead','acorde','perc','bajo','lead'][(f.body+shift)%5],g=genres[region.genre],pool=role==='bajo'?expressiveBassInstruments(region.genre,g):role==='perc'?(g.percP||['tom','wood','conga','rim','shaker']):interactionInstruments(region.genre,g,role);return {role,instrument:pool[f.head%pool.length],degree:(f.head+(source.personality?.degree||0))%7,response:f.gait?3:6,low:role==='bajo'?36:45,high:role==='bajo'?52:69};}
 export function moveWalker(k,f,player,dt,time){dt=Math.max(0,Math.min(.05,dt));if(!dt)return;const distance=Math.hypot(k.x-player.x,k.y-player.y)||1,phase=time/1000;
- if(k.follow>0){const angle=phase*(f.body===1?.55:.18)+(f.head*1.3),spacing=f.spacing,tx=player.x+Math.cos(angle)*spacing,ty=player.y+Math.sin(angle)*spacing,dx=tx-k.x,dy=ty-k.y,d=Math.hypot(dx,dy)||1;const move=Math.min(d,Math.min(145,d*1.8)*dt*f.speed*(f.body===2?.7:1));k.x+=dx/d*move;k.y+=dy/d*move;return;}
+ if(k.follow>0){const angle=phase*(f.body===1?.55:.18)+(f.head*1.3),spacing=f.spacing,tx=player.x+Math.cos(angle)*spacing,ty=player.y+Math.sin(angle)*spacing,dx=tx-k.x,dy=ty-k.y,d=Math.hypot(dx,dy)||1;const move=Math.min(d,Math.min(145,d*1.8)*dt*f.speed*(k.personality?.speed||1)*(f.body===2?.7:1));k.x+=dx/d*move;k.y+=dy/d*move;return;}
  k.a+=Math.sin(phase/(f.gait?1.1:2.8)+k.hx)*dt*.6;
  if(f.body===0&&distance<180&&distance>70+f.head*5)k.a=Math.atan2(player.y-k.y,player.x-k.x);
  if(f.body===1)k.a=Math.atan2(k.hy-k.y,k.hx-k.x)+.9+f.head*.08;
  if(f.body===2&&distance<100+f.head*6)k.a=Math.atan2(k.y-player.y,k.x-player.x);
  if(Math.hypot(k.hx-k.x,k.hy-k.y)>380)k.a=Math.atan2(k.hy-k.y,k.hx-k.x);
  const rest=f.body===3&&Math.sin(phase*.6+f.head)>.2?0:f.body===4?(Math.sin(phase*3)>0?1.5:.25):1;
- const speed=22*f.speed*rest;k.x+=Math.cos(k.a)*speed*dt;k.y+=Math.sin(k.a)*speed*dt;
+ const speed=22*f.speed*rest*(k.personality?.speed||1);k.x+=Math.cos(k.a)*speed*dt;k.y+=Math.sin(k.a)*speed*dt;
 }
 export function initialize(runtime){let owner=runtime.S,heard=new WeakMap();
  function record(form){const s=runtime.S;s.walkerForms=s.walkerForms&&typeof s.walkerForms==='object'&&!Array.isArray(s.walkerForms)?s.walkerForms:{};if(!Object.hasOwn(s.walkerForms,form.id)){s.walkerForms[form.id]={day:s.todayKey};runtime.save?.();}}

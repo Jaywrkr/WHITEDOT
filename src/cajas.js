@@ -15,7 +15,7 @@ const TAU=Math.PI*2;
 
 export function normalizeGiftBoxes(items){const seen=new Set();return (Array.isArray(items)?items:[]).filter(b=>b&&typeof b.id==='string'&&b.id.startsWith('regalo:')&&!seen.has(b.id)&&Number.isFinite(b.x)&&Number.isFinite(b.y)&&Math.abs(b.x)<1e12&&Math.abs(b.y)<1e12&&Object.hasOwn(POWERS,b.power)&&seen.add(b.id)).map(b=>({...b,gift:true,hue:Number.isFinite(b.hue)?b.hue:0,spin:0}));}
 export function initialize(runtime){
- const clock=createPowerClock(POWERS),S=()=>runtime.S,powers=clock.powers,spawned=[],trail=[],marks=[],companion={x:0,y:0,on:false,lit:0,heard:[],species:null};let previous=S(),lastMark=null;
+ const clock=createPowerClock(POWERS),S=()=>runtime.S,powers=clock.powers,spawned=[],trail=[],marks=[],companion={id:'power:companero',x:0,y:0,on:false,lit:0,heard:[],species:null};let previous=S(),lastMark=null;
  S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};
  const surface=()=>runtime.inWorld()&&(S().layer||'superficie')==='superficie';
  const now=clock.now;
@@ -62,24 +62,25 @@ export function initialize(runtime){
  // ---------- reloj musical ----------
  function sources(){
   // Todo lo que suena cerca: objetos del mundo (snd) y fuentes de módulos (materia, vida, vidrios, espejos, encuentros).
-  const list=(runtime.MU.near||[]).filter(o=>typeof o.snd==='function'&&o.x!=null).map(o=>({x:o.x,y:o.y,o,play:t=>{o.snd(t);o.hit=1;}}));
-  for(const fn of ['materiaSources','vidaSources','glassSources','mirrorSources','encounterSources'])for(const s of runtime[fn]?.()||[]){const ob=s.object;if(ob?.x==null)continue;list.push({x:ob.x,y:ob.y,o:ob,play:t=>{runtime.playVoice(s.kind,Math.floor(Math.hypot(ob.x-S().wx,ob.y-S().wy)/30)%7,t,runtime.regionOfPos(ob.x,ob.y),false,.35,ob,'player');ob.lit=1;}});}
+  const list=(runtime.MU.near||[]).filter(o=>typeof o.snd==='function'&&o.x!=null).map(o=>({x:o.x,y:o.y,o,play:t=>{if(runtime.withVoiceOrigin)runtime.withVoiceOrigin('field',()=>o.snd(t));else o.snd(t);o.hit=1;}}));
+  for(const fn of ['materiaSources','vidaSources','glassSources','mirrorSources','encounterSources'])for(const s of runtime[fn]?.()||[]){const ob=s.object;if(ob?.x==null)continue;list.push({x:ob.x,y:ob.y,o:ob,play:t=>{runtime.playVoice(s.kind,Math.floor(Math.hypot(ob.x-S().wx,ob.y-S().wy)/30)%7,t,runtime.regionOfPos(ob.x,ob.y),false,.35,ob,'field');ob.lit=1;}});}
   return list;
  }
- function melody(n,t,v){const d=runtime.MU.dnaA||runtime.MU.dnaT;if(!d)return;const inst=runtime.MU.radio?.hookI||hookInstruments(d.genre,runtime.GEN[d.genre])[0];runtime.hookInst(inst,hookPitch(inst,n,musicalCharacter(d.genre)),t,v,d);}
+ function melody(n,t,v,source=null,front=false){const d=runtime.MU.dnaA||runtime.MU.dnaT;if(!d)return;const inst=runtime.MU.radio?.hookI||hookInstruments(d.genre,runtime.GEN[d.genre])[0],cue=source?{...source,id:source.id||'power:pincel:'+Math.round(source.x)+','+Math.round(source.y)}:{id:'power:cometa',x:S().wx,y:S().wy},voice={instrument:inst,role:'lead'},emit=()=>runtime.hookInst(inst,hookPitch(inst,n,musicalCharacter(d.genre)),t,v,d);if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(front?'power:pincel':'power:voice',d,voice,cue,t,emit);else emit();if(front)runtime.focusGesture?.(t,cue,'lead');runtime.soundCue?.(cue,'lead',t);}
+
  function step(s,bar,time){
   if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])')||!S().sound||runtime.ac?.state!=='running')return;
   // Campo: el brazo gira una vuelta por compás y toca lo que cruza dentro del círculo.
   if(has('campo')){const R=fieldRadius(left('campo'),POWERS.campo.seconds);let n=0;
    for(const src of sources()){const dx=src.x-S().wx,dy=src.y-S().wy;if(Math.hypot(dx,dy)>R||n>=3)continue;const a=((Math.atan2(dy,dx)+Math.PI/2)%TAU+TAU)%TAU;if(Math.floor(a/TAU*16)===s){src.play(time);n++;}}}
   // Cometa: la estela suena en corcheas mientras corres.
-  if(has('cometa')&&s%2===0&&(runtime.body?.speed||0)>80){const ct=runtime.chordTones?.()||[60,64,67];melody(ct[(s/2)%ct.length],time,.02);}
+  if(has('cometa')&&s%2===0&&(runtime.body?.speed||0)>80){const ct=runtime.chordTones?.()||[60,64,67];melody(ct[(s/2)%ct.length],time,.02,trail.at(-1));}
   // Pincel: tus marcas suenan cada dos compases, en el orden en que las dejaste.
-  if(has('pincel')&&bar%2===0)for(const m of marks)if(m.step===s){const ct=runtime.chordTones?.()||[60,64,67];melody(ct[m.degree%ct.length],time,.025);setTimeout(()=>{m.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
+  if(has('pincel')&&bar%2===0)for(const m of marks)if(m.step===s){const ct=runtime.chordTones?.()||[60,64,67];melody(ct[m.degree%ct.length],time,.025,m,true);setTimeout(()=>{m.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
   // Imán: los que te siguen tocan cada uno su parte.
-  if(has('iman')&&s%4===0){const o=(runtime.MU.near||[]).filter(o=>typeof o.snd==='function')[(bar*4+s/4)%Math.max(1,(runtime.MU.near||[]).length)];if(o&&typeof o.snd==='function'){o.snd(time);o.hit=1;}}
+  if(has('iman')&&s%4===0){const small=(runtime.MU.near||[]).filter(o=>typeof o.snd==='function'),o=small[(bar*4+s/4)%Math.max(1,small.length)];if(o){if(runtime.withVoiceOrigin)runtime.withVoiceOrigin('field',()=>o.snd(time));else o.snd(time);o.hit=1;}}
   // Compañero: contesta lo último que tocaste una tercera arriba.
-  if(companion.on&&companion.heard.length&&s%4===2){const h=companion.heard.shift(),ct=runtime.chordTones?.()||[60,64,67];const n=ct[(h+2)%ct.length],spec=PET_SPECIES[companion.species];if(spec?.role==='bass'){let pitch=n;while(pitch>52)pitch-=12;while(pitch<36)pitch+=12;runtime.bassInst(spec.pool[0],pitch,time,.025);}else if(spec?.role==='groove')runtime.wood(time,.025);else melody(n,time,.025);setTimeout(()=>{companion.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
+  if(companion.on&&companion.heard.length&&s%4===2){const h=companion.heard.shift(),ct=runtime.chordTones?.()||[60,64,67];const n=ct[(h+2)%ct.length],spec=PET_SPECIES[companion.species];if(spec?.role==='bass'){let pitch=n;while(pitch>52)pitch-=12;while(pitch<36)pitch+=12;runtime.bassInst(spec.pool[0],pitch,time,.025);}else if(spec?.role==='groove')runtime.wood(time,.025);else melody(n,time,.025,companion);if(spec?.role==='bass'||spec?.role==='groove')runtime.soundCue?.(companion,spec.role==='bass'?'bajo':'perc',time);setTimeout(()=>{companion.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
  }
  function hear(index){if(companion.on){companion.heard.push(index||0);if(companion.heard.length>4)companion.heard.shift();}}
  // Brújula y compañero: lo raro cerca (dirección y nombre).

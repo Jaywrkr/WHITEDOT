@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.0.0-rc.6-pulido-f6';
+const CACHE='whitedot-2.0.0-rc.7-pulido-f7';
 const SHELL=[
  "./src/onboarding-model.js",
  "./src/onboarding.js",
