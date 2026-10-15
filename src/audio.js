@@ -8,6 +8,7 @@ import {harmonicDegree,createVoiceCurator} from './grammar.js';
 import { createRadio } from './radio.js';
 import {labDrumEvents,labNoteEvents} from './lab-score.js';
 import {productionSpace,createProductionRooms} from './music-direction.js';
+import {blendProductionSpace} from './territory-presentation.js';
 
 // Motor musical, síntesis y programación de Web Audio.
 export function initialize(runtime) {
@@ -227,7 +228,8 @@ export function initialize(runtime) {
     if(s%4===0){MU.bq.push(t);if(MU.bq.length>8)MU.bq.shift();}
     MU.sq.push({t,s});if(MU.sq.length>12)MU.sq.shift();
     const id=BI().id,cave=id==="cueva",bar=MU.step>>4;
-    const space=runtime.inWorld()&&!runtime.duetRoom?productionSpace(A?.genre||'ambient',{cave,fog:A?.air==='niebla',canon:MU.anomaly==='canon'}):null;
+    const nativeSpace=productionSpace(A?.genre||'ambient',{cave,fog:A?.air==='niebla',canon:MU.anomaly==='canon'}),
+     space=runtime.inWorld()&&!runtime.duetRoom?(nb?blendProductionSpace(nativeSpace,productionSpace(nb.genre),w):nativeSpace):null;
     droneG.gain.setTargetAtTime(0,t,1.5);
     dfb.gain.setTargetAtTime(space?.feedback??.36,t,.4);
     dsend.gain.setTargetAtTime(space?.echo??1,t,.4);
@@ -488,6 +490,11 @@ export function initialize(runtime) {
     if(tr.labScore){
       for(const event of labNoteEvents(tr,s,MU.step>>4)){
         const at=t+event.offset*SIX,articulation={...tr.expression,technique:event.technique};
+        if(event.role==='acorde'){
+          if(runtime.cultureListening||E<=.15)continue;
+          for(const n of ct.slice(0,3))hookInst(event.instrument,inRegister(n,45,65),at,vel(.025*event.level),d,{...articulation,decayScale:Math.min(.8,articulation.decayScale||1)});
+          runtime.labPerformanceCue?.({...event,time:at,bar:MU.step>>4,step:s});continue;
+        }
         if(event.role==='bajo'){
           if(E<=.15||MU.vari===0||d.genre==='ambient')continue;
           const note=inRegister(nt(event.degree,45),38,52);bassInst(event.instrument,note,at,vel(.14*(tr.grammar.bassLevel||1)*event.level),d);

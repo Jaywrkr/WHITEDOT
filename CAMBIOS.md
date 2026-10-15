@@ -1,3 +1,11 @@
+# Pulido · fase 3: territorios y claros
+
+- Fondos geométricos por zonas: claros amplios, transiciones continuas y texturas más tenues. Se aplica al suelo antiguo, ecologías, microhábitats, familias y dunas; no elimina actores musicales.
+- Timbres principales y secundarios compatibles alternan por frases; vecinos de igual carácter comparten acento territorial.
+- Tratamiento de sala y eco se mezcla al acercarse a la música vecina. Ritmos, género, escala y posiciones conservados.
+- Acordes breves en estilos armónicos, coordinados cada ocho compases y omitidos en descansos. No se añade fondo continuo.
+- Validación: auditoría, 117 suites Node, ocho programas de navegador y treinta renders de audio aprobados. Pico máximo 0,943133; evidencia en `scripts/pulido-03-validation.json`. Escucha física/CI/deploy separados.
+
 # Pulido · fase 2: dirección musical
 
 - Plan integral actualizado a nueve fases por petición de Jay; fase 1 ya integrada en PR #144.

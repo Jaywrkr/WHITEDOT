@@ -1,0 +1,59 @@
+{
+  "phase": 3,
+  "branch": "feat/pulido-03-territorios",
+  "parent": "a3a5fa7cf5f66ddf408ebba5905bf626cbd5ce65",
+  "validatedAtUTC": "2026-10-15T22:44:49.494369+00:00",
+  "audit": {
+    "result": "passed",
+    "errors": 0,
+    "warnings": 0,
+    "modules": 179
+  },
+  "node": {
+    "result": "passed",
+    "suites": 117
+  },
+  "browser": {
+    "result": "passed",
+    "flows": [
+      "territory_presentation_smoke.py",
+      "world_family_smoke.py",
+      "world_visibility_smoke.py",
+      "lab_score_smoke.py",
+      "volume_control_smoke.py",
+      "ui_silence_smoke.py",
+      "offline_smoke.py",
+      "lab_performance_smoke.py"
+    ],
+    "artifact": "scripts/pulido-03-family-browser.json"
+  },
+  "audio": {
+    "result": "passed",
+    "renders": 30,
+    "maxPeak": 0.9431321620941162,
+    "artifacts": [
+      {
+        "path": "scripts/pulido-03-music-audio.json",
+        "sha256": "0ae1232f68a49b56186f46665b2ea250c678e759d441270cde0e10be5df08876"
+      },
+      {
+        "path": "scripts/pulido-03-band-audio.json",
+        "sha256": "f0a064343f3c6574c3b6598199d799dad1a7087da1f14ade959eb56b1d8d718f"
+      },
+      {
+        "path": "scripts/pulido-03-evolution-audio.json",
+        "sha256": "272ed5e9416af2b54e2b1eec2fffb8facad210ee9446a4a6ab3e9bfcd81cae44"
+      }
+    ]
+  },
+  "scope": [
+    "Continuous optional world-space decoration with bounded cache; all interactive actors retained.",
+    "Compatible secondary voices visit phrase windows while neighbors share a territorial accent.",
+    "Short voiced chords reach the real scheduler in harmonic styles; silence and native patterns retained.",
+    "Neighboring production-space parameters crossfade."
+  ],
+  "notRun": [
+    "Full browser/audio suites reserved for F9 and CI.",
+    "Physical-phone listening and deployment acceptance."
+  ]
+}

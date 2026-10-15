@@ -1,4 +1,5 @@
 import {visualHash,distanceOpacity} from './world-visibility-model.js';
+import {decorativeField} from './territory-presentation.js';
 // Small ground structures; never a screen-filling illustration or a collision wall.
 export function familyContour(c,terrain,s,t,phase,reduced=false){
  const motion=reduced?0:Math.sin(t/2400+phase)*2;
@@ -16,19 +17,20 @@ export function familyContour(c,terrain,s,t,phase,reduced=false){
  c.stroke();
 }
 export function initialize(runtime){
- const c=runtime.cx;let drawn=0;
+ const c=runtime.cx;let drawn=0,examined=0,clear=0;
  function draw(t){
-  drawn=0;if(!runtime.inWorld()||runtime.S.layer!=='superficie'&&runtime.S.layer)return;
+  drawn=0;examined=0;clear=0;if(!runtime.inWorld()||runtime.S.layer!=='superficie'&&runtime.S.layer)return;
   const s=runtime.S,radius=runtime.worldVisibility?.radius||750,step=180,
    halfX=Math.min(runtime.W/2+90,radius),halfY=Math.min(runtime.H/2+90,radius);
   const reduced=runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   c.save();c.lineWidth=1;
   for(let x=Math.floor((s.wx-halfX)/step);x<=Math.floor((s.wx+halfX)/step);x++)for(let y=Math.floor((s.wy-halfY)/step);y<=Math.floor((s.wy+halfY)/step);y++){
    const wx=(x+.5)*step,wy=(y+.5)*step,d=runtime.regionOfPos(wx,wy),f=d.worldFamily;if(!f||f.quiet)continue;
+   examined++;const field=decorativeField(wx,wy,runtime.seedOf);if(field<.002){clear++;continue;}
    const h=visualHash(x,y,f.seed),detail=runtime.visualDetail?.detailQuality??1;
    const presence=Math.max(0,Math.min(1,(.4+Math.min(2,detail)*.13-h)*12));if(!presence)continue;
    const px=wx+Math.sin(f.angle+y)*27,py=wy+Math.cos(f.angle+x)*27,
-    alpha=presence*distanceOpacity(Math.hypot(px-s.wx,py-s.wy),radius)*(.16+h*.15);
+    alpha=field*presence*distanceOpacity(Math.hypot(px-s.wx,py-s.wy),radius)*(.16+h*.15);
    if(alpha<.002)continue;
    c.save();c.translate(px+runtime.W/2-s.wx,py+runtime.H/2-s.wy);c.rotate(f.angle*.35);
    c.globalAlpha=alpha;c.strokeStyle=`hsl(${f.hue},${f.saturation}%,67%)`;
@@ -36,5 +38,5 @@ export function initialize(runtime){
   }
   c.restore();
  }
- Object.defineProperties(runtime,{drawWorldFamilyGround:{get:()=>draw},worldFamilyVisualStats:{get:()=>({drawn})}});
+ Object.defineProperties(runtime,{drawWorldFamilyGround:{get:()=>draw},worldFamilyVisualStats:{get:()=>({drawn,examined,clear})}});
 }

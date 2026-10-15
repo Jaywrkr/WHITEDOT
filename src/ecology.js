@@ -53,7 +53,7 @@ export function initialize(runtime){
   c.save();c.strokeStyle=elementInk(e.material,runtime.regionOfPos(cx*size+1,cy*size+1).hue);c.lineWidth=1;
   for(let x=x0;x<Math.min((cx+1)*size,runtime.S.wx+R);x+=scale)for(let y=y0;y<Math.min((cy+1)*size,runtime.S.wy+R);y+=scale){
    const h=runtime.seedOf(`ecology:v2:terrain:${Math.round(x)},${Math.round(y)}`)%1000/1000,d=Math.hypot(x-runtime.S.wx,y-runtime.S.wy);if(d>R||h>.28+e.density*.28)continue;
-   const px=x+ox,py=y+oy,r=5+h*13;c.globalAlpha=.12*(1-d/R);c.beginPath();
+   const field=decorativeField(x,y,runtime.seedOf);if(field<.002)continue;const px=x+ox,py=y+oy,r=5+h*13;c.globalAlpha=.12*(1-d/R)*field;c.beginPath();
    if(e.terrain==='ripples')c.ellipse(px,py,r*1.5,r*.5,0,0,Math.PI*2);
    else if(e.terrain==='cells'){for(let i=0;i<=6;i++){const a=i*Math.PI/3;i?c.lineTo(px+Math.cos(a)*r,py+Math.sin(a)*r):c.moveTo(px+r,py);}}
    else if(e.terrain==='roots'){c.moveTo(px-r,py+r);c.quadraticCurveTo(px,py-r,px+r,py);c.moveTo(px,py);c.lineTo(px+r*.6,py-r);}
@@ -77,3 +77,4 @@ export function initialize(runtime){
  const sources=()=>visible().map(o=>({object:o,kind:kind(o),name:o.name,distance:Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),hint:'Toca · arrastra para modelar · quédate cerca para cultivar'})).filter(o=>o.distance<250);
  Object.defineProperties(runtime,{ecologyTick:{get:()=>tick},drawEcology:{get:()=>draw},ecologySources:{get:()=>sources},ecologyDown:{get:()=>down},ecologyMove:{get:()=>move},ecologyUp:{get:()=>up},ecologyEngaged:{get:()=>!!gesture}});
 }
+import {decorativeField} from './territory-presentation.js';

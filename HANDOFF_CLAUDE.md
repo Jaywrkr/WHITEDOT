@@ -1,3 +1,13 @@
+# Handoff · Territorios, fase 3
+
+Rama `feat/pulido-03-territorios` desde F2 `a3a5fa7`. Plan vigente de nueve fases en [PLAN_PULIDO_CUBO_MUSICA.md](PLAN_PULIDO_CUBO_MUSICA.md). F2 ya subida; Jay mantiene PR/merge.
+
+`territory-presentation.js` aporta un campo visual continuo y caché acotada: hay zonas sin motivos y otras de textura tenue. Todos los cambios son de presentación; fuentes y colecciones permanecen. Los vecinos comparten una orquesta compatible; un timbre secundario entra cada tres/cuatro ventanas de frase, preservando el principal. `audio.js` mezcla parámetros de producción en fronteras. `labNoteEvents` emite acordes breves solo en estilos armónicos y ventanas de ocho compases; el scheduler los interpreta en registro medio con caída limitada, respetando pausas.
+
+Validación F3: auditoría sin errores/advertencias, 117 suites Node, ocho programas de navegador y treinta renders de audio aprobados. Evidencia en `scripts/pulido-03-validation.json`. Escucha física/CI/deploy separados. F4 corresponde a interacciones; no reiniciar entregas anteriores.
+
+## Antecedentes
+
 # Handoff · Dirección musical, fase 2
 
 Plan vigente: [nueve fases integrales](PLAN_PULIDO_CUBO_MUSICA.md). Sustituye el esquema inicial de seis fases por petición de Jay. Rama `feat/pulido-02-direccion-musical` desde main `30b2df8` (PR #144 integra F1). F3 sigue con territorios; cubo pasa a F6 y tarjetas a F7. Codex commit/push; Jay PR/merge.

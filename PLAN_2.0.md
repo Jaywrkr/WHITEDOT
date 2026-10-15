@@ -8,7 +8,7 @@
 |---|---|---|---|
 | 1 · Base de evaluación | `feat/pulido-01-medicion` | Medición y referencias internas | En main, PR #144 |
 | 2 · Dirección musical | `feat/pulido-02-direccion-musical` | Identidades, articulación y espacios musicales | Implementada y probada; entrega en esta rama |
-| 3 · Territorios coherentes | `feat/pulido-03-territorios` | Música, materiales, color, habitantes y fusiones | Pendiente |
+| 3 · Territorios coherentes | `feat/pulido-03-territorios` | Música, materiales, color, habitantes y fusiones | Implementada y probada; entrega en esta rama |
 | 4 · Interacciones musicales | `feat/pulido-04-interacciones` | Gestos con causa visual y aporte audible | Pendiente |
 | 5 · Ambiente vivo | `feat/pulido-05-ambiente` | Clima, percusión natural, vida y quietud | Pendiente |
 | 6 · Cubo e interfaz | `feat/pulido-06-cubo-ui` | Personalización, claridad y móvil | Pendiente |
