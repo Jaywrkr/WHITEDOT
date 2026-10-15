@@ -18,7 +18,9 @@ try:
   expected=page.evaluate('(type)=>import("/src/rare-card-model.js").then(m=>m.rareDefinition(type).probability)',card['type'])
   assert card['odds']['probability']==expected,'the book must retain the current, truthful conditional rarity'
   assert card['appearance']==page.evaluate('__rareLiving.anatomy'),'portrait must preserve the specimen actually found'
+  page.evaluate('()=>{const r=__testRuntime,c=r.rareCards.find(c=>c.sourceId===__rareLiving.id);r.collectRareCard(c.type,__rareLiving,{context:{...c.context,phase:"otra fase"}});}')
   page.evaluate('__testRuntime.openJournal("rares")');page.wait_for_timeout(150);count=page.evaluate('__livingNotes.length');page.locator('#rareFilter').select_option(page.evaluate('__rareLiving.group'));page.wait_for_timeout(350);assert page.evaluate('__livingNotes.length')==count
+  page.locator('[data-rare-technique]').first.click();assert page.evaluate('__testRuntime.cardTechnique(__rareLiving)')!='normal'
   assert card['name'] in page.locator('#journalBody').inner_text();assert page.locator('.rare-portrait svg').count()>=1
   with page.expect_download() as info:page.locator('[data-rare-png]').first.click()
   target=info.value.path();assert Path(target).read_bytes().startswith(b'\x89PNG\r\n\x1a\n');assert page.evaluate('__livingNotes.length')==count

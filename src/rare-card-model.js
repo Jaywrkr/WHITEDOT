@@ -57,3 +57,15 @@ export function cardAbility(card){
  const names={bajo:['Cuerpo','Sostiene el suelo musical.'],perc:['Pulso','Dibuja acentos entre los golpes.'],acorde:['Aire','Abre espacio entre las voces.'],lead:['Frase','Contesta con una pequeña melodía.'],agudo:['Detalle','Añade un brillo breve.'],transformacion:['Cambio','Transforma temporalmente tu manera de tocar.']};
  const [name,text]=names[role]||names.lead;return {role,name,text,instrument:card.context?.instrument||''};
 }
+
+export const CARD_TECHNIQUES={normal:'Natural',muted:'Apagada',ghost:'Susurro',accent:'Acento',slide:'Deslizamiento',breathy:'Respirada'};
+export function learnCardEncounter(card,context={}){
+ if(card.learning?.version>1)return false;
+ const old=card.learning||{},contexts=Array.isArray(old.contexts)?old.contexts.filter(k=>typeof k==='string'):[],techniques=Array.isArray(old.techniques)?old.techniques.filter(k=>Object.hasOwn(CARD_TECHNIQUES,k)):['normal'];
+ const key=['weather','phase','gesture'].map(k=>String(context[k]||'').slice(0,60)).join('|');if(contexts.includes(key))return false;
+ if(contexts.length>=24)return false;contexts.push(key);
+ const choices=cardAbility(card).role==='perc'?['normal','ghost','accent']:cardAbility(card).role==='bajo'?['normal','muted','slide']:['normal','muted','breathy'];
+ for(const technique of choices.slice(0,Math.min(3,contexts.length)))if(!techniques.includes(technique))techniques.push(technique);
+ card.learning={...old,version:1,contexts,techniques,selected:techniques.includes(old.selected)?old.selected:'normal'};return true;
+}
+export function nextCardTechnique(card){const l=card.learning;if(!l||l.version!==1||!Array.isArray(l.techniques)||!l.techniques.length)return null;const options=l.techniques.filter(t=>Object.hasOwn(CARD_TECHNIQUES,t));if(!options.length)return null;l.selected=options[(options.indexOf(l.selected)+1)%options.length];return l.selected;}

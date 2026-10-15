@@ -1,13 +1,13 @@
 import {POWERS} from './expansion-music.js';
 import {livingDefinition} from './living-catalog.js';
-import {RARE_BOOK_LIMIT,RARE_PAGE_SIZE,CARD_TIERS,rareDefinition,rarityLabel,cardSerial,makeRareCard,normalizeRareBook,storeRareCard,cardAbility} from './rare-card-model.js';
+import {RARE_BOOK_LIMIT,RARE_PAGE_SIZE,CARD_TIERS,rareDefinition,rarityLabel,cardSerial,makeRareCard,normalizeRareBook,storeRareCard,cardAbility,learnCardEncounter,nextCardTechnique,CARD_TECHNIQUES} from './rare-card-model.js';
 import {rarePortrait} from './rare-card-art.js';
 import {relicAt} from './relics.js';
 import {encodePlace} from './share-tools.js';
 import {sameWorld} from './world-identity.js';
 const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function initialize(runtime){
- const $=runtime.$;let owner=null,queue=[],shown=null,remaining=0,page=0,fullNoticed=false,filter='todo',effects=[];
+ const $=runtime.$;let owner=null,queue=[],shown=null,remaining=0,page=0,fullNoticed=false,filter='todo',effects=[],noticeTimes=new Map();
  const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!$('voice').classList.contains('expanded')&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function hide(){ $('rareNotice').hidden=true;document.body.classList.remove('rare-reveal'); }
  function dismiss(){const focused=$('rareNotice').contains(document.activeElement);shown=null;remaining=0;hide();if(focused)$('w').focus({preventScroll:true});}
@@ -44,11 +44,13 @@ export function initialize(runtime){
   const book=ensure();if(book.readOnly||!runtime.inWorld()||!rareDefinition(type))return false;
   const card=descriptor(type,source,extra);if(!card)return false;
   const repeated=book.items.some(c=>c.type===type&&!c.forced);const result=storeRareCard(book,card);if(result==='added')runtime.recordRewardSource?.('finding',card.odds.tier==='legendario'?'singular':card.odds.tier);
+  const original=book.items.find(c=>c.id===card.id);if(original&&learnCardEncounter(original,card.context)&&result==='duplicate')runtime.save();
   if(result==='full'){if(!fullNoticed){fullNoticed=true;runtime.toast?.('Libro completo. Guarda tus tarjetas: Menú → Guardar copia.');}return false;}
   if(result==='duplicate'&&card.context?.phase){const original=book.items.find(c=>c.id===card.id);const next={at:new Date().toISOString(),phase:card.context.phase,weather:card.context.weather||''};if(!original.observations.some(o=>o.phase===next.phase&&o.weather===next.weather)){original.observations.push(next);if(original.observations.length>8)original.observations.shift();runtime.save();}}
   if(result!=='added')return false;
   // Collection never starts audio, touches the cube, changes a beat or opens a modal.
   runtime.unlock?.('tarjeta1');runtime.save();if(!card.forced&&card.address){effects.push({x:card.address.x,y:card.address.y,layer:card.address.layer,age:0});effects=effects.slice(-3);}if(['legendario','mitico'].includes(card.odds.tier)&&!card.forced)runtime.say?.('Una presencia excepcional dejó su voz contigo.','Hallazgo excepcional',{exceptional:true});
+  if(repeated&&performance.now()-(noticeTimes.get(card.type)??-Infinity)<60000)return true;
   if(!runtime.boxCardCelebration?.(card)){const tier=c=>['raro','singular','legendario','mitico'].indexOf(c.odds.tier),near=queue.findIndex(e=>e.card.address&&card.address&&sameWorld(e.card.address,card.address)&&e.card.address.layer===card.address.layer&&Math.hypot(e.card.address.x-card.address.x,e.card.address.y-card.address.y)<3);const event={card,repeated};if(near>=0){if(tier(card)>=tier(queue[near].card))queue[near]=event;}else if(queue.length<4)queue.push(event);} // All cards are saved, even if a burst exceeds the notice queue.
   return true;
  }
@@ -56,7 +58,7 @@ export function initialize(runtime){
   const def=rareDefinition(card.type),notice=$('rareNotice');notice.style.setProperty('--rare-ink',CARD_TIERS[card.odds.tier].ink);
   $('rareNoticeArt').innerHTML=rarePortrait(card);$('rareNoticeTier').textContent=card.forced?'Muestra de laboratorio':CARD_TIERS[card.odds.tier].name+' · Hallazgo';
   $('rareNoticeName').textContent=card.name;$('rareNoticeWhere').textContent=location(card);$('rareNoticeWhere').title=location(card);$('rareNoticeOdds').textContent=rarityLabel(card.type,card.odds);
-  shown=card;remaining=repeated?3:8;notice.dataset.repeat=String(repeated);notice.hidden=false;document.body.classList.add('rare-reveal');
+  noticeTimes.set(card.type,performance.now());shown=card;remaining=repeated?3:8;notice.dataset.repeat=String(repeated);notice.hidden=false;document.body.classList.add('rare-reveal');
  }
  function tick(dt){
   ensure();if(!runtime.inWorld()){effects=[];queue=[];dismiss();return;}
@@ -77,7 +79,7 @@ export function initialize(runtime){
    ${Object.keys(card.context||{}).length?'<p class="rare-biome">'+escape(Object.values(card.context).join(' · '))+'</p>':''}${card.observations?.length?'<p class="rare-biome">'+card.observations.length+' observaciones posteriores</p>':''}
    ${card.forced?'<p class="rare-provenance">Muestra forzada; no demuestra un encuentro natural.</p>':''}${card.legacy?'<p class="rare-provenance">Recuperada del progreso anterior; sin hora original.</p>':''}
    <details><summary>Cómo de raro es</summary><p>${escape(card.odds.condition)}</p></details>
-   ${powerInfo}${address?`<div class="rare-actions"><button data-rare-png="${index}">Imagen</button><button data-rare-copy="${index}">Copiar lugar</button><button data-rare-return="${index}" ${canReturn?'':'disabled'}>Orientar</button></div>${canReturn?'':'<p class="rare-provenance">Para volver: Menú → Otros mundos.</p>'}`:''}
+   ${card.learning?.version===1?`<p class="rare-biome">${card.learning.contexts.length} encuentros distintos · ${card.learning.techniques.length} interpretaciones</p><button data-rare-technique="${index}">Interpretación · ${escape(CARD_TECHNIQUES[card.learning.selected]||'Natural')}</button>`:''}${powerInfo}${address?`<div class="rare-actions"><button data-rare-png="${index}">Imagen</button><button data-rare-copy="${index}">Copiar lugar</button><button data-rare-return="${index}" ${canReturn?'':'disabled'}>Orientar</button></div>${canReturn?'':'<p class="rare-provenance">Para volver: Menú → Otros mundos.</p>'}`:''}
   </article>`;
  }
  function cards(search=''){
@@ -96,9 +98,10 @@ export function initialize(runtime){
   }catch(_){runtime.toast('No se pudo exportar la imagen. El código del lugar sigue disponible.');}finally{URL.revokeObjectURL(url);}
  }
  async function action(event){
-  const button=event.target.closest('button[data-rare-copy],button[data-rare-return],button[data-rare-page],button[data-rare-png]');if(!button||button.disabled)return;
+  const button=event.target.closest('button[data-rare-copy],button[data-rare-return],button[data-rare-page],button[data-rare-png],button[data-rare-technique]');if(!button||button.disabled)return;
   if(button.dataset.rarePage){const delta=Number(button.dataset.rarePage);if(![-1,1].includes(delta))return;page+=delta;runtime.refreshJournal?.();(document.querySelector('[data-rare-page="'+button.dataset.rarePage+'"]:not(:disabled)')||document.querySelector('[data-rare-page]:not(:disabled)'))?.focus();return;}
-  const index=Number(button.dataset.rareCopy??button.dataset.rareReturn??button.dataset.rarePng),book=ensure(),card=Number.isInteger(index)&&book.items[index];if(!card)return;
+  const index=Number(button.dataset.rareCopy??button.dataset.rareReturn??button.dataset.rarePng??button.dataset.rareTechnique),book=ensure(),card=Number.isInteger(index)&&book.items[index];if(!card||book.readOnly)return;
+  if(button.dataset.rareTechnique!==undefined){const technique=nextCardTechnique(card);if(technique){runtime.save();button.textContent='Interpretación · '+CARD_TECHNIQUES[technique];}return;}
   if(button.dataset.rarePng!==undefined){await exportPNG(card);return;}if(!card.address)return;
   if(button.dataset.rareCopy!==undefined){
    const code=encodePlace(card.address,card.name);try{await navigator.clipboard.writeText(code);button.textContent='Copiado';}
@@ -117,5 +120,5 @@ export function initialize(runtime){
  runtime.VOZ.tarjeta1='Un hallazgo merece memoria. Su tarjeta guarda el lugar.';
  runtime.ACH.push(['tarjeta1','Un hallazgo tiene memoria','Guardaste una tarjeta de un encuentro poco común.']);
  ensure();
- Object.defineProperties(runtime,{drawRareFinding:{get:()=>drawFinding},collectRareCard:{get:()=>collect},rareCardTick:{get:()=>tick},rareBookCards:{get:()=>cards},rareBookAction:{get:()=>action},rareCards:{get:()=>ensure().items},rareNoticeState:{get:()=>({shown:shown?.id||null,remaining,pending:queue.length})}});
+ Object.defineProperties(runtime,{cardTechnique:{get:()=>source=>{if(!source?.id)return null;const c=ensure().items.find(c=>c.sourceId===source.id&&sameWorld(c.world,runtime.worldIdentity));return c?.learning?.version===1&&Object.hasOwn(CARD_TECHNIQUES,c.learning.selected)?c.learning.selected:null;}},drawRareFinding:{get:()=>drawFinding},collectRareCard:{get:()=>collect},rareCardTick:{get:()=>tick},rareBookCards:{get:()=>cards},rareBookAction:{get:()=>action},rareCards:{get:()=>ensure().items},rareNoticeState:{get:()=>({shown:shown?.id||null,remaining,pending:queue.length})}});
 }
