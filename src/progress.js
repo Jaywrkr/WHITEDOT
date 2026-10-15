@@ -19,7 +19,9 @@ export function initialize(runtime) {
   const fallbackCatalog=createRewardsCatalog(runtime.ACH),hiddenAchievements=(runtime.ACH||[]).filter(a=>a[3]).map(a=>a[0]);
   const applyScope=state=>{state.rewards=migrateRewards(state,runtime.rewardCatalog||fallbackCatalog,{hiddenAchievements});return Object.assign(normalizeLivingState(state),{previewSeed:preview,previewLayout:layout,worldSeed:identity.seed,worldIdentity:{...identity},saveVersion:SAVE_VERSION});};
   applyScope(S);
-  const save=()=>{const before=new Set(Object.keys(S.rewards?.items||{}));S.rewards=migrateRewards(S,runtime.rewardCatalog||fallbackCatalog,{at:S.todayKey,legacy:false,hiddenAchievements});const saved=store.save(S);if(saved)for(const id of Object.keys(S.rewards.items))if(!before.has(id))runtime.rewardEarned?.((runtime.rewardCatalog||fallbackCatalog).find(p=>p.id===id));return saved;};
+  let saveFailure=null;
+  const save=()=>{const before=new Set(Object.keys(S.rewards?.items||{}));S.rewards=migrateRewards(S,runtime.rewardCatalog||fallbackCatalog,{at:S.todayKey,legacy:false,hiddenAchievements});const saved=store.save(S);if(saved){saveFailure=null;for(const id of Object.keys(S.rewards.items))if(!before.has(id))runtime.rewardEarned?.((runtime.rewardCatalog||fallbackCatalog).find(p=>p.id===id));}
+    else if(saveFailure!==store.status.kind){saveFailure=store.status.kind;runtime.toast?.(saveFailure==='conflict'?'Otra pestaña cambió la partida. Guarda una copia antes de recargar.':'No pudimos guardar. Menú → Guardar copia.');}return saved;};
 
   const pad2=n=>String(n).padStart(2,"0");
   function dayKey(){const d=new Date();d.setDate(d.getDate()+S.offset);return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate());}
@@ -35,6 +37,8 @@ export function initialize(runtime) {
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
   const isFree=()=>S.todayLight>=runtime.CAP;
+  // The daily first light opens exploration; the old full bar remains optional.
+  const worldReady=()=>S.todayLight>0;
   const inWorld=()=>S.mode==="world";
   function shownStreak(){if(!S.lastDay)return 0;const d=diffDays(S.lastDay,S.todayKey);return d<=1?S.streak:0;}
   function displayDay(){return S.lastDay===S.todayKey?S.totalDays:S.totalDays+1;}
@@ -42,12 +46,14 @@ export function initialize(runtime) {
   function pxSize(){return Math.min(6+(level()-1)*1.6,64);}
   function lightR(){return 90+pxSize()*6;}
   function lampMax(){return Math.min(60,10+shownStreak())*60;}
-  function lampLeft(){return S.lampDay===S.todayKey?Math.max(0,lampMax()-S.lampUsed):lampMax();}
+  // Keep the finite legacy API and saved history; exploration no longer expires.
+  function lampLeft(){return lampMax();}
 
-  function checkDay(){
+  function checkDay(startup=false){
     const k=dayKey();
     if(S.todayKey!==k){S.todayKey=k;S.todayLight=0;S.capShown=false;S.collected=[];collected=new Set();chunks.clear();wchunks.clear();
-      if(inWorld())runtime.exitWorld(false);
+      if(inWorld()&&startup)runtime.exitWorld(false);
+      else if(inWorld()){ /* Never interrupt an ongoing musical session at midnight. */ }
       else if(S.mode==="studio")S.prevMode="camino";
       else runtime.setBiome(0);
       document.getElementById("mCap").hidden=true;document.getElementById("mOut").hidden=true;document.getElementById("mHelpW").hidden=true;
@@ -83,6 +89,7 @@ export function initialize(runtime) {
     rng: { get: () => rng },
     clamp: { get: () => clamp },
     isFree: { get: () => isFree },
+    worldReady: { get: () => worldReady },
     inWorld: { get: () => inWorld },
     shownStreak: { get: () => shownStreak },
     displayDay: { get: () => displayDay },

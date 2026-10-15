@@ -157,7 +157,8 @@ voiceGuide(runtime);
 livingSynthesis(runtime);living(runtime);livingBehavior(runtime);livingComposition(runtime);livingEcology(runtime);livingTerrain(runtime);livingBuildings(runtime);livingDiscoveries(runtime);connection(runtime);
 
 if(!runtime.S.helpV2){runtime.S.help={};runtime.S.helpV2=true;}
-runtime.checkDay();if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&(!runtime.isFree()||(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0)))runtime.S.mode="camino";
+runtime.checkDay(true);if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.prevMode==="world"?"world":"camino";if(runtime.inWorld()&&!runtime.worldReady())runtime.S.mode="camino";
+if(runtime.S.mode==='camino'&&runtime.worldReady()&&runtime.S.lastWorldDay===runtime.S.todayKey)runtime.S.mode='world';
 seeds(runtime);
 lab(runtime);
 achievementsV2(runtime);worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);

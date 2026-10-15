@@ -9,4 +9,6 @@ q.dismiss();assert.equal(q.current,null);for(let i=0;i<20;i++)q.enqueue({id:'x'+
 assert.equal(celebrationDuration('comun'),2);assert.equal(celebrationDuration('mitica'),4);
 assert(!q.enqueue({id:'bad',rarity:'bad'}));assert(openingFragments(12,1.2).every(p=>p.alpha===0));assert(openingFragments(12,.5).every(p=>Math.abs(p.x)<64&&Math.abs(p.y)<64));
 assert(Object.values(POWERS).every(p=>p.text.split(/\s+/).length<=12&&p.seconds>0));
+const openings=Object.keys(POWERS).map(power=>openingFragments(42,.6,power));assert.equal(new Set(openings.map(p=>JSON.stringify(p))).size,6,'each power reveals its own motion');
+for(const power of Object.keys(POWERS)){assert.deepEqual(openingFragments(42,.6,power),openingFragments(42,.6,power));assert(openingFragments(42,1.2,power).every(p=>p.alpha===0));assert(openingFragments(42,.8,power).every(p=>Math.abs(p.x)<64&&Math.abs(p.y)<64));}
 console.log('PASS celebration sequencing, duplicate coalescing, active-time pause, bounded queue/fragments and short timed-power copy');

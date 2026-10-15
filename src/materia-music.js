@@ -60,7 +60,6 @@ export function createMateriaSite(kind,region,regionSize,seedOf,rng){
 }
 export function normalizeMateriaSites(saved){
  const out={};for(const [id,entry] of Object.entries(saved||{})){
-  if(Object.keys(out).length>=96)break;
   if(!/^(strings|prism|membrane):-?\d+,-?\d+$/.test(id)||!entry||typeof entry!=='object')continue;
   const clean={seen:!!entry.seen};if(id.startsWith('prism:')&&Number.isFinite(entry.angle))clean.angle=((entry.angle%TAU)+TAU)%TAU;
   out[id]=clean;

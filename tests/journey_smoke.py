@@ -17,7 +17,7 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(8000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
   # Recorrido: una diagonal larga, región por región, hasta las tierras raras.
   for i in range(0,13):
    page.evaluate(f'()=>{{const r=window.__testRuntime;r.S.wx={i*5}*3600+1800;r.S.wy={-i*2}*3600+1800;}}');page.wait_for_timeout(120)

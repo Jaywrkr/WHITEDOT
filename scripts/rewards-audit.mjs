@@ -2,7 +2,7 @@ import {REWARDS_CATALOG,REWARD_RARITIES,migrateRewards} from '../src/rewards-mod
 import {CUBE_WARDROBE} from '../src/wardrobe-model.js';
 // Hypothetical daily sessions; these assumptions are not telemetry or spawn odds.
 const players=160,days=365,minutesPerDay=20,trials=[],first=Object.fromEntries(Object.keys(REWARD_RARITIES).map(id=>[id,[]]));
-const percentile=(v,q)=>v.toSorted((a,b)=>a-b)[Math.min(v.length-1,Math.floor(v.length*q))]??null;
+const percentile=(v,q)=>[...v].sort((a,b)=>a-b)[Math.min(v.length-1,Math.floor(v.length*q))]??null;
 function random(seed){return ()=>{seed=Math.imul(seed^seed>>>15,2246822519);return (seed>>>0)/4294967296;};}
 for(let player=1;player<=players;player++){
  const randomDay=random(player),state={ach:{},livingSeen:{},zones:{},totalDays:0},timeline={},seen=new Set();

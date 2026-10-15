@@ -18,12 +18,12 @@ export function initialize(runtime) {
     const fill=$("barfill"),goal=$("goal"),gr=$("goalR");
     $("bDeploy").hidden=!runtime.inWorld();
     if(runtime.S.mode==="studio"){const house=runtime.houseActive?.(),n=house?runtime.currentHouse().objects.length:Object.keys(runtime.S.studio.slots).length;$("era").textContent=house?"Casa":"Taller · "+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/(house?40:64)*100)+"%";goal.textContent=(house?"Casa · ":"Taller · ")+n+" sonando";gr.textContent=house?"Camina. Coloca. Escucha.":"Toca un punto";}
-    else if(runtime.inWorld()){const l=runtime.lampLeft();fill.style.width=(l/runtime.lampMax()*100)+"%";
+    else if(runtime.inWorld()){fill.style.width="100%";
       goal.textContent=dist?"Eco cercano · escucha y pulsa":"Lugares "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
-      gr.textContent=runtime.S.relaxedCreate?"Crear ∞":fmt(l);}
-    else if(runtime.isFree()){const l=runtime.lampLeft();fill.style.width="100%";goal.textContent=runtime.S.relaxedCreate?"Camino completo · crea sin prisa":l>0?"Camino completo · entra al Mundo":"Vuelve mañana";gr.textContent=runtime.S.relaxedCreate?"Crear ∞":l>0?"Linterna "+fmt(l):"";}
-    else{fill.style.width=(runtime.S.todayLight/runtime.CAP*100)+"%";goal.textContent="Luz "+runtime.S.todayLight+" / "+runtime.CAP;gr.textContent="Toca a tiempo";}
-    const canWorld=runtime.S.mode==="camino"&&runtime.isFree()&&(runtime.S.relaxedCreate||runtime.lampLeft()>0),bp=$("bPrimary");$("bWorld").querySelector("span").textContent=runtime.inWorld()?"Camino":"Mundo";
+      gr.textContent="Sin reloj";}
+    else if(runtime.worldReady()){fill.style.width="100%";goal.textContent="Mundo abierto · explora cuando quieras";gr.textContent="Sin reloj";}
+    else{fill.style.width="0%";goal.textContent="Recoge una luz para abrir el Mundo";gr.textContent="Arrastra para caminar";}
+    const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary");$("bWorld").querySelector("span").textContent=runtime.inWorld()?"Camino":"Mundo";
     bp.hidden=!(canWorld||runtime.inWorld());$("bPrimaryL").textContent=runtime.inWorld()?"Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=runtime.inWorld()?"scaleX(-1)":"";
   }
   let phT;function showPhrase(t,big){const p=$("phrase");p.textContent=t;p.classList.toggle("big",!!big);p.classList.add("on");clearTimeout(phT);phT=setTimeout(()=>p.classList.remove("on"),big?5000:3200);}
@@ -34,8 +34,7 @@ export function initialize(runtime) {
   function nextToast(){if(toasting||!toastQ.length)return;toasting=true;const el=$("toast");el.innerHTML=toastQ.shift();el.classList.add("on");setTimeout(()=>{el.classList.remove("on");setTimeout(()=>{toasting=false;nextToast();},350);},2200);}
 
   function enterWorld(){
-    if(!runtime.isFree()){toast("<em>Mundo</em> · Primero completa el camino de hoy");return;}
-    if(!runtime.S.relaxedCreate&&runtime.lampLeft()<=0){toast("<em>Linterna</em> · Vuelve mañana");return;}
+    if(!runtime.worldReady()){toast("Recoge una luz en el Camino para entrar.");return;}
     runtime.beginSession();runtime.audio();if(runtime.S.lastWorldDay!==runtime.S.todayKey){if(runtime.S.studio.x!=null){runtime.S.wx=runtime.S.studio.x;runtime.S.wy=runtime.S.studio.y;{const rp=runtime.REG*runtime.WCH,ring=Math.max(Math.abs(Math.floor(runtime.S.wx/rp)),Math.abs(Math.floor(runtime.S.wy/rp)));if(ring>=3)setTimeout(()=>runtime.toast(`<em>Campamento</em> · a ${ring} regiones del Origen`),2600);if(ring>=3&&!runtime.S.help.camp){runtime.S.help.camp=true;setTimeout(()=>runtime.say(runtime.VOZ.campamento),4000);}}}runtime.S.lastWorldDay=runtime.S.todayKey;}runtime.zoneHops=0;runtime.S.mode="world";runtime.curZone=-1;{const rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);runtime.curRegion=rg.key;runtime.enterRegion(rg,rg.z);}runtime.MU.layers=new Set();
     runtime.todayRelics();runtime.enterFx=1;runtime.flocks=[];
     runtime.jamUI?.();
@@ -48,7 +47,7 @@ export function initialize(runtime) {
     runtime.closeGlass?.();runtime.closeMirrors?.();runtime.stopAutopilot?.();runtime.resetJam?.();runtime.fxReset?.();    runtime.S.layer='superficie';runtime.MU.layer='superficie';runtime.resetContinent?.();runtime.MU.vit=null;runtime.MU.lowT=0;runtime.S.mode="camino";runtime.setBiome(0);runtime.MU.dnaT=null;runtime.MU.vari=-1;runtime.MU.near=[];runtime.MU.singers=[];runtime.curRegion=null;runtime.RP=null;runtime.retoUI();runtime.MU.layers=new Set();runtime.MU.flowers=[];runtime.MU.follower=false;if(runtime.inPond&&runtime.mfilt){runtime.inPond=false;runtime.mfilt.frequency.setTargetAtTime(18000,runtime.ac.currentTime,.2);}runtime.save();hud();
     if(out){runtime.say(runtime.VOZ.lampOut);$("oToday").textContent=runtime.relicsGot();$("oStars").textContent=runtime.S.stars.length;$("oStreak").textContent=runtime.shownStreak();$("mOut").hidden=false;}
   }
-  function openCap(){$("cDay").textContent=runtime.displayDay();$("cStreak").textContent=runtime.shownStreak();$("cSize").textContent=runtime.level();$("cLamp").textContent=Math.round(runtime.lampLeft()/60)+" min";$("mCap").hidden=false;}
+  function openCap(){$("cDay").textContent=runtime.displayDay();$("cStreak").textContent=runtime.shownStreak();$("cSize").textContent=runtime.level();$("cLamp").textContent="Explora sin límite de tiempo.";$("mCap").hidden=false;}
   function openAch(){
     const got=runtime.ACH.filter(a=>runtime.S.ach[a[0]]).length;
     $("achBody").innerHTML=`<div class="sub">Catálogo · ${runtime.S.catN||0} formas · ${runtime.S.placesN||0} lugares · ${runtime.S.retosN||0} retos</div><div class="list">${(runtime.S.catRecent||[]).length?(runtime.S.catRecent||[]).slice(0,12).map(c=>`<div class="life got"><span class="px"></span><span><strong>${c.n}</strong><small>Vive en ${c.r}</small></span></div>`).join(""):`<div><span class="px"></span><span><strong>Vacío</strong><small>Las formas con anillo dorado son nuevas. Tócalas para nombrarlas.</small></span></div>`}</div>

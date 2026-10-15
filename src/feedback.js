@@ -22,17 +22,17 @@ export function initialize(runtime) {
     return musicalInk(region?.hue??190,role);
   }
   function soundCue(source,role,time) {
-    if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running')return;
+    if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running')return;
     buffer.add(source,role,performance.now()+Math.max(0,time-runtime.ac.currentTime)*1000);
   }
   function filterCue(source,role,filter,time){
-    if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running')return;
+    if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running')return;
     buffer.add(source,role,performance.now()+Math.max(0,time-runtime.ac.currentTime)*1000,{...filter});
   }
   function drawSoundCues(ox,oy,radius) {
-    if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running'){buffer.clear();return;}
+    if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running'){buffer.clear();return;}
     const ctx=runtime.cx;let named=false;
-    for(const cue of buffer.active(performance.now())) {
+    for(const cue of buffer.active(performance.now()).reverse()) {
       const {source,role,age}=cue;
       if(Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)>radius)continue;
       const reduced=runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches,r=12+(reduced?0:age*(role==='bajo'?28:20));
@@ -44,11 +44,11 @@ export function initialize(runtime) {
       else if(role==='agudo'){ctx.moveTo(-r/2,0);ctx.lineTo(r/2,0);ctx.moveTo(0,-r/2);ctx.lineTo(0,r/2);}
       else {ctx.arc(0,0,r,0,Math.PI*2);if(role==='acorde')for(let i=1;i<3;i++){ctx.moveTo(r+i*4,0);ctx.arc(0,0,r+i*4,0,Math.PI*2);}}
       ctx.stroke();
-      if(!named&&Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<65&&age<.7){named=true;ctx.font='9px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillStyle=ctx.strokeStyle;ctx.fillText({bajo:'Bajo',perc:'Ritmo',acorde:'Acorde',lead:'Melodía',agudo:'Detalle'}[role]||'',0,-28);}
       const filter=cue.filter;
+      if(!named&&Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<65&&age<.7){named=true;ctx.font='9px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillStyle=ctx.strokeStyle;
+       const name={bajo:'Bajo',perc:'Ritmo',acorde:'Acorde',lead:'Melodía',agudo:'Detalle'}[role]||'';ctx.fillText(name+(filter?' · Filtro'+(filter.slope?' '+filter.slope+' dB':''):''),0,-28,180);}
       if(filter){
        const phase=filter.end>filter.start?age:1-age;ctx.lineWidth=.8;for(let i=0;i<filter.stages;i++){ctx.beginPath();ctx.arc(0,0,9+i*3,-Math.PI/2,-Math.PI/2+Math.PI*2*(.2+phase*.7));ctx.stroke();}
-       if(Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<90){ctx.fillStyle=ctx.strokeStyle;ctx.font='9px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText(filter.slope?'Filtro '+filter.slope+' dB':filter.type==='bandpass'?'Filtro de banda':'Filtro de muesca',0,-24);}
       }ctx.restore();
     }
   }

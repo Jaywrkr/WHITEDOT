@@ -1,5 +1,14 @@
 # Probar el universo vivo
 
+## Novedad F10 · Auditoría y candidata 2.0.0-rc.1
+
+1. En tu partida habitual, recoge una luz y entra al Mundo. Comprueba que no exige completar 120 luces ni agota exploración.
+2. Vuelve ese mismo día: conserva lugar y progreso. Al empezar otro día, el Camino vuelve a abrir el recorrido.
+3. Menú → Tu recorrido: consulta propósito y glosario; cierra para recuperar el espacio.
+4. Abre una caja, observa su figura, lugar y duración. Compartir descarga una imagen silenciosamente.
+5. Prueba un lugar WD1, recarga y comprueba que conserva el punto y la capa.
+6. Escucha percusión, graves y cruces en varios lugares; registra cualquier fatiga con WD1 y gesto.
+
 ## Novedad F9 · Cubo, Bitácora, logros y casa unidos
 
 1. Menú → Tu cubo: inspecciona piezas, elige las ganadas y vuelve al Mundo.

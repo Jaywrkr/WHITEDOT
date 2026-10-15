@@ -20,7 +20,7 @@ with sync_playwright() as p:
  # Sin zoom ni desbordes: la página mide lo mismo que la pantalla.
  dims=page.evaluate('({vw:innerWidth,sw:document.documentElement.scrollWidth,sh:document.documentElement.scrollHeight,vh:innerHeight,scale:visualViewport.scale})')
  assert dims['sw']<=dims['vw'] and dims['sh']<=dims['vh'] and dims['scale']==1,dims
- page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+ page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
  page.wait_for_timeout(500)
  cdp=c.new_cdp_session(page)
  def drag(x0,y0,x1,y1):

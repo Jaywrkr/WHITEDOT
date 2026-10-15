@@ -2,7 +2,7 @@ import {livingDefinition} from './living-catalog.js';import {VOICE_MODES} from '
 export function normalizeLivingState(s){
  const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
  const seen={};if(object(s.livingSeen))for(const [kind,v]of Object.entries(s.livingSeen))if(livingDefinition(kind)&&object(v))seen[kind]={day:typeof v.day==='string'?v.day.slice(0,10):'',variant:Number.isInteger(v.variant)?Math.abs(v.variant)%256:0};s.livingSeen=seen;
- const sites={};if(object(s.livingSites))for(const [key,v]of Object.entries(s.livingSites).slice(-512))if(/^living:v1:-?\d+,-?\d+:\d+(?::(?:bajo|cielo))?$/.test(key)&&object(v))sites[key]={open:v.open===true,visits:Number.isInteger(v.visits)?Math.min(999,Math.max(0,v.visits)):0};s.livingSites=sites;
+ const sites={};if(object(s.livingSites))for(const [key,v]of Object.entries(s.livingSites))if(/^living:v1:-?\d+,-?\d+:\d+(?::(?:bajo|cielo))?$/.test(key)&&object(v))sites[key]={open:v.open===true,visits:Number.isInteger(v.visits)?Math.min(999,Math.max(0,v.visits)):0};s.livingSites=sites;
  const story={};for(const id of ['atencion','gesto','constancia','compartir'])if(object(s.jayStory)&&typeof s.jayStory[id]==='string')story[id]=s.jayStory[id].slice(0,10);s.jayStory=story;
  s.livingSeconds=Number.isFinite(s.livingSeconds)?Math.max(0,Math.min(1e9,s.livingSeconds)):0;
  s.voiceMode=VOICE_MODES.includes(s.voiceMode)?s.voiceMode:'discreta';s.autoIntent=['paisaje','vida','hallazgos','afinidad','contraste'].includes(s.autoIntent)?s.autoIntent:'paisaje';

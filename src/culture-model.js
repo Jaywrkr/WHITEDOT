@@ -38,7 +38,6 @@ export function normalizeCultureBook(raw){
  const out={collections:{},sites:{}};
  for(const id of CULTURE_IDS){const n=raw?.collections?.[id];if(Number.isInteger(n)&&n>=0&&n<=3)out.collections[id]=n;}
  if(raw?.sites&&typeof raw.sites==='object')for(const [id,e]of Object.entries(raw.sites)){
-  if(Object.keys(out.sites).length>=96)break;
   if(!/^sanctuary:-?\d+,-?\d+$/.test(id)||!e||!Number.isInteger(e.chapter)||e.chapter<0||e.chapter>3)continue;
   const heard=e.heard===true,clues=heard&&Number.isInteger(e.clues)?Math.max(0,Math.min(2,e.clues)):0;
   out.sites[id]={chapter:e.chapter,heard,clues,open:heard&&clues===2&&e.open===true};

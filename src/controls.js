@@ -39,8 +39,8 @@ export function initialize(runtime) {
   runtime.$("muClose").onclick=()=>{runtime.$("mMusic").hidden=true;runtime.save();};
   runtime.$("muMute").onclick=()=>{runtime.S.sound=!runtime.S.sound;styleUI();runtime.audio();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);runtime.save();};
   runtime.$("dFill").onclick=()=>{if(runtime.isFree())return;if(runtime.S.lastDay!==runtime.S.todayKey)runtime.onFirstLight();const add=runtime.CAP-runtime.S.todayLight;runtime.S.todayLight=runtime.CAP;runtime.S.totalLight+=add;runtime.S.capShown=true;runtime.unlock("tope");runtime.hud();runtime.openCap();};
-  runtime.$("dNext").onclick=()=>{runtime.S.offset+=1;runtime.checkDay();runtime.hud();runtime.showPhrase("Nuevo día. Tu luz se recargó.");};
-  runtime.$("dSkip").onclick=()=>{runtime.S.offset+=2;runtime.checkDay();runtime.hud();runtime.showPhrase("Fallaste un día. Tu crecimiento sigue aquí.");};
+  runtime.$("dNext").onclick=()=>{runtime.S.offset+=1;runtime.checkDay(true);runtime.hud();runtime.showPhrase("Nuevo día. Recoge una luz para entrar.");};
+  runtime.$("dSkip").onclick=()=>{runtime.S.offset+=2;runtime.checkDay(true);runtime.hud();runtime.showPhrase("Tu crecimiento sigue aquí. Recoge una luz para volver.");};
   let armed=false;runtime.$("dReset").onclick=e=>{if(!armed){armed=true;e.target.textContent="¿Seguro?";setTimeout(()=>{armed=false;e.target.textContent="Reiniciar";},2500);return;}const snd=runtime.S.sound,st=runtime.S.style;runtime.stopAutopilot?.();runtime.resetJam?.();runtime.clearPowers?.();runtime.quietReset?.();runtime.fxReset?.();runtime.MU.q8=[];runtime.MU.queue=[];runtime.S=runtime.fresh();runtime.S.sound=snd;runtime.S.style=st;runtime.S.help={camino:true,mundo:false};runtime.S.py=runtime.pathY(0);runtime.jamUI?.();runtime.creativeModeUI?.();styleUI();runtime.collected=new Set();runtime.chunks.clear();runtime.wchunks.clear();runtime.checkDay();runtime.hud();runtime.save();e.target.textContent="Reiniciar";armed=false;};
 
 

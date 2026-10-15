@@ -8,4 +8,5 @@ const future={...first,address:{...first.address,generatorVersion:2}},normalized
 assert.equal(normalizeFavorites({items:[{...first,address:null}]}).items[0].address,null);
 const invalid=normalizeFavorites({items:[{id:'a',layer:'superficie',x:NaN,y:1},{id:'b',layer:'unknown',x:1,y:1},{...first,name:'x'.repeat(100)},first]});assert.equal(invalid.items.length,1);assert.equal(invalid.items[0].name.length,60);
 for(let i=s.favorites.items.length;i<FAVORITE_LIMIT;i++)assert(storeFavorite(s,{...base,x:i*100,created:10+i}));assert.equal(storeFavorite(s,{...base,x:99999,created:100}),null);
+const larger=normalizeFavorites({items:Array.from({length:80},(_,i)=>({...first,id:'old:'+i,x:i*100}))});assert.equal(larger.items.length,80,'a new admission cap never truncates existing saved places');
 console.log('PASS: persistent named coordinates, layer distinction, local deduplication, safe normalization and bounded favorite list');

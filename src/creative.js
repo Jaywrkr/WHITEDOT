@@ -12,7 +12,7 @@ export function initialize(runtime){
  runtime.VOZ.composicionAbierta='Tocar, quitar, cultivar, modelar. El lugar ya te responde.';
  runtime.ACH.push(['composicionAbierta','Otra forma de componer','Transforma dos partes musicales de dos maneras en un lugar.']);
  const modeButton=runtime.$('bCreateMode');
- function modeUI(){modeButton.setAttribute('aria-pressed',String(!!runtime.S.relaxedCreate));modeButton.querySelector('span').textContent=runtime.S.relaxedCreate?'Crear sin límite':'Explorar con linterna';}
+ function modeUI(){modeButton.setAttribute('aria-pressed',String(!!runtime.S.relaxedCreate));modeButton.querySelector('span').textContent=runtime.S.relaxedCreate?'Modo: crear':'Modo: explorar';}
  modeButton.onclick=()=>{runtime.S.relaxedCreate=!runtime.S.relaxedCreate;modeUI();runtime.save();runtime.hud();};modeUI();
  const state=()=>runtime.S.creativeJourney||=( {world:false,transformed:false,studio:false} );
  let previousMode=null,subtractIndex=0,gesture=null,lastAction=-Infinity,hintClock=0;
@@ -56,14 +56,13 @@ export function initialize(runtime){
    if(hintClock>180&&runtime.MU.speed>.1){hintClock=0;runtime.say(state().transformed?'Ya cambiaste este lugar. Puedes seguir una pista, retirar una capa o entrar al Estudio.':'Quédate cerca de un aro para cultivar una parte; arrastrarlo también cambia su figura.','Una posibilidad');}
   }
   if(runtime.S.mode==='studio'&&state().transformed)state().studio=true;
-  if(previousMode!==runtime.S.mode){previousMode=runtime.S.mode;runtime.S.help.creativeVisit??=false;if(runtime.inWorld()&&!runtime.S.help.creativeVisit){runtime.S.help.creativeVisit=true;runtime.say('Escucha este lugar. Pasa el cubo por algo, quédate junto a un aro o gira un prisma. Después puedes llevar lo descubierto a tu Estudio.','Tu recorrido');}}
+  if(previousMode!==runtime.S.mode){previousMode=runtime.S.mode;runtime.S.help.creativeVisit??=false;if(runtime.inWorld()&&!runtime.S.help.creativeVisit){runtime.S.help.creativeVisit=true;runtime.say('Acerca el cubo a una criatura. Escucha cómo cambia la música.','Tu primera voz');}}
  }
  function action(channel,verb='touch'){
   if(!runtime.inWorld())return;lastAction=performance.now();hintClock=0;state().transformed=true;
   const region=runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy),book=runtime.S.openChallenges||={};
   const challenge=book[region.key]||={channels:[],verbs:[],done:false},wasDone=challenge.done;
   if(advanceOpenChallenge(challenge,channel,verb)&&!wasDone){runtime.unlock('composicionAbierta');runtime.S.journal.creative||={};runtime.S.journal.creative[region.key]='Dos partes transformadas de dos maneras';}
-  while(Object.keys(book).length>128)delete book[Object.keys(book)[0]];
  }
  function draw(){
   if(!runtime.inWorld()||runtime.scanning||document.hidden||document.querySelector('.modal:not([hidden])')||runtime.MU.speed>.12)return;

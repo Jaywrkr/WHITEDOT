@@ -1,3 +1,24 @@
+# Handoff vigente · cierre F10 · Auditoría y candidata 2.0.0-rc.1
+
+Rama `feat/cierre-f10-lanzamiento`, basada en F9. F1–F10 están reunidas en esta candidata. Jay autorizó continuar el pulido de PLAN_PULIDO_FINAL.md sin pedir de nuevo autorización. Commit/push por fase; Jay crea PR/merge. No reescribir ramas publicadas. Ver [plan vigente](PLAN_CIERRE_2.0.md).
+
+- Conservar coordenadas y estado de viaje al recargar una dirección WD1.
+- Conservar cajas consumidas, construcciones abiertas, ángulos, plantas, regalos y escucha; no truncar colecciones válidas al normalizar. Las cachés y protección global del guardado siguen acotadas.
+- Una primera luz diaria abre el Mundo sin reloj de exploración. No interrumpir una sesión a medianoche; conservar los contadores históricos y el crecimiento opcional del Camino.
+- Propósito y reliquias explicados con brevedad; recorrido y glosario consultables en el menú. El primer nivel completo continúa en pulido F2.
+- Celebraciones contenidas, seis movimientos de apertura, serial ligado al mundo, lugar y regalos identificados. Títulos menores y una etiqueta musical cercana; volumen cero no registra música inaudible.
+- Auditoría espacial de 49.152 sectores y diversidad de 4.096 regiones: condiciones y conteos de muestra, sin prometer millones de canciones perceptualmente únicas.
+- Auditoría documentada y plan de ocho bloques; F10 es el primero. Tutorial, viajes, Bitácora, tarjetas, cincuenta personajes, integración musical y cierre continúan en ramas hijas.
+- Versión candidata local sin fecha inventada de deploy. Main no se modifica; Jay crea PR y merge.
+
+Auditoría limpia; 93 suites Node y 69 recorridos completos aprobados. 445 renders en 21 programas de audio completos, con pico máximo 0,945447 y cero fracción caliente. Las pruebas no sustituyen escucha artística ni teléfonos físicos. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f10-validation.json).
+
+Consulta [auditoría](AUDITORIA_CIERRE_2.0.md), [cierre técnico](CIERRE_2.0.md) y [pulido pendiente autorizado](PLAN_PULIDO_FINAL.md). A12, A14 y A15 siguen asignados a sus ramas hijas. Para integrar la base reparada, el PR de F10 incluye sus padres; no volver a abrir los trabajos locales antiguos.
+
+## Entregas anteriores
+
+Lo que sigue conserva sus alcances históricos; prevalece el encabezado actual.
+
 # Handoff vigente · cierre F9 · Cubo, Bitácora, logros y casa unidos
 
 Rama `feat/cierre-f9-juego`, basada en F8. Jay autorizó continuar las diez fases; no pedir de nuevo autorización para las restantes. Commit/push por fase; Jay crea PR/merge. No reescribir ramas publicadas. Ver [plan vigente](PLAN_CIERRE_2.0.md).

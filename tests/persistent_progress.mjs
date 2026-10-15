@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import {normalizeGlassSites} from '../src/glass.js';
+import {normalizeMirrorSites} from '../src/mirrors.js';
+import {normalizeMateriaSites} from '../src/materia-music.js';
+import {normalizeCultureBook} from '../src/culture-model.js';
+import {normalizeLivingState} from '../src/living-state.js';
+import {normalizeVida} from '../src/vida-music.js';
+import {createSaveStore,MAX_SAVE_BYTES} from '../src/save-store.js';
+import {worldIdentity} from '../src/world-identity.js';
+const entries=(prefix,value,n=700)=>Object.fromEntries(Array.from({length:n},(_,i)=>[prefix+i+',0',structuredClone(value)]));
+const glass=normalizeGlassSites(entries('glass:',{angles:[.1,.2,.3],seen:true}));assert.equal(Object.keys(glass).length,700);assert.deepEqual(glass['glass:0,0'].angles.map(n=>Math.round(n*10)),[1,2,3]);
+const mirrors=normalizeMirrorSites(entries('mirror:',{angles:[.1,.2,.3],solved:true}));assert.equal(Object.keys(mirrors).length,700);assert(mirrors['mirror:0,0'].solved);
+assert.equal(Object.keys(normalizeMateriaSites(entries('prism:',{angle:.2,seen:true}))).length,700);
+const sites=Object.fromEntries(Array.from({length:700},(_,i)=>['living:v1:'+i+',0:0',{open:true,visits:7}]));assert.equal(Object.keys(normalizeLivingState({livingSites:sites}).livingSites).length,700);
+const plants=Object.fromEntries(Array.from({length:700},(_,i)=>['plant:'+i+',0:0',{g:3,t:1000}]));assert.equal(Object.keys(normalizeVida({plants}).plants).length,700);
+const cultures=normalizeCultureBook({sites:entries('sanctuary:',{chapter:0,heard:true,clues:2,open:true})});
+assert.equal(Object.keys(cultures.sites).length,700);assert(cultures.sites['sanctuary:0,0'].open);
+// Increasing persistent history never removes save-level size/complexity protection.
+const map=new Map(),storage={getItem:k=>map.get(k)??null,setItem:(k,v)=>map.set(k,v)},identity=worldIdentity(''),store=createSaveStore(storage,'test',{ach:{},studio:{slots:{}},journal:{music:{}}},identity);
+const state=store.load();state.ach.earned='2026-10-15';assert(store.save(state));const good=map.get('test');
+state.large=Array.from({length:200},()=> 'x'.repeat(60000));assert(JSON.stringify(state).length>MAX_SAVE_BYTES);assert(!store.save(state));assert.equal(map.get('test'),good);
+console.log('PASS persistent edits beyond legacy caps, safe normalizers and save-budget failure preserves the last good progress');

@@ -60,7 +60,6 @@ export function initialize(runtime){
     const S=runtime.S,[x,y]=regionCenter(runtime,e.nearest.rx,e.nearest.ry);
     // Herramienta de prueba: si el Camino de hoy no está completo, lo completa.
     if(!runtime.inWorld()&&!runtime.isFree()){if(S.lastDay!==S.todayKey)runtime.onFirstLight();S.totalLight+=runtime.CAP-S.todayLight;S.todayLight=runtime.CAP;S.capShown=true;}
-    if(!runtime.inWorld()&&runtime.lampLeft()<=0){runtime.toast("<em>Linterna</em> · Usa +1 día en Prototipo para recargarla");return;}
     $("mAtlas").hidden=true;
     S.wx=x;S.wy=y;S.layer='superficie';
     if(runtime.inWorld()){runtime.toast(`<em>Atlas</em> · ${esc(e.name)}`);} // el loop detecta la región nueva y la inicializa

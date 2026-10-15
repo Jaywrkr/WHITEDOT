@@ -25,7 +25,7 @@ export function initialize(runtime){
  }
  function remember(site){runtime.recordElement?.('installation:'+site.kind,site.region);
   if(drag?.site===site&&site.kind==='prism')return;   // una vista previa no se guarda hasta soltar
-  const saved=S().materiaSites;if(!saved[site.id]&&Object.keys(saved).length>=96)delete saved[Object.keys(saved)[0]];
+  const saved=S().materiaSites;
   const first=!saved[site.id]?.seen;saved[site.id]={seen:true,...(site.kind==='prism'?{angle:site.angle}:{})};
   if(first){if(!S().help[site.kind]){S().help[site.kind]=true;runtime.say(runtime.VOZ[`materia_${site.kind}`],MATERIA_NAMES[site.kind]);}
    const kinds=new Set(Object.keys(saved).map(id=>id.split(':')[0]));if(kinds.size>=3)runtime.unlock('materia3');}

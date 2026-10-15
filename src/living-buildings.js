@@ -2,10 +2,10 @@ import {studyOf,JAY_STORY} from './living-studies.js';
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function bridgeContact(progress,index){return index===progress?Math.min(3,progress+1):index===0?1:0;}
 export function initialize(runtime){
- function memory(o){const s=runtime.S;const book=s.livingSites&&typeof s.livingSites==='object'&&!Array.isArray(s.livingSites)?s.livingSites:(s.livingSites={});
-  if(!book[o.id]){if(Object.keys(book).length>=512)delete book[Object.keys(book)[0]];book[o.id]={open:false,visits:0};}return book[o.id];
+ function memory(o,commit=false){const s=runtime.S;const book=s.livingSites&&typeof s.livingSites==='object'&&!Array.isArray(s.livingSites)?s.livingSites:(s.livingSites={});
+  const entry=book[o.id]||(o.siteMemory||={open:false,visits:0});if(commit&&!book[o.id])book[o.id]=entry;return entry;
  }
- function open(o){const m=memory(o);if(m.open)return;m.open=true;m.visits=Math.min(999,(m.visits||0)+1);o.energy=1;const study=studyOf(o);runtime.recordRewardSource?.('study',study.id);runtime.unlock('umbralVivo');runtime.say(study.name+' · '+study.reference+'.','Un recuerdo despierta');runtime.livingBuildingFound?.(o,study);runtime.duetEdit?.(o);runtime.save();}
+ function open(o){const m=memory(o,true);if(m.open)return;m.open=true;m.visits=Math.min(999,(m.visits||0)+1);o.energy=1;const study=studyOf(o);runtime.recordRewardSource?.('study',study.id);runtime.unlock('umbralVivo');runtime.say(study.name+' · '+study.reference+'.','Un recuerdo despierta');runtime.livingBuildingFound?.(o,study);runtime.duetEdit?.(o);runtime.save();}
  function tick(o,dt,clock,d){if(o.group!=='architecture')return;const m=memory(o);o.open=m.open;
   if(o.kind==='bridge'){
    const index=[-22,0,22].findIndex(x=>Math.hypot(o.x+x-runtime.S.wx,o.y-runtime.S.wy)<10),previous=o.bridgeTouch??-1;

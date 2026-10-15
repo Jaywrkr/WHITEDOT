@@ -20,7 +20,7 @@ with sync_playwright() as p:
   for i in range(25):
    page.keyboard.press('Tab');assert page.evaluate('document.getElementById("mMenu").contains(document.activeElement)')
   page.keyboard.press('Escape');assert not page.locator('#mMenu').is_visible();assert page.evaluate('document.activeElement.id')=='bMenu'
-  page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dSeeds').click();page.wait_for_timeout(100)
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dSeeds').click();page.wait_for_timeout(100)
   page.locator('#seedEncounter').select_option('box');page.locator('#seedValue').fill('creative-box')
   # Every musical or navigation UI action here must leave gameplay pulses alone.
   assert page.evaluate('__testRuntime.waves.length')==0

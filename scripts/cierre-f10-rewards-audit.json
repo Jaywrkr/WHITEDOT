@@ -1,0 +1,63 @@
+{
+  "catalogue": 163,
+  "cosmetics": 50,
+  "players": 160,
+  "days": 365,
+  "assumptions": {
+    "minutesPerDay": 20,
+    "lineageContactsPerSession": 0.7,
+    "legacyAchievementChancePerSession": 0.16,
+    "scope": "Wardrobe daily-session simulation; not telemetry or world occurrence odds. Real players may progress slower."
+  },
+  "firstPieceByRarity": {
+    "comun": {
+      "players": 160,
+      "medianDay": 1,
+      "p90Day": 1
+    },
+    "poco_comun": {
+      "players": 160,
+      "medianDay": 3,
+      "p90Day": 3
+    },
+    "rara": {
+      "players": 160,
+      "medianDay": 30,
+      "p90Day": 30
+    },
+    "epica": {
+      "players": 160,
+      "medianDay": 90,
+      "p90Day": 90
+    },
+    "mitica": {
+      "players": 160,
+      "medianDay": 180,
+      "p90Day": 180
+    }
+  },
+  "collectionByDay": {
+    "7": {
+      "medianPieces": 23
+    },
+    "14": {
+      "medianPieces": 28
+    },
+    "30": {
+      "medianPieces": 32
+    },
+    "90": {
+      "medianPieces": 41
+    },
+    "180": {
+      "medianPieces": 48
+    },
+    "240": {
+      "medianPieces": 50
+    },
+    "365": {
+      "medianPieces": 50
+    }
+  },
+  "notes": "Days are distinct play days. Existing thirteen pieces retain their legacy unlocks. New rare pieces require 30–90 days; mythical pieces 180–240 days and sixteen lineages."
+}

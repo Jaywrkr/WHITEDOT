@@ -13,7 +13,7 @@ export function initialize(runtime){
  function ensure(){if(runtime.ac&&runtime.ac!==ac){ac=runtime.ac;stage=createStage(ac,[runtime.bus,runtime.verbIn,runtime.dsend]);}return stage;}
  function accompaniment(emit){const s=ensure();if(!s)return emit();const old=[runtime.bus,runtime.verbIn,runtime.dsend];[runtime.bus,runtime.verbIn,runtime.dsend]=s.inputs;
   try{return emit();}finally{[runtime.bus,runtime.verbIn,runtime.dsend]=old;}}
- function focus(time,source,role){if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running'||globalThis.document?.hidden||globalThis.document?.querySelector('.modal:not([hidden])'))return;
+ function focus(time,source,role){if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running'||globalThis.document?.hidden||globalThis.document?.querySelector('.modal:not([hidden])'))return;
   ensure()?.focus(time);runtime.foregroundNoteCue?.({time,role,source:source?.id});}
  Object.defineProperties(runtime,{withAccompaniment:{get:()=>accompaniment},focusGesture:{get:()=>focus},accompanimentStage:{get:()=>ensure}});
 }

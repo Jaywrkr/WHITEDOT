@@ -11,7 +11,7 @@ for(let i=0;i<10;i++)b.add(source,'perc',2000+i);
 assert.equal(b.active(2100).length,2);
 b.clear();assert.equal(b.active(2100).length,0);
 b.add({x:NaN,y:1},'lead',0);assert.equal(b.active(0).length,0);
-let strokes=0,lastInk;const ctx=new Proxy({}, {get:(_,key)=>key==='stroke'?()=>strokes++:()=>{},set:(_,key,value)=>{if(key==='strokeStyle')lastInk=value;return true;}});
+let strokes=0,lastInk;const labels=[];const ctx=new Proxy({}, {get:(_,key)=>key==='stroke'?()=>strokes++:key==='fillText'?(text)=>labels.push(text):()=>{},set:(_,key,value)=>{if(key==='strokeStyle')lastInk=value;return true;}});
 const r={S:{sound:true,wx:0,wy:0},ac:{state:'running',currentTime:1},inWorld:()=>true,cx:ctx,GOLD:'#f0d27a'};
 initialize(r);
 r.soundCue(source,'bajo',1.1);r.drawSoundCues(0,0,100);assert.equal(strokes,0);
@@ -21,3 +21,5 @@ assert(new Set(['bajo','perc','acorde','lead','agudo'].map(role=>r.musicInk(sour
 r.S.sound=false;r.drawSoundCues(0,0,100);r.S.sound=true;r.drawSoundCues(0,0,100);assert.equal(strokes,1);
 r.ac.state='suspended';r.soundCue(source,'perc',1);r.ac.state='running';r.drawSoundCues(0,0,100);assert.equal(strokes,1);
 console.log('PASS: audio onset gating, moving sources, lifetime, bounded cues, mute and suspended audio');
+
+r.musicVolume=()=>0;r.soundCue(source,'lead',1);const silentStrokes=strokes;r.drawSoundCues(0,0,100);assert.equal(strokes,silentStrokes);r.musicVolume=()=>1;labels.length=0;r.soundCue(source,'lead',1);r.filterCue(source,'lead',{slope:24,stages:2,start:100,end:1000},1);r.drawSoundCues(0,0,100);assert.equal(labels.length,1);assert.match(labels[0],/Filtro 24 dB/);

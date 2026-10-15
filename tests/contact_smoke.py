@@ -17,9 +17,9 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
   page.wait_for_function("window.__testRuntime.MU.dnaA && window.__testRuntime.ac.state==='running'")
-  page.evaluate("""()=>{const r=window.__testRuntime,c=r.wchunk(Math.floor(r.S.wx/900),Math.floor(r.S.wy/900)),old=c.pillars,p={x:r.S.wx,y:r.S.wy,w:10,h:30,hit:0,cd:0,snd:()=>{}};c.pillars=[p];
+  page.evaluate("""()=>{const r=window.__testRuntime,raw=r.wchunk(Math.floor(r.S.wx/900),Math.floor(r.S.wy/900)),c=r.sceneChunk(raw),old=c.pillars,p={x:r.S.wx,y:r.S.wy,w:10,h:30,hit:0,cd:0,snd:()=>{}};c.pillars=[p];
    const frame=()=>{r.frame.l=performance.now();r.frame(performance.now()+16);};
    try{frame();if(p.hits!==1)throw Error('first pillar contact missing');p.cd=0;frame();frame();if(p.hits!==1)throw Error('held pillar retriggered');
     const x=r.S.wx;r.S.wx=x+150;frame();r.S.wx=x;p.cd=0;frame();if(p.hits!==2)throw Error('pillar did not rearm after leaving');

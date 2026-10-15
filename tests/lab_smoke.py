@@ -18,7 +18,7 @@ with sync_playwright() as p:
  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
  page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
  normal=page.evaluate("localStorage.getItem('pixel-blanco-v4')")
- page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dLab').click()
+ page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dLab').click()
  page.wait_for_function('window.__testRuntime&&window.__testRuntime.labMode&&!document.getElementById("labBar").hidden')
  page.wait_for_timeout(400)
  assert page.evaluate("window.__testRuntime.S.previewSeed")=='laboratorio'
