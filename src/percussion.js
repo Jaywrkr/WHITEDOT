@@ -1,3 +1,4 @@
+import {expandedRhythm} from './ecoregions.js';
 import {RHYTHM_ELEMENTS,createRhythmElements,rhythmPattern} from './percussion-model.js';
 import {contactEntry} from './contact.js';
 import {polarDelta} from './body.js';
@@ -18,7 +19,7 @@ export function initialize(runtime){
   }
   const out=[],size=runtime.WCH,{wx:x,wy:y}=runtime.S;
   for(let a=Math.floor((x-radius)/size);a<=Math.floor((x+radius)/size);a++)for(let b=Math.floor((y-radius)/size);b<=Math.floor((y+radius)/size);b++){
-   const key=a+','+b;if(!cache.has(key)){cache.set(key,createRhythmElements(a,b,size,runtime.regionOfPos((a+.5)*size,(b+.5)*size),runtime.seedOf,runtime.rng));while(cache.size>64)cache.delete(cache.keys().next().value);}
+   const key=a+','+b;if(!cache.has(key)){const region=runtime.regionOfPos((a+.5)*size,(b+.5)*size),base=createRhythmElements(a,b,size,region,runtime.seedOf,runtime.rng);cache.set(key,[...base,...expandedRhythm(a,b,size,region,runtime.BIOMES[region.z].id,base,runtime.seedOf,runtime.rng)]);while(cache.size>64)cache.delete(cache.keys().next().value);}
    out.push(...cache.get(key).filter(o=>Math.hypot(o.x-x,o.y-y)<radius));
   }return out.sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y));
  }
@@ -75,7 +76,8 @@ export function initialize(runtime){
    const spec=RHYTHM_ELEMENTS[o.kind],d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);
    c.save();c.translate(o.x+ox,o.y+oy);c.globalAlpha=elementAlpha(d,radius,lit*.4);c.strokeStyle=elementInk(spec.material,runtime.regionOfPos(o.x,o.y).hue,lit>.1);c.fillStyle=c.strokeStyle;c.lineWidth=WORLD_VISUAL.line;
    c.beginPath();
-   if(o.kind==='fossil'){c.arc(0,0,13,.3,5.8);c.moveTo(8,0);c.arc(0,0,8,0,5.5);c.moveTo(3,0);c.arc(0,0,3,0,4);}
+   if(spec.expansion){const n=3+spec.shape;for(let i=0;i<n;i++){const a=i*6.283/n,r=8+spec.shape*2;if(spec.shape===0){c.moveTo(0,0);c.quadraticCurveTo(Math.cos(a-.3)*r,Math.sin(a-.3)*r,Math.cos(a)*r,Math.sin(a)*r);}else if(spec.shape===1){c.moveTo(Math.cos(a)*r+3,Math.sin(a)*r);c.ellipse(Math.cos(a)*r,Math.sin(a)*r,3,5,a,0,6.283);}else if(spec.shape===2){c.moveTo(-12,i*4-6);c.quadraticCurveTo(0,i*4-9-lit*3,12,i*4-6);}else{c.moveTo(Math.cos(a)*r,Math.sin(a)*r);c.lineTo(Math.cos(a)*(r+5),Math.sin(a)*(r+5));}}}
+   else if(o.kind==='fossil'){c.arc(0,0,13,.3,5.8);c.moveTo(8,0);c.arc(0,0,8,0,5.5);c.moveTo(3,0);c.arc(0,0,3,0,4);}
    else if(o.kind==='stone'){c.ellipse(0,0,13+lit*2,9+lit*2,.2,0,6.283);c.moveTo(-5,0);c.lineTo(5,0);}
    else if(o.kind==='hollow'){c.ellipse(0,0,7,12,1,0,6.283);c.moveTo(-15,-8);c.lineTo(-9,-12);c.moveTo(9,12);c.lineTo(15,8);}
    else if(o.kind==='roots'){for(let i=0;i<3;i++){c.moveTo(-15,6-i*6);c.quadraticCurveTo(0,-5+lit*3,15,-6+i*6);}}

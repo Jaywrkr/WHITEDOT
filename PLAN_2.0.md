@@ -3,7 +3,7 @@
 <!-- experiencia-actual -->
 ## Prioridad vigente · Experiencia viva
 
-[Plan de catorce fases](PLAN_EXPERIENCIA.md), autorizado por Jay. Fase 1 auditada y documentada; continuar sin confirmación. Una rama por fase; Jay crea PR y merge. L7 anterior integrado por Jay en PR #129 (main e351584).
+[Plan de catorce fases](PLAN_EXPERIENCIA.md), autorizado por Jay. Entregadas fases 1–12; detalle y validación por rama en el plan vigente; continuar sin confirmación. Una rama por fase; Jay crea PR y merge. L7 anterior integrado por Jay en PR #129 (main e351584).
 <!-- /experiencia-actual -->
 
 

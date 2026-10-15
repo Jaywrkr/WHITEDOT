@@ -1,3 +1,9 @@
+# Experiencia 12 · Biodiversidad territorial
+
+Rama `feat/experiencia-12-ecosistemas`. Se incorporan veinte linajes y doce familias acústicas: 48 linajes, 21 percusiones, 70 tarjetas y 243 destinos de laboratorio. Veintidós ecorregiones se distribuyen sobre los once biomas originales; no cambian sus posiciones ni generadores. Rasgos, anatomías, agrupaciones y semillas nuevas independientes.
+
+Validación: Auditoría/Node completos; living_smoke, percussion_smoke y lab_smoke; living_mix y percussion_mix. Jay mantiene PR/merge.
+
 # Experiencia 11 · Espejos y percepción
 
 Rama `feat/experiencia-11-optica`. Ángulos y alineación de espejos/vidrios modulan filtros reales de la fuente: apertura y pendientes de 12/24/36/48 dB, limitadas en graves. Señales ligadas al onset y etiquetas de función musical; panel óptico compacto.

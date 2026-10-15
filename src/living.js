@@ -1,3 +1,4 @@
+import {expandedChunk} from './ecoregions.js';
 import {distanceOpacity,detailBlend} from './world-visibility-model.js';
 import {studyOf} from './living-studies.js';
 import {BoundedMap} from './cache.js';
@@ -24,6 +25,7 @@ export function initialize(runtime){
     aquaticChunk(x,y,runtime.WCH,d,seed,runtime.rng):livingChunk(x,y,runtime.WCH,region,biome,seed,runtime.rng,LIVING_GROUPS);
    const profile=populationProfile(region,biome,seed,runtime.rng);
    const inhabitants=populatedChunk(base,x,y,runtime.WCH,region,profile,seed,runtime.rng);
+   inhabitants.push(...expandedChunk(x,y,runtime.WCH,region,biome,inhabitants,seed,runtime.rng));
    chunks.set(key,inhabitants.filter(o=>layer==='superficie'||(layer==='cielo'?['seed','manta','whale','jelly','moth'].includes(o.kind):['fungal-net','lichen','moss','turtle','worm','beetle'].includes(o.kind))).map(o=>({...o,id:layer==='superficie'?o.id:o.id+':'+layer})));
   }return chunks.get(key);
  }
@@ -31,7 +33,7 @@ export function initialize(runtime){
   const cx=Math.floor(runtime.S.wx/runtime.WCH),cy=Math.floor(runtime.S.wy/runtime.WCH),out=[];
   const n=Math.min(2,Math.ceil((radius+75)/runtime.WCH));for(let x=cx-n;x<=cx+n;x++)for(let y=cy-n;y<=cy+n;y++)out.push(...chunk(x,y));return [...out,...(runtime.cultureResidents?.(radius)||[])].filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<radius);
  }
- function ensureMind(o){runtime.restoreCreature?.(o);if(!o.mind){o.mind=mindProfile(o,runtime.seedOf,runtime.rng);const d=runtime.regionOfPos(o.homeX,o.homeY);o.worldFamily=d.worldFamily;o.habitat=habitatAt(d,o.homeX,o.homeY,runtime.seedOf);o.anatomy=anatomyOf({...o,role:livingDefinition(o.kind).role},o.worldFamily,runtime.seedOf);}return o;}
+ function ensureMind(o){runtime.restoreCreature?.(o);if(!o.mind){o.mind=mindProfile(o,runtime.seedOf,runtime.rng);const traits=livingDefinition(o.kind)?.traits;if(traits)o.mind=Object.freeze({...o.mind,...traits});const d=runtime.regionOfPos(o.homeX,o.homeY);o.worldFamily=d.worldFamily;o.habitat=habitatAt(d,o.homeX,o.homeY,runtime.seedOf);o.anatomy=anatomyOf({...o,role:livingDefinition(o.kind).role},o.worldFamily,runtime.seedOf);}return o;}
  function emit(o,time,full=false,origin='ambient'){
   if(!active()||!runtime.S.sound||runtime.ac?.state!=='running')return;
   const d=runtime.regionOfPos(o.homeX,o.homeY);runtime.playVoice('living:'+o.kind,((o.phrase.length?o.phrase[(barPlayed<0?0:barPlayed)%o.phrase.length]:o.variant)+(origin==='ambient'?(o.degreeOffset||0):0))%7,time,d,full,origin==='player'?.48:.23,o,origin);o.lit=1;if(origin==='player')runtime.performanceReply?.(o,time,d);

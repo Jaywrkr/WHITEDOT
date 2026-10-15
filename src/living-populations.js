@@ -5,7 +5,7 @@ const DENSITIES=[.25,.55,.9,1.25];
 export function populationProfile(region,biome,seedOf,rng){
  const [rx,ry]=region.key.split(',').map(Number),zone=`${Math.floor((rx||0)/3)},${Math.floor((ry||0)/3)}:${biome}`;
  const family=activeWorldFamily(region),definition=worldFamilyDefinition(family?.id),random=rng(seedOf(`population:territory:v1:${zone}`));
- const choose=group=>{const compatible=LIVING_CATALOG.filter(d=>d.group===group&&d.affinity.includes(biome)&&d.id!=='whale');
+ const choose=group=>{const compatible=LIVING_CATALOG.filter(d=>!d.expansion&&d.group===group&&d.affinity.includes(biome)&&d.id!=='whale');
   const pool=compatible;if(!pool.length)return [];
   const preferred=pool.filter(d=>definition?.[group].includes(d.id)),dominants=preferred.length?preferred:pool;
   const first=dominants[Math.floor(random()*dominants.length)],other=pool.filter(d=>d!==first),mix=random();

@@ -17,7 +17,7 @@ for(const def of LIVING_CATALOG){
  }assert.equal(paths.size,32,'individuals cannot share an identical silhouette');variants+=paths.size;
  silhouettes.add(anatomyPath(anatomyOf({...def,kind:def.id,id:'same'})));
 }
-assert.equal(silhouettes.size,28,'previously shared kinds must now have distinct anatomy');
+assert.equal(silhouettes.size,48,'previously shared kinds must now have distinct anatomy');
 assert.equal(normalizeAnatomy({version:1,shape:'<script>'}),null);
 assert.equal(normalizeAnatomy({...anatomyOf({shape:'blob'}),lineage:Infinity}),null);
-console.log(`PASS ${variants} deterministic individual anatomies, 28 distinct lineages, bounded complexity/coordinates and migrated exact specimen portraits`);
+console.log(`PASS ${variants} deterministic individual anatomies, 48 distinct lineages, bounded complexity/coordinates and migrated exact specimen portraits`);

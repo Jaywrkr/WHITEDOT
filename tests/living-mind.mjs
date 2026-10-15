@@ -26,4 +26,4 @@ const turtle={id:'turtle:motion',kind:'turtle',group:'fauna',variant:25,activeAt
 turtle.mind={...mindProfile(turtle,seedOf,rng),curiosity:1,caution:0};
 for(let i=0;i<1000;i++)updateMind(turtle,.05,i*.05,60,{x:60,y:0,speed:0});assert(turtle.x>5,'the turtle must reach its slow movement strategy');
 assert.equal(JSON.stringify(livingChunk(3,2,900,region,'bosque',seedOf,rng)),snapshot,'mind sampling consumed placement RNG');
-console.log('PASS 28 lineage capability profiles, 32 distinct seeds each, 3+ observable decisions, bounded fauna/immobile flora, individual voices and slow turtle motion');
+console.log('PASS 48 lineage capability profiles, 32 distinct seeds each, 3+ observable decisions, bounded fauna/immobile flora, individual voices and slow turtle motion');

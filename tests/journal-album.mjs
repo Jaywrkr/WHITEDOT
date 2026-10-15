@@ -3,8 +3,8 @@ import {albumEntries,filterAlbum,nextDiscovery,progressRing} from '../src/journa
 import {CUBE_WARDROBE} from '../src/wardrobe-model.js';
 const state={elementBook:{found:{arbol:{day:'2026-10-14'}}},livingSeen:{manta:{day:'2026-10-13'}}};
 const rows=albumEntries(state,CUBE_WARDROBE.map(p=>({...p,owned:p.free,obtainedAt:p.free?'2026-10-14':null})));
-assert.equal(filterAlbum(rows,{group:'cubo'}).length,50);assert.equal(filterAlbum(rows,{group:'elementos'}).length,109);assert.equal(filterAlbum(rows,{group:'linajes'}).length,28);
+assert.equal(filterAlbum(rows,{group:'cubo'}).length,50);assert.equal(filterAlbum(rows,{group:'elementos'}).length,141);assert.equal(filterAlbum(rows,{group:'linajes'}).length,48);
 assert.equal(filterAlbum(rows,{group:'linajes',owned:'ganado'}).length,1);assert.equal(filterAlbum(rows,{group:'linajes',search:'Manta'}).length,1);
 assert.equal(filterAlbum(rows,{group:'elementos',search:'<script>'}).length,0);assert.equal(filterAlbum(rows,{group:'cubo',owned:'pendiente'}).length,43);
 assert.equal(filterAlbum(rows,{group:'linajes',owned:'ganado'})[0].date,'2026-10-13');assert(nextDiscovery(state,{biomeId:'bosque'}).text.split(/\s+/).length<=12);
-assert(progressRing(5,10,'<Colección>').includes('&lt;Colección&gt;'));console.log('PASS searchable album, 50 cube styles, 109 families, 28 lineages, dates, silhouettes and contextual next step');
+assert(progressRing(5,10,'<Colección>').includes('&lt;Colección&gt;'));console.log('PASS searchable album, 50 cube styles, 141 families, 48 lineages, dates, silhouettes and contextual next step');
