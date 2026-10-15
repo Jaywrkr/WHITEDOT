@@ -34,7 +34,7 @@ export function initialize(runtime){
  function ensureMind(o){runtime.restoreCreature?.(o);if(!o.mind){o.mind=mindProfile(o,runtime.seedOf,runtime.rng);const d=runtime.regionOfPos(o.homeX,o.homeY);o.worldFamily=d.worldFamily;o.habitat=habitatAt(d,o.homeX,o.homeY,runtime.seedOf);o.anatomy=anatomyOf({...o,role:livingDefinition(o.kind).role},o.worldFamily,runtime.seedOf);}return o;}
  function emit(o,time,full=false,origin='ambient'){
   if(!active()||!runtime.S.sound||runtime.ac?.state!=='running')return;
-  const d=runtime.regionOfPos(o.homeX,o.homeY);runtime.playVoice('living:'+o.kind,((o.phrase.length?o.phrase[(barPlayed<0?0:barPlayed)%o.phrase.length]:o.variant)+(origin==='ambient'?(o.degreeOffset||0):0))%7,time,d,full,origin==='player'?.48:.23,o,origin);o.lit=1;
+  const d=runtime.regionOfPos(o.homeX,o.homeY);runtime.playVoice('living:'+o.kind,((o.phrase.length?o.phrase[(barPlayed<0?0:barPlayed)%o.phrase.length]:o.variant)+(origin==='ambient'?(o.degreeOffset||0):0))%7,time,d,full,origin==='player'?.48:.23,o,origin);o.lit=1;if(origin==='player')runtime.performanceReply?.(o,time,d);
  }
  function interact(o){ensureMind(o);const def=livingDefinition(o.kind);o.stimulusAt=clock;o.energy=Math.min(1,o.energy+.5);o.phrase.push(runtime.MU.deg||0);if(o.phrase.length>o.mind.memorySpan)o.phrase.shift();runtime.rememberCreature?.(o);runtime.livingLink?.(o);runtime.livingFound?.(o);runtime.unlock('vidaNueva');runtime.beatSoon(t=>emit(o,t,true,'player'),null,'player');
   const seen=runtime.S.livingSeen||={};if(!seen[o.kind]){seen[o.kind]={day:runtime.S.todayKey,variant:o.variant};runtime.say(def.name+' · '+HINTS[def.gesture]+'.','Una voz nueva');}runtime.save();

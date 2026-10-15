@@ -1,7 +1,9 @@
+import {PERFORMANCE_INSTRUMENTS} from './performance-instruments.js';
 import {physicalString} from './modular-synth.js';
 // Original modeled voices; the names describe inspiration, not sampled instruments.
 const spec=(name,kind,cut,attack,decay,partials,noise=0,sustain=false)=>Object.freeze({name,kind,cut,attack,decay,partials:Object.freeze(partials.map(p=>Object.freeze(p))),noise,sustain,technique:true});
 export const TECHNIQUE_INSTRUMENTS=Object.freeze({
+ ...PERFORMANCE_INSTRUMENTS,
  silkpluck:spec('Cuerda de seda','string',2500,.006,1.65,[[1,'sine',.7],[2.01,'triangle',.09]],.025),
  skinpluck:spec('Cuerda de piel','string',2900,.003,.65,[[1,'triangle',.5],[2.02,'square',.08]],.15),
  lowbow:spec('Arco de madera','bow',1300,.24,1.7,[[.998,'sawtooth',.25],[1.002,'triangle',.35],[2,'sine',.08]],.025,true),
@@ -57,6 +59,7 @@ export function createTechniquePlayer(runtime){
    // The skin bridge adds a short, inharmonic rattle distinct from the silk body.
    if(id==='skinpluck')oscillator(2.02,'triangle',.1);
   }else for(const [ratio,type,amount]of spec.partials)oscillator(ratio,type,amount);
+  if(spec.kind==='fm'&&oscillators.length){const mod=make('createOscillator'),depth=make('createGain');mod.frequency.value=hz*spec.fmRatio;depth.gain.setValueAtTime(hz*spec.fmIndex,at);depth.gain.exponentialRampToValueAtTime(.01,at+Math.min(1.5,duration*.8));mod.connect(depth).connect(oscillators[0].o.frequency);mod.start(at);mod.stop(voice.end+.02);sources.push(mod);}
   if(shape.noise){const source=make('createBufferSource'),g=make('createGain'),breath=make('createBiquadFilter');source.buffer=noiseBuffer(ac);source.loop=true;breath.type='bandpass';breath.frequency.value=spec.kind==='membrane'?1900:1200;breath.Q.value=.8;g.gain.value=shape.noise;
    source.connect(breath).connect(g).connect(filter);source.start(at);source.stop(voice.end+.02);sources.push(source);}
   if(spec.kind==='wind'||spec.kind==='bow'){const lfo=make('createOscillator'),depth=make('createGain');lfo.frequency.value=spec.kind==='wind'?4.4:3.1;depth.gain.value=hz*.0012;

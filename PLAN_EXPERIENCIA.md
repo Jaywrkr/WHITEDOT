@@ -13,7 +13,7 @@ Jay autorizó las catorce fases. Una rama por fase, encadenadas. Codex commit/pu
 | 7 | Rareza y observaciones útiles | `feat/experiencia-07-rareza` | Implementada; validación registrada abajo |
 | 8 | Atlas y expediciones sonoras | `feat/experiencia-08-atlas` | Implementada; validación registrada abajo |
 | 9 | Coleccionar para crear | `feat/experiencia-09-creacion` | Implementada; validación registrada abajo |
-| 10 | Profundidad musical | `feat/experiencia-10-musica` | Pendiente |
+| 10 | Profundidad musical | `feat/experiencia-10-musica` | Implementada; validación registrada abajo |
 | 11 | Espejos y percepción | `feat/experiencia-11-optica` | Pendiente |
 | 12 | Biodiversidad territorial | `feat/experiencia-12-ecosistemas` | Pendiente |
 | 13 | Identidad y constelaciones | `feat/experiencia-13-identidad` | Pendiente |
@@ -96,3 +96,9 @@ Validación: Auditoría/Node completos; living-cards_smoke y journal_v2_smoke; a
 Hasta cuatro tarjetas forman voces físicas en casa: función e instrumento del encuentro, posición editable y hasta ocho jardines conservados. Las tarjetas no se consumen; visitas quedan separadas y se comparte el presupuesto de cuatro voces por paso.
 
 Validación: Auditoría/Node completos; experience_garden_smoke y house_v2_smoke; experience_garden_mix y house_mix. Aceptación física y CI del PR, separados.
+
+## Entrega 10 · Profundidad musical
+
+Banco ampliado a 75 instrumentos: 32 colores articulados nuevos, incluida modulación FM real. Veinticuatro gramáticas de respuesta de encuentros complementan los 16 cruces de radio sin cambiar sus recetas. Dos notas como máximo cada cuatro compases, canceladas con menú/silencio; laboratorio 211 destinos.
+
+Validación: Auditoría/Node completos; instrument_techniques_smoke y lab_landscape_smoke; technique_mix, lab_music_mix y experience_learning_mix. Aceptación física y CI del PR, separados.

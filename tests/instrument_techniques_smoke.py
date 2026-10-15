@@ -17,6 +17,7 @@ try:
   page.evaluate('window.__techNotes=[];__testRuntime.techniqueNoteCue=n=>__techNotes.push(n);document.querySelectorAll(".modal").forEach(m=>m.hidden=true);')
   ids=page.evaluate('import("/src/instrument-techniques.js").then(m=>Object.keys(m.TECHNIQUE_INSTRUMENTS))')
   for id in ids:
+   page.wait_for_function('__testRuntime.activeTechniqueCount<10')
    page.evaluate('(id)=>{const r=__testRuntime;r.labGo("synth:"+id);const o=r.livingNear(500)[0];r.playVoice("living:"+o.kind,0,r.ac.currentTime+.02,r.regionOfPos(o.x,o.y),false,1,o,"player");}',id)
    page.wait_for_function('(id)=>__techNotes.some(n=>n.instrument===id)',arg=id)
   page.evaluate('__testRuntime.labGo("synth:bamboowind")')
@@ -25,5 +26,5 @@ try:
   page.locator('#bMenu').click();page.wait_for_timeout(400)
   page.evaluate('window.__heldBefore=__techNotes.filter(n=>n.held).length')
   page.wait_for_timeout(400);assert page.evaluate('__techNotes.filter(n=>n.held).length===__heldBefore'),'menu must not restart a sustained voice'
-  assert not errors,errors;print('PASS eleven lab voices, real held wind from cube contact, bounded nodes and release/no restart in menu',flush=True);b.close()
+  assert not errors,errors;print('PASS forty-three lab voices, real held wind from cube contact, bounded nodes and release/no restart in menu',flush=True);b.close()
 finally:server.shutdown()
