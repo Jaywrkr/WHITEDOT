@@ -215,6 +215,7 @@ body.world-focus .goal{display:none}
 .card-ability{display:flex;gap:8px;align-items:baseline;border-top:1px solid #ffffff24;border-bottom:1px solid #ffffff24;padding:8px 0;margin:8px 0}.card-ability b{font-size:11px}.card-ability span{font-size:9px;line-height:1.7}.rare-portrait{position:relative}.rare-card header small{letter-spacing:.1em}#rareNotice:not([hidden]) .rare-glyph{animation:found-voice .8s ease-out 1}@keyframes found-voice{from{opacity:.15;transform:scale(.8)}to{opacity:1;transform:scale(1)}}@media(prefers-reduced-motion:reduce){#rareNotice .rare-glyph{animation:none}}
 
 .atlas-summary svg{display:block;width:120px;height:24px;fill:none;stroke:#bda5f5;stroke-width:1}.atlas-summary p,.atlas-summary small{font-size:10px;line-height:1.7}
+#musicTravelList{max-height:36dvh}#mMusicTravel .sheet>button{min-height:44px;font-size:11px}#mMusicTravel .sheet>p{margin:8px 0}
 
 #houseGardenTools{font-size:10px;max-width:100%;margin:4px 0}#houseGardenTools summary{padding:8px;cursor:pointer}#houseGardenTools p{font-size:10px}#gardenSlots{display:flex;flex-wrap:wrap;gap:4px}#gardenSlots button{font-size:9px;min-height:44px}#gardenSave,#gardenSets{font-size:10px;min-height:40px}
 

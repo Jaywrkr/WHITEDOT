@@ -18,7 +18,7 @@ export function initialize(runtime){
  function anchors(o){
   const out=Array.from({length:3},(_,i)=>{const a=-Math.PI/2+i*Math.PI*2/3;return {id:o.id+':anchor:'+i,x:o.x+Math.cos(a)*54,y:o.y+Math.sin(a)*54};});
   for(const source of runtime.MU.near||[]){if(distance(source,o)>145||distance(source,o)<32)continue;if(!identities.has(source))identities.set(source,source.id||`source:${source.s?.id||source.kind||'voice'}:${source.hx??source.x},${source.hy??source.y}`);out.push({id:identities.get(source),x:source.x,y:source.y});if(out.length>=8)break;}
-  for(const other of objects()){if(other===o||distance(other,o)>145||out.length>=10)continue;out.push({id:other.id,x:other.x,y:other.y});}
+  for(const other of objects()){if(other===o||distance(other,o)>(o.groveStyle?215:145)||out.length>=10)continue;out.push({id:other.id,x:other.x,y:other.y});}
   return out;
  }
  function ensure(o){runtime.restoreEncounter?.(o);if(o.kind==='weaver')o.state.weave||={edges:[]};if(o.kind==='box')o.state.box||=createBox(runtime.regionOfPos(o.x,o.y));}
@@ -119,13 +119,15 @@ export function initialize(runtime){
  function phrase(o,bar){
   if(o.kind==='animal'&&o.state.dialogue?.phase==='listening')return [];
   if(o.kind==='animal'&&o.state.dialogue?.phase==='replying')return dialogueReply(o.state.dialogue,bar).map(n=>({...n,relative:true}));
-  if(o.kind==='weaver'&&o.state.weave?.edges.length)return threadScore(o.state.weave,runtime.seedOf).notes.slice(0,3);
+  if(o.kind==='weaver'&&o.state.weave?.edges.length){const notes=threadScore(o.state.weave,runtime.seedOf).notes.slice(0,3);
+   return o.groveStyle==='garden'?notes.map((n,i)=>({...n,index:[0,2,4][i]})):o.groveStyle==='relay'?notes.map(n=>({...n,step:(n.step+2)%16})):notes;
+  }
   if(o.kind==='box'&&o.state.box&&o.state.a>.65){const out=[];for(const channel of ['bass','groove','melody']){const part=boxPart(o.state.box,channel);if(!part?.enabled)continue;const notes=part.steps.map((index,step)=>({step,index})).filter(n=>n.index>=0);if(notes.length)out.push({...notes[Math.floor(bar/2)%notes.length],channel});}return out;}
   return null;
  }
  function replied(o,bar,time=runtime.ac.currentTime){if(o.state.dialogue?.phase==='replying'){o.state.dialogue.lastReplyBar=bar;o.state.dialogue.replyAt=time;o.state.dialogue.replyEnd=time+runtime.SIX*((o.state.dialogue.phrase.at(-1)?.step||0)+3);runtime.S.journal.depth||={};runtime.S.journal.depth.dialogue=true;runtime.unlock('respuestaAnimal');}}
  function arrangement(o,track,region){
-  if(o.kind==='weaver'&&o.state.weave?.edges.length)return threadArrangement(track,o.state.weave,encounterRole('weaver',region,runtime.seedOf),runtime.seedOf);
+  if(o.kind==='weaver'&&o.state.weave?.edges.length)return threadArrangement(track,o.state.weave,o.groveRole||encounterRole('weaver',region,runtime.seedOf),runtime.seedOf);
   if(o.kind==='box'&&o.state.box&&o.state.a>.65)return boxArrangement(track,o.state.box);
   return track;
  }
@@ -133,12 +135,12 @@ export function initialize(runtime){
   if(!active())return true;
   const nearby=objects().filter(o=>o.state.used&&o.state.active>0&&distance(o,{x:runtime.S.wx,y:runtime.S.wy})<140).sort((a,b)=>distance(a,{x:runtime.S.wx,y:runtime.S.wy})-distance(b,{x:runtime.S.wx,y:runtime.S.wy}));
   for(const o of nearby){
-   if(o.kind==='weaver'&&o.state.weave?.edges.length&&encounterRole('weaver',runtime.regionOfPos(o.x,o.y),runtime.seedOf)==='groove')return threadScore(o.state.weave,runtime.seedOf).mask[step];
+   if(o.kind==='weaver'&&o.state.weave?.edges.length&&(o.groveRole||encounterRole('weaver',runtime.regionOfPos(o.x,o.y),runtime.seedOf))==='groove')return threadScore(o.state.weave,runtime.seedOf).mask[step];
    if(o.kind==='box'&&o.state.box&&o.state.a>.65){const part=boxPart(o.state.box,'groove');return !!part?.enabled&&part.steps[step]>=0;}
   }return true;
  }
  function hint(o){
-  if(o.kind==='weaver')return 'Cruza dos anclas · permanece sobre un hilo para retirarlo';
+  if(o.kind==='weaver')return o.groveStyle?'Toca para conectar · permanece sobre un hilo para retirarlo':'Cruza dos anclas · permanece sobre un hilo para retirarlo';
   if(o.kind==='box')return o.state.a>.65?'Raíces: tocar · núcleos: mover/mantener · arco: reposar':'Toca el suelo o permanece cerca para despertarlo';
   if(o.kind==='animal')return !runtime.S.sound?'Activa Música para enseñarle una frase':o.state.dialogue?.phase==='listening'?'Te escucho · toca objetos o el vacío · tócame para responder':o.state.dialogue?.phase==='replying'?'Toca para enseñarme otra frase · mantén para cambiar voz':'Toca para enseñarme · mantén para cambiar voz · arrastra para acercar';
   return FAMILIES[o.kind].hint;
@@ -146,9 +148,10 @@ export function initialize(runtime){
  function draw(o){
   ensure(o);const c=runtime.cx,near=distance(o,{x:runtime.S.wx,y:runtime.S.wy})<180;
   if(o.kind==='weaver'){
-   for(const edge of o.state.weave.edges){const nodes=anchors(o),a=nodes.find(n=>n.id===edge.from)||edge.a,b=nodes.find(n=>n.id===edge.to)||edge.b;c.beginPath();c.moveTo(a.x-o.x,a.y-o.y);c.lineTo(b.x-o.x,b.y-o.y);c.stroke();}
-   if(near){for(const [index,a]of anchors(o).entries()){const x=a.x-o.x,y=a.y-o.y;c.beginPath();if(index===1){c.moveTo(x,y-5);c.lineTo(x+4,y);c.lineTo(x,y+5);c.lineTo(x-4,y);c.closePath();}else if(index===2){c.moveTo(x-5,y);c.bezierCurveTo(x-2,y-7,x+2,y+7,x+5,y);}else c.arc(x,y,armed?.node.id===a.id?7:4,0,Math.PI*2);c.stroke();if(index<3&&o.state.cubeAnchor===a.id){c.font='9px "Geist Mono", monospace';c.fillText(['Fuente','Filtro','Modulador'][index],x-20,y+16);}}if(gesture?.object===o&&gesture.type==='anchor'){c.beginPath();c.moveTo(gesture.node.x-o.x,gesture.node.y-o.y);c.lineTo(gesture.now.x-o.x,gesture.now.y-o.y);c.stroke();}}
-   c.font='8px "Geist Mono", monospace';c.textAlign='center';c.fillText(`${o.state.weave.edges.length}/${MAX_THREADS} hilos`,0,34);
+   for(const edge of o.state.weave.edges){const nodes=anchors(o),a=nodes.find(n=>n.id===edge.from)||edge.a,b=nodes.find(n=>n.id===edge.to)||edge.b;c.beginPath();c.moveTo(a.x-o.x,a.y-o.y);c.lineTo(b.x-o.x,b.y-o.y);c.stroke();
+    if(o.groveStyle&&!runtime.S.reducedMotion&&o.state.active>0&&runtime.ac?.state==='running'){const phase=((runtime.ac.currentTime/(runtime.SIX*4))%1+1)%1;c.beginPath();c.arc(a.x-o.x+(b.x-a.x)*phase,a.y-o.y+(b.y-a.y)*phase,2,0,Math.PI*2);c.fill();}}
+   if(near&&(!o.groveStyle||distance(o,{x:runtime.S.wx,y:runtime.S.wy})<85)){for(const [index,a]of anchors(o).entries()){const x=a.x-o.x,y=a.y-o.y;c.beginPath();if(index===1){c.moveTo(x,y-5);c.lineTo(x+4,y);c.lineTo(x,y+5);c.lineTo(x-4,y);c.closePath();}else if(index===2){c.moveTo(x-5,y);c.bezierCurveTo(x-2,y-7,x+2,y+7,x+5,y);}else c.arc(x,y,armed?.node.id===a.id?7:4,0,Math.PI*2);c.stroke();if(index<3&&o.state.cubeAnchor===a.id){c.font='9px "Geist Mono", monospace';c.fillText(['Fuente','Filtro','Modulador'][index],x-20,y+16);}}if(gesture?.object===o&&gesture.type==='anchor'){c.beginPath();c.moveTo(gesture.node.x-o.x,gesture.node.y-o.y);c.lineTo(gesture.now.x-o.x,gesture.now.y-o.y);c.stroke();}}
+   if(!o.groveStyle||distance(o,{x:runtime.S.wx,y:runtime.S.wy})<85){c.font='8px "Geist Mono", monospace';c.textAlign='center';c.fillText(`${o.state.weave.edges.length}/${MAX_THREADS} hilos`,0,34);}
   }
   if(o.kind==='box'&&o.state.a>.65&&near){
    c.fillStyle=c.strokeStyle;c.font='8px "Geist Mono", monospace';c.textAlign='center';

@@ -10,7 +10,7 @@ export function initialize(runtime){
  function restoreCreature(o){const b=book();if(creatures.has(o)||b.version!==1)return;creatures.add(o);const m=b.bonds[o.id];if(m&&m.kind===o.kind&&Math.hypot(o.homeX-m.x,o.homeY-m.y)<1){o.phrase=m.phrase.slice();o.familiarity=Math.min(1,m.visits/6);}}
  function creature(o,visit=true){const b=book();if(b.version!==1||o.group==='architecture')return;
   const prior=b.bonds[o.id];const visits=(prior?.visits||0)+(visit?1:0);if(rememberEntry(b,'bonds',o.id,{kind:o.kind,x:o.homeX,y:o.homeY,visits,phrase:o.phrase||[]}))o.familiarity=Math.min(1,visits/6);}
- function musicMode(){return runtime.S.livingMusic===false||runtime.labClassicMusic?'classic':'live';}
+ function musicMode(){return runtime.labClassicMusic||!runtime.unifiedMusic&&runtime.S.livingMusic===false?'classic':'live';}
  function musicalAddress(){return {...runtime.worldIdentity,musicVersion:1,musicMode:musicMode()};}
  function stamp(d,mode=musicMode()){
   const hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng),score=mode==='live'?labScore(d,runtime.seedOf,runtime.rng):null;

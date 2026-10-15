@@ -1,4 +1,4 @@
-"""The native scheduler uses the territory band; classic mode and UI stay safe."""
+"""One production music engine ignores retired preferences without changing the world."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -22,15 +22,20 @@ try:
   first=page.evaluate('({band:__testRuntime.MU.radio.labScore.id,world:JSON.stringify(__testRuntime.MU.dnaT)})')
   page.locator('#bMenu').click();page.locator('#bMusicSettings').click()
   before=page.evaluate('({waves:__testRuntime.waves.length,context:__testRuntime.ac})')
-  page.locator('#bLivingMusic').click();assert page.locator('#bLivingMusic').get_attribute('aria-pressed')=='false'
+  assert page.locator('#bLivingMusic').is_hidden()
   assert page.evaluate('__testRuntime.waves.length')==before['waves']
-  page.locator('#muClose').click();page.wait_for_function('__testRuntime.MU.radio&&!__testRuntime.MU.radio.labScore')
+  page.evaluate('__testRuntime.S.livingMusic=false;__testRuntime.save()')
+  page.locator('#muClose').click();page.wait_for_function('__testRuntime.MU.radio?.labScore?.electronic')
   assert page.evaluate('JSON.stringify(__testRuntime.MU.dnaT)')==first['world']
   page.reload();page.wait_for_function('window.__testRuntime?.S.livingMusic===false')
   page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true)')
-  page.locator('#bMenu').click();page.locator('#bMusicSettings').click();page.locator('#bLivingMusic').click();page.locator('#muClose').click()
+  page.locator('#bMenu').click();page.locator('#bMusicSettings').click();assert page.locator('#bLivingMusic').is_hidden();page.locator('#muClose').click()
   page.locator('#w').click(position={'x':30,'y':300});page.wait_for_function('__testRuntime.MU.radio?.labScore')
   assert page.evaluate('__testRuntime.MU.radio.labScore.id')==first['band']
+  page.locator('#bStyles').click();page.locator('#musicTravelFull').click();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=60000)
+  page.wait_for_function('__testRuntime.MU.radio?.labScore?.electronic?.count===10')
+  page.evaluate("()=>{const r=__testRuntime;window.__fieldFoundation=[];r.labPerformanceCue=e=>__fieldFoundation.push(e);r.givePower('campo');}")
+  page.wait_for_function('__fieldFoundation.some(e=>e.role==="perc")&&__fieldFoundation.some(e=>e.role!=="perc")',timeout=15000)
   assert not errors,errors
-  print('PASS native territory band, silent classic/live toggle, saved preference and unchanged world identity',flush=True);b.close()
+  print('PASS one production electronic foundation, no retired toggle, preserved legacy data and unchanged world identity',flush=True);b.close()
 finally:server.shutdown()

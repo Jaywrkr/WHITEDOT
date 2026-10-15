@@ -26,7 +26,7 @@ export function initialize(runtime){
   const state=director.state,m=runtime.MU,region=m.dnaA;
   if(!enabled||document.hidden||state.stage===0||!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running'||!region||state.strength<.1||lastBar===bar||bar%4||runtime.currentPocket?.()?.kind==='quiet')return;
   lastBar=bar;
-  const random=runtime.rng(runtime.seedOf(`initiative:v1:${region.key}:${Math.floor(bar/4)}:${state.stage}`));
+  const random=runtime.rng(runtime.seedOf(`initiative:phrase:v2:${region.key}:${Math.floor(bar/16)}`));
   const nearby=m.near.filter(o=>o.snd&&Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<280);
   const at=time+runtime.SIX*[3,7,11][Math.floor(random()*3)];
   if(nearby.length){const source=nearby[Math.floor(random()*nearby.length)];runtime.withVoiceOrigin('ambient',()=>source.snd(at));setTimeout(()=>{source.lit=1;},Math.max(0,(at-runtime.ac.currentTime)*1000));}

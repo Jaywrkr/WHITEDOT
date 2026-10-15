@@ -3,12 +3,13 @@ import {musicalCharacter,hookPitch,inRegister} from './musical-character.js';
 import {peakGuardCurve,returnFilters} from './mix.js';
 import {REFERENCE_GENRES,referenceRhythm} from './references.js';
 import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
-import {chooseNearbySource} from './spatial.js';
 import {harmonicDegree,createVoiceCurator} from './grammar.js';
 import { createRadio } from './radio.js';
 import {labDrumEvents,labNoteEvents} from './lab-score.js';
 import {productionSpace,createProductionRooms} from './music-direction.js';
 import {blendProductionSpace} from './territory-presentation.js';
+import {ambientSoloist} from './ambient-score.js';
+import {electronicDrum} from './electronic-ensemble.js';
 
 // Motor musical, síntesis y programación de Web Audio.
 export function initialize(runtime) {
@@ -33,7 +34,7 @@ export function initialize(runtime) {
   const style=()=>{if(runtime.S.mode==="camino")return .08;return runtime.clamp((KB[BI().id]??.3)+(MU.dnaA?MU.dnaA.kOff||0:0),0,1);};
   const MU={deg:0,pending:false,dist:0,E:0,act:0,still:0,dirY:0,speed:0,mel:69,motif:[],lastNoteStep:-999,step:0,next:0,queue:[],bq:[],cell:CELLS[0],lastChange:0,
     biome:0,biomeT:0,tr:0,sq:[],nb:null,nbW:0,prevKit:null,xf0:-999,bpmFrom:96,dnaA:null,dnaT:null,q8:[],near:[],singers:[],vari:-1,timbre:0,follower:false,voices:[57,60,64,67],resp:false,layers:new Set(),flowers:[],boltAt:0,groove:0};
-  const living=()=>!!runtime.labLiveMusic||runtime.S.livingMusic!==false&&!runtime.labClassicMusic;
+  const living=()=>!runtime.labClassicMusic&&(runtime.unifiedMusic===true||!!runtime.labLiveMusic||runtime.S.livingMusic!==false);
   const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN,{living});
   const neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN,{living});
   MU.radio = null;MU.neighborRadio=null;
@@ -77,7 +78,7 @@ export function initialize(runtime) {
       fx.verb.buffer=impulse(4.5);fx.verbSend.gain.value=0;fx.delaySend.gain.value=0;fx.fb.gain.value=.45;fx.dtone.type='lowpass';fx.dtone.frequency.value=2600;fx.crushSend.gain.value=0;
       if(fx.crush.curve!==undefined){const n=4096,cv=new Float32Array(n);for(let i=0;i<n;i++){const x=i/(n-1)*2-1;cv[i]=Math.round(x*6)/6;}fx.crush.curve=cv;}
       subsonic=ac.createBiquadFilter();subsonic.type='highpass';subsonic.frequency.value=20;subsonic.Q.value=Math.SQRT1_2;
-      headroom=ac.createGain();headroom.gain.value=.95;   // reserve margin after oversampling, including dense low-register arrangements
+      headroom=ac.createGain();headroom.gain.value=.92;   // extra 0.28 dB for oversampling reconstruction peaks in full electronic ensembles
       const fxRoom=returnFilters(ac,180,8000),fxEcho=returnFilters(ac,110,8000);
       mixInput.connect(subsonic).connect(mfilt).connect(fx.lp).connect(fx.hp).connect(fx.dry).connect(punch);
       fx.hp.connect(fx.verbSend).connect(fx.verb).connect(fxRoom.input);fxRoom.output.connect(punch);
@@ -236,14 +237,14 @@ export function initialize(runtime) {
     const air=runtime.inWorld()&&MU.dnaA?MU.dnaA.air:null;
     verbIn.gain.setTargetAtTime(space?.room??.8,t,.6);productionRooms?.set(space?.space??1,t);
     runtime.productionSpaceCue?.({time:t,genre:A?.genre,...space});
-    if(!MU.radio?.melodyRest&&air==="esporas"&&s===14&&bar%4===3&&rnd()<.2)pluck(hookPitch('glass',chordTones()[1],musicalCharacter(MU.dnaA.genre)),t,.012,4);
     if(runtime.inWorld())E=runtime.clamp(E+(runtime.influenceState?.values.groove||0)*.09,.05,.9);
     const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(MU.radio?.identity?.swing??G.sw??0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
     const xp=runtime.inWorld()?(runtime.experimentalLevel?.()||0):0;   // zonas experimentales: ≥0.7 sin batería ni pista
-    if(live&&!runtime.labSolo&&!(runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie')&&xp<.7){   // Campo de escucha: solo suena lo que está dentro   // laboratorio: «Solo» calla la música del lugar para oír el elemento
+    const continuous=runtime.unifiedMusic===true&&!runtime.labMode,field=runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie',foundationGain=continuous&&field?.32:1;
+    if(live&&!runtime.labSolo&&(continuous||!field)&&(continuous||xp<.7)){   // Production keeps its electronic foundation; deliberate laboratory Solo stays isolated.
       const accompany=()=>{
-      if(nb){VW=w;const nt=t+((s%2)?SIX*(MU.neighborRadio?.identity?.swing??runtime.GEN[nb.genre].sw??0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true,MU.neighborRadio);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }
-      VW=1-w;if(!(xp>.4&&rnd()<(xp-.4)*2.2))drums(A?A.genre:"ambient",s,bar,t,tt,E,ct,false);   // entre 0.4 y 0.7 la batería se deshace
+      if(nb){VW=w*foundationGain;const nt=t+((s%2)?SIX*(MU.neighborRadio?.identity?.swing??runtime.GEN[nb.genre].sw??0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true,MU.neighborRadio);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }
+      VW=(1-w)*foundationGain;if(continuous||!(xp>.4&&rnd()<(xp-.4)*2.2))drums(A?A.genre:"ambient",s,bar,t,tt,E,ct,false);   // Experimental overlays keep production's composed foundation.
       if(runtime.inWorld()&&A){
         playTrack(A,s,tt,E,ct,MU.influenced||MU.radio);
         const grammar=MU.radio?.grammar;
@@ -272,8 +273,11 @@ export function initialize(runtime) {
       MU.motif.slice(-6).forEach(m=>{const off=Math.min(m.st-st0,24);pluck(snap(m.n,ct)-12,t+off*SIX,vel(.05),2);});
     }
     // el mundo toca solo: objetos cercanos suenan en el beat, las criaturas que te siguen cantan
-    if(runtime.inWorld()&&s%4===0&&MU.near.length&&rnd()<(.04+.12*E)*(MU.vari===4?1.8:MU.vari===0?.6:1)){const o=chooseNearbySource(MU.near,runtime.S.wx,runtime.S.wy,rnd);if(o?.snd){o.snd(t);setTimeout(()=>{o.lit=1;o.hit=1;},Math.max(0,(t-ac.currentTime)*1000));}}
-    if(runtime.inWorld()&&s===0&&(MU.step>>4)%2===1)MU.singers.slice(0,1).forEach(o=>{runtime.speciesSound(o.s,t+SIX*2,true,o.personality,o);setTimeout(()=>{o.lit=1;},Math.max(0,(t+SIX*2-ac.currentTime)*1000));});
+    if(runtime.inWorld()&&MU.near.length){
+      const o=ambientSoloist(MU.dnaA,MU.step>>4,s,MU.near,runtime.seedOf,{x:runtime.S.wx,y:runtime.S.wy,rest:MU.radio?.melodyRest,quiet:runtime.currentPocket?.()?.kind==='quiet'});
+      if(o?.snd){o.snd(t);setTimeout(()=>{o.lit=1;o.hit=1;},Math.max(0,(t-ac.currentTime)*1000));}
+    }
+    if(runtime.inWorld()&&s===2&&(MU.step>>4)%4===2&&!MU.radio?.melodyRest&&runtime.currentPocket?.()?.kind!=='quiet')MU.singers.slice(0,1).forEach(o=>{runtime.speciesSound(o.s,t,false,o.personality,o);setTimeout(()=>{o.lit=1;},Math.max(0,(t-ac.currentTime)*1000));});
     // lo que tocas espera la siguiente corchea (con un poco de vida humana)
     if(s%2===0){let m=0;while(MU.q8.length&&m<3){const it=MU.q8.shift(),t2=t+jit()*1.5;it.fn(t2);if(it.vis)setTimeout(it.vis,Math.max(0,(t2-ac.currentTime)*1000));m++;}}
     runtime.duetStep?.(s,bar,t);runtime.livingStep?.(s,bar,t);
@@ -363,11 +367,12 @@ export function initialize(runtime) {
     if(arrangement?.labScore){
       const groove=runtime.inWorld()?Math.max(0,-(runtime.influenceState?.values.groove||0)):0;
       for(const hit of labDrumEvents(arrangement.labScore,s,bar,E*(1-.75*groove))){
-        const at=(hit.instrument==='kick'?t:tt)+(hit.offset||0)*SIX,v=vel(hit.gain);
+        const at=(hit.instrument==='kick'?t:tt)+(hit.offset||0)*SIX,v=vel(hit.gain*(hit.technique==='ghost'?.82:hit.technique==='accent'?1.04:1));
         runtime.labPerformanceCue?.({...hit,time:at,bar,step:s,role:'perc'});
+        if(electronicDrum(runtime,hit.instrument,at,v,arrangement.labScore.electronic?.kit))continue;
         if(runtime.playNewInstrument?.(hit.instrument,hit.pitch,at,v,{technique:hit.technique}))continue;
         if(hit.instrument==='kick')kick(at,v);else if(hit.instrument==='snare')snare(at,v);
-        else if(hit.instrument==='conga')conga(at,hit.pitch,v);else if(hit.instrument==='tom')tom(at,hit.pitch,v);
+        else if(hit.instrument==='conga')conga(at,90+(hit.pitch-40)*4,v);else if(hit.instrument==='tom')tom(at,hit.pitch,v);
         else if(hit.instrument==='cowbell')cowbell(at,v);else if(hit.instrument==='guiro')runtime.guiro(at,v);else if(hit.instrument==='timbale')runtime.timbale(at,v);
         else if(hit.instrument==='rim')rim(at,v);else if(hit.instrument==='wood')wood(at,v);else shaker(at,v);
       }return;
@@ -486,7 +491,7 @@ export function initialize(runtime) {
   }
   // Neighbors retain their own groove/timbre/register while sharing the current harmonic center.
   function playTrack(d,s,t,E,ct,arrangement=MU.radio){
-    const base=d&&d.track;if(!base)return;const tr=arrangement?{...base,...arrangement}:base;const sc=MU.dnaA?.scale||d.scale,trans=MU.dnaA?MU.tr:runtime.BIOMES[d.z].tr+d.trOff,nativeProfile=musicalCharacter(d.genre),profile=tr.hybrid?{...nativeProfile,low:Math.min(nativeProfile.low,tr.hybrid.high-12),high:Math.min(nativeProfile.high,tr.hybrid.high)}:nativeProfile,bar=(MU.step>>4)&1,nt=(dg,base)=>base+trans+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
+    const base=d&&d.track;if(!base)return;const tr=arrangement?{...base,...arrangement}:base;const sc=MU.dnaA?.scale||d.scale,trans=MU.dnaA?MU.tr:runtime.BIOMES[d.z].tr+d.trOff,nativeProfile=musicalCharacter(d.genre),profile=tr.hybrid?{...nativeProfile,low:Math.min(nativeProfile.low,tr.hybrid.high-12),high:Math.min(nativeProfile.high,tr.hybrid.high)}:nativeProfile,bar=(MU.step>>4)&1,nt=(dg,base)=>{const degree=dg+(tr.labScore?MU.deg:0);return base+trans+sc[((degree%7)+7)%7]+12*Math.floor(degree/7);};
     if(tr.labScore){
       for(const event of labNoteEvents(tr,s,MU.step>>4)){
         const at=t+event.offset*SIX,articulation={...tr.expression,technique:event.technique};
@@ -500,7 +505,7 @@ export function initialize(runtime) {
           const note=inRegister(nt(event.degree,45),38,52);bassInst(event.instrument,note,at,vel(.14*(tr.grammar.bassLevel||1)*event.level),d);
         }else{
           if(runtime.cultureListening||E<=.12&&s%4!==0||MU.vari===0&&s%4)continue;
-          const note=hookPitch(event.instrument,nt(event.degree,57),profile);
+          const rawPitch=nt(event.degree,57),pitch=hookPitch(event.instrument,s%4===0?snap(rawPitch,ct):rawPitch,profile),note=event.part==='answer'||event.part==='sequence'||event.part==='air'?inRegister(pitch,48,64):pitch;
           hookInst(event.instrument,note,at,vel((.05+.05*E)*(tr.grammar.hookLevel||1)*profile.level*event.level),d,articulation);
         }
         runtime.labPerformanceCue?.({...event,time:at,bar:MU.step>>4,step:s});

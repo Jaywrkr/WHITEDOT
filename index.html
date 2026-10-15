@@ -91,8 +91,10 @@
 </aside>
 <aside class="routehud" id="routeHud" aria-label="Orientación al destino" hidden><svg id="routeArrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l7-9 7 9M12 6v15"/></svg><div><strong id="routeName"></strong><small id="routeDetail"></small></div><button id="routeAuto" aria-label="Viajar automáticamente" aria-pressed="false">▶</button><button id="navCancel" aria-label="Cancelar destino">×</button></aside>
 <aside class="routehud" id="autopilotHud" aria-label="Paseo musical" hidden><div><strong id="autoStatus">Paseo musical</strong><small>Mueve el punto para recuperar el control</small></div><button id="autoPulse" aria-pressed="false">Pulsos: no</button><button id="autoStop" aria-label="Detener paseo">■</button></aside>
-<div class="modal lite" id="mMusicTravel" role="dialog" aria-modal="true" aria-labelledby="musicTravelTitle" hidden><div class="sheet">
+<div class="modal" id="mMusicTravel" role="dialog" aria-modal="true" aria-labelledby="musicTravelTitle" hidden><div class="sheet">
  <h2 id="musicTravelTitle">Elige dónde escuchar</h2>
+ <button id="musicTravelConnections">Explora redes musicales</button>
+ <button id="musicTravelFull">Escucha un ensamble completo</button>
  <p id="musicTravelCount"></p><label for="musicTravelSearch">Busca un estilo</label><input id="musicTravelSearch" type="search" maxlength="60" autocomplete="off">
  <p id="musicTravelStatus" role="status" aria-live="polite"></p><div id="musicTravelList" class="scroll"></div><button id="musicTravelClose">Volver</button>
 </div></div>
@@ -271,7 +273,7 @@
     <input type="range" id="rStyle" min="0" max="100" value="30" aria-label="Estilo de la música">
     <div class="ends"><span>Ambiente</span><span>Underground</span></div>
     <div class="tiles"><button id="bSound"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg><span>Música</span></button><button id="bSoft" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 5v14M16 7v10M20 10v4"/></svg><span>Calma</span></button><button id="bAutoPins" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 8v8M8 12h8"/></svg><span>Repetir: no</span></button></div>
-    <button id="bLivingMusic" aria-pressed="true">Paisaje vivo</button>
+    <button id="bLivingMusic" hidden>Música electrónica generativa</button>
     <div class="row"><button id="muClose" class="gold">Listo</button><button id="muMute" hidden>Silenciar</button></div>
   </div>
 </div>

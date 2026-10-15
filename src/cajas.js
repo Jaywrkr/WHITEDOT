@@ -2,7 +2,7 @@ import {PET_SPECIES} from './pet-model.js';
 import {createPowerClock} from './power-clock.js';
 import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js';
 // Cajas misteriosas: raras, flotan y brillan; el cubo las abre al tocarlas y te dan un poder por un rato.
-// - Campo de escucha: un círculo te sigue; la música del lugar calla y un brazo gira en el campo tocando
+// - Campo de escucha: un círculo te sigue; la base baja y un brazo gira en el campo tocando
 //   a tempo solo lo que está dentro. Moverte = cambiar la canción.
 // - Cometa: más velocidad y una estela que suena.
 // - Brújula: flechas hacia lo raro (materia, aves lira, santuarios, puertas, otras cajas).
