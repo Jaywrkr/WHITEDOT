@@ -1,0 +1,47 @@
+{
+  "phase": 4,
+  "utc": "2026-10-15T17:35:39.556363+00:00",
+  "checks": [
+    {
+      "command": "npm run audit:release",
+      "exitCode": 0,
+      "log": "/tmp/wd-exp-04-check-0.log",
+      "tail": "\n> whitedot@2.2.0-alpha.4 audit:release\n> node scripts/release-audit.mjs\n\n{\n  \"version\": \"2.2.0-alpha.4\",\n  \"sourceModules\": 166,\n  \"htmlIDs\": 328,\n  \"staticImports\": 429,\n  \"shellAssets\": 186,\n  \"errors\": [],\n  \"warnings\": [],\n  \"notes\": [\n    \"Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.\",\n    \"Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems.\"\n  ]\n}\n"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "log": "/tmp/wd-exp-04-check-1.log",
+      "tail": "utomation, bounded climate/gesture response and protected mono bass\nPASS V1 closure: competing tabs preserve the persisted writer, explicit recovery/restore, and malformed place-code payload rejection\nPASS V1 PWA update controls: save guard, active-recording deferral and explicit reload\nPASS: 728 flocks in 2428 land regions (golondrina 247, grulla 260, luciernaga 184, lira 37), 647 gardens; trust gathers, running scatters, calls answered in rhythm, fireflies sync into groove, flora grows and withers\nPASS: stable regional voices, five tree roles within one biome, varied instruments, bounded emitted registers and groove responses\nPASS fifty reachable distinct silhouettes, territorial identity, bounded divergent movement, diatonic replies and preserved collection\nPASS exact 50-style/rarity counts, earned gates, six-month myths, legacy dates/defaults, safe material selection and five actual pulse instruments\nPASS: 97 raro / 16 legendario / 2 m\u00edtico rarities with visible rules and unique samples; rivers 1.0 % of land, followable 6000 px downstream\nPASS eight real families, 52 retained genres, distinct spatial fields/contours, matched materials/music/populations, protected bass, raw DNA and rare specimens\nPASS edit/phrase roundtrips, persistent removals, non-evicting limits, future-data preservation, bounded bonds, familiar approach and musical affinity\nPASS continuous fog/day/LOD, zero-opacity cutoff, negative-coordinate preload margin, three decor-only parallax planes and independent visual hash\nPASS actual lineage rendering fades bright sources and blends the former 500px cutoff\nPASS: 35 continents (largest 310, smallest 1 regions), 32 % seas, 53 % family identity, density contrast, 447 landmarks of 5 types\nPASS: 105 Node suites with assertions (Web Audio helper excluded)\n"
+    },
+    {
+      "command": "python3 tests/favorites_smoke.py",
+      "exitCode": 0,
+      "log": "/tmp/wd-exp-04-check-2.log",
+      "tail": "mobile: named favorite save, rename, reload, journal, safe text and removal PASS\ndesktop: named favorite save, rename, reload, journal, safe text and removal PASS\n"
+    },
+    {
+      "command": "python3 tests/travel_v2_smoke.py",
+      "exitCode": 0,
+      "log": "/tmp/wd-exp-04-check-3.log",
+      "tail": "PASS real travel keeps exact coordinates/layer/progress on reload, hides test scenes and supports explicit center\n"
+    },
+    {
+      "command": "python3 tests/materia_smoke.py",
+      "exitCode": 0,
+      "log": "/tmp/wd-exp-04-check-4.log",
+      "tail": "mobile: strings bend/strum, prism rotate/save/cancel, membrane roll, chorus/phaser/freeze, place code, set recording PASS\ndesktop: strings bend/strum, prism rotate/save/cancel, membrane roll, chorus/phaser/freeze, place code, set recording PASS\n"
+    },
+    {
+      "command": "python3 tests/favorite_save_failure_smoke.py",
+      "exitCode": 0,
+      "log": "/tmp/wd-exp-04-check-5.log",
+      "tail": "PASS native favorite quota/conflict failure, honest imported-code status, unchanged disk save and successful duplicate-free retry\n"
+    }
+  ],
+  "sourceSHA256": "c47bd0c12484e00c9c4f9a2b748855ae5c81e8a6aca817b58d06da4eb1ddece3",
+  "audioReports": {},
+  "manualPhone": "pending",
+  "githubCI": "not checked",
+  "deploy": "not verified"
+}

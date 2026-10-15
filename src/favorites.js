@@ -16,7 +16,7 @@ export function storeFavorite(state,point){
 }
 export function initialize(runtime){
  runtime.S.favorites=normalizeFavorites(runtime.S.favorites,runtime.worldIdentity);
- const list=()=>runtime.S.favorites.items,$=runtime.$;let shown=20;
+ const list=()=>runtime.S.favorites.items,$=runtime.$;let shown=20,query='';
  function persist(point,learn=false){
   if(!runtime.save()){runtime.toast('Lugar pendiente. Menú → Guardar copia.');render();return null;}
   if(learn){runtime.unlock('favorito1');runtime.firstJourneyEvent?.('save');}
@@ -41,7 +41,9 @@ export function initialize(runtime){
   const body=$('favoritesBody');body.replaceChildren();$('favSave').disabled=!runtime.inWorld();
   $('favNote').textContent=runtime.inWorld()?'Guarda el lugar. Su música sigue viviendo.':'Entra al Mundo. Tus lugares siguen guardados.';
   if(!list().length){const p=document.createElement('p');p.textContent='Todavía no hay lugares guardados.';body.append(p);}
-  for(const point of list().slice().reverse().slice(0,shown)){
+  const matching=list().slice().reverse().filter(p=>[p.name,p.genre,p.character,p.regionName].join(' ').toLocaleLowerCase('es').includes(query));$('favCount').textContent=matching.length+' lugares';
+  if(list().length&&!matching.length){const p=document.createElement('p');p.textContent='Prueba otro nombre o estilo.';body.append(p);}
+  for(const point of matching.slice(0,shown)){
    const card=document.createElement('article');card.className='journal-card favorite-card';card.dataset.favorite=point.id;
    const title=document.createElement('h3');title.textContent=point.name;const input=document.createElement('input');input.value=point.name;input.maxLength=60;input.setAttribute('aria-label','Nombre del favorito');
    const details=document.createElement('p');details.textContent=[point.layer==='bajo'?'Subsuelo':point.layer==='cielo'?'Cielo':'Superficie',point.genre?(runtime.GEN[point.genre]?.name||point.genre):'',point.bpm?`${point.bpm} BPM`:'',point.character,point.shared?'compartido':'',`(${Math.round(point.x)}, ${Math.round(point.y)})`].filter(Boolean).join(' · ');
@@ -54,11 +56,12 @@ export function initialize(runtime){
    const route=document.createElement('div');route.className='row';if(sameWorld(point.address,runtime.worldIdentity))runtime.favoriteActions?.(point,route);
    edit.append(input,notes,row,route);card.append(title,details,visit,edit);body.append(card);
   }
-  if(shown<list().length){const more=document.createElement('button');more.textContent='Ver más lugares';more.onclick=()=>{shown+=20;render();};body.append(more);}
+  if(shown<matching.length){const more=document.createElement('button');more.textContent='Ver más lugares';more.onclick=()=>{shown+=20;render();};body.append(more);}
   $('favReturn').hidden=!runtime.previousWorldAddress?.();
   runtime.refreshDestinations?.();
  }
- function open(){runtime.stopScanner?.();shown=20;const region=runtime.inWorld()?(runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy)):null;$('favName').value=region?.name||'';render();$('mFavorites').hidden=false;}
+ function open(){runtime.stopScanner?.();shown=20;query='';$('favSearch').value='';$('arrivalMode').value=runtime.S.arrivalMode==='continue'?'continue':'explore';const region=runtime.inWorld()?(runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy)):null;$('favName').value=region?.name||'';render();$('mFavorites').hidden=false;}
+ $('favSearch').oninput=e=>{query=e.target.value.trim().toLocaleLowerCase('es');shown=20;render();};$('arrivalMode').onchange=e=>{runtime.S.arrivalMode=e.target.value;runtime.save();};
  $('bFavorites').onclick=open;$('era').onclick=()=>{if(runtime.inWorld())open();};$('quickSave').onclick=()=>{if(!runtime.inWorld())return;const s=runtime.S,existing=list().find(p=>p.layer===(s.layer||'superficie')&&sameWorld(p.address,runtime.worldIdentity)&&Math.hypot(p.x-s.wx,p.y-s.wy)<8);if(existing){persist(existing,true);open();return;}const point=add();if(point)runtime.toast('<em>Lugar guardado</em> · Toca su nombre para volver.');};$('favReturn').onclick=()=>{const address=runtime.previousWorldAddress?.();if(address)runtime.visitWorldAddress?.(address);};$('favoritesClose').onclick=()=>{$('mFavorites').hidden=true;};
  $('favForm').onsubmit=e=>{e.preventDefault();add($('favName').value);};
  Object.defineProperties(runtime,{favorites:{get:()=>list()},addFavorite:{get:()=>add},addFavoriteAddress:{get:()=>addAddress},renameFavorite:{get:()=>rename},removeFavorite:{get:()=>remove},openFavorites:{get:()=>open},renderFavorites:{get:()=>render}});

@@ -1,3 +1,13 @@
+# Experiencia · fase 4
+
+Rama `feat/experiencia-04-viajes`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Favoritos prioriza destinos con búsqueda, fichas compactas y códigos/opciones plegados. Una llegada nueva diaria conserva el punto anterior; continuar, direcciones explícitas y partidas de prueba respetan coordenadas. Guardar sigue a un toque.
+
+Validación: Auditoría/Node completos y favorites_smoke, travel_v2_smoke, materia_smoke, favorite_save_failure_smoke. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 3
 
 Rama `feat/experiencia-03-camino`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.

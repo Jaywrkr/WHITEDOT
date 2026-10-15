@@ -21,6 +21,9 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('#bFavorites').click();assert page.locator('#mFavorites').is_visible()
   page.locator('#favName').fill('Mi música <favorita>');page.locator('#favSave').click()
   assert page.locator('[data-favorite]').count()==1
+  page.locator('#favSearch').fill('sin coincidencias 999');assert page.locator('[data-favorite]').count()==0
+  page.locator('#favSearch').fill('Mi música');assert page.locator('[data-favorite]').count()==1
+  page.locator('#favSearch').fill('')
   page.locator('[data-favorite] summary').click();page.locator('[data-favorite] input').fill('Rincón de dub');page.locator('[data-favorite] button').filter(has_text='Renombrar').click()
   point=page.evaluate('window.__testRuntime.favorites[0]');assert point['name']=='Rincón de dub' and point['layer']=='superficie'
   page.locator('#favoritesClose').click();page.reload(wait_until='domcontentloaded')
@@ -30,6 +33,7 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('#bFavorites').click();page.screenshot(path=f'/tmp/whitedot-favorites-{label}.png')
   page.locator('[data-favorite] summary').click();page.locator('[data-favorite] button').filter(has_text='Borrar').click();assert page.evaluate('window.__testRuntime.favorites.length')==0
   page.locator('#favoritesClose').click()
+  assert page.evaluate('''()=>{const r=__testRuntime,s=r.S;s.arrivalMode='continue';const before=[s.wx,s.wy];if(r.dailyArrival())throw Error('Continue moved the player');s.arrivalMode='explore';s.destination=null;if(!r.dailyArrival())throw Error('Daily exploration needs a destination');return !r.regionOfPos(s.wx,s.wy).sea&&Math.hypot(s.wx-before[0],s.wy-before[1])>500&&s.practiceTravel.previous.x===before[0];}''')
   assert not errors,errors
   print(label+': named favorite save, rename, reload, journal, safe text and removal PASS',flush=True);c.close()
  b.close()

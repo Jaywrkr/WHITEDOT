@@ -1,3 +1,9 @@
+# Experiencia 4 · Llegadas y favoritos claros
+
+Rama `feat/experiencia-04-viajes`. Favoritos prioriza destinos con búsqueda, fichas compactas y códigos/opciones plegados. Una llegada nueva diaria conserva el punto anterior; continuar, direcciones explícitas y partidas de prueba respetan coordenadas. Guardar sigue a un toque.
+
+Validación: Auditoría/Node completos y favorites_smoke, travel_v2_smoke, materia_smoke, favorite_save_failure_smoke. Jay mantiene PR/merge.
+
 # Experiencia 3 · Camino, entrada y Voz
 
 Rama `feat/experiencia-03-camino`. Camino alterna discretamente figuras de luz por día con flujo independiente. Invitación mínima a entrar, respetando movimiento reducido. Voz conserva diario y restringe presencia a introducción, solicitudes y convergencias excepcionales.
