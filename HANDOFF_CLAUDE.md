@@ -1,3 +1,19 @@
+# Handoff vigente · pulido F4 · Bitácora con lectura por capas
+
+Rama `feat/pulido-f4-bitacora`, desde `e5d2da5`. Continuar [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) sin pedir otra autorización; Jay crea PR/merge. Main permanece fuera de estos pushes.
+
+- Lugares abre con tres cifras y los seis destinos más recientes, con viaje directo y acceso a todos los favoritos.
+- Recuerdos, ecosistemas e interacciones se agrupan en secciones plegables. Cada región conserva bioma, gravedad, flora, tareas y progreso tras su nombre.
+- El índice musical muestra nombres compactos y abre las explicaciones al pedirlas; no reproduce instrumentos ni cambia la música.
+- Siete categorías de logros muestran el progreso antes de desplegar los registros completos. Ninguna recompensa ni fecha desaparece.
+- Se conserva el desplazamiento y las secciones abiertas al cambiar de pestaña y volver. Colección mantiene búsqueda, filtros y paginación.
+
+Auditoría aprobada; 94 suites Node y 11 recorridos afectados aprobados. Sin cambios de DSP; interfaz silenciosa comprobada. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f4-validation.json).
+
+## Entregas anteriores
+
+Los siguientes encabezados conservan evidencia histórica; prevalece el estado actual.
+
 # Handoff vigente · pulido F3 · Guardar y regresar sin rodeos
 
 Rama `feat/pulido-f3-viajes`, desde `2e45cc0`. Continuar [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) sin pedir otra autorización; Jay crea PR/merge. Main permanece fuera de estos pushes.

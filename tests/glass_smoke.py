@@ -37,7 +37,7 @@ with sync_playwright() as p:
   page.evaluate("()=>{const r=window.__testRuntime,s=r.nearbyGlass(400)[0];r.S.wx=s.x;r.S.wy=s.y;}");page.locator('#w').click(position={'x':size['width']/2,'y':size['height']/2});page.keyboard.down('e');page.wait_for_timeout(250);assert 'Vidrio' in page.locator('#scannerSources').inner_text();page.keyboard.up('e')
   page.reload(wait_until='domcontentloaded');page.wait_for_function('window.__testRuntime && window.__testRuntime.S.glassSites["glass:0,0"]')
   assert page.evaluate('window.__testRuntime.S.glassSites["glass:0,0"].angles')==[0,0,0]
-  page.locator('#bMenu').click();page.locator('#bAch').click();assert 'Vidrios cromáticos' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
+  page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-detail="Tu recorrido creativo"] > summary').click();assert 'Vidrios cromáticos' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
   page.evaluate('window.__testRuntime.audio()');page.wait_for_function('window.__testRuntime.ac.state==="running"')
   page.evaluate("()=>{const r=window.__testRuntime;r.audio();const site=r.nearbyGlass(400)[0],ac=r.ac,original=ac.createOscillator.bind(ac),buffer=ac.createBufferSource.bind(ac);let emitted=0;ac.createOscillator=()=>{emitted++;return original();};ac.createBufferSource=()=>{emitted++;return buffer();};try{const p=site.angles.map(x=>Math.floor(x/(Math.PI*2)*16));for(let s=0;s<16;s++)r.glassStep(s,100,ac.currentTime+.1);if(!emitted)throw Error('glass has no musical response');}finally{ac.createOscillator=original;ac.createBufferSource=buffer;}}")
   assert not errors,errors
