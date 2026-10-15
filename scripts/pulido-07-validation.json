@@ -1,0 +1,44 @@
+{
+  "phase": 7,
+  "branch": "feat/pulido-07-coleccion",
+  "base": "5fe2538",
+  "audit": {
+    "command": "npm run audit:release",
+    "result": "passed",
+    "errors": 0,
+    "warnings": 0
+  },
+  "node": {
+    "command": "npm test",
+    "result": "passed",
+    "suites": 120
+  },
+  "browser": {
+    "result": "passed",
+    "programs": [
+      "collection_focus_smoke.py",
+      "rare_cards_smoke.py",
+      "living-cards_smoke.py",
+      "experience_garden_smoke.py",
+      "journal_v2_smoke.py",
+      "experience_future_smoke.py",
+      "celebration_smoke.py",
+      "offline_smoke.py"
+    ],
+    "checks": [
+      "compact front and disclosure",
+      "clear stale filters and focus finding",
+      "role and instrument search",
+      "repeat burst saves all cards with one reveal",
+      "native collection, export and coordinates",
+      "future data retention",
+      "silent UI"
+    ]
+  },
+  "audio": "No synthesis or mix change; integrated audio suite in phase 9.",
+  "external": {
+    "physicalPhone": "pending",
+    "CI": "pending",
+    "deployment": "pending"
+  }
+}

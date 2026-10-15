@@ -12,7 +12,7 @@ Una rama por fase; la siguiente parte de la anterior si todavía no está integr
 | 4 · Interacciones musicales | `feat/pulido-04-interacciones` | Gestos, estilos y paseo opcional | Implementada y probada; entrega en esta rama |
 | 5 · Ambiente vivo | `feat/pulido-05-ambiente` | Ensambles, redes y color distante | Implementada y probada; entrega en esta rama |
 | 6 · Cubo e interfaz | `feat/pulido-06-cubo-ui` | Personalización reversible y móvil | Implementada y probada; entrega en esta rama |
-| 7 · Colección y tarjetas | `feat/pulido-07-coleccion` | Hallazgos, utilidad, procedencia y regreso | Pendiente |
+| 7 · Colección y tarjetas | `feat/pulido-07-coleccion` | Hallazgos, utilidad, procedencia y regreso | Implementada y probada; entrega en esta rama |
 | 8 · Exploración y aprendizaje | `feat/pulido-08-exploracion` | Pistas, memoria reciente y contraste | Pendiente |
 | 9 · Curaduría y cierre | `feat/pulido-09-cierre` | Auditoría conjunta y escucha | Pendiente |
 
@@ -164,6 +164,8 @@ No se modifica síntesis ni mezcla; no se repite audio para esta fase. Suite com
 - Distinguir presencia, despertar y premio; probabilidades con su unidad real.
 
 **Aceptación:** entender qué se encontró, por qué importa y qué hacer con ello. Los avisos permiten seguir jugando; versiones futuras y datos desconocidos sobreviven.
+
+**Entrega F7:** frente compacto y detalles desplegables; función musical, jardín y búsqueda complementaria. Abrir desde aviso encuentra la tarjeta aun con filtros anteriores. Primeras voces distinguidas de repeticiones; ráfagas se guardan sin saturar avisos. Contexto real en reliquias/fósiles nuevos, sin reescribir historia. Auditoría, 120 suites Node y ocho programas de navegador aprobados; evidencia `scripts/pulido-07-validation.json`. Sin cambio de síntesis.
 
 ## Fase 8 · Exploración y aprendizaje
 
