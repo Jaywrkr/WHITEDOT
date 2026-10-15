@@ -1,3 +1,4 @@
+import {performanceVoice} from './performance.js';
 import {labScore,labInteractionVoice} from './lab-score.js';
 import {walkerVoice} from './walker-forms.js';
 import {cubePulseVoice} from './cube-voice.js';
@@ -78,10 +79,11 @@ export function initialize(runtime) {
   function getVoice(kind,region,source=null){
     let raw=rawVoice(kind,region,source);
     if(source?.id?.startsWith('living:lab:')&&INSTRUMENT_SPECS[source.labSynth]){
-      const role=source.labSynth==='velvetbass'?'bajo':['analogpad','choir','orbitorgan'].includes(source.labSynth)?'acorde':'lead';
-      raw={...raw,role,instrument:source.labSynth,low:role==='bajo'?36:45,high:role==='bajo'?54:69};
+      const spec=INSTRUMENT_SPECS[source.labSynth],role=spec.kind==='bass'||['velvetbass','reedbass','p_foldbass'].includes(source.labSynth)?'bajo':spec.kind==='membrane'?'perc':spec.sustain&&['bow','pad'].includes(spec.kind)||['analogpad','choir','orbitorgan'].includes(source.labSynth)?'acorde':'lead';
+      raw={...raw,role,instrument:source.labSynth,low:role==='bajo'||role==='perc'?36:45,high:role==='bajo'?54:role==='perc'?57:69};
     }
     if(runtime.MU?.radio?.labScore&&!source?.labSynth)raw=labInteractionVoice(raw,labScore(region,runtime.seedOf,runtime.rng),kind,source,runtime.seedOf);
+    if(runtime.MU?.radio?.labScore)raw=performanceVoice(raw,region,kind,source,runtime.seedOf);
     if(kind==='pulso')raw=cubePulseVoice(raw,runtime.S.cube?.voice);
     return hybridRegister(voiceRegister(raw,region.genre),hybridIdentity(region,runtime.seedOf,runtime.rng));
   }
@@ -110,10 +112,10 @@ export function initialize(runtime) {
       if(['player','field','lesson'].includes(origin))runtime.focusGesture?.(t,source,voice.role);
       runtime.soundCue?.(source,voice.role,t);
       const n = note(degree);let v = runtime.vel(strength * volume*(voice.volume??1))*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
-      const articulation={technique:source?.expression==='staccato'?'muted':source?.expression==='glide'?'slide':voice.technique||'normal'};
+      const articulation={technique:runtime.cardTechnique?.(source)|| (source?.expression==='staccato'?'muted':source?.expression==='glide'?'slide':voice.technique||'normal')};
       if(source){source.musicRole=voice.role;source.musicInstrument=voice.instrument;}
       const emit=()=>{
-        if(voice.labTerritory&&voice.role==='perc'&&runtime.playNewInstrument?.(voice.instrument,n,t,v,articulation)){runtime.recordInstrument?.(voice.instrument);if(kind.startsWith('living:'))runtime.livingNoteCue?.({id:source?.id,role:voice.role,note:n,time:t,material:voice.material,instrument:voice.instrument});return;}
+        if(voice.role==='perc'&&INSTRUMENT_SPECS[voice.instrument]&&runtime.playNewInstrument?.(voice.instrument,n,t,v,articulation)){runtime.recordInstrument?.(voice.instrument);if(kind.startsWith('living:'))runtime.livingNoteCue?.({id:source?.id,role:voice.role,note:n,time:t,material:voice.material,instrument:voice.instrument});return;}
         if(kind.startsWith('living:')&&runtime.livingSynthesis?.(voice,n,t,v,source))return;
         if(kind.startsWith('rhythm:')&&playMaterialStrike(runtime,kind.split(':')[1],source?.variant||0,t,v)){runtime.recordInstrument?.(voice.instrument);return;}
         if (voice.role === 'bajo') runtime.bassInst(voice.instrument,n,t,v);

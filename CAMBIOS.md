@@ -1,3 +1,9 @@
+# Experiencia 10 · Profundidad musical
+
+Rama `feat/experiencia-10-musica`. Banco ampliado a 75 instrumentos: 32 colores articulados nuevos, incluida modulación FM real. Veinticuatro gramáticas de respuesta de encuentros complementan los 16 cruces de radio sin cambiar sus recetas. Dos notas como máximo cada cuatro compases, canceladas con menú/silencio; laboratorio 211 destinos.
+
+Validación: Auditoría/Node completos; instrument_techniques_smoke y lab_landscape_smoke; technique_mix, lab_music_mix y experience_learning_mix. Jay mantiene PR/merge.
+
 # Experiencia 9 · Coleccionar para crear
 
 Rama `feat/experiencia-09-creacion`. Hasta cuatro tarjetas forman voces físicas en casa: función e instrumento del encuentro, posición editable y hasta ocho jardines conservados. Las tarjetas no se consumen; visitas quedan separadas y se comparte el presupuesto de cuatro voces por paso.

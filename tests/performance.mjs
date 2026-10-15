@@ -1,0 +1,8 @@
+import assert from 'node:assert/strict';
+import {FIELD_FUSIONS,performanceVoice,fieldFusion} from '../src/performance.js';
+import {PERFORMANCE_INSTRUMENTS} from '../src/performance-instruments.js';
+import {INSTRUMENT_SPECS} from '../src/instruments.js';
+const seed=s=>[...s].reduce((h,c)=>Math.imul(h^c.charCodeAt(0),16777619)>>>0,2166136261);assert.equal(Object.keys(PERFORMANCE_INSTRUMENTS).length,32);assert.equal(Object.keys(INSTRUMENT_SPECS).length,75);assert.equal(FIELD_FUSIONS.length,24);const instruments=new Set();
+for(const role of ['bajo','perc','acorde','lead'])for(let i=0;i<400;i++){const d={key:i+',0',genre:'deep',scale:[0,2,3,5,7,9,10]},o={id:'source:'+i},raw={role,instrument:'legacy',low:36,high:69};const v=performanceVoice(raw,d,'living:tree',o,seed);assert.equal(v.role,role);assert(v.high<=69);if(v.instrument!=='legacy'){assert(INSTRUMENT_SPECS[v.instrument]);instruments.add(v.instrument);}const f=fieldFusion(d,o,seed);assert(f&&f.steps.length===2);}
+assert.equal(instruments.size,32);for(const id of ['pulso','reliquia','heritage:test','rhythm:stone']){const raw={role:'lead'};assert.equal(performanceVoice(raw,{key:'0,0'},id,{id:'protected'},seed),raw);}
+console.log('PASS 75 registered instruments, 32 reachable new colors, 24 sparse field grammars, protected roles and legacy sources');

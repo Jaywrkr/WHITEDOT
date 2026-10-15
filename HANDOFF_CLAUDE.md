@@ -1,3 +1,13 @@
+# Experiencia · fase 10
+
+Rama `feat/experiencia-10-musica`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Banco ampliado a 75 instrumentos: 32 colores articulados nuevos, incluida modulación FM real. Veinticuatro gramáticas de respuesta de encuentros complementan los 16 cruces de radio sin cambiar sus recetas. Dos notas como máximo cada cuatro compases, canceladas con menú/silencio; laboratorio 211 destinos.
+
+Validación: Auditoría/Node completos; instrument_techniques_smoke y lab_landscape_smoke; technique_mix, lab_music_mix y experience_learning_mix. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 9
 
 Rama `feat/experiencia-09-creacion`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.

@@ -8,7 +8,7 @@ export const ADVANCED_INSTRUMENTS=Object.freeze({
  pluckbody:{name:'Cuerda física',engine:'string',attack:.004,dec:1.9,partials:[]},
  modaldrum:{name:'Membrana profunda',engine:'membrane',attack:.003,dec:.65,partials:[]},
 });
-export const voiceLifetime=id=>ADVANCED_INSTRUMENTS[id]||['silkpluck','skinpluck','lowbow','bamboowind','clayflute','skinbass','handslap','acousticsnare','feltkeys','duskpad','reedbass'].includes(id)?2.9:2;
+export const voiceLifetime=id=>ADVANCED_INSTRUMENTS[id]||id.startsWith('p_')||['silkpluck','skinpluck','lowbow','bamboowind','clayflute','skinbass','handslap','acousticsnare','feltkeys','duskpad','reedbass'].includes(id)?2.9:2;
 export function physicalString(sampleRate,hz,duration=2,seed=17){
  if(!Number.isFinite(sampleRate)||sampleRate<1000||sampleRate>192000||!Number.isFinite(hz)||hz<=0||!Number.isFinite(duration)||duration<=0||duration>4)throw Error('Invalid physical string parameters');
  const length=Math.ceil(sampleRate*duration),out=new Float32Array(length),delay=Math.max(4,sampleRate/Math.max(30,Math.min(1600,hz))-.5),ring=new Float32Array(Math.ceil(delay)+3),feedback=Math.pow(.001,1/(hz*2.1));

@@ -31,5 +31,5 @@ try:
    assert cases['normal']['energy']>cases['muted']['energy'] and cases['normal']['energy']>cases['ghost']['energy'],id
   report={'renders':len(rows),'maxPeak':max(r['peak'] for r in rows),'rows':rows}
   (ROOT/'scripts/technique-audio-validation.json').write_text(json.dumps(report,indent=2)+'\n')
-  print(f'PASS {len(rows)} technique renders, eleven distinct voices, quieter muted/ghost, actual long holds and complete release',flush=True);b.close()
+  print(f'PASS {len(rows)} technique renders, forty-three distinct voices, quieter muted/ghost, actual long holds and complete release',flush=True);b.close()
 finally:server.shutdown()

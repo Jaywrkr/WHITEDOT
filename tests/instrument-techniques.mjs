@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {TECHNIQUE_INSTRUMENTS,techniqueShape,createTechniquePlayer} from '../src/instrument-techniques.js';
 import {voiceLifetime} from '../src/modular-synth.js';
-assert.equal(Object.keys(TECHNIQUE_INSTRUMENTS).length,11);
+assert.equal(Object.keys(TECHNIQUE_INSTRUMENTS).length,43);
 for(const [id,s]of Object.entries(TECHNIQUE_INSTRUMENTS)){
  const plain=techniqueShape(s),muted=techniqueShape(s,{technique:'muted'}),ghost=techniqueShape(s,{technique:'ghost'}),slide=techniqueShape(s,{technique:'slide'});
  assert(muted.decay<plain.decay&&muted.cut<plain.cut);assert(ghost.level<plain.level);assert(slide.bend>0);assert(voiceLifetime(id)>2.7);
@@ -21,7 +21,7 @@ r.S.mode='camino';p.tick();assert(held.slice(0,4).every(v=>v.released));ac.curre
 r.S.mode='world';for(let i=0;i<80;i++)p.play('handslap',55,ac.currentTime,.08);assert(p.active<=16);
 assert.equal(p.play('unknown',60,ac.currentTime,.1),false);
 assert.equal(p.hold('lowbow',NaN,ac.currentTime,.04),null);
-console.log('PASS eleven original articulated voices, distinct techniques, preserved pitch, sixteen-voice/four-hold budgets and release on pause');
+console.log('PASS forty-three original articulated voices, distinct techniques, preserved pitch, sixteen-voice/four-hold budgets and release on pause');
 
 ac.currentTime+=4;r.currentVoiceOrigin='ambient';let events=0;r.techniqueNoteCue=()=>events++;for(let i=0;i<16;i++)p.play('handslap',48,ac.currentTime,.04);const before=events;
 r.currentVoiceOrigin='player';p.play('feltkeys',55,ac.currentTime+.1,.04);assert.equal(events,before+1,'a player note must displace ambient pressure');assert.equal(p.active,16);

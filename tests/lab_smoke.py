@@ -24,7 +24,7 @@ with sync_playwright() as p:
  assert page.evaluate("window.__testRuntime.S.previewSeed")=='laboratorio'
  assert page.evaluate("document.querySelectorAll('.modal:not([hidden])').length")==0,'lab starts without blocking modals'
  ids=page.evaluate("import('./src/lab-catalog.js').then(m=>m.LAB_ELEMENTS.map(e=>[e.id,e.find.type,e.find.tool||'']))")
- assert len(ids)==179,len(ids)
+ assert len(ids)==211,len(ids)
  page.screenshot(path='/tmp/whitedot-lab-first.png')
  found={}
  for i,(eid,kind,tool) in enumerate(ids):
@@ -60,6 +60,6 @@ with sync_playwright() as p:
  assert page.evaluate('window.__testRuntime.S.previewSeed') in (None,'',False) and page.locator('#labBar').is_hidden()
  assert page.evaluate("localStorage.getItem('pixel-blanco-v4')")==normal or normal is None
  assert not errors,errors
- print('lab: 179 entries located, solo, notes/report persisted, exit to own save PASS',flush=True)
+ print('lab: 211 entries located, solo, notes/report persisted, exit to own save PASS',flush=True)
  b.close()
 server.shutdown()
