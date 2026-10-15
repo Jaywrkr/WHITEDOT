@@ -11,13 +11,13 @@ export function initialize(runtime){
    a=profile(o,{id:`${sp.id}:${o.hx??o.x},${o.hy??o.y}`,kind:sp.id,shape,group,role:sp.role,variant:sp.bits},d),
    phase=reduce()?0:t/(1500+(a.individual%1800))+(o.ph||0);
   c.save();c.translate(x,y);c.strokeStyle=o.lit>.1?musicalInk(d.hue,sp.role):elementInk(d.worldFamily?.material||'air',d.worldFamily?.hue??d.hue);c.lineWidth=1.1;
-  drawAnatomy(c,a,Math.min(24,9+(sp.cell||2)*3)*(1+o.lit*.08),phase);c.restore();
+  drawAnatomy(c,a,Math.min(24,9+(sp.cell||2)*3)*(1+o.lit*.08)*(o.nativeOpenness||1),phase);c.restore();
  }
  function plant(o,x,y,t){
   const d=runtime.regionOfPos(o.x,o.y),shape={hierba:'reeds',flor:'flower',arbusto:'branch',helecho:'branch',junco:'reeds',coral:'network'}[o.pt.t];if(!shape)return false;
   const role=runtime.getVoice?.('planta:'+o.pt.t,d,o)?.role||'acorde',a=profile(o,{id:`plant:${o.x},${o.y}`,kind:o.pt.t,shape,group:'flora',role},d);
   c.save();c.translate(x,y-o.h*.45);c.lineWidth=1;c.strokeStyle=o.lit>.1?musicalInk(d.hue,role):elementInk(d.worldFamily?.material||'wood',o.pt.hue);
-  drawAnatomy(c,a,Math.max(5,Math.min(22,o.h*.6)),reduce()?0:t/(o.personality?.period||1800)+o.ph);c.restore();return true;
+  drawAnatomy(c,a,Math.max(5,Math.min(22,o.h*.6))*(runtime.nativePlantScale?.(o)||1),reduce()?0:t/(o.personality?.period||1800)+o.ph);c.restore();return true;
  }
  Object.defineProperties(runtime,{drawNativeSpecies:{get:()=>species},drawNativePlant:{get:()=>plant}});
 }

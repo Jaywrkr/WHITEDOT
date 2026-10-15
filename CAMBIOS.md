@@ -1,3 +1,14 @@
+# Cierre F3 · Hábitats y conducta local
+
+Rama `feat/cierre-f3-ecosistemas`, hija de la fase anterior. Jay crea PR/merge.
+
+- `habitats.js`: nichos espaciales deterministas, humedad/fertilidad, visitantes y cinco estrategias ecológicas. Forrajeo, refugio, agrupación, vigilancia e incursiones locales cambian decisiones reales, con movimiento limitado al radio del individuo.
+- `living-mind.js` y `living.js`: prioridad a peligro y respuesta del jugador; después necesidades del hábitat. Flora/estructuras siguen estáticas y expresan apertura. Las especies nativas anteriores reciben mentes sin alterar su ADN ni reclutamiento; las plantas cambian apertura por ambiente.
+- `living-ecology.js`: reloj analítico de lugares lejanos y actualización ecológica cercana cada 250 ms. Índice espacial y hasta doce vecinos por relación; reloj y guardado se reinician correctamente al cambiar ámbito. No es migración de poblaciones entre continentes ni simulación mundial continua.
+- Anatomías de F2 expresan la apertura. Hábitats, comportamiento y radio musical siguen compartiendo el paisaje F1. SW incorpora el módulo una sola vez; progreso y coordenadas se conservan.
+
+Auditoría limpia; 83 suites Node y 5 recorridos afectados aprobados. 34 renders: 28 respuestas de linajes y seis con reloj/decisiones ecológicas activos, mezclas densas y 44,1/48 kHz aprobados; ver evidencia de audio de esta fase. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f3-validation.json).
+
 # Cierre F2 · Anatomías reproducibles
 
 Rama `feat/cierre-f2-especies`, hija de la fase anterior. Jay crea PR/merge.

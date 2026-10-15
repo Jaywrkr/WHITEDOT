@@ -1,0 +1,108 @@
+{
+  "validatedAt": "2026-10-15T01:16:24.360066+00:00",
+  "phase": "cierre-f3",
+  "branch": "feat/cierre-f3-ecosistemas",
+  "sourceFingerprint": "7a69e12b4bbbad08cd83652ec3b2595f130fe3476b18c39f6d103e3dc86d96a3",
+  "nodeSuites": 83,
+  "browserFlows": 5,
+  "audioPrograms": 2,
+  "audioEvidence": [
+    "scripts/cierre-f3-living-audio-validation.json",
+    "scripts/cierre-f3-habitat-audio-validation.json"
+  ],
+  "checks": [
+    {
+      "check": "audit",
+      "command": [
+        "npm",
+        "run",
+        "audit:release"
+      ],
+      "exitCode": 0,
+      "seconds": 0.17,
+      "result": "\n> whitedot@1.1.0 audit:release\n> node scripts/release-audit.mjs\n\n{\n  \"version\": \"1.1.0\",\n  \"sourceModules\": 140,\n  \"htmlIDs\": 274,\n  \"staticImports\": 354,\n  \"shellAssets\": 160,\n  \"errors\": [],\n  \"warnings\": [],\n  \"notes\": [\n    \"Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.\",\n    \"Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems.\"\n  ]\n}\n"
+    },
+    {
+      "check": "node",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 14.57,
+      "result": "d codes rejected; recording format negotiation\nPASS: smooth distance curve, nearby selection, live moving-source gain, effect isolation, bounded routing and cleanup\nPASS 16 original programs, genuine 12/24/36/48 cascades, open/close automation, bounded climate/gesture response and protected mono bass\nPASS V1 closure: competing tabs preserve the persisted writer, explicit recovery/restore, and malformed place-code payload rejection\nPASS V1 PWA update controls: save guard, active-recording deferral and explicit reload\nPASS: 728 flocks in 2428 land regions (golondrina 247, grulla 260, luciernaga 184, lira 37), 647 gardens; trust gathers, running scatters, calls answered in rhythm, fireflies sync into groove, flora grows and withers\nPASS: stable regional voices, five tree roles within one biome, varied instruments, bounded emitted registers and groove responses\nPASS: 97 raro / 16 legendario / 2 mítico rarities with visible rules and unique samples; rivers 1.0 % of land, followable 6000 px downstream\nPASS eight real families, 52 retained genres, distinct spatial fields/contours, matched materials/music/populations, protected bass, raw DNA and rare specimens\nPASS continuous fog/day/LOD, zero-opacity cutoff, negative-coordinate preload margin, three decor-only parallax planes and independent visual hash\nPASS actual lineage rendering fades bright sources and blends the former 500px cutoff\nPASS: 35 continents (largest 310, smallest 1 regions), 32 % seas, 53 % family identity, density contrast, 447 landmarks of 5 types\nPASS: 83 Node suites with assertions (Web Audio helper excluded)\n"
+    },
+    {
+      "check": "living_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/living_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 10.3,
+      "result": "PASS 28 native living contacts, real musical replies, scoped discoveries, modal pause and no browser errors\n"
+    },
+    {
+      "check": "ecology_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/ecology_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 18.6,
+      "result": "PASS 390x844: live habitat, gestures/cancel, groove roles, pause/mute, cultivation, journal, favorite/backup isolation and original-world comparison\nPASS 844x390: live habitat, gestures/cancel, groove roles, pause/mute, cultivation, journal, favorite/backup isolation and original-world comparison\nPASS 1280x800: live habitat, gestures/cancel, groove roles, pause/mute, cultivation, journal, favorite/backup isolation and original-world comparison\n"
+    },
+    {
+      "check": "vida_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/vida_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 23.57,
+      "result": "mobile: flock trust/gather, call answered, scatter, flora grows/waters/persists PASS\ndesktop: flock trust/gather, call answered, scatter, flora grows/waters/persists PASS\n"
+    },
+    {
+      "check": "practice_travel_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/practice_travel_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 7.69,
+      "result": "PASS three phone sizes: one-touch contrast, visible 44px jump, silent UI, saved progress, exact reloaded location and menu return\n"
+    },
+    {
+      "check": "offline_smoke.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/offline_smoke.py"
+      ],
+      "exitCode": 0,
+      "seconds": 2.07,
+      "result": "PASS offline reload with all 140 modules cached and no HTML fallback for missing JavaScript\n"
+    },
+    {
+      "check": "living_mix.py",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tests/living_mix.py"
+      ],
+      "exitCode": 0,
+      "seconds": 566.44,
+      "result": " 'dense': True, 'soft': True, 'peak': 0.6799712777137756}\nRendered {'genre': 'minimaltechno', 'scene': 'living:crab', 'identity': 'minimal-hush', 'dense': True, 'soft': False, 'peak': 0.9012083411216736}\nRendered {'genre': 'deep', 'scene': 'living:blob', 'identity': 'jazz-shadow', 'dense': True, 'soft': True, 'peak': 0.8159192800521851}\nRendered {'genre': 'afro', 'scene': 'living:root-house', 'identity': 'afro-roots', 'dense': True, 'soft': False, 'peak': 0.9020882844924927}\nRendered {'genre': 'ambient', 'scene': 'living:mill', 'identity': 'ambient-string', 'dense': True, 'soft': True, 'peak': 0.41165250539779663}\nRendered {'genre': 'dnb', 'scene': 'living:cathedral', 'identity': 'liquid-veil', 'dense': True, 'soft': False, 'peak': 0.9092445969581604}\nRendered {'genre': 'nudisco', 'scene': 'living:observatory', 'identity': 'disco-orbit', 'dense': True, 'soft': True, 'peak': 0.6182059645652771}\nRendered {'genre': 'minimaltechno', 'scene': 'living:plaza', 'identity': 'minimal-hush', 'dense': True, 'soft': False, 'peak': 0.9013012051582336}\nRendered {'genre': 'deep', 'scene': 'living:mirror-grove', 'identity': 'jazz-shadow', 'dense': True, 'soft': True, 'peak': 0.8154298067092896}\nRendered {'genre': 'afro', 'scene': 'living:bridge', 'identity': 'afro-roots', 'dense': True, 'soft': False, 'peak': 0.9020769596099854}\nRendered {'genre': 'ambient', 'scene': 'living:membrane-home', 'identity': 'ambient-string', 'dense': True, 'soft': True, 'peak': 0.41167154908180237}\nPASS 28 living species/structures with actual dense scheduler, audible native notes, 44.1/48 kHz and peak 0.909245\n"
+    },
+    {
+      "check": "habitat_mix.py",
+      "command": [
+        "python3",
+        "tests/habitat_mix.py"
+      ],
+      "exitCode": 0,
+      "result": "Rendered {'genre': 'ambient', 'scene': 'living:breath-tree', 'identity': 'ambient-string', 'dense': True, 'soft': False, 'peak': 0.9012121558189392}\nRendered {'genre': 'deep', 'scene': 'living:moss', 'identity': 'jazz-shadow', 'dense': True, 'soft': True, 'peak': 0.7830286622047424}\nRendered {'genre': 'organic', 'scene': 'living:deer', 'identity': 'organic-strings', 'dense': True, 'soft': False, 'peak': 0.9009291529655457}\nRendered {'genre': 'ambient', 'scene': 'living:moth', 'identity': 'ambient-string', 'dense': True, 'soft': True, 'peak': 0.4117201268672943}\nRendered {'genre': 'deep', 'scene': 'living:turtle', 'identity': 'jazz-shadow', 'dense': True, 'soft': False, 'peak': 0.9015844464302063}\nRendered {'genre': 'organic', 'scene': 'living:crab', 'identity': 'organic-strings', 'dense': True, 'soft': True, 'peak': 0.6676433682441711}\nPASS six live ecological actor clocks and real replies, dense mixes and 44.1/48 kHz\n"
+    }
+  ],
+  "scope": "Affected browser flows. Full browser/audio CI and physical-phone acceptance remain required before release.",
+  "audioRenders": 34,
+  "ecologyAudio": "Six additional renders initialize actual ecological actor clock/decisions. Existing 28 renders retain default synthesis-regression duration."
+}

@@ -1,7 +1,8 @@
 // Stable individual preferences, independent of every world placement stream.
+import {habitatIntent} from './habitats.js';
 export const MIND_VERSION=1;
 export const MIND_CAPABILITIES=Object.freeze({
- fauna:Object.freeze(['observe','approach','retreat','cooperate','rest','explore','respond']),
+ fauna:Object.freeze(['observe','approach','retreat','cooperate','rest','explore','respond','forage','shelter','migrate']),
  flora:Object.freeze(['listen','open','retract','transmit','rest','respond']),
  architecture:Object.freeze(['listen','resonate','seal','transmit','rest','respond']),
 });
@@ -21,6 +22,7 @@ export function mindDecision(o,d,player,clock,neighbors=[]){
  const danger=player.speed>55+55*(1-p.motionSensitivity)&&d<65+p.caution*65;
  if(danger&&p.caution>.35)return group==='fauna'?'retreat':group==='flora'?'retract':'seal';
  if(o.stimulusAt!==undefined&&clock-o.stimulusAt<2+p.patience*3&&p.musicInterest>.45)return 'respond';
+ const ecological=habitatIntent(o,player,clock,neighbors);if(ecological)return ecological;
  const daylight=[.35,1,.4,.05][o.ecology?.phase??p.activity];
  if(o.awake<.5&&o.energy<.2&&(p.energy<.7||Math.abs(daylight-p.lightPreference)>.5))return 'rest';
  if(d<175&&p.curiosity>.58)return group==='fauna'?'approach':group==='flora'?'open':'resonate';
@@ -43,6 +45,9 @@ export function updateMind(o,dt,clock,d,player,neighbors=[]){
  else if(intent==='approach'){const a=Math.atan2(player.y-o.homeY,player.x-o.homeX),stop=22+o.size;tx=player.x-Math.cos(a)*stop;ty=player.y-Math.sin(a)*stop;}
  else if(intent==='retreat'){tx=o.homeX-Math.cos(targetAngle)*p.territory;ty=o.homeY-Math.sin(targetAngle)*p.territory;}
  else if(intent==='cooperate'){const peer=neighbors.find(n=>n!==o&&n.group==='fauna'&&Math.hypot(n.x-o.x,n.y-o.y)<150);if(peer){tx+=(peer.x-tx)*.5;ty+=(peer.y-ty)*.5;}}
+ else if(intent==='forage'){const plant=neighbors.find(n=>n!==o&&n.group==='flora'&&Math.hypot(n.x-o.x,n.y-o.y)<140);if(plant){tx=plant.x+Math.cos(clock*.4)*12;ty=plant.y+Math.sin(clock*.4)*8;}}
+ else if(intent==='shelter'){tx=o.homeX;ty=o.homeY;}
+ else if(intent==='migrate'){const a=(o.habitat?.angle||0)+Math.sin(clock/45)*.5;tx=o.homeX+Math.cos(a)*p.territory;ty=o.homeY+Math.sin(a)*p.territory;}
  const dx=tx-o.homeX,dy=ty-o.homeY,r=Math.hypot(dx,dy);if(r>p.territory){tx=o.homeX+dx/r*p.territory;ty=o.homeY+dy/r*p.territory;}
  const pace=(o.kind==='turtle'?.22:o.kind==='deer'?1.1:.65)*p.energy*(o.awake??1)*(o.worldFamily?.pace||1);
  o.x+=(tx-o.x)*Math.min(1,dt*pace);o.y+=(ty-o.y)*Math.min(1,dt*pace);

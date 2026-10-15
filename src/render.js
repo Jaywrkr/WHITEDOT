@@ -305,13 +305,14 @@ export function initialize(runtime) {
       }
       for(const o of c.sp){const sp=o.s;
         if(ev==="migracion"&&sp.id.startsWith(rg.key+":"))o.hx+=dt*55;
-        if(sp.mob==="orbita"){o.x=o.hx+Math.cos(t/1000*sp.spd*(o.personality?.speed||1)+o.ph)*50;o.y=o.hy+Math.sin(t/1000*sp.spd*(o.personality?.speed||1)+o.ph)*50;}
-        else if(sp.mob==="salta"){o.x=o.hx+Math.sin(t/2000*sp.spd*(o.personality?.speed||1)+o.ph)*30;o.y=o.hy-b*(o.personality?.jump||12);}
-        else if(sp.mob==="deriva"){o.x=o.hx+Math.sin(t/3000*sp.spd*(o.personality?.speed||1)+o.ph)*120;o.y=o.hy+Math.cos(t/3700*sp.spd*(o.personality?.speed||1)+o.ph)*90;}
+        if(!runtime.nativeLifeTick&&sp.mob==="orbita"){o.x=o.hx+Math.cos(t/1000*sp.spd*(o.personality?.speed||1)+o.ph)*50;o.y=o.hy+Math.sin(t/1000*sp.spd*(o.personality?.speed||1)+o.ph)*50;}
+        else if(!runtime.nativeLifeTick&&sp.mob==="salta"){o.x=o.hx+Math.sin(t/2000*sp.spd*(o.personality?.speed||1)+o.ph)*30;o.y=o.hy-b*(o.personality?.jump||12);}
+        else if(!runtime.nativeLifeTick&&sp.mob==="deriva"){o.x=o.hx+Math.sin(t/3000*sp.spd*(o.personality?.speed||1)+o.ph)*120;o.y=o.hy+Math.cos(t/3700*sp.spd*(o.personality?.speed||1)+o.ph)*90;}
         if(o.follow>0){o.follow-=dt;const tx=runtime.S.wx+Math.cos(o.ph+t/900)*40,ty=runtime.S.wy+Math.sin(o.ph+t/900)*40;o.hx+=(tx-o.hx)*Math.min(1,dt*2*(o.personality?.speed||1));o.hy+=(ty-o.hy)*Math.min(1,dt*2*(o.personality?.speed||1));if(sp.mob==='timida'){o.x=o.hx;o.y=o.hy;}if(!Object.values(runtime.jam?.band.members||{}).some(m=>m.sp.id===sp.id))singers.push(o);}
         else if(!sp.mob)runtime.physics(o,dt,c.sp);
         if(sp.mob==="timida"&&o.follow>0){}
-        else if(sp.mob==="timida"){const ax=o.x-runtime.S.wx,ay=o.y-runtime.S.wy,dd=Math.hypot(ax,ay)||1;if(dd<110){o.x+=ax/dd*dt*120*(o.personality?.speed||1);o.y+=ay/dd*dt*120*(o.personality?.speed||1);}else{o.x+=(o.hx-o.x)*dt*.3;o.y+=(o.hy-o.y)*dt*.3;}}
+        else if(!runtime.nativeLifeTick&&sp.mob==="timida"){const ax=o.x-runtime.S.wx,ay=o.y-runtime.S.wy,dd=Math.hypot(ax,ay)||1;if(dd<110){o.x+=ax/dd*dt*120*(o.personality?.speed||1);o.y+=ay/dd*dt*120*(o.personality?.speed||1);}else{o.x+=(o.hx-o.x)*dt*.3;o.y+=(o.hy-o.y)*dt*.3;}}
+        runtime.nativeLifeTick?.(o,sp,paused?0:dt,t/1000,c.sp);
         const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),w=runtime.waves.length&&runtime.hitW(o.x,o.y);
         if(w){o.lit=1;runtime.wsoon(w,q=>runtime.speciesSound(sp,q,false,o.personality,o));}
         if(contactEntry(o,d<ds/2+12,!paused&&!runtime.scanning)&&ms>o.cd){o.cd=ms+(o.personality?.cooldown||1100);runtime.MU.act+=.3;runtime.touched();runtime.burst(o.x,o.y,8,true);runtime.discover(sp);if(runtime.S.autoPins)runtime.bandJoin?.(o,sp);

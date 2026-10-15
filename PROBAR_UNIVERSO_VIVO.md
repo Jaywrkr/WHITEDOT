@@ -1,5 +1,12 @@
 # Probar el universo vivo
 
+## Novedad F3 · Hábitats y conducta local
+
+1. Entra al Mundo; alterna caminar rápido, acercarte despacio y permanecer.
+2. Busca una criatura junto a flora: observa recorridos y encuentros locales.
+3. Compara varias familias con Saltar; las respuestas conservan su música.
+4. Abre un menú y vuelve: pausa de juego y progreso deben conservarse.
+
 ## Novedad F2 · Anatomías reproducibles
 
 1. Abre Mundo y usa Saltar: compara cuerpos, ramas y movimientos.
