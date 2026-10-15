@@ -62,7 +62,7 @@ with sync_playwright() as p:
   page.locator('#fxClose').click()
   # Código de lugar: copiar el de aquí y abrirlo guarda un favorito orientado.
   page.locator('#bMenu').click();page.locator('#bFavorites').click()
-  page.locator('#placeShare').click();page.wait_for_function("document.getElementById('placeCode').value.startsWith('WD1-')")
+  page.locator('.favorite-tools > summary').click();page.locator('#placeShare').click();page.wait_for_function("document.getElementById('placeCode').value.startsWith('WD1-')")
   page.evaluate("()=>{const r=window.__testRuntime;document.getElementById('placeCode').value=r.placeCode().replace(/^WD1-.*/,(c)=>c);}")
   code=page.evaluate("(()=>{const r=window.__testRuntime;r.S.wx+=4000;return document.getElementById('placeCode').value})()")
   page.locator('#placeOpen').click();page.wait_for_function("window.__testRuntime.S.destination&&window.__testRuntime.favorites.some(p=>p.shared)")
