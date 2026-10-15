@@ -13,6 +13,10 @@ L1–L6 están en main por los PR de Jay. L7 se entrega para su PR; el agente no
 El cierre anterior y sus ocho fases de pulido están subidos. El ciclo musical actual se detalla abajo. Los pendientes históricos de PLAN_2.0 se distinguen de la aceptación externa actual en [CIERRE_2.0.md](CIERRE_2.0.md).
 
 <!-- laboratorio-vivo -->
+## Experiencia viva
+
+[Plan actual de catorce fases](PLAN_EXPERIENCIA.md): entrada jugable, viajes, casa, atlas y creación musical. Una rama por fase; Jay integra los PR.
+
 ## Laboratorio Vivo · L7
 
 Curaduría y cierre del laboratorio. La curaduría integra seis bandas con los 52 estilos y los dieciséis cruces previos. La muestra por género verificó 51 gramáticas de batería distintas; las membranas y cajas usan cuerpos graves/medios.

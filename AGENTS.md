@@ -2,6 +2,10 @@
 
 WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un mundo negro. Producción: https://whitedot-inky.vercel.app (Vercel, se publica al hacer merge a `main`).
 
+## Prioridad actual
+
+Jay autorizó [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md), catorce fases consecutivas. Sus ramas sustituyen la prioridad anterior; no esperar confirmación entre fases. Mantener el flujo commit/push sin PR/merge del agente.
+
 ## Leer primero
 
 **Estado de entrega:** `feat/lab-l7-curaduria`, 2.1.0-alpha.7. L1–L7 de [PLAN_LABORATORIO_VIVO.md](PLAN_LABORATORIO_VIVO.md) están implementadas, probadas y subidas. El ciclo de código autorizado está completo; no reiniciar fases históricas. Jay mantiene PR/merge. [Cierre y condiciones externas](CIERRE_LABORATORIO_VIVO.md).
