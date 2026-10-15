@@ -6,6 +6,7 @@ import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
 import {chooseNearbySource} from './spatial.js';
 import {harmonicDegree,createVoiceCurator} from './grammar.js';
 import { createRadio } from './radio.js';
+import {labDrumEvents} from './lab-score.js';
 
 // Motor musical, síntesis y programación de Web Audio.
 export function initialize(runtime) {
@@ -30,8 +31,9 @@ export function initialize(runtime) {
   const style=()=>{if(runtime.S.mode==="camino")return .08;return runtime.clamp((KB[BI().id]??.3)+(MU.dnaA?MU.dnaA.kOff||0:0),0,1);};
   const MU={deg:0,pending:false,dist:0,E:0,act:0,still:0,dirY:0,speed:0,mel:69,motif:[],lastNoteStep:-999,step:0,next:0,queue:[],bq:[],cell:CELLS[0],lastChange:0,
     biome:0,biomeT:0,tr:0,sq:[],nb:null,nbW:0,prevKit:null,xf0:-999,bpmFrom:96,dnaA:null,dnaT:null,q8:[],near:[],singers:[],vari:-1,timbre:0,follower:false,voices:[57,60,64,67],resp:false,layers:new Set(),flowers:[],boltAt:0,groove:0};
-  const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN);
-  const neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN);
+  const living=()=>!!runtime.labLiveMusic||runtime.S.livingMusic!==false&&!runtime.labClassicMusic;
+  const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN,{living});
+  const neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN,{living});
   MU.radio = null;MU.neighborRadio=null;
   let arrangementAir=1;
   const LOUD=5.6;   // ganancia de compensación en modo normal: fuerte pero limpio (6.8 saturaba)
@@ -359,6 +361,15 @@ export function initialize(runtime) {
   }
   function drumPattern(gid,s,bar,t,tt,E,ct,DO,arrangement){
     if(runtime.inWorld()&&!DO&&runtime.depthGate?.(s)===false&&s%4!==0)return;
+    if(arrangement?.labScore){
+      const groove=runtime.inWorld()?Math.max(0,-(runtime.influenceState?.values.groove||0)):0;
+      for(const hit of labDrumEvents(arrangement.labScore,s,bar,E*(1-.75*groove))){
+        const at=hit.instrument==='kick'?t:tt,v=vel(hit.gain);
+        if(hit.instrument==='kick')kick(at,v);else if(hit.instrument==='snare')snare(at,v);
+        else if(hit.instrument==='conga')conga(at,hit.pitch,v);else if(hit.instrument==='tom')tom(at,hit.pitch,v);
+        else if(hit.instrument==='rim')rim(at,v);else if(hit.instrument==='wood')wood(at,v);else shaker(at,v);
+      }return;
+    }
     const reduction=runtime.inWorld()?Math.max(0,-(runtime.influenceState?.values.groove||0)):0;
     const L1=E>.12,L2=E>.32&&reduction<.4,L3=E>.55&&reduction<.2&&!arrangement?.melodyRest,variation=(bar>>2)%3;
     if(reduction>.7&&s%4!==0)return;

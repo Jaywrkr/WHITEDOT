@@ -1,6 +1,7 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.0.0-rc.9-auditoria-cierre';
+const CACHE='whitedot-2.1.0-alpha.1-laboratorio';
 const SHELL=[
+ "./src/lab-score.js",
  "./src/onboarding-model.js",
  "./src/onboarding.js",
  "./src/cube-art.js",

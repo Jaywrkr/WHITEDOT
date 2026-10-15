@@ -6,16 +6,19 @@ import {PALETTE_STEPS} from './palettes.js';
 import {RHYTHM_GENRES} from './rhythms.js';
 import {musicIdentity,identityGrammar,identityExpression,identityBass} from './musical-recipes.js';
 import {hybridIdentity,hybridArrangement} from './musical-hybrids.js';
+import {labScore,labArrangement} from './lab-score.js';
 // Composición por frases: el reloj musical avanza sin necesitar movimiento.
 // No modifica el ADN de la región ni guarda estado en la partida.
-export function createRadio(seedOf, rng, genres) {
+export function createRadio(seedOf, rng, genres, {living=()=>false}={}) {
   let transportKey=null,lastBar=-1,regionKey = null, phrase = -1, nextPhrase = 0, nextSection = 0;
-  let section = 0, energy = .25, arrangement = null,grammar,identity,startBar=0;
+  let section = 0, energy = .25, arrangement = null,grammar,identity,startBar=0,lastLiving=null;
   const levels = [.24, .43, .62, .3];
 
   function advance(region, bar, environment = {}) {
     if(bar<lastBar)regionKey=null;lastBar=bar;
-    if (region.key !== regionKey||transportKey!==(environment.room||null)) {
+    const alive=!environment.room&&living();
+    if (region.key !== regionKey||transportKey!==(environment.room||null)||lastLiving!==alive) {
+      lastLiving=alive;
       transportKey=environment.room||null;
       regionKey = region.key;
       startBar=environment.room?0:bar;
@@ -94,7 +97,8 @@ export function createRadio(seedOf, rng, genres) {
     const target = Math.max(.14, Math.min(limit, sectionEnergy + life + event + density + Math.min(.06,Math.max(0,environment.initiative||0)*.06)));
     energy += (target - energy) * .25;
     const frame={ ...arrangement, harmonyBar:bar-startBar, energy, genre: region.genre };
-    return hybridArrangement(frame,region,bar-startBar,environment.room?null:hybridIdentity(region,seedOf,rng),genres);
+    const native=hybridArrangement(frame,region,bar-startBar,environment.room?null:hybridIdentity(region,seedOf,rng),genres);
+    return alive?labArrangement(native,labScore(region,seedOf,rng)):native;
   }
   return { advance };
 }

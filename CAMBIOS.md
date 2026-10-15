@@ -1,3 +1,13 @@
+# Laboratorio Vivo L1 · 2.1.0-alpha.1
+
+Rama `feat/lab-l1-adn-territorial`. Jay mantiene PR/merge.
+
+- Seis bandas territoriales coordinan batería, bajo, frase, instrumentos, silencios y brillo mediante semillas independientes. No se desplazan mapas ni objetos.
+- La radio principal y vecina comparten el nuevo contrato; la capa de producción respeta el bajo y armonía elegidos. El transporte acordado de duetos conserva su arreglo anterior.
+- Sonido permite Paisaje vivo/clásico sin lanzar notas. El laboratorio conserva las recetas clásicas y añade seis bandas en destinos reales con habitantes.
+
+Auditoría aprobada; 98 suites Node, 5 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l1-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+
 # Auditoría de aceptación · 2.0.0-rc.9
 
 Rama `audit/cierre-2-validacion`, desde `10b74ed`. Jay mantiene PR y merge.
