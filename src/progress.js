@@ -20,7 +20,7 @@ export function initialize(runtime) {
   const applyScope=state=>{state.rewards=migrateRewards(state,runtime.rewardCatalog||fallbackCatalog,{hiddenAchievements});return Object.assign(normalizeLivingState(state),{previewSeed:preview,previewLayout:layout,worldSeed:identity.seed,worldIdentity:{...identity},saveVersion:SAVE_VERSION});};
   applyScope(S);
   let saveFailure=null;
-  const save=()=>{const before=new Set(Object.keys(S.rewards?.items||{}));S.rewards=migrateRewards(S,runtime.rewardCatalog||fallbackCatalog,{at:S.todayKey,legacy:false,hiddenAchievements});const saved=store.save(S);if(saved){saveFailure=null;for(const id of Object.keys(S.rewards.items))if(!before.has(id))runtime.rewardEarned?.((runtime.rewardCatalog||fallbackCatalog).find(p=>p.id===id));}
+  const save=()=>{if(runtime.snapshotPowers)S.boxPowers=runtime.snapshotPowers();const before=new Set(Object.keys(S.rewards?.items||{}));S.rewards=migrateRewards(S,runtime.rewardCatalog||fallbackCatalog,{at:S.todayKey,legacy:false,hiddenAchievements});const saved=store.save(S);if(saved){saveFailure=null;for(const id of Object.keys(S.rewards.items))if(!before.has(id))runtime.rewardEarned?.((runtime.rewardCatalog||fallbackCatalog).find(p=>p.id===id));}
     else if(saveFailure!==store.status.kind){saveFailure=store.status.kind;runtime.toast?.(saveFailure==='conflict'?'Otra pestaña cambió la partida. Guarda una copia antes de recargar.':'No pudimos guardar. Menú → Guardar copia.');}return saved;};
 
   const pad2=n=>String(n).padStart(2,"0");

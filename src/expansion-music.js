@@ -58,7 +58,7 @@ export function boxAt(cx,cy,size,seedOf,rng){
  const power=POWER_IDS[Math.floor(r()*POWER_IDS.length)];
  return {id:`caja:${cx},${cy}`,x:(cx+.15+r()*.7)*size,y:(cy+.15+r()*.7)*size,power,hue:Math.floor(r()*360),spin:r()*6.283};
 }
-// Poderes activos: {id: hasta (ms)}. Solo duran la sesión de juego; no se guardan.
+// Poderes activos: {id: hasta (ms)}. El guardado conserva milisegundos restantes de juego activo.
 export function activePowers(powers,now){return Object.entries(powers||{}).filter(([,until])=>until>now).map(([id,until])=>({id,left:(until-now)/1000}));}
 export const powerSpeed=(powers,now)=>activePowers(powers,now).some(p=>p.id==='cometa')?2.2:1;
 // Campo: radio que crece al abrirse y se encoge al final.

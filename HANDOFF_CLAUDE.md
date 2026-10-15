@@ -1,3 +1,20 @@
+# Handoff vigente · pulido F5 · Hallazgos con valor y poderes que se conservan
+
+Rama `feat/pulido-f5-tarjetas`, desde `e1a0897`. Continuar [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) sin pedir otra autorización; Jay crea PR/merge. Main permanece fuera de estos pushes.
+
+- Las tarjetas simultáneas de un mismo punto comparten aviso: se presenta la más excepcional, pero se guardan todas. Tipos ya encontrados avisan tres segundos; los primeros, ocho.
+- Cada apertura conserva su pequeño movimiento. Repetir un poder muestra una confirmación de dos segundos; la primera conserva su tarjeta especial. Cerrar devuelve el foco al mundo.
+- Probabilidades naturales sin cambios: una caja concreta ≈1/150 sectores de tierra; cualquier caja ≈1/25. Regalos y muestras no se presentan como suerte natural. Las tasas territoriales conjuntas no medidas siguen explícitas.
+- Instantánea versionada de milisegundos de juego restantes: recargar no pierde ni rellena poderes; menús y app cerrada no consumen duración. Se conservan marcas del pincel y especie/frase del compañero temporal.
+- Regalo de quietud registrado por región y día, con caja pendiente persistente hasta recogerla. Recargar no concede otro ni hace desaparecer el pendiente.
+- Formatos futuros de poderes, campos desconocidos y regalos no reconocidos se preservan. No cambia ningún flujo de generación antiguo.
+
+Auditoría aprobada; 95 suites Node y 7 recorridos afectados aprobados. Dos programas de audio afectados: 32 renders de culturas, poderes, quietud y aperturas; picos finitos menores de 0,96 y cero muestras calientes. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f5-validation.json).
+
+## Entregas anteriores
+
+Los siguientes encabezados conservan evidencia histórica; prevalece el estado actual.
+
 # Handoff vigente · pulido F4 · Bitácora con lectura por capas
 
 Rama `feat/pulido-f4-bitacora`, desde `e5d2da5`. Continuar [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) sin pedir otra autorización; Jay crea PR/merge. Main permanece fuera de estos pushes.
