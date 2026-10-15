@@ -24,10 +24,10 @@ export function initialize(runtime){
  runtime.$('guideGlossary').onclick=()=>{const content=runtime.$('guideDefinitions');content.hidden=!content.hidden;runtime.$('guideGlossary').setAttribute('aria-expanded',String(!content.hidden));};
  function tick(dt,paused){
   if(owner!==runtime.S){owner=runtime.S;seconds=0;lastKey='';select.value=owner.voiceMode||'discreta';}
-  if(paused||!runtime.inWorld()||runtime.firstJourneyState?.next)return;seconds+=dt;if(seconds<75)return;seconds=0;
+  if(paused||!runtime.inWorld()||runtime.firstJourneyState?.next)return;seconds+=dt;if(seconds<180)return;seconds=0;
   const d=runtime.regionOfPos(runtime.S.wx,runtime.S.wy),key=d.key+':'+(runtime.body?.still>15?'quietud':'caminar');
-  if(key===lastKey||runtime.S.voiceMode==='discreta'||!runtime.S.voiceMode)return;lastKey=key;
-  if(runtime.S.voiceMode==='guia'&&runtime.livingEnvironment?.migration){runtime.say('El ambiente cambia. Sigue una criatura y escucha su nueva frase.','El ambiente cambia');return;}
+  if(key===lastKey||!runtime.livingEnvironment?.convergence||runtime.S.voiceMode==='discreta'||!runtime.S.voiceMode)return;lastKey=key;
+  if(runtime.S.voiceMode==='guia'&&runtime.livingEnvironment?.migration){runtime.say('El ambiente cambia. Sigue una criatura y escucha su nueva frase.','El ambiente cambia',{exceptional:true});return;}
   if(runtime.S.voiceMode==='poetica')runtime.say(runtime.body?.still>15?'Quédate. El lugar encuentra otra voz junto a ti.':'Camina con atención. Otra presencia puede responder distinto.','El Camino');
   else runtime.say(runtime.body?.still>15?'Escucha el cambio. Acércate despacio y descubre cada voz.':'Acerca el cubo. Alejarte suelta el gesto; fijarlo es opcional.','Escuchar aquí');
  }
@@ -35,7 +35,7 @@ export function initialize(runtime){
   if(origin!=='player'||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running')return;
   if(kind!=='pulso'&&Number.isFinite(source?.x)&&Number.isFinite(source?.y))runtime.firstJourneyEvent?.('voice');
   const help=runtime.S.voiceLearned||={};const v=runtime.getVoice(kind,region,source);if(help[v.role])return;help[v.role]=true;
-  if(runtime.S.voiceMode==='guia')runtime.say(`Este encuentro aporta ${ {bajo:'graves',perc:'percusión',acorde:'armonía',lead:'una frase',agudo:'detalle melódico'}[v.role]||v.role}. Su voz cambia entre ambientes.`, 'El lugar responde');
+  if(runtime.S.voiceMode==='guia')runtime.say(`Este encuentro aporta ${ {bajo:'graves',perc:'percusión',acorde:'armonía',lead:'una frase',agudo:'detalle melódico'}[v.role]||v.role}. Su voz cambia entre ambientes.`, 'El lugar responde',{requested:true});
  }
  function diary(){return '<article class="journal-card"><h3>La Voz · recuerdos</h3>'+((runtime.S.voiceDiary||[]).slice(-12).reverse().map(v=>`<p><b>${escape(v.title)}</b> · ${escape(v.text)}</p>`).join('')||'<p>Los mensajes completos se conservan aquí.</p>')+'</article>';}
  Object.defineProperties(runtime,{voiceGuideTick:{get:()=>tick},voiceGuideHear:{get:()=>heard},voiceDiaryCard:{get:()=>diary}});

@@ -1,3 +1,13 @@
+# Experiencia · fase 3
+
+Rama `feat/experiencia-03-camino`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Camino alterna discretamente figuras de luz por día con flujo independiente. Invitación mínima a entrar, respetando movimiento reducido. Voz conserva diario y restringe presencia a introducción, solicitudes y convergencias excepcionales.
+
+Validación: Auditoría y Node completos; guide_smoke, messages_smoke y first_level_smoke; audio sin cambios. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 2
 
 Rama `feat/experiencia-02-bienvenida`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.

@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {voiceMaySpeak} from '../src/messages.js';
+const state={help:{mundo:true},firstJourney:{skipped:true}};
+assert(!voiceMaySpeak(state,'Logro',{world:true}));
+assert(voiceMaySpeak(state,'Encuentro',{world:true,exceptional:true}));
+assert(voiceMaySpeak(state,'Consulta',{world:true,requested:true}));
+assert(voiceMaySpeak(state,'Inicio',{world:false}));
+assert(voiceMaySpeak({help:{mundo:false}},'Inicio',{world:true}));
+assert(!voiceMaySpeak({...state,firstJourney:{facts:{voice:true,pulse:true}}},'Rutina',{world:true}));
+console.log('PASS voice keeps routine messages in memory and reserves presence for teaching, requests and exceptions');

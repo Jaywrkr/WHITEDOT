@@ -1,0 +1,13 @@
+{
+  "phase": 3,
+  "audit": "passed, zero warnings",
+  "nodeSuites": 105,
+  "browser": [
+    "guide_smoke.py",
+    "messages_smoke.py",
+    "first_level_smoke.py"
+  ],
+  "result": "passed",
+  "audio": "unchanged",
+  "phone": "pending"
+}
