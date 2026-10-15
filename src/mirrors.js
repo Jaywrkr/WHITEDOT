@@ -70,7 +70,7 @@ export function initialize(runtime){
   saved[site.id]={angles:site.mirrors.map(m=>m.angle),solved:solved||!!saved[site.id]?.solved};
  }
  function emit(site,i,time,origin='ambient'){
-  const route=traceMirrors(site),m=site.mirrors[i],degree=route.connected?i*2:Math.floor(m.angle/Math.PI*7)%7;
+  const route=traceMirrors(site),m=site.mirrors[i],degree=route.connected?i*2:Math.floor(m.angle/Math.PI*7)%7;m.opticalPosition=m.angle/Math.PI;
   runtime.playVoice(`installation:mirror:${i}`,degree,time,site.region,false,.4,m,origin);
   setTimeout(()=>site.lit=1,Math.max(0,(time-runtime.ac.currentTime)*1000));
  }
@@ -180,7 +180,7 @@ export function initialize(runtime){
    ctx.save();ctx.lineWidth=WORLD_VISUAL.line;ctx.strokeStyle=route.connected?elementInk('glass',site.hue,true):color;ctx.globalAlpha=.22+site.lit*.3;
    ctx.lineWidth=route.connected?1.3+(site.glow||0)*.5:WORLD_VISUAL.line;ctx.globalAlpha=route.connected?.6+(site.glow||0)*.3:.22+site.lit*.3;route.segments.forEach((segment,i)=>{ctx.strokeStyle=route.connected?elementInk('glass',site.hue+i*40):elementInk('metal',site.hue+i*25);ctx.beginPath();ctx.moveTo(segment.from.x+ox,segment.from.y+oy);ctx.lineTo(segment.to.x+ox,segment.to.y+oy);ctx.stroke();});
    ctx.globalAlpha=.85;ctx.fillStyle=elementInk('glass',site.hue,true);ctx.beginPath();ctx.arc(site.emitter.x+ox,site.emitter.y+oy,4,0,TAU);ctx.fill();
-   site.mirrors.forEach((m,i)=>{ctx.strokeStyle=color;ctx.beginPath();const dx=Math.cos(m.angle)*HALF,dy=Math.sin(m.angle)*HALF;ctx.moveTo(m.x+ox-dx,m.y+oy-dy);ctx.lineTo(m.x+ox+dx,m.y+oy+dy);ctx.stroke();ctx.beginPath();ctx.arc(m.x+ox,m.y+oy,8,0,TAU);ctx.stroke();ctx.fillStyle=color;ctx.font='10px "Geist Mono", monospace';ctx.textAlign='center';if(Math.hypot(m.x-S().wx,m.y-S().wy)<65)ctx.fillText(String(i+1),m.x+ox,m.y+oy-14);});
+   site.mirrors.forEach((m,i)=>{ctx.strokeStyle=color;ctx.beginPath();const dx=Math.cos(m.angle)*HALF,dy=Math.sin(m.angle)*HALF;ctx.moveTo(m.x+ox-dx,m.y+oy-dy);ctx.lineTo(m.x+ox+dx,m.y+oy+dy);ctx.stroke();ctx.beginPath();ctx.arc(m.x+ox,m.y+oy,8,0,TAU);ctx.stroke();ctx.fillStyle=color;ctx.font='10px "Geist Mono", monospace';ctx.textAlign='center';if(Math.hypot(m.x-S().wx,m.y-S().wy)<65)ctx.fillText(ROLES[runtime.getVoice('installation:mirror:'+i,site.region,m).role],m.x+ox,m.y+oy-14);});
    const x=site.target.x+ox,y=site.target.y+oy;ctx.strokeStyle=route.connected?elementInk('glass',site.hue,true):color;ctx.beginPath();ctx.moveTo(x,y-12);ctx.lineTo(x+12,y);ctx.lineTo(x,y+12);ctx.lineTo(x-12,y);ctx.closePath();ctx.stroke();
    if(route.connected){ctx.globalAlpha=.65;ctx.beginPath();const sides=3+site.glyph;for(let i=0;i<=sides;i++){const a=i*TAU/sides;const px=x+Math.cos(a)*32,py=y+Math.sin(a)*32;if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.stroke();}
    if(Math.hypot(site.x-S().wx,site.y-S().wy)<250){ctx.globalAlpha=.7;ctx.fillStyle=color;ctx.fillText(route.connected?'Conectado · la luz llegó':'Empuja el espejo · guía la luz',site.x+ox,site.y+oy+145);}
