@@ -19,8 +19,9 @@ export function labScore(region,seedOf,rng){
  const pair=String(region.key).match(/(-?\d+),(-?\d+)$/),territory=pair?`${Math.floor(Number(pair[1])/2)},${Math.floor(Number(pair[2])/2)}`:region.key;
  const r=rng(seedOf(`lab:band:v1:${territory}:${kind}`)),base=pool[Math.floor(r()*pool.length)];
  const individual=rng(seedOf(`lab:individual:v1:${region.key}:${region.genre}`));
- return Object.freeze({...base,territory,variant:Math.floor(individual()*16),genre:region.genre,
-  bassI:['hollow','velvetbass','rubber'][Math.floor(individual()*3)],
+ const leads={interlock:['silkpluck','skinpluck','handslap'],silk:['silkpluck','skinpluck','lowbow'],breath:['bamboowind','clayflute','duskpad'],heavy:['feltkeys','lowbow','skinpluck'],warm:['feltkeys','lowbow','duskpad'],pulse:['skinpluck','feltkeys','duskpad']}[base.id];
+ return Object.freeze({...base,leads:Object.freeze(leads),version:2,territory,variant:Math.floor(individual()*16),genre:region.genre,
+  bassI:['hollow','velvetbass','reedbass'][Math.floor(individual()*3)],
   ceiling:region.genre==='ambient'?Math.min(3000,base.ceiling):base.ceiling,
   kick:kind==='calm'?Object.freeze([]):kind==='broken'||kind==='bass'?Object.freeze([0,7,10]):Object.freeze([0,4,8,12]),
  });

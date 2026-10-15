@@ -6,18 +6,18 @@ Un pixel blanco en un mundo negro. Descubre cómo suena el universo y crea tu pr
 
 **Jugar:** https://whitedot-inky.vercel.app. En el teléfono puedes instalarlo como app (en iPhone: Compartir → Añadir a pantalla de inicio). Toca la pantalla una vez para activar el sonido.
 
-Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama **2.1.0-alpha.1** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
+Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama **2.1.0-alpha.2** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
 Main no se publica desde estas ramas. Jay integra mediante PR. [Auditoría y soluciones](AUDITORIA_CIERRE_2.0.md) · [Pulido final autorizado](PLAN_PULIDO_FINAL.md).
 
 Las ocho fases están subidas; no se espera confirmación entre fases autorizadas. Los pendientes históricos de PLAN_2.0 se distinguen de la aceptación externa actual en [CIERRE_2.0.md](CIERRE_2.0.md).
 
 <!-- laboratorio-vivo -->
-## Laboratorio Vivo · L1
+## Laboratorio Vivo · L2
 
-Identidad musical completa por territorio. Seis bandas territoriales coordinan batería, bajo, frase, instrumentos, silencios y brillo mediante semillas independientes. No se desplazan mapas ni objetos.
+Instrumentos con técnicas propias. Once voces originales amplían el banco a 43 instrumentos: cuerdas pulsadas y de arco, vientos, membranas, caja, teclas, pad y bajo. Cada voz tiene articulación y límites propios.
 
-[Plan y ramas](PLAN_LABORATORIO_VIVO.md) · [Validación](scripts/lab-l1-validation.json). Sonido → Paisaje vivo/clásico. Para comparar bandas en el teléfono: abre el preview con `?dev=1`, Menú → Prototipo → Laboratorio → Paisaje vivo.
+[Plan y ramas](PLAN_LABORATORIO_VIVO.md) · [Validación](scripts/lab-l2-validation.json). Sonido → Paisaje vivo/clásico. Para comparar bandas en el teléfono: abre el preview con `?dev=1`, Menú → Prototipo → Laboratorio → Paisaje vivo.
 <!-- /laboratorio-vivo -->
 
 ## Cierre anterior
@@ -37,13 +37,13 @@ Identidad musical completa por territorio. Seis bandas territoriales coordinan b
 | Paisajes | Ocho familias espaciales sobre 11 biomas y 33 hábitats |
 | Vida | 28 linajes, cincuenta caminantes explícitos, anatomías y comportamiento territorial |
 | Composición | 52 estilos, dieciséis influencias compatibles y regiones sin cruce |
-| Instrumentos | 32 especificaciones, siete motores avanzados originales y dieciséis programas de filtro |
+| Instrumentos | 43 especificaciones, siete motores avanzados y once voces articuladas originales y dieciséis programas de filtro |
 | Interacción | Percusión natural de nueve materiales, prioridad del gesto y señales locales |
 | Descubrimiento | Guardianes, pistas, reliquias recuperables y cincuenta tipos de tarjeta |
 | Memoria | Instrumentos editados, vínculos, favoritos, capas y direcciones WD1 |
 | Creación | Casa desde arriba con cuarenta objetos/cuatro habitaciones; Taller radial conservado |
 | Colección | Cincuenta personalizaciones ganadas, doscientos cincuenta logros y cinco secciones de Bitácora |
-| Laboratorio | 162 entradas/20 grupos; herramienta de prototipo en localhost o `?dev=1` |
+| Laboratorio | 179 entradas/21 grupos; herramienta de prototipo en localhost o `?dev=1` |
 
 **Saltar** busca contraste musical y habitantes; **Volver al salto** recupera el punto anterior. El mundo varía también en quietud. Las familias mantienen género, tempo, escala y batería nativos; las influencias compatibles cambian frases, armonía y paleta. Hay filtros reales de 12/24/36/48 dB por octava y conexiones de señal/modulación acotadas. No contiene instrumentos ni presets comerciales.
 

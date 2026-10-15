@@ -1,0 +1,438 @@
+{
+  "renders": 48,
+  "maxPeak": 0.04280345141887665,
+  "rows": [
+    {
+      "instrument": "silkpluck",
+      "mode": "normal",
+      "sampleRate": 48000,
+      "peak": 0.012411070987582207,
+      "energy": 0.09741963893403623,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "silkpluck",
+      "mode": "muted",
+      "sampleRate": 44100,
+      "peak": 0.01133123878389597,
+      "energy": 0.034493606265338546,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "silkpluck",
+      "mode": "slide",
+      "sampleRate": 48000,
+      "peak": 0.012183557264506817,
+      "energy": 0.09198232745454643,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "silkpluck",
+      "mode": "ghost",
+      "sampleRate": 44100,
+      "peak": 0.005200509913265705,
+      "energy": 0.011519809741710841,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "skinpluck",
+      "mode": "normal",
+      "sampleRate": 48000,
+      "peak": 0.01682036742568016,
+      "energy": 0.07893181597149897,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "skinpluck",
+      "mode": "muted",
+      "sampleRate": 44100,
+      "peak": 0.014045365154743195,
+      "energy": 0.024032272590423915,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "skinpluck",
+      "mode": "slide",
+      "sampleRate": 48000,
+      "peak": 0.016508672386407852,
+      "energy": 0.07546059377716073,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "skinpluck",
+      "mode": "ghost",
+      "sampleRate": 44100,
+      "peak": 0.007029110100120306,
+      "energy": 0.00813073821094045,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "lowbow",
+      "mode": "normal",
+      "sampleRate": 48000,
+      "peak": 0.009681835770606995,
+      "energy": 0.2457070771223992,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "lowbow",
+      "mode": "muted",
+      "sampleRate": 44100,
+      "peak": 0.0035282059106975794,
+      "energy": 0.03200620970625989,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "lowbow",
+      "mode": "slide",
+      "sampleRate": 48000,
+      "peak": 0.00952152069658041,
+      "energy": 0.24221721373166255,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "lowbow",
+      "mode": "ghost",
+      "sampleRate": 44100,
+      "peak": 0.0022952882573008537,
+      "energy": 0.01355920382353397,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "lowbow",
+      "mode": "hold",
+      "sampleRate": 48000,
+      "peak": 0.026202255859971046,
+      "energy": 22.640681032934804,
+      "late": 3.256933219823017,
+      "released": 0
+    },
+    {
+      "instrument": "bamboowind",
+      "mode": "normal",
+      "sampleRate": 44100,
+      "peak": 0.01837693527340889,
+      "energy": 0.515967520437155,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "bamboowind",
+      "mode": "muted",
+      "sampleRate": 48000,
+      "peak": 0.006830659694969654,
+      "energy": 0.07826182807402561,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "bamboowind",
+      "mode": "slide",
+      "sampleRate": 44100,
+      "peak": 0.017304206266999245,
+      "energy": 0.5176810889167407,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "bamboowind",
+      "mode": "ghost",
+      "sampleRate": 48000,
+      "peak": 0.004433032125234604,
+      "energy": 0.03410630607351575,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "bamboowind",
+      "mode": "hold",
+      "sampleRate": 44100,
+      "peak": 0.03484070301055908,
+      "energy": 76.73764301578811,
+      "late": 10.660688641427203,
+      "released": 0
+    },
+    {
+      "instrument": "clayflute",
+      "mode": "normal",
+      "sampleRate": 48000,
+      "peak": 0.020655078813433647,
+      "energy": 0.5987196309067863,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "clayflute",
+      "mode": "muted",
+      "sampleRate": 44100,
+      "peak": 0.009772826917469501,
+      "energy": 0.10448786822582422,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "clayflute",
+      "mode": "slide",
+      "sampleRate": 48000,
+      "peak": 0.020698346197605133,
+      "energy": 0.6014724621240263,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "clayflute",
+      "mode": "ghost",
+      "sampleRate": 44100,
+      "peak": 0.005647092126309872,
+      "energy": 0.03749308602367592,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "clayflute",
+      "mode": "hold",
+      "sampleRate": 48000,
+      "peak": 0.03470240905880928,
+      "energy": 100.62044145306605,
+      "late": 13.958894029337461,
+      "released": 0
+    },
+    {
+      "instrument": "skinbass",
+      "mode": "normal",
+      "sampleRate": 44100,
+      "peak": 0.04280345141887665,
+      "energy": 0.47238091633525364,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "skinbass",
+      "mode": "muted",
+      "sampleRate": 48000,
+      "peak": 0.03936261683702469,
+      "energy": 0.20385479200435142,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "skinbass",
+      "mode": "slide",
+      "sampleRate": 44100,
+      "peak": 0.04280345141887665,
+      "energy": 0.47238091702583146,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "skinbass",
+      "mode": "ghost",
+      "sampleRate": 48000,
+      "peak": 0.01614519953727722,
+      "energy": 0.04865700796817511,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "handslap",
+      "mode": "normal",
+      "sampleRate": 44100,
+      "peak": 0.03258249908685684,
+      "energy": 0.10297175564017608,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "handslap",
+      "mode": "muted",
+      "sampleRate": 48000,
+      "peak": 0.02540888637304306,
+      "energy": 0.0588921913793731,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "handslap",
+      "mode": "slide",
+      "sampleRate": 44100,
+      "peak": 0.03258249908685684,
+      "energy": 0.1029717541050437,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "handslap",
+      "mode": "ghost",
+      "sampleRate": 48000,
+      "peak": 0.010782800614833832,
+      "energy": 0.012015148557473642,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "acousticsnare",
+      "mode": "normal",
+      "sampleRate": 44100,
+      "peak": 0.02368438057601452,
+      "energy": 0.08482821974770283,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "acousticsnare",
+      "mode": "muted",
+      "sampleRate": 48000,
+      "peak": 0.01618226431310177,
+      "energy": 0.025894574253745424,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "acousticsnare",
+      "mode": "slide",
+      "sampleRate": 44100,
+      "peak": 0.02368438057601452,
+      "energy": 0.08482822064341647,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "acousticsnare",
+      "mode": "ghost",
+      "sampleRate": 48000,
+      "peak": 0.009075483307242393,
+      "energy": 0.00975650733640717,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "feltkeys",
+      "mode": "normal",
+      "sampleRate": 44100,
+      "peak": 0.03145328536629677,
+      "energy": 0.8771950775561411,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "feltkeys",
+      "mode": "muted",
+      "sampleRate": 48000,
+      "peak": 0.028310762718319893,
+      "energy": 0.2605618151519039,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "feltkeys",
+      "mode": "slide",
+      "sampleRate": 44100,
+      "peak": 0.03055080585181713,
+      "energy": 0.8791803507475301,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "feltkeys",
+      "mode": "ghost",
+      "sampleRate": 48000,
+      "peak": 0.012044072151184082,
+      "energy": 0.08133276665240903,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "duskpad",
+      "mode": "normal",
+      "sampleRate": 44100,
+      "peak": 0.004444114398211241,
+      "energy": 0.08501177728966035,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "duskpad",
+      "mode": "muted",
+      "sampleRate": 48000,
+      "peak": 0.0020751438569277525,
+      "energy": 0.014209460430691885,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "duskpad",
+      "mode": "slide",
+      "sampleRate": 44100,
+      "peak": 0.004384610801935196,
+      "energy": 0.08452537578492547,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "duskpad",
+      "mode": "ghost",
+      "sampleRate": 48000,
+      "peak": 0.0012348864693194628,
+      "energy": 0.005157790730202589,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "duskpad",
+      "mode": "hold",
+      "sampleRate": 44100,
+      "peak": 0.020393088459968567,
+      "energy": 14.447970964002858,
+      "late": 2.3503234984958303,
+      "released": 0
+    },
+    {
+      "instrument": "reedbass",
+      "mode": "normal",
+      "sampleRate": 48000,
+      "peak": 0.02623402699828148,
+      "energy": 0.3216723641104531,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "reedbass",
+      "mode": "muted",
+      "sampleRate": 44100,
+      "peak": 0.020001554861664772,
+      "energy": 0.09774309907560749,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "reedbass",
+      "mode": "slide",
+      "sampleRate": 48000,
+      "peak": 0.025324622169137,
+      "energy": 0.32722717890885394,
+      "late": 0,
+      "released": 0
+    },
+    {
+      "instrument": "reedbass",
+      "mode": "ghost",
+      "sampleRate": 44100,
+      "peak": 0.009048390202224255,
+      "energy": 0.024586673151315092,
+      "late": 0,
+      "released": 0
+    }
+  ]
+}

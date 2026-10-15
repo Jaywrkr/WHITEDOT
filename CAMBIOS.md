@@ -1,3 +1,13 @@
+# Laboratorio Vivo L2 · 2.1.0-alpha.2
+
+Rama `feat/lab-l2-instrumentos`. Jay mantiene PR/merge.
+
+- Once voces originales amplían el banco a 43 instrumentos: cuerdas pulsadas y de arco, vientos, membranas, caja, teclas, pad y bajo. Cada voz tiene articulación y límites propios.
+- Arco, vientos y pad se sostienen mediante contacto en el laboratorio; soltar, salir, pausar u ocultar la página libera las voces. Deslizamiento, apagado, golpe suave y acento cambian el sonido sin cambiar la afinación base.
+- El laboratorio reúne 179 destinos. Se verificaron 48 renders individuales y 12 mezclas territoriales densas; no se usan muestras ni presets comerciales.
+
+Auditoría aprobada; 99 suites Node, 3 recorridos afectados y 2 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l2-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+
 # Laboratorio Vivo L1 · 2.1.0-alpha.1
 
 Rama `feat/lab-l1-adn-territorial`. Jay mantiene PR/merge.
