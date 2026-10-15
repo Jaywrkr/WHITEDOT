@@ -1,5 +1,13 @@
 # Probar el universo vivo
 
+## Pulido F6 · Cincuenta caminantes con identidad
+
+1. Camina despacio junto a un caminante pequeño; espera su gesto de confianza.
+2. Lanza un pulso. Escucha la respuesta con su instrumento y observa su señal local.
+3. Visita otros territorios: compara cuerpos, pasos, paciencia y registro musical.
+4. Abre Bitácora → Colección → 50 caminantes. Comprueba miniaturas y los encontrados.
+5. Recarga: conserva los descubrimientos y las formas nativas de ese lugar.
+
 ## Pulido F5 · Hallazgos con valor y poderes que se conservan
 
 1. Encuentra una caja o usa Prototipo local: comprueba su poder y el tiempo indicado.

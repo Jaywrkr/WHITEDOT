@@ -1,3 +1,4 @@
+import {initialize as walkers} from './walker-forms.js';
 import {initialize as worldMemory} from './world-memory.js';
 import {initialize as foreground} from './foreground.js';
 import {initialize as house} from './house.js';
@@ -95,7 +96,7 @@ progress(runtime);
 world(runtime);
 audio(runtime);
 foreground(runtime);
-voices(runtime);
+voices(runtime);walkers(runtime);
 canvas(runtime);
 body(runtime);
 messages(runtime);

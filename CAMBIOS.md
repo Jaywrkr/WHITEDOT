@@ -1,3 +1,16 @@
+# Pulido F6 · Cincuenta caminantes con identidad
+
+Rama `feat/pulido-f6-personajes`, desde `4cdc59a`. Jay crea PR y merge.
+
+- Cincuenta variantes explícitas: cinco cuerpos, cinco cabezas y dos pasos, con cincuenta retratos distinguibles; tamaño de mundo pequeño y sin paneles nuevos.
+- Grupos corporales por territorios de tres regiones; cabezas y paso individuales por semillas independientes. Las posiciones y flujos antiguos conservan sus hashes de referencia.
+- Cinco estrategias: acercarse, orbitar, mantener distancia, alternar descanso y desplazamiento, o caminar a pulsos. Confianza, separación y tiempo de compañía varían.
+- Respuesta diatónica una tercera sobre tu gesto, con papel e instrumento del género: graves, percusión, armonía o melodía. Máximo dos respuestas por compás, sin grabado automático ni cadenas recursivas.
+- Corregida la respuesta antigua fuera del recorrido de audio del Mundo. La fuente real recibe su señal de onset y el movimiento se pausa en menús.
+- Colección → 50 caminantes muestra miniaturas y descubrimientos conservados por variante. No sustituye la mascota permanente ni altera sus logros; datos desconocidos permanecen.
+
+Auditoría aprobada; 96 suites Node y 5 recorridos afectados aprobados. Diez renders de respuesta real de caminantes en deep/dub a 44,1/48 kHz; picos menores de 0,96, sin muestras calientes. La suite completa del conjunto final incluye este programa nuevo. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f6-validation.json).
+
 # Pulido F5 · Hallazgos con valor y poderes que se conservan
 
 Rama `feat/pulido-f5-tarjetas`, desde `e1a0897`. Jay crea PR y merge.

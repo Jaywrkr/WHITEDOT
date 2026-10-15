@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.0.0-rc.5-pulido-f5';
+const CACHE='whitedot-2.0.0-rc.6-pulido-f6';
 const SHELL=[
  "./src/onboarding-model.js",
  "./src/onboarding.js",
@@ -181,7 +181,7 @@ const SHELL=[
  "./src/quietud.js",
  "./src/vida-music.js",
  "./src/vida.js",
- "./src/voices.js",
+ "./src/voices.js","./src/walker-forms.js",
  "./src/wonders.js",
 ];
 // Precache a whole release. The new worker waits while an older game is open.

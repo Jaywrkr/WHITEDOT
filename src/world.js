@@ -1,3 +1,4 @@
+import {walkerForm} from './walker-forms.js';
 import {foundationContent} from './content-contracts.js';
 import {ECOLOGY_CONTENT,homeEcologyBiome,chooseEcologyBiome,applyEcology,ecologyRecipe,createEcologyObjects} from './ecology-model.js';
 import {BoundedMap,CACHE_LIMITS} from './cache.js';
@@ -151,7 +152,7 @@ export function initialize(runtime) {
     if(expanded){c.ecology=dna0.ecology;c.ecologyObjects=createEcologyObjects(cx,cy,runtime.WCH,dna0,B.id,contentDirectory,runtime.seedOf,runtime.rng,c.pockets,!!runtime.S.previewSeed&&cx===runtime.REG/2&&cy===runtime.REG/2);}
     if(expanded&&dna0.ecology.density===0)for(const field of ['grass','flies','plants','sp','props','playthings'])c[field]=[];
     c.playthings.forEach((o,i)=>{o.snd=q=>runtime.playVoice('toy:'+o.kind,i+(o.personality?.degree||0),q,runtime.regionOfPos(o.x,o.y),false,o.personality?.volume||1,o);});
-    attachPersonalities(c,runtime.seedOf,runtime.rng);
+    attachPersonalities(c,runtime.seedOf,runtime.rng);c.walkers.forEach((k,i)=>Object.defineProperties(k,{id:{value:'walker:'+c.id+':'+i},walkerForm:{value:walkerForm(k,dna0,runtime.seedOf)}}));
     // A few seeded inhabitants near the testing center make a blob preview playable immediately.
     if(/^blobs/i.test(runtime.S.worldSeed||'')&&runtime.S.previewSeed&&cx===runtime.REG/2&&cy===runtime.REG/2){
       const center=regionPx()/2,nr=runtime.rng(runtime.seedOf('blob-nursery:v1'));

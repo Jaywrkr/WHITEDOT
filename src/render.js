@@ -1,3 +1,4 @@
+import {moveWalker,drawWalker} from './walker-forms.js';
 import {contactEntry} from './contact.js';
 import { movementMultiplier } from './gravity.js';
 
@@ -291,7 +292,7 @@ export function initialize(runtime) {
     runtime.bolts=runtime.bolts.filter(bo=>(bo.l-=dt*3)>0);
     for(const bo of runtime.bolts){runtime.cx.globalAlpha=bo.l;runtime.cx.strokeStyle="#fff";runtime.cx.lineWidth=2;runtime.cx.beginPath();bo.pts.forEach(([x,y],i)=>runtime.cx[i?"lineTo":"moveTo"](x+ox,y+oy));runtime.cx.stroke();}
     // vida
-    let follow=false,followers=0;
+    let follow=false,followers=0;runtime.MU.walkerFollowers=[];
     for(let a=a0;a<=a1;a++)for(let bb=b0;bb<=b1;bb++){
       const raw=runtime.wchunk(a,bb),c=runtime.sceneChunk?.(raw)||raw;
       for(const f of c.flies){
@@ -325,19 +326,18 @@ export function initialize(runtime) {
         if(runtime.drawNativeSpecies)runtime.drawNativeSpecies(sp,o,o.x+ox,o.y+oy,t,b,!!runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)));else if(runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)))runtime.drawBlob(sp,o,o.x+ox,o.y+oy,t,b);else runtime.drawSprite(sp.bits,o.x+ox,o.y+oy,sp.cell*(1+o.lit*.4+(sp.mob?b*.15:0)),o.lit>.1?"#fff":sp.col);
         if(o.lit<.1&&!runtime.S.cat[sp.id])runtime.touchRing(o.x+ox,o.y+oy,d,R,b);}
       for(const k of c.walkers){
+        const form=k.walkerForm,kd=paused?0:dt;moveWalker(k,form,{x:runtime.S.wx,y:runtime.S.wy},kd,t);
         const d=Math.hypot(k.x-runtime.S.wx,k.y-runtime.S.wy)||1;
-        if(k.follow>0){k.follow-=dt;follow=true;followers++;if(d>45){const v=Math.min(150,d*2)*dt*(k.personality?.speed||1);k.x+=(runtime.S.wx-k.x)/d*v;k.y+=(runtime.S.wy-k.y)/d*v;}}
+        if(k.follow>0){k.follow-=kd;follow=true;followers++;if(runtime.MU.walkerFollowers.length<2)runtime.MU.walkerFollowers.push(k);}
         else{
-          k.a+=Math.sin(t/1700+k.hx)*dt*.8;if(Math.hypot(k.hx-k.x,k.hy-k.y)>420)k.a=Math.atan2(k.hy-k.y,k.hx-k.x);
-          k.x+=Math.cos(k.a)*22*dt*(k.personality?.speed||1);k.y+=Math.sin(k.a)*22*dt*(k.personality?.speed||1);
-          if(d<80){k.near+=dt;if(k.near>1.5/(k.personality?.speed||1)&&!k.done){k.done=true;k.follow=k.personality?.stamina||30;runtime.unlock("compania");runtime.showPhrase("Un caminante te sigue. Canta lo que tocas.");runtime.soon(q=>runtime.playVoice('caminante',0,q,runtime.regionOfPos(k.x,k.y),true,1,k));}}
-          else k.near=Math.max(0,k.near-dt);
+          if(d<80){k.near+=kd;if(!paused&&k.near>form.patience&&!k.done){k.done=true;k.follow=form.following;runtime.recordWalkerForm(form);runtime.unlock("compania");runtime.showPhrase(form.name+" · escucha tu música");runtime.soon(q=>runtime.playVoice('caminante',0,q,runtime.regionOfPos(k.x,k.y),true,1,k),'player');}}
+          else k.near=Math.max(0,k.near-kd);
         }
         if(!k.lt||Math.hypot(k.x-k.lt[0],k.y-k.lt[1])>12){k.lt=[k.x,k.y];k.trail.push(k.lt);if(k.trail.length>30)k.trail.shift();}
         const vis=R*1.7;if(d>vis+400)continue;if(d<R*1.2)runtime.seen("caminante");
         runtime.cx.fillStyle="#fff";
         k.trail.forEach(([p,q],i)=>{const e=Math.hypot(p-runtime.S.wx,q-runtime.S.wy),al=(i/k.trail.length)*.25*Math.max(0,1-e/vis);if(al>.01){runtime.cx.globalAlpha=al;runtime.cx.fillRect(p+ox-1,q+oy-1,2,2);}});
-        if(d<vis){const s=5+b*3+(k.near>0&&!k.done?k.near*2:0);runtime.cx.globalAlpha=Math.max(0,1-d/vis);runtime.cx.fillRect(k.x+ox-s/2,k.y+oy-s/2,s,s);}
+        if(d<vis){runtime.cx.globalAlpha=Math.max(0,1-d/vis)*(runtime.worldOpacity?.(d,vis)??1);runtime.cx.strokeStyle=runtime.musicInk?.(k)||'#fff';drawWalker(runtime.cx,form,k.x+ox,k.y+oy,t,runtime.S.reducedMotion);if(k.follow>0&&d<140){runtime.cx.globalAlpha*=.65;runtime.cx.font='10px "Geist Mono",monospace';runtime.cx.textAlign='center';runtime.cx.fillText(form.name,k.x+ox,k.y+oy-16);}}
       }
       for(let i=c.motes.length-1;i>=0;i--){const m=c.motes[i],d=Math.hypot(m.x-runtime.S.wx,m.y-runtime.S.wy);
         if(d<ds/2+10){c.motes.splice(i,1);runtime.playerNote(.13);runtime.burst(m.x,m.y,5,runtime.grooveFx>.9);continue;}
