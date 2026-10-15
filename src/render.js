@@ -367,6 +367,7 @@ export function initialize(runtime) {
     // Only local clues: no global arrow or player-relative spawning.
     let nd=0;
     runtime.pruneRelics();
+    runtime.relicEchoTick?.();runtime.drawRelicEchoes?.(ox,oy,R);
     for(const rl of runtime.nearbyRelics()){
       const d=Math.hypot(rl.x-runtime.S.wx,rl.y-runtime.S.wy);
       if(!rl.id&&d<ds/2+16){runtime.takeRelic(rl);continue;}

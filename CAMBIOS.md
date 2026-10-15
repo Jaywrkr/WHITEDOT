@@ -1,3 +1,17 @@
+# Cierre F7 · Hallazgos que puedes volver a tocar
+
+Rama `feat/cierre-f7-hallazgos`, hija de la fase anterior. Jay crea PR/merge.
+
+- heritage.js deriva cuatro roles estables para reliquias, con bajos, percusión, cuerdas, pianos y vientos. Regresar al punto de una reliquia ganada permite tocarla, sin duplicar estrellas ni recompensas. Las tasas y coordenadas originales siguen intactas.
+- Ocho santuarios existentes reúnen parejas de flora/fauna relacionadas con su estudio. Son habitantes reales con anatomía y mente, en un flujo nuevo independiente, no imágenes decorativas ni sustitución de poblaciones antiguas.
+- Cada recuerdo cultural ganado deja un resonador pequeño junto al guardián: voz, ritmo y armonía. Se toca con el cubo; no requiere menú. Sus señales y las lecciones pasan por filtros de fuente y dejan espacio en el acompañamiento.
+- Nueva tarjeta Recuerdo del guardián con lugar, estudio, gesto y rol reales. Requiere escuchar, recorrer huellas y resolver la puerta. Frecuencia conjunta sin estimar; no se inventa un porcentaje de rareza. El catálogo tiene 50 tipos de tarjeta.
+- La rareza de tarjetas ahora alimenta correctamente las recompensas desde odds.tier, incluyendo migración de tarjetas existentes y compatibilidad con tier antiguo. No se elimina progreso.
+- Pistas aún no ganadas usan cian; oro para recuerdos recuperados. Celebración de reliquia contenida. Estudios originales inspirados en tradiciones: no se atribuyen interpretaciones auténticas ni se usan grabaciones ajenas.
+- Corrección de superposición real: en laboratorio horizontal, el aviso de hallazgo queda al lado opuesto de Saltar. Cada render usa almacenamiento efímero propio; la prueba exige cuatro notas reales por llamada y restaura el almacenamiento original.
+
+Auditoría limpia; 87 suites Node y 5 recorridos afectados aprobados. 12 renders: ocho llamadas culturales, tres recuerdos utilizables y una reliquia recuperada; evidencia en cierre-f7-heritage-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f7-validation.json).
+
 # Cierre F6 · Percusión y gestos en primer plano
 
 Rama `feat/cierre-f6-interacciones`, hija de la fase anterior. Jay crea PR/merge.

@@ -35,6 +35,8 @@ try:
      page.evaluate('(p)=>{__testRuntime.S.wx=p.x;__testRuntime.S.wy=p.y}',route['stones'][index]);page.wait_for_timeout(200)
     page.wait_for_function('__testRuntime.S.cultures.sites[__site.id].open')
     page.evaluate('(p)=>{__testRuntime.S.wx=p.x;__testRuntime.S.wy=p.y}',route['relic']);page.wait_for_function(f'__testRuntime.S.cultures.collections.altiplano==={chapter+1}')
+   assert page.evaluate('__testRuntime.S.rareBook.items.filter(c=>c.type==="culture:artifact").length')==3
+   assert page.evaluate('__testRuntime.cultureHome().residents.length')==2
    page.screenshot(path=f'/tmp/whitedot-cultures-{width}.png');page.reload();page.wait_for_function('__testRuntime?.labMode');assert page.evaluate('__testRuntime.S.cultures.collections.altiplano')==3
    # The compact visible control starts/stops travel without sending a sonar.
    page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)");assert page.locator('#bAuto').is_visible()

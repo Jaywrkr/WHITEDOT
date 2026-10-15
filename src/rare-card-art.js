@@ -12,6 +12,7 @@ export function rarePortrait(card){
  if(art==='living')path=livingPortrait(card.type,card.appearance,card.artVariant);
  else if(art==='event')path='M-29 0Q-40 -22 -15 -18Q0 -38 17 -17Q41 -18 30 0M-20 10L-25 25M0 10L-5 25M20 10L15 25';
  else if(art==='fossil')path='M23 5C29 -24 -10 -33 -25 -10C-38 16 -7 36 15 19C34 3 15 -18 -1 -12C-17 -8 -16 13 -2 14C10 15 13 2 4 -1';
+ else if(art==='culture')path=RELICS[(v+3)%RELICS.length];
  else if(art==='relic')path=RELICS[v%RELICS.length];
  else if(art==='petbox')path=card.type.endsWith('luciernaga')?'M-7 0C-7 -25 7 -25 7 0C7 21 -7 21 -7 0M-23 -8Q0 -35 23 -8M0 17V24':card.type.endsWith('grulla')?'M-30 -5Q-12 -25 0 0Q16 -22 29 -5M0 0Q14 -28 20 -24L25 -19':'M-30 -6Q-12 -27 0 0Q14 -25 30 -6M-9 8Q0 15 9 8';
  else if(art==='box')path={campo:'M27 0A27 27 0 1 1 -27 0A27 27 0 1 1 27 0M5 0A5 5 0 1 1 -5 0A5 5 0 1 1 5 0',cometa:'M-29 23L9 -12M-19 26L14 -6M20 -15A7 7 0 1 1 6 -15A7 7 0 1 1 20 -15',brujula:'M0 -29L9 -4L0 29L-9 4ZM-24 0H-14M14 0H24',iman:'M-20 -16V4A20 20 0 0 0 20 4V-16M-11 -16V4A11 11 0 0 0 11 4V-16M-24 -16H-7M7 -16H24',pincel:'M-29 19Q-10 20 -7 4Q0 -15 27 -18M-22 11L-20 13M11 -10L13 -8',companero:'M-4 0A13 13 0 1 1 -30 0A13 13 0 1 1 -4 0M30 0A13 13 0 1 1 4 0A13 13 0 1 1 30 0M-3 -20Q0 -26 3 -20'}[card.type.split(':')[1]];

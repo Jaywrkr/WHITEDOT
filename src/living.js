@@ -29,7 +29,7 @@ export function initialize(runtime){
  }
  function near(radius=750){if(!runtime.inWorld())return [];if(owner!==runtime.S){owner=runtime.S;chunks.clear();lab=null;clock=0;}if(runtime.labLiving){if(lab?.kind!==runtime.labLiving||lab?.labSynth!==(runtime.labSynth||null)||lab?.labFilter!==(runtime.labFilter||null)){const def=livingDefinition(runtime.labLiving);lab=def?{id:'living:lab:'+def.id,kind:def.id,shape:def.shape,group:def.group,size:18,variant:25,hue:200,x:runtime.S.wx,y:runtime.S.wy+110,homeX:runtime.S.wx,homeY:runtime.S.wy+110,phase:1,energy:0,lit:0,phrase:[],personality:'curiosa',activeAt:0,labSynth:runtime.labSynth||null,labFilter:runtime.labFilter||null}:null;}return lab?[lab]:[];}lab=null;
   const cx=Math.floor(runtime.S.wx/runtime.WCH),cy=Math.floor(runtime.S.wy/runtime.WCH),out=[];
-  const n=Math.min(2,Math.ceil((radius+75)/runtime.WCH));for(let x=cx-n;x<=cx+n;x++)for(let y=cy-n;y<=cy+n;y++)out.push(...chunk(x,y));return out.filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<radius);
+  const n=Math.min(2,Math.ceil((radius+75)/runtime.WCH));for(let x=cx-n;x<=cx+n;x++)for(let y=cy-n;y<=cy+n;y++)out.push(...chunk(x,y));return [...out,...(runtime.cultureResidents?.(radius)||[])].filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<radius);
  }
  function ensureMind(o){if(!o.mind){o.mind=mindProfile(o,runtime.seedOf,runtime.rng);const d=runtime.regionOfPos(o.homeX,o.homeY);o.worldFamily=d.worldFamily;o.habitat=habitatAt(d,o.homeX,o.homeY,runtime.seedOf);o.anatomy=anatomyOf({...o,role:livingDefinition(o.kind).role},o.worldFamily,runtime.seedOf);}return o;}
  function emit(o,time,full=false,origin='ambient'){

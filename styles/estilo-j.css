@@ -100,6 +100,8 @@ body.dev .devbox{display:block}
 .rare-notice{background:var(--void);border-color:#ffffff33}
 .rare-notice-copy strong{font-family:var(--display);font-weight:400;font-size:14px}
 .rare-notice-copy small{font-size:10px}
+/* Landscape laboratory keeps its raised dock on the right. */
+@media(max-height:440px){body.lab .rare-notice{left:16px;right:auto}}
 .scanner{background:var(--void);border-color:var(--line)}
 .scanner h2{font:400 14px/1.4 var(--display);color:var(--ink)}
 .fxpanel,.glasspanel,.lab-bar,.routehud{background:var(--void)}
