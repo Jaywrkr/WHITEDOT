@@ -8,7 +8,7 @@
 | 2 · Formas y especies generadas | `feat/cierre-f2-especies` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 3 · Ecosistemas y territorios vivos | `feat/cierre-f3-ecosistemas` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 4 · Instrumentos y síntesis modular | `feat/cierre-f4-sintesis` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 5 · Composición, géneros y mezclas | `feat/cierre-f5-composicion` | Pendiente |
+| 5 · Composición, géneros y mezclas | `feat/cierre-f5-composicion` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 6 · Interacciones que hacen música | `feat/cierre-f6-interacciones` | Pendiente |
 | 7 · Exploración y hallazgos con sentido | `feat/cierre-f7-hallazgos` | Pendiente |
 | 8 · Memoria, regreso y vínculos | `feat/cierre-f8-memoria` | Pendiente |

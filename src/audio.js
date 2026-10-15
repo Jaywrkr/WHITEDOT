@@ -471,14 +471,18 @@ export function initialize(runtime) {
   }
   // Neighbors retain their own groove/timbre/register while sharing the current harmonic center.
   function playTrack(d,s,t,E,ct,arrangement=MU.radio){
-    const base=d&&d.track;if(!base)return;const tr=arrangement?{...base,...arrangement}:base;const sc=MU.dnaA?.scale||d.scale,trans=MU.dnaA?MU.tr:runtime.BIOMES[d.z].tr+d.trOff,profile=musicalCharacter(d.genre),bar=(MU.step>>4)&1,nt=(dg,base)=>base+trans+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
+    const base=d&&d.track;if(!base)return;const tr=arrangement?{...base,...arrangement}:base;const sc=MU.dnaA?.scale||d.scale,trans=MU.dnaA?MU.tr:runtime.BIOMES[d.z].tr+d.trOff,nativeProfile=musicalCharacter(d.genre),profile=tr.hybrid?{...nativeProfile,low:Math.min(nativeProfile.low,tr.hybrid.high-12),high:Math.min(nativeProfile.high,tr.hybrid.high)}:nativeProfile,bar=(MU.step>>4)&1,nt=(dg,base)=>base+trans+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
     const gid=d.genre,bs=arrangement?tr.bass[s]:gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
     if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel((gid==="rominimal"?.13:.17)*(arrangement?.grammar.bassLevel||1)),d);}
     let h=tr.hook[s];if(h>=0&&!runtime.cultureListening&&!arrangement?.melodyRest&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);n=hookPitch(tr.hookI,n,profile);const expression=arrangement?.expression,accent=expression?phraseAccent(expression,s):1;
       const level=vel((.05+.05*E)*(arrangement?.grammar.hookLevel||1)*profile.level*accent);
-      const harmony=expression?.harmony&&s===0&&((MU.step>>4)%4===0);
+      const harmony=!tr.hybrid&&expression?.harmony&&s===0&&((MU.step>>4)%4===0);
       hookInst(tr.hookI,n,t,level*(harmony?.7:1),d,expression);
       if(harmony){const companion=hookPitch(tr.hookI,snap(n+4+(tr.hookI==='glass'?12:0),ct),profile);if(companion!==n)hookInst(tr.hookI,companion,t,level*.3,d,expression);}}
+    if(tr.hybrid?.harmony&&!arrangement?.melodyRest&&tr.section>0&&s===0&&(MU.step>>4)%8===0){
+      const instrument=['feltpiano','rhodes'].includes(tr.hookI)?'silkstrings':tr.hookI;
+      [ct[1],ct[3]].forEach(n=>hookInst(instrument,hookPitch(instrument,n-12,profile),t,vel(.012*(tr.grammar.hookLevel||1)),d,tr.expression));
+    }
   }
   function thunder(t){noise(t,"lowpass",900,.5,.25,.9,true);noise(t,"highpass",3000,.5,.06,.12);}
   const soon=(fn,origin="ambient")=>{if(ac)MU.queue.push(t=>runtime.withVoiceOrigin?runtime.withVoiceOrigin(origin,()=>fn(t)):fn(t));};

@@ -8,6 +8,7 @@ import {ecologyVoice} from './ecology-model.js';
 import {encounterVoice} from './encounter-families.js';
 import {rhythmVoice} from './percussion-model.js';
 import {blobVoice} from './blobs.js';
+import {hybridIdentity,hybridRegister} from './musical-hybrids.js';
 // Identidad musical estable por región; el aspecto no fija el instrumento.
 const ROLES = ['bajo', 'perc', 'acorde', 'lead', 'agudo'];
 const PROPS = {llanura:'piedra',bosque:'hongo',jardin:'campanilla',dunas:'cactus',tormenta:'antena',cueva:'gota',vacio:'astro'};
@@ -72,7 +73,7 @@ export function initialize(runtime) {
       const role=source.labSynth==='velvetbass'?'bajo':['analogpad','choir','orbitorgan'].includes(source.labSynth)?'acorde':'lead';
       raw={...raw,role,instrument:source.labSynth,low:role==='bajo'?36:45,high:role==='bajo'?54:69};
     }
-    return voiceRegister(raw,region.genre);
+    return hybridRegister(voiceRegister(raw,region.genre),hybridIdentity(region,runtime.seedOf,runtime.rng));
   }
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
     if (!runtime.ac || !region) return;

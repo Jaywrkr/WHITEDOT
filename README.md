@@ -20,6 +20,10 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Versión **1.1.0** · [C
 
 `feat/cierre-f4-sintesis` continúa la fase anterior. Siete instrumentos originales añaden piano modal, flauta, cuerdas sostenidas, tablas de onda, granular real, cuerda física y membrana. Los hilos de la tejedora transforman también señal y modulación; puedes conectarlos con el cubo. [Plan vigente](PLAN_CIERRE_2.0.md) · [Pruebas](scripts/cierre-f4-validation.json).
 
+## Cierre · fase 5 · Cruces musicales y espacio
+
+`feat/cierre-f5-composicion` continúa la fase anterior. Dieciséis influencias compositivas compatibles conservan los 52 estilos y zonas puras, con frases, armonías y registros que evolucionan sin moverse. [Plan vigente](PLAN_CIERRE_2.0.md) · [Pruebas](scripts/cierre-f5-validation.json).
+
 ## Cierre · fase 1 · identidades completas
 
 `feat/cierre-f1-identidades` parte de `main 6702093`, que ya integra M1. Ocho gramáticas de paisaje unen contornos, espacio vacío, materiales, habitantes comunes y carácter musical: cauces, raíces, terrazas, órbitas, arrecifes, bóvedas, estratos e islas. Variantes deterministas, no ocho mapas cerrados ni nuevos géneros: permanecen los 11 biomas y 52 estilos.

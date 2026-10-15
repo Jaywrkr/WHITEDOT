@@ -7,7 +7,7 @@ export function productionFrame(region,arrangement,seedOf,rng,context={}){
  const grammar={...arrangement.grammar,hookLevel:(arrangement.grammar.hookLevel||1)*(rest?.65:.85+random()*.1),bassLevel:(arrangement.grammar.bassLevel||1)*(rest?.8:.9),
   brightness:Math.min(arrangement.grammar.brightness||9000,score.signature==='calida'?6500:score.signature==='textural'?7200:8700)};
  // Long harmonic chapters grow from the regional palette without dissonant random chords.
- if(chapter>1&&['warm','organic','melodic','disco'].includes(context.character))grammar.progression=score.progression;
+ if(!arrangement.hybrid&&chapter>1&&['warm','organic','melodic','disco'].includes(context.character))grammar.progression=score.progression;
  const hook=arrangement.hook.map((n,i)=>rest&&i%8!==0?-1:n),out={...arrangement,grammar,hook,
   energy:Math.min(arrangement.energy,rest?.28:.65),production:{chapter,stage,signature:score.signature,score,soft},expression:{...arrangement.expression,toneScale:(arrangement.expression?.toneScale||1)*(rest?.8:1)}};
  const crosses={dub:'organic',organic:'dub',afro:'minimal',minimal:'afro',deep:'jazztronica',jazztronica:'deep',nudisco:'cosmic',cosmic:'nudisco',melodic:'progressive',progressive:'melodic'};

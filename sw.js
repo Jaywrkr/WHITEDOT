@@ -1,6 +1,7 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-1.1.0-cierre-f4';
+const CACHE='whitedot-1.1.0-cierre-f5';
 const SHELL=[
+ "./src/musical-hybrids.js",
  "./src/modular-synth.js",
  "./src/modular-routing.js",
  "./src/habitats.js",
