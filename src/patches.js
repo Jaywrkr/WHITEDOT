@@ -1,4 +1,4 @@
-import {SYNTH_PROGRAMS,synthProgram,filterMovement} from './synth-colors.js';
+import {SYNTH_PROGRAMS,synthProgram,filterMovement,opticalFilter} from './synth-colors.js';
 import {voiceLifetime} from './modular-synth.js';
 import {routeThreadGraph} from './modular-routing.js';
 const MATERIALS={wood:{name:'Madera cálida',tone:.7,tail:.75,attack:1.1,harmonics:.6},glass:{name:'Cristal suave',tone:1.05,tail:1.1,attack:.85,harmonics:.85},metal:{name:'Metal filtrado',tone:.9,tail:.85,attack:.75,harmonics:.8},air:{name:'Aire sedoso',tone:.65,tail:1.2,attack:1.6,harmonics:.5}};
@@ -31,7 +31,7 @@ export function initialize(runtime){
   patchTick();const ac=runtime.ac;
   if(!runtime.S.sound||ac?.state!=='running'||!runtime.bus||!runtime.verbIn||!runtime.dsend||active.length>=32){try{return emit();}finally{current=previous;}}
   const original=[runtime.bus,runtime.verbIn,runtime.dsend],filters=[],verb=ac.createGain(),delay=ac.createGain();
-  const movement=filterMovement(patch.program,patch.cutoff,voice.role,time,runtime.SIX,source?.energy||runtime.body?.speed/180||0,runtime.weather?.i||0);
+  const movement=opticalFilter(filterMovement(patch.program,patch.cutoff,voice.role,time,runtime.SIX,source?.energy||runtime.body?.speed/180||0,runtime.weather?.i||0),source?.opticalPosition,voice.role);
   for(let i=0;i<movement.stages;i++){const f=ac.createBiquadFilter();f.type=movement.type;f.frequency.value=patch.cutoff;f.Q.value=movement.type==='bandpass'?.85:.55;
    f.frequency.setValueAtTime?.(movement.start,time);f.frequency.exponentialRampToValueAtTime?.(movement.end,time+movement.duration);filters.push(f);if(i)filters[i-1].connect(f);}
   const lifetime=voice.sustained?24.3:voiceLifetime(voice.instrument),modularNodes=[];

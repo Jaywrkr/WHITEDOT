@@ -1,3 +1,9 @@
+# Experiencia 11 · Espejos y percepción
+
+Rama `feat/experiencia-11-optica`. Ángulos y alineación de espejos/vidrios modulan filtros reales de la fuente: apertura y pendientes de 12/24/36/48 dB, limitadas en graves. Señales ligadas al onset y etiquetas de función musical; panel óptico compacto.
+
+Validación: Auditoría/Node completos; glass_smoke, mirrors_smoke y synth_bank_smoke; glass_mix y synth_bank_mix. Jay mantiene PR/merge.
+
 # Experiencia 10 · Profundidad musical
 
 Rama `feat/experiencia-10-musica`. Banco ampliado a 75 instrumentos: 32 colores articulados nuevos, incluida modulación FM real. Veinticuatro gramáticas de respuesta de encuentros complementan los 16 cruces de radio sin cambiar sus recetas. Dos notas como máximo cada cuatro compases, canceladas con menú/silencio; laboratorio 211 destinos.

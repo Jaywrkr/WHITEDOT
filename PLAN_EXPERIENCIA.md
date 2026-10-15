@@ -14,7 +14,7 @@ Jay autorizó las catorce fases. Una rama por fase, encadenadas. Codex commit/pu
 | 8 | Atlas y expediciones sonoras | `feat/experiencia-08-atlas` | Implementada; validación registrada abajo |
 | 9 | Coleccionar para crear | `feat/experiencia-09-creacion` | Implementada; validación registrada abajo |
 | 10 | Profundidad musical | `feat/experiencia-10-musica` | Implementada; validación registrada abajo |
-| 11 | Espejos y percepción | `feat/experiencia-11-optica` | Pendiente |
+| 11 | Espejos y percepción | `feat/experiencia-11-optica` | Implementada; validación registrada abajo |
 | 12 | Biodiversidad territorial | `feat/experiencia-12-ecosistemas` | Pendiente |
 | 13 | Identidad y constelaciones | `feat/experiencia-13-identidad` | Pendiente |
 | 14 | Auditoría integrada | `feat/experiencia-14-cierre` | Pendiente |
@@ -102,3 +102,9 @@ Validación: Auditoría/Node completos; experience_garden_smoke y house_v2_smoke
 Banco ampliado a 75 instrumentos: 32 colores articulados nuevos, incluida modulación FM real. Veinticuatro gramáticas de respuesta de encuentros complementan los 16 cruces de radio sin cambiar sus recetas. Dos notas como máximo cada cuatro compases, canceladas con menú/silencio; laboratorio 211 destinos.
 
 Validación: Auditoría/Node completos; instrument_techniques_smoke y lab_landscape_smoke; technique_mix, lab_music_mix y experience_learning_mix. Aceptación física y CI del PR, separados.
+
+## Entrega 11 · Espejos y percepción
+
+Ángulos y alineación de espejos/vidrios modulan filtros reales de la fuente: apertura y pendientes de 12/24/36/48 dB, limitadas en graves. Señales ligadas al onset y etiquetas de función musical; panel óptico compacto.
+
+Validación: Auditoría/Node completos; glass_smoke, mirrors_smoke y synth_bank_smoke; glass_mix y synth_bank_mix. Aceptación física y CI del PR, separados.

@@ -214,3 +214,5 @@ body.world-focus .goal{display:none}
 .atlas-summary svg{display:block;width:120px;height:24px;fill:none;stroke:#bda5f5;stroke-width:1}.atlas-summary p,.atlas-summary small{font-size:10px;line-height:1.7}
 
 #houseGardenTools{font-size:10px;max-width:100%;margin:4px 0}#houseGardenTools summary{padding:8px;cursor:pointer}#houseGardenTools p{font-size:10px}#gardenSlots{display:flex;flex-wrap:wrap;gap:4px}#gardenSlots button{font-size:9px;min-height:44px}#gardenSave,#gardenSets{font-size:10px;min-height:40px}
+
+#mirrorPanel{max-width:min(280px,calc(100vw - 24px));background:#000}#mirrorPanel label,#mirrorInfo{font-size:10px;line-height:1.6}#mirrorPanel h3{font-size:12px}

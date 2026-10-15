@@ -41,7 +41,7 @@ export function initialize(runtime){
   saved[site.id]={angles:[...site.angles],seen:true};
  }
  function emit(site,pane,time,origin='ambient'){
-  const p=glassShape(site.angles,pane,site.region,runtime.seedOf),source=site.plates[pane];
+  const p=glassShape(site.angles,pane,site.region,runtime.seedOf),source=site.plates[pane];source.opticalPosition=(1+Math.cos(site.angles[pane]-site.angles[(pane+1)%3]))/2;
   runtime.playVoice(`installation:glass:${pane}`,p.degree,time,site.region,false,origin==='player'?.2:.12,source,origin);
   setTimeout(()=>{site.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));
  }

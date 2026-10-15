@@ -1,3 +1,13 @@
+# Experiencia · fase 11
+
+Rama `feat/experiencia-11-optica`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Ángulos y alineación de espejos/vidrios modulan filtros reales de la fuente: apertura y pendientes de 12/24/36/48 dB, limitadas en graves. Señales ligadas al onset y etiquetas de función musical; panel óptico compacto.
+
+Validación: Auditoría/Node completos; glass_smoke, mirrors_smoke y synth_bank_smoke; glass_mix y synth_bank_mix. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 10
 
 Rama `feat/experiencia-10-musica`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.

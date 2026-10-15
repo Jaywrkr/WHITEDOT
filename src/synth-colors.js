@@ -39,3 +39,11 @@ export function filterMovement(program,cutoff,role,time,six=.125,gesture=0,weath
  return {start:Math.max(low,centre*a*shift),end:Math.max(low,centre*b*shift),
   duration:Math.max(.08,Math.min(.8,six*(bass?2:3))),type:bass?'lowpass':program.type,stages:program.stages,slope:program.slope,time};
 }
+
+// Optical gestures change real source filters, never the master or unrelated voices.
+export function opticalFilter(movement,position,role){
+ if(!Number.isFinite(position))return movement;
+ const p=Math.max(0,Math.min(1,position)),bass=role==='bajo',low=bass?150:250,high=bass?1200:6500,scale=.35+p*.65;
+ const stages=movement.type==='lowpass'?Math.min(bass?2:4,1+Math.floor(p*3.99)):movement.stages;
+ return {...movement,start:Math.max(low,Math.min(high,movement.start*scale)),end:Math.max(low,Math.min(high,movement.end*scale)),stages,slope:movement.type==='lowpass'?stages*12:null,optical:p};
+}
