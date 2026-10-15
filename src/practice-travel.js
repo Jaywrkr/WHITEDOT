@@ -44,6 +44,8 @@ export function initialize(runtime){
  }
  function back(){const p=runtime.S.practiceTravel?.previous;if(!runtime.inWorld()||blocked()||!validPoint(p)||!runtime.save())return false;
   const here={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};runtime.S.practiceTravel.previous=here;$('mMenu').hidden=true;move(p);return true;}
+ function travel(point){if(!runtime.inWorld()||blocked()||!validPoint(point)||runtime.duetRoom||!runtime.save())return false;
+  runtime.S.practiceTravel=normalizePracticeTravel(runtime.S.practiceTravel);runtime.S.practiceTravel.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};move(point);return true;}
  function dailyArrival(){
   const s=runtime.S;if(s.arrivalMode==='continue'||!s.help?.mundo||s.previewSeed||s.destination||new URLSearchParams(globalThis.location?.search||'').has('addr')||!runtime.save())return false;
   const point=choosePracticePlace(runtime,runtime.rng(runtime.seedOf('travel:arrival:v1:'+s.todayKey)),s.practiceTravel?.recent||[]);if(!point)return false;
@@ -51,5 +53,5 @@ export function initialize(runtime){
   s.wx=point.x;s.wy=point.y;s.layer='superficie';return true;
  }
  $('bJump').onclick=jump;$('bJumpBack').onclick=back;setInterval(ui,250);ui();
- Object.defineProperties(runtime,{dailyArrival:{get:()=>dailyArrival},jumpPracticePlace:{get:()=>jump},returnPracticePlace:{get:()=>back}});
+ Object.defineProperties(runtime,{canPracticeTravel:{get:()=>()=>!blocked()&&!runtime.duetRoom},travelPracticePoint:{get:()=>travel},dailyArrival:{get:()=>dailyArrival},jumpPracticePlace:{get:()=>jump},returnPracticePlace:{get:()=>back}});
 }

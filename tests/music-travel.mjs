@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {genrePlaces} from '../src/music-travel.js';
+import {createAutoPulse} from '../src/autopilot.js';
+import {createCueBuffer} from '../src/feedback.js';
+const calls=[],r={S:{wx:25,wy:-5},REG:2,WCH:10,regionOfPos(x,y){calls.push([x,y]);return {genre:'deep',sea:x<0};}};
+const places=[...genrePlaces(r,undefined,1)];assert.equal(places.length,9);assert.deepEqual(calls[0],[30,-10]);assert(places.filter(Boolean).every(p=>p.x>=0));assert.equal(new Set(calls.map(String)).size,9);
+const pulse=createAutoPulse(()=>0);for(let i=0;i<1000;i++)assert.equal(pulse.tick(.05,false),false);
+let n=0;for(let i=0;i<482;i++)if(pulse.tick(.05,true))n++;assert.equal(n,2);pulse.reset();assert.equal(pulse.tick(100,true),false,'resuming cannot catch up elapsed time');
+const buffer=createCueBuffer(2),player={x:1,y:1},other={x:2,y:2};buffer.add(player,'lead',10,null,'player');buffer.add(other,'perc',10);buffer.add(other,'bajo',10);
+assert(buffer.active(10).some(c=>c.source===player));buffer.add(player,'lead',11,{slope:24});assert.equal(buffer.active(11).length,2);assert.equal(buffer.active(11).find(c=>c.source===player).filter.slope,24);
+console.log('PASS bounded real-place traversal, paused autonomous clock and foreground cue priority');

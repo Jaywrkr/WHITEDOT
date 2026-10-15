@@ -73,6 +73,7 @@
   <button class="ico round" id="bDeploy" aria-label="Desplegar Estudio aquí" title="Desplegar Estudio aquí" hidden><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg></button>
   <button class="ico round" id="bAuto" aria-label="Iniciar paseo musical" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></svg></button>
   <button class="ico" id="bJump" aria-label="Saltar a otro paisaje musical" hidden>Saltar</button>
+  <button class="ico" id="bStyles" aria-label="Elegir estilo musical" hidden>Estilos</button>
   <button class="ico round" id="bMenu" aria-label="Menú"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
 </div>
 <div class="modal lite" id="mCube" role="dialog" aria-modal="true" aria-labelledby="cubeTitle" hidden><div class="sheet cube-sheet">
@@ -89,7 +90,12 @@
   <h2>Escuchar</h2><p id="scannerRegion"></p><ul id="scannerSources"></ul><small id="scannerHint"></small>
 </aside>
 <aside class="routehud" id="routeHud" aria-label="Orientación al destino" hidden><svg id="routeArrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l7-9 7 9M12 6v15"/></svg><div><strong id="routeName"></strong><small id="routeDetail"></small></div><button id="routeAuto" aria-label="Viajar automáticamente" aria-pressed="false">▶</button><button id="navCancel" aria-label="Cancelar destino">×</button></aside>
-<aside class="routehud" id="autopilotHud" aria-label="Paseo musical" hidden><div><strong id="autoStatus">Paseo musical</strong><small>Mueve el punto para recuperar el control</small></div><button id="autoStop" aria-label="Detener paseo">■</button></aside>
+<aside class="routehud" id="autopilotHud" aria-label="Paseo musical" hidden><div><strong id="autoStatus">Paseo musical</strong><small>Mueve el punto para recuperar el control</small></div><button id="autoPulse" aria-pressed="false">Pulsos: no</button><button id="autoStop" aria-label="Detener paseo">■</button></aside>
+<div class="modal lite" id="mMusicTravel" role="dialog" aria-modal="true" aria-labelledby="musicTravelTitle" hidden><div class="sheet">
+ <h2 id="musicTravelTitle">Elige dónde escuchar</h2>
+ <p id="musicTravelCount"></p><label for="musicTravelSearch">Busca un estilo</label><input id="musicTravelSearch" type="search" maxlength="60" autocomplete="off">
+ <p id="musicTravelStatus" role="status" aria-live="polite"></p><div id="musicTravelList" class="scroll"></div><button id="musicTravelClose">Volver</button>
+</div></div>
 <div class="zone" id="zone" aria-live="polite"><small id="zMood"></small><b id="zName"></b><span id="zDo"></span></div>
 
 <div class="modal" id="mSeeds" hidden><div class="sheet"><h2>Semillas de prueba</h2><p id="seedSummary">Tu progreso de cada semilla se conserva.</p><p id="seedInfo"></p><label for="seedGeneration">Paisaje</label><select id="seedGeneration"><option value="2">Paisajes vivos · explorar</option><option value="1">Original · volver y comparar</option></select><label for="seedLayout">Espacio</label><select id="seedLayout"><option value="immense">Inmenso · regiones de 100.800</option><option value="grand">Gran territorio · regiones de 50.400</option><option value="vasto">Vasto · regiones de 18.000</option><option value="wide">Amplio · más espacio</option><option value="classic">Clásico · comparar</option></select><form id="seedForm" class="row"><label for="seedValue">Semilla</label><input id="seedValue" maxlength="40" autocomplete="off"><button type="submit">Probar</button></form><div class="row" id="seedPresets"><button data-seed="blobs-01">Blobs I</button><button data-seed="blobs-02">Blobs II</button><button data-seed="bosque-01">Otra tierra</button><button data-seed="humedal-01">Humedal</button><button data-seed="salinas-01">Salinas</button><button data-seed="basalto-01">Basalto</button><button data-seed="micelio-01">Micelio</button></div><div class="row"><button id="seedNext">Otra semilla</button><button id="seedCenter">Volver al centro</button><button id="seedOriginal">Mi partida</button><button id="seedClose">Cerrar</button></div></div></div>

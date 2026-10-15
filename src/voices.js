@@ -110,7 +110,7 @@ export function initialize(runtime) {
     if(origin==='ambient'&&(voice.role==='lead'||voice.role==='agudo')&&runtime.MU.radio?.genre===region.genre&&runtime.MU.radio?.melodyRest)return;
     function hit(t, degree, strength) {
       if(['player','field','lesson'].includes(origin))runtime.focusGesture?.(t,source,voice.role);
-      runtime.soundCue?.(source,voice.role,t);
+      runtime.soundCue?.(source,voice.role,t,origin);
       const n = note(degree);if(origin==='player'&&source)runtime.identityGesture?.(source,voice,n);let v = runtime.vel(strength * volume*(voice.volume??1))*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
       const articulation={technique:runtime.cardTechnique?.(source)|| (source?.expression==='staccato'?'muted':source?.expression==='glide'?'slide':voice.technique||'normal')};
       if(source){source.musicRole=voice.role;source.musicInstrument=voice.instrument;}
