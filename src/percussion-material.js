@@ -1,5 +1,7 @@
+import {EXTRA_STRIKES} from './expanded-content.js';
 // Original compact physical-material strikes; no recordings, bright jingles or loops.
 export const STRIKE_BODIES=Object.freeze({
+ ...EXTRA_STRIKES,
  stone:{frequency:59,ratio:1.58,decay:.32,fall:1.8,noise:0},
  hollow:{frequency:118,ratio:2.23,decay:.23,fall:1.16,noise:.12},
  roots:{frequency:410,ratio:1.43,decay:.075,fall:1,noise:.25},

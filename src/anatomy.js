@@ -1,6 +1,6 @@
 // Reproducible topology, independent of placement RNG. The same descriptor draws a card/world.
 export const ANATOMY_VERSION=1;
-const shapes=new Set('branch roots pods vine worm network flower reeds moss lichen cactus seed manta moth deer turtle beetle crab jelly whale blob mill arches orbit plaza mirrors bridge shelter'.split(' '));
+const shapes=new Set('frond chime cap fan cluster kite ribbon spinner spiral hare lantern centipede harp cairn gate nest wheel branch roots pods vine worm network flower reeds moss lichen cactus seed manta moth deer turtle beetle crab jelly whale blob mill arches orbit plaza mirrors bridge shelter'.split(' '));
 const hash=s=>{let h=2166136261;for(const ch of String(s))h=Math.imul(h^ch.charCodeAt(0),16777619);return h>>>0;};
 const fraction=(seed,n)=>{let v=Math.imul(seed^(n*374761393),668265263);v=Math.imul(v^v>>>13,1274126177);return ((v^v>>>16)>>>0)/4294967296;};
 export function normalizeAnatomy(raw){
@@ -28,6 +28,24 @@ export function anatomyPath(a,phase=0){
  const ellipse=(x,y,rx,ry)=>{M(x+rx,y);C(x+rx,y+ry*.56,x+rx*.56,y+ry,x,y+ry);C(x-rx*.56,y+ry,x-rx,y+ry*.56,x-rx,y);C(x-rx,y-ry*.56,x-rx*.56,y-ry,x,y-ry);C(x+rx*.56,y-ry,x+rx,y-ry*.56,x+rx,y);};
  const branch=(n,root=false)=>{M(0,h);Q(sway,-h*.2,g.lean,-h);for(let k=1;k<=n;k++){const y=h-k*2*h/(n+1);for(const side of [-1,1]){M(g.lean*k/(n+1),y);Q(side*w*.4,y-h*.28,side*w*(.5+k/(n+1)*.45),y-h*.24);if(root){L(side*w*.9,y);L(side*w*.65,y+.12);}}}};
  switch(a.shape){
+
+ case 'frond':M(0,h);Q(-w*.2,0,0,-h);for(let k=0;k<g.limbs+2;k++){const y=h-k*2*h/(g.limbs+2);for(const side of [-1,1]){M(0,y);Q(side*w,y-h*.4,side*w*.7,y-h*.5);}}break;
+ case 'chime':M(-w,-h*.8);Q(0,-h,w,-h*.8);for(let k=0;k<g.limbs;k++){const x=-w+2*w*(k+.5)/g.limbs;M(x,-h*.8);L(x,h*(.3+k/g.limbs*.5));ellipse(x,h*(.3+k/g.limbs*.5),.08,.06);}break;
+ case 'cap':M(-w,0);Q(0,-h*1.2,w,0);Q(0,h*.25,-w,0);M(-.1,0);L(-.1,h);M(.1,0);L(.1,h);break;
+ case 'fan':for(let k=0;k<g.limbs+2;k++){const a=-Math.PI+(k+.5)*Math.PI/(g.limbs+2);M(0,h*.5);Q(Math.cos(a)*w*.3,0,Math.cos(a)*w,Math.sin(a)*h);}break;
+ case 'cluster':for(let k=0;k<g.lobes;k++){const a=k*2.4;ellipse(Math.cos(a)*w*.55,Math.sin(a)*h*.45,.1+(k%2)*.08,.12);}break;
+ case 'kite':M(0,-h);Q(w*.4,-h*.2,w,0);Q(w*.4,h*.2,0,h*.45);Q(-w*.4,h*.2,-w,0);Q(-w*.4,-h*.2,0,-h);M(0,h*.4);Q(-w*.3,h*.8,0,h);break;
+ case 'ribbon':M(-w,0);C(-w*.3,-h,w*.3,h,w,0);C(w*.3,h*.6,-w*.3,-h*.6,-w,0);M(w*.8,0);L(w,h*.4);break;
+ case 'spinner':ellipse(0,0,w*.25,h*.3);for(let k=0;k<4;k++)for(const side of [-1,1]){M(side*w*.2,(k-1.5)*.12);L(side*w*.7,(k-1.5)*h*.4);L(side*w,(k-1.5)*h*.65);}break;
+ case 'spiral':for(let k=0;k<28;k++){const a=k*.35,r=(1-k/32);const x=Math.cos(a)*w*r,y=Math.sin(a)*h*r;k?L(x,y):M(x,y);}M(-w,h*.5);L(w,h*.5);break;
+ case 'hare':ellipse(0,0,w*.7,h*.45);M(w*.4,-h*.15);Q(w*.2,-h*1.3,w*.55,-h*.9);M(w*.65,-h*.2);Q(w*.7,-h*1.2,w*.9,-h*.8);M(-w*.5,h*.3);L(-w*.8,h*.65);break;
+ case 'lantern':M(0,-h);Q(w,-h*.3,w*.5,h*.6);Q(0,h,-w*.5,h*.6);Q(-w,-h*.3,0,-h);M(-w*.4,0);L(w*.4,0);M(0,-h*.7);L(0,h*.6);break;
+ case 'centipede':for(let k=0;k<g.segments;k++){const x=-w+2*w*k/g.segments,y=Math.sin(k+phase*.2)*h*.15;ellipse(x,y,.13,.13);M(x,y);L(x-.1,y+h*.5);M(x,y);L(x+.1,y-h*.5);}break;
+ case 'harp':M(-w,h);Q(-w,-h,w,-h);L(w,h);L(-w,h);for(let k=1;k<g.limbs+1;k++){const x=-w+2*w*k/(g.limbs+1);M(x,h);L(x,-h*.6);}break;
+ case 'cairn':for(let k=0;k<3;k++)ellipse(k%2?.1:0,h*.7-k*h*.5,w*(.9-k*.2),h*.2);break;
+ case 'gate':M(-w,h);L(-w,-h);Q(0,-h*.7,w,-h);L(w,h);M(-w*.7,h);L(-w*.7,-h*.6);M(w*.7,h);L(w*.7,-h*.6);break;
+ case 'nest':for(let k=0;k<3;k++){M(-w,h*.1+k*.16);Q(0,h,w,-h*.1+k*.16);}ellipse(0,0,w*.35,h*.3);break;
+ case 'wheel':ellipse(0,0,w,h);for(let k=0;k<g.limbs+2;k++){const a=k*6.283/(g.limbs+2)+phase*.1;M(0,0);L(Math.cos(a)*w,Math.sin(a)*h);}break;
  case 'branch':branch(g.limbs);break;
  case 'roots':branch(g.limbs,true);M(-w,h*.6);Q(0,-h*1.1,w,h*.6);break;
  case 'pods':for(let k=0;k<g.limbs;k++){const x=(k-(g.limbs-1)/2)*.32;M(x,h*.65);Q(x+sway,0,x,-h*.25);ellipse(x+sway,-h*.45,.1,.2+(k%2)*.08);}break;

@@ -1,3 +1,13 @@
+# Experiencia · fase 12
+
+Rama `feat/experiencia-12-ecosistemas`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Se incorporan veinte linajes y doce familias acústicas: 48 linajes, 21 percusiones, 70 tarjetas y 243 destinos de laboratorio. Veintidós ecorregiones se distribuyen sobre los once biomas originales; no cambian sus posiciones ni generadores. Rasgos, anatomías, agrupaciones y semillas nuevas independientes.
+
+Validación: Auditoría/Node completos; living_smoke, percussion_smoke y lab_smoke; living_mix y percussion_mix. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 11
 
 Rama `feat/experiencia-11-optica`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.

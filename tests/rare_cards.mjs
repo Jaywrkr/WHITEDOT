@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {RARE_CARDS,RARE_BOOK_LIMIT,rareDefinition,rarityLabel,cardKey,makeRareCard,normalizeRareBook,storeRareCard,cardSerial} from '../src/rare-card-model.js';
 import {worldIdentity} from '../src/world-identity.js';import {encodePlace,decodePlace} from '../src/share-tools.js';import {rarePortrait} from '../src/rare-card-art.js';
 import {RHYTHM_EMPTY_CHANCE,FOSSIL_DENOMINATOR} from '../src/percussion-model.js';import {RELIC_RATE,MAGICAL_RELIC_RATE} from '../src/relics.js';import {NATURAL_BOX_RATE,POWER_IDS} from '../src/expansion-music.js';
-assert.equal(Object.keys(RARE_CARDS).length,50);assert.equal(rareDefinition('bad'),null);assert.equal(rareDefinition('__proto__'),null);
+assert.equal(Object.keys(RARE_CARDS).length,70);assert.equal(rareDefinition('bad'),null);assert.equal(rareDefinition('__proto__'),null);
 assert.equal(rareDefinition('fossil').probability,RHYTHM_EMPTY_CHANCE/FOSSIL_DENOMINATOR);assert.equal(rarityLabel('fossil'),'≈1/640 sectores de tierra');
 assert.equal(rareDefinition('relic:ordinary').probability,RELIC_RATE-MAGICAL_RELIC_RATE);assert.equal(rareDefinition('relic:magical').probability,MAGICAL_RELIC_RATE);
 assert.equal(rareDefinition('anomaly:canon').probability,1/750);assert.equal(rareDefinition('anomaly:espejo').probability,1/2400);assert.equal(rareDefinition('anomaly:luna').probability,1/6000);
@@ -22,6 +22,6 @@ const overflow=normalizeRareBook({items:Array.from({length:600},(_,i)=>makeRareC
 const unknown=makeRareCard({...raw,address:null,legacy:true});assert.equal(unknown.precision,'unknown');assert(unknown.legacy);
 assert.equal(cardSerial(card.id).length,8);assert.equal(cardKey(card.type,card.sourceId,world),card.id);
 for(const type of Object.keys(RARE_CARDS)){const art=rarePortrait({type,artVariant:11});assert(art.includes('<svg')&&art.includes('rare-glyph'));assert(!art.includes('<img'));assert(!art.includes('http'));}
-console.log('PASS 50 rare card types with sourced conditional odds, place-code roundtrip, invalid-save normalization, encounter/seed dedupe, bounded book and original safe portraits');
+console.log('PASS 70 rare card types with sourced conditional odds, place-code roundtrip, invalid-save normalization, encounter/seed dedupe, bounded book and original safe portraits');
 
 const living=makeRareCard({...raw,type:'living:relation',context:{phase:'noche',weather:'calma'}});assert.equal(living.odds.probability,null);assert.match(rarityLabel(living.type,living.odds),/sin estimar/);assert.deepEqual(normalizeRareBook({items:[living]}).items[0].context,living.context);

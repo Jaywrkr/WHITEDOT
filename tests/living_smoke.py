@@ -29,7 +29,7 @@ try:
    page.wait_for_function('__testRuntime.S.livingSeen[__testRuntime.labLiving]!==undefined',timeout=5000)
    anatomies.append(page.evaluate('async()=>{const {anatomyPath}=await import("/src/anatomy.js");return anatomyPath(__testRuntime.livingNear()[0].anatomy);}'))
    if kind in ['breath-tree','moth','crab','cathedral']:page.screenshot(path='/tmp/whitedot-f2-'+kind+'.png')
-  assert len(set(anatomies))==28,'each lineage must render its own topology'
+  assert len(set(anatomies))==48,'each lineage must render its own topology'
   page.evaluate('()=>{const r=__testRuntime;r.givePower("cometa");document.getElementById("mMenu").hidden=false;window.__until=r.powers.cometa;}')
   page.wait_for_timeout(600);assert page.evaluate('__testRuntime.hasPower("cometa")')
   page.evaluate('()=>{const r=__testRuntime;for(let i=0;i<300;i++)r.cajasTick(.1);if(r.powers.cometa!==__until)throw Error("modal power deadline changed");}')

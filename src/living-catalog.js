@@ -1,3 +1,4 @@
+import {EXPANDED_LIVING} from './expanded-content.js';
 import {musicIdentity} from './musical-recipes.js';
 import {interactionInstruments,expressiveBassInstruments} from './musical-character.js';
 // Independent namespaces: additions do not consume the legacy generator's RNG.
@@ -34,8 +35,10 @@ export const LIVING_CATALOG=Object.freeze([
  building('mirror-grove','Arboleda de espejos','orbita','acorde','mirrors','vidrio',['cristales','ruinas']),
  building('bridge','Puente de respuesta','respuesta','bajo','bridge','cuerda',['lago','ruinas']),
  building('membrane-home','Refugio de membranas','presion','bajo','shelter','membrana',['tormenta','dunas']),
+ ...EXPANDED_LIVING,
 ]);
 for(const item of LIVING_CATALOG){Object.freeze(item.affinity);Object.freeze(item);}
+export const LEGACY_LIVING_CATALOG=Object.freeze(LIVING_CATALOG.filter(d=>!d.expansion));
 export const livingDefinition=id=>LIVING_CATALOG.find(v=>v.id===id);
 export const RHYTHM_FAMILIES=Object.freeze({straight:[0,4,8,12],broken:[0,3,7,10,14],sync:[0,6,9,14],free:[0,5,11],clave:[0,3,6,10,12],swing:[0,3,6,10,13],half:[0,8,14],double:[0,2,4,6,8,10,12,14]});
 export function musicRecipe(region,seedOf,rng){
@@ -53,8 +56,8 @@ export function livingChunk(cx,cy,size,region,biome,seedOf,rng,groups=['flora','
  const density=Math.floor(random()*4),out=[];
  for(let i=0;i<density;i++){
   const group=['flora','fauna','architecture'][Math.floor(random()*3)];
-  let pool=LIVING_CATALOG.filter(d=>d.group===group&&d.affinity.includes(biome));
-  if(!pool.length)pool=LIVING_CATALOG.filter(d=>d.group===group);if(!pool.length)continue;
+  let pool=LEGACY_LIVING_CATALOG.filter(d=>d.group===group&&d.affinity.includes(biome));
+  if(!pool.length)pool=LEGACY_LIVING_CATALOG.filter(d=>d.group===group);if(!pool.length)continue;
   const d=pool[Math.floor(random()*pool.length)],variant=Math.floor(random()*256);
   if(d.id==='whale'&&variant%32!==0)continue;
   if(d.group==='architecture'&&variant%8!==0)continue;

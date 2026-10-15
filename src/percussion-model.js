@@ -1,6 +1,8 @@
+import {EXTRA_RHYTHMS} from './expanded-content.js';
 export const RHYTHM_EMPTY_CHANCE=.3,FOSSIL_DENOMINATOR=192;
 // An additive stream: existing terrain, flora, genres and favourite coordinates never move.
 export const RHYTHM_ELEMENTS=Object.freeze({
+ ...EXTRA_RHYTHMS,
  stone:{name:'Piedra de bombo',material:'metal',voices:['kick','tom'],gesture:'hold',hint:'Pasa para golpear; permanece para sostener el pulso grave.'},
  hollow:{name:'Tronco hueco',material:'wood',voices:['conga','tom'],gesture:'hold',hint:'Entra para golpear; quédate para una respuesta sincopada.'},
  roots:{name:'Raíces de clave',material:'wood',voices:['wood','rim'],gesture:'cross',hint:'Cruza las raíces; cada entrada añade un acento seco.'},
@@ -11,7 +13,7 @@ export const RHYTHM_ELEMENTS=Object.freeze({
  fossil:{name:'Fósil de ritmo',material:'wood',voices:['wood','tom'],gesture:'hold',hint:'Toca el fósil; permanece para despertar su ritmo lento y cambiante.'},
  pool:{name:'Charco de toms',material:'glass',voices:['tom','conga'],gesture:'hold',hint:'Entra para un golpe redondo; permanece para una frase grave.'}
 });
-export const RHYTHM_KINDS=Object.keys(RHYTHM_ELEMENTS).filter(k=>k!=='fossil');
+export const RHYTHM_KINDS=Object.keys(RHYTHM_ELEMENTS).filter(k=>k!=='fossil'&&!RHYTHM_ELEMENTS[k].expansion);
 const calm=g=>['ambient','heart','downtempo','dub','dubtechno','berlinschool'].includes(g);
 export function rhythmVoice(kind,region,seedOf){
  const [,family,variant='0']=kind.split(':'),spec=RHYTHM_ELEMENTS[family];if(!spec)return null;
