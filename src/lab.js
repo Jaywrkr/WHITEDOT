@@ -1,4 +1,5 @@
 import {hybridIdentity} from './musical-hybrids.js';
+import {labScore} from './lab-score.js';
 // Laboratorio: un mundo de prueba aparte (no toca tu partida) para probar cada elemento interactivo,
 // uno por uno, y anotar qué mejorar. Te pone frente al elemento, dice qué probar, puede callar la música
 // del lugar («Solo») y exporta un informe en Markdown para llevarlo a Claude/ChatGPT.
@@ -38,10 +39,10 @@ export function initialize(runtime){
  }
  function locate(e){
   const f=e.find,home=Math.floor(runtime.REG/2)*runtime.WCH;
-  if(['landscape','hybrid'].includes(f.type)){
+  if(['landscape','hybrid','band'].includes(f.type)){
    const R=size();for(let radius=0;radius<=32;radius++)for(let x=-radius;x<=radius;x++)for(let y=-radius;y<=radius;y++){
     if(Math.max(Math.abs(x),Math.abs(y))!==radius)continue;
-    const d=runtime.regionOfPos((x+.5)*R,(y+.5)*R);if(d.sea||(f.type==='landscape'?d.worldFamily?.id!==f.family:hybridIdentity(d,runtime.seedOf,runtime.rng)?.id!==f.hybrid))continue;
+    const d=runtime.regionOfPos((x+.5)*R,(y+.5)*R);if(d.sea||(f.type==='landscape'?d.worldFamily?.id!==f.family:f.type==='band'?labScore(d,runtime.seedOf,runtime.rng)?.id!==f.band:hybridIdentity(d,runtime.seedOf,runtime.rng)?.id!==f.hybrid))continue;
     // Locate an actual inhabitant, using exactly the same population as the World.
     for(let a=0;a<runtime.REG;a++)for(let b=0;b<runtime.REG;b++){
      const cx=x*runtime.REG+a,cy=y*runtime.REG+b,biome=runtime.BIOMES[d.z].id,
@@ -73,6 +74,7 @@ export function initialize(runtime){
  function closeOverlays(){for(const m of document.querySelectorAll('.modal:not([hidden])'))if(m.id!=='mLab')m.hidden=true;if(runtime.fxState?.open)runtime.fxReset?.();}
  function go(id=book.current){
   const e=labElement(id)||LAB_ELEMENTS[0];book.current=e.id;keep();closeOverlays();
+  runtime.labClassicMusic=['music','hybrid'].includes(e.find.type);runtime.labLiveMusic=e.find.type==='band';
   runtime.stopAutopilot?.();runtime.clearPowers?.();runtime.cancelMateria?.();
   runtime.labLiving=e.find.type==='living'?e.find.kind:['synth','filter'].includes(e.find.type)?'breath-tree':null;runtime.labSynth=e.find.type==='synth'?e.find.instrument:null;runtime.labFilter=e.find.type==='filter'?e.find.program:null;
   runtime.labRhythm=e.find.type==='rhythm'?e.find.kind:null;

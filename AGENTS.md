@@ -4,7 +4,7 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 
 ## Leer primero
 
-**Estado de entrega:** `audit/cierre-2-validacion`, 2.0.0-rc.9, revisa el cierre de los ocho bloques e incorpora la corrección A29 de guardado. Leer AUDITORIA_ACEPTACION_2.0, CIERRE_2.0 y el handoff vigente para evidencia y aceptación externa; no reiniciar fases a partir de pendientes históricos. Jay mantiene PR/merge.
+**Estado de entrega:** `feat/lab-l1-adn-territorial`, 2.1.0-alpha.1, L1 de [PLAN_LABORATORIO_VIVO.md](PLAN_LABORATORIO_VIVO.md). Ese es el ciclo vigente: L1–L7 autorizadas consecutivamente, una rama hija por fase, sin confirmaciones intermedias. No reiniciar fases históricas. Jay mantiene PR/merge. La auditoría 2.0 anterior conserva su aceptación externa pendiente.
 
 **Prioridad vigente:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida el cierre por decisión de Jay. No confundir su F1 con la fase visual 1 histórica ni con M1. Conservar estados y trabajos locales de PLAN_2.0; Jay autorizó F2–F10 consecutivamente; una rama anidada por fase, con pruebas y push.
 

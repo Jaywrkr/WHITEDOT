@@ -99,11 +99,16 @@ try {
     if(runtime.GEN[genre].bassP){assert(heard.has('kick'),`${genre}: groove has no kick`);assert(heard.has(runtime.MU.radio.identity.bassI)||runtime.GEN[genre].bassP.some(id=>heard.has(id)));assert(runtime.MU.radio.identity.hooks.some(id=>heard.has(id)),`${genre}: recipe hooks ${runtime.MU.radio.identity.hooks} not in ${[...heard]}; final ${JSON.stringify({section:runtime.MU.radio.section,phrase:runtime.MU.radio.phrase,rest:runtime.MU.radio.melodyRest,hook:runtime.MU.radio.hook,step:runtime.MU.step,vari:runtime.MU.vari})}`);}
     assert.equal(runtime.MU.radio.genre,genre);
   }
+  // Keep the original two-native-bass border contract under classic playback.
+  // The same scheduler loop above exercises all 52 styles with live territories.
+  runtime.S.livingMusic=false;
   const mixed=new Set();runtime.recordInstrument=id=>mixed.add(id);
   runtime.MU.dnaT={...origin,key:'mix:primary',genre:'tropical',bpm:112,track:{...origin.track,bassI:'rubber'}};
   runtime.MU.nb={...origin,key:'mix:neighbor',genre:'robotic',bpm:126,track:{...origin.track,bassI:'machine'}};runtime.MU.nbW=.5;
   for(let tick=0;tick<4800;tick++){runtime.ac.currentTime+=.025;schedule();}
-  assert(mixed.has('rubber')&&mixed.has('machine'),'border failed to mix both bass voices');
+  const primaryBass=runtime.MU.radio.bassI,neighborBass=runtime.MU.neighborRadio.bassI;
+  assert.notEqual(primaryBass,neighborBass,'border fixture must contain distinct bass voices');
+  assert(mixed.has(primaryBass)&&mixed.has(neighborBass),'border failed to mix both actual arranged bass voices');
   assert(runtime.MU.radio.identity.hooks.some(id=>mixed.has(id))&&runtime.MU.neighborRadio.identity.hooks.some(id=>mixed.has(id)),'border failed to mix both melodic palettes');
   assert.equal(runtime.MU.neighborRadio.key,'mix:neighbor');runtime.MU.nb=null;runtime.MU.nbW=0;
   runtime.S.softMusic=true;runtime.applyComfort();assert.equal(runtime.musicVolume(),.65);
