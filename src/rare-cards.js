@@ -20,7 +20,7 @@ export function initialize(runtime){
  function descriptor(type,source,extra={}){
   const world=runtime.worldIdentity,valid=Number.isFinite(source?.x)&&Number.isFinite(source?.y),region=valid?runtime.regionOfPos(source.x,source.y):null;
   return makeRareCard({type,sourceId:source?.id,world,address:valid?{...world,x:source.x,y:source.y,layer:runtime.S.layer||'superficie'}:null,
-   regionName:region?.name,biome:region?runtime.BIOMES[region.z]?.name:'',genre:region?.genre,artVariant:source?.s??source?.variant??0,
+   regionName:region?.name,biome:region?runtime.BIOMES[region.z]?.name:'',genre:region?.genre,artVariant:source?.s??source?.variant??0,appearance:source?.anatomy,
    firstSeen:new Date().toISOString(),day:runtime.S.todayKey,forced:source?.id?.startsWith('rhythm:lab:')||false,...extra});
  }
  function migrate(){

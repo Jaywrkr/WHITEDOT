@@ -6,6 +6,7 @@ import {NATURAL_BOX_RATE,POWERS,POWER_IDS} from './expansion-music.js';
 import {PET_SPECIES,PET_BOX_DENOMINATOR} from './pet-model.js';
 import {placeAddress,supportedWorld} from './world-identity.js';
 import {deploymentTime} from './release-model.js';
+import {normalizeAnatomy} from './anatomy.js';
 export const RARE_BOOK_LIMIT=512,RARE_PAGE_SIZE=12;
 export const CARD_TIERS={raro:{name:'Raro',ink:'#9fe8ff'},singular:{name:'Singular',ink:'#bda5f5'},legendario:{name:'Legendario',ink:'#bda5f5'},mitico:{name:'Mítico',ink:'#f0d27a'}};
 const boxChance=NATURAL_BOX_RATE/POWER_IDS.length;
@@ -36,7 +37,7 @@ export function makeRareCard(raw){
  const odds={version:1,probability:valid?o.probability:def.probability,unit:valid?o.unit:def.unit,tier:valid?o.tier:def.tier,condition:clean(valid?o.condition:def.condition,600)};
  const context={};for(const key of ['habitat','weather','phase','gesture','study','relation','role','instrument','character']){const value=clean(raw.context?.[key],100);if(value)context[key]=value;}
  const observations=Array.isArray(raw.observations)?raw.observations.filter(o=>o&&typeof o==='object'&&deploymentTime(o.at)).slice(-8).map(o=>({at:deploymentTime(o.at),phase:clean(o.phase,40),weather:clean(o.weather,40)})):[];
- const date=clean(raw.day,10);return {id:cardKey(raw.type,raw.sourceId,world),type:raw.type,name:clean(raw.name,64)||def.name,odds,sourceId:raw.sourceId,world,address,
+ const date=clean(raw.day,10);return {id:cardKey(raw.type,raw.sourceId,world),type:raw.type,name:clean(raw.name,64)||def.name,odds,sourceId:raw.sourceId,world,address,appearance:normalizeAnatomy(raw.appearance),
   precision:address?(raw.precision==='region'?'region':'point'):'unknown',regionName:clean(raw.regionName,64)||'Lugar no registrado',biome:clean(raw.biome,40),genre:clean(raw.genre,40),
   firstSeen:deploymentTime(raw.firstSeen),day:deploymentTime(date+'T00:00:00Z')?date:'',artVariant:Number.isInteger(raw.artVariant)?Math.abs(raw.artVariant)%12:0,forced:raw.forced===true,legacy:raw.legacy===true,context,observations};
 }

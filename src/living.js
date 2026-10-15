@@ -8,6 +8,7 @@ import {contactEntry} from './contact.js';
 import {claimInstallationBar} from './installations.js';
 import {mindProfile} from './living-mind.js';
 import {populationProfile,populatedChunk} from './living-populations.js';
+import {anatomyOf} from './anatomy.js';
 export const LIVING_GROUPS=['flora','fauna','architecture'];
 const HINTS={contacto:'Pasa el cubo para tocar',quietud:'Escucha quieto a su lado',orbita:'Rodea con el cubo',presion:'Entra despacio y permanece',cruce:'Cruza despacio',respuesta:'Toca y escucha la respuesta',seguir:'Camina a su lado'};
 export function initialize(runtime){
@@ -29,7 +30,7 @@ export function initialize(runtime){
   const cx=Math.floor(runtime.S.wx/runtime.WCH),cy=Math.floor(runtime.S.wy/runtime.WCH),out=[];
   const n=Math.min(2,Math.ceil((radius+75)/runtime.WCH));for(let x=cx-n;x<=cx+n;x++)for(let y=cy-n;y<=cy+n;y++)out.push(...chunk(x,y));return out.filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<radius);
  }
- function ensureMind(o){if(!o.mind){o.mind=mindProfile(o,runtime.seedOf,runtime.rng);o.worldFamily=runtime.regionOfPos(o.homeX,o.homeY).worldFamily;}return o;}
+ function ensureMind(o){if(!o.mind){o.mind=mindProfile(o,runtime.seedOf,runtime.rng);o.worldFamily=runtime.regionOfPos(o.homeX,o.homeY).worldFamily;o.anatomy=anatomyOf({...o,role:livingDefinition(o.kind).role},o.worldFamily,runtime.seedOf);}return o;}
  function emit(o,time,full=false,origin='ambient'){
   if(!active()||!runtime.S.sound||runtime.ac?.state!=='running')return;
   const d=runtime.regionOfPos(o.homeX,o.homeY);runtime.playVoice('living:'+o.kind,((o.phrase.length?o.phrase[(barPlayed<0?0:barPlayed)%o.phrase.length]:o.variant)+(origin==='ambient'?(o.degreeOffset||0):0))%7,time,d,full,origin==='player'?.48:.23,o,origin);o.lit=1;

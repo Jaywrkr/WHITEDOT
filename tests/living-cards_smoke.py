@@ -14,7 +14,10 @@ try:
   page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})");page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=card-world&layout=wide&generation=2');page.wait_for_function('__testRuntime?.S.mode==="world"');page.evaluate('()=>{document.querySelectorAll(".modal").forEach(m=>m.hidden=true);const r=__testRuntime;r.audio();window.__livingNotes=[];r.livingNoteCue=n=>__livingNotes.push(n);let found;outer:for(let x=-40;x<=40;x++)for(let y=-20;y<=20;y++){r.S.wx=(x+.5)*r.WCH;r.S.wy=(y+.5)*r.WCH;found=r.livingNear().find(o=>o.rare&&o.group!=="architecture");if(found)break outer;}if(!found)throw Error("No natural rare fixture");window.__rareLiving=found;r.S.wx=found.x-80;r.S.wy=found.y;}')
   page.wait_for_timeout(200);page.evaluate('()=>{const r=__testRuntime;r.S.wx=__rareLiving.x;r.S.wy=__rareLiving.y;}');page.wait_for_function('__testRuntime.rareCards.some(c=>c.sourceId===__rareLiving.id)',timeout=6000)
-  card=page.evaluate('__testRuntime.rareCards.find(c=>c.sourceId===__rareLiving.id)');assert not card['forced'];assert card['context']['instrument'] and card['context']['role'];assert card['odds']['probability'] in [1/256,1/32]
+  card=page.evaluate('__testRuntime.rareCards.find(c=>c.sourceId===__rareLiving.id)');assert not card['forced'];assert card['context']['instrument'] and card['context']['role']
+  expected=page.evaluate('(type)=>import("/src/rare-card-model.js").then(m=>m.rareDefinition(type).probability)',card['type'])
+  assert card['odds']['probability']==expected,'the book must retain the current, truthful conditional rarity'
+  assert card['appearance']==page.evaluate('__rareLiving.anatomy'),'portrait must preserve the specimen actually found'
   page.evaluate('__testRuntime.openJournal("rares")');page.wait_for_timeout(150);count=page.evaluate('__livingNotes.length');page.locator('#rareFilter').select_option(page.evaluate('__rareLiving.group'));page.wait_for_timeout(350);assert page.evaluate('__livingNotes.length')==count
   assert card['name'] in page.locator('#journalBody').inner_text();assert page.locator('.rare-portrait svg').count()>=1
   with page.expect_download() as info:page.locator('[data-rare-png]').first.click()

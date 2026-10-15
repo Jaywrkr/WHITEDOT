@@ -1,3 +1,19 @@
+# Handoff vigente · cierre F2 · Anatomías reproducibles
+
+Rama `feat/cierre-f2-especies`, basada en F1. Jay autorizó continuar las diez fases; no pedir de nuevo autorización para las restantes. Commit/push por fase; Jay crea PR/merge. No reescribir ramas publicadas. Ver [plan vigente](PLAN_CIERRE_2.0.md).
+
+- `anatomy.js`: descriptor validado, semillas independientes de linaje/individuo y topologías con ramas, segmentos, pétalos, alas, caparazones, membranas y órganos según rol. 896 variantes verificadas y 28 linajes visualmente distintos. No consume RNG del mapa.
+- `anatomy-view.js`: integra especies nativas y los seis tipos de plantas anteriores, además de los 28 linajes. Caché de perfiles débil y de Path2D acotada; geometría estática reutilizada con respiración leve. Contornos pequeños, color local, movimiento reducido y sin controles nuevos.
+- `living-portraits.js`, tarjetas y libro comparten la gramática del Mundo. `appearance` se normaliza aditivamente; tarjetas nuevas conservan el descriptor visto, tarjetas antiguas siguen legibles. No cambia progreso, odds ni coordenadas.
+- La prueba de tarjetas compara rareza con el catálogo vigente: las probabilidades territoriales sin medir siguen siendo nulas, no se reemplazan por el antiguo 1/256. SVG/PNG y contacto musical reales comprobados.
+- SW actualizado con dos módulos una sola vez. La siguiente fase es ecología, no síntesis.
+
+Auditoría limpia; 82 suites Node y 5 recorridos afectados aprobados. Sin cambios de síntesis/audio en esta fase. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f2-validation.json).
+
+## Entregas anteriores
+
+Lo que sigue conserva sus alcances históricos; prevalece el encabezado actual.
+
 # Handoff vigente · cierre F1 · identidades completas
 
 15 de octubre de 2026. `feat/cierre-f1-identidades` parte de `main 6702093` (M1 integrada). Prioridad: [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md), diez fases consolidadas; solo F1 está implementada aquí. Jay crea PR/merge. La próxima rama parte de esta si aún no está integrada; comprobar remoto/ascendencia. No incorporar sin validar los trabajos locales de cubo/menú/Bitácora/logros/casa.
