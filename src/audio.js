@@ -309,7 +309,7 @@ export function initialize(runtime) {
     MU.queue.push(t=>{if(runtime.inWorld()){runtime.playVoice('luz',n%7,t,runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy),gold,1,null,'player');return;}pluck(n,t,vel(v),MU.timbre);
       if(ob){const h=snap(n+4,chordTones());pluck(h,t,vel(v*.6),MU.timbre);if(MU.groove>=4)pluck(snap(n+7,chordTones())+12,t+SIX,vel(v*.4),4);}
       if(gold)chordTones().slice(0,4).forEach((c,i)=>pluck(snap(n+3+i*4,chordTones()),t+(i+1)*SIX,vel(.07),MU.timbre));
-      if(MU.follower)pluck(n-12,t+SIX*8,vel(.05),2);});
+});
   }
   function env(g,t,a,peak,dec,shaped=false){const patch=shaped?null:runtime.activeInstrumentPatch;if(patch){a=Math.min(.12,a*patch.attackScale);dec*=patch.legacyDecay;peak*=patch.level;}g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0002,peak),t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+dec);}
   function kick(t,v){runtime.recordInstrument?.("kick");const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(44,t+.11);env(g,t,.003,v,.32);o.connect(g).connect(bus);o.start(t);o.stop(t+.4);}

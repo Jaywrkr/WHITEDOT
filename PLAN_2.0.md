@@ -24,8 +24,8 @@
 | 2 · Primer nivel y guía mínima | `feat/pulido-f2-primer-nivel` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `2e45cc0` |
 | 3 · Guardar, volver y viajar | `feat/pulido-f3-viajes` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `e5d2da5` |
 | 4 · Bitácora visual | `feat/pulido-f4-bitacora` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `e1a0897` |
-| 5 · Tarjetas y ritmo de descubrimiento | `feat/pulido-f5-tarjetas` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | HEAD de esta rama |
-| 6 · Cincuenta variantes de personajes | `feat/pulido-f6-personajes` | Pendiente | — |
+| 5 · Tarjetas y ritmo de descubrimiento | `feat/pulido-f5-tarjetas` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | `4cdc59a` |
+| 6 · Cincuenta variantes de personajes | `feat/pulido-f6-personajes` | Implementado y probado; listo para PR de Jay; aceptación física pendiente | HEAD de esta rama |
 | 7 · Interacciones musicales coherentes | `feat/pulido-f7-interacciones` | Pendiente | — |
 | 8 · Limpieza y aceptación del conjunto | `feat/pulido-f8-cierre` | Pendiente | — |
 

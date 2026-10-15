@@ -23,6 +23,7 @@ Trabajo en `feat/cierre-f10-lanzamiento`, hija de F9. Main no se modifica. Este 
 | A15 | Los segundos restantes de los poderes no se guardan: una recarga conserva la caja consumida, pero pierde el beneficio activo. | Corregido en pulido F5: instantánea versionada de tiempo activo restante, pincel y compañero; pausa, recarga y formatos futuros probados. |
 | A16 | IDs de favoritos podían coincidir al guardar dos mundos simultáneamente. | Corregido en pulido F3: sufijo único, sin cambiar IDs existentes; prueba de ambos registros. |
 | A17 | Un duplicado inválido podía ocultar otro favorito válido. | Corregido en pulido F3: validar antes de reservar ID; prueba de normalización. |
+| A18 | La respuesta del caminante estaba después del retorno anticipado de audio del Mundo y podía no sonar. | Corregido en pulido F6: respuesta desde playVoice con fuente, escala y reloj reales; pruebas nativas y diez renders. |
 
 Los selectores de Prototipo de las pruebas se acotan a su menú: añadir un glosario plegable no debe hacer ambiguo un clic de una regresión ajena. La prueba de paseo verifica ahora reloj activo de sesión y ausencia de consumo de exploración; conserva movimiento, pausa y cancelación.
 

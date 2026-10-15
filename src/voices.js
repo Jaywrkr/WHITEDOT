@@ -1,3 +1,4 @@
+import {walkerVoice} from './walker-forms.js';
 import {cubePulseVoice} from './cube-voice.js';
 import {heritageVoice,relicVoice} from './heritage.js';
 import {playMaterialStrike} from './percussion-material.js';
@@ -57,6 +58,7 @@ export function initialize(runtime) {
   let voiceOrigin="ambient";
   function withVoiceOrigin(origin,emit){const previous=voiceOrigin;voiceOrigin=origin;try{return emit();}finally{voiceOrigin=previous;}}
   function rawVoice(kind, region, source) {
+    if(kind==='caminante'&&source)return walkerVoice(source,region,runtime.GEN,runtime.seedOf);
     if(kind==='reliquia')return relicVoice(region,source,runtime.seedOf);
     if(kind.startsWith('heritage:')){const v=heritageVoice(kind);if(v)return v;}
     if(kind.startsWith('living:')){const v=livingVoice(kind,region,runtime.GEN,runtime.seedOf,runtime.rng,source);if(v)return v;}
@@ -132,6 +134,7 @@ export function initialize(runtime) {
     }
     const strength = voice.role === 'bajo' ? .15 : voice.role === 'perc' ? .12 : voice.role === 'agudo' ? .03 : .075;
     hit(time,index%7,strength);
+    if(origin==='player'&&kind!=='caminante')runtime.walkerHear?.({degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region});
     if (full) hit(time+runtime.SIX*voice.response,index%7,strength*.45);
   }
   Object.defineProperties(runtime, {

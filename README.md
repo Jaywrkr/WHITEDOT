@@ -6,13 +6,13 @@ Un pixel blanco en un mundo negro. Descubre cómo suena el universo y crea tu pr
 
 **Jugar:** https://whitedot-inky.vercel.app. En el teléfono puedes instalarlo como app (en iPhone: Compartir → Añadir a pantalla de inicio). Toca la pantalla una vez para activar el sonido.
 
-Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama **2.0.0-rc.5** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
+Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama **2.0.0-rc.6** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
 Main no se publica desde estas ramas. Jay integra mediante PR. [Auditoría y soluciones](AUDITORIA_CIERRE_2.0.md) · [Pulido final autorizado](PLAN_PULIDO_FINAL.md).
 
 ## Pulido actual
 
-**F5 · Hallazgos con valor y poderes que se conservan.** Celebraciones según novedad, tarjetas relacionadas reunidas y poderes recuperables sin reiniciar duración. [Plan y ramas](PLAN_PULIDO_FINAL.md) · [Evidencia](scripts/pulido-f5-validation.json).
+**F6 · Cincuenta caminantes con identidad.** Cincuenta siluetas pequeñas, cinco maneras de moverse y respuestas musicales ligadas al territorio. [Plan y ramas](PLAN_PULIDO_FINAL.md) · [Evidencia](scripts/pulido-f6-validation.json).
 
 ## Cierre · fase 10 · Auditoría y candidata 2.0.0-rc.1
 
