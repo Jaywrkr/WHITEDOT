@@ -39,7 +39,7 @@ const INTERACTIONS={
  machine:{acorde:['hollow','pad','strings','analogpad'],lead:['machine','hollow','metalkeys','plucked','phasekeys','fmglass']},
  broken:{acorde:['pad','rhodes','bowed','analogpad'],lead:['membrane','metalkeys','plucked','reed','phasekeys','granularair']}
 };
-for(const p of Object.values(INTERACTIONS)){Object.freeze(p.acorde);Object.freeze(p.lead);Object.freeze(p);}
+for(const p of Object.values(INTERACTIONS)){p.lead=[...p.lead,'feltpiano','airflute','pluckbody','wavetable'];p.acorde=[...p.acorde,'silkstrings','graincloud'];Object.freeze(p.acorde);Object.freeze(p.lead);Object.freeze(p);}
 Object.freeze(INTERACTIONS);
 export function interactionInstruments(genre,definition,role){
  const profile=INTERACTIONS[GENRE_CHARACTERS[genre]||'warm'];

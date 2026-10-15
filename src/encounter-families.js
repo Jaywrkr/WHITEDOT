@@ -34,7 +34,7 @@ export const FAMILIES={
   tap(s){s.a=(s.a+1/3)%1;},drag(s,x,y){s.a=clamp(.5+x/160);s.b=clamp(.5-y/120);s.c=.65;},
   tick(s,dt,near,context){if(context)s.c=clamp(1-context.distance/(60+s.b*90));},
   influence(s){return {[['bass','groove','melody'][Math.min(2,Math.floor(s.a*3))]]:-s.c,space:s.b*.5};},figure(s){return Math.floor(s.a*7);}},
- weaver:{name:'Criatura tejedora',hint:'Une puntos · toca un hilo para retirar',description:'Une sus anclas y objetos cercanos mediante arrastre o dos toques. La red cambia su figura musical; tocar un hilo lo retira. Hasta seis hilos, sin realimentación sonora.',role:'groove',shape:'weaver',
+ weaver:{name:'Criatura tejedora',hint:'Cruza dos anclas · permanece sobre un hilo para retirarlo',description:'Une sus anclas y objetos cercanos mediante arrastre o dos toques. La red transforma notas, filtros y modulación. Pasar dos anclas conecta; permanecer sobre un hilo lo retira. Hasta seis hilos, sin realimentación sonora.',role:'groove',shape:'weaver',
   tap(s){s.a=(s.a+.34)%1;},drag(s,x,y){s.a=clamp(.5+x/140);s.b=clamp(.5-y/140);},
   tick(s,dt,near){if(near)s.c=(s.c+dt*.1)%1;},
   influence(s){return {groove:(s.a-.5)*1.7,space:(.5-s.b)*1.3};},figure(s){return (Math.floor(s.a*3)+Math.floor(s.b*5))%8;}},

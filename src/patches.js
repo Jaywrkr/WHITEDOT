@@ -1,4 +1,6 @@
 import {SYNTH_PROGRAMS,synthProgram,filterMovement} from './synth-colors.js';
+import {voiceLifetime} from './modular-synth.js';
+import {routeThreadGraph} from './modular-routing.js';
 const MATERIALS={wood:{name:'Madera cálida',tone:.7,tail:.75,attack:1.1,harmonics:.6},glass:{name:'Cristal suave',tone:1.05,tail:1.1,attack:.85,harmonics:.85},metal:{name:'Metal filtrado',tone:.9,tail:.85,attack:.75,harmonics:.8},air:{name:'Aire sedoso',tone:.65,tail:1.2,attack:1.6,harmonics:.5}};
 export function patchIdentity(kind,source){
  const p=source?.personality;
@@ -25,18 +27,19 @@ export function initialize(runtime){
  function patchTick(){if(!runtime.ac)return;for(let i=active.length-1;i>=0;i--)if(active[i].end<=runtime.ac.currentTime){active[i].nodes.forEach(n=>n.disconnect());active.splice(i,1);}}
  function withInstrumentPatch(kind,region,voice,source,time,emit){
   if(!region||!runtime.inWorld())return emit();
-  const patch=getInstrumentPatch(kind,region,voice,source),previous=current;current=patch;
+  const base=getInstrumentPatch(kind,region,voice,source),graph=runtime.modularForSource?.(kind,region,source),patch=graph?{...base,modular:graph}:base,previous=current;current=patch;
   patchTick();const ac=runtime.ac;
   if(!runtime.S.sound||ac?.state!=='running'||!runtime.bus||!runtime.verbIn||!runtime.dsend||active.length>=32){try{return emit();}finally{current=previous;}}
   const original=[runtime.bus,runtime.verbIn,runtime.dsend],filters=[],verb=ac.createGain(),delay=ac.createGain();
   const movement=filterMovement(patch.program,patch.cutoff,voice.role,time,runtime.SIX,source?.energy||runtime.body?.speed/180||0,runtime.weather?.i||0);
   for(let i=0;i<movement.stages;i++){const f=ac.createBiquadFilter();f.type=movement.type;f.frequency.value=patch.cutoff;f.Q.value=movement.type==='bandpass'?.85:.55;
    f.frequency.setValueAtTime?.(movement.start,time);f.frequency.exponentialRampToValueAtTime?.(movement.end,time+movement.duration);filters.push(f);if(i)filters[i-1].connect(f);}
-  filters.at(-1).connect(original[0]);
+  const lifetime=voiceLifetime(voice.instrument),modularNodes=[];
+  if(graph){modularNodes.push(...routeThreadGraph(ac,filters.at(-1),original[0],graph,time,time+lifetime));runtime.modularGraphCue?.(graph.signature,time);if(source)source.modularSignal={signature:graph.signature,routes:graph.routes.length};}else filters.at(-1).connect(original[0]);
   verb.gain.value=patch.sendScale;verb.connect(original[1]);delay.gain.value=patch.sendScale;delay.connect(original[2]);
   if(source){source.filterMotion={...movement,onset:performance.now()+Math.max(0,time-ac.currentTime)*1000};}
   runtime.filterCue?.(source,voice.role,movement,time);
-  active.push({nodes:[...filters,verb,delay],end:time+2});[runtime.bus,runtime.verbIn,runtime.dsend]=[filters[0],verb,delay];
+  active.push({nodes:[...filters,verb,delay,...modularNodes],end:time+lifetime});[runtime.bus,runtime.verbIn,runtime.dsend]=[filters[0],verb,delay];
   try{return emit();}finally{[runtime.bus,runtime.verbIn,runtime.dsend]=original;current=previous;}
  }
  Object.defineProperties(runtime,{getInstrumentPatch:{get:()=>getInstrumentPatch},withInstrumentPatch:{get:()=>withInstrumentPatch},activeInstrumentPatch:{get:()=>current},patchTick:{get:()=>patchTick},activePatchCount:{get:()=>active.length},instrumentPatchCacheSize:{get:()=>cache.size}});

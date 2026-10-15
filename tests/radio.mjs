@@ -58,14 +58,15 @@ function param() {
 }
 function check(value, time) { assert(Number.isFinite(value)); assert(Number.isFinite(time)); }
 function node() {
-  return { gain: param(), frequency: param(), detune: param(), delayTime: param(), Q: param(),
+  return { gain: param(), frequency: param(), detune: param(), delayTime: param(), Q: param(),playbackRate:param(),setPeriodicWave(){},
     connect(target) { return target; }, disconnect() {}, start(time=0) { assert(Number.isFinite(time)); started++; }, stop: () => {} };
 }
 class Context {
   currentTime = 0; state = 'running'; sampleRate = 1000; destination = node();
   createGain = node; createOscillator = node; createBiquadFilter = node;
   createDynamicsCompressor = node; createConvolver = node; createDelay = node; createBufferSource = node;
-  createBuffer(channels, length) { const buffers = Array.from({length:channels},()=>new Float32Array(length)); return {getChannelData:i=>buffers[i]}; }
+  createConstantSource=node;createPeriodicWave(real,imag){return {real,imag};}
+  createBuffer(channels, length) { const buffers = Array.from({length:channels},()=>new Float32Array(length)); return {duration:length/this.sampleRate,getChannelData:i=>buffers[i],copyToChannel(data,i){buffers[i].set(data);}}; }
 }
 globalThis.window = { AudioContext: Context };
 try {
