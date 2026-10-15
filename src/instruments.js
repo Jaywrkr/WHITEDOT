@@ -35,18 +35,33 @@ export function initialize(runtime) {
  const techniques=createTechniquePlayer(runtime);
  let held=null,heldKey=null,nearAt=0;
  function techniqueTick(){
-  techniques.tick();const id=runtime.labSynth,spec=TECHNIQUE_INSTRUMENTS[id],ac=runtime.ac,
-   blocked=!ac||ac.state!=='running'||runtime.S.mode!=='world'||globalThis.document?.hidden||globalThis.document?.querySelector?.('.modal:not([hidden])')||(runtime.musicVolume?.()??1)<=0;
-  const source=!blocked&&spec?.sustain&&runtime.labMode?runtime.livingNear?.(90).find(o=>o.id?.startsWith('living:lab:')&&Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<42):null;
-  const key=source?source.id+':'+id:null;
+  techniques.tick();const ac=runtime.ac,
+   blocked=!ac||ac.state!=='running'||runtime.S.mode!=='world'||globalThis.document?.hidden||globalThis.document?.querySelector?.('.modal:not([hidden])')||runtime.scanning||runtime.duetRoom||(runtime.musicVolume?.()??1)<=0;
+  let source=null,voice=null;
+  if(!blocked&&(runtime.labMode||runtime.MU?.radio?.labScore)){
+   const candidates=runtime.livingNear?.(90)||[];
+   for(const o of candidates){
+    if(runtime.labMode&&runtime.labSynth&&!o.id?.startsWith('living:lab:'))continue;
+    if(Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)>Math.min(42,(o.size||18)+18))continue;
+    const d=runtime.regionOfPos(o.x,o.y),v=runtime.getVoice('living:'+o.kind,d,o);
+    if(TECHNIQUE_INSTRUMENTS[v.instrument]?.sustain){source=o;voice=v;break;}
+   }
+  }
+  const id=voice?.instrument,key=source?`${runtime.S.layer||'superficie'}:${source.id}:${id}`:null;
   if(key!==heldKey||!source){held?.release();held=null;heldKey=key;nearAt=ac?.currentTime||0;}
+  runtime.heldContact=held&&!held.released?{source,instrument:id,role:voice?.role}:null;
   if(!source)return;
   if(held&&(held.released||held.end<=ac.currentTime))held=null;
-  if(!held&&ac.currentTime-nearAt>.35){const d=runtime.regionOfPos(source.x,source.y),voice=runtime.getVoice('living:'+source.kind,d,source),degree=((runtime.MU.deg+voice.degree)%7+7)%7;
+  if(!held&&ac.currentTime-nearAt>.35){const d=runtime.regionOfPos(source.x,source.y),degree=((runtime.MU.deg+voice.degree)%7+7)%7;
    let note=57+(runtime.MU.tr||0)+d.scale[degree];while(note>69)note-=12;while(note<45)note+=12;
-   held=techniques.hold(id,note,ac.currentTime+.01,.035);if(held)runtime.soundCue?.(source,voice.role,ac.currentTime+.01);
+   const start=()=>{held=techniques.hold(id,note,ac.currentTime+.01,.035,{technique:voice.technique||'normal'});};
+   runtime.focusGesture?.(ac.currentTime+.01,source,voice.role);
+   if(runtime.withSpatialVoice)runtime.withSpatialVoice(source,ac.currentTime+.01,gain=>{const emit=()=>{held=techniques.hold(id,note,ac.currentTime+.01,.035*gain,{technique:voice.technique||'normal'});};if(runtime.withInstrumentPatch)runtime.withInstrumentPatch('living:'+source.kind,runtime.regionOfPos(source.x,source.y),{...voice,sustained:true},source,ac.currentTime+.01,emit);else emit();},24.3);else start();
+   if(held)runtime.soundCue?.(source,voice.role,ac.currentTime+.01);
   }
+  if(held){const pressure=Math.max(.2,1-Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)/70);held.update({pressure,bend:Math.max(-1,Math.min(1,(runtime.S.wx-source.x)/36))});}
  }
+
  const noiseBuffers=new WeakMap();
  function playNewInstrument(id,m,time,volume,articulation=null) {
   const spec=INSTRUMENT_SPECS[id],ac=runtime.ac;if(!spec)return false;if(!ac)return true;

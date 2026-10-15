@@ -1,3 +1,15 @@
+# Handoff vigente · Laboratorio Vivo L4
+
+Rama `feat/lab-l4-paisaje`, versión 2.1.0-alpha.4. L1–L7 autorizadas consecutivamente; continuar desde esta rama sin esperar confirmación. Jay mantiene PR/merge. [Plan](PLAN_LABORATORIO_VIVO.md).
+
+- Los habitantes y objetos conservan su papel musical; territorio e individuo eligen cuerdas, vientos, teclas, pads, bajos y membranas. Las voces patrimoniales, reliquias, pulso personal y materiales de percusión conservan su identidad.
+- El contacto del cubo sostiene voces compatibles; posición y cercanía cambian presión, tono y presencia. Alejarse, cambiar capa, silenciar o abrir una hoja libera la voz. El arco local señala el sostén.
+- Se corrigió el corte de rutas a tres segundos y el registro de percusión viva. Auditoría, 101 suites Node, dos recorridos y 18 mezclas afectadas aprobados.
+
+Auditoría aprobada; 101 suites Node, 2 recorridos afectados y 2 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l4-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+
+## Entregas anteriores
+
 # Handoff vigente · Laboratorio Vivo L3
 
 Rama `feat/lab-l3-interpretacion`, versión 2.1.0-alpha.3. L1–L7 autorizadas consecutivamente; continuar desde esta rama sin esperar confirmación. Jay mantiene PR/merge. [Plan](PLAN_LABORATORIO_VIVO.md).

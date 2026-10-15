@@ -72,3 +72,13 @@ export function labDrumEvents(score,step,bar,energy){
  }
  return out.slice(0,3);
 }
+
+// Keep each species' role; territory and individual choose the playing material.
+export function labInteractionVoice(raw,score,kind,source,seedOf){
+ if(!score||!raw||kind==='pulso'||kind==='reliquia'||kind.startsWith('heritage:')||kind.startsWith('rhythm:'))return raw;
+ const key=source?.id||`${source?.x??0},${source?.y??0}`,h=seedOf(`lab:gesture:v1:${score.id}:${kind}:${key}`),
+  pool=raw.role==='bajo'?['reedbass','velvetbass','hollow']:raw.role==='perc'?score.id==='heavy'?['acousticsnare','skinbass','handslap']:['skinbass','handslap','wood']:
+   raw.role==='acorde'?['duskpad','lowbow','feltkeys']:score.leads;
+ return {...raw,instrument:pool[h%pool.length],labTerritory:score.id,low:raw.role==='bajo'?36:45,
+  high:raw.role==='bajo'?54:69,technique:['normal','muted','slide','normal'][Math.floor(h/7)%4]};
+}
