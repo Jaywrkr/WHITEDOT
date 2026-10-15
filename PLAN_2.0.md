@@ -6,7 +6,7 @@
 |---|---|---|
 | 1 · Identidades completas de mundos | `feat/cierre-f1-identidades` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 2 · Formas y especies generadas | `feat/cierre-f2-especies` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
-| 3 · Ecosistemas y territorios vivos | `feat/cierre-f3-ecosistemas` | Pendiente |
+| 3 · Ecosistemas y territorios vivos | `feat/cierre-f3-ecosistemas` | Implementada y probada; lista para PR de Jay; aceptación física pendiente |
 | 4 · Instrumentos y síntesis modular | `feat/cierre-f4-sintesis` | Pendiente |
 | 5 · Composición, géneros y mezclas | `feat/cierre-f5-composicion` | Pendiente |
 | 6 · Interacciones que hacen música | `feat/cierre-f6-interacciones` | Pendiente |
