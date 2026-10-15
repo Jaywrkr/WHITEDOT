@@ -1,6 +1,6 @@
 // Real Web Audio render of the scheduler, with a virtual clock and deterministic noise.
-export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false,generation=1,ecology=false,testInstrument=null,scene=null,celebration=false,identityKey='0,0',worldPoint=null,actorEcology=false,renderSeconds=10}={}) {
- const modules=await Promise.all(['data','progress','world','audio','foreground','voices','instruments','patches','effects','spatial','influence','blobs','living-composition'].map(id=>import(`../src/${id}.js`)));
+export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false,generation=1,ecology=false,testInstrument=null,scene=null,celebration=false,identityKey='0,0',worldPoint=null,actorEcology=false,renderSeconds=10,savedMemory=null}={}) {
+ const modules=await Promise.all(['data','progress','world','audio','foreground','voices','instruments','patches','effects','spatial','influence','blobs','living-composition','world-memory'].map(id=>import(`../src/${id}.js`)));
  if(!Number.isFinite(renderSeconds)||renderSeconds<5||renderSeconds>30)throw Error('Invalid render duration');
  const r=Object.create(null),duration=renderSeconds,context=new OfflineAudioContext(2,duration*sampleRate,sampleRate);
  const storageDescriptor=Object.getOwnPropertyDescriptor(window,'localStorage'),renderStorage=new Map();
@@ -16,7 +16,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   Object.defineProperty(window,'localStorage',{configurable:true,value:{getItem:k=>renderStorage.get(k)??null,setItem:(k,v)=>renderStorage.set(k,String(v)),removeItem:k=>renderStorage.delete(k)}});
   if(generation===2){const url=new URL(location.href);url.searchParams.set('testSeed',worldSeed||'humedal-01');url.searchParams.set('layout','classic');url.searchParams.set('generation','2');history.replaceState(null,'',url);}
   window.AudioContext=function(){return proxy;};window.setInterval=fn=>{schedule=fn;return 0;};window.setTimeout=()=>0;
-  for(const m of modules.slice(0,2))m.initialize(r);r.S.worldSeed=worldSeed;modules[2].initialize(r);
+  for(const m of modules.slice(0,2))m.initialize(r);if(savedMemory)r.S.worldMemory=structuredClone(savedMemory);r.S.worldSeed=worldSeed;modules[2].initialize(r);
   Math.random=r.rng(r.seedOf('mix-render:v1'));
   for(const m of modules.slice(3))m.initialize(r);
   r.cultureNoteCue=n=>cultureNotes.push(n);r.foregroundNoteCue=n=>{if(foregroundNotes.length<128)foregroundNotes.push(n);};r.materialStrikeCue=n=>materialStrikes.push(n);r.advancedNoteCue=n=>advancedNotes.push(n);r.modularGraphCue=signature=>modularGraphs.push(signature);

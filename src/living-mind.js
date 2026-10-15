@@ -22,6 +22,7 @@ export function mindDecision(o,d,player,clock,neighbors=[]){
  const danger=player.speed>55+55*(1-p.motionSensitivity)&&d<65+p.caution*65;
  if(danger&&p.caution>.35)return group==='fauna'?'retreat':group==='flora'?'retract':'seal';
  if(o.stimulusAt!==undefined&&clock-o.stimulusAt<2+p.patience*3&&p.musicInterest>.45)return 'respond';
+ if(group==='fauna'&&(o.familiarity||0)>.35&&d<120&&player.speed<20&&(o.awake??1)>.5)return 'approach';
  const ecological=habitatIntent(o,player,clock,neighbors);if(ecological)return ecological;
  const daylight=[.35,1,.4,.05][o.ecology?.phase??p.activity];
  if(o.awake<.5&&o.energy<.2&&(p.energy<.7||Math.abs(daylight-p.lightPreference)>.5))return 'rest';

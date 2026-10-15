@@ -1,5 +1,13 @@
 # Probar el universo vivo
 
+## Novedad F8 · Memoria de instrumentos y encuentros
+
+1. Une dos anclas de una red; sal del lugar y recarga. Vuelve: conserva los hilos.
+2. Retira un hilo y vuelve a recargar; no debe reaparecer.
+3. Enseña una frase al animal de respuesta y regresa para escucharla.
+4. Guarda dos favoritos cercanos con músicas distintas; prueba Afinidad/Contraste en Paseo automático.
+5. Regresa mediante el código WD1: mismo punto y capa; música evolutiva.
+
 ## Novedad F7 · Hallazgos que puedes volver a tocar
 
 1. En Laboratorio → Culturas, escucha un guardián y sigue sus huellas.
