@@ -1,4 +1,4 @@
-import {placeAddress,worldIdentity,supportedWorld,sameWorld} from './world-identity.js';
+import {placeAddress,worldIdentity,supportedWorld,supportedMusic,sameWorld} from './world-identity.js';
 export const FAVORITE_LIMIT=256;
 const layers=new Set(['superficie','bajo','cielo']);
 const cleanName=name=>String(name||'Lugar musical').trim().slice(0,60)||'Lugar musical';
@@ -25,14 +25,14 @@ export function initialize(runtime){
  function add(name){
   if(!runtime.inWorld())return null;
   const s=runtime.S,region=runtime.activeLayerRegion?.()||runtime.regionOfPos(s.wx,s.wy);
-  const point=storeFavorite(s,{address:placeAddress(runtime.worldIdentity,s.wx,s.wy,s.layer||'superficie'),name:name||region.name,x:s.wx,y:s.wy,layer:s.layer||'superficie',created:Date.now(),region:region.key,regionName:region.name,genre:region.genre,bpm:region.bpm,scale:[...region.scale],phase:runtime.livingEnvironment?.name||'',notes:'',character:region.recipe?.name||'',material:region.recipe?.materialName||'',recipeVersion:region.recipe?.version||1,musicStamp:runtime.musicStamp?.(region)});
+  const point=storeFavorite(s,{address:placeAddress(runtime.musicalAddress?.()||runtime.worldIdentity,s.wx,s.wy,s.layer||'superficie'),name:name||region.name,x:s.wx,y:s.wy,layer:s.layer||'superficie',created:Date.now(),region:region.key,regionName:region.name,genre:region.genre,bpm:region.bpm,scale:[...region.scale],phase:runtime.livingEnvironment?.name||'',notes:'',character:region.recipe?.name||'',material:region.recipe?.materialName||'',recipeVersion:region.recipe?.version||1,musicStamp:runtime.musicStamp?.(region)});
   if(!point){runtime.toast(`<em>Favoritos</em> · Límite de ${FAVORITE_LIMIT}. Exporta tu copia.`);return null;}
   return persist(point,true);
  }
  // Guarda un lugar recibido por código. Si es del mismo mundo, completa su identidad musical.
  function addAddress(address,name){
   const s=runtime.S,same=sameWorld(address,runtime.worldIdentity),region=same&&address.layer==='superficie'?runtime.regionOfPos(address.x,address.y):null;
-  const point=storeFavorite(s,{address,name,x:address.x,y:address.y,layer:address.layer,created:Date.now(),shared:true,region:region?.key||'',regionName:region?.name||'',genre:region?.genre||'',bpm:region?.bpm||0,scale:region?[...region.scale]:[],character:region?.recipe?.name||'',material:region?.recipe?.materialName||'',...(region?{musicStamp:runtime.musicStamp?.(region)}:{})});
+  const point=storeFavorite(s,{address,name,x:address.x,y:address.y,layer:address.layer,created:Date.now(),shared:true,region:region?.key||'',regionName:region?.name||'',genre:region?.genre||'',bpm:region?.bpm||0,scale:region?[...region.scale]:[],character:region?.recipe?.name||'',material:region?.recipe?.materialName||'',...(region?{musicStamp:runtime.musicStamp?.(region,address.musicMode)}:{})});
   return point?persist(point):null;
  }
  function rename(id,name){const point=list().find(p=>p.id===id);if(point){point.name=cleanName(name);runtime.save();}return point;}
@@ -50,7 +50,7 @@ export function initialize(runtime){
    const button=(text,callback)=>{const b=document.createElement('button');b.textContent=text;b.onclick=callback;row.append(b);return b;};
    button('Renombrar',()=>{rename(point.id,input.value);input.value=point.name;title.textContent=point.name;});button('Borrar',()=>remove(point.id));
    button('Código',async()=>{try{const code=runtime.encodeFavorite?.(point);if(code){$('placeCode').value=code;try{await navigator.clipboard.writeText(code);runtime.toast('<em>Código</em> · copiado');}catch(_){runtime.toast('<em>Código</em> · listo para copiar arriba');}}}catch(_){}});
-   const visit=document.createElement('button');visit.textContent='Ir a este lugar';visit.disabled=!supportedWorld(point.address);visit.onclick=()=>runtime.visitWorldAddress?.(point.address);
+   const visit=document.createElement('button');visit.textContent='Ir a este lugar';visit.disabled=!supportedWorld(point.address)||!supportedMusic(point.address);visit.onclick=()=>runtime.visitWorldAddress?.(point.address);
    const route=document.createElement('div');route.className='row';if(sameWorld(point.address,runtime.worldIdentity))runtime.favoriteActions?.(point,route);
    edit.append(input,notes,row,route);card.append(title,details,visit,edit);body.append(card);
   }

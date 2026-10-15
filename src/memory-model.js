@@ -38,4 +38,4 @@ export function applyPatch(o,p){if(!p||p.kind!==o.kind||Math.hypot(o.x-p.x,o.y-p
  if(p.phrase)o.state.dialogue={phase:'replying',phrase:structuredClone(p.phrase),age:0,lastReplyBar:-Infinity};
  o.state.used=true;o.state.active=0;return true;
 }
-export function musicalDistance(a,b){if(!a||!b)return 0;return (a.family!==b.family?2:0)+(a.hybrid!==b.hybrid?2:0)+(a.genre!==b.genre?2:0)+Math.min(2,Math.abs((a.bpm||0)-(b.bpm||0))/24);}
+export function musicalDistance(a,b){if(!a||!b)return 0;return (a.family!==b.family?2:0)+(a.hybrid!==b.hybrid?2:0)+(a.genre!==b.genre?2:0)+(a.band!==b.band?3:0)+(a.palette!==b.palette?2:0)+(a.rhythm!==b.rhythm?2:0)+Math.min(2,Math.abs((a.bpm||0)-(b.bpm||0))/24);}

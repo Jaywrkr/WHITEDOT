@@ -26,14 +26,16 @@ export function labScore(region,seedOf,rng){
   kick:kind==='calm'?Object.freeze([]):kind==='broken'||kind==='bass'?Object.freeze([0,7,10]):Object.freeze([0,4,8,12]),
  });
 }
-export function labArrangement(frame,score){
+export function labArrangement(frame,score,environment={}){
  if(!score)return frame;
- const rest=frame.melodyRest,cycle=Math.floor(Math.max(0,frame.phrase)/2)%4,hook=Array(16).fill(-1),budget=Math.min(4,frame.grammar.hookLimit);
+ const chapter=Math.floor(Math.max(0,frame.harmonyBar||0)/16),quiet=(environment.initiative||0)>.35,
+  scene=chapter%6,orchestra=(score.variant+chapter+(quiet?1:0))%score.leads.length,
+  evolved={...score,scene,quiet},rest=frame.melodyRest||scene===5,cycle=Math.floor(Math.max(0,frame.phrase)/2)%4,hook=Array(16).fill(-1),budget=Math.min(4,frame.grammar.hookLimit);
  if(!rest)score.hook.slice(0,budget).forEach((s,i)=>{if(cycle!==3||i===0)hook[s]=[0,2,4,3][(i+(cycle===2?1:0))%4];});
  const bass=score.bass.map((n,s)=>frame.section===0&&s!==0&&s%8!==0?-1:n);
- return {...frame,labScore:score,hybrid:null,hook,bass,bassI:score.bassI,hookI:score.leads[(score.variant+Math.floor(frame.phrase/4))%score.leads.length],
+ return {...frame,labScore:evolved,labEvolution:{chapter,scene,quiet},hybrid:null,hook,bass,bassI:score.bassI,hookI:score.leads[orchestra],
   identity:{...frame.identity,id:`lab:${score.id}`,name:score.name,hooks:score.leads,bassI:score.bassI,swing:score.swing,air:Math.min(.5,frame.identity?.air??.5)},
-  grammar:{...frame.grammar,progression:score.progression,harmonyBars:8,brightness:Math.min(frame.grammar.brightness,score.ceiling),hookLevel:frame.grammar.hookLevel*.85,accents:[]},
+  grammar:{...frame.grammar,progression:score.progression,harmonyBars:8,brightness:Math.min(frame.grammar.brightness,score.ceiling),hookLevel:frame.grammar.hookLevel*(scene===1?.55:.85),accents:[]},
   expression:{...frame.expression,harmony:false,toneScale:Math.min(1,frame.expression.toneScale),attackScale:frame.expression.attackScale*(score.id==='breath'?1.4:1)},
  };
 }
@@ -53,17 +55,17 @@ export function labNoteEvents(frame,step,bar){
 }
 export function labDrumEvents(score,step,bar,energy){
  if(!score||!Number.isInteger(step)||step<0||step>15||!Number.isFinite(energy)||energy<=.12)return [];
- const out=[],cycle=((Math.floor(bar)%8)+8)%8,rest=cycle===7,
+ const out=[],cycle=((Math.floor(bar)%8)+8)%8,rest=cycle===7||score.scene===5,
   push=(instrument,gain,pitch,offset=0,technique='normal')=>out.push({instrument,gain,pitch,offset,technique});
  if(score.kick.includes(step)&&(!rest||step===0||step===8))push('kick',score.id==='heavy'?.2:.16,48);
- if(energy>.24&&!rest)for(const [original,steps]of Object.entries(score.drums))if(steps.includes(step)){
+ if(energy>.24&&!rest&&score.scene!==1)for(const [original,steps]of Object.entries(score.drums))if(steps.includes(step)){
   if(energy<.4&&step%4!==0&&(step+bar)%2)continue;
   const instrument=original==='conga'?'handslap':original==='tom'?'skinbass':original==='snare'?'acousticsnare':original;
   push(instrument,instrument==='shaker'?.012:instrument==='acousticsnare'?.048:.035,
    instrument==='handslap'?48+(step%3)*3:instrument==='skinbass'?40+step%3*2:72+step%3*18,0,step%4?'ghost':'accent');
  }
  // Three hand strokes span two beats against the binary kick (3:2).
- if(score.id==='interlock'&&energy>.38&&!rest){
+ if(score.id==='interlock'&&energy>.38&&!rest&&score.scene!==1){
   for(const at of [0,8/3,16/3])if(Math.floor(at)===step%8)push('handslap',.028,50+cycle%3,at-Math.floor(at),step%8===0?'accent':'normal');
  }
  // A short pickup once per eight bars; it replaces density rather than piling up.

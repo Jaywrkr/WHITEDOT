@@ -2,22 +2,23 @@
 // - Código de lugar: semilla + versiones + layout + capa + coordenadas. Abrirlo guarda el lugar en
 //   Favoritos y, si es del mismo mundo, te orienta hacia él (no teletransporta: la distancia sigue contando).
 // - Grabar set: hasta 60 s de la pantalla con el audio real del juego, para descargar o compartir.
-import {supportedWorld,sameWorld,placeAddress} from './world-identity.js';
+import {supportedWorld,supportedMusic,sameWorld,placeAddress} from './world-identity.js';
 
 const PREFIX='WD1-';
 const b64url=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 const unb64url=s=>decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/')+'==='.slice((s.length+3)%4))));
 // Código compacto y legible por máquina. Redondea a 1 px: suficiente para volver al mismo punto.
 export function encodePlace(address,name=''){
+ if(!supportedMusic(address))throw Error('Versión musical no compatible');
  const a=placeAddress(address,address.x,address.y,address.layer||'superficie');
- return PREFIX+b64url(JSON.stringify({s:a.seed,l:a.layout,g:a.generatorVersion,c:a.catalogVersion,o:a.layoutVersion,x:Math.round(a.x),y:Math.round(a.y),L:a.layer==='superficie'?0:a.layer==='bajo'?1:2,n:String(name).slice(0,40)}));
+ return PREFIX+b64url(JSON.stringify({s:a.seed,l:a.layout,g:a.generatorVersion,c:a.catalogVersion,o:a.layoutVersion,x:Math.round(a.x),y:Math.round(a.y),L:a.layer==='superficie'?0:a.layer==='bajo'?1:2,n:String(name).slice(0,40),...(a.musicVersion!==undefined?{M:a.musicVersion,P:a.musicMode}:{})}));
 }
 export function decodePlace(code){
  const text=String(code||'').trim();if(!text.startsWith(PREFIX)||text.length>400)throw Error('Código no reconocido');
  let v;try{v=JSON.parse(unb64url(text.slice(PREFIX.length)));}catch(_){throw Error('Código dañado');}
  if(!v||typeof v!=='object'||Array.isArray(v)||typeof v.s!=='string'||!Number.isFinite(v.x)||!Number.isFinite(v.y)||![0,1,2].includes(v.L))throw Error('Dirección de lugar inválida');
- const identity={seed:v.s,layout:v.l,generatorVersion:v.g,catalogVersion:v.c,layoutVersion:v.o};
- if(!supportedWorld(identity))throw Error('Mundo o versión no compatible');
+ const identity={seed:v.s,layout:v.l,generatorVersion:v.g,catalogVersion:v.c,layoutVersion:v.o,...(Object.hasOwn(v,'M')?{musicVersion:v.M,musicMode:v.P}:{})};
+ if(!supportedWorld(identity)||!supportedMusic(identity))throw Error('Mundo o versión no compatible');
  const address=placeAddress(identity,v.x,v.y,['superficie','bajo','cielo'][v.L]);
  return {address,name:typeof v.n==='string'?v.n.slice(0,40):''};
 }
@@ -30,7 +31,7 @@ export const MAX_SET_SECONDS=60;
 export function initialize(runtime){
  const $=runtime.$,S=()=>runtime.S;
  // ---------- códigos de lugar ----------
- function currentCode(){const s=S(),region=runtime.activeLayerRegion?.()||runtime.regionOfPos(s.wx,s.wy);return encodePlace({...runtime.worldIdentity,x:s.wx,y:s.wy,layer:s.layer||'superficie'},region.name);}
+ function currentCode(){const s=S(),region=runtime.activeLayerRegion?.()||runtime.regionOfPos(s.wx,s.wy);return encodePlace({...(runtime.musicalAddress?.()||runtime.worldIdentity),x:s.wx,y:s.wy,layer:s.layer||'superficie'},region.name);}
  async function copy(text){try{await navigator.clipboard.writeText(text);return true;}catch(_){return false;}}
  async function shareHere(){
   if(!runtime.inWorld()){runtime.toast('<em>Código</em> · entra al Mundo para compartir dónde estás');return null;}

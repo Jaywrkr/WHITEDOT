@@ -1,3 +1,15 @@
+# Handoff vigente · Laboratorio Vivo L6
+
+Rama `feat/lab-l6-exploracion`, versión 2.1.0-alpha.6. L1–L7 autorizadas consecutivamente; continuar desde esta rama sin esperar confirmación. Jay mantiene PR/merge. [Plan](PLAN_LABORATORIO_VIVO.md).
+
+- Seis secciones cambian orquestación, silencio y densidad manteniendo el ancla territorial. La iniciativa en quietud influye en la elección de voz; los vecinos mantienen reloj y centro armónico compartidos.
+- Saltar compara banda, paleta y patrón además del género y paisaje. Los Favoritos guardan una huella musical ampliada; las direcciones y códigos nuevos restauran Paisaje vivo/clásico sin cambiar coordenadas ni ámbito del guardado.
+- Los códigos anteriores siguen válidos. Los metadatos musicales futuros se conservan sin abrir versiones desconocidas. Auditoría, 103 suites Node, tres recorridos y seis mezclas de evolución aprobados.
+
+Auditoría aprobada; 103 suites Node, 3 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l6-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+
+## Entregas anteriores
+
 # Handoff vigente · Laboratorio Vivo L5
 
 Rama `feat/lab-l5-aprendizaje`, versión 2.1.0-alpha.5. L1–L7 autorizadas consecutivamente; continuar desde esta rama sin esperar confirmación. Jay mantiene PR/merge. [Plan](PLAN_LABORATORIO_VIVO.md).
