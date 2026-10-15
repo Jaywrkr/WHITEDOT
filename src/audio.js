@@ -6,7 +6,7 @@ import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
 import {chooseNearbySource} from './spatial.js';
 import {harmonicDegree,createVoiceCurator} from './grammar.js';
 import { createRadio } from './radio.js';
-import {labDrumEvents} from './lab-score.js';
+import {labDrumEvents,labNoteEvents} from './lab-score.js';
 
 // Motor musical, síntesis y programación de Web Audio.
 export function initialize(runtime) {
@@ -365,7 +365,9 @@ export function initialize(runtime) {
     if(arrangement?.labScore){
       const groove=runtime.inWorld()?Math.max(0,-(runtime.influenceState?.values.groove||0)):0;
       for(const hit of labDrumEvents(arrangement.labScore,s,bar,E*(1-.75*groove))){
-        const at=hit.instrument==='kick'?t:tt,v=vel(hit.gain);
+        const at=(hit.instrument==='kick'?t:tt)+(hit.offset||0)*SIX,v=vel(hit.gain);
+        runtime.labPerformanceCue?.({...hit,time:at,bar,step:s,role:'perc'});
+        if(runtime.playNewInstrument?.(hit.instrument,hit.pitch,at,v,{technique:hit.technique}))continue;
         if(hit.instrument==='kick')kick(at,v);else if(hit.instrument==='snare')snare(at,v);
         else if(hit.instrument==='conga')conga(at,hit.pitch,v);else if(hit.instrument==='tom')tom(at,hit.pitch,v);
         else if(hit.instrument==='rim')rim(at,v);else if(hit.instrument==='wood')wood(at,v);else shaker(at,v);
@@ -486,6 +488,20 @@ export function initialize(runtime) {
   // Neighbors retain their own groove/timbre/register while sharing the current harmonic center.
   function playTrack(d,s,t,E,ct,arrangement=MU.radio){
     const base=d&&d.track;if(!base)return;const tr=arrangement?{...base,...arrangement}:base;const sc=MU.dnaA?.scale||d.scale,trans=MU.dnaA?MU.tr:runtime.BIOMES[d.z].tr+d.trOff,nativeProfile=musicalCharacter(d.genre),profile=tr.hybrid?{...nativeProfile,low:Math.min(nativeProfile.low,tr.hybrid.high-12),high:Math.min(nativeProfile.high,tr.hybrid.high)}:nativeProfile,bar=(MU.step>>4)&1,nt=(dg,base)=>base+trans+sc[((dg%7)+7)%7]+12*Math.floor(dg/7);
+    if(tr.labScore){
+      for(const event of labNoteEvents(tr,s,MU.step>>4)){
+        const at=t+event.offset*SIX,articulation={...tr.expression,technique:event.technique};
+        if(event.role==='bajo'){
+          if(E<=.15||MU.vari===0||d.genre==='ambient')continue;
+          const note=inRegister(nt(event.degree,45),38,52);bassInst(event.instrument,note,at,vel(.14*(tr.grammar.bassLevel||1)*event.level),d);
+        }else{
+          if(runtime.cultureListening||E<=.12&&s%4!==0||MU.vari===0&&s%4)continue;
+          const note=hookPitch(event.instrument,nt(event.degree,57),profile);
+          hookInst(event.instrument,note,at,vel((.05+.05*E)*(tr.grammar.hookLevel||1)*profile.level*event.level),d,articulation);
+        }
+        runtime.labPerformanceCue?.({...event,time:at,bar:MU.step>>4,step:s});
+      }return;
+    }
     const gid=d.genre,bs=arrangement?tr.bass[s]:gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
     if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel((gid==="rominimal"?.13:.17)*(arrangement?.grammar.bassLevel||1)),d);}
     let h=tr.hook[s];if(h>=0&&!runtime.cultureListening&&!arrangement?.melodyRest&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);n=hookPitch(tr.hookI,n,profile);const expression=arrangement?.expression,accent=expression?phraseAccent(expression,s):1;
