@@ -31,19 +31,20 @@ export function initialize(runtime) {
   }
   function drawSoundCues(ox,oy,radius) {
     if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running'){buffer.clear();return;}
-    const ctx=runtime.cx;
+    const ctx=runtime.cx;let named=false;
     for(const cue of buffer.active(performance.now())) {
       const {source,role,age}=cue;
       if(Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)>radius)continue;
-      const r=8+age*(role==='bajo'?38:18);
+      const reduced=runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches,r=12+(reduced?0:age*(role==='bajo'?28:20));
       ctx.save();ctx.translate(source.x+ox,source.y+oy);
-      ctx.strokeStyle=musicInk(source,role);ctx.lineWidth=role==='bajo'?2:1;ctx.globalAlpha=(1-age)*.65;
+      ctx.strokeStyle=musicInk(source,role);ctx.lineWidth=role==='bajo'?2:1.6;ctx.globalAlpha=(1-age)*.88;
       ctx.beginPath();
       if(role==='perc')for(let i=0;i<4;i++){const a=i*Math.PI/2;ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r);ctx.lineTo(Math.cos(a)*(r+5),Math.sin(a)*(r+5));}
       else if(role==='lead'){ctx.moveTo(-r/2,0);ctx.lineTo(0,-r);ctx.lineTo(r/2,-r/2);}
       else if(role==='agudo'){ctx.moveTo(-r/2,0);ctx.lineTo(r/2,0);ctx.moveTo(0,-r/2);ctx.lineTo(0,r/2);}
       else {ctx.arc(0,0,r,0,Math.PI*2);if(role==='acorde')for(let i=1;i<3;i++){ctx.moveTo(r+i*4,0);ctx.arc(0,0,r+i*4,0,Math.PI*2);}}
       ctx.stroke();
+      if(!named&&Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<65&&age<.7){named=true;ctx.font='9px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillStyle=ctx.strokeStyle;ctx.fillText({bajo:'Bajo',perc:'Ritmo',acorde:'Acorde',lead:'Melodía',agudo:'Detalle'}[role]||'',0,-28);}
       const filter=cue.filter;
       if(filter){
        const phase=filter.end>filter.start?age:1-age;ctx.lineWidth=.8;for(let i=0;i<filter.stages;i++){ctx.beginPath();ctx.arc(0,0,9+i*3,-Math.PI/2,-Math.PI/2+Math.PI*2*(.2+phase*.7));ctx.stroke();}

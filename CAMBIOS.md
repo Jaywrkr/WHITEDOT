@@ -1,3 +1,15 @@
+# Cierre F6 · Percusión y gestos en primer plano
+
+Rama `feat/cierre-f6-interacciones`, hija de la fase anterior. Jay crea PR/merge.
+
+- foreground.js crea tres rutas persistentes para acompañamiento seco, reverberación y eco. Un gesto del Mundo reduce suavemente esas rutas al 62 %, con recuperación automática, sin bajar su propia voz ni cambiar el máster. La ruta se restaura incluso si falla una emisión.
+- percussion-material.js sintetiza nueve cuerpos originales: piedra, tronco, raíces, juncos, vainas, concha, polvo, fósil y charco. Setenta y dos articulaciones deterministas combinan parciales amortiguados, caída y ruido filtrado. Conserva posiciones, roles y límites compartidos de golpes.
+- El semillero ya no repite siempre una caja: cinco voces regionales. Los truenos varían cuerpo, filtro, duración y envío según región/compás. No cambian los patrones nativos de batería.
+- Señales sincronizadas con el inicio del sonido, trazos locales más claros y una sola etiqueta de rol cercana. Respeta movimiento reducido, silencio y modales; tocar interfaz sigue sin generar música.
+- Prueba aislada de dos señales comprueba que baja el acompañamiento, recupera y mantiene intacta la voz del jugador; recorridos móviles verifican los nueve materiales reales y la persistencia de descubrimientos. Sin migraciones destructivas.
+
+Auditoría limpia; 86 suites Node y 6 recorridos afectados aprobados. 11 renders densos de materiales/fenómeno/tormenta y una medición aislada de contraste; resultados en cierre-f6-foreground-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f6-validation.json).
+
 # Cierre F5 · Cruces musicales y espacio
 
 Rama `feat/cierre-f5-composicion`, hija de la fase anterior. Jay crea PR/merge.

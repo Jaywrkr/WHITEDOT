@@ -95,7 +95,7 @@ export function initialize(runtime) {
       delay.connect(dl).connect(dfb).connect(delay);const echo=returnFilters(ac,110,8000);dl.connect(echo.input);echo.output.connect(master);echo.output.connect(verbIn);
       dsend=ac.createGain();dsend.gain.value=1;dsend.connect(delay);
       padF=ac.createBiquadFilter();padF.type="lowpass";padF.frequency.value=600;padF.Q.value=.5;padG=ac.createGain();padG.gain.value=0;
-      padF.connect(padG);padG.connect(master);padG.connect(verbIn);
+      padF.connect(padG);padG.connect(runtime.accompanimentStage?.()?.inputs[0]||master);padG.connect(runtime.accompanimentStage?.()?.inputs[1]||verbIn);
       MU.voices.forEach((m,i)=>{[-5,5].forEach(det=>{const o=ac.createOscillator();o.type=i%2?"triangle":"sine";o.frequency.value=hz(m);o.detune.value=det+(Math.random()*4-2);const g=ac.createGain();g.gain.value=i%2?.5:1;o.connect(g).connect(padF);o.start();padOsc.push({o,i});});});
       drone=ac.createOscillator();drone.type="sine";drone.frequency.value=hz(33);droneG=ac.createGain();droneG.gain.value=0;drone.connect(droneG).connect(master);drone.start();
       noiseBuf=ac.createBuffer(1,ac.sampleRate*2|0,ac.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
@@ -240,6 +240,7 @@ export function initialize(runtime) {
     const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(MU.radio?.identity?.swing??G.sw??0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
     const xp=runtime.inWorld()?(runtime.experimentalLevel?.()||0):0;   // zonas experimentales: ≥0.7 sin batería ni pista
     if(live&&!runtime.labSolo&&!(runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie')&&xp<.7){   // Campo de escucha: solo suena lo que está dentro   // laboratorio: «Solo» calla la música del lugar para oír el elemento
+      const accompany=()=>{
       if(nb){VW=w;const nt=t+((s%2)?SIX*(MU.neighborRadio?.identity?.swing??runtime.GEN[nb.genre].sw??0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true,MU.neighborRadio);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }
       VW=1-w;if(!(xp>.4&&rnd()<(xp-.4)*2.2))drums(A?A.genre:"ambient",s,bar,t,tt,E,ct,false);   // entre 0.4 y 0.7 la batería se deshace
       if(runtime.inWorld()&&A){
@@ -251,6 +252,7 @@ export function initialize(runtime) {
         }
       }
       VW=1;
+      };if(runtime.withAccompaniment)runtime.withAccompaniment(accompany);else accompany();
     }
     // tu Estudio: cada pieza suena en su paso
     if(runtime.S.mode==="studio"){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);runtime.studioHit[key]=performance.now()+(t-ac.currentTime)*1000;}}}
@@ -484,7 +486,9 @@ export function initialize(runtime) {
       [ct[1],ct[3]].forEach(n=>hookInst(instrument,hookPitch(instrument,n-12,profile),t,vel(.012*(tr.grammar.hookLevel||1)),d,tr.expression));
     }
   }
-  function thunder(t){noise(t,"lowpass",900,.5,.25,.9,true);noise(t,"highpass",3000,.5,.06,.12);}
+  function thunder(t,source=null){const d=MU.dnaA||MU.dnaT,variation=runtime.seedOf(`storm:articulation:v1:${d?.key}:${MU.step>>4}`)%8;
+    noise(t,"lowpass",420+variation*55,.6,.16,.45+variation*.04,variation%3===0);tom(t,48+variation*5,.085);if(variation%2)noise(t,"bandpass",900+variation*100,.7,.025,.07);
+    if(source){runtime.soundCue?.(source,'perc',t);runtime.stormStrikeCue?.({variation,time:t});}}
   const soon=(fn,origin="ambient")=>{if(ac)MU.queue.push(t=>runtime.withVoiceOrigin?runtime.withVoiceOrigin(origin,()=>fn(t)):fn(t));};
   const now=fn=>{if(ac&&ac.state==="running")fn(ac.currentTime+.01);};
   function beat(){if(!ac)return 0;const n=ac.currentTime;while(MU.bq.length>1&&MU.bq[1]<=n)MU.bq.shift();const bt=MU.bq[0];if(bt===undefined||bt>n)return 0;const ph=(n-bt)/(SIX*4);return ph>1?0:Math.pow(1-ph,4)*(.35+MU.E*.65);}
