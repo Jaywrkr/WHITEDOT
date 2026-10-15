@@ -1,3 +1,13 @@
+# Experiencia · fase 6
+
+Rama `feat/experiencia-06-hallazgos`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Las tarjetas explican su función musical y celebran el encuentro con señales locales contenidas. El atlas conserva campos desconocidos; libros futuros quedan de solo lectura. La UI no inicia audio.
+
+Validación: Auditoría/Node completos; living-cards_smoke y rare_cards_smoke; audio sin cambios. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 5
 
 Rama `feat/experiencia-05-casa`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.

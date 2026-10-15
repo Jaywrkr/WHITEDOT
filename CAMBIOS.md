@@ -1,3 +1,9 @@
+# Experiencia 6 · Tarjetas ganadas en encuentros
+
+Rama `feat/experiencia-06-hallazgos`. Las tarjetas explican su función musical y celebran el encuentro con señales locales contenidas. El atlas conserva campos desconocidos; libros futuros quedan de solo lectura. La UI no inicia audio.
+
+Validación: Auditoría/Node completos; living-cards_smoke y rare_cards_smoke; audio sin cambios. Jay mantiene PR/merge.
+
 # Experiencia 5 · Casa viva y edición táctil
 
 Rama `feat/experiencia-05-casa`. Casa con colocación anticipada, selección y arrastre directo de objetos; señales locales cuando suenan. Conserva Taller y visitas; versiones futuras quedan protegidas contra edición.

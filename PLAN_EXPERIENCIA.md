@@ -9,7 +9,7 @@ Jay autorizó las catorce fases. Una rama por fase, encadenadas. Codex commit/pu
 | 3 | Camino, entrada y Voz | `feat/experiencia-03-camino` | Implementada; validación registrada abajo |
 | 4 | Llegadas y favoritos claros | `feat/experiencia-04-viajes` | Implementada; validación registrada abajo |
 | 5 | Casa viva y edición táctil | `feat/experiencia-05-casa` | Implementada; validación registrada abajo |
-| 6 | Tarjetas ganadas en encuentros | `feat/experiencia-06-hallazgos` | Pendiente |
+| 6 | Tarjetas ganadas en encuentros | `feat/experiencia-06-hallazgos` | Implementada; validación registrada abajo |
 | 7 | Rareza y observaciones útiles | `feat/experiencia-07-rareza` | Pendiente |
 | 8 | Atlas y expediciones sonoras | `feat/experiencia-08-atlas` | Pendiente |
 | 9 | Coleccionar para crear | `feat/experiencia-09-creacion` | Pendiente |
@@ -72,3 +72,9 @@ Validación: Auditoría/Node completos y favorites_smoke, travel_v2_smoke, mater
 Casa con colocación anticipada, selección y arrastre directo de objetos; señales locales cuando suenan. Conserva Taller y visitas; versiones futuras quedan protegidas contra edición.
 
 Validación: Auditoría/Node completos; house_v2_smoke y ui_silence_smoke; house_mix Web Audio. Aceptación física y CI del PR, separados.
+
+## Entrega 6 · Tarjetas ganadas en encuentros
+
+Las tarjetas explican su función musical y celebran el encuentro con señales locales contenidas. El atlas conserva campos desconocidos; libros futuros quedan de solo lectura. La UI no inicia audio.
+
+Validación: Auditoría/Node completos; living-cards_smoke y rare_cards_smoke; audio sin cambios. Aceptación física y CI del PR, separados.

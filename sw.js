@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.2.0-alpha.5-experiencia';
+const CACHE='whitedot-2.2.0-alpha.6-experiencia';
 const SHELL=[
  "./src/instrument-techniques.js",
  "./src/lab-score.js", "./src/lab-learning.js", "./src/lab-learning-model.js",
