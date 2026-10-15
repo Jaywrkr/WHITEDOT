@@ -1,23 +1,23 @@
 # Experiencia viva · plan autorizado
 
-Jay autorizó las catorce fases. Una rama por fase, encadenadas. Codex commit/push; Jay PR/merge. Base observada: main e351584 (PR #129 integra L7). No reiniciar planes históricos.
+Jay autorizó las catorce fases. Una rama por fase, encadenadas. Codex commit/push; Jay PR/merge. Base inicial: main e351584 (PR #129 integra L7). Revisión posterior: main 88c96b0 integra fases 1–13 por Jay (PR #142). No reiniciar planes históricos.
 
 | Fase | Alcance | Rama | Estado |
 |---|---|---|---|
-| 1 | Auditoría y experiencia coherente | `feat/experiencia-01-base` | Implementada; validación registrada abajo |
-| 2 | Primer encuentro jugable | `feat/experiencia-02-bienvenida` | Implementada; validación registrada abajo |
-| 3 | Camino, entrada y Voz | `feat/experiencia-03-camino` | Implementada; validación registrada abajo |
-| 4 | Llegadas y favoritos claros | `feat/experiencia-04-viajes` | Implementada; validación registrada abajo |
-| 5 | Casa viva y edición táctil | `feat/experiencia-05-casa` | Implementada; validación registrada abajo |
-| 6 | Tarjetas ganadas en encuentros | `feat/experiencia-06-hallazgos` | Implementada; validación registrada abajo |
-| 7 | Rareza y observaciones útiles | `feat/experiencia-07-rareza` | Implementada; validación registrada abajo |
-| 8 | Atlas y expediciones sonoras | `feat/experiencia-08-atlas` | Implementada; validación registrada abajo |
-| 9 | Coleccionar para crear | `feat/experiencia-09-creacion` | Implementada; validación registrada abajo |
-| 10 | Profundidad musical | `feat/experiencia-10-musica` | Implementada; validación registrada abajo |
-| 11 | Espejos y percepción | `feat/experiencia-11-optica` | Implementada; validación registrada abajo |
-| 12 | Biodiversidad territorial | `feat/experiencia-12-ecosistemas` | Implementada; validación registrada abajo |
-| 13 | Identidad y constelaciones | `feat/experiencia-13-identidad` | Implementada; validación registrada abajo |
-| 14 | Auditoría integrada | `feat/experiencia-14-cierre` | Pendiente |
+| 1 | Auditoría y experiencia coherente | `feat/experiencia-01-base` | En main por Jay; validación registrada abajo |
+| 2 | Primer encuentro jugable | `feat/experiencia-02-bienvenida` | En main por Jay; validación registrada abajo |
+| 3 | Camino, entrada y Voz | `feat/experiencia-03-camino` | En main por Jay; validación registrada abajo |
+| 4 | Llegadas y favoritos claros | `feat/experiencia-04-viajes` | En main por Jay; validación registrada abajo |
+| 5 | Casa viva y edición táctil | `feat/experiencia-05-casa` | En main por Jay; validación registrada abajo |
+| 6 | Tarjetas ganadas en encuentros | `feat/experiencia-06-hallazgos` | En main por Jay; validación registrada abajo |
+| 7 | Rareza y observaciones útiles | `feat/experiencia-07-rareza` | En main por Jay; validación registrada abajo |
+| 8 | Atlas y expediciones sonoras | `feat/experiencia-08-atlas` | En main por Jay; validación registrada abajo |
+| 9 | Coleccionar para crear | `feat/experiencia-09-creacion` | En main por Jay; validación registrada abajo |
+| 10 | Profundidad musical | `feat/experiencia-10-musica` | En main por Jay; validación registrada abajo |
+| 11 | Espejos y percepción | `feat/experiencia-11-optica` | En main por Jay; validación registrada abajo |
+| 12 | Biodiversidad territorial | `feat/experiencia-12-ecosistemas` | En main por Jay; validación registrada abajo |
+| 13 | Identidad y constelaciones | `feat/experiencia-13-identidad` | En main por Jay; validación registrada abajo |
+| 14 | Auditoría integrada | `feat/experiencia-14-cierre` | Validada; entrega en esta rama |
 
 ## Contratos de aceptación
 
@@ -120,3 +120,19 @@ Validación: Auditoría/Node completos; living_smoke, percussion_smoke y lab_smo
 Constelaciones de fuentes realmente tocadas, guardado independiente, imagen 1080×1350 y regreso por dirección completa. Las voces coleccionadas pueden llevarse a casa. Un jardín guardado con tres funciones diferentes origina un brote musical local; sigue al cubo y comparte el presupuesto de voces.
 
 Validación: Auditoría/Node completos; experience_identity_smoke, experience_garden_smoke, house_v2_smoke y ui_silence_smoke; experience_garden_mix. Aceptación física y CI del PR, separados.
+
+## Entrega 14 · Auditoría integrada
+
+Auditoría integrada: migraciones de tarjetas recuperables, guardados futuros protegidos y respuestas musicales locales; catálogo y tutorial conservados.
+
+Validación: Auditoría, Node y suites completas de navegador/audio; resultados en CIERRE_EXPERIENCIA.md.. Aceptación física y CI del PR, separados.
+
+Petición adicional de Jay durante el cierre: más zonas de fiesta feliz. F14 incorpora tres bandas originales sobre géneros bailables compatibles, animación local mínima y prioridad periódica al saltar.
+
+## Resultado conjunto
+
+[CIERRE_EXPERIENCIA.md](CIERRE_EXPERIENCIA.md) reúne hallazgos, commits, pruebas finales y un recorrido móvil por fase. La implementación cierra este ciclo; aceptación física, CI y publicación conservan su alcance propio.
+
+Auditoría sin errores ni advertencias, 113 suites Node, 86 recorridos de navegador incluido offline y 789 renders de 31 programas de audio: aprobados. Prueba HTTP/SQLite aprobada. Pico máximo medido 0.945447. [Evidencia final](scripts/experience-14-validation.json).
+
+Cierre validado en UTC: `2026-10-15T21:29:06.192006+00:00`. Esa marca corresponde a pruebas, no al deploy.

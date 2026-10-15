@@ -26,7 +26,7 @@ try:
    assert page.locator('#celebrationName').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')<=16
    rect=page.locator('#celebration').bounding_box();assert rect['width']*rect['height']<width*height*.3,rect
    assert page.locator('#rareNotice').is_hidden()
-   page.evaluate('__testRuntime.say("Escucha tu nueva voz.","Colección")');page.wait_for_function('document.getElementById("voice").classList.contains("on")')
+   page.evaluate('__testRuntime.say("Escucha tu nueva voz.","Colección",{requested:true})');page.wait_for_function('document.getElementById("voice").classList.contains("on")')
    page.locator('#voice').click();assert page.locator('#voice').get_attribute('aria-expanded')=='true';page.wait_for_function('document.getElementById("celebration").hidden')
    page.locator('#voice').click();page.wait_for_function('!document.getElementById("celebration").hidden')
    page.locator('#bMenu').click();page.wait_for_timeout(150);assert page.locator('#celebration').is_hidden();remaining=page.evaluate('__testRuntime.celebrationState.remaining');power=page.evaluate('__testRuntime.powerSecondsLeft("cometa")');page.wait_for_timeout(350)

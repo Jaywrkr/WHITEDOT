@@ -1,3 +1,14 @@
+# Experiencia 14 · Auditoría integrada
+
+Auditoría sin errores ni advertencias, 113 suites Node, 86 recorridos de navegador incluido offline y 789 renders de 31 programas de audio: aprobados. Prueba HTTP/SQLite aprobada. Pico máximo medido 0.945447. [Evidencia final](scripts/experience-14-validation.json).
+
+Tres zonas festivas originales: Patio tropical, Jardín disco y Verbena eléctrica. Colonias discretas se mueven al pulso; cada tercer salto prioriza encontrar una. Sin alterar ambient, terreno ni volumen maestro. Nueve bandas y 246 destinos del laboratorio.
+
+
+Rama `feat/experiencia-14-cierre`. Auditoría integrada: migraciones de tarjetas recuperables, guardados futuros protegidos y respuestas musicales locales; catálogo y tutorial conservados.
+
+Validación: Auditoría, Node y suites completas de navegador/audio; resultados en CIERRE_EXPERIENCIA.md.. Jay mantiene PR/merge.
+
 # Experiencia 13 · Identidad y constelaciones
 
 Rama `feat/experiencia-13-identidad`. Constelaciones de fuentes realmente tocadas, guardado independiente, imagen 1080×1350 y regreso por dirección completa. Las voces coleccionadas pueden llevarse a casa. Un jardín guardado con tres funciones diferentes origina un brote musical local; sigue al cubo y comparte el presupuesto de voces.

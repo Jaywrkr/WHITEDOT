@@ -4,26 +4,22 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 
 ## Prioridad actual
 
-Jay autorizó [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md), catorce fases consecutivas. Sus ramas sustituyen la prioridad anterior; no esperar confirmación entre fases. Mantener el flujo commit/push sin PR/merge del agente.
+Cierre de [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md), catorce fases autorizadas. Candidata **2.2.0-rc.1**, rama final `feat/experiencia-14-cierre`. Leer [CIERRE_EXPERIENCIA.md](CIERRE_EXPERIENCIA.md) y la evidencia enlazada para comprobar el resultado y sus condiciones externas. No reiniciar planes históricos.
+
+Jay integró fases 1–13 en main `88c96b0` (PR #142). F14 sigue esa ascendencia y está validada; resultados en el cierre vigente. El agente solo commit/push; Jay PR/merge. La escucha física, CI y el deploy real se verifican separadamente. Nuevo alcance requiere una solicitud de Jay.
 
 ## Leer primero
 
-**Estado de entrega:** `feat/lab-l7-curaduria`, 2.1.0-alpha.7. L1–L7 de [PLAN_LABORATORIO_VIVO.md](PLAN_LABORATORIO_VIVO.md) están implementadas, probadas y subidas. El ciclo de código autorizado está completo; no reiniciar fases históricas. Jay mantiene PR/merge. [Cierre y condiciones externas](CIERRE_LABORATORIO_VIVO.md).
+1. [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md): ciclo actual y entregas.
+2. [CIERRE_EXPERIENCIA.md](CIERRE_EXPERIENCIA.md): auditoría, integración y prueba móvil.
+3. [README.md](README.md) y [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md): mapa técnico vigente.
+4. [PLAN_2.0.md](PLAN_2.0.md): decisiones y estados anteriores; su cabecera remite al ciclo actual.
 
-**Prioridad vigente:** el ciclo musical L1–L7 está entregado. Revisar [CIERRE_LABORATORIO_VIVO.md](CIERRE_LABORATORIO_VIVO.md) y la escucha física pendiente; empezar alcance nuevo solo cuando Jay lo solicite. PLAN_CIERRE_2.0 y PLAN_PULIDO_FINAL conservan sus entregas anteriores.
-
-**Antecedentes de auditoría:** [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) y [AUDITORIA_CIERRE_2.0.md](AUDITORIA_CIERRE_2.0.md) conservan los ocho bloques anteriores y sus hallazgos. Son entregas históricas, no fases nuevas pendientes. La aceptación física/artística permanece separada de la validación automática.
-
-1. [PLAN_2.0.md](PLAN_2.0.md): **trabajo actual**. Fases, orden, ramas, criterios de "listo" y decisiones pendientes.
-2. [README.md](README.md): cómo correr, verificar y publicar.
-3. [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md): mapa técnico de módulos y dirección creativa que debe conservarse.
-4. [CIERRE_V1.md](CIERRE_V1.md): estilo J y decisiones de la 1.1.0.
-
-`docs/historial/` es historia: no describe el estado actual.
+[CIERRE_LABORATORIO_VIVO.md](CIERRE_LABORATORIO_VIVO.md), [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md), [AUDITORIA_CIERRE_2.0.md](AUDITORIA_CIERRE_2.0.md), [CIERRE_V1.md](CIERRE_V1.md) y `docs/historial/` conservan antecedentes. No sustituyen el estado actual ni autorizan repetir trabajo cerrado.
 
 ## Flujo de ramas (obligatorio)
 
-- Una rama por fase del plan vigente. Para Laboratorio Vivo, nombres de `PLAN_LABORATORIO_VIVO.md`, desde `main` actualizado o desde la fase de la que dependa.
+- Una rama por fase del plan vigente. Para Experiencia viva, nombres de `PLAN_EXPERIENCIA.md`, desde `main` actualizado o desde la fase de la que dependa.
 - Commit y push de la rama. **Jay crea el PR y hace el merge.** No hacer push a `main` ni merges salvo que Jay lo pida explícitamente en ese momento.
 - Continuar con todas las fases ya autorizadas sin esperar confirmación entre ramas. Entregar una rama no detiene la siguiente; un bloqueo externo solo detiene las acciones que dependen de él.
 - Mensajes de commit en inglés, en imperativo, explicando el porqué. Sin identificadores de modelos.

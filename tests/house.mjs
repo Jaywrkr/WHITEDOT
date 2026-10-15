@@ -7,3 +7,7 @@ const state={studio:{slots:{'0,4':'canon'}},rewards:{items:{'cube:color:ffffff':
 assert.throws(()=>decodeHouse('WH1-invalid'));assert.throws(()=>decodeHouse('WH1-'+btoa(JSON.stringify({v:1,o:[['obj:origen','sala',null,20]]}))));console.log('PASS forty earned house objects, four rooms, normalized positions, preserved workshop, note timing/register/proximity and safe visit code');
 
 const future={version:9,objects:[{kind:'future:instrument',room:'future',x:.2,y:.4}],unlocked:['future'],unknown:{won:true}};const preserved=normalizeHouse(future);assert.equal(preserved.version,9);assert.deepEqual(preserved.objects,future.objects);assert.deepEqual(preserved.unknown,future.unknown);assert(!placeHouseObject(preserved,'obj:origen','sala',.2,.2));
+assert.throws(()=>encodeHouse(preserved),/versión más reciente/,'future home cannot be down-converted');
+const unknownHouse=normalizeHouse({objects:[{kind:'future:won',room:'other',earned:1},{kind:'obj:origen',room:'sala',x:.5,y:.5}]});assert.equal(unknownHouse.objects.length,2);assert.equal(decodeHouse(encodeHouse(unknownHouse)).objects.length,1,'visit code includes playable data without erasing owned unknown data');assert.equal(unknownHouse.objects[0].earned,1);
+
+const edited=normalizeHouse({objects:[{kind:'obj:origen',room:'sala',x:.2,y:.2,wonMetadata:{custom:1}}]});placeHouseObject(edited,'obj:origen','sala',.7,.8);assert.equal(edited.objects[0].wonMetadata.custom,1,'moving a known object preserves additional earned fields');
