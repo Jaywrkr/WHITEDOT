@@ -1,4 +1,11 @@
 import {directionTo} from './navigation.js';
+export function createAutoPulse(random=Math.random){
+ let elapsed=0,next=12+random()*10;
+ return {reset(){elapsed=0;next=12+random()*10;},tick(dt,enabled){
+  if(!enabled)return false;elapsed+=Math.max(0,Math.min(.05,Number.isFinite(dt)?dt:0));
+  if(elapsed<next)return false;elapsed=0;next=12+random()*10;return true;
+ }};
+}
 export function createAutopilot(random=Math.random){
  const state={mode:null,layer:null,seconds:0,angle:0,targetAngle:0,nextTurn:0,paused:false};
  function stop(){state.mode=null;state.paused=false;}
@@ -24,22 +31,25 @@ export function createAutopilot(random=Math.random){
  return {state,start,stop,vector};
 }
 export function initialize(runtime){
- const engine=createAutopilot(),$=runtime.$;
- function ui(){const s=engine.state;$('autopilotHud').hidden=!runtime.inWorld()||s.mode!=='wander';$('autoStatus').textContent=s.paused?'Paseo en pausa':'Paseo musical';$('bAuto')?.setAttribute('aria-pressed',String(s.mode==='wander'));$('bAuto')?.setAttribute('aria-label',s.mode==='wander'?'Detener paseo musical':'Iniciar paseo musical');$('routeAuto').setAttribute('aria-pressed',String(s.mode==='destination'));$('routeAuto').setAttribute('aria-label',s.mode==='destination'?'Detener viaje automático':'Viajar automáticamente');}
+ const engine=createAutopilot(),pulses=createAutoPulse(),$=runtime.$;
+ function ui(){const s=engine.state;$('autoPulse').textContent=runtime.S.autoPulse===true?'Pulsos: sí':'Pulsos: no';$('autoPulse').setAttribute('aria-pressed',String(runtime.S.autoPulse===true));$('autopilotHud').hidden=!runtime.inWorld()||s.mode!=='wander';$('autoStatus').textContent=s.paused?'Paseo en pausa':'Paseo musical';$('bAuto')?.setAttribute('aria-pressed',String(s.mode==='wander'));$('bAuto')?.setAttribute('aria-label',s.mode==='wander'?'Detener paseo musical':'Iniciar paseo musical');$('routeAuto').setAttribute('aria-pressed',String(s.mode==='destination'));$('routeAuto').setAttribute('aria-label',s.mode==='destination'?'Detener viaje automático':'Viajar automáticamente');}
  function stop(){engine.stop();ui();}
  function start(mode){
   if(!runtime.inWorld()){runtime.toast('<em>Autopilot</em> · Entra al Mundo para iniciar.');return false;}
   runtime.audio();runtime.navigationTick();const layer=runtime.S.layer||'superficie';
   if(mode==='destination'&&(!runtime.navigationState?.sameLayer||runtime.navigationState.arrived)){runtime.toast('<em>Autopilot</em> · Elige un destino en esta capa.');return false;}
   if(mode==='wander')runtime.cancelDestination();
-  engine.start(mode,layer,runtime.seedOf(`paseo:${runtime.MU.dnaT?.key}`)/4294967296*Math.PI*2);$('mFavorites').hidden=true;ui();return true;
+  pulses.reset();engine.start(mode,layer,runtime.seedOf(`paseo:${runtime.MU.dnaT?.key}`)/4294967296*Math.PI*2);$('mFavorites').hidden=true;ui();return true;
  }
  function vector(dt,manual,paused){
   const s=runtime.S,result=engine.vector(dt,{manual,paused,active:runtime.inWorld(),studio:s.mode==='studio'&&s.prevMode==='world',layer:s.layer||'superficie',x:s.wx,y:s.wy,target:runtime.navigationState?.target,localTarget:runtime.autopilotAim?.(),speed:runtime.SPEED,seaAhead:(s.layer||'superficie')==='superficie'?angle=>{const size=runtime.REG*runtime.WCH;for(const d of [90,220]){const x=s.wx+Math.cos(angle)*d,y=s.wy+Math.sin(angle)*d;if(runtime.continents.at(Math.floor(x/size),Math.floor(y/size)).sea)return true;}return false;}:null});
+  const pulseAllowed=!!result&&!engine.state.paused&&(s.layer||'superficie')==='superficie'&&s.autoPulse===true&&engine.state.mode==='wander'&&s.sound&&runtime.musicVolume?.()>0&&runtime.ac?.state==='running'&&!runtime.setRecording&&!runtime.jam?.loop?.rec&&!runtime.jam?.loop?.armed&&!runtime.duetRoom&&!runtime.scanning;
+  if(pulses.tick(dt,pulseAllowed))runtime.sonar('ambient');
   if(engine.state.seconds>=60)runtime.unlock('paseo1');ui();if(result&&s.layer!=='bajo'&&s.layer!=='cielo'&&runtime.MU.anomaly==='invertida')return {dx:-result.dx,dy:-result.dy};return result;
  }
  function actions(point,row){const button=document.createElement('button');button.textContent='Viajar';button.onclick=()=>{if(runtime.selectDestination(point.id))start('destination');};row.append(button);}
  if($('bAuto'))$('bAuto').onclick=()=>engine.state.mode==='wander'?stop():start('wander');
+ $('autoPulse').onclick=()=>{runtime.S.autoPulse=runtime.S.autoPulse!==true;pulses.reset();runtime.save();ui();};
  $('favWalk').onclick=()=>start('wander');$('autoStop').onclick=stop;$('routeAuto').onclick=()=>engine.state.mode==='destination'?stop():start('destination');
  Object.defineProperties(runtime,{startAutopilot:{get:()=>start},stopAutopilot:{get:()=>stop},autopilotVector:{get:()=>vector},autopilotState:{get:()=>engine.state},autopilotActions:{get:()=>actions}});
  ui();

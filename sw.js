@@ -1,6 +1,7 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.2.0-rc.1-pulido-03';
+const CACHE='whitedot-2.2.0-rc.1-pulido-04';
 const SHELL=[
+ "./src/music-travel.js",
  "./src/territory-presentation.js",
  "./src/music-direction.js",
  "./src/listening-reference.js",

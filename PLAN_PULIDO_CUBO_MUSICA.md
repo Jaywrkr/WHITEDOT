@@ -9,7 +9,7 @@ Una rama por fase; la siguiente parte de la anterior si todavía no está integr
 | 1 · Base de evaluación | `feat/pulido-01-medicion` | Medición y referencias internas | En main, PR #144 |
 | 2 · Dirección musical | `feat/pulido-02-direccion-musical` | Identidades, articulación y espacios musicales | Implementada y probada; entrega en esta rama |
 | 3 · Territorios coherentes | `feat/pulido-03-territorios` | Música, materiales, color, habitantes y fusiones | Implementada y probada; entrega en esta rama |
-| 4 · Interacciones musicales | `feat/pulido-04-interacciones` | Gestos con causa visual y aporte audible | Pendiente |
+| 4 · Interacciones musicales | `feat/pulido-04-interacciones` | Gestos, estilos y paseo opcional | Implementada y probada; entrega en esta rama |
 | 5 · Ambiente vivo | `feat/pulido-05-ambiente` | Clima, percusión natural, vida y quietud | Pendiente |
 | 6 · Cubo e interfaz | `feat/pulido-06-cubo-ui` | Personalización, claridad y móvil | Pendiente |
 | 7 · Colección y tarjetas | `feat/pulido-07-coleccion` | Hallazgos, utilidad, procedencia y regreso | Pendiente |
@@ -114,6 +114,10 @@ No se modifica síntesis ni mezcla; no se repite audio para esta fase. Suite com
 
 **Aceptación:** identificar el aporte del gesto sin manual; contacto sostenido no provoca ráfagas accidentales, ni atraviesa pausas/menús/cambios de capa.
 
+**Ampliación autorizada durante F4:** selector Estilos en producción con búsqueda de destinos reales y marca de escuchado desde el registro audible existente; paseo con pulsos opcionales cada 12–22 segundos activos. Sin notas por botones, sin completar el Camino desde el selector y sin premios manuales por pulsos automáticos. Los gestos conservan prioridad visual y atenúan selectivamente el acompañamiento.
+
+**Validación F4:** auditoría sin errores/advertencias, 118 suites Node, seis programas de navegador y 29 renders de audio aprobados. Pico máximo 0,904554. Evidencia: `scripts/pulido-04-validation.json`. En teléfono: Mundo → Estilos → busca un género → viaja; abre de nuevo tras escucharlo. Activa Paseo y alterna Pulsos: sí/no. CI/deploy/escucha física separados.
+
 ## Fase 5 · Ambiente vivo
 
 **Objetivo:** un entorno que participa musicalmente y deja respirar.
@@ -126,6 +130,8 @@ No se modifica síntesis ni mezcla; no se repite audio para esta fase. Suite com
 - Acotar fuentes simultáneas, repetición y actividad; no llenar las zonas tranquilas.
 
 **Aceptación:** permanecer varios minutos y reconocer desarrollo; cambiar de ambiente sin saltos de volumen ni acumulación de agudos.
+
+**Peticiones incorporadas a F5:** manchas multicolor tenues, localizadas y graduales como galaxias lejanas; territorios ricos en redes conectables sin alterar los elementos anteriores. Ensambles complementarios en algunos territorios, conservando otros mínimos. Motivos reconocibles y desarrollo por frases: sorpresa armónica y tímbrica, evitando punteos automáticos sin continuidad.
 
 ## Fase 6 · Cubo e interfaz
 

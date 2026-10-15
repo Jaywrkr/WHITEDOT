@@ -1,3 +1,13 @@
+# Pulido · fase 4: estilos, paseo y respuesta
+
+Auditoría, 118 suites Node, seis programas de navegador y 29 renders aprobados. Pico máximo 0,904554; evidencia `scripts/pulido-04-validation.json`. CI, deploy y escucha física separados.
+
+- Estilos a mano en el Mundo, en producción: 52 géneros, búsqueda, viaje real y escuchados desde el registro audible. El menú no crea notas ni completa el Camino.
+- Paseo musical sin tocar y opción Pulsos: sí/no, con intervalo de 12–22 segundos activos. Guardado persistente; se detiene o pausa con las mismas restricciones del juego.
+- Los pulsos automáticos no cuentan como pulsos manuales ni despiertan reliquias por sí mismos.
+- Señales pequeñas por instrumento, prioridad visual de tus gestos y acompañamiento que deja sitio según la función musical.
+- Guardado fallido impide viajar y conserva el último lugar. Sin cambios en semillas ni propiedad.
+
 # Pulido · fase 3: territorios y claros
 
 - Fondos geométricos por zonas: claros amplios, transiciones continuas y texturas más tenues. Se aplica al suelo antiguo, ecologías, microhábitats, familias y dunas; no elimina actores musicales.

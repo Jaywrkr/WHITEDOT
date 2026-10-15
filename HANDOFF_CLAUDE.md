@@ -1,3 +1,16 @@
+# Handoff · Interacciones, fase 4
+
+Rama `feat/pulido-04-interacciones` desde F3 `2a60dea`. Plan vigente de nueve fases; Jay crea PR y merge.
+
+- `music-travel.js`: selector Estilos visible en producción. Busca terrenos existentes por anillos, 24 regiones por tanda para ceder el hilo. Conserva favoritos/direcciones y usa el traslado completo de `practice-travel.js`. No abre el Mundo antes del Camino. Cancela búsquedas al cerrar o cambiar partida; bloquea durante grabación, escáner, duetos o fallo de guardado.
+- Marca Escuchado desde `journal.music.genres`: registro preexistente de instrumentos realmente emitidos con audio activo. Viajar por menú no lo concede. No añade géneros ni modifica el mapa.
+- `autopilot.js`: paseo independiente con pulsos optativos cada 12–22 segundos activos; pausa con menú, escáner, grabación y silencio. `S.autoPulse` es aditivo. No registra los pulsos automáticos como acciones manuales ni despierta reliquias por sí mismo.
+- `feedback.js`: hasta ocho señales visibles, prioridad del gesto, filtro fusionado en el onset, trazos según instrumento. `foreground.js` reserva espacio por función sin subir el máster.
+
+Validación y comandos en `scripts/pulido-04-validation.json`. Escucha física, CI y deploy separados. Las peticiones sobre galaxias localizadas, redes abundantes y frases menos aleatorias continúan en F5.
+
+## Antecedentes
+
 # Handoff · Territorios, fase 3
 
 Rama `feat/pulido-03-territorios` desde F2 `a3a5fa7`. Plan vigente de nueve fases en [PLAN_PULIDO_CUBO_MUSICA.md](PLAN_PULIDO_CUBO_MUSICA.md). F2 ya subida; Jay mantiene PR/merge.

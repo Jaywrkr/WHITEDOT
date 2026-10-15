@@ -3,10 +3,11 @@ import {musicalInk} from './visual.js';
 export function createCueBuffer(limit=32) {
   const cues=[];
   return {
-    add(source,role,onset,filter=null) {
+    add(source,role,onset,filter=null,origin='ambient') {
       if(!source||!Number.isFinite(source.x)||!Number.isFinite(source.y)||!Number.isFinite(onset))return;
-      cues.push({source,role,onset,filter});
-      if(cues.length>limit)cues.splice(0,cues.length-limit);
+      if(filter){const same=cues.findLast(c=>c.source===source&&c.role===role&&Math.abs(c.onset-onset)<15);if(same){same.filter=filter;return;}}
+      cues.push({source,role,onset,filter,origin});
+      if(cues.length>limit){const quiet=cues.findIndex(c=>!['player','field','lesson'].includes(c.origin));cues.splice(quiet<0?0:quiet,1);}
     },
     active(now) {
       for(let i=cues.length-1;i>=0;i--)if(now-cues[i].onset>650)cues.splice(i,1);
@@ -21,9 +22,9 @@ export function initialize(runtime) {
     const region=runtime.regionOfPos?.(source?.x??runtime.S.wx,source?.y??runtime.S.wy);
     return musicalInk(region?.hue??190,role);
   }
-  function soundCue(source,role,time) {
+  function soundCue(source,role,time,origin='ambient') {
     if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running')return;
-    buffer.add(source,role,performance.now()+Math.max(0,time-runtime.ac.currentTime)*1000);
+    buffer.add(source,role,performance.now()+Math.max(0,time-runtime.ac.currentTime)*1000,null,origin);
   }
   function filterCue(source,role,filter,time){
     if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running')return;
@@ -37,7 +38,8 @@ export function initialize(runtime) {
     if(held?.source){const source=held.source,x=source.x+ox,y=source.y+oy,r=Math.min(30,(source.size||18)+8);
       ctx.save();ctx.strokeStyle=musicInk(source,held.role);ctx.globalAlpha=.7;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(x,y,r,-Math.PI/2,Math.PI*1.1);ctx.stroke();ctx.restore();
     }
-    for(const cue of buffer.active(performance.now()).reverse()) {
+    const cues=buffer.active(performance.now()).reverse().sort((a,b)=>Number(['player','field','lesson'].includes(b.origin))-Number(['player','field','lesson'].includes(a.origin))).slice(0,8);
+    for(const cue of cues) {
       const {source,role,age}=cue;
       if(Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)>radius)continue;
       const reduced=runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches,r=12+(reduced?0:age*(role==='bajo'?28:20));
@@ -45,6 +47,9 @@ export function initialize(runtime) {
       ctx.strokeStyle=musicInk(source,role);ctx.lineWidth=role==='bajo'?2:1.6;ctx.globalAlpha=(1-age)*.88;
       ctx.beginPath();
       if(role==='perc')for(let i=0;i<4;i++){const a=i*Math.PI/2;ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r);ctx.lineTo(Math.cos(a)*(r+5),Math.sin(a)*(r+5));}
+      else if(/string|bow|harp|guitar|silk|cello/i.test(source.musicInstrument||'')){for(let i=-1;i<=1;i++){ctx.moveTo(-r,i*4);ctx.quadraticCurveTo(0,i*4+Math.sin(age*Math.PI*4)*5*(1-age),r,i*4);}}
+      else if(/flute|wind|reed|horn/i.test(source.musicInstrument||'')){ctx.moveTo(-r,3);ctx.bezierCurveTo(-r/3,-r,r/3,r,r,-3);}
+      else if(/piano|keys|clav|rhodes|tine/i.test(source.musicInstrument||'')){for(let i=-1;i<=1;i++){ctx.moveTo(i*7,-r*.5);ctx.lineTo(i*7,-r*.5-6-age*4);}}
       else if(role==='lead'){ctx.moveTo(-r/2,0);ctx.lineTo(0,-r);ctx.lineTo(r/2,-r/2);}
       else if(role==='agudo'){ctx.moveTo(-r/2,0);ctx.lineTo(r/2,0);ctx.moveTo(0,-r/2);ctx.lineTo(0,r/2);}
       else {ctx.arc(0,0,r,0,Math.PI*2);if(role==='acorde')for(let i=1;i<3;i++){ctx.moveTo(r+i*4,0);ctx.arc(0,0,r+i*4,0,Math.PI*2);}}

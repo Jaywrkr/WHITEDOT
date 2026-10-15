@@ -196,7 +196,7 @@ body:has(#mirrorPanel:not([hidden])) .zone,body:has(#mirrorPanel:not([hidden])) 
 
 
 /* Compact paseo/menu controls while exploring. Restore counters explicitly from the menu. */
-body.world-mode:not(.tools-open) .dock>button:not(#bMenu):not(#bAuto):not(#bJump){display:none}
+body.world-mode:not(.tools-open) .dock>button:not(#bMenu):not(#bAuto):not(#bJump):not(#bStyles){display:none}
 body.world-mode .hud .day{display:none}
 body.world-focus .hud .stats,body.world-focus .bar,body.world-focus .goal b,body.world-focus .reto{display:none}
 body.world-focus .hud{padding-top:calc(env(safe-area-inset-top,0px) + 14px)}
