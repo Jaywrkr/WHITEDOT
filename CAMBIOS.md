@@ -1,3 +1,14 @@
+# Estado unificado · documentación de cierre
+
+Rama `docs/cierre-estado-unificado`, desde `5d02c08`. Jay mantiene PR y merge.
+
+- Verificadas las ocho ramas remotas: coinciden con los commits de entrega.
+- Corregidos estados históricos que aún describían como pendientes soluciones del cierre.
+- Registrada la continuación automática entre todas las fases autorizadas, sin confirmaciones intermedias.
+- Separados comentarios de Vercel, suite de CI, bloqueo de red y aceptación física. Sin cambios de código, versión, música ni progreso.
+
+Validación documental: `npm run audit:release` aprobado sin errores ni advertencias; `npm test` aprobado, 97 suites. Navegador/audio conservan la evidencia de F8 porque no cambia el producto.
+
 # Pulido F8 · Cierre integrado y revisión final
 
 Rama `feat/pulido-f8-cierre`, desde `7af93e2`. Jay crea PR y merge.

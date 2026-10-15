@@ -10,6 +10,8 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama *
 
 Main no se publica desde estas ramas. Jay integra mediante PR. [Auditoría y soluciones](AUDITORIA_CIERRE_2.0.md) · [Pulido final autorizado](PLAN_PULIDO_FINAL.md).
 
+Las ocho fases están subidas; no se espera confirmación entre fases autorizadas. Los pendientes históricos de PLAN_2.0 se distinguen de la aceptación externa actual en [CIERRE_2.0.md](CIERRE_2.0.md).
+
 ## Pulido actual
 
 **F8 · Cierre integrado y revisión final.** Bitácora por demanda, guía sin superposiciones y validación completa de la candidata. [Plan y ramas](PLAN_PULIDO_FINAL.md) · [Evidencia](scripts/pulido-f8-validation.json).

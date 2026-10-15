@@ -1,4 +1,10 @@
-# Handoff vigente · pulido F8 · Cierre integrado y revisión final
+# Estado documental vigente · continuación automática
+
+Rama `docs/cierre-estado-unificado`, hija de `feat/pulido-f8-cierre` en `5d02c08`. Las ocho referencias de entrega están verificadas en remoto. PLAN_2.0 distingue ahora pendientes históricos de soluciones ya incluidas. No reiniciar fases ni esperar confirmación entre ramas autorizadas. Jay mantiene PR/merge.
+
+Esta actualización solo modifica documentación. La candidata sigue en 2.0.0-rc.8 y conserva la validación final siguiente. Consultar [CIERRE_2.0.md](CIERRE_2.0.md) para el bloqueo de red y la aceptación externa; un check de comentarios de Vercel aprobado no equivale a deploy o CI aprobado.
+
+# Handoff de implementación · pulido F8 · Cierre integrado y revisión final
 
 Rama `feat/pulido-f8-cierre`, desde `7af93e2`. Los ocho bloques de [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md) están implementados; no reiniciarlos. Jay crea PR/merge. Main permanece fuera de estos pushes. Main observado: `15bbe77`, con F1/F2 integradas; sus ramas remotas ya no existen.
 

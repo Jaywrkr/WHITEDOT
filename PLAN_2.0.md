@@ -33,7 +33,7 @@ Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0**
 
 **Hilo común:** encontrar cosas en el universo debe darte algo visible, que se celebre y que puedas usar. Por eso cubo, casa y logros comparten una base (fase 0) en vez de ser sistemas separados.
 
-La continuación autorizada durante esta auditoría se organiza en [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md). F10 entrega la base auditada; los siete bloques siguientes permanecen separados y pendientes hasta implementarse.
+La continuación autorizada durante esta auditoría se organiza en [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md). F10 entrega la base auditada y los siete bloques siguientes están implementados y publicados en sus ramas. Continuar entre fases autorizadas sin esperar confirmación de Jay. Los apartados históricos siguientes conservan el alcance original; las tablas iniciales y CIERRE_2.0 describen la entrega actual.
 
 ## Flujo de trabajo (obligatorio)
 
@@ -56,13 +56,13 @@ La continuación autorizada durante esta auditoría se organiza en [PLAN_PULIDO_
 | 6 · Bitácora perfeccionada | `v2/f6-bitacora` | Recuperada y probada en cierre F9; lista para PR de Jay |
 | 4 · Logros 2.0 | `v2/f4-logros` | Recuperada y probada en cierre F9; lista para PR de Jay |
 | 5 · La casa del cubo | `v2/f5-casa` | Recuperada y probada en cierre F9; lista para PR de Jay |
-| 8 · Pulido y lanzamiento 2.0 | `v2/f8-lanzamiento` | Pendiente |
+| 8 · Pulido y lanzamiento 2.0 | `v2/f8-lanzamiento` | Automatización y pulido cubiertos por cierre F10/pulido F8; aceptación física, CI y publicación pendientes |
 
 **Orden de trabajo:** 0 → 1 → 2 → 3 → 7 → 6 → 4 → 5 → 8. Primero la base y que el mundo se vea profesional; luego celebración y cubo; después menú y bitácora; al final logros y casa, las fases más grandes.
 
 ## Prioridad adicional · 14 de octubre · Despliegue e interacción
 
-Esta integración excepcional reúne las fases 0, 1 y 2 y el arreglo de deploy. Las fases 3, 7, 6, 4 y 5 tienen trabajo local pendiente de validación y no forman parte de esta publicación.
+Esta integración excepcional reunió las fases 0, 1 y 2 y el arreglo de deploy. Las fases 3, 7, 6, 4 y 5 quedaron fuera de aquella publicación; posteriormente se recuperaron y probaron en cierre F9. Están incluidas en la candidata actual, todavía sin merge.
 
 Reparación incluida: `fix/vercel-static-output` (`6feac66`) sirve la raíz del juego en lugar de la carpeta `public` inexistente. Conserva el sello de revisión/hora y el SW sin caché HTTP. Jay autorizó a Codex integrar y publicar `main` solo en este caso; las próximas fases vuelven al flujo habitual.
 
@@ -73,7 +73,7 @@ Estado de las peticiones adicionales de Jay, sin eliminar fases ni progreso:
 3. **Percusión natural con diversidad real.** Ya existen nueve familias en `src/percussion-model.js` y `src/percussion.js`; su presencia actual no garantiza que se perciban durante la exploración. Revisar distribución, gestos, alcance, contraste y señales antes de añadir más familias. Variar el rayo: articulación, registro, patrón y eco según clima/género, evitando que toda caja sea el mismo golpe. Explorar gotas sobre hojas, semillas que traquetean, cañas que golpean, piedras huecas, insectos y aleteos como funciones diferenciadas: bombo, rim, tom, shaker, clap y percusión suave. Cada golpe debe tener una señal visual pequeña en su fuente; distribuir apariciones con semillas independientes. Mantener pausas, presupuesto de voces y margen de mezcla. Integrar como trabajo musical de fase 8; comparar géneros y lluvia en teléfono.
 4. **Reconocer quién está tocando.** Todo elemento que modifique la música debe indicar cuándo actúa, qué cambió y cuánto dura, mediante animación o rastro local sincronizado. Distinguir escucha por cercanía, contacto, conexión y quietud. Mayor claridad no implica subir todos los volúmenes: contrastar timbre, ritmo y registro sin saturar. Integrar en fase 8; comprobar que las señales respetan fondo negro y espacio libre.
 
-Aceptación: probar tap y arrastre con una mano; identificar fuentes musicales sin leer un panel; escuchar bajos/percusión distintos en varios destinos; volver al lugar anterior sin perder progreso. Validar UI silenciosa, guardados, offline, mezclas densas y movimiento reducido. Saltar y las señales de filtros están implementados en M1; los demás criterios globales de tap/percusión/feedback siguen pendientes.
+Aceptación: probar tap y arrastre con una mano; identificar fuentes musicales sin leer un panel; escuchar bajos/percusión distintos en varios destinos; volver al lugar anterior sin perder progreso. Validar UI silenciosa, guardados, offline, mezclas densas y movimiento reducido. Saltar y las señales de filtros se implementaron en M1; cierre F6 y pulido F7/F8 implementan y prueban tap, percusión y feedback. La aceptación perceptiva y táctil en teléfonos sigue pendiente.
 
 ## Reglas de diseño (estilo J)
 
@@ -204,9 +204,9 @@ Arte final, sonido de celebraciones, prueba en teléfonos ([ACEPTACION_V1.md](AC
 
 Mientras no estén decididas, las fases 0–3, 6 y 7 pueden avanzar. La vista de la fase 5 ya está decidida; se implementa después de la 4.
 
-## Pendientes agrupados y orden de cierre
+## Agrupación histórica del cierre
 
-Las fases 0–2 y la reparación están en `main d16e695`. Confirmar el deploy en Vercel y probar en teléfono sigue pendiente. Las fases 3, 7, 6, 4 y 5 tienen implementación local; necesitan integrar la base actual, resolver incidencias de prueba y cerrar su entrega. No están publicadas.
+La siguiente lista documenta el alcance que se agrupó para el cierre. Las fases 3, 7, 6, 4 y 5 ya se recuperaron, integraron y probaron en cierre F9; F10 y pulido F2–F8 completan las soluciones posteriores. Todas están publicadas en ramas. No volver a ejecutarlas por estos verbos históricos. Consultar CIERRE_2.0 para los pendientes externos actuales.
 
 1. **Fase 3:** cerrar vestidor de 50 piezas, pistas, apariencia en el mundo y voces del pulso; conservar las 13 piezas anteriores. Validar voces y guardar/reabrir.
 2. **Fase 7:** cerrar menú compacto y sonido en una hoja; viajes reales entre semillas, más botón provisional “Otro lugar” en pantalla principal y regreso al destino anterior. No confundir viajes con el laboratorio.
@@ -220,13 +220,13 @@ Las fases 0–2 y la reparación están en `main d16e695`. Confirmar el deploy e
 | Fase | Rama | Estado |
 |---|---|---|
 | M1 · Identidad musical y ADN individual | `feat/m1-musical-identity` | Integrada en `main 6702093`; pruebas aprobadas, escucha física pendiente |
-| M2–M6 · Mezclas, distribución, viajes, diversidad y juego | Por crear | Pendientes; no iniciadas |
+| M2–M6 · Mezclas, distribución, viajes, diversidad y juego | Distribuidas en cierre F3–F10 | Alcance consolidado implementado y probado; no crear otras cinco ramas duplicadas |
 
-M1 es una fase musical nueva; no renumera la fase visual 1 integrada. [Plan y alcance](PLAN_MEZCLAS_MUSICALES.md). El criterio de escucha humana sigue pendiente hasta probar en teléfono. No iniciar las fases restantes sin la siguiente instrucción de Jay.
+M1 no renumera la fase visual 1 integrada. [Plan y alcance histórico](PLAN_MEZCLAS_MUSICALES.md). Jay autorizó después cierre F1–F10 y pulido F2–F8 consecutivamente: esa autorización reemplaza la espera que figuraba aquí. El criterio de escucha humana sigue pendiente hasta probar en teléfono.
 
 ### Ampliaciones posteriores, pendientes de elegir y calendarizar
 
-- **Diversidad musical y descubrimiento:** [PLAN_MEZCLAS_MUSICALES.md](PLAN_MEZCLAS_MUSICALES.md). M1 autorizada e implementada: 16 recetas y perfil activo de los 28 linajes nuevos. M1 también incorpora Saltar, base territorial, ocho familias y 16 filtros por petición posterior de Jay. Híbridos libres, ecología global, vínculos persistentes y cobertura perceptiva del 100 % siguen en M2–M6.
+- **Diversidad musical y descubrimiento:** [PLAN_MEZCLAS_MUSICALES.md](PLAN_MEZCLAS_MUSICALES.md) conserva el alcance original. Cierre F3–F10 implementa ecosistemas locales, síntesis, dieciséis influencias compatibles y vínculos persistentes; no equivale a mezclas arbitrarias, simulación global o cobertura perceptiva certificada del 100 %. Esas ampliaciones y la escucha humana conservan su alcance separado.
 - **Vida y territorios:** redes editables de enredaderas/hongos, colonias persistentes, migraciones entre regiones, jardines, costas variables, fronteras híbridas y nuevas rutas/alturas. Incluye tormentas explorables y figuras trazadas con el camino.
 - **Búsqueda e historia:** pistas encadenadas, puertas musicales, laberintos de color/espejos, puentes que abran rutas, tradiciones investigadas y reliquias históricas funcionales documentadas. Fósiles de canciones, jardines de semillas, radio pirata, noche de la ballena y botellas con ecos siguen como ideas para seleccionar.
 - **Control y memoria:** deshacer general, recorrido natural que enseñe gestos, comparador de variantes, colección instrumental/cultural y constelación de mundos. Unir Camino, atención, creación y constancia de Jay sin llenar la pantalla.

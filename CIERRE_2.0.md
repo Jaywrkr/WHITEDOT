@@ -55,6 +55,16 @@ WD1 guarda semilla, versiones, tamaño, capa y coordenadas. Las semillas guardan
 
 Estos puntos no se presentan como aprobados mediante emulación. No se necesita otra expansión de contenido para ejecutar esta aceptación.
 
+### Verificación remota · 15 de octubre de 2026
+
+Se comprobaron las ocho referencias remotas de la tabla: todas coinciden con sus commits. Main continúa en `15bbe77`. No queda ninguna fase de implementación de esta tabla esperando autorización. Jay mantiene PR y merge.
+
+El preview enlazado por el check de GitHub es [pulido F8](https://whitedot-git-feat-pulido-f8-cierre-jaywrkr-1498s-projects.vercel.app). El check aprobado `Vercel Preview Comments` indica ausencia de comentarios pendientes; no acredita el despliegue ni las pruebas completas.
+
+El proxy rechazó con HTTP 403 el túnel hacia Vercel y el acceso a la API de GitHub. Se guardó un borrador de red con `api.github.com`, `vercel.com`, el dominio de producción y el host exacto del preview. La herramienta exige aplicar/publicar ese borrador; guardarlo no habilitó el acceso actual. Las páginas públicas de GitHub sí permitieron verificar referencias y comentarios.
+
+La suite de Actions se activa con un PR o push a main, no con cada push de una rama de fase. Los fallos anteriores observados de F1/F2 no son pruebas de la candidata F8. Volvieron a aprobarse auditoría y la regresión de metadatos de publicación; no se repitieron las suites pesadas sin cambios funcionales. La rama documental posterior no modifica versión, música, interfaz ni guardados.
+
 ## Próximo ciclo: servicio público
 
 Servidor, cuentas públicas y duetos por Internet quedan fuera de este cierre. Existe un servidor opcional local probado; no equivale a un servicio público desplegado. Vercel sirve el juego estático.
