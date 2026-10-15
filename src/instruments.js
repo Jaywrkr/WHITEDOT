@@ -1,7 +1,9 @@
 // Synthesized families: resonant partials, FM keys and filtered subtractive voices.
 import {ADVANCED_INSTRUMENTS,createAdvancedPlayer} from './modular-synth.js';
+import {TECHNIQUE_INSTRUMENTS,createTechniquePlayer} from './instrument-techniques.js';
 export const INSTRUMENT_SPECS={
  ...ADVANCED_INSTRUMENTS,
+ ...TECHNIQUE_INSTRUMENTS,
  analogpad:{partials:[[.996,'sawtooth',.18],[1.004,'triangle',.28],[2,'sine',.06]],cut:1800,attack:.11,dec:1.2,send:.12},
  phasekeys:{partials:[[1,'triangle',.6],[2,'sine',.09]],periodic:true,cut:2500,attack:.009,dec:.48,send:.08},
  fmglass:{fm:2,index:1.1,partials:[[1,'sine',.7]],cut:2100,attack:.008,dec:.7,send:.1},
@@ -30,9 +32,25 @@ export const INSTRUMENT_SPECS={
 };
 export function initialize(runtime) {
  const advanced=createAdvancedPlayer(runtime);
+ const techniques=createTechniquePlayer(runtime);
+ let held=null,heldKey=null,nearAt=0;
+ function techniqueTick(){
+  techniques.tick();const id=runtime.labSynth,spec=TECHNIQUE_INSTRUMENTS[id],ac=runtime.ac,
+   blocked=!ac||ac.state!=='running'||runtime.S.mode!=='world'||globalThis.document?.hidden||globalThis.document?.querySelector?.('.modal:not([hidden])')||(runtime.musicVolume?.()??1)<=0;
+  const source=!blocked&&spec?.sustain&&runtime.labMode?runtime.livingNear?.(90).find(o=>o.id?.startsWith('living:lab:')&&Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<42):null;
+  const key=source?source.id+':'+id:null;
+  if(key!==heldKey||!source){held?.release();held=null;heldKey=key;nearAt=ac?.currentTime||0;}
+  if(!source)return;
+  if(held&&(held.released||held.end<=ac.currentTime))held=null;
+  if(!held&&ac.currentTime-nearAt>.35){const d=runtime.regionOfPos(source.x,source.y),voice=runtime.getVoice('living:'+source.kind,d,source),degree=((runtime.MU.deg+voice.degree)%7+7)%7;
+   let note=57+(runtime.MU.tr||0)+d.scale[degree];while(note>69)note-=12;while(note<45)note+=12;
+   held=techniques.hold(id,note,ac.currentTime+.01,.035);if(held)runtime.soundCue?.(source,voice.role,ac.currentTime+.01);
+  }
+ }
  const noiseBuffers=new WeakMap();
  function playNewInstrument(id,m,time,volume,articulation=null) {
   const spec=INSTRUMENT_SPECS[id],ac=runtime.ac;if(!spec)return false;if(!ac)return true;
+  if(spec.technique)return techniques.play(id,m,time,volume,articulation||{});
   if(spec.engine)return advanced(id,m,time,volume,articulation||{});
   const patch=runtime.activeInstrumentPatch,attack=Math.min(.12,(spec.attack||.008)*(patch?.attackScale||1)*(articulation?.attackScale||1)),decay=Math.min(1.3,spec.dec*(patch?.decayScale||1)*(articulation?.decayScale||1)),cut=spec.cut*(patch?.toneScale||1)*(articulation?.toneScale||1);
   const hz=runtime.hz(m),end=time+attack+decay+.12,f=ac.createBiquadFilter(),gain=ac.createGain(),nodes=[f,gain],sources=[];
@@ -52,5 +70,5 @@ export function initialize(runtime) {
  }
  function guiro(time,volume){runtime.recordInstrument?.('guiro');for(let i=0;i<3;i++)runtime.noiseHit(time+i*.018,'bandpass',1800+i*180,1.2,volume*(1-i*.2),.025,false);}
  function timbale(time,volume){runtime.recordInstrument?.('timbale');runtime.tom(time,340,volume*.7);runtime.noiseHit(time,'bandpass',2600,2,volume*.25,.055,false);}
- Object.defineProperties(runtime,{playNewInstrument:{get:()=>playNewInstrument},guiro:{get:()=>guiro},timbale:{get:()=>timbale}});
+ Object.defineProperties(runtime,{playNewInstrument:{get:()=>playNewInstrument},holdInstrument:{get:()=>techniques.hold},releaseHeldInstruments:{get:()=>techniques.releaseHeld},techniqueTick:{get:()=>techniqueTick},activeTechniqueCount:{get:()=>techniques.active},guiro:{get:()=>guiro},timbale:{get:()=>timbale}});
 }

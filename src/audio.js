@@ -131,6 +131,7 @@ export function initialize(runtime) {
   }
   function setBiome(z){MU.biomeT=z;MU.timbre=runtime.S.mode==="camino"?2:MU.dnaT?runtime.GEN[MU.dnaT.genre].pt:runtime.BIOMES[z].tim;}
   function sched(){
+    runtime.techniqueTick?.();
     runtime.effectsTick?.();
     runtime.spatialTick?.();
     runtime.patchTick?.();
