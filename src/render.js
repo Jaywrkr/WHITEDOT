@@ -79,7 +79,7 @@ export function initialize(runtime) {
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.drawDuet?.();runtime.petTick?.(dt);runtime.drawPet?.(t);
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
-    runtime.drawCelebration?.();runtime.drawWorldFog?.(t);
+    runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}

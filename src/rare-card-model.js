@@ -36,16 +36,24 @@ export function makeRareCard(raw){
  const def=rareDefinition(raw.type),o=raw.odds,units=new Set(['sectores de tierra','sectores elegibles','regiones elegibles','cajas naturales','individuos elegibles','encuentros elegibles']);
  const valid=o?.version===1&&(o.probability===null&&def.probability===null||Number.isFinite(o.probability)&&o.probability>=1e-12&&o.probability<=1)&&units.has(o.unit)&&Object.hasOwn(CARD_TIERS,o.tier)&&typeof o.condition==='string';
  const odds={version:1,probability:valid?o.probability:def.probability,unit:valid?o.unit:def.unit,tier:valid?o.tier:def.tier,condition:clean(valid?o.condition:def.condition,600)};
- const context={};for(const key of ['habitat','weather','phase','gesture','study','relation','role','instrument','character']){const value=clean(raw.context?.[key],100);if(value)context[key]=value;}
+ const context={...raw.context};for(const key of ['habitat','weather','phase','gesture','study','relation','role','instrument','character']){const value=clean(raw.context?.[key],100);if(value)context[key]=value;}
  const observations=Array.isArray(raw.observations)?raw.observations.filter(o=>o&&typeof o==='object'&&deploymentTime(o.at)).slice(-8).map(o=>({at:deploymentTime(o.at),phase:clean(o.phase,40),weather:clean(o.weather,40)})):[];
- const date=clean(raw.day,10);return {id:cardKey(raw.type,raw.sourceId,world),type:raw.type,name:clean(raw.name,64)||def.name,odds,sourceId:raw.sourceId,world,address,appearance:normalizeAnatomy(raw.appearance),
+ const date=clean(raw.day,10);return {...raw,id:cardKey(raw.type,raw.sourceId,world),type:raw.type,name:clean(raw.name,64)||def.name,odds,sourceId:raw.sourceId,world,address,appearance:normalizeAnatomy(raw.appearance),
   precision:address?(raw.precision==='region'?'region':'point'):'unknown',regionName:clean(raw.regionName,64)||'Lugar no registrado',biome:clean(raw.biome,40),genre:clean(raw.genre,40),
   firstSeen:deploymentTime(raw.firstSeen),day:deploymentTime(date+'T00:00:00Z')?date:'',artVariant:Number.isInteger(raw.artVariant)?Math.abs(raw.artVariant)%12:0,forced:raw.forced===true,legacy:raw.legacy===true,context,observations};
 }
 export function normalizeRareBook(raw){
+ if(Number.isInteger(raw?.version)&&raw.version>1)return {...raw,readOnly:true,items:Array.isArray(raw.items)?raw.items:[]};
+ const unknown=[...(Array.isArray(raw?.unrecognizedItems)?raw.unrecognizedItems:[])];for(const value of Array.isArray(raw?.items)?raw.items:[])if(value&&typeof value.type==='string'&&!rareDefinition(value.type))unknown.push(value);
  const items=[],seen=new Set();if(Array.isArray(raw?.items))for(const value of raw.items){const c=makeRareCard(value);if(!c||seen.has(c.id))continue;seen.add(c.id);items.push(c);}
- return {version:1,items};
+ return {...raw,version:1,items,...(unknown.length?{unrecognizedItems:unknown}:{})};
 }
 export function storeRareCard(book,card){
- if(!card||book.items.some(c=>c.id===card.id))return 'duplicate';if(book.items.length>=RARE_BOOK_LIMIT)return 'full';book.items.push(card);return 'added';
+ if(book.readOnly)return 'readonly';if(!card||book.items.some(c=>c.id===card.id))return 'duplicate';if(book.items.length>=RARE_BOOK_LIMIT)return 'full';book.items.push(card);return 'added';
+}
+
+export function cardAbility(card){
+ const role=card.context?.role||((card.type||'').startsWith('box:')?'transformacion':card.type==='fossil'?'perc':'lead');
+ const names={bajo:['Cuerpo','Sostiene el suelo musical.'],perc:['Pulso','Dibuja acentos entre los golpes.'],acorde:['Aire','Abre espacio entre las voces.'],lead:['Frase','Contesta con una pequeña melodía.'],agudo:['Detalle','Añade un brillo breve.'],transformacion:['Cambio','Transforma temporalmente tu manera de tocar.']};
+ const [name,text]=names[role]||names.lead;return {role,name,text,instrument:card.context?.instrument||''};
 }

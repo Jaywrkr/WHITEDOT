@@ -1,13 +1,13 @@
 import {POWERS} from './expansion-music.js';
 import {livingDefinition} from './living-catalog.js';
-import {RARE_BOOK_LIMIT,RARE_PAGE_SIZE,CARD_TIERS,rareDefinition,rarityLabel,cardSerial,makeRareCard,normalizeRareBook,storeRareCard} from './rare-card-model.js';
+import {RARE_BOOK_LIMIT,RARE_PAGE_SIZE,CARD_TIERS,rareDefinition,rarityLabel,cardSerial,makeRareCard,normalizeRareBook,storeRareCard,cardAbility} from './rare-card-model.js';
 import {rarePortrait} from './rare-card-art.js';
 import {relicAt} from './relics.js';
 import {encodePlace} from './share-tools.js';
 import {sameWorld} from './world-identity.js';
 const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function initialize(runtime){
- const $=runtime.$;let owner=null,queue=[],shown=null,remaining=0,page=0,fullNoticed=false,filter='todo';
+ const $=runtime.$;let owner=null,queue=[],shown=null,remaining=0,page=0,fullNoticed=false,filter='todo',effects=[];
  const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!$('voice').classList.contains('expanded')&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function hide(){ $('rareNotice').hidden=true;document.body.classList.remove('rare-reveal'); }
  function dismiss(){const focused=$('rareNotice').contains(document.activeElement);shown=null;remaining=0;hide();if(focused)$('w').focus({preventScroll:true});}
@@ -41,14 +41,14 @@ export function initialize(runtime){
   }
  }
  function collect(type,source,extra={}){
-  const book=ensure();if(!runtime.inWorld()||!rareDefinition(type))return false;
+  const book=ensure();if(book.readOnly||!runtime.inWorld()||!rareDefinition(type))return false;
   const card=descriptor(type,source,extra);if(!card)return false;
   const repeated=book.items.some(c=>c.type===type&&!c.forced);const result=storeRareCard(book,card);if(result==='added')runtime.recordRewardSource?.('finding',card.odds.tier==='legendario'?'singular':card.odds.tier);
   if(result==='full'){if(!fullNoticed){fullNoticed=true;runtime.toast?.('Libro completo. Guarda tus tarjetas: Menú → Guardar copia.');}return false;}
   if(result==='duplicate'&&card.context?.phase){const original=book.items.find(c=>c.id===card.id);const next={at:new Date().toISOString(),phase:card.context.phase,weather:card.context.weather||''};if(!original.observations.some(o=>o.phase===next.phase&&o.weather===next.weather)){original.observations.push(next);if(original.observations.length>8)original.observations.shift();runtime.save();}}
   if(result!=='added')return false;
   // Collection never starts audio, touches the cube, changes a beat or opens a modal.
-  runtime.unlock?.('tarjeta1');runtime.save();
+  runtime.unlock?.('tarjeta1');runtime.save();if(!card.forced&&card.address){effects.push({x:card.address.x,y:card.address.y,layer:card.address.layer,age:0});effects=effects.slice(-3);}if(['legendario','mitico'].includes(card.odds.tier)&&!card.forced)runtime.say?.('Una presencia excepcional dejó su voz contigo.','Hallazgo excepcional',{exceptional:true});
   if(!runtime.boxCardCelebration?.(card)){const tier=c=>['raro','singular','legendario','mitico'].indexOf(c.odds.tier),near=queue.findIndex(e=>e.card.address&&card.address&&sameWorld(e.card.address,card.address)&&e.card.address.layer===card.address.layer&&Math.hypot(e.card.address.x-card.address.x,e.card.address.y-card.address.y)<3);const event={card,repeated};if(near>=0){if(tier(card)>=tier(queue[near].card))queue[near]=event;}else if(queue.length<4)queue.push(event);} // All cards are saved, even if a burst exceeds the notice queue.
   return true;
  }
@@ -59,17 +59,18 @@ export function initialize(runtime){
   shown=card;remaining=repeated?3:8;notice.dataset.repeat=String(repeated);notice.hidden=false;document.body.classList.add('rare-reveal');
  }
  function tick(dt){
-  ensure();if(!runtime.inWorld()){queue=[];dismiss();return;}
+  ensure();if(!runtime.inWorld()){effects=[];queue=[];dismiss();return;}
   if(!active()||runtime.celebrationActive){hide();return;}
+  for(const e of effects)e.age+=Math.min(.1,Math.max(0,dt));effects=effects.filter(e=>e.age<2);
   if(shown){$('rareNotice').hidden=false;document.body.classList.add('rare-reveal');remaining-=Math.max(0,Math.min(.1,dt));if(remaining<=0)dismiss();}
   else if(queue.length)reveal(queue.shift());
  }
  function cardHTML(card,index){
-  const power=card.type.startsWith('box:')?POWERS[card.type.slice(4)]:null;const powerInfo=power?'<p>'+escape(power.text)+'</p><p>'+power.seconds+' s por caja · máximo '+(power.seconds*2)+' s</p>':'';
+  const ability=cardAbility(card);const power=card.type.startsWith('box:')?POWERS[card.type.slice(4)]:null;const powerInfo=power?'<p>'+escape(power.text)+'</p><p>'+power.seconds+' s por caja · máximo '+(power.seconds*2)+' s</p>':'';
   const def=rareDefinition(card.type),tier=CARD_TIERS[card.odds.tier],address=card.address,canReturn=address&&sameWorld(address,runtime.worldIdentity),serial=cardSerial(card.id);
   const date=card.firstSeen?new Intl.DateTimeFormat('es-EC',{day:'numeric',month:'short',year:'numeric'}).format(new Date(card.firstSeen)):card.day||'Fecha original no registrada';
   return `<article class="rare-card" style="--rare-ink:${tier.ink}"><header><span>${escape(card.forced?'Laboratorio':tier.name)}</span><small>#${serial}</small></header>
-   <div class="rare-portrait">${rarePortrait(card)}</div><h3>${escape(card.name)}</h3><p class="rare-flavour">${escape(def.text)}</p>
+   <div class="rare-portrait">${rarePortrait(card)}</div><h3>${escape(card.name)}</h3><div class="card-ability"><b>${escape(ability.name)}</b><span>${escape(ability.text)}</span></div><p class="rare-flavour">${escape(def.text)}</p>
    <div class="rare-odds"><b>${escape(rarityLabel(card.type,card.odds))}</b><small>Aparición teórica · ${card.type.startsWith('petbox:')?'de compañía, no de esta especie':'de este tipo'}</small></div>
    <p class="rare-location">${escape(location(card))}</p><p class="rare-biome">${escape([card.biome,runtime.GEN[card.genre]?.name||card.genre,date].filter(Boolean).join(' · '))}</p>
    <p class="rare-biome">Semilla ${escape(card.world.seed||'original')} · ${escape(card.world.layout)} · ${escape(card.address?.layer||'capa no registrada')}</p>
@@ -80,7 +81,7 @@ export function initialize(runtime){
   </article>`;
  }
  function cards(search=''){
-  const items=ensure().items,mapped=items.map((c,index)=>({c,index})).filter(({c})=>filter==='todo'||(filter==='vida'?c.type.startsWith('living:'):filter==='culturas'?(c.type==='living:study'||c.type==='culture:artifact'):filter==='fenomenos'?c.type.startsWith('anomaly:')||c.type.startsWith('event:'):filter==='cajas'?c.type.startsWith('box:')||c.type.startsWith('petbox:'):livingDefinition(c.type.slice(7))?.group===filter)).filter(({c})=>!search||c.name.toLocaleLowerCase('es').includes(search.toLocaleLowerCase('es'))),pages=Math.max(1,Math.ceil(mapped.length/RARE_PAGE_SIZE));page=Math.max(0,Math.min(page,pages-1));$('rareCodeFallback').hidden=true;
+  const items=ensure().items,mapped=items.map((c,index)=>({c,index})).filter(({c})=>rareDefinition(c?.type)).filter(({c})=>filter==='todo'||(filter==='vida'?c.type.startsWith('living:'):filter==='culturas'?(c.type==='living:study'||c.type==='culture:artifact'):filter==='fenomenos'?c.type.startsWith('anomaly:')||c.type.startsWith('event:'):filter==='cajas'?c.type.startsWith('box:')||c.type.startsWith('petbox:'):livingDefinition(c.type.slice(7))?.group===filter)).filter(({c})=>!search||c.name.toLocaleLowerCase('es').includes(search.toLocaleLowerCase('es'))),pages=Math.max(1,Math.ceil(mapped.length/RARE_PAGE_SIZE));page=Math.max(0,Math.min(page,pages-1));$('rareCodeFallback').hidden=true;
   if(!items.length)return '<article class="journal-card"><h3>Libro de hallazgos</h3><p>Lo raro deja una tarjeta: fósiles, reliquias, anomalías, cajas naturales y compañía de caja. Encuentra algo y el libro guardará su lugar.</p></article>';
   const list=mapped.reverse().slice(page*RARE_PAGE_SIZE,(page+1)*RARE_PAGE_SIZE);
   return `<div class="rare-book-head"><label for="rareFilter">Colección</label><select id="rareFilter">${[['todo','Todos'],['vida','Universo vivo'],['flora','Flora'],['fauna','Fauna'],['architecture','Construcciones'],['culturas','Estudios'],['fenomenos','Fenómenos'],['cajas','Cajas y visitas']].map(([id,name])=>'<option value="'+id+'" '+(filter===id?'selected':'')+'>'+name+'</option>').join('')}</select><h3>Libro de hallazgos · ${items.length}</h3><p>Cada encuentro tiene su tarjeta. Volver al mismo ejemplar no duplica; otro lugar sí. El código conserva semilla, versiones, capa y coordenadas.</p></div><div class="rare-grid">${list.map(({c,index})=>cardHTML(c,index)).join('')}</div>
@@ -109,11 +110,12 @@ export function initialize(runtime){
   if(point&&runtime.selectDestination?.(point.id))$('mJournal').hidden=true;
   else if(!point)runtime.toast?.(runtime.storageStatus.kind==='ok'?'Favoritos lleno · libera un lugar para orientarte.':'No se pudo guardar. Menú → Guardar copia.');
  }
+ function drawFinding(){const c=runtime.cx;if(!runtime.inWorld()||document.hidden)return;c.save();for(const e of effects){if(e.layer!==(runtime.S.layer||'superficie'))continue;const x=e.x-runtime.S.wx+runtime.W/2,y=e.y-runtime.S.wy+runtime.H/2,rr=12+e.age*16;c.globalAlpha=(1-e.age/2)*.7;c.strokeStyle='#bda5f5';c.lineWidth=1;for(let i=0;i<4;i++){const a=i*Math.PI/2;c.beginPath();c.moveTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);c.lineTo(x+Math.cos(a)*(rr+5),y+Math.sin(a)*(rr+5));c.stroke();}}c.restore();}
  runtime.$('journalBody').addEventListener('change',event=>{if(event.target.id!=='rareFilter')return;filter=event.target.value;page=0;runtime.refreshJournal?.();document.getElementById('rareFilter')?.focus();});
  $('rareNoticeDismiss').onclick=dismiss;
  $('rareNoticeOpen').onclick=()=>{if(!shown)return;const index=ensure().items.findIndex(c=>c.id===shown.id);page=Math.floor(Math.max(0,ensure().items.length-1-index)/RARE_PAGE_SIZE);dismiss();runtime.openJournal('rares');};
  runtime.VOZ.tarjeta1='Un hallazgo merece memoria. Su tarjeta guarda el lugar.';
  runtime.ACH.push(['tarjeta1','Un hallazgo tiene memoria','Guardaste una tarjeta de un encuentro poco común.']);
  ensure();
- Object.defineProperties(runtime,{collectRareCard:{get:()=>collect},rareCardTick:{get:()=>tick},rareBookCards:{get:()=>cards},rareBookAction:{get:()=>action},rareCards:{get:()=>ensure().items},rareNoticeState:{get:()=>({shown:shown?.id||null,remaining,pending:queue.length})}});
+ Object.defineProperties(runtime,{drawRareFinding:{get:()=>drawFinding},collectRareCard:{get:()=>collect},rareCardTick:{get:()=>tick},rareBookCards:{get:()=>cards},rareBookAction:{get:()=>action},rareCards:{get:()=>ensure().items},rareNoticeState:{get:()=>({shown:shown?.id||null,remaining,pending:queue.length})}});
 }
