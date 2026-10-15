@@ -153,7 +153,9 @@ export function initialize(runtime) {
         if(d<sz/2+10&&(runtime.worldReady()||dx||dy||m.pull)){runtime.collect(m);continue;}
         if(d>R)continue;
         runtime.cx.globalAlpha=Math.min(1,Math.pow(1-d/R,1.3)*(.6+.25*Math.sin(t/400+m.ph)+b*.3)*(free?.45:1));
-        runtime.cx.fillStyle=m.off?runtime.GOLD:"#fff";runtime.cx.fillRect(m.x+ox-1.5,m.y+oy-1.5,3,3);}
+        runtime.cx.fillStyle=m.off?runtime.GOLD:"#fff";runtime.cx.fillRect(m.x+ox-1.5,m.y+oy-1.5,3,3);
+        const ritual=runtime.seedOf('camino:encuentro:v1:'+runtime.S.todayKey)%4;
+        if(ritual&&runtime.seedOf('camino:figura:v1:'+m.id)%7===0){const c=runtime.cx,rr=5+Math.sin(t/900+m.ph)*2;c.strokeStyle='#fff';c.lineWidth=.8;c.beginPath();if(ritual===1){c.arc(m.x+ox,m.y+oy,rr,0,Math.PI*1.5);}else if(ritual===2){c.moveTo(m.x+ox-rr,m.y+oy);c.lineTo(m.x+ox,m.y+oy-rr);c.lineTo(m.x+ox+rr,m.y+oy);}else{c.moveTo(m.x+ox-rr,m.y+oy-rr);c.lineTo(m.x+ox+rr,m.y+oy+rr);}c.stroke();}}
     }
     return sz;
   }

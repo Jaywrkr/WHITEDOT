@@ -1,8 +1,14 @@
 import {rememberVoice} from './voice-guide.js';
+export function voiceMaySpeak(state,title,{world=false,requested=false,exceptional=false}={}){
+ if(!world||requested||exceptional)return true;
+ if(!state?.help?.mundo)return true;
+ const lesson=state.firstJourney;
+ return !!lesson&&!lesson.skipped&&!lesson.readOnly&&['voice','pulse'].some(id=>lesson.facts?.[id]!==true);
+}
 // Mensajes y animación de la Voz del sistema.
 export function initialize(runtime) {
   let voiceQ=[],voicing=false,lastText=null,lastAt=-Infinity,hideTimer;
-  function say(text,title){if(!text)return;rememberVoice(runtime.S||{},text,title,{region:runtime.MU?.dnaT?.key||''});const now=performance.now();if(text===lastText&&now-lastAt<60000)return;if(runtime.inWorld?.()&&!title?.startsWith('Logro')&&(document.querySelector('.glasspanel:not([hidden])')||(runtime.MU.speed<.08&&now-(runtime.lastCreativeAction??-Infinity)<15000)))return;lastText=text;lastAt=now;if(voiceQ.length>=3)voiceQ.shift();voiceQ.push({text,title:title||"Sistema"});nextVoice();}
+  function say(text,title,options={}){if(!text)return;rememberVoice(runtime.S||{},text,title,{region:runtime.MU?.dnaT?.key||''});if(!voiceMaySpeak(runtime.S,title,{world:runtime.inWorld?.(),...options}))return;const now=performance.now();if(text===lastText&&now-lastAt<60000)return;if(runtime.inWorld?.()&&!title?.startsWith('Logro')&&(document.querySelector('.glasspanel:not([hidden])')||(runtime.MU.speed<.08&&now-(runtime.lastCreativeAction??-Infinity)<15000)))return;lastText=text;lastAt=now;if(voiceQ.length>=3)voiceQ.shift();voiceQ.push({text,title:title||"Sistema"});nextVoice();}
   function nextVoice(){if(voicing||!voiceQ.length)return;voicing=true;const v=voiceQ.shift(),el=document.getElementById("voice"),tx=document.getElementById("vX");document.getElementById("vT").textContent=v.title;tx.textContent="";
     // Estilo J: "~~antes~~ después" shows the struck phrase at once and types the correction.
     const strike=/^~~(.+?)~~\s*(.*)$/.exec(v.text),text=strike?strike[2]:v.text;

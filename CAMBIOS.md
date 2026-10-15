@@ -1,3 +1,9 @@
+# Experiencia 3 · Camino, entrada y Voz
+
+Rama `feat/experiencia-03-camino`. Camino alterna discretamente figuras de luz por día con flujo independiente. Invitación mínima a entrar, respetando movimiento reducido. Voz conserva diario y restringe presencia a introducción, solicitudes y convergencias excepcionales.
+
+Validación: Auditoría y Node completos; guide_smoke, messages_smoke y first_level_smoke; audio sin cambios. Jay mantiene PR/merge.
+
 # Experiencia 2 · Primer encuentro jugable
 
 Rama `feat/experiencia-02-bienvenida`. Bienvenida gráfica Explora/Escucha/Crea y símbolos locales del primer recorrido. Se conservan los seis gestos reales, omitir/repetir y progreso; controles iniciales blancos y silenciosos.
