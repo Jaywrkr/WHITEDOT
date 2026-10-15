@@ -17,3 +17,5 @@ assert.equal(normalizeCube({material:'metal'},{}).material,'plain');assert.deepE
 const base={role:'lead',instrument:'keys',degree:2,low:55,high:79},styles=wardrobeByType('voice').map(p=>cubePulseVoice(base,p.value));
 assert.equal(styles[0],base);assert(new Set(styles.map(v=>v.instrument)).size===5);assert(styles.slice(1).every(v=>v.high<=67&&v.volume<1));assert.equal(cubePulseVoice({role:'perc',instrument:'hat',low:36,high:79},'wood').instrument,'wood');
 console.log('PASS exact 50-style/rarity counts, earned gates, six-month myths, legacy dates/defaults, safe material selection and five actual pulse instruments');
+const future={version:7,color:'#102030',future:{detail:1}};assert.equal(normalizeCube(future,player.ach,player.rewards),future);
+const unknown=normalizeCube({version:2,material:'future-surface',extra:{keep:1}},player.ach,player.rewards);assert.equal(unknown.material,'plain');assert.equal(unknown.unrecognizedStyles.material,'future-surface');assert.deepEqual(unknown.extra,{keep:1});assert.deepEqual(normalizeCube(unknown,player.ach,player.rewards),unknown);

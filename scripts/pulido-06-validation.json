@@ -1,0 +1,53 @@
+{
+  "phase": 6,
+  "branch": "feat/pulido-06-cubo-ui",
+  "base": "b3d8f0b",
+  "audit": {
+    "command": "npm run audit:release",
+    "result": "passed",
+    "errors": 0,
+    "warnings": 0
+  },
+  "node": {
+    "command": "npm test",
+    "result": "passed",
+    "suites": 120
+  },
+  "browser": {
+    "result": "passed",
+    "programs": [
+      "cube_editor_smoke.py",
+      "interface_smoke.py",
+      "wardrobe_smoke.py",
+      "pet_smoke.py",
+      "rewards_smoke.py",
+      "ui_silence_smoke.py",
+      "offline_smoke.py"
+    ],
+    "checks": [
+      "draft/apply/cancel/restore",
+      "write failure rollback",
+      "exact future-data retention",
+      "unknown styles archived",
+      "keyboard tabs and retained focus",
+      "three small phone viewports",
+      "silent UI and no context creation"
+    ]
+  },
+  "audio": {
+    "result": "passed",
+    "programs": [
+      "energy_mix.py"
+    ],
+    "renders": 4,
+    "maxPeak": 0.8735794425010681,
+    "neutralFactor": 1,
+    "renderNeutralToleranceDb": 0.001
+  },
+  "external": {
+    "physicalListening": "pending",
+    "CI": "pending",
+    "deployment": "pending"
+  },
+  "fullSuites": "Integrated browser/audio suites remain phase 9."
+}

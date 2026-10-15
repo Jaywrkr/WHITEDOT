@@ -78,8 +78,12 @@
 </div>
 <div class="modal lite" id="mCube" role="dialog" aria-modal="true" aria-labelledby="cubeTitle" hidden><div class="sheet cube-sheet">
  <h2 id="cubeTitle">Tu cubo</h2><div id="cubePreview" class="cube-preview" role="img" aria-label="Vista previa de tu cubo"><canvas id="cubePreviewCanvas" aria-hidden="true"></canvas><i></i></div>
- <p id="cubeCount"></p><p id="cubeHint" role="status"></p><div><p>Material</p><div id="cubeMaterials" class="cube-options"></div></div><div><p>Borde</p><div id="cubeForms" class="cube-options"></div></div><div><p>Aura</p><div id="cubeAuras" class="cube-options"></div></div><div><p>Voz del pulso</p><div id="cubeVoices" class="cube-options"></div></div><div><p>Color</p><div id="cubeColors" class="cube-options"></div></div><div><p>Estela</p><div id="cubeTrails" class="cube-options"></div></div><div><p>Halo</p><div id="cubeHalos" class="cube-options"></div></div>
- <p>El blanco siempre está contigo. Los demás detalles se descubren jugando.</p><button id="cubeClose">Volver</button>
+ <p id="cubeCount"></p><p id="cubeHint" role="status"></p>
+ <div id="cubeTabs" class="cube-tabs" role="tablist" aria-label="Personaliza tu cubo"><button id="cubeTabAppearance" role="tab" data-cube-tab="appearance" aria-controls="cubePanelAppearance" aria-selected="true">Apariencia</button><button id="cubeTabMotion" role="tab" data-cube-tab="motion" aria-controls="cubePanelMotion" aria-selected="false" tabindex="-1">Movimiento</button><button id="cubeTabVoice" role="tab" data-cube-tab="voice" aria-controls="cubePanelVoice" aria-selected="false" tabindex="-1">Voz</button></div>
+ <div id="cubePanelAppearance" role="tabpanel" aria-labelledby="cubeTabAppearance" data-cube-panel="appearance"><p>Color</p><div id="cubeColors" class="cube-options"></div><p>Material</p><div id="cubeMaterials" class="cube-options"></div><p>Borde</p><div id="cubeForms" class="cube-options"></div></div>
+ <div id="cubePanelMotion" role="tabpanel" aria-labelledby="cubeTabMotion" data-cube-panel="motion" hidden><p>Estela</p><div id="cubeTrails" class="cube-options"></div><p>Halo</p><div id="cubeHalos" class="cube-options"></div><p>Aura</p><div id="cubeAuras" class="cube-options"></div></div>
+ <div id="cubePanelVoice" role="tabpanel" aria-labelledby="cubeTabVoice" data-cube-panel="voice" hidden><p>Voz del pulso</p><div id="cubeVoices" class="cube-options"></div><p>Escucha tu elección al pulsar dentro del Mundo.</p></div>
+ <p>Conserva el blanco. Descubre detalles jugando.</p><button id="cubeRestore">Restaurar blanco</button><div class="row"><button id="cubeClose">Cancelar</button><button id="cubeApply" disabled>Aplicar</button></div>
 </div></div>
 <section class="fxpanel" id="fxPanel" aria-label="Mesa de efectos" hidden>
   <div class="fxhead"><small>Mesa de efectos</small><span id="fxRead">Limpio</span><button id="fxClose" aria-label="Cerrar mesa de efectos">×</button></div>
@@ -268,10 +272,10 @@
     <h2 id="musicTitle">Sonido</h2>
     <label for="rVolume">Volumen <output id="volumeNow" for="rVolume">100%</output></label><input type="range" id="rVolume" min="0" max="100" value="100">
     <label for="rStyle">Energía</label>
-    <div class="style-now" id="styleNow">Minimal</div>
+    <div class="style-now" id="styleNow">Equilibrada</div>
     <p>Quieto: calma. En movimiento: ritmo. Esto marca hasta dónde llega.</p>
-    <input type="range" id="rStyle" min="0" max="100" value="30" aria-label="Estilo de la música">
-    <div class="ends"><span>Ambiente</span><span>Underground</span></div>
+    <input type="range" id="rStyle" min="0" max="100" value="50" aria-label="Intensidad del arreglo">
+    <div class="ends"><span>Suave</span><span>Energética</span></div>
     <div class="tiles"><button id="bSound"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg><span>Música</span></button><button id="bSoft" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 5v14M16 7v10M20 10v4"/></svg><span>Calma</span></button><button id="bAutoPins" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 8v8M8 12h8"/></svg><span>Repetir: no</span></button></div>
     <button id="bLivingMusic" hidden>Música electrónica generativa</button>
     <div class="row"><button id="muClose" class="gold">Listo</button><button id="muMute" hidden>Silenciar</button></div>

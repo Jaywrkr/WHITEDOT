@@ -51,9 +51,10 @@ try:
    page.evaluate('()=>{const r=__testRuntime;r.S.ach.poder_cometa=r.S.ach.tiempo=r.S.ach.bandada1=r.S.todayKey;r.S.ach.tope=r.S.todayKey;}')
    page.locator('#cubeClose').click();page.locator('#bMenu').click();page.locator('#bCube').click()
    before=page.evaluate('({w:__testRuntime.waves.length,q:__testRuntime.MU.q8.length})')
-   page.get_by_role('button',name='Ámbar',exact=True).click();page.locator('#cubeTrails').get_by_role('button',name='Línea',exact=True).click();page.locator('#cubeHalos').get_by_role('button',name='Pulso',exact=True).click()
+   page.get_by_role('button',name='Ámbar',exact=True).click();page.locator('#cubeTabMotion').click();page.locator('#cubeTrails').get_by_role('button',name='Línea',exact=True).click();page.locator('#cubeHalos').get_by_role('button',name='Pulso',exact=True).click();page.locator('#cubeApply').click()
    assert page.evaluate('__testRuntime.cubeColor()')=='#f0d27a';assert page.evaluate('__testRuntime.S.cube.trail')=='line'
    assert page.evaluate('__testRuntime.waves.length')==before['w'];assert page.evaluate('__testRuntime.MU.q8.length')<=before['q']
+   page.locator('#bMenu').click();page.locator('#bCube').click()
    seconds=page.evaluate('__testRuntime.S.pet.seconds');page.evaluate('()=>{const r=__testRuntime;r.S.wx=Math.floor(r.S.wx/r.WCH)*r.WCH+20;r.S.wy=Math.floor(r.S.wy/r.WCH)*r.WCH+20;}')
    page.wait_for_timeout(400);assert page.evaluate('__testRuntime.S.pet.seconds')==seconds
    page.screenshot(path=f'/tmp/whitedot-cube-{species}.png');page.locator('#cubeClose').click();page.wait_for_timeout(100)

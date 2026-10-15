@@ -26,11 +26,14 @@ try:
    assert page.locator('#cubeCount').inner_text()=='50 de 50'
    before=page.evaluate('({context:!!__testRuntime.ac,waves:__testRuntime.waves.length})')
    for id in ['cubeMaterials','cubeForms','cubeTrails','cubeHalos','cubeAuras','cubeVoices']:
+    page.locator('#cubeTab'+('Appearance' if id in ['cubeMaterials','cubeForms'] else 'Voice' if id=='cubeVoices' else 'Motion')).click()
     page.locator('#'+id+' button').last.click()
    page.locator('#cubePreview').click()
    assert page.evaluate('!!__testRuntime.ac')==before['context'] and page.evaluate('__testRuntime.waves.length')==before['waves']
    page.wait_for_function('document.getElementById("cubePreviewCanvas").width>0');page.screenshot(path=f'/tmp/whitedot-v2-f3-cube-{width}.png')
-   selected=page.evaluate('JSON.stringify(__testRuntime.cubeSettings())');page.reload();page.wait_for_function('__testRuntime?.cubeSettings');assert page.evaluate('JSON.stringify(__testRuntime.cubeSettings())')==selected
+   assert page.evaluate('JSON.stringify(__testRuntime.cubeSettings())')==old,'preview cannot equip before applying'
+   page.locator('#cubeApply').click();selected=page.evaluate('JSON.stringify(__testRuntime.cubeSettings())');assert selected!=old
+   page.reload();page.wait_for_function('__testRuntime?.cubeSettings');assert page.evaluate('JSON.stringify(__testRuntime.cubeSettings())')==selected
    assert page.evaluate('Object.keys(__testRuntime.S.rewards.items).filter(id=>id.startsWith("cube:")).length')==50
    assert not errors,errors;print('PASS fifty styles, locked inspection, silent choices, real preview and reload at '+str(width),flush=True);page.close()
   browser.close()

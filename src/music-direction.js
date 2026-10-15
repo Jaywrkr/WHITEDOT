@@ -20,6 +20,7 @@ export function musicDirection(genre){
  return MUSIC_DIRECTIONS[GENRE_CHARACTERS[genre]]||MUSIC_DIRECTIONS.warm;
 }
 const FLOATING=new Set(['graincloud','granularair','choir','duskpad','p_stringcloud','p_breathingpad','p_velvetchoir']);
+export function arrangementEnergy(value,setting){const level=Number.isFinite(setting)?Math.max(0,Math.min(1,setting)):.5;return Math.max(0,Math.min(.9,value*(.7+.6*level)));}
 export function directedLeads(genre,base,hybrid=[],native=[]){
  const p=musicDirection(genre),adapt=id=>({organ:'p_barkkeys',strings:'p_cellobody',keys:'p_tinepiano',flute:'p_panreed',saw:'resonantpluck'})[id]||id,
   pool=p.space>.5?[...native,...base,...hybrid]:[...native.map(adapt),...p.leads,...hybrid.filter(id=>!FLOATING.has(id)).slice(0,2)];

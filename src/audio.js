@@ -6,7 +6,7 @@ import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
 import {harmonicDegree,createVoiceCurator} from './grammar.js';
 import { createRadio } from './radio.js';
 import {labDrumEvents,labNoteEvents} from './lab-score.js';
-import {productionSpace,createProductionRooms} from './music-direction.js';
+import {productionSpace,createProductionRooms,arrangementEnergy} from './music-direction.js';
 import {blendProductionSpace} from './territory-presentation.js';
 import {ambientSoloist} from './ambient-score.js';
 import {electronicDrum} from './electronic-ensemble.js';
@@ -238,6 +238,7 @@ export function initialize(runtime) {
     verbIn.gain.setTargetAtTime(space?.room??.8,t,.6);productionRooms?.set(space?.space??1,t);
     runtime.productionSpaceCue?.({time:t,genre:A?.genre,...space});
     if(runtime.inWorld())E=runtime.clamp(E+(runtime.influenceState?.values.groove||0)*.09,.05,.9);
+    if(runtime.inWorld())E=arrangementEnergy(E,runtime.S.musicEnergy);
     const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(MU.radio?.identity?.swing??G.sw??0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
     const xp=runtime.inWorld()?(runtime.experimentalLevel?.()||0):0;   // zonas experimentales: ≥0.7 sin batería ni pista
     const continuous=runtime.unifiedMusic===true&&!runtime.labMode,field=runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie',foundationGain=continuous&&field?.32:1;
