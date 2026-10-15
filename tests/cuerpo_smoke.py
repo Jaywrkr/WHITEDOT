@@ -58,7 +58,9 @@ with sync_playwright() as p:
  # Aves (2800,1650): el cubo pasa por un ave → aprende la llamada.
  jump(2800,1500);page.wait_for_timeout(300)
  bird=page.evaluate(f"(()=>{{const f={R}.nearbyFlocks(600)[0],m=f.members[0];return [m.x,m.y]}})()")
- walk([[2800,1500],[bird[0],bird[1]]],400);page.wait_for_function(f"{R}.nearbyFlocks(600)[0].learned.length>0||{R}.nearbyFlocks(600)[0].answerBar>=0")
+ # Track the moving bird each frame; a stale position at running speed can miss or scatter it.
+ page.evaluate('async()=>{const r=window.__testRuntime;for(let i=0;i<180;i++){const f=r.nearbyFlocks(600)[0],m=f.members[0];if(f.learned.length||f.answerBar>=0||r.S.ach.bandada1)return;const dx=m.x-r.S.wx,dy=m.y-r.S.wy,dist=Math.hypot(dx,dy),step=Math.min(dist,2);r.S.wx+=dx/(dist||1)*step;r.S.wy+=dy/(dist||1)*step;await new Promise(resolve=>requestAnimationFrame(resolve));}}')
+ page.wait_for_function(f"{R}.nearbyFlocks(600)[0].learned.length>0||{R}.nearbyFlocks(600)[0].answerBar>=0||!!{R}.S.ach.bandada1")
  # El dedo sobre un objeto no lo manipula: lanza el pulso.
  jump(1800,2620);a2=page.evaluate(f"{R}.nearbyMateria(300).find(s=>s.kind==='prism').angle");waves=page.evaluate(f'{R}.waves.length')
  page.mouse.click(195,422+80);page.wait_for_timeout(200)

@@ -1,4 +1,5 @@
-import {CUBE_COLORS,CUBE_TRAILS,CUBE_HALOS} from './cube-model.js';
+import {HOUSE_OBJECTS} from './house-model.js';
+import {CUBE_WARDROBE,wardrobeEligible} from './wardrobe-model.js';
 import {LIVING_CATALOG} from './living-catalog.js';
 import {LIVING_STUDIES} from './living-studies.js';
 import {POWER_IDS,POWERS} from './expansion-music.js';
@@ -14,11 +15,10 @@ export const REWARD_RARITIES=Object.freeze({
 export const REWARDS_VERSION=1;
 const piece=(id,name,type,rarity,kind,key,hint,extra={})=>Object.freeze({id,name,type,rarity,source:Object.freeze({kind,key}),hint,...extra});
 export function createRewardsCatalog(achievements=[]){
- const colors=CUBE_COLORS.map(([hex,name,ach],i)=>piece('cube:color:'+hex.slice(1),name,'color',['comun','rara','rara','poco_comun','epica','epica'][i],ach?'achievement':'default',ach||'start',ach?'Descubre el logro de este color.':'Empieza en blanco.',{value:hex}));
- const trails=CUBE_TRAILS.map((p,i)=>piece('cube:trail:'+p.id,p.name,'trail',['comun','poco_comun','rara','epica'][i],p.ach?'achievement':'default',p.ach||'start',p.ach?'Sigue el logro de esta estela.':'Camina sin estela.',{value:p.id}));
- const halos=CUBE_HALOS.map((p,i)=>piece('cube:halo:'+p.id,p.name,'halo',['comun','poco_comun','rara'][i],p.ach?'achievement':'default',p.ach||'start',p.ach?'Sigue el logro de este halo.':'Conserva el brillo suave.',{value:p.id}));
  const biomes=['llanura','bosque','lago','dunas','cristales','jardin','ruinas','cueva','tormenta','faros','vacio'];
- const catalog=[...colors,...trails,...halos,
+ const cosmetics=CUBE_WARDROBE.map(p=>piece(p.id,p.name,p.type,p.rarity,p.free?'default':p.ach?'achievement':'wardrobe',p.free?'start':p.ach||p.id,p.hint,{value:p.value}));
+ const house=HOUSE_OBJECTS.map(d=>{const [kind,...key]=d.source.split(':');return piece(d.id,d.name,'houseObject',kind==='lineage'?'rara':kind==='box'?'rara':'poco_comun',d.id==='obj:origen'?'default':kind,d.id==='obj:origen'?'start':key.join(':'),'Encuentra su voz dentro del mundo.',{shape:d.shape,instrument:d.instrument,role:d.role});});
+ const catalog=[...cosmetics,...house,
   ...biomes.map(id=>piece('biome:'+id,'Huella · '+id,'material','poco_comun','biome',id,'Explora este bioma.')),
   ...LIVING_CATALOG.map(d=>piece('lineage:'+d.id,d.name,'material',d.id==='whale'?'epica':'rara','lineage',d.id,'Encuentra y toca este linaje.')),
   ...LIVING_STUDIES.map(d=>piece('study:'+d.id,d.name,'memory','epica','study',d.id,'Despierta una construcción que guarde este estudio.')),
@@ -71,9 +71,11 @@ export function migrateRewards(state,catalog=REWARDS_CATALOG,{at=null,legacy=tru
  for(const [id,date]of Object.entries(state.ach||{}))if(date&&id.startsWith('poder_'))give('box',id.slice(6),rewardDate(date));
  for(const card of state.rareBook?.items||[])if(card&&typeof card.type==='string'){give('finding',(card.odds?.tier||card.tier)==='legendario'?'singular':(card.odds?.tier||card.tier),rewardDate(card.firstSeen)||rewardDate(card.day));if(card.type==='event:convergence')give('weather','convergencia',rewardDate(card.firstSeen));}
  // A selected legacy cosmetic is evidence of ownership even if its old flag is absent.
- for(const [type,value]of [['color',state.cube?.color||state.color],['trail',state.cube?.trail],['halo',state.cube?.halo]]){
+ for(const [type,value]of [['color',state.cube?.color||state.color],['trail',state.cube?.trail],['halo',state.cube?.halo],...['material','form','aura','voice'].map(type=>[type,state.cube?.[type]])]){
   const p=catalog.find(p=>p.type===type&&p.value===value);if(p)awardReward(book,p.id,catalog,{source:'legacy:selection',legacy:true});
  }
+ for(const p of CUBE_WARDROBE)if(!p.ach&&!p.free&&wardrobeEligible(p,state,hiddenAchievements))give('wardrobe',p.id);
+ for(const d of HOUSE_OBJECTS)if(d.achievement&&state.ach?.[d.achievement])awardReward(book,d.id,catalog,{at:rewardDate(state.ach[d.achievement]),source:'achievement:'+d.achievement,legacy});
  // Source records permit a future catalogue to add pieces without replaying events.
  for(const [id,v]of Object.entries(book.sources)){const split=id.indexOf(':');rewardSource(book,id.slice(0,split),id.slice(split+1),catalog,{at:v.at,legacy:v.legacy});}
  return book;

@@ -36,6 +36,10 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Versión **1.1.0** · [C
 
 `feat/cierre-f8-memoria` continúa la fase anterior. Conexiones, suelo editado y frases aprendidas sobreviven al regreso; favoritos y paseos distinguen afinidad y contraste musical. [Plan vigente](PLAN_CIERRE_2.0.md) · [Pruebas](scripts/cierre-f8-validation.json).
 
+## Cierre · fase 9 · Cubo, Bitácora, logros y casa unidos
+
+`feat/cierre-f9-juego` continúa la fase anterior. Recupera y une el trabajo local pendiente con las ocho fases actuales: cubo, menú, Bitácora, logros y casa vista desde arriba. [Plan vigente](PLAN_CIERRE_2.0.md) · [Pruebas](scripts/cierre-f9-validation.json).
+
 ## Cierre · fase 1 · identidades completas
 
 `feat/cierre-f1-identidades` parte de `main 6702093`, que ya integra M1. Ocho gramáticas de paisaje unen contornos, espacio vacío, materiales, habitantes comunes y carácter musical: cauces, raíces, terrazas, órbitas, arrecifes, bóvedas, estratos e islas. Variantes deterministas, no ocho mapas cerrados ni nuevos géneros: permanecen los 11 biomas y 52 estilos.

@@ -15,7 +15,7 @@ export function initialize(runtime) {
   const fresh=()=>({saveVersion:SAVE_VERSION,worldIdentity:{...identity},offset:0,lastDay:null,streak:0,best:0,totalDays:0,totalLight:0,todayKey:null,todayLight:0,capShown:false,collected:[],trail:[],px:0,py:0,ach:{},sound:true,softMusic:false,style:.3,
     worldSeed:"",previewSeed:null,previewLayout:null,session:null,lastSession:null,favorites:{version:1,items:[]},destination:null,glassSites:{},mirrorSites:{},autoPins:false,patchSites:{},worldDetails:false,mode:"camino",wx:900,wy:900,lampDay:null,lampUsed:0,species:{},rel:null,relicSites:{},stars:[],help:{},zones:{},drums:0,bag:{luz:8},studio:{x:null,y:null,biome:0,slots:{}},color:"#ffffff",lastWorldDay:null,prevMode:null,capPlusDay:null,voiceStart:false,luzN:0,cat:{},catN:0,catRecent:[],places:{},placesN:0,retos:{},retosN:0,events:{},journal:{events:{},relics:{},music:{genres:{},instruments:{},scales:{}}}});
   const storage=(()=>{try{return globalThis.localStorage;}catch(_){return {getItem(){throw Error('Unavailable');},setItem(){throw Error('Unavailable');}};}})();
-  const store=createSaveStore(storage,KEY,fresh(),identity);let S=store.load();
+  const store=createSaveStore(storage,KEY,fresh(),identity);let S=store.load();const scopeHadSave=store.original()!==null;
   const fallbackCatalog=createRewardsCatalog(runtime.ACH),hiddenAchievements=(runtime.ACH||[]).filter(a=>a[3]).map(a=>a[0]);
   const applyScope=state=>{state.rewards=migrateRewards(state,runtime.rewardCatalog||fallbackCatalog,{hiddenAchievements});return Object.assign(normalizeLivingState(state),{previewSeed:preview,previewLayout:layout,worldSeed:identity.seed,worldIdentity:{...identity},saveVersion:SAVE_VERSION});};
   applyScope(S);
@@ -67,7 +67,7 @@ export function initialize(runtime) {
 
 
   Object.defineProperties(runtime, {
-    worldIdentity:{get:()=>identity},saveScope:{get:()=>scope},saveStore:{get:()=>store},storageStatus:{get:()=>store.status},
+    realTravel:{get:()=>new URLSearchParams(globalThis.location?.search||'').get('travel')==='1'},scopeHadSave:{get:()=>scopeHadSave},worldIdentity:{get:()=>identity},saveScope:{get:()=>scope},saveStore:{get:()=>store},storageStatus:{get:()=>store.status},
     fresh: { get: () => fresh },
     S: { get: () => S, set: value => { S = applyScope(value); } },
     save: { get: () => save },

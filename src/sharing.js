@@ -52,6 +52,7 @@ export function initialize(runtime) {
 
 
   Object.defineProperties(runtime, {
+    drawSky: {get:()=>drawSky},
     openSky: { get: () => openSky },
     shareCard: { get: () => shareCard },
   });

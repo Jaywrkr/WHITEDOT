@@ -23,7 +23,7 @@ try:
   page.evaluate('__testRuntime.labGo("rhythm:roots")');page.wait_for_timeout(350);page.evaluate('()=>{const r=__testRuntime,o=r.nearbyPercussion()[0];r.S.wx=o.x;r.S.wy=o.y;}');page.wait_for_function('__testRuntime.S.elementBook.found["rhythm:roots"]!==undefined')
   assert '/109' in page.locator('#elementCount').inner_text()
   # Journal access is pure UI; no percussion while a sheet is open.
-  page.evaluate('()=>{window.__hits=0;__testRuntime.percussionCue=()=>__hits++;__testRuntime.openJournal();}');count=page.evaluate('__hits');page.locator('[data-journal-tab="elements"]').click();page.wait_for_timeout(1300)
+  page.evaluate('()=>{window.__hits=0;__testRuntime.percussionCue=()=>__hits++;__testRuntime.openJournal();}');count=page.evaluate('__hits');page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('elementos');page.wait_for_timeout(1300)
   assert 'Fósil de ritmo' in page.locator('#journalBody').inner_text();assert page.evaluate('__hits')==count
   page.locator('#journalClose').click();page.evaluate('__testRuntime.save()');n=page.evaluate('__testRuntime.elementFamilyCount');page.reload();page.wait_for_function('__testRuntime?.labMode');assert page.evaluate('__testRuntime.elementFamilyCount')>=n
   # Native installations remain in place and interaction geometry is unchanged after simplification.

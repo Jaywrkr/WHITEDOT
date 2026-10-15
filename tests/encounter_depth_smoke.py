@@ -55,12 +55,15 @@ with sync_playwright() as p:
   assert page.evaluate('deepObject.state.dialogue.events.length')==0,'ambient must not teach'
   page.mouse.click(30,height/2);page.wait_for_function('deepObject.state.dialogue.events.length>0');page.evaluate('deepObject.state.dialogue.events=[]')
   # One event-loop turn keeps the harmonic center stable for this exact interval assertion.
-  page.evaluate("()=>{const r=__testRuntime;for(const [step,degree]of [[0,0],[4,2],[12,4],[24,2]]){deepObject.state.dialogue.elapsed=r.SIX*step;r.playVoice('pulso',degree,r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'player');}}")
+  page.evaluate("()=>{const r=__testRuntime;for(const [step,degree]of [[0,0],[4,2],[12,4],[24,2]]){deepObject.state.dialogue.elapsed=r.SIX*step;r.playVoice('pulso',degree,r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'player');}document.getElementById('bMenu').click();}")
   assert page.evaluate('deepObject.state.dialogue.events.length')==4
-  page.locator('#bMenu').click();frozen=page.evaluate('deepObject.state.dialogue.elapsed');page.wait_for_timeout(300);assert page.evaluate('deepObject.state.dialogue.elapsed')==frozen;page.locator('#mnClose').click()
+  taught=page.evaluate('deepObject.state.dialogue.events');assert [(n['degree']-taught[0]['degree'])%7 for n in taught]==[0,2,4,2],taught
+  # Pause in the teaching turn; a delayed automation click can cross the idle timeout.
+  assert page.evaluate('deepObject.state.dialogue.phase')=='listening'
+  frozen=page.evaluate('deepObject.state.dialogue.elapsed');page.wait_for_timeout(300);assert page.evaluate('deepObject.state.dialogue.elapsed')==frozen;page.locator('#mnClose').click()
   # Waiting is the automatic-response gesture. A late tap may start a new lesson.
   page.wait_for_function('deepObject.state.dialogue.phase==="replying"')
-  assert page.evaluate('deepObject.state.dialogue.phrase.map(n=>n.index)')==[0,2,4,2]
+  assert page.evaluate('deepObject.state.dialogue.phrase.map(n=>n.index)')==[0,2,4,2],page.evaluate('({phrase:deepObject.state.dialogue.phrase,events:deepObject.state.dialogue.events})')
   emitted=page.evaluate("""()=>{const r=__testRuntime,ac=r.ac,old=ac.createOscillator.bind(ac);let n=0;ac.createOscillator=()=>{n++;return old();};r.encounterBar(ac.currentTime+.1,2000);ac.createOscillator=old;return n;}""")
   assert emitted>0,'learned answer must actually emit audio';assert page.evaluate('!!__testRuntime.S.ach.respuestaAnimal')
   page.touchscreen.tap(center['x'],center['y']);assert page.evaluate('deepObject.state.dialogue.phase')=='listening'

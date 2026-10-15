@@ -1,4 +1,7 @@
 import {HYBRID_STYLES} from './musical-hybrids.js';
+import {ACH_CATEGORIES,baseAchievementMeta} from './achievement-metadata.js';
+import {albumEntries,filterAlbum,progressRing,nextDiscovery} from './journal-model.js';
+import {albumPortrait} from './album-art.js';
 import {RHYTHM_ELEMENTS} from './percussion-model.js';
 import {SYNTH_PROGRAMS} from './synth-colors.js';
 import {ECOLOGIES,ECOLOGY_CONTENT} from './ecology-model.js';
@@ -33,9 +36,9 @@ export function ensureJournal(state) {
 export function initialize(runtime) {
   ensureJournal(runtime.S);
   const data=()=>runtime.S.journal?.music?.hybrids?runtime.S.journal:ensureJournal(runtime.S);
-  let tab='places';
+  let tab='places',group='todo',query='',ownership='todo',limit=60;
   function recordInstrument(id) {
-    if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running')return;
+    if(!(runtime.inWorld()||runtime.houseActive?.())||!runtime.S.sound||runtime.ac?.state!=='running')return;
     const music=data().music;
     music.instruments[id]=1;const hybrid=runtime.MU.radio?.hybrid;if(hybrid&&HYBRID_STYLES.some(h=>h.id===hybrid.id))music.hybrids[hybrid.id]=1;
     const program=runtime.activeInstrumentPatch?.program;if(program)music.programs[program.id]=1;
@@ -76,31 +79,32 @@ export function initialize(runtime) {
   }
   function music() {
     const heard=data().music;
-    return '<h3>Cruces musicales</h3>'+HYBRID_STYLES.filter(h=>heard.hybrids?.[h.id]).map(h=>card(h.name,'Una influencia transforma frases, armonía, registro e instrumentos.')).join('')+'<h3>Colores de síntesis</h3>'+SYNTH_PROGRAMS.filter(p=>heard.programs?.[p.id]).map(p=>card(p.name,`Filtro ${p.type==='lowpass'?'grave':p.type==='bandpass'?'de banda':'de muesca'} · ${p.slope?p.slope+' dB':''}`)).join('')+
+    return progressRing(Object.keys(heard.genres).length,52,'Géneros')+'<h3>Cruces musicales</h3>'+HYBRID_STYLES.filter(h=>heard.hybrids?.[h.id]).map(h=>card(h.name,'Una influencia transforma frases, armonía, registro e instrumentos.')).join('')+'<h3>Colores de síntesis</h3>'+SYNTH_PROGRAMS.filter(p=>heard.programs?.[p.id]).map(p=>card(p.name,`Filtro ${p.type==='lowpass'?'grave':p.type==='bandpass'?'de banda':'de muesca'} · ${p.slope?p.slope+' dB':''}`)).join('')+
       '<h3>Géneros</h3>'+Object.keys(heard.genres).map(id=>card(runtime.GEN[id]?.name||id,GENRE_GUIDE[id]||RHYTHM_GENRES[id]?.guide||'Identidad musical de una región escuchada.')).join('')+
       '<h3>Escalas</h3>'+Object.keys(heard.scales).map(id=>card(MODES[id]||'Escala regional','Conjunto de intervalos que organiza las notas y acordes del lugar.')).join('')+
       '<h3>Instrumentos</h3>'+Object.keys(heard.instruments).map(id=>card(...(INSTRUMENTS[id]||[id,'Instrumento sintetizado del Mundo.']))).join('')+
+      '<h3>Sets</h3>'+((runtime.S.setLog||[]).map(set=>card('Set registrado',set.at+' · '+set.name)).join('')||(runtime.S.ach.set1?card('Tu primer set',String(runtime.S.ach.set1)):card('Graba tu música','Menú → Crear → Grabar set.')))+(runtime.lastSet?'<button data-journal-set>Tu último set</button>':'')+
       (!Object.keys(heard.instruments).length?card('Escucha el Mundo','Activa el sonido y explora. Aquí se registran los sonidos que el juego reproduce.'): '');
   }
-  function achievements() {
-    const groups={Constancia:[],Exploración:[],Música:[],Ocultos:[]};
-    for(const [id,name,description,hidden]of runtime.ACH) {
-      if(['patch1','instalacionUnida','instrumentoDespierto'].includes(id)&&!runtime.S.ach[id])continue;
-      const got=runtime.S.ach[id],group=hidden?'Ocultos':/^(r\d|t\d|dia1|tope|regreso|s10)/.test(id)?'Constancia':['instrumentoDespierto','instalacionUnida','tejidoVivo','respuestaAnimal','cajaEditable','patch1','fijarSonido','cultivarMusica','espejo1','vidrio1','paseo1','escuchaViva','tiempo','under','faro','banda','jardinero','tambor'].includes(id)?'Música':'Exploración';
-      groups[group].push(card(hidden&&!got?'???':name,hidden&&!got?'Logro oculto. Sigue explorando.':description,`<p>${got?'Conseguido':'Pendiente'}</p>`));
-    }
-    return Object.entries(groups).map(([name,items])=>`<h3>${name}</h3>${items.join('')}`).join('');
-  }
+  function achievements(){const list=runtime.ACH.filter(a=>!runtime.achievementMeta?.(a)?.retired||runtime.S.ach[a[0]]),got=list.filter(a=>runtime.S.ach[a[0]]);return progressRing(got.length,list.length,'Logros')+ACH_CATEGORIES.map(category=>{const group=list.filter(a=>(runtime.achievementMeta?.(a)||baseAchievementMeta(a)).category===category);return '<h3>'+category+'</h3>'+group.map(a=>{const meta=runtime.achievementMeta?.(a)||baseAchievementMeta(a),date=runtime.S.ach[a[0]],rule=runtime.achievementRules?.find(p=>p.id===a[0]),progress=rule?runtime.achievementProgress(rule):null;return card(meta.hidden&&!date?'???':a[1],meta.hidden&&!date?'Sigue explorando.':a[2],'<p>'+escape(meta.tier+' · '+(date?date:'Pendiente'))+'</p>'+(progress?'<progress max="'+progress.target+'" value="'+progress.value+'" aria-label="Progreso"></progress>':''));}).join('');}).join('');}
+  function today(){const summary=runtime.sessionSummary?.();if(!summary)return card('Hoy empieza aquí','Entra al mundo y escucha una voz.');return card(runtime.S.session?'Sesión en curso':'Última sesión',`${summary.day} · ${Math.floor(summary.seconds/60)} minutos`)+card('Tu actividad',`${summary.interactions} interacciones · ${summary.pulses} pulsos`)+card('Descubrimientos',`${summary.places} lugares · ${summary.forms} formas · ${summary.relics} hallazgos`)+card('Música compartida',summary.genres.map(id=>runtime.GEN[id]?.name||id).join(' · ')||'Escucha el mundo.');}
+  function collection(){if(group==='tarjetas')return runtime.rareBookCards?.(query)||'';if(group==='formas')return forms();const all=albumEntries(runtime.S,runtime.rewardPieces||[]),rows=filterAlbum(all,{group,search:query,owned:ownership});runtime.$('journalMore').hidden=rows.length<=limit;return progressRing(rows.filter(p=>p.owned).length,rows.length,'Colección',{earned:rows.filter(p=>p.owned&&p.earned!==false).length})+'<div class="journal-album">'+rows.slice(0,limit).map(p=>`<article class="journal-card album-piece" data-owned="${p.owned&&p.earned!==false}"><svg viewBox="-40 -40 80 80" aria-hidden="true">${albumPortrait(p)}</svg><h3>${escape(p.name)}</h3><p>${escape(p.owned?'Conseguida · '+(p.date||'Progreso anterior'):p.hint||'Explora y escucha.')}</p></article>`).join('')+'</div>';}
+  function constellation(){return '<h3>Tu constelación</h3><canvas id="journalSky" width="320" height="220" aria-label="Recorridos guardados"></canvas>'+card('Estrellas compartidas',runtime.S.stars.length+' recuerdos conservados.');}
   function render() {
     ensureJournal(runtime.S);
+    runtime.$('sessionShare').hidden=tab!=='today'||!runtime.sessionSummary?.();
     runtime.$('rareCodeFallback').hidden=true;
-    runtime.$('journalBody').innerHTML=({places,forms,music,achievements,elements:()=>runtime.elementBookCards?.()||'',rares:()=>runtime.rareBookCards?.()||''})[tab]();
+    runtime.$('journalFilters').hidden=tab!=='collection';runtime.$('journalMore').hidden=true;runtime.$('journalBody').innerHTML=({today,places:()=>places()+constellation(),collection,music,achievements})[tab]();if(tab==='places'){const canvas=document.getElementById('journalSky');runtime.drawSky?.(canvas.getContext('2d'),20,20,280,180);}
     runtime.$('journalBody').scrollTop=0;
-    document.querySelectorAll('[data-journal-tab]').forEach(button=>{const active=button.dataset.journalTab===tab;button.setAttribute('aria-pressed',String(active));button.classList.toggle('gold',active);});
+    document.querySelectorAll('[data-journal-tab]').forEach(button=>{const active=button.dataset.journalTab===tab;button.setAttribute('aria-pressed',String(active));button.classList.toggle('selected',active);});
   }
-  function openJournal(nextTab) {if(['places','forms','music','achievements','elements','rares'].includes(nextTab))tab=nextTab;render();runtime.$('mJournal').hidden=false;}
+  function openJournal(nextTab){const aliases={forms:'formas',elements:'elementos',rares:'tarjetas'};if(aliases[nextTab]){tab='collection';group=aliases[nextTab];runtime.$('journalGroup').value=group;}else if(['today','places','collection','music','achievements'].includes(nextTab))tab=nextTab;render();runtime.$('mJournal').hidden=false;}
   document.querySelectorAll('[data-journal-tab]').forEach(button=>button.onclick=()=>{tab=button.dataset.journalTab;render();});
+  runtime.$('sessionShare').addEventListener('click',()=>runtime.$('mJournal').hidden=true);
+  runtime.$('journalGroup').onchange=e=>{group=e.target.value;limit=60;render();};runtime.$('journalOwnership').onchange=e=>{ownership=e.target.value;limit=60;render();};runtime.$('journalSearch').oninput=e=>{query=e.target.value;limit=60;render();};runtime.$('journalMore').onclick=()=>{limit+=60;render();};
+  runtime.$('journalNext').onclick=()=>{const d=runtime.regionOfPos(runtime.S.wx,runtime.S.wy),n=nextDiscovery(runtime.S,{biomeId:runtime.BIOMES[d.z].id});runtime.$('mJournal').hidden=true;runtime.say(n.text,n.name);};
+  runtime.$('bSession').hidden=true;runtime.$('bSky').hidden=true;
   document.getElementById('journalClose').onclick=()=>{runtime.$('mJournal').hidden=true;runtime.save();};
-  runtime.$('journalBody').addEventListener('click',event=>runtime.rareBookAction?.(event));
+  runtime.$('journalBody').addEventListener('click',event=>{if(event.target.closest('[data-journal-set]')){runtime.$('mJournal').hidden=true;runtime.$('mSet').hidden=false;}else runtime.rareBookAction?.(event);});
   Object.defineProperties(runtime,{refreshJournal:{get:()=>render},openJournal:{get:()=>openJournal},recordInstrument:{get:()=>recordInstrument}});
 }

@@ -1,3 +1,18 @@
+# Cierre F9 · Cubo, Bitácora, logros y casa unidos
+
+Rama `feat/cierre-f9-juego`, hija de la fase anterior. Jay crea PR/merge.
+
+- Integración selectiva de los trabajos locales a28c4b2, d6676e5, 7a99011, 4e77a14 y la casa preparada. Se resolvieron diferencias conservando anatomías, ecosistemas, híbridos, percusión, reliquias, memoria y retornos exactos. Las ramas antiguas no se reescribieron ni se hicieron merges a main.
+- Cincuenta personalizaciones ganadas: color, material, forma, estela, halo, aura y voz del pulso. Conserva los trece IDs anteriores, fechas, piezas retiradas y recompensas desconocidas. El blanco es original; el timbre elegido se usa con el cubo en el Mundo. Vista previa animada y elecciones completamente silenciosas.
+- Menú Jugar/Crear/Sonido/Más, seis destinos principales y ajustes separados. Una sola hoja de sonido con volumen persistente, calma y silencio. Saltar y su regreso siguen disponibles; viajar realmente entre semillas conserva progreso y posición por mundo.
+- Bitácora: Hoy, Colección, Lugares, Música y Logros. Álbum con búsqueda/filtros/siluetas, paginación de piezas, coordenadas/WD1, constelación, sets, cruces y memoria musical. Guarda el historial real, sin fabricar fechas ni hallazgos.
+- Doscientos cincuenta logros en siete categorías, con métricas de exploración, música, vida, colección y casa. Migración de logros ganados y secretos; conserva los retirados sin promoverlos como objetivos nuevos.
+- Casa desde arriba con cuatro habitaciones, cuarenta objetos ganados, posición que define paso/nota y proximidad, acústicas contenidas por habitación y visitas WH1 sin editar la colección anfitriona. Conserva el Taller radial y sus muestras. El plano se toca para caminar, colocar o retirar.
+- Geist Mono también en los dibujos recuperados. Frases de historia breves ligadas a atención, creación, regreso y Jay. Se conserva el lenguaje negro, cubo blanco y oro ganado. No se añadió servidor ni cuentas.
+- La revisión visual corrigió transparencia heredada del plano y cabecera desactualizada. Una prueba sobre Canvas exige contraste visible y cabecera Casa; vertical y horizontal aprobados tras el ajuste.
+
+Auditoría limpia; 92 suites Node y 10 recorridos afectados aprobados. 31 renders: cinco timbres del pulso sobre cinco estilos y cuarenta objetos de casa/cuatro acústicas en seis mezclas. Evidencia en cierre-f9-wardrobe-audio-validation.json y cierre-f9-house-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f9-validation.json).
+
 # Cierre F8 · Memoria de instrumentos y encuentros
 
 Rama `feat/cierre-f8-memoria`, hija de la fase anterior. Jay crea PR/merge.

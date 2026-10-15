@@ -69,7 +69,7 @@ try:
     page.evaluate("Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async()=>{throw Error('clipboard unavailable')}}})")
     page.locator('[data-rare-copy="0"]').click();page.wait_for_function('!document.getElementById("rareCodeFallback").hidden')
     assert page.locator('#rarePlaceCode').input_value().startswith('WD1-')
-    page.locator('[data-journal-tab="elements"]').click();assert page.locator('#rareCodeFallback').is_hidden()
+    page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('elementos');assert page.locator('#rareCodeFallback').is_hidden()
     page.locator('#journalClose').click()
     page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=otro-mundo&layout=wide&generation=2');page.wait_for_function('__testRuntime?.inWorld()');assert page.evaluate('__testRuntime.rareCards.length')==0,'preview libraries cannot leak into another seed'
    assert not errors,errors;print(f'PASS rare cards at {size}: native contact, truthful forced label, compact notice, paused clock, silent book, return code, dedupe and persistence',flush=True);context.close()

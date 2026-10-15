@@ -12,7 +12,7 @@ export function initialize(runtime){
   queue.enqueue({id:'box:'+box.id,name:power.name,rarity:'rara',power:box.power,effect:power.text,seconds:Math.ceil(runtime.powerSecondsLeft?.(box.power)||power.seconds),where:d.name});
   runtime.beatSoon(time=>{if(active())playBoxCelebration(runtime,time,d);},null,'ambient');
  }
- function earned(piece){if(!piece||piece.type==='achievement'||piece.source.kind==='box'||piece.source.kind==='finding'||piece.source.kind==='default')return;
+ function earned(piece){if(!piece||piece.type==='achievement'||piece.type==='houseObject'||piece.source.kind==='box'||piece.source.kind==='finding'||piece.source.kind==='default')return;
   queue.enqueue({id:'reward:'+piece.id,name:piece.name,rarity:piece.rarity,effect:'Guárdala en tu colección.',where:runtime.MU.dnaT?.name||''});
  }
  function present(event){current=event;age=0;const tier=REWARD_RARITIES[event.rarity];panel.dataset.level=String(tier.celebration);$('celebrationName').textContent=event.name;$('celebrationTier').textContent=tier.name;$('celebrationEffect').textContent=event.effect||'Conserva este encuentro.';$('celebrationTime').textContent=event.seconds?event.seconds+' s de juego':'';$('celebrationSignature').textContent=tier.celebration===2?'Simple.':'';

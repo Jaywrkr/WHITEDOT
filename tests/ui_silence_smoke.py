@@ -20,10 +20,10 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
   page.wait_for_function("window.__testRuntime.MU.dnaA && window.__testRuntime.ac.state==='running'")
   before=page.evaluate('({q:window.__testRuntime.MU.q8.length,p:window.__testRuntime.MU.queue.length,w:window.__testRuntime.waves.length})')
-  page.locator('#bMenu').click();page.locator('#bDetails').focus();page.keyboard.press('Space');page.keyboard.press('ArrowDown')
+  page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bDetails').focus();page.keyboard.press('Space');page.keyboard.press('ArrowDown')
   assert page.evaluate('window.__testRuntime.waves.length')==before['w']
   assert page.evaluate('window.__testRuntime.keys.arrowdown||0')==0
-  page.locator('#bMenu').click();page.locator('#bAutoPins').click()
+  page.locator('#settingsClose').click();page.locator('#bMenu').click();page.locator('#bMusicSettings').click();page.locator('#bAutoPins').click();page.locator('#muClose').click()
   assert page.evaluate('window.__testRuntime.jam.loop.ecos.length')==0
   page.evaluate('()=>{const r=window.__testRuntime;r.MU.queue=[];r.exitWorld(false);r.enterWorld();if(r.MU.queue.length)throw Error("world entry queued a UI jingle");}')
   page.wait_for_timeout(200);page.locator('#w').click(position={'x':30,'y':300});page.wait_for_timeout(50);assert page.evaluate('window.__testRuntime.waves.length')>0

@@ -1,21 +1,20 @@
-import {REWARDS_CATALOG,REWARD_RARITIES,normalizeRewards,rewardSource} from '../src/rewards-model.js';
-// Explicit hypothetical daily sessions: an estimate to tune, not observed player telemetry.
-const players=160,days=365,minutesPerDay=20;
-const trials=[],first=Object.fromEntries(Object.keys(REWARD_RARITIES).map(id=>[id,[]]));
+import {REWARDS_CATALOG,REWARD_RARITIES,migrateRewards} from '../src/rewards-model.js';
+import {CUBE_WARDROBE} from '../src/wardrobe-model.js';
+// Hypothetical daily sessions; these assumptions are not telemetry or spawn odds.
+const players=160,days=365,minutesPerDay=20,trials=[],first=Object.fromEntries(Object.keys(REWARD_RARITIES).map(id=>[id,[]]));
+const percentile=(v,q)=>v.toSorted((a,b)=>a-b)[Math.min(v.length-1,Math.floor(v.length*q))]??null;
 function random(seed){return ()=>{seed=Math.imul(seed^seed>>>15,2246822519);return (seed>>>0)/4294967296;};}
 for(let player=1;player<=players;player++){
- const r=random(player),book=normalizeRewards(),seen=new Set(),timeline={};
- const grant=(kind,key,day)=>{for(const id of rewardSource(book,kind,key,REWARDS_CATALOG,{at:new Date(Date.UTC(2026,0,day)).toISOString()})){const p=REWARDS_CATALOG.find(p=>p.id===id);if(!seen.has(p.rarity)){seen.add(p.rarity);first[p.rarity].push(day);}}};
- grant('default','start',0);
+ const randomDay=random(player),state={ach:{},livingSeen:{},zones:{},totalDays:0},timeline={},seen=new Set();
  for(let day=1;day<=days;day++){
-  for(const n of [1,3,7,14,30,90,180])if(day>=n)grant('constancy',String(n),day);
-  for(const kind of ['biome','lineage','box','study','layer','weather']){
-   const chance={biome:.5,lineage:.7,box:.08,study:.06,layer:.05,weather:.15}[kind];
-   if(r()<chance){const options=REWARDS_CATALOG.filter(p=>p.source.kind===kind);grant(kind,options[Math.floor(r()*options.length)].source.key,day);}
-  }
-  if([7,14,30,90,180].includes(day))timeline[day]=Object.keys(book.items).length;
+  state.totalDays=day;
+  if(randomDay()<.7){const id='lineage-'+Math.floor(randomDay()*28);state.livingSeen[id]={day:'2026-01-01'};}
+  for(const p of CUBE_WARDROBE.filter(p=>p.ach))if(randomDay()<.16)state.ach[p.ach==='oculto'?'secret':p.ach]='2026-01-01';
+  state.rewards=migrateRewards(state,REWARDS_CATALOG,{at:new Date(Date.UTC(2026,0,day)).toISOString(),legacy:false,hiddenAchievements:['secret']});
+  const owned=CUBE_WARDROBE.filter(p=>state.rewards.items[p.id]);
+  for(const p of owned)if(!seen.has(p.rarity)){seen.add(p.rarity);first[p.rarity].push(day);}
+  if([7,14,30,90,180,240,365].includes(day))timeline[day]=owned.length;
  }
  trials.push(timeline);
 }
-const percentile=(v,q)=>v.toSorted((a,b)=>a-b)[Math.min(v.length-1,Math.floor(v.length*q))]??null;
-console.log(JSON.stringify({catalogue:REWARDS_CATALOG.length,cosmetics:13,players,days,assumptions:{minutesPerDay,biomeVisitsPerSession:.5,lineageContactsPerSession:.7,boxChancePerSession:.08,studyChancePerSession:.06,layerChancePerSession:.05,weatherChancePerSession:.15,scope:'Catalogue foundation only; excludes achievement awards and future 50-piece wardrobe. Assumptions are hypothetical, not world occurrence odds.'},firstPieceByRarity:Object.fromEntries(Object.keys(first).map(id=>[id,{players:first[id].length,medianDay:percentile(first[id],.5),p90Day:percentile(first[id],.9),medianMinutes:percentile(first[id],.5)*minutesPerDay}])),collectionByDay:Object.fromEntries([7,14,30,90,180].map(day=>[day,{medianPieces:percentile(trials.map(t=>t[day]),.5)}])),notes:'First reward in a tier is not completing that tier. No six-month guarantee for every mythical source; cadence of the 50 cosmetics belongs to phase 3.'},null,2));
+console.log(JSON.stringify({catalogue:REWARDS_CATALOG.length,cosmetics:CUBE_WARDROBE.length,players,days,assumptions:{minutesPerDay,lineageContactsPerSession:.7,legacyAchievementChancePerSession:.16,scope:'Wardrobe daily-session simulation; not telemetry or world occurrence odds. Real players may progress slower.'},firstPieceByRarity:Object.fromEntries(Object.keys(first).map(id=>[id,{players:first[id].length,medianDay:percentile(first[id],.5),p90Day:percentile(first[id],.9)}])),collectionByDay:Object.fromEntries([7,14,30,90,180,240,365].map(day=>[day,{medianPieces:percentile(trials.map(t=>t[day]),.5)}])),notes:'Days are distinct play days. Existing thirteen pieces retain their legacy unlocks. New rare pieces require 30–90 days; mythical pieces 180–240 days and sixteen lineages.'},null,2));

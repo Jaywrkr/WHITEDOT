@@ -10,6 +10,8 @@ for(let i=0;i<300;i++)growPet(p,.05,`${i},1`);assert.equal(p.places.length,128);
 assert(petFormationEligible({species:'grulla',trust:1,follow:20,followTime:30}));assert(!petFormationEligible({species:'golondrina',trust:.2,follow:40,followTime:99}));
 let n=0;for(let i=0;i<8192;i++)if(petFromBox('caja:'+i,s=>{let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;}))n++;assert(n>20&&n<120);assert.equal(petFromBox('regalo:1',()=>0),null,'gifts do not farm permanent pets');
 assert.deepEqual(Object.values(PET_SPECIES).map(s=>s.role),['melody','bass','groove']);
-assert.deepEqual(normalizeCube({trail:'line',halo:'pulse'},{}),{version:1,color:'#ffffff',trail:'none',halo:'soft'});
-assert.equal(normalizeCube({trail:'line',halo:'pulse'},{poder_cometa:true,tiempo:true}).trail,'line');assert(CUBE_TRAILS.every(t=>cosmeticUnlocked(t,{mundo:1,poder_cometa:1,bandada1:1})));assert(CUBE_HALOS.every(t=>cosmeticUnlocked(t,{quietud5:1,tiempo:1})));
+assert.deepEqual(normalizeCube({trail:'line',halo:'pulse'},{}),{version:2,color:'#ffffff',material:'plain',form:'square',trail:'none',halo:'soft',aura:'none',voice:'natural'});
+assert.equal(normalizeCube({trail:'line',halo:'pulse'},{poder_cometa:true,tiempo:true}).trail,'line');assert(CUBE_TRAILS.slice(0,4).every(t=>cosmeticUnlocked(t,{mundo:1,poder_cometa:1,bandada1:1})));assert(CUBE_HALOS.slice(0,3).every(t=>cosmeticUnlocked(t,{quietud5:1,tiempo:1})));
 console.log('PASS persistent pet validation, contextual species, bounded phrases/places, rare natural-box births, earned growth and cube unlocks');
+
+assert(CUBE_TRAILS.slice(4).every(t=>!cosmeticUnlocked(t,{mundo:1,poder_cometa:1,bandada1:1})));assert(CUBE_HALOS.slice(3).every(t=>!cosmeticUnlocked(t,{quietud5:1,tiempo:1})));

@@ -1,0 +1,24 @@
+import {LIVING_CATALOG} from './living-catalog.js';
+import {POWER_IDS,POWERS} from './expansion-music.js';
+export const HOUSE_ROOMS=Object.freeze([{id:'sala',name:'Sala',days:0,cut:8000,echo:.03},{id:'jardin',name:'Jardín',days:3,cut:4500,echo:.02},{id:'azotea',name:'Azotea',days:7,cut:6500,echo:.08},{id:'sotano',name:'Sótano',days:14,cut:2400,echo:.05}]);
+const biomes=['llanura','bosque','lago','dunas','cristales','jardin','ruinas','cueva','tormenta','faros','vacio'];
+export const HOUSE_OBJECTS=Object.freeze([
+ {id:'obj:origen',name:'Pulso de casa',source:'cube:color:ffffff',instrument:'sub',role:'bajo',shape:'square'},
+ ...biomes.map((id,i)=>({id:'obj:biome:'+id,name:'Recuerdo · '+id,source:'biome:'+id,achievement:['mundo','arbol1','loto1','cactus1','cristal1','flor1','pilar1','bajo1','percusion4','faro','cielo1'][i],instrument:['rhodes','wood','reed','shaker','metalkeys','kalimba','tom','hollow','rim','sub','strings'][i],role:['lead','perc','lead','perc','lead','lead','perc','lead','perc','bajo','acorde'][i],shape:['branch','pod','wave'][i%3]})),
+ ...LIVING_CATALOG.slice(0,22).map((p,i)=>({id:'obj:life:'+p.id,name:p.name,source:'lineage:'+p.id,role:p.role,instrument:p.role==='bajo'?['sub','rubber','machine'][i%3]:p.role==='perc'?['tom','wood','rim'][i%3]:['reed','rhodes','bowed','hollow'][i%4],shape:p.shape})),
+ ...POWER_IDS.map((id,i)=>({id:'obj:box:'+id,name:POWERS[id].name,source:'box:'+id,role:i%2?'perc':'bajo',instrument:i%2?'conga':'fm',shape:'box'}))
+].map(Object.freeze));
+const finite=(v,fallback=0)=>Number.isFinite(v)?v:fallback;
+export function normalizeHouse(raw,days=0){const objects=[],seen=new Set();for(const p of Array.isArray(raw?.objects)?raw.objects:[]){if(!p||!HOUSE_OBJECTS.some(d=>d.id===p.kind)||seen.has(p.kind)||!HOUSE_ROOMS.some(r=>r.id===p.room))continue;seen.add(p.kind);objects.push({kind:p.kind,room:p.room,x:Math.max(0,Math.min(1,finite(p.x,.5))),y:Math.max(0,Math.min(1,finite(p.y,.5)))});}
+ const unlocked=[...new Set([...(Array.isArray(raw?.unlocked)?raw.unlocked.filter(id=>HOUSE_ROOMS.some(r=>r.id===id)):[]),...HOUSE_ROOMS.filter(r=>r.days<=days).map(r=>r.id)])];
+ return {version:1,objects,unlocked,visited:raw?.visited===true,playerRoom:HOUSE_ROOMS.some(r=>r.id===raw?.playerRoom)?raw.playerRoom:'sala',x:Math.max(0,Math.min(1,finite(raw?.x,.5))),y:Math.max(0,Math.min(1,finite(raw?.y,.5))),knownVisitors:raw?.knownVisitors&&typeof raw.knownVisitors==='object'?{...raw.knownVisitors}:{}};}
+export const houseOwns=(definition,state)=>!!state.rewards?.items?.[definition.id]||!!state.rewards?.items?.[definition.source]||!!(definition.achievement&&state.ach?.[definition.achievement]);
+export const houseStep=o=>Math.min(15,Math.floor(o.x*16));
+export const houseRegister=o=>o.room==='sotano'?36:36+Math.min(2,Math.floor((1-o.y)*3))*12;
+export const houseDegree=o=>Math.min(6,Math.floor((1-o.y)*7));
+export const houseGain=(o,player)=>Math.max(.12,Math.min(.65,.65-Math.hypot(o.x-player.x,o.y-player.y)*.4));
+export function placeHouseObject(house,kind,room,x,y){if(!house.unlocked.includes(room)||!HOUSE_OBJECTS.some(p=>p.id===kind))return false;const p={kind,room,x:Math.max(0,Math.min(1,x)),y:Math.max(0,Math.min(1,y))};const existing=house.objects.findIndex(p=>p.kind===kind);if(existing>=0)house.objects[existing]=p;else if(house.objects.length<HOUSE_OBJECTS.length)house.objects.push(p);else return false;return true;}
+export function encodeHouse(house){const safe=normalizeHouse(house);return 'WH1-'+btoa(JSON.stringify({v:1,r:safe.unlocked,o:safe.objects.map(p=>[p.kind,p.room,Math.round(p.x*1000),Math.round(p.y*1000)])})).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+export function decodeHouse(text){if(typeof text!=='string'||!text.startsWith('WH1-')||text.length>16000)throw Error('Código de casa inválido.');let p;try{p=JSON.parse(atob(text.slice(4).replace(/-/g,'+').replace(/_/g,'/')));}catch(_){throw Error('Código de casa dañado.');}if(p?.v!==1||!Array.isArray(p.o)||p.o.length>40||p.o.some(row=>!Array.isArray(row)||row.length!==4||!Number.isFinite(row[2])||!Number.isFinite(row[3])))throw Error('Casa incompatible.');return normalizeHouse({unlocked:p.r,objects:p.o.map(([kind,room,x,y])=>({kind,room,x:x/1000,y:y/1000}))});}
+
+export function houseSelection(objects,step,bar){const matches=objects.filter(p=>houseStep(p)===step),offset=(bar*4)%Math.max(1,matches.length);return matches.slice(offset,offset+4).concat(matches.slice(0,Math.max(0,offset+4-matches.length))).slice(0,Math.min(4,matches.length));}

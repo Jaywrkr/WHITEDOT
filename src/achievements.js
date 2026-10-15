@@ -1,0 +1,5 @@
+import {newAchievementRules,achievementMeta,achievementProgress} from './achievements-model.js';
+export function initialize(runtime){const rules=newAchievementRules(runtime.ACH);for(const p of rules)runtime.ACH.push([p.id,p.name,p.description,p.hidden?1:0]);let clock=0;if(runtime.S.achievementVersion!==2){for(const p of rules)if(!runtime.S.ach[p.id]&&achievementProgress(p,runtime.S).ratio===1)runtime.S.ach[p.id]=runtime.S.todayKey||new Date().toISOString().slice(0,10);runtime.S.achievementVersion=2;}
+ function check(dt=2){clock+=dt;if(clock<2||document.hidden||document.querySelector('.modal:not([hidden])'))return;clock=0;for(const p of rules)if(!runtime.S.ach[p.id]&&achievementProgress(p,runtime.S).ratio===1){runtime.unlock(p.id);break;}}
+ Object.defineProperties(runtime,{achievementRetired:{get:()=>id=>id==='dj'},achievementRules:{get:()=>rules},achievementMeta:{get:()=>a=>achievementMeta(a,rules)},achievementProgress:{get:()=>p=>achievementProgress(p,runtime.S)},achievementsTick:{get:()=>check}});
+}
