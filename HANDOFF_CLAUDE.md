@@ -1,3 +1,13 @@
+# Experiencia · fase 2
+
+Rama `feat/experiencia-02-bienvenida`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Bienvenida gráfica Explora/Escucha/Crea y símbolos locales del primer recorrido. Se conservan los seis gestos reales, omitir/repetir y progreso; controles iniciales blancos y silenciosos.
+
+Validación: Auditoría y suites Node; first_level_smoke y ui_silence_smoke (resultados en registro de fase). Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 1
 
 Rama `feat/experiencia-01-base`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.

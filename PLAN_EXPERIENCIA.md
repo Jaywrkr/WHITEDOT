@@ -5,7 +5,7 @@ Jay autorizó las catorce fases. Una rama por fase, encadenadas. Codex commit/pu
 | Fase | Alcance | Rama | Estado |
 |---|---|---|---|
 | 1 | Auditoría y experiencia coherente | `feat/experiencia-01-base` | Implementada; validación registrada abajo |
-| 2 | Primer encuentro jugable | `feat/experiencia-02-bienvenida` | Pendiente |
+| 2 | Primer encuentro jugable | `feat/experiencia-02-bienvenida` | Implementada; validación registrada abajo |
 | 3 | Camino, entrada y Voz | `feat/experiencia-03-camino` | Pendiente |
 | 4 | Llegadas y favoritos claros | `feat/experiencia-04-viajes` | Pendiente |
 | 5 | Casa viva y edición táctil | `feat/experiencia-05-casa` | Pendiente |
@@ -48,3 +48,9 @@ Jay autorizó las catorce fases. Una rama por fase, encadenadas. Codex commit/pu
 Auditoría inicial y plan de catorce ramas; mapa de fricciones y criterios verificables. Main observado e351584 ya integra L7. Sin cambios de audio ni guardados.
 
 Validación: npm run audit:release aprobado sin advertencias; npm test aprobado, 104 suites; navegador/audio no requeridos para documentación. Aceptación física y CI del PR, separados.
+
+## Entrega 2 · Primer encuentro jugable
+
+Bienvenida gráfica Explora/Escucha/Crea y símbolos locales del primer recorrido. Se conservan los seis gestos reales, omitir/repetir y progreso; controles iniciales blancos y silenciosos.
+
+Validación: Auditoría y suites Node; first_level_smoke y ui_silence_smoke (resultados en registro de fase). Aceptación física y CI del PR, separados.
