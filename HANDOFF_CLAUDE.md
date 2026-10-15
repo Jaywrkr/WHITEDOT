@@ -1,4 +1,20 @@
-# Handoff vigente · fase musical M1
+# Handoff vigente · cierre F1 · identidades completas
+
+15 de octubre de 2026. `feat/cierre-f1-identidades` parte de `main 6702093` (M1 integrada). Prioridad: [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md), diez fases consolidadas; solo F1 está implementada aquí. Jay crea PR/merge. La próxima rama parte de esta si aún no está integrada; comprobar remoto/ascendencia. No incorporar sin validar los trabajos locales de cubo/menú/Bitácora/logros/casa.
+
+- `world-families.js`: ocho gramáticas compatibles con bioma y afinidad musical, variantes independientes por región. `region.worldFamily` y `recipe.worldFamily`, sin cambiar generador, direcciones ni esquema de partida. Campos espaciales proyectan habitantes comunes; terreno, posiciones brutas y raros/arquitectura conservados. Golden histórico mantiene su hash excluyendo solo la propiedad aditiva `worldFamily`.
+- `world-family-art.js`, `render.js`: contornos pequeños sobre negro, coordenadas del mundo, opacidad por distancia y presencia continua según detalle. Movimiento reducido; solo superficie. Sin panel nuevo ni sonido de UI.
+- `living-populations.js`, `blobs.js`: dominantes compatibles, proporción flora/fauna y nichos compartidos. Proyección de comunes sin trasladar raros. `living.js`/`living-mind.js`: material/color del trazo y velocidad de fauna. Sin anatomías nuevas ni simulación ecológica completa.
+- `musical-recipes.js`/`synth-colors.js`: timbre compatible, articulación, aire, brillo y preferencia de filtro ligados a familia/material. Conserva batería, tempo, escala, identidad de género, presupuestos y protección del bajo. No es aún síntesis modular ni híbridos libres.
+- `practice-travel.js`: contraste de familia; cubo dentro de la región elegida al colocarlo junto al habitante. Regreso, guardado y bloqueos conservados. Llegada, semillas y Bitácora muestran identidad de paisaje.
+- Laboratorio: ocho destinos reales, habitantes naturales; 139 entradas/19 grupos. Notas/IDs antiguos conservados. Las entradas de paisaje no fuerzan instrumento ni figura.
+- SW nuevo, dos módulos añadidos una vez. Pruebas Node, navegador de ocho lugares/regreso, audio de paisajes/criaturas. CI completo suma el programa de audio (13 programas, tres grupos). `tests/audio_mix.mjs` acepta destino real sin sustituir su ADN; modo anterior conservado.
+
+Auditoría limpia, 81 suites Node, 14 recorridos afectados y 48 renders en dos programas, pico 0.909774/cero muestras calientes. [Evidencia F1](scripts/f1-validation.json). CI completo sigue requerido antes de merge. Escucha artística y rendimiento físico pendientes. Próxima fase: F2 formas; F3 ecología; F4 síntesis. Casa desde arriba ya decidida, recuperar en F9. No iniciar otra fase sin instrucción de Jay.
+
+## Entrega anterior · M1 integrada
+
+Lo siguiente conserva el alcance y evidencias anteriores. Prevalecen la rama y orden de cierre del encabezado.
 
 14 de octubre de 2026. Rama `feat/m1-musical-identity` desde `main 08d1833`, que ya integró `feat/geist-and-phase-plan` mediante los PR #101/#102. Jay autoriza M1 y Geist Mono en absolutamente todo. Commit/push en rama; Jay crea el PR y merge. No se publica main desde esta fase.
 

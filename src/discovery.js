@@ -7,7 +7,7 @@ export function initialize(runtime) {
   function showRegion(d,first){
     const el=document.getElementById("zone");
     const se=!d.sea&&d.continent?runtime.seasonOf?.(d.continent.id):null;document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+" · "+d.bpm+" BPM"+(se?" · "+se.name:"");
-    document.getElementById("zName").textContent=d.ecology?.name||d.name;
+    document.getElementById("zName").textContent=d.worldFamily?.name||d.ecology?.name||d.name;
     document.getElementById("zDo").textContent=(d.sea?"Mar de silencio":d.continent?d.continent.name:"")+(d.sea||d.continent?" · ":"")+gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
     el.classList.add("on");clearTimeout(zoneT);zoneT=setTimeout(()=>el.classList.remove("on"),first?3200:2200);
   }

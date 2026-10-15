@@ -1,0 +1,158 @@
+{
+  "validatedAt": "2026-10-15T00:52:49.192484+00:00",
+  "branch": "feat/cierre-f1-identidades",
+  "baseMain": "6702093",
+  "sourceFingerprint": "dc0d302588d197549ac13deaa0fc00fec65257a451354254b4953d2c1ef62667",
+  "fingerprintScope": "Sorted relative src/*.js, styles/*.css, sw.js and index.html: path, NUL, bytes, NUL.",
+  "checks": {
+    "releaseAudit": {
+      "version": "1.1.0",
+      "sourceModules": 137,
+      "htmlIDs": 274,
+      "staticImports": 341,
+      "shellAssets": 157,
+      "errors": [],
+      "warnings": [],
+      "notes": [
+        "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+        "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+      ]
+    },
+    "node": {
+      "command": "npm test",
+      "suites": 81,
+      "exitCode": 0
+    },
+    "browser": {
+      "scope": "14 affected flows; not the full browser suite",
+      "flows": [
+        {
+          "file": "world_family_smoke.py",
+          "exitCode": 0,
+          "evidence": "scripts/f1-world-family-browser-validation.json"
+        },
+        {
+          "file": "world_visibility_smoke.py",
+          "exitCode": 0,
+          "seconds": 23.9,
+          "output": "PASS visual depth 390x844: {\"crossings\": 5, \"maxJump\": 0.554250544453339, \"cache\": 48, \"quality\": {\"quality\": 1, \"detailQuality\": 1, \"hardware\": 1, \"averageMs\": 16.666207457054764, \"frames\": 332, \"pending\": 0, \"footprints\": 80}, \"blackEdge\": 0, \"near\": 1, \"shell\": 86}\nPASS visual depth 844x390: {\"crossings\": 5, \"maxJump\": 0.9902290586408071, \"cache\": 48, \"quality\": {\"quality\": 1, \"detailQuality\": 1, \"hardware\": 1, \"averageMs\": 16.67856628729744, \"frames\": 334, \"pending\": 0, \"footprints\": 80}, \"blackEdge\": 0, \"near\": 1, \"shell\": 86}\nPASS visual depth 1280x800: {\"crossings\": 5, \"maxJump\": 1.3726078977557563, \"cache\": 48, \"quality\": {\"quality\": 1, \"detailQuality\": 1, \"hardware\": 1, \"averageMs\": 22.297028603138642, \"frames\": 334, \"pending\": 0, \"footprints\": 80}, \"blackEdge\": 0, \"near\": 1, \"shell\": 88}\n"
+        },
+        {
+          "file": "practice_travel_smoke.py",
+          "exitCode": 0,
+          "seconds": 7.6,
+          "output": "PASS three phone sizes: one-touch contrast, visible 44px jump, silent UI, saved progress, exact reloaded location and menu return\n"
+        },
+        {
+          "file": "lab_smoke.py",
+          "exitCode": 0,
+          "seconds": 48.87,
+          "output": "lab: 139 entries located, solo, notes/report persisted, exit to own save PASS\n"
+        },
+        {
+          "file": "music_identity_smoke.py",
+          "exitCode": 0,
+          "seconds": 38.81,
+          "output": "PASS all 16 real musical destinations, live individual profile, mobile UI and Canvas/export Geist Mono\n"
+        },
+        {
+          "file": "music_response_smoke.py",
+          "exitCode": 0,
+          "seconds": 2.26,
+          "output": "PASS all nine Geist weights, mobile layout, five colored musical roles and native pad/plucked/strings/bowed routing\n"
+        },
+        {
+          "file": "ui_silence_smoke.py",
+          "exitCode": 0,
+          "seconds": 10.89,
+          "output": "mobile: UI keyboard does not move or pulse, settings do not pin notes, entry has no jingle and canvas still plays PASS\ndesktop: UI keyboard does not move or pulse, settings do not pin notes, entry has no jingle and canvas still plays PASS\n"
+        },
+        {
+          "file": "ecology_smoke.py",
+          "exitCode": 0,
+          "seconds": 17.2,
+          "output": "PASS 390x844: live habitat, gestures/cancel, groove roles, pause/mute, cultivation, journal, favorite/backup isolation and original-world comparison\nPASS 844x390: live habitat, gestures/cancel, groove roles, pause/mute, cultivation, journal, favorite/backup isolation and original-world comparison\nPASS 1280x800: live habitat, gestures/cancel, groove roles, pause/mute, cultivation, journal, favorite/backup isolation and original-world comparison\n"
+        },
+        {
+          "file": "living_smoke.py",
+          "exitCode": 0,
+          "seconds": 10.54,
+          "output": "PASS 28 native living contacts, real musical replies, scoped discoveries, modal pause and no browser errors\n"
+        },
+        {
+          "file": "seeds_smoke.py",
+          "exitCode": 0,
+          "seconds": 26.83,
+          "output": "mobile: prototype seed switching, whole-world variation, center, preview save isolation and return to main save PASS\ndesktop: prototype seed switching, whole-world variation, center, preview save isolation and return to main save PASS\n"
+        },
+        {
+          "file": "world-return_smoke.py",
+          "exitCode": 0,
+          "seconds": 2.64,
+          "output": "PASS foreign seed/version/layer return code restores exact point and preserves the departed save\n"
+        },
+        {
+          "file": "interface_smoke.py",
+          "exitCode": 0,
+          "seconds": 27.27,
+          "output": "PASS UI 320×568: eight real sheets, account entry hidden without server, touch targets, no overflow, summary/focus return, silent settings and keyboard effects\nPASS UI 360×640: eight real sheets, account entry hidden without server, touch targets, no overflow, summary/focus return, silent settings and keyboard effects\nPASS UI 390×844: eight real sheets, account entry hidden without server, touch targets, no overflow, summary/focus return, silent settings and keyboard effects\nPASS UI 844×390: eight real sheets, account entry hidden without server, touch targets, no overflow, summary/focus return, silent settings and keyboard effects\nPASS UI 1280×800: eight real sheets, account entry hidden without server, touch targets, no overflow, summary/focus return, silent settings and keyboard effects\n"
+        },
+        {
+          "file": "pwa_updates_smoke.py",
+          "exitCode": 0,
+          "seconds": 6.48,
+          "output": "PASS real PWA: waiting upgrade A→B, coherent shell/assets, explicit activation, 157 bounded cached assets, query previews offline and local fonts\n"
+        },
+        {
+          "file": "offline_smoke.py",
+          "exitCode": 0,
+          "seconds": 1.86,
+          "output": "PASS offline reload with all 137 modules cached and no HTML fallback for missing JavaScript\n"
+        }
+      ]
+    },
+    "audio": {
+      "scope": "Two affected audio programs; not the full audio suite",
+      "renders": 48,
+      "maxPeak": 0.9097737669944763,
+      "hotSamples": 0,
+      "sampleRates": [
+        44100,
+        48000
+      ],
+      "commands": [
+        "python3 tests/world_family_mix.py",
+        "WHITEDOT_AUDIO_REPORT=scripts/f1-identity-audio-validation.json python3 tests/music_identity_mix.py"
+      ],
+      "evidence": [
+        "scripts/f1-world-family-audio-validation.json",
+        "scripts/f1-identity-audio-validation.json"
+      ]
+    },
+    "universe": [
+      {
+        "generation": 1,
+        "candidates": 4000,
+        "seeds": 2,
+        "genres": 52,
+        "boundedCaches": true,
+        "note": "Structural sampling, not a count of songs or perceptually distinct worlds."
+      },
+      {
+        "generation": 2,
+        "candidates": 4000,
+        "seeds": 2,
+        "genres": 52,
+        "boundedCaches": true,
+        "note": "Structural sampling, not a count of songs or perceptually distinct worlds."
+      }
+    ]
+  },
+  "pending": [
+    "Full browser/audio CI must pass before merge",
+    "Artistic listening and frame rate on physical phones",
+    "F2-F10: see PLAN_CIERRE_2.0.md"
+  ],
+  "compatibility": "No save schema/version or raw placement change. Historical golden hash is unchanged after excluding only additive worldFamily metadata. Existing rare species/IDs/coordinates include M1 added specimens. Common visibility can change.",
+  "audioRegressionNote": "Final rare-preservation change only restores population identity. The rendered destinations, DSP, palettes and forced creature sources are unchanged; Node invariants cover preservation."
+}

@@ -4,6 +4,8 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 
 ## Leer primero
 
+**Prioridad vigente:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida el cierre por decisión de Jay. No confundir su F1 con la fase visual 1 histórica ni con M1. Conservar estados y trabajos locales de PLAN_2.0; solo F1 del cierre está autorizada en esta entrega.
+
 1. [PLAN_2.0.md](PLAN_2.0.md): **trabajo actual**. Fases, orden, ramas, criterios de "listo" y decisiones pendientes.
 2. [README.md](README.md): cómo correr, verificar y publicar.
 3. [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md): mapa técnico de módulos y dirección creativa que debe conservarse.
@@ -13,7 +15,7 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 
 ## Flujo de ramas (obligatorio)
 
-- Una rama por fase de `PLAN_2.0.md` (`v2/f0-coleccion`, `v2/f1-universo-visual`, …), desde `main` actualizado o desde la fase de la que dependa.
+- Una rama por fase del plan vigente; para el cierre, nombres de `PLAN_CIERRE_2.0.md`, desde `main` actualizado o desde la fase de la que dependa.
 - Commit y push de la rama. **Jay crea el PR y hace el merge.** No hacer push a `main` ni merges salvo que Jay lo pida explícitamente en ese momento.
 - Mensajes de commit en inglés, en imperativo, explicando el porqué. Sin identificadores de modelos.
 - Al terminar una fase: actualizar `CAMBIOS.md`, la tabla de estado de `PLAN_2.0.md` y, si cambia el mapa técnico, `HANDOFF_CLAUDE.md`.

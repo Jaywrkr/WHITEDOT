@@ -1,3 +1,16 @@
+# Cierre F1 · identidades completas de mundos
+
+Rama `feat/cierre-f1-identidades`, desde `main 6702093` (M1 integrada). [Plan consolidado](PLAN_CIERRE_2.0.md): diez fases, una rama por fase. Solo F1 implementada aquí; Jay crea PR/merge.
+
+- Ocho familias con gramáticas de cauces, raíces, terrazas, órbitas, arrecifes, bóvedas, estratos e islas. Semillas propias versionadas y afinidades bioma/género. Contornos pequeños, negro, opacidad gradual, detalle adaptativo y movimiento reducido. Sin controles permanentes nuevos.
+- Poblaciones comunes y nichos ligados al paisaje; dominantes compatibles, proporción flora/fauna, velocidad de fauna, material/color local. Anatomía procedural y ecosistemas completos pendientes.
+- Paleta instrumental, filtro por material, articulación, brillo y aire del arreglo ligados a familia. Batería, tempo, escala y 52 géneros conservados; presupuestos de mezcla/bajo protegido. No es todavía el motor modular ni híbridos libres.
+- Saltar busca contraste de paisaje y corrige colocación junto al borde regional. Nombres en llegada, Bitácora y semillas. Laboratorio suma ocho lugares reales con habitantes naturales: 139 entradas/19 grupos; notas anteriores intactas.
+- Guardados sin cambio de esquema ni borrado. Coordenadas/generadores antiguos conservados. La proyección puede cambiar presencia ordinaria, conserva arquitectura/raros. Golden mantiene el hash histórico excluyendo solo `worldFamily` aditivo.
+- SW actualizado, dos módulos únicos. CI incluye nuevo recorrido y audio de familias; 13 programas, tres grupos sin omisiones. Plan, README, AGENTS, handoff y guía actualizados.
+
+Auditoría sin errores/avisos, 81 suites Node, 14 recorridos de navegador afectados y 48 renders de audio en dos programas (44,1/48 kHz). Pico máximo 0.909774 y cero muestras calientes. Muestreo de 8.000 regiones entre generadores 1/2 conserva 52 géneros y cachés acotadas; no mide canciones distintas. [Evidencia de entrega](scripts/f1-validation.json). Raros anteriores, incluidos los añadidos en M1, conservan también especie/ID. Escucha artística y rendimiento físico pendientes. Suites completas de navegador/audio en CI/preintegración según AGENTS.
+
 # Fase musical M1 · identidad, conducta y Geist completo
 
 Rama `feat/m1-musical-identity`, desde `main 08d1833`. Jay autorizó esta fase y sustituir también los títulos por Geist Mono.

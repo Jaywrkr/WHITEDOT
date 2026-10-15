@@ -1,5 +1,6 @@
 import {LIVING_CATALOG} from './living-catalog.js';
 import {MUSIC_IDENTITIES} from './musical-recipes.js';
+import {WORLD_FAMILIES} from './world-families.js';
 import {SYNTH_PROGRAMS} from './synth-colors.js';
 import {RHYTHM_ELEMENTS} from './percussion-model.js';
 import {CULTURES} from './culture-model.js';
@@ -54,7 +55,9 @@ export const LAB_ELEMENTS=[...BASE,...life,...families,...toys,...phenomena,...t
  ...MUSIC_IDENTITIES.map(r=>({id:'music:'+r.id,group:'Música',name:r.name,find:{type:'music',identity:r.id},
   try:['Escucha dos minutos; deja que la frase respire.','Compara bajo, groove, instrumentos y silencios.','Camina para tocar; vuelve aquí para comparar.']})),
  ...[['analogpad','Pad analógico'],['phasekeys','Teclas de fase'],['fmglass','Cristal FM'],['choir','Coro sintético'],['resonantpluck','Cuerda resonante'],['velvetbass','Bajo de terciopelo'],['granularair','Aire granular'],['orbitorgan','Órgano orbital']].map(([instrument,name])=>({id:'synth:'+instrument,group:'Síntesis',name,find:{type:'synth',instrument},try:['Toca la rama con el cubo; escucha su timbre.','Prueba Solo para comparar sin la música del lugar.']})),
- ...SYNTH_PROGRAMS.map(p=>({id:'filter:'+p.id,group:'Filtros',name:p.name+(p.slope?' · '+p.slope+' dB':p.type==='bandpass'?' · Banda':' · Muesca'),find:{type:'filter',program:p.id},try:['Toca la rama; escucha cómo abre o cierra.','Mira los aros del filtro junto al elemento.','Compara Solo y mezcla.']}))];
+ ...SYNTH_PROGRAMS.map(p=>({id:'filter:'+p.id,group:'Filtros',name:p.name+(p.slope?' · '+p.slope+' dB':p.type==='bandpass'?' · Banda':' · Muesca'),find:{type:'filter',program:p.id},try:['Toca la rama; escucha cómo abre o cierra.','Mira los aros del filtro junto al elemento.','Compara Solo y mezcla.']})),
+ ...WORLD_FAMILIES.map(f=>({id:'landscape:'+f.id,group:'Paisajes',name:f.name,find:{type:'landscape',family:f.id},
+  try:['Camina; compara formas, espacios, habitantes y música.','Toca una criatura; escucha su material y filtro.','Este lugar existe fuera del laboratorio.']}))];
 export const LAB_GROUPS=[...new Set(LAB_ELEMENTS.map(e=>e.group))];
 export const labElement=id=>LAB_ELEMENTS.find(e=>e.id===id)||null;
 export function labStep(id,delta){const i=Math.max(0,LAB_ELEMENTS.findIndex(e=>e.id===id));return LAB_ELEMENTS[(i+delta+LAB_ELEMENTS.length)%LAB_ELEMENTS.length];}

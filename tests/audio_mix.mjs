@@ -1,5 +1,5 @@
 // Real Web Audio render of the scheduler, with a virtual clock and deterministic noise.
-export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false,generation=1,ecology=false,testInstrument=null,scene=null,celebration=false,identityKey='0,0'}={}) {
+export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false,generation=1,ecology=false,testInstrument=null,scene=null,celebration=false,identityKey='0,0',worldPoint=null}={}) {
  const modules=await Promise.all(['data','progress','world','audio','voices','instruments','patches','effects','spatial','influence','blobs','living-composition'].map(id=>import(`../src/${id}.js`)));
  const r=Object.create(null),duration=10,context=new OfflineAudioContext(2,duration*sampleRate,sampleRate);
  const original={AudioContext:window.AudioContext,setInterval:window.setInterval,setTimeout:window.setTimeout,random:Math.random};
@@ -16,9 +16,10 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   for(const m of modules.slice(0,2))m.initialize(r);r.S.worldSeed=worldSeed;modules[2].initialize(r);
   Math.random=r.rng(r.seedOf('mix-render:v1'));
   for(const m of modules.slice(3))m.initialize(r);
-  const origin=r.regionOfPos(900,900),G=r.GEN[genre];
-  r.S.mode='world';r.S.softMusic=soft;r.S.sound=true;r.S.wx=900;r.S.wy=900;
-  r.MU.dnaT={...origin,key:identityKey,genre,bpm:(G.bpm[0]+G.bpm[1])/2,track:{...origin.track,bassI:G.bassI,hookI:G.hookP[0]}};
+  const origin=r.regionOfPos(worldPoint?.x??900,worldPoint?.y??900),G=r.GEN[genre];
+  if(worldPoint&&origin.genre!==genre)throw Error('Audio destination does not match its native genre');
+  r.S.mode='world';r.S.softMusic=soft;r.S.sound=true;r.S.wx=worldPoint?.x??900;r.S.wy=worldPoint?.y??900;
+  r.MU.dnaT=worldPoint?{...origin}:{...origin,key:identityKey,genre,bpm:(G.bpm[0]+G.bpm[1])/2,track:{...origin.track,bassI:G.bassI,hookI:G.hookP[0]}};
   r.MU.E=dense?.8:.45;r.MU.vit=1;r.MU.vari=2;r.audio();
   if(influenced){r.activeLayerRegion=()=>r.MU.dnaT;for(const k of ['bass','groove','melody'])r.driveInfluence(r.MU.dnaT,k,1,3);for(let i=0;i<100;i++)r.influenceTick(.05,false);}
   if(glass){
@@ -59,7 +60,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
    if(scene.startsWith('power:')){const m=await import('../src/cajas.js');m.initialize(r);r.givePower(scene.slice(6));r.MU.near=Array.from({length:8},(_,i)=>({x:r.S.wx+Math.cos(i)*70,y:r.S.wy+Math.sin(i)*70,snd:t=>r.playVoice('arbol',i,t,r.MU.dnaT,false,.4)}));}
    if(scene.startsWith('experimental:')){r.labMode=true;r.labExperimental={level:.8,mode:scene.slice(13)};const m=await import('../src/experimental.js');m.initialize(r);}
   }
-  const sources=Array.from({length:8},(_,i)=>({x:(trail?r.S.wx:900)+10*i,y:trail?r.S.wy:900,id:`mix:${i}`}));
+  const sources=Array.from({length:8},(_,i)=>({x:(trail||worldPoint?r.S.wx:900)+10*i,y:trail||worldPoint?r.S.wy:900,id:`mix:${i}`}));
   for(let tick=0;tick<duration/.025;tick++){
    clock=tick*.025;if(celebration&&tick===60){const {playBoxCelebration}=await import('../src/celebration-audio.js');r.celebrationAudioCue=n=>celebrationNotes.push(n);playBoxCelebration(r,Math.ceil((clock+.13)/(r.SIX*2))*(r.SIX*2),r.MU.dnaA||r.MU.dnaT);}if(scene?.startsWith('rhythm:')){const o=r.nearbyPercussion(1e6)[0];r.S.wx=o.x+(tick%120<90?0:-70);r.S.wy=o.y;}if(scene==='power:pincel')r.S.wx+=4;if(scene){r.bodyTick(.025);r.livingTick?.(.025);r.percussionTick?.(.025);if(scene?.startsWith('rhythm:'))r.influenceTick?.(.025,false);r.cajasTick?.(.025);r.cultureTick?.(.025);r.petTick?.(.025);if(scene==='power:cometa')r.body.speed=120;}if(testInstrument&&tick%8===0){const {compositionFrame}=await import('../src/composition.js');r.withInstrumentPatch('track',r.MU.dnaT,{instrument:testInstrument,role:'lead'},null,clock+.13,()=>r.playNewInstrument(testInstrument,60+(tick%3)*2,clock+.13,.035,compositionFrame(genre,Math.floor(tick/40),2)));instrumentNotes++;}if(trail)r.trailTick(.025,false);if(encounter)r.encounterTick(.025,false);schedule();
    if(ecology&&tick%16===0)sources.slice(0,4).forEach((source,i)=>{r.playVoice('ecology:'+['reed','pod','lichen','stone'][i]+':'+['bass','groove','space','groove'][i],i,clock+.13,r.MU.dnaT,false,.5,source,'player');ecologyNotes++;});
@@ -69,7 +70,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   let peak=0,sum=0,hot=0,n=0;
   for(const samples of data)for(let i=sampleRate;i<samples.length;i++){const value=samples[i];if(!Number.isFinite(value))throw Error('nonfinite rendered audio');peak=Math.max(peak,Math.abs(value));sum+=value*value;hot+=Math.abs(value)>.98;n++;}
   if(window.__mixProgress)await window.__mixProgress({genre,scene,identity:r.MU.radio?.identity?.id,dense,soft,peak});
-  return {identity:r.MU.radio?.identity?.id,deferredDisconnects,...(celebration?{celebrationNotes}:{}),scene,filterMotion:r.livingNear?.(1000)[0]?.filterMotion,instrumentHits,petNotes,percussionNotes,cultureHeard:Object.values(r.S.cultures?.sites||{}).some(e=>e.heard),testInstrument,instrumentNotes,genre,dense,soft,fx,influenced,worldSeed,generation,ecology,ecologyNotes,encounter,deep,installation,trail,glass,trailNotes,glassNotes,glassRoles:[...glassRoles],sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
+  return {identity:r.MU.radio?.identity?.id,worldFamily:r.MU.radio?.identity?.worldFamily,hookI:r.MU.radio?.hookI,brightness:r.MU.radio?.grammar?.brightness,deferredDisconnects,...(celebration?{celebrationNotes}:{}),scene,filterMotion:r.livingNear?.(1000)[0]?.filterMotion,instrumentHits,petNotes,percussionNotes,cultureHeard:Object.values(r.S.cultures?.sites||{}).some(e=>e.heard),testInstrument,instrumentNotes,genre,dense,soft,fx,influenced,worldSeed,generation,ecology,ecologyNotes,encounter,deep,installation,trail,glass,trailNotes,glassNotes,glassRoles:[...glassRoles],sampleRate,peak,rmsDb:20*Math.log10(Math.sqrt(sum/n)),hotFraction:hot/n};
  } finally {window.AudioContext=original.AudioContext;window.setInterval=original.setInterval;window.setTimeout=original.setTimeout;Math.random=original.random;history.replaceState(null,'',originalURL);}
 }
 

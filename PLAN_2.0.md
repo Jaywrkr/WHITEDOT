@@ -1,5 +1,12 @@
 # Plan WHITEDOT 2.0
 
+**Continuación acordada:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida las siguientes diez fases. No confundir F1 de cierre con la fase visual 1 histórica. Cubo/menú/Bitácora/logros/casa locales mantienen sus estados pendientes; se recuperarán en F9.
+
+| Fase de cierre | Rama | Estado |
+|---|---|---|
+| F1 · Identidades completas | `feat/cierre-f1-identidades` | Implementada y probada desde `main 6702093`; lista para PR; aceptación física pendiente |
+| F2–F10 | Ver plan consolidado | Pendientes |
+
 Aprobado por Jay el 14 de octubre de 2026. Punto de partida: `main` en **1.1.0** (`4ed00ce`), con CI en verde. La 2.0 se construye en ramas. Por excepción explícita de Jay, se integran en `main` las fases 0–2 y la reparación de Vercel; las siguientes conservan el flujo de PR y merge de Jay.
 
 **Hilo común:** encontrar cosas en el universo debe darte algo visible, que se celebre y que puedas usar. Por eso cubo, casa y logros comparten una base (fase 0) en vez de ser sistemas separados.
@@ -37,7 +44,7 @@ Reparación incluida: `fix/vercel-static-output` (`6feac66`) sirve la raíz del 
 
 Estado de las peticiones adicionales de Jay, sin eliminar fases ni progreso:
 
-1. **Saltar por el universo · implementado en M1.** Botón «Saltar» visible en Mundo y «Volver al salto» en menú. Selecciona candidatos con contraste y habitantes, conserva progreso/capa, guarda lugar previo y dirección WD1 para recarga. Silencioso; bloqueado durante grabación/escaneo. Pendiente de aceptación en teléfono físico y de integrar mediante PR de Jay.
+1. **Saltar por el universo · integrado con M1 en main.** Botón «Saltar» visible en Mundo y «Volver al salto» en menú. Selecciona candidatos con contraste y habitantes, conserva progreso/capa, guarda lugar previo y dirección WD1 para recarga. Silencioso; bloqueado durante grabación/escaneo. Aceptación física pendiente. F1 de cierre añade contraste entre paisajes y protege los bordes regionales.
 2. **Toques que se entiendan.** Revisar qué recibe cada clic/tap: mostrar una respuesta local inmediata del objeto y un efecto musical identificable, a tempo. Cambiar movimiento, pulso o textura según especie y gesto; alternar graves, medios, percusión y melodía según ambiente. No convertir menús ni tarjetas en instrumentos. Integrar y probar en fase 8, con objetivos táctiles adecuados para móvil.
 3. **Percusión natural con diversidad real.** Ya existen nueve familias en `src/percussion-model.js` y `src/percussion.js`; su presencia actual no garantiza que se perciban durante la exploración. Revisar distribución, gestos, alcance, contraste y señales antes de añadir más familias. Variar el rayo: articulación, registro, patrón y eco según clima/género, evitando que toda caja sea el mismo golpe. Explorar gotas sobre hojas, semillas que traquetean, cañas que golpean, piedras huecas, insectos y aleteos como funciones diferenciadas: bombo, rim, tom, shaker, clap y percusión suave. Cada golpe debe tener una señal visual pequeña en su fuente; distribuir apariciones con semillas independientes. Mantener pausas, presupuesto de voces y margen de mezcla. Integrar como trabajo musical de fase 8; comparar géneros y lluvia en teléfono.
 4. **Reconocer quién está tocando.** Todo elemento que modifique la música debe indicar cuándo actúa, qué cambió y cuánto dura, mediante animación o rastro local sincronizado. Distinguir escucha por cercanía, contacto, conexión y quietud. Mayor claridad no implica subir todos los volúmenes: contrastar timbre, ritmo y registro sin saturar. Integrar en fase 8; comprobar que las señales respetan fondo negro y espacio libre.
@@ -188,7 +195,7 @@ Las fases 0–2 y la reparación están en `main d16e695`. Confirmar el deploy e
 
 | Fase | Rama | Estado |
 |---|---|---|
-| M1 · Identidad musical y ADN individual | `feat/m1-musical-identity` | Implementada desde `main 08d1833`; pruebas aprobadas, escucha física pendiente |
+| M1 · Identidad musical y ADN individual | `feat/m1-musical-identity` | Integrada en `main 6702093`; pruebas aprobadas, escucha física pendiente |
 | M2–M6 · Mezclas, distribución, viajes, diversidad y juego | Por crear | Pendientes; no iniciadas |
 
 M1 es una fase musical nueva; no renumera la fase visual 1 integrada. [Plan y alcance](PLAN_MEZCLAS_MUSICALES.md). El criterio de escucha humana sigue pendiente hasta probar en teléfono. No iniciar las fases restantes sin la siguiente instrucción de Jay.

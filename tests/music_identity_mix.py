@@ -28,7 +28,7 @@ try:
   for row in rows:assert 0<row['peak']<.96 and row['hotFraction']==0 and -65<row['rmsDb']<-3,row
   assert len({row['identity'] for row in rows})==16
   report={'renders':len(rows),'maxPeak':max(row['peak'] for row in rows),'rows':rows}
-  (ROOT/'scripts/m1-identity-audio-validation.json').write_text(json.dumps(report,indent=2)+'\n')
+  Path(os.environ.get('WHITEDOT_AUDIO_REPORT',ROOT/'scripts/m1-identity-audio-validation.json')).write_text(json.dumps(report,indent=2)+'\n')
   print(f'PASS {len(rows)} native identity renders, all 16 recipes, dense/soft mixes, 44.1/48 kHz and peak {report["maxPeak"]:.6f}',flush=True)
   browser.close()
 finally:server.shutdown()

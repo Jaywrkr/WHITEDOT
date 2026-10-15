@@ -1,8 +1,22 @@
 # Probar el universo vivo
 
-La rama musical vigente es `feat/m1-musical-identity`; la entrega de diez fases anteriores está integrada y documentada en [ENTREGA_UNIVERSO_VIVO.md](docs/historial/ENTREGA_UNIVERSO_VIVO.md). No necesitas una cuenta ni un servidor para probar flora, fauna, música, construcciones y tarjetas.
+La rama vigente es `feat/cierre-f1-identidades`, desde `main 6702093` (M1 integrada). [Plan consolidado](PLAN_CIERRE_2.0.md). No necesitas cuenta ni servidor para probar el juego.
 
-- **Menú → Prototipo → Laboratorio:** 131 entradas y 18 grupos, incluidas diez familias de flora, diez de fauna, ocho construcciones, 16 destinos musicales, ocho nuevos instrumentos y 16 filtros. «Solo» permite comparar su cuerpo sonoro; volver a la mezcla prueba cómo encaja con el género. Las notas e informes se guardan por separado de tu partida habitual.
+## Comparar paisajes · fase 1 del cierre
+
+1. Abre el preview de esta rama en el teléfono. Entra al Mundo.
+2. Toca **Saltar** varias veces: busca contraste de paisaje/música con habitantes.
+3. Al llegar, mira el nombre y las formas del suelo. Compara cauces, raíces, terrazas, órbitas, arrecifes, bóvedas, estratos e islas. Son familias variables; una visita no muestra todas.
+4. Camina y toca con el cubo. Compara material, voces, brillo, aire y articulación; el ritmo del género se conserva. Permanece dos minutos para escuchar capítulos.
+5. Usa **Menú → Volver al salto** y recarga: vuelve al lugar sin perder hallazgos. Guarda favorito/código WD1 si te gusta.
+6. Para comparar sin buscarlos: **Menú → Prototipo → Laboratorio → Notas → Paisajes**. Ocho destinos reales con habitantes naturales. No son escenas exclusivas del laboratorio.
+7. Anota si reconoces el paisaje sin leer, si cambia su carácter sonoro, si mantiene espacio negro y si caminar/tocar resulta fluido. Escucha con altavoz y audífonos, a volumen parecido entre lugares.
+
+No dar por terminado el proyecto por esta fase: anatomías nuevas, síntesis modular, mezclas y respuesta más fuerte de todos los elementos tienen fases propias. Las mediciones automáticas no sustituyen esta escucha física.
+
+## Sistemas conservados
+
+- **Menú → Prototipo → Laboratorio:** 139 entradas y 19 grupos, con flora/fauna, construcciones, 16 destinos musicales, ocho instrumentos, 16 filtros y ocho paisajes. «Solo» compara la fuente; volver a mezcla prueba cómo encaja. Notas/informes separados de tu partida habitual.
 - **Menú → Explorar mundos:** semillas y cinco tamaños. Gran territorio tiene regiones de 50.400 por lado; Inmenso, de 100.800. Los mapas clásicos, amplios y vastos conservan su escala.
 - **Con el cubo:** pasar toca; quedarse escucha/presiona; rodear modula; caminar junto a una criatura permite observar su carácter. El escáner explica el gesto y el papel musical. El borrado de ecos sigue haciéndose tocando el eco; Fijar sonidos es opcional y empieza apagado.
 - **Construcciones:** el puente responde al recorrido de sus tres piedras de izquierda a derecha; en el observatorio rodea y permanece junto a la estrella; molinos y arboledas de espejos se despiertan al rodear; casas, catedrales y refugios con escucha cercana.

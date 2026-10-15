@@ -42,6 +42,7 @@ export function createRegionalRecipe(region,biome,seedOf,rng,catalog=createEleme
  return Object.freeze({version:RECIPE_VERSION,key:region.key,archetype,name:ARCHETYPES[archetype],biome,layer:region.key.startsWith('bajo:')?'bajo':region.key.startsWith('cielo:')?'cielo':'superficie',
   material,materialName:MATERIAL_NAMES[material],layout,activity:quiet?.3:.65+r()*.35,objectDensity:quiet?.25:.45+r()*1.05,
   elements:Object.freeze(elements.map(Object.freeze)),music:Object.freeze({genre:region.genre,family:familyOf(region.genre),bpm:region.bpm,scale:Object.freeze([...region.scale])}),
+  worldFamily:region.worldFamily||null,
   visual:Object.freeze({hue:region.hue,material,background:'#000',motion:archetype==='mechanical'?'precise':'breathing'}),
   budgets:Object.freeze({objects:quiet?8:40,ambientPerBar:1,activeVoices:4}),influences:Object.freeze([])});
 }

@@ -9,7 +9,8 @@ const make=(seed='',generation=1,layout='classic')=>{globalThis.location={search
 // Captured from phase 1, not from the new generator: recipes and real chunk positions must remain identical.
 const old=make(),regions=[[-20,10],[-3,-2],[0,0],[2,3],[9,-12],[18,17]].map(([x,y])=>old.regionOfPos((x+.5)*3600,(y+.5)*3600)),chunks=[[1,1],[-3,4],[39,-48]].map(([x,y])=>old.wchunk(x,y));
 old.ACH.push(['registered-later','Dynamic achievement','Discovery']);assert(old.ACH.some(a=>a[0]==='registered-later'),'achievement plugins must retain their shared mutable registry');assert(!old.ACH.some(a=>a[0]==='ecologyTouch'));
-assert.equal(createHash('sha256').update(JSON.stringify([regions,chunks])).digest('hex'),'81ae446e930a1dbd4bb2e35ae85d2d328335130fc200fadd0ddd561305ce33ce');
+// F1 adds presentation metadata; every pre-existing value/position still matches the golden.
+assert.equal(createHash('sha256').update(JSON.stringify([regions,chunks],(key,value)=>key==='worldFamily'?undefined:value)).digest('hex'),'81ae446e930a1dbd4bb2e35ae85d2d328335130fc200fadd0ddd561305ce33ce');
 assert(supportedWorld(worldIdentity('a','wide',2)));assert(!sameWorld(worldIdentity('a','wide',1),worldIdentity('a','wide',2)));assert(!supportedWorld({...worldIdentity('a','wide',2),layoutVersion:1}));
 assert.notEqual(previewKey('a','wide',1),previewKey('a','wide',2));
 assert.equal(Object.values(ECOLOGIES).flat().length,33);const live=make('humedal-01',2,'wide');assert.equal(live.REG*live.WCH,10800);assert.equal(make('humedal-01',1,'wide').REG*900,7200);

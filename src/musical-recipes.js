@@ -1,4 +1,5 @@
 import {musicalCharacter,hookInstruments,interactionInstruments,expressiveBassInstruments} from './musical-character.js';
+import {familyMusic} from './world-families.js';
 
 // Playback DNA only. Never draw from the placement RNG or mutate a region/save.
 export const MUSIC_IDENTITY_VERSION=1;
@@ -53,7 +54,7 @@ export function musicIdentity(region,seedOf,rng,genres={}){
  const allowed=new Set(interactionInstruments(region.genre,native,'lead'));
  const hooks=base.hooks.filter(id=>allowed.has(id));
  const bassPool=expressiveBassInstruments(region.genre,native);
- return Object.freeze({...base,version:MUSIC_IDENTITY_VERSION,genre:region.genre,
+ return Object.freeze(familyMusic({...base,version:MUSIC_IDENTITY_VERSION,genre:region.genre,
   hooks:Object.freeze(hooks.length?hooks:nativeHooks.slice()),bassI:bassPool[Math.floor(random()*bassPool.length)],
   // Fast/straight native traditions keep their grid; shuffle stays in its own traditions.
   swing:Math.min(.33,(native.sw||0)===0?0:(native.sw||0)*.8+base.swing*.2),
@@ -61,7 +62,7 @@ export function musicIdentity(region,seedOf,rng,genres={}){
   hookLimit:Math.min(base.hookLimit,Math.max(...profile.budget)),
   phraseBars:[4,4,6,8][Math.floor(random()*4)],brightness:Math.min(profile.ceiling,4200+base.tone*3300),
   drums:Object.freeze({nativeGenre:region.genre,accent:base.accent,steps:base.accents}),
- });
+ },region,[...allowed]));
 }
 
 export function identityGrammar(grammar,identity){

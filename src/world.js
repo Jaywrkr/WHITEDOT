@@ -11,6 +11,7 @@ import { attachPersonalities } from './personality.js';
 import { createPlaythings } from './playthings.js';
 import { createContinents, strangeness } from './continents.js';
 import { anomalyAt, applyAnomaly } from './wonders.js';
+import {createWorldFamily} from './world-families.js';
 
 // Generación procedural del camino, regiones y reliquias.
 export function initialize(runtime) {
@@ -96,6 +97,7 @@ export function initialize(runtime) {
     d.anomaly=anomalyAt(rx,ry,(a,b)=>continents.at(a,b).sea,runtime.seedOf,runtime.rng);
     if(d.anomaly)applyAnomaly(d,d.anomaly.type==='espejo'?regionAt(0,0):null);
     if(expanded){applyEcology(d,B.id,runtime.seedOf,runtime.rng,runtime.S.worldSeed);d.tuneCents=Math.max(-12,Math.min(12,d.tuneCents));}
+    d.worldFamily=createWorldFamily(d,B.id,runtime.seedOf,runtime.rng);
     d.recipe=recipeFor(d);
     rcache.set(key,d);return d;
   }
