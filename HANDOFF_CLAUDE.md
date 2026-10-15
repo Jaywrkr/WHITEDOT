@@ -1,3 +1,13 @@
+# Experiencia · fase 5
+
+Rama `feat/experiencia-05-casa`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
+
+Casa con colocación anticipada, selección y arrastre directo de objetos; señales locales cuando suenan. Conserva Taller y visitas; versiones futuras quedan protegidas contra edición.
+
+Validación: Auditoría/Node completos; house_v2_smoke y ui_silence_smoke; house_mix Web Audio. Sin aceptación física inventada.
+
+## Estado anterior
+
 # Experiencia · fase 4
 
 Rama `feat/experiencia-04-viajes`. [Plan vigente](PLAN_EXPERIENCIA.md). Continuar fases autorizadas sin confirmación; Jay hace PR/merge.
