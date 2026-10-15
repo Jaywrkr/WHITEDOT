@@ -21,7 +21,7 @@ export function behavior(o,dt,clock,d,player,neighbors=[]){
 export function initialize(runtime){
  function tick(o,dt,clock,d,neighbors){behavior(o,dt,clock,d,{x:runtime.S.wx,y:runtime.S.wy,speed:runtime.body?.speed||0},neighbors||runtime.livingNear(350));}
  function hear(kind,index,region,source,origin){if(origin!=='player')return;
-  for(const o of runtime.livingNear(240)){if(o.id===source?.id||!['moth','cactus','worm'].includes(o.kind))continue;o.stimulusAt=runtime.livingClock;o.phrase.push(((index%7)+7)%7);if(o.phrase.length>(o.mind?.memorySpan||6))o.phrase.shift();o.energy=Math.min(1,o.energy+.1);}
+  for(const o of runtime.livingNear(240)){if(o.id===source?.id||!['moth','cactus','worm'].includes(o.kind))continue;o.stimulusAt=runtime.livingClock;o.phrase.push(((index%7)+7)%7);if(o.phrase.length>(o.mind?.memorySpan||6))o.phrase.shift();o.energy=Math.min(1,o.energy+.1);runtime.rememberCreature?.(o,false);}
  }
  function link(o){if(!['vine','fungal-net'].includes(o.kind))return;const peer=runtime.livingNear(400).find(p=>p!==o&&p.group!=='architecture'&&Math.hypot(o.x-p.x,o.y-p.y)<180);if(!peer)return;o.links=[peer.id];peer.phrase=o.phrase.slice(-4);peer.energy=Math.max(peer.energy,.4);peer.lit=.4;}
  Object.defineProperties(runtime,{livingBehavior:{get:()=>tick},livingHear:{get:()=>hear},livingLink:{get:()=>link}});

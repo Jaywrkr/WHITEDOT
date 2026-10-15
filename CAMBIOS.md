@@ -1,3 +1,16 @@
+# Cierre F8 · Memoria de instrumentos y encuentros
+
+Rama `feat/cierre-f8-memoria`, hija de la fase anterior. Jay crea PR/merge.
+
+- memory-model.js/world-memory.js guardan modelos finitos de redes, partes del suelo resonante y respuestas aprendidas. Se reconstruyen al volver, recargar o regenerar caché; quitar un hilo también queda guardado. Los temporizadores, audio y simulación siguen vivos, sin congelar el lugar.
+- Hasta 128 instrumentos editados y 256 vínculos nuevos por partida. Al llegar al límite no se expulsan ediciones existentes; las entradas existentes siguen editables y se avisa. Datos de una versión futura se conservan sin modificarlos.
+- Las criaturas conservan frases y encuentros por individuo y coordenadas. Tras varios encuentros pueden acercarse si caminas despacio; peligro, descanso y territorio siguen mandando. La mascota existente conserva su guardado propio.
+- Favoritos incluyen firma musical versionada de paisaje/cruce/género/tempo. WD1 conserva semilla, versiones, tamaño, capa y coordenadas. El código no graba un instante de la canción.
+- Paseo automático ofrece Afinidad y Contraste entre favoritos cercanos del mismo mundo y capa, dentro de tres regiones. Sin favoritos compatibles conserva el paseo libre; no inventa destinos conocidos ni atraviesa guardados.
+- La Bitácora muestra instrumentos editados y vínculos. Cancelar una edición no confirma cambios. Guardados, premios y mapas anteriores conservados.
+
+Auditoría limpia; 88 suites Node y 5 recorridos afectados aprobados. Seis renders comparan runtimes vacíos/restaurados en minimal, deep y ambient; comprueban rutas reales de señal/CV, sin cambios del DSP. Evidencia en cierre-f8-memory-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f8-validation.json).
+
 # Cierre F7 · Hallazgos que puedes volver a tocar
 
 Rama `feat/cierre-f7-hallazgos`, hija de la fase anterior. Jay crea PR/merge.

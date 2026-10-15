@@ -1,3 +1,4 @@
+import {initialize as worldMemory} from './world-memory.js';
 import {initialize as foreground} from './foreground.js';
 import {initialize as celebration} from './celebration.js';
 import {initialize as practiceTravel} from './practice-travel.js';
@@ -144,7 +145,7 @@ atlas(runtime);
 creative(runtime);
 clues(runtime);
 encounters(runtime);
-encounterDepth(runtime);
+encounterDepth(runtime);worldMemory(runtime);
 ecology(runtime);
 saveTools(runtime);
 accessibility(runtime);

@@ -21,9 +21,9 @@ export function initialize(runtime){
   for(const other of objects()){if(other===o||distance(other,o)>145||out.length>=10)continue;out.push({id:other.id,x:other.x,y:other.y});}
   return out;
  }
- function ensure(o){if(o.kind==='weaver')o.state.weave||={edges:[]};if(o.kind==='box')o.state.box||=createBox(runtime.regionOfPos(o.x,o.y));}
+ function ensure(o){runtime.restoreEncounter?.(o);if(o.kind==='weaver')o.state.weave||={edges:[]};if(o.kind==='box')o.state.box||=createBox(runtime.regionOfPos(o.x,o.y));}
  function mark(o,verb,channel=null){
-  o.state.used=true;o.state.active=16;runtime.S.journal.encounters||={};runtime.S.journal.encounters[o.kind]=1;
+  o.state.used=true;o.state.active=16;runtime.rememberEncounter?.(o);runtime.S.journal.encounters||={};runtime.S.journal.encounters[o.kind]=1;
   const region=runtime.regionOfPos(o.x,o.y),f=FAMILIES[o.kind];channel||=o.kind==='box'&&o.state.box?o.state.box.parts[o.state.box.selected].id:f.voiceRole?f.voiceRole(o.state):encounterRole(o.kind,region,runtime.seedOf);runtime.creativeAction?.(channel,verb);
   runtime.unlock('encounter:'+o.kind);
  }
@@ -79,7 +79,7 @@ export function initialize(runtime){
   if(duration>=500){FAMILIES.animal.tap(o.state);o.state.voiceFeedback={channel:FAMILIES.animal.voiceRole(o.state),until:performance.now()+1600};mark(o,'model');return true;}
   const d=o.state.dialogue;
   if(d?.phase==='listening'){
-   if(d.events.length)finishDialogue(d);else{d.phase='idle';d.empty=true;}
+   if(d.events.length){finishDialogue(d);runtime.rememberEncounter?.(o);}else{d.phase='idle';d.empty=true;}
   }else{o.state.dialogue=startDialogue();mark(o,'listen');}
   runtime.stopAutopilot?.();return true;
  }
@@ -105,7 +105,7 @@ export function initialize(runtime){
   if(d.phase==='listening'){
    o.state.active=16;
    if(!d.events.length){d.waitingAge=(d.waitingAge||0)+dt;if(d.waitingAge>20){d.phase='idle';d.empty=true;}}
-   else{d.elapsed+=dt;d.sinceInput=(d.sinceInput||0)+dt;if(d.elapsed>=runtime.SIX*32||d.sinceInput>=Math.max(1.2,runtime.SIX*8))finishDialogue(d);}
+   else{d.elapsed+=dt;d.sinceInput=(d.sinceInput||0)+dt;if(d.elapsed>=runtime.SIX*32||d.sinceInput>=Math.max(1.2,runtime.SIX*8)){finishDialogue(d);runtime.rememberEncounter?.(o);}}
   }
   if(d.phase==='replying'){d.age+=dt;o.state.active=16;if(d.age>90)d.phase='idle';}
  }

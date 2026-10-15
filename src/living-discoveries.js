@@ -8,9 +8,9 @@ export function initialize(runtime){
  }
  function relation(o,peer,type){if(!o.rare&&!peer.rare)return;const ids=[o.id,peer.id].sort();runtime.collectRareCard?.('living:relation',{...o,id:'relation:'+ids.join('|').slice(0,95)},{context:{...context(o,'escucha'),relation:type}});}
  function building(o,study){if(!o.rare)return;runtime.collectRareCard?.('living:study',o,{name:study.name,context:context(o,'activacion')});}
- function aim(){const now=performance.now();if(route&&Math.hypot(route.x-runtime.S.wx,route.y-runtime.S.wy)<65){avoid.set(route.id,now+60000);route=null;while(avoid.size>32)avoid.delete(avoid.keys().next().value);}
+ function aim(){const now=performance.now();if(route&&Math.hypot(route.x-runtime.S.wx,route.y-runtime.S.wy)<65){avoid.set(route.id,now+60000);runtime.musicAimReached?.(route);route=null;while(avoid.size>32)avoid.delete(avoid.keys().next().value);}
   if(now-routeAt<1200)return route;routeAt=now;
-  const intent=runtime.S.autoIntent||'paisaje';let candidates=runtime.livingNear(750).filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)>90&&(avoid.get(o.id)||0)<now);
+  const intent=runtime.S.autoIntent||'paisaje';if(['afinidad','contraste'].includes(intent)){route=runtime.musicAim?.(intent)||null;return route;}let candidates=runtime.livingNear(750).filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)>90&&(avoid.get(o.id)||0)<now);
   if(intent==='hallazgos')candidates=candidates.filter(o=>o.rare||o.group==='architecture');else if(intent==='vida')candidates=candidates.filter(o=>o.group==='fauna'||o.relation);else candidates=candidates.filter(o=>o.group==='flora');
   route=candidates.sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy))[0]||null;return route?{...route,layer:runtime.S.layer||'superficie'}:null;
  }
