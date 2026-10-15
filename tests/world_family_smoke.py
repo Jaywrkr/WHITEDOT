@@ -24,8 +24,9 @@ try:
    # Reload without lab so the screenshots exercise the normal World rendering.
    page.goto(base+'?testSeed=laboratorio&layout=wide&generation=2&addr='+address)
    page.wait_for_function('__testRuntime?.inWorld()');page.evaluate('''()=>{const r=__testRuntime;r.S.relaxedCreate=true;r.S.sound=false;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}''')
-   page.wait_for_function('__testRuntime.worldFamilyVisualStats?.drawn>0')
+   page.wait_for_function('__testRuntime.worldFamilyVisualStats?.examined>0')
    result=page.evaluate('''()=>{const r=__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy);r.S.ach.familyKept='2026-10-15';r.save();return {id:d.worldFamily.id,key:d.key,x:r.S.wx,y:r.S.wy,genre:d.genre,stats:r.worldFamilyVisualStats,overflow:document.documentElement.scrollWidth>innerWidth,lab:!!r.labMode,visible:r.livingNear(220).length};}''')
+   assert 0<=result['stats']['clear']<=result['stats']['examined'];assert result['stats']['drawn']<=result['stats']['examined']
    assert result['id']==family and not result['lab'] and not result['overflow'] and result['visible']>0,result
    path=f'/tmp/whitedot-f1-{family}-phone.png';images.add(hashlib.sha256(page.screenshot(path=path)).hexdigest());rows.append(result)
    page.reload();page.wait_for_function('__testRuntime?.inWorld()')
@@ -36,7 +37,7 @@ try:
   # Small phones, landscape phones, reduced motion, all three layers and low detail.
   for width,height in [(320,568),(844,390)]:
    page.set_viewport_size({'width':width,'height':height});page.emulate_media(reduced_motion='reduce')
-   page.evaluate("__testRuntime.labGo('landscape:tidal')");page.wait_for_function('__testRuntime.worldFamilyVisualStats.drawn>0')
+   page.evaluate("__testRuntime.labGo('landscape:tidal')");page.wait_for_function('__testRuntime.worldFamilyVisualStats.examined>0')
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   for layer in ['bajo','cielo']:
    page.evaluate('(layer)=>{const r=__testRuntime;r.S.layer=layer;r.drawWorldFamilyGround(performance.now());}',layer)

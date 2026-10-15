@@ -8,7 +8,7 @@ Una rama por fase; la siguiente parte de la anterior si todavía no está integr
 |---|---|---|---|
 | 1 · Base de evaluación | `feat/pulido-01-medicion` | Medición y referencias internas | En main, PR #144 |
 | 2 · Dirección musical | `feat/pulido-02-direccion-musical` | Identidades, articulación y espacios musicales | Implementada y probada; entrega en esta rama |
-| 3 · Territorios coherentes | `feat/pulido-03-territorios` | Música, materiales, color, habitantes y fusiones | Pendiente |
+| 3 · Territorios coherentes | `feat/pulido-03-territorios` | Música, materiales, color, habitantes y fusiones | Implementada y probada; entrega en esta rama |
 | 4 · Interacciones musicales | `feat/pulido-04-interacciones` | Gestos con causa visual y aporte audible | Pendiente |
 | 5 · Ambiente vivo | `feat/pulido-05-ambiente` | Clima, percusión natural, vida y quietud | Pendiente |
 | 6 · Cubo e interfaz | `feat/pulido-06-cubo-ui` | Personalización, claridad y móvil | Pendiente |
@@ -94,6 +94,12 @@ No se modifica síntesis ni mezcla; no se repite audio para esta fase. Suite com
 - Expresar las fusiones mediante comportamiento y respuesta musical, sin superponer dos canciones completas.
 
 **Aceptación:** reconocer territorios por imagen y sonido; no convertir todo el mapa en una mezcla uniforme. Mapas anteriores y direcciones regresan al mismo sitio.
+
+**Implementado:** campo continuo de claros y texturas sobre todas las capas decorativas principales, caché acotada y transición gradual. Orquesta primaria/secundaria coherente entre vecinos. Entradas de acordes breves en estilos armónicos, separadas por ocho compases y respetando descansos; no se restablece un órgano continuo. Sala y eco se mezclan en fronteras. Las fuentes físicas y las rarezas permanecen intactas.
+
+**Prueba como jugador:** usa Saltar o camina hasta pasar entre un claro y una zona de textura. Los elementos musicales siguen respondiendo. Escucha cómo entra alguna voz secundaria y cómo cambia el espacio al acercarte a otro territorio. No hace falta usar A/B.
+
+**Validación F3:** auditoría sin errores/advertencias, 117 suites Node, ocho programas de navegador y treinta renders de audio aprobados. Pico máximo 0,943133. Evidencia: `scripts/pulido-03-validation.json`. Escucha física, CI y deploy separados.
 
 ## Fase 4 · Interacciones musicales
 

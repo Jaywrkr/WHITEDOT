@@ -31,7 +31,7 @@ export function initialize(runtime){
     const h=visualHash(x,y,groundSeed+Math.round(plane*100));const population=1- Math.max(0,Math.min(1,(h-(.10+.075*Math.min(2,detailQuality)))*20));if(!population)continue;
     const wx=(x+h)*step,wy=(y+visualHash(y,x,groundSeed))*step,p=planePoint(wx,wy,s.wx,s.wy,runtime.W,runtime.H,plane),dist=Math.hypot(p.x-runtime.W/2,p.y-runtime.H/2);
     if(p.x<-16||p.x>runtime.W+16||p.y<-16||p.y>runtime.H+16)continue;
-    c.globalAlpha=population*opacity(dist)*(.028+(plane===1?.04:0))*(.6+fog.day*.4);
+    c.globalAlpha=population*opacity(dist)*(.028+(plane===1?.04:0))*(.6+fog.day*.4)*(.15+decorativeField(wx,wy,runtime.seedOf));
     const alpha=c.globalAlpha;for(const [biome,weight]of groundKinds){c.globalAlpha=alpha*weight;
     if(biome==='agua'){const wave=Math.sin(t/1800+h*9)*3;c.fillRect(p.x+wave,p.y,4+plane*4,1);}
     else if(['bosque','jardin','llanura'].includes(biome)&&plane===1){const sway=Math.sin(t/1400+h*12)*3*(.4+Math.abs(runtime.livingEnvironment?.wind||0));c.beginPath();c.moveTo(p.x,p.y);c.lineTo(p.x+sway,p.y-4-h*5);c.stroke();}
@@ -56,3 +56,4 @@ export function initialize(runtime){
  }
  Object.defineProperties(runtime,{worldVisualBegin:{get:()=>begin},drawDepthGround:{get:()=>ground},drawWorldFog:{get:()=>cover},worldOpacity:{get:()=>opacity},worldVisibility:{get:()=>fog},visualDetail:{get:()=>({quality,detailQuality,hardware,averageMs,frames,pending:pending.length,footprints:footprints.length})}});
 }
+import {decorativeField} from './territory-presentation.js';

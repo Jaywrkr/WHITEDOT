@@ -1,3 +1,4 @@
+import {decorativeField} from './territory-presentation.js';
 // Pulsos, física y respuestas de los objetos.
 export function initialize(runtime) {
   let emptyP=0,waves=[],lastSonar=0,tapStart=null,rain=[],beams=[];
@@ -53,11 +54,12 @@ export function initialize(runtime) {
   function hash2(a,b){let h=(a*374761393+b*668265263)|0;h=Math.imul(h^(h>>>13),1274126177);return ((h^(h>>>16))>>>0)/4294967296;}
   function drawGround(ox,oy,R,t){const G=24,x0=Math.floor((runtime.S.wx-R)/G),x1=Math.floor((runtime.S.wx+R)/G),y0=Math.floor((runtime.S.wy-R)/G),y1=Math.floor((runtime.S.wy+R)/G);let lastC=null,lastK="";
     for(let ix=x0;ix<=x1;ix++)for(let iy=y0;iy<=y1;iy++){const wx=ix*G,wy=iy*G,d=Math.hypot(wx-runtime.S.wx,wy-runtime.S.wy);if(d>R)continue;
+      const field=decorativeField(wx,wy,runtime.seedOf);if(field<.002)continue;
       const ck=Math.floor(wx/runtime.WCH)+","+Math.floor(wy/runtime.WCH);if(ck!==lastK){lastK=ck;lastC=runtime.wchunks.get(ck);}if(!lastC)continue;
       let gt=lastC.ground,pal=lastC.pal;
       {const RS=runtime.REG*runtime.WCH,lx=((wx%RS)+RS)%RS,ly=((wy%RS)+RS)%RS,ed=[lx,RS-lx,ly,RS-ly],i=ed.indexOf(Math.min(...ed)),de=ed[i];if(de<900&&hash2(ix+11,iy-7)<.5*(1-de/900)){const nb=runtime.regionOfPos(wx+[-1,1,0,0][i]*(de+10),wy+[0,0,-1,1][i]*(de+10));gt=nb.ground;pal=nb.pal;}}
       if(!gt)continue;
-      const h=hash2(ix,iy),al=Math.pow(1-d/R,1.2),gx=wx+ox+h*G,gy=wy+oy+((h*7)%1)*G;
+      const h=hash2(ix,iy),al=Math.pow(1-d/R,1.2)*field,gx=wx+ox+h*G,gy=wy+oy+((h*7)%1)*G;
       switch(gt){
         case "arena":runtime.cx.globalAlpha=al*.45;runtime.cx.fillStyle=pal.sand;runtime.cx.fillRect(gx,gy,h>.7?2:1,1);if(h<.25){runtime.cx.fillRect(gx+5,gy+3,1,1);}break;
         case "piedra":if(h<.45){runtime.cx.globalAlpha=al*.38;runtime.cx.strokeStyle=pal.soft;runtime.cx.lineWidth=1;runtime.cx.beginPath();runtime.cx.moveTo(gx,gy);runtime.cx.lineTo(gx+4+h*8,gy+(h-.2)*8);runtime.cx.stroke();}break;

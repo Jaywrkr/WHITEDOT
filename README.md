@@ -10,7 +10,7 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) ·
 
 ## Cubo, colección y música · ciclo actual
 
-[Nueve fases, ramas y aceptación](PLAN_PULIDO_CUBO_MUSICA.md). Fase 1 integrada por Jay (PR #144). Fase 2: once perfiles de producción distinguen pulso seco, cuerpo grave, teclas cálidas, madera/piel, máquina, síncopa, cuerdas, disco, cinta, dub y espacio abierto. Se elimina el órgano/pad automático de fondo. Menú ofrece volumen directo 0–100%, conservando el control de Sonido y el guardado. Ganancia general 1,5× antes del limitador. La quietud no aumenta el eco automáticamente; salas cortas y largas se mezclan según el estilo. Las notas se conservan aparte de tu partida; los controles permanecen silenciosos. El modelo no estima tarjetas ganadas ni sustituye la escucha humana.
+[Nueve fases, ramas y aceptación](PLAN_PULIDO_CUBO_MUSICA.md). Fase 1 integrada por Jay (PR #144). Fase 2: once perfiles de producción distinguen pulso seco, cuerpo grave, teclas cálidas, madera/piel, máquina, síncopa, cuerdas, disco, cinta, dub y espacio abierto. Se elimina el órgano/pad automático de fondo. Menú ofrece volumen directo 0–100%, conservando el control de Sonido y el guardado. Ganancia general 1,5× antes del limitador. Fase 3: claros y texturas decorativas por zonas, invitados musicales por frases y acordes breves en estilos armónicos. Las fronteras mezclan el tratamiento acústico. La quietud no aumenta el eco automáticamente; salas cortas y largas se mezclan según el estilo. Las notas se conservan aparte de tu partida; los controles permanecen silenciosos. El modelo no estima tarjetas ganadas ni sustituye la escucha humana.
 
 ```bash
 npm run audit:encounters -- --routes 192 --output /tmp/whitedot-encounters.json

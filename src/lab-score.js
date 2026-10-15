@@ -2,6 +2,7 @@ import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
 import {REFERENCE_GENRES,REFERENCE_STEPS,referenceRhythm} from './references.js';
 import {hybridIdentity} from './musical-hybrids.js';
 import {directedLeads} from './music-direction.js';
+import {territorialOrchestra,territoryInstrument} from './territory-presentation.js';
 // Playback-only musical territories. Independent seeds never move existing objects.
 const pattern=s=>Object.freeze([...s].map(n=>n==='.'?-1:Number(n)));
 const band=(id,name,characters,leads,bass,hook,drums,ceiling,swing,progression)=>Object.freeze({
@@ -46,8 +47,10 @@ export function labScore(region,seedOf,rng){
  const leads={interlock:['silkpluck','skinpluck','handslap'],silk:['silkpluck','skinpluck','lowbow'],breath:['bamboowind','clayflute','duskpad'],heavy:['feltkeys','lowbow','skinpluck'],warm:['feltkeys','lowbow','duskpad'],pulse:['skinpluck','feltkeys','duskpad']}[base.id]||base.leads;
  const hybrid=hybridIdentity(region,seedOf,rng),native=RHYTHM_GENRES[region.genre]||REFERENCE_GENRES[region.genre],variant=Math.floor(individual()*16),
   nativeDrums=RHYTHM_GENRES[region.genre]?rhythmPattern(region.genre,variant%3):referenceRhythm(region.genre,variant%3)||BASE_DRUMS[region.genre],
-  bassPool=native?.bassP||[region.track?.bassI||'hollow','reedbass','velvetbass'];
- return Object.freeze({...base,leads:Object.freeze(base.festive?[...new Set([...leads,...(hybrid?.instruments||[])])]:directedLeads(region.genre,leads,hybrid?.instruments||[])),
+  bassPool=native?.bassP||[region.track?.bassI||'hollow','reedbass','velvetbass'],
+  primary=base.festive?[...leads]:directedLeads(region.genre,leads),
+  orchestra=territorialOrchestra(region,primary,base.festive?hybrid?.instruments||[]:directedLeads(region.genre,leads,hybrid?.instruments||[]),seedOf);
+ return Object.freeze({...base,orchestra,leads:Object.freeze([...orchestra.primary,...orchestra.secondary]),
   nativeDrums:nativeDrums?Object.freeze(Object.fromEntries(Object.entries(nativeDrums).map(([id,steps])=>[id,Object.freeze([...steps])]))):null,hook:Object.freeze([...(base.festive?base.hook:hybrid?.steps||native?.steps||REFERENCE_STEPS[region.genre]||base.hook)]),
   bass:Object.freeze([...(native?.bass||region.track?.bass||base.bass)]),version:4,territory,variant,genre:region.genre,
   bassI:bassPool[Math.floor(individual()*bassPool.length)],
@@ -63,7 +66,7 @@ export function labArrangement(frame,score,environment={}){
   evolved={...score,scene,quiet},rest=frame.melodyRest||scene===5,cycle=Math.floor(Math.max(0,frame.phrase)/2)%4,hook=Array(16).fill(-1),budget=Math.min(4,frame.grammar.hookLimit);
  if(!rest)score.hook.slice(0,budget).forEach((s,i)=>{if(cycle!==3||i===0)hook[s]=(frame.hybrid?.tones||[0,2,4,3])[(i+(cycle===2?1:0)+score.variant)%(frame.hybrid?.tones?.length||4)];});
  const bass=score.bass.map((n,s)=>frame.section===0&&s!==0&&s%8!==0?-1:n);
- return {...frame,labScore:evolved,labEvolution:{chapter,scene,quiet},hybrid:frame.hybrid||null,melodyRest:rest,hook,bass,bassI:score.bassI,hookI:score.leads[orchestra],
+ return {...frame,labScore:evolved,labEvolution:{chapter,scene,quiet},hybrid:frame.hybrid||null,melodyRest:rest,hook,bass,bassI:score.bassI,hookI:score.orchestra?territoryInstrument(score.orchestra,Math.floor(Math.max(0,frame.harmonyBar||0)/4),chapter+(quiet?1:0)):score.leads[orchestra],
   identity:{...frame.identity,id:`lab:${score.id}`,name:score.name,hooks:score.leads,bassI:score.bassI,swing:score.swing,air:Math.min(.5,frame.identity?.air??.5)},
   grammar:{...frame.grammar,progression:frame.hybrid?.progression||score.progression,harmonyBars:frame.hybrid?.harmonyBars||8,brightness:Math.min(frame.grammar.brightness,score.ceiling),hookLevel:frame.grammar.hookLevel*(scene===1?.55:.85),accents:[]},
   expression:{...frame.expression,harmony:false,toneScale:Math.min(1,frame.expression.toneScale),attackScale:frame.expression.attackScale*(score.id==='breath'?1.4:1)},
@@ -81,6 +84,10 @@ export function labNoteEvents(frame,step,bar){
   events.push({role:'lead',degree,instrument:frame.hookI,offset:score.id==='breath'?.22:0,
    level:step===0?.85:.68,technique:answer&&['silk','breath'].includes(score.id)?'slide':step%4?'ghost':'normal'});
  }
+ // Sparse voiced harmony belongs to the arrangement, never a continuous organ bed.
+ const kind=character(score.genre);
+ if(step===0&&bar%8===0&&frame.section>0&&!frame.melodyRest&&score.scene!==5&&(frame.hybrid?.harmony||['warm','disco'].includes(kind)))
+  events.push({role:'acorde',degree:0,instrument:['warm','disco'].includes(kind)?'p_tinepiano':'p_cellobody',offset:0,level:.45,technique:'muted'});
  return events;
 }
 export function labDrumEvents(score,step,bar,energy){
