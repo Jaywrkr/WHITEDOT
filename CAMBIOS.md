@@ -1,3 +1,17 @@
+# Pulido F2 · Primer nivel jugable y guía mínima
+
+Rama `feat/pulido-f2-primer-nivel`, desde `25732e6`. Jay crea PR y merge.
+
+- onboarding-model.js define seis hechos del primer recorrido; onboarding.js los observa sin imponer objetivos ni entregar rarezas artificiales. Las partidas previas conservan progreso; los datos futuros quedan intactos.
+- Una franja pequeña enseña una acción cada vez. La ayuda se retira al terminar y puede omitirse o repetirse desde Menú → Tu recorrido → Practicar, sin reiniciar el juego.
+- Movimiento y primera luz, entrada al Mundo, respuesta real de una fuente, pulso y guardado completan la guía mediante acciones. Marcas locales pequeñas sugieren un elemento cercano; los menús y celebraciones tienen prioridad visual.
+- La introducción terminada no se repite en otras semillas; una lección incompleta continúa tras recargar. Los visitantes nuevos de un lugar compartido reciben ayuda breve. El modo laboratorio conserva su acceso de pruebas.
+- La Voz resuelve el papel musical usando la fuente real. Un sonido ambiente, volumen cero, audio suspendido o un pulso vacío no completa la lección de encuentro. Esto corrige A12 de la auditoría.
+- Bienvenida más corta, objetivos táctiles de 44 px, foco restaurado al omitir y Geist Mono. No se añadió sonido a ningún control ni se modificó la síntesis.
+- Versión 2.0.0-rc.2 y shell offline con los dos módulos nuevos una sola vez.
+
+Auditoría aprobada; 94 suites Node y 7 recorridos afectados aprobados. Sin cambios de DSP; interfaz silenciosa comprobada. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f2-validation.json).
+
 # Cierre F10 · Auditoría y candidata 2.0.0-rc.1
 
 Rama `feat/cierre-f10-lanzamiento`, hija de la fase anterior. Jay crea PR/merge.

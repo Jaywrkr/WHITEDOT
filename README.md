@@ -6,9 +6,13 @@ Un pixel blanco en un mundo negro. Descubre cómo suena el universo y crea tu pr
 
 **Jugar:** https://whitedot-inky.vercel.app. En el teléfono puedes instalarlo como app (en iPhone: Compartir → Añadir a pantalla de inicio). Toca la pantalla una vez para activar el sonido.
 
-Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama **2.0.0-rc.1** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
+Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · Candidata de esta rama **2.0.0-rc.2** · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
 Main no se publica desde estas ramas. Jay integra mediante PR. [Auditoría y soluciones](AUDITORIA_CIERRE_2.0.md) · [Pulido final autorizado](PLAN_PULIDO_FINAL.md).
+
+## Pulido actual
+
+**F2 · Primer nivel jugable y guía mínima.** Aprende moviéndote, escuchando, pulsando y guardando. Una sola indicación breve, omisible y consultable; conserva experiencia y progreso al cambiar de mundo. [Plan y ramas](PLAN_PULIDO_FINAL.md) · [Evidencia](scripts/pulido-f2-validation.json).
 
 ## Cierre · fase 10 · Auditoría y candidata 2.0.0-rc.1
 

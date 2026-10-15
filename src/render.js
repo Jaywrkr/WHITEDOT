@@ -69,6 +69,7 @@ export function initialize(runtime) {
     runtime.encounterTick?.(dt,modal||runtime.scanning||document.hidden);
     runtime.ecologyTick?.(dt,modal||runtime.scanning||document.hidden);
     runtime.voiceGuideTick?.(dt,modal||runtime.scanning||document.hidden);
+    runtime.firstJourneyTick?.();
     runtime.updateScanner();runtime.fxTick?.(dt);
     const b=runtime.beat();runtime.drawCubePreview?.(t,b);
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);
@@ -395,6 +396,7 @@ export function initialize(runtime) {
     runtime.drawJam?.(t,dt,ox,oy,b);
     runtime.drawAlive?.(t,dt,ox,oy,'sky');
     runtime.drawSoundCues(ox,oy,R);
+    runtime.drawFirstJourney?.();
     if((runtime.hudT+=dt)>.5){runtime.hudT=0;runtime.hud(nd);}
     return ds;
   }

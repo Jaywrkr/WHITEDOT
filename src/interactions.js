@@ -20,6 +20,7 @@ export function initialize(runtime) {
   function sonar(){
     if(runtime.S.mode==="studio")return;runtime.audio();const ms=performance.now();if(ms-lastSonar<700)return;lastSonar=ms;
     runtime.markInput?.();
+    if(runtime.inWorld())runtime.firstJourneyEvent?.('pulse');
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.layerPulse?.();return;}
     if(runtime.inWorld())runtime.portalPulse?.(runtime.onBeatNow());   // ritual de portales: pulsos seguidos en el beat
     if(runtime.inWorld()&&(runtime.S.layer||"superficie")!=="superficie")return;

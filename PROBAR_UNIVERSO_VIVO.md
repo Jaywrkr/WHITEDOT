@@ -1,5 +1,14 @@
 # Probar el universo vivo
 
+## Pulido F2 · Primer nivel jugable y guía mínima
+
+1. Abre una partida nueva o usa Menú → Tu recorrido → Practicar. No borres tu partida.
+2. Arrastra hacia una luz y entra al Mundo. Sigue una indicación cada vez.
+3. Acércate con el cubo a un elemento, escucha su respuesta y pulsa un espacio vacío.
+4. Guarda el lugar en Favoritos; la ayuda desaparece. Cambia de mundo y vuelve sin repetir lo terminado.
+5. Prueba Omitir guía y Practicar. Ambos controles son silenciosos; lo ganado permanece.
+6. Prueba vertical y horizontal. La guía debe dejar libre la exploración.
+
 ## Novedad F10 · Auditoría y candidata 2.0.0-rc.1
 
 1. En tu partida habitual, recoge una luz y entra al Mundo. Comprueba que no exige completar 120 luces ni agota exploración.

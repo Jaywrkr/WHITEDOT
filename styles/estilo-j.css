@@ -147,6 +147,10 @@ body.dev .devbox{display:block}
 @media(prefers-reduced-motion:reduce){.celebration{animation:none}}
 @media(max-height:440px){.celebration{width:300px;max-height:32vh;top:16px;padding:8px;gap:2px 8px;grid-template-columns:48px minmax(0,1fr)}.celebration svg{width:48px;height:48px}.celebration p{font-size:11px}.celebration strong{font-size:14px}body.lab .celebration{left:16px;right:auto}}
 .guide-sheet #guideGlossary{border-top:1px solid var(--line);margin-top:12px;width:100%;text-align:left}.guide-sheet h3{font-size:13px;font-weight:500}.guide-sheet small{font-size:11px;color:var(--dim)}
+.first-journey-hint{position:fixed;z-index:16;left:16px;bottom:calc(var(--safe-bottom) + 84px);width:min(280px,calc(100vw - 32px));display:flex;align-items:center;gap:8px;padding:4px 4px 4px 10px;box-sizing:border-box;background:#000e;border-left:1px solid #fff;pointer-events:none}
+.first-journey-hint[hidden]{display:none}.first-journey-hint span{font:12px/1.5 var(--mono);color:#fff}.first-journey-hint button{pointer-events:auto;flex:none;width:44px;height:44px;padding:0;border:0;background:transparent;color:#fff;font-size:18px}
+body:has(#celebration:not([hidden])) .first-journey-hint,body:has(#rareNotice:not([hidden])) .first-journey-hint{visibility:hidden}
+@media(max-height:440px){.first-journey-hint{left:16px;bottom:calc(var(--safe-bottom) + 72px);width:250px}}
 
 body:has(#celebration:not([hidden])) .toast{visibility:hidden;pointer-events:none}
 body:has(#celebration:not([hidden])) .voice:not(.expanded){top:auto;bottom:calc(var(--safe-bottom) + 84px);left:16px;width:min(280px,calc(100vw - 32px));max-width:calc(100vw - 32px)}
