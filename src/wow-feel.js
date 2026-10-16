@@ -1,7 +1,7 @@
 import {createMotion,WOW_LIMITS,lookVector,greetingPose,formationOffset} from './wow-model.js';
 export function initialize(runtime){
  const greetings=new WeakMap(),formation=new WeakMap(),seenBeams=new WeakSet(),markedWaves=new WeakMap();let nextSlot=0;
- const motion=createMotion();let owner=null,layer=null,dust=[],seconds=0,nearby=[],pending=[],ripples=[],flashes=[],memory=[],marks=[],lastPosition=null;
+ const motion=createMotion();let owner=null,layer=null,dust=[],seconds=0,nearby=[],pending=[],ripples=[],flashes=[],memory=[],marks=[],clusters=[],lastPosition=null;
  const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
  function sources(){
   const pool=[...(runtime.MU?.near||[]),...(runtime.MU?.walkerFollowers||[]),...(runtime.livingNear?.(140)||[]),...(runtime.microNear?.(140)||[]),...(runtime.inhabitantsNear?.(140)||[])].map(o=>o.object||o);
@@ -15,7 +15,15 @@ export function initialize(runtime){
   const stopped=paused||blocked()||jumped,step=motion.step(runtime.S.wx,runtime.S.wy,dt,stopped);
   seconds+=Math.max(0,Math.min(.05,dt||0));
   nearby=stopped?[]:sources();
-  if(stopped||reduced()){dust=[];pending=[];ripples=[];flashes=[];memory=[];marks=[];return;}
+  if(stopped||reduced()){dust=[];pending=[];ripples=[];flashes=[];memory=[];marks=[];clusters=[];return;}
+  clusters=[];
+  if(runtime.currentPocket?.()?.kind!=='quiet')for(const o of nearby){
+   const key=o.id||o.s?.id||[o.x,o.y].join(',');
+   if((runtime.seedOf('wow:dust:v1:'+key)>>>0)%3||clusters.some(p=>Math.hypot(p.x-o.x,p.y-o.y)<120))continue;
+   if(nearby.filter(p=>Math.hypot(p.x-o.x,p.y-o.y)<65).length<3)continue;
+   clusters.push({x:o.x,y:o.y,ink:runtime.musicInk?.(o)||'#bddbe0',phase:(runtime.seedOf('wow:dust:phase:'+key)>>>0)%628/100});
+   if(clusters.length===2)break;
+  }
   dust=dust.filter(p=>seconds-p.at<.6);memory=memory.filter(p=>seconds-p.at<2.8);marks=marks.filter(p=>seconds-p.at<1.4);
   for(const be of (runtime.beams||[]).slice(0,8)){
    if(seenBeams.has(be)||be.l<=0||![be.x1,be.y1,be.x2,be.y2].every(Number.isFinite))continue;
@@ -52,6 +60,7 @@ export function initialize(runtime){
   if(blocked()||Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)>130)return;
   const v=lookVector(runtime.S.wx-o.x,runtime.S.wy-o.y,reduced());
   c.save();
+  for(const p of clusters)for(let i=0;i<8;i++){const a=p.phase+i*2.39996+seconds*.12,r=20+(i%3)*7;c.fillStyle=p.ink;c.globalAlpha=.12+.06*Math.sin(seconds*.6+i);c.fillRect(p.x+ox+Math.cos(a)*r,p.y+oy+Math.sin(a)*r*.7,1,1);}
   for(const p of marks){const age=seconds-p.at;c.globalAlpha=(1-age/1.4)*.36;c.strokeStyle=p.ink;c.lineWidth=.7;c.beginPath();c.arc(p.x+ox,p.y+oy,2+age*2,0,Math.PI*1.5);c.stroke();}
   for(const p of memory){const a=1-(seconds-p.at)/2.8;c.globalAlpha=a*.13;c.strokeStyle=c.fillStyle=p.ink;c.lineWidth=.65;c.beginPath();c.moveTo(p.x1+ox,p.y1+oy);c.lineTo(p.x2+ox,p.y2+oy);c.stroke();c.fillRect(p.x1+ox-1,p.y1+oy-1,2,2);c.fillRect(p.x2+ox-1,p.y2+oy-1,2,2);}
   drawConnections(c,ox,oy);c.fillStyle='#fff';
@@ -95,5 +104,5 @@ export function initialize(runtime){
  function cubeTransform(c,x,y){
   const p=motion.pose(reduced()||blocked());c.translate(x,y);c.rotate(p.angle);c.scale(p.x,p.y);c.rotate(-p.angle);c.translate(-x,-y);
  }
- Object.defineProperties(runtime,{wowTick:{get:()=>tick},drawWowWorld:{get:()=>draw},wowObjectTransform:{get:()=>objectTransform},wowEyes:{get:()=>eyes},wowFollowTarget:{get:()=>followTarget},wowSoundCue:{get:()=>noteCue},wowPulseHit:{get:()=>pulseHit},wowState:{get:()=>({dust:dust.length,seconds,pending:pending.length,ripples:ripples.length,flashes:flashes.length,constellations:memory.length,marks:marks.length})},cubeVisualTransform:{get:()=>cubeTransform}});
+ Object.defineProperties(runtime,{wowTick:{get:()=>tick},drawWowWorld:{get:()=>draw},wowObjectTransform:{get:()=>objectTransform},wowEyes:{get:()=>eyes},wowFollowTarget:{get:()=>followTarget},wowSoundCue:{get:()=>noteCue},wowPulseHit:{get:()=>pulseHit},wowState:{get:()=>({dust:dust.length,seconds,pending:pending.length,ripples:ripples.length,flashes:flashes.length,constellations:memory.length,marks:marks.length,clusters:clusters.length})},cubeVisualTransform:{get:()=>cubeTransform}});
 }

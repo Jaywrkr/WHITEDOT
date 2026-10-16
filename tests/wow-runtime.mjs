@@ -17,3 +17,7 @@ s.reducedMotion=false;s.wx=0;r.wowTick(.02);const wave={color:'#fff'};
 for(let i=0;i<100;i++)r.wowPulseHit(i*9,0,wave);
 assert.equal(r.wowState.marks,18);r.wowPulseHit(891,0,wave);assert.equal(r.wowState.marks,18);
 r.wowTick(.02,true);assert.equal(r.wowState.marks,0);
+
+r.seedOf=()=>0;r.MU.near=[source,neighbor,{x:50,y:10}];r.wowTick(.02);
+assert(r.wowState.clusters<=2&&r.wowState.clusters>0);
+r.currentPocket=()=>({kind:'quiet'});r.wowTick(.02);assert.equal(r.wowState.clusters,0);

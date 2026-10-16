@@ -2,6 +2,7 @@
 
 | Entrega | Estado |
 |---|---|
+| WOW 12: Polvo localizado | Implementada; scripts/wow-12-validation.json |
 | WOW 11: Huellas de pulso | Implementada; scripts/wow-11-validation.json |
 | WOW 11: Huellas de pulso | Implementada; scripts/wow-11-validation.json |
 | WOW 10: Constelaciones temporales | Implementada; scripts/wow-10-validation.json |
