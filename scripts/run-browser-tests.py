@@ -22,6 +22,8 @@ if mode=='audio' and os.environ.get('WHITEDOT_AUDIO_SHARD'):
  print(f'Audio shard {shard}/{total}: '+', '.join(selected),flush=True)
 for flow in selected:
  print(f'RUN {mode}: {flow}',flush=True)
- result=subprocess.run([sys.executable,str(ROOT/'tests'/flow)],cwd=ROOT,timeout=900)
+ command=[sys.executable,str(ROOT/'tests'/flow)]
+ if flow!='creative_regression.py':command=[sys.executable,str(ROOT/'scripts/browser-processes.py'),'--timeout=895',*command]
+ result=subprocess.run(command,cwd=ROOT,timeout=900)
  print(('FAIL' if result.returncode else 'PASS')+f' {mode}: {flow}',flush=True)
  if result.returncode:raise SystemExit(result.returncode)

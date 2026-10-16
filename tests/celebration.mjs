@@ -12,3 +12,5 @@ assert(Object.values(POWERS).every(p=>p.text.split(/\s+/).length<=12&&p.seconds>
 const openings=Object.keys(POWERS).map(power=>openingFragments(42,.6,power));assert.equal(new Set(openings.map(p=>JSON.stringify(p))).size,6,'each power reveals its own motion');
 for(const power of Object.keys(POWERS)){assert.deepEqual(openingFragments(42,.6,power),openingFragments(42,.6,power));assert(openingFragments(42,1.2,power).every(p=>p.alpha===0));assert(openingFragments(42,.8,power).every(p=>Math.abs(p.x)<64&&Math.abs(p.y)<64));}
 console.log('PASS celebration sequencing, duplicate coalescing, active-time pause, bounded queue/fragments and short timed-power copy');
+
+const gap=createCelebrationQueue();gap.enqueue({id:'first',rarity:'comun'});gap.enqueue({id:'second',rarity:'comun'});gap.tick(0,true);gap.tick(1,true,false);gap.tick(1,true,false);assert.equal(gap.current,null);assert.equal(gap.pending,1);assert.equal(gap.tick(0,true).id,'second');

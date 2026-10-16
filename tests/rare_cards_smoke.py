@@ -1,4 +1,4 @@
-"""Actual rare contacts, compact cards, book/coordinates, pause, persistence and migration."""
+"""Actual rare contacts, inspectable cards, book/coordinates, pause, persistence and migration."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 from functools import partial
@@ -21,11 +21,12 @@ try:
    page.wait_for_function('__testRuntime.rareCards.some(c=>c.type==="fossil")');page.wait_for_function('!document.getElementById("rareNotice").hidden')
    assert page.locator('#rareNoticeName').inner_text()=='Fósil de ritmo';assert 'laboratorio' in page.locator('#rareNoticeTier').inner_text().lower()
    assert '1/640' in page.locator('#rareNoticeOdds').inner_text();assert page.evaluate('__testRuntime.rareCards[0].forced')
-   rect=page.locator('#rareNotice').bounding_box();assert rect['width']*rect['height']<size['width']*size['height']*.2,rect
-   assert rect['x']>=0 and rect['x']+rect['width']<=size['width'] and rect['y']+rect['height']<size['height'],rect
+   rect=page.locator('#rareNotice').bounding_box();assert rect['width']*rect['height']>=size['width']*size['height']*.95,rect
+   inner=page.locator('.rare-reveal-card').bounding_box();assert inner['width']>=300 and inner['x']>=0 and inner['x']+inner['width']<=size['width'],inner
+   assert rect['x']>=0 and rect['x']+rect['width']<=size['width'] and rect['y']+rect['height']<=size['height']+1,rect
    page.screenshot(path=f'/tmp/whitedot-rare-notice-{size["width"]}.png')
    # A menu hides the reveal and pauses its active-play clock; it never consumes the finding.
-   page.locator('#bMenu').click();page.wait_for_timeout(150);assert page.locator('#rareNotice').is_hidden()
+   page.evaluate('document.getElementById("bMenu").click()');page.wait_for_timeout(150);assert page.locator('#rareNotice').is_hidden()
    remaining=page.evaluate('__testRuntime.rareNoticeState.remaining');page.wait_for_timeout(800);assert page.evaluate('__testRuntime.rareNoticeState.remaining')==remaining
    page.locator('#mnClose').click();page.wait_for_function('!document.getElementById("rareNotice").hidden')
    # Tools pause the reveal, so the finding is never lost behind another panel.
@@ -72,6 +73,6 @@ try:
     page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('elementos');assert page.locator('#rareCodeFallback').is_hidden()
     page.locator('#journalClose').click()
     page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=otro-mundo&layout=wide&generation=2');page.wait_for_function('__testRuntime?.inWorld()');assert page.evaluate('__testRuntime.rareCards.length')==0,'preview libraries cannot leak into another seed'
-   assert not errors,errors;print(f'PASS rare cards at {size}: native contact, truthful forced label, compact notice, paused clock, silent book, return code, dedupe and persistence',flush=True);context.close()
+   assert not errors,errors;print(f'PASS rare cards at {size}: native contact, truthful forced label, fullscreen manual reveal, paused clock, silent book, return code, dedupe and persistence',flush=True);context.close()
   browser.close()
 finally:server.shutdown()

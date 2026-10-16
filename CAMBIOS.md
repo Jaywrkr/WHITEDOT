@@ -1,3 +1,14 @@
+# Interacción final · entrega 1: animaciones y hallazgos
+
+- Botones con respuesta visual local y silenciosa. Entrar al Mundo lleva la flecha hasta el cuadrado antes de abrir; protege el doble toque y conserva la activación de audio dentro del gesto inicial. Movimiento reducido entra inmediatamente.
+- Cola compartida para Voz, toast, frases, zonas y celebraciones: una notificación visible, salida de 260 ms y separación de 360 ms antes del relevo. Los paneles abiertos pausan avisos y su tiempo; los avisos de paisaje esperan durante la primera guía.
+- Tarjetas especiales centradas a pantalla completa, con ilustración vectorial del hallazgo, lugar, frecuencia teórica y número de ejemplar. Continuar, Escape y Abrir libro conservan la colección; las renovaciones y premios comunes siguen siendo breves.
+- Inspección con foco acotado y fondo inerte. El cubo y el reloj de los poderes esperan mientras lees. No cambia el audio musical ni se añaden sonidos de UI. Negro, Geist Mono y movimiento reducido conservados.
+- El ejecutor Linux recoge sus propios procesos de navegador y conserva errores/timeouts; se evita acumular huérfanos en contenedores. Concurrencia y HTTP serial de pruebas configurables sin omitir casos.
+- Retratos con un pequeño paisaje procedural para la presentación grande; el libro y sus exportaciones mantienen sus formatos. Probabilidades, coordenadas, datos futuros y guardados no cambian.
+
+129 suites Node y auditoría aprobadas al cierre local. Los recorridos afectados pasaron durante el desarrollo; los intentos completos posteriores agotaron procesos/hilos del entorno antes de cargar páginas. Validación final y push pendientes; evidencia en `scripts/posmusica-01-validation.json`. La auditoría musical anterior corresponde a su propio conjunto. CI/deploy y escucha física se comprueban aparte.
+
 # Dirección musical · fase 7: auditoría y correcciones integradas
 
 - Matriz reproducible de patrones musicales: 52 estilos, 18 influencias, 128 compases por estilo, 71 comprobaciones y 51 gramáticas rítmicas observadas. Usa territorios y eventos reales, con criterios estilísticos documentados.

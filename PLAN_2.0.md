@@ -10,6 +10,12 @@ El ciclo vigente es [Dirección musical, siete fases](PLAN_DIRECCION_MUSICAL.md)
 | 5 · Interacciones | `feat/musica-05-interacciones` | `9042c83` | Implementada y probada |
 | 6 · Transiciones | `feat/musica-06-transiciones` | `97f7c98` | Implementada y probada |
 | 7 · Auditoría | `feat/musica-07-auditoria` | Esta entrega | Implementada y probada |
+
+| Interacción final | Rama | Estado |
+|---|---|---|
+| 1 · Interfaz y hallazgos | `feat/posmusica-01-interfaz` | Implementada localmente; validación final pendiente |
+| 2 · Diez miniinstrumentos | `feat/posmusica-02-instrumentos` | Pendiente; desde la entrega 1 |
+
 <!-- /direccion-musical-actual -->
 
 # Plan WHITEDOT 2.0

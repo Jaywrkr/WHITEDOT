@@ -1,3 +1,4 @@
+import {installNoticeLane} from './notice-lane.js';
 import { POCKET_NAMES } from './pockets.js';
 
 import { gravityOf } from './gravity.js';
@@ -5,7 +6,7 @@ import { gravityOf } from './gravity.js';
 // HUD, avisos y transiciones del Mundo.
 export function initialize(runtime) {
   /* ---------- HUD ---------- */
-  const $=id=>document.getElementById(id);
+  const $=id=>document.getElementById(id),lane=installNoticeLane(runtime);
   const fmt=s=>Math.floor(s/60)+":"+runtime.pad2(Math.floor(s%60));
   function era(d){return runtime.ERAS.find(e=>d<=e[0])[1];}
   function hud(dist){
@@ -27,12 +28,11 @@ export function initialize(runtime) {
     const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary");$("bWorld").querySelector("span").textContent=runtime.inWorld()?"Camino":"Mundo";
     bp.hidden=!(canWorld||runtime.inWorld());$("bPrimaryL").textContent=runtime.inWorld()?"Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=runtime.inWorld()?"scaleX(-1)":"";
   }
-  let phT;function showPhrase(t,big){const p=$("phrase");p.textContent=t;p.classList.toggle("big",!!big);p.classList.add("on");clearTimeout(phT);phT=setTimeout(()=>p.classList.remove("on"),big?5000:3200);}
-  let toastQ=[],toasting=false;
-  function toast(html){if(toastQ.at(-1)===html)return;if(toastQ.length>=4)toastQ.shift();toastQ.push(html);nextToast();}
+  function showPhrase(t,big){const p=$('phrase');lane.enqueue('phrase',p,()=>{p.textContent=t;p.classList.toggle('big',!!big);},big?5:3.2,String(t));}
+  function toast(html){const el=$('toast');lane.enqueue('toast',el,()=>{el.innerHTML=html;},2.5,String(html));}
   function unlock(id){if(runtime.S.ach[id]||runtime.achievementRetired?.(id))return;const prev=new Set(runtime.COLORS.filter(runtime.colorOk).map(c=>c[0]));runtime.S.ach[id]=runtime.S.todayKey;const a=runtime.ACH.find(x=>x[0]===id);runtime.say(runtime.VOZ[id]||"Bien. Sigue.","Logro · "+a[1]);
     runtime.COLORS.forEach(c=>{if(runtime.colorOk(c)&&!prev.has(c[0]))toast("<em>Color nuevo</em> · "+c[1]+" · Menú → Tu cubo o Estudio");});runtime.save();}
-  function nextToast(){if(toasting||!toastQ.length)return;toasting=true;const el=$("toast");el.innerHTML=toastQ.shift();el.classList.add("on");setTimeout(()=>{el.classList.remove("on");setTimeout(()=>{toasting=false;nextToast();},350);},2200);}
+
 
   function enterWorld(){
     if(!runtime.worldReady()){toast("Recoge una luz en el Camino para entrar.");return;}

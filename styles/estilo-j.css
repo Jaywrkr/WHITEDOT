@@ -230,3 +230,40 @@ body.world-focus .goal{display:none}
 .rare-book-head{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px}.rare-book-head>h3{grid-column:1/-1;grid-row:1;font-size:12px;margin:0 0 8px}.rare-book-head>label{grid-row:2}.rare-book-head>select{grid-row:3;width:100%;min-width:0;font-size:11px}.rare-book-head>p{grid-column:1/-1;font-size:10px;margin:4px 0 12px}.rare-book-head>label[for=rareFilter],#rareFilter{grid-column:1}.rare-book-head>label[for=rareRole],#rareRole{grid-column:2}
 
 .music-travel-shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:6px}.music-travel-shortcuts button{min-height:44px;font-size:10px;white-space:normal}.music-travel-shortcuts #musicTravelFull{grid-column:1/-1}#musicTravelBack{min-height:44px;font-size:11px;width:100%;margin-top:6px}
+
+/* One notice lane. Exit completes before another message enters. */
+#toast,#phrase,#zone,#voice:not(.expanded){position:fixed;inset:auto;top:calc(var(--safe-top,0px) + 64px);left:50%;bottom:auto;width:max-content;max-width:min(360px,calc(100vw - 32px));box-sizing:border-box;transform:translate(-50%,-10px);opacity:0;transition:opacity .24s ease,transform .26s ease;z-index:35;pointer-events:none;background:#000;border:1px solid #ffffff30;padding:12px;font:12px/1.6 var(--mono);visibility:visible}
+#toast.on,#phrase.on,#zone.on,#voice.on:not(.expanded){transform:translate(-50%,0);opacity:1;visibility:visible}
+#voice.on{pointer-events:auto}#voice.expanded{z-index:35;background:#000;max-width:calc(100vw - 32px)}
+#toast.notice-leaving,#phrase.notice-leaving,#zone.notice-leaving,#voice.notice-leaving{opacity:0;transform:translate(-50%,-10px);pointer-events:none}
+#rareNotice.notice-leaving,#celebration.notice-leaving{animation:none;opacity:0;pointer-events:none;transition:opacity .26s ease}
+/* Special cards deliberately occupy the screen; the world and power clock wait. */
+#rareNotice[data-layout="full"],#celebration[data-layout="full"]{position:fixed;inset:0;width:100%;height:100dvh;max-width:none;max-height:none;margin:0;padding:16px;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto;gap:0;transform:none;place-items:center;background:#000e;border:0;z-index:80;overflow:auto;pointer-events:auto;animation:card-arrival .32s ease-out}
+.rare-reveal-card,.celebration-card{grid-row:auto;position:relative;box-sizing:border-box;background:#000;border:1px solid var(--rare-ink,#f0d27a);padding:24px;max-width:100%;min-width:0}
+#rareNotice[data-layout="full"] .rare-reveal-card,#celebration[data-layout="full"] .celebration-card{width:min(420px,100%);max-height:calc(100dvh - 32px);overflow:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px;color:#fff;box-shadow:0 0 70px #f0d27a0c}
+#rareNoticeArt,#celebrationArt{grid-column:1/-1;grid-row:auto;color:var(--rare-ink,#f0d27a);width:100%;height:clamp(100px,28dvh,240px);display:block!important}
+#rareNoticeArt svg,#celebrationArt svg{width:100%;height:100%;max-height:none;display:block;stroke-width:1;fill:none}
+.rare-glyph,.rare-sparks{stroke:currentColor;fill:none}.rare-orbit{stroke:#ffffff30;fill:none}.rare-scene{stroke:currentColor;opacity:.22;fill:none;stroke-width:.5}
+.rare-notice-copy{grid-column:1/-1;display:grid;gap:10px;min-width:0}#rareNoticeName,#celebrationName{font:500 clamp(16px,5vw,22px)/1.35 var(--mono);color:#fff;white-space:normal;overflow-wrap:anywhere;padding-right:0}
+#celebrationName,#celebrationTier,#celebrationEffect,#celebrationTime,#celebrationPlace,#celebrationSerial,#celebrationSignature{grid-column:1/-1;grid-row:auto;white-space:normal;overflow-wrap:anywhere}
+#rareNoticeTier,#rareNoticeOdds,#celebrationTier,#celebrationTime{font:11px/1.6 var(--mono);color:var(--rare-ink,#f0d27a)}
+#rareNoticeWhere,#rareNoticeSerial,#celebrationPlace,#celebrationSerial{font:10px/1.6 var(--mono);color:#ffffff99;white-space:normal;overflow-wrap:anywhere}
+#rareNoticeAbility,#celebrationEffect{font:12px/1.6 var(--mono);margin:0}
+#rareNotice button,#celebration button{position:static;grid-column:auto;grid-row:auto;min-height:44px;min-width:44px;width:auto;padding:10px 12px;box-sizing:border-box;background:#000;border:1px solid #ffffff40;color:#fff;font:12px var(--mono);pointer-events:auto;text-align:center}
+#rareNotice #rareNoticeDismiss,#celebration #celebrationDismiss{position:absolute;top:0;right:0;width:44px;border:0;font-size:20px}
+#rareNoticeContinue,#celebrationContinue{border-color:var(--rare-ink,#f0d27a)!important}
+#celebration:not([data-layout="full"]){display:block;left:50%;right:auto;top:calc(var(--safe-top,0px) + 64px);bottom:auto;transform:translateX(-50%);width:min(340px,calc(100vw - 32px));max-height:none;padding:0;background:#000;border:0;z-index:35;pointer-events:auto}
+#celebration:not([data-layout="full"]) .celebration-card{display:grid;gap:6px;padding:12px 48px 12px 12px;border-color:#ffffff40}
+#celebration:not([data-layout="full"]) #celebrationArt,#celebration:not([data-layout="full"]) #celebrationShare,#celebration:not([data-layout="full"]) #celebrationSerial{display:none!important}
+#celebration:not([data-layout="full"]) #celebrationName{font-size:14px}
+@keyframes card-arrival{from{opacity:0}to{opacity:1}}
+@media(max-height:500px){#rareNotice[data-layout="full"] .rare-reveal-card,#celebration[data-layout="full"] .celebration-card{width:min(640px,100%);grid-template-columns:180px 1fr 1fr;padding:16px;gap:8px}#rareNoticeArt,#celebrationArt{grid-column:1;grid-row:1/8;height:220px;align-self:center}.rare-notice-copy,#celebrationName,#celebrationTier,#celebrationEffect,#celebrationTime,#celebrationPlace,#celebrationSerial,#celebrationSignature{grid-column:2/-1}#rareNoticeOpen,#celebrationShare{grid-column:2}#rareNoticeContinue,#celebrationContinue{grid-column:3}}
+#bPrimary.entering-world #bPrimaryL{opacity:.15}#bPrimary.entering-world::after,#cExplore.entering-world::after{animation:none}#cExplore svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.2;vertical-align:middle;margin-right:8px;flex:none}
+body.ui-reduced-motion *,body.ui-reduced-motion *::before,body.ui-reduced-motion *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(prefers-reduced-motion:reduce){#rareNotice,#celebration{animation:none!important;transition:none!important}}
+
+body.first-journey #zone,body.first-journey #phrase{visibility:hidden}
+
+#celebration .celebration-card{grid-row:auto}
+
+.notice-leaving *{pointer-events:none!important}

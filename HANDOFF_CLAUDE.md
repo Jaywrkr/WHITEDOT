@@ -1,3 +1,19 @@
+# Handoff · Interacción final, entrega 1
+
+Rama `feat/posmusica-01-interfaz`, desde auditoría musical `5c3cb2f`. Codex commit/push; Jay crea PR/merge. Continúa [PLAN_INTERACCION_FINAL.md](PLAN_INTERACCION_FINAL.md).
+
+`notice-lane.js` coordina leases de Voz, toast, frases, zonas, rareza y celebraciones. Los avisos temporizados se pausan al abrir paneles. Separación real entre salida y relevo; tarjetas manuales conservan su turno hasta Continuar. La primera guía difiere las zonas/frases; su pista permanece accesible ante avisos comunes.
+
+`control-motion.js` instala feedback silencioso en botones dinámicos y entrada de 360 ms protegida contra doble toque. AudioContext se activa sincrónicamente en el gesto original; la navegación espera a la flecha. Respeta movimiento reducido del sistema y de la partida.
+
+`rare-cards.js` y `celebration.js` usan `data-inspect` para inspección/foco y `data-layout` para conservar el tamaño durante la salida. Hallazgos raros y primeros poderes reciben presentación grande; colores comunes y renovaciones expiran. `accessibility.js` reconoce estos diálogos condicionales, acota foco, aísla fondo y cierra mediante su acción real. Render/input y reloj de poderes respetan inspección. La banda continúa sonando.
+
+Ilustraciones originales SVG ampliadas con paisaje procedural opcional. No se cambian probabilidades, progreso, ubicaciones ni exportación PNG. UI silenciosa y sin nuevo DSP. La suite de música M7 no se presenta como validación de esta ampliación. Estado: implementación local; push detenido por validación final bloqueada en Chromium (EAGAIN/pthread_create). Los procesos viejos del contenedor consumen capacidad; no se ha modificado su supervisor. Resultado de esta entrega: `scripts/posmusica-01-validation.json`.
+
+`scripts/browser-processes.py` activa recolección de hijos únicamente para cada prueba Linux; conserva su código de salida y limita el tiempo sin dejar Chromium huérfano. No modifica PID 1 ni procesos ajenos. `WHITEDOT_BROWSER_WORKERS=1` conserva todos los recorridos con menor concurrencia; `WHITEDOT_TEST_SERIAL_HTTP=1` limita el servidor HTTP de pruebas a ejecución serial cuando faltan hilos. CI conserva su modo normal y todas sus pruebas.
+
+## Antecedentes
+
 # Handoff · Dirección musical, fase 7
 
 Rama `feat/musica-07-auditoria`, desde F6 `97f7c98`. Última rama del ciclo de siete fases: auditoría, 127 suites Node, 71 comprobaciones de patrones, 92 recorridos más offline y 39 programas de audio / 915 renders aprobados, pico máximo registrado 0,934278. Continúa [PLAN_INTERACCION_FINAL.md](PLAN_INTERACCION_FINAL.md), autorizado después. Esta rama conserva las entregas de pulido anteriores. Jay crea PR y merge, de la más antigua a la nueva. No publicar main desde este trabajo.

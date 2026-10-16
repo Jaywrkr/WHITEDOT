@@ -49,14 +49,19 @@
 <div class="goal"><b id="goal">Recoge una luz para abrir el Mundo</b><span id="goalR"></span></div>
 
 <aside id="celebration" class="celebration" role="status" aria-live="polite" hidden>
+ <div class="celebration-card">
  <div id="celebrationArt" aria-hidden="true"></div><small id="celebrationTier"></small><strong id="celebrationName"></strong><p id="celebrationEffect"></p><small id="celebrationTime"></small><small id="celebrationPlace"></small><small id="celebrationSerial"></small><span id="celebrationSignature"></span>
- <button id="celebrationDismiss" aria-label="Ocultar celebración">×</button><button id="celebrationShare" hidden>Compartir</button>
+ <button id="celebrationDismiss" aria-label="Ocultar celebración">×</button><button id="celebrationShare" hidden>Compartir</button><button id="celebrationContinue">Continuar</button>
+ </div>
 </aside>
 <aside id="rareNotice" class="rare-notice" role="status" aria-live="polite" aria-atomic="true" hidden>
+ <div class="rare-reveal-card">
   <div id="rareNoticeArt" class="rare-notice-art" aria-hidden="true"></div>
-  <div class="rare-notice-copy"><small id="rareNoticeTier"></small><strong id="rareNoticeName"></strong><span id="rareNoticeWhere"></span><small id="rareNoticeOdds"></small></div>
+  <div class="rare-notice-copy"><small id="rareNoticeTier"></small><strong id="rareNoticeName"></strong><span id="rareNoticeWhere"></span><small id="rareNoticeOdds"></small><span id="rareNoticeAbility"></span><small id="rareNoticeSerial"></small></div>
   <button id="rareNoticeDismiss" class="rare-dismiss" aria-label="Ocultar tarjeta de hallazgo">×</button>
   <button id="rareNoticeOpen" class="rare-open">Abrir libro</button>
+  <button id="rareNoticeContinue">Continuar</button>
+ </div>
 </aside>
 <div class="phrase" id="phrase"></div>
 <div class="reto" id="reto" hidden></div>
@@ -200,7 +205,7 @@
     </div>
     <p><b>El Mundo está abierto.</b> <span id="cLamp">Explora sin límite de tiempo.</span></p>
     <p class="firma">Simple.</p>
-    <div class="row"><button id="cExplore" class="gold">Entrar al Mundo</button><button id="cShare">Compartir mi día</button></div>
+    <div class="row"><button id="cExplore" class="gold"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Entrar al Mundo</button><button id="cShare">Compartir mi día</button></div>
   </div>
 </div>
 

@@ -10,7 +10,7 @@ export function initialize(runtime) {
   addEventListener("keydown",e=>{
     const focusedMenu=e.target===document.getElementById('bMenu')&&runtime.inWorld();
     if(e.target!==document.body&&e.target!==cv&&!(focusedMenu&&['arrowright','arrowleft','arrowup','arrowdown','w','a','s','d'].includes(e.key.toLowerCase())))return;
-    if(document.querySelector('.modal:not([hidden])'))return;
+    if(runtime.noticeLane?.inspecting||document.querySelector('.modal:not([hidden])'))return;
     if(e.key==='Escape'){runtime.stopAutopilot?.();return;}
     const key=e.key.toLowerCase();if(['arrowright','arrowleft','arrowup','arrowdown','w','a','s','d'].includes(key)){keys[key]=1;runtime.audio();if(e.key.startsWith('Arrow'))e.preventDefault();}
     if(e.code==='Space'&&!e.repeat){e.preventDefault();runtime.sonar();}
@@ -20,7 +20,7 @@ export function initialize(runtime) {
   const cancelHold=()=>{clearTimeout(holdTimer);holdTimer=null;};
   // El juego escucha toda la pantalla: un arrastre que empieza sobre textos del HUD o la Voz también mueve al pixel.
   // Solo se excluyen botones, paneles abiertos y el Estudio.
-  const blocked=t=>!!t?.closest?.('button,a,input,select,textarea,label,summary,.modal:not([hidden]),#studioPanel,#scanner,#fxPanel,#mirrorPanel,[role="button"]');
+  const blocked=t=>!!t?.closest?.('button,a,input,select,textarea,label,summary,.modal:not([hidden]),#studioPanel,#scanner,#fxPanel,#mirrorPanel,[data-inspect="true"],[role="button"]');
   let fromOverlay=false;
   addEventListener("pointerdown",e=>{
     if(e.target===cv||blocked(e.target))return;

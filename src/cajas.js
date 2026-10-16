@@ -49,9 +49,9 @@ export function initialize(runtime){
  // ---------- cada cuadro ----------
  function tick(dt){
   ensureOwner();
-  clock.tick(runtime.activeFrameSeconds??dt,surface()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])'));
+  clock.tick(runtime.activeFrameSeconds??dt,surface()&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden])'));
   runtime.speedBoost=has('cometa')?2.2:1;runtime.fieldSolo=has('campo');
-  if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])'))return;const b=runtime.body;
+  if(!surface()||document.hidden||runtime.noticeLane?.inspecting||document.querySelector('.modal:not([hidden])'))return;const b=runtime.body;
   for(const box of boxesNear(400))if(Math.hypot(box.x-S().wx,box.y-S().wy)<22)open(box);
   if(has('cometa')&&b?.speed>40){trail.push({x:S().wx,y:S().wy,a:1});if(trail.length>60)trail.shift();}
   for(const p of trail)p.a-=dt*.8;while(trail.length&&trail[0].a<=0)trail.shift();
@@ -71,7 +71,7 @@ export function initialize(runtime){
  function melody(n,t,v,source=null,front=false){t=runtime.musicalTime?.(t)??t;const frame=runtime.musicalFrame?.(t);if(frame)n=consonantPitch(n,frame.chords,45,69);const d=runtime.MU.dnaA||runtime.MU.dnaT;if(!d)return;const inst=runtime.MU.radio?.hookI||hookInstruments(d.genre,runtime.GEN[d.genre])[0],cue=source?{...source,id:source.id||(front?'power:pincel:':'power:cometa:')+Math.round(source.x)+','+Math.round(source.y)}:{id:'power:cometa',x:S().wx,y:S().wy},voice={instrument:inst,role:'lead'},emit=()=>runtime.hookInst(inst,hookPitch(inst,n,musicalCharacter(d.genre)),t,v,d);if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(front?'power:pincel':'power:voice',d,voice,cue,t,emit);else emit();if(front)runtime.focusGesture?.(t,cue,'lead');runtime.soundCue?.(cue,'lead',t);}
 
  function step(s,bar,time){
-  if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])')||!S().sound||runtime.ac?.state!=='running')return;
+  if(!surface()||document.hidden||runtime.noticeLane?.inspecting||document.querySelector('.modal:not([hidden])')||!S().sound||runtime.ac?.state!=='running')return;
   // Campo: el brazo gira una vuelta por compás y toca lo que cruza dentro del círculo.
   if(has('campo')){const R=listeningRadius();let n=0;
    for(const src of sources()){const dx=src.x-S().wx,dy=src.y-S().wy;if(Math.hypot(dx,dy)>R||n>=3)continue;const a=((Math.atan2(dy,dx)+Math.PI/2)%TAU+TAU)%TAU;if(Math.floor(a/TAU*16)===s){src.play(time);n++;}}}
