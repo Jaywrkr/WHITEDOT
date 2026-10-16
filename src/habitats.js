@@ -1,9 +1,9 @@
-import {familyHabitat} from './world-families.js';
+import {ecosystemAt} from './ecosystem-field.js';
 // A distant habitat has an analytic clock: no background simulation or new placement draws.
 export function habitatAt(region,x,y,seedOf){
- const seed=seedOf(`habitat:v1:${region.key}:${Math.floor(x/240)},${Math.floor(y/240)}`),weight=familyHabitat(region.worldFamily,x,y),
+ const seed=seedOf(`habitat:v1:${region.key}:${Math.floor(x/240)},${Math.floor(y/240)}`),place=ecosystemAt(region.worldFamily,x,y,seedOf),weight=place.weight,
   humidity=region.ecology?.climate.humidity??(.2+(seed%60)/100),fertility=region.ecology?.climate.fertility??((seed>>>8)%100)/100;
- const niche=region.sea?'coast':weight<.3?'clearing':weight<.58?'corridor':fertility>.55?'colony':'refuge';
+ const niche=region.sea?'coast':place.niche;
  return Object.freeze({version:1,niche,humidity,fertility,angle:(seed%628)/100,
   phase:seed%4,visitor:(seed>>>8)%5===0,guild:['pollinator','grazer','shoal','collector','sentinel'][(seed>>>12)%5]});
 }

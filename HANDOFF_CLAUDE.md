@@ -1,3 +1,7 @@
+# Reencuentro · fase 4
+
+Leer PLAN_REENCUENTRO.md. Rama `feat/reencuentro-04-ecosistemas`, versión 2.3.0-alpha.20. Un campo continuo de colonias, corredores, refugios y claros sustituye tres filtros acumulados. La muestra conserva 678 de 2.058 individuos originales frente a 166 antes, con límites de densidad y sin mover mapas. Los hábitats y contornos comparten esa geografía; raros, nursery y acompañantes quedan protegidos. Las vistas se refrescan también al crecer una misma lista. Evidencia en scripts/reencuentro-04-validation.json. Jay conserva PR/merge; respetar los límites de audio documentados.
+
 # Reencuentro · fase 3
 
 Leer PLAN_REENCUENTRO.md. Rama `feat/reencuentro-03-identidad`, versión 2.3.0-alpha.19. Las ocho familias regionales usan cinco gramáticas de dibujo reales: píxel original, membrana, facetas, filamentos y anatomía orgánica. La topología facetada deriva de los bits de cada especie; las membranas reutilizan blobs y los filamentos cambian proporciones. Se añaden prácticas de cada aspecto y se respeta movimiento reducido. Evidencia en scripts/reencuentro-03-validation.json. Jay conserva PR/merge; respetar los límites de audio documentados.

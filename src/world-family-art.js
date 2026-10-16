@@ -1,3 +1,4 @@
+import {ecosystemAt} from './ecosystem-field.js';
 import {visualHash,distanceOpacity} from './world-visibility-model.js';
 import {decorativeField} from './territory-presentation.js';
 // Small ground structures; never a screen-filling illustration or a collision wall.
@@ -30,7 +31,7 @@ export function initialize(runtime){
    const h=visualHash(x,y,f.seed),detail=runtime.visualDetail?.detailQuality??1;
    const presence=Math.max(0,Math.min(1,(.4+Math.min(2,detail)*.13-h)*12));if(!presence)continue;
    const px=wx+Math.sin(f.angle+y)*27,py=wy+Math.cos(f.angle+x)*27,
-    alpha=field*presence*distanceOpacity(Math.hypot(px-s.wx,py-s.wy),radius)*(.16+h*.15);
+    alpha=field*presence*(.3+.7*ecosystemAt(f,px,py,runtime.seedOf).weight)*distanceOpacity(Math.hypot(px-s.wx,py-s.wy),radius)*(.16+h*.15);
    if(alpha<.002)continue;
    c.save();c.translate(px+runtime.W/2-s.wx,py+runtime.H/2-s.wy);c.rotate(f.angle*.35);
    c.globalAlpha=alpha;c.strokeStyle=f.ink||`hsl(${f.hue},${f.saturation}%,67%)`;
