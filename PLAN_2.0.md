@@ -2,6 +2,7 @@
 
 | Entrega | Estado |
 |---|---|
+| WOW 10: Constelaciones temporales | Implementada; scripts/wow-10-validation.json |
 | WOW 09: Corriente en conexiones | Implementada; scripts/wow-09-validation.json |
 | WOW 08: Notas visibles a tiempo | Implementada; scripts/wow-08-validation.json |
 | WOW 07: Reacciones entre vecinos | Implementada; scripts/wow-07-validation.json |
