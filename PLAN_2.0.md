@@ -8,7 +8,7 @@ Ciclo vigente: [PLAN_REENCUENTRO.md](PLAN_REENCUENTRO.md).
 | 3 · Identidad regional | `feat/reencuentro-03-identidad` | alpha.19 | Implementada; pruebas de renderer, navegador pendiente |
 | 4 · Ecosistemas | `feat/reencuentro-04-ecosistemas` | alpha.20 | Implementada; muestreo y pruebas enfocadas |
 | 5 · Exploración legible | `feat/reencuentro-05-exploracion` | alpha.21 | Implementada; pruebas enfocadas, CI pendiente |
-| 6 · Auditoría | `feat/reencuentro-06-auditoria` | alpha.22 | Pendiente |
+| 6 · Auditoría | `feat/reencuentro-06-auditoria` | alpha.22 | Implementada; cierre de publicación condicionado a CI y escucha |
 <!-- /reencuentro-actual -->
 
 <!-- viaje-reacciones-actual -->

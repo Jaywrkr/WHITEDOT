@@ -88,15 +88,18 @@ export function labArrangement(frame,score,environment={},backbone=null){
 // All event offsets are fractions of one sixteenth; the electronic clock stays shared.
 export function labNoteEvents(frame,step,bar){
  if(!frame?.labScore||!Number.isInteger(step)||step<0||step>15)return [];
+ const supporting=!!frame.referenceSupport;if(supporting)frame={...frame,...frame.referenceSupport};
  const score=frame.labScore,cycle=Math.floor(Math.max(0,bar))%8,answer=cycle%4===2,rest=cycle%4===3,
   events=[],bass=frame.bass[step],hook=frame.hook[step];
  if((!score.electronic||score.electronic.layers.includes('bass'))&&bass>=0&&(score.backbone||!rest||step===0||step===8))events.push({role:'bajo',degree:!score.backbone&&answer&&step!==0?Math.min(7,bass+2):bass,
   instrument:frame.bassI,offset:0,level:step%4===0?1:.8,technique:cycle%2?'muted':'normal'});
  if(!frame.melodyRest&&hook>=0&&(score.backbone||!rest||step===0)){
   const degree=rest&&!score.backbone?0:hook;
-  events.push({role:'lead',degree,instrument:frame.hookI,offset:score.id==='breath'?.22:0,
+  events.push({role:'lead',...(supporting?{part:'foundation'}:{}),degree,instrument:frame.hookI,offset:score.id==='breath'?.22:0,
    level:step===0?.85:.68,technique:answer&&['silk','breath'].includes(score.id)?'slide':step%4?'ghost':'normal'});
  }
+ // The old pad used to fill these rests; preserve one quiet voiced pulse instead.
+ if(frame.referenceOrigin&&frame.melodyRest&&(score.electronic?.count||10)<=3&&step===0)events.push({role:'lead',part:'foundation',degree:0,instrument:frame.hookI,offset:0,level:.3,technique:'muted'});
  // Sparse voiced harmony belongs to the arrangement, never a continuous organ bed.
  const kind=character(score.genre);
  if(!score.electronic&&step===0&&bar%8===0&&frame.section>0&&!frame.melodyRest&&score.scene!==5&&(frame.hybrid?.harmony||['warm','disco'].includes(kind)))
@@ -127,7 +130,7 @@ export function labNoteEvents(frame,step,bar){
   if(score.electronic.layers.includes('air')&&step===8&&position===0)
    events.push({role:'lead',part:'air',degree:4,instrument:group.air,offset:0,level:.52,technique:'normal'});
  }
- return frame.referenceOrigin?[...events.filter(e=>!e.part&&e.role!=='acorde'),...phraseNotes(events.filter(e=>e.part||e.role==='acorde'),frame.phrasing,step)]:phraseNotes(events,frame.phrasing,step);
+ return frame.referenceOrigin?[...events.filter(e=>(!e.part&&e.role!=='acorde')||e.part==='foundation'),...phraseNotes(events.filter(e=>(e.part&&e.part!=='foundation')||e.role==='acorde'),frame.phrasing,step)]:phraseNotes(events,frame.phrasing,step);
 }
 export function labDrumEvents(score,step,bar,energy){
  if(!score||!Number.isInteger(step)||step<0||step>15||!Number.isFinite(energy)||energy<=.12)return [];

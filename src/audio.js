@@ -385,6 +385,7 @@ export function initialize(runtime) {
   }
   function drumPattern(gid,s,bar,t,tt,E,ct,DO,arrangement){
     if(runtime.inWorld()&&!DO&&runtime.depthGate?.(s)===false&&s%4!==0)return;
+    if(arrangement?.referenceOrigin&&(arrangement.labScore?.electronic?.count||10)<=3)return;
     if(arrangement?.labScore&&!arrangement.referenceOrigin){
       const groove=runtime.inWorld()?Math.max(0,-(runtime.influenceState?.values.groove||0)):0;
       for(const hit of labDrumEvents(arrangement.labScore,s,bar,E*(1-.75*groove))){
@@ -533,6 +534,7 @@ export function initialize(runtime) {
         runtime.labPerformanceCue?.({...event,time:at,bar:MU.step>>4,step:s});
       }return;
     }
+    if(tr.referenceOrigin&&tr.melodyRest&&d.genre==='ambient'&&s===0){hookInst(tr.hookI,inRegister(ct[0],48,64),t,vel(.025),d,tr.expression);}
     const gid=d.genre,bs=arrangement?tr.bass[s]:gid==="rominimal"?(s%2===1?(s%8===7?4:0):-1):gid==="acid"?(ACID[s]?(ACID[s]===2?7:0):-1):tr.bass[s];
     if(tr.bassI&&E>.15&&bs>=0&&MU.vari!==0&&gid!=="ambient"){let n=nt(bs,45);while(n>52)n-=12;while(n<38)n+=12;bassInst(tr.bassI,n,t,vel((gid==="rominimal"?.13:.17)*(arrangement?.grammar.bassLevel||1)),d);}
     let h=tr.hook[s];if(h>=0&&!runtime.cultureListening&&!arrangement?.melodyRest&&(E>.12||s%4===0)&&!(MU.vari===0&&s%4)){if(bar&&!arrangement)h+=tr.shift;let n=nt(h,57);if(s%4===0)n=snap(n,ct);n=hookPitch(tr.hookI,n,profile);const expression=arrangement?.expression,accent=expression?phraseAccent(expression,s):1;

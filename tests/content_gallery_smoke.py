@@ -20,6 +20,11 @@ try:
    assert page.evaluate("document.querySelectorAll('.content-specimen').length===1&&!!document.querySelector('.content-specimen svg rect')")
    page.locator('.content-specimen button').click();assert page.locator('#contentGallery').is_hidden();assert page.evaluate("__r.labBook.current==='native:pixel'")
    assert page.evaluate("(()=>{const r=__r,d=r.regionOfPos(r.S.wx,r.S.wy+110);return d.worldFamily.id==='terraces';})()")
+   if width==390:
+    for style in ['pixel','membrane','filament','facets','anatomy']:
+     page.evaluate('s=>__r.labGo("native:"+s)',style)
+     assert page.evaluate('async s=>{const {nativeVisualFamily}=await import("/src/native-visual.js");return nativeVisualFamily(__r.regionOfPos(__r.S.wx,__r.S.wy+110),__r.seedOf)===s;}',style)
+     page.wait_for_timeout(70);assert not errors,errors
    page.wait_for_timeout(120);assert page.evaluate('!__r.ac'),'gallery controls stay silent'
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');assert not errors,errors;page.screenshot(path=f'/tmp/whitedot-catalog-{width}.png');print('PASS searchable gallery, actual pixel colony, silent controls and contained UI at '+str(width),flush=True)
   b.close()

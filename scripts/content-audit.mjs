@@ -1,7 +1,4 @@
 import {ecosystemField} from '../src/ecosystem-field.js';
-import {populationField} from '../src/living-populations.js';
-import {calmField} from '../src/blobs.js';
-import {familyField} from '../src/world-families.js';
 import {writeFileSync,existsSync} from 'node:fs';
 import {manifestCoverage,CONTENT_MANIFEST} from '../src/content-manifest.js';
 import {initialize as data} from '../src/data.js';import {initialize as progress} from '../src/progress.js';import {initialize as world} from '../src/world.js';
@@ -19,5 +16,8 @@ for(let i=0;i<count;i++){
  for(const id of local)add(id);living+=local.size;
 }
 const missingRoutes=CONTENT_MANIFEST.flatMap(e=>[e.generator,e.renderer,e.audio].filter(f=>!existsSync(new URL('../src/'+f,import.meta.url))).map(file=>({id:e.id,file})));
-const report={coverage:manifestCoverage(),sample:{chunks:count,landChunks:land,nativeIndividuals:native,visibleNativeIndividuals:visibleNative,observedFamilies:seen.size,worldFamilies:Object.fromEntries(families),visualStyles:Object.fromEntries(styles)},presence:CONTENT_MANIFEST.map(e=>({id:e.id,observedChunks:seen.get(e.id)||0,denominator:count,status:seen.has(e.id)?'observed':'not-observed-in-sample'})),missingRoutes,limits:['This is a deterministic spatial sample, not encounter probability per hour.','Absence in the sample is not proof of unreachable content.','Routes are declared; render, interaction and audio need their own checks.']};
-if(process.argv[3])writeFileSync(process.argv[3],JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({coverage:report.coverage,sample:report.sample,missingRoutes},null,2));if(missingRoutes.length)process.exitCode=1;
+const tracked=id=>/^(living|micro|toy|ecology):/.test(id);
+const report={coverage:manifestCoverage(),sample:{chunks:count,landChunks:land,nativeIndividuals:native,visibleNativeIndividuals:visibleNative,observedFamilies:seen.size,worldFamilies:Object.fromEntries(families),visualStyles:Object.fromEntries(styles)},presence:CONTENT_MANIFEST.map(e=>({id:e.id,observedChunks:tracked(e.id)?seen.get(e.id)||0:null,denominator:tracked(e.id)?count:null,status:!tracked(e.id)?'not-instrumented':seen.has(e.id)?'observed':'not-observed-in-sample'})),missingRoutes,limits:['This is a deterministic spatial sample, not encounter probability per hour.','Absence in the sample is not proof of unreachable content.','Routes are declared; render, interaction and audio need their own checks.']};
+if(process.argv[3])writeFileSync(process.argv[3],JSON.stringify(report,null,2)+'\n');
+if(process.argv[4])writeFileSync(process.argv[4],['# Inventario del universo','',`Muestra determinista de ${count} chunks, antes de distancia y niebla. No es probabilidad por hora.`, '',`Familias coleccionables: ${report.coverage.families}. Entradas combinadas: ${report.coverage.entries}. Con práctica: ${report.coverage.practices}.`,'','Las rutas técnicas son declaraciones contrastadas con archivos. La presencia muestreada no demuestra visibilidad, interacción ni audio. Cero significa no observado en esta muestra.','', '| ID | Nombre | Práctica | Chunks observados | Generador → dibujo → audio |','|---|---|---|---|---|',...CONTENT_MANIFEST.map(e=>`| ${e.id} | ${e.name.replaceAll("|","/")} | ${e.labId||"Pendiente"} | ${tracked(e.id)?(seen.get(e.id)||0)+'/'+count:'Sin medición'} | ${e.generator} → ${e.renderer} → ${e.audio} |`),'','Regenerar: `node scripts/content-audit.mjs 1024 /tmp/contenido.json INVENTARIO_UNIVERSO.md`.',''].join('\n'));
+console.log(JSON.stringify({coverage:report.coverage,sample:report.sample,missingRoutes},null,2));if(missingRoutes.length)process.exitCode=1;

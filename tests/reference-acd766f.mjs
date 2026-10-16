@@ -11,4 +11,5 @@ for(const {region,frames}of fixture.rows){const radio=createRadio(r.seedOf,r.rng
  }
  assert.equal(JSON.stringify(region),before);assert(!radio.advance(region,65,{room:'shared'}).referenceOrigin,'duet agreement is preserved');
 }
-assert.equal(comparisons,96);console.log('PASS 96 frames from actual acd766f across 12 styles: native motifs, bass, lead, grammar, expression and sections; modern guests, immutable maps and duet agreement retained');
+assert.equal(comparisons,96);
+const silent={referenceOrigin:'acd766f',melodyRest:true,hookI:'rhodes',hook:Array(16).fill(-1),bass:Array(16).fill(-1),labScore:{electronic:{count:1,layers:['motif'],pool:['rhodes']},genre:'ambient',variant:0,leads:['rhodes'],scene:5,ensemble:1},phrasing:{name:'bridge',local:1}};assert(labNoteEvents(silent,0,0).some(e=>e.part==='foundation'&&e.degree===0&&e.instrument==='rhodes'));assert.equal(labNoteEvents(silent,8,0).filter(e=>e.part==='foundation').length,0,'one quiet pulse per bar, no pad or note lottery');console.log('PASS 96 frames from actual acd766f across 12 styles: native motifs, bass, lead, grammar, expression and sections; modern guests, immutable maps and duet agreement retained');

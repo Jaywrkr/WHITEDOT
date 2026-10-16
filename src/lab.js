@@ -1,5 +1,5 @@
 import {microChunk} from './micro-instruments-model.js';
-import {nativeVisualFamily} from './native-visual.js';
+import {nativeVisualFamily,nativePractice} from './native-visual.js';
 import {hybridIdentity} from './musical-hybrids.js';
 import {labScore} from './lab-score.js';
 import {LISTENING_REFERENCES,listeningReference,listeningReport} from './listening-reference.js';
@@ -45,7 +45,7 @@ export function initialize(runtime){
   const f=e.find,home=Math.floor(runtime.REG/2)*runtime.WCH;
   if(f.type==='micro')return spiral((a,b)=>microChunk(a,b,runtime.WCH,runtime.regionOfPos((a+.5)*runtime.WCH,(b+.5)*runtime.WCH),runtime.seedOf,runtime.rng).find(o=>o.kind===f.kind)||null,32);
   if(f.type==='ecology')return spiral((a,b)=>(runtime.wchunk(a,b).ecologyObjects||[]).find(o=>o.kind===f.kind)||null,32);
-  if(f.type==='native')return spiral((a,b)=>{const d=runtime.regionOfPos((a+.5)*runtime.WCH,(b+.5)*runtime.WCH);if(nativeVisualFamily(d,runtime.seedOf)!==f.style)return null;const raw=runtime.wchunk(a,b),c=runtime.sceneChunk?.(raw)||raw;return c.sp?.[0]||null;},32);
+  if(f.type==='native')return nativePractice(runtime,f.style);
   if(['landscape','hybrid','band'].includes(f.type)){
    const R=size();for(let radius=0;radius<=32;radius++)for(let x=-radius;x<=radius;x++)for(let y=-radius;y<=radius;y++){
     if(Math.max(Math.abs(x),Math.abs(y))!==radius)continue;

@@ -1,3 +1,9 @@
+## 2.3.0-alpha.22 · Reencuentro 6
+
+Auditoría de 52 estilos y ocho familias en las dos generaciones, con 64 compases por estilo y cinco gramáticas visibles. El cierre corrige una apertura mínima que dependía del pad retirado: un pulso armónico discreto conserva la música sin órgano continuo, y los territorios de una a tres partes no reciben toda la batería. Las suites completas de lógica y CI comprueban el conjunto; navegador, DSP y escucha se documentan separados.
+
+Rama `feat/reencuentro-06-auditoria`. Evidencia: scripts/reencuentro-06-validation.json. CI, DSP y escucha física se registran por separado; no se afirma deploy.
+
 ## 2.3.0-alpha.21 · Reencuentro 5
 
 Saltar y las nuevas llegadas valoran cinco aspectos, ocho familias y nichos además de música. El historial visual migra sin borrar datos y mantiene ocho recuerdos. Los gradientes orientan también hacia aspectos distintos; el detalle del lugar nombra el hábitat. La guía abre el catálogo aislado sin arrastrar direcciones del guardado principal.

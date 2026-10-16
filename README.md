@@ -1,8 +1,8 @@
 <!-- reencuentro -->
-[Plan vigente: recuperar música e identidad del universo](PLAN_REENCUENTRO.md). Fase 5 de seis implementada; evidencias y condiciones de publicación separadas.
+[Plan vigente: recuperar música e identidad del universo](PLAN_REENCUENTRO.md). [Cierre y condiciones](CIERRE_REENCUENTRO.md) · [Inventario](INVENTARIO_UNIVERSO.md). Fase 6 de seis implementada; evidencias y condiciones de publicación separadas.
 <!-- /reencuentro -->
 
-Versión en desarrollo: **2.3.0-alpha.21** · [Mejora integral, diez fases](PLAN_MEJORA_INTEGRAL.md). Fecha de deploy real en la aplicación.
+Versión en desarrollo: **2.3.0-alpha.22** · [Mejora integral, diez fases](PLAN_MEJORA_INTEGRAL.md). Fecha de deploy real en la aplicación.
 
 [Cierre de mejora integral: ramas, pruebas y teléfono](CIERRE_MEJORA_INTEGRAL.md). Diez fases implementadas; integración completa pendiente de CI y aceptación física.
 
@@ -18,7 +18,7 @@ Cierre de interacción 8 incorpora avisos discretos/relevantes/excepcionales, me
 
 Explora para descubrir sonidos, crear tu música y conservar tus encuentros. Un cubo blanco en negro, electrónica generativa y organismos que responden a tus gestos. La primera luz del Camino abre el Mundo del día sin reloj de exploración.
 
-**Jugar:** https://whitedot-inky.vercel.app. La versión de producción depende de los merges de Jay. Esta rama propone **2.3.0-alpha.21**. En iPhone: Compartir → Añadir a pantalla de inicio. Toca el Mundo para activar audio.
+**Jugar:** https://whitedot-inky.vercel.app. La versión de producción depende de los merges de Jay. Esta rama propone **2.3.0-alpha.22**. En iPhone: Compartir → Añadir a pantalla de inicio. Toca el Mundo para activar audio.
 
 Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
