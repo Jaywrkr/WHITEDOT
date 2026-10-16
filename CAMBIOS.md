@@ -1,3 +1,9 @@
+## 2.3.0-alpha.16 · Ecosistemas reactivos
+
+Diez respuestas visuales sobre flora, fauna y miniinstrumentos reales: contornos, flores, niebla abierta, constelaciones, elasticidad, color transportado, ecos, enjambres, hilos y metamorfosis. Acercarse, tocar, esperar y rodear cambian el gesto. Actividad, sensibilidad y contagio independientes generan zonas quietas, reactivas o festivas. El color puede despertar otra flor y las respuestas pueden propagarse a un vecino real.
+
+Efectos efímeros y acotados, pausas con menús/escáner, limpieza al saltar y soporte de movimiento reducido. No cambia síntesis, composición, población, coordenadas guardadas ni progreso. No añade botones. Versión actualizada; publicación/fecha las estampa Vercel al desplegar. Evidencia enfocada en scripts/viaje-02-validation.json. CI completo y audio de fase 1 siguen pendientes antes de integrar.
+
 ## 2.3.0-alpha.15 · Viaje continuo
 
 Núcleos musicales locales, relevos de ocho compases y mezcla gradual; viento diez veces más leve, niebla coloreada y gradientes que orientan hacia núcleos reales. Cada apertura automática busca una región no usada; regresos deliberados intactos. Distancia caminada siempre visible, sin contar saltos, y bienvenida breve para jugadores que vuelven. Se preservan progreso y coordenadas históricas.

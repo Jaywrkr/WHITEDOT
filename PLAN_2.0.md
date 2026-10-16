@@ -4,7 +4,7 @@ Prioridad vigente: [PLAN_VIAJE_Y_REACCIONES.md](PLAN_VIAJE_Y_REACCIONES.md).
 | Fase | Rama | Estado |
 |---|---|---|
 | Viaje 1 | `feat/viaje-musical-continuo` | Implementada; DSP/CI pendientes, ver evidencia |
-| Reacciones 2 | `feat/ecosistemas-reactivos` | Siguiente, desde viaje 1 |
+| Reacciones 2 | `feat/ecosistemas-reactivos` | Implementada; validación enfocada, CI conjunto pendiente |
 
 <!-- /viaje-reacciones-actual -->
 

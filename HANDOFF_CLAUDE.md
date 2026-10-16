@@ -1,3 +1,9 @@
+# Prioridad vigente · Ecosistemas reactivos
+
+Fase 2 en `feat/ecosistemas-reactivos`, desde `267a7de` (viaje), versión alpha.16. Leer PLAN_VIAJE_Y_REACCIONES.md. `reactive-ecology-model.js` decide régimen, diez gestos por individuo, memoria efímera y límites; `reactive-ecology.js` observa toques sin capturarlos, obtiene habitantes reales y dibuja respuestas bajo la niebla. Render llama tick tras movimiento y dibujo antes del fog. Living/micro aplican poses locales sin mover coordenadas. Fog abre ventanas pequeñas de radio gradual; movimiento reducido conserva solo contornos estáticos. Sin cambios de música en esta fase. No guardar efectos ni fabricar logros.
+
+Navegador enfocado: tres tamaños y las diez rutas de dibujo alcanzadas sobre habitantes nativos. Pausa, toque, permanencia, movimiento reducido y limpieza comprobados. Evidencia en scripts/viaje-02-validation.json. CI completo se dispara con push a esta rama; no afirmar verde hasta tener resultados. El audio DSP de fase 1 sigue pendiente por agotamiento de hilos local. Jay mantiene PR/merge.
+
 # Prioridad vigente · Viaje y reacciones
 
 Leer PLAN_VIAJE_Y_REACCIONES.md. Fase 1 en `feat/viaje-musical-continuo`, desde `2499e61`, versión alpha.15. `territory-journey.js` conserva radios y frases por bloques; `practice-travel.js` asigna llegadas sin repetir regiones examinadas; perfil recibe movimiento real del integrador; `return-entrance.js` saluda sin audio; `distant-colors.js` señala núcleos reales y protege el centro negro. Renders DSP pendientes por falta de hilos, no confundir grafo de programación con escucha. Evidencia en scripts/viaje-01-validation.json. Sigue fase 2, ecosistemas reactivos, autorizada por Jay. Jay PR/merge; no push a main.

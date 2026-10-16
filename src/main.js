@@ -1,3 +1,4 @@
+import {initialize as reactiveEcology} from './reactive-ecology.js';
 import {initialize as returnEntrance} from './return-entrance.js';
 import {initialize as musicTerritories} from './territory-journey.js';
 import {initialize as microInstruments} from './micro-instruments.js';
@@ -181,7 +182,7 @@ lab(runtime);
 microInstruments(runtime);achievementsV2(runtime);worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
 practiceTravel(runtime);boxSurprises(runtime);
 musicTravel(runtime);
-distantColors(runtime);vjWorld(runtime);
+distantColors(runtime);vjWorld(runtime);reactiveEcology(runtime);
 houseAudio(runtime);house(runtime);
 onboarding(runtime);labLearning(runtime);
 runtime.styleUI();runtime.hud();
