@@ -48,7 +48,7 @@ export function initialize(runtime){
   c.restore();
  }
  function cover(t){if(!runtime.inWorld()||!fog)return;const x=runtime.W/2,y=runtime.H/2,reach=fog.radius,flicker=fog.lamp<.12?1-Math.pow(1-fog.lamp/.12,2)*(.018+.012*Math.sin(t/57)*Math.sin(t/113)):1;
-  c.save();c.globalAlpha=1;const g=c.createRadialGradient(x,y,0,x,y,reach*flicker);
+  c.save();c.globalAlpha=1;for(const window of runtime.reactiveMistWindows?.()||[]){if(window.radius<.5)continue;c.beginPath();c.rect(0,0,runtime.W,runtime.H);c.moveTo(window.x+window.radius,window.y);c.arc(window.x,window.y,window.radius,0,Math.PI*2);c.clip('evenodd');}const g=c.createRadialGradient(x,y,0,x,y,reach*flicker);
   g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.18,'rgba(0,0,0,0)');g.addColorStop(.52,'rgba(0,0,0,'+fog.density*.42+')');g.addColorStop(.82,'rgba(0,0,0,.66)');g.addColorStop(1,'#000');c.fillStyle=g;c.fillRect(0,0,runtime.W,runtime.H);
   // Noise darkens existing light; it never paints a grey panel over black space.
   if(detailQuality>.01){c.fillStyle='#000';for(let i=0;i<16;i++){const a=i*Math.PI*2/16+t/180000,rr=reach*(.42+visualHash(i,0,groundSeed)*.35),px=x+Math.cos(a)*rr,py=y+Math.sin(a)*rr;const n=c.createRadialGradient(px,py,0,px,py,reach*.17);n.addColorStop(0,'rgba(0,0,0,'+fog.density*.13*Math.min(1,detailQuality)+')');n.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=n;c.fillRect(px-reach*.17,py-reach*.17,reach*.34,reach*.34);}}

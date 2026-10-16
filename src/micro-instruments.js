@@ -51,7 +51,7 @@ export function initialize(runtime){
  function draw(t,ox,oy,radius){
   if(!surface())return;const c=runtime.cx,now=runtime.ac?.currentTime??-100,still=runtime.S.reducedMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;
   for(const o of nearby(Math.min(radius+40,1200))){const distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),elapsed=now-(o.onset??-1000),lit=runtime.S.sound&&elapsed>=0?Math.max(0,1-elapsed/.65):0,fade=runtime.worldOpacity?.(distance)??Math.max(0,1-distance/radius);if(fade<=.001)continue;
-   c.save();c.translate(o.x+ox,o.y+oy);c.globalAlpha=fade*(.45+lit*.55);c.strokeStyle=runtime.musicInk?.(o,MICRO_INSTRUMENTS[o.kind].role)||'#fff';c.fillStyle=c.strokeStyle;c.lineWidth=lit?1.4:1;
+   c.save();c.translate(o.x+ox,o.y+oy);const response=runtime.reactivePose?.(o.id);if(response){c.translate(response.x,response.y);c.rotate(response.rotation);c.scale(response.sx,response.sy);}c.globalAlpha=fade*(.45+lit*.55);c.strokeStyle=runtime.musicInk?.(o,MICRO_INSTRUMENTS[o.kind].role)||'#fff';c.fillStyle=c.strokeStyle;c.lineWidth=lit?1.4:1;
    const scale=1+(still?0:lit*.15);c.scale(scale,scale);c.stroke(new Path2D(microPath(o.kind)));
    if(distance<100){c.globalAlpha=fade*(.25+lit*.55);c.beginPath();c.arc(0,0,27,-Math.PI/2,-Math.PI/2+(o.parameter||.35)*Math.PI*1.8);c.stroke();}
    if(lit){for(let i=0;i<3;i++){const a=o.phase+i*2.094+(still?0:elapsed*2),r=25+(still?0:elapsed*18);c.fillRect(Math.cos(a)*r-1,Math.sin(a)*r-1,2,2);}}

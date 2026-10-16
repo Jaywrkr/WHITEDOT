@@ -1,0 +1,105 @@
+{
+  "version": "2.3.0-alpha.16",
+  "branch": "feat/ecosistemas-reactivos",
+  "base": "267a7de",
+  "node": {
+    "base": "267a7dee53ad0f7facbe7e31e6c406dbcfb225de",
+    "changes": [
+      ".github/workflows/checks.yml",
+      "CAMBIOS.md",
+      "HANDOFF_CLAUDE.md",
+      "PLAN_2.0.md",
+      "PLAN_VIAJE_Y_REACCIONES.md",
+      "README.md",
+      "index.html",
+      "package.json",
+      "src/living.js",
+      "src/main.js",
+      "src/micro-instruments.js",
+      "src/release-info.js",
+      "src/render.js",
+      "src/world-visibility.js",
+      "sw.js",
+      "src/reactive-ecology-model.js",
+      "src/reactive-ecology.js",
+      "tests/reactive-ecology.mjs",
+      "tests/reactive_ecology_smoke.py"
+    ],
+    "selected": [
+      "micro-instruments.mjs",
+      "reactive-ecology.mjs",
+      "release.mjs",
+      "territory-engine.mjs",
+      "test-impact.mjs",
+      "version-bump.mjs",
+      "world-visibility.mjs"
+    ],
+    "results": [
+      {
+        "test": "micro-instruments.mjs",
+        "exit": 0,
+        "milliseconds": 99
+      },
+      {
+        "test": "reactive-ecology.mjs",
+        "exit": 0,
+        "milliseconds": 299
+      },
+      {
+        "test": "release.mjs",
+        "exit": 0,
+        "milliseconds": 51
+      },
+      {
+        "test": "territory-engine.mjs",
+        "exit": 0,
+        "milliseconds": 555
+      },
+      {
+        "test": "test-impact.mjs",
+        "exit": 0,
+        "milliseconds": 37
+      },
+      {
+        "test": "version-bump.mjs",
+        "exit": 0,
+        "milliseconds": 107
+      },
+      {
+        "test": "world-visibility.mjs",
+        "exit": 0,
+        "milliseconds": 48
+      }
+    ],
+    "completeSuite": false
+  },
+  "audit": {
+    "version": "2.3.0-alpha.16",
+    "sourceModules": 207,
+    "htmlIDs": 406,
+    "staticImports": 539,
+    "shellAssets": 227,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "browser": {
+    "passed": true,
+    "viewports": [
+      390,
+      844,
+      1280
+    ],
+    "allTenRendererPaths": "reached through native inhabitants, no fabricated source positions",
+    "runner": "Real Chromium CDP; local resource profile without Node bridge; unchanged portable test assertions",
+    "output": "PASS all ten render paths reached through real native inhabitants\nPASS real flora proximity/tap, menu pause, reduced motion, bounded reactions, teleport cleanup and silent contained UI at 390\nPASS real flora proximity/tap, menu pause, reduced motion, bounded reactions, teleport cleanup and silent contained UI at 844\nPASS real flora proximity/tap, menu pause, reduced motion, bounded reactions, teleport cleanup and silent contained UI at 1280\n",
+    "physicalTouchDevice": false
+  },
+  "music": "No synthesis/composition changes in this phase; inherited phase-1 DSP validation remains pending",
+  "physicalPhone": false,
+  "fullSuites": false,
+  "ciAndDeploy": "not claimed; final branch push triggers complete suites before integration"
+}

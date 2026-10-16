@@ -1,4 +1,4 @@
-Versión en desarrollo: **2.3.0-alpha.15** · [Mejora integral, diez fases](PLAN_MEJORA_INTEGRAL.md). Fecha de deploy real en la aplicación.
+Versión en desarrollo: **2.3.0-alpha.16** · [Mejora integral, diez fases](PLAN_MEJORA_INTEGRAL.md). Fecha de deploy real en la aplicación.
 
 [Cierre de mejora integral: ramas, pruebas y teléfono](CIERRE_MEJORA_INTEGRAL.md). Diez fases implementadas; integración completa pendiente de CI y aceptación física.
 
@@ -22,7 +22,7 @@ Cierre de la ampliación: [estado, auditoría y orden de ramas](CIERRE_INTERACCI
 
 ## Viaje y reacciones
 
-Distancia caminada visible, llegadas nuevas, núcleos musicales y gradientes de orientación. [Plan vigente y límites de validación](PLAN_VIAJE_Y_REACCIONES.md). Las reacciones visuales continúan en una rama dependiente.
+Distancia caminada visible, llegadas nuevas, núcleos musicales y gradientes de orientación. [Plan vigente y límites de validación](PLAN_VIAJE_Y_REACCIONES.md). Diez gestos visuales responden al contacto, toque, quietud y órbita en zonas tranquilas, reactivas o festivas. Sin controles nuevos.
 
 ## Dirección musical · antecedente integrado
 
