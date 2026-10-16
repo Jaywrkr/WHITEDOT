@@ -22,7 +22,7 @@ export function initialize(runtime){
  function touch(o,origin='player'){
   if(!active()||clock-(o.last??-100)<.7)return false;o.last=clock;o.entry++;o.charge=1;
   const d=runtime.regionOfPos(o.x,o.y),def=MICRO_INSTRUMENTS[o.kind],voice=microVoice('micro:'+o.kind,o);
-  if(origin==='player'){runtime.recordElement?.('micro:'+o.kind,d);runtime.touched?.();runtime.creativeAction?.(def.role==='perc'?'groove':def.role==='bajo'?'bass':'melody','model');}
+  if(origin==='player'){runtime.visualGesture?.(o.x,o.y);runtime.recordElement?.('micro:'+o.kind,d);runtime.touched?.();runtime.creativeAction?.(def.role==='perc'?'groove':def.role==='bajo'?'bass':'melody','model');}
   if(origin==='player'&&['grain','ring'].includes(o.kind)&&o.variant===63)runtime.collectRareCard?.('micro:'+o.kind,o,{context:{role:voice.role,instrument:voice.instrument,gesture:'contacto'}});
   if(origin==='player')runtime.save();const state=runtime.S;if(runtime.S.sound&&runtime.ac?.state==='running')runtime.beatSoon(time=>{if(state===runtime.S)emit(o,time,origin);},null,origin);return true;
  }

@@ -2,7 +2,13 @@ name: Universe foundation checks
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, 'feat/posmusica-08-cierre']
+    # Documentation-only updates do not change the validated runtime.
+    # Pull requests still run every suite without path filters.
+    paths-ignore:
+      - '**/*.md'
+      - 'scripts/posmusica-*-validation.json'
+      - 'scripts/posmusica-08-ci.json'
 permissions:
   contents: read
 jobs:

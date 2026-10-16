@@ -56,7 +56,7 @@ Jay pidió completar los pendientes con «Hazlo entonces». La pausa musical ant
 |---|---|---|
 | 6 · Instrumentos y estelas musicales | `feat/posmusica-06-instrumentos` | Probada: auditoría, 133 suites Node, navegador y 25 renders; desde perfil |
 | 7 · Guía y referencias VJ | `feat/posmusica-07-recorrido` | Probada: auditoría, 133 suites Node y cuatro tamaños; desde 6 |
-| 8 · Auditoría y cierre integral | `feat/posmusica-08-cierre` | Pendiente, desde 7 |
+| 8 · Auditoría y cierre integral | `feat/posmusica-08-cierre` | Local aprobado; CI completo pendiente, desde 7 |
 
 Diez familias de miniinstrumentos con predominio por hábitat, variantes, huecos y pequeños grupos. Seis voces originales amplían el catálogo de síntesis de 75 a 81; otras familias reutilizan batería y motores avanzados. Contacto y permanencia aportan ritmo/acordes; rodear abre filtro o modulación. No son muestras de instrumentos comerciales ni un ranking de ventas. Estilos busca una agrupación nativa; escáner y libro reconocen diez familias nuevas (151 en total). Dos tarjetas excepcionales de nube/anillo (72 tipos en total): variante 1/64 dentro de su tipo, probabilidad de territorio desconocida; no prometer tasas por hora.
 

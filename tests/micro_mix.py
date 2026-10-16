@@ -19,6 +19,7 @@ try:
    assert 0<row['peak']<.96 and -60<row['rms']<-3,row
    assert row['notes'],row
    assert all(n['time']>=0 and 30<=n['note']<=81 for n in row['notes']),row
+   assert all(all(any((pitch-tone)%12==0 for tone in n['tones']) for pitch in n['pitches']) for n in row['notes'] if n['role'] in ['acorde','bajo'] or n['strongBeat']),row
    assert row['onsets'] and max(n['errorSeconds'] for n in row['onsets'])<.011,row
    if row.get('trails'):
     assert len(row['trails'])<=12,row

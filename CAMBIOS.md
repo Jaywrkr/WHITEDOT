@@ -1,3 +1,9 @@
+## Auditoría de interacción · entrega 8
+
+Corrección de armonía para respuestas repetidas: usan el marco disponible para su instante. Contactar un miniinstrumento activa el gesto visual común también sin audio. Regresiones en el reloj y en la revisión integrada PC/móvil. CIERRE_INTERACCION_FINAL.md reúne alcance, números, correcciones, orden de ramas y límites de aceptación.
+
+CI se activa en la rama final: navegador completo y todos los programas de audio repartidos en tres grupos. PR conserva todas las comprobaciones. Documentación sola no repite suites en push. Auditoría, 133 suites Node, recorrido integrado en cuatro tamaños y 25 renders finales aprobados. CI completo pendiente; no se afirma escucha física ni publicación.
+
 ## Recorrido y referencias VJ · entrega 7
 
 Guía opcional ilustrada, cuatro experiencias y siguiente paso claro. Práctica de seis pasos con progreso pequeño y una sola instrucción. Nuevos instrumentos incluidos en la señal del primer encuentro; glosario explica sus gestos/filtros. Omitir o repetir conserva premios. Normalización de guía preserva campos desconocidos.

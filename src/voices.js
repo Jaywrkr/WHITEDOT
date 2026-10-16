@@ -109,26 +109,24 @@ export function initialize(runtime) {
     if(origin==='player'){runtime.vidaHear?.(kind,index,time);runtime.powerHear?.(index);}   // el ave lira escucha lo que tocas   // el looper guarda lo que causas tú
     if(origin==='player')runtime.petHear?.({degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,source});
     if(origin==='player'&&(!source||Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<360))runtime.depthHear?.({origin,degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,layer:runtime.S.layer||'superficie'});
-    const frame=runtime.musicalFrame?.(time),harmonicRegion=frame?.region||(origin==='band'?(runtime.MU.dnaA||region):region);
-    const scale = harmonicRegion.scale, transposition = frame?.transposition??(runtime.BIOMES[harmonicRegion.z].tr + harmonicRegion.trOff);
-    const note = degree => {
-      const d = (((frame?.degree??runtime.MU.deg) + voice.degree + degree) % 7 + 7) % 7;
-      let n = 57 + transposition + scale[d];
-      while (n < voice.low) n += 12;
-      while (n > voice.high) n -= 12;
-      const step=frame?frame.step+Math.round((time-frame.time)/frame.six):null;
-      return frame&&(voice.role==='bajo'||step%4===0)?consonantPitch(n,frame.chords.slice(0,3),voice.low,voice.high):n;
+    const frame=runtime.musicalFrame?.(time);
+    const note = (degree,harmonicFrame=frame,onset=time) => {
+      const harmonicRegion=harmonicFrame?.region||(origin==='band'?(runtime.MU.dnaA||region):region),scale=harmonicRegion.scale,
+       transposition=harmonicFrame?.transposition??(runtime.BIOMES[harmonicRegion.z].tr+harmonicRegion.trOff),d=(((harmonicFrame?.degree??runtime.MU.deg)+voice.degree+degree)%7+7)%7;
+      let n=57+transposition+scale[d];while(n<voice.low)n+=12;while(n>voice.high)n-=12;
+      const step=harmonicFrame?harmonicFrame.step+Math.round((onset-harmonicFrame.time)/harmonicFrame.six):null;
+      return harmonicFrame&&(voice.role==='bajo'||step%4===0)?consonantPitch(n,harmonicFrame.chords.slice(0,3),voice.low,voice.high):n;
     };
     // Only automatic upper voices rest; a player's gesture still receives its own response.
     if(origin==='ambient'&&(voice.role==='lead'||voice.role==='agudo')&&runtime.MU.radio?.genre===region.genre&&runtime.MU.radio?.melodyRest)return;
     function hit(t, degree, strength) {
       if(['player','field','lesson'].includes(origin))runtime.focusGesture?.(t,source,voice.role);
       runtime.soundCue?.(source,voice.role,t,origin);
-      const n = note(degree);if(origin==='player'&&source)runtime.identityGesture?.(source,voice,n);let v = runtime.vel(strength * volume*(voice.volume??1))*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
+      const hitFrame=runtime.musicalFrame?.(t)??frame,n=note(degree,hitFrame,t);if(origin==='player'&&source)runtime.identityGesture?.(source,voice,n);let v = runtime.vel(strength * volume*(voice.volume??1))*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
       const articulation={...(kind.startsWith('micro:')?microArticulation(source):{}),technique:runtime.cardTechnique?.(source)|| (source?.expression==='staccato'?'muted':source?.expression==='glide'?'slide':voice.technique||'normal')};
       if(source){source.musicRole=voice.role;source.musicInstrument=voice.instrument;}
       const emit=()=>{
-        if(kind.startsWith('micro:'))runtime.microVoiceCue?.({kind,instrument:voice.instrument,role:voice.role,note:n,time:t,tones:frame?.chords||[],morph:articulation.morph});
+        if(kind.startsWith('micro:'))runtime.microVoiceCue?.({kind,instrument:voice.instrument,role:voice.role,note:n,time:t,tones:hitFrame?.chords||[],pitches:voice.role==='acorde'&&hitFrame?hitFrame.chords.slice(0,3).map(n=>fitRegister(n,voice.low,voice.high)):[n],strongBeat:!!hitFrame&&(hitFrame.step+Math.round((t-hitFrame.time)/hitFrame.six))%4===0,morph:articulation.morph});
         if(kind.startsWith('micro:')&&voice.role==='bajo'&&runtime.playNewInstrument?.(voice.instrument,n,t,v,articulation)){runtime.recordInstrument?.(voice.instrument);return;}
         if(kind==='micro:drum'&&electronicDrum(runtime,voice.instrument,t,v,microKit(region,runtime.seedOf)))return;
         if(voice.role==='perc'&&INSTRUMENT_SPECS[voice.instrument]&&runtime.playNewInstrument?.(voice.instrument,n,t,v,articulation)){runtime.recordInstrument?.(voice.instrument);if(kind.startsWith('living:'))runtime.livingNoteCue?.({id:source?.id,role:voice.role,note:n,time:t,material:voice.material,instrument:voice.instrument});return;}
@@ -148,7 +146,7 @@ export function initialize(runtime) {
           else if (voice.instrument === 'snare') runtime.snare(t,v*.8);
           else runtime.tom(t,55+voice.degree*15,v);
         } else if (voice.role === 'acorde') {
-          [0,2,4].forEach((d,i)=>runtime.hookInst(voice.instrument,(frame?fitRegister(frame.chords[i],voice.low,voice.high):note(degree+d))-(voice.instrument==='glass'?12:0),t,v*.4,region,articulation));
+          [0,2,4].forEach((d,i)=>runtime.hookInst(voice.instrument,(hitFrame?fitRegister(hitFrame.chords[i],voice.low,voice.high):note(degree+d,hitFrame,t))-(voice.instrument==='glass'?12:0),t,v*.4,region,articulation));
         } else runtime.hookInst(voice.instrument,n-(voice.instrument==='glass'?12:0),t,v,region,articulation);
       };
       const patchEmit=()=>{const produce=()=>withVoiceOrigin(origin,emit);if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(kind,region,voice,source,t,produce);else produce();};

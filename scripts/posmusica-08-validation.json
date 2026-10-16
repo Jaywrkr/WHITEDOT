@@ -1,0 +1,64 @@
+{
+  "branch": "feat/posmusica-08-cierre",
+  "base": "51bc007",
+  "audit": {
+    "version": "2.2.0-rc.1",
+    "sourceModules": 201,
+    "htmlIDs": 402,
+    "staticImports": 521,
+    "shellAssets": 221,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "node": {
+    "suites": 133,
+    "result": "passed",
+    "additionalRegression": "muted micro contact still emits a visual gesture; no audio queue"
+  },
+  "browser": {
+    "program": "tests/visual_closure_smoke.py",
+    "result": "passed",
+    "viewports": [
+      [
+        320,
+        640
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        844,
+        390
+      ],
+      [
+        1280,
+        800
+      ]
+    ],
+    "includes": "entry, profile, quiet UI, guide/footer/font, boxes/undo/clocks, full cards, VJ, persistence and reduced motion"
+  },
+  "audio": {
+    "program": "tests/micro_mix.py",
+    "result": "passed",
+    "renders": 25,
+    "maxPeak": 0.8791258931159973,
+    "checks": "register, triads/bass/strong-beat consonance, swing/grid, full-buffer peak including startup",
+    "detail": "scripts/posmusica-08-audio.json",
+    "environment": "initial process failed creating a thread; optional local profile reduces compositor threading; all assertions retained"
+  },
+  "CI": {
+    "status": "pending",
+    "browserFlows": 100,
+    "offlinePrograms": 1,
+    "audioPrograms": 40,
+    "audioShards": 3
+  },
+  "physicalPhone": "pending",
+  "deployment": "not performed",
+  "main": "not modified by Codex"
+}

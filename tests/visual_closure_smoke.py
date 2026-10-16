@@ -22,6 +22,10 @@ try:
    assert page.locator('#mProfile').evaluate('e=>e.contains(document.activeElement)');assert page.evaluate('__r.waves.length')<=before
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');assert page.locator('.profile-sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
    page.screenshot(path=f'/tmp/whitedot-profile-{width}.png');page.locator('#profileClose').click()
+   # Guide actions remain reachable while its descriptive content scrolls.
+   page.locator('#bMenu').click();page.locator('#bGuide').click();assert page.locator('#guideJourney li').count()==4
+   page.locator('#guideGlossary').click();assert page.locator('#guideClose').bounding_box()['y']+page.locator('#guideClose').bounding_box()['height']<=height
+   assert 'Geist Mono' in page.locator('#guideClose').evaluate('e=>getComputedStyle(e).fontFamily');page.locator('#guideClose').click()
    # One reversible temporary effect; menu pauses its active-time clock.
    page.evaluate('__r.giveSurprise("pequeno")');page.wait_for_function('!document.getElementById("surpriseHud").hidden');assert page.evaluate('__r.surpriseStyle.scale')==.55
    rect=page.locator('#surpriseHud').bounding_box();assert rect['x']>=0 and rect['x']+rect['width']<=width

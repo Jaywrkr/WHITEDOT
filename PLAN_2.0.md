@@ -21,7 +21,7 @@ El ciclo vigente es [Dirección musical, siete fases](PLAN_DIRECCION_MUSICAL.md)
 | 2 · Diez miniinstrumentos | `feat/posmusica-02-instrumentos` | Recuperada selectivamente en entrega 6 |
 | 6 · Instrumentos y estelas | `feat/posmusica-06-instrumentos` | Probada: auditoría, 133 suites Node, navegador y 25 renders; desde perfil |
 | 7 · Recorrido y referencias VJ | `feat/posmusica-07-recorrido` | Probada: auditoría, 133 suites Node y cuatro tamaños; desde entrega 6 |
-| 8 · Cierre integral | `feat/posmusica-08-cierre` | Pendiente; desde entrega 7 |
+| 8 · Cierre integral | `feat/posmusica-08-cierre` | Local aprobado; CI completo pendiente, desde entrega 7 |
 
 <!-- /direccion-musical-actual -->
 
