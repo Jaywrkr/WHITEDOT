@@ -1,3 +1,7 @@
+## 2.3.0-alpha.31 · Cuaderno vivo 7/20
+
+Una nota real despierta una pequeña onda visual entre hasta tres vecinos presentes. Se espera el reloj de audio; colas acotadas, sin notas adicionales. Saltos y paneles limpian reacciones pendientes.
+
 ## 2.3.0-alpha.30 · Cuaderno vivo 6/20
 
 Caminantes y especies que ya te seguían ocupan posiciones distintas, con cuatro distancias y deriva lenta. Conservan sus temporizadores, voces y velocidad; no se crean seguidores artificiales.

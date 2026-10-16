@@ -10,7 +10,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 4 | Miradas hacia el cubo | feat/wow-04-miradas | Implementada; ver informe 04 |
 | 5 | Saludos diferentes | feat/wow-05-saludos | Implementada; ver informe 05 |
 | 6 | Compañía con espacio propio | feat/wow-06-compania | Implementada; ver informe 06 |
-| 7 | Reacciones entre vecinos | feat/wow-07-reacciones | Pendiente |
+| 7 | Reacciones entre vecinos | feat/wow-07-reacciones | Implementada; ver informe 07 |
 | 8 | Notas visibles a tiempo | feat/wow-08-notas-visibles | Pendiente |
 | 9 | Corriente en conexiones | feat/wow-09-corriente | Pendiente |
 | 10 | Constelaciones temporales | feat/wow-10-constelaciones | Pendiente |
@@ -56,3 +56,7 @@ Tres saludos individuales: reverencia, giro corto o salto. Se activan al entrar 
 ### 6. Compañía con espacio propio
 
 Caminantes y especies que ya te seguían ocupan posiciones distintas, con cuatro distancias y deriva lenta. Conservan sus temporizadores, voces y velocidad; no se crean seguidores artificiales.
+
+### 7. Reacciones entre vecinos
+
+Una nota real despierta una pequeña onda visual entre hasta tres vecinos presentes. Se espera el reloj de audio; colas acotadas, sin notas adicionales. Saltos y paneles limpian reacciones pendientes.
