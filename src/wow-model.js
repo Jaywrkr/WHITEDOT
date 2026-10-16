@@ -13,3 +13,8 @@ export function createMotion(){
  },pose(reduced=false){const stretch=reduced?0:.11*Math.exp(-age*8)*Math.cos(age*18);return {x:1+stretch,y:1/(1+stretch),angle};},
  reset(){last=null;moving=false;age=9;}};
 }
+
+export function lookVector(dx,dy,reduced=false){
+ if(reduced||!Number.isFinite(dx)||!Number.isFinite(dy))return {x:0,y:0};
+ const d=Math.hypot(dx,dy)||1;return {x:dx/d*1.4,y:dy/d*1.4};
+}

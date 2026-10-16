@@ -1,3 +1,7 @@
+## 2.3.0-alpha.28 · Cuaderno vivo 4/20
+
+Los habitantes pixelados y la fauna pixel original miran hacia el cubo cercano. Pupilas de desplazamiento acotado, sin modificar figuras guardadas. Movimiento reducido conserva la mirada fija.
+
 ## 2.3.0-alpha.27 · Cuaderno vivo 3/20
 
 Los habitantes y especies se inclinan y abren ligeramente al acercarte. Un arco tenue muestra atención en hasta doce fuentes reales; no aparecen objetos nuevos ni sonidos.

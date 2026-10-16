@@ -58,6 +58,7 @@ export function initialize(runtime){
    c.save();c.translate(o.x+ox,o.y+oy+(still?0:o.pose||0));runtime.wowObjectTransform?.(c,o);if(!still){c.rotate((o.rotation||0)+Math.sin(p*2)*response*.25);c.scale(1+response*.16,1-response*.1);}
    c.globalAlpha=fade*(.65+o.lit*.35);c.fillStyle=runtime.musicInk?.(o,g.role)||'#bddbe0';
    const cell=1.5+(g.variant%3)*.2;for(const [x,y]of pixels)c.fillRect(Math.round(x*cell),Math.round(y*cell),cell,cell);
+   runtime.wowEyes?.(o,c);
    if(o.kind==='viajero'&&!still){c.globalAlpha=fade*.2;for(let i=1;i<=3;i++)c.fillRect(-o.vx*.22*i,-o.vy*.22*i,2,2);}
    if(response){c.strokeStyle=c.fillStyle;c.lineWidth=1;c.globalAlpha=fade*response;c.beginPath();c.arc(0,0,still?15:12+age*12,0,Math.PI*1.7);c.stroke();}c.restore();
   }
