@@ -66,19 +66,23 @@ export function labScore(region,seedOf,rng){
   kick:Object.freeze([...(nativeDrums?.kick||(kind==='calm'?[]:kind==='broken'||kind==='bass'?[0,7,10]:FOUR))]),
  });
 }
-export function labArrangement(frame,score,environment={}){
+export function labArrangement(frame,score,environment={},backbone=null){
  if(!score)return frame;
  const chapter=Math.floor(Math.max(0,frame.harmonyBar||0)/16),quiet=(environment.initiative||0)>.35,
   scene=chapter%6,orchestra=(score.variant+chapter+(quiet?1:0))%score.leads.length,
-  phrasing=score.production?arrangementPhrase(frame.harmonyBar||0,score.variant):null,evolved={...score,phrasing,scene,quiet,listenQuiet:environment.quiet===true},
+  phrasing=score.production?arrangementPhrase(frame.harmonyBar||0,score.variant):null,
+  native=backbone&&Array.isArray(backbone.hook)&&Array.isArray(backbone.bass)?backbone:null,
+  evolved={...score,phrasing,scene,quiet,listenQuiet:environment.quiet===true,
+   ...(native?{backbone:{identity:native.identity?.id,hookI:native.hookI},leads:[...new Set([native.hookI,...score.leads])],ceiling:Math.max(score.ceiling,native.grammar.brightness)}:{})},
   foundation=(frame.section===0||(frame.harmonyBar||0)<8||(score.electronic?.count||10)<=3)&&(score.ensemble>1||(score.electronic?.count||0)>0)&&!environment.quiet,
-  rest=frame.melodyRest&&!foundation||scene===5&&(score.electronic?.count??10)>3,motif=regionalPhrase(score,frame),hook=rest?Array(16).fill(-1):motif.hook;
- const bass=interlockedBass(score,hook,frame.section===0);
+  rest=(native?native.melodyRest&&!foundation:frame.melodyRest&&!foundation)||scene===5&&(score.electronic?.count??10)>3,
+  motif=regionalPhrase(score,frame),hook=rest?Array(16).fill(-1):native&&!native.melodyRest?native.hook.slice():motif.hook;
+ const bass=native?native.bass.slice():interlockedBass(score,hook,frame.section===0);
  const floor=environment.quiet||scene===5?.16:(score.electronic?.count||0)>=8?.48:(score.electronic?.count||0)>=6?.38:.22;
- return {...frame,phrasing,energy:Math.min(.86,Math.max(frame.energy??.25,floor)*(phrasing?.energy||1)),labScore:evolved,labEvolution:{chapter,scene,quiet,motif:motif.id,movement:motif.movement,line:motif.line},hybrid:frame.hybrid||null,melodyRest:rest,hook,bass,bassI:score.bassI,hookI:score.orchestra?territoryInstrument(score.orchestra,Math.floor(Math.max(0,frame.harmonyBar||0)/4),chapter+(quiet?1:0)):score.leads[orchestra],
-  identity:{...frame.identity,id:`lab:${score.id}`,name:score.name,hooks:score.leads,bassI:score.bassI,swing:Math.min(.28,frame.identity?.swing??score.swing),air:Math.min(.5,frame.identity?.air??.5)},
-  grammar:{...frame.grammar,progression:frame.hybrid?.progression||score.progression,harmonyBars:frame.hybrid?.harmonyBars||8,brightness:Math.min(frame.grammar.brightness,score.ceiling),hookLevel:frame.grammar.hookLevel*(scene===1?.55:.85),accents:[]},
-  expression:{...frame.expression,harmony:false,toneScale:Math.min(1,frame.expression.toneScale),attackScale:frame.expression.attackScale*(score.id==='breath'?1.4:1)},
+ return {...frame,phrasing,energy:Math.min(.86,Math.max(frame.energy??.25,floor)*(phrasing?.energy||1)),labScore:evolved,labEvolution:{chapter,scene,quiet,motif:native?`${native.identity?.id||score.genre}:${motif.id}`:motif.id,movement:motif.movement,line:motif.line},hybrid:frame.hybrid||null,melodyRest:rest,hook,bass,bassI:native?.bassI||score.bassI,hookI:native?.hookI||(score.orchestra?territoryInstrument(score.orchestra,Math.floor(Math.max(0,frame.harmonyBar||0)/4),chapter+(quiet?1:0)):score.leads[orchestra]),
+  identity:{...(native?.identity||frame.identity),id:native?.identity?.id||`lab:${score.id}`,name:native?.identity?.name||score.name,hooks:evolved.leads,bassI:native?.bassI||score.bassI,swing:Math.min(.33,native?.identity?.swing??frame.identity?.swing??score.swing),air:native?.identity?.air??Math.min(.5,frame.identity?.air??.5)},
+  grammar:{...frame.grammar,progression:frame.hybrid?.progression||native?.grammar.progression||score.progression,harmonyBars:frame.hybrid?.harmonyBars||native?.grammar.harmonyBars||8,brightness:native?Math.min(native.grammar.brightness,frame.hybrid?.brightness||Infinity):Math.min(frame.grammar.brightness,score.ceiling),hookLevel:(native?.grammar.hookLevel??frame.grammar.hookLevel)*(scene===1?.75:1),accents:[]},
+  expression:{...(native?.expression||frame.expression),harmony:false,toneScale:Math.min(1,native?.expression.toneScale??frame.expression.toneScale),attackScale:native?.expression.attackScale??frame.expression.attackScale*(score.id==='breath'?1.4:1)},
  };
 }
 // All event offsets are fractions of one sixteenth; the electronic clock stays shared.
@@ -86,10 +90,10 @@ export function labNoteEvents(frame,step,bar){
  if(!frame?.labScore||!Number.isInteger(step)||step<0||step>15)return [];
  const score=frame.labScore,cycle=Math.floor(Math.max(0,bar))%8,answer=cycle%4===2,rest=cycle%4===3,
   events=[],bass=frame.bass[step],hook=frame.hook[step];
- if((!score.electronic||score.electronic.layers.includes('bass'))&&bass>=0&&(!rest||step===0||step===8))events.push({role:'bajo',degree:answer&&step!==0?Math.min(7,bass+2):bass,
+ if((!score.electronic||score.electronic.layers.includes('bass'))&&bass>=0&&(score.backbone||!rest||step===0||step===8))events.push({role:'bajo',degree:!score.backbone&&answer&&step!==0?Math.min(7,bass+2):bass,
   instrument:frame.bassI,offset:0,level:step%4===0?1:.8,technique:cycle%2?'muted':'normal'});
- if(!frame.melodyRest&&hook>=0&&(!rest||step===0)){
-  const degree=rest?0:hook;
+ if(!frame.melodyRest&&hook>=0&&(score.backbone||!rest||step===0)){
+  const degree=rest&&!score.backbone?0:hook;
   events.push({role:'lead',degree,instrument:frame.hookI,offset:score.id==='breath'?.22:0,
    level:step===0?.85:.68,technique:answer&&['silk','breath'].includes(score.id)?'slide':step%4?'ghost':'normal'});
  }
@@ -113,7 +117,7 @@ export function labNoteEvents(frame,step,bar){
    events.push({role:'acorde',part:'comp',degree:0,instrument:comp,offset:0,level:score.ensemble===3?.85:.7,technique:'muted'});
   }
   if(answerVoice&&(!score.electronic||score.electronic.layers.includes('counter'))&&position>0&&answerSteps.includes(step)&&hook<0){
-   const index=answerSteps.indexOf(step),degree=[2,4,2,0][((position-1)*2+index)%4];
+   const index=answerSteps.indexOf(step),phrase=regionalPhrase(score,frame),notes=phrase.hook.filter(n=>n>=0),degree=notes.length?notes[(position+index)%notes.length]:[2,4,2,0][((position-1)*2+index)%4];
    events.push({role:'lead',part:'answer',degree,instrument:answerVoice,offset:0,level:score.ensemble===3?.62:.5,technique:'muted'});
   }
  }
@@ -128,14 +132,15 @@ export function labNoteEvents(frame,step,bar){
 export function labDrumEvents(score,step,bar,energy){
  if(!score||!Number.isInteger(step)||step<0||step>15||!Number.isFinite(energy)||energy<=.12)return [];
  const out=[],cycle=((Math.floor(bar)%8)+8)%8,rest=cycle===7||score.scene===5,
+  nativeDrums=score.backbone?(RHYTHM_GENRES[score.genre]?rhythmPattern(score.genre,Math.floor(bar/4)%3):referenceRhythm(score.genre,Math.floor(bar/4)%3)||score.nativeDrums):score.nativeDrums,
   layer=instrument=>instrument==='kick'?'kick':instrument==='rim'||/snare|clap/i.test(instrument)?'snare':/hat|shaker/.test(instrument)?'hats':'percussion',
   push=(instrument,gain,pitch,offset=0,technique='normal')=>{if(!score.electronic||score.electronic.layers.includes(layer(instrument)))out.push({instrument,gain,pitch,offset,technique});};
- if(score.kick.includes(step)&&(!rest||step===0||step===8))push('kick',score.id==='heavy'?.2:.16,48);
- if(energy>.24&&!rest&&score.scene!==1)for(const [original,steps]of Object.entries(score.nativeDrums||score.drums))if(steps.includes(step)){
+ if((nativeDrums?.kick||score.kick).includes(step)&&(!rest||step===0||step===8))push('kick',score.id==='heavy'?.2:score.backbone?.19:.16,48);
+ if(energy>.24&&!rest&&score.scene!==1)for(const [original,steps]of Object.entries(nativeDrums||score.drums))if(steps.includes(step)){
   if(original==='kick'||original==='chord')continue;
   if(energy<.4&&step%4!==0&&(step+bar)%2)continue;
   const instrument=score.electronic?original:original==='conga'?'handslap':original==='tom'?'skinbass':['snare','clap','clapRoll'].includes(original)?'acousticsnare':['hat','hatO','hatRoll'].includes(original)?'shaker':original;
-  push(instrument,/hat|shaker/.test(instrument)?.011:/snare|clap/.test(instrument)?.046:.035,
+  push(instrument,/hat|shaker/.test(instrument)?score.backbone?.016:.011:/snare|clap/.test(instrument)?score.backbone?.065:.046:.035,
    ['handslap','conga'].includes(instrument)?48+(step%3)*3:['skinbass','tom'].includes(instrument)?40+step%3*2:/snare|clap/.test(instrument)?48+step%2*2:72+step%3*18,0,step%4?'ghost':'accent');
  }
  if(score.nativeDrums&&score.festive&&energy>.32&&!rest&&score.scene!==1)for(const [original,steps]of Object.entries(score.drums)){

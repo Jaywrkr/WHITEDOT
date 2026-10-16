@@ -27,10 +27,10 @@ export function directedLeads(genre,base,hybrid=[],native=[]){
  return [...new Set(pool)];
 }
 export function directedFrame(frame,genre){
- const p=musicDirection(genre);
+ const p=musicDirection(genre),blend=frame.labScore?.backbone?.25:1;
  return {...frame,direction:p,expression:{...frame.expression,
-  attackScale:Math.max(.4,Math.min(2.25,(frame.expression?.attackScale||1)*p.attack)),
-  decayScale:Math.max(.35,Math.min(2,(frame.expression?.decayScale||1)*p.decay))}};
+  attackScale:Math.max(.4,Math.min(2.25,(frame.expression?.attackScale||1)*(1+(p.attack-1)*blend))),
+  decayScale:Math.max(.35,Math.min(2,(frame.expression?.decayScale||1)*(1+(p.decay-1)*blend)))}};
 }
 export function productionSpace(genre,{cave=false,fog=false,canon=false}={}){
  const p=musicDirection(genre);

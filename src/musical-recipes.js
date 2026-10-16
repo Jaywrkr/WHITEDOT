@@ -3,6 +3,9 @@ import {familyMusic} from './world-families.js';
 
 // Playback DNA only. Never draw from the placement RNG or mutate a region/save.
 export const MUSIC_IDENTITY_VERSION=1;
+// These later synthesis additions accompany the radio in the modern ensemble.
+// Keeping them out of its seeded pool preserves the original regional lead.
+const ENSEMBLE_GUESTS=new Set('silkstrings graincloud pluckbody airflute wavetable feltpiano modaldrum'.split(' '));
 const line=s=>[...s].map(v=>v==='.'?-1:Number(v));
 const recipe=(id,name,genres,influence,bass,motif,hooks,accent,accents,production)=>({
  id,name,genres:genres.split(' '),influence,bass:line(bass),motif,
@@ -51,7 +54,7 @@ export function musicIdentity(region,seedOf,rng,genres={}){
  const random=rng(seedOf(`music:identity:v1:${region.key}:${region.genre}`)),base=pool[Math.floor(random()*pool.length)];
  const native=genres[region.genre]||{hookP:['rhodes'],bassI:region.track?.bassI||'sub'},profile=musicalCharacter(region.genre);
  const nativeHooks=hookInstruments(region.genre,native)||['rhodes'];
- const allowed=new Set(interactionInstruments(region.genre,native,'lead'));
+ const allowed=new Set(interactionInstruments(region.genre,native,'lead').filter(id=>!ENSEMBLE_GUESTS.has(id)));
  const hooks=base.hooks.filter(id=>allowed.has(id));
  const bassPool=expressiveBassInstruments(region.genre,native);
  return Object.freeze(familyMusic({...base,version:MUSIC_IDENTITY_VERSION,genre:region.genre,

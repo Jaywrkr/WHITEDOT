@@ -1,3 +1,11 @@
+## 2.3.0-alpha.4 · Recuperar la radio
+
+Por petición de Jay, se comparó la música actual con `15bbe77`, último main anterior al corte de hace unas 30 horas. La producción vuelve a conservar los motivos activos, bajos, instrumentos principales y secciones de esa radio, acompañados por los ensambles actuales. La percusión recupera variaciones nativas cada cuatro compases; el cuerpo de bombo, cajas y hats tiene más presencia. La articulación conserva más del ataque y cola anteriores; el conductor admite el shuffle nativo.
+
+Se conservan las fusiones, los filtros, los miniinstrumentos, la expresividad, la respuesta armónica de sostenidos y la protección de mezcla. No se repone el órgano continuo ni se alteran guardados o mapas. Las voces avanzadas permanecen como acompañantes e interacciones sin cambiar el sorteo de la voz principal histórica.
+
+Validación: 72 marcos históricos de nueve estilos, 108 suites Node afectadas, auditoría sin errores/avisos, recorrido móvil de producción y seis mezclas completas a 44,1/48 kHz. Pico máximo 0,878; error de entrada máximo 7,5 ms, dentro del margen de microtiempo comprobado. Son pruebas de ejecución y mezcla, no aceptación de escucha física. [Referencia, alcance y prueba móvil](RECUPERACION_MUSICAL.md). La ampliación nueva de gestos de F4 queda pendiente; esta entrega prioriza recuperar el carácter solicitado.
+
 ## 2.3.0-alpha.3 · Frases regionales
 
 Catorce gramáticas de motivo, con llamada/respuesta, cierre y desarrollo por secciones. Las respuestas conservan la frase compuesta: no vuelven a las mismas tres notas ni se transponen notas aisladas al azar. El bajo preserva raíces y patrón nativo; deja espacio en algunas subdivisiones compartidas. Se conserva un presupuesto de cero notas cuando el arreglo pide silencio.
