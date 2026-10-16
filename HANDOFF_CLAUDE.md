@@ -1,3 +1,13 @@
+# Ciclo vigente · Juego musical, fase 2
+
+F1 subida en `07cd4b4`; F2 nace de ella en `feat/juego-02-sonido`, versión `2.3.0-alpha.2`. `voice-expression.js` define articulación acotada por rol/gesto/individuo y acentos métricos, sin RNG ni cambio de notas. voices transmite la misma articulación a living-synthesis; el último usa el instrumento nativo en todas sus variantes, conservando fallback solo para voces anteriores desconocidas. Los 81 specs siguen siendo 81: cambia su interpretación real, no un contador nominal.
+
+`instruments.techniqueTick` alinea sostenidos mediante musicalTime y adopta el acorde audible al arrancar. Patches, espacialización, foco y cue usan ese mismo instante. Cuatro cuerpos de snare, derivados de la semilla del kit sin consumir RNG antiguo. No mantener doble articulación/velocidad: voices aplica velocity una vez; llamadas directas a living-synthesis la aplican solo si no reciben articulación.
+
+Nuevo acuerdo de Jay: `npm run test:impact -- --base SHA_FASE_ANTERIOR --report /tmp/informe.json`, auditoría rápida y un recorrido representativo; renders afectados si cambia sonido. El selector sigue dependencias transitivas, incluye tests nuevos y recursos literales, y es conservador ante imports dinámicos no resueltos/recorridos. No presenta cobertura enfocada como suite completa. `npm test`, test:browser y test:audio quedan intactos para F12/CI. No repetir completos por metadatos o documentación.
+
+Evidencia propia en scripts/juego-02-validation.json y juego-02-audio-validation.json. Seguir F3 desde esta rama y actualizar versiones. Jay mantiene PR/merge. No se afirma escucha física, CI ni deploy.
+
 <!-- juego-musical-actual -->
 Ciclo vigente: [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md). Doce fases autorizadas, versiones 2.3 alpha, ramas encadenadas. Jay mantiene PR/merge. Las tablas siguientes son antecedentes.
 

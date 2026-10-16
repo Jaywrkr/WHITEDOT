@@ -4,7 +4,8 @@ Ciclo vigente: [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md). Doce fases autori
 | Entrega actual | Rama | Versión | Estado |
 |---|---|---|---|
 | Juego 1 · Llegadas | `feat/juego-01-llegadas` | `2.3.0-alpha.1` | Implementada y probada: auditoría, 137 suites Node y 13 recorridos enfocados |
-| Juego 2–12 | Ver PLAN_JUEGO_MUSICAL.md | alpha.2–12 | Pendientes, autorización conservada |
+| Juego 2 · Instrumentos | `feat/juego-02-sonido` | `2.3.0-alpha.2` | Auditoría, 42 suites afectadas, un recorrido de 43 voces y 14 renders aprobados |
+| Juego 3–12 | Ver PLAN_JUEGO_MUSICAL.md | alpha.3–12 | Pendientes, autorización conservada |
 <!-- /juego-musical-actual -->
 
 <!-- ampliacion-visual -->

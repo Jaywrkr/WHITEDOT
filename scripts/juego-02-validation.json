@@ -1,0 +1,305 @@
+{
+  "version": "2.3.0-alpha.2",
+  "base": "07cd4b4",
+  "audit": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "node": {
+    "base": "07cd4b450d3b25765c6c109ec4ba2a13f8933d2a",
+    "changes": [
+      "README.md",
+      "index.html",
+      "package.json",
+      "src/electronic-ensemble.js",
+      "src/instruments.js",
+      "src/living-synthesis.js",
+      "src/release-info.js",
+      "src/voices.js",
+      "sw.js",
+      "scripts/juego-02-audio-validation.json",
+      "scripts/test-impact-model.mjs",
+      "scripts/test-impact.mjs",
+      "src/voice-expression.js",
+      "tests/expression_mix.py",
+      "tests/test-impact.mjs",
+      "tests/voice-expression.mjs"
+    ],
+    "selected": [
+      "ambient-world.mjs",
+      "arrangement-phrases.mjs",
+      "arrival.mjs",
+      "composition.mjs",
+      "duet-harmony.mjs",
+      "ecology.mjs",
+      "electronic-ensemble.mjs",
+      "festive-territories.mjs",
+      "glass_music.mjs",
+      "grammar.mjs",
+      "influence.mjs",
+      "lab-curation.mjs",
+      "lab-evolution.mjs",
+      "lab-gestures.mjs",
+      "lab-performance.mjs",
+      "lab-score.mjs",
+      "lab.mjs",
+      "listening-reference.mjs",
+      "micro-instruments.mjs",
+      "music-direction.mjs",
+      "music-quality.mjs",
+      "music-travel.mjs",
+      "musical-conductor.mjs",
+      "musical-hybrids.mjs",
+      "musical-recipes.mjs",
+      "musical_character.mjs",
+      "palettes.mjs",
+      "performance.mjs",
+      "pockets.mjs",
+      "practice-travel.mjs",
+      "production-experiments.mjs",
+      "production-identities.mjs",
+      "radio.mjs",
+      "references.mjs",
+      "release.mjs",
+      "source-budget.mjs",
+      "territory-presentation.mjs",
+      "test-impact.mjs",
+      "version-bump.mjs",
+      "voice-expression.mjs",
+      "voices.mjs",
+      "world-visibility.mjs"
+    ],
+    "results": [
+      {
+        "test": "ambient-world.mjs",
+        "exit": 0,
+        "milliseconds": 816
+      },
+      {
+        "test": "arrangement-phrases.mjs",
+        "exit": 0,
+        "milliseconds": 180
+      },
+      {
+        "test": "arrival.mjs",
+        "exit": 0,
+        "milliseconds": 253
+      },
+      {
+        "test": "composition.mjs",
+        "exit": 0,
+        "milliseconds": 62
+      },
+      {
+        "test": "duet-harmony.mjs",
+        "exit": 0,
+        "milliseconds": 85
+      },
+      {
+        "test": "ecology.mjs",
+        "exit": 0,
+        "milliseconds": 625
+      },
+      {
+        "test": "electronic-ensemble.mjs",
+        "exit": 0,
+        "milliseconds": 537
+      },
+      {
+        "test": "festive-territories.mjs",
+        "exit": 0,
+        "milliseconds": 646
+      },
+      {
+        "test": "glass_music.mjs",
+        "exit": 0,
+        "milliseconds": 281
+      },
+      {
+        "test": "grammar.mjs",
+        "exit": 0,
+        "milliseconds": 82
+      },
+      {
+        "test": "influence.mjs",
+        "exit": 0,
+        "milliseconds": 216
+      },
+      {
+        "test": "lab-curation.mjs",
+        "exit": 0,
+        "milliseconds": 442
+      },
+      {
+        "test": "lab-evolution.mjs",
+        "exit": 0,
+        "milliseconds": 44
+      },
+      {
+        "test": "lab-gestures.mjs",
+        "exit": 0,
+        "milliseconds": 42
+      },
+      {
+        "test": "lab-performance.mjs",
+        "exit": 0,
+        "milliseconds": 45
+      },
+      {
+        "test": "lab-score.mjs",
+        "exit": 0,
+        "milliseconds": 443
+      },
+      {
+        "test": "lab.mjs",
+        "exit": 0,
+        "milliseconds": 59
+      },
+      {
+        "test": "listening-reference.mjs",
+        "exit": 0,
+        "milliseconds": 51
+      },
+      {
+        "test": "micro-instruments.mjs",
+        "exit": 0,
+        "milliseconds": 85
+      },
+      {
+        "test": "music-direction.mjs",
+        "exit": 0,
+        "milliseconds": 80
+      },
+      {
+        "test": "music-quality.mjs",
+        "exit": 0,
+        "milliseconds": 936
+      },
+      {
+        "test": "music-travel.mjs",
+        "exit": 0,
+        "milliseconds": 42
+      },
+      {
+        "test": "musical-conductor.mjs",
+        "exit": 0,
+        "milliseconds": 73
+      },
+      {
+        "test": "musical-hybrids.mjs",
+        "exit": 0,
+        "milliseconds": 611
+      },
+      {
+        "test": "musical-recipes.mjs",
+        "exit": 0,
+        "milliseconds": 180
+      },
+      {
+        "test": "musical_character.mjs",
+        "exit": 0,
+        "milliseconds": 164
+      },
+      {
+        "test": "palettes.mjs",
+        "exit": 0,
+        "milliseconds": 414
+      },
+      {
+        "test": "performance.mjs",
+        "exit": 0,
+        "milliseconds": 44
+      },
+      {
+        "test": "pockets.mjs",
+        "exit": 0,
+        "milliseconds": 218
+      },
+      {
+        "test": "practice-travel.mjs",
+        "exit": 0,
+        "milliseconds": 278
+      },
+      {
+        "test": "production-experiments.mjs",
+        "exit": 0,
+        "milliseconds": 83
+      },
+      {
+        "test": "production-identities.mjs",
+        "exit": 0,
+        "milliseconds": 136
+      },
+      {
+        "test": "radio.mjs",
+        "exit": 0,
+        "milliseconds": 2151
+      },
+      {
+        "test": "references.mjs",
+        "exit": 0,
+        "milliseconds": 469
+      },
+      {
+        "test": "release.mjs",
+        "exit": 0,
+        "milliseconds": 46
+      },
+      {
+        "test": "source-budget.mjs",
+        "exit": 0,
+        "milliseconds": 73
+      },
+      {
+        "test": "territory-presentation.mjs",
+        "exit": 0,
+        "milliseconds": 413
+      },
+      {
+        "test": "test-impact.mjs",
+        "exit": 0,
+        "milliseconds": 34
+      },
+      {
+        "test": "version-bump.mjs",
+        "exit": 0,
+        "milliseconds": 106
+      },
+      {
+        "test": "voice-expression.mjs",
+        "exit": 0,
+        "milliseconds": 39
+      },
+      {
+        "test": "voices.mjs",
+        "exit": 0,
+        "milliseconds": 458
+      },
+      {
+        "test": "world-visibility.mjs",
+        "exit": 0,
+        "milliseconds": 45
+      }
+    ],
+    "completeSuite": false
+  },
+  "browser": {
+    "test": "instrument_techniques_smoke.py",
+    "passed": true,
+    "scope": "43 native techniques, actual cube contact, hold/release and pause"
+  },
+  "audio": {
+    "program": "expression_mix.py",
+    "nativeAndKitRenders": 10,
+    "denseMixes": 4,
+    "sampleRates": [
+      44100,
+      48000
+    ],
+    "maxPeak": 0.8728870153427124,
+    "maxOnsetError": 0.008461538461533635
+  },
+  "completeSuites": false,
+  "physicalPhone": false,
+  "ciAndDeploy": "not claimed"
+}

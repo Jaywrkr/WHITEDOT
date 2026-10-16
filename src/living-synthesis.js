@@ -1,3 +1,4 @@
+import {voiceExpression} from './voice-expression.js';
 import {leadVoicing} from './living-voicing.js';
 import {INSTRUMENT_SPECS} from './instruments.js';
 // Locally synthesized material samples and smooth resonant voices, no copyrighted recordings.
@@ -12,10 +13,11 @@ export function materialSamples(ac,material,variant){
 }
 export function initialize(runtime){
  const caches=new WeakMap(),voicings=new Map();
- function emit(voice,n,time,volume,source){
+ function emit(voice,n,time,volume,source,articulation=null){
   const ac=runtime.ac;if(!ac||ac.state!=='running')return true;
-  const technique=runtime.cardTechnique?.(source)||voice.technique||'normal',muted=technique==='muted',ghost=technique==='ghost';const spec=voice.score,variant=source?.variant||0;let chordNotes=null;if(voice.role==='acorde'){const key=source?.id||'accord';chordNotes=leadVoicing(runtime.musicalFrame?.(time)?.chords||runtime.chordTones?.()||[n,n+3,n+7],voicings.get(key));voicings.set(key,chordNotes);if(voicings.size>128)voicings.delete(voicings.keys().next().value);}volume=Math.min(.085,Math.max(0,volume)*(ghost?.5:technique==='accent'?1.08:1));const end=time+Math.min(1.4,(spec.decay+.22)*(muted?.4:1)*(source?.expression==='staccato'?.55:source?.expression==='legato'?1.2:1));
-  if(voice.role!=='perc'&&INSTRUMENT_SPECS[voice.instrument]&&(voice.labTerritory||variant%4!==0)){runtime.recordInstrument?.(voice.instrument);const notes=voice.role==='acorde'?chordNotes:[n];for(const note of notes)runtime.playNewInstrument(voice.instrument,note,time,volume/Math.sqrt(notes.length),{technique,attackScale:(source?.expression==='legato'?1.4:.9)*(source?.mind?.patience===undefined?1:.85+source.mind.patience*.55),decayScale:(muted?.45:ghost?.65:1)*(source?.expression==='staccato'?.6:1)*(source?.mind?.energy===undefined?1:.75+source.mind.energy*.3),toneScale:muted?.45:ghost?.65:.85,glide:technique==='slide'?1:source?.expression==='glide'?-1:0,tremolo:source?.expression==='tremolo'?3.5:0});runtime.livingNoteCue?.({id:source?.id,role:voice.role,note:n,time,material:voice.material,instrument:voice.instrument});return true;}
+  const expression=articulation||voiceExpression(voice,source,runtime.musicalFrame?.(time),time);if(!articulation)volume*=expression.velocity;
+  const technique=runtime.cardTechnique?.(source)||expression.technique||'normal',muted=technique==='muted',ghost=technique==='ghost';const spec=voice.score||{attack:.008,decay:.6,signature:''},variant=source?.variant||0;let chordNotes=null;if(voice.role==='acorde'){const key=source?.id||'accord';chordNotes=leadVoicing(runtime.musicalFrame?.(time)?.chords||runtime.chordTones?.()||[n,n+3,n+7],voicings.get(key));voicings.set(key,chordNotes);if(voicings.size>128)voicings.delete(voicings.keys().next().value);}volume=Math.min(.085,Math.max(0,volume)*(ghost?.5:technique==='accent'?1.08:1));const end=time+Math.min(1.4,(spec.decay+.22)*(muted?.4:1)*(source?.expression==='staccato'?.55:source?.expression==='legato'?1.2:1));
+  if(voice.role!=='perc'&&INSTRUMENT_SPECS[voice.instrument]){runtime.recordInstrument?.(voice.instrument);const notes=voice.role==='acorde'?chordNotes:[n];for(const note of notes)runtime.playNewInstrument(voice.instrument,note,time,volume/Math.sqrt(notes.length),{...expression,technique,decayScale:expression.decayScale*(muted?.65:ghost?.8:1)});runtime.livingNoteCue?.({id:source?.id,role:voice.role,note:n,time,material:voice.material,instrument:voice.instrument});return true;}
   const gain=ac.createGain(),filter=ac.createBiquadFilter();filter.type='lowpass';filter.frequency.value=voice.role==='bajo'?900:spec.signature==='robotica'?2500:1700;if(muted)filter.frequency.value*=.5;filter.Q.value=.65;
   filter.connect(gain).connect(runtime.bus);gain.gain.setValueAtTime(0,time);gain.gain.linearRampToValueAtTime(volume,time+spec.attack);gain.gain.exponentialRampToValueAtTime(.00001,end);
   const nodes=[gain,filter],sources=[];

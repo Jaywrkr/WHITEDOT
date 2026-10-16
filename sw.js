@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.3.0-alpha.1';
+const CACHE='whitedot-2.3.0-alpha.2';
 const SHELL=[
  "./src/micro-instruments-model.js", "./src/micro-instruments.js", "./src/micro-synthesis.js",
  "./src/player-profile-model.js", "./src/player-profile.js",
@@ -206,7 +206,7 @@ const SHELL=[
  "./src/quietud.js",
  "./src/vida-music.js",
  "./src/vida.js",
- "./src/voices.js","./src/walker-forms.js",
+ "./src/voices.js","./src/voice-expression.js","./src/walker-forms.js",
  "./src/wonders.js",
 ];
 // Precache a whole release. The new worker waits while an older game is open.
