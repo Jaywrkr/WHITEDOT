@@ -1,3 +1,11 @@
+## 2.3.0-alpha.34 · Cuaderno vivo 10/20
+
+Las conexiones reales dejan una constelación tenue durante 2,8 segundos. Solo ocho recuerdos efímeros, sin guardado ni enlaces ficticios. Saltos y paneles limpian la memoria visual.
+
+## 2.3.0-alpha.33 · Cuaderno vivo 9/20
+
+Tres puntos recorren cada conexión musical existente mientras dura. Máximo ocho conexiones, color de su fuente, sin cables nuevos ni cambios musicales. Se omite con movimiento reducido.
+
 ## 2.3.0-alpha.32 · Cuaderno vivo 8/20
 
 Cada fuente ilumina su centro al comenzar su nota real. Percusión, bajo, acorde y melodía tienen trazos propios. Se descartan eventos atrasados sin adelantar el destello al sonido.
