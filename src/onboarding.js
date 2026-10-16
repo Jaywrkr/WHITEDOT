@@ -8,7 +8,7 @@ export function initialize(runtime){
  function event(id){const b=book();if(advanceFirstJourney(b,id)){if(!firstJourneyNext(b))rememberDone();runtime.save();}}
  function tick(){const s=runtime.S,b=book();if(s.mode==='camino'&&Math.hypot(s.px-anchor.x,s.py-anchor.y)>20)event('move');if(runtime.worldReady())event('light');if(runtime.inWorld())event('world');
   let next=firstJourneyNext(b);const blocked=document.hidden||runtime.scanning||!['camino','world'].includes(s.mode)||document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])')||$('voice').classList.contains('expanded');
-  if(next&&s.mode==='camino')next=!runtime.worldReady()?(b.facts.move?['light','Recoge una luz. Abre el Mundo de hoy.']:['move','Arrastra para acercarte a una luz.']):['world','Entra al Mundo con el botón de abajo.'];
+  if(next&&s.mode==='camino')next=!runtime.worldReady()?(b.facts.move?['light','Rompe diez cristales para entrar al Mundo.']:['move','Arrastra para acercarte a un cristal.']):['world','Entra al Mundo al romper diez cristales.'];
   visible(!!next&&!blocked);if(panel.hidden)return;
   const text=next[0]==='voice'&&(!s.sound||runtime.musicVolume()===0)?'Activa el sonido para escuchar este encuentro.':next[1];if(text!==last){$('firstJourneyText').textContent=text;last=text;}const step=FIRST_JOURNEY_STEPS.findIndex(([id])=>id===next[0])+1;$('firstJourneyProgress').textContent=step+'/'+FIRST_JOURNEY_STEPS.length;$('firstJourneyProgress').setAttribute('aria-label','Paso '+step+' de '+FIRST_JOURNEY_STEPS.length);panel.dataset.step=next[0];document.body.classList.add('first-journey');
  }

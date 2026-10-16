@@ -1,3 +1,13 @@
+## Cristales · distribución, Camino y entrada directa
+
+Rama `feat/crystal-path-entry`, desde main `d404b52`. Cristales facetados con relleno tenue y caras interiores; una retícula independiente separa sus posiciones y regiones de 1200 unidades alternan abundancia escasa, media y alta. Se conservan los tres tamaños, impactos y valores del Mundo.
+
+El Camino conserva su trazado y cambia sus luces recogibles por cristales pequeños. Diez cristales distintos rotos por pulso manual completan la entrada diaria; el décimo entra automáticamente, sin botón ni bienvenida del Mundo. Cada rotura cuenta una vez y aporta una chispa; el progreso parcial se guarda, no se duplica tras recargar y se reinicia al cambiar de día. Las luces antiguas no abren esta puerta. Las partidas antiguas que ya estaban dentro del Mundo conservan el acceso; regresar voluntariamente al Camino no fuerza otra entrada. Las vistas de prueba por semilla mantienen su acceso directo.
+
+Firma literal `.simple` después de la frase de regreso y en la primera bienvenida. El contador pasa de Canvas a un elemento debajo de la distancia, alineado y adaptable al área segura en móvil, horizontal y escritorio. Sin cambios de audio; caché mediante el sellado de publicación existente.
+
+Verificación: `npm run test:impact -- --base d404b52`, 87 suites afectadas aprobadas; `node tests/crystal-path.mjs` y `node tests/crystal-sparks.mjs`, incluyendo migración, densidad, separación, diez roturas únicas y regreso al Camino. `npm run audit:release` sin errores/advertencias; recorridos Chrome `tests/crystal_path_smoke.py` y `tests/crystal_sparks_smoke.py`, revisión visual y `git diff --check`. Entorno Windows con adaptación ESM y licencias originales para auditoría, fuera del commit. Pruebas enfocadas; sin suite completa navegador/audio, aceptación física ni despliegue certificado. Jay conserva PR/merge.
+
 ## Cristales y chispas · primera interacción de recolección
 
 Rama `feat/crystal-sparks`, desde main `0491b58` (incluye la reparación de ojos integrada por Jay). Cristales pequeños, medianos y grandes: 1/2/3 pulsos manuales y 1/3/5 chispas. Grietas visibles, hasta tres fragmentos atraídos al acercarse, contador discreto con incremento temporal y saldo guardado/exportable. Sin tienda ni cambios de audio. El paseo automático no daña ni recoge; los cristales agotados permanecen así durante la sesión, incluso tras viajar y volver. Al recargar comienza otro paseo.

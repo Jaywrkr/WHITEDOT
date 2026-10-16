@@ -16,7 +16,7 @@ Cierre de interacción 8 incorpora avisos discretos/relevantes/excepcionales, me
 
 **Un pixel. Un mundo que suena.**
 
-Explora para descubrir sonidos, crear tu música y conservar tus encuentros. Un cubo blanco en negro, electrónica generativa y organismos que responden a tus gestos. La primera luz del Camino abre el Mundo del día sin reloj de exploración.
+Explora para descubrir sonidos, crear tu música y conservar tus encuentros. Un cubo blanco en negro, electrónica generativa y organismos que responden a tus gestos. Rompe diez cristales del Camino para entrar automáticamente al Mundo del día.
 
 **Jugar:** https://whitedot-inky.vercel.app. La versión de producción depende de los merges de Jay. Esta rama propone **2.3.0-alpha.23**. En iPhone: Compartir → Añadir a pantalla de inicio. Toca el Mundo para activar audio.
 
@@ -109,8 +109,8 @@ Las cifras cuentan sistemas y catálogos, no canciones únicas. No multiplicamos
 
 ## Cómo se juega
 
-1. **Camino.** Arrastra hacia una luz al comenzar el día. Recógela.
-2. **Mundo.** Entra cuando quieras; explora sin límite de tiempo.
+1. **Camino.** Arrastra hacia los cristales y rómpelos con tu pulso.
+2. **Mundo.** Entra automáticamente al romper diez cristales; explora sin límite de tiempo.
 3. **Acércate.** El cubo toca los objetos. Un toque vacío lanza un pulso. Mantener permite escuchar; permanecer transforma algunas voces.
 4. **Casa.** Coloca objetos ganados y compón caminando. El Taller radial conserva tus muestras.
 5. **Bitácora.** Hoy, Colección, Lugares, Música y Logros. Menú → Tu recorrido explica las posibilidades.

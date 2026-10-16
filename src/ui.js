@@ -23,8 +23,7 @@ export function initialize(runtime) {
     else if(runtime.inWorld()){fill.style.width="100%";
       goal.textContent=dist?"Eco cercano · escucha y pulsa":"Lugares "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
       gr.textContent="Sin reloj";}
-    else if(runtime.worldReady()){fill.style.width="100%";goal.textContent="Mundo abierto · explora cuando quieras";gr.textContent="Sin reloj";}
-    else{fill.style.width="0%";goal.textContent="Recoge una luz para abrir el Mundo";gr.textContent="Arrastra para caminar";}
+    else{const n=runtime.S.pathCrystals.length;fill.style.width=(n*10)+"%";goal.textContent="Rompe cristales · "+n+" / 10";gr.textContent="Acércate y lanza un pulso";}
     const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary");$("bWorld").querySelector("span").textContent=runtime.inWorld()?"Camino":"Mundo";
     bp.hidden=!(canWorld||runtime.inWorld());$("bPrimaryL").textContent=runtime.inWorld()?"Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=runtime.inWorld()?"scaleX(-1)":"";
   }
@@ -35,13 +34,13 @@ export function initialize(runtime) {
     runtime.COLORS.forEach(c=>{if(runtime.colorOk(c)&&!prev.has(c[0]))toast("<em>Color nuevo</em> · "+c[1],{level:2,category:'ganado'});});runtime.save();}
 
 
-  function enterWorld(){
-    if(!runtime.worldReady()){toast("Recoge una luz en el Camino para entrar.");return;}
+  function enterWorld({automatic=false}={}){
+    if(!runtime.worldReady()){toast("Rompe diez cristales del Camino para entrar.");return;}
     runtime.beginSession();if(runtime.S.sound)runtime.audio();if(runtime.S.lastWorldDay!==runtime.S.todayKey){if(runtime.dailyArrival?.()){ /* Previous place remains available through Volver al salto. */ }else if(runtime.S.studio.x!=null){runtime.S.wx=runtime.S.studio.x;runtime.S.wy=runtime.S.studio.y;{const rp=runtime.REG*runtime.WCH,ring=Math.max(Math.abs(Math.floor(runtime.S.wx/rp)),Math.abs(Math.floor(runtime.S.wy/rp)));if(ring>=3)setTimeout(()=>runtime.toast(`<em>Campamento</em> · a ${ring} regiones del Origen`),2600);if(ring>=3&&!runtime.S.help.camp){runtime.S.help.camp=true;setTimeout(()=>runtime.say(runtime.VOZ.campamento),4000);}}}runtime.S.lastWorldDay=runtime.S.todayKey;}runtime.zoneHops=0;runtime.S.mode="world";runtime.curZone=-1;{const rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);runtime.curRegion=rg.key;runtime.enterRegion(rg,rg.z);}runtime.MU.layers=new Set();
     runtime.todayRelics();runtime.enterFx=1;runtime.flocks=[];
     runtime.jamUI?.();
     unlock("mundo");
-    if(!runtime.S.help.mundo){$("mHelpW").hidden=false;}
+    if(automatic){runtime.S.help.mundo=true;$("mHelpW").hidden=true;}else if(!runtime.S.help.mundo){$("mHelpW").hidden=false;}
     runtime.save();hud();
   }
   function exitWorld(out){

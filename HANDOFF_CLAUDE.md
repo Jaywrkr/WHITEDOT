@@ -1,3 +1,7 @@
+# Cristales · Camino obligatorio y regiones de abundancia
+
+`crystal-sparks.js`: retícula de 200 unidades con densidad por región y dibujo facetado. `pathCrystalField` sitúa cristales pequeños junto al Camino; `S.pathCrystals` guarda hasta diez IDs diarios. `progress.js` exige diez roturas; `save-store.js` normaliza IDs y conserva acceso de partidas antiguas ya dentro del Mundo. La décima rotura llama a `enterWorld({automatic:true})`, que omite la bienvenida; no se repite al volver voluntariamente. `render.js` conserva el trazado y retira las luces antiguas del Camino. El contador DOM `sparkCount` sigue a `walkDistance`; `.simple` firma la entrada. Contratos, pruebas y límites en CAMBIOS.md.
+
 # Cristales y chispas · interacción de recolección
 
 `src/crystal-sparks.js` añade grupos deterministas con hash independiente, 1/2/3 impactos de pulso manual, 1/3/5 chispas y hasta tres fragmentos por cristal. `main.js` inicializa; `render.js` integra tick, mundo y contador. Saldo aditivo `S.sparks`, predeterminado en `progress.js` y normalizado en `save-store.js`; exportaciones existentes lo conservan. Daño/agotamiento efímeros por sesión, hasta 8192 sitios, sin cambios musicales. El paseo automático no extrae ni recoge. Caché en SHELL y sellado de publicación existente. Pruebas y límites en CAMBIOS.md. No iniciar trabajos históricos pendientes.

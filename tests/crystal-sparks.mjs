@@ -7,7 +7,8 @@ assert.deepEqual(crystalField(-250,20,seedOf),crystalField(-250,20,seedOf));
 assert.deepEqual([undefined,-5,3.9,Infinity].map(normalizeSparks),[0,0,3,0]);
 let modal=false,saves=0;globalThis.document={hidden:false,querySelector:()=>modal?{}:null};
 const calls=[],c=new Proxy({},{get:(o,k)=>o[k]??((...args)=>{for(const v of args)if(typeof v==='number')assert(Number.isFinite(v));calls.push([k,...args]);}),set:(o,k,v)=>(o[k]=v,true)});
-const r={S:{wx:0,wy:0,layer:'superficie'},W:390,H:844,camX:0,camY:0,cx:c,worldIdentity:{seed:'a'},seedOf,inWorld:()=>true,waves:[],save:()=>{saves++;return true;}};
+const hud={sparkCount:{classList:{toggle(){}}},sparkTotal:{},sparkGain:{}};
+const r={$:id=>hud[id],S:{wx:0,wy:0,layer:'superficie'},W:390,H:844,camX:0,camY:0,cx:c,worldIdentity:{seed:'a'},seedOf,inWorld:()=>true,waves:[],save:()=>{saves++;return true;}};
 initialize(r);r.crystalTick(.02);assert.equal(r.S.sparks,0);
 const all=r.crystalState.near;assert.deepEqual(new Set(all.map(o=>o.size)),new Set([1,2,3]));
 let expected=0;
@@ -26,7 +27,7 @@ for(const size of [1,2,3]){
  expected+=o.value;assert.equal(r.S.sparks,expected);r.drawSparkHUD();
  const before=expected;r.waves=[wave('player')];for(let i=0;i<20;i++)r.crystalTick(.05);assert.equal(r.S.sparks,before,'depleted sites never pay twice');
 }
-assert.equal(expected,9);assert.equal(saves,3);assert(calls.some(([k,t])=>k==='fillText'&&t==='✦ 9'));
+assert.equal(expected,9);assert.equal(saves,3);assert.equal(hud.sparkTotal.textContent,'✦ 9');
 r.S.wx=10000;r.crystalTick(.02);r.S.wx=0;r.S.wy=0;r.crystalTick(.02);assert.equal(r.crystalState.near.filter(o=>o.collected).length,3,'travel does not respawn sites');
 const identity=worldIdentity('', 'classic',1),defaults={sparks:0,studio:{},journal:{music:{}}};
 assert.equal(validateSave({},defaults,identity).sparks,0);assert.equal(validateSave({sparks:9},defaults,identity).sparks,9);assert.equal(validateSave({sparks:-2},defaults,identity).sparks,0);

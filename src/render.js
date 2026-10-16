@@ -148,20 +148,6 @@ export function initialize(runtime) {
     for(let i=Math.max(0,runtime.S.trail.length-600);i<runtime.S.trail.length;i++){const[p,q]=runtime.S.trail[i];const d=Math.hypot(p-runtime.S.px,q-runtime.S.py);if(d>R*1.6)continue;runtime.cx.globalAlpha=.22*(1-d/(R*1.6));runtime.cx.fillRect(p+ox-1,q+oy-1,2,2);}
     runtime.cx.fillStyle="#fff";
     for(let x=runtime.S.px-R;x<runtime.S.px+R;x+=9){const y=runtime.pathY(x),d=Math.hypot(x-runtime.S.px,y-runtime.S.py);if(d>R)continue;runtime.cx.globalAlpha=Math.pow(1-d/R,1.6)*.45;runtime.cx.fillRect(x+ox-1,y+oy-1,2,2);}
-    const c0=Math.floor((runtime.S.px-R)/runtime.CHUNK),c1=Math.floor((runtime.S.px+R)/runtime.CHUNK),r0=Math.floor((runtime.S.py-R)/runtime.CHUNK),r1=Math.floor((runtime.S.py+R)/runtime.CHUNK);
-    for(let a=c0;a<=c1;a++)for(let bb=r0;bb<=r1;bb++){
-      const ch=runtime.getChunk(a,bb);
-      for(let i=ch.length-1;i>=0;i--){const m=ch[i];
-        if(runtime.waves.length&&runtime.hitW(m.x,m.y))m.pull=1;
-        if(m.pull){const ax=runtime.S.px-m.x,ay=runtime.S.py-m.y,dd=Math.hypot(ax,ay)||1,v=Math.min(dd,dt*520);m.x+=ax/dd*v;m.y+=ay/dd*v;}
-        const d=Math.hypot(m.x-runtime.S.px,m.y-runtime.S.py);
-        if(d<sz/2+10&&(runtime.worldReady()||dx||dy||m.pull)){runtime.collect(m);continue;}
-        if(d>R)continue;
-        runtime.cx.globalAlpha=Math.min(1,Math.pow(1-d/R,1.3)*(.6+.25*Math.sin(t/400+m.ph)+b*.3)*(free?.45:1));
-        runtime.cx.fillStyle=m.off?runtime.GOLD:"#fff";runtime.cx.fillRect(m.x+ox-1.5,m.y+oy-1.5,3,3);
-        const ritual=runtime.seedOf('camino:encuentro:v1:'+runtime.S.todayKey)%4;
-        if(ritual&&runtime.seedOf('camino:figura:v1:'+m.id)%7===0){const c=runtime.cx,rr=5+Math.sin(t/900+m.ph)*2;c.strokeStyle='#fff';c.lineWidth=.8;c.beginPath();if(ritual===1){c.arc(m.x+ox,m.y+oy,rr,0,Math.PI*1.5);}else if(ritual===2){c.moveTo(m.x+ox-rr,m.y+oy);c.lineTo(m.x+ox,m.y+oy-rr);c.lineTo(m.x+ox+rr,m.y+oy);}else{c.moveTo(m.x+ox-rr,m.y+oy-rr);c.lineTo(m.x+ox+rr,m.y+oy+rr);}c.stroke();}}
-    }
     return sz;
   }
 
