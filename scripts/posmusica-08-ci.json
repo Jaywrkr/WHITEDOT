@@ -1,0 +1,43 @@
+{
+  "sourceCommit": "93016d0874c08f78ee7df0863ea0aa9fbd7ecab6",
+  "run": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/38922793396",
+  "status": "in_progress",
+  "conclusion": null,
+  "jobs": [
+    {
+      "name": "logic",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "name": "audio (1)",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "name": "audio (3)",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "name": "browser",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "name": "audio (2)",
+      "status": "in_progress",
+      "conclusion": null
+    }
+  ],
+  "localValidation": "134 Node suites, release audit, focused browser and 16 new audio renders passed; old percussion browser additional run blocked by local thread limits; complete remote suites pending",
+  "mainIntegration": {
+    "base": "d4beace0ec0a3fcd392040410cf66478513d6236",
+    "simulation": "clean; no real merge performed"
+  },
+  "supersededRun": {
+    "id": 38921542927,
+    "source": "7e28462",
+    "reason": "A later UI-only correction and full run 38922793396 replace it; cancellation is not a passed result."
+  }
+}

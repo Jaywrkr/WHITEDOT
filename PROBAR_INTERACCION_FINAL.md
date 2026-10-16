@@ -1,6 +1,6 @@
 # Probar la ampliación completa
 
-Rama final: `feat/posmusica-08-cierre`. Incluye las entregas anteriores. [Preview de la revisión funcional 7e28462](https://whitedot-k2955refm-jaywrkr-1498s-projects.vercel.app). Vercel informa despliegue correcto; la comprobación procede del estado de GitHub, no de una prueba física. No necesitas parámetros dev.
+Rama final: `feat/posmusica-08-cierre`. Incluye las entregas anteriores. [Preview de la revisión funcional 93016d0](https://whitedot-hzk5j07ss-jaywrkr-1498s-projects.vercel.app). Vercel informa despliegue correcto; la comprobación procede del estado de GitHub, no de una prueba física. No necesitas parámetros dev.
 
 ## Teléfono
 
