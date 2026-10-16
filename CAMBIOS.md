@@ -1,3 +1,7 @@
+## 2.3.0-alpha.39 · Cuaderno vivo 15/20
+
+Tres detalles de la ilustración anticipan su revelado con un único destello breve. El nombre, controles y foco están disponibles desde el inicio. No cambia la cola, rareza, recompensa ni duración de las tarjetas.
+
 ## 2.3.0-alpha.38 · Cuaderno vivo 14/20
 
 Las galaxias lejanas respiran lentamente en luminosidad y escala, sin variar la paleta ni convertirse en señales próximas. Los gradientes siguen grandes y difusos; movimiento reducido conserva una imagen estable.

@@ -337,3 +337,9 @@ body:has(#voice.on:not([hidden])) .first-journey-hint{visibility:hidden}
 /* Earned pulse families stay inside the cube's movement panel. */
 #cubePulseFamily{display:block;width:100%;min-height:44px;margin:8px 0 10px;background:#000;color:#fff;border:1px solid #fff3;border-radius:0;font:400 16px 'Geist Mono',monospace;padding:8px;}
 #cubePulses{min-height:44px;}
+
+/* One restrained visual prelude; notice timing, focus and queue stay unchanged. */
+#rareNotice:not([hidden]) .rare-sparks{animation:wow-finding-spark .3s ease-out 1;transform-origin:center}
+#rareNotice:not([hidden]) .rare-glyph{animation:found-voice .65s .16s ease-out 1 backwards;transform-origin:center}
+@keyframes wow-finding-spark{0%{opacity:.15;transform:scale(.94)}45%{opacity:1;transform:scale(1.04)}100%{opacity:.65;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){#rareNotice .rare-sparks,#rareNotice .rare-glyph{animation:none!important}}

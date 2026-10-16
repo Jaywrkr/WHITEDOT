@@ -18,7 +18,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 12 | Polvo localizado | feat/wow-12-polvo | Implementada; ver informe 12 |
 | 13 | Cometas variados | feat/wow-13-cometas | Implementada; ver informe 13 |
 | 14 | Galaxias que respiran | feat/wow-14-galaxias | Implementada; ver informe 14 |
-| 15 | Anticipación de hallazgos | feat/wow-15-hallazgos | Pendiente |
+| 15 | Anticipación de hallazgos | feat/wow-15-hallazgos | Implementada; ver informe 15 |
 | 16 | Profundidad en tarjetas | feat/wow-16-profundidad | Pendiente |
 | 17 | Barrido de adquisición | feat/wow-17-adquisicion | Pendiente |
 | 18 | Álbum con foco | feat/wow-18-album | Pendiente |
@@ -92,3 +92,7 @@ Los cometas conservan lugares y frecuencia originales, con variación suave de v
 ### 14. Galaxias que respiran
 
 Las galaxias lejanas respiran lentamente en luminosidad y escala, sin variar la paleta ni convertirse en señales próximas. Los gradientes siguen grandes y difusos; movimiento reducido conserva una imagen estable.
+
+### 15. Anticipación de hallazgos
+
+Tres detalles de la ilustración anticipan su revelado con un único destello breve. El nombre, controles y foco están disponibles desde el inicio. No cambia la cola, rareza, recompensa ni duración de las tarjetas.
