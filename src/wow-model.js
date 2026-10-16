@@ -29,3 +29,8 @@ export function formationOffset(slot,seconds=0){
  const angle=slot*2.3999632297+seconds*.08,radius=32+(slot%4)*14;
  return {x:Math.cos(angle)*radius,y:Math.sin(angle)*radius};
 }
+
+export function cometStyle(hash,u){
+ const h=hash>>>0,k=((h>>>8)%5-2)*.018;
+ return {progress:u+Math.sin(u*Math.PI*2)*k,tail:22+(h>>>12)%35,width:.7+(h%3)*.2,pair:h%11===0};
+}

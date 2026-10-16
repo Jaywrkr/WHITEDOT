@@ -23,3 +23,6 @@ const {formationOffset}=await import('../src/wow-model.js');
 const positions=Array.from({length:24},(_,i)=>formationOffset(i,3));
 assert.equal(new Set(positions.map(p=>[p.x.toFixed(2),p.y.toFixed(2)].join(','))).size,24);
 assert(positions.every(p=>Math.hypot(p.x,p.y)>=31.99&&Math.hypot(p.x,p.y)<=74.01));
+
+const {cometStyle}=await import('../src/wow-model.js');
+for(let h=0;h<100;h++){let previous=-1;for(let i=0;i<=100;i++){const c=cometStyle(h*1057,i/100);assert(c.progress>=previous&&c.progress<=1.00001);previous=c.progress;assert(c.tail>=22&&c.tail<=56);}}

@@ -1,3 +1,7 @@
+## 2.3.0-alpha.37 · Cuaderno vivo 13/20
+
+Los cometas conservan lugares y frecuencia originales, con variación suave de velocidad, estelas de tres intensidades y parejas ocasionales. Sin música nueva; movimiento reducido sigue suprimiendo cometas.
+
 ## 2.3.0-alpha.36 · Cuaderno vivo 12/20
 
 Algunas agrupaciones reales de tres o más elementos tienen polvo de color tenue. Solo dos agrupaciones y ocho motas por grupo. Los espacios de quietud permanecen despejados.
