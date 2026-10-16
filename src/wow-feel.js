@@ -62,19 +62,7 @@ export function initialize(runtime){
   if(blocked()||Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)>130)return;
   const v=lookVector(runtime.S.wx-o.x,runtime.S.wy-o.y,reduced());
   c.save();
-  for(const p of clusters)for(let i=0;i<8;i++){const a=p.phase+i*2.39996+seconds*.12,r=20+(i%3)*7;c.fillStyle=p.ink;c.globalAlpha=.12+.06*Math.sin(seconds*.6+i);c.fillRect(p.x+ox+Math.cos(a)*r,p.y+oy+Math.sin(a)*r*.7,1,1);}
-  for(const p of marks){const age=seconds-p.at;c.globalAlpha=(1-age/1.4)*.36;c.strokeStyle=p.ink;c.lineWidth=.7;c.beginPath();c.arc(p.x+ox,p.y+oy,2+age*2,0,Math.PI*1.5);c.stroke();}
-  for(const p of memory){const a=1-(seconds-p.at)/2.8;c.globalAlpha=a*.13;c.strokeStyle=c.fillStyle=p.ink;c.lineWidth=.65;c.beginPath();c.moveTo(p.x1+ox,p.y1+oy);c.lineTo(p.x2+ox,p.y2+oy);c.stroke();c.fillRect(p.x1+ox-1,p.y1+oy-1,2,2);c.fillRect(p.x2+ox-1,p.y2+oy-1,2,2);}
-  drawConnections(c,ox,oy);c.fillStyle='#fff';
-  for(const p of flashes){
-   const age=(seconds-p.at)/.45,r=5+age*8;c.globalAlpha=(1-age)*.8;c.strokeStyle=c.fillStyle=p.ink;c.lineWidth=p.role==='bajo'?2:1.2;
-   const x=p.x+ox,y=p.y+oy;c.fillRect(x-1.5,y-1.5,3,3);c.beginPath();
-   if(p.role==='perc'){c.moveTo(x-r,y);c.lineTo(x+r,y);c.moveTo(x,y-r);c.lineTo(x,y+r);}
-   else if(p.role==='bajo'){c.moveTo(x-r,y+r);c.lineTo(x+r,y+r);c.moveTo(x-r*.6,y+r+4);c.lineTo(x+r*.6,y+r+4);}
-   else if(p.role==='acorde'){for(let i=-1;i<=1;i++){c.moveTo(x+i*5,y-r);c.lineTo(x+i*5,y+r);}}
-   else c.arc(x,y,r,-Math.PI*.5,Math.PI*.8);c.stroke();
-  }
-  for(const p of ripples){const age=seconds-p.at;if(age<0)continue;c.strokeStyle=p.ink;c.globalAlpha=(1-age/.55)*.38;c.lineWidth=.8;c.beginPath();c.arc(p.x+ox,p.y+oy,8+age*15,0,Math.PI*1.7);c.stroke();}c.globalAlpha*=.85;
+  c.fillStyle='#fff';c.globalAlpha*=.85;
   c.fillRect(x-3+v.x,y-2+v.y,1.4,1.4);c.fillRect(x+1.6+v.x,y-2+v.y,1.4,1.4);c.restore();
  }
  function objectTransform(c,o){
@@ -98,7 +86,21 @@ export function initialize(runtime){
  }
  function draw(){
   if(blocked())return;const c=runtime.cx,ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
-  c.save();c.fillStyle='#fff';
+  c.save();
+  for(const p of clusters)for(let i=0;i<8;i++){const a=p.phase+i*2.39996+seconds*.12,r=20+(i%3)*7;c.fillStyle=p.ink;c.globalAlpha=.12+.06*Math.sin(seconds*.6+i);c.fillRect(p.x+ox+Math.cos(a)*r,p.y+oy+Math.sin(a)*r*.7,1,1);}
+  for(const p of marks){const age=seconds-p.at;c.globalAlpha=(1-age/1.4)*.36;c.strokeStyle=p.ink;c.lineWidth=.7;c.beginPath();c.arc(p.x+ox,p.y+oy,2+age*2,0,Math.PI*1.5);c.stroke();}
+  for(const p of memory){const a=1-(seconds-p.at)/2.8;c.globalAlpha=a*.13;c.strokeStyle=c.fillStyle=p.ink;c.lineWidth=.65;c.beginPath();c.moveTo(p.x1+ox,p.y1+oy);c.lineTo(p.x2+ox,p.y2+oy);c.stroke();c.fillRect(p.x1+ox-1,p.y1+oy-1,2,2);c.fillRect(p.x2+ox-1,p.y2+oy-1,2,2);}
+  drawConnections(c,ox,oy);c.fillStyle='#fff';
+  for(const p of flashes){
+   const age=(seconds-p.at)/.45,r=5+age*8;c.globalAlpha=(1-age)*.8;c.strokeStyle=c.fillStyle=p.ink;c.lineWidth=p.role==='bajo'?2:1.2;
+   const x=p.x+ox,y=p.y+oy;c.fillRect(x-1.5,y-1.5,3,3);c.beginPath();
+   if(p.role==='perc'){c.moveTo(x-r,y);c.lineTo(x+r,y);c.moveTo(x,y-r);c.lineTo(x,y+r);}
+   else if(p.role==='bajo'){c.moveTo(x-r,y+r);c.lineTo(x+r,y+r);c.moveTo(x-r*.6,y+r+4);c.lineTo(x+r*.6,y+r+4);}
+   else if(p.role==='acorde'){for(let i=-1;i<=1;i++){c.moveTo(x+i*5,y-r);c.lineTo(x+i*5,y+r);}}
+   else c.arc(x,y,r,-Math.PI*.5,Math.PI*.8);c.stroke();
+  }
+  for(const p of ripples){const age=seconds-p.at;if(age<0)continue;c.strokeStyle=p.ink;c.globalAlpha=(1-age/.55)*.38;c.lineWidth=.8;c.beginPath();c.arc(p.x+ox,p.y+oy,8+age*15,0,Math.PI*1.7);c.stroke();}
+  c.fillStyle='#fff';
   for(const o of nearby){const weight=Math.max(0,1-Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)/100);if(!weight)continue;c.globalAlpha=weight*.24;c.strokeStyle=runtime.musicInk?.(o)||'#bddbe0';c.lineWidth=.7;c.beginPath();c.arc(o.x+ox,o.y+oy,13,Math.PI*.1,Math.PI*.8);c.stroke();}
   for(const p of dust){const age=seconds-p.at;c.globalAlpha=(1-age/.6)*.35;c.fillRect(p.x+ox+age*p.side*6,p.y+oy,1.5,1.5);}
   c.restore();

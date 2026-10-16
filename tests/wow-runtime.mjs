@@ -23,3 +23,24 @@ assert(r.wowState.clusters<=2&&r.wowState.clusters>0);
 r.currentPocket=()=>({kind:'quiet'});r.wowTick(.02);assert.equal(r.wowState.clusters,0);
 
 r.currentPocket=()=>null;s.layer='cielo';r.wowTick(.02);assert.equal(r.wowState.clusters,0,'surface sources do not leak into other layers');
+
+// Exercise the real eyes hook with no effects: drawConnections previously threw even here.
+s.layer='superficie';r.seedOf=()=>1;r.wowTick(.02);
+calls.length=0;r.wowEyes(source,c,7,9);
+assert.equal(calls.filter(([name])=>name==='fillRect').length,2,'eyes draw exactly two local pixels');
+// Populate every relocated world effect and verify world coordinates, independent of eyes.
+r.seedOf=()=>0;r.beams=[{x1:20,y1:0,x2:42,y2:0,l:.8}];
+r.wowPulseHit(20,0,{color:'#abcdef'});r.wowSoundCue(source,'perc',r.ac.currentTime);r.wowTick(.05);
+r.wowTick(.05);r.wowTick(.05);
+for(const key of ['clusters','marks','constellations','flashes','ripples'])assert(r.wowState[key]>0,key+' fixture is active');
+calls.length=0;r.wowEyes(source,c,7,9);
+assert.deepEqual(calls.map(([name])=>name),['save','fillRect','fillRect','restore'],'world effects never draw once per inhabitant');
+r.camX=80;r.camY=-30;calls.length=0;r.drawWowWorld();
+const ox=r.W/2-r.camX,oy=r.H/2-r.camY;
+assert(calls.some(([name,x,y])=>name==='moveTo'&&x===20+ox&&y===oy),'beam memory uses camera coordinates');
+assert(calls.some(([name,x,y,w,h])=>name==='fillRect'&&x===20+ox-1.5&&y===oy-1.5&&w===3&&h===3),'flash survives relocation');
+assert(calls.some(([name,x,y,radius])=>name==='arc'&&x===20+ox&&y===oy&&radius<4),'pulse mark survives relocation');
+assert(calls.some(([name,x,y,radius])=>name==='arc'&&x===42+ox&&y===oy&&radius>=8&&radius<13),'neighbor ripple survives relocation');
+assert(calls.filter(([name,,,w,h])=>name==='fillRect'&&w===1&&h===1).length===8,'cluster retains eight dust pixels');
+assert(calls.filter(([name,,,w,h])=>name==='fillRect'&&w===2&&h===2).length===5,'beam retains endpoints and three connection lights');
+console.log('PASS real eyes hook and all world effects with nonzero camera offsets');
