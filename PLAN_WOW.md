@@ -22,7 +22,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 16 | Profundidad en tarjetas | feat/wow-16-profundidad | Implementada; ver informe 16 |
 | 17 | Barrido de adquisición | feat/wow-17-adquisicion | Implementada; ver informe 17 |
 | 18 | Álbum con foco | feat/wow-18-album | Implementada; ver informe 18 |
-| 19 | Firma de favoritos | feat/wow-19-favoritos | Pendiente |
+| 19 | Firma de favoritos | feat/wow-19-favoritos | Implementada; ver informe 19 |
 | 20 | Constelación de regreso | feat/wow-20-regresos | Pendiente |
 
 ## Verificación
@@ -108,3 +108,7 @@ Una luz atraviesa una sola vez la ilustración de un hallazgo nuevo y realmente 
 ### 18. Álbum con foco
 
 Solo la tarjeta elegida con el dedo o el teclado respira suavemente. Al seleccionar otra, cerrar el libro o cambiar de pantalla, la anterior se detiene. Textos, botones y desplazamiento permanecen estables.
+
+### 19. Firma de favoritos
+
+Cada favorito muestra una constelación pequeña derivada de su dirección y carácter guardados. Funciona también con semillas ajenas, no añade consultas al generador y conserva su dibujo al renombrar el lugar.

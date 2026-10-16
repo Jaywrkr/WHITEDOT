@@ -1,3 +1,4 @@
+import {favoriteSignatureSVG} from './wow-memory.js';
 import {placeAddress,worldIdentity,supportedWorld,supportedMusic,sameWorld} from './world-identity.js';
 export const FAVORITE_LIMIT=256;
 const layers=new Set(['superficie','bajo','cielo']);
@@ -48,12 +49,12 @@ export function initialize(runtime){
   if(list().length&&!matching.length){const p=document.createElement('p');p.textContent='Prueba otro nombre o estilo.';body.append(p);}
   for(const point of matching.slice(0,shown)){
    const card=document.createElement('article');card.className='journal-card favorite-card';card.dataset.favorite=point.id;
-   const title=document.createElement('h3');title.textContent=point.name;const input=document.createElement('input');input.value=point.name;input.maxLength=60;input.setAttribute('aria-label','Nombre del favorito');
+   const title=document.createElement('h3'),label=document.createElement('span'),signature=document.createElement('span');title.className='favorite-title';label.textContent=point.name;signature.className='favorite-signature';signature.innerHTML=favoriteSignatureSVG(point);title.append(label,signature);const input=document.createElement('input');input.value=point.name;input.maxLength=60;input.setAttribute('aria-label','Nombre del favorito');
    const details=document.createElement('p');details.textContent=[point.layer==='bajo'?'Subsuelo':point.layer==='cielo'?'Cielo':'Superficie',point.genre?(runtime.GEN[point.genre]?.name||point.genre):'',point.bpm?`${point.bpm} BPM`:''].filter(Boolean).join(' · ');
    const notes=document.createElement('textarea');notes.rows=2;notes.maxLength=280;notes.value=point.notes||'';notes.setAttribute('aria-label','Recuerdo del lugar');notes.placeholder='Qué te gusta de este lugar';notes.onchange=()=>{point.notes=notes.value.slice(0,280);runtime.save();};
    const edit=document.createElement('details'),summary=document.createElement('summary');summary.textContent='Editar y compartir';edit.append(summary);const row=document.createElement('div');row.className='row';
    const button=(text,callback)=>{const b=document.createElement('button');b.textContent=text;b.onclick=callback;row.append(b);return b;};
-   button('Renombrar',()=>{rename(point.id,input.value);input.value=point.name;title.textContent=point.name;});button('Borrar',()=>remove(point.id));
+   button('Renombrar',()=>{rename(point.id,input.value);input.value=point.name;label.textContent=point.name;});button('Borrar',()=>remove(point.id));
    button('Código',async()=>{try{const code=runtime.encodeFavorite?.(point);if(code){$('placeCode').value=code;try{await navigator.clipboard.writeText(code);runtime.toast('<em>Código</em> · copiado');}catch(_){runtime.toast('<em>Código</em> · listo para copiar arriba');}}}catch(_){}});
    const visit=document.createElement('button');visit.textContent='Ir a este lugar';visit.disabled=!supportedWorld(point.address)||!supportedMusic(point.address);visit.onclick=()=>runtime.visitWorldAddress?.(point.address);
    const route=document.createElement('div');route.className='row';if(sameWorld(point.address,runtime.worldIdentity))runtime.favoriteActions?.(point,route);
