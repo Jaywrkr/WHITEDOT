@@ -1,5 +1,5 @@
 <!-- mejora-integral-actual -->
-Ciclo vigente: [PLAN_MEJORA_INTEGRAL.md](PLAN_MEJORA_INTEGRAL.md), diez fases de mejora autorizadas, desde recuperación faa0fe9. Fases 1–4 implementadas y probadas en ramas encadenadas. Última: `mejora/04-mundo`, versión 2.3.0-alpha.8. Jay PR/merge. Las tablas anteriores conservan su evidencia histórica.
+Ciclo vigente: [PLAN_MEJORA_INTEGRAL.md](PLAN_MEJORA_INTEGRAL.md), diez fases de mejora autorizadas, desde recuperación faa0fe9. Fases 1–5 implementadas y probadas en ramas encadenadas. Última: `mejora/05-encuentros`, versión 2.3.0-alpha.9. Jay PR/merge. Las tablas anteriores conservan su evidencia histórica.
 <!-- /mejora-integral-actual -->
 
 <!-- juego-musical-actual -->

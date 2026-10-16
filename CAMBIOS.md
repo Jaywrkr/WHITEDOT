@@ -1,3 +1,9 @@
+## 2.3.0-alpha.9 · Encuentros
+
+Cancelar un gesto restaura conexiones y patrones anidados; los movimientos y cambios de partida no retienen referencias al encuentro anterior. Los encuentros se atenúan gradualmente al alejarse. El animal muestra indicaciones breves de escucha y respuesta, también usando el cubo. Diez familias comprobadas con toque, moldeado, pausa y bitácora.
+
+Auditoría sin errores/avisos; 5 suites Node afectadas y recorrido representativo aprobados; audio sin cambios. Evidencia: scripts/mejora-05-validation.json. No afirma escucha física, CI ni deploy.
+
 ## 2.3.0-alpha.8 · Mundo y habitantes
 
 El descanso de criaturas conserva una presencia tenue y respeta vigilia cero. Movimiento reducido congela glifos y bailes; las construcciones tienen tamaño proporcional al teléfono. La entrada usa anillos locales del color musical, en lugar de expandir oro por toda la pantalla. No cambia música, coordenadas ni hallazgos.
