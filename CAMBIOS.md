@@ -1,3 +1,7 @@
+## 2.3.0-alpha.25 · Cuaderno vivo 1/20
+
+El cubo se estira brevemente al arrancar según la dirección real. Superficie y cuerpo comparten pose; sin alterar tamaño físico. Saltos, menús y movimiento reducido restablecen la pose.
+
 ## 2.3.0-alpha.24 · Cuaderno vivo
 
 Cincuenta variantes de pulso ganadas mediante hallazgos, diez familias, distinta geometría/alcance y selección dentro de Tu cubo. Los descubrimientos antiguos desbloquean ondas sin perder progreso. Paseo invita ocasionalmente a vecinos y miniinstrumentos; respuestas regionales a tempo, sin reescribir la música de fondo. La propuesta Perplexity/Gemini permanece como evaluación para Jay.

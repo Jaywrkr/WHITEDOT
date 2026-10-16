@@ -103,6 +103,7 @@ import { initialize as jam } from './jam.js';
 import { initialize as fxpad } from './fxpad.js';
 import { initialize as controls } from './controls.js';
 import { initialize as pwa } from './pwa.js';
+import {initialize as wowFeel} from './wow-feel.js';
 import { initialize as atlas } from './atlas.js';
 
 // Initialize once, in the same order as the original game. Never expose runtime on window.
@@ -185,7 +186,7 @@ contentGallery(runtime);microInstruments(runtime);achievementsV2(runtime);worldV
 practiceTravel(runtime);boxSurprises(runtime);
 musicTravel(runtime);
 distantColors(runtime);vjWorld(runtime);reactiveEcology(runtime);
-pixelLife(runtime);
+pixelLife(runtime);wowFeel(runtime);
 houseAudio(runtime);house(runtime);
 onboarding(runtime);labLearning(runtime);
 runtime.styleUI();runtime.hud();

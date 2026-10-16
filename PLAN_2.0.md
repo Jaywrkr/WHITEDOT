@@ -1,3 +1,8 @@
+## Estado vigente: Cuaderno vivo
+
+| Entrega | Estado |
+|---|---|
+| WOW 01: Cubo elástico al arrancar | Implementada; scripts/wow-01-validation.json |
 <!-- reencuentro-actual -->
 Ciclo vigente: [PLAN_REENCUENTRO.md](PLAN_REENCUENTRO.md).
 

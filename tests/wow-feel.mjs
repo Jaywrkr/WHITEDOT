@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {createMotion} from '../src/wow-model.js';
+const m=createMotion();m.step(0,0,.02);
+assert(m.step(3,0,.02).started);assert(m.pose().x>1);
+for(let i=0;i<50;i++)m.step(3,0,.02);
+assert(Math.abs(m.pose().x-1)<.001);
+m.step(3,5,.02);assert(m.pose().x>1);
+assert.equal(m.pose(true).x,1);
+m.step(999,999,.02);assert.equal(m.pose().x,1,'teleport does not stretch');
+m.step(1000,999,.02,true);assert.equal(m.pose().x,1,'modal pauses effects');
+m.reset();assert(!m.step(500,800,.02).started,'first frame is not movement');
+console.log('PASS visual motion: starts, decay, reduced motion, teleport and modal guards');

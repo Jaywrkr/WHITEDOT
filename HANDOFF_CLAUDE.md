@@ -1186,3 +1186,7 @@ Al terminar en Claude, actualizar estado, pendientes, matriz afectada, guía de 
 ## 10. Reparación prioritaria de Vercel
 
 > **Reparación de Vercel · 14 oct:** `fix/vercel-static-output` parte de fase 0 `f8af7c4`, la rama del preview fallido. `vercel.json` fija `framework: null` y `outputDirectory: "."`; mantiene el sello de build y el SW sin caché HTTP. La auditoría protege esa configuración. Jay autorizó integrar esta reparación y las fases 0–2 en `main` solo en este caso; el deploy remoto queda por confirmar. Al continuar las fases dependientes, conservar estas opciones. Las cuatro nuevas peticiones de interacción/percusión figuran como pendientes en [PLAN_2.0.md](PLAN_2.0.md).
+
+## Cuaderno vivo · ciclo vigente
+
+PLAN_WOW.md registra veinte ramas autorizadas desde 5ab5952. wow-model.js y wow-feel.js gestionan presentación acotada; render y cube aplican la misma pose sin mover colisiones. Música y guardados intactos. Informes scripts/wow-NN-validation.json separan aprobado/bloqueado. Jay conserva PR y merge.
