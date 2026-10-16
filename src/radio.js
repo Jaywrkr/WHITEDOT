@@ -1,3 +1,4 @@
+import {createReferenceRadio} from './radio-reference.js';
 import {compositionFrame} from './composition.js';
 import {musicalCharacter,hookInstruments} from './musical-character.js';
 import {REFERENCE_STEPS,REFERENCE_BASS} from './references.js';
@@ -10,9 +11,10 @@ import {labScore,labArrangement} from './lab-score.js';
 import {directedFrame} from './music-direction.js';
 // Composición por frases: el reloj musical avanza sin necesitar movimiento.
 // No modifica el ADN de la región ni guarda estado en la partida.
-export function createRadio(seedOf, rng, genres, {living=()=>false}={}) {
+export function createRadio(seedOf, rng, genres, {living=()=>false,reference=()=>false}={}) {
   let transportKey=null,lastBar=-1,regionKey = null, phrase = -1, nextPhrase = 0, nextSection = 0;
   let section = 0, energy = .25, arrangement = null,grammar,identity,startBar=0,lastLiving=null;
+  const referenceRadio=createReferenceRadio(seedOf,rng,genres);
   const levels = [.24, .43, .62, .3];
 
   function advance(region, bar, environment = {}) {
@@ -100,7 +102,16 @@ export function createRadio(seedOf, rng, genres, {living=()=>false}={}) {
     const native=hybridArrangement(frame,region,bar-startBar,environment.room?null:hybridIdentity(region,seedOf,rng),genres);
     // The original regional radio is the backbone; newer parts accompany it.
     // Keep hybrids' common harmony, without replacing every native melody/timbre.
-    return alive?directedFrame(labArrangement(native,labScore(region,seedOf,rng),environment,frame),region.genre):native;
+    const modern=alive?directedFrame(labArrangement(native,labScore(region,seedOf,rng),environment,frame),region.genre):native;
+    if(!reference()||environment.room||!alive)return modern;
+    const original=referenceRadio.advance(region,bar,environment);
+    return {...modern,...original,referenceOrigin:'acd766f',hybrid:modern.hybrid,
+      labScore:modern.labScore,phrasing:modern.phrasing,labEvolution:modern.labEvolution,direction:modern.direction,
+      bassI:region.track.bassI,
+      // Native phrasing owns the lead/bass. Modern guests keep their own parts.
+      identity:{...modern.identity,id:'reference:acd766f',name:'Radio original',hooks:[original.hookI],bassI:region.track.bassI,swing:genres[region.genre].sw||0},
+      grammar:{...original.grammar},expression:{...original.expression},
+      energy:Math.max(original.energy,(modern.labScore?.electronic?.count||0)>=8?.38:.14)};
   }
   return { advance };
 }

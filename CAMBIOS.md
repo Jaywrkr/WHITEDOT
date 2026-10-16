@@ -1,3 +1,9 @@
+## 2.3.0-alpha.17 · Reencuentro 1
+
+La radio real de acd766f gobierna motivos, bajos, secciones, expresión y timbres principales en producción. Acompañantes modernos respetan sus frases; batería nativa, armonía compartida, transiciones, filtros y duetos se conservan. Se comparan 96 marcos históricos de doce estilos sin tocar mapas ni progreso.
+
+Rama `feat/reencuentro-01-musica`. Evidencia: scripts/reencuentro-01-validation.json. CI, DSP y escucha física se registran por separado; no se afirma deploy.
+
 ## 2.3.0-alpha.16 · Ecosistemas reactivos
 
 Diez respuestas visuales sobre flora, fauna y miniinstrumentos reales: contornos, flores, niebla abierta, constelaciones, elasticidad, color transportado, ecos, enjambres, hilos y metamorfosis. Acercarse, tocar, esperar y rodear cambian el gesto. Actividad, sensibilidad y contagio independientes generan zonas quietas, reactivas o festivas. El color puede despertar otra flor y las respuestas pueden propagarse a un vecino real.

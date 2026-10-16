@@ -127,7 +127,7 @@ export function labNoteEvents(frame,step,bar){
   if(score.electronic.layers.includes('air')&&step===8&&position===0)
    events.push({role:'lead',part:'air',degree:4,instrument:group.air,offset:0,level:.52,technique:'normal'});
  }
- return phraseNotes(events,frame.phrasing,step);
+ return frame.referenceOrigin?[...events.filter(e=>!e.part&&e.role!=='acorde'),...phraseNotes(events.filter(e=>e.part||e.role==='acorde'),frame.phrasing,step)]:phraseNotes(events,frame.phrasing,step);
 }
 export function labDrumEvents(score,step,bar,energy){
  if(!score||!Number.isInteger(step)||step<0||step>15||!Number.isFinite(energy)||energy<=.12)return [];

@@ -1,3 +1,7 @@
+# Reencuentro · fase 1
+
+Leer PLAN_REENCUENTRO.md. Rama `feat/reencuentro-01-musica`, versión 2.3.0-alpha.17. La radio real de acd766f gobierna motivos, bajos, secciones, expresión y timbres principales en producción. Acompañantes modernos respetan sus frases; batería nativa, armonía compartida, transiciones, filtros y duetos se conservan. Se comparan 96 marcos históricos de doce estilos sin tocar mapas ni progreso. Evidencia en scripts/reencuentro-01-validation.json. Jay conserva PR/merge; respetar los límites de audio documentados.
+
 # Prioridad vigente · Ecosistemas reactivos
 
 Fase 2 en `feat/ecosistemas-reactivos`, desde `267a7de` (viaje), versión alpha.16. Leer PLAN_VIAJE_Y_REACCIONES.md. `reactive-ecology-model.js` decide régimen, diez gestos por individuo, memoria efímera y límites; `reactive-ecology.js` observa toques sin capturarlos, obtiene habitantes reales y dibuja respuestas bajo la niebla. Render llama tick tras movimiento y dibujo antes del fog. Living/micro aplican poses locales sin mover coordenadas. Fog abre ventanas pequeñas de radio gradual; movimiento reducido conserva solo contornos estáticos. Sin cambios de música en esta fase. No guardar efectos ni fabricar logros.
