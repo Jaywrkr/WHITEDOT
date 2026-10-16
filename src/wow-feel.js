@@ -1,4 +1,4 @@
-import {createMotion,WOW_LIMITS} from './wow-model.js';
+import {createMotion,WOW_LIMITS,lookVector} from './wow-model.js';
 export function initialize(runtime){
  const motion=createMotion();let owner=null,layer=null,dust=[],seconds=0,nearby=[];
  const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
@@ -16,6 +16,12 @@ export function initialize(runtime){
   dust=dust.filter(p=>seconds-p.at<.6);
   if(step.stopped){for(let i=0;i<3;i++)dust.push({x:step.x-Math.cos(step.angle)*(4+i*4),y:step.y-Math.sin(step.angle)*(4+i*4),at:seconds,side:i-1});dust=dust.slice(-WOW_LIMITS.brakes);}
  }
+ function eyes(o,c,x=0,y=0){
+  if(blocked()||Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)>130)return;
+  const v=lookVector(runtime.S.wx-o.x,runtime.S.wy-o.y,reduced());
+  c.save();c.fillStyle='#fff';c.globalAlpha*=.85;
+  c.fillRect(x-3+v.x,y-2+v.y,1.4,1.4);c.fillRect(x+1.6+v.x,y-2+v.y,1.4,1.4);c.restore();
+ }
  function objectTransform(c,o){
   if(blocked()||reduced())return;
   const proximity=Math.max(0,1-Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)/100);
@@ -31,5 +37,5 @@ export function initialize(runtime){
  function cubeTransform(c,x,y){
   const p=motion.pose(reduced()||blocked());c.translate(x,y);c.rotate(p.angle);c.scale(p.x,p.y);c.rotate(-p.angle);c.translate(-x,-y);
  }
- Object.defineProperties(runtime,{wowTick:{get:()=>tick},drawWowWorld:{get:()=>draw},wowObjectTransform:{get:()=>objectTransform},wowState:{get:()=>({dust:dust.length,seconds})},cubeVisualTransform:{get:()=>cubeTransform}});
+ Object.defineProperties(runtime,{wowTick:{get:()=>tick},drawWowWorld:{get:()=>draw},wowObjectTransform:{get:()=>objectTransform},wowEyes:{get:()=>eyes},wowState:{get:()=>({dust:dust.length,seconds})},cubeVisualTransform:{get:()=>cubeTransform}});
 }

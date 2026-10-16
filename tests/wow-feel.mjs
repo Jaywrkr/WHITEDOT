@@ -10,3 +10,7 @@ m.step(999,999,.02);assert.equal(m.pose().x,1,'teleport does not stretch');
 m.step(1000,999,.02,true);assert.equal(m.pose().x,1,'modal pauses effects');
 m.reset();assert(!m.step(500,800,.02).started,'first frame is not movement');
 console.log('PASS visual motion: starts, decay, reduced motion, teleport and modal guards');
+
+const {lookVector}=await import('../src/wow-model.js');
+for(const [x,y]of [[0,0],[1,0],[-40,800],[NaN,1]]){const eye=lookVector(x,y);assert(Number.isFinite(eye.x)&&Math.hypot(eye.x,eye.y)<=1.40001);}
+assert.deepEqual(lookVector(20,30,true),{x:0,y:0});
