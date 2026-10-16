@@ -13,7 +13,7 @@ Autorizado por Jay con «hazlo». Sustituye la ampliación del ciclo anterior: m
 | 7 · Interfaz y cubo | `mejora/07-interfaz` | 2.3.0-alpha.11 | Implementada y probada | Móvil/PC, paneles y personalización congruentes. |
 | 8 · Colección | `mejora/08-coleccion` | 2.3.0-alpha.12 | Implementada y probada | Tarjetas, rareza, bitácora y progreso claros. |
 | 9 · Recorrido y Casa | `mejora/09-recorrido` | 2.3.0-alpha.13 | Implementada y probada | Enseñar jugando y conectar lo descubierto con Casa. |
-| 10 · Cierre | `mejora/10-cierre` | 2.3.0-alpha.14 | Pendiente | Integración, rendimiento, suites y límites documentados. |
+| 10 · Cierre | `mejora/10-cierre` | 2.3.0-alpha.14 | Implementada; integración completa pendiente de CI | Integración, rendimiento, suites y límites documentados. |
 
 Verificación proporcional: auditoría, suites afectadas, un recorrido representativo y renders afectados cuando cambia audio. Reutilizar verde de código intacto. Completas una vez sobre el conjunto final; no desactivar pruebas. Escucha física/CI/deploy se registran aparte. UI silenciosa, Geist Mono, negro y dorado ganado.
 
@@ -22,3 +22,7 @@ Verificación proporcional: auditoría, suites afectadas, un recorrido represent
 Problema comprobado: después de que la radio compusiera la pieza, living-composition aplicaba otra forma independiente cada 32 compases. En su cuarto capítulo borraba notas y reducía de nuevo la energía del motivo recuperado. El marco regional pasa a ser dueño de forma, niveles y brillo; la capa viva conserva metadatos y resta solo cuando el jugador entra en un espacio de quietud explícito. Radio histórica, armonía híbrida, ensamble y gesto mantienen sus papeles.
 
 Resultados y comandos por fase en `scripts/mejora-NN-validation.json`; evolución técnica en HANDOFF_CLAUDE y CAMBIOS. Ninguna fase equivale a garantía de belleza musical ni publicación remota.
+
+## Cierre del ciclo
+
+Las diez fases están implementadas en ramas encadenadas. [CIERRE_MEJORA_INTEGRAL.md](CIERRE_MEJORA_INTEGRAL.md) reúne commits, comprobaciones y prueba en teléfono. La validación enfocada de cada fase no sustituye navegador/audio completos ni escucha física. La rama final activa ambos conjuntos en CI sin omitir pruebas; no integrar con comprobaciones pendientes o fallidas.

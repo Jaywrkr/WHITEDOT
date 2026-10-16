@@ -1,9 +1,9 @@
 <!-- mejora-integral-actual -->
-Ciclo vigente: [PLAN_MEJORA_INTEGRAL.md](PLAN_MEJORA_INTEGRAL.md), diez fases de mejora autorizadas, desde recuperación faa0fe9. Fases 1–9 implementadas y probadas en ramas encadenadas. Última: `mejora/09-recorrido`, versión 2.3.0-alpha.13. Jay PR/merge. Las tablas anteriores conservan su evidencia histórica.
+Ciclo vigente: [PLAN_MEJORA_INTEGRAL.md](PLAN_MEJORA_INTEGRAL.md), diez fases de mejora autorizadas, desde recuperación faa0fe9. Fases 1–10 implementadas en ramas encadenadas. Última: `mejora/10-cierre`, versión 2.3.0-alpha.14. Verificación local y límites en [CIERRE_MEJORA_INTEGRAL.md](CIERRE_MEJORA_INTEGRAL.md); integración completa pendiente de CI. Jay PR/merge. Las tablas anteriores conservan su evidencia histórica.
 <!-- /mejora-integral-actual -->
 
 <!-- juego-musical-actual -->
-Ciclo vigente: [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md). Doce fases autorizadas, versiones 2.3 alpha, ramas encadenadas. Jay mantiene PR/merge. Las tablas siguientes son antecedentes.
+Ciclo anterior, sustituido: [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md). Doce fases autorizadas, versiones 2.3 alpha, ramas encadenadas. Jay mantiene PR/merge. Las tablas siguientes son antecedentes.
 
 | Entrega actual | Rama | Versión | Estado |
 |---|---|---|---|
@@ -11,11 +11,11 @@ Ciclo vigente: [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md). Doce fases autori
 | Juego 2 · Instrumentos | `feat/juego-02-sonido` | `2.3.0-alpha.2` | Auditoría, 42 suites afectadas, un recorrido de 43 voces y 14 renders aprobados |
 | Juego 3 · Composición | `feat/juego-03-composicion` | `2.3.0-alpha.3` | Auditoría, 43 suites afectadas, producción y cinco renders aprobados |
 | Juego 4 · Recuperación prioritaria | `feat/juego-04-interpretacion` | `2.3.0-alpha.4` | Radio histórica con acompañamiento actual; ampliación de gestos pendiente |
-| Juego 5–12 | Ver PLAN_JUEGO_MUSICAL.md | alpha.5–12 | Pendientes, autorización conservada |
+| Juego 5–12 | Ver PLAN_JUEGO_MUSICAL.md | alpha.5–12 | Ampliación sustituida por mejora integral; no reabrir |
 <!-- /juego-musical-actual -->
 
 <!-- ampliacion-visual -->
-Estado actual: [ampliación de interacción](PLAN_INTERACCION_FINAL.md). Entregas 3–7 publicadas; cierre 8 amplía avisos por prioridad, imán y seis percusiones naturales por petición de Jay. Conserva catálogo/guardados y documenta evidencias en CIERRE_INTERACCION_FINAL.md. Jay mantiene PR/merge. CI completo y teléfono físico se registran por revisión; no reabrir fases históricas.
+Antecedente integrado: [ampliación de interacción](PLAN_INTERACCION_FINAL.md). Entregas 3–7 publicadas; cierre 8 amplía avisos por prioridad, imán y seis percusiones naturales por petición de Jay. Conserva catálogo/guardados y documenta evidencias en CIERRE_INTERACCION_FINAL.md. Jay mantiene PR/merge. CI completo y teléfono físico se registran por revisión; no reabrir fases históricas.
 <!-- /ampliacion-visual -->
 
 <!-- direccion-musical-actual -->

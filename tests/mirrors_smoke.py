@@ -12,8 +12,8 @@ threading.Thread(target=server.serve_forever, daemon=True).start()
 URL = f'http://127.0.0.1:{server.server_port}/'
 CHROMIUM = os.environ.get('CHROMIUM_PATH') or shutil.which('chromium') or shutil.which('chromium-browser')
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
  for label,size in [('mobile',{'width':390,'height':844}),('desktop',{'width':1280,'height':800})]:
+  b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
@@ -54,6 +54,7 @@ with sync_playwright() as p:
   assert page.evaluate('JSON.stringify(window.__testRuntime.S.mirrorSites["mirror:0,0"])')==saved
   page.evaluate("()=>{const r=window.__testRuntime,m=r.nearbyMirrors(300)[0].mirrors[0];r.S.wx=m.x;r.S.wy=m.y;}")
   page.locator('#w').click(position={'x':30,'y':200});page.keyboard.down('e');page.wait_for_timeout(250);assert 'Espejo musical' in page.locator('#scannerSources').inner_text();page.keyboard.up('e')
+  page.evaluate("()=>{const r=__testRuntime;r.S.arrivalMode='continue';r.save();}")
   page.reload(wait_until='domcontentloaded');page.wait_for_function('window.__testRuntime?.S.mirrorSites["mirror:0,0"]?.solved')
   page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-detail="Tu recorrido creativo"] > summary').click();assert 'Espejos musicales' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
   page.evaluate('window.__testRuntime.audio()');page.wait_for_function('window.__testRuntime.ac.state==="running"')
@@ -62,6 +63,5 @@ with sync_playwright() as p:
   page.evaluate("()=>{const r=window.__testRuntime,ac=r.ac,o=ac.createOscillator.bind(ac),b=ac.createBufferSource.bind(ac);let count=0;ac.createOscillator=()=>{count++;return o();};ac.createBufferSource=()=>{count++;return b();};try{for(let s=0;s<16;s++)r.mirrorStep(s,102,ac.currentTime+.1);if(!count)throw Error('mirror sequence silent');const before=count;for(let s=0;s<16;s++)r.mirrorStep(s,102,ac.currentTime+.2);if(count!==before)throw Error('mirror exceeded budget');}finally{ac.createOscillator=o;ac.createBufferSource=b;}}")
   page.evaluate('window.__testRuntime.enterLayer("bajo")');page.wait_for_timeout(200);assert not page.locator('#mirrorPanel').is_visible()
   assert not errors,errors
-  print(label+': direct drag/cancel, modal rollback, mirror touch controls, completed light route, audible bounded sequence, achievements, persistence, scanner and journal PASS',flush=True);c.close()
- b.close()
+  print(label+': direct drag/cancel, modal rollback, mirror touch controls, completed light route, audible bounded sequence, achievements, persistence, scanner and journal PASS',flush=True);c.close();b.close()
 server.shutdown()

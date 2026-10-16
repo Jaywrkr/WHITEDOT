@@ -1,8 +1,8 @@
 import {HOUSE_ROOMS,HOUSE_OBJECTS,normalizeHouse,houseOwns,placeHouseObject,encodeHouse,decodeHouse} from './house-model.js';
 import {livingGlyph} from './living-art.js';
 import {cubeSurface,cubeHalo,cubeAura} from './cube-art.js';
-export function initialize(runtime){const $=runtime.$,signals=new Map();let owner=null,visit=null,active=false,action='walk',selected='obj:origen',drag=null,selectedObject=null;
- function own(){if(owner!==runtime.S||owner.house?.version>1&&!owner.house.readOnly){owner=runtime.S;owner.house=normalizeHouse(owner.house,owner.totalDays);visit=null;selected='obj:origen';action='walk';}else if(!owner.house.readOnly)owner.house.unlocked=normalizeHouse(owner.house,owner.totalDays).unlocked;return owner.house;}
+export function initialize(runtime){const $=runtime.$,signals=new Map();let owner=null,knownDays=null,visit=null,active=false,action='walk',selected='obj:origen',drag=null,selectedObject=null;
+ function own(){if(owner!==runtime.S||owner.house?.version>1&&!owner.house.readOnly){owner=runtime.S;knownDays=owner.totalDays;owner.house=normalizeHouse(owner.house,owner.totalDays);visit=null;selected='obj:origen';action='walk';}else if(!owner.house.readOnly&&knownDays!==owner.totalDays){knownDays=owner.totalDays;owner.house.unlocked=normalizeHouse(owner.house,owner.totalDays).unlocked;}return owner.house;}
  const current=()=>visit||own();
  const items=h=>[...h.objects.filter(o=>o&&HOUSE_OBJECTS.some(d=>d.id===o.kind)),...(runtime.gardenObjects?.(h)||[])];
  const definition=o=>HOUSE_OBJECTS.find(p=>p.id===o.kind)||runtime.gardenDefinition?.(o);

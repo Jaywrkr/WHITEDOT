@@ -12,8 +12,8 @@ threading.Thread(target=server.serve_forever, daemon=True).start()
 URL = f'http://127.0.0.1:{server.server_port}/'
 CHROMIUM = os.environ.get('CHROMIUM_PATH') or shutil.which('chromium') or shutil.which('chromium-browser')
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
  for label,size in [('mobile',{'width':390,'height':844}),('desktop',{'width':1280,'height':800})]:
+  b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
@@ -21,7 +21,7 @@ with sync_playwright() as p:
   page.wait_for_function("window.__testRuntime.MU.dnaA && window.__testRuntime.ac.state==='running'")
   baseline=page.evaluate('localStorage.getItem("pixel-blanco-v4")')
   page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();assert page.locator('#mSeeds').is_visible()
-  baseline=page.evaluate('()=>{window.__testRuntime.S.sound=false;window.__testRuntime.applyComfort();window.__testRuntime.save();return localStorage.getItem("pixel-blanco-v4");}')
+  baseline=page.evaluate('()=>{window.__testRuntime.S.sound=false;window.__testRuntime.S.arrivalMode="continue";window.__testRuntime.applyComfort();window.__testRuntime.save();return localStorage.getItem("pixel-blanco-v4");}')
   page.locator('[data-seed="blobs-01"]').click();page.wait_for_url('**testSeed=blobs-01*');page.wait_for_function('window.__testRuntime?.S.previewSeed==="blobs-01" && window.__testRuntime.S.mode==="world"')
   first=page.evaluate('()=>{const r=window.__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy);if(r.S.wx!==r.REG*r.WCH/2||r.S.wy!==r.S.wx)throw Error("not centered");return JSON.stringify([d.z,d.genre,d.track,d.species,d.ground,d.air]);}')
   assert page.evaluate('localStorage.getItem("pixel-blanco-v4")')==baseline
@@ -34,6 +34,5 @@ with sync_playwright() as p:
   second=page.evaluate('()=>{const r=window.__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy);return JSON.stringify([d.z,d.genre,d.track,d.species,d.ground,d.air]);}');assert first!=second
   page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('#seedOriginal').click();page.wait_for_function('window.__testRuntime && !window.__testRuntime.S.previewSeed');assert page.evaluate('localStorage.getItem("pixel-blanco-v4")')==baseline
   assert not errors,errors
-  print(label+': prototype seed switching, whole-world variation, center, preview save isolation and return to main save PASS',flush=True);c.close()
- b.close()
+  print(label+': prototype seed switching, whole-world variation, center, preview save isolation and return to main save PASS',flush=True);c.close();b.close()
 server.shutdown()

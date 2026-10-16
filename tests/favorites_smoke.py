@@ -12,8 +12,8 @@ threading.Thread(target=server.serve_forever, daemon=True).start()
 URL = f'http://127.0.0.1:{server.server_port}/'
 CHROMIUM = os.environ.get('CHROMIUM_PATH') or shutil.which('chromium') or shutil.which('chromium-browser')
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
  for label,size in [('mobile',{'width':390,'height':844}),('desktop',{'width':1280,'height':800})]:
+  b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
@@ -26,7 +26,7 @@ with sync_playwright() as p:
   page.locator('#favSearch').fill('')
   page.locator('[data-favorite] summary').click();page.locator('[data-favorite] input').fill('Rincón de dub');page.locator('[data-favorite] button').filter(has_text='Renombrar').click()
   point=page.evaluate('window.__testRuntime.favorites[0]');assert point['name']=='Rincón de dub' and point['layer']=='superficie'
-  page.locator('#favoritesClose').click();page.reload(wait_until='domcontentloaded')
+  page.locator('#favoritesClose').click();page.evaluate("()=>{const r=__testRuntime;r.S.arrivalMode='continue';r.save();}");page.reload(wait_until='domcontentloaded')
   page.wait_for_function('window.__testRuntime && window.__testRuntime.favorites.length===1')
   assert page.evaluate('window.__testRuntime.favorites[0].name')=='Rincón de dub'
   page.locator('#bMenu').click();page.locator('#bAch').click();assert 'Rincón de dub' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
@@ -35,6 +35,5 @@ with sync_playwright() as p:
   page.locator('#favoritesClose').click()
   assert page.evaluate('''()=>{const r=__testRuntime,s=r.S;s.arrivalMode='continue';const before=[s.wx,s.wy];if(r.dailyArrival())throw Error('Continue moved the player');s.arrivalMode='explore';s.destination=null;if(!r.dailyArrival())throw Error('Daily exploration needs a destination');return !r.regionOfPos(s.wx,s.wy).sea&&Math.hypot(s.wx-before[0],s.wy-before[1])>500&&s.practiceTravel.previous.x===before[0];}''')
   assert not errors,errors
-  print(label+': named favorite save, rename, reload, journal, safe text and removal PASS',flush=True);c.close()
- b.close()
+  print(label+': named favorite save, rename, reload, journal, safe text and removal PASS',flush=True);c.close();b.close()
 server.shutdown()
