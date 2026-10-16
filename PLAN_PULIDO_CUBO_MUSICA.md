@@ -1,3 +1,7 @@
+<!-- direccion-musical-actual -->
+El ciclo vigente es [Dirección musical, siete fases](PLAN_DIRECCION_MUSICAL.md), autorizado el 16 de octubre. F2–F8 de pulido conservadas; su cierre conjunto continúa en la auditoría musical final.
+<!-- /direccion-musical-actual -->
+
 # Pulido de identidad, colección y música
 
 Nuevo alcance solicitado por Jay después de integrar Experiencia viva. Base inicial: main `d7ea883`, PR #143, con F14 `b2faf63`. Jay integró fase 1 en main `30b2df8`, PR #144. El plan de nueve fases sustituye la organización inicial de seis, por petición expresa de Jay. No reiniciar los planes anteriores.
@@ -14,7 +18,7 @@ Una rama por fase; la siguiente parte de la anterior si todavía no está integr
 | 6 · Cubo e interfaz | `feat/pulido-06-cubo-ui` | Personalización reversible y móvil | Implementada y probada; entrega en esta rama |
 | 7 · Colección y tarjetas | `feat/pulido-07-coleccion` | Hallazgos, utilidad, procedencia y regreso | Implementada y probada; entrega en esta rama |
 | 8 · Exploración y aprendizaje | `feat/pulido-08-exploracion` | Pistas, memoria reciente y contraste | Implementada y probada; entrega en esta rama |
-| 9 · Curaduría y cierre | `feat/pulido-09-cierre` | Auditoría conjunta y escucha | Pendiente |
+| 9 · Curaduría y cierre | `feat/pulido-09-cierre` | Auditoría conjunta y escucha | Incorporada a F7 de Dirección musical |
 
 ## Contrato común
 

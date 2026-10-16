@@ -1,3 +1,17 @@
+# Handoff · Dirección musical, fase 1
+
+Plan vigente [PLAN_DIRECCION_MUSICAL.md](PLAN_DIRECCION_MUSICAL.md), siete fases autorizadas el 16 de octubre. Rama `feat/musica-01-motor`, desde `24e0d1a`. Pulido F2–F8 conservado; su cierre F9 pasa a la auditoría musical F7. Codex commit/push; Jay PR/merge. Continuar todas las fases sin confirmaciones.
+
+`musical-conductor.js` es puro y acotado a 48 marcos. `audio.js` recuerda tiempo/paso/región/grado/subdivisión/swing/acorde antes de programar fuentes. `musicalFrame(time)` y `musicalTime(time)` solo actúan en producción unificada fuera de laboratorio/dueto. `voices.js` usa el centro armónico activo para fuentes de cualquier región y acuerda sus apoyos; cultura aplica la escala audible. Instrumentos, roles y guardados permanecen locales. `practice-travel.js` limpia los marcos efímeros tras persistir el viaje.
+
+`foundation_mix.py` añade siete renders de producción: preferencias antiguas, Campo/experimental, solo/banda de diez partes y ocho fuentes densas, con onsets dentro de 10 ms. `audio_mix.mjs` admite producción explícita sin alterar las comparaciones históricas por defecto. `musical-conductor.mjs` comprueba swing, cambio de tempo, centros armónicos vecinos, registro y límites de memoria.
+
+Auditoría y 121 suites Node; seis programas de navegador afectados y siete renders aprobados. El intento completo previo de navegador dio 90/92: fallaron dos expectativas anteriores al cambio de diseño (dock sin Estilos y reverb profunda en todo género); ambas corregidas y recorridos repetidos completos aprobados. No se presenta ese intento como suite final del nuevo ciclo. Evidencia `scripts/musica-01-validation.json`. Suite completa sobre F7.
+
+Red devolvió 403 al intentar previews públicos de referencias: la escucha/análisis directo de esas grabaciones sigue pendiente. Se pueden documentar principios estilísticos y medir el motor generado, separadamente.
+
+## Antecedentes
+
 # Handoff · Exploración, fase 8
 
 Rama `feat/pulido-08-exploracion` desde F7 `556ad5e`. Jay crea PR/merge.

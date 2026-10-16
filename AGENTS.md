@@ -4,13 +4,13 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 
 ## Prioridad actual
 
-Jay autorizó [PLAN_PULIDO_CUBO_MUSICA.md](PLAN_PULIDO_CUBO_MUSICA.md): nueve fases, entregadas fase a fase. Fase 1 integrada en main `30b2df8` (PR #144). Fase 2 subida en `a3a5fa7`. Fase 3 subida en `2a60dea`. Fase 4 subida en `845e8fc`. Fase 5 subida en `b3d8f0b`. Fase 6 subida en `5fe2538`. Fase 7 subida en `556ad5e`. Actual: fase 8, `feat/pulido-08-exploracion`, desde F7. Leer el plan nuevo antes de cambiar código; las tablas de planes históricos no reabren trabajo cerrado.
+Jay autorizó [PLAN_DIRECCION_MUSICAL.md](PLAN_DIRECCION_MUSICAL.md): siete fases de música, una rama por fase. Actual: fase 1 `feat/musica-01-motor`, desde F8 del pulido `24e0d1a`. F2–F8 del pulido ya están subidas; el cierre F9 se incorpora a la auditoría musical final. Leer el plan nuevo antes de cambiar código. Las tablas históricas no reabren trabajo cerrado.
 
 El ciclo anterior [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md) queda integrado por Jay. [CIERRE_EXPERIENCIA.md](CIERRE_EXPERIENCIA.md) conserva su evidencia y condiciones externas. Codex solo commit/push; Jay PR/merge. Escucha física, CI y deploy se verifican separadamente.
 
 ## Leer primero
 
-1. [PLAN_PULIDO_CUBO_MUSICA.md](PLAN_PULIDO_CUBO_MUSICA.md): ciclo actual y entregas.
+1. [PLAN_DIRECCION_MUSICAL.md](PLAN_DIRECCION_MUSICAL.md): ciclo actual y entregas.
 2. [CIERRE_EXPERIENCIA.md](CIERRE_EXPERIENCIA.md): auditoría, integración y prueba móvil.
 3. [README.md](README.md) y [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md): mapa técnico vigente.
 4. [PLAN_2.0.md](PLAN_2.0.md): decisiones y estados anteriores; su cabecera remite al ciclo actual.
@@ -19,7 +19,7 @@ El ciclo anterior [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md) queda integrado por
 
 ## Flujo de ramas (obligatorio)
 
-- Una rama por fase del plan vigente. Para el pulido actual, nombres de `PLAN_PULIDO_CUBO_MUSICA.md`, desde `main` actualizado o desde la fase de la que dependa.
+- Una rama por fase del plan vigente. Para el pulido actual, nombres de `PLAN_DIRECCION_MUSICAL.md`, desde `main` actualizado o desde la fase de la que dependa.
 - Commit y push de la rama. **Jay crea el PR y hace el merge.** No hacer push a `main` ni merges salvo que Jay lo pida explícitamente en ese momento.
 - Continuar con todas las fases ya autorizadas sin esperar confirmación entre ramas. Entregar una rama no detiene la siguiente; un bloqueo externo solo detiene las acciones que dependen de él.
 - Mensajes de commit en inglés, en imperativo, explicando el porqué. Sin identificadores de modelos.

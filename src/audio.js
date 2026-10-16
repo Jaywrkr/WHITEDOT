@@ -1,3 +1,4 @@
+import {createMusicalConductor} from './musical-conductor.js';
 import {phraseAccent} from './composition.js';
 import {musicalCharacter,hookPitch,inRegister} from './musical-character.js';
 import {peakGuardCurve,returnFilters} from './mix.js';
@@ -38,6 +39,7 @@ export function initialize(runtime) {
   const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN,{living});
   const neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN,{living});
   MU.radio = null;MU.neighborRadio=null;
+  const conductor=createMusicalConductor(),conducted=()=>runtime.unifiedMusic===true&&!runtime.labMode&&!runtime.duetRoom;
   let arrangementAir=1,productionRooms=null;
   const OUTPUT_BOOST=1.5,LOUD=5.6*OUTPUT_BOOST;   // requested lift before limiter/peak guard
   let ac=null,fx=null,master,mixInput,mfilt,punch,presence,makeup,limiter,clipper,comfortShelf,comfortLowpass,subsonic,headroom,bus,delay,dfb,dsend,verbIn,drone,droneG,noiseBuf,windG,windF;
@@ -217,6 +219,7 @@ export function initialize(runtime) {
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.riverBar?.(t);
       if(s===0&&(runtime.S.layer||'superficie')==='superficie')runtime.stormBar?.(t);   // hitos lejanos: se oyen antes de verse
     }else{MU.radio=null;voiceCurator.clear();}
+    if(conducted()&&runtime.inWorld()&&MU.dnaA)conductor.remember(t,MU.step,MU.dnaA,MU.deg,SIX,MU.radio?.identity?.swing,chordTones());
     if(runtime.inWorld()){runtime.loopStep?.(s,MU.step,t);runtime.bandStep?.(s,MU.step>>4,t);}   // ecos en bucle y banda de criaturas
     if(runtime.inWorld()&&MU.nb&&MU.nbW>0){if(s===0||MU.neighborRadio?.key!==MU.nb.key)MU.neighborRadio={...neighborRadio.advance(MU.nb,MU.step>>4),key:MU.nb.key};}else MU.neighborRadio=null;
     if(s===0)applyComfort(t);
@@ -240,7 +243,7 @@ export function initialize(runtime) {
     if(runtime.inWorld())E=runtime.clamp(E+(runtime.influenceState?.values.groove||0)*.09,.05,.9);
     if(runtime.inWorld())E=arrangementEnergy(E,runtime.S.musicEnergy);
     const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(MU.radio?.identity?.swing??G.sw??0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
-    const xp=runtime.inWorld()?(runtime.experimentalLevel?.()||0):0;   // zonas experimentales: ≥0.7 sin batería ni pista
+    const xp=runtime.inWorld()?(runtime.experimentalLevel?.()||0):0;   // El aislamiento experimental se conserva solo en laboratorio.
     const continuous=runtime.unifiedMusic===true&&!runtime.labMode,field=runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie',foundationGain=continuous&&field?.32:1;
     if(live&&!runtime.labSolo&&(continuous||!field)&&(continuous||xp<.7)){   // Production keeps its electronic foundation; deliberate laboratory Solo stays isolated.
       const accompany=()=>{
@@ -585,6 +588,9 @@ export function initialize(runtime) {
     pluck: { get: () => pluck },
     flute: { get: () => flute },
     thunder: { get: () => thunder },
+    musicalFrame:{get:()=>time=>conducted()?conductor.at(time):null},
+    musicalTime:{get:()=>time=>conducted()?conductor.align(time,ac?.currentTime||0):time},
+    clearMusicalFrames:{get:()=>()=>conductor.clear()},
     soon: { get: () => soon },
     now: { get: () => now },
     beat: { get: () => beat },

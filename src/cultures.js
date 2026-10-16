@@ -1,3 +1,4 @@
+import {consonantPitch} from './musical-conductor.js';
 import {culturalResidents,culturalResonators} from './heritage.js';
 import {CULTURES,ARTIFACTS,createSanctuary,normalizeCultureBook,captureStone,cultureNotes} from './culture-model.js';
 import {musicalCharacter,hookPitch} from './musical-character.js';
@@ -36,9 +37,11 @@ export function initialize(runtime){
  }
  function sound(site,interval,time,volume=.035){
   if(!audible())return;
+  time=runtime.musicalTime?.(time)??time;
   const c=CULTURES[site.culture],d=runtime.regionOfPos(S().wx,S().wy),profile=musicalCharacter(d.genre);
   // Shared root and quiet accompaniment; cultural phrase uses its own interval palette.
-  const note=runtime.chordTones()[0]+interval;
+  const frame=runtime.musicalFrame?.(time),base=(frame?.chords||runtime.chordTones())[0]+interval,region=frame?.region;
+  const note=region?consonantPitch(base,region.scale.map(n=>57+runtime.BIOMES[region.z].tr+region.trOff+n),45,76):base;
   const voice={instrument:c.instrument,role:'lead'},emit=()=>runtime.hookInst(c.instrument,hookPitch(c.instrument,note,profile),time,volume,d);
   if(runtime.withInstrumentPatch)runtime.withInstrumentPatch('culture:'+site.culture,d,voice,site,time,emit);else emit();runtime.focusGesture?.(time,site,'lead');runtime.soundCue?.(site,'lead',time);runtime.cultureNoteCue?.({culture:site.culture,time,interval});
  }

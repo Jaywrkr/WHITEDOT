@@ -1,3 +1,15 @@
+# Dirección musical · fase 1: reloj y armonía comunes
+
+Rama `feat/musica-01-motor`, desde pulido F8 `24e0d1a`. El nuevo plan de siete fases incorpora el cierre anterior y mantiene todas sus entregas.
+
+- `musical-conductor.js` conserva hasta 48 marcos del scheduler. Cada marco registra tiempo, paso, BPM mediante subdivisión, región, grado y acorde. No existe un tempo universal.
+- Fuentes vecinas conservan su voz, pero siguen la armonía audible. Bajos y apoyos fuertes se ajustan al acorde; acordes de objetos comparten tríada. Las fuentes culturales usan la escala activa.
+- Contactos se alinean con la rejilla, swing y microtiming de la banda. Historial efímero se limpia al viajar. Duetos y laboratorio conservan su transporte deliberado.
+- Se verifican siete renders reales de producción, con una voz, bandas de diez partes, preferencias antiguas, Campo, zonas experimentales y fuentes densas. Contactos dentro de 10 ms de la rejilla prevista; salida protegida.
+- Dos expectativas antiguas de navegador se actualizan: el dock incluye Estilos y los efectos profundos se prueban en estilos abiertos. Se conservan límites de recursos, routing y viewport.
+
+Validación: auditoría sin errores/avisos, 121 suites Node, seis programas de navegador afectados y siete renders. Evidencia `scripts/musica-01-validation.json`. La suite completa se ejecutará sobre el conjunto final. Referencias de audio externas bloqueadas por HTTP 403; no se declara escucha de esas grabaciones. CI/deploy/teléfono físico separados.
+
 # Pulido · fase 8: contraste y regreso directo
 
 - Estilos ofrece lugares reales de una voz, banda completa y redes conectables; acceso directo al lugar anterior, sin abrir otro menú. La llegada a una red explica el gesto con una sola frase.
