@@ -22,6 +22,10 @@ try:
    assert page.evaluate('__testRuntime.regionOfPos(__testRuntime.S.wx,__testRuntime.S.wy).genre')=='nudisco'
    assert page.evaluate('__testRuntime.S.cat.kept&&__testRuntime.waves.length===0&&Object.keys(__testRuntime.S.journal.music.genres).length===0'),'menu travel must not award listening or launch notes'
    page.locator('#bStyles').tap();assert page.locator('.music-heard').count()==0
+   page.locator('#musicTravelBack').tap();assert page.evaluate('__testRuntime.S.wx===__old.x&&__testRuntime.S.wy===__old.y')
+   page.locator('#bStyles').tap();page.locator('#musicTravelSolo').tap();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=60000)
+   assert page.evaluate('async()=>{const r=__testRuntime,{labScore}=await import("/src/lab-score.js");return labScore(r.regionOfPos(r.S.wx,r.S.wy),r.seedOf,r.rng).electronic.count===1;}')
+   page.locator('#bStyles').tap();assert page.locator('.music-heard').count()==0
    page.evaluate("()=>{const r=__testRuntime;document.getElementById('mMusicTravel').hidden=true;r.S.sound=true;r.audio();r.MU.dnaA=r.regionOfPos(r.S.wx,r.S.wy);r.hookInst('p_tinepiano',60,r.ac.currentTime+.02,.05,r.MU.dnaA);}")
    page.locator('#bStyles').tap();assert page.locator('.music-heard').count()>=1
    if width==390:page.screenshot(path='/tmp/whitedot-music-travel.png')

@@ -13,7 +13,7 @@ Una rama por fase; la siguiente parte de la anterior si todavía no está integr
 | 5 · Ambiente vivo | `feat/pulido-05-ambiente` | Ensambles, redes y color distante | Implementada y probada; entrega en esta rama |
 | 6 · Cubo e interfaz | `feat/pulido-06-cubo-ui` | Personalización reversible y móvil | Implementada y probada; entrega en esta rama |
 | 7 · Colección y tarjetas | `feat/pulido-07-coleccion` | Hallazgos, utilidad, procedencia y regreso | Implementada y probada; entrega en esta rama |
-| 8 · Exploración y aprendizaje | `feat/pulido-08-exploracion` | Pistas, memoria reciente y contraste | Pendiente |
+| 8 · Exploración y aprendizaje | `feat/pulido-08-exploracion` | Pistas, memoria reciente y contraste | Implementada y probada; entrega en esta rama |
 | 9 · Curaduría y cierre | `feat/pulido-09-cierre` | Auditoría conjunta y escucha | Pendiente |
 
 ## Contrato común
@@ -179,6 +179,8 @@ No se modifica síntesis ni mezcla; no se repite audio para esta fase. Suite com
 - Guardar y volver desde el contexto, con direcciones completas y controles sencillos.
 
 **Aceptación:** descubrir tres acciones distintas sin manual y volver al lugar deseado conservando progresión.
+
+**Entrega F8:** Estilos incluye destinos de una sola voz y regreso inmediato. Saltar conserva firmas tímbricas recientes para buscar contraste. Traslados persistidos antes de cambiar colas/URL, con rollback en fallo de segunda escritura y preservación de formatos futuros. Auditoría, 120 suites Node y siete programas de navegador afectados aprobados; evidencia `scripts/pulido-08-validation.json`. Sin cambios de síntesis.
 
 ## Fase 9 · Curaduría y cierre
 
