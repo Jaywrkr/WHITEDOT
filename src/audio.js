@@ -38,8 +38,9 @@ export function initialize(runtime) {
   const MU={deg:0,pending:false,dist:0,E:0,act:0,still:0,dirY:0,speed:0,mel:69,motif:[],lastNoteStep:-999,step:0,next:0,queue:[],bq:[],cell:CELLS[0],lastChange:0,
     biome:0,biomeT:0,tr:0,sq:[],nb:null,nbW:0,prevKit:null,xf0:-999,bpmFrom:96,dnaA:null,dnaT:null,q8:[],near:[],singers:[],vari:-1,timbre:0,follower:false,voices:[57,60,64,67],resp:false,layers:new Set(),flowers:[],boltAt:0,groove:0};
   const living=()=>!runtime.labClassicMusic&&(runtime.unifiedMusic===true||!!runtime.labLiveMusic||runtime.S.livingMusic!==false);
-  let radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN,{living});
-  let neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN,{living});
+  const reference=()=>runtime.unifiedMusic===true&&!runtime.labMode&&!runtime.duetRoom;
+  let radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN,{living,reference});
+  let neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN,{living,reference});
   MU.radio = null;MU.neighborRadio=null;
   let enteredAt=-Infinity;const conductor=createMusicalConductor(),conducted=()=>runtime.unifiedMusic===true&&runtime.inWorld?.()===true&&!runtime.labMode&&!runtime.duetRoom;
   const journey=createTerritoryJourney();let journeyOwner=null,journeyLayer=null,journeyFrame=null;
@@ -384,7 +385,7 @@ export function initialize(runtime) {
   }
   function drumPattern(gid,s,bar,t,tt,E,ct,DO,arrangement){
     if(runtime.inWorld()&&!DO&&runtime.depthGate?.(s)===false&&s%4!==0)return;
-    if(arrangement?.labScore){
+    if(arrangement?.labScore&&!arrangement.referenceOrigin){
       const groove=runtime.inWorld()?Math.max(0,-(runtime.influenceState?.values.groove||0)):0;
       for(const hit of labDrumEvents(arrangement.labScore,s,bar,E*(1-.75*groove))){
         const at=(hit.instrument==='kick'?t:tt)+(hit.offset||0)*SIX,v=vel(hit.gain*(hit.technique==='ghost'?.82:hit.technique==='accent'?1.04:1));
