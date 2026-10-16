@@ -1,3 +1,7 @@
+## 2.3.0-alpha.26 · Cuaderno vivo 2/20
+
+Al detenerte quedan tres motas blancas durante 600 ms. Máximo seis; desaparecen al abrir paneles o reducir movimiento. No añaden sonido ni distancia.
+
 ## 2.3.0-alpha.25 · Cuaderno vivo 1/20
 
 El cubo se estira brevemente al arrancar según la dirección real. Superficie y cuerpo comparten pose; sin alterar tamaño físico. Saltos, menús y movimiento reducido restablecen la pose.

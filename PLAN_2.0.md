@@ -2,6 +2,7 @@
 
 | Entrega | Estado |
 |---|---|
+| WOW 02: Tres partículas al frenar | Implementada; scripts/wow-02-validation.json |
 | WOW 01: Cubo elástico al arrancar | Implementada; scripts/wow-01-validation.json |
 <!-- reencuentro-actual -->
 Ciclo vigente: [PLAN_REENCUENTRO.md](PLAN_REENCUENTRO.md).

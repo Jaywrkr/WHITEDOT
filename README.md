@@ -2,7 +2,7 @@
 [Plan vigente: recuperar música e identidad del universo](PLAN_REENCUENTRO.md). Habitantes subidos; ampliación 8 de pulsos implementada localmente, auditoría y cuatro suites enfocadas aprobadas; navegador/CI pendientes. [Propuesta posterior](PROPUESTA_PULIDO_EXPERIENCIA.md).
 <!-- /reencuentro -->
 
-Versión en desarrollo: **2.3.0-alpha.25** · [Mejora integral, diez fases](PLAN_MEJORA_INTEGRAL.md). Fecha de deploy real en la aplicación.
+Versión en desarrollo: **2.3.0-alpha.26** · [Mejora integral, diez fases](PLAN_MEJORA_INTEGRAL.md). Fecha de deploy real en la aplicación.
 
 [Cierre de mejora integral: ramas, pruebas y teléfono](CIERRE_MEJORA_INTEGRAL.md). Diez fases implementadas; integración completa pendiente de CI y aceptación física.
 

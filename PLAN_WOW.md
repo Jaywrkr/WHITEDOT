@@ -5,7 +5,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | # | Mejora | Rama | Estado |
 |---|---|---|---|
 | 1 | Cubo elástico al arrancar | feat/wow-01-cubo | Implementada; ver informe 01 |
-| 2 | Tres partículas al frenar | feat/wow-02-frenada | Pendiente |
+| 2 | Tres partículas al frenar | feat/wow-02-frenada | Implementada; ver informe 02 |
 | 3 | Presencia cercana | feat/wow-03-presencia | Pendiente |
 | 4 | Miradas hacia el cubo | feat/wow-04-miradas | Pendiente |
 | 5 | Saludos diferentes | feat/wow-05-saludos | Pendiente |
@@ -36,3 +36,7 @@ Escucha en teléfono, suites de navegador/audio y deploy. La evaluación Perplex
 ### 1. Cubo elástico al arrancar
 
 El cubo se estira brevemente al arrancar según la dirección real. Superficie y cuerpo comparten pose; sin alterar tamaño físico. Saltos, menús y movimiento reducido restablecen la pose.
+
+### 2. Tres partículas al frenar
+
+Al detenerte quedan tres motas blancas durante 600 ms. Máximo seis; desaparecen al abrir paneles o reducir movimiento. No añaden sonido ni distancia.
