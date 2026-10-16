@@ -56,5 +56,21 @@
   },
   "audio": "unchanged since validated phase 6",
   "physicalPhone": "pending",
-  "fullCI": "pending final audit branch"
+  "fullCI": "pending final audit branch",
+  "node20Compatibility": {
+    "runtime": "20.20.2",
+    "suites": 133,
+    "result": "passed",
+    "regression": "notice timer never starts without document",
+    "sourceCommit": "ed6ee79ab31b919a0da65932611e1f31e4aaf076",
+    "audit": "passed",
+    "browser": {
+      "program": "tests/notice_lane_smoke.py",
+      "widths": [
+        390,
+        844
+      ],
+      "result": "passed"
+    }
+  }
 }
