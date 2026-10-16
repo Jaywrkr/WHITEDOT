@@ -1,3 +1,4 @@
+import {knownElementFound} from './element-book-model.js';
 const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
 const nonnegative=v=>Number.isFinite(v)&&v>=0?v:0;
 const count=v=>object(v)?Object.keys(v).length:0;
@@ -21,6 +22,6 @@ export function createProfileTracker(){
   previous=active&&seconds&&valid?point:null;
  }};
 }
-export function profileSummary(s){return {days:nonnegative(s.totalDays),places:count(s.places),genres:count(s.journal?.music?.genres),instruments:count(s.journal?.music?.instruments),elements:count(s.elementBook?.found),achievements:count(s.ach),cards:Array.isArray(s.rareBook?.items)?s.rareBook.items.filter(object).length:0,boxes:nonnegative(s.boxesOpened),favorites:Array.isArray(s.favorites?.items)?s.favorites.items.filter(object).length:0};}
+export function profileSummary(s){return {days:nonnegative(s.totalDays),places:count(s.places),genres:count(s.journal?.music?.genres),instruments:count(s.journal?.music?.instruments),elements:count(knownElementFound(s.elementBook)),achievements:count(s.ach),cards:Array.isArray(s.rareBook?.items)?s.rareBook.items.filter(object).length:0,boxes:nonnegative(s.boxesOpened),favorites:Array.isArray(s.favorites?.items)?s.favorites.items.filter(object).length:0};}
 export function formatPlayTime(seconds){const n=Math.floor(nonnegative(seconds));return n<60?n+' s':n<3600?Math.floor(n/60)+' min':Math.floor(n/3600)+' h '+Math.floor(n%3600/60)+' min';}
 export function formatDistance(units){const meters=Math.floor(nonnegative(units)/10);return meters<1000?meters.toLocaleString('es-EC')+' m':(meters/1000).toLocaleString('es-EC',{maximumFractionDigits:1})+' km';}

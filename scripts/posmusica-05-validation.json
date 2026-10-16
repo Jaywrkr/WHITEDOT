@@ -51,5 +51,21 @@
   "physicalPhone": "pending",
   "CI": "pending",
   "deploy": "not performed",
-  "push": "validated for publication; remote transport reported separately"
+  "push": "validated for publication; remote transport reported separately",
+  "node20Compatibility": {
+    "runtime": "20.20.2",
+    "suites": 132,
+    "result": "passed",
+    "regression": "notice timer never starts without document",
+    "sourceCommit": "8d74fb3a8c1b14c5334ba08b74744ee3edb372d3",
+    "audit": "passed",
+    "browser": {
+      "program": "tests/notice_lane_smoke.py",
+      "widths": [
+        390,
+        844
+      ],
+      "result": "passed"
+    }
+  }
 }

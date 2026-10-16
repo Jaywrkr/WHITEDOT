@@ -1,6 +1,6 @@
-# Probar visuales, cajas y perfil
+# Probar la ampliación completa
 
-Rama final: `feat/posmusica-05-perfil`. Incluye las entregas anteriores. Abre su Preview cuando Vercel lo genere; este documento no afirma un deploy ya realizado.
+Rama final: `feat/posmusica-08-cierre`. Incluye las entregas anteriores. [Preview de la revisión funcional 2bcda49](https://whitedot-7795jz1cl-jaywrkr-1498s-projects.vercel.app). Vercel informa despliegue correcto; la comprobación procede del estado de GitHub, no de una prueba física. No necesitas parámetros dev.
 
 ## Teléfono
 
@@ -39,3 +39,9 @@ Si una caja entrega Órbitas detrás, Cinta viajera, Polvo de prismas, Lluvia in
 Menú → Tu recorrido. Mira las cuatro experiencias y abre Qué puedes encontrar. Practicar vuelve a las indicaciones pequeñas; Omitir las retira. No debes perder favoritos, tarjetas ni progreso. Con sonido apagado la guía pide activarlo antes de dar el encuentro por aprendido.
 
 Explora buscando brotes luminosos, un pequeño nudo de cintas, telarañas o redes de anillos. Son motivos localizados, no fondos permanentes; queda vacío entre ellos. Se mantienen ocho motivos anteriores. Reducir movimiento congela su deformación. La guía y sus botones no crean audio.
+
+## Avisos, Imán y percusión
+
+Prueba varias interacciones seguidas: los avisos pequeños se agrupan, los relevantes son breves y solo un hallazgo excepcional ocupa la pantalla hasta continuar. Al volver de un menú no deben aparecer mensajes viejos. Renovar un poder no abre otra tarjeta.
+
+Con Imán, acércate a fuentes pequeñas: siguen al cubo y su turno musical dibuja un vínculo. Deben distinguirse sobre la base sin aumentar toda la mezcla. Se añaden Hongo de caja, Hojas de escobillas, Cuenco de barro, Semillas de lluvia, Guijarros de aro y Pétalos de palmas en hábitats afines. El Laboratorio existente permite comparar sus golpes sin esperar un encuentro natural. El toque también responde visualmente con sonido apagado. Revisa volumen bajo y alto en altavoz y auriculares; no consta aceptación física hasta hacerla.

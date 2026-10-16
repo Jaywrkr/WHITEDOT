@@ -28,10 +28,11 @@ export function initialize(runtime) {
     const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary");$("bWorld").querySelector("span").textContent=runtime.inWorld()?"Camino":"Mundo";
     bp.hidden=!(canWorld||runtime.inWorld());$("bPrimaryL").textContent=runtime.inWorld()?"Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=runtime.inWorld()?"scaleX(-1)":"";
   }
-  function showPhrase(t,big){const p=$('phrase');lane.enqueue('phrase',p,()=>{p.textContent=t;p.classList.toggle('big',!!big);},big?5:3.2,String(t));}
-  function toast(html){const el=$('toast');lane.enqueue('toast',el,()=>{el.innerHTML=html;},2.5,String(html));}
-  function unlock(id){if(runtime.S.ach[id]||runtime.achievementRetired?.(id))return;const prev=new Set(runtime.COLORS.filter(runtime.colorOk).map(c=>c[0]));runtime.S.ach[id]=runtime.S.todayKey;const a=runtime.ACH.find(x=>x[0]===id);runtime.say(runtime.VOZ[id]||"Bien. Sigue.","Logro · "+a[1]);
-    runtime.COLORS.forEach(c=>{if(runtime.colorOk(c)&&!prev.has(c[0]))toast("<em>Color nuevo</em> · "+c[1]+" · Menú → Tu cubo o Estudio");});runtime.save();}
+  function showPhrase(t,big){const p=$('phrase');lane.enqueue('phrase',p,()=>{p.textContent=t;p.classList.toggle('big',!!big);},big?5:3.2,String(t),()=>true,{level:big?2:1,category:'ambiente',coalesce:true});}
+  function toast(html,options={}){const el=$('toast'),important=/no se pudo|no pudo|no disponible|fall[oó]|sin espacio|guardar copia|recoge una luz|libro completo/i.test(html);return lane.enqueue('toast',el,()=>{el.innerHTML=html;},2.5,String(html),()=>true,{level:important?2:1,category:important?'atención':'cotidiano',coalesce:true,...options});}
+  function unlock(id){if(runtime.S.ach[id]||runtime.achievementRetired?.(id))return;const prev=new Set(runtime.COLORS.filter(runtime.colorOk).map(c=>c[0]));runtime.S.ach[id]=runtime.S.todayKey;const a=runtime.ACH.find(x=>x[0]===id);runtime.say(runtime.VOZ[id]||"Bien. Sigue.","Logro · "+a[1],{recordOnly:true});
+    if(id!=='tarjeta1'&&!id.startsWith('poder_'))toast('<em>Logro</em> · '+a[1],{level:2,category:'ganado'});
+    runtime.COLORS.forEach(c=>{if(runtime.colorOk(c)&&!prev.has(c[0]))toast("<em>Color nuevo</em> · "+c[1],{level:2,category:'ganado'});});runtime.save();}
 
 
   function enterWorld(){

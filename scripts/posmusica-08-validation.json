@@ -5,7 +5,7 @@
     "version": "2.2.0-rc.1",
     "sourceModules": 201,
     "htmlIDs": 402,
-    "staticImports": 521,
+    "staticImports": 522,
     "shellAssets": 221,
     "errors": [],
     "warnings": [],
@@ -15,9 +15,9 @@
     ]
   },
   "node": {
-    "suites": 133,
+    "suites": 134,
     "result": "passed",
-    "additionalRegression": "muted micro contact still emits a visual gesture; no audio queue",
+    "additionalRegression": "collection future/unknown preservation, exclusive prioritized notices, six added percussion habitats and bounded magnetic gain",
     "runtimes": [
       "24 (original full run)",
       "20.20.2 (full npm test after reproduced CI failure)"
@@ -80,5 +80,75 @@
   },
   "physicalPhone": "pending",
   "deployment": "not performed",
-  "main": "not modified by Codex"
+  "main": "not modified by Codex",
+  "lateRequests": {
+    "noticeLevels": {
+      "X1": "1.8 s; one small context every 18 s; latest grouped; 8 s pending expiry",
+      "X2": "3 s; automatic spacing 6 s; two pending; 20 s expiry",
+      "X3": "manual rare reveal; exclusive; four-second breathing space"
+    },
+    "noticeChecks": {
+      "programs": [
+        "notice_priority_smoke.py",
+        "notice_lane_smoke.py",
+        "interface_cards_smoke.py",
+        "messages_smoke.py"
+      ],
+      "results": "passed",
+      "viewports": [
+        320,
+        390,
+        844,
+        1280
+      ],
+      "bursts": 50,
+      "includes": "exclusive owner, source rejection, priority, fade gap, expiry, grouping, modal pause, focus and silence"
+    },
+    "collectionChecks": {
+      "program": "collection_guard_smoke.py",
+      "result": "passed at 390 and 844",
+      "includes": "unknown earned families/metadata, restoration, future readonly exact save/reload, honest counters and silent journal"
+    },
+    "percussionChecks": {
+      "program": "magnet_percussion_smoke.py",
+      "result": "passed at 390, 844 and 1280",
+      "newFamilies": 6,
+      "totalPercussionFamilies": 27,
+      "materialProfiles": 216,
+      "bookFamilies": 157,
+      "legacyPlacement": "unchanged"
+    },
+    "integratedBrowser": {
+      "program": "visual_closure_smoke.py",
+      "result": "passed at 320, 390, 844 and 1280",
+      "environment": "A prior attempt failed to create an inherited-resource-limited audio thread; direct isolated runner completed every assertion."
+    },
+    "audio": {
+      "program": "magnet_percussion_mix.py",
+      "result": "passed",
+      "renders": 16,
+      "rates": [
+        44100,
+        48000
+      ],
+      "peak": 0.8767239451408386,
+      "maximumGridErrorSeconds": 0.008461538461533635,
+      "timingContract": "conductor intentionally retains scheduled humanization below 9 ms; no assertion disabled",
+      "magnetGainByRole": {
+        "bajo": 1.8,
+        "perc": 1.75,
+        "acorde": 1.6,
+        "lead": 1.8,
+        "agudo": 1.35
+      },
+      "notes": "New harness isolates application startup; actual scheduler/modules still render. Local initial resource failure recorded separately."
+    },
+    "node": {
+      "suites": 134,
+      "runtime": "20.20.2",
+      "status": "passed"
+    },
+    "releaseAudit": "passed: zero errors and warnings",
+    "fullRemoteCI": "requires the final pushed revision; previous-run results are not inherited"
+  }
 }

@@ -33,5 +33,21 @@
   },
   "audio": "No synthesis, arrangement, instruments or musical timing changed. New trails are silent. Existing travel resets preserved.",
   "push": "ready after stack validation",
-  "phone": "pending"
+  "phone": "pending",
+  "node20Compatibility": {
+    "runtime": "20.20.2",
+    "suites": 131,
+    "result": "passed",
+    "regression": "notice timer never starts without document",
+    "sourceCommit": "ae2ee42622105d574fd502bcc3d86841faf72d36",
+    "audit": "passed",
+    "browser": {
+      "program": "tests/notice_lane_smoke.py",
+      "widths": [
+        390,
+        844
+      ],
+      "result": "passed"
+    }
+  }
 }

@@ -1,11 +1,11 @@
 # Interacción final · ampliación autorizada
 
-Jay autorizó estas dos entregas después de Dirección musical. Base: `feat/musica-07-auditoria`. Una rama dependiente por entrega; Codex commit/push, Jay PR/merge. Continuar sin confirmaciones intermedias. No modificar main.
+Plan consolidado de las entregas iniciales y sus ampliaciones autorizadas por Jay. Base: `feat/musica-07-auditoria`. Una rama dependiente por entrega; Codex commit/push, Jay PR/merge. Continuar sin confirmaciones intermedias. No modificar main.
 
 | Entrega | Rama | Estado |
 |---|---|---|
 | 1 · Interfaz expresiva y hallazgos | `feat/posmusica-01-interfaz` | Incluida y validada con entrega 3; sin PR separado |
-| 2 · Diez familias de miniinstrumentos | `feat/posmusica-02-instrumentos` | Pausada por Jay; trabajo incompleto conservado aparte |
+| 2 · Diez familias de miniinstrumentos | `feat/posmusica-02-instrumentos` | Recuperada y publicada en entrega 6; no usar la rama incompleta |
 
 ## 1 · Interfaz expresiva y hallazgos
 
@@ -34,7 +34,7 @@ Jay pidió continuar sin modificar música. El trabajo de miniinstrumentos queda
 | 4 · Sorpresas temporales de las cajas | `feat/posmusica-04-cajas` | Implementada y probada: auditoría, 131 suites Node y dos programas de navegador enfocados |
 | 5 · Perfil y revisión PC/móvil | `feat/posmusica-05-perfil` | Implementada y probada: auditoría, 132 suites Node y navegador integrado en cuatro tamaños |
 
-Ocho motivos originales procedurales: órbitas, circuitos, cintas, vidrio, islas, partitura, abanico y organismo. Inspirados en las imágenes compartidas por Jay, sin reutilizar archivos ajenos. El repositorio TouchDesigner mencionado no está disponible en los checkouts locales inspeccionados; no se afirma haber analizado su código. Ubicaciones independientes de mapas/sonido, vacío entre escenas, fade por distancia, tamaño local y movimiento reducido. Cometas ocasionales; visitantes curiosos y esquivos con territorio acotado. Gestos silenciosos al pulsar/contactar. No altera notas, tempo, instrumentos ni ganancia.
+Ocho motivos originales procedurales: órbitas, circuitos, cintas, vidrio, islas, partitura, abanico y organismo. Inspirados en las imágenes compartidas por Jay, sin reutilizar archivos ajenos. En esta entrega aún no se había revisado TDAI2026; la revisión pública y sus adaptaciones se completan en la entrega 7. Ubicaciones independientes de mapas/sonido, vacío entre escenas, fade por distancia, tamaño local y movimiento reducido. Cometas ocasionales; visitantes curiosos y esquivos con territorio acotado. Gestos silenciosos al pulsar/contactar. No altera notas, tempo, instrumentos ni ganancia.
 
 ### Cajas · alcance de la entrega 4
 
@@ -63,3 +63,7 @@ Diez familias de miniinstrumentos con predominio por hábitat, variantes, huecos
 Cinco estelas temporales de caja aportan batería, acordes, recortes, FM o arpegios solo al caminar y con sonido activo. Máximo dos entradas por compás, armonía y límites compartidos con las demás voces. Menús, inspección, segundo plano, deshacer y silencio detienen las nuevas entradas. Los botones siguen silenciosos. Las respuestas repetidas se realinean al swing en vez de sumar tiempo recto.
 
 Se encontró el repositorio público de Jay `Jaywrkr/TDAI2026` (98 escenas). La entrega 7 documentará las referencias leídas y adaptaciones originales pequeñas; la ausencia en los checkouts locales no impide revisar el repositorio público. El cierre ejecutará suites completas; teléfonos físicos y despliegue se registran por separado. No crear PR ni hacer merge.
+
+## Ajustes pedidos durante el cierre 8
+
+Jay pidió reducir notificaciones y distinguir su importancia, destacar el sonido de las voces del Imán y añadir percusión. Se incorporan al cierre existente para evitar otra cadena de ramas. X1 discreto/cotidiano, X2 relevante/breve y X3 excepcional/manual; agrupación, caducidad y prioridad sin perder hallazgos. Colección con metadatos desconocidos y formatos futuros conservados. Imán con grupo musical cercano acotado y ganancia por rol. Seis fuentes naturales nuevas por hábitat, con colocación independiente de las anteriores. Validación enfocada nueva y CI completo sobre la revisión acumulada; Jay crea PR/merge.

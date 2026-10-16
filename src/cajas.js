@@ -15,6 +15,8 @@ import {swatchOf,WORLD_VISUAL} from './visual.js';
 const TAU=Math.PI*2;
 
 export function normalizeGiftBoxes(items){const seen=new Set();return (Array.isArray(items)?items:[]).filter(b=>b&&typeof b.id==='string'&&b.id.startsWith('regalo:')&&!seen.has(b.id)&&Number.isFinite(b.x)&&Number.isFinite(b.y)&&Math.abs(b.x)<1e12&&Math.abs(b.y)<1e12&&Object.hasOwn(POWERS,b.power)&&seen.add(b.id)).map(b=>({...b,gift:true,hue:Number.isFinite(b.hue)?b.hue:0,spin:0}));}
+// The same bounded, nearby musical group moves, plays and lights up.
+export function magnetFollowers(near,x,y){return (near||[]).filter(o=>Number.isFinite(o.x)&&Number.isFinite(o.y)&&!o.pond&&typeof o.snd==='function'&&Math.hypot(o.x-x,o.y-y)<180).sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y)).slice(0,8);}
 export function initialize(runtime){
  const clock=createPowerClock(POWERS),S=()=>runtime.S,powers=clock.powers,spawned=[],trail=[],marks=[],companion={id:'power:companero',x:0,y:0,on:false,lit:0,heard:[],species:null};let previous=S(),lastMark=null;
  S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};
@@ -58,7 +60,7 @@ export function initialize(runtime){
   if(has('pincel')&&b?.speed>20&&(!lastMark||Math.hypot(S().wx-lastMark.x,S().wy-lastMark.y)>70)){lastMark={x:S().wx,y:S().wy};marks.push({x:S().wx,y:S().wy,degree:Math.abs(Math.round(S().wy/60))%7,lit:1,step:marks.length%16});if(marks.length>16)marks.shift();}
   if(!has('pincel')&&marks.length)marks.length=0;
   // Imán: lo pequeño cercano te sigue en órbita.
-  if(has('iman'))(runtime.MU.near||[]).slice(0,8).forEach((o,i)=>{if(o.x==null||o.pond)return;const a=i/8*TAU+performance.now()/2400,tx=S().wx+Math.cos(a)*60,ty=S().wy+Math.sin(a)*48;o.x+=(tx-o.x)*Math.min(1,dt*1.8);o.y+=(ty-o.y)*Math.min(1,dt*1.8);if(o.hx!=null){o.hx=o.x;o.hy=o.y;}});
+  if(has('iman'))magnetFollowers(runtime.MU.near,S().wx,S().wy).forEach((o,i)=>{if(o.x==null||o.pond)return;const a=i/8*TAU+performance.now()/2400,tx=S().wx+Math.cos(a)*60,ty=S().wy+Math.sin(a)*48;o.x+=(tx-o.x)*Math.min(1,dt*1.8);o.y+=(ty-o.y)*Math.min(1,dt*1.8);if(o.hx!=null){o.hx=o.x;o.hy=o.y;}});
   if(companion.on){if(!has('companero'))companion.on=false;else{const tx=S().wx+40*Math.cos(performance.now()/1700),ty=S().wy-36+20*Math.sin(performance.now()/1300);companion.x+=(tx-companion.x)*Math.min(1,dt*1.6);companion.y+=(ty-companion.y)*Math.min(1,dt*1.6);companion.lit=Math.max(0,companion.lit-dt*1.5);}}
  }
  // ---------- reloj musical ----------
@@ -80,7 +82,7 @@ export function initialize(runtime){
   // Pincel: tus marcas suenan cada dos compases, en el orden en que las dejaste.
   if(has('pincel')&&bar%2===0)for(const m of marks)if(m.step===s){const ct=runtime.chordTones?.()||[60,64,67];melody(ct[m.degree%ct.length],time,.025,m,true);setTimeout(()=>{m.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
   // Imán: los que te siguen tocan cada uno su parte.
-  if(has('iman')&&s%4===0){const small=(runtime.MU.near||[]).filter(o=>typeof o.snd==='function'),o=small[(bar*4+s/4)%Math.max(1,small.length)];if(o){if(runtime.withVoiceOrigin)runtime.withVoiceOrigin('field',()=>o.snd(time));else o.snd(time);o.hit=1;}}
+  if(has('iman')&&s%4===0){const small=magnetFollowers(runtime.MU.near,S().wx,S().wy),o=small[(bar*4+s/4)%Math.max(1,small.length)];if(o){const emit=()=>runtime.withMagnetVoice?runtime.withMagnetVoice(o,()=>o.snd(time)):o.snd(time);if(runtime.withVoiceOrigin)runtime.withVoiceOrigin('field',emit);else emit();o.hit=1;o.magnetOnset=time;}}
   // Compañero: contesta lo último que tocaste una tercera arriba.
   if(companion.on&&companion.heard.length&&s%4===2){const h=companion.heard.shift(),ct=runtime.chordTones?.()||[60,64,67];const n=ct[(h+2)%ct.length],spec=PET_SPECIES[companion.species];if(spec?.role==='bass'){let pitch=n;while(pitch>52)pitch-=12;while(pitch<36)pitch+=12;runtime.bassInst(spec.pool[0],pitch,time,.025);}else if(spec?.role==='groove')runtime.wood(time,.025);else melody(n,time,.025,companion);if(spec?.role==='bass'||spec?.role==='groove')runtime.soundCue?.(companion,spec.role==='bass'?'bajo':'perc',time);setTimeout(()=>{companion.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));}
  }
@@ -108,6 +110,7 @@ export function initialize(runtime){
    c.globalAlpha=.6;c.strokeStyle=runtime.cubeColor?.()||WORLD_VISUAL.gold;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+Math.cos(arm)*R,cy+Math.sin(arm)*R);c.stroke();}
   if(trail.length){for(const p of trail){const [H]=swatchOf((p.x+p.y)/7);c.globalAlpha=p.a*.6;c.fillStyle=`hsl(${H},85%,62%)`;c.fillRect(p.x+ox-2,p.y+oy-2,4,4);}}
   for(const m of marks){m.lit=Math.max(0,m.lit-dt*1.5);const [H]=swatchOf(m.degree*51);c.globalAlpha=.5+m.lit*.5;c.fillStyle=m.lit>.3?WORLD_VISUAL.gold:`hsl(${H},80%,64%)`;c.beginPath();c.arc(m.x+ox,m.y+oy,3+m.lit*4,0,TAU);c.fill();}
+  if(has('iman'))for(const o of magnetFollowers(runtime.MU.near,S().wx,S().wy)){const elapsed=(runtime.ac?.currentTime||0)-(o.magnetOnset??-10),lit=elapsed>=0?Math.max(0,1-elapsed/.4):0;if(!lit)continue;const x=o.x+ox,y=o.y+oy;c.strokeStyle=runtime.cubeColor?.()||'#fff';c.globalAlpha=lit*.55;c.lineWidth=1;c.beginPath();c.moveTo(cx,cy);c.quadraticCurveTo((cx+x)/2,(cy+y)/2-10,x,y);c.stroke();c.beginPath();c.arc(x,y,9+(runtime.S.reducedMotion?0:(1-lit)*12),0,TAU);c.stroke();}
   if(companion.on){const x=companion.x+ox,y=companion.y+oy,g=c.createRadialGradient(x,y,0,x,y,22);g.addColorStop(0,`rgba(255,255,255,${.5+companion.lit*.4})`);g.addColorStop(1,'rgba(0,0,0,0)');c.globalAlpha=1;c.fillStyle=g;c.fillRect(x-22,y-22,44,44);}
   if(has('brujula')||companion.on)for(const tg of rareTargets().slice(0,has('brujula')?4:1)){const a=Math.atan2(tg.y-S().wy,tg.x-S().wx),r=Math.min(cx,cy)-46,x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;
    c.save();c.translate(x,y);c.rotate(a);c.globalAlpha=.85;c.fillStyle=WORLD_VISUAL.gold;c.beginPath();c.moveTo(10,0);c.lineTo(-6,-6);c.lineTo(-6,6);c.closePath();c.fill();c.restore();

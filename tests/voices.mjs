@@ -55,3 +55,11 @@ const encountered=new Set();
 for(let x=-20;x<=20;x++)for(let y=-20;y<=20;y++)encountered.add(runtime.regionOfPos(x*3600+900,y*3600+900).genre);
 for(const genre of ['electro','progressive','microhouse','minimaltechno','dubstep','dnb'])assert(encountered.has(genre),`${genre}: unavailable in world`);
 console.log('PASS: stable regional voices, five tree roles within one biome, varied instruments, bounded emitted registers and groove responses');
+// The magnet keeps the actual voice/notes, promotes its level only inside the call,
+// and supplies a spatial source even for legacy closures without one.
+const d=runtime.regionOfPos(900,900),source={id:'magnet:voice',x:900,y:900};
+const {magnetVoiceGain}=await import('../src/voices.js');
+const hear=()=>{calls.length=0;runtime.withVoiceOrigin('field',()=>runtime.playVoice('arbol',0,1,d,false,.4,source));return calls.map(c=>c.v??c.args.at(-1));};
+const base=hear(),boosted=runtime.withMagnetVoice(source,hear),ratio=magnetVoiceGain(runtime.getVoice('arbol',d).role);
+assert(base.length>0);assert.equal(boosted.length,base.length);assert(boosted.every((v,i)=>Math.abs(v-base[i]*ratio)<1e-12));assert.deepEqual(hear(),base);assert.throws(()=>runtime.withMagnetVoice(source,()=>{throw Error('restore');}));assert.deepEqual(hear(),base);
+console.log('PASS magnet voices rise by their role, preserve notes and restore gain after errors');

@@ -1,3 +1,13 @@
+## Avisos tranquilos, imán y percusión · ampliación de cierre 8
+
+Tres niveles silenciosos: X1 cotidiano, X2 relevante y X3 excepcional. X1 dura 1,8 s, se agrupa y admite una entrada cada 18 s; X2 dura 3 s, conserva dos pendientes como máximo y separa avisos automáticos por 6 s. Caducan los pendientes obsoletos: 8/20 s. Los mensajes pedidos explícitamente conservan su lectura. Los hallazgos excepcionales siguen siendo tarjetas manuales completas; al cerrar dejan 4 s de respiro. Repetir una especie o renovar un poder usa un aviso pequeño. Cosméticos/logros de un mismo hallazgo se agrupan, sin otra celebración ni Voz duplicada. Un panel sin turno no puede reaparecer. La guía no se superpone a la franja de avisos.
+
+Imán: hasta ocho fuentes musicales cercanas; una toca por pulso, cuatro por compás. Se destacan por rol entre 1,35× y 1,8×, mantienen su instrumento/armonía y dibujan una conexión al sonar. La ganancia se restaura tras cada llamada y no se aplica al resto del mundo. Menús, silencio, lectura y caducidad detienen nuevas entradas.
+
+Seis cuerpos naturales adicionales: Hongo de caja, Hojas de escobillas, Cuenco de barro, Semillas de lluvia, Guijarros de aro y Pétalos de palmas. Siluetas, materiales y gestos propios; predominio por hábitat con otra semilla. Los 21 cuerpos anteriores y sus ubicaciones se conservan: 27 familias de percusión, 216 perfiles de material y 157 familias del libro. El contacto responde visualmente también en silencio. No se suman instrumentos simultáneos sin límite.
+
+La auditoría detectó que el libro eliminaba familias desconocidas: ahora conserva sus datos para recuperarlos y protege formatos futuros sin reescribirlos. Álbum de versiones futuras informa del bloqueo y mantiene premios y extensiones. Pruebas nuevas de guardado/recarga, avisos bajo ráfagas, mapas, imán, contacto y renders; resultados por revisión en los informes del cierre.
+
 ## Corrección detectada por CI
 
 Node 20 reprodujo un timer de avisos iniciado desde colección sin DOM. La cola ahora instala su driver visual solo cuando existe pantalla; regresión y 133 suites completas en Node 20 aprobadas. El perfil local permite reducir compositor exclusivamente para audio offline: la interfaz conserva composición normal. No se retiran pruebas ni se cambia el runtime de CI para eludir el fallo.

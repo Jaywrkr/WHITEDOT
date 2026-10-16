@@ -1,5 +1,5 @@
 <!-- ampliacion-visual -->
-Estado actual: [ampliación visual](PLAN_INTERACCION_FINAL.md). Entregas 3–5 subidas: visuales, cajas reversibles y perfil. Entrega 6 recupera miniinstrumentos y estelas sonoras con nueva autorización. Auditoría y Node completos por rama; navegador enfocado aprobado en cada entrega. CI completo, teléfono físico y publicación dependen del PR/merge de Jay. No reabrir fases históricas.
+Estado actual: [ampliación de interacción](PLAN_INTERACCION_FINAL.md). Entregas 3–7 publicadas; cierre 8 amplía avisos por prioridad, imán y seis percusiones naturales por petición de Jay. Conserva catálogo/guardados y documenta evidencias en CIERRE_INTERACCION_FINAL.md. Jay mantiene PR/merge. CI completo y teléfono físico se registran por revisión; no reabrir fases históricas.
 <!-- /ampliacion-visual -->
 
 <!-- direccion-musical-actual -->
