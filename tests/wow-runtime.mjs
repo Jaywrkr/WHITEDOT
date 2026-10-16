@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {initialize} from '../src/wow-feel.js';
+globalThis.document={hidden:false,querySelector:()=>null};globalThis.matchMedia=()=>({matches:false});
+const source={x:20,y:0},neighbor={x:42,y:0},s={wx:0,wy:0,layer:'superficie',sound:true},calls=[];
+const c=new Proxy({globalAlpha:1},{get:(o,k)=>k in o?o[k]:(...a)=>calls.push([k,...a]),set:(o,k,v)=>(o[k]=v,true)});
+const r={S:s,cx:c,W:390,H:844,camX:0,camY:0,ac:{currentTime:0},inWorld:()=>true,$:()=>null,MU:{near:[source,neighbor]},seedOf:()=>1,musicInk:()=> '#88bbdd',playVoice:()=>assert.fail('visual feedback must not create audio')};
+initialize(r);r.wowTick(.02);r.wowSoundCue(source,'perc',1);
+r.wowTick(.02);assert.equal(r.wowState.pending,1);assert.equal(r.wowState.ripples,0,'no early note lights');
+r.ac.currentTime=1;r.wowTick(.02);assert(r.wowState.ripples>0);
+for(let i=0;i<100;i++)r.wowSoundCue(source,'bajo',2);assert.equal(r.wowState.pending,16);
+r.drawWowWorld();assert(calls.length);
+s.wx=1000;r.wowTick(.02);assert.equal(r.wowState.pending,0,'jumps clear queued reactions');assert.equal(r.wowState.ripples,0);
+s.reducedMotion=true;r.wowSoundCue(source,'lead',3);assert.equal(r.wowState.pending,0);
+console.log('PASS real-clock visual reactions, bounded queues, teleport cleanup, reduced motion and no audio generation');

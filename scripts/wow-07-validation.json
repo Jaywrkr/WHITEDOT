@@ -1,0 +1,6 @@
+{
+  "phase": 7,
+  "logic": "Pending: Node startup uv_thread_create failure before JavaScript",
+  "browser": "Pending: process/thread exhaustion",
+  "readyToMerge": false
+}

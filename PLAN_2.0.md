@@ -2,6 +2,7 @@
 
 | Entrega | Estado |
 |---|---|
+| WOW 07: Reacciones entre vecinos | Implementada; scripts/wow-07-validation.json |
 | WOW 06: Compañía con espacio propio | Implementada; scripts/wow-06-validation.json |
 | WOW 05: Saludos diferentes | Implementada; scripts/wow-05-validation.json |
 | WOW 04: Miradas hacia el cubo | Implementada; scripts/wow-04-validation.json |
