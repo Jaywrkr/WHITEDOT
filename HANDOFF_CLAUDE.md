@@ -1,3 +1,9 @@
+# Mejora integral · fase 1
+
+Rama `mejora/01-identidad-musical`, versión 2.3.0-alpha.5. La radio regional es dueña del motivo, forma, brillo y energía. La capa viva deja de aplicar una segunda sustracción periódica; conserva metadatos y la quietud explícita. Se comprueba conservación durante 256 compases, además de las referencias históricas existentes.
+
+Auditoría sin errores/avisos; 4 suites Node afectadas y recorrido representativo aprobados; renders afectados aprobados. Leer PLAN_MEJORA_INTEGRAL.md; este ciclo sustituye la ampliación anterior. Evidencia: scripts/mejora-01-validation.json. Jay conserva PR/merge.
+
 # Prioridad más reciente · Recuperación de la radio
 
 Entrega `feat/juego-04-interpretacion`, desde `347e922`, versión `2.3.0-alpha.4`. Jay pidió recuperar el estilo de hace 30 horas, mezclándolo con avances actuales. Leer [RECUPERACION_MUSICAL.md](RECUPERACION_MUSICAL.md). Referencia comprobada: `15bbe77`, último main anterior al 15 de octubre de 2026, 11:43 UTC; no se presume qué preview escuchaba Jay.

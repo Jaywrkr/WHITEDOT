@@ -1,3 +1,5 @@
+Ciclo histórico: sustituido por [PLAN_MEJORA_INTEGRAL.md](PLAN_MEJORA_INTEGRAL.md).
+
 # Juego musical · ciclo 2.3
 
 Autorizado por Jay: ejecutar las doce fases consecutivamente, sin pedir aprobación entre ellas. Cada rama nace de la anterior. Codex hace commit/push; Jay PR/merge, en orden. No integrar main desde Codex.

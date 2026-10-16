@@ -3,13 +3,15 @@ import {musicalCharacter,GENRE_CHARACTERS} from './musical-character.js';
 // Slow, phrase-aligned change; preserves each genre's native notes and drum grammar.
 export function productionFrame(region,arrangement,seedOf,rng,context={}){
  const score=musicRecipe(region,seedOf,rng),bar=arrangement.harmonyBar||0,chapter=Math.floor(bar/32),random=rng(seedOf(`living:production:v1:${region.key}:${chapter}`));
- const stage=chapter%4,rest=stage===3||context.silence,soft=musicalCharacter(region.genre).level;
- const grammar={...arrangement.grammar,hookLevel:(arrangement.grammar.hookLevel||1)*(rest?.65:.85+random()*.1),bassLevel:(arrangement.grammar.bassLevel||1)*(rest?.8:.9),
-  brightness:Math.min(arrangement.grammar.brightness||9000,score.signature==='calida'?6500:score.signature==='textural'?7200:8700)};
+ // The regional score already owns form, density and articulation. Do not run
+ // a second independent arrangement over it; only explicit quiet may subtract.
+ const owned=!!arrangement.labScore?.backbone,stage=chapter%4,rest=!!context.silence||!owned&&stage===3,soft=musicalCharacter(region.genre).level;
+ const grammar={...arrangement.grammar,hookLevel:(arrangement.grammar.hookLevel||1)*(rest?.65:owned?1:.85+random()*.1),bassLevel:(arrangement.grammar.bassLevel||1)*(rest?.8:owned?1:.9),
+  brightness:owned?arrangement.grammar.brightness:Math.min(arrangement.grammar.brightness||9000,score.signature==='calida'?6500:score.signature==='textural'?7200:8700)};
  // Long harmonic chapters grow from the regional palette without dissonant random chords.
  if(!arrangement.labScore&&!arrangement.hybrid&&chapter>1&&['warm','organic','melodic','disco'].includes(context.character))grammar.progression=score.progression;
  const hook=arrangement.hook.map((n,i)=>rest&&i%8!==0?-1:n),out={...arrangement,grammar,hook,
-  energy:Math.min(arrangement.energy,rest?.28:.65),production:{chapter,stage,signature:score.signature,score,soft},expression:{...arrangement.expression,toneScale:(arrangement.expression?.toneScale||1)*(rest?.8:1)}};
+  energy:rest?Math.min(arrangement.energy,.28):owned?arrangement.energy:Math.min(arrangement.energy,.65),production:{chapter,stage,signature:score.signature,score,soft},expression:{...arrangement.expression,toneScale:(arrangement.expression?.toneScale||1)*(rest?.8:1)}};
  const crosses={dub:'organic',organic:'dub',afro:'minimal',minimal:'afro',deep:'jazztronica',jazztronica:'deep',nudisco:'cosmic',cosmic:'nudisco',melodic:'progressive',progressive:'melodic'};
  const partner=score.palette%8===0&&stage===2?crosses[region.genre]:null;out.production.partner=partner;
  const native=partner&&context.genres?.[partner];const pool=native?.bassP||context.genre?.bassP||[context.genre?.bassI];if(!arrangement.labScore&&pool[0])out.bassI=pool[(score.palette+chapter)%pool.length];
