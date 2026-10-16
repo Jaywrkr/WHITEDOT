@@ -1,6 +1,7 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.3.0-alpha.42';
+const CACHE='whitedot-2.3.0-alpha.43';
 const SHELL=[
+ "./src/wow-memory.js",
  "./src/wow-ui.js",
  "./src/wow-model.js", "./src/wow-feel.js",
  "./src/pulse-forms.js",

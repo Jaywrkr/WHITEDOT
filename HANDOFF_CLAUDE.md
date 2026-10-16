@@ -1192,3 +1192,5 @@ Al terminar en Claude, actualizar estado, pendientes, matriz afectada, guía de 
 PLAN_WOW.md registra veinte ramas autorizadas desde 5ab5952. wow-model.js y wow-feel.js gestionan presentación acotada; render y cube aplican la misma pose sin mover colisiones. Música y guardados intactos. Informes scripts/wow-NN-validation.json separan aprobado/bloqueado. Jay conserva PR y merge.
 
 WOW 16: wow-ui.js delega profundidad de ilustraciones. Nunca captura gestos ni modifica scroll, sonidos, contenido o recompensas. wow-model.cardTilt limita el giro.
+
+WOW 19: wow-memory.js dibuja firmas de favoritos desde sus datos guardados. No consulta regiones de semillas ajenas ni altera direcciones. Las firmas no cambian al renombrar.

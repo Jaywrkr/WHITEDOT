@@ -1,3 +1,7 @@
+## 2.3.0-alpha.43 · Cuaderno vivo 19/20
+
+Cada favorito muestra una constelación pequeña derivada de su dirección y carácter guardados. Funciona también con semillas ajenas, no añade consultas al generador y conserva su dibujo al renombrar el lugar.
+
 ## 2.3.0-alpha.42 · Cuaderno vivo 18/20
 
 Solo la tarjeta elegida con el dedo o el teclado respira suavemente. Al seleccionar otra, cerrar el libro o cambiar de pantalla, la anterior se detiene. Textos, botones y desplazamiento permanecen estables.
