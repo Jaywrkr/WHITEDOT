@@ -4,12 +4,12 @@ Autorizado por Jay con «hazlo». Sustituye la ampliación del ciclo anterior: m
 
 | Fase | Rama | Versión | Estado | Cierre |
 |---|---|---|---|---|
-| 1 · Identidad musical | `mejora/01-identidad-musical` | 2.3.0-alpha.5 | Implementada y probada | Una prioridad musical; preservar la radio recuperada. |
-| 2 · Composición y mezcla | `mejora/02-composicion` | 2.3.0-alpha.6 | Implementada y probada | Bajo, groove, voces y descansos coordinados. |
-| 3 · Interpretación | `mejora/03-interacciones` | 2.3.0-alpha.7 | Implementada y probada | Contacto, permanencia y movimiento legibles. |
-| 4 · Mundo y habitantes | `mejora/04-mundo` | 2.3.0-alpha.8 | Implementada y probada | Coherencia, apariciones suaves y siluetas legibles. |
-| 5 · Encuentros | `mejora/05-encuentros` | 2.3.0-alpha.9 | Implementada y probada | Invitación, gesto, respuesta y salida comprensibles. |
-| 6 · Viajes y favoritos | `mejora/06-viajes` | 2.3.0-alpha.10 | Implementada y probada | Guardar, encontrar y regresar con menos fricción. |
+| 1 · Identidad musical | `mejora/01-identidad-musical` | 2.3.0-alpha.5 | Integrada en main | Una prioridad musical; preservar la radio recuperada. |
+| 2 · Composición y mezcla | `mejora/02-composicion` | 2.3.0-alpha.6 | Integrada en main | Bajo, groove, voces y descansos coordinados. |
+| 3 · Interpretación | `mejora/03-interacciones` | 2.3.0-alpha.7 | Integrada en main | Contacto, permanencia y movimiento legibles. |
+| 4 · Mundo y habitantes | `mejora/04-mundo` | 2.3.0-alpha.8 | Integrada en main | Coherencia, apariciones suaves y siluetas legibles. |
+| 5 · Encuentros | `mejora/05-encuentros` | 2.3.0-alpha.9 | Integrada en main | Invitación, gesto, respuesta y salida comprensibles. |
+| 6 · Viajes y favoritos | `mejora/06-viajes` | 2.3.0-alpha.10 | Integrada en main | Guardar, encontrar y regresar con menos fricción. |
 | 7 · Interfaz y cubo | `mejora/07-interfaz` | 2.3.0-alpha.11 | Implementada y probada | Móvil/PC, paneles y personalización congruentes. |
 | 8 · Colección | `mejora/08-coleccion` | 2.3.0-alpha.12 | Implementada y probada | Tarjetas, rareza, bitácora y progreso claros. |
 | 9 · Recorrido y Casa | `mejora/09-recorrido` | 2.3.0-alpha.13 | Implementada y probada | Enseñar jugando y conectar lo descubierto con Casa. |

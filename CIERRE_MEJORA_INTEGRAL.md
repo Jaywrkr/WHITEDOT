@@ -1,10 +1,12 @@
 # Cierre de mejora integral · 2.3.0-alpha.14
 
-Diez fases implementadas sobre la recuperación musical `faa0fe9`. Es una consolidación de lo existente: no añade catálogos, carreras ni persecuciones. Jay conserva PR y merge; no se ha enviado nada a main.
+Diez fases implementadas sobre la recuperación musical `faa0fe9`. Es una consolidación de lo existente: no añade catálogos, carreras ni persecuciones. Jay conserva PR y merge; Codex no ha hecho merge ni push a main.
 
 El código está entregado en ramas dependientes. **La publicación queda pendiente de CI completo y aceptación física.** No se afirma perfección, escucha en un teléfono real ni un deploy que no haya ocurrido. El artefacto publicado registra su fecha real; el repositorio conserva `deployedAt: null`.
 
 ## Orden de revisión
+
+Comprobado al cierre: `origin/main` en `6f00f13a1a60f1245751ae048240a62cc3e1b05d` ya contiene las fases 1–6, incluida `aa43815` mediante PR #175. Sus ramas remotas fueron eliminadas tras integrarse. **Solo quedan por revisar las fases 7 → 8 → 9 → 10.** Los commits anteriores siguen documentados como historial.
 
 | Fase | Rama | Commit de entrega | Qué probar en teléfono |
 |---|---|---|---|
