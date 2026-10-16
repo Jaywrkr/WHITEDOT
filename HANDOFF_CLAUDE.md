@@ -1,3 +1,9 @@
+# Reencuentro · fase 6
+
+Cierre y mapa: CIERRE_REENCUENTRO.md. Inventario regenerable: INVENTARIO_UNIVERSO.md. El muestreo distingue no observado de no instrumentado; no son probabilidades por hora. referenceSupport conserva aperturas ricas mientras el protagonista histórico descansa; referencia y apoyo se registran por separado. La radio acd766f solo gobierna producción; los invitados modernos y los modos de laboratorio siguen separados. nativePractice localiza organismos visibles reales en ambas generaciones. No declarar publicación cerrada mientras falten navegador, DSP y escucha.
+
+Leer PLAN_REENCUENTRO.md. Rama `feat/reencuentro-06-auditoria`, versión 2.3.0-alpha.22. Auditoría de 52 estilos y ocho familias en las dos generaciones, con 64 compases por estilo y cinco gramáticas visibles. El cierre corrige una apertura mínima que dependía del pad retirado: un pulso armónico discreto conserva la música sin órgano continuo, y los territorios de una a tres partes no reciben toda la batería. Las suites completas de lógica y CI comprueban el conjunto; navegador, DSP y escucha se documentan separados. Evidencia en scripts/reencuentro-06-validation.json. Jay conserva PR/merge; respetar los límites de audio documentados.
+
 # Reencuentro · fase 5
 
 Leer PLAN_REENCUENTRO.md. Rama `feat/reencuentro-05-exploracion`, versión 2.3.0-alpha.21. Saltar y las nuevas llegadas valoran cinco aspectos, ocho familias y nichos además de música. El historial visual migra sin borrar datos y mantiene ocho recuerdos. Los gradientes orientan también hacia aspectos distintos; el detalle del lugar nombra el hábitat. La guía abre el catálogo aislado sin arrastrar direcciones del guardado principal. Evidencia en scripts/reencuentro-05-validation.json. Jay conserva PR/merge; respetar los límites de audio documentados.

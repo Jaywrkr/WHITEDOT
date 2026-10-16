@@ -106,6 +106,7 @@ export function createRadio(seedOf, rng, genres, {living=()=>false,reference=()=
     if(!reference()||environment.room||!alive)return modern;
     const original=referenceRadio.advance(region,bar,environment);
     return {...modern,...original,referenceOrigin:'acd766f',hybrid:modern.hybrid,
+      referenceSupport:original.melodyRest&&!modern.melodyRest?{hook:modern.hook,hookI:modern.hookI,melodyRest:false}:null,
       labScore:modern.labScore,phrasing:modern.phrasing,labEvolution:modern.labEvolution,direction:modern.direction,
       bassI:region.track.bassI,
       // Native phrasing owns the lead/bass. Modern guests keep their own parts.

@@ -9,7 +9,7 @@ Autorizado por Jay después de identificar `acd766f` en su captura. Seis ramas d
 | 3 · Identidad regional | `feat/reencuentro-03-identidad` | alpha.19 | Implementada; pruebas de renderer, navegador pendiente |
 | 4 · Ecosistemas | `feat/reencuentro-04-ecosistemas` | alpha.20 | Implementada; muestreo y pruebas enfocadas |
 | 5 · Exploración legible | `feat/reencuentro-05-exploracion` | alpha.21 | Implementada; pruebas enfocadas, CI pendiente |
-| 6 · Auditoría | `feat/reencuentro-06-auditoria` | alpha.22 | Pendiente |
+| 6 · Auditoría | `feat/reencuentro-06-auditoria` | alpha.22 | Implementada; cierre de publicación condicionado a CI y escucha |
 
 ## 1 · Referencia musical
 
@@ -42,3 +42,7 @@ Ejecutar el inventario contra el mundo real muestreado, comprobar accesibilidad 
 `node scripts/content-audit.mjs 256 /tmp/contenido.json` registra presencia por chunk, rutas declaradas y huecos de práctica. No mide probabilidad por hora. Catálogo: 157 familias coleccionables; entradas del laboratorio y familias se unen por ID, no son nuevas especies. Las rutas declaradas se contrastan con archivos existentes; que exista una ruta no prueba una interacción audible. Los elementos sin práctica individual quedan explícitos en `withoutPractice`. Galería: Laboratorio → Catálogo; filtrar y abrir el elemento real. Los retratos son ejemplares, no todas las variaciones individuales.
 
 Fase 2: navegador local sin cerrar por agotamiento de hilos; la primera ejecución del perfil CDP detectó un clic sin apertura, cuyo perfil no desplazaba controles de paneles con scroll. Se corrigió el perfil local, pero los intentos posteriores no iniciaron Chromium. No se afirma UI aprobada: el recorrido portable sigue obligatorio en CI. Módulo de galería probado con adaptador DOM, separado de layout real.
+
+## Cierre del conjunto
+
+Ver [CIERRE_REENCUENTRO.md](CIERRE_REENCUENTRO.md) y [INVENTARIO_UNIVERSO.md](INVENTARIO_UNIVERSO.md). Implementación de seis fases; publicación pendiente de CI, navegador, DSP y escucha física. No presentar el inventario declarado como cobertura sensorial completa. La fase 6 conserva dos generaciones y las decisiones de la referencia, añade localizadores reales de los cinco aspectos y mantiene el informe de huecos.

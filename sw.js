@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.3.0-alpha.21';
+const CACHE='whitedot-2.3.0-alpha.22';
 const SHELL=[
  "./src/exploration-context.js",
  "./src/ecosystem-field.js",
