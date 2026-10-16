@@ -12,7 +12,7 @@ export function initialize(runtime) {
   const generation=preview&&new URLSearchParams(globalThis.location?.search||'').get('generation')==='2'?2:1;
   const KEY=preview?previewKey(preview,layout,generation):'pixel-blanco-v4';
   const identity=worldIdentity(preview&&preview!=='original'?preview:'',layout||'classic',generation),scope={kind:preview?'preview':'main',seed:preview||'',layout:layout||'classic'};
-  const fresh=()=>({sparks:0,saveVersion:SAVE_VERSION,worldIdentity:{...identity},offset:0,lastDay:null,streak:0,best:0,totalDays:0,totalLight:0,todayKey:null,todayLight:0,capShown:false,collected:[],trail:[],px:0,py:0,ach:{},sound:true,softMusic:false,style:.3,
+  const fresh=()=>({pathCrystals:[],sparks:0,saveVersion:SAVE_VERSION,worldIdentity:{...identity},offset:0,lastDay:null,streak:0,best:0,totalDays:0,totalLight:0,todayKey:null,todayLight:0,capShown:false,collected:[],trail:[],px:0,py:0,ach:{},sound:true,softMusic:false,style:.3,
     worldSeed:"",previewSeed:null,previewLayout:null,session:null,lastSession:null,favorites:{version:1,items:[]},destination:null,glassSites:{},mirrorSites:{},autoPins:false,patchSites:{},worldDetails:false,mode:"camino",wx:900,wy:900,lampDay:null,lampUsed:0,species:{},rel:null,relicSites:{},stars:[],help:{},zones:{},drums:0,bag:{luz:8},studio:{x:null,y:null,biome:0,slots:{}},color:"#ffffff",lastWorldDay:null,prevMode:null,capPlusDay:null,voiceStart:false,luzN:0,cat:{},catN:0,catRecent:[],places:{},placesN:0,retos:{},retosN:0,events:{},journal:{events:{},relics:{},music:{genres:{},instruments:{},scales:{}}}});
   const storage=(()=>{try{return globalThis.localStorage;}catch(_){return {getItem(){throw Error('Unavailable');},setItem(){throw Error('Unavailable');}};}})();
   const store=createSaveStore(storage,KEY,fresh(),identity);let S=store.load();const scopeHadSave=store.original()!==null;
@@ -37,8 +37,8 @@ export function initialize(runtime) {
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
   const isFree=()=>S.todayLight>=runtime.CAP;
-  // The daily first light opens exploration; the old full bar remains optional.
-  const worldReady=()=>S.todayLight>0;
+  // Break ten Camino crystals to open today's world.
+  const worldReady=()=>(S.pathCrystals?.length||0)>=10;
   const inWorld=()=>S.mode==="world";
   function shownStreak(){if(!S.lastDay)return 0;const d=diffDays(S.lastDay,S.todayKey);return d<=1?S.streak:0;}
   function displayDay(){return S.lastDay===S.todayKey?S.totalDays:S.totalDays+1;}
@@ -51,7 +51,7 @@ export function initialize(runtime) {
 
   function checkDay(startup=false){
     const k=dayKey();
-    if(S.todayKey!==k){S.todayKey=k;S.todayLight=0;S.capShown=false;S.collected=[];collected=new Set();chunks.clear();wchunks.clear();
+    if(S.todayKey!==k){S.todayKey=k;S.pathCrystals=[];S.todayLight=0;S.capShown=false;S.collected=[];collected=new Set();chunks.clear();wchunks.clear();
       if(inWorld()&&startup)runtime.exitWorld(false);
       else if(inWorld()){ /* Never interrupt an ongoing musical session at midnight. */ }
       else if(S.mode==="studio")S.prevMode="camino";

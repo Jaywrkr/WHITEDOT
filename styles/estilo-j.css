@@ -366,3 +366,8 @@ body.ui-reduced-motion #rareNoticeArt::after{display:none}
 .favorite-title>span:first-child{min-width:0;overflow-wrap:anywhere}
 .favorite-signature{display:block;flex:0 0 60px;width:60px;height:40px;pointer-events:none}
 .favorite-signature svg{display:block;width:100%;height:100%}
+
+/* The wallet follows the distance label, including safe-area and responsive layout. */
+.spark-count{display:flex;gap:8px;align-items:center;font:11px/1.5 var(--mono);color:#ffffff80;font-variant-numeric:tabular-nums}
+.spark-count.collecting{color:var(--earned)}#sparkGain{font-size:10px;color:var(--earned)}
+.return-entrance .return-signature{animation-delay:.5s;font-size:11px}
