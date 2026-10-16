@@ -1,3 +1,14 @@
+# Pulido · fase 7: tarjetas con función y memoria
+
+- Frente compacto: retrato, función musical y acceso al jardín/búsqueda complementaria. Lugar, historia, rareza, interpretación y exportación se despliegan a pedido.
+- Filtros por función de jardín y búsqueda por instrumento, bioma y género; conserva los índices originales de las tarjetas.
+- Abrir un hallazgo limpia filtros y búsqueda anteriores, enfoca su tarjeta y conserva el lugar exacto.
+- Primer encuentro de tipo: seis a doce segundos activos según rareza. Otro ejemplar: tres segundos, con supresión de ráfagas/repeticiones durante un minuto. Todas las tarjetas se guardan aunque no aparezca otro aviso.
+- Reliquias y fósiles nuevos registran su voz real. Los registros históricos conservan sus datos; no se inventa un instrumento anterior. Las probabilidades siguen siendo condicionales y espaciales, no por hora.
+- Libro y exportación negros, UI silenciosa; destello local usa el color de rareza y respeta movimiento reducido.
+
+Validación: auditoría, 120 suites Node y ocho programas de navegador afectados. Evidencia: `scripts/pulido-07-validation.json`. No cambia síntesis/mezcla. CI, deploy y teléfono físico separados.
+
 # Pulido · fase 6: cubo reversible e interfaz
 
 Auditoría, 120 suites Node, siete programas de navegador y cuatro renders aprobados. Evidencia: `scripts/pulido-06-validation.json`. CI/deploy/escucha física separados.

@@ -1,3 +1,15 @@
+# Handoff · Colección, fase 7
+
+Rama `feat/pulido-07-coleccion` desde F6 `5fe2538`. Jay crea PR/merge.
+
+`rare-cards.js`: frente musical compacto, detalles secundarios plegados, filtro de función y búsqueda ampliada. Índices originales preservados. Abrir desde aviso restablece filtros y usa `openJournal('rares',{finding:id})` para limpiar búsqueda y enfocar el ejemplar correcto. Dedupe de cola por tipo, enfriamiento de repeticiones y tiempos 6/8/10/12 segundos según tier; repeticiones tres segundos. No afecta adquisición ni probabilidades. Todas las tarjetas quedan guardadas.
+
+`discovery.js` y `percussion.js` registran contexto de voz al recoger una reliquia/fósil nuevo; no modifican registros anteriores. `cardAbility` mantiene compatibilidad histórica. Jardín, técnicas, atlas, códigos, orientación y PNG continúan disponibles sin consumir tarjetas. Las versiones futuras conservan su protección.
+
+Evidencia: `scripts/pulido-07-validation.json`. No cambia audio. CI/deploy/teléfono físico separados.
+
+## Antecedentes
+
 # Handoff · Cubo e interfaz, fase 6
 
 Rama `feat/pulido-06-cubo-ui` desde F5 `b3d8f0b`. Jay crea PR/merge.

@@ -33,7 +33,7 @@ try:
    remaining=page.evaluate('__testRuntime.rareNoticeState.remaining');page.wait_for_timeout(400)
    assert page.evaluate('__testRuntime.rareNoticeState.remaining')==remaining
    page.locator('#fxClose').click();page.wait_for_function('!document.getElementById("rareNotice").hidden')
-   page.locator('#rareNoticeOpen').click();assert page.locator('#mJournal').is_visible();assert 'Fósil de ritmo' in page.locator('#journalBody').inner_text();assert 'Muestra forzada' in page.locator('#journalBody').inner_text()
+   page.locator('#rareNoticeOpen').click();assert page.locator('#mJournal').is_visible();assert 'Fósil de ritmo' in page.locator('#journalBody').inner_text();page.locator('.rare-card-details > summary').first.click();assert 'Muestra forzada' in page.locator('#journalBody').inner_text()
    page.screenshot(path=f'/tmp/whitedot-rare-book-{size["width"]}.png')
    before=page.evaluate('({q:__testRuntime.MU.q8.length,w:__testRuntime.waves.length})')
    page.locator('[data-rare-copy="0"]').click();page.wait_for_timeout(150)
@@ -42,7 +42,7 @@ try:
    assert page.evaluate('__testRuntime.MU.q8.length')<=before['q'];assert page.evaluate('__testRuntime.waves.length')<=before['w'],'book UI cannot pulse'
    page.locator('[data-rare-return="0"]').click();assert page.locator('#mJournal').is_hidden()
    assert page.evaluate('()=>{const r=__testRuntime,p=r.favorites.find(p=>p.id===r.S.destination),c=r.rareCards[0];return p&&p.x===c.address.x&&p.y===c.address.y;}')
-   page.evaluate('__testRuntime.renameFavorite(__testRuntime.S.destination,"Mi rincón");__testRuntime.openJournal("rares")');page.locator('[data-rare-return="0"]').click();assert page.evaluate('__testRuntime.favorites.find(p=>p.id===__testRuntime.S.destination).name')=='Mi rincón'
+   page.evaluate('__testRuntime.renameFavorite(__testRuntime.S.destination,"Mi rincón");__testRuntime.openJournal("rares")');page.locator('.rare-card-details > summary').first.click();page.locator('[data-rare-return="0"]').click();assert page.evaluate('__testRuntime.favorites.find(p=>p.id===__testRuntime.S.destination).name')=='Mi rincón'
    count=page.evaluate('__testRuntime.rareCards.length');page.evaluate('__testRuntime.labGo("rhythm:fossil")');page.wait_for_timeout(300)
    page.evaluate('()=>{const r=__testRuntime,o=r.nearbyPercussion()[0];r.S.wx=o.x;r.S.wy=o.y;}');page.wait_for_timeout(900);assert page.evaluate('__testRuntime.rareCards.length')==count,'revisit must not duplicate'
    page.evaluate('__testRuntime.save()');page.reload();page.wait_for_function('__testRuntime?.labMode');assert page.evaluate('__testRuntime.rareCards.length')==count
@@ -67,7 +67,7 @@ try:
     assert page.locator('.rare-card').count()==12
     page.locator('[data-rare-page="1"]').click();assert page.locator('.rare-card').count()==1
     page.evaluate("Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async()=>{throw Error('clipboard unavailable')}}})")
-    page.locator('[data-rare-copy="0"]').click();page.wait_for_function('!document.getElementById("rareCodeFallback").hidden')
+    page.locator('.rare-card-details > summary').first.click();page.locator('[data-rare-copy="0"]').click();page.wait_for_function('!document.getElementById("rareCodeFallback").hidden')
     assert page.locator('#rarePlaceCode').input_value().startswith('WD1-')
     page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('elementos');assert page.locator('#rareCodeFallback').is_hidden()
     page.locator('#journalClose').click()
