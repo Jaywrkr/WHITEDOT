@@ -12,7 +12,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 6 | Compañía con espacio propio | feat/wow-06-compania | Implementada; ver informe 06 |
 | 7 | Reacciones entre vecinos | feat/wow-07-reacciones | Implementada; ver informe 07 |
 | 8 | Notas visibles a tiempo | feat/wow-08-notas-visibles | Implementada; ver informe 08 |
-| 9 | Corriente en conexiones | feat/wow-09-corriente | Pendiente |
+| 9 | Corriente en conexiones | feat/wow-09-corriente | Implementada; ver informe 09 |
 | 10 | Constelaciones temporales | feat/wow-10-constelaciones | Pendiente |
 | 11 | Huellas de pulso | feat/wow-11-huellas-pulso | Pendiente |
 | 12 | Polvo localizado | feat/wow-12-polvo | Pendiente |
@@ -64,3 +64,7 @@ Una nota real despierta una pequeña onda visual entre hasta tres vecinos presen
 ### 8. Notas visibles a tiempo
 
 Cada fuente ilumina su centro al comenzar su nota real. Percusión, bajo, acorde y melodía tienen trazos propios. Se descartan eventos atrasados sin adelantar el destello al sonido.
+
+### 9. Corriente en conexiones
+
+Tres puntos recorren cada conexión musical existente mientras dura. Máximo ocho conexiones, color de su fuente, sin cables nuevos ni cambios musicales. Se omite con movimiento reducido.

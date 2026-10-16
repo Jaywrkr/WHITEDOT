@@ -41,7 +41,7 @@ export function initialize(runtime){
  function eyes(o,c,x=0,y=0){
   if(blocked()||Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)>130)return;
   const v=lookVector(runtime.S.wx-o.x,runtime.S.wy-o.y,reduced());
-  c.save();c.fillStyle='#fff';
+  c.save();drawConnections(c,ox,oy);c.fillStyle='#fff';
   for(const p of flashes){
    const age=(seconds-p.at)/.45,r=5+age*8;c.globalAlpha=(1-age)*.8;c.strokeStyle=c.fillStyle=p.ink;c.lineWidth=p.role==='bajo'?2:1.2;
    const x=p.x+ox,y=p.y+oy;c.fillRect(x-1.5,y-1.5,3,3);c.beginPath();
@@ -62,6 +62,15 @@ export function initialize(runtime){
   const pose=greetingPose(g.kind,seconds-g.at);c.translate(0,pose.lift);c.rotate(pose.turn);
   const proximity=Math.max(0,1-Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)/100);
   c.rotate(Math.sign(runtime.S.wx-o.x)*proximity*.035);c.scale(1+proximity*.035,1+proximity*.06);
+ }
+ function drawConnections(c,ox,oy){
+  if(reduced())return;
+  for(const be of (runtime.beams||[]).slice(0,8)){
+   const length=Math.hypot(be.x2-be.x1,be.y2-be.y1);
+   if(!Number.isFinite(length)||length<1||be.l<=0)continue;
+   c.fillStyle=runtime.musicInk?.({x:be.x1,y:be.y1},'acorde')||'#fff';c.globalAlpha=Math.min(.65,be.l*.65);
+   for(let i=0;i<3;i++){const p=((1-be.l)+i/3)%1;c.fillRect(be.x1+(be.x2-be.x1)*p+ox-1,be.y1+(be.y2-be.y1)*p+oy-1,2,2);}
+  }
  }
  function draw(){
   if(blocked())return;const c=runtime.cx,ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
