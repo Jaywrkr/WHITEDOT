@@ -1,0 +1,55 @@
+{
+  "phase": 1,
+  "branch": "feat/musica-01-motor",
+  "base": "24e0d1a",
+  "audit": {
+    "command": "npm run audit:release",
+    "result": "passed",
+    "errors": 0,
+    "warnings": 0
+  },
+  "node": {
+    "command": "npm test",
+    "result": "passed",
+    "suites": 121
+  },
+  "browser": {
+    "result": "passed",
+    "programs": [
+      "focusui_smoke.py",
+      "smoke.py",
+      "heritage_smoke.py",
+      "living_smoke.py",
+      "music_travel_smoke.py",
+      "offline_smoke.py"
+    ]
+  },
+  "audio": {
+    "result": "passed",
+    "programs": [
+      "foundation_mix.py"
+    ],
+    "renders": 7,
+    "maxPeak": 0.8765688538551331,
+    "denseOnsetToleranceSeconds": 0.01
+  },
+  "previousIntegratedBrowserAttempt": {
+    "passed": 90,
+    "total": 92,
+    "failures": [
+      "old dock expected no Styles",
+      "old FX probe expected deep space in dry genres"
+    ],
+    "correctedAndRerun": [
+      "focusui_smoke.py",
+      "smoke.py"
+    ]
+  },
+  "external": {
+    "referenceRecordingDownload": "blocked HTTP 403",
+    "physicalListening": "pending",
+    "CI": "pending",
+    "deployment": "pending"
+  },
+  "fullSuites": "Final integrated set: phase 7."
+}

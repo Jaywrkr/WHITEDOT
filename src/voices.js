@@ -1,3 +1,4 @@
+import {consonantPitch,fitRegister} from './musical-conductor.js';
 import {performanceVoice} from './performance.js';
 import {labScore,labInteractionVoice} from './lab-score.js';
 import {walkerVoice} from './walker-forms.js';
@@ -89,6 +90,7 @@ export function initialize(runtime) {
   }
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
     if (!runtime.ac || !region) return;
+    time=runtime.musicalTime?.(time)??time;
     if(origin==='player'&&runtime.duetCapture?.(kind,index,time,region,source))return;
     runtime.labLearningHear?.(kind,index,time,region,source,origin);runtime.influenceInput?.(kind,region,source,origin);runtime.voiceGuideHear?.(kind,region,source,origin);runtime.livingHear?.(kind,index,region,source,origin);
     runtime.loopTap?.(kind,index,time,region,full,volume,source,origin);
@@ -97,14 +99,15 @@ export function initialize(runtime) {
     const raw=getVoice(kind,region,source),voice=origin==='duet'?runtime.duetVoice?.(raw,source?.duetSlot,region)||raw:raw;
     if(origin==='player')runtime.petHear?.({degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,source});
     if(origin==='player'&&(!source||Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<360))runtime.depthHear?.({origin,degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,layer:runtime.S.layer||'superficie'});
-    const harmonicRegion=origin==='band'?(runtime.MU.dnaA||region):region;
+    const frame=runtime.musicalFrame?.(time),harmonicRegion=frame?.region||(origin==='band'?(runtime.MU.dnaA||region):region);
     const scale = harmonicRegion.scale, transposition = runtime.BIOMES[harmonicRegion.z].tr + harmonicRegion.trOff;
     const note = degree => {
-      const d = ((runtime.MU.deg + voice.degree + degree) % 7 + 7) % 7;
+      const d = (((frame?.degree??runtime.MU.deg) + voice.degree + degree) % 7 + 7) % 7;
       let n = 57 + transposition + scale[d];
       while (n < voice.low) n += 12;
       while (n > voice.high) n -= 12;
-      return n;
+      const step=frame?frame.step+Math.round((time-frame.time)/frame.six):null;
+      return frame&&(voice.role==='bajo'||step%4===0)?consonantPitch(n,frame.chords.slice(0,3),voice.low,voice.high):n;
     };
     // Only automatic upper voices rest; a player's gesture still receives its own response.
     if(origin==='ambient'&&(voice.role==='lead'||voice.role==='agudo')&&runtime.MU.radio?.genre===region.genre&&runtime.MU.radio?.melodyRest)return;
@@ -132,7 +135,7 @@ export function initialize(runtime) {
           else if (voice.instrument === 'snare') runtime.snare(t,v*.8);
           else runtime.tom(t,55+voice.degree*15,v);
         } else if (voice.role === 'acorde') {
-          [0,2,4].forEach(d=>runtime.hookInst(voice.instrument,note(degree+d)-(voice.instrument==='glass'?12:0),t,v*.4,region,articulation));
+          [0,2,4].forEach((d,i)=>runtime.hookInst(voice.instrument,(frame?fitRegister(frame.chords[i],voice.low,voice.high):note(degree+d))-(voice.instrument==='glass'?12:0),t,v*.4,region,articulation));
         } else runtime.hookInst(voice.instrument,n-(voice.instrument==='glass'?12:0),t,v,region,articulation);
       };
       const patchEmit=()=>{const produce=()=>withVoiceOrigin(origin,emit);if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(kind,region,voice,source,t,produce);else produce();};

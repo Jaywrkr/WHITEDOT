@@ -40,7 +40,7 @@ export function initialize(runtime){
   prepare?.();runtime.stopAutopilot?.();runtime.ptr=null;runtime.S.destination=null;runtime.S.wx=point.x;runtime.S.wy=point.y;runtime.S.layer=point.layer;
   runtime.MU.dnaT=runtime.regionOfPos(point.x,point.y);runtime.MU.near=[];runtime.MU.singers=[];runtime.MU.nb=null;runtime.MU.nbW=0;runtime.MU.radio=null;runtime.MU.influenced=null;runtime.MU.neighborRadio=null;
   runtime.MU.layers=new Set();runtime.MU.flowers=[];runtime.MU.boltAt=0;runtime.MU.q8?.splice(0);runtime.MU.queue?.splice(0);
-  runtime.waves.length=0;runtime.clearSoundCues?.();runtime.curRegion=null;runtime.RP=null;
+  runtime.waves.length=0;runtime.clearSoundCues?.();runtime.clearMusicalFrames?.();runtime.curRegion=null;runtime.RP=null;
   if(!runtime.labMode&&typeof location!=='undefined'&&typeof history!=='undefined'){const url=new URL(location.href);url.searchParams.set('addr',encodePlace(placeAddress(runtime.worldIdentity,point.x,point.y,point.layer)));history.replaceState(null,'',url.href);}
   runtime.hud();ui();return true;}
  function jump(){if(!runtime.inWorld()||blocked()||document.querySelector('.modal:not([hidden])'))return false;

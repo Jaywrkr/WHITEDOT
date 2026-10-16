@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import {createMusicalConductor,consonantPitch,fitRegister} from '../src/musical-conductor.js';
+const a={key:'a',scale:[0,2,3,5,7,8,10]},b={key:'b',scale:[0,2,4,5,7,9,11]},c=createMusicalConductor();
+c.remember(1,0,a,0,.125,0,[57,60,64]);c.remember(1.125,1,a,0,.125,0,[57,60,64]);
+assert.equal(c.align(1.04,.95),1);assert.equal(c.align(1.04,1.03),1.125);
+assert.equal(c.align(1.126,1),1.126,'preserve scheduled microtiming');
+c.remember(1.25,2,b,3,.1,0,[60,64,67]);assert.equal(c.at(1.24).region,a);assert.equal(c.at(1.26).region,b);
+assert.equal(c.align(1.345,1.3),1.345);assert.equal(c.align(1.39,1.3),1.35,'tempo extrapolation uses the new sixteenth');
+const swing=createMusicalConductor();swing.remember(2,0,a,0,.125,.2,[57,60,64]);assert.equal(swing.align(2.13,2),2.15);
+assert.equal(consonantPitch(61,[60,64,67],45,69),60);assert.equal(fitRegister(81,45,67),57);
+for(let i=0;i<100;i++)c.remember(3+i*.125,i,a,0,.125,0,[57,60,64]);assert.equal(c.size,48);c.clear();assert.equal(c.size,0);assert.equal(c.at(0),null);
+// Real source routing adopts the active harmony; its identity still comes from its territory.
+import {initialize as data} from '../src/data.js';import {initialize as progress} from '../src/progress.js';import {initialize as world} from '../src/world.js';import {initialize as voices} from '../src/voices.js';
+globalThis.localStorage={getItem:()=>null,setItem(){}};const r={};data(r);progress(r);world(r);
+const main={...r.regionOfPos(900,900),key:'conductor-main',trOff:0,scale:[0,2,4,5,7,9,11]},other={...main,key:'conductor-source',trOff:5,scale:[0,2,3,5,7,8,10]};
+const notes=[],frame={region:main,degree:0,chords:[57,61,64],step:0,time:1,six:.125};
+Object.assign(r,{ac:{},MU:{deg:4},SIX:.125,vel:v=>v,musicalTime:()=>1,musicalFrame:()=>frame,hookInst:(id,n,t)=>notes.push({n,t}),bassInst:(id,n,t)=>notes.push({n,t})});
+for(const id of ['kick','conga','wood','rim','shaker','tom','guiro','timbale','clap','hatHit','snare'])r[id]=()=>{};voices(r);
+for(let i=0;i<24;i++)r.playVoice('reliquia',i,1.04,other,false,.5,{id:'conductor:'+i});
+assert(notes.length>0);assert(notes.every(n=>n.t===1&&frame.chords.some(c=>((c-n.n)%12+12)%12===0)),'border sources must support the current chord, regardless of source key');
+console.log('PASS shared source clock, tempo change, swing, harmonic boundary, strong-beat consonance, register and bounded frame history');

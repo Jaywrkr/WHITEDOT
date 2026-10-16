@@ -1,3 +1,7 @@
+<!-- direccion-musical-actual -->
+El ciclo vigente es [Dirección musical, siete fases](PLAN_DIRECCION_MUSICAL.md), autorizado el 16 de octubre. Fase 1 musical implementada en `feat/musica-01-motor`. F2–F8 de pulido conservadas; su cierre conjunto continúa en la auditoría musical final.
+<!-- /direccion-musical-actual -->
+
 # Plan WHITEDOT 2.0
 
 ## Prioridad vigente · Cubo, colección y música
@@ -14,7 +18,7 @@
 | 6 · Cubo e interfaz | `feat/pulido-06-cubo-ui` | Personalización reversible y móvil | Implementada y probada; entrega en esta rama |
 | 7 · Colección y tarjetas | `feat/pulido-07-coleccion` | Hallazgos, utilidad, procedencia y regreso | Implementada y probada; entrega en esta rama |
 | 8 · Exploración y aprendizaje | `feat/pulido-08-exploracion` | Pistas, memoria reciente y contraste | Implementada y probada; entrega en esta rama |
-| 9 · Curaduría y cierre | `feat/pulido-09-cierre` | Auditoría conjunta y escucha | Pendiente |
+| 9 · Curaduría y cierre | `feat/pulido-09-cierre` | Auditoría conjunta y escucha | Incorporada a F7 de Dirección musical |
 
 Las secciones siguientes conservan estados históricos; no sustituyen este plan.
 

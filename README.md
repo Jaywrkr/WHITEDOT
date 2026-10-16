@@ -1,7 +1,3 @@
-<!-- pulido-viajes -->
-Estilos permite viajar a un género, una voz, una banda completa o redes musicales. Volver al lugar anterior conserva coordenadas y capa. Saltar busca contraste entre recetas existentes, sin cambiar rarezas ni otorgar hallazgos por menú.
-<!-- /pulido-viajes -->
-
 # WHITEDOT
 
 **Un pixel. Un mundo que suena.**
@@ -12,9 +8,17 @@ Explora para descubrir sonidos, crear tu música y conservar tus encuentros. Un 
 
 Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
-## Cubo, colección y música · ciclo actual
+## Dirección musical · ciclo actual
 
-[Nueve fases, ramas y aceptación](PLAN_PULIDO_CUBO_MUSICA.md). Fase 1 integrada por Jay (PR #144). Fase 2: once perfiles de producción distinguen pulso seco, cuerpo grave, teclas cálidas, madera/piel, máquina, síncopa, cuerdas, disco, cinta, dub y espacio abierto. Se elimina el órgano/pad automático de fondo. Menú ofrece volumen directo 0–100%, conservando el control de Sonido y el guardado. Ganancia general 1,5× antes del limitador. Fase 3: claros y texturas decorativas por zonas, invitados musicales por frases y acordes breves en estilos armónicos. Las fronteras mezclan el tratamiento acústico. Fase 4: botón Estilos disponible en el Mundo, búsqueda entre 52 destinos musicales y marca de escuchado tras emitir instrumentos. Paseo con pulsos optativos y respuestas visuales de cuerda, viento, teclas y percusión; el acompañamiento deja sitio al gesto. La quietud no aumenta el eco automáticamente; salas cortas y largas se mezclan según el estilo. Fase 5 unifica la música de producción: sin selección vivo/clásico, bandas de una a diez partes, baterías electrónicas propias y patrones nativos. Bajo, melodías y acordes comparten progresión. Añade territorios de redes con funciones repartidas y gradientes multicolor localizados. Los ensambles completos incluyen acordes y una voz complementaria desde la llegada; el ambiente conserva un solista durante ocho compases. Estilos → Explora redes musicales lleva a una agrupación existente; Escucha un ensamble completo busca un territorio de diez partes. Fase 6 organiza el cubo en Apariencia, Movimiento y Voz: vista previa silenciosa, Aplicar/Cancelar y restaurar el blanco sin perder premios. El control Energía regula ahora el arreglo, sin cambiar el género ni el volumen final. Las notas se conservan aparte de tu partida; los controles permanecen silenciosos. El modelo no estima tarjetas ganadas ni sustituye la escucha humana.
+[Plan de siete fases](PLAN_DIRECCION_MUSICAL.md). La fase 1 comparte reloj y armonía dentro de cada zona; cada territorio mantiene su tempo. Fuentes cercanas conservan su instrumento y acompañan la armonía audible. El cierre musical continúa con identidades, fusiones, arreglos, interacciones, transiciones y auditoría.
+
+## Cubo, colección y música · entregas conservadas
+
+[Nueve fases, ramas y aceptación](PLAN_PULIDO_CUBO_MUSICA.md). Fase 1 integrada por Jay (PR #144). Fase 2: once perfiles de producción distinguen pulso seco, cuerpo grave, teclas cálidas, madera/piel, máquina, síncopa, cuerdas, disco, cinta, dub y espacio abierto. Se elimina el órgano/pad automático de fondo. Menú ofrece volumen directo 0–100%, conservando el control de Sonido y el guardado. Ganancia general 1,5× antes del limitador. Fase 3: claros y texturas decorativas por zonas, invitados musicales por frases y acordes breves en estilos armónicos. Las fronteras mezclan el tratamiento acústico. Fase 4: botón Estilos disponible en el Mundo, búsqueda entre 52 destinos musicales y marca de escuchado tras emitir instrumentos. Paseo con pulsos optativos y respuestas visuales de cuerda, viento, teclas y percusión; el acompañamiento deja sitio al gesto. La quietud no aumenta el eco automáticamente; salas cortas y largas se mezclan según el estilo. Fase 5 unifica la música de producción: sin selección vivo/clásico, bandas de una a diez partes, baterías electrónicas propias y patrones nativos. Bajo, melodías y acordes comparten progresión. Añade territorios de redes con funciones repartidas y gradientes multicolor localizados. Los ensambles completos incluyen acordes y una voz complementaria desde la llegada; el ambiente conserva un solista durante ocho compases. Estilos → Explora redes musicales lleva a una agrupación existente; Escucha un ensamble completo busca un territorio de diez partes. Fase 6 organiza el cubo en Apariencia, Movimiento y Voz: vista previa silenciosa, Aplicar/Cancelar y restaurar el blanco sin perder premios. El control Energía regula ahora el arreglo, sin cambiar el género ni el volumen final. Las notas se conservan aparte de tu partida; los controles permanecen silenciosos. Fase 7 compacta tarjetas por función musical; procedencia y herramientas se despliegan sin consumir la colección. Fase 8 incorpora viaje a una sola voz, regreso directo y memoria de timbres recientes. El modelo no estima tarjetas ganadas ni sustituye la escucha humana.
+
+<!-- pulido-viajes -->
+Estilos permite viajar a un género, una voz, una banda completa o redes musicales. Volver al lugar anterior conserva coordenadas y capa. Saltar busca contraste entre recetas existentes, sin cambiar rarezas ni otorgar hallazgos por menú.
+<!-- /pulido-viajes -->
 
 ```bash
 npm run audit:encounters -- --routes 192 --output /tmp/whitedot-encounters.json
