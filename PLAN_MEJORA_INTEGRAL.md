@@ -7,7 +7,7 @@ Autorizado por Jay con «hazlo». Sustituye la ampliación del ciclo anterior: m
 | 1 · Identidad musical | `mejora/01-identidad-musical` | 2.3.0-alpha.5 | Implementada y probada | Una prioridad musical; preservar la radio recuperada. |
 | 2 · Composición y mezcla | `mejora/02-composicion` | 2.3.0-alpha.6 | Implementada y probada | Bajo, groove, voces y descansos coordinados. |
 | 3 · Interpretación | `mejora/03-interacciones` | 2.3.0-alpha.7 | Implementada y probada | Contacto, permanencia y movimiento legibles. |
-| 4 · Mundo y habitantes | `mejora/04-mundo` | 2.3.0-alpha.8 | Pendiente | Coherencia, apariciones suaves y siluetas legibles. |
+| 4 · Mundo y habitantes | `mejora/04-mundo` | 2.3.0-alpha.8 | Implementada y probada | Coherencia, apariciones suaves y siluetas legibles. |
 | 5 · Encuentros | `mejora/05-encuentros` | 2.3.0-alpha.9 | Pendiente | Invitación, gesto, respuesta y salida comprensibles. |
 | 6 · Viajes y favoritos | `mejora/06-viajes` | 2.3.0-alpha.10 | Pendiente | Guardar, encontrar y regresar con menos fricción. |
 | 7 · Interfaz y cubo | `mejora/07-interfaz` | 2.3.0-alpha.11 | Pendiente | Móvil/PC, paneles y personalización congruentes. |

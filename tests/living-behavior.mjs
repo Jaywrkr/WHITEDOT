@@ -2,4 +2,5 @@ import assert from 'node:assert/strict';import {behavior} from '../src/living-be
 const a={kind:'deer',homeX:0,homeY:0,x:0,y:0,variant:5,personality:'timida'},b={...a,personality:'curiosa'};
 for(let i=0;i<10000;i++){for(const o of [a,b])behavior(o,.05,i*.05,40,{x:40,y:0,speed:50});assert(Math.hypot(a.x,a.y)<=75);assert(Math.hypot(b.x,b.y)<=75);}
 assert(Math.abs(a.x-b.x)>5);behavior(a,.05,500,30,{x:30,y:0,speed:130});assert.equal(a.expression,'staccato');
+const sleeping={...a,awake:0},position=[sleeping.x,sleeping.y];behavior(sleeping,.05,501,40,{x:40,y:0,speed:0});assert.deepEqual([sleeping.x,sleeping.y],position,'zero wakefulness is not a missing value');
 console.log('PASS bounded 500-second organism travel, distinct personalities and gesture expression');
