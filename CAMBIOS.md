@@ -1,3 +1,9 @@
+## Recorrido y referencias VJ · entrega 7
+
+Guía opcional ilustrada, cuatro experiencias y siguiente paso claro. Práctica de seis pasos con progreso pequeño y una sola instrucción. Nuevos instrumentos incluidos en la señal del primer encuentro; glosario explica sus gestos/filtros. Omitir o repetir conserva premios. Normalización de guía preserva campos desconocidos.
+
+Cuatro motivos Canvas originales basados en la revisión pública de TDAI2026: brotes, nudo, telaraña y red orbital. Catálogo visual de ocho a doce; ubicaciones, radio y huecos anteriores intactos. Procedencia en REFERENCIAS_VJ.md y CREDITOS.md. Sin notas ni cambios de motor musical. Auditoría y 133 suites Node aprobadas; guía y cuatro motivos nativos probados a 320/390/844/1280 px. La prueba detectó el pie fuera de pantalla al abrir el glosario; se corrigió la regla flex para mantener acciones visibles.
+
 ## Miniinstrumentos y estelas · entrega 6
 
 Diez instrumentos orgánicos distribuidos por hábitats con semillas independientes. Contacto, permanencia y rodear producen batería, bajos, acordes, FM, ondas, granos, recortes, modulación y arpegios. Seis voces nuevas: 81 especificaciones en total. Escáner, 151 familias del libro y 72 tipos de tarjeta integrados. Estilos busca una agrupación nativa; no entrega rarezas por botón.

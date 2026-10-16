@@ -14,7 +14,7 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) ·
 
 ## Visuales localizados
 
-Ocho escenas VJ originales aparecen en áreas concretas del Mundo, dejando espacio negro entre ellas. Cometas ocasionales y visitantes curiosos/esquivos responden visualmente al recorrido. Movimiento reducido evita desplazamientos. Esta ampliación conserva la música; navegador enfocado aprobado en móvil vertical, horizontal y escritorio; CI y teléfonos físicos pendientes.
+Doce escenas VJ originales aparecen en áreas concretas del Mundo, dejando espacio negro entre ellas. Cometas ocasionales y visitantes curiosos/esquivos responden visualmente al recorrido. Movimiento reducido evita desplazamientos. Los cuatro motivos nuevos se basan en una revisión de documentos y previews públicos de Jay: [referencias VJ](REFERENCIAS_VJ.md). La ampliación visual conserva la música; CI y teléfonos físicos se verifican aparte.
 
 ## Cajas reversibles
 
@@ -22,13 +22,17 @@ Además de sus seis poderes originales, algunas cajas incorporan una de diecisé
 
 Guía de esta entrega: [probar visuales, cajas y perfil](PROBAR_INTERACCION_FINAL.md).
 
+## Guía opcional
+
+Menú → Tu recorrido muestra cuatro experiencias ilustradas: escuchar, conservar, crear en Casa y despertar una reliquia. La práctica conserva seis pasos breves y una sola indicación en el juego, con progreso discreto. Los instrumentos vivos participan en la señal visual del primer encuentro. Omitir o repetir no borra colección; los campos de guardados desconocidos se conservan.
+
 ## Tu perfil
 
 Menú → Tu perfil muestra tiempo activo, distancia, sesiones, lugares y colección. Puedes guardar un nombre local y abrir tus hallazgos o lugares. Los contadores nuevos empiezan con esta versión; su fecha queda visible. Las copias de partida incluyen el perfil. No requiere cuenta.
 
 ## Interacción final
 
-[Dos entregas dependientes](PLAN_INTERACCION_FINAL.md). La primera añade botones animados y silenciosos, una cola de avisos y tarjetas especiales grandes que puedes examinar antes de continuar. La flecha de Entrar al Mundo llega al cuadrado; movimiento reducido entra al instante. Mientras inspeccionas un hallazgo se pausan el cubo y los poderes, conservando la música. El libro mantiene lugares, frecuencias y exportaciones.
+[Entregas dependientes](PLAN_INTERACCION_FINAL.md). La primera añade botones animados y silenciosos, una cola de avisos y tarjetas especiales grandes que puedes examinar antes de continuar. La flecha de Entrar al Mundo llega al cuadrado; movimiento reducido entra al instante. Mientras inspeccionas un hallazgo se pausan el cubo y los poderes, conservando la música. El libro mantiene lugares, frecuencias y exportaciones.
 
 La entrega musical se retoma, con autorización de Jay, en `feat/posmusica-06-instrumentos`, desde el perfil. Diez familias orgánicas: batería, ácido, sub, acordes, FM, ondas, granos, recortes, modulación y arpegios. Estilos → Explora instrumentos vivos busca una agrupación real. Contactar, quedarse o rodear cambia la respuesta y el filtro; todo sigue el tempo y armonía audibles. Son 81 especificaciones de síntesis, 151 familias del libro y 72 tipos de tarjeta: estos catálogos no equivalen a mundos ni a frecuencia por hora. Cada entrega publica su propia evidencia; los resultados anteriores no sustituyen las nuevas comprobaciones.
 

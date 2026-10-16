@@ -1,3 +1,11 @@
+# Handoff · Recorrido y referencias VJ
+
+`feat/posmusica-07-recorrido` desde miniinstrumentos `b180731`. Guía opcional con cuatro experiencias ilustradas; práctica factual de seis pasos y progreso 1/6 discreto. `onboarding-model` conserva extensiones desconocidas; `onboarding.draw` reconoce miniinstrumentos como candidatos de señal. Omitir/repetir nunca concede premios ni borra colección. Glosario nuevo dentro del acordeón existente, sin otro popup.
+
+Se revisó Jaywrkr/TDAI2026 en `0ef40446331225ec82cfeb35d91bef1b772f21a4`: README, cuatro documentos completos y cuatro previews. REFERENCIAS_VJ.md registra procedencia y límites; no se ejecutó TouchDesigner ni se importaron shaders/assets. `vj-model` mantiene el hash de coordenadas original y usa un segundo hash para cuatro motivos nuevos en una parte de las áreas existentes. Doce motivos en total, sin aumentar densidad, radio o notas. `vj-art` conserva recorte/fade/reducción de movimiento. Auditoría sin errores/advertencias, 133 suites Node y recorrido real a 320/390/844/1280 px aprobados. El contenido de la guía desplaza dentro del panel; encabezado y acciones quedan visibles. Sigue cierre integral en rama 8, sin PR/merge de Codex.
+
+## Antecedentes conservados
+
 # Handoff · Reanudación de miniinstrumentos
 
 Rama `feat/posmusica-06-instrumentos`, desde `feat/posmusica-05-perfil` (`bbaa50c`). Jay autorizó completar pendientes con «Hazlo entonces». Se recuperó selectivamente el stash, sin reaplicar su UI antigua. `micro-instruments-model`, `micro-instruments` y `micro-synthesis` conectan diez familias al mapa, escáner, libro, retratos, fuentes y reloj real. Seis motores nuevos amplían INSTRUMENT_SPECS a 81; libro 151 familias, tarjetas 72 tipos. Módulos nuevos una vez en SHELL; service worker posmusica-06.

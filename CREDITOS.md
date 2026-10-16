@@ -17,3 +17,7 @@ Las tres bajo **SIL Open Font License 1.1**, conservada íntegramente junto a lo
 El juego actual guarda la partida en el navegador y permite descargar respaldos/sets explícitamente. No incluye cuentas, micrófono ni backend de usuarios; eso requiere el alcance y las condiciones de la siguiente versión.
 
 Los siete motores avanzados, tablas, granos y modelos de cuerda/membrana son síntesis original. No incluyen presets de Arturia ni nuevas grabaciones externas. Las referencias culturales describen inspiración, no autoría ni interpretación auténtica de una tradición.
+
+## Referencias visuales de Jay
+
+Cuatro motivos VJ locales se inspiran en documentos y previews de [Jaywrkr/TDAI2026](https://github.com/Jaywrkr/TDAI2026). Son dibujos Canvas originales; no incluyen proyectos ni assets externos. [Revisión y procedencia](REFERENCIAS_VJ.md), con los tutoriales citados por el repositorio de referencia.

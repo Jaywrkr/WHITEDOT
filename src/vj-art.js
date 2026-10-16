@@ -19,6 +19,16 @@ export function drawVisualSegment(c,q,{x,y,radius,time=0,energy=0,alpha=1,reduce
  }else if(q.kind==='partitura'){
   for(let i=-2;i<=2;i++){const yy=i*r*.3;c.beginPath();c.moveTo(-r,yy);c.lineTo(r,yy);c.stroke();for(let j=0;j<3;j++)dot(Math.sin(p+i*2+j*3)*r*.7,yy,j===i%3?4:1.8);}
   c.strokeStyle=other;c.lineWidth=2;c.beginPath();for(let i=0;i<=24;i++){const yy=-r+i/24*r*2,xx=Math.sin(yy/r*3+p+t*.1)*r*.6;c[i?'lineTo':'moveTo'](xx,yy);}c.stroke();
+ }else if(q.kind==='brotes'){
+  // Analytic stems: no particles, history buffers or growing allocations.
+  for(let i=0;i<14;i++){const a=p+i*2.399,baseX=Math.cos(a)*r*.65,baseY=r*.8-i/14*r*.3,tipX=baseX+Math.sin(t*.12+i)*r*.18,tipY=-r*(.15+(i%5)*.16);c.strokeStyle=ink;c.lineWidth=.6;c.beginPath();c.moveTo(baseX,baseY);c.bezierCurveTo(baseX-r*.2,baseY-r*.5,tipX+r*.12,tipY+r*.35,tipX,tipY);c.stroke();c.fillStyle=i%3===0?'#fff':other;dot(tipX,tipY,1.3+energy*3);}
+ }else if(q.kind==='nudo'){
+  // Three folded ribbons, compact white crossings and a short tail.
+  for(let i=0;i<3;i++){c.save();c.rotate(p+i*TAU/3+t*.025);const g=c.createLinearGradient(-r*.6,0,r*.6,0);g.addColorStop(0,ink);g.addColorStop(.45,'#fff');g.addColorStop(1,other);c.strokeStyle=g;c.lineWidth=r*(.07+energy*.025);c.beginPath();c.moveTo(-r*.7,r*.25);c.bezierCurveTo(-r*.2,-r*.9,r*.8,-r*.6,r*.55,0);c.bezierCurveTo(r*.1,r*.65,-r*.6,r*.6,-r*.35,-r*.2);c.stroke();c.restore();}
+ }else if(q.kind==='telarana'){
+  for(let center=0;center<2;center++){const xx=(center?1:-1)*r*.28,yy=(center?1:-1)*r*.12;c.strokeStyle=center?other:'#fff';c.lineWidth=.55;for(let ring=1;ring<=5;ring++){c.beginPath();for(let j=0;j<=36;j++){const a=j/36*TAU,rr=ring*r*.09*(1+.11*Math.sin(a*5+p+t*.07));c[j?'lineTo':'moveTo'](xx+Math.cos(a)*rr,yy+Math.sin(a)*rr);}c.stroke();}for(let j=0;j<12;j++){const a=j/12*TAU+p;c.beginPath();c.moveTo(xx+Math.cos(a)*r*.08,yy+Math.sin(a)*r*.08);c.lineTo(xx+Math.cos(a)*r*.48,yy+Math.sin(a)*r*.48);c.stroke();}}
+ }else if(q.kind==='red-orbital'){
+  for(let ring=1;ring<=4;ring++){const rr=r*(.13+ring*.15)*(1+energy*.06);c.strokeStyle=ink;c.beginPath();for(let j=0;j<=20;j++){const a=j/20*TAU+p+Math.sin(ring+t*.05)*.2;c[j?'lineTo':'moveTo'](Math.cos(a)*rr,Math.sin(a)*rr);}c.closePath();c.stroke();for(let j=0;j<20;j++){const a=j/20*TAU+p+Math.sin(ring+t*.05)*.2,x=Math.cos(a)*rr,y=Math.sin(a)*rr;c.fillStyle=other;dot(x,y,1+energy*2);if(ring<4){const next=a+Math.sin(ring+1+t*.05)*.2-Math.sin(ring+t*.05)*.2;c.beginPath();c.moveTo(x,y);c.lineTo(Math.cos(next)*r*(.13+(ring+1)*.15),Math.sin(next)*r*(.13+(ring+1)*.15));c.stroke();}}}
  }else{
   for(let i=1;i<=4;i++){c.beginPath();c.arc(-r*.55,r*.55,r*i*.36,-Math.PI/2,-.05);c.stroke();}for(let i=0;i<6;i++){const a=-Math.PI/2+i*.28;c.beginPath();c.moveTo(-r*.55,r*.55);c.lineTo(-r*.55+Math.cos(a)*r*1.5,r*.55+Math.sin(a)*r*1.5);c.stroke();}
  }

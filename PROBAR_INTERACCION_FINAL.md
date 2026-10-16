@@ -33,3 +33,9 @@ No habilitar ese perfil para suites que necesitan contextos simultáneos. CI com
 Abre Estilos → Explora instrumentos vivos en el Preview de esta rama, sin parámetros dev. Acerca el cubo a un instrumento: debe responder visual y auditivamente. Entra, sal y vuelve; permanece dentro para escuchar el patrón. Rodea una raíz ácida o un anillo para variar su filtro/modulación. Cada región tiene familias predominantes; no contiene las diez juntas. El escáner explica el gesto y el libro conserva las familias descubiertas. Algunos lugares siguen vacíos.
 
 Si una caja entrega Órbitas detrás, Cinta viajera, Polvo de prismas, Lluvia inversa o Eco de siluetas, camina para escuchar su aporte. Deshacer lo detiene; no hay notas de botón ni nuevos disparos con un menú abierto. Revisa bajo volumen primero y compara con altavoz y auriculares del teléfono: la audición física queda pendiente hasta hacerla realmente.
+
+## Recorrido y VJ · entrega 7
+
+Menú → Tu recorrido. Mira las cuatro experiencias y abre Qué puedes encontrar. Practicar vuelve a las indicaciones pequeñas; Omitir las retira. No debes perder favoritos, tarjetas ni progreso. Con sonido apagado la guía pide activarlo antes de dar el encuentro por aprendido.
+
+Explora buscando brotes luminosos, un pequeño nudo de cintas, telarañas o redes de anillos. Son motivos localizados, no fondos permanentes; queda vacío entre ellos. Se mantienen ocho motivos anteriores. Reducir movimiento congela su deformación. La guía y sus botones no crean audio.

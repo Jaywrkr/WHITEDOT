@@ -10,8 +10,8 @@ export const FIRST_JOURNEY_STEPS=[
 export function normalizeFirstJourney(raw,{experienced=false}={}){
  if(!raw||typeof raw!=='object'||Array.isArray(raw))raw=null;
  if(raw&&Number.isInteger(raw.version)&&raw.version>FIRST_JOURNEY_VERSION)return {...raw,readOnly:true};
- const facts={};for(const [id]of FIRST_JOURNEY_STEPS)facts[id]=raw?.facts?.[id]===true;
- return {version:1,facts,skipped:raw?.skipped===true||!raw&&experienced};
+ const facts=raw?.facts&&typeof raw.facts==='object'&&!Array.isArray(raw.facts)?{...raw.facts}:{};for(const [id]of FIRST_JOURNEY_STEPS)facts[id]=raw?.facts?.[id]===true;
+ return {...raw,version:1,facts,skipped:raw?.skipped===true||!raw&&experienced};
 }
 export function firstJourneyNext(state){if(state.readOnly||state.skipped)return null;return FIRST_JOURNEY_STEPS.find(([id])=>!state.facts[id])||null;}
 export function advanceFirstJourney(state,id){if(state.readOnly||state.skipped||!FIRST_JOURNEY_STEPS.some(([key])=>key===id)||state.facts[id])return false;state.facts[id]=true;if(id==='light'||id==='world')state.facts.move=true;if(id==='world')state.facts.light=true;return true;}

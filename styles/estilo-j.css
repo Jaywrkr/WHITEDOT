@@ -288,3 +288,9 @@ body:has(#surpriseHud:not([hidden])) .first-journey-hint{bottom:calc(var(--safe-
 @media(max-height:500px){#celebration[data-layout="full"] #celebrationShare{grid-column:2}#celebration[data-layout="full"] #celebrationContinue{grid-column:3}}
 
 .music-travel-shortcuts #musicTravelFull{grid-column:auto}
+
+/* Optional illustrated guide; the game keeps a single small contextual hint. */
+.guide-journey{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;list-style:none;padding:0;margin:16px 0}.guide-journey li{display:grid;grid-template-columns:28px minmax(0,1fr);align-items:center;gap:4px 8px;padding:10px;border:1px solid var(--line);font-size:11px;min-width:0}.guide-journey li[aria-current]{border-color:#aaa}.guide-journey svg{grid-row:span 2;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1}.guide-journey span{overflow-wrap:anywhere}.guide-journey small{grid-column:2;font-size:9px}.guide-journey li[data-complete]{color:#ddd}.journey-progress{font-size:9px;color:var(--dim);white-space:nowrap}.guide-sheet .row{flex-wrap:wrap}.guide-sheet .row button{min-height:44px}
+@media(max-width:360px){.guide-journey{gap:6px}.guide-journey li{padding:8px;gap:3px 6px;font-size:10px}}
+
+.modal .guide-sheet{display:flex;flex-direction:column;overflow:hidden!important;max-height:calc(100dvh - 48px);box-sizing:border-box}.modal .guide-sheet>.guide-content{flex:1 1 auto}.guide-sheet>h2{flex:none}.guide-content{min-height:0;overflow:auto;overscroll-behavior:contain;padding-right:2px}.guide-sheet>.row{flex:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding-top:10px;margin-top:8px;border-top:1px solid var(--line)}.guide-sheet>.row button{font-size:11px;margin:0}.guide-sheet #guideClose{grid-column:1/-1}.guide-journey{letter-spacing:.02em}

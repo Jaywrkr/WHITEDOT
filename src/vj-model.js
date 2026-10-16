@@ -1,10 +1,12 @@
 // Spatial visual streams never consume terrain, life or music randomness.
-export const VJ_FORMS=Object.freeze(['orbitas','circuitos','cintas','vidrio','islas','partitura','abanico','organismo']);
+export const VJ_TD_FORMS=Object.freeze(['brotes','nudo','telarana','red-orbital']);
+export const VJ_FORMS=Object.freeze(['orbitas','circuitos','cintas','vidrio','islas','partitura','abanico','organismo',...VJ_TD_FORMS]);
 export const VJ_CELL=1000;
 const TAU=Math.PI*2;
 export function visualSegment(cx,cy,seedOf){
  const h=seedOf(`vj:terrain:v1:${cx},${cy}`)>>>0;if(h%10<6)return null;
- return {id:`vj:${cx},${cy}`,kind:VJ_FORMS[(h>>>4)%8],x:(cx+.2+(h>>>8)%600/1000)*VJ_CELL,y:(cy+.2+(h>>>18)%600/1000)*VJ_CELL,radius:84+(h>>>11)%46,hue:(h>>>3)%360,phase:h%1000/1000*TAU,seed:h};
+ const extra=seedOf(`vj:td-reference:v1:${cx},${cy}`)>>>0,kind=extra%7===0?VJ_TD_FORMS[(extra>>>6)%4]:VJ_FORMS[(h>>>4)%8];
+ return {id:`vj:${cx},${cy}`,kind,x:(cx+.2+(h>>>8)%600/1000)*VJ_CELL,y:(cy+.2+(h>>>18)%600/1000)*VJ_CELL,radius:84+(h>>>11)%46,hue:(h>>>3)%360,phase:h%1000/1000*TAU,seed:h};
 }
 export function segmentOpacity(segment,x,y,reach){const d=Math.hypot(segment.x-x,segment.y-y),k=Math.max(0,Math.min(1,(reach+segment.radius-d)/Math.max(1,segment.radius*2)));return k*k*(3-2*k);}
 export function encounterOf(cx,cy,seedOf){
