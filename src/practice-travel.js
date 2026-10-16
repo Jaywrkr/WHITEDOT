@@ -12,7 +12,7 @@ export function normalizePracticeTravel(raw){
  return {...raw,version:1,previous:validPoint(raw?.previous)?{...raw.previous,x:raw.previous.x,y:raw.previous.y,layer:raw.previous.layer}:null,
   recent:bounded(raw?.recent),sounds:bounded(raw?.sounds)};
 }
-export function practiceSoundIdentity(band){return [band?.leads?.join(','),band?.electronic?.count||0,Math.floor((band?.electronic?.kit?.snap||0)/350)].join(':');}
+export function practiceSoundIdentity(band,identity=null){return [identity?.hooks?.join(',')||band?.leads?.join(','),band?.electronic?.count||0,Math.floor((band?.electronic?.kit?.snap||0)/350)].join(':');}
 export function choosePracticePlace(runtime,random,history=[],festive=false,recentSounds=[]){
  const R=runtime.REG*runtime.WCH,s=runtime.S,current=runtime.regionOfPos(s.wx,s.wy),previous=musicIdentity(current,runtime.seedOf,runtime.rng,runtime.GEN),previousHybrid=hybridIdentity(current,runtime.seedOf,runtime.rng),previousBand=labScore(current,runtime.seedOf,runtime.rng),candidates=[];
  for(let i=0;i<24;i++){
@@ -22,7 +22,7 @@ export function choosePracticePlace(runtime,random,history=[],festive=false,rece
   const identity=musicIdentity(d,runtime.seedOf,runtime.rng,runtime.GEN),profile=populationProfile(d,runtime.BIOMES[d.z].id,runtime.seedOf,runtime.rng),
    inhabitants=populatedChunk(livingChunk(cx,cy,runtime.WCH,d,runtime.BIOMES[d.z].id,runtime.seedOf,runtime.rng),cx,cy,runtime.WCH,d,profile,runtime.seedOf,runtime.rng);
   if(!inhabitants.length)continue;
-  const band=labScore(d,runtime.seedOf,runtime.rng),hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng),animal=inhabitants.find(o=>o.group==='fauna')||inhabitants[0],score=(d.genre!==current.genre?6:0)+(identity?.id!==previous?.id?4:0)+(d.z!==current.z?2:0)+(history.some(s=>s===identity?.id||s.startsWith(identity?.id+'~'))?-5:0)+(d.worldFamily?.id!==current.worldFamily?.id?5:0)+(hybrid?.id!==previousHybrid?.id?4:0)+(band?.id!==previousBand?.id?6:0)+(band?.leads.join(',')!==previousBand?.leads.join(',')?4:0)+(JSON.stringify(band?.kick)!==JSON.stringify(previousBand?.kick)?3:0)+(festive&&band?.festive?25:0)+Math.min(5,Math.abs((d.bpm||100)-(current.bpm||100))/8)-(recentSounds.includes(practiceSoundIdentity(band))?12:0);
+  const band=labScore(d,runtime.seedOf,runtime.rng),hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng),animal=inhabitants.find(o=>o.group==='fauna')||inhabitants[0],score=(d.genre!==current.genre?6:0)+(identity?.id!==previous?.id?4:0)+(d.z!==current.z?2:0)+(history.some(s=>s===identity?.id||s.startsWith(identity?.id+'~'))?-5:0)+(d.worldFamily?.id!==current.worldFamily?.id?5:0)+(hybrid?.id!==previousHybrid?.id?4:0)+(band?.id!==previousBand?.id?6:0)+(band?.leads.join(',')!==previousBand?.leads.join(',')?4:0)+(JSON.stringify(band?.kick)!==JSON.stringify(previousBand?.kick)?3:0)+(festive&&band?.festive?25:0)+Math.min(5,Math.abs((d.bpm||100)-(current.bpm||100))/8)-(recentSounds.some(sound=>sound===practiceSoundIdentity(band,identity)||sound===practiceSoundIdentity(band))?12:0);
   candidates.push({x:animal.x,y:animal.y+(animal.y-75<ry*R?75:-75),layer:'superficie',region:d,identity,hybrid,band,population:profile,score});
   if(score>=21&&i>=7&&(!festive||band?.festive))break;
  }return candidates.sort((a,b)=>b.score-a.score)[0]||null;
@@ -48,13 +48,13 @@ export function initialize(runtime){
   if(!runtime.save())return false;
   const state=normalizePracticeTravel(runtime.S.practiceTravel),random=runtime.rng(runtime.seedOf(`travel:practice:v1:${Date.now()}:${counter++}`)),point=choosePracticePlace(runtime,random,state.recent,counter%3===0,state.sounds);
   if(!point){runtime.toast('No encontré otro lugar. Intenta otra vez.');return false;}
-  state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.recent.push(point.identity.id+'~'+(point.hybrid?.id||'native'));state.recent=state.recent.slice(-8);state.sounds=[...state.sounds,practiceSoundIdentity(point.band)].slice(-8);
+  state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.recent.push(point.identity.id+'~'+(point.hybrid?.id||'native'));state.recent=state.recent.slice(-8);state.sounds=[...state.sounds,practiceSoundIdentity(point.band,point.identity)].slice(-8);
   if(!move(point,state,runtime.labMode?()=>runtime.labGo(point.band?'band:'+point.band.id:'music:'+point.identity.id):null))return false;runtime.toast(`${point.region.worldFamily?.name||runtime.BIOMES[point.region.z].name} · ${point.band?.festive?point.band.name:point.identity.name}`);return true;
  }
  function back(){const p=runtime.S.practiceTravel?.previous;if(!runtime.inWorld()||blocked()||!validPoint(p)||!runtime.save())return false;
   const here={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};const state={...normalizePracticeTravel(runtime.S.practiceTravel),previous:here};if(!move(p,state))return false;$('mMenu').hidden=true;return true;}
  function travel(point){if(!runtime.inWorld()||blocked()||!validPoint(point)||runtime.duetRoom||!runtime.save())return false;
-  const state=normalizePracticeTravel(runtime.S.practiceTravel),band=labScore(runtime.regionOfPos(point.x,point.y),runtime.seedOf,runtime.rng);state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.sounds=[...state.sounds,practiceSoundIdentity(band)].slice(-8);return move(point,state);}
+  const state=normalizePracticeTravel(runtime.S.practiceTravel),band=labScore(runtime.regionOfPos(point.x,point.y),runtime.seedOf,runtime.rng);state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.sounds=[...state.sounds,practiceSoundIdentity(band,musicIdentity(runtime.regionOfPos(point.x,point.y),runtime.seedOf,runtime.rng,runtime.GEN))].slice(-8);return move(point,state);}
  let arrived=false;
  function dailyArrival(){
   const s=runtime.S,params=new URLSearchParams(globalThis.location?.search||'');
@@ -64,7 +64,7 @@ export function initialize(runtime){
   if(!point)return false;
   state.previous={x:s.wx,y:s.wy,layer:s.layer||'superficie'};state.arrivals=serial+1;
   state.recent=[...state.recent,point.identity.id+'~'+(point.hybrid?.id||'native')].slice(-8);
-  state.sounds=[...state.sounds,practiceSoundIdentity(point.band)].slice(-8);
+  state.sounds=[...state.sounds,practiceSoundIdentity(point.band,point.identity)].slice(-8);
   if(!move(point,state,null,false))return false;arrived=true;return true;
  }
  // A new document is a fresh visit. Background/resume never runs this again.

@@ -1,3 +1,9 @@
+## 2.3.0-alpha.10 · Viajes y favoritos
+
+Favoritos busca nombres visibles de géneros, recuerdos y texto con o sin tildes. Su resumen muestra solo capa, estilo y tempo; procedencia y coordenadas quedan en el detalle existente. Se conservan metadatos y libros futuros en lectura protegida. Saltar compara también los timbres de la radio recuperada y respeta historiales anteriores.
+
+Auditoría sin errores/avisos; 8 suites Node afectadas y recorrido representativo aprobados; audio sin cambios. Evidencia: scripts/mejora-06-validation.json. No afirma escucha física, CI ni deploy.
+
 ## 2.3.0-alpha.9 · Encuentros
 
 Cancelar un gesto restaura conexiones y patrones anidados; los movimientos y cambios de partida no retienen referencias al encuentro anterior. Los encuentros se atenúan gradualmente al alejarse. El animal muestra indicaciones breves de escucha y respuesta, también usando el cubo. Diez familias comprobadas con toque, moldeado, pausa y bitácora.
