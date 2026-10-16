@@ -1,0 +1,41 @@
+{
+  "branch": "feat/posmusica-06-instrumentos",
+  "audit": {
+    "version": "2.2.0-rc.1",
+    "sourceModules": 201,
+    "htmlIDs": 400,
+    "staticImports": 521,
+    "shellAssets": 221,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "node": {
+    "suites": 133,
+    "result": "passed"
+  },
+  "browser": {
+    "program": "tests/micro_instruments_smoke.py",
+    "widths": [
+      390,
+      844,
+      1280
+    ],
+    "result": "passed",
+    "mode": "single reused context; explicit AudioContext cleanup before reload",
+    "priorAttempt": "local Chromium process closed during reload before explicit context cleanup"
+  },
+  "audio": {
+    "program": "tests/micro_mix.py",
+    "renders": 25,
+    "result": "passed",
+    "maxPeak": 0.8791258931159973,
+    "detail": "scripts/posmusica-06-audio.json"
+  },
+  "physicalPhone": "pending",
+  "fullCI": "pending final audit branch",
+  "deploy": "not performed"
+}

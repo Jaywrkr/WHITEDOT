@@ -1,3 +1,4 @@
+import {MICRO_INSTRUMENTS} from './micro-instruments-model.js';
 import {LIVING_CATALOG} from './living-catalog.js';
 import {RHYTHM_EMPTY_CHANCE,FOSSIL_DENOMINATOR} from './percussion-model.js';
 import {RELIC_RATE,MAGICAL_RELIC_RATE} from './relics.js';
@@ -11,6 +12,7 @@ export const RARE_BOOK_LIMIT=512,RARE_PAGE_SIZE=12;
 export const CARD_TIERS={raro:{name:'Raro',ink:'#9fe8ff'},singular:{name:'Singular',ink:'#bda5f5'},legendario:{name:'Legendario',ink:'#bda5f5'},mitico:{name:'Mítico',ink:'#f0d27a'}};
 const boxChance=NATURAL_BOX_RATE/POWER_IDS.length;
 export const RARE_CARDS=Object.freeze({
+ ...Object.fromEntries(['grain','ring'].map(id=>['micro:'+id,{name:MICRO_INSTRUMENTS[id].name+' · singular',tier:'singular',probability:null,variantProbability:1/64,unit:'encuentros elegibles',condition:'Variante 63 entre 64 variantes de un instrumento elegible. Su presencia depende del hábitat; no es una probabilidad por hora ni por sector.',text:MICRO_INSTRUMENTS[id].hint,art:'micro'}])),
  ...Object.fromEntries(LIVING_CATALOG.map(d=>['living:'+d.id,{name:d.name,tier:d.id==='whale'?'singular':'raro',probability:d.id==='whale'||d.group==='architecture'?1/32:null,variantProbability:1/256,unit:'individuos elegibles',condition:d.id==='whale'?'Una variante de 32 candidatos de este linaje llega a manifestarse. No es una probabilidad por distancia.':d.group==='architecture'?'Variante 248 entre las 32 variantes admitidas de esta construcción. Condicionado a que el tipo esté presente; no es frecuencia por sector.':'Variante 255 entre 256 tiradas de variante. La población y presencia del linaje dependen del territorio; su frecuencia conjunta no está medida.',text:'Un ejemplar singular del universo vivo. El lugar queda guardado; la criatura o el momento pueden cambiar.',art:'living'}])),
  'event:convergence':{name:'Convergencia de lluvia y vida',tier:'singular',probability:null,unit:'encuentros elegibles',condition:'Un individuo raro fue observado durante tormenta y atardecer del ciclo local. Frecuencia conjunta sin estimar.',text:'El clima y una voz singular coincidieron durante tu recorrido.',art:'living'},
  'living:relation':{name:'Encuentro entre voces',tier:'singular',probability:null,unit:'encuentros elegibles',condition:'Una relación local real incluye al menos un individuo raro. La frecuencia conjunta no se ha estimado; no multiplicamos probabilidades correlacionadas.',text:'Dos presencias encontraron una frase en común.',art:'living'},
@@ -24,7 +26,7 @@ export const RARE_CARDS=Object.freeze({
  ...Object.fromEntries(Object.entries(PET_SPECIES).map(([id,p])=>['petbox:'+id,{name:p.name,tier:'singular',probability:1/PET_BOX_DENOMINATOR,unit:'cajas naturales',condition:'Probabilidad de que una caja natural origine compañía, como visita temporal. No es la probabilidad de esta especie: no multiplicamos tasas sin demostrar su independencia.',text:'Una voz rara te acompaña durante unos minutos de juego; el encuentro permanece en esta tarjeta.',art:'pet'}]))
 });
 export const rareDefinition=type=>Object.hasOwn(RARE_CARDS,type)?RARE_CARDS[type]:null;
-export function rarityLabel(type,recorded=null){const d=recorded||rareDefinition(type);if(!d)return '';if(d.probability===null)return rareDefinition(type)?.variantProbability?'Variante ≈1/256 · territorio sin medir':'Frecuencia conjunta sin estimar';return `≈1/${Math.round(1/d.probability).toLocaleString('es-EC')} ${d.unit}`;}
+export function rarityLabel(type,recorded=null){const d=recorded||rareDefinition(type);if(!d)return '';if(d.probability===null)return rareDefinition(type)?.variantProbability?`Variante ≈1/${Math.round(1/rareDefinition(type).variantProbability)} · territorio sin medir`:'Frecuencia conjunta sin estimar';return `≈1/${Math.round(1/d.probability).toLocaleString('es-EC')} ${d.unit}`;}
 const clean=(v,n)=>typeof v==='string'?v.slice(0,n):'';
 export const cardKey=(type,sourceId,world)=>JSON.stringify([type,sourceId,world.seed,world.layout,world.generatorVersion,world.catalogVersion,world.layoutVersion]);
 export function cardSerial(key){let h=2166136261;for(const ch of key)h=Math.imul(h^ch.charCodeAt(0),16777619);return (h>>>0).toString(16).padStart(8,'0').toUpperCase();}

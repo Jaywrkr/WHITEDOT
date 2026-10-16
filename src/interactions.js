@@ -24,6 +24,7 @@ export function initialize(runtime) {
     if(origin==='player'){runtime.markInput?.();runtime.visualGesture?.();}
     if(origin==='player'&&runtime.inWorld())runtime.firstJourneyEvent?.('pulse');
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.layerPulse?.();return;}
+    if(runtime.inWorld())runtime.microPulse?.(origin);
     if(origin==='player'&&runtime.inWorld())runtime.portalPulse?.(runtime.onBeatNow());   // ritual de portales: pulsos seguidos en el beat
     if(runtime.inWorld()&&(runtime.S.layer||"superficie")!=="superficie")return;
     if(origin==='player'&&runtime.inWorld()){runtime.sessionAction("pulse");runtime.pulseRelics();}

@@ -286,3 +286,5 @@ body:has(#surpriseHud:not([hidden])) .first-journey-hint{bottom:calc(var(--safe-
 #celebrationSignature:empty,#celebrationTime:empty{display:none}
 #celebration[data-layout="full"] .celebration-card:has(#celebrationShare[hidden]) #celebrationContinue{grid-column:1/-1}
 @media(max-height:500px){#celebration[data-layout="full"] #celebrationShare{grid-column:2}#celebration[data-layout="full"] #celebrationContinue{grid-column:3}}
+
+.music-travel-shortcuts #musicTravelFull{grid-column:auto}

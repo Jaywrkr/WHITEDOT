@@ -1,3 +1,4 @@
+import {initialize as microInstruments} from './micro-instruments.js';
 import {initialize as playerProfile} from './player-profile.js';
 import {initialize as boxSurprises} from './box-surprises.js';
 import {initialize as vjWorld} from './vj-world.js';
@@ -174,7 +175,7 @@ runtime.checkDay(true);if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.pre
 if(runtime.S.mode==='camino'&&runtime.worldReady()&&runtime.S.lastWorldDay===runtime.S.todayKey)runtime.S.mode='world';
 seeds(runtime);
 lab(runtime);
-achievementsV2(runtime);worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
+microInstruments(runtime);achievementsV2(runtime);worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
 practiceTravel(runtime);boxSurprises(runtime);
 musicTravel(runtime);
 distantColors(runtime);vjWorld(runtime);

@@ -18,7 +18,7 @@ Ocho escenas VJ originales aparecen en áreas concretas del Mundo, dejando espac
 
 ## Cajas reversibles
 
-Además de sus seis poderes originales, algunas cajas incorporan una de dieciséis sorpresas temporales. Tamaño, forma, estelas, brotes y saltos pueden cambiar; Deshacer o Volver permiten revertir. Borrador solo borra brotes temporales. No se pierde colección ni se modifica la música. Los temporizadores se pausan durante menús y tarjetas.
+Además de sus seis poderes originales, algunas cajas incorporan una de dieciséis sorpresas temporales. Tamaño, forma, estelas, brotes y saltos pueden cambiar; Deshacer o Volver permiten revertir. Borrador solo borra brotes temporales. No se pierde colección. Cinco estelas aportan notas o percusión al caminar, dentro del pulso local. Los temporizadores se pausan durante menús y tarjetas.
 
 Guía de esta entrega: [probar visuales, cajas y perfil](PROBAR_INTERACCION_FINAL.md).
 
@@ -30,7 +30,7 @@ Menú → Tu perfil muestra tiempo activo, distancia, sesiones, lugares y colecc
 
 [Dos entregas dependientes](PLAN_INTERACCION_FINAL.md). La primera añade botones animados y silenciosos, una cola de avisos y tarjetas especiales grandes que puedes examinar antes de continuar. La flecha de Entrar al Mundo llega al cuadrado; movimiento reducido entra al instante. Mientras inspeccionas un hallazgo se pausan el cubo y los poderes, conservando la música. El libro mantiene lugares, frecuencias y exportaciones.
 
-La segunda entrega de miniinstrumentos está pausada: Jay pidió conservar la música durante el ciclo visual. Su trabajo incompleto está guardado aparte. Cada entrega publica su propia evidencia; los resultados musicales anteriores no sustituyen esas comprobaciones.
+La entrega musical se retoma, con autorización de Jay, en `feat/posmusica-06-instrumentos`, desde el perfil. Diez familias orgánicas: batería, ácido, sub, acordes, FM, ondas, granos, recortes, modulación y arpegios. Estilos → Explora instrumentos vivos busca una agrupación real. Contactar, quedarse o rodear cambia la respuesta y el filtro; todo sigue el tempo y armonía audibles. Son 81 especificaciones de síntesis, 151 familias del libro y 72 tipos de tarjeta: estos catálogos no equivalen a mundos ni a frecuencia por hora. Cada entrega publica su propia evidencia; los resultados anteriores no sustituyen las nuevas comprobaciones.
 
 ## Cubo, colección y música · entregas conservadas
 

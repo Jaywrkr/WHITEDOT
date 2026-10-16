@@ -1,3 +1,4 @@
+import {MICRO_INSTRUMENTS} from './micro-instruments-model.js';
 import {LIVING_CATALOG} from './living-catalog.js';
 import {TOY_NAMES} from './playthings.js';
 import {PHENOMENON_NAMES} from './phenomena.js';
@@ -12,6 +13,7 @@ export const DISCOVERY_ELEMENTS=Object.freeze([
  ...rows('Paisaje',{piedra:'Piedra',hongo:'Hongo',campanilla:'Campanilla',cactus:'Cactus',antena:'Antena',gota:'Gota',astro:'Astro',arbol:'Árbol de luz',loto:'Loto',cristal:'Cristal',pilar:'Pilar',faro:'Faro pequeño',luz:'Mota de luz',pulso:'Luz de pulso',luciernaga:'Luciérnaga',agua:'Agua',caminante:'Caminante',bandada:'Bandada',form:'Forma procedural',blob:'Blob'}),
  ...rows('Flora',{hierba:'Hierba',flor:'Flor',arbusto:'Arbusto',helecho:'Helecho',junco:'Junco',coral:'Coral'},'planta:'),
  ...rows('Juguetes',TOY_NAMES,'toy:'),...rows('Fenómenos',PHENOMENON_NAMES,'phenomenon:'),
+ ...rows('Instrumentos vivos',MICRO_INSTRUMENTS,'micro:'),
  ...rows('Percusión',RHYTHM_ELEMENTS,'rhythm:'),...ECOLOGY_CONTENT.map(e=>({id:e.id,name:e.name,group:'Paisajes vivos'})),
  ...rows('Encuentros',FAMILIES,'encounter:'),
  ...rows('Instalaciones',{glass:'Vidrios cromáticos',mirror:'Espejos musicales',strings:'Cuerdas tensables',prism:'Prisma de luz',membrane:'Membrana resonante'},'installation:'),

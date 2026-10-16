@@ -1,5 +1,5 @@
 <!-- ampliacion-visual -->
-Estado actual: [ampliación visual](PLAN_INTERACCION_FINAL.md). Entregas 3–5 implementadas y probadas, en ramas dependientes: visuales, cajas reversibles y perfil. Auditoría y Node completos por rama; navegador enfocado aprobado en cada entrega. CI completo, teléfono físico y publicación dependen del PR/merge de Jay. No reabrir fases históricas.
+Estado actual: [ampliación visual](PLAN_INTERACCION_FINAL.md). Entregas 3–5 subidas: visuales, cajas reversibles y perfil. Entrega 6 recupera miniinstrumentos y estelas sonoras con nueva autorización. Auditoría y Node completos por rama; navegador enfocado aprobado en cada entrega. CI completo, teléfono físico y publicación dependen del PR/merge de Jay. No reabrir fases históricas.
 <!-- /ampliacion-visual -->
 
 <!-- direccion-musical-actual -->
@@ -17,8 +17,11 @@ El ciclo vigente es [Dirección musical, siete fases](PLAN_DIRECCION_MUSICAL.md)
 
 | Interacción final | Rama | Estado |
 |---|---|---|
-| 1 · Interfaz y hallazgos | `feat/posmusica-01-interfaz` | Implementada localmente; validación final pendiente |
-| 2 · Diez miniinstrumentos | `feat/posmusica-02-instrumentos` | Pendiente; desde la entrega 1 |
+| 1 · Interfaz y hallazgos | `feat/posmusica-01-interfaz` | Incluida y probada en entrega 3 |
+| 2 · Diez miniinstrumentos | `feat/posmusica-02-instrumentos` | Recuperada selectivamente en entrega 6 |
+| 6 · Instrumentos y estelas | `feat/posmusica-06-instrumentos` | Probada: auditoría, 133 suites Node, navegador y 25 renders; desde perfil |
+| 7 · Recorrido y referencias VJ | `feat/posmusica-07-recorrido` | Siguiente; desde entrega 6 |
+| 8 · Cierre integral | `feat/posmusica-08-cierre` | Pendiente; desde entrega 7 |
 
 <!-- /direccion-musical-actual -->
 

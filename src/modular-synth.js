@@ -45,7 +45,7 @@ export function createAdvancedPlayer(runtime){
    }
   }else if(spec.engine==='wavetable'){
    for(let i=0;i<2;i++){const key='table:'+i;if(!state.waves.has(key)){const real=new Float32Array(17),imag=new Float32Array(17);for(let k=1;k<17;k++)imag[k]=i?(k%2?1/k**1.8:0):1/k**1.4;state.waves.set(key,ac.createPeriodicWave(real,imag));}
-    const {osc,gain}=oscillator(i?1.001:1,'sine',i?.08:.5);osc.setPeriodicWave(state.waves.get(key));gain.gain.linearRampToValueAtTime(i?.5:.08,time+1.1);}
+    const morph=Number.isFinite(articulation.morph)?Math.max(0,Math.min(1,articulation.morph)):null;const amount=morph===null?(i?.08:.5):.08+.42*(i?morph:1-morph);const {osc,gain}=oscillator(i?1.001:1,'sine',amount);osc.setPeriodicWave(state.waves.get(key));if(morph===null)gain.gain.linearRampToValueAtTime(i?.5:.08,time+1.1);}
   }else if(spec.engine==='ensemble'){
    [-3.5,0,3.5].forEach(cents=>oscillator(2**(cents/1200),'sawtooth',.12));oscillator(1,'sine',.18);
   }else if(spec.engine==='wind'){

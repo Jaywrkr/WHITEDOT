@@ -1,3 +1,9 @@
+## Miniinstrumentos y estelas · entrega 6
+
+Diez instrumentos orgánicos distribuidos por hábitats con semillas independientes. Contacto, permanencia y rodear producen batería, bajos, acordes, FM, ondas, granos, recortes, modulación y arpegios. Seis voces nuevas: 81 especificaciones en total. Escáner, 151 familias del libro y 72 tipos de tarjeta integrados. Estilos busca una agrupación nativa; no entrega rarezas por botón.
+
+Cinco estelas temporales de cajas generan música al caminar, con límites por compás y pausas de UI. Los botones permanecen silenciosos. Las respuestas repetidas se ajustan al swing en su propio instante. Coordenadas y guardados anteriores conservados. Auditoría sin errores/advertencias, 133 suites Node, recorrido real a 390/844/1280 px y 25 renders aprobados. Cierre explícito del AudioContext antes de recargar libera recursos de prueba; no se elimina ninguna aserción.
+
 ## Perfil local y cierre visual · entrega 5
 
 Menú → Tu perfil reúne nombre, tiempo activo, distancia, sesiones y descubrimientos. Reutiliza la colección real y las copias de partida; preserva campos/formatos futuros. No añade cuentas ni HUD permanente. Tiempo/distancia empiezan a medirse ahora, excluyen menús/segundo plano/saltos. Controles de 44 px, input táctil de 16 px y textos compactos.

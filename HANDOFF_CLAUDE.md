@@ -1,3 +1,13 @@
+# Handoff · Reanudación de miniinstrumentos
+
+Rama `feat/posmusica-06-instrumentos`, desde `feat/posmusica-05-perfil` (`bbaa50c`). Jay autorizó completar pendientes con «Hazlo entonces». Se recuperó selectivamente el stash, sin reaplicar su UI antigua. `micro-instruments-model`, `micro-instruments` y `micro-synthesis` conectan diez familias al mapa, escáner, libro, retratos, fuentes y reloj real. Seis motores nuevos amplían INSTRUMENT_SPECS a 81; libro 151 familias, tarjetas 72 tipos. Módulos nuevos una vez en SHELL; service worker posmusica-06.
+
+`microStep` sigue los patrones locales; voz manual usa el presupuesto existente y la armonía audible. Un acompañamiento de cercanía por compás comparte el arbitraje de instalaciones, sin registrar descubrimientos automáticos. Cercanía/polaridad controla filtro/modulación y morph wavetable. Nuevas colas comprueban propietario/distancia. Guardados y coordenadas previas intactos. `surpriseStep` añade cinco estelas sonoras temporales, dos entradas por compás como máximo, pausadas ante UI, sin sonido de botones. Corrección general: las respuestas repetidas de playVoice vuelven a la rejilla, respetando swing.
+
+Estilos → Explora instrumentos vivos permite probar una agrupación existente sin otorgar hallazgos por menú. Rarezas micro grain/ring exigen variante 63; 1/64 es condicional a la familia, sin probabilidad territorial inventada. Validación propia aprobada: auditoría, 133 suites Node, contacto/destino/guardado real a 390/844/1280 px y 25 renders de audio. No atribuirle los 39 programas del ciclo anterior. Sigue entrega 7 (guía y referencias públicas TDAI2026), luego entrega 8 (cierre con suites completas). PR/merge siguen siendo de Jay.
+
+## Antecedentes conservados
+
 # Cierre de ampliación visual
 
 Orden de revisión: `feat/posmusica-03-universo-vj` → `feat/posmusica-04-cajas` → `feat/posmusica-05-perfil`. La primera incluye interfaz `8950671`; no necesita publicar aquella rama separada. Cada fase contiene la anterior. Codex solo commit/push; Jay PR/merge. No se modificó main.

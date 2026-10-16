@@ -397,7 +397,7 @@ export function initialize(runtime) {
     runtime.drawQuietud?.();
     runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);
     runtime.drawCajas?.(t,dt,ox,oy);runtime.drawCultures?.();
-    runtime.percussionTick?.(dt);runtime.drawPercussion?.(t,dt,ox,oy,R);
+    runtime.percussionTick?.(dt);runtime.drawPercussion?.(t,dt,ox,oy,R);runtime.microTick?.(dt);runtime.drawMicro?.(t,ox,oy,R);
     runtime.drawPhenomena(t,dt,ox,oy,R);
     runtime.drawJam?.(t,dt,ox,oy,b);
     runtime.drawAlive?.(t,dt,ox,oy,'sky');

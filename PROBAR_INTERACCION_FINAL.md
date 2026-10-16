@@ -27,3 +27,9 @@ WHITEDOT_TEST_SERIAL_HTTP=1 WHITEDOT_CHROMIUM_SINGLE_PROCESS=1 CHROMIUM_PATH="$P
 ```
 
 No habilitar ese perfil para suites que necesitan contextos simultáneos. CI completo, pruebas en teléfonos físicos y deploy se verifican aparte. La síntesis, instrumentos, composición y mezcla permanecen iguales; esta ampliación no afirma una nueva escucha o masterización.
+
+## Instrumentos · entrega 6
+
+Abre Estilos → Explora instrumentos vivos en el Preview de esta rama, sin parámetros dev. Acerca el cubo a un instrumento: debe responder visual y auditivamente. Entra, sal y vuelve; permanece dentro para escuchar el patrón. Rodea una raíz ácida o un anillo para variar su filtro/modulación. Cada región tiene familias predominantes; no contiene las diez juntas. El escáner explica el gesto y el libro conserva las familias descubiertas. Algunos lugares siguen vacíos.
+
+Si una caja entrega Órbitas detrás, Cinta viajera, Polvo de prismas, Lluvia inversa o Eco de siluetas, camina para escuchar su aporte. Deshacer lo detiene; no hay notas de botón ni nuevos disparos con un menú abierto. Revisa bajo volumen primero y compara con altavoz y auriculares del teléfono: la audición física queda pendiente hasta hacerla realmente.

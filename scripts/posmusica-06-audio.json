@@ -1,0 +1,1933 @@
+{
+  "renders": 25,
+  "maxPeak": 0.8791258931159973,
+  "sampleRates": [
+    44100,
+    48000
+  ],
+  "rows": [
+    {
+      "kind": "drum",
+      "parameter": 0.05,
+      "peak": 0.8789865374565125,
+      "rms": -13.217834032209652,
+      "emittedNotes": 4,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0.008461538461533635,
+      "notes": [
+        {
+          "kind": "micro:drum",
+          "instrument": "snare",
+          "role": "perc",
+          "note": 64,
+          "time": 2.176923076923077,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:drum",
+          "instrument": "kick",
+          "role": "perc",
+          "note": 67,
+          "time": 4.145846153846154,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:drum",
+          "instrument": "hat",
+          "role": "perc",
+          "note": 69,
+          "time": 5.63,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:drum",
+          "instrument": "clap",
+          "role": "perc",
+          "note": 60,
+          "time": 7.607384615384603,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "drum",
+      "parameter": 0.95,
+      "peak": 0.8769792318344116,
+      "rms": -13.234864940272686,
+      "emittedNotes": 4,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0.008461538461533635,
+      "notes": [
+        {
+          "kind": "micro:drum",
+          "instrument": "snare",
+          "role": "perc",
+          "note": 64,
+          "time": 2.176923076923077,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:drum",
+          "instrument": "kick",
+          "role": "perc",
+          "note": 67,
+          "time": 4.145846153846154,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:drum",
+          "instrument": "hat",
+          "role": "perc",
+          "note": 69,
+          "time": 5.63,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:drum",
+          "instrument": "clap",
+          "role": "perc",
+          "note": 60,
+          "time": 7.607384615384603,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "acid",
+      "parameter": 0.05,
+      "peak": 0.8742246627807617,
+      "rms": -12.842655370263818,
+      "emittedNotes": 3,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:acid",
+          "instrument": "mi_acid",
+          "role": "bajo",
+          "note": 52,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:acid",
+          "instrument": "mi_acid",
+          "role": "bajo",
+          "note": 52,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:acid",
+          "instrument": "mi_acid",
+          "role": "bajo",
+          "note": 48,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "acid",
+      "parameter": 0.95,
+      "peak": 0.8746214509010315,
+      "rms": -12.87038258043609,
+      "emittedNotes": 3,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:acid",
+          "instrument": "mi_acid",
+          "role": "bajo",
+          "note": 52,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:acid",
+          "instrument": "mi_acid",
+          "role": "bajo",
+          "note": 52,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:acid",
+          "instrument": "mi_acid",
+          "role": "bajo",
+          "note": 48,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "analog",
+      "parameter": 0.05,
+      "peak": 0.8735889196395874,
+      "rms": -14.134341970026455,
+      "emittedNotes": 3,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:analog",
+          "instrument": "mi_analog",
+          "role": "bajo",
+          "note": 52,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:analog",
+          "instrument": "mi_analog",
+          "role": "bajo",
+          "note": 52,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:analog",
+          "instrument": "mi_analog",
+          "role": "bajo",
+          "note": 48,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "analog",
+      "parameter": 0.95,
+      "peak": 0.8734813928604126,
+      "rms": -13.837492025416553,
+      "emittedNotes": 3,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:analog",
+          "instrument": "mi_analog",
+          "role": "bajo",
+          "note": 52,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:analog",
+          "instrument": "mi_analog",
+          "role": "bajo",
+          "note": 52,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:analog",
+          "instrument": "mi_analog",
+          "role": "bajo",
+          "note": 48,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "poly",
+      "parameter": 0.05,
+      "peak": 0.8738701939582825,
+      "rms": -24.99084992145109,
+      "emittedNotes": 2,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 8.881784197001252e-16,
+      "notes": [
+        {
+          "kind": "micro:poly",
+          "instrument": "mi_poly",
+          "role": "acorde",
+          "note": 60,
+          "time": 3.176923076923078,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:poly",
+          "instrument": "mi_poly",
+          "role": "acorde",
+          "note": 60,
+          "time": 6.061538461538466,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "poly",
+      "parameter": 0.95,
+      "peak": 0.8730687499046326,
+      "rms": -24.71450263158892,
+      "emittedNotes": 2,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 8.881784197001252e-16,
+      "notes": [
+        {
+          "kind": "micro:poly",
+          "instrument": "mi_poly",
+          "role": "acorde",
+          "note": 60,
+          "time": 3.176923076923078,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:poly",
+          "instrument": "mi_poly",
+          "role": "acorde",
+          "note": 60,
+          "time": 6.061538461538466,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "fm",
+      "parameter": 0.05,
+      "peak": 0.8768990635871887,
+      "rms": -12.666624058888091,
+      "emittedNotes": 5,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0.0017647058823531125,
+      "notes": [
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 60,
+          "time": 1.6017647058823525,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 60,
+          "time": 3.100000000000001,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 60,
+          "time": 4.601764705882354,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 60,
+          "time": 6.099999999999995,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 64,
+          "time": 7.158823529411756,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "fm",
+      "parameter": 0.95,
+      "peak": 0.8755408525466919,
+      "rms": -12.682264716584585,
+      "emittedNotes": 5,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0.0017647058823531125,
+      "notes": [
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 60,
+          "time": 1.6017647058823525,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 60,
+          "time": 3.100000000000001,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 60,
+          "time": 4.601764705882354,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 60,
+          "time": 6.099999999999995,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 64,
+          "time": 7.158823529411756,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "wave",
+      "parameter": 0.05,
+      "peak": 0.8766095042228699,
+      "rms": -13.072989763735324,
+      "emittedNotes": 4,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0.008461538461533635,
+      "notes": [
+        {
+          "kind": "micro:wave",
+          "instrument": "wavetable",
+          "role": "lead",
+          "note": 64,
+          "time": 2.176923076923077,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:wave",
+          "instrument": "wavetable",
+          "role": "lead",
+          "note": 55,
+          "time": 4.145846153846154,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:wave",
+          "instrument": "wavetable",
+          "role": "lead",
+          "note": 57,
+          "time": 5.63,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:wave",
+          "instrument": "wavetable",
+          "role": "lead",
+          "note": 60,
+          "time": 7.607384615384603,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "wave",
+      "parameter": 0.95,
+      "peak": 0.8769804239273071,
+      "rms": -13.072958002175028,
+      "emittedNotes": 4,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0.008461538461533635,
+      "notes": [
+        {
+          "kind": "micro:wave",
+          "instrument": "wavetable",
+          "role": "lead",
+          "note": 64,
+          "time": 2.176923076923077,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:wave",
+          "instrument": "wavetable",
+          "role": "lead",
+          "note": 55,
+          "time": 4.145846153846154,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:wave",
+          "instrument": "wavetable",
+          "role": "lead",
+          "note": 57,
+          "time": 5.63,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:wave",
+          "instrument": "wavetable",
+          "role": "lead",
+          "note": 60,
+          "time": 7.607384615384603,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "grain",
+      "parameter": 0.05,
+      "peak": 0.8742006421089172,
+      "rms": -12.823614091666789,
+      "emittedNotes": 3,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:grain",
+          "instrument": "graincloud",
+          "role": "acorde",
+          "note": 64,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:grain",
+          "instrument": "graincloud",
+          "role": "acorde",
+          "note": 69,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:grain",
+          "instrument": "graincloud",
+          "role": "acorde",
+          "note": 60,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "grain",
+      "parameter": 0.95,
+      "peak": 0.8746253252029419,
+      "rms": -12.867404326563015,
+      "emittedNotes": 3,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:grain",
+          "instrument": "graincloud",
+          "role": "acorde",
+          "note": 64,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:grain",
+          "instrument": "graincloud",
+          "role": "acorde",
+          "note": 69,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:grain",
+          "instrument": "graincloud",
+          "role": "acorde",
+          "note": 60,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "slice",
+      "parameter": 0.05,
+      "peak": 0.8733657002449036,
+      "rms": -14.11590620183322,
+      "emittedNotes": 3,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 64,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 69,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 60,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "slice",
+      "parameter": 0.95,
+      "peak": 0.8734154105186462,
+      "rms": -13.931556846813596,
+      "emittedNotes": 3,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 64,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 69,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 60,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "ring",
+      "parameter": 0.05,
+      "peak": 0.8738701939582825,
+      "rms": -25.516677303314196,
+      "emittedNotes": 2,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 8.881784197001252e-16,
+      "notes": [
+        {
+          "kind": "micro:ring",
+          "instrument": "mi_ring",
+          "role": "lead",
+          "note": 60,
+          "time": 3.176923076923078,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:ring",
+          "instrument": "mi_ring",
+          "role": "lead",
+          "note": 60,
+          "time": 6.061538461538466,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "ring",
+      "parameter": 0.95,
+      "peak": 0.8733158111572266,
+      "rms": -25.13023086617674,
+      "emittedNotes": 2,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 8.881784197001252e-16,
+      "notes": [
+        {
+          "kind": "micro:ring",
+          "instrument": "mi_ring",
+          "role": "lead",
+          "note": 60,
+          "time": 3.176923076923078,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:ring",
+          "instrument": "mi_ring",
+          "role": "lead",
+          "note": 60,
+          "time": 6.061538461538466,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "arp",
+      "parameter": 0.05,
+      "peak": 0.8791258931159973,
+      "rms": -13.14664022084573,
+      "emittedNotes": 5,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0.0017647058823531125,
+      "notes": [
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 57,
+          "time": 1.6017647058823525,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 57,
+          "time": 3.100000000000001,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 57,
+          "time": 4.601764705882354,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 57,
+          "time": 6.099999999999995,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 64,
+          "time": 7.158823529411756,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.05,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "arp",
+      "parameter": 0.95,
+      "peak": 0.875853955745697,
+      "rms": -13.061453112703397,
+      "emittedNotes": 5,
+      "trailNotes": 0,
+      "maxOnsetErrorSeconds": 0.0017647058823531125,
+      "notes": [
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 57,
+          "time": 1.6017647058823525,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 57,
+          "time": 3.100000000000001,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 57,
+          "time": 4.601764705882354,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 57,
+          "time": 6.099999999999995,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 64,
+          "time": 7.158823529411756,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.95,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "arcos",
+      "parameter": null,
+      "peak": 0.8784897327423096,
+      "rms": -13.691032197419677,
+      "emittedNotes": 7,
+      "trailNotes": 7,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:drum",
+          "instrument": "kick",
+          "role": "perc",
+          "note": 60,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:drum",
+          "instrument": "snare",
+          "role": "perc",
+          "note": 60,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:drum",
+          "instrument": "clap",
+          "role": "perc",
+          "note": 64,
+          "time": 5.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:drum",
+          "instrument": "clap",
+          "role": "perc",
+          "note": 60,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:drum",
+          "instrument": "hat",
+          "role": "perc",
+          "note": 64,
+          "time": 7.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:drum",
+          "instrument": "hat",
+          "role": "perc",
+          "note": 60,
+          "time": 8.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:drum",
+          "instrument": "tom",
+          "role": "perc",
+          "note": 64,
+          "time": 9.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "cintas",
+      "parameter": null,
+      "peak": 0.8784888386726379,
+      "rms": -14.07145708740056,
+      "emittedNotes": 7,
+      "trailNotes": 7,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:poly",
+          "instrument": "mi_poly",
+          "role": "acorde",
+          "note": 60,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:poly",
+          "instrument": "mi_poly",
+          "role": "acorde",
+          "note": 60,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:poly",
+          "instrument": "mi_poly",
+          "role": "acorde",
+          "note": 64,
+          "time": 5.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:poly",
+          "instrument": "mi_poly",
+          "role": "acorde",
+          "note": 60,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:poly",
+          "instrument": "mi_poly",
+          "role": "acorde",
+          "note": 64,
+          "time": 7.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:poly",
+          "instrument": "mi_poly",
+          "role": "acorde",
+          "note": 60,
+          "time": 8.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:poly",
+          "instrument": "mi_poly",
+          "role": "acorde",
+          "note": 64,
+          "time": 9.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "diamantes",
+      "parameter": null,
+      "peak": 0.8784898519515991,
+      "rms": -13.631841777620208,
+      "emittedNotes": 7,
+      "trailNotes": 7,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 64,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 64,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 69,
+          "time": 5.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 64,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 69,
+          "time": 7.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 64,
+          "time": 8.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 69,
+          "time": 9.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "puntos",
+      "parameter": null,
+      "peak": 0.8784893751144409,
+      "rms": -13.688255986823032,
+      "emittedNotes": 7,
+      "trailNotes": 7,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 60,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 60,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 64,
+          "time": 5.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 60,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 64,
+          "time": 7.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 60,
+          "time": 8.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:fm",
+          "instrument": "mi_fm",
+          "role": "lead",
+          "note": 64,
+          "time": 9.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        }
+      ]
+    },
+    {
+      "kind": "duplicador",
+      "parameter": null,
+      "peak": 0.8784893155097961,
+      "rms": -13.741180622232857,
+      "emittedNotes": 7,
+      "trailNotes": 7,
+      "maxOnsetErrorSeconds": 0,
+      "notes": [
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 57,
+          "time": 2.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 57,
+          "time": 4.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 60,
+          "time": 5.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 57,
+          "time": 6.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 60,
+          "time": 7.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 57,
+          "time": 8.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:arp",
+          "instrument": "resonantpluck",
+          "role": "lead",
+          "note": 60,
+          "time": 9.1,
+          "tones": [
+            57,
+            60,
+            64,
+            67,
+            71
+          ],
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        }
+      ]
+    }
+  ]
+}

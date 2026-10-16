@@ -47,3 +47,19 @@ Menú → Tu perfil: nombre local, tiempo activo, distancia caminada (10 unidade
 Los contadores nuevos empiezan desde esta versión y muestran su fecha: no se inventa tiempo ni distancia anteriores. Pausa en menús, vestidor, escaneo y segundo plano; saltos/cambios de capa o semilla no cuentan como caminar. Formatos futuros quedan intactos. Todo viaja en la copia de partida existente, sin cuenta ni servidor obligatorio.
 
 Revisión integrada: cuatro tamaños (320×640, 390×844, 844×390, 1280×800), entrada real, silencio de UI, perfil, persistencia, sorpresas/deshacer, pausa, zonas VJ, tarjetas completas y movimiento reducido. El contenedor conserva procesos zombis ajenos; el navegador normal falló antes de cargar. Un perfil local de Chromium con un solo proceso/contexto permitió completar el recorrido integrado inicial. No equivale a la suite completa ni a probar teléfonos físicos. CI mantiene sus procesos normales y todas las pruebas.
+
+## Reanudación autorizada · instrumentos, recorrido y cierre
+
+Jay pidió completar los pendientes con «Hazlo entonces». La pausa musical anterior fue temporal; no se repite la rama 2 ni se sobrescribe la interfaz nueva.
+
+| Entrega | Rama | Estado |
+|---|---|---|
+| 6 · Instrumentos y estelas musicales | `feat/posmusica-06-instrumentos` | Probada: auditoría, 133 suites Node, navegador y 25 renders; desde perfil |
+| 7 · Guía y referencias VJ | `feat/posmusica-07-recorrido` | Siguiente, desde 6 |
+| 8 · Auditoría y cierre integral | `feat/posmusica-08-cierre` | Pendiente, desde 7 |
+
+Diez familias de miniinstrumentos con predominio por hábitat, variantes, huecos y pequeños grupos. Seis voces originales amplían el catálogo de síntesis de 75 a 81; otras familias reutilizan batería y motores avanzados. Contacto y permanencia aportan ritmo/acordes; rodear abre filtro o modulación. No son muestras de instrumentos comerciales ni un ranking de ventas. Estilos busca una agrupación nativa; escáner y libro reconocen diez familias nuevas (151 en total). Dos tarjetas excepcionales de nube/anillo (72 tipos en total): variante 1/64 dentro de su tipo, probabilidad de territorio desconocida; no prometer tasas por hora.
+
+Cinco estelas temporales de caja aportan batería, acordes, recortes, FM o arpegios solo al caminar y con sonido activo. Máximo dos entradas por compás, armonía y límites compartidos con las demás voces. Menús, inspección, segundo plano, deshacer y silencio detienen las nuevas entradas. Los botones siguen silenciosos. Las respuestas repetidas se realinean al swing en vez de sumar tiempo recto.
+
+Se encontró el repositorio público de Jay `Jaywrkr/TDAI2026` (98 escenas). La entrega 7 documentará las referencias leídas y adaptaciones originales pequeñas; la ausencia en los checkouts locales no impide revisar el repositorio público. El cierre ejecutará suites completas; teléfonos físicos y despliegue se registran por separado. No crear PR ni hacer merge.
