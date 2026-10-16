@@ -1,3 +1,4 @@
+import {cloudBreath} from './wow-model.js';
 import {explorationContext} from './exploration-context.js';
 import {territoryNucleus} from './territory-journey.js';
 import {territoryInk} from './territory-transition.js';
@@ -39,7 +40,7 @@ export function initialize(runtime){
   c.save();c.globalAlpha=1;
   if(outside){const reach=Math.min((runtime.worldVisibility?.radius||220)*.55,w*.28,h*.25);c.beginPath();c.rect(0,0,w,h);c.arc(w/2,h/2,reach,0,Math.PI*2);c.clip('evenodd');}
   for(const {q,sx,sy,alpha}of items.slice(0,2)){
-   const radius=Math.min(q.radius,w*.7,h*.6);c.save();c.translate(sx,sy);c.rotate(q.phase);c.scale(1,.8);
+   const breath=cloudBreath(q,seconds,reduced),radius=Math.min(q.radius*breath.scale,w*.7,h*.6);c.save();c.globalAlpha=breath.light;c.translate(sx,sy);c.rotate(q.phase);c.scale(1,.8);
    for(let i=0;i<3;i++){
     const x=(i-1)*radius*.32,g=c.createRadialGradient(x,0,0,x,0,radius*(i===1?.75:1));
     g.addColorStop(0,`hsla(${(q.hue+i*q.spread)%360},65%,45%,${alpha*.085})`);g.addColorStop(.3,`hsla(${(q.hue+i*q.spread+20)%360},60%,32%,${alpha*.045})`);g.addColorStop(.72,`hsla(${(q.hue+i*q.spread+30)%360},55%,24%,${alpha*.012})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(x-radius,-radius,radius*2,radius*2);

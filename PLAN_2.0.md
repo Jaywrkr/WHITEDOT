@@ -2,6 +2,7 @@
 
 | Entrega | Estado |
 |---|---|
+| WOW 14: Galaxias que respiran | Implementada; scripts/wow-14-validation.json |
 | WOW 13: Cometas variados | Implementada; scripts/wow-13-validation.json |
 | WOW 12: Polvo localizado | Implementada; scripts/wow-12-validation.json |
 | WOW 11: Huellas de pulso | Implementada; scripts/wow-11-validation.json |

@@ -26,3 +26,7 @@ assert(positions.every(p=>Math.hypot(p.x,p.y)>=31.99&&Math.hypot(p.x,p.y)<=74.01
 
 const {cometStyle}=await import('../src/wow-model.js');
 for(let h=0;h<100;h++){let previous=-1;for(let i=0;i<=100;i++){const c=cometStyle(h*1057,i/100);assert(c.progress>=previous&&c.progress<=1.00001);previous=c.progress;assert(c.tail>=22&&c.tail<=56);}}
+
+const {cloudBreath}=await import('../src/wow-model.js');
+for(let i=0;i<300;i++){const b=cloudBreath({phase:1},i);assert(b.light>=.79999&&b.light<=1&&b.scale>=.97499&&b.scale<=1.02501);}
+assert.deepEqual(cloudBreath({phase:1},400,true),{light:.9,scale:1});

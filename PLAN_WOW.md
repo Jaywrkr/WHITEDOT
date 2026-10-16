@@ -17,7 +17,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 11 | Huellas de pulso | feat/wow-11-huellas-pulso | Implementada; ver informe 11 |
 | 12 | Polvo localizado | feat/wow-12-polvo | Implementada; ver informe 12 |
 | 13 | Cometas variados | feat/wow-13-cometas | Implementada; ver informe 13 |
-| 14 | Galaxias que respiran | feat/wow-14-galaxias | Pendiente |
+| 14 | Galaxias que respiran | feat/wow-14-galaxias | Implementada; ver informe 14 |
 | 15 | Anticipación de hallazgos | feat/wow-15-hallazgos | Pendiente |
 | 16 | Profundidad en tarjetas | feat/wow-16-profundidad | Pendiente |
 | 17 | Barrido de adquisición | feat/wow-17-adquisicion | Pendiente |
@@ -88,3 +88,7 @@ Algunas agrupaciones reales de tres o más elementos tienen polvo de color tenue
 ### 13. Cometas variados
 
 Los cometas conservan lugares y frecuencia originales, con variación suave de velocidad, estelas de tres intensidades y parejas ocasionales. Sin música nueva; movimiento reducido sigue suprimiendo cometas.
+
+### 14. Galaxias que respiran
+
+Las galaxias lejanas respiran lentamente en luminosidad y escala, sin variar la paleta ni convertirse en señales próximas. Los gradientes siguen grandes y difusos; movimiento reducido conserva una imagen estable.
