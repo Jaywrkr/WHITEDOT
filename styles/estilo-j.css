@@ -174,6 +174,7 @@ body:has(#celebration:not([hidden])) .voice:not(.expanded){top:auto;bottom:calc(
 @keyframes cubePreviewPulse{50%{outline-offset:6px}}
 
 .cube-preview i{display:none}.cube-preview canvas{display:block;width:100%;height:70px;pointer-events:none}
+.cube-tabs{display:flex;gap:4px;margin:8px 0}.cube-tabs button{flex:1;min-width:0;min-height:44px;padding:6px;font-size:11px}.cube-tabs [aria-selected="true"]{border-color:#fff;background:#ffffff14;color:#fff}.cube-sheet [role="tabpanel"][hidden]{display:none}.cube-sheet .cube-options{display:flex;flex-wrap:wrap;gap:6px}.cube-sheet .cube-options button{font-size:11px;min-width:44px;min-height:44px}.cube-sheet p{font-size:11px;margin:8px 0}.cube-sheet h2{font-size:18px}.cube-sheet #cubeRestore{font-size:11px;min-height:44px}.cube-sheet .row button{flex:1;min-height:44px}#cubeApply:not(:disabled){border-color:#fff;color:#fff}
 
 /* Five sections share one album; gold marks earned entries, never selection. */
 .journal-tabs button.selected{color:#fff;border-color:#fff;background:#000}

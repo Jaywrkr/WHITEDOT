@@ -11,7 +11,7 @@ Una rama por fase; la siguiente parte de la anterior si todavía no está integr
 | 3 · Territorios coherentes | `feat/pulido-03-territorios` | Música, materiales, color, habitantes y fusiones | Implementada y probada; entrega en esta rama |
 | 4 · Interacciones musicales | `feat/pulido-04-interacciones` | Gestos, estilos y paseo opcional | Implementada y probada; entrega en esta rama |
 | 5 · Ambiente vivo | `feat/pulido-05-ambiente` | Ensambles, redes y color distante | Implementada y probada; entrega en esta rama |
-| 6 · Cubo e interfaz | `feat/pulido-06-cubo-ui` | Personalización, claridad y móvil | Pendiente |
+| 6 · Cubo e interfaz | `feat/pulido-06-cubo-ui` | Personalización reversible y móvil | Implementada y probada; entrega en esta rama |
 | 7 · Colección y tarjetas | `feat/pulido-07-coleccion` | Hallazgos, utilidad, procedencia y regreso | Pendiente |
 | 8 · Exploración y aprendizaje | `feat/pulido-08-exploracion` | Pistas, memoria reciente y contraste | Pendiente |
 | 9 · Curaduría y cierre | `feat/pulido-09-cierre` | Auditoría conjunta y escucha | Pendiente |
@@ -149,6 +149,8 @@ No se modifica síntesis ni mezcla; no se repite audio para esta fase. Suite com
 - Revisar móvil, foco, objetivos táctiles, contraste y movimiento reducido. Sin sonido de interfaz.
 
 **Aceptación:** probar, comparar, restaurar y salir sin pérdida de configuración; acceder con teclado, lector y teléfono pequeño.
+
+**Validación F6:** auditoría sin errores/advertencias, 120 suites Node, siete programas de navegador y cuatro renders de audio aprobados. Pico máximo 0,873580. Evidencia: `scripts/pulido-06-validation.json`. En teléfono: Menú → Tu cubo; prueba piezas, cambia pestaña y cancela. Reabre, prueba y aplica. Restaurar blanco no consume premios. Sonido → Energía cambia la intensidad sin seleccionar otro género. CI/deploy/escucha física separados.
 
 ## Fase 7 · Colección y tarjetas
 

@@ -1,5 +1,5 @@
 // Real Web Audio render of the scheduler, with a virtual clock and deterministic noise.
-export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false,generation=1,ecology=false,testInstrument=null,scene=null,celebration=false,identityKey='0,0',worldPoint=null,actorEcology=false,renderSeconds=10,savedMemory=null,pulseVoice=null,livingMusic=false,evolutionBar=null,outputVolume=null}={}) {
+export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false,generation=1,ecology=false,testInstrument=null,scene=null,celebration=false,identityKey='0,0',worldPoint=null,actorEcology=false,renderSeconds=10,savedMemory=null,pulseVoice=null,livingMusic=false,evolutionBar=null,outputVolume=null,energySetting=null}={}) {
  const modules=await Promise.all(['data','progress','world','audio','foreground','voices','instruments','patches','effects','spatial','influence','blobs','living-composition','world-memory','performance'].map(id=>import(`../src/${id}.js`)));
  if(!Number.isFinite(renderSeconds)||renderSeconds<5||renderSeconds>30)throw Error('Invalid render duration');
  const r=Object.create(null),duration=renderSeconds,context=new OfflineAudioContext(2,duration*sampleRate,sampleRate);
@@ -28,6 +28,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   r.MU.dnaT=worldPoint?{...origin}:{...origin,key:identityKey,genre,bpm:(G.bpm[0]+G.bpm[1])/2,track:{...origin.track,bassI:G.bassI,hookI:G.hookP[0]}};
   if(pulseVoice)r.S.cube={...r.S.cube,voice:pulseVoice};
   if(outputVolume!==null)r.S.outputVolume=outputVolume;
+  if(energySetting!==null)r.S.musicEnergy=energySetting;
   r.MU.E=dense?.8:.45;r.MU.vit=1;r.MU.vari=2;r.audio();
   if(influenced){r.activeLayerRegion=()=>r.MU.dnaT;for(const k of ['bass','groove','melody'])r.driveInfluence(r.MU.dnaT,k,1,3);for(let i=0;i<100;i++)r.influenceTick(.05,false);}
   if(glass){

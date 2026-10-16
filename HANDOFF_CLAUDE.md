@@ -1,3 +1,17 @@
+# Handoff · Cubo e interfaz, fase 6
+
+Rama `feat/pulido-06-cubo-ui` desde F5 `b3d8f0b`. Jay crea PR/merge.
+
+- `cube.js` mantiene borrador local al abrir. Botones de piezas prueban sin equipar; Aplicar normaliza/guarda, con rollback en fallo; Cancelar/cierre descarta. Restaurar vuelve a los valores gratuitos y mantiene propiedad. API programática `chooseCubeStyle` conserva selección directa para compatibilidad.
+- Tres pestañas con paneles ARIA, flechas/Inicio/Fin, foco retenido, piezas ganadas primero. Cincuenta IDs/estilos y controles previos conservados.
+- `cube-model.js`: conserva campos desconocidos; guarda valores de estilos desconocidos en `unrecognizedStyles`. Versión mayor de dos permanece exacta. El editor no modifica esos cubos; el mundo usa una representación blanca compatible.
+- `controls.js` protege también colores del Estudio ante un cubo futuro. Energía guarda `S.musicEnergy` 0–1; mantiene `S.style` heredado sin borrarlo. El centro 0,5 es neutro. `arrangementEnergy` modifica intensidad entre factores 0,7 y 1,3, con techo 0,9, sin tocar el máster ni el género. La UI no inicia el contexto de audio ni concede Under por mover un slider.
+- `tests/audio_mix.mjs` admite `energySetting`; `energy_mix.py` comprueba valores extremos y equivalencia entre centro y valor ausente dentro de 0,001 dB de redondeo DSP; el factor matemático es exactamente uno. Se añade a la suite completa de audio.
+
+Validación en `scripts/pulido-06-validation.json`. CI/deploy/escucha física separados.
+
+## Antecedentes
+
 # Handoff · Ambiente, fase 5
 
 Rama `feat/pulido-05-ambiente` desde F4 `845e8fc`. Jay crea PR/merge. Plan vigente: nueve fases.

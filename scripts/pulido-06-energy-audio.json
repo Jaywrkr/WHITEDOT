@@ -1,0 +1,72 @@
+{
+  "renders": 4,
+  "maxPeak": 0.8735794425010681,
+  "rows": [
+    {
+      "energySetting": 0,
+      "peak": 0.8735794425010681,
+      "rmsDb": -13.601461365455314,
+      "hotFraction": 0,
+      "genre": "deep",
+      "instruments": {
+        "kick": 12,
+        "pluck": 12,
+        "rhodes": 12,
+        "p_softhorn": 6,
+        "hat": 8,
+        "clap": 6
+      }
+    },
+    {
+      "energySetting": 0.5,
+      "peak": 0.8732531070709229,
+      "rmsDb": -13.434113550415551,
+      "hotFraction": 0,
+      "genre": "deep",
+      "instruments": {
+        "kick": 12,
+        "pluck": 12,
+        "rhodes": 12,
+        "p_softhorn": 6,
+        "hat": 12,
+        "shaker": 12,
+        "clap": 6,
+        "rim": 6
+      }
+    },
+    {
+      "energySetting": 1,
+      "peak": 0.8732491135597229,
+      "rmsDb": -13.305291090543301,
+      "hotFraction": 0,
+      "genre": "deep",
+      "instruments": {
+        "kick": 12,
+        "pluck": 12,
+        "rhodes": 12,
+        "p_softhorn": 6,
+        "hat": 12,
+        "shaker": 12,
+        "clap": 6,
+        "rim": 6
+      }
+    },
+    {
+      "energySetting": null,
+      "peak": 0.8732534050941467,
+      "rmsDb": -13.434159357589778,
+      "hotFraction": 0,
+      "genre": "deep",
+      "instruments": {
+        "kick": 12,
+        "pluck": 12,
+        "rhodes": 12,
+        "p_softhorn": 6,
+        "hat": 12,
+        "shaker": 12,
+        "clap": 6,
+        "rim": 6
+      }
+    }
+  ]
+}

@@ -1,3 +1,13 @@
+# Pulido · fase 6: cubo reversible e interfaz
+
+Auditoría, 120 suites Node, siete programas de navegador y cuatro renders aprobados. Evidencia: `scripts/pulido-06-validation.json`. CI/deploy/escucha física separados.
+
+- Apariencia, Movimiento y Voz con pestañas accesibles. Piezas ganadas primero y controles táctiles de 44 px.
+- Vista previa real y silenciosa; Aplicar guarda y Cancelar descarta. Restaurar blanco conserva todos los premios. Un guardado fallido conserva la selección anterior y permite reintentar.
+- El cubo de una versión futura permanece intacto y de solo lectura. Campos desconocidos se conservan y estilos aún no reconocidos se archivan sin borrar sus valores.
+- Vista previa sin movimiento con movimiento reducido; foco conservado al seleccionar y navegación por flechas/Inicio/Fin entre pestañas.
+- Energía deja de mostrar géneros que no seleccionaba: Suave, Equilibrada y Energética regulan la intensidad real del arreglo. Valor neutro conserva la mezcla de F5. No crea audio al mover el control ni concede logros por cambiarlo.
+
 # Pulido · fase 5: una base electrónica, redes y color distante
 
 Auditoría, 120 suites Node, doce programas de navegador y 87 renders aprobados, incluyendo los 52 estilos. Pico máximo 0,933802. Evidencia: `scripts/pulido-05-validation.json`. CI/deploy/escucha física separados.
