@@ -12,7 +12,7 @@ export function createNoticeLane(){
 export function installNoticeLane(runtime){
  if(runtime.noticeLane)return runtime.noticeLane;
  const model=createNoticeLane(),timed=new Map(),callbacks=new Map(),hides=new WeakMap();let state=runtime.S,last=performance.now();
- const blocked=()=>document.hidden||!!document.querySelector('.modal:not([hidden]),.fxpanel:not([hidden]),.glasspanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const blocked=()=>!globalThis.document||document.hidden||!!document.querySelector('.modal:not([hidden]),.fxpanel:not([hidden]),.glasspanel:not([hidden]),#mirrorPanel:not([hidden])');
  const reduced=()=>runtime.S?.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
  function show(panel){panel.inert=false;clearTimeout(hides.get(panel));panel.classList.remove('notice-leaving');if(panel.hidden)panel.hidden=false;if(!panel.classList.contains('on'))panel.classList.add('on');}
  function hide(panel){panel.inert=true;if(panel.hidden||panel.classList.contains('notice-leaving'))return;panel.classList.remove('on');panel.classList.add('notice-leaving');hides.set(panel,setTimeout(()=>{panel.hidden=true;panel.classList.remove('notice-leaving');},reduced()?0:260));}
@@ -21,7 +21,7 @@ export function installNoticeLane(runtime){
   if(key&&(slot.current?.key===key||slot.queue.some(e=>e.key===key)))return;
   slot.queue.push({render,seconds,key,valid});model.request(id);
  }
- const api={request:model.request,claim:id=>!blocked()&&model.claim(id),release:model.release,cancel:model.cancel,blocked,show,hide,enqueue,register:(id,fn)=>callbacks.set(id,fn),get owner(){return model.owner;},get pending(){return model.pending;},get inspecting(){return !!document.querySelector('[data-inspect="true"]:not([hidden]):not(.notice-leaving)');}};
+ const api={request:model.request,claim:id=>!blocked()&&model.claim(id),release:model.release,cancel:model.cancel,blocked,show,hide,enqueue,register:(id,fn)=>callbacks.set(id,fn),get owner(){return model.owner;},get pending(){return model.pending;},get inspecting(){return !!globalThis.document?.querySelector('[data-inspect="true"]:not([hidden]):not(.notice-leaving)');}};
  function tick(){const now=performance.now(),dt=Math.max(0,Math.min(.1,(now-last)/1000));last=now;
   if(state!==runtime.S){state=runtime.S;model.clear();for(const slot of timed.values()){slot.queue.length=0;slot.current=null;hide(slot.panel);}}
   if(!blocked())model.tick(dt);
@@ -34,5 +34,5 @@ export function installNoticeLane(runtime){
   for(const fn of callbacks.values())fn(dt);
   document.body.dataset.notice=model.owner||model.exiting||'';document.body.classList.toggle('ui-reduced-motion',!!reduced());
  }
- Object.defineProperty(runtime,'noticeLane',{value:api});const timer=setInterval(tick,50);timer.unref?.();return api;
+ Object.defineProperty(runtime,'noticeLane',{value:api});const timer=globalThis.document?setInterval(tick,50):null;timer?.unref?.();return api;
 }
