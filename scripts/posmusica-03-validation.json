@@ -43,5 +43,21 @@
   },
   "audio": "unchanged; no new audio renders claimed",
   "push": "ready after branch-stack validation",
-  "manual_phone": "pending"
+  "manual_phone": "pending",
+  "node20Compatibility": {
+    "runtime": "20.20.2",
+    "suites": 130,
+    "result": "passed",
+    "regression": "notice timer never starts without document",
+    "sourceCommit": "8f1c99f2977413da6358052e993c2888760f5caf",
+    "audit": "passed",
+    "browser": {
+      "program": "tests/notice_lane_smoke.py",
+      "widths": [
+        390,
+        844
+      ],
+      "result": "passed"
+    }
+  }
 }
