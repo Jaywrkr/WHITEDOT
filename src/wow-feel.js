@@ -1,6 +1,6 @@
-import {createMotion,WOW_LIMITS,lookVector,greetingPose} from './wow-model.js';
+import {createMotion,WOW_LIMITS,lookVector,greetingPose,formationOffset} from './wow-model.js';
 export function initialize(runtime){
- const greetings=new WeakMap();
+ const greetings=new WeakMap(),formation=new WeakMap();let nextSlot=0;
  const motion=createMotion();let owner=null,layer=null,dust=[],seconds=0,nearby=[];
  const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
  function sources(){
@@ -16,6 +16,10 @@ export function initialize(runtime){
   if(stopped||reduced()){dust=[];return;}
   dust=dust.filter(p=>seconds-p.at<.6);
   if(step.stopped){for(let i=0;i<3;i++)dust.push({x:step.x-Math.cos(step.angle)*(4+i*4),y:step.y-Math.sin(step.angle)*(4+i*4),at:seconds,side:i-1});dust=dust.slice(-WOW_LIMITS.brakes);}
+ }
+ function followTarget(o){
+  let slot=formation.get(o);if(slot===undefined){slot=nextSlot++%512;formation.set(o,slot);}
+  const p=formationOffset(slot,reduced()?0:seconds);return {x:runtime.S.wx+p.x,y:runtime.S.wy+p.y};
  }
  function eyes(o,c,x=0,y=0){
   if(blocked()||Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)>130)return;
@@ -43,5 +47,5 @@ export function initialize(runtime){
  function cubeTransform(c,x,y){
   const p=motion.pose(reduced()||blocked());c.translate(x,y);c.rotate(p.angle);c.scale(p.x,p.y);c.rotate(-p.angle);c.translate(-x,-y);
  }
- Object.defineProperties(runtime,{wowTick:{get:()=>tick},drawWowWorld:{get:()=>draw},wowObjectTransform:{get:()=>objectTransform},wowEyes:{get:()=>eyes},wowState:{get:()=>({dust:dust.length,seconds})},cubeVisualTransform:{get:()=>cubeTransform}});
+ Object.defineProperties(runtime,{wowTick:{get:()=>tick},drawWowWorld:{get:()=>draw},wowObjectTransform:{get:()=>objectTransform},wowEyes:{get:()=>eyes},wowFollowTarget:{get:()=>followTarget},wowState:{get:()=>({dust:dust.length,seconds})},cubeVisualTransform:{get:()=>cubeTransform}});
 }

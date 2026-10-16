@@ -317,7 +317,7 @@ export function initialize(runtime) {
         if(!runtime.nativeLifeTick&&sp.mob==="orbita"){o.x=o.hx+Math.cos(t/1000*sp.spd*(o.personality?.speed||1)+o.ph)*50;o.y=o.hy+Math.sin(t/1000*sp.spd*(o.personality?.speed||1)+o.ph)*50;}
         else if(!runtime.nativeLifeTick&&sp.mob==="salta"){o.x=o.hx+Math.sin(t/2000*sp.spd*(o.personality?.speed||1)+o.ph)*30;o.y=o.hy-b*(o.personality?.jump||12);}
         else if(!runtime.nativeLifeTick&&sp.mob==="deriva"){o.x=o.hx+Math.sin(t/3000*sp.spd*(o.personality?.speed||1)+o.ph)*120;o.y=o.hy+Math.cos(t/3700*sp.spd*(o.personality?.speed||1)+o.ph)*90;}
-        if(o.follow>0){o.follow-=dt;const tx=runtime.S.wx+Math.cos(o.ph+t/900)*40,ty=runtime.S.wy+Math.sin(o.ph+t/900)*40;o.hx+=(tx-o.hx)*Math.min(1,dt*2*(o.personality?.speed||1));o.hy+=(ty-o.hy)*Math.min(1,dt*2*(o.personality?.speed||1));if(sp.mob==='timida'){o.x=o.hx;o.y=o.hy;}if(!Object.values(runtime.jam?.band.members||{}).some(m=>m.sp.id===sp.id))singers.push(o);}
+        if(o.follow>0){o.follow-=dt;const spot=runtime.wowFollowTarget?.(o)||{x:runtime.S.wx+Math.cos(o.ph+t/900)*40,y:runtime.S.wy+Math.sin(o.ph+t/900)*40},tx=spot.x,ty=spot.y;o.hx+=(tx-o.hx)*Math.min(1,dt*2*(o.personality?.speed||1));o.hy+=(ty-o.hy)*Math.min(1,dt*2*(o.personality?.speed||1));if(sp.mob==='timida'){o.x=o.hx;o.y=o.hy;}if(!Object.values(runtime.jam?.band.members||{}).some(m=>m.sp.id===sp.id))singers.push(o);}
         else if(!sp.mob)runtime.physics(o,dt,c.sp);
         if(sp.mob==="timida"&&o.follow>0){}
         else if(!runtime.nativeLifeTick&&sp.mob==="timida"){const ax=o.x-runtime.S.wx,ay=o.y-runtime.S.wy,dd=Math.hypot(ax,ay)||1;if(dd<110){o.x+=ax/dd*dt*120*(o.personality?.speed||1);o.y+=ay/dd*dt*120*(o.personality?.speed||1);}else{o.x+=(o.hx-o.x)*dt*.3;o.y+=(o.hy-o.y)*dt*.3;}}
@@ -333,7 +333,7 @@ export function initialize(runtime) {
         if(runtime.drawNativeSpecies)runtime.drawNativeSpecies(sp,o,o.x+ox,o.y+oy,t,b,!!runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)));else if(runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)))runtime.drawBlob(sp,o,o.x+ox,o.y+oy,t,b);else runtime.drawSprite(sp.bits,o.x+ox,o.y+oy,sp.cell*(1+o.lit*.4+(sp.mob?b*.15:0)),o.lit>.1?"#fff":sp.col);
         if(o.lit<.1&&!runtime.S.cat[sp.id])runtime.touchRing(o.x+ox,o.y+oy,d,R,b);}
       for(const k of c.walkers){
-        const form=k.walkerForm,kd=paused?0:dt;moveWalker(k,form,{x:runtime.S.wx,y:runtime.S.wy},kd,t);
+        const form=k.walkerForm,kd=paused?0:dt;moveWalker(k,form,{x:runtime.S.wx,y:runtime.S.wy},kd,t,runtime.wowFollowTarget?.(k));
         const d=Math.hypot(k.x-runtime.S.wx,k.y-runtime.S.wy)||1;
         if(k.follow>0){k.follow-=kd;follow=true;followers++;if(runtime.MU.walkerFollowers.length<2)runtime.MU.walkerFollowers.push(k);}
         else{

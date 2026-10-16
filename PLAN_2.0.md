@@ -2,6 +2,7 @@
 
 | Entrega | Estado |
 |---|---|
+| WOW 06: Compañía con espacio propio | Implementada; scripts/wow-06-validation.json |
 | WOW 05: Saludos diferentes | Implementada; scripts/wow-05-validation.json |
 | WOW 04: Miradas hacia el cubo | Implementada; scripts/wow-04-validation.json |
 | WOW 03: Presencia cercana | Implementada; scripts/wow-03-validation.json |
