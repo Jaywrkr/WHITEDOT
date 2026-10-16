@@ -1,3 +1,7 @@
+## 2.3.0-alpha.29 · Cuaderno vivo 5/20
+
+Tres saludos individuales: reverencia, giro corto o salto. Se activan al entrar en cercanía, con separación de ocho segundos y salida real antes de repetirse. Sin carteles ni sonidos añadidos.
+
 ## 2.3.0-alpha.28 · Cuaderno vivo 4/20
 
 Los habitantes pixelados y la fauna pixel original miran hacia el cubo cercano. Pupilas de desplazamiento acotado, sin modificar figuras guardadas. Movimiento reducido conserva la mirada fija.

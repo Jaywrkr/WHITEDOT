@@ -8,7 +8,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 2 | Tres partículas al frenar | feat/wow-02-frenada | Implementada; ver informe 02 |
 | 3 | Presencia cercana | feat/wow-03-presencia | Implementada; ver informe 03 |
 | 4 | Miradas hacia el cubo | feat/wow-04-miradas | Implementada; ver informe 04 |
-| 5 | Saludos diferentes | feat/wow-05-saludos | Pendiente |
+| 5 | Saludos diferentes | feat/wow-05-saludos | Implementada; ver informe 05 |
 | 6 | Compañía con espacio propio | feat/wow-06-compania | Pendiente |
 | 7 | Reacciones entre vecinos | feat/wow-07-reacciones | Pendiente |
 | 8 | Notas visibles a tiempo | feat/wow-08-notas-visibles | Pendiente |
@@ -48,3 +48,7 @@ Los habitantes y especies se inclinan y abren ligeramente al acercarte. Un arco 
 ### 4. Miradas hacia el cubo
 
 Los habitantes pixelados y la fauna pixel original miran hacia el cubo cercano. Pupilas de desplazamiento acotado, sin modificar figuras guardadas. Movimiento reducido conserva la mirada fija.
+
+### 5. Saludos diferentes
+
+Tres saludos individuales: reverencia, giro corto o salto. Se activan al entrar en cercanía, con separación de ocho segundos y salida real antes de repetirse. Sin carteles ni sonidos añadidos.
