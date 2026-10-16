@@ -1,7 +1,7 @@
+import {explorationContext} from './exploration-context.js';
 import {installNoticeLane} from './notice-lane.js';
 import { POCKET_NAMES } from './pockets.js';
 
-import { gravityOf } from './gravity.js';
 
 // HUD, avisos y transiciones del Mundo.
 export function initialize(runtime) {
@@ -12,7 +12,7 @@ export function initialize(runtime) {
   function hud(dist){
     const d=runtime.displayDay();
     const pocket=runtime.currentPocket?.();
-    $("day").textContent="DÍA "+d;$("era").textContent=runtime.inWorld()?(runtime.MU.dnaT?runtime.MU.dnaT.name+(runtime.S.worldDetails?" · "+(pocket?POCKET_NAMES[pocket.kind]:gravityOf(runtime.MU.dnaT,runtime.seedOf).name):''):"El Mundo"):"Era "+era(d);
+    $("day").textContent="DÍA "+d;$("era").textContent=runtime.inWorld()?(runtime.MU.dnaT?runtime.MU.dnaT.name+(runtime.S.worldDetails?" · "+(pocket?POCKET_NAMES[pocket.kind]:explorationContext(runtime.MU.dnaT,runtime.S.wx,runtime.S.wy,runtime.seedOf).label):''):"El Mundo"):"Era "+era(d);
     $("quickSave").hidden=!runtime.inWorld();$("era").disabled=!runtime.inWorld();
     $("streak").textContent=runtime.shownStreak();$("starsN").textContent=runtime.S.stars.length;$("size").textContent=runtime.level();
     $("bar").classList.toggle("free",runtime.isFree());

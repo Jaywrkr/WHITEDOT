@@ -14,11 +14,12 @@ import {livingChunk} from './living-catalog.js';
 import {populationProfile,populatedChunk} from './living-populations.js';
 
 const KEY='whitedot-lab-v1',LAB_SEED='laboratorio';
-export const labURL=href=>{const url=new URL(href);url.searchParams.set('testSeed',LAB_SEED);url.searchParams.set('layout','wide');url.searchParams.set('generation','2');url.searchParams.set('lab','1');url.searchParams.delete('encounter');return url.href;};
+export const labURL=href=>{const url=new URL(href);url.searchParams.set('testSeed',LAB_SEED);url.searchParams.set('layout','wide');url.searchParams.set('generation','2');url.searchParams.set('lab','1');url.searchParams.delete('encounter');url.searchParams.delete('addr');return url.href;};
 
 export function initialize(runtime){
  const $=runtime.$,params=new URLSearchParams(location.search);
  $('dLab').onclick=()=>location.assign(labURL(location.href));
+ if($('guideCatalog'))$('guideCatalog').onclick=e=>{e.preventDefault();const url=new URL(labURL(location.href));url.searchParams.set('gallery','1');location.assign(url.href);};
  const active=params.get('lab')==='1'&&!!runtime.S.previewSeed;
  Object.defineProperty(runtime,'labMode',{get:()=>active,configurable:true});
  if(!active)return;
@@ -140,7 +141,7 @@ export function initialize(runtime){
  $('labCopy').onclick=async()=>{let ok=false;try{await navigator.clipboard.writeText(report());ok=true;}catch(_){}
   if(!ok){$('labText').value=report();$('labText').select();}runtime.toast(ok?'<em>Informe</em> · copiado. Pégalo en el chat':'<em>Informe</em> · selecciónalo y cópialo');};
  $('labDownload').onclick=()=>{const url=URL.createObjectURL(new Blob([report()],{type:'text/markdown'})),a=document.createElement('a');a.href=url;a.download=`laboratorio-${new Date().toISOString().slice(0,10)}.md`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);};
- $('labExit').onclick=()=>{const url=new URL(location.href);for(const k of ['testSeed','layout','generation','lab','encounter'])url.searchParams.delete(k);location.assign(url.href);};
+ $('labExit').onclick=()=>{const url=new URL(location.href);for(const k of ['testSeed','layout','generation','lab','encounter','gallery'])url.searchParams.delete(k);location.assign(url.href);};
  Object.defineProperties(runtime,{labGo:{get:()=>go},labBook:{get:()=>book},labReportText:{get:()=>report}});
  // Arranque: el mundo de prueba ya está en el Mundo (seeds.js); ponte frente al elemento en curso.
  requestAnimationFrame(()=>go());

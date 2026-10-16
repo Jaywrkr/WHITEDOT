@@ -1,3 +1,9 @@
+## 2.3.0-alpha.21 · Reencuentro 5
+
+Saltar y las nuevas llegadas valoran cinco aspectos, ocho familias y nichos además de música. El historial visual migra sin borrar datos y mantiene ocho recuerdos. Los gradientes orientan también hacia aspectos distintos; el detalle del lugar nombra el hábitat. La guía abre el catálogo aislado sin arrastrar direcciones del guardado principal.
+
+Rama `feat/reencuentro-05-exploracion`. Evidencia: scripts/reencuentro-05-validation.json. CI, DSP y escucha física se registran por separado; no se afirma deploy.
+
 ## 2.3.0-alpha.20 · Reencuentro 4
 
 Un campo continuo de colonias, corredores, refugios y claros sustituye tres filtros acumulados. La muestra conserva 678 de 2.058 individuos originales frente a 166 antes, con límites de densidad y sin mover mapas. Los hábitats y contornos comparten esa geografía; raros, nursery y acompañantes quedan protegidos. Las vistas se refrescan también al crecer una misma lista.

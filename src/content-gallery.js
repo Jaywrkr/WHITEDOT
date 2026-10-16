@@ -14,5 +14,6 @@ export function initialize(runtime){
   }
   $('contentGalleryMore').hidden=matches.length<=64;
  }
- $('labGallery').onclick=()=>{draw();sheet.hidden=false;$('contentGallerySearch').focus();};$('contentGallerySearch').oninput=draw;$('contentGalleryClose').onclick=()=>sheet.hidden=true;
+ const open=()=>{document.querySelectorAll?.('.modal:not([hidden])').forEach(e=>e.hidden=true);draw();sheet.hidden=false;$('contentGallerySearch').focus();};$('labGallery').onclick=open;
+ if(new URLSearchParams(globalThis.location?.search||'').get('gallery')==='1')setTimeout(open,0);$('contentGallerySearch').oninput=draw;$('contentGalleryClose').onclick=()=>sheet.hidden=true;
 }
