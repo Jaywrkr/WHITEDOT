@@ -17,7 +17,7 @@ El código está entregado en ramas dependientes. **La publicación queda pendie
 | 7 | `mejora/07-interfaz` | `6f3ef81` | Cambia tu cubo: prueba, cancela o aplica sin sonido. |
 | 8 | `mejora/08-coleccion` | `0d83eea` | Examina una tarjeta y filtra el libro sin superposición. |
 | 9 | `mejora/09-recorrido` | `6bc180d` | Toca un objeto en Casa para escucharlo; arrástralo para moverlo. |
-| 10 | `mejora/10-cierre` | Historial de esta rama | Camino, Mundo, Casa, cubo y regreso con tu partida anterior. |
+| 10 | `mejora/10-cierre` | `0e17e7f` (código) | Camino, Mundo, Casa, cubo y regreso con tu partida anterior. |
 
 Cada rama nace de la anterior. Si se integran por fases, mantener este orden y evitar squash/rebase entre ramas dependientes hasta actualizar sus bases. La relación de dependencia reduce conflictos; cambios externos pueden requerir resolverlos. No se promete ausencia absoluta de conflictos.
 
@@ -55,3 +55,7 @@ Abrir el preview normal de cada rama, sin parámetros de desarrollo. Conservar u
 8. Confirmar versión del preview y fecha real del deploy. No integrar si CI está pendiente o falla.
 
 Si una comprobación falla, corregir su causa en esta misma fase y repetir la cobertura afectada. Nuevas funciones o catálogos quedan para otro ciclo; este cierre no los autoriza.
+
+## Estado remoto registrado
+
+Código enviado: `0e17e7f68507364ad35fa36bfe90b864901bf581`. [CI completo de esta revisión](https://github.com/Jaywrkr/WHITEDOT/actions/runs/38951542059): `queued`, conclusión None. Instantánea en `scripts/mejora-10-ci.json`; pendiente no equivale a aprobado. La actualización documental posterior conserva el código y pruebas de esta revisión. Consultar el resultado actual en GitHub antes de integrar.
