@@ -9,7 +9,7 @@ export function createMusicalConductor(){
  function remember(time,step,region,degree,six,swing,chords){
   if(!region||!Number.isFinite(time)||!(six>0))return;
   if(frames.length&&time<frames.at(-1).time)frames.length=0;
-  frames.push(Object.freeze({time,step,region,degree,transposition:chords[0]-57-region.scale[degree],six,swing:Math.max(0,Math.min(.28,swing||0)),chords:Object.freeze(chords.slice())}));
+  frames.push(Object.freeze({time,step,region,degree,transposition:chords[0]-57-region.scale[degree],six,swing:Math.max(0,Math.min(.33,swing||0)),chords:Object.freeze(chords.slice())}));
   if(frames.length>48)frames.shift();
  }
  function at(time){for(let i=frames.length-1;i>=0;i--)if(frames[i].time<=time+.0001)return frames[i];return frames[0]||null;}

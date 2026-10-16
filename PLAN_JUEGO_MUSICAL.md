@@ -8,8 +8,8 @@ Versiones: `2.3.0-alpha.1` a `alpha.12`, una por fase. `node scripts/bump-versio
 |---|---|---|---|---|
 | 1 · Llegadas variadas | `feat/juego-01-llegadas` | `2.3.0-alpha.1` | Subida en `07cd4b4` | Contraste musical entre visitas; regreso exacto y guardado seguro. |
 | 2 · Instrumentos expresivos | `feat/juego-02-sonido` | `2.3.0-alpha.2` | Subida en `7e01e1c` | Articulación y dinámica por rol, percusión variada y mezcla controlada. |
-| 3 · Composición regional | `feat/juego-03-composicion` | `2.3.0-alpha.3` | Implementada y probada; entrega en esta rama | Motivos, bajos, groove, descansos y arreglos de dos a diez instrumentos. |
-| 4 · Interpretación | `feat/juego-04-interpretacion` | `2.3.0-alpha.4` | Pendiente | Gestos audibles a tiempo, filtros y respuesta visual localizada. |
+| 3 · Composición regional | `feat/juego-03-composicion` | `2.3.0-alpha.3` | Subida en `347e922` | Motivos, bajos, groove, descansos y arreglos de dos a diez instrumentos. |
+| 4 · Recuperación e interpretación | `feat/juego-04-interpretacion` | `2.3.0-alpha.4` | Recuperación musical en esta entrega; gestos nuevos pendientes | Recuperar radio anterior con ensambles actuales; después ampliar interpretación. |
 | 5 · Encuentros vivos | `feat/juego-05-encuentros` | `2.3.0-alpha.5` | Pendiente | Invitaciones legibles por hábitat, personalidades y límites de densidad. |
 | 6 · Perseguir y encontrar | `feat/juego-06-perseguir` | `2.3.0-alpha.6` | Pendiente | Mensajeros, cometas e individuos; observar e interceptar también sirve. |
 | 7 · Escapar y refugiarse | `feat/juego-07-escapar` | `2.3.0-alpha.7` | Pendiente | Persecuciones suaves, refugios y salida voluntaria sin perder progreso. |
@@ -20,6 +20,8 @@ Versiones: `2.3.0-alpha.1` a `alpha.12`, una por fase. `node scripts/bump-versio
 | 12 · Auditoría y guía | `feat/juego-12-cierre` | `2.3.0-alpha.12` | Pendiente | Recorrido breve; suites completas, auditoría de música y límites explícitos. |
 
 ## Condiciones de cierre por entrega
+
+Prioridad posterior de Jay: [recuperación musical](RECUPERACION_MUSICAL.md), antes de añadir más interpretación. Referencia temporal comprobada en main `15bbe77`; conserva avances de F2/F3 y no restaura guardados ni UI antiguos. Esta entrega no declara implementada la ampliación nueva de gestos ni las fases 5–12.
 
 - Acuerdo actualizado de Jay: auditoría rápida, Node afectado y un recorrido representativo por cambio; reutilizar evidencia de código intacto.
 - Navegador de sistemas afectados; audio renderizado si cambia sonido.

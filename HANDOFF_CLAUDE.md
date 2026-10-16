@@ -1,3 +1,13 @@
+# Prioridad más reciente · Recuperación de la radio
+
+Entrega `feat/juego-04-interpretacion`, desde `347e922`, versión `2.3.0-alpha.4`. Jay pidió recuperar el estilo de hace 30 horas, mezclándolo con avances actuales. Leer [RECUPERACION_MUSICAL.md](RECUPERACION_MUSICAL.md). Referencia comprobada: `15bbe77`, último main anterior al 15 de octubre de 2026, 11:43 UTC; no se presume qué preview escuchaba Jay.
+
+radio conserva el marco regional anterior a la fusión y lo pasa como cuarto argumento de labArrangement. Bajo, motivo activo, timbre principal e identidad vuelven a esa base. Las fusiones conservan su progresión y armonía; las respuestas/comp/sequence actuales siguen acompañando. Las voces avanzadas no entran en el sorteo histórico de musicIdentity, pero siguen disponibles en el ensamble e interacciones. labDrumEvents recupera variación nativa por cuatro compases cuando hay backbone. directedFrame aplica una influencia menor sobre la articulación nativa. Conductor y radio admiten shuffle de hasta 0,33.
+
+No retirar ensambles, sincronización, sostenidos armónicos ni filtros para recuperar el carácter. No reponer el órgano continuo. No se cambian geometría, guardados ni UI. tests/music-reference-15bbe77.json se extrajo ejecutando el código histórico completo, no calculando expectativas con el código modificado. music-recovery compara 72 marcos de nueve estilos. Evidencia: scripts/juego-04-validation.json y juego-04-audio-validation.json. Auditoría, 108 suites Node afectadas, un recorrido móvil de producción y seis mezclas aprobados; máximo pico 0,878 y error de entrada 7,5 ms. No afirmar suites completas, escucha física, CI o deploy.
+
+La ampliación nueva de gestos de F4 y fases 5–12 permanecen pendientes. La recuperación tiene prioridad por la última petición; no presentar todo el ciclo como terminado. PR y merge siguen siendo de Jay.
+
 # Ciclo vigente · Juego musical, fase 3
 
 F3 desde `7e01e1c`, versión 2.3.0-alpha.3. `regional-phrases.js` elige células por producción/territorio/variante, sin RNG del mapa. Desarrolla frases completas a lo largo de ocho compases y movimientos largos; cierra en raíz, conserva presupuestos cero e influencias diatónicas. lab-score reproduce ese motivo sin reemplazar la respuesta por grados genéricos. arrangement-phrases retira el desplazamiento aislado de notas; mantiene forma, descansos y dinámica.

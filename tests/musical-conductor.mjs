@@ -7,6 +7,7 @@ assert.equal(c.align(1.126,1),1.126,'preserve scheduled microtiming');
 c.remember(1.25,2,b,3,.1,0,[60,64,67]);assert.equal(c.at(1.24).region,a);assert.equal(c.at(1.26).region,b);
 assert.equal(c.align(1.345,1.3),1.345);assert.equal(c.align(1.39,1.3),1.35,'tempo extrapolation uses the new sixteenth');
 const swing=createMusicalConductor();swing.remember(2,0,a,0,.125,.2,[57,60,64]);assert.equal(swing.align(2.13,2),2.15);
+const shuffle=createMusicalConductor();shuffle.remember(2,0,a,0,.125,.33,[57,60,64]);assert.equal(shuffle.align(2.14,2),2+.125*1.33,'restored native shuffle and contacts share the same grid');
 assert.equal(consonantPitch(61,[60,64,67],45,69),60);assert.equal(fitRegister(81,45,67),57);
 for(let i=0;i<100;i++)c.remember(3+i*.125,i,a,0,.125,0,[57,60,64]);assert.equal(c.size,48);c.clear();assert.equal(c.size,0);assert.equal(c.at(0),null);
 // Real source routing adopts the active harmony; its identity still comes from its territory.

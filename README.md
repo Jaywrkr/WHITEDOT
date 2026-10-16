@@ -1,4 +1,6 @@
-Versión en desarrollo: **2.3.0-alpha.3** · [Juego musical, doce fases](PLAN_JUEGO_MUSICAL.md). Fecha de deploy real en la aplicación.
+Versión en desarrollo: **2.3.0-alpha.4** · [Juego musical, doce fases](PLAN_JUEGO_MUSICAL.md). Fecha de deploy real en la aplicación.
+
+[Recuperación musical](RECUPERACION_MUSICAL.md): motivos, bajos y voces principales de la radio anterior, acompañados por los ensambles, filtros e interacciones actuales. Comparación histórica documentada; sin reiniciar partidas.
 
 <!-- avisos-imán-percusión -->
 Cierre de interacción 8 incorpora avisos discretos/relevantes/excepcionales, menos repeticiones, voces del Imán más presentes y seis percusiones naturales por hábitat. Catálogos actuales: 157 familias del libro, 27 percusiones y 216 perfiles de material; 81 especificaciones de síntesis, 52 estilos y 72 tipos de tarjeta. El resto de las cifras históricas describe su propia revisión. [Estado, ramas y pruebas](CIERRE_INTERACCION_FINAL.md).
@@ -10,7 +12,7 @@ Cierre de interacción 8 incorpora avisos discretos/relevantes/excepcionales, me
 
 Explora para descubrir sonidos, crear tu música y conservar tus encuentros. Un cubo blanco en negro, electrónica generativa y organismos que responden a tus gestos. La primera luz del Camino abre el Mundo del día sin reloj de exploración.
 
-**Jugar:** https://whitedot-inky.vercel.app. La versión de producción depende de los merges de Jay. Esta rama propone **2.2.0-rc.1**. En iPhone: Compartir → Añadir a pantalla de inicio. Toca el Mundo para activar audio.
+**Jugar:** https://whitedot-inky.vercel.app. La versión de producción depende de los merges de Jay. Esta rama propone **2.3.0-alpha.4**. En iPhone: Compartir → Añadir a pantalla de inicio. Toca el Mundo para activar audio.
 
 Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
