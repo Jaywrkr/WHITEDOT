@@ -1,3 +1,15 @@
+# Handoff · Dirección musical, fase 5
+
+Rama `feat/musica-05-interacciones`, desde F4 `b4d12fd`. Jay PR/merge.
+
+`productionPercussion` aporta pools instrumentales por producción; `labInteractionVoice` mantiene el rol y usa bajo/comping de la banda. `effects.js` conserva tipos existentes, con topología LP/BP de una/dos etapas, Q/cantidad/barridos al tempo y capa limpia; emite filterCue real. La guitarra p_gutguitar en producción guitar pasa por waveshaper 2x, ganancia compensada y nodos acotados.
+
+`voices.js` limita gestos manuales por fuente/compás (16 totales; seis percusivos, tres melódicos, ocho de sonar). El gate está antes de captura/enseñanza para no registrar sonidos inaudibles. Rechaza contactos atrasados a más de 360 unidades; laboratorio/dueto/banda conservan su política. `living-synthesis.js` toma acordes de musicalFrame(time), evitando la armonía adelantada del scheduler.
+
+124 suites Node; cinco programas de navegador; 121 renders con 52 géneros, 21 familias de percusión, 18 cruces y producción densa. Evidencia compacta `scripts/musica-05-audio.json`; resultados `scripts/musica-05-validation.json`. UI silenciosa y mapas/guardados intactos. CI/deploy/escucha física separados.
+
+## Antecedentes
+
 # Handoff · Dirección musical, fase 4
 
 Rama `feat/musica-04-arreglos`, desde F3 `92ebd5c`. Jay PR/merge. Plan vigente: siete fases.

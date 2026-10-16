@@ -1,3 +1,13 @@
+# Dirección musical · fase 5: cada fuente tiene un aporte
+
+- Percusión de especies por producción: marco, barro, agua, semilla, madera, bronce, brush, clap y gong. Bajo y acordes comparten vocabulario con la banda, conservando funciones individuales.
+- Filtros con modos, una/dos etapas (12/24 dB), resonancia, cantidad y barrido de dos a cuatro subdivisiones del tempo. Mezcla limpia conserva cuerpo; señal local muestra la pendiente real.
+- La guitarra de la familia Guitarra y máquina incorpora saturación suave real sobremuestreada. Los demás instrumentos conservan sus tratamientos propios.
+- Presupuesto por compás y fuente evita ráfagas atrasadas. Pulsos deliberados conservan respuesta; bandas tienen su política independiente. Un golpe suprimido no entra en looper ni enseña a la mascota.
+- Acordes de criaturas consultan la armonía en su onset, incluyendo el cruce de compás del scheduler.
+
+Auditoría, 124 suites Node, cinco programas de navegador y 121 renders aprobados. Evidencia `scripts/musica-05-validation.json`. CI/deploy/escucha física separados.
+
 # Dirección musical · fase 4: música que desarrolla una forma
 
 - Seis situaciones de arreglo: exposición, respuesta, crecimiento, retirada, regreso y puente. Bloques de ocho compases con variación territorial y desarrollo del motivo tras 48 compases.

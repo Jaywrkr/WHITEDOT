@@ -23,3 +23,8 @@ export function productionIdentity(region,seedOf,hybrid=null){
   leads=base.leads.slice(offset).concat(base.leads.slice(0,offset));
  return Object.freeze({...base,version:1,leads:Object.freeze(leads),bassI:base.bass[(h>>>5)%base.bass.length],variant:(h>>>10)%16});
 }
+
+export function productionPercussion(identity){
+ const id=identity?.id,pools={afro:['p_framedrum','p_waterdrum','p_seedshake','conga'],organic:['p_claypot','p_seedshake','p_woodrim','wood'],machine:['p_bronzebody','p_woodrim','p_brushkit','clap'],disco:['clap','p_woodrim','p_seedshake','p_brushkit'],guitar:['p_brushkit','p_framedrum','rim','clap'],italo:['clap','p_woodrim','p_seedshake','p_brushkit'],ambient:['p_lowgong','p_claypot','p_seedshake','wood'],dub:['rim','p_woodrim','p_waterdrum','wood'],bass:['p_brushkit','p_framedrum','p_woodrim','clap']};
+ return pools[id]||['p_woodrim','p_claypot','p_brushkit','rim'];
+}

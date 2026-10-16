@@ -58,7 +58,7 @@ export function createRegionalVoices(region, biomes, genres, seedOf, rng) {
 
 export function initialize(runtime) {
   const cache = new Map(),blobCache=new Map();
-  let voiceOrigin="ambient";
+  let voiceOrigin="ambient",budgetOwner=null,budgetKey=null,manualHits=0;const sourceHits=new Map();
   function withVoiceOrigin(origin,emit){const previous=voiceOrigin;voiceOrigin=origin;try{return emit();}finally{voiceOrigin=previous;}}
   function rawVoice(kind, region, source) {
     if(kind==='caminante'&&source)return walkerVoice(source,region,runtime.GEN,runtime.seedOf);
@@ -91,12 +91,19 @@ export function initialize(runtime) {
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
     if (!runtime.ac || !region) return;
     time=runtime.musicalTime?.(time)??time;
+    const raw=getVoice(kind,region,source),voice=origin==='duet'?runtime.duetVoice?.(raw,source?.duetSlot,region)||raw:raw;
+    if(runtime.unifiedMusic===true&&!runtime.labMode&&!runtime.duetRoom&&origin==='player'&&source&&runtime.inWorld()){
+      const key=(runtime.MU.dnaA?.key||region.key)+':'+Math.floor(runtime.MU.step/16);
+      if(budgetOwner!==runtime.S||budgetKey!==key){budgetOwner=runtime.S;budgetKey=key;manualHits=0;sourceHits.clear();}
+      const id=source.id||kind+':'+source.x+':'+source.y,count=sourceHits.get(id)||0;
+      if(manualHits>=16||count>=(kind==='pulso'?8:voice.role==='perc'?6:3)||Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)>360)return;
+      sourceHits.set(id,count+1);manualHits++;
+    }
     if(origin==='player'&&runtime.duetCapture?.(kind,index,time,region,source))return;
     runtime.labLearningHear?.(kind,index,time,region,source,origin);runtime.influenceInput?.(kind,region,source,origin);runtime.voiceGuideHear?.(kind,region,source,origin);runtime.livingHear?.(kind,index,region,source,origin);
     runtime.loopTap?.(kind,index,time,region,full,volume,source,origin);
     if(origin==='player')runtime.recordElement?.(kind,region);
     if(origin==='player'){runtime.vidaHear?.(kind,index,time);runtime.powerHear?.(index);}   // el ave lira escucha lo que tocas   // el looper guarda lo que causas tú
-    const raw=getVoice(kind,region,source),voice=origin==='duet'?runtime.duetVoice?.(raw,source?.duetSlot,region)||raw:raw;
     if(origin==='player')runtime.petHear?.({degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,source});
     if(origin==='player'&&(!source||Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<360))runtime.depthHear?.({origin,degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,layer:runtime.S.layer||'superficie'});
     const frame=runtime.musicalFrame?.(time),harmonicRegion=frame?.region||(origin==='band'?(runtime.MU.dnaA||region):region);
@@ -139,7 +146,7 @@ export function initialize(runtime) {
         } else runtime.hookInst(voice.instrument,n-(voice.instrument==='glass'?12:0),t,v,region,articulation);
       };
       const patchEmit=()=>{const produce=()=>withVoiceOrigin(origin,emit);if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(kind,region,voice,source,t,produce);else produce();};
-      const spatialEmit=(gain=1)=>{v*=gain;if(runtime.withVoiceEffect)runtime.withVoiceEffect(kind,region,voice,t,patchEmit);else patchEmit();};
+      const spatialEmit=(gain=1)=>{v*=gain;if(runtime.withVoiceEffect)runtime.withVoiceEffect(kind,region,voice,t,patchEmit,source);else patchEmit();};
       if(runtime.withSpatialVoice)runtime.withSpatialVoice(source,t,spatialEmit);else spatialEmit();
     }
     const strength = voice.role === 'bajo' ? .15 : voice.role === 'perc' ? .12 : voice.role === 'agudo' ? .03 : .075;
