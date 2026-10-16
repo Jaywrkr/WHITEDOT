@@ -1,24 +1,25 @@
 import {createMotion,WOW_LIMITS,lookVector,greetingPose,formationOffset} from './wow-model.js';
 export function initialize(runtime){
- const greetings=new WeakMap(),formation=new WeakMap(),seenBeams=new WeakSet(),markedWaves=new WeakMap();let nextSlot=0;
+ let greetings=new WeakMap();const formation=new WeakMap(),seenBeams=new WeakSet(),markedWaves=new WeakMap();let nextSlot=0;
  const motion=createMotion();let owner=null,layer=null,dust=[],seconds=0,nearby=[],pending=[],ripples=[],flashes=[],memory=[],marks=[],clusters=[],lastPosition=null;
  const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
  function sources(){
-  const pool=[...(runtime.MU?.near||[]),...(runtime.MU?.walkerFollowers||[]),...(runtime.livingNear?.(140)||[]),...(runtime.microNear?.(140)||[]),...(runtime.inhabitantsNear?.(140)||[])].map(o=>o.object||o);
+  const surface=(runtime.S.layer||'superficie')==='superficie';
+  const pool=[...(surface?runtime.MU?.near||[]:[]),...(surface?runtime.MU?.walkerFollowers||[]:[]),...(runtime.livingNear?.(140)||[]),...(surface?runtime.microNear?.(140)||[]:[]),...(surface?runtime.inhabitantsNear?.(140)||[]:[])].filter(Boolean).map(o=>o.object||o);
   return [...new Set(pool)].filter(o=>Number.isFinite(o.x)&&Number.isFinite(o.y)&&Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<140).sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy)).slice(0,WOW_LIMITS.nearby);
  }
  const blocked=()=>!runtime.inWorld()||document.hidden||runtime.scanning||runtime.$?.('rareNotice')?.dataset.inspect==='true'||!!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function tick(dt,paused=false){
-  runtime.cardFocusTick?.();
-  if(owner!==runtime.S||layer!==runtime.S.layer){owner=runtime.S;layer=runtime.S.layer;motion.reset();dust=[];pending=[];ripples=[];flashes=[];memory=[];marks=[];}
+  runtime.cardFocusTick?.();runtime.favoriteReturnTick?.(dt,paused||blocked());
+  if(owner!==runtime.S||layer!==runtime.S.layer){owner=runtime.S;layer=runtime.S.layer;motion.reset();greetings=new WeakMap();dust=[];pending=[];ripples=[];flashes=[];memory=[];marks=[];}
   const jumped=lastPosition&&Math.hypot(runtime.S.wx-lastPosition.x,runtime.S.wy-lastPosition.y)>40;
-  lastPosition={x:runtime.S.wx,y:runtime.S.wy};
+  lastPosition={x:runtime.S.wx,y:runtime.S.wy};if(jumped)greetings=new WeakMap();
   const stopped=paused||blocked()||jumped,step=motion.step(runtime.S.wx,runtime.S.wy,dt,stopped);
   seconds+=Math.max(0,Math.min(.05,dt||0));
   nearby=stopped?[]:sources();
   if(stopped||reduced()){dust=[];pending=[];ripples=[];flashes=[];memory=[];marks=[];clusters=[];return;}
   clusters=[];
-  if(runtime.currentPocket?.()?.kind!=='quiet')for(const o of nearby){
+  if(runtime.currentPocket?.()?.kind!=='quiet'&&!runtime.regionOfPos?.(runtime.S.wx,runtime.S.wy)?.worldFamily?.quiet)for(const o of nearby){
    const key=o.id||o.s?.id||[o.x,o.y].join(',');
    if((runtime.seedOf('wow:dust:v1:'+key)>>>0)%3||clusters.some(p=>Math.hypot(p.x-o.x,p.y-o.y)<120))continue;
    if(nearby.filter(p=>Math.hypot(p.x-o.x,p.y-o.y)<65).length<3)continue;
@@ -103,7 +104,7 @@ export function initialize(runtime){
   c.restore();
  }
  function cubeTransform(c,x,y){
-  const p=motion.pose(reduced()||blocked());c.translate(x,y);c.rotate(p.angle);c.scale(p.x,p.y);c.rotate(-p.angle);c.translate(-x,-y);
+  const p=motion.pose(reduced()||blocked());if(p.x===1&&p.y===1)return;c.translate(x,y);c.rotate(p.angle);c.scale(p.x,p.y);c.rotate(-p.angle);c.translate(-x,-y);
  }
  Object.defineProperties(runtime,{wowTick:{get:()=>tick},drawWowWorld:{get:()=>draw},wowObjectTransform:{get:()=>objectTransform},wowEyes:{get:()=>eyes},wowFollowTarget:{get:()=>followTarget},wowSoundCue:{get:()=>noteCue},wowPulseHit:{get:()=>pulseHit},wowState:{get:()=>({dust:dust.length,seconds,pending:pending.length,ripples:ripples.length,flashes:flashes.length,constellations:memory.length,marks:marks.length,clusters:clusters.length})},cubeVisualTransform:{get:()=>cubeTransform}});
 }

@@ -2,7 +2,7 @@
 [Plan vigente: recuperar música e identidad del universo](PLAN_REENCUENTRO.md). Habitantes subidos; ampliación 8 de pulsos implementada localmente, auditoría y cuatro suites enfocadas aprobadas; navegador/CI pendientes. [Propuesta posterior](PROPUESTA_PULIDO_EXPERIENCIA.md).
 <!-- /reencuentro -->
 
-Versión en desarrollo: **2.3.0-alpha.43** · [Mejora integral, diez fases](PLAN_MEJORA_INTEGRAL.md). Fecha de deploy real en la aplicación.
+Versión en desarrollo: **2.3.0-alpha.44** · [Mejora integral, diez fases](PLAN_MEJORA_INTEGRAL.md). Fecha de deploy real en la aplicación.
 
 [Cierre de mejora integral: ramas, pruebas y teléfono](CIERRE_MEJORA_INTEGRAL.md). Diez fases implementadas; integración completa pendiente de CI y aceptación física.
 
@@ -174,3 +174,5 @@ El guardado vive en el navegador (`localStorage`). Exporta una copia desde Menú
 ## Cuaderno vivo
 
 Veinte mejoras visuales en [PLAN_WOW.md](PLAN_WOW.md). Música preservada; estado de verificación por entrega.
+
+Cuaderno vivo incorpora gestos del cubo, miradas y saludos, conexiones luminosas, cometas, profundidad de tarjetas y firmas de favoritos. Son veinte mejoras visuales sin reescribir música, mapas ni guardados. Estado y pendientes en PLAN_WOW.md.

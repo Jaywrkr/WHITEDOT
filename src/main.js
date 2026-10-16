@@ -1,3 +1,4 @@
+import {initialize as wowMemory} from './wow-memory.js';
 import {initialize as wowUI} from './wow-ui.js';
 import {initialize as contentGallery} from './content-gallery.js';
 import {initialize as pixelLife} from './pixel-life.js';
@@ -187,7 +188,7 @@ contentGallery(runtime);microInstruments(runtime);achievementsV2(runtime);worldV
 practiceTravel(runtime);boxSurprises(runtime);
 musicTravel(runtime);
 distantColors(runtime);vjWorld(runtime);reactiveEcology(runtime);
-pixelLife(runtime);wowFeel(runtime);wowUI(runtime);
+pixelLife(runtime);wowFeel(runtime);wowUI(runtime);wowMemory(runtime);
 houseAudio(runtime);house(runtime);
 onboarding(runtime);labLearning(runtime);
 runtime.styleUI();runtime.hud();

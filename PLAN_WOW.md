@@ -23,7 +23,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 17 | Barrido de adquisición | feat/wow-17-adquisicion | Implementada; ver informe 17 |
 | 18 | Álbum con foco | feat/wow-18-album | Implementada; ver informe 18 |
 | 19 | Firma de favoritos | feat/wow-19-favoritos | Implementada; ver informe 19 |
-| 20 | Constelación de regreso | feat/wow-20-regresos | Pendiente |
+| 20 | Constelación de regreso | feat/wow-20-regresos | Implementada; ver informe 20 |
 
 ## Verificación
 
@@ -112,3 +112,15 @@ Solo la tarjeta elegida con el dedo o el teclado respira suavemente. Al seleccio
 ### 19. Firma de favoritos
 
 Cada favorito muestra una constelación pequeña derivada de su dirección y carácter guardados. Funciona también con semillas ajenas, no añade consultas al generador y conserva su dibujo al renombrar el lugar.
+
+## Publicación y pendientes de cierre
+
+Ramas 1–19 confirmadas por respuestas del servidor Git y anuncios remotos. La alternativa local usa el protocolo Git HTTPS estándar en un proceso, sin extraer credenciales; bibliotecas auxiliares fuera del repo, verificadas contra PyPI. No hay dependencias de juego nuevas. La rama 20 completa el conjunto.
+
+Main ya contenía pulsos y entregas 1–8 en el PR #196. La integración de 9–10 está preparada en integration/wow-10, commit 52aa65e; comprobaciones de GitHub pendientes. No se presenta esa integración como publicada.
+
+Quedan pendientes la propuesta integral de siete fases, la escucha física y las suites oficiales completas. Ninguna de las veinte mejoras se considera una medición de variedad musical o de frecuencia de encuentros.
+
+### 20. Constelación de regreso
+
+Al volver desde un favorito, su constelación aparece alrededor del cubo durante 2,2 segundos. Marca efímera, consumida una vez y validada por mundo, capa, coordenadas y antigüedad. No salta a lugares aproximados ni cambia guardados. El cierre añade un recorrido real de tarjetas/favoritos para tres tamaños y protege capas y reinicios visuales.

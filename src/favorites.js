@@ -56,7 +56,7 @@ export function initialize(runtime){
    const button=(text,callback)=>{const b=document.createElement('button');b.textContent=text;b.onclick=callback;row.append(b);return b;};
    button('Renombrar',()=>{rename(point.id,input.value);input.value=point.name;label.textContent=point.name;});button('Borrar',()=>remove(point.id));
    button('Código',async()=>{try{const code=runtime.encodeFavorite?.(point);if(code){$('placeCode').value=code;try{await navigator.clipboard.writeText(code);runtime.toast('<em>Código</em> · copiado');}catch(_){runtime.toast('<em>Código</em> · listo para copiar arriba');}}}catch(_){}});
-   const visit=document.createElement('button');visit.textContent='Ir a este lugar';visit.disabled=!supportedWorld(point.address)||!supportedMusic(point.address);visit.onclick=()=>runtime.visitWorldAddress?.(point.address);
+   const visit=document.createElement('button');visit.textContent='Ir a este lugar';visit.disabled=!supportedWorld(point.address)||!supportedMusic(point.address);visit.onclick=()=>{runtime.rememberFavoriteReturn?.(point);if(!runtime.visitWorldAddress?.(point.address))runtime.clearFavoriteReturn?.();};
    const route=document.createElement('div');route.className='row';if(sameWorld(point.address,runtime.worldIdentity))runtime.favoriteActions?.(point,route);
    const provenance=document.createElement('p');provenance.textContent=[point.character,point.shared?'Compartido':'',`${Math.round(point.x)}, ${Math.round(point.y)}`].filter(Boolean).join(' · ');if(readOnly()){input.disabled=notes.disabled=true;for(const b of row.querySelectorAll('button'))if(b.textContent!=='Código')b.disabled=true;}
    edit.append(provenance,input,notes,row,route);card.append(title,details,visit,edit);body.append(card);
