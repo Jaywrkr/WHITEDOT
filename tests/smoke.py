@@ -99,6 +99,6 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('#bStudio').click();page.locator('#houseWorkshop').click();page.locator('#w').click(position={'x':size['width']/2,'y':size['height']/2-min(size['width'],size['height']-260)*.13});assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).studio.slots).length')==1
   page.locator('#stExit').click();page.reload(wait_until='domcontentloaded');page.wait_for_function('document.getElementById("bMenu").onclick !== null');assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).studio.slots).length')==1
   assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).journal.music.instruments).length > 0')
-  page.locator('#bMenu').click();page.locator('#bShare').click();assert page.locator('#shareImg').evaluate('(i)=>i.naturalWidth>0');assert not errors,errors
+  page.locator('#bMenu').click();page.locator('#bShare').click();page.wait_for_function('document.getElementById("shareImg").complete && document.getElementById("shareImg").naturalWidth>0');assert page.locator('#shareImg').evaluate('(i)=>i.naturalWidth>0');assert not errors,errors
   print(label+': challenges, day rollover, paused lamp, studio persistence, sharing PASS',flush=True);c.close();b.close()
 server.shutdown()

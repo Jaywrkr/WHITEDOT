@@ -1,4 +1,6 @@
-Versión en desarrollo: **2.3.0-alpha.13** · [Mejora integral, diez fases](PLAN_MEJORA_INTEGRAL.md). Fecha de deploy real en la aplicación.
+Versión en desarrollo: **2.3.0-alpha.14** · [Mejora integral, diez fases](PLAN_MEJORA_INTEGRAL.md). Fecha de deploy real en la aplicación.
+
+[Cierre de mejora integral: ramas, pruebas y teléfono](CIERRE_MEJORA_INTEGRAL.md). Diez fases implementadas; integración completa pendiente de CI y aceptación física.
 
 [Recuperación musical](RECUPERACION_MUSICAL.md): motivos, bajos y voces principales de la radio anterior, acompañados por los ensambles, filtros e interacciones actuales. Comparación histórica documentada; sin reiniciar partidas.
 
@@ -12,13 +14,13 @@ Cierre de interacción 8 incorpora avisos discretos/relevantes/excepcionales, me
 
 Explora para descubrir sonidos, crear tu música y conservar tus encuentros. Un cubo blanco en negro, electrónica generativa y organismos que responden a tus gestos. La primera luz del Camino abre el Mundo del día sin reloj de exploración.
 
-**Jugar:** https://whitedot-inky.vercel.app. La versión de producción depende de los merges de Jay. Esta rama propone **2.3.0-alpha.13**. En iPhone: Compartir → Añadir a pantalla de inicio. Toca el Mundo para activar audio.
+**Jugar:** https://whitedot-inky.vercel.app. La versión de producción depende de los merges de Jay. Esta rama propone **2.3.0-alpha.14**. En iPhone: Compartir → Añadir a pantalla de inicio. Toca el Mundo para activar audio.
 
 Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
 Cierre de la ampliación: [estado, auditoría y orden de ramas](CIERRE_INTERACCION_FINAL.md). Pruebas automatizadas y aceptación física se registran por separado.
 
-## Dirección musical · ciclo actual
+## Dirección musical · antecedente integrado
 
 [Plan de siete fases](PLAN_DIRECCION_MUSICAL.md). La fase 1 comparte reloj y armonía dentro de cada zona; cada territorio mantiene su tempo. Fuentes cercanas conservan su instrumento y acompañan la armonía audible. Fase 2 conecta identidades de producción a protagonistas, acordes y respuestas del motor. Fase 3 permite explorar 18 cruces desde Estilos → Cruces, incluyendo guitarra/máquina y disco de secuencias, con formas musicales originales. Fase 4 desarrolla seis situaciones de arreglo por frases, manteniendo motivos reconocibles y retirando capas. Fase 5 reparte instrumentos por función, coordina contactos y ofrece filtros audibles de distinta pendiente/cantidad. Fase 6 coordina cambios de tempo, entrada musical y color local, manteniendo audibles los lugares mínimos. La fase 7 audita el conjunto, corrige introducciones mudas y mezclas de percusión, conserva swing y ordena las zonas experimentales dentro del pulso. [Cierre y comprobaciones](CIERRE_DIRECCION_MUSICAL.md): 127 suites Node, 92 recorridos más offline y 39 programas de audio aprobados. Son 14 identidades de producción y 18 influencias sobre los 52 estilos existentes.
 

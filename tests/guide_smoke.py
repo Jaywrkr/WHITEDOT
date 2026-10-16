@@ -12,18 +12,22 @@ threading.Thread(target=server.serve_forever,daemon=True).start()
 try:
  with sync_playwright() as p:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
+  page=b.new_page(has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   for width,height in [(320,740),(390,844),(844,390)]:
-   page=b.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+   if page.url!='about:blank':page.evaluate('localStorage.clear()')
+   page.set_viewport_size({'width':width,'height':height})
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('typeof window.__testRuntime?.worldReady==="function"')
    assert not page.evaluate('__testRuntime.worldReady()')
+   page.evaluate('__testRuntime.S.sound=false')
    page.locator('#hcGo').click()
+   assert not page.evaluate('__testRuntime.ac'),'muted tutorial entry must not allocate audio'
    page.evaluate('''()=>{const r=__testRuntime;r.S.sound=false;r.enterWorld();if(r.inWorld())throw Error('Daily ritual bypassed');let light;for(let x=-2;x<3&&!light;x++)for(let y=-2;y<3&&!light;y++)light=r.getChunk(x,y)[0];if(!light)throw Error('No native Camino light');r.collect(light);r.S.ach.keep='2026-10-01';r.S.lampUsed=999999;r.S.relaxedCreate=false;r.save();}''')
    assert page.evaluate('__testRuntime.worldReady() && !__testRuntime.isFree()'),'one light must open the world before the optional full bar'
    page.locator('#bPrimary').click();page.locator('#hwGo').click()
    page.wait_for_timeout(180);assert page.evaluate('__testRuntime.inWorld() && __testRuntime.S.lampUsed===999999')
    page.locator('#bMenu').click();page.locator('#bGuide').click();assert page.locator('#mGuide').is_visible()
-   assert 'identidad musical' in page.locator('#mGuide').inner_text()
+   assert 'Explora sonidos. Crea tu música.' in page.locator('#mGuide').inner_text()
    assert 'criatura' in page.locator('#guideNext').inner_text()
    page.locator('#guideGlossary').click();assert 'poderes temporales' in page.locator('#mGuide').inner_text()
    assert 'escuchando cerca y lanzando pulsos' in page.locator('#mGuide').inner_text()
@@ -43,6 +47,6 @@ try:
    assert page.evaluate('__testRuntime.S.mode')=='camino';assert not page.evaluate('__testRuntime.worldReady()')
    assert page.evaluate('__testRuntime.S.ach.keep')=='2026-10-01'
    page.reload();page.wait_for_function('typeof window.__testRuntime?.worldReady==="function"');assert page.evaluate('__testRuntime.S.mode')=='camino'
-   assert not errors,errors;print('PASS daily first light, no expiry, same-day return, next-day Camino, saved rewards and silent optional guide at '+str(width),flush=True);page.close()
+   assert not errors,errors;print('PASS daily first light, no expiry, same-day return, next-day Camino, saved rewards and silent optional guide at '+str(width),flush=True)
   b.close()
 finally:server.shutdown()

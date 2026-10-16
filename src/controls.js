@@ -7,7 +7,7 @@ export function initialize(runtime) {
   runtime.$("oSession").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openJournal("today");};
   runtime.$("sessionClose").onclick=()=>{runtime.$("mSession").hidden=true;};
   runtime.$("sessionShare").onclick=runtime.shareSession;
-  runtime.$("hcGo").onclick=()=>{runtime.S.help.camino=true;runtime.$("mHelpC").hidden=true;runtime.audio();if(!runtime.S.voiceStart){runtime.S.voiceStart=true;setTimeout(()=>runtime.say(runtime.VOZ.start),900);}runtime.save();};
+  runtime.$("hcGo").onclick=()=>{runtime.S.help.camino=true;runtime.$("mHelpC").hidden=true;if(runtime.S.sound)runtime.audio();if(!runtime.S.voiceStart){runtime.S.voiceStart=true;setTimeout(()=>runtime.say(runtime.VOZ.start),900);}runtime.save();};
   runtime.$("bMenu").onclick=()=>{volumeUI();runtime.$("mMenu").hidden=false;};runtime.$("mnClose").onclick=()=>{runtime.$("mMenu").hidden=true;};
   document.querySelectorAll("#mMenu .tiles button,#mMenu .devbox button").forEach(b=>b.addEventListener("click",()=>{if(b.id!=="dReset")runtime.$("mMenu").hidden=true;}));
   runtime.$("bPrimary").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else motion.enter(runtime.$('bPrimary'));};

@@ -315,3 +315,6 @@ body:has(#voice.on:not([hidden])) .first-journey-hint{visibility:hidden}
 .rare-card-details p,.rare-card .rare-flavour{font-size:12px;line-height:1.65}
 .card-ability b{font-size:12px}.card-ability span{font-size:11px}
 .rare-reveal-card button,.celebration-card button{min-height:44px;touch-action:manipulation}
+
+/* The preview keeps its full drawing area inside the scrollable editor. */
+.cube-preview{min-height:71px}.cube-sheet>.panel-heading,.cube-sheet>.row:last-child{flex-shrink:0}

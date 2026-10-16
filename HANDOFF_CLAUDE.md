@@ -1,3 +1,9 @@
+# Mejora integral · fase 10 y cierre
+
+Rama `mejora/10-cierre`, desde `6bc180d`. Cierra las diez mejoras existentes sin ampliar catálogos. Casa recalcula habitaciones al cambiar los días, conservando objetos y datos futuros. El cubo mantiene 70 px de dibujo. Las entradas del Camino y Mundo respetan sonido apagado sin preparar audio. Los recorridos de CI distinguen llegada aleatoria, regreso deliberado, tarjetas abiertas y carga asíncrona de imágenes; mantienen sus aserciones.
+
+141 suites Node completas aprobadas. Recorridos locales y renders finales en scripts/mejora-10-validation.json. Navegador/audio completos se exigen en CI; escucha física y deploy no se afirman. Leer [CIERRE_MEJORA_INTEGRAL.md](CIERRE_MEJORA_INTEGRAL.md). Main comprobado en `6f00f13` ya incluye fases 1–6; quedan ramas 7 → 8 → 9 → 10. Jay conserva PR/merge; no se hizo merge ni push a main.
+
 # Mejora integral · fase 9
 
 Rama `mejora/09-recorrido`, versión 2.3.0-alpha.13. El toque en Casa escucha sin desplazar objetos; el arrastre los mueve y cambiar de herramienta cancela el gesto anterior. Casa y Taller conservan explicaciones propias y entrar con sonido apagado no crea el motor. La guía expresa explorar, crear y conservar; la Voz guarda contexto sin competir con el tutorial inicial. Se preservan visitas, partidas futuras y el taller radial.

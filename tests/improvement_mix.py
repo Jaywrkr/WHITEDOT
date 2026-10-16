@@ -25,6 +25,6 @@ try:
   if PHASE==3:
    assert all(r['microNotes'] for r in rows),rows
    assert {'kick','snare','hat'} <= {n['instrument'] for n in rows[0]['microNotes']},rows[0]
-  (ROOT/f'scripts/mejora-{PHASE:02}-audio-validation.json').write_text(json.dumps(rows,indent=2)+'\n')
+  (ROOT/f'scripts/mejora-{PHASE:02}-audio-validation.json' if 'WHITEDOT_IMPROVEMENT_PHASE' in os.environ else Path('/tmp/whitedot-improvement-audio.json')).write_text(json.dumps(rows,indent=2)+'\n')
   print('PASS focused production mixes: recovered lead, contemporary ensemble, synchronized interactions and protected output',flush=True);browser.close()
 finally:server.shutdown()

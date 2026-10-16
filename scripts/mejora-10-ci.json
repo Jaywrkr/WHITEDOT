@@ -1,0 +1,62 @@
+{
+  "checkedAt": "2026-10-16T19:00:25.716208+00:00",
+  "run": 38951542059,
+  "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/38951542059",
+  "branch": "mejora/10-cierre",
+  "codeCommit": "0e17e7f68507364ad35fa36bfe90b864901bf581",
+  "status": "queued",
+  "conclusion": null,
+  "jobs": [
+    {
+      "name": "logic",
+      "status": "queued",
+      "conclusion": null,
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/38951542059/job/117143878806"
+    },
+    {
+      "name": "audio (2)",
+      "status": "queued",
+      "conclusion": null,
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/38951542059/job/117143879002"
+    },
+    {
+      "name": "audio (1)",
+      "status": "queued",
+      "conclusion": null,
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/38951542059/job/117143879085"
+    },
+    {
+      "name": "audio (3)",
+      "status": "queued",
+      "conclusion": null,
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/38951542059/job/117143879188"
+    },
+    {
+      "name": "browser",
+      "status": "queued",
+      "conclusion": null,
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/38951542059/job/117143879197"
+    }
+  ],
+  "scope": "Full Node, universe, browser and three audio shards; queued or missing results are not success. Documentation-only follow-up does not change tested code.",
+  "mainSnapshot": {
+    "revision": "6f00f13a1a60f1245751ae048240a62cc3e1b05d",
+    "containsPhase6": "aa438159",
+    "alreadyIntegratedPhases": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "remainingBranches": [
+      "mejora/07-interfaz",
+      "mejora/08-coleccion",
+      "mejora/09-recorrido",
+      "mejora/10-cierre"
+    ],
+    "verifiedWith": "git fetch origin main; git merge-base --is-ancestor aa43815 FETCH_HEAD; git ls-remote --heads origin mejora/*",
+    "mergedByCodex": false
+  }
+}
