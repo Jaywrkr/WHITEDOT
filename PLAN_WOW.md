@@ -14,7 +14,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 8 | Notas visibles a tiempo | feat/wow-08-notas-visibles | Implementada; ver informe 08 |
 | 9 | Corriente en conexiones | feat/wow-09-corriente | Implementada; ver informe 09 |
 | 10 | Constelaciones temporales | feat/wow-10-constelaciones | Implementada; ver informe 10 |
-| 11 | Huellas de pulso | feat/wow-11-huellas-pulso | Pendiente |
+| 11 | Huellas de pulso | feat/wow-11-huellas-pulso | Implementada; ver informe 11 |
 | 12 | Polvo localizado | feat/wow-12-polvo | Pendiente |
 | 13 | Cometas variados | feat/wow-13-cometas | Pendiente |
 | 14 | Galaxias que respiran | feat/wow-14-galaxias | Pendiente |
@@ -72,3 +72,11 @@ Tres puntos recorren cada conexión musical existente mientras dura. Máximo och
 ### 10. Constelaciones temporales
 
 Las conexiones reales dejan una constelación tenue durante 2,8 segundos. Solo ocho recuerdos efímeros, sin guardado ni enlaces ficticios. Saltos y paneles limpian la memoria visual.
+
+### 11. Huellas de pulso
+
+Los pulsos dejan huellas pequeñas únicamente donde cruzaron un objeto real. Máximo dieciocho, con deduplicación y borrado automático. La forma y el alcance musical del pulso se conservan.
+
+### 11. Huellas de pulso
+
+Los pulsos dejan huellas pequeñas únicamente donde cruzaron un objeto real. Máximo dieciocho, con deduplicación y borrado automático. La forma y el alcance musical se conservan.
