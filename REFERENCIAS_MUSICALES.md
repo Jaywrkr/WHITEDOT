@@ -2,7 +2,7 @@
 
 Referencias de intención elegidas por Jay; material generado original. Se comparan decisiones de composición y producción. No son presets de artistas ni un análisis ya realizado sobre sus grabaciones.
 
-La red bloqueó los previews públicos con HTTP 403. Por tanto, esta primera matriz se apoya en características estilísticas conocidas. La auditoría distinguirá medidas del motor, análisis directo de grabaciones y escucha física. No atribuir resultados medidos a un artista sin disponer de la fuente.
+La red bloqueó los previews públicos con HTTP 403. Por tanto, esta primera matriz se apoya en características estilísticas conocidas. La auditoría distingue medidas del motor, análisis directo de grabaciones y escucha física. No atribuir resultados medidos a un artista sin disponer de la fuente.
 
 | Familia | Referencia de intención | Patrones que evaluar | Desarrollo y producción |
 |---|---|---|---|
@@ -27,3 +27,9 @@ La red bloqueó los previews públicos con HTTP 403. Por tanto, esta primera mat
 ## Evaluación de escucha pendiente
 
 Recorrer minimal, blues electrónico, disco/funk, garage, afro y ambient con el mismo volumen. Escuchar quietud, interacción y viaje. Registrar groove, fatiga, deseo de quedarse, reconocimiento de cada fuente y contraste entre territorios. Evaluar teléfonos con altavoz/auriculares y sesiones largas. Los resultados automáticos se registran por separado.
+
+## Resultado estructural del ciclo
+
+La auditoría de [CIERRE_DIRECCION_MUSICAL.md](CIERRE_DIRECCION_MUSICAL.md) usa `npm run audit:music`: 52 estilos nativos, 18 influencias y 128 compases por estilo. Las 71 comprobaciones pasan. Se observan 51 gramáticas rítmicas en la muestra, seis formas de arreglo por estilo, repetición intencional y desarrollo de motivos.
+
+Los controles verifican pulso de minimal/disco/afro, backbeat y swing de garage, tempo rápido de drum & bass, estratos de percusión afro, doce compases de blues y protagonistas reales de guitarra/disco de secuencias. Estas son medidas de los eventos originales del juego; no se atribuyen a grabaciones inaccesibles. Evidencia: `scripts/musica-07-pattern-audit.json`. Renders, transiciones y resultados de suites se registran aparte en el cierre.

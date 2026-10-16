@@ -1,3 +1,17 @@
+# Handoff · Dirección musical, fase 7
+
+Rama `feat/musica-07-auditoria`, desde F6 `97f7c98`. Última rama del ciclo de siete fases: auditoría, 127 suites Node, 71 comprobaciones de patrones, 92 recorridos más offline y 39 programas de audio / 915 renders aprobados, pico máximo registrado 0,934278. Continúa [PLAN_INTERACCION_FINAL.md](PLAN_INTERACCION_FINAL.md), autorizado después. Esta rama conserva las entregas de pulido anteriores. Jay crea PR y merge, de la más antigua a la nueva. No publicar main desde este trabajo.
+
+[CIERRE_DIRECCION_MUSICAL.md](CIERRE_DIRECCION_MUSICAL.md) es el cierre vigente. `scripts/musica-07-validation.json` registra las suites finales; `musica-07-pattern-audit.json` recoge 71 comprobaciones sobre 52 estilos y 128 compases por estilo. `npm run audit:music` reproduce esta matriz y también entra en `npm test`.
+
+Correcciones de auditoría: introducción ambient de dos voces antes muda; swing de garage conservado; percusión nativa dominante y ornamentos acotados; laboratorio de golpes ternarios localizado en territorio compatible, con energía controlada en su prueba. El laboratorio mantiene sus experimentos explícitos; producción usa `production-experiments.js`: notas del acorde y subdivisiones compartidas, cuatro tratamientos acotados. Visitas de quietud responden por frase; el pincel musical se afina al acorde del onset. La mascota usa ese marco audible en los cruces; `pet_mix.py` valida ahora producción real y pertenencia al acorde. Una pasada de audio se interrumpió para incorporar este arreglo y no se contabiliza como suite completa.
+
+`tests/audio_mix.mjs` comprueba señal finita y pico de todo el buffer, incluido arranque. `production_mix.py` añade 52 estilos nativos y cuatro zonas experimentales reales. `run-browser-tests.py` incluye encuentros y descubre nuevos `*_mix.py` para no omitir programas; ejecuciones completas de navegador y audio se hacen secuencialmente. Los informes históricos se conservan; evidencia nueva con prefijo `musica-07`.
+
+La referencia de artistas es estilística, documentada en `REFERENCIAS_MUSICALES.md`: la red bloqueó previews con HTTP 403, sin descarga ni escucha directa de grabaciones. Escucha física iOS/Android, CI y deploy son verificaciones externas separadas. No afirmar masterización profesional certificada por métricas automáticas. No reabrir fases históricas por sus tablas antiguas.
+
+## Antecedentes
+
 # Handoff · Dirección musical, fase 6
 
 Rama `feat/musica-06-transiciones`, desde F5 `9042c83`. Jay PR/merge. Siguiente F7: auditoría integrada del conjunto final.
@@ -358,7 +372,7 @@ Rama `feat/lab-l7-curaduria`, versión 2.1.0-alpha.7. L1–L7 entregadas. El cic
 - Las voces articuladas reservan espacio para los gestos y la práctica. Las cuerdas nuevas reutilizan excitaciones con una caché de ocho buffers por contexto; las voces sostenidas tienen liberación suave y límites explícitos.
 - El cierre conserva mundos, progreso, códigos anteriores y modo clásico. CIERRE_LABORATORIO_VIVO.md reúne hallazgos, soluciones, orden de ramas y aceptación física/artística pendiente.
 
-Validación completa aprobada: auditoría, 104 suites Node, 82 recorridos incluido offline y 581 renders de 28 programas de audio. Pico máximo medido: 0.945447; señal finita y límites aprobados por cada programa. [Evidencia](scripts/lab-l7-validation.json). CI de los PR y aceptación física/artística conservan su alcance propio.
+Validación completa aprobada: auditoría, 104 suites Node, 82 recorridos incluido offline y 581 renders de 28 programas de audio. Pico máximo registrado: 0.945447; señal finita y límites aprobados por cada programa. [Evidencia](scripts/lab-l7-validation.json). CI de los PR y aceptación física/artística conservan su alcance propio.
 
 ## Mapa técnico del ciclo
 

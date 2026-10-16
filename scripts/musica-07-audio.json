@@ -1,0 +1,533 @@
+{
+  "result": "passed",
+  "programCount": 39,
+  "rendersWithEvidence": 915,
+  "maxPeak": 0.9342780709266663,
+  "programs": [
+    {
+      "program": "production_mix.py",
+      "result": "passed",
+      "renders": 56,
+      "maxPeakIncludingStartupWhenAvailable": 0.886355996131897,
+      "rmsDbRange": [
+        -37.918745583622865,
+        -10.195401467201988
+      ],
+      "sampleRates": []
+    },
+    {
+      "program": "encounter_mix.py",
+      "result": "passed",
+      "renders": 10,
+      "maxPeakIncludingStartupWhenAvailable": 0.8862646222114563,
+      "rmsDbRange": [
+        -14.335657553846088,
+        -10.374569368695866
+      ],
+      "sampleRates": [
+        48000
+      ]
+    },
+    {
+      "program": "audio_mix.py",
+      "result": "passed",
+      "renders": 77,
+      "maxPeakIncludingStartupWhenAvailable": 0.9198006391525269,
+      "rmsDbRange": [
+        -28.391969691238135,
+        -7.780606973702122
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "depth_mix.py",
+      "result": "passed",
+      "renders": 14,
+      "maxPeakIncludingStartupWhenAvailable": 0.8742910027503967,
+      "rmsDbRange": [
+        -27.816271604822767,
+        -8.997246358855369
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "glass_mix.py",
+      "result": "passed",
+      "renders": 6,
+      "maxPeakIncludingStartupWhenAvailable": 0.9185774326324463,
+      "rmsDbRange": [
+        -27.416391275149657,
+        -10.144585067788793
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "ecology_mix.py",
+      "result": "passed",
+      "renders": 12,
+      "maxPeakIncludingStartupWhenAvailable": 0.8943759202957153,
+      "rmsDbRange": [
+        -18.770598779353755,
+        -8.244225006792469
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "composition_mix.py",
+      "result": "passed",
+      "renders": 14,
+      "maxPeakIncludingStartupWhenAvailable": 0.8838931918144226,
+      "rmsDbRange": [
+        -29.284601763067364,
+        -11.042874105262577
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "exploration_mix.py",
+      "result": "passed",
+      "renders": 26,
+      "maxPeakIncludingStartupWhenAvailable": 0.8762324452400208,
+      "rmsDbRange": [
+        -30.490289282537127,
+        -10.709446873406105
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "pet_mix.py",
+      "result": "passed",
+      "renders": 21,
+      "maxPeakIncludingStartupWhenAvailable": 0.8796026110649109,
+      "rmsDbRange": [
+        -26.565970800845488,
+        -12.168364919851777
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "percussion_mix.py",
+      "result": "passed",
+      "renders": 73,
+      "maxPeakIncludingStartupWhenAvailable": 0.9030426740646362,
+      "rmsDbRange": [
+        -42.973533748740785,
+        -8.887213814649265
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "living_mix.py",
+      "result": "passed",
+      "renders": 48,
+      "maxPeakIncludingStartupWhenAvailable": 0.8910486698150635,
+      "rmsDbRange": [
+        -31.972140570101388,
+        -11.597825204040548
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "celebration_mix.py",
+      "result": "passed",
+      "renders": 6,
+      "maxPeakIncludingStartupWhenAvailable": 0.882439911365509,
+      "rmsDbRange": [
+        -29.923703403244232,
+        -10.904457179312423
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "music_identity_mix.py",
+      "result": "passed",
+      "renders": 32,
+      "maxPeakIncludingStartupWhenAvailable": 0.8850745558738708,
+      "rmsDbRange": [
+        -27.32073793965748,
+        -10.651137894749663
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "synth_bank_mix.py",
+      "result": "passed",
+      "renders": 32,
+      "maxPeakIncludingStartupWhenAvailable": 0.8813273906707764,
+      "rmsDbRange": [
+        -32.026410780011815,
+        -11.507393700171955
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "world_family_mix.py",
+      "result": "passed",
+      "renders": 16,
+      "maxPeakIncludingStartupWhenAvailable": 0.8799270391464233,
+      "rmsDbRange": [
+        -22.321969774407656,
+        -12.29212359969127
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "habitat_mix.py",
+      "result": "passed",
+      "renders": 6,
+      "maxPeakIncludingStartupWhenAvailable": 0.8750088214874268,
+      "rmsDbRange": [
+        -32.12051291110648,
+        -11.42005955242663
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "modular_mix.py",
+      "result": "passed",
+      "renders": 18,
+      "maxPeakIncludingStartupWhenAvailable": 0.8814868330955505,
+      "rmsDbRange": [
+        -39.88708121643573,
+        -12.720568128297845
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "hybrid_mix.py",
+      "result": "passed",
+      "renders": 18,
+      "maxPeakIncludingStartupWhenAvailable": 0.900291383266449,
+      "rmsDbRange": [
+        -23.59328774004515,
+        -9.219034455570696
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "foreground_mix.py",
+      "result": "passed",
+      "renders": 23,
+      "maxPeakIncludingStartupWhenAvailable": 0.8858219981193542,
+      "rmsDbRange": [
+        -23.45824613122335,
+        -13.088570112576502
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "heritage_mix.py",
+      "result": "passed",
+      "renders": 12,
+      "maxPeakIncludingStartupWhenAvailable": 0.8725545406341553,
+      "rmsDbRange": [
+        -21.258498846282478,
+        -10.396075910853622
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "memory_mix.py",
+      "result": "passed",
+      "renders": 6,
+      "maxPeakIncludingStartupWhenAvailable": 0.875987708568573,
+      "rmsDbRange": [
+        -39.1803884981612,
+        -12.720644673551522
+      ],
+      "sampleRates": [
+        48000
+      ]
+    },
+    {
+      "program": "wardrobe_mix.py",
+      "result": "passed",
+      "renders": 25,
+      "maxPeakIncludingStartupWhenAvailable": 0.8817155957221985,
+      "rmsDbRange": [
+        -34.34753950899817,
+        -9.65210137466628
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "house_mix.py",
+      "result": "passed",
+      "renders": 6,
+      "maxPeakIncludingStartupWhenAvailable": 0.9069804549217224,
+      "rmsDbRange": [
+        -25.402312663447034,
+        -11.427395880647321
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "walkers_mix.py",
+      "result": "passed",
+      "renders": 10,
+      "maxPeakIncludingStartupWhenAvailable": 0.8755071759223938,
+      "rmsDbRange": [
+        -20.280949486766218,
+        -12.665987889611799
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "lab_music_mix.py",
+      "result": "passed",
+      "renders": 18,
+      "maxPeakIncludingStartupWhenAvailable": 0.903605043888092,
+      "rmsDbRange": [
+        -28.239548767475874,
+        -9.591327798491616
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "technique_mix.py",
+      "result": "passed",
+      "renders": 186,
+      "maxPeakIncludingStartupWhenAvailable": 0.04280345141887665,
+      "rmsDbRange": null,
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "landscape_gestures_mix.py",
+      "result": "passed",
+      "renders": 6,
+      "maxPeakIncludingStartupWhenAvailable": 0.8756259679794312,
+      "rmsDbRange": [
+        -36.68706228625586,
+        -11.341034393270352
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "lab_learning_mix.py",
+      "result": "passed",
+      "renders": 2,
+      "maxPeakIncludingStartupWhenAvailable": 0.8734979629516602,
+      "rmsDbRange": [
+        -20.941769624585934,
+        -11.43224567978335
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "lab_evolution_mix.py",
+      "result": "passed",
+      "renders": 6,
+      "maxPeakIncludingStartupWhenAvailable": 0.872708797454834,
+      "rmsDbRange": [
+        -21.216544867272347,
+        -12.95980111252609
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "lab_genres_mix.py",
+      "result": "passed",
+      "renders": 52,
+      "maxPeakIncludingStartupWhenAvailable": 0.9342780709266663,
+      "rmsDbRange": [
+        -21.905209384538882,
+        -6.869560065236505
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "experience_learning_mix.py",
+      "result": "passed",
+      "renders": 6,
+      "maxPeakIncludingStartupWhenAvailable": 0.012484940700232983,
+      "rmsDbRange": null,
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "experience_garden_mix.py",
+      "result": "passed",
+      "renders": 8,
+      "maxPeakIncludingStartupWhenAvailable": 0.8849388957023621,
+      "rmsDbRange": [
+        -25.72981120084721,
+        -11.325882817427884
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "performance_mix.py",
+      "result": "passed",
+      "renders": 6,
+      "maxPeakIncludingStartupWhenAvailable": 0.8750823140144348,
+      "rmsDbRange": [
+        -34.84768716240177,
+        -12.856569162487832
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "music_direction_mix.py",
+      "result": "passed",
+      "renders": 27,
+      "maxPeakIncludingStartupWhenAvailable": 0.8780022859573364,
+      "rmsDbRange": [
+        -Infinity,
+        -8.861671242713085
+      ],
+      "sampleRates": [
+        44100,
+        48000
+      ]
+    },
+    {
+      "program": "territory_music_mix.py",
+      "result": "passed",
+      "renders": 6,
+      "maxPeakIncludingStartupWhenAvailable": 0.9067148566246033,
+      "rmsDbRange": [
+        -35.354651516588234,
+        -10.286363382668139
+      ],
+      "sampleRates": [
+        48000
+      ]
+    },
+    {
+      "program": "ensemble_mix.py",
+      "result": "passed",
+      "renders": 11,
+      "maxPeakIncludingStartupWhenAvailable": 0.8836944699287415,
+      "rmsDbRange": [
+        -39.59512461791687,
+        -12.272140571819683
+      ],
+      "sampleRates": [
+        48000
+      ]
+    },
+    {
+      "program": "energy_mix.py",
+      "result": "passed",
+      "renders": 4,
+      "maxPeakIncludingStartupWhenAvailable": 0.8735798001289368,
+      "rmsDbRange": [
+        -12.60868455775668,
+        -12.380784834646725
+      ],
+      "sampleRates": []
+    },
+    {
+      "program": "foundation_mix.py",
+      "result": "passed",
+      "renders": 7,
+      "maxPeakIncludingStartupWhenAvailable": 0.8761866092681885,
+      "rmsDbRange": [
+        -34.43347310670936,
+        -11.939085825132672
+      ],
+      "sampleRates": []
+    },
+    {
+      "program": "transition_mix.py",
+      "result": "passed",
+      "renders": 3,
+      "maxPeakIncludingStartupWhenAvailable": 0.8790865540504456,
+      "rmsDbRange": [
+        -21.76198435847812,
+        -12.304623174902403
+      ],
+      "sampleRates": []
+    }
+  ],
+  "scope": "Actual offline Web Audio output. All renderMix calls check every sample, including startup. Counts include auxiliary volume/tail renders where logged. No artist recording or physical device listening claim. The aggregate maxPeak is the maximum retained metric; compact legacy summaries may retain post-startup peaks. Every renderMix still enforces full-buffer startup peak < 0.96."
+}

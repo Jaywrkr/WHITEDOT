@@ -1,8 +1,6 @@
+import {PRODUCTION_EXPERIMENT_NAMES,productionExperimentEvents} from './production-experiments.js';
 import {musicalCharacter,inRegister} from './musical-character.js';
-// Música experimental en ciertos lugares: el pulso se afloja o desaparece y entran texturas.
-// Modos: «Sin pulso» (eventos libres fuera de la rejilla), «Métrica impar» (ciclos de 5/7/11/13 contra el compás),
-// «Fallas» (ráfagas cortadas) y «Microtonos» (racimos desafinados que laten). Nivel 0..1:
-// <0.4 casi nada; 0.4–0.7 la batería se adelgaza; ≥0.7 sin batería ni pista: solo el lugar raro.
+// Production uses restrained rhythmic/tonal color; explicit lab modes retain free experiments.
 import {experimentalZone,experimentalLevel,EXPERIMENTAL_NAMES,euclid,ODD_CYCLES,microCents} from './expansion-music.js';
 
 export function initialize(runtime){
@@ -11,7 +9,7 @@ export function initialize(runtime){
   if(owner!==S()){owner=S();zoneKey=null;announced.clear();cycle=level=0;}
   const d=runtime.MU.dnaT;if(!runtime.inWorld()||(S().layer||'superficie')!=='superficie'){zone={level:0,mode:null};zoneKey=null;return zone;}if(runtime.labMode&&runtime.labExperimental){zone={...runtime.labExperimental};return zone;}if(!d){zone={level:0,mode:null};zoneKey=null;return zone;}
   if(d.key!==zoneKey){zoneKey=d.key;zone=experimentalZone(d,runtime.BIOMES[d.z]?.id,runtime.seedOf,runtime.rng);cycle=0;
-   if(zone.level>=.4&&!announced.has(d.key)){announced.add(d.key);while(announced.size>128)announced.delete(announced.values().next().value);runtime.toast(`<em>Zona experimental</em> · ${EXPERIMENTAL_NAMES[zone.mode]}`);
+   if(zone.level>=.4&&!announced.has(d.key)){announced.add(d.key);while(announced.size>128)announced.delete(announced.values().next().value);runtime.toast(`Zona experimental · ${(runtime.unifiedMusic&&!runtime.labMode?PRODUCTION_EXPERIMENT_NAMES:EXPERIMENTAL_NAMES)[zone.mode]}`);
     if(!S().help.experimental){S().help.experimental=true;runtime.say(runtime.VOZ.experimental,'Zona experimental');}runtime.unlock('experimental1');}}
   return zone;
  }
@@ -29,6 +27,15 @@ export function initialize(runtime){
  const scaleNote=(d,i,oct=0)=>{const sc=d.scale||[0,2,4,5,7,9,11],tr=(runtime.BIOMES[d.z]?.tr||0)+(d.trOff||0);return 57+tr+sc[((i%sc.length)+sc.length)%sc.length]+12*(oct+Math.floor(i/sc.length));};
  function step(s,bar,time){
   if(!runtime.inWorld()||(S().layer||'superficie')!=='superficie'||!S().sound||runtime.ac?.state!=='running'||document.hidden||document.querySelector('.modal:not([hidden])'))return;const x=compute(),d=runtime.MU.dnaT;if(x<.3||!d)return;
+  if(runtime.duetRoom)return;
+  if(runtime.unifiedMusic===true&&!runtime.labMode){
+   const frame=runtime.musicalFrame?.(time),chords=frame?.chords||runtime.chordTones(),instrument=runtime.MU.radio?.labScore?.production?.comp||'p_cellobody';
+   for(const e of productionExperimentEvents(zone.mode,s,bar,x)){const at=time+e.offset*runtime.SIX;
+    if(e.kind==='voice')runtime.hookInst(instrument,inRegister(chords[e.chord%chords.length],45,67),at,e.level*x,d,{technique:'muted',decayScale:.6});
+    else if(e.kind==='wood')runtime.wood(at,e.level*x);else if(e.kind==='tom')runtime.tom(at,95,e.level*x);else runtime.noiseHit(at,'bandpass',1100,.7,e.level*x,.02);
+    runtime.experimentalNoteCue?.({mode:zone.mode,step:s,bar,time:at,kind:e.kind,tones:chords.slice(0,3),note:e.kind==='voice'?inRegister(chords[e.chord%chords.length],45,67):null});
+   }return;
+  }
   const r=Math.random,six=runtime.SIX,seed=runtime.seedOf(`exp:${d.key}`),v=.025+x*.035;
   if(zone.mode==='libre'){   // sin rejilla: cuándo suena no depende del compás
    if(r()<.1*x){const t=time+r()*six*3,n=Math.floor(r()*7);tone(t,scaleNote(d,n,r()<.3?1:0),microCents(seed,n,x*.4),.6+r()*2.4,v,{type:r()<.5?'sine':'triangle',swell:r()<.4,pan:r()*1.6-.8});}

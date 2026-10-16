@@ -1,10 +1,20 @@
 <!-- direccion-musical-actual -->
-El ciclo vigente es [Dirección musical, siete fases](PLAN_DIRECCION_MUSICAL.md), autorizado el 16 de octubre. Fases 1–6 musicales implementadas; actual `feat/musica-06-transiciones`. F2–F8 de pulido conservadas; su cierre conjunto continúa en la auditoría musical final.
+El ciclo vigente es [Dirección musical, siete fases](PLAN_DIRECCION_MUSICAL.md), autorizado el 16 de octubre. Las siete fases musicales están implementadas y probadas. Continúan las dos entregas de [Interacción final](PLAN_INTERACCION_FINAL.md), autorizadas después del cierre musical. F2–F8 de pulido conservadas y cierre conjunto en [CIERRE_DIRECCION_MUSICAL.md](CIERRE_DIRECCION_MUSICAL.md). Jay crea PR y merge.
+
+| Fase | Rama | Commit | Estado |
+|---|---|---|---|
+| 1 · Motor | `feat/musica-01-motor` | `e2876a9` | Implementada y probada |
+| 2 · Identidades | `feat/musica-02-identidades` | `b47d099` | Implementada y probada |
+| 3 · Fusiones | `feat/musica-03-fusiones` | `92ebd5c` | Implementada y probada |
+| 4 · Arreglos | `feat/musica-04-arreglos` | `b4d12fd` | Implementada y probada |
+| 5 · Interacciones | `feat/musica-05-interacciones` | `9042c83` | Implementada y probada |
+| 6 · Transiciones | `feat/musica-06-transiciones` | `97f7c98` | Implementada y probada |
+| 7 · Auditoría | `feat/musica-07-auditoria` | Esta entrega | Implementada y probada |
 <!-- /direccion-musical-actual -->
 
 # Plan WHITEDOT 2.0
 
-## Prioridad vigente · Cubo, colección y música
+## Ciclo anterior · Cubo, colección y música
 
 [Plan detallado de nueve fases](PLAN_PULIDO_CUBO_MUSICA.md), autorizado por Jay. Sustituye la organización inicial de seis fases. Fase 1 integrada por Jay en main `30b2df8` (PR #144); fase 2 parte de ese main.
 
