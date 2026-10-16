@@ -11,3 +11,9 @@ listeners.scroll();assert.equal(values.size,0);
 listeners.pointercancel();assert(!classes.has('wow-depth'));
 r.S.reducedMotion=true;listeners.pointerdown(event);assert.equal(values.size,0);
 console.log('PASS delegated card depth, touch intent, scrolling, cancellation, reduced motion and silent UI');
+
+function card(id){const classes=new Set();const p={isConnected:true,dataset:{cardId:id},classList:{add:k=>classes.add(k),remove:k=>classes.delete(k)},classes};p.closest=s=>s.includes('data-card-id')?p:null;return p;}
+const first=card('first'),second=card('second');
+listeners.focusin({target:first});assert(first.classes.has('wow-selected'));
+listeners.focusin({target:second});assert(!first.classes.has('wow-selected'));assert(second.classes.has('wow-selected'));
+second.isConnected=false;r.cardFocusTick();assert(!second.classes.has('wow-selected'));

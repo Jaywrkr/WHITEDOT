@@ -9,6 +9,7 @@ export function initialize(runtime){
  }
  const blocked=()=>!runtime.inWorld()||document.hidden||runtime.scanning||runtime.$?.('rareNotice')?.dataset.inspect==='true'||!!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function tick(dt,paused=false){
+  runtime.cardFocusTick?.();
   if(owner!==runtime.S||layer!==runtime.S.layer){owner=runtime.S;layer=runtime.S.layer;motion.reset();dust=[];pending=[];ripples=[];flashes=[];memory=[];marks=[];}
   const jumped=lastPosition&&Math.hypot(runtime.S.wx-lastPosition.x,runtime.S.wy-lastPosition.y)>40;
   lastPosition={x:runtime.S.wx,y:runtime.S.wy};

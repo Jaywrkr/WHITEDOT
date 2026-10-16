@@ -21,7 +21,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 15 | Anticipación de hallazgos | feat/wow-15-hallazgos | Implementada; ver informe 15 |
 | 16 | Profundidad en tarjetas | feat/wow-16-profundidad | Implementada; ver informe 16 |
 | 17 | Barrido de adquisición | feat/wow-17-adquisicion | Implementada; ver informe 17 |
-| 18 | Álbum con foco | feat/wow-18-album | Pendiente |
+| 18 | Álbum con foco | feat/wow-18-album | Implementada; ver informe 18 |
 | 19 | Firma de favoritos | feat/wow-19-favoritos | Pendiente |
 | 20 | Constelación de regreso | feat/wow-20-regresos | Pendiente |
 
@@ -104,3 +104,7 @@ La ilustración de la tarjeta responde al dedo o cursor con profundidad de tres 
 ### 17. Barrido de adquisición
 
 Una luz atraviesa una sola vez la ilustración de un hallazgo nuevo y realmente ganado. No aparece en muestras forzadas, migraciones, duplicados ni al abrir el álbum. Sin sonido, botones extra o animación repetida.
+
+### 18. Álbum con foco
+
+Solo la tarjeta elegida con el dedo o el teclado respira suavemente. Al seleccionar otra, cerrar el libro o cambiar de pantalla, la anterior se detiene. Textos, botones y desplazamiento permanecen estables.

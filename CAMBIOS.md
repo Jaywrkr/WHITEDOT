@@ -1,3 +1,7 @@
+## 2.3.0-alpha.42 · Cuaderno vivo 18/20
+
+Solo la tarjeta elegida con el dedo o el teclado respira suavemente. Al seleccionar otra, cerrar el libro o cambiar de pantalla, la anterior se detiene. Textos, botones y desplazamiento permanecen estables.
+
 ## 2.3.0-alpha.41 · Cuaderno vivo 17/20
 
 Una luz atraviesa una sola vez la ilustración de un hallazgo nuevo y realmente ganado. No aparece en muestras forzadas, migraciones, duplicados ni al abrir el álbum. Sin sonido, botones extra o animación repetida.
