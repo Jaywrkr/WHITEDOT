@@ -1,3 +1,9 @@
+## 2.3.0-alpha.8 · Mundo y habitantes
+
+El descanso de criaturas conserva una presencia tenue y respeta vigilia cero. Movimiento reducido congela glifos y bailes; las construcciones tienen tamaño proporcional al teléfono. La entrada usa anillos locales del color musical, en lugar de expandir oro por toda la pantalla. No cambia música, coordenadas ni hallazgos.
+
+Auditoría sin errores/avisos; 5 suites Node afectadas y recorrido representativo aprobados; audio sin cambios. Evidencia: scripts/mejora-04-validation.json. No afirma escucha física, CI ni deploy.
+
 ## 2.3.0-alpha.7 · Interpretación
 
 La permanencia sobre nidos de percusión interpreta bombo, caja y hats complementarios; el contacto conserva sus cinco golpes y la articulación temporal no se filtra a gestos posteriores. Las señales del jugador tienen más contraste que el ambiente y solo sus acciones muestran la etiqueta local. Tres renders usan el módulo real de permanencia, no una imitación del patrón.

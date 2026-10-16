@@ -1,0 +1,80 @@
+{
+  "phase": 4,
+  "version": "2.3.0-alpha.8",
+  "base": "6c5e6c54a410b191ab6ca0dfbd52a81aa269fa78",
+  "summary": "El descanso de criaturas conserva una presencia tenue y respeta vigilia cero. Movimiento reducido congela glifos y bailes; las construcciones tienen tama\u00f1o proporcional al tel\u00e9fono. La entrada usa anillos locales del color musical, en lugar de expandir oro por toda la pantalla. No cambia m\u00fasica, coordenadas ni hallazgos.",
+  "node": {
+    "base": "6c5e6c54a410b191ab6ca0dfbd52a81aa269fa78",
+    "changes": [
+      "CAMBIOS.md",
+      "HANDOFF_CLAUDE.md",
+      "PLAN_2.0.md",
+      "PLAN_MEJORA_INTEGRAL.md",
+      "README.md",
+      "index.html",
+      "package.json",
+      "src/living-behavior.js",
+      "src/living.js",
+      "src/release-info.js",
+      "src/render.js",
+      "sw.js",
+      "tests/living-behavior.mjs",
+      "scripts/mejora-04-validation.json"
+    ],
+    "selected": [
+      "living-behavior.mjs",
+      "release.mjs",
+      "test-impact.mjs",
+      "version-bump.mjs",
+      "world-visibility.mjs"
+    ],
+    "results": [
+      {
+        "test": "living-behavior.mjs",
+        "exit": 0,
+        "milliseconds": 46
+      },
+      {
+        "test": "release.mjs",
+        "exit": 0,
+        "milliseconds": 52
+      },
+      {
+        "test": "test-impact.mjs",
+        "exit": 0,
+        "milliseconds": 38
+      },
+      {
+        "test": "version-bump.mjs",
+        "exit": 0,
+        "milliseconds": 105
+      },
+      {
+        "test": "world-visibility.mjs",
+        "exit": 0,
+        "milliseconds": 50
+      }
+    ],
+    "completeSuite": false
+  },
+  "audit": {
+    "version": "2.3.0-alpha.8",
+    "sourceModules": 203,
+    "htmlIDs": 402,
+    "staticImports": 526,
+    "shellAssets": 223,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "browser": {
+    "passed": true,
+    "output": "PASS real entry, silent visuals, pause and reduced motion at 390\nPASS real entry, silent visuals, pause and reduced motion at 844\nPASS real entry, silent visuals, pause and reduced motion at 1280"
+  },
+  "physicalPhone": false,
+  "ciAndDeploy": "not claimed",
+  "fullSuites": false
+}
