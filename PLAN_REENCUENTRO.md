@@ -5,7 +5,7 @@ Autorizado por Jay después de identificar `acd766f` en su captura. Seis ramas d
 | Fase | Rama | Versión | Estado |
 |---|---|---|---|
 | 1 · Referencia musical | `feat/reencuentro-01-musica` | alpha.17 | Implementada; pruebas enfocadas, DSP pendiente |
-| 2 · Contenido visible | `feat/reencuentro-02-catalogo` | alpha.18 | Pendiente |
+| 2 · Contenido visible | `feat/reencuentro-02-catalogo` | alpha.18 | Implementada; validación enfocada |
 | 3 · Identidad regional | `feat/reencuentro-03-identidad` | alpha.19 | Pendiente |
 | 4 · Ecosistemas | `feat/reencuentro-04-ecosistemas` | alpha.20 | Pendiente |
 | 5 · Exploración legible | `feat/reencuentro-05-exploracion` | alpha.21 | Pendiente |
@@ -36,3 +36,9 @@ Pistas periféricas hacia lugares reales con contenido distinto, sin flechas per
 ## 6 · Auditoría
 
 Ejecutar el inventario contra el mundo real muestreado, comprobar accesibilidad de todas las familias, la presencia de protagonistas originales y variedad perceptible en regiones. Comparar referencia histórica y producción con acompañantes. Validar teléfono/PC, guardados, silencio de UI, movimiento reducido y límites de dibujo. Registrar diferencias entre programación musical, métricas DSP y escucha física; CI completo pendiente no equivale a cierre de publicación.
+
+### Evidencia de contenido
+
+`node scripts/content-audit.mjs 256 /tmp/contenido.json` registra presencia por chunk, rutas declaradas y huecos de práctica. No mide probabilidad por hora. Catálogo: 157 familias coleccionables; entradas del laboratorio y familias se unen por ID, no son nuevas especies. Las rutas declaradas se contrastan con archivos existentes; que exista una ruta no prueba una interacción audible. Los elementos sin práctica individual quedan explícitos en `withoutPractice`. Galería: Laboratorio → Catálogo; filtrar y abrir el elemento real. Los retratos son ejemplares, no todas las variaciones individuales.
+
+Fase 2: navegador local sin cerrar por agotamiento de hilos; la primera ejecución del perfil CDP detectó un clic sin apertura, cuyo perfil no desplazaba controles de paneles con scroll. Se corrigió el perfil local, pero los intentos posteriores no iniciaron Chromium. No se afirma UI aprobada: el recorrido portable sigue obligatorio en CI. Módulo de galería probado con adaptador DOM, separado de layout real.

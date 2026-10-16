@@ -330,3 +330,6 @@ body:has(#voice.on:not([hidden])) .first-journey-hint{visibility:hidden}
 @media(prefers-reduced-motion:reduce){.return-entrance svg,.return-entrance span{animation:none}}
 
 .hud-right{display:flex;flex-direction:column;align-items:flex-end}.hud-right>.element-count,.hud-right>.stats{display:none}.walk-distance{display:block;color:#ffffffb3;font-size:11px;line-height:1.5}
+
+/* Internal laboratory gallery; world HUD stays unchanged. */
+#contentGallery .sheet{max-width:760px;width:calc(100% - 24px);max-height:88dvh;overflow:auto}#contentGalleryRows{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}.content-specimen{border:1px solid #292929;padding:12px;min-width:0}.content-specimen h3{font-size:12px;line-height:1.5;margin:6px 0}.content-specimen small{display:block;overflow-wrap:anywhere;line-height:1.5}.content-specimen svg{height:68px;width:100%;stroke:#ddd;fill:none;stroke-width:.04}.content-specimen svg rect{fill:#ddd;stroke:none}.content-specimen details{margin:8px 0;font-size:11px}.content-specimen button{width:100%;min-height:44px;font-size:11px}#contentGallerySearch{font-size:16px;min-height:44px;width:100%}

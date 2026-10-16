@@ -1,3 +1,7 @@
+# Reencuentro · fase 2
+
+Leer PLAN_REENCUENTRO.md. Rama `feat/reencuentro-02-catalogo`, versión 2.3.0-alpha.18. Catálogo interno buscable conectado al laboratorio real, prácticas nuevas de miniinstrumentos y ecologías, inventario de rutas y muestreo espacial. Las colonias de Terrazas recuperan los píxeles originales sin cambiar bits, IDs, voces o coordenadas; blobs y anatomías restantes se conservan. Evidencia en scripts/reencuentro-02-validation.json. Jay conserva PR/merge; respetar los límites de audio documentados.
+
 # Reencuentro · fase 1
 
 Leer PLAN_REENCUENTRO.md. Rama `feat/reencuentro-01-musica`, versión 2.3.0-alpha.17. La radio real de acd766f gobierna motivos, bajos, secciones, expresión y timbres principales en producción. Acompañantes modernos respetan sus frases; batería nativa, armonía compartida, transiciones, filtros y duetos se conservan. Se comparan 96 marcos históricos de doce estilos sin tocar mapas ni progreso. Evidencia en scripts/reencuentro-01-validation.json. Jay conserva PR/merge; respetar los límites de audio documentados.

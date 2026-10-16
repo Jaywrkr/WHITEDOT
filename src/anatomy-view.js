@@ -1,3 +1,4 @@
+import {nativeVisualFamily} from './native-visual.js';
 import {anatomyOf,drawAnatomy} from './anatomy.js';
 import {elementInk,musicalInk} from './visual.js';
 // Weak ownership: visiting more places cannot grow an anatomy registry indefinitely.
@@ -6,7 +7,9 @@ export function initialize(runtime){
  const reduce=()=>globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
  function profile(o,definition,d){let a=profiles.get(o);if(!a){a=anatomyOf(definition,d.worldFamily,runtime.seedOf);profiles.set(o,a);}return a;}
  function species(sp,o,x,y,t,beat,blob=false){
-  const d=runtime.regionOfPos(o.hx??o.x,o.hy??o.y),group=sp.mob?'fauna':'flora',choices=group==='fauna'?['manta','beetle','worm','crab','deer','jelly']:['branch','network','pods','reeds','flower','lichen'],
+  const d=runtime.regionOfPos(o.hx??o.x,o.hy??o.y);
+  if(!blob&&nativeVisualFamily(d,runtime.seedOf)==='pixel'&&runtime.drawSprite){runtime.drawSprite(sp.bits,x,y,sp.cell*(1+o.lit*.3),o.lit>.1?(runtime.musicInk?.(o,sp.role)||'#fff'):elementInk('metal',d.hue));return;}
+  const group=sp.mob?'fauna':'flora',choices=group==='fauna'?['manta','beetle','worm','crab','deer','jelly']:['branch','network','pods','reeds','flower','lichen'],
    shape=blob?'blob':choices[runtime.seedOf(`anatomy:native:v1:${sp.id}`)%choices.length],
    a=profile(o,{id:`${sp.id}:${o.hx??o.x},${o.hy??o.y}`,kind:sp.id,shape,group,role:sp.role,variant:sp.bits},d),
    phase=reduce()?0:t/(1500+(a.individual%1800))+(o.ph||0);

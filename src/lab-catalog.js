@@ -1,3 +1,5 @@
+import {MICRO_INSTRUMENTS} from './micro-instruments-model.js';
+import {ECOLOGY_CONTENT} from './ecology-model.js';
 import {HYBRID_STYLES} from './musical-hybrids.js';
 import {LAB_BANDS} from './lab-score.js';
 import {TECHNIQUE_INSTRUMENTS} from './instrument-techniques.js';
@@ -66,6 +68,7 @@ export const LAB_ELEMENTS=[...BASE,...life,...families,...toys,...phenomena,...t
  ...HYBRID_STYLES.map(h=>({id:'hybrid:'+h.id,group:'Cruces',name:h.name,find:{type:'hybrid',hybrid:h.id},try:['Escucha frases y armonía; compáralas con otro cruce.','Camina para tocar; la influencia pertenece a este lugar.']}))];
 LAB_ELEMENTS.push(...LAB_BANDS.map(b=>({id:'band:'+b.id,group:'Paisaje vivo',name:b.name,find:{type:'band',band:b.id},try:['Escucha el ritmo, bajo y frase del territorio.','Toca sus elementos; compara con otra banda.']})));
 LAB_ELEMENTS.push(...Object.entries(TECHNIQUE_INSTRUMENTS).map(([id,s])=>({id:'synth:'+id,group:'Síntesis',name:s.name,find:{type:'synth',instrument:id},try:['Toca la rama. Escucha su ataque y cuerpo.','Compara notas graves y medias con Solo.']})));
+LAB_ELEMENTS.push({id:'native:pixel',group:'Especies originales',name:'Colonia pixelada',find:{type:'native',style:'pixel'},try:['Acércate y toca las figuras pequeñas.','Sus píxeles y voces conservan el origen.']},...Object.entries(MICRO_INSTRUMENTS).map(([kind,m])=>({id:'micro:'+kind,group:'Instrumentos vivos',name:m.name,find:{type:'micro',kind},try:[m.hint,'Compara cerca, lejos y en silencio.']})),...ECOLOGY_CONTENT.map(e=>({id:e.id,group:'Paisajes vivos',name:e.name,find:{type:'ecology',kind:e.id.split(':')[1]},try:['Toca, permanece y observa su respuesta.']})));
 export const LAB_GROUPS=[...new Set(LAB_ELEMENTS.map(e=>e.group))];
 export const labElement=id=>LAB_ELEMENTS.find(e=>e.id===id)||null;
 export function labStep(id,delta){const i=Math.max(0,LAB_ELEMENTS.findIndex(e=>e.id===id));return LAB_ELEMENTS[(i+delta+LAB_ELEMENTS.length)%LAB_ELEMENTS.length];}
