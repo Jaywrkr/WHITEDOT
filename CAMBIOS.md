@@ -1,3 +1,13 @@
+## Reparación · ojos y renderizado del mundo
+
+Rama `fix/wow-eyes-render`, desde main remoto `3324d447cd6232c5a61127dfbaac0e253015580e`. Los efectos insertados en `eyes()` usaban `ox/oy` fuera de alcance y detenían el frame. Se mueve el mismo bloque a `drawWowWorld()`, donde existen los offsets de cámara, conservando parámetros, límites, activaciones y audio. Ojos locales y polvo de frenada conservan su blanco.
+
+Regresión: `node tests/wow-runtime.mjs` reproduce el ReferenceError antes del arreglo y pasa después; comprueba ojos y todos los efectos con cámara desplazada. `python tests/wow_eyes_smoke.py` pasa con Chrome: habitantes reales, ojos y frames sucesivos pese al `/api/session` 404. Es una consulta controlada al servidor de cuentas opcional, independiente; no se modifica.
+
+Validación aprobada: `npm run audit:release` sin errores/avisos; `npm run test:impact -- --base 3324d447cd6232c5a61127dfbaac0e253015580e`, seis suites; `git diff --check` y revisión del diff. Ajustes locales Windows fuera del commit: restaurar bytes Git de licencias convertidas por autocrlf, adaptador ESM para importaciones de rutas Windows, Playwright fuera del repo y Chrome local. Sin cambio manual de versión/caché: el build existente sella la caché por fecha/revisión.
+
+Limitaciones: pruebas enfocadas, sin suite completa navegador/audio, escucha física ni despliegue. CI no certificado; la rama no figura en el filtro push existente. Sin PR ni merge.
+
 ## 2.3.0-alpha.44 · Cuaderno vivo 20/20
 
 Al volver desde un favorito, su constelación aparece alrededor del cubo durante 2,2 segundos. Marca efímera, consumida una vez y validada por mundo, capa, coordenadas y antigüedad. No salta a lugares aproximados ni cambia guardados. El cierre añade un recorrido real de tarjetas/favoritos para tres tamaños y protege capas y reinicios visuales.
