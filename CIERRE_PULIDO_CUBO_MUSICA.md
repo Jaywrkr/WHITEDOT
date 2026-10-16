@@ -28,7 +28,7 @@ No se añaden etiquetas para inflar el catálogo: 52 géneros, 75 especificacion
 
 ## Validación integrada
 
-En ejecución. El registro final será la evidencia de F7 del plan musical. Auditoría y Node, navegador/offline completos y todos los programas de audio son condiciones de entrega. Las métricas de señal no acreditan gusto musical ni una masterización de estudio.
+El cierre continúa en [CIERRE_DIRECCION_MUSICAL.md](CIERRE_DIRECCION_MUSICAL.md), con auditoría estructural, regresiones y aceptación externa separadas.
 
 ## Probar en teléfono
 

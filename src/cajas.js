@@ -1,3 +1,4 @@
+import {consonantPitch} from './musical-conductor.js';
 import {PET_SPECIES} from './pet-model.js';
 import {createPowerClock} from './power-clock.js';
 import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js';
@@ -67,7 +68,7 @@ export function initialize(runtime){
   for(const fn of ['materiaSources','vidaSources','glassSources','mirrorSources','encounterSources'])for(const s of runtime[fn]?.()||[]){const ob=s.object;if(ob?.x==null)continue;list.push({x:ob.x,y:ob.y,o:ob,play:t=>{runtime.playVoice(s.kind,Math.floor(Math.hypot(ob.x-S().wx,ob.y-S().wy)/30)%7,t,runtime.regionOfPos(ob.x,ob.y),false,.35,ob,'field');ob.lit=1;}});}
   return list;
  }
- function melody(n,t,v,source=null,front=false){const d=runtime.MU.dnaA||runtime.MU.dnaT;if(!d)return;const inst=runtime.MU.radio?.hookI||hookInstruments(d.genre,runtime.GEN[d.genre])[0],cue=source?{...source,id:source.id||(front?'power:pincel:':'power:cometa:')+Math.round(source.x)+','+Math.round(source.y)}:{id:'power:cometa',x:S().wx,y:S().wy},voice={instrument:inst,role:'lead'},emit=()=>runtime.hookInst(inst,hookPitch(inst,n,musicalCharacter(d.genre)),t,v,d);if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(front?'power:pincel':'power:voice',d,voice,cue,t,emit);else emit();if(front)runtime.focusGesture?.(t,cue,'lead');runtime.soundCue?.(cue,'lead',t);}
+ function melody(n,t,v,source=null,front=false){t=runtime.musicalTime?.(t)??t;const frame=runtime.musicalFrame?.(t);if(frame)n=consonantPitch(n,frame.chords,45,69);const d=runtime.MU.dnaA||runtime.MU.dnaT;if(!d)return;const inst=runtime.MU.radio?.hookI||hookInstruments(d.genre,runtime.GEN[d.genre])[0],cue=source?{...source,id:source.id||(front?'power:pincel:':'power:cometa:')+Math.round(source.x)+','+Math.round(source.y)}:{id:'power:cometa',x:S().wx,y:S().wy},voice={instrument:inst,role:'lead'},emit=()=>runtime.hookInst(inst,hookPitch(inst,n,musicalCharacter(d.genre)),t,v,d);if(runtime.withInstrumentPatch)runtime.withInstrumentPatch(front?'power:pincel':'power:voice',d,voice,cue,t,emit);else emit();if(front)runtime.focusGesture?.(t,cue,'lead');runtime.soundCue?.(cue,'lead',t);}
 
  function step(s,bar,time){
   if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])')||!S().sound||runtime.ac?.state!=='running')return;

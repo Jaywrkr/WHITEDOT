@@ -43,7 +43,9 @@ export function initialize(runtime){
   if(['landscape','hybrid','band'].includes(f.type)){
    const R=size();for(let radius=0;radius<=32;radius++)for(let x=-radius;x<=radius;x++)for(let y=-radius;y<=radius;y++){
     if(Math.max(Math.abs(x),Math.abs(y))!==radius)continue;
-    const d=runtime.regionOfPos((x+.5)*R,(y+.5)*R);if(d.sea||(f.type==='landscape'?d.worldFamily?.id!==f.family:f.type==='band'?labScore(d,runtime.seedOf,runtime.rng)?.id!==f.band:hybridIdentity(d,runtime.seedOf,runtime.rng)?.id!==f.hybrid))continue;
+    const d=runtime.regionOfPos((x+.5)*R,(y+.5)*R),band=f.type==='band'?labScore(d,runtime.seedOf,runtime.rng):null;if(d.sea||(f.type==='landscape'?d.worldFamily?.id!==f.family:f.type==='band'?band?.id!==f.band:hybridIdentity(d,runtime.seedOf,runtime.rng)?.id!==f.hybrid))continue;
+    // Demonstrate ternary hand strokes in a territory whose native music uses them.
+    if(f.type==='band'&&f.band==='interlock'&&(!band.electronic?.layers.includes('percussion')||band.nativeDrums&&band.production?.id!=='afro'&&band.hybridId!=='afro-poly'))continue;
     // Locate an actual inhabitant, using exactly the same population as the World.
     for(let a=0;a<runtime.REG;a++)for(let b=0;b<runtime.REG;b++){
      const cx=x*runtime.REG+a,cy=y*runtime.REG+b,biome=runtime.BIOMES[d.z].id,

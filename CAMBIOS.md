@@ -1,3 +1,16 @@
+# Dirección musical · fase 7: auditoría y correcciones integradas
+
+- Matriz reproducible de patrones musicales: 52 estilos, 18 influencias, 128 compases por estilo, 71 comprobaciones y 51 gramáticas rítmicas observadas. Usa territorios y eventos reales, con criterios estilísticos documentados.
+- Corregida una introducción ambient de dos voces que comenzaba muda: nueve notas en sus primeros cuatro compases, conservando descansos deliberados. Se retienen swing de garage y ritmos nativos; el minimal deja de heredar un kit de congas ajeno.
+- Cuatro tratamientos experimentales en producción siguen subdivisiones y acorde. Laboratorio explícito conserva sus experimentos libres. Visitas de quietud responden por frase; trazos musicales se ajustan a la armonía vigente.
+- La mascota usa reloj y armonía audibles al cruzar regiones, conservando especie y registro. La regresión verifica fronteras y 21 renders de producción.
+- Laboratorio de membranas busca un lugar con polirritmia y capa de percusión reales. La regresión del scheduler mantiene energía estable durante la espera para no depender del decaimiento de la llegada.
+- Corregida una carrera en la regresión de cables: espera la firma emitida con señal y CV tras el segundo cable, conservando sus exigencias de conexión y retirada.
+- Los renders comprueban el pico de todo el audio, incluido arranque. Nueva cobertura de 52 estilos nativos y cuatro zonas experimentales reales. La suite incluye encuentros y descubre los nuevos programas de audio automáticamente.
+- Mapas, coordenadas, guardados y premios conservados. UI silenciosa, fondo negro y Geist Mono. Cierre conjunto del pulido y las siete fases musicales en [CIERRE_DIRECCION_MUSICAL.md](CIERRE_DIRECCION_MUSICAL.md).
+
+Auditoría sin errores/advertencias, 127 suites Node, 71 comprobaciones de patrones, 92 recorridos más offline y 39 programas de audio con 915 renders aprobados; pico máximo registrado 0,934278. Resultados finales: `scripts/musica-07-validation.json`. Escucha física, comparación directa de grabaciones, CI y deploy se registran aparte de las comprobaciones locales; la red bloqueó la descarga de referencias con HTTP 403.
+
 # Dirección musical · fase 6: viajar entre músicas y hábitats
 
 - El tempo converge al destino por compases, con pasos máximos de 24 BPM. Cada territorio conserva su BPM; dueto/laboratorio mantienen su transporte deliberado.
@@ -236,7 +249,7 @@ Rama `feat/lab-l7-curaduria`. Jay mantiene PR/merge.
 - Las voces articuladas reservan espacio para los gestos y la práctica. Las cuerdas nuevas reutilizan excitaciones con una caché de ocho buffers por contexto; las voces sostenidas tienen liberación suave y límites explícitos.
 - El cierre conserva mundos, progreso, códigos anteriores y modo clásico. CIERRE_LABORATORIO_VIVO.md reúne hallazgos, soluciones, orden de ramas y aceptación física/artística pendiente.
 
-Validación completa aprobada: auditoría, 104 suites Node, 82 recorridos incluido offline y 581 renders de 28 programas de audio. Pico máximo medido: 0.945447; señal finita y límites aprobados por cada programa. [Evidencia](scripts/lab-l7-validation.json). CI de los PR y aceptación física/artística conservan su alcance propio.
+Validación completa aprobada: auditoría, 104 suites Node, 82 recorridos incluido offline y 581 renders de 28 programas de audio. Pico máximo registrado: 0.945447; señal finita y límites aprobados por cada programa. [Evidencia](scripts/lab-l7-validation.json). CI de los PR y aceptación física/artística conservan su alcance propio.
 
 # Laboratorio Vivo L6 · 2.1.0-alpha.6
 

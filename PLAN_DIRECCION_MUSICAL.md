@@ -12,7 +12,7 @@ Una rama por fase, desde la anterior si no está integrada. Codex hace commit/pu
 | 4 | `feat/musica-04-arreglos` | Desarrollo por frases, bandas de 1–10 partes | Implementada y probada |
 | 5 | `feat/musica-05-interacciones` | Funciones musicales claras y respuestas coordinadas | Implementada y probada |
 | 6 | `feat/musica-06-transiciones` | Viajes, cambios de tempo y hábitats coherentes | Implementada y probada |
-| 7 | `feat/musica-07-auditoria` | Comparación, correcciones y regresión completa | Pendiente |
+| 7 | `feat/musica-07-auditoria` | Comparación, correcciones y regresión completa | Implementada y probada |
 
 ## Contrato
 
@@ -67,3 +67,7 @@ Referencias: Richie Hawtin/Plastikman para economía, articulación y microvaria
 Registrar la procedencia y el alcance real de cada análisis. Intento de obtener previews públicos: servidor de red devuelve HTTP 403; no se han descargado ni escuchado esas grabaciones. El análisis de referencias disponible inicialmente es de estructura estilística conocida. El análisis directo de grabaciones queda separado hasta disponer de material accesible.
 
 Matriz: pulso/contratiempo, relación bombo-caja-bajo, swing, registro, repetición/microvariación, arco por frases, transición, acumulación de agudos, margen de salida y prominencia del gesto. Renderizar el motor real a 44,1/48 kHz, con fuentes densas, FX, quietud y cambios de zona. Registrar defectos, corregir y repetir los casos afectados; cerrar con suites completas verdes. La ausencia de clipping no sustituye una escucha de calidad musical.
+
+## Cierre del ciclo
+
+Las siete fases están implementadas. [Cierre y alcance real de validación](CIERRE_DIRECCION_MUSICAL.md): 127 suites Node, 71 comprobaciones de patrones, 92 recorridos más offline y 39 programas de audio con 915 renders, todos aprobados. CI, deploy, escucha física y análisis directo de grabaciones se registran aparte. La ampliación de interfaz y miniinstrumentos autorizada después continúa en [PLAN_INTERACCION_FINAL.md](PLAN_INTERACCION_FINAL.md).

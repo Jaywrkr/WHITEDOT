@@ -21,7 +21,8 @@ try:
    page.evaluate('''index=>{const r=__testRuntime,o=r.encounterObjects.find(o=>o.kind==='weaver'),a=r.depthAnchors(o)[index];r.S.wx=a.x;r.S.wy=a.y;r.ptr=null;}''',index)
    page.wait_for_function('''index=>{const r=__testRuntime,o=r.encounterObjects.find(o=>o.kind==='weaver');return o.state.cubeAnchor===r.depthAnchors(o)[index].id;}''',arg=index)
   page.wait_for_function('__testRuntime.encounterObjects.find(o=>o.kind==="weaver").state.weave.edges.length===2')
-  page.wait_for_function('__graphs.length>0',timeout=12000)
+  # The first graph may have sounded after cable one; wait for cable two's actual graph.
+  page.wait_for_function('__graphs.some(s=>s.includes("cv")&&s.includes("signal"))',timeout=12000)
   assert page.evaluate('__graphs.some(s=>s.includes("cv")&&s.includes("signal"))')
   page.screenshot(path='/tmp/whitedot-f4-cables-phone.png')
   page.evaluate('''()=>{const r=__testRuntime,o=r.encounterObjects.find(o=>o.kind==='weaver'),e=o.state.weave.edges[1];r.S.wx=(e.a.x+e.b.x)/2;r.S.wy=(e.a.y+e.b.y)/2;r.ptr=null;}''')

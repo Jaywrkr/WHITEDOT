@@ -10,7 +10,7 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) ·
 
 ## Dirección musical · ciclo actual
 
-[Plan de siete fases](PLAN_DIRECCION_MUSICAL.md). La fase 1 comparte reloj y armonía dentro de cada zona; cada territorio mantiene su tempo. Fuentes cercanas conservan su instrumento y acompañan la armonía audible. Fase 2 conecta doce identidades de producción a protagonistas, acordes y respuestas del motor. Fase 3 permite explorar 18 cruces desde Estilos → Cruces, incluyendo guitarra/máquina y disco de secuencias, con formas musicales originales. Fase 4 desarrolla seis situaciones de arreglo por frases, manteniendo motivos reconocibles y retirando capas. Fase 5 reparte instrumentos por función, coordina contactos y ofrece filtros audibles de distinta pendiente/cantidad. Fase 6 coordina cambios de tempo, entrada musical y color local, manteniendo audibles los lugares mínimos. La fase 7 cierra con auditoría integrada.
+[Plan de siete fases](PLAN_DIRECCION_MUSICAL.md). La fase 1 comparte reloj y armonía dentro de cada zona; cada territorio mantiene su tempo. Fuentes cercanas conservan su instrumento y acompañan la armonía audible. Fase 2 conecta identidades de producción a protagonistas, acordes y respuestas del motor. Fase 3 permite explorar 18 cruces desde Estilos → Cruces, incluyendo guitarra/máquina y disco de secuencias, con formas musicales originales. Fase 4 desarrolla seis situaciones de arreglo por frases, manteniendo motivos reconocibles y retirando capas. Fase 5 reparte instrumentos por función, coordina contactos y ofrece filtros audibles de distinta pendiente/cantidad. Fase 6 coordina cambios de tempo, entrada musical y color local, manteniendo audibles los lugares mínimos. La fase 7 audita el conjunto, corrige introducciones mudas y mezclas de percusión, conserva swing y ordena las zonas experimentales dentro del pulso. [Cierre y comprobaciones](CIERRE_DIRECCION_MUSICAL.md): 127 suites Node, 92 recorridos más offline y 39 programas de audio aprobados. Son 14 identidades de producción y 18 influencias sobre los 52 estilos existentes.
 
 ## Cubo, colección y música · entregas conservadas
 
@@ -79,6 +79,7 @@ Sin dependencias npm ni compilación de módulos. Los módulos necesitan HTTP; `
 
 ```bash
 npm run audit:release   # integridad del shell, fuentes y enlaces
+npm run audit:music     # patrones, forma y contraste en territorios reales
 npm test                # suites de lógica (Node ≥ 18)
 npm run test:browser    # recorridos de navegador y offline (Python + Playwright)
 npm run test:audio      # mezclas renderizadas con Web Audio offline
@@ -91,7 +92,7 @@ python3 tests/server_api.py && python3 tests/duet_smoke.py   # servidor opcional
 
 El repo está conectado a Vercel (proyecto `whitedot`). Cada rama tiene vista previa; el merge a `main` publica producción. `vercel.json` fija Framework **Other** (`null`), Output Directory **`.`** y el build `node scripts/vercel-build.mjs`. El juego vive en la raíz: no genera `public`. La configuración del repo evita que Vercel busque esa carpeta inexistente. El build sella la revisión y la hora de publicación, que se ven al pie del menú. Vercel sirve solo la parte estática: el servidor de cuentas y duetos no corre ahí.
 
-Flujo: una rama por fase del [pulido actual](PLAN_PULIDO_CUBO_MUSICA.md), desde main actualizado o desde la fase anterior pendiente de merge; commit y push. **Jay crea el PR y hace el merge.** [PLAN_2.0.md](PLAN_2.0.md) conserva los estados anteriores.
+Flujo: una rama por fase del [ciclo musical actual](PLAN_DIRECCION_MUSICAL.md), desde main actualizado o desde la fase anterior pendiente de merge; commit y push. **Jay crea el PR y hace el merge.** [PLAN_2.0.md](PLAN_2.0.md) conserva los estados anteriores.
 
 ## Mapa del repositorio
 

@@ -19,3 +19,16 @@ for(const id of ['kick','conga','wood','rim','shaker','tom','guiro','timbale','c
 for(let i=0;i<24;i++)r.playVoice('reliquia',i,1.04,other,false,.5,{id:'conductor:'+i});
 assert(notes.length>0);assert(notes.every(n=>n.t===1&&frame.chords.some(c=>((c-n.n)%12+12)%12===0)),'border sources must support the current chord, regardless of source key');
 console.log('PASS shared source clock, tempo change, swing, harmonic boundary, strong-beat consonance, register and bounded frame history');
+
+// A pet on the new territory still accompanies the harmony actually audible at its onset.
+import {initialize as pet} from '../src/pet.js';import {createPet} from '../src/pet-model.js';
+globalThis.document={hidden:false,querySelector:()=>null};
+for(const species of ['golondrina','grulla','luciernaga'])for(const composed of [false,true]){
+ const cues=[],played=[],heard={region:main,transposition:2,chords:[59,62,66]},q={S:{pet:createPet(species,12),wx:0,wy:0,sound:true},ACH:[],BIOMES:r.BIOMES,ac:{state:'running'},SIX:.125,inWorld:()=>true,regionOfPos:()=>other,musicalTime:t=>composed?1.15:t,musicalFrame:()=>composed?heard:null,hookInst:(id,n,t)=>played.push({n,t}),bassInst:(id,n,t)=>played.push({n,t}),petNoteCue:n=>cues.push(n)};
+ for(const id of ['wood','conga','rim'])q[id]=()=>{};
+ pet(q);q.petHear({degree:1,time:.5});q.petStep(0,0,1);q.petStep(2,0,1.04);
+ assert.equal(cues.length,1);assert.equal(cues[0].time,composed?1.15:1.04);
+ if(species!=='luciernaga'&&composed)assert(heard.chords.some(n=>(n-played[0].n)%12===0),'a companion must not use the neighboring destination key');
+ if(species==='grulla')assert(cues[0].note>=36&&cues[0].note<=52);
+}
+console.log('PASS companion responses use the audible territory clock/chord across borders; explicit legacy playback and species registers remain');

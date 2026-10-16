@@ -1,3 +1,4 @@
+import {consonantPitch} from './musical-conductor.js';
 import {PET_SPECIES,normalizePet,createPet,petStage,learnPet,growPet,petFormationEligible,petFromBox} from './pet-model.js';
 import {musicalCharacter,hookPitch,inRegister} from './musical-character.js';
 import {claimInstallationBar} from './installations.js';
@@ -51,13 +52,15 @@ export function initialize(runtime){
   if(!audible())pending=null;
  }
  function emit(p,n,time){
-  const d=runtime.activeLayerRegion?.()||runtime.regionOfPos(S().wx,S().wy),spec=PET_SPECIES[p.species],stage=petStage(p),instrument=spec.pool[(p.seed+stage)%spec.pool.length];
+  time=runtime.musicalTime?.(time)??time;const frame=runtime.musicalFrame?.(time);
+  const d=frame?.region||runtime.activeLayerRegion?.()||runtime.regionOfPos(S().wx,S().wy),spec=PET_SPECIES[p.species],stage=petStage(p),instrument=spec.pool[(p.seed+stage)%spec.pool.length];
   const degree=(n.degree+2)%7,level=(S().softMusic?.012:.022)*(state.sleep>20?.45:1);
-  let note=57+runtime.BIOMES[d.z].tr+d.trOff+d.scale[degree];
+  let note=57+(frame?.transposition??runtime.BIOMES[d.z].tr+d.trOff)+d.scale[degree];
+  if(frame&&spec.role!=='groove')note=consonantPitch(note,frame.chords,spec.role==='bass'?36:45,spec.role==='bass'?52:76);
   if(spec.role==='bass'){note=inRegister(note,36,52);runtime.bassInst(instrument,note,time,level,d);}
   else if(spec.role==='groove'){if(instrument==='wood')runtime.wood(time,level);else if(instrument==='conga')runtime.conga(time,100+degree*12,level);else runtime.rim(time,level);}
   else {note=hookPitch(instrument,note,musicalCharacter(d.genre));runtime.hookInst(instrument,note,time,level,d);}
-  state.lit=1;runtime.petNoteCue?.({species:p.species,degree,note,time,role:spec.role});
+  state.lit=1;runtime.petNoteCue?.({species:p.species,degree,note,time,role:spec.role,tones:frame?.chords||null});
  }
  function step(s,bar,time){
   const p=ensure();if(!p||!audible()||lastBar===bar)return;

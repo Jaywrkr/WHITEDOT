@@ -1,0 +1,86 @@
+{
+  "phase": 7,
+  "branch": "feat/musica-07-auditoria",
+  "base": "97f7c98",
+  "completedAtUTC": "2026-10-16T03:03:19.124786+00:00",
+  "sourceSHA256": "a60f9dc2cd212ac35110412774f8ec70f4155f6dc972e1985cd4b4efd6052d10",
+  "audit": {
+    "command": "npm run audit:release",
+    "result": "passed",
+    "version": "2.2.0-rc.1",
+    "sourceModules": 189,
+    "htmlIDs": 364,
+    "staticImports": 493,
+    "shellAssets": 209,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "node": {
+    "command": "npm test",
+    "result": "passed",
+    "suites": 127
+  },
+  "patterns": {
+    "command": "npm run audit:music",
+    "result": "passed",
+    "checks": 71,
+    "styles": 52,
+    "influences": 18,
+    "barsPerStyle": 128,
+    "observedRhythmicGrammars": 51
+  },
+  "browser": {
+    "command": "npm run test:browser",
+    "result": "passed",
+    "flows": 92,
+    "offline": "passed",
+    "cachedModules": 189,
+    "modularRaceFocusedRepeats": 2
+  },
+  "audio": {
+    "command": "npm run test:audio",
+    "result": "passed",
+    "programs": 39,
+    "rendersWithEvidence": 915,
+    "maxPeak": 0.9342780709266663,
+    "sampleRates": [
+      44100,
+      48000
+    ],
+    "productionNativeStyles": 52,
+    "productionExperimentalRegions": 4,
+    "productionPetRenders": 21,
+    "startupIncluded": true
+  },
+  "universe": {
+    "result": "passed",
+    "commands": [
+      "npm run audit:universe -- 2000 2",
+      "npm run audit:universe -- 2000 2 2 classic"
+    ]
+  },
+  "iterations": [
+    {
+      "result": "fixed",
+      "finding": "Browser 91/92: lab ternary demonstration lacked a compatible native percussion habitat; fixed locator and controlled test energy."
+    },
+    {
+      "result": "fixed",
+      "finding": "Source review found pet used destination key instead of audible harmony; production pet regression and boundary unit added; an incomplete audio run was deliberately interrupted and excluded."
+    },
+    {
+      "result": "fixed",
+      "finding": "Browser 91/92: modular test raced the second cable playback; now waits for the actual combined signal/CV graph, with two focused passes and final full suite."
+    }
+  ],
+  "external": {
+    "physicalListening": "pending: iOS/Android, speakers/headphones and long sessions",
+    "artistRecordingAnalysis": "not performed: preview download blocked by HTTP 403; stylistic principles and engine events audited instead",
+    "CI": "pending on user PR",
+    "deployment": "pending on user integration"
+  }
+}
