@@ -1,0 +1,452 @@
+{
+  "phase": 2,
+  "version": "2.3.0-alpha.6",
+  "base": "6f42e22d6b367c99a3e7b2bd395196da4fcfffcb",
+  "summary": "Los acompa\u00f1antes conservan sus instrumentos cuando cambia el solista; solo se sustituye la voz que coincide con \u00e9l. Los acordes usan la conducci\u00f3n de voces existente en registro medio, dejando espacio al bajo. Se mantienen motivos, tempo, progresiones y l\u00edmites de mezcla.",
+  "node": {
+    "base": "6f42e22d6b367c99a3e7b2bd395196da4fcfffcb",
+    "changes": [
+      "README.md",
+      "index.html",
+      "package.json",
+      "src/audio.js",
+      "src/electronic-ensemble.js",
+      "src/release-info.js",
+      "sw.js",
+      "tests/electronic-ensemble.mjs"
+    ],
+    "selected": [
+      "ambient-world.mjs",
+      "arrangement-phrases.mjs",
+      "arrival.mjs",
+      "duet-harmony.mjs",
+      "ecology.mjs",
+      "electronic-ensemble.mjs",
+      "festive-territories.mjs",
+      "glass_music.mjs",
+      "grammar.mjs",
+      "influence.mjs",
+      "lab-curation.mjs",
+      "lab-evolution.mjs",
+      "lab-gestures.mjs",
+      "lab-performance.mjs",
+      "lab-score.mjs",
+      "lab.mjs",
+      "listening-reference.mjs",
+      "music-direction.mjs",
+      "music-quality.mjs",
+      "music-recovery.mjs",
+      "music-travel.mjs",
+      "musical-conductor.mjs",
+      "musical-hybrids.mjs",
+      "musical-recipes.mjs",
+      "musical_character.mjs",
+      "palettes.mjs",
+      "pockets.mjs",
+      "practice-travel.mjs",
+      "production-experiments.mjs",
+      "production-identities.mjs",
+      "radio.mjs",
+      "references.mjs",
+      "regional-phrases.mjs",
+      "release.mjs",
+      "source-budget.mjs",
+      "territory-presentation.mjs",
+      "test-impact.mjs",
+      "version-bump.mjs",
+      "voice-expression.mjs",
+      "voices.mjs",
+      "world-visibility.mjs"
+    ],
+    "results": [
+      {
+        "test": "ambient-world.mjs",
+        "exit": 0,
+        "milliseconds": 811
+      },
+      {
+        "test": "arrangement-phrases.mjs",
+        "exit": 0,
+        "milliseconds": 207
+      },
+      {
+        "test": "arrival.mjs",
+        "exit": 0,
+        "milliseconds": 275
+      },
+      {
+        "test": "duet-harmony.mjs",
+        "exit": 0,
+        "milliseconds": 76
+      },
+      {
+        "test": "ecology.mjs",
+        "exit": 0,
+        "milliseconds": 770
+      },
+      {
+        "test": "electronic-ensemble.mjs",
+        "exit": 0,
+        "milliseconds": 613
+      },
+      {
+        "test": "festive-territories.mjs",
+        "exit": 0,
+        "milliseconds": 717
+      },
+      {
+        "test": "glass_music.mjs",
+        "exit": 0,
+        "milliseconds": 293
+      },
+      {
+        "test": "grammar.mjs",
+        "exit": 0,
+        "milliseconds": 104
+      },
+      {
+        "test": "influence.mjs",
+        "exit": 0,
+        "milliseconds": 320
+      },
+      {
+        "test": "lab-curation.mjs",
+        "exit": 0,
+        "milliseconds": 643
+      },
+      {
+        "test": "lab-evolution.mjs",
+        "exit": 0,
+        "milliseconds": 66
+      },
+      {
+        "test": "lab-gestures.mjs",
+        "exit": 0,
+        "milliseconds": 60
+      },
+      {
+        "test": "lab-performance.mjs",
+        "exit": 0,
+        "milliseconds": 64
+      },
+      {
+        "test": "lab-score.mjs",
+        "exit": 0,
+        "milliseconds": 549
+      },
+      {
+        "test": "lab.mjs",
+        "exit": 0,
+        "milliseconds": 65
+      },
+      {
+        "test": "listening-reference.mjs",
+        "exit": 0,
+        "milliseconds": 56
+      },
+      {
+        "test": "music-direction.mjs",
+        "exit": 0,
+        "milliseconds": 86
+      },
+      {
+        "test": "music-quality.mjs",
+        "exit": 0,
+        "milliseconds": 1234
+      },
+      {
+        "test": "music-recovery.mjs",
+        "exit": 0,
+        "milliseconds": 115
+      },
+      {
+        "test": "music-travel.mjs",
+        "exit": 0,
+        "milliseconds": 45
+      },
+      {
+        "test": "musical-conductor.mjs",
+        "exit": 0,
+        "milliseconds": 85
+      },
+      {
+        "test": "musical-hybrids.mjs",
+        "exit": 0,
+        "milliseconds": 719
+      },
+      {
+        "test": "musical-recipes.mjs",
+        "exit": 0,
+        "milliseconds": 174
+      },
+      {
+        "test": "musical_character.mjs",
+        "exit": 0,
+        "milliseconds": 200
+      },
+      {
+        "test": "palettes.mjs",
+        "exit": 0,
+        "milliseconds": 492
+      },
+      {
+        "test": "pockets.mjs",
+        "exit": 0,
+        "milliseconds": 261
+      },
+      {
+        "test": "practice-travel.mjs",
+        "exit": 0,
+        "milliseconds": 314
+      },
+      {
+        "test": "production-experiments.mjs",
+        "exit": 0,
+        "milliseconds": 78
+      },
+      {
+        "test": "production-identities.mjs",
+        "exit": 0,
+        "milliseconds": 154
+      },
+      {
+        "test": "radio.mjs",
+        "exit": 0,
+        "milliseconds": 2478
+      },
+      {
+        "test": "references.mjs",
+        "exit": 0,
+        "milliseconds": 455
+      },
+      {
+        "test": "regional-phrases.mjs",
+        "exit": 0,
+        "milliseconds": 52
+      },
+      {
+        "test": "release.mjs",
+        "exit": 0,
+        "milliseconds": 55
+      },
+      {
+        "test": "source-budget.mjs",
+        "exit": 0,
+        "milliseconds": 86
+      },
+      {
+        "test": "territory-presentation.mjs",
+        "exit": 0,
+        "milliseconds": 382
+      },
+      {
+        "test": "test-impact.mjs",
+        "exit": 0,
+        "milliseconds": 40
+      },
+      {
+        "test": "version-bump.mjs",
+        "exit": 0,
+        "milliseconds": 105
+      },
+      {
+        "test": "voice-expression.mjs",
+        "exit": 0,
+        "milliseconds": 42
+      },
+      {
+        "test": "voices.mjs",
+        "exit": 0,
+        "milliseconds": 540
+      },
+      {
+        "test": "world-visibility.mjs",
+        "exit": 0,
+        "milliseconds": 51
+      }
+    ],
+    "completeSuite": false
+  },
+  "audit": {
+    "version": "2.3.0-alpha.6",
+    "sourceModules": 203,
+    "htmlIDs": 402,
+    "staticImports": 526,
+    "shellAssets": 223,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "browser": {
+    "passed": true,
+    "output": "PASS one production electronic foundation, no retired toggle, preserved legacy data and unchanged world identity"
+  },
+  "physicalPhone": false,
+  "ciAndDeploy": "not claimed",
+  "fullSuites": false,
+  "audio": {
+    "passed": true,
+    "output": "PASS focused production mixes: recovered lead, contemporary ensemble, synchronized interactions and protected output",
+    "renders": [
+      {
+        "genre": "minimaltechno",
+        "seconds": 8,
+        "sampleRate": 48000,
+        "peak": 0.8775718808174133,
+        "rmsDb": -12.608988860624525,
+        "hotFraction": 0,
+        "motif": "minimal-hush:minimal:1",
+        "movement": 0,
+        "ensemble": 8,
+        "backbone": {
+          "identity": "minimal-hush",
+          "hookI": "phasekeys"
+        },
+        "instruments": {
+          "kick": 17,
+          "fm": 17,
+          "phasekeys": 4,
+          "p_fmharp": 15,
+          "p_cellobody": 11,
+          "living:acorde": 7,
+          "p_violaswell": 60,
+          "clav": 20,
+          "wood": 41,
+          "p_claypot": 38,
+          "p_tinepiano": 60,
+          "p_feltmallet": 20,
+          "hat": 13,
+          "rim": 1
+        },
+        "onsets": 166,
+        "maxOnsetError": 0.007384615384616211,
+        "phrasing": {
+          "name": "bridge",
+          "bar": 10,
+          "local": 2,
+          "turn": 0,
+          "energy": 0.78
+        }
+      },
+      {
+        "genre": "garage",
+        "seconds": 10,
+        "sampleRate": 44100,
+        "peak": 0.8740780353546143,
+        "rmsDb": -12.031007389157704,
+        "hotFraction": 0,
+        "motif": "broken-thread:warm:2",
+        "movement": 0,
+        "ensemble": 10,
+        "backbone": {
+          "identity": "broken-thread",
+          "hookI": "rhodes"
+        },
+        "instruments": {
+          "kick": 15,
+          "organb": 22,
+          "organ": 22,
+          "rhodes": 41,
+          "p_feltmallet": 15,
+          "p_cellobody": 8,
+          "living:acorde": 8,
+          "p_violaswell": 72,
+          "feltpiano": 24,
+          "wood": 51,
+          "rim": 46,
+          "p_gutguitar": 86,
+          "hat": 27,
+          "snare": 9,
+          "p_softhorn": 2,
+          "p_panreed": 4
+        },
+        "onsets": 199,
+        "maxOnsetError": 0.007272727272740198,
+        "phrasing": {
+          "name": "statement",
+          "bar": 11,
+          "local": 3,
+          "turn": 0,
+          "energy": 1
+        }
+      },
+      {
+        "genre": "ambient",
+        "seconds": 12,
+        "sampleRate": 48000,
+        "peak": 0.8727520108222961,
+        "rmsDb": -14.423348443965406,
+        "hotFraction": 0,
+        "motif": "ambient-string:ambient:2",
+        "movement": 0,
+        "ensemble": 2,
+        "backbone": {
+          "identity": "ambient-string",
+          "hookI": "bowed"
+        },
+        "instruments": {
+          "bowed": 8,
+          "p_violaswell": 129,
+          "p_cellobody": 7,
+          "living:acorde": 7,
+          "skinpluck": 20,
+          "wood": 40,
+          "p_claypot": 38,
+          "p_duskwind": 20
+        },
+        "onsets": 166,
+        "maxOnsetError": 0.006301059219493865,
+        "phrasing": {
+          "name": "build",
+          "bar": 10,
+          "local": 2,
+          "turn": 0,
+          "energy": 1.03
+        }
+      },
+      {
+        "genre": "nudisco",
+        "seconds": 8,
+        "sampleRate": 44100,
+        "peak": 0.8741165995597839,
+        "rmsDb": -12.055207909305803,
+        "hotFraction": 0,
+        "motif": "disco-orbit:disco:0",
+        "movement": 0,
+        "ensemble": 7,
+        "backbone": {
+          "identity": "disco-orbit",
+          "hookI": "orbitorgan"
+        },
+        "instruments": {
+          "kick": 14,
+          "pluck": 24,
+          "orbitorgan": 14,
+          "p_gutguitar": 9,
+          "p_cellobody": 66,
+          "living:acorde": 6,
+          "p_violaswell": 60,
+          "p_tinepiano": 38,
+          "strings": 40,
+          "clav": 40,
+          "hat": 12,
+          "wood": 6,
+          "clap": 6,
+          "cowbell": 1
+        },
+        "onsets": 165,
+        "maxOnsetError": 0.004615384615389573,
+        "phrasing": {
+          "name": "build",
+          "bar": 10,
+          "local": 2,
+          "turn": 0,
+          "energy": 1.03
+        }
+      }
+    ]
+  }
+}

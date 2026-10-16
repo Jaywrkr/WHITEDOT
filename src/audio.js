@@ -502,7 +502,8 @@ export function initialize(runtime) {
         const at=t+event.offset*SIX,articulation={...tr.expression,technique:event.technique};
         if(event.role==='acorde'){
           if(runtime.cultureListening||E<=.15)continue;
-          for(const n of ct.slice(0,3))hookInst(event.instrument,inRegister(n,45,65),at,vel(.025*event.level),d,{...articulation,decayScale:Math.min(.8,articulation.decayScale||1)});
+          // Existing voice leading keeps chords in the mids, clear of the bass.
+          for(const n of MU.voices.slice(0,3))hookInst(event.instrument,inRegister(n,52,69),at,vel(.025*event.level),d,{...articulation,decayScale:Math.min(.8,articulation.decayScale||1)});
           runtime.labPerformanceCue?.({...event,time:at,bar:MU.step>>4,step:s});continue;
         }
         if(event.role==='bajo'){

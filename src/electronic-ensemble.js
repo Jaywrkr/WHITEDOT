@@ -20,8 +20,11 @@ export function electronicEnsemble(region,kind,ensemble,seedOf){
    kick:40+(h>>>6)%16,metal:kind==='machine',dark:['dub','minimal','rominimal','microhouse'].includes(region.genre)})});
 }
 export function ensembleVoices(plan,lead,variant=0){
- const pool=plan.pool.filter(id=>id!==lead),at=(Number.isFinite(variant)?variant:0)%pool.length,
-  voices=pool.slice(at).concat(pool.slice(0,at));
+ const pool=plan.pool,at=((Number.isFinite(variant)?Math.trunc(variant):0)%pool.length+pool.length)%pool.length,
+  ordered=pool.slice(at).concat(pool.slice(0,at)),voices=ordered.slice(0,4),collision=voices.indexOf(lead);
+ // Keep each accompaniment's chair when the lead changes. Only its collision
+ // borrows a reserve voice; do not rotate the whole band with every soloist.
+ if(collision>=0)voices[collision]=ordered.slice(4).find(id=>id!==lead);
  return {chords:voices[0],counter:voices[1],sequence:voices[2],air:voices[3]};
 }
 export function electronicDrum(runtime,instrument,time,volume,kit){
