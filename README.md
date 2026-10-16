@@ -16,6 +16,10 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) ·
 
 Ocho escenas VJ originales aparecen en áreas concretas del Mundo, dejando espacio negro entre ellas. Cometas ocasionales y visitantes curiosos/esquivos responden visualmente al recorrido. Movimiento reducido evita desplazamientos. Esta ampliación conserva la música; validación visual en navegador pendiente por recursos del entorno.
 
+## Cajas reversibles
+
+Además de sus seis poderes originales, algunas cajas incorporan una de dieciséis sorpresas temporales. Tamaño, forma, estelas, brotes y saltos pueden cambiar; Deshacer o Volver permiten revertir. Borrador solo borra brotes temporales. No se pierde colección ni se modifica la música. Los temporizadores se pausan durante menús y tarjetas.
+
 ## Interacción final
 
 [Dos entregas dependientes](PLAN_INTERACCION_FINAL.md). La primera añade botones animados y silenciosos, una cola de avisos y tarjetas especiales grandes que puedes examinar antes de continuar. La flecha de Entrar al Mundo llega al cuadrado; movimiento reducido entra al instante. Mientras inspeccionas un hallazgo se pausan el cubo y los poderes, conservando la música. El libro mantiene lugares, frecuencias y exportaciones.

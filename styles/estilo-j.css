@@ -245,7 +245,7 @@ body.world-focus .goal{display:none}
 #rareNoticeArt svg,#celebrationArt svg{width:100%;height:100%;max-height:none;display:block;stroke-width:1;fill:none}
 .rare-glyph,.rare-sparks{stroke:currentColor;fill:none}.rare-orbit{stroke:#ffffff30;fill:none}.rare-scene{stroke:currentColor;opacity:.22;fill:none;stroke-width:.5}
 .rare-notice-copy{grid-column:1/-1;display:grid;gap:10px;min-width:0}#rareNoticeName,#celebrationName{font:500 clamp(16px,5vw,22px)/1.35 var(--mono);color:#fff;white-space:normal;overflow-wrap:anywhere;padding-right:0}
-#celebrationName,#celebrationTier,#celebrationEffect,#celebrationTime,#celebrationPlace,#celebrationSerial,#celebrationSignature{grid-column:1/-1;grid-row:auto;white-space:normal;overflow-wrap:anywhere}
+#celebrationName,#celebrationTier,#celebrationEffect,#celebrationSurprise,#celebrationTime,#celebrationPlace,#celebrationSerial,#celebrationSignature{grid-column:1/-1;grid-row:auto;white-space:normal;overflow-wrap:anywhere}
 #rareNoticeTier,#rareNoticeOdds,#celebrationTier,#celebrationTime{font:11px/1.6 var(--mono);color:var(--rare-ink,#f0d27a)}
 #rareNoticeWhere,#rareNoticeSerial,#celebrationPlace,#celebrationSerial{font:10px/1.6 var(--mono);color:#ffffff99;white-space:normal;overflow-wrap:anywhere}
 #rareNoticeAbility,#celebrationEffect{font:12px/1.6 var(--mono);margin:0}
@@ -257,7 +257,7 @@ body.world-focus .goal{display:none}
 #celebration:not([data-layout="full"]) #celebrationArt,#celebration:not([data-layout="full"]) #celebrationShare,#celebration:not([data-layout="full"]) #celebrationSerial{display:none!important}
 #celebration:not([data-layout="full"]) #celebrationName{font-size:14px}
 @keyframes card-arrival{from{opacity:0}to{opacity:1}}
-@media(max-height:500px){#rareNotice[data-layout="full"] .rare-reveal-card,#celebration[data-layout="full"] .celebration-card{width:min(640px,100%);grid-template-columns:180px 1fr 1fr;padding:16px;gap:8px}#rareNoticeArt,#celebrationArt{grid-column:1;grid-row:1/8;height:220px;align-self:center}.rare-notice-copy,#celebrationName,#celebrationTier,#celebrationEffect,#celebrationTime,#celebrationPlace,#celebrationSerial,#celebrationSignature{grid-column:2/-1}#rareNoticeOpen,#celebrationShare{grid-column:2}#rareNoticeContinue,#celebrationContinue{grid-column:3}}
+@media(max-height:500px){#rareNotice[data-layout="full"] .rare-reveal-card,#celebration[data-layout="full"] .celebration-card{width:min(640px,100%);grid-template-columns:180px 1fr 1fr;padding:16px;gap:8px}#rareNoticeArt,#celebrationArt{grid-column:1;grid-row:1/8;height:220px;align-self:center}.rare-notice-copy,#celebrationName,#celebrationTier,#celebrationEffect,#celebrationSurprise,#celebrationTime,#celebrationPlace,#celebrationSerial,#celebrationSignature{grid-column:2/-1}#rareNoticeOpen,#celebrationShare{grid-column:2}#rareNoticeContinue,#celebrationContinue{grid-column:3}}
 #bPrimary.entering-world #bPrimaryL{opacity:.15}#bPrimary.entering-world::after,#cExplore.entering-world::after{animation:none}#cExplore svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.2;vertical-align:middle;margin-right:8px;flex:none}
 body.ui-reduced-motion *,body.ui-reduced-motion *::before,body.ui-reduced-motion *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 @media(prefers-reduced-motion:reduce){#rareNotice,#celebration{animation:none!important;transition:none!important}}
@@ -274,3 +274,9 @@ body.first-journey #zone,body.first-journey #phrase{visibility:hidden}
 #celebrationSignature:empty,#celebrationTime:empty{display:none}
 #celebration[data-layout="full"] .celebration-card:has(#celebrationShare[hidden]) #celebrationContinue{grid-column:1/-1}
 @media(max-height:500px){#celebration[data-layout="full"] #celebrationShare{grid-column:2}#celebration[data-layout="full"] #celebrationContinue{grid-column:3}}
+/* Temporary surprises: one quiet, reversible action above the dock. */
+.surprise-hud{position:fixed;z-index:25;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;max-width:calc(100vw - 24px);padding:4px 8px;background:#000;border:1px solid #ffffff30;font-size:10px;white-space:nowrap}
+.surprise-hud[hidden]{display:none}.surprise-hud button{min-height:44px;min-width:44px;padding:5px 9px;font-size:10px}.surprise-hud small{color:#aaa}#celebrationSurprise:empty{display:none}#celebrationSurprise{color:#bdb5e8;max-width:32ch;line-height:1.5}
+@media(max-height:450px){.surprise-hud{bottom:calc(env(safe-area-inset-bottom,0px) + 60px)}}
+
+body:has(#surpriseHud:not([hidden])) .first-journey-hint{bottom:calc(var(--safe-bottom) + 144px)}

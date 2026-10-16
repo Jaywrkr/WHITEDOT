@@ -1,3 +1,4 @@
+import {initialize as boxSurprises} from './box-surprises.js';
 import {initialize as vjWorld} from './vj-world.js';
 import {initialize as identityPlay} from './identity-play.js';
 import {initialize as performancePlay} from './performance.js';
@@ -173,7 +174,7 @@ if(runtime.S.mode==='camino'&&runtime.worldReady()&&runtime.S.lastWorldDay===run
 seeds(runtime);
 lab(runtime);
 achievementsV2(runtime);worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
-practiceTravel(runtime);
+practiceTravel(runtime);boxSurprises(runtime);
 musicTravel(runtime);
 distantColors(runtime);vjWorld(runtime);
 houseAudio(runtime);house(runtime);

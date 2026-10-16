@@ -35,7 +35,7 @@ export function initialize(runtime){
 
  function open(b){if(!b.gift)runtime.collectRareCard?.('box:'+b.power,b);runtime.recordElement?.('box',runtime.regionOfPos(b.x,b.y));
   const book=S().boxes;if(!b.gift)book[b.id]=1;else{const i=spawned.indexOf(b);if(i>=0)spawned.splice(i,1);S().giftBoxes=(Array.isArray(S().giftBoxes)?S().giftBoxes:[]).filter(item=>item?.id!==b.id);}
-  S().boxesOpened=(S().boxesOpened||0)+1;runtime.petBox?.(b);give(b.power);runtime.colorPulse?.(b.hue,1);runtime.burst?.(b.x,b.y,14,true);
+  S().boxesOpened=(S().boxesOpened||0)+1;runtime.petBox?.(b);give(b.power);runtime.giveBoxSurprise?.(b);runtime.colorPulse?.(b.hue,1);runtime.burst?.(b.x,b.y,14,true);
   if(runtime.celebrateBox)runtime.celebrateBox(b);else runtime.beatSoon(t=>{const ct=runtime.chordTones?.()||[60,64,67];ct.slice(0,3).forEach((n,i)=>melody(n,t+i*runtime.SIX*2,.025));},null,'player');
   runtime.unlock('caja1');if(S().boxesOpened>=5)runtime.unlock('caja5');runtime.unlock('poder_'+b.power);runtime.save();
  }

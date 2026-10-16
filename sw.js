@@ -1,6 +1,7 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.2.0-rc.1-posmusica-03';
+const CACHE='whitedot-2.2.0-rc.1-posmusica-04';
 const SHELL=[
+ "./src/box-surprises-model.js", "./src/box-surprises.js",
  "./src/vj-model.js", "./src/vj-art.js", "./src/vj-world.js",
  "./src/notice-lane.js",
  "./src/control-motion.js",

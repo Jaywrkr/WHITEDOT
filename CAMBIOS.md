@@ -1,3 +1,9 @@
+## Sorpresas temporales · entrega 4
+
+Dieciséis efectos secundarios de caja, incluyendo contratiempos suaves, cambio temporal de tamaño/forma, cuatro estelas, lunas, brotes, ecos, borrado de brotes y salto con regreso. Un control contextual permite deshacer. Guardado versionado, pausa en menús/inspección y preservación de datos futuros. Las seis cajas originales, sus posiciones y probabilidades no cambian. Sin nuevas voces ni sonidos de UI.
+
+Auditoría aprobada, cero errores/advertencias; 131 suites Node aprobadas. Navegador nuevo pendiente por el bloqueo documentado de Chromium; no se sube como validado. Prueba: abrir una caja; si contiene sorpresa, usar Deshacer. En salto, usar Volver.
+
 ## Visuales localizados · entrega 3
 
 - Ocho escenas procedurales: órbitas, circuitos, cintas, vidrio, islas, partitura, abanico y organismo. Semillas independientes; 60 % de celdas candidatas quedan vacías por regla del hash. Esa regla no mide cobertura visible ni biomas nuevos.

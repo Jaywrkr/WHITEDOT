@@ -1,0 +1,19 @@
+{
+  "branch": "feat/posmusica-04-cajas",
+  "audit": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "node": {
+    "suites": 131,
+    "result": "passed"
+  },
+  "browser": {
+    "test": "tests/box_surprises_smoke.py",
+    "result": "pending",
+    "reason": "Previous real browser attempt blocked before app load by Target crashed; no completed new browser run claimed"
+  },
+  "audio": "No synthesis, arrangement, instruments or musical timing changed. New trails are silent. Existing travel resets preserved.",
+  "push": "pending required browser validation",
+  "phone": "pending"
+}
