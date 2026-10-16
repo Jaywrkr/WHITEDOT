@@ -1,3 +1,9 @@
+## 2.3.0-alpha.6 · Composición y mezcla
+
+Los acompañantes conservan sus instrumentos cuando cambia el solista; solo se sustituye la voz que coincide con él. Los acordes usan la conducción de voces existente en registro medio, dejando espacio al bajo. Se mantienen motivos, tempo, progresiones y límites de mezcla.
+
+Auditoría sin errores/avisos; 41 suites Node afectadas y recorrido representativo aprobados; renders afectados aprobados. Evidencia: scripts/mejora-02-validation.json. No afirma escucha física, CI ni deploy.
+
 ## 2.3.0-alpha.5 · Identidad musical
 
 La radio regional es dueña del motivo, forma, brillo y energía. La capa viva deja de aplicar una segunda sustracción periódica; conserva metadatos y la quietud explícita. Se comprueba conservación durante 256 compases, además de las referencias históricas existentes.

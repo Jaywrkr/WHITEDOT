@@ -27,4 +27,6 @@ const frame=labArrangement(base,solo.s);for(let step=0;step<16;step++){assert.eq
 const quiet=labArrangement(base,full.s,{quiet:true});assert.equal(quiet.melodyRest,true);
 assert.deepEqual(labNoteEvents({...quiet,labScore:{...quiet.labScore,scene:5}},2,0).filter(e=>e.role!=='bajo'),[]);
 assert.equal(electronicDrum({},'unrecognized',0,1,{}),false);
+const chairs={pool:['rhodes','p_gutguitar','clav','phasekeys','p_cellobody','p_softhorn']},steady=ensembleVoices(chairs,'elsewhere',0);
+for(const lead of chairs.pool){const group=ensembleVoices(chairs,lead,0);assert.equal(new Set(Object.values(group)).size,4);assert(!Object.values(group).includes(lead));assert(Object.keys(group).filter(k=>group[k]!==steady[k]).length<=1,'changing soloist must not replace every accompaniment');}
 console.log('PASS all ten ensemble sizes, solo/ten-part real scores, distinct instruments/kits, arrival harmony and protected quiet/rest behavior');

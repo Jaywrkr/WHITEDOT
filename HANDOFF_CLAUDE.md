@@ -1,3 +1,9 @@
+# Mejora integral · fase 2
+
+Rama `mejora/02-composicion`, versión 2.3.0-alpha.6. Los acompañantes conservan sus instrumentos cuando cambia el solista; solo se sustituye la voz que coincide con él. Los acordes usan la conducción de voces existente en registro medio, dejando espacio al bajo. Se mantienen motivos, tempo, progresiones y límites de mezcla.
+
+Auditoría sin errores/avisos; 41 suites Node afectadas y recorrido representativo aprobados; renders afectados aprobados. Leer PLAN_MEJORA_INTEGRAL.md; este ciclo sustituye la ampliación anterior. Evidencia: scripts/mejora-02-validation.json. Jay conserva PR/merge.
+
 # Mejora integral · fase 1
 
 Rama `mejora/01-identidad-musical`, versión 2.3.0-alpha.5. La radio regional es dueña del motivo, forma, brillo y energía. La capa viva deja de aplicar una segunda sustracción periódica; conserva metadatos y la quietud explícita. Se comprueba conservación durante 256 compases, además de las referencias históricas existentes.
