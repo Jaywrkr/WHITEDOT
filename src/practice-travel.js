@@ -1,3 +1,4 @@
+import {explorationContext,explorationContrast} from './exploration-context.js';
 import {territoryNucleus} from './territory-journey.js';
 import {labScore} from './lab-score.js';
 import {musicIdentity} from './musical-recipes.js';
@@ -11,11 +12,11 @@ export function normalizePracticeTravel(raw){
  if(Number.isInteger(raw?.version)&&raw.version>1)return raw;
  const bounded=items=>Array.isArray(items)?items.filter(s=>typeof s==='string').slice(-8).map(s=>s.slice(0,160)):[];
  return {...raw,version:1,previous:validPoint(raw?.previous)?{...raw.previous,x:raw.previous.x,y:raw.previous.y,layer:raw.previous.layer}:null,
-  recent:bounded(raw?.recent),sounds:bounded(raw?.sounds)};
+  recent:bounded(raw?.recent),sounds:bounded(raw?.sounds),sights:bounded(raw?.sights)};
 }
 export function practiceSoundIdentity(band,identity=null){return [identity?.hooks?.join(',')||band?.leads?.join(','),band?.electronic?.count||0,Math.floor((band?.electronic?.kit?.snap||0)/350)].join(':');}
-export function choosePracticePlace(runtime,random,history=[],festive=false,recentSounds=[]){
- const R=runtime.REG*runtime.WCH,s=runtime.S,current=runtime.regionOfPos(s.wx,s.wy),previous=musicIdentity(current,runtime.seedOf,runtime.rng,runtime.GEN),previousHybrid=hybridIdentity(current,runtime.seedOf,runtime.rng),previousBand=labScore(current,runtime.seedOf,runtime.rng),candidates=[];
+export function choosePracticePlace(runtime,random,history=[],festive=false,recentSounds=[],recentSights=[]){
+ const R=runtime.REG*runtime.WCH,s=runtime.S,current=runtime.regionOfPos(s.wx,s.wy),previous=musicIdentity(current,runtime.seedOf,runtime.rng,runtime.GEN),previousHybrid=hybridIdentity(current,runtime.seedOf,runtime.rng),previousBand=labScore(current,runtime.seedOf,runtime.rng),currentView=explorationContext(current,s.wx,s.wy,runtime.seedOf),candidates=[];
  for(let i=0;i<24;i++){
   const rx=Math.floor(s.wx/R)+Math.floor((random()-.5)*160),ry=Math.floor(s.wy/R)+Math.floor((random()-.5)*160),
    cx=rx*runtime.REG+Math.floor(random()*runtime.REG),cy=ry*runtime.REG+Math.floor(random()*runtime.REG),d=runtime.regionOfPos((cx+.5)*runtime.WCH,(cy+.5)*runtime.WCH);
@@ -23,9 +24,11 @@ export function choosePracticePlace(runtime,random,history=[],festive=false,rece
   const identity=musicIdentity(d,runtime.seedOf,runtime.rng,runtime.GEN),profile=populationProfile(d,runtime.BIOMES[d.z].id,runtime.seedOf,runtime.rng),
    inhabitants=populatedChunk(livingChunk(cx,cy,runtime.WCH,d,runtime.BIOMES[d.z].id,runtime.seedOf,runtime.rng),cx,cy,runtime.WCH,d,profile,runtime.seedOf,runtime.rng);
   if(!inhabitants.length)continue;
-  const band=labScore(d,runtime.seedOf,runtime.rng),hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng),animal=inhabitants.find(o=>o.group==='fauna')||inhabitants[0],score=(d.genre!==current.genre?6:0)+(identity?.id!==previous?.id?4:0)+(d.z!==current.z?2:0)+(history.some(s=>s===identity?.id||s.startsWith(identity?.id+'~'))?-5:0)+(d.worldFamily?.id!==current.worldFamily?.id?5:0)+(hybrid?.id!==previousHybrid?.id?4:0)+(band?.id!==previousBand?.id?6:0)+(band?.leads.join(',')!==previousBand?.leads.join(',')?4:0)+(JSON.stringify(band?.kick)!==JSON.stringify(previousBand?.kick)?3:0)+(festive&&band?.festive?25:0)+Math.min(5,Math.abs((d.bpm||100)-(current.bpm||100))/8)-(recentSounds.some(sound=>sound===practiceSoundIdentity(band,identity)||sound===practiceSoundIdentity(band))?12:0);
-  candidates.push({x:animal.x,y:animal.y+(animal.y-75<ry*R?75:-75),layer:'superficie',region:d,identity,hybrid,band,population:profile,score});
-  if(score>=21&&i>=7&&(!festive||band?.festive))break;
+  const source=runtime.wchunk(cx,cy),view=runtime.sceneChunk?.(source)||source,native=view.sp?.[0],animal=native||inhabitants.find(o=>o.group==='fauna')||inhabitants[0],sight=explorationContext(d,animal.x,animal.y,runtime.seedOf);
+  const band=labScore(d,runtime.seedOf,runtime.rng),hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng),score=explorationContrast(currentView,sight,recentSights)+(d.genre!==current.genre?6:0)+(identity?.id!==previous?.id?4:0)+(d.z!==current.z?2:0)+(history.some(s=>s===identity?.id||s.startsWith(identity?.id+'~'))?-5:0)+(d.worldFamily?.id!==current.worldFamily?.id?5:0)+(hybrid?.id!==previousHybrid?.id?4:0)+(band?.id!==previousBand?.id?6:0)+(band?.leads.join(',')!==previousBand?.leads.join(',')?4:0)+(JSON.stringify(band?.kick)!==JSON.stringify(previousBand?.kick)?3:0)+(festive&&band?.festive?25:0)+Math.min(5,Math.abs((d.bpm||100)-(current.bpm||100))/8)-(recentSounds.some(sound=>sound===practiceSoundIdentity(band,identity)||sound===practiceSoundIdentity(band))?12:0);
+  const landingY=animal.y+(animal.y-75<ry*R?75:-75);if(runtime.regionOfPos(animal.x,landingY).key!==d.key)continue;
+  candidates.push({x:animal.x,y:landingY,layer:'superficie',region:d,identity,hybrid,band,population:profile,sight,score});
+  if(score>=29&&i>=11&&(!festive||band?.festive))break;
  }return candidates.sort((a,b)=>b.score-a.score)[0]||null;
 }
 // A monotonic spiral allocates each automatic arrival region only once.
@@ -43,7 +46,7 @@ export function nextArrivalPlace(runtime,state){
   if(Math.abs(rx*size)>1e12-size||Math.abs(ry*size)>1e12-size)continue;
   const d=runtime.regionOfPos((rx+.5)*size,(ry+.5)*size);if(d.sea)continue;
   const point=territoryNucleus(rx,ry,size,runtime.seedOf),identity=musicIdentity(d,runtime.seedOf,runtime.rng,runtime.GEN),band=labScore(d,runtime.seedOf,runtime.rng),sound=practiceSoundIdentity(band,identity);
-  const score=(d.genre!==current.genre?6:0)+(d.worldFamily?.id!==current.worldFamily?.id?3:0)-(state.sounds.includes(sound)?8:0)+(runtime.seedOf('arrival:contrast:v1:'+d.key)%100)/100;
+  const score=explorationContrast(explorationContext(current,s.wx,s.wy,runtime.seedOf),explorationContext(d,point.x,point.y,runtime.seedOf),state.sights||[])+(d.genre!==current.genre?6:0)+(d.worldFamily?.id!==current.worldFamily?.id?3:0)-(state.sounds.includes(sound)?8:0)+(runtime.seedOf('arrival:contrast:v1:'+d.key)%100)/100;
   candidates.push({...point,layer:'superficie',region:d,identity,band,score});
  }
  const point=candidates.sort((a,b)=>b.score-a.score)[0];return point?{point,origin,cursor}:null;
@@ -55,6 +58,7 @@ export function initialize(runtime){
   $('bJump').disabled=blocked();$('bJumpBack').disabled=blocked();}
  function move(point,state,prepare=null,updateAddress=true){
   const old={wx:runtime.S.wx,wy:runtime.S.wy,layer:runtime.S.layer,destination:runtime.S.destination,practiceTravel:runtime.S.practiceTravel};
+  state.sights=[...(state.sights||[]),explorationContext(runtime.regionOfPos(point.x,point.y),point.x,point.y,runtime.seedOf).signature].slice(-8);
   runtime.S.wx=point.x;runtime.S.wy=point.y;runtime.S.layer=point.layer;runtime.S.practiceTravel=state;runtime.S.destination=null;
   // Persist the complete destination before changing queues, URL or navigation.
   if(!runtime.save()){Object.assign(runtime.S,old);ui();return false;}
@@ -67,7 +71,7 @@ export function initialize(runtime){
  function jump(){if(!runtime.inWorld()||blocked()||document.querySelector('.modal:not([hidden])'))return false;
   // Commit the current place/progress before replacing coordinates. UI itself emits no note.
   if(!runtime.save())return false;
-  const state=normalizePracticeTravel(runtime.S.practiceTravel),random=runtime.rng(runtime.seedOf(`travel:practice:v1:${Date.now()}:${counter++}`)),point=choosePracticePlace(runtime,random,state.recent,counter%3===0,state.sounds);
+  const state=normalizePracticeTravel(runtime.S.practiceTravel),random=runtime.rng(runtime.seedOf(`travel:practice:v1:${Date.now()}:${counter++}`)),point=choosePracticePlace(runtime,random,state.recent,counter%3===0,state.sounds,state.sights);
   if(!point){runtime.toast('No encontré otro lugar. Intenta otra vez.');return false;}
   state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.recent.push(point.identity.id+'~'+(point.hybrid?.id||'native'));state.recent=state.recent.slice(-8);state.sounds=[...state.sounds,practiceSoundIdentity(point.band,point.identity)].slice(-8);
   if(!move(point,state,runtime.labMode?()=>runtime.labGo(point.band?'band:'+point.band.id:'music:'+point.identity.id):null))return false;runtime.toast(`${point.region.worldFamily?.name||runtime.BIOMES[point.region.z].name} · ${point.band?.festive?point.band.name:point.identity.name}`);return true;

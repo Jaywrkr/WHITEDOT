@@ -1,3 +1,4 @@
+import {explorationContext} from './exploration-context.js';
 import {territoryNucleus} from './territory-journey.js';
 import {territoryInk} from './territory-transition.js';
 // Localized distant color, independent of sound, terrain and collectible RNG streams.
@@ -7,7 +8,7 @@ export function distantDirections(x,y,size,width,height,regionAt,seedOf){
   const a=rx+dx,b=ry+dy,region=regionAt((a+.5)*size,(b+.5)*size);if(region.sea)continue;
   const target=territoryNucleus(a,b,size,seedOf),vx=target.x-x,vy=target.y-y,distance=Math.hypot(vx,vy),radius=Math.min(150,Math.min(width,height)*.38);
   const edge=Math.min((width/2+radius*.12)/Math.max(.001,Math.abs(vx)),(height/2+radius*.12)/Math.max(.001,Math.abs(vy)));
-  out.push({key:region.key,target,genre:region.genre,ink:territoryInk(region,'lead',seedOf),x:width/2+vx*edge,y:height/2+vy*edge,radius,score:(region.genre!==here.genre?1.25:1)/Math.max(1,distance)});
+  out.push({key:region.key,target,genre:region.genre,ink:territoryInk(region,'lead',seedOf),x:width/2+vx*edge,y:height/2+vy*edge,radius,score:(region.genre!==here.genre?1.25:1)*(explorationContext(region,target.x,target.y,seedOf).style!==explorationContext(here,x,y,seedOf).style?1.3:1)/Math.max(1,distance)});
  }
  return out.sort((a,b)=>b.score-a.score).slice(0,2);
 }

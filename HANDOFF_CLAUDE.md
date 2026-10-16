@@ -1,3 +1,7 @@
+# Reencuentro · fase 5
+
+Leer PLAN_REENCUENTRO.md. Rama `feat/reencuentro-05-exploracion`, versión 2.3.0-alpha.21. Saltar y las nuevas llegadas valoran cinco aspectos, ocho familias y nichos además de música. El historial visual migra sin borrar datos y mantiene ocho recuerdos. Los gradientes orientan también hacia aspectos distintos; el detalle del lugar nombra el hábitat. La guía abre el catálogo aislado sin arrastrar direcciones del guardado principal. Evidencia en scripts/reencuentro-05-validation.json. Jay conserva PR/merge; respetar los límites de audio documentados.
+
 # Reencuentro · fase 4
 
 Leer PLAN_REENCUENTRO.md. Rama `feat/reencuentro-04-ecosistemas`, versión 2.3.0-alpha.20. Un campo continuo de colonias, corredores, refugios y claros sustituye tres filtros acumulados. La muestra conserva 678 de 2.058 individuos originales frente a 166 antes, con límites de densidad y sin mover mapas. Los hábitats y contornos comparten esa geografía; raros, nursery y acompañantes quedan protegidos. Las vistas se refrescan también al crecer una misma lista. Evidencia en scripts/reencuentro-04-validation.json. Jay conserva PR/merge; respetar los límites de audio documentados.
