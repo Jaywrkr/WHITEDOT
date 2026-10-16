@@ -2,6 +2,7 @@
 
 | Entrega | Estado |
 |---|---|
+| WOW 18: Álbum con foco | Implementada; scripts/wow-18-validation.json |
 | WOW 17: Barrido de adquisición | Implementada; scripts/wow-17-validation.json |
 | WOW 16: Profundidad en tarjetas | Implementada; scripts/wow-16-validation.json |
 | WOW 15: Anticipación de hallazgos | Implementada; scripts/wow-15-validation.json |

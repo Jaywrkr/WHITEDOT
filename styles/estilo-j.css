@@ -355,3 +355,9 @@ body.ui-reduced-motion .wow-depth>svg{transform:none!important}
 @keyframes wow-acquire{to{transform:translateX(140%)}}
 @media(prefers-reduced-motion:reduce){#rareNoticeArt::after{display:none}}
 body.ui-reduced-motion #rareNoticeArt::after{display:none}
+
+.rare-grid .rare-card:not(.wow-selected) .rare-glyph{animation:none}
+.rare-card.wow-selected .rare-glyph{animation:wow-album-breathe 4s ease-in-out infinite;transform-origin:center}
+.rare-card.wow-selected{border-color:var(--rare-ink,#fff)}
+@keyframes wow-album-breathe{0%,100%{opacity:.84;transform:translateY(0)}50%{opacity:1;transform:translateY(-1px)}}
+@media(prefers-reduced-motion:reduce){.rare-card.wow-selected .rare-glyph{animation:none}}
