@@ -2,7 +2,7 @@
 
 `feat/posmusica-04-cajas` desde la entrega visual. `box-surprises-model.js` define 16 efectos secundarios sin cambiar POWER_IDS ni la selección original de caja. `box-surprises.js` controla un efecto a la vez, reloj activo guardado, rastros acotados y reversión. Estado `S.boxSurprises`, campos desconocidos y formatos futuros conservados. El salto usa `travelPracticePoint`, con limpieza de transporte existente y posibilidad de regreso; no interviene en composición ni síntesis. Borrador solo elimina brotes efímeros propios. `surpriseHud` es contextual; no añade un botón permanente al dock.
 
-Auditoría y 131 suites Node aprobadas; navegador y push pendientes por recursos del contenedor. Nuevos recorridos `box_surprises_smoke.py`. Mantener pruebas CI completas. Las estelas nuevas son silenciosas bajo el encargo actual de no tocar música.
+Auditoría, 131 suites Node y navegador enfocado aprobados: `box_surprises_smoke.py` y `power_cards_smoke.py`, tres tamaños cada uno. Perfil local de un solo proceso/contexto; CI y teléfono físico pendientes. Mantener pruebas CI completas. Las estelas nuevas son silenciosas bajo el encargo actual de no tocar música.
 
 ## Antecedentes
 

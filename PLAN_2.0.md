@@ -1,5 +1,5 @@
 <!-- ampliacion-visual -->
-Estado actual: [ampliación visual](PLAN_INTERACCION_FINAL.md). Entrega 3 implementada y probada: 130 suites Node, auditoría y tres programas de navegador enfocados aprobados. Entrega 4 implementada; navegador pendiente. Entrega 5 continúa en rama dependiente. No reabrir fases históricas.
+Estado actual: [ampliación visual](PLAN_INTERACCION_FINAL.md). Entrega 3 implementada y probada: 130 suites Node, auditoría y tres programas de navegador enfocados aprobados. Entrega 4 implementada y probada: 131 suites Node, auditoría y dos programas de navegador enfocados. Entrega 5 continúa en rama dependiente. No reabrir fases históricas.
 <!-- /ampliacion-visual -->
 
 <!-- direccion-musical-actual -->
