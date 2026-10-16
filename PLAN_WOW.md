@@ -19,7 +19,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 13 | Cometas variados | feat/wow-13-cometas | Implementada; ver informe 13 |
 | 14 | Galaxias que respiran | feat/wow-14-galaxias | Implementada; ver informe 14 |
 | 15 | Anticipación de hallazgos | feat/wow-15-hallazgos | Implementada; ver informe 15 |
-| 16 | Profundidad en tarjetas | feat/wow-16-profundidad | Pendiente |
+| 16 | Profundidad en tarjetas | feat/wow-16-profundidad | Implementada; ver informe 16 |
 | 17 | Barrido de adquisición | feat/wow-17-adquisicion | Pendiente |
 | 18 | Álbum con foco | feat/wow-18-album | Pendiente |
 | 19 | Firma de favoritos | feat/wow-19-favoritos | Pendiente |
@@ -96,3 +96,7 @@ Las galaxias lejanas respiran lentamente en luminosidad y escala, sin variar la 
 ### 15. Anticipación de hallazgos
 
 Tres detalles de la ilustración anticipan su revelado con un único destello breve. El nombre, controles y foco están disponibles desde el inicio. No cambia la cola, rareza, recompensa ni duración de las tarjetas.
+
+### 16. Profundidad en tarjetas
+
+La ilustración de la tarjeta responde al dedo o cursor con profundidad de tres grados. Solo se mueve el dibujo; texto y botones permanecen estables. Scroll, cancelación, teclado y movimiento reducido conservan su comportamiento.

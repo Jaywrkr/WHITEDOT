@@ -40,3 +40,9 @@ export function cloudBreath(cloud,seconds,reduced=false){
  const phase=Number.isFinite(cloud.phase)?cloud.phase:0,a=seconds*Math.PI*2/(100+phase*6)+phase;
  return {light:.9+Math.sin(a)*.1,scale:1+Math.sin(a*.7)*.025};
 }
+
+export function cardTilt(rect,x,y){
+ if(!rect||!Number.isFinite(x)||!Number.isFinite(y)||rect.width<=0||rect.height<=0)return {x:0,y:0};
+ const nx=Math.max(-1,Math.min(1,(x-rect.left)/rect.width*2-1)),ny=Math.max(-1,Math.min(1,(y-rect.top)/rect.height*2-1));
+ return {x:-ny*3,y:nx*3};
+}

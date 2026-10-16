@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {initialize} from '../src/wow-ui.js';
+const listeners={},values=new Map(),classes=new Set();
+globalThis.document={hidden:false,addEventListener:(name,fn)=>listeners[name]=fn};globalThis.matchMedia=()=>({matches:false});globalThis.addEventListener=()=>{};
+const node={style:{setProperty:(k,v)=>values.set(k,v),removeProperty:k=>values.delete(k)},classList:{add:k=>classes.add(k),remove:k=>classes.delete(k)},getBoundingClientRect:()=>({left:0,top:0,width:100,height:100}),closest:()=>node,contains:()=>false};
+const r={S:{},playVoice:()=>assert.fail('card UI is silent')};initialize(r);
+const event={target:node,pointerId:1,pointerType:'touch',clientX:90,clientY:10,preventDefault:()=>assert.fail('never consume scrolling')};
+listeners.pointermove(event);assert.equal(values.size,0);
+listeners.pointerdown(event);assert(values.size===2);assert(classes.has('wow-depth'));
+listeners.scroll();assert.equal(values.size,0);
+listeners.pointercancel();assert(!classes.has('wow-depth'));
+r.S.reducedMotion=true;listeners.pointerdown(event);assert.equal(values.size,0);
+console.log('PASS delegated card depth, touch intent, scrolling, cancellation, reduced motion and silent UI');

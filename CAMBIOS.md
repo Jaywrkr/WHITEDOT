@@ -1,3 +1,7 @@
+## 2.3.0-alpha.40 · Cuaderno vivo 16/20
+
+La ilustración de la tarjeta responde al dedo o cursor con profundidad de tres grados. Solo se mueve el dibujo; texto y botones permanecen estables. Scroll, cancelación, teclado y movimiento reducido conservan su comportamiento.
+
 ## 2.3.0-alpha.39 · Cuaderno vivo 15/20
 
 Tres detalles de la ilustración anticipan su revelado con un único destello breve. El nombre, controles y foco están disponibles desde el inicio. No cambia la cola, rareza, recompensa ni duración de las tarjetas.

@@ -2,6 +2,7 @@
 
 | Entrega | Estado |
 |---|---|
+| WOW 16: Profundidad en tarjetas | Implementada; scripts/wow-16-validation.json |
 | WOW 15: Anticipación de hallazgos | Implementada; scripts/wow-15-validation.json |
 | WOW 14: Galaxias que respiran | Implementada; scripts/wow-14-validation.json |
 | WOW 13: Cometas variados | Implementada; scripts/wow-13-validation.json |
