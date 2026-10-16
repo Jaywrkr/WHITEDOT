@@ -1,3 +1,4 @@
+import {voiceExpression} from './voice-expression.js';
 import {microVoice,microArticulation,microKit} from './micro-instruments-model.js';
 import {electronicDrum} from './electronic-ensemble.js';
 import {consonantPitch,fitRegister} from './musical-conductor.js';
@@ -128,14 +129,15 @@ export function initialize(runtime) {
       runtime.soundCue?.(source,voice.role,t,origin);
       if(magnetic)runtime.magnetVoiceCue?.({id:source?.id,role:voice.role,instrument:voice.instrument,time:t,gain:magnetVoiceGain(voice.role)});
       const hitFrame=runtime.musicalFrame?.(t)??frame,n=note(degree,hitFrame,t);if(origin==='player'&&source)runtime.identityGesture?.(source,voice,n);let v = runtime.vel(strength * volume*(voice.volume??1)*(magnetic?magnetVoiceGain(voice.role):1))*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
-      const articulation={...(kind.startsWith('micro:')?microArticulation(source):{}),technique:runtime.cardTechnique?.(source)|| (source?.expression==='staccato'?'muted':source?.expression==='glide'?'slide':voice.technique||'normal')};
+      const expression=voiceExpression(voice,source,hitFrame,t);v*=expression.velocity;
+      const articulation={...expression,...(kind.startsWith('micro:')?microArticulation(source):{}),technique:runtime.cardTechnique?.(source)|| (source?.expression==='staccato'?'muted':source?.expression==='glide'?'slide':voice.technique||'normal')};
       if(source){source.musicRole=voice.role;source.musicInstrument=voice.instrument;}
       const emit=()=>{
         if(kind.startsWith('micro:'))runtime.microVoiceCue?.({kind,instrument:voice.instrument,role:voice.role,note:n,time:t,tones:hitFrame?.chords||[],pitches:voice.role==='acorde'&&hitFrame?hitFrame.chords.slice(0,3).map(n=>fitRegister(n,voice.low,voice.high)):[n],strongBeat:!!hitFrame&&(hitFrame.step+Math.round((t-hitFrame.time)/hitFrame.six))%4===0,morph:articulation.morph});
         if(kind.startsWith('micro:')&&voice.role==='bajo'&&runtime.playNewInstrument?.(voice.instrument,n,t,v,articulation)){runtime.recordInstrument?.(voice.instrument);return;}
         if(kind==='micro:drum'&&electronicDrum(runtime,voice.instrument,t,v,microKit(region,runtime.seedOf)))return;
         if(voice.role==='perc'&&INSTRUMENT_SPECS[voice.instrument]&&runtime.playNewInstrument?.(voice.instrument,n,t,v,articulation)){runtime.recordInstrument?.(voice.instrument);if(kind.startsWith('living:'))runtime.livingNoteCue?.({id:source?.id,role:voice.role,note:n,time:t,material:voice.material,instrument:voice.instrument});return;}
-        if(kind.startsWith('living:')&&runtime.livingSynthesis?.(voice,n,t,v,source))return;
+        if(kind.startsWith('living:')&&runtime.livingSynthesis?.(voice,n,t,v,source,articulation))return;
         if(kind.startsWith('rhythm:')&&playMaterialStrike(runtime,kind.split(':')[1],source?.variant||0,t,v)){runtime.recordInstrument?.(voice.instrument);return;}
         if (voice.role === 'bajo') runtime.bassInst(voice.instrument,n,t,v);
         else if (voice.role === 'perc') {

@@ -16,7 +16,7 @@ export function electronicEnsemble(region,kind,ensemble,seedOf){
   order=calm?['motif','chords','air']:kind==='organic'?['kick','bass','motif','percussion','hats','chords','snare','counter','sequence','air']:['kick','bass','motif','snare','hats','chords','percussion','counter','sequence','air'],
   pool=POOLS[kind]||POOLS.floor;
  return Object.freeze({version:2,count,layers:Object.freeze(order.slice(0,count)),pool:Object.freeze([...pool]),
-  kit:Object.freeze({seed:h,body:130+(h>>>3)%90,snap:1700+(h>>>10)%1400,tail:.09+(h>>>17)%10*.01,
+  kit:Object.freeze({seed:h,snareStyle:(h>>>23)%4,body:130+(h>>>3)%90,snap:1700+(h>>>10)%1400,tail:.09+(h>>>17)%10*.01,
    kick:40+(h>>>6)%16,metal:kind==='machine',dark:['dub','minimal','rominimal','microhouse'].includes(region.genre)})});
 }
 export function ensembleVoices(plan,lead,variant=0){
@@ -36,10 +36,19 @@ export function electronicDrum(runtime,instrument,time,volume,kit){
  runtime.recordInstrument?.(instrument);
  if(instrument==='kick')tone(kit.kick*2.8,kit.kick,volume,.26+(kit.seed%4)*.025);
  else if(instrument.startsWith('snare')){
-  tone(kit.body*1.25,kit.body,volume*.48,.1+(kit.seed%4)*.015,kit.metal?'triangle':'sine');
-  runtime.noiseHit(time,'bandpass',kit.snap,kit.dark?1.8:1,volume*.85,kit.tail,false);
+  const style=snareBody(kit);tone(kit.body*style.fall,kit.body,volume*style.body,style.decay,kit.metal?'triangle':'sine');
+  runtime.noiseHit(time,'bandpass',kit.snap*style.tone,kit.dark?1.8:1,volume*style.noise,kit.tail*style.tail,false);
  }else if(instrument.startsWith('clap')){
   for(const offset of [0,.011,.024])runtime.noiseHit(time+offset,'bandpass',kit.snap*.85,1.1,volume*.42,offset?.035:kit.tail,false);
  }else runtime.noiseHit(time,'highpass',kit.dark?4300:5500+kit.seed%1600,.7,volume,instrument==='hatO'?.14:.035+(kit.seed%4)*.008,false);
  runtime.electronicDrumCue?.({instrument,time,kit:kit.seed});return true;
 }
+
+// Four dry regional snare bodies: wood, brush, skin and a short electronic gate.
+const SNARE_BODIES=Object.freeze([
+ {body:.7,noise:.32,fall:1.12,decay:.075,tail:.55,tone:.72},
+ {body:.28,noise:.65,fall:1.15,decay:.11,tail:1.25,tone:.9},
+ {body:.5,noise:.85,fall:1.3,decay:.145,tail:.85,tone:1},
+ {body:.62,noise:.6,fall:1.5,decay:.09,tail:.45,tone:.82}
+].map(Object.freeze));
+export function snareBody(kit={}){const n=Number.isInteger(kit.snareStyle)?kit.snareStyle:Number.isInteger(kit.seed)?kit.seed:0;return SNARE_BODIES[(n%4+4)%4];}

@@ -6,8 +6,8 @@ Versiones: `2.3.0-alpha.1` a `alpha.12`, una por fase. `node scripts/bump-versio
 
 | Fase | Rama | Versión | Estado | Resultado esperado |
 |---|---|---|---|---|
-| 1 · Llegadas variadas | `feat/juego-01-llegadas` | `2.3.0-alpha.1` | Implementada y probada; entrega en esta rama | Contraste musical entre visitas; regreso exacto y guardado seguro. |
-| 2 · Instrumentos expresivos | `feat/juego-02-sonido` | `2.3.0-alpha.2` | Pendiente | Articulación y dinámica por rol, percusión variada y mezcla controlada. |
+| 1 · Llegadas variadas | `feat/juego-01-llegadas` | `2.3.0-alpha.1` | Subida en `07cd4b4` | Contraste musical entre visitas; regreso exacto y guardado seguro. |
+| 2 · Instrumentos expresivos | `feat/juego-02-sonido` | `2.3.0-alpha.2` | Implementada y probada; entrega en esta rama | Articulación y dinámica por rol, percusión variada y mezcla controlada. |
 | 3 · Composición regional | `feat/juego-03-composicion` | `2.3.0-alpha.3` | Pendiente | Motivos, bajos, groove, descansos y arreglos de dos a diez instrumentos. |
 | 4 · Interpretación | `feat/juego-04-interpretacion` | `2.3.0-alpha.4` | Pendiente | Gestos audibles a tiempo, filtros y respuesta visual localizada. |
 | 5 · Encuentros vivos | `feat/juego-05-encuentros` | `2.3.0-alpha.5` | Pendiente | Invitaciones legibles por hábitat, personalidades y límites de densidad. |

@@ -1,3 +1,9 @@
+## 2.3.0-alpha.2 · Instrumentos expresivos
+
+Cada variante conserva el instrumento nativo que le corresponde: se retiró la sustitución genérica de una de cada cuatro variantes. Ataque, cola, color y acento dependen del rol, gesto e individuo; no se sortean notas. Los sostenidos entran en el pulso y acorde activos; fuente, efectos y señal visual usan el mismo instante. Cuatro cajas regionales secas: madera, escobillas, piel y puerta electrónica. Sin añadir eco automático ni tocar guardados o geometría.
+
+Pruebas por impacto según el nuevo acuerdo de Jay: selector transitorio de dependencias, recursos y casos nuevos, conservador con imports dinámicos/recorridos. No se elimina ninguna suite ni se cambia CI. Las completas se reservan al cierre. La fase 1 ya está subida en `07cd4b4`; esta rama depende de ella. Auditoría, 42 suites afectadas, recorrido de 43 voces y 14 renders aprobados. Métricas de estabilidad no equivalen a aceptación musical física.
+
 ## 2.3.0-alpha.1 · Llegadas y base
 
 Llegadas nuevas en visitas reales, con memoria de ocho timbres y contraste de tempo; conserva el punto anterior. Reanudar la misma página, seguir un enlace o abrir una prueba no mueve al jugador. Rechazo de guardado restaura coordenadas antes de cambiar URL/colas. Tarjetas esperan durante grabación; guía tiene prioridad sobre avisos rutinarios. Los metadatos regionales se actualizan aunque el aviso se suprima. Expectativas del laboratorio y repetidos alineadas con el catálogo y diseño vigentes.

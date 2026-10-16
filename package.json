@@ -1,6 +1,6 @@
 {
   "name": "whitedot",
-  "version": "2.3.0-alpha.1",
+  "version": "2.3.0-alpha.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,7 +10,8 @@
     "test:audio": "python3 scripts/run-browser-tests.py audio",
     "audit:universe": "node scripts/universe-audit.mjs",
     "audit:encounters": "node scripts/encounter-audit.mjs",
-    "audit:music": "node scripts/music-quality-audit.mjs"
+    "audit:music": "node scripts/music-quality-audit.mjs",
+    "test:impact": "node scripts/test-impact.mjs"
   },
   "engines": {
     "node": ">=18"

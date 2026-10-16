@@ -1,0 +1,179 @@
+{
+  "voices": [
+    {
+      "instrument": "p_gutguitar",
+      "sampleRate": 48000,
+      "peak": 0.007326933555305004,
+      "energy": 0.02410265118766852,
+      "late": 0
+    },
+    {
+      "instrument": "p_tinepiano",
+      "sampleRate": 44100,
+      "peak": 0.030292067676782608,
+      "energy": 0.4408220820099221,
+      "late": 0
+    },
+    {
+      "instrument": "p_panreed",
+      "sampleRate": 48000,
+      "peak": 0.019585413858294487,
+      "energy": 0.2596126029910432,
+      "late": 0
+    },
+    {
+      "instrument": "p_cellobody",
+      "sampleRate": 44100,
+      "peak": 0.009252195246517658,
+      "energy": 0.15436820554474,
+      "late": 2.94775084180569e-12
+    },
+    {
+      "instrument": "velvetbass",
+      "sampleRate": 48000,
+      "peak": 0.03530746325850487,
+      "energy": 0.8891941112569769,
+      "late": 0
+    },
+    {
+      "instrument": "phasekeys",
+      "sampleRate": 44100,
+      "peak": 0.031050650402903557,
+      "energy": 0.55272256124822,
+      "late": 0
+    },
+    {
+      "instrument": "snare:0",
+      "sampleRate": 48000,
+      "peak": 0.031264327466487885,
+      "energy": 0.12374282903330186,
+      "late": 0
+    },
+    {
+      "instrument": "snare:1",
+      "sampleRate": 48000,
+      "peak": 0.02266654372215271,
+      "energy": 0.046211462429881375,
+      "late": 0
+    },
+    {
+      "instrument": "snare:2",
+      "sampleRate": 48000,
+      "peak": 0.03639299049973488,
+      "energy": 0.13921578058900025,
+      "late": 0
+    },
+    {
+      "instrument": "snare:3",
+      "sampleRate": 48000,
+      "peak": 0.034701280295848846,
+      "energy": 0.12312486265466362,
+      "late": 0
+    }
+  ],
+  "mixes": [
+    {
+      "genre": "minimaltechno",
+      "scene": "living:deer",
+      "sampleRate": 48000,
+      "peak": 0.8726567625999451,
+      "rmsDb": -13.37937244494552,
+      "hotFraction": 0,
+      "instrumentHits": {
+        "kick": 18,
+        "p_foldbass": 15,
+        "skinpluck": 7,
+        "phasekeys": 15,
+        "p_roundbass": 7,
+        "living:bajo": 7,
+        "p_violaswell": 60,
+        "clav": 20,
+        "wood": 49,
+        "p_claypot": 38,
+        "p_tinepiano": 60,
+        "p_feltmallet": 20,
+        "hat": 17,
+        "rim": 2,
+        "p_cellobody": 4,
+        "feltkeys": 1
+      },
+      "onsets": 165,
+      "maxOnsetError": 0.008461538461533635
+    },
+    {
+      "genre": "garage",
+      "scene": "living:breath-tree",
+      "sampleRate": 44100,
+      "peak": 0.8728870153427124,
+      "rmsDb": -10.88641882064573,
+      "hotFraction": 0,
+      "instrumentHits": {
+        "kick": 14,
+        "velvetbass": 15,
+        "feltpiano": 30,
+        "p_feltmallet": 15,
+        "p_cellobody": 6,
+        "living:acorde": 6,
+        "p_violaswell": 60,
+        "wood": 43,
+        "rim": 38,
+        "p_gutguitar": 71,
+        "rhodes": 22,
+        "hat": 27,
+        "snare": 9,
+        "p_softhorn": 1,
+        "p_panreed": 4
+      },
+      "onsets": 165,
+      "maxOnsetError": 0.00840291773519386
+    },
+    {
+      "genre": "afro",
+      "scene": "living:reeds",
+      "sampleRate": 48000,
+      "peak": 0.8726958632469177,
+      "rmsDb": -13.971263461208691,
+      "hotFraction": 0,
+      "instrumentHits": {
+        "kick": 16,
+        "conga": 20,
+        "p_woodybass": 20,
+        "kalimba": 10,
+        "living:bajo": 6,
+        "p_violaswell": 48,
+        "p_gutguitar": 16,
+        "wood": 32,
+        "p_waterdrum": 30,
+        "p_cellobody": 48,
+        "p_panreed": 16
+      },
+      "onsets": 132,
+      "maxOnsetError": 0.007468403077567132
+    },
+    {
+      "genre": "nudisco",
+      "scene": "living:moth",
+      "sampleRate": 44100,
+      "peak": 0.8725656270980835,
+      "rmsDb": -13.389768000502933,
+      "hotFraction": 0,
+      "instrumentHits": {
+        "kick": 16,
+        "p_roundbass": 14,
+        "clav": 45,
+        "p_gutguitar": 12,
+        "living:lead": 6,
+        "p_violaswell": 48,
+        "p_tinepiano": 30,
+        "strings": 32,
+        "p_cellobody": 48,
+        "hat": 16,
+        "wood": 7,
+        "clap": 8,
+        "cowbell": 2
+      },
+      "onsets": 132,
+      "maxOnsetError": 0.0017288004253059597
+    }
+  ]
+}
