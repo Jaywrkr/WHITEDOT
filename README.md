@@ -1,8 +1,8 @@
 <!-- reencuentro -->
-[Plan vigente: recuperar música e identidad del universo](PLAN_REENCUENTRO.md). Fase 7 de siete implementada; evidencias y condiciones de publicación separadas.
+[Plan vigente: recuperar música e identidad del universo](PLAN_REENCUENTRO.md). Habitantes subidos; ampliación 8 de pulsos implementada localmente, auditoría y cuatro suites enfocadas aprobadas; navegador/CI pendientes. [Propuesta posterior](PROPUESTA_PULIDO_EXPERIENCIA.md).
 <!-- /reencuentro -->
 
-Versión en desarrollo: **2.3.0-alpha.23** · [Mejora integral, diez fases](PLAN_MEJORA_INTEGRAL.md). Fecha de deploy real en la aplicación.
+Versión en desarrollo: **2.3.0-alpha.25** · [Mejora integral, diez fases](PLAN_MEJORA_INTEGRAL.md). Fecha de deploy real en la aplicación.
 
 [Cierre de mejora integral: ramas, pruebas y teléfono](CIERRE_MEJORA_INTEGRAL.md). Diez fases implementadas; integración completa pendiente de CI y aceptación física.
 
@@ -31,6 +31,12 @@ Distancia caminada visible, llegadas nuevas, núcleos musicales y gradientes de 
 ## Dirección musical · antecedente integrado
 
 [Plan de siete fases](PLAN_DIRECCION_MUSICAL.md). La fase 1 comparte reloj y armonía dentro de cada zona; cada territorio mantiene su tempo. Fuentes cercanas conservan su instrumento y acompañan la armonía audible. Fase 2 conecta identidades de producción a protagonistas, acordes y respuestas del motor. Fase 3 permite explorar 18 cruces desde Estilos → Cruces, incluyendo guitarra/máquina y disco de secuencias, con formas musicales originales. Fase 4 desarrolla seis situaciones de arreglo por frases, manteniendo motivos reconocibles y retirando capas. Fase 5 reparte instrumentos por función, coordina contactos y ofrece filtros audibles de distinta pendiente/cantidad. Fase 6 coordina cambios de tempo, entrada musical y color local, manteniendo audibles los lugares mínimos. La fase 7 audita el conjunto, corrige introducciones mudas y mezclas de percusión, conserva swing y ordena las zonas experimentales dentro del pulso. [Cierre y comprobaciones](CIERRE_DIRECCION_MUSICAL.md): 127 suites Node, 92 recorridos más offline y 39 programas de audio aprobados. Son 14 identidades de producción y 18 influencias sobre los 52 estilos existentes.
+
+## Cuaderno de ondas
+
+Cincuenta variantes de pulso en diez familias, ganadas al descubrir elementos. Los hallazgos anteriores también cuentan. Tu cubo → Movimiento permite escoger familia y una de cinco ondas, con vista previa silenciosa y Aplicar/Cancelar. Arcos, láseres, ondas y burbujas cambian el alcance espacial; dobles y triples dibujan varios frentes sin multiplicar la respuesta del mismo punto. La onda original conserva su alcance anterior.
+
+Paseo invita ocasionalmente a vecinos y miniinstrumentos cercanos; algunas criaturas se acercan. Respuestas a tempo y con voz regional, pausadas en menús y quietud. No cambia la radio ni la mezcla de fondo. Esta ampliación requiere completar sus comprobaciones en un entorno con hilos disponibles; no es una publicación certificada.
 
 ## Habitantes y profundidad
 
@@ -164,3 +170,7 @@ Flujo: una rama por fase del [ciclo musical actual](PLAN_DIRECCION_MUSICAL.md), 
 | [docs/historial/](docs/historial) | Fases, revisiones, handoffs y auditorías anteriores |
 
 El guardado vive en el navegador (`localStorage`). Exporta una copia desde Menú → Guardar copia.
+
+## Cuaderno vivo
+
+Veinte mejoras visuales en [PLAN_WOW.md](PLAN_WOW.md). Música preservada; estado de verificación por entrega.

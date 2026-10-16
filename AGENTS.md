@@ -4,7 +4,10 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 
 ## Prioridad actual
 
-Ciclo vigente: [PLAN_REENCUENTRO.md](PLAN_REENCUENTRO.md), seis fases y ampliación 7 autorizadas. Referencia musical precisa `acd766f`, inventario, figuras originales, identidad, ecosistemas, exploración y habitantes; ramas encadenadas desde main `2f9cf3e`. Tiene prioridad sobre los ciclos anteriores. La propuesta Perplexity/Gemini de PROPUESTA_PULIDO_EXPERIENCIA.md es solo evaluación para Jay; no autoriza otro ciclo. Jay disfruta la música actual: no iniciar otra reescritura musical por esos documentos.
+Petición más reciente: [PLAN_WOW.md](PLAN_WOW.md), veinte mejoras autorizadas, una rama dependiente por idea. Conservar música, guardados y semillas. Esta instrucción tiene prioridad sobre ciclos históricos.
+
+
+Ciclo vigente: [PLAN_REENCUENTRO.md](PLAN_REENCUENTRO.md), seis fases y ampliaciones 7–8 autorizadas. Referencia musical precisa `acd766f`, inventario, figuras originales, identidad, ecosistemas, exploración y habitantes; ramas encadenadas desde main `2f9cf3e`. Tiene prioridad sobre los ciclos anteriores. La propuesta Perplexity/Gemini de PROPUESTA_PULIDO_EXPERIENCIA.md es solo evaluación para Jay; no autoriza otro ciclo. Jay disfruta la música actual: no iniciar otra reescritura musical por esos documentos.
 
 La petición más reciente es [PLAN_VIAJE_Y_REACCIONES.md](PLAN_VIAJE_Y_REACCIONES.md): viaje continuo y diez gestos visuales en ecosistemas de distinta intensidad, explícitamente autorizados. Dos ramas dependientes; conservar las reglas de verificación proporcional y PR/merge de Jay. Tiene prioridad sobre las limitaciones de ampliación del ciclo anterior.
 

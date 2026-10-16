@@ -79,7 +79,7 @@ export function initialize(runtime) {
     runtime.drawDistantColors?.();
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
-    runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.reactiveTick?.(dt);runtime.inhabitantTick?.(dt);runtime.drawInhabitants?.();
+    runtime.wowTick?.(dt,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.reactiveTick?.(dt);runtime.inhabitantTick?.(dt);runtime.drawInhabitants?.();
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.drawDuet?.();runtime.petTick?.(dt);runtime.drawPet?.(t);
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
@@ -95,7 +95,7 @@ export function initialize(runtime) {
     // En tiempo: respuesta musical local y contador.
     if(runtime.grooveFx>0){runtime.grooveFx=Math.max(0,runtime.grooveFx-dt*2.2);runtime.cx.globalAlpha=runtime.grooveFx;runtime.cx.strokeStyle=runtime.musicInk?.(null,'perc')||'#fff';runtime.cx.lineWidth=1.5;const rr=s+(1-runtime.grooveFx)*40;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,rr,0,6.283);runtime.cx.stroke();
       if(runtime.MU.groove>=2){runtime.cx.fillStyle=runtime.musicInk?.(null,'perc')||'#fff';runtime.cx.font='600 12px "Geist Mono", monospace';runtime.cx.textAlign="center";runtime.cx.fillText("EN TIEMPO ×"+runtime.MU.groove,runtime.W/2,runtime.H/2-s-18-(1-runtime.grooveFx)*10);runtime.cx.textAlign="left";}}
-    runtime.cx.save();runtime.cx.globalAlpha=1;runtime.cx.fillStyle=playerColor;
+    runtime.cx.save();runtime.cubeVisualTransform?.(runtime.cx,runtime.W/2,runtime.H/2);runtime.cx.globalAlpha=1;runtime.cx.fillStyle=playerColor;
     const ritual=runtime.inWorld()&&(runtime.quietState?.stage>=6||runtime.hasPower?.('cometa'));
     if(runtime.inWorld()&&runtime.drawSurpriseBody?.(runtime.cx,runtime.W/2,runtime.H/2,s,t)){}else if(ritual){runtime.cx.translate(runtime.W/2,runtime.H/2);runtime.cx.rotate(Math.sin(t/600)*.12);runtime.cx.fillRect(-s/2,-s/2,s,s);}else runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));runtime.cx.restore();
     if(!runtime.inWorld()||runtime.surpriseStyle?.shape==='cube')runtime.drawCubeSurface?.(t,b,s);

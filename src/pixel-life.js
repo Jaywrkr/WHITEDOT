@@ -1,11 +1,11 @@
 import {PIXEL_CELL,pixelColony,pixelGeometry,moveInhabitant,migratingBeings} from './pixel-life-model.js';
 import {contactEntry} from './contact.js';
 export function initialize(runtime){
- const cache=new Map(),travellers=new Map(),geometry=new WeakMap();let owner=null,scope='',seconds=0,travelSeconds=0,items=[],lastCell='',queued=0,barKey='',pointer=null,tap=null;
+ const cache=new Map(),travellers=new Map(),geometry=new WeakMap();let owner=null,scope='',seconds=0,travelSeconds=0,items=[],lastCell='',queued=0,barKey='',pointer=null,tap=null,nextInvitation=10;
  const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches),
   surface=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie',
   active=()=>surface()&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden])');
- function reset(){owner=runtime.S;scope=runtime.worldIdentity?.seed;cache.clear();travellers.clear();items=[];seconds=travelSeconds=0;lastCell='';queued=0;barKey='';tap=pointer=null;}
+ function reset(){owner=runtime.S;scope=runtime.worldIdentity?.seed;cache.clear();travellers.clear();items=[];seconds=travelSeconds=0;lastCell='';queued=0;barKey='';tap=pointer=null;nextInvitation=10;}
  function neighbors(){
   const s=runtime.S,cx=Math.floor(s.wx/PIXEL_CELL),cy=Math.floor(s.wy/PIXEL_CELL),cell=cx+','+cy;
   if(cell===lastCell)return;lastCell=cell;const local=[];
@@ -15,14 +15,15 @@ export function initialize(runtime){
   }
   while(cache.size>64)cache.delete(cache.keys().next().value);items=local;
  }
- function respond(o){
+ function respond(o,origin='player'){
   if(!active()||seconds-(o.lastTouch??-10)<2)return false;o.lastTouch=seconds;o.lit=1;o.responseAt=seconds;runtime.visualGesture?.(o.x,o.y);
+  if(origin==='player')runtime.recordElement?.('caminante',runtime.regionOfPos(o.x,o.y));
   const key=Math.floor((runtime.MU?.step||0)/16);if(barKey!==key){barKey=key;queued=0;}
   if(runtime.S.sound&&runtime.musicVolume?.()!==0&&runtime.ac?.state==='running'&&queued<2){
    queued++;const state=runtime.S,seed=scope;
    runtime.beatSoon(time=>{if(state!==runtime.S||seed!==runtime.worldIdentity?.seed||!active()||Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)>200)return;
-    const d=runtime.regionOfPos(o.x,o.y);if(runtime.playVoice('habitante',0,time,d,false,.65,o,'player')===true){o.onset=runtime.musicalTime?.(time)??time;runtime.inhabitantNoteCue?.({id:o.id,time:o.onset,voice:runtime.getVoice('habitante',d,o)});}
-   },null,'player');
+    const d=runtime.regionOfPos(o.x,o.y);if(runtime.playVoice('habitante',0,time,d,false,origin==='player'?.65:.4,o,origin)===true){o.onset=runtime.musicalTime?.(time)??time;runtime.inhabitantNoteCue?.({id:o.id,time:o.onset,origin,voice:runtime.getVoice('habitante',d,o)});}
+   },null,origin);
   }return true;
  }
  function tick(dt){
@@ -32,10 +33,19 @@ export function initialize(runtime){
   const live=migratingBeings(s.wx,s.wy,travelSeconds,runtime.seedOf,reach+80),ids=new Set(live.map(o=>o.id));
   for(const fresh of live){const old=travellers.get(fresh.id);if(old){old.x=fresh.x;old.y=fresh.y;}else travellers.set(fresh.id,fresh);}
   for(const id of travellers.keys())if(!ids.has(id))travellers.delete(id);
+  const walking=runtime.autopilotState?.mode==='wander'&&!runtime.autopilotState.paused,inviting=walking&&runtime.currentPocket?.()?.kind!=='quiet'&&!runtime.regionOfPos(s.wx,s.wy).worldFamily?.quiet;
   for(const o of [...items,...travellers.values()]){
    if(o.kind!=='viajero')moveInhabitant(o,player,seconds,dt,still);o.lit=Math.max(0,o.lit-dt*1.4);
+   if(inviting&&!still&&o.kind!=='viajero'&&['curioso','escolta','orbital','enjambre'].includes(o.genome.activity)){
+    const dx=s.wx-o.x,dy=s.wy-o.y,d=Math.hypot(dx,dy)||1;if(d>42&&d<170&&Math.hypot(o.hx-s.wx,o.hy-s.wy)<180){o.x+=dx/d*dt*12;o.y+=dy/d*dt*12;}
+   }
    const inside=Math.hypot(o.x-s.wx,o.y-s.wy)<23;
-   if(!runtime.body?.jump&&contactEntry(o,inside))respond(o);
+   if(!runtime.body?.jump&&contactEntry(o,inside))respond(o,walking?'ambient':'player');
+   const wave=runtime.waves?.length&&runtime.hitW?.(o.x,o.y);if(wave)respond(o,wave.origin||'player');
+  }
+  if(inviting&&seconds>=nextInvitation){nextInvitation=seconds+10+(runtime.seedOf('inhabitants:invitation:'+Math.floor(seconds/10))>>>0)%9;
+   const candidate=nearby(160).filter(o=>seconds-(o.lastTouch??-100)>8).sort((a,b)=>(a.lastTouch??-100)-(b.lastTouch??-100))[0];if(candidate)respond(candidate,'ambient');
+   else {const micro=runtime.microNear?.(120)?.[0];if(micro)runtime.microTouch?.(micro,'ambient');}
   }
   if(tap){const candidates=nearby(700).filter(o=>Math.hypot(o.x-tap.x,o.y-tap.y)<30).sort((a,b)=>Math.hypot(a.x-tap.x,a.y-tap.y)-Math.hypot(b.x-tap.x,b.y-tap.y));if(candidates[0])respond(candidates[0]);tap=null;}
  }
