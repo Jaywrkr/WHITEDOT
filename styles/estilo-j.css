@@ -301,3 +301,12 @@ body:has(#surpriseHud:not([hidden])) .first-journey-hint{bottom:calc(var(--safe-
 #zone[data-notice-level="1"] #zDo{display:none}#zone[data-notice-level="1"] #zName{font:11px/1.5 var(--mono);max-width:100%;overflow:hidden;text-overflow:ellipsis}#zone[data-notice-level="1"] #zMood{font:9px/1.5 var(--mono);color:#aaa}
 #toast[data-notice-level="2"],#phrase[data-notice-level="2"],#voice[data-notice-level="2"]:not(.expanded){max-width:min(320px,calc(100vw - 32px));padding:10px 12px;max-height:24dvh;overflow:auto;font:12px/1.5 var(--mono)}
 body:has(#voice.on:not([hidden])) .first-journey-hint{visibility:hidden}
+
+/* Consolidation: readable controls, quiet hierarchy and actions within reach. */
+#zone,#zone b,#zone #zName,#phrase{color:var(--ink)}
+.modal .sheet{overscroll-behavior:contain;scroll-padding-block:16px}
+.cube-sheet>.row:last-child{position:sticky;bottom:0;background:#000;padding-top:8px;padding-bottom:4px;z-index:1}
+.cube-sheet button,.favorite-card button{touch-action:manipulation}
+@media(pointer:coarse){
+ .modal input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]),.modal select,.modal textarea,.house-panel select{font-size:16px;min-height:44px;box-sizing:border-box}
+}
