@@ -1,3 +1,9 @@
+## 2.3.0-alpha.19 · Reencuentro 3
+
+Las ocho familias regionales usan cinco gramáticas de dibujo reales: píxel original, membrana, facetas, filamentos y anatomía orgánica. La topología facetada deriva de los bits de cada especie; las membranas reutilizan blobs y los filamentos cambian proporciones. Se añaden prácticas de cada aspecto y se respeta movimiento reducido.
+
+Rama `feat/reencuentro-03-identidad`. Evidencia: scripts/reencuentro-03-validation.json. CI, DSP y escucha física se registran por separado; no se afirma deploy.
+
 ## 2.3.0-alpha.18 · Reencuentro 2
 
 Catálogo interno buscable conectado al laboratorio real, prácticas nuevas de miniinstrumentos y ecologías, inventario de rutas y muestreo espacial. Las colonias de Terrazas recuperan los píxeles originales sin cambiar bits, IDs, voces o coordenadas; blobs y anatomías restantes se conservan.

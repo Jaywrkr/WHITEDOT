@@ -1,0 +1,97 @@
+{
+  "version": "2.3.0-alpha.19",
+  "node": {
+    "base": "567ae0d1a8e16e5dd73aa921e86c182f8f614693",
+    "changes": [
+      "CAMBIOS.md",
+      "HANDOFF_CLAUDE.md",
+      "PLAN_2.0.md",
+      "PLAN_REENCUENTRO.md",
+      "README.md",
+      "index.html",
+      "package.json",
+      "src/anatomy-view.js",
+      "src/lab-catalog.js",
+      "src/native-visual.js",
+      "src/release-info.js",
+      "sw.js",
+      "tests/native-identity.mjs"
+    ],
+    "selected": [
+      "content-gallery.mjs",
+      "content-manifest.mjs",
+      "lab.mjs",
+      "listening-reference.mjs",
+      "native-identity.mjs",
+      "release.mjs",
+      "territory-engine.mjs",
+      "test-impact.mjs",
+      "version-bump.mjs"
+    ],
+    "results": [
+      {
+        "test": "content-gallery.mjs",
+        "exit": 0,
+        "milliseconds": 68
+      },
+      {
+        "test": "content-manifest.mjs",
+        "exit": 0,
+        "milliseconds": 89
+      },
+      {
+        "test": "lab.mjs",
+        "exit": 0,
+        "milliseconds": 53
+      },
+      {
+        "test": "listening-reference.mjs",
+        "exit": 0,
+        "milliseconds": 58
+      },
+      {
+        "test": "native-identity.mjs",
+        "exit": 0,
+        "milliseconds": 34
+      },
+      {
+        "test": "release.mjs",
+        "exit": 0,
+        "milliseconds": 59
+      },
+      {
+        "test": "territory-engine.mjs",
+        "exit": 0,
+        "milliseconds": 469
+      },
+      {
+        "test": "test-impact.mjs",
+        "exit": 0,
+        "milliseconds": 37
+      },
+      {
+        "test": "version-bump.mjs",
+        "exit": 0,
+        "milliseconds": 134
+      }
+    ],
+    "completeSuite": false
+  },
+  "audit": {
+    "version": "2.3.0-alpha.19",
+    "sourceModules": 211,
+    "htmlIDs": 414,
+    "staticImports": 558,
+    "shellAssets": 231,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "browser": "Actual renderer branches exercised with a recording Canvas adapter; real-browser layout/raster pending due inherited host thread exhaustion.",
+  "audioDSP": "Inherited phase-1 render blocked by Chromium pthread_create EAGAIN; final CI required",
+  "physicalPhone": false,
+  "fullSuites": false
+}
