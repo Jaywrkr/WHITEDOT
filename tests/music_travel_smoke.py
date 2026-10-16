@@ -26,6 +26,11 @@ try:
    page.locator('#bStyles').tap();page.locator('#musicTravelSolo').tap();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=60000)
    assert page.evaluate('async()=>{const r=__testRuntime,{labScore}=await import("/src/lab-score.js");return labScore(r.regionOfPos(r.S.wx,r.S.wy),r.seedOf,r.rng).electronic.count===1;}')
    page.locator('#bStyles').tap();assert page.locator('.music-heard').count()==0
+   if width==390:
+    page.locator('#musicTravelHybrids').tap();assert page.locator('[data-music-genre]').count()==18
+    page.locator('#musicTravelSearch').fill('guitarra');page.locator('[data-music-genre="fusion:guitar-machine"]').tap();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=60000)
+    assert page.evaluate('async()=>{const r=__testRuntime,{hybridIdentity}=await import("/src/musical-hybrids.js");return hybridIdentity(r.regionOfPos(r.S.wx,r.S.wy),r.seedOf,r.rng).id==="guitar-machine";}')
+    assert page.evaluate('Object.keys(__testRuntime.S.journal.music.hybrids||{}).length===0'),'silent menu cannot award a heard fusion'
    page.evaluate("()=>{const r=__testRuntime;document.getElementById('mMusicTravel').hidden=true;r.S.sound=true;r.audio();r.MU.dnaA=r.regionOfPos(r.S.wx,r.S.wy);r.hookInst('p_tinepiano',60,r.ac.currentTime+.02,.05,r.MU.dnaA);}")
    page.locator('#bStyles').tap();assert page.locator('.music-heard').count()>=1
    if width==390:page.screenshot(path='/tmp/whitedot-music-travel.png')

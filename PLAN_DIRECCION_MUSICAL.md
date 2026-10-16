@@ -8,7 +8,7 @@ Una rama por fase, desde la anterior si no está integrada. Codex hace commit/pu
 |---|---|---|---|
 | 1 | `feat/musica-01-motor` | Reloj y armonía compartidos dentro de cada zona | Implementada y probada |
 | 2 | `feat/musica-02-identidades` | Recetas de producción reconocibles y contrastadas | Implementada y probada |
-| 3 | `feat/musica-03-fusiones` | Base dominante e influencias compatibles y audibles | Pendiente |
+| 3 | `feat/musica-03-fusiones` | Base dominante e influencias compatibles y audibles | Implementada y probada |
 | 4 | `feat/musica-04-arreglos` | Desarrollo por frases, bandas de 1–10 partes | Pendiente |
 | 5 | `feat/musica-05-interacciones` | Funciones musicales claras y respuestas coordinadas | Pendiente |
 | 6 | `feat/musica-06-transiciones` | Viajes, cambios de tempo y hábitats coherentes | Pendiente |

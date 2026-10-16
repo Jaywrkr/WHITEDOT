@@ -4,7 +4,7 @@ import {initialize as progress} from '../src/progress.js';
 import {initialize as world} from '../src/world.js';
 import {labScore,labDrumEvents} from '../src/lab-score.js';
 import {createRadio} from '../src/radio.js';
-import {hybridIdentity} from '../src/musical-hybrids.js';
+import {HYBRID_STYLES,hybridIdentity} from '../src/musical-hybrids.js';
 globalThis.localStorage={getItem:()=>null,setItem(){}};
 const r={};data(r);progress(r);world(r);const genres=new Set(),hybrids=new Set(),rhythms=new Set();
 for(let x=-20;x<=20;x++)for(let y=-20;y<=20;y++){
@@ -17,5 +17,5 @@ for(let x=-20;x<=20;x++)for(let y=-20;y<=20;y++){
   if(['handslap','skinbass','acousticsnare'].includes(hit.instrument))assert(hit.pitch>=36&&hit.pitch<=57,'natural drums must use a low/mid body');
  }
 }
-assert.equal(genres.size,52);assert.equal(hybrids.size,16);assert(rhythms.size>=24,`too few actual rhythmic grammars: ${rhythms.size}`);
+assert.equal(genres.size,52);assert.equal(hybrids.size,HYBRID_STYLES.length);assert(rhythms.size>=24,`too few actual rhythmic grammars: ${rhythms.size}`);
 console.log(`PASS ${genres.size} native styles, ${hybrids.size} retained live fusions, ${rhythms.size} actual drum grammars and low/mid membrane bodies`);

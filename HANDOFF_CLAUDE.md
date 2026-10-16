@@ -1,3 +1,15 @@
+# Handoff · Dirección musical, fase 3
+
+Rama `feat/musica-03-fusiones`, desde F2 `b47d099`. Jay PR/merge. Continuar F4–F7 sin confirmaciones.
+
+`musical-hybrids.js` añade guitar-machine e italo-current mediante selección independiente sobre territorios compatibles (14% del hash de extensión dentro de los candidatos ya híbridos). El pool anterior excluye estas extensiones para conservar su elección en el resto. No es frecuencia horaria ni rareza de tarjetas. Blues cambia harmonyBars a uno para doce compases reales.
+
+`production-identities.js` añade guitar/italo. `music-travel.js` tiene vistas Estilos/Cruces, busca con generadores nativos y conserva el marcado audible de journal.music.hybrids. Los catálogos derivados del laboratorio incorporan dos entradas automáticamente; el recorrido completo ahora comprueba 248. `hybrid_mix.py` renderiza las 18 mezclas en producción unificada, con ubicaciones nativas, comprobando los perfiles nuevos. Datos compactos en `scripts/musica-03-audio.json`.
+
+Evidencia `scripts/musica-03-validation.json`. La descarga de referencias sigue bloqueada (403); no declarar análisis directo de grabaciones. CI/deploy/escucha física separados.
+
+## Antecedentes
+
 # Handoff · Dirección musical, fase 2
 
 Rama `feat/musica-02-identidades`, desde F1 `e2876a9`. Jay PR/merge. Plan vigente `PLAN_DIRECCION_MUSICAL.md`.

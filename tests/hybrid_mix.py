@@ -13,13 +13,16 @@ try:
  with sync_playwright() as p:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   page=b.new_page();page.expose_function('__mixProgress',lambda row:print('Rendered '+str(row),flush=True));page.goto(f'http://127.0.0.1:{server.server_port}/')
-  rows=page.evaluate('''async()=>{const {renderMix}=await import('/tests/audio_mix.mjs'),{hybridIdentity}=await import('/src/musical-hybrids.js'),r={},out=[],found=new Map();
+  rows=page.evaluate('''async()=>{const {renderMix}=await import('/tests/audio_mix.mjs'),{HYBRID_STYLES,hybridIdentity}=await import('/src/musical-hybrids.js'),r={},out=[],found=new Map();
    for(const id of ['data','progress','world'])(await import('/src/'+id+'.js')).initialize(r);
    for(let x=-28;x<=28;x++)for(let y=-28;y<=28;y++){const point={x:(x+.5)*3600,y:(y+.5)*3600},d=r.regionOfPos(point.x,point.y),h=hybridIdentity(d,r.seedOf,r.rng);if(h&&!found.has(h.id))found.set(h.id,{point,genre:d.genre});}
-   if(found.size!==16)throw Error('Missing actual influence destinations');
-   for(const [id,{point,genre}]of found){const row=await renderMix(genre,{worldPoint:point,dense:true,soft:out.length%2===0,sampleRate:out.length%2?44100:48000,renderSeconds:6});if(row.hybrid!==id)throw Error('Wrong composition '+id);out.push(row);}return out;
+   if(found.size!==HYBRID_STYLES.length)throw Error('Missing actual influence destinations');
+   for(const [id,{point,genre}]of found){const row=await renderMix(genre,{worldPoint:point,productionFoundation:true,livingMusic:false,dense:true,soft:out.length%2===0,sampleRate:out.length%2?44100:48000,renderSeconds:6});if(row.hybrid!==id)throw Error('Wrong composition '+id);out.push(row);}return out;
   }''')
-  for r in rows:assert 0<r['peak']<.96 and r['hotFraction']==0 and -65<r['rmsDb']<-3,r
+  for r in rows:
+   assert 0<r['peak']<.96 and r['hotFraction']==0 and -65<r['rmsDb']<-3,r
+   if r['hybrid']=='guitar-machine':assert r['productionIdentity']=='guitar',r
+   if r['hybrid']=='italo-current':assert r['productionIdentity']=='italo',r
   report={'renders':len(rows),'maxPeak':max(r['peak'] for r in rows),'rows':rows};(ROOT/'scripts/hybrid-audio-validation.json').write_text(json.dumps(report,indent=2)+'\n')
   print(f'PASS {len(rows)} real-world hybrid renders, dense/soft, 44.1/48 kHz, peak {report["maxPeak"]:.6f}',flush=True);b.close()
 finally:server.shutdown()

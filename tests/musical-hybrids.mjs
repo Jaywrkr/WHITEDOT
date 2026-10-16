@@ -9,7 +9,7 @@ for(let x=-28;x<=28;x++)for(let y=-28;y<=28;y++){
  assert.equal(JSON.stringify(d),before,'hybrids must never mutate a stored world recipe');if(d.sea)continue;genres.add(d.genre);
  if(h){assert.deepEqual(h,hybridIdentity(d,r.seedOf,r.rng));if(!found.has(h.id))found.set(h.id,d);}else native++;
 }
-assert.equal(genres.size,52);assert.equal(found.size,16);assert(native>100,'pure styles must remain common');
+assert.equal(genres.size,52);assert.equal(found.size,HYBRID_STYLES.length);assert(native>100,'pure styles must remain common');
 const signatures=new Set();
 for(const [id,d]of found){const radio=createRadio(r.seedOf,r.rng,r.GEN),heard=[];
  for(let bar=0;bar<128;bar++){
@@ -21,5 +21,7 @@ for(const [id,d]of found){const radio=createRadio(r.seedOf,r.rng,r.GEN),heard=[]
  const lower=hybridRegister({role:'lead',low:52,high:76},hybridIdentity(d,r.seedOf,r.rng));assert(lower.low<lower.high&&lower.high<=76);
  const shared=createRadio(r.seedOf,r.rng,r.GEN).advance(d,0,{room:'shared-room'});assert(!shared.hybrid,'room transport must retain its existing agreed harmony');
 }
-assert.equal(signatures.size,16);assert.equal(HYBRID_STYLES.find(h=>h.id==='blues-machine').progression.length,12);
-console.log('PASS 16 reachable compositional influences, 52 retained styles, pure worlds, immutable DNA, evolving diatonic phrases, spectral/density limits and room harmony');
+assert.equal(signatures.size,HYBRID_STYLES.length);assert.equal(HYBRID_STYLES.find(h=>h.id==='blues-machine').progression.length,12);
+console.log('PASS 18 reachable compositional influences, 52 retained styles, pure worlds, immutable DNA, evolving diatonic phrases, spectral/density limits and room harmony');
+
+assert.equal(hybridIdentity(found.get('blues-machine'),r.seedOf,r.rng).harmonyBars,1,'twelve chord positions correspond to twelve musical bars');

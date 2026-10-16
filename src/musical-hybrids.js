@@ -3,6 +3,8 @@ import {activeWorldFamily} from './world-families.js';
 // Composition grammars, not arbitrary mixing of genre labels or recorded songs.
 const style=(id,name,characters,instruments,steps,tones,progression,brightness,high,swing=0,harmony=false)=>({id,name,characters:characters.split(' '),instruments:instruments.split(' '),steps,tones,progression,brightness,high,swing,harmony});
 export const HYBRID_STYLES=[
+ style('guitar-machine','Guitarra y máquina','floor machine disco melodic','p_gutguitar p_barkkeys p_cellobody',[0,3,8,11],[0,2,4,5],[0,5,3,4],5400,69,.04,true),
+ style('italo-current','Disco de secuencias','floor machine disco melodic','phasekeys p_fmharp clav',[0,2,6,10],[0,2,4,5],[0,5,3,4],6200,71,.02,true),
  style('blues-machine','Blues modular','floor warm machine','feltpiano pluckbody rhodes',[0,3,7,10],[0,2,3,4,6],[0,0,0,0,3,3,0,0,4,3,0,4],5200,67,.12),
  style('soul-glow','Soul eléctrico','warm disco melodic','feltpiano rhodes silkstrings',[0,6,10,14],[0,1,2,4,5],[0,5,1,4],5700,70,.12,true),
  style('jazz-tide','Jazz entre mareas','warm broken calm','feltpiano phasekeys airflute',[0,3,9,14],[0,1,2,4,6],[1,4,0,5],5400,69,.18,true),
@@ -27,7 +29,7 @@ export function hybridIdentity(region,seedOf,rng){
  if(cache.has(region))return cache.get(region);
  const r=rng(seedOf(`music:hybrid:v1:${region.key}:${region.genre}`));if(r()<.22){cache.set(region,null);return null;}
  const character=GENRE_CHARACTERS[region.genre]||'warm',pool=HYBRID_STYLES.filter(h=>h.characters.includes(character)&&(h.id!=='blues-machine'||region.scale?.[2]===3));
- const base=pool[Math.floor(r()*pool.length)],out=Object.freeze({...base,version:1,variant:Math.floor(r()*32),harmonyBars:base.id==='blues-machine'?2:4+Math.floor(r()*3)*2});
+ const original=pool.filter(h=>!['guitar-machine','italo-current'].includes(h.id)),base=original[Math.floor(r()*original.length)],extras=HYBRID_STYLES.filter(h=>['guitar-machine','italo-current'].includes(h.id)&&h.characters.includes(character)),extraSeed=seedOf('music:fusion-extension:v1:'+region.key+':'+region.genre)>>>0,selected=extras.length&&extraSeed%100<14?extras[(extraSeed>>>8)%extras.length]:base,out=Object.freeze({...selected,version:1,variant:Math.floor(r()*32),harmonyBars:selected.id==='blues-machine'?1:4+Math.floor(r()*3)*2});
  cache.set(region,out);return out;
 }
 export function hybridArrangement(track,region,bar,hybrid,genres){
