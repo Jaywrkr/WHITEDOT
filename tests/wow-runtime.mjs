@@ -12,3 +12,8 @@ r.drawWowWorld();assert(calls.length);
 s.wx=1000;r.wowTick(.02);assert.equal(r.wowState.pending,0,'jumps clear queued reactions');assert.equal(r.wowState.ripples,0);assert.equal(r.wowState.flashes,0);
 s.reducedMotion=true;r.wowSoundCue(source,'lead',3);assert.equal(r.wowState.pending,0);
 console.log('PASS real-clock visual reactions, bounded queues, teleport cleanup, reduced motion and no audio generation');
+
+s.reducedMotion=false;s.wx=0;r.wowTick(.02);const wave={color:'#fff'};
+for(let i=0;i<100;i++)r.wowPulseHit(i*9,0,wave);
+assert.equal(r.wowState.marks,18);r.wowPulseHit(891,0,wave);assert.equal(r.wowState.marks,18);
+r.wowTick(.02,true);assert.equal(r.wowState.marks,0);

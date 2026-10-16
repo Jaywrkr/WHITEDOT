@@ -1,3 +1,11 @@
+## 2.3.0-alpha.35 · Cuaderno vivo 11/20
+
+Los pulsos dejan huellas pequeñas únicamente donde cruzaron un objeto real. Máximo dieciocho, con deduplicación y borrado automático. La forma y el alcance musical se conservan.
+
+## 2.3.0-alpha.35 · Cuaderno vivo 11/20
+
+Los pulsos dejan huellas pequeñas únicamente donde cruzaron un objeto real. Máximo dieciocho, con deduplicación y borrado automático. La forma y el alcance musical del pulso se conservan.
+
 ## 2.3.0-alpha.34 · Cuaderno vivo 10/20
 
 Las conexiones reales dejan una constelación tenue durante 2,8 segundos. Solo ocho recuerdos efímeros, sin guardado ni enlaces ficticios. Saltos y paneles limpian la memoria visual.

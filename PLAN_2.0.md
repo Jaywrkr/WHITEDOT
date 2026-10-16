@@ -2,6 +2,8 @@
 
 | Entrega | Estado |
 |---|---|
+| WOW 11: Huellas de pulso | Implementada; scripts/wow-11-validation.json |
+| WOW 11: Huellas de pulso | Implementada; scripts/wow-11-validation.json |
 | WOW 10: Constelaciones temporales | Implementada; scripts/wow-10-validation.json |
 | WOW 09: Corriente en conexiones | Implementada; scripts/wow-09-validation.json |
 | WOW 08: Notas visibles a tiempo | Implementada; scripts/wow-08-validation.json |

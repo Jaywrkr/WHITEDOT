@@ -15,7 +15,7 @@ export function initialize(runtime) {
     beatSoon(q=>o.snd&&o.snd(q,depth),()=>{o.lit=1;o.hit=1;if(depth>=(maxD||6))return;let best=null,bd=240;
       for(const p of list){if(seen.has(p))continue;const d=Math.hypot(p.x-o.x,p.y-o.y);if(d<bd){bd=d;best=p;}}
       if(best){beams.push({x1:o.x,y1:o.y,x2:best.x,y2:best.y,l:1});chain(list,best,depth+1,seen,maxD);}});}
-  function hitW(x,y){for(const w of waves){if(!pulseCrossed(w,x,y))continue;if(!w.form||w.form.id==='ring-0')return w;const key=x.toFixed(2)+','+y.toFixed(2);w.contacts||=new Set();if(w.contacts.has(key)||w.contacts.size>=256)continue;w.contacts.add(key);return w;}return null;}
+  function hitW(x,y){for(const w of waves){if(!pulseCrossed(w,x,y))continue;if(!w.form||w.form.id==='ring-0'){runtime.wowPulseHit?.(x,y,w);return w;}const key=x.toFixed(2)+','+y.toFixed(2);w.contacts||=new Set();if(w.contacts.has(key)||w.contacts.size>=256)continue;w.contacts.add(key);runtime.wowPulseHit?.(x,y,w);return w;}return null;}
   function wsoon(w,fn){if(w.n++<12)runtime.soon(fn,w.origin||"player");}
   function updWaves(dt,ox,oy){for(const w of waves){w.prev=w.r;w.r+=dt*420;if(w.r>=w.max&&runtime.inWorld()){if(runtime.RP&&runtime.RP.type==="pulsoGrande")runtime.retoSet("pulsoGrande",Math.max(runtime.RP.val,w.n));if(w.n===0){emptyP++;if(emptyP>=10)runtime.unlock("dj");}else emptyP=0;}}waves=waves.filter(w=>w.r<w.max);
     for(const w of waves){runtime.cx.globalAlpha=(1-w.r/w.max)*.6;runtime.cx.strokeStyle=w.color||runtime.S.color;runtime.cx.lineWidth=1.5;drawPulse(runtime.cx,w.form||selectedPulse({}),w.x+ox,w.y+oy,w.r,!!runtime.S.reducedMotion);}}
