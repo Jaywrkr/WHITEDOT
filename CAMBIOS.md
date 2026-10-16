@@ -1,3 +1,7 @@
+## 2.3.0-alpha.38 · Cuaderno vivo 14/20
+
+Las galaxias lejanas respiran lentamente en luminosidad y escala, sin variar la paleta ni convertirse en señales próximas. Los gradientes siguen grandes y difusos; movimiento reducido conserva una imagen estable.
+
 ## 2.3.0-alpha.37 · Cuaderno vivo 13/20
 
 Los cometas conservan lugares y frecuencia originales, con variación suave de velocidad, estelas de tres intensidades y parejas ocasionales. Sin música nueva; movimiento reducido sigue suprimiendo cometas.

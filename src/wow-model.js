@@ -34,3 +34,9 @@ export function cometStyle(hash,u){
  const h=hash>>>0,k=((h>>>8)%5-2)*.018;
  return {progress:u+Math.sin(u*Math.PI*2)*k,tail:22+(h>>>12)%35,width:.7+(h%3)*.2,pair:h%11===0};
 }
+
+export function cloudBreath(cloud,seconds,reduced=false){
+ if(reduced)return {light:.9,scale:1};
+ const phase=Number.isFinite(cloud.phase)?cloud.phase:0,a=seconds*Math.PI*2/(100+phase*6)+phase;
+ return {light:.9+Math.sin(a)*.1,scale:1+Math.sin(a*.7)*.025};
+}
