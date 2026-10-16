@@ -1,7 +1,7 @@
 import {createMotion,WOW_LIMITS,lookVector,greetingPose,formationOffset} from './wow-model.js';
 export function initialize(runtime){
- const greetings=new WeakMap(),formation=new WeakMap();let nextSlot=0;
- const motion=createMotion();let owner=null,layer=null,dust=[],seconds=0,nearby=[],pending=[],ripples=[],flashes=[],lastPosition=null;
+ const greetings=new WeakMap(),formation=new WeakMap(),seenBeams=new WeakSet();let nextSlot=0;
+ const motion=createMotion();let owner=null,layer=null,dust=[],seconds=0,nearby=[],pending=[],ripples=[],flashes=[],memory=[],lastPosition=null;
  const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
  function sources(){
   const pool=[...(runtime.MU?.near||[]),...(runtime.MU?.walkerFollowers||[]),...(runtime.livingNear?.(140)||[]),...(runtime.microNear?.(140)||[]),...(runtime.inhabitantsNear?.(140)||[])].map(o=>o.object||o);
@@ -9,14 +9,18 @@ export function initialize(runtime){
  }
  const blocked=()=>!runtime.inWorld()||document.hidden||runtime.scanning||runtime.$?.('rareNotice')?.dataset.inspect==='true'||!!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function tick(dt,paused=false){
-  if(owner!==runtime.S||layer!==runtime.S.layer){owner=runtime.S;layer=runtime.S.layer;motion.reset();dust=[];}
+  if(owner!==runtime.S||layer!==runtime.S.layer){owner=runtime.S;layer=runtime.S.layer;motion.reset();dust=[];pending=[];ripples=[];flashes=[];memory=[];}
   const jumped=lastPosition&&Math.hypot(runtime.S.wx-lastPosition.x,runtime.S.wy-lastPosition.y)>40;
   lastPosition={x:runtime.S.wx,y:runtime.S.wy};
   const stopped=paused||blocked()||jumped,step=motion.step(runtime.S.wx,runtime.S.wy,dt,stopped);
   seconds+=Math.max(0,Math.min(.05,dt||0));
   nearby=stopped?[]:sources();
-  if(stopped||reduced()){dust=[];pending=[];ripples=[];flashes=[];return;}
-  dust=dust.filter(p=>seconds-p.at<.6);
+  if(stopped||reduced()){dust=[];pending=[];ripples=[];flashes=[];memory=[];return;}
+  dust=dust.filter(p=>seconds-p.at<.6);memory=memory.filter(p=>seconds-p.at<2.8);
+  for(const be of (runtime.beams||[]).slice(0,8)){
+   if(seenBeams.has(be)||be.l<=0||![be.x1,be.y1,be.x2,be.y2].every(Number.isFinite))continue;
+   seenBeams.add(be);memory.push({x1:be.x1,y1:be.y1,x2:be.x2,y2:be.y2,at:seconds,ink:runtime.musicInk?.({x:be.x1,y:be.y1},'acorde')||'#bddbe0'});
+  }memory=memory.slice(-8);
   ripples=ripples.filter(p=>seconds-p.at<.55);flashes=flashes.filter(p=>seconds-p.at<.45);
   const audioNow=runtime.ac?.currentTime;
   const ready=pending.filter(p=>p.at<=audioNow);pending=pending.filter(p=>p.at>audioNow);
@@ -41,7 +45,9 @@ export function initialize(runtime){
  function eyes(o,c,x=0,y=0){
   if(blocked()||Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)>130)return;
   const v=lookVector(runtime.S.wx-o.x,runtime.S.wy-o.y,reduced());
-  c.save();c.fillStyle='#fff';
+  c.save();
+  for(const p of memory){const a=1-(seconds-p.at)/2.8;c.globalAlpha=a*.13;c.strokeStyle=c.fillStyle=p.ink;c.lineWidth=.65;c.beginPath();c.moveTo(p.x1+ox,p.y1+oy);c.lineTo(p.x2+ox,p.y2+oy);c.stroke();c.fillRect(p.x1+ox-1,p.y1+oy-1,2,2);c.fillRect(p.x2+ox-1,p.y2+oy-1,2,2);}
+  drawConnections(c,ox,oy);c.fillStyle='#fff';
   for(const p of flashes){
    const age=(seconds-p.at)/.45,r=5+age*8;c.globalAlpha=(1-age)*.8;c.strokeStyle=c.fillStyle=p.ink;c.lineWidth=p.role==='bajo'?2:1.2;
    const x=p.x+ox,y=p.y+oy;c.fillRect(x-1.5,y-1.5,3,3);c.beginPath();
@@ -63,6 +69,15 @@ export function initialize(runtime){
   const proximity=Math.max(0,1-Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)/100);
   c.rotate(Math.sign(runtime.S.wx-o.x)*proximity*.035);c.scale(1+proximity*.035,1+proximity*.06);
  }
+ function drawConnections(c,ox,oy){
+  if(reduced())return;
+  for(const be of (runtime.beams||[]).slice(0,8)){
+   const length=Math.hypot(be.x2-be.x1,be.y2-be.y1);
+   if(!Number.isFinite(length)||length<1||be.l<=0)continue;
+   c.fillStyle=runtime.musicInk?.({x:be.x1,y:be.y1},'acorde')||'#fff';c.globalAlpha=Math.min(.65,be.l*.65);
+   for(let i=0;i<3;i++){const p=((1-be.l)+i/3)%1;c.fillRect(be.x1+(be.x2-be.x1)*p+ox-1,be.y1+(be.y2-be.y1)*p+oy-1,2,2);}
+  }
+ }
  function draw(){
   if(blocked())return;const c=runtime.cx,ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
   c.save();c.fillStyle='#fff';
@@ -73,5 +88,5 @@ export function initialize(runtime){
  function cubeTransform(c,x,y){
   const p=motion.pose(reduced()||blocked());c.translate(x,y);c.rotate(p.angle);c.scale(p.x,p.y);c.rotate(-p.angle);c.translate(-x,-y);
  }
- Object.defineProperties(runtime,{wowTick:{get:()=>tick},drawWowWorld:{get:()=>draw},wowObjectTransform:{get:()=>objectTransform},wowEyes:{get:()=>eyes},wowFollowTarget:{get:()=>followTarget},wowSoundCue:{get:()=>noteCue},wowState:{get:()=>({dust:dust.length,seconds,pending:pending.length,ripples:ripples.length,flashes:flashes.length})},cubeVisualTransform:{get:()=>cubeTransform}});
+ Object.defineProperties(runtime,{wowTick:{get:()=>tick},drawWowWorld:{get:()=>draw},wowObjectTransform:{get:()=>objectTransform},wowEyes:{get:()=>eyes},wowFollowTarget:{get:()=>followTarget},wowSoundCue:{get:()=>noteCue},wowState:{get:()=>({dust:dust.length,seconds,pending:pending.length,ripples:ripples.length,flashes:flashes.length,constellations:memory.length})},cubeVisualTransform:{get:()=>cubeTransform}});
 }
