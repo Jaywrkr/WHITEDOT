@@ -1,3 +1,9 @@
+## 2.3.0-alpha.23 · Reencuentro 7
+
+Habitantes pixelados más frecuentes con cientos de siluetas, doce conductas y cuatro roles musicales a tempo. Viajeros autónomos, galaxias amplias y difusas, VJ lejano, escáner y dos prácticas reales; no se reescribe la base musical. Evaluación Perplexity/Gemini documentada como propuesta.
+
+Rama `feat/reencuentro-07-habitantes`. Evidencia: scripts/reencuentro-07-validation.json. CI, DSP y escucha física se registran por separado; no se afirma deploy.
+
 ## 2.3.0-alpha.22 · Reencuentro 6
 
 Auditoría de 52 estilos y ocho familias en las dos generaciones, con 64 compases por estilo y cinco gramáticas visibles. El cierre corrige una apertura mínima que dependía del pad retirado: un pulso armónico discreto conserva la música sin órgano continuo, y los territorios de una a tres partes no reciben toda la batería. Las suites completas de lógica y CI comprueban el conjunto; navegador, DSP y escucha se documentan separados.

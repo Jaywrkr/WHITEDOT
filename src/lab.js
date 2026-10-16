@@ -1,4 +1,5 @@
 import {microChunk} from './micro-instruments-model.js';
+import {inhabitantPractice} from './pixel-life-model.js';
 import {nativeVisualFamily,nativePractice} from './native-visual.js';
 import {hybridIdentity} from './musical-hybrids.js';
 import {labScore} from './lab-score.js';
@@ -43,6 +44,7 @@ export function initialize(runtime){
  }
  function locate(e){
   const f=e.find,home=Math.floor(runtime.REG/2)*runtime.WCH;
+  if(f.type==='inhabitants')return inhabitantPractice(runtime,f.kind);
   if(f.type==='micro')return spiral((a,b)=>microChunk(a,b,runtime.WCH,runtime.regionOfPos((a+.5)*runtime.WCH,(b+.5)*runtime.WCH),runtime.seedOf,runtime.rng).find(o=>o.kind===f.kind)||null,32);
   if(f.type==='ecology')return spiral((a,b)=>(runtime.wchunk(a,b).ecologyObjects||[]).find(o=>o.kind===f.kind)||null,32);
   if(f.type==='native')return nativePractice(runtime,f.style);

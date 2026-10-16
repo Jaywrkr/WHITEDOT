@@ -79,7 +79,7 @@ export function initialize(runtime) {
     runtime.drawDistantColors?.();
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
-    runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.reactiveTick?.(dt);
+    runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.reactiveTick?.(dt);runtime.inhabitantTick?.(dt);runtime.drawInhabitants?.();
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.drawDuet?.();runtime.petTick?.(dt);runtime.drawPet?.(t);
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();

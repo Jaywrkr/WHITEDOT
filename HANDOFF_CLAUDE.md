@@ -1,3 +1,7 @@
+# Reencuentro · fase 7
+
+Leer PLAN_REENCUENTRO.md. Rama `feat/reencuentro-07-habitantes`, versión 2.3.0-alpha.23. Habitantes pixelados más frecuentes con cientos de siluetas, doce conductas y cuatro roles musicales a tempo. Viajeros autónomos, galaxias amplias y difusas, VJ lejano, escáner y dos prácticas reales; no se reescribe la base musical. Evaluación Perplexity/Gemini documentada como propuesta. Evidencia en scripts/reencuentro-07-validation.json. Jay conserva PR/merge; respetar los límites de audio documentados.
+
 # Reencuentro · fase 6
 
 Cierre y mapa: CIERRE_REENCUENTRO.md. Inventario regenerable: INVENTARIO_UNIVERSO.md. El muestreo distingue no observado de no instrumentado; no son probabilidades por hora. referenceSupport conserva aperturas ricas mientras el protagonista histórico descansa; referencia y apoyo se registran por separado. La radio acd766f solo gobierna producción; los invitados modernos y los modos de laboratorio siguen separados. nativePractice localiza organismos visibles reales en ambas generaciones. No declarar publicación cerrada mientras falten navegador, DSP y escucha.
