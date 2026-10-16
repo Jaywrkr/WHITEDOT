@@ -1,3 +1,12 @@
+<!-- juego-musical-actual -->
+Ciclo vigente: [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md). Doce fases autorizadas, versiones 2.3 alpha, ramas encadenadas. Jay mantiene PR/merge. Las tablas siguientes son antecedentes.
+
+| Entrega actual | Rama | Versión | Estado |
+|---|---|---|---|
+| Juego 1 · Llegadas | `feat/juego-01-llegadas` | `2.3.0-alpha.1` | Implementada y probada: auditoría, 137 suites Node y 13 recorridos enfocados |
+| Juego 2–12 | Ver PLAN_JUEGO_MUSICAL.md | alpha.2–12 | Pendientes, autorización conservada |
+<!-- /juego-musical-actual -->
+
 <!-- ampliacion-visual -->
 Estado actual: [ampliación de interacción](PLAN_INTERACCION_FINAL.md). Entregas 3–7 publicadas; cierre 8 amplía avisos por prioridad, imán y seis percusiones naturales por petición de Jay. Conserva catálogo/guardados y documenta evidencias en CIERRE_INTERACCION_FINAL.md. Jay mantiene PR/merge. CI completo y teléfono físico se registran por revisión; no reabrir fases históricas.
 <!-- /ampliacion-visual -->

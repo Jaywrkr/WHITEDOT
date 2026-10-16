@@ -12,8 +12,8 @@ URL = f'http://127.0.0.1:{server.server_port}/'
 CHROMIUM = os.environ.get('CHROMIUM_PATH') or shutil.which('chromium') or shutil.which('chromium-browser')
 
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
  for label,size in [('mobile',{'width':390,'height':844}),('desktop',{'width':1280,'height':800})]:
+  b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(5000);page.add_init_script('window.__audioContexts=[];window.AudioContext=class extends AudioContext {constructor(...args){super(...args);window.__audioContexts.push(this);}}');errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
@@ -21,7 +21,7 @@ with sync_playwright() as p:
   assert page.evaluate('!document.getElementById("reto").hidden') == page.evaluate('!window.__testRuntime.S.retos[window.__testRuntime.regionOfPos(window.__testRuntime.S.wx,window.__testRuntime.S.wy).key]')
   page.evaluate('''()=>{const r=window.__testRuntime;for(let i=0;i<12;i++){const region=r.regionOfPos(i*3600+900,900);for(const kind of ['arbol','cristal','pilar','loto','luz','pulso','luciernaga'])r.playVoice(kind,i,r.ac.currentTime+.05,region,true);for(const sp of region.species)r.speciesSound(sp,r.ac.currentTime+.05,true);}}''')
   page.evaluate('''async()=>{const r=window.__testRuntime,{gravityOf}=await import('/src/gravity.js');const oldRAF=window.requestAnimationFrame,oldX=r.S.wx,oldY=r.S.wy;window.requestAnimationFrame=()=>0;try{for(const factor of [.55,1,1.65]){let region,x,y;for(let i=-10;i<=10;i++){x=i*3600+1800;y=1800;region=r.regionOfPos(x,y);if(gravityOf(region,r.seedOf).multiplier===factor)break;}if(gravityOf(region,r.seedOf).multiplier!==factor)throw Error('Missing gravity');r.S.wx=x;r.S.wy=y;r.ptr=null;r.keys.d=1;r.frame.l=1000;r.frame(1050);r.keys.d=0;if(Math.abs(r.S.wx-x-r.SPEED*factor*.05)>.001)throw Error('Gravity movement mismatch');r.showRegion(region,true);if(!document.getElementById('zDo').textContent.includes(gravityOf(region,r.seedOf).name))throw Error('Gravity label missing');}}finally{r.S.wx=oldX;r.S.wy=oldY;r.keys.d=0;r.frame.l=performance.now();window.requestAnimationFrame=oldRAF;}}''')
-  page.evaluate('''()=>{const r=window.__testRuntime;document.getElementById('voice').classList.add('on');document.getElementById('vX').textContent='Un mensaje largo para verificar que la interfaz compacta permite consultar todo su contenido sin ocupar el mundo constantemente. '.repeat(3);}''')
+  page.evaluate('''()=>{const r=window.__testRuntime;r.say('Un mensaje largo para verificar que la interfaz compacta permite consultar todo su contenido sin ocupar el mundo constantemente. '.repeat(3),'Guía de prueba',{requested:true});}''')
   page.locator('#voice').click();assert page.locator('#voice').get_attribute('aria-expanded')=='true'
   page.locator('#voice').click();assert page.locator('#voice').get_attribute('aria-expanded')=='false'
   page.evaluate('''()=>{const r=window.__testRuntime,old=r.MU.speed,region=r.regionOfPos(r.S.wx,r.S.wy),g=r.windG.gain,f=r.windF.frequency,gs=g.setTargetAtTime,fs=f.setTargetAtTime;let gain,frequency;g.setTargetAtTime=(...args)=>{gain=args[0];return gs.apply(g,args);};f.setTargetAtTime=(...args)=>{frequency=args[0];return fs.apply(f,args);};try{r.MU.speed=1;r.MU.dnaT={...region,air:'polvo'};r.frame.l=1000;r.frame(1050);if(!(gain>0&&gain<=.012&&frequency>=260&&frequency<=810))throw Error('Wind targets not softened');}finally{g.setTargetAtTime=gs;f.setTargetAtTime=fs;r.MU.speed=old;r.MU.dnaT=region;r.frame.l=performance.now();}}''')
@@ -100,6 +100,5 @@ with sync_playwright() as p:
   page.locator('#stExit').click();page.reload(wait_until='domcontentloaded');page.wait_for_function('document.getElementById("bMenu").onclick !== null');assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).studio.slots).length')==1
   assert page.evaluate('Object.keys(JSON.parse(localStorage.getItem("pixel-blanco-v4")).journal.music.instruments).length > 0')
   page.locator('#bMenu').click();page.locator('#bShare').click();assert page.locator('#shareImg').evaluate('(i)=>i.naturalWidth>0');assert not errors,errors
-  print(label+': challenges, day rollover, paused lamp, studio persistence, sharing PASS',flush=True);c.close()
- b.close()
+  print(label+': challenges, day rollover, paused lamp, studio persistence, sharing PASS',flush=True);c.close();b.close()
 server.shutdown()

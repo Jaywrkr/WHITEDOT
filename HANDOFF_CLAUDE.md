@@ -1,3 +1,17 @@
+<!-- juego-musical-actual -->
+Ciclo vigente: [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md). Doce fases autorizadas, versiones 2.3 alpha, ramas encadenadas. Jay mantiene PR/merge. Las tablas siguientes son antecedentes.
+
+F1 local: practice-travel activa una llegada por documento en partidas habituales experimentadas. El contador persistente y ocho identidades recientes contrastan destinos nativos; `move` guarda antes de limpiar colas o cambiar URL y revierte ante fallo. La llegada automática NO escribe `addr` (evita bloquear la siguiente visita); navegación explícita sí. `arrivalMode=continue`, enlaces, pruebas y partidas futuras protegidas no saltan. Reanudar una pestaña no reejecuta inicialización. No se alteró síntesis, ritmo ni posiciones de objetos.
+
+`notice-lane` bloquea presentación durante grabación/looper armado; región actualiza metadatos sin depender de notificar. Replay de guía descarta avisos rutinarios y Voz automática conservando la memoria y mensajes pedidos; CSS oculta la pista por panel realmente visible. Nuevas regresiones Node: arrival, region-notice, version-bump; notice-lane amplía grabación. arrival_smoke queda incluido automáticamente por discovery de navegador, todavía sin ejecutar por infraestructura.
+
+F1 verificada: auditoría, 137 suites Node (20/24) y 13 recorridos enfocados aprobados. Se recuperó Chromium mediante `python3 scripts/prepare-cloud-browser.py`: Headless Shell 153, tarball npm con SHA-512 fijo, sin dependencias del juego. Ejecutar con UV_THREADPOOL_SIZE=1, NODE_OPTIONS=--v8-pool-size=1, WHITEDOT_TEST_SERIAL_HTTP=1, WHITEDOT_CHROMIUM_SINGLE_PROCESS=1, WHITEDOT_SYSTEM_CHROMIUM=/tmp/whitedot-headless/chromium y CHROMIUM_PATH=$PWD/scripts/chromium-constrained.sh. Compositor nativo para UI. Los recorridos con varios tamaños recrean navegador por contexto, manteniendo aserciones. CI mantiene su perfil normal.
+
+La prueba real descubrió que seeds consume `addr` antes de practice-travel: `arrivedByAddress` preserva esa intención hasta terminar el arranque. El código WD1 conserva su precisión histórica de un píxel; el regreso inmediato conserva los decimales. Accesibilidad no intenta restaurar foco a body/html; cae al Canvas. La prueba de grabación recoge una tarjeta nueva durante el set y verifica conservación, ocultación y botón de detener accesible.
+
+Siguiente: F2 desde esta rama, versión alpha.2, con renders propios. Jay pidió después acortar sustancialmente pruebas: seleccionar impacto, reutilizar el verde anterior y ejecutar completas una vez en F12; no apagar suites. El contexto del plan queda en PLAN_JUEGO_MUSICAL.md y la evidencia en scripts/juego-01-validation.json. No se ha ejecutado la suite completa de navegador/audio de F12 ni validado teléfono físico/deploy.
+<!-- /juego-musical-actual -->
+
 ## Última ampliación · avisos, imán y percusión
 
 Continuación autorizada dentro de `feat/posmusica-08-cierre`; no mezclar la antigua rama 02 incompleta. `src/notice-lane.js` exporta tres estilos y coordina prioridad, caducidad, repetidos y dueño exclusivo de la pantalla. Productores en messages/ui/discovery/celebration/rare-cards; X1 1,8 s / intervalo 18 s, X2 3 s / intervalo automático 6 s, X3 manual / respiro 4 s. Los progresos se guardan antes de decidir su aviso. Voz conserva memoria; cosméticos y logros asociados no duplican tarjetas. No crear otro sistema de avisos ni añadir sonidos de UI.

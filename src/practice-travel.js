@@ -22,7 +22,7 @@ export function choosePracticePlace(runtime,random,history=[],festive=false,rece
   const identity=musicIdentity(d,runtime.seedOf,runtime.rng,runtime.GEN),profile=populationProfile(d,runtime.BIOMES[d.z].id,runtime.seedOf,runtime.rng),
    inhabitants=populatedChunk(livingChunk(cx,cy,runtime.WCH,d,runtime.BIOMES[d.z].id,runtime.seedOf,runtime.rng),cx,cy,runtime.WCH,d,profile,runtime.seedOf,runtime.rng);
   if(!inhabitants.length)continue;
-  const band=labScore(d,runtime.seedOf,runtime.rng),hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng),animal=inhabitants.find(o=>o.group==='fauna')||inhabitants[0],score=(d.genre!==current.genre?6:0)+(identity?.id!==previous?.id?4:0)+(d.z!==current.z?2:0)+(history.some(s=>s===identity?.id||s.startsWith(identity?.id+'~'))?-5:0)+(d.worldFamily?.id!==current.worldFamily?.id?5:0)+(hybrid?.id!==previousHybrid?.id?4:0)+(band?.id!==previousBand?.id?6:0)+(band?.leads.join(',')!==previousBand?.leads.join(',')?4:0)+(JSON.stringify(band?.kick)!==JSON.stringify(previousBand?.kick)?3:0)+(festive&&band?.festive?25:0)-(recentSounds.includes(practiceSoundIdentity(band))?12:0);
+  const band=labScore(d,runtime.seedOf,runtime.rng),hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng),animal=inhabitants.find(o=>o.group==='fauna')||inhabitants[0],score=(d.genre!==current.genre?6:0)+(identity?.id!==previous?.id?4:0)+(d.z!==current.z?2:0)+(history.some(s=>s===identity?.id||s.startsWith(identity?.id+'~'))?-5:0)+(d.worldFamily?.id!==current.worldFamily?.id?5:0)+(hybrid?.id!==previousHybrid?.id?4:0)+(band?.id!==previousBand?.id?6:0)+(band?.leads.join(',')!==previousBand?.leads.join(',')?4:0)+(JSON.stringify(band?.kick)!==JSON.stringify(previousBand?.kick)?3:0)+(festive&&band?.festive?25:0)+Math.min(5,Math.abs((d.bpm||100)-(current.bpm||100))/8)-(recentSounds.includes(practiceSoundIdentity(band))?12:0);
   candidates.push({x:animal.x,y:animal.y+(animal.y-75<ry*R?75:-75),layer:'superficie',region:d,identity,hybrid,band,population:profile,score});
   if(score>=21&&i>=7&&(!festive||band?.festive))break;
  }return candidates.sort((a,b)=>b.score-a.score)[0]||null;
@@ -32,7 +32,7 @@ export function initialize(runtime){
  const blocked=()=>runtime.S.practiceTravel?.version>1||!!runtime.duetRoom||!!runtime.setRecording||!!runtime.jam?.loop?.rec||!!runtime.jam?.loop?.armed||!!runtime.scanning;
  function ui(){const world=runtime.inWorld();$('bJump').hidden=!world;$('bJumpBack').hidden=!world||!runtime.S.practiceTravel?.previous;
   $('bJump').disabled=blocked();$('bJumpBack').disabled=blocked();}
- function move(point,state,prepare=null){
+ function move(point,state,prepare=null,updateAddress=true){
   const old={wx:runtime.S.wx,wy:runtime.S.wy,layer:runtime.S.layer,destination:runtime.S.destination,practiceTravel:runtime.S.practiceTravel};
   runtime.S.wx=point.x;runtime.S.wy=point.y;runtime.S.layer=point.layer;runtime.S.practiceTravel=state;runtime.S.destination=null;
   // Persist the complete destination before changing queues, URL or navigation.
@@ -41,7 +41,7 @@ export function initialize(runtime){
   runtime.MU.dnaT=runtime.regionOfPos(point.x,point.y);runtime.MU.near=[];runtime.MU.singers=[];runtime.MU.nb=null;runtime.MU.nbW=0;runtime.MU.radio=null;runtime.MU.influenced=null;runtime.MU.neighborRadio=null;
   runtime.MU.layers=new Set();runtime.MU.flowers=[];runtime.MU.boltAt=0;runtime.MU.q8?.splice(0);runtime.MU.queue?.splice(0);
   runtime.waves.length=0;runtime.clearSoundCues?.();runtime.clearMusicalFrames?.();runtime.curRegion=null;runtime.RP=null;
-  if(!runtime.labMode&&typeof location!=='undefined'&&typeof history!=='undefined'){const url=new URL(location.href);url.searchParams.set('addr',encodePlace(placeAddress(runtime.worldIdentity,point.x,point.y,point.layer)));history.replaceState(null,'',url.href);}
+  if(updateAddress&&!runtime.labMode&&typeof location!=='undefined'&&typeof history!=='undefined'){const url=new URL(location.href);url.searchParams.set('addr',encodePlace(placeAddress(runtime.worldIdentity,point.x,point.y,point.layer)));history.replaceState(null,'',url.href);}
   runtime.hud();ui();return true;}
  function jump(){if(!runtime.inWorld()||blocked()||document.querySelector('.modal:not([hidden])'))return false;
   // Commit the current place/progress before replacing coordinates. UI itself emits no note.
@@ -55,12 +55,21 @@ export function initialize(runtime){
   const here={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};const state={...normalizePracticeTravel(runtime.S.practiceTravel),previous:here};if(!move(p,state))return false;$('mMenu').hidden=true;return true;}
  function travel(point){if(!runtime.inWorld()||blocked()||!validPoint(point)||runtime.duetRoom||!runtime.save())return false;
   const state=normalizePracticeTravel(runtime.S.practiceTravel),band=labScore(runtime.regionOfPos(point.x,point.y),runtime.seedOf,runtime.rng);state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.sounds=[...state.sounds,practiceSoundIdentity(band)].slice(-8);return move(point,state);}
+ let arrived=false;
  function dailyArrival(){
-  const s=runtime.S;if(s.practiceTravel?.version>1||s.arrivalMode==='continue'||!s.help?.mundo||s.previewSeed||s.destination||new URLSearchParams(globalThis.location?.search||'').has('addr')||!runtime.save())return false;
-  const point=choosePracticePlace(runtime,runtime.rng(runtime.seedOf('travel:arrival:v1:'+s.todayKey)),s.practiceTravel?.recent||[]);if(!point)return false;
-  s.practiceTravel=normalizePracticeTravel(s.practiceTravel);s.practiceTravel.previous={x:s.wx,y:s.wy,layer:s.layer||'superficie'};
-  s.wx=point.x;s.wy=point.y;s.layer='superficie';return true;
+  const s=runtime.S,params=new URLSearchParams(globalThis.location?.search||'');
+  if(arrived||blocked()||s.arrivalMode==='continue'||!s.help?.mundo||s.previewSeed||s.destination||runtime.arrivedByAddress||params.has('addr')||!runtime.save())return false;
+  const state=normalizePracticeTravel(s.practiceTravel),serial=Number.isSafeInteger(state.arrivals)?state.arrivals:0;
+  const point=choosePracticePlace(runtime,runtime.rng(runtime.seedOf(`travel:arrival:v2:${s.todayKey}:${serial}`)),state.recent,serial%3===2,state.sounds);
+  if(!point)return false;
+  state.previous={x:s.wx,y:s.wy,layer:s.layer||'superficie'};state.arrivals=serial+1;
+  state.recent=[...state.recent,point.identity.id+'~'+(point.hybrid?.id||'native')].slice(-8);
+  state.sounds=[...state.sounds,practiceSoundIdentity(point.band)].slice(-8);
+  if(!move(point,state,null,false))return false;arrived=true;return true;
  }
+ // A new document is a fresh visit. Background/resume never runs this again.
+ // Explicit addresses and preview saves retain their exact coordinates.
+ if(runtime.inWorld()&&runtime.scopeHadSave)dailyArrival();
  $('bJump').onclick=jump;$('bJumpBack').onclick=back;setInterval(ui,250);ui();
  Object.defineProperties(runtime,{canPracticeTravel:{get:()=>()=>!blocked()&&!runtime.duetRoom},travelPracticePoint:{get:()=>travel},dailyArrival:{get:()=>dailyArrival},jumpPracticePlace:{get:()=>jump},returnPracticePlace:{get:()=>back}});
 }

@@ -14,8 +14,8 @@ URL = f'http://127.0.0.1:{server.server_port}/'
 CHROMIUM = os.environ.get('CHROMIUM_PATH') or shutil.which('chromium') or shutil.which('chromium-browser')
 COUNT='()=>{window.__testRuntime.materiaPlayed.length=0}'
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
  for label,size in [('mobile',{'width':390,'height':844}),('desktop',{'width':1280,'height':800})]:
+  b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
@@ -69,11 +69,19 @@ with sync_playwright() as p:
   assert 'Guardado' in page.locator('#placeCodeInfo').inner_text()
   if page.locator('#favoritesClose').is_visible():page.locator('#favoritesClose').click()
   # Grabar set: 2 s y detener produce un video descargable.
-  page.locator('#bMenu').click();page.locator('#bRecord').click();page.wait_for_timeout(2200);page.locator('#recBadge').click()
+  # A real finding may precede recording. Read it through its own controls first.
+  for panel,button in [('#celebration','#celebrationContinue'),('#rareNotice','#rareNoticeContinue')]:
+   if page.locator(panel).is_visible():page.locator(button).click();page.locator(panel).wait_for(state='hidden')
+  page.locator('#bMenu').click();page.locator('#bRecord').click();page.wait_for_function('window.__testRuntime.setRecording')
+  count=page.evaluate('window.__testRuntime.rareCards.length')
+  page.evaluate("()=>{const r=window.__testRuntime;r.collectRareCard('fossil',{id:'fixture:recording',x:r.S.wx,y:r.S.wy});}")
+  page.wait_for_timeout(2200)
+  assert page.evaluate('window.__testRuntime.rareCards.length')==count+1,'recording cannot lose a finding'
+  assert page.locator('#rareNotice').is_hidden() and page.locator('#celebration').is_hidden(),'findings wait until recording stops'
+  page.locator('#recBadge').click()
   page.wait_for_function("!document.getElementById('mSet').hidden",timeout=15000)
   assert page.evaluate('window.__testRuntime.lastSet.size')>1000 and page.locator('#setDownload').get_attribute('download').startswith('whitedot-set-')
   page.locator('#setClose').click()
   assert not errors,errors
-  print(label+': strings bend/strum, prism rotate/save/cancel, membrane roll, chorus/phaser/freeze, place code, set recording PASS',flush=True);c.close()
- b.close()
+  print(label+': strings bend/strum, prism rotate/save/cancel, membrane roll, chorus/phaser/freeze, place code, set recording PASS',flush=True);c.close();b.close()
 server.shutdown()

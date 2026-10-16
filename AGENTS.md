@@ -4,13 +4,16 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 
 ## Prioridad actual
 
+El ciclo vigente es [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md), doce fases autorizadas, ramas encadenadas y versión por entrega. Este plan sustituye la prioridad de los ciclos históricos descritos abajo; no reabrirlos.
+
+
 Jay autorizó [PLAN_DIRECCION_MUSICAL.md](PLAN_DIRECCION_MUSICAL.md): siete fases de música, una rama por fase. Fase 1 subida en `e2876a9`. Fase 2 subida en `b47d099`. Fase 3 subida en `92ebd5c`. Fase 4 subida en `b4d12fd`. Fase 5 subida en `9042c83`. Fase 6 subida en `97f7c98`. Fase 7 implementada y probada en `feat/musica-07-auditoria`, desde F6: 127 suites Node, 92 recorridos más offline y 39 programas de audio aprobados. Siguiente ciclo autorizado: [PLAN_INTERACCION_FINAL.md](PLAN_INTERACCION_FINAL.md), interfaz y miniinstrumentos, cada entrega en una rama dependiente. F2–F8 del pulido ya están subidas; el cierre F9 se incorpora a la auditoría musical final. Leer el plan nuevo antes de cambiar código. Interacción 1 está incluida y validada con la entrega visual 3. Entregas 3–5 implementadas y probadas en ramas dependientes; Jay mantiene PR/merge. Jay autorizó completar lo pendiente con «Hazlo entonces»: los miniinstrumentos se recuperan en entrega 6, desde perfil; siguen guía/referencias VJ (7) y cierre integral (8). Las tablas históricas no reabren trabajo cerrado.
 
 El ciclo anterior [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md) queda integrado por Jay. [CIERRE_EXPERIENCIA.md](CIERRE_EXPERIENCIA.md) conserva su evidencia y condiciones externas. Codex solo commit/push; Jay PR/merge. Escucha física, CI y deploy se verifican separadamente.
 
 ## Leer primero
 
-1. [PLAN_DIRECCION_MUSICAL.md](PLAN_DIRECCION_MUSICAL.md): ciclo actual y entregas.
+1. [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md): ciclo actual y entregas.
 2. [CIERRE_EXPERIENCIA.md](CIERRE_EXPERIENCIA.md): auditoría, integración y prueba móvil.
 3. [README.md](README.md) y [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md): mapa técnico vigente.
 4. [PLAN_2.0.md](PLAN_2.0.md): decisiones y estados anteriores; su cabecera remite al ciclo actual.
@@ -19,7 +22,7 @@ El ciclo anterior [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md) queda integrado por
 
 ## Flujo de ramas (obligatorio)
 
-- Una rama por fase del plan vigente. Para el pulido actual, nombres de `PLAN_DIRECCION_MUSICAL.md`, desde `main` actualizado o desde la fase de la que dependa.
+- Una rama por fase del plan vigente. Para el ciclo actual, nombres de `PLAN_JUEGO_MUSICAL.md`, desde `main` actualizado o desde la fase de la que dependa.
 - Commit y push de la rama. **Jay crea el PR y hace el merge.** No hacer push a `main` ni merges salvo que Jay lo pida explícitamente en ese momento.
 - Continuar con todas las fases ya autorizadas sin esperar confirmación entre ramas. Entregar una rama no detiene la siguiente; un bloqueo externo solo detiene las acciones que dependen de él.
 - Mensajes de commit en inglés, en imperativo, explicando el porqué. Sin identificadores de modelos.
@@ -29,7 +32,7 @@ El ciclo anterior [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md) queda integrado por
 ## Verificación proporcional (acordada con Jay)
 
 - Durante la fase: pruebas enfocadas en los sistemas modificados.
-- Antes del push de una rama: `npm run audit:release`, `npm test` completos y recorridos de navegador de los sistemas afectados. Si cambia música, renders de audio afectados. Para documentación sola no se necesitan navegador ni audio.
+- Acuerdo posterior de Jay: acortar sustancialmente las pruebas. Antes del push: `npm run audit:release`, suites Node afectadas y un recorrido representativo del sistema cambiado. Si cambia sonido, renders afectados. Reutilizar el verde anterior para código intacto. Suites completas una vez en F12; ampliar solo ante fallos o cambios transversales. No desactivar pruebas. Documentación sola no requiere navegador/audio.
 - Antes de integrar/publicar `main`: suite completa de navegador y audio sobre el conjunto final, además de auditoría y lógica. Ejecutarla una vez por conjunto; repetir tras cambios funcionales relevantes o fallos.
 - CI (`.github/workflows/checks.yml`) conserva las suites completas: navegador separado y tres grupos de audio sin omisiones; el check `browser-audio` exige ambos resultados. Un PR con comprobaciones pendientes o fallidas no se integra; que GitHub las imponga depende de las reglas de protección del repositorio.
 - Registrar comandos ejecutados, resultados y qué queda para CI o aceptación manual. No presentar pruebas enfocadas como una ejecución completa.

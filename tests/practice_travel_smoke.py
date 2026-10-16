@@ -11,8 +11,8 @@ server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)))
 threading.Thread(target=server.serve_forever,daemon=True).start()
 try:
  with sync_playwright() as p:
-  b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
   for width,height in [(320,568),(390,844),(844,390)]:
+   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
    page=b.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=sonidos&generation=2&layout=vasto');page.wait_for_function('__testRuntime?.inWorld()')
@@ -30,7 +30,6 @@ try:
    page.locator('#bMenu').click();page.locator('#bJumpBack').click();page.wait_for_function('document.getElementById("mMenu").hidden')
    back=page.evaluate('({x:__testRuntime.S.wx,y:__testRuntime.S.wy,layer:__testRuntime.S.layer,kept:__testRuntime.S.cat.held})')
    assert abs(back['x']-before['x'])<1 and abs(back['y']-before['y'])<1 and back['layer']==before['layer'] and back['kept'],back
-   assert not errors,errors;page.close()
+   assert not errors,errors;page.close();b.close()
   print('PASS three phone sizes: one-touch contrast, visible 44px jump, silent UI, saved progress, exact reloaded location and menu return',flush=True)
-  b.close()
 finally:server.shutdown()

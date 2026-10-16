@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.2.0-rc.1-posmusica-08-r3';
+const CACHE='whitedot-2.3.0-alpha.1';
 const SHELL=[
  "./src/micro-instruments-model.js", "./src/micro-instruments.js", "./src/micro-synthesis.js",
  "./src/player-profile-model.js", "./src/player-profile.js",
