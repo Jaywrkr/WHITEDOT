@@ -1,3 +1,7 @@
+## 2.3.0-alpha.30 · Cuaderno vivo 6/20
+
+Caminantes y especies que ya te seguían ocupan posiciones distintas, con cuatro distancias y deriva lenta. Conservan sus temporizadores, voces y velocidad; no se crean seguidores artificiales.
+
 ## 2.3.0-alpha.29 · Cuaderno vivo 5/20
 
 Tres saludos individuales: reverencia, giro corto o salto. Se activan al entrar en cercanía, con separación de ocho segundos y salida real antes de repetirse. Sin carteles ni sonidos añadidos.

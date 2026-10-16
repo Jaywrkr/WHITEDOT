@@ -24,3 +24,8 @@ export function greetingPose(kind,age){
  const a=Math.sin(age/.75*Math.PI)*(1-age/.75);
  return {turn:kind===0?a*.18:kind===1?Math.sin(age*12)*a*.45:0,lift:kind===2?-a*8:0};
 }
+
+export function formationOffset(slot,seconds=0){
+ const angle=slot*2.3999632297+seconds*.08,radius=32+(slot%4)*14;
+ return {x:Math.cos(angle)*radius,y:Math.sin(angle)*radius};
+}

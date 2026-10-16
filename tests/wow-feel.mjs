@@ -18,3 +18,8 @@ assert.deepEqual(lookVector(20,30,true),{x:0,y:0});
 const {greetingPose}=await import('../src/wow-model.js');
 assert(greetingPose(0,.25).turn>0);assert(greetingPose(2,.25).lift<0);
 for(const k of [0,1,2]){assert.deepEqual(greetingPose(k,3),{turn:0,lift:0});assert.deepEqual(greetingPose(k,-1),{turn:0,lift:0});}
+
+const {formationOffset}=await import('../src/wow-model.js');
+const positions=Array.from({length:24},(_,i)=>formationOffset(i,3));
+assert.equal(new Set(positions.map(p=>[p.x.toFixed(2),p.y.toFixed(2)].join(','))).size,24);
+assert(positions.every(p=>Math.hypot(p.x,p.y)>=31.99&&Math.hypot(p.x,p.y)<=74.01));

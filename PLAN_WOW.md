@@ -9,7 +9,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 3 | Presencia cercana | feat/wow-03-presencia | Implementada; ver informe 03 |
 | 4 | Miradas hacia el cubo | feat/wow-04-miradas | Implementada; ver informe 04 |
 | 5 | Saludos diferentes | feat/wow-05-saludos | Implementada; ver informe 05 |
-| 6 | Compañía con espacio propio | feat/wow-06-compania | Pendiente |
+| 6 | Compañía con espacio propio | feat/wow-06-compania | Implementada; ver informe 06 |
 | 7 | Reacciones entre vecinos | feat/wow-07-reacciones | Pendiente |
 | 8 | Notas visibles a tiempo | feat/wow-08-notas-visibles | Pendiente |
 | 9 | Corriente en conexiones | feat/wow-09-corriente | Pendiente |
@@ -52,3 +52,7 @@ Los habitantes pixelados y la fauna pixel original miran hacia el cubo cercano. 
 ### 5. Saludos diferentes
 
 Tres saludos individuales: reverencia, giro corto o salto. Se activan al entrar en cercanía, con separación de ocho segundos y salida real antes de repetirse. Sin carteles ni sonidos añadidos.
+
+### 6. Compañía con espacio propio
+
+Caminantes y especies que ya te seguían ocupan posiciones distintas, con cuatro distancias y deriva lenta. Conservan sus temporizadores, voces y velocidad; no se crean seguidores artificiales.
