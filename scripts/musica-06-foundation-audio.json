@@ -1,0 +1,134 @@
+{
+  "renders": 7,
+  "maxPeak": 0.8854308724403381,
+  "rows": [
+    {
+      "genre": "deep",
+      "peak": 0.8729091286659241,
+      "rmsDb": -13.137744606479632,
+      "count": 10,
+      "focused": false,
+      "instruments": {
+        "kick": 20,
+        "p_roundbass": 10,
+        "p_tinepiano": 17,
+        "p_cellobody": 15,
+        "hat": 20,
+        "shaker": 20,
+        "p_tapepiano": 4,
+        "wood": 15,
+        "clap": 10,
+        "rim": 10,
+        "p_gutguitar": 2,
+        "clav": 4
+      }
+    },
+    {
+      "genre": "deep",
+      "peak": 0.8724231123924255,
+      "rmsDb": -14.519204389592073,
+      "count": 10,
+      "focused": true,
+      "instruments": {
+        "kick": 20,
+        "p_roundbass": 10,
+        "p_tinepiano": 17,
+        "p_cellobody": 15,
+        "hat": 20,
+        "shaker": 20,
+        "p_tapepiano": 4,
+        "wood": 15,
+        "clap": 10,
+        "rim": 10,
+        "p_gutguitar": 2,
+        "clav": 4
+      }
+    },
+    {
+      "genre": "dnb",
+      "peak": 0.8854308724403381,
+      "rmsDb": -12.317515857014696,
+      "count": 10,
+      "focused": false,
+      "instruments": {
+        "kick": 22,
+        "hat": 56,
+        "p_softreese": 27,
+        "membrane": 10,
+        "resonantpluck": 24,
+        "p_gutguitar": 18,
+        "wood": 14,
+        "snare": 14,
+        "p_feltmallet": 2,
+        "rim": 7,
+        "p_bassclarinet": 8,
+        "p_barkkeys": 10
+      }
+    },
+    {
+      "genre": "dnb",
+      "peak": 0.8726570010185242,
+      "rmsDb": -14.442723331064629,
+      "count": 10,
+      "focused": true,
+      "instruments": {
+        "kick": 22,
+        "hat": 56,
+        "p_softreese": 27,
+        "membrane": 10,
+        "resonantpluck": 24,
+        "p_gutguitar": 18,
+        "wood": 14,
+        "snare": 14,
+        "p_feltmallet": 2,
+        "rim": 7,
+        "p_bassclarinet": 8,
+        "p_barkkeys": 10
+      }
+    },
+    {
+      "genre": "ambient",
+      "peak": 0.18871423602104187,
+      "rmsDb": -30.718670559634656,
+      "count": 1,
+      "focused": false,
+      "instruments": {
+        "p_cellobody": 7
+      }
+    },
+    {
+      "genre": "ambient",
+      "peak": 0.12261663377285004,
+      "rmsDb": -34.43347332144248,
+      "count": 1,
+      "focused": true,
+      "instruments": {
+        "p_cellobody": 7
+      }
+    },
+    {
+      "genre": "deep",
+      "peak": 0.8770039081573486,
+      "rmsDb": -11.888588460405792,
+      "count": 10,
+      "focused": false,
+      "dense": true,
+      "instruments": {
+        "kick": 20,
+        "p_roundbass": 10,
+        "p_tinepiano": 97,
+        "p_cellobody": 15,
+        "p_brushkit": 240,
+        "silkstrings": 480,
+        "rim": 90,
+        "p_tapepiano": 84,
+        "hat": 20,
+        "shaker": 20,
+        "wood": 15,
+        "clap": 10,
+        "p_gutguitar": 2,
+        "clav": 4
+      }
+    }
+  ]
+}

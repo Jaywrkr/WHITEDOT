@@ -1,3 +1,4 @@
+import {territoryPalette} from './territory-transition.js';
 // Additive landscape DNA. Never consumes legacy placement, rarity or music streams.
 // Geometry/addresses stay in generator 1/2; this is a versioned presentation grammar.
 export const WORLD_FAMILY_VERSION=1;
@@ -32,10 +33,10 @@ export function createWorldFamily(region,biome,seedOf,rng){
  const pool=compatible.length?compatible:WORLD_FAMILIES,weight=f=>f.genres.includes(region.genre)?5:1;
  let pick=choose()*pool.reduce((n,f)=>n+weight(f),0),definition=pool.at(-1);
  for(const f of pool){pick-=weight(f);if(pick<=0){definition=f;break;}}
- const quiet=!!region.sea||biome==='vacio',angle=variant()*Math.PI,spacing=180+variant()*90;
+ const presentation=territoryPalette(region,seedOf,biome==='tormenta'),quiet=!!region.sea||biome==='vacio',angle=variant()*Math.PI,spacing=180+variant()*90;
  return Object.freeze({version:WORLD_FAMILY_VERSION,key:region.key,genre:region.genre,id:definition.id,name:definition.name,
   terrain:definition.terrain,material:definition.material,quiet,angle,spacing,seed:seedOf(`world:space:v1:${region.key}`),
-  hue:((region.hue||0)+variant()*36-18+360)%360,saturation:32+Math.floor(variant()*22),
+  musicHue:presentation.hue,ink:presentation.monochrome?presentation.ink:null,paletteMode:presentation.monochrome?'monochrome':'accents',hue:((region.hue||0)+variant()*36-18+360)%360,saturation:32+Math.floor(variant()*22),
   pace:definition.life.pace*(.9+variant()*.2),density:quiet?.15:definition.life.density,
   music:definition.music,signature:`WF1:${definition.id}:${Math.round(angle*10)}:${Math.round(spacing)}:${region.genre}`});
 }

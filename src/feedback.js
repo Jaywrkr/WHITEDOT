@@ -1,3 +1,4 @@
+import {territoryInk} from './territory-transition.js';
 import {musicalInk} from './visual.js';
 // Audio onset uses the audio clock; drawing uses the monotonic display clock.
 export function createCueBuffer(limit=32) {
@@ -20,7 +21,7 @@ export function initialize(runtime) {
   const buffer=createCueBuffer();
   function musicInk(source,role='lead'){
     const region=runtime.regionOfPos?.(source?.x??runtime.S.wx,source?.y??runtime.S.wy);
-    return musicalInk(region?.hue??190,role);
+    return region?territoryInk(region,role,runtime.seedOf):musicalInk(190,role);
   }
   function soundCue(source,role,time,origin='ambient') {
     if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running')return;

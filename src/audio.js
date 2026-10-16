@@ -1,3 +1,4 @@
+import {approachTempo,transitionGain,sparseFoundationGain} from './territory-transition.js';
 import {createMusicalConductor} from './musical-conductor.js';
 import {phraseAccent} from './composition.js';
 import {musicalCharacter,hookPitch,inRegister} from './musical-character.js';
@@ -39,7 +40,7 @@ export function initialize(runtime) {
   const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN,{living});
   const neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN,{living});
   MU.radio = null;MU.neighborRadio=null;
-  const conductor=createMusicalConductor(),conducted=()=>runtime.unifiedMusic===true&&!runtime.labMode&&!runtime.duetRoom;
+  let enteredAt=-Infinity;const conductor=createMusicalConductor(),conducted=()=>runtime.unifiedMusic===true&&runtime.inWorld?.()===true&&!runtime.labMode&&!runtime.duetRoom;
   let arrangementAir=1,productionRooms=null;
   const OUTPUT_BOOST=1.5,LOUD=5.6*OUTPUT_BOOST;   // requested lift before limiter/peak guard
   let ac=null,fx=null,master,mixInput,mfilt,punch,presence,makeup,limiter,clipper,comfortShelf,comfortLowpass,subsonic,headroom,bus,delay,dfb,dsend,verbIn,drone,droneG,noiseBuf,windG,windF;
@@ -201,9 +202,9 @@ export function initialize(runtime) {
     const s=MU.step%16,k=style(),calm=runtime.isFree()&&runtime.S.mode==="camino";
     const live=runtime.inWorld()||runtime.S.mode==="studio";
     if(s===0){
-      if(MU.biome!==MU.biomeT||MU.dnaA!==MU.dnaT){MU.biome=MU.biomeT;MU.dnaA=MU.dnaT;MU.tr=BI().tr+(MU.dnaA?MU.dnaA.trOff:0);MU.pending=true;MU.harmonyRegion=null;}
+      if(MU.biome!==MU.biomeT||MU.dnaA!==MU.dnaT){if(conducted()&&MU.dnaA&&MU.dnaT&&MU.dnaA.key!==MU.dnaT.key)enteredAt=MU.step>>4;MU.biome=MU.biomeT;MU.dnaA=MU.dnaT;MU.tr=BI().tr+(MU.dnaA?MU.dnaA.trOff:0);MU.pending=true;MU.harmonyRegion=null;}
       const nb=runtime.inWorld()?MU.nb:null,w=nb?MU.nbW:0;
-      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;BPM=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld())BPM+=MU.seasonBpm||0;if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)BPM=Math.round(BPM*.55);BPM=runtime.duetBPM?.()||BPM;SIX=60/BPM/4;delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
+      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;let target=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld())target+=MU.seasonBpm||0;if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)target=Math.round(target*.55);BPM=runtime.duetBPM?.()||(conducted()&&enteredAt>-Infinity?approachTempo(BPM,target):target);SIX=60/BPM/4;runtime.tempoCue?.({time:t,bpm:BPM,target,region:MU.dnaA?.key});delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
       if(!runtime.inWorld()&&(MU.pending||(MU.step-MU.lastChange>16*(6+Math.floor(rnd()*4)))))changeChord(t);
       if(BI().id==="tormenta"&&runtime.inWorld()&&(MU.step/16)%2===0&&rnd()<.75)MU.boltAt=t+SIX*(rnd()<.5?0:8);
     }
@@ -244,7 +245,7 @@ export function initialize(runtime) {
     if(runtime.inWorld())E=arrangementEnergy(E,runtime.S.musicEnergy);
     const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(MU.radio?.identity?.swing??G.sw??0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
     const xp=runtime.inWorld()?(runtime.experimentalLevel?.()||0):0;   // El aislamiento experimental se conserva solo en laboratorio.
-    const continuous=runtime.unifiedMusic===true&&!runtime.labMode,field=runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie',foundationGain=continuous&&field?.32:1;
+    const continuous=runtime.unifiedMusic===true&&!runtime.labMode,field=runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie',parts=MU.radio?.labScore?.electronic?.count,foundationGain=(continuous?transitionGain((MU.step>>4)-enteredAt)*sparseFoundationGain(parts):1)*(continuous&&field?(parts<=3?.65:.32):1);
     if(live&&!runtime.labSolo&&(continuous||!field)&&(continuous||xp<.7)){   // Production keeps its electronic foundation; deliberate laboratory Solo stays isolated.
       const accompany=()=>{
       if(nb){VW=w*foundationGain;const nt=t+((s%2)?SIX*(MU.neighborRadio?.identity?.swing??runtime.GEN[nb.genre].sw??0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true,MU.neighborRadio);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }

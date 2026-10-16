@@ -1,0 +1,62 @@
+{
+  "phase": 6,
+  "branch": "feat/musica-06-transiciones",
+  "base": "9042c83",
+  "audit": {
+    "command": "npm run audit:release",
+    "result": "passed",
+    "errors": 0,
+    "warnings": 0
+  },
+  "node": {
+    "command": "npm test",
+    "result": "passed",
+    "suites": 125
+  },
+  "browser": {
+    "result": "passed",
+    "programs": [
+      "world_family_smoke.py",
+      "territory_presentation_smoke.py",
+      "world_visibility_smoke.py",
+      "music_travel_smoke.py",
+      "lab_memory_smoke.py",
+      "encounters_smoke.py",
+      "offline_smoke.py"
+    ],
+    "viewports": [
+      [
+        390,
+        844
+      ],
+      [
+        844,
+        390
+      ],
+      [
+        1280,
+        800
+      ]
+    ]
+  },
+  "audio": {
+    "result": "passed",
+    "programs": [
+      "transition_mix.py",
+      "foundation_mix.py"
+    ],
+    "renders": 10,
+    "maxPeak": 0.8854308724403381,
+    "journeySeconds": 30,
+    "maxTempoChangePerBar": 24,
+    "sparseAmbientRmsDb": [
+      -30.7,
+      -34.4
+    ]
+  },
+  "external": {
+    "physicalListening": "pending",
+    "CI": "pending",
+    "deployment": "pending"
+  }
+}
