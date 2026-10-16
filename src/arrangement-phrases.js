@@ -11,7 +11,7 @@ export function phraseNotes(events,phrase,step){
   if(phrase.name==='bridge'&&e.role==='lead')return e.part==='answer'||step===0&&phrase.local%2===0;
   if(phrase.name==='answer'&&e.role==='lead'&&!e.part&&phrase.local%2)return false;
   return true;
- }).map(e=>({...e,degree:e.role==='lead'&&step%4!==0&&phrase.turn?(e.degree+[0,2,4,2][phrase.turn])%7:e.degree,
+ }).map(e=>({...e,
   level:e.level*(phrase.name==='answer'&&e.part!=='answer'?.82:phrase.name==='release'?.82:1)}));
 }
 export function phraseDrums(events,phrase,step){

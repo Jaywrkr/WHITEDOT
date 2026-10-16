@@ -1,3 +1,9 @@
+# Ciclo vigente · Juego musical, fase 3
+
+F3 desde `7e01e1c`, versión 2.3.0-alpha.3. `regional-phrases.js` elige células por producción/territorio/variante, sin RNG del mapa. Desarrolla frases completas a lo largo de ocho compases y movimientos largos; cierra en raíz, conserva presupuestos cero e influencias diatónicas. lab-score reproduce ese motivo sin reemplazar la respuesta por grados genéricos. arrangement-phrases retira el desplazamiento aislado de notas; mantiene forma, descansos y dinámica.
+
+`instruments.techniqueTick` conserva notas comunes del acorde y renueva sostenidos incompatibles en una nota cercana al próximo pulso, liberando la voz anterior suavemente. No añade camas de órgano automáticas ni cambia síntesis. Regresiones nuevas en regional-phrases y voice-expression; audio propio y evidencia en scripts/juego-03-validation.json. Auditoría, 43 suites afectadas, producción y cinco mezclas aprobadas. Continúa F4 desde esta rama; no volver a ejecutar completas entre fases salvo fallos/cambios transversales. Jay mantiene PR/merge.
+
 # Ciclo vigente · Juego musical, fase 2
 
 F1 subida en `07cd4b4`; F2 nace de ella en `feat/juego-02-sonido`, versión `2.3.0-alpha.2`. `voice-expression.js` define articulación acotada por rol/gesto/individuo y acentos métricos, sin RNG ni cambio de notas. voices transmite la misma articulación a living-synthesis; el último usa el instrumento nativo en todas sus variantes, conservando fallback solo para voces anteriores desconocidas. Los 81 specs siguen siendo 81: cambia su interpretación real, no un contador nominal.

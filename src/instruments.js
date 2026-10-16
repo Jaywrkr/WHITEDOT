@@ -37,7 +37,7 @@ export function initialize(runtime) {
  const micro=createMicroPlayer(runtime);
  const advanced=createAdvancedPlayer(runtime);
  const techniques=createTechniquePlayer(runtime);
- let held=null,heldKey=null,nearAt=0;
+ let held=null,heldKey=null,heldNote=null,nearAt=0;
  function techniqueTick(){
   techniques.tick();const ac=runtime.ac,
    blocked=!ac||ac.state!=='running'||runtime.S.mode!=='world'||globalThis.document?.hidden||globalThis.document?.querySelector?.('.modal:not([hidden])')||runtime.scanning||runtime.duetRoom||(runtime.musicVolume?.()??1)<=0;
@@ -52,12 +52,13 @@ export function initialize(runtime) {
    }
   }
   const id=voice?.instrument,key=source?`${runtime.S.layer||'superficie'}:${source.id}:${id}`:null;
-  if(key!==heldKey||!source){held?.release();held=null;heldKey=key;nearAt=ac?.currentTime||0;}
+  if(key!==heldKey||!source){held?.release();held=null;heldNote=null;heldKey=key;nearAt=ac?.currentTime||0;}
   runtime.heldContact=held&&!held.released?{source,instrument:id,role:voice?.role}:null;
   if(!source)return;
   if(held&&(held.released||held.end<=ac.currentTime))held=null;
+  if(held&&heldNote!==null){const at=runtime.musicalTime?.(ac.currentTime+.01)??ac.currentTime+.01,f=runtime.musicalFrame?.(at);if(f&&consonantPitch(heldNote,f.chords,45,69)!==heldNote){held.release(at,.08);held=null;}}
   if(!held&&ac.currentTime-nearAt>.35){const at=runtime.musicalTime?.(ac.currentTime+.01)??ac.currentTime+.01,frame=runtime.musicalFrame?.(at),d=frame?.region||runtime.regionOfPos(source.x,source.y),degree=(((frame?.degree??runtime.MU.deg)+voice.degree)%7+7)%7;
-   let note=57+(frame?.transposition??runtime.MU.tr??0)+d.scale[degree];while(note>69)note-=12;while(note<45)note+=12;if(frame)note=consonantPitch(note,frame.chords,45,69);
+   let note=57+(frame?.transposition??runtime.MU.tr??0)+d.scale[degree];while(note>69)note-=12;while(note<45)note+=12;if(frame)note=consonantPitch(heldNote??note,frame.chords,45,69);heldNote=note;
    const start=()=>{held=techniques.hold(id,note,at,.035,{technique:voice.technique||'normal'});};
    runtime.focusGesture?.(at,source,voice.role);
    if(runtime.withSpatialVoice)runtime.withSpatialVoice(source,at,gain=>{const emit=()=>{held=techniques.hold(id,note,at,.035*gain,{technique:voice.technique||'normal'});};if(runtime.withInstrumentPatch)runtime.withInstrumentPatch('living:'+source.kind,runtime.regionOfPos(source.x,source.y),{...voice,sustained:true},source,at,emit);else emit();},24.3);else start();
