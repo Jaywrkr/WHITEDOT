@@ -1,3 +1,11 @@
+## Visuales localizados · entrega 3
+
+- Ocho escenas procedurales: órbitas, circuitos, cintas, vidrio, islas, partitura, abanico y organismo. Semillas independientes; 60 % de celdas candidatas quedan vacías por regla del hash. Esa regla no mide cobertura visible ni biomas nuevos.
+- Cometas ocasionales; visitantes curiosos y esquivos, acotados a su hogar. Gestos de contacto/pulso silenciosos; pausa ante paneles y movimiento reducido.
+- Conexión real de `control-motion` a Entrar al Mundo y cExplore: el módulo existía, faltaba su inicialización en controles.
+- `npm run audit:release`: cero errores/advertencias. `npm test`: 130 suites aprobadas. `vj_ui_smoke.py`: bloqueado al crear página, Chromium `Target crashed`, antes de cargar la aplicación. No se presenta como aprobado ni se publica esta rama sin la validación necesaria.
+- No se modificó el motor musical. El repo TouchDesigner mencionado no está entre los checkouts disponibles.
+
 # Interacción final · entrega 1: animaciones y hallazgos
 
 - Botones con respuesta visual local y silenciosa. Entrar al Mundo lleva la flecha hasta el cuadrado antes de abrir; protege el doble toque y conserva la activación de audio dentro del gesto inicial. Movimiento reducido entra inmediatamente.

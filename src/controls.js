@@ -1,5 +1,7 @@
+import {initialize as controlMotion} from './control-motion.js';
 // Eventos de botones y controles de prototipo.
 export function initialize(runtime) {
+  const motion=controlMotion(runtime);
   /* ---------- botones ---------- */
   runtime.$("bSession").onclick=runtime.openSession;
   runtime.$("oSession").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openJournal("today");};
@@ -8,7 +10,7 @@ export function initialize(runtime) {
   runtime.$("hcGo").onclick=()=>{runtime.S.help.camino=true;runtime.$("mHelpC").hidden=true;runtime.audio();if(!runtime.S.voiceStart){runtime.S.voiceStart=true;setTimeout(()=>runtime.say(runtime.VOZ.start),900);}runtime.save();};
   runtime.$("bMenu").onclick=()=>{volumeUI();runtime.$("mMenu").hidden=false;};runtime.$("mnClose").onclick=()=>{runtime.$("mMenu").hidden=true;};
   document.querySelectorAll("#mMenu .tiles button,#mMenu .devbox button").forEach(b=>b.addEventListener("click",()=>{if(b.id!=="dReset")runtime.$("mMenu").hidden=true;}));
-  runtime.$("bPrimary").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else runtime.enterWorld();};
+  runtime.$("bPrimary").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else motion.enter(runtime.$('bPrimary'));};
   runtime.$("bStudio").onclick=runtime.enterStudio;runtime.$("bDeploy").onclick=runtime.deployStudio;runtime.$("stExit").onclick=runtime.exitStudio;
   runtime.$("oDeploy").onclick=()=>{runtime.$("mOut").hidden=true;runtime.deployStudio();};
   runtime.$("bag").onclick=e=>{const b=e.target.closest("button");if(!b)return;runtime.selSample=b.dataset.s;runtime.renderBag();};
@@ -16,7 +18,7 @@ export function initialize(runtime) {
   let armC=false;runtime.$("stClear").onclick=e=>{if(!armC){armC=true;e.target.textContent="¿Seguro?";setTimeout(()=>{armC=false;e.target.textContent="Vaciar";},2500);return;}for(const k in runtime.S.studio.slots){const t=runtime.S.studio.slots[k];runtime.S.bag[t]=Math.min(9,(runtime.S.bag[t]||0)+1);}runtime.S.studio.slots={};armC=false;e.target.textContent="Vaciar";runtime.renderBag();runtime.save();runtime.hud();};
   runtime.$("hwGo").onclick=()=>{runtime.S.help.mundo=true;runtime.save();runtime.$("mHelpW").hidden=true;runtime.showRegion(runtime.regionOfPos(runtime.S.wx,runtime.S.wy),true);};
   runtime.$("bShare").onclick=()=>runtime.shareCard(runtime.inWorld()||runtime.S.stars.length?"sky":"day");runtime.$("cShare").onclick=()=>{runtime.$("mCap").hidden=true;runtime.shareCard("day");};
-  runtime.$("cExplore").onclick=()=>{runtime.$("mCap").hidden=true;runtime.enterWorld();};
+  runtime.$("cExplore").onclick=()=>motion.enter(runtime.$('cExplore'),()=>runtime.$('mCap').hidden=true);
   runtime.$("bWorld").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else runtime.enterWorld();};
   runtime.$("bSky").onclick=runtime.openSky;runtime.$("kClose").onclick=()=>{runtime.$("mSky").hidden=true;};runtime.$("kShare").onclick=()=>{runtime.$("mSky").hidden=true;runtime.shareCard("sky");};
   runtime.$("oSky").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openJournal("places");};runtime.$("oClose").onclick=()=>{runtime.$("mOut").hidden=true;};

@@ -12,6 +12,10 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) ·
 
 [Plan de siete fases](PLAN_DIRECCION_MUSICAL.md). La fase 1 comparte reloj y armonía dentro de cada zona; cada territorio mantiene su tempo. Fuentes cercanas conservan su instrumento y acompañan la armonía audible. Fase 2 conecta identidades de producción a protagonistas, acordes y respuestas del motor. Fase 3 permite explorar 18 cruces desde Estilos → Cruces, incluyendo guitarra/máquina y disco de secuencias, con formas musicales originales. Fase 4 desarrolla seis situaciones de arreglo por frases, manteniendo motivos reconocibles y retirando capas. Fase 5 reparte instrumentos por función, coordina contactos y ofrece filtros audibles de distinta pendiente/cantidad. Fase 6 coordina cambios de tempo, entrada musical y color local, manteniendo audibles los lugares mínimos. La fase 7 audita el conjunto, corrige introducciones mudas y mezclas de percusión, conserva swing y ordena las zonas experimentales dentro del pulso. [Cierre y comprobaciones](CIERRE_DIRECCION_MUSICAL.md): 127 suites Node, 92 recorridos más offline y 39 programas de audio aprobados. Son 14 identidades de producción y 18 influencias sobre los 52 estilos existentes.
 
+## Visuales localizados
+
+Ocho escenas VJ originales aparecen en áreas concretas del Mundo, dejando espacio negro entre ellas. Cometas ocasionales y visitantes curiosos/esquivos responden visualmente al recorrido. Movimiento reducido evita desplazamientos. Esta ampliación conserva la música; validación visual en navegador pendiente por recursos del entorno.
+
 ## Interacción final
 
 [Dos entregas dependientes](PLAN_INTERACCION_FINAL.md). La primera añade botones animados y silenciosos, una cola de avisos y tarjetas especiales grandes que puedes examinar antes de continuar. La flecha de Entrar al Mundo llega al cuadrado; movimiento reducido entra al instante. Mientras inspeccionas un hallazgo se pausan el cubo y los poderes, conservando la música. El libro mantiene lugares, frecuencias y exportaciones.

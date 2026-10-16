@@ -21,7 +21,7 @@ export function initialize(runtime) {
   function sonar(origin='player'){
     origin=origin==='ambient'?'ambient':'player';
     if(runtime.S.mode==="studio")return;runtime.audio();const ms=performance.now();if(ms-lastSonar<700)return;lastSonar=ms;
-    if(origin==='player')runtime.markInput?.();
+    if(origin==='player'){runtime.markInput?.();runtime.visualGesture?.();}
     if(origin==='player'&&runtime.inWorld())runtime.firstJourneyEvent?.('pulse');
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.layerPulse?.();return;}
     if(origin==='player'&&runtime.inWorld())runtime.portalPulse?.(runtime.onBeatNow());   // ritual de portales: pulsos seguidos en el beat

@@ -23,3 +23,15 @@ Distribución reproducible por hábitats con semillas independientes, predominio
 ## Verificación
 
 Auditoría y Node completos por rama, navegador de los sistemas afectados y renders del audio modificado. Documentar comandos/resultados por entrega. Las suites completas de Dirección musical cierran su propio conjunto anterior; no presentarlas como prueba de ampliaciones posteriores. CI conserva navegador y todos los grupos de audio como condición antes del merge. Escucha física en iOS/Android se registra aparte.
+
+## Ampliación visual autorizada · 16 de octubre
+
+Jay pidió continuar sin modificar música. El trabajo de miniinstrumentos queda conservado en el stash `Preserve unfinished mini-instruments before visual-only work`, asociado a `feat/posmusica-02-instrumentos`; no está terminado ni publicado.
+
+| Entrega | Rama | Estado |
+|---|---|---|
+| 3 · Zonas VJ, cometas y encuentros visuales | `feat/posmusica-03-universo-vj` | Implementada localmente; 130 suites Node y auditoría aprobadas; navegador bloqueado por Target crashed |
+| 4 · Sorpresas temporales de las cajas | `feat/posmusica-04-cajas` | Pendiente |
+| 5 · Perfil y revisión PC/móvil | `feat/posmusica-05-perfil` | Pendiente |
+
+Ocho motivos originales procedurales: órbitas, circuitos, cintas, vidrio, islas, partitura, abanico y organismo. Inspirados en las imágenes compartidas por Jay, sin reutilizar archivos ajenos. El repositorio TouchDesigner mencionado no está disponible en los checkouts locales inspeccionados; no se afirma haber analizado su código. Ubicaciones independientes de mapas/sonido, vacío entre escenas, fade por distancia, tamaño local y movimiento reducido. Cometas ocasionales; visitantes curiosos y esquivos con territorio acotado. Gestos silenciosos al pulsar/contactar. No altera notas, tempo, instrumentos ni ganancia.

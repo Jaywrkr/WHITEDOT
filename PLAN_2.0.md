@@ -1,3 +1,7 @@
+<!-- ampliacion-visual -->
+Estado actual: [ampliación visual](PLAN_INTERACCION_FINAL.md). Entrega 3 implementada localmente, 130 suites Node y auditoría aprobadas; navegador bloqueado por recursos y push pendiente. Entregas 4–5 continúan en ramas dependientes. No reabrir fases históricas.
+<!-- /ampliacion-visual -->
+
 <!-- direccion-musical-actual -->
 El ciclo vigente es [Dirección musical, siete fases](PLAN_DIRECCION_MUSICAL.md), autorizado el 16 de octubre. Las siete fases musicales están implementadas y probadas. Continúan las dos entregas de [Interacción final](PLAN_INTERACCION_FINAL.md), autorizadas después del cierre musical. F2–F8 de pulido conservadas y cierre conjunto en [CIERRE_DIRECCION_MUSICAL.md](CIERRE_DIRECCION_MUSICAL.md). Jay crea PR y merge.
 

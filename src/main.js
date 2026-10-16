@@ -1,3 +1,4 @@
+import {initialize as vjWorld} from './vj-world.js';
 import {initialize as identityPlay} from './identity-play.js';
 import {initialize as performancePlay} from './performance.js';
 import {initialize as collectionGarden} from './collection-garden.js';
@@ -174,7 +175,7 @@ lab(runtime);
 achievementsV2(runtime);worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
 practiceTravel(runtime);
 musicTravel(runtime);
-distantColors(runtime);
+distantColors(runtime);vjWorld(runtime);
 houseAudio(runtime);house(runtime);
 onboarding(runtime);labLearning(runtime);
 runtime.styleUI();runtime.hud();

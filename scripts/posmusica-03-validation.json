@@ -1,0 +1,20 @@
+{
+  "branch": "feat/posmusica-03-universo-vj",
+  "base": "8950671",
+  "audit": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "node": {
+    "suites": 130,
+    "result": "passed"
+  },
+  "browser": {
+    "test": "tests/vj_ui_smoke.py",
+    "result": "blocked",
+    "reason": "Browser.new_page: Target crashed before loading application"
+  },
+  "audio": "unchanged; no new audio renders claimed",
+  "push": "pending required browser validation",
+  "manual_phone": "pending"
+}

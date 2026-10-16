@@ -191,6 +191,7 @@ export function initialize(runtime) {
     if(ev==="lluvia"){if(Math.random()<dt*7*(1+3*(runtime.MU.storm||0)))runtime.rain.push({x:runtime.S.wx+(Math.random()-.5)*R*2.4,y:runtime.S.wy-R*1.3,vy:110+Math.random()*60});
       for(let i=runtime.rain.length-1;i>=0;i--){const q=runtime.rain[i];q.y+=q.vy*dt;const d=Math.hypot(q.x-runtime.S.wx,q.y-runtime.S.wy);if(d<runtime.pxSize()/2+14){runtime.rain.splice(i,1);runtime.playerNote(.12);runtime.burst(q.x,q.y,5,true);continue;}
         if(q.y>runtime.S.wy+R*1.4){runtime.rain.splice(i,1);continue;}runtime.cx.globalAlpha=Math.min(1,Math.max(.15,1-d/(R*1.3)))*(runtime.worldOpacity?.(d,R*1.4)??1);runtime.cx.fillStyle=runtime.musicInk?.(q,'perc')||'#fff';runtime.cx.fillRect(q.x+ox-1,q.y+oy-6,2,7);}}else if(runtime.rain.length)runtime.rain=[];
+    runtime.drawVJWorld?.(t,dt,ox,oy,paused);
     runtime.drawDepthGround?.(t);runtime.drawWorldFamilyGround?.(t);runtime.drawGround(ox,oy,R,t);
     runtime.drawRivers?.(t,ox,oy);runtime.drawAlive?.(t,dt,ox,oy,'ground');
     runtime.updWaves(dt,ox,oy);
