@@ -1,3 +1,12 @@
+# Dirección musical · fase 4: música que desarrolla una forma
+
+- Seis situaciones de arreglo: exposición, respuesta, crecimiento, retirada, regreso y puente. Bloques de ocho compases con variación territorial y desarrollo del motivo tras 48 compases.
+- Primeros ocho compases conservan la presentación de la banda; los territorios ricos siguen mostrando sus voces desde la llegada.
+- Retirada y puente restan secuencias/adornos, manteniendo anclas de bombo/caja/bajo. Respuesta deja huecos en el motivo principal. Los apoyos siguen siendo diatónicos y el reloj no cambia.
+- Se conserva el límite de nivel de la voz complementaria; destacar una respuesta atenúa otras partes. La quietud desarrolla el arreglo sin depender del movimiento.
+
+Auditoría, 123 suites Node, cuatro programas de navegador y 24 renders aprobados. Evidencia `scripts/musica-04-validation.json`. En teléfono: escucha quieto al menos dos minutos, después toca fuentes y cambia de estilo. CI/deploy/escucha física separados.
+
 # Dirección musical · fase 3: fusiones que se pueden encontrar
 
 - Guitarra y máquina y Disco de secuencias amplían los cruces a 18, con instrumentos, motivos y progresiones propios. Las identidades guitar/italo llegan al motor real.

@@ -1,3 +1,13 @@
+# Handoff · Dirección musical, fase 4
+
+Rama `feat/musica-04-arreglos`, desde F3 `92ebd5c`. Jay PR/merge. Plan vigente: siete fases.
+
+`arrangement-phrases.js` define seis formas en bloques de ocho compases; primeros ocho compases estables. Tras 48 compases, un giro diatónico desarrolla motivos en posiciones débiles. `labArrangement` incorpora phrasing al frame y score, escala energía y `labNoteEvents`/`labDrumEvents` aplican retirada/respuesta sobre eventos reales. No mueve mapas ni modifica guardados. Partes opcionales se retiran, sin inventar instrumentos fuera de la plantilla.
+
+El límite previo de respuesta 0,62 se conserva: se destaca retirando/atenuando acompañamiento. Node recorre 160 compases de seis familias; renders de evolución comprueban tres o más formas reales además de capítulos. 123 suites Node, cuatro programas de navegador y 24 renders aprobados, en `scripts/musica-04-validation.json`. Evidencia compacta en `scripts/musica-04-audio.json`. CI/deploy/escucha física separados.
+
+## Antecedentes
+
 # Handoff · Dirección musical, fase 3
 
 Rama `feat/musica-03-fusiones`, desde F2 `b47d099`. Jay PR/merge. Continuar F4–F7 sin confirmaciones.

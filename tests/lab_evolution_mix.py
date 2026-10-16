@@ -16,6 +16,7 @@ try:
   rows=page.evaluate('''async()=>{const {renderMix}=await import('/tests/audio_mix.mjs'),out=[];for(const bar of [0,16,32,48,64,80])out.push(await renderMix('techhouse',{livingMusic:true,evolutionBar:bar,dense:true,soft:bar%32===0,sampleRate:bar%32===0?44100:48000,renderSeconds:6}));return out;}''')
   for row in rows:assert 0<row['peak']<.96 and row['hotFraction']==0 and -65<row['rmsDb']<-3,row
   assert {r['labEvolution']['chapter'] for r in rows}==set(range(6))
+  assert len({r['phrasing']['name'] for r in rows})>=3,'actual scheduler must develop its musical form'
   assert len(rows[-1]['labPerformance'])<len(rows[0]['labPerformance'])
   report={'renders':len(rows),'maxPeak':max(r['peak'] for r in rows),'rows':rows}
   (ROOT/'scripts/evolution-audio-validation.json').write_text(json.dumps(report,indent=2)+'\n')
