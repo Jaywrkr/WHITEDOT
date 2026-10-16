@@ -10,7 +10,7 @@ Autorizado por Jay con «hazlo». Sustituye la ampliación del ciclo anterior: m
 | 4 · Mundo y habitantes | `mejora/04-mundo` | 2.3.0-alpha.8 | Implementada y probada | Coherencia, apariciones suaves y siluetas legibles. |
 | 5 · Encuentros | `mejora/05-encuentros` | 2.3.0-alpha.9 | Implementada y probada | Invitación, gesto, respuesta y salida comprensibles. |
 | 6 · Viajes y favoritos | `mejora/06-viajes` | 2.3.0-alpha.10 | Implementada y probada | Guardar, encontrar y regresar con menos fricción. |
-| 7 · Interfaz y cubo | `mejora/07-interfaz` | 2.3.0-alpha.11 | Pendiente | Móvil/PC, paneles y personalización congruentes. |
+| 7 · Interfaz y cubo | `mejora/07-interfaz` | 2.3.0-alpha.11 | Implementada y probada | Móvil/PC, paneles y personalización congruentes. |
 | 8 · Colección | `mejora/08-coleccion` | 2.3.0-alpha.12 | Pendiente | Tarjetas, rareza, bitácora y progreso claros. |
 | 9 · Recorrido y Casa | `mejora/09-recorrido` | 2.3.0-alpha.13 | Pendiente | Enseñar jugando y conectar lo descubierto con Casa. |
 | 10 · Cierre | `mejora/10-cierre` | 2.3.0-alpha.14 | Pendiente | Integración, rendimiento, suites y límites documentados. |

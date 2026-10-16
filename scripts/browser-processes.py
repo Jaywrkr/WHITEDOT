@@ -39,7 +39,17 @@ def main():
   except subprocess.TimeoutExpired:raise SystemExit(124)
  if linux and ctypes.CDLL(None,use_errno=True).prctl(36,1,0,0,0)!=0:raise OSError(ctypes.get_errno(),'Cannot enable child reaping')
  if os.environ.get('WHITEDOT_TEST_SERIAL_HTTP')=='1' and len(command)>1 and command[1].endswith('.py'):
-  bootstrap="import http.server,runpy,sys;http.server.ThreadingHTTPServer.process_request=http.server.HTTPServer.process_request;sys.argv=sys.argv[1:];runpy.run_path(sys.argv[0],run_name='__main__')"
+  bootstrap="""import http.server,runpy,sys
+from pathlib import Path
+from playwright._impl import _page
+http.server.ThreadingHTTPServer.process_request=http.server.HTTPServer.process_request
+async def write_inline(path,data):
+ Path(path).write_bytes(data)
+# Screenshot evidence is small; the constrained runner needs no extra I/O thread.
+_page.async_writefile=write_inline
+sys.argv=sys.argv[1:]
+runpy.run_path(sys.argv[0],run_name='__main__')
+"""
   command=[command[0],'-c',bootstrap,*command[1:]]
  process=subprocess.Popen(command);deadline=time.monotonic()+timeout if timeout else float('inf');timed_out=False;stop_at=None
  def stop(sig,_):

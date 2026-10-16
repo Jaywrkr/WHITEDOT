@@ -1,3 +1,9 @@
+# Mejora integral · fase 7
+
+Rama `mejora/07-interfaz`, versión 2.3.0-alpha.11. Campos táctiles legibles de 16 px y 44 px de alto; avisos de contexto blancos y acciones del cubo accesibles al desplazar. La vista previa nombra el detalle elegido. La selección antigua también revierte ante fallos de guardado. Se verifican tres tamaños, teclado, silencio y conservación futura; el perfil local escribe capturas sin hilos extra.
+
+Auditoría sin errores/avisos; 4 suites Node afectadas y recorrido representativo aprobados; audio sin cambios. Leer PLAN_MEJORA_INTEGRAL.md; este ciclo sustituye la ampliación anterior. Evidencia: scripts/mejora-07-validation.json. Jay conserva PR/merge.
+
 # Mejora integral · fase 6
 
 Rama `mejora/06-viajes`, versión 2.3.0-alpha.10. Favoritos busca nombres visibles de géneros, recuerdos y texto con o sin tildes. Su resumen muestra solo capa, estilo y tempo; procedencia y coordenadas quedan en el detalle existente. Se conservan metadatos y libros futuros en lectura protegida. Saltar compara también los timbres de la radio recuperada y respeta historiales anteriores.
