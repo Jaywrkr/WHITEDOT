@@ -32,6 +32,7 @@ export function validateSave(value,defaults,identity){
  if(value.session!==undefined&&value.session!==null){const q=value.session;if(!object(q)||q.version!==1||!['baseline','visited','genres','instruments'].every(k=>object(q[k]))||!Number.isFinite(q.seconds)||q.seconds<0)throw Error('Sesión inválida');}
  if(value.lastSession!==undefined&&value.lastSession!==null){const q=value.lastSession;if(!object(q)||!['visited','genres','instruments'].every(k=>Array.isArray(q[k]))||!Number.isFinite(q.seconds))throw Error('Resumen inválido');}
  const base=structuredClone(defaults),result={...base,...value,saveVersion:SAVE_VERSION,worldIdentity:{...identity}};
+ result.sparks=Number.isFinite(result.sparks)?Math.min(Number.MAX_SAFE_INTEGER,Math.max(0,Math.floor(result.sparks))):0;
  result.studio={...base.studio,...value.studio};result.journal={...base.journal,...value.journal};result.journal.music={...base.journal.music,...value.journal?.music};
  return result;
 }

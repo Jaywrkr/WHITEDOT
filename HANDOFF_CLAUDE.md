@@ -1,3 +1,7 @@
+# Cristales y chispas · interacción de recolección
+
+`src/crystal-sparks.js` añade grupos deterministas con hash independiente, 1/2/3 impactos de pulso manual, 1/3/5 chispas y hasta tres fragmentos por cristal. `main.js` inicializa; `render.js` integra tick, mundo y contador. Saldo aditivo `S.sparks`, predeterminado en `progress.js` y normalizado en `save-store.js`; exportaciones existentes lo conservan. Daño/agotamiento efímeros por sesión, hasta 8192 sitios, sin cambios musicales. El paseo automático no extrae ni recoge. Caché en SHELL y sellado de publicación existente. Pruebas y límites en CAMBIOS.md. No iniciar trabajos históricos pendientes.
+
 # Reencuentro · fase 8 · cierre de verificación pendiente
 
 Rama `feat/reencuentro-08-pulsos`, desde `0ac0ed6`, versión alpha.24. Petición explícita posterior: cuaderno negro, cincuenta ondas ganadas y mayor iniciativa durante Paseo. No iniciar las siete fases de PROPUESTA_PULIDO_EXPERIENCIA.md: esa evaluación no está autorizada para implementación.
