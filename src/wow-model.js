@@ -18,3 +18,9 @@ export function lookVector(dx,dy,reduced=false){
  if(reduced||!Number.isFinite(dx)||!Number.isFinite(dy))return {x:0,y:0};
  const d=Math.hypot(dx,dy)||1;return {x:dx/d*1.4,y:dy/d*1.4};
 }
+
+export function greetingPose(kind,age){
+ if(!Number.isFinite(age)||age<0||age>=.75)return {turn:0,lift:0};
+ const a=Math.sin(age/.75*Math.PI)*(1-age/.75);
+ return {turn:kind===0?a*.18:kind===1?Math.sin(age*12)*a*.45:0,lift:kind===2?-a*8:0};
+}

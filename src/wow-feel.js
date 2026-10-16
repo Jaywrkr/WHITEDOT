@@ -1,5 +1,6 @@
-import {createMotion,WOW_LIMITS,lookVector} from './wow-model.js';
+import {createMotion,WOW_LIMITS,lookVector,greetingPose} from './wow-model.js';
 export function initialize(runtime){
+ const greetings=new WeakMap();
  const motion=createMotion();let owner=null,layer=null,dust=[],seconds=0,nearby=[];
  const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
  function sources(){
@@ -24,6 +25,11 @@ export function initialize(runtime){
  }
  function objectTransform(c,o){
   if(blocked()||reduced())return;
+  const distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);
+  let g=greetings.get(o);if(!g){const key=o.id||o.s?.id||[o.hx??o.x,o.hy??o.y].join(',');g={inside:false,at:-10,kind:(runtime.seedOf('wow:greeting:v1:'+key)>>>0)%3};greetings.set(o,g);}
+  if(distance>135)g.inside=false;
+  if(distance<80&&!g.inside&&seconds-g.at>8){g.at=seconds;g.inside=true;}
+  const pose=greetingPose(g.kind,seconds-g.at);c.translate(0,pose.lift);c.rotate(pose.turn);
   const proximity=Math.max(0,1-Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)/100);
   c.rotate(Math.sign(runtime.S.wx-o.x)*proximity*.035);c.scale(1+proximity*.035,1+proximity*.06);
  }

@@ -14,3 +14,7 @@ console.log('PASS visual motion: starts, decay, reduced motion, teleport and mod
 const {lookVector}=await import('../src/wow-model.js');
 for(const [x,y]of [[0,0],[1,0],[-40,800],[NaN,1]]){const eye=lookVector(x,y);assert(Number.isFinite(eye.x)&&Math.hypot(eye.x,eye.y)<=1.40001);}
 assert.deepEqual(lookVector(20,30,true),{x:0,y:0});
+
+const {greetingPose}=await import('../src/wow-model.js');
+assert(greetingPose(0,.25).turn>0);assert(greetingPose(2,.25).lift<0);
+for(const k of [0,1,2]){assert.deepEqual(greetingPose(k,3),{turn:0,lift:0});assert.deepEqual(greetingPose(k,-1),{turn:0,lift:0});}
