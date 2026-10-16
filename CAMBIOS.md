@@ -1,3 +1,9 @@
+## 2.3.0-alpha.12 · Colección
+
+Las tarjetas excepcionales tienen prioridad en la cola sin desplazar la que estás examinando; todos los hallazgos siguen guardados. El libro explica filtros vacíos, muestra contexto humano y mejora tipografía y controles táctiles. Se mantienen rarezas y probabilidades registradas; tres tamaños verifican presentación completa, aviso exclusivo, silencio y persistencia.
+
+Auditoría sin errores/avisos; 9 suites Node afectadas y recorrido representativo aprobados; audio sin cambios. Evidencia: scripts/mejora-08-validation.json. No afirma escucha física, CI ni deploy.
+
 ## 2.3.0-alpha.11 · Interfaz y cubo
 
 Campos táctiles legibles de 16 px y 44 px de alto; avisos de contexto blancos y acciones del cubo accesibles al desplazar. La vista previa nombra el detalle elegido. La selección antigua también revierte ante fallos de guardado. Se verifican tres tamaños, teclado, silencio y conservación futura; el perfil local escribe capturas sin hilos extra.

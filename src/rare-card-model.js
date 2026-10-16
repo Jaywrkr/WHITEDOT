@@ -5,11 +5,17 @@ import {RELIC_RATE,MAGICAL_RELIC_RATE} from './relics.js';
 import {ANOMALIES,TIERS} from './wonders.js';
 import {NATURAL_BOX_RATE,POWERS,POWER_IDS} from './expansion-music.js';
 import {PET_SPECIES,PET_BOX_DENOMINATOR} from './pet-model.js';
-import {placeAddress,supportedWorld} from './world-identity.js';
+import {placeAddress,supportedWorld,sameWorld} from './world-identity.js';
 import {deploymentTime} from './release-model.js';
 import {normalizeAnatomy} from './anatomy.js';
 export const RARE_BOOK_LIMIT=512,RARE_PAGE_SIZE=12;
 export const CARD_TIERS={raro:{name:'Raro',ink:'#9fe8ff'},singular:{name:'Singular',ink:'#bda5f5'},legendario:{name:'Legendario',ink:'#bda5f5'},mitico:{name:'Mítico',ink:'#f0d27a'}};
+export function queueRareNotice(queue,event,limit=4){
+ const rank=e=>Object.keys(CARD_TIERS).indexOf(e.card.odds.tier),card=event.card,
+  near=queue.findIndex(e=>e.card.address&&card.address&&sameWorld(e.card.address,card.address)&&e.card.address.layer===card.address.layer&&Math.hypot(e.card.address.x-card.address.x,e.card.address.y-card.address.y)<3);
+ if(near<0)queue.push(event);else if(rank(event)>=rank(queue[near]))queue[near]=event;
+ queue.sort((a,b)=>rank(b)-rank(a));queue.splice(Math.max(0,limit));return queue.includes(event);
+}
 const boxChance=NATURAL_BOX_RATE/POWER_IDS.length;
 export const RARE_CARDS=Object.freeze({
  ...Object.fromEntries(['grain','ring'].map(id=>['micro:'+id,{name:MICRO_INSTRUMENTS[id].name+' · singular',tier:'singular',probability:null,variantProbability:1/64,unit:'encuentros elegibles',condition:'Variante 63 entre 64 variantes de un instrumento elegible. Su presencia depende del hábitat; no es una probabilidad por hora ni por sector.',text:MICRO_INSTRUMENTS[id].hint,art:'micro'}])),
