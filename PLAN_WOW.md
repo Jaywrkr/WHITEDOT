@@ -11,7 +11,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 5 | Saludos diferentes | feat/wow-05-saludos | Implementada; ver informe 05 |
 | 6 | Compañía con espacio propio | feat/wow-06-compania | Implementada; ver informe 06 |
 | 7 | Reacciones entre vecinos | feat/wow-07-reacciones | Implementada; ver informe 07 |
-| 8 | Notas visibles a tiempo | feat/wow-08-notas-visibles | Pendiente |
+| 8 | Notas visibles a tiempo | feat/wow-08-notas-visibles | Implementada; ver informe 08 |
 | 9 | Corriente en conexiones | feat/wow-09-corriente | Pendiente |
 | 10 | Constelaciones temporales | feat/wow-10-constelaciones | Pendiente |
 | 11 | Huellas de pulso | feat/wow-11-huellas-pulso | Pendiente |
@@ -60,3 +60,7 @@ Caminantes y especies que ya te seguían ocupan posiciones distintas, con cuatro
 ### 7. Reacciones entre vecinos
 
 Una nota real despierta una pequeña onda visual entre hasta tres vecinos presentes. Se espera el reloj de audio; colas acotadas, sin notas adicionales. Saltos y paneles limpian reacciones pendientes.
+
+### 8. Notas visibles a tiempo
+
+Cada fuente ilumina su centro al comenzar su nota real. Percusión, bajo, acorde y melodía tienen trazos propios. Se descartan eventos atrasados sin adelantar el destello al sonido.

@@ -1,3 +1,7 @@
+## 2.3.0-alpha.32 · Cuaderno vivo 8/20
+
+Cada fuente ilumina su centro al comenzar su nota real. Percusión, bajo, acorde y melodía tienen trazos propios. Se descartan eventos atrasados sin adelantar el destello al sonido.
+
 ## 2.3.0-alpha.31 · Cuaderno vivo 7/20
 
 Una nota real despierta una pequeña onda visual entre hasta tres vecinos presentes. Se espera el reloj de audio; colas acotadas, sin notas adicionales. Saltos y paneles limpian reacciones pendientes.
