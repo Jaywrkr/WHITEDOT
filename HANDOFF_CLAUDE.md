@@ -2,7 +2,7 @@
 
 Rama `feat/posmusica-08-cierre` desde recorrido `51bc007`. CIERRE_INTERACCION_FINAL.md es el estado consolidado y el orden para PR/merge de Jay. Código musical previo ya integrado en main por PR #158; esta ampliación permanece en ramas. No hace falta la antigua rama incompleta 2.
 
-Corrección final en `voices`: cada hit repetido consulta su marco armónico disponible; pruebas verifican rejilla y cambio de acorde. `microTouch` conecta el gesto visual común aun con sonido apagado. El recorrido integrado comprueba también guía, acciones visibles y Geist Mono. Auditoría, 133 suites Node, navegador integrado en cuatro tamaños y 25 renders finales aprobados; CI completo pendiente. No afirmar cierre de CI hasta consultar los resultados reales.
+Corrección final en `voices`: cada hit repetido consulta su marco armónico disponible; pruebas verifican rejilla y cambio de acorde. `microTouch` conecta el gesto visual común aun con sonido apagado. El recorrido integrado comprueba también guía, acciones visibles y Geist Mono. Auditoría, 133 suites Node, navegador integrado en cuatro tamaños y 25 renders finales aprobados; CI completo pendiente. La primera ejecución detectó un timer de DOM arrancado desde colección headless. Se reprodujo con el binario oficial Node 20.20.2, se corrigió en notice-lane y pasaron sus 133 suites completas. No afirmar cierre de CI hasta consultar los resultados reales.
 
 El workflow incluye push de esta rama y conserva todos los programas. Los cambios exclusivamente de documentación/informes no repiten push de pruebas; `pull_request` mantiene suites completas sin filtros. No crear PR ni merge con Codex. Teléfonos físicos y publicación se verifican por separado.
 

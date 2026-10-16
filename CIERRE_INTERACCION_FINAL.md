@@ -32,6 +32,7 @@ La entrega 3 incluye la interfaz 1. La rama incompleta 2 no se necesita: su trab
 | Guardado de guía | Campos desconocidos se perdían al normalizar | Se conservan extensiones y hechos desconocidos |
 | Territorio VJ | Más motivos podían reasignar coordenadas previas | Hash secundario; conserva posiciones, tamaño y huecos |
 | Referencia real | Repo TouchDesigner no estaba en los checkouts | Revisión pública de cuatro escenas y previews; procedencia documentada |
+| Colección sin pantalla | La cola creaba un timer de DOM en Node; fallo reproducido en Node 20 | Sin DOM no inicia el driver visual; regresión y 133 suites Node 20 aprobadas |
 | Pruebas locales | Recursos heredados impiden Chromium normal | Wrapper opcional de un contexto, limpieza propia; CI normal conserva todas las pruebas |
 
 ## Catálogos actuales
@@ -46,7 +47,7 @@ Las nuevas ubicaciones usan semillas independientes. Las dieciséis sorpresas no
 - Node: 133 suites completas.
 - Entrega 6: navegador real a 390/844/1280 px y 25 renders a 44.1/48 kHz, presión/filtro extremos, cinco estelas sobre banda densa y pico máximo 0,8792.
 - Entrega 7: guía, guardado, controles y cuatro motivos nativos a 320/390/844/1280 px; capturas inspeccionadas.
-- Entrega 8: recorrido integrado a 320/390/844/1280 px y 25 renders finales aprobados. Se comprueban además las alturas de acordes y tiempos fuertes. El primer intento de Chromium agotó hilos al arrancar el audio; el perfil local reduce un hilo de composición y completó todos los renders. CI completo se ejecuta sobre esta rama, sin abrir PR ni hacer merge. El resultado se registra en `scripts/posmusica-08-ci.json` cuando exista.
+- Entrega 8: recorrido integrado a 320/390/844/1280 px y 25 renders finales aprobados. Se comprueban además las alturas de acordes y tiempos fuertes. El primer intento de Chromium agotó hilos al arrancar el audio; el perfil local de audio reduce un hilo de composición y completó todos los renders. Esa opción se limita al audio offline mediante `WHITEDOT_CHROMIUM_NO_COMPOSITOR=1`; las pruebas visuales conservan el compositor. CI completo se ejecuta sobre esta rama, sin abrir PR ni hacer merge. La primera ejecución remota reveló el timer sin DOM: se reprodujo y corrigió, sin omitir pruebas ni cambiar la versión de CI para ocultarlo. El resultado final se registra en `scripts/posmusica-08-ci.json` cuando exista.
 
 `checks.yml` conserva navegador completo y tres grupos de audio; todos condicionan `browser-audio`. El push de la rama final activa la ejecución. Actualizar exclusivamente documentación/informes no repite ese push de pruebas; los PR siguen ejecutando todo sin filtros de archivos. No se elimina ningún programa o aserción. Los comandos completos son `npm run audit:release`, `npm test`, `npm run test:browser` y `npm run test:audio`.
 

@@ -1,3 +1,7 @@
+## Corrección detectada por CI
+
+Node 20 reprodujo un timer de avisos iniciado desde colección sin DOM. La cola ahora instala su driver visual solo cuando existe pantalla; regresión y 133 suites completas en Node 20 aprobadas. El perfil local permite reducir compositor exclusivamente para audio offline: la interfaz conserva composición normal. No se retiran pruebas ni se cambia el runtime de CI para eludir el fallo.
+
 ## Auditoría de interacción · entrega 8
 
 Corrección de armonía para respuestas repetidas: usan el marco disponible para su instante. Contactar un miniinstrumento activa el gesto visual común también sin audio. Regresiones en el reloj y en la revisión integrada PC/móvil. CIERRE_INTERACCION_FINAL.md reúne alcance, números, correcciones, orden de ramas y límites de aceptación.
