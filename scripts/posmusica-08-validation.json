@@ -85,7 +85,8 @@
     "noticeLevels": {
       "X1": "1.8 s; one small context every 18 s; latest grouped; 8 s pending expiry",
       "X2": "3 s; automatic spacing 6 s; two pending; 20 s expiry",
-      "X3": "manual rare reveal; exclusive; four-second breathing space"
+      "X3": "manual rare reveal; exclusive; four-second breathing space",
+      "achievements": "Routine achievements remain in journal/voice memory; usable rewards can show a grouped notice."
     },
     "noticeChecks": {
       "programs": [
@@ -102,7 +103,8 @@
         1280
       ],
       "bursts": 50,
-      "includes": "exclusive owner, source rejection, priority, fade gap, expiry, grouping, modal pause, focus and silence"
+      "includes": "exclusive owner, source rejection, priority, fade gap, expiry, grouping, modal pause, focus and silence",
+      "routineAchievement": "Actual ui.unlock, duplicate guard, earned date and voice memory preserved; no notification ticket, passed at four sizes"
     },
     "collectionChecks": {
       "program": "collection_guard_smoke.py",
@@ -116,7 +118,8 @@
       "totalPercussionFamilies": 27,
       "materialProfiles": 216,
       "bookFamilies": 157,
-      "legacyPlacement": "unchanged"
+      "legacyPlacement": "unchanged",
+      "legacyBrowser": "percussion_smoke.py keeps all nine families and now closes its fossil card before another gesture; local additional run blocked by Chromium thread EAGAIN before loading; complete CI still required."
     },
     "integratedBrowser": {
       "program": "visual_closure_smoke.py",

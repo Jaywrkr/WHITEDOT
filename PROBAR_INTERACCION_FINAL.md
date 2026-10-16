@@ -1,13 +1,13 @@
 # Probar la ampliación completa
 
-Rama final: `feat/posmusica-08-cierre`. Incluye las entregas anteriores. [Preview de la revisión funcional 2bcda49](https://whitedot-7795jz1cl-jaywrkr-1498s-projects.vercel.app). Vercel informa despliegue correcto; la comprobación procede del estado de GitHub, no de una prueba física. No necesitas parámetros dev.
+Rama final: `feat/posmusica-08-cierre`. Incluye las entregas anteriores. [Preview de la revisión funcional 7e28462](https://whitedot-k2955refm-jaywrkr-1498s-projects.vercel.app). Vercel informa despliegue correcto; la comprobación procede del estado de GitHub, no de una prueba física. No necesitas parámetros dev.
 
 ## Teléfono
 
 1. **Entrada:** recoge la primera luz del día y entra al Mundo. La flecha llega al cuadrado antes de entrar. No hay sonido de botón. Movimiento reducido evita el desplazamiento y la espera.
 2. **Exploración:** camina y usa Saltar. En algunos lugares aparecen órbitas, circuitos, cintas, vidrio o contornos orgánicos. Permanecen zonas vacías. Las figuras se revelan gradualmente; no todos los lugares contienen cada motivo. Los visitantes curiosos se acercan; los esquivos se alejan dentro de su territorio. Los cometas son ocasionales.
 3. **Cajas:** toca una con el cubo. Algunas añaden una sorpresa temporal al poder original. Lee ambas duraciones en la tarjeta. Tras Continuar, el control contextual muestra la sorpresa y su tiempo. Deshacer la elimina; Volver revierte un salto activo. Al caducar, el regreso habitual del menú sigue disponible. El borrador solo elimina brotes efímeros nuevos.
-4. **Hallazgos:** una tarjeta nueva ocupa la pantalla para examinarla. No caduca mientras la lees. Continuar devuelve el control; los avisos esperan su turno. La colección y las direcciones siguen guardadas.
+4. **Hallazgos:** una tarjeta excepcional nueva ocupa la pantalla para examinarla. No caduca mientras la lees. Continuar devuelve el control; los avisos esperan su turno. La colección y las direcciones siguen guardadas.
 5. **Perfil:** Menú → Tu perfil. Guarda un nombre, revisa tiempo/distancia y abre colección o lugares. Tiempo por espacio se despliega aparte. Reabre la aplicación: el perfil debe continuar. Los datos nuevos empiezan desde su fecha de medición; la colección anterior sí se conserva.
 
 Prueba vertical y horizontal. Verifica que puedes cerrar cada panel, leer la tarjeta y alcanzar sus botones sin desbordamiento horizontal. El perfil se desplaza verticalmente. También se respeta reducir movimiento del sistema.

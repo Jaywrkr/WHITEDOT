@@ -2,7 +2,7 @@
 
 ## Entregas y orden
 
-Base musical: `5c3cb2f`, ya integrada por Jay en main mediante PR #158 (`eb3230e`). Al revisar, los archivos de ejecución de ese main coinciden con la base musical. Las ramas de esta ampliación son acumulativas; Codex solo commit/push, Jay PR/merge.
+Base musical: `5c3cb2f`, ya integrada por Jay en main mediante PR #158 (`eb3230e`). Al revisar, los archivos de ejecución de ese main coinciden con la base musical. Jay integró después las entregas 3–7; main actual revisado `d4beace` (PR #164). La simulación de integración de esta entrega final contra ese main no presenta conflictos. Las ramas de esta ampliación son acumulativas; Codex solo commit/push, Jay PR/merge.
 
 | Orden | Rama | Commit de entrega | Alcance |
 |---|---|---|---|
@@ -71,3 +71,5 @@ Ver [PROBAR_INTERACCION_FINAL.md](PROBAR_INTERACCION_FINAL.md). Entrar al Mundo;
 - Recorrido integrado final: 320/390/844/1280 px. Un intento agotó un hilo al abrir AudioContext en este contenedor; la ejecución directa completó las cuatro vistas sin omitir aserciones.
 - Audio nuevo: 16 renders de seis cuerpos y cuatro conjuntos con Imán, 44.1/48 kHz, pico máximo 0,876724 y cero muestras calientes. Error máximo frente a rejilla: 8,462 ms; el conductor conserva deliberadamente microtiempo programado menor a 9 ms. No se elimina ese groove ni se exige una cuadrícula robótica. El harness offline aísla el arranque de la aplicación para no crear un segundo motor.
 - Totales a verificar en CI: 103 recorridos más offline, 41 programas de audio y 134 suites Node. El resultado debe corresponder al commit final. La ejecución previa `38914350592` aprobó lógica y los tres grupos de audio, pero falló navegador; no se presenta como un cierre aprobado. Los fallos futuros de cada recorrido se incluyen en anotaciones de GitHub para poder diagnosticarlos.
+
+Último ajuste: los logros rutinarios se conservan sin aviso, comprobado con `ui.unlock` real en cuatro tamaños. El recorrido antiguo de nueve percusiones cierra ahora la tarjeta del fósil antes de comenzar otro gesto, respetando la pausa de lectura; sus aserciones siguen activas. Su ejecución adicional local no llegó a cargar por `pthread_create: EAGAIN`; no se afirma aprobada. Las regresiones Node de las nueve familias, los seis contactos nuevos y los 16 renders sí están aprobados. CI normal conserva ese recorrido completo.

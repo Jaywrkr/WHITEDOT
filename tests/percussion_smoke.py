@@ -30,6 +30,8 @@ try:
   assert page.evaluate('new Set(__materials.map(n=>n.kind)).size')==9
   assert page.evaluate('__foreground.length>0&&__testRuntime.accompanimentStage().inputs.length===3')
   assert page.evaluate('!!__testRuntime.S.ach.percusion4')
+  # Finish reading the fossil before starting another physical interaction.
+  page.wait_for_function('!document.getElementById("rareNotice").hidden');page.locator('#rareNoticeContinue').click();page.wait_for_function('document.getElementById("rareNotice").hidden')
   page.evaluate('__testRuntime.labGo("rhythm:stone")');page.wait_for_timeout(350)
   stone_from=page.evaluate('__hits.length')
   page.evaluate('()=>{const r=__testRuntime,o=r.nearbyPercussion()[0];r.S.wx=o.x;r.S.wy=o.y;}')
@@ -38,6 +40,6 @@ try:
   page.locator('#bMenu').click();count=page.evaluate('__hits.length');page.wait_for_timeout(2300);assert page.evaluate('__hits.length')==count,'menu does not create percussion'
   page.locator('#mnClose').click();page.evaluate('__testRuntime.S.sound=false');count=page.evaluate('__hits.length');page.wait_for_timeout(2400);assert page.evaluate('__hits.length')==count
   page.evaluate('__testRuntime.save()');page.reload();page.wait_for_function('__testRuntime?.labMode');assert page.evaluate('Object.keys(__testRuntime.S.rhythmFound).length')==9
-  page.screenshot(path='/tmp/whitedot-percussion-mobile.png');assert not errors,errors
+  Path('/tmp/whitedot-percussion-mobile.png').write_bytes(page.screenshot());assert not errors,errors
   print('PASS nine native percussion gestures, held groove, menu/mute pause, discovery persistence, silent UI and mobile rendering',flush=True);b.close()
 finally:server.shutdown()
