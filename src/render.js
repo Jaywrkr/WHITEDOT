@@ -63,6 +63,7 @@ export function initialize(runtime) {
     if(runtime.windG)runtime.windG.gain.setTargetAtTime(runtime.inWorld()&&(runtime.BI().id==="dunas"||(runtime.MU.dnaT&&runtime.MU.dnaT.air==="polvo"))?runtime.MU.speed*.012:0,runtime.ac.currentTime,.8);
     if(runtime.windF)runtime.windF.frequency.setTargetAtTime(260+runtime.MU.speed*550,runtime.ac.currentTime,.8);
 
+    runtime.profileTick?.(runtime.activeFrameSeconds,modal);
     runtime.surpriseTick?.(dt,modal);
     runtime.navigationTick?.();
     runtime.initiativeTick?.(dt,sp>.01,modal);

@@ -1,3 +1,11 @@
+## Perfil local y cierre visual · entrega 5
+
+Menú → Tu perfil reúne nombre, tiempo activo, distancia, sesiones y descubrimientos. Reutiliza la colección real y las copias de partida; preserva campos/formatos futuros. No añade cuentas ni HUD permanente. Tiempo/distancia empiezan a medirse ahora, excluyen menús/segundo plano/saltos. Controles de 44 px, input táctil de 16 px y textos compactos.
+
+Revisión adicional: la sorpresa de una caja muestra su propia duración junto al poder original; pausa del perfil también en vestidor; cambios de silueta limitados a superficie; cancelación de la animación de entrada no deja botones bloqueados. Se corrigen esperas de pruebas nuevas para comprobar funciones sin invocarlas.
+
+132 suites Node y auditoría aprobadas. El recorrido integrado inicial pasó a 320, 390, 844 y 1280 px; tarjetas de poder aprobadas en tres tamaños. Chromium normal no pudo crear página por recursos; el perfil local de un solo proceso/contexto funciona. No se modifica CI ni se declara escucha física o deploy.
+
 ## Sorpresas temporales · entrega 4
 
 Dieciséis efectos secundarios de caja, incluyendo contratiempos suaves, cambio temporal de tamaño/forma, cuatro estelas, lunas, brotes, ecos, borrado de brotes y salto con regreso. Un control contextual permite deshacer. Guardado versionado, pausa en menús/inspección y preservación de datos futuros. Las seis cajas originales, sus posiciones y probabilidades no cambian. Sin nuevas voces ni sonidos de UI.

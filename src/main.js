@@ -1,3 +1,4 @@
+import {initialize as playerProfile} from './player-profile.js';
 import {initialize as boxSurprises} from './box-surprises.js';
 import {initialize as vjWorld} from './vj-world.js';
 import {initialize as identityPlay} from './identity-play.js';
@@ -162,7 +163,7 @@ clues(runtime);
 encounters(runtime);
 encounterDepth(runtime);worldMemory(runtime);
 ecology(runtime);
-saveTools(runtime);
+saveTools(runtime);playerProfile(runtime);
 accessibility(runtime);
 rareCards(runtime);atlasPlay(runtime);collectionGarden(runtime);performancePlay(runtime);identityPlay(runtime);
 voiceGuide(runtime);

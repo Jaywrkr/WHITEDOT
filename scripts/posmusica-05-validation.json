@@ -1,0 +1,52 @@
+{
+  "branch": "feat/posmusica-05-perfil",
+  "audit": {
+    "errors": 0,
+    "warnings": 0,
+    "sourceModules": 198,
+    "htmlIDs": 399,
+    "shellAssets": 218
+  },
+  "node": {
+    "suites": 132,
+    "result": "passed"
+  },
+  "browser": {
+    "test": "tests/visual_closure_smoke.py",
+    "initialResult": "passed",
+    "viewports": [
+      [
+        320,
+        640
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        844,
+        390
+      ],
+      [
+        1280,
+        800
+      ]
+    ],
+    "finalPowerCardReview": {
+      "result": "passed",
+      "program": "tests/power_cards_smoke.py",
+      "widths": [
+        320,
+        844,
+        1280
+      ]
+    },
+    "mode": "local single-process Chromium, single context, serial test HTTP",
+    "normalChromium": "Target crashed before application load; environment process/thread exhaustion"
+  },
+  "audio": "unchanged engine; no new audio validation claimed",
+  "physicalPhone": "pending",
+  "CI": "pending",
+  "deploy": "not performed",
+  "push": "pending branch-stack consistency review"
+}

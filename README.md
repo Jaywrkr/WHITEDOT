@@ -20,6 +20,10 @@ Ocho escenas VJ originales aparecen en áreas concretas del Mundo, dejando espac
 
 Además de sus seis poderes originales, algunas cajas incorporan una de dieciséis sorpresas temporales. Tamaño, forma, estelas, brotes y saltos pueden cambiar; Deshacer o Volver permiten revertir. Borrador solo borra brotes temporales. No se pierde colección ni se modifica la música. Los temporizadores se pausan durante menús y tarjetas.
 
+## Tu perfil
+
+Menú → Tu perfil muestra tiempo activo, distancia, sesiones, lugares y colección. Puedes guardar un nombre local y abrir tus hallazgos o lugares. Los contadores nuevos empiezan con esta versión; su fecha queda visible. Las copias de partida incluyen el perfil. No requiere cuenta.
+
 ## Interacción final
 
 [Dos entregas dependientes](PLAN_INTERACCION_FINAL.md). La primera añade botones animados y silenciosos, una cola de avisos y tarjetas especiales grandes que puedes examinar antes de continuar. La flecha de Entrar al Mundo llega al cuadrado; movimiento reducido entra al instante. Mientras inspeccionas un hallazgo se pausan el cubo y los poderes, conservando la música. El libro mantiene lugares, frecuencias y exportaciones.

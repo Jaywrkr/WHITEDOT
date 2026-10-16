@@ -1,3 +1,13 @@
+# Handoff · Perfil y cierre visual
+
+`feat/posmusica-05-perfil` depende de las cajas y los visuales. `player-profile-model.js` normaliza contadores versionados y excluye saltos/cambios de contexto. `player-profile.js` presenta el panel; `profileTick` recibe tiempo activo del frame y respeta todos los modales, incluidos los ligeros. Datos nuevos en `S.playerProfile`, copia/exportación existentes, ningún progreso anterior eliminado ni tiempo retrospectivo supuesto. Distancia interna /10 para metros del juego. No es geolocalización ni una cuenta.
+
+132 suites Node y auditoría aprobadas. `visual_closure_smoke.py` recorre el conjunto real en cuatro tamaños con un único contexto; permite validar en este entorno saturado usando un perfil local de Chromium de un solo proceso. La configuración de CI no cambia. El recorrido integrado inicial pasó; la tarjeta de poder y sus duraciones pasaron a 320, 844 y 1280 px. Ver evidencia por rama. No confundir estas comprobaciones enfocadas con navegador/audio completos ni pruebas físicas.
+
+Mininstrumentos sin terminar conservados en el stash nombrado en PLAN_INTERACCION_FINAL; no están publicados. Jay pidió no tocar música: esta entrega no cambia composición, voces, instrumentos ni DSP. Los efectos nuevos de estelas son visuales/silenciosos.
+
+## Antecedentes
+
 # Handoff · Cajas reversibles
 
 `feat/posmusica-04-cajas` desde la entrega visual. `box-surprises-model.js` define 16 efectos secundarios sin cambiar POWER_IDS ni la selección original de caja. `box-surprises.js` controla un efecto a la vez, reloj activo guardado, rastros acotados y reversión. Estado `S.boxSurprises`, campos desconocidos y formatos futuros conservados. El salto usa `travelPracticePoint`, con limpieza de transporte existente y posibilidad de regreso; no interviene en composición ni síntesis. Borrador solo elimina brotes efímeros propios. `surpriseHud` es contextual; no añade un botón permanente al dock.

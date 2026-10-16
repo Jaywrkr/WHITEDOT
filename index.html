@@ -82,6 +82,16 @@
   <button class="ico" id="bStyles" aria-label="Elegir estilo musical" hidden>Estilos</button>
   <button class="ico round" id="bMenu" aria-label="Menú"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
 </div>
+<div class="modal" id="mProfile" role="dialog" aria-modal="true" aria-labelledby="profileTitle" hidden><div class="sheet profile-sheet">
+ <h2 id="profileTitle">Tu perfil</h2>
+ <div class="profile-identity"><svg id="profileAvatar" viewBox="0 0 64 64" aria-hidden="true"><path d="M4 32h14M46 32h14M32 4v14M32 46v14"/><rect x="24" y="24" width="16" height="16"/></svg><div><label for="profileName">Tu nombre</label><div class="profile-name-row"><input id="profileName" type="text" maxlength="24" placeholder="Explorador" autocomplete="nickname"><button id="profileNameSave">Guardar nombre</button></div></div></div>
+ <p id="profileSaveStatus" role="status"></p><p id="profileSince"></p>
+ <dl class="profile-metrics"><div><dt>Tiempo activo</dt><dd id="profileTime"></dd></div><div><dt>Distancia caminada</dt><dd id="profileDistance"></dd></div><div><dt>Sesiones medidas</dt><dd id="profileSessions"></dd></div><div><dt>Días con luz</dt><dd id="profileDays"></dd></div></dl>
+ <h3>Tu universo descubierto</h3><dl class="profile-metrics compact"><div><dt>Lugares</dt><dd id="profilePlaces"></dd></div><div><dt>Estilos escuchados</dt><dd id="profileGenres"></dd></div><div><dt>Instrumentos escuchados</dt><dd id="profileInstruments"></dd></div><div><dt>Familias encontradas</dt><dd id="profileElements"></dd></div><div><dt>Tarjetas</dt><dd id="profileCards"></dd></div><div><dt>Cajas abiertas</dt><dd id="profileBoxes"></dd></div><div><dt>Logros</dt><dd id="profileAchievements"></dd></div></dl>
+ <details><summary>Tiempo por espacio</summary><dl class="profile-breakdown"><dt>Camino</dt><dd id="profileCaminoTime"></dd><dt>Mundo</dt><dd id="profileWorldTime"></dd><dt>Casa</dt><dd id="profileHouseTime"></dd></dl><p>No cuenta menús, segundo plano ni saltos como distancia.</p><p>La distancia usa la escala interna del juego.</p></details>
+ <div class="row"><button id="profileCollection">Ver colección</button><button id="profilePlacesLink">Volver a tus lugares</button></div><p>Perfil local. Viaja con tu copia guardada.</p><button id="profileClose">Volver</button>
+</div></div>
+
 <div class="modal lite" id="mCube" role="dialog" aria-modal="true" aria-labelledby="cubeTitle" hidden><div class="sheet cube-sheet">
  <h2 id="cubeTitle">Tu cubo</h2><div id="cubePreview" class="cube-preview" role="img" aria-label="Vista previa de tu cubo"><canvas id="cubePreviewCanvas" aria-hidden="true"></canvas><i></i></div>
  <p id="cubeCount"></p><p id="cubeHint" role="status"></p>
@@ -135,6 +145,7 @@
       <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
       <button id="bJumpBack" hidden><span>Volver al salto</span></button>
       <button id="bSettings"><span>Ajustes</span></button>
+      <button id="bProfile"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="4" width="6" height="6"/><path d="M5 21v-4a7 7 0 0114 0v4"/></svg><span>Tu perfil</span></button>
       <button id="bGuide"><span>Tu recorrido</span></button>
       <button id="bConnection"><span>Cuenta y duetos</span></button>
       <button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Guardar copia</span></button>
