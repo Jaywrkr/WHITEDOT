@@ -10,7 +10,9 @@ Autorizado por Jay después de identificar `acd766f` en su captura. Seis ramas i
 | 4 · Ecosistemas | `feat/reencuentro-04-ecosistemas` | alpha.20 | Implementada; muestreo y pruebas enfocadas |
 | 5 · Exploración legible | `feat/reencuentro-05-exploracion` | alpha.21 | Implementada; pruebas enfocadas, CI pendiente |
 | 6 · Auditoría | `feat/reencuentro-06-auditoria` | alpha.22 | Implementada; cierre de publicación condicionado a CI y escucha |
-| 7 · Habitantes y profundidad | `feat/reencuentro-07-habitantes` | alpha.23 | Implementada; 156 suites completas, navegador/DSP bloqueados por recursos |
+| 7 · Habitantes y profundidad | `feat/reencuentro-07-habitantes` | alpha.23 | Subida en 0ac0ed6; 156 suites, CI pendiente |
+
+| 8 · Cuaderno vivo | `feat/reencuentro-08-pulsos` | alpha.24 | Implementada; auditoría y cuatro suites enfocadas, CI pendiente |
 
 ## 7 · Más habitantes, fondos lejanos
 
@@ -61,3 +63,11 @@ Fase 2: navegador local sin cerrar por agotamiento de hilos; la primera ejecuci�
 ## Cierre del conjunto
 
 Ver [CIERRE_REENCUENTRO.md](CIERRE_REENCUENTRO.md) y [INVENTARIO_UNIVERSO.md](INVENTARIO_UNIVERSO.md). Implementación de seis fases; publicación pendiente de CI, navegador, DSP y escucha física. No presentar el inventario declarado como cobertura sensorial completa. La fase 6 conserva dos generaciones y las decisiones de la referencia, añade localizadores reales de los cinco aspectos y mantiene el informe de huecos.
+
+## 8 · Cuaderno negro, constelaciones vivas
+
+Ampliación explícita de Jay: cincuenta variantes de pulso y entorno más participativo durante Paseo. Rama dependiente de habitantes, 0ac0ed6. Diez familias: pulso, doble, triple, arcos, ondas, láseres, burbujas, pétalos, cristales y espirales. Cincuenta geometrías y cuarenta huellas espaciales diferentes en la muestra de pruebas. Las formas direccionales realmente cambian qué fuentes alcanza la onda; dobles y triples conservan una respuesta por punto para no multiplicar sonidos. El pulso original mantiene su huella anterior.
+
+Los hallazgos conocidos del Libro desbloquean ondas de forma retroactiva. La tabla de fuentes tiene IDs fijos: insertar catálogo en el futuro no revoca ondas. Los encuentros adicionales contribuyen a esas mismas cincuenta formas; no se promete una pieza única por cada individuo. Selección en Tu cubo → Movimiento, diez familias con cinco opciones cada una. Vista previa silenciosa, Aplicar/Cancelar, pista del bloqueo y movimiento reducido. La selección es un campo aditivo de cube, conservado por normalizeCube; no se cambia la versión ni se borran campos futuros.
+
+Paseo invita ocasionalmente a vecinos, acerca algunas conductas y usa miniinstrumentos cercanos como alternativa. Máximo dos respuestas de vecinos por compás y una invitación cada 10–18 segundos; voz regional, reloj común, ninguna nueva síntesis ni cambio de radio/mezcla. Las invitaciones automáticas no fabrican hallazgos. Menús, silencio, quietud y movimiento reducido conservan sus reglas.

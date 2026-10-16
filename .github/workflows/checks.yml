@@ -2,7 +2,7 @@ name: Universe foundation checks
 on:
   pull_request:
   push:
-    branches: [main, 'feat/posmusica-08-cierre', 'mejora/10-cierre', 'feat/ecosistemas-reactivos', 'feat/reencuentro-06-auditoria', 'feat/reencuentro-07-habitantes']
+    branches: [main, 'feat/posmusica-08-cierre', 'mejora/10-cierre', 'feat/ecosistemas-reactivos', 'feat/reencuentro-06-auditoria', 'feat/reencuentro-07-habitantes', 'feat/reencuentro-08-pulsos']
     # Documentation-only updates do not change the validated runtime.
     # Pull requests still run every suite without path filters.
     paths-ignore:

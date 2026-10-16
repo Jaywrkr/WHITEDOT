@@ -1,0 +1,53 @@
+{
+  "version": "2.3.0-alpha.24",
+  "baseline": {
+    "branch": "feat/reencuentro-07-habitantes",
+    "commit": "0ac0ed6",
+    "fullNodePassed": 156
+  },
+  "focusedObservedPassed": [
+    "pulse-forms.mjs: 50 geometries, 40 spatial footprints, earned and legacy gates",
+    "paseo-invitations.mjs: passive ambient invitations, quiet guard, manual discoveries",
+    "pixel-life-runtime.mjs: tap, contact, pause, ownership, bounded cache"
+  ],
+  "affectedSelection": 9,
+  "affectedComplete": false,
+  "releaseAudit": {
+    "status": "passed",
+    "command": "node --single-threaded --v8-pool-size=1 scripts/release-audit.mjs",
+    "errors": [],
+    "warnings": [],
+    "sourceModules": 216,
+    "shellAssets": 236
+  },
+  "browser": {
+    "status": "pending",
+    "flow": "tests/pulse_forms_smoke.py",
+    "priorBlocker": "Chromium pthread_create EAGAIN"
+  },
+  "audioDSP": {
+    "status": "pending",
+    "baseMusicUnchanged": true,
+    "priorFlow": "tests/inhabitants_mix.py"
+  },
+  "physicalPhone": false,
+  "readyToMerge": false,
+  "notes": [
+    "Complete required checks in an environment with available processes; do not certify a release from this report.",
+    "No musical rewrite is authorized by the Perplexity/Gemini proposal."
+  ],
+  "freshFocusedPassed": [
+    "content-manifest.mjs",
+    "paseo-invitations.mjs",
+    "pixel-life-runtime.mjs",
+    "pulse-forms.mjs"
+  ],
+  "reusedFromPhase7": [
+    "reference-production.mjs",
+    "release.mjs",
+    "territory-engine.mjs",
+    "test-impact.mjs",
+    "version-bump.mjs"
+  ],
+  "reuseReason": "Same relevant implementations passed in the phase-7 complete 156-suite run; conservative selection from version/resource changes. Fresh reference retry blocked before JavaScript at Node platform startup."
+}

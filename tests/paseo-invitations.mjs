@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';import {initialize} from '../src/pixel-life.js';import {inhabitantPractice} from '../src/pixel-life-model.js';import {initialize as data} from '../src/data.js';import {initialize as progress} from '../src/progress.js';import {initialize as world} from '../src/world.js';
+globalThis.localStorage={getItem:()=>null,setItem(){}};globalThis.document={hidden:false,querySelector:()=>null};globalThis.addEventListener=()=>{};globalThis.matchMedia=()=>({matches:false});
+const base={};data(base);progress(base);world(base);const r=Object.create(base),target=inhabitantPractice(r);r.S.mode='world';r.S.sound=true;r.S.wx=target.x;r.S.wy=target.y-60;
+const emitted=[],queue=[];let found=0,quiet=false;Object.assign(r,{autopilotState:{mode:'wander',paused:false},body:{jump:false},W:390,H:844,cv:{addEventListener(){}},ac:{state:'running'},currentPocket:()=>quiet?{kind:'quiet'}:null,MU:{step:0},beatSoon:fn=>queue.push(fn),playVoice:(...args)=>(emitted.push(args),true),recordElement:()=>found++,getVoice:()=>({role:'bajo',instrument:'sub'})});
+const regionOf=r.regionOfPos;Object.defineProperty(r,'regionOfPos',{value:(x,y)=>({...regionOf(x,y),worldFamily:{...regionOf(x,y).worldFamily,quiet:false}})});initialize(r);
+for(let i=0;i<800;i++){r.MU.step=Math.floor(i/40)*16;r.inhabitantTick(.05);while(queue.length)queue.shift()(i*.05+.125);}
+assert(emitted.length>0&&emitted.length<14,'passive travel invites occasional responses, not a continuous chorus');assert(emitted.every(a=>a[7]==='ambient'&&a[5]<=.4));assert.equal(found,0,'passive invitations do not fabricate player discoveries');
+const count=emitted.length;quiet=true;for(let i=0;i<500;i++)r.inhabitantTick(.05);assert.equal(queue.length,0);assert.equal(emitted.length,count);quiet=false;
+r.autopilotState.paused=true;const p=r.inhabitantsNear()[0];r.inhabitantTouch(p);assert(found===1,'actual contact still records a discovery');
+console.log('PASS passive Paseo invitations, ambient clock routing, bounded activity, quiet-pocket protection and manual discoveries kept separate');

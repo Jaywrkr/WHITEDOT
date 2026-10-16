@@ -1,3 +1,9 @@
+## 2.3.0-alpha.24 · Cuaderno vivo
+
+Cincuenta variantes de pulso ganadas mediante hallazgos, diez familias, distinta geometría/alcance y selección dentro de Tu cubo. Los descubrimientos antiguos desbloquean ondas sin perder progreso. Paseo invita ocasionalmente a vecinos y miniinstrumentos; respuestas regionales a tempo, sin reescribir la música de fondo. La propuesta Perplexity/Gemini permanece como evaluación para Jay.
+
+Rama `feat/reencuentro-08-pulsos`, desde `0ac0ed6`. Implementación validada con auditoría y cuatro suites enfocadas; comprobaciones completas de CI pendientes por límites de hilos locales. No declarar publicación cerrada. Evidencia y pendientes: scripts/reencuentro-08-validation.json.
+
 ## 2.3.0-alpha.23 · Reencuentro 7
 
 Habitantes pixelados más frecuentes con cientos de siluetas, doce conductas y cuatro roles musicales a tempo. Viajeros autónomos, galaxias amplias y difusas, VJ lejano, escáner y dos prácticas reales; no se reescribe la base musical. Evaluación Perplexity/Gemini documentada como propuesta.

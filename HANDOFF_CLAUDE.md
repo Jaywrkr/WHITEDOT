@@ -1,3 +1,11 @@
+# Reencuentro · fase 8 · cierre de verificación pendiente
+
+Rama `feat/reencuentro-08-pulsos`, desde `0ac0ed6`, versión alpha.24. Petición explícita posterior: cuaderno negro, cincuenta ondas ganadas y mayor iniciativa durante Paseo. No iniciar las siete fases de PROPUESTA_PULIDO_EXPERIENCIA.md: esa evaluación no está autorizada para implementación.
+
+`pulse-forms.js`: diez familias/cincuenta geometrías, puertas derivadas de hallazgos existentes, fuentes con IDs fijos, migración retroactiva sin perder datos. El campo aditivo `cube.pulse` se conserva en normalizeCube. Editor dentro de Movimiento: cinco opciones por familia, pista, foco, vista previa silenciosa, Aplicar/Cancelar. `interactions.js` usa la forma para alcance y dibujo; deduplica puntos de formas múltiples y conserva el comportamiento del pulso original. `pixel-life.js` añade invitaciones ambientales de Paseo, presupuesto y protección de zonas tranquilas; no reescribe radio/síntesis/mezcla.
+
+Dos pruebas nuevas de modelo/invitaciones y la integración de habitantes pasaron en ejecuciones enfocadas. Auditoría de publicación y cuatro suites enfocadas aprobadas tras liberar procesos propios. Cinco selecciones conservadoras reutilizan la evidencia de fase 7 sobre implementaciones intactas; el reintento de referencia falló antes de ejecutar JavaScript por falta de hilos. Baseline fase 7: 156 suites completas aprobadas. No presentar estas revisiones como idénticas ni afirmar verde final. Escucha física, Chromium y render DSP siguen pendientes. Ver scripts/reencuentro-08-validation.json. Completar comprobaciones antes de integrar. Jay mantiene PR/merge.
+
 # Reencuentro · fase 7
 
 Leer PLAN_REENCUENTRO.md. Rama `feat/reencuentro-07-habitantes`, versión 2.3.0-alpha.23. Habitantes pixelados más frecuentes con cientos de siluetas, doce conductas y cuatro roles musicales a tempo. Viajeros autónomos, galaxias amplias y difusas, VJ lejano, escáner y dos prácticas reales; no se reescribe la base musical. Evaluación Perplexity/Gemini documentada como propuesta. Evidencia en scripts/reencuentro-07-validation.json. Jay conserva PR/merge; respetar los límites de audio documentados.
