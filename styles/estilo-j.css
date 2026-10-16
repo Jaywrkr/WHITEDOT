@@ -349,3 +349,9 @@ body:has(#voice.on:not([hidden])) .first-journey-hint{visibility:hidden}
 .wow-depth>svg{transform:rotateX(var(--wow-tilt-x,0deg)) rotateY(var(--wow-tilt-y,0deg))}
 @media(prefers-reduced-motion:reduce){.wow-depth>svg{transform:none!important;transition:none!important}}
 body.ui-reduced-motion .wow-depth>svg{transform:none!important}
+
+#rareNoticeArt{position:relative}
+#rareNotice[data-earned="true"]:not([hidden]) #rareNoticeArt::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 39%,#ffffff16 49%,#ffffff30 50%,#ffffff16 51%,transparent 61%);transform:translateX(-140%);animation:wow-acquire .8s .2s ease-out 1 forwards}
+@keyframes wow-acquire{to{transform:translateX(140%)}}
+@media(prefers-reduced-motion:reduce){#rareNoticeArt::after{display:none}}
+body.ui-reduced-motion #rareNoticeArt::after{display:none}
