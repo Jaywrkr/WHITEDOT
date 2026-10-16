@@ -1,3 +1,9 @@
+## 2.3.0-alpha.5 · Identidad musical
+
+La radio regional es dueña del motivo, forma, brillo y energía. La capa viva deja de aplicar una segunda sustracción periódica; conserva metadatos y la quietud explícita. Se comprueba conservación durante 256 compases, además de las referencias históricas existentes.
+
+Auditoría sin errores/avisos; 4 suites Node afectadas y recorrido representativo aprobados; renders afectados aprobados. Evidencia: scripts/mejora-01-validation.json. No afirma escucha física, CI ni deploy.
+
 ## 2.3.0-alpha.4 · Recuperar la radio
 
 Por petición de Jay, se comparó la música actual con `15bbe77`, último main anterior al corte de hace unas 30 horas. La producción vuelve a conservar los motivos activos, bajos, instrumentos principales y secciones de esa radio, acompañados por los ensambles actuales. La percusión recupera variaciones nativas cada cuatro compases; el cuerpo de bombo, cajas y hats tiene más presencia. La articulación conserva más del ataque y cola anteriores; el conductor admite el shuffle nativo.

@@ -1,3 +1,7 @@
+<!-- mejora-integral-actual -->
+Ciclo vigente: [PLAN_MEJORA_INTEGRAL.md](PLAN_MEJORA_INTEGRAL.md), diez fases de mejora autorizadas, desde recuperación faa0fe9. Fases 1–1 implementadas y probadas en ramas encadenadas. Última: `mejora/01-identidad-musical`, versión 2.3.0-alpha.5. Jay PR/merge. Las tablas anteriores conservan su evidencia histórica.
+<!-- /mejora-integral-actual -->
+
 <!-- juego-musical-actual -->
 Ciclo vigente: [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md). Doce fases autorizadas, versiones 2.3 alpha, ramas encadenadas. Jay mantiene PR/merge. Las tablas siguientes son antecedentes.
 
