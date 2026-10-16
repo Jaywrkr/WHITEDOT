@@ -6,7 +6,7 @@ Autorizado por Jay después de identificar `acd766f` en su captura. Seis ramas d
 |---|---|---|---|
 | 1 · Referencia musical | `feat/reencuentro-01-musica` | alpha.17 | Implementada; pruebas enfocadas, DSP pendiente |
 | 2 · Contenido visible | `feat/reencuentro-02-catalogo` | alpha.18 | Implementada; validación enfocada |
-| 3 · Identidad regional | `feat/reencuentro-03-identidad` | alpha.19 | Pendiente |
+| 3 · Identidad regional | `feat/reencuentro-03-identidad` | alpha.19 | Implementada; pruebas de renderer, navegador pendiente |
 | 4 · Ecosistemas | `feat/reencuentro-04-ecosistemas` | alpha.20 | Pendiente |
 | 5 · Exploración legible | `feat/reencuentro-05-exploracion` | alpha.21 | Pendiente |
 | 6 · Auditoría | `feat/reencuentro-06-auditoria` | alpha.22 | Pendiente |

@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.3.0-alpha.18';
+const CACHE='whitedot-2.3.0-alpha.19';
 const SHELL=[
  "./src/native-visual.js", "./src/content-manifest.js", "./src/content-gallery.js",
  "./src/radio-reference.js",
