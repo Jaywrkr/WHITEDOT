@@ -21,3 +21,5 @@ r.wowTick(.02,true);assert.equal(r.wowState.marks,0);
 r.seedOf=()=>0;r.MU.near=[source,neighbor,{x:50,y:10}];r.wowTick(.02);
 assert(r.wowState.clusters<=2&&r.wowState.clusters>0);
 r.currentPocket=()=>({kind:'quiet'});r.wowTick(.02);assert.equal(r.wowState.clusters,0);
+
+r.currentPocket=()=>null;s.layer='cielo';r.wowTick(.02);assert.equal(r.wowState.clusters,0,'surface sources do not leak into other layers');

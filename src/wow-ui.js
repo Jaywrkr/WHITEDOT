@@ -23,6 +23,6 @@ export function initialize(runtime){
  document.addEventListener('pointerout',e=>{if(active&&!active.contains(e.relatedTarget))clear();},{passive:true});
  document.addEventListener('scroll',clear,{capture:true,passive:true});
  document.addEventListener('visibilitychange',()=>{if(document.hidden){clear();unselect();}});
- globalThis.addEventListener?.('blur',clear);
+ globalThis.addEventListener?.('blur',clear);globalThis.addEventListener?.('resize',clear);
  Object.defineProperties(runtime,{resetCardDepth:{get:()=>clear},cardFocusTick:{get:()=>focusTick}});
 }

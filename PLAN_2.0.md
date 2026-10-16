@@ -2,6 +2,7 @@
 
 | Entrega | Estado |
 |---|---|
+| WOW 20: Constelación de regreso | Implementada; scripts/wow-20-validation.json |
 | WOW 19: Firma de favoritos | Implementada; scripts/wow-19-validation.json |
 | WOW 18: Álbum con foco | Implementada; scripts/wow-18-validation.json |
 | WOW 17: Barrido de adquisición | Implementada; scripts/wow-17-validation.json |

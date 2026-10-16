@@ -1194,3 +1194,5 @@ PLAN_WOW.md registra veinte ramas autorizadas desde 5ab5952. wow-model.js y wow-
 WOW 16: wow-ui.js delega profundidad de ilustraciones. Nunca captura gestos ni modifica scroll, sonidos, contenido o recompensas. wow-model.cardTilt limita el giro.
 
 WOW 19: wow-memory.js dibuja firmas de favoritos desde sus datos guardados. No consulta regiones de semillas ajenas ni altera direcciones. Las firmas no cambian al renombrar.
+
+WOW 20: wow-memory initialize registra una marca efímera en sessionStorage solo al viajar desde un favorito. Se consume una vez al cargar addr, verifica semilla/versiones/capa/coordenadas y dibuja su firma 2,2 s. No cambia guardados ni direcciones y tolera almacenamiento bloqueado.

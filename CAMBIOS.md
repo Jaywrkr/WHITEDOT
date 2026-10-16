@@ -1,3 +1,7 @@
+## 2.3.0-alpha.44 · Cuaderno vivo 20/20
+
+Al volver desde un favorito, su constelación aparece alrededor del cubo durante 2,2 segundos. Marca efímera, consumida una vez y validada por mundo, capa, coordenadas y antigüedad. No salta a lugares aproximados ni cambia guardados. El cierre añade un recorrido real de tarjetas/favoritos para tres tamaños y protege capas y reinicios visuales.
+
 ## 2.3.0-alpha.43 · Cuaderno vivo 19/20
 
 Cada favorito muestra una constelación pequeña derivada de su dirección y carácter guardados. Funciona también con semillas ajenas, no añade consultas al generador y conserva su dibujo al renombrar el lugar.
