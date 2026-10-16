@@ -1,0 +1,40 @@
+{
+  "phase": 4,
+  "branch": "feat/musica-04-arreglos",
+  "base": "92ebd5c",
+  "audit": {
+    "command": "npm run audit:release",
+    "result": "passed",
+    "errors": 0,
+    "warnings": 0
+  },
+  "node": {
+    "command": "npm test",
+    "result": "passed",
+    "suites": 123
+  },
+  "browser": {
+    "result": "passed",
+    "programs": [
+      "lab_score_smoke.py",
+      "initiative_smoke.py",
+      "lab_memory_smoke.py",
+      "offline_smoke.py"
+    ]
+  },
+  "audio": {
+    "result": "passed",
+    "programs": [
+      "ensemble_mix.py",
+      "foundation_mix.py",
+      "lab_evolution_mix.py"
+    ],
+    "renders": 24,
+    "maxPeak": 0.8854315876960754
+  },
+  "external": {
+    "physicalListening": "pending",
+    "CI": "pending",
+    "deployment": "pending"
+  }
+}

@@ -1,3 +1,4 @@
+import {arrangementPhrase,phraseNotes,phraseDrums} from './arrangement-phrases.js';
 import {productionIdentity} from './production-identities.js';
 import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
 import {REFERENCE_GENRES,REFERENCE_STEPS,referenceRhythm} from './references.js';
@@ -68,13 +69,13 @@ export function labArrangement(frame,score,environment={}){
  if(!score)return frame;
  const chapter=Math.floor(Math.max(0,frame.harmonyBar||0)/16),quiet=(environment.initiative||0)>.35,
   scene=chapter%6,orchestra=(score.variant+chapter+(quiet?1:0))%score.leads.length,
-  evolved={...score,scene,quiet,listenQuiet:environment.quiet===true},
+  phrasing=score.production?arrangementPhrase(frame.harmonyBar||0,score.variant):null,evolved={...score,phrasing,scene,quiet,listenQuiet:environment.quiet===true},
   foundation=frame.section===0&&(score.ensemble>1||score.electronic?.count===1)&&!environment.quiet,
   rest=frame.melodyRest&&!foundation||scene===5,cycle=Math.floor(Math.max(0,frame.phrase)/2)%4,hook=Array(16).fill(-1),budget=Math.min(4,frame.grammar.hookLimit);
  if(!rest)score.hook.slice(0,budget).forEach((s,i)=>{if(cycle!==3||i===0)hook[s]=(frame.hybrid?.tones||[0,2,4,3])[(i+(cycle===2?1:0)+score.variant)%(frame.hybrid?.tones?.length||4)];});
  const bass=score.bass.map((n,s)=>frame.section===0&&s!==0&&s%8!==0?-1:n);
  const floor=environment.quiet||scene===5?.16:(score.electronic?.count||0)>=8?.48:(score.electronic?.count||0)>=6?.38:.22;
- return {...frame,energy:Math.max(frame.energy??.25,floor),labScore:evolved,labEvolution:{chapter,scene,quiet},hybrid:frame.hybrid||null,melodyRest:rest,hook,bass,bassI:score.bassI,hookI:score.orchestra?territoryInstrument(score.orchestra,Math.floor(Math.max(0,frame.harmonyBar||0)/4),chapter+(quiet?1:0)):score.leads[orchestra],
+ return {...frame,phrasing,energy:Math.min(.86,Math.max(frame.energy??.25,floor)*(phrasing?.energy||1)),labScore:evolved,labEvolution:{chapter,scene,quiet},hybrid:frame.hybrid||null,melodyRest:rest,hook,bass,bassI:score.bassI,hookI:score.orchestra?territoryInstrument(score.orchestra,Math.floor(Math.max(0,frame.harmonyBar||0)/4),chapter+(quiet?1:0)):score.leads[orchestra],
   identity:{...frame.identity,id:`lab:${score.id}`,name:score.name,hooks:score.leads,bassI:score.bassI,swing:score.swing,air:Math.min(.5,frame.identity?.air??.5)},
   grammar:{...frame.grammar,progression:frame.hybrid?.progression||score.progression,harmonyBars:frame.hybrid?.harmonyBars||8,brightness:Math.min(frame.grammar.brightness,score.ceiling),hookLevel:frame.grammar.hookLevel*(scene===1?.55:.85),accents:[]},
   expression:{...frame.expression,harmony:false,toneScale:Math.min(1,frame.expression.toneScale),attackScale:frame.expression.attackScale*(score.id==='breath'?1.4:1)},
@@ -122,7 +123,7 @@ export function labNoteEvents(frame,step,bar){
   if(score.electronic.layers.includes('air')&&step===8&&position===0)
    events.push({role:'lead',part:'air',degree:4,instrument:group.air,offset:0,level:.52,technique:'normal'});
  }
- return events;
+ return phraseNotes(events,frame.phrasing,step);
 }
 export function labDrumEvents(score,step,bar,energy){
  if(!score||!Number.isInteger(step)||step<0||step>15||!Number.isFinite(energy)||energy<=.12)return [];
@@ -149,7 +150,7 @@ export function labDrumEvents(score,step,bar,energy){
  if(cycle===6&&energy>.42&&[14,15].includes(step)&&!['breath','silk'].includes(score.id)){
   push('skinbass',.025,43+(step-14)*3,.5,'muted');
  }
- return out.slice(0,3);
+ return phraseDrums(out.slice(0,3),score.phrasing,step);
 }
 
 // Keep each species' role; territory and individual choose the playing material.
