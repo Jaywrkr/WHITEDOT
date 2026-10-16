@@ -12,7 +12,7 @@ Autorizado por Jay con «hazlo». Sustituye la ampliación del ciclo anterior: m
 | 6 · Viajes y favoritos | `mejora/06-viajes` | 2.3.0-alpha.10 | Implementada y probada | Guardar, encontrar y regresar con menos fricción. |
 | 7 · Interfaz y cubo | `mejora/07-interfaz` | 2.3.0-alpha.11 | Implementada y probada | Móvil/PC, paneles y personalización congruentes. |
 | 8 · Colección | `mejora/08-coleccion` | 2.3.0-alpha.12 | Implementada y probada | Tarjetas, rareza, bitácora y progreso claros. |
-| 9 · Recorrido y Casa | `mejora/09-recorrido` | 2.3.0-alpha.13 | Pendiente | Enseñar jugando y conectar lo descubierto con Casa. |
+| 9 · Recorrido y Casa | `mejora/09-recorrido` | 2.3.0-alpha.13 | Implementada y probada | Enseñar jugando y conectar lo descubierto con Casa. |
 | 10 · Cierre | `mejora/10-cierre` | 2.3.0-alpha.14 | Pendiente | Integración, rendimiento, suites y límites documentados. |
 
 Verificación proporcional: auditoría, suites afectadas, un recorrido representativo y renders afectados cuando cambia audio. Reutilizar verde de código intacto. Completas una vez sobre el conjunto final; no desactivar pruebas. Escucha física/CI/deploy se registran aparte. UI silenciosa, Geist Mono, negro y dorado ganado.

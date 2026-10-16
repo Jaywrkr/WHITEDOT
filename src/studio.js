@@ -74,10 +74,10 @@ export function initialize(runtime) {
     document.getElementById("bag").innerHTML=Object.keys(runtime.SAMPLES).filter(k=>!SPECIAL.has(k)||(runtime.S.bag[k]||0)>0||Object.values(runtime.S.studio.slots||{}).includes(k)).map(k=>`<button data-s="${k}" class="${k===runtime.selSample?"on":""} ${(runtime.S.bag[k]||0)?"":"zero"}">${runtime.SAMPLES[k]} ${runtime.S.bag[k]||0}</button>`).join("");
     document.getElementById("swatches").innerHTML='<span>COLOR</span>'+runtime.COLORS.map((c,i)=>`<button data-c="${i}" title="${c[1]}${colorOk(c)?"":" · se gana con un logro"}" aria-label="${c[1]}" style="background:${c[0]}" class="${runtime.S.color===c[0]?"on":""}" ${colorOk(c)?"":"disabled"}></button>`).join("");
   }
-  function enterStudio(){
-    runtime.audio();document.getElementById("reto").hidden=true;if(runtime.S.mode!=="studio")runtime.S.prevMode=runtime.S.mode;runtime.S.mode="studio";runtime.setBiome(runtime.S.studio.biome||0);runtime.MU.dnaT=runtime.S.studio.x!=null?runtime.regionOfPos(runtime.S.studio.x,runtime.S.studio.y):null;runtime.parts=[];
+  function enterStudio(options={}){
+    if(runtime.S.sound)runtime.audio();document.getElementById("reto").hidden=true;if(runtime.S.mode!=="studio")runtime.S.prevMode=runtime.S.mode;runtime.S.mode="studio";runtime.setBiome(runtime.S.studio.biome||0);runtime.MU.dnaT=runtime.S.studio.x!=null?runtime.regionOfPos(runtime.S.studio.x,runtime.S.studio.y):null;runtime.parts=[];
     document.getElementById("dock").hidden=true;document.getElementById("studioPanel").hidden=false;renderBag();
-    if(!Object.keys(runtime.S.studio.slots).length)runtime.say(runtime.VOZ.studioEmpty);
+    if(!options.house&&!Object.keys(runtime.S.studio.slots).length)runtime.say(runtime.VOZ.studioEmpty);
     runtime.save();runtime.hud();
   }
   function exitStudio(){

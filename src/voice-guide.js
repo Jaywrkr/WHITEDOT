@@ -35,7 +35,7 @@ export function initialize(runtime){
   if(origin!=='player'||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running')return;
   if(kind!=='pulso'&&Number.isFinite(source?.x)&&Number.isFinite(source?.y))runtime.firstJourneyEvent?.('voice');
   const help=runtime.S.voiceLearned||={};const v=runtime.getVoice(kind,region,source);if(help[v.role])return;help[v.role]=true;
-  if(runtime.S.voiceMode==='guia')runtime.say(`Este encuentro aporta ${ {bajo:'graves',perc:'percusión',acorde:'armonía',lead:'una frase',agudo:'detalle melódico'}[v.role]||v.role}. Su voz cambia entre ambientes.`, 'El lugar responde',{requested:true});
+  if(runtime.S.voiceMode==='guia')runtime.say(`Este encuentro aporta ${ {bajo:'graves',perc:'percusión',acorde:'armonía',lead:'una frase',agudo:'detalle melódico'}[v.role]||v.role}. Su voz cambia entre ambientes.`, 'El lugar responde',{recordOnly:!!runtime.firstJourneyState?.next});
  }
  function diary(){return '<article class="journal-card"><h3>La Voz · recuerdos</h3>'+((runtime.S.voiceDiary||[]).slice(-12).reverse().map(v=>`<p><b>${escape(v.title)}</b> · ${escape(v.text)}</p>`).join('')||'<p>Los mensajes completos se conservan aquí.</p>')+'</article>';}
  Object.defineProperties(runtime,{voiceGuideTick:{get:()=>tick},voiceGuideHear:{get:()=>heard},voiceDiaryCard:{get:()=>diary}});

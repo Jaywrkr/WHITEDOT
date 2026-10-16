@@ -1,3 +1,9 @@
+# Mejora integral · fase 9
+
+Rama `mejora/09-recorrido`, versión 2.3.0-alpha.13. El toque en Casa escucha sin desplazar objetos; el arrastre los mueve y cambiar de herramienta cancela el gesto anterior. Casa y Taller conservan explicaciones propias y entrar con sonido apagado no crea el motor. La guía expresa explorar, crear y conservar; la Voz guarda contexto sin competir con el tutorial inicial. Se preservan visitas, partidas futuras y el taller radial.
+
+Auditoría sin errores/avisos; 75 suites Node afectadas y recorrido representativo aprobados; audio sin cambios. Leer PLAN_MEJORA_INTEGRAL.md; este ciclo sustituye la ampliación anterior. Evidencia: scripts/mejora-09-validation.json. Jay conserva PR/merge.
+
 # Mejora integral · fase 8
 
 Rama `mejora/08-coleccion`, versión 2.3.0-alpha.12. Las tarjetas excepcionales tienen prioridad en la cola sin desplazar la que estás examinando; todos los hallazgos siguen guardados. El libro explica filtros vacíos, muestra contexto humano y mejora tipografía y controles táctiles. Se mantienen rarezas y probabilidades registradas; tres tamaños verifican presentación completa, aviso exclusivo, silencio y persistencia.
