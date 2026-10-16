@@ -1,3 +1,12 @@
+# Dirección musical · fase 2: protagonistas reconocibles
+
+- Doce identidades de producción originales para minimal, máquina, cálida, orgánica, afro, disco, quebrada, grave, melódica, dub, ambient y blues.
+- Instrumentos protagonistas por identidad y variación determinista. Comping y respuesta complementarios entran en el ensamble real, no solo en una etiqueta.
+- Bajos nativos conservan prioridad cuando la referencia del género los define. Mapas, tempos, probabilidades y propiedad intactos.
+- Matriz de referencias y criterios de escucha en `REFERENCIAS_MUSICALES.md`, con el bloqueo de descarga explícito.
+
+Auditoría, 122 suites Node, cuatro programas de navegador afectados y 18 renders aprobados. Evidencia `scripts/musica-02-validation.json`. Teléfono: Estilos → una banda completa; compara deep, disco, afro y máquina al mismo volumen. CI/deploy/escucha física separados.
+
 # Dirección musical · fase 1: reloj y armonía comunes
 
 Rama `feat/musica-01-motor`, desde pulido F8 `24e0d1a`. El nuevo plan de siete fases incorpora el cierre anterior y mantiene todas sus entregas.

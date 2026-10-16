@@ -1,0 +1,40 @@
+{
+  "phase": 2,
+  "branch": "feat/musica-02-identidades",
+  "base": "e2876a9",
+  "audit": {
+    "command": "npm run audit:release",
+    "result": "passed",
+    "errors": 0,
+    "warnings": 0
+  },
+  "node": {
+    "command": "npm test",
+    "result": "passed",
+    "suites": 122
+  },
+  "browser": {
+    "result": "passed",
+    "programs": [
+      "lab_score_smoke.py",
+      "music_travel_smoke.py",
+      "heritage_smoke.py",
+      "offline_smoke.py"
+    ]
+  },
+  "audio": {
+    "result": "passed",
+    "programs": [
+      "ensemble_mix.py",
+      "foundation_mix.py"
+    ],
+    "renders": 18,
+    "maxPeak": 0.8854309916496277
+  },
+  "external": {
+    "CI": "pending",
+    "deployment": "pending",
+    "physicalListening": "pending",
+    "referenceRecordingDownload": "blocked HTTP 403"
+  }
+}
