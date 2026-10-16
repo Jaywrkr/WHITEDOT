@@ -1,3 +1,7 @@
+## 2.3.0-alpha.41 · Cuaderno vivo 17/20
+
+Una luz atraviesa una sola vez la ilustración de un hallazgo nuevo y realmente ganado. No aparece en muestras forzadas, migraciones, duplicados ni al abrir el álbum. Sin sonido, botones extra o animación repetida.
+
 ## 2.3.0-alpha.40 · Cuaderno vivo 16/20
 
 La ilustración de la tarjeta responde al dedo o cursor con profundidad de tres grados. Solo se mueve el dibujo; texto y botones permanecen estables. Scroll, cancelación, teclado y movimiento reducido conservan su comportamiento.
