@@ -1,3 +1,4 @@
+import {cometStyle} from './wow-model.js';
 // Spatial visual streams never consume terrain, life or music randomness.
 export const VJ_TD_FORMS=Object.freeze(['brotes','nudo','telarana','red-orbital']);
 export const VJ_FORMS=Object.freeze(['orbitas','circuitos','cintas','vidrio','islas','partitura','abanico','organismo',...VJ_TD_FORMS]);
@@ -21,9 +22,9 @@ export function moveVisitor(o,player,seconds,dt,reduced=false){
  const bound=220,dx=tx-home.x,dy=ty-home.y,dist=Math.hypot(dx,dy);if(dist>bound){tx=home.x+dx/dist*bound;ty=home.y+dy/dist*bound;}
  const mix=reduced?0:1-Math.exp(-Math.max(0,Math.min(.05,dt))*(o.kind==='curioso'?1.7:2.6));o.x+=(tx-o.x)*mix;o.y+=(ty-o.y)*mix;return o;
 }
-export function cometOf(cx,cy,seedOf,seconds){
+export function cometOf(cx,cy,seedOf,seconds,presentation=false){
  const h=seedOf(`vj:comet:v1:${cx},${cy}`)>>>0;if(h%3)return null;
  const cycle=110+h%50,phase=((seconds+(h>>>5)%cycle)%cycle+cycle)%cycle;if(phase>9)return null;
- const u=phase/9,angle=(h>>>9)%628/100,homeX=(cx+.5)*VJ_CELL,homeY=(cy+.5)*VJ_CELL;
- return {id:`comet:${cx},${cy}`,x:homeX+Math.cos(angle)*(u-.5)*560,y:homeY+Math.sin(angle)*(u-.5)*560,angle,hue:(h>>>14)%360,alpha:Math.sin(u*Math.PI)};
+ const originalU=phase/9,style=presentation?cometStyle(seedOf('wow:comet:v1:'+cx+','+cy),originalU):null,u=style?.progress??originalU,angle=(h>>>9)%628/100,homeX=(cx+.5)*VJ_CELL,homeY=(cy+.5)*VJ_CELL;
+ return {id:`comet:${cx},${cy}`,x:homeX+Math.cos(angle)*(u-.5)*560,y:homeY+Math.sin(angle)*(u-.5)*560,angle,hue:(h>>>14)%360,alpha:Math.sin(originalU*Math.PI),...(style||{})};
 }
