@@ -1,8 +1,18 @@
+# Cierre de ampliación visual
+
+Orden de revisión: `feat/posmusica-03-universo-vj` → `feat/posmusica-04-cajas` → `feat/posmusica-05-perfil`. La primera incluye interfaz `8950671`; no necesita publicar aquella rama separada. Cada fase contiene la anterior. Codex solo commit/push; Jay PR/merge. No se modificó main.
+
+Entregas probadas: auditoría y 130/131/132 suites Node completas. Navegador enfocado: avisos/entrada/VJ/tarjetas (entrega 3), reversión/guardado/duraciones (entrega 4), perfil/colección/tarjetas/VJ/quietud de UI en cuatro tamaños (entrega 5). Las suites completas y aceptación física siguen pendientes para el merge. El navegador estándar falló al crear página por recursos heredados; el wrapper local opcional de un solo proceso/contexto permitió ejecutar sin omitir aserciones. CI conserva su configuración normal.
+
+El código de ejecución final (`src`, `index.html`, `styles`, `sw.js`) coincide byte a byte con `ba0ee2a`, sobre el que pasaron las pruebas integradas finales. La revisión de dependencias solo adelantó correcciones compartidas, pruebas y documentación a sus ramas. `PROBAR_INTERACCION_FINAL.md` explica la prueba manual. No confundir validación, push, CI y deploy.
+
+## Detalles de la entrega
+
 # Handoff · Perfil y cierre visual
 
 `feat/posmusica-05-perfil` depende de las cajas y los visuales. `player-profile-model.js` normaliza contadores versionados y excluye saltos/cambios de contexto. `player-profile.js` presenta el panel; `profileTick` recibe tiempo activo del frame y respeta todos los modales, incluidos los ligeros. Datos nuevos en `S.playerProfile`, copia/exportación existentes, ningún progreso anterior eliminado ni tiempo retrospectivo supuesto. Distancia interna /10 para metros del juego. No es geolocalización ni una cuenta.
 
-132 suites Node y auditoría aprobadas. `visual_closure_smoke.py` recorre el conjunto real en cuatro tamaños con un único contexto; permite validar en este entorno saturado usando un perfil local de Chromium de un solo proceso. La configuración de CI no cambia. El recorrido integrado inicial pasó; la tarjeta de poder y sus duraciones pasaron a 320, 844 y 1280 px. Ver evidencia por rama. No confundir estas comprobaciones enfocadas con navegador/audio completos ni pruebas físicas.
+132 suites Node y auditoría aprobadas. `visual_closure_smoke.py` recorre el conjunto real en cuatro tamaños con un único contexto; permite validar en este entorno saturado usando un perfil local de Chromium de un solo proceso. La configuración de CI no cambia. El recorrido integrado pasó a 320, 390, 844 y 1280 px; la tarjeta de poder y sus duraciones pasaron a 320, 844 y 1280 px. Ver evidencia por rama. No confundir estas comprobaciones enfocadas con navegador/audio completos ni pruebas físicas.
 
 Mininstrumentos sin terminar conservados en el stash nombrado en PLAN_INTERACCION_FINAL; no están publicados. Jay pidió no tocar música: esta entrega no cambia composición, voces, instrumentos ni DSP. Los efectos nuevos de estelas son visuales/silenciosos.
 

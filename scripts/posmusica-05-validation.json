@@ -42,11 +42,14 @@
       ]
     },
     "mode": "local single-process Chromium, single context, serial test HTTP",
-    "normalChromium": "Target crashed before application load; environment process/thread exhaustion"
+    "normalChromium": "Target crashed before application load; environment process/thread exhaustion",
+    "result": "passed",
+    "testedRuntimeCommit": "ba0ee2a",
+    "runtimeParity": "git diff --exit-code ba0ee2a HEAD -- src index.html styles sw.js: passed after stack update"
   },
   "audio": "unchanged engine; no new audio validation claimed",
   "physicalPhone": "pending",
   "CI": "pending",
   "deploy": "not performed",
-  "push": "pending branch-stack consistency review"
+  "push": "validated for publication; remote transport reported separately"
 }

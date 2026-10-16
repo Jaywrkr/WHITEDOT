@@ -4,8 +4,8 @@ Jay autorizó estas dos entregas después de Dirección musical. Base: `feat/mus
 
 | Entrega | Rama | Estado |
 |---|---|---|
-| 1 · Interfaz expresiva y hallazgos | `feat/posmusica-01-interfaz` | Implementada localmente; navegador final bloqueado por recursos |
-| 2 · Diez familias de miniinstrumentos | `feat/posmusica-02-instrumentos` | Pendiente |
+| 1 · Interfaz expresiva y hallazgos | `feat/posmusica-01-interfaz` | Incluida y validada con entrega 3; sin PR separado |
+| 2 · Diez familias de miniinstrumentos | `feat/posmusica-02-instrumentos` | Pausada por Jay; trabajo incompleto conservado aparte |
 
 ## 1 · Interfaz expresiva y hallazgos
 
