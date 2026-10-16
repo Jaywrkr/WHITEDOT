@@ -1,0 +1,496 @@
+{
+  "phase": 9,
+  "version": "2.3.0-alpha.13",
+  "base": "0d83eeaba773e4d5d1caf303efaf9f214c1fff3a",
+  "summary": "El toque en Casa escucha sin desplazar objetos; el arrastre los mueve y cambiar de herramienta cancela el gesto anterior. Casa y Taller conservan explicaciones propias y entrar con sonido apagado no crea el motor. La gu\u00eda expresa explorar, crear y conservar; la Voz guarda contexto sin competir con el tutorial inicial. Se preservan visitas, partidas futuras y el taller radial.",
+  "node": {
+    "base": "0d83eeaba773e4d5d1caf303efaf9f214c1fff3a",
+    "changes": [
+      "README.md",
+      "index.html",
+      "package.json",
+      "src/house.js",
+      "src/release-info.js",
+      "src/studio.js",
+      "src/voice-guide.js",
+      "sw.js",
+      "tests/house_v2_smoke.py",
+      "tests/onboarding.mjs"
+    ],
+    "selected": [
+      "ambient-world.mjs",
+      "arrangement-phrases.mjs",
+      "arrival.mjs",
+      "atlas.mjs",
+      "blobs.mjs",
+      "cache_residency.mjs",
+      "catalog.mjs",
+      "combinations.mjs",
+      "content_contracts.mjs",
+      "core.mjs",
+      "creative.mjs",
+      "cultures.mjs",
+      "duet-harmony.mjs",
+      "ecology.mjs",
+      "effects.mjs",
+      "electronic-ensemble.mjs",
+      "encounter-audit.mjs",
+      "encounters.mjs",
+      "expanded-ecology.mjs",
+      "experience-voice.mjs",
+      "festive-territories.mjs",
+      "foundation.mjs",
+      "glass.mjs",
+      "glass_music.mjs",
+      "grammar.mjs",
+      "gravity.mjs",
+      "heritage.mjs",
+      "influence.mjs",
+      "journey.mjs",
+      "lab-curation.mjs",
+      "lab-score.mjs",
+      "living-state.mjs",
+      "materia.mjs",
+      "micro-instruments.mjs",
+      "mirrors.mjs",
+      "music-direction.mjs",
+      "music-quality.mjs",
+      "music-recovery.mjs",
+      "musical-conductor.mjs",
+      "musical-hybrids.mjs",
+      "musical-recipes.mjs",
+      "musical_character.mjs",
+      "neighborhoods.mjs",
+      "onboarding.mjs",
+      "palettes.mjs",
+      "patches.mjs",
+      "percussion-additional.mjs",
+      "percussion.mjs",
+      "persistent_progress.mjs",
+      "personality.mjs",
+      "phenomena.mjs",
+      "playthings.mjs",
+      "pockets.mjs",
+      "practice-travel.mjs",
+      "production-experiments.mjs",
+      "production-identities.mjs",
+      "radio.mjs",
+      "references.mjs",
+      "release.mjs",
+      "relics.mjs",
+      "rhythms.mjs",
+      "seeds.mjs",
+      "session.mjs",
+      "source-budget.mjs",
+      "territory-presentation.mjs",
+      "territory-transition.mjs",
+      "test-impact.mjs",
+      "v1_closure.mjs",
+      "version-bump.mjs",
+      "vida.mjs",
+      "voices.mjs",
+      "walkers.mjs",
+      "wonders.mjs",
+      "world-families.mjs",
+      "world.mjs"
+    ],
+    "results": [
+      {
+        "test": "ambient-world.mjs",
+        "exit": 0,
+        "milliseconds": 769
+      },
+      {
+        "test": "arrangement-phrases.mjs",
+        "exit": 0,
+        "milliseconds": 195
+      },
+      {
+        "test": "arrival.mjs",
+        "exit": 0,
+        "milliseconds": 279
+      },
+      {
+        "test": "atlas.mjs",
+        "exit": 0,
+        "milliseconds": 686
+      },
+      {
+        "test": "blobs.mjs",
+        "exit": 0,
+        "milliseconds": 73
+      },
+      {
+        "test": "cache_residency.mjs",
+        "exit": 0,
+        "milliseconds": 421
+      },
+      {
+        "test": "catalog.mjs",
+        "exit": 0,
+        "milliseconds": 344
+      },
+      {
+        "test": "combinations.mjs",
+        "exit": 0,
+        "milliseconds": 392
+      },
+      {
+        "test": "content_contracts.mjs",
+        "exit": 0,
+        "milliseconds": 90
+      },
+      {
+        "test": "core.mjs",
+        "exit": 0,
+        "milliseconds": 257
+      },
+      {
+        "test": "creative.mjs",
+        "exit": 0,
+        "milliseconds": 43
+      },
+      {
+        "test": "cultures.mjs",
+        "exit": 0,
+        "milliseconds": 392
+      },
+      {
+        "test": "duet-harmony.mjs",
+        "exit": 0,
+        "milliseconds": 73
+      },
+      {
+        "test": "ecology.mjs",
+        "exit": 0,
+        "milliseconds": 754
+      },
+      {
+        "test": "effects.mjs",
+        "exit": 0,
+        "milliseconds": 58
+      },
+      {
+        "test": "electronic-ensemble.mjs",
+        "exit": 0,
+        "milliseconds": 620
+      },
+      {
+        "test": "encounter-audit.mjs",
+        "exit": 0,
+        "milliseconds": 694
+      },
+      {
+        "test": "encounters.mjs",
+        "exit": 0,
+        "milliseconds": 260
+      },
+      {
+        "test": "expanded-ecology.mjs",
+        "exit": 0,
+        "milliseconds": 393
+      },
+      {
+        "test": "experience-voice.mjs",
+        "exit": 0,
+        "milliseconds": 34
+      },
+      {
+        "test": "festive-territories.mjs",
+        "exit": 0,
+        "milliseconds": 689
+      },
+      {
+        "test": "foundation.mjs",
+        "exit": 0,
+        "milliseconds": 76
+      },
+      {
+        "test": "glass.mjs",
+        "exit": 0,
+        "milliseconds": 353
+      },
+      {
+        "test": "glass_music.mjs",
+        "exit": 0,
+        "milliseconds": 267
+      },
+      {
+        "test": "grammar.mjs",
+        "exit": 0,
+        "milliseconds": 95
+      },
+      {
+        "test": "gravity.mjs",
+        "exit": 0,
+        "milliseconds": 52
+      },
+      {
+        "test": "heritage.mjs",
+        "exit": 0,
+        "milliseconds": 58
+      },
+      {
+        "test": "influence.mjs",
+        "exit": 0,
+        "milliseconds": 298
+      },
+      {
+        "test": "journey.mjs",
+        "exit": 0,
+        "milliseconds": 276
+      },
+      {
+        "test": "lab-curation.mjs",
+        "exit": 0,
+        "milliseconds": 555
+      },
+      {
+        "test": "lab-score.mjs",
+        "exit": 0,
+        "milliseconds": 545
+      },
+      {
+        "test": "living-state.mjs",
+        "exit": 0,
+        "milliseconds": 42
+      },
+      {
+        "test": "materia.mjs",
+        "exit": 0,
+        "milliseconds": 538
+      },
+      {
+        "test": "micro-instruments.mjs",
+        "exit": 0,
+        "milliseconds": 94
+      },
+      {
+        "test": "mirrors.mjs",
+        "exit": 0,
+        "milliseconds": 343
+      },
+      {
+        "test": "music-direction.mjs",
+        "exit": 0,
+        "milliseconds": 102
+      },
+      {
+        "test": "music-quality.mjs",
+        "exit": 0,
+        "milliseconds": 1240
+      },
+      {
+        "test": "music-recovery.mjs",
+        "exit": 0,
+        "milliseconds": 116
+      },
+      {
+        "test": "musical-conductor.mjs",
+        "exit": 0,
+        "milliseconds": 94
+      },
+      {
+        "test": "musical-hybrids.mjs",
+        "exit": 0,
+        "milliseconds": 710
+      },
+      {
+        "test": "musical-recipes.mjs",
+        "exit": 0,
+        "milliseconds": 173
+      },
+      {
+        "test": "musical_character.mjs",
+        "exit": 0,
+        "milliseconds": 224
+      },
+      {
+        "test": "neighborhoods.mjs",
+        "exit": 0,
+        "milliseconds": 457
+      },
+      {
+        "test": "onboarding.mjs",
+        "exit": 0,
+        "milliseconds": 40
+      },
+      {
+        "test": "palettes.mjs",
+        "exit": 0,
+        "milliseconds": 501
+      },
+      {
+        "test": "patches.mjs",
+        "exit": 0,
+        "milliseconds": 72
+      },
+      {
+        "test": "percussion-additional.mjs",
+        "exit": 0,
+        "milliseconds": 258
+      },
+      {
+        "test": "percussion.mjs",
+        "exit": 0,
+        "milliseconds": 300
+      },
+      {
+        "test": "persistent_progress.mjs",
+        "exit": 0,
+        "milliseconds": 193
+      },
+      {
+        "test": "personality.mjs",
+        "exit": 0,
+        "milliseconds": 307
+      },
+      {
+        "test": "phenomena.mjs",
+        "exit": 0,
+        "milliseconds": 296
+      },
+      {
+        "test": "playthings.mjs",
+        "exit": 0,
+        "milliseconds": 76
+      },
+      {
+        "test": "pockets.mjs",
+        "exit": 0,
+        "milliseconds": 272
+      },
+      {
+        "test": "practice-travel.mjs",
+        "exit": 0,
+        "milliseconds": 300
+      },
+      {
+        "test": "production-experiments.mjs",
+        "exit": 0,
+        "milliseconds": 70
+      },
+      {
+        "test": "production-identities.mjs",
+        "exit": 0,
+        "milliseconds": 168
+      },
+      {
+        "test": "radio.mjs",
+        "exit": 0,
+        "milliseconds": 2130
+      },
+      {
+        "test": "references.mjs",
+        "exit": 0,
+        "milliseconds": 461
+      },
+      {
+        "test": "release.mjs",
+        "exit": 0,
+        "milliseconds": 50
+      },
+      {
+        "test": "relics.mjs",
+        "exit": 0,
+        "milliseconds": 92
+      },
+      {
+        "test": "rhythms.mjs",
+        "exit": 0,
+        "milliseconds": 436
+      },
+      {
+        "test": "seeds.mjs",
+        "exit": 0,
+        "milliseconds": 86
+      },
+      {
+        "test": "session.mjs",
+        "exit": 0,
+        "milliseconds": 79
+      },
+      {
+        "test": "source-budget.mjs",
+        "exit": 0,
+        "milliseconds": 93
+      },
+      {
+        "test": "territory-presentation.mjs",
+        "exit": 0,
+        "milliseconds": 445
+      },
+      {
+        "test": "territory-transition.mjs",
+        "exit": 0,
+        "milliseconds": 338
+      },
+      {
+        "test": "test-impact.mjs",
+        "exit": 0,
+        "milliseconds": 46
+      },
+      {
+        "test": "v1_closure.mjs",
+        "exit": 0,
+        "milliseconds": 48
+      },
+      {
+        "test": "version-bump.mjs",
+        "exit": 0,
+        "milliseconds": 108
+      },
+      {
+        "test": "vida.mjs",
+        "exit": 0,
+        "milliseconds": 473
+      },
+      {
+        "test": "voices.mjs",
+        "exit": 0,
+        "milliseconds": 583
+      },
+      {
+        "test": "walkers.mjs",
+        "exit": 0,
+        "milliseconds": 470
+      },
+      {
+        "test": "wonders.mjs",
+        "exit": 0,
+        "milliseconds": 675
+      },
+      {
+        "test": "world-families.mjs",
+        "exit": 0,
+        "milliseconds": 523
+      },
+      {
+        "test": "world.mjs",
+        "exit": 0,
+        "milliseconds": 591
+      }
+    ],
+    "completeSuite": false
+  },
+  "audit": {
+    "version": "2.3.0-alpha.13",
+    "sourceModules": 203,
+    "htmlIDs": 402,
+    "staticImports": 528,
+    "shellAssets": 223,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "browser": {
+    "passed": true,
+    "output": "DOC 390\nREADY\nHOUSE ENTERED 390\nPLACED\nPASS earned placement, native room drawing, read-only visit, reload and preserved radial workshop at 390\nDOC 844\nREADY\nHOUSE ENTERED 844\nPLACED\nPASS earned placement, native room drawing, read-only visit, reload and preserved radial workshop at 844"
+  },
+  "physicalPhone": false,
+  "ciAndDeploy": "not claimed",
+  "fullSuites": false
+}

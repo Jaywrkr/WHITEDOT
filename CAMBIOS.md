@@ -1,3 +1,9 @@
+## 2.3.0-alpha.13 · Recorrido y Casa
+
+El toque en Casa escucha sin desplazar objetos; el arrastre los mueve y cambiar de herramienta cancela el gesto anterior. Casa y Taller conservan explicaciones propias y entrar con sonido apagado no crea el motor. La guía expresa explorar, crear y conservar; la Voz guarda contexto sin competir con el tutorial inicial. Se preservan visitas, partidas futuras y el taller radial.
+
+Auditoría sin errores/avisos; 75 suites Node afectadas y recorrido representativo aprobados; audio sin cambios. Evidencia: scripts/mejora-09-validation.json. No afirma escucha física, CI ni deploy.
+
 ## 2.3.0-alpha.12 · Colección
 
 Las tarjetas excepcionales tienen prioridad en la cola sin desplazar la que estás examinando; todos los hallazgos siguen guardados. El libro explica filtros vacíos, muestra contexto humano y mejora tipografía y controles táctiles. Se mantienen rarezas y probabilidades registradas; tres tamaños verifican presentación completa, aviso exclusivo, silencio y persistencia.
