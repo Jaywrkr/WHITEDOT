@@ -18,3 +18,11 @@ r.S={todayKey:'2026-10-14'};r.elementBookUI();assert.equal(r.elementFamilyCount,
 r.recordElement('pet',{genre:'<img src=x onerror=bad()>'});assert(!r.elementBookCards().includes('<img'));
 for(const [w,h]of [[320,640],[844,390],[1920,1080]])assert(localGlowRadius(w,h,400)<=Math.min(w,h)*.18);assert.equal(localGlowRadius(1920,1080,400),72);
 console.log('PASS 151 unique collectible families, honest migration, deduplication, UI/modal silence, bounded normalization, save reset, escaped journal and local visual budgets');
+
+// New catalogs may recognize old quarantined discoveries; never delete their evidence.
+const preserved=normalizeElementBook({version:1,extension:{earned:7},found:{'rhythm:stone':{day:'2026-10-14',genre:'ambient',earnedShape:'kept'},'future:voice':{day:'2026-10-14',genre:'future',learned:[1,3,5]}}});
+assert.equal(preserved.extension.earned,7);assert.equal(preserved.found['rhythm:stone'].earnedShape,'kept');assert.deepEqual(preserved.unrecognizedFound['future:voice'].learned,[1,3,5]);
+const restored=normalizeElementBook({...preserved,unrecognizedFound:{...preserved.unrecognizedFound,'rhythm:roots':{day:'2026-10-14',genre:'ambient'}}});assert(restored.found['rhythm:roots']);assert(!Object.hasOwn(restored.unrecognizedFound,'rhythm:roots'));assert(restored.unrecognizedFound['future:voice']);
+const newer={version:9,found:{'rhythm:stone':{day:'2026-10-14',genre:'ambient'},'future:voice':{earned:99}},extension:{reward:8}};assert.equal(normalizeElementBook(newer),newer);assert.equal(migrateElementBook({elementBook:newer,rhythmFound:{roots:1}}),newer);
+r.S={todayKey:'2026-10-14',elementBook:newer};const snapshot=JSON.stringify(newer);r.elementBookUI();assert(!r.recordElement('rhythm:roots'));assert.equal(JSON.stringify(r.S.elementBook),snapshot);assert.match(badge.textContent,/versión posterior/);assert.equal(r.elementFamilyCount,1);assert.match(r.elementBookCards(),/siguen guardados/);
+console.log('PASS unknown discoveries and metadata retained, recognized quarantine restored, future book readonly and honest visible counts');
