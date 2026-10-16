@@ -33,7 +33,7 @@ export function initialize(runtime){
     alpha=field*presence*distanceOpacity(Math.hypot(px-s.wx,py-s.wy),radius)*(.16+h*.15);
    if(alpha<.002)continue;
    c.save();c.translate(px+runtime.W/2-s.wx,py+runtime.H/2-s.wy);c.rotate(f.angle*.35);
-   c.globalAlpha=alpha;c.strokeStyle=`hsl(${f.hue},${f.saturation}%,67%)`;
+   c.globalAlpha=alpha;c.strokeStyle=f.ink||`hsl(${f.hue},${f.saturation}%,67%)`;
    familyContour(c,f.terrain,19+h*16,t,h*6.28,reduced);c.restore();drawn++;
   }
   c.restore();

@@ -1,6 +1,7 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.2.0-rc.1-musica-05';
+const CACHE='whitedot-2.2.0-rc.1-musica-06';
 const SHELL=[
+ "./src/territory-transition.js",
  "./src/arrangement-phrases.js",
  "./src/production-identities.js",
  "./src/musical-conductor.js",

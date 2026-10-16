@@ -107,7 +107,7 @@ export function initialize(runtime) {
     if(origin==='player')runtime.petHear?.({degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,source});
     if(origin==='player'&&(!source||Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<360))runtime.depthHear?.({origin,degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,layer:runtime.S.layer||'superficie'});
     const frame=runtime.musicalFrame?.(time),harmonicRegion=frame?.region||(origin==='band'?(runtime.MU.dnaA||region):region);
-    const scale = harmonicRegion.scale, transposition = runtime.BIOMES[harmonicRegion.z].tr + harmonicRegion.trOff;
+    const scale = harmonicRegion.scale, transposition = frame?.transposition??(runtime.BIOMES[harmonicRegion.z].tr + harmonicRegion.trOff);
     const note = degree => {
       const d = (((frame?.degree??runtime.MU.deg) + voice.degree + degree) % 7 + 7) % 7;
       let n = 57 + transposition + scale[d];

@@ -1,3 +1,13 @@
+# Dirección musical · fase 6: viajar entre músicas y hábitats
+
+- El tempo converge al destino por compases, con pasos máximos de 24 BPM. Cada territorio conserva su BPM; dueto/laboratorio mantienen su transporte deliberado.
+- Cambio de centro musical con entrada de acompañamiento de dos compases, sin apagado total. Las bandas de una a tres partes tienen compensación acotada; Campo conserva mejor su audibilidad.
+- Paletas territoriales por carácter musical, algunas monocromáticas y otras con acentos complementarios. Tormenta y carácter pesado pueden compartir rojo; negro, densidades y figuras permanecen.
+- Flora, fauna, contornos, instalaciones y señales musicales comparten el acento local. Estilos aparece desde el primer fotograma útil del Mundo.
+- El marco armónico incluye la transposición real del scheduler. El conductor solo actúa en Mundo; Camino y Estudio conservan su música propia.
+
+Auditoría, 125 suites Node, siete programas de navegador y diez renders aprobados, incluidos tres viajes reales de treinta segundos. Evidencia `scripts/musica-06-validation.json`. CI/deploy/escucha física separados.
+
 # Dirección musical · fase 5: cada fuente tiene un aporte
 
 - Percusión de especies por producción: marco, barro, agua, semilla, madera, bronce, brush, clap y gong. Bajo y acordes comparten vocabulario con la banda, conservando funciones individuales.

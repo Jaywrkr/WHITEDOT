@@ -1,3 +1,15 @@
+# Handoff · Dirección musical, fase 6
+
+Rama `feat/musica-06-transiciones`, desde F5 `9042c83`. Jay PR/merge. Siguiente F7: auditoría integrada del conjunto final.
+
+`territory-transition.js`: aproximación de tempo por compás, pasos de hasta 24 BPM, entrada del acompañamiento de dos compases y compensación de bandas pequeñas. `audio.js` aplica solo en producción del Mundo; no fija tempo universal ni cambia datos del lugar. `transition_mix.py` verifica tres trayectos reales de 30 segundos, convergencia y picos. El helper de producción selecciona el bioma del lugar como el juego y registra tempoFrames.
+
+`musical-conductor.js` conserva transposición del marco; voces/culturas la usan junto al acorde y escala. `conducted` excluye Camino/Estudio además de laboratorio/dueto. `territoryPalette` usa semilla nueva y carácter musical para acentos y zonas monocromáticas, sin amarillo de premio. worldFamily incorpora musicHue/ink/paletteMode, sin tocar seed, densidades, geometría ni firma. Flora/fauna, contornos e instalaciones usan esos acentos; feedback coordina el color musical. Estilos se presenta sin esperar el temporizador inicial.
+
+125 suites Node; siete programas de navegador; diez renders. Evidencia en `scripts/musica-06-validation.json`, `musica-06-transitions-audio.json`, `musica-06-foundation-audio.json` y `musica-06-world.json`. Escucha física/CI/deploy separados. Referencias externas siguen bloqueadas por HTTP 403.
+
+## Antecedentes
+
 # Handoff · Dirección musical, fase 5
 
 Rama `feat/musica-05-interacciones`, desde F4 `b4d12fd`. Jay PR/merge.
