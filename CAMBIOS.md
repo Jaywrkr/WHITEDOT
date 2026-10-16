@@ -1,3 +1,11 @@
+## Cristales y chispas · primera interacción de recolección
+
+Rama `feat/crystal-sparks`, desde main `0491b58` (incluye la reparación de ojos integrada por Jay). Cristales pequeños, medianos y grandes: 1/2/3 pulsos manuales y 1/3/5 chispas. Grietas visibles, hasta tres fragmentos atraídos al acercarse, contador discreto con incremento temporal y saldo guardado/exportable. Sin tienda ni cambios de audio. El paseo automático no daña ni recoge; los cristales agotados permanecen así durante la sesión, incluso tras viajar y volver. Al recargar comienza otro paseo.
+
+Distribución determinista con hash independiente `crystals:v1`; mapas y RNG previos intactos. Solo superficie, pausa en menús/escáner, movimiento reducido sin vuelo de fragmentos. Memoria limitada a 8192 sitios tocados por sesión; al alcanzar ese límite no se habilitan sitios nuevos hasta recargar. Caché incluida en SHELL; el sellado de despliegue existente renueva su identidad sin incremento manual.
+
+Verificación: `npm run audit:release` sin errores/avisos; `npm run test:impact -- --base 0491b58`, 84 suites afectadas aprobadas; `node tests/crystal-sparks.mjs` cubre tamaños, valores, ondas únicas, pulsos automáticos, pausa, guardados y agotamiento. `python tests/crystal_sparks_smoke.py`: gesto real de pulso, rotura/recogida, rechazo ambiental, recarga con saldo y render móvil/escritorio. Revisión visual y `git diff --check`. Adaptador ESM y licencias con bytes Git originales para pruebas Windows; Playwright externo al repo. Sin suite completa de navegador/audio, escucha física ni despliegue certificado. Jay conserva PR/merge.
+
 ## Reparación · ojos y renderizado del mundo
 
 Rama `fix/wow-eyes-render`, desde main remoto `3324d447cd6232c5a61127dfbaac0e253015580e`. Los efectos insertados en `eyes()` usaban `ox/oy` fuera de alcance y detenían el frame. Se mueve el mismo bloque a `drawWowWorld()`, donde existen los offsets de cámara, conservando parámetros, límites, activaciones y audio. Ojos locales y polvo de frenada conservan su blanco.

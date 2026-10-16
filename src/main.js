@@ -1,3 +1,4 @@
+import {initialize as crystalSparks} from './crystal-sparks.js';
 import {initialize as wowMemory} from './wow-memory.js';
 import {initialize as wowUI} from './wow-ui.js';
 import {initialize as contentGallery} from './content-gallery.js';
@@ -188,7 +189,7 @@ contentGallery(runtime);microInstruments(runtime);achievementsV2(runtime);worldV
 practiceTravel(runtime);boxSurprises(runtime);
 musicTravel(runtime);
 distantColors(runtime);vjWorld(runtime);reactiveEcology(runtime);
-pixelLife(runtime);wowFeel(runtime);wowUI(runtime);wowMemory(runtime);
+crystalSparks(runtime);pixelLife(runtime);wowFeel(runtime);wowUI(runtime);wowMemory(runtime);
 houseAudio(runtime);house(runtime);
 onboarding(runtime);labLearning(runtime);
 runtime.styleUI();runtime.hud();

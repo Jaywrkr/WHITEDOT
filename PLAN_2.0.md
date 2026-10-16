@@ -2,6 +2,7 @@
 
 | Entrega | Estado |
 |---|---|
+| Cristales y chispas | Implementados en feat/crystal-sparks; pruebas enfocadas, ver CAMBIOS.md |
 | WOW 20: Constelación de regreso | Implementada; scripts/wow-20-validation.json |
 | WOW 19: Firma de favoritos | Implementada; scripts/wow-19-validation.json |
 | WOW 18: Álbum con foco | Implementada; scripts/wow-18-validation.json |
