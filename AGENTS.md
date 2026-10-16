@@ -4,6 +4,8 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 
 ## Prioridad actual
 
+La petición más reciente es [PLAN_VIAJE_Y_REACCIONES.md](PLAN_VIAJE_Y_REACCIONES.md): viaje continuo y diez gestos visuales en ecosistemas de distinta intensidad, explícitamente autorizados. Dos ramas dependientes; conservar las reglas de verificación proporcional y PR/merge de Jay. Tiene prioridad sobre las limitaciones de ampliación del ciclo anterior.
+
 El ciclo vigente es [PLAN_MEJORA_INTEGRAL.md](PLAN_MEJORA_INTEGRAL.md), diez fases de mejora autorizadas por Jay, desde la recuperación faa0fe9. Sustituye la ampliación anterior: mejorar sistemas existentes, sin añadir catálogos ni carreras/persecuciones nuevas. Ramas encadenadas, versión por entrega; no reabrir ciclos históricos.
 
 

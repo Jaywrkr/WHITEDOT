@@ -1,0 +1,564 @@
+{
+  "version": "2.3.0-alpha.15",
+  "base": "2499e61",
+  "branch": "feat/viaje-musical-continuo",
+  "node": {
+    "base": "2499e610263d19926bebb7630a35d5e125cbf777",
+    "changes": [
+      "README.md",
+      "index.html",
+      "package.json",
+      "src/audio.js",
+      "src/autopilot.js",
+      "src/distant-colors.js",
+      "src/layers.js",
+      "src/main.js",
+      "src/player-profile-model.js",
+      "src/player-profile.js",
+      "src/practice-travel.js",
+      "src/release-info.js",
+      "src/render.js",
+      "src/world-visibility-model.js",
+      "src/world-visibility.js",
+      "styles/estilo-j.css",
+      "sw.js",
+      "tests/arrival.mjs",
+      "tests/audio_mix.mjs",
+      "tests/blobs_smoke.py",
+      "tests/favorites_smoke.py",
+      "tests/glass_smoke.py",
+      "tests/mirrors_smoke.py",
+      "tests/player-profile.mjs",
+      "tests/world-visibility.mjs",
+      "src/return-entrance.js",
+      "src/territory-journey.js",
+      "tests/browser_helpers.py",
+      "tests/journey_mix.py",
+      "tests/journey_ui_smoke.py",
+      "tests/territory-engine.mjs",
+      "tests/territory-journey.mjs"
+    ],
+    "selected": [
+      "ambient-world.mjs",
+      "arrangement-phrases.mjs",
+      "arrival.mjs",
+      "atlas.mjs",
+      "autopilot.mjs",
+      "blobs.mjs",
+      "box-save.mjs",
+      "cache_residency.mjs",
+      "catalog.mjs",
+      "combinations.mjs",
+      "content_contracts.mjs",
+      "core.mjs",
+      "cultures.mjs",
+      "duet-harmony.mjs",
+      "ecology.mjs",
+      "electronic-ensemble.mjs",
+      "element_book.mjs",
+      "encounter-audit.mjs",
+      "encounters.mjs",
+      "expanded-ecology.mjs",
+      "feedback.mjs",
+      "festive-territories.mjs",
+      "glass.mjs",
+      "glass_music.mjs",
+      "grammar.mjs",
+      "influence.mjs",
+      "journal-album.mjs",
+      "journal.mjs",
+      "journey.mjs",
+      "lab-curation.mjs",
+      "lab-score.mjs",
+      "lab.mjs",
+      "listening-reference.mjs",
+      "materia.mjs",
+      "micro-instruments.mjs",
+      "mirrors.mjs",
+      "music-direction.mjs",
+      "music-quality.mjs",
+      "music-recovery.mjs",
+      "music-travel.mjs",
+      "musical-conductor.mjs",
+      "musical-hybrids.mjs",
+      "musical-recipes.mjs",
+      "musical_character.mjs",
+      "neighborhoods.mjs",
+      "palettes.mjs",
+      "percussion-additional.mjs",
+      "percussion.mjs",
+      "persistent_progress.mjs",
+      "personality.mjs",
+      "phenomena.mjs",
+      "player-profile.mjs",
+      "playthings.mjs",
+      "pockets.mjs",
+      "power-feedback.mjs",
+      "practice-travel.mjs",
+      "production-experiments.mjs",
+      "production-identities.mjs",
+      "radio.mjs",
+      "references.mjs",
+      "release.mjs",
+      "relics.mjs",
+      "rhythms.mjs",
+      "scanner.mjs",
+      "seeds.mjs",
+      "session.mjs",
+      "source-budget.mjs",
+      "territory-engine.mjs",
+      "territory-journey.mjs",
+      "territory-presentation.mjs",
+      "territory-transition.mjs",
+      "test-impact.mjs",
+      "version-bump.mjs",
+      "vida.mjs",
+      "voices.mjs",
+      "walkers.mjs",
+      "wonders.mjs",
+      "world-families.mjs",
+      "world-visibility.mjs",
+      "world.mjs"
+    ],
+    "results": [
+      {
+        "test": "ambient-world.mjs",
+        "exit": 0,
+        "milliseconds": 659
+      },
+      {
+        "test": "arrangement-phrases.mjs",
+        "exit": 0,
+        "milliseconds": 168
+      },
+      {
+        "test": "arrival.mjs",
+        "exit": 0,
+        "milliseconds": 375
+      },
+      {
+        "test": "atlas.mjs",
+        "exit": 0,
+        "milliseconds": 687
+      },
+      {
+        "test": "autopilot.mjs",
+        "exit": 0,
+        "milliseconds": 32
+      },
+      {
+        "test": "blobs.mjs",
+        "exit": 0,
+        "milliseconds": 63
+      },
+      {
+        "test": "box-save.mjs",
+        "exit": 0,
+        "milliseconds": 37
+      },
+      {
+        "test": "cache_residency.mjs",
+        "exit": 0,
+        "milliseconds": 313
+      },
+      {
+        "test": "catalog.mjs",
+        "exit": 0,
+        "milliseconds": 304
+      },
+      {
+        "test": "combinations.mjs",
+        "exit": 0,
+        "milliseconds": 350
+      },
+      {
+        "test": "content_contracts.mjs",
+        "exit": 0,
+        "milliseconds": 68
+      },
+      {
+        "test": "core.mjs",
+        "exit": 0,
+        "milliseconds": 276
+      },
+      {
+        "test": "cultures.mjs",
+        "exit": 0,
+        "milliseconds": 364
+      },
+      {
+        "test": "duet-harmony.mjs",
+        "exit": 0,
+        "milliseconds": 69
+      },
+      {
+        "test": "ecology.mjs",
+        "exit": 0,
+        "milliseconds": 752
+      },
+      {
+        "test": "electronic-ensemble.mjs",
+        "exit": 0,
+        "milliseconds": 572
+      },
+      {
+        "test": "element_book.mjs",
+        "exit": 0,
+        "milliseconds": 48
+      },
+      {
+        "test": "encounter-audit.mjs",
+        "exit": 0,
+        "milliseconds": 559
+      },
+      {
+        "test": "encounters.mjs",
+        "exit": 0,
+        "milliseconds": 213
+      },
+      {
+        "test": "expanded-ecology.mjs",
+        "exit": 0,
+        "milliseconds": 313
+      },
+      {
+        "test": "feedback.mjs",
+        "exit": 0,
+        "milliseconds": 32
+      },
+      {
+        "test": "festive-territories.mjs",
+        "exit": 0,
+        "milliseconds": 610
+      },
+      {
+        "test": "glass.mjs",
+        "exit": 0,
+        "milliseconds": 274
+      },
+      {
+        "test": "glass_music.mjs",
+        "exit": 0,
+        "milliseconds": 237
+      },
+      {
+        "test": "grammar.mjs",
+        "exit": 0,
+        "milliseconds": 87
+      },
+      {
+        "test": "influence.mjs",
+        "exit": 0,
+        "milliseconds": 277
+      },
+      {
+        "test": "journal-album.mjs",
+        "exit": 0,
+        "milliseconds": 54
+      },
+      {
+        "test": "journal.mjs",
+        "exit": 0,
+        "milliseconds": 54
+      },
+      {
+        "test": "journey.mjs",
+        "exit": 0,
+        "milliseconds": 296
+      },
+      {
+        "test": "lab-curation.mjs",
+        "exit": 0,
+        "milliseconds": 549
+      },
+      {
+        "test": "lab-score.mjs",
+        "exit": 0,
+        "milliseconds": 521
+      },
+      {
+        "test": "lab.mjs",
+        "exit": 0,
+        "milliseconds": 52
+      },
+      {
+        "test": "listening-reference.mjs",
+        "exit": 0,
+        "milliseconds": 55
+      },
+      {
+        "test": "materia.mjs",
+        "exit": 0,
+        "milliseconds": 587
+      },
+      {
+        "test": "micro-instruments.mjs",
+        "exit": 0,
+        "milliseconds": 121
+      },
+      {
+        "test": "mirrors.mjs",
+        "exit": 0,
+        "milliseconds": 339
+      },
+      {
+        "test": "music-direction.mjs",
+        "exit": 0,
+        "milliseconds": 87
+      },
+      {
+        "test": "music-quality.mjs",
+        "exit": 0,
+        "milliseconds": 1073
+      },
+      {
+        "test": "music-recovery.mjs",
+        "exit": 0,
+        "milliseconds": 109
+      },
+      {
+        "test": "music-travel.mjs",
+        "exit": 0,
+        "milliseconds": 50
+      },
+      {
+        "test": "musical-conductor.mjs",
+        "exit": 0,
+        "milliseconds": 104
+      },
+      {
+        "test": "musical-hybrids.mjs",
+        "exit": 0,
+        "milliseconds": 692
+      },
+      {
+        "test": "musical-recipes.mjs",
+        "exit": 0,
+        "milliseconds": 185
+      },
+      {
+        "test": "musical_character.mjs",
+        "exit": 0,
+        "milliseconds": 162
+      },
+      {
+        "test": "neighborhoods.mjs",
+        "exit": 0,
+        "milliseconds": 430
+      },
+      {
+        "test": "palettes.mjs",
+        "exit": 0,
+        "milliseconds": 528
+      },
+      {
+        "test": "percussion-additional.mjs",
+        "exit": 0,
+        "milliseconds": 327
+      },
+      {
+        "test": "percussion.mjs",
+        "exit": 0,
+        "milliseconds": 310
+      },
+      {
+        "test": "persistent_progress.mjs",
+        "exit": 0,
+        "milliseconds": 167
+      },
+      {
+        "test": "personality.mjs",
+        "exit": 0,
+        "milliseconds": 255
+      },
+      {
+        "test": "phenomena.mjs",
+        "exit": 0,
+        "milliseconds": 267
+      },
+      {
+        "test": "player-profile.mjs",
+        "exit": 0,
+        "milliseconds": 77
+      },
+      {
+        "test": "playthings.mjs",
+        "exit": 0,
+        "milliseconds": 88
+      },
+      {
+        "test": "pockets.mjs",
+        "exit": 0,
+        "milliseconds": 263
+      },
+      {
+        "test": "power-feedback.mjs",
+        "exit": 0,
+        "milliseconds": 1047
+      },
+      {
+        "test": "practice-travel.mjs",
+        "exit": 0,
+        "milliseconds": 317
+      },
+      {
+        "test": "production-experiments.mjs",
+        "exit": 0,
+        "milliseconds": 78
+      },
+      {
+        "test": "production-identities.mjs",
+        "exit": 0,
+        "milliseconds": 132
+      },
+      {
+        "test": "radio.mjs",
+        "exit": 0,
+        "milliseconds": 2338
+      },
+      {
+        "test": "references.mjs",
+        "exit": 0,
+        "milliseconds": 463
+      },
+      {
+        "test": "release.mjs",
+        "exit": 0,
+        "milliseconds": 54
+      },
+      {
+        "test": "relics.mjs",
+        "exit": 0,
+        "milliseconds": 90
+      },
+      {
+        "test": "rhythms.mjs",
+        "exit": 0,
+        "milliseconds": 515
+      },
+      {
+        "test": "scanner.mjs",
+        "exit": 0,
+        "milliseconds": 53
+      },
+      {
+        "test": "seeds.mjs",
+        "exit": 0,
+        "milliseconds": 97
+      },
+      {
+        "test": "session.mjs",
+        "exit": 0,
+        "milliseconds": 68
+      },
+      {
+        "test": "source-budget.mjs",
+        "exit": 0,
+        "milliseconds": 89
+      },
+      {
+        "test": "territory-engine.mjs",
+        "exit": 0,
+        "milliseconds": 483
+      },
+      {
+        "test": "territory-journey.mjs",
+        "exit": 0,
+        "milliseconds": 243
+      },
+      {
+        "test": "territory-presentation.mjs",
+        "exit": 0,
+        "milliseconds": 440
+      },
+      {
+        "test": "territory-transition.mjs",
+        "exit": 0,
+        "milliseconds": 342
+      },
+      {
+        "test": "test-impact.mjs",
+        "exit": 0,
+        "milliseconds": 31
+      },
+      {
+        "test": "version-bump.mjs",
+        "exit": 0,
+        "milliseconds": 95
+      },
+      {
+        "test": "vida.mjs",
+        "exit": 0,
+        "milliseconds": 521
+      },
+      {
+        "test": "voices.mjs",
+        "exit": 0,
+        "milliseconds": 563
+      },
+      {
+        "test": "walkers.mjs",
+        "exit": 0,
+        "milliseconds": 482
+      },
+      {
+        "test": "wonders.mjs",
+        "exit": 0,
+        "milliseconds": 783
+      },
+      {
+        "test": "world-families.mjs",
+        "exit": 0,
+        "milliseconds": 527
+      },
+      {
+        "test": "world-visibility.mjs",
+        "exit": 0,
+        "milliseconds": 53
+      },
+      {
+        "test": "world.mjs",
+        "exit": 0,
+        "milliseconds": 519
+      }
+    ],
+    "completeSuite": false
+  },
+  "audit": {
+    "version": "2.3.0-alpha.15",
+    "sourceModules": 205,
+    "htmlIDs": 406,
+    "staticImports": 536,
+    "shellAssets": 225,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "browser": {
+    "passed": true,
+    "viewports": [
+      390,
+      844,
+      1280
+    ],
+    "runner": "Real Chromium CDP; local resource-constrained profile without Node bridge; unchanged journey_ui_smoke assertions",
+    "coverage": "arrival, welcome, visible walking distance, teleport exclusion, fog/color directions, muted UI, overflow"
+  },
+  "audioScheduler": {
+    "passed": true,
+    "virtualSeconds": 180,
+    "test": "tests/territory-engine.mjs",
+    "limitation": "Recording AudioContext graph; no DSP or listening claim"
+  },
+  "audioDSP": {
+    "passed": null,
+    "test": "tests/journey_mix.py",
+    "status": "Blocked: Chromium pthread_create EAGAIN with host thread exhaustion; no metrics produced; execute in CI before integration"
+  },
+  "physicalPhone": false,
+  "fullSuites": false,
+  "ciAndDeploy": "not claimed"
+}

@@ -1,3 +1,4 @@
+import {windLevel} from './territory-journey.js';
 import {moveWalker,drawWalker} from './walker-forms.js';
 import {contactEntry} from './contact.js';
 import { movementMultiplier } from './gravity.js';
@@ -60,10 +61,9 @@ export function initialize(runtime) {
       }
       if(runtime.S.mode==="camino"&&!runtime.isFree()&&runtime.MU.still>25&&!runtime.idleSaid&&runtime.S.help.camino){runtime.idleSaid=true;runtime.say(runtime.VOZ.idle);}
     }
-    if(runtime.windG)runtime.windG.gain.setTargetAtTime(runtime.inWorld()&&(runtime.BI().id==="dunas"||(runtime.MU.dnaT&&runtime.MU.dnaT.air==="polvo"))?runtime.MU.speed*.012:0,runtime.ac.currentTime,.8);
-    if(runtime.windF)runtime.windF.frequency.setTargetAtTime(260+runtime.MU.speed*550,runtime.ac.currentTime,.8);
+    if(runtime.windG)runtime.windG.gain.setTargetAtTime(runtime.inWorld()&&(runtime.BI().id==="dunas"||(runtime.MU.dnaT&&runtime.MU.dnaT.air==="polvo"))?windLevel(runtime.MU.speed,runtime.MU.E):0,runtime.ac.currentTime,.8);
+    if(runtime.windF)runtime.windF.frequency.setTargetAtTime(180+runtime.MU.speed*220,runtime.ac.currentTime,.8);
 
-    runtime.profileTick?.(runtime.activeFrameSeconds,modal);
     runtime.surpriseTick?.(dt,modal);
     runtime.navigationTick?.();
     runtime.initiativeTick?.(dt,sp>.01,modal);
@@ -79,6 +79,7 @@ export function initialize(runtime) {
     runtime.drawDistantColors?.();
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
+    runtime.profileTick?.(runtime.activeFrameSeconds,modal);
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.drawDuet?.();runtime.petTick?.(dt);runtime.drawPet?.(t);
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
@@ -122,7 +123,7 @@ export function initialize(runtime) {
         if(air==="polvo"){x=((s.x*runtime.W*3+t*(.05+runtime.MU.speed*.12)*(1+z)-runtime.camX*z)%runtime.W+runtime.W)%runtime.W;y=((s.y*runtime.H*2+Math.sin(t/900+i)*8-runtime.camY*z)%runtime.H+runtime.H)%runtime.H;col=pal.sand;al=.22;w=2;}
         else if(air==="esporas"){x=((s.x*runtime.W*2+Math.sin(t/2500+i)*20-runtime.camX*z)%runtime.W+runtime.W)%runtime.W;y=((s.y*runtime.H*2-t*.012*(1+z)-runtime.camY*z)%runtime.H+runtime.H)%runtime.H;col=pal.acc;al=.12+.2*Math.max(0,Math.sin(t/600+i));w=h=2;}
         else if(air==="ceniza"){x=((s.x*runtime.W*2+t*.006-runtime.camX*z)%runtime.W+runtime.W)%runtime.W;y=((s.y*runtime.H*2+t*.02*(1+z)-runtime.camY*z)%runtime.H+runtime.H)%runtime.H;col="#9a9a9f";al=.22;w=h=2;}
-        else{x=((s.x*runtime.W*2+t*.004-runtime.camX*.3)%runtime.W+runtime.W)%runtime.W;y=((s.y*runtime.H*2-runtime.camY*.3)%runtime.H+runtime.H)%runtime.H;const g=runtime.cx.createRadialGradient(x,y,0,x,y,160);g.addColorStop(0,"rgba(200,200,210,.07)");g.addColorStop(1,"rgba(200,200,210,0)");runtime.cx.globalAlpha=1;runtime.cx.fillStyle=g;runtime.cx.fillRect(x-160,y-160,320,320);continue;}
+        else{x=((s.x*runtime.W*2+t*.004-runtime.camX*.3)%runtime.W+runtime.W)%runtime.W;y=((s.y*runtime.H*2-runtime.camY*.3)%runtime.H+runtime.H)%runtime.H;const g=runtime.cx.createRadialGradient(x,y,0,x,y,160);g.addColorStop(0,'rgba('+[runtime.worldVisibility?.red??150,runtime.worldVisibility?.green??185,runtime.worldVisibility?.blue??225].map(Math.round).join(',')+',.045)');g.addColorStop(1,"rgba(200,200,210,0)");runtime.cx.globalAlpha=1;runtime.cx.fillStyle=g;runtime.cx.fillRect(x-160,y-160,320,320);continue;}
         runtime.cx.globalAlpha=Math.min(1,al);runtime.cx.fillStyle=col;runtime.cx.fillRect(x,y,w,h);}}
   }
   function ambientStars(t,dt,b){const dn=runtime.inWorld()?runtime.MU.dnaT:null,air=dn?dn.air:"claro";
@@ -134,7 +135,7 @@ export function initialize(runtime) {
   }
 
   function caminoStep(t,dt,dx,dy,b){
-    if(dx||dy){runtime.S.px+=dx*runtime.SPEED*dt;runtime.S.py+=dy*runtime.SPEED*dt;}
+    if(dx||dy){runtime.S.px+=dx*runtime.SPEED*dt;runtime.S.py+=dy*runtime.SPEED*dt;runtime.recordWalk?.(Math.hypot(dx,dy)*runtime.SPEED*dt);}
     if(!runtime.lastTrail||Math.hypot(runtime.S.px-runtime.lastTrail[0],runtime.S.py-runtime.lastTrail[1])>22){runtime.lastTrail=[Math.round(runtime.S.px),Math.round(runtime.S.py)];runtime.S.trail.push(runtime.lastTrail);if(runtime.S.trail.length>4000)runtime.S.trail=runtime.S.trail.filter((_,i)=>i%2===0);}
     runtime.camX=runtime.S.px;runtime.camY=runtime.S.py;
     const free=runtime.isFree(), R=runtime.lightR()*(1+b*.04), sz=runtime.pxSize(), ox=runtime.W/2-runtime.S.px, oy=runtime.H/2-runtime.S.py;
@@ -166,7 +167,7 @@ export function initialize(runtime) {
   function worldStep(t,dt,dx,dy,b,paused=false,movementSpeed=runtime.SPEED){
     const sz=runtime.pxSize(),ds=Math.min(sz,22);
     if(runtime.MU.anomaly==='invertida'){dx=-dx;dy=-dy;}   // rareza: arriba es abajo
-    if(dx||dy){runtime.S.wx+=dx*movementSpeed*dt;runtime.S.wy+=dy*movementSpeed*dt;}
+    if(dx||dy){runtime.S.wx+=dx*movementSpeed*dt;runtime.S.wy+=dy*movementSpeed*dt;runtime.recordWalk?.(Math.hypot(dx,dy)*movementSpeed*dt);}
     runtime.camX=runtime.S.wx;runtime.camY=runtime.S.wy;
     if(!paused&&!runtime.scanning)runtime.sessionTime(dt);
     const z=runtime.biomeOfPos(runtime.S.wx,runtime.S.wy),rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);

@@ -1,3 +1,4 @@
+import {createTerritoryJourney,approachJourneyTempo} from './territory-journey.js';
 import {approachTempo,transitionGain,sparseFoundationGain} from './territory-transition.js';
 import {createMusicalConductor} from './musical-conductor.js';
 import {phraseAccent} from './composition.js';
@@ -37,10 +38,15 @@ export function initialize(runtime) {
   const MU={deg:0,pending:false,dist:0,E:0,act:0,still:0,dirY:0,speed:0,mel:69,motif:[],lastNoteStep:-999,step:0,next:0,queue:[],bq:[],cell:CELLS[0],lastChange:0,
     biome:0,biomeT:0,tr:0,sq:[],nb:null,nbW:0,prevKit:null,xf0:-999,bpmFrom:96,dnaA:null,dnaT:null,q8:[],near:[],singers:[],vari:-1,timbre:0,follower:false,voices:[57,60,64,67],resp:false,layers:new Set(),flowers:[],boltAt:0,groove:0};
   const living=()=>!runtime.labClassicMusic&&(runtime.unifiedMusic===true||!!runtime.labLiveMusic||runtime.S.livingMusic!==false);
-  const radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN,{living});
-  const neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN,{living});
+  let radio = createRadio(runtime.seedOf, runtime.rng, runtime.GEN,{living});
+  let neighborRadio=createRadio(runtime.seedOf,runtime.rng,runtime.GEN,{living});
   MU.radio = null;MU.neighborRadio=null;
   let enteredAt=-Infinity;const conductor=createMusicalConductor(),conducted=()=>runtime.unifiedMusic===true&&runtime.inWorld?.()===true&&!runtime.labMode&&!runtime.duetRoom;
+  const journey=createTerritoryJourney();let journeyOwner=null,journeyLayer=null,journeyFrame=null;
+  const journeyEnabled=()=>conducted()&&!!runtime.readTerritoryField&&(runtime.S.layer||'superficie')==='superficie';
+  const musicNeighbor=()=>journeyFrame?journeyFrame.secondary:MU.nb;
+  const musicBlend=()=>journeyFrame?journeyFrame.from+(journeyFrame.to-journeyFrame.from)*(MU.step%16)/16:MU.nbW;
+  function resetMusicJourney(){journey.reset();journeyOwner=null;journeyFrame=null;}
   let arrangementAir=1,productionRooms=null;
   const OUTPUT_BOOST=1.5,LOUD=5.6*OUTPUT_BOOST;   // requested lift before limiter/peak guard
   let ac=null,fx=null,master,mixInput,mfilt,punch,presence,makeup,limiter,clipper,comfortShelf,comfortLowpass,subsonic,headroom,bus,delay,dfb,dsend,verbIn,drone,droneG,noiseBuf,windG,windF;
@@ -56,6 +62,7 @@ export function initialize(runtime) {
   }
   function impulse(sec){const n=ac.sampleRate*sec|0,b=ac.createBuffer(2,n,ac.sampleRate);for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);}return b;}
   function audio(){
+    if(!ac&&runtime.S.sound===false)return;
     if(!ac){
       try{ac=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return;}
       // iPhone: sonar como música (volumen multimedia y aunque el interruptor de silencio esté activo).
@@ -202,9 +209,17 @@ export function initialize(runtime) {
     const s=MU.step%16,k=style(),calm=runtime.isFree()&&runtime.S.mode==="camino";
     const live=runtime.inWorld()||runtime.S.mode==="studio";
     if(s===0){
-      if(MU.biome!==MU.biomeT||MU.dnaA!==MU.dnaT){if(conducted()&&MU.dnaA&&MU.dnaT&&MU.dnaA.key!==MU.dnaT.key)enteredAt=MU.step>>4;MU.biome=MU.biomeT;MU.dnaA=MU.dnaT;MU.tr=BI().tr+(MU.dnaA?MU.dnaA.trOff:0);MU.pending=true;MU.harmonyRegion=null;}
-      const nb=runtime.inWorld()?MU.nb:null,w=nb?MU.nbW:0;
-      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;let target=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld())target+=MU.seasonBpm||0;if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)target=Math.round(target*.55);BPM=runtime.duetBPM?.()||(conducted()&&enteredAt>-Infinity?approachTempo(BPM,target):target);SIX=60/BPM/4;runtime.tempoCue?.({time:t,bpm:BPM,target,region:MU.dnaA?.key});delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
+      let desired=MU.dnaT,biome=MU.biomeT;
+      if(journeyEnabled()){
+        if(journeyOwner!==runtime.S||journeyLayer!==runtime.S.layer){resetMusicJourney();journeyOwner=runtime.S;journeyLayer=runtime.S.layer;}
+        journeyFrame=journey.advance(runtime.readTerritoryField(),MU.step>>4);
+        if(journeyFrame.swap)[radio,neighborRadio]=[neighborRadio,radio];
+        desired=journeyFrame.primary;biome=desired.z;
+        runtime.territoryJourneyCue?.({time:t,bar:MU.step>>4,primary:desired.key,secondary:journeyFrame.secondary?.key||null,from:journeyFrame.from,to:journeyFrame.to,swap:journeyFrame.swap,core:journeyFrame.core});
+      }else if(journeyFrame)resetMusicJourney();
+      if(MU.biome!==biome||MU.dnaA!==desired){if(conducted()&&MU.dnaA&&desired&&MU.dnaA.key!==desired.key&&!journeyFrame?.swap)enteredAt=MU.step>>4;MU.biome=biome;MU.dnaA=desired;MU.tr=BI().tr+(MU.dnaA?MU.dnaA.trOff:0);MU.pending=true;MU.harmonyRegion=null;}
+      const nb=runtime.inWorld()?musicNeighbor():null,w=nb?musicBlend():0;
+      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;let target=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld())target+=MU.seasonBpm||0;if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)target=Math.round(target*.55);BPM=runtime.duetBPM?.()||(journeyFrame&&!journeyFrame.initial?approachJourneyTempo(BPM,target):conducted()&&enteredAt>-Infinity?approachTempo(BPM,target):target);SIX=60/BPM/4;runtime.tempoCue?.({time:t,bpm:BPM,target,region:MU.dnaA?.key});delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
       if(!runtime.inWorld()&&(MU.pending||(MU.step-MU.lastChange>16*(6+Math.floor(rnd()*4)))))changeChord(t);
       if(BI().id==="tormenta"&&runtime.inWorld()&&(MU.step/16)%2===0&&rnd()<.75)MU.boltAt=t+SIX*(rnd()<.5?0:8);
     }
@@ -222,14 +237,14 @@ export function initialize(runtime) {
     }else{MU.radio=null;voiceCurator.clear();}
     if(conducted()&&runtime.inWorld()&&MU.dnaA)conductor.remember(t,MU.step,MU.dnaA,MU.deg,SIX,MU.radio?.identity?.swing,chordTones());
     if(runtime.inWorld()){runtime.loopStep?.(s,MU.step,t);runtime.bandStep?.(s,MU.step>>4,t);}   // ecos en bucle y banda de criaturas
-    if(runtime.inWorld()&&MU.nb&&MU.nbW>0){if(s===0||MU.neighborRadio?.key!==MU.nb.key)MU.neighborRadio={...neighborRadio.advance(MU.nb,MU.step>>4),key:MU.nb.key};}else MU.neighborRadio=null;
+    {const neighbor=runtime.inWorld()?musicNeighbor():null;if(neighbor){if(s===0||!MU.neighborRadio)MU.neighborRadio={...neighborRadio.advance(neighbor,MU.step>>4),key:neighbor.key};}else MU.neighborRadio=null;}
     if(s===0)applyComfort(t);
     if(s===0&&runtime.inWorld()&&MU.dnaA)MU.influenced=runtime.shapeInfluence?.(MU.dnaA,MU.radio)||MU.radio;
     // En zonas vacías la música se adelgaza (subida); en un oasis vuelve completa (drop).
     const vitCap=runtime.inWorld()?.16+.7*Math.min(1,(MU.vit??1)/.7):1;
     let E=(calm||runtime.S.mode==="camino")?Math.min(MU.E,.2):Math.min(vitCap,Math.max(MU.E,MU.radio?.energy||0));
     if(runtime.inWorld()&&!calm){if(MU.river)E=Math.max(E,.3+.45*MU.river);if(MU.anomaly==='luna')E=Math.max(E,.85);}   // río abajo sube la energía; la luna lo abre todo
-    const A=live&&MU.dnaA?MU.dnaA:null,G=A?runtime.GEN[A.genre]:runtime.GEN.ambient,nb=runtime.inWorld()&&MU.nb&&MU.nb!==A?MU.nb:null,w=nb?MU.nbW:0;
+    const A=live&&MU.dnaA?MU.dnaA:null,G=A?runtime.GEN[A.genre]:runtime.GEN.ambient,nb=runtime.inWorld()&&musicNeighbor()&&musicNeighbor()!==A?musicNeighbor():null,w=nb?musicBlend():0;
     if(s%4===0){MU.bq.push(t);if(MU.bq.length>8)MU.bq.shift();}
     MU.sq.push({t,s});if(MU.sq.length>12)MU.sq.shift();
     const id=BI().id,cave=id==="cueva",bar=MU.step>>4;
@@ -245,7 +260,7 @@ export function initialize(runtime) {
     if(runtime.inWorld())E=arrangementEnergy(E,runtime.S.musicEnergy);
     const swA=(s%2)?SIX*Math.max(0,Math.min(.38,(MU.radio?.identity?.swing??G.sw??0)+(runtime.influenceState?.values.groove||0)*.035)):0,tt=t+swA+jit(),R=root(),ct=chordTones();
     const xp=runtime.inWorld()?(runtime.experimentalLevel?.()||0):0;   // El aislamiento experimental se conserva solo en laboratorio.
-    const continuous=runtime.unifiedMusic===true&&!runtime.labMode,field=runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie',parts=MU.radio?.labScore?.electronic?.count,foundationGain=(continuous?transitionGain((MU.step>>4)-enteredAt)*sparseFoundationGain(parts):1)*(continuous&&field?(parts<=3?.65:.32):1);
+    const continuous=runtime.unifiedMusic===true&&!runtime.labMode,field=runtime.fieldSolo&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie',parts=MU.radio?.labScore?.electronic?.count,foundationGain=(continuous?transitionGain((MU.step>>4)-enteredAt)*sparseFoundationGain(parts)*(journeyFrame ? .85+.15*journeyFrame.core : 1):1)*(continuous&&field?(parts<=3?.65:.32):1);
     if(live&&!runtime.labSolo&&(continuous||!field)&&(continuous||xp<.7)){   // Production keeps its electronic foundation; deliberate laboratory Solo stays isolated.
       const accompany=()=>{
       if(nb){VW=w*foundationGain;const nt=t+((s%2)?SIX*(MU.neighborRadio?.identity?.swing??runtime.GEN[nb.genre].sw??0):0)+jit();drums(nb.genre,s,bar,t,nt,E,ct,true,MU.neighborRadio);playTrack(nb,s,nt,E,ct,MU.neighborRadio); }
@@ -567,6 +582,7 @@ export function initialize(runtime) {
     dsend: { get: () => dsend, set: value => { dsend = value; } },
     bus: { get: () => bus, set: value => { bus = value; } },
     verbIn: { get: () => verbIn, set: value => { verbIn = value; } },
+    resetMusicJourney: {get:()=>resetMusicJourney},
     windG: { get: () => windG, set: value => { windG = value; } },
     windF: { get: () => windF, set: value => { windF = value; } },
     audio: { get: () => audio },

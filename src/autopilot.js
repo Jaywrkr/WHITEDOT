@@ -36,7 +36,7 @@ export function initialize(runtime){
  function stop(){engine.stop();ui();}
  function start(mode){
   if(!runtime.inWorld()){runtime.toast('<em>Autopilot</em> · Entra al Mundo para iniciar.');return false;}
-  runtime.audio();runtime.navigationTick();const layer=runtime.S.layer||'superficie';
+  if(runtime.S.sound)runtime.audio();runtime.navigationTick();const layer=runtime.S.layer||'superficie';
   if(mode==='destination'&&(!runtime.navigationState?.sameLayer||runtime.navigationState.arrived)){runtime.toast('<em>Autopilot</em> · Elige un destino en esta capa.');return false;}
   if(mode==='wander')runtime.cancelDestination();
   pulses.reset();engine.start(mode,layer,runtime.seedOf(`paseo:${runtime.MU.dnaT?.key}`)/4294967296*Math.PI*2);$('mFavorites').hidden=true;ui();return true;

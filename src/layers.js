@@ -82,7 +82,7 @@ export function initialize(runtime){
   if(L==='bajo'&&!s.under)s.under={x:s.wx/UNDER_SCALE,y:s.wy/UNDER_SCALE};runtime.MU.layer=L;runtime.MU.near=[];runtime.MU.singers=[];
   if(!paused&&!runtime.scanning)runtime.sessionTime(dt);
   if(L==='bajo'){
-   if(dx||dy){s.under.x+=dx*speed*dt;s.under.y+=dy*speed*dt;}s.wx=s.under.x*UNDER_SCALE;s.wy=s.under.y*UNDER_SCALE;
+   if(dx||dy){s.under.x+=dx*speed*dt;s.under.y+=dy*speed*dt;runtime.recordWalk?.(Math.hypot(dx,dy)*speed*dt*UNDER_SCALE);}s.wx=s.under.x*UNDER_SCALE;s.wy=s.under.y*UNDER_SCALE;
    runtime.camX=s.under.x;runtime.camY=s.under.y;const ox=W/2-s.under.x,oy=H/2-s.under.y;layerDNA();
    // Cueva: vetas que brillan con el beat, gotas y columnas de luz que son salidas.
    cx.globalAlpha=1;cx.fillStyle=WORLD_VISUAL.background;cx.fillRect(0,0,W,H);
@@ -97,7 +97,7 @@ export function initialize(runtime){
    if(nearest&&nearest.d<40)surface(nearest.x*UNDER_SCALE,nearest.y*UNDER_SCALE,'<em>Saliste</em> · '+runtime.regionOfPos(nearest.x*UNDER_SCALE,nearest.y*UNDER_SCALE).name);
    else if(nearest&&nearest.d>W*.45){const a=Math.atan2(nearest.y-s.under.y,nearest.x-s.under.x),ex=W/2+Math.cos(a)*W*.45,ey=H/2+Math.sin(a)*H*.45,g=cx.createRadialGradient(ex,ey,0,ex,ey,120);g.addColorStop(0,'rgba(255,230,180,.16)');g.addColorStop(1,'rgba(0,0,0,0)');cx.fillStyle=g;cx.fillRect(ex-120,ey-120,240,240);}
   }else{
-   if(dx||dy){s.wx+=dx*speed*6*dt;s.wy+=dy*speed*6*dt;}runtime.camX=s.wx;runtime.camY=s.wy;layerDNA();
+   if(dx||dy){s.wx+=dx*speed*6*dt;s.wy+=dy*speed*6*dt;runtime.recordWalk?.(Math.hypot(dx,dy)*speed*6*dt);}runtime.camX=s.wx;runtime.camY=s.wy;layerDNA();
    // Vista del continente: cada región es un cuadro; mares oscuros, tierra con el color del continente.
    cx.globalAlpha=1;cx.fillStyle=WORLD_VISUAL.background;cx.fillRect(0,0,W,H);
    const k=1/SKY_SCALE,rp=RP(),cell=rp*k,rx0=Math.floor((s.wx-W/2/k)/rp),ry0=Math.floor((s.wy-H/2/k)/rp),rx1=Math.ceil((s.wx+W/2/k)/rp),ry1=Math.ceil((s.wy+H/2/k)/rp),labels=new Map();

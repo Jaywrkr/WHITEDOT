@@ -1,3 +1,4 @@
+import {territoryInk} from './territory-transition.js';
 import {deviceDetail,fogTarget,blendFog,distanceOpacity,preloadCells,visualHash,DEPTH_PLANES,planePoint} from './world-visibility-model.js';
 export function initialize(runtime){
  let fog=null,owner=null,lastCell='',pending=[],frames=0,averageMs=16.7,slow=0,quality=deviceDetail({memory:navigator.deviceMemory||4,cores:navigator.hardwareConcurrency||4}),hardware=quality,detailQuality=quality,lastPos=null,footprints=[];
@@ -10,7 +11,7 @@ export function initialize(runtime){
   const s=runtime.S,d=runtime.regionOfPos(s.wx,s.wy),biome=runtime.BIOMES[d.z].id;
   const surface=d.sea||biome==='lago'?'agua':biome;if(!groundKinds.size)groundKinds.set(surface,1);else if(!groundKinds.has(surface))groundKinds.set(surface,0);
   for(const [id,value]of groundKinds){const next=value+((id===surface?1:0)-value)*(1-Math.exp(-dt*1.5));if(next<.001&&id!==surface)groundKinds.delete(id);else groundKinds.set(id,next);}
-  const target=fogTarget({biome,air:d.air,storm:runtime.weather?.i||0,seconds:s.livingSeconds||0,phaseOffset:runtime.seedOf('living:climate:v1:'+d.key)%4,lamp:1,layer:s.layer||'superficie',width:runtime.W,height:runtime.H});target.lightRadius=(runtime.eventOf(d)?.[0]==='eclipse'?.6:1)*Math.max(170,Math.min(360,runtime.lightR()*1.1))*(1+Math.min(runtime.shownStreak(),30)/30*.7)*(biome==='cueva'?.6:1);fog=blendFog(fog,target,dt);
+  const target=fogTarget({biome,air:d.air,storm:runtime.weather?.i||0,seconds:s.livingSeconds||0,phaseOffset:runtime.seedOf('living:climate:v1:'+d.key)%4,lamp:1,layer:s.layer||'superficie',width:runtime.W,height:runtime.H,tint:territoryInk(d,'acorde',runtime.seedOf).slice(1).match(/../g).map(h=>parseInt(h,16))});target.lightRadius=(runtime.eventOf(d)?.[0]==='eclipse'?.6:1)*Math.max(170,Math.min(360,runtime.lightR()*1.1))*(1+Math.min(runtime.shownStreak(),30)/30*.7)*(biome==='cueva'?.6:1);fog=blendFog(fog,target,dt);
   const cell=(s.layer||'superficie')+':'+Math.floor(s.wx/runtime.WCH)+','+Math.floor(s.wy/runtime.WCH)+':'+runtime.W+','+runtime.H;
   if(cell!==lastCell){lastCell=cell;pending=preloadCells(s.wx,s.wy,runtime.WCH,runtime.W,runtime.H).filter(([x,y])=>!runtime.wchunks.has(x+','+y));runtime.preloadLiving?.(fog.radius+runtime.WCH);}
   // Bound work per frame; visible cells are already loaded by worldStep.
@@ -51,6 +52,7 @@ export function initialize(runtime){
   g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.18,'rgba(0,0,0,0)');g.addColorStop(.52,'rgba(0,0,0,'+fog.density*.42+')');g.addColorStop(.82,'rgba(0,0,0,.66)');g.addColorStop(1,'#000');c.fillStyle=g;c.fillRect(0,0,runtime.W,runtime.H);
   // Noise darkens existing light; it never paints a grey panel over black space.
   if(detailQuality>.01){c.fillStyle='#000';for(let i=0;i<16;i++){const a=i*Math.PI*2/16+t/180000,rr=reach*(.42+visualHash(i,0,groundSeed)*.35),px=x+Math.cos(a)*rr,py=y+Math.sin(a)*rr;const n=c.createRadialGradient(px,py,0,px,py,reach*.17);n.addColorStop(0,'rgba(0,0,0,'+fog.density*.13*Math.min(1,detailQuality)+')');n.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=n;c.fillRect(px-reach*.17,py-reach*.17,reach*.34,reach*.34);}}
+  const mist=c.createRadialGradient(x,y,reach*.2,x,y,reach*.8),rgb=[fog.red,fog.green,fog.blue].map(Math.round).join(',');mist.addColorStop(0,'rgba('+rgb+',0)');mist.addColorStop(.55,'rgba('+rgb+','+fog.density*.065+')');mist.addColorStop(1,'rgba('+rgb+',0)');c.fillStyle=mist;c.fillRect(x-reach,y-reach,reach*2,reach*2);
   // Emitters at night stay local and underneath the darkness.
   c.restore();
  }

@@ -1,3 +1,5 @@
+import {initialize as returnEntrance} from './return-entrance.js';
+import {initialize as musicTerritories} from './territory-journey.js';
 import {initialize as microInstruments} from './micro-instruments.js';
 import {initialize as playerProfile} from './player-profile.js';
 import {initialize as boxSurprises} from './box-surprises.js';
@@ -106,6 +108,7 @@ Object.defineProperty(runtime,'unifiedMusic',{value:true});
 data(runtime);
 progress(runtime);
 world(runtime);
+musicTerritories(runtime);
 audio(runtime);
 foreground(runtime);
 voices(runtime);walkers(runtime);
@@ -183,6 +186,7 @@ houseAudio(runtime);house(runtime);
 onboarding(runtime);labLearning(runtime);
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
+returnEntrance(runtime);
 // Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.
 setTimeout(()=>{try{runtime.regionOfPos(5*runtime.REG*runtime.WCH,0);}catch(e){}},1200);
 setInterval(()=>{runtime.checkDay();if(!runtime.inWorld())runtime.hud();runtime.S.collected=[...runtime.collected];runtime.save();},2000);
