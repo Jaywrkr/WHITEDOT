@@ -1,3 +1,4 @@
+from browser_helpers import keep_place_on_reload
 # Navegador: mesa de efectos. El pad filtra y da espacio, vuelve a limpio al soltar, Fijar lo mantiene, Stop frena y no mueve al pixel.
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -35,7 +36,7 @@ with sync_playwright() as p:
   page.screenshot(path=f'/tmp/whitedot-glass-{label}.png')
   state=page.evaluate('window.__testRuntime.S.glassSites');assert 'glass:0,0' in state
   page.evaluate("()=>{const r=window.__testRuntime,s=r.nearbyGlass(400)[0];r.S.wx=s.x;r.S.wy=s.y;}");page.locator('#w').click(position={'x':size['width']/2,'y':size['height']/2});page.keyboard.down('e');page.wait_for_timeout(250);assert 'Vidrio' in page.locator('#scannerSources').inner_text();page.keyboard.up('e')
-  page.evaluate("()=>{const r=__testRuntime;r.S.arrivalMode='continue';r.save();}")
+  keep_place_on_reload(page)
   page.reload(wait_until='domcontentloaded');page.wait_for_function('window.__testRuntime && window.__testRuntime.S.glassSites["glass:0,0"]')
   assert page.evaluate('window.__testRuntime.S.glassSites["glass:0,0"].angles')==[0,0,0]
   page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-detail="Tu recorrido creativo"] > summary').click();assert 'Vidrios cromáticos' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()

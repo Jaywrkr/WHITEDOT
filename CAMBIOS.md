@@ -1,3 +1,9 @@
+## 2.3.0-alpha.15 · Viaje continuo
+
+Núcleos musicales locales, relevos de ocho compases y mezcla gradual; viento diez veces más leve, niebla coloreada y gradientes que orientan hacia núcleos reales. Cada apertura automática busca una región no usada; regresos deliberados intactos. Distancia caminada siempre visible, sin contar saltos, y bienvenida breve para jugadores que vuelven. Se preservan progreso y coordenadas históricas.
+
+Ver PLAN_VIAJE_Y_REACCIONES.md y scripts/viaje-01-validation.json. Navegador real en tres tamaños y programación del motor comprobados. Renders de audio pendientes por agotamiento de hilos de Chromium; no se afirma escucha, CI completo ni deploy.
+
 ## 2.3.0-alpha.14 · Cierre de mejora integral
 
 Rama `mejora/10-cierre`, desde `6bc180d`. Cierra las diez mejoras existentes sin ampliar catálogos. Casa recalcula habitaciones al cambiar los días, conservando objetos y datos futuros. El cubo mantiene 70 px de dibujo. Las entradas del Camino y Mundo respetan sonido apagado sin preparar audio. Los recorridos de CI distinguen llegada aleatoria, regreso deliberado, tarjetas abiertas y carga asíncrona de imágenes; mantienen sus aserciones.

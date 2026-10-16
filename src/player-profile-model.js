@@ -10,14 +10,15 @@ export function normalizeProfile(raw,at=new Date().toISOString()){
 }
 export function createProfileTracker(){
  let previous=null,owner=null,counted=false;
- return {reset(){previous=null;owner=null;counted=false;},tick(profile,s,{dt,active=true,maxSpeed=800,worldKey=''}={}){
+ return {reset(){previous=null;owner=null;counted=false;},tick(profile,s,{dt,active=true,maxSpeed=800,worldKey='',walkedUnits=null}={}){
   if(owner!==s){owner=s;previous=null;counted=false;}
   const point={x:s.mode==='camino'?s.px:s.wx,y:s.mode==='camino'?s.py:s.wy,mode:s.mode,layer:s.layer||'superficie',world:worldKey};
   const valid=Number.isFinite(point.x)&&Number.isFinite(point.y),seconds=Number.isFinite(dt)&&dt>0&&dt<=1?dt:0;
   if(profile.version===1&&active&&seconds&&['camino','world','studio'].includes(s.mode)){
    if(!counted){profile.sessions++;counted=true;}
    profile.activeSeconds+=seconds;profile[s.mode==='world'?'worldSeconds':s.mode==='studio'?'houseSeconds':'caminoSeconds']+=seconds;
-   if(valid&&previous&&s.mode!=='studio'&&previous.mode===point.mode&&previous.layer===point.layer&&previous.world===point.world){const distance=Math.hypot(point.x-previous.x,point.y-previous.y);if(distance<=Math.max(0,maxSpeed)*seconds*1.5+4)profile.distanceUnits+=distance;}
+   if(Number.isFinite(walkedUnits)&&walkedUnits>=0&&s.mode!=='studio')profile.distanceUnits+=walkedUnits;
+   else if(walkedUnits===null&&valid&&previous&&s.mode!=='studio'&&previous.mode===point.mode&&previous.layer===point.layer&&previous.world===point.world){const distance=Math.hypot(point.x-previous.x,point.y-previous.y);if(distance<=Math.max(0,maxSpeed)*seconds*1.5+4)profile.distanceUnits+=distance;}
   }
   previous=active&&seconds&&valid?point:null;
  }};

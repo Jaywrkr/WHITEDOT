@@ -14,3 +14,8 @@ const identity=worldIdentity('', 'classic'),defaults={mode:'camino',wx:0,wy:0,st
 console.log('PASS persistent local profile, active-only counters, real walking without teleports, future formats, safe labels and backup roundtrip');
 
 const futureBook={version:9,found:{'rhythm:stone':{day:'2026-10-16'},'future:voice':{earned:1}}};const originalBook=JSON.stringify(futureBook);assert.equal(profileSummary({elementBook:futureBook}).elements,1);assert.equal(JSON.stringify(futureBook),originalBook);
+
+const walked=normalizeProfile({distanceUnits:123}),explicit=createProfileTracker(),body={mode:'world',wx:0,wy:0};
+explicit.tick(walked,body,{dt:.05,walkedUnits:0});body.wx=1;explicit.tick(walked,body,{dt:.05,walkedUnits:0});assert.equal(walked.distanceUnits,123,'even a one-unit teleport counts nothing');
+body.wx=999999;explicit.tick(walked,body,{dt:.05,walkedUnits:5});assert.equal(walked.distanceUnits,128,'only the actual movement integrator contributes');
+explicit.tick(walked,body,{dt:.05,active:false,walkedUnits:99});assert.equal(walked.distanceUnits,128);body.layer='cielo';explicit.tick(walked,body,{dt:.05,walkedUnits:60});assert.equal(walked.distanceUnits,188,'fast layers count actual movement without a teleport heuristic');

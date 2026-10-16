@@ -1,3 +1,4 @@
+from browser_helpers import keep_place_on_reload
 # Navegador: mesa de efectos. El pad filtra y da espacio, vuelve a limpio al soltar, Fijar lo mantiene, Stop frena y no mueve al pixel.
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -54,7 +55,7 @@ with sync_playwright() as p:
   assert page.evaluate('JSON.stringify(window.__testRuntime.S.mirrorSites["mirror:0,0"])')==saved
   page.evaluate("()=>{const r=window.__testRuntime,m=r.nearbyMirrors(300)[0].mirrors[0];r.S.wx=m.x;r.S.wy=m.y;}")
   page.locator('#w').click(position={'x':30,'y':200});page.keyboard.down('e');page.wait_for_timeout(250);assert 'Espejo musical' in page.locator('#scannerSources').inner_text();page.keyboard.up('e')
-  page.evaluate("()=>{const r=__testRuntime;r.S.arrivalMode='continue';r.save();}")
+  keep_place_on_reload(page)
   page.reload(wait_until='domcontentloaded');page.wait_for_function('window.__testRuntime?.S.mirrorSites["mirror:0,0"]?.solved')
   page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-detail="Tu recorrido creativo"] > summary').click();assert 'Espejos musicales' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
   page.evaluate('window.__testRuntime.audio()');page.wait_for_function('window.__testRuntime.ac.state==="running"')

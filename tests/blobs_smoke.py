@@ -1,7 +1,7 @@
 # Navegador: mesa de efectos. El pad filtra y da espacio, vuelve a limpio al soltar, Fijar lo mantiene, Stop frena y no mueve al pixel.
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-import os, shutil, threading
+import os, shutil, threading, json
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,7 +32,11 @@ with sync_playwright() as p:
   page.evaluate('window.__testRuntime.S.wx+=400');page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('#seedCenter').click();page.wait_for_function('window.__testRuntime && window.__testRuntime.S.wx===window.__testRuntime.REG*window.__testRuntime.WCH/2')
   page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('[data-seed="blobs-02"]').click();page.wait_for_url('**testSeed=blobs-02*');page.wait_for_function('window.__testRuntime?.S.previewSeed==="blobs-02"')
   second=page.evaluate('()=>{const r=window.__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy);return JSON.stringify([d.z,d.genre,d.track,d.species,d.ground,d.air]);}');assert first!=second
-  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('#seedOriginal').click();page.wait_for_function('window.__testRuntime && !window.__testRuntime.S.previewSeed');assert page.evaluate('localStorage.getItem("pixel-blanco-v4")')==baseline
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click() if not page.locator('details.devbox').evaluate('(el)=>el.open') else None;page.locator('#dSeeds').click();page.locator('#seedOriginal').click();page.wait_for_function('window.__testRuntime && !window.__testRuntime.S.previewSeed');restored=page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4"))');original=json.loads(baseline)
+  for field in ['ach','cat','bag']:
+   for key,value in original.get(field,{}).items():assert restored[field].get(key)==value,(field,key)
+  assert all(star in restored['stars'] for star in original['stars'])
+  assert restored['practiceTravel']['arrivals']>original.get('practiceTravel',{}).get('arrivals',0),'returning from a preview is a new visit; its earned main progress stays intact'
   assert not errors,errors
   print(label+': prototype seed switching, whole-world variation, center, preview save isolation and return to main save PASS',flush=True);c.close();b.close()
 server.shutdown()

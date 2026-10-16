@@ -24,3 +24,5 @@ assert(Math.abs(drawAt(499)-drawAt(501))<.02,'real glyph-to-point transition can
 assert(drawAt(749.9)<.000001,'even a bright lineage must fade before unloading');
 assert.equal(drawAt(750),0);assert.equal(drawAt(751),0);
 console.log('PASS actual lineage rendering fades bright sources and blends the former 500px cutoff');
+
+const red=fogTarget({tint:[220,35,50]}),blue=fogTarget({tint:[30,60,225]}),tinted=blendFog(red,blue,.05);assert(tinted.red<red.red&&tinted.red>blue.red);assert(tinted.blue>red.blue&&tinted.blue<blue.blue);

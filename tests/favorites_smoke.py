@@ -1,3 +1,4 @@
+from browser_helpers import keep_place_on_reload
 # Navegador: mesa de efectos. El pad filtra y da espacio, vuelve a limpio al soltar, Fijar lo mantiene, Stop frena y no mueve al pixel.
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -26,14 +27,16 @@ with sync_playwright() as p:
   page.locator('#favSearch').fill('')
   page.locator('[data-favorite] summary').click();page.locator('[data-favorite] input').fill('Rincón de dub');page.locator('[data-favorite] button').filter(has_text='Renombrar').click()
   point=page.evaluate('window.__testRuntime.favorites[0]');assert point['name']=='Rincón de dub' and point['layer']=='superficie'
-  page.locator('#favoritesClose').click();page.evaluate("()=>{const r=__testRuntime;r.S.arrivalMode='continue';r.save();}");page.reload(wait_until='domcontentloaded')
+  page.locator('#favoritesClose').click();keep_place_on_reload(page);page.reload(wait_until='domcontentloaded')
   page.wait_for_function('window.__testRuntime && window.__testRuntime.favorites.length===1')
   assert page.evaluate('window.__testRuntime.favorites[0].name')=='Rincón de dub'
   page.locator('#bMenu').click();page.locator('#bAch').click();assert 'Rincón de dub' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
   page.locator('#bMenu').click();page.locator('#bFavorites').click();page.screenshot(path=f'/tmp/whitedot-favorites-{label}.png')
   page.locator('[data-favorite] summary').click();page.locator('[data-favorite] button').filter(has_text='Borrar').click();assert page.evaluate('window.__testRuntime.favorites.length')==0
   page.locator('#favoritesClose').click()
-  assert page.evaluate('''()=>{const r=__testRuntime,s=r.S;s.arrivalMode='continue';const before=[s.wx,s.wy];if(r.dailyArrival())throw Error('Continue moved the player');s.arrivalMode='explore';s.destination=null;if(!r.dailyArrival())throw Error('Daily exploration needs a destination');return !r.regionOfPos(s.wx,s.wy).sea&&Math.hypot(s.wx-before[0],s.wy-before[1])>500&&s.practiceTravel.previous.x===before[0];}''')
+  entry=page.evaluate("()=>{const r=__testRuntime,s=r.S;s.arrivalMode='continue';s.destination=null;r.save();return {x:s.wx,y:s.wy,arrivals:s.practiceTravel.arrivals||0};}")
+  page.goto(URL);page.wait_for_function('!!window.__testRuntime?.dailyArrival')
+  assert page.evaluate('''before=>{const r=__testRuntime,s=r.S;return s.practiceTravel.arrivals===before.arrivals+1&&!r.regionOfPos(s.wx,s.wy).sea&&Math.hypot(s.wx-before.x,s.wy-before.y)>500&&s.practiceTravel.previous.x===before.x&&!r.dailyArrival();}''',entry)
   assert not errors,errors
   print(label+': named favorite save, rename, reload, journal, safe text and removal PASS',flush=True);c.close();b.close()
 server.shutdown()

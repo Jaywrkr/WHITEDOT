@@ -1,3 +1,7 @@
+# Prioridad vigente · Viaje y reacciones
+
+Leer PLAN_VIAJE_Y_REACCIONES.md. Fase 1 en `feat/viaje-musical-continuo`, desde `2499e61`, versión alpha.15. `territory-journey.js` conserva radios y frases por bloques; `practice-travel.js` asigna llegadas sin repetir regiones examinadas; perfil recibe movimiento real del integrador; `return-entrance.js` saluda sin audio; `distant-colors.js` señala núcleos reales y protege el centro negro. Renders DSP pendientes por falta de hilos, no confundir grafo de programación con escucha. Evidencia en scripts/viaje-01-validation.json. Sigue fase 2, ecosistemas reactivos, autorizada por Jay. Jay PR/merge; no push a main.
+
 # Mejora integral · fase 10 y cierre
 
 Rama `mejora/10-cierre`, desde `6bc180d`. Cierra las diez mejoras existentes sin ampliar catálogos. Casa recalcula habitaciones al cambiar los días, conservando objetos y datos futuros. El cubo mantiene 70 px de dibujo. Las entradas del Camino y Mundo respetan sonido apagado sin preparar audio. Los recorridos de CI distinguen llegada aleatoria, regreso deliberado, tarjetas abiertas y carga asíncrona de imágenes; mantienen sus aserciones.

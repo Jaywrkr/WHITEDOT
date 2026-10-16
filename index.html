@@ -34,11 +34,13 @@
 </head>
 <body>
 <canvas id="w" aria-label="Mundo del juego"></canvas>
+<div id="returnEntrance" class="modal return-entrance" role="dialog" aria-modal="true" aria-labelledby="returnPhrase" hidden><button id="returnContinue" aria-label="Comenzar a explorar"><svg viewBox="0 0 40 80" aria-hidden="true"><path d="M25 4 12 36h15L14 76"/></svg><span id="returnPhrase"></span></button></div>
 
 <div class="hud">
   <div><div class="day" id="day">DÍA 1</div><div class="place-shortcuts"><button class="era" id="era" aria-label="Abrir tus lugares" disabled>Era I · Pixel</button><button id="quickSave" aria-label="Guardar este lugar" title="Guardar este lugar" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 3h10v18l-5-4-5 4Z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button></div></div>
   <div class="hud-right">
   <small class="element-count" id="elementCount">Elementos 0</small>
+  <small class="walk-distance" id="walkDistance" aria-label="Distancia caminada">Caminado · 0 m</small>
   <div class="stats">
     <div title="Racha">RACHA <b id="streak">0</b></div>
     <div title="Estrellas">★ <b id="starsN">0</b></div>
@@ -162,7 +164,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.14</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.15</span><small id="releaseDeploy">deploy sin registrar</small></div>
     <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>
@@ -334,7 +336,7 @@
  <div class="sheet"><h2 id="favoritesTitle">Favoritos musicales</h2>
  <button id="favReturn" hidden>Volver al punto anterior</button><form id="favForm" class="favorite-form"><label for="favName">Nombre de este punto</label><input id="favName" maxlength="60" autocomplete="off"><button id="favSave" type="submit">Guardar aquí</button></form>
  <p id="favNote"></p>
- <label class="favorite-search" for="favSearch">Buscar lugares</label><input id="favSearch" type="search" placeholder="Nombre, estilo o paisaje" autocomplete="off"><p id="favCount" role="status"></p><details class="favorite-tools"><summary>Códigos y opciones de viaje</summary><label for="arrivalMode">Al entrar otro día</label><select id="arrivalMode"><option value="explore">Descubrir otro lugar</option><option value="continue">Continuar donde estaba</option></select><div class="place-code"><label for="placeCode">Código de lugar</label><input id="placeCode" maxlength="400" autocomplete="off" spellcheck="false" placeholder="Pega un código WD1-…"><div class="row"><button id="placeShare">Copiar código de aquí</button><button id="placeOpen">Abrir código</button></div><small id="placeCodeInfo"></small></div><div class="row"><button id="favStudio" disabled>Orientar al Estudio</button><button id="favWalk">Paseo musical</button></div></details><div id="favoritesBody" class="scroll"></div><div class="row"><button id="favoritesClose">Cerrar</button></div></div>
+ <label class="favorite-search" for="favSearch">Buscar lugares</label><input id="favSearch" type="search" placeholder="Nombre, estilo o paisaje" autocomplete="off"><p id="favCount" role="status"></p><details class="favorite-tools"><summary>Códigos y opciones de viaje</summary><p>Cada visita empieza en otro lugar.</p><select id="arrivalMode" hidden aria-label="Preferencia anterior"><option value="explore">Descubrir otro lugar</option><option value="continue">Continuar donde estaba</option></select><div class="place-code"><label for="placeCode">Código de lugar</label><input id="placeCode" maxlength="400" autocomplete="off" spellcheck="false" placeholder="Pega un código WD1-…"><div class="row"><button id="placeShare">Copiar código de aquí</button><button id="placeOpen">Abrir código</button></div><small id="placeCodeInfo"></small></div><div class="row"><button id="favStudio" disabled>Orientar al Estudio</button><button id="favWalk">Paseo musical</button></div></details><div id="favoritesBody" class="scroll"></div><div class="row"><button id="favoritesClose">Cerrar</button></div></div>
 </div>
 <div id="labBar" class="lab-bar" hidden>
  <div class="lab-head"><button id="labPrev" aria-label="Elemento anterior">‹</button><div class="lab-title"><strong id="labName"></strong><span id="labMeta"></span></div><button id="labNext" aria-label="Elemento siguiente">›</button></div>

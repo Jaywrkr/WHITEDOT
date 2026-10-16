@@ -1,3 +1,4 @@
+import {territoryNucleus} from './territory-journey.js';
 import {labScore} from './lab-score.js';
 import {musicIdentity} from './musical-recipes.js';
 import {livingChunk} from './living-catalog.js';
@@ -27,6 +28,26 @@ export function choosePracticePlace(runtime,random,history=[],festive=false,rece
   if(score>=21&&i>=7&&(!festive||band?.festive))break;
  }return candidates.sort((a,b)=>b.score-a.score)[0]||null;
 }
+// A monotonic spiral allocates each automatic arrival region only once.
+export function arrivalCell(index){
+ if(index===0)return {x:0,y:0};const ring=Math.ceil((Math.sqrt(index+1)-1)/2),side=ring*2,d=(side+1)**2-1-index;
+ if(d<side)return {x:ring-d,y:-ring};if(d<side*2)return {x:-ring,y:-ring+d-side};
+ if(d<side*3)return {x:-ring+d-side*2,y:ring};return {x:ring,y:ring-d+side*3};
+}
+export function nextArrivalPlace(runtime,state){
+ const size=runtime.REG*runtime.WCH,s=runtime.S,origin=Number.isSafeInteger(state.arrivalOrigin?.x)&&Number.isSafeInteger(state.arrivalOrigin?.y)?state.arrivalOrigin:{x:Math.floor(s.wx/size),y:Math.floor(s.wy/size)},start=Number.isSafeInteger(state.arrivalCursor)&&state.arrivalCursor>=1?state.arrivalCursor:1;
+ const current=runtime.regionOfPos(s.wx,s.wy),candidates=[];let cursor=start;
+ for(let n=0;n<96&&candidates.length<8;n++,cursor++){
+  if(!Number.isSafeInteger(cursor+1))break;
+  const cell=arrivalCell(cursor),rx=origin.x+cell.x,ry=origin.y+cell.y;
+  if(Math.abs(rx*size)>1e12-size||Math.abs(ry*size)>1e12-size)continue;
+  const d=runtime.regionOfPos((rx+.5)*size,(ry+.5)*size);if(d.sea)continue;
+  const point=territoryNucleus(rx,ry,size,runtime.seedOf),identity=musicIdentity(d,runtime.seedOf,runtime.rng,runtime.GEN),band=labScore(d,runtime.seedOf,runtime.rng),sound=practiceSoundIdentity(band,identity);
+  const score=(d.genre!==current.genre?6:0)+(d.worldFamily?.id!==current.worldFamily?.id?3:0)-(state.sounds.includes(sound)?8:0)+(runtime.seedOf('arrival:contrast:v1:'+d.key)%100)/100;
+  candidates.push({...point,layer:'superficie',region:d,identity,band,score});
+ }
+ const point=candidates.sort((a,b)=>b.score-a.score)[0];return point?{point,origin,cursor}:null;
+}
 export function initialize(runtime){
  const $=runtime.$;let counter=0;runtime.S.practiceTravel=normalizePracticeTravel(runtime.S.practiceTravel);
  const blocked=()=>runtime.S.practiceTravel?.version>1||!!runtime.duetRoom||!!runtime.setRecording||!!runtime.jam?.loop?.rec||!!runtime.jam?.loop?.armed||!!runtime.scanning;
@@ -37,7 +58,7 @@ export function initialize(runtime){
   runtime.S.wx=point.x;runtime.S.wy=point.y;runtime.S.layer=point.layer;runtime.S.practiceTravel=state;runtime.S.destination=null;
   // Persist the complete destination before changing queues, URL or navigation.
   if(!runtime.save()){Object.assign(runtime.S,old);ui();return false;}
-  prepare?.();runtime.stopAutopilot?.();runtime.ptr=null;runtime.S.destination=null;runtime.S.wx=point.x;runtime.S.wy=point.y;runtime.S.layer=point.layer;
+  runtime.resetMusicJourney?.();prepare?.();runtime.stopAutopilot?.();runtime.ptr=null;runtime.S.destination=null;runtime.S.wx=point.x;runtime.S.wy=point.y;runtime.S.layer=point.layer;
   runtime.MU.dnaT=runtime.regionOfPos(point.x,point.y);runtime.MU.near=[];runtime.MU.singers=[];runtime.MU.nb=null;runtime.MU.nbW=0;runtime.MU.radio=null;runtime.MU.influenced=null;runtime.MU.neighborRadio=null;
   runtime.MU.layers=new Set();runtime.MU.flowers=[];runtime.MU.boltAt=0;runtime.MU.q8?.splice(0);runtime.MU.queue?.splice(0);
   runtime.waves.length=0;runtime.clearSoundCues?.();runtime.clearMusicalFrames?.();runtime.curRegion=null;runtime.RP=null;
@@ -58,18 +79,19 @@ export function initialize(runtime){
  let arrived=false;
  function dailyArrival(){
   const s=runtime.S,params=new URLSearchParams(globalThis.location?.search||'');
-  if(arrived||blocked()||s.arrivalMode==='continue'||!s.help?.mundo||s.previewSeed||s.destination||runtime.arrivedByAddress||params.has('addr')||!runtime.save())return false;
+  if(arrived||blocked()||!s.help?.mundo||s.previewSeed||runtime.arrivedByAddress||params.has('addr')||!runtime.save())return false;
   const state=normalizePracticeTravel(s.practiceTravel),serial=Number.isSafeInteger(state.arrivals)?state.arrivals:0;
-  const point=choosePracticePlace(runtime,runtime.rng(runtime.seedOf(`travel:arrival:v2:${s.todayKey}:${serial}`)),state.recent,serial%3===2,state.sounds);
-  if(!point)return false;
+  const allocated=nextArrivalPlace(runtime,state);if(!allocated)return false;const {point,origin,cursor}=allocated;
+  state.arrivalOrigin=origin;state.arrivalCursor=cursor;
   state.previous={x:s.wx,y:s.wy,layer:s.layer||'superficie'};state.arrivals=serial+1;
   state.recent=[...state.recent,point.identity.id+'~'+(point.hybrid?.id||'native')].slice(-8);
   state.sounds=[...state.sounds,practiceSoundIdentity(point.band,point.identity)].slice(-8);
-  if(!move(point,state,null,false))return false;arrived=true;return true;
+  const path={px:s.px,py:s.py};if(s.mode==='camino'){s.px+=(runtime.REG*runtime.WCH)*(.2+serial%5*.05);s.py=runtime.pathY(s.px);}
+  if(!move(point,state,null,false)){Object.assign(s,path);return false;}arrived=true;return true;
  }
  // A new document is a fresh visit. Background/resume never runs this again.
  // Explicit addresses and preview saves retain their exact coordinates.
- if(runtime.inWorld()&&runtime.scopeHadSave)dailyArrival();
+ if(runtime.scopeHadSave)dailyArrival();
  $('bJump').onclick=jump;$('bJumpBack').onclick=back;setInterval(ui,250);ui();
  Object.defineProperties(runtime,{canPracticeTravel:{get:()=>()=>!blocked()&&!runtime.duetRoom},travelPracticePoint:{get:()=>travel},dailyArrival:{get:()=>dailyArrival},jumpPracticePlace:{get:()=>jump},returnPracticePlace:{get:()=>back}});
 }

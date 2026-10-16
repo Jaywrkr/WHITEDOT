@@ -42,7 +42,7 @@ label,summary{font-size:13px}
 .list .got .px{background:var(--ink);border-color:var(--ink)}
 .list .life.got .px,.list .q .px{background:var(--earned);border-color:var(--earned)}
 
-/* HUD: the day and its light. Version, counters and streak live in the menu and the journal. */
+/* HUD: day and walking distance. Detailed counters remain in the journal. */
 .hud-right{display:none}
 .day{font-size:22px;letter-spacing:.02em}
 .era,body.world-focus .era{color:var(--dim)}
@@ -318,3 +318,15 @@ body:has(#voice.on:not([hidden])) .first-journey-hint{visibility:hidden}
 
 /* The preview keeps its full drawing area inside the scrollable editor. */
 .cube-preview{min-height:71px}.cube-sheet>.panel-heading,.cube-sheet>.row:last-child{flex-shrink:0}
+
+/* Returning is brief and silent; the universe remains the main interface. */
+.walk-distance{color:#ffffff80;font-size:10px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.modal.return-entrance{padding:0;background:#000;z-index:120}
+.return-entrance button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;width:100%;height:100%;border:0;background:#000;color:#fff;font:400 12px "Geist Mono",monospace;letter-spacing:.04em}
+.return-entrance svg{width:24px;height:48px;fill:none;stroke:#fff;stroke-width:1;stroke-dasharray:100;animation:return-light 1.4s ease-out both}
+.return-entrance span{animation:return-copy 1.4s ease-out both}
+@keyframes return-light{0%{stroke-dashoffset:100;opacity:0}35%{stroke-dashoffset:0;opacity:1}100%{opacity:.35}}
+@keyframes return-copy{0%,12%{opacity:0;transform:translateY(3px)}40%,100%{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.return-entrance svg,.return-entrance span{animation:none}}
+
+.hud-right{display:flex;flex-direction:column;align-items:flex-end}.hud-right>.element-count,.hud-right>.stats{display:none}.walk-distance{display:block;color:#ffffffb3;font-size:11px;line-height:1.5}
