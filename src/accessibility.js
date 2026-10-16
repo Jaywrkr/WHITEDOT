@@ -36,7 +36,7 @@ export function initialize(runtime){
   }
   isolate();const active=open();
   if(active&&(changed||!active.contains(document.activeElement)))(active.querySelector('h2')||controls(active)[0])?.focus({preventScroll:true});
-  else if(!active){const target=closedTarget;if(target?.isConnected&&!target.closest('[inert]')&&target.getClientRects().length&&getComputedStyle(target).visibility!=='hidden')target.focus({preventScroll:true});else canvas.focus({preventScroll:true});}
+  else if(!active){const target=closedTarget;if(target?.isConnected&&target!==document.body&&target!==document.documentElement&&!target.closest('[inert]')&&target.getClientRects().length&&getComputedStyle(target).visibility!=='hidden')target.focus({preventScroll:true});else canvas.focus({preventScroll:true});}
  });
  for(const dialog of dialogs)observer.observe(dialog,{attributes:true,attributeFilter:['hidden','data-inspect']});
  runtime.$('bMenu').setAttribute('aria-haspopup','dialog');

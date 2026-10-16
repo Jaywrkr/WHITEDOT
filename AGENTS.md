@@ -13,7 +13,7 @@ El ciclo anterior [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md) queda integrado por
 
 ## Leer primero
 
-1. [PLAN_DIRECCION_MUSICAL.md](PLAN_DIRECCION_MUSICAL.md): ciclo actual y entregas.
+1. [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md): ciclo actual y entregas.
 2. [CIERRE_EXPERIENCIA.md](CIERRE_EXPERIENCIA.md): auditoría, integración y prueba móvil.
 3. [README.md](README.md) y [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md): mapa técnico vigente.
 4. [PLAN_2.0.md](PLAN_2.0.md): decisiones y estados anteriores; su cabecera remite al ciclo actual.
@@ -22,7 +22,7 @@ El ciclo anterior [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md) queda integrado por
 
 ## Flujo de ramas (obligatorio)
 
-- Una rama por fase del plan vigente. Para el pulido actual, nombres de `PLAN_DIRECCION_MUSICAL.md`, desde `main` actualizado o desde la fase de la que dependa.
+- Una rama por fase del plan vigente. Para el ciclo actual, nombres de `PLAN_JUEGO_MUSICAL.md`, desde `main` actualizado o desde la fase de la que dependa.
 - Commit y push de la rama. **Jay crea el PR y hace el merge.** No hacer push a `main` ni merges salvo que Jay lo pida explícitamente en ese momento.
 - Continuar con todas las fases ya autorizadas sin esperar confirmación entre ramas. Entregar una rama no detiene la siguiente; un bloqueo externo solo detiene las acciones que dependen de él.
 - Mensajes de commit en inglés, en imperativo, explicando el porqué. Sin identificadores de modelos.
@@ -32,7 +32,7 @@ El ciclo anterior [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md) queda integrado por
 ## Verificación proporcional (acordada con Jay)
 
 - Durante la fase: pruebas enfocadas en los sistemas modificados.
-- Antes del push de una rama: `npm run audit:release`, `npm test` completos y recorridos de navegador de los sistemas afectados. Si cambia música, renders de audio afectados. Para documentación sola no se necesitan navegador ni audio.
+- Acuerdo posterior de Jay: acortar sustancialmente las pruebas. Antes del push: `npm run audit:release`, suites Node afectadas y un recorrido representativo del sistema cambiado. Si cambia sonido, renders afectados. Reutilizar el verde anterior para código intacto. Suites completas una vez en F12; ampliar solo ante fallos o cambios transversales. No desactivar pruebas. Documentación sola no requiere navegador/audio.
 - Antes de integrar/publicar `main`: suite completa de navegador y audio sobre el conjunto final, además de auditoría y lógica. Ejecutarla una vez por conjunto; repetir tras cambios funcionales relevantes o fallos.
 - CI (`.github/workflows/checks.yml`) conserva las suites completas: navegador separado y tres grupos de audio sin omisiones; el check `browser-audio` exige ambos resultados. Un PR con comprobaciones pendientes o fallidas no se integra; que GitHub las imponga depende de las reglas de protección del repositorio.
 - Registrar comandos ejecutados, resultados y qué queda para CI o aceptación manual. No presentar pruebas enfocadas como una ejecución completa.

@@ -12,8 +12,8 @@ threading.Thread(target=server.serve_forever, daemon=True).start()
 URL = f'http://127.0.0.1:{server.server_port}/'
 CHROMIUM = os.environ.get('CHROMIUM_PATH') or shutil.which('chromium') or shutil.which('chromium-browser')
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
  for label,size in [('mobile',{'width':390,'height':844}),('desktop',{'width':1280,'height':800})]:
+  b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(8000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
@@ -30,13 +30,14 @@ with sync_playwright() as p:
   page.wait_for_function('document.getElementById("zDo").textContent.includes("Mar de silencio")')
   page.wait_for_function('window.__testRuntime.MU.vit<.15')
   # Oasis después de un desierto: drop.
-  page.evaluate('''()=>{const r=window.__testRuntime;let o;for(let x=-80;x<80&&!o;x++)for(let y=-80;y<80&&!o;y++){const px=x*900+450,py=y*900+450;if(!r.continents.at(Math.floor(x/4),Math.floor(y/4)).sea&&r.vitalityAt(px,py)>.95)o=[px,py];}r.MU.lowT=20;r.S.wx=o[0];r.S.wy=o[1];r.MU.vit=.9;}''')
-  page.wait_for_function('document.getElementById("phrase").textContent.includes("Oasis")')
+  page.evaluate('''()=>{const r=window.__testRuntime;let o;for(let x=-80;x<80&&!o;x++)for(let y=-80;y<80&&!o;y++){const px=x*900+450,py=y*900+450;if(!r.continents.at(Math.floor(x/4),Math.floor(y/4)).sea&&r.vitalityAt(px,py)>.95)o=[px,py];}window.__oasisBefore=r.S.oasisN||0;r.MU.lowT=20;r.S.wx=o[0];r.S.wy=o[1];r.MU.vit=.9;}''')
+  page.wait_for_function('window.__testRuntime.S.oasisN>window.__oasisBefore')
+  assert page.evaluate('window.__testRuntime.MU.lowT<.1 && window.__testRuntime.MU.E>.65'),'oasis must restore musical energy, even when routine notices are suppressed'
+  assert page.evaluate('window.__testRuntime.S.help.oasis'),'oasis remains explained and remembered'
   # Al llegar a un hito queda registrado.
   page.evaluate('''()=>{const r=window.__testRuntime,lm=r.nearbyLandmarks(9000,1800,8000).find(l=>l.id==='lm:2,0');r.S.wx=lm.x;r.S.wy=lm.y+60;}''')
   page.wait_for_function('!!(window.__testRuntime.S.landmarks||{})["lm:2,0"]')
   page.screenshot(path=f'/tmp/whitedot-landmark-{label}.png')
   assert not errors,errors
-  print(label+': sound horizon panned, silent seas, oasis drop and landmark arrival PASS',flush=True);c.close()
- b.close()
+  print(label+': sound horizon panned, silent seas, oasis drop and landmark arrival PASS',flush=True);c.close();b.close()
 server.shutdown()

@@ -58,7 +58,7 @@ export function initialize(runtime){
  let arrived=false;
  function dailyArrival(){
   const s=runtime.S,params=new URLSearchParams(globalThis.location?.search||'');
-  if(arrived||blocked()||s.arrivalMode==='continue'||!s.help?.mundo||s.previewSeed||s.destination||params.has('addr')||!runtime.save())return false;
+  if(arrived||blocked()||s.arrivalMode==='continue'||!s.help?.mundo||s.previewSeed||s.destination||runtime.arrivedByAddress||params.has('addr')||!runtime.save())return false;
   const state=normalizePracticeTravel(s.practiceTravel),serial=Number.isSafeInteger(state.arrivals)?state.arrivals:0;
   const point=choosePracticePlace(runtime,runtime.rng(runtime.seedOf(`travel:arrival:v2:${s.todayKey}:${serial}`)),state.recent,serial%3===2,state.sounds);
   if(!point)return false;

@@ -25,8 +25,12 @@ try:
   page.evaluate("document.dispatchEvent(new Event('visibilitychange'))");assert page.evaluate('({x:__r.S.wx,y:__r.S.wy,layer:__r.S.layer})')==at
   page.reload();page.wait_for_function('!!window.__r?.dailyArrival');assert page.evaluate('__r.S.practiceTravel.arrivals')==2
   assert page.evaluate('__r.returnPracticePlace()');assert page.evaluate('({x:__r.S.wx,y:__r.S.wy,layer:__r.S.layer})')==at
-  # Return writes an explicit address, which survives reload without arrival replacement.
-  page.reload();page.wait_for_function('!!window.__r?.dailyArrival');assert page.evaluate('({x:__r.S.wx,y:__r.S.wy,layer:__r.S.layer})')==at
+  # WD1 links intentionally encode whole pixels; return itself retains exact floats.
+  page.reload();page.wait_for_function('!!window.__r?.dailyArrival')
+  after=page.evaluate('({x:__r.S.wx,y:__r.S.wy,layer:__r.S.layer})')
+  assert abs(after['x']-at['x'])<=.5
+  assert abs(after['y']-at['y'])<=.5 and after['layer']==at['layer']
+  assert page.evaluate('__r.S.practiceTravel.arrivals')==2,'explicit link does not trigger another arrival'
   assert not errors,errors
   print('PASS native arrivals, silent resume, coordinate return, persisted rewards and addressed reload');browser.close()
 finally:server.shutdown()

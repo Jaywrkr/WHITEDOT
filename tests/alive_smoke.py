@@ -12,8 +12,8 @@ threading.Thread(target=server.serve_forever, daemon=True).start()
 URL = f'http://127.0.0.1:{server.server_port}/'
 CHROMIUM = os.environ.get('CHROMIUM_PATH') or shutil.which('chromium') or shutil.which('chromium-browser')
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
  for label,size in [('mobile',{'width':390,'height':844}),('desktop',{'width':1280,'height':800})]:
+  b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
@@ -40,6 +40,5 @@ with sync_playwright() as p:
   page.wait_for_function('!!window.__testRuntime.MU.confNb && !!window.__testRuntime.S.ach.confluencia')
   page.locator('#bMenu').click();page.locator('#bMap').click();page.locator('#mapClose').click()
   assert not errors,errors
-  print(label+': moving storm with rain and thunder, season card, footprints and camps, confluence mix PASS',flush=True);c.close()
- b.close()
+  print(label+': moving storm with rain and thunder, season card, footprints and camps, confluence mix PASS',flush=True);c.close();b.close()
 server.shutdown()

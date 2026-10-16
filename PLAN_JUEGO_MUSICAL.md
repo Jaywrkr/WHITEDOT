@@ -6,7 +6,7 @@ Versiones: `2.3.0-alpha.1` a `alpha.12`, una por fase. `node scripts/bump-versio
 
 | Fase | Rama | Versión | Estado | Resultado esperado |
 |---|---|---|---|---|
-| 1 · Llegadas variadas | `feat/juego-01-llegadas` | `2.3.0-alpha.1` | Implementada localmente; navegador bloqueado | Contraste musical entre visitas; regreso exacto y guardado seguro. |
+| 1 · Llegadas variadas | `feat/juego-01-llegadas` | `2.3.0-alpha.1` | Implementada y probada; entrega en esta rama | Contraste musical entre visitas; regreso exacto y guardado seguro. |
 | 2 · Instrumentos expresivos | `feat/juego-02-sonido` | `2.3.0-alpha.2` | Pendiente | Articulación y dinámica por rol, percusión variada y mezcla controlada. |
 | 3 · Composición regional | `feat/juego-03-composicion` | `2.3.0-alpha.3` | Pendiente | Motivos, bajos, groove, descansos y arreglos de dos a diez instrumentos. |
 | 4 · Interpretación | `feat/juego-04-interpretacion` | `2.3.0-alpha.4` | Pendiente | Gestos audibles a tiempo, filtros y respuesta visual localizada. |
@@ -21,10 +21,10 @@ Versiones: `2.3.0-alpha.1` a `alpha.12`, una por fase. `node scripts/bump-versio
 
 ## Condiciones de cierre por entrega
 
-- Auditoría de release y todas las suites Node antes de cada push.
+- Acuerdo actualizado de Jay: auditoría rápida, Node afectado y un recorrido representativo por cambio; reutilizar evidencia de código intacto.
 - Navegador de sistemas afectados; audio renderizado si cambia sonido.
 - No reemplazar escucha por métricas. El teléfono físico queda como aceptación externa explícita.
-- Última fase: navegador y audio completos, guardados, rendimiento y revisión musical.
+- Última fase: Node, navegador y audio completos, guardados, rendimiento y revisión musical. Ampliar antes solo si un fallo o cambio transversal lo exige.
 - Una sola pista visible, UI silenciosa, Geist Mono, negro, esquinas rectas; dorado ganado.
 - Retos opcionales: ni penalización de progreso ni recompensas por botones de navegación.
 - Dos a diez instrumentos significa variedad de arreglos; no diez voces tocando sin descanso.
@@ -39,4 +39,4 @@ Minimal: economía, interacción bombo/bajo y evolución tímbrica. Blues electr
 
 ## Evidencia de fase 1
 
-Leer [CIERRE_JUEGO_MUSICAL.md](CIERRE_JUEGO_MUSICAL.md). Lógica y auditoría aprobadas. No hay push: Chromium falla al arrancar por falta de hilos del contenedor. Las fases 2–12 siguen pendientes; no se presentan como implementadas ni se crea una cadena sin verificación. La autorización de Jay para continuarlas sigue vigente.
+Leer [CIERRE_JUEGO_MUSICAL.md](CIERRE_JUEGO_MUSICAL.md). Auditoría y 137 suites Node aprobadas; 13 recorridos enfocados de navegador aprobados. Navegador recuperado con Headless Shell 153 verificado desde npm, aislado del juego. Cada fase siguiente nace de la anterior y conserva su validación propia.

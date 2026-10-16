@@ -15,6 +15,6 @@ try{
  const reopened=runtime();travel(reopened);assert.equal(reopened.S.practiceTravel.arrivals,2);assert.deepEqual(reopened.S.practiceTravel.previous,at);assert.notEqual(reopened.S.wx,at.x);
  assert.equal(reopened.returnPracticePlace(),true);assert.equal(reopened.S.wx,at.x);
  globalThis.location={search:'?addr=explicit'};const linked=runtime(),before=linked.S.wx;travel(linked);assert.equal(linked.S.wx,before,'explicit place is never replaced');
- delete globalThis.location;const stay=runtime();stay.S.arrivalMode='continue';const x=stay.S.wx;travel(stay);assert.equal(stay.S.wx,x);
+ delete globalThis.location;const consumed=runtime();consumed.arrivedByAddress=true;const consumedX=consumed.S.wx;travel(consumed);assert.equal(consumed.S.wx,consumedX,'consumed address still protects arrival');const stay=runtime();stay.S.arrivalMode='continue';const x=stay.S.wx;travel(stay);assert.equal(stay.S.wx,x);
  console.log('PASS contrasting fresh visits, one arrival per document, exact return, earned progress, explicit destination and continue preference');
 }finally{globalThis.setInterval=interval;delete globalThis.location;}

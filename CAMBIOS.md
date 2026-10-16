@@ -1,8 +1,8 @@
-## 2.3.0-alpha.1 · Llegadas y base · entrega local
+## 2.3.0-alpha.1 · Llegadas y base
 
 Llegadas nuevas en visitas reales, con memoria de ocho timbres y contraste de tempo; conserva el punto anterior. Reanudar la misma página, seguir un enlace o abrir una prueba no mueve al jugador. Rechazo de guardado restaura coordenadas antes de cambiar URL/colas. Tarjetas esperan durante grabación; guía tiene prioridad sobre avisos rutinarios. Los metadatos regionales se actualizan aunque el aviso se suprima. Expectativas del laboratorio y repetidos alineadas con el catálogo y diseño vigentes.
 
-Validación: auditoría sin errores/advertencias y 137 suites Node aprobadas. Navegador bloqueado al arrancar Chromium por EAGAIN de hilos heredados; fase sin push y sin declarar aceptación móvil. Ver CIERRE_JUEGO_MUSICAL.md.
+Validación: auditoría sin errores/advertencias y 137 suites Node aprobadas. 13 recorridos enfocados de navegador aprobados, sin atribuir escucha física ni CI/deploy. Se corrigió un enlace consumido durante el arranque y la devolución del foco al cerrar una tarjeta. Ver CIERRE_JUEGO_MUSICAL.md.
 
 ## Avisos tranquilos, imán y percusión · ampliación de cierre 8
 
