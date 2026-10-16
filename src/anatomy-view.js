@@ -6,7 +6,7 @@ export function initialize(runtime){
  const profiles=new WeakMap(),c=runtime.cx;
  const reduce=()=>globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
  function profile(o,definition,d){let a=profiles.get(o);if(!a){a=anatomyOf(definition,d.worldFamily,runtime.seedOf);profiles.set(o,a);}return a;}
- function species(sp,o,x,y,t,beat,blob=false){
+ function paintSpecies(sp,o,x,y,t,beat,blob=false){
   const d=runtime.regionOfPos(o.hx??o.x,o.hy??o.y);
   const visual=nativeVisualDescriptor(sp,d,runtime.seedOf),still=runtime.S.reducedMotion||reduce();
   if(!blob&&visual.style==='pixel'&&runtime.drawSprite){runtime.drawSprite(sp.bits,x,y,sp.cell*(1+o.lit*.3),o.lit>.1?(runtime.musicInk?.(o,sp.role)||'#fff'):elementInk('metal',d.hue));return;}
@@ -18,6 +18,10 @@ export function initialize(runtime){
    phase=still?0:t/(1500+(a.individual%1800))+(o.ph||0);
   c.save();c.translate(x,y);c.scale(visual.width,visual.height);c.strokeStyle=o.lit>.1?(runtime.musicInk?.(o,sp.role)||musicalInk(d.hue,sp.role)):d.worldFamily?.ink||elementInk(d.worldFamily?.material||'air',d.worldFamily?.hue??d.hue);c.lineWidth=1.1;
   drawAnatomy(c,a,Math.min(24,9+(sp.cell||2)*3)*(1+o.lit*.08)*(o.nativeOpenness||1),phase);c.restore();
+ }
+ function species(sp,o,x,y,t,beat,blob=false){
+  if(!runtime.wowObjectTransform)return paintSpecies(sp,o,x,y,t,beat,blob);
+  c.save();c.translate(x,y);runtime.wowObjectTransform(c,o);paintSpecies(sp,o,0,0,t,beat,blob);c.restore();
  }
  function plant(o,x,y,t){
   const d=runtime.regionOfPos(o.x,o.y),shape={hierba:'reeds',flor:'flower',arbusto:'branch',helecho:'branch',junco:'reeds',coral:'network'}[o.pt.t];if(!shape)return false;

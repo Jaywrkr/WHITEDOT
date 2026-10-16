@@ -1,3 +1,7 @@
+## 2.3.0-alpha.27 · Cuaderno vivo 3/20
+
+Los habitantes y especies se inclinan y abren ligeramente al acercarte. Un arco tenue muestra atención en hasta doce fuentes reales; no aparecen objetos nuevos ni sonidos.
+
 ## 2.3.0-alpha.26 · Cuaderno vivo 2/20
 
 Al detenerte quedan tres motas blancas durante 600 ms. Máximo seis; desaparecen al abrir paneles o reducir movimiento. No añaden sonido ni distancia.
