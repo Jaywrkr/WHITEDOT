@@ -1,0 +1,1439 @@
+{
+  "phase": 3,
+  "version": "2.3.0-alpha.7",
+  "base": "48c8293e3428fda9bc7c8d8e4757b07d3b57506a",
+  "summary": "La permanencia sobre nidos de percusi\u00f3n interpreta bombo, caja y hats complementarios; el contacto conserva sus cinco golpes y la articulaci\u00f3n temporal no se filtra a gestos posteriores. Las se\u00f1ales del jugador tienen m\u00e1s contraste que el ambiente y solo sus acciones muestran la etiqueta local. Tres renders usan el m\u00f3dulo real de permanencia, no una imitaci\u00f3n del patr\u00f3n.",
+  "node": {
+    "base": "48c8293e3428fda9bc7c8d8e4757b07d3b57506a",
+    "changes": [
+      "README.md",
+      "index.html",
+      "package.json",
+      "src/feedback.js",
+      "src/micro-instruments-model.js",
+      "src/micro-instruments.js",
+      "src/release-info.js",
+      "sw.js",
+      "tests/audio_mix.mjs",
+      "tests/feedback.mjs",
+      "tests/improvement_mix.py",
+      "tests/micro-instruments.mjs",
+      "tests/micro_instruments_smoke.py"
+    ],
+    "selected": [
+      "anatomy.mjs",
+      "atlas-play.mjs",
+      "ecology.mjs",
+      "element_book.mjs",
+      "experience-collection.mjs",
+      "feedback.mjs",
+      "garden.mjs",
+      "glass_music.mjs",
+      "journal-album.mjs",
+      "journal.mjs",
+      "materia.mjs",
+      "micro-instruments.mjs",
+      "mirrors.mjs",
+      "music-travel.mjs",
+      "musical-conductor.mjs",
+      "musical_character.mjs",
+      "palettes.mjs",
+      "persistent_progress.mjs",
+      "player-profile.mjs",
+      "radio.mjs",
+      "rare_cards.mjs",
+      "references.mjs",
+      "release.mjs",
+      "rhythms.mjs",
+      "scanner.mjs",
+      "session.mjs",
+      "source-budget.mjs",
+      "test-impact.mjs",
+      "version-bump.mjs",
+      "vida.mjs",
+      "voices.mjs"
+    ],
+    "results": [
+      {
+        "test": "anatomy.mjs",
+        "exit": 0,
+        "milliseconds": 380
+      },
+      {
+        "test": "atlas-play.mjs",
+        "exit": 0,
+        "milliseconds": 52
+      },
+      {
+        "test": "ecology.mjs",
+        "exit": 0,
+        "milliseconds": 839
+      },
+      {
+        "test": "element_book.mjs",
+        "exit": 0,
+        "milliseconds": 64
+      },
+      {
+        "test": "experience-collection.mjs",
+        "exit": 0,
+        "milliseconds": 66
+      },
+      {
+        "test": "feedback.mjs",
+        "exit": 0,
+        "milliseconds": 43
+      },
+      {
+        "test": "garden.mjs",
+        "exit": 0,
+        "milliseconds": 49
+      },
+      {
+        "test": "glass_music.mjs",
+        "exit": 0,
+        "milliseconds": 289
+      },
+      {
+        "test": "journal-album.mjs",
+        "exit": 0,
+        "milliseconds": 77
+      },
+      {
+        "test": "journal.mjs",
+        "exit": 0,
+        "milliseconds": 67
+      },
+      {
+        "test": "materia.mjs",
+        "exit": 0,
+        "milliseconds": 686
+      },
+      {
+        "test": "micro-instruments.mjs",
+        "exit": 0,
+        "milliseconds": 111
+      },
+      {
+        "test": "mirrors.mjs",
+        "exit": 0,
+        "milliseconds": 345
+      },
+      {
+        "test": "music-travel.mjs",
+        "exit": 0,
+        "milliseconds": 49
+      },
+      {
+        "test": "musical-conductor.mjs",
+        "exit": 0,
+        "milliseconds": 84
+      },
+      {
+        "test": "musical_character.mjs",
+        "exit": 0,
+        "milliseconds": 236
+      },
+      {
+        "test": "palettes.mjs",
+        "exit": 0,
+        "milliseconds": 558
+      },
+      {
+        "test": "persistent_progress.mjs",
+        "exit": 0,
+        "milliseconds": 183
+      },
+      {
+        "test": "player-profile.mjs",
+        "exit": 0,
+        "milliseconds": 72
+      },
+      {
+        "test": "radio.mjs",
+        "exit": 0,
+        "milliseconds": 2589
+      },
+      {
+        "test": "rare_cards.mjs",
+        "exit": 0,
+        "milliseconds": 85
+      },
+      {
+        "test": "references.mjs",
+        "exit": 0,
+        "milliseconds": 525
+      },
+      {
+        "test": "release.mjs",
+        "exit": 0,
+        "milliseconds": 59
+      },
+      {
+        "test": "rhythms.mjs",
+        "exit": 0,
+        "milliseconds": 533
+      },
+      {
+        "test": "scanner.mjs",
+        "exit": 0,
+        "milliseconds": 63
+      },
+      {
+        "test": "session.mjs",
+        "exit": 0,
+        "milliseconds": 81
+      },
+      {
+        "test": "source-budget.mjs",
+        "exit": 0,
+        "milliseconds": 85
+      },
+      {
+        "test": "test-impact.mjs",
+        "exit": 0,
+        "milliseconds": 34
+      },
+      {
+        "test": "version-bump.mjs",
+        "exit": 0,
+        "milliseconds": 109
+      },
+      {
+        "test": "vida.mjs",
+        "exit": 0,
+        "milliseconds": 548
+      },
+      {
+        "test": "voices.mjs",
+        "exit": 0,
+        "milliseconds": 597
+      }
+    ],
+    "completeSuite": false
+  },
+  "audit": {
+    "version": "2.3.0-alpha.7",
+    "sourceModules": 203,
+    "htmlIDs": 402,
+    "staticImports": 526,
+    "shellAssets": 223,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "browser": {
+    "passed": true,
+    "output": "PASS native destination, cube contact/audio, collection, modal pause, persistence at 390\nPASS native destination, cube contact/audio, collection, modal pause, persistence at 844\nPASS native destination, cube contact/audio, collection, modal pause, persistence at 1280"
+  },
+  "physicalPhone": false,
+  "ciAndDeploy": "not claimed",
+  "fullSuites": false,
+  "audio": {
+    "passed": true,
+    "output": "PASS focused production mixes: recovered lead, contemporary ensemble, synchronized interactions and protected output",
+    "renders": [
+      {
+        "genre": "minimaltechno",
+        "seconds": 10,
+        "sampleRate": 48000,
+        "peak": 0.8725776672363281,
+        "rmsDb": -13.796756057159607,
+        "hotFraction": 0,
+        "motif": "minimal-hush:minimal:1",
+        "movement": 0,
+        "ensemble": 8,
+        "backbone": {
+          "identity": "minimal-hush",
+          "hookI": "phasekeys"
+        },
+        "microNotes": [
+          {
+            "kind": "micro:drum",
+            "instrument": "snare",
+            "role": "perc",
+            "note": 57,
+            "time": 0.10268250123318286,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "hat",
+            "role": "perc",
+            "note": 57,
+            "time": 0.7923076923076925,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": false,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "kick",
+            "role": "perc",
+            "note": 57,
+            "time": 1.0230769230769232,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "kick",
+            "role": "perc",
+            "note": 57,
+            "time": 1.1384615384615386,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "snare",
+            "role": "perc",
+            "note": 57,
+            "time": 1.6000000000000003,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "hat",
+            "role": "perc",
+            "note": 57,
+            "time": 1.8307692307692311,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": false,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "kick",
+            "role": "perc",
+            "note": 57,
+            "time": 2.0615384615384618,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "snare",
+            "role": "perc",
+            "note": 57,
+            "time": 2.5230769230769234,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "hat",
+            "role": "perc",
+            "note": 57,
+            "time": 2.7538461538461543,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": false,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "kick",
+            "role": "perc",
+            "note": 57,
+            "time": 2.984615384615385,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "snare",
+            "role": "perc",
+            "note": 57,
+            "time": 3.446153846153847,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "hat",
+            "role": "perc",
+            "note": 57,
+            "time": 3.6769230769230776,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": false,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "kick",
+            "role": "perc",
+            "note": 57,
+            "time": 3.9076923076923085,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "snare",
+            "role": "perc",
+            "note": 57,
+            "time": 4.369230769230769,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "hat",
+            "role": "perc",
+            "note": 57,
+            "time": 4.599999999999999,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": false,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "kick",
+            "role": "perc",
+            "note": 57,
+            "time": 4.830769230769229,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "snare",
+            "role": "perc",
+            "note": 57,
+            "time": 5.292307692307689,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "hat",
+            "role": "perc",
+            "note": 57,
+            "time": 5.5230769230769186,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": false,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "kick",
+            "role": "perc",
+            "note": 57,
+            "time": 5.7538461538461485,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "snare",
+            "role": "perc",
+            "note": 57,
+            "time": 6.215384615384608,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "hat",
+            "role": "perc",
+            "note": 57,
+            "time": 6.446153846153838,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": false,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "kick",
+            "role": "perc",
+            "note": 57,
+            "time": 6.676923076923068,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "snare",
+            "role": "perc",
+            "note": 57,
+            "time": 7.138461538461528,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "hat",
+            "role": "perc",
+            "note": 57,
+            "time": 7.369230769230758,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": false,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "kick",
+            "role": "perc",
+            "note": 57,
+            "time": 7.599999999999988,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "snare",
+            "role": "perc",
+            "note": 57,
+            "time": 8.061538461538449,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "hat",
+            "role": "perc",
+            "note": 57,
+            "time": 8.292307692307679,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": false,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "kick",
+            "role": "perc",
+            "note": 57,
+            "time": 8.523076923076909,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "snare",
+            "role": "perc",
+            "note": 57,
+            "time": 8.984615384615369,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "hat",
+            "role": "perc",
+            "note": 57,
+            "time": 9.215384615384599,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": false,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "kick",
+            "role": "perc",
+            "note": 57,
+            "time": 9.446153846153829,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:drum",
+            "instrument": "snare",
+            "role": "perc",
+            "note": 57,
+            "time": 9.907692307692288,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          }
+        ],
+        "instruments": {
+          "kick": 32,
+          "fm": 21,
+          "phasekeys": 4,
+          "p_fmharp": 15,
+          "snare": 11,
+          "hat": 27,
+          "wood": 1,
+          "rim": 1,
+          "p_cellobody": 4
+        },
+        "onsets": 32,
+        "maxOnsetError": 0.002682501233182852,
+        "phrasing": {
+          "name": "bridge",
+          "bar": 11,
+          "local": 3,
+          "turn": 0,
+          "energy": 0.78
+        }
+      },
+      {
+        "genre": "garage",
+        "seconds": 10,
+        "sampleRate": 44100,
+        "peak": 0.8730515837669373,
+        "rmsDb": -14.482512731721766,
+        "hotFraction": 0,
+        "motif": "broken-thread:warm:2",
+        "movement": 0,
+        "ensemble": 10,
+        "backbone": {
+          "identity": "broken-thread",
+          "hookI": "rhodes"
+        },
+        "microNotes": [
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 57,
+            "time": 0.09827119957469405,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 64,
+            "time": 1.009090909090909,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              64
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 57,
+            "time": 1.1227272727272726,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 60,
+            "time": 1.5772727272727267,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              60
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 64,
+            "time": 2.031818181818181,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              64
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 62,
+            "time": 2.940909090909091,
+            "tones": [
+              62,
+              65,
+              69,
+              72,
+              76
+            ],
+            "pitches": [
+              62
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 65,
+            "time": 3.395454545454546,
+            "tones": [
+              62,
+              65,
+              69,
+              72,
+              76
+            ],
+            "pitches": [
+              65
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 57,
+            "time": 3.850000000000001,
+            "tones": [
+              62,
+              65,
+              69,
+              72,
+              76
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 62,
+            "time": 4.759090909090908,
+            "tones": [
+              62,
+              65,
+              69,
+              72,
+              76
+            ],
+            "pitches": [
+              62
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 65,
+            "time": 5.213636363636361,
+            "tones": [
+              62,
+              65,
+              69,
+              72,
+              76
+            ],
+            "pitches": [
+              65
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 57,
+            "time": 5.668181818181814,
+            "tones": [
+              62,
+              65,
+              69,
+              72,
+              76
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 62,
+            "time": 6.577272727272721,
+            "tones": [
+              62,
+              65,
+              69,
+              72,
+              76
+            ],
+            "pitches": [
+              62
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 65,
+            "time": 7.031818181818174,
+            "tones": [
+              62,
+              65,
+              69,
+              72,
+              76
+            ],
+            "pitches": [
+              65
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 57,
+            "time": 7.4863636363636274,
+            "tones": [
+              62,
+              65,
+              69,
+              72,
+              76
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 62,
+            "time": 8.395454545454534,
+            "tones": [
+              62,
+              65,
+              69,
+              72,
+              76
+            ],
+            "pitches": [
+              62
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 65,
+            "time": 8.849999999999987,
+            "tones": [
+              62,
+              65,
+              69,
+              72,
+              76
+            ],
+            "pitches": [
+              65
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:arp",
+            "instrument": "resonantpluck",
+            "role": "lead",
+            "note": 57,
+            "time": 9.30454545454544,
+            "tones": [
+              62,
+              65,
+              69,
+              72,
+              76
+            ],
+            "pitches": [
+              57
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          }
+        ],
+        "instruments": {
+          "kick": 15,
+          "organb": 22,
+          "organ": 22,
+          "rhodes": 17,
+          "p_feltmallet": 15,
+          "resonantpluck": 17,
+          "hat": 27,
+          "p_gutguitar": 14,
+          "wood": 3,
+          "snare": 9,
+          "p_softhorn": 2,
+          "p_panreed": 4
+        },
+        "onsets": 17,
+        "maxOnsetError": 0.0017288004253059597,
+        "phrasing": {
+          "name": "statement",
+          "bar": 11,
+          "local": 3,
+          "turn": 0,
+          "energy": 1
+        }
+      },
+      {
+        "genre": "ambient",
+        "seconds": 12,
+        "sampleRate": 48000,
+        "peak": 0.5415022969245911,
+        "rmsDb": -28.014259387437008,
+        "hotFraction": 0,
+        "motif": "ambient-string:ambient:2",
+        "movement": 0,
+        "ensemble": 2,
+        "backbone": {
+          "identity": "ambient-string",
+          "hookI": "bowed"
+        },
+        "microNotes": [
+          {
+            "kind": "micro:poly",
+            "instrument": "mi_poly",
+            "role": "acorde",
+            "note": 57,
+            "time": 0.10323644002713264,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57,
+              60,
+              64
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:poly",
+            "instrument": "mi_poly",
+            "role": "acorde",
+            "note": 57,
+            "time": 1.2538461538461538,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57,
+              60,
+              64
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:poly",
+            "instrument": "mi_poly",
+            "role": "acorde",
+            "note": 57,
+            "time": 4.330769230769233,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57,
+              60,
+              64
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:poly",
+            "instrument": "mi_poly",
+            "role": "acorde",
+            "note": 57,
+            "time": 7.407692307692313,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57,
+              60,
+              64
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          },
+          {
+            "kind": "micro:poly",
+            "instrument": "mi_poly",
+            "role": "acorde",
+            "note": 57,
+            "time": 10.484615384615383,
+            "tones": [
+              57,
+              60,
+              64,
+              67,
+              71
+            ],
+            "pitches": [
+              57,
+              60,
+              64
+            ],
+            "strongBeat": true,
+            "morph": 1,
+            "gridError": 0
+          }
+        ],
+        "instruments": {
+          "bowed": 8,
+          "p_violaswell": 9,
+          "mi_poly": 15
+        },
+        "onsets": 5,
+        "maxOnsetError": 0.0032364400271326366,
+        "phrasing": {
+          "name": "build",
+          "bar": 10,
+          "local": 2,
+          "turn": 0,
+          "energy": 1.03
+        }
+      }
+    ]
+  }
+}

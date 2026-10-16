@@ -31,9 +31,9 @@ export function microChunk(cx,cy,size,region,seedOf,rng){
 }
 export function microVoice(kind,source=null){
  const id=kind.split(':')[1],spec=MICRO_INSTRUMENTS[id];if(!spec)return null;
- const variant=source?.variant||0,drums=['kick','snare','clap','hat','tom'],instrument=id==='drum'?drums[((source?.entry||0)+variant)%drums.length]:spec.instrument;
+ const variant=source?.variant||0,drums=['kick','snare','clap','hat','tom'],held=Number.isInteger(source?.playStep),instrument=id==='drum'?(held?source.playStep%8===0?'kick':source.playStep%8===4?'snare':'hat':drums[((source?.entry||0)+variant)%drums.length]):spec.instrument;
  return {role:spec.role,instrument,degree:id==='arp'?0:variant%3*2,response:4,low:spec.role==='bajo'?33:45,high:spec.role==='bajo'?55:69,volume:id==='grain'?.65:1};
 }
 export function microArticulation(source){const amount=Math.max(0,Math.min(1,Number.isFinite(source?.parameter)?source.parameter:.35));return {pressure:amount,morph:amount,toneScale:.65+amount*.8,decayScale:source?.kind==='slice'?.35:1};}
 export function microKit(region,seedOf){const h=seedOf('micro:kit:v1:'+region.key)>>>0;return {seed:h,kick:39+h%16,body:125+(h>>>5)%95,snap:1600+(h>>>12)%1600,tail:.08+(h>>>18)%7*.015,metal:machine.has(region.genre),dark:calm.has(region.genre)};}
-export function microPattern(kind,variant=0){return kind==='arp'?[0,4,8]:kind==='drum'||kind==='slice'?(variant%2?[0,6,12]:[0,8]):[0];}
+export function microPattern(kind,variant=0){return kind==='arp'?[0,4,8]:kind==='drum'?(variant%2?[0,3,6,10,12,14]:[0,4,6,8,12,14]):kind==='slice'?(variant%2?[0,6,12]:[0,8]):[0];}

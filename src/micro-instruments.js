@@ -43,7 +43,8 @@ export function initialize(runtime){
  function step(s,bar,time){
   if(!active()||!runtime.S.sound||runtime.ac?.state!=='running')return;
   const o=nearby(110)[0];if(!o)return;const distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),held=distance<30&&(o.dwell||0)>.5,pattern=microPattern(o.kind,o.variant);
-  if(held&&pattern.includes(s)){o.charge=1;emit(o,time,'player',o.kind==='arp'?pattern.indexOf(s)*2:0);return;}
+  if(held&&pattern.includes(s)){o.charge=1;const previous=o.playStep;o.playStep=s;
+   try{emit(o,time,'player',o.kind==='arp'?pattern.indexOf(s)*2:0);}finally{if(previous===undefined)delete o.playStep;else o.playStep=previous;}return;}
   if(distance>=30&&distance<100&&s===0&&bar!==lastAmbient&&runtime.currentPocket?.()?.kind!=='quiet'&&claimInstallationBar(runtime,bar)){lastAmbient=bar;emit(o,time,'ambient');}
  }
  function pulse(origin='player'){if(!active())return false;let changed=false;for(const o of nearby(170).slice(0,2))changed=touch(o,origin)||changed;return changed;}

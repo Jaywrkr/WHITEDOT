@@ -1,3 +1,9 @@
+## 2.3.0-alpha.7 · Interpretación
+
+La permanencia sobre nidos de percusión interpreta bombo, caja y hats complementarios; el contacto conserva sus cinco golpes y la articulación temporal no se filtra a gestos posteriores. Las señales del jugador tienen más contraste que el ambiente y solo sus acciones muestran la etiqueta local. Tres renders usan el módulo real de permanencia, no una imitación del patrón.
+
+Auditoría sin errores/avisos; 31 suites Node afectadas y recorrido representativo aprobados; renders afectados aprobados. Evidencia: scripts/mejora-03-validation.json. No afirma escucha física, CI ni deploy.
+
 ## 2.3.0-alpha.6 · Composición y mezcla
 
 Los acompañantes conservan sus instrumentos cuando cambia el solista; solo se sustituye la voz que coincide con él. Los acordes usan la conducción de voces existente en registro medio, dejando espacio al bajo. Se mantienen motivos, tempo, progresiones y límites de mezcla.
