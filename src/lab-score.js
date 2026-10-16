@@ -1,3 +1,4 @@
+import {productionIdentity} from './production-identities.js';
 import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
 import {REFERENCE_GENRES,REFERENCE_STEPS,referenceRhythm} from './references.js';
 import {hybridIdentity} from './musical-hybrids.js';
@@ -46,18 +47,18 @@ export function labScore(region,seedOf,rng){
  const r=rng(seedOf(`lab:band:v1:${territory}:${kind}`)),base=festiveBand(region,seedOf)||pool[Math.floor(r()*pool.length)];
  const individual=rng(seedOf(`lab:individual:v1:${region.key}:${region.genre}`));
  const leads={interlock:['silkpluck','skinpluck','handslap'],silk:['silkpluck','skinpluck','lowbow'],breath:['bamboowind','clayflute','duskpad'],heavy:['feltkeys','lowbow','skinpluck'],warm:['feltkeys','lowbow','duskpad'],pulse:['skinpluck','feltkeys','duskpad']}[base.id]||base.leads;
- const hybrid=hybridIdentity(region,seedOf,rng),native=RHYTHM_GENRES[region.genre]||REFERENCE_GENRES[region.genre],variant=Math.floor(individual()*16),
+ const hybrid=hybridIdentity(region,seedOf,rng),production=productionIdentity(region,seedOf,hybrid),native=RHYTHM_GENRES[region.genre]||REFERENCE_GENRES[region.genre],variant=Math.floor(individual()*16),
   nativeDrums=RHYTHM_GENRES[region.genre]?rhythmPattern(region.genre,variant%3):referenceRhythm(region.genre,variant%3)||BASE_DRUMS[region.genre],
   bassPool=native?.bassP||[region.track?.bassI||'hollow','reedbass','velvetbass'],
-  primary=base.festive?[...leads]:directedLeads(region.genre,leads,[],native?.hookP||[]),
+  primary=[...new Set([...production.leads,...(base.festive?leads:directedLeads(region.genre,leads,[],native?.hookP||[])).slice(0,1)])],
   orchestra=territorialOrchestra(region,primary,base.festive?hybrid?.instruments||[]:directedLeads(region.genre,leads,hybrid?.instruments||[],native?.hookP||[]),seedOf);
  const ensembleSeed=seedOf('territory:ensemble:v1:'+territory+':'+region.genre)>>>0,
   ensemble=['ambient','heart'].includes(region.genre)?1:1+ensembleSeed%3;
- const electronic=electronicEnsemble(region,kind,ensemble,seedOf);
- return Object.freeze({...base,orchestra,ensemble,electronic,leads:Object.freeze([...orchestra.primary,...orchestra.secondary]),
+ const plan=electronicEnsemble(region,kind,ensemble,seedOf),electronic=Object.freeze({...plan,pool:Object.freeze([...new Set([production.comp,production.answer,...plan.pool])])});
+ return Object.freeze({...base,production,orchestra,ensemble,electronic,leads:Object.freeze([...orchestra.primary,...orchestra.secondary]),
   nativeDrums:nativeDrums?Object.freeze(Object.fromEntries(Object.entries(nativeDrums).map(([id,steps])=>[id,Object.freeze([...steps])]))):null,hook:Object.freeze([...(base.festive?base.hook:hybrid?.steps||native?.steps||REFERENCE_STEPS[region.genre]||base.hook)]),
-  bass:Object.freeze([...(native?.bass||region.track?.bass||base.bass)]),version:5,territory,variant,genre:region.genre,
-  bassI:bassPool[Math.floor(individual()*bassPool.length)],
+  bass:Object.freeze([...(native?.bass||region.track?.bass||base.bass)]),version:6,territory,variant,genre:region.genre,
+  bassI:native?.bassP?bassPool[Math.floor(individual()*bassPool.length)]:production.bassI,
   ceiling:region.genre==='ambient'?Math.min(3000,base.ceiling):base.ceiling,
   swing:Math.min(.28,native?.sw??region.track?.swing??base.swing),
   kick:Object.freeze([...(nativeDrums?.kick||(kind==='calm'?[]:kind==='broken'||kind==='bass'?[0,7,10]:FOUR))]),

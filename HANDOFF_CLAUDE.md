@@ -1,3 +1,13 @@
+# Handoff · Dirección musical, fase 2
+
+Rama `feat/musica-02-identidades`, desde F1 `e2876a9`. Jay PR/merge. Plan vigente `PLAN_DIRECCION_MUSICAL.md`.
+
+`production-identities.js`: doce perfiles originales, timbres/comping/respuestas y variaciones por semilla independiente. `lab-score.js` v6 incorpora protagonistas en la orquesta, comping y respuesta en el pool real, y conserva bassP nativo si existe. No modifica ADN del mapa ni BPM. `REFERENCIAS_MUSICALES.md` distingue criterios estilísticos de análisis directo de grabaciones bloqueado por red.
+
+Auditoría, 122 suites Node, cuatro recorridos de navegador y 18 renders aprobados. `scripts/musica-02-audio.json` conserva evidencia compacta; originales de fases anteriores restaurados. Suites completas en F7, escucha física/CI/deploy separados.
+
+## Antecedentes
+
 # Handoff · Dirección musical, fase 1
 
 Plan vigente [PLAN_DIRECCION_MUSICAL.md](PLAN_DIRECCION_MUSICAL.md), siete fases autorizadas el 16 de octubre. Rama `feat/musica-01-motor`, desde `24e0d1a`. Pulido F2–F8 conservado; su cierre F9 pasa a la auditoría musical F7. Codex commit/push; Jay PR/merge. Continuar todas las fases sin confirmaciones.

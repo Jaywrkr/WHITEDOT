@@ -1,5 +1,5 @@
 <!-- direccion-musical-actual -->
-El ciclo vigente es [Dirección musical, siete fases](PLAN_DIRECCION_MUSICAL.md), autorizado el 16 de octubre. Fase 1 musical implementada en `feat/musica-01-motor`. F2–F8 de pulido conservadas; su cierre conjunto continúa en la auditoría musical final.
+El ciclo vigente es [Dirección musical, siete fases](PLAN_DIRECCION_MUSICAL.md), autorizado el 16 de octubre. Fases 1–2 musicales implementadas; actual `feat/musica-02-identidades`. F2–F8 de pulido conservadas; su cierre conjunto continúa en la auditoría musical final.
 <!-- /direccion-musical-actual -->
 
 # Plan WHITEDOT 2.0
