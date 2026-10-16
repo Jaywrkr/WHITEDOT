@@ -33,3 +33,5 @@ for(const disabled of ['mute','path','suspend']){
  r.withVoiceEffect(kinds.echo,region,{role:'lead'},5,()=>assert.equal(r.bus,original.bus));assert.equal(r.activeEffectCount,0);
 }
 console.log('PASS: stable local effects, protected bass/percussion, beat delay, routing restoration, bounded nodes and cleanup');
+r.ac.createWaveShaper=node;r.ac.state='running';r.S.sound=true;r.S.mode='world';r.MU={radio:{labScore:{production:{id:'guitar'}}}};
+r.withVoiceEffect(kinds.dry,region,{role:'lead',instrument:'p_gutguitar'},5,()=>assert.notEqual(r.bus,original.bus));assert(nodes.some(n=>n.curve instanceof Float32Array&&n.oversample==='2x'),'electric guitar source must reach actual saturation');r.ac.currentTime=9;r.effectsTick();assert.equal(r.activeEffectCount,0);assert.equal(r.bus,original.bus);

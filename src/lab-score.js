@@ -1,5 +1,5 @@
 import {arrangementPhrase,phraseNotes,phraseDrums} from './arrangement-phrases.js';
-import {productionIdentity} from './production-identities.js';
+import {productionIdentity,productionPercussion} from './production-identities.js';
 import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
 import {REFERENCE_GENRES,REFERENCE_STEPS,referenceRhythm} from './references.js';
 import {hybridIdentity} from './musical-hybrids.js';
@@ -156,11 +156,9 @@ export function labDrumEvents(score,step,bar,energy){
 // Keep each species' role; territory and individual choose the playing material.
 export function labInteractionVoice(raw,score,kind,source,seedOf){
  if(!score||!raw||kind==='pulso'||kind==='reliquia'||kind.startsWith('heritage:')||kind.startsWith('rhythm:'))return raw;
- const key=source?.id||`${source?.x??0},${source?.y??0}`,h=seedOf(`lab:gesture:v1:${score.id}:${kind}:${key}`),
-  pool=raw.role==='bajo'?['reedbass','velvetbass','hollow']:raw.role==='perc'?score.id==='heavy'?['acousticsnare','skinbass','handslap']:['skinbass','handslap','wood']:
-   raw.role==='acorde'?['duskpad','lowbow','feltkeys']:score.leads,
-  festivePools={bajo:['p_roundbass','p_woodybass'],perc:['p_claypot','p_seedshake','p_woodrim'],acorde:['p_fogorgan','p_velvetchoir']},
-  voices=score.festive?(festivePools[raw.role]||score.leads):pool;
+ const key=source?.id||`${source?.x??0},${source?.y??0}`,h=seedOf(`lab:gesture:v1:${score.id}:${kind}:${key}`),production=score.production,
+  pool=raw.role==='bajo'?[...new Set([score.bassI,...(production?.bass||[]),raw.instrument])]:raw.role==='perc'?productionPercussion(production):raw.role==='acorde'?[production?.comp||'p_tinepiano','p_cellobody','p_gutguitar']:score.leads,
+  voices=pool;
  return {...raw,instrument:voices[h%voices.length],labTerritory:score.id,low:raw.role==='bajo'||raw.role==='perc'?36:45,
   high:raw.role==='bajo'?54:raw.role==='perc'?57:69,technique:['normal','muted','slide','normal'][Math.floor(h/7)%4]};
 }
