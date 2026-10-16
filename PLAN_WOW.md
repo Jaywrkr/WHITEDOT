@@ -15,7 +15,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 | 9 | Corriente en conexiones | feat/wow-09-corriente | Implementada; ver informe 09 |
 | 10 | Constelaciones temporales | feat/wow-10-constelaciones | Implementada; ver informe 10 |
 | 11 | Huellas de pulso | feat/wow-11-huellas-pulso | Implementada; ver informe 11 |
-| 12 | Polvo localizado | feat/wow-12-polvo | Pendiente |
+| 12 | Polvo localizado | feat/wow-12-polvo | Implementada; ver informe 12 |
 | 13 | Cometas variados | feat/wow-13-cometas | Pendiente |
 | 14 | Galaxias que respiran | feat/wow-14-galaxias | Pendiente |
 | 15 | Anticipación de hallazgos | feat/wow-15-hallazgos | Pendiente |
@@ -80,3 +80,7 @@ Los pulsos dejan huellas pequeñas únicamente donde cruzaron un objeto real. M�
 ### 11. Huellas de pulso
 
 Los pulsos dejan huellas pequeñas únicamente donde cruzaron un objeto real. Máximo dieciocho, con deduplicación y borrado automático. La forma y el alcance musical se conservan.
+
+### 12. Polvo localizado
+
+Algunas agrupaciones reales de tres o más elementos tienen polvo de color tenue. Solo dos agrupaciones y ocho motas por grupo. Los espacios de quietud permanecen despejados.

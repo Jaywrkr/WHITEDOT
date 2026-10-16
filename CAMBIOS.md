@@ -1,3 +1,7 @@
+## 2.3.0-alpha.36 · Cuaderno vivo 12/20
+
+Algunas agrupaciones reales de tres o más elementos tienen polvo de color tenue. Solo dos agrupaciones y ocho motas por grupo. Los espacios de quietud permanecen despejados.
+
 ## 2.3.0-alpha.35 · Cuaderno vivo 11/20
 
 Los pulsos dejan huellas pequeñas únicamente donde cruzaron un objeto real. Máximo dieciocho, con deduplicación y borrado automático. La forma y el alcance musical se conservan.
