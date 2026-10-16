@@ -1,6 +1,6 @@
+import {ecosystemField} from './ecosystem-field.js';
 import {elementInk} from './visual.js';
-import {populationProfile,populationField} from './living-populations.js';
-import {familyField} from './world-families.js';
+import {populationProfile} from './living-populations.js';
 export function blobHabitat(region,seed,seedOf){return !region.sea&&(/^blobs/i.test(seed||'')||seedOf(`blob-habitat:v1:${region.key}`)%100<14);}
 export function blobTraits(species,seedOf,rng){
  const r=rng(seedOf(`blob:v1:${species.id}`));return {size:8+r()*7,lobes:3+Math.floor(r()*4),period:1500+r()*1800,bounce:2+r()*4,hueOffset:r()*30-15};
@@ -21,7 +21,7 @@ export function initialize(runtime){
   let entry=views.get(chunk);if(!entry){const [x,y]=chunk.id.split(',').map(Number),d=runtime.regionOfPos((x+.5)*runtime.WCH,(y+.5)*runtime.WCH);entry={view:{...chunk},sources:{},family:d.worldFamily,population:populationProfile(d,runtime.BIOMES[d.z].id,runtime.seedOf,runtime.rng)};views.set(chunk,entry);}
   for(const [field,value] of Object.entries(chunk)){
    if(!RATIOS[field]){entry.view[field]=value;continue;}
-   if(entry.sources[field]!==value){entry.sources[field]=value;entry.view[field]=familyField(calmField(populationField(value,field,chunk.id,entry.population,runtime.seedOf),field,chunk.id,runtime.seedOf),field,chunk.id,entry.family,runtime.seedOf);}
+   if(entry.sources[field]!==value||entry.sources[field+':length']!==value.length){entry.sources[field]=value;entry.sources[field+':length']=value.length;entry.view[field]=ecosystemField(value,field,chunk.id,entry.population,runtime.seedOf);}
   }return entry.view;
  }
  function habitat(region){return blobHabitat(region,runtime.S.worldSeed,runtime.seedOf);}

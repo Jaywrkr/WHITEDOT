@@ -1,3 +1,4 @@
+import {ecosystemField} from '../src/ecosystem-field.js';
 import {populationField} from '../src/living-populations.js';
 import {calmField} from '../src/blobs.js';
 import {familyField} from '../src/world-families.js';
@@ -10,7 +11,7 @@ globalThis.localStorage={getItem:()=>null,setItem(){}};const r={};data(r);progre
 const add=(id)=>seen.set(id,(seen.get(id)||0)+1);
 for(let i=0;i<count;i++){
  const a=i%32-16,b=Math.floor(i/32)-8,c=r.wchunk(a,b),d=r.regionOfPos((a+.5)*r.WCH,(b+.5)*r.WCH),biome=r.BIOMES[d.z].id;if(!d.sea)land++;
- families.set(d.worldFamily.id,(families.get(d.worldFamily.id)||0)+1);styles.set(nativeVisualFamily(d,r.seedOf),(styles.get(nativeVisualFamily(d,r.seedOf))||0)+1);native+=c.sp.length;const population=populationProfile(d,biome,r.seedOf,r.rng);visibleNative+=familyField(calmField(populationField(c.sp,'sp',c.id,population,r.seedOf),'sp',c.id,r.seedOf),'sp',c.id,d.worldFamily,r.seedOf).length;
+ families.set(d.worldFamily.id,(families.get(d.worldFamily.id)||0)+1);styles.set(nativeVisualFamily(d,r.seedOf),(styles.get(nativeVisualFamily(d,r.seedOf))||0)+1);native+=c.sp.length;const population=populationProfile(d,biome,r.seedOf,r.rng);visibleNative+=ecosystemField(c.sp,'sp',c.id,population,r.seedOf).length;
  const local=new Set();for(const o of [...populatedChunk(livingChunk(a,b,r.WCH,d,biome,r.seedOf,r.rng),a,b,r.WCH,d,populationProfile(d,biome,r.seedOf,r.rng),r.seedOf,r.rng)])local.add('living:'+o.kind);
  for(const o of expandedChunk(a,b,r.WCH,d,biome,[],r.seedOf,r.rng))local.add('living:'+o.kind);
  for(const o of microChunk(a,b,r.WCH,d,r.seedOf,r.rng))local.add('micro:'+o.kind);
