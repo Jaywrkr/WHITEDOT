@@ -1,3 +1,13 @@
+<!-- juego-musical-actual -->
+Ciclo vigente: [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md). Doce fases autorizadas, versiones 2.3 alpha, ramas encadenadas. Jay mantiene PR/merge. Las tablas siguientes son antecedentes.
+
+F1 local: practice-travel activa una llegada por documento en partidas habituales experimentadas. El contador persistente y ocho identidades recientes contrastan destinos nativos; `move` guarda antes de limpiar colas o cambiar URL y revierte ante fallo. La llegada automática NO escribe `addr` (evita bloquear la siguiente visita); navegación explícita sí. `arrivalMode=continue`, enlaces, pruebas y partidas futuras protegidas no saltan. Reanudar una pestaña no reejecuta inicialización. No se alteró síntesis, ritmo ni posiciones de objetos.
+
+`notice-lane` bloquea presentación durante grabación/looper armado; región actualiza metadatos sin depender de notificar. Replay de guía descarta avisos rutinarios y Voz automática conservando la memoria y mensajes pedidos; CSS oculta la pista por panel realmente visible. Nuevas regresiones Node: arrival, region-notice, version-bump; notice-lane amplía grabación. arrival_smoke queda incluido automáticamente por discovery de navegador, todavía sin ejecutar por infraestructura.
+
+Bloqueo concreto y comandos pendientes en CIERRE_JUEGO_MUSICAL.md. No hacer push ni marcar cierre con el navegador sin arrancar. No borrar aserciones, no tocar PID 1 ni procesos ajenos. Reanudar desde esta rama en un contenedor limpio, ejecutar los diez recorridos indicados y corregir cualquier fallo antes de publicar. Después seguir F2–F12 sin pedir confirmación. Node 24: 137 suites aprobadas; Node 20.20.2: 137 suites aprobadas; detalle en informe. Guardado de configuración del entorno es borrador, no reinicio ni publicación.
+<!-- /juego-musical-actual -->
+
 ## Última ampliación · avisos, imán y percusión
 
 Continuación autorizada dentro de `feat/posmusica-08-cierre`; no mezclar la antigua rama 02 incompleta. `src/notice-lane.js` exporta tres estilos y coordina prioridad, caducidad, repetidos y dueño exclusivo de la pantalla. Productores en messages/ui/discovery/celebration/rare-cards; X1 1,8 s / intervalo 18 s, X2 3 s / intervalo automático 6 s, X3 manual / respiro 4 s. Los progresos se guardan antes de decidir su aviso. Voz conserva memoria; cosméticos y logros asociados no duplican tarjetas. No crear otro sistema de avisos ni añadir sonidos de UI.

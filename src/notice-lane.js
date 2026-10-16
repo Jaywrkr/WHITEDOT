@@ -18,7 +18,7 @@ export function createNoticeLane(){
 export function installNoticeLane(runtime){
  if(runtime.noticeLane)return runtime.noticeLane;
  const model=createNoticeLane(),timed=new Map(),callbacks=new Map(),hides=new WeakMap(),recent=new Map(),started=new Map(),panelIDs={rareNotice:'rare'};let state=runtime.S,last=performance.now(),quiet=0;
- const blocked=()=>!globalThis.document||document.hidden||!!document.querySelector('.modal:not([hidden]),.fxpanel:not([hidden]),.glasspanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const blocked=()=>!globalThis.document||document.hidden||!!runtime.setRecording||!!runtime.jam?.loop?.rec||!!runtime.jam?.loop?.armed||!!document.querySelector('.modal:not([hidden]),.fxpanel:not([hidden]),.glasspanel:not([hidden]),#mirrorPanel:not([hidden])');
  const reduced=()=>runtime.S?.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
  const idOf=panel=>panelIDs[panel.id]||panel.id;
  const panels=()=>document.querySelectorAll('#toast,#phrase,#zone,#voice,#rareNotice,#celebration');
@@ -46,13 +46,14 @@ export function installNoticeLane(runtime){
   recent.set(duplicate,now);if(recent.size>120)recent.delete(recent.keys().next().value);
   request(id,{level:Math.max(...slot.queue.map(e=>e.level),slot.current?.level||1)});return true;
  }
- const api={request,claim,release,cancel:model.cancel,blocked,show,hide,enqueue,register:(id,fn)=>callbacks.set(id,fn),get owner(){return model.owner;},get pending(){return model.pending;},get inspecting(){return !!globalThis.document?.querySelector('[data-inspect="true"]:not([hidden]):not(.notice-leaving)');}};
+ function quietRoutine(){for(const [id,slot]of timed)if(['zone','phrase','toast'].includes(id)){slot.queue.length=0;slot.current=null;model.cancel(id);slot.panel.hidden=true;slot.panel.classList.remove('on');}if(['zone','phrase','toast'].includes(document.body.dataset.notice))document.body.dataset.notice='';}
+ const api={quietRoutine,request,claim,release,cancel:model.cancel,blocked,show,hide,enqueue,register:(id,fn)=>callbacks.set(id,fn),get owner(){return model.owner;},get pending(){return model.pending;},get inspecting(){return !!globalThis.document?.querySelector('[data-inspect="true"]:not([hidden]):not(.notice-leaving)');}};
  function tick(){const now=performance.now(),dt=Math.max(0,Math.min(.1,(now-last)/1000));last=now;
   if(state!==runtime.S){state=runtime.S;model.clear();recent.clear();started.clear();quiet=0;for(const slot of timed.values()){slot.queue.length=0;slot.current=null;hide(slot.panel);}}
   const paused=blocked();if(!paused){model.tick(dt);quiet=Math.max(0,quiet-dt);}
   for(const [id,slot]of timed){
    // Routine context gets stale during lessons. Never replay it afterwards.
-   if(['zone','phrase'].includes(id)&&document.body.classList.contains('first-journey')){slot.panel.hidden=true;slot.queue.length=0;slot.current=null;model.cancel(id);continue;}
+   if(['zone','phrase','toast'].includes(id)&&document.body.classList.contains('first-journey')){slot.panel.hidden=true;slot.queue.length=0;slot.current=null;model.cancel(id);continue;}
    if(paused){slot.panel.hidden=true;continue;}
    slot.queue=slot.queue.filter(e=>e.expires>now&&e.valid());
    if(slot.current&&model.owner!==id){slot.current=null;slot.panel.hidden=true;}

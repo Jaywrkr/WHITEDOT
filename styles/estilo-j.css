@@ -300,4 +300,4 @@ body:has(#surpriseHud:not([hidden])) .first-journey-hint{bottom:calc(var(--safe-
 #toast[data-notice-level="1"] em{color:#ddd;font-style:normal}
 #zone[data-notice-level="1"] #zDo{display:none}#zone[data-notice-level="1"] #zName{font:11px/1.5 var(--mono);max-width:100%;overflow:hidden;text-overflow:ellipsis}#zone[data-notice-level="1"] #zMood{font:9px/1.5 var(--mono);color:#aaa}
 #toast[data-notice-level="2"],#phrase[data-notice-level="2"],#voice[data-notice-level="2"]:not(.expanded){max-width:min(320px,calc(100vw - 32px));padding:10px 12px;max-height:24dvh;overflow:auto;font:12px/1.5 var(--mono)}
-body[data-notice]:not([data-notice=""]) .first-journey-hint{visibility:hidden}
+body:has(#voice.on:not([hidden])) .first-journey-hint{visibility:hidden}

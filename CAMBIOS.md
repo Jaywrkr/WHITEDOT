@@ -1,3 +1,9 @@
+## 2.3.0-alpha.1 · Llegadas y base · entrega local
+
+Llegadas nuevas en visitas reales, con memoria de ocho timbres y contraste de tempo; conserva el punto anterior. Reanudar la misma página, seguir un enlace o abrir una prueba no mueve al jugador. Rechazo de guardado restaura coordenadas antes de cambiar URL/colas. Tarjetas esperan durante grabación; guía tiene prioridad sobre avisos rutinarios. Los metadatos regionales se actualizan aunque el aviso se suprima. Expectativas del laboratorio y repetidos alineadas con el catálogo y diseño vigentes.
+
+Validación: auditoría sin errores/advertencias y 137 suites Node aprobadas. Navegador bloqueado al arrancar Chromium por EAGAIN de hilos heredados; fase sin push y sin declarar aceptación móvil. Ver CIERRE_JUEGO_MUSICAL.md.
+
 ## Avisos tranquilos, imán y percusión · ampliación de cierre 8
 
 Tres niveles silenciosos: X1 cotidiano, X2 relevante y X3 excepcional. X1 dura 1,8 s, se agrupa y admite una entrada cada 18 s; X2 dura 3 s, conserva dos pendientes como máximo y separa avisos automáticos por 6 s. Caducan los pendientes obsoletos: 8/20 s. Los mensajes pedidos explícitamente conservan su lectura. Los hallazgos excepcionales siguen siendo tarjetas manuales completas; al cerrar dejan 4 s de respiro. Repetir una especie o renovar un poder usa un aviso pequeño. Cosméticos/logros de un mismo hallazgo se agrupan, sin otra celebración ni Voz duplicada. Un panel sin turno no puede reaparecer. La guía no se superpone a la franja de avisos.

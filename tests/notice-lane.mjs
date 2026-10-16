@@ -13,3 +13,12 @@ try{const headless={S:{}};installNoticeLane(headless);assert.equal(intervals,0);
 console.log('PASS headless collection installs no UI timer; Node runtimes cannot race a missing document');
 const priority=createNoticeLane();priority.request('routine',{level:1});priority.request('useful',{level:2});priority.request('finding',{level:3});assert(!priority.claim('routine'));assert(!priority.claim('useful'));assert(priority.claim('finding'));priority.request('another',{level:3});assert.equal(priority.owner,'finding','important arrivals never interrupt an open card');priority.release('finding');for(let i=0;i<4;i++)priority.tick(.1);assert(priority.claim('another'));priority.cancel('another');for(let i=0;i<4;i++)priority.tick(.1);assert(priority.claim('useful'));priority.clear();assert.deepEqual(priority.pending,[]);
 console.log('PASS priority reserves the next slot for exceptional findings without interrupting the current reader');
+// Recording must remain stoppable while a finding is queued.
+const doc=globalThis.document;globalThis.document={hidden:false,querySelector:()=>null};
+try{
+ const r={S:{}};globalThis.setInterval=()=>0;const notices=installNoticeLane(r);
+ assert(!notices.blocked());r.setRecording=true;assert(notices.blocked());assert(!notices.claim('rare',{level:3}));
+ r.setRecording=false;r.jam={loop:{armed:true,rec:false}};assert(notices.blocked());r.jam.loop.armed=false;r.jam.loop.rec=true;assert(notices.blocked());
+ r.jam.loop.rec=false;assert(notices.claim('rare'));assert.equal(notices.owner,'rare');
+}finally{globalThis.document=doc;globalThis.setInterval=originalInterval;}
+console.log('PASS queued cards cannot cover active or armed recording controls');

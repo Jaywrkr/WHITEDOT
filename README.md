@@ -1,3 +1,5 @@
+Versión en desarrollo: **2.3.0-alpha.1** · [Juego musical, doce fases](PLAN_JUEGO_MUSICAL.md). Fecha de deploy real en la aplicación.
+
 <!-- avisos-imán-percusión -->
 Cierre de interacción 8 incorpora avisos discretos/relevantes/excepcionales, menos repeticiones, voces del Imán más presentes y seis percusiones naturales por hábitat. Catálogos actuales: 157 familias del libro, 27 percusiones y 216 perfiles de material; 81 especificaciones de síntesis, 52 estilos y 72 tipos de tarjeta. El resto de las cifras históricas describe su propia revisión. [Estado, ramas y pruebas](CIERRE_INTERACCION_FINAL.md).
 <!-- /avisos-imán-percusión -->

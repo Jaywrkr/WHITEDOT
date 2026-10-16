@@ -1,0 +1,11 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const version=process.argv[2];
+if(!/^\d+\.\d+\.\d+-(?:alpha|rc)\.\d+$/.test(version||''))throw Error('Use x.y.z-alpha.n or x.y.z-rc.n');
+const root=new URL('../',import.meta.url),read=f=>readFileSync(new URL(f,root),'utf8'),pkg=JSON.parse(read('package.json'));
+const release=read('src/release-info.js'),sw=read('sw.js'),html=read('index.html'),readme=read('README.md');
+if(!/version:\s*'[^']+'/.test(release)||!/const CACHE\s*=\s*['"][^'"]+['"]/.test(sw))throw Error('Unknown release format');
+pkg.version=version;
+if(!/id="releaseVersion">v[^<]+/.test(html))throw Error('Missing HTML release');
+const files={'README.md':readme.replace(/Versión en desarrollo: \*\*[^*]+\*\*/,`Versión en desarrollo: **${version}**`),'index.html':html.replace(/id="releaseVersion">v[^<]+/,`id="releaseVersion">v${version}`),'package.json':JSON.stringify(pkg,null,2)+'\n','src/release-info.js':release.replace(/version:\s*'[^']+'/,`version: '${version}'`).replace(/deployedAt:\s*(?:null|'[^']*')/,'deployedAt: null').replace(/revision:\s*(?:null|'[^']*')/,'revision: null'),'sw.js':sw.replace(/const CACHE\s*=\s*['"][^'"]+['"]/,`const CACHE='whitedot-${version}'`)};
+for(const [file,body]of Object.entries(files))writeFileSync(new URL(file,root),body);
+console.log('Version '+version+'; deployment timestamp remains artifact-only');

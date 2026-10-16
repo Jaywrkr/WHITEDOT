@@ -8,11 +8,11 @@ export function initialize(runtime) {
   function discover(sp){runtime.recordElement?.('forma:'+sp.id,runtime.regionOfPos(runtime.S.wx,runtime.S.wy));if(runtime.S.cat[sp.id])return;runtime.S.cat[sp.id]=1;runtime.S.catN=(runtime.S.catN||0)+1;runtime.S.catRecent=[{n:sp.name,r:sp.region,d:runtime.S.todayKey}].concat(runtime.S.catRecent||[]).slice(0,40);
     runtime.toast("<em>Forma nueva</em> · "+sp.name+" · "+runtime.S.catN);runtime.unlock("forma1");if(runtime.S.catN>=25)runtime.unlock("cat25");if(runtime.S.catN>=100)runtime.unlock("cat100");if(runtime.S.catN>=500)runtime.unlock("cat500");runtime.save();}
   function showRegion(d,first){
-    const el=document.getElementById("zone");notices.enqueue('zone',el,()=>{
+    const el=document.getElementById("zone");const render=()=>{
     const hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng);const se=!d.sea&&d.continent?runtime.seasonOf?.(d.continent.id):null;document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+(hybrid?" × "+hybrid.name:"")+" · "+d.bpm+" BPM"+(se?" · "+se.name:"");
     document.getElementById("zName").textContent=d.worldFamily?.name||d.ecology?.name||d.name;
     document.getElementById("zDo").textContent=(d.sea?"Mar de silencio":d.continent?d.continent.name:"")+(d.sea||d.continent?" · ":"")+gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
-    },first?3.2:2.2,'region:'+d.key,()=>runtime.inWorld()&&runtime.MU.dnaT?.key===d.key,{level:1,category:'territorio',coalesce:true});
+    };render();notices.enqueue('zone',el,()=>{},first?3.2:2.2,'region:'+d.key,()=>runtime.inWorld()&&runtime.MU.dnaT?.key===d.key,{level:1,category:'territorio',coalesce:true});
   }
 
   let curRegion=null,RP=null;
