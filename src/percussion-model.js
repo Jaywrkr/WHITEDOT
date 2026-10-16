@@ -1,8 +1,16 @@
 import {EXTRA_RHYTHMS} from './expanded-content.js';
 export const RHYTHM_EMPTY_CHANCE=.3,FOSSIL_DENOMINATOR=192;
 // An additive stream: existing terrain, flora, genres and favourite coordinates never move.
+export const NEW_PERCUSSION=Object.freeze({
+ membrane:{name:'Hongo de caja',material:'wood',voices:['tom','conga'],gesture:'hold',hint:'Pisa su membrana; sostén una caja cálida.',affinity:['bosque','cueva','tormenta'],shape:0,expansion:2},
+ leafbrush:{name:'Hojas de escobillas',material:'wood',voices:['guiro','shaker'],gesture:'brush',hint:'Roza las hojas; dibuja escobillas al caminar.',affinity:['bosque','jardin','lago'],shape:1,expansion:2},
+ clayshell:{name:'Cuenco de barro',material:'wood',voices:['tom','conga'],gesture:'orbit',hint:'Rodea el cuenco; escucha su golpe redondo.',affinity:['lago','cueva','ruinas'],shape:2,expansion:2},
+ seedshaker:{name:'Semillas de lluvia',material:'wood',voices:['shaker','guiro'],gesture:'brush',hint:'Sacude las semillas; acompaña el pulso con lluvia.',affinity:['dunas','llanura','tormenta','vacio'],shape:3,expansion:2},
+ pebblerim:{name:'Guijarros de aro',material:'metal',voices:['rim','wood'],gesture:'cross',hint:'Cruza los guijarros; escucha un acento seco.',affinity:['ruinas','cristales','dunas','faros'],shape:4,expansion:2},
+ petalclap:{name:'Pétalos de palmas',material:'air',voices:['clap','wood'],gesture:'hold',hint:'Reúne los pétalos; sostén palmas con el ritmo.',affinity:['jardin','llanura','faros','vacio'],shape:5,expansion:2}
+});
 export const RHYTHM_ELEMENTS=Object.freeze({
- ...EXTRA_RHYTHMS,
+ ...EXTRA_RHYTHMS,...NEW_PERCUSSION,
  stone:{name:'Piedra de bombo',material:'metal',voices:['kick','tom'],gesture:'hold',hint:'Pasa para golpear; permanece para sostener el pulso grave.'},
  hollow:{name:'Tronco hueco',material:'wood',voices:['conga','tom'],gesture:'hold',hint:'Entra para golpear; quédate para una respuesta sincopada.'},
  roots:{name:'Raíces de clave',material:'wood',voices:['wood','rim'],gesture:'cross',hint:'Cruza las raíces; cada entrada añade un acento seco.'},
@@ -25,6 +33,7 @@ export function rhythmVoice(kind,region,seedOf){
 export function rhythmPattern(kind,genre,variant=0){
  if(calm(genre))return variant%2?[4,12]:[0,10];
  if(kind==='fossil')return variant%2?[0,12]:[4,14];
+ if(NEW_PERCUSSION[kind])return ({membrane:[4,12],leafbrush:variant%2?[3,11]:[2,10],clayshell:[6,14],seedshaker:[2,10],pebblerim:[3,14],petalclap:[4,12]})[kind];
  if(kind==='stone')return ['breaks','garage','dnb','liquid','dubstep','idm'].includes(genre)?[0,6]:[0,8];
  if(kind==='hollow'||kind==='pool')return variant%2?[3,11]:[6,14];
  return variant%2?[2,10]:[4,12];
@@ -42,4 +51,14 @@ export function createRhythmElements(cx,cy,size,region,seedOf,rng){
   const kind=RHYTHM_KINDS[Math.floor(random()*RHYTHM_KINDS.length)],a=random()*Math.PI*2,rad=i?45+random()*50:0;
   return {id:`rhythm:v1:${cx},${cy}:${i}`,kind,x:x+Math.cos(a)*rad,y:y+Math.sin(a)*rad,variant:Math.floor(random()*8),phase:random()*6.283,touching:false,lit:0,cooldown:0,turn:0};
  });
+}
+
+// Separate stream: adding these habitats never moves the original rhythm sources.
+export function additionalRhythmElements(cx,cy,size,region,biome,seedOf,rng,existing=[]){
+ if(region.sea||existing.length>=2)return [];
+ const random=rng(seedOf(`percussion:additional:v1:${cx},${cy}`));if(random()>(calm(region.genre)?.18:.38))return [];
+ const pool=Object.keys(NEW_PERCUSSION).filter(k=>NEW_PERCUSSION[k].affinity.includes(biome));if(!pool.length)return [];
+ const dominant=seedOf(`percussion:habitat:v1:${region.key}:${biome}`)%pool.length,kind=pool[(dominant+(random()<.8?0:1))%pool.length],x=(cx+.2+random()*.6)*size,y=(cy+.2+random()*.6)*size;
+ if(existing.some(o=>Math.hypot(o.x-x,o.y-y)<110))return [];
+ return [{id:`rhythm:additional:v1:${cx},${cy}`,kind,x,y,variant:Math.floor(random()*8),phase:random()*6.283,touching:false,lit:0,cooldown:0,turn:0}];
 }

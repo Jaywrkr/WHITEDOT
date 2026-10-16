@@ -58,8 +58,11 @@ export function createRegionalVoices(region, biomes, genres, seedOf, rng) {
   return Object.freeze(voices);
 }
 
+export const magnetVoiceGain=role=>({bajo:1.8,perc:1.75,acorde:1.6,lead:1.8,agudo:1.35}[role]||1.6);
 export function initialize(runtime) {
   const cache = new Map(),blobCache=new Map();
+  let magnetSource=null;
+  function withMagnetVoice(source,emit){const previous=magnetSource;magnetSource=source;try{return emit();}finally{magnetSource=previous;}}
   let voiceOrigin="ambient",budgetOwner=null,budgetKey=null,manualHits=0;const sourceHits=new Map();
   function withVoiceOrigin(origin,emit){const previous=voiceOrigin;voiceOrigin=origin;try{return emit();}finally{voiceOrigin=previous;}}
   function rawVoice(kind, region, source) {
@@ -93,6 +96,7 @@ export function initialize(runtime) {
   }
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
     if (!runtime.ac || !region) return;
+    const magnetic=!!magnetSource;if(magnetic&&!source)source=magnetSource;
     time=runtime.musicalTime?.(time)??time;
     const raw=getVoice(kind,region,source),voice=origin==='duet'?runtime.duetVoice?.(raw,source?.duetSlot,region)||raw:raw;
     if(runtime.unifiedMusic===true&&!runtime.labMode&&!runtime.duetRoom&&origin==='player'&&source&&runtime.inWorld()){
@@ -122,7 +126,8 @@ export function initialize(runtime) {
     function hit(t, degree, strength) {
       if(['player','field','lesson'].includes(origin))runtime.focusGesture?.(t,source,voice.role);
       runtime.soundCue?.(source,voice.role,t,origin);
-      const hitFrame=runtime.musicalFrame?.(t)??frame,n=note(degree,hitFrame,t);if(origin==='player'&&source)runtime.identityGesture?.(source,voice,n);let v = runtime.vel(strength * volume*(voice.volume??1))*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
+      if(magnetic)runtime.magnetVoiceCue?.({id:source?.id,role:voice.role,instrument:voice.instrument,time:t,gain:magnetVoiceGain(voice.role)});
+      const hitFrame=runtime.musicalFrame?.(t)??frame,n=note(degree,hitFrame,t);if(origin==='player'&&source)runtime.identityGesture?.(source,voice,n);let v = runtime.vel(strength * volume*(voice.volume??1)*(magnetic?magnetVoiceGain(voice.role):1))*(runtime.inWorld?.()?runtime.curatedVoiceGain?.(t,voice.role)??1:1);
       const articulation={...(kind.startsWith('micro:')?microArticulation(source):{}),technique:runtime.cardTechnique?.(source)|| (source?.expression==='staccato'?'muted':source?.expression==='glide'?'slide':voice.technique||'normal')};
       if(source){source.musicRole=voice.role;source.musicInstrument=voice.instrument;}
       const emit=()=>{
@@ -160,6 +165,7 @@ export function initialize(runtime) {
     return true;
   }
   Object.defineProperties(runtime, {
+    withMagnetVoice:{get:()=>withMagnetVoice},
     currentVoiceOrigin:{get:()=>voiceOrigin},
     withVoiceOrigin: {get:()=>withVoiceOrigin},
     getVoice: {get:()=>getVoice},

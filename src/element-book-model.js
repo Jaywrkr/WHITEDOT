@@ -30,15 +30,21 @@ export function elementFamily(kind,blob=false){
  const parts=kind.split(':'),id=parts.length>1?parts.slice(0,2).join(':'):kind;
  return directory.has(id)?id:null;
 }
+const plain=v=>v&&typeof v==='object'&&!Array.isArray(v);
+export function knownElementFound(book){return Object.fromEntries(Object.entries(plain(book?.found)?book.found:{}).filter(([id,e])=>directory.has(id)&&plain(e)));}
 export function normalizeElementBook(raw){
- const found={};if(raw?.found&&typeof raw.found==='object'&&!Array.isArray(raw.found))for(const [id,e]of Object.entries(raw.found)){
-  if(!directory.has(id)||!e||typeof e!=='object')continue;
-  found[id]={day:typeof e.day==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(e.day)?e.day:'',genre:typeof e.genre==='string'?e.genre.slice(0,40):''};
- }return {version:1,found};
+ const previous=plain(raw)?raw:{};if(Number.isInteger(previous.version)&&previous.version>1)return previous;
+ const pending=new Map(Object.entries(plain(previous.unrecognizedFound)?previous.unrecognizedFound:{})),found={};
+ for(const [id,e]of Object.entries(plain(previous.found)?previous.found:{}))pending.set(id,e);
+ for(const [id,e]of pending){
+  if(!directory.has(id)||!plain(e))continue;
+  found[id]={...e,day:typeof e.day==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(e.day)?e.day:'',genre:typeof e.genre==='string'?e.genre.slice(0,40):''};pending.delete(id);
+ }
+ return {...previous,version:1,found,...(pending.size||previous.unrecognizedFound?{unrecognizedFound:Object.fromEntries(pending)}:{})};
 }
 // Migrate only explicit evidence; old catN is never inflated into every object family.
 export function migrateElementBook(state){
- const b=normalizeElementBook(state.elementBook),add=id=>{if(directory.has(id)&&!b.found[id])b.found[id]={day:'',genre:''};};
+ const b=normalizeElementBook(state.elementBook);if(b.version>1)return b;const add=id=>{if(directory.has(id)&&!b.found[id])b.found[id]={day:'',genre:''};};
  for(const [k,v]of Object.entries(state.rhythmFound||{}))if(v)add('rhythm:'+k);
  for(const [k,v]of Object.entries(state.journal?.ecologyObjects||{}))if(v)add('ecology:'+k);
  for(const [k,v]of Object.entries(state.journal?.encounters||{}))if(v)add('encounter:'+k);

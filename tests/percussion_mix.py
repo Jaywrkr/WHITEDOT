@@ -20,5 +20,5 @@ try:
    assert len(r['percussionNotes'])>0,r
    assert r['materialStrikes'] and all(n['kind']==r['scene'].split(':')[1] for n in r['materialStrikes']),r
    assert all(n['instrument'] in ['kick','tom','conga','wood','rim','shaker','guiro','timbale','clap'] for n in r['percussionNotes']),r
-  print(f'PASS {len(results)} real percussion mixes: 52 genres and twenty-one soft ambient families, max peak {max(r["peak"] for r in results):.5f}, no clipping',flush=True);b.close()
+  print(f'PASS {len(results)} real percussion mixes: 52 genres and twenty-seven soft ambient families, max peak {max(r["peak"] for r in results):.5f}, no clipping',flush=True);b.close()
 finally:server.shutdown()

@@ -1,3 +1,11 @@
+## Última ampliación · avisos, imán y percusión
+
+Continuación autorizada dentro de `feat/posmusica-08-cierre`; no mezclar la antigua rama 02 incompleta. `src/notice-lane.js` exporta tres estilos y coordina prioridad, caducidad, repetidos y dueño exclusivo de la pantalla. Productores en messages/ui/discovery/celebration/rare-cards; X1 1,8 s / intervalo 18 s, X2 3 s / intervalo automático 6 s, X3 manual / respiro 4 s. Los progresos se guardan antes de decidir su aviso. Voz conserva memoria; cosméticos y logros asociados no duplican tarjetas. No crear otro sistema de avisos ni añadir sonidos de UI.
+
+`cajas.js` selecciona el mismo grupo musical cercano para órbita y sonido del Imán. `voices.js` aplica `withMagnetVoice` con restauración segura; mantiene origen field y reloj/armonía existentes. `percussion-model.js` añade seis familias mediante `additionalRhythmElements`, otra semilla, afinidad regional y huecos; no ampliar el pool antiguo `RHYTHM_KINDS`. Cuerpos en percussion-material.js y siluetas en percussion.js. Laboratorio, escáner y álbum usan los catálogos existentes. Totales: 27 percusiones, 216 perfiles de material, 157 familias de colección; siguen 81 especificaciones de síntesis, 52 estilos, 18 influencias y 72 tipos de tarjeta.
+
+`normalizeElementBook` conserva familias desconocidas en unrecognizedFound, metadatos y versiones futuras. El álbum informa de lectura protegida para libros futuros. Nuevos recorridos: collection_guard_smoke, notice_priority_smoke, magnet_percussion_smoke; render magnet_percussion_mix y regresión Node percussion-additional. No afirmar resultados de CI o teléfono sin evidencia de esa revisión.
+
 # Handoff · Auditoría de interacción final
 
 Rama `feat/posmusica-08-cierre` desde recorrido `51bc007`. CIERRE_INTERACCION_FINAL.md es el estado consolidado y el orden para PR/merge de Jay. Código musical previo ya integrado en main por PR #158; esta ampliación permanece en ramas. No hace falta la antigua rama incompleta 2.

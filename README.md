@@ -1,3 +1,7 @@
+<!-- avisos-imán-percusión -->
+Cierre de interacción 8 incorpora avisos discretos/relevantes/excepcionales, menos repeticiones, voces del Imán más presentes y seis percusiones naturales por hábitat. Catálogos actuales: 157 familias del libro, 27 percusiones y 216 perfiles de material; 81 especificaciones de síntesis, 52 estilos y 72 tipos de tarjeta. El resto de las cifras históricas describe su propia revisión. [Estado, ramas y pruebas](CIERRE_INTERACCION_FINAL.md).
+<!-- /avisos-imán-percusión -->
+
 # WHITEDOT
 
 **Un pixel. Un mundo que suena.**
@@ -52,7 +56,7 @@ npm run audit:encounters -- --routes 192 --output /tmp/whitedot-encounters.json
 
 Explorar y quietud se informan por separado, con sus supuestos e intervalos. El ciclo parte de main `d7ea883`, donde Jay integró Experiencia viva completa (PR #143). La fase 2 parte de main `30b2df8`, con fase 1 ya integrada. Las comparaciones del laboratorio son herramientas internas opcionales; no una tarea del jugador.
 
-## Experiencia viva · ciclo integrado
+## Experiencia viva · archivo del PR #143
 
 [Catorce fases y sus ramas](PLAN_EXPERIENCIA.md) · [Auditoría, pruebas y recorrido móvil](CIERRE_EXPERIENCIA.md) · [Mapa técnico](HANDOFF_CLAUDE.md).
 
@@ -60,7 +64,7 @@ Fases 1–14 integradas por Jay en main `d7ea883` (PR #143). Codex entrega commi
 
 Auditoría sin errores ni advertencias, 113 suites Node, 86 recorridos de navegador incluido offline y 789 renders de 31 programas de audio: aprobados. Prueba HTTP/SQLite aprobada. Pico máximo medido 0.945447. [Evidencia final](scripts/experience-14-validation.json).
 
-| Área | Alcance verificable de esta candidata |
+| Área | Alcance histórico del PR #143 |
 |---|---|
 | Paisajes | Ocho familias, once biomas, 33 hábitats previos y 22 ecorregiones nuevas |
 | Vida | 48 linajes; veinte nuevos, anatomía reproducible y nichos territoriales |

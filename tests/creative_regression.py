@@ -18,6 +18,9 @@ with ThreadPoolExecutor(max_workers=workers) as pool:
   try:name,code,output=future.result()
   except Exception as error:failed.append(str(error));print('FAIL '+str(error),flush=True);continue
   print(('PASS ' if code==0 else 'FAIL ')+name,flush=True)
-  if code:failed.append(name);print(output[-3500:],flush=True)
+  if code:
+   failed.append(name);print(output[-3500:],flush=True)
+   if os.environ.get('GITHUB_ACTIONS'):
+    message=(name+'\n'+output[-2500:]).replace('%','%25').replace('\r','%0D').replace('\n','%0A');print('::error title=Browser journey failed::'+message,flush=True)
 print(f'{len(flows)-len(failed)}/{len(flows)} browser flows passed',flush=True)
 if failed:sys.exit(1)
