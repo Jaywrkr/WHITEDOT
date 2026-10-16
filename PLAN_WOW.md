@@ -6,7 +6,7 @@ Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de f
 |---|---|---|---|
 | 1 | Cubo elástico al arrancar | feat/wow-01-cubo | Implementada; ver informe 01 |
 | 2 | Tres partículas al frenar | feat/wow-02-frenada | Implementada; ver informe 02 |
-| 3 | Presencia cercana | feat/wow-03-presencia | Pendiente |
+| 3 | Presencia cercana | feat/wow-03-presencia | Implementada; ver informe 03 |
 | 4 | Miradas hacia el cubo | feat/wow-04-miradas | Pendiente |
 | 5 | Saludos diferentes | feat/wow-05-saludos | Pendiente |
 | 6 | Compañía con espacio propio | feat/wow-06-compania | Pendiente |
@@ -40,3 +40,7 @@ El cubo se estira brevemente al arrancar según la dirección real. Superficie y
 ### 2. Tres partículas al frenar
 
 Al detenerte quedan tres motas blancas durante 600 ms. Máximo seis; desaparecen al abrir paneles o reducir movimiento. No añaden sonido ni distancia.
+
+### 3. Presencia cercana
+
+Los habitantes y especies se inclinan y abren ligeramente al acercarte. Un arco tenue muestra atención en hasta doce fuentes reales; no aparecen objetos nuevos ni sonidos.
