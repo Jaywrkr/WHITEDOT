@@ -2,7 +2,7 @@
 
 `feat/posmusica-03-universo-vj` depende de interfaz `8950671`. `vj-model` decide ubicaciones y encuentros con hashes propios; `vj-art` dibuja ocho motivos acotados; `vj-world` integra pausa, cometas y visitantes. No llama al motor de audio. `controls.js` conecta la animación de entrada a los botones reales. Caché 48 celdas, hasta ocho gestos. No altera coordenadas, colecciones ni probabilidades existentes.
 
-130 suites Node y auditoría aprobadas; recorrido nuevo bloqueado por Chromium `Target crashed` al crear página. Rama local, sin push hasta completar navegador. Trabajo de miniinstrumentos conservado aparte, pausado por petición de Jay de no tocar música. Ver `PLAN_INTERACCION_FINAL.md` y `scripts/posmusica-03-validation.json`.
+130 suites Node y auditoría aprobadas; navegador enfocado aprobado: notice_lane, vj_ui e interface_cards. El perfil local de un solo proceso/contexto resolvió el bloqueo de arranque para estos recorridos. CI completo y teléfono físico pendientes. Trabajo de miniinstrumentos conservado aparte, pausado por petición de Jay de no tocar música. Ver `PLAN_INTERACCION_FINAL.md` y `scripts/posmusica-03-validation.json`.
 
 ## Antecedentes
 

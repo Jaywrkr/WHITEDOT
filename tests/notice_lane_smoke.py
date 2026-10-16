@@ -14,9 +14,10 @@ document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.lane=installNoti
 try:
  with sync_playwright() as p:
   browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
+  page=browser.new_page(viewport={'width':390,'height':844},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=bootstrap,content_type='text/javascript'))
   for width,height in [(390,844),(844,390)]:
-   page=browser.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-   page.route('**/src/main.js',lambda route:route.fulfill(body=bootstrap,content_type='text/javascript'))
+   page.set_viewport_size({'width':width,'height':height});page.emulate_media(reduced_motion='no-preference')
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('window.__r')
    page.evaluate('''()=>{const l=__r.lane;for(const [id,text]of [['toast','Primero'],['phrase','Segundo'],['zone','Tercero']])l.enqueue(id,document.getElementById(id),()=>document.getElementById(id).textContent=text,.6);}''')
    page.wait_for_function('__r.lane.owner==="toast"');page.wait_for_timeout(150)
@@ -36,6 +37,6 @@ try:
    assert page.locator('#bPrimary').is_enabled()
    page.emulate_media(reduced_motion='reduce');page.locator('#bPrimary').click();assert page.evaluate('__r.entries')==2
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'), 'phone has no horizontal overflow'
-   assert not errors,errors;print(f'PASS notice serialization, hidden-time pause, exit gap, silent guarded entry and reduced motion at {width}',flush=True);page.close()
+   assert not errors,errors;print(f'PASS notice serialization, hidden-time pause, exit gap, silent guarded entry and reduced motion at {width}',flush=True)
   browser.close()
 finally:server.shutdown()

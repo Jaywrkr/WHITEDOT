@@ -3,7 +3,7 @@
 - Ocho escenas procedurales: órbitas, circuitos, cintas, vidrio, islas, partitura, abanico y organismo. Semillas independientes; 60 % de celdas candidatas quedan vacías por regla del hash. Esa regla no mide cobertura visible ni biomas nuevos.
 - Cometas ocasionales; visitantes curiosos y esquivos, acotados a su hogar. Gestos de contacto/pulso silenciosos; pausa ante paneles y movimiento reducido.
 - Conexión real de `control-motion` a Entrar al Mundo y cExplore: el módulo existía, faltaba su inicialización en controles.
-- `npm run audit:release`: cero errores/advertencias. `npm test`: 130 suites aprobadas. `vj_ui_smoke.py`: bloqueado al crear página, Chromium `Target crashed`, antes de cargar la aplicación. No se presenta como aprobado ni se publica esta rama sin la validación necesaria.
+- `npm run audit:release`: cero errores/advertencias. `npm test`: 130 suites aprobadas. Navegador normal: `Target crashed` antes de cargar. Con perfil local de un solo proceso/contexto: notice_lane (dos tamaños), vj_ui (tres) e interface_cards (cuatro) aprobados. CI completo y teléfonos físicos pendientes.
 - No se modificó el motor musical. El repo TouchDesigner mencionado no está entre los checkouts disponibles.
 
 # Interacción final · entrega 1: animaciones y hallazgos

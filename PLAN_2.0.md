@@ -1,5 +1,5 @@
 <!-- ampliacion-visual -->
-Estado actual: [ampliación visual](PLAN_INTERACCION_FINAL.md). Entrega 3 implementada localmente, 130 suites Node y auditoría aprobadas; navegador bloqueado por recursos y push pendiente. Entregas 4–5 continúan en ramas dependientes. No reabrir fases históricas.
+Estado actual: [ampliación visual](PLAN_INTERACCION_FINAL.md). Entrega 3 implementada y probada: 130 suites Node, auditoría y tres programas de navegador enfocados aprobados. Entregas 4–5 continúan en ramas dependientes. No reabrir fases históricas.
 <!-- /ampliacion-visual -->
 
 <!-- direccion-musical-actual -->

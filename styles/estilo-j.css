@@ -267,3 +267,10 @@ body.first-journey #zone,body.first-journey #phrase{visibility:hidden}
 #celebration .celebration-card{grid-row:auto}
 
 .notice-leaving *{pointer-events:none!important}
+
+/* Keep power-card actions aligned, including compact phone layouts. */
+#celebration[data-layout="full"] #celebrationShare{grid-column:1;text-align:center}
+#celebration[data-layout="full"] #celebrationContinue{grid-column:2}
+#celebrationSignature:empty,#celebrationTime:empty{display:none}
+#celebration[data-layout="full"] .celebration-card:has(#celebrationShare[hidden]) #celebrationContinue{grid-column:1/-1}
+@media(max-height:500px){#celebration[data-layout="full"] #celebrationShare{grid-column:2}#celebration[data-layout="full"] #celebrationContinue{grid-column:3}}

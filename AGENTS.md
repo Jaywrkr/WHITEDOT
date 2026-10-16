@@ -51,3 +51,7 @@ El ciclo anterior [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md) queda integrado por
 - Textos en español: máximo 12 palabras, una idea, imperativo. Tachado-corrección en la Voz con `"~~antes~~ después"`. Firma *Simple.* solo en momentos importantes.
 - UI silenciosa: menús y botones no hacen sonido musical.
 - Menos, pero mejor: antes de añadir controles, ordenar lo que existe.
+
+## Continuación visual
+
+Jay pidió no tocar la música y autorizó zonas VJ, encuentros visuales, sorpresas reversibles y perfil. Ver la ampliación de `PLAN_INTERACCION_FINAL.md`. Entrega 3 incluye la interfaz anterior y su conexión real a controles. Validada con 130 suites Node y tres programas de navegador enfocados. El contenedor tiene numerosos procesos zombis heredados; `WHITEDOT_CHROMIUM_SINGLE_PROCESS=1` en el wrapper local sirve solamente para pruebas que reutilizan un único contexto. No habilitarlo por defecto en CI ni omitir aserciones. Mininstrumentos sin terminar conservados aparte.

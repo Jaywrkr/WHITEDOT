@@ -30,7 +30,7 @@ Jay pidió continuar sin modificar música. El trabajo de miniinstrumentos queda
 
 | Entrega | Rama | Estado |
 |---|---|---|
-| 3 · Zonas VJ, cometas y encuentros visuales | `feat/posmusica-03-universo-vj` | Implementada localmente; 130 suites Node y auditoría aprobadas; navegador bloqueado por Target crashed |
+| 3 · Zonas VJ, cometas y encuentros visuales | `feat/posmusica-03-universo-vj` | Implementada y probada: auditoría, 130 suites Node y tres programas de navegador enfocados |
 | 4 · Sorpresas temporales de las cajas | `feat/posmusica-04-cajas` | Pendiente |
 | 5 · Perfil y revisión PC/móvil | `feat/posmusica-05-perfil` | Pendiente |
 
