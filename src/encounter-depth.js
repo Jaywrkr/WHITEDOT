@@ -142,7 +142,7 @@ export function initialize(runtime){
  function hint(o){
   if(o.kind==='weaver')return o.groveStyle?'Toca para conectar · permanece sobre un hilo para retirarlo':'Cruza dos anclas · permanece sobre un hilo para retirarlo';
   if(o.kind==='box')return o.state.a>.65?'Raíces: tocar · núcleos: mover/mantener · arco: reposar':'Toca el suelo o permanece cerca para despertarlo';
-  if(o.kind==='animal')return !runtime.S.sound?'Activa Música para enseñarle una frase':o.state.dialogue?.phase==='listening'?'Te escucho · toca objetos o el vacío · tócame para responder':o.state.dialogue?.phase==='replying'?'Toca para enseñarme otra frase · mantén para cambiar voz':'Toca para enseñarme · mantén para cambiar voz · arrastra para acercar';
+  if(o.kind==='animal')return !runtime.S.sound?'Activa Música para enseñarle una frase':o.state.dialogue?.phase==='listening'?'Te escucho. Toca objetos o pulsa el vacío.':o.state.dialogue?.phase==='replying'?'Escucha mi respuesta. Vuelve a tocarme para enseñarme.':'Acércate. Enséñame una frase tocando el mundo.';
   return FAMILIES[o.kind].hint;
  }
  function draw(o){

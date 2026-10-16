@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import {FAMILIES,createFamilyState,familyInfluence,encounterVoice} from '../src/encounter-families.js';
 import {createEncounters} from '../src/encounters.js';
+import {snapshotEncounter,restoreEncounterState} from '../src/encounters.js';
+const nested={a:.5,weave:{edges:[{from:'a',to:'b'}]},box:{parts:[{steps:[0,1]}]}},saved=snapshotEncounter(nested);nested.weave.edges[0].to='lost';nested.box.parts[0].steps.push(4);nested.temporary=true;restoreEncounterState(nested,saved);assert.deepEqual(nested,saved);nested.box.parts[0].steps.push(9);assert.equal(saved.box.parts[0].steps.length,2,'cancel snapshots must remain independent through repeated drags');
 import {initialize as data} from '../src/data.js';import {initialize as progress} from '../src/progress.js';import {initialize as world} from '../src/world.js';
 globalThis.localStorage={getItem:()=>null,setItem(){}};const r={};data(r);progress(r);world(r);
 for(const [kind,f]of Object.entries(FAMILIES)){

@@ -2,6 +2,9 @@ import {FAMILIES,createFamilyState,familyInfluence,familyArrange,regionalFamilyI
 import {claimInstallationBar} from './installations.js';
 import {groveNodes} from './connection-groves.js';
 import {toggleThread} from './encounter-depth-model.js';
+import {distanceOpacity} from './world-visibility-model.js';
+export const snapshotEncounter=state=>structuredClone(state);
+export function restoreEncounterState(state,snapshot){for(const key of Object.keys(state))delete state[key];Object.assign(state,structuredClone(snapshot));}
 export function createEncounters(cx,cy,size,region,seedOf,rng){
  if(region.sea)return [];
  const candidates=[];
@@ -46,7 +49,7 @@ export function initialize(runtime){
   runtime.beatSoon(time=>runtime.playVoice('encounter:weaver:'+o.groveRole,0,time,runtime.regionOfPos(o.x,o.y),false,.6,o,origin));
  }
  function tick(dt,paused){
-  if(previous!==runtime.S){cache.clear();visible=[];gesture=null;previous=runtime.S;lastBar=-Infinity;}
+  if(previous!==runtime.S){cache.clear();visible=[];gesture=bodyGesture=null;previous=runtime.S;lastBar=-Infinity;}
   if(!playable()||paused){if(gesture)cancel();runtime.depthPause?.();return;}
   const x=Math.floor(runtime.S.wx/runtime.WCH),y=Math.floor(runtime.S.wy/runtime.WCH);visible=[];
   for(let a=x-1;a<=x+1;a++)for(let b=y-1;b<=y+1;b++)visible.push(...chunk(a,b));
@@ -70,23 +73,23 @@ export function initialize(runtime){
   const b=runtime.body,S=runtime.S;if(gesture||!b?.ready||!playable()||b.jump){bodyGesture=null;return;}
   if(bodyGesture){const g=bodyGesture,o=g.object;if(Math.hypot(o.x-S.wx,o.y-S.wy)>72){if(g.moved)record(o,'model');bodyGesture=null;return;}
    const dx=S.wx-g.x,dy=S.wy-g.y;g.moved||=Math.hypot(dx,dy)>9;
-   if(g.moved){Object.assign(o.state,g.initial);FAMILIES[o.kind].drag(o.state,dx,dy,b.speed);o.state.active=16;}return;}
+   if(g.moved){restoreEncounterState(o.state,g.initial);FAMILIES[o.kind].drag(o.state,dx,dy,b.speed);o.state.active=16;}return;}
   const now=performance.now(),o=visible.find(o=>Math.hypot(o.x-S.wx,o.y-S.wy)<30&&now>(o.bodyNext||0));if(!o)return;
   runtime.audio();if(!runtime.depthTap?.(o,120))FAMILIES[o.kind].tap(o.state);record(o,'touch');o.bodyNext=now+1500;
   activateGrove(o);
-  bodyGesture={object:o,initial:{...o.state},x:S.wx,y:S.wy,moved:false};
+  bodyGesture={object:o,initial:snapshotEncounter(o.state),x:S.wx,y:S.wy,moved:false};
  }
- function cancel(){if(gesture){for(const k of Object.keys(gesture.object.state))delete gesture.object.state[k];Object.assign(gesture.object.state,gesture.initial);}gesture=null;}
+ function cancel(){if(gesture)restoreEncounterState(gesture.object.state,gesture.initial);gesture=null;}
  function down(e){
   if(!e.isPrimary||gesture||runtime.depthEngaged||!playable())return false;const x=runtime.S.wx+e.clientX-runtime.W/2,y=runtime.S.wy+e.clientY-runtime.H/2;
   const o=visible.find(o=>Math.hypot(o.x-x,o.y-y)<36);if(!o)return false;
-  runtime.audio();runtime.stopAutopilot?.();gesture={id:e.pointerId,object:o,initial:{...o.state},x:e.clientX,y:e.clientY,t:performance.now(),moved:false};
+  runtime.audio();runtime.stopAutopilot?.();gesture={id:e.pointerId,object:o,initial:snapshotEncounter(o.state),x:e.clientX,y:e.clientY,t:performance.now(),moved:false};
   try{runtime.$('w').setPointerCapture(e.pointerId);}catch(_){}return true;
  }
  function move(e){
   if(!gesture||gesture.id!==e.pointerId)return false;if(!playable()){cancel();return true;}
   const g=gesture,dx=e.clientX-g.x,dy=e.clientY-g.y;g.moved||=Math.hypot(dx,dy)>9;
-  if(g.moved){Object.assign(g.object.state,g.initial);FAMILIES[g.object.kind].drag(g.object.state,dx,dy,Math.hypot(dx,dy)/Math.max(.05,(performance.now()-g.t)/1000));g.object.state.active=16;}
+  if(g.moved){restoreEncounterState(g.object.state,g.initial);FAMILIES[g.object.kind].drag(g.object.state,dx,dy,Math.hypot(dx,dy)/Math.max(.05,(performance.now()-g.t)/1000));g.object.state.active=16;}
   return true;
  }
  function up(e){
@@ -112,19 +115,19 @@ export function initialize(runtime){
  function draw(){
   if(!runtime.inWorld()||(runtime.S.layer||'superficie')!=='superficie')return;
   const c=runtime.cx,ox=runtime.W/2-runtime.S.wx,oy=runtime.H/2-runtime.S.wy;
-  for(const o of visible){const s=o.state,f=FAMILIES[o.kind],d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);if(d>360)continue;
-   c.save();c.translate(o.x+ox,o.y+oy);c.globalAlpha=Math.max(.08,.55*(1-d/440));c.strokeStyle=runtime.musicInk?.(o,o.musicRole||{bass:'bajo',groove:'perc',melody:'lead',space:'acorde'}[o.groveRole]||f.voiceRole?.(s)||'lead')||'#fff';c.fillStyle=c.strokeStyle;c.lineWidth=1.2;
+  for(const o of visible){const s=o.state,f=FAMILIES[o.kind],d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),fade=distanceOpacity(d,460);if(fade<=.001)continue;
+   c.save();c.translate(o.x+ox,o.y+oy);c.globalAlpha=.55*fade;c.strokeStyle=runtime.musicInk?.(o,o.musicRole||{bass:'bajo',groove:'perc',melody:'lead',space:'acorde'}[o.groveRole]||f.voiceRole?.(s)||'lead')||'#fff';c.fillStyle=c.strokeStyle;c.lineWidth=1.2;
    drawShape(c,f.shape,s,o,runtime);runtime.depthDraw?.(o);c.restore();
   }
   if(!playable()||runtime.MU.speed>.1||runtime.scanning)return;
   const nearest=visible.slice().sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy))[0];
-  if(nearest&&Math.hypot(nearest.x-runtime.S.wx,nearest.y-runtime.S.wy)<140){c.save();c.fillStyle='#ddd';c.globalAlpha=.65;c.textAlign='center';c.font='10px "Geist Mono", monospace';const offset=nearest.kind==='box'&&nearest.state.a>.65?-132:72;c.fillText(FAMILIES[nearest.kind].name,runtime.W/2,runtime.H/2+offset,Math.min(300,runtime.W-32));c.fillText(nearest.kind==='weaver'?(runtime.depthHint?.(nearest)||FAMILIES.weaver.hint):runtime.fingerTouch?(runtime.depthHint?.(nearest)||FAMILIES[nearest.kind].hint):'Acércate para tocar · muévete para moldear · permanece para escuchar',runtime.W/2,runtime.H/2+offset+15,Math.min(330,runtime.W-24));c.restore();}
+  if(nearest&&Math.hypot(nearest.x-runtime.S.wx,nearest.y-runtime.S.wy)<140){c.save();c.fillStyle='#ddd';c.globalAlpha=.65;c.textAlign='center';c.font='10px "Geist Mono", monospace';const offset=nearest.kind==='box'&&nearest.state.a>.65?-132:72;c.fillText(FAMILIES[nearest.kind].name,runtime.W/2,runtime.H/2+offset,Math.min(300,runtime.W-32));c.fillText(nearest.kind==='animal'||nearest.kind==='weaver'||runtime.fingerTouch?(runtime.depthHint?.(nearest)||FAMILIES[nearest.kind].hint):'Acércate para tocar · muévete para moldear · permanece para escuchar',runtime.W/2,runtime.H/2+offset+15,Math.min(330,runtime.W-24));c.restore();}
  }
  function sources(){return visible.map(o=>({object:o,kind:'encounter:'+o.kind+(o.groveRole?':'+o.groveRole:FAMILIES[o.kind].voiceRole?':'+FAMILIES[o.kind].voiceRole(o.state):''),name:FAMILIES[o.kind].name,hint:runtime.depthHint?.(o),distance:Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)})).filter(s=>s.distance<250);}
  function journal(){return Object.keys(runtime.S.journal.encounters||{}).filter(k=>FAMILIES[k]).map(k=>`<article class="journal-card"><h3>${FAMILIES[k].name}</h3><p>${FAMILIES[k].description||FAMILIES[k].hint}. Su papel y su timbre cambian con la región; los gestos transforman la composición existente.</p></article>`).join('');}
  for(const [kind,f]of Object.entries(FAMILIES)){runtime.VOZ['encounter:'+kind]=f.hint+'. Escucha cómo cambia este lugar.';runtime.ACH.push(['encounter:'+kind,f.name,'Aprende un gesto de este encuentro.']);}
  addEventListener('blur',cancel);
- Object.defineProperties(runtime,{encounterReset:{get:()=>()=>{cache.clear();visible=[];gesture=null;}},shapeEncounters:{get:()=>arrange},encounterTick:{get:()=>tick},encounterDraw:{get:()=>draw},encounterBar:{get:()=>bar},encounterEngaged:{get:()=>!!gesture},encounterBodyGesture:{get:()=>bodyGesture},encounterDown:{get:()=>down},encounterMove:{get:()=>move},encounterUp:{get:()=>up},encounterSources:{get:()=>sources},encounterJournal:{get:()=>journal},encounterObjects:{get:()=>visible},encounterCacheSize:{get:()=>cache.size}});
+ Object.defineProperties(runtime,{encounterReset:{get:()=>()=>{cache.clear();visible=[];gesture=bodyGesture=null;}},shapeEncounters:{get:()=>arrange},encounterTick:{get:()=>tick},encounterDraw:{get:()=>draw},encounterBar:{get:()=>bar},encounterEngaged:{get:()=>!!gesture},encounterBodyGesture:{get:()=>bodyGesture},encounterDown:{get:()=>down},encounterMove:{get:()=>move},encounterUp:{get:()=>up},encounterSources:{get:()=>sources},encounterJournal:{get:()=>journal},encounterObjects:{get:()=>visible},encounterCacheSize:{get:()=>cache.size}});
 }
 function drawShape(c,shape,s,o,runtime){
  const TAU=Math.PI*2;
