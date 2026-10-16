@@ -1,3 +1,4 @@
+import {initialize as contentGallery} from './content-gallery.js';
 import {initialize as reactiveEcology} from './reactive-ecology.js';
 import {initialize as returnEntrance} from './return-entrance.js';
 import {initialize as musicTerritories} from './territory-journey.js';
@@ -179,7 +180,7 @@ runtime.checkDay(true);if(runtime.S.mode==="studio")runtime.S.mode=runtime.S.pre
 if(runtime.S.mode==='camino'&&runtime.worldReady()&&runtime.S.lastWorldDay===runtime.S.todayKey)runtime.S.mode='world';
 seeds(runtime);
 lab(runtime);
-microInstruments(runtime);achievementsV2(runtime);worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
+contentGallery(runtime);microInstruments(runtime);achievementsV2(runtime);worldVisibility(runtime);worldFamilyArt(runtime);anatomyView(runtime);rewards(runtime);celebration(runtime);releaseUI(runtime);elementBook(runtime);
 practiceTravel(runtime);boxSurprises(runtime);
 musicTravel(runtime);
 distantColors(runtime);vjWorld(runtime);reactiveEcology(runtime);

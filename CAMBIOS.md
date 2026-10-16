@@ -1,3 +1,9 @@
+## 2.3.0-alpha.18 · Reencuentro 2
+
+Catálogo interno buscable conectado al laboratorio real, prácticas nuevas de miniinstrumentos y ecologías, inventario de rutas y muestreo espacial. Las colonias de Terrazas recuperan los píxeles originales sin cambiar bits, IDs, voces o coordenadas; blobs y anatomías restantes se conservan.
+
+Rama `feat/reencuentro-02-catalogo`. Evidencia: scripts/reencuentro-02-validation.json. CI, DSP y escucha física se registran por separado; no se afirma deploy.
+
 ## 2.3.0-alpha.17 · Reencuentro 1
 
 La radio real de acd766f gobierna motivos, bajos, secciones, expresión y timbres principales en producción. Acompañantes modernos respetan sus frases; batería nativa, armonía compartida, transiciones, filtros y duetos se conservan. Se comparan 96 marcos históricos de doce estilos sin tocar mapas ni progreso.
