@@ -1,3 +1,9 @@
+## 2.3.0-alpha.3 · Frases regionales
+
+Catorce gramáticas de motivo, con llamada/respuesta, cierre y desarrollo por secciones. Las respuestas conservan la frase compuesta: no vuelven a las mismas tres notas ni se transponen notas aisladas al azar. El bajo preserva raíces y patrón nativo; deja espacio en algunas subdivisiones compartidas. Se conserva un presupuesto de cero notas cuando el arreglo pide silencio.
+
+Los sostenidos cambian a una nota cercana si el acorde deja de contenerlos, en el pulso común y con salida suave; mantienen notas compartidas sin volver a dispararse. Se conservan las escalas, estilos, cantidades de instrumentos, tiempos regionales, mapas y premios. Auditoría, 43 suites afectadas, un recorrido de producción y cinco mezclas aprobadas; sin afirmar escucha física.
+
 ## 2.3.0-alpha.2 · Instrumentos expresivos
 
 Cada variante conserva el instrumento nativo que le corresponde: se retiró la sustitución genérica de una de cada cuatro variantes. Ataque, cola, color y acento dependen del rol, gesto e individuo; no se sortean notas. Los sostenidos entran en el pulso y acorde activos; fuente, efectos y señal visual usan el mismo instante. Cuatro cajas regionales secas: madera, escobillas, piel y puerta electrónica. Sin añadir eco automático ni tocar guardados o geometría.

@@ -1,3 +1,4 @@
+import {regionalPhrase,interlockedBass} from './regional-phrases.js';
 import {arrangementPhrase,phraseNotes,phraseDrums} from './arrangement-phrases.js';
 import {productionIdentity,productionPercussion} from './production-identities.js';
 import {RHYTHM_GENRES,rhythmPattern} from './rhythms.js';
@@ -71,11 +72,10 @@ export function labArrangement(frame,score,environment={}){
   scene=chapter%6,orchestra=(score.variant+chapter+(quiet?1:0))%score.leads.length,
   phrasing=score.production?arrangementPhrase(frame.harmonyBar||0,score.variant):null,evolved={...score,phrasing,scene,quiet,listenQuiet:environment.quiet===true},
   foundation=(frame.section===0||(frame.harmonyBar||0)<8||(score.electronic?.count||10)<=3)&&(score.ensemble>1||(score.electronic?.count||0)>0)&&!environment.quiet,
-  rest=frame.melodyRest&&!foundation||scene===5&&(score.electronic?.count??10)>3,cycle=Math.floor(Math.max(0,frame.phrase)/2)%4,hook=Array(16).fill(-1),budget=Math.min(4,frame.grammar.hookLimit);
- if(!rest)score.hook.slice(0,budget).forEach((s,i)=>{if(cycle!==3||i===0)hook[s]=(frame.hybrid?.tones||[0,2,4,3])[(i+(cycle===2?1:0)+score.variant)%(frame.hybrid?.tones?.length||4)];});
- const bass=score.bass.map((n,s)=>frame.section===0&&s!==0&&s%8!==0?-1:n);
+  rest=frame.melodyRest&&!foundation||scene===5&&(score.electronic?.count??10)>3,motif=regionalPhrase(score,frame),hook=rest?Array(16).fill(-1):motif.hook;
+ const bass=interlockedBass(score,hook,frame.section===0);
  const floor=environment.quiet||scene===5?.16:(score.electronic?.count||0)>=8?.48:(score.electronic?.count||0)>=6?.38:.22;
- return {...frame,phrasing,energy:Math.min(.86,Math.max(frame.energy??.25,floor)*(phrasing?.energy||1)),labScore:evolved,labEvolution:{chapter,scene,quiet},hybrid:frame.hybrid||null,melodyRest:rest,hook,bass,bassI:score.bassI,hookI:score.orchestra?territoryInstrument(score.orchestra,Math.floor(Math.max(0,frame.harmonyBar||0)/4),chapter+(quiet?1:0)):score.leads[orchestra],
+ return {...frame,phrasing,energy:Math.min(.86,Math.max(frame.energy??.25,floor)*(phrasing?.energy||1)),labScore:evolved,labEvolution:{chapter,scene,quiet,motif:motif.id,movement:motif.movement,line:motif.line},hybrid:frame.hybrid||null,melodyRest:rest,hook,bass,bassI:score.bassI,hookI:score.orchestra?territoryInstrument(score.orchestra,Math.floor(Math.max(0,frame.harmonyBar||0)/4),chapter+(quiet?1:0)):score.leads[orchestra],
   identity:{...frame.identity,id:`lab:${score.id}`,name:score.name,hooks:score.leads,bassI:score.bassI,swing:Math.min(.28,frame.identity?.swing??score.swing),air:Math.min(.5,frame.identity?.air??.5)},
   grammar:{...frame.grammar,progression:frame.hybrid?.progression||score.progression,harmonyBars:frame.hybrid?.harmonyBars||8,brightness:Math.min(frame.grammar.brightness,score.ceiling),hookLevel:frame.grammar.hookLevel*(scene===1?.55:.85),accents:[]},
   expression:{...frame.expression,harmony:false,toneScale:Math.min(1,frame.expression.toneScale),attackScale:frame.expression.attackScale*(score.id==='breath'?1.4:1)},
@@ -85,11 +85,11 @@ export function labArrangement(frame,score,environment={}){
 export function labNoteEvents(frame,step,bar){
  if(!frame?.labScore||!Number.isInteger(step)||step<0||step>15)return [];
  const score=frame.labScore,cycle=Math.floor(Math.max(0,bar))%8,answer=cycle%4===2,rest=cycle%4===3,
-  events=[],bass=frame.bass[step],hook=frame.hook[step],variant=score.variant;
+  events=[],bass=frame.bass[step],hook=frame.hook[step];
  if((!score.electronic||score.electronic.layers.includes('bass'))&&bass>=0&&(!rest||step===0||step===8))events.push({role:'bajo',degree:answer&&step!==0?Math.min(7,bass+2):bass,
   instrument:frame.bassI,offset:0,level:step%4===0?1:.8,technique:cycle%2?'muted':'normal'});
  if(!frame.melodyRest&&hook>=0&&(!rest||step===0)){
-  const degree=rest?0:answer?[4,2,0][(hook+variant)%3]:hook;
+  const degree=rest?0:hook;
   events.push({role:'lead',degree,instrument:frame.hookI,offset:score.id==='breath'?.22:0,
    level:step===0?.85:.68,technique:answer&&['silk','breath'].includes(score.id)?'slide':step%4?'ghost':'normal'});
  }
