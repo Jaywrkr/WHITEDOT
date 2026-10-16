@@ -1,4 +1,12 @@
 const TAU=Math.PI*2;
+export function distantSegmentLayout(q,player,width,height){return {x:width/2+(q.x-player.x)*.4,y:height/2+(q.y-player.y)*.4,radius:Math.min(q.radius*2.2,Math.min(width,height)*.65)};}
+// Render once at low resolution: softened lines, a radial edge and bounded GPU memory.
+export function visualPlate(q){
+ if(typeof globalThis.document?.createElement!=='function')return null;
+ const cv=document.createElement('canvas');cv.width=cv.height=240;const c=cv.getContext('2d');if(!c)return null;
+ c.filter='blur(4px)';drawVisualSegment(c,q,{x:120,y:120,radius:105,alpha:1,reduced:true});c.filter='none';
+ c.globalCompositeOperation='destination-in';const mask=c.createRadialGradient(120,120,20,120,120,112);mask.addColorStop(0,'#fff');mask.addColorStop(.35,'#fff');mask.addColorStop(1,'transparent');c.fillStyle=mask;c.fillRect(0,0,240,240);return cv;
+}
 // Bounded original vector scenes, inspired by Jay's reference collection.
 export function drawVisualSegment(c,q,{x,y,radius,time=0,energy=0,alpha=1,reduced=false}={}){
  const r=radius,t=reduced?0:time,p=q.phase,ink=`hsl(${q.hue} 65% 68%)`,other=`hsl(${(q.hue+90)%360} 65% 65%)`;

@@ -1,6 +1,6 @@
 # Cierre de implementación · Reencuentro
 
-Versión 2.3.0-alpha.22. Seis fases implementadas desde main `2f9cf3e`; Jay crea PR y merge en orden. La rama final contiene las anteriores. No se hizo merge ni push a main. El cierre de publicación queda condicionado a CI completo y escucha física.
+Versión 2.3.0-alpha.23. Seis fases iniciales y ampliación 7 implementadas desde main `2f9cf3e`; Jay crea PR y merge en orden. La rama final contiene las anteriores. No se hizo merge ni push a main. El cierre de publicación queda condicionado a CI completo y escucha física.
 
 | Fase | Rama | Commit |
 |---|---|---|
@@ -9,7 +9,7 @@ Versión 2.3.0-alpha.22. Seis fases implementadas desde main `2f9cf3e`; Jay crea
 | 3 · Identidad | feat/reencuentro-03-identidad | 6fb41b0 |
 | 4 · Ecosistemas | feat/reencuentro-04-ecosistemas | a030b9d |
 | 5 · Exploración | feat/reencuentro-05-exploracion | 67c156a |
-| 6 · Auditoría | feat/reencuentro-06-auditoria | Esta entrega |
+| 6 · Auditoría | feat/reencuentro-06-auditoria | 76d4c87 |
 
 ## Música
 
@@ -43,7 +43,7 @@ La muestra final de 1.024 chunks registra 8.243 individuos originales y 2.356 pr
 
 ## Probar en teléfono
 
-1. Abre el Preview de la rama final; comprueba alpha.22.
+1. Abre el Preview de la rama final; comprueba alpha.23.
 2. Escucha un estilo conocido y camina: compara con el preview acd766f.
 3. Pulsa Saltar varias veces: deben cambiar música, habitantes y siluetas.
 4. Menú → Tu recorrido → Qué puedes encontrar → catálogo.
@@ -52,3 +52,13 @@ La muestra final de 1.024 chunks registra 8.243 individuos originales y 2.356 pr
 7. Guarda un lugar, vuelve, reinicia y verifica colección y distancia.
 
 El catálogo abre un laboratorio aislado; salir vuelve a la partida principal. Los controles no producen música. Toca el mundo para activar audio cuando quieras escucharlo.
+
+## Ampliación 7 · alpha.23
+
+Habitantes más visibles, doce actividades y viajeros autónomos. 2.524 siluetas distintas en 3.000 genomas muestreados; el muestreo de colonias genera 1.069 vecinos en 567 celdas y conserva 130 celdas despejadas. El campo original proyecta 720 de 2.058 individuos de la muestra de 256 chunks, frente a 166 antes de la recuperación. Escáner y prácticas reales conectadas. Galaxias y VJ amplios, difusos y distantes.
+
+156 suites Node completas aprobadas usando un bucle secuencial equivalente a scripts/run-tests.mjs, con idénticas aserciones: npm test quedó bloqueado al anidar procesos por falta de hilos; se cancelaron solo procesos propios. La prueba de versiones se repitió sola y pasó. 41 suites afectadas anteriores también terminaron; no usar el hijo de versión cancelado como evidencia independiente. Las voces reales verifican cuatro roles, armonía/tiempo y 37 instrumentos en su muestra de integración; no es un render DSP.
+
+Navegador y audio se registran en scripts/reencuentro-07-validation.json. No afirmar escucha física, FPS ni layout aprobado si Chromium no completa el recorrido. La rama 7 activa CI completo antes de cualquier merge.
+
+Para probar: abre el Preview alpha.23; usa Saltar y observa vecinos pequeños. Guía → Catálogo → Vecinos pixelados y Viajeros del vacío. Toca uno, espera, observa su reacción; deja al cubo quieto para ver pasar viajeros. Prueba Movimiento reducido y vuelve a tu guardado principal.

@@ -9,6 +9,7 @@ Ciclo vigente: [PLAN_REENCUENTRO.md](PLAN_REENCUENTRO.md).
 | 4 · Ecosistemas | `feat/reencuentro-04-ecosistemas` | alpha.20 | Implementada; muestreo y pruebas enfocadas |
 | 5 · Exploración legible | `feat/reencuentro-05-exploracion` | alpha.21 | Implementada; pruebas enfocadas, CI pendiente |
 | 6 · Auditoría | `feat/reencuentro-06-auditoria` | alpha.22 | Implementada; cierre de publicación condicionado a CI y escucha |
+| 7 · Habitantes y profundidad | `feat/reencuentro-07-habitantes` | alpha.23 | Implementada; 156 suites completas, navegador/DSP bloqueados por recursos |
 <!-- /reencuentro-actual -->
 
 <!-- viaje-reacciones-actual -->

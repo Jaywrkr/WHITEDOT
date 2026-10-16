@@ -20,7 +20,7 @@ export function ecosystemField(items,field,chunkId,profile,seedOf){
   const o=items[i];if(protectedInhabitant(o)){retained.push(o);continue;}
   const point=ecosystemAt(f,o.hx??o.x,o.hy??o.y,seedOf),dominant=field==='sp'?o.s?.id===profile.animal:field==='plants'?o.pt?.t===profile.plant:true,
    density=clamp(.6+profile.density*.4,.65,1.1),base=field==='grass'?.12:field==='sp'?.23:.2,
-   probability=clamp((base+point.weight*.65)*(dominant?1:.55)*density*(f?.quiet?.4:1),.04,.95),
+   probability=clamp((base+point.weight*.65)*(dominant?1:.55)*density*(f?.quiet?.4:1)+(field==='sp'&&o.s?.mob?(f?.quiet?.05:.18):0),.04,.95),
    lottery=(seedOf(`ecosystem:presence:v1:${chunkId}:${field}:${i}`)>>>0)/4294967296;
   candidates.push({o,eligible:lottery<probability,score:point.weight+(dominant?.25:0)-lottery*.2});
  }

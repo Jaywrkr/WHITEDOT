@@ -1,4 +1,5 @@
 import {voiceExpression} from './voice-expression.js';
+import {inhabitantVoice} from './pixel-life-model.js';
 import {microVoice,microArticulation,microKit} from './micro-instruments-model.js';
 import {electronicDrum} from './electronic-ensemble.js';
 import {consonantPitch,fitRegister} from './musical-conductor.js';
@@ -67,6 +68,7 @@ export function initialize(runtime) {
   let voiceOrigin="ambient",budgetOwner=null,budgetKey=null,manualHits=0;const sourceHits=new Map();
   function withVoiceOrigin(origin,emit){const previous=voiceOrigin;voiceOrigin=origin;try{return emit();}finally{voiceOrigin=previous;}}
   function rawVoice(kind, region, source) {
+    if(kind==='habitante'&&source?.genome)return inhabitantVoice(source,region,runtime.GEN);
     if(kind.startsWith('micro:')){const voice=microVoice(kind,source);if(voice)return voice;}
     if(kind==='caminante'&&source)return walkerVoice(source,region,runtime.GEN,runtime.seedOf);
     if(kind==='reliquia')return relicVoice(region,source,runtime.seedOf);
@@ -90,8 +92,8 @@ export function initialize(runtime) {
       const spec=INSTRUMENT_SPECS[source.labSynth],role=spec.kind==='bass'||['velvetbass','reedbass','p_foldbass'].includes(source.labSynth)?'bajo':spec.kind==='membrane'?'perc':spec.sustain&&['bow','pad'].includes(spec.kind)||['analogpad','choir','orbitorgan'].includes(source.labSynth)?'acorde':'lead';
       raw={...raw,role,instrument:source.labSynth,low:role==='bajo'||role==='perc'?36:45,high:role==='bajo'?54:role==='perc'?57:69};
     }
-    if(runtime.MU?.radio?.labScore&&!source?.labSynth&&!kind.startsWith('micro:'))raw=labInteractionVoice(raw,labScore(region,runtime.seedOf,runtime.rng),kind,source,runtime.seedOf);
-    if(runtime.MU?.radio?.labScore&&!kind.startsWith('micro:'))raw=performanceVoice(raw,region,kind,source,runtime.seedOf);
+    if(runtime.MU?.radio?.labScore&&!source?.labSynth&&!kind.startsWith('micro:')&&kind!=='habitante')raw=labInteractionVoice(raw,labScore(region,runtime.seedOf,runtime.rng),kind,source,runtime.seedOf);
+    if(runtime.MU?.radio?.labScore&&!kind.startsWith('micro:')&&kind!=='habitante')raw=performanceVoice(raw,region,kind,source,runtime.seedOf);
     if(kind==='pulso')raw=cubePulseVoice(raw,runtime.S.cube?.voice);
     return hybridRegister(voiceRegister(raw,region.genre),hybridIdentity(region,runtime.seedOf,runtime.rng));
   }

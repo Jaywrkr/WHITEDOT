@@ -2,7 +2,7 @@
 
 Muestra determinista de 1024 chunks, antes de distancia y niebla. No es probabilidad por hora.
 
-Familias coleccionables: 157. Entradas combinadas: 320. Con práctica: 293.
+Familias coleccionables: 157. Entradas combinadas: 322. Con práctica: 295.
 
 Las rutas técnicas son declaraciones contrastadas con archivos. La presencia muestreada no demuestra visibilidad, interacción ni audio. Cero significa no observado en esta muestra.
 
@@ -328,5 +328,7 @@ Las rutas técnicas son declaraciones contrastadas con archivos. La presencia mu
 | native:facets | Seres de cristal | native:facets | Sin medición | world.js → anatomy-view.js → voices.js |
 | native:anatomy | Organismos de raíces | native:anatomy | Sin medición | world.js → anatomy-view.js → voices.js |
 | native:pixel | Colonia pixelada | native:pixel | Sin medición | world.js → anatomy-view.js → voices.js |
+| inhabitants:colony | Vecinos pixelados | inhabitants:colony | Sin medición | pixel-life-model.js → pixel-life.js → voices.js |
+| inhabitants:traveller | Viajeros del vacío | inhabitants:traveller | Sin medición | pixel-life-model.js → pixel-life.js → voices.js |
 
 Regenerar: `node scripts/content-audit.mjs 1024 /tmp/contenido.json INVENTARIO_UNIVERSO.md`.
