@@ -10,7 +10,7 @@ Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) ·
 
 ## Dirección musical · ciclo actual
 
-[Plan de siete fases](PLAN_DIRECCION_MUSICAL.md). La fase 1 comparte reloj y armonía dentro de cada zona; cada territorio mantiene su tempo. Fuentes cercanas conservan su instrumento y acompañan la armonía audible. Fase 2 conecta doce identidades de producción a protagonistas, acordes y respuestas del motor. El cierre musical continúa con fusiones, arreglos, interacciones, transiciones y auditoría.
+[Plan de siete fases](PLAN_DIRECCION_MUSICAL.md). La fase 1 comparte reloj y armonía dentro de cada zona; cada territorio mantiene su tempo. Fuentes cercanas conservan su instrumento y acompañan la armonía audible. Fase 2 conecta doce identidades de producción a protagonistas, acordes y respuestas del motor. Fase 3 permite explorar 18 cruces desde Estilos → Cruces, incluyendo guitarra/máquina y disco de secuencias, con formas musicales originales. El cierre musical continúa con arreglos, interacciones, transiciones y auditoría.
 
 ## Cubo, colección y música · entregas conservadas
 

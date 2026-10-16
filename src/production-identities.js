@@ -13,10 +13,12 @@ export const PRODUCTION_IDENTITIES=Object.freeze({
  melodic:identity('melodic','Arco y secuencia','p_cellobody p_fmharp phasekeys','sub p_roundbass','p_tinepiano','p_panreed','normal','clap'),
  dub:identity('dub','Acorde entre ecos','p_barkkeys p_gutguitar hollow','sub p_woodybass','p_tapepiano','p_bassclarinet','muted','rim'),
  ambient:identity('ambient','Aire y respiración','p_cellobody p_tapepiano p_duskwind','sub p_woodybass','p_violaswell','p_bassclarinet','breathy','wood'),
+ guitar:identity('guitar','Cuerda eléctrica','p_gutguitar p_barkkeys p_cellobody','p_roundbass p_foldbass','p_tinepiano','phasekeys','muted','snare'),
+ italo:identity('italo','Secuencia y disco','phasekeys p_fmharp clav','pluck p_roundbass','rhodes','p_gutguitar','normal','clap'),
  blues:identity('blues','Guitarra y electrónica','p_gutguitar rhodes p_softhorn','p_woodybass p_roundbass','p_tinepiano','p_cellobody','slide','rim')
 });
 export function productionIdentity(region,seedOf,hybrid=null){
- const kind=hybrid?.id==='blues-machine'?'blues':['ambient','heart'].includes(region.genre)?'ambient':region.genre==='dub'?'dub':['afro','tribal'].includes(region.genre)?'afro':GENRE_CHARACTERS[region.genre]==='floor'?'minimal':GENRE_CHARACTERS[region.genre]||'warm',
+ const kind=hybrid?.id==='guitar-machine'?'guitar':hybrid?.id==='italo-current'?'italo':hybrid?.id==='blues-machine'?'blues':['ambient','heart'].includes(region.genre)?'ambient':region.genre==='dub'?'dub':['afro','tribal'].includes(region.genre)?'afro':GENRE_CHARACTERS[region.genre]==='floor'?'minimal':GENRE_CHARACTERS[region.genre]||'warm',
   base=PRODUCTION_IDENTITIES[kind]||PRODUCTION_IDENTITIES.warm,h=seedOf('production:identity:v1:'+region.key+':'+region.genre)>>>0,offset=h%base.leads.length,
   leads=base.leads.slice(offset).concat(base.leads.slice(0,offset));
  return Object.freeze({...base,version:1,leads:Object.freeze(leads),bassI:base.bass[(h>>>5)%base.bass.length],variant:(h>>>10)%16});

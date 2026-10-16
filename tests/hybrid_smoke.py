@@ -1,4 +1,4 @@
-"""All sixteen influences reached through the real mobile laboratory."""
+"""All compositional influences reached through the real mobile laboratory."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -22,5 +22,5 @@ try:
    page.wait_for_function('(id)=>__testRuntime.MU.radio?.hybrid?.id===id',arg=id,timeout=15000)
    assert page.evaluate('''()=>{const r=__testRuntime,f=r.MU.radio;return f.hook.filter(n=>n>=0).length<=4&&f.grammar.brightness<=f.hybrid.brightness&&document.documentElement.scrollWidth<=innerWidth;}''')
   assert not errors,errors
-  page.screenshot(path='/tmp/whitedot-f5-cruces.png');print('PASS 16 actual hybrid destinations, native regions, contained phrases and mobile layout',flush=True);b.close()
+  page.screenshot(path='/tmp/whitedot-f5-cruces.png');print('PASS all actual hybrid destinations, native regions, contained phrases and mobile layout',flush=True);b.close()
 finally:server.shutdown()

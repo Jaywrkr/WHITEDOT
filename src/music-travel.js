@@ -1,3 +1,4 @@
+import {HYBRID_STYLES,hybridIdentity} from './musical-hybrids.js';
 // Production travel selects existing terrain; it never completes the Camino or awards music.
 import {groveNodes} from './connection-groves.js';
 import {labScore} from './lab-score.js';
@@ -11,12 +12,13 @@ export function* genrePlaces(runtime,origin={x:runtime.S.wx,y:runtime.S.wy},radi
  }
 }
 export function initialize(runtime){
- const $=runtime.$,destinations=new Map();let owner=runtime.S,search=null,query='',busy=false,generation=0;
- const names=()=>Object.entries(runtime.GEN).sort((a,b)=>a[1].name.localeCompare(b[1].name,'es'));
+ const $=runtime.$,destinations=new Map();let owner=runtime.S,search=null,query='',mode='genres',busy=false,generation=0;
+ const names=()=>((mode==='hybrids'?HYBRID_STYLES.map(h=>['fusion:'+h.id,h]):Object.entries(runtime.GEN))).sort((a,b)=>a[1].name.localeCompare(b[1].name,'es'));
  function render(){
   $('musicTravelConnections').disabled=busy;
   $('musicTravelFull').disabled=busy;$('musicTravelSolo').disabled=busy;$('musicTravelBack').hidden=!runtime.S.practiceTravel?.previous;$('musicTravelBack').disabled=busy||!runtime.canPracticeTravel?.();
-  const heard=runtime.S.journal?.music?.genres||{},rows=names().filter(([id,g])=>(g.name+' '+id).toLocaleLowerCase('es').includes(query));
+  const heard=mode==='hybrids'?Object.fromEntries(Object.entries(runtime.S.journal?.music?.hybrids||{}).map(([id,v])=>['fusion:'+id,v])):runtime.S.journal?.music?.genres||{},rows=names().filter(([id,g])=>(g.name+' '+id).toLocaleLowerCase('es').includes(query));
+  $('musicTravelGenres').setAttribute('aria-pressed',String(mode==='genres'));$('musicTravelHybrids').setAttribute('aria-pressed',String(mode==='hybrids'));
   $('musicTravelCount').textContent=`${names().filter(([id])=>heard[id]).length} de ${names().length} escuchados`;
   $('musicTravelList').replaceChildren(...rows.map(([id,g])=>{
    const row=document.createElement('div'),button=document.createElement('button'),check=document.createElement('span');row.className='music-destination';
@@ -32,7 +34,7 @@ export function initialize(runtime){
   while(!done&&token===generation){
    for(let i=0;i<24;i++){
     const next=search.next();if(next.done){done=true;break;}
-    const p=next.value;if(p&&!destinations.has(p.region.genre))destinations.set(p.region.genre,p);
+    const p=next.value;if(p){if(!destinations.has(p.region.genre))destinations.set(p.region.genre,p);const fusion=hybridIdentity(p.region,runtime.seedOf,runtime.rng);if(fusion&&!destinations.has('fusion:'+fusion.id))destinations.set('fusion:'+fusion.id,p);}
     if(p&&id==='connections'){
      const nodes=groveNodes(Math.floor(p.x/runtime.WCH),Math.floor(p.y/runtime.WCH),runtime.WCH,p.region,runtime.seedOf),node=nodes[5];
      if(node)destinations.set('connections',{...p,x:node.x,y:node.y});
@@ -46,7 +48,7 @@ export function initialize(runtime){
   return null;
  }
  async function go(id){
-  reset();if(busy||!runtime.GEN[id]&&!['connections','full','solo'].includes(id)||!runtime.inWorld()||!runtime.canPracticeTravel?.())return false;
+  reset();if(busy||!runtime.GEN[id]&&!['connections','full','solo'].includes(id)&&!HYBRID_STYLES.some(h=>'fusion:'+h.id===id)||!runtime.inWorld()||!runtime.canPracticeTravel?.())return false;
   busy=true;const token=++generation,scope=runtime.S;render();$('musicTravelStatus').textContent='Buscando un lugar real…';
   try{
    const point=await find(id,token);
@@ -56,11 +58,12 @@ export function initialize(runtime){
    $('mMusicTravel').hidden=true;runtime.toast(id==='connections'?'Toca para conectar. Permanece sobre un hilo para retirarlo.':id==='solo'?'Una voz. Camina para encontrar otra respuesta.':point.region.name+' · '+runtime.GEN[point.region.genre].name);return true;
   }finally{if(token===generation){busy=false;render();}}
  }
- function open(){if(!runtime.inWorld())return;reset();query='';$('musicTravelSearch').value='';$('musicTravelStatus').textContent='Viaja, escucha y descubre.';render();$('mMusicTravel').hidden=false;}
+ function open(){if(!runtime.inWorld())return;reset();mode='genres';query='';$('musicTravelSearch').value='';$('musicTravelStatus').textContent='Viaja, escucha y descubre.';render();$('mMusicTravel').hidden=false;}
  $('bStyles').onclick=open;$('musicTravelClose').onclick=()=>{generation++;busy=false;$('mMusicTravel').hidden=true;};
  $('musicTravelConnections').onclick=()=>go('connections');
  $('musicTravelFull').onclick=()=>go('full');$('musicTravelSolo').onclick=()=>go('solo');
  $('musicTravelBack').onclick=()=>{if(busy)return;if(runtime.returnPracticePlace())$('mMusicTravel').hidden=true;else $('musicTravelStatus').textContent='Revisa el guardado antes de volver.';};
+ for(const [button,value]of [['musicTravelGenres','genres'],['musicTravelHybrids','hybrids']])$(button).onclick=()=>{if(busy)return;mode=value;query='';$('musicTravelSearch').value='';render();};
  $('musicTravelSearch').oninput=e=>{query=e.target.value.toLocaleLowerCase('es');render();};
  $('musicTravelList').onclick=e=>{const b=e.target.closest('[data-music-genre]');if(b)go(b.dataset.musicGenre);};
  setInterval(()=>{$('bStyles').hidden=!runtime.inWorld();reset();},250);

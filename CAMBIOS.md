@@ -1,3 +1,13 @@
+# Dirección musical · fase 3: fusiones que se pueden encontrar
+
+- Guitarra y máquina y Disco de secuencias amplían los cruces a 18, con instrumentos, motivos y progresiones propios. Las identidades guitar/italo llegan al motor real.
+- Extensión selectiva con semilla independiente; conserva recetas puras y la selección previa en la mayoría de territorios compatibles. La base electrónica conserva ritmo y tempo; la influencia aporta fraseo, timbre y armonía.
+- Blues modular usa doce posiciones armónicas de un compás cada una: doce compases, sin duplicar la duración de la forma.
+- Estilos → Cruces permite buscar y viajar a fusiones reales. Escuchado se registra por emisión de instrumentos, nunca por seleccionar un destino.
+- Laboratorio recorre las 248 entradas, incluidos los dos cruces nuevos. Tests comprueban el catálogo completo y las 18 influencias alcanzables.
+
+Auditoría, 122 suites Node, cuatro programas de navegador y 18 renders de producción aprobados. Pico máximo 0,904477. Evidencia `scripts/musica-03-validation.json`; CI/deploy/escucha física separados.
+
 # Dirección musical · fase 2: protagonistas reconocibles
 
 - Doce identidades de producción originales para minimal, máquina, cálida, orgánica, afro, disco, quebrada, grave, melódica, dub, ambient y blues.
