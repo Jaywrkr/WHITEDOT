@@ -1,3 +1,4 @@
+import {microPath} from './micro-instruments-model.js';
 import {livingPortrait} from './living-portraits.js';
 // Original small vector portraits, inspired by the world's own glyphs and materials.
 // No external images, logos, recordings or characters.
@@ -7,9 +8,10 @@ const RELICS=[
  'M-18 -18L18 18M18 -18L-18 18','M24 0L12 21L-12 21L-24 0L-12 -21L12 -21Z','M-22 8A22 22 0 0 1 22 8',
  'M-20 -2H-16V2H-20ZM-2 -2H2V2H-2ZM16 -2H20V2H16Z','M-12 -23V16H23','M-22 -22H22V22H-22ZM-4 -4H4V4H-4Z'
 ];
-export function rarePortrait(card){
+export function rarePortrait(card,{scene=false}={}){
  const art=card.type.split(':')[0],v=card.artVariant||0;let path;
- if(art==='living')path=livingPortrait(card.type,card.appearance,card.artVariant);
+ if(art==='micro')path=microPath(card.type.split(':')[1]);
+ else if(art==='living')path=livingPortrait(card.type,card.appearance,card.artVariant);
  else if(art==='event')path='M-29 0Q-40 -22 -15 -18Q0 -38 17 -17Q41 -18 30 0M-20 10L-25 25M0 10L-5 25M20 10L15 25';
  else if(art==='fossil')path='M23 5C29 -24 -10 -33 -25 -10C-38 16 -7 36 15 19C34 3 15 -18 -1 -12C-17 -8 -16 13 -2 14C10 15 13 2 4 -1';
  else if(art==='culture')path=RELICS[(v+3)%RELICS.length];
@@ -20,5 +22,6 @@ export function rarePortrait(card){
  else if(card.type==='anomaly:detenido')path='M24 0A24 24 0 1 1 -24 0A24 24 0 1 1 24 0M-7 -10V10M7 -10V10';
  else if(card.type==='anomaly:frenesi')path='M-30 7H-18L-9 -18L0 21L10 -21L19 7H30';
  else path=card.type==='anomaly:luna'?'M25 0A25 25 0 1 1 -25 0A25 25 0 1 1 25 0M-8 -8L8 8M8 -8L-8 8':card.type==='anomaly:espejo'?'M-19 -21L-1 -12L-1 21L-19 12ZM19 -21L1 -12L1 21L19 12Z':'M0 -24L24 0L0 24L-24 0ZM-14 0H14M0 -14V14';
- return `<svg viewBox="-64 -48 128 96" aria-hidden="true" focusable="false"><path class="rare-orbit" d="M38 0A38 38 0 1 1 -38 0A38 38 0 1 1 38 0"/><path class="rare-glyph" d="${path}"/><path class="rare-sparks" d="M-50 -25h4M-48 -27v4M43 27h4M45 25v4"/></svg>`;
+ const landscape=scene?`<g class="rare-scene"><path d="M-64 34Q-35 ${18+v%9} -12 34T64 29M-64 40Q-25 28 4 40T64 38M-51 -35h${8+v%14}M42 -32v${4+v%7}"/><circle cx="${36-v%12}" cy="-30" r="${2+v%4}"/></g>`:'';
+ return `<svg viewBox="-64 -48 128 96" aria-hidden="true" focusable="false">${landscape}<path class="rare-orbit" d="M38 0A38 38 0 1 1 -38 0A38 38 0 1 1 38 0"/><path class="rare-glyph" d="${path}"/><path class="rare-sparks" d="M-50 -25h4M-48 -27v4M43 27h4M45 25v4"/></svg>`;
 }

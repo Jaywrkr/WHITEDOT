@@ -49,22 +49,28 @@
 <div class="goal"><b id="goal">Recoge una luz para abrir el Mundo</b><span id="goalR"></span></div>
 
 <aside id="celebration" class="celebration" role="status" aria-live="polite" hidden>
- <div id="celebrationArt" aria-hidden="true"></div><small id="celebrationTier"></small><strong id="celebrationName"></strong><p id="celebrationEffect"></p><small id="celebrationTime"></small><small id="celebrationPlace"></small><small id="celebrationSerial"></small><span id="celebrationSignature"></span>
- <button id="celebrationDismiss" aria-label="Ocultar celebración">×</button><button id="celebrationShare" hidden>Compartir</button>
+ <div class="celebration-card">
+ <div id="celebrationArt" aria-hidden="true"></div><small id="celebrationTier"></small><strong id="celebrationName"></strong><p id="celebrationEffect"></p><small id="celebrationSurpriseName"></small><small id="celebrationSurprise"></small><small id="celebrationTime"></small><small id="celebrationPlace"></small><small id="celebrationSerial"></small><span id="celebrationSignature"></span>
+ <button id="celebrationDismiss" aria-label="Ocultar celebración">×</button><button id="celebrationShare" hidden>Compartir</button><button id="celebrationContinue">Continuar</button>
+ </div>
 </aside>
 <aside id="rareNotice" class="rare-notice" role="status" aria-live="polite" aria-atomic="true" hidden>
+ <div class="rare-reveal-card">
   <div id="rareNoticeArt" class="rare-notice-art" aria-hidden="true"></div>
-  <div class="rare-notice-copy"><small id="rareNoticeTier"></small><strong id="rareNoticeName"></strong><span id="rareNoticeWhere"></span><small id="rareNoticeOdds"></small></div>
+  <div class="rare-notice-copy"><small id="rareNoticeTier"></small><strong id="rareNoticeName"></strong><span id="rareNoticeWhere"></span><small id="rareNoticeOdds"></small><span id="rareNoticeAbility"></span><small id="rareNoticeSerial"></small></div>
   <button id="rareNoticeDismiss" class="rare-dismiss" aria-label="Ocultar tarjeta de hallazgo">×</button>
   <button id="rareNoticeOpen" class="rare-open">Abrir libro</button>
+  <button id="rareNoticeContinue">Continuar</button>
+ </div>
 </aside>
 <div class="phrase" id="phrase"></div>
 <div class="reto" id="reto" hidden></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="voice" id="voice" role="button" tabindex="-1" aria-expanded="false" aria-label="Ampliar mensaje del sistema" title="Toca para leer el mensaje completo"><small id="vT">Sistema</small><span id="vX"></span></div>
-<aside id="firstJourney" class="first-journey-hint" hidden><svg class="journey-symbol" viewBox="0 0 40 24" aria-hidden="true"><path d="M5 12h22m-6-5 6 5-6 5"/><rect x="2" y="9" width="6" height="6"/><circle cx="33" cy="12" r="3"/></svg><span id="firstJourneyText" role="status" aria-live="polite" aria-atomic="true"></span><button id="firstJourneySkip" aria-label="Omitir guía">×</button></aside>
+<aside id="firstJourney" class="first-journey-hint" hidden><svg class="journey-symbol" viewBox="0 0 40 24" aria-hidden="true"><path d="M5 12h22m-6-5 6 5-6 5"/><rect x="2" y="9" width="6" height="6"/><circle cx="33" cy="12" r="3"/></svg><span id="firstJourneyProgress" class="journey-progress"></span><span id="firstJourneyText" role="status" aria-live="polite" aria-atomic="true"></span><button id="firstJourneySkip" aria-label="Omitir guía">×</button></aside>
 <div id="voiceAnnouncement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
+<aside id="surpriseHud" class="surprise-hud" aria-label="Sorpresa temporal" hidden><span id="surpriseName"></span><small id="surpriseTime"></small><button id="surpriseUndo">Deshacer</button></aside>
 <div class="dock" id="dock">
   <button class="ico" id="bPrimary" hidden><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span id="bPrimaryL">Mundo</span></button>
   <div class="sp"></div>
@@ -76,6 +82,16 @@
   <button class="ico" id="bStyles" aria-label="Elegir estilo musical" hidden>Estilos</button>
   <button class="ico round" id="bMenu" aria-label="Menú"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
 </div>
+<div class="modal" id="mProfile" role="dialog" aria-modal="true" aria-labelledby="profileTitle" hidden><div class="sheet profile-sheet">
+ <h2 id="profileTitle">Tu perfil</h2>
+ <div class="profile-identity"><svg id="profileAvatar" viewBox="0 0 64 64" aria-hidden="true"><path d="M4 32h14M46 32h14M32 4v14M32 46v14"/><rect x="24" y="24" width="16" height="16"/></svg><div><label for="profileName">Tu nombre</label><div class="profile-name-row"><input id="profileName" type="text" maxlength="24" placeholder="Explorador" autocomplete="nickname"><button id="profileNameSave">Guardar nombre</button></div></div></div>
+ <p id="profileSaveStatus" role="status"></p><p id="profileSince"></p>
+ <dl class="profile-metrics"><div><dt>Tiempo activo</dt><dd id="profileTime"></dd></div><div><dt>Distancia caminada</dt><dd id="profileDistance"></dd></div><div><dt>Sesiones medidas</dt><dd id="profileSessions"></dd></div><div><dt>Días con luz</dt><dd id="profileDays"></dd></div></dl>
+ <h3>Tu universo descubierto</h3><dl class="profile-metrics compact"><div><dt>Lugares</dt><dd id="profilePlaces"></dd></div><div><dt>Estilos escuchados</dt><dd id="profileGenres"></dd></div><div><dt>Instrumentos escuchados</dt><dd id="profileInstruments"></dd></div><div><dt>Familias encontradas</dt><dd id="profileElements"></dd></div><div><dt>Tarjetas</dt><dd id="profileCards"></dd></div><div><dt>Cajas abiertas</dt><dd id="profileBoxes"></dd></div><div><dt>Logros</dt><dd id="profileAchievements"></dd></div></dl>
+ <details><summary>Tiempo por espacio</summary><dl class="profile-breakdown"><dt>Camino</dt><dd id="profileCaminoTime"></dd><dt>Mundo</dt><dd id="profileWorldTime"></dd><dt>Casa</dt><dd id="profileHouseTime"></dd></dl><p>No cuenta menús, segundo plano ni saltos como distancia.</p><p>La distancia usa la escala interna del juego.</p></details>
+ <div class="row"><button id="profileCollection">Ver colección</button><button id="profilePlacesLink">Volver a tus lugares</button></div><p>Perfil local. Viaja con tu copia guardada.</p><button id="profileClose">Volver</button>
+</div></div>
+
 <div class="modal lite" id="mCube" role="dialog" aria-modal="true" aria-labelledby="cubeTitle" hidden><div class="sheet cube-sheet">
  <h2 id="cubeTitle">Tu cubo</h2><div id="cubePreview" class="cube-preview" role="img" aria-label="Vista previa de tu cubo"><canvas id="cubePreviewCanvas" aria-hidden="true"></canvas><i></i></div>
  <p id="cubeCount"></p><p id="cubeHint" role="status"></p>
@@ -98,6 +114,7 @@
 <div class="modal" id="mMusicTravel" role="dialog" aria-modal="true" aria-labelledby="musicTravelTitle" hidden><div class="sheet">
  <h2 id="musicTravelTitle">Elige dónde escuchar</h2>
  <div class="music-travel-shortcuts"><button id="musicTravelSolo">Escucha una sola voz</button>
+ <button id="musicTravelMicro">Explora instrumentos vivos</button>
  <button id="musicTravelConnections">Explora redes musicales</button>
  <button id="musicTravelFull">Escucha un ensamble completo</button></div><button id="musicTravelBack" hidden>Volver al lugar anterior</button>
  <div class="row"><button id="musicTravelGenres" aria-pressed="true">Estilos</button><button id="musicTravelHybrids" aria-pressed="false">Cruces</button></div><p id="musicTravelCount"></p><label for="musicTravelSearch">Busca un estilo o cruce</label><input id="musicTravelSearch" type="search" maxlength="60" autocomplete="off">
@@ -129,6 +146,7 @@
       <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
       <button id="bJumpBack" hidden><span>Volver al salto</span></button>
       <button id="bSettings"><span>Ajustes</span></button>
+      <button id="bProfile"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="4" width="6" height="6"/><path d="M5 21v-4a7 7 0 0114 0v4"/></svg><span>Tu perfil</span></button>
       <button id="bGuide"><span>Tu recorrido</span></button>
       <button id="bConnection"><span>Cuenta y duetos</span></button>
       <button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Guardar copia</span></button>
@@ -174,20 +192,22 @@
 </div>
 
 <div class="modal" id="mGuide" role="dialog" aria-modal="true" aria-labelledby="guideTitle" hidden><div class="sheet guide-sheet">
- <h2 id="guideTitle">Tu recorrido</h2>
+ <h2 id="guideTitle">Tu recorrido</h2><div class="guide-content">
  <p>Descubre cómo suena el universo. Crea tu propia identidad musical.</p>
  <article class="journal-card"><h3>Tu siguiente paso</h3><p id="guideNext"></p><small id="guideProgress"></small></article>
+ <ol id="guideJourney" class="guide-journey" aria-label="Experiencias del recorrido"></ol>
  <p>Elige tu camino. Puedes explorar sin completar esta guía.</p>
  <button id="guideGlossary" aria-expanded="false" aria-controls="guideDefinitions">Qué puedes encontrar</button><div id="guideDefinitions" hidden>
  <p><b>Voces.</b> Criaturas y plantas aportan instrumentos, ritmos o cambios musicales.</p>
  <p><b>Reliquias.</b> Despierta recuerdos musicales escuchando cerca y lanzando pulsos.</p>
  <p>Consérvalas en la Bitácora. Vuelve a tocarlas donde las encontraste.</p>
+ <p><b>Instrumentos vivos.</b> Tócalos, quédate o rodéalos. Escucha cómo cambia su filtro.</p>
  <p><b>Cajas.</b> Descubre poderes temporales. Su tarjeta conserva el encuentro.</p>
  <p><b>Casa.</b> Coloca objetos ganados y compón caminando entre ellos.</p>
  <p><b>Favoritos.</b> Guarda un lugar y regresa mediante su dirección.</p>
  <p><b>Camino.</b> Recoge una luz al empezar el día. Después, explora libremente.</p>
  </div>
- <div class="row"><button id="guideLabPractice">Escuchar y responder</button><button id="guidePractice">Practicar</button><button id="guideClose">Seguir jugando</button></div>
+ </div><div class="row"><button id="guideLabPractice" aria-label="Escuchar y responder en el laboratorio">Laboratorio</button><button id="guidePractice">Practicar</button><button id="guideClose">Seguir jugando</button></div>
 </div></div>
 
 <div class="modal" id="mCap" hidden>
@@ -200,7 +220,7 @@
     </div>
     <p><b>El Mundo está abierto.</b> <span id="cLamp">Explora sin límite de tiempo.</span></p>
     <p class="firma">Simple.</p>
-    <div class="row"><button id="cExplore" class="gold">Entrar al Mundo</button><button id="cShare">Compartir mi día</button></div>
+    <div class="row"><button id="cExplore" class="gold"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Entrar al Mundo</button><button id="cShare">Compartir mi día</button></div>
   </div>
 </div>
 

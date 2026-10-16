@@ -1,0 +1,37 @@
+{
+  "branch": "feat/posmusica-04-cajas",
+  "audit": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "node": {
+    "suites": 131,
+    "result": "passed"
+  },
+  "browser": {
+    "result": "passed",
+    "programs": [
+      {
+        "test": "box_surprises_smoke.py",
+        "widths": [
+          390,
+          844,
+          1280
+        ]
+      },
+      {
+        "test": "power_cards_smoke.py",
+        "widths": [
+          320,
+          844,
+          1280
+        ]
+      }
+    ],
+    "mode": "optional local single-process Chromium, single context, serial HTTP",
+    "fullSuite": "pending CI"
+  },
+  "audio": "No synthesis, arrangement, instruments or musical timing changed. New trails are silent. Existing travel resets preserved.",
+  "push": "ready after stack validation",
+  "phone": "pending"
+}

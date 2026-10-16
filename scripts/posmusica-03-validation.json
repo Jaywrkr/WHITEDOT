@@ -1,0 +1,47 @@
+{
+  "branch": "feat/posmusica-03-universo-vj",
+  "base": "8950671",
+  "audit": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "node": {
+    "suites": 130,
+    "result": "passed"
+  },
+  "browser": {
+    "result": "passed",
+    "programs": [
+      {
+        "test": "notice_lane_smoke.py",
+        "widths": [
+          390,
+          844
+        ]
+      },
+      {
+        "test": "vj_ui_smoke.py",
+        "widths": [
+          390,
+          844,
+          1280
+        ]
+      },
+      {
+        "test": "interface_cards_smoke.py",
+        "widths": [
+          320,
+          390,
+          844,
+          1280
+        ]
+      }
+    ],
+    "mode": "Optional local single-process Chromium, single reused context per program; serial HTTP",
+    "normalChromium": "initial startup blocked by Target crashed; inherited process/thread exhaustion",
+    "fullSuite": "not rerun; CI required"
+  },
+  "audio": "unchanged; no new audio renders claimed",
+  "push": "ready after branch-stack validation",
+  "manual_phone": "pending"
+}

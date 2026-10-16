@@ -33,7 +33,7 @@ export function initialize(runtime) {
     if(!runtime.inWorld())runtime.clearRelicProgress();
     runtime.activeFrameSeconds=Math.max(0,Math.min(1,(t-(frame.l||t))/1000));
     const dt=Math.max(0,Math.min(.05,(t-(frame.l||t))/1000));frame.l=t;runtime.worldVisualBegin?.(dt,runtime.activeFrameSeconds);runtime.celebrationTick?.(runtime.activeFrameSeconds);runtime.rareCardTick?.(runtime.activeFrameSeconds);
-    const modal=[...document.querySelectorAll(".modal")].some(m=>!m.hidden&&!m.classList.contains("lite"));
+    const modal=runtime.noticeLane?.inspecting||[...document.querySelectorAll(".modal")].some(m=>!m.hidden&&!m.classList.contains("lite"));
     let dx=(runtime.keys.arrowright||runtime.keys.d?1:0)-(runtime.keys.arrowleft||runtime.keys.a?1:0), dy=(runtime.keys.arrowdown||runtime.keys.s?1:0)-(runtime.keys.arrowup||runtime.keys.w?1:0);
     if(runtime.ptr){const jx=runtime.ptr.ox??runtime.W/2,jy=runtime.ptr.oy??runtime.H/2,rad=runtime.ptr.ox!=null?55:80;dx=runtime.ptr.x-jx;dy=runtime.ptr.y-jy;const l=Math.hypot(dx,dy);if(l<6){dx=dy=0;}else{const k=Math.min(1,l/rad);dx=dx/l*k;dy=dy/l*k;}}
     else{const l=Math.hypot(dx,dy);if(l){dx/=l;dy/=l;}}
@@ -63,6 +63,8 @@ export function initialize(runtime) {
     if(runtime.windG)runtime.windG.gain.setTargetAtTime(runtime.inWorld()&&(runtime.BI().id==="dunas"||(runtime.MU.dnaT&&runtime.MU.dnaT.air==="polvo"))?runtime.MU.speed*.012:0,runtime.ac.currentTime,.8);
     if(runtime.windF)runtime.windF.frequency.setTargetAtTime(260+runtime.MU.speed*550,runtime.ac.currentTime,.8);
 
+    runtime.profileTick?.(runtime.activeFrameSeconds,modal);
+    runtime.surpriseTick?.(dt,modal);
     runtime.navigationTick?.();
     runtime.initiativeTick?.(dt,sp>.01,modal);
     runtime.influenceTick?.(dt,modal||runtime.scanning);
@@ -85,8 +87,8 @@ export function initialize(runtime) {
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
     runtime.pulse=Math.max(0,runtime.pulse-dt*1.5);
-    const s=ds*(1+runtime.pulse*.6+b*.08);
-    runtime.drawCubeStyle?.(t,dt,b,s);
+    const s=ds*(1+runtime.pulse*.6+b*.08)*(runtime.inWorld()?runtime.surpriseStyle?.scale||1:1);
+    runtime.drawCubeStyle?.(t,dt,b,s);runtime.drawSurprises?.(t,ox,oy);
     const playerColor=runtime.inWorld()?(runtime.cubeColor?.()||'#fff'):'#fff';
     if(runtime.pulse){runtime.cx.globalAlpha=runtime.pulse*.5;runtime.cx.strokeStyle=playerColor;runtime.cx.lineWidth=1;const rr=s*(1+(1-runtime.pulse)*4);runtime.cx.strokeRect(runtime.W/2-rr/2,runtime.H/2-rr/2,rr,rr);}
     // En tiempo: respuesta musical local y contador.
@@ -94,8 +96,8 @@ export function initialize(runtime) {
       if(runtime.MU.groove>=2){runtime.cx.fillStyle=runtime.musicInk?.(null,'perc')||'#fff';runtime.cx.font='600 12px "Geist Mono", monospace';runtime.cx.textAlign="center";runtime.cx.fillText("EN TIEMPO ×"+runtime.MU.groove,runtime.W/2,runtime.H/2-s-18-(1-runtime.grooveFx)*10);runtime.cx.textAlign="left";}}
     runtime.cx.save();runtime.cx.globalAlpha=1;runtime.cx.fillStyle=playerColor;
     const ritual=runtime.inWorld()&&(runtime.quietState?.stage>=6||runtime.hasPower?.('cometa'));
-    if(ritual){runtime.cx.translate(runtime.W/2,runtime.H/2);runtime.cx.rotate(Math.sin(t/600)*.12);runtime.cx.fillRect(-s/2,-s/2,s,s);}else runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));runtime.cx.restore();
-    runtime.drawCubeSurface?.(t,b,s);
+    if(runtime.inWorld()&&runtime.drawSurpriseBody?.(runtime.cx,runtime.W/2,runtime.H/2,s,t)){}else if(ritual){runtime.cx.translate(runtime.W/2,runtime.H/2);runtime.cx.rotate(Math.sin(t/600)*.12);runtime.cx.fillRect(-s/2,-s/2,s,s);}else runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));runtime.cx.restore();
+    if(!runtime.inWorld()||runtime.surpriseStyle?.shape==='cube')runtime.drawCubeSurface?.(t,b,s);
     // El pixel siempre se distingue: halo suave y anillo fino en el Mundo.
     if(runtime.inWorld()){const c=runtime.cx,hx=runtime.W/2,hy=runtime.H/2,g=c.createRadialGradient(hx,hy,0,hx,hy,s*2.6);g.addColorStop(0,'rgba(255,255,255,.22)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(hx-s*2.6,hy-s*2.6,s*5.2,s*5.2);
       c.globalAlpha=.55;c.strokeStyle='#fff';c.lineWidth=1;c.strokeRect(Math.round(hx-s/2)-3.5,Math.round(hy-s/2)-3.5,Math.round(s)+7,Math.round(s)+7);c.globalAlpha=1;}
@@ -191,6 +193,7 @@ export function initialize(runtime) {
     if(ev==="lluvia"){if(Math.random()<dt*7*(1+3*(runtime.MU.storm||0)))runtime.rain.push({x:runtime.S.wx+(Math.random()-.5)*R*2.4,y:runtime.S.wy-R*1.3,vy:110+Math.random()*60});
       for(let i=runtime.rain.length-1;i>=0;i--){const q=runtime.rain[i];q.y+=q.vy*dt;const d=Math.hypot(q.x-runtime.S.wx,q.y-runtime.S.wy);if(d<runtime.pxSize()/2+14){runtime.rain.splice(i,1);runtime.playerNote(.12);runtime.burst(q.x,q.y,5,true);continue;}
         if(q.y>runtime.S.wy+R*1.4){runtime.rain.splice(i,1);continue;}runtime.cx.globalAlpha=Math.min(1,Math.max(.15,1-d/(R*1.3)))*(runtime.worldOpacity?.(d,R*1.4)??1);runtime.cx.fillStyle=runtime.musicInk?.(q,'perc')||'#fff';runtime.cx.fillRect(q.x+ox-1,q.y+oy-6,2,7);}}else if(runtime.rain.length)runtime.rain=[];
+    runtime.drawVJWorld?.(t,dt,ox,oy,paused);
     runtime.drawDepthGround?.(t);runtime.drawWorldFamilyGround?.(t);runtime.drawGround(ox,oy,R,t);
     runtime.drawRivers?.(t,ox,oy);runtime.drawAlive?.(t,dt,ox,oy,'ground');
     runtime.updWaves(dt,ox,oy);
@@ -394,7 +397,7 @@ export function initialize(runtime) {
     runtime.drawQuietud?.();
     runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);
     runtime.drawCajas?.(t,dt,ox,oy);runtime.drawCultures?.();
-    runtime.percussionTick?.(dt);runtime.drawPercussion?.(t,dt,ox,oy,R);
+    runtime.percussionTick?.(dt);runtime.drawPercussion?.(t,dt,ox,oy,R);runtime.microTick?.(dt);runtime.drawMicro?.(t,ox,oy,R);
     runtime.drawPhenomena(t,dt,ox,oy,R);
     runtime.drawJam?.(t,dt,ox,oy,b);
     runtime.drawAlive?.(t,dt,ox,oy,'sky');

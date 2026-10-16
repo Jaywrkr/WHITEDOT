@@ -1,3 +1,83 @@
+# Handoff · Auditoría de interacción final
+
+Rama `feat/posmusica-08-cierre` desde recorrido `51bc007`. CIERRE_INTERACCION_FINAL.md es el estado consolidado y el orden para PR/merge de Jay. Código musical previo ya integrado en main por PR #158; esta ampliación permanece en ramas. No hace falta la antigua rama incompleta 2.
+
+Corrección final en `voices`: cada hit repetido consulta su marco armónico disponible; pruebas verifican rejilla y cambio de acorde. `microTouch` conecta el gesto visual común aun con sonido apagado. El recorrido integrado comprueba también guía, acciones visibles y Geist Mono. Auditoría, 133 suites Node, navegador integrado en cuatro tamaños y 25 renders finales aprobados; CI completo pendiente. La primera ejecución detectó un timer de DOM arrancado desde colección headless. Se reprodujo con el binario oficial Node 20.20.2, se corrigió en notice-lane y pasaron sus 133 suites completas. No afirmar cierre de CI hasta consultar los resultados reales.
+
+El workflow incluye push de esta rama y conserva todos los programas. Los cambios exclusivamente de documentación/informes no repiten push de pruebas; `pull_request` mantiene suites completas sin filtros. No crear PR ni merge con Codex. Teléfonos físicos y publicación se verifican por separado.
+
+## Antecedentes conservados
+
+# Handoff · Recorrido y referencias VJ
+
+`feat/posmusica-07-recorrido` desde miniinstrumentos `b180731`. Guía opcional con cuatro experiencias ilustradas; práctica factual de seis pasos y progreso 1/6 discreto. `onboarding-model` conserva extensiones desconocidas; `onboarding.draw` reconoce miniinstrumentos como candidatos de señal. Omitir/repetir nunca concede premios ni borra colección. Glosario nuevo dentro del acordeón existente, sin otro popup.
+
+Se revisó Jaywrkr/TDAI2026 en `0ef40446331225ec82cfeb35d91bef1b772f21a4`: README, cuatro documentos completos y cuatro previews. REFERENCIAS_VJ.md registra procedencia y límites; no se ejecutó TouchDesigner ni se importaron shaders/assets. `vj-model` mantiene el hash de coordenadas original y usa un segundo hash para cuatro motivos nuevos en una parte de las áreas existentes. Doce motivos en total, sin aumentar densidad, radio o notas. `vj-art` conserva recorte/fade/reducción de movimiento. Auditoría sin errores/advertencias, 133 suites Node y recorrido real a 320/390/844/1280 px aprobados. El contenido de la guía desplaza dentro del panel; encabezado y acciones quedan visibles. Sigue cierre integral en rama 8, sin PR/merge de Codex.
+
+## Antecedentes conservados
+
+# Handoff · Reanudación de miniinstrumentos
+
+Rama `feat/posmusica-06-instrumentos`, desde `feat/posmusica-05-perfil` (`bbaa50c`). Jay autorizó completar pendientes con «Hazlo entonces». Se recuperó selectivamente el stash, sin reaplicar su UI antigua. `micro-instruments-model`, `micro-instruments` y `micro-synthesis` conectan diez familias al mapa, escáner, libro, retratos, fuentes y reloj real. Seis motores nuevos amplían INSTRUMENT_SPECS a 81; libro 151 familias, tarjetas 72 tipos. Módulos nuevos una vez en SHELL; service worker posmusica-06.
+
+`microStep` sigue los patrones locales; voz manual usa el presupuesto existente y la armonía audible. Un acompañamiento de cercanía por compás comparte el arbitraje de instalaciones, sin registrar descubrimientos automáticos. Cercanía/polaridad controla filtro/modulación y morph wavetable. Nuevas colas comprueban propietario/distancia. Guardados y coordenadas previas intactos. `surpriseStep` añade cinco estelas sonoras temporales, dos entradas por compás como máximo, pausadas ante UI, sin sonido de botones. Corrección general: las respuestas repetidas de playVoice vuelven a la rejilla, respetando swing.
+
+Estilos → Explora instrumentos vivos permite probar una agrupación existente sin otorgar hallazgos por menú. Rarezas micro grain/ring exigen variante 63; 1/64 es condicional a la familia, sin probabilidad territorial inventada. Validación propia aprobada: auditoría, 133 suites Node, contacto/destino/guardado real a 390/844/1280 px y 25 renders de audio. No atribuirle los 39 programas del ciclo anterior. Sigue entrega 7 (guía y referencias públicas TDAI2026), luego entrega 8 (cierre con suites completas). PR/merge siguen siendo de Jay.
+
+## Antecedentes conservados
+
+# Cierre de ampliación visual
+
+Orden de revisión: `feat/posmusica-03-universo-vj` → `feat/posmusica-04-cajas` → `feat/posmusica-05-perfil`. La primera incluye interfaz `8950671`; no necesita publicar aquella rama separada. Cada fase contiene la anterior. Codex solo commit/push; Jay PR/merge. No se modificó main.
+
+Entregas probadas: auditoría y 130/131/132 suites Node completas. Navegador enfocado: avisos/entrada/VJ/tarjetas (entrega 3), reversión/guardado/duraciones (entrega 4), perfil/colección/tarjetas/VJ/quietud de UI en cuatro tamaños (entrega 5). Las suites completas y aceptación física siguen pendientes para el merge. El navegador estándar falló al crear página por recursos heredados; el wrapper local opcional de un solo proceso/contexto permitió ejecutar sin omitir aserciones. CI conserva su configuración normal.
+
+El código de ejecución final (`src`, `index.html`, `styles`, `sw.js`) coincide byte a byte con `ba0ee2a`, sobre el que pasaron las pruebas integradas finales. La revisión de dependencias solo adelantó correcciones compartidas, pruebas y documentación a sus ramas. `PROBAR_INTERACCION_FINAL.md` explica la prueba manual. No confundir validación, push, CI y deploy.
+
+## Detalles de la entrega
+
+# Handoff · Perfil y cierre visual
+
+`feat/posmusica-05-perfil` depende de las cajas y los visuales. `player-profile-model.js` normaliza contadores versionados y excluye saltos/cambios de contexto. `player-profile.js` presenta el panel; `profileTick` recibe tiempo activo del frame y respeta todos los modales, incluidos los ligeros. Datos nuevos en `S.playerProfile`, copia/exportación existentes, ningún progreso anterior eliminado ni tiempo retrospectivo supuesto. Distancia interna /10 para metros del juego. No es geolocalización ni una cuenta.
+
+132 suites Node y auditoría aprobadas. `visual_closure_smoke.py` recorre el conjunto real en cuatro tamaños con un único contexto; permite validar en este entorno saturado usando un perfil local de Chromium de un solo proceso. La configuración de CI no cambia. El recorrido integrado pasó a 320, 390, 844 y 1280 px; la tarjeta de poder y sus duraciones pasaron a 320, 844 y 1280 px. Ver evidencia por rama. No confundir estas comprobaciones enfocadas con navegador/audio completos ni pruebas físicas.
+
+Mininstrumentos sin terminar conservados en el stash nombrado en PLAN_INTERACCION_FINAL; no están publicados. Jay pidió no tocar música: esta entrega no cambia composición, voces, instrumentos ni DSP. Los efectos nuevos de estelas son visuales/silenciosos.
+
+## Antecedentes
+
+# Handoff · Cajas reversibles
+
+`feat/posmusica-04-cajas` desde la entrega visual. `box-surprises-model.js` define 16 efectos secundarios sin cambiar POWER_IDS ni la selección original de caja. `box-surprises.js` controla un efecto a la vez, reloj activo guardado, rastros acotados y reversión. Estado `S.boxSurprises`, campos desconocidos y formatos futuros conservados. El salto usa `travelPracticePoint`, con limpieza de transporte existente y posibilidad de regreso; no interviene en composición ni síntesis. Borrador solo elimina brotes efímeros propios. `surpriseHud` es contextual; no añade un botón permanente al dock.
+
+Auditoría, 131 suites Node y navegador enfocado aprobados: `box_surprises_smoke.py` y `power_cards_smoke.py`, tres tamaños cada uno. Perfil local de un solo proceso/contexto; CI y teléfono físico pendientes. Mantener pruebas CI completas. Las estelas nuevas son silenciosas bajo el encargo actual de no tocar música.
+
+## Antecedentes
+
+# Handoff · Visuales localizados
+
+`feat/posmusica-03-universo-vj` depende de interfaz `8950671`. `vj-model` decide ubicaciones y encuentros con hashes propios; `vj-art` dibuja ocho motivos acotados; `vj-world` integra pausa, cometas y visitantes. No llama al motor de audio. `controls.js` conecta la animación de entrada a los botones reales. Caché 48 celdas, hasta ocho gestos. No altera coordenadas, colecciones ni probabilidades existentes.
+
+130 suites Node y auditoría aprobadas; navegador enfocado aprobado: notice_lane, vj_ui e interface_cards. El perfil local de un solo proceso/contexto resolvió el bloqueo de arranque para estos recorridos. CI completo y teléfono físico pendientes. Trabajo de miniinstrumentos conservado aparte, pausado por petición de Jay de no tocar música. Ver `PLAN_INTERACCION_FINAL.md` y `scripts/posmusica-03-validation.json`.
+
+## Antecedentes
+
+# Handoff · Interacción final, entrega 1
+
+Rama `feat/posmusica-01-interfaz`, desde auditoría musical `5c3cb2f`. Codex commit/push; Jay crea PR/merge. Continúa [PLAN_INTERACCION_FINAL.md](PLAN_INTERACCION_FINAL.md).
+
+`notice-lane.js` coordina leases de Voz, toast, frases, zonas, rareza y celebraciones. Los avisos temporizados se pausan al abrir paneles. Separación real entre salida y relevo; tarjetas manuales conservan su turno hasta Continuar. La primera guía difiere las zonas/frases; su pista permanece accesible ante avisos comunes.
+
+`control-motion.js` instala feedback silencioso en botones dinámicos y entrada de 360 ms protegida contra doble toque. AudioContext se activa sincrónicamente en el gesto original; la navegación espera a la flecha. Respeta movimiento reducido del sistema y de la partida.
+
+`rare-cards.js` y `celebration.js` usan `data-inspect` para inspección/foco y `data-layout` para conservar el tamaño durante la salida. Hallazgos raros y primeros poderes reciben presentación grande; colores comunes y renovaciones expiran. `accessibility.js` reconoce estos diálogos condicionales, acota foco, aísla fondo y cierra mediante su acción real. Render/input y reloj de poderes respetan inspección. La banda continúa sonando.
+
+Ilustraciones originales SVG ampliadas con paisaje procedural opcional. No se cambian probabilidades, progreso, ubicaciones ni exportación PNG. UI silenciosa y sin nuevo DSP. La suite de música M7 no se presenta como validación de esta ampliación. Estado: implementación local; push detenido por validación final bloqueada en Chromium (EAGAIN/pthread_create). Los procesos viejos del contenedor consumen capacidad; no se ha modificado su supervisor. Resultado de esta entrega: `scripts/posmusica-01-validation.json`.
+
+`scripts/browser-processes.py` activa recolección de hijos únicamente para cada prueba Linux; conserva su código de salida y limita el tiempo sin dejar Chromium huérfano. No modifica PID 1 ni procesos ajenos. `WHITEDOT_BROWSER_WORKERS=1` conserva todos los recorridos con menor concurrencia; `WHITEDOT_TEST_SERIAL_HTTP=1` limita el servidor HTTP de pruebas a ejecución serial cuando faltan hilos. CI conserva su modo normal y todas sus pruebas.
+
+## Antecedentes
+
 # Handoff · Dirección musical, fase 7
 
 Rama `feat/musica-07-auditoria`, desde F6 `97f7c98`. Última rama del ciclo de siete fases: auditoría, 127 suites Node, 71 comprobaciones de patrones, 92 recorridos más offline y 39 programas de audio / 915 renders aprobados, pico máximo registrado 0,934278. Continúa [PLAN_INTERACCION_FINAL.md](PLAN_INTERACCION_FINAL.md), autorizado después. Esta rama conserva las entregas de pulido anteriores. Jay crea PR y merge, de la más antigua a la nueva. No publicar main desde este trabajo.

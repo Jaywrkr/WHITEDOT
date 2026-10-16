@@ -1,0 +1,375 @@
+{
+  "branch": "feat/posmusica-01-interfaz",
+  "base": "5c3cb2f",
+  "status": "Local implementation; final browser validation and push pending",
+  "audit": {
+    "errors": 0,
+    "warnings": 0,
+    "sourceModules": 191,
+    "htmlIDs": 368,
+    "staticImports": 499,
+    "shellAssets": 211
+  },
+  "node": {
+    "command": "npm test",
+    "result": "PASS: 129 Node suites with assertions (Web Audio helper excluded)"
+  },
+  "focusedDevelopmentEvidence": {
+    "wd-ui-messages.log": {
+      "passedLines": [
+        "PASS message persists while reading, Escape collapses, expiry restores focus, hidden message is not tabbable, complete speech announcement"
+      ],
+      "error": null
+    },
+    "wd-ui-lane.log": {
+      "passedLines": [
+        "PASS notice serialization, hidden-time pause, exit gap, silent guarded entry and reduced motion at 390",
+        "PASS notice serialization, hidden-time pause, exit gap, silent guarded entry and reduced motion at 844"
+      ],
+      "error": null
+    },
+    "wd-ui-rare.log": {
+      "passedLines": [
+        "PASS rare cards at {'width': 390, 'height': 844}: native contact, truthful forced label, fullscreen manual reveal, paused clock, silent book, return code, dedupe and persistence",
+        "PASS rare cards at {'width': 844, 'height': 390}: native contact, truthful forced label, fullscreen manual reveal, paused clock, silent book, return code, dedupe and persistence",
+        "PASS rare cards at {'width': 1280, 'height': 800}: native contact, truthful forced label, fullscreen manual reveal, paused clock, silent book, return code, dedupe and persistence"
+      ],
+      "error": null
+    },
+    "wd-ui-celebration.log": {
+      "passedLines": [
+        "PASS timed box card, paused power/queue, silent 512x640 export and earned memory at 390",
+        "PASS timed box card, paused power/queue, silent 512x640 export and earned memory at 844"
+      ],
+      "error": null
+    },
+    "wd-ui-pacing.log": {
+      "passedLines": [
+        "PASS related findings coalesce without record loss, repeat notices shorten and UI stays silent with focus return"
+      ],
+      "error": null
+    },
+    "wd-ui-first-level.log": {
+      "passedLines": [
+        "PASS native first light, source contact, pulse, saved place, quiet replay/skip and reload at 320",
+        "PASS native first light, source contact, pulse, saved place, quiet replay/skip and reload at 390",
+        "PASS native first light, source contact, pulse, saved place, quiet replay/skip and reload at 844",
+        "PASS a first shared-world visitor receives brief guidance"
+      ],
+      "error": null
+    },
+    "wd-ui-alive.log": {
+      "passedLines": [
+        "mobile: moving storm with rain and thunder, season card, footprints and camps, confluence mix PASS",
+        "desktop: moving storm with rain and thunder, season card, footprints and camps, confluence mix PASS"
+      ],
+      "error": null
+    },
+    "wd-ui-accessibility-recovery.log": {
+      "passedLines": [
+        "PASS 360x640: modal focus, Tab containment, Escape return, scrollable seed controls and silent UI",
+        "PASS 844x390: modal focus, Tab containment, Escape return, scrollable seed controls and silent UI"
+      ],
+      "error": null
+    },
+    "wd-ui-final-notice_lane_smoke.py.log": {
+      "passedLines": [
+        "PASS notice serialization, hidden-time pause, exit gap, silent guarded entry and reduced motion at 390",
+        "PASS notice serialization, hidden-time pause, exit gap, silent guarded entry and reduced motion at 844"
+      ],
+      "error": null
+    }
+  },
+  "browserAttempts": [
+    {
+      "log": "wd-ui-browser-full.log",
+      "passedFlows": [
+        "achievements_v2_smoke.py",
+        "accessibility_smoke.py",
+        "ambient_world_smoke.py",
+        "atlas_smoke.py",
+        "autopilot_smoke.py",
+        "blobs_smoke.py",
+        "collection_focus_smoke.py",
+        "contact_smoke.py",
+        "celebration_smoke.py",
+        "creative_smoke.py",
+        "cube_editor_smoke.py",
+        "cuerpo_smoke.py",
+        "discoveries_smoke.py",
+        "cultures_smoke.py",
+        "duet_smoke.py",
+        "ecology_smoke.py",
+        "encounter_depth_smoke.py",
+        "encounters_smoke.py",
+        "experience_festival_smoke.py",
+        "expansion_smoke.py",
+        "experience_future_smoke.py",
+        "experience_garden_smoke.py",
+        "experience_identity_smoke.py",
+        "favorite_save_failure_smoke.py",
+        "favorites_smoke.py",
+        "focusui_smoke.py",
+        "foundation_smoke.py",
+        "fx_smoke.py",
+        "glass_smoke.py",
+        "heritage_smoke.py",
+        "house_v2_smoke.py",
+        "guide_smoke.py"
+      ],
+      "failedFlows": [
+        "alive_smoke.py",
+        "discovery_pacing_smoke.py",
+        "first_level_smoke.py"
+      ],
+      "completed": false,
+      "status": "Interrupted or blocked; not a complete passing suite"
+    },
+    {
+      "log": "wd-ui-browser-final.log",
+      "passedFlows": [
+        "achievements_v2_smoke.py",
+        "accessibility_smoke.py",
+        "ambient_world_smoke.py",
+        "atlas_smoke.py",
+        "autopilot_smoke.py",
+        "alive_smoke.py",
+        "blobs_smoke.py",
+        "collection_focus_smoke.py",
+        "contact_smoke.py",
+        "celebration_smoke.py",
+        "cube_editor_smoke.py",
+        "creative_smoke.py",
+        "cuerpo_smoke.py",
+        "discoveries_smoke.py",
+        "cultures_smoke.py",
+        "discovery_pacing_smoke.py",
+        "duet_smoke.py",
+        "ecology_smoke.py",
+        "encounter_depth_smoke.py",
+        "encounters_smoke.py",
+        "experience_festival_smoke.py",
+        "expansion_smoke.py",
+        "experience_future_smoke.py",
+        "experience_garden_smoke.py",
+        "experience_identity_smoke.py",
+        "favorite_save_failure_smoke.py"
+      ],
+      "failedFlows": [
+        "favorites_smoke.py",
+        "focusui_smoke.py",
+        "first_level_smoke.py",
+        "foundation_smoke.py",
+        "fx_smoke.py",
+        "guide_smoke.py",
+        "heritage_smoke.py",
+        "house_v2_smoke.py",
+        "hybrid_smoke.py",
+        "influence_smoke.py",
+        "initiative_smoke.py",
+        "instrument_techniques_smoke.py",
+        "interface_smoke.py",
+        "jam_smoke.py",
+        "journal_scale_smoke.py",
+        "glass_smoke.py",
+        "journey_smoke.py",
+        "journal_v2_smoke.py",
+        "lab_landscape_smoke.py",
+        "lab_learning_smoke.py",
+        "lab_memory_smoke.py",
+        "lab_score_smoke.py",
+        "lab_smoke.py",
+        "layer_jam_smoke.py",
+        "layers_smoke.py",
+        "listening_reference_smoke.py",
+        "living-cards_smoke.py",
+        "living_smoke.py",
+        "materia_smoke.py",
+        "memory_smoke.py",
+        "menu_v2_smoke.py",
+        "messages_smoke.py",
+        "mirrors_smoke.py",
+        "mobile_smoke.py",
+        "modular_smoke.py",
+        "music_identity_smoke.py",
+        "music_response_smoke.py",
+        "music_travel_smoke.py",
+        "navigation_smoke.py",
+        "notice_lane_smoke.py",
+        "percussion_smoke.py",
+        "pet_smoke.py",
+        "pins_smoke.py",
+        "power_feedback_smoke.py",
+        "power_persistence_smoke.py",
+        "practice_travel_smoke.py",
+        "pwa_updates_smoke.py",
+        "rare_cards_smoke.py",
+        "release_smoke.py",
+        "rewards_smoke.py",
+        "seeds_smoke.py",
+        "synth_bank_smoke.py",
+        "territory_presentation_smoke.py",
+        "travel_v2_smoke.py",
+        "ui_silence_smoke.py",
+        "v1_closure_smoke.py",
+        "vida_smoke.py",
+        "volume_control_smoke.py",
+        "walkers_smoke.py",
+        "wardrobe_smoke.py"
+      ],
+      "completed": false,
+      "status": "Interrupted or blocked; not a complete passing suite"
+    },
+    {
+      "log": "wd-ui-browser-constrained.log",
+      "passedFlows": [],
+      "failedFlows": [
+        "accessibility_smoke.py",
+        "achievements_v2_smoke.py",
+        "alive_smoke.py",
+        "ambient_world_smoke.py",
+        "atlas_smoke.py",
+        "autopilot_smoke.py",
+        "blobs_smoke.py",
+        "celebration_smoke.py",
+        "collection_focus_smoke.py",
+        "contact_smoke.py",
+        "creative_smoke.py",
+        "cube_editor_smoke.py",
+        "cuerpo_smoke.py",
+        "cultures_smoke.py"
+      ],
+      "completed": false,
+      "status": "Interrupted or blocked; not a complete passing suite"
+    },
+    {
+      "log": "wd-ui-browser-recovery.log",
+      "passedFlows": [
+        "experience_future_smoke.py"
+      ],
+      "failedFlows": [
+        "accessibility_smoke.py",
+        "achievements_v2_smoke.py",
+        "alive_smoke.py",
+        "ambient_world_smoke.py",
+        "atlas_smoke.py",
+        "autopilot_smoke.py",
+        "blobs_smoke.py",
+        "celebration_smoke.py",
+        "collection_focus_smoke.py",
+        "contact_smoke.py",
+        "creative_smoke.py",
+        "cube_editor_smoke.py",
+        "cuerpo_smoke.py",
+        "cultures_smoke.py",
+        "discoveries_smoke.py",
+        "discovery_pacing_smoke.py",
+        "duet_smoke.py",
+        "ecology_smoke.py",
+        "encounter_depth_smoke.py",
+        "encounters_smoke.py",
+        "expansion_smoke.py",
+        "experience_festival_smoke.py",
+        "experience_garden_smoke.py",
+        "experience_identity_smoke.py",
+        "favorite_save_failure_smoke.py",
+        "favorites_smoke.py",
+        "first_level_smoke.py",
+        "focusui_smoke.py",
+        "foundation_smoke.py",
+        "fx_smoke.py",
+        "glass_smoke.py",
+        "guide_smoke.py"
+      ],
+      "completed": false,
+      "status": "Interrupted or blocked; not a complete passing suite"
+    },
+    {
+      "log": "wd-ui-browser-final-recovered.log",
+      "passedFlows": [
+        "accessibility_smoke.py",
+        "achievements_v2_smoke.py",
+        "celebration_smoke.py"
+      ],
+      "failedFlows": [
+        "alive_smoke.py",
+        "ambient_world_smoke.py",
+        "atlas_smoke.py",
+        "autopilot_smoke.py",
+        "blobs_smoke.py",
+        "collection_focus_smoke.py",
+        "contact_smoke.py",
+        "creative_smoke.py",
+        "cube_editor_smoke.py",
+        "cuerpo_smoke.py",
+        "cultures_smoke.py",
+        "discoveries_smoke.py",
+        "discovery_pacing_smoke.py",
+        "duet_smoke.py",
+        "ecology_smoke.py",
+        "encounter_depth_smoke.py",
+        "encounters_smoke.py",
+        "expansion_smoke.py",
+        "experience_festival_smoke.py",
+        "experience_future_smoke.py",
+        "experience_garden_smoke.py",
+        "experience_identity_smoke.py",
+        "favorite_save_failure_smoke.py",
+        "favorites_smoke.py",
+        "first_level_smoke.py",
+        "focusui_smoke.py",
+        "foundation_smoke.py",
+        "fx_smoke.py",
+        "glass_smoke.py",
+        "guide_smoke.py",
+        "heritage_smoke.py",
+        "house_v2_smoke.py",
+        "hybrid_smoke.py",
+        "influence_smoke.py",
+        "initiative_smoke.py",
+        "instrument_techniques_smoke.py",
+        "interface_smoke.py",
+        "jam_smoke.py",
+        "journal_scale_smoke.py",
+        "journal_v2_smoke.py",
+        "journey_smoke.py",
+        "lab_landscape_smoke.py",
+        "lab_learning_smoke.py",
+        "lab_memory_smoke.py",
+        "lab_performance_smoke.py",
+        "lab_score_smoke.py",
+        "lab_smoke.py",
+        "layer_jam_smoke.py",
+        "layers_smoke.py",
+        "listening_reference_smoke.py",
+        "living-cards_smoke.py",
+        "living_smoke.py",
+        "materia_smoke.py",
+        "memory_smoke.py",
+        "menu_v2_smoke.py",
+        "messages_smoke.py",
+        "mirrors_smoke.py",
+        "mobile_smoke.py",
+        "modular_smoke.py",
+        "music_identity_smoke.py",
+        "music_response_smoke.py",
+        "music_travel_smoke.py",
+        "navigation_smoke.py",
+        "notice_lane_smoke.py",
+        "percussion_smoke.py",
+        "pet_smoke.py",
+        "pins_smoke.py",
+        "power_feedback_smoke.py",
+        "power_persistence_smoke.py"
+      ],
+      "completed": false,
+      "status": "Interrupted or blocked; not a complete passing suite"
+    }
+  ],
+  "lastGuard": "Inert exit panels and child pointer guard added after development browser passes; final browser run still pending",
+  "blocker": "Chromium cannot reliably create threads/pages: EAGAIN, pthread_create and target crash before app load; around 19000 historical container tasks. No checks disabled.",
+  "testInfrastructure": "Linux test child reaping; optional serial HTTP and constrained Chromium. Default CI still runs all flows and audio shards.",
+  "audio": "No new DSP in this delivery. M7 full audio results belong to the preceding musical snapshot.",
+  "physicalMobile": "Not performed",
+  "push": "Not performed while validation is incomplete"
+}

@@ -7,7 +7,7 @@ export function discoveryJourney(state){
   {id:'home',done:(state.house?.objects?.length||0)>0,text:'Entra en Casa desde el menú. Coloca un objeto ganado.'},
   {id:'relic',done:(state.stars?.length||0)>0,text:'Busca una reliquia. Escucha cerca y pulsa para despertarla.'}
  ];
- return {steps,completed:steps.filter(s=>s.done).length,next:steps.find(s=>!s.done)?.text||'Sigue una voz nueva. Conserva lo que haga tu música especial.'};
+ return {steps,nextId:steps.find(s=>!s.done)?.id||null,completed:steps.filter(s=>s.done).length,next:steps.find(s=>!s.done)?.text||'Sigue una voz nueva. Conserva lo que haga tu música especial.'};
 }
 export function rememberVoice(state,text,title,context={}){
  if(!Array.isArray(state.voiceDiary))state.voiceDiary=[];
@@ -19,7 +19,7 @@ export function initialize(runtime){
  const select=runtime.$('voiceMode');select.value=VOICE_MODES.includes(runtime.S.voiceMode)?runtime.S.voiceMode:'discreta';
  select.onchange=()=>{runtime.S.voiceMode=select.value;runtime.save();};
  let seconds=0,lastKey='',owner=runtime.S;
- function openGuide(){const journey=discoveryJourney(runtime.S);runtime.$('guideNext').textContent=journey.next;runtime.$('guideProgress').textContent=journey.completed+' de '+journey.steps.length+' experiencias · sin orden obligatorio';runtime.$('mMenu').hidden=true;runtime.$('mGuide').hidden=false;}
+ function openGuide(){const journey=discoveryJourney(runtime.S);runtime.$('guideNext').textContent=journey.next;runtime.$('guideProgress').textContent=journey.completed+' de '+journey.steps.length+' experiencias · sin orden obligatorio';const symbols={voice:'M5 14q5-17 10 0t10 0',place:'M8 3h14v22l-7-5-7 5Z',home:'M4 13 15 3l11 10v13H4Z M11 26V16h8v10',relic:'M15 2 27 15 15 28 3 15Z M15 8v14M8 15h14'},labels={voice:'Escucha una voz',place:'Conserva un lugar',home:'Crea en Casa',relic:'Despierta una reliquia'};runtime.$('guideJourney').innerHTML=journey.steps.map(step=>`<li${step.done?' data-complete="true"':''}${step.id===journey.nextId?' aria-current="step"':''}><svg viewBox="0 0 30 30" aria-hidden="true"><path d="${symbols[step.id]}"/></svg><span>${labels[step.id]}</span><small>${step.done?'✓ Hecho':step.id===journey.nextId?'Puedes probarlo':'A tu ritmo'}</small></li>`).join('');runtime.$('guideDefinitions').hidden=true;runtime.$('guideGlossary').setAttribute('aria-expanded','false');runtime.$('mMenu').hidden=true;runtime.$('mGuide').hidden=false;}
  runtime.$('bGuide').onclick=openGuide;runtime.$('guideClose').onclick=()=>runtime.$('mGuide').hidden=true;
  runtime.$('guideGlossary').onclick=()=>{const content=runtime.$('guideDefinitions');content.hidden=!content.hidden;runtime.$('guideGlossary').setAttribute('aria-expanded',String(!content.hidden));};
  function tick(dt,paused){

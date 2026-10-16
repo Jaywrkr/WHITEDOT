@@ -1,0 +1,60 @@
+{
+  "branch": "feat/posmusica-07-recorrido",
+  "audit": {
+    "version": "2.2.0-rc.1",
+    "sourceModules": 201,
+    "htmlIDs": 402,
+    "staticImports": 521,
+    "shellAssets": 221,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "node": {
+    "result": "passed",
+    "suites": 133
+  },
+  "browser": {
+    "program": "tests/recorrido_smoke.py",
+    "result": "passed",
+    "viewports": [
+      [
+        320,
+        640
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        844,
+        390
+      ],
+      [
+        1280,
+        800
+      ]
+    ],
+    "checks": [
+      "illustrated optional journey",
+      "mute cannot complete heard lesson",
+      "single factual hint with progress",
+      "guide actions remain inside viewport",
+      "unknown saved fields retained",
+      "four native TD motifs, bounded cache and reduced motion"
+    ],
+    "mode": "single reused Chromium context; serial HTTP"
+  },
+  "reference": {
+    "repo": "Jaywrkr/TDAI2026",
+    "commit": "0ef40446331225ec82cfeb35d91bef1b772f21a4",
+    "read": "README and four complete scene documents; inspected four previews",
+    "implementation": "original Canvas geometry; no imported source/assets"
+  },
+  "audio": "unchanged since validated phase 6",
+  "physicalPhone": "pending",
+  "fullCI": "pending final audit branch"
+}

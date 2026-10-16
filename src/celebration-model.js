@@ -7,8 +7,8 @@ export function createCelebrationQueue(limit=12){
   if(pending.length>=limit){const minor=pending.findIndex(p=>REWARD_RARITIES[p.rarity].celebration===0);pending.splice(minor>=0?minor:0,1);}
   pending.push({...event});return true;
  }
- function tick(dt,active){if(!active)return null;if(current){remaining-=Math.max(0,Math.min(1,Number.isFinite(dt)?dt:0));if(remaining<=0){current=null;remaining=0;}}
-  if(!current&&pending.length){current=pending.shift();remaining=celebrationDuration(current.rarity);return {...current};}return null;
+ function tick(dt,active,startNext=true){if(!active)return null;if(current){remaining-=Math.max(0,Math.min(1,Number.isFinite(dt)?dt:0));if(remaining<=0){current=null;remaining=0;}}
+  if(startNext&&!current&&pending.length){current=pending.shift();remaining=celebrationDuration(current.rarity);return {...current};}return null;
  }
  function dismiss(){current=null;remaining=0;}
  function clear(){dismiss();pending.length=0;}

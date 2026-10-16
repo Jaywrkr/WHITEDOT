@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {visualSegment,segmentOpacity,VJ_FORMS,VJ_TD_FORMS,encounterOf,moveVisitor,cometOf} from '../src/vj-model.js';
+import {drawVisualSegment} from '../src/vj-art.js';
+import {initialize} from '../src/vj-world.js';
+const seed=s=>{let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;};
+const kinds=new Set();let empty=0,visitors=0;
+for(let i=-100;i<100;i++){const q=visualSegment(i,i*7,seed);assert.deepEqual(q,visualSegment(i,i*7,seed));if(!q){empty++;continue;}kinds.add(q.kind);const h=seed(`vj:terrain:v1:${i},${i*7}`)>>>0;assert.equal(q.x,(i+.2+(h>>>8)%600/1000)*1000,'reference motifs preserve existing terrain coordinates');assert(q.radius>=84&&q.radius<130);assert(q.x>=i*1000&&q.x<(i+1)*1000);assert.equal(segmentOpacity(q,q.x,q.y,600),1);assert.equal(segmentOpacity(q,q.x+1000,q.y,600),0);assert(Math.abs(segmentOpacity(q,q.x+600,q.y,600)-segmentOpacity(q,q.x+600.01,q.y,600))<.001);if(encounterOf(i,i*7,seed))visitors++;}
+assert.equal(kinds.size,VJ_FORMS.length);assert(empty>90&&empty<150);assert(visitors>0);
+const player={x:100,y:0},a={x:0,y:0,kind:'curioso',phase:0},b={x:0,y:0,kind:'esquivo',phase:0};for(let i=0;i<60;i++){moveVisitor(a,player,i/60,1/60);moveVisitor(b,player,i/60,1/60);}assert(a.x>0&&b.x<0);for(let i=0;i<5000;i++)moveVisitor(a,{x:100+i*.1,y:0},i/60,1/60);assert(Math.hypot(a.x-a.home.x,a.y-a.home.y)<=220.01);const frozen={...a};moveVisitor(a,player,99,.05,true);assert.equal(a.x,frozen.x);
+let comets=0;for(let t=0;t<300;t++)for(let x=0;x<40;x++){const q=cometOf(x,0,seed,t);if(q){comets++;assert(q.alpha>=0&&q.alpha<=1);assert.deepEqual(q,cometOf(x,0,seed,t));}}assert(comets>0);
+let balance=0,draws=0;const ctx=new Proxy({save(){balance++;},restore(){balance--;},createRadialGradient(){return {addColorStop(){}};},createLinearGradient(){return {addColorStop(){}};}},{get:(o,k)=>k in o?o[k]:(...args)=>{for(const v of args)if(typeof v==='number')assert(Number.isFinite(v));draws++;}});
+for(const kind of VJ_FORMS)for(const reduced of [false,true])drawVisualSegment(ctx,{kind,hue:180,phase:1},{x:100,y:100,radius:70,time:100,reduced});assert.equal(balance,0);assert(draws>100);
+globalThis.document={hidden:false,querySelector:()=>null};const r={S:{wx:0,wy:0},cx:ctx,W:390,H:844,inWorld:()=>true,seedOf:seed,beat:()=>.5};initialize(r);for(let i=0;i<150;i++){r.S.wx=i*1000;r.drawVJWorld(0,.05,195-r.S.wx,422);}assert(r.vjState.cache<=48&&r.vjState.visitors<=48);const sec=r.vjState.seconds;r.drawVJWorld(0,1,0,0,true);assert.equal(r.vjState.seconds,sec);r.visualGesture();r.visualGesture();assert.equal(r.vjState.gestures,1);r.S={wx:0,wy:0};r.nearbyVisualSegments();assert.equal(r.vjState.gestures,0);assert.equal(r.vjState.seconds,0);assert.equal(balance,0);
+console.log('PASS twelve bounded VJ scenes, independent deterministic placement, smooth fade, visitors, comets, modal pause and session isolation');

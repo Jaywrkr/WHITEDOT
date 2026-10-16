@@ -8,9 +8,35 @@ Explora para descubrir sonidos, crear tu música y conservar tus encuentros. Un 
 
 Por Jay · [@jaywrkr](https://instagram.com/jaywrkr) · [Cambios](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Licencia](LICENSE)
 
+Cierre de la ampliación: [estado, auditoría y orden de ramas](CIERRE_INTERACCION_FINAL.md). Pruebas automatizadas y aceptación física se registran por separado.
+
 ## Dirección musical · ciclo actual
 
 [Plan de siete fases](PLAN_DIRECCION_MUSICAL.md). La fase 1 comparte reloj y armonía dentro de cada zona; cada territorio mantiene su tempo. Fuentes cercanas conservan su instrumento y acompañan la armonía audible. Fase 2 conecta identidades de producción a protagonistas, acordes y respuestas del motor. Fase 3 permite explorar 18 cruces desde Estilos → Cruces, incluyendo guitarra/máquina y disco de secuencias, con formas musicales originales. Fase 4 desarrolla seis situaciones de arreglo por frases, manteniendo motivos reconocibles y retirando capas. Fase 5 reparte instrumentos por función, coordina contactos y ofrece filtros audibles de distinta pendiente/cantidad. Fase 6 coordina cambios de tempo, entrada musical y color local, manteniendo audibles los lugares mínimos. La fase 7 audita el conjunto, corrige introducciones mudas y mezclas de percusión, conserva swing y ordena las zonas experimentales dentro del pulso. [Cierre y comprobaciones](CIERRE_DIRECCION_MUSICAL.md): 127 suites Node, 92 recorridos más offline y 39 programas de audio aprobados. Son 14 identidades de producción y 18 influencias sobre los 52 estilos existentes.
+
+## Visuales localizados
+
+Doce escenas VJ originales aparecen en áreas concretas del Mundo, dejando espacio negro entre ellas. Cometas ocasionales y visitantes curiosos/esquivos responden visualmente al recorrido. Movimiento reducido evita desplazamientos. Los cuatro motivos nuevos se basan en una revisión de documentos y previews públicos de Jay: [referencias VJ](REFERENCIAS_VJ.md). La ampliación visual conserva la música; CI y teléfonos físicos se verifican aparte.
+
+## Cajas reversibles
+
+Además de sus seis poderes originales, algunas cajas incorporan una de dieciséis sorpresas temporales. Tamaño, forma, estelas, brotes y saltos pueden cambiar; Deshacer o Volver permiten revertir. Borrador solo borra brotes temporales. No se pierde colección. Cinco estelas aportan notas o percusión al caminar, dentro del pulso local. Los temporizadores se pausan durante menús y tarjetas.
+
+Guía de esta entrega: [probar visuales, cajas y perfil](PROBAR_INTERACCION_FINAL.md).
+
+## Guía opcional
+
+Menú → Tu recorrido muestra cuatro experiencias ilustradas: escuchar, conservar, crear en Casa y despertar una reliquia. La práctica conserva seis pasos breves y una sola indicación en el juego, con progreso discreto. Los instrumentos vivos participan en la señal visual del primer encuentro. Omitir o repetir no borra colección; los campos de guardados desconocidos se conservan.
+
+## Tu perfil
+
+Menú → Tu perfil muestra tiempo activo, distancia, sesiones, lugares y colección. Puedes guardar un nombre local y abrir tus hallazgos o lugares. Los contadores nuevos empiezan con esta versión; su fecha queda visible. Las copias de partida incluyen el perfil. No requiere cuenta.
+
+## Interacción final
+
+[Entregas dependientes](PLAN_INTERACCION_FINAL.md). La primera añade botones animados y silenciosos, una cola de avisos y tarjetas especiales grandes que puedes examinar antes de continuar. La flecha de Entrar al Mundo llega al cuadrado; movimiento reducido entra al instante. Mientras inspeccionas un hallazgo se pausan el cubo y los poderes, conservando la música. El libro mantiene lugares, frecuencias y exportaciones.
+
+La entrega musical se retoma, con autorización de Jay, en `feat/posmusica-06-instrumentos`, desde el perfil. Diez familias orgánicas: batería, ácido, sub, acordes, FM, ondas, granos, recortes, modulación y arpegios. Estilos → Explora instrumentos vivos busca una agrupación real. Contactar, quedarse o rodear cambia la respuesta y el filtro; todo sigue el tempo y armonía audibles. Son 81 especificaciones de síntesis, 151 familias del libro y 72 tipos de tarjeta: estos catálogos no equivalen a mundos ni a frecuencia por hora. Cada entrega publica su propia evidencia; los resultados anteriores no sustituyen las nuevas comprobaciones.
 
 ## Cubo, colección y música · entregas conservadas
 

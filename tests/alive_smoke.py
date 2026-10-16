@@ -17,7 +17,7 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click();page.locator('#firstJourneySkip').click()
   # Tormenta: buscar el centro de una tormenta activa ahora mismo y entrar.
   page.evaluate('''async()=>{const r=window.__testRuntime,{stormsNear}=await import('/src/alive.js');let best=null;for(let u=-40;u<=40;u+=10)for(let v=-40;v<=40;v+=10){for(const s of stormsNear(u,v,Date.now()))if(s.life>.5&&(!best||s.r>best.r))best=s;}
    if(!best)throw Error('no storm');r.S.wx=best.x*3600;r.S.wy=best.y*3600;}''')
@@ -29,7 +29,7 @@ with sync_playwright() as p:
   # Estación en la tarjeta de zona.
   page.evaluate('()=>{const r=window.__testRuntime;r.S.wx=1800;r.S.wy=1800;}');page.wait_for_timeout(300)
   page.evaluate('()=>{const r=window.__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy);r.showRegion(d,true);}')
-  assert any(sn in page.locator('#zMood').text_content() for sn in ['Primavera','Verano','Otoño','Invierno'])
+  page.wait_for_function('["Primavera","Verano","Otoño","Invierno"].some(s=>document.getElementById("zMood").textContent.includes(s))',timeout=30000)
   # Huellas y campamento anterior.
   for i in range(6):page.evaluate(f'()=>{{const r=window.__testRuntime;r.S.wx+=200;}}');page.wait_for_timeout(60)
   assert page.evaluate('window.__testRuntime.S.steps.length')>=5

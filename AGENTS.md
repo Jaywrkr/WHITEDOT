@@ -4,7 +4,7 @@ WHITEDOT es un juego musical procedural de Jay (@jaywrkr): un pixel blanco en un
 
 ## Prioridad actual
 
-Jay autorizó [PLAN_DIRECCION_MUSICAL.md](PLAN_DIRECCION_MUSICAL.md): siete fases de música, una rama por fase. Fase 1 subida en `e2876a9`. Fase 2 subida en `b47d099`. Fase 3 subida en `92ebd5c`. Fase 4 subida en `b4d12fd`. Fase 5 subida en `9042c83`. Fase 6 subida en `97f7c98`. Fase 7 implementada y probada en `feat/musica-07-auditoria`, desde F6: 127 suites Node, 92 recorridos más offline y 39 programas de audio aprobados. Siguiente ciclo autorizado: [PLAN_INTERACCION_FINAL.md](PLAN_INTERACCION_FINAL.md), interfaz y miniinstrumentos, cada entrega en una rama dependiente. F2–F8 del pulido ya están subidas; el cierre F9 se incorpora a la auditoría musical final. Leer el plan nuevo antes de cambiar código. Las tablas históricas no reabren trabajo cerrado.
+Jay autorizó [PLAN_DIRECCION_MUSICAL.md](PLAN_DIRECCION_MUSICAL.md): siete fases de música, una rama por fase. Fase 1 subida en `e2876a9`. Fase 2 subida en `b47d099`. Fase 3 subida en `92ebd5c`. Fase 4 subida en `b4d12fd`. Fase 5 subida en `9042c83`. Fase 6 subida en `97f7c98`. Fase 7 implementada y probada en `feat/musica-07-auditoria`, desde F6: 127 suites Node, 92 recorridos más offline y 39 programas de audio aprobados. Siguiente ciclo autorizado: [PLAN_INTERACCION_FINAL.md](PLAN_INTERACCION_FINAL.md), interfaz y miniinstrumentos, cada entrega en una rama dependiente. F2–F8 del pulido ya están subidas; el cierre F9 se incorpora a la auditoría musical final. Leer el plan nuevo antes de cambiar código. Interacción 1 está incluida y validada con la entrega visual 3. Entregas 3–5 implementadas y probadas en ramas dependientes; Jay mantiene PR/merge. Jay autorizó completar lo pendiente con «Hazlo entonces»: los miniinstrumentos se recuperan en entrega 6, desde perfil; siguen guía/referencias VJ (7) y cierre integral (8). Las tablas históricas no reabren trabajo cerrado.
 
 El ciclo anterior [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md) queda integrado por Jay. [CIERRE_EXPERIENCIA.md](CIERRE_EXPERIENCIA.md) conserva su evidencia y condiciones externas. Codex solo commit/push; Jay PR/merge. Escucha física, CI y deploy se verifican separadamente.
 
@@ -51,3 +51,17 @@ El ciclo anterior [PLAN_EXPERIENCIA.md](PLAN_EXPERIENCIA.md) queda integrado por
 - Textos en español: máximo 12 palabras, una idea, imperativo. Tachado-corrección en la Voz con `"~~antes~~ después"`. Firma *Simple.* solo en momentos importantes.
 - UI silenciosa: menús y botones no hacen sonido musical.
 - Menos, pero mejor: antes de añadir controles, ordenar lo que existe.
+
+## Continuación visual
+
+Jay pidió no tocar la música y autorizó zonas VJ, encuentros visuales, sorpresas reversibles y perfil. Ver la ampliación de `PLAN_INTERACCION_FINAL.md`. Entrega 3 incluye la interfaz anterior y su conexión real a controles. Validada con 130 suites Node y tres programas de navegador enfocados. El contenedor tiene numerosos procesos zombis heredados; `WHITEDOT_CHROMIUM_SINGLE_PROCESS=1` en el wrapper local sirve solamente para pruebas que reutilizan un único contexto. No habilitarlo por defecto en CI ni omitir aserciones. Mininstrumentos sin terminar conservados aparte.
+
+Cierre de esta ampliación: 130/131/132 suites Node por entrega, auditorías sin errores/advertencias y recorridos de navegador enfocados aprobados. La entrega final conserva exactamente los archivos de ejecución de la revisión integrada probada `ba0ee2a`; solo cambia la cadena local y su documentación. Ver informes `scripts/posmusica-03-validation.json` a `05`. No afirmar suite completa, escucha física ni deploy de esta ampliación. La autorización posterior de Jay permite miniinstrumentos y sonidos de estelas, con validación musical propia.
+
+## Reanudación autorizada
+
+`feat/posmusica-06-instrumentos` recupera selectivamente el trabajo conservado, sin aplicar controles antiguos sobre el UI nuevo. Diez familias; seis motores nuevos y tres motores avanzados reutilizados, batería electrónica existente con kit regional. `micro-instruments-model.js` distribuye por hábitat con semillas nuevas; `micro-instruments.js` conecta contacto, cercanía, escáner, colección y reloj. Cinco estelas musicales, máximo dos entradas por compás, usan la misma ruta de voces. No hacer sonar botones. Las respuestas repetidas vuelven a la rejilla antes de emitirse. Siguiente: guía y referencias reales de Jaywrkr/TDAI2026; después suites completas en un entorno con recursos.
+
+Entrega 6 publicada en `b180731`: 133 suites Node, auditoría, navegador en tres tamaños y 25 renders nuevos. Entrega 7 completa guía y cuatro motivos VJ de TDAI2026: 133 suites, auditoría y navegador en cuatro tamaños. Referencias y límites en REFERENCIAS_VJ.md. Próximo cierre 8: comprobar el conjunto completo y documentar CI/aceptación externa sin atribuir resultados de otras revisiones.
+
+Cierre de interacción: leer CIERRE_INTERACCION_FINAL.md y sus informes por revisión. Rama final `feat/posmusica-08-cierre`, desde recorrido 7. La normalización de guía conserva campos desconocidos; las respuestas repetidas consultan el marco armónico de su propio instante. CI push de esta rama ejecuta suites completas; PR sin filtros. Documentación sola no requiere repetir ese push de pruebas. No afirmar aceptación física/deploy ni reabrir ramas históricas.

@@ -230,3 +230,67 @@ body.world-focus .goal{display:none}
 .rare-book-head{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px}.rare-book-head>h3{grid-column:1/-1;grid-row:1;font-size:12px;margin:0 0 8px}.rare-book-head>label{grid-row:2}.rare-book-head>select{grid-row:3;width:100%;min-width:0;font-size:11px}.rare-book-head>p{grid-column:1/-1;font-size:10px;margin:4px 0 12px}.rare-book-head>label[for=rareFilter],#rareFilter{grid-column:1}.rare-book-head>label[for=rareRole],#rareRole{grid-column:2}
 
 .music-travel-shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:6px}.music-travel-shortcuts button{min-height:44px;font-size:10px;white-space:normal}.music-travel-shortcuts #musicTravelFull{grid-column:1/-1}#musicTravelBack{min-height:44px;font-size:11px;width:100%;margin-top:6px}
+
+/* One notice lane. Exit completes before another message enters. */
+#toast,#phrase,#zone,#voice:not(.expanded){position:fixed;inset:auto;top:calc(var(--safe-top,0px) + 64px);left:50%;bottom:auto;width:max-content;max-width:min(360px,calc(100vw - 32px));box-sizing:border-box;transform:translate(-50%,-10px);opacity:0;transition:opacity .24s ease,transform .26s ease;z-index:35;pointer-events:none;background:#000;border:1px solid #ffffff30;padding:12px;font:12px/1.6 var(--mono);visibility:visible}
+#toast.on,#phrase.on,#zone.on,#voice.on:not(.expanded){transform:translate(-50%,0);opacity:1;visibility:visible}
+#voice.on{pointer-events:auto}#voice.expanded{z-index:35;background:#000;max-width:calc(100vw - 32px)}
+#toast.notice-leaving,#phrase.notice-leaving,#zone.notice-leaving,#voice.notice-leaving{opacity:0;transform:translate(-50%,-10px);pointer-events:none}
+#rareNotice.notice-leaving,#celebration.notice-leaving{animation:none;opacity:0;pointer-events:none;transition:opacity .26s ease}
+/* Special cards deliberately occupy the screen; the world and power clock wait. */
+#rareNotice[data-layout="full"],#celebration[data-layout="full"]{position:fixed;inset:0;width:100%;height:100dvh;max-width:none;max-height:none;margin:0;padding:16px;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto;gap:0;transform:none;place-items:center;background:#000e;border:0;z-index:80;overflow:auto;pointer-events:auto;animation:card-arrival .32s ease-out}
+.rare-reveal-card,.celebration-card{grid-row:auto;position:relative;box-sizing:border-box;background:#000;border:1px solid var(--rare-ink,#f0d27a);padding:24px;max-width:100%;min-width:0}
+#rareNotice[data-layout="full"] .rare-reveal-card,#celebration[data-layout="full"] .celebration-card{width:min(420px,100%);max-height:calc(100dvh - 32px);overflow:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px;color:#fff;box-shadow:0 0 70px #f0d27a0c}
+#rareNoticeArt,#celebrationArt{grid-column:1/-1;grid-row:auto;color:var(--rare-ink,#f0d27a);width:100%;height:clamp(100px,28dvh,240px);display:block!important}
+#rareNoticeArt svg,#celebrationArt svg{width:100%;height:100%;max-height:none;display:block;stroke-width:1;fill:none}
+.rare-glyph,.rare-sparks{stroke:currentColor;fill:none}.rare-orbit{stroke:#ffffff30;fill:none}.rare-scene{stroke:currentColor;opacity:.22;fill:none;stroke-width:.5}
+.rare-notice-copy{grid-column:1/-1;display:grid;gap:10px;min-width:0}#rareNoticeName,#celebrationName{font:500 clamp(16px,5vw,22px)/1.35 var(--mono);color:#fff;white-space:normal;overflow-wrap:anywhere;padding-right:0}
+#celebrationName,#celebrationTier,#celebrationEffect,#celebrationSurpriseName,#celebrationSurprise,#celebrationTime,#celebrationPlace,#celebrationSerial,#celebrationSignature{grid-column:1/-1;grid-row:auto;white-space:normal;overflow-wrap:anywhere}
+#rareNoticeTier,#rareNoticeOdds,#celebrationTier,#celebrationTime{font:11px/1.6 var(--mono);color:var(--rare-ink,#f0d27a)}
+#rareNoticeWhere,#rareNoticeSerial,#celebrationPlace,#celebrationSerial{font:10px/1.6 var(--mono);color:#ffffff99;white-space:normal;overflow-wrap:anywhere}
+#rareNoticeAbility,#celebrationEffect{font:12px/1.6 var(--mono);margin:0}
+#rareNotice button,#celebration button{position:static;grid-column:auto;grid-row:auto;min-height:44px;min-width:44px;width:auto;padding:10px 12px;box-sizing:border-box;background:#000;border:1px solid #ffffff40;color:#fff;font:12px var(--mono);pointer-events:auto;text-align:center}
+#rareNotice #rareNoticeDismiss,#celebration #celebrationDismiss{position:absolute;top:0;right:0;width:44px;border:0;font-size:20px}
+#rareNoticeContinue,#celebrationContinue{border-color:var(--rare-ink,#f0d27a)!important}
+#celebration:not([data-layout="full"]){display:block;left:50%;right:auto;top:calc(var(--safe-top,0px) + 64px);bottom:auto;transform:translateX(-50%);width:min(340px,calc(100vw - 32px));max-height:none;padding:0;background:#000;border:0;z-index:35;pointer-events:auto}
+#celebration:not([data-layout="full"]) .celebration-card{display:grid;gap:6px;padding:12px 48px 12px 12px;border-color:#ffffff40}
+#celebration:not([data-layout="full"]) #celebrationArt,#celebration:not([data-layout="full"]) #celebrationShare,#celebration:not([data-layout="full"]) #celebrationSerial{display:none!important}
+#celebration:not([data-layout="full"]) #celebrationName{font-size:14px}
+@keyframes card-arrival{from{opacity:0}to{opacity:1}}
+@media(max-height:500px){#rareNotice[data-layout="full"] .rare-reveal-card,#celebration[data-layout="full"] .celebration-card{width:min(640px,100%);grid-template-columns:180px 1fr 1fr;padding:16px;gap:8px}#rareNoticeArt,#celebrationArt{grid-column:1;grid-row:1/8;height:220px;align-self:center}.rare-notice-copy,#celebrationName,#celebrationTier,#celebrationEffect,#celebrationSurpriseName,#celebrationSurprise,#celebrationTime,#celebrationPlace,#celebrationSerial,#celebrationSignature{grid-column:2/-1}#rareNoticeOpen,#celebrationShare{grid-column:2}#rareNoticeContinue,#celebrationContinue{grid-column:3}}
+#bPrimary.entering-world #bPrimaryL{opacity:.15}#bPrimary.entering-world::after,#cExplore.entering-world::after{animation:none}#cExplore svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.2;vertical-align:middle;margin-right:8px;flex:none}
+body.ui-reduced-motion *,body.ui-reduced-motion *::before,body.ui-reduced-motion *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(prefers-reduced-motion:reduce){#rareNotice,#celebration{animation:none!important;transition:none!important}}
+
+body.first-journey #zone,body.first-journey #phrase{visibility:hidden}
+
+#celebration .celebration-card{grid-row:auto}
+
+.notice-leaving *{pointer-events:none!important}
+
+/* Temporary surprises: one quiet, reversible action above the dock. */
+.surprise-hud{position:fixed;z-index:25;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;max-width:calc(100vw - 24px);padding:4px 8px;background:#000;border:1px solid #ffffff30;font-size:10px;white-space:nowrap}
+.surprise-hud[hidden]{display:none}.surprise-hud button{min-height:44px;min-width:44px;padding:5px 9px;font-size:10px}.surprise-hud small{color:#aaa}#celebrationSurprise:empty{display:none}#celebrationSurprise{color:#bdb5e8;max-width:32ch;line-height:1.5}
+@media(max-height:450px){.surprise-hud{bottom:calc(env(safe-area-inset-bottom,0px) + 60px)}}
+
+body:has(#surpriseHud:not([hidden])) .first-journey-hint{bottom:calc(var(--safe-bottom) + 144px)}
+
+/* Profile stays in the menu; it does not add HUD noise or an account requirement. */
+.profile-sheet{max-width:500px!important}.profile-sheet h2{font-size:18px}.profile-sheet h3{font-size:12px;font-weight:500;margin:20px 0 10px}.profile-sheet p,.profile-sheet label,.profile-sheet summary{font-size:10px;line-height:1.6}.profile-identity{display:flex;align-items:center;gap:12px}.profile-identity>div{min-width:0;flex:1}#profileAvatar{width:56px;height:56px;flex:none;fill:none;stroke:var(--profile-ink,#fff);stroke-width:.7}#profileAvatar rect{fill:var(--profile-ink,#fff);stroke:none}.profile-name-row{display:flex;gap:6px;margin-top:5px}.profile-name-row input{min-width:0;width:100%;font:16px var(--mono);padding:7px;box-sizing:border-box}.profile-name-row button{flex:none;font-size:10px;min-height:44px;padding:5px 8px}.profile-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin:14px 0}.profile-metrics>div{padding:14px 8px 14px 0;border-top:1px solid #ffffff24;min-width:0}.profile-metrics dt{font-size:10px;color:#aaa;line-height:1.5}.profile-metrics dd{margin:5px 0 0;color:#fff;font:500 20px/1.3 var(--mono);overflow-wrap:anywhere}.profile-metrics.compact dd{font-size:16px}.profile-breakdown{display:grid;grid-template-columns:1fr auto;font-size:11px}.profile-breakdown dd{margin:0}.profile-sheet summary{min-height:44px;display:flex;align-items:center;cursor:pointer}.profile-sheet .row{display:flex;flex-wrap:wrap;gap:6px}.profile-sheet button{min-height:44px;min-width:44px;font-size:11px}.profile-sheet .row>button{flex:1}#profileSince{color:#aaa}#profileSaveStatus:empty{display:none}#profileSaveStatus{color:#fff}
+@media(max-width:360px){.profile-identity{gap:6px}#profileAvatar{width:36px;height:36px}.profile-name-row{flex-wrap:wrap}.profile-metrics dd{font-size:18px}}
+
+#celebrationSurpriseName:empty{display:none}#celebrationSurpriseName{color:#bdb5e8;font:11px/1.6 var(--mono)}
+/* Keep power-card actions together; legacy grid rules placed them on different rows. */
+#celebration[data-layout="full"] #celebrationShare{grid-column:1;text-align:center}
+#celebration[data-layout="full"] #celebrationContinue{grid-column:2}
+#celebrationSignature:empty,#celebrationTime:empty{display:none}
+#celebration[data-layout="full"] .celebration-card:has(#celebrationShare[hidden]) #celebrationContinue{grid-column:1/-1}
+@media(max-height:500px){#celebration[data-layout="full"] #celebrationShare{grid-column:2}#celebration[data-layout="full"] #celebrationContinue{grid-column:3}}
+
+.music-travel-shortcuts #musicTravelFull{grid-column:auto}
+
+/* Optional illustrated guide; the game keeps a single small contextual hint. */
+.guide-journey{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;list-style:none;padding:0;margin:16px 0}.guide-journey li{display:grid;grid-template-columns:28px minmax(0,1fr);align-items:center;gap:4px 8px;padding:10px;border:1px solid var(--line);font-size:11px;min-width:0}.guide-journey li[aria-current]{border-color:#aaa}.guide-journey svg{grid-row:span 2;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1}.guide-journey span{overflow-wrap:anywhere}.guide-journey small{grid-column:2;font-size:9px}.guide-journey li[data-complete]{color:#ddd}.journey-progress{font-size:9px;color:var(--dim);white-space:nowrap}.guide-sheet .row{flex-wrap:wrap}.guide-sheet .row button{min-height:44px}
+@media(max-width:360px){.guide-journey{gap:6px}.guide-journey li{padding:8px;gap:3px 6px;font-size:10px}}
+
+.modal .guide-sheet{display:flex;flex-direction:column;overflow:hidden!important;max-height:calc(100dvh - 48px);box-sizing:border-box}.modal .guide-sheet>.guide-content{flex:1 1 auto}.guide-sheet>h2{flex:none}.guide-content{min-height:0;overflow:auto;overscroll-behavior:contain;padding-right:2px}.guide-sheet>.row{flex:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding-top:10px;margin-top:8px;border-top:1px solid var(--line)}.guide-sheet>.row button{font-size:11px;margin:0}.guide-sheet #guideClose{grid-column:1/-1}.guide-journey{letter-spacing:.02em}

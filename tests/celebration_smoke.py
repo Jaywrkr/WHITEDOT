@@ -1,4 +1,4 @@
-"""Native box contact, timed cards, single queue, pause and silent 4:5 sharing."""
+"""Native box contact, inspectable cards, single queue, pause and silent 4:5 sharing."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -23,22 +23,25 @@ try:
    assert page.locator('#celebrationSerial').inner_text().startswith('#')
    assert page.locator('#celebrationPlace').inner_text()
    first_art=page.locator('#celebrationArt').inner_html();first_serial=page.locator('#celebrationSerial').inner_text()
-   assert page.locator('#celebrationName').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')<=16
-   rect=page.locator('#celebration').bounding_box();assert rect['width']*rect['height']<width*height*.3,rect
+   assert page.locator('#celebrationName').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')<=22
+   rect=page.locator('#celebration').bounding_box();assert rect['width']*rect['height']>=width*height*.95,rect
+   inner=page.locator('.celebration-card').bounding_box();assert inner['width']>=300 and inner['x']>=0 and inner['x']+inner['width']<=width,inner
    assert page.locator('#rareNotice').is_hidden()
-   page.evaluate('__testRuntime.say("Escucha tu nueva voz.","Colección",{requested:true})');page.wait_for_function('document.getElementById("voice").classList.contains("on")')
-   page.locator('#voice').click();assert page.locator('#voice').get_attribute('aria-expanded')=='true';page.wait_for_function('document.getElementById("celebration").hidden')
-   page.locator('#voice').click();page.wait_for_function('!document.getElementById("celebration").hidden')
-   page.locator('#bMenu').click();page.wait_for_timeout(150);assert page.locator('#celebration').is_hidden();remaining=page.evaluate('__testRuntime.celebrationState.remaining');power=page.evaluate('__testRuntime.powerSecondsLeft("cometa")');page.wait_for_timeout(350)
+   page.evaluate('__testRuntime.say("Escucha tu nueva voz.","Colección",{requested:true})');page.wait_for_timeout(450)
+   assert not page.locator('#voice').evaluate('e=>e.classList.contains("on")'),'voice must wait for the card'
+   remaining=page.evaluate('__testRuntime.celebrationState.remaining');power=page.evaluate('__testRuntime.powerSecondsLeft("cometa")');page.wait_for_timeout(650)
    assert page.evaluate('__testRuntime.celebrationState.remaining')==remaining
-   assert page.evaluate('__testRuntime.powerSecondsLeft("cometa")')==power
+   assert page.evaluate('__testRuntime.powerSecondsLeft("cometa")')==power,'inspection pauses the earned power'
+   assert page.locator('#celebration').get_attribute('role')=='dialog'
+   assert page.evaluate('document.getElementById("celebration").contains(document.activeElement)')
+   page.evaluate('document.getElementById("bMenu").click()');page.wait_for_timeout(150);assert page.locator('#celebration').is_hidden()
    page.locator('#mnClose').click();page.wait_for_function('!document.getElementById("celebration").hidden')
    before=page.evaluate('({wave:__testRuntime.waves.length,context:!!__testRuntime.ac})')
    with page.expect_download() as dl:page.locator('#celebrationShare').click()
    path=dl.value.path();data=Path(path).read_bytes();assert struct.unpack('>II',data[16:24])==(512,640)
    assert page.evaluate('__testRuntime.waves.length')==before['wave'] and page.evaluate('!!__testRuntime.ac')==before['context']
    page.screenshot(path=f'/tmp/whitedot-v2-f2-power-{width}.png')
-   page.locator('#celebrationDismiss').click();page.wait_for_function('document.getElementById("celebration").hidden')
+   page.locator('#celebrationContinue').click();page.wait_for_function('document.getElementById("celebration").hidden');page.wait_for_function('document.getElementById("voice").classList.contains("on")')
    assert page.evaluate('__testRuntime.S.ach.poder_cometa')
    assert page.evaluate('__testRuntime.ownsReward("box:cometa")')
    page.evaluate('''()=>{const r=__testRuntime;r.celebrateBox({id:'second-native-opening',power:'campo',x:r.S.wx,y:r.S.wy});}''')

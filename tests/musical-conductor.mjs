@@ -18,6 +18,9 @@ Object.assign(r,{ac:{},MU:{deg:4},SIX:.125,vel:v=>v,musicalTime:()=>1,musicalFra
 for(const id of ['kick','conga','wood','rim','shaker','tom','guiro','timbale','clap','hatHit','snare'])r[id]=()=>{};voices(r);
 for(let i=0;i<24;i++)r.playVoice('reliquia',i,1.04,other,false,.5,{id:'conductor:'+i});
 assert(notes.length>0);assert(notes.every(n=>n.t===1&&frame.chords.some(c=>((c-n.n)%12+12)%12===0)),'border sources must support the current chord, regardless of source key');
+notes.length=0;r.musicalFrame=t=>t>=2?{...frame,time:2,chords:[59,62,66]}:frame;let alignCalls=0;r.musicalTime=()=>++alignCalls===1?1:2;
+r.playVoice('reliquia',0,1.04,other,true,.5,{id:'reply-grid'});
+assert.equal(alignCalls,2,'a repeated response joins its own grid slot rather than adding straight time to a swung onset');assert(notes.some(n=>n.t===1)&&notes.some(n=>n.t===2));assert(notes.filter(n=>n.t===2).every(n=>[59,62,66].some(t=>(n.n-t)%12===0)),'repeated responses must adopt the chord actually audible at their own onset');
 console.log('PASS shared source clock, tempo change, swing, harmonic boundary, strong-beat consonance, register and bounded frame history');
 
 // A pet on the new territory still accompanies the harmony actually audible at its onset.

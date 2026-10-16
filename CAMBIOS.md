@@ -1,3 +1,58 @@
+## Corrección detectada por CI
+
+Node 20 reprodujo un timer de avisos iniciado desde colección sin DOM. La cola ahora instala su driver visual solo cuando existe pantalla; regresión y 133 suites completas en Node 20 aprobadas. El perfil local permite reducir compositor exclusivamente para audio offline: la interfaz conserva composición normal. No se retiran pruebas ni se cambia el runtime de CI para eludir el fallo.
+
+## Auditoría de interacción · entrega 8
+
+Corrección de armonía para respuestas repetidas: usan el marco disponible para su instante. Contactar un miniinstrumento activa el gesto visual común también sin audio. Regresiones en el reloj y en la revisión integrada PC/móvil. CIERRE_INTERACCION_FINAL.md reúne alcance, números, correcciones, orden de ramas y límites de aceptación.
+
+CI se activa en la rama final: navegador completo y todos los programas de audio repartidos en tres grupos. PR conserva todas las comprobaciones. Documentación sola no repite suites en push. Auditoría, 133 suites Node, recorrido integrado en cuatro tamaños y 25 renders finales aprobados. CI completo pendiente; no se afirma escucha física ni publicación.
+
+## Recorrido y referencias VJ · entrega 7
+
+Guía opcional ilustrada, cuatro experiencias y siguiente paso claro. Práctica de seis pasos con progreso pequeño y una sola instrucción. Nuevos instrumentos incluidos en la señal del primer encuentro; glosario explica sus gestos/filtros. Omitir o repetir conserva premios. Normalización de guía preserva campos desconocidos.
+
+Cuatro motivos Canvas originales basados en la revisión pública de TDAI2026: brotes, nudo, telaraña y red orbital. Catálogo visual de ocho a doce; ubicaciones, radio y huecos anteriores intactos. Procedencia en REFERENCIAS_VJ.md y CREDITOS.md. Sin notas ni cambios de motor musical. Auditoría y 133 suites Node aprobadas; guía y cuatro motivos nativos probados a 320/390/844/1280 px. La prueba detectó el pie fuera de pantalla al abrir el glosario; se corrigió la regla flex para mantener acciones visibles.
+
+## Miniinstrumentos y estelas · entrega 6
+
+Diez instrumentos orgánicos distribuidos por hábitats con semillas independientes. Contacto, permanencia y rodear producen batería, bajos, acordes, FM, ondas, granos, recortes, modulación y arpegios. Seis voces nuevas: 81 especificaciones en total. Escáner, 151 familias del libro y 72 tipos de tarjeta integrados. Estilos busca una agrupación nativa; no entrega rarezas por botón.
+
+Cinco estelas temporales de cajas generan música al caminar, con límites por compás y pausas de UI. Los botones permanecen silenciosos. Las respuestas repetidas se ajustan al swing en su propio instante. Coordenadas y guardados anteriores conservados. Auditoría sin errores/advertencias, 133 suites Node, recorrido real a 390/844/1280 px y 25 renders aprobados. Cierre explícito del AudioContext antes de recargar libera recursos de prueba; no se elimina ninguna aserción.
+
+## Perfil local y cierre visual · entrega 5
+
+Menú → Tu perfil reúne nombre, tiempo activo, distancia, sesiones y descubrimientos. Reutiliza la colección real y las copias de partida; preserva campos/formatos futuros. No añade cuentas ni HUD permanente. Tiempo/distancia empiezan a medirse ahora, excluyen menús/segundo plano/saltos. Controles de 44 px, input táctil de 16 px y textos compactos.
+
+Revisión adicional: la sorpresa de una caja muestra su propia duración junto al poder original; pausa del perfil también en vestidor; cambios de silueta limitados a superficie; cancelación de la animación de entrada no deja botones bloqueados. Se corrigen esperas de pruebas nuevas para comprobar funciones sin invocarlas.
+
+132 suites Node y auditoría aprobadas. El recorrido integrado inicial pasó a 320, 390, 844 y 1280 px; tarjetas de poder aprobadas en tres tamaños. Chromium normal no pudo crear página por recursos; el perfil local de un solo proceso/contexto funciona. No se modifica CI ni se declara escucha física o deploy.
+
+## Sorpresas temporales · entrega 4
+
+Dieciséis efectos secundarios de caja, incluyendo contratiempos suaves, cambio temporal de tamaño/forma, cuatro estelas, lunas, brotes, ecos, borrado de brotes y salto con regreso. Un control contextual permite deshacer. Guardado versionado, pausa en menús/inspección y preservación de datos futuros. Las seis cajas originales, sus posiciones y probabilidades no cambian. Sin nuevas voces ni sonidos de UI.
+
+Auditoría aprobada, cero errores/advertencias; 131 suites Node aprobadas. Navegador enfocado aprobado: box_surprises (390/844/1280 px) y power_cards (320/844/1280 px), usando el perfil local de un solo proceso/contexto. CI completo y teléfono físico pendientes. Prueba: abrir una caja; si contiene sorpresa, usar Deshacer. En salto, usar Volver.
+
+## Visuales localizados · entrega 3
+
+- Ocho escenas procedurales: órbitas, circuitos, cintas, vidrio, islas, partitura, abanico y organismo. Semillas independientes; 60 % de celdas candidatas quedan vacías por regla del hash. Esa regla no mide cobertura visible ni biomas nuevos.
+- Cometas ocasionales; visitantes curiosos y esquivos, acotados a su hogar. Gestos de contacto/pulso silenciosos; pausa ante paneles y movimiento reducido.
+- Conexión real de `control-motion` a Entrar al Mundo y cExplore: el módulo existía, faltaba su inicialización en controles.
+- `npm run audit:release`: cero errores/advertencias. `npm test`: 130 suites aprobadas. Navegador normal: `Target crashed` antes de cargar. Con perfil local de un solo proceso/contexto: notice_lane (dos tamaños), vj_ui (tres) e interface_cards (cuatro) aprobados. CI completo y teléfonos físicos pendientes.
+- No se modificó el motor musical. El repo TouchDesigner mencionado no está entre los checkouts disponibles.
+
+# Interacción final · entrega 1: animaciones y hallazgos
+
+- Botones con respuesta visual local y silenciosa. Entrar al Mundo lleva la flecha hasta el cuadrado antes de abrir; protege el doble toque y conserva la activación de audio dentro del gesto inicial. Movimiento reducido entra inmediatamente.
+- Cola compartida para Voz, toast, frases, zonas y celebraciones: una notificación visible, salida de 260 ms y separación de 360 ms antes del relevo. Los paneles abiertos pausan avisos y su tiempo; los avisos de paisaje esperan durante la primera guía.
+- Tarjetas especiales centradas a pantalla completa, con ilustración vectorial del hallazgo, lugar, frecuencia teórica y número de ejemplar. Continuar, Escape y Abrir libro conservan la colección; las renovaciones y premios comunes siguen siendo breves.
+- Inspección con foco acotado y fondo inerte. El cubo y el reloj de los poderes esperan mientras lees. No cambia el audio musical ni se añaden sonidos de UI. Negro, Geist Mono y movimiento reducido conservados.
+- El ejecutor Linux recoge sus propios procesos de navegador y conserva errores/timeouts; se evita acumular huérfanos en contenedores. Concurrencia y HTTP serial de pruebas configurables sin omitir casos.
+- Retratos con un pequeño paisaje procedural para la presentación grande; el libro y sus exportaciones mantienen sus formatos. Probabilidades, coordenadas, datos futuros y guardados no cambian.
+
+129 suites Node y auditoría aprobadas al cierre local. Los recorridos afectados pasaron durante el desarrollo; los intentos completos posteriores agotaron procesos/hilos del entorno antes de cargar páginas. Validación final y push pendientes; evidencia en `scripts/posmusica-01-validation.json`. La auditoría musical anterior corresponde a su propio conjunto. CI/deploy y escucha física se comprueban aparte.
+
 # Dirección musical · fase 7: auditoría y correcciones integradas
 
 - Matriz reproducible de patrones musicales: 52 estilos, 18 influencias, 128 compases por estilo, 71 comprobaciones y 51 gramáticas rítmicas observadas. Usa territorios y eventos reales, con criterios estilísticos documentados.

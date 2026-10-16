@@ -48,6 +48,6 @@ try:
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
    assert not errors,errors;print('PASS native first light, source contact, pulse, saved place, quiet replay/skip and reload at '+str(width),flush=True);page.close()
   visitor=b.new_page(viewport={'width':390,'height':844});visitor.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
-  visitor.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=new-visitor&layout=classic&generation=2&travel=1');visitor.wait_for_function('window.__testRuntime?.firstJourneyState.next==="voice"');assert visitor.locator('#firstJourney').is_visible();visitor.close();print('PASS a first shared-world visitor receives brief guidance',flush=True)
+  visitor.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=new-visitor&layout=classic&generation=2&travel=1');visitor.wait_for_function('window.__testRuntime?.firstJourneyState.next==="voice"');visitor.locator('#firstJourney').wait_for(state='visible');assert visitor.locator('#firstJourney').is_visible();visitor.close();print('PASS a first shared-world visitor receives brief guidance',flush=True)
   b.close()
 finally:server.shutdown()
