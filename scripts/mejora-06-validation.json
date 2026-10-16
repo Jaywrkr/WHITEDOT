@@ -1,0 +1,92 @@
+{
+  "phase": 6,
+  "version": "2.3.0-alpha.10",
+  "base": "05877fa906f56bf564444ce6a4542d74bb5ad3e5",
+  "summary": "Favoritos busca nombres visibles de g\u00e9neros, recuerdos y texto con o sin tildes. Su resumen muestra solo capa, estilo y tempo; procedencia y coordenadas quedan en el detalle existente. Se conservan metadatos y libros futuros en lectura protegida. Saltar compara tambi\u00e9n los timbres de la radio recuperada y respeta historiales anteriores.",
+  "node": {
+    "base": "05877fa906f56bf564444ce6a4542d74bb5ad3e5",
+    "changes": [
+      "README.md",
+      "index.html",
+      "package.json",
+      "src/favorites.js",
+      "src/practice-travel.js",
+      "src/release-info.js",
+      "sw.js",
+      "tests/favorites.mjs"
+    ],
+    "selected": [
+      "arrival.mjs",
+      "favorites.mjs",
+      "festive-territories.mjs",
+      "lab-evolution.mjs",
+      "practice-travel.mjs",
+      "release.mjs",
+      "test-impact.mjs",
+      "version-bump.mjs"
+    ],
+    "results": [
+      {
+        "test": "arrival.mjs",
+        "exit": 0,
+        "milliseconds": 262
+      },
+      {
+        "test": "favorites.mjs",
+        "exit": 0,
+        "milliseconds": 111
+      },
+      {
+        "test": "festive-territories.mjs",
+        "exit": 0,
+        "milliseconds": 632
+      },
+      {
+        "test": "lab-evolution.mjs",
+        "exit": 0,
+        "milliseconds": 45
+      },
+      {
+        "test": "practice-travel.mjs",
+        "exit": 0,
+        "milliseconds": 356
+      },
+      {
+        "test": "release.mjs",
+        "exit": 0,
+        "milliseconds": 56
+      },
+      {
+        "test": "test-impact.mjs",
+        "exit": 0,
+        "milliseconds": 40
+      },
+      {
+        "test": "version-bump.mjs",
+        "exit": 0,
+        "milliseconds": 120
+      }
+    ],
+    "completeSuite": false
+  },
+  "audit": {
+    "version": "2.3.0-alpha.10",
+    "sourceModules": 203,
+    "htmlIDs": 402,
+    "staticImports": 527,
+    "shellAssets": 223,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "browser": {
+    "passed": true,
+    "output": "PASS native favorite quota/conflict failure, honest imported-code status, unchanged disk save and successful duplicate-free retry"
+  },
+  "physicalPhone": false,
+  "ciAndDeploy": "not claimed",
+  "fullSuites": false
+}

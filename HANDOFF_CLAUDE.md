@@ -1,3 +1,9 @@
+# Mejora integral · fase 6
+
+Rama `mejora/06-viajes`, versión 2.3.0-alpha.10. Favoritos busca nombres visibles de géneros, recuerdos y texto con o sin tildes. Su resumen muestra solo capa, estilo y tempo; procedencia y coordenadas quedan en el detalle existente. Se conservan metadatos y libros futuros en lectura protegida. Saltar compara también los timbres de la radio recuperada y respeta historiales anteriores.
+
+Auditoría sin errores/avisos; 8 suites Node afectadas y recorrido representativo aprobados; audio sin cambios. Leer PLAN_MEJORA_INTEGRAL.md; este ciclo sustituye la ampliación anterior. Evidencia: scripts/mejora-06-validation.json. Jay conserva PR/merge.
+
 # Mejora integral · fase 5
 
 Rama `mejora/05-encuentros`, versión 2.3.0-alpha.9. Cancelar un gesto restaura conexiones y patrones anidados; los movimientos y cambios de partida no retienen referencias al encuentro anterior. Los encuentros se atenúan gradualmente al alejarse. El animal muestra indicaciones breves de escucha y respuesta, también usando el cubo. Diez familias comprobadas con toque, moldeado, pausa y bitácora.
