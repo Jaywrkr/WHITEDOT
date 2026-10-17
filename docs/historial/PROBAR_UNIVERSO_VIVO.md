@@ -157,7 +157,7 @@ No dar por terminado el proyecto por esta fase: anatomías nuevas, síntesis mod
 - **Bitácora:** familias, recuerdos, mensajes completos y libro de hallazgos. El libro tiene colecciones y exportación PNG/código. Las condiciones sin frecuencia conjunta calculada lo indican; un ejemplar repetido no infla el contador.
 - **Favoritos:** nombre, nota y punto musical. Orientar permite volver caminando en el mismo mundo. Abrir lugar carga una semilla/capa diferente en sus coordenadas, conservando la partida que abandonas. La identidad del lugar permanece, pero el estado musical y los seres móviles pueden cambiar.
 - **Cajas:** los poderes cuentan tiempo de juego, se pausan con menús/suspensión y tienen tope de acumulación. Una visita de caja termina; mascotas permanentes ya ganadas se conservan y las nuevas se ganan mediante vínculo natural.
-- **Cuenta y duetos:** necesita el servicio opcional descrito en [SERVIDOR_Y_DUETOS.md](SERVIDOR_Y_DUETOS.md). El alojamiento estático ofrece el resto del juego.
+- **Cuenta y duetos:** necesita el servicio opcional descrito en [SERVIDOR_Y_DUETOS.md](../SERVIDOR_Y_DUETOS.md). El alojamiento estático ofrece el resto del juego.
 
 Para comparar música, visita la misma semilla antes y después, escucha también sin moverte, prueba bajos/percusión y modo suave. Cambiar una huella estructural no garantiza que un oído la perciba como una canción diferente. Esta entrega requiere esa escucha antes de declarar cerrada la calidad musical de V1.
 

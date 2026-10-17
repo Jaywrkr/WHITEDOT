@@ -1,4 +1,4 @@
-> Estado posterior: **1.1.0-alpha.10**, diez ramas del universo vivo. [Entrega y validación](ENTREGA_UNIVERSO_VIVO.md), [cobertura y pendientes](../../COBERTURA_150_UNIVERSO.md). El contenido que sigue conserva el contexto original de este documento; sus cifras/pendientes históricos no sustituyen el estado nuevo. Para continuar en Claude, leer primero [HANDOFF_CLAUDE.md](../../HANDOFF_CLAUDE.md).
+> Estado posterior: **1.1.0-alpha.10**, diez ramas del universo vivo. [Entrega y validación](ENTREGA_UNIVERSO_VIVO.md), [cobertura y pendientes](COBERTURA_150_UNIVERSO.md). El contenido que sigue conserva el contexto original de este documento; sus cifras/pendientes históricos no sustituyen el estado nuevo. Para continuar en Claude, leer primero [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md).
 
 > **Ampliación vigente:** [150 propuestas en diez fases](UNIVERSO_150_IDEAS_FASES.md), de menor a mayor complejidad. Una rama amplia por fase al implementarla. Este turno solo actualiza el plan; las fases históricas y la evidencia de la aplicación conservan su numeración/fecha.
 

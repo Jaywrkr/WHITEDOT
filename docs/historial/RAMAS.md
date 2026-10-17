@@ -2,11 +2,11 @@
 
 Estado vigente: **1.1.0-alpha.10**, con diez fases acumuladas en `feat/universe-10-server-duets-validation` (código `57fb5d2`). Este handoff añade documentación en `docs/claude-handoff-universe-alpha`. Main remoto comprobado: `704ae07`; las fases aún no estaban integradas. Volver a verificar antes de continuar.
 
-- [Empezar aquí: handoff para Claude](../../HANDOFF_CLAUDE.md)
+- [Empezar aquí: handoff para Claude](HANDOFF_CLAUDE.md)
 - [Entrega, ramas y límites](ENTREGA_UNIVERSO_VIVO.md)
-- [Cómo probar](../../PROBAR_UNIVERSO_VIVO.md)
-- [Cobertura de las 150 ideas](../../COBERTURA_150_UNIVERSO.md)
-- [Servidor y duetos](../../SERVIDOR_Y_DUETOS.md)
+- [Cómo probar](PROBAR_UNIVERSO_VIVO.md)
+- [Cobertura de las 150 ideas](COBERTURA_150_UNIVERSO.md)
+- [Servidor y duetos](../SERVIDOR_Y_DUETOS.md)
 
 Jay crea los PR y hace merge. La última rama de código contiene las diez fases; esta rama documental añade el handoff. El plan de 150 ideas ya está incluido en la primera fase.
 

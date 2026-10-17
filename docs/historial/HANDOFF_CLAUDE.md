@@ -442,7 +442,7 @@ Validación: auditoría sin errores/advertencias, 115 suites Node, navegador de 
 
 [Cierre y pruebas](CIERRE_EXPERIENCIA.md) · [Plan actual](PLAN_EXPERIENCIA.md). Catorce fases autorizadas; no reiniciar las anteriores. Fases 1–13 en main `88c96b0` por Jay (PR #142). F14 continúa desde F13 `4625f2f` y reúne el cierre validado. El agente no crea PR ni integra main.
 
-Auditoría sin errores ni advertencias, 113 suites Node, 86 recorridos de navegador incluido offline y 789 renders de 31 programas de audio: aprobados. Prueba HTTP/SQLite aprobada. Pico máximo medido 0.945447. [Evidencia final](scripts/experience-14-validation.json).
+Auditoría sin errores ni advertencias, 113 suites Node, 86 recorridos de navegador incluido offline y 789 renders de 31 programas de audio: aprobados. Prueba HTTP/SQLite aprobada. Pico máximo medido 0.945447. [Evidencia final](../../scripts/experience-14-validation.json).
 
 ## Mapa técnico incorporado
 
@@ -620,7 +620,7 @@ Rama `feat/lab-l7-curaduria`, versión 2.1.0-alpha.7. L1–L7 entregadas. El cic
 - Las voces articuladas reservan espacio para los gestos y la práctica. Las cuerdas nuevas reutilizan excitaciones con una caché de ocho buffers por contexto; las voces sostenidas tienen liberación suave y límites explícitos.
 - El cierre conserva mundos, progreso, códigos anteriores y modo clásico. CIERRE_LABORATORIO_VIVO.md reúne hallazgos, soluciones, orden de ramas y aceptación física/artística pendiente.
 
-Validación completa aprobada: auditoría, 104 suites Node, 82 recorridos incluido offline y 581 renders de 28 programas de audio. Pico máximo registrado: 0.945447; señal finita y límites aprobados por cada programa. [Evidencia](scripts/lab-l7-validation.json). CI de los PR y aceptación física/artística conservan su alcance propio.
+Validación completa aprobada: auditoría, 104 suites Node, 82 recorridos incluido offline y 581 renders de 28 programas de audio. Pico máximo registrado: 0.945447; señal finita y límites aprobados por cada programa. [Evidencia](../../scripts/lab-l7-validation.json). CI de los PR y aceptación física/artística conservan su alcance propio.
 
 ## Mapa técnico del ciclo
 
@@ -642,7 +642,7 @@ Rama `feat/lab-l6-exploracion`, versión 2.1.0-alpha.6. L1–L7 autorizadas cons
 - Saltar compara banda, paleta y patrón además del género y paisaje. Los Favoritos guardan una huella musical ampliada; las direcciones y códigos nuevos restauran Paisaje vivo/clásico sin cambiar coordenadas ni ámbito del guardado.
 - Los códigos anteriores siguen válidos. Los metadatos musicales futuros se conservan sin abrir versiones desconocidas. Auditoría, 103 suites Node, tres recorridos y seis mezclas de evolución aprobados.
 
-Auditoría aprobada; 103 suites Node, 3 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l6-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+Auditoría aprobada; 103 suites Node, 3 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](../../scripts/lab-l6-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
 
 ## Entregas anteriores
 
@@ -654,7 +654,7 @@ Rama `feat/lab-l5-aprendizaje`, versión 2.1.0-alpha.5. L1–L7 autorizadas cons
 - Una indicación local enseña cada acción. La práctica se pausa con las hojas, ocultación o silencio y permite volver a escuchar. El progreso aditivo conserva versiones futuras y aparece en Música de la Bitácora.
 - Los sonidos secundarios de una onda no se confunden con gestos nuevos. Auditoría, 102 suites Node, dos recorridos reales y dos mezclas de lección aprobados.
 
-Auditoría aprobada; 102 suites Node, 2 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l5-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+Auditoría aprobada; 102 suites Node, 2 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](../../scripts/lab-l5-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
 
 ## Entregas anteriores
 
@@ -666,7 +666,7 @@ Rama `feat/lab-l4-paisaje`, versión 2.1.0-alpha.4. L1–L7 autorizadas consecut
 - El contacto del cubo sostiene voces compatibles; posición y cercanía cambian presión, tono y presencia. Alejarse, cambiar capa, silenciar o abrir una hoja libera la voz. El arco local señala el sostén.
 - Se corrigió el corte de rutas a tres segundos y el registro de percusión viva. Auditoría, 101 suites Node, dos recorridos y 18 mezclas afectadas aprobados.
 
-Auditoría aprobada; 101 suites Node, 2 recorridos afectados y 2 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l4-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+Auditoría aprobada; 101 suites Node, 2 recorridos afectados y 2 programas de audio aprobados. Alcance exacto y reportes: [evidencia](../../scripts/lab-l4-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
 
 ## Entregas anteriores
 
@@ -678,7 +678,7 @@ Rama `feat/lab-l3-interpretacion`, versión 2.1.0-alpha.3. L1–L7 autorizadas c
 - Bajos y motivos alternan pregunta, respuesta, resolución y descanso durante ocho compases; se mantienen escala, tempo, registro y límites de eventos. Los offsets fraccionarios llegan al reloj real de Web Audio.
 - Validación: 100 suites Node, dos recorridos afectados y doce mezclas territoriales densas en 44.1/48 kHz. El modo clásico y transporte de duetos conservan su contrato anterior.
 
-Auditoría aprobada; 100 suites Node, 2 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l3-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+Auditoría aprobada; 100 suites Node, 2 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](../../scripts/lab-l3-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
 
 ## Entregas anteriores
 
@@ -690,7 +690,7 @@ Rama `feat/lab-l2-instrumentos`, versión 2.1.0-alpha.2. L1–L7 autorizadas con
 - Arco, vientos y pad se sostienen mediante contacto en el laboratorio; soltar, salir, pausar u ocultar la página libera las voces. Deslizamiento, apagado, golpe suave y acento cambian el sonido sin cambiar la afinación base.
 - El laboratorio reúne 179 destinos. Se verificaron 48 renders individuales y 12 mezclas territoriales densas; no se usan muestras ni presets comerciales.
 
-Auditoría aprobada; 99 suites Node, 3 recorridos afectados y 2 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l2-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+Auditoría aprobada; 99 suites Node, 3 recorridos afectados y 2 programas de audio aprobados. Alcance exacto y reportes: [evidencia](../../scripts/lab-l2-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
 
 ## Entregas anteriores
 
@@ -702,7 +702,7 @@ Rama `feat/lab-l1-adn-territorial`, versión 2.1.0-alpha.1. L1–L7 autorizadas 
 - La radio principal y vecina comparten el nuevo contrato; la capa de producción respeta el bajo y armonía elegidos. El transporte acordado de duetos conserva su arreglo anterior.
 - Sonido permite Paisaje vivo/clásico sin lanzar notas. El laboratorio conserva las recetas clásicas y añade seis bandas en destinos reales con habitantes.
 
-Auditoría aprobada; 98 suites Node, 5 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](scripts/lab-l1-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
+Auditoría aprobada; 98 suites Node, 5 recorridos afectados y 1 programas de audio aprobados. Alcance exacto y reportes: [evidencia](../../scripts/lab-l1-validation.json). CI completo y aceptación física/artística conservan su requisito propio.
 
 ## Entregas anteriores
 
@@ -737,7 +737,7 @@ Rama `feat/pulido-f8-cierre`, desde `7af93e2`. Los ocho bloques de [PLAN_PULIDO_
 - Corregido Campo acumulado: su apertura depende del tiempo desde la activación, no de la duración restante; renovar o recargar conserva el radio, incluido el paso por la duración original.
 - Las formas registradas también se paginan. Búsqueda/propiedad se ocultan donde no aplican, evitando controles sin efecto; siguen disponibles en las colecciones compatibles.
 
-Auditoría sin errores ni advertencias; 97 suites Node, 75 recorridos de navegador incluidos offline, y 455 renders de audio en 22 programas aprobados. Ambas generaciones y diversidad verificadas. CI del PR, deploy real y aceptación física pendientes. [Evidencia](scripts/pulido-f8-validation.json).
+Auditoría sin errores ni advertencias; 97 suites Node, 75 recorridos de navegador incluidos offline, y 455 renders de audio en 22 programas aprobados. Ambas generaciones y diversidad verificadas. CI del PR, deploy real y aceptación física pendientes. [Evidencia](../../scripts/pulido-f8-validation.json).
 
 
 Leer [CIERRE_2.0.md](CIERRE_2.0.md) para integración y pendientes externos, [AUDITORIA_CIERRE_2.0.md](AUDITORIA_CIERRE_2.0.md) para hallazgos y [MATRIZ_INTERACCIONES.md](MATRIZ_INTERACCIONES.md) para rutas musicales. Las tablas y pendientes siguientes son historia de entregas anteriores.
@@ -759,7 +759,7 @@ Rama `feat/pulido-f7-interacciones`, desde `1637aed`. Continuar [PLAN_PULIDO_FIN
 - El giro de quietud restaura el corte anterior del filtro, en lugar de abrirlo siempre a 20 kHz. Añade señal de filtro y no acumula escucha con volumen cero.
 - Los cincuenta caminantes combinan su forma con velocidad y grado individuales anteriores. Mantienen los mapas y responden dentro de la escala local.
 
-Auditoría aprobada; 97 suites Node y 6 recorridos afectados aprobados. Tres programas musicales afectados: 47 renders de poderes/quietud/culturas, caminantes y materiales/tiempo; picos menores de 0,96 y cero muestras calientes. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f7-validation.json).
+Auditoría aprobada; 97 suites Node y 6 recorridos afectados aprobados. Tres programas musicales afectados: 47 renders de poderes/quietud/culturas, caminantes y materiales/tiempo; picos menores de 0,96 y cero muestras calientes. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](../../scripts/pulido-f7-validation.json).
 
 ## Entregas anteriores
 
@@ -776,7 +776,7 @@ Rama `feat/pulido-f6-personajes`, desde `4cdc59a`. Continuar [PLAN_PULIDO_FINAL.
 - Corregida la respuesta antigua fuera del recorrido de audio del Mundo. La fuente real recibe su señal de onset y el movimiento se pausa en menús.
 - Colección → 50 caminantes muestra miniaturas y descubrimientos conservados por variante. No sustituye la mascota permanente ni altera sus logros; datos desconocidos permanecen.
 
-Auditoría aprobada; 96 suites Node y 5 recorridos afectados aprobados. Diez renders de respuesta real de caminantes en deep/dub a 44,1/48 kHz; picos menores de 0,96, sin muestras calientes. La suite completa del conjunto final incluye este programa nuevo. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f6-validation.json).
+Auditoría aprobada; 96 suites Node y 5 recorridos afectados aprobados. Diez renders de respuesta real de caminantes en deep/dub a 44,1/48 kHz; picos menores de 0,96, sin muestras calientes. La suite completa del conjunto final incluye este programa nuevo. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](../../scripts/pulido-f6-validation.json).
 
 ## Entregas anteriores
 
@@ -793,7 +793,7 @@ Rama `feat/pulido-f5-tarjetas`, desde `e1a0897`. Continuar [PLAN_PULIDO_FINAL.md
 - Regalo de quietud registrado por región y día, con caja pendiente persistente hasta recogerla. Recargar no concede otro ni hace desaparecer el pendiente.
 - Formatos futuros de poderes, campos desconocidos y regalos no reconocidos se preservan. No cambia ningún flujo de generación antiguo.
 
-Auditoría aprobada; 95 suites Node y 7 recorridos afectados aprobados. Dos programas de audio afectados: 32 renders de culturas, poderes, quietud y aperturas; picos finitos menores de 0,96 y cero muestras calientes. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f5-validation.json).
+Auditoría aprobada; 95 suites Node y 7 recorridos afectados aprobados. Dos programas de audio afectados: 32 renders de culturas, poderes, quietud y aperturas; picos finitos menores de 0,96 y cero muestras calientes. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](../../scripts/pulido-f5-validation.json).
 
 ## Entregas anteriores
 
@@ -809,7 +809,7 @@ Rama `feat/pulido-f4-bitacora`, desde `e5d2da5`. Continuar [PLAN_PULIDO_FINAL.md
 - Siete categorías de logros muestran el progreso antes de desplegar los registros completos. Ninguna recompensa ni fecha desaparece.
 - Se conserva el desplazamiento y las secciones abiertas al cambiar de pestaña y volver. Colección mantiene búsqueda, filtros y paginación.
 
-Auditoría aprobada; 94 suites Node y 11 recorridos afectados aprobados. Sin cambios de DSP; interfaz silenciosa comprobada. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f4-validation.json).
+Auditoría aprobada; 94 suites Node y 11 recorridos afectados aprobados. Sin cambios de DSP; interfaz silenciosa comprobada. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](../../scripts/pulido-f4-validation.json).
 
 ## Entregas anteriores
 
@@ -825,7 +825,7 @@ Rama `feat/pulido-f3-viajes`, desde `2e45cc0`. Continuar [PLAN_PULIDO_FINAL.md](
 - Corregidos IDs coincidentes entre mundos y normalización donde un duplicado inválido ocultaba un destino válido. Ningún RNG histórico cambia.
 - Encabezado muestra el nombre; gravedad sigue disponible en detalles. Todos los controles permanecen silenciosos.
 
-Auditoría aprobada; 94 suites Node y 7 recorridos afectados aprobados. Sin cambios de DSP; interfaz silenciosa comprobada. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f3-validation.json).
+Auditoría aprobada; 94 suites Node y 7 recorridos afectados aprobados. Sin cambios de DSP; interfaz silenciosa comprobada. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](../../scripts/pulido-f3-validation.json).
 
 ## Entregas anteriores
 
@@ -843,7 +843,7 @@ Rama `feat/pulido-f2-primer-nivel`, desde `25732e6`. Continuar [PLAN_PULIDO_FINA
 - Bienvenida más corta, objetivos táctiles de 44 px, foco restaurado al omitir y Geist Mono. No se añadió sonido a ningún control ni se modificó la síntesis.
 - Versión 2.0.0-rc.2 y shell offline con los dos módulos nuevos una sola vez.
 
-Auditoría aprobada; 94 suites Node y 7 recorridos afectados aprobados. Sin cambios de DSP; interfaz silenciosa comprobada. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](scripts/pulido-f2-validation.json).
+Auditoría aprobada; 94 suites Node y 7 recorridos afectados aprobados. Sin cambios de DSP; interfaz silenciosa comprobada. Suite completa del conjunto final y aceptación física pendientes. [Evidencia](../../scripts/pulido-f2-validation.json).
 
 ## Entregas anteriores
 
@@ -862,7 +862,7 @@ Rama `feat/cierre-f10-lanzamiento`, basada en F9. F1–F10 están reunidas en es
 - Auditoría documentada y plan de ocho bloques; F10 es el primero. Tutorial, viajes, Bitácora, tarjetas, cincuenta personajes, integración musical y cierre continúan en ramas hijas.
 - Versión candidata local sin fecha inventada de deploy. Main no se modifica; Jay crea PR y merge.
 
-Auditoría limpia; 93 suites Node y 69 recorridos completos aprobados. 445 renders en 21 programas de audio completos, con pico máximo 0,945447 y cero fracción caliente. Las pruebas no sustituyen escucha artística ni teléfonos físicos. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f10-validation.json).
+Auditoría limpia; 93 suites Node y 69 recorridos completos aprobados. 445 renders en 21 programas de audio completos, con pico máximo 0,945447 y cero fracción caliente. Las pruebas no sustituyen escucha artística ni teléfonos físicos. CI completo y aceptación en teléfono físico pendientes. [Evidencia](../../scripts/cierre-f10-validation.json).
 
 Consulta [auditoría](AUDITORIA_CIERRE_2.0.md), [cierre técnico](CIERRE_2.0.md) y [pulido pendiente autorizado](PLAN_PULIDO_FINAL.md). A12, A14 y A15 siguen asignados a sus ramas hijas. Para integrar la base reparada, el PR de F10 incluye sus padres; no volver a abrir los trabajos locales antiguos.
 
@@ -883,7 +883,7 @@ Rama `feat/cierre-f9-juego`, basada en F8. Jay autorizó continuar las diez fase
 - Geist Mono también en los dibujos recuperados. Frases de historia breves ligadas a atención, creación, regreso y Jay. Se conserva el lenguaje negro, cubo blanco y oro ganado. No se añadió servidor ni cuentas.
 - La revisión visual corrigió transparencia heredada del plano y cabecera desactualizada. Una prueba sobre Canvas exige contraste visible y cabecera Casa; vertical y horizontal aprobados tras el ajuste.
 
-Auditoría limpia; 92 suites Node y 10 recorridos afectados aprobados. 31 renders: cinco timbres del pulso sobre cinco estilos y cuarenta objetos de casa/cuatro acústicas en seis mezclas. Evidencia en cierre-f9-wardrobe-audio-validation.json y cierre-f9-house-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f9-validation.json).
+Auditoría limpia; 92 suites Node y 10 recorridos afectados aprobados. 31 renders: cinco timbres del pulso sobre cinco estilos y cuarenta objetos de casa/cuatro acústicas en seis mezclas. Evidencia en cierre-f9-wardrobe-audio-validation.json y cierre-f9-house-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](../../scripts/cierre-f9-validation.json).
 
 ## Entregas anteriores
 
@@ -900,7 +900,7 @@ Rama `feat/cierre-f8-memoria`, basada en F7. Jay autorizó continuar las diez fa
 - Paseo automático ofrece Afinidad y Contraste entre favoritos cercanos del mismo mundo y capa, dentro de tres regiones. Sin favoritos compatibles conserva el paseo libre; no inventa destinos conocidos ni atraviesa guardados.
 - La Bitácora muestra instrumentos editados y vínculos. Cancelar una edición no confirma cambios. Guardados, premios y mapas anteriores conservados.
 
-Auditoría limpia; 88 suites Node y 5 recorridos afectados aprobados. Seis renders comparan runtimes vacíos/restaurados en minimal, deep y ambient; comprueban rutas reales de señal/CV, sin cambios del DSP. Evidencia en cierre-f8-memory-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f8-validation.json).
+Auditoría limpia; 88 suites Node y 5 recorridos afectados aprobados. Seis renders comparan runtimes vacíos/restaurados en minimal, deep y ambient; comprueban rutas reales de señal/CV, sin cambios del DSP. Evidencia en cierre-f8-memory-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](../../scripts/cierre-f8-validation.json).
 
 ## Entregas anteriores
 
@@ -918,7 +918,7 @@ Rama `feat/cierre-f7-hallazgos`, basada en F6. Jay autorizó continuar las diez 
 - Pistas aún no ganadas usan cian; oro para recuerdos recuperados. Celebración de reliquia contenida. Estudios originales inspirados en tradiciones: no se atribuyen interpretaciones auténticas ni se usan grabaciones ajenas.
 - Corrección de superposición real: en laboratorio horizontal, el aviso de hallazgo queda al lado opuesto de Saltar. Cada render usa almacenamiento efímero propio; la prueba exige cuatro notas reales por llamada y restaura el almacenamiento original.
 
-Auditoría limpia; 87 suites Node y 5 recorridos afectados aprobados. 12 renders: ocho llamadas culturales, tres recuerdos utilizables y una reliquia recuperada; evidencia en cierre-f7-heritage-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f7-validation.json).
+Auditoría limpia; 87 suites Node y 5 recorridos afectados aprobados. 12 renders: ocho llamadas culturales, tres recuerdos utilizables y una reliquia recuperada; evidencia en cierre-f7-heritage-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](../../scripts/cierre-f7-validation.json).
 
 ## Entregas anteriores
 
@@ -934,7 +934,7 @@ Rama `feat/cierre-f6-interacciones`, basada en F5. Jay autorizó continuar las d
 - Señales sincronizadas con el inicio del sonido, trazos locales más claros y una sola etiqueta de rol cercana. Respeta movimiento reducido, silencio y modales; tocar interfaz sigue sin generar música.
 - Prueba aislada de dos señales comprueba que baja el acompañamiento, recupera y mantiene intacta la voz del jugador; recorridos móviles verifican los nueve materiales reales y la persistencia de descubrimientos. Sin migraciones destructivas.
 
-Auditoría limpia; 86 suites Node y 6 recorridos afectados aprobados. 11 renders densos de materiales/fenómeno/tormenta y una medición aislada de contraste; resultados en cierre-f6-foreground-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f6-validation.json).
+Auditoría limpia; 86 suites Node y 6 recorridos afectados aprobados. 11 renders densos de materiales/fenómeno/tormenta y una medición aislada de contraste; resultados en cierre-f6-foreground-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](../../scripts/cierre-f6-validation.json).
 
 ## Entregas anteriores
 
@@ -951,7 +951,7 @@ Rama `feat/cierre-f5-composicion`, basada en F4. Jay autorizó continuar las die
 - Bitácora registra cruces al sonar realmente. La llegada los identifica sin añadir controles. Guardados y ADN histórico de colocación conservados.
 - Pruebas de vidrios y voces comparan la ruta completa de registro/caracter/cruce; conservan comprobaciones de instrumentos, roles y notas emitidas. Los 16 cruces evolucionan en 128 compases sin alterar la receta.
 
-Auditoría limpia; 85 suites Node y 6 recorridos afectados aprobados. 16 renders de regiones reales, densos/alternando suave y 44,1/48 kHz; valores exactos en cierre-f5-hybrid-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f5-validation.json).
+Auditoría limpia; 85 suites Node y 6 recorridos afectados aprobados. 16 renders de regiones reales, densos/alternando suave y 44,1/48 kHz; valores exactos en cierre-f5-hybrid-audio-validation.json. CI completo y aceptación en teléfono físico pendientes. [Evidencia](../../scripts/cierre-f5-validation.json).
 
 ## Entregas anteriores
 
@@ -967,7 +967,7 @@ Rama `feat/cierre-f4-sintesis`, basada en F3. Jay autorizó continuar las diez f
 - Paletas, familias y Bitácora incluyen los instrumentos; laboratorio suma siete demos orgánicas: 146 entradas/19 grupos, 15 instrumentos de Síntesis y 16 filtros. Geist Mono, UI silenciosa y controles anteriores conservados.
 - Pruebas de nodos incorporan las APIs nuevas en sus dobles. La comprobación de instrumentos antiguos conserva todas sus aserciones y busca voces reales en más recetas; no presupone el reparto anterior en ocho fixtures. SW añade los dos módulos una vez. La expansión de composición corresponde a F5.
 
-Auditoría limpia; 84 suites Node y 5 recorridos afectados aprobados. 18 renders de los siete motores y cables conectados/desconectados aprobados; pico 0.907871, cero muestras calientes, 44,1/48 kHz. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f4-validation.json).
+Auditoría limpia; 84 suites Node y 5 recorridos afectados aprobados. 18 renders de los siete motores y cables conectados/desconectados aprobados; pico 0.907871, cero muestras calientes, 44,1/48 kHz. CI completo y aceptación en teléfono físico pendientes. [Evidencia](../../scripts/cierre-f4-validation.json).
 
 ## Entregas anteriores
 
@@ -982,7 +982,7 @@ Rama `feat/cierre-f3-ecosistemas`, basada en F2. Jay autorizó continuar las die
 - `living-ecology.js`: reloj analítico de lugares lejanos y actualización ecológica cercana cada 250 ms. Índice espacial y hasta doce vecinos por relación; reloj y guardado se reinician correctamente al cambiar ámbito. No es migración de poblaciones entre continentes ni simulación mundial continua.
 - Anatomías de F2 expresan la apertura. Hábitats, comportamiento y radio musical siguen compartiendo el paisaje F1. SW incorpora el módulo una sola vez; progreso y coordenadas se conservan.
 
-Auditoría limpia; 83 suites Node y 5 recorridos afectados aprobados. 34 renders: 28 respuestas de linajes y seis con reloj/decisiones ecológicas activos, mezclas densas y 44,1/48 kHz aprobados; ver evidencia de audio de esta fase. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f3-validation.json).
+Auditoría limpia; 83 suites Node y 5 recorridos afectados aprobados. 34 renders: 28 respuestas de linajes y seis con reloj/decisiones ecológicas activos, mezclas densas y 44,1/48 kHz aprobados; ver evidencia de audio de esta fase. CI completo y aceptación en teléfono físico pendientes. [Evidencia](../../scripts/cierre-f3-validation.json).
 
 ## Entregas anteriores
 
@@ -998,7 +998,7 @@ Rama `feat/cierre-f2-especies`, basada en F1. Jay autorizó continuar las diez f
 - La prueba de tarjetas compara rareza con el catálogo vigente: las probabilidades territoriales sin medir siguen siendo nulas, no se reemplazan por el antiguo 1/256. SVG/PNG y contacto musical reales comprobados.
 - SW actualizado con dos módulos una sola vez. La siguiente fase es ecología, no síntesis.
 
-Auditoría limpia; 82 suites Node y 5 recorridos afectados aprobados. Sin cambios de síntesis/audio en esta fase. CI completo y aceptación en teléfono físico pendientes. [Evidencia](scripts/cierre-f2-validation.json).
+Auditoría limpia; 82 suites Node y 5 recorridos afectados aprobados. Sin cambios de síntesis/audio en esta fase. CI completo y aceptación en teléfono físico pendientes. [Evidencia](../../scripts/cierre-f2-validation.json).
 
 ## Entregas anteriores
 
@@ -1016,7 +1016,7 @@ Lo que sigue conserva sus alcances históricos; prevalece el encabezado actual.
 - Laboratorio: ocho destinos reales, habitantes naturales; 139 entradas/19 grupos. Notas/IDs antiguos conservados. Las entradas de paisaje no fuerzan instrumento ni figura.
 - SW nuevo, dos módulos añadidos una vez. Pruebas Node, navegador de ocho lugares/regreso, audio de paisajes/criaturas. CI completo suma el programa de audio (13 programas, tres grupos). `tests/audio_mix.mjs` acepta destino real sin sustituir su ADN; modo anterior conservado.
 
-Auditoría limpia, 81 suites Node, 14 recorridos afectados y 48 renders en dos programas, pico 0.909774/cero muestras calientes. [Evidencia F1](scripts/f1-validation.json). CI completo sigue requerido antes de merge. Escucha artística y rendimiento físico pendientes. Próxima fase: F2 formas; F3 ecología; F4 síntesis. Casa desde arriba ya decidida, recuperar en F9. No iniciar otra fase sin instrucción de Jay.
+Auditoría limpia, 81 suites Node, 14 recorridos afectados y 48 renders en dos programas, pico 0.909774/cero muestras calientes. [Evidencia F1](../../scripts/f1-validation.json). CI completo sigue requerido antes de merge. Escucha artística y rendimiento físico pendientes. Próxima fase: F2 formas; F3 ecología; F4 síntesis. Casa desde arriba ya decidida, recuperar en F9. No iniciar otra fase sin instrucción de Jay.
 
 ## Entrega anterior · M1 integrada
 
@@ -1033,7 +1033,7 @@ Lo siguiente conserva el alcance y evidencias anteriores. Prevalecen la rama y o
 - `lab-catalog.js`, `lab.js`: 131 entradas y 18 grupos, las 91 antiguas más 16 recetas, ocho instrumentos y 16 filtros. Las recetas localizan regiones reales compatibles; las demos usan un objeto orgánico pequeño tocado con el cubo, no teclas ni audio de botones. IDs/notas anteriores conservados.
 - `rare-card-model.js`: frecuencia de flora/fauna nueva sin estimar tras cambiar la distribución; no presenta 1/256 como frecuencia observada. Probabilidades históricas guardadas se conservan, y reglas de ballenas/estructuras no cambian.
 - Geist Mono es la única familia activa en CSS, Canvas y exportaciones, nueve pesos 100–900. Silkscreen y JetBrains quedan con licencias/hashes históricos fuera de CSS y precache. `sw.js` cambia su caché y suma exactamente una vez los cinco módulos nuevos.
-- Pruebas nuevas de recetas, mentes, poblaciones, viaje y filtros; navegador comprueba destinos, contacto, retorno/recarga y laboratorio. Audio añade `music_identity_mix.py` y `synth_bank_mix.py` al runner completo. CI reparte sus doce programas de audio entre tres grupos, sin omitir ninguno; `browser-audio` mantiene el nombre requerido y exige navegador y todos los grupos en verde. El comando local sin `WHITEDOT_AUDIO_SHARD` conserva la ejecución completa secuencial. Auditoría estática, lógica, recorridos afectados y renders ejecutados están en [scripts/m1-validation.json](scripts/m1-validation.json). `tests/audio_mix.mjs` difiere desconexiones solicitadas durante programación virtual hasta que el contexto comienza a renderizar; las notas anteriores no pierden filtros por el reloj simulado. No aplicar este override al juego, que utiliza el reloj real. No confundir comprobación automatizada con escucha artística o rendimiento físico.
+- Pruebas nuevas de recetas, mentes, poblaciones, viaje y filtros; navegador comprueba destinos, contacto, retorno/recarga y laboratorio. Audio añade `music_identity_mix.py` y `synth_bank_mix.py` al runner completo. CI reparte sus doce programas de audio entre tres grupos, sin omitir ninguno; `browser-audio` mantiene el nombre requerido y exige navegador y todos los grupos en verde. El comando local sin `WHITEDOT_AUDIO_SHARD` conserva la ejecución completa secuencial. Auditoría estática, lógica, recorridos afectados y renders ejecutados están en [scripts/m1-validation.json](../../scripts/m1-validation.json). `tests/audio_mix.mjs` difiere desconexiones solicitadas durante programación virtual hasta que el contexto comienza a renderizar; las notas anteriores no pierden filtros por el reloj simulado. No aplicar este override al juego, que utiliza el reloj real. No confundir comprobación automatizada con escucha artística o rendimiento físico.
 
 Siguiente fase musical: M2 en [PLAN_MEZCLAS_MUSICALES.md](PLAN_MEZCLAS_MUSICALES.md); todavía pendiente. M1 da perfiles a los 28 linajes nuevos, no certifica personalidad única de las 109 familias. La cobertura global y la percepción son criterios de M5. Las fases locales 3→7→6→4→5 de PLAN_2.0 conservan sus trabajos pendientes; no se incluyen en esta rama.
 
@@ -1041,21 +1041,21 @@ Siguiente fase musical: M2 en [PLAN_MEZCLAS_MUSICALES.md](PLAN_MEZCLAS_MUSICALES
 
 Lo que sigue describe la entrega alpha anterior; para rama, fuente, conteos y pruebas actuales prevalece el encabezado y CAMBIOS.
 
-> **Reglas y pendientes actualizados:** Jay aprobó pruebas proporcionales: auditoría/lógica completas y navegador/audio afectados antes de push de rama; suites completas sobre el conjunto antes de publicar main y CI verde antes de merge. [AGENTS.md](AGENTS.md) prevalece sobre los comandos históricos. Geist Mono sustituye a JetBrains en el juego; Silkscreen conserva la frase principal. Colores al tocar e instrumentos se agrupan en `feat/geist-and-phase-plan`. [PLAN_2.0.md](PLAN_2.0.md) organiza pendientes; [PLAN_MEZCLAS_MUSICALES.md](PLAN_MEZCLAS_MUSICALES.md) es SOLO DISEÑO: Jay pidió no implementar los híbridos todavía. Rebasar las fases locales pendientes sobre la base vigente antes de publicarlas, conservando progreso y decisiones.
+> **Reglas y pendientes actualizados:** Jay aprobó pruebas proporcionales: auditoría/lógica completas y navegador/audio afectados antes de push de rama; suites completas sobre el conjunto antes de publicar main y CI verde antes de merge. [AGENTS.md](../../AGENTS.md) prevalece sobre los comandos históricos. Geist Mono sustituye a JetBrains en el juego; Silkscreen conserva la frase principal. Colores al tocar e instrumentos se agrupan en `feat/geist-and-phase-plan`. [PLAN_2.0.md](PLAN_2.0.md) organiza pendientes; [PLAN_MEZCLAS_MUSICALES.md](PLAN_MEZCLAS_MUSICALES.md) es SOLO DISEÑO: Jay pidió no implementar los híbridos todavía. Rebasar las fases locales pendientes sobre la base vigente antes de publicarlas, conservando progreso y decisiones.
 
-> **Integración excepcional actual:** por instrucción explícita de Jay se reúnen en `main` las fases 0, 1 y 2 y `fix/vercel-static-output`. Validación conjunta aprobada: auditoría, 75 suites Node, 52 recorridos más offline y 259 renders de audio. [Evidencia](scripts/main-integration-validation.json). Publicación de Vercel todavía por confirmar. Las fases posteriores siguen fuera de main. La siguiente entrega usa rama, commit y push; Jay crea PR y merge. Los estados históricos de abajo no cambian esta instrucción.
+> **Integración excepcional actual:** por instrucción explícita de Jay se reúnen en `main` las fases 0, 1 y 2 y `fix/vercel-static-output`. Validación conjunta aprobada: auditoría, 75 suites Node, 52 recorridos más offline y 259 renders de audio. [Evidencia](../../scripts/main-integration-validation.json). Publicación de Vercel todavía por confirmar. Las fases posteriores siguen fuera de main. La siguiente entrega usa rama, commit y push; Jay crea PR y merge. Los estados históricos de abajo no cambian esta instrucción.
 
-> **Continuidad 2.0 · fase 2:** `v2/f2-celebracion` depende de fase 1 `88aeab1`. [src/celebration-model.js](src/celebration-model.js) gestiona cola/tiempos y fragmentos; [src/celebration.js](src/celebration.js) coordina tarjetas, pausas, apertura y exportación 4:5; [src/celebration-audio.js](src/celebration-audio.js) ejecuta el remate bajo/medio nativo a tempo. `cajas.js` conserva beneficios temporales y expone segundos restantes; `rare-cards.js` evita duplicar el aviso de caja y explica efecto/duración en el libro. `rewardEarned` es visual: ningún botón activa música. El programa [tests/celebration_mix.py](tests/celebration_mix.py) mide el evento real junto a mezclas densas y está incluido en `test:audio`.
+> **Continuidad 2.0 · fase 2:** `v2/f2-celebracion` depende de fase 1 `88aeab1`. [src/celebration-model.js](../../src/celebration-model.js) gestiona cola/tiempos y fragmentos; [src/celebration.js](../../src/celebration.js) coordina tarjetas, pausas, apertura y exportación 4:5; [src/celebration-audio.js](../../src/celebration-audio.js) ejecuta el remate bajo/medio nativo a tempo. `cajas.js` conserva beneficios temporales y expone segundos restantes; `rare-cards.js` evita duplicar el aviso de caja y explica efecto/duración en el libro. `rewardEarned` es visual: ningún botón activa música. El programa [tests/celebration_mix.py](../../tests/celebration_mix.py) mide el evento real junto a mezclas densas y está incluido en `test:audio`.
 
-> **Continuidad 2.0 · fase 1:** `v2/f1-universo-visual` depende de fase 0 `f8af7c4`. [src/world-visibility-model.js](src/world-visibility-model.js) contiene curvas, perfil de niebla/luz, precarga, hash visual independiente y planos. [src/world-visibility.js](src/world-visibility.js) integra niebla, suelo, huellas y adaptación de detalle. `render.js` separa radio visual/escucha; `living.js` precarga y mezcla figura/punto; `vida.js` y `visual.js` atenúan antes del corte. La niebla cubre el paisaje antes de dibujar el cubo; los controles siguen silenciosos. Aceptación física de 60 FPS pendiente. Estado y pruebas en [CAMBIOS.md](CAMBIOS.md).
+> **Continuidad 2.0 · fase 1:** `v2/f1-universo-visual` depende de fase 0 `f8af7c4`. [src/world-visibility-model.js](../../src/world-visibility-model.js) contiene curvas, perfil de niebla/luz, precarga, hash visual independiente y planos. [src/world-visibility.js](../../src/world-visibility.js) integra niebla, suelo, huellas y adaptación de detalle. `render.js` separa radio visual/escucha; `living.js` precarga y mezcla figura/punto; `vida.js` y `visual.js` atenúan antes del corte. La niebla cubre el paisaje antes de dibujar el cubo; los controles siguen silenciosos. Aceptación física de 60 FPS pendiente. Estado y pruebas en [CAMBIOS.md](../../CAMBIOS.md).
 
-> **Continuidad 2.0:** fase 0 en `v2/f0-coleccion`, desde `main c8d286e`. Reglas y estado vigente en [PLAN_2.0.md](PLAN_2.0.md) y [CAMBIOS.md](CAMBIOS.md). Las referencias alpha que siguen son históricas.
+> **Continuidad 2.0:** fase 0 en `v2/f0-coleccion`, desde `main c8d286e`. Reglas y estado vigente en [PLAN_2.0.md](PLAN_2.0.md) y [CAMBIOS.md](../../CAMBIOS.md). Las referencias alpha que siguen son históricas.
 >
-> **Colección:** [src/rewards-model.js](src/rewards-model.js) define catálogo, rarezas, migración y concesión idempotente. [src/rewards.js](src/rewards.js) integra `awardReward`, `recordRewardSource`, `rewardPieces`, `ownsReward` y resumen de Bitácora. `progress.js` reconcilia al cargar/cambiar ámbito/guardar; el guardado conserva fechas y piezas futuras. Los 13 cosméticos salen de `cube-model.js`; `data.js` comparte sus colores. [scripts/rewards-audit.mjs](scripts/rewards-audit.mjs) estima ritmo bajo supuestos explícitos, sin telemetría ni promesa de rareza.
+> **Colección:** [src/rewards-model.js](../../src/rewards-model.js) define catálogo, rarezas, migración y concesión idempotente. [src/rewards.js](../../src/rewards.js) integra `awardReward`, `recordRewardSource`, `rewardPieces`, `ownsReward` y resumen de Bitácora. `progress.js` reconcilia al cargar/cambiar ámbito/guardar; el guardado conserva fechas y piezas futuras. Los 13 cosméticos salen de `cube-model.js`; `data.js` comparte sus colores. [scripts/rewards-audit.mjs](../../scripts/rewards-audit.mjs) estima ritmo bajo supuestos explícitos, sin telemetría ni promesa de rareza.
 
-> **Trabajo actual: [PLAN_2.0.md](PLAN_2.0.md)** (fases de la 2.0) y reglas de agentes en [AGENTS.md](AGENTS.md).
+> **Trabajo actual: [PLAN_2.0.md](PLAN_2.0.md)** (fases de la 2.0) y reglas de agentes en [AGENTS.md](../../AGENTS.md).
 
-> **Actualización 14 oct · cierre 1.1.0 con estilo J.** Las ramas `cierre/f1`→`f6` (ver [CAMBIOS.md](CAMBIOS.md)) parten de `main` 959e95e, que ya integra las diez fases. Añaden la capa `styles/estilo-j.css`, textos J, licencia, Open Graph, sets 4:5, sello de deploy en Vercel, ocultan "Cuenta y duetos" sin servidor y estabilizan tres pruebas de navegador. Producción: https://whitedot-inky.vercel.app (Vercel estático; el servidor opcional no corre ahí). Lo que sigue es la [aceptación](ACEPTACION_V1.md). El resto de este documento describe el estado alpha.10.
+> **Actualización 14 oct · cierre 1.1.0 con estilo J.** Las ramas `cierre/f1`→`f6` (ver [CAMBIOS.md](../../CAMBIOS.md)) parten de `main` 959e95e, que ya integra las diez fases. Añaden la capa `styles/estilo-j.css`, textos J, licencia, Open Graph, sets 4:5, sello de deploy en Vercel, ocultan "Cuenta y duetos" sin servidor y estabilizan tres pruebas de navegador. Producción: https://whitedot-inky.vercel.app (Vercel estático; el servidor opcional no corre ahí). Lo que sigue es la [aceptación](ACEPTACION_V1.md). El resto de este documento describe el estado alpha.10.
 
 # Handoff para Claude · Universo vivo
 
@@ -1070,7 +1070,7 @@ Estado del juego: **1.1.0-alpha.10**. Esta actualización modifica documentació
 
 Si main sigue en esa revisión, partir de esta rama de documentación para conservar todo lo nuevo. No partir de un main antiguo y recrear funcionalidades ya implementadas. No resetear cambios de Jay ni reescribir las ramas publicadas.
 
-[RAMAS.md](docs/historial/RAMAS.md) contiene el orden. Merge normal que conserve los commits: 01 → 10 → este handoff. Evitar squash/rebase de los padres mientras existan ramas dependientes. Las ramas archivadas de entregas anteriores no se vuelven a integrar. El plan `docs/universe-150-phases` ya está incluido en la fase 01.
+[RAMAS.md](RAMAS.md) contiene el orden. Merge normal que conserve los commits: 01 → 10 → este handoff. Evitar squash/rebase de los padres mientras existan ramas dependientes. Las ramas archivadas de entregas anteriores no se vuelven a integrar. El plan `docs/universe-150-phases` ya está incluido en la fase 01.
 
 ## 2. Qué se entregó realmente
 
@@ -1108,19 +1108,19 @@ Aplicación estática de módulos JS nativos, Canvas y Web Audio. No requiere in
 
 | Archivos | Responsabilidad y precaución |
 |---|---|
-| [src/main.js](src/main.js) | Composición de sistemas y runtime. Inicialización única; getters no redefinibles. No exponer runtime en producción; las pruebas lo instrumentan al servir el módulo |
-| [src/world-identity.js](src/world-identity.js), [src/seeds.js](src/seeds.js) | Identidad, versiones, perfiles, separación de partidas y retorno WD1. Guardar antes de salir y preservar coordenadas/capa exactas |
-| [src/living-catalog.js](src/living-catalog.js), [src/living.js](src/living.js) | Catálogo/distribución y comportamiento integrado; semillas independientes `living:*:v1`, caché de 48 sectores, escucha y presupuesto ambiental |
-| [src/living-art.js](src/living-art.js), [src/living-portraits.js](src/living-portraits.js) | Glifos y retratos originales de los 28 linajes |
-| [src/living-synthesis.js](src/living-synthesis.js), [src/living-voicing.js](src/living-voicing.js), [src/instruments.js](src/instruments.js) | Timbres, articulaciones y acordes. Mantener niveles, registro y cachés acotados; no introducir notas fuera de la armonía por ratios mayores fijos |
-| [src/living-composition.js](src/living-composition.js), [src/radio.js](src/radio.js) | Capítulos, bancos y variación. En duetos, frase y armonía derivan del reloj de sala para admitir entrada tardía |
-| [src/living-behavior.js](src/living-behavior.js), [src/living-ecology.js](src/living-ecology.js), [src/living-terrain.js](src/living-terrain.js) | Movimiento, relaciones/ciclos y microhábitats. Movimiento nuevo local y acotado; no es simulación de poblaciones completa |
-| [src/living-buildings.js](src/living-buildings.js), [src/living-studies.js](src/living-studies.js) | Construcciones, gestos, recuerdos y estudios culturales/históricos originales |
-| [src/living-state.js](src/living-state.js) | Normalizar importaciones/guardados y reiniciar extensiones al cambiar ámbito; no filtrar progreso entre semillas |
-| [src/power-clock.js](src/power-clock.js), [src/cajas.js](src/cajas.js), [src/voice-guide.js](src/voice-guide.js) | Tiempo activo, beneficios y Voz; pausar con herramientas, paneles, pestaña oculta y fuera del mundo |
-| [src/living-discoveries.js](src/living-discoveries.js), [src/rare-cards.js](src/rare-cards.js), [src/favorites.js](src/favorites.js) | Registro real, contexto, tarjetas, rutas y favoritos |
-| [src/connection.js](src/connection.js), [src/duet-model.js](src/duet-model.js), [server/app.py](server/app.py) | Cliente/API opcionales, sincronía, reparto de voces, cuentas y copias |
-| [styles/interface.css](styles/interface.css), [src/accessibility.js](src/accessibility.js), [sw.js](sw.js) | Interfaz común, foco/cierres y shell offline. Todo módulo nuevo debe precachearse una sola vez |
+| [src/main.js](../../src/main.js) | Composición de sistemas y runtime. Inicialización única; getters no redefinibles. No exponer runtime en producción; las pruebas lo instrumentan al servir el módulo |
+| [src/world-identity.js](../../src/world-identity.js), [src/seeds.js](../../src/seeds.js) | Identidad, versiones, perfiles, separación de partidas y retorno WD1. Guardar antes de salir y preservar coordenadas/capa exactas |
+| [src/living-catalog.js](../../src/living-catalog.js), [src/living.js](../../src/living.js) | Catálogo/distribución y comportamiento integrado; semillas independientes `living:*:v1`, caché de 48 sectores, escucha y presupuesto ambiental |
+| [src/living-art.js](../../src/living-art.js), [src/living-portraits.js](../../src/living-portraits.js) | Glifos y retratos originales de los 28 linajes |
+| [src/living-synthesis.js](../../src/living-synthesis.js), [src/living-voicing.js](../../src/living-voicing.js), [src/instruments.js](../../src/instruments.js) | Timbres, articulaciones y acordes. Mantener niveles, registro y cachés acotados; no introducir notas fuera de la armonía por ratios mayores fijos |
+| [src/living-composition.js](../../src/living-composition.js), [src/radio.js](../../src/radio.js) | Capítulos, bancos y variación. En duetos, frase y armonía derivan del reloj de sala para admitir entrada tardía |
+| [src/living-behavior.js](../../src/living-behavior.js), [src/living-ecology.js](../../src/living-ecology.js), [src/living-terrain.js](../../src/living-terrain.js) | Movimiento, relaciones/ciclos y microhábitats. Movimiento nuevo local y acotado; no es simulación de poblaciones completa |
+| [src/living-buildings.js](../../src/living-buildings.js), [src/living-studies.js](../../src/living-studies.js) | Construcciones, gestos, recuerdos y estudios culturales/históricos originales |
+| [src/living-state.js](../../src/living-state.js) | Normalizar importaciones/guardados y reiniciar extensiones al cambiar ámbito; no filtrar progreso entre semillas |
+| [src/power-clock.js](../../src/power-clock.js), [src/cajas.js](../../src/cajas.js), [src/voice-guide.js](../../src/voice-guide.js) | Tiempo activo, beneficios y Voz; pausar con herramientas, paneles, pestaña oculta y fuera del mundo |
+| [src/living-discoveries.js](../../src/living-discoveries.js), [src/rare-cards.js](../../src/rare-cards.js), [src/favorites.js](../../src/favorites.js) | Registro real, contexto, tarjetas, rutas y favoritos |
+| [src/connection.js](../../src/connection.js), [src/duet-model.js](../../src/duet-model.js), [server/app.py](../../server/app.py) | Cliente/API opcionales, sincronía, reparto de voces, cuentas y copias |
+| [styles/interface.css](../../styles/interface.css), [src/accessibility.js](../../src/accessibility.js), [sw.js](../../sw.js) | Interfaz común, foco/cierres y shell offline. Todo módulo nuevo debe precachearse una sola vez |
 
 No consumir RNG antiguo para añadir contenido: cambia posiciones existentes. Versionar los flujos de generación cuando corresponda. Mantener el control de audio también en callbacks programados, para que abrir UI no deje disparar una nota pendiente. El shell offline tuvo un fallo por un asset duplicado: ya corregido y auditado; no duplicar rutas al ampliar el precache.
 
@@ -1138,11 +1138,11 @@ Los tamaños son lados de **región**, no el borde total del mapa:
 
 Tres capas actuales: superficie, bajo y cielo. Direcciones de magnitud menor de 10^12 por eje. Semilla + versiones de generador/catálogo/layout + tamaño + capa + coordenadas permiten guardar y volver con WD1; los favoritos ya permiten abrir lugares de otra semilla. Volver al punto no garantiza que un animal móvil o evento temporal siga allí.
 
-[La muestra registrada](scripts/living-universe-validation.json) cubre 10.000 regiones en 20 semillas: 10.000 recetas estructurales distintas; 6.327 regiones terrestres con 6.327 firmas musicales distintas; aparecen los 52 géneros, 11 biomas y 28 linajes. **No es un conteo total de mundos ni prueba de 10.000 canciones perceptiblemente diferentes.** No extrapolar a millones ni multiplicar variables correlacionadas. La variedad que importa todavía debe comprobarse escuchando y jugando.
+[La muestra registrada](../../scripts/living-universe-validation.json) cubre 10.000 regiones en 20 semillas: 10.000 recetas estructurales distintas; 6.327 regiones terrestres con 6.327 firmas musicales distintas; aparecen los 52 géneros, 11 biomas y 28 linajes. **No es un conteo total de mundos ni prueba de 10.000 canciones perceptiblemente diferentes.** No extrapolar a millones ni multiplicar variables correlacionadas. La variedad que importa todavía debe comprobarse escuchando y jugando.
 
 ## 6. Pruebas y cómo reproducirlas
 
-La entrega de código dejó **71 suites Node, 49 recorridos de navegador más offline y 253 renders de audio en 9 programas** aprobados. Audio a 44,1/48 kHz, pico máximo observado 0,9576108456 y cero muestras calientes. HTTP/SQLite y duetos entre dos navegadores también comprobados. [Evidencia consolidada](scripts/universe-phase-validation.json), [audio de los linajes](scripts/living-audio-validation.json).
+La entrega de código dejó **71 suites Node, 49 recorridos de navegador más offline y 253 renders de audio en 9 programas** aprobados. Audio a 44,1/48 kHz, pico máximo observado 0,9576108456 y cero muestras calientes. HTTP/SQLite y duetos entre dos navegadores también comprobados. [Evidencia consolidada](../../scripts/universe-phase-validation.json), [audio de los linajes](../../scripts/living-audio-validation.json).
 
 Desde la raíz:
 
@@ -1178,20 +1178,20 @@ El detalle de los 40 parciales está en la matriz; esta priorización agrupa tra
 python3 server/app.py --host 127.0.0.1 --port 8080
 ```
 
-Servidor opcional Python estándar/SQLite, mismo origen. Consultar [SERVIDOR_Y_DUETOS.md](SERVIDOR_Y_DUETOS.md). Progreso local/offline sigue disponible sin cuentas. SQLite en `server/data` está excluido de Git; no subir bases, sesiones ni credenciales.
+Servidor opcional Python estándar/SQLite, mismo origen. Consultar [SERVIDOR_Y_DUETOS.md](../SERVIDOR_Y_DUETOS.md). Progreso local/offline sigue disponible sin cuentas. SQLite en `server/data` está excluido de Git; no subir bases, sesiones ni credenciales.
 
 Cuentas con scrypt, sesiones HttpOnly/SameSite, origen/CSRF y límites. Copias con revisión y conflicto sin sobrescribir. Salas privadas de dos voces; audio sintetizado localmente, reloj/armonía compartidos, invitación, presencia y construcciones abiertas persistentes. Salas de hasta dos horas, presencia de 30 segundos, ámbito ±5.000 unidades. Salas en RAM de un proceso: un reinicio las corta; cuentas/copias/marcas quedan en SQLite.
 
 Faltan recuperación/borrado de cuentas, operación/respaldos/monitorización, revisión de abuso y escalado, dispositivos/redes reales y host público. No hay servidor público desplegado ni sesión de escucha física realizada. El borrador guardado de configuración del entorno Codex tampoco publica el juego.
 
-[src/release-info.js](src/release-info.js) conserva `deployedAt: null` y `revision: null`. Registrar revisión y hora real con [scripts/stamp-deploy.mjs](scripts/stamp-deploy.mjs) **sobre el artefacto publicado** cuando haya deploy. Un commit, una prueba o este handoff no generan una fecha de publicación.
+[src/release-info.js](../../src/release-info.js) conserva `deployedAt: null` y `revision: null`. Registrar revisión y hora real con [scripts/stamp-deploy.mjs](../../scripts/stamp-deploy.mjs) **sobre el artefacto publicado** cuando haya deploy. Un commit, una prueba o este handoff no generan una fecha de publicación.
 
 ## 9. Lectura recomendada y actualización al devolverlo
 
-1. Este handoff y [ESTADO_ACTUAL.md](docs/historial/ESTADO_ACTUAL.md).
-2. [PROBAR_UNIVERSO_VIVO.md](PROBAR_UNIVERSO_VIVO.md) y [ENTREGA_UNIVERSO_VIVO.md](docs/historial/ENTREGA_UNIVERSO_VIVO.md).
-3. [COBERTURA_150_UNIVERSO.md](COBERTURA_150_UNIVERSO.md), [PENDIENTES.md](docs/historial/PENDIENTES.md) y [SERVIDOR_Y_DUETOS.md](SERVIDOR_Y_DUETOS.md).
-4. [UNIVERSO_150_IDEAS_FASES.md](docs/historial/UNIVERSO_150_IDEAS_FASES.md) como visión de diseño; [CUBO_Y_EXPANSION.md](docs/historial/CUBO_Y_EXPANSION.md) como contexto heredado de Claude. Sus estados originales son históricos.
+1. Este handoff y [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md).
+2. [PROBAR_UNIVERSO_VIVO.md](PROBAR_UNIVERSO_VIVO.md) y [ENTREGA_UNIVERSO_VIVO.md](ENTREGA_UNIVERSO_VIVO.md).
+3. [COBERTURA_150_UNIVERSO.md](COBERTURA_150_UNIVERSO.md), [PENDIENTES.md](PENDIENTES.md) y [SERVIDOR_Y_DUETOS.md](../SERVIDOR_Y_DUETOS.md).
+4. [UNIVERSO_150_IDEAS_FASES.md](UNIVERSO_150_IDEAS_FASES.md) como visión de diseño; [CUBO_Y_EXPANSION.md](CUBO_Y_EXPANSION.md) como contexto heredado de Claude. Sus estados originales son históricos.
 
 Al terminar en Claude, actualizar estado, pendientes, matriz afectada, guía de prueba, entrega/ramas y handoff. Anotar rama/commit, comportamiento cambiado, migraciones, pruebas realmente ejecutadas y pendientes. Mantener evidencias históricas separadas de las nuevas; no declarar main actualizado ni un deploy sin comprobarlo.
 

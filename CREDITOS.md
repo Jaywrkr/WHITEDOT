@@ -14,10 +14,10 @@ Las tres bajo **SIL Open Font License 1.1**, conservada íntegramente junto a lo
 
 **Todos los derechos reservados.** El código, los gráficos, los textos y la música generada son de Jay; ver [LICENSE](LICENSE). La OFL solo aplica a las tipografías.
 
-El juego actual guarda la partida en el navegador y permite descargar respaldos/sets explícitamente. No incluye cuentas, micrófono ni backend de usuarios; eso requiere el alcance y las condiciones de la siguiente versión.
+El juego actual guarda la partida en el navegador y permite descargar respaldos/sets explícitamente. El cliente estático no incluye un servicio de cuentas desplegado ni usa micrófono. Existe un [servidor opcional de cuentas y duetos](docs/SERVIDOR_Y_DUETOS.md), con sus propios límites de operación.
 
 Los siete motores avanzados, tablas, granos y modelos de cuerda/membrana son síntesis original. No incluyen presets de Arturia ni nuevas grabaciones externas. Las referencias culturales describen inspiración, no autoría ni interpretación auténtica de una tradición.
 
 ## Referencias visuales de Jay
 
-Cuatro motivos VJ locales se inspiran en documentos y previews de [Jaywrkr/TDAI2026](https://github.com/Jaywrkr/TDAI2026). Son dibujos Canvas originales; no incluyen proyectos ni assets externos. [Revisión y procedencia](REFERENCIAS_VJ.md), con los tutoriales citados por el repositorio de referencia.
+Cuatro motivos VJ locales se inspiran en documentos y previews de [Jaywrkr/TDAI2026](https://github.com/Jaywrkr/TDAI2026). Son dibujos Canvas originales; no incluyen proyectos ni assets externos. [Revisión y procedencia](docs/historial/REFERENCIAS_VJ.md), con los tutoriales citados por el repositorio de referencia.

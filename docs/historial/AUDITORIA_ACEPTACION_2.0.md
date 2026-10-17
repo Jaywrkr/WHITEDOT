@@ -15,7 +15,7 @@ No se certifican ausencia absoluta de errores, gusto musical ni rendimiento fís
 - Versión candidata: `2.0.0-rc.9`; fecha y revisión de publicación las sella Vercel al construir el artefacto.
 - Revisados: planes vigentes, matriz musical, código de recorrido/guardado/viajes/tarjetas, reloj de poderes, cola de celebraciones, contrato de almacenamiento, shell offline, metadatos y workflow.
 - Revisados también los informes completos F8 y su procedencia. La huella de producto previa coincide con `b308785d91c0fc9ac863df5db1ac95bfb15b15e3a725b9fe3176c4c07032e6f7`; las ramas documentales no cambiaron esa implementación.
-- La evidencia actual se conserva en [auditoria-cierre-rc9-validation.json](scripts/auditoria-cierre-rc9-validation.json). Los resultados definitivos se resumen en su sección de verificación.
+- La evidencia actual se conserva en [auditoria-cierre-rc9-validation.json](../../scripts/auditoria-cierre-rc9-validation.json). Los resultados definitivos se resumen en su sección de verificación.
 
 ## Verificación actual
 
@@ -53,7 +53,7 @@ La prueba falló primero en la implementación anterior: avanzaba el hecho `save
 
 ## Despliegue e integración observados
 
-Comprobados el 15 de octubre de 2026; [instantáneas remotas](scripts/auditoria-cierre-rc9-remote.json):
+Comprobados el 15 de octubre de 2026; [instantáneas remotas](../../scripts/auditoria-cierre-rc9-remote.json):
 
 1. Main cambió durante esta revisión por los merges de Jay. La última instantánea es `52fec80cfd9d0d8329d81ce876306b5505b77be6`: cierre F1–F10 y pulido F2 integrados; sus checks estaban en cola.
 2. Producción responde con JavaScript real: **2.0.0-rc.2**, revisión `52fec80`, sello `2026-10-15T12:58:34.000Z`. Antes se observó 1.1.0 mientras se integraban ramas. La candidata RC9 de esta auditoría no es todavía la versión pública. Fecha de instantánea: `2026-10-15T13:00:02.314297+00:00`.

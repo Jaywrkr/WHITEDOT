@@ -2,21 +2,21 @@
 
 > **Versión cerrada: 1.1.0** ([CIERRE_V1.md](CIERRE_V1.md)). Producción en Vercel. Entra aquí todo lo que surja de la [aceptación](ACEPTACION_V1.md) y no bloquee jugar, oír o guardar, más los 40 parciales y 2 pendientes de [COBERTURA_150_UNIVERSO.md](COBERTURA_150_UNIVERSO.md). Duetos públicos necesitan un host propio para `server/app.py`.
 
-> Estado posterior: **1.1.0-alpha.10**, diez ramas del universo vivo. [Entrega y validación](docs/historial/ENTREGA_UNIVERSO_VIVO.md), [cobertura y pendientes](COBERTURA_150_UNIVERSO.md). El contenido que sigue conserva el contexto original de este documento; sus cifras/pendientes históricos no sustituyen el estado nuevo. Para continuar en Claude, leer primero [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md).
+> Estado posterior: **1.1.0-alpha.10**, diez ramas del universo vivo. [Entrega y validación](ENTREGA_UNIVERSO_VIVO.md), [cobertura y pendientes](COBERTURA_150_UNIVERSO.md). El contenido que sigue conserva el contexto original de este documento; sus cifras/pendientes históricos no sustituyen el estado nuevo. Para continuar en Claude, leer primero [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md).
 
-> **Ampliación vigente:** [150 propuestas en diez fases](docs/historial/UNIVERSO_150_IDEAS_FASES.md), de menor a mayor complejidad. Una rama amplia por fase al implementarla. Este turno solo actualiza el plan; las fases históricas y la evidencia de la aplicación conservan su numeración/fecha.
+> **Ampliación vigente:** [150 propuestas en diez fases](UNIVERSO_150_IDEAS_FASES.md), de menor a mayor complejidad. Una rama amplia por fase al implementarla. Este turno solo actualiza el plan; las fases históricas y la evidencia de la aplicación conservan su numeración/fecha.
 
-> **RC6 ya integrada:** main incluye `9b5fe00`. [Nuevo plan: 50 propuestas](docs/historial/UNIVERSO_50_IDEAS.md), con beneficios temporales de cajas como prioridad. Estas ideas aún no se implementaron; el historial de abajo conserva su fecha.
+> **RC6 ya integrada:** main incluye `9b5fe00`. [Nuevo plan: 50 propuestas](UNIVERSO_50_IDEAS.md), con beneficios temporales de cajas como prioridad. Estas ideas aún no se implementaron; el historial de abajo conserva su fecha.
 
-> **RC6 vigente:** interfaz integrada en `polish/coherent-game-ui`. [Auditoría, decisiones y capturas](docs/historial/AUDITORIA_INTERFAZ.md). Los catálogos y límites musicales se mantienen; el contenido anterior conserva su fecha histórica.
+> **RC6 vigente:** interfaz integrada en `polish/coherent-game-ui`. [Auditoría, decisiones y capturas](AUDITORIA_INTERFAZ.md). Los catálogos y límites musicales se mantienen; el contenido anterior conserva su fecha histórica.
 
-> **Registro RC5 implementado:** libro local de hallazgos raros con coordenadas/WD1, doce cartas por página y límite de 512 por partida. [Detalle](docs/historial/HALLAZGOS_RAROS.md). Archivo ampliable, biblioteca entre dispositivos y sincronización de libros quedan para el bloque de progreso de V2.
+> **Registro RC5 implementado:** libro local de hallazgos raros con coordenadas/WD1, doce cartas por página y límite de 512 por partida. [Detalle](HALLAZGOS_RAROS.md). Archivo ampliable, biblioteca entre dispositivos y sincronización de libros quedan para el bloque de progreso de V2.
 
-> **Actualización autorizada tras la auditoría:** candidata **1.0.0-rc.4**, tres ramas amplias descritas en [EXPANSION_RITMICA.md](docs/historial/EXPANSION_RITMICA.md). La congelación RC1 citada abajo es histórica: se implementaron percusión, versión/deploy, minimalismo y registro de elementos por la petición posterior de Jay. No hay servidor/deploy confirmado; los límites de aceptación siguen vigentes.
+> **Actualización autorizada tras la auditoría:** candidata **1.0.0-rc.4**, tres ramas amplias descritas en [EXPANSION_RITMICA.md](EXPANSION_RITMICA.md). La congelación RC1 citada abajo es histórica: se implementaron percusión, versión/deploy, minimalismo y registro de elementos por la petición posterior de Jay. No hay servidor/deploy confirmado; los límites de aceptación siguen vigentes.
 
 # Después de V1 · publicar y abrir V2
 
-La auditoría de [V1 RC1](docs/historial/AUDITORIA_V1.md) congela las funciones actuales. Este documento es un plan, no funciones ya implementadas. Una rama amplia por bloque, commit/push; Jay revisa PR/merge. No se inicia ninguna integración de servidor en esta sesión.
+La auditoría de [V1 RC1](AUDITORIA_V1.md) congela las funciones actuales. Este documento es un plan, no funciones ya implementadas. Una rama amplia por bloque, commit/push; Jay revisa PR/merge. No se inicia ninguna integración de servidor en esta sesión.
 
 ## 0. Publicar la versión individual
 

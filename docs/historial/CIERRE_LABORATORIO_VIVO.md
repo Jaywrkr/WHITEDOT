@@ -65,13 +65,13 @@ Los duetos mantienen el transporte acordado anterior; la interpretación nueva s
 
 ## Resultado automático
 
-Validación completa aprobada: auditoría, 104 suites Node, 82 recorridos incluido offline y 581 renders de 28 programas de audio. Pico máximo medido: 0.945447; señal finita y límites aprobados por cada programa. [Evidencia](scripts/lab-l7-validation.json). CI de los PR y aceptación física/artística conservan su alcance propio.
+Validación completa aprobada: auditoría, 104 suites Node, 82 recorridos incluido offline y 581 renders de 28 programas de audio. Pico máximo medido: 0.945447; señal finita y límites aprobados por cada programa. [Evidencia](../../scripts/lab-l7-validation.json). CI de los PR y aceptación física/artística conservan su alcance propio.
 
 Validado en UTC: `2026-10-15T17:07:34.070877+00:00`. Esta fecha corresponde a pruebas, no a un despliegue.
 
 ## Condiciones de publicación
 
-La evidencia final incluye los comandos completos `audit:release`, `test`, `test:browser` y `test:audio` sobre el mismo código: [informe L7](scripts/lab-l7-validation.json).
+La evidencia final incluye los comandos completos `audit:release`, `test`, `test:browser` y `test:audio` sobre el mismo código: [informe L7](../../scripts/lab-l7-validation.json).
 
 Pendientes externos: escucha con altavoz y auriculares en Android/iPhone físicos; gusto musical, claridad y fatiga en sesiones largas; CI de cada PR; preview autenticado y comprobación del artefacto desplegado por Vercel. El render automático mide señales y contratos; no certifica calidad artística ni el sonido de un teléfono real.
 

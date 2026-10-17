@@ -180,7 +180,7 @@ La continuación autorizada durante esta auditoría se organiza en [PLAN_PULIDO_
 - Commit y push. **Jay crea el PR y hace el merge.** No hacer push a `main` salvo que Jay lo pida en ese momento.
 - Validación acordada: durante la fase, pruebas afectadas. Antes de push de rama, auditoría y lógica completas más navegador/audio enfocados según cambios. Antes de integrar/publicar `main`, navegador y audio completos una vez sobre el conjunto final. CI completo debe estar aprobado antes de merge; nunca desactivar pruebas.
 - No crear decenas de ramas pequeñas. No reabrir funciones retiradas (ver [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md), sección 3).
-- Cada fase actualiza [CAMBIOS.md](CAMBIOS.md) y marca su estado en la tabla de abajo.
+- Cada fase actualiza [CAMBIOS.md](../../CAMBIOS.md) y marca su estado en la tabla de abajo.
 - Vercel Hobby tiene límite diario de deploys: evitar pushes innecesarios.
 
 ## Estado por fase
@@ -216,7 +216,7 @@ Aceptación: probar tap y arrastre con una mano; identificar fuentes musicales s
 
 ## Reglas de diseño (estilo J)
 
-- Capa visual: [styles/estilo-j.css](styles/estilo-j.css). Negro puro, esquinas rectas, blanco para estados, **dorado solo para lo ganado**, Geist Mono en toda la interfaz, Canvas y exportaciones (100–900).
+- Capa visual: [styles/estilo-j.css](../../styles/estilo-j.css). Negro puro, esquinas rectas, blanco para estados, **dorado solo para lo ganado**, Geist Mono en toda la interfaz, Canvas y exportaciones (100–900).
 - Textos: máximo 12 palabras, una idea, imperativo. Recurso tachado-corrección en la Voz (`"~~antes~~ después"`). Firma *Simple.* solo en momentos importantes.
 - UI silenciosa: menús y botones no hacen sonido musical. Las celebraciones son eventos del mundo, a tempo y en la tonalidad del lugar.
 - Nunca quitar progreso ganado. Nunca pagar por nada.

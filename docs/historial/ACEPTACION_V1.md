@@ -42,7 +42,7 @@ Solo si vas a ofrecer duetos: levanta `python3 server/app.py` en un host HTTPS p
 
 ## 4. Lo que ya está comprobado en automático
 
-Integridad del shell, suites de lógica, recorridos de navegador en 320–1280 px, offline, mezclas de audio renderizadas y API/duetos con servidor local. Ver [README](README.md#verificar). Esto no sustituye escuchar en un teléfono.
+Integridad del shell, suites de lógica, recorridos de navegador en 320–1280 px, offline, mezclas de audio renderizadas y API/duetos con servidor local. Ver [README](../../README.md#verificar). Esto no sustituye escuchar en un teléfono.
 
 ## Resultado
 

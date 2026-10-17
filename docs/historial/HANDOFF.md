@@ -2,13 +2,13 @@
 
 Estado vigente: **1.1.0-alpha.10**, con diez fases acumuladas en `feat/universe-10-server-duets-validation` (código `57fb5d2`). Este handoff añade documentación en `docs/claude-handoff-universe-alpha`. Main remoto comprobado: `704ae07`; las fases aún no estaban integradas. Volver a verificar antes de continuar.
 
-- [Empezar aquí: handoff para Claude](../../HANDOFF_CLAUDE.md)
+- [Empezar aquí: handoff para Claude](HANDOFF_CLAUDE.md)
 - [Entrega, ramas y límites](ENTREGA_UNIVERSO_VIVO.md)
-- [Cómo probar](../../PROBAR_UNIVERSO_VIVO.md)
-- [Cobertura de las 150 ideas](../../COBERTURA_150_UNIVERSO.md)
-- [Servidor y duetos](../../SERVIDOR_Y_DUETOS.md)
+- [Cómo probar](PROBAR_UNIVERSO_VIVO.md)
+- [Cobertura de las 150 ideas](COBERTURA_150_UNIVERSO.md)
+- [Servidor y duetos](../SERVIDOR_Y_DUETOS.md)
 
-El documento de continuidad completo es [HANDOFF_CLAUDE.md](../../HANDOFF_CLAUDE.md): identidad de la rama, cambios, mapa de código, reglas creativas, migraciones, pruebas, pendientes y límites del servicio. La rama de documentación incluye toda la fase 10; trabajar desde ella si main todavía conserva la entrega anterior.
+El documento de continuidad completo es [HANDOFF_CLAUDE.md](HANDOFF_CLAUDE.md): identidad de la rama, cambios, mapa de código, reglas creativas, migraciones, pruebas, pendientes y límites del servicio. La rama de documentación incluye toda la fase 10; trabajar desde ella si main todavía conserva la entrega anterior.
 
 Leer la matriz antes de desarrollar: las diez fases tienen una base integrada, pero no las 150 propuestas terminadas. No reaplicar ramas archivadas ni tomar los planes de abajo como estado vigente. Jay hace los PR y merges; continuar en ramas nuevas sin reescribir historia publicada.
 
@@ -53,7 +53,7 @@ Los datos RC1 siguientes son la fotografía anterior, conservada como historia; 
 
 **Candidata `1.0.0-rc.1` · rama `audit/v1-closure` · base f4c112b.** Main remoto observado: **8096c8d (#77)**. Esta rama contiene culturas + mascota + auditoría/correcciones: **un único PR hacia main integra todo**. Jay crea PR/merge; no volver a aplicar ramas padres ni declarar main actualizado hasta comprobarlo.
 
-Leer [AUDITORIA_V1.md](AUDITORIA_V1.md), [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md), [PENDIENTES.md](PENDIENTES.md) y [PLAN_V2.md](../../PLAN_V2.md). Handoffs/inventarios previos conservados íntegramente en [HANDOFF_HISTORICO.md](HANDOFF_HISTORICO.md).
+Leer [AUDITORIA_V1.md](AUDITORIA_V1.md), [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md), [PENDIENTES.md](PENDIENTES.md) y [PLAN_V2.md](PLAN_V2.md). Handoffs/inventarios previos conservados íntegramente en [HANDOFF_HISTORICO.md](HANDOFF_HISTORICO.md).
 
 ## Cierre y reglas
 

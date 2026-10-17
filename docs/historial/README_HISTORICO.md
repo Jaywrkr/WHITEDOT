@@ -2,11 +2,11 @@
 
 Estado vigente: **1.1.0-alpha.10**, con diez fases acumuladas en `feat/universe-10-server-duets-validation` (código `57fb5d2`). Este handoff añade documentación en `docs/claude-handoff-universe-alpha`. Main remoto comprobado: `704ae07`; las fases aún no estaban integradas. Volver a verificar antes de continuar.
 
-- [Empezar aquí: handoff para Claude](../../HANDOFF_CLAUDE.md)
+- [Empezar aquí: handoff para Claude](HANDOFF_CLAUDE.md)
 - [Entrega, ramas y límites](ENTREGA_UNIVERSO_VIVO.md)
-- [Cómo probar](../../PROBAR_UNIVERSO_VIVO.md)
-- [Cobertura de las 150 ideas](../../COBERTURA_150_UNIVERSO.md)
-- [Servidor y duetos](../../SERVIDOR_Y_DUETOS.md)
+- [Cómo probar](PROBAR_UNIVERSO_VIVO.md)
+- [Cobertura de las 150 ideas](COBERTURA_150_UNIVERSO.md)
+- [Servidor y duetos](../SERVIDOR_Y_DUETOS.md)
 
 Exploración musical procedural con fondo negro, cubo y objetos naturales/electrónicos. 52 géneros, 11 biomas, 33 hábitats; 28 linajes nuevos; 109 familias registrables, 91 entradas del laboratorio y 49 tipos de tarjeta. Radio evolutiva, relaciones ecológicas, arquitectura sonora, Voz opcional, libro, favoritos y retorno entre semillas. Cuentas y duetos son opcionales y experimentales.
 
