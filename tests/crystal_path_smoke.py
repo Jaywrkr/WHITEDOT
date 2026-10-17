@@ -30,6 +30,8 @@ try:
   partial=page.evaluate('__r.S.pathCrystals.length')
   assert 0<partial<10
   page.evaluate('__r.save()');page.reload();page.wait_for_function('!!window.__r?.sparkTick')
+  page.locator('#returnContinue').click()
+  page.wait_for_function('__r.crystalState.near.length>0')
   assert page.evaluate('__r.S.pathCrystals.length')==partial
   assert page.evaluate('__r.S.mode')=='camino'
   for i in range(10):

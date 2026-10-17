@@ -1,5 +1,13 @@
 # Cambios recientes
 
+## Salto ganado e intro visible
+
+Rama `fix/earned-jump-and-intro`, dependiente de la limpieza documental `7f77842` y de la entrega de chispas aún no integrada en main remoto `81856a3`. Al acumular 20 chispas ganadas aparece Saltar en el dock. Permanece visible tras gastar y recargar; sin saldo suficiente se desactiva. Cada salto conserva el coste de 20 y el regreso gratuito. El menú mantiene su propio control, sin duplicar IDs ni sobrescribir el botón principal.
+
+La intro ya no se omite por tutorial pendiente o primera visita: frase y `.simple`, cierre automático a los 2,4 s o por toque/Escape. Al cerrar se recupera la primera guía, sin saltarse sus pasos. Movimiento reducido sin animación de sistema; sin cambios musicales ni de progreso. Versión y caché mediante el sellado existente.
+
+Verificación: auditoría sin errores/avisos; diez suites Node afectadas aprobadas. Regresión Chrome de entrada, firma legible, guía pendiente, minería manual de la chispa 20, salto cobrado, botón persistente, recarga y regreso gratuito en 320/390/844/1280 px; además movimiento reducido. Compatibilidad de viajes, economía y regreso, más diez roturas reales del Camino, probadas por separado. Comandos y huellas en [el informe](scripts/entry-jump-validation.json). Pruebas enfocadas; sin suite completa, audio nuevo, CI ni despliegue certificado.
+
 ## Documentación consolidada
 
 Cuatro documentos en la raíz y tres guías operativas en `docs/`. Planes, cierres, inventarios y handoffs anteriores se conservan en [historial](docs/historial/README.md), sin autorizar trabajo nuevo. README y mapa técnico reflejan las chispas; las instrucciones ya no declaran varios ciclos vigentes. Créditos distinguen cliente local de servidor opcional. Sin cambios del juego, versión ni caché.

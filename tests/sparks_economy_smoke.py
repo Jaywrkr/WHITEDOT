@@ -36,8 +36,8 @@ try:
   keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.sparkTick')
   assert page.evaluate('(id)=>__r.savedCrystal(id).collected',crystal_id)
   page.evaluate("""()=>{__r.S.sparks=100;__r.sparkEconomy.earned=100+__r.sparkEconomy.spent;__r.save();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);__r.openSparks();}""")
-  assert page.locator('#bJump').inner_text()=='Saltar · 20 ✦'
-  assert page.locator('#bJump').evaluate('e=>e.closest("#mSparks")!==null')
+  assert page.locator('#sparkJump').inner_text()=='Saltar · 20 ✦'
+  assert page.locator('#sparkJump').evaluate('e=>e.closest("#mSparks")!==null')
   page.locator('[data-spark-preview="orbit"]').click()
   assert page.locator('#sparkPreview svg').count()==1
   page.locator('[data-spark-buy="dust"]').click()
@@ -53,7 +53,7 @@ try:
   assert not page.evaluate('!!__r.sparkEconomy.purchases.facet')
   assert 'No se guardó' in page.locator('#sparkStatus').inner_text()
   page.evaluate('Storage.prototype.setItem=originalSet;__r.save();__r.S.sparks=60;__r.sparkEconomy.earned=60+__r.sparkEconomy.spent;__r.save();')
-  page.locator('#bJump').click()
+  page.locator('#sparkJump').click()
   assert page.evaluate('__r.S.sparks')==40
   assert page.locator('#mSparks').is_hidden()
   paid=page.evaluate('({x:__r.S.wx,y:__r.S.wy})')
@@ -62,7 +62,7 @@ try:
   assert page.evaluate('!!__r.sparkEconomy.claims["badge:wrong"]')
   # Failed destination persistence must refund the reserved fare and retain coordinates.
   page.evaluate("""()=>{window.beforeJump={x:__r.S.wx,y:__r.S.wy};let writes=0;Storage.prototype.setItem=function(k,v){if(k===__r.saveStore.key&&++writes===2)throw Error('destination quota');return originalSet.call(this,k,v);};__r.openSparks();}""")
-  page.locator('#bJump').click()
+  page.locator('#sparkJump').click()
   assert page.evaluate('__r.S.sparks')==40
   assert page.evaluate('__r.S.wx===beforeJump.x&&__r.S.wy===beforeJump.y')
   page.evaluate('Storage.prototype.setItem=originalSet;__r.save();')

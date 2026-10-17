@@ -83,6 +83,7 @@
   <button class="ico round" id="bDeploy" aria-label="Desplegar Estudio aquí" title="Desplegar Estudio aquí" hidden><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg></button>
   <button class="ico round" id="bAuto" aria-label="Iniciar paseo musical" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></svg></button>
 
+  <button class="ico" id="bJump" hidden>Saltar · 20 ✦</button>
   <button class="ico" id="bStyles" aria-label="Elegir estilo musical" hidden>Estilos</button>
   <button class="ico round" id="bMenu" aria-label="Menú"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
 </div>
@@ -131,7 +132,7 @@
 <div class="modal" id="mSaveTools" hidden><div class="sheet"><h2>Guardar copia</h2><p>Tu progreso y tus lugares, en un archivo. Guárdalo.</p><p id="saveStatus" role="status"></p><div class="row"><button id="saveExport">Exportar esta partida</button><button id="saveOriginal" hidden>Exportar original conservado</button><button id="saveRecover" hidden>Recuperar copia válida</button></div><label for="saveImportFile">Elegir copia de esta partida</label><input id="saveImportFile" type="file" accept="application/json,.json"><p>Restaurar reemplaza esta partida. Antes se guarda una copia.</p><div class="row"><button id="saveImportApply" disabled>Restaurar copia elegida</button><button id="saveToolsClose">Cerrar</button></div></div></div>
 <div class="modal" id="mSparks" role="dialog" aria-modal="true" aria-labelledby="sparkHeading" hidden><div class="sheet sparks-sheet">
 <header><h2 id="sparkHeading">Tu recorrido</h2><button id="sparkClose" aria-label="Cerrar chispas">×</button></header><strong id="sparkBalance"></strong><small id="sparkLedger"></small><p id="sparkStatus" role="status"></p>
-<section><h3>Viajar</h3><p>Explora otro paisaje. Regresa gratis al punto anterior.</p><div class="row"><button id="bJump" hidden>Saltar · 20 ✦</button><button id="sparkBack">Volver gratis</button></div></section>
+<section><h3>Viajar</h3><p>Explora otro paisaje. Regresa gratis al punto anterior.</p><div class="row"><button id="sparkJump">Saltar · 20 ✦</button><button id="sparkBack">Volver gratis</button></div></section>
 <label for="sparkGoalSelect">Tu próxima meta</label><select id="sparkGoalSelect"></select>
 <section><h3>Tu cubo · compras permanentes</h3><div id="sparkPreview"></div><p id="sparkPreviewLabel"></p><div id="sparkShop" class="spark-grid"></div></section>
 <section><h3>Colecciones</h3><div id="sparkSets" class="spark-grid"></div></section>
