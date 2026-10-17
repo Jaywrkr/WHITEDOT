@@ -1,3 +1,4 @@
+import {crystalPlay,crystalFragments,moveEscape,CRYSTAL_CHAIN_RADIUS,CRYSTAL_CHAIN_LIMIT} from './crystal-play-model.js';
 import {pulseCrossed} from './pulse-forms.js';
 const CELL=200,MAX_SITES=8192;
 export const normalizeSparks=value=>Number.isFinite(value)?Math.min(Number.MAX_SAFE_INTEGER,Math.max(0,Math.floor(value))):0;
@@ -9,7 +10,7 @@ export function crystalField(wx,wy,seedOf){
   const density=region%10<3?.08:region%10<8?.28:.7,key=a+','+b,h=seedOf('crystals:site:v2:'+key)>>>0;
   if(h/4294967296>=density)continue;
   const n=seedOf('crystals:shape:v2:'+key)>>>0,size=1+(n%10<6?0:n%10<9?1:2);
-  out.push({id:key,x:a*CELL+60+(h>>>8)%80,y:b*CELL+60+(h>>>16)%80,size,value:[1,3,5][size-1]});
+  const o={id:key,x:a*CELL+60+(h>>>8)%80,y:b*CELL+60+(h>>>16)%80,size,value:[1,3,5][size-1]};out.push({...o,...crystalPlay(o,seedOf)});
  }return out;
 }
 export function pathCrystalField(px,pathY,day){
@@ -17,13 +18,13 @@ export function pathCrystalField(px,pathY,day){
  for(let i=cell-4;i<=cell+4;i++){const x=i*160+90;out.push({id:'path:'+day+':'+i,x,y:pathY(x)+(i%2?18:-18),size:1,value:1});}return out;
 }
 export function initialize(runtime){
- let owner=null,scope='',sites=new Map(),seen=new WeakMap(),stale=new WeakSet(),near=[],seconds=0,shownUntil=0,gain=0,lastGain=0,cell='';
+ let owner=null,scope='',sites=new Map(),seen=new WeakMap(),stale=new WeakSet(),near=[],seconds=0,shownUntil=0,gain=0,lastGain=0,cell='',chains=[];
  const S=()=>runtime.S,position=()=>runtime.inWorld()?{x:S().wx,y:S().wy}:{x:S().px,y:S().py};
  const active=()=>(S().mode==='camino'||runtime.inWorld()&&(S().layer||'superficie')==='superficie')&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  const reduced=()=>!!(S().reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
  function ensure(){
   const key=JSON.stringify(runtime.worldIdentity||{})+':'+S().todayKey;
-  if(owner!==S()||scope!==key){owner=S();scope=key;sites=new Map();seen=new WeakMap();stale=new WeakSet(runtime.waves||[]);near=[];cell='';gain=0;shownUntil=0;seconds=0;owner.sparks=normalizeSparks(owner.sparks);owner.pathCrystals||=[];}
+  if(owner!==S()||scope!==key){owner=S();scope=key;sites=new Map();seen=new WeakMap();stale=new WeakSet(runtime.waves||[]);near=[];cell='';gain=0;shownUntil=0;seconds=0;chains=[];owner.sparks=normalizeSparks(owner.sparks);owner.pathCrystals||=[];}
  }
  function tick(dt,paused=false){
   ensure();if(paused||!active())return;
@@ -43,7 +44,7 @@ export function initialize(runtime){
     if(!site){site={hits:0,flash:0,broken:false,collected:false};sites.set(o.id,site);}
     site.hits++;site.flash=seconds+.18;
     if(site.hits>=o.size){site.broken=true;if(path){if(!S().pathCrystals.length)runtime.onFirstLight?.();S().pathCrystals.push(o.id);completed=S().pathCrystals.length===10;S().todayLight=(S().todayLight||0)+1;S().totalLight=(S().totalLight||0)+1;earn(o.value);site.rewarded=true;runtime.hud?.();}
-     site.particles=Array.from({length:Math.min(3,o.value)},(_,i)=>({x:o.x+Math.cos(i*2.399)*12,y:o.y+Math.sin(i*2.399)*12}));break;}
+     site.particles=particles(o,{rare:false});break;}
    }
    if(site?.broken&&!site.collected&&!(runtime.autopilotState?.mode==='wander'&&!runtime.autopilotState.paused)&&Math.hypot(o.x-pos.x,o.y-pos.y)<70){
     let arrived=true;
@@ -54,23 +55,57 @@ export function initialize(runtime){
     if(arrived){site.collected=true;if(!site.rewarded)earn(o.value);}
    }
   }
+  if(!path&&runtime.crystalTransaction)tickChains();
   if(completed){runtime.waves=[];runtime.ptr=null;runtime.enterWorld?.({automatic:true});near=[];cell='';}
+ }
+ function particles(o,site){return crystalFragments(o,site.rare===true).map(p=>({...p,x:(site.drop?.x??o.x)+Math.cos(p.index*2.399)*14,y:(site.drop?.y??o.y)+Math.sin(p.index*2.399)*14,home:site.drop||o,age:0,trail:[]}));}
+ function hit(o,path,source=null){
+  const prior=sites.get(o.id)||runtime.savedCrystal(o.id);if(prior?.broken)return false;
+  const before=S().sparks,next=runtime.crystalTransaction(o,'hit',path);if(!next)return false;
+  const site={...prior,...next,flash:seconds+.25};
+  if(o.runner&&!path&&!prior?.hits&&!site.broken){site.run={x:o.x,y:o.y,age:0,trail:[]};}
+  if(site.broken){site.drop=site.run?{x:site.run.x,y:site.run.y}:o;site.run=null;site.particles=particles(o,site);if(!path){const chain=source||{hit:new Set([o.id]),budget:CRYSTAL_CHAIN_LIMIT};chains.push({x:prior?.run?.x??o.x,y:prior?.run?.y??o.y,at:seconds,chain});chains=chains.slice(-12);}}
+  sites.set(o.id,site);if(S().sparks>before)runtime.showSparkPickup?.(S().sparks-before,position());return true;
+ }
+ function tickChains(){
+  // A bounded delayed front makes neighbouring breaks readable; chains never create musical pulses.
+  for(const wave of [...chains]){
+   const age=seconds-wave.at;if(age>.65||wave.done)continue;const radius=Math.min(CRYSTAL_CHAIN_RADIUS,age*900),chain=wave.chain;
+   const targets=near.filter(o=>!chain.hit.has(o.id)&&Math.hypot((sites.get(o.id)?.run?.x??o.x)-wave.x,(sites.get(o.id)?.run?.y??o.y)-wave.y)<=radius).sort((a,b)=>Math.hypot(a.x-wave.x,a.y-wave.y)-Math.hypot(b.x-wave.x,b.y-wave.y));
+   for(const o of targets){if(chain.budget<=0)break;chain.hit.add(o.id);if(sites.get(o.id)?.broken||runtime.savedCrystal(o.id)?.broken)continue;chain.budget--;hit(o,false,chain);}
+   if(radius===CRYSTAL_CHAIN_RADIUS)wave.done=true;
+  }
+  chains=chains.filter(w=>seconds-w.at<.65);
  }
  function processSaved(o,path,step,pos){
   let site=sites.get(o.id),stored=runtime.savedCrystal(o.id);
   if(!site&&stored){site={...stored};sites.set(o.id,site);}
+  if(site?.run){const old={x:site.run.x,y:site.run.y};site.run.age+=step;if(!reduced()&&!(runtime.autopilotState?.mode==='wander'&&!runtime.autopilotState.paused))Object.assign(site.run,moveEscape(site.run,o,pos,step,site.run.age));if(Math.hypot(site.run.x-old.x,site.run.y-old.y)>1){site.run.trail.push(old);site.run.trail=site.run.trail.slice(-6);}else site.run.trail=site.run.trail.slice(1);}
+  const point=site?.run||o;
   for(const wave of runtime.waves||[]){
-   if(stale.has(wave)||wave.origin!=='player'||!pulseCrossed(wave,o.x,o.y))continue;
+   if(stale.has(wave)||wave.origin!=='player'||!pulseCrossed(wave,point.x,point.y))continue;
    let hits=seen.get(wave);if(!hits){hits=new Set();seen.set(wave,hits);}if(hits.has(o.id))continue;hits.add(o.id);
    if(site?.broken){runtime.inspectSpentCrystal?.(o.id);continue;}
-   const next=runtime.crystalTransaction(o,'hit',path);if(!next)continue;
-   site={...next,flash:seconds+.18};if(site.broken)site.particles=Array.from({length:Math.min(3,o.value)},(_,i)=>({x:o.x+Math.cos(i*2.399)*12,y:o.y+Math.sin(i*2.399)*12}));sites.set(o.id,site);
+   hit(o,path);site=sites.get(o.id);
   }
   if(!site?.broken||site.collected)return;
-  site.particles||=Array.from({length:Math.min(3,o.value)},(_,i)=>({x:o.x+Math.cos(i*2.399)*12,y:o.y+Math.sin(i*2.399)*12}));
-  if(runtime.autopilotState?.mode==='wander'&&!runtime.autopilotState.paused||Math.hypot(o.x-pos.x,o.y-pos.y)>=70)return;
-  let arrived=true;for(const p of site.particles){const dx=pos.x-p.x,dy=pos.y-p.y,d=Math.hypot(dx,dy),travel=step*180;if(d>3&&!reduced()){const k=Math.min(1,travel/d);p.x+=dx*k;p.y+=dy*k;if(d>travel+3)arrived=false;}}
-  if(arrived){const next=runtime.crystalTransaction(o,'collect',path);if(next?.collected)site.collected=true;}
+  site.particles||=particles(o,site);
+  if(runtime.autopilotState?.mode==='wander'&&!runtime.autopilotState.paused)return;
+  for(const p of site.particles){
+   if((site.fragments||0)&(1<<p.index))continue;
+   p.age+=step;const old={x:p.x,y:p.y};
+   if(p.rare&&!reduced())Object.assign(p,moveEscape(p,p.home,pos,step,p.age,100,78));
+   const dx=pos.x-p.x,dy=pos.y-p.y,d=Math.hypot(dx,dy),reach=p.rare&&!reduced()?32:70;
+   // Common fragments retain their original collection radius; rare ones invite a short chase.
+   if(d<reach&&(!p.rare||p.age>2||reduced())){
+    const travel=step*180;if(!reduced()&&d>3){const k=Math.min(1,travel/d);p.x+=dx*k;p.y+=dy*k;}
+    if(d<=travel+3||reduced()){
+     const before=S().sparks,next=runtime.crystalTransaction(o,'collect',path,p.index);
+     if(next){Object.assign(site,next);if(S().sparks>before)runtime.showSparkPickup?.(S().sparks-before,{x:p.x,y:p.y});}
+    }
+   }
+   if(!reduced()&&Math.hypot(p.x-old.x,p.y-old.y)>.3){p.trail.push(old);p.trail=p.trail.slice(-5);}else p.trail=p.trail.slice(1);
+  }
  }
  function earn(value){S().sparks=normalizeSparks(S().sparks+value);gain=seconds-lastGain<1?gain+value:value;lastGain=seconds;shownUntil=seconds+3;runtime.save?.();}
  function draw(){
@@ -83,19 +118,28 @@ export function initialize(runtime){
    if(opacity<.01||(!site&&sites.size>=MAX_SITES))continue;
    c.globalAlpha=opacity;c.strokeStyle=c.fillStyle='#bddbe0';
    if(site?.broken){
-    if(!site.collected){c.fillStyle='#e9ca7d';for(const p of site.particles)c.fillRect(p.x+ox-1.5,p.y+oy-1.5,3,3);}
+    if(!site.collected)for(const p of site.particles||[]){
+     if((site.fragments||0)&(1<<p.index))continue;
+     const x=p.x+ox,y=p.y+oy+(reduced()?0:Math.sin(seconds*2+p.index)*2),ink=p.rare?'#77e8ff':'#e9ca7d';
+     c.fillStyle=c.strokeStyle=ink;for(let i=0;i<(p.trail?.length||0);i++){c.globalAlpha=opacity*.15*(i+1)/p.trail.length;c.fillRect(p.trail[i].x+ox-1,p.trail[i].y+oy-1,2,2);}
+     c.globalAlpha=opacity*.2;c.beginPath();c.arc(x,y,p.rare?10:8,0,Math.PI*2);c.fill();
+     c.globalAlpha=opacity*(reduced()?1:.85+.15*Math.sin(seconds*2));c.beginPath();c.moveTo(x,y-5);c.lineTo(x+3,y);c.lineTo(x,y+5);c.lineTo(x-3,y+1);c.closePath();c.fill();c.fillStyle='#fff';c.fillRect(x-1,y-2,2,3);
+     if(p.rare){c.lineWidth=1;c.beginPath();c.moveTo(x+5,y-8);c.lineTo(x+5,y-3);c.moveTo(x+2.5,y-5.5);c.lineTo(x+7.5,y-5.5);c.stroke();if(d<130){c.font='10px "Geist Mono",monospace';c.textAlign='center';c.fillText('+'+p.value+' ✦',x,y-15);}}
+    }
     continue;
    }
-   const x=o.x+ox,y=o.y+oy;
+   const x=(site?.run?.x??o.x)+ox,y=(site?.run?.y??o.y)+oy;
+   if(site?.run){if(!reduced()){c.fillStyle='#bddbe0';for(const p of site.run.trail){c.globalAlpha=opacity*.2;c.fillRect(p.x+ox,p.y+oy+6,1,1);}c.globalAlpha=opacity;}const leg=reduced()?0:Math.sin(seconds*24)*3;c.strokeStyle='#bddbe0';c.lineWidth=1.3;c.beginPath();c.moveTo(x-3,y+4);c.lineTo(x-6-leg,y+10);c.moveTo(x+3,y+4);c.lineTo(x+6+leg,y+10);c.stroke();}
    if(site?.flash>seconds){c.strokeStyle='#fff';c.lineWidth=2;}else c.lineWidth=1.2;
    for(let i=0;i<o.size;i++){
     const px=x+(i-(o.size-1)/2)*6,h=9+(i%2)*4;
     c.beginPath();c.moveTo(px-3,y+4);c.lineTo(px-4,y-h+4);c.lineTo(px,y-h);c.lineTo(px+4,y-h+4);c.lineTo(px+3,y+4);c.closePath();c.globalAlpha=opacity*.13;c.fill();c.globalAlpha=opacity;c.stroke();
     c.globalAlpha=opacity*.5;c.beginPath();c.moveTo(px,y-h);c.lineTo(px+1,y-h+5);c.lineTo(px,y+4);c.moveTo(px-4,y-h+4);c.lineTo(px+1,y-h+5);c.lineTo(px+4,y-h+4);c.stroke();c.globalAlpha=opacity;
    }
-   if(site?.hits){c.strokeStyle='#fff';c.beginPath();c.moveTo(x-4,y-5);c.lineTo(x+2,y-2);c.lineTo(x-1,y+2);if(site.hits>1)c.lineTo(x+5,y+3);c.stroke();}
+   if(site?.hits){c.strokeStyle='#fff';c.lineWidth=site.hits===o.size-1?2:1;c.shadowColor='#fff';c.shadowBlur=site.flash>seconds?8:0;c.beginPath();c.moveTo(x-4,y-5);c.lineTo(x+2,y-2);c.lineTo(x-1,y+2);if(site.hits>1)c.lineTo(x+5,y+3);c.stroke();c.shadowBlur=0;}
    if(d<85){c.globalAlpha=opacity*.8;c.font='10px "Geist Mono",monospace';c.textAlign='center';c.fillText('Lanza un pulso',x,y+19);}
   }
+  if(!reduced())for(const wave of chains){const age=seconds-wave.at;c.globalAlpha=Math.max(0,1-age/.65)*.3;c.strokeStyle='#bddbe0';c.lineWidth=1;c.beginPath();c.arc(wave.x+ox,wave.y+oy,Math.min(CRYSTAL_CHAIN_RADIUS,age*900),0,Math.PI*2);c.stroke();}
   c.restore();
  }
  function drawHUD(){

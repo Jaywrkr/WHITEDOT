@@ -23,7 +23,7 @@ try:
   page.evaluate("""async()=>{
    const r=__r;r.S.sound=false;r.S.firstJourney.skipped=true;r.S.pathCrystals=Array.from({length:10},(_,i)=>'fixture:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();
    const {crystalField}=await import('/src/crystal-sparks.js');let o=null;
-   for(let i=0;i<20&&!o;i++)o=crystalField(i*1200,0,r.seedOf).find(p=>p.size===2);
+   for(let i=0;i<20&&!o;i++)o=crystalField(i*1200,0,r.seedOf).find(p=>p.size===2&&!p.runner&&!p.rare);
    if(!o)throw Error('Missing crystal fixture');window.crystal=o;window.start=r.S.sparks;r.S.wx=o.x;r.S.wy=o.y-35;
   }""")
   page.wait_for_timeout(800)

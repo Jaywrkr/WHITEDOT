@@ -35,11 +35,13 @@ try:
    page.wait_for_function('!document.getElementById("w").inert')
    assert page.locator('#bJump').is_hidden()
    # Supply nineteen earlier earned sparks; the final spark comes from a real manual pulse.
-   page.evaluate('''async()=>{const r=__r;r.S.sound=false;r.S.help.mundo=true;r.S.ach.mundo=r.S.todayKey;r.S.firstJourney.skipped=true;r.S.pathCrystals=Array.from({length:10},(_,i)=>'entry:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();r.S.sparks=19;r.sparkEconomy.earned=19;r.save();const {crystalField}=await import('/src/crystal-sparks.js');let crystal=null;for(let i=0;i<30&&!crystal;i++)crystal=crystalField(i*1200,0,r.seedOf).find(c=>c.size===1);if(!crystal)throw Error('No native small crystal');r.S.wx=crystal.x;r.S.wy=crystal.y-30;window.site=crystal.id;}''')
+   page.evaluate('''async()=>{const r=__r;r.S.sound=false;r.S.help.mundo=true;r.S.ach.mundo=r.S.todayKey;r.S.firstJourney.skipped=true;r.S.pathCrystals=Array.from({length:10},(_,i)=>'entry:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();r.S.sparks=19;r.sparkEconomy.earned=19;r.save();const {crystalField}=await import('/src/crystal-sparks.js');let crystal=null;for(let i=0;i<500&&!crystal;i++){const field=crystalField(i*1200,0,r.seedOf);crystal=field.find(c=>c.size===1&&!c.rare&&field.every(o=>o.id===c.id||Math.hypot(o.x-c.x,o.y-c.y)>240));}if(!crystal)throw Error('No native small crystal');r.S.wx=crystal.x;r.S.wy=crystal.y-30;window.site=crystal.id;}''')
    page.wait_for_timeout(700);assert page.locator('#bJump').is_hidden()
    page.mouse.click(25,height/2);page.wait_for_function('__r.S.sparks===20')
    page.locator('#bJump').wait_for(state='visible')
    assert page.locator('#bJump').is_enabled()
+   assert page.locator('#sparkTotal').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')>=14
+   assert page.locator('#sparkTotal').evaluate('e=>getComputedStyle(e).color')=='rgb(240, 210, 122)'
    assert page.locator('#bJump').evaluate('e=>e.parentElement.id')=='dock'
    rect=page.locator('#bJump').bounding_box()
    assert rect['width']>=44 and rect['height']>=44 and rect['y']+rect['height']<=height

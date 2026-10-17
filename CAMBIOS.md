@@ -1,5 +1,17 @@
 # Cambios recientes
 
+## Cristales juguetones y chispas visibles
+
+Rama `feat/playful-crystal-sparks`, dependiente de `6fd8ec6` (entregas anteriores aún pendientes en main remoto `81856a3`). Fragmentos con esquirla de centro blanco, halo, flotación lenta y estela corta. Contador de 14 px, saldo dorado y +✦ hacia él; destello de recogida, grietas más visibles y aviso/luz única al alcanzar el primer salto disponible.
+
+En el Mundo, aproximadamente uno de cada ocho cristales puede soltar un fragmento cian con estrella y bono de 3 chispas. Escapa durante dos segundos hasta 100 unidades y queda disponible; se recoge al acercarse a 32 unidades. Algunos cristales medianos/grandes corren al primer golpe, con patas y rastro breve, durante dos segundos hasta 90 unidades. Sin penalización por dejarlos: se detienen. Los fragmentos normales mantienen radio 70. Con movimiento reducido no hay persecución ni vuelo; todos conservan alcance 70 y sus premios.
+
+Romper un cristal del Mundo envía una onda de radio 240, un impacto por vecino y hasta ocho impactos adicionales por cadena inicial. El Camino conserva sus diez cristales sin cadenas ni persecuciones. Solo los pulsos manuales inician minería; paseo automático no recoge. Reparto normal total 1/3/5, más el bono raro cuando corresponde; cada fragmento cobrado se guarda por separado, con rollback de escritura y sin duplicación al recargar. Sin premio retroactivo en cristales antiguos agotados. Hash nuevo independiente, misma retícula y mapas.
+
+El paisaje modula suavemente su brillo cercano con el beat real existente. No añade sonido ni cambia composición, mezcla, física o controles. Se desactiva con silencio, pausa y movimiento reducido. Shell actualizado una sola vez para el módulo nuevo; sellado de versión/caché existente.
+
+Auditoría sin errores/avisos, 87 suites Node afectadas y pruebas Chrome de persecución/bono, guardados, economía, Camino, intro/salto y offline aprobadas. Diff y capturas revisados. Comandos, huellas y límites en [el informe](scripts/crystal-play-validation.json). No se certifican suites completas de navegador/audio, CI, dispositivos físicos ni despliegue.
+
 ## Salto ganado e intro visible
 
 Rama `fix/earned-jump-and-intro`, dependiente de la limpieza documental `7f77842` y de la entrega de chispas aún no integrada en main remoto `81856a3`. Al acumular 20 chispas ganadas aparece Saltar en el dock. Permanece visible tras gastar y recargar; sin saldo suficiente se desactiva. Cada salto conserva el coste de 20 y el regreso gratuito. El menú mantiene su propio control, sin duplicar IDs ni sobrescribir el botón principal.
