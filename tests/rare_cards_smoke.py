@@ -21,7 +21,7 @@ try:
    page.wait_for_function('__testRuntime.rareCards.some(c=>c.type==="fossil")');page.wait_for_function('!document.getElementById("rareNotice").hidden')
    assert page.locator('#rareNoticeName').inner_text()=='Fósil de ritmo';assert 'laboratorio' in page.locator('#rareNoticeTier').inner_text().lower()
    assert '1/640' in page.locator('#rareNoticeOdds').inner_text();assert page.evaluate('__testRuntime.rareCards[0].forced')
-   rect=page.locator('#rareNotice').bounding_box();assert rect['width']*rect['height']>=size['width']*size['height']*.95,rect
+   rect=page.locator('#rareNotice').bounding_box();assert rect['width']<=size['width']-32 and rect['height']<=180,rect
    inner=page.locator('.rare-reveal-card').bounding_box();assert inner['width']>=300 and inner['x']>=0 and inner['x']+inner['width']<=size['width'],inner
    assert rect['x']>=0 and rect['x']+rect['width']<=size['width'] and rect['y']+rect['height']<=size['height']+1,rect
    page.screenshot(path=f'/tmp/whitedot-rare-notice-{size["width"]}.png')

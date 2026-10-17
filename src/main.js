@@ -1,3 +1,4 @@
+import {initialize as sparks} from './sparks.js';
 import {initialize as crystalSparks} from './crystal-sparks.js';
 import {initialize as wowMemory} from './wow-memory.js';
 import {initialize as wowUI} from './wow-ui.js';
@@ -191,7 +192,7 @@ musicTravel(runtime);
 distantColors(runtime);vjWorld(runtime);reactiveEcology(runtime);
 crystalSparks(runtime);pixelLife(runtime);wowFeel(runtime);wowUI(runtime);wowMemory(runtime);
 houseAudio(runtime);house(runtime);
-onboarding(runtime);labLearning(runtime);
+onboarding(runtime);labLearning(runtime);sparks(runtime);
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
 returnEntrance(runtime);

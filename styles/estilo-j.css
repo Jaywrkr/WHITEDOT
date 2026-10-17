@@ -371,3 +371,24 @@ body.ui-reduced-motion #rareNoticeArt::after{display:none}
 .spark-count{display:flex;gap:8px;align-items:center;font:11px/1.5 var(--mono);color:#ffffff80;font-variant-numeric:tabular-nums}
 .spark-count.collecting{color:var(--earned)}#sparkGain{font-size:10px;color:var(--earned)}
 .return-entrance .return-signature{animation-delay:.5s;font-size:11px}
+
+/* Two feedback forms: wallet delta and one silent, brief card. */
+.spark-goal{max-width:180px;min-height:24px;padding:2px 0;border:0;background:#000;color:#ffffff90;font:10px/1.5 var(--mono);text-align:right}
+.spark-title{max-width:180px;color:var(--earned);font:10px/1.5 var(--mono);text-align:right}
+.sparks-sheet{width:min(720px,calc(100vw - 24px));max-height:88dvh;overflow:auto}.sparks-sheet header{display:flex;justify-content:space-between;align-items:center}.sparks-sheet section{margin:20px 0}.sparks-sheet select{width:100%;min-height:44px;font:16px var(--mono);background:#000;color:#fff;border:1px solid #fff5}.sparks-sheet small{display:block;color:#ffffff80}.spark-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.spark-grid article{border:1px solid #fff3;padding:12px;min-width:0}.spark-grid svg,#sparkPreview svg{width:100%;height:60px;stroke:#fff;fill:none;stroke-width:1}.spark-grid button{font-size:11px;margin-top:8px}.sparks-sheet details{margin:18px 0}.sparks-sheet p{font-size:12px;line-height:1.6}
+#rareNotice[data-layout="compact"],#celebration[data-layout="compact"]{position:fixed;top:calc(var(--safe-top,0px) + 74px);bottom:auto;left:50%;transform:translateX(-50%);width:min(320px,calc(100vw - 32px));max-height:180px;background:#000;border:1px solid #fff4;padding:12px;z-index:35}
+#rareNotice[data-layout="compact"] #rareNoticeArt,#rareNotice[data-layout="compact"] #rareNoticeSerial,#rareNotice[data-layout="compact"] #rareNoticeOdds,#rareNotice[data-layout="compact"] #rareNoticeContinue,#rareNotice[data-layout="compact"] #rareNoticeWhere,#rareNotice[data-layout="compact"] #rareNoticeAbility,#celebration[data-layout="compact"] #celebrationArt,#celebration[data-layout="compact"] #celebrationSerial,#celebration[data-layout="compact"] #celebrationPlace,#celebration[data-layout="compact"] #celebrationShare{display:none}
+#toast[data-detail="sparks"]{pointer-events:auto;cursor:pointer}
+@media(max-width:480px){.spark-grid{grid-template-columns:1fr}.spark-goal{max-width:155px}}
+
+.spark-power{max-width:190px;font:10px/1.5 var(--mono);color:var(--earned);text-align:right}.spark-power button{min-height:26px;padding:2px 6px;font-size:10px}#toast[data-detail="save"]{pointer-events:auto;cursor:pointer}
+
+.spark-goal,.spark-power button{pointer-events:auto}
+
+/* Compact cards override the historic full-screen artwork rules. */
+#rareNotice[data-layout="compact"],#celebration[data-layout="compact"]{top:calc(var(--safe-top,0px) + 64px);right:auto;display:block;height:auto;box-sizing:border-box;padding:0;border:0;overflow:auto}
+#rareNotice[data-layout="compact"] #rareNoticeArt,#celebration[data-layout="compact"] #celebrationArt{display:none!important}
+#rareNotice[data-layout="compact"] .rare-reveal-card{display:block;padding:12px 44px 12px 12px;border-color:#ffffff40}
+#rareNotice[data-layout="compact"] .rare-notice-copy{display:block}#rareNotice[data-layout="compact"] #rareNoticeName{font-size:14px;margin:4px 0}
+#rareNotice[data-layout="compact"] #rareNoticeOpen{min-height:36px;padding:6px 10px;margin-top:8px}
+#celebration[data-layout="compact"] #celebrationSurprise,#celebration[data-layout="compact"] #celebrationSignature{display:none}

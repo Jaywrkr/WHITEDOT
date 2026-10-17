@@ -31,7 +31,7 @@ try:
   assert page.evaluate('__foreground.length>0&&__testRuntime.accompanimentStage().inputs.length===3')
   assert page.evaluate('!!__testRuntime.S.ach.percusion4')
   # Finish reading the fossil before starting another physical interaction.
-  page.wait_for_function('!document.getElementById("rareNotice").hidden');page.locator('#rareNoticeContinue').click();page.wait_for_function('document.getElementById("rareNotice").hidden')
+  page.wait_for_function('!document.getElementById("rareNotice").hidden');page.locator('#rareNoticeDismiss').click();page.wait_for_function('document.getElementById("rareNotice").hidden')
   page.evaluate('__testRuntime.labGo("rhythm:stone")');page.wait_for_timeout(350)
   stone_from=page.evaluate('__hits.length')
   page.evaluate('()=>{const r=__testRuntime,o=r.nearbyPercussion()[0];r.S.wx=o.x;r.S.wy=o.y;}')

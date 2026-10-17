@@ -1,6 +1,7 @@
 // Complete local shell; UI controls do not trigger musical events.
 const CACHE='whitedot-2.3.0-alpha.44';
 const SHELL=[
+ "./src/sparks-model.js", "./src/sparks.js",
  "./src/crystal-sparks.js",
  "./src/wow-memory.js",
  "./src/wow-ui.js",

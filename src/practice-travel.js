@@ -74,10 +74,11 @@ export function initialize(runtime){
   const state=normalizePracticeTravel(runtime.S.practiceTravel),random=runtime.rng(runtime.seedOf(`travel:practice:v1:${Date.now()}:${counter++}`)),point=choosePracticePlace(runtime,random,state.recent,counter%3===0,state.sounds,state.sights);
   if(!point){runtime.toast('No encontré otro lugar. Intenta otra vez.');return false;}
   state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.recent.push(point.identity.id+'~'+(point.hybrid?.id||'native'));state.recent=state.recent.slice(-8);state.sounds=[...state.sounds,practiceSoundIdentity(point.band,point.identity)].slice(-8);
-  if(!move(point,state,runtime.labMode?()=>runtime.labGo(point.band?'band:'+point.band.id:'music:'+point.identity.id):null))return false;runtime.toast(`${point.region.worldFamily?.name||runtime.BIOMES[point.region.z].name} · ${point.band?.festive?point.band.name:point.identity.name}`);return true;
+  const ticket=runtime.reserveSparkJump?.();if(ticket===false)return false;
+  if(!move(point,state,runtime.labMode?()=>runtime.labGo(point.band?'band:'+point.band.id:'music:'+point.identity.id):null)){runtime.cancelSparkJump?.(ticket);return false;}runtime.confirmSparkJump?.();if(!runtime.confirmSparkJump)runtime.toast(`${point.region.worldFamily?.name||runtime.BIOMES[point.region.z].name} · ${point.band?.festive?point.band.name:point.identity.name}`);return true;
  }
  function back(){const p=runtime.S.practiceTravel?.previous;if(!runtime.inWorld()||blocked()||!validPoint(p)||!runtime.save())return false;
-  const here={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};const state={...normalizePracticeTravel(runtime.S.practiceTravel),previous:here};if(!move(p,state))return false;$('mMenu').hidden=true;return true;}
+  const here={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};const state={...normalizePracticeTravel(runtime.S.practiceTravel),previous:here};if(!move(p,state))return false;runtime.sparkReturn?.();$('mMenu').hidden=true;return true;}
  function travel(point){if(!runtime.inWorld()||blocked()||!validPoint(point)||runtime.duetRoom||!runtime.save())return false;
   const state=normalizePracticeTravel(runtime.S.practiceTravel),band=labScore(runtime.regionOfPos(point.x,point.y),runtime.seedOf,runtime.rng);state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.sounds=[...state.sounds,practiceSoundIdentity(band,musicIdentity(runtime.regionOfPos(point.x,point.y),runtime.seedOf,runtime.rng,runtime.GEN))].slice(-8);return move(point,state);}
  let arrived=false;

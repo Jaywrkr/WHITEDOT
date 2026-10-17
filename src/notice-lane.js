@@ -1,7 +1,7 @@
 // One visible notice, ordered by importance, with a real exit interval.
 export const NOTICE_STYLES=Object.freeze({
  1:Object.freeze({seconds:1.8,ttl:8000,cooldown:18000,pending:1}),
- 2:Object.freeze({seconds:3,ttl:20000,cooldown:6000,pending:2}),
+ 2:Object.freeze({seconds:3,ttl:120000,cooldown:2000,pending:8}),
  3:Object.freeze({seconds:0,ttl:Infinity,cooldown:0,pending:4})
 });
 const levelOf=value=>[1,2,3].includes(value)?value:2;
@@ -41,8 +41,8 @@ export function installNoticeLane(runtime){
   let slot=timed.get(id);if(!slot){slot={panel,queue:[],current:null,left:0};timed.set(id,slot);}
   if(key&&(slot.current?.key===key||slot.queue.some(e=>e.key===key)))return false;
   if(options.coalesce)slot.queue=slot.queue.filter(e=>e.category!==category);
-  slot.queue.push({render,seconds:options.level?style.seconds:seconds,key,category,level,valid,paced:options.level!==undefined,expires:now+(options.ttl??style.ttl)});
-  slot.queue.sort((a,b)=>b.level-a.level);while(slot.queue.length>(slot.queue.every(e=>e.level===1)?1:2))slot.queue.pop();
+  slot.queue.push({render,seconds:options.persistent?Infinity:options.level?style.seconds:seconds,detail:options.detail|| (options.persistent?'save':''),key,category,level,valid,paced:options.level!==undefined,expires:now+(options.ttl??style.ttl)});
+  slot.queue.sort((a,b)=>b.level-a.level);while(slot.queue.length>(slot.queue.every(e=>e.level===1)?1:8))slot.queue.pop();
   recent.set(duplicate,now);if(recent.size>120)recent.delete(recent.keys().next().value);
   request(id,{level:Math.max(...slot.queue.map(e=>e.level),slot.current?.level||1)});return true;
  }
@@ -50,10 +50,11 @@ export function installNoticeLane(runtime){
  const api={quietRoutine,request,claim,release,cancel:model.cancel,blocked,show,hide,enqueue,register:(id,fn)=>callbacks.set(id,fn),get owner(){return model.owner;},get pending(){return model.pending;},get inspecting(){return !!globalThis.document?.querySelector('[data-inspect="true"]:not([hidden]):not(.notice-leaving)');}};
  function tick(){const now=performance.now(),dt=Math.max(0,Math.min(.1,(now-last)/1000));last=now;
   if(state!==runtime.S){state=runtime.S;model.clear();recent.clear();started.clear();quiet=0;for(const slot of timed.values()){slot.queue.length=0;slot.current=null;hide(slot.panel);}}
+  for(const [id,slot]of timed)if(slot.current?.seconds===Infinity&&runtime.storageStatus?.kind==='ok'){slot.current=null;hide(slot.panel);release(id);}
   const paused=blocked();if(!paused){model.tick(dt);quiet=Math.max(0,quiet-dt);}
   for(const [id,slot]of timed){
    // Routine context gets stale during lessons. Never replay it afterwards.
-   if(['zone','phrase','toast'].includes(id)&&document.body.classList.contains('first-journey')){slot.panel.hidden=true;slot.queue.length=0;slot.current=null;model.cancel(id);continue;}
+   if(['zone','phrase','toast'].includes(id)&&document.body.classList.contains('first-journey')&&slot.current?.seconds!==Infinity&&!slot.queue.some(e=>e.seconds===Infinity)){slot.panel.hidden=true;slot.queue.length=0;slot.current=null;model.cancel(id);continue;}
    if(paused){slot.panel.hidden=true;continue;}
    slot.queue=slot.queue.filter(e=>e.expires>now&&e.valid());
    if(slot.current&&model.owner!==id){slot.current=null;slot.panel.hidden=true;}
@@ -61,7 +62,7 @@ export function installNoticeLane(runtime){
     while(slot.queue[0]?.level===1&&now-(started.get(1)??-Infinity)<NOTICE_STYLES[1].cooldown)slot.queue.shift();
     if(!slot.queue.length){model.cancel(id);continue;}
     request(id,{level:slot.queue[0].level});if(slot.queue[0].paced&&slot.queue[0].level===2&&now-(started.get(2)??-Infinity)<NOTICE_STYLES[2].cooldown)continue;if(!claim(id))continue;
-    slot.current=slot.queue.shift();slot.left=slot.current.seconds;started.set(slot.current.level,now);slot.panel.dataset.noticeLevel=String(slot.current.level);slot.current.render();show(slot.panel);
+    slot.current=slot.queue.shift();slot.left=slot.current.seconds;started.set(slot.current.level,now);slot.panel.dataset.detail=slot.current.detail;slot.panel.dataset.noticeLevel=String(slot.current.level);slot.current.render();if(slot.current.seconds===Infinity){slot.panel.setAttribute('role','button');slot.panel.tabIndex=0;}else{slot.panel.removeAttribute('role');slot.panel.removeAttribute('tabindex');}show(slot.panel);
    }else if(show(slot.panel)){slot.left-=dt;if(slot.left<=0){hide(slot.panel);slot.current=null;release(id);if(slot.queue.length)request(id,{level:slot.queue[0].level});}}
   }
   for(const fn of callbacks.values())fn(dt);

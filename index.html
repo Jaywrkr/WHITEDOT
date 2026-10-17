@@ -42,6 +42,7 @@
   <small class="element-count" id="elementCount">Elementos 0</small>
   <small class="walk-distance" id="walkDistance" aria-label="Distancia caminada">Caminado · 0 m</small>
   <small id="sparkCount" class="spark-count"><span id="sparkTotal">✦ 0</span><span id="sparkGain" aria-live="polite"></span></small>
+  <button id="sparkGoal" class="spark-goal" hidden></button><small id="sparkTitleHud" class="spark-title"></small><div id="sparkPowerHud" class="spark-power" hidden><span id="sparkPowerText"></span><button id="sparkPowerUndo">Deshacer</button></div>
   <div class="stats">
     <div title="Racha">RACHA <b id="streak">0</b></div>
     <div title="Estrellas">★ <b id="starsN">0</b></div>
@@ -81,7 +82,7 @@
   <button class="ico round" id="bLoop" aria-label="Grabar un eco de 2 compases" title="Eco: grabar 2 compases" hidden><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 8v4l3 2"/></svg></button>
   <button class="ico round" id="bDeploy" aria-label="Desplegar Estudio aquí" title="Desplegar Estudio aquí" hidden><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg></button>
   <button class="ico round" id="bAuto" aria-label="Iniciar paseo musical" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></svg></button>
-  <button class="ico" id="bJump" aria-label="Saltar a otro paisaje musical" hidden>Saltar</button>
+
   <button class="ico" id="bStyles" aria-label="Elegir estilo musical" hidden>Estilos</button>
   <button class="ico round" id="bMenu" aria-label="Menú"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
 </div>
@@ -128,11 +129,21 @@
 
 <div class="modal" id="mSeeds" hidden><div class="sheet"><h2>Semillas de prueba</h2><p id="seedSummary">Tu progreso de cada semilla se conserva.</p><p id="seedInfo"></p><label for="seedGeneration">Paisaje</label><select id="seedGeneration"><option value="2">Paisajes vivos · explorar</option><option value="1">Original · volver y comparar</option></select><label for="seedLayout">Espacio</label><select id="seedLayout"><option value="immense">Inmenso · regiones de 100.800</option><option value="grand">Gran territorio · regiones de 50.400</option><option value="vasto">Vasto · regiones de 18.000</option><option value="wide">Amplio · más espacio</option><option value="classic">Clásico · comparar</option></select><form id="seedForm" class="row"><label for="seedValue">Semilla</label><input id="seedValue" maxlength="40" autocomplete="off"><button type="submit">Probar</button></form><div class="row" id="seedPresets"><button data-seed="blobs-01">Blobs I</button><button data-seed="blobs-02">Blobs II</button><button data-seed="bosque-01">Otra tierra</button><button data-seed="humedal-01">Humedal</button><button data-seed="salinas-01">Salinas</button><button data-seed="basalto-01">Basalto</button><button data-seed="micelio-01">Micelio</button></div><div class="row"><button id="seedNext">Otra semilla</button><button id="seedCenter">Volver al centro</button><button id="seedOriginal">Mi partida</button><button id="seedClose">Cerrar</button></div></div></div>
 <div class="modal" id="mSaveTools" hidden><div class="sheet"><h2>Guardar copia</h2><p>Tu progreso y tus lugares, en un archivo. Guárdalo.</p><p id="saveStatus" role="status"></p><div class="row"><button id="saveExport">Exportar esta partida</button><button id="saveOriginal" hidden>Exportar original conservado</button><button id="saveRecover" hidden>Recuperar copia válida</button></div><label for="saveImportFile">Elegir copia de esta partida</label><input id="saveImportFile" type="file" accept="application/json,.json"><p>Restaurar reemplaza esta partida. Antes se guarda una copia.</p><div class="row"><button id="saveImportApply" disabled>Restaurar copia elegida</button><button id="saveToolsClose">Cerrar</button></div></div></div>
+<div class="modal" id="mSparks" role="dialog" aria-modal="true" aria-labelledby="sparkHeading" hidden><div class="sheet sparks-sheet">
+<header><h2 id="sparkHeading">Tu recorrido</h2><button id="sparkClose" aria-label="Cerrar chispas">×</button></header><strong id="sparkBalance"></strong><small id="sparkLedger"></small><p id="sparkStatus" role="status"></p>
+<section><h3>Viajar</h3><p>Explora otro paisaje. Regresa gratis al punto anterior.</p><div class="row"><button id="bJump" hidden>Saltar · 20 ✦</button><button id="sparkBack">Volver gratis</button></div></section>
+<label for="sparkGoalSelect">Tu próxima meta</label><select id="sparkGoalSelect"></select>
+<section><h3>Tu cubo · compras permanentes</h3><div id="sparkPreview"></div><p id="sparkPreviewLabel"></p><div id="sparkShop" class="spark-grid"></div></section>
+<section><h3>Colecciones</h3><div id="sparkSets" class="spark-grid"></div></section>
+<details><summary>Logros e hitos</summary><div id="sparkBadges"></div></details><label for="sparkTitle">Tu título</label><select id="sparkTitle"></select>
+<details><summary>Historial de recompensas</summary><div id="sparkLog"></div></details>
+</div></div>
 <div class="modal menu" id="mMenu" hidden>
   <div class="sheet menu-sheet">
     <header class="menu-heading"><div><small>Tu espacio</small><h2 id="menuTitle">WHITEDOT</h2></div><button id="mnClose" class="sheet-close" aria-label="Cerrar menú">×</button></header>
     <div class="menu-sections">
     <section class="menu-group primary"><h3>Jugar</h3><div class="tiles">
+      <button id="bSparks"><span>Viajar y chispas</span></button>
       <button id="bWorld"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/></svg><span>Mundo</span></button>
       <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Casa</span></button>
       <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>

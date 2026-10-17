@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';
+import {normalizeSparkEconomy,creditSparks,debitSparks,claimSparkReward,sparkSetProgress,SPARK_JUMP_COST} from '../src/sparks-model.js';
+import {initialize} from '../src/sparks.js';
+const day='2026-10-16';let s={sparks:42,todayKey:day};s.sparkEconomy=normalizeSparkEconomy(null,s.sparks,day);assert.equal(s.sparkEconomy.earned,42);
+assert.equal(creditSparks(s,3),3);assert(debitSparks(s,20));assert(!debitSparks(s,999));assert.equal(s.sparks,25);assert.equal(s.sparkEconomy.earned-s.sparkEconomy.spent,s.sparks);
+assert(claimSparkReward(s,'set:one',15,'Uno'));assert(!claimSparkReward(s,'set:one',15,'Uno'));assert.equal(s.sparks,40);
+s.sparkEconomy.sites['0,0']={x:2,y:3,size:2,value:3,hits:2,broken:true,collected:true};
+let q=normalizeSparkEconomy(s.sparkEconomy,s.sparks,day);assert(q.sites['0,0'].collected);assert(q.claims['set:one']);q=normalizeSparkEconomy(q,s.sparks,'2026-10-17');assert.equal(Object.keys(q.sites).length,0);assert(q.claims['set:one']);assert.equal(q.earned-q.spent,s.sparks);
+const future={version:8,secret:17};assert.equal(normalizeSparkEconomy(future,100,day),future);
+const cards=['perc','bajo','lead','acorde'].map((role,i)=>({type:'voice:'+i,context:{role}}));cards.push({type:'living:deer'},{type:'living:turtle'},{type:'living:whale'},{type:'relic:ordinary'},{type:'anomaly:espejo'},{type:'event:lluvia'});
+assert.deepEqual(sparkSetProgress({rareBook:{items:cards}}),{band:4,neighbors:3,wonders:3});assert.equal(sparkSetProgress({rareBook:{items:cards.map(c=>({...c,forced:true}))}}).band,0);
+globalThis.document={hidden:false,querySelector:()=>null,querySelectorAll:()=>[]};let fail=false,saved=null;
+function runtime(state){const nodes={};const $=id=>nodes[id]||=( {hidden:false,textContent:'',innerHTML:'',dataset:{},classList:{toggle(){}},addEventListener(){}} );const r={S:state,$,inWorld:()=>state.mode==='world',save:()=>{if(fail)return false;saved=structuredClone(r.S);return true;},toast(){},W:390,H:844,playerProfile:{distanceUnits:0},jumpPracticePlace:()=>true,returnPracticePlace:()=>true};initialize(r);return r;}
+let r=runtime({mode:'world',todayKey:day,sparks:200,pathCrystals:[],playerProfile:{distanceUnits:0}});
+assert(r.buySparkStyle('dust'));assert.equal(r.S.sparks,160);assert(!r.buySparkStyle('dust'));assert.equal(r.S.sparks,160);assert(r.equipSparkStyle('dust'));assert(!r.equipSparkStyle('orbit'));
+fail=true;assert(!r.buySparkStyle('facet'));assert.equal(r.S.sparks,160);assert(!r.sparkEconomy.purchases.facet);fail=false;
+const ticket=r.reserveSparkJump();assert(ticket);assert.equal(r.S.sparks,160-SPARK_JUMP_COST);r.cancelSparkJump(ticket);assert.equal(r.S.sparks,160);assert.equal(r.sparkEconomy.stats.jumps,0);
+const crystal={id:'a',x:20,y:0,size:2,value:3};assert.equal(r.crystalTransaction(crystal,'hit').hits,1);fail=true;assert.equal(r.crystalTransaction(crystal,'hit'),null);assert.equal(r.savedCrystal('a').hits,1);fail=false;
+assert(r.crystalTransaction(crystal,'hit').broken);assert(!r.savedCrystal('a').collected);assert(r.crystalTransaction(crystal,'collect').collected);assert.equal(r.S.sparks,163);
+assert(r.crystalTransaction(crystal,'collect').collected);assert.equal(r.S.sparks,163,'collect never pays twice');
+r=runtime(structuredClone(saved));assert(r.savedCrystal('a').collected);assert.equal(r.S.sparks,163,'reload keeps mining and wallet');
+r.S.rareBook={items:cards};for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,218);const amount=r.S.sparks;for(let i=0;i<6;i++)r.sparkTick(.1);assert.equal(r.S.sparks,amount,'retroactive sets pay once');
+r.S.playerProfile.distanceUnits=10000;for(let i=0;i<6;i++)r.sparkTick(.1);assert(r.sparkEconomy.claims['distance:1000']);assert(r.sparkEconomy.claims['badge:taxi']);assert.equal(r.sparkEconomy.earned-r.sparkEconomy.spent,r.S.sparks);
+r.drawSparkEconomyHUD();assert(r.$('sparkTotal').textContent.includes(String(r.S.sparks)));
+const demo=runtime({mode:'world',todayKey:day,sparks:0,pathCrystals:[]});demo.labMode=true;assert.equal(demo.crystalTransaction(crystal,'hit'),null);assert.equal(demo.S.sparks,0);
+const f=runtime({mode:'world',todayKey:day,sparks:20,pathCrystals:[],sparkEconomy:future});assert(!f.buySparkStyle('dust'));assert.equal(f.sparkEconomy,future);
+console.log('PASS wallet conservation, migration/future saves, daily depletion, atomic save failure, permanent purchases/equipment, jump rollback, retroactive one-time sets, distance badges and demo rejection');

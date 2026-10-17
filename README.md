@@ -1,3 +1,7 @@
+## Chispas y recorrido
+
+Rompe cristales para reunir chispas. La minería del día se conserva al recargar. Menú → Viajar y chispas permite pagar un salto (20), regresar gratis, comprar/equipar tres detalles visuales y elegir una próxima meta. Colecciones, logros secretos y distancia dejan títulos y recompensas permanentes; los hallazgos anteriores cuentan. Los avisos son breves y las cajas duran 10–20 segundos. [Reglas, pruebas y límites](CAMBIOS.md).
+
 <!-- reencuentro -->
 [Plan vigente: recuperar música e identidad del universo](PLAN_REENCUENTRO.md). Habitantes subidos; ampliación 8 de pulsos implementada localmente, auditoría y cuatro suites enfocadas aprobadas; navegador/CI pendientes. [Propuesta posterior](PROPUESTA_PULIDO_EXPERIENCIA.md).
 <!-- /reencuentro -->

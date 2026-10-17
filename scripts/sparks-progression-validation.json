@@ -1,0 +1,97 @@
+{
+  "base": "81856a3",
+  "branch": "feat/sparks-progression",
+  "nodeSuites": 106,
+  "audit": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "browser": [
+    "sparks_economy_smoke.py",
+    "crystal_path_smoke.py",
+    "crystal_sparks_smoke.py",
+    "sparks_notice_smoke.py"
+  ],
+  "audio": {
+    "command": "python tests/celebration_mix.py",
+    "renders": 6,
+    "maxPeak": 0.8826345801353455,
+    "sampleRates": [
+      44100,
+      48000
+    ]
+  },
+  "calibration": {
+    "method": "Three ten-minute simulated walking routes, sinusoidal lateral movement, real pulse crossings/mining and collection. No player steering towards deposits, no human timing claim.",
+    "results": [
+      {
+        "seconds": 600,
+        "speedUnitsPerSecond": 40,
+        "manualPulseEverySeconds": 0.9,
+        "crystals": 21,
+        "sparks": 31
+      },
+      {
+        "seconds": 600,
+        "speedUnitsPerSecond": 80,
+        "manualPulseEverySeconds": 0.9,
+        "crystals": 46,
+        "sparks": 90
+      },
+      {
+        "seconds": 600,
+        "speedUnitsPerSecond": 120,
+        "manualPulseEverySeconds": 0.9,
+        "crystals": 79,
+        "sparks": 129
+      }
+    ]
+  },
+  "limits": [
+    "Focused suites, not full browser/audio CI.",
+    "Prices informed by simulated routes, not human play-time validation.",
+    "Local per-save wallet; no server-side anti-tamper or trading.",
+    "Daily mining record bound: 8192 sites.",
+    "Destellos and personal constellation remain the agreed later expansion."
+  ],
+  "commands": [
+    "npm run audit:release",
+    "npm run test:impact -- --base 81856a3",
+    "node tests/sparks-economy.mjs",
+    "node scripts/sparks-calibration.mjs",
+    "python tests/sparks_economy_smoke.py",
+    "python tests/sparks_notice_smoke.py",
+    "python tests/crystal_path_smoke.py",
+    "python tests/crystal_sparks_smoke.py",
+    "python tests/power_cards_smoke.py",
+    "python tests/wow_smoke.py",
+    "python tests/practice_travel_smoke.py",
+    "python tests/interface_cards_smoke.py",
+    "python tests/celebration_mix.py"
+  ],
+  "sourceHashesUTF8NormalizedLF": {
+    "src/box-surprises-model.js": "1161538fbd3184e462ef57b6b1c89703cba895e0f89cc0a88b53b93306f10804",
+    "src/box-surprises.js": "9d9d1d3436c28c9d7f0a31d0480d33a9204d0d706714991fc2c008a962200e1f",
+    "src/cajas.js": "e80cf11b21e4d55ffb10f2d81f3fec3a5353bba4357f6ce8fc98ab70609dd9d9",
+    "src/celebration-model.js": "4f394e7481958dc685d9295087163ffb785beb17123be35f99190190484160ee",
+    "src/celebration.js": "277b65e97ac6fa8db0d4dee856e6b8c40b60003d338686a54702ba488b5ee625",
+    "src/crystal-sparks.js": "892f0836fe17cac6863ff3ff09410560f619caa41ba8bcb2b78af079d1f242fe",
+    "src/expansion-music.js": "106daa9e9666db6433ea2e73a3d55a0ea59b0f74dd9ed195873918bb4374c3cd",
+    "src/main.js": "d614f5aae4c8f97d2312e05481f8658d0ada7e93262abc22f71cc0e17959d335",
+    "src/notice-lane.js": "927e11ac6d7644e291de1ac2fb9722dc6dc568d0fda878864d3b8aad72b446b3",
+    "src/power-clock.js": "49bd0d6037d18022aefdff6c57b96342eea3a17aa7fe98e071dadbc05ea91e86",
+    "src/practice-travel.js": "5fa1a51f4f502fbe4fb0cbc3241f9e16bafc43d09215cfe25f42fb04ac344e70",
+    "src/rare-cards.js": "98711790d61d9f23602b0fc46586d76abd01f3144417bbaba46c1d4f710946f3",
+    "src/render.js": "f3b70928c82ac25114b04d4f2fafcea0cea04f2daeadc49dd14c01af124074ef",
+    "src/save-store.js": "1452fc259d6bf6394d0819da262ec43672dfd9b43b240bf347bd30e91910b6cd",
+    "src/sparks-model.js": "cd413ec850ba3ffff103c0cc3e0f5a94ea7557a6647a38064a5aefd042f84ebe",
+    "src/sparks.js": "20328484396b3b0d3244afb2b3fa3f24865482189a52c35d9a2357973d762f14",
+    "src/ui.js": "99c4cf864c2bccee52c93bc2905758cca1a12eecdad5e3bb422f4cec51c1a7ec"
+  },
+  "browserCompatibility": [
+    "power_cards_smoke.py",
+    "wow_smoke.py",
+    "practice_travel_smoke.py",
+    "interface_cards_smoke.py"
+  ]
+}

@@ -22,7 +22,8 @@ try:
    page.evaluate("""()=>{const r=__r,o=r.nearbyPercussion()[0];r.S.wx=o.x;r.S.wy=o.y;}""")
    page.wait_for_function("!document.getElementById('rareNotice').hidden")
    assert page.locator('#rareNotice').get_attribute('data-earned')=='false','forced lab samples never receive acquisition shine'
-   portrait=page.locator('#rareNoticeArt')
+   page.locator('#rareNoticeOpen').click()
+   portrait=page.locator('.rare-card .rare-portrait').first
    box=portrait.bounding_box();assert box and box['width']>20
    event={'pointerId':1,'pointerType':'touch','clientX':box['x']+box['width']*.9,'clientY':box['y']+box['height']*.1}
    portrait.dispatch_event('pointerdown',event)
@@ -30,7 +31,6 @@ try:
    assert abs(portrait.evaluate("e=>parseFloat(e.style.getPropertyValue('--wow-tilt-x'))"))<=3
    portrait.dispatch_event('pointercancel',event)
    assert not portrait.evaluate("e=>e.classList.contains('wow-depth')")
-   page.locator('#rareNoticeOpen').click()
    page.locator('.rare-card').first.locator('button').first.focus()
    assert page.locator('.rare-card.wow-selected').count()==1
    page.emulate_media(reduced_motion='reduce')

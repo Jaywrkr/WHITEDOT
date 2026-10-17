@@ -43,12 +43,12 @@ export const quietStart=(saved)=>QUIET_STAGES[Math.max(0,Math.floor((saved||0)/2
 
 // ---------- cajas misteriosas y poderes ----------
 export const POWERS={
- campo:{name:'Campo de escucha',seconds:150,text:'Acércate; las voces del círculo destacan sobre la base electrónica.'},
- cometa:{name:'Cometa',seconds:90,text:'Muévete rápido; deja una estela que suena.'},
- brujula:{name:'Brújula',seconds:180,text:'Sigue su giro hacia un encuentro cercano.'},
- iman:{name:'Imán',seconds:120,text:'Acércate; lo pequeño orbita y toca contigo.'},
- pincel:{name:'Pincel sonoro',seconds:120,text:'Dibuja un camino; tus notas vuelven durante unos minutos.'},
- companero:{name:'Compañero',seconds:240,text:'Camina acompañado; una voz contesta tus gestos.'}
+ campo:{name:'Campo de escucha',seconds:20,text:'Acércate; las voces del círculo destacan sobre la base electrónica.'},
+ cometa:{name:'Cometa',seconds:20,text:'Muévete rápido; deja una estela que suena.'},
+ brujula:{name:'Brújula',seconds:20,text:'Sigue su giro hacia un encuentro cercano.'},
+ iman:{name:'Imán',seconds:20,text:'Acércate; lo pequeño orbita y toca contigo.'},
+ pincel:{name:'Pincel sonoro',seconds:20,text:'Dibuja un camino; tus notas vuelven durante unos segundos.'},
+ companero:{name:'Compañero',seconds:20,text:'Camina acompañado; una voz contesta tus gestos.'}
 };
 export const POWER_IDS=Object.keys(POWERS);
 export const BOX_RARITY=.16;   // fracción de chunks de tierra con una caja (más en mundos vastos por tamaño)

@@ -18,7 +18,7 @@ export function normalizeGiftBoxes(items){const seen=new Set();return (Array.isA
 // The same bounded, nearby musical group moves, plays and lights up.
 export function magnetFollowers(near,x,y){return (near||[]).filter(o=>Number.isFinite(o.x)&&Number.isFinite(o.y)&&!o.pond&&typeof o.snd==='function'&&Math.hypot(o.x-x,o.y-y)<180).sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y)).slice(0,8);}
 export function initialize(runtime){
- const clock=createPowerClock(POWERS),S=()=>runtime.S,powers=clock.powers,spawned=[],trail=[],marks=[],companion={id:'power:companero',x:0,y:0,on:false,lit:0,heard:[],species:null};let previous=S(),lastMark=null;
+ const clock=createPowerClock(POWERS,{stack:1}),S=()=>runtime.S,powers=clock.powers,spawned=[],trail=[],marks=[],companion={id:'power:companero',x:0,y:0,on:false,lit:0,heard:[],species:null};let previous=S(),lastMark=null;
  S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};
  const surface=()=>runtime.inWorld()&&(S().layer||'superficie')==='superficie';
  const now=clock.now;
@@ -115,14 +115,13 @@ export function initialize(runtime){
   if(has('brujula')||companion.on)for(const tg of rareTargets().slice(0,has('brujula')?4:1)){const a=Math.atan2(tg.y-S().wy,tg.x-S().wx),r=Math.min(cx,cy)-46,x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;
    c.save();c.translate(x,y);c.rotate(a);c.globalAlpha=.85;c.fillStyle=WORLD_VISUAL.gold;c.beginPath();c.moveTo(10,0);c.lineTo(-6,-6);c.lineTo(-6,6);c.closePath();c.fill();c.restore();
    c.globalAlpha=.75;c.fillStyle=WORLD_VISUAL.gold;c.font='9px "Geist Mono", monospace';c.textAlign='center';c.fillText(`${tg.name} · ${Math.round(tg.d/10)} m`,x-Math.cos(a)*22,y-Math.sin(a)*22+3);}
-  // Poderes activos: un renglón discreto arriba.
-  const active=activePowers(powers,now());if(active.length){c.globalAlpha=.75;c.fillStyle=WORLD_VISUAL.gold;c.font='10px "Geist Mono", monospace';c.textAlign='center';c.fillText(active.map(p=>`${POWERS[p.id].name} ${Math.ceil(p.left)} s`).join(' · '),cx,Math.min(runtime.H-60,180));}
   c.restore();
  }
  function clear(){clock.clear();spawned.length=0;trail.length=0;marks.length=0;companion.on=false;companion.heard=[];companion.species=null;lastMark=null;runtime.fieldSolo=false;runtime.speedBoost=1;}
+ function undo(){if(S().boxPowers?.version>1)return false;const gifts=spawned.slice();clear();spawned.push(...gifts);S().boxPowers=snapshot();runtime.save?.();return true;}
  function restore(){clock.restore(S().boxPowers);spawned.push(...normalizeGiftBoxes(S().giftBoxes));if(has('companero')){companion.on=true;companion.x=S().wx+30;companion.y=S().wy+30;const saved=S().boxPowers?.companion;companion.species=PET_SPECIES[saved?.species]?saved.species:null;companion.heard=Array.isArray(saved?.heard)?saved.heard.filter(Number.isFinite).slice(-4):[];}if(has('pincel')&&Array.isArray(S().boxPowers?.marks))for(const m of S().boxPowers.marks.slice(-16))if(Number.isFinite(m.x)&&Number.isFinite(m.y)&&Number.isInteger(m.degree)&&m.degree>=0&&m.degree<7&&Number.isInteger(m.step)&&m.step>=0&&m.step<16)marks.push({...m,lit:0});lastMark=marks.at(-1)||null;runtime.speedBoost=has('cometa')?2.2:1;runtime.fieldSolo=has('campo');}
  function ensureOwner(){if(previous!==S()){previous=S();clear();S().boxes=typeof S().boxes==='object'&&S().boxes?S().boxes:{};restore();}}
  function snapshot(){ensureOwner();const raw=S().boxPowers;if(raw?.version>1)return raw;const data=clock.snapshot();return {...raw,...data,remaining:{...raw?.remaining,...data.remaining},elapsed:{...raw?.elapsed,...data.elapsed},companion:{...raw?.companion,species:companion.species,heard:[...companion.heard]},marks:marks.map(m=>({x:m.x,y:m.y,degree:m.degree,step:m.step}))};}
  restore();
- Object.defineProperties(runtime,{powerFieldRadius:{get:()=>listeningRadius},snapshotPowers:{get:()=>snapshot},powerSecondsLeft:{get:()=>left},clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
+ Object.defineProperties(runtime,{undoBoxPowers:{get:()=>undo},powerFieldRadius:{get:()=>listeningRadius},snapshotPowers:{get:()=>snapshot},powerSecondsLeft:{get:()=>left},clearPowers:{get:()=>clear},boxesNear:{get:()=>boxesNear},spawnBox:{get:()=>spawnBox},givePower:{get:()=>give},powers:{get:()=>powers},cajasTick:{get:()=>tick},cajasStep:{get:()=>step},drawCajas:{get:()=>draw},powerHear:{get:()=>hear},rareTargets:{get:()=>rareTargets},hasPower:{get:()=>has}});
 }

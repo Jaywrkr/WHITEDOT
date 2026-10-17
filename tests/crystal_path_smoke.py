@@ -18,7 +18,7 @@ try:
   page.on('response', lambda r: sessions.append(r.status) if r.url.endswith('/api/session') else None)
   page.route('**/src/main.js', lambda route: route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;', content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/')
-  page.wait_for_function('!!window.__r?.crystalTick')
+  page.wait_for_function('!!window.__r?.sparkTick')
   assert page.locator('#mHelpC .firma').inner_text()=='.simple'
   page.locator('#hcGo').click()
   assert page.evaluate('__r.S.mode')=='camino'
@@ -29,7 +29,7 @@ try:
   page.mouse.click(30,422);page.wait_for_timeout(1000)
   partial=page.evaluate('__r.S.pathCrystals.length')
   assert 0<partial<10
-  page.evaluate('__r.save()');page.reload();page.wait_for_function('!!window.__r?.crystalTick')
+  page.evaluate('__r.save()');page.reload();page.wait_for_function('!!window.__r?.sparkTick')
   assert page.evaluate('__r.S.pathCrystals.length')==partial
   assert page.evaluate('__r.S.mode')=='camino'
   for i in range(10):
