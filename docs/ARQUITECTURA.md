@@ -32,6 +32,10 @@ La generación existente depende de semillas: no insertar consumos en su RNG. Lo
 
 Los poderes originales de cajas duran 20 segundos; las sorpresas, entre 10 y 20, sin acumular duraciones. No añadir sonidos a botones ni modificar síntesis/composición incidentalmente. `world-visibility.js` lee `beat()` para modular suavemente el brillo cercano; no programa audio ni altera la niebla. Se desactiva con silencio, pausa y movimiento reducido.
 
+## Interfaz y aprendizaje
+
+`styles/estilo-j.css` unifica paneles, cabeceras, campos y controles adaptables. El menú conserva IDs y funciones; agrupa juego y espacio personal. `onboarding-model.js` mantiene hechos aprendidos en el guardado, incluido el pulso del Camino. `onboarding.js` muestra el progreso real de cristales; `voice-guide.js` conserva la guía opcional de consulta. El HUD de chispas se limita al Mundo y distingue metas cumplidas; el panel usa las mismas restricciones de viaje que el control principal.
+
 ## Servicio opcional
 
 [Servidor y duetos](SERVIDOR_Y_DUETOS.md) describe el backend Python/SQLite. El alojamiento estático no ejecuta esa API: `GET /api/session` puede devolver 404 y la conexión lo controla. Es independiente del renderizado. No presentar el servicio opcional como desplegado o aceptado en producción.

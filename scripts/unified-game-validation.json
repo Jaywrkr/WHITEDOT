@@ -1,0 +1,38 @@
+{
+  "base": "97f0729",
+  "branch": "fix/unified-game-loop",
+  "version": "2.3.0-alpha.45",
+  "commands": {
+    "node scripts/test-impact.mjs --base 97f0729": "PASS 10 affected Node suites",
+    "python tests/game_loop_smoke.py": "PASS real manual Camino/crystals, natural totem/card, mined wallet, purchase/equip, paid jump/free return, optional goal and reload",
+    "python tests/panel_polish_smoke.py": "PASS intro/manual pulse/crystal progress/resume; eight panels at 320x640, 390x844, 844x390, 1280x800; horizontal overflow, sticky close, focus containment, reduced motion",
+    "python tests/guide_smoke.py": "PASS 320/390/844 widths; ten-crystal gate contract, history preservation, next-day Camino and quiet guide",
+    "python tests/offline_smoke.py": "PASS 227 cached modules and offline reload, missing JS fails instead of HTML",
+    "npm run audit:release": "PASS zero errors/warnings",
+    "npm test": "Initial attempt stopped because python3 was absent. PASS all 168 Node suites with external NODE_OPTIONS adapter mapping python3 to C:/Python314/python.exe; no skipped tests.",
+    "git diff --check": "PASS"
+  },
+  "environment": {
+    "browser": "installed Google Chrome, headless",
+    "python": "Python 3.14, isolated Playwright 1.62.0 under work/test-python",
+    "audit": "exact Git font-license bytes restored locally for hash audit, excluded from commit",
+    "nodeAdapter": "NODE_OPTIONS=--import=file:///C:/Users/jcjaramillov/Documents/Codex/2026-10-16/referenced-chatgpt-conversation-this-is-an/work/python3-test-adapter.mjs"
+  },
+  "limitations": [
+    "No full browser/audio suites, CI, deployment or physical-device acceptance.",
+    "No audio code, map generation, economic prices/rewards or save-format changes.",
+    "Browser fixtures locate natural objects and advance coordinates to keep the end-to-end test bounded; manual pulses, transactions and UI actions are real.",
+    "Contextual first-feature overlays were not added; existing guide, tutorial and notification mechanisms are retained."
+  ],
+  "sha256Utf8Lf": {
+    "src/sparks.js": "bedafcb09c99a8c17c26491c9efa5fa825ae3966e6865288847c987016887858",
+    "src/onboarding.js": "80fe9e2d3fc2dcc03454f71aed5a031dda555509d80a0c2af7b79759c8f11b7d",
+    "src/onboarding-model.js": "76ad9449d1418cc8019b90770a782809a41f8a21c519299ab10ebe220570e771",
+    "src/interactions.js": "36ab0c88fd5868a3ccee2f6261ccb165bbf5b8f4f880c0db55fa8b9a4c5ff941",
+    "styles/estilo-j.css": "7fd6a87b3da765a17ed6abc02684b039559dafe68ef6feef194cb1b95c6423e3",
+    "index.html": "2f28335840559a9a1686b5f0a9add80e426cdddc57de9acd1f251dd4364d4751",
+    "tests/game_loop_smoke.py": "a77e761a53009225a0dce346f8213ccf78b4e8aac1a2632f07b5100395e7e7cc",
+    "tests/panel_polish_smoke.py": "e4111db23d059c243ecdf0a507b545f2df78144b2dd9f1f93d277ea1ed57e091"
+  },
+  "nodeSuites": 168
+}

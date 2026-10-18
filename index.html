@@ -135,8 +135,8 @@
 <section><h3>Viajar</h3><p>Explora otro paisaje. Regresa gratis al punto anterior.</p><div class="row"><button id="sparkJump">Saltar · 20 ✦</button><button id="sparkBack">Volver gratis</button></div></section>
 <label for="sparkGoalSelect">Tu próxima meta</label><select id="sparkGoalSelect"></select>
 <section><h3>Tu cubo · compras permanentes</h3><div id="sparkPreview"></div><p id="sparkPreviewLabel"></p><div id="sparkShop" class="spark-grid"></div></section>
-<section><h3>Colecciones</h3><div id="sparkSets" class="spark-grid"></div></section>
-<details><summary>Logros e hitos</summary><div id="sparkBadges"></div></details><label for="sparkTitle">Tu título</label><select id="sparkTitle"></select>
+<section><h3>Colecciones</h3><p>Las tarjetas que encuentras completan estos conjuntos y dan chispas una sola vez. Consúltalas en tu libro.</p><div id="sparkSets" class="spark-grid"></div></section>
+<details><summary>Logros e hitos</summary><p>Caminar desbloquea títulos; los logros sorprenden durante el viaje.</p><div id="sparkBadges"></div></details><label for="sparkTitle">Tu título</label><select id="sparkTitle"></select>
 <details><summary>Historial de recompensas</summary><div id="sparkLog"></div></details>
 </div></div>
 <div class="modal menu" id="mMenu" hidden>
@@ -144,13 +144,16 @@
     <header class="menu-heading"><div><small>Tu espacio</small><h2 id="menuTitle">WHITEDOT</h2></div><button id="mnClose" class="sheet-close" aria-label="Cerrar menú">×</button></header>
     <div class="menu-sections">
     <section class="menu-group primary"><h3>Jugar</h3><div class="tiles">
-      <button id="bSparks"><span>Viajar y chispas</span></button>
+      <button id="bSparks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 6 9-6 9-6-9Z M6 12h12M12 3v18"/></svg><span>Viajar y chispas</span></button>
       <button id="bWorld"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/></svg><span>Mundo</span></button>
       <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Casa</span></button>
-      <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
       <button id="bMap"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mapa</span></button>
+    </div></section>
+    <section class="menu-group"><h3>Tu espacio</h3><div class="tiles">
+      <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
       <button id="bFavorites"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Favoritos</span></button>
       <button id="bCube"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/><path d="M3 3h3M18 21h3"/></svg><span>Tu cubo</span></button>
+      <button id="bProfile"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="4" width="6" height="6"/><path d="M5 21v-4a7 7 0 0114 0v4"/></svg><span>Tu perfil</span></button>
     </div></section>
     <section class="menu-group"><h3>Crear</h3><div class="tiles">
       <button id="bTools" aria-expanded="false" title="Efectos, eco de 2 compases y desplegar Estudio" hidden><svg viewBox="0 0 24 24"><path d="M6 4v16M12 4v16M18 4v16M4 9h4M10 15h4M16 7h4"/></svg><span>Herramientas</span></button>
@@ -162,8 +165,7 @@
       <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
       <button id="bJumpBack" hidden><span>Volver al salto</span></button>
       <button id="bSettings"><span>Ajustes</span></button>
-      <button id="bProfile"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="4" width="6" height="6"/><path d="M5 21v-4a7 7 0 0114 0v4"/></svg><span>Tu perfil</span></button>
-      <button id="bGuide"><span>Tu recorrido</span></button>
+      <button id="bGuide"><span>Guía de juego</span></button>
       <button id="bConnection"><span>Cuenta y duetos</span></button>
       <button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Guardar copia</span></button>
       <button id="pwaUpdate" hidden><span>Actualizar versión disponible</span></button>
@@ -178,7 +180,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.44</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.45</span><small id="releaseDeploy">deploy sin registrar</small></div>
     <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>
@@ -210,14 +212,15 @@
 </div>
 
 <div class="modal" id="mGuide" role="dialog" aria-modal="true" aria-labelledby="guideTitle" hidden><div class="sheet guide-sheet">
- <h2 id="guideTitle">Tu recorrido</h2><div class="guide-content">
- <p>Acércate, rodea o permanece. Cada entorno responde distinto.</p>
- <p>Explora sonidos. Crea tu música. Conserva lugares y recuerdos.</p>
+ <h2 id="guideTitle">Guía de juego</h2><div class="guide-content">
+ <p>Muévete arrastrando o con las flechas. Toca un espacio vacío para lanzar un pulso.</p>
+ <p>Rompe cristales, recoge chispas y descubre voces. Elige tu próxima meta en Viajar y chispas.</p>
  <article class="journal-card"><h3>Tu siguiente paso</h3><p id="guideNext"></p><small id="guideProgress"></small></article>
  <ol id="guideJourney" class="guide-journey" aria-label="Experiencias del recorrido"></ol>
  <p>Elige tu camino. Puedes explorar sin completar esta guía.</p>
- <button id="guideGlossary" aria-expanded="false" aria-controls="guideDefinitions">Qué puedes encontrar</button><div id="guideDefinitions" hidden>
+ <button id="guideGlossary" aria-expanded="false" aria-controls="guideDefinitions">Cómo jugar y guardar</button><div id="guideDefinitions" hidden>
  <p><a id="guideCatalog" href="?testSeed=laboratorio&amp;layout=wide&amp;generation=2&amp;lab=1&amp;gallery=1">Compara elementos en el catálogo.</a></p>
+ <h3>Descubrir</h3><p><b>Tótems.</b> Pulsa para despertarlos. Algunos piden varios pulsos; acompaña las esferas que se desprenden. Cada forma deja una tarjeta.</p>
  <p><b>Voces.</b> Criaturas y plantas aportan instrumentos, ritmos o cambios musicales.</p>
  <p><b>Reliquias.</b> Despierta recuerdos musicales escuchando cerca y lanzando pulsos.</p>
  <p>Consérvalas en la Bitácora. Vuelve a tocarlas donde las encontraste.</p>
@@ -225,7 +228,10 @@
  <p><b>Cajas.</b> Descubre poderes temporales. Su tarjeta conserva el encuentro.</p>
  <p><b>Casa.</b> Coloca voces ganadas. Muévelas y compón tu espacio.</p>
  <p><b>Favoritos.</b> Guarda un lugar y regresa mediante su dirección.</p>
- <p><b>Camino.</b> Recoge una luz al empezar el día. Después, explora libremente.</p>
+ <h3>Avanzar a tu ritmo</h3><p><b>Camino.</b> Rompe diez cristales. El décimo abre el Mundo automáticamente.</p>
+ <p><b>Chispas.</b> En el Mundo, rompe cristales y recoge sus fragmentos. Saltar cuesta 20; volver al punto anterior es gratis. Las apariencias se compran una sola vez.</p>
+ <p><b>Tarjetas y distancia.</b> Las tarjetas completan conjuntos que dan chispas una vez. Caminar desbloquea títulos; las metas son opcionales.</p>
+ <h3>Conservar tu partida</h3><p>El progreso se guarda en este navegador. Menú → Guardar copia permite exportarlo antes de cambiar de dispositivo.</p>
  </div>
  </div><div class="row"><button id="guideLabPractice" aria-label="Escuchar y responder en el laboratorio">Laboratorio</button><button id="guidePractice">Practicar</button><button id="guideClose">Seguir jugando</button></div>
 </div></div>

@@ -26,3 +26,17 @@ const novice=runtime({mode:'world',todayKey:day,sparks:19,pathCrystals:[]});asse
 const demo=runtime({mode:'world',todayKey:day,sparks:0,pathCrystals:[]});demo.labMode=true;assert.equal(demo.crystalTransaction(crystal,'hit'),null);assert.equal(demo.S.sparks,0);
 const f=runtime({mode:'world',todayKey:day,sparks:20,pathCrystals:[],sparkEconomy:future});assert(!f.buySparkStyle('dust'));assert.equal(f.sparkEconomy,future);
 console.log('PASS wallet conservation, migration/future saves, daily depletion, atomic save failure, permanent purchases/equipment, jump rollback, retroactive one-time sets, distance badges and demo rejection');
+
+// The hub and HUD describe the same journey and respect the same travel restrictions.
+const loop=runtime({mode:'camino',todayKey:day,sparks:10,pathCrystals:[],playerProfile:{distanceUnits:0}});
+loop.drawSparkEconomyHUD();assert(loop.$('sparkGoal').hidden);loop.openSparks();assert(loop.$('sparkJump').disabled);assert(loop.$('sparkStatus').textContent.includes('diez cristales'));
+loop.S.playerProfile.distanceUnits=9000;loop.sparkTick(.1);loop.S.mode='world';loop.sparkTick(.1);assert.equal(loop.sparkEconomy.stats.sinceJump,0,'Camino distance cannot leak into world-only badges');
+loop.S.playerProfile.distanceUnits+=5000;loop.sparkTick(.1,true);loop.sparkTick(.1);assert.equal(loop.sparkEconomy.stats.sinceJump,0,'paused distance cannot leak into the next active frame');
+loop.S.playerProfile.distanceUnits+=20;loop.sparkTick(.1);assert.equal(loop.sparkEconomy.stats.sinceJump,20);
+loop.openSparks();assert(loop.$('sparkJump').disabled);assert(loop.$('sparkStatus').textContent.includes('10 chispas'));
+creditSparks(loop.S,50);loop.canPracticeTravel=()=>false;loop.S.practiceTravel={previous:{x:0,y:0}};loop.openSparks();assert(loop.$('sparkJump').disabled);assert(loop.$('sparkBack').disabled);
+loop.canPracticeTravel=()=>true;loop.openSparks();assert(!loop.$('sparkJump').disabled);assert(!loop.$('sparkBack').disabled);loop.drawSparkEconomyHUD();assert(loop.$('sparkGoal').textContent.includes('Salto disponible'));
+assert(loop.buySparkStyle('dust'));loop.sparkEconomy.goal='shop:dust';loop.drawSparkEconomyHUD();assert(loop.$('sparkGoal').textContent.includes('Meta cumplida'));
+loop.S.rareBook={items:cards};for(let i=0;i<6;i++)loop.sparkTick(.1);loop.sparkEconomy.goal='set:band';loop.drawSparkEconomyHUD();assert(loop.$('sparkGoal').textContent.includes('Meta cumplida'));
+loop.sparkEconomy.goal='none';loop.drawSparkEconomyHUD();assert(loop.$('sparkGoal').hidden);
+console.log('PASS connected Camino/world guidance, active-only badge distance, consistent travel availability and completed optional goals');
