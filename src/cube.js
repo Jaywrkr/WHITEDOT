@@ -1,3 +1,4 @@
+import {wonderPortrait} from './musical-wonders-art.js';
 import {normalizeCube} from './cube-model.js';
 import {CUBE_DEFAULTS,wardrobeByType,cubeStyleUnlocked} from './wardrobe-model.js';
 import {cubeSurface,cubeAura,cubeHalo,cubeTrailPreview} from './cube-art.js';
@@ -23,7 +24,8 @@ export function initialize(runtime){
   for(const [type,id]of Object.entries(groups)){$(id).replaceChildren();for(const p of wardrobeByType(type).slice().sort((a,b)=>Number(unlocked(b))-Number(unlocked(a)))){const ok=unlocked(p);if(ok)owned++;const b=document.createElement('button');b.type='button';b.className=type==='color'?'cube-swatch':'cube-option';b.dataset.locked=String(!ok);b.dataset.earned=String(ok&&!p.free);b.setAttribute('aria-label',p.name);b.setAttribute('aria-pressed',String(ok&&s[type]===p.value));b.title=ok?p.name:p.hint;
     if(type==='color'){b.style.background=ok?p.value:'#000';if(!ok)b.textContent='□';}else b.textContent=(ok?'':'□ ')+p.name;
     b.dataset.cubeStyleType=type;b.dataset.cubeStyleValue=p.value;b.disabled=current.version!==2;b.onclick=()=>inspectStyle(type,p.value);$(id).append(b);}}
-  const gifts=runtime.wonderGifts||[];$('cubeWonder').innerHTML='<option value="">Sin regalo equipado</option>'+gifts.map(d=>'<option value="'+d.id+'" '+(s.wonder===d.id?'selected':'')+'>'+d.gift+' · '+d.name+'</option>').join('');$('cubeWonder').disabled=current.version!==2||!gifts.length;
+  const gifts=runtime.wonderGifts||[],gift=gifts.find(d=>d.id===s.wonder);$('cubeWonder').innerHTML='<option value="">Sin regalo equipado</option>'+gifts.map(d=>'<option value="'+d.id+'" '+(s.wonder===d.id?'selected':'')+'>'+d.gift+'</option>').join('');$('cubeWonder').disabled=current.version!==2||!gifts.length;
+  $('cubeGiftPortrait').innerHTML=gift?wonderPortrait(gift.id):'<span aria-hidden="true">◇</span>';$('cubeGiftName').textContent=gift?gift.name:'Regalos del universo';$('cubeGiftStatus').textContent=!gifts.length?'Encuentra un hallazgo para desbloquear su regalo.':gift?(current.wonder===gift.id?'Equipado':'Vista previa · aplica para equipar'):'Elige un regalo o conserva el cubo sin adorno.';$('cubeGiftCount').textContent=gifts.length+' de 20 encontrados';
   drawPulses(s,current);
   $('cubeCount').textContent=owned+' de 50';if($('cubePulseCount'))$('cubePulseCount').textContent='Ondas '+ownedPulses(S()).size+'/50';$('cubeHint').textContent=current.version!==2?'Actualiza para editar este cubo.':inspection?inspection.hint:previewName?previewName+' · Vista previa sin guardar.':'Prueba aquí. Aplica cuando esté listo.';
   $('cubeApply').disabled=current.version!==2||!['pulse','wonder',...Object.keys(CUBE_DEFAULTS)].some(k=>s[k]!==current[k]);$('cubeRestore').disabled=current.version!==2;

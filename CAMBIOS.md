@@ -1,5 +1,15 @@
 # Cambios recientes
 
+## Identidad musical, campanas y controles nuevos
+
+Rama `fix/music-identity-menu` desde main actualizado `4c5c237`. Eliminadas las llamadas automáticas fijas de campana/cristal de float, heart y ambient. Las voces metálicas ambientales tienen un límite compartido por región de una cada ocho compases; las pistas, gestos y celebraciones conservan sus notas. Traza opcional de instrumento/origen/tiempo para verificar las rutas. No se garantiza identificar un sonido subjetivo sin una grabación del usuario; se corrigieron las rutas reproducibles encontradas.
+
+Seis familias originales amplían la reproducción de géneros compatibles: funk/disco, dub/reggae, jazz/bossa, afro/latino, folk/cuerdas y ambient/cámara, con bajos, motivos, percusión, progresiones, articulaciones y descansos propios. Buscables por nombre en Viaje musical. Sin nuevos IDs de género ni cambios de mapas, BPM, escalas, guardados, volúmenes maestros o duetos. La referencia histórica se comprueba intacta por separado; los estilos ampliados cambian su arreglo de producción deliberadamente.
+
+Regalos de Tu cubo con retrato, nombre corto, contador y estados de vista previa/equipado. Ajustes distingue textos del paisaje, La Voz y datos del mundo. Corregido checkbox estirado por reglas generales, que desbordaba en 320 px; etiquetas de familias adaptables. Versión alpha.48 mediante sellado existente.
+
+172 suites Node completas y regresiones enfocadas; 6.144 compases deterministas, rutas reales de síntesis y seis notas de celebración conservadas. Seis renders densos de veinte segundos alternando 44,1/48 kHz, pico máximo 0,915755 sin saturación, y Camino de treinta segundos sin campana/cristal automático. Chrome en 320/390/844/1280 px: regalos vacíos/completos, equipo, rollback, recarga, búsqueda y diez paneles; offline con 236 módulos. Detalle de auditoría y comandos en [el informe](scripts/music-menu-validation.json). Adaptador externo de Windows para python3. Sin certificar suites completas de navegador/audio, CI, despliegue, dispositivos físicos ni escucha física.
+
 ## Hallazgos musicales y actividades del universo
 
 Rama `feat/rare-musical-wonders`, dependiente de `b8166c0` (pulido del cubo y cristales); main remoto observado `290cd2f`. Seis esculturas dieciséis veces más raras, con celebraciones iniciales y repetidas. Veinte hallazgos con tarjeta, adorno cosmético equipable y frase musical original; treinta actividades procedurales de movimiento/contacto, con cinco chispas una vez por lugar. Catálogo en [hallazgos y actividades](docs/HALLAZGOS_Y_ACTIVIDADES.md). Semillas independientes, progreso persistente y reversión de premios ante fallos de escritura.

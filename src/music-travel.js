@@ -1,3 +1,4 @@
+import {musicFamily} from './music-families.js';
 import {microChunk} from './micro-instruments-model.js';
 import {HYBRID_STYLES,hybridIdentity} from './musical-hybrids.js';
 // Production travel selects existing terrain; it never completes the Camino or awards music.
@@ -18,13 +19,13 @@ export function initialize(runtime){
  function render(){
   $('musicTravelConnections').disabled=busy;$('musicTravelMicro').disabled=busy;
   $('musicTravelFull').disabled=busy;$('musicTravelSolo').disabled=busy;$('musicTravelBack').hidden=!runtime.S.practiceTravel?.previous;$('musicTravelBack').disabled=busy||!runtime.canPracticeTravel?.();
-  const heard=mode==='hybrids'?Object.fromEntries(Object.entries(runtime.S.journal?.music?.hybrids||{}).map(([id,v])=>['fusion:'+id,v])):runtime.S.journal?.music?.genres||{},rows=names().filter(([id,g])=>(g.name+' '+id).toLocaleLowerCase('es').includes(query));
+  const heard=mode==='hybrids'?Object.fromEntries(Object.entries(runtime.S.journal?.music?.hybrids||{}).map(([id,v])=>['fusion:'+id,v])):runtime.S.journal?.music?.genres||{},rows=names().filter(([id,g])=>(g.name+' '+id+' '+(mode==='genres'?musicFamily(id)?.name||'':'')).toLocaleLowerCase('es').includes(query));
   $('musicTravelGenres').setAttribute('aria-pressed',String(mode==='genres'));$('musicTravelHybrids').setAttribute('aria-pressed',String(mode==='hybrids'));
   $('musicTravelCount').textContent=`${names().filter(([id])=>heard[id]).length} de ${names().length} escuchados`;
   $('musicTravelList').replaceChildren(...rows.map(([id,g])=>{
    const row=document.createElement('div'),button=document.createElement('button'),check=document.createElement('span');row.className='music-destination';
    button.textContent=g.name;button.dataset.musicGenre=id;button.disabled=busy;button.setAttribute('aria-label','Viajar a '+g.name);
-   check.textContent=heard[id]?'✓ Escuchado':'Por descubrir';check.className=heard[id]?'music-heard':'';row.append(button,check);return row;
+   const family=mode==='genres'?musicFamily(id):null;check.textContent=(heard[id]?'✓ Escuchado':'Por descubrir')+(family?' · '+family.name:'');check.className=heard[id]?'music-heard':'';row.append(button,check);return row;
   }));
  }
  function reset(){if(owner!==runtime.S){owner=runtime.S;destinations.clear();search=null;generation++;busy=false;}}

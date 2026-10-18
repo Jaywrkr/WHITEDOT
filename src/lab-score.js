@@ -99,7 +99,7 @@ export function labNoteEvents(frame,step,bar){
    level:step===0?.85:.68,technique:answer&&['silk','breath'].includes(score.id)?'slide':step%4?'ghost':'normal'});
  }
  // The old pad used to fill these rests; preserve one quiet voiced pulse instead.
- if(frame.referenceOrigin&&frame.melodyRest&&(score.electronic?.count||10)<=3&&step===0)events.push({role:'lead',part:'foundation',degree:0,instrument:frame.hookI,offset:0,level:.3,technique:'muted'});
+ if(!frame.musicFamily&&frame.referenceOrigin&&frame.melodyRest&&(score.electronic?.count||10)<=3&&step===0)events.push({role:'lead',part:'foundation',degree:0,instrument:frame.hookI,offset:0,level:.3,technique:'muted'});
  // Sparse voiced harmony belongs to the arrangement, never a continuous organ bed.
  const kind=character(score.genre);
  if(!score.electronic&&step===0&&bar%8===0&&frame.section>0&&!frame.melodyRest&&score.scene!==5&&(frame.hybrid?.harmony||['warm','disco'].includes(kind)))

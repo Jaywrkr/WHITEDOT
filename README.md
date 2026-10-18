@@ -2,7 +2,7 @@
 
 Un píxel blanco en un mundo negro: explorar, descubrir y hacer música al viajar. Proyecto de Jay · [Jugar](https://whitedot-inky.vercel.app).
 
-Versión en desarrollo: **2.3.0-alpha.47**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
+Versión en desarrollo: **2.3.0-alpha.48**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
 
 ## Jugar y avanzar
 
@@ -13,6 +13,7 @@ Versión en desarrollo: **2.3.0-alpha.47**. La versión publicada depende del ú
 - Al ganar las primeras 20 chispas aparece Saltar en la pantalla principal. Cada salto cuesta 20; el botón permanece visible después de gastar. Menú → Viajar y chispas conserva el regreso gratuito y las apariencias por 40/80/150.
 - Seis tótems de color, ahora 16 veces más raros, celebran su primer despertar con un espectáculo propio. Aparecen solos o en grupos de dos o tres, en las tres capas. Despiértalos con pulsos, acompaña su esfera o sigue su orientación. Gana su tarjeta y 2 chispas por lugar al día.
 - Menú → Guía de juego permite consultar controles, descubrimientos y guardado, o repetir las ayudas. Viajar y chispas reúne compras y metas opcionales.
+- Viaje musical distingue seis familias ampliadas con patrones propios: funk/disco, dub/reggae, jazz/bossa, afro/latino, folk/cuerdas y ambient/cámara. Se pueden buscar por su nombre.
 - Veinte hallazgos excepcionales dan tarjetas y regalos visuales permanentes para Tu cubo, con frases musicales originales.
 - Treinta tipos de actividad aparecen en portales raros, con versiones por semilla. Se resuelven moviendo el cubo; la puerta permite salir. Cada lugar completado entrega 5 chispas una sola vez.
 - Ajustes permite ocultar los textos de la exploración; los menús y avisos de guardado siguen disponibles.
