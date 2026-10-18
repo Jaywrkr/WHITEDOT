@@ -1,5 +1,15 @@
 # Cambios recientes
 
+## Tótems de esculturas de color
+
+Rama `feat/sculpture-totems`, dependiente de `9889252`; main remoto observado `81856a3`, con las entregas previas pendientes. Seis siluetas/degradados inspirados en la referencia visual de Jay: torres violetas, reloj verde, esfera de ámbar, rombo azul, botella rosa y aguja de cobalto. Dibujos Canvas y retratos SVG, sin imagen externa, dependencias ni otro menú.
+
+Encuentros poco densos en celdas de 1400 unidades: 24% ocupadas, generalmente solitarios y algunos grupos de dos o tres. Semillas independientes en superficie, bajo y cielo; mapas originales intactos. Tres pulsos despiertan la torre; acompañar el remate desprendido lo devuelve; los alargados señalan un cristal o escultura real cercana. Abandonar la esfera la devuelve sin penalización. Respuestas visuales breves, sin interacción por paseo automático. Movimiento reducido usa poses estáticas.
+
+Cada forma nueva guarda su tarjeta en el libro existente. Cada lugar da 2 chispas una vez al día, hasta 64 lugares diarios; pagos persistentes y reversión en fallos de escritura. Repetir sigue permitido sin duplicar premios. Los grupos responden con hasta tres voces nativas espaciadas en la cuadrícula musical y niveles bajos; no se reescribe composición, mezcla ni síntesis. Módulos incluidos una sola vez en el shell; publicación mediante el sellado existente.
+
+Auditoría sin errores/avisos y 93 suites Node afectadas aprobadas. Recorridos Chrome en 390/1280 px, tarjetas coloreadas reales, pagos únicos tras recarga, compatibilidad de economía y offline con 227 módulos. Tres renders con las seis voces sobre mezclas densas a 44,1/48 kHz: pico 0,882648, sin saturación. Diff y capturas revisados. Comandos, huellas y límites en [el informe](scripts/sculpture-totems-validation.json). Sin certificar suites completas de navegador/audio, CI, dispositivos físicos ni despliegue.
+
 ## Cristales juguetones y chispas visibles
 
 Rama `feat/playful-crystal-sparks`, dependiente de `6fd8ec6` (entregas anteriores aún pendientes en main remoto `81856a3`). Fragmentos con esquirla de centro blanco, halo, flotación lenta y estela corta. Contador de 14 px, saldo dorado y +✦ hacia él; destello de recogida, grietas más visibles y aviso/luz única al alcanzar el primer salto disponible.

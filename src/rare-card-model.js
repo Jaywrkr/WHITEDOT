@@ -1,3 +1,4 @@
+import {TOTEMS} from './sculpture-totems-model.js';
 import {MICRO_INSTRUMENTS} from './micro-instruments-model.js';
 import {LIVING_CATALOG} from './living-catalog.js';
 import {RHYTHM_EMPTY_CHANCE,FOSSIL_DENOMINATOR} from './percussion-model.js';
@@ -18,6 +19,7 @@ export function queueRareNotice(queue,event,limit=4){
 }
 const boxChance=NATURAL_BOX_RATE/POWER_IDS.length;
 export const RARE_CARDS=Object.freeze({
+ ...Object.fromEntries(Object.entries(TOTEMS).map(([id,d])=>['totem:'+id,{name:d.name,tier:'raro',probability:null,unit:'encuentros elegibles',condition:'Escultura procedural dispersa, sola o en pequeño grupo. Su forma y presencia dependen de la semilla; frecuencia conjunta sin estimar.',text:'Despiértala con pulsos o acompaña su esfera. Una tarjeta por forma; las chispas del lugar se ganan una vez al día.',art:'totem'}])),
  ...Object.fromEntries(['grain','ring'].map(id=>['micro:'+id,{name:MICRO_INSTRUMENTS[id].name+' · singular',tier:'singular',probability:null,variantProbability:1/64,unit:'encuentros elegibles',condition:'Variante 63 entre 64 variantes de un instrumento elegible. Su presencia depende del hábitat; no es una probabilidad por hora ni por sector.',text:MICRO_INSTRUMENTS[id].hint,art:'micro'}])),
  ...Object.fromEntries(LIVING_CATALOG.map(d=>['living:'+d.id,{name:d.name,tier:d.id==='whale'?'singular':'raro',probability:d.id==='whale'||d.group==='architecture'?1/32:null,variantProbability:1/256,unit:'individuos elegibles',condition:d.id==='whale'?'Una variante de 32 candidatos de este linaje llega a manifestarse. No es una probabilidad por distancia.':d.group==='architecture'?'Variante 248 entre las 32 variantes admitidas de esta construcción. Condicionado a que el tipo esté presente; no es frecuencia por sector.':'Variante 255 entre 256 tiradas de variante. La población y presencia del linaje dependen del territorio; su frecuencia conjunta no está medida.',text:'Un ejemplar singular del universo vivo. El lugar queda guardado; la criatura o el momento pueden cambiar.',art:'living'}])),
  'event:convergence':{name:'Convergencia de lluvia y vida',tier:'singular',probability:null,unit:'encuentros elegibles',condition:'Un individuo raro fue observado durante tormenta y atardecer del ciclo local. Frecuencia conjunta sin estimar.',text:'El clima y una voz singular coincidieron durante tu recorrido.',art:'living'},

@@ -21,3 +21,5 @@ Los siete motores avanzados, tablas, granos y modelos de cuerda/membrana son sí
 ## Referencias visuales de Jay
 
 Cuatro motivos VJ locales se inspiran en documentos y previews de [Jaywrkr/TDAI2026](https://github.com/Jaywrkr/TDAI2026). Son dibujos Canvas originales; no incluyen proyectos ni assets externos. [Revisión y procedencia](docs/historial/REFERENCIAS_VJ.md), con los tutoriales citados por el repositorio de referencia.
+
+Las esculturas de color usan siluetas y degradados procedurales inspirados en la referencia visual proporcionada por Jay en esta entrega. El juego dibuja las formas en Canvas y SVG; no empaqueta la imagen de referencia.
