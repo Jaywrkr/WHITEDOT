@@ -1,3 +1,4 @@
+import {normalizeTotemClaims} from './sculpture-totems-model.js';
 import {fragmentMask} from './crystal-play-model.js';
 import {livingDefinition} from './living-catalog.js';
 // One local wallet. Claims and depletion travel with the exported save.
@@ -37,7 +38,7 @@ export function normalizeSparkEconomy(raw,balance=0,day=''){
   const hits=Math.min(p.size,sparkNumber(p.hits)),mask=fragmentMask(p),broken=hits>=p.size,fragments=broken?(p.collected===true?mask:sparkNumber(p.fragments)&mask):0;sites[id]={x:p.x,y:p.y,size:p.size,value:[1,3,5][p.size-1],hits,broken,rare:!id.startsWith('path:')&&p.rare===true,fragments,collected:broken&&fragments===mask};
  }
  const spent=Math.min(sparkNumber(q.spent),Number.MAX_SAFE_INTEGER-sparkNumber(balance));
- return {...q,version:1,day,sites,earned:sparkNumber(balance)+spent,spent,purchases:record(q.purchases),claims:record(q.claims),
+ return {...q,version:1,day,sites,totems:q.day===day?normalizeTotemClaims(q.totems):{},earned:sparkNumber(balance)+spent,spent,purchases:record(q.purchases),claims:record(q.claims),
   equipped:SPARK_SHOP.some(p=>p.id===q.equipped)&&q.purchases?.[q.equipped]?q.equipped:'',goal:typeof q.goal==='string'?q.goal.slice(0,60):'jump',title:typeof q.title==='string'?q.title.slice(0,60):'',
   stats:{...q.stats,broken:sparkNumber(q.stats?.broken),jumps:sparkNumber(q.stats?.jumps),sinceJump:sparkNumber(q.stats?.sinceJump)},
   log:(Array.isArray(q.log)?q.log:[]).filter(p=>object(p)&&typeof p.title==='string').slice(-80).map(p=>({title:p.title.slice(0,100),text:String(p.text||'').slice(0,180),at:String(p.at||'').slice(0,24)}))};

@@ -1,0 +1,136 @@
+{
+  "base": "98892522394d5256341ef677f269c714910164f7",
+  "branch": "feat/sculpture-totems",
+  "parameters": {
+    "forms": 6,
+    "cellUnits": 1400,
+    "occupiedCellRate": 0.24,
+    "groupSizes": [
+      1,
+      2,
+      3
+    ],
+    "groupedEncounters": "approximately one third",
+    "layers": [
+      "superficie",
+      "bajo",
+      "cielo"
+    ],
+    "rewardPerPlacePerDay": 2,
+    "dailyRewardedPlaceLimit": 64,
+    "cacheCellLimit": 48,
+    "towerManualPulses": 3,
+    "sphereExcursionUnits": 55,
+    "sphereTimeoutSeconds": 12,
+    "groupReplyLimit": 3,
+    "replyVolumes": [
+      0.28,
+      0.14
+    ]
+  },
+  "commands": {
+    "npm run audit:release": "PASS: 227 modules, 443 HTML IDs, 603 imports, 247 shell assets; no errors/warnings",
+    "node scripts/test-impact.mjs --base 9889252": "PASS: 93 affected Node suites; final confirmation exit 0 with external Windows register() ESM adapter",
+    "node tests/sculpture-totems.mjs": "PASS: final focused check, sparse deterministic solo/groups, six card portraits in all layers, three interactions, bounded cache, atomic/reloaded daily rewards, mute/stale callbacks and separate demo versus earned card IDs",
+    "node tests/rare_cards.mjs": "PASS: 78 types (72 prior plus 6 sculptures), original odds retained, portrait/dedupe/future-save contracts",
+    "python tests/sculpture_totems_smoke.py": "PASS: 390/1280 px, natural independent fixtures, real pulses/keyboard following, repeat after reload without duplicate rewards/cards, real group replies, mute, gradient card DOM and preview screenshots",
+    "python tests/sculpture_totems_mix.py": "PASS: 3 dense native scheduler renders at 44.1/48 kHz covering all six sculpture voices; no clipping",
+    "python tests/offline_smoke.py": "PASS: 227 modules cached and reloaded offline; absent JavaScript returns failure, never HTML",
+    "python tests/sparks_economy_smoke.py": "PASS: existing wallet, purchases, saved mining, failures/refunds, paid/free travel and notices",
+    "git diff --check": "PASS"
+  },
+  "audio": {
+    "renders": 3,
+    "maxPeak": 0.8826475739479065,
+    "sampleRates": [
+      44100,
+      48000
+    ],
+    "notes": [
+      [
+        {
+          "kind": "stack",
+          "at": 1.8461538461538463,
+          "gain": 0.28
+        },
+        {
+          "kind": "orb",
+          "at": 2.076923076923077,
+          "gain": 0.14
+        },
+        {
+          "kind": "bottle",
+          "at": 2.307692307692308,
+          "gain": 0.14
+        }
+      ],
+      [
+        {
+          "kind": "hourglass",
+          "at": 1.9230769230769231,
+          "gain": 0.28
+        },
+        {
+          "kind": "diamond",
+          "at": 2.307692307692308,
+          "gain": 0.14
+        },
+        {
+          "kind": "spire",
+          "at": 2.6923076923076925,
+          "gain": 0.14
+        }
+      ],
+      [
+        {
+          "kind": "stack",
+          "at": 1.7647058823529413,
+          "gain": 0.28
+        },
+        {
+          "kind": "orb",
+          "at": 1.9411764705882355,
+          "gain": 0.14
+        },
+        {
+          "kind": "bottle",
+          "at": 2.1176470588235294,
+          "gain": 0.14
+        }
+      ]
+    ]
+  },
+  "review": [
+    "Reference supplied by Jay; Canvas/SVG silhouettes and gradients drawn in code, no source image packaged.",
+    "Reviewed six-form preview, actual mobile/desktop groups and coloured collection-card screenshots.",
+    "Existing music engine, composition, mix and voices retained; replies use the existing harmonic grid and budgets.",
+    "No new controls, dependencies or deployment configuration. Shell entries added once; existing publication stamping retained.",
+    "Pulse browser checks wait for actual wave acceptance/game cooldown instead of assuming a fixed wall-clock speed."
+  ],
+  "limits": [
+    "Focused checks; not full browser/audio suites, CI, deployment or physical-device/listening acceptance.",
+    "A legacy experimental-loader invocation finished assertions but the host exited abnormally; the register() adapter confirmation completed with exit 0. Both adapters are outside the repository.",
+    "Windows release audit used exact Git font-license bytes; those local adjustments are excluded from the commit.",
+    "Sculpture gesture progress/poses are temporary; cards and daily paid-place flags persist.",
+    "Local save economy, not an authoritative remote economy.",
+    "Only explicit manual pulses start encounters; proximity and automatic wandering never start them.",
+    "Depends on earlier unmerged branches; observed remote main 81856a3. No PR or merge."
+  ],
+  "sourceSha256Utf8Lf": {
+    "src/sculpture-totems-model.js": "121ebe334b313527c82b9428334d3cae5a45e6ede9f2b074331047a27a5d7bad",
+    "src/sculpture-totems-art.js": "c35fb0bb583d126a35f9035d3e6229d5ad2e7ac9a37296fe0d15d2ab6e119ae1",
+    "src/sculpture-totems.js": "4bb383a9b67b82db243ae635057dce59641bfee22f5b4d35a79b2899bf541573",
+    "src/main.js": "f3f7624ae59200e656dc1763b8232146d97092b2aa1fd1c3e103e1a925860638",
+    "src/render.js": "16bee0e26b3b82b90912739c29475cf5390ddfffc12d29df7ad5a088735f0637",
+    "src/rare-card-model.js": "5afdc291d8f1ec7968c5b7c611045b881c5daf41fadf2441fa52435f59545059",
+    "src/rare-card-art.js": "c284283dd080a2193c0033432b2d64c637591d6d77753a1052d71f3f7fd22ea3",
+    "src/sparks-model.js": "9a33144cb6b5579617ffa16d2d10931c8e1b451ddd22540328db8a0e6f72eeef",
+    "src/sparks.js": "58a39b9b1ccea3bf89506b712348c16bed35a6c4edbd02833dfb9cd242188178",
+    "sw.js": "88b2b53b7915542465ef21ee52b54addda832e0639d47dca6bb56e8ea0ea243e",
+    "tests/sculpture-totems.mjs": "2328ffd0e52ddfe0e9dbc5707e9665054877a05a363bbba57fca7d7c96c02a22",
+    "tests/sculpture_totems_smoke.py": "99026fa8d11b8a73b75700977a3a0fee8bf448a313fda0d4571de9903fceaef3",
+    "tests/sculpture_totems_mix.py": "c44185edd6cc864ce7b56addd4db6378110a9006111c3d003c6c2374577aefe8",
+    "tests/audio_mix.mjs": "2bfbfecb7985618b83ee996882ec9bf88d7dddadf8df5d0236c70b6c20408a7f",
+    "tests/rare_cards.mjs": "c0a5ef4a4997fc0c9bc3a980f00488c25c207604c36fcb43debf60259779fd7c"
+  }
+}

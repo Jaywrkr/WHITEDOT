@@ -1,3 +1,4 @@
+import {TOTEM_DAILY_LIMIT} from './sculpture-totems-model.js';
 import {crystalFragments,fragmentMask} from './crystal-play-model.js';
 import {POWERS,POWER_IDS} from './expansion-music.js';
 import {SPARK_JUMP_COST,SPARK_SITE_LIMIT,SPARK_SHOP,SPARK_SETS,SPARK_BADGES,SPARK_MILESTONES,sparkNumber,normalizeSparkEconomy,creditSparks,debitSparks,claimSparkReward,sparkSetProgress} from './sparks-model.js';
@@ -8,7 +9,7 @@ export function initialize(runtime){
  const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function book(){
   if(owner!==runtime.S){owner=runtime.S;owner.sparkEconomy=normalizeSparkEconomy(owner.sparkEconomy,owner.sparks,owner.todayKey);day=owner.todayKey;clock=0;refresh=0;lastDistance=sparkNumber(owner.playerProfile?.distanceUnits);sessionDistance=0;segment=0;anchor=home=null;homeTime=0;newCards=new Set();neighbors=new Set();worldBroken=0;inspector={id:'',count:0};lastJump=null;trail=[];lastTrail=null;delta=0;deltaUntil=0;pickups=[];jumpAvailable=owner.sparkEconomy.earned>=SPARK_JUMP_COST;jumpUntil=0;}
-  const q=owner.sparkEconomy;if(q.version===1&&day!==owner.todayKey){day=owner.todayKey;q.day=day;q.sites={};}
+  const q=owner.sparkEconomy;if(q.version===1&&day!==owner.todayKey){day=owner.todayKey;q.day=day;q.sites={};q.totems={};}
   return q;
  }
  function commit(change){const q=book();if(q.version!==1)return false;const before={sparks:owner.sparks,sparkEconomy:structuredClone(q),pathCrystals:owner.pathCrystals?.slice(),todayLight:owner.todayLight,totalLight:owner.totalLight};
@@ -29,6 +30,12 @@ export function initialize(runtime){
    next.sites[o.id]=p;result={...p};
   });
   if(!ok)return null;if(amount)changeNotice(amount);if(action==='hit'&&result.broken&&!path)worldBroken++;if(first)runtime.onFirstLight?.();if(path)runtime.hud?.();return result;
+ }
+ function rewardTotem(id){
+  const q=book();if(q.version!==1||typeof id!=='string'||!id.startsWith('totem:v1:')||id.length>=120)return false;
+  if(runtime.labMode||owner.previewSeed&&!runtime.realTravel||q.totems[id]||Object.keys(q.totems).length>=TOTEM_DAILY_LIMIT)return {amount:0};
+  let amount=0;if(!commit(next=>{next.totems[id]=true;amount=creditSparks(owner,2);} ))return false;
+  changeNotice(amount);if(amount)pickup(amount,{x:owner.wx,y:owner.wy});return {amount};
  }
  function reserveJump(){const q=book();if(q.version!==1||sparkNumber(owner.sparks)<SPARK_JUMP_COST){notice('Necesitas '+Math.max(0,SPARK_JUMP_COST-sparkNumber(owner.sparks))+' chispas más');return false;}
   const ticket={balance:owner.sparks,economy:structuredClone(q)};debitSparks(owner,SPARK_JUMP_COST);q.stats.jumps++;q.stats.sinceJump=0;return ticket;
@@ -103,5 +110,5 @@ export function initialize(runtime){
  $('toast').addEventListener('keydown',e=>{if(['Enter',' '].includes(e.key)&&$('toast').dataset.detail==='save'){e.preventDefault();runtime.noticeLane?.cancel('toast');runtime.openSaveTools?.();}});
  $('sparkPowerUndo').onclick=()=>runtime.undoBoxPowers?.();
  $('toast').addEventListener('click',()=>{if($('toast').dataset.detail==='sparks')open();if($('toast').dataset.detail==='save'){runtime.noticeLane?.cancel('toast');runtime.openSaveTools?.();}});
- Object.defineProperties(runtime,{showSparkPickup:{get:()=>pickup},sparkEconomy:{get:()=>book()},sparkTick:{get:()=>tick},drawSparkEconomyHUD:{get:()=>hud},drawSparkCosmetics:{get:()=>draw},openSparks:{get:()=>open},buySparkStyle:{get:()=>buy},equipSparkStyle:{get:()=>equip},crystalTransaction:{get:()=>crystal},savedCrystal:{get:()=>id=>book().sites?.[id]},inspectSpentCrystal:{get:()=>inspect},sparkCardFound:{get:()=>found},sparkJumpEarned:{get:()=>()=>book().version===1&&(book().earned>=SPARK_JUMP_COST||book().stats.jumps>0)},canAffordSparkJump:{get:()=>()=>book().version===1&&sparkNumber(runtime.S.sparks)>=SPARK_JUMP_COST},reserveSparkJump:{get:()=>reserveJump},cancelSparkJump:{get:()=>cancelJump},confirmSparkJump:{get:()=>confirmJump},sparkReturn:{get:()=>returned}});book();
+ Object.defineProperties(runtime,{rewardTotem:{get:()=>rewardTotem},showSparkPickup:{get:()=>pickup},sparkEconomy:{get:()=>book()},sparkTick:{get:()=>tick},drawSparkEconomyHUD:{get:()=>hud},drawSparkCosmetics:{get:()=>draw},openSparks:{get:()=>open},buySparkStyle:{get:()=>buy},equipSparkStyle:{get:()=>equip},crystalTransaction:{get:()=>crystal},savedCrystal:{get:()=>id=>book().sites?.[id]},inspectSpentCrystal:{get:()=>inspect},sparkCardFound:{get:()=>found},sparkJumpEarned:{get:()=>()=>book().version===1&&(book().earned>=SPARK_JUMP_COST||book().stats.jumps>0)},canAffordSparkJump:{get:()=>()=>book().version===1&&sparkNumber(runtime.S.sparks)>=SPARK_JUMP_COST},reserveSparkJump:{get:()=>reserveJump},cancelSparkJump:{get:()=>cancelJump},confirmSparkJump:{get:()=>confirmJump},sparkReturn:{get:()=>returned}});book();
 }
