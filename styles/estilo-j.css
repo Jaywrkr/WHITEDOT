@@ -370,7 +370,7 @@ body.ui-reduced-motion #rareNoticeArt::after{display:none}
 /* The wallet follows the distance label, including safe-area and responsive layout. */
 .spark-count{display:flex;gap:8px;align-items:center;font:11px/1.5 var(--mono);color:#ffffff80;font-variant-numeric:tabular-nums}
 .spark-count.collecting{color:var(--earned)}#sparkGain{font-size:10px;color:var(--earned)}
-.return-entrance .return-signature{animation-delay:.5s;font-size:11px}
+.return-entrance .return-signature{animation-delay:.7s;font-size:11px}
 
 /* Two feedback forms: wallet delta and one silent, brief card. */
 .spark-goal{max-width:180px;min-height:24px;padding:2px 0;border:0;background:#000;color:#ffffff90;font:10px/1.5 var(--mono);text-align:right}

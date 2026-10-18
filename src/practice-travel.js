@@ -54,8 +54,8 @@ export function nextArrivalPlace(runtime,state){
 export function initialize(runtime){
  const $=runtime.$;let counter=0;runtime.S.practiceTravel=normalizePracticeTravel(runtime.S.practiceTravel);
  const blocked=()=>runtime.S.practiceTravel?.version>1||!!runtime.duetRoom||!!runtime.setRecording||!!runtime.jam?.loop?.rec||!!runtime.jam?.loop?.armed||!!runtime.scanning;
- function ui(){const world=runtime.inWorld();$('bJump').hidden=!world;$('bJumpBack').hidden=!world||!runtime.S.practiceTravel?.previous;
-  $('bJump').disabled=blocked();$('bJumpBack').disabled=blocked();}
+ function ui(){const world=runtime.inWorld();$('bJump').hidden=!world||runtime.sparkJumpEarned?.()!==true;$('bJumpBack').hidden=!world||!runtime.S.practiceTravel?.previous;
+  $('bJump').disabled=blocked()||runtime.canAffordSparkJump?.()===false;$('bJumpBack').disabled=blocked();}
  function move(point,state,prepare=null,updateAddress=true){
   const old={wx:runtime.S.wx,wy:runtime.S.wy,layer:runtime.S.layer,destination:runtime.S.destination,practiceTravel:runtime.S.practiceTravel};
   state.sights=[...(state.sights||[]),explorationContext(runtime.regionOfPos(point.x,point.y),point.x,point.y,runtime.seedOf).signature].slice(-8);

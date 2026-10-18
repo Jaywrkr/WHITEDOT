@@ -1,0 +1,31 @@
+{
+  "base": "7f778429af203e40834b983ea136f4343bc12060",
+  "branch": "fix/earned-jump-and-intro",
+  "commands": {
+    "npm run audit:release": "PASS: no errors or warnings",
+    "npm run test:impact -- --base 7f77842": "PASS: 10 affected Node suites",
+    "python tests/entry_jump_smoke.py": "PASS: 320/390/844/1280 px; new and returning greeting, pending guide, real mining to 20 sparks, charged dock jump, persisted unlock, free return and system reduced motion",
+    "python tests/practice_travel_smoke.py": "PASS: 3 phone sizes",
+    "python tests/sparks_economy_smoke.py": "PASS: mining, purchases, refunds, menu travel, notices and save failures",
+    "python tests/journey_ui_smoke.py": "PASS: 3 screen sizes; fixture updated to current ten-crystal entry and paid fare",
+    "python tests/crystal_path_smoke.py": "PASS: real pulses, partial reload, automatic tenth-crystal entry and signature; test explicitly closes the restored greeting"
+  },
+  "limits": [
+    "Focused verification; no complete browser/audio suite, CI, physical device or deployment claim.",
+    "Local Windows ESM loader and exact Git font-license bytes used for checks; Playwright installed outside the game.",
+    "Depends on unmerged sparks and documentation branches; remote main was 81856a3."
+  ],
+  "sourceSha256Utf8Lf": {
+    "index.html": "01a0a89eabc8bf93cb78ec87e1a7a2035e7a470f1a5d5cdd6451724cfcb260f8",
+    "src/practice-travel.js": "68689f5bc1a852d1cf736d2c3fa01e8b2175095e17676a51c4aa7427404cef42",
+    "src/return-entrance.js": "b1e27092f017bd33a8a255f121669bbcf72c5fc523afc6bfd50b7158a6527129",
+    "src/sparks.js": "29d841d227576d495355cce33ede08d807e76643c4a2d57ffa7bb2f5d4a977ec",
+    "styles/estilo-j.css": "95f0df42b9e923c7bdc1f5735f665bba60c0e80e87d6088b2b9d8e9e32ac6be8",
+    "tests/entry_jump_smoke.py": "8cc83941cd0bd034cc2dd28546202f64d41dd07b6829eebc7f33edec0dbce723",
+    "tests/sparks-economy.mjs": "feaaacbe4dee36b04d9282808092c0815792df772d6a96cba69263ffded2f2cf",
+    "tests/journey_ui_smoke.py": "162c8f0737baac6cd964e47aef45a023e83dce11de03ef211104ca5c928aa08b",
+    "tests/practice_travel_smoke.py": "e039d02474d9fc8157069d049b3bf05afb3cbb58cc18f12af79a1b159b65fc38",
+    "tests/sparks_economy_smoke.py": "4116253cfd6031fa84b984c28e984ea7dbe4d29695881f6e8718f97434a9bb35",
+    "tests/crystal_path_smoke.py": "79570492960d0836f2c2df3018c4b65f509ceaf62a390f84a7fb8e2c5061f15b"
+  }
+}

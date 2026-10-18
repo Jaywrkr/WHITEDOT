@@ -17,16 +17,16 @@ try:
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=sonidos&generation=2&layout=vasto');page.wait_for_function('__testRuntime?.inWorld()')
    page.evaluate('''()=>{document.querySelectorAll('.modal').forEach(m=>m.hidden=true);const r=__testRuntime;r.S.cat.held=true;r.S.ach.held=r.S.todayKey;window.__pulses=0;const original=r.sessionAction;window.__point={x:r.S.wx,y:r.S.wy,layer:r.S.layer||'superficie'};}''')
-   page.wait_for_function('!document.getElementById("w").inert');page.wait_for_function('!document.getElementById("bJump").hidden')
+   page.evaluate('__testRuntime.S.sparks=40;__testRuntime.sparkEconomy.earned=40');page.wait_for_function('!document.getElementById("w").inert');page.wait_for_function('!document.getElementById("bJump").hidden')
    before=page.evaluate('__point');old=page.evaluate('__testRuntime.regionOfPos(__point.x,__point.y).genre')
-   page.evaluate('__testRuntime.S.sparks=40;__testRuntime.sparkEconomy.earned=40;__testRuntime.openSparks()');button=page.locator('#bJump').bounding_box()
+   page.evaluate('__testRuntime.S.sparks=40;__testRuntime.sparkEconomy.earned=40');button=page.locator('#bJump').bounding_box()
    page.locator('#bJump').tap();page.wait_for_function('__testRuntime.S.practiceTravel.previous!==null&&__testRuntime.MU.dnaA?.genre!=='+repr(old))
    state=page.evaluate('''()=>{const r=__testRuntime,b=document.getElementById('bJump').getBoundingClientRect();return {x:r.S.wx,y:r.S.wy,layer:r.S.layer,previous:r.S.practiceTravel.previous,kept:r.S.cat.held&&r.S.ach.held,overflow:document.documentElement.scrollWidth>innerWidth,button:{x:b.x,y:b.y,width:b.width,height:b.height},waves:r.waves.length};}''')
    state['button']=button;assert page.evaluate('__testRuntime.S.sparks')==20
    assert state['previous']==before and state['kept'] and not state['overflow'],state
    assert state['button']['width']>=44 and state['button']['height']>=44 and state['button']['y']>=0 and state['button']['y']+state['button']['height']<=height,state
    assert state['waves']==0,'jumping UI launched a musical pulse'
-   if width==390:page.screenshot(path='/tmp/whitedot-m1-jump-phone.png')
+   if width==390:page.screenshot(path=str(ROOT.parent/'jump-phone.png'))
    page.reload();page.wait_for_function('__testRuntime?.inWorld()');page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true)')
    current=page.evaluate('({x:__testRuntime.S.wx,y:__testRuntime.S.wy})');assert abs(current['x']-state['x'])<1 and abs(current['y']-state['y'])<1,(state,current)
    page.locator('#bMenu').click();page.locator('#bJumpBack').click();page.wait_for_function('document.getElementById("mMenu").hidden')
