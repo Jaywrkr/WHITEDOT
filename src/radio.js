@@ -1,3 +1,4 @@
+import {familyArrangement} from './music-families.js';
 import {createReferenceRadio} from './radio-reference.js';
 import {compositionFrame} from './composition.js';
 import {musicalCharacter,hookInstruments} from './musical-character.js';
@@ -105,14 +106,14 @@ export function createRadio(seedOf, rng, genres, {living=()=>false,reference=()=
     const modern=alive?directedFrame(labArrangement(native,labScore(region,seedOf,rng),environment,frame),region.genre):native;
     if(!reference()||environment.room||!alive)return modern;
     const original=referenceRadio.advance(region,bar,environment);
-    return {...modern,...original,referenceOrigin:'acd766f',hybrid:modern.hybrid,
+    return familyArrangement({...modern,...original,referenceOrigin:'acd766f',hybrid:modern.hybrid,
       referenceSupport:original.melodyRest&&!modern.melodyRest?{hook:modern.hook,hookI:modern.hookI,melodyRest:false}:null,
       labScore:modern.labScore,phrasing:modern.phrasing,labEvolution:modern.labEvolution,direction:modern.direction,
       bassI:region.track.bassI,
       // Native phrasing owns the lead/bass. Modern guests keep their own parts.
       identity:{...modern.identity,id:'reference:acd766f',name:'Radio original',hooks:[original.hookI],bassI:region.track.bassI,swing:genres[region.genre].sw||0},
       grammar:{...original.grammar},expression:{...original.expression},
-      energy:Math.max(original.energy,(modern.labScore?.electronic?.count||0)>=8?.38:.14)};
+      energy:Math.max(original.energy,(modern.labScore?.electronic?.count||0)>=8?.38:.14)},region,seedOf);
   }
   return { advance };
 }

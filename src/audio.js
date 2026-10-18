@@ -11,6 +11,7 @@ import { createRadio } from './radio.js';
 import {labDrumEvents,labNoteEvents} from './lab-score.js';
 import {productionSpace,createProductionRooms,arrangementEnergy} from './music-direction.js';
 import {blendProductionSpace} from './territory-presentation.js';
+import {familyDrums,createAmbientPunctuation} from './music-families.js';
 import {ambientSoloist} from './ambient-score.js';
 import {electronicDrum} from './electronic-ensemble.js';
 
@@ -19,7 +20,7 @@ export function initialize(runtime) {
   /* ---------- música generativa ----------
      La región compone por frases y secciones aunque estés quieto; tu movimiento
      añade energía. Cada zona conserva su escala, género y timbres. */
-  const A=57;
+  const A=57,ambientPunctuation=createAmbientPunctuation();
   const NEXTD={0:[5,3,6,2],1:[4,6,0],2:[5,3,6],3:[0,6,4,1],4:[0,5,3],5:[2,6,3,0],6:[2,0,5]};
   const UPD=[2,6,5,4],DOWND=[3,5,0,1];
   const CELLS=[[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],[1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0],[0,0,1,0,0,0,1,0,0,0,1,0,0,0,2,0],[1,0,0,1,0,0,2,0,0,0,1,0,0,2,1,0]];
@@ -170,7 +171,7 @@ export function initialize(runtime) {
         break;
       case "float":
         if(s===0&&E>.15)tom(t,70,vel(.12));
-        if((s===6||s===14)&&P(.5))!DO&&pluck(ct[Math.floor(rnd()*3)]+24,tt,vel(.03),4);
+        if((s===6||s===14)&&P(.5))!DO&&hookInst('airflute',inRegister(ct[Math.floor(rnd()*3)],48,64),tt,vel(.022));
         if(s===0&&E>.3)!DO&&softBass(R,t,vel(.12));
         break;
       case "tribal":{
@@ -201,7 +202,7 @@ export function initialize(runtime) {
         break;
       case "heart":
         if(s===0||s===3)kick(t,vel(s===0?.22:.14));
-        if(s===0&&MU.step%32===0)!DO&&pluck(ct[0]+12,t,.04,2);
+        if(s===0&&MU.step%32===0)!DO&&hookInst('bowed',inRegister(ct[0],48,64),t,.025);
         break;
       case "none":break;
     }
@@ -275,7 +276,7 @@ export function initialize(runtime) {
         }
       }
       VW=1;
-      };if(runtime.withAccompaniment)runtime.withAccompaniment(accompany);else accompany();
+      };const emit=()=>runtime.withVoiceOrigin?runtime.withVoiceOrigin('track',accompany):accompany();if(runtime.withAccompaniment)runtime.withAccompaniment(emit);else emit();
     }
     // tu Estudio: cada pieza suena en su paso
     runtime.houseMusicStep?.(s,t);if(runtime.S.mode==="studio"&&!runtime.houseActive?.()){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);runtime.studioHit[key]=performance.now()+(t-ac.currentTime)*1000;}}}
@@ -377,14 +378,22 @@ export function initialize(runtime) {
   function dubChord(ct,t){stab(ct.slice(0,3).map(n=>inRegister(n,45,65)),t,.35);}
   function organChord(ct,t){ct.slice(0,3).forEach(n=>organ(inRegister(n,48,71),t,vel(.05)));}
   function reese(m,t,v){runtime.recordInstrument?.("reese");const f=ac.createBiquadFilter(),g=ac.createGain();f.type="lowpass";f.frequency.value=480;[-12,12].forEach(dt=>{const o=ac.createOscillator();o.type="sawtooth";o.frequency.value=hz(m);o.detune.value=dt;o.connect(f);o.start(t);o.stop(t+.45);});env(g,t,.01,v*.7,.35);f.connect(g).connect(bus);}
-  function bassInst(ty,m,t,v,region=MU.dnaA||MU.dnaT){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'bajo'},null,t,()=>bassInst(ty,m,t,v,region));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "reese":reese(m,t,v);return;case "organb":organ(m,t,v*1.5);return;case "roll":houseBass(m,t,v*.8,.3);return;}switch(ty){case "sub":softBass(m,t,v);break;case "acid":acid(m,t,v*.85,300+MU.speed*2200);break;case "pluck":houseBass(m,t,v,.5);break;case "fm":fmBass(m,t,v);break;case "boing":runtime.boing(m,t,v);break;}}
-  function hookInst(ty,m,t,v,region=MU.dnaA||MU.dnaT,articulation=null){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'lead'},null,t,()=>hookInst(ty,m,t,v,region,articulation));runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v,articulation))return;switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
+  function bassInst(ty,m,t,v,region=MU.dnaA||MU.dnaT){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'bajo'},null,t,()=>bassInst(ty,m,t,v,region));runtime.audioNoteCue?.({instrument:ty,note:m,time:t,origin:runtime.currentVoiceOrigin||'track',region:region?.key});runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v))return;switch(ty){case "reese":reese(m,t,v);return;case "organb":organ(m,t,v*1.5);return;case "roll":houseBass(m,t,v*.8,.3);return;}switch(ty){case "sub":softBass(m,t,v);break;case "acid":acid(m,t,v*.85,300+MU.speed*2200);break;case "pluck":houseBass(m,t,v,.5);break;case "fm":fmBass(m,t,v);break;case "boing":runtime.boing(m,t,v);break;}}
+  function hookInst(ty,m,t,v,region=MU.dnaA||MU.dnaT,articulation=null){if(runtime.withInstrumentPatch&&runtime.inWorld()&&region&&!runtime.activeInstrumentPatch)return runtime.withInstrumentPatch('track',region,{instrument:ty,role:'lead'},null,t,()=>hookInst(ty,m,t,v,region,articulation));if(runtime.inWorld()&&!ambientPunctuation.allow(ty,runtime.currentVoiceOrigin||'track',region?.key||'',MU.step>>4,runtime.S))return;runtime.audioNoteCue?.({instrument:ty,note:m,time:t,origin:runtime.currentVoiceOrigin||'track',region:region?.key});runtime.recordInstrument?.(ty);if(runtime.playNewInstrument?.(ty,m,t,v,articulation))return;switch(ty){case "keys":pluck(m,t,v,0);break;case "marimba":pluck(m,t,v,1);break;case "glass":pluck(m+12,t,v*.8,4);break;case "saw":sawLead(m,t,v);break;case "organ":organ(m,t,v);break;case "flute":flute(m,t,v);break;}}
   function drums(gid,s,bar,t,tt,E,ct,DO,arrangement=MU.radio){
     const previous=arrangementAir;arrangementAir=(arrangement?.identity?.air??musicalCharacter(gid).air)*(arrangement?.melodyRest?.2:1);
     try{drumPattern(gid,s,bar,t,tt,E,ct,DO,arrangement);}finally{arrangementAir=previous;}
   }
   function drumPattern(gid,s,bar,t,tt,E,ct,DO,arrangement){
     if(runtime.inWorld()&&!DO&&runtime.depthGate?.(s)===false&&s%4!==0)return;
+    if(arrangement?.musicFamily){
+      const reduction=runtime.inWorld()?Math.max(0,-(runtime.influenceState?.values.groove||0)):0;
+      for(const hit of familyDrums(arrangement,s,bar,E*(1-.75*reduction))){
+        const at=hit.instrument==='kick'?t:tt,v=vel(hit.gain);
+        runtime.audioNoteCue?.({instrument:hit.instrument,time:at,origin:'family-drums',family:arrangement.musicFamily.id});
+        if(hit.instrument==='kick')kick2(at,v,50,.25);else if(hit.instrument==='clap')clap(at,v);else if(hit.instrument==='rim')rim(at,v);else if(hit.instrument==='wood')wood(at,v);else if(hit.instrument==='conga')conga(at,180+(s%3)*40,v);else if(hit.instrument==='shaker')shaker(at,v);else hatC(at,v);
+      }return;
+    }
     if(arrangement?.referenceOrigin&&(arrangement.labScore?.electronic?.count||10)<=3)return;
     if(arrangement?.labScore&&!arrangement.referenceOrigin){
       const groove=runtime.inWorld()?Math.max(0,-(runtime.influenceState?.values.groove||0)):0;
@@ -443,7 +452,7 @@ export function initialize(runtime) {
       return;
     }
     switch(gid){
-      case "ambient":if(L2&&!arrangement?.melodyRest&&s===0&&bar%2===0&&!DO)pluck(inRegister(ct[0],45,67)-12,t,vel(.025),4);break;
+      case "ambient":if(L2&&!arrangement?.melodyRest&&s===0&&bar%2===0&&!DO)hookInst('bowed',inRegister(ct[0],45,64),t,vel(.018));break;
       case "downtempo":if(L1&&(s===0||s===10))kick2(t,vel(.26),58,.35);if(L2&&s===8)snare(tt,vel(.09));if(L2&&s%4===2)hatC(tt,vel(.03));if(L3&&s%2===1&&r()<.4)hatC(tt,vel(.012));break;
       case "dub":if(L1&&s%4===0)kick2(t,vel(.22),48,.4);if(L2&&s%4===2)hatC(tt,vel(.025));if(L3&&(s===3||s===11)&&r()<.7&&!DO)dubChord(ct,tt);if(L3&&s%2===1&&r()<.3)shaker(tt,vel(.012));break;
       case "deep":if(L1&&s%4===0)kick2(t,vel(.28),52,.32);if(L2&&(s===4||s===12))clap(t,vel(.07));if(L2&&s%4===2)hatO(tt,vel(.035));if(L3&&s%2===1)shaker(tt,vel(.015));if(L3&&(s===6||s===14)&&r()<.6&&!DO)organChord(ct,tt);break;
