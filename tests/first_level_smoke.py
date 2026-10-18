@@ -16,11 +16,12 @@ try:
    page=b.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('window.__testRuntime?.firstJourneyState')
-   page.locator('#hcGo').click();page.wait_for_function('!document.getElementById("firstJourney").hidden')
+   page.locator('#returnContinue').click();page.locator('#hcGo').click();page.wait_for_function('!document.getElementById("firstJourney").hidden')
    assert page.locator('#firstJourney').get_attribute('data-step')=='move'
    page.mouse.move(width/2,height/2);page.mouse.down();page.mouse.move(width/2+65,height/2,steps=8);page.wait_for_timeout(450);page.mouse.up()
    page.wait_for_function('__testRuntime.firstJourneyState.next==="light"')
    page.wait_for_function('document.getElementById("firstJourney").dataset.step==="light"&&document.getElementById("firstJourneyProgress").textContent.includes("/10")')
+   page.locator('#firstJourneyText').wait_for(state='visible')
    assert 'cristales' in page.locator('#firstJourneyText').inner_text();assert '/10' in page.locator('#firstJourneyProgress').inner_text()
    for i in range(10):
     if page.evaluate('__testRuntime.inWorld()'):break
