@@ -133,6 +133,6 @@ Petición adicional de Jay durante el cierre: más zonas de fiesta feliz. F14 in
 
 [CIERRE_EXPERIENCIA.md](CIERRE_EXPERIENCIA.md) reúne hallazgos, commits, pruebas finales y un recorrido móvil por fase. La implementación cierra este ciclo; aceptación física, CI y publicación conservan su alcance propio.
 
-Auditoría sin errores ni advertencias, 113 suites Node, 86 recorridos de navegador incluido offline y 789 renders de 31 programas de audio: aprobados. Prueba HTTP/SQLite aprobada. Pico máximo medido 0.945447. [Evidencia final](scripts/experience-14-validation.json).
+Auditoría sin errores ni advertencias, 113 suites Node, 86 recorridos de navegador incluido offline y 789 renders de 31 programas de audio: aprobados. Prueba HTTP/SQLite aprobada. Pico máximo medido 0.945447. [Evidencia final](../../scripts/experience-14-validation.json).
 
 Cierre validado en UTC: `2026-10-15T21:29:06.192006+00:00`. Esa marca corresponde a pruebas, no al deploy.

@@ -42,7 +42,7 @@ Si una fase ya está integrada, comprobar ascendencia antes de abrir su sucesora
 - Ambas generaciones del universo, muestra de diversidad y 49.152 sectores de frecuencia espacial.
 - API opcional con HTTP/SQLite temporal: cuentas, copias, concurrencia y salas locales.
 
-[Evidencia consolidada](../../scripts/cierre-f10-validation.json) · [Casos de audio](../../scripts/cierre-f10-audio-suite.json) · [Navegador final](../../scripts/cierre-f10-final-browser.json) · [Auditoría y soluciones](../../AUDITORIA_CIERRE_2.0.md). La candidata conserva pendientes de experiencia autorizados en [PLAN_PULIDO_FINAL.md](../../PLAN_PULIDO_FINAL.md); esta pasada técnica no los presenta como terminados.
+[Evidencia consolidada](../../scripts/cierre-f10-validation.json) · [Casos de audio](../../scripts/cierre-f10-audio-suite.json) · [Navegador final](../../scripts/cierre-f10-final-browser.json) · [Auditoría y soluciones](AUDITORIA_CIERRE_2.0.md). La candidata conserva pendientes de experiencia autorizados en [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md); esta pasada técnica no los presenta como terminados.
 
 ## Diversidad comprobada
 

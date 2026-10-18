@@ -8,7 +8,7 @@
 
 # Alcance vigente · cierre V1 RC1
 
-Esta candidata se cierra en [AUDITORIA_V1.md](AUDITORIA_V1.md). Solo A01–A04 y correcciones de aceptación quedan para publicar. El inventario anterior de fases/64 tareas se conserva como historia y candidatos de [V2](../../PLAN_V2.md), no como nuevas funciones obligatorias de V1. [Estado](ESTADO_ACTUAL.md).
+Esta candidata se cierra en [AUDITORIA_V1.md](AUDITORIA_V1.md). Solo A01–A04 y correcciones de aceptación quedan para publicar. El inventario anterior de fases/64 tareas se conserva como historia y candidatos de [V2](PLAN_V2.md), no como nuevas funciones obligatorias de V1. [Estado](ESTADO_ACTUAL.md).
 
 <details><summary>Plan anterior íntegro; consultar la auditoría para el estado vigente</summary>
 

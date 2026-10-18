@@ -76,7 +76,7 @@ Pendientes reales: teléfono físico (auriculares/altavoz, fatiga, controles, FP
 
 ## Siguiente orden recomendado después de probar RC4
 
-Estos son candidatos, todavía **sin implementar**: (1) aceptación/ajustes de esta versión y publicación con sello real; (2) lote pequeño de nuevos motores de percusión con diferencias de cuerpo, ataque y textura, escuchados antes de añadir etiquetas de estilos; (3) búsquedas que combinan percusión, color y guardianes sin subir densidad; (4) ecosistemas/eventos temporales con reglas de descanso y relaciones entre criaturas; (5) infraestructura de usuario/progreso/dueto según [PLAN_V2.md](../../PLAN_V2.md). Mantener una rama amplia por bloque y datos independientes para no mover mundos anteriores.
+Estos son candidatos, todavía **sin implementar**: (1) aceptación/ajustes de esta versión y publicación con sello real; (2) lote pequeño de nuevos motores de percusión con diferencias de cuerpo, ataque y textura, escuchados antes de añadir etiquetas de estilos; (3) búsquedas que combinan percusión, color y guardianes sin subir densidad; (4) ecosistemas/eventos temporales con reglas de descanso y relaciones entre criaturas; (5) infraestructura de usuario/progreso/dueto según [PLAN_V2.md](PLAN_V2.md). Mantener una rama amplia por bloque y datos independientes para no mover mundos anteriores.
 
 ## Orden de integración
 

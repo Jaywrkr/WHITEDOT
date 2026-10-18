@@ -96,7 +96,7 @@ Nueva firma v2, tres semillas y 4.000 candidatos por semilla:
 
 ## Qué no está y se pasa a V2
 
-Cuentas/servidor/sincronización y multijugador; historia completa; ecosistema cultural profundo y reliquias históricas investigadas; construir/cablear/crafting; mixer por buses; nuevos estilos con diferencias reales; nuevos motores y formas largas; edición avanzada del Estudio y sesiones compartidas. No se reintroducen escenas musicales guardables descartadas por Jay. [Plan de V2](../../PLAN_V2.md).
+Cuentas/servidor/sincronización y multijugador; historia completa; ecosistema cultural profundo y reliquias históricas investigadas; construir/cablear/crafting; mixer por buses; nuevos estilos con diferencias reales; nuevos motores y formas largas; edición avanzada del Estudio y sesiones compartidas. No se reintroducen escenas musicales guardables descartadas por Jay. [Plan de V2](PLAN_V2.md).
 
 ## Integración y operación de esta candidata
 

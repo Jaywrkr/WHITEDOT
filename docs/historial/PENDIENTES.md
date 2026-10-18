@@ -2,13 +2,13 @@
 
 Estado vigente: **1.1.0-alpha.10**, con diez fases acumuladas en `feat/universe-10-server-duets-validation` (código `57fb5d2`). Este handoff añade documentación en `docs/claude-handoff-universe-alpha`. Main remoto comprobado: `704ae07`; las fases aún no estaban integradas. Volver a verificar antes de continuar.
 
-- [Empezar aquí: handoff para Claude](../../HANDOFF_CLAUDE.md)
+- [Empezar aquí: handoff para Claude](HANDOFF_CLAUDE.md)
 - [Entrega, ramas y límites](ENTREGA_UNIVERSO_VIVO.md)
-- [Cómo probar](../../PROBAR_UNIVERSO_VIVO.md)
-- [Cobertura de las 150 ideas](../../COBERTURA_150_UNIVERSO.md)
-- [Servidor y duetos](../../SERVIDOR_Y_DUETOS.md)
+- [Cómo probar](PROBAR_UNIVERSO_VIVO.md)
+- [Cobertura de las 150 ideas](COBERTURA_150_UNIVERSO.md)
+- [Servidor y duetos](../SERVIDOR_Y_DUETOS.md)
 
-**105 base jugable, 40 parciales, 2 pendientes y 3 externas**. Una base jugable todavía requiere aceptación humana. La [matriz completa](../../COBERTURA_150_UNIVERSO.md) es la lista exhaustiva por idea; el [handoff](../../HANDOFF_CLAUDE.md) explica dependencias y fuentes.
+**105 base jugable, 40 parciales, 2 pendientes y 3 externas**. Una base jugable todavía requiere aceptación humana. La [matriz completa](COBERTURA_150_UNIVERSO.md) es la lista exhaustiva por idea; el [handoff](HANDOFF_CLAUDE.md) explica dependencias y fuentes.
 
 Orden recomendado para la siguiente iteración:
 
@@ -74,7 +74,7 @@ Protección entre pestañas optimista; históricos largos sin compactación gene
 
 ## Después: V2
 
-Publicar V1 individual → identidad/progreso sincronizado → dueto musical → control/historia/memoria → variedad perceptible/culturas/ecosistemas. [Plan por bloques](../../PLAN_V2.md). Construcción/cableado, mixer y más motores/géneros no son funciones obligatorias nuevas de esta V1. Mantener blanco disponible, mascota ganada, música cuidada y UI mínima. No reintroducir escenas guardables descartadas.
+Publicar V1 individual → identidad/progreso sincronizado → dueto musical → control/historia/memoria → variedad perceptible/culturas/ecosistemas. [Plan por bloques](PLAN_V2.md). Construcción/cableado, mixer y más motores/géneros no son funciones obligatorias nuevas de esta V1. Mantener blanco disponible, mascota ganada, música cuidada y UI mínima. No reintroducir escenas guardables descartadas.
 
 <details><summary>Ideas e inventario previos; conservados para V2, no una lista nueva de obligaciones de V1</summary>
 

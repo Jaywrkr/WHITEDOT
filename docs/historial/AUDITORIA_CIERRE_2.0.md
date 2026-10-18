@@ -79,4 +79,4 @@ Orden y ramas del trabajo solicitado: `PLAN_PULIDO_FINAL.md`.
 
 ## Resultado automatizado final
 
-Auditoría sin errores ni advertencias; 97 suites Node, 75 recorridos de navegador incluidos offline, y 455 renders de audio en 22 programas aprobados. Ambas generaciones y diversidad verificadas. CI del PR, deploy real y aceptación física pendientes. [Informe](scripts/pulido-f8-validation.json) · [Audio por caso](scripts/pulido-f8-audio-suite.json). La prueba de frecuencia espacial de F10 se conserva: no se cambiaron las probabilidades naturales.
+Auditoría sin errores ni advertencias; 97 suites Node, 75 recorridos de navegador incluidos offline, y 455 renders de audio en 22 programas aprobados. Ambas generaciones y diversidad verificadas. CI del PR, deploy real y aceptación física pendientes. [Informe](../../scripts/pulido-f8-validation.json) · [Audio por caso](../../scripts/pulido-f8-audio-suite.json). La prueba de frecuencia espacial de F10 se conserva: no se cambiaron las probabilidades naturales.

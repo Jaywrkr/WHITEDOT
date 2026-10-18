@@ -25,7 +25,7 @@ RC9: auditoría sin errores ni advertencias, 97 suites Node, 76 recorridos de na
 
 Pico máximo de audio renderizado: 0.945446670; fracción caliente cero. Los renders comprueban señal/margen; no certifican gusto musical, altavoces físicos ni masterización profesional.
 
-[Informe RC9](scripts/auditoria-cierre-rc9-validation.json) · [Base F8](scripts/pulido-f8-validation.json) · [Audio por caso](scripts/pulido-f8-audio-suite.json) · [Hallazgos resueltos](AUDITORIA_CIERRE_2.0.md) · [Rutas musicales](MATRIZ_INTERACCIONES.md) · [Reporte anterior conservado](docs/historial/CIERRE_2.0_RC1.md).
+[Informe RC9](../../scripts/auditoria-cierre-rc9-validation.json) · [Base F8](../../scripts/pulido-f8-validation.json) · [Audio por caso](../../scripts/pulido-f8-audio-suite.json) · [Hallazgos resueltos](AUDITORIA_CIERRE_2.0.md) · [Rutas musicales](MATRIZ_INTERACCIONES.md) · [Reporte anterior conservado](CIERRE_2.0_RC1.md).
 
 ## Qué probar en teléfono
 

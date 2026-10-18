@@ -2,11 +2,11 @@
 
 Estado vigente: **1.1.0-alpha.10**, con diez fases acumuladas en `feat/universe-10-server-duets-validation` (código `57fb5d2`). Este handoff añade documentación en `docs/claude-handoff-universe-alpha`. Main remoto comprobado: `704ae07`; las fases aún no estaban integradas. Volver a verificar antes de continuar.
 
-- [Empezar aquí: handoff para Claude](../../HANDOFF_CLAUDE.md)
+- [Empezar aquí: handoff para Claude](HANDOFF_CLAUDE.md)
 - [Entrega, ramas y límites](ENTREGA_UNIVERSO_VIVO.md)
-- [Cómo probar](../../PROBAR_UNIVERSO_VIVO.md)
-- [Cobertura de las 150 ideas](../../COBERTURA_150_UNIVERSO.md)
-- [Servidor y duetos](../../SERVIDOR_Y_DUETOS.md)
+- [Cómo probar](PROBAR_UNIVERSO_VIVO.md)
+- [Cobertura de las 150 ideas](COBERTURA_150_UNIVERSO.md)
+- [Servidor y duetos](../SERVIDOR_Y_DUETOS.md)
 
 | Aspecto | Estado comprobado |
 |---|---|
@@ -57,7 +57,7 @@ Los datos RC1 siguientes son la fotografía anterior, conservada como historia; 
 
 # Estado vigente · V1 RC1
 
-Rama **audit/v1-closure**, candidata **1.0.0-rc.1**, sobre f4c112b. Main remoto sigue en 8096c8d (#77). La rama incluye las dos entregas pendientes y las correcciones de cierre, para **un PR**. [Auditoría y dictamen](AUDITORIA_V1.md) · [Continuar](HANDOFF.md) · [Pendientes de aceptación](PENDIENTES.md) · [V2](../../PLAN_V2.md).
+Rama **audit/v1-closure**, candidata **1.0.0-rc.1**, sobre f4c112b. Main remoto sigue en 8096c8d (#77). La rama incluye las dos entregas pendientes y las correcciones de cierre, para **un PR**. [Auditoría y dictamen](AUDITORIA_V1.md) · [Continuar](HANDOFF.md) · [Pendientes de aceptación](PENDIENTES.md) · [V2](PLAN_V2.md).
 
 | Dimensión | Estado comprobado |
 |---|---|

@@ -1,4 +1,4 @@
-# Servidor y duetos · 1.1.0-alpha.10
+# Servidor y duetos (opcional)
 
 El juego conserva su modo estático, local y offline. El servicio es opcional y experimental; todavía no está publicado en un dominio ni aceptado como servicio de producción.
 
@@ -10,7 +10,7 @@ Desde la raíz del repositorio, con Python 3.10 o superior:
 python3 server/app.py --host 127.0.0.1 --port 8080
 ```
 
-Sirve el juego y la API del mismo origen. `GET /api/health` debe devolver HTTP 200 y `service: whitedot`. SQLite usa `server/data/world.sqlite`, excluido de Git. No necesita instalar paquetes ni crear un secreto para desarrollo. Las instrucciones de arranque y verificación se guardaron también en el borrador de configuración del entorno de Codex; revisar, guardar y publicar ese entorno activa la configuración. Ese paso no publica el juego.
+Sirve el juego y la API del mismo origen. `GET /api/health` debe devolver HTTP 200 y `service: whitedot`. SQLite usa `server/data/world.sqlite`, excluido de Git. No necesita instalar paquetes ni crear un secreto para desarrollo.
 
 Pruebas reproducibles, con bases temporales:
 
@@ -41,7 +41,7 @@ El servicio admite hasta 64 copias por cuenta. No hay recuperación de contrase�
 
 1. Elegir servidor y dominio; apuntar DNS.
 2. Ejecutar el backend como servicio privado con un directorio de datos persistente y respaldado. Definir `WD_DATABASE` con la ruta elegida y `WD_ORIGIN` con el origen HTTPS exacto.
-3. Usar un proxy HTTPS, por ejemplo [server/Caddyfile.example](server/Caddyfile.example), delante del proceso privado. No exponer SQLite ni el directorio del servidor como archivos públicos.
+3. Usar un proxy HTTPS, por ejemplo [server/Caddyfile.example](../server/Caddyfile.example), delante del proceso privado. No exponer SQLite ni el directorio del servidor como archivos públicos.
 4. Preparar un artefacto de despliegue y ejecutar `scripts/stamp-deploy.mjs` con su directorio, revisión Git y hora UTC real de publicación. Publicarlo de forma atómica. El repositorio mantiene `deployedAt: null`: un commit no es un deploy.
 5. Exportar e importar el progreso si cambia el origen del sitio; el almacenamiento local de un dominio no aparece automáticamente en otro.
 6. Probar iPhone/Android físicos, Safari/Chrome, suspensión, latencia de dos redes, actualización offline, recuperación de copia y escucha humana antes de una apertura pública.

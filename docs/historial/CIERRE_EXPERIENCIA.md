@@ -76,7 +76,7 @@ No hay una cifra comprobada de canciones únicas ni se afirma que los productos 
 
 ## Resultado automático
 
-Auditoría sin errores ni advertencias, 113 suites Node, 86 recorridos de navegador incluido offline y 789 renders de 31 programas de audio: aprobados. Prueba HTTP/SQLite aprobada. Pico máximo medido 0.945447. [Evidencia final](scripts/experience-14-validation.json).
+Auditoría sin errores ni advertencias, 113 suites Node, 86 recorridos de navegador incluido offline y 789 renders de 31 programas de audio: aprobados. Prueba HTTP/SQLite aprobada. Pico máximo medido 0.945447. [Evidencia final](../../scripts/experience-14-validation.json).
 
 | Comando completo | Resultado |
 |---|---|
