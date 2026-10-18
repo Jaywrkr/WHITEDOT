@@ -1,0 +1,410 @@
+{
+  "branch": "feat/universe-mischief",
+  "base": "9d92778",
+  "release": "2.3.0-alpha.49",
+  "content": {
+    "sceneTypes": 10,
+    "newAchievements": 120,
+    "registeredAchievements": 370,
+    "retiredExistingAchievements": 1,
+    "sceneReward": 3,
+    "claimLimit": 4096,
+    "cellSize": 1800,
+    "cellRate": 0.12,
+    "cacheCells": 48,
+    "concurrentScenes": 1,
+    "cooldownSeconds": 45,
+    "retrySeconds": 2,
+    "abandonRadius": 650,
+    "travellingCompanionRadius": 1400
+  },
+  "checks": [
+    {
+      "command": "npm test",
+      "result": "174 Node suites passed with external Windows python3 adapter; before final follow/orbit refinements, covered afterward by focused tests"
+    },
+    {
+      "command": "npm run test:impact -- --base 9d92778 --report ../mischief-final-node.json",
+      "result": "13 affected suites passed after final refinements; 0 cached, 0 skipped"
+    },
+    {
+      "command": "node tests/universe-mischief.mjs",
+      "result": "240 movement/contact solutions: ten scenes x twelve seeds x two motion modes, all ten secret conditions reachable, immutable finite Canvas rendering and bounded/future saves passed"
+    },
+    {
+      "command": "node tests/universe-mischief-runtime.mjs",
+      "result": "Natural entry, automatic/pause/hidden guards, one-time payment/reload/quota rollback/backoff, moving mineral target, local freeze, travelling farewell, stale audio and 120 unique/reachable achievement rules passed"
+    },
+    {
+      "command": "node tests/universe-activities-runtime.mjs",
+      "result": "Existing rewards and failed-write rollback retained; legacy boolean claims restore completed types without another payment"
+    },
+    {
+      "command": "python tests/universe_mischief_smoke.py",
+      "result": "Full ten natural encounters passed with real keyboard motion, existing mining pulses, native sculpture orbit, paused menu, persisted claims/reload and 370-entry journal. Earlier dance fixture was corrected to follow the actual nearest sculpture in a group."
+    },
+    {
+      "command": "WHITEDOT_MISCHIEF_CASES=audience python tests/universe_mischief_smoke.py",
+      "result": "Actual orbital procession, claim and reload passed after orbital refinement"
+    },
+    {
+      "command": "WHITEDOT_MISCHIEF_CASES=twin,farewell,helper python tests/universe_mischief_smoke.py",
+      "result": "Copy tracking, farewell while continuing travel, natural helper/mining and reload passed after final follow refinements"
+    },
+    {
+      "command": "python tests/achievements_v2_smoke.py",
+      "result": "370 registered entries, catalog rewards, seven categories and retired achievement retention passed"
+    },
+    {
+      "command": "python tests/music_menu_smoke.py",
+      "result": "320/390/844/1280 menu panels, guide, empty/full gifts, failed-save rollback and text preference passed"
+    },
+    {
+      "command": "python tests/universe_mischief_mix.py",
+      "result": "Four dense twelve-second production renders, alternating 44100/48000 Hz. All contact/relay indices and three-note completion, finite bounded pitches/gains, no clipping.",
+      "maxPeak": 0.8765384554862976,
+      "renders": [
+        {
+          "genre": "deep",
+          "rate": 48000,
+          "peak": 0.874295175075531,
+          "hot": 0,
+          "notes": [
+            {
+              "instrument": "p_gutguitar",
+              "note": 59,
+              "time": 1.25,
+              "index": 0,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 62,
+              "time": 2.25,
+              "index": 1,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 65,
+              "time": 3.25,
+              "index": 2,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 74,
+              "time": 4.25,
+              "index": 3,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 77,
+              "time": 5.25,
+              "index": 4,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 64,
+              "time": 6.25,
+              "index": 5,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 64,
+              "time": 7.25,
+              "index": 0,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 8.25,
+              "index": 6,
+              "gain": 0.014
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 60,
+              "time": 8.5,
+              "index": 6,
+              "gain": 0.014
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 64,
+              "time": 8.75,
+              "index": 6,
+              "gain": 0.014
+            }
+          ]
+        },
+        {
+          "genre": "afro",
+          "rate": 44100,
+          "peak": 0.8741719126701355,
+          "hot": 0,
+          "notes": [
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 1.25,
+              "index": 0,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 60,
+              "time": 2.25,
+              "index": 1,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 64,
+              "time": 3.25,
+              "index": 2,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 67,
+              "time": 4.25,
+              "index": 3,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 71,
+              "time": 5.25,
+              "index": 4,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 6.25,
+              "index": 5,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 7.25,
+              "index": 0,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 8.25,
+              "index": 6,
+              "gain": 0.014
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 60,
+              "time": 8.5,
+              "index": 6,
+              "gain": 0.014
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 64,
+              "time": 8.75,
+              "index": 6,
+              "gain": 0.014
+            }
+          ]
+        },
+        {
+          "genre": "ambient",
+          "rate": 48000,
+          "peak": 0.8739732503890991,
+          "hot": 0,
+          "notes": [
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 1.153846153846154,
+              "index": 0,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 60,
+              "time": 2.307692307692308,
+              "index": 1,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 64,
+              "time": 3.4615384615384617,
+              "index": 2,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 67,
+              "time": 4.230769230769231,
+              "index": 3,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 71,
+              "time": 5.384615384615385,
+              "index": 4,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 6.153846153846154,
+              "index": 5,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 7.307692307692308,
+              "index": 0,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 8.461538461538462,
+              "index": 6,
+              "gain": 0.014
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 60,
+              "time": 8.846153846153847,
+              "index": 6,
+              "gain": 0.014
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 64,
+              "time": 9.230769230769232,
+              "index": 6,
+              "gain": 0.014
+            }
+          ]
+        },
+        {
+          "genre": "minimaltechno",
+          "rate": 44100,
+          "peak": 0.8765384554862976,
+          "hot": 0,
+          "notes": [
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 1.153846153846154,
+              "index": 0,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 60,
+              "time": 2.307692307692308,
+              "index": 1,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 64,
+              "time": 3.230769230769231,
+              "index": 2,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 67,
+              "time": 4.153846153846154,
+              "index": 3,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 71,
+              "time": 5.307692307692308,
+              "index": 4,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 6.230769230769231,
+              "index": 5,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 7.153846153846154,
+              "index": 0,
+              "gain": 0.012
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 57,
+              "time": 8.307692307692308,
+              "index": 6,
+              "gain": 0.014
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 60,
+              "time": 8.538461538461538,
+              "index": 6,
+              "gain": 0.014
+            },
+            {
+              "instrument": "p_gutguitar",
+              "note": 64,
+              "time": 8.76923076923077,
+              "index": 6,
+              "gain": 0.014
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "command": "python tests/offline_smoke.py",
+      "result": "240 cached modules; offline reload and missing-JavaScript handling passed"
+    },
+    {
+      "command": "npm run audit:release",
+      "result": "Passed: 240 modules, 450 HTML IDs, 638 imports, 260 shell assets; zero errors/warnings"
+    }
+  ],
+  "limitations": [
+    "No full browser/audio suites, CI, deployment, physical device or physical listening certification.",
+    "Browser fixtures position the cube near naturally seeded scenes and skip the already-tested Camino; normal encounter/grant logic and real movement/mining remain in use.",
+    "Incomplete scenes are ephemeral and restart after leaving/reload; completed claims and achievements persist.",
+    "Up to 4096 rewarded mischief sites per save; subsequent scenes remain playable without new payments.",
+    "Helper requires an existing large crystal; dancing uses existing sculpture targets. Other scenes use small local procedural actors.",
+    "Musical replies reuse regional synthesis and harmony; no recorded assets or new genre IDs."
+  ],
+  "sha256Utf8Lf": {
+    "src/universe-mischief-model.js": "73050db857404f641fa49ac8be232d2a6b9fd1467fc03152ff1b77c03d55acd1",
+    "src/universe-mischief-art.js": "d0aec9d8eb65f4c6457761174191df5e2f8ef5bacb24d1d9f0c79caeff1398f7",
+    "src/universe-mischief.js": "a332a089b3d3da2d7655b6e23cec42b42caa9a31cb21cfe19085e07d5485c0d0",
+    "src/adventure-achievements.js": "72ceebb12d780bd241b3b8ccd46ea64bd8b94595df2fd714065188b13ba3e1d9",
+    "src/achievements.js": "e3ed278069f9a6a7ccefaad3bc6e287dc75d8e10d6a80ca0868ba58213ec4278",
+    "src/universe-activities.js": "373837063d44e95050611845aedca002916916febf12982e5007ded433f56ee9",
+    "src/render.js": "e32277ef1e3c6673a31e1f2841c2f94c24bbc181beea0eec1cc122f08b9fcf97",
+    "src/pixel-life.js": "ae55df2e863c374734dac7df8a77dfa65fdcbe768df7829613251fa990f34e93",
+    "src/audio.js": "341febc630a3520be163e829814fa2c2d52a3612207139e6662242b4b94e9b50",
+    "src/sculpture-totems.js": "38da3a9128e0deed23d2d3ef8953a4e31ea1c498857342ccbd371852a8653725"
+  }
+}

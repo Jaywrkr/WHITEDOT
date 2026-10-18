@@ -66,6 +66,7 @@ export function initialize(runtime){
  function draw(){
   if(!runtime.inWorld()||runtime.labMode)return;const s=runtime.S,c=runtime.cx,still=reduced(),ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
   for(const o of nearby()){
+   if(runtime.mischiefDancing?.(o.id))continue;
    const distance=Math.hypot(o.x-s.wx,o.y-s.wy),fade=runtime.worldOpacity?.(distance)??Math.max(0,1-distance/650);if(fade<.01)continue;
    const lit=Math.min(1,Math.max(0,(o.lit||0)-clock)),b=o.ball,amount=b?Math.min(1,b.age/.7):0,ball=b?(b.phase==='out'?amount:1-amount)*55*b.direction:0;
    c.save();c.translate(o.x+ox,o.y+oy);c.globalAlpha=fade*.9;

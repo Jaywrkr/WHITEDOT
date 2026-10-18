@@ -35,7 +35,7 @@ export function initialize(runtime){
   for(const id of travellers.keys())if(!ids.has(id))travellers.delete(id);
   const walking=runtime.autopilotState?.mode==='wander'&&!runtime.autopilotState.paused,inviting=walking&&runtime.currentPocket?.()?.kind!=='quiet'&&!runtime.regionOfPos(s.wx,s.wy).worldFamily?.quiet;
   for(const o of [...items,...travellers.values()]){
-   if(o.kind!=='viajero')moveInhabitant(o,player,seconds,dt,still);o.lit=Math.max(0,o.lit-dt*1.4);
+   if(o.kind!=='viajero'&&!runtime.mischiefFrozen?.(o))moveInhabitant(o,player,seconds,dt,still);o.lit=Math.max(0,o.lit-dt*1.4);
    if(inviting&&!still&&o.kind!=='viajero'&&['curioso','escolta','orbital','enjambre'].includes(o.genome.activity)){
     const dx=s.wx-o.x,dy=s.wy-o.y,d=Math.hypot(dx,dy)||1;if(d>42&&d<170&&Math.hypot(o.hx-s.wx,o.hy-s.wy)<180){o.x+=dx/d*dt*12;o.y+=dy/d*dt*12;}
    }
@@ -53,7 +53,7 @@ export function initialize(runtime){
  function draw(){
   if(!surface()||owner!==runtime.S)return;const c=runtime.cx,s=runtime.S,still=reduced(),ox=runtime.W/2-s.wx,oy=runtime.H/2-s.wy;
   for(const o of nearby(Math.min(700,runtime.worldVisibility?.radius||500))){const d=Math.hypot(o.x-s.wx,o.y-s.wy),fade=runtime.worldOpacity?.(d)??Math.max(0,1-d/500);if(fade<.005)continue;
-   const g=o.genome,p=still?0:seconds/g.period+g.phase,age=seconds-(o.responseAt??-10),response=age>=0&&age<1?Math.sin(age*Math.PI):0;
+   const phaseTime=(runtime.mischiefTime?.(o,seconds*1000)??seconds*1000)/1000,g=o.genome,p=still?0:phaseTime/g.period+g.phase,age=seconds-(o.responseAt??-10),response=age>=0&&age<1?Math.sin(age*Math.PI):0;
    let pixels=geometry.get(g);if(!pixels){pixels=pixelGeometry(g);geometry.set(g,pixels);}
    c.save();c.translate(o.x+ox,o.y+oy+(still?0:o.pose||0));runtime.wowObjectTransform?.(c,o);if(!still){c.rotate((o.rotation||0)+Math.sin(p*2)*response*.25);c.scale(1+response*.16,1-response*.1);}
    c.globalAlpha=fade*(.65+o.lit*.35);c.fillStyle=runtime.musicInk?.(o,g.role)||'#bddbe0';
