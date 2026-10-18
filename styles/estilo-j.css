@@ -368,7 +368,7 @@ body.ui-reduced-motion #rareNoticeArt::after{display:none}
 .favorite-signature svg{display:block;width:100%;height:100%}
 
 /* The wallet follows the distance label, including safe-area and responsive layout. */
-.spark-count{display:flex;gap:8px;align-items:center;font:11px/1.5 var(--mono);color:#ffffff80;font-variant-numeric:tabular-nums}
+.spark-count{display:flex;gap:8px;align-items:center;font:600 14px/1.5 var(--mono);color:var(--earned);font-variant-numeric:tabular-nums}
 .spark-count.collecting{color:var(--earned)}#sparkGain{font-size:10px;color:var(--earned)}
 .return-entrance .return-signature{animation-delay:.7s;font-size:11px}
 
@@ -392,3 +392,10 @@ body.ui-reduced-motion #rareNoticeArt::after{display:none}
 #rareNotice[data-layout="compact"] .rare-notice-copy{display:block}#rareNotice[data-layout="compact"] #rareNoticeName{font-size:14px;margin:4px 0}
 #rareNotice[data-layout="compact"] #rareNoticeOpen{min-height:36px;padding:6px 10px;margin-top:8px}
 #celebration[data-layout="compact"] #celebrationSurprise,#celebration[data-layout="compact"] #celebrationSignature{display:none}
+
+/* Earned sparks remain legible; one short response, never a repeating flash. */
+#sparkTotal{font:inherit;color:var(--earned)}#sparkGain{font-size:12px}.spark-count.collecting{filter:drop-shadow(0 0 4px #e9ca7d55)}
+#bJump.spark-ready{animation:spark-ready 2.4s ease-out both}
+@keyframes spark-ready{0%,100%{box-shadow:none}35%{box-shadow:inset 0 0 12px #e9ca7d66;border-color:var(--earned)}}
+@media(prefers-reduced-motion:reduce){#bJump.spark-ready{animation:none;border-color:var(--earned)}}
+body.ui-reduced-motion #bJump.spark-ready{animation:none;border-color:var(--earned)}

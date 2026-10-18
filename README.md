@@ -7,7 +7,8 @@ Versión en desarrollo: **2.3.0-alpha.44**. La versión publicada depende del ú
 ## Jugar y avanzar
 
 - En el Camino, romper diez cristales distintos con pulsos manuales abre el Mundo automáticamente.
-- En el Mundo, los cristales requieren 1/2/3 impactos y entregan 1/3/5 chispas. La abundancia cambia por región; el paseo automático no recoge.
+- En el Mundo, los cristales requieren 1/2/3 impactos y entregan 1/3/5 chispas. Algunos corren al primer golpe; romper uno puede golpear a sus vecinos. La abundancia cambia por región; el paseo automático no recoge.
+- Los fragmentos tienen centro blanco y halo dorado. Algunos son cian, escapan brevemente y añaden 3 chispas al valor normal. Recogerlos guarda cada pago por separado.
 - Las chispas se guardan por partida. El agotamiento de cristales persiste durante el día; recargar no repite el pago.
 - Al ganar las primeras 20 chispas aparece Saltar en la pantalla principal. Cada salto cuesta 20; el botón permanece visible después de gastar. Menú → Viajar y chispas conserva el regreso gratuito y las apariencias por 40/80/150.
 - Tarjetas, colecciones, logros secretos, distancia, títulos y una meta opcional acompañan el viaje. Los avisos breves no detienen el movimiento.

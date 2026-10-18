@@ -23,7 +23,7 @@ try:
    const r=__r;r.S.sound=false;r.S.firstJourney.skipped=true;r.S.wx=5000;r.S.wy=5200;r.stopAutopilot?.();
    document.querySelectorAll('.modal').forEach(m=>m.hidden=true);
    r.crystalTick(.02);
-   const o=r.crystalState.near.find(o=>o.size===2);
+   const o=r.crystalState.near.find(o=>o.size===2&&!o.runner&&!o.rare);
    if(!o)throw Error('No medium crystal fixture');
    window.crystal=o;window.startSparks=r.S.sparks;
    r.S.wx=o.x;r.S.wy=o.y-45;
