@@ -1,6 +1,8 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.3.0-alpha.46';
+const CACHE='whitedot-2.3.0-alpha.47';
 const SHELL=[
+ "./src/universe-activities-model.js","./src/universe-activities-art.js","./src/universe-activities.js","./src/universe-texts.js",
+ "./src/musical-wonders-model.js","./src/musical-wonders-audio.js","./src/musical-wonders-art.js","./src/musical-wonders.js",
  "./src/sculpture-totems-model.js","./src/sculpture-totems-art.js","./src/sculpture-totems.js",
  "./src/sparks-model.js", "./src/sparks.js",
  "./src/crystal-sparks.js","./src/crystal-play-model.js",

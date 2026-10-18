@@ -4,7 +4,7 @@ export function initialize(runtime){
  const cache=new Map(),travellers=new Map(),geometry=new WeakMap();let owner=null,scope='',seconds=0,travelSeconds=0,items=[],lastCell='',queued=0,barKey='',pointer=null,tap=null,nextInvitation=10;
  const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches),
   surface=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie',
-  active=()=>surface()&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden])');
+  active=()=>surface()&&!runtime.activityActive&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden])');
  function reset(){owner=runtime.S;scope=runtime.worldIdentity?.seed;cache.clear();travellers.clear();items=[];seconds=travelSeconds=0;lastCell='';queued=0;barKey='';tap=pointer=null;nextInvitation=10;}
  function neighbors(){
   const s=runtime.S,cx=Math.floor(s.wx/PIXEL_CELL),cy=Math.floor(s.wy/PIXEL_CELL),cell=cx+','+cy;

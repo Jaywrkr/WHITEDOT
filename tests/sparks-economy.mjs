@@ -40,3 +40,9 @@ assert(loop.buySparkStyle('dust'));loop.sparkEconomy.goal='shop:dust';loop.drawS
 loop.S.rareBook={items:cards};for(let i=0;i<6;i++)loop.sparkTick(.1);loop.sparkEconomy.goal='set:band';loop.drawSparkEconomyHUD();assert(loop.$('sparkGoal').textContent.includes('Meta cumplida'));
 loop.sparkEconomy.goal='none';loop.drawSparkEconomyHUD();assert(loop.$('sparkGoal').hidden);
 console.log('PASS connected Camino/world guidance, active-only badge distance, consistent travel availability and completed optional goals');
+
+const beyond=runtime({mode:'camino',todayKey:day,sparks:10,pathCrystals:Array.from({length:10},(_,i)=>'earned:'+i),todayLight:10,totalLight:10});
+const beforeBeyond=structuredClone(beyond.S),extra={id:'path:extra',x:90,y:0,size:1,value:1};
+assert(beyond.crystalTransaction(extra,'hit',true).broken);assert(beyond.savedCrystal(extra.id).collected);assert.equal(beyond.S.sparks,10);assert.deepEqual(beyond.S.pathCrystals,beforeBeyond.pathCrystals);assert.equal(beyond.S.todayLight,10);assert.equal(beyond.S.totalLight,10);assert.equal(beyond.sparkEconomy.stats.broken,0);
+fail=true;assert.equal(beyond.crystalTransaction({...extra,id:'path:failed'},'hit',true),null);assert(!beyond.savedCrystal('path:failed'));fail=false;
+console.log('PASS returning Camino crystals break without currency, daily light, objective or badge farming; failed writes roll back');

@@ -33,7 +33,6 @@ export function initialize(runtime){
   if(key!==cell){cell=key;near=path?pathCrystalField(pos.x,runtime.pathY,S().todayKey):crystalField(pos.x,pos.y,runtime.seedOf);}
   let completed=false;
   for(const o of near){
-   if(path&&S().pathCrystals.length>=10)break;
    if(path&&S().pathCrystals.includes(o.id)&&!sites.has(o.id))continue;
    if(runtime.crystalTransaction){const before=S().pathCrystals.length;processSaved(o,path,step,pos);if(path&&before<10&&S().pathCrystals.length===10)completed=true;continue;}
    let site=sites.get(o.id);
@@ -43,7 +42,7 @@ export function initialize(runtime){
     let hits=seen.get(wave);if(!hits){hits=new Set();seen.set(wave,hits);}if(hits.has(o.id))continue;hits.add(o.id);
     if(!site){site={hits:0,flash:0,broken:false,collected:false};sites.set(o.id,site);}
     site.hits++;site.flash=seconds+.18;if(site.hits<o.size)impact(o,site);
-    if(site.hits>=o.size){site.broken=true;if(path){if(!S().pathCrystals.length)runtime.onFirstLight?.();S().pathCrystals.push(o.id);completed=S().pathCrystals.length===10;S().todayLight=(S().todayLight||0)+1;S().totalLight=(S().totalLight||0)+1;earn(o.value);site.rewarded=true;runtime.hud?.();}
+    if(site.hits>=o.size){site.broken=true;if(path){if(S().pathCrystals.length<10){if(!S().pathCrystals.length)runtime.onFirstLight?.();S().pathCrystals.push(o.id);completed=S().pathCrystals.length===10;S().todayLight=(S().todayLight||0)+1;S().totalLight=(S().totalLight||0)+1;earn(o.value);}site.rewarded=true;runtime.hud?.();}
      site.particles=particles(o,{rare:false});impact(o,site);break;}
    }
    if(site?.broken&&!site.collected&&!(runtime.autopilotState?.mode==='wander'&&!runtime.autopilotState.paused)&&Math.hypot(o.x-pos.x,o.y-pos.y)<70){

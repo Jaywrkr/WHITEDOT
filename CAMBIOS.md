@@ -1,5 +1,14 @@
 # Cambios recientes
 
+## Hallazgos musicales y actividades del universo
+
+Rama `feat/rare-musical-wonders`, dependiente de `b8166c0` (pulido del cubo y cristales); main remoto observado `290cd2f`. Seis esculturas dieciséis veces más raras, con celebraciones iniciales y repetidas. Veinte hallazgos con tarjeta, adorno cosmético equipable y frase musical original; treinta actividades procedurales de movimiento/contacto, con cinco chispas una vez por lugar. Catálogo en [hallazgos y actividades](docs/HALLAZGOS_Y_ACTIVIDADES.md). Semillas independientes, progreso persistente y reversión de premios ante fallos de escritura.
+
+Ajustes permite ocultar textos del universo sin ocultar controles ni avisos de guardado. El Camino admite roturas después de diez sin puntos adicionales. Reducida la campana automática repetitiva; respuestas manuales conservadas. Corregida la transformación visual duplicada de la superficie del cubo. Publicación alpha.47 mediante sellado existente.
+
+Verificación: 171 suites Node completas, 97 afectadas, 360 soluciones de actividades, recorridos Chrome de hallazgos/equipo y actividad por teclado, y arranque offline con 235 módulos. Veinte frases en cinco mezclas densas a 44,1/48 kHz: pico 0,882477, sin saturación; Camino de treinta segundos sin campanas automáticas. El ejecutable python3 de las pruebas antiguas se resolvió mediante adaptador externo de Windows. Auditoría, comandos y límites en [el informe](scripts/rare-universe-validation.json). Sin certificar suites completas de navegador/audio, CI, despliegue, dispositivos físicos ni escucha física.
+
+
 ## Respuesta visual del cubo y cristales
 
 Rama `polish/cube-crystal-feedback` desde main `290cd2f`. Cubo con inclinación suavizada al caminar, deformación de arranque existente y compresión breve al pulsar, en Camino y Mundo. La superficie sigue la misma transformación que el cuerpo. Pausa, inspección, cambio de capa, teletransporte y movimiento reducido eliminan la pose añadida.
