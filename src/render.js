@@ -29,7 +29,7 @@ export function initialize(runtime) {
   let scheduledFrame=null;
   function frame(t){
     if(scheduledFrame!==null)cancelAnimationFrame(scheduledFrame);
-    runtime.achievementsTick?.(Math.min(.1,Math.max(0,(t-(frame.l||t))/1000)));runtime.connectionTick?.();runtime.saveToolsTick?.();runtime.focusUITick?.();runtime.syncSession();runtime.glassTick?.();runtime.mirrorTick?.();
+    runtime.universeTextsTick?.();runtime.achievementsTick?.(Math.min(.1,Math.max(0,(t-(frame.l||t))/1000)));runtime.connectionTick?.();runtime.saveToolsTick?.();runtime.focusUITick?.();runtime.syncSession();if(!runtime.activityActive){runtime.glassTick?.();runtime.mirrorTick?.();}
     if(!runtime.inWorld()||!runtime.S.sound)runtime.clearSoundCues();
     if(!runtime.inWorld())runtime.clearRelicProgress();
     runtime.activeFrameSeconds=Math.max(0,Math.min(1,(t-(frame.l||t))/1000));
@@ -38,9 +38,10 @@ export function initialize(runtime) {
     let dx=(runtime.keys.arrowright||runtime.keys.d?1:0)-(runtime.keys.arrowleft||runtime.keys.a?1:0), dy=(runtime.keys.arrowdown||runtime.keys.s?1:0)-(runtime.keys.arrowup||runtime.keys.w?1:0);
     if(runtime.ptr){const jx=runtime.ptr.ox??runtime.W/2,jy=runtime.ptr.oy??runtime.H/2,rad=runtime.ptr.ox!=null?55:80;dx=runtime.ptr.x-jx;dy=runtime.ptr.y-jy;const l=Math.hypot(dx,dy);if(l<6){dx=dy=0;}else{const k=Math.min(1,l/rad);dx=dx/l*k;dy=dy/l*k;}}
     else{const l=Math.hypot(dx,dy);if(l){dx/=l;dy/=l;}}
-    const manual=Math.hypot(dx,dy)>.01,automatic=runtime.autopilotVector?.(dt,manual,modal||runtime.scanning||document.hidden||runtime.S.mode==="studio");
+    const manual=Math.hypot(dx,dy)>.01,automatic=!runtime.activityActive&&runtime.autopilotVector?.(dt,manual,modal||runtime.scanning||document.hidden||runtime.S.mode==="studio");
     if(!manual&&automatic){dx=automatic.dx;dy=automatic.dy;}
     if(modal||runtime.scanning||runtime.S.mode==="studio"){dx=dy=0;}
+    if(runtime.activityActive){runtime.activityFrame(t,dt,dx,dy,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.sparkTick?.(0,true);runtime.drawSparkEconomyHUD?.();scheduledFrame=requestAnimationFrame(frame);return;}
     const sp=Math.hypot(dx,dy);
     runtime.MU.speed+=(sp-runtime.MU.speed)*Math.min(1,dt*3);
     runtime.MU.act*=Math.pow(.5,dt/2.5);
@@ -79,11 +80,11 @@ export function initialize(runtime) {
     runtime.drawDistantColors?.();
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
-    runtime.crystalTick?.(dt,modal);runtime.totemTick?.(dt,modal);runtime.wowTick?.(dt,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.sparkTick?.(dt,modal);runtime.reactiveTick?.(dt);runtime.inhabitantTick?.(dt);runtime.drawInhabitants?.();
+    runtime.crystalTick?.(dt,modal);runtime.totemTick?.(dt,modal);runtime.wonderTick?.(dt,modal);runtime.activityWorldTick?.(dt,modal);runtime.wowTick?.(dt,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.sparkTick?.(dt,modal);runtime.reactiveTick?.(dt);runtime.inhabitantTick?.(dt);runtime.drawInhabitants?.();
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.drawDuet?.();runtime.petTick?.(dt);runtime.drawPet?.(t);
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
-    runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawDistantColors?.(true);
+    runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWonders?.();runtime.drawActivityPortals?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawDistantColors?.(true);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
@@ -98,7 +99,8 @@ export function initialize(runtime) {
     runtime.cx.save();runtime.cubeVisualTransform?.(runtime.cx,runtime.W/2,runtime.H/2);runtime.cx.globalAlpha=1;runtime.cx.fillStyle=playerColor;
     const ritual=runtime.inWorld()&&(runtime.quietState?.stage>=6||runtime.hasPower?.('cometa'));
     if(runtime.inWorld()&&runtime.drawSurpriseBody?.(runtime.cx,runtime.W/2,runtime.H/2,s,t)){}else if(ritual){runtime.cx.translate(runtime.W/2,runtime.H/2);runtime.cx.rotate(Math.sin(t/600)*.12);runtime.cx.fillRect(-s/2,-s/2,s,s);}else runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));runtime.cx.restore();
-    if(!runtime.inWorld()||runtime.surpriseStyle?.shape==='cube'){runtime.cx.save();runtime.cubeVisualTransform?.(runtime.cx,runtime.W/2,runtime.H/2);runtime.drawCubeSurface?.(t,b,s);runtime.cx.restore();}
+    if(!runtime.inWorld()||runtime.surpriseStyle?.shape==='cube')runtime.drawCubeSurface?.(t,b,s);
+    runtime.drawWonderGift?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);
     // El pixel siempre se distingue: halo suave y anillo fino en el Mundo.
     if(runtime.inWorld()){const c=runtime.cx,hx=runtime.W/2,hy=runtime.H/2,g=c.createRadialGradient(hx,hy,0,hx,hy,s*2.6);g.addColorStop(0,'rgba(255,255,255,.22)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(hx-s*2.6,hy-s*2.6,s*5.2,s*5.2);
       c.globalAlpha=.55;c.strokeStyle='#fff';c.lineWidth=1;c.strokeRect(Math.round(hx-s/2)-3.5,Math.round(hy-s/2)-3.5,Math.round(s)+7,Math.round(s)+7);c.globalAlpha=1;}

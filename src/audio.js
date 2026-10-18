@@ -286,22 +286,22 @@ export function initialize(runtime) {
       if(MU.layers.has(2)&&s%4===0&&rnd()<.6)runtime.playVoice('faro',2,t,MU.dnaA,false,.4);
       for(const f of MU.flowers){if(f.st===s){runtime.playVoice('planta:flor',f.n%7,t,runtime.regionOfPos(f.x,f.y),false,.7,f);f.hit=performance.now()+(t-ac.currentTime)*1000;}}
     }
-    // quieto: campanas lentas sobre el acorde
-    if(!live&&MU.still>2.5&&s%2===0&&rnd()<.05){const n=ct[Math.floor(rnd()*ct.length)]+12+(rnd()<.4?12:0);pluck(n,t+jit(),vel(.045),2);}
+    // Quiet idle punctuation: one warm phrase opportunity every eight bars, no recurring high bell.
+    if(!live&&MU.still>2.5&&s===0&&(MU.step>>4)%8===0&&rnd()<.3){const n=ct[Math.floor(rnd()*ct.length)];hookInst('feltpiano',n,t+jit(),vel(.022));}
     // la música te responde con tu propia frase
     if(!runtime.inWorld()&&!MU.resp&&MU.motif.length>=3&&MU.step-MU.lastNoteStep===24){
       MU.resp=true;const st0=MU.motif[0].st;
       MU.motif.slice(-6).forEach(m=>{const off=Math.min(m.st-st0,24);pluck(snap(m.n,ct)-12,t+off*SIX,vel(.05),2);});
     }
     // el mundo toca solo: objetos cercanos suenan en el beat, las criaturas que te siguen cantan
-    if(runtime.inWorld()&&MU.near.length){
+    if(runtime.inWorld()&&!runtime.activityActive&&MU.near.length){
       const o=ambientSoloist(MU.dnaA,MU.step>>4,s,MU.near,runtime.seedOf,{x:runtime.S.wx,y:runtime.S.wy,rest:MU.radio?.melodyRest,quiet:runtime.currentPocket?.()?.kind==='quiet'});
       if(o?.snd){o.snd(t);setTimeout(()=>{o.lit=1;o.hit=1;},Math.max(0,(t-ac.currentTime)*1000));}
     }
-    if(runtime.inWorld()&&s===2&&(MU.step>>4)%4===2&&!MU.radio?.melodyRest&&runtime.currentPocket?.()?.kind!=='quiet')MU.singers.slice(0,1).forEach(o=>{runtime.speciesSound(o.s,t,false,o.personality,o);setTimeout(()=>{o.lit=1;},Math.max(0,(t-ac.currentTime)*1000));});
+    if(runtime.inWorld()&&!runtime.activityActive&&s===2&&(MU.step>>4)%4===2&&!MU.radio?.melodyRest&&runtime.currentPocket?.()?.kind!=='quiet')MU.singers.slice(0,1).forEach(o=>{runtime.speciesSound(o.s,t,false,o.personality,o);setTimeout(()=>{o.lit=1;},Math.max(0,(t-ac.currentTime)*1000));});
     // lo que tocas espera la siguiente corchea (con un poco de vida humana)
     if(s%2===0){let m=0;while(MU.q8.length&&m<3){const it=MU.q8.shift(),t2=t+jit()*1.5;it.fn(t2);if(it.vis)setTimeout(it.vis,Math.max(0,(t2-ac.currentTime)*1000));m++;}}
-    runtime.duetStep?.(s,bar,t);runtime.livingStep?.(s,bar,t);
+    runtime.wonderMusicStep?.(s,bar,t);runtime.duetStep?.(s,bar,t);runtime.livingStep?.(s,bar,t);
     runtime.performanceStep?.(s,bar,t);runtime.percussionStep?.(s,bar,t);runtime.microStep?.(s,bar,t);runtime.surpriseStep?.(s,bar,t);
     runtime.petStep?.(s,bar,t);
     runtime.glassStep?.(s,bar,t);

@@ -431,3 +431,13 @@ body.ui-reduced-motion #bJump.spark-ready{animation:none;border-color:var(--earn
 body.ui-reduced-motion .sheet button{transition:none}
 
 .sheet a:not(.btn),.sheet a:not(.btn):visited{color:var(--ink);text-underline-offset:3px;text-decoration-color:#ffffff80}
+
+#cubeWonder{display:block;width:100%;min-height:44px;margin:8px 0 16px;padding:8px;background:#000;color:#fff;border:1px solid var(--line);font:16px var(--mono)}
+
+.universe-texts-setting{display:flex;align-items:center;gap:12px;min-height:44px;line-height:1.5}.universe-texts-setting input{width:20px;height:20px;flex:none;accent-color:#fff}
+body.world-mode.universe-texts-off :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not(.expanded),#rareNotice[data-layout="compact"],#celebration[data-layout="compact"],#firstJourney){visibility:hidden!important;pointer-events:none!important}
+
+/* Activity scenes keep their own spatial cues; the global menu and save warnings stay available. */
+body.activity-open .hud,body.activity-open .goal,body.activity-open .bar{visibility:hidden;pointer-events:none}
+body.activity-open .dock>button:not(#bMenu){display:none!important}
+body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not(.expanded),#rareNotice[data-layout="compact"],#celebration[data-layout="compact"],#firstJourney){visibility:hidden!important;pointer-events:none!important}

@@ -1,0 +1,73 @@
+{
+  "branch": "feat/rare-musical-wonders",
+  "base": "b8166c0",
+  "observedRemoteMain": "290cd2f",
+  "dependency": "polish/cube-crystal-feedback",
+  "release": "2.3.0-alpha.47",
+  "content": {
+    "totemRate": 0.015,
+    "wonderTypes": 20,
+    "activityTypes": 30,
+    "solvedActivitySeeds": 360,
+    "mazeSize": 51,
+    "rewardPerSiteOnce": 5,
+    "progressSitesRetained": 32,
+    "claimLimit": 8192
+  },
+  "checks": [
+    {
+      "command": "npm test",
+      "result": "171 suites passed",
+      "environment": "External ESM adapter resolves python3 to installed Python on Windows."
+    },
+    {
+      "command": "npm run test:impact -- --base b8166c0 --report ../wonders-activities-node.json",
+      "result": "97 suites passed"
+    },
+    {
+      "command": "node tests/universe-activities.mjs",
+      "result": "30 types x 12 seeds solved using movement/contact model; maze connectivity and swept collision passed"
+    },
+    {
+      "command": "node tests/universe-activities-runtime.mjs",
+      "result": "Passed again after final audio-queue guards"
+    },
+    {
+      "command": "python tests/musical_wonders_smoke.py",
+      "result": "20 natural generated contact grants, equipment/reload/write failures, native musical cue, sculpture show, Camino no extra reward; 390/844/1280 views passed"
+    },
+    {
+      "command": "python tests/universe_activities_smoke.py",
+      "result": "Real keyboard orchestra completion, one payment/reload, unchanged world coordinates, pause, saved text toggle/save warning, 51x51 maze wall and free exit passed; rerun after visual cleanup"
+    },
+    {
+      "command": "python tests/musical_wonders_mix.py",
+      "result": "20 phrases across 5 dense mixes at 44100/48000 Hz; peak 0.8824763298034668, no clipping; 30-second Camino zero automatic bells"
+    },
+    {
+      "command": "python tests/offline_smoke.py",
+      "result": "235 cached modules, offline reload passed"
+    },
+    {
+      "command": "npm run audit:release",
+      "result": "Passed: 235 modules, 445 HTML IDs, 621 imports, 255 shell assets; zero errors/warnings"
+    }
+  ],
+  "limitations": [
+    "No full browser/audio suites, CI, deployment, physical-device or physical listening certification.",
+    "Browser discovery fixtures place the cube near naturally generated objects; grant logic is unchanged.",
+    "Thirty scenes share bounded mechanisms; they are not independent large games.",
+    "Native synthetic musical inspirations, no recorded samples or copied songs.",
+    "Full Node run preceded final CSS cleanup and sound queue guards; focused model/runtime/browser checks passed afterward."
+  ],
+  "sha256Utf8Lf": {
+    "src/musical-wonders-model.js": "1a4bf8a4187f54888e55596169c64b16222e4197a81090ba1e626735a65fd18d",
+    "src/musical-wonders.js": "e57ea490b9798d2cac1f9ffca6188efbf50570d0def129e719d7ca7f91533c31",
+    "src/musical-wonders-art.js": "e81f7b96a850d08e9f29d85c4525366d2b60472b04695d993f96e3455c238a8c",
+    "src/musical-wonders-audio.js": "c9e931fb461c4ae6eb26483e11476881057dd220516e7597fc952416b1b678e1",
+    "src/universe-activities-model.js": "e82b803d613b4e3daf92f150338b3253c211c664f6d6a9765ee5195377e59507",
+    "src/universe-activities.js": "6d45bc023b314f8dd0f9fd47faa58a930eff756fd297d03c0f3b3e9a500a4094",
+    "src/universe-activities-art.js": "14774bb597e99aaefa3b5125e0550ffe8f6c71e7ff4b60de90c3a0a30c37eb05",
+    "src/universe-texts.js": "c6788b153f03541d4df0fcde9575d1f8f9d3f214a666d7861720daa998d90bd3"
+  }
+}

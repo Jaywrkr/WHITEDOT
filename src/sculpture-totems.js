@@ -34,7 +34,7 @@ export function initialize(runtime){
  }
  function finish(o){
   const result=runtime.rewardTotem?.(o.id);if(result===false)return false;
-  o.done=clock+8;o.progress=0;o.lit=clock+2;o.ball=null;
+  runtime.celebrateTotem?.(o);o.done=clock+8;o.progress=0;o.lit=clock+2;o.ball=null;
   runtime.collectRareCard?.('totem:'+o.kind,{...o,id:'totem:'+((runtime.labMode||runtime.S.previewSeed&&!runtime.realTravel)?'sample:':'shape:')+o.kind},{context:{role:'lead',instrument:TOTEMS[o.kind].voice,gesture:'despertar'}});return true;
  }
  function guide(o){

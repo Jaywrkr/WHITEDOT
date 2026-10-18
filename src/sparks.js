@@ -25,7 +25,7 @@ export function initialize(runtime){
   if(path&&owner.pathCrystals.includes(o.id))return prior?{...prior}:null;
   let amount=0,result=null,first=false;
   const ok=commit(next=>{const p=next.sites[o.id]||{x:o.x,y:o.y,size:o.size,value:o.value,hits:0,broken:false,collected:false,rare:!path&&o.rare===true,fragments:0};
-   if(action==='hit'){p.hits++;p.broken=p.hits>=o.size;if(p.broken){next.stats.broken++;if(path){first=!owner.pathCrystals.length;owner.pathCrystals.push(o.id);owner.todayLight=(owner.todayLight||0)+1;owner.totalLight=(owner.totalLight||0)+1;p.collected=true;p.fragments=fragmentMask(p);amount=creditSparks(owner,o.value);}}}
+   if(action==='hit'){p.hits++;p.broken=p.hits>=o.size;if(p.broken){if(!path||owner.pathCrystals.length<10)next.stats.broken++;if(path){p.collected=true;p.fragments=fragmentMask(p);if(owner.pathCrystals.length<10){first=!owner.pathCrystals.length;owner.pathCrystals.push(o.id);owner.todayLight=(owner.todayLight||0)+1;owner.totalLight=(owner.totalLight||0)+1;amount=creditSparks(owner,o.value);}}}}
    else if(action==='collect'){const remaining=crystalFragments(p,p.rare===true).filter(f=>!((p.fragments||0)&(1<<f.index))&&(fragment===null||fragment===f.index));if(!remaining.length)return false;for(const f of remaining){p.fragments=(p.fragments||0)|(1<<f.index);amount+=creditSparks(owner,f.value);}p.collected=p.fragments===fragmentMask(p);}else return false;
    next.sites[o.id]=p;result={...p};
   });

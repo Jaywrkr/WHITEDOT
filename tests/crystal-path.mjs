@@ -25,3 +25,6 @@ const saved=r.S.pathCrystals.slice();r.S.mode='camino';r.waves=[];r.crystalTick(
 r.waves=[{x:o.x-10,y:o.y,r:11,prev:9,origin:'player'}];r.crystalTick(.02);assert.equal(r.S.pathCrystals.length,9,'saved broken crystals cannot count twice');
 r.S.todayKey='2000-01-01';r.S.mode='camino';r.checkDay();assert.equal(r.S.pathCrystals.length,0,'new day restores the ten-crystal goal');
 console.log('PASS regional gaps/abundance, mandatory ten unique broken crystals, automatic entry without prompt, paused mining, saved depletion and day reset');
+
+r.S.mode='camino';r.S.pathCrystals=Array.from({length:10},(_,i)=>'earned:'+i);r.S.sparks=10;const extraPath=pathCrystalField(5000,r.pathY,r.S.todayKey).at(4);r.S.px=extraPath.x;r.S.py=extraPath.y-20;r.waves=[];r.crystalTick(.02);r.waves=[{x:extraPath.x-10,y:extraPath.y,r:11,prev:9,origin:'player'}];r.crystalTick(.02);assert(r.crystalState.near.find(o=>o.id===extraPath.id).broken);assert.equal(r.S.sparks,10);assert.equal(r.S.pathCrystals.length,10);assert.equal(r.S.mode,'camino');
+console.log('PASS real fallback pulse breaks further Camino crystals without payment or re-entry');

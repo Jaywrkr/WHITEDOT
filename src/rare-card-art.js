@@ -1,3 +1,4 @@
+import {wonderPortrait} from './musical-wonders-art.js';
 import {totemPortrait} from './sculpture-totems-art.js';
 import {microPath} from './micro-instruments-model.js';
 import {livingPortrait} from './living-portraits.js';
@@ -10,6 +11,7 @@ const RELICS=[
  'M-20 -2H-16V2H-20ZM-2 -2H2V2H-2ZM16 -2H20V2H16Z','M-12 -23V16H23','M-22 -22H22V22H-22ZM-4 -4H4V4H-4Z'
 ];
 export function rarePortrait(card,{scene=false}={}){
+ if(card.type.startsWith('wonder:'))return wonderPortrait(card.type.slice(7));
  if(card.type.startsWith('totem:'))return totemPortrait(card.type.slice(6));
  const art=card.type.split(':')[0],v=card.artVariant||0;let path;
  if(art==='micro')path=microPath(card.type.split(':')[1]);

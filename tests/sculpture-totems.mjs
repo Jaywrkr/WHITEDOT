@@ -12,7 +12,7 @@ for(const layer of ['superficie','bajo','cielo'])for(let x=-25;x<25;x++)for(let 
  const items=totemCell(x,y,seedOf,layer);assert.deepEqual(items,totemCell(x,y,seedOf,layer));if(items.length){cells++;if(items.length===1)alone++;else groups++;}assert(items.length<=3);
  for(const o of items){found.set(o.kind,o);assert(Math.abs(o.x-(x+.5)*TOTEM_CELL)<TOTEM_CELL*.35);assert(Math.abs(o.y-(y+.5)*TOTEM_CELL)<TOTEM_CELL*.35);assert(o.id.includes(layer));}
 }
-assert.equal(found.size,6);assert(cells>1400&&cells<2200);assert(groups>300&&alone>700);assert.equal(normalizeTotemClaims(Object.fromEntries(Array.from({length:90},(_,i)=>['totem:v1:'+i,true]))).constructor,Object);assert.equal(Object.keys(normalizeTotemClaims(Object.fromEntries(Array.from({length:90},(_,i)=>['totem:v1:'+i,true])))).length,64);
+assert.equal(found.size,6);assert(cells>75&&cells<155);assert(groups>15&&alone>45);assert.equal(normalizeTotemClaims(Object.fromEntries(Array.from({length:90},(_,i)=>['totem:v1:'+i,true]))).constructor,Object);assert.equal(Object.keys(normalizeTotemClaims(Object.fromEntries(Array.from({length:90},(_,i)=>['totem:v1:'+i,true])))).length,64);
 const identity=worldIdentity('','classic',1);
 for(const kind of TOTEM_KINDS){const card=makeRareCard({type:'totem:'+kind,sourceId:'totem:shape:'+kind,world:identity});assert(card);assert(rarePortrait(card).includes('linearGradient'));assert.equal(normalizeRareBook({version:1,items:[card]}).items.length,1);}
 let modal=false,fail=false,cards=[],queued=[],notes=[],saved=null;globalThis.document={hidden:false,querySelector:()=>modal?{}:null};globalThis.Path2D=class{constructor(path){assert(path.includes('M'));}};
