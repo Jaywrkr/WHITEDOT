@@ -1,5 +1,5 @@
 import {MISCHIEF,MISCHIEF_CELL,mischiefCell,normalizeMischief,createMischief,stepMischief} from './universe-mischief-model.js';
-import {drawMischief} from './universe-mischief-art.js';
+import {drawMischief,drawMischiefClue} from './universe-mischief-art.js';
 import {crystalField} from './crystal-sparks.js';
 import {creditSparks} from './sparks-model.js';
 import {musicFamily} from './music-families.js';
@@ -45,5 +45,5 @@ export function initialize(r){
   if(scene.done)finish();music();
  }
  const frozen=o=>r.inWorld()&&!r.activityActive&&!!scene&&scene.kind==='breath'&&scene.stage===1&&!scene.done&&Math.hypot(o.x-scene.x,o.y-scene.y)<130;
- Object.defineProperties(r,{mischiefTick:{get:()=>tick},drawMischief:{get:()=>()=>{if(active())drawMischief(r,scene,reduced());}},mischiefFrozen:{get:()=>frozen},mischiefTime:{get:()=>(o,t)=>{if(!frozen(o))return t;if(!frozenTimes.has(o))frozenTimes.set(o,t);return frozenTimes.get(o);}},mischiefHush:{get:()=>active()&&!!scene&&scene.kind==='breath'&&scene.stage===1&&!scene.done},mischiefDancing:{get:()=>id=>!!scene&&scene.kind==='dance'&&scene.target?.id===id},mischiefNear:{get:()=>sites},mischiefState:{get:()=>({book:book(),scene,cache:cache.size,clock})}});book();
+ Object.defineProperties(r,{mischiefTick:{get:()=>tick},drawMischief:{get:()=>()=>{if(active()){if(!scene&&clock>=cooldown&&!(r.autopilotState?.mode==='wander'&&!r.autopilotState.paused))drawMischiefClue(r,sites(),reduced());drawMischief(r,scene,reduced());}}},mischiefFrozen:{get:()=>frozen},mischiefTime:{get:()=>(o,t)=>{if(!frozen(o))return t;if(!frozenTimes.has(o))frozenTimes.set(o,t);return frozenTimes.get(o);}},mischiefHush:{get:()=>active()&&!!scene&&scene.kind==='breath'&&scene.stage===1&&!scene.done},mischiefDancing:{get:()=>id=>!!scene&&scene.kind==='dance'&&scene.target?.id===id},mischiefNear:{get:()=>sites},mischiefState:{get:()=>({book:book(),scene,cache:cache.size,clock})}});book();
 }

@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {initialize} from '../src/achievements.js';
+import {drawMischiefClue} from '../src/universe-mischief-art.js';
+import {validateSave} from '../src/save-store.js';
+let fail=false,modal=false;globalThis.document={hidden:false,querySelector:()=>modal?{}:null};
+const classes=new Set(),notices=[],r={S:{achievementVersion:2,ach:{old:'2026-10-18'},journal:{}},ACH:[['old','Anterior',''],['new','<Nuevo>',''],['other','Otro','']],inWorld:()=>false,$:()=>({classList:{toggle:(k,v)=>v?classes.add(k):classes.delete(k)},setAttribute(){}}),save:()=>!fail,toast:(t,o)=>{notices.push({t,o});return true;},unlock(){}};
+initialize(r);r.achievementsTick(2);assert(!classes.has('has-unread'));assert.equal(notices.length,0,'old saves stay quiet');
+r.S.ach.new='2026-10-18';r.achievementEarned(['new']);modal=true;r.achievementsTick(2);assert.equal(notices.length,0);modal=false;r.achievementsTick(2);assert.match(notices[0].t,/&lt;Nuevo&gt;/);assert(classes.has('has-unread'));
+validateSave(r.S,{ach:{},journal:{}},{});
+const saved=structuredClone(r.S);fail=true;r.acknowledgeAchievements();assert(classes.has('has-unread'),'failed acknowledgement keeps unread');fail=false;r.acknowledgeAchievements();assert(!classes.has('has-unread'));assert(r.S.journal.achievementSeen.new);assert.equal(notices[0].o.valid(),false,'already-read queued notice expires');
+r.S=saved;r.achievementsTick(2);assert(classes.has('has-unread'),'unread survives reload');assert.equal(notices.length,1,'reload does not replay toast');
+r.S.ach.other='2026-10-18';r.achievementEarned(['new','other']);r.achievementsTick(2);assert.match(notices.at(-1).t,/2 logros nuevos/);assert.equal(notices.at(-1).o.category,'logros');r.acknowledgeAchievements();r.achievementsTick(2);assert(!classes.has('has-unread'));
+r.S={achievementVersion:2,ach:{},journal:{}};r.achievementsTick(2);assert(!classes.has('has-unread'),'another save does not inherit marker');
+const calls=[],c={save(){},restore(){},fillRect(...args){assert(args.every(Number.isFinite));calls.push(args);}},view={cx:c,S:{wx:0,wy:0,mischief:{done:{}}},W:800,H:600,camX:0,camY:0},sites=[{id:'near',x:140,y:0},{id:'far',x:250,y:0}];
+const original=JSON.stringify(sites);drawMischiefClue(view,sites,true);assert.equal(calls.length,3,'one clue only');assert.equal(JSON.stringify(sites),original);calls.length=0;view.S.mischief.done={near:1,far:1};drawMischiefClue(view,sites);assert.equal(calls.length,0);view.S.mischief.done={};drawMischiefClue(view,[{id:'offscreen',x:310,y:0}],true);assert.equal(calls.length,3);drawMischiefClue(view,[{id:'outside',x:400,y:0}],true);assert.equal(calls.length,3);
+console.log('PASS silent/grouped escaped notices, legacy migration, persisted unread, acknowledgement rollback, save validation, no cross-save/reload spam and bounded immutable discovery cues');

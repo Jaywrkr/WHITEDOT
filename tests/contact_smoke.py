@@ -1,3 +1,4 @@
+from browser_helpers import complete_path_fixture
 # Navegador: mesa de efectos. El pad filtra y da espacio, vuelve a limpio al soltar, Fijar lo mantiene, Stop frena y no mueve al pixel.
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -17,7 +18,7 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();complete_path_fixture(page);page.locator('#cExplore').click();page.locator('#hwGo').click()
   page.wait_for_function("window.__testRuntime.MU.dnaA && window.__testRuntime.ac.state==='running'")
   page.evaluate("""()=>{const r=window.__testRuntime,raw=r.wchunk(Math.floor(r.S.wx/900),Math.floor(r.S.wy/900)),c=r.sceneChunk(raw),old=c.pillars,p={x:r.S.wx,y:r.S.wy,w:10,h:30,hit:0,cd:0,snd:()=>{}};c.pillars=[p];
    const frame=()=>{r.frame.l=performance.now();r.frame(performance.now()+16);};

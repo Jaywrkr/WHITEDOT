@@ -17,7 +17,7 @@ try:
   for width,height in [(390,844),(844,390),(1280,800)]:
    if page.url!='about:blank':page.evaluate('localStorage.clear()')
    page.set_viewport_size({'width':width,'height':height});page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.reactiveTick')
-   source=page.evaluate('''()=>{const r=__r,s=r.S;document.querySelectorAll('.modal').forEach(e=>e.hidden=true);s.sound=false;s.mode='world';s.help.camino=s.help.mundo=true;s.todayLight=1;s.lastWorldDay=s.todayKey;s.firstJourney.skipped=true;
+   source=page.evaluate('''()=>{const r=__r,s=r.S;document.getElementById('returnContinue').click();document.querySelectorAll('.modal').forEach(e=>e.hidden=true);s.sound=false;s.mode='world';s.help.camino=s.help.mundo=true;s.todayLight=1;s.lastWorldDay=s.todayKey;s.firstJourney.skipped=true;
     for(let i=0;i<20;i++){s.wx=(i+.5)*r.WCH;s.wy=r.WCH*.5;const o=r.livingNear(350).find(o=>o.group==='flora');if(o){s.wx=o.x+90;s.wy=o.y;window.nativeSource=o;return {id:o.id,x:o.x,y:o.y};}}throw Error('Native flora absent');}''')
    page.wait_for_function('!!__r.reactiveState?.profile');page.evaluate('__r.S.wx=nativeSource.x+15;__r.S.wy=nativeSource.y')
    page.wait_for_function('__r.reactiveState.effects.some(e=>e.source===nativeSource.id)')

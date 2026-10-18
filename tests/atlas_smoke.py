@@ -18,6 +18,8 @@ with sync_playwright() as p:
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
   assert page.evaluate('window.__testRuntime.S.mode')=='camino'
+  from browser_helpers import complete_path_fixture
+  complete_path_fixture(page)
   page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dAtlas').click()
   page.wait_for_function('document.querySelectorAll("#atlasBody button[data-atlas]").length>0')
   rows=page.locator('#atlasBody button[data-atlas]').count();n=page.evaluate('Object.keys(window.__testRuntime.GEN).length');assert rows==n,(rows,n)

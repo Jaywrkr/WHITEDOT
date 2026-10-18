@@ -31,7 +31,7 @@ try:
    const {createRegionalVoices}=await import('/src/voices.js');const base=r.regionOfPos(r.S.wx,r.S.wy);
    for(const id of ['pad','plucked','strings','bowed'])delete r.S.journal.music.instruments[id];
    const pending=new Set(['pad','plucked','strings','bowed']),source={x:r.S.wx,y:r.S.wy};
-   for(const genre of ['minimal','ambient','organic','nudisco','robotic']){
+   for(const genre of Object.keys(r.GEN)){
     for(let i=0;i<96&&pending.size;i++){const region={...base,genre,key:'touch-'+genre+'-'+i};
      const profile=createRegionalVoices(region,r.BIOMES,r.GEN,r.seedOf,r.rng);
      for(const kind of Object.keys(profile)){const voice=r.getVoice(kind,region,source);if(!pending.has(voice.instrument))continue;

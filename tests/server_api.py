@@ -32,5 +32,17 @@ with tempfile.TemporaryDirectory() as tmp:
   # Restart the service/store, not the test process: copies and shared place edits survive.
   restarted=module.Store(Path(tmp)/'test.sqlite')
   with restarted.db() as db:assert db.execute('SELECT revision FROM saves').fetchone()[0]==1;assert db.execute('SELECT COUNT(*) FROM edits').fetchone()[0]==1
+  try:db.execute('SELECT 1')
+  except module.sqlite3.ProgrammingError:pass
+  else:raise AssertionError('Database context leaked its connection')
+  try:
+   with restarted.db() as failed:
+    failed.execute("INSERT INTO users(id,name) VALUES('rollback-fixture','rollback-fixture')")
+    raise RuntimeError('rollback fixture')
+  except RuntimeError:pass
+  with restarted.db() as checked:assert checked.execute("SELECT COUNT(*) FROM users WHERE id='rollback-fixture'").fetchone()[0]==0
+  try:failed.execute('SELECT 1')
+  except module.sqlite3.ProgrammingError:pass
+  else:raise AssertionError('Exceptional database context leaked its connection')
   print('PASS HTTP accounts/guests, protected files, origin/CSRF, concurrent CAS, save isolation, 2-slot rooms, clocked events, validation and persistent edits')
  finally:server.shutdown();server.server_close()

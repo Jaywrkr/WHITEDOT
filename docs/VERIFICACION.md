@@ -23,7 +23,7 @@ npm run test:browser
 npm run test:audio
 ```
 
-CI está definido en [checks.yml](../.github/workflows/checks.yml), con navegador y tres grupos de audio. No integrar con comprobaciones pendientes o fallidas. No ejecutar varias suites pesadas simultáneamente ni desactivar aserciones. Documentar por separado CI, pruebas locales, escucha física, dispositivos reales y despliegue.
+CI está definido en [checks.yml](../.github/workflows/checks.yml), con navegador y tres grupos de audio. No integrar con comprobaciones pendientes o fallidas. El catálogo de navegador conserva un límite de 145 segundos por recorrido y hasta dos trabajadores; su contenedor admite 40 minutos, igual que el job de CI, para no cortar todo el catálogo a los 15 minutos. No ejecutar varias suites pesadas simultáneamente ni desactivar aserciones. Documentar por separado CI, pruebas locales, escucha física, dispositivos reales y despliegue.
 
 ## Entorno Windows
 

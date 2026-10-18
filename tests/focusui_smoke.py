@@ -1,3 +1,4 @@
+from browser_helpers import complete_path_fixture
 # Navegador: mesa de efectos. El pad filtra y da espacio, vuelve a limpio al soltar, Fijar lo mantiene, Stop frena y no mueve al pixel.
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -17,16 +18,16 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();complete_path_fixture(page);page.locator('#cExplore').click();page.locator('#hwGo').click()
   page.wait_for_function("window.__testRuntime.MU.dnaA && window.__testRuntime.ac.state==='running'")
   page.wait_for_function('document.body.classList.contains("world-focus")')
-  assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bJump','bMenu','bStyles']
+  assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bMenu','bStyles']
   assert not page.locator('#goal').is_visible()
   page.locator('#bMenu').click();page.locator('#bTools').click();assert page.locator('#bFx').is_visible()
-  page.locator('#bFx').click();assert page.locator('#fxPanel').is_visible();assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bJump','bMenu','bStyles'];page.locator('#fxClose').click()
+  page.locator('#bFx').click();assert page.locator('#fxPanel').is_visible();assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bMenu','bStyles'];page.locator('#fxClose').click()
   page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bDetails').click();page.locator('#settingsClose').click();assert page.locator('#goal').is_visible()
   page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bDetails').click();page.locator('#settingsClose').click();assert not page.locator('#goal').is_visible()
-  page.locator('#bMenu').click();page.locator('#bTools').click();page.mouse.click(30,300);assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bJump','bMenu','bStyles']
+  page.locator('#bMenu').click();page.locator('#bTools').click();page.mouse.click(30,300);assert page.locator('#dock button:visible').evaluate_all('(buttons)=>buttons.map(b=>b.id).sort()')==['bAuto','bMenu','bStyles']
   page.evaluate('window.__testRuntime.startScanner()');assert page.locator('#scanner').is_visible();page.evaluate('window.__testRuntime.stopScanner()')
   dims=page.evaluate('({vw:innerWidth,sw:document.documentElement.scrollWidth,sh:document.documentElement.scrollHeight,vh:innerHeight})');assert dims['sw']<=dims['vw'] and dims['sh']<=dims['vh'],dims
   page.wait_for_timeout(700);page.screenshot(path=f'/tmp/whitedot-focus-{label}.png')

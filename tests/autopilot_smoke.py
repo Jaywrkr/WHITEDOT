@@ -1,3 +1,4 @@
+from browser_helpers import complete_path_fixture
 # Navegador: paseo automático, reloj de sesión, exploración sin límite y cancelación.
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -17,7 +18,7 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();complete_path_fixture(page);page.locator('#cExplore').click();page.locator('#hwGo').click()
   page.evaluate("()=>{const r=window.__testRuntime;r.startAutopilot('wander');}")
   before=page.evaluate('[window.__testRuntime.S.wx,window.__testRuntime.S.wy]');lamp=page.evaluate('window.__testRuntime.S.lampUsed');elapsed=page.evaluate('window.__testRuntime.S.session.seconds');page.wait_for_timeout(600)
   after=page.evaluate('[window.__testRuntime.S.wx,window.__testRuntime.S.wy]');assert ((after[0]-before[0])**2+(after[1]-before[1])**2)**.5>10

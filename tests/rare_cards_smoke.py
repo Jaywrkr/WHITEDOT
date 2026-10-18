@@ -50,6 +50,8 @@ try:
    # Reload restores the collection but never replays old popups.
    page.wait_for_timeout(200);assert page.locator('#rareNotice').is_hidden()
    if size['width']==390:
+    # Leave the demonstration before asserting genuine earned provenance.
+    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=tarjetas-naturales&layout=wide&generation=2&travel=1');page.wait_for_function('__testRuntime?.inWorld()');page.locator('#w').click(position={'x':30,'y':300})
     # Genuine, seeded fossil; approach then contact with the cube.
     page.evaluate('''async()=>{const r=__testRuntime,{createRhythmElements}=await import('/src/percussion-model.js');let o;outer:for(let x=-100;x<100;x++)for(let y=-70;y<70;y++){const d=r.regionOfPos((x+.5)*r.WCH,(y+.5)*r.WCH);if(d.sea||d.anomaly)continue;const hit=createRhythmElements(x,y,r.WCH,d,r.seedOf,r.rng).find(o=>o.kind==='fossil');if(hit){o=hit;break outer;}}if(!o)throw Error('missing natural fossil fixture');window.__natural=o;r.labRhythm=null;r.S.wx=o.x-75;r.S.wy=o.y;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}''')
     page.wait_for_timeout(350);page.evaluate('__testRuntime.S.wx=__natural.x');page.wait_for_function('__testRuntime.rareCards.some(c=>c.sourceId===__natural.id)')
@@ -73,6 +75,6 @@ try:
     page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('elementos');assert page.locator('#rareCodeFallback').is_hidden()
     page.locator('#journalClose').click()
     page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=otro-mundo&layout=wide&generation=2');page.wait_for_function('__testRuntime?.inWorld()');assert page.evaluate('__testRuntime.rareCards.length')==0,'preview libraries cannot leak into another seed'
-   assert not errors,errors;print(f'PASS rare cards at {size}: native contact, truthful forced label, fullscreen manual reveal, paused clock, silent book, return code, dedupe and persistence',flush=True);context.close()
+   assert not errors,errors;print(f'PASS rare cards at {size}: native contact, truthful forced label, compact manual reveal, paused clock, silent book, return code, dedupe and persistence',flush=True);context.close()
   browser.close()
 finally:server.shutdown()

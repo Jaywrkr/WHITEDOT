@@ -1,3 +1,4 @@
+from browser_helpers import complete_path_fixture
 from browser_helpers import keep_place_on_reload
 # Navegador: mesa de efectos. El pad filtra y da espacio, vuelve a limpio al soltar, Fijar lo mantiene, Stop frena y no mueve al pixel.
 from pathlib import Path
@@ -18,7 +19,7 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();complete_path_fixture(page);page.locator('#cExplore').click();page.locator('#hwGo').click()
   handle=page.evaluate("""()=>{const r=window.__testRuntime,site=r.nearbyGlass(2000).find(s=>s.id==='glass:0,0');r.S.wx=site.x-90;r.S.wy=site.y;const angle=site.angles[0];return {x:r.W/2+90+Math.cos(angle)*50,y:r.H/2+Math.sin(angle)*50};}""")
   page.wait_for_timeout(400);before=page.evaluate('[window.__testRuntime.S.wx,window.__testRuntime.S.wy]')
   page.mouse.move(handle['x'],handle['y']);page.mouse.down();page.mouse.move(handle['x']-25,handle['y']-30,steps=5);page.mouse.up()

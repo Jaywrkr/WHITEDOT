@@ -5,3 +5,13 @@ def keep_place_on_reload(page):
   if(!r.save())throw Error('Cannot persist place fixture');
   const url=new URL(location.href);url.searchParams.set('addr',encodePlace(placeAddress(r.worldIdentity,r.S.wx,r.S.wy,r.S.layer||'superficie')));history.replaceState(null,'',url);
  }''')
+
+
+def complete_path_fixture(page):
+ """Set the current entry prerequisite for tests of unrelated World systems.
+ Real ten-crystal mining remains covered by crystal_path_smoke.py.
+ """
+ page.evaluate("""()=>{const r=window.__testRuntime||window.__r;
+  if(!r)throw Error('Runtime fixture missing');
+  r.S.pathCrystals=Array.from({length:10},(_,i)=>'fixture:path:'+i);
+ }""")

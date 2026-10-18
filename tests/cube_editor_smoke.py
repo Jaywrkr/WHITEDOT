@@ -15,7 +15,7 @@ try:
   for width,height in [(320,568),(390,844),(844,390)]:
    if page.url!='about:blank':page.evaluate('localStorage.clear()')
    page.set_viewport_size({'width':width,'height':height})
-   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('__testRuntime?.cubeSettings');page.evaluate("()=>{document.querySelectorAll('.modal').forEach(m=>m.hidden=true);const r=__testRuntime;r.awardReward('cube:material:metal');r.cubeSettings().extra={keep:true};r.save();window.__cube=JSON.stringify(r.cubeSettings());document.getElementById('bCube').click();}")
+   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('__testRuntime?.cubeSettings');page.evaluate("()=>{document.getElementById('returnContinue').click();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);const r=__testRuntime;r.awardReward('cube:material:metal');r.cubeSettings().extra={keep:true};r.save();window.__cube=JSON.stringify(r.cubeSettings());document.getElementById('bCube').click();}")
    assert page.locator('#cubePreview').evaluate('e=>e.clientHeight>=70'),'preview must retain its complete drawing area'
    page.locator('#cubeMaterials [data-cube-style-value="metal"]').click();assert page.evaluate('JSON.stringify(__testRuntime.cubeSettings())')==page.evaluate('__cube')
    assert page.locator('#cubePreview').get_attribute('data-material')=='metal';assert 'Vista previa' in page.locator('#cubeHint').inner_text();assert page.locator('#mCube').evaluate('e=>e.contains(document.activeElement)')

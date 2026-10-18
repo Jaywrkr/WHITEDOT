@@ -15,8 +15,11 @@ try:
   for width,height in [(390,844),(844,390),(1280,800)]:
    if page.url!='about:blank':page.evaluate('localStorage.clear()')
    page.set_viewport_size({'width':width,'height':height});page.goto(f'http://127.0.0.1:{server.server_port}/');print('APP LOADED '+str(width),flush=True);page.wait_for_function('!!window.__r?.collectRareCard');print('RUNTIME READY',flush=True)
-   page.evaluate("()=>{const r=__r;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.S.sound=false;r.S.todayLight=1;r.S.mode='world';r.S.help.mundo=true;r.hud();r.noticeLane.quietRoutine();r.collectRareCard('relic:magical',{id:'presentation:relic',x:r.S.wx,y:r.S.wy},{context:{role:'bajo',instrument:'sub',gesture:'contacto'}});}")
-   print('COLLECTED',flush=True);page.wait_for_function('!document.getElementById("rareNotice").hidden');print('NOTICE READY',flush=True);rect=page.locator('#rareNotice').bounding_box();assert rect['width']*rect['height']>=width*height*.95
+   page.evaluate('__r.S.sound=false');page.locator('#returnContinue').click();page.locator('#hcGo').click()
+   from browser_helpers import complete_path_fixture
+   complete_path_fixture(page)
+   page.evaluate("()=>{const r=__r;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.S.sound=false;r.S.firstJourney.skipped=true;r.S.todayLight=1;r.S.mode='world';r.S.help.mundo=true;r.hud();r.noticeLane.quietRoutine();r.collectRareCard('relic:magical',{id:'presentation:relic',x:r.S.wx,y:r.S.wy},{context:{role:'bajo',instrument:'sub',gesture:'contacto'}});}")
+   print('COLLECTED',flush=True);page.wait_for_function('!document.getElementById("rareNotice").hidden');print('NOTICE READY',flush=True);rect=page.locator('#rareNotice').bounding_box();assert rect['width']*rect['height']<width*height*.5;assert page.locator('#rareNotice').get_attribute('aria-modal')=='false'
    assert 'Constelación' in page.locator('#rareNoticeName').inner_text()
    assert page.evaluate("['toast','phrase','zone','voice','rareNotice','celebration'].filter(id=>{const n=document.getElementById(id);return !n.hidden&&n.classList.contains('on')}).length===1")
    page.screenshot(path=f'/tmp/whitedot-collection-{width}.png');page.locator('#rareNoticeOpen').click();assert page.locator('#mJournal').is_visible()
@@ -25,6 +28,6 @@ try:
    page.locator('.rare-card-details > summary').click();assert all('sub' not in text for text in page.locator('.rare-biome').all_text_contents());assert 'Contacto' in page.locator('#journalBody').inner_text()
    assert page.evaluate('!__r.ac&&__r.waves.length===0'),'card UI must remain silent'
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');page.locator('#journalClose').click();page.reload();page.wait_for_function('__r?.rareCards.length===1');assert page.locator('#rareNotice').is_hidden();assert not errors,errors
-   print(f'PASS card presentation {width}: fullscreen, exclusive notice, filtered empty state, readable context, silent UI and saved collection',flush=True)
+   print(f'PASS card presentation {width}: compact, exclusive notice, filtered empty state, readable context, silent UI and saved collection',flush=True)
   browser.close()
 finally:server.shutdown()
