@@ -14,3 +14,7 @@ r.S.sound=false;r.voiceGuideHear('living:cactus',{},source,'player');r.S.sound=t
 r.musicVolume=()=>1;r.voiceGuideHear('living:cactus',{},source,'ambient');r.voiceGuideHear('pulso',{},source,'player');assert.equal(events.length,2,'ambient and empty pulses cannot complete the encounter lesson');
 console.log('PASS optional factual first journey, reload/future preservation, short hints, actual source roles and audible player-only learning');
 let options;r.firstJourneyState={next:'pulse'};r.say=(text,title,value)=>options=value;source.role='perc';r.voiceGuideHear('living:cactus',{},source,'player');assert.equal(options.recordOnly,true,'learning records context without stacking another spoken hint over the tutorial');
+
+assert(FIRST_JOURNEY_STEPS[1][1].includes('diez cristales'));assert(FIRST_JOURNEY_STEPS[2][1].includes('automáticamente'));
+
+const learnedOnPath=normalizeFirstJourney(null);advanceFirstJourney(learnedOnPath,'pulse');advanceFirstJourney(learnedOnPath,'world');advanceFirstJourney(learnedOnPath,'voice');assert.equal(firstJourneyNext(normalizeFirstJourney(learnedOnPath))[0],'save','a pulse learned on Camino is not taught again after reload');

@@ -48,8 +48,9 @@ export function initialize(runtime){
  function found(card){if(card.forced||runtime.labMode||owner.previewSeed&&!runtime.realTravel)return;newCards.add(card.type);if(sparkSetProgress({rareBook:{items:[card]}}).neighbors)neighbors.add(card.type);}
  function tick(dt,paused=false){
   const q=book();if(q.version!==1)return;const step=Math.max(0,Math.min(.1,dt||0));if(document.hidden)return;
-  clock+=step;if(paused||!active()||runtime.labMode||owner.previewSeed&&!runtime.realTravel)return;
-  const dist=sparkNumber(owner.playerProfile?.distanceUnits),walk=Math.max(0,dist-lastDistance);lastDistance=dist;sessionDistance+=walk;segment+=walk;q.stats.sinceJump+=walk;
+  clock+=step;const dist=sparkNumber(owner.playerProfile?.distanceUnits),walk=Math.max(0,dist-lastDistance);lastDistance=dist;
+  if(paused||!active()||runtime.labMode||owner.previewSeed&&!runtime.realTravel)return;
+  sessionDistance+=walk;segment+=walk;q.stats.sinceJump+=walk;
   const point={x:owner.wx,y:owner.wy,layer:owner.layer||'superficie'};
   if(!anchor)anchor={...point};if(!home||home.layer!==point.layer||Math.hypot(home.x-point.x,home.y-point.y)>70){home={...point};homeTime=0;}else homeTime+=step;
   refresh+=step;if(refresh<.25)return;refresh=0;
@@ -67,10 +68,10 @@ export function initialize(runtime){
  }
  function equip(id){if(book().version!==1)return false;if(id&&!book().purchases[id])return false;const ok=commit(q=>{q.equipped=id;});if(ok){trail=[];render();}return ok;}
  function goalText(){const q=book(),progress=sparkSetProgress(owner),goal=q.goal;
-  if(goal==='none')return '';if(goal==='jump')return 'Próximo salto · '+Math.min(owner.sparks,SPARK_JUMP_COST)+'/'+SPARK_JUMP_COST+' ✦';
-  const p=SPARK_SHOP.find(p=>'shop:'+p.id===goal);if(p)return q.purchases[p.id]?p.name+' · Tuya':p.name+' · '+Math.min(owner.sparks,p.cost)+'/'+p.cost+' ✦';
-  const set=SPARK_SETS.find(p=>'set:'+p.id===goal);if(set)return set.name+' · '+Math.min(progress[set.id],set.need)+'/'+set.need;
-  const m=SPARK_MILESTONES.find(p=>'distance:'+p.meters===goal);if(m)return 'Camina · '+Math.min(Math.floor((owner.playerProfile?.distanceUnits||0)/10),m.meters)+'/'+m.meters+' m';return '';
+  if(goal==='none')return '';if(goal==='jump')return owner.sparks>=SPARK_JUMP_COST?'Salto disponible · '+SPARK_JUMP_COST+' ✦':'Próximo salto · '+sparkNumber(owner.sparks)+'/'+SPARK_JUMP_COST+' ✦';
+  const p=SPARK_SHOP.find(p=>'shop:'+p.id===goal);if(p)return q.purchases[p.id]?p.name+' · Meta cumplida':p.name+' · '+Math.min(owner.sparks,p.cost)+'/'+p.cost+' ✦';
+  const set=SPARK_SETS.find(p=>'set:'+p.id===goal);if(set)return set.name+' · '+(q.claims['set:'+set.id]?'Meta cumplida':Math.min(progress[set.id],set.need)+'/'+set.need);
+  const m=SPARK_MILESTONES.find(p=>'distance:'+p.meters===goal);if(m)return q.claims['distance:'+m.meters]?m.title+' · Meta cumplida':'Camina · '+Math.min(Math.floor((owner.playerProfile?.distanceUnits||0)/10),m.meters)+'/'+m.meters+' m';return '';
  }
  function render(){const q=book();if(q.version!==1){$('sparkStatus').textContent='Actualiza para usar estas chispas.';$('sparkShop').innerHTML='';$('sparkJump').disabled=true;return;}const p=sparkSetProgress(owner);$('sparkBalance').textContent='✦ '+sparkNumber(owner.sparks);$('sparkLedger').textContent='Ganadas '+q.earned+' · Gastadas '+q.spent;
   $('sparkShop').innerHTML=SPARK_SHOP.map(p=>'<article><h3>'+p.name+'</h3>'+preview(p.id)+'<p>'+p.text+'</p><button data-spark-preview="'+p.id+'">Vista previa</button> '+(q.purchases[p.id]?'<button data-spark-equip="'+p.id+'">'+(q.equipped===p.id?'Quitar':'Equipar')+'</button>':'<button data-spark-buy="'+p.id+'">Comprar · '+p.cost+' ✦</button>')+'</article>').join('');
@@ -80,10 +81,10 @@ export function initialize(runtime){
   $('sparkTitle').innerHTML='<option value="">Sin título</option>'+titles.map(t=>'<option '+(q.title===t?'selected':'')+'>'+escape(t)+'</option>').join('');
   $('sparkGoalSelect').innerHTML=[['none','Sin meta'],['jump','Ahorrar para un salto'],...SPARK_SHOP.map(p=>['shop:'+p.id,p.name]),...SPARK_SETS.map(p=>['set:'+p.id,p.name]),...SPARK_MILESTONES.map(p=>['distance:'+p.meters,p.meters+' metros'])].map(([id,t])=>'<option value="'+id+'" '+(q.goal===id?'selected':'')+'>'+t+'</option>').join('');
   $('sparkLog').innerHTML=q.log.slice().reverse().map(e=>'<p><b>'+escape(e.title)+'</b> · '+escape(e.text)+'</p>').join('')||'<p>Tu recorrido empieza aquí.</p>';
-  $('sparkStatus').textContent=q.version>1?'Actualiza para usar estas chispas.':'';$('sparkBack').disabled=!owner.practiceTravel?.previous;$('sparkJump').disabled=!runtime.inWorld()||q.version>1;
+  $('sparkStatus').textContent=!runtime.inWorld()?'Rompe diez cristales para entrar al Mundo.':sparkNumber(owner.sparks)<SPARK_JUMP_COST?'Rompe cristales y recoge sus fragmentos. Te faltan '+(SPARK_JUMP_COST-sparkNumber(owner.sparks))+' chispas para saltar.':'Puedes saltar o ahorrar para una apariencia permanente.';const travel=runtime.inWorld()&&runtime.canPracticeTravel?.()!==false;$('sparkBack').disabled=!travel||!owner.practiceTravel?.previous;$('sparkJump').disabled=!travel||sparkNumber(owner.sparks)<SPARK_JUMP_COST;
  }
  function open(){document.querySelectorAll('.modal:not([hidden])').forEach(p=>p.hidden=true);$('mSparks').hidden=false;render();}
- function hud(){const q=book(),total=$('sparkTotal'),gain=$('sparkGain');if(!total)return;total.textContent='✦ '+sparkNumber(owner.sparks);gain.textContent=clock<deltaUntil?(delta>0?'+':'')+delta:'';$('sparkCount').classList.toggle('collecting',clock<deltaUntil);$('bJump').classList.toggle('spark-ready',clock<jumpUntil);$('sparkGoal').textContent=goalText();$('sparkGoal').hidden=!goalText();$('sparkTitleHud').textContent=q.title||'';const powers=POWER_IDS.filter(id=>(runtime.powerSecondsLeft?.(id)||0)>0);$('sparkPowerHud').hidden=!runtime.inWorld()||!powers.length;$('sparkPowerText').textContent=powers.map(id=>POWERS[id].name+' '+Math.ceil(runtime.powerSecondsLeft(id))+' s').join(' · ');}
+ function hud(){const q=book(),total=$('sparkTotal'),gain=$('sparkGain');if(!total)return;total.textContent='✦ '+sparkNumber(owner.sparks);gain.textContent=clock<deltaUntil?(delta>0?'+':'')+delta:'';$('sparkCount').classList.toggle('collecting',clock<deltaUntil);$('bJump').classList.toggle('spark-ready',clock<jumpUntil);$('sparkGoal').textContent=goalText();$('sparkGoal').hidden=!runtime.inWorld()||!goalText();$('sparkTitleHud').textContent=q.title||'';const powers=POWER_IDS.filter(id=>(runtime.powerSecondsLeft?.(id)||0)>0);$('sparkPowerHud').hidden=!runtime.inWorld()||!powers.length;$('sparkPowerText').textContent=powers.map(id=>POWERS[id].name+' '+Math.ceil(runtime.powerSecondsLeft(id))+' s').join(' · ');}
  function pickup(amount,point){
   if(!(amount>0))return;const q=book(),last=pickups.at(-1);
   if(last&&clock-last.at<.12){last.amount+=amount;return;}

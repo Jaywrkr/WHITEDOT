@@ -2,7 +2,7 @@
 
 Un píxel blanco en un mundo negro: explorar, descubrir y hacer música al viajar. Proyecto de Jay · [Jugar](https://whitedot-inky.vercel.app).
 
-Versión en desarrollo: **2.3.0-alpha.44**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
+Versión en desarrollo: **2.3.0-alpha.45**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
 
 ## Jugar y avanzar
 
@@ -12,6 +12,7 @@ Versión en desarrollo: **2.3.0-alpha.44**. La versión publicada depende del ú
 - Las chispas se guardan por partida. El agotamiento de cristales persiste durante el día; recargar no repite el pago.
 - Al ganar las primeras 20 chispas aparece Saltar en la pantalla principal. Cada salto cuesta 20; el botón permanece visible después de gastar. Menú → Viajar y chispas conserva el regreso gratuito y las apariencias por 40/80/150.
 - Seis tótems de color aparecen espaciados, solos o en grupos de dos o tres, en las tres capas. Despiértalos con pulsos, acompaña su esfera o sigue su orientación. Gana su tarjeta y 2 chispas por lugar al día.
+- Menú → Guía de juego permite consultar controles, descubrimientos y guardado, o repetir las ayudas. Viajar y chispas reúne compras y metas opcionales.
 - Tarjetas, colecciones, logros secretos, distancia, títulos y una meta opcional acompañan el viaje. Los avisos breves no detienen el movimiento.
 
 El progreso se conserva en el navegador. Usa los respaldos del juego antes de cambiar de dispositivo u origen. La economía es local, sin intercambio ni validación remota.

@@ -1,5 +1,13 @@
 # Cambios recientes
 
+## Integración del recorrido, menús y guía
+
+Rama `fix/unified-game-loop` desde main `97f0729`. El Camino mantiene su objetivo único de diez cristales; la meta opcional aparece en el Mundo, indica cuándo hay saldo para saltar y reconoce compras, conjuntos e hitos cumplidos. El panel de chispas explica cómo obtenerlas y respeta saldo y bloqueos del viaje. Los logros del Mundo no absorben distancia acumulada en el Camino o en pausa. Precios, premios, distribución, mapas, música y formatos de guardado conservados.
+
+Menú agrupado con cuatro accesos principales y una sección para el espacio/progreso personal. Paneles con cabecera/cierre accesibles, controles táctiles, campos legibles, filas adaptables y estados uniformes. Guía diferenciada de Tu recorrido, instrucciones reales de cristales, tótems, chispas, tarjetas y copia de seguridad. El tutorial muestra cristales rotos y recuerda el pulso aprendido en el Camino; no vuelve a exigirlo al explorar. Intro breve existente, omitible, con `.simple`. Sin pantallas, monedas ni catálogo nuevos. Versión alpha.45 mediante sellado existente.
+
+Prueba real del ciclo completo aprobada: Camino, tótem/tarjeta, fondos obtenidos por minería, compra/equipo, salto pagado, vuelta gratuita y persistencia. Paneles comprobados en 320/390/844/1280 px, teclado y movimiento reducido. Offline: 227 módulos. Diez suites Node afectadas y auditoría aprobadas. `npm test`: 168 suites aprobadas con adaptador externo de Windows que resuelve `python3` al ejecutable `python` instalado. El primer intento sin adaptador se detuvo por ese nombre ausente; no se modificó ni omitió ninguna prueba. Sin renders de audio (sonido intacto), suites completas de navegador/audio, CI, dispositivos físicos ni despliegue. Detalles en `scripts/unified-game-validation.json`.
+
 ## Pruebas locales más rápidas
 
 `test:impact` ejecuta hasta dos suites Node en paralelo y reutiliza aciertos durante una hora solo con los mismos archivos, runtime y entorno. Un cambio invalida toda la caché por seguridad; los fallos se repiten y detienen nuevas tareas. Resumen y reporte distinguen ejecución y reutilización. Opciones `--no-cache` y `--jobs 1`. Sin cambios en juego, versiones, suites completas ni CI.
