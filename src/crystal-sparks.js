@@ -22,7 +22,7 @@ export function initialize(runtime){
  const active=()=>(S().mode==='camino'||runtime.inWorld()&&(S().layer||'superficie')==='superficie')&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  const reduced=()=>!!(S().reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
  function ensure(){
-  const key=JSON.stringify(runtime.worldIdentity||{});
+  const key=JSON.stringify(runtime.worldIdentity||{})+':'+S().todayKey;
   if(owner!==S()||scope!==key){owner=S();scope=key;sites=new Map();seen=new WeakMap();stale=new WeakSet(runtime.waves||[]);near=[];cell='';gain=0;shownUntil=0;seconds=0;owner.sparks=normalizeSparks(owner.sparks);owner.pathCrystals||=[];}
  }
  function tick(dt,paused=false){
@@ -34,6 +34,7 @@ export function initialize(runtime){
   for(const o of near){
    if(path&&S().pathCrystals.length>=10)break;
    if(path&&S().pathCrystals.includes(o.id)&&!sites.has(o.id))continue;
+   if(runtime.crystalTransaction){const before=S().pathCrystals.length;processSaved(o,path,step,pos);if(path&&before<10&&S().pathCrystals.length===10)completed=true;continue;}
    let site=sites.get(o.id);
    if(!site&&sites.size>=MAX_SITES)continue;
    if(!site?.broken)for(const wave of runtime.waves||[]){
@@ -54,6 +55,22 @@ export function initialize(runtime){
    }
   }
   if(completed){runtime.waves=[];runtime.ptr=null;runtime.enterWorld?.({automatic:true});near=[];cell='';}
+ }
+ function processSaved(o,path,step,pos){
+  let site=sites.get(o.id),stored=runtime.savedCrystal(o.id);
+  if(!site&&stored){site={...stored};sites.set(o.id,site);}
+  for(const wave of runtime.waves||[]){
+   if(stale.has(wave)||wave.origin!=='player'||!pulseCrossed(wave,o.x,o.y))continue;
+   let hits=seen.get(wave);if(!hits){hits=new Set();seen.set(wave,hits);}if(hits.has(o.id))continue;hits.add(o.id);
+   if(site?.broken){runtime.inspectSpentCrystal?.(o.id);continue;}
+   const next=runtime.crystalTransaction(o,'hit',path);if(!next)continue;
+   site={...next,flash:seconds+.18};if(site.broken)site.particles=Array.from({length:Math.min(3,o.value)},(_,i)=>({x:o.x+Math.cos(i*2.399)*12,y:o.y+Math.sin(i*2.399)*12}));sites.set(o.id,site);
+  }
+  if(!site?.broken||site.collected)return;
+  site.particles||=Array.from({length:Math.min(3,o.value)},(_,i)=>({x:o.x+Math.cos(i*2.399)*12,y:o.y+Math.sin(i*2.399)*12}));
+  if(runtime.autopilotState?.mode==='wander'&&!runtime.autopilotState.paused||Math.hypot(o.x-pos.x,o.y-pos.y)>=70)return;
+  let arrived=true;for(const p of site.particles){const dx=pos.x-p.x,dy=pos.y-p.y,d=Math.hypot(dx,dy),travel=step*180;if(d>3&&!reduced()){const k=Math.min(1,travel/d);p.x+=dx*k;p.y+=dy*k;if(d>travel+3)arrived=false;}}
+  if(arrived){const next=runtime.crystalTransaction(o,'collect',path);if(next?.collected)site.collected=true;}
  }
  function earn(value){S().sparks=normalizeSparks(S().sparks+value);gain=seconds-lastGain<1?gain+value:value;lastGain=seconds;shownUntil=seconds+3;runtime.save?.();}
  function draw(){
@@ -82,6 +99,7 @@ export function initialize(runtime){
   c.restore();
  }
  function drawHUD(){
+  if(runtime.drawSparkEconomyHUD)return;
   const counter=runtime.$?.('sparkCount'),total=runtime.$?.('sparkTotal'),delta=runtime.$?.('sparkGain');if(!counter||!total||!delta)return;
   counter.hidden=!['camino','world'].includes(S().mode);total.textContent='✦ '+normalizeSparks(S().sparks);
   const visible=seconds<shownUntil;counter.classList.toggle('collecting',visible);delta.textContent=visible?'+'+gain:'';

@@ -18,10 +18,11 @@ try:
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=boxes-v2&layout=classic&generation=2');page.wait_for_function('__testRuntime?.celebrationState')
    page.evaluate('()=>{const r=__testRuntime;document.querySelectorAll(".modal").forEach(m=>m.hidden=true);r.S.sound=false;r.S.relaxedCreate=true;r.spawnBox(r.S.wx,r.S.wy,"cometa");}')
    page.wait_for_function('__testRuntime.hasPower("cometa")');page.wait_for_function('!document.getElementById("celebration").hidden&&document.getElementById("celebrationName").textContent==="Cometa"')
-   assert page.locator('#celebrationTime').inner_text()=='90 s de juego'
+   assert page.locator('#celebrationTime').inner_text()=='20 s de juego'
    assert page.locator('#celebration').get_attribute('data-power')=='cometa'
    assert page.locator('#celebrationSerial').inner_text().startswith('#')
    assert page.locator('#celebrationPlace').inner_text()
+   assert page.locator('#celebration').get_attribute('data-inspect')=='false';page.locator('#celebrationContinue').click()
    first_art=page.locator('#celebrationArt').inner_html();first_serial=page.locator('#celebrationSerial').inner_text()
    assert page.locator('#celebrationName').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')<=22
    rect=page.locator('#celebration').bounding_box();assert rect['width']*rect['height']>=width*height*.95,rect

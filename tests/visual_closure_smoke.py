@@ -33,19 +33,19 @@ try:
    # Seeded terrain is actually rendered by the app; silence leaves it interactive.
    page.evaluate('''()=>{const r=__r;let q;for(let i=0;i<40&&!q;i++){r.S.wx=i*1000;r.S.wy=0;q=r.nearbyVisualSegments()[0];}if(!q)throw Error('visual fixture missing');r.S.wx=q.x;r.S.wy=q.y;r.visualGesture();}''');page.wait_for_timeout(100);assert page.evaluate('__r.vjState.cache')<=48
    page.screenshot(path=f'/tmp/whitedot-vj-final-{width}.png')
-   # Actual reveal retains the notice lane and focus until explicitly continued.
+   # A compact reveal keeps one lane and leaves movement available.
    page.evaluate('''()=>{const r=__r;r.collectRareCard('fossil',{id:'visual-closure:'+innerWidth,x:r.S.wx,y:r.S.wy},{forced:true});}''');page.wait_for_function('!document.getElementById("rareNotice").hidden',timeout=45000)
-   rect=page.locator('#rareNotice').bounding_box();assert rect['width']*rect['height']>=width*height*.95
+   rect=page.locator('#rareNotice').bounding_box();assert rect['width']<=width-32 and rect['height']<=180
    assert page.locator('.rare-reveal-card').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
-   page.wait_for_timeout(350);assert page.locator('#rareNotice').is_visible();assert page.locator('#rareNotice').evaluate('e=>e.contains(document.activeElement)')
-   page.screenshot(path=f'/tmp/whitedot-card-final-{width}.png');page.locator('#rareNoticeContinue').click();page.wait_for_function('document.getElementById("rareNotice").hidden')
+   page.wait_for_timeout(350);assert page.locator('#rareNotice').is_visible();assert page.locator('#rareNotice').get_attribute('data-inspect')=='false'
+   page.screenshot(path=f'/tmp/whitedot-card-final-{width}.png');page.locator('#rareNoticeDismiss').click();page.wait_for_function('document.getElementById("rareNotice").hidden')
    # A real gifted box opens its earned presentation, including a secondary duration.
    page.evaluate("()=>{const r=__r;r.givePower('cometa');r.giveSurprise('lento');r.celebrateBox({id:'closure-box:'+innerWidth,x:r.S.wx,y:r.S.wy,power:'cometa',surprise:'lento',gift:true});}")
    page.wait_for_function('!document.getElementById("celebration").hidden',timeout=45000)
-   assert '24 s' in page.locator('#celebrationSurpriseName').inner_text()
+   assert '10 s' in page.locator('#celebrationSurpriseName').inner_text()
    assert page.locator('.celebration-card').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
    page.screenshot(path=f'/tmp/whitedot-box-card-{width}.png')
-   page.locator('#celebrationContinue').click();page.wait_for_function('document.getElementById("celebration").hidden')
+   page.locator('#celebrationDismiss').click();page.wait_for_function('document.getElementById("celebration").hidden')
    page.evaluate('__r.clearSurprise();__r.clearPowers()')
    # Persistence and reduced motion use production paths without resetting the save.
    page.evaluate('__r.save()');page.reload();page.wait_for_function('window.__r?.playerProfile');assert page.evaluate('__r.playerProfile.name')=='Jay '+str(width)

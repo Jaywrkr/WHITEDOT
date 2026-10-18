@@ -1,3 +1,4 @@
+import {normalizeSparkEconomy} from './sparks-model.js';
 import {sameWorld,supportedWorld,validWorldIdentity} from './world-identity.js';
 export const SAVE_VERSION=1,MAX_SAVE_BYTES=8*1024*1024;
 const incompatible=message=>Object.assign(new Error(message),{code:'incompatible'});
@@ -35,6 +36,7 @@ export function validateSave(value,defaults,identity){
  result.pathCrystals=Array.isArray(result.pathCrystals)?[...new Set(result.pathCrystals.filter(id=>typeof id==='string'))].slice(0,10):[];
  if(value.pathCrystals===undefined&&(value.mode==='world'||value.mode==='studio'&&value.prevMode==='world'))result.pathCrystals=Array.from({length:10},(_,i)=>'legacy:'+i);
  result.sparks=Number.isFinite(result.sparks)?Math.min(Number.MAX_SAFE_INTEGER,Math.max(0,Math.floor(result.sparks))):0;
+ result.sparkEconomy=normalizeSparkEconomy(result.sparkEconomy,result.sparks,result.todayKey);
  result.studio={...base.studio,...value.studio};result.journal={...base.journal,...value.journal};result.journal.music={...base.journal.music,...value.journal?.music};
  return result;
 }

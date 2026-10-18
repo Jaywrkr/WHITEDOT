@@ -1,3 +1,15 @@
+## Chispas · economía, recorrido y avisos
+
+Rama `feat/sparks-progression`, desde main remoto `81856a3`. Primera etapa del plan acordado: una moneda por partida, saldo conservado, total ganado/gastado y minería diaria persistente. Daño, rotura y recogida se guardan; ni recargar ni volver al mismo cristal duplica el pago. Las operaciones revierten saldo/propiedad si falla la escritura, y el salto guarda destino y coste juntos. Las demostraciones no generan saldo; sus tarjetas se marcan como muestras. Se conservan formatos futuros y el progreso anterior.
+
+Saltar sale del dock y pasa a Menú → Viajar y chispas: 20 chispas, regreso gratuito. Compras permanentes con vista previa y equipar/quitar: Polvo viajero 40, Pulso facetado 80, Órbita personal 150. Son capas visuales adicionales; conservan las apariencias ganadas, la física y el alcance del pulso. Tres colecciones retroactivas pagan una vez: Primera banda (+15), Vecinos extraños (+15), Pequeñas maravillas (+25). Ocho logros secretos, hitos de 1/5/10 km, títulos elegibles, historial y una meta opcional bajo el saldo. Distancia caminada existente, sin sumar teletransportes ni pagar monedas por estar inactivo.
+
+Dos formas de aviso: delta agrupado junto al saldo durante 1,5 s y tarjeta breve (~3 s), una a la vez. Los duplicados no interrumpen. Los hallazgos permanecen en el libro; abrir detalles es una decisión del jugador. Los problemas de guardado quedan visibles hasta recuperarse o abrir su atención. Cajas originales de 20 s; sorpresas de 10–20 s; sin acumular duraciones. Indicadores y Deshacer; compartir/leer conserva acceso explícito. Sin nuevos sonidos de interfaz ni cambios de síntesis/composición.
+
+Validación: auditoría sin errores/advertencias; 106 suites Node afectadas; pruebas de economía/rollback, minería tras recarga, compra/equipamiento, salto y regreso, metas, tarjetas sin pausa, cajas/Deshacer y tres tamaños. Seis renders de celebración a 44,1/48 kHz, pico 0,882635. Simulación reproducible de tres recorridos de diez minutos: 31/90/129 chispas; precios iniciales, no medición con jugadores. Comandos y límites en scripts/sparks-progression-validation.json; revisión visual y diff sin errores. Adaptaciones Windows de ESM/licencias y Playwright externo sin dependencias nuevas del juego. No se certifican suites completas de navegador/audio, CI ni despliegue. Jay conserva PR/merge.
+
+Límites: libro de minería diario de hasta 8192 sitios; saldo local de cada partida, sin validación remota ni intercambio. Destellos y constelación personal corresponden a la ampliación posterior acordada.
+
 ## Cristales · distribución, Camino y entrada directa
 
 Rama `feat/crystal-path-entry`, desde main `d404b52`. Cristales facetados con relleno tenue y caras interiores; una retícula independiente separa sus posiciones y regiones de 1200 unidades alternan abundancia escasa, media y alta. Se conservan los tres tamaños, impactos y valores del Mundo.

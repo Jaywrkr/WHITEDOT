@@ -1,7 +1,7 @@
 import {BOX_SURPRISES,SURPRISE_IDS,surpriseFor,normalizeSurprise,surpriseStyle} from './box-surprises-model.js';
 import {createPowerClock} from './power-clock.js';
 export function initialize(runtime){
- const clock=createPowerClock(BOX_SURPRISES),$=runtime.$,path=[],marks=[];let owner=null,last=null,prior=null,returnPoint=null,lastNote=null;
+ const clock=createPowerClock(BOX_SURPRISES,{stack:1}),$=runtime.$,path=[],marks=[];let owner=null,last=null,prior=null,returnPoint=null,lastNote=null;
  const reduced=()=>runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
  const surface=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie';
  function ensure(){if(owner===runtime.S)return;owner=runtime.S;const raw=normalizeSurprise(owner.boxSurprises);owner.boxSurprises=raw;clock.restore(raw);path.length=marks.length=0;last=null;lastNote=null;returnPoint=raw.returnPoint&&Number.isFinite(raw.returnPoint.x)&&Number.isFinite(raw.returnPoint.y)?{...raw.returnPoint}:null;prior=null;}

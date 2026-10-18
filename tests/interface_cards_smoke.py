@@ -16,16 +16,17 @@ try:
    page.set_viewport_size({'width':width,'height':height});page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=interface-{width}');page.wait_for_function('!!window.__r?.celebrateBox')
    page.evaluate("()=>{const r=__r;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.S.mode='world';r.S.sound=false;r.collectRareCard('fossil',{id:'interface:'+innerWidth,x:r.S.wx,y:r.S.wy},{forced:true});}")
    page.wait_for_function('!document.getElementById("rareNotice").hidden',timeout=45000);page.wait_for_timeout(400)
-   rect=page.locator('#rareNotice').bounding_box();assert rect['width']*rect['height']>=width*height*.95
-   assert page.locator('#rareNotice').evaluate('e=>e.contains(document.activeElement)');assert page.locator('.rare-reveal-card').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
-   page.wait_for_timeout(300);assert page.locator('#rareNotice').is_visible();page.locator('#rareNoticeContinue').click();page.wait_for_function('document.getElementById("rareNotice").hidden')
+   rect=page.locator('#rareNotice').bounding_box();assert rect['width']<=width-32 and rect['height']<=180
+   assert page.locator('#rareNotice').get_attribute('data-inspect')=='false';assert page.locator('.rare-reveal-card').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
+   page.wait_for_timeout(300);assert page.locator('#rareNotice').is_visible();page.locator('#rareNoticeDismiss').click();page.wait_for_function('document.getElementById("rareNotice").hidden')
    page.evaluate("()=>{const r=__r;r.givePower('cometa');r.celebrateBox({id:'interface-box:'+innerWidth,x:r.S.wx,y:r.S.wy,power:'cometa',gift:true});}")
    page.wait_for_function('!document.getElementById("celebration").hidden',timeout=45000);page.wait_for_timeout(400)
+   assert page.locator('#celebration').get_attribute('data-inspect')=='false';page.locator('#celebrationContinue').click()
    assert page.locator('#celebration').evaluate('e=>e.contains(document.activeElement)');assert page.locator('.celebration-card').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
    a=page.locator('#celebrationShare').bounding_box();b=page.locator('#celebrationContinue').bounding_box();assert abs(a['y']-b['y'])<2 and a['x']<b['x'],[a,b]
    left=page.evaluate('__r.powerSecondsLeft("cometa")');page.wait_for_timeout(250);assert page.evaluate('__r.powerSecondsLeft("cometa")')==left
    page.locator('#celebrationContinue').click();page.wait_for_function('document.getElementById("celebration").hidden');page.evaluate('__r.clearPowers()')
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');assert not errors,errors
-   print(f'PASS full cards, readable art, focus, paused power and aligned actions at {width}',flush=True)
+   print(f'PASS compact notices, explicit details, focus, manual power pause and aligned actions at {width}',flush=True)
   browser.close()
 finally:server.shutdown()

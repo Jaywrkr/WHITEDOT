@@ -17,10 +17,10 @@ try:
   page.on('pageerror', lambda e: errors.append(str(e)))
   page.on('response', lambda r: sessions.append(r.status) if r.url.endswith('/api/session') else None)
   page.route('**/src/main.js', lambda route: route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;', content_type='text/javascript'))
-  page.goto(f'http://127.0.0.1:{server.server_port}/?lab=1&testSeed=laboratorio&layout=wide&generation=2')
-  page.wait_for_function('!!window.__r?.labMode')
+  page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=laboratorio&layout=wide&generation=2&travel=1')
+  page.wait_for_function('!!window.__r?.crystalTick')
   page.evaluate("""()=>{
-   const r=__r;r.S.sound=false;r.labGo('rhythm:fossil');r.stopAutopilot?.();
+   const r=__r;r.S.sound=false;r.S.firstJourney.skipped=true;r.S.wx=5000;r.S.wy=5200;r.stopAutopilot?.();
    document.querySelectorAll('.modal').forEach(m=>m.hidden=true);
    r.crystalTick(.02);
    const o=r.crystalState.near.find(o=>o.size===2);
@@ -42,7 +42,7 @@ try:
   before=page.evaluate('__r.S.sparks')
   from browser_helpers import keep_place_on_reload
   keep_place_on_reload(page)
-  page.reload();page.wait_for_function('!!window.__r?.labMode')
+  page.reload();page.wait_for_function('!!window.__r?.crystalTick')
   assert page.evaluate('__r.S.sparks')==before
   page.set_viewport_size({'width':1280,'height':800})
   page.wait_for_timeout(400)

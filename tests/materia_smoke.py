@@ -70,7 +70,7 @@ with sync_playwright() as p:
   if page.locator('#favoritesClose').is_visible():page.locator('#favoritesClose').click()
   # Grabar set: 2 s y detener produce un video descargable.
   # A real finding may precede recording. Read it through its own controls first.
-  for panel,button in [('#celebration','#celebrationContinue'),('#rareNotice','#rareNoticeContinue')]:
+  for panel,button in [('#celebration','#celebrationDismiss'),('#rareNotice','#rareNoticeDismiss')]:
    if page.locator(panel).is_visible():page.locator(button).click();page.locator(panel).wait_for(state='hidden')
   page.locator('#bMenu').click();page.locator('#bRecord').click();page.wait_for_function('window.__testRuntime.setRecording')
   count=page.evaluate('window.__testRuntime.rareCards.length')

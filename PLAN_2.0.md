@@ -2,6 +2,7 @@
 
 | Entrega | Estado |
 |---|---|
+| Economía y recorrido con chispas | Implementado en feat/sparks-progression; ver CAMBIOS.md y validación |
 | Cristales: Camino y abundancia | Implementado en feat/crystal-path-entry; 87 suites y recorridos enfocados, ver CAMBIOS.md |
 | Cristales y chispas | Implementados en feat/crystal-sparks; pruebas enfocadas, ver CAMBIOS.md |
 | WOW 20: Constelación de regreso | Implementada; scripts/wow-20-validation.json |

@@ -1,5 +1,5 @@
 import {REWARD_RARITIES} from './rewards-model.js';
-export function celebrationDuration(rarity){const level=REWARD_RARITIES[rarity]?.celebration||0;return level===0?2:level===1?5:4;}
+export function celebrationDuration(){return 3;}
 export function createCelebrationQueue(limit=12){
  const pending=[];let current=null,remaining=0;
  function enqueue(event){if(!event?.id||!REWARD_RARITIES[event.rarity])return false;
