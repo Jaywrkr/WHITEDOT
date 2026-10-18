@@ -1,5 +1,13 @@
 # Cambios recientes
 
+## Cierre de claridad y descubrimiento
+
+Rama `polish/release-closure` desde `main` actualizado `8924f16`. Cristales con mayor contraste y fragmentos recogibles más legibles, conservando posiciones, golpes, tamaños de cristal, escapes, premios y radios de recogida. El HUD identifica el saldo como chispas. Saltar conserva su desbloqueo y coste existentes. Corregido el inicio de audio del laboratorio con sonido desactivado y el cierre de conexiones SQLite del servicio opcional, conservando commit/rollback; sin modificar rutas ni el 404 del alojamiento estático.
+
+Los logros nuevos y anteriores usan avisos breves, silenciosos y agrupados en la cola existente. Bitácora marca los logros sin consultar; leer Logros reconoce el registro guardado, con reversión ante fallo de escritura. Las partidas previas no reciben avisos por logros ya ganados. Una única pista dorada anticipa una travesura cercana sin textos, sonido, premios ni cambios de distribución.
+
+Pruebas históricas del Mundo actualizadas al requisito de diez cristales mediante una preparación compartida; se conservan sus aserciones funcionales y la minería real tiene sus recorridos dedicados. Versión alpha.50 con sellado/caché existentes. Resultados finales y límites en `scripts/release-closure-validation.json`. 175 suites Node, 127 recorridos Chrome y arranque offline con 240 módulos aprobados; auditoría sin errores/avisos. El audio completo se inició y se detuvo por coste/tiempo señalado por Jay; no se certifica completo. Sin certificar CI de esta rama, dispositivos físicos ni escucha física.
+
 ## Travesuras del universo y 120 logros nuevos
 
 Rama `feat/universe-mischief` desde main actualizado `9d92778`. Diez encuentros ocasionales: cristal ayudante, imitador torpe, lluvia ascendente, ladrón de sombras, público/procesión, escultura bailarina, carrera amistosa, paisaje contenido, copia de fragmentos y despedida encadenada. Movimiento/contacto sin botones nuevos; el cristal grande conserva la minería por pulsos existente. Esculturas y cristales objetivo son reales. La procesión puede orbitar o llegar a una escultura para celebrar; copia y despedida acompañan el viaje continuo.

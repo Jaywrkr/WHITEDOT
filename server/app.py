@@ -6,6 +6,7 @@ from http.cookies import SimpleCookie
 from pathlib import Path
 from urllib.parse import urlparse,parse_qs,unquote
 from collections import deque
+from contextlib import contextmanager
 import os,json,sqlite3,secrets,hashlib,hmac,time,threading,re,argparse
 ROOT=Path(__file__).resolve().parents[1]
 MAX_BODY=8*1024*1024
@@ -24,8 +25,13 @@ class Store:
   self.path=str(path);self.lock=threading.RLock();self.rooms={};self.rates={}
   with self.db() as db:
    db.executescript('CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY,name TEXT UNIQUE,salt TEXT,hash TEXT); CREATE TABLE IF NOT EXISTS sessions(token TEXT PRIMARY KEY,user TEXT,csrf TEXT,expires REAL,guest INTEGER); CREATE TABLE IF NOT EXISTS saves(user TEXT,scope TEXT,revision INTEGER,state TEXT,PRIMARY KEY(user,scope)); CREATE TABLE IF NOT EXISTS edits(world TEXT,id TEXT,data TEXT,PRIMARY KEY(world,id));')
+ @contextmanager
  def db(self):
-  conn=sqlite3.connect(self.path,timeout=10);conn.execute('PRAGMA journal_mode=WAL');return conn
+  conn=sqlite3.connect(self.path,timeout=10)
+  try:
+   conn.execute('PRAGMA journal_mode=WAL')
+   with conn:yield conn
+  finally:conn.close()
  def limit(self,ip,kind,maximum):
   with self.lock:
    now=time.time();key=(ip,kind);q=self.rates.setdefault(key,deque())

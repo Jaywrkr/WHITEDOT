@@ -24,6 +24,8 @@ for flow in selected:
  print(f'RUN {mode}: {flow}',flush=True)
  command=[sys.executable,str(ROOT/'tests'/flow)]
  if flow!='creative_regression.py':command=[sys.executable,str(ROOT/'scripts/browser-processes.py'),'--timeout=895',*command]
- result=subprocess.run(command,cwd=ROOT,timeout=900)
+ # The complete browser catalog now exceeds two hours of individual budgets;
+ # preserve each flow's 145s limit, but allow the enclosing CI job's 40 minutes.
+ result=subprocess.run(command,cwd=ROOT,timeout=2400 if flow=='creative_regression.py' else 900)
  print(('FAIL' if result.returncode else 'PASS')+f' {mode}: {flow}',flush=True)
  if result.returncode:raise SystemExit(result.returncode)

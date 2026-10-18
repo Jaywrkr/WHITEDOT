@@ -16,7 +16,7 @@ try:
   page.on('pageerror',lambda e:errors.append(str(e)))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.dailyArrival')
-  old=page.evaluate("""()=>{const r=__r;document.querySelectorAll('.modal').forEach(e=>e.hidden=true);r.S.help.mundo=true;r.S.help.camino=true;r.S.todayLight=1;r.S.mode='world';r.S.lastWorldDay=r.S.todayKey;r.S.ach.arrival_test='earned';r.S.arrivalMode='discover';r.save();return {x:r.S.wx,y:r.S.wy,layer:r.S.layer||'superficie'};}""")
+  old=page.evaluate("""()=>{const r=__r;document.querySelectorAll('.modal').forEach(e=>e.hidden=true);r.S.help.mundo=true;r.S.help.camino=true;r.S.todayLight=1;r.S.pathCrystals=Array.from({length:10},(_,i)=>'fixture:path:'+i);r.S.mode='world';r.S.lastWorldDay=r.S.todayKey;r.S.ach.arrival_test='earned';r.S.arrivalMode='discover';r.save();return {x:r.S.wx,y:r.S.wy,layer:r.S.layer||'superficie'};}""")
   page.reload();page.wait_for_function('!!window.__r?.dailyArrival')
   assert page.evaluate('__r.S.practiceTravel.previous')==old
   at=page.evaluate('({x:__r.S.wx,y:__r.S.wy,layer:__r.S.layer})');assert at!=old

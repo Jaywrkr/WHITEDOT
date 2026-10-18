@@ -15,7 +15,7 @@ try:
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
   for width,height in [(390,844),(844,390),(1280,800)]:
    page.set_viewport_size({'width':width,'height':height});page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=inhabitants&layout=wide&generation=2');page.wait_for_function('!!window.__r?.inhabitantTick')
-   page.evaluate('''async()=>{const r=__r,{inhabitantPractice}=await import('/src/pixel-life-model.js');document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.S.sound=false;r.S.mode='world';const p=inhabitantPractice(r);r.S.wx=p.x;r.S.wy=p.y-80;r.inhabitantTick(.05);window.__inhabitantId=p.id;}''');page.wait_for_timeout(150)
+   page.evaluate('''async()=>{const r=__r,{inhabitantPractice}=await import('/src/pixel-life-model.js');document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.S.sound=false;r.S.reducedMotion=false;r.S.mode='world';const p=inhabitantPractice(r);r.S.wx=p.x;r.S.wy=p.y-80;r.inhabitantTick(.05);window.__inhabitantId=p.id;}''');page.wait_for_timeout(150)
    assert page.evaluate('__r.inhabitantsNear(300).some(o=>o.id===__inhabitantId)')
    assert page.evaluate('''()=>{const r=__r,o=r.inhabitantsNear(300).find(o=>o.id===__inhabitantId);return r.inhabitantTouch(o)&&o.lit===1;}''')
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');page.screenshot(path=f'/tmp/whitedot-inhabitants-{width}.png')

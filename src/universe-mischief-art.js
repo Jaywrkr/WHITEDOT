@@ -39,3 +39,12 @@ export function drawMischief(r,s,reduced=false){
  if(Math.hypot(s.x-r.S.wx,s.y-r.S.wy)<180){c.globalAlpha=.75;c.fillStyle='#ddd';c.font='10px "Geist Mono",monospace';c.textAlign='center';const hints={helper:'Acompaña el cristal · rompe el grande',imitator:'Muévete · gira · detente',rain:'Pasa entre los fragmentos',shadow:'Sigue las tres pistas y alcanza tu sombra',audience:phase<2?'Espera un poco · después camina':'Te siguen · camina o busca una escultura',dance:'Da una vuelta a la escultura',race:'Acompaña a tu rival hasta la marca',breath:'Entra · espera · sal del círculo',twin:'Camina con tu copia · recoge sus fragmentos',farewell:'Camina · escucha la despedida'};c.fillText(s.done?(s.paid?(s.reward?'Encuentro guardado · +3 chispas':'Encuentro completado'):'Guardado pendiente'):hints[s.kind],r.W/2,Math.min(r.H-135,r.H/2+130));}
  c.restore();
 }
+
+// One nearby invitation; no interaction, text, rewards or new procedural sites.
+export function drawMischiefClue(r,sites,reduced=false){
+ const site=sites.filter(o=>!r.S.mischief?.done?.[o.id]).map(o=>({o,d:Math.hypot(o.x-r.S.wx,o.y-r.S.wy)})).filter(q=>q.d>=95&&q.d<320).sort((a,b)=>a.d-b.d)[0];if(!site)return;
+ const {o,d}=site,c=r.cx,x=o.x+r.W/2-r.camX,y=o.y+r.H/2-r.camY;
+ if(x<12||y<12||x>r.W-12||y>r.H-12)return;
+ const t=reduced?0:performance.now()/1000;c.save();c.globalAlpha=.55*(1-(d-95)/225);c.fillStyle=c.strokeStyle='#e9ca7d';c.lineWidth=1;
+ for(let i=0;i<3;i++){const a=i*TAU/3+t*.35,rad=9+(reduced?0:Math.sin(t*1.5)*2);c.fillRect(x+Math.cos(a)*rad-1,y+Math.sin(a)*rad-1,3,3);}c.restore();
+}

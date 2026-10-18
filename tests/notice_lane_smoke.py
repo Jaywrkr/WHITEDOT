@@ -9,7 +9,7 @@ class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*a):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
 bootstrap='''import {installNoticeLane} from './notice-lane.js';import {initialize as motion} from './control-motion.js';
-const r={S:{reducedMotion:false},inWorld:()=>false,audio:()=>r.resumes++,enterWorld:()=>r.entries++,resumes:0,entries:0};
+const r={S:{reducedMotion:false,sound:true},inWorld:()=>false,audio:()=>r.resumes++,enterWorld:()=>r.entries++,resumes:0,entries:0};
 document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.lane=installNoticeLane(r);const m=motion(r),b=document.getElementById('bPrimary');b.hidden=false;b.classList.add('gold');b.onclick=()=>m.enter(b);window.__r=r;'''
 try:
  with sync_playwright() as p:

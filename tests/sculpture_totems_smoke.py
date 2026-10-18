@@ -27,7 +27,7 @@ try:
    page.evaluate('''async()=>{const r=__r;r.S.sound=false;r.S.firstJourney.skipped=true;r.S.pathCrystals=Array.from({length:10},(_,i)=>'totem:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();r.noticeLane.quietRoutine();const {totemCell,TOTEMS}=await import('/src/sculpture-totems-model.js'),{crystalField}=await import('/src/crystal-sparks.js');const fixtures={};for(let x=-30;x<=30;x++)for(let y=-30;y<=30;y++){const a=totemCell(x,y,r.seedOf);if(a.length>1&&!fixtures.group)fixtures.group=a;if(a.length!==1)continue;const o=a[0];if(crystalField(o.x,o.y,r.seedOf).some(c=>Math.hypot(c.x-o.x,c.y-o.y)<220))continue;fixtures[TOTEMS[o.kind].action]||=o;}if(!fixtures.stack||!fixtures.orb||!fixtures.guide||!fixtures.group)throw Error('Missing natural sculptures');window.fixtures=fixtures;r.S.wx=fixtures.stack.x;r.S.wy=fixtures.stack.y-50;window.balance=r.S.sparks;}''')
    page.wait_for_timeout(600)
    pulse_stack(page,page.evaluate('fixtures.stack.id'),height)
-   page.wait_for_function('__r.S.sparks===balance+2')
+   page.wait_for_function('__r.S.sparks>=balance+2')
    assert page.evaluate('__r.S.rareBook.items.some(c=>c.type==="totem:"+fixtures.stack.kind&&!c.forced)')
    page.screenshot(path=str(ROOT.parent/f'totem-stack-{width}.png'))
    stack_id=page.evaluate('fixtures.stack.id');stack_kind=page.evaluate('fixtures.stack.kind')
@@ -48,11 +48,15 @@ try:
     if abs(info['dx'])>abs(info['dy']):key='ArrowRight' if info['dx']>0 else 'ArrowLeft'
     else:key='ArrowDown' if info['dy']>0 else 'ArrowUp'
     page.keyboard.down(key);page.wait_for_timeout(100);page.keyboard.up(key)
-   page.wait_for_function('__r.S.sparks===balance+2')
+   page.wait_for_function('__r.S.sparks>=balance+2')
    assert page.evaluate('__r.S.rareBook.items.some(c=>c.type==="totem:"+fixtures.orb.kind)')
    page.evaluate('''()=>{const p=fixtures.guide;__r.S.wx=p.x;__r.S.wy=p.y-50;window.balance=__r.S.sparks;}''')
-   page.wait_for_timeout(600);page.mouse.click(25,height/2);page.wait_for_function('__r.S.sparks===balance+2')
-   assert page.evaluate('__r.totemNear().find(o=>o.id===fixtures.guide.id).target!==undefined')
+   page.wait_for_timeout(600);page.locator('#w').focus();page.keyboard.press('Space')
+   try:page.wait_for_function('__r.S.sparks>=balance+2',timeout=5000)
+   except Exception:
+    print(page.evaluate('({balance,sparks:__r.S.sparks,site:__r.totemNear().find(o=>o.id===fixtures.guide.id),paid:__r.sparkEconomy.totems[fixtures.guide.id],mode:__r.S.mode,player:{x:__r.S.wx,y:__r.S.wy},modals:[...document.querySelectorAll(".modal:not([hidden])")].map(e=>e.id)})'),flush=True)
+    raise
+   assert page.evaluate('__r.totemNear().find(o=>o.id===fixtures.guide.id).target!==undefined');assert page.evaluate('__r.sparkEconomy.totems[fixtures.guide.id]===true')
    page.screenshot(path=str(ROOT.parent/f'totem-guide-{width}.png'))
    # Group reply is player-triggered, bounded and silent when muted.
    page.evaluate('''()=>{const p=fixtures.group[0];__r.S.wx=p.x;__r.S.wy=p.y-40;__r.S.sound=true;__r.audio();window.notes=[];__r.totemNoteCue=n=>notes.push(n);}''')

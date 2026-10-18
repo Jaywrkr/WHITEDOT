@@ -98,7 +98,7 @@ export function initialize(runtime){
   if(e.find.type==='quiet')runtime.quietPreview?.(e.find.seconds);
   if(e.find.tool==='fx'){if(!runtime.fxState?.open)$('bFx').click();}
   else if(e.find.tool==='favorites')$('bFavorites').click();
-  runtime.audio?.();draw();
+  if(runtime.S.sound)runtime.audio?.();draw();
  }
 
  // ---------- interfaz ----------

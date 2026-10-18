@@ -19,6 +19,9 @@ try:
    page.evaluate('window.__walkerNotes=[]')
    for i in range(5):
     page.mouse.click(20,height/2);page.wait_for_timeout(800)
+   # Empty-space pulses need not hit another voice. Supply an actual native player note for the response.
+   page.evaluate("()=>{const r=__testRuntime;r.playVoice('arbol',0,r.ac.currentTime+.1,r.regionOfPos(r.S.wx,r.S.wy),false,.12,{x:r.S.wx,y:r.S.wy},'player');}")
+   page.wait_for_function('f=>__walkerNotes.some(n=>n.form===f)',arg=found['form'])
    assert page.evaluate('(f)=>__walkerNotes.some(n=>n.form===f)',found['form']);assert page.evaluate('__walkerNotes.length')<=4
    page.locator('#bMenu').click();before=page.evaluate('({x:__nativeWalker.x,y:__nativeWalker.y,follow:__nativeWalker.follow})');page.wait_for_timeout(400);assert page.evaluate('({x:__nativeWalker.x,y:__nativeWalker.y,follow:__nativeWalker.follow})')==before
    page.locator('#bAch').click();page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('caminantes');assert page.locator('.album-piece').count()==50;assert page.locator('.album-piece[data-owned="true"]').count()>=1;assert page.locator('.album-piece').first.get_attribute('data-owned')=='true';assert page.locator('.album-piece svg').count()==50;page.screenshot(path=f'/tmp/whitedot-walkers-{width}.png');page.locator('#journalClose').click()

@@ -1,3 +1,4 @@
+from browser_helpers import complete_path_fixture
 # Navegador: ritual de portal, Subsuelo (1 paso = 8 arriba) con salida, Cielo con vista del continente y bajada.
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -17,7 +18,7 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();complete_path_fixture(page);page.locator('#cExplore').click();page.locator('#hwGo').click()
   # Grieta de la región (1,1): el ritual exige pulsos seguidos en el beat; uno fuera de tiempo reinicia.
   need=page.evaluate('''()=>{const r=window.__testRuntime;r.S.wx=3600*1.5;r.S.wy=3600*1.5;const g=r.nearPortals().find(p=>p.kind==='grieta');r.S.wx=g.x+30;r.S.wy=g.y;return g.need;}''')
   page.wait_for_timeout(300);page.screenshot(path=f'/tmp/whitedot-portal-{label}.png')

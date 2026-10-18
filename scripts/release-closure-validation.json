@@ -1,0 +1,598 @@
+{
+  "branch": "polish/release-closure",
+  "base": "8924f161738e0f1fa94b28a7390474f4b62d92fa",
+  "release": "2.3.0-alpha.50",
+  "checks": {
+    "node": "175 suites passed",
+    "browser": "127 of 127 unique flows passed, including corrected historical fixtures; initial full runner hit its old 900s wrapper deadline, continued only pending/affected flows",
+    "offline": "240 modules cached; offline reload passed",
+    "releaseAudit": "zero errors and warnings",
+    "serverAPI": "passed including transaction rollback and closed connections",
+    "audio": {
+      "completed": [
+        "RUN audio: production_mix.py"
+      ],
+      "status": "Full audio run stopped after user raised time/token cost; not certified complete"
+    }
+  },
+  "browserFlows": {
+    "guide_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "discovery_pacing_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "cultures_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "collection_guard_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "jam_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "discoveries_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "journey_ui_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "glass_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "initiative_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "journey_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "lab_landscape_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "interface_cards_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "messages_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "music_menu_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "encounter_depth_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "notice_lane_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "music_response_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "favorites_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "experience_future_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "music_travel_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "lab_memory_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "entry_jump_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "box_surprises_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "contact_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "crystal_play_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "memory_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "cuerpo_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "music_identity_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "game_loop_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "musical_wonders_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "heritage_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "atlas_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "layer_jam_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "alive_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "foundation_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "creative_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "ecology_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "influence_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "ambient_world_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "living_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "navigation_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "arrival_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "encounters_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "magnet_percussion_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "experience_festival_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "modular_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "expansion_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "crystal_path_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "lab_performance_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "materia_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "mirrors_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "hybrid_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "lab_learning_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "fx_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "favorite_save_failure_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "cube_crystal_feedback_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "instrument_techniques_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "celebration_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "experience_identity_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "blobs_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "mobile_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "layers_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "listening_reference_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "autopilot_smoke.py": {
+      "status": "pass",
+      "source": "initial full run"
+    },
+    "achievements_v2_smoke.py": {
+      "status": "pass",
+      "seconds": 3.92,
+      "source": "final retest"
+    },
+    "collection_focus_smoke.py": {
+      "status": "pass",
+      "seconds": 8.09,
+      "source": "final retest"
+    },
+    "accessibility_smoke.py": {
+      "status": "pass",
+      "seconds": 12.12,
+      "source": "final retest"
+    },
+    "content_gallery_smoke.py": {
+      "status": "pass",
+      "seconds": 7.18,
+      "source": "final retest"
+    },
+    "collection_presentation_smoke.py": {
+      "status": "pass",
+      "seconds": 10.93,
+      "source": "final retest"
+    },
+    "crystal_sparks_smoke.py": {
+      "status": "pass",
+      "seconds": 9.74,
+      "source": "final retest"
+    },
+    "cube_editor_smoke.py": {
+      "status": "pass",
+      "seconds": 9.7,
+      "source": "final retest"
+    },
+    "duet_smoke.py": {
+      "status": "pass",
+      "seconds": 9.38,
+      "source": "final retest"
+    },
+    "first_level_smoke.py": {
+      "status": "pass",
+      "seconds": 89.34,
+      "source": "final retest"
+    },
+    "experience_garden_smoke.py": {
+      "status": "pass",
+      "seconds": 17.69,
+      "source": "final retest"
+    },
+    "house_v2_smoke.py": {
+      "status": "pass",
+      "seconds": 7.37,
+      "source": "final retest"
+    },
+    "focusui_smoke.py": {
+      "status": "pass",
+      "seconds": 37.25,
+      "source": "final retest"
+    },
+    "inhabitants_smoke.py": {
+      "status": "pass",
+      "seconds": 10.5,
+      "source": "final retest"
+    },
+    "journal_scale_smoke.py": {
+      "status": "pass",
+      "seconds": 10.63,
+      "source": "final retest"
+    },
+    "journal_v2_smoke.py": {
+      "status": "pass",
+      "seconds": 8.89,
+      "source": "final retest"
+    },
+    "interface_smoke.py": {
+      "status": "pass",
+      "seconds": 32.67,
+      "source": "final retest"
+    },
+    "lab_score_smoke.py": {
+      "status": "pass",
+      "seconds": 11.98,
+      "source": "final retest"
+    },
+    "living-cards_smoke.py": {
+      "status": "pass",
+      "seconds": 7.28,
+      "source": "final retest"
+    },
+    "menu_v2_smoke.py": {
+      "status": "pass",
+      "seconds": 9.21,
+      "source": "final retest"
+    },
+    "micro_instruments_smoke.py": {
+      "status": "pass",
+      "seconds": 19.86,
+      "source": "final retest"
+    },
+    "lab_smoke.py": {
+      "status": "pass",
+      "seconds": 97.07,
+      "source": "final retest"
+    },
+    "panel_polish_smoke.py": {
+      "status": "pass",
+      "seconds": 20.93,
+      "source": "final retest"
+    },
+    "notice_priority_smoke.py": {
+      "status": "pass",
+      "seconds": 64.99,
+      "source": "final retest"
+    },
+    "percussion_smoke.py": {
+      "status": "pass",
+      "seconds": 18.65,
+      "source": "final retest"
+    },
+    "pins_smoke.py": {
+      "status": "pass",
+      "seconds": 26.24,
+      "source": "final retest"
+    },
+    "pet_smoke.py": {
+      "status": "pass",
+      "seconds": 57.22,
+      "source": "final retest"
+    },
+    "power_cards_smoke.py": {
+      "status": "pass",
+      "seconds": 23.24,
+      "source": "final retest"
+    },
+    "power_persistence_smoke.py": {
+      "status": "pass",
+      "seconds": 6.98,
+      "source": "final retest"
+    },
+    "power_feedback_smoke.py": {
+      "status": "pass",
+      "seconds": 17.19,
+      "source": "final retest"
+    },
+    "pulse_forms_smoke.py": {
+      "status": "pass",
+      "seconds": 10.25,
+      "source": "final retest"
+    },
+    "practice_travel_smoke.py": {
+      "status": "pass",
+      "seconds": 17.71,
+      "source": "final retest"
+    },
+    "pwa_updates_smoke.py": {
+      "status": "pass",
+      "seconds": 10.89,
+      "source": "final retest"
+    },
+    "rare_cards_smoke.py": {
+      "status": "pass",
+      "seconds": 63.38,
+      "source": "final retest"
+    },
+    "recorrido_smoke.py": {
+      "status": "pass",
+      "seconds": 14.23,
+      "source": "final retest"
+    },
+    "release_closure_smoke.py": {
+      "status": "pass",
+      "seconds": 16.77,
+      "source": "final retest"
+    },
+    "reactive_ecology_smoke.py": {
+      "status": "pass",
+      "seconds": 24.52,
+      "source": "final retest"
+    },
+    "release_smoke.py": {
+      "status": "pass",
+      "seconds": 9.58,
+      "source": "final retest"
+    },
+    "rewards_smoke.py": {
+      "status": "pass",
+      "seconds": 7.48,
+      "source": "final retest"
+    },
+    "sculpture_totems_smoke.py": {
+      "status": "pass",
+      "seconds": 44.35,
+      "source": "final retest"
+    },
+    "smoke.py": {
+      "status": "pass",
+      "seconds": 85.04,
+      "source": "final retest"
+    },
+    "seeds_smoke.py": {
+      "status": "pass",
+      "seconds": 60.82,
+      "source": "final retest"
+    },
+    "sparks_economy_smoke.py": {
+      "status": "pass",
+      "seconds": 21.07,
+      "source": "final retest"
+    },
+    "sparks_notice_smoke.py": {
+      "status": "pass",
+      "seconds": 38.2,
+      "source": "final retest"
+    },
+    "synth_bank_smoke.py": {
+      "status": "pass",
+      "seconds": 24.52,
+      "source": "final retest"
+    },
+    "territory_presentation_smoke.py": {
+      "status": "pass",
+      "seconds": 5.01,
+      "source": "final retest"
+    },
+    "travel_v2_smoke.py": {
+      "status": "pass",
+      "seconds": 6.79,
+      "source": "final retest"
+    },
+    "ui_silence_smoke.py": {
+      "status": "pass",
+      "seconds": 19.09,
+      "source": "final retest"
+    },
+    "universe_activities_smoke.py": {
+      "status": "pass",
+      "seconds": 21.0,
+      "source": "final retest"
+    },
+    "v1_closure_smoke.py": {
+      "status": "pass",
+      "seconds": 13.85,
+      "source": "final retest"
+    },
+    "vida_smoke.py": {
+      "status": "pass",
+      "seconds": 33.03,
+      "source": "final retest"
+    },
+    "universe_mischief_smoke.py": {
+      "status": "pass",
+      "seconds": 73.86,
+      "source": "final retest"
+    },
+    "vj_ui_smoke.py": {
+      "status": "pass",
+      "seconds": 11.15,
+      "source": "final retest"
+    },
+    "visual_closure_smoke.py": {
+      "status": "pass",
+      "seconds": 59.59,
+      "source": "final retest"
+    },
+    "volume_control_smoke.py": {
+      "status": "pass",
+      "seconds": 5.8,
+      "source": "final retest"
+    },
+    "walkers_smoke.py": {
+      "status": "pass",
+      "seconds": 33.18,
+      "source": "final retest"
+    },
+    "wonders_smoke.py": {
+      "status": "pass",
+      "seconds": 20.16,
+      "source": "final retest"
+    },
+    "wardrobe_smoke.py": {
+      "status": "pass",
+      "seconds": 12.6,
+      "source": "final retest"
+    },
+    "world-return_smoke.py": {
+      "status": "pass",
+      "seconds": 7.93,
+      "source": "final retest"
+    },
+    "world_smoke.py": {
+      "status": "pass",
+      "seconds": 23.8,
+      "source": "final retest"
+    },
+    "world_family_smoke.py": {
+      "status": "pass",
+      "seconds": 43.37,
+      "source": "final retest"
+    },
+    "wow_eyes_smoke.py": {
+      "status": "pass",
+      "seconds": 7.21,
+      "source": "final retest"
+    },
+    "world_visibility_smoke.py": {
+      "status": "pass",
+      "seconds": 33.83,
+      "source": "final retest"
+    },
+    "wow_smoke.py": {
+      "status": "pass",
+      "seconds": 23.08,
+      "source": "final retest"
+    }
+  },
+  "limitations": [
+    "No CI certification for this branch; published main CI was already failing at run 39131197780.",
+    "No physical mobile device or physical listening verification.",
+    "No PR, merge or manual deployment."
+  ],
+  "environment": "Windows; external python3 adapter for Node tests, bundled external Playwright, system Chrome. Original committed font-license bytes used for audit without license changes.",
+  "sourceSHA256": "907a11e55726010c9250aed98c31a17cb2a0b456ba8efd295fc3a6e6c193fc43"
+}

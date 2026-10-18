@@ -34,8 +34,13 @@ try:
   assert page.evaluate('__testRuntime.MU.radio.labScore.id')==first['band']
   page.locator('#bStyles').click();page.locator('#musicTravelFull').click();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=60000)
   page.wait_for_function('__testRuntime.MU.radio?.labScore?.electronic?.count===10')
-  page.evaluate("()=>{const r=__testRuntime;window.__fieldFoundation=[];r.labPerformanceCue=e=>__fieldFoundation.push(e);r.givePower('campo');}")
-  page.wait_for_function('__fieldFoundation.some(e=>e.role==="perc")&&__fieldFoundation.some(e=>e.role!=="perc")',timeout=15000)
+  page.evaluate("()=>{const r=__testRuntime;window.__fieldFoundation=[];r.labPerformanceCue=e=>__fieldFoundation.push(e);r.audioNoteCue=e=>{if(e.origin==='family-drums')__fieldFoundation.push({...e,role:'perc'});else if(e.origin==='track'&&Number.isFinite(e.note))__fieldFoundation.push({...e,role:'lead'});};for(const id of ['kick','snare','clap','hat'])delete r.S.journal.music.instruments[id];r.givePower('campo');}")
+  page.locator('#w').focus();page.keyboard.down('ArrowRight')
+  try:page.wait_for_function('["kick","snare","clap","hat"].some(id=>__testRuntime.S.journal.music.instruments[id])&&__fieldFoundation.some(e=>e.role!=="perc")',timeout=15000)
+  except Exception:
+   print(page.evaluate("({events:__fieldFoundation.slice(0,8),sound:__testRuntime.S.sound,ac:__testRuntime.ac?.state,mode:__testRuntime.S.mode,step:__testRuntime.MU.step,energy:__testRuntime.MU.E,family:__testRuntime.MU.radio?.musicFamily,genre:__testRuntime.MU.dnaT?.genre,modals:[...document.querySelectorAll('.modal:not([hidden])')].map(e=>e.id)})"),flush=True)
+   raise
+  finally:page.keyboard.up('ArrowRight')
   assert not errors,errors
   print('PASS one production electronic foundation, no retired toggle, preserved legacy data and unchanged world identity',flush=True);b.close()
 finally:server.shutdown()

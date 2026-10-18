@@ -21,6 +21,8 @@ try:
   assert page.evaluate('__testRuntime.S.mode')=='camino';assert page.evaluate('__testRuntime.autopilotState.mode') is None
   assert page.locator('#bSoft').get_attribute('aria-pressed')=='false';assert page.locator('#bAutoPins').get_attribute('aria-pressed')=='false';assert page.locator('#bCreateMode').get_attribute('aria-pressed')=='false'
   assert not page.evaluate('__testRuntime.jam.loop.armed');assert not page.evaluate('__testRuntime.hasPower("cometa")||__testRuntime.hasPower("campo")')
+  from browser_helpers import complete_path_fixture
+  complete_path_fixture(page)
   page.evaluate('()=>{const r=__testRuntime;r.S.todayLight=r.CAP;r.S.relaxedCreate=true;r.enterWorld();}')
   page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true)');page.wait_for_timeout(300)
   assert page.evaluate('typeof __testRuntime.S.listened')=='object';assert page.evaluate('__testRuntime.quietState.stage')==0
@@ -46,7 +48,7 @@ try:
   # can otherwise win between load and the deliberately newer write.
   lifecycle=context.new_cdp_session(page);lifecycle.send('Page.setWebLifecycleState',{'state':'frozen'})
   other=context.new_page();other.goto(url);other.wait_for_function('__testRuntime?.labMode')
-  assert other.evaluate('__testRuntime.S.totalLight=101;__testRuntime.save()')
+  assert other.evaluate('__testRuntime.S.totalLight=101;__testRuntime.save()'),other.evaluate('({status:__testRuntime.storageStatus,scope:__testRuntime.saveScope,key:__testRuntime.saveStore.key})')
   lifecycle.send('Page.setWebLifecycleState',{'state':'active'})
   assert not page.evaluate('__testRuntime.S.totalLight=3;__testRuntime.save()')
   assert page.evaluate('__testRuntime.storageStatus.kind')=='conflict';assert page.evaluate('JSON.parse(localStorage.getItem(__testRuntime.saveStore.key)).totalLight')==101

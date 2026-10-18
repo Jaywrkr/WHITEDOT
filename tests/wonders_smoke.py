@@ -1,3 +1,4 @@
+from browser_helpers import complete_path_fixture
 # Navegador: rarezas con su regla, muestra única y rumor; ríos que suenan; mapa con estrellas.
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -18,7 +19,7 @@ with sync_playwright() as p:
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(8000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
-  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();page.locator('#cExplore').click();page.locator('#hwGo').click()
+  page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();complete_path_fixture(page);page.locator('#cExplore').click();page.locator('#hwGo').click()
   # Rumor: apunta a una rareza con dirección.
   rum=page.evaluate('window.__testRuntime.rumor(true)');assert rum and rum['text'].startswith('Dicen que al'),rum
   # Rareza en canon: regla activa, registro y muestra única.
