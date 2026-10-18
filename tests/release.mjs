@@ -1,3 +1,4 @@
+import {pathToFileURL} from 'node:url';
 import assert from 'node:assert/strict';
 import {mkdtempSync,copyFileSync,mkdirSync,readFileSync,rmSync} from 'node:fs';import {tmpdir} from 'node:os';import {join} from 'node:path';
 import {deploymentTime,normalizeRelease,releaseLabels} from '../src/release-model.js';
@@ -11,6 +12,6 @@ const dir=mkdtempSync(join(tmpdir(),'whitedot-release-'));try{
  mkdirSync(join(dir,'src'));for(const f of ['sw.js','package.json','src/release-info.js'])copyFileSync(new URL('../'+f,import.meta.url),join(dir,f));
  const original=readFileSync(join(dir,'sw.js'),'utf8');assert.throws(()=>stampDeployment({directory:dir,deployedAt:'now',revision:'abcdef0'}));assert.equal(readFileSync(join(dir,'sw.js'),'utf8'),original,'invalid input cannot partly stamp');
  const result=stampDeployment({directory:dir,deployedAt:release.deployedAt,revision:release.revision});assert.equal(result.deployedAt,'2026-10-14T12:04:00.000Z');assert(readFileSync(join(dir,'sw.js'),'utf8').includes(result.cache));
- const stamped=await import(join(dir,'src/release-info.js'));assert.equal(stamped.RELEASE.deployedAt,result.deployedAt);assert.equal(stamped.RELEASE.revision,release.revision);
+ const stamped=await import(pathToFileURL(join(dir,'src/release-info.js')).href);assert.equal(stamped.RELEASE.deployedAt,result.deployedAt);assert.equal(stamped.RELEASE.revision,release.revision);
 }finally{rmSync(dir,{recursive:true,force:true});}
 console.log('PASS version and genuine UTC deployment metadata, local label, invalid inputs, artifact stamping and unique PWA publication cache');

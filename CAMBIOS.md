@@ -1,5 +1,11 @@
 # Cambios recientes
 
+## Pruebas locales más rápidas
+
+`test:impact` ejecuta hasta dos suites Node en paralelo y reutiliza aciertos durante una hora solo con los mismos archivos, runtime y entorno. Un cambio invalida toda la caché por seguridad; los fallos se repiten y detienen nuevas tareas. Resumen y reporte distinguen ejecución y reutilización. Opciones `--no-cache` y `--jobs 1`. Sin cambios en juego, versiones, suites completas ni CI.
+
+Regresión con procesos reales: concurrencia, reutilización, invalidación por huella, caducidad, ejecución forzada, fallos y señales. Tres suites afectadas aprobadas: 6496 ms sin caché y 3022 ms reutilizando las tres. Auditoría sin errores/avisos y diff revisado. Corregida importación de la prueba de publicación en Windows mediante file URL. No se ejecutaron suites completas de navegador/audio ni CI; el juego no cambia. Comandos: `node scripts/test-impact.mjs --base af47928 --no-cache`, repetición sin `--no-cache`, y `npm run audit:release`.
+
 ## Tótems de esculturas de color
 
 Rama `feat/sculpture-totems`, dependiente de `9889252`; main remoto observado `81856a3`, con las entregas previas pendientes. Seis siluetas/degradados inspirados en la referencia visual de Jay: torres violetas, reloj verde, esfera de ámbar, rombo azul, botella rosa y aguja de cobalto. Dibujos Canvas y retratos SVG, sin imagen externa, dependencias ni otro menú.
