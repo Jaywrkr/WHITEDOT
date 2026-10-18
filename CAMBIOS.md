@@ -1,5 +1,13 @@
 # Cambios recientes
 
+## Revisión enfocada de navegador · 18 de octubre de 2026
+
+Sobre `0752b5c`, sin cambios de juego, contenido, audio, versión ni caché. Corregida una carrera en `first_level_smoke.py`: cerrar el saludo explícitamente y esperar la visibilidad del texto, que los avisos temporales ocultan por diseño. Conservadas todas las aserciones.
+
+Chrome local: aprobados `first_level_smoke.py` (320/390/844 y visitante compartido), `menu_v2_smoke.py` (320/390/844), `release_closure_smoke.py` (320/390/844/1280), `sparks_economy_smoke.py` y `offline_smoke.py` (240 módulos). Cubren entrada real, contacto/pulsos, menús, compras/reembolsos, logros y persistencia tras recargar. Auditoría: cero errores y avisos al comparar licencias con sus bytes Git originales; conversión CRLF local restaurada sin cambios de licencia.
+
+Audio enfocado: funk y dub, renders densos de 20 s; jazz, afro, folk y cámara, renders de 5 s con las mismas aserciones del test existente; 44,1/48 kHz, sin clipping ni campana de pista en esas muestras. Camino quieto de 30 s sin campana/glass automáticos. El intento original de seis renders largos alcanzó el límite local de 145 s tras dos aprobados; no se presenta como suite completa. Evidencia local en `work/browser-closure-focused-rest.json`, `work/browser-closure-intro.log` y `work/music-families-audio.json`, fuera del repositorio. No se repitieron Node/navegador/audio completos. Pendientes de certificación: CI de rama (no se dispara para este nombre), dispositivos físicos, escucha humana, suspensión real del navegador, migración entre versiones y transiciones largas. Sin Android, PR, merge ni despliegue.
+
 ## Cierre de claridad y descubrimiento
 
 Rama `polish/release-closure` desde `main` actualizado `8924f16`. Cristales con mayor contraste y fragmentos recogibles más legibles, conservando posiciones, golpes, tamaños de cristal, escapes, premios y radios de recogida. El HUD identifica el saldo como chispas. Saltar conserva su desbloqueo y coste existentes. Corregido el inicio de audio del laboratorio con sonido desactivado y el cierre de conexiones SQLite del servicio opcional, conservando commit/rollback; sin modificar rutas ni el 404 del alojamiento estático.
