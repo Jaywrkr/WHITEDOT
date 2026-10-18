@@ -295,11 +295,11 @@ export function initialize(runtime) {
       MU.motif.slice(-6).forEach(m=>{const off=Math.min(m.st-st0,24);pluck(snap(m.n,ct)-12,t+off*SIX,vel(.05),2);});
     }
     // el mundo toca solo: objetos cercanos suenan en el beat, las criaturas que te siguen cantan
-    if(runtime.inWorld()&&!runtime.activityActive&&MU.near.length){
+    if(runtime.inWorld()&&!runtime.activityActive&&!runtime.mischiefHush&&MU.near.length){
       const o=ambientSoloist(MU.dnaA,MU.step>>4,s,MU.near,runtime.seedOf,{x:runtime.S.wx,y:runtime.S.wy,rest:MU.radio?.melodyRest,quiet:runtime.currentPocket?.()?.kind==='quiet'});
       if(o?.snd){o.snd(t);setTimeout(()=>{o.lit=1;o.hit=1;},Math.max(0,(t-ac.currentTime)*1000));}
     }
-    if(runtime.inWorld()&&!runtime.activityActive&&s===2&&(MU.step>>4)%4===2&&!MU.radio?.melodyRest&&runtime.currentPocket?.()?.kind!=='quiet')MU.singers.slice(0,1).forEach(o=>{runtime.speciesSound(o.s,t,false,o.personality,o);setTimeout(()=>{o.lit=1;},Math.max(0,(t-ac.currentTime)*1000));});
+    if(runtime.inWorld()&&!runtime.activityActive&&!runtime.mischiefHush&&s===2&&(MU.step>>4)%4===2&&!MU.radio?.melodyRest&&runtime.currentPocket?.()?.kind!=='quiet')MU.singers.slice(0,1).forEach(o=>{runtime.speciesSound(o.s,t,false,o.personality,o);setTimeout(()=>{o.lit=1;},Math.max(0,(t-ac.currentTime)*1000));});
     // lo que tocas espera la siguiente corchea (con un poco de vida humana)
     if(s%2===0){let m=0;while(MU.q8.length&&m<3){const it=MU.q8.shift(),t2=t+jit()*1.5;it.fn(t2);if(it.vis)setTimeout(it.vis,Math.max(0,(t2-ac.currentTime)*1000));m++;}}
     runtime.wonderMusicStep?.(s,bar,t);runtime.duetStep?.(s,bar,t);runtime.livingStep?.(s,bar,t);

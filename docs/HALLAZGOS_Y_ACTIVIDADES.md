@@ -1,6 +1,6 @@
 # Hallazgos y actividades
 
-Contenido de la rama feat/rare-musical-wonders; pendiente de integración.
+Catálogo del contenido en desarrollo. La publicación depende del despliegue de main.
 
 ## Encuentros
 
@@ -75,3 +75,24 @@ Cada lugar entrega cinco chispas una sola vez. Repetirlo no vuelve a pagar. No h
 Ajustes → Textos en el universo permite ocultar el texto de exploración y de estas escenas. Las señales gráficas, controles, menús y avisos de guardado siguen disponibles. La preferencia se conserva al volver.
 
 Volver al Camino permite seguir rompiendo cristales después de los diez iniciales, sin sumar chispas ni progreso adicional. La campana automática repetitiva se sustituye por una respuesta de piano suave menos frecuente; las respuestas musicales manuales se conservan.
+
+## Travesuras del universo
+
+Diez encuentros ocasionales, con una sola escena activa. Acercarse, caminar, girar o esperar basta; el cristal grande conserva los pulsos de minería existentes. Alejarse permite abandonar sin penalización. Las escenas pueden repetirse, pero cada lugar da tres chispas una sola vez y solo los lugares distintos avanzan los logros por cantidad.
+
+| Encuentro | Qué sucede |
+|---|---|
+| Cristal que pide ayuda | Un cristal pequeño te guía a un cristal grande real. Romperlo resuelve la petición. |
+| Imitador torpe | Copia con retraso tus cambios de dirección; girar y detenerte le ayuda a sincronizarse. |
+| Lluvia ascendente | Ocho fragmentos suben; pasar por sus pequeñas marcas los recoge. |
+| Ladrón de sombras | Se lleva un eco oscuro del cubo; sigue tres pistas y recupéralo. |
+| Público escondido | Esperar revela espectadores; caminar inicia una procesión. Detenerse cierra el concierto; llegar a una escultura celebra allí. |
+| Escultura bailarina | Rodear una escultura real la anima; sus interacciones y tarjetas anteriores permanecen. |
+| Carrera inesperada | Una criatura acompaña la carrera hasta una marca. Llegar segundo también celebra. |
+| Paisaje contenido | Dentro del círculo, presencias cercanas quedan inmóviles. Salir libera partículas y una respuesta musical. |
+| Copia de fragmentos | Se arma un cubo imperfecto, te acompaña y se desarma en fragmentos recogibles. |
+| Despedida contagiosa | Una criatura acompaña un trecho; su despedida tiene cuatro respuestas en cadena. |
+
+Los gráficos respetan movimiento reducido y Textos del paisaje. No hay botón, pantalla ni moneda nueva. Los encuentros interrumpidos se reinician al volver; premios y logros sí persisten.
+
+Los 120 logros nuevos incluyen 40 hitos de encuentros, uno por cada actividad, uno por cada hallazgo, seis de esculturas, catorce de variedad y diez secretos absurdos. Ejemplos: «Abogado de las piedras», «Me llovió al contrario», «Después de usted», «Festival sin permisos» y «Mi sombra me debe explicaciones». Los logros reconocen el progreso anterior disponible y se consultan en la Bitácora.

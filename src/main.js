@@ -1,3 +1,4 @@
+import {initialize as universeMischief} from './universe-mischief.js';
 import {initialize as universeActivities} from './universe-activities.js';
 import {initialize as universeTexts} from './universe-texts.js';
 import {initialize as musicalWonders} from './musical-wonders.js';
@@ -196,7 +197,7 @@ musicTravel(runtime);
 distantColors(runtime);vjWorld(runtime);reactiveEcology(runtime);
 crystalSparks(runtime);pixelLife(runtime);wowFeel(runtime);wowUI(runtime);wowMemory(runtime);
 houseAudio(runtime);house(runtime);
-onboarding(runtime);labLearning(runtime);sparks(runtime);sculptureTotems(runtime);musicalWonders(runtime);universeActivities(runtime);universeTexts(runtime);
+onboarding(runtime);labLearning(runtime);sparks(runtime);sculptureTotems(runtime);musicalWonders(runtime);universeActivities(runtime);universeTexts(runtime);universeMischief(runtime);
 runtime.styleUI();runtime.hud();
 if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
 returnEntrance(runtime);

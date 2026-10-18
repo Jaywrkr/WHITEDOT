@@ -80,11 +80,11 @@ export function initialize(runtime) {
     runtime.drawDistantColors?.();
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
-    runtime.crystalTick?.(dt,modal);runtime.totemTick?.(dt,modal);runtime.wonderTick?.(dt,modal);runtime.activityWorldTick?.(dt,modal);runtime.wowTick?.(dt,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.sparkTick?.(dt,modal);runtime.reactiveTick?.(dt);runtime.inhabitantTick?.(dt);runtime.drawInhabitants?.();
+    runtime.crystalTick?.(dt,modal);runtime.totemTick?.(dt,modal);runtime.wonderTick?.(dt,modal);runtime.activityWorldTick?.(dt,modal);runtime.mischiefTick?.(dt,modal);runtime.wowTick?.(dt,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.sparkTick?.(dt,modal);runtime.reactiveTick?.(dt);runtime.inhabitantTick?.(dt);runtime.drawInhabitants?.();
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.drawDuet?.();runtime.petTick?.(dt);runtime.drawPet?.(t);
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
-    runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWonders?.();runtime.drawActivityPortals?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawDistantColors?.(true);
+    runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWonders?.();runtime.drawActivityPortals?.();runtime.drawMischief?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawDistantColors?.(true);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
@@ -302,7 +302,7 @@ export function initialize(runtime) {
         const vis=R*1.8;if(d>vis)continue;if(d<R*1.2)runtime.seen("luciernaga");
         const bl=Math.max(0,Math.sin(t/260+f.ph*3));runtime.cx.globalAlpha=Math.min(1,(.15+.85*bl*bl)*(1-d/vis)+b*.15)*(runtime.worldOpacity?.(d,vis)??1);runtime.cx.fillStyle=runtime.GOLD;runtime.cx.fillRect(f.x+ox-1,f.y+oy-1,2,2);
       }
-      for(const o of c.sp){const sp=o.s;
+      for(const o of c.sp){const sp=o.s,frozen=runtime.mischiefFrozen?.(o);if(!frozen){
         if(ev==="migracion"&&sp.id.startsWith(rg.key+":"))o.hx+=dt*55;
         if(!runtime.nativeLifeTick&&sp.mob==="orbita"){o.x=o.hx+Math.cos(t/1000*sp.spd*(o.personality?.speed||1)+o.ph)*50;o.y=o.hy+Math.sin(t/1000*sp.spd*(o.personality?.speed||1)+o.ph)*50;}
         else if(!runtime.nativeLifeTick&&sp.mob==="salta"){o.x=o.hx+Math.sin(t/2000*sp.spd*(o.personality?.speed||1)+o.ph)*30;o.y=o.hy-b*(o.personality?.jump||12);}
@@ -312,6 +312,7 @@ export function initialize(runtime) {
         if(sp.mob==="timida"&&o.follow>0){}
         else if(!runtime.nativeLifeTick&&sp.mob==="timida"){const ax=o.x-runtime.S.wx,ay=o.y-runtime.S.wy,dd=Math.hypot(ax,ay)||1;if(dd<110){o.x+=ax/dd*dt*120*(o.personality?.speed||1);o.y+=ay/dd*dt*120*(o.personality?.speed||1);}else{o.x+=(o.hx-o.x)*dt*.3;o.y+=(o.hy-o.y)*dt*.3;}}
         runtime.nativeLifeTick?.(o,sp,paused?0:dt,t/1000,c.sp);
+        }
         const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),w=runtime.waves.length&&runtime.hitW(o.x,o.y);
         if(w){o.lit=1;runtime.wsoon(w,q=>runtime.speciesSound(sp,q,false,o.personality,o));}
         if(contactEntry(o,d<ds/2+12,!paused&&!runtime.scanning)&&ms>o.cd){o.cd=ms+(o.personality?.cooldown||1100);runtime.MU.act+=.3;runtime.touched();runtime.burst(o.x,o.y,8,true);runtime.discover(sp);if(runtime.S.autoPins)runtime.bandJoin?.(o,sp);
@@ -320,7 +321,7 @@ export function initialize(runtime) {
             runtime.beatSoon(q=>{runtime.speciesSound(sp,q,true,o.personality,o);if(mate){runtime.speciesSound(sp,q+runtime.SIX*16,true,mate.personality,mate);setTimeout(()=>{mate.lit=1;runtime.beams.push({x1:o.x,y1:o.y,x2:mate.x,y2:mate.y,l:1});},Math.max(0,(q+runtime.SIX*16-runtime.ac.currentTime)*1000));}},()=>{o.lit=1;});}if(runtime.RP&&runtime.RP.type==="cantar"&&sp.id.startsWith(runtime.RP.key+":")){runtime.RP.set.add(sp.id);runtime.retoSet("cantar",runtime.RP.set.size);}}
         if(d<soundR)nearO.push(o);o.lit=Math.max(0,o.lit-dt*.8);const vis=sp.mob?R*1.6:R*1.2;if(d>vis&&o.lit<=0)continue;
         runtime.cx.globalAlpha=Math.min(1,Math.max(Math.max(0,1-d/vis)*.9,o.lit))*(runtime.worldOpacity?.(d,vis)??1);
-        if(runtime.drawNativeSpecies)runtime.drawNativeSpecies(sp,o,o.x+ox,o.y+oy,t,b,!!runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)));else if(runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)))runtime.drawBlob(sp,o,o.x+ox,o.y+oy,t,b);else runtime.drawSprite(sp.bits,o.x+ox,o.y+oy,sp.cell*(1+o.lit*.4+(sp.mob?b*.15:0)),o.lit>.1?"#fff":sp.col);
+        if(runtime.drawNativeSpecies)runtime.drawNativeSpecies(sp,o,o.x+ox,o.y+oy,runtime.mischiefTime?.(o,t)??t,frozen?0:b,!!runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)));else if(runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)))runtime.drawBlob(sp,o,o.x+ox,o.y+oy,t,b);else runtime.drawSprite(sp.bits,o.x+ox,o.y+oy,sp.cell*(1+o.lit*.4+(sp.mob?b*.15:0)),o.lit>.1?"#fff":sp.col);
         if(o.lit<.1&&!runtime.S.cat[sp.id])runtime.touchRing(o.x+ox,o.y+oy,d,R,b);}
       for(const k of c.walkers){
         const form=k.walkerForm,kd=paused?0:dt;moveWalker(k,form,{x:runtime.S.wx,y:runtime.S.wy},kd,t,runtime.wowFollowTarget?.(k));

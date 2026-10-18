@@ -1,5 +1,15 @@
 # Cambios recientes
 
+## Travesuras del universo y 120 logros nuevos
+
+Rama `feat/universe-mischief` desde main actualizado `9d92778`. Diez encuentros ocasionales: cristal ayudante, imitador torpe, lluvia ascendente, ladrón de sombras, público/procesión, escultura bailarina, carrera amistosa, paisaje contenido, copia de fragmentos y despedida encadenada. Movimiento/contacto sin botones nuevos; el cristal grande conserva la minería por pulsos existente. Esculturas y cristales objetivo son reales. La procesión puede orbitar o llegar a una escultura para celebrar; copia y despedida acompañan el viaje continuo.
+
+Cada lugar da tres chispas una sola vez, con reclamación y saldo guardados juntos, rollback y reintento acotado. Una escena y caché de 48 celdas; sin progreso por paseo automático, menús, laboratorio o previews. Pausa, textos opcionales y movimiento reducido conservados. Las escenas interrumpidas se reinician; las reclamaciones y logros persisten. Hasta 4096 lugares premiados; después se puede seguir jugando sin pagos nuevos.
+
+120 logros originales añadidos al catálogo anterior (370 registrados, incluido el retirado): 40 hitos de encuentros distintos, 30 actividades, 20 hallazgos, seis esculturas, 14 de variedad y diez secretos. «Abogado de las piedras», «Después de usted», «Festival sin permisos» y otros. Reconoce progreso anterior de actividades/hallazgos sin repetir sus pagos. Guardado de nuevos logros en lote con reversión ante error; sin avisos ni moneda adicional. Guía y catálogo actualizados. Alpha.49 con el sellado existente.
+
+Verificación: 174 suites Node completas; 240 soluciones de escenas, los diez secretos alcanzables y compatibilidad de partidas anteriores. Diez escenas naturales completadas por teclado/contacto en Chrome, minería real, vuelta a escultura y persistencia tras recarga; regresiones adicionales de procesión orbital y viaje continuo. Menús en 320/390/844/1280 px y offline con 240 módulos. Cuatro renders densos alternando 44,1/48 kHz, pico 0,876539 sin saturación. Auditoría, comandos y límites en [el informe](scripts/universe-mischief-validation.json). Adaptador externo Windows para python3. Sin certificar suites completas de navegador/audio, CI, despliegue, dispositivos físicos ni escucha física.
+
 ## Identidad musical, campanas y controles nuevos
 
 Rama `fix/music-identity-menu` desde main actualizado `4c5c237`. Eliminadas las llamadas automáticas fijas de campana/cristal de float, heart y ambient. Las voces metálicas ambientales tienen un límite compartido por región de una cada ocho compases; las pistas, gestos y celebraciones conservan sus notas. Traza opcional de instrumento/origen/tiempo para verificar las rutas. No se garantiza identificar un sonido subjetivo sin una grabación del usuario; se corrigieron las rutas reproducibles encontradas.

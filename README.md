@@ -2,7 +2,7 @@
 
 Un píxel blanco en un mundo negro: explorar, descubrir y hacer música al viajar. Proyecto de Jay · [Jugar](https://whitedot-inky.vercel.app).
 
-Versión en desarrollo: **2.3.0-alpha.48**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
+Versión en desarrollo: **2.3.0-alpha.49**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
 
 ## Jugar y avanzar
 
@@ -18,6 +18,8 @@ Versión en desarrollo: **2.3.0-alpha.48**. La versión publicada depende del ú
 - Treinta tipos de actividad aparecen en portales raros, con versiones por semilla. Se resuelven moviendo el cubo; la puerta permite salir. Cada lugar completado entrega 5 chispas una sola vez.
 - Ajustes permite ocultar los textos de la exploración; los menús y avisos de guardado siguen disponibles.
 - Después de los diez cristales puedes volver al Camino y seguir rompiendo sin sumar.
+- Diez travesuras ocasionales responden al movimiento del cubo: imitadores, lluvia ascendente, sombras, público y otras sorpresas. Dan 3 chispas una sola vez por lugar.
+- 120 logros nuevos conectan estas situaciones con actividades, hallazgos y esculturas, sin avisos adicionales que interrumpan.
 - Tarjetas, colecciones, logros secretos, distancia, títulos y una meta opcional acompañan el viaje. Los avisos breves no detienen el movimiento.
 
 El progreso se conserva en el navegador. Usa los respaldos del juego antes de cambiar de dispositivo u origen. La economía es local, sin intercambio ni validación remota.
