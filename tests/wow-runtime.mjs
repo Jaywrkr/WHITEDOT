@@ -44,3 +44,12 @@ assert(calls.some(([name,x,y,radius])=>name==='arc'&&x===42+ox&&y===oy&&radius>=
 assert(calls.filter(([name,,,w,h])=>name==='fillRect'&&w===1&&h===1).length===8,'cluster retains eight dust pixels');
 assert(calls.filter(([name,,,w,h])=>name==='fillRect'&&w===2&&h===2).length===5,'beam retains endpoints and three connection lights');
 console.log('PASS real eyes hook and all world effects with nonzero camera offsets');
+
+// The real Canvas hook animates presentation in both modes without editing the player.
+r.inWorld=()=>s.mode==='world';s.mode='camino';s.px=s.py=0;r.pulse=0;r.wowTick(.02);s.px=5;r.wowTick(.02);
+let before=structuredClone(s);calls.length=0;r.cubeVisualTransform(c,195,422);assert(calls.some(([name,angle])=>name==='rotate'&&Math.abs(angle)>.001));assert.deepEqual(s,before);
+for(let i=0;i<100;i++)r.wowTick(.02);r.pulse=.6;calls.length=0;r.cubeVisualTransform(c,195,422);assert(calls.some(([name,x,y])=>name==='scale'&&x>1.08&&y<.93));
+s.reducedMotion=true;r.wowTick(.02);calls.length=0;r.cubeVisualTransform(c,195,422);assert.equal(calls.length,0);
+s.reducedMotion=false;r.wowTick(.02,true);calls.length=0;r.cubeVisualTransform(c,195,422);assert.equal(calls.length,0);
+r.pulse=0;s.px+=500;r.wowTick(.02);calls.length=0;r.cubeVisualTransform(c,195,422);assert(!calls.some(([name,angle])=>name==='rotate'&&angle!==0),'teleports cannot leave a tilt');
+console.log('PASS actual cube hook: Camino movement, pulse compression, unchanged state, pause, reduced motion and teleport cleanup');
