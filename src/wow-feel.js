@@ -1,7 +1,7 @@
 import {createMotion,WOW_LIMITS,lookVector,greetingPose,formationOffset} from './wow-model.js';
 export function initialize(runtime){
  let greetings=new WeakMap();const formation=new WeakMap(),seenBeams=new WeakSet(),markedWaves=new WeakMap();let nextSlot=0;
- const motion=createMotion();let owner=null,layer=null,dust=[],seconds=0,nearby=[],pending=[],ripples=[],flashes=[],memory=[],marks=[],clusters=[],lastPosition=null;
+ const motion=createMotion(),cubeMotion=createMotion();let cubeMode=null,cubeLayer=null,cubeOwner=null,cubeLean=0,cubePaused=true;let owner=null,layer=null,dust=[],seconds=0,nearby=[],pending=[],ripples=[],flashes=[],memory=[],marks=[],clusters=[],lastPosition=null;
  const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
  function sources(){
   const surface=(runtime.S.layer||'superficie')==='superficie';
@@ -10,6 +10,11 @@ export function initialize(runtime){
  }
  const blocked=()=>!runtime.inWorld()||document.hidden||runtime.scanning||runtime.$?.('rareNotice')?.dataset.inspect==='true'||!!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function tick(dt,paused=false){
+  const mode=runtime.inWorld()?'world':runtime.S.mode,world=mode==='world',x=world?runtime.S.wx:runtime.S.px,y=world?runtime.S.wy:runtime.S.py;
+  if(cubeOwner!==runtime.S||cubeMode!==mode||cubeLayer!==runtime.S.layer){cubeOwner=runtime.S;cubeMode=mode;cubeLayer=runtime.S.layer;cubeMotion.reset();cubeLean=0;}
+  cubePaused=paused||document.hidden||runtime.scanning||runtime.noticeLane?.inspecting||runtime.$?.('rareNotice')?.dataset.inspect==='true'||!['world','camino'].includes(mode)||!!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+  const move=cubeMotion.step(x,y,dt,cubePaused||reduced()),target=move.moving?Math.cos(move.angle)*.055:0;
+  cubeLean=cubePaused||reduced()||move.angle===undefined?0:cubeLean+(target-cubeLean)*(1-Math.exp(-Math.max(0,Math.min(.05,dt||0))*18));
   runtime.cardFocusTick?.();runtime.favoriteReturnTick?.(dt,paused||blocked());
   if(owner!==runtime.S||layer!==runtime.S.layer){owner=runtime.S;layer=runtime.S.layer;motion.reset();greetings=new WeakMap();dust=[];pending=[];ripples=[];flashes=[];memory=[];marks=[];}
   const jumped=lastPosition&&Math.hypot(runtime.S.wx-lastPosition.x,runtime.S.wy-lastPosition.y)>40;
@@ -106,7 +111,8 @@ export function initialize(runtime){
   c.restore();
  }
  function cubeTransform(c,x,y){
-  const p=motion.pose(reduced()||blocked());if(p.x===1&&p.y===1)return;c.translate(x,y);c.rotate(p.angle);c.scale(p.x,p.y);c.rotate(-p.angle);c.translate(-x,-y);
+  if(reduced()||cubePaused)return;const p=cubeMotion.pose(),press=Math.max(0,Math.min(1,(runtime.pulse||0)/.6))*.09;
+  c.translate(x,y);c.rotate(cubeLean);c.rotate(p.angle);c.scale(p.x*(1+press),p.y/(1+press));c.rotate(-p.angle);c.translate(-x,-y);
  }
  Object.defineProperties(runtime,{wowTick:{get:()=>tick},drawWowWorld:{get:()=>draw},wowObjectTransform:{get:()=>objectTransform},wowEyes:{get:()=>eyes},wowFollowTarget:{get:()=>followTarget},wowSoundCue:{get:()=>noteCue},wowPulseHit:{get:()=>pulseHit},wowState:{get:()=>({dust:dust.length,seconds,pending:pending.length,ripples:ripples.length,flashes:flashes.length,constellations:memory.length,marks:marks.length,clusters:clusters.length})},cubeVisualTransform:{get:()=>cubeTransform}});
 }

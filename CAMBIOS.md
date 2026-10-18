@@ -1,5 +1,13 @@
 # Cambios recientes
 
+## Respuesta visual del cubo y cristales
+
+Rama `polish/cube-crystal-feedback` desde main `290cd2f`. Cubo con inclinación suavizada al caminar, deformación de arranque existente y compresión breve al pulsar, en Camino y Mundo. La superficie sigue la misma transformación que el cuerpo. Pausa, inspección, cambio de capa, teletransporte y movimiento reducido eliminan la pose añadida.
+
+Cristales con retroceso visual de menos de dos píxeles y esquirlas decorativas al impactar/romperse: hasta 48 respuestas, de 0,48 segundos, sin alterar fragmentos recogibles, posición real, golpes, cadenas, pagos, sonido ni guardado. La rotura emite 4–6 esquirlas según tamaño; no se añaden partículas móviles con movimiento reducido. Versión alpha.46 con el mecanismo existente.
+
+Regresiones Node sobre hooks Canvas reales, estado intacto al dibujar, caducidad, pausa y movimiento reducido; recorrido Chrome en móvil/escritorio con movimiento y pulsos reales, cristal natural de dos golpes y pago de tres chispas. Auditoría y suites afectadas registradas en `scripts/cube-crystal-feedback-validation.json`. Sin certificar CI, despliegue ni suites completas de navegador/audio; audio intacto.
+
 ## Integración del recorrido, menús y guía
 
 Rama `fix/unified-game-loop` desde main `97f0729`. El Camino mantiene su objetivo único de diez cristales; la meta opcional aparece en el Mundo, indica cuándo hay saldo para saltar y reconoce compras, conjuntos e hitos cumplidos. El panel de chispas explica cómo obtenerlas y respeta saldo y bloqueos del viaje. Los logros del Mundo no absorben distancia acumulada en el Camino o en pausa. Precios, premios, distribución, mapas, música y formatos de guardado conservados.

@@ -39,3 +39,11 @@ r=game();r.S.reducedMotion=true;r.S.wx=runner.x;r.S.wy=runner.y-10;r.crystalTick
 r=game({mode:'world',todayKey:'2026-10-16',wx:0,wy:0,sparks:19,pathCrystals:[]});const unlock={id:'unlock',x:0,y:0,size:1,value:1};r.crystalTransaction(unlock,'hit');r.crystalTransaction(unlock,'collect');assert.equal(messages.filter(m=>m==='Ya puedes saltar').length,1);r.crystalTransaction(unlock,'collect');assert.equal(messages.filter(m=>m==='Ya puedes saltar').length,1,'unlock notice never repeats');
 assert.deepEqual(moveEscape({x:0,y:0},{x:0,y:0},{x:0,y:-20},.05,3),{x:0,y:0});
 console.log('PASS real seeded runners/rare fragments, bounded pursuit and chains, individual/bonus payouts, partial reload, failed-save rollback, legacy depletion, reduced motion and finite drawing');
+
+// Cosmetic fracture debris is bounded and never becomes a collectible or saved state.
+r=game();const solid=crystalField(0,0,seedOf).find(o=>o.size>1&&!o.runner);assert(solid);r.S.wx=solid.x;r.S.wy=solid.y-90;r.crystalTick(.05);tap(r,solid);
+assert(r.crystalState.feedback>0);const wallet=structuredClone(r.S),effectCount=r.crystalState.feedback;r.drawCrystals();assert.deepEqual(r.S,wallet,'drawing cannot alter mining, coordinates or rewards');
+r.crystalTick(.05,true);assert.equal(r.crystalState.feedback,effectCount,'pauses freeze impact presentation');
+run(r,80);assert.equal(r.crystalState.feedback,0,'debris expires');
+r=game();r.S.reducedMotion=true;r.S.wx=solid.x;r.S.wy=solid.y-90;r.crystalTick(.05);tap(r,solid);assert.equal(r.crystalState.feedback,0,'no moving debris under reduced motion');
+console.log('PASS cosmetic impact/debris lifetime, pause, reduced motion and draw-only state conservation');
