@@ -1,93 +1,45 @@
-# Cuenta opcional y respaldo · desarrollo
+# Cuenta y progreso automático · alpha.58
 
-Estado: rama local conectada a Kubono Dev (`eghmydqxsicqmbmeprgq`), organización Kubono (`eebalwznymfdxaexvghc`), región us-east-1 y plan Free comprobados el 19 oct 2026. Aplicación sin publicar. Rama feature/account-recovery-link desde main 20ebdf4; cuentas previas integradas en main por Jay. Sin despliegue ni contratos; Supabase Free acordado para pruebas. CORESOLUTIONS y su proyecto permanecen intactos por decisión de Jay.
+## Funcionamiento vigente
 
-## Preparación pendiente
+- Cuenta obligatoria por correo/contraseña. Crear cuenta, confirmar el enlace del correo y entrar. Sin invitado, demo ni otros proveedores.
+- Sesión persistente en localStorage, sin guardar la contraseña. Se valida con Auth al abrir y se renueva antes de las peticiones. Una sesión previa permite continuar offline; sin sesión no se inicializa el mundo.
+- Guardado y comprobación automática cada cinco segundos con cambios, al volver a la pestaña y con intento adicional al salir. Sin botones de guardar/recuperar/respaldar en el flujo normal.
+- Se trae la copia remota cuando la local no avanzó; una copia vacía no provoca conflictos. Si ambas tienen avances diferentes, se conserva todo y se pide elegir. No se suman saldos ni se elige el máximo o la fecha más reciente.
+- Sin red o con suspensión prematura, el avance permanece local. No se garantiza envío antes de que iOS cierre el proceso. Reabrir permite reintentar.
+- Cerrar sesión vuelve a la entrada. Cambiar de usuario no mezcla partidas. Cada dispositivo requiere su propio primer acceso; los tokens no se comparten entre orígenes.
 
-1. Proyecto Free creado por Jay y acceso autorizado. Sin planes, add-ons ni branches de pago.
-2. Esquema y endurecimiento aplicados por MCP como `kubono_optional_cloud_saves` y `harden_cloud_save_privileges`. `supabase/setup.sql` representa el esquema consolidado; no volver a ejecutarlo en este proyecto. Se usó apply_migration para DDL conforme al contrato de la herramienta; no se inventó historial CLI.
-3. En `src/cloud-config.js`, indicar URL HTTPS exacta `https://REF.supabase.co` y clave **sb_publishable_...**. Es información pública. Jamás poner contraseñas de base, claves secretas ni service_role. Configuración vacía sigue admitida para modo local; esta rama usa únicamente la clave publicable del proyecto Dev. La misma API HTTPS usa Authorization/apikey, sin cookies de terceros, desde web y assets locales Android; verificar en dispositivo.
-4. Confirmación de correo activada y alta por enlace real comprobada. El panel exige SMTP propio para editar plantillas; con el correo predeterminado no se pudo añadir `{{ .Token }}`. No se contrató/configuró SMTP ni se desactivó la confirmación. Se usa el enlace predeterminado: confirmación por correo y recuperación mediante página local, sin exigir códigos personalizados.
-5. El correo predeterminado de Supabase está limitado a destinatarios autorizados y cuotas de desarrollo; comprobarlos. SMTP propio y dominio verificado antes de una beta pública. No se ha contratado correo. Solicitud real de recuperación aceptada con HTTP 200; cambio privado de clave pendiente de confirmación del usuario.
+## Proyecto y datos
 
-## Comportamiento
+Kubono Dev: `eghmydqxsicqmbmeprgq`, organización Kubono `eebalwznymfdxaexvghc`, región us-east-1, Free comprobado el 19 oct 2026. Sin publicación ni planes contratados. CORESOLUTIONS permanece intacto.
 
-Menú → Cuenta y respaldo. Sin cuenta: juego/guardado local intactos. Crear cuenta, confirmar mediante enlace o entrar; primera conexión por mundo exige elegir «Usar esta partida» o «Recuperar copia». Sin elección no hay subida automática. Confirmar una subida reemplaza la copia online de ese mundo usando su revisión conocida; una revisión concurrente detiene las subidas y no sobrescribe. No hay mezcla automática de partidas.
+`cloud-config.js` contiene únicamente URL HTTPS y clave publicable; nunca secretos/service_role. Vacío bloquea el acceso, no abre un modo invitado. Esquema consolidado en `supabase/setup.sql`; no reaplicarlo al proyecto existente. Migraciones aplicadas: `kubono_optional_cloud_saves` y `harden_cloud_save_privileges`.
 
-Después de elegir, el cliente recuerda revisión por usuario/mundo en este dispositivo y respalda como máximo cada minuto en primer plano; no usa un guardado remoto como reemplazo automático. Si la revisión coincide al volver a entrar, continúa el respaldo. Sin red conserva la partida local y reintenta de forma acotada. Cerrar/suspender antes del minuto puede dejar una copia remota anterior: «respaldar» manual permite cerrar con una copia reciente. No es sincronización continua ni promesa de cero pérdida si el dispositivo se pierde.
+Local: `kubono:user:USER_ID:CLAVE_MUNDO`. Remoto: la clave de mundo histórica con RLS por usuario. La migración copia sin borrar el original y registra un único propietario; si hay evidencia de otro propietario no asigna esa partida automáticamente.
 
-Auth se conserva solo durante la sesión de esa pestaña/WebView (sessionStorage, con fallback en memoria), nunca dentro de la partida/exportación. Las contraseñas no se persisten. El token se renueva antes de vencer, sin almacenar claves privilegiadas. No ofrece «recordarme» persistente al cerrar el proceso: revisar UX y almacenamiento seguro de cada plataforma antes de producción. Un origen con scripts comprometidos podría leer tokens del navegador; requiere revisión de seguridad final.
+La referencia canónica por usuario/mundo distingue cambios locales/remotos; los contadores de tiempo y resúmenes de sesión no generan divergencias. CAS impide sobrescribir una revisión nueva. Restaurar conserva `:before-restore`; elegir la local conserva primero la remota. Si no hay espacio, se cancela el reemplazo.
 
-Recuperar valida mundo/versión/esquema, verifica el guardado local y conserva `:before-restore`. Descargar no cambia la partida. Eliminar exige confirmación y volver a autenticar con clave; SQL exige una sesión reciente, revoca sesiones y elimina usuario/copias. La partida local se conserva. Sin salas ni llamadas a /api/rooms. El backend Python y módulo de duetos se conservan como históricos y no se inicializan desde main.
+Servidor: máximo 64 mundos por cuenta y 1 MiB por estado; JSON de objeto con worldIdentity. Trigger y RPC controlan revisiones/cuotas, incluso ante acceso directo por tabla. El backend Python y duetos son históricos, no parte del lanzamiento.
 
-## Permisos y cuotas
+Eliminar cuenta exige confirmación y reautenticación. La sesión permanece durante la comprobación para evitar una recarga prematura. El RPC requiere una sesión reciente y elimina sesiones, usuario y copias remotas. Los archivos locales anteriores se conservan según el aviso actual; su política definitiva de eliminación/retención debe cerrarse antes de vender.
 
-RLS filtra por auth.uid y excluye invitados anónimos. Foreign key a auth.users con cascade; ninguna clave secret en cliente. RPC con comparación atómica de revisión, máximo 64 mundos por usuario y 1 MiB por copia; el guardado local conserva su límite previo de 8 MiB. Guardados mayores siguen locales y deben mostrar error de copia online. Trigger también comprueba cuotas/revisión para escrituras directas por tabla. El borrado usa privilegios elevados solo para el propio auth.uid y sesión reciente; necesita validación/advisors en Supabase real antes de exponerlo.
+## Correo local
 
-No se prometen guardados para siempre con Free: política de retención, restauración operativa, abuso/capacidad y plan de producción siguen pendientes. Compra en tienda no equivale a cuenta ni a cross-buy. No existe migración automática de usuarios/passwords del backend Python anterior.
+Correo predeterminado de Supabase, limitado a destinatarios/cuotas de desarrollo. Sin SMTP contratado ni plantillas personalizadas. Alta y recuperación por enlace real comprobadas.
 
-## Verificación
+`python scripts/serve-recovery.py` sirve el callback local en `http://localhost:3000/`, Site URL predeterminada. Si fue cambiada, autorizar esa URL exacta en Auth → URL Configuration. Mantener el servidor mientras se abre el correo en ese computador. Confirmación muestra «Correo confirmado»; recuperación permite elegir clave. Se borra el fragmento antes de pedir datos, se valida Auth y no se persisten tokens del enlace. Nunca compartir contraseña ni enlace en el chat.
 
-`node tests/cloud-account.mjs`: adaptador REST y coordinador de copias con fixtures; no verifica base real. `python tests/cloud_account_smoke.py`: navegador real con Supabase HTTP interceptado. Nunca envía datos de usuario a Supabase real. `tests/duet_smoke.py` prueba exclusivamente el módulo histórico inyectado por su fixture; no habilita salas en el lanzamiento. Los contratos de interfaz/render se actualizan para el acceso opcional sin sondeo de /api/session.
+## Evidencia y límites
 
-Pendiente: carreras HTTP simultáneas, cuotas completas, sesión vencida/borrada, recuperación por enlace, eliminación real, actualización PWA y validación en Android/iOS/escritorio. El servicio real tiene aceptación parcial, no cierre de lanzamiento. Revisado changelog Supabase: retirada de cifrados TLS CBC antiguos prevista desde noviembre 2026; probar con sistemas/WebView actualizados.
+- PC e iPhone/Safari normal: Jay confirmó sesión tras cerrar/reabrir y mismo saldo automático en alpha.57. La comparación anterior entre contextos privados distintos no fue pérdida: en la pestaña del juego había 4 disponibles, 24 ganadas y 20 gastadas.
+- Android emulado: APK alpha.57 compilado en Actions 39334695709 (0481194), SHA-256 verificado, instalación separada que conserva la app anterior. Puerta de acceso real aprobada. Jay confirmó saldo igual; cierre forzado y apertura en frío conservaron sesión y 52 chispas, también consultadas en Supabase (revisión 28).
+- RLS y RPC real: aislamiento de dos usuarios, anonimato rechazado, CAS y borrado de usuario/sesión/copia desechables aprobados en transacciones revertidas. Nunca se borró la cuenta de Jay.
+- UI de eliminación: cancelación, reautenticación, RPC y retorno sin sesión aprobados con Auth/REST simulado; no equivale a eliminar una cuenta alojada a través de Auth HTTP.
+- Alpha.58 corrige la reautenticación de eliminación. Build 39335918044 y hashes aprobados, pero la actualización fue rechazada por firma debug distinta: alpha.57 validada continúa instalada con datos intactos. Ruta de firma/caché corregida; antes de tienda hace falta custodiar una clave permanente. No se desinstaló para forzar la actualización.
+- Lógica afectada, auditoría y recorridos enfocados aprobados. No se atribuyen audio completo, dispositivo Android físico, app iOS nativa, builds desktop ni publicación.
+- La copia de fixture `live-verification` quedó en Dev porque su limpieza fue cancelada y no se reintentó. No es la partida personal.
+- Últimos advisors tras endurecimiento: sin avisos de RLS/permisos; protección contra contraseñas filtradas desactivada, pendiente revisión sin activar un plan de pago.
 
-Resultado local de esta iteración: 8 suites Node afectadas y auditoría aprobadas; recorrido nuevo de cuenta en Chromium aprobado con HTTP simulado. No se ejecutó la suite completa ni renders de audio. Adaptación de entorno Windows: Node con adaptador externo para python3, Playwright existente en PYTHONPATH y licencias auditadas con bytes originales de Git sin cambios versionados.
+## Antes de vender
 
-Recorridos afectados adicionales: interfaz en cinco tamaños, regresión de ojos/render y duetos históricos aprobados. El servidor histórico registró una conexión abortada al cerrar el navegador en Windows; las aserciones del recorrido pasaron. No se modificó ese backend ajeno al lanzamiento.
-
-## Evidencia real · 19 oct 2026
-
-- Plan Free y proyecto ACTIVE_HEALTHY verificados por la conexión; CORESOLUTIONS intacto.
-- Alta real aceptada, correo confirmado, login HTTP 200 y logout 204. Contraseña aleatoria/tokens de prueba solo en memoria, sin escribirlos en archivos ni commits; la cuenta de prueba requiere establecer una clave propia por un flujo de recuperación antes de uso personal.
-- PostgreSQL real: dos usuarios efímeros dentro de una transacción revertida; aislamiento de lectura/escritura, rechazo anónimo, revisión conflictiva preservada y ausencia de TRUNCATE para authenticated. Fixtures de ese test no persistieron.
-- REST real: insertar copia, leerla y rechazar revisión obsoleta sin sobrescribir. Después subió una partida generada por Chromium: 102 campos, seed cloud-live-check, 43 chispas; lectura desde la base idéntica al original y validación de restauración con save-store.js aprobada. No es un recorrido UI completo autenticado contra Supabase: UI/recuperación se probaron antes con HTTP simulado.
-- La copia aislada `live-verification` quedó en Dev: su limpieza fue cancelada por la herramienta y no se reintentó. No es una partida personal ni modifica el mundo principal.
-- Correcciones reales: eliminar grants TRUNCATE/REFERENCES/TRIGGER heredados; revocar EXECUTE público del helper rls_auto_enable; mover borrado privilegiado a kubono_private con envoltorio público invoker. Advisors posteriores sin avisos de permisos/RLS; queda aviso `auth_leaked_password_protection` (protección contra contraseñas filtradas desactivada), a revisar antes de producción sin contratar nada ahora. [Detalle oficial](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection).
-- Hubo errores transitorios de la conexión MCP; luego se recuperó. No se ocultaron errores ni se amplió el acceso de CORESOLUTIONS.
-
-## Recuperación local gratuita
-
-Ejecutar `python scripts/serve-recovery.py` y mantenerlo abierto. Usa `http://localhost:3000/`, Site URL predeterminada de Supabase; si fue modificada, autorizar esa URL exacta en Authentication → URL Configuration. En el juego, escribe el correo autorizado y pulsa «Olvidé mi clave». Abre el último enlace recibido y elige una clave propia (no compartirla en el chat). Después vuelve al juego e inicia sesión.
-
-Sin editar plantillas ni contratar SMTP. Solo destinatarios autorizados y cuota gratuita de desarrollo; no reenviar repetidamente ante límites. El callback borra el fragmento, valida el acceso contra Auth y conserva el token solo en memoria, sin tocar la partida. Recargar requiere otro enlace. Falta el cierre público/móvil, sus callbacks y correo de producción.
-
-## Continuidad entre dispositivos · alpha.54
-
-Después de establecer una copia común (Usar esta partida o Recuperar copia), guardamos por usuario/mundo su revisión y representación canónica exacta. Al entrar/volver/reconectar y cada 15 segundos se compara local, referencia y remoto. Avance solo remoto: restauración validada con copia local anterior. Avance solo local: respaldo sujeto a CAS. Avances en ambos: pausa y elección explícita; sin sumar monedas, elegir el máximo ni resolver por reloj. Las copias anteriores sin referencia completa requieren una elección inicial, sin inferir que son descartables.
-
-El reloj de sesión, sus resúmenes y contadores de tiempo pasivo no se usan para declarar divergencia. El saldo, gastos, premios, posiciones, distancia y demás progreso sí. Una mutación local durante la lectura cancela la restauración. Reemplazar manualmente lo remoto preserva primero esa copia en el dispositivo; si no hay espacio, se cancela el reemplazo. La restauración conserva `:before-restore`.
-
-Respaldo cada minuto si cambió el estado, más intento al salir/ocultar. Cargas pequeñas usan keepalive; no garantiza entrega si iOS suspende o no hay conexión. En ese caso el avance local se conserva y se reintenta al volver. Para pasar inmediatamente de dispositivo, comprobar «Respaldo online guardado»; trabajar offline en ambos requiere elegir entre copias, no fusionarlas.
-
-Safari normal: usuario confirmó conservación de saldo al cerrar/reabrir. La discrepancia del diagnóstico correspondía a pestañas privadas distintas; en la pestaña del juego se confirmaron 4 disponibles, 24 ganadas y 20 gastadas. No se detectó pérdida de esas chispas. La nueva sincronización necesita una comprobación humana corta tras actualizar ambas páginas.
-
-## Flujo normal · alpha.55
-
-Entrar una vez con correo/clave; la sesión se conserva en localStorage por origen y se renueva automáticamente antes de las peticiones. No guardamos la contraseña. Una sesión antigua en sessionStorage se migra una vez. Cerrar sesión borra el acceso local y lo notifica a los otros clientes del mismo origen al comprobar su sesión; no borra la partida. Navegación privada/borrado de datos del navegador pueden eliminar la persistencia. Si el navegador bloquea almacenamiento, solo queda acceso en memoria.
-
-No hay elección inicial obligatoria: servidor sin copia permite subir la local automáticamente; dispositivo sin moneda ganada/gastada, desplazamiento, descubrimientos ni historial de progreso permite traer la online. Copias con avances distintos sin referencia común se consideran conflicto y requieren elegir. Con referencia común se mantiene el protocolo de alpha.54. Los controles de elección se ocultan durante el uso normal y el conflicto abre Cuenta y respaldo; descarga de respaldo sigue disponible.
-
-La persistencia sigue el patrón de cliente web descrito por [Supabase Auth](https://supabase.com/docs/reference/javascript/auth), sin añadir SDK ni métodos de acceso. La prueba automatizada usa Auth/REST simulado; falta comprobar la nueva versión una vez en Safari normal con el servicio real. No equivale a publicación ni aceptación de Android.
-
-## Uso final · alpha.56
-
-Menú → Cuenta: correo, contraseña y acceso persistente. Sin Guardar copia, descargar respaldo ni acciones iniciales de subida/recuperación en el flujo visible. Las elecciones de avance solo aparecen ante divergencia real. La conservación interna de copias anteriores sigue activa y no depende de un botón del jugador. Guardado/comprobación cada cinco segundos con cambios, más intento al ocultar; sin conexión se conserva localmente y se reintenta al volver. Una edición local durante una petición no causa aviso si el remoto sigue en la referencia común.
-
-Las herramientas internas de reparación conservan sus IDs por compatibilidad, pero no tienen entrada en el menú. El servicio remoto y la conectividad siguen siendo necesarios para continuar en otro dispositivo; no se promete envío si el sistema suspende antes de completarlo.
-
-## Acceso obligatorio · alpha.57
-
-El producto ya no permite invitado/demo. `account-entry.js` requiere registro confirmado/login antes de inicializar el mundo. Valida la sesión persistida contra Auth cuando hay red; solo una sesión anterior puede retomarse sin conexión. No se guarda contraseña. Logout, eliminación o cambio de identidad recargan en la entrada y detienen el frame anterior.
-
-Local: `kubono:user:USER_ID:CLAVE_MUNDO`. Remoto: misma clave de mundo anterior con RLS por user_id; no se cambia el esquema. Migración no destructiva: conservar original, registrar una única cuenta propietaria de la partida heredada, copiar solo si no existe una propia. Si ya hay evidencia de otro propietario, no asignar esa partida automáticamente.
-
-Cuenta/pago son independientes: esto no implementa compra, recibos ni desbloqueo entre tiendas. Los contenedores necesitan incorporar esta versión antes de su aceptación. Persistencia en Safari normal ya comprobada en versiones anteriores; la nueva entrada obligatoria requiere una comprobación humana breve, sin repetir toda la batería.
-
-Aceptación humana alpha.57 (19 oct): Jay confirmó que Safari normal conserva sesión y que PC/iPhone muestran las mismas chispas automáticamente. No repetir ese recorrido. Android sigue pendiente de instalar la compilación actualizada y comprobar acceso/saldo.
-
-Android alpha.57: compilación 0481194 y prueba real de puerta de acceso en emulador aprobadas. App instalada en paquete separado, sin sustituir datos previos. Falta entrada privada de Jay, saldo real y reapertura.
-
-Aceptación Android completada (emulador, alpha.57): Jay inició sesión y confirmó saldo igual al PC/iPhone. Se forzó cierre del proceso y apertura en frío sin volver a introducir credenciales; el juego volvió con 52 chispas visibles. No equivale a Android físico ni iOS nativo. Correo/callbacks de producción, privacidad/operación, compra de tiendas y cierre de eliminación de cuenta desde UI siguen separados de esta prueba.
-
-Alpha.58: eliminación desde UI verificada con Auth/REST simulado (cancelación, reautenticación, RPC y retorno a entrada sin sesión). Se corrigió una carrera: no borrar la sesión actual antes de recibir respuesta de reautenticación. RPC real ya validado aparte con usuario/sesión/copia desechables en transacción revertida. No se atribuye borrado HTTP real de una cuenta alojada.
+Correo de producción y dominio/callbacks HTTPS de web/apps; política de privacidad, retención/eliminación y restauración operativa; cuotas/capacidad y condiciones de Free; dispositivos/plataformas finales; compra/recibos y configuración de cada tienda. Cuenta no equivale a compra ni cross-buy. Ninguno autoriza contratar o publicar ahora.

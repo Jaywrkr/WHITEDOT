@@ -10,6 +10,8 @@ jobs:
   apk:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      KUBONO_ACCOUNT_KEYSTORE: ${{ runner.temp }}/kubono-account-debug.keystore
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,8 +29,14 @@ jobs:
           gradle-version: '8.13'
       - uses: actions/cache@v4
         with:
-          path: ~/.android/debug.keystore
-          key: kubono-account-preview-debug-v1
+          path: ${{ runner.temp }}/kubono-account-debug.keystore
+          key: kubono-account-preview-debug-v2
+      - name: Prepare explicit debug signing file
+        run: |
+          if [ ! -s "$KUBONO_ACCOUNT_KEYSTORE" ]; then
+            keytool -genkeypair -keystore "$KUBONO_ACCOUNT_KEYSTORE" -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+          fi
+          test -s "$KUBONO_ACCOUNT_KEYSTORE"
       - name: Build isolated account-test APKs
         env:
           ANDROID_BUILD_SHA: ${{ github.sha }}
@@ -39,6 +47,7 @@ jobs:
           cp android/app/build/outputs/apk/debug/app-debug.apk android-evidence/Kubono-accounts.apk
           cp android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk android-evidence/Kubono-accounts-test.apk
           sha256sum android-evidence/*.apk > android-evidence/SHA256SUMS.txt
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --print-certs android-evidence/Kubono-accounts.apk > android-evidence/signing-certificate.txt
       - uses: actions/upload-artifact@v4
         with:
           name: Kubono-account-preview

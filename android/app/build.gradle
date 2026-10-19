@@ -12,6 +12,9 @@ android {
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes { debug { applicationIdSuffix '.preview'; if (project.hasProperty('accountPreview')) applicationIdSuffix '.accounts' } }
+    if (project.hasProperty('accountPreview') && System.getenv('KUBONO_ACCOUNT_KEYSTORE')) {
+        signingConfigs.debug.storeFile = file(System.getenv('KUBONO_ACCOUNT_KEYSTORE'))
+    }
     sourceSets.main.assets.srcDir layout.buildDirectory.dir('generated/gameAssets')
     sourceSets.main.res.srcDir layout.buildDirectory.dir('generated/gameRes')
 }

@@ -89,9 +89,9 @@ Desarrollo/pruebas: US$0 de servicio. No se aprueba Pro ni US$30/mes: revisar cu
 | D18 | Web/PWA: decisión comercial, landing común con estados disponibles/próximamente y enlaces por plataforma; verificar recorrido existente sin convertirlo en otro proyecto. | S1–S6 | Ambos | Pendiente |
 | D19 | Consolas: registrar programas de acceso, requisitos y estimación de viabilidad; Jay decide alcance/presupuesto antes de cualquier port. | Evaluación S1; fecha de salida por definir | Ambos | Sin viabilidad confirmada |
 
-| D20 | Cuenta obligatoria Supabase Free: correo/clave, verificación y recuperación por enlace, cierre y eliminación. Proyecto Kubono Dev gratuito conectado. | S1–S4 | Codex + Jay cuentas | En curso; alta/enlace/login reales aprobados; recuperación por enlace local en pruebas |
-| D21 | Progreso automático por cuenta/mundo, sesión persistente, aislamiento y resolución excepcional de conflictos. | S2–S4 | Codex | En curso; copia completa real validada; falta cierre multiplataforma |
-| D22 | Validar en proyecto Free aislado RLS entre dos usuarios, correo real, recuperación/eliminación, cuotas y backups; luego navegador y contenedores reales. | Antes de aprobar lanzamiento | Ambos | En curso; RLS y guardado reales aprobados; recuperación real y dispositivos pendientes |
+| D20 | Cuenta obligatoria Supabase Free: correo/clave, verificación y recuperación por enlace, cierre y eliminación. Proyecto Kubono Dev gratuito conectado. | S1–S4 | Codex + Jay cuentas | Núcleo aprobado en PC/iPhone/Android emulado; correo/callbacks públicos pendientes |
+| D21 | Progreso automático por cuenta/mundo, sesión persistente, aislamiento y resolución excepcional de conflictos. | S2–S4 | Codex | Aprobado funcional: sesión/saldo automáticos PC, Safari iPhone y APK emulado; plataformas finales se cierran en D15–D16 |
+| D22 | Validar en proyecto Free aislado RLS entre dos usuarios, correo real, recuperación/eliminación, cuotas y backups; luego navegador y contenedores reales. | Antes de aprobar lanzamiento | Ambos | En curso; RLS, enlaces y continuidad reales aprobados; producción/plataformas finales pendientes |
 
 Las dimensiones y reglas finales se revisan al exportar, no se mantienen dos catálogos de requisitos. [Material de Google Play](https://support.google.com/googleplay/android-developer/answer/9866151).
 
@@ -172,3 +172,5 @@ Android de cuentas: build 39334695709 aprobado; APK instalado y puerta de acceso
 Aceptación Android completada (emulador, alpha.57): Jay inició sesión y confirmó saldo igual al PC/iPhone. Se forzó cierre del proceso y apertura en frío sin volver a introducir credenciales; el juego volvió con 52 chispas visibles. No equivale a Android físico ni iOS nativo. Correo/callbacks de producción, privacidad/operación, compra de tiendas y cierre de eliminación de cuenta desde UI siguen separados de esta prueba.
 
 Alpha.58 cierra la prueba UI de eliminación con una cuenta ficticia y corrige la reautenticación prematura; el borrado RPC real fue verificado antes de forma aislada. El saldo y reapertura reales de Android aprobados corresponden al APK alpha.57; la corrección alpha.58 deberá incorporarse al siguiente APK antes de tienda.
+
+Bloqueo de actualización APK (sin pérdida): alpha.58 compiló, pero la clave debug anterior no fue conservada por la ruta de caché. Android rechazó actualizar; queda alpha.57 funcional instalada, sin borrar datos. Se corrige archivo de firma explícito/caché y se registra la huella del certificado. Antes de tienda, clave permanente respaldada fuera de caché y prueba de actualización con esa firma.
