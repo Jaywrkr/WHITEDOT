@@ -2,7 +2,7 @@
 
 ## Plan compartido de lanzamiento · 19 de octubre de 2026
 
-`docs/PLAN_LANZAMIENTO.md` concentra decisiones de nombre, precio, relación web/app, cuentas, prueba cerrada, materiales, landing, comunicación, salida Android e iOS posterior. Calendario propuesto de seis semanas más margen de revisión; responsables, dependencias, condiciones de publicación y próxima acción. Fechas y previsiones no son compromisos ni autorizan gastos/publicación. Sin cambios de juego, versión o caché; solo documentación desde main `5a08f0e`.
+`docs/PLAN_LANZAMIENTO.md` concentra marca, precio, web, cuentas, materiales, landing y comunicación. Corregido según decisión de Jay: preparación conjunta de Android, iOS/iPadOS, web/PWA y Windows/macOS/Linux, con salida independiente al estar cada plataforma lista y aprobada. Incluye Steam, evaluación de consolas, dependencias y ventana orientativa de ocho semanas por reestimar con recursos reales. Sin cambios de juego, versión o caché; no autoriza ports, gastos ni publicación.
 
 ## Android instalable de prueba · 19 de octubre de 2026
 
