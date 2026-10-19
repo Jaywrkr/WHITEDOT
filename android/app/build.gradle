@@ -7,7 +7,7 @@ android {
         applicationId 'com.jaywrkr.whitedot'
         minSdk 26
         targetSdk 36
-        versionCode (project.findProperty('previewVersionCode') ?: '1').toInteger()
+        versionCode = (project.findProperty('previewVersionCode') ?: '1').toInteger()
         versionName gameVersion + '-android-preview'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
