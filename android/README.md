@@ -22,6 +22,10 @@ gradle -p android assembleDebug assembleDebugAndroidTest
 
 El APK queda en `android/app/build/outputs/apk/debug/app-debug.apk`. Gradle copia los assets a su directorio de compilación; no modifica los módulos originales ni añade dependencias npm al juego. La actualización/offline pertenece al APK, por lo que su copia no incluye el service worker web. El sellado de metadatos reutiliza `stamp-deploy.mjs` con revisión y fecha de compilación reales.
 
+## Resultado de esta vista previa
+
+[CI Android aprobado](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39277322334) sobre `7aeae6a`: APK firmado debug, Android 15 emulado y dos pruebas instrumentadas aprobadas. El artefacto descargado está en `outputs/android-preview/`, fuera del repositorio, con vídeo/capturas y SHA-256 verificado. Android muestra su aviso estándar de pantalla completa en el primer arranque; forma parte del sistema operativo. La reinstalación de prueba usa el mismo APK con `install -r`, no certifica migraciones futuras de formatos.
+
 ## Alcance de las pruebas
 
 Contrato de assets, compilación e instalación reales; arranque sin wifi/datos; gesto táctil y AudioContext; menú/Atrás; Home/regreso; rotación; reinstalación conservando saldo y compra. El APK que se entrega no expone `runtime`: la instrumentación de AudioContext vive únicamente en el APK separado de pruebas. Capturas y vídeo proceden del emulador, no de un navegador con dimensiones móviles.
