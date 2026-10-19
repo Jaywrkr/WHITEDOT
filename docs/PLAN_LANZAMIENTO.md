@@ -14,7 +14,7 @@ Actualizado: 19 de octubre de 2026. Estado: propuesta operativa para revisar con
 | Nombre | **Kubono**, elegido por Jay. Repositorio, web y APK conservan WHITEDOT hasta autorizar la implementación del cambio. | Decidido; sin renombrar producto todavía |
 | Dominio | **playkubono.com**, previsto por Jay; sin registro encontrado en RDAP en la consulta del 19 oct. Confirmar disponibilidad/precio al comprar. | Elegido; no comprado ni reservado |
 | Promesa | «Un cubo. Un universo que suena.» Explorar, romper cristales y descubrir rarezas musicales. Público inicial propuesto: jugadores de exploración relajada y curiosos de la música. | Hipótesis a probar |
-| Modelo | Propuesta pendiente de aprobación: **US$2,99 móvil / US$4,99 escritorio**, pago único, sin anuncios ni venta de chispas. Revisar precios locales al configurar tiendas. | Precios finales pendientes |
+| Modelo | Aprobado por Jay: **US$2,99 móvil / US$4,99 escritorio**, pago único, sin anuncios ni venta de chispas. Revisar precios locales al configurar tiendas. | Precios base aprobados; configurar equivalentes locales |
 | Web | Jay confirma que habrá **demo web**. Recomendación pendiente: zona acotada sin cronómetro; extensión y límites por definir. La web completa actual sigue intacta. | Demo decidida; alcance e implementación pendientes |
 | Identidad | Aprovechar negro, blanco, cubo e iconos existentes; preparar una versión legible en tamaño pequeño, no rediseñar todo. | Pendiente |
 | Cuentas | Jay no tiene Apple Developer Program confirmado; podría tener cuenta gratuita. Play/Steam y pagos sin confirmar. Para App Store/TestFlight se necesita membresía Apple. | Verificar estado antes de pagar |
@@ -102,9 +102,9 @@ Si pocos llegan a la ficha, mejorar distribución o primer clip. Si llegan y no 
 
 ## Precio y presupuesto
 
-Propuesta todavía sin aprobar: **US$2,99 móvil / US$4,99 escritorio**; **US$350 de reserva inicial**. Base publicada de registros: Play US$25 una vez + Apple US$99/año + Steam US$100 por juego = **US$224**, antes de impuestos/conversión. El margen no es una cotización completa: excluye hardware, publicidad, consumo Codex y posibles servicios/certificados adicionales. Aprovechar Mac/iPhone propios y Android prestado; sin compras autorizadas.
+Aprobado por Jay el 19 oct: **US$2,99 móvil / US$4,99 escritorio** y **US$350 de presupuesto inicial**. La aprobación del presupuesto no inicia compras ni suscripciones; en esta etapa solo se verifican cuentas y equipos. Base publicada de registros: Play US$25 una vez + Apple US$99/año + Steam US$100 por juego = **US$224**, antes de impuestos/conversión. El margen no es una cotización completa: excluye hardware, publicidad, consumo Codex y posibles servicios/certificados adicionales. Aprovechar Mac/iPhone propios y Android prestado; sin compras autorizadas.
 
-- Mantener US$2,99 como referencia inicial acordada para Android; decidir en S1 si se aplica también a iOS y escritorio. Comparar presentación y expectativas por canal antes de fijarlo; no hay precio PC aprobado. Revisar moneda/precio por país. No añadir suscripciones, anuncios o pagos por chispas.
+- Aplicar los precios base aprobados: US$2,99 en móvil y US$4,99 en escritorio. Revisar moneda/precio por país. No añadir suscripciones, anuncios o pagos por chispas.
 - Propuesta: promoción orgánica al principio. No autorizar gasto en anuncios en este plan. Si Jay decide una prueba pagada, fijar importe máximo y una métrica de compra antes de gastarlo.
 - Google Play: registro de US$25 una vez; cuenta, verificación y datos deben pertenecer a Jay/editor real. [Alta oficial](https://support.google.com/googleplay/android-developer/answer/6112435). Ecuador figura como ubicación admitida para desarrollador/comerciante en USD; confirmar el país real del perfil, no inferirlo de la zona horaria. [Ubicaciones](https://support.google.com/googleplay/android-developer/answer/9306917).
 - Las comisiones dependen de mercado/programa. Revisar elegibilidad e inscripción al nivel aplicable en Play; no tratar US$2,99 como ingreso neto. Impuestos, devoluciones y otros ajustes cambian lo recibido. [Tarifas](https://support.google.com/googleplay/android-developer/answer/112622).
@@ -130,7 +130,7 @@ Al empezar una sesión: leer «Próxima acción» y los IDs implicados; trabajar
 
 No añadir actividades, monedas, menús o sistemas nuevos para justificar el precio. No ejecutar todo el plan porque este documento exista. No crear otro backlog paralelo: mantener aquí tareas y decisiones, y enlazar los materiales finales. Los planes históricos no son autorización vigente.
 
-**Próxima acción:** cerrar precios, presupuesto, estado de cuentas y compatibilidad de equipos. Jay facilita modelo de Mac/macOS y modelo de iPhone; confirma cuentas Play/Steam y acceso Android. La demo está decidida, sus límites aún no. **Paquete común en espera por instrucción de Jay**: no producir identidad, fichas ni ports hasta resolver estos puntos. Sin compra de dominio ni cambio del producto.
+**Próxima acción:** comprobar estado de cuentas y compatibilidad de equipos; precios y presupuesto ya aprobados. Jay facilita modelo de Mac/macOS y modelo de iPhone; confirma cuentas Play/Steam y acceso Android. La demo está decidida, sus límites aún no. **Paquete común en espera por instrucción de Jay**: no producir identidad, fichas ni ports hasta resolver estos puntos. Sin compra de dominio ni cambio del producto.
 
 | Fecha | Decisión o evidencia | Consecuencia |
 |---|---|---|
@@ -138,5 +138,7 @@ No añadir actividades, monedas, menús o sistemas nuevos para justificar el pre
 | 19 oct 2026 | Jay decide preparación conjunta y salida de cada plataforma cuando esté lista/aprobada. | Sustituye Android primero/iOS después; recursos y fechas siguen por confirmar; sin autorización de publicación |
 
 | 19 oct 2026 | Jay elige Kubono y playkubono.com como dominio previsto, sin comprar; confirma demo, Mac e iPhone. | Documentar decisiones; precios y presupuesto pendientes; paquete común en espera |
+
+| 19 oct 2026 | Jay aprueba US$2,99 móvil, US$4,99 escritorio y US$350 de presupuesto inicial. | Verificar cuentas/equipos antes del paquete común; sin ejecutar pagos |
 
 Fuentes oficiales consultadas el 19 de octubre de 2026. Revalidar al efectuar cada trámite; las reglas de tiendas y plazos pueden cambiar.

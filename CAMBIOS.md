@@ -2,7 +2,7 @@
 
 ## Decisiones comerciales de Kubono · 19 de octubre de 2026
 
-Plan actualizado: nombre Kubono, dominio previsto playkubono.com sin compra y demo web confirmada. Registra alcance de búsquedas de marca, equipos disponibles, precios/presupuesto propuestos y decisiones pendientes. Paquete común en espera; sin renombrar producto, modificar juego ni contratar servicios.
+Plan actualizado: nombre Kubono, dominio previsto playkubono.com sin compra y demo web confirmada. Registra alcance de búsquedas de marca, equipos disponibles, precios aprobados de US$2,99 móvil / US$4,99 escritorio y presupuesto inicial aprobado de US$350. Verificación de cuentas y equipos pendiente. Paquete común en espera; sin renombrar producto, modificar juego ni contratar servicios.
 
 ## Plan compartido de lanzamiento · 19 de octubre de 2026
 
