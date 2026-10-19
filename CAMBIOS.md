@@ -1,3 +1,9 @@
+# Acceso persistente y sincronización automática · alpha.55
+
+- Sesión persistente entre pestañas/aperturas, renovación del token existente y cierre de sesión compartido. Migra una sesión anterior por pestaña sin guardar contraseñas.
+- Primer guardado automático si no hay copia online; recuperación automática en un dispositivo sin progreso. Si ambas copias tienen avances, muestra Cuenta y respaldo y exige elegir, preservando los respaldos.
+- Los controles de elección solo aparecen al resolver un conflicto; correo/clave siguen siendo el único método de acceso. Sin publicación ni servicios nuevos.
+
 # Continuidad de guardado entre dispositivos · alpha.54
 
 - Al entrar, volver a la pestaña o recuperar conexión se compara la partida con la última copia compartida. Si solo avanzó el otro dispositivo, se recupera automáticamente conservando el respaldo local anterior.

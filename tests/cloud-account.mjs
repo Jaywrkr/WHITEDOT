@@ -31,3 +31,17 @@ assert.match(schema,/revoke all on public\.kubono_saves from public, anon, authe
 assert.match(schema,/create function kubono_private\.kubono_delete_account\(\) returns void language plpgsql security definer/);
 assert.match(schema,/create function public\.kubono_delete_account\(\) returns void language sql security invoker/);
 assert.match(schema,/revoke all on function public\.rls_auto_enable\(\) from public,anon,authenticated/);
+
+// A new adapter/browser tab resumes the existing persistent token, without a password.
+const persistent=memory();const first=createCloudClient(config,{fetcher,storage:persistent,now:()=>now});online=true;responseUser='persistent';await first.login('fixture@example.test','private-fixture-password');
+const reopened=createCloudClient(config,{fetcher,storage:persistent,now:()=>now});assert.equal(reopened.user().id,'persistent');assert(!JSON.stringify([...persistent.m]).includes('private-fixture-password'));
+await first.logout();assert.equal(reopened.user(),null,'sign-out propagates to other tabs');
+console.log('PASS persistent login: reopen without password and shared-storage sign-out');
+
+// A refresh finishing after another tab signs out must not revive the session.
+await first.login('fixture@example.test','private-fixture-password');now+=120001;
+let finishRefresh;const pendingRefresh=new Promise(r=>finishRefresh=r);
+const lateClient=createCloudClient(config,{storage:persistent,now:()=>now,fetcher:async(url,options)=>{if(url.includes('grant_type=refresh_token'))await pendingRefresh;return fetcher(url,options);}});
+const lateRead=lateClient.read('world');await reopened.logout();finishRefresh();await assert.rejects(lateRead,/cambió/);assert.equal(lateClient.user(),null);
+await first.login('fixture@example.test','private-fixture-password');persistent.setItem('kubono:auth:'+config.url,'invalid JSON');assert.equal(first.user(),null,'corrupt persisted credentials must not remain authenticated');
+console.log('PASS persistent auth: late refresh cannot revive logout; corrupt credentials rejected');

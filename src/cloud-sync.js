@@ -33,7 +33,7 @@ export function createCloudSync({client,storage,now=()=>Date.now(),onStatus=()=>
   try{const copy=await client.read(currentScope);if(!valid(g))throw Error('La cuenta o partida cambió.');if(!copy?.state)throw Error('Todavía no hay copia online.');const applied=await restore(copy.state);if(!valid(g))throw Error('La cuenta o partida cambió.');revision=copy.revision;ready=true;last='';lastAttempt=now();remember(applied||copy.state);onStatus('Copia recuperada; conservamos el respaldo local anterior.');return copy;}finally{busy=false;}
  }
  // Read before writing on resume. A local change during the request cancels restore.
- async function reconcile(snapshot,restore){
+ async function reconcile(snapshot,restore,{empty=()=>false}={}){
   if(busy||!owner||owner!==client.user()?.id)return false;
   busy=true;const g=generation,currentScope=scope;
   try{
@@ -41,10 +41,10 @@ export function createCloudSync({client,storage,now=()=>Date.now(),onStatus=()=>
    const copy=await client.read(currentScope);if(!valid(g))return false;
    const after=cloudStateKey(snapshot());if(after!==before)return conflict();
    const remoteKey=copy?.state?cloudStateKey(copy.state):null;
-   if(!copy){ready=!!baseline&&revision===0;return ready;}
+   if(!copy){revision=0;ready=true;return true;}
    if(remoteKey===after){revision=copy.revision;ready=true;remember(copy.state);return true;}
    if(baseline&&copy.revision===baseRevision){ready=true;return true;}
-   if(baseline&&after===baseline){
+   if(baseline&&after===baseline||!baseline&&empty()){
     // Restore validates the world and preserves the actual local copy first.
     const applied=await restore(copy.state);if(!valid(g))return false;
     revision=copy.revision;ready=true;lastAttempt=now();remember(applied||copy.state);

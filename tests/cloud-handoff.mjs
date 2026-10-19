@@ -30,3 +30,10 @@ const normalized=device();await normalized.sync.inspect('world');await normalize
 await normalized.sync.reconcile(normalized.snapshot,()=>{throw Error('unchanged revision must not repeatedly restore');});assert(normalized.sync.ready);
 let invalid=true;await normalized.sync.reconcile(()=>{if(invalid)throw Error('local storage locked');return normalized.snapshot();},normalized.restore);invalid=false;
 await normalized.sync.reconcile(normalized.snapshot,normalized.restore);assert(!normalized.sync.busy,'a failed snapshot cannot lock future sync');
+
+// First account login uploads local progress automatically if the server is empty.
+remote=null;const initial=device();initial.state={sparks:7};await initial.sync.inspect('new');await initial.sync.reconcile(initial.snapshot,initial.restore);await initial.sync.push(initial.snapshot,{force:true});assert.equal(remote.state.sparks,7);
+// A pristine device can restore without prompting, but an existing wallet cannot.
+const fresh=device();await fresh.sync.inspect('new');await fresh.sync.reconcile(fresh.snapshot,fresh.restore,{empty:()=>true});assert.equal(fresh.state.sparks,7);assert(fresh.sync.ready);
+const guest=device();guest.state={sparks:3};await guest.sync.inspect('new');await guest.sync.reconcile(guest.snapshot,guest.restore,{empty:()=>false});assert.equal(guest.state.sparks,3);assert(!guest.sync.ready);
+console.log('PASS automatic first upload, pristine restore and protected guest progress');

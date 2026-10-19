@@ -61,3 +61,11 @@ El reloj de sesión, sus resúmenes y contadores de tiempo pasivo no se usan par
 Respaldo cada minuto si cambió el estado, más intento al salir/ocultar. Cargas pequeñas usan keepalive; no garantiza entrega si iOS suspende o no hay conexión. En ese caso el avance local se conserva y se reintenta al volver. Para pasar inmediatamente de dispositivo, comprobar «Respaldo online guardado»; trabajar offline en ambos requiere elegir entre copias, no fusionarlas.
 
 Safari normal: usuario confirmó conservación de saldo al cerrar/reabrir. La discrepancia del diagnóstico correspondía a pestañas privadas distintas; en la pestaña del juego se confirmaron 4 disponibles, 24 ganadas y 20 gastadas. No se detectó pérdida de esas chispas. La nueva sincronización necesita una comprobación humana corta tras actualizar ambas páginas.
+
+## Flujo normal · alpha.55
+
+Entrar una vez con correo/clave; la sesión se conserva en localStorage por origen y se renueva automáticamente antes de las peticiones. No guardamos la contraseña. Una sesión antigua en sessionStorage se migra una vez. Cerrar sesión borra el acceso local y lo notifica a los otros clientes del mismo origen al comprobar su sesión; no borra la partida. Navegación privada/borrado de datos del navegador pueden eliminar la persistencia. Si el navegador bloquea almacenamiento, solo queda acceso en memoria.
+
+No hay elección inicial obligatoria: servidor sin copia permite subir la local automáticamente; dispositivo sin moneda ganada/gastada, desplazamiento, descubrimientos ni historial de progreso permite traer la online. Copias con avances distintos sin referencia común se consideran conflicto y requieren elegir. Con referencia común se mantiene el protocolo de alpha.54. Los controles de elección se ocultan durante el uso normal y el conflicto abre Cuenta y respaldo; descarga de respaldo sigue disponible.
+
+La persistencia sigue el patrón de cliente web descrito por [Supabase Auth](https://supabase.com/docs/reference/javascript/auth), sin añadir SDK ni métodos de acceso. La prueba automatizada usa Auth/REST simulado; falta comprobar la nueva versión una vez en Safari normal con el servicio real. No equivale a publicación ni aceptación de Android.
