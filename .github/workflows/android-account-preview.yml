@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      KUBONO_ACCOUNT_KEYSTORE: ${{ runner.temp }}/kubono-account-debug.keystore
+      KUBONO_ACCOUNT_KEYSTORE: ${{ github.workspace }}/.kubono-account-debug.keystore
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,7 +29,7 @@ jobs:
           gradle-version: '8.13'
       - uses: actions/cache@v4
         with:
-          path: ${{ runner.temp }}/kubono-account-debug.keystore
+          path: ${{ github.workspace }}/.kubono-account-debug.keystore
           key: kubono-account-preview-debug-v2
       - name: Prepare explicit debug signing file
         run: |
