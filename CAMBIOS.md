@@ -2,7 +2,7 @@
 
 ## Tablero local y dirección musical · 19 de octubre de 2026
 
-Estilo visual de Kubono aprobado. Plan incorpora explícitamente electrónica como nicho para comunicación y clips, sin modificar el audio. Tablero local fuera del juego: 19 entregables, estados/notas persistentes en JSON, filtro y exportación/importación con copia anterior y control de revisiones. Sin nube, publicación ni compras.
+Estilo visual de Kubono aprobado; acento principal web/marca ajustado a violeta eléctrico #A37AFF, con dorado para progreso y pasteles secundarios. Paleta del juego intacta. Plan incorpora explícitamente electrónica como nicho para comunicación y clips, sin modificar el audio. Tablero local fuera del juego: 19 entregables, estados/notas persistentes en JSON, filtro y exportación/importación con copia anterior y control de revisiones. Sin nube, publicación ni compras.
 
 ## Decisiones comerciales de Kubono · 19 de octubre de 2026
 

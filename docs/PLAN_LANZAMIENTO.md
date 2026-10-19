@@ -16,7 +16,7 @@ Actualizado: 19 de octubre de 2026. Estado: propuesta operativa para revisar con
 | Promesa | «Un cubo. Un universo que suena.» Explorar, romper cristales y descubrir rarezas musicales. Público inicial propuesto: jugadores de exploración relajada y curiosos de la música. | Hipótesis a probar |
 | Modelo | Aprobado por Jay: **US$2,99 móvil / US$4,99 escritorio**, pago único, sin anuncios ni venta de chispas. Revisar precios locales al configurar tiendas. | Precios base aprobados; configurar equivalentes locales |
 | Web | Jay confirma que habrá **demo web**. Recomendación pendiente: zona acotada sin cronómetro; extensión y límites por definir. La web completa actual sigue intacta. | Demo decidida; alcance e implementación pendientes |
-| Identidad | Jay aprueba el estilo visual local: negro/blanco cálido, dorado para progreso, acentos menta/rosa; logo kubono con cubo, lectura simple y Geist Mono en datos. | Dirección visual aprobada; piezas finales pendientes |
+| Identidad | Jay aprueba el estilo visual local: negro/blanco cálido, violeta eléctrico #A37AFF para música/descubrimiento, dorado para progreso y menta/rosa secundarios; logo kubono con cubo, lectura simple y Geist Mono en datos. | Dirección visual aprobada; piezas finales pendientes |
 | Cuentas | Jay no tiene Apple Developer Program confirmado; podría tener cuenta gratuita. Play/Steam y pagos sin confirmar. Para App Store/TestFlight se necesita membresía Apple. | Verificar estado antes de pagar |
 | Recursos | Jay tiene Mac e iPhone y podría conseguir Android prestado. Faltan modelo/macOS para compatibilidad Xcode, confirmar acceso Android y prueba iPad si se anuncia soporte. | Disponibilidad declarada; compatibilidad pendiente |
 
