@@ -36,6 +36,7 @@ public class InstallSmokeTest {
     private void until(String predicate) throws Exception {
         long end = SystemClock.uptimeMillis() + 35000;
         while (SystemClock.uptimeMillis() < end) { if ("true".equals(js(predicate))) return;Thread.sleep(200); }
+        screenshot("android-failure.png");
         fail("Timed out: " + predicate + " errors=" + activity.scriptErrors);
     }
     private void screenshot(String name) throws Exception {
@@ -53,7 +54,7 @@ public class InstallSmokeTest {
                     Collections.singleton(MainActivity.ORIGIN));
             activity.web.reload();
         });
-        until("document.readyState==='complete'&&!!document.getElementById('hcGo')&&typeof window.__whitedotHost==='object'");
+        until("Array.isArray(window.__testAudio)&&document.readyState==='complete'&&!!document.getElementById('returnContinue')&&!!document.getElementById('hcGo')");
         js("document.getElementById('returnContinue').click();document.getElementById('hcGo').click()");
         Thread.sleep(700);
         int[] location = new int[2];instrumentation.runOnMainSync(() -> activity.web.getLocationOnScreen(location));
