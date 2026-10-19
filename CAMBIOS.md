@@ -1,7 +1,7 @@
 # Reautenticación segura al eliminar cuenta · alpha.58
 
 - Firma estable de vista previa guardada fuera del repositorio y en secreto de CI; sin regeneración silenciosa ni dependencia de caché. CI 39337750907 aprobado; huella del APK coincide con copia local. Prueba real aislada v1→v2 con install -r conserva guardado por cuenta (137 chispas y compra dust), comprobado también antes de actualizar. La primera fixture no había llegado a disco antes de terminar instrumentación; la prueba espera su escritura, sin alterar el juego.
-- App real alpha.57 intacta; APK y datos privados respaldados localmente con permisos restringidos para posible migración única desde su firma perdida. No se desinstaló ni restauró la app real.
+- Migración real del emulador autorizada y completada: APK estable alpha.58 instalado y 280 archivos privados restaurados idénticos al respaldo. Cuenta conectada sin reingresar clave, 52 chispas (72 ganadas/20 gastadas). Actualización posterior con install -r y reapertura en frío conservan sesión y saldo. Lanzador local actualizado; copia privada de rollback retenida.
 
 - APK alpha.58 compilado y verificado, pero Android rechazó la actualización por firma debug distinta; alpha.57 validada se conserva intacta. Se corrige la ruta explícita de firma/caché. Clave permanente de publicación sigue pendiente.
 - La sesión actual se conserva mientras Auth comprueba las credenciales; ya no se recarga prematuramente el juego durante la eliminación. Tras borrado confirmado se cierra el acceso y vuelve a la entrada.
