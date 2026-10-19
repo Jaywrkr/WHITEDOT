@@ -1,5 +1,9 @@
 # Cambios recientes
 
+## Tablero local y dirección musical · 19 de octubre de 2026
+
+Estilo visual de Kubono aprobado. Plan incorpora explícitamente electrónica como nicho para comunicación y clips, sin modificar el audio. Tablero local fuera del juego: 19 entregables, estados/notas persistentes en JSON, filtro y exportación/importación con copia anterior y control de revisiones. Sin nube, publicación ni compras.
+
 ## Decisiones comerciales de Kubono · 19 de octubre de 2026
 
 Plan actualizado: nombre Kubono, dominio previsto playkubono.com sin compra y demo web confirmada. Registra alcance de búsquedas de marca, equipos disponibles, precios aprobados de US$2,99 móvil / US$4,99 escritorio y presupuesto inicial aprobado de US$350. Verificación de cuentas y equipos pendiente. Paquete común en espera; sin renombrar producto, modificar juego ni contratar servicios.

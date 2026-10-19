@@ -16,7 +16,7 @@ Actualizado: 19 de octubre de 2026. Estado: propuesta operativa para revisar con
 | Promesa | «Un cubo. Un universo que suena.» Explorar, romper cristales y descubrir rarezas musicales. Público inicial propuesto: jugadores de exploración relajada y curiosos de la música. | Hipótesis a probar |
 | Modelo | Aprobado por Jay: **US$2,99 móvil / US$4,99 escritorio**, pago único, sin anuncios ni venta de chispas. Revisar precios locales al configurar tiendas. | Precios base aprobados; configurar equivalentes locales |
 | Web | Jay confirma que habrá **demo web**. Recomendación pendiente: zona acotada sin cronómetro; extensión y límites por definir. La web completa actual sigue intacta. | Demo decidida; alcance e implementación pendientes |
-| Identidad | Aprovechar negro, blanco, cubo e iconos existentes; preparar una versión legible en tamaño pequeño, no rediseñar todo. | Pendiente |
+| Identidad | Jay aprueba el estilo visual local: negro/blanco cálido, dorado para progreso, acentos menta/rosa; logo kubono con cubo, lectura simple y Geist Mono en datos. | Dirección visual aprobada; piezas finales pendientes |
 | Cuentas | Jay no tiene Apple Developer Program confirmado; podría tener cuenta gratuita. Play/Steam y pagos sin confirmar. Para App Store/TestFlight se necesita membresía Apple. | Verificar estado antes de pagar |
 | Recursos | Jay tiene Mac e iPhone y podría conseguir Android prestado. Faltan modelo/macOS para compatibilidad Xcode, confirmar acceso Android y prueba iPad si se anuncia soporte. | Disponibilidad declarada; compatibilidad pendiente |
 
@@ -72,7 +72,7 @@ Steam: preparar cuenta, página y build en paralelo; contempla un mínimo de dos
 | D09 | Tráiler de 20–30 s y seis clips verticales de 10–20 s con audio original del juego: cristal/fragmento, encuentro raro, música al moverse, actividad, personalización y sorpresa. Material real, sin promesas inventadas. | S2–S5 | Codex edita con capturas; Jay aprueba | Pendiente |
 | D10 | Landing de una página: vídeo corto, frase principal, tres motivos para jugar, precio/modelo, requisitos, preguntas frecuentes, soporte y privacidad. Antes de salir: enlace real a beta si existe; después: enlaces de cada plataforma disponible. Sin tienda propia ni otra app. | S2–S5 | Codex; Jay aprueba | Pendiente |
 | D11 | Press kit pequeño: icono, 4 capturas, tráiler, descripción, autor/contacto y enlaces. Una carpeta o ZIP; no hace falta un portal adicional. | S5 | Codex | Pendiente |
-| D12 | Lista revisada de 15–20 creadores pequeños/comunidades pertinentes y tres borradores de contacto personalizados. No comprar listas ni enviar mensajes sin instrucciones de Jay. | S3–S5 | Codex investiga; Jay selecciona/envía | Pendiente |
+| D12 | Lista revisada de 15–20 creadores pequeños/comunidades pertinentes, incluyendo electrónica, producción musical y exploración indie y tres borradores de contacto personalizados. No comprar listas ni enviar mensajes sin instrucciones de Jay. | S3–S5 | Codex investiga; Jay selecciona/envía | Pendiente |
 | D13 | Prueba cerrada completa y acceso a producción; evidencias y defectos pendientes registrados. No pedir reseñas positivas ni sustituir pruebas reales por intercambios de reseñas. | S2–S4 | Jay + testers | Pendiente |
 | D14 | Candidato final por plataforma, checks afectados, revisión, precio y enlaces comprobados; plan de retirada/hotfix y respaldo seguro de firma. Registrar evidencia por canal. | Desde S5 | Ambos | Pendiente |
 | D15 | iOS/iPadOS: recursos y cuenta desde S1, contenedor mínimo, firma, TestFlight, instalación/actualización, audio, suspensión, guardados y archivos; ficha y App Review. Reutilizar arte/textos y adaptar formatos. | S1–S8 | Jay + Codex | Pendiente; sin proyecto iOS |
@@ -85,7 +85,7 @@ Las dimensiones y reglas finales se revisan al exportar, no se mantienen dos cat
 
 ## Comunicación y venta: experimento inicial
 
-**Hipótesis comercial, no demanda demostrada:** vender el placer de descubrir sonidos y rarezas con el cubo. No vender «millones de funciones» ni compararlo como sustituto de Minecraft/No Man's Sky. El primer vídeo debe mostrar una acción y su respuesta en los primeros segundos.
+**Hipótesis comercial, no demanda demostrada:** presentar Kubono como exploración musical con una identidad de música electrónica: descubrir ritmos, texturas y rarezas con el cubo. Fans de electrónica y jugadores de exploración son dos públicos iniciales a validar. Mostrar música real del juego en clips; no prometer un DAW, licencias de artistas ni géneros aún no comprobados. No vender «millones de funciones» ni compararlo como sustituto de Minecraft/No Man's Sky. El primer vídeo debe mostrar una acción y su respuesta en los primeros segundos.
 
 Recorrido propuesto: clip real → landing clara → probar/entender el juego → ficha de la plataforma elegida → compra. Primero validar esta secuencia; no abrir cinco plataformas de contenido a la vez.
 
@@ -130,7 +130,7 @@ Al empezar una sesión: leer «Próxima acción» y los IDs implicados; trabajar
 
 No añadir actividades, monedas, menús o sistemas nuevos para justificar el precio. No ejecutar todo el plan porque este documento exista. No crear otro backlog paralelo: mantener aquí tareas y decisiones, y enlazar los materiales finales. Los planes históricos no son autorización vigente.
 
-**Próxima acción:** comprobar estado de cuentas y compatibilidad de equipos; precios y presupuesto ya aprobados. Jay facilita modelo de Mac/macOS y modelo de iPhone; confirma cuentas Play/Steam y acceso Android. La demo está decidida, sus límites aún no. **Paquete común en espera por instrucción de Jay**: no producir identidad, fichas ni ports hasta resolver estos puntos. Sin compra de dominio ni cambio del producto.
+**Próxima acción:** comprobar estado de cuentas y compatibilidad de equipos; precios y presupuesto ya aprobados. Jay facilita modelo de Mac/macOS y modelo de iPhone; confirma cuentas Play/Steam y acceso Android. La demo está decidida, sus límites aún no. **Dirección visual aprobada por Jay; tablero local funcional autorizado.** Las piezas comerciales finales, fichas y ports siguen esperando la revisión de cuentas/equipos. Sin compra de dominio ni cambio del producto.
 
 | Fecha | Decisión o evidencia | Consecuencia |
 |---|---|---|
@@ -141,4 +141,10 @@ No añadir actividades, monedas, menús o sistemas nuevos para justificar el pre
 
 | 19 oct 2026 | Jay aprueba US$2,99 móvil, US$4,99 escritorio y US$350 de presupuesto inicial. | Verificar cuentas/equipos antes del paquete común; sin ejecutar pagos |
 
+| 19 oct 2026 | Jay aprueba el estilo visual y pide tablero funcional local; destaca la música electrónica como nicho importante. | Incorporar electrónica en posicionamiento, clips y público; sin cambiar audio ni publicar |
+
 Fuentes oficiales consultadas el 19 de octubre de 2026. Revalidar al efectuar cada trámite; las reglas de tiendas y plazos pueden cambiar.
+
+## Tablero local de seguimiento
+
+La web local vive fuera del juego en `outputs/kubono-visual/` (raíz de esta tarea). El servidor escucha solo en 127.0.0.1:8768 y guarda estados/notas en `progress.json`; el catálogo de entregables parte de D01–D19. El MD conserva alcance y decisiones; el JSON conserva el seguimiento operativo. Leer ambos al retomar y reconciliar estados antes de informar avances. Se puede exportar/importar una copia JSON; no subir cuentas, credenciales ni datos de pago. No hay colaboración remota ni autenticación: es una herramienta local, no publicarla con este servidor.
