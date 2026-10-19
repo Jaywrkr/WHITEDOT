@@ -156,3 +156,7 @@ No añadir actividades, monedas, menús o sistemas nuevos para justificar el pre
 Fuentes oficiales consultadas el 19 de octubre de 2026. Revalidar al efectuar cada trámite; las reglas de tiendas y plazos pueden cambiar.
 
 Recuperación de desarrollo: enlace predeterminado + página local en localhost:3000, sin SMTP contratado. D22 permanece abierto hasta comprobar el cambio privado de clave y las plataformas.
+
+Cierre de continuidad alpha.54: referencia compartida y detección de conflictos entre dispositivos; recuperar automáticamente solo si la copia local sigue intacta. Safari normal conservó saldo en prueba humana anterior. Pendiente breve comprobación PC/iPhone con esta versión, además de Android y correo/callbacks públicos. No hay publicación ni nuevos servicios.
+
+Alpha.55 simplifica el acceso: sesión persistente con correo/clave, primera subida o recuperación automáticas, elección solo para conflictos. Sin nuevos proveedores. Pendiente comprobación humana corta en Safari normal y Android; sin servicios contratados ni publicación.

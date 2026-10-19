@@ -2,7 +2,7 @@
 
 Un píxel blanco en un mundo negro: explorar, descubrir y hacer música al viajar. Proyecto de Jay · [Jugar](https://whitedot-inky.vercel.app).
 
-Versión en desarrollo: **2.3.0-alpha.53**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
+Versión en desarrollo: **2.3.0-alpha.55**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
 
 ## Jugar y avanzar
 

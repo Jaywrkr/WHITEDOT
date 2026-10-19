@@ -51,3 +51,21 @@ Recorridos afectados adicionales: interfaz en cinco tamaños, regresión de ojos
 Ejecutar `python scripts/serve-recovery.py` y mantenerlo abierto. Usa `http://localhost:3000/`, Site URL predeterminada de Supabase; si fue modificada, autorizar esa URL exacta en Authentication → URL Configuration. En el juego, escribe el correo autorizado y pulsa «Olvidé mi clave». Abre el último enlace recibido y elige una clave propia (no compartirla en el chat). Después vuelve al juego e inicia sesión.
 
 Sin editar plantillas ni contratar SMTP. Solo destinatarios autorizados y cuota gratuita de desarrollo; no reenviar repetidamente ante límites. El callback borra el fragmento, valida el acceso contra Auth y conserva el token solo en memoria, sin tocar la partida. Recargar requiere otro enlace. Falta el cierre público/móvil, sus callbacks y correo de producción.
+
+## Continuidad entre dispositivos · alpha.54
+
+Después de establecer una copia común (Usar esta partida o Recuperar copia), guardamos por usuario/mundo su revisión y representación canónica exacta. Al entrar/volver/reconectar y cada 15 segundos se compara local, referencia y remoto. Avance solo remoto: restauración validada con copia local anterior. Avance solo local: respaldo sujeto a CAS. Avances en ambos: pausa y elección explícita; sin sumar monedas, elegir el máximo ni resolver por reloj. Las copias anteriores sin referencia completa requieren una elección inicial, sin inferir que son descartables.
+
+El reloj de sesión, sus resúmenes y contadores de tiempo pasivo no se usan para declarar divergencia. El saldo, gastos, premios, posiciones, distancia y demás progreso sí. Una mutación local durante la lectura cancela la restauración. Reemplazar manualmente lo remoto preserva primero esa copia en el dispositivo; si no hay espacio, se cancela el reemplazo. La restauración conserva `:before-restore`.
+
+Respaldo cada minuto si cambió el estado, más intento al salir/ocultar. Cargas pequeñas usan keepalive; no garantiza entrega si iOS suspende o no hay conexión. En ese caso el avance local se conserva y se reintenta al volver. Para pasar inmediatamente de dispositivo, comprobar «Respaldo online guardado»; trabajar offline en ambos requiere elegir entre copias, no fusionarlas.
+
+Safari normal: usuario confirmó conservación de saldo al cerrar/reabrir. La discrepancia del diagnóstico correspondía a pestañas privadas distintas; en la pestaña del juego se confirmaron 4 disponibles, 24 ganadas y 20 gastadas. No se detectó pérdida de esas chispas. La nueva sincronización necesita una comprobación humana corta tras actualizar ambas páginas.
+
+## Flujo normal · alpha.55
+
+Entrar una vez con correo/clave; la sesión se conserva en localStorage por origen y se renueva automáticamente antes de las peticiones. No guardamos la contraseña. Una sesión antigua en sessionStorage se migra una vez. Cerrar sesión borra el acceso local y lo notifica a los otros clientes del mismo origen al comprobar su sesión; no borra la partida. Navegación privada/borrado de datos del navegador pueden eliminar la persistencia. Si el navegador bloquea almacenamiento, solo queda acceso en memoria.
+
+No hay elección inicial obligatoria: servidor sin copia permite subir la local automáticamente; dispositivo sin moneda ganada/gastada, desplazamiento, descubrimientos ni historial de progreso permite traer la online. Copias con avances distintos sin referencia común se consideran conflicto y requieren elegir. Con referencia común se mantiene el protocolo de alpha.54. Los controles de elección se ocultan durante el uso normal y el conflicto abre Cuenta y respaldo; descarga de respaldo sigue disponible.
+
+La persistencia sigue el patrón de cliente web descrito por [Supabase Auth](https://supabase.com/docs/reference/javascript/auth), sin añadir SDK ni métodos de acceso. La prueba automatizada usa Auth/REST simulado; falta comprobar la nueva versión una vez en Safari normal con el servicio real. No equivale a publicación ni aceptación de Android.
