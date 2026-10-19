@@ -11,7 +11,7 @@ server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)))
 try:
  with sync_playwright() as p:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required']);page=b.new_page(viewport={'width':390,'height':844},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=garden-proof&layout=classic&generation=2&travel=1');page.wait_for_function('!!window.__testRuntime?.gardenState');page.evaluate('''()=>{const r=__testRuntime;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.S.sound=false;r.collectRareCard('fossil',{id:'garden:found',x:r.S.wx,y:r.S.wy},{forced:true,context:{role:'perc',instrument:'handslap'}});r.openJournal('rares');}''')
   page.locator('[data-garden-add]').first.click();assert page.evaluate('__testRuntime.gardenState.cards.length')==1;assert page.evaluate('__testRuntime.rareCards.length')==1
   page.locator('#journalClose').click();page.evaluate('__testRuntime.rareCardTick(0)');

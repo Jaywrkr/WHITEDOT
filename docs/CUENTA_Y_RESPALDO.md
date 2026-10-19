@@ -75,3 +75,11 @@ La persistencia sigue el patrón de cliente web descrito por [Supabase Auth](htt
 Menú → Cuenta: correo, contraseña y acceso persistente. Sin Guardar copia, descargar respaldo ni acciones iniciales de subida/recuperación en el flujo visible. Las elecciones de avance solo aparecen ante divergencia real. La conservación interna de copias anteriores sigue activa y no depende de un botón del jugador. Guardado/comprobación cada cinco segundos con cambios, más intento al ocultar; sin conexión se conserva localmente y se reintenta al volver. Una edición local durante una petición no causa aviso si el remoto sigue en la referencia común.
 
 Las herramientas internas de reparación conservan sus IDs por compatibilidad, pero no tienen entrada en el menú. El servicio remoto y la conectividad siguen siendo necesarios para continuar en otro dispositivo; no se promete envío si el sistema suspende antes de completarlo.
+
+## Acceso obligatorio · alpha.57
+
+El producto ya no permite invitado/demo. `account-entry.js` requiere registro confirmado/login antes de inicializar el mundo. Valida la sesión persistida contra Auth cuando hay red; solo una sesión anterior puede retomarse sin conexión. No se guarda contraseña. Logout, eliminación o cambio de identidad recargan en la entrada y detienen el frame anterior.
+
+Local: `kubono:user:USER_ID:CLAVE_MUNDO`. Remoto: misma clave de mundo anterior con RLS por user_id; no se cambia el esquema. Migración no destructiva: conservar original, registrar una única cuenta propietaria de la partida heredada, copiar solo si no existe una propia. Si ya hay evidencia de otro propietario, no asignar esa partida automáticamente.
+
+Cuenta/pago son independientes: esto no implementa compra, recibos ni desbloqueo entre tiendas. Los contenedores necesitan incorporar esta versión antes de su aceptación. Persistencia en Safari normal ya comprobada en versiones anteriores; la nueva entrada obligatoria requiere una comprobación humana breve, sin repetir toda la batería.

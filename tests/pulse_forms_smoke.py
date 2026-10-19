@@ -13,7 +13,7 @@ try:
  with sync_playwright() as p:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox']);page=b.new_page(has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.add_init_script("localStorage.setItem('pixel-blanco-v4:preview-wide:v2:pulses',JSON.stringify({sound:false}))")
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   for width,height in [(390,844),(844,390),(1280,800)]:
    page.set_viewport_size({'width':width,'height':height});page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=pulses&layout=wide&generation=2');page.wait_for_function('!!window.__r?.cubeSettings')
    page.evaluate('''async()=>{const r=__r,{DISCOVERY_ELEMENTS}=await import('/src/element-book-model.js');r.S.sound=false;r.S.elementBook={version:1,found:Object.fromEntries(DISCOVERY_ELEMENTS.map(e=>[e.id,{day:'2026-10-16'}]))};document.querySelectorAll('.modal').forEach(m=>m.hidden=true);document.getElementById('bCube').click();}''')

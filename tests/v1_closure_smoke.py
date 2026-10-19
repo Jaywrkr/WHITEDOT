@@ -13,7 +13,7 @@ try:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
   context=b.new_context(viewport={'width':390,'height':844},has_touch=True);page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   context.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
-  context.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  context.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   url=f'http://127.0.0.1:{server.server_port}/?lab=1&testSeed=closure&generation=2&layout=wide'
   page.goto(url);page.wait_for_function('__testRuntime?.labMode');page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true)')
   page.evaluate('()=>{const r=__testRuntime;r.givePower("cometa");r.givePower("campo");r.startAutopilot("wander");r.loopButton();r.quietState.stage=6;r.S.softMusic=true;r.S.autoPins=true;r.jamUI();r.S.relaxedCreate=true;r.creativeModeUI();r.styleUI();}')

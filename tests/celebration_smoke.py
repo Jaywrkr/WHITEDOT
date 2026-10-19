@@ -14,7 +14,7 @@ try:
   for width,height in [(390,844),(844,390)]:
    page=browser.new_page(viewport={'width':width,'height':height},has_touch=True,accept_downloads=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
    page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=boxes-v2&layout=classic&generation=2');page.wait_for_function('__testRuntime?.celebrationState')
    page.evaluate('()=>{const r=__testRuntime;document.querySelectorAll(".modal").forEach(m=>m.hidden=true);r.S.sound=false;r.S.relaxedCreate=true;r.spawnBox(r.S.wx,r.S.wy,"cometa");}')
    page.wait_for_function('__testRuntime.hasPower("cometa")');page.wait_for_function('!document.getElementById("celebration").hidden&&document.getElementById("celebrationName").textContent==="Cometa"')

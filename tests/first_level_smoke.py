@@ -14,7 +14,7 @@ try:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   for width,height in [(320,740),(390,844),(844,390)]:
    page=b.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('window.__testRuntime?.firstJourneyState')
    page.locator('#returnContinue').click();page.locator('#hcGo').click();page.wait_for_function('!document.getElementById("firstJourney").hidden')
    assert page.locator('#firstJourney').get_attribute('data-step')=='move'
@@ -56,7 +56,7 @@ try:
    assert page.evaluate('JSON.parse(localStorage.getItem("pixel-blanco-v4")).favorites.items[0].name')=='Mi primera voz'
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
    assert not errors,errors;print('PASS native first light, source contact, pulse, saved place, quiet replay/skip and reload at '+str(width),flush=True);page.close()
-  visitor=b.new_page(viewport={'width':390,'height':844});visitor.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  visitor=b.new_page(viewport={'width':390,'height':844});visitor.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   visitor.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=new-visitor&layout=classic&generation=2&travel=1');visitor.wait_for_function('window.__testRuntime?.firstJourneyState.next==="voice"');visitor.locator('#firstJourney').wait_for(state='visible');assert visitor.locator('#firstJourney').is_visible();visitor.close();print('PASS a first shared-world visitor receives brief guidance',flush=True)
   b.close()
 finally:server.shutdown()

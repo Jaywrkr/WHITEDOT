@@ -13,7 +13,7 @@ try:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   for width,height in [(320,568),(390,844),(844,390)]:
    page=b.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[];page.on('pageerror',lambda e:(errors.append(str(e)),print('PAGE ERROR '+str(e),flush=True)))
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__testRuntime?.openJournal');page.evaluate('()=>{document.getElementById("returnContinue").click();document.querySelectorAll(".modal").forEach(m=>m.hidden=true);window.__testRuntime.openJournal("today");}')
    assert page.locator('[data-journal-tab]').all_text_contents()==['Hoy','Colección','Lugares','Música','Logros']
    page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('cubo');assert page.locator('.album-piece').count()==50

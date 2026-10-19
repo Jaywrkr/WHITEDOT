@@ -13,7 +13,7 @@ try:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   for width,height in [(390,844),(844,390)]:
    page=b.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=path-clarity&layout=classic&generation=2&travel=1');page.wait_for_function('!!window.__testRuntime?.givePower');page.evaluate('''()=>{const r=__testRuntime;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);window.__pathNotes=[];r.foregroundNoteCue=n=>__pathNotes.push(n);r.givePower('pincel');}''')
    page.mouse.move(width/2,height/2);page.mouse.down();page.mouse.move(width/2+100,height/2,steps=6);page.wait_for_timeout(1000);page.mouse.up();page.wait_for_function('__testRuntime.ac?.state==="running"');page.wait_for_function('__pathNotes.some(n=>n.source?.startsWith("power:pincel:"))',timeout=15000)
    assert page.evaluate('__testRuntime.accompanimentStage().until')>0;assert page.evaluate('__testRuntime.S.autoPins') is False;assert page.evaluate('()=>{__testRuntime.save();return __testRuntime.S.boxPowers.marks.length;}')>0

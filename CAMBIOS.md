@@ -1,3 +1,12 @@
+# Cuenta obligatoria y partidas separadas · alpha.57
+
+- El mundo solo se inicializa después de acceder o retomar una cuenta previamente autenticada. Sin invitado ni demo; registro, confirmación y recuperación de clave disponibles en la entrada.
+- Sesión persistente, revalidación online y continuación offline de una sesión anterior. Cerrar sesión o cambiar de usuario vuelve a la entrada; otra pestaña que cierre sesión bloquea también el juego.
+- Partidas locales separadas por cuenta y mundo; el ámbito remoto existente no cambia. La partida antigua se copia una vez al propietario autorizado y nunca se borra.
+- La página local de enlace distingue confirmación de correo y recuperación, validando ambos sin persistir tokens.
+- Validación: 87 suites Node afectadas, auditoría, cuenta obligatoria con dos contextos, un recorrido de juego, shell offline bloqueado sin cuenta y enlaces locales. Auth/REST simulados en la aceptación; no se repitió audio ni navegador completos.
+- Sin verificación de compra de tiendas todavía, publicación ni contratos nuevos. Los fixtures de componentes aíslan explícitamente la entrada; la aceptación de cuentas usa la entrada real con Auth/REST simulado.
+
 # Cuenta y progreso automáticos · alpha.56
 
 - Menú muestra Cuenta; se retiran Guardar copia y descarga de respaldo online del flujo visible. No hay acciones manuales para guardar ni recuperar durante el juego normal.

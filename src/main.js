@@ -1,3 +1,4 @@
+import {requireAccount} from './account-entry.js';
 import {initialize as universeMischief} from './universe-mischief.js';
 import {initialize as universeActivities} from './universe-activities.js';
 import {initialize as universeTexts} from './universe-texts.js';
@@ -116,7 +117,9 @@ import {initialize as wowFeel} from './wow-feel.js';
 import { initialize as atlas } from './atlas.js';
 
 // Initialize once, in the same order as the original game. Never expose runtime on window.
+const accountClient = await requireAccount();
 const runtime = Object.create(null);
+Object.defineProperties(runtime,{accountClient:{value:accountClient},accountUserId:{value:accountClient?.user()?.id||null}});
 Object.defineProperty(runtime,'unifiedMusic',{value:true});
 data(runtime);
 progress(runtime);
@@ -203,5 +206,5 @@ if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
 returnEntrance(runtime);
 // Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.
 setTimeout(()=>{try{runtime.regionOfPos(5*runtime.REG*runtime.WCH,0);}catch(e){}},1200);
-setInterval(()=>{runtime.checkDay();if(!runtime.inWorld())runtime.hud();runtime.S.collected=[...runtime.collected];runtime.save();},2000);
+setInterval(()=>{if(runtime.accountClient&&runtime.accountClient.user()?.id!==runtime.accountUserId)return;runtime.checkDay();if(!runtime.inWorld())runtime.hud();runtime.S.collected=[...runtime.collected];runtime.save();},2000);
 requestAnimationFrame(runtime.frame);

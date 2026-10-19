@@ -28,6 +28,7 @@ try:
   assert page.evaluate('localStorage.length+sessionStorage.length')==0
   assert page.locator('body').evaluate('e=>e.scrollWidth<=innerWidth')
   page.reload();page.wait_for_function("document.getElementById('status').textContent.includes('vencido')");assert page.locator('form').is_hidden();assert len(calls)==3
+  page.goto('about:blank');page.goto(url+'#type=signup&access_token=fixture-confirmed');page.wait_for_function("document.getElementById('status').textContent.includes('Vuelve a Kubono')");assert page.locator('form').is_hidden();assert page.evaluate('location.hash')=='';assert [method for method,_ in calls]==['GET','PUT','POST','GET'];assert page.evaluate('localStorage.length+sessionStorage.length')==0
   browser.close()
  print('PASS recovery browser: cleared URL before Auth, invalid link, mismatch, password update, no storage, reload, mobile fit')
 finally:server.shutdown();server.server_close()

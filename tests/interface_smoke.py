@@ -17,7 +17,7 @@ try:
    page=browser.new_page(viewport={'width':width,'height':height},has_touch=True)
    page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
    page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=bosque-01&layout=vasto&generation=2')
    page.wait_for_function('__testRuntime?.inWorld()')
    page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)")
@@ -42,7 +42,9 @@ try:
    for control,modal in [('bMusicSettings','mMusic'),('bCube','mCube'),('bFavorites','mFavorites'),('bAch','mJournal'),('bMap','mMap'),('bSettings','mSettings'),('bSaveTools','mSaveTools')]:
     page.locator('#bMenu').click()
     if control in ['bSky','bSession']:page.locator('#bAch').click()
-    page.locator('#'+control).click()
+    if control=='bSaveTools':
+     assert page.locator('#bSaveTools').is_hidden();page.evaluate('(window.__r||window.__testRuntime).openSaveTools()')
+    else:page.locator('#'+control).click()
     page.wait_for_function('(id)=>!document.getElementById(id).hidden',arg=modal)
     metrics=page.locator('#'+modal+' .sheet').evaluate('e=>({x:e.getBoundingClientRect().x,right:e.getBoundingClientRect().right,y:e.getBoundingClientRect().y,bottom:e.getBoundingClientRect().bottom,sw:e.scrollWidth,cw:e.clientWidth})')
     assert metrics['x']>=0 and metrics['right']<=width+1 and metrics['y']>=0 and metrics['bottom']<=height+1, (modal,metrics)

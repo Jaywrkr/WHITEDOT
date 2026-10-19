@@ -14,7 +14,7 @@ try:
   browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   page=browser.new_page(viewport={'width':390,'height':844},has_touch=True);errors=[]
   page.on('pageerror',lambda e:errors.append(str(e)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=collection-focus&layout=wide&generation=2')
   page.wait_for_function('__testRuntime?.inWorld()')
   page.evaluate('''()=>{const r=__testRuntime;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.S.rareBook={version:1,items:[]};for(let i=0;i<3;i++)r.collectRareCard('fossil',{id:'focus:'+i,x:r.S.wx+300+i,y:r.S.wy},{context:{role:'perc',instrument:'woodblock'}});r.openJournal('rares');}''')

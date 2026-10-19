@@ -45,3 +45,9 @@ const lateClient=createCloudClient(config,{storage:persistent,now:()=>now,fetche
 const lateRead=lateClient.read('world');await reopened.logout();finishRefresh();await assert.rejects(lateRead,/cambió/);assert.equal(lateClient.user(),null);
 await first.login('fixture@example.test','private-fixture-password');persistent.setItem('kubono:auth:'+config.url,'invalid JSON');assert.equal(first.user(),null,'corrupt persisted credentials must not remain authenticated');
 console.log('PASS persistent auth: late refresh cannot revive logout; corrupt credentials rejected');
+
+// Persisted access must be accepted by Auth; rejection clears it, network failure preserves offline access.
+const cachedAuth=()=>{const s=memory();s.setItem('kubono:auth:'+config.url,JSON.stringify({access_token:'cached',refresh_token:'cached-refresh',expires_at:now+3600000,user:{id:'one'}}));return s;};
+const revoked=createCloudClient(config,{storage:cachedAuth(),now:()=>now,fetcher:async()=>new Response('{}',{status:401})});await assert.rejects(revoked.identity());assert.equal(revoked.user(),null);
+const unavailable=createCloudClient(config,{storage:cachedAuth(),now:()=>now,fetcher:async()=>{throw Error('offline');}});await assert.rejects(unavailable.identity(),/Sin conexión/);assert.equal(unavailable.user().id,'one');
+console.log('PASS mandatory admission: rejected server identity clears access; cached offline identity retained');

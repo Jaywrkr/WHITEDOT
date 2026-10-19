@@ -15,7 +15,7 @@ try:
   for width,height in [(390,844),(1280,800)]:
    page=browser.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[]
    page.on('pageerror',lambda e:errors.append(str(e)))
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.sparkTick')
    page.locator('#returnContinue').click();page.locator('#hcGo').click()
    page.evaluate('''async()=>{const r=__r;r.S.sound=false;r.S.firstJourney.skipped=true;r.S.help.mundo=true;r.S.pathCrystals=Array.from({length:10},(_,i)=>'play:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();r.noticeLane.quietRoutine();const {crystalField}=await import('/src/crystal-sparks.js');let runner=null,rare=null,chain=null;for(let i=0;i<500&&!(runner&&rare&&chain);i++){const field=crystalField(i*1200,0,r.seedOf);runner||=field.find(p=>p.runner&&p.size===2&&field.every(o=>o.id===p.id||Math.hypot(o.x-p.x,o.y-p.y)>400));rare||=field.find(p=>p.rare&&!p.runner&&p.size===3&&field.every(o=>o.id===p.id||Math.hypot(o.x-p.x,o.y-p.y)>245));if(!chain)for(const a of field.filter(p=>p.size===1)){const b=field.find(p=>p.id!==a.id&&Math.hypot(p.x-a.x,p.y-a.y)<230);if(b){chain={root:a,neighbor:b};break;}}}if(!(runner&&rare&&chain))throw Error('Missing natural variant fixtures');window.fixtures={runner,rare,chain};r.S.wx=runner.x;r.S.wy=runner.y-40;}''')

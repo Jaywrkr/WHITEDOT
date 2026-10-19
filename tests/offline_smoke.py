@@ -17,7 +17,7 @@ with sync_playwright() as p:
  modules=sorted('./src/'+f.name for f in (ROOT/'src').glob('*.js'))
  missing=page.evaluate('(paths)=>Promise.all(paths.map(async p=>({p,ok:!!(await caches.match(p))})))',modules)
  assert all(m['ok'] for m in missing),[m for m in missing if not m['ok']]
- context.set_offline(True);page.reload(wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden')
+ context.set_offline(True);page.reload(wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mConnection").hidden');assert page.evaluate('document.body.dataset.accountLocked')=='true'
  assert page.evaluate("fetch('./src/encounter-families.js').then(r=>r.text()).then(t=>t.includes('FAMILIES'))")
  assert page.evaluate("fetch('./missing-module.js').then(r=>!r.ok).catch(()=>true)"),'missing JS must fail instead of receiving HTML'
  assert not errors,errors

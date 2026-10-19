@@ -14,7 +14,7 @@ try:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH'),args=['--no-sandbox'])
   page=browser.new_page(has_touch=True);page.set_default_timeout(10000);errors=[]
   page.on('pageerror',lambda e:errors.append(str(e)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.set_viewport_size({'width':390,'height':844})
   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.firstJourneyState')
   assert page.locator('#returnEntrance .return-signature').inner_text()=='.simple'
@@ -33,7 +33,7 @@ try:
    page.wait_for_function('!!window.__r?.openSparks')
    page.evaluate("()=>{__r.S.sound=false;__r.S.firstJourney.skipped=true;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}")
    for button,panel in [('bSparks','mSparks'),('bGuide','mGuide'),('bCube','mCube'),('bFavorites','mFavorites'),('bProfile','mProfile'),('bSettings','mSettings'),('bSaveTools','mSaveTools'),('bAch','mJournal')]:
-    page.locator('#bMenu').click();page.locator('#'+button).click();dialog=page.locator('#'+panel);dialog.wait_for(state='visible')
+    page.locator('#bMenu').click();page.evaluate('(window.__r||window.__testRuntime).openSaveTools()') if button=='bSaveTools' else page.locator('#'+button).click();dialog=page.locator('#'+panel);dialog.wait_for(state='visible')
     if panel=='mGuide':
      page.locator('#guideGlossary').click();assert 'décimo abre el Mundo automáticamente' in dialog.inner_text();assert '20' in dialog.inner_text();assert 'Guardar copia' in dialog.inner_text()
     assert dialog.locator('.sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2'),(width,panel,'horizontal overflow')

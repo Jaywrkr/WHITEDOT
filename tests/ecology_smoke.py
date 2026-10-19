@@ -13,7 +13,7 @@ try:
   browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   for width,height in [(390,844),(844,390),(1280,800)]:
    context=browser.new_context(viewport={'width':width,'height':height},has_touch=True,accept_downloads=True);page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.set_default_timeout(10000)
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=humedal-01&generation=2&layout=wide');page.wait_for_function('window.__testRuntime?.S.mode==="world"');page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)")
    assert page.evaluate('__testRuntime.REG*__testRuntime.WCH')==10800
    assert page.evaluate('__testRuntime.regionOfPos(__testRuntime.S.wx,__testRuntime.S.wy).ecology.id')=='humedal'
@@ -30,7 +30,7 @@ try:
    page.evaluate('__testRuntime.S.sound=false;__object.cd=0');queued=page.evaluate('__testRuntime.MU.q8.length');pt=point();page.mouse.click(pt['x'],pt['y']);assert page.evaluate('__testRuntime.MU.q8.length')<=queued;page.evaluate('__testRuntime.S.sound=true')
    page.evaluate('__testRuntime.S.wx=__object.hx;__testRuntime.S.wy=__object.hy;__testRuntime.MU.speed=0;for(let i=0;i<240;i++)__testRuntime.ecologyTick(.05,false)');assert page.evaluate('!!__testRuntime.S.ach.ecologyGrow')
    page.evaluate("__testRuntime.addFavorite('Mi humedal');__testRuntime.save()");assert page.evaluate('__testRuntime.favorites[0].address.layoutVersion')==2
-   page.locator('#bMenu').click();page.locator('#bSaveTools').click()
+   page.locator('#bMenu').click();page.evaluate('(window.__r||window.__testRuntime).openSaveTools()')
    with page.expect_download() as event:page.locator('#saveExport').click()
    raw=Path(event.value.path()).read_bytes();backup=json.loads(raw);assert backup['worldIdentity']['generatorVersion']==2
    legacy={**backup,'worldIdentity':{**backup['worldIdentity'],'generatorVersion':1,'catalogVersion':1,'layoutVersion':1}}

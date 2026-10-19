@@ -13,7 +13,7 @@ with sync_playwright() as p:
  for width,height in [(390,844),(844,390),(1280,800)]:
   context=browser.new_context(viewport={'width':width,'height':height},has_touch=True)
   page=context.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   def visit(kind):
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=deep-lab&encounter={kind}')
    page.wait_for_function(f'window.__testRuntime?.encounterObjects.some(o=>o.id==="preview:{kind}")')

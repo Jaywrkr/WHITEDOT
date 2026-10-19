@@ -14,7 +14,7 @@ try:
   for width,height in [(390,844),(844,390)]:
    context=browser.new_context(viewport={'width':width,'height':height},has_touch=True);page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
    page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?lab=1&testSeed=laboratorio&layout=vasto&generation=2')
    page.wait_for_function('window.__testRuntime?.labMode');page.evaluate("__testRuntime.labGo('culture:altiplano')")
    page.wait_for_function('__testRuntime.cultureHome()!==null');assert page.evaluate('__testRuntime.REG')==20;assert not page.evaluate('__testRuntime.fingerTouch')

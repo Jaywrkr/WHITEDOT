@@ -13,7 +13,7 @@ with sync_playwright() as p:
  for width,height in [(390,844),(844,390),(1280,800)]:
   context=browser.new_context(viewport={'width':width,'height':height},has_touch=True)
   page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=blobs-creative&layout=wide');page.wait_for_function('window.__testRuntime?.inWorld()')
   page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)")
   page.touchscreen.tap(width/2,height/2);page.wait_for_timeout(150)

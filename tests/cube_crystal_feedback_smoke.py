@@ -14,7 +14,7 @@ try:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH'),args=['--no-sandbox'])
   for width,height in [(390,844),(1280,800)]:
    page=browser.new_page(viewport={'width':width,'height':height});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.cubeVisualTransform');page.locator('#returnContinue').click();page.locator('#hcGo').click()
    page.evaluate("""()=>{__r.S.sound=false;window.matrix=()=>{const c=document.createElement('canvas').getContext('2d');__r.cubeVisualTransform(c,0,0);const m=c.getTransform();return {a:m.a,b:m.b,c:m.c,d:m.d};};}""")
    page.keyboard.down('ArrowRight');page.wait_for_timeout(140);moving=page.evaluate('matrix()');page.keyboard.up('ArrowRight');assert abs(moving['b'])>.001

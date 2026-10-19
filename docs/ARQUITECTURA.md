@@ -95,3 +95,5 @@ Recuperación de desarrollo: `recovery.html` valida el token con `cloud-recovery
 Alpha.55: sesión localStorage con migración de sessionStorage y lectura compartida al consultar usuario/token. Reconciliación inicial automática: primera subida si no existe remoto, recuperación en dispositivo sin progreso y elección solo ante divergencias. Controles de elección ocultos mientras la sincronización esté resuelta.
 
 Alpha.56 elimina la entrada visible a exportación/importación y descarga remota. Cuenta conserva login persistente, sincronización automática cada 5 s y resolución excepcional de divergencias. Copias internas previas y CAS se conservan. Ediciones locales con remoto intacto no generan conflictos falsos.
+
+Alpha.57: `main.js` espera `requireAccount()` antes de crear el runtime. `progress.js` separa almacenamiento local por accountUserId y expone cloudScope estable para el remoto. Frame/guardado verifican la identidad; logout/cambio recargan a la entrada. No hay bypass de acceso por URL ni bandera de producción. Fixtures de gameplay instrumentan main sustituyendo solo su llamada de admisión, mientras la prueba de cuentas verifica la llamada real.

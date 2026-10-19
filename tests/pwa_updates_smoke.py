@@ -21,7 +21,7 @@ class Handler(SimpleHTTPRequestHandler):
   elif path=='/sw.js':body=(ROOT/'sw.js').read_text().replace(CACHE_BASE,"whitedot-test-"+version).encode();typ='text/javascript'
   elif path in ['/','/index.html']:body=(old['index.html'].decode('utf-8') if version=='A' else (ROOT/'index.html').read_text(encoding='utf-8')).replace('<head>','<head><meta name="audit-version" content="'+version+'">').encode();typ='text/html'
   elif path=='/src/catalog.js':body=((ROOT/'src/catalog.js').read_text()+'\n// release-'+version).encode();typ='text/javascript'
-  elif path=='/src/main.js':body=(ROOT/'src/main.js').read_bytes();typ='text/javascript'
+  elif path=='/src/main.js':body=(ROOT/'src/main.js').read_bytes().replace(b'await requireAccount()',b'null');typ='text/javascript'
   else:return super().do_GET()
   if path=='/src/main.js':body+=b'\nwindow.__upgradeRuntime=runtime;'
   self.send_response(200);self.send_header('Content-Type',typ);self.send_header('Cache-Control','no-store');self.end_headers();self.wfile.write(body)
