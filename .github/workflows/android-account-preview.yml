@@ -27,15 +27,13 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.13'
-      - uses: actions/cache@v4
-        with:
-          path: ${{ github.workspace }}/.kubono-account-debug.keystore
-          key: kubono-account-preview-debug-v2
-      - name: Prepare explicit debug signing file
+      - name: Restore stable preview signing key
+        env:
+          SIGNING_KEY_B64: ${{ secrets.KUBONO_ACCOUNT_PREVIEW_KEYSTORE_B64 }}
         run: |
-          if [ ! -s "$KUBONO_ACCOUNT_KEYSTORE" ]; then
-            keytool -genkeypair -keystore "$KUBONO_ACCOUNT_KEYSTORE" -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
-          fi
+          test -n "$SIGNING_KEY_B64" || { echo "Missing stable preview signing secret; refusing to generate another identity."; exit 1; }
+          umask 077
+          printf '%s' "$SIGNING_KEY_B64" | base64 --decode > "$KUBONO_ACCOUNT_KEYSTORE"
           test -s "$KUBONO_ACCOUNT_KEYSTORE"
       - name: Build isolated account-test APKs
         env:
@@ -48,6 +46,16 @@ jobs:
           cp android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk android-evidence/Kubono-accounts-test.apk
           sha256sum android-evidence/*.apk > android-evidence/SHA256SUMS.txt
           "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --print-certs android-evidence/Kubono-accounts.apk > android-evidence/signing-certificate.txt
+      - name: Build isolated update probe pair
+        run: |
+          gradle -p android assembleDebug -PaccountPreview -PsigningProbe -PpreviewVersionCode=1 --no-daemon
+          cp android/app/build/outputs/apk/debug/app-debug.apk android-evidence/Kubono-update-probe-v1.apk
+          gradle -p android assembleDebug -PaccountPreview -PsigningProbe -PpreviewVersionCode=2 --no-daemon
+          cp android/app/build/outputs/apk/debug/app-debug.apk android-evidence/Kubono-update-probe-v2.apk
+          sha256sum android-evidence/*.apk > android-evidence/SHA256SUMS.txt
+      - name: Remove temporary signing material
+        if: always()
+        run: rm -f -- "$KUBONO_ACCOUNT_KEYSTORE"
       - uses: actions/upload-artifact@v4
         with:
           name: Kubono-account-preview

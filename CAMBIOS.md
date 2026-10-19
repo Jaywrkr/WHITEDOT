@@ -1,5 +1,7 @@
 # Reautenticación segura al eliminar cuenta · alpha.58
 
+- Firma estable de vista previa guardada fuera del repositorio y en secreto de CI; sin regeneración silenciosa ni dependencia de caché. Par de APKs de diagnóstico aislado para comprobar actualización sin tocar la instalación real.
+
 - APK alpha.58 compilado y verificado, pero Android rechazó la actualización por firma debug distinta; alpha.57 validada se conserva intacta. Se corrige la ruta explícita de firma/caché. Clave permanente de publicación sigue pendiente.
 - La sesión actual se conserva mientras Auth comprueba las credenciales; ya no se recarga prematuramente el juego durante la eliminación. Tras borrado confirmado se cierra el acceso y vuelve a la entrada.
 - Prueba de interfaz con usuario ficticio: cancelar no borra, confirmar reautentica y llama al RPC, se limpian tokens y vuelve el bloqueo obligatorio; otra cuenta permanece intacta. No se eliminó ninguna cuenta alojada en esta prueba; el RPC real se comprobó previamente con datos desechables y rollback.
