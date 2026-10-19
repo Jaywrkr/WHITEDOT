@@ -1,4 +1,4 @@
-# WHITEDOT · plan hasta las primeras ventas
+# KUBONO · plan hasta las primeras ventas
 
 Actualizado: 19 de octubre de 2026. Estado: propuesta operativa para revisar con Jay. Este archivo es la guía compartida; las fechas son objetivos, no compromisos públicos ni aprobación de tiendas.
 
@@ -11,15 +11,18 @@ Actualizado: 19 de octubre de 2026. Estado: propuesta operativa para revisar con
 | Tema | Lo que sabemos / recomendación | Estado |
 |---|---|---|
 | Producto | Juego web existente y APK debug funcionando en Android 15 emulado; Jay ya lo jugó en su PC. | Hecho; no equivale a versión de tienda |
-| Nombre | Repositorio, web y APK se llaman **WHITEDOT**, no Whitebox. Recomiendo conservar WHITEDOT hasta revisar coincidencias en tiendas, búsquedas, dominio y redes. WHITEBOX es solo un candidato; no hay disponibilidad comprobada de ninguno. | Jay decide en S1 |
+| Nombre | **Kubono**, elegido por Jay. Repositorio, web y APK conservan WHITEDOT hasta autorizar la implementación del cambio. | Decidido; sin renombrar producto todavía |
+| Dominio | **playkubono.com**, previsto por Jay; sin registro encontrado en RDAP en la consulta del 19 oct. Confirmar disponibilidad/precio al comprar. | Elegido; no comprado ni reservado |
 | Promesa | «Un cubo. Un universo que suena.» Explorar, romper cristales y descubrir rarezas musicales. Público inicial propuesto: jugadores de exploración relajada y curiosos de la música. | Hipótesis a probar |
-| Modelo | Android a **US$2,99**, pago único, sin anuncios ni venta de chispas. Precios locales revisados en Play Console. | Orientación acordada; configurar después |
-| Web | Hoy existe una versión web completa. Antes de vender, decidir si seguirá completa gratis o se convertirá en una demo acotada. Recomiendo una demo si queremos priorizar ventas; su alcance necesita aprobación aparte. No restringirla ahora. | Decisión comercial pendiente |
+| Modelo | Propuesta pendiente de aprobación: **US$2,99 móvil / US$4,99 escritorio**, pago único, sin anuncios ni venta de chispas. Revisar precios locales al configurar tiendas. | Precios finales pendientes |
+| Web | Jay confirma que habrá **demo web**. Recomendación pendiente: zona acotada sin cronómetro; extensión y límites por definir. La web completa actual sigue intacta. | Demo decidida; alcance e implementación pendientes |
 | Identidad | Aprovechar negro, blanco, cubo e iconos existentes; preparar una versión legible en tamaño pequeño, no rediseñar todo. | Pendiente |
-| Cuentas | No constan cuentas Play/Apple/Steam verificadas ni perfiles de pagos listos. No inventar que están listos. | Jay confirma en S1 |
-| Recursos | Emulador listo; falta acceso a Android físico. No consta acceso a Mac, Xcode o iPhone. | Dependencias abiertas |
+| Cuentas | Jay no tiene Apple Developer Program confirmado; podría tener cuenta gratuita. Play/Steam y pagos sin confirmar. Para App Store/TestFlight se necesita membresía Apple. | Verificar estado antes de pagar |
+| Recursos | Jay tiene Mac e iPhone y podría conseguir Android prestado. Faltan modelo/macOS para compatibilidad Xcode, confirmar acceso Android y prueba iPad si se anuncia soporte. | Disponibilidad declarada; compatibilidad pendiente |
 
-Si la web sigue completa gratis, comunicarlo con claridad: la compra apoya el proyecto y ofrece la aplicación de la plataforma elegida. No prometer contenido exclusivo, ni usar «offline» como diferencia si la PWA también lo ofrece. El APK debug no se vende como producto final.
+La demo mostrará el juego real y dirigirá a las versiones completas; límites todavía sin decidir. No prometer compras compartidas ni usar «offline» como ventaja exclusiva si la PWA lo ofrece. El APK debug no se vende como producto final.
+
+**Revisión del nombre, 19 oct:** sin título exacto encontrado en las consultas de tiendas realizadas (App Store estadounidense, Play y Steam); USPTO sin resultados para KUBONO. TMview, búsqueda «contiene» sin restringir clases, devolvió una coincidencia china: 久保农 KUBONO, solicitud 55781613, registrada en clase 4 para aceites/lubricantes; no devolvió registros europeos. Madrid Monitor de WIPO: cero resultados, incluyendo activos, pendientes e inactivos; Global Brand Database no accesible. Esto no certifica disponibilidad jurídica ni descarta similitudes. Búsqueda fonética SENADI pendiente, sin trámite ni pago iniciado. [Ficha encontrada](https://www.tmdn.org/tmview/#/tmview/detail/CN500005578161304), [Madrid Monitor](https://www3.wipo.int/madrid/monitor/en/), [USPTO](https://tmsearch.uspto.gov/).
 
 ## Plataformas y dependencias
 
@@ -58,8 +61,8 @@ Steam: preparar cuenta, página y build en paralelo; contempla un mínimo de dos
 
 | ID | Entrega y criterio de terminado | Ventana | Responsable propuesto | Estado |
 |---|---|---|---|---|
-| D01 | Nombre decidido y revisión básica de coincidencias documentada; confirmar identificación del editor y uso de @jaywrkr. Esto no certifica disponibilidad jurídica. | S1 | Jay + Codex | Pendiente |
-| D02 | Precio/base, países, idioma y política web/app decididos. No cambiar el nombre del proyecto antes de esa decisión. | S1 | Jay | Pendiente |
+| D01 | Kubono y playkubono.com decididos; revisión inicial registrada arriba. Confirmar editor/contacto y valorar búsqueda fonética SENADI. No renombrar ni comprar todavía. | S1 | Jay + Codex | Nombre/dominio decididos; resto pendiente |
+| D02 | Precio/base, países, idioma y política web/app decididos. No implementar el cambio de nombre hasta autorizar el paquete correspondiente. | S1 | Jay | Pendiente |
 | D03 | Cuenta Play, identidad y pagos verificados; correo de soporte y contacto público definidos; Android físico accesible. | S1–S2 | Jay | No confirmado |
 | D04 | Identificador de producción definitivo, versionCode, firma/upload key y respaldo seguro, AAB release sin depuración. Mantener separada la edición `.preview`; no guardar claves en Git. | S2 | Codex prepara; Jay custodia | Pendiente |
 | D05 | Primera instalación y actualización desde Play probadas; audio/Home/regreso, guardado, restauración de copia y descarga de archivos en al menos dos Android reales de distinta capacidad. | S2–S4 | Jay/testers + Codex | Pendiente |
@@ -99,6 +102,8 @@ Si pocos llegan a la ficha, mejorar distribución o primer clip. Si llegan y no 
 
 ## Precio y presupuesto
 
+Propuesta todavía sin aprobar: **US$2,99 móvil / US$4,99 escritorio**; **US$350 de reserva inicial**. Base publicada de registros: Play US$25 una vez + Apple US$99/año + Steam US$100 por juego = **US$224**, antes de impuestos/conversión. El margen no es una cotización completa: excluye hardware, publicidad, consumo Codex y posibles servicios/certificados adicionales. Aprovechar Mac/iPhone propios y Android prestado; sin compras autorizadas.
+
 - Mantener US$2,99 como referencia inicial acordada para Android; decidir en S1 si se aplica también a iOS y escritorio. Comparar presentación y expectativas por canal antes de fijarlo; no hay precio PC aprobado. Revisar moneda/precio por país. No añadir suscripciones, anuncios o pagos por chispas.
 - Propuesta: promoción orgánica al principio. No autorizar gasto en anuncios en este plan. Si Jay decide una prueba pagada, fijar importe máximo y una métrica de compra antes de gastarlo.
 - Google Play: registro de US$25 una vez; cuenta, verificación y datos deben pertenecer a Jay/editor real. [Alta oficial](https://support.google.com/googleplay/android-developer/answer/6112435). Ecuador figura como ubicación admitida para desarrollador/comerciante en USD; confirmar el país real del perfil, no inferirlo de la zona horaria. [Ubicaciones](https://support.google.com/googleplay/android-developer/answer/9306917).
@@ -125,11 +130,13 @@ Al empezar una sesión: leer «Próxima acción» y los IDs implicados; trabajar
 
 No añadir actividades, monedas, menús o sistemas nuevos para justificar el precio. No ejecutar todo el plan porque este documento exista. No crear otro backlog paralelo: mantener aquí tareas y decisiones, y enlazar los materiales finales. Los planes históricos no son autorización vigente.
 
-**Próxima acción:** cerrar D01–D03 y las dependencias S1 de D15–D19: nombre, relación web/app, precios por canal, cuentas y acceso a equipos. Preparar después un único paquete de identidad/textos y candidatos mínimos en paralelo. Este plan no autoriza todavía implementar ports, pagar altas ni publicar.
+**Próxima acción:** cerrar precios, presupuesto, estado de cuentas y compatibilidad de equipos. Jay facilita modelo de Mac/macOS y modelo de iPhone; confirma cuentas Play/Steam y acceso Android. La demo está decidida, sus límites aún no. **Paquete común en espera por instrucción de Jay**: no producir identidad, fichas ni ports hasta resolver estos puntos. Sin compra de dominio ni cambio del producto.
 
 | Fecha | Decisión o evidencia | Consecuencia |
 |---|---|---|
 | 19 oct 2026 | Jay confirma haber jugado al APK en su emulador local; CI Android previo aprobado. | Base técnica de vista previa disponible; no certifica hardware físico ni tienda |
 | 19 oct 2026 | Jay decide preparación conjunta y salida de cada plataforma cuando esté lista/aprobada. | Sustituye Android primero/iOS después; recursos y fechas siguen por confirmar; sin autorización de publicación |
+
+| 19 oct 2026 | Jay elige Kubono y playkubono.com como dominio previsto, sin comprar; confirma demo, Mac e iPhone. | Documentar decisiones; precios y presupuesto pendientes; paquete común en espera |
 
 Fuentes oficiales consultadas el 19 de octubre de 2026. Revalidar al efectuar cada trámite; las reglas de tiendas y plazos pueden cambiar.
