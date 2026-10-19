@@ -61,7 +61,7 @@ Steam: preparar cuenta, página y build en paralelo; contempla un mínimo de dos
 
 Jay aprueba Supabase **Free para desarrollo/pruebas**. Sin suscripciones, contratación ni publicación; organización Kubono y proyecto Kubono Dev creados por Jay; Free confirmado y esquema conectado. Mantener CORESOLUTIONS y su proyecto existente intactos. La implementación empieza en `feature/optional-cloud-save` desde main actualizado `ba9c31a`.
 
-Entrar al juego sin cuenta sigue permitido. Cuenta por correo/clave con código de confirmación y recuperación, eliminación de cuenta y copias por mundo. Al conectar por primera vez, elegir partida; después respaldo cada minuto mientras el juego esté activo, con comprobación de revisión y recuperación explícita ante conflictos. Sin salas, duetos ni sesiones sociales en este lanzamiento. El resumen local de una sesión de juego permanece.
+Entrar al juego sin cuenta sigue permitido. Cuenta por correo/clave con enlaces de confirmación y recuperación, eliminación de cuenta y copias por mundo. Al conectar por primera vez, elegir partida; después respaldo cada minuto mientras el juego esté activo, con comprobación de revisión y recuperación explícita ante conflictos. Sin salas, duetos ni sesiones sociales en este lanzamiento. El resumen local de una sesión de juego permanece.
 
 Desarrollo/pruebas: US$0 de servicio. No se aprueba Pro ni US$30/mes: revisar cuotas, correo/SMTP, backups, estabilidad y presupuesto antes de vender. Supabase Free puede pausarse por inactividad y no incluye backups automáticos. La prueba local con HTTP simulado no certifica el servicio real ni las plataformas móviles. No prometer recuperación online pública hasta completar D22.
 
@@ -89,9 +89,9 @@ Desarrollo/pruebas: US$0 de servicio. No se aprueba Pro ni US$30/mes: revisar cu
 | D18 | Web/PWA: decisión comercial, landing común con estados disponibles/próximamente y enlaces por plataforma; verificar recorrido existente sin convertirlo en otro proyecto. | S1–S6 | Ambos | Pendiente |
 | D19 | Consolas: registrar programas de acceso, requisitos y estimación de viabilidad; Jay decide alcance/presupuesto antes de cualquier port. | Evaluación S1; fecha de salida por definir | Ambos | Sin viabilidad confirmada |
 
-| D20 | Cuenta opcional Supabase Free: correo/clave, verificación y recuperación por código, cierre y eliminación. Configuración pública vacía hasta elegir organización/proyecto. | S1–S4 | Codex + Jay cuentas | En curso; alta/enlace/login reales aprobados; recuperación por código pendiente SMTP |
+| D20 | Cuenta opcional Supabase Free: correo/clave, verificación y recuperación por enlace, cierre y eliminación. Proyecto Kubono Dev gratuito conectado. | S1–S4 | Codex + Jay cuentas | En curso; alta/enlace/login reales aprobados; recuperación por enlace local en pruebas |
 | D21 | Respaldo por mundo cada minuto con elección inicial, recuperación validada y copia local anterior; aislamiento y conflictos. | S2–S4 | Codex | En curso; copia completa real validada; falta cierre multiplataforma |
-| D22 | Validar en proyecto Free aislado RLS entre dos usuarios, correo real, recuperación/eliminación, cuotas y backups; luego navegador y contenedores reales. | Antes de aprobar lanzamiento | Ambos | En curso; RLS y guardado reales aprobados; correo por código y dispositivos pendientes |
+| D22 | Validar en proyecto Free aislado RLS entre dos usuarios, correo real, recuperación/eliminación, cuotas y backups; luego navegador y contenedores reales. | Antes de aprobar lanzamiento | Ambos | En curso; RLS y guardado reales aprobados; recuperación real y dispositivos pendientes |
 
 Las dimensiones y reglas finales se revisan al exportar, no se mantienen dos catálogos de requisitos. [Material de Google Play](https://support.google.com/googleplay/android-developer/answer/9866151).
 
@@ -154,3 +154,5 @@ No añadir actividades, monedas, menús o sistemas nuevos para justificar el pre
 | 19 oct 2026 | Jay aprueba US$2,99 móvil, US$4,99 escritorio y US$350 de presupuesto inicial. | Verificar cuentas/equipos antes del paquete común; sin ejecutar pagos |
 
 Fuentes oficiales consultadas el 19 de octubre de 2026. Revalidar al efectuar cada trámite; las reglas de tiendas y plazos pueden cambiar.
+
+Recuperación de desarrollo: enlace predeterminado + página local en localhost:3000, sin SMTP contratado. D22 permanece abierto hasta comprobar el cambio privado de clave y las plataformas.
