@@ -89,8 +89,8 @@ Desarrollo/pruebas: US$0 de servicio. No se aprueba Pro ni US$30/mes: revisar cu
 | D18 | Web/PWA: decisión comercial, landing común con estados disponibles/próximamente y enlaces por plataforma; verificar recorrido existente sin convertirlo en otro proyecto. | S1–S6 | Ambos | Pendiente |
 | D19 | Consolas: registrar programas de acceso, requisitos y estimación de viabilidad; Jay decide alcance/presupuesto antes de cualquier port. | Evaluación S1; fecha de salida por definir | Ambos | Sin viabilidad confirmada |
 
-| D20 | Cuenta opcional Supabase Free: correo/clave, verificación y recuperación por enlace, cierre y eliminación. Proyecto Kubono Dev gratuito conectado. | S1–S4 | Codex + Jay cuentas | En curso; alta/enlace/login reales aprobados; recuperación por enlace local en pruebas |
-| D21 | Respaldo por mundo cada minuto con elección inicial, recuperación validada y copia local anterior; aislamiento y conflictos. | S2–S4 | Codex | En curso; copia completa real validada; falta cierre multiplataforma |
+| D20 | Cuenta obligatoria Supabase Free: correo/clave, verificación y recuperación por enlace, cierre y eliminación. Proyecto Kubono Dev gratuito conectado. | S1–S4 | Codex + Jay cuentas | En curso; alta/enlace/login reales aprobados; recuperación por enlace local en pruebas |
+| D21 | Progreso automático por cuenta/mundo, sesión persistente, aislamiento y resolución excepcional de conflictos. | S2–S4 | Codex | En curso; copia completa real validada; falta cierre multiplataforma |
 | D22 | Validar en proyecto Free aislado RLS entre dos usuarios, correo real, recuperación/eliminación, cuotas y backups; luego navegador y contenedores reales. | Antes de aprobar lanzamiento | Ambos | En curso; RLS y guardado reales aprobados; recuperación real y dispositivos pendientes |
 
 Las dimensiones y reglas finales se revisan al exportar, no se mantienen dos catálogos de requisitos. [Material de Google Play](https://support.google.com/googleplay/android-developer/answer/9866151).
@@ -164,3 +164,5 @@ Alpha.55 simplifica el acceso: sesión persistente con correo/clave, primera sub
 Alpha.56: flujo normal único de Cuenta y guardado automático, sin herramientas de respaldo visibles. Comprobación/guardado de cambios cada 5 s; intervención solo por divergencias. No se publica ni se contrata servicio alguno.
 
 Decisión vigente alpha.57: cuenta obligatoria; sin demo ni invitado. Correo/clave, sesión persistente y progreso automático entre dispositivos. Prueba acotada: entrada antes del mundo, sesión/offline, PC↔teléfono, aislamiento de cuentas y logout. Compra de tiendas sigue pendiente de sus paquetes; no se publica ni contrata nada.
+
+19 oct 2026 · Jay confirmó en alpha.57: Safari normal no pidió contraseña al reabrir y PC/iPhone mostraron las mismas chispas automáticamente. Cierre web real aprobado para ese recorrido. Siguiente: APK de cuentas aislado en emulador, sin borrar la app anterior. Correo/callbacks de producción y compra de tiendas siguen pendientes; sin publicación ni contratación.

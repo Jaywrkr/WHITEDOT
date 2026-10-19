@@ -11,7 +11,7 @@ android {
         versionName gameVersion + '-android-preview'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
-    buildTypes { debug { applicationIdSuffix '.preview' } }
+    buildTypes { debug { applicationIdSuffix '.preview'; if (project.hasProperty('accountPreview')) applicationIdSuffix '.accounts' } }
     sourceSets.main.assets.srcDir layout.buildDirectory.dir('generated/gameAssets')
     sourceSets.main.res.srcDir layout.buildDirectory.dir('generated/gameRes')
 }

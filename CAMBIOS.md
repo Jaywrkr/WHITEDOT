@@ -1,3 +1,9 @@
+# Verificación real web y preparación Android de cuentas
+
+- Jay confirmó sesión persistente y saldo idéntico automático entre Safari normal y PC en alpha.57.
+- Preparación de APK de cuentas con package de prueba separado para preservar la instalación anterior; workflow de compilación sin publicación y prueba de entrada obligatoria en WebView.
+- Pendientes: acceso/saldo reales del APK y reapertura, correo/callbacks de producción y compra de tiendas. Sin contratos nuevos.
+
 # Cuenta obligatoria y partidas separadas · alpha.57
 
 - El mundo solo se inicializa después de acceder o retomar una cuenta previamente autenticada. Sin invitado ni demo; registro, confirmación y recuperación de clave disponibles en la entrada.

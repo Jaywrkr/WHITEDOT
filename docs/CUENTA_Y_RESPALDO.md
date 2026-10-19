@@ -83,3 +83,5 @@ El producto ya no permite invitado/demo. `account-entry.js` requiere registro co
 Local: `kubono:user:USER_ID:CLAVE_MUNDO`. Remoto: misma clave de mundo anterior con RLS por user_id; no se cambia el esquema. Migración no destructiva: conservar original, registrar una única cuenta propietaria de la partida heredada, copiar solo si no existe una propia. Si ya hay evidencia de otro propietario, no asignar esa partida automáticamente.
 
 Cuenta/pago son independientes: esto no implementa compra, recibos ni desbloqueo entre tiendas. Los contenedores necesitan incorporar esta versión antes de su aceptación. Persistencia en Safari normal ya comprobada en versiones anteriores; la nueva entrada obligatoria requiere una comprobación humana breve, sin repetir toda la batería.
+
+Aceptación humana alpha.57 (19 oct): Jay confirmó que Safari normal conserva sesión y que PC/iPhone muestran las mismas chispas automáticamente. No repetir ese recorrido. Android sigue pendiente de instalar la compilación actualizada y comprobar acceso/saldo.

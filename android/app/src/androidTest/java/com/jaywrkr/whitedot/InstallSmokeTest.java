@@ -81,6 +81,16 @@ public class InstallSmokeTest {
         assertTrue(activity.scriptErrors.toString(), activity.scriptErrors.isEmpty());
         instrumentation.runOnMainSync(() -> activity.finish());
     }
+    @Test public void requiresAccountBeforeWorld() throws Exception {
+        start();
+        until("document.body.dataset.accountLocked==='true'&&!document.getElementById('mConnection').hidden");
+        assertEquals("true", js("document.getElementById('accountGuest').hidden"));
+        assertEquals("true", js("document.getElementById('connectionClose').hidden"));
+        assertEquals("null", js("localStorage.getItem('pixel-blanco-v4')"));
+        assertTrue(activity.scriptErrors.toString(), activity.scriptErrors.isEmpty());
+        screenshot("android-account-required.png");
+        instrumentation.runOnMainSync(() -> activity.finish());
+    }
     @Test public void preservesSaveAfterApkReplacement() throws Exception {
         start();
         assertEquals("\"137:dust\"", js("localStorage.getItem('android-update-probe')"));

@@ -1,6 +1,6 @@
 # Android · vista previa instalable
 
-Se reutiliza el juego actual en un WebView con archivos incluidos mediante `WebViewAssetLoader`. No necesita conexión para arrancar; las funciones del servidor opcional conservan sus límites. No añade anuncios, cobros, cuentas ni contenido. Android 8 o superior y Android System WebView actualizado; la primera comprobación se realiza en un emulador Android 15.
+Se reutiliza el juego actual en un WebView con archivos incluidos mediante `WebViewAssetLoader`. Desde alpha.57 requiere cuenta: el primer acceso necesita conexión; una sesión anterior permite continuar offline. No añade anuncios, cobros ni contenido. Android 8 o superior y Android System WebView actualizado; la primera comprobación se realiza en un emulador Android 15.
 
 ## Obtener y probar
 
@@ -10,7 +10,7 @@ Sin teléfono: ver el vídeo y las capturas; para jugar, instalar Android Studio
 
 En un Android prestado, abrir el APK y permitir la instalación desde esa fuente. La edición de prueba usa `com.jaywrkr.whitedot.preview`. No desinstalar para actualizar: usar otro APK de la misma firma o `adb install -r WHITEDOT-preview.apk`. Desinstalar elimina los datos locales. La firma debug se conserva en caché de CI, pero no es una clave de producción ni tiene conservación garantizada; guardar una copia desde el menú antes de sustituir esta vista previa.
 
-Los datos del navegador no aparecen automáticamente en la aplicación: exportar una copia desde la web e importarla con el menú existente. La app usa su propio origen HTTPS local estable. Los archivos se abren/guardan mediante el selector de Android, sin permiso general de almacenamiento. Exportación limitada a 64 MiB en este primer contenedor.
+El progreso del navegador llega automáticamente al entrar con la misma cuenta y conexión. No hay acciones manuales de exportación/importación en el flujo normal. La app usa su propio origen HTTPS local estable. Los archivos se abren/guardan mediante el selector de Android, sin permiso general de almacenamiento. Exportación limitada a 64 MiB en este primer contenedor.
 
 ## Compilar
 
@@ -33,3 +33,9 @@ Contrato de assets, compilación e instalación reales; arranque sin wifi/datos;
 Pendientes antes de tienda: dispositivo físico y escucha humana, probar completamente selección/importación/exportación de archivos en diferentes proveedores Android, versiones adicionales de Android/WebView, clave de publicación y configuración de Play Console. Esta firma debug no sirve como entrega de pago.
 
 Referencia técnica: [contenido local en WebView](https://developer.android.com/develop/ui/views/layout/webapps/load-local-content).
+
+## Comprobación acotada de cuentas
+
+`Android account preview` genera APK y APK de instrumentación en la rama de cuentas, sin publicar en tienda. Usa `-PaccountPreview` para `com.jaywrkr.whitedot.accounts`: instalación separada, sin borrar ni reemplazar los datos de la vista previa anterior. Firma debug exclusiva de prueba. El producto normal conserva su applicationId; no es una nueva edición comercial.
+
+Prueba nueva: `requiresAccountBeforeWorld` sobre una instalación limpia comprueba la entrada obligatoria en el WebView real. Después Jay introduce su contraseña directamente en el emulador para comprobar el saldo con Supabase y la reapertura; nunca enviar la contraseña al chat. Los dos recorridos históricos anteriores son evidencia de un APK previo sin cuentas, no aceptación del nuevo acceso.
