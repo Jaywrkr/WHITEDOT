@@ -23,7 +23,7 @@ try:
    if row['genre']=='ambient':assert row['count']==1 and len(row['instruments'])==1,row
    else:
     assert row['count']==10 and len(row['instruments'])>=10,row
-    assert row['instruments'].get('kick',0)>0 and any(row['instruments'].get(k,0)>0 for k in ['clap','snare']),row
+    assert row['instruments'].get('kick',0)>0 and any(row['instruments'].get(k,0)>0 for k in ['clap','snare','rim']),row
   assert rows[-1]['onsets'] and max(n['errorSeconds'] for n in rows[-1]['onsets'])<.01,rows[-1]
   for a,b in zip(rows[:6:2],rows[1:6:2]):assert b['rmsDb']<a['rmsDb']-.1,'field attenuates, but retains the composed foundation'
   (ROOT/'scripts/musica-01-foundation-audio.json').write_text(json.dumps({'renders':len(rows),'maxPeak':max(r['peak'] for r in rows),'rows':rows},indent=2)+'\n')

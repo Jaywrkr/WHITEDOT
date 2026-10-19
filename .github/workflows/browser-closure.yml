@@ -1,0 +1,44 @@
+name: Focused browser closure
+on:
+  push:
+    branches: ['fix/browser-lifecycle-closure']
+    paths-ignore: ['**/*.md']
+permissions:
+  contents: read
+jobs:
+  closure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install -r requirements-dev.txt
+      - run: python3 -m playwright install --with-deps chromium
+      - name: Audit and targeted save contracts
+        run: |
+          npm run audit:release
+          node tests/persistent_progress.mjs
+          node tests/release-closure.mjs
+      - name: Suspension and upgrade with actual previous release
+        run: |
+          python3 scripts/browser-processes.py --timeout=145 python3 tests/browser_lifecycle_smoke.py
+          python3 scripts/browser-processes.py --timeout=145 python3 tests/pwa_updates_smoke.py
+      - name: Previously failing browser flows
+        run: |
+          python3 scripts/browser-processes.py --timeout=145 python3 tests/lab_learning_smoke.py
+          python3 scripts/browser-processes.py --timeout=145 python3 tests/listening_reference_smoke.py
+          python3 scripts/browser-processes.py --timeout=145 python3 tests/memory_smoke.py
+      - name: Failed audio render and previously unreached tail
+        run: |
+          python3 scripts/browser-processes.py --timeout=600 python3 tests/foundation_mix.py
+          python3 scripts/browser-processes.py --timeout=600 python3 tests/improvement_mix.py
+          python3 scripts/browser-processes.py --timeout=600 python3 tests/magnet_percussion_mix.py
+          python3 scripts/browser-processes.py --timeout=600 python3 tests/music_recovery_mix.py
+          python3 scripts/browser-processes.py --timeout=600 python3 tests/regional_composition_mix.py

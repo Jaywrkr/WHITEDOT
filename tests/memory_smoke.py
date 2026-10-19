@@ -23,8 +23,9 @@ try:
   page.evaluate('''()=>{const r=__testRuntime,o=r.encounterObjects.find(o=>o.id==='preview:weaver');document.querySelectorAll('.modal').forEach(m=>m.hidden=true);const a=r.depthAnchors(o);r.depthConnect(o,a[0],a[1]);r.save();}''')
   page.reload();page.wait_for_function('__testRuntime?.encounterObjects.some(o=>o.id==="preview:weaver"&&o.state.weave?.edges.length===1)')
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=laboratorio&lab=1&layout=wide&generation=2');page.wait_for_function('__testRuntime?.labMode')
-  page.evaluate('''()=>{const r=__testRuntime;r.labGo('living:moth');document.querySelectorAll('.modal').forEach(m=>m.hidden=true);const o=r.livingNear()[0];o.phrase=[0,3,4];for(let i=0;i<3;i++)r.rememberCreature(o);r.save();}''')
-  page.reload();page.wait_for_function('__testRuntime?.livingNear()[0]?.familiarity>=.5');assert page.evaluate('__testRuntime.livingNear()[0].phrase.slice(0,3)')==[0,3,4]
+  page.evaluate('''()=>{const r=__testRuntime;r.labGo('living:moth');document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.S.sound=false;const o=r.livingNear()[0];window.__creatureId=o.id;o.phrase=[0,3,4];for(let i=0;i<3;i++)r.rememberCreature(o);r.save();}''')
+  creature_id=page.evaluate('__creatureId')
+  page.reload();page.wait_for_function('id=>__testRuntime?.livingNear().some(o=>o.id===id&&o.familiarity>=.5)',arg=creature_id);assert page.evaluate('id=>__testRuntime.livingNear().find(o=>o.id===id).phrase.slice(0,3)',creature_id)==[0,3,4]
   # A different seed cannot inherit connections or bonds.
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=memory-other&encounter=weaver');page.wait_for_function('__testRuntime?.encounterObjects.some(o=>o.id==="preview:weaver")')
   assert page.evaluate('Object.keys(__testRuntime.S.worldMemory.patches).length')==0
