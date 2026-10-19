@@ -1,3 +1,10 @@
+# Recuperación local por enlace · alpha.53
+
+- Enlace predeterminado de Supabase y página local para elegir clave, sin SMTP contratado ni publicación.
+- URL limpiada, acceso validado y token solo en memoria; no toca la partida.
+- Verificación: nueve suites Node afectadas, auditoría sin errores/avisos y dos recorridos Chromium enfocados aprobados. Solicitud de correo real HTTP 200; cambio privado pendiente de confirmación.
+- Rama nueva desde main 20ebdf4; sin publicación ni SMTP contratado.
+
 # Cambios recientes
 
 ## Conexión real a Kubono Dev Free · 19 de octubre de 2026

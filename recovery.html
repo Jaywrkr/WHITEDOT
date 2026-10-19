@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>Kubono · Recuperar cuenta</title>
+<style>body{background:#000;color:#fff;font:16px monospace;margin:0;padding:24px}main{max-width:440px;margin:10vh auto}h1{color:#a37aff}label,input,button{display:block;box-sizing:border-box;width:100%;margin:16px 0}input,button{padding:14px;background:#111;color:white;border:1px solid #666;font:inherit}button{border-color:#a37aff}button:disabled{opacity:.4}p{line-height:1.6}</style>
+<main><h1>Kubono</h1><h2>Nueva clave</h2><p id="status" role="status">Comprobando enlace…</p><form hidden><label>Nueva clave · 12 caracteres mínimo<input name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required></label><label>Repite la clave<input name="confirmation" type="password" autocomplete="new-password" minlength="12" maxlength="128" required></label><button>Guardar nueva clave</button></form></main>
+<script type="module">
+// Remove credentials before any network request; do not register a service worker.
+const hash=location.hash;history.replaceState(null,'',location.pathname);
+const status=document.getElementById('status'),form=document.querySelector('form');
+try{
+ const [{CLOUD_CONFIG},{recoverySession}]=await Promise.all([import('./src/cloud-config.js'),import('./src/cloud-recovery.js')]);
+ const session=await recoverySession(CLOUD_CONFIG,hash);status.textContent='Elige tu nueva clave. Tu partida permanece intacta.';form.hidden=false;
+ form.onsubmit=async event=>{event.preventDefault();const button=form.querySelector('button');button.disabled=true;
+  try{await session.change(form.elements.password.value,form.elements.confirmation.value);form.reset();form.hidden=true;status.textContent='Clave actualizada. Vuelve al juego y entra con tu correo y tu nueva clave.';}
+  catch(error){status.textContent=error.message;}finally{button.disabled=false;}
+ };
+}catch(_){status.textContent='Enlace ausente, vencido o sin conexión. Solicita otro desde el juego.';}
+</script></html>

@@ -1,18 +1,18 @@
 # Cuenta opcional y respaldo · desarrollo
 
-Estado: rama local conectada a Kubono Dev (`eghmydqxsicqmbmeprgq`), organización Kubono (`eebalwznymfdxaexvghc`), región us-east-1 y plan Free comprobados el 19 oct 2026. Aplicación sin publicar. Rama feature/optional-cloud-save desde main ba9c31a. Sin despliegue ni contratos; Supabase Free acordado para pruebas. CORESOLUTIONS y su proyecto permanecen intactos por decisión de Jay.
+Estado: rama local conectada a Kubono Dev (`eghmydqxsicqmbmeprgq`), organización Kubono (`eebalwznymfdxaexvghc`), región us-east-1 y plan Free comprobados el 19 oct 2026. Aplicación sin publicar. Rama feature/account-recovery-link desde main 20ebdf4; cuentas previas integradas en main por Jay. Sin despliegue ni contratos; Supabase Free acordado para pruebas. CORESOLUTIONS y su proyecto permanecen intactos por decisión de Jay.
 
 ## Preparación pendiente
 
 1. Proyecto Free creado por Jay y acceso autorizado. Sin planes, add-ons ni branches de pago.
 2. Esquema y endurecimiento aplicados por MCP como `kubono_optional_cloud_saves` y `harden_cloud_save_privileges`. `supabase/setup.sql` representa el esquema consolidado; no volver a ejecutarlo en este proyecto. Se usó apply_migration para DDL conforme al contrato de la herramienta; no se inventó historial CLI.
 3. En `src/cloud-config.js`, indicar URL HTTPS exacta `https://REF.supabase.co` y clave **sb_publishable_...**. Es información pública. Jamás poner contraseñas de base, claves secretas ni service_role. Configuración vacía sigue admitida para modo local; esta rama usa únicamente la clave publicable del proyecto Dev. La misma API HTTPS usa Authorization/apikey, sin cookies de terceros, desde web y assets locales Android; verificar en dispositivo.
-4. Confirmación de correo activada y alta por enlace real comprobada. El panel exige SMTP propio para editar plantillas; con el correo predeterminado no se pudo añadir `{{ .Token }}`. No se contrató/configuró SMTP ni se desactivó la confirmación. La confirmación por código y recuperación/cambio de clave dentro del juego siguen pendientes; no presentarlas como aceptadas.
-5. El correo predeterminado de Supabase está limitado a destinatarios autorizados y cuotas de desarrollo; comprobarlos. SMTP propio y dominio verificado antes de una beta pública. No se ha contratado correo ni enviado mensajes.
+4. Confirmación de correo activada y alta por enlace real comprobada. El panel exige SMTP propio para editar plantillas; con el correo predeterminado no se pudo añadir `{{ .Token }}`. No se contrató/configuró SMTP ni se desactivó la confirmación. Se usa el enlace predeterminado: confirmación por correo y recuperación mediante página local, sin exigir códigos personalizados.
+5. El correo predeterminado de Supabase está limitado a destinatarios autorizados y cuotas de desarrollo; comprobarlos. SMTP propio y dominio verificado antes de una beta pública. No se ha contratado correo. Solicitud real de recuperación aceptada con HTTP 200; cambio privado de clave pendiente de confirmación del usuario.
 
 ## Comportamiento
 
-Menú → Cuenta y respaldo. Sin cuenta: juego/guardado local intactos. Crear cuenta, confirmar código o entrar; primera conexión por mundo exige elegir «Usar esta partida» o «Recuperar copia». Sin elección no hay subida automática. Confirmar una subida reemplaza la copia online de ese mundo usando su revisión conocida; una revisión concurrente detiene las subidas y no sobrescribe. No hay mezcla automática de partidas.
+Menú → Cuenta y respaldo. Sin cuenta: juego/guardado local intactos. Crear cuenta, confirmar mediante enlace o entrar; primera conexión por mundo exige elegir «Usar esta partida» o «Recuperar copia». Sin elección no hay subida automática. Confirmar una subida reemplaza la copia online de ese mundo usando su revisión conocida; una revisión concurrente detiene las subidas y no sobrescribe. No hay mezcla automática de partidas.
 
 Después de elegir, el cliente recuerda revisión por usuario/mundo en este dispositivo y respalda como máximo cada minuto en primer plano; no usa un guardado remoto como reemplazo automático. Si la revisión coincide al volver a entrar, continúa el respaldo. Sin red conserva la partida local y reintenta de forma acotada. Cerrar/suspender antes del minuto puede dejar una copia remota anterior: «respaldar» manual permite cerrar con una copia reciente. No es sincronización continua ni promesa de cero pérdida si el dispositivo se pierde.
 
@@ -30,7 +30,7 @@ No se prometen guardados para siempre con Free: política de retención, restaur
 
 `node tests/cloud-account.mjs`: adaptador REST y coordinador de copias con fixtures; no verifica base real. `python tests/cloud_account_smoke.py`: navegador real con Supabase HTTP interceptado. Nunca envía datos de usuario a Supabase real. `tests/duet_smoke.py` prueba exclusivamente el módulo histórico inyectado por su fixture; no habilita salas en el lanzamiento. Los contratos de interfaz/render se actualizan para el acceso opcional sin sondeo de /api/session.
 
-Pendiente: carreras HTTP simultáneas, cuotas completas, sesión vencida/borrada, recuperación por código, eliminación real, actualización PWA y validación en Android/iOS/escritorio. El servicio real tiene aceptación parcial, no cierre de lanzamiento. Revisado changelog Supabase: retirada de cifrados TLS CBC antiguos prevista desde noviembre 2026; probar con sistemas/WebView actualizados.
+Pendiente: carreras HTTP simultáneas, cuotas completas, sesión vencida/borrada, recuperación por enlace, eliminación real, actualización PWA y validación en Android/iOS/escritorio. El servicio real tiene aceptación parcial, no cierre de lanzamiento. Revisado changelog Supabase: retirada de cifrados TLS CBC antiguos prevista desde noviembre 2026; probar con sistemas/WebView actualizados.
 
 Resultado local de esta iteración: 8 suites Node afectadas y auditoría aprobadas; recorrido nuevo de cuenta en Chromium aprobado con HTTP simulado. No se ejecutó la suite completa ni renders de audio. Adaptación de entorno Windows: Node con adaptador externo para python3, Playwright existente en PYTHONPATH y licencias auditadas con bytes originales de Git sin cambios versionados.
 
@@ -45,3 +45,9 @@ Recorridos afectados adicionales: interfaz en cinco tamaños, regresión de ojos
 - La copia aislada `live-verification` quedó en Dev: su limpieza fue cancelada por la herramienta y no se reintentó. No es una partida personal ni modifica el mundo principal.
 - Correcciones reales: eliminar grants TRUNCATE/REFERENCES/TRIGGER heredados; revocar EXECUTE público del helper rls_auto_enable; mover borrado privilegiado a kubono_private con envoltorio público invoker. Advisors posteriores sin avisos de permisos/RLS; queda aviso `auth_leaked_password_protection` (protección contra contraseñas filtradas desactivada), a revisar antes de producción sin contratar nada ahora. [Detalle oficial](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection).
 - Hubo errores transitorios de la conexión MCP; luego se recuperó. No se ocultaron errores ni se amplió el acceso de CORESOLUTIONS.
+
+## Recuperación local gratuita
+
+Ejecutar `python scripts/serve-recovery.py` y mantenerlo abierto. Usa `http://localhost:3000/`, Site URL predeterminada de Supabase; si fue modificada, autorizar esa URL exacta en Authentication → URL Configuration. En el juego, escribe el correo autorizado y pulsa «Olvidé mi clave». Abre el último enlace recibido y elige una clave propia (no compartirla en el chat). Después vuelve al juego e inicia sesión.
+
+Sin editar plantillas ni contratar SMTP. Solo destinatarios autorizados y cuota gratuita de desarrollo; no reenviar repetidamente ante límites. El callback borra el fragmento, valida el acceso contra Auth y conserva el token solo en memoria, sin tocar la partida. Recargar requiere otro enlace. Falta el cierre público/móvil, sus callbacks y correo de producción.
