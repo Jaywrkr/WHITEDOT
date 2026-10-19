@@ -87,3 +87,7 @@ Cuenta/pago son independientes: esto no implementa compra, recibos ni desbloqueo
 Aceptación humana alpha.57 (19 oct): Jay confirmó que Safari normal conserva sesión y que PC/iPhone muestran las mismas chispas automáticamente. No repetir ese recorrido. Android sigue pendiente de instalar la compilación actualizada y comprobar acceso/saldo.
 
 Android alpha.57: compilación 0481194 y prueba real de puerta de acceso en emulador aprobadas. App instalada en paquete separado, sin sustituir datos previos. Falta entrada privada de Jay, saldo real y reapertura.
+
+Aceptación Android completada (emulador, alpha.57): Jay inició sesión y confirmó saldo igual al PC/iPhone. Se forzó cierre del proceso y apertura en frío sin volver a introducir credenciales; el juego volvió con 52 chispas visibles. No equivale a Android físico ni iOS nativo. Correo/callbacks de producción, privacidad/operación, compra de tiendas y cierre de eliminación de cuenta desde UI siguen separados de esta prueba.
+
+Alpha.58: eliminación desde UI verificada con Auth/REST simulado (cancelación, reautenticación, RPC y retorno a entrada sin sesión). Se corrigió una carrera: no borrar la sesión actual antes de recibir respuesta de reautenticación. RPC real ya validado aparte con usuario/sesión/copia desechables en transacción revertida. No se atribuye borrado HTTP real de una cuenta alojada.

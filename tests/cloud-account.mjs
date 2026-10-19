@@ -51,3 +51,9 @@ const cachedAuth=()=>{const s=memory();s.setItem('kubono:auth:'+config.url,JSON.
 const revoked=createCloudClient(config,{storage:cachedAuth(),now:()=>now,fetcher:async()=>new Response('{}',{status:401})});await assert.rejects(revoked.identity());assert.equal(revoked.user(),null);
 const unavailable=createCloudClient(config,{storage:cachedAuth(),now:()=>now,fetcher:async()=>{throw Error('offline');}});await assert.rejects(unavailable.identity(),/Sin conexión/);assert.equal(unavailable.user().id,'one');
 console.log('PASS mandatory admission: rejected server identity clears access; cached offline identity retained');
+
+// Reauthentication must not temporarily log out a running world before deletion.
+const reauthStorage=memory();let releaseAuth;let gateAuth=null;
+const reauthClient=createCloudClient(config,{storage:reauthStorage,now:()=>now,fetcher:async(url,options)=>{if(gateAuth&&url.includes('/token?'))await gateAuth;return fetcher(url,options);}});
+await reauthClient.login('fixture@example.test','fixture-password-123');gateAuth=new Promise(r=>releaseAuth=r);const deleting=reauthClient.erase('fixture-password-123');assert(reauthClient.user(),'reauthentication keeps the old identity until Auth responds');releaseAuth();await deleting;assert.equal(reauthClient.user(),null);
+console.log('PASS deletion reauthentication retains admission until confirmed account removal');

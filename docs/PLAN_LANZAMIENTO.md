@@ -168,3 +168,7 @@ Decisión vigente alpha.57: cuenta obligatoria; sin demo ni invitado. Correo/cla
 19 oct 2026 · Jay confirmó en alpha.57: Safari normal no pidió contraseña al reabrir y PC/iPhone mostraron las mismas chispas automáticamente. Cierre web real aprobado para ese recorrido. Siguiente: APK de cuentas aislado en emulador, sin borrar la app anterior. Correo/callbacks de producción y compra de tiendas siguen pendientes; sin publicación ni contratación.
 
 Android de cuentas: build 39334695709 aprobado; APK instalado y puerta de acceso real verificada en emulador. Pendiente Jay inicia sesión para contrastar saldo y reapertura. No se vuelve a probar el recorrido PC/iPhone ya aprobado.
+
+Aceptación Android completada (emulador, alpha.57): Jay inició sesión y confirmó saldo igual al PC/iPhone. Se forzó cierre del proceso y apertura en frío sin volver a introducir credenciales; el juego volvió con 52 chispas visibles. No equivale a Android físico ni iOS nativo. Correo/callbacks de producción, privacidad/operación, compra de tiendas y cierre de eliminación de cuenta desde UI siguen separados de esta prueba.
+
+Alpha.58 cierra la prueba UI de eliminación con una cuenta ficticia y corrige la reautenticación prematura; el borrado RPC real fue verificado antes de forma aislada. El saldo y reapertura reales de Android aprobados corresponden al APK alpha.57; la corrección alpha.58 deberá incorporarse al siguiente APK antes de tienda.

@@ -1,9 +1,15 @@
+# Reautenticación segura al eliminar cuenta · alpha.58
+
+- La sesión actual se conserva mientras Auth comprueba las credenciales; ya no se recarga prematuramente el juego durante la eliminación. Tras borrado confirmado se cierra el acceso y vuelve a la entrada.
+- Prueba de interfaz con usuario ficticio: cancelar no borra, confirmar reautentica y llama al RPC, se limpian tokens y vuelve el bloqueo obligatorio; otra cuenta permanece intacta. No se eliminó ninguna cuenta alojada en esta prueba; el RPC real se comprobó previamente con datos desechables y rollback.
+
 # Verificación real web y preparación Android de cuentas
 
 - Jay confirmó sesión persistente y saldo idéntico automático entre Safari normal y PC en alpha.57.
 - Preparación de APK de cuentas con package de prueba separado para preservar la instalación anterior; workflow de compilación sin publicación y prueba de entrada obligatoria en WebView.
 - APK compilado (Actions 39334695709, 0481194), hashes verificados e instalado aparte. Puerta de cuenta real aprobada en emulador (1 prueba); acceso habitual actualizado con copia previa.
-- Pendientes: acceso/saldo reales del APK y reapertura, correo/callbacks de producción y compra de tiendas. Sin contratos nuevos.
+- Android real en emulador: Jay confirmó acceso/saldo igual a PC/iPhone; cierre forzado y apertura en frío conservaron sesión y 52 chispas.
+- Pendientes de lanzamiento: correo/callbacks públicos, privacidad/operación, eliminación desde UI y compra de tiendas. Sin contratos nuevos.
 
 # Cuenta obligatoria y partidas separadas · alpha.57
 
