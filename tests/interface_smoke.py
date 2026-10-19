@@ -25,8 +25,8 @@ try:
    page.locator('#bMenu').click()
    assert page.locator('#w').evaluate('(e)=>e.inert'), 'canvas cannot receive focus behind a modal'
    assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Tu espacio','Crear','Sonido','Más']
-   # This static server has no optional /api: the account entry stays out of the menu (duet_smoke covers it with a server).
-   page.wait_for_function('document.getElementById("bConnection").hidden')
+   # Optional account stays available; without configuration it explains local-only mode.
+   page.wait_for_function('!document.getElementById("bConnection").hidden')
    page.locator('#mMenu .sheet').evaluate('e=>e.scrollTop=e.scrollHeight')
    close=page.locator('#mnClose').bounding_box()
    assert close['y']>=0 and close['y']+close['height']<=height, 'close stays visible while menu scrolls'
@@ -77,7 +77,7 @@ try:
    assert page.evaluate('document.activeElement.id')=='bMenu'
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth&&document.documentElement.scrollHeight<=innerHeight')
    assert not errors,errors
-   print(f'PASS UI {width}×{height}: eight real sheets, account entry hidden without server, touch targets, no overflow, summary/focus return, silent settings and keyboard effects',flush=True)
+   print(f'PASS UI {width}×{height}: eight real sheets, optional account entry available in local mode, touch targets, no overflow, summary/focus return, silent settings and keyboard effects',flush=True)
    page.close()
   browser.close()
 finally: server.shutdown()

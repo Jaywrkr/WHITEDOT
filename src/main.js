@@ -35,7 +35,7 @@ import {initialize as worldVisibility} from './world-visibility.js';
 import {initialize as worldFamilyArt} from './world-family-art.js';
 import {initialize as anatomyView} from './anatomy-view.js';
 import {initialize as rewards} from './rewards.js';
-import {initialize as connection} from './connection.js';
+import {initialize as connection} from './cloud-account.js';
 import {initialize as livingDiscoveries} from './living-discoveries.js';
 import {initialize as livingBuildings} from './living-buildings.js';
 import {initialize as livingTerrain} from './living-terrain.js';

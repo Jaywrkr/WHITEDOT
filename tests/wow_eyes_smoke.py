@@ -31,10 +31,10 @@ try:
   before=page.evaluate('({eyes:eyeDraws,time:__r.wowState.seconds})')
   page.wait_for_function('(eyeDraws>'+str(before['eyes'])+'+10)&&(__r.wowState.seconds>'+str(before['time'])+'+.3)')
   assert page.evaluate('__r.inhabitantsNear(130).length')>0
-  assert 404 in sessions, sessions
-  assert page.locator('#bConnection').is_hidden()
+  assert not sessions, sessions  # Unconfigured cloud never probes the retired same-origin API.
+  assert page.locator('#bConnection').get_attribute('hidden') is None
   assert not errors, errors
   browser.close()
- print('PASS real inhabitant eyes and successive animation frames despite independent /api/session 404')
+ print('PASS real inhabitant eyes and successive animation frames with optional cloud unconfigured and no legacy API request')
 finally:
  server.shutdown();server.server_close()

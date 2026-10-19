@@ -1,6 +1,10 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.3.0-alpha.50';
+const CACHE='whitedot-2.3.0-alpha.51';
 const SHELL=[
+ "./src/cloud-config.js",
+ "./src/cloud-client.js",
+ "./src/cloud-sync.js",
+ "./src/cloud-account.js",
  "./src/universe-activities-model.js","./src/universe-activities-art.js","./src/universe-activities.js","./src/universe-texts.js",
  "./src/musical-wonders-model.js","./src/musical-wonders-audio.js","./src/musical-wonders-art.js","./src/musical-wonders.js",
  "./src/sculpture-totems-model.js","./src/sculpture-totems-art.js","./src/sculpture-totems.js",
