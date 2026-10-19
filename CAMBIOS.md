@@ -1,8 +1,12 @@
 # Cambios recientes
 
+## Decisiones comerciales de Kubono · 19 de octubre de 2026
+
+Plan actualizado: nombre Kubono, dominio previsto playkubono.com sin compra y demo web confirmada. Registra alcance de búsquedas de marca, equipos disponibles, precios aprobados de US$2,99 móvil / US$4,99 escritorio y presupuesto inicial aprobado de US$350. Verificación de cuentas y equipos pendiente. Paquete común en espera; sin renombrar producto, modificar juego ni contratar servicios.
+
 ## Plan compartido de lanzamiento · 19 de octubre de 2026
 
-`docs/PLAN_LANZAMIENTO.md` concentra decisiones de nombre, precio, relación web/app, cuentas, prueba cerrada, materiales, landing, comunicación, salida Android e iOS posterior. Calendario propuesto de seis semanas más margen de revisión; responsables, dependencias, condiciones de publicación y próxima acción. Fechas y previsiones no son compromisos ni autorizan gastos/publicación. Sin cambios de juego, versión o caché; solo documentación desde main `5a08f0e`.
+`docs/PLAN_LANZAMIENTO.md` concentra marca, precio, web, cuentas, materiales, landing y comunicación. Corregido según decisión de Jay: preparación conjunta de Android, iOS/iPadOS, web/PWA y Windows/macOS/Linux, con salida independiente al estar cada plataforma lista y aprobada. Incluye Steam, evaluación de consolas, dependencias y ventana orientativa de ocho semanas por reestimar con recursos reales. Sin cambios de juego, versión o caché; no autoriza ports, gastos ni publicación.
 
 ## Android instalable de prueba · 19 de octubre de 2026
 
