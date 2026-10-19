@@ -8,10 +8,17 @@ const hash=location.hash;history.replaceState(null,'',location.pathname);
 const status=document.getElementById('status'),form=document.querySelector('form');
 try{
  const [{CLOUD_CONFIG},{recoverySession}]=await Promise.all([import('./src/cloud-config.js'),import('./src/cloud-recovery.js')]);
+ const params=new URLSearchParams(hash.replace(/^#/,''));
+ if(params.get('type')==='signup'&&!params.has('error')&&params.get('access_token')){
+  const response=await fetch(CLOUD_CONFIG.url+'/auth/v1/user',{credentials:'omit',cache:'no-store',signal:AbortSignal.timeout(15000),headers:{apikey:CLOUD_CONFIG.publishableKey,Authorization:'Bearer '+params.get('access_token')}});
+  if(!response.ok||!(await response.json())?.id)throw Error('Confirmación no válida');
+  document.querySelector('h2').textContent='Correo confirmado';status.textContent='Vuelve a Kubono y entra con tu correo y contraseña.';
+ }else{
  const session=await recoverySession(CLOUD_CONFIG,hash);status.textContent='Elige tu nueva clave. Tu partida permanece intacta.';form.hidden=false;
  form.onsubmit=async event=>{event.preventDefault();const button=form.querySelector('button');button.disabled=true;
   try{await session.change(form.elements.password.value,form.elements.confirmation.value);form.reset();form.hidden=true;status.textContent='Clave actualizada. Vuelve al juego y entra con tu correo y tu nueva clave.';}
   catch(error){status.textContent=error.message;}finally{button.disabled=false;}
  };
+ }
 }catch(_){status.textContent='Enlace ausente, vencido o sin conexión. Solicita otro desde el juego.';}
 </script></html>

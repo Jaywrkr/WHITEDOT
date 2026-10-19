@@ -12,7 +12,7 @@ threading.Thread(target=server.serve_forever,daemon=True).start()
 try:
  with sync_playwright() as p:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required']);page=b.new_page(viewport={'width':320,'height':568},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__testRuntime?.styleUI')
   initial=page.evaluate('''()=>{const r=__testRuntime;if(r.ac)throw Error('Unexpected early context');const AC=window.AudioContext,oscillators=[],gains=[];window.AudioContext=function(){const ac=new AC(),osc=ac.createOscillator.bind(ac),gain=ac.createGain.bind(ac);ac.createOscillator=()=>{const o=osc();oscillators.push(o);return o;};ac.createGain=()=>{const g=gain();gains.push(g);return g;};return ac;};r.audio();const state={musicalDrones:oscillators.filter(o=>o.frequency.value>=130).length,boost:gains.some(g=>Math.abs(g.gain.value-8.4)<.0001)};document.getElementById('returnContinue').click();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);return state;}''')
   assert initial['musicalDrones']==0,initial

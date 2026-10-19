@@ -13,7 +13,7 @@ try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
   page=browser.new_page(viewport={'width':390,'height':844});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.wonderTick');page.locator('#returnContinue').click();page.locator('#hcGo').click()
   fixtures=page.evaluate('''async()=>{const r=__r;r.S.sound=false;r.S.firstJourney.skipped=true;r.S.pathCrystals=Array.from({length:10},(_,i)=>'fixture:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();const {wonderCell,WONDERS}=await import('/src/musical-wonders-model.js');const found={};for(let x=-100;x<100&&Object.keys(found).length<20;x++)for(let y=-100;y<100&&Object.keys(found).length<20;y++)for(const o of wonderCell(x,y,r.seedOf))found[o.kind]||=o;window.fixtures=found;return WONDERS.map(d=>found[d.id]);}''')
   assert len(fixtures)==20 and all(fixtures)

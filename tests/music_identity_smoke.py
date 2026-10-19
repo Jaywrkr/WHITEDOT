@@ -15,7 +15,7 @@ try:
   page=b.new_page(viewport={'width':390,'height':844},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.add_init_script('''window.__fonts=[];const fill=CanvasRenderingContext2D.prototype.fillText;
    CanvasRenderingContext2D.prototype.fillText=function(...args){__fonts.push(this.font);if(__fonts.length>500)__fonts.shift();return fill.apply(this,args);};''')
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   url=f'http://127.0.0.1:{server.server_port}/'
   page.goto(url+'?testSeed=laboratorio&lab=1&layout=wide&generation=2');page.wait_for_function('__testRuntime?.labMode')
   page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true)')

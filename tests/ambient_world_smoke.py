@@ -11,7 +11,7 @@ server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)))
 try:
  with sync_playwright() as p:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required']);page=b.new_page(viewport={'width':390,'height':844},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=groves&generation=2');page.wait_for_function('__testRuntime?.inWorld()');page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)")
   page.wait_for_function('!document.getElementById("bStyles").hidden');page.locator('#bStyles').tap();page.locator('#musicTravelConnections').tap();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=60000)
   page.evaluate('__testRuntime.audio();__testRuntime.S.sound=true')

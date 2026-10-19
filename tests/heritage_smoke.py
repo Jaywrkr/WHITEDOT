@@ -13,7 +13,7 @@ try:
  with sync_playwright() as p:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
   page=b.new_page(viewport={'width':390,'height':844},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=heritage-return&layout=wide');page.wait_for_function('__testRuntime?.worldIdentity')
   page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true)')
   result=page.evaluate('''async()=>{const r=__testRuntime,{relicAt}=await import('/src/relics.js');let site;for(let x=3;x<400&&!site;x++)for(let y=1;y<4&&!site;y++){const s=relicAt(x,y,r.WCH,r.seedOf,r.rng);if(s&&!r.regionOfPos(s.x,s.y).sea)site=s;}if(!site)throw Error('Missing site');

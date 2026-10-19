@@ -11,7 +11,7 @@ server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)))
 try:
  with sync_playwright() as p:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox']);page=b.new_page(viewport={'width':390,'height':844},has_touch=True);errors=[];page.on('pageerror',lambda e:(errors.append(str(e)),print(str(e),flush=True)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__testRuntime?.achievementRules');assert page.evaluate('window.__testRuntime.ACH.length')==370
   result=page.evaluate('()=>{const r=window.__testRuntime;document.querySelectorAll(".modal").forEach(m=>m.hidden=true);r.S.ach.dj="2026-01-01";r.S.journal.music.genres={minimal:1,deep:1};r.achievementsTick(2);r.save();return r.achievementRules.find(p=>p.metric==="genres").id;}')
   assert page.evaluate('(id)=>!!window.__testRuntime.S.ach[id]',result);assert page.evaluate('(id)=>window.__testRuntime.ownsReward("achievement:"+id)',result)

@@ -21,7 +21,7 @@ try:
   for width,height in [(390,844),(1280,800)]:
    page=browser.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[]
    page.on('pageerror',lambda e:errors.append(str(e)))
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.totemTick')
    page.locator('#returnContinue').click();page.locator('#hcGo').click()
    page.evaluate('''async()=>{const r=__r;r.S.sound=false;r.S.firstJourney.skipped=true;r.S.pathCrystals=Array.from({length:10},(_,i)=>'totem:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();r.noticeLane.quietRoutine();const {totemCell,TOTEMS}=await import('/src/sculpture-totems-model.js'),{crystalField}=await import('/src/crystal-sparks.js');const fixtures={};for(let x=-30;x<=30;x++)for(let y=-30;y<=30;y++){const a=totemCell(x,y,r.seedOf);if(a.length>1&&!fixtures.group)fixtures.group=a;if(a.length!==1)continue;const o=a[0];if(crystalField(o.x,o.y,r.seedOf).some(c=>Math.hypot(c.x-o.x,c.y-o.y)<220))continue;fixtures[TOTEMS[o.kind].action]||=o;}if(!fixtures.stack||!fixtures.orb||!fixtures.guide||!fixtures.group)throw Error('Missing natural sculptures');window.fixtures=fixtures;r.S.wx=fixtures.stack.x;r.S.wy=fixtures.stack.y-50;window.balance=r.S.sparks;}''')

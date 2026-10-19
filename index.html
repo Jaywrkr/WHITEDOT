@@ -33,6 +33,7 @@
 
 </head>
 <body>
+<style>body[data-account-locked] > :not(#mConnection):not(script):not(style){visibility:hidden!important;pointer-events:none!important}</style>
 <canvas id="w" aria-label="Mundo del juego"></canvas>
 <div id="returnEntrance" class="modal return-entrance" role="dialog" aria-modal="true" aria-labelledby="returnPhrase" hidden><button id="returnContinue" aria-label="Comenzar a explorar"><svg viewBox="0 0 40 80" aria-hidden="true"><path d="M25 4 12 36h15L14 76"/></svg><span id="returnPhrase"></span><span class="return-signature">.simple</span></button></div>
 
@@ -166,8 +167,8 @@
       <button id="bJumpBack" hidden><span>Volver al salto</span></button>
       <button id="bSettings"><span>Ajustes</span></button>
       <button id="bGuide"><span>Guía de juego</span></button>
-      <button id="bConnection"><span>Cuenta y respaldo</span></button>
-      <button id="bSaveTools"><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Guardar copia</span></button>
+      <button id="bConnection"><span>Cuenta</span></button>
+      <button id="bSaveTools" hidden><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Guardar copia</span></button>
       <button id="pwaUpdate" hidden><span>Actualizar versión disponible</span></button>
     </div></section>
     </div>
@@ -180,7 +181,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.55</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.57</span><small id="releaseDeploy">deploy sin registrar</small></div>
     <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>
@@ -232,7 +233,7 @@
  <h3>Avanzar a tu ritmo</h3><p><b>Camino.</b> Rompe diez cristales. El décimo abre el Mundo automáticamente.</p>
  <p><b>Chispas.</b> En el Mundo, rompe cristales y recoge sus fragmentos. Saltar cuesta 20; volver al punto anterior es gratis. Las apariencias se compran una sola vez.</p>
  <p><b>Tarjetas y distancia.</b> Las tarjetas completan conjuntos que dan chispas una vez. Caminar desbloquea títulos; las metas son opcionales.</p>
- <h3>Conservar tu partida</h3><p>El progreso se guarda en este navegador. Menú → Guardar copia permite exportarlo antes de cambiar de dispositivo.</p>
+ <h3>Conservar tu partida</h3><p>El progreso se guarda en este navegador. Entra en tu cuenta para continuar automáticamente en otro dispositivo.</p>
  </div>
  </div><div class="row"><button id="guideLabPractice" aria-label="Escuchar y responder en el laboratorio">Laboratorio</button><button id="guidePractice">Practicar</button><button id="guideClose">Seguir jugando</button></div>
 </div></div>
@@ -395,7 +396,7 @@
  <label for="mirrorAngle1">Espejo 2 <output id="mirrorValue1"></output></label><input id="mirrorAngle1" type="range" min="0" max="180" step="1">
  <label for="mirrorAngle2">Espejo 3 <output id="mirrorValue2"></output></label><input id="mirrorAngle2" type="range" min="0" max="180" step="1"><small id="mirrorInfo"></small></aside>
 
-<div class="modal" id="mConnection" hidden><div class="sheet"><h2>Cuenta y respaldo</h2><p id="accountState"></p><p id="connectionStatus" role="status"></p><form id="accountForm"><label for="accountName">Correo</label><input id="accountName" type="email" autocomplete="username" maxlength="254" required><label for="accountPassword">Clave · al menos 12 caracteres</label><input id="accountPassword" type="password" autocomplete="current-password" minlength="12" maxlength="128" required><div class="row"><button type="submit">Entrar</button><button id="accountRegister" type="button">Crear cuenta</button><button id="accountGuest" type="button">Seguir sin cuenta</button><button id="accountLogout" type="button">Salir de cuenta</button></div></form><div class="row"><button id="accountRecover">Olvidé mi clave</button><button id="accountDelete">Eliminar cuenta</button></div><div hidden><label for="accountCode">Código recibido por correo</label><input id="accountCode" inputmode="numeric" autocomplete="one-time-code" maxlength="10"><div class="row"><button id="accountVerify">Confirmar correo</button><button id="accountVerifyRecovery">Verificar recuperación</button></div><label for="accountNewPassword">Nueva clave · al menos 12 caracteres</label><input id="accountNewPassword" type="password" autocomplete="new-password" minlength="12" maxlength="128"><button id="accountUpdatePassword">Guardar nueva clave</button></div><h3>Tu copia</h3><p>Tu partida se sincroniza automáticamente.</p><p>Solo tendrás que elegir si hay avances distintos.</p><p>Conservamos una copia antes de reemplazar.</p><div class="row"><button id="cloudPush">Conservar esta partida</button><button id="cloudPull">Usar copia online</button><button id="cloudDownload">Descargar respaldo remoto</button></div><div id="connectionRooms" hidden><h3>Dos voces</h3><p id="roomStatus"></p><p>Unirte te lleva junto al anfitrión.</p><p>Comparte el código con una persona.</p><p>Cada voz tiene su espacio musical.</p><p>La sala cubre un entorno local; termina al quedar vacía.</p><label for="roomCode">Código de invitación</label><input id="roomCode" maxlength="12" autocomplete="off"><div class="row"><button id="roomCreate">Crear sala</button><button id="roomJoin">Unirme</button><button id="roomLeave">Salir de sala</button></div></div><button id="connectionClose">Volver al mundo</button></div></div>
+<div class="modal" id="mConnection" hidden><div class="sheet"><h2>Cuenta</h2><p id="accountState"></p><p id="connectionStatus" role="status"></p><form id="accountForm"><label for="accountName">Correo</label><input id="accountName" type="email" autocomplete="username" maxlength="254" required><label for="accountPassword">Clave · al menos 12 caracteres</label><input id="accountPassword" type="password" autocomplete="current-password" minlength="12" maxlength="128" required><div class="row"><button type="submit">Entrar</button><button id="accountRegister" type="button">Crear cuenta</button><button id="accountGuest" type="button" hidden>Volver</button><button id="accountLogout" type="button">Salir de cuenta</button></div></form><div class="row"><button id="accountRecover">Olvidé mi clave</button><button id="accountDelete">Eliminar cuenta</button></div><div hidden><label for="accountCode">Código recibido por correo</label><input id="accountCode" inputmode="numeric" autocomplete="one-time-code" maxlength="10"><div class="row"><button id="accountVerify">Confirmar correo</button><button id="accountVerifyRecovery">Verificar recuperación</button></div><label for="accountNewPassword">Nueva clave · al menos 12 caracteres</label><input id="accountNewPassword" type="password" autocomplete="new-password" minlength="12" maxlength="128"><button id="accountUpdatePassword">Guardar nueva clave</button></div><p>Tu avance se guarda automáticamente en tu cuenta.</p><div class="row"><button id="cloudPush">Conservar esta partida</button><button id="cloudPull">Usar copia online</button></div><button id="cloudDownload" type="button" hidden aria-hidden="true" tabindex="-1"></button><div id="connectionRooms" hidden><h3>Dos voces</h3><p id="roomStatus"></p><p>Unirte te lleva junto al anfitrión.</p><p>Comparte el código con una persona.</p><p>Cada voz tiene su espacio musical.</p><p>La sala cubre un entorno local; termina al quedar vacía.</p><label for="roomCode">Código de invitación</label><input id="roomCode" maxlength="12" autocomplete="off"><div class="row"><button id="roomCreate">Crear sala</button><button id="roomJoin">Unirme</button><button id="roomLeave">Salir de sala</button></div></div><button id="connectionClose">Volver al mundo</button></div></div>
 <script type="module" src="./src/main.js"></script>
 
 

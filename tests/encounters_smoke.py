@@ -13,7 +13,7 @@ with sync_playwright() as p:
  context=browser.new_context(viewport={'width':390,'height':844},is_mobile=True,has_touch=True)
  kinds=[]
  page=context.new_page();page.set_default_timeout(8000);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
- page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+ page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
  page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=creative-lab&encounter=cloud');page.wait_for_function('window.__testRuntime?.encounterObjects.length>0')
  kinds=page.evaluate("import('./src/encounter-families.js').then(m=>Object.keys(m.FAMILIES))")
  browser.close()
@@ -22,7 +22,7 @@ with sync_playwright() as p:
   context=browser.new_context(viewport={'width':390,'height':844},is_mobile=True,has_touch=True)
   kinds=[]
   page=context.new_page();page.set_default_timeout(8000);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=creative-lab&encounter={kind}');page.wait_for_function(f'window.__testRuntime?.encounterObjects.some(o=>o.id==="preview:{kind}")')
   page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)")
   before=page.evaluate(f"(()=>{{const r=__testRuntime,o=r.encounterObjects.find(o=>o.id==='preview:{kind}');window.enc=o;return {{x:r.S.wx,y:r.S.wy,a:o.state.a,b:o.state.b,c:o.state.c}};}})()")

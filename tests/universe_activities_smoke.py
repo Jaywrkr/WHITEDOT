@@ -22,7 +22,7 @@ try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH'),args=['--no-sandbox'])
   page=browser.new_page(viewport={'width':390,'height':844},has_touch=True);page.set_default_timeout(15000);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.activityWorldTick');page.locator('#returnContinue').click();page.locator('#hcGo').click()
   page.evaluate('''async()=>{const r=__r;r.S.sound=false;r.S.firstJourney.skipped=true;r.S.pathCrystals=Array.from({length:10},(_,i)=>'activity:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();const {activityCell}=await import('/src/universe-activities-model.js');const sites={};for(let x=-120;x<120&&Object.keys(sites).length<30;x++)for(let y=-120;y<120&&Object.keys(sites).length<30;y++)for(const o of activityCell(x,y,r.seedOf))sites[o.kind]||=o;window.sites=sites;if(Object.keys(sites).length!==30)throw Error('Missing activity types');}''')
   page.evaluate('()=>{const p=sites.orchestra;__r.S.wx=p.x;__r.S.wy=p.y;window.balance=__r.S.sparks;window.worldPoint={x:p.x,y:p.y};}')

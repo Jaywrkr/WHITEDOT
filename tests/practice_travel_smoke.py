@@ -14,7 +14,7 @@ try:
   for width,height in [(320,568),(390,844),(844,390)]:
    b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
    page=b.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=sonidos&generation=2&layout=vasto');page.wait_for_function('__testRuntime?.inWorld()')
    page.evaluate('''()=>{document.querySelectorAll('.modal').forEach(m=>m.hidden=true);const r=__testRuntime;r.S.cat.held=true;r.S.ach.held=r.S.todayKey;window.__pulses=0;const original=r.sessionAction;window.__point={x:r.S.wx,y:r.S.wy,layer:r.S.layer||'superficie'};}''')
    page.evaluate('__testRuntime.S.sparks=40;__testRuntime.sparkEconomy.earned=40');page.wait_for_function('!document.getElementById("w").inert');page.wait_for_function('!document.getElementById("bJump").hidden')

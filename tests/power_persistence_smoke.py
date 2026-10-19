@@ -11,7 +11,7 @@ server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)))
 try:
  with sync_playwright() as p:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required']);page=b.new_page(viewport={'width':390,'height':844},has_touch=True);errors=[];page.set_default_timeout(10000);page.on('pageerror',lambda e:(errors.append(str(e)),print(str(e),flush=True)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   url=f'http://127.0.0.1:{server.server_port}/?testSeed=power-persistence&layout=classic&generation=2&travel=1'
   page.goto(url);page.wait_for_function('window.__testRuntime?.quietState');page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true)');page.mouse.click(20,250);page.wait_for_function('__testRuntime.ac?.state==="running"')
   quiet='''()=>{const r=__testRuntime,q=r.quietState,d=r.MU.dnaT;r.body.ready=true;r.body.speed=0;r.body.jump=false;q.anchor={x:r.S.wx,y:r.S.wy};q.key=d.key;q.seconds=199.5;q.stage=4;r.quietTick(1);return {id:r.S.giftBoxes.at(-1)?.id,count:r.S.giftBoxes.length,book:structuredClone(r.S.quietGifts)};}'''

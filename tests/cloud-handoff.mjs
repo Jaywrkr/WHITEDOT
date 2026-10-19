@@ -18,7 +18,7 @@ const reopened=device(a.storage);reopened.state=structuredClone(a.state);await r
 // Both devices advance: neither automatic read nor write may choose a winner.
 a.state={sparks:10,earned:30,spent:20};const before=writes;assert.equal(await a.sync.reconcile(a.snapshot,a.restore),false);assert.equal(a.state.sparks,10);assert.equal(remote.state.sparks,12);await a.sync.push(a.snapshot,{force:true});assert.equal(writes,before);
 // A local change during the remote read cannot be discarded.
-let release;gate=new Promise(r=>release=r);const pending=reopened.sync.reconcile(reopened.snapshot,reopened.restore);reopened.state.sparks=15;release();await pending;gate=null;assert.equal(reopened.state.sparks,15);assert(!reopened.sync.ready);
+let release;gate=new Promise(r=>release=r);const pending=reopened.sync.reconcile(reopened.snapshot,reopened.restore);reopened.state.sparks=15;release();await pending;gate=null;assert.equal(reopened.state.sparks,15);assert(reopened.sync.ready,'in-flight local progress is safe when remote is unchanged');
 // Old numeric revision metadata cannot prove that a local save is unchanged.
 const legacy=device({getItem:()=>String(remote.revision),setItem(){}});legacy.state={sparks:99};await legacy.sync.inspect('world');await legacy.sync.reconcile(legacy.snapshot,legacy.restore);assert.equal(legacy.state.sparks,99);assert(!legacy.sync.ready);
 assert.equal(cloudStateKey({sparks:4,session:{seconds:10},livingSeconds:20}),cloudStateKey({livingSeconds:21,session:{seconds:12},sparks:4}));
@@ -37,3 +37,6 @@ remote=null;const initial=device();initial.state={sparks:7};await initial.sync.i
 const fresh=device();await fresh.sync.inspect('new');await fresh.sync.reconcile(fresh.snapshot,fresh.restore,{empty:()=>true});assert.equal(fresh.state.sparks,7);assert(fresh.sync.ready);
 const guest=device();guest.state={sparks:3};await guest.sync.inspect('new');await guest.sync.reconcile(guest.snapshot,guest.restore,{empty:()=>false});assert.equal(guest.state.sparks,3);assert(!guest.sync.ready);
 console.log('PASS automatic first upload, pristine restore and protected guest progress');
+
+// An older empty server save is not a real conflict with earned guest progress.
+remote={revision:1,state:{sparks:0}};const earnedGuest=device();earnedGuest.state={sparks:4,earned:24,spent:20};await earnedGuest.sync.inspect('world');await earnedGuest.sync.reconcile(earnedGuest.snapshot,earnedGuest.restore,{empty:()=>false,remoteEmpty:s=>s.sparks===0});await earnedGuest.sync.push(earnedGuest.snapshot,{force:true});assert.equal(remote.state.sparks,4);assert.equal(remote.state.spent,20);

@@ -16,7 +16,7 @@ try:
   errors, sessions = [], []
   page.on('pageerror', lambda e: errors.append(str(e)))
   page.on('response', lambda r: sessions.append(r.status) if r.url.endswith('/api/session') else None)
-  page.route('**/src/main.js', lambda route: route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;', content_type='text/javascript'))
+  page.route('**/src/main.js', lambda route: route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;', content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/')
   page.wait_for_function('!!window.__r?.sparkTick')
   assert page.locator('#mHelpC .firma').inner_text()=='.simple'

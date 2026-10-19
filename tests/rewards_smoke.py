@@ -14,7 +14,7 @@ try:
   browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   page=browser.new_page(viewport={'width':390,'height':844},is_mobile=True,has_touch=True);errors=[]
   page.on('pageerror',lambda e:errors.append(str(e)))
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   legacy={'ach':{'tope':'2026-10-01','mundo':'2026-10-02','r3':'2026-10-03','estrella1':'2026-10-04','poder_cometa':'2026-10-05','quietud5':'2026-10-06','tiempo':'2026-10-07','bandada1':'2026-10-08'},'cube':{'color':'#f0d27a','trail':'line','halo':'pulse'},'color':'#f0d27a','helpV2':True,'help':{'camino':True,'mundo':True},'favorites':{'version':1,'items':[]}}
   page.add_init_script('if(!localStorage.getItem("pixel-blanco-v4"))localStorage.setItem("pixel-blanco-v4",'+json.dumps(json.dumps(legacy))+');')
   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('__testRuntime?.rewardCatalog?.length>86')

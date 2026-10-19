@@ -16,7 +16,7 @@ try:
    page=browser.new_page(viewport={'width':width,'height':height},is_mobile=width<1000,has_touch=True);errors=[]
    page.on('pageerror',lambda e:errors.append(str(e)))
    page.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>false})")
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=visual-depth&layout=classic&generation=2')
    page.wait_for_function('__testRuntime?.worldVisibility')
    page.evaluate('()=>{const r=__testRuntime;r.S.relaxedCreate=true;r.S.sound=false;document.querySelectorAll(".modal").forEach(m=>m.hidden=true);}')

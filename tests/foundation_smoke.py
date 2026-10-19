@@ -13,12 +13,12 @@ try:
   for width,height in [(390,844),(844,390),(1280,800)]:
    context=browser.new_context(viewport={'width':width,'height':height},accept_downloads=True,has_touch=True);page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.set_default_timeout(10000)
    page.add_init_script("const original=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(window.__quota&&k.startsWith('pixel-blanco'))throw new DOMException('Quota','QuotaExceededError');return original.call(this,k,v)}")
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=foundation-lab&layout=classic');page.wait_for_function('window.__testRuntime?.S.mode==="world"');page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)")
    page.evaluate("__testRuntime.S.ach.fixture='2026-10-13';__testRuntime.S.studio.slots={'0,0':'luz'};__testRuntime.addFavorite('Mi música');__testRuntime.save()")
    assert page.evaluate('__testRuntime.favorites[0].address.seed')=='foundation-lab'
    def open_tools():
-    page.locator('#bMenu').click();page.locator('#bSaveTools').click();assert page.locator('#mSaveTools').is_visible()
+    page.locator('#bMenu').click();page.evaluate('(window.__r||window.__testRuntime).openSaveTools()');assert page.locator('#mSaveTools').is_visible()
    open_tools()
    with page.expect_download() as event:page.locator('#saveExport').click()
    raw=Path(event.value.path()).read_bytes();backup=json.loads(raw);assert backup['state']['ach']['fixture']=='2026-10-13';assert backup['worldIdentity']['layout']=='classic'

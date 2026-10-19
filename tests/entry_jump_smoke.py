@@ -15,7 +15,7 @@ try:
   for width,height in [(320,568),(390,844),(844,390),(1280,800)]:
    page = browser.new_page(viewport={'width':width,'height':height},has_touch=True)
    errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.showReturnEntrance')
    assert page.locator('#returnEntrance').is_visible()
    assert page.locator('#mHelpC').is_hidden()
@@ -64,7 +64,7 @@ try:
    print(f'PASS {width}: readable intro/signature, guide restore, pending tutorial reload, native earning, paid dock jump, reload and free return',flush=True)
    page.close()
   page=browser.new_page(reduced_motion='reduce')
-  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.showReturnEntrance')
   assert page.locator('#returnEntrance').is_visible()
   assert page.locator('.return-signature').evaluate('e=>getComputedStyle(e).animationName')=='none'

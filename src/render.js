@@ -28,6 +28,7 @@ export function initialize(runtime) {
   /* ---------- loop ---------- */
   let scheduledFrame=null;
   function frame(t){
+    if(runtime.accountClient&&runtime.accountClient.user()?.id!==runtime.accountUserId){location.reload();return;}
     if(scheduledFrame!==null)cancelAnimationFrame(scheduledFrame);
     runtime.universeTextsTick?.();runtime.achievementsTick?.(Math.min(.1,Math.max(0,(t-(frame.l||t))/1000)));runtime.connectionTick?.();runtime.saveToolsTick?.();runtime.focusUITick?.();runtime.syncSession();if(!runtime.activityActive){runtime.glassTick?.();runtime.mirrorTick?.();}
     if(!runtime.inWorld()||!runtime.S.sound)runtime.clearSoundCues();

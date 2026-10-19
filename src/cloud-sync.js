@@ -16,39 +16,40 @@ export function createCloudSync({client,storage,now=()=>Date.now(),onStatus=()=>
   const copy=await client.read(scope);if(!valid(g))throw Error('La cuenta o partida cambió; no aplicamos la respuesta.');
   revision=copy?.revision||0;let known=null;try{known=storage.getItem(metadata());}catch(_){}
   const record=(()=>{try{return JSON.parse(known);}catch(_){return null;}})();baseline=record?.baseline||null;baseRevision=record?.revision||0;ready=known!==null&&(Number(known)===revision||record?.revision===revision);
-  onStatus(copy?(ready?'Copia conectada. Respaldo automático cada minuto.':'Hay una copia online. Elige recuperar o conservar esta partida.'):'Elige «Usar esta partida» para activar el respaldo online.');return copy;
+  onStatus(copy?(ready?'Cuenta conectada. Guardado automático.':'Comprobando tu avance…'):'Sincronizando tu avance…');return copy;
  }
  async function push(snapshot,{manual=false,force=false}={}){
   if(busy||!owner||owner!==client.user()?.id||!manual&&!ready)return false;
-  if(!manual&&!force&&now()-lastAttempt<60000)return false;
+  if(!manual&&!force&&now()-lastAttempt<5000)return false;
   busy=true;lastAttempt=now();const g=generation,currentScope=scope;
   try{const state=snapshot(),raw=JSON.stringify(state);if(!manual&&cloudStateKey(state)===baseline)return true;
    const result=await client.write(currentScope,revision,state);if(!valid(g))return false;
-   if(!result?.ok){ready=false;onStatus('La copia online cambió. Descarga o recupera antes de seguir; no la sobrescribimos.');return false;}
-   revision=result.revision;ready=true;last=raw;remember(state);onStatus('Respaldo online guardado.');return true;
+   if(!result?.ok){ready=false;onStatus('La copia online cambió. Hay avances distintos; elige cuál continuar.');return false;}
+   revision=result.revision;ready=true;last=raw;remember(state);onStatus('Guardado automáticamente.');return true;
   }catch(e){if(valid(g)){if(e.status===401)ready=false;onStatus(e.message);}return false;}finally{busy=false;}
  }
  async function pull(restore){
   if(busy)throw Error('Espera a que termine el respaldo.');busy=true;const g=generation,currentScope=scope;
-  try{const copy=await client.read(currentScope);if(!valid(g))throw Error('La cuenta o partida cambió.');if(!copy?.state)throw Error('Todavía no hay copia online.');const applied=await restore(copy.state);if(!valid(g))throw Error('La cuenta o partida cambió.');revision=copy.revision;ready=true;last='';lastAttempt=now();remember(applied||copy.state);onStatus('Copia recuperada; conservamos el respaldo local anterior.');return copy;}finally{busy=false;}
+  try{const copy=await client.read(currentScope);if(!valid(g))throw Error('La cuenta o partida cambió.');if(!copy?.state)throw Error('Todavía no hay copia online.');const applied=await restore(copy.state);if(!valid(g))throw Error('La cuenta o partida cambió.');revision=copy.revision;ready=true;last='';lastAttempt=now();remember(applied||copy.state);onStatus('Partida sincronizada.');return copy;}finally{busy=false;}
  }
  // Read before writing on resume. A local change during the request cancels restore.
- async function reconcile(snapshot,restore,{empty=()=>false}={}){
+ async function reconcile(snapshot,restore,{empty=()=>false,remoteEmpty=()=>false}={}){
   if(busy||!owner||owner!==client.user()?.id)return false;
   busy=true;const g=generation,currentScope=scope;
   try{
-   const before=cloudStateKey(snapshot());
+   snapshot();
    const copy=await client.read(currentScope);if(!valid(g))return false;
-   const after=cloudStateKey(snapshot());if(after!==before)return conflict();
+   const after=cloudStateKey(snapshot());
    const remoteKey=copy?.state?cloudStateKey(copy.state):null;
    if(!copy){revision=0;ready=true;return true;}
    if(remoteKey===after){revision=copy.revision;ready=true;remember(copy.state);return true;}
+   if(!baseline&&remoteEmpty(copy.state)){revision=copy.revision;ready=true;return true;}
    if(baseline&&copy.revision===baseRevision){ready=true;return true;}
    if(baseline&&after===baseline||!baseline&&empty()){
     // Restore validates the world and preserves the actual local copy first.
     const applied=await restore(copy.state);if(!valid(g))return false;
     revision=copy.revision;ready=true;lastAttempt=now();remember(applied||copy.state);
-    onStatus('Partida actualizada desde tu otro dispositivo. Conservamos la copia local anterior.');return true;
+    onStatus('Partida actualizada desde tu otro dispositivo.');return true;
    }
    if(baseline&&remoteKey===baseline){revision=copy.revision;ready=true;return true;}
    return conflict();
