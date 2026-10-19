@@ -91,6 +91,20 @@ public class InstallSmokeTest {
         screenshot("android-account-required.png");
         instrumentation.runOnMainSync(() -> activity.finish());
     }
+    @Test public void prepareSigningUpdateFixture() throws Exception {
+        assertTrue("Only disposable signing probe may seed a save", instrumentation.getTargetContext().getPackageName().endsWith(".signingprobe"));
+        start();
+        js("localStorage.setItem('kubono:user:signing-fixture:pixel-blanco-v4',JSON.stringify({sparks:137,sparkEconomy:{purchases:{dust:true},equipped:'dust'}}));localStorage.setItem('android-update-probe','137:dust')");
+        instrumentation.runOnMainSync(() -> activity.finish());
+    }
+    @Test public void verifySigningUpdateFixture() throws Exception {
+        assertTrue("Only disposable signing probe may verify a fixture", instrumentation.getTargetContext().getPackageName().endsWith(".signingprobe"));
+        start();
+        assertEquals("\"137:dust\"", js("localStorage.getItem('android-update-probe')"));
+        assertEquals("true", js("(()=>{const s=JSON.parse(localStorage.getItem('kubono:user:signing-fixture:pixel-blanco-v4'));return s.sparks===137&&s.sparkEconomy.purchases.dust&&s.sparkEconomy.equipped==='dust';})()"));
+        assertTrue(activity.scriptErrors.toString(), activity.scriptErrors.isEmpty());
+        instrumentation.runOnMainSync(() -> activity.finish());
+    }
     @Test public void preservesSaveAfterApkReplacement() throws Exception {
         start();
         assertEquals("\"137:dust\"", js("localStorage.getItem('android-update-probe')"));

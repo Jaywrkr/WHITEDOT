@@ -48,8 +48,9 @@ jobs:
           "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --print-certs android-evidence/Kubono-accounts.apk > android-evidence/signing-certificate.txt
       - name: Build isolated update probe pair
         run: |
-          gradle -p android assembleDebug -PaccountPreview -PsigningProbe -PpreviewVersionCode=1 --no-daemon
+          gradle -p android assembleDebug assembleDebugAndroidTest -PaccountPreview -PsigningProbe -PpreviewVersionCode=1 --no-daemon
           cp android/app/build/outputs/apk/debug/app-debug.apk android-evidence/Kubono-update-probe-v1.apk
+          cp android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk android-evidence/Kubono-update-probe-test.apk
           gradle -p android assembleDebug -PaccountPreview -PsigningProbe -PpreviewVersionCode=2 --no-daemon
           cp android/app/build/outputs/apk/debug/app-debug.apk android-evidence/Kubono-update-probe-v2.apk
           sha256sum android-evidence/*.apk > android-evidence/SHA256SUMS.txt
