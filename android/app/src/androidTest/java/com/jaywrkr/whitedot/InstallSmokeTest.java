@@ -53,7 +53,7 @@ public class InstallSmokeTest {
                     Collections.singleton(MainActivity.ORIGIN));
             activity.web.reload();
         });
-        until("!!document.getElementById('returnContinue')&&typeof window.__whitedotHost==='object'");
+        until("document.readyState==='complete'&&!!document.getElementById('hcGo')&&typeof window.__whitedotHost==='object'");
         js("document.getElementById('returnContinue').click();document.getElementById('hcGo').click()");
         Thread.sleep(700);
         int[] location = new int[2];instrumentation.runOnMainSync(() -> activity.web.getLocationOnScreen(location));
