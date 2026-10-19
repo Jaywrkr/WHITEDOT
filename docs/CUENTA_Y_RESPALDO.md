@@ -51,3 +51,13 @@ Recorridos afectados adicionales: interfaz en cinco tamaños, regresión de ojos
 Ejecutar `python scripts/serve-recovery.py` y mantenerlo abierto. Usa `http://localhost:3000/`, Site URL predeterminada de Supabase; si fue modificada, autorizar esa URL exacta en Authentication → URL Configuration. En el juego, escribe el correo autorizado y pulsa «Olvidé mi clave». Abre el último enlace recibido y elige una clave propia (no compartirla en el chat). Después vuelve al juego e inicia sesión.
 
 Sin editar plantillas ni contratar SMTP. Solo destinatarios autorizados y cuota gratuita de desarrollo; no reenviar repetidamente ante límites. El callback borra el fragmento, valida el acceso contra Auth y conserva el token solo en memoria, sin tocar la partida. Recargar requiere otro enlace. Falta el cierre público/móvil, sus callbacks y correo de producción.
+
+## Continuidad entre dispositivos · alpha.54
+
+Después de establecer una copia común (Usar esta partida o Recuperar copia), guardamos por usuario/mundo su revisión y representación canónica exacta. Al entrar/volver/reconectar y cada 15 segundos se compara local, referencia y remoto. Avance solo remoto: restauración validada con copia local anterior. Avance solo local: respaldo sujeto a CAS. Avances en ambos: pausa y elección explícita; sin sumar monedas, elegir el máximo ni resolver por reloj. Las copias anteriores sin referencia completa requieren una elección inicial, sin inferir que son descartables.
+
+El reloj de sesión, sus resúmenes y contadores de tiempo pasivo no se usan para declarar divergencia. El saldo, gastos, premios, posiciones, distancia y demás progreso sí. Una mutación local durante la lectura cancela la restauración. Reemplazar manualmente lo remoto preserva primero esa copia en el dispositivo; si no hay espacio, se cancela el reemplazo. La restauración conserva `:before-restore`.
+
+Respaldo cada minuto si cambió el estado, más intento al salir/ocultar. Cargas pequeñas usan keepalive; no garantiza entrega si iOS suspende o no hay conexión. En ese caso el avance local se conserva y se reintenta al volver. Para pasar inmediatamente de dispositivo, comprobar «Respaldo online guardado»; trabajar offline en ambos requiere elegir entre copias, no fusionarlas.
+
+Safari normal: usuario confirmó conservación de saldo al cerrar/reabrir. La discrepancia del diagnóstico correspondía a pestañas privadas distintas; en la pestaña del juego se confirmaron 4 disponibles, 24 ganadas y 20 gastadas. No se detectó pérdida de esas chispas. La nueva sincronización necesita una comprobación humana corta tras actualizar ambas páginas.

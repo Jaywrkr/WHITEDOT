@@ -1,3 +1,11 @@
+# Continuidad de guardado entre dispositivos · alpha.54
+
+- Al entrar, volver a la pestaña o recuperar conexión se compara la partida con la última copia compartida. Si solo avanzó el otro dispositivo, se recupera automáticamente conservando el respaldo local anterior.
+- Si ambos avanzaron, se detienen las escrituras automáticas; no se suman saldos ni se elige por fecha o por saldo mayor. La elección manual conserva la copia reemplazada.
+- Comprobación remota cada 15 segundos y respaldo de cambios cada minuto; intento adicional al salir/ocultar la página. La entrega final depende de la conexión y de que iOS no suspenda el proceso.
+- Validación: recorrido Chromium con dos contextos y regresiones de continuidad, conflicto, normalización y referencia antigua.
+- Referencias antiguas requieren elegir copia una vez. Sin publicación, cambios de esquema ni servicios contratados.
+
 # Recuperación local por enlace · alpha.53
 
 - Enlace predeterminado de Supabase y página local para elegir clave, sin SMTP contratado ni publicación.
