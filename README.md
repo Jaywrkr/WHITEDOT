@@ -2,7 +2,7 @@
 
 Un píxel blanco en un mundo negro: explorar, descubrir y hacer música al viajar. Proyecto de Jay · [Jugar](https://whitedot-inky.vercel.app).
 
-Versión en desarrollo: **2.3.0-alpha.50**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
+Versión en desarrollo: **2.3.0-alpha.52**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
 
 ## Jugar y avanzar
 
@@ -32,7 +32,7 @@ Requiere Python para servir archivos; el juego usa módulos ES, Canvas 2D y Web 
 python -m http.server 8000
 ```
 
-Abrir `http://localhost:8000`. Para cuentas y duetos opcionales, consultar [Servidor y duetos](docs/SERVIDOR_Y_DUETOS.md).
+Abrir `http://localhost:8000`. Para cuenta opcional y respaldo en desarrollo, consultar [Cuenta y respaldo](docs/CUENTA_Y_RESPALDO.md). El backend de [servidor y duetos](docs/SERVIDOR_Y_DUETOS.md) queda como prototipo histórico fuera de este lanzamiento.
 
 ## Documentación
 

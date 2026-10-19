@@ -1,5 +1,13 @@
 # Cambios recientes
 
+## Conexión real a Kubono Dev Free · 19 de octubre de 2026
+
+Proyecto `eghmydqxsicqmbmeprgq` conectado con clave publicable; esquema y permisos endurecidos en la organización Kubono Free, sin tocar CORESOLUTIONS. Alta/enlace/login/logout reales; PostgreSQL RLS entre dos usuarios y bloqueo anónimo; REST guarda/lee y conserva copia ante conflicto. Partida real Chromium de 102 campos validada tras ida/vuelta. Recuperación por código requiere SMTP para editar plantillas, aún no configurado; aviso de contraseñas filtradas pendiente. Sin publicación ni contratación; límites/evidencias en `docs/CUENTA_Y_RESPALDO.md`.
+
+## Cuenta opcional y respaldo Supabase Free · 19 de octubre de 2026
+
+Rama `feature/optional-cloud-save` desde main `ba9c31a`. Base local: correo/clave, códigos de verificación/recuperación, cierre y eliminación, copias por mundo con revisión y respaldo cada minuto después de elegir partida. Guardado local conservado, sin dependencias npm ni sesiones sociales inicializadas. Configuración pública vacía y esquema SQL sin aplicar; Jay elige otra organización, sin tocar CORESOLUTIONS ni contratar/publicar. Verificación: 8 suites Node afectadas, auditoría y recorrido nuevo Chromium con HTTP simulado aprobados; sin repetir toda la batería ni renders. Pruebas y límites en `docs/CUENTA_Y_RESPALDO.md`; servicio Supabase real, SQL/RLS/correo y dispositivos pendientes. Versión/caché sincronizadas a alpha.51 por cambio funcional, sin fecha de despliegue inventada.
+
 ## Decisiones comerciales de Kubono · 19 de octubre de 2026
 
 Plan actualizado: nombre Kubono, dominio previsto playkubono.com sin compra y demo web confirmada. Registra alcance de búsquedas de marca, equipos disponibles, precios aprobados de US$2,99 móvil / US$4,99 escritorio y presupuesto inicial aprobado de US$350. Verificación de cuentas y equipos pendiente. Paquete común en espera; sin renombrar producto, modificar juego ni contratar servicios.
