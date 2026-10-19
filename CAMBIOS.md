@@ -1,5 +1,13 @@
 # Cambios recientes
 
+## Suspensión, actualización y CI enfocado · 19 de octubre de 2026
+
+Rama `fix/browser-lifecycle-closure` desde main `8553298`. Sin cambios de producto, música, versión ni caché. Regresión con congelación/descongelación real de Chromium, interrupción de AudioContext, recuperación por gesto, transporte acotado, posición/saldo y silencio persistente. Actualización PWA desde el código real alpha.49 (`8924f16`) al actual: saldo, compras, equipo, meta, logros, diez cristales e identidad conservados; activación explícita, recursos coherentes y offline.
+
+CI anterior `39178363929`: lógica, audio 1/3 y 124/127 recorridos aprobados. Corregidas preparaciones de los tres recorridos fallidos: foco nativo para responder a la lección, verificar la misma criatura por ID y distinguir pulsos del jugador de la cola ambiental en A/B. Contrato de percusión acepta rim, presente en la familia jazz/bossa actual, conservando exigencias de mezcla y transporte. Nueva ejecución enfocada de Actions solo para esta rama: dos contratos Node, auditoría, suspensión/actualización, tres recorridos fallidos y audio fallido más los cuatro renders no alcanzados por la interrupción anterior. No sustituye ni cambia los checks completos requeridos para integrar.
+
+Validación local aprobada: cinco recorridos enfocados, dos contratos Node y auditoría sin errores/avisos usando bytes originales de licencias Git (CRLF local restaurado). Sin certificar suspensión del sistema operativo móvil ni dispositivos físicos. CI enfocado aprobado sobre `03bd690`: [ejecución 39272406574](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39272406574), incluidos cinco renders/suites de audio pendientes. La actualización de esta evidencia no repite CI por el filtro de documentación. Los checks completos históricos siguen conservados y se exigirán al integrar; esta ejecución es enfocada. Sin PR, merge ni Android.
+
 ## Revisión enfocada de navegador · 18 de octubre de 2026
 
 Sobre `0752b5c`, sin cambios de juego, contenido, audio, versión ni caché. Corregida una carrera en `first_level_smoke.py`: cerrar el saludo explícitamente y esperar la visibilidad del texto, que los avisos temporales ocultan por diseño. Conservadas todas las aserciones.
