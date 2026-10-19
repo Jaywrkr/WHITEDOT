@@ -1,3 +1,9 @@
+# Preparación de privacidad y producción · sin cambio de versión
+
+- Borradores de privacidad y eliminación basados en código actual; distinguen datos online, copias locales, registros y respaldos, sin prometer borrado completo ni plazos no configurados.
+- Lista de producción con campos legales, correo, callback local pendiente de sustitución, recurso web de eliminación, retención y operación. Plan actualizado a cuenta obligatoria sin demo; no se reabren pruebas aprobadas.
+- Documentación únicamente: sin cambios de código, servicios, contratos, publicaciones ni eliminación de datos. Referencias oficiales de Google Play, Apple y Supabase revisadas; no equivale a aprobación legal/de tienda.
+
 # Reautenticación segura al eliminar cuenta · alpha.58
 
 - Firma estable de vista previa guardada fuera del repositorio y en secreto de CI; sin regeneración silenciosa ni dependencia de caché. CI 39337750907 aprobado; huella del APK coincide con copia local. Prueba real aislada v1→v2 con install -r conserva guardado por cuenta (137 chispas y compra dust), comprobado también antes de actualizar. La primera fixture no había llegado a disco antes de terminar instrumentación; la prueba espera su escritura, sin alterar el juego.
