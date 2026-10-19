@@ -95,6 +95,8 @@ public class InstallSmokeTest {
         assertTrue("Only disposable signing probe may seed a save", instrumentation.getTargetContext().getPackageName().endsWith(".signingprobe"));
         start();
         js("localStorage.setItem('kubono:user:signing-fixture:pixel-blanco-v4',JSON.stringify({sparks:137,sparkEconomy:{purchases:{dust:true},equipped:'dust'}}));localStorage.setItem('android-update-probe','137:dust')");
+        // WebView commits localStorage asynchronously; let the fixture reach disk before the test process exits.
+        Thread.sleep(6000);
         instrumentation.runOnMainSync(() -> activity.finish());
     }
     @Test public void verifySigningUpdateFixture() throws Exception {
