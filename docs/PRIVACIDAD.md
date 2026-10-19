@@ -34,10 +34,21 @@ Puedes eliminar la cuenta desde **Menú → Cuenta → Eliminar cuenta**, confir
 
 Para retirar las copias locales, borra los datos del sitio en el navegador o los datos de la aplicación desde el sistema operativo; esto puede borrar también partidas de otras cuentas que usen esa misma instalación. Los archivos que hayas exportado o respaldado fuera del juego requieren eliminación por separado. Consulta [Eliminación de datos](ELIMINACION_DATOS.md).
 
-**Pendiente antes de publicación:** fijar y configurar plazos para registros, soporte y respaldos, sus excepciones justificadas y el tratamiento de datos tras restaurar un respaldo. No se promete borrado instantáneo de copias históricas ni un plazo todavía no establecido. La copia técnica local usada para migrar el APK de desarrollo no es un respaldo del servicio de producción.
+Política aprobada por Jay el 19 de octubre de 2026 para producción:
+
+| Datos o solicitud | Conservación o atención aprobada |
+|---|---|
+| Cuenta y progreso | Hasta eliminación, sin borrado por inactividad |
+| Eliminación desde el juego | Datos online al completarse la operación |
+| Solicitud de eliminación por soporte | Objetivo: resolver en 7 días tras verificar identidad |
+| Registros técnicos bajo nuestro control | Hasta 7 días |
+| Conversaciones de soporte | 90 días después de cerrar la incidencia |
+| Respaldos que gestionemos | Rotación de 7 días; reaplicar eliminaciones antes de volver a servir una restauración |
+
+**Aprobado no significa configurado:** aplicar la rotación/purga y confirmar los plazos propios de proveedores antes de publicar; documentar cualquier excepción legal justificada. El objetivo de soporte no está operativo mientras no exista el canal público. No se promete borrado instantáneo de copias históricas. La copia técnica local usada para migrar el APK de desarrollo no es un respaldo del servicio de producción.
 
 ## Solicitudes y público
 
-Escribe a **[correo pendiente]** para solicitar acceso, corrección, eliminación o información sobre tus datos y los derechos aplicables en tu país. Verificaremos que la solicitud corresponde a tu cuenta sin pedir tu contraseña ni códigos de acceso. La vía web de solicitud y sus plazos están pendientes de activar.
+Escribe a **[correo pendiente]** para solicitar acceso, corrección, eliminación o información sobre tus datos y los derechos aplicables en tu país. Verificaremos que la solicitud corresponde a tu cuenta sin pedir tu contraseña ni códigos de acceso. La vía web de solicitud está pendiente de activar; el objetivo de resolución aprobado es de 7 días tras verificar identidad.
 
-Antes de publicar se definirá el público por edades y se revisarán las obligaciones aplicables. No se declara una edad mínima ni una categoría infantil que aún no se ha decidido. Los cambios materiales se comunicarán en los canales del juego que se habiliten para el lanzamiento.
+Público objetivo aprobado: personas de **16 años o más**. La clasificación de contenido de cada tienda se determinará por su cuestionario y no se sustituye por esta decisión. Este texto no implementa verificación de edad; antes de publicar se alinearán la comunicación y las obligaciones de los mercados elegidos con ese público. Los cambios materiales se comunicarán en los canales del juego que se habiliten para el lanzamiento.
