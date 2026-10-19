@@ -36,6 +36,7 @@ Abrir `http://localhost:8000`. Para cuentas y duetos opcionales, consultar [Serv
 
 ## Documentación
 
+- [Plan de lanzamiento](docs/PLAN_LANZAMIENTO.md): calendario propuesto, marca, precio, tiendas, comunicación y próximas decisiones.
 - [AGENTS.md](AGENTS.md): reglas de trabajo y verificación.
 - [Arquitectura](docs/ARQUITECTURA.md): mapa técnico y límites actuales.
 - [Hallazgos y actividades](docs/HALLAZGOS_Y_ACTIVIDADES.md): catálogo actual, gestos y recompensas.
