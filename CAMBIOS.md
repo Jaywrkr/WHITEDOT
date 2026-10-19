@@ -1,5 +1,11 @@
 # Cambios recientes
 
+## Android instalable de prueba · 19 de octubre de 2026
+
+Rama `android/installable-preview` desde main `8e94612`. Contenedor Java/WebView con assets locales, icono existente, audio suspendido al salir, Atrás para cerrar paneles, importación por selector y exportación de blobs por un puente restringido al origen local y frame principal. Sin cambios de juego, música, recompensas ni dependencias npm. APK debug separado de la futura aplicación de pago; sin publicación ni clave de producción.
+
+Compilación y prueba enfocadas en Actions: Android 15 emulado sin red, táctil/audio, menú/Atrás, Home/regreso, rotación y reinstalación conservando una compra y saldo. Artefacto con APK, hash, vídeo y capturas; resultado remoto pendiente de registrar al concluir. Contrato local verifica que todos los módulos y recursos originales se conservan sin cambios. Límites y prueba sin dispositivo en `android/README.md`.
+
 ## Suspensión, actualización y CI enfocado · 19 de octubre de 2026
 
 Rama `fix/browser-lifecycle-closure` desde main `8553298`. Sin cambios de producto, música, versión ni caché. Regresión con congelación/descongelación real de Chromium, interrupción de AudioContext, recuperación por gesto, transporte acotado, posición/saldo y silencio persistente. Actualización PWA desde el código real alpha.49 (`8924f16`) al actual: saldo, compras, equipo, meta, logros, diez cristales e identidad conservados; activación explícita, recursos coherentes y offline.
