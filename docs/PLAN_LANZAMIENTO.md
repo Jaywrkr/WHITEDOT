@@ -166,3 +166,5 @@ Alpha.56: flujo normal único de Cuenta y guardado automático, sin herramientas
 Decisión vigente alpha.57: cuenta obligatoria; sin demo ni invitado. Correo/clave, sesión persistente y progreso automático entre dispositivos. Prueba acotada: entrada antes del mundo, sesión/offline, PC↔teléfono, aislamiento de cuentas y logout. Compra de tiendas sigue pendiente de sus paquetes; no se publica ni contrata nada.
 
 19 oct 2026 · Jay confirmó en alpha.57: Safari normal no pidió contraseña al reabrir y PC/iPhone mostraron las mismas chispas automáticamente. Cierre web real aprobado para ese recorrido. Siguiente: APK de cuentas aislado en emulador, sin borrar la app anterior. Correo/callbacks de producción y compra de tiendas siguen pendientes; sin publicación ni contratación.
+
+Android de cuentas: build 39334695709 aprobado; APK instalado y puerta de acceso real verificada en emulador. Pendiente Jay inicia sesión para contrastar saldo y reapertura. No se vuelve a probar el recorrido PC/iPhone ya aprobado.

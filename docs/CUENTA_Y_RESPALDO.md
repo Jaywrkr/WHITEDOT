@@ -85,3 +85,5 @@ Local: `kubono:user:USER_ID:CLAVE_MUNDO`. Remoto: misma clave de mundo anterior 
 Cuenta/pago son independientes: esto no implementa compra, recibos ni desbloqueo entre tiendas. Los contenedores necesitan incorporar esta versión antes de su aceptación. Persistencia en Safari normal ya comprobada en versiones anteriores; la nueva entrada obligatoria requiere una comprobación humana breve, sin repetir toda la batería.
 
 Aceptación humana alpha.57 (19 oct): Jay confirmó que Safari normal conserva sesión y que PC/iPhone muestran las mismas chispas automáticamente. No repetir ese recorrido. Android sigue pendiente de instalar la compilación actualizada y comprobar acceso/saldo.
+
+Android alpha.57: compilación 0481194 y prueba real de puerta de acceso en emulador aprobadas. App instalada en paquete separado, sin sustituir datos previos. Falta entrada privada de Jay, saldo real y reapertura.

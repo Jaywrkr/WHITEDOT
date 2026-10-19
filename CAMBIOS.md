@@ -2,6 +2,7 @@
 
 - Jay confirmó sesión persistente y saldo idéntico automático entre Safari normal y PC en alpha.57.
 - Preparación de APK de cuentas con package de prueba separado para preservar la instalación anterior; workflow de compilación sin publicación y prueba de entrada obligatoria en WebView.
+- APK compilado (Actions 39334695709, 0481194), hashes verificados e instalado aparte. Puerta de cuenta real aprobada en emulador (1 prueba); acceso habitual actualizado con copia previa.
 - Pendientes: acceso/saldo reales del APK y reapertura, correo/callbacks de producción y compra de tiendas. Sin contratos nuevos.
 
 # Cuenta obligatoria y partidas separadas · alpha.57
