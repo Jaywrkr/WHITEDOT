@@ -59,7 +59,7 @@ Steam: preparar cuenta, página y build en paralelo; contempla un mínimo de dos
 
 ## Cuenta opcional y respaldo online · alcance aprobado
 
-Jay aprueba Supabase **Free para desarrollo/pruebas**. Sin suscripciones, contratación ni publicación; organización nueva por elegir. Mantener CORESOLUTIONS y su proyecto existente intactos. La implementación empieza en `feature/optional-cloud-save` desde main actualizado `ba9c31a`.
+Jay aprueba Supabase **Free para desarrollo/pruebas**. Sin suscripciones, contratación ni publicación; organización Kubono y proyecto Kubono Dev creados por Jay; Free confirmado y esquema conectado. Mantener CORESOLUTIONS y su proyecto existente intactos. La implementación empieza en `feature/optional-cloud-save` desde main actualizado `ba9c31a`.
 
 Entrar al juego sin cuenta sigue permitido. Cuenta por correo/clave con código de confirmación y recuperación, eliminación de cuenta y copias por mundo. Al conectar por primera vez, elegir partida; después respaldo cada minuto mientras el juego esté activo, con comprobación de revisión y recuperación explícita ante conflictos. Sin salas, duetos ni sesiones sociales en este lanzamiento. El resumen local de una sesión de juego permanece.
 
@@ -89,9 +89,9 @@ Desarrollo/pruebas: US$0 de servicio. No se aprueba Pro ni US$30/mes: revisar cu
 | D18 | Web/PWA: decisión comercial, landing común con estados disponibles/próximamente y enlaces por plataforma; verificar recorrido existente sin convertirlo en otro proyecto. | S1–S6 | Ambos | Pendiente |
 | D19 | Consolas: registrar programas de acceso, requisitos y estimación de viabilidad; Jay decide alcance/presupuesto antes de cualquier port. | Evaluación S1; fecha de salida por definir | Ambos | Sin viabilidad confirmada |
 
-| D20 | Cuenta opcional Supabase Free: correo/clave, verificación y recuperación por código, cierre y eliminación. Configuración pública vacía hasta elegir organización/proyecto. | S1–S4 | Codex + Jay cuentas | En curso; código local, sin proyecto conectado |
-| D21 | Respaldo por mundo cada minuto con elección inicial, recuperación validada y copia local anterior; aislamiento y conflictos. | S2–S4 | Codex | En curso; pruebas con servicio simulado |
-| D22 | Validar en proyecto Free aislado RLS entre dos usuarios, correo real, recuperación/eliminación, cuotas y backups; luego navegador y contenedores reales. | Antes de aprobar lanzamiento | Ambos | Pendiente; organización/proyecto por elegir |
+| D20 | Cuenta opcional Supabase Free: correo/clave, verificación y recuperación por código, cierre y eliminación. Configuración pública vacía hasta elegir organización/proyecto. | S1–S4 | Codex + Jay cuentas | En curso; alta/enlace/login reales aprobados; recuperación por código pendiente SMTP |
+| D21 | Respaldo por mundo cada minuto con elección inicial, recuperación validada y copia local anterior; aislamiento y conflictos. | S2–S4 | Codex | En curso; copia completa real validada; falta cierre multiplataforma |
+| D22 | Validar en proyecto Free aislado RLS entre dos usuarios, correo real, recuperación/eliminación, cuotas y backups; luego navegador y contenedores reales. | Antes de aprobar lanzamiento | Ambos | En curso; RLS y guardado reales aprobados; correo por código y dispositivos pendientes |
 
 Las dimensiones y reglas finales se revisan al exportar, no se mantienen dos catálogos de requisitos. [Material de Google Play](https://support.google.com/googleplay/android-developer/answer/9866151).
 
@@ -142,7 +142,7 @@ Al empezar una sesión: leer «Próxima acción» y los IDs implicados; trabajar
 
 No añadir actividades, monedas, menús o sistemas nuevos para justificar el precio. No ejecutar todo el plan porque este documento exista. No crear otro backlog paralelo: mantener aquí tareas y decisiones, y enlazar los materiales finales. Los planes históricos no son autorización vigente.
 
-**Próxima acción:** terminar verificación local de D20–D21 y elegir organización nueva para conectar el proyecto Supabase Free de D22, sin usar CORESOLUTIONS. Comprobar también cuentas de tiendas y compatibilidad de equipos; precios y presupuesto ya aprobados. Jay facilita modelo de Mac/macOS y modelo de iPhone; confirma cuentas Play/Steam y acceso Android. La demo está decidida, sus límites aún no. **Paquete común en espera por instrucción de Jay**: no producir identidad, fichas ni ports hasta resolver estos puntos. Sin compra de dominio ni cambio del producto.
+**Próxima acción:** terminar verificación local de D20–D21 y resolver el envío de códigos sin contratar ahora; Kubono Dev Free ya está conectado y RLS/guardado real validados. Sin usar CORESOLUTIONS. Comprobar también cuentas de tiendas y compatibilidad de equipos; precios y presupuesto ya aprobados. Jay facilita modelo de Mac/macOS y modelo de iPhone; confirma cuentas Play/Steam y acceso Android. La demo está decidida, sus límites aún no. **Paquete común en espera por instrucción de Jay**: no producir identidad, fichas ni ports hasta resolver estos puntos. Sin compra de dominio ni cambio del producto.
 
 | Fecha | Decisión o evidencia | Consecuencia |
 |---|---|---|

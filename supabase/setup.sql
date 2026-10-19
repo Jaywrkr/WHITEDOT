@@ -1,4 +1,4 @@
--- Development schema for a NEW isolated Free project only. Not applied by this change.
+-- Consolidated schema applied to Kubono Dev Free on 2026-10-19; run only on a new empty project.
 begin;
 create table public.kubono_saves (
  user_id uuid not null references auth.users(id) on delete cascade default auth.uid(),
@@ -9,7 +9,7 @@ create table public.kubono_saves (
  primary key (user_id,scope)
 );
 alter table public.kubono_saves enable row level security;
-revoke all on public.kubono_saves from public, anon;
+revoke all on public.kubono_saves from public, anon, authenticated;
 grant select,insert,update,delete on public.kubono_saves to authenticated;
 create policy own_saves on public.kubono_saves to authenticated
  using ((select auth.uid())=user_id and not coalesce((auth.jwt()->>'is_anonymous')::boolean,false))
@@ -43,14 +43,25 @@ begin
 end; $$;
 revoke all on function public.kubono_save(text,bigint,jsonb) from public,anon;
 grant execute on function public.kubono_save(text,bigint,jsonb) to authenticated;
+-- Keep privileged deletion outside the exposed API schema.
+create schema if not exists kubono_private;
+revoke all on schema kubono_private from public,anon;
+grant usage on schema kubono_private to authenticated;
 -- Account deletion needs auth-schema privileges; never accepts a caller-supplied user ID.
-create function public.kubono_delete_account() returns void language plpgsql security definer set search_path='' as $$
+create function kubono_private.kubono_delete_account() returns void language plpgsql security definer set search_path='' as $$
 declare v_user uuid:=auth.uid();
 begin
  if v_user is null or not exists(select 1 from auth.sessions where id=(auth.jwt()->>'session_id')::uuid and user_id=v_user and created_at>now()-interval '5 minutes') then raise exception 'Recent sign-in required'; end if;
  delete from auth.sessions where user_id=v_user;
  delete from auth.users where id=v_user;
 end; $$;
+revoke all on function kubono_private.kubono_delete_account() from public,anon;
+grant execute on function kubono_private.kubono_delete_account() to authenticated;
+create function public.kubono_delete_account() returns void language sql security invoker set search_path='' as $$ select kubono_private.kubono_delete_account(); $$;
 revoke all on function public.kubono_delete_account() from public,anon;
 grant execute on function public.kubono_delete_account() to authenticated;
+-- Some new projects create this event-trigger helper with public EXECUTE grants.
+do $$ begin if to_regprocedure('public.rls_auto_enable()') is not null then
+ execute 'revoke all on function public.rls_auto_enable() from public,anon,authenticated';
+end if; end $$;
 commit;

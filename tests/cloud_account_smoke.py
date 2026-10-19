@@ -25,7 +25,8 @@ def api(route):
  route.fulfill(status=status,body=json.dumps(data),content_type='application/json',headers={'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'*'})
 def prepare(page,configured=True):
  page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
- if configured:page.route('**/src/cloud-config.js',lambda r:r.fulfill(body=config,content_type='text/javascript'));page.route('https://fixture.supabase.co/**',api)
+ page.route('**/src/cloud-config.js',lambda r:r.fulfill(body=config if configured else 'export const CLOUD_CONFIG={};',content_type='text/javascript'))
+ if configured:page.route('https://fixture.supabase.co/**',api)
  page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.connectionTick')
  page.locator('#returnContinue').click()
  if page.locator('#hcGo').is_visible():page.locator('#hcGo').click()

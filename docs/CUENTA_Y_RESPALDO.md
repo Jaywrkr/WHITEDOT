@@ -1,13 +1,13 @@
 # Cuenta opcional y respaldo · desarrollo
 
-Estado: código local sin proyecto Supabase configurado. Rama feature/optional-cloud-save desde main ba9c31a. Sin despliegue ni contratos; Supabase Free acordado para pruebas. CORESOLUTIONS y su proyecto permanecen intactos por decisión de Jay.
+Estado: rama local conectada a Kubono Dev (`eghmydqxsicqmbmeprgq`), organización Kubono (`eebalwznymfdxaexvghc`), región us-east-1 y plan Free comprobados el 19 oct 2026. Aplicación sin publicar. Rama feature/optional-cloud-save desde main ba9c31a. Sin despliegue ni contratos; Supabase Free acordado para pruebas. CORESOLUTIONS y su proyecto permanecen intactos por decisión de Jay.
 
 ## Preparación pendiente
 
-1. Jay elige otra organización; confirmar tarifa cero antes de crear un proyecto nuevo aislado. No activar planes, add-ons ni branches de pago.
-2. Revisar `supabase/setup.sql` y aplicarlo solo al proyecto nuevo de prueba. Es un script transaccional de preparación, no una migración aplicada. No había CLI, Docker ni PostgreSQL local disponibles; no se inventó historial de migraciones. Cuando haya entorno, validar SQL, RLS y advisors y generar la migración con CLI conforme a la guía Supabase.
-3. En `src/cloud-config.js`, indicar URL HTTPS exacta `https://REF.supabase.co` y clave **sb_publishable_...**. Es información pública. Jamás poner contraseñas de base, claves secretas ni service_role. Configuración vacía: sin red ni bloqueo de juego. La misma API HTTPS usa Authorization/apikey, sin cookies de terceros, desde web y assets locales Android; verificar en dispositivo.
-4. Activar confirmación de correo. En plantillas de confirmación y recuperación, incluir `{{ .Token }}`: el jugador escribe el código en el juego. Evita enlaces/deep links entre navegador y contenedor. Mantener límites de intentos; no desactivar verificación para aparentar que funciona.
+1. Proyecto Free creado por Jay y acceso autorizado. Sin planes, add-ons ni branches de pago.
+2. Esquema y endurecimiento aplicados por MCP como `kubono_optional_cloud_saves` y `harden_cloud_save_privileges`. `supabase/setup.sql` representa el esquema consolidado; no volver a ejecutarlo en este proyecto. Se usó apply_migration para DDL conforme al contrato de la herramienta; no se inventó historial CLI.
+3. En `src/cloud-config.js`, indicar URL HTTPS exacta `https://REF.supabase.co` y clave **sb_publishable_...**. Es información pública. Jamás poner contraseñas de base, claves secretas ni service_role. Configuración vacía sigue admitida para modo local; esta rama usa únicamente la clave publicable del proyecto Dev. La misma API HTTPS usa Authorization/apikey, sin cookies de terceros, desde web y assets locales Android; verificar en dispositivo.
+4. Confirmación de correo activada y alta por enlace real comprobada. El panel exige SMTP propio para editar plantillas; con el correo predeterminado no se pudo añadir `{{ .Token }}`. No se contrató/configuró SMTP ni se desactivó la confirmación. La confirmación por código y recuperación/cambio de clave dentro del juego siguen pendientes; no presentarlas como aceptadas.
 5. El correo predeterminado de Supabase está limitado a destinatarios autorizados y cuotas de desarrollo; comprobarlos. SMTP propio y dominio verificado antes de una beta pública. No se ha contratado correo ni enviado mensajes.
 
 ## Comportamiento
@@ -30,8 +30,18 @@ No se prometen guardados para siempre con Free: política de retención, restaur
 
 `node tests/cloud-account.mjs`: adaptador REST y coordinador de copias con fixtures; no verifica base real. `python tests/cloud_account_smoke.py`: navegador real con Supabase HTTP interceptado. Nunca envía datos de usuario a Supabase real. `tests/duet_smoke.py` prueba exclusivamente el módulo histórico inyectado por su fixture; no habilita salas en el lanzamiento. Los contratos de interfaz/render se actualizan para el acceso opcional sin sondeo de /api/session.
 
-Pendiente: SQL/RLS real entre dos usuarios, carreras simultáneas, cuotas, sesión vencida/borrada, correo real, copia completa, actualización PWA y validación en Android/iOS/escritorio. Sin proyecto elegido no se declara aceptación online. Revisado changelog Supabase: retirada de cifrados TLS CBC antiguos prevista desde noviembre 2026; probar con sistemas/WebView actualizados.
+Pendiente: carreras HTTP simultáneas, cuotas completas, sesión vencida/borrada, recuperación por código, eliminación real, actualización PWA y validación en Android/iOS/escritorio. El servicio real tiene aceptación parcial, no cierre de lanzamiento. Revisado changelog Supabase: retirada de cifrados TLS CBC antiguos prevista desde noviembre 2026; probar con sistemas/WebView actualizados.
 
 Resultado local de esta iteración: 8 suites Node afectadas y auditoría aprobadas; recorrido nuevo de cuenta en Chromium aprobado con HTTP simulado. No se ejecutó la suite completa ni renders de audio. Adaptación de entorno Windows: Node con adaptador externo para python3, Playwright existente en PYTHONPATH y licencias auditadas con bytes originales de Git sin cambios versionados.
 
 Recorridos afectados adicionales: interfaz en cinco tamaños, regresión de ojos/render y duetos históricos aprobados. El servidor histórico registró una conexión abortada al cerrar el navegador en Windows; las aserciones del recorrido pasaron. No se modificó ese backend ajeno al lanzamiento.
+
+## Evidencia real · 19 oct 2026
+
+- Plan Free y proyecto ACTIVE_HEALTHY verificados por la conexión; CORESOLUTIONS intacto.
+- Alta real aceptada, correo confirmado, login HTTP 200 y logout 204. Contraseña aleatoria/tokens de prueba solo en memoria, sin escribirlos en archivos ni commits; la cuenta de prueba requiere establecer una clave propia por un flujo de recuperación antes de uso personal.
+- PostgreSQL real: dos usuarios efímeros dentro de una transacción revertida; aislamiento de lectura/escritura, rechazo anónimo, revisión conflictiva preservada y ausencia de TRUNCATE para authenticated. Fixtures de ese test no persistieron.
+- REST real: insertar copia, leerla y rechazar revisión obsoleta sin sobrescribir. Después subió una partida generada por Chromium: 102 campos, seed cloud-live-check, 43 chispas; lectura desde la base idéntica al original y validación de restauración con save-store.js aprobada. No es un recorrido UI completo autenticado contra Supabase: UI/recuperación se probaron antes con HTTP simulado.
+- La copia aislada `live-verification` quedó en Dev: su limpieza fue cancelada por la herramienta y no se reintentó. No es una partida personal ni modifica el mundo principal.
+- Correcciones reales: eliminar grants TRUNCATE/REFERENCES/TRIGGER heredados; revocar EXECUTE público del helper rls_auto_enable; mover borrado privilegiado a kubono_private con envoltorio público invoker. Advisors posteriores sin avisos de permisos/RLS; queda aviso `auth_leaked_password_protection` (protección contra contraseñas filtradas desactivada), a revisar antes de producción sin contratar nada ahora. [Detalle oficial](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection).
+- Hubo errores transitorios de la conexión MCP; luego se recuperó. No se ocultaron errores ni se amplió el acceso de CORESOLUTIONS.

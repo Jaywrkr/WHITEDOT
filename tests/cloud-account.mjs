@@ -1,3 +1,4 @@
+import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
 import {cloudConfig,createCloudClient} from '../src/cloud-client.js';
 import {createCloudSync} from '../src/cloud-sync.js';
@@ -24,3 +25,9 @@ await sync.pull(state=>{restored++;local=state;});assert.equal(local.sparks,70);
 let resolve;pendingRead=new Promise(r=>resolve=r);const late=sync.inspect('world-A');user={id:'two'};sync.reset();resolve({revision:999,state:{sparks:999}});await assert.rejects(()=>late,/cambió/);assert(!sync.ready);pendingRead=null;
 const disabled=createCloudClient({});assert.equal(disabled,null);
 console.log('PASS cloud REST: public-key restriction, optional/offline access, no password persistence, single token refresh, account switch, safe initial choice, throttled backups, conflict pause, recovery, stale-response isolation');
+
+const schema=readFileSync(new URL('../supabase/setup.sql',import.meta.url),'utf8');
+assert.match(schema,/revoke all on public\.kubono_saves from public, anon, authenticated/);
+assert.match(schema,/create function kubono_private\.kubono_delete_account\(\) returns void language plpgsql security definer/);
+assert.match(schema,/create function public\.kubono_delete_account\(\) returns void language sql security invoker/);
+assert.match(schema,/revoke all on function public\.rls_auto_enable\(\) from public,anon,authenticated/);
