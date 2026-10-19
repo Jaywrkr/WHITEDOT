@@ -1,5 +1,9 @@
 # Cambios recientes
 
+## Plan compartido de lanzamiento · 19 de octubre de 2026
+
+`docs/PLAN_LANZAMIENTO.md` concentra decisiones de nombre, precio, relación web/app, cuentas, prueba cerrada, materiales, landing, comunicación, salida Android e iOS posterior. Calendario propuesto de seis semanas más margen de revisión; responsables, dependencias, condiciones de publicación y próxima acción. Fechas y previsiones no son compromisos ni autorizan gastos/publicación. Sin cambios de juego, versión o caché; solo documentación desde main `5a08f0e`.
+
 ## Android instalable de prueba · 19 de octubre de 2026
 
 Rama `android/installable-preview` desde main `8e94612`. Contenedor Java/WebView con assets locales, icono existente, audio suspendido al salir, Atrás para cerrar paneles, importación por selector y exportación de blobs por un puente restringido al origen local y frame principal. Sin cambios de juego, música, recompensas ni dependencias npm. APK debug separado de la futura aplicación de pago; sin publicación ni clave de producción.
