@@ -1,0 +1,31 @@
+plugins { id 'com.android.application' }
+def gameVersion = new groovy.json.JsonSlurper().parse(file('../../package.json')).version
+android {
+    namespace 'com.jaywrkr.whitedot'
+    compileSdk 36
+    defaultConfig {
+        applicationId 'com.jaywrkr.whitedot'
+        minSdk 26
+        targetSdk 36
+        versionCode 1
+        versionName gameVersion + '-android-preview'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+    buildTypes { debug { applicationIdSuffix '.preview' } }
+    sourceSets.main.assets.srcDir layout.buildDirectory.dir('generated/gameAssets')
+    sourceSets.main.res.srcDir layout.buildDirectory.dir('generated/gameRes')
+}
+tasks.register('stageGame', Exec) {
+    workingDir '../..'
+    commandLine 'node', 'scripts/android-assets.mjs'
+    inputs.files(fileTree('../..') { include 'src/**', 'styles/**', 'icons/**', 'assets/**', 'index.html', 'manifest.webmanifest', 'package.json', 'sw.js', 'scripts/android-assets.mjs', 'android/host.js' })
+    inputs.property 'revision', System.getenv('ANDROID_BUILD_SHA') ?: ''
+    inputs.property 'buildTime', System.getenv('ANDROID_BUILD_TIME') ?: ''
+    outputs.dirs layout.buildDirectory.dir('generated/gameAssets'), layout.buildDirectory.dir('generated/gameRes')
+}
+tasks.named('preBuild').configure { dependsOn 'stageGame' }
+dependencies {
+    implementation 'androidx.webkit:webkit:1.12.1'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+}
