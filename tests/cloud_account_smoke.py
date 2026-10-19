@@ -3,7 +3,7 @@ from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
-import threading,json,os
+import threading,json,os,time
 ROOT=Path(__file__).resolve().parents[1]
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
@@ -31,6 +31,11 @@ def prepare(page,configured=True):
  page.locator('#returnContinue').click()
  if page.locator('#hcGo').is_visible():page.locator('#hcGo').click()
  page.evaluate('__r.S.sound=false');page.locator('#bMenu').click();page.locator('#bConnection').click()
+def wait_remote(page,sparks):
+ deadline=time.monotonic()+15
+ while remote.get('state',{}).get('sparks')!=sparks and time.monotonic()<deadline:page.wait_for_timeout(100)
+ assert remote.get('state',{}).get('sparks')==sparks
+
 def credentials(page):
  page.locator('#accountName').fill('test@example.test');page.locator('#accountPassword').fill('fixture-password-123')
 try:
@@ -39,14 +44,14 @@ try:
   assert 'no configurada' in page.locator('#connectionStatus').inner_text();assert page.locator('#connectionRooms').is_hidden();assert page.locator('#accountRegister').is_disabled();assert page.evaluate('__r.save()');assert not requests
   page.close();context.close();context=browser.new_context(viewport={'width':390,'height':844},service_workers='block');page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)));page.on('dialog',lambda d:d.accept());prepare(page);credentials(page)
   page.locator('#accountRegister').click();page.wait_for_function("document.getElementById('connectionStatus').textContent.includes('enlace de confirmación')");assert page.locator('#cloudPush').is_disabled();assert page.locator('#accountPassword').input_value()==''
-  credentials(page);page.locator('#accountForm button[type=submit]').click();page.wait_for_function("!document.getElementById('cloudPush').disabled");page.evaluate('()=>{__r.S.sparks=42;__r.save()}');page.evaluate("dispatchEvent(new Event('focus'))");page.wait_for_timeout(1500);assert remote['state']['sparks']==42
-  page.evaluate('()=>{__r.S.sparks=55;__r.save();const old=Date.now;Date.now=()=>old()+61000}');page.wait_for_function("document.getElementById('connectionStatus').textContent==='Respaldo online guardado.'");page.wait_for_timeout(1500);assert remote['state']['sparks']==55
+  credentials(page);page.locator('#accountForm button[type=submit]').click();page.wait_for_function("!document.getElementById('cloudPush').disabled");page.evaluate('()=>{__r.S.sparks=42;__r.save()}');page.evaluate("dispatchEvent(new Event('focus'))");wait_remote(page,42)
+  page.evaluate('()=>{__r.S.sparks=55;__r.save();const old=Date.now;Date.now=()=>old()+61000}');page.wait_for_function("document.getElementById('connectionStatus').textContent==='Guardado automáticamente.'");wait_remote(page,55)
   # A newer remote copy must never be silently overwritten.
   remote['revision']+=1;remote['state']['sparks']=70;page.evaluate('()=>{__r.S.sparks=60;__r.save();const old=Date.now;Date.now=()=>old()+61000}');page.wait_for_function("document.getElementById('connectionStatus').textContent.includes('avances distintos')");assert remote['state']['sparks']==70;assert page.evaluate('__r.S.sparks')==60
   page.locator('#cloudPull').click();page.wait_for_function('__r.S.sparks===70');assert page.evaluate("!!localStorage.getItem(__r.saveStore.key+':before-restore')")
   # A second device establishes its common copy, then spends sparks.
   second=browser.new_context(viewport={'width':390,'height':844},service_workers='block');phone=second.new_page();phone.on('dialog',lambda d:d.accept());prepare(phone);credentials(phone);phone.locator('#accountForm button[type=submit]').click();phone.wait_for_function("!document.getElementById('cloudPull').disabled");phone.wait_for_function('__r.S.sparks===70')
-  phone.evaluate("()=>{__r.S.sparks=50;__r.S.sparkEconomy.spent+=20;__r.save()}");phone.evaluate("dispatchEvent(new Event('focus'))");phone.wait_for_timeout(1500);assert remote['state']['sparks']==50
+  phone.evaluate("()=>{__r.S.sparks=50;__r.S.sparkEconomy.spent+=20;__r.save()}");phone.evaluate("dispatchEvent(new Event('focus'))");wait_remote(phone,50)
   page.evaluate("dispatchEvent(new Event('focus'))");page.wait_for_function('__r.S.sparks===50');assert page.evaluate("!!localStorage.getItem(__r.saveStore.key+':before-restore')")
   # Concurrent local progress during a remote change cannot be overwritten.
   page.evaluate('()=>{__r.S.sparks=51;__r.save()}');remote['state']['sparks']=60;remote['revision']+=1;page.evaluate("dispatchEvent(new Event('focus'))");page.wait_for_function("document.getElementById('connectionStatus').textContent.includes('avances distintos')");assert page.evaluate('__r.S.sparks')==51;assert remote['state']['sparks']==60
@@ -57,8 +62,8 @@ try:
   page.locator('#returnContinue').click();page.locator('#bMenu').click();page.locator('#bConnection').click();page.wait_for_function("!document.getElementById('accountLogout').disabled")
   page.close();page=context.new_page();page.on('dialog',lambda d:d.accept());prepare(page);page.wait_for_function("document.getElementById('accountState').textContent.includes('Cuenta conectada')");assert page.locator('#accountPassword').input_value()==''
   page.locator('#accountLogout').click();page.wait_for_function("document.getElementById('accountState').textContent.includes('sin cuenta')");credentials(page);page.locator('#accountRecover').click();page.wait_for_function("document.getElementById('connectionStatus').textContent.includes('recuperar el acceso')");assert page.locator('#accountVerifyRecovery').is_hidden();assert any('redirect_to=http' in path for path in requests)
-  assert page.locator('#connectionRooms').is_hidden();assert not any('/rooms' in p for p in requests);assert not errors,errors
+  assert page.locator('#bSaveTools').is_hidden();assert page.locator('#cloudDownload').is_hidden();assert page.locator('#connectionRooms').is_hidden();assert not any('/rooms' in p for p in requests);assert not errors,errors
   assert page.locator('#mConnection .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2')
   page.screenshot(path=str(ROOT.parent/'cloud-account-mobile.png'));browser.close()
- print('PASS browser: optional/unconfigured offline play, signup verification, persistent login across tab close, automatic initial save/restore, minute backup, conflict, restore with local backup, offline/reload, sign-out/password recovery, two-device spend/resume and divergent-copy preservation, no rooms; Supabase HTTP fixture only')
+ print('PASS browser: optional/unconfigured offline play, signup verification, persistent login across tab close, automatic initial save/restore, automatic backup, conflict, restore with local backup, offline/reload, sign-out/password recovery, two-device spend/resume and divergent-copy preservation, no rooms; Supabase HTTP fixture only')
 finally:server.shutdown();server.server_close()

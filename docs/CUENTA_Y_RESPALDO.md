@@ -69,3 +69,9 @@ Entrar una vez con correo/clave; la sesión se conserva en localStorage por orig
 No hay elección inicial obligatoria: servidor sin copia permite subir la local automáticamente; dispositivo sin moneda ganada/gastada, desplazamiento, descubrimientos ni historial de progreso permite traer la online. Copias con avances distintos sin referencia común se consideran conflicto y requieren elegir. Con referencia común se mantiene el protocolo de alpha.54. Los controles de elección se ocultan durante el uso normal y el conflicto abre Cuenta y respaldo; descarga de respaldo sigue disponible.
 
 La persistencia sigue el patrón de cliente web descrito por [Supabase Auth](https://supabase.com/docs/reference/javascript/auth), sin añadir SDK ni métodos de acceso. La prueba automatizada usa Auth/REST simulado; falta comprobar la nueva versión una vez en Safari normal con el servicio real. No equivale a publicación ni aceptación de Android.
+
+## Uso final · alpha.56
+
+Menú → Cuenta: correo, contraseña y acceso persistente. Sin Guardar copia, descargar respaldo ni acciones iniciales de subida/recuperación en el flujo visible. Las elecciones de avance solo aparecen ante divergencia real. La conservación interna de copias anteriores sigue activa y no depende de un botón del jugador. Guardado/comprobación cada cinco segundos con cambios, más intento al ocultar; sin conexión se conserva localmente y se reintenta al volver. Una edición local durante una petición no causa aviso si el remoto sigue en la referencia común.
+
+Las herramientas internas de reparación conservan sus IDs por compatibilidad, pero no tienen entrada en el menú. El servicio remoto y la conectividad siguen siendo necesarios para continuar en otro dispositivo; no se promete envío si el sistema suspende antes de completarlo.

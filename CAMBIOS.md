@@ -1,3 +1,11 @@
+# Cuenta y progreso automáticos · alpha.56
+
+- Menú muestra Cuenta; se retiran Guardar copia y descarga de respaldo online del flujo visible. No hay acciones manuales para guardar ni recuperar durante el juego normal.
+- Guardado automático de cambios cada cinco segundos y al pasar a segundo plano; al volver al otro dispositivo se sincroniza. Sesión persistente de alpha.55.
+- Solo aparecen dos opciones si existen avances incompatibles en ambos dispositivos. El progreso local durante una lectura remota ya no se interpreta por sí solo como conflicto.
+- Una copia remota vacía tampoco obliga a elegir frente a progreso local: se conserva el avance ganado automáticamente.
+- Sin publicación, proveedores nuevos ni contratos.
+
 # Acceso persistente y sincronización automática · alpha.55
 
 - Sesión persistente entre pestañas/aperturas, renovación del token existente y cierre de sesión compartido. Migra una sesión anterior por pestaña sin guardar contraseñas.

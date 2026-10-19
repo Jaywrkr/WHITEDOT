@@ -21,7 +21,7 @@ export function initialize(runtime) {
   applyScope(S);
   let saveFailure=null;
   const save=()=>{if(runtime.snapshotBoxSurprises)S.boxSurprises=runtime.snapshotBoxSurprises();if(runtime.snapshotPowers)S.boxPowers=runtime.snapshotPowers();const before=new Set(Object.keys(S.rewards?.items||{}));S.rewards=migrateRewards(S,runtime.rewardCatalog||fallbackCatalog,{at:S.todayKey,legacy:false,hiddenAchievements});const saved=store.save(S);if(saved){saveFailure=null;for(const id of Object.keys(S.rewards.items))if(!before.has(id))runtime.rewardEarned?.((runtime.rewardCatalog||fallbackCatalog).find(p=>p.id===id));}
-    else if(saveFailure!==store.status.kind){saveFailure=store.status.kind;runtime.toast?.(saveFailure==='conflict'?'Otra pestaña cambió la partida. Guarda una copia antes de recargar.':'No pudimos guardar. Menú → Guardar copia.');}return saved;};
+    else if(saveFailure!==store.status.kind){saveFailure=store.status.kind;runtime.toast?.(saveFailure==='conflict'?'Otra pestaña cambió la partida. Guarda una copia antes de recargar.':'No pudimos guardar en este dispositivo. Conservamos tu progreso en esta sesión.');}return saved;};
 
   const pad2=n=>String(n).padStart(2,"0");
   function dayKey(){const d=new Date();d.setDate(d.getDate()+S.offset);return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate());}

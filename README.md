@@ -2,7 +2,7 @@
 
 Un píxel blanco en un mundo negro: explorar, descubrir y hacer música al viajar. Proyecto de Jay · [Jugar](https://whitedot-inky.vercel.app).
 
-Versión en desarrollo: **2.3.0-alpha.55**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
+Versión en desarrollo: **2.3.0-alpha.56**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
 
 ## Jugar y avanzar
 
@@ -22,7 +22,7 @@ Versión en desarrollo: **2.3.0-alpha.55**. La versión publicada depende del ú
 - 120 logros nuevos conectan estas situaciones con actividades, hallazgos y esculturas, con avisos breves y silenciosos agrupados; la Bitácora marca los logros sin consultar.
 - Tarjetas, colecciones, logros secretos, distancia, títulos y una meta opcional acompañan el viaje. Los avisos breves no detienen el movimiento.
 
-El progreso se conserva en el navegador. Usa los respaldos del juego antes de cambiar de dispositivo u origen. La economía es local, sin intercambio ni validación remota.
+Sin cuenta, el progreso se conserva en este navegador. Con cuenta, la sesión permanece y el avance se sincroniza automáticamente entre dispositivos; solo se pide elegir si hay avances incompatibles. No hay botones de guardar ni respaldar en el flujo normal. La economía no permite intercambio entre jugadores.
 
 ## Ejecutar localmente
 
