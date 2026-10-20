@@ -49,6 +49,7 @@ Desde alpha.57, los recorridos de gameplay/audio que ya instrumentaban main sust
 - `smoke.py` esperaba la radio vecina con una pausa fija; usa `wait_for_function`.
 - `cloud_account_smoke.py` fallaba al abrir el menú cuando la segunda pestaña de la misma cuenta ya había abierto el panel de divergencia; la fixture lo tolera. El comportamiento del producto no cambió.
 - `pwa_updates_smoke.py` archiva `8924f16` con `git archive`; el job `browser` de `checks.yml` usa `fetch-depth: 0`.
+- Fase 1 (alpha.60): `cloud_account_smoke.py` añade el caso «copia online del Camino elegida en el Mundo» y lo verifica contra la corrección (falla 2/2 sin ella, pasa 5/5 con ella). Su paso de Cuenta reintenta porque el aviso de divergencia puede abrir el panel entre la comprobación y el clic; esa carrera explicaba fallos intermitentes en la línea del cierre de sesión entre pestañas.
 - Tras integrar alpha.59 (`9953eed`), `browser` quedó 130/131: `first_level_smoke.py` esperaba el panel del visitante nuevo dentro de la ventana de 2,4 s en que el saludo oculta la guía; la fixture descarta saludo y guía antes de esperar, como ya hacía en su primera página.
 - `tests/version-bump.mjs` fallaba desde `3175b41` porque el README pasó a decir «Versión del código» y `bump-version.mjs` solo reconocía «Versión en desarrollo»; la selección de impacto documental no lo ejecutó. El script acepta ambas etiquetas.
 

@@ -2,7 +2,7 @@
 
 Un cubo, un universo y música al viajar. Exploración con una base electrónica, mezclas de otras familias musicales, cristales, rarezas y actividades resueltas con el cubo. Nombre comercial aprobado: **Kubono**; el código, los identificadores y algunos textos todavía conservan WHITEDOT. No se ha completado el cambio de marca dentro del producto.
 
-Versión del código: **2.3.0-alpha.59**. Estado documental: **20 de octubre de 2026**. Rama de trabajo: `claude/charming-darwin-dvbfc7`, creada desde `feature/account-recovery-link`; no equivale a main integrado ni a publicación en tiendas. `main` ya exige cuenta (alpha.57) y su CI de navegador está en rojo; ver [traspaso](HANDOFF_CLAUDE.md). El estado del sitio existente no se verificó en esta revisión.
+Versión del código: **2.3.0-alpha.59**. Estado documental: **20 de octubre de 2026**. Rama de trabajo: `claude/charming-darwin-dvbfc7`, creada desde `main` (`9953eed`, alpha.59); no equivale a main integrado ni a publicación en tiendas. En `main`, CI de navegador quedó 130/131 por una fixture corregida en esta rama; ver [verificación](docs/VERIFICACION.md). El estado del sitio existente no se verificó en esta revisión.
 
 ## Empezar aquí
 

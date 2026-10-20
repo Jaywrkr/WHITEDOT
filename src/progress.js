@@ -59,7 +59,7 @@ export function initialize(runtime) {
     const k=dayKey();
     if(S.todayKey!==k){S.todayKey=k;S.pathCrystals=[];S.todayLight=0;S.capShown=false;S.collected=[];collected=new Set();chunks.clear();wchunks.clear();
       if(inWorld()&&startup)runtime.exitWorld(false);
-      else if(inWorld()){ /* Never interrupt an ongoing musical session at midnight. */ }
+      else if(inWorld()){ /* Never interrupt an ongoing musical session at midnight; only tell the player the day changed. */ runtime.toast?.('Nuevo día. Los cristales vuelven a brillar.'); }
       else if(S.mode==="studio")S.prevMode="camino";
       else runtime.setBiome(0);
       document.getElementById("mCap").hidden=true;document.getElementById("mOut").hidden=true;document.getElementById("mHelpW").hidden=true;

@@ -47,7 +47,7 @@ export function initialize(runtime){
   const demonstration=runtime.labMode||runtime.S.previewSeed&&!runtime.realTravel;const card=descriptor(type,source,demonstration?{...extra,forced:true}:extra);if(!card)return false;
   const repeated=book.items.some(c=>c.type===type&&!c.forced);const result=storeRareCard(book,card);if(result==='added')runtime.recordRewardSource?.('finding',card.odds.tier==='legendario'?'singular':card.odds.tier);
   const original=book.items.find(c=>c.id===card.id);if(original&&learnCardEncounter(original,card.context)&&result==='duplicate')runtime.save();
-  if(result==='full'){if(!fullNoticed){fullNoticed=true;runtime.toast?.('Libro completo. Guarda tus tarjetas: Menú → Guardar copia.');}return false;}
+  if(result==='full'){if(!fullNoticed){fullNoticed=true;runtime.toast?.('Libro completo. No caben más tarjetas.');}return false;}
   if(result==='duplicate'&&card.context?.phase){const original=book.items.find(c=>c.id===card.id);const next={at:new Date().toISOString(),phase:card.context.phase,weather:card.context.weather||''};if(!original.observations.some(o=>o.phase===next.phase&&o.weather===next.weather)){original.observations.push(next);if(original.observations.length>8)original.observations.shift();runtime.save();}}
   if(result!=='added')return false;
   // Collection never starts audio, touches the cube, changes a beat or opens a modal.
@@ -84,7 +84,7 @@ export function initialize(runtime){
    ${context.length?'<p class="rare-biome">'+escape(context.join(' · '))+'</p>':''}${card.observations?.length?'<p class="rare-biome">'+card.observations.length+' observaciones posteriores</p>':''}
    ${card.forced?'<p class="rare-provenance">Muestra forzada; no demuestra un encuentro natural.</p>':''}${card.legacy?'<p class="rare-provenance">Recuperada del progreso anterior; sin hora original.</p>':''}
    <details><summary>Cómo de raro es</summary><p>${escape(card.odds.condition)}</p></details>
-   ${card.learning?.version===1?`<p class="rare-biome">${card.learning.contexts.length} encuentros distintos · ${card.learning.techniques.length} interpretaciones</p>${card.learning.techniques.length<2?'<small>Vuelve bajo otra luz o prueba otro gesto.</small>':''}<button data-rare-technique="${index}" ${card.learning.techniques.length<2?'disabled':''}>Interpretación · ${escape(CARD_TECHNIQUES[card.learning.selected]||'Natural')}</button>`:''}${powerInfo}${address?`<div class="rare-actions"><button data-rare-png="${index}">Imagen</button><button data-rare-copy="${index}">Copiar lugar</button><button data-rare-return="${index}" ${canReturn?'':'disabled'}>Orientar</button></div>${canReturn?'':'<p class="rare-provenance">Para volver: Menú → Otros mundos.</p>'}`:''}
+   ${card.learning?.version===1?`<p class="rare-biome">${card.learning.contexts.length} encuentros distintos · ${card.learning.techniques.length} interpretaciones</p>${card.learning.techniques.length<2?'<small>Vuelve bajo otra luz o prueba otro gesto.</small>':''}<button data-rare-technique="${index}" ${card.learning.techniques.length<2?'disabled':''}>Interpretación · ${escape(CARD_TECHNIQUES[card.learning.selected]||'Natural')}</button>`:''}${powerInfo}${address?`<div class="rare-actions"><button data-rare-png="${index}">Imagen</button><button data-rare-copy="${index}">Copiar lugar</button><button data-rare-return="${index}" ${canReturn?'':'disabled'}>Orientar</button></div>${canReturn?'':'<p class="rare-provenance">Para volver: Menú → Viajar a otra semilla.</p>'}`:''}
   </details></article>`;
  }
  function cards(search=''){
@@ -117,7 +117,7 @@ export function initialize(runtime){
   const existing=(runtime.favorites||[]).find(p=>sameWorld(p.address,card.address)&&p.layer===card.address.layer&&Math.hypot(p.x-card.address.x,p.y-card.address.y)<8);
   const point=existing||runtime.addFavoriteAddress?.(card.address,card.name);
   if(point&&runtime.selectDestination?.(point.id))$('mJournal').hidden=true;
-  else if(!point)runtime.toast?.(runtime.storageStatus.kind==='ok'?'Favoritos lleno · libera un lugar para orientarte.':'No se pudo guardar. Menú → Guardar copia.');
+  else if(!point)runtime.toast?.(runtime.storageStatus.kind==='ok'?'Favoritos lleno · libera un lugar para orientarte.':'No se pudo guardar en este dispositivo.');
  }
  function drawFinding(){const c=runtime.cx;if(!runtime.inWorld()||document.hidden)return;c.save();for(const e of effects){if(e.layer!==(runtime.S.layer||'superficie'))continue;const x=e.x-runtime.S.wx+runtime.W/2,y=e.y-runtime.S.wy+runtime.H/2,rr=12+(runtime.S.reducedMotion?0:e.age*16);c.globalAlpha=(1-e.age/2)*.7;c.strokeStyle=e.ink;c.lineWidth=1;for(let i=0;i<4;i++){const a=i*Math.PI/2;c.beginPath();c.moveTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);c.lineTo(x+Math.cos(a)*(rr+5),y+Math.sin(a)*(rr+5));c.stroke();}}c.restore();}
  runtime.$('journalBody').addEventListener('change',event=>{if(!['rareFilter','rareRole'].includes(event.target.id))return;if(event.target.id==='rareFilter')filter=event.target.value;else roleFilter=event.target.value;page=0;runtime.refreshJournal?.();document.getElementById(event.target.id)?.focus();});

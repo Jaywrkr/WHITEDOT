@@ -19,7 +19,7 @@ export function initialize(runtime){
   $('seedInfo').textContent=`${runtime.S.previewSeed?(prototype?'Prueba: ':'Semilla: ')+runtime.S.previewSeed:'Partida habitual'} · ${d.worldFamily?.name||d.ecology?.name||runtime.BIOMES[d.z].name} · ${runtime.GEN[d.genre].name} · ${d.bpm} BPM · Biomas de ${runtime.REG*runtime.WCH} unidades`;
   $('mSeeds').hidden=false;
  }
- function saveBeforeLeaving(){runtime.S.collected=[...runtime.collected];if(runtime.save())return true;runtime.toast('No se pudo guardar. Menú → Guardar copia antes de cambiar.');return false;}
+ function saveBeforeLeaving(){runtime.S.collected=[...runtime.collected];if(runtime.save())return true;runtime.toast('No se pudo guardar. Seguimos en este mundo.');return false;}
  function visit(value,{center=false}={}){if(!saveBeforeLeaving())return;const url=new URL(location.href);url.searchParams.delete('addr');if(center)url.searchParams.set('center','1');else url.searchParams.delete('center');url.searchParams.set('testSeed',normalizeSeed(value));url.searchParams.set('layout',$('seedLayout').value);url.searchParams.set('generation',$('seedGeneration').value);if(prototype&&select.value)url.searchParams.set('encounter',select.value);else url.searchParams.delete('encounter');if(prototype)url.searchParams.delete('travel');else{url.searchParams.set('travel','1');url.searchParams.delete('lab');}location.assign(url.href);}
  $('dSeeds').onclick=()=>open(true);$('seedClose').onclick=()=>$('mSeeds').hidden=true;
  $('bWorlds').onclick=()=>open(false);

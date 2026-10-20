@@ -22,7 +22,7 @@ export function initialize(runtime){
  runtime.S.favorites=normalizeFavorites(runtime.S.favorites,runtime.worldIdentity);
  const readOnly=()=>runtime.S.favorites.version!==1,list=()=>Array.isArray(runtime.S.favorites.items)?runtime.S.favorites.items.filter(p=>p&&typeof p.id==='string'&&Number.isFinite(p.x)&&Number.isFinite(p.y)):[],$=runtime.$;let shown=20,query='';
  function persist(point,learn=false){
-  if(!runtime.save()){runtime.toast('Lugar pendiente. Menú → Guardar copia.');render();return null;}
+  if(!runtime.save()){runtime.toast('Lugar pendiente. No se pudo guardar en este dispositivo.');render();return null;}
   if(learn){runtime.unlock('favorito1');runtime.firstJourneyEvent?.('save');}
   render();return point;
  }
@@ -30,7 +30,7 @@ export function initialize(runtime){
   if(!runtime.inWorld()||readOnly())return null;
   const s=runtime.S,region=runtime.activeLayerRegion?.()||runtime.regionOfPos(s.wx,s.wy);
   const point=storeFavorite(s,{address:placeAddress(runtime.musicalAddress?.()||runtime.worldIdentity,s.wx,s.wy,s.layer||'superficie'),name:name||region.name,x:s.wx,y:s.wy,layer:s.layer||'superficie',created:Date.now(),region:region.key,regionName:region.name,genre:region.genre,bpm:region.bpm,scale:[...region.scale],phase:runtime.livingEnvironment?.name||'',notes:'',character:region.recipe?.name||'',material:region.recipe?.materialName||'',recipeVersion:region.recipe?.version||1,musicStamp:runtime.musicStamp?.(region)});
-  if(!point){runtime.toast(`<em>Favoritos</em> · Límite de ${FAVORITE_LIMIT}. Exporta tu copia.`);return null;}
+  if(!point){runtime.toast(`<em>Favoritos</em> · Límite de ${FAVORITE_LIMIT}. Libera un lugar.`);return null;}
   return persist(point,true);
  }
  // Guarda un lugar recibido por código. Si es del mismo mundo, completa su identidad musical.

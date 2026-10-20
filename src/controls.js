@@ -22,7 +22,7 @@ export function initialize(runtime) {
   runtime.$("bWorld").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else runtime.enterWorld();};
   runtime.$("bSky").onclick=runtime.openSky;runtime.$("kClose").onclick=()=>{runtime.$("mSky").hidden=true;};runtime.$("kShare").onclick=()=>{runtime.$("mSky").hidden=true;runtime.shareCard("sky");};
   runtime.$("oSky").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openJournal("places");};runtime.$("oClose").onclick=()=>{runtime.$("mOut").hidden=true;};
-  runtime.$("bAch").onclick=runtime.openJournal;runtime.$("aClose").onclick=()=>{runtime.$("mAch").hidden=true;};
+  runtime.$("bAch").onclick=runtime.openJournal;
   runtime.$("sClose").onclick=()=>{runtime.$("mShare").hidden=true;};
   runtime.$("bSoft").onclick=()=>{runtime.S.softMusic=!runtime.S.softMusic;runtime.$("bSoft").setAttribute('aria-pressed',String(runtime.S.softMusic));runtime.audio();runtime.applyComfort();runtime.toast(runtime.S.softMusic?'Calma · sí':'Calma · no');runtime.save();};
   runtime.$("bSoft").setAttribute('aria-pressed',String(!!runtime.S.softMusic));

@@ -21,7 +21,11 @@ export function initialize(runtime){
   return !s.sparks&&!q.earned&&!q.spent&&!s.totalLight&&!s.totalDays&&!p.distanceUnits&&s.mode==='camino'&&!(s.pathCrystals?.length||s.collected?.length||s.stars?.length||s.favorites?.items?.length)&&!records.some(k=>Object.keys(s[k]||{}).length)&&!Object.keys(q.claims||{}).length&&!Object.keys(s.activities?.done||{}).length&&!Object.keys(s.mischief?.done||{}).length;
  }
  function capture(){if(scopeState!==runtime.S||sync.scope!==(runtime.cloudScope||runtime.saveStore.key))throw Error('La partida cambió. Abre Cuenta de nuevo.');return validateSave(runtime.S,runtime.fresh(),runtime.worldIdentity);}
- function restore(state){const valid=validateSave(state,runtime.fresh(),runtime.worldIdentity);snapshot();runtime.S=runtime.saveStore.restore(valid);scopeState=runtime.S;runtime.collected=new Set(runtime.S.collected);runtime.chunks.clear();runtime.wchunks.clear();runtime.bcache.clear();runtime.hud();return capture();}
+ function restore(state){const valid=validateSave(state,runtime.fresh(),runtime.worldIdentity);snapshot();const was=runtime.S.mode;runtime.S=runtime.saveStore.restore(valid);scopeState=runtime.S;runtime.collected=new Set(runtime.S.collected);runtime.chunks.clear();runtime.wchunks.clear();runtime.bcache.clear();settleMode(was);runtime.hud();return capture();}
+ // A restored copy may be in the other mode: run the normal transition so region, session and music follow, keeping the restored place.
+ function settleMode(was){const s=runtime.S,now=s.mode,modes=['world','camino'];if(now===was||!modes.includes(now)||!modes.includes(was))return;
+  if(now==='camino'){s.mode='world';runtime.exitWorld?.(false);return;}
+  const day=s.lastWorldDay;s.mode='camino';s.lastWorldDay=s.todayKey;runtime.enterWorld?.({automatic:true});if(!runtime.inWorld())s.lastWorldDay=day;}
  function snapshot(){if(scopeState!==runtime.S||sync.scope!==(runtime.cloudScope||runtime.saveStore.key))throw Error('La partida cambió. Abre Cuenta de nuevo.');if(!runtime.save())throw Error('No pudimos guardar en este dispositivo. No reemplazamos tu avance online.');return validateSave(runtime.S,runtime.fresh(),runtime.worldIdentity);}
  $('bConnection').hidden=false;$('bConnection').textContent='Cuenta';$('connectionRooms').hidden=true;
  $('bConnection').onclick=()=>{$('mMenu').hidden=true;$('mConnection').hidden=false;if(client&&!recovery)run(inspect);else ui();};$('connectionClose').onclick=()=>{$('mConnection').hidden=true;};

@@ -49,14 +49,6 @@ export function initialize(runtime) {
     if(out){runtime.say(runtime.VOZ.lampOut);$("oToday").textContent=runtime.relicsGot();$("oStars").textContent=runtime.S.stars.length;$("oStreak").textContent=runtime.shownStreak();$("mOut").hidden=false;}
   }
   function openCap(){$("cDay").textContent=runtime.displayDay();$("cStreak").textContent=runtime.shownStreak();$("cSize").textContent=runtime.level();$("cLamp").textContent="Explora sin límite de tiempo.";$("mCap").hidden=false;}
-  function openAch(){
-    const got=runtime.ACH.filter(a=>runtime.S.ach[a[0]]).length;
-    $("achBody").innerHTML=`<div class="sub">Catálogo · ${runtime.S.catN||0} formas · ${runtime.S.placesN||0} lugares · ${runtime.S.retosN||0} retos</div><div class="list">${(runtime.S.catRecent||[]).length?(runtime.S.catRecent||[]).slice(0,12).map(c=>`<div class="life got"><span class="px"></span><span><strong>${c.n}</strong><small>Vive en ${c.r}</small></span></div>`).join(""):`<div><span class="px"></span><span><strong>Vacío</strong><small>Las formas con anillo dorado son nuevas. Tócalas para nombrarlas.</small></span></div>`}</div>
-    <div class="sub">Familias · ${Object.keys(runtime.S.zones).length} / ${runtime.BIOMES.length}</div><div class="list">${runtime.BIOMES.map(B=>`<div class="life ${runtime.S.zones[B.id]?"got":""}"><span class="px"></span><span><strong>${runtime.S.zones[B.id]?B.name:"???"}</strong><small>${runtime.S.zones[B.id]?B.desc:B.minD>=4?"Muy lejos del centro.":B.minD>=3?"Lejos del centro.":"Más allá de la llanura."}</small></span></div>`).join("")}</div>
-    <div class="sub">Vida · ${Object.keys(runtime.S.species).length} / ${runtime.SPECIES.length}</div><div class="list">${runtime.SPECIES.map(([id,n,d])=>`<div class="life ${runtime.S.species[id]?"got":""}"><span class="px"></span><span><strong>${runtime.S.species[id]?n:"???"}</strong><small>${runtime.S.species[id]?d:"Aún no la encuentras."}</small></span></div>`).join("")}</div>
-    <div class="sub">Logros · ${got} / ${runtime.ACH.length}</div><div class="list">${runtime.ACH.map(([id,n,d,h])=>{const g=runtime.S.ach[id],hid=h&&!g;return `<div class="${g?"got":""}"><span class="px"></span><span><strong>${hid?"???":n}</strong><small>${hid?"Logro oculto. Nadie te va a decir cómo.":d}</small></span></div>`;}).join("")}</div>`;
-    $("mAch").hidden=false;
-  }
 
 
   Object.defineProperties(runtime, {
@@ -69,6 +61,5 @@ export function initialize(runtime) {
     enterWorld: { get: () => enterWorld },
     exitWorld: { get: () => exitWorld },
     openCap: { get: () => openCap },
-    openAch: { get: () => openAch },
   });
 }

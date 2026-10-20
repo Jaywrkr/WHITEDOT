@@ -95,7 +95,7 @@
  <dl class="profile-metrics"><div><dt>Tiempo activo</dt><dd id="profileTime"></dd></div><div><dt>Distancia caminada</dt><dd id="profileDistance"></dd></div><div><dt>Sesiones medidas</dt><dd id="profileSessions"></dd></div><div><dt>Días con luz</dt><dd id="profileDays"></dd></div></dl>
  <h3>Tu universo descubierto</h3><dl class="profile-metrics compact"><div><dt>Lugares</dt><dd id="profilePlaces"></dd></div><div><dt>Estilos escuchados</dt><dd id="profileGenres"></dd></div><div><dt>Instrumentos escuchados</dt><dd id="profileInstruments"></dd></div><div><dt>Familias encontradas</dt><dd id="profileElements"></dd></div><div><dt>Tarjetas</dt><dd id="profileCards"></dd></div><div><dt>Cajas abiertas</dt><dd id="profileBoxes"></dd></div><div><dt>Logros</dt><dd id="profileAchievements"></dd></div></dl>
  <details><summary>Tiempo por espacio</summary><dl class="profile-breakdown"><dt>Camino</dt><dd id="profileCaminoTime"></dd><dt>Mundo</dt><dd id="profileWorldTime"></dd><dt>Casa</dt><dd id="profileHouseTime"></dd></dl><p>No cuenta menús, segundo plano ni saltos como distancia.</p><p>La distancia usa la escala interna del juego.</p></details>
- <div class="row"><button id="profileCollection">Ver colección</button><button id="profilePlacesLink">Volver a tus lugares</button></div><p>Perfil local. Viaja con tu copia guardada.</p><button id="profileClose">Volver</button>
+ <div class="row"><button id="profileCollection">Ver colección</button><button id="profilePlacesLink">Volver a tus lugares</button></div><p>Tu progreso viaja con tu cuenta.</p><button id="profileClose">Volver</button>
 </div></div>
 
 <div class="modal lite" id="mCube" role="dialog" aria-modal="true" aria-labelledby="cubeTitle" hidden><div class="sheet cube-sheet">
@@ -300,7 +300,7 @@
   <div class="sheet">
     <h2 id="journalTitle">Bitácora</h2>
     <div class="journal-tabs" aria-label="Secciones de la Bitácora"><button data-journal-tab="today">Hoy</button><button data-journal-tab="collection">Colección</button><button data-journal-tab="places">Lugares</button><button data-journal-tab="music">Música</button><button data-journal-tab="achievements">Logros</button></div>
-    <div id="journalFilters" hidden><input id="journalSearch" type="search" placeholder="Busca una pieza" aria-label="Buscar colección"><select id="journalGroup" aria-label="Tipo de colección"><option value="todo">Todo</option><option value="cubo">Cubo</option><option value="casa">Casa</option><option value="elementos">109 elementos</option><option value="linajes">28 linajes</option><option value="tarjetas">Tarjetas</option><option value="caminantes">50 caminantes</option><option value="formas">Formas</option></select><select id="journalOwnership" aria-label="Piezas ganadas o pendientes"><option value="todo">Todo</option><option value="ganado">Ganado</option><option value="pendiente">Pendiente</option></select></div>
+    <div id="journalFilters" hidden><input id="journalSearch" type="search" placeholder="Busca una pieza" aria-label="Buscar colección"><select id="journalGroup" aria-label="Tipo de colección"><option value="todo">Todo</option><option value="cubo">Cubo</option><option value="casa">Casa</option><option value="elementos">Elementos</option><option value="linajes">Linajes</option><option value="tarjetas">Tarjetas</option><option value="caminantes">Caminantes</option><option value="formas">Formas</option></select><select id="journalOwnership" aria-label="Piezas ganadas o pendientes"><option value="todo">Todo</option><option value="ganado">Ganado</option><option value="pendiente">Pendiente</option></select></div>
     <button id="sessionShare">Compartir sesión</button><button id="journalNext">Lo próximo</button><button id="journalMore" hidden>Ver más</button>
     <div class="scroll" id="journalBody" aria-live="polite"></div>
     <label id="rareCodeFallback" hidden>Código del hallazgo · selecciónalo y copia<textarea id="rarePlaceCode" readonly aria-label="Código de lugar del hallazgo"></textarea></label>
@@ -308,13 +308,6 @@
   </div>
 </div>
 
-<div class="modal" id="mAch" hidden>
-  <div class="sheet">
-    <h2>Logros</h2>
-    <div class="scroll" id="achBody"></div>
-    <div class="row"><button id="aClose">Cerrar</button></div>
-  </div>
-</div>
 
 <div class="modal lite" id="mMusic" hidden>
   <div class="sheet">

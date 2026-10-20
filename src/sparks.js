@@ -41,7 +41,7 @@ export function initialize(runtime){
   const ticket={balance:owner.sparks,economy:structuredClone(q)};debitSparks(owner,SPARK_JUMP_COST);q.stats.jumps++;q.stats.sinceJump=0;return ticket;
  }
  function cancelJump(ticket){if(ticket){owner.sparks=ticket.balance;owner.sparkEconomy=ticket.economy;}}
- function confirmJump(){lastJump={at:clock};segment=0;anchor=null;sessionDistance=0;trail=[];lastTrail=null;changeNotice(-SPARK_JUMP_COST);notice('Salto realizado','Vuelve gratis al punto anterior');}
+ function confirmJump(){lastJump={at:clock};segment=0;anchor=null;sessionDistance=0;newCards=new Set();neighbors=new Set();trail=[];lastTrail=null;changeNotice(-SPARK_JUMP_COST);notice('Salto realizado','Vuelve gratis al punto anterior');}
  function returned(){if(lastJump&&clock-lastJump.at<30)award('badge:wrong',0,'No era por aquí','Volviste antes de treinta segundos.');lastJump=null;}
  function award(id,value,title,text){if(Object.hasOwn(book().claims,id))return false;let amount=0;const ok=commit(()=>{const before=owner.sparks;if(!claimSparkReward(owner,id,value,title,text))return false;amount=owner.sparks-before;});if(ok){changeNotice(amount);notice(title,text+(amount?' · +'+amount+' chispas':''));}return ok;}
  function inspect(id){if(inspector.id!==id)inspector={id,count:0};inspector.count++;}
@@ -81,7 +81,7 @@ export function initialize(runtime){
   $('sparkTitle').innerHTML='<option value="">Sin título</option>'+titles.map(t=>'<option '+(q.title===t?'selected':'')+'>'+escape(t)+'</option>').join('');
   $('sparkGoalSelect').innerHTML=[['none','Sin meta'],['jump','Ahorrar para un salto'],...SPARK_SHOP.map(p=>['shop:'+p.id,p.name]),...SPARK_SETS.map(p=>['set:'+p.id,p.name]),...SPARK_MILESTONES.map(p=>['distance:'+p.meters,p.meters+' metros'])].map(([id,t])=>'<option value="'+id+'" '+(q.goal===id?'selected':'')+'>'+t+'</option>').join('');
   $('sparkLog').innerHTML=q.log.slice().reverse().map(e=>'<p><b>'+escape(e.title)+'</b> · '+escape(e.text)+'</p>').join('')||'<p>Tu recorrido empieza aquí.</p>';
-  $('sparkStatus').textContent=!runtime.inWorld()?'Rompe diez cristales para entrar al Mundo.':sparkNumber(owner.sparks)<SPARK_JUMP_COST?'Rompe cristales y recoge sus fragmentos. Te faltan '+(SPARK_JUMP_COST-sparkNumber(owner.sparks))+' chispas para saltar.':'Puedes saltar o ahorrar para una apariencia permanente.';const travel=runtime.inWorld()&&runtime.canPracticeTravel?.()!==false;$('sparkBack').disabled=!travel||!owner.practiceTravel?.previous;$('sparkJump').disabled=!travel||sparkNumber(owner.sparks)<SPARK_JUMP_COST;
+  $('sparkStatus').textContent=!runtime.inWorld()?'Rompe diez cristales para entrar al Mundo.':sparkNumber(owner.sparks)<SPARK_JUMP_COST?'Rompe cristales y recoge sus fragmentos. Te faltan '+(SPARK_JUMP_COST-sparkNumber(owner.sparks))+' chispas para saltar.':(SPARK_SHOP.some(p=>!book().purchases?.[p.id])?'Puedes saltar o ahorrar para una apariencia permanente.':'Tienes todas las apariencias. Usa tus chispas para saltar.');const travel=runtime.inWorld()&&runtime.canPracticeTravel?.()!==false;$('sparkBack').disabled=!travel||!owner.practiceTravel?.previous;$('sparkJump').disabled=!travel||sparkNumber(owner.sparks)<SPARK_JUMP_COST;
  }
  function open(){document.querySelectorAll('.modal:not([hidden])').forEach(p=>p.hidden=true);$('mSparks').hidden=false;render();}
  function hud(){const q=book(),total=$('sparkTotal'),gain=$('sparkGain');if(!total)return;total.textContent='✦ '+sparkNumber(owner.sparks)+' chispas';gain.textContent=clock<deltaUntil?(delta>0?'+':'')+delta:'';$('sparkCount').classList.toggle('collecting',clock<deltaUntil);$('bJump').classList.toggle('spark-ready',clock<jumpUntil);$('sparkGoal').textContent=goalText();$('sparkGoal').hidden=!runtime.inWorld()||!goalText();$('sparkTitleHud').textContent=q.title||'';const powers=POWER_IDS.filter(id=>(runtime.powerSecondsLeft?.(id)||0)>0);$('sparkPowerHud').hidden=!runtime.inWorld()||!powers.length;$('sparkPowerText').textContent=powers.map(id=>POWERS[id].name+' '+Math.ceil(runtime.powerSecondsLeft(id))+' s').join(' · ');}
@@ -104,6 +104,7 @@ export function initialize(runtime){
   c.restore();
  }
  $('bSparks').onclick=open;$('sparkGoal').onclick=open;$('sparkClose').onclick=()=>{$('mSparks').hidden=true;};
+ for(const id of ['bJump','sparkJump'])$(id).textContent='Saltar · '+SPARK_JUMP_COST+' ✦';
  $('sparkJump').onclick=()=>{if(sparkNumber(runtime.S.sparks)<SPARK_JUMP_COST){$('sparkStatus').textContent='Necesitas '+(SPARK_JUMP_COST-sparkNumber(runtime.S.sparks))+' chispas más.';return;}$('mSparks').hidden=true;runtime.jumpPracticePlace();};
  $('sparkBack').onclick=()=>{$('mSparks').hidden=true;runtime.returnPracticePlace();};
  $('sparkShop').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.sparkBuy)buy(b.dataset.sparkBuy);if(b.dataset.sparkEquip)equip(book().equipped===b.dataset.sparkEquip?'':b.dataset.sparkEquip);if(b.dataset.sparkPreview){$('sparkPreview').innerHTML=preview(b.dataset.sparkPreview);$('sparkPreviewLabel').textContent=SPARK_SHOP.find(p=>p.id===b.dataset.sparkPreview).name;}};
