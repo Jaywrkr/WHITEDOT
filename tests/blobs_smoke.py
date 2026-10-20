@@ -37,7 +37,7 @@ with sync_playwright() as p:
   for field in ['ach','cat','bag']:
    for key,value in original.get(field,{}).items():assert restored[field].get(key)==value,(field,key)
   assert all(star in restored['stars'] for star in original['stars'])
-  assert restored['practiceTravel']['arrivals']>original.get('practiceTravel',{}).get('arrivals',0),'returning from a preview is a new visit; its earned main progress stays intact'
+  assert restored.get('practiceTravel',{}).get('arrivals',0)==original.get('practiceTravel',{}).get('arrivals',0),'returning from a preview the same day keeps the place: one new arrival per day, earned main progress intact'
   assert not errors,errors
   print(label+': prototype seed switching, whole-world variation, center, preview save isolation and return to main save PASS',flush=True);c.close();b.close()
 server.shutdown()
