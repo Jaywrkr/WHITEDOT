@@ -1,10 +1,12 @@
 import {wearing} from './cube-shop-model.js';
-// Batch 1 of the cube shop: movement and body pieces. Drawing only: collisions, reach, saves and music are untouched.
+// Cube shop art: movement and body (batch 1), eyes, habits and accessories (batch 2). Drawing only: collisions, reach, saves and music are untouched.
 // Every piece has a still variant, so nothing bought disappears when motion is reduced.
 export function initialize(runtime){
  let lastT=null,lastX=null,lastY=null,vx=0,vy=0,speed=0,lastSpeed=0,squash=0,roll=0,travel=0,heat=0,lastBroken=null,stopped=0,blinkAt=-1;
+ let face=null,rare=null,blushAt=-1,greetAt=-1,greetDir=1,lastGreet=-1e9,greeted=new WeakSet(),nextSneeze=0,sneezeAt=-1,sneezed=false,sector=null,turns=[],dizzyUntil=-1;
  const wear=()=>runtime.sparkEconomy?.wear||{};
  const on=slot=>runtime.inWorld()?wear()[slot]||'':'';
+ const has=id=>runtime.inWorld()&&wearing(runtime.sparkEconomy,id);
  const still=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
  // Movement is read from the player's world position, once per frame.
  function sample(t){
@@ -23,7 +25,16 @@ export function initialize(runtime){
   if(motion==='motion:legs'){c.save();c.strokeStyle='#fff';c.lineWidth=1;const step=calm||speed<8?0:Math.sin(t/90)*2.5,feet=s>=14?[-.45,-.15,.15,.45]:[-.5,.5],len=Math.max(4,s*.45);feet.forEach((f,i)=>{const fx=Math.round(x+f*(s+4))+.5,swing=i%2?step:-step;c.beginPath();c.moveTo(fx,y+s/2+1);c.lineTo(fx+swing,y+s/2+1+len);c.stroke();});c.restore();}
   if(motion==='motion:skate'){c.save();c.globalAlpha=.6;c.strokeStyle='#fff';c.lineWidth=1;c.beginPath();c.moveTo(x-s*.5,y+s/2+3);c.lineTo(x+s*.5,y+s/2+3);c.stroke();if(!calm&&speed>20){c.globalAlpha=.3;const a=Math.atan2(vy,vx);for(const o of [-3,3]){c.beginPath();c.moveTo(x-Math.cos(a)*s*.7-Math.sin(a)*o,y-Math.sin(a)*s*.7+Math.cos(a)*o);c.lineTo(x-Math.cos(a)*s*1.4-Math.sin(a)*o,y-Math.sin(a)*s*1.4+Math.cos(a)*o);c.stroke();}}c.restore();}
   if(body==='body:disco'){c.save();c.fillStyle='#fff';const turn=calm?0:t/1400;for(let i=0;i<12;i++){const a=turn+i*.5236,r=s*(1.6+(i%3)*.5);c.globalAlpha=.35+(i%2)*.2;c.fillRect(x+Math.cos(a)*r,y+Math.sin(a)*r*.55+s*.2,2,2);}c.restore();}
+  if(dt)habits(t,dt,calm);
   if(dt&&motion==='motion:blink'&&!calm&&speed>20){const b=runtime.beat?.()||0;if(b>.92&&blinkAt<0)blinkAt=t;if(blinkAt>=0&&t-blinkAt>140)blinkAt=-1;}
+ }
+ // Habits: short moments read from what already happens around the cube.
+ function habits(t,dt,calm){
+  const cards=runtime.S.rareBook?.items?.length||0;if(rare===null)rare=cards;if(cards>rare)blushAt=t;rare=cards;
+  if(has('habit:greet'))for(const o of runtime.MU?.near||[]){if(!o||typeof o!=='object'||greeted.has(o))continue;greeted.add(o);if(o.x!=null&&t-lastGreet>4000){lastGreet=greetAt=t;greetDir=o.x>=runtime.S.wx?1:-1;}}
+  if(has('habit:sneeze')&&['esporas','polvo','niebla'].includes(runtime.MU?.dnaT?.air)){if(!nextSneeze)nextSneeze=t+6000;if(t>=nextSneeze){sneezeAt=t;sneezed=false;nextSneeze=t+8000+Math.floor(t*7.3)%6000;}}else nextSneeze=0;
+  if(sneezeAt>=0&&!sneezed&&t-sneezeAt>=450){sneezed=true;if(!calm){const dir=vx<0?-1:1;for(let i=0;i<6;i++)runtime.parts?.push({x:runtime.S.wx+dir*4,y:runtime.S.wy,vx:dir*(70+i*18),vy:(i-2.5)*16,l:1,g:true});}}
+  if(has('habit:dizzy')&&speed>20){const a=Math.atan2(vy,vx),q=((Math.round(a/(Math.PI/2))%4)+4)%4;if(q!==sector){if(sector!==null)turns.push(t);sector=q;}turns=turns.filter(x=>t-x<3000);if(turns.length>=6){dizzyUntil=t+2600;turns=[];}}
  }
  // Inside the cube's own transform: how the body moves.
  function transform(c,x,y,s,t){
@@ -37,15 +48,17 @@ export function initialize(runtime){
   if(motion==='motion:blink'&&blinkAt>=0&&speed>0){ox=vx/speed*5;oy+=vy/speed*5;}
   if(body==='body:beat'&&!calm){const b=1+(runtime.beat?.()||0)*.12;sx*=b;sy*=b;}
   if(body==='body:streak'){const g=1+heat*.04;sx*=g;sy*=g;}
+  if(has('habit:sneeze')&&sneezeAt>=0&&!calm){const k=t-sneezeAt;if(k<450){const g=1+k/450*.08;sx*=g;sy*=g;}else if(k<650)ox-=(vx<0?-1:1)*2;}
+  if(has('habit:dizzy')&&t<dizzyUntil&&!calm)rot+=Math.sin(t/110)*.12;
   if(sx!==1||sy!==1||rot||ox||oy){c.translate(x+ox,y+oy);c.rotate(rot);c.scale(sx,sy);c.translate(-x,-y);}
  }
  // The body itself. Returns true when it replaced the plain square.
  function body(c,x,y,s,t,color){
-  if(!runtime.inWorld())return false;const piece=on('body'),calm=still(),L=Math.round(x-s/2),T=Math.round(y-s/2),S=Math.round(s);
+  face=null;if(!runtime.inWorld())return false;const piece=on('body'),calm=still(),L=Math.round(x-s/2),T=Math.round(y-s/2),S=Math.round(s);
   if(!piece&&on('motion')!=='motion:blink')return false;
   c.fillStyle=piece==='body:chameleon'?ink():color;
   if(on('motion')==='motion:blink'&&(calm||blinkAt>=0)){c.save();c.globalAlpha=.3;c.strokeStyle=c.fillStyle;c.strokeRect(L-(calm?5:Math.sign(vx)*5)+.5,T+.5,S-1,S-1);c.restore();}
-  if(piece==='body:swarm'){const m=Math.max(3,Math.round(s*.42)),gap=2,go=calm?0:Math.min(1,speed/90),ux=speed>1?vx/speed:0,uy=speed>1?vy/speed:0;[[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([i,j],k)=>{const hx=x+i*(m+gap)/2,hy=y+j*(m+gap)/2,lx=x-ux*k*(m+gap),ly=y-uy*k*(m+gap),px=hx+(lx-hx)*go,py=hy+(ly-hy)*go;c.fillRect(Math.round(px-m/2),Math.round(py-m/2),m,m);});return true;}
+  if(piece==='body:swarm'){const m=Math.max(3,Math.round(s*.42)),gap=2,go=calm?0:Math.min(1,speed/90),ux=speed>1?vx/speed:0,uy=speed>1?vy/speed:0;[[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([i,j],k)=>{const hx=x+i*(m+gap)/2,hy=y+j*(m+gap)/2,lx=x-ux*k*(m+gap),ly=y-uy*k*(m+gap),px=hx+(lx-hx)*go,py=hy+(ly-hy)*go;c.fillRect(Math.round(px-m/2),Math.round(py-m/2),m,m);if(!k)face={x:px,y:py,s:m};});return true;}
   if(piece==='body:assembly'){const n=4,cell=S/n,gap=calm?1:Math.min(3,stopped*3);for(let i=0;i<n;i++)for(let j=0;j<n;j++){const off=(i-1.5)*gap,offy=(j-1.5)*gap;c.fillRect(Math.round(L+i*cell+off),Math.round(T+j*cell+offy),Math.ceil(cell-.6),Math.ceil(cell-.6));}return true;}
   if(piece==='body:fish'){c.save();c.globalAlpha=.32;c.fillRect(L,T,S,S);c.globalAlpha=.9;c.strokeStyle=c.fillStyle;c.lineWidth=1;c.strokeRect(L+.5,T+.5,S-1,S-1);const fx=x+(calm?0:Math.sin(t/700)*s*.22),fy=y+(calm?0:Math.sin(t/430)*s*.12),face=calm||Math.cos(t/700)>0?1:-1;c.fillStyle='#fff';c.globalAlpha=1;c.fillRect(Math.round(fx-2),Math.round(fy-1),4,2);c.fillRect(Math.round(fx-face*3),Math.round(fy-2),1,4);c.restore();return true;}
   c.fillRect(L,T,S,S);
@@ -57,5 +70,42 @@ export function initialize(runtime){
   if(piece==='body:disco'){c.globalAlpha=.45;for(let i=1;i<4;i++){c.beginPath();c.moveTo(L+i*S/4,T);c.lineTo(L+i*S/4,T+S);c.moveTo(L,T+i*S/4);c.lineTo(L+S,T+i*S/4);c.stroke();}}
   c.restore();return true;
  }
- Object.defineProperties(runtime,{drawCubeShopUnder:{get:()=>under},cubeShopTransform:{get:()=>transform},drawCubeShopBody:{get:()=>body},cubeShopWearing:{get:()=>id=>wearing(runtime.sparkEconomy,id)}});
+ // Over the body, inside its transform: eyes, habit faces and accessories.
+ function nearest(){let best=null,d=Infinity;for(const o of runtime.MU?.near||[]){if(o?.x==null)continue;const k=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);if(k<d){d=k;best=o;}}return best;}
+ function over(c,x,y,s,t){
+  if(!runtime.inWorld())return;const F=face||{x,y,s},eyes=on('eyes'),acc=on('accessory'),calm=still();face=null;
+  const cycle=(stopped-6)%12,yawn=has('habit:yawn')&&stopped>6&&cycle<1.8?Math.sin(cycle/1.8*Math.PI):0,greet=has('habit:greet')&&greetAt>=0&&t-greetAt<900,sneeze=has('habit:sneeze')&&sneezeAt>=0&&t-sneezeAt<700,dizzy=has('habit:dizzy')&&t<dizzyUntil;
+  const kind=acc==='acc:shades'?'':eyes||(yawn||greet||sneeze||dizzy?'eyes:plain':'');
+  if(!kind&&!acc&&!yawn&&!dizzy)return;
+  // Whole-pixel face: the cube is 6 px at level 1 and 22 px at most, so every mark snaps to the grid.
+  const S=Math.round(F.s),L=Math.round(F.x-S/2),T=Math.round(F.y-S/2),e=Math.max(1,Math.round(S/7)),inset=Math.round(S*.22),eyeX=[L+inset,L+S-inset-e],ey=T+Math.round(S*.3),roomy=S>=10,px=(X,Y,W,H)=>c.fillRect(Math.round(X),Math.round(Y),Math.max(1,Math.round(W)),Math.max(1,Math.round(H)));
+  let lx=0,ly=0;
+  if(!calm){let tx=vx,ty=vy,m=speed;if(eyes==='eyes:curious'){const o=nearest();if(o){tx=o.x-runtime.S.wx;ty=o.y-runtime.S.wy;m=Math.hypot(tx,ty);}else if(m<8){tx=Math.sin(t/1300);ty=Math.sin(t/2100)*.4;m=1;}}if(greet){tx=greetDir;ty=0;m=1;}if(m>.5){const reach=S>=14?2:1;lx=Math.round(tx/m*reach);ly=roomy?Math.round(ty/m):0;}}
+  if(eyes==='eyes:naughty'&&!greet&&!lx)lx=1;
+  c.save();c.globalAlpha=1;c.fillStyle='#000';
+  const sleepy=eyes==='eyes:sleepy',dozing=sleepy&&(stopped>3||calm&&stopped>1),winking=eyes==='eyes:naughty'&&!calm&&t%3200<380;
+  if(kind){
+   eyeX.forEach((ex0,n)=>{
+    const side=n?1:-1,ex=ex0+lx,closed=yawn>.3||sneeze||dozing||greet&&side===greetDir||winking&&side<0;
+    if(dizzy){const a=calm?side:t/80+side*2;px(ex+Math.round(Math.cos(a)*.8),ey+Math.round(Math.sin(a)*.8),e,e);return;}
+    if(closed){px(ex-(n?0:e>1?0:1),ey+e,e+1,1);return;}
+    if(sleepy){px(ex-(n?0:1),ey+1+ly,e+1,Math.max(1,Math.ceil(e/2)));return;}
+    if(eyes==='eyes:serious'){if(roomy){px(ex,ey+ly,e,e);px(ex-(n?0:1),ey-2,e+1,1);}else px(ex-(n?0:1),ey,e+1,1);return;}
+    if(eyes==='eyes:naughty'&&n){px(ex-1+(roomy?0:1),ey+e+ly,e+(roomy?1:0),1);return;}
+    const big=eyes==='eyes:curious'&&roomy?1:0;px(ex-(n?0:big),ey+ly-big,e+big,e+1+big);
+    if(eyes==='eyes:curious'&&!roomy)px(ex,ey-1,e,1);
+   });
+   if(eyes==='eyes:naughty'&&roomy)px(eyeX[0]+lx-1,ey-2+(winking?1:0),e+1,1);
+   if(eyes==='eyes:blush'){const glow=blushAt>=0&&t-blushAt<4000?1-(t-blushAt)/4000:0;c.fillStyle='#ff7aa8';c.globalAlpha=.55+.45*glow;px(L+(roomy?1:0),ey+e+1,roomy?e+1:1,roomy?2:1);px(L+S-(roomy?e+2:1),ey+e+1,roomy?e+1:1,roomy?2:1);c.globalAlpha=1;c.fillStyle='#000';}
+   if(dozing){c.fillStyle='#fff';c.globalAlpha=.8;const rise=calm?0:Math.floor((t/700)%3),zx=L+S+2+rise,zy=T-4-rise*2;px(zx,zy,3,1);px(zx+1,zy+1,1,1);px(zx,zy+2,3,1);c.globalAlpha=1;c.fillStyle='#000';}
+  }
+  if(yawn)px(L+Math.floor((S-e-1)/2),T+Math.round(S*.62),e+1,Math.max(1,Math.round(yawn*S*.28)));
+  if(acc==='acc:mustache'){const w=Math.max(4,Math.round(S*.7)),my=ey+e+(roomy?2:1),mx=L+Math.round((S-w)/2),h=Math.floor(w/2);if(roomy){px(mx+1,my,w-2,1);px(mx,my+1,h,1);px(mx+w-h,my+1,h,1);if(S>=16){px(mx,my+2,1,1);px(mx+w-1,my+2,1,1);}}else px(mx,my,w,1);}
+  if(acc==='acc:shades'){const w=e+(roomy?2:1),gy=ey-(roomy?1:0);px(eyeX[0]-(roomy?1:1),gy,w,e+(roomy?1:0));px(eyeX[1]-(roomy?1:0),gy,w,e+(roomy?1:0));px(eyeX[0],gy,eyeX[1]-eyeX[0],1);px(L-1,gy,1,1);px(L+S,gy,1,1);if(roomy){c.fillStyle='#fff';c.globalAlpha=.75;px(eyeX[0],gy,1,1);px(eyeX[1],gy,1,1);}}
+  if(acc==='acc:monocle'){const mx=eyeX[1]+lx,r=roomy?2:1;c.strokeStyle='#000';c.lineWidth=1;c.strokeRect(mx-r+.5,ey-r+.5,e+r*2-1,e+r*2);c.strokeStyle='#f0d27a';c.beginPath();c.moveTo(mx+e+r-.5,ey+e+r);c.quadraticCurveTo(L+S+3,T+S*.7,L+S+1.5,T+S+3);c.stroke();}
+  if(acc==='acc:hat'){const w=Math.max(4,Math.round(S*.6))|0,h=Math.max(5,Math.round(S*.75)),bx=L+Math.round(S/2),by=T;c.fillStyle=ink();c.beginPath();c.moveTo(bx-w/2,by);c.lineTo(bx+w/2,by);c.lineTo(bx+1,by-h);c.closePath();c.fill();c.fillStyle='#fff';px(bx,by-h-1,roomy?2:1,roomy?2:1);}
+  if(dizzy){c.fillStyle='#fff';const r=Math.max(5,S*.7),cy=T-4;for(let i=0;i<3;i++){const a=(calm?.4:t/250)+i*2.094;px(F.x+Math.cos(a)*r-1,cy+Math.sin(a)*r*.35-1,roomy?2:1,roomy?2:1);}}
+  c.restore();
+ }
+ Object.defineProperties(runtime,{drawCubeShopUnder:{get:()=>under},cubeShopTransform:{get:()=>transform},drawCubeShopBody:{get:()=>body},drawCubeShopOver:{get:()=>over},cubeShopHabits:{get:()=>()=>({yawn:has('habit:yawn')&&stopped>6&&(stopped-6)%12<1.8,greeted:greetAt>=0,sneezed:sneezeAt>=0,dizzy:dizzyUntil>=0,blushed:blushAt>=0})},cubeShopWearing:{get:()=>id=>wearing(runtime.sparkEconomy,id)}});
 }
