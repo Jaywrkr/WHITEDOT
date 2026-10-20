@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.64**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.65**. Las entradas describen su revisión, no certifican producción.
+
+## Tu cubo, un solo lugar · alpha.65
+
+Pedido por Jay: «Tu cubo» y «Viajar y chispas» se juntan en un solo panel. Arriba, el cubo vivo con todo lo que llevas y tus ✦. Tres pestañas:
+
+- **Llevar:** lo ganado jugando y lo comprado, por ranura; tocar lo pone o lo quita al momento, sin Aplicar ni Cancelar. Un solo rastro a la vez.
+- **Tienda:** solo lo que no tienes, con precio junto al nombre. Al comprar te lo pones y pasa a Llevar. Sin vista previa: cada imagen es el dibujo real de la pieza. `cube-shop-preview.js` la genera en una escena corta (andar, pararse, girar) usando los mismos módulos de dibujo del juego.
+- **Viaje:** saltar, volver, meta, colecciones, título e historial.
+
+El menú pierde «Viajar y chispas» y «Tu cubo» pasa a Jugar.
+
+Corrige un fallo de alpha.64: si se reemplazaba la partida en marcha, el dibujo de rastros fallaba en cada fotograma; lo destapó `pet_smoke.py`.
+
+Pruebas adaptadas sin quitar aserciones de comportamiento: `cube_editor`, `wardrobe`, `music_menu`, `musical_wonders`, `pet`, `pulse_forms`, `panel_polish`, `sparks_economy`, `game_loop` y las tres de la tienda. La de rastros además comprueba que un rastro ganado y uno comprado se excluyen.
 
 ## Tienda del cubo, tanda 3 · alpha.64
 

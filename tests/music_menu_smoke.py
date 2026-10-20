@@ -23,13 +23,13 @@ try:
    page.locator('#cubeClose').click()
    page.evaluate('''async()=>{const {WONDERS}=await import('/src/musical-wonders-model.js');__r.S.musicalWonders={version:1,found:Object.fromEntries(WONDERS.map(d=>[d.id,true])),totems:{}};__r.save();}''')
    page.locator('#bMenu').click();page.locator('#bCube').click();assert page.locator('#cubeWonder option').count()==21
-   page.locator('#cubeWonder').select_option('star-seed');assert 'Vista previa' in page.locator('#cubeGiftStatus').inner_text();assert page.locator('#cubeGiftPortrait svg').count()==1
-   for tab in ['#cubeTabMotion','#cubeTabVoice','#cubeTabAppearance']:
+   page.locator('#cubeWonder').select_option('star-seed');assert page.locator('#cubeGiftStatus').inner_text()=='Lo llevas';assert page.locator('#cubeGiftPortrait svg').count()==1
+   for tab in ['#cubeTabShop','#cubeTabTravel','#cubeTabWear']:
     page.locator(tab).click();assert page.locator('#mCube .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2')
-   page.locator('#cubeWonder').scroll_into_view_if_needed();page.screenshot(path=str(ROOT.parent/f'menu-gifts-{width}.png'));page.locator('#cubeApply').click()
+   page.locator('#cubeWonder').scroll_into_view_if_needed();page.screenshot(path=str(ROOT.parent/f'menu-gifts-{width}.png'));page.locator('#cubeClose').click()
    assert page.evaluate('__r.S.cube.wonder')=='star-seed'
-   page.locator('#bMenu').click();page.locator('#bCube').click();assert page.locator('#cubeGiftStatus').inner_text()=='Equipado'
-   page.locator('#cubeWonder').select_option('dawn-mirror');page.evaluate("()=>{window.originalSet=Storage.prototype.setItem;Storage.prototype.setItem=function(){throw Error('quota')};}");page.locator('#cubeApply').click();assert page.evaluate('__r.S.cube.wonder')=='star-seed';page.evaluate('()=>{Storage.prototype.setItem=originalSet;}');page.locator('#cubeClose').click()
+   page.locator('#bMenu').click();page.locator('#bCube').click();assert page.locator('#cubeGiftStatus').inner_text()=='Lo llevas'
+   page.evaluate("()=>{window.originalSet=Storage.prototype.setItem;Storage.prototype.setItem=function(){throw Error('quota')};}");page.locator('#cubeWonder').select_option('dawn-mirror');assert page.evaluate('__r.S.cube.wonder')=='star-seed';page.evaluate('()=>{Storage.prototype.setItem=originalSet;}');page.locator('#cubeClose').click()
    page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#universeTexts').uncheck();assert page.evaluate('__r.S.universeTexts===false');assert page.locator('#universeTexts').evaluate('e=>e.getBoundingClientRect().width<=24');assert page.locator('#universeTextsHint').is_visible();page.screenshot(path=str(ROOT.parent/f'menu-settings-before-{width}.png'));assert page.locator('#mSettings .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2'),page.locator('#mSettings .sheet').evaluate('e=>({sw:e.scrollWidth,cw:e.clientWidth,children:[...e.querySelectorAll("*")].map(n=>({id:n.id,tag:n.tagName,x:n.getBoundingClientRect().x,w:n.getBoundingClientRect().width})).filter(n=>n.x+n.w>innerWidth)})');page.locator('#settingsClose').scroll_into_view_if_needed();page.screenshot(path=str(ROOT.parent/f'menu-settings-{width}.png'));page.locator('#settingsClose').click()
    page.reload();page.wait_for_function('!!window.__r?.wonderTick');page.locator('#returnContinue').click();assert page.evaluate('__r.S.cube.wonder')=='star-seed';assert page.evaluate('__r.S.universeTexts===false')
    for button,modal in [('bMusicSettings','mMusic'),('bFavorites','mFavorites'),('bAch','mJournal'),('bProfile','mProfile'),('bMap','mMap'),('bGuide','mGuide'),('bSaveTools','mSaveTools')]:

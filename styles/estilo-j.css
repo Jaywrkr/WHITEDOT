@@ -381,7 +381,7 @@ body.ui-reduced-motion #rareNoticeArt::after{display:none}
 #rareNotice[data-layout="compact"],#celebration[data-layout="compact"]{position:fixed;top:calc(var(--safe-top,0px) + 74px);bottom:auto;left:50%;transform:translateX(-50%);width:min(320px,calc(100vw - 32px));max-height:180px;background:#000;border:1px solid #fff4;padding:12px;z-index:35}
 #rareNotice[data-layout="compact"] #rareNoticeArt,#rareNotice[data-layout="compact"] #rareNoticeSerial,#rareNotice[data-layout="compact"] #rareNoticeOdds,#rareNotice[data-layout="compact"] #rareNoticeContinue,#rareNotice[data-layout="compact"] #rareNoticeWhere,#rareNotice[data-layout="compact"] #rareNoticeAbility,#celebration[data-layout="compact"] #celebrationArt,#celebration[data-layout="compact"] #celebrationSerial,#celebration[data-layout="compact"] #celebrationPlace,#celebration[data-layout="compact"] #celebrationShare{display:none}
 #toast[data-detail="sparks"]{pointer-events:auto;cursor:pointer}
-@media(max-width:480px){.spark-grid{grid-template-columns:1fr}.spark-goal{max-width:155px}}
+@media(max-width:480px){.spark-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.spark-goal{max-width:155px}}
 
 .spark-power{max-width:190px;font:10px/1.5 var(--mono);color:var(--earned);text-align:right}.spark-power button{min-height:26px;padding:2px 6px;font-size:10px}#toast[data-detail="save"]{pointer-events:auto;cursor:pointer}
 
@@ -454,3 +454,22 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 /* Silent unread marker without changing button layout. */
 #bAch.has-unread svg{stroke:var(--earned)}
 #bAch.has-unread span::after{content:" ·";color:var(--earned)}
+/* Tu cubo: one place for wearing, buying and travelling. Pictures are drawn by the game; gold marks what was earned. */
+.modal .sheet.cube-sheet{width:min(720px,calc(100vw - 24px));max-width:720px;max-height:min(88dvh,calc(100dvh - var(--safe-top,0px) - var(--safe-bottom,0px) - 24px));padding-top:0}
+.cube-head{display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:2;background:#000;padding:16px 0 8px}.cube-head h2{flex:1;margin:0}.cube-head strong{color:#f0d27a;font:500 16px var(--mono);white-space:nowrap}
+.cube-sheet .cube-preview{height:96px;min-height:96px}.cube-sheet .cube-preview canvas{height:96px}
+.cube-sheet .cube-tabs{position:sticky;top:60px;z-index:2;background:#000;margin:0;padding:8px 0}
+.cube-sheet #cubeHint{min-height:1.6em;margin:4px 0}
+.cube-group{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#ffffff80;margin:24px 0 4px;padding-top:12px;border-top:1px solid var(--line)}
+.cube-sheet [data-owned-slot][hidden]{display:none}
+.cube-options .cube-piece{display:flex;flex-direction:column;align-items:center;gap:4px;width:96px;min-height:0;padding:4px;font-size:10px}
+.cube-piece img,.spark-picture{display:block;width:100%;aspect-ratio:3/2;image-rendering:pixelated;background:#000}
+.cube-piece span{overflow-wrap:anywhere;text-align:center}
+.cube-sheet .spark-grid article{gap:6px;padding:8px}.cube-sheet .spark-grid h3{font-size:12px;margin:0}.cube-sheet .spark-grid article p{font-size:10px;line-height:1.5;color:#ffffffb3}
+.spark-grid article[data-afford="false"] button{color:#ffffff80;border-color:#ffffff33}
+.spark-empty{grid-column:1/-1}
+#cubePanelTravel section{margin:16px 0;padding-top:12px;border-top:1px solid var(--line)}#cubePanelTravel select{width:100%;min-height:44px;font:16px var(--mono);background:#000;color:#fff;border:1px solid #fff5}#cubePanelTravel small{display:block;color:#ffffff80}#cubePanelTravel details>summary{min-height:44px;padding-block:12px;border-top:1px solid var(--line);cursor:pointer}
+#cubeRestore{margin-top:24px;width:100%}
+.cube-sheet #cubeHint:empty{display:none}.cube-sheet .cube-preview{margin:0;border-bottom:0}
+#cubePanelTravel h3{font:500 13px var(--mono);margin:0 0 8px}
+.cube-sheet .spark-grid h3{display:flex;justify-content:space-between;gap:6px}.cube-sheet .spark-grid h3 span{color:#f0d27a;font-weight:400;white-space:nowrap}

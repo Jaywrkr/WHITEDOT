@@ -99,14 +99,26 @@
 </div></div>
 
 <div class="modal lite" id="mCube" role="dialog" aria-modal="true" aria-labelledby="cubeTitle" hidden><div class="sheet cube-sheet">
- <h2 id="cubeTitle">Tu cubo</h2><div id="cubePreview" class="cube-preview" role="img" aria-label="Vista previa de tu cubo"><canvas id="cubePreviewCanvas" aria-hidden="true"></canvas><i></i></div>
- <p id="cubeCount"></p><p id="cubeHint" role="status"></p>
- <div id="cubeTabs" class="cube-tabs" role="tablist" aria-label="Personaliza tu cubo"><button id="cubeTabAppearance" role="tab" data-cube-tab="appearance" aria-controls="cubePanelAppearance" aria-selected="true">Apariencia</button><button id="cubeTabMotion" role="tab" data-cube-tab="motion" aria-controls="cubePanelMotion" aria-selected="false" tabindex="-1">Movimiento</button><button id="cubeTabVoice" role="tab" data-cube-tab="voice" aria-controls="cubePanelVoice" aria-selected="false" tabindex="-1">Voz</button></div>
- <div id="cubePanelAppearance" role="tabpanel" aria-labelledby="cubeTabAppearance" data-cube-panel="appearance"><section class="cube-gift" aria-label="Regalos encontrados"><div class="cube-gift-summary"><div id="cubeGiftPortrait" aria-hidden="true"></div><div><h3 id="cubeGiftName">Regalos del universo</h3><p id="cubeGiftStatus" aria-live="polite"></p><small id="cubeGiftCount"></small></div></div><label for="cubeWonder">Elegir regalo</label><select id="cubeWonder" aria-describedby="cubeGiftStatus"></select></section><p>Color</p><div id="cubeColors" class="cube-options"></div><p>Material</p><div id="cubeMaterials" class="cube-options"></div><p>Borde</p><div id="cubeForms" class="cube-options"></div></div>
- <div id="cubePanelMotion" role="tabpanel" aria-labelledby="cubeTabMotion" data-cube-panel="motion" hidden><p>Estela</p><div id="cubeTrails" class="cube-options"></div><p>Halo</p><div id="cubeHalos" class="cube-options"></div><p>Aura</p><div id="cubeAuras" class="cube-options"></div><label for="cubePulseFamily">Ondas del pulso</label><select id="cubePulseFamily" aria-label="Familia de ondas"></select><div id="cubePulses" class="cube-options"></div><p>Descubre elementos; sus ondas quedan en Tu cubo.</p></div>
- <p id="cubePulseCount" role="status" data-cube-panel="motion" hidden></p>
- <div id="cubePanelVoice" role="tabpanel" aria-labelledby="cubeTabVoice" data-cube-panel="voice" hidden><p>Voz del pulso</p><div id="cubeVoices" class="cube-options"></div><p>Escucha tu elección al pulsar dentro del Mundo.</p></div>
- <p>Conserva el blanco. Descubre detalles jugando.</p><button id="cubeRestore">Restaurar blanco</button><div class="row"><button id="cubeClose">Cancelar</button><button id="cubeApply" disabled>Aplicar</button></div>
+ <header class="cube-head"><h2 id="cubeTitle">Tu cubo</h2><strong id="sparkBalance"></strong><button id="cubeClose" class="sheet-close" aria-label="Cerrar Tu cubo">×</button></header>
+ <div id="cubePreview" class="cube-preview" role="img" aria-label="Tu cubo con lo que llevas"><canvas id="cubePreviewCanvas" aria-hidden="true"></canvas><i></i></div>
+ <p id="cubeHint" role="status"></p>
+ <div id="cubeTabs" class="cube-tabs" role="tablist" aria-label="Tu cubo"><button id="cubeTabWear" role="tab" data-cube-tab="wear" aria-controls="cubePanelWear" aria-selected="true">Llevar</button><button id="cubeTabShop" role="tab" data-cube-tab="shop" aria-controls="cubePanelShop" aria-selected="false" tabindex="-1">Tienda</button><button id="cubeTabTravel" role="tab" data-cube-tab="travel" aria-controls="cubePanelTravel" aria-selected="false" tabindex="-1">Viaje</button></div>
+ <div id="cubePanelWear" role="tabpanel" aria-labelledby="cubeTabWear" data-cube-panel="wear"><p id="cubeCount"></p>
+  <h3 class="cube-group">Cuerpo y cara</h3><p>Color</p><div id="cubeColors" class="cube-options"></div><p>Material</p><div id="cubeMaterials" class="cube-options"></div><p>Borde</p><div id="cubeForms" class="cube-options"></div>
+  <section data-owned-slot="body" hidden><p>Cuerpo</p><div class="cube-options"></div></section><section data-owned-slot="eyes" hidden><p>Ojos</p><div class="cube-options"></div></section><section data-owned-slot="accessory" hidden><p>Accesorio</p><div class="cube-options"></div></section>
+  <section class="cube-gift" aria-label="Regalos encontrados"><div class="cube-gift-summary"><div id="cubeGiftPortrait" aria-hidden="true"></div><div><h3 id="cubeGiftName">Regalos del universo</h3><p id="cubeGiftStatus" aria-live="polite"></p><small id="cubeGiftCount"></small></div></div><label for="cubeWonder">Elegir regalo</label><select id="cubeWonder" aria-describedby="cubeGiftStatus"></select></section>
+  <h3 class="cube-group">Movimiento</h3><section data-owned-slot="motion" hidden><p>Forma de moverse</p><div class="cube-options"></div></section><section data-owned-slot="habits" hidden><p>Hábitos · puedes llevar varios</p><div class="cube-options"></div></section>
+  <p>Rastro</p><div id="cubeTrails" class="cube-options"></div><section data-owned-slot="companion" hidden><p>Compañero</p><div class="cube-options"></div></section><p>Halo</p><div id="cubeHalos" class="cube-options"></div><p>Aura</p><div id="cubeAuras" class="cube-options"></div>
+  <h3 class="cube-group">Pulso y voz</h3><label for="cubePulseFamily">Ondas del pulso</label><select id="cubePulseFamily" aria-label="Familia de ondas"></select><div id="cubePulses" class="cube-options"></div><p id="cubePulseCount" role="status"></p><section data-owned-slot="pulse" hidden><p>Forma del pulso</p><div class="cube-options"></div></section>
+  <p>Voz del pulso</p><div id="cubeVoices" class="cube-options"></div>
+  <button id="cubeRestore">Volver al cubo blanco</button></div>
+ <div id="cubePanelShop" role="tabpanel" aria-labelledby="cubeTabShop" data-cube-panel="shop" hidden><div id="sparkShop" class="spark-grid"></div></div>
+ <div id="cubePanelTravel" role="tabpanel" aria-labelledby="cubeTabTravel" data-cube-panel="travel" hidden><small id="sparkLedger"></small><p id="sparkStatus" role="status"></p>
+  <section><h3>Saltar</h3><p>Explora otro paisaje. Regresa gratis al punto anterior.</p><div class="row"><button id="sparkJump">Saltar · 20 ✦</button><button id="sparkBack">Volver gratis</button></div></section>
+  <label for="sparkGoalSelect">Tu próxima meta</label><select id="sparkGoalSelect"></select>
+  <section><h3>Colecciones</h3><p>Las tarjetas que encuentras completan estos conjuntos y dan chispas una sola vez.</p><div id="sparkSets" class="spark-grid"></div></section>
+  <details><summary>Logros e hitos</summary><p>Caminar desbloquea títulos; los logros sorprenden durante el viaje.</p><div id="sparkBadges"></div></details><label for="sparkTitle">Tu título</label><select id="sparkTitle"></select>
+  <details><summary>Historial de recompensas</summary><div id="sparkLog"></div></details></div>
 </div></div>
 <section class="fxpanel" id="fxPanel" aria-label="Mesa de efectos" hidden>
   <div class="fxhead"><small>Mesa de efectos</small><span id="fxRead">Limpio</span><button id="fxClose" aria-label="Cerrar mesa de efectos">×</button></div>
@@ -131,21 +143,12 @@
 
 <div class="modal" id="mSeeds" hidden><div class="sheet"><h2>Semillas de prueba</h2><p id="seedSummary">Tu progreso de cada semilla se conserva.</p><p id="seedInfo"></p><label for="seedGeneration">Paisaje</label><select id="seedGeneration"><option value="2">Paisajes vivos · explorar</option><option value="1">Original · volver y comparar</option></select><label for="seedLayout">Espacio</label><select id="seedLayout"><option value="immense">Inmenso · regiones de 100.800</option><option value="grand">Gran territorio · regiones de 50.400</option><option value="vasto">Vasto · regiones de 18.000</option><option value="wide">Amplio · más espacio</option><option value="classic">Clásico · comparar</option></select><form id="seedForm" class="row"><label for="seedValue">Semilla</label><input id="seedValue" maxlength="40" autocomplete="off"><button type="submit">Probar</button></form><div class="row" id="seedPresets"><button data-seed="blobs-01">Blobs I</button><button data-seed="blobs-02">Blobs II</button><button data-seed="bosque-01">Otra tierra</button><button data-seed="humedal-01">Humedal</button><button data-seed="salinas-01">Salinas</button><button data-seed="basalto-01">Basalto</button><button data-seed="micelio-01">Micelio</button></div><div class="row"><button id="seedNext">Otra semilla</button><button id="seedCenter">Volver al centro</button><button id="seedOriginal">Mi partida</button><button id="seedClose">Cerrar</button></div></div></div>
 <div class="modal" id="mSaveTools" hidden><div class="sheet"><h2>Guardar copia</h2><p>Tu progreso y tus lugares, en un archivo. Guárdalo.</p><p id="saveStatus" role="status"></p><div class="row"><button id="saveExport">Exportar esta partida</button><button id="saveOriginal" hidden>Exportar original conservado</button><button id="saveRecover" hidden>Recuperar copia válida</button></div><label for="saveImportFile">Elegir copia de esta partida</label><input id="saveImportFile" type="file" accept="application/json,.json"><p>Restaurar reemplaza esta partida. Antes se guarda una copia.</p><div class="row"><button id="saveImportApply" disabled>Restaurar copia elegida</button><button id="saveToolsClose">Cerrar</button></div></div></div>
-<div class="modal" id="mSparks" role="dialog" aria-modal="true" aria-labelledby="sparkHeading" hidden><div class="sheet sparks-sheet">
-<header><h2 id="sparkHeading">Tu recorrido</h2><button id="sparkClose" aria-label="Cerrar chispas">×</button></header><strong id="sparkBalance"></strong><small id="sparkLedger"></small><p id="sparkStatus" role="status"></p>
-<section><h3>Viajar</h3><p>Explora otro paisaje. Regresa gratis al punto anterior.</p><div class="row"><button id="sparkJump">Saltar · 20 ✦</button><button id="sparkBack">Volver gratis</button></div></section>
-<label for="sparkGoalSelect">Tu próxima meta</label><select id="sparkGoalSelect"></select>
-<section><h3>Tu cubo · compras permanentes</h3><div id="sparkPreview"></div><p id="sparkPreviewLabel"></p><div id="sparkShop" class="spark-grid"></div></section>
-<section><h3>Colecciones</h3><p>Las tarjetas que encuentras completan estos conjuntos y dan chispas una sola vez. Consúltalas en tu libro.</p><div id="sparkSets" class="spark-grid"></div></section>
-<details><summary>Logros e hitos</summary><p>Caminar desbloquea títulos; los logros sorprenden durante el viaje.</p><div id="sparkBadges"></div></details><label for="sparkTitle">Tu título</label><select id="sparkTitle"></select>
-<details><summary>Historial de recompensas</summary><div id="sparkLog"></div></details>
-</div></div>
 <div class="modal menu" id="mMenu" hidden>
   <div class="sheet menu-sheet">
     <header class="menu-heading"><div><small>Tu espacio</small><h2 id="menuTitle">Kubono</h2></div><button id="mnClose" class="sheet-close" aria-label="Cerrar menú">×</button></header>
     <div class="menu-sections">
     <section class="menu-group primary"><h3>Jugar</h3><div class="tiles">
-      <button id="bSparks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 6 9-6 9-6-9Z M6 12h12M12 3v18"/></svg><span>Viajar y chispas</span></button>
+      <button id="bCube"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/><path d="M3 3h3M18 21h3"/></svg><span>Tu cubo</span></button>
       <button id="bWorld"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/></svg><span>Mundo</span></button>
       <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Casa</span></button>
       <button id="bMap"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mapa</span></button>
@@ -153,7 +156,6 @@
     <section class="menu-group"><h3>Tu espacio</h3><div class="tiles">
       <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
       <button id="bFavorites"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Favoritos</span></button>
-      <button id="bCube"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/><path d="M3 3h3M18 21h3"/></svg><span>Tu cubo</span></button>
       <button id="bProfile"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="4" width="6" height="6"/><path d="M5 21v-4a7 7 0 0114 0v4"/></svg><span>Tu perfil</span></button>
     </div></section>
     <section class="menu-group"><h3>Crear</h3><div class="tiles">
@@ -181,7 +183,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.64</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.65</span><small id="releaseDeploy">deploy sin registrar</small></div>
     <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>
@@ -215,7 +217,7 @@
 <div class="modal" id="mGuide" role="dialog" aria-modal="true" aria-labelledby="guideTitle" hidden><div class="sheet guide-sheet">
  <h2 id="guideTitle">Guía de juego</h2><div class="guide-content">
  <p>Muévete arrastrando o con las flechas. Toca un espacio vacío para lanzar un pulso.</p>
- <p>Rompe cristales, recoge chispas y descubre voces. Elige tu próxima meta en Viajar y chispas.</p>
+ <p>Rompe cristales, recoge chispas y descubre voces. Elige tu próxima meta en Tu cubo · Viaje.</p>
  <article class="journal-card"><h3>Tu siguiente paso</h3><p id="guideNext"></p><small id="guideProgress"></small></article>
  <ol id="guideJourney" class="guide-journey" aria-label="Experiencias del recorrido"></ol>
  <p>Elige tu camino. Puedes explorar sin completar esta guía.</p>

@@ -54,9 +54,11 @@ try:
   page.evaluate('__r.save()');page.reload();page.wait_for_function('!!window.__r?.sparkEconomy')
   assert page.evaluate("__r.sparkEconomy.wear")=={'eyes':'eyes:curious','accessory':'acc:monocle'},page.evaluate("__r.sparkEconomy.wear")
   assert page.evaluate("__r.sparkEconomy.on")=={'habit:yawn':True,'habit:greet':True,'habit:sneeze':True,'habit:dizzy':True}
-  page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.evaluate('__r.openSparks()')
-  slots=page.locator('#sparkShop .spark-slot').all_text_contents();assert {'Ojos','Hábitos','Accesorio'}<=set(slots),slots
-  assert [page.locator(f'#sparkShop article[data-slot="{s}"]').count() for s in ('eyes','habits','accessory')]==[5,4,4]
+  page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.evaluate("__r.openCube('wear')")
+  assert [page.locator(f'[data-owned-slot="{s}"] [data-shop-piece]').count() for s in ('eyes','habits','accessory')]==[5,4,4]
+  assert page.locator('#sparkShop article[data-slot="eyes"]').count()==0
+  # Several habits stay on together; tapping one takes only that one off.
+  page.locator('[data-shop-piece="habit:yawn"]').click();assert page.evaluate("__r.sparkEconomy.on")=={'habit:greet':True,'habit:sneeze':True,'habit:dizzy':True}
   assert not errors,errors;browser.close()
  print('PASS 13 eye, habit and accessory pieces bought, faces drawn at 10 px on a level-1 cube, worn moving and still, habits set off by the world, persisted after reload and listed by slot',flush=True)
 finally:server.shutdown();server.server_close()

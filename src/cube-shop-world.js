@@ -7,7 +7,7 @@ export function initialize(runtime){
  const still=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
  const ink=(part='lead')=>runtime.musicInk?.(null,part)||'#fff';
  const surface=()=>!runtime.S.layer||runtime.S.layer==='superficie';
- function reset(){paint=[];comet=[];flowers=[];history=[];last=null;moved=0;routeStep=0;}
+ function reset(){paint=[];comet=[];flowers=[];history=[];last=null;lastT=null;moved=0;routeStep=0;}
  function route(){const S=runtime.S;if(!S.cubeRoute||S.cubeRoute.version!==1)S.cubeRoute=normalizeRoute(S.cubeRoute);const r=rollRoute(S.cubeRoute,S.todayKey);if(r!==S.cubeRoute)S.cubeRoute=r;return r;}
  // Once per frame: where the cube is in the world and how far it went.
  function sample(t){

@@ -5,8 +5,8 @@ Diseño aprobado por Jay el 20 de octubre de 2026: «me gusta todo». Esta guía
 ## Reglas
 
 - Lo comprado con chispas cambia cómo se ve, se mueve, suena y reacciona el cubo. Nada da ventaja para jugar, salvo la ranura **Habilidades**, que se construye al final con su propia revisión de economía.
-- Una sola ranura por tipo. El vestuario que se gana jugando (colores, materiales, formas, rastros, halos) sigue ganándose en Tu cubo, marcado en dorado, y se lleva a la vez que lo comprado: un rastro ganado y uno comprado conviven.
-- Las ranuras «una a la vez» se equipan; las ranuras «todos los comprados activos» se encienden o apagan pieza a pieza en Tu cubo.
+- Una sola ranura por tipo. El vestuario que se gana jugando (colores, materiales, formas, rastros, halos) se sigue ganando, marcado en dorado, y se lleva junto a lo comprado. Desde alpha.65 hay un solo rastro a la vez: elegir uno ganado quita el comprado y al revés.
+- Todo se cambia en Tu cubo: Llevar (tocar pone o quita, al momento), Tienda (solo lo que no tienes; al comprar te lo pones y pasa a Llevar) y Viaje. Sin vista previa: la imagen de cada pieza es su dibujo real en el juego.
 - Cada pieza tiene variante estática con movimiento reducido: nada comprado puede quedar invisible.
 - Los sonidos usan las voces sintetizadas, la armonía y el reloj existentes, sin muestras nuevas ni cambios de volumen maestro, y siguen las reglas de silencio, pausa y menús.
 - Determinismo y guardado: las compras viven en `sparkEconomy` y lo equipado en `S.cube`, ambos normalizados sin borrar progreso y conservando formatos futuros.

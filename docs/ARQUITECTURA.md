@@ -15,7 +15,7 @@ Vercel sirve la raíz. `scripts/vercel-build.mjs` sella el artefacto con revisi�
 - `progress.js`, `save-store.js` y `save-tools.js`: estado, normalización y respaldos locales.
 - `crystal-sparks.js`: distribución determinista independiente, dibujo, impactos manuales y recogida. Camino: diez roturas únicas para entrar automáticamente. En el Mundo añade corredores, fragmentos fugitivos y cadenas; no crea pulsos musicales.
 - `crystal-play-model.js`: variantes con hash independiente, reparto de fragmentos y escape acotado. Un fragmento raro añade 3 chispas; su máscara de recogida persiste en `sparkEconomy.sites`. Los registros antiguos agotados no recuperan premios. Cadenas de hasta ocho impactos adicionales por rotura inicial, radio 240; corredores y fragmentos se detienen tras dos segundos, a un máximo de 90/100 unidades. Movimiento reducido conserva las recompensas sin persecución.
-- `sparks-model.js`: catálogo, normalización y reglas puras. `sparks.js`: operaciones, compras, colecciones, logros, títulos, metas e interfaz.
+- `sparks-model.js`: catálogo, normalización y reglas puras. `sparks.js`: operaciones, compras, colecciones, logros, títulos y metas; pinta la Tienda y el Viaje dentro de Tu cubo (`cube.js`).
 - `practice-travel.js`: viaje pagado y regreso gratuito. El coste y destino se guardan juntos; los fallos revierten la operación. El botón principal se muestra al acumular 20 chispas ganadas y se desactiva si falta saldo; el menú conserva una acción independiente.
 - `return-entrance.js`: saludo silencioso al abrir, incluso con guía pendiente. Muestra frase y `.simple` durante 2,4 segundos; tocar o Escape permite continuar. La primera guía se restaura al cerrar el saludo.
 - `rare-cards.js`, `celebration.js` y `notice-lane.js`: hallazgos y avisos breves en una cola, con detalles explícitos y efectos temporales reversibles.
@@ -74,7 +74,7 @@ La referencia histórica sigue verificándose por separado; los géneros ampliad
 
 En `audio.js`, float/heart/ambient dejan de añadir las llamadas fijas de campana/cristal. `createAmbientPunctuation` admite una voz metálica automática por región cada ocho compases, con caché de 64 regiones, reiniciada al cambiar partida o retroceder el reloj. Las voces de pistas, gestos y celebraciones conservan su origen y no consumen ese límite. El hook opcional `audioNoteCue` registra instrumento, origen y tiempo sin exponer runtime en producción. No modifica síntesis ni volumen maestro.
 
-Tu cubo conserva el selector y el guardado existente; los regalos incluyen retrato, nombre corto, encontrados y estado de vista previa/equipado. Ajustes distingue textos del paisaje, estilo de La Voz y datos del mundo.
+Tu cubo es el único lugar para cambiar el cubo (alpha.65): pestañas Llevar (lo ganado y lo comprado, se aplica y guarda al tocar), Tienda (solo lo que falta) y Viaje (saltar, volver, meta, colecciones, título e historial, antes «Viajar y chispas»). Las imágenes de la tienda y el cubo de arriba salen de `cube-shop-preview.js`, que monta un escenario con su propio reloj y posición e inicializa `cube-shop-art.js` y `cube-shop-world.js` sobre él: la imagen es el dibujo real de la pieza, no un icono. Los regalos incluyen retrato, nombre corto y encontrados. Ajustes distingue textos del paisaje, estilo de La Voz y datos del mundo.
 
 ## Encuentros traviesos y logros ampliados
 

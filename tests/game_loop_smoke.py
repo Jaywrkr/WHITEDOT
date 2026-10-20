@@ -64,8 +64,8 @@ try:
    page.wait_for_function('__r.savedCrystal(crystal.id)?.collected')
   assert page.evaluate('__r.S.sparks>=60')
   print('PASS actual mining funds',flush=True)
-  page.evaluate('__r.openSparks()');page.locator('[data-spark-buy="dust"]').click();page.locator('[data-spark-equip="dust"]').click()
-  page.locator('#sparkGoalSelect').select_option('shop:dust');page.locator('#sparkClose').click()
+  page.evaluate("__r.openSparks('shop')");page.locator('[data-spark-buy="dust"]').click()
+  page.locator('#cubeTabTravel').click();page.locator('#sparkGoalSelect').select_option('shop:dust');page.locator('#cubeClose').click()
   page.wait_for_function('document.getElementById("sparkGoal").textContent.includes("Meta cumplida")')
   before_jump=page.evaluate('__r.S.sparks')
   page.wait_for_function('!document.getElementById("bJump").hidden&&!document.getElementById("bJump").disabled')
@@ -83,8 +83,8 @@ try:
   assert page.evaluate('__r.sparkEconomy.earned-__r.sparkEconomy.spent===__r.S.sparks')
   for width,height in [(390,844),(1280,800)]:
    page.set_viewport_size({'width':width,'height':height});page.evaluate('__r.openSparks()')
-   assert page.locator('#mSparks .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2')
-   page.screenshot(path=str(ROOT.parent/f'unified-game-loop-{width}.png'));page.locator('#sparkClose').click()
+   assert page.locator('#mCube .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2')
+   page.screenshot(path=str(ROOT.parent/f'unified-game-loop-{width}.png'));page.locator('#cubeClose').click()
   assert not errors,errors
   browser.close()
  print('PASS complete real loop: Camino, natural totem/card, mined funds, permanent purchase/equip, paid jump/free return, optional completed goal and persistent reload')
