@@ -35,7 +35,11 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('#bFavorites').click();page.screenshot(path=f'/tmp/whitedot-favorites-{label}.png')
   page.locator('[data-favorite] summary').click();page.locator('[data-favorite] button').filter(has_text='Borrar').click();assert page.evaluate('window.__testRuntime.favorites.length')==0
   page.locator('#favoritesClose').click()
-  entry=page.evaluate("()=>{const r=__testRuntime,s=r.S;s.arrivalMode='continue';s.destination=null;r.save();return {x:s.wx,y:s.wy,arrivals:s.practiceTravel.arrivals||0};}")
+  # Same-day reopen keeps the place; a save left in the Mundo from another day receives the new arrival.
+  same=page.evaluate("()=>{const r=__testRuntime,s=r.S;s.destination=null;r.save();return {x:s.wx,y:s.wy,arrivals:s.practiceTravel.arrivals||0};}")
+  page.goto(URL);page.wait_for_function('!!window.__testRuntime?.dailyArrival')
+  assert page.evaluate("b=>{const s=__testRuntime.S;return (s.practiceTravel.arrivals||0)===b.arrivals&&s.wx===b.x&&s.wy===b.y;}",same)
+  entry=page.evaluate("()=>{const r=__testRuntime,s=r.S;s.arrivalMode='continue';s.destination=null;s.lastWorldDay='2000-01-01';r.save();return {x:s.wx,y:s.wy,arrivals:s.practiceTravel.arrivals||0};}")
   page.goto(URL);page.wait_for_function('!!window.__testRuntime?.dailyArrival')
   assert page.evaluate('''before=>{const r=__testRuntime,s=r.S;return s.practiceTravel.arrivals===before.arrivals+1&&!r.regionOfPos(s.wx,s.wy).sea&&Math.hypot(s.wx-before.x,s.wy-before.y)>500&&s.practiceTravel.previous.x===before.x&&!r.dailyArrival();}''',entry)
   assert not errors,errors
