@@ -57,6 +57,10 @@ try:
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
    assert not errors,errors;print('PASS native first light, source contact, pulse, saved place, quiet replay/skip and reload at '+str(width),flush=True);page.close()
   visitor=b.new_page(viewport={'width':390,'height':844});visitor.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
-  visitor.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=new-visitor&layout=classic&generation=2&travel=1');visitor.wait_for_function('window.__testRuntime?.firstJourneyState.next==="voice"');visitor.locator('#firstJourney').wait_for(state='visible');assert visitor.locator('#firstJourney').is_visible();visitor.close();print('PASS a first shared-world visitor receives brief guidance',flush=True)
+  visitor.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=new-visitor&layout=classic&generation=2&travel=1');visitor.wait_for_function('window.__testRuntime?.firstJourneyState.next==="voice"')
+  # The greeting hides the guide for 2.4 s and the guide blocks the panel: dismiss both instead of racing that window.
+  if visitor.locator('#returnContinue').is_visible():visitor.locator('#returnContinue').click()
+  if visitor.locator('#hcGo').is_visible():visitor.locator('#hcGo').click()
+  visitor.wait_for_function('!document.getElementById("firstJourney").hidden');visitor.locator('#firstJourney').wait_for(state='visible');assert visitor.locator('#firstJourney').get_attribute('data-step')=='voice';visitor.close();print('PASS a first shared-world visitor receives brief guidance',flush=True)
   b.close()
 finally:server.shutdown()

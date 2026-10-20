@@ -2,6 +2,10 @@
 
 Estado: 20 de octubre de 2026. Código **2.3.0-alpha.59**. Las entradas describen su revisión, no certifican producción.
 
+## Fixture del visitante nuevo · tras 9953eed
+
+CI de `main` sobre alpha.59: `logic`, `audio (1)` y `audio (2)` verdes, `browser` 130/131 por una carrera de tiempo en `first_level_smoke.py` (ventana del saludo). Solo cambia la fixture; sin cambios de producto ni versión.
+
 ## Recuperación configurable, borrado local y CI · alpha.59
 
 Rama `claude/charming-darwin-dvbfc7` desde `feature/account-recovery-link` (`3175b41`). `recoveryUrl` en `cloud-config.js`, validado en `cloud-client.js` (local HTTP o HTTPS limpio) y aviso de puerto 3000 solo con destino local. Eliminar cuenta pide credenciales, luego confirmación, y tras el RPC `purgeUserStorage` borra en el dispositivo solo las claves de esa cuenta. Fixtures de navegador adaptadas a la cuenta obligatoria y al menú sin «Guardar copia»; `checks.yml` con historial completo en `browser`; `bump-version.mjs` reconoce la etiqueta «Versión del código» del README consolidado. Evidencia local: Node de cuentas y nueve recorridos en PASS; catálogo completo, Android y Supabase sin ejecutar. CI de `main` sigue rojo hasta integrar.

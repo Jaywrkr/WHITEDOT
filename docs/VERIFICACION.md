@@ -49,6 +49,7 @@ Desde alpha.57, los recorridos de gameplay/audio que ya instrumentaban main sust
 - `smoke.py` esperaba la radio vecina con una pausa fija; usa `wait_for_function`.
 - `cloud_account_smoke.py` fallaba al abrir el menú cuando la segunda pestaña de la misma cuenta ya había abierto el panel de divergencia; la fixture lo tolera. El comportamiento del producto no cambió.
 - `pwa_updates_smoke.py` archiva `8924f16` con `git archive`; el job `browser` de `checks.yml` usa `fetch-depth: 0`.
+- Tras integrar alpha.59 (`9953eed`), `browser` quedó 130/131: `first_level_smoke.py` esperaba el panel del visitante nuevo dentro de la ventana de 2,4 s en que el saludo oculta la guía; la fixture descarta saludo y guía antes de esperar, como ya hacía en su primera página.
 - `tests/version-bump.mjs` fallaba desde `3175b41` porque el README pasó a decir «Versión del código» y `bump-version.mjs` solo reconocía «Versión en desarrollo»; la selección de impacto documental no lo ejecutó. El script acepta ambas etiquetas.
 
 Evidencia local del 20 de octubre sobre alpha.59: `cloud-account.mjs`, `cloud-handoff.mjs`, `cloud-recovery.mjs` y los recorridos `release_smoke`, `panel_polish_smoke`, `music_menu_smoke`, `interface_smoke`, `foundation_smoke`, `smoke`, `cloud_account_smoke`, `cloud_delete_smoke` y `pwa_updates_smoke` en PASS con Chromium local, uno por uno. El catálogo completo de navegador y audio no se ejecutó en local; CI no ha corrido sobre esta rama porque no existe PR. No declarar CI verde hasta leer el run.
