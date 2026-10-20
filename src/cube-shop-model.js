@@ -51,7 +51,17 @@ export const CUBE_SHOP=Object.freeze([
  {id:'acc:mustache',slot:'accessory',name:'Bigote',cost:50,text:'Bigote de píxel.',art:'<path d="M84 39h12M84 39v2M96 39v2"/>'},
  {id:'acc:hat',slot:'accessory',name:'Gorrito',cost:60,text:'Gorrito de fiesta.',art:'<path d="M85 24l5-14 5 14"/><circle cx="90" cy="9" r="1.5"/>'},
  {id:'acc:shades',slot:'accessory',name:'Gafas de sol',cost:80,text:'Gafas negras de dos píxeles.',art:'<path d="M78 28h24M80 28v4h7v-4M93 28v4h7v-4"/>'},
- {id:'acc:monocle',slot:'accessory',name:'Monóculo',cost:80,text:'Monóculo con cadenita.',art:'<circle cx="99" cy="28" r="4"/><path d="M102 31q4 10 0 18"/>'}
+ {id:'acc:monocle',slot:'accessory',name:'Monóculo',cost:80,text:'Monóculo con cadenita.',art:'<circle cx="99" cy="28" r="4"/><path d="M102 31q4 10 0 18"/>'},
+ {id:'trail:graffiti',slot:'trail',name:'Grafiti',cost:300,text:'Pinta el suelo y se borra poco a poco.',art:'<path d="M30 40q15-14 30-4t22-6" stroke-width="3" stroke-opacity=".6"/>'},
+ {id:'trail:comet',slot:'trail',name:'Cometa',cost:350,text:'Estela larga que se curva con tus giros.',art:'<path d="M20 48q30-4 45-14t18-6" stroke-opacity=".7"/><path d="M34 46q20-4 34-13" stroke-opacity=".3"/>'},
+ {id:'trail:steps',slot:'trail',name:'Huellas del día',cost:400,text:'Tus pasos quedan en el suelo hasta medianoche.',art:'<path d="M30 40h2M38 36h2M46 40h2M54 36h2M62 40h2M70 36h2"/>'},
+ {id:'trail:garden',slot:'trail',name:'Jardín',cost:500,text:'Crecen flores donde pasas.',art:'<path d="M40 48v-6M56 48v-8M72 48v-5"/><circle cx="40" cy="40" r="2"/><circle cx="56" cy="38" r="2"/><circle cx="72" cy="41" r="2"/>'},
+ {id:'trail:rainbow',slot:'trail',name:'Arcoíris',cost:600,text:'Aparece tras romper tres cristales en cadena.',art:'<path d="M30 46q25-30 50-16M30 50q25-30 50-16M30 54q25-30 50-16" stroke-opacity=".6"/>'},
+ {id:'pet:cloud',slot:'companion',name:'Nube',cost:300,text:'Una nube pequeña llueve sobre el cubo.',art:'<path d="M80 12h20M78 15h24M84 9h10M84 19v3M90 18v3M96 19v3"/>'},
+ {id:'pet:bird',slot:'companion',name:'Pájaro',cost:400,text:'Vuela contigo y se posa encima al parar.',art:'<path d="M86 16l3 2 3-2M92 16l3 2 3-2"/>'},
+ {id:'pet:mimic',slot:'companion',name:'Imitador',cost:500,text:'Mini cubo que repite tu camino con retraso.',art:'<rect x="56" y="27" width="5" height="5"/><path d="M63 30h14" stroke-dasharray="2 2"/>'},
+ {id:'pet:dj',slot:'companion',name:'Satélite DJ',cost:600,text:'Un disquito que gira marcando el tempo.',art:'<circle cx="114" cy="18" r="5"/><circle cx="114" cy="18" r="1"/><path d="M90 30m-22 0a22 12 0 1 0 44 0a22 12 0 1 0-44 0" stroke-opacity=".25"/>'},
+ {id:'pet:ghost',slot:'companion',name:'Fantasma de ayer',cost:800,text:'Repite en miniatura tu recorrido de ayer.',art:'<path d="M66 20q10-12 22-4t20 6q8 10-4 16t-24 2q-16 0-14-20" stroke-opacity=".35"/><rect x="104" y="20" width="5" height="5" stroke-opacity=".5"/>'}
 ].map(Object.freeze));
 export const shopPiece=id=>CUBE_SHOP.find(p=>p.id===id)||null;
 export const shopSlot=id=>CUBE_SHOP_SLOTS.find(s=>s.id===id)||null;
@@ -72,3 +82,12 @@ export function normalizeWear(raw,purchases={},legacyEquipped=''){
  return {wear,on};
 }
 export const wearing=(q,id)=>{const piece=shopPiece(id);if(!piece)return false;return shopSlot(piece.slot)?.many?q?.on?.[id]===true:q?.wear?.[piece.slot]===id;};
+// Route kept for Huellas del día and Fantasma de ayer: today's steps and yesterday's walk, small and bounded.
+export const ROUTE_TODAY=600,ROUTE_YESTERDAY=120;
+const day=v=>typeof v==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)?v:'';
+const points=(v,max)=>Array.isArray(v)?v.filter(p=>Array.isArray(p)&&p.length===2&&p.every(n=>Number.isFinite(n)&&Math.abs(n)<1e12)).slice(-max).map(([x,y])=>[Math.round(x),Math.round(y)]):[];
+export function normalizeRoute(raw){const q=object(raw)?raw:{};return {...q,version:1,day:day(q.day),today:points(q.today,ROUTE_TODAY),yday:day(q.yday),yesterday:points(q.yesterday,ROUTE_YESTERDAY)};}
+// Keeps the shape of a long walk in a few points.
+export function thinRoute(list,max=ROUTE_YESTERDAY){if(list.length<=max)return list.slice();const out=[];for(let i=0;i<max;i++)out.push(list[Math.round(i*(list.length-1)/(max-1))]);return out;}
+// A new day turns today's steps into yesterday's walk; a day without walking keeps the older one.
+export function rollRoute(q,today){if(q.day===today)return q;return {...q,day:today,today:[],...(q.today.length>1?{yday:q.day,yesterday:thinRoute(q.today)}:{})};}
