@@ -1,3 +1,10 @@
+# Retención gratuita de desarrollo · sin cambio de versión
+
+- GitHub Actions configurado y leído por API a 7 días, con ambos workflows Android alineados. Tarea local horaria limita respaldos de migración y logs inactivos mediante lista explícita, sin incluir clave de firma ni partida activa.
+- Prueba aislada aprobada: borrado de fixture vencida, conservación de reciente/clave y dry-run sin borrado. Primera ejecución real: 0 vencidos, 0 borrados. Tarea Ready/PT1H comprobada.
+- Supabase no permitió escrituras (solicitud caducada dos veces): SQL preparado sin aplicarlo; lectura confirma ausencia de pg_cron, 1 usuario, 2 guardados y saldo 52 intactos. Logs administrados, exportación completa y soporte/correo siguen pendientes; no se declaran configurados.
+- Sin publicación, servicios contratados ni repetición de pruebas de juego.
+
 # Preparación de privacidad y producción · sin cambio de versión
 
 - Jay aprueba público de 16 años o más y plazos de conservación/atención; privacidad, eliminación y lista de producción actualizadas. Datos legales, país, mercados y correo público permanecen pendientes. Aprobación documental únicamente: no se activó purga, respaldo ni verificación de edad.

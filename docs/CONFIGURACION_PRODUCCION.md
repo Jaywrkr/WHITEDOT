@@ -40,10 +40,28 @@ En Free, Supabase recomienda exportaciones propias y copias fuera del servicio; 
 | Mensajes de soporte | 90 días desde el cierre de la incidencia |
 | Respaldos gestionados | Rotación de 7 días; reaplicar eliminaciones antes de servir una restauración |
 
-Aprobación del 19 de octubre de 2026. No se ha configurado purga, exportación ni automatización por esta decisión. Confirmar los plazos propios de proveedores y las excepciones legales aplicables antes de publicar. La frecuencia de las exportaciones y el tiempo de recuperación siguen pendientes: una ventana de retención de 7 días no equivale a una copia diaria ni garantiza recuperar todos los cambios.
+Aprobación del 19 de octubre de 2026. Se aplicaron los controles gratuitos indicados a continuación; no se ha configurado exportación completa de la base de datos ni el buzón de soporte. Confirmar los plazos propios de proveedores y las excepciones legales aplicables antes de publicar. La frecuencia de las exportaciones y el tiempo de recuperación siguen pendientes: una ventana de retención de 7 días no equivale a una copia diaria ni garantiza recuperar todos los cambios.
 
 Las copias privadas de migración del emulador contienen sesión y progreso: conservarlas solo mientras haga falta rollback; eliminar al cerrar esa ventana. Mantener la clave de firma por separado, pues sí se necesita para futuras actualizaciones. No borrar ninguna ahora.
 
 ## Criterio de cierre
 
 No repetir PC/iPhone/emulador, RLS, sincronización o actualización ya aprobados. Cuando haya configuración/paquetes finales, comprobar una sola vez únicamente lo que cambió: enlaces y correo públicos, eliminación completa en cuenta desechable, restauración operativa aislada y continuidad en paquetes finales. Hasta entonces, documentos preparados no equivalen a cumplimiento aprobado ni servicio publicado.
+
+## Configuración gratuita aplicada y límites
+
+| Control | Resultado comprobado |
+|---|---|
+| GitHub Actions, repositorio Jaywrkr/WHITEDOT | Retención efectiva consultada por API: `days=7`, antes 90; ambos workflows Android ajustados explícitamente a 7 días. La política del proveedor no se anuncia como purga retroactiva de artefactos anteriores |
+| Respaldos privados de migración del emulador | Tarea Windows `Kubono-LocalRetention`, cada hora, usuario conectado, ejecución oculta y recuperación al estar disponible. Script `scripts/prune-local-retention.ps1` instalado en `AndroidPlayer/maintenance`; solo archivos expresamente permitidos bajo `account-migration-backup` |
+| Logs locales de emulador sin actividad | Solo `emulator.log` y `emulator-error.log` vencidos por última modificación; no es una purga por registro de un log activo |
+| Seguridad local | No recorre carpetas ni acepta enlaces/reparse points; nunca incluye `signing`, APK activo, sesión ni almacenamiento del juego. Margen de una hora para barrido horario. PC apagado o usuario desconectado retrasan la limpieza |
+| Comprobación local | Fixture vencida eliminada; backup reciente y clave ficticia preservados; dry-run no elimina. Aplicación real inicial: 0 archivos vencidos, 0 borrados; tarea Ready, repetición PT1H, clave y backup reales presentes |
+| Supabase, auditoría Auth | Pendiente: ambos intentos de escritura expiraron (`Invalid or expired requestState`); lectura posterior confirma pg_cron no instalado. Configuración reproducible en `supabase/retention.sql`, aún NO aplicada |
+| Datos existentes | Lectura posterior: 1 usuario, 2 guardados, saldo principal 52, 0 registros de auditoría; sin borrado de cuenta o partida |
+
+Para desactivar solo la limpieza local, deshabilitar la tarea `Kubono-LocalRetention`; no borrar la clave de firma. Actualizar la copia instalada del script si cambia la versión del repositorio. No se crea ninguna automatización de seguimiento del chat.
+
+Pendientes técnicos, además de datos legales/correo: aplicar/verificar el SQL de auditoría cuando Supabase permita escrituras; confirmar retención de logs administrados por proveedores (no ajustada aquí); preparar exportación completa cifrada y restauración de Auth/guardados con borrados reaplicados. La tarea local rota copias existentes, no crea respaldos de producción. Soporte de 90 días y objetivo de eliminación de 7 días siguen pendientes del buzón y responsable.
+
+Fuentes de configuración: [API de retención de GitHub](https://docs.github.com/en/rest/actions/permissions#set-artifact-and-log-retention-settings-for-a-repository), [auditoría Auth](https://supabase.com/docs/guides/auth/audit-logs), [Cron y limpieza de su historial](https://supabase.com/docs/guides/cron/quickstart). La escritura pendiente no autoriza a ejecutar el SQL sin revisar primero si ya se aplicó.

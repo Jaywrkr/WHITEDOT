@@ -57,4 +57,4 @@ jobs:
         with:
           name: WHITEDOT-Android-preview
           path: android-evidence/
-          retention-days: 30
+          retention-days: 7

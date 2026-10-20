@@ -21,7 +21,7 @@ El borrado actual conserva las partidas locales en tus dispositivos. Puedes quit
 | Sesión del dispositivo que solicita | El cliente limpia su sesión tras éxito y vuelve a la entrada | No anunciar éxito si falla el RPC |
 | Guardados locales y copias de conflictos | Se conservan, como advierte el diálogo actual | Recomendado antes de tienda: limpiar solo datos locales de la cuenta eliminada y alinear el aviso; requiere cambio de código separado |
 | Otros dispositivos offline | No hay borrado remoto del almacenamiento | Definir limpieza al confirmar revocación online, sin tratar una caída de red como orden de borrado |
-| Registros, soporte y respaldos de operación | Plazos aprobados, purga/rotación aún sin configurar | Responsable y plazos de proveedores pendientes; aplicar la política de conservación |
+| Registros, soporte y respaldos de operación | Plazos aprobados; controles de CI/copia local aplicados, resto pendiente según configuración de producción | Responsable y plazos de proveedores pendientes; aplicar la política de conservación |
 
 No hay sesiones multijugador en este lanzamiento. No eliminar otra cuenta, su progreso local ni la partida de Jay para verificar este flujo. La evidencia existente de UI/RPC permanece válida; no se repite en esta preparación documental.
 

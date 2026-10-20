@@ -45,7 +45,7 @@ Política aprobada por Jay el 19 de octubre de 2026 para producción:
 | Conversaciones de soporte | 90 días después de cerrar la incidencia |
 | Respaldos que gestionemos | Rotación de 7 días; reaplicar eliminaciones antes de volver a servir una restauración |
 
-**Aprobado no significa configurado:** aplicar la rotación/purga y confirmar los plazos propios de proveedores antes de publicar; documentar cualquier excepción legal justificada. El objetivo de soporte no está operativo mientras no exista el canal público. No se promete borrado instantáneo de copias históricas. La copia técnica local usada para migrar el APK de desarrollo no es un respaldo del servicio de producción.
+**Aprobado no significa configurado en todos los servicios:** CI y copias locales de desarrollo tienen controles aplicados según [estado operativo](CONFIGURACION_PRODUCCION.md); quedan la auditoría Supabase, soporte, respaldo completo y los plazos propios de proveedores antes de publicar; documentar cualquier excepción legal justificada. El objetivo de soporte no está operativo mientras no exista el canal público. No se promete borrado instantáneo de copias históricas. La copia técnica local usada para migrar el APK de desarrollo no es un respaldo del servicio de producción.
 
 ## Solicitudes y público
 

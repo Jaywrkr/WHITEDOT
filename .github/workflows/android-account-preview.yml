@@ -61,4 +61,4 @@ jobs:
         with:
           name: Kubono-account-preview
           path: android-evidence/
-          retention-days: 14
+          retention-days: 7

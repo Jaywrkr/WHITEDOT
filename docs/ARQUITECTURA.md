@@ -97,3 +97,7 @@ Alpha.55: sesión localStorage con migración de sessionStorage y lectura compar
 Alpha.56 elimina la entrada visible a exportación/importación y descarga remota. Cuenta conserva login persistente, sincronización automática cada 5 s y resolución excepcional de divergencias. Copias internas previas y CAS se conservan. Ediciones locales con remoto intacto no generan conflictos falsos.
 
 Alpha.57: `main.js` espera `requireAccount()` antes de crear el runtime. `progress.js` separa almacenamiento local por accountUserId y expone cloudScope estable para el remoto. Frame/guardado verifican la identidad; logout/cambio recargan a la entrada. No hay bypass de acceso por URL ni bandera de producción. Fixtures de gameplay instrumentan main sustituyendo solo su llamada de admisión, mientras la prueba de cuentas verifica la llamada real.
+
+## Retención operativa de desarrollo
+
+GitHub Actions conserva artefactos/logs nuevos durante siete días. Windows ejecuta `prune-local-retention.ps1` cada hora desde una copia instalada fuera del checkout; solo elimina respaldos de migración y logs inactivos permitidos, nunca la clave de firma ni los datos activos del juego. `supabase/retention.sql` prepara limpieza de auditoría sin cuentas/partidas, todavía no aplicada por error de solicitud del conector. Alcance y pendientes en [configuración de producción](CONFIGURACION_PRODUCCION.md).
