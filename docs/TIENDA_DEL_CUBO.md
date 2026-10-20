@@ -1,11 +1,11 @@
 # Tienda del cubo
 
-Diseño aprobado por Jay el 20 de octubre de 2026: «me gusta todo». Esta guía es el catálogo de la tienda de chispas y su orden de construcción; no es un backlog de lanzamiento (ese sigue siendo D01–D22). Nada de esto está implementado salvo las tres piezas marcadas «Ya existe».
+Diseño aprobado por Jay el 20 de octubre de 2026: «me gusta todo». Esta guía es el catálogo de la tienda de chispas y su orden de construcción; no es un backlog de lanzamiento (ese sigue siendo D01–D22). Estado: tanda 0 hecha en alpha.61 (ranuras en `src/cube-shop-model.js`, compras antiguas migradas a su ranura, tienda ordenada por ranura); las piezas nuevas llegan desde la tanda 1.
 
 ## Reglas
 
 - Lo comprado con chispas cambia cómo se ve, se mueve, suena y reacciona el cubo. Nada da ventaja para jugar, salvo la ranura **Habilidades**, que se construye al final con su propia revisión de economía.
-- Una sola ranura por tipo. El vestuario que se gana jugando (colores, materiales, formas, rastros, halos) sigue ganándose y comparte ranura cuando es del mismo tipo; lo ganado se marca en dorado.
+- Una sola ranura por tipo. El vestuario que se gana jugando (colores, materiales, formas, rastros, halos) sigue ganándose en Tu cubo, marcado en dorado, y se lleva a la vez que lo comprado: un rastro ganado y uno comprado conviven.
 - Las ranuras «una a la vez» se equipan; las ranuras «todos los comprados activos» se encienden o apagan pieza a pieza en Tu cubo.
 - Cada pieza tiene variante estática con movimiento reducido: nada comprado puede quedar invisible.
 - Los sonidos usan las voces sintetizadas, la armonía y el reloj existentes, sin muestras nuevas ni cambios de volumen maestro, y siguen las reglas de silencio, pausa y menús.
