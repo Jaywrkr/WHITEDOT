@@ -41,8 +41,8 @@ export function initialize(runtime){
   let place;try{place=decodePlace(text);}catch(error){$('placeCodeInfo').textContent=error.message;return null;}
   const same=sameWorld(place.address,runtime.worldIdentity);
   const point=runtime.addFavoriteAddress?.(place.address,place.name||'Lugar compartido');
-  if(!point){$('placeCodeInfo').textContent=runtime.storageStatus.kind==='ok'?'Favoritos lleno. Exporta tu copia.':'No se pudo guardar. Menú → Guardar copia.';return null;}
-  $('placeCodeInfo').textContent=same?'Guardado en Favoritos. Te oriento hacia allá.':`Guardado. Es de otro mundo (semilla “${place.address.seed||'original'}”): ábrelo desde Otros mundos.`;
+  if(!point){$('placeCodeInfo').textContent=runtime.storageStatus.kind==='ok'?'Favoritos lleno. Libera un lugar.':'No se pudo guardar en este dispositivo.';return null;}
+  $('placeCodeInfo').textContent=same?'Guardado en Favoritos. Te oriento hacia allá.':`Guardado. Es de otra semilla (“${place.address.seed||'original'}”).`;
   if(same)runtime.selectDestination?.(point.id);runtime.unlock('codigoAbierto');return point;
  }
  $('placeShare').onclick=shareHere;
@@ -57,7 +57,7 @@ export function initialize(runtime){
    const w=game.width,h=game.height,area=1080/1250,cw=w/h>area?h*area:w,ch=w/h>area?h:w/area;
    if(w&&h)x.drawImage(game,(w-cw)/2,(h-ch)/2,cw,ch,0,0,1080,1250);
    x.fillStyle='#000';x.fillRect(0,1250,1080,100);x.textBaseline='middle';
-   x.fillStyle='#fff';x.font='34px "Geist Mono", monospace';x.fillText('WHITEDOT',56,1300);
+   x.fillStyle='#fff';x.font='34px "Geist Mono", monospace';x.fillText('KUBONO',56,1300);
    x.fillStyle='#ffffff99';x.font='26px "Geist Mono", monospace';x.textAlign='right';x.fillText('@jaywrkr',1024,1300);x.textAlign='left';
   };
   draw();return {canvas:c,timer:setInterval(draw,1000/30)};
@@ -87,14 +87,14 @@ export function initialize(runtime){
  function finish(type){
   if(!rec.recorder)return;
   releaseCapture();
-  const blob=new Blob(rec.chunks,{type:type.split(';')[0]}),ext=type.includes('mp4')?'mp4':'webm',name=`whitedot-set-${new Date().toISOString().slice(0,16).replace(/[:T]/g,'-')}.${ext}`;
+  const blob=new Blob(rec.chunks,{type:type.split(';')[0]}),ext=type.includes('mp4')?'mp4':'webm',name=`kubono-set-${new Date().toISOString().slice(0,16).replace(/[:T]/g,'-')}.${ext}`;
   rec.recorder=null;rec.dest=null;setUI();if(!blob.size){runtime.toast('<em>Grabar</em> · no se grabó nada');return;}
   if(rec.url)URL.revokeObjectURL(rec.url);
   const url=rec.url=URL.createObjectURL(blob),file=new File([blob],name,{type:blob.type});runtime.lastSet={url,name,size:blob.size,type:blob.type,file};
   $('setVideo').src=url;$('setDownload').href=url;$('setDownload').download=name;$('setShare').hidden=!(navigator.canShare?.({files:[file]}));$('mSet').hidden=false;runtime.S.setCount=(runtime.S.setCount||0)+1;(runtime.S.setLog||=[]).push({at:new Date().toISOString().slice(0,10),name:name.slice(0,80),seconds:Math.min(60,Math.round((Date.now()-rec.started)/1000))});if(runtime.S.setLog.length>100)runtime.S.setLog.shift();runtime.save();runtime.unlock('set1');
  }
  $('bRecord').onclick=e=>{e.stopPropagation();start();};$('recBadge').onclick=stop;
- $('setShare').onclick=async()=>{const f=runtime.lastSet?.file;if(f)try{await navigator.share({files:[f],title:'Mi set en WHITEDOT',text:'@jaywrkr'});}catch(_){}};
+ $('setShare').onclick=async()=>{const f=runtime.lastSet?.file;if(f)try{await navigator.share({files:[f],title:'Mi set en Kubono',text:'@jaywrkr'});}catch(_){}};
  $('setClose').onclick=()=>{$('mSet').hidden=true;};
  addEventListener('pagehide',()=>{if(rec.recorder)stop();});
  Object.defineProperties(runtime,{encodeFavorite:{get:()=>point=>encodePlace(point.address,point.name)},placeCode:{get:()=>currentCode},openPlaceCode:{get:()=>openCode},startSet:{get:()=>start},stopSet:{get:()=>stop},setRecording:{get:()=>!!rec.recorder}});

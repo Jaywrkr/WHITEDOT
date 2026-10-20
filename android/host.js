@@ -12,7 +12,7 @@
   event.preventDefault();event.stopImmediatePropagation();
   fetch(a.href).then(r=>r.blob()).then(blob=>{
    if(blob.size>64*1024*1024)throw Error('Archivo demasiado grande para exportar en esta vista previa.');
-   const reader=new FileReader();reader.onload=()=>AndroidFiles.postMessage(JSON.stringify({name:a.download||'whitedot',type:blob.type||'application/octet-stream',data:reader.result.split(',')[1]}));reader.onerror=()=>alert('No se pudo preparar el archivo.');reader.readAsDataURL(blob);
+   const reader=new FileReader();reader.onload=()=>AndroidFiles.postMessage(JSON.stringify({name:a.download||'kubono',type:blob.type||'application/octet-stream',data:reader.result.split(',')[1]}));reader.onerror=()=>alert('No se pudo preparar el archivo.');reader.readAsDataURL(blob);
   }).catch(error=>alert(error.message));
  },true);
 })();

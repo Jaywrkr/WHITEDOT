@@ -51,7 +51,7 @@ try:
    return {info:document.getElementById('placeCodeInfo').textContent,count:r.favorites.length};
   }''')
   assert result['count'] == 2
-  assert 'Guardado' not in result['info'] and 'copia' in result['info'], result
+  assert 'Guardado' not in result['info'] and 'No se pudo guardar' in result['info'], result
   # Retry the same quick-save after storage recovers: no duplicate or renamed place.
   page.evaluate('()=>{Storage.prototype.setItem=__originalSetItem;}')
   page.locator('#quickSave').click()

@@ -16,21 +16,24 @@ try:
   page.on('pageerror',lambda e:errors.append(str(e)))
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.dailyArrival')
-  old=page.evaluate("""()=>{const r=__r;document.querySelectorAll('.modal').forEach(e=>e.hidden=true);r.S.help.mundo=true;r.S.help.camino=true;r.S.todayLight=1;r.S.pathCrystals=Array.from({length:10},(_,i)=>'fixture:path:'+i);r.S.mode='world';r.S.lastWorldDay=r.S.todayKey;r.S.ach.arrival_test='earned';r.S.arrivalMode='discover';r.save();return {x:r.S.wx,y:r.S.wy,layer:r.S.layer||'superficie'};}""")
+  old=page.evaluate("""()=>{const r=__r;document.querySelectorAll('.modal').forEach(e=>e.hidden=true);r.S.help.mundo=true;r.S.help.camino=true;r.S.todayLight=1;r.S.pathCrystals=Array.from({length:10},(_,i)=>'fixture:path:'+i);r.S.mode='world';r.S.lastWorldDay='2000-01-01';r.S.ach.arrival_test='earned';r.S.arrivalMode='discover';r.save();return {x:r.S.wx,y:r.S.wy,layer:r.S.layer||'superficie'};}""")
   page.reload();page.wait_for_function('!!window.__r?.dailyArrival')
   assert page.evaluate('__r.S.practiceTravel.previous')==old
   at=page.evaluate('({x:__r.S.wx,y:__r.S.wy,layer:__r.S.layer})');assert at!=old
   assert page.evaluate('__r.S.ach.arrival_test')=='earned'
   assert 'addr=' not in page.url,'automatic arrival must not turn the next launch into an explicit destination'
   page.evaluate("document.dispatchEvent(new Event('visibilitychange'))");assert page.evaluate('({x:__r.S.wx,y:__r.S.wy,layer:__r.S.layer})')==at
-  page.reload();page.wait_for_function('!!window.__r?.dailyArrival');assert page.evaluate('__r.S.practiceTravel.arrivals')==2
-  assert page.evaluate('__r.returnPracticePlace()');assert page.evaluate('({x:__r.S.wx,y:__r.S.wy,layer:__r.S.layer})')==at
+  # Reopening the same day keeps the place: one new place per day.
+  page.reload();page.wait_for_function('!!window.__r?.dailyArrival');assert page.evaluate('__r.S.practiceTravel.arrivals')==1
+  assert page.evaluate('({x:__r.S.wx,y:__r.S.wy,layer:__r.S.layer})')==at
+  assert page.evaluate('__r.returnPracticePlace()');back=page.evaluate('({x:__r.S.wx,y:__r.S.wy,layer:__r.S.layer})')
+  assert abs(back['x']-old['x'])<=.5 and abs(back['y']-old['y'])<=.5 and back['layer']==old['layer'],(back,old)
   # WD1 links intentionally encode whole pixels; return itself retains exact floats.
   page.reload();page.wait_for_function('!!window.__r?.dailyArrival')
   after=page.evaluate('({x:__r.S.wx,y:__r.S.wy,layer:__r.S.layer})')
-  assert abs(after['x']-at['x'])<=.5
-  assert abs(after['y']-at['y'])<=.5 and after['layer']==at['layer']
-  assert page.evaluate('__r.S.practiceTravel.arrivals')==2,'explicit link does not trigger another arrival'
+  assert abs(after['x']-old['x'])<=.5
+  assert abs(after['y']-old['y'])<=.5 and after['layer']==old['layer']
+  assert page.evaluate('__r.S.practiceTravel.arrivals')==1,'reload and return do not trigger another arrival'
   assert not errors,errors
-  print('PASS native arrivals, silent resume, coordinate return, persisted rewards and addressed reload');browser.close()
+  print('PASS new-day arrival, same-day reopen in place, silent resume, coordinate return, persisted rewards and reload after return');browser.close()
 finally:server.shutdown()

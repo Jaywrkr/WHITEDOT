@@ -1,7 +1,7 @@
 {
-  "name": "WHITEDOT · Pixel Blanco",
-  "short_name": "WHITEDOT",
-  "description": "Un pixel blanco en un mundo negro donde todo hace música.",
+  "name": "Kubono",
+  "short_name": "Kubono",
+  "description": "Un cubo y un universo que suena.",
   "lang": "es",
   "start_url": "./",
   "scope": "./",

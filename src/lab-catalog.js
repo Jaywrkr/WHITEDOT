@@ -89,7 +89,7 @@ export const labTested=n=>!!(n&&(n.verdict||n.text||Object.keys(n.checks||{}).le
 export function labReport(notes,{date='',build=''}={}){
  const clean=normalizeLabNotes(notes),tested=LAB_ELEMENTS.filter(e=>labTested(clean[e.id]));
  const count=v=>tested.filter(e=>clean[e.id].verdict===v).length;
- const lines=[`# Laboratorio WHITEDOT${date?' · '+date:''}`,'',`Probados: ${tested.length} de ${LAB_ELEMENTS.length} · Bien ${count('ok')} · Mejorar ${count('fix')} · Quitar ${count('cut')}${build?' · '+build:''}`,''];
+ const lines=[`# Laboratorio Kubono${date?' · '+date:''}`,'',`Probados: ${tested.length} de ${LAB_ELEMENTS.length} · Bien ${count('ok')} · Mejorar ${count('fix')} · Quitar ${count('cut')}${build?' · '+build:''}`,''];
  for(const group of LAB_GROUPS){
   const items=tested.filter(e=>e.group===group);if(!items.length)continue;lines.push(`## ${group}`,'');
   for(const e of items){const n=clean[e.id];lines.push(`### ${e.name}${n.verdict?' — '+LAB_VERDICTS[n.verdict]:''}`);

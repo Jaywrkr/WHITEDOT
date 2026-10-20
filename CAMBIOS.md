@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.59**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.60**. Las entradas describen su revisión, no certifican producción.
+
+## Fase 2 y tienda del cubo · alpha.61 en curso
+
+Fase 2: meta y título «Universo completo» (actividades, hallazgos, travesuras y esculturas); Polvo viajero visible con movimiento reducido; portales de actividad del 6 % al 15 % de celdas y esculturas del 1,5 % al 3 %, sin mover sitios existentes. Arreglos pedidos por Jay: «Viajar a otra semilla» y el catálogo de laboratorio ocultos en producción, con bloqueo de viajes a otras semillas; marca Kubono en todo lo visible (identificadores internos conservados); un lugar nuevo por día en lugar de en cada recarga. El tope de minería quedó descartado a favor de una tienda grande: catálogo aprobado en [Tienda del cubo](docs/TIENDA_DEL_CUBO.md), sin implementar.
+
+## Fase 1 de pulido: integridad y textos · alpha.60
+
+Rama `claude/charming-darwin-dvbfc7` desde `main` `9953eed`, tras la revisión completa del juego. Bitácora con etiquetas «Elementos», «Linajes» y «Caminantes» en lugar de cifras desfasadas (109/28 frente a 157/48 reales). Seis avisos y el Perfil dejaban de apuntar a «Menú → Guardar copia» u «Otros mundos», controles que ya no existen; ahora dicen qué pasó o nombran «Viajar a otra semilla». Retirado el panel de logros antiguo `mAch`, sin acceso. Viaje musical y galería reciben la × común. «Saltar · N ✦» se deriva de `SPARK_JUMP_COST`; el panel de chispas deja de invitar a ahorrar cuando ya tienes todas las apariencias; las insignias «en un paseo» reinician tarjetas y vecinos al saltar, como ya hacían distancia y ancla. Aviso breve al cambiar el día dentro del Mundo. Restaurar desde la nube una copia en el otro modo pasa por la transición normal: antes, elegir la copia online del Camino estando en el Mundo dejaba región y música del Mundo activas. `cloud_account_smoke.py` lo comprueba (falla sin la corrección) y su paso de Cuenta ya no compite con el aviso de divergencia.
+
+
+## Fixture del visitante nuevo · tras 9953eed
+
+CI de `main` sobre alpha.59: `logic`, `audio (1)` y `audio (2)` verdes, `browser` 130/131 por una carrera de tiempo en `first_level_smoke.py` (ventana del saludo). Solo cambia la fixture; sin cambios de producto ni versión.
 
 ## Recuperación configurable, borrado local y CI · alpha.59
 

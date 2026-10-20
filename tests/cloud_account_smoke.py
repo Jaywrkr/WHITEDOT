@@ -38,8 +38,12 @@ def started(page):
  page.evaluate('__r.S.sound=false')
 def account(page):
  # A second tab of the same account may already show the divergence panel; the menu is inert behind it.
- if page.locator('#mConnection').is_visible():return
- page.locator('#bMenu').click();page.locator('#bConnection').click()
+ # The panel can also open between the check and the click, leaving the menu inert: retry instead of racing it.
+ for _ in range(4):
+  if page.locator('#mConnection').is_visible():return
+  try:page.locator('#bMenu').click(timeout=4000);page.locator('#bConnection').click(timeout=4000);return
+  except Exception:pass
+ assert page.locator('#mConnection').is_visible()
 def wait_remote(page,uid,sparks):
  deadline=time.monotonic()+15
  while remote.get(uid,{}).get('state',{}).get('sparks')!=sparks and time.monotonic()<deadline:page.wait_for_timeout(100)
@@ -66,6 +70,19 @@ try:
   other=context.new_page();prepare(other);started(other);assert other.evaluate('__r.accountUserId')=='two'
   account(page);page.locator('#accountLogout').click();other.wait_for_function("document.body.dataset.accountLocked==='true'");assert other.evaluate('typeof window.__r')=='undefined'
   assert page.locator('#accountGuest').is_hidden();assert not any('/rooms' in p for p in calls)
+  # Choosing the online copy from the Camino while this device is in the Mundo must leave the Mundo cleanly: no region or world music left behind.
+  desk=browser.new_context(viewport={'width':390,'height':844},service_workers='block').new_page();prepare(desk);login(desk,'two@example.test');started(desk)
+  desk.evaluate("()=>{const r=__r;r.S.pathCrystals=Array.from({length:10},(_,i)=>'fixture:'+i);r.enterWorld({automatic:true});r.save();dispatchEvent(new Event('focus'));}")
+  deadline=time.monotonic()+15
+  while remote.get('two',{}).get('state',{}).get('mode')!='world' and time.monotonic()<deadline:desk.wait_for_timeout(100)
+  mobile=browser.new_context(viewport={'width':390,'height':844},service_workers='block').new_page();prepare(mobile);login(mobile,'two@example.test');started(mobile);mobile.wait_for_function('__r.inWorld()')
+  mobile.evaluate("()=>{__r.exitWorld(false);__r.S.sparks=11;__r.save();dispatchEvent(new Event('focus'));}")
+  deadline=time.monotonic()+15
+  while remote.get('two',{}).get('state',{}).get('mode')!='camino' and time.monotonic()<deadline:mobile.wait_for_timeout(100)
+  assert remote['two']['state']['mode']=='camino'
+  desk.evaluate("()=>{__r.S.sparks=99;__r.save();dispatchEvent(new Event('focus'));}");desk.wait_for_function("!document.getElementById('cloudPull').hidden",timeout=20000);assert desk.evaluate('__r.curRegion')!=None
+  desk.once('dialog',lambda d:d.accept());desk.locator('#cloudPull').click();desk.wait_for_function('__r.S.sparks===11&&!__r.inWorld()')
+  desk.wait_for_timeout(500);assert desk.evaluate('__r.curRegion') is None;assert not desk.evaluate('!!__r.MU.dnaT');assert 'world-mode' not in desk.evaluate('document.body.className')
   page.screenshot(path=str(ROOT.parent/'account-required-mobile.png'));browser.close()
- print('PASS mandatory account: no world before Auth, invalid/signup gate, legacy preservation, persistent/offline reopen, automatic PC/phone balance, account isolation and cross-tab logout; mocked Auth/REST only')
+ print('PASS mandatory account: no world before Auth, invalid/signup gate, legacy preservation, persistent/offline reopen, automatic PC/phone balance, account isolation, cross-tab logout and clean Mundo-to-Camino restore; mocked Auth/REST only')
 finally:server.shutdown();server.server_close()

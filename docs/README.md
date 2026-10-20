@@ -14,6 +14,7 @@ Actualizada el 20 de octubre de 2026. Este índice distingue estado actual, deci
 | [Cuenta y progreso](CUENTA_Y_RESPALDO.md) | Login obligatorio, sincronización automática, recuperación, eliminación y evidencia real |
 | [Android](../android/README.md) | APK de cuentas, firma estable, migración y alcance del emulador |
 | [Hallazgos y actividades](HALLAZGOS_Y_ACTIVIDADES.md) | Contenido, gestos y recompensas, no una lista de funciones pendientes |
+| [Tienda del cubo](TIENDA_DEL_CUBO.md) | Catálogo aprobado de piezas compradas con chispas, ranuras, precios y orden de construcción por tandas |
 | [Verificación](VERIFICACION.md) | Pruebas enfocadas frente a cierre completo, CI y límites de evidencia |
 | [Plan de lanzamiento](PLAN_LANZAMIENTO.md) | Único catálogo vigente de entregables D01–D22 y decisiones comerciales |
 | [Configuración de producción](CONFIGURACION_PRODUCCION.md) | Controles aplicados, proveedores/correo pendientes y retención |

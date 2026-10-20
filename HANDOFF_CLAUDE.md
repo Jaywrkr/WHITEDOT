@@ -10,7 +10,7 @@ La configuración de Supabase sigue detenida. Tras la revisión de solo lectura 
 
 - Repositorio: `Jaywrkr/WHITEDOT`; nombre comercial aprobado **Kubono**. No confundir decisión de marca con renombrado de código/paquetes ya completado.
 - Rama de esta entrega: `claude/charming-darwin-dvbfc7`, creada desde `feature/account-recovery-link` en `3175b41` (dependencia explícita). Estado remoto comprobado el 20 de octubre: `origin/main` es `997b232` (merge de PR #232) y el ancestro común con la rama de cuentas es `076128d`; los PR #230, #231 y #232 ya integraron la cuenta obligatoria en `main` (alpha.57). Los 15 commits posteriores de `feature/account-recovery-link` (firma Android, retención, documentación) no tienen PR abierto. No resetear ni mezclar cambios por suponer otra base.
-- Versión de código: `2.3.0-alpha.59`. Commit de la última compilación de firma validada funcionalmente: `165a356`; el cambio alpha.59 (recuperación configurable, borrado local, fixtures) no se ha compilado ni instalado en Android. Consultar `git log` para el HEAD real.
+- Versión de código: `2.3.0-alpha.60` (fase 1 de pulido sobre alpha.59; ver [CAMBIOS](CAMBIOS.md)). Commit de la última compilación de firma validada funcionalmente: `165a356`; el cambio alpha.59 (recuperación configurable, borrado local, fixtures) no se ha compilado ni instalado en Android. Consultar `git log` para el HEAD real.
 - Cliente estático: ES modules, Canvas 2D y Web Audio. Punto de entrada `src/main.js`; no instalación npm para jugar. Android es un contenedor WebView con esos mismos assets.
 - [Mapa técnico](docs/ARQUITECTURA.md), [catálogo](docs/HALLAZGOS_Y_ACTIVIDADES.md), [cuentas](docs/CUENTA_Y_RESPALDO.md), [Android](android/README.md).
 
@@ -41,7 +41,7 @@ Eliminar cuenta exige credenciales, confirmación y reautenticación; borra usua
 | Actualización aislada | Paquete `.accounts.signingprobe`: 137 chispas y compra dust conservadas antes/después de v1→v2; la primera fixture requirió esperar persistencia de WebView antes de cerrar el proceso |
 | Auth/RLS/CAS y borrado RPC | Pruebas reales con datos desechables en transacciones revertidas; nunca se eliminó la cuenta de Jay. UI de eliminación con Auth/REST simulado, no borrado de una cuenta alojada desde esa UI |
 | Pruebas enfocadas | `tests/cloud-account.mjs`, `tests/cloud_account_smoke.py`, `tests/cloud_delete_smoke.py` y admisión Android; ver alcance en [Verificación](docs/VERIFICACION.md). No atribuir todos los tests a todos los commits |
-| CI `Universe foundation checks` | Rojo en `main` desde la cuenta obligatoria: `logic` y `audio` verdes, `browser` 122/130 en `997b232`. Causas y correcciones de fixtures en [Verificación](docs/VERIFICACION.md); los ocho recorridos que fallaban pasan en local sobre alpha.59. CI no ha corrido sobre esta rama: no hay PR y `checks.yml` solo se dispara por `pull_request` o ramas listadas |
+| CI `Universe foundation checks` | Tras integrar alpha.59 en `main` (`9953eed`): `logic`, `audio (1)` y `audio (2)` verdes; `browser` 130/131 por una carrera de la fixture `first_level_smoke.py`, corregida en esta rama; `audio (3)` cancelado al agotar 40 minutos. No declarar CI verde hasta leer el run del siguiente PR |
 
 El saldo anterior es evidencia de la última comprobación, no una promesa del saldo actual. Evidencia local fuera de Git: `outputs/android-account-migration/acceptance.json`, capturas y `outputs/android-stable-signing-final/update-acceptance.json`, relativas al directorio de la tarea (padre de `work/`). No están disponibles automáticamente al clonar GitHub. Los enlaces de CI son la evidencia remota; sus artefactos caducan.
 
@@ -68,6 +68,10 @@ El único backlog vigente es [D01–D22](docs/PLAN_LANZAMIENTO.md). Decisiones q
 ## Petición sugerida para abrir la revisión
 
 > Lee AGENTS.md, HANDOFF_CLAUDE.md y la guía del área que te indique. Revisa contra el código actual, distingue fallos de pendientes de producción y cita archivo/línea. No implementes, publiques, contrates, borres datos ni repitas baterías completas hasta acordar el detalle. Los planes históricos solo son contexto.
+
+## Revisión completa y fase 1 (alpha.60)
+
+Tras volver de Codex, Jay pidió revisar jugabilidad, UI, bitácora, economía e integridad del ciclo, más ideas para divertir con lo existente, y aprobó la fase 1 del plan resultante (integridad y textos). Detalle en [CAMBIOS](CAMBIOS.md). Siguen siendo de Jay: ocultar «Viajar a otra semilla» en producción (crea partidas y copias online paralelas), mantener la reubicación en cada recarga (`practice-travel.js:99`) y la marca dentro del producto. Fases 2 (cerrar el ciclo y la economía) y 3 (ajustes de diversión) quedan propuestas, sin iniciar. Hallazgo sin cambiar: una partida quieta en el Mundo registra especies cercanas, eso cuenta como progreso y genera divergencia frente a otro dispositivo activo de la misma cuenta.
 
 ## Entrega alpha.59 (rama `claude/charming-darwin-dvbfc7`)
 

@@ -104,7 +104,7 @@ public class MainActivity extends Activity {
                             if (encoded.length() > 90 * 1024 * 1024) throw new IllegalArgumentException("size");
                             pendingDownload = Base64.decode(encoded, Base64.DEFAULT);
                             if (pendingDownload.length > 64 * 1024 * 1024) throw new IllegalArgumentException("size");
-                            String name = file.optString("name", "whitedot").replaceAll("[^a-zA-Z0-9._-]", "_");
+                            String name = file.optString("name", "kubono").replaceAll("[^a-zA-Z0-9._-]", "_");
                             Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
                                     .setType(file.optString("type", "application/octet-stream")).putExtra(Intent.EXTRA_TITLE, name);
                             startActivityForResult(intent, 11);

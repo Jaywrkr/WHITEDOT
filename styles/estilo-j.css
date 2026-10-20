@@ -97,6 +97,8 @@ body.world-mode .dock{flex-wrap:wrap}
 /* The prototype tools exist only for development (localhost, ?dev=1 or automated tests). */
 .devbox{display:none}
 body.dev .devbox{display:block}
+/* Seed travel and the lab catalog create separate saves: development only, except to return from another seed. */
+body:not(.dev):not(.seed-travel) #bWorlds,body:not(.dev) p:has(> #guideCatalog){display:none}
 
 /* Discoveries keep their own ink; everything else stays black and white. */
 .rare-card{background:var(--void)}

@@ -77,8 +77,8 @@ export function initialize(runtime){
   x.textBaseline="top";x.fillStyle="#fff";x.font='96px "Geist Mono", monospace';x.fillText("MI MAPA",100,96);
   x.font='28px "Geist Mono", monospace';x.fillStyle="#8a8a8f";x.fillText(`DÍA ${runtime.displayDay()} · SOLO LO QUE VI`,104,206);
   x.fillStyle="#fff";x.font='600 34px "Geist Mono", monospace';x.fillText(`REGIONES ${m.cells.length}`,100,1160);x.fillText(`CONTINENTES ${m.continents}`,440,1160);x.fillText(`RÉCORD ${m.record}`,820,1160);
-  x.fillStyle="#8a8a8f";x.font='26px "Geist Mono", monospace';x.fillText("PIXEL BLANCO  ·  @jaywrkr",100,1250);
-  runtime.$("shareImg").alt="Mi mapa en WHITEDOT";runtime.$("shareImg").src=c.toDataURL("image/png");$("mMap").hidden=true;runtime.$("mShare").hidden=false;
+  x.fillStyle="#8a8a8f";x.font='26px "Geist Mono", monospace';x.fillText("KUBONO  ·  @jaywrkr",100,1250);
+  runtime.$("shareImg").alt="Mi mapa en Kubono";runtime.$("shareImg").src=c.toDataURL("image/png");$("mMap").hidden=true;runtime.$("mShare").hidden=false;
  }
  $("bMap").onclick=open;$("mapClose").onclick=()=>{$("mMap").hidden=true;};
  $("mapZoom").onclick=()=>{zoom=zoom==='mundo'?'cerca':'mundo';render();};$("mapShare").onclick=share;

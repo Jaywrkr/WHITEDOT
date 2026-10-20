@@ -94,9 +94,9 @@ export function initialize(runtime){
   const path={px:s.px,py:s.py};if(s.mode==='camino'){s.px+=(runtime.REG*runtime.WCH)*(.2+serial%5*.05);s.py=runtime.pathY(s.px);}
   if(!move(point,state,null,false)){Object.assign(s,path);return false;}arrived=true;return true;
  }
- // A new document is a fresh visit. Background/resume never runs this again.
- // Explicit addresses and preview saves retain their exact coordinates.
- if(runtime.scopeHadSave)dailyArrival();
+ // One new place per day: entering the Mundo brings it (ui.js enterWorld). Reopening the same day keeps the player where they were;
+ // only a save left in the Mundo across midnight gets the new day's arrival on load. Explicit addresses and preview saves keep their coordinates.
+ if(runtime.scopeHadSave&&runtime.S.mode==='world'&&runtime.S.lastWorldDay!==runtime.S.todayKey&&dailyArrival()){runtime.S.lastWorldDay=runtime.S.todayKey;runtime.save();}
  $('bJump').onclick=jump;$('bJumpBack').onclick=back;setInterval(ui,250);ui();
  Object.defineProperties(runtime,{canPracticeTravel:{get:()=>()=>!blocked()&&!runtime.duetRoom},travelPracticePoint:{get:()=>travel},dailyArrival:{get:()=>dailyArrival},jumpPracticePlace:{get:()=>jump},returnPracticePlace:{get:()=>back}});
 }

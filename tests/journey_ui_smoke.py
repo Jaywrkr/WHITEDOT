@@ -20,7 +20,7 @@ try:
    assert page.locator('#returnEntrance').is_visible(),'first visit greets before the original tutorial'
    page.locator('#returnContinue').click()
    assert page.locator('#mHelpC').is_visible()
-   previous=page.evaluate('''()=>{const r=__r,s=r.S;document.querySelectorAll('.modal').forEach(e=>e.hidden=true);s.sound=false;s.help.camino=s.help.mundo=true;s.todayLight=10;s.pathCrystals=Array.from({length:10},(_,i)=>'journey:'+i);s.lastWorldDay=s.todayKey;s.mode='world';s.ach.mundo='earned';s.firstJourney.skipped=true;s.arrivalMode='continue';r.save();return {x:s.wx,y:s.wy};}''')
+   previous=page.evaluate('''()=>{const r=__r,s=r.S;document.querySelectorAll('.modal').forEach(e=>e.hidden=true);s.sound=false;s.help.camino=s.help.mundo=true;s.todayLight=10;s.pathCrystals=Array.from({length:10},(_,i)=>'journey:'+i);s.lastWorldDay='2000-01-01';s.mode='world';s.ach.mundo='earned';s.firstJourney.skipped=true;s.arrivalMode='continue';r.save();return {x:s.wx,y:s.wy};}''')
    page.reload();page.wait_for_function('!!window.__r?.showReturnEntrance');assert page.locator('#returnEntrance').is_visible();assert len(page.locator('#returnPhrase').inner_text().split())<=12
    page.locator('#returnContinue').click();assert page.locator('#returnEntrance').is_hidden()
    assert page.evaluate('p=>Math.hypot(__r.S.wx-p.x,__r.S.wy-p.y)>500',previous)
