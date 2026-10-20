@@ -11,7 +11,9 @@ class Handler(SimpleHTTPRequestHandler):
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
 # Lit pixels around the cube, and dark pixels inside its square: eyes and accessories add the latter.
 MARKS="""()=>{const c=document.getElementById('w'),x=c.getContext('2d'),w=c.width,h=c.height,r=24,d=x.getImageData(Math.floor(w/2-r),Math.floor(h/2-r),r*2,r*2).data;let lit=0;for(let i=0;i<d.length;i+=4){const v=d[i]+d[i+1]+d[i+2];if(v>240)lit++;}return lit;}"""
-FACE="""()=>{const c=document.getElementById('w'),x=c.getContext('2d'),s=Math.round(__r.pxSize()),L=Math.round(c.width/2-s/2),T=Math.round(c.height/2-s/2),d=x.getImageData(L+1,T+1,s-2,s-2).data;let dark=0;for(let i=0;i<d.length;i+=4)if(d[i]+d[i+1]+d[i+2]<200)dark++;return dark;}"""
+FACE="""()=>{const c=document.getElementById('w'),x=c.getContext('2d'),s=Math.round(Math.max(__r.pxSize(),__r.cubeShopMinSize())),L=Math.round(c.width/2-s/2),T=Math.round(c.height/2-s/2),d=x.getImageData(L+1,T+1,s-2,s-2).data;let dark=0;for(let i=0;i<d.length;i+=4)if(d[i]+d[i+1]+d[i+2]<200)dark++;return dark;}"""
+# Width of the cube's square, measured on the row just below its centre.
+WIDTH="""()=>{const c=document.getElementById('w'),x=c.getContext('2d'),y=Math.floor(c.height/2)+2,d=x.getImageData(0,y,c.width,1).data,mid=Math.floor(c.width/2);let a=mid,b=mid;const on=i=>d[i*4]+d[i*4+1]+d[i*4+2]>600;while(a>0&&on(a-1))a--;while(b<c.width-1&&on(b+1))b++;return b-a+1;}"""
 try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
@@ -25,7 +27,10 @@ try:
   for pid in pieces:assert page.evaluate('id=>__r.buySparkStyle(id)',pid),pid
   hide="document.querySelectorAll('.modal').forEach(m=>m.hidden=true)"
   page.evaluate(f"()=>{{__r.equipSparkStyle('');__r.S.reducedMotion=true;{hide}}}");page.wait_for_timeout(200)
-  plain=page.evaluate(FACE)
+  plain=page.evaluate(FACE);small=page.evaluate(WIDTH);assert page.evaluate('__r.pxSize()')==6 and small<10,small
+  # A face needs room: at level 1 the cube is drawn at 10 px while one is worn, and goes back to 6 px without it.
+  page.evaluate(f"()=>{{__r.equipSparkStyle('eyes:serious');{hide}}}");page.wait_for_timeout(200);assert page.evaluate(WIDTH)>=10,page.evaluate(WIDTH)
+  page.evaluate(f"()=>{{__r.equipSparkStyle('');{hide}}}");page.wait_for_timeout(200);assert page.evaluate(WIDTH)<10
   for pid in [p for p in pieces if not p.startswith('habit:')]:
    for reduced in (False,True):
     page.evaluate("([id,reduced])=>{const r=__r;r.equipSparkStyle('');r.equipSparkStyle(id);r.S.reducedMotion=reduced;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}",[pid,reduced])
@@ -53,5 +58,5 @@ try:
   slots=page.locator('#sparkShop .spark-slot').all_text_contents();assert {'Ojos','Hábitos','Accesorio'}<=set(slots),slots
   assert [page.locator(f'#sparkShop article[data-slot="{s}"]').count() for s in ('eyes','habits','accessory')]==[5,4,4]
   assert not errors,errors;browser.close()
- print('PASS 13 eye, habit and accessory pieces bought, worn moving and still, habits set off by the world, persisted after reload and listed by slot',flush=True)
+ print('PASS 13 eye, habit and accessory pieces bought, faces drawn at 10 px on a level-1 cube, worn moving and still, habits set off by the world, persisted after reload and listed by slot',flush=True)
 finally:server.shutdown();server.server_close()

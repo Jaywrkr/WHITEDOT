@@ -70,6 +70,9 @@ export function initialize(runtime){
   if(piece==='body:disco'){c.globalAlpha=.45;for(let i=1;i<4;i++){c.beginPath();c.moveTo(L+i*S/4,T);c.lineTo(L+i*S/4,T+S);c.moveTo(L,T+i*S/4);c.lineTo(L+S,T+i*S/4);c.stroke();}}
   c.restore();return true;
  }
+ // A face needs room: while one is worn, the cube is drawn at least 10 px (levels 1-3). Drawing only; reach and collisions keep the real size.
+ const FACE_MIN=10;
+ function minSize(){if(!runtime.inWorld())return 0;const q=runtime.sparkEconomy;return q?.wear?.eyes||q?.wear?.accessory||Object.keys(q?.on||{}).some(id=>id.startsWith('habit:'))?FACE_MIN:0;}
  // Over the body, inside its transform: eyes, habit faces and accessories.
  function nearest(){let best=null,d=Infinity;for(const o of runtime.MU?.near||[]){if(o?.x==null)continue;const k=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);if(k<d){d=k;best=o;}}return best;}
  function over(c,x,y,s,t){
@@ -107,5 +110,5 @@ export function initialize(runtime){
   if(dizzy){c.fillStyle='#fff';const r=Math.max(5,S*.7),cy=T-4;for(let i=0;i<3;i++){const a=(calm?.4:t/250)+i*2.094;px(F.x+Math.cos(a)*r-1,cy+Math.sin(a)*r*.35-1,roomy?2:1,roomy?2:1);}}
   c.restore();
  }
- Object.defineProperties(runtime,{drawCubeShopUnder:{get:()=>under},cubeShopTransform:{get:()=>transform},drawCubeShopBody:{get:()=>body},drawCubeShopOver:{get:()=>over},cubeShopHabits:{get:()=>()=>({yawn:has('habit:yawn')&&stopped>6&&(stopped-6)%12<1.8,greeted:greetAt>=0,sneezed:sneezeAt>=0,dizzy:dizzyUntil>=0,blushed:blushAt>=0})},cubeShopWearing:{get:()=>id=>wearing(runtime.sparkEconomy,id)}});
+ Object.defineProperties(runtime,{drawCubeShopUnder:{get:()=>under},cubeShopTransform:{get:()=>transform},drawCubeShopBody:{get:()=>body},drawCubeShopOver:{get:()=>over},cubeShopMinSize:{get:()=>minSize},cubeShopHabits:{get:()=>()=>({yawn:has('habit:yawn')&&stopped>6&&(stopped-6)%12<1.8,greeted:greetAt>=0,sneezed:sneezeAt>=0,dizzy:dizzyUntil>=0,blushed:blushAt>=0})},cubeShopWearing:{get:()=>id=>wearing(runtime.sparkEconomy,id)}});
 }
