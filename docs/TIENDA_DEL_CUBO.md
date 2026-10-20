@@ -1,6 +1,6 @@
 # Tienda del cubo
 
-Diseño aprobado por Jay el 20 de octubre de 2026: «me gusta todo». Esta guía es el catálogo de la tienda de chispas y su orden de construcción; no es un backlog de lanzamiento (ese sigue siendo D01–D22). Estado: tanda 0 hecha en alpha.61 (ranuras en `src/cube-shop-model.js`, compras antiguas migradas a su ranura, tienda ordenada por ranura); las piezas nuevas llegan desde la tanda 1.
+Diseño aprobado por Jay el 20 de octubre de 2026: «me gusta todo». Esta guía es el catálogo de la tienda de chispas y su orden de construcción; no es un backlog de lanzamiento (ese sigue siendo D01–D22). Estado: tanda 0 hecha en alpha.61 (ranuras en `src/cube-shop-model.js`, compras antiguas migradas a su ranura, tienda ordenada por ranura). Tanda 1 hecha en alpha.62: las 17 piezas de Movimiento y Cuerpo, dibujadas en `src/cube-shop-art.js`. «Dado» cambia con cada cristal roto, no con cada golpe.
 
 ## Reglas
 

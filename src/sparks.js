@@ -4,7 +4,7 @@ import {crystalFragments,fragmentMask} from './crystal-play-model.js';
 import {POWERS,POWER_IDS} from './expansion-music.js';
 import {SPARK_JUMP_COST,SPARK_SITE_LIMIT,SPARK_SHOP,SPARK_SETS,SPARK_BADGES,SPARK_MILESTONES,SPARK_UNIVERSE,universeProgress,sparkNumber,normalizeSparkEconomy,creditSparks,debitSparks,claimSparkReward,sparkSetProgress} from './sparks-model.js';
 const escape=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const preview=id=>'<svg viewBox="0 0 180 60" aria-hidden="true"><rect x="85" y="25" width="10" height="10" fill="currentColor"/>'+(id==='dust'?'<path d="M32 34h2m14-7h2m13 9h2m9-8h2"/>':id==='facet'?'<path d="M90 7l40 23-40 23-40-23zM90 7v46M50 30h80"/>':'<circle cx="90" cy="30" r="20"/><circle cx="70" cy="30" r="2"/><circle cx="100" cy="13" r="2"/><circle cx="100" cy="47" r="2"/>')+'</svg>';
+const preview=id=>'<svg viewBox="0 0 180 60" aria-hidden="true"><rect x="85" y="25" width="10" height="10" fill="currentColor"/>'+(shopPiece(id)?.art||'')+'</svg>';
 export function initialize(runtime){
  const $=runtime.$;let owner=null,day='',clock=0,refresh=0,lastDistance=0,sessionDistance=0,segment=0,anchor=null,home=null,homeTime=0,newCards=new Set(),neighbors=new Set(),worldBroken=0,inspector={id:'',count:0},lastJump=null,delta=0,deltaUntil=0,trail=[],lastTrail=null,pickups=[],jumpAvailable=false,jumpUntil=0;
  const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');

@@ -1,6 +1,10 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.61**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.62**. Las entradas describen su revisión, no certifican producción.
+
+## Tienda del cubo, tanda 1 · alpha.62
+
+Movimiento: Gelatina, Patinador, Pogo, Gusano, Ingravidez, Rodar, Patitas y Parpadeo. Cuerpo: Latido, Dado, Camaleón, Racha, Pecera, Origami, Ensamblaje, Bola de disco y Enjambre. Precios del catálogo (150 a 1.200 ✦). Nuevo `cube-shop-art.js` enganchado a `render.js`; solo dibujo, sin cambios de juego. `tests/cube_shop_smoke.py` compra y equipa las 17, comprueba que el cubo se ve en movimiento y quieto, y que lo equipado sobrevive a la recarga; la revisión visual ampliada corrigió Enjambre, Patitas y Racha en cubos pequeños.
 
 ## Tienda del cubo, tanda 0 · alpha.61
 
