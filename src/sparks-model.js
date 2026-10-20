@@ -1,6 +1,7 @@
 import {normalizeTotemClaims} from './sculpture-totems-model.js';
 import {fragmentMask} from './crystal-play-model.js';
 import {livingDefinition} from './living-catalog.js';
+import {CUBE_SHOP,normalizeWear} from './cube-shop-model.js';
 import {adventureValue} from './adventure-achievements.js';
 import {ACTIVITIES} from './universe-activities-model.js';
 import {WONDERS} from './musical-wonders-model.js';
@@ -12,11 +13,8 @@ export const sparkNumber=n=>Number.isFinite(n)?Math.min(Number.MAX_SAFE_INTEGER,
 const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
 const safeKey=k=>typeof k==='string'&&k.length<180&&!['__proto__','constructor','prototype'].includes(k);
 const record=raw=>Object.fromEntries(Object.entries(object(raw)?raw:{}).filter(([k])=>safeKey(k)).slice(0,512));
-export const SPARK_SHOP=Object.freeze([
- {id:'dust',name:'Polvo viajero',cost:40,text:'Deja pequeñas chispas blancas al caminar.'},
- {id:'facet',name:'Pulso facetado',cost:80,text:'Añade facetas visuales sin cambiar el alcance.'},
- {id:'orbit',name:'Órbita personal',cost:150,text:'Tres luces acompañan a tu cubo.'}
-]);
+// The shop catalog lives in cube-shop-model.js; SPARK_SHOP keeps its former name for existing callers.
+export const SPARK_SHOP=CUBE_SHOP;
 export const SPARK_SETS=Object.freeze([
  {id:'band',name:'Primera banda',need:4,reward:15,title:'Tengo una banda'},
  {id:'neighbors',name:'Vecinos extraños',need:3,reward:15,title:'Soy de aquí'},
@@ -47,7 +45,7 @@ export function normalizeSparkEconomy(raw,balance=0,day=''){
  }
  const spent=Math.min(sparkNumber(q.spent),Number.MAX_SAFE_INTEGER-sparkNumber(balance));
  return {...q,version:1,day,sites,totems:q.day===day?normalizeTotemClaims(q.totems):{},earned:sparkNumber(balance)+spent,spent,purchases:record(q.purchases),claims:record(q.claims),
-  equipped:SPARK_SHOP.some(p=>p.id===q.equipped)&&q.purchases?.[q.equipped]?q.equipped:'',goal:typeof q.goal==='string'?q.goal.slice(0,60):'jump',title:typeof q.title==='string'?q.title.slice(0,60):'',
+  equipped:SPARK_SHOP.some(p=>p.id===q.equipped)&&q.purchases?.[q.equipped]?q.equipped:'',...normalizeWear(q,record(q.purchases),q.equipped),goal:typeof q.goal==='string'?q.goal.slice(0,60):'jump',title:typeof q.title==='string'?q.title.slice(0,60):'',
   stats:{...q.stats,broken:sparkNumber(q.stats?.broken),jumps:sparkNumber(q.stats?.jumps),sinceJump:sparkNumber(q.stats?.sinceJump)},
   log:(Array.isArray(q.log)?q.log:[]).filter(p=>object(p)&&typeof p.title==='string').slice(-80).map(p=>({title:p.title.slice(0,100),text:String(p.text||'').slice(0,180),at:String(p.at||'').slice(0,24)}))};
 }

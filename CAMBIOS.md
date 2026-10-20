@@ -1,8 +1,12 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.60**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.61**. Las entradas describen su revisión, no certifican producción.
 
-## Fase 2 y tienda del cubo · alpha.61 en curso
+## Tienda del cubo, tanda 0 · alpha.61
+
+Nuevo `cube-shop-model.js` con las 14 ranuras del catálogo. Polvo viajero, Pulso facetado y Órbita personal pasan a Rastro, Forma del pulso y Compañero, y se pueden llevar las tres a la vez; lo equipado en guardados anteriores se migra a su ranura y `equipped` se conserva para dispositivos sin actualizar. Piezas de versiones futuras se mantienen mientras estén compradas. El panel de chispas agrupa la tienda por ranura. Pruebas: `tests/cube-shop.mjs` y equipar/quitar por ranura en `tests/sparks-economy.mjs`.
+
+## Fase 2 y catálogo de la tienda · alpha.61
 
 Fase 2: meta y título «Universo completo» (actividades, hallazgos, travesuras y esculturas); Polvo viajero visible con movimiento reducido; portales de actividad del 6 % al 15 % de celdas y esculturas del 1,5 % al 3 %, sin mover sitios existentes. Arreglos pedidos por Jay: «Viajar a otra semilla» y el catálogo de laboratorio ocultos en producción, con bloqueo de viajes a otras semillas; marca Kubono en todo lo visible (identificadores internos conservados); un lugar nuevo por día en lugar de en cada recarga. El tope de minería quedó descartado a favor de una tienda grande: catálogo aprobado en [Tienda del cubo](docs/TIENDA_DEL_CUBO.md), sin implementar.
 

@@ -59,3 +59,10 @@ const full={activities:{version:1,types:fullSet(ACTIVITIES)},musicalWonders:{ver
 assert(universeProgress(full).complete);delete full.musicalWonders.found[WONDERS[0].id];const almost=universeProgress(full);assert(!almost.complete);assert.equal(almost.value,almost.need-1);
 assert.equal(SPARK_UNIVERSE.parts.length,4);
 console.log('PASS universe completion counts every activity type, wonder, mischief scene and sculpture shape');
+// Pieces in different slots are worn together; taking one off leaves the others.
+{const w=runtime({mode:'world',todayKey:day,sparks:400,pathCrystals:[],playerProfile:{distanceUnits:0}});
+for(const id of ['dust','facet','orbit'])assert(w.buySparkStyle(id));for(const id of ['dust','facet','orbit'])assert(w.equipSparkStyle(id));
+assert.deepEqual(w.sparkEconomy.wear,{trail:'dust',pulse:'facet',companion:'orbit'});assert(w.unequipSparkStyle('facet'));assert.deepEqual(w.sparkEconomy.wear,{trail:'dust',companion:'orbit'});assert(!w.unequipSparkStyle('facet'));
+const reloaded=normalizeSparkEconomy(structuredClone(saved.sparkEconomy),saved.sparks,day);assert.deepEqual(reloaded.wear,{trail:'dust',companion:'orbit'});
+assert(w.equipSparkStyle(''));assert.deepEqual(w.sparkEconomy.wear,{});assert.equal(w.sparkEconomy.equipped,'');}
+console.log('PASS pieces worn per slot, removal keeps the rest, saved wear survives reload and everything comes off at once');
