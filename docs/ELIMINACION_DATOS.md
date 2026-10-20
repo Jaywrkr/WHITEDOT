@@ -1,5 +1,7 @@
 # Eliminación de cuenta y datos
 
+Revisión documental: 20 de octubre de 2026. Borrador no publicado; la configuración de Supabase está detenida por petición de Jay para revisar el proyecto. [Índice vigente](README.md).
+
 Preparado el 19 de octubre de 2026. Instrucciones actuales y procedimiento de producción pendiente; nada publicado ni ejecutado por este documento.
 
 ## Texto preparado para la futura página pública

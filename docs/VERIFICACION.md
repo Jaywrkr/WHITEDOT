@@ -1,5 +1,7 @@
 # Verificación
 
+Revisión documental: 20 de octubre de 2026. [Traspaso/evidencia actual](../HANDOFF_CLAUDE.md). Esta revisión no reejecuta baterías de juego, audio ni servicios.
+
 Desde la raíz, con Node 18 o superior:
 
 ```sh
@@ -36,3 +38,17 @@ La conversión automática CRLF de licencias puede alterar sus hashes: comparar 
 ## Fixtures de cuenta obligatoria
 
 Desde alpha.57, los recorridos de gameplay/audio que ya instrumentaban main sustituyen explícitamente `await requireAccount()` por `null` en su copia de prueba. Aíslan componentes y conservan sus aserciones; no certifican acceso ni añaden una bandera al producto. `cloud_account_smoke.py` usa la admisión real con Auth/REST simulado y comprueba bloqueo antes del mundo, registro, cuenta persistente/offline, separación entre usuarios y logout. `offline_smoke.py` comprueba el shell offline y que un usuario sin sesión siga bloqueado.
+
+## Evidencia de cuentas y Android que se puede reutilizar
+
+- PC y Safari normal iPhone: aceptación humana de sesión persistente y saldo automático. Android emulado: cuenta real, migración autorizada con 280 archivos idénticos, actualización/reapertura conservando 52 chispas y sesión. Es evidencia de esos recorridos, no de paquetes iOS/desktop o dispositivos Android físicos.
+- UI de eliminación (`tests/cloud_delete_smoke.py`) usa Auth/REST simulado; RLS/CAS y RPC se verificaron con datos desechables en transacciones revertidas. No decir que la UI eliminó una cuenta alojada ni repetirlo sobre la cuenta personal.
+- `tests/cloud-account.mjs` incluye identidad, persistencia, carreras de sesión y reautenticación de eliminación. La prueba Android `requiresAccountBeforeWorld` comprueba admisión en instalación limpia; no volver a ejecutarla sobre la cuenta conectada esperando que esté bloqueada.
+- [CI 39337750907](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39337750907), `165a356`, y [CI 39455805125](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39455805125), `32e2102`, aprobados. El workflow de cuentas compila los paquetes/pruebas; las ejecuciones instrumentadas de actualización/admisión citadas ocurrieron en el emulador local, no se atribuyen al CI.
+- Evidencia local `outputs/` fuera del repositorio no viaja al clonar. Los artefactos de CI tienen caducidad; un enlace al run no garantiza que el APK siga descargable.
+
+## Revisar solo documentación
+
+Comprobar enlaces locales de todos los Markdown, separación vigente/histórico, coherencia con los símbolos/contratos citados y `git diff --check`. Ejecutar auditoría estática y consultar `test:impact -- --base SHA --list` antes de decidir qué pruebas corresponden. Si los únicos cambios son Markdown, no volver a probar login, recuperación, dispositivos o audio. Los pushes/PR pueden disparar automáticamente workflows según sus filtros: no atribuirles resultados sin leerlos.
+
+El cierre completo previo a integrar/publicar sigue vigente cuando corresponda; una limpieza documental no lo sustituye ni lo dispara por sí sola. No afirmar «todo probado» con una selección enfocada.

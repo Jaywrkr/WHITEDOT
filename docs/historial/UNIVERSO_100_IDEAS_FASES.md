@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 > **Ampliación posterior vigente:** [150 propuestas en diez fases](UNIVERSO_150_IDEAS_FASES.md), con treinta ideas musicales, diez funciones de la Voz y diez de tarjetas añadidas. Este documento conserva la lista de cien y su numeración histórica.
 
 # Universo vivo: 100 propuestas en 10 fases

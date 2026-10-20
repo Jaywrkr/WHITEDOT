@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 Ciclo histórico: sustituido por [PLAN_MEJORA_INTEGRAL.md](PLAN_MEJORA_INTEGRAL.md).
 
 # Juego musical · ciclo 2.3

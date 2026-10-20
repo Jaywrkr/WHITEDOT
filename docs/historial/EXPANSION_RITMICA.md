@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 > **Continuación RC5:** tarjetas y libro de hallazgos en `feat/rare-discovery-cards`, hija de la rama RC4 final. [Entrega vigente](HALLAZGOS_RAROS.md). El inventario y evidencia siguientes describen RC2–RC4 y permanecen como historia.
 
 # Expansión rítmica · tres fases amplias

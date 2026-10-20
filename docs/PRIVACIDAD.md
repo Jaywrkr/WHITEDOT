@@ -1,5 +1,7 @@
 # Privacidad de Kubono · borrador
 
+Revisión documental: 20 de octubre de 2026. Borrador no publicado; la configuración de Supabase está detenida por petición de Jay para revisar el proyecto. [Índice vigente](README.md).
+
 Preparado el 19 de octubre de 2026. No publicado. Describe la versión actual; completar los campos pendientes antes de usarlo en tiendas. Configuración y decisiones pendientes en [Producción](CONFIGURACION_PRODUCCION.md).
 
 ## Responsable y contacto

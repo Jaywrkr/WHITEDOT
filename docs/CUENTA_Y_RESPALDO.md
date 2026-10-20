@@ -1,49 +1,57 @@
 # Cuenta y progreso automático · alpha.58
 
+Revisión documental: 20 de octubre de 2026. La configuración de Supabase está **detenida por petición de Jay** para revisar documentación con Claude. No ejecutar pendientes por leer esta guía.
+
 ## Funcionamiento vigente
 
-- Cuenta obligatoria por correo/contraseña. Crear cuenta, confirmar el enlace del correo y entrar. Sin invitado, demo ni otros proveedores.
-- Sesión persistente en localStorage, sin guardar la contraseña. Se valida con Auth al abrir y se renueva antes de las peticiones. Una sesión previa permite continuar offline; sin sesión no se inicializa el mundo.
-- Guardado y comprobación automática cada cinco segundos con cambios, al volver a la pestaña y con intento adicional al salir. Sin botones de guardar/recuperar/respaldar en el flujo normal.
-- Se trae la copia remota cuando la local no avanzó; una copia vacía no provoca conflictos. Si ambas tienen avances diferentes, se conserva todo y se pide elegir. No se suman saldos ni se elige el máximo o la fecha más reciente.
-- Sin red o con suspensión prematura, el avance permanece local. No se garantiza envío antes de que iOS cierre el proceso. Reabrir permite reintentar.
-- Cerrar sesión vuelve a la entrada. Cambiar de usuario no mezcla partidas. Cada dispositivo requiere su propio primer acceso; los tokens no se comparten entre orígenes.
+- Cuenta obligatoria por correo/contraseña, confirmación y recuperación por enlace. Sin invitado, demo ni otros proveedores. `main.js` espera `requireAccount()` antes de crear el runtime; configuración vacía no abre el mundo.
+- Sesión persistente en localStorage, sin guardar contraseña. Se valida con Auth al abrir y se renueva para solicitudes. Una sesión previa permite continuar offline si no hay red; una respuesta de acceso inválido se trata de otra forma, no como fallo de red.
+- Guardado local periódico y conciliación online automática cada cinco segundos cuando corresponde, al reanudar y con intento adicional al salir. No hay botones normales de guardar/recuperar/respaldar; la salida no garantiza envío si el sistema mata el proceso.
+- Primera copia remota ausente se sube; dispositivo sin avance propio recupera la remota. Si la local no avanzó, se adopta el remoto; cambios solo locales se envían. Si ambas avanzaron, se detiene el reemplazo y se pide elegir, preservando copias. No sumar balances ni decidir por fecha o saldo máximo.
+- Cerrar sesión vuelve a la entrada. Cambiar usuario no mezcla guardados. Cada dispositivo/origen necesita su primer acceso: los tokens no se transfieren entre navegador y APK.
 
-## Proyecto y datos
+## Proyecto, almacenamiento y límites
 
-Kubono Dev: `eghmydqxsicqmbmeprgq`, organización Kubono `eebalwznymfdxaexvghc`, región us-east-1, Free comprobado el 19 oct 2026. Sin publicación ni planes contratados. CORESOLUTIONS permanece intacto.
+Kubono Dev: `eghmydqxsicqmbmeprgq`, organización Kubono `eebalwznymfdxaexvghc`, us-east-1. Free confirmado durante el desarrollo el 19 de octubre; no se contrató un plan. CORESOLUTIONS está fuera de alcance.
 
-`cloud-config.js` contiene únicamente URL HTTPS y clave publicable; nunca secretos/service_role. Vacío bloquea el acceso, no abre un modo invitado. Esquema consolidado en `supabase/setup.sql`; no reaplicarlo al proyecto existente. Migraciones aplicadas: `kubono_optional_cloud_saves` y `harden_cloud_save_privileges`.
+`cloud-config.js` contiene URL HTTPS y clave publicable, nunca service_role/secretos. `supabase/setup.sql` es esquema consolidado aplicado a Dev: **no reaplicarlo sobre el proyecto existente**. Identidad, Auth y claves administrativas no se deben imprimir ni guardar en informes.
 
-Local: `kubono:user:USER_ID:CLAVE_MUNDO`. Remoto: la clave de mundo histórica con RLS por usuario. La migración copia sin borrar el original y registra un único propietario; si hay evidencia de otro propietario no asigna esa partida automáticamente.
+Local: `kubono:user:USER_ID:CLAVE_MUNDO`. Remoto: ámbito histórico por usuario/mundo. La migración local conserva el original y asigna un propietario solo si no hay evidencia de otro. Baseline canónica, CAS, respaldos previos a restauración y copia de remoto antes de conservar local evitan reemplazos silenciosos. Si no hay espacio se cancela el reemplazo. Resúmenes de sesión/tiempo no crean divergencias por sí solos.
 
-La referencia canónica por usuario/mundo distingue cambios locales/remotos; los contadores de tiempo y resúmenes de sesión no generan divergencias. CAS impide sobrescribir una revisión nueva. Restaurar conserva `:before-restore`; elegir la local conserva primero la remota. Si no hay espacio, se cancela el reemplazo.
+Servidor: 64 mundos por cuenta y 1 MiB por estado; JSON objeto con worldIdentity. RLS, cuotas y revisiones se aplican también a peticiones directas. El backend Python/SQLite y las salas no son este servicio.
 
-Servidor: máximo 64 mundos por cuenta y 1 MiB por estado; JSON de objeto con worldIdentity. Trigger y RPC controlan revisiones/cuotas, incluso ante acceso directo por tabla. El backend Python y duetos son históricos, no parte del lanzamiento.
+## Recuperación de desarrollo
 
-Eliminar cuenta exige confirmación y reautenticación. La sesión permanece durante la comprobación para evitar una recarga prematura. El RPC requiere una sesión reciente y elimina sesiones, usuario y copias remotas. Los archivos locales anteriores se conservan según el aviso actual; su política definitiva de eliminación/retención debe cerrarse antes de vender.
+Correo predeterminado de Supabase, limitado a destinatarios/cuotas de desarrollo; sin SMTP contratado. Alta, enlace y cambio de clave reales comprobados. Callback local:
 
-## Correo local
+```sh
+python scripts/serve-recovery.py
+```
 
-Correo predeterminado de Supabase, limitado a destinatarios/cuotas de desarrollo. Sin SMTP contratado ni plantillas personalizadas. Alta y recuperación por enlace real comprobadas.
+Abrir el enlace del correo en ese computador con `http://localhost:3000/` activo y autorizado en Auth → URL Configuration. La página limpia el fragmento, valida Auth y no persiste los tokens del enlace. No compartir contraseña, códigos o enlace en el chat.
 
-`python scripts/serve-recovery.py` sirve el callback local en `http://localhost:3000/`, Site URL predeterminada. Si fue cambiada, autorizar esa URL exacta en Auth → URL Configuration. Mantener el servidor mientras se abre el correo en ese computador. Confirmación muestra «Correo confirmado»; recuperación permite elegir clave. Se borra el fragmento antes de pedir datos, se valida Auth y no se persisten tokens del enlace. Nunca compartir contraseña ni enlace en el chat.
+`src/cloud-client.js` conserva ese destino hardcoded; `src/cloud-account.js` muestra un aviso de servidor local. La producción requiere código y configuración de URLs/correo, no solo tocar Site URL.
 
-## Evidencia y límites
+## Eliminación y retención
 
-- PC e iPhone/Safari normal: Jay confirmó sesión tras cerrar/reabrir y mismo saldo automático en alpha.57. La comparación anterior entre contextos privados distintos no fue pérdida: en la pestaña del juego había 4 disponibles, 24 ganadas y 20 gastadas.
-- Android emulado: APK alpha.57 compilado en Actions 39334695709 (0481194), SHA-256 verificado, instalación separada que conserva la app anterior. Puerta de acceso real aprobada. Jay confirmó saldo igual; cierre forzado y apertura en frío conservaron sesión y 52 chispas, también consultadas en Supabase (revisión 28).
-- RLS y RPC real: aislamiento de dos usuarios, anonimato rechazado, CAS y borrado de usuario/sesión/copia desechables aprobados en transacciones revertidas. Nunca se borró la cuenta de Jay.
-- UI de eliminación: cancelación, reautenticación, RPC y retorno sin sesión aprobados con Auth/REST simulado; no equivale a eliminar una cuenta alojada a través de Auth HTTP.
-- Alpha.58 corrige la reautenticación de eliminación. Build 39335918044 y hashes aprobados, pero la actualización fue rechazada por firma debug distinta: alpha.57 validada continúa instalada con datos intactos. Ruta de firma/caché corregida; antes de tienda hace falta custodiar una clave permanente. No se desinstaló para forzar la actualización.
-- Lógica afectada, auditoría y recorridos enfocados aprobados. No se atribuyen audio completo, dispositivo Android físico, app iOS nativa, builds desktop ni publicación.
-- La copia de fixture `live-verification` quedó en Dev porque su limpieza fue cancelada y no se reintentó. No es la partida personal.
-- Últimos advisors tras endurecimiento: sin avisos de RLS/permisos; protección contra contraseñas filtradas desactivada, pendiente revisión sin activar un plan de pago.
+Confirmación y reautenticación recientes antes del RPC. Se eliminan sesiones del servidor, usuario y guardados online; después se limpia la sesión solicitante y se vuelve a la entrada. Alpha.58 mantiene la sesión durante reautenticación para evitar la recarga prematura.
 
-## Antes de vender
+**Las partidas locales, copias de conflictos y archivos exportados no se borran automáticamente.** No prometer purga remota de dispositivos offline ni revocación instantánea de cada JWT emitido. Alcance y pendientes en [Eliminación](ELIMINACION_DATOS.md) y [Privacidad](PRIVACIDAD.md).
 
-Correo de producción y dominio/callbacks HTTPS de web/apps; política de privacidad, retención/eliminación y restauración operativa; cuotas/capacidad y condiciones de Free; dispositivos/plataformas finales; compra/recibos y configuración de cada tienda. Cuenta no equivale a compra ni cross-buy. Ninguno autoriza contratar o publicar ahora.
+Plazos aprobados y configuración real en [Producción](CONFIGURACION_PRODUCCION.md). GitHub y limpieza local están configurados; `supabase/retention.sql` no está aplicado por errores del conector y el trabajo está detenido. No hay exportación completa/rotación de la base de producción configurada.
 
-Cierre de firma Android (19-10-2026): CI [39337750907](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39337750907) aprobado con clave estable, copia local fuera de Git y secreto de repositorio; falta de secreto detiene build. Huella pública SHA-256 `1f7b2c71e607180eb3b7f949de02b1e5c5c994cd414be16fe25d7ac501fa2490`. APKs y hashes comprobados. En `.accounts.signingprobe`, guardado local por cuenta con 137 chispas/compra dust persiste antes y después de actualización v1→v2 con `install -r`. No se repitieron login/audio/suites completas. Se conserva copia privada local del APK alpha.57 y datos para volver atrás. Migración desde su firma perdida autorizada y completada: 280 archivos privados restaurados con hashes idénticos; sesión conectada y 52 chispas (72 ganadas/20 gastadas) conservadas. Actualización real posterior mediante `install -r`, cierre forzado y reapertura mantienen esos mismos valores y acceso sin clave. Lanzador apunta al APK estable; respaldo privado de rollback retenido. La extracción por stdin falló; se restauró desde archivo temporal del emulador, eliminado tras verificar. La clave estable corresponde a vista previa, no a publicación en tiendas.
+## Evidencia existente y límites
 
-Material de salida preparado (sin publicación): [Privacidad](PRIVACIDAD.md), [Eliminación y atención de solicitudes](ELIMINACION_DATOS.md), [Configuración de producción](CONFIGURACION_PRODUCCION.md). Son borradores; el borrado local y el callback de producción requieren cambios separados. Público de 16 años o más y plazos de conservación aprobados el 19 de octubre de 2026 según la lista de producción. Su configuración y los plazos propios de proveedores siguen pendientes, al igual que datos legales, mercados y correo público.
+| Área | Resultado registrado |
+|---|---|
+| PC y Safari normal iPhone | Jay confirmó persistencia tras cerrar/reabrir y saldo automático igual. Un diagnóstico previo en otra pestaña privada no medía el mismo almacenamiento |
+| Android emulado | Acceso real, migración a firma estable, 280 archivos restaurados idénticos y actualización/reapertura sin contraseña; último saldo comprobado 52, 72 ganadas y 20 gastadas |
+| RLS, CAS y RPC | Aislamiento entre dos usuarios, anonimato rechazado y datos desechables borrados en transacciones revertidas; nunca se borró la cuenta de Jay |
+| UI de eliminación | Cancelar/reautenticar/RPC/retorno a entrada con Auth/REST simulado. No equivale a borrar un usuario alojado desde esa UI |
+| Código y empaquetado | Pruebas enfocadas y auditorías registradas; [CI Android estable](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39337750907) y [CI de configuración posterior](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39455805125) aprobados |
+
+No certificar a partir de esto dispositivo Android físico, app iOS, builds desktop, correo público o despliegue actual. Una lectura puntual del saldo no prueba una futura sincronización. La fixture `live-verification` quedó en Dev porque se canceló su limpieza; no reintentar ese borrado sin autorización.
+
+Últimos avisos de seguridad registrados: sin advertencias de RLS/permisos; protección frente a contraseñas filtradas desactivada y pendiente revisión sin activar un plan de pago. No es un nuevo análisis de seguridad realizado por esta revisión documental.
+
+Antes de vender: correo/callbacks públicos, limpieza local y política coherente, respaldo/restauración operativa, datos legales y mercados, recibos/licencia de tienda y aceptación de paquetes finales. Cuenta no equivale a compra ni a cross-buy. Ver D20–D22 del [plan](PLAN_LANZAMIENTO.md).

@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Vasto y laboratorio actuales
 
 Esta rama añade Vasto: regiones de 18.000 unidades (REG20), con clave de prueba/dirección separadas para Original/vivo. Clásico y Amplio mantienen las medidas y guardados de abajo. Otra semilla propone Vasto. El laboratorio permanece independiente y permite54 casos de cubo/culturas/poderes/quietud/experimental. WD1 comparte direcciones; no sincroniza progreso ni congela música. [Entrega](FASE_06.md).

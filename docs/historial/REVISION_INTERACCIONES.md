@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Nota de alcance histórico
 
 > Estado al 13 de octubre de 2026: Revisión histórica: recuperación/cachés y shell offline fueron ampliados posteriormente en fases 1/2. No tratar sus carencias antiguas como diagnóstico actual. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).

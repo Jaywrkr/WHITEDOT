@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Mejora integral · consolidación 2.3
 
 Autorizado por Jay con «hazlo». Sustituye la ampliación del ciclo anterior: mejorar los sistemas existentes, sin añadir catálogos ni mecánicas. Carreras/persecuciones nuevas quedan fuera. Base: recuperación `faa0fe9`. Cada rama nace de la anterior; Codex commit/push y Jay PR/merge. Guardados, coordenadas y premios se preservan.

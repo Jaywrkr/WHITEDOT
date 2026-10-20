@@ -1,10 +1,14 @@
-# Historial documental
+# Archivo histórico de Kubono / WHITEDOT
 
-Estos documentos conservan planes, decisiones, inventarios y evidencias de revisiones anteriores. Sus fases, autorizaciones, pendientes y cifras son históricas: no definen el trabajo actual ni certifican la versión publicada. Consultar primero el [README vigente](../../README.md).
+Los documentos siguientes conservan decisiones, planes, comandos, evidencia y pendientes de revisiones anteriores. **No son documentación vigente ni autorización de trabajo.** Incluso un título como ESTADO_ACTUAL, HANDOFF, AGENTS o PENDIENTES describe su revisión histórica.
 
-Los nombres originales se conservan para localizar referencias de informes y commits. Los enlaces válidos al moverlos se ajustaron; las rutas literales de informes históricos siguen describiendo su revisión. No hace falta leer este archivo completo para trabajar en el proyecto.
+Empezar en [README actual](../../README.md), [traspaso actual a Claude](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md). Para trabajar no hace falta leer este archivo completo ni seguir sus fases. Los commits y pruebas antiguos no certifican el código, el servicio o la tienda actuales.
 
-## Archivo
+## Procedencia de la consolidación del 20 de octubre de 2026
+
+Se conservó el texto previo de CAMBIOS, del plan de lanzamiento y del prototipo Python antes de condensar sus guías vigentes. Se añadió el aviso histórico a cada Markdown para evitar que una apertura directa se interprete como instrucción actual. Las cifras y decisiones originales no se reescribieron para aparentar que ya estaban aprobadas.
+
+## Inventario
 
 - [ACEPTACION_V1.md](ACEPTACION_V1.md)
 - [AGENTS_ANTES_CONSOLIDACION.md](AGENTS_ANTES_CONSOLIDACION.md)
@@ -13,6 +17,7 @@ Los nombres originales se conservan para localizar referencias de informes y com
 - [AUDITORIA_INTERFAZ.md](AUDITORIA_INTERFAZ.md)
 - [AUDITORIA_V1.md](AUDITORIA_V1.md)
 - [CAMBIOS_ANTES_CONSOLIDACION.md](CAMBIOS_ANTES_CONSOLIDACION.md)
+- [CAMBIOS_HASTA_ALPHA_58.md](CAMBIOS_HASTA_ALPHA_58.md)
 - [CIERRE_2.0.md](CIERRE_2.0.md)
 - [CIERRE_2.0_RC1.md](CIERRE_2.0_RC1.md)
 - [CIERRE_DIRECCION_MUSICAL.md](CIERRE_DIRECCION_MUSICAL.md)
@@ -59,6 +64,7 @@ Los nombres originales se conservan para localizar referencias de informes y com
 - [PLAN_INTERACCION_FINAL.md](PLAN_INTERACCION_FINAL.md)
 - [PLAN_JUEGO_MUSICAL.md](PLAN_JUEGO_MUSICAL.md)
 - [PLAN_LABORATORIO_VIVO.md](PLAN_LABORATORIO_VIVO.md)
+- [PLAN_LANZAMIENTO_ANTES_REVISION.md](PLAN_LANZAMIENTO_ANTES_REVISION.md)
 - [PLAN_MEJORA_INTEGRAL.md](PLAN_MEJORA_INTEGRAL.md)
 - [PLAN_MEZCLAS_MUSICALES.md](PLAN_MEZCLAS_MUSICALES.md)
 - [PLAN_PULIDO_CUBO_MUSICA.md](PLAN_PULIDO_CUBO_MUSICA.md)
@@ -81,6 +87,7 @@ Los nombres originales se conservan para localizar referencias de informes y com
 - [REVISION_CREATIVA.md](REVISION_CREATIVA.md)
 - [REVISION_INTERACCIONES.md](REVISION_INTERACCIONES.md)
 - [REVISION_REGISTROS.md](REVISION_REGISTROS.md)
+- [SERVIDOR_Y_DUETOS_HISTORICO.md](SERVIDOR_Y_DUETOS_HISTORICO.md)
 - [UNIVERSO_100_IDEAS_FASES.md](UNIVERSO_100_IDEAS_FASES.md)
 - [UNIVERSO_150_IDEAS_FASES.md](UNIVERSO_150_IDEAS_FASES.md)
 - [UNIVERSO_50_IDEAS.md](UNIVERSO_50_IDEAS.md)

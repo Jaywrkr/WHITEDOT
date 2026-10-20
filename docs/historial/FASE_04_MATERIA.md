@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Fase 4 · Materia + Fase 8 · Compartir (rama `feat/phase-04-materia-y-compartir`)
 
 Entrega de Claude **integrada por #75**. El control de dedo descrito originalmente fue sustituido por el cubo en #77; revisión vigente en [FASE_06.md](FASE_06.md).

@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Experiencia viva · cierre de implementación
 
 Candidata **2.2.0-rc.1**. Este documento reúne las catorce fases, sus soluciones y la prueba móvil. Las pruebas automáticas no sustituyen escuchar el juego en un teléfono físico. La fecha de validación no es una fecha de deploy.

@@ -1,6 +1,6 @@
 # Hallazgos y actividades
 
-Catálogo del contenido en desarrollo. La publicación depende del despliegue de main.
+Catálogo vigente del código alpha.58, revisado documentalmente el 20 de octubre de 2026. Este contenido ya está implementado: no es un plan de funciones por ejecutar. La publicación depende del despliegue/paquete real; no se verifica aquí. Acceso por cuenta y continuidad en [Cuenta y progreso](CUENTA_Y_RESPALDO.md).
 
 ## Encuentros
 

@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Archivo de agrupación creativa
 
 El orden actual es [FASES_UNIVERSO.md](FASES_UNIVERSO.md), diez bloques amplios. Fases 1–3 y bloque de fase 4 integrados hasta main e27c219; [estado](ESTADO_ACTUAL.md).

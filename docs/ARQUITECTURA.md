@@ -54,9 +54,9 @@ La respuesta del cubo en `wow-feel.js` usa una pose local de presentación para 
 
 `universe-texts.js` filtra texto del canvas del Mundo y sincroniza el ajuste persistente; menús, vista previa y avisos de guardado conservan su función. En actividades se despeja el HUD exterior y permanece el menú. El Camino permite roturas posteriores al décimo sin chispas, luces, objetivo extra ni reentrada automática. La campana aleatoria de quietud se sustituye por una intervención de piano cálida y espaciada; se mantienen respuestas manuales e instrumentos regionales.
 
-## Servicio opcional
+## Prototipo histórico Python
 
-[Servidor y duetos](SERVIDOR_Y_DUETOS.md) describe el backend Python/SQLite. El alojamiento estático no ejecuta esa API: `GET /api/session` puede devolver 404 y la conexión lo controla. Es independiente del renderizado. Cada contexto SQLite confirma o revierte su transacción y cierra la conexión, incluso si falla la operación. No presentar el servicio opcional como desplegado o aceptado en producción.
+[Servidor y duetos](SERVIDOR_Y_DUETOS.md) conserva un backend Python/SQLite fuera del lanzamiento y de la inicialización actual. El 404 histórico de `/api/session` no explica el fallo del render; no sustituir el flujo Supabase vigente por esa API. Los límites del prototipo están archivados.
 
 ## Evidencia
 
@@ -84,19 +84,15 @@ Tu cubo conserva el selector y el guardado existente; los regalos incluyen retra
 
 La presentación alpha.50 aclara el saldo de chispas y refuerza el contraste de minerales y fragmentos sin cambiar minería, posiciones ni pagos. Una única pista dorada anticipa la travesura no completada más cercana entre 95 y 320 unidades, dentro de pantalla, sin sonidos, textos, interacción o sitios nuevos. Respeta pausa, capas, paseo automático, movimiento reducido y separación entre escenas.
 
-## Cuenta opcional Supabase · proyecto Dev conectado
+## Cuenta obligatoria y sincronización Supabase
 
-`main.js` inicializa `cloud-account.js` en vez del módulo histórico `connection.js`. `cloud-client.js` usa Auth/Data REST HTTPS con clave publicable, tokens persistentes por origen y renovación compartida; `cloud-sync.js` coordina elección inicial, revisión por usuario/mundo y respaldos de un minuto. `cloud-config.js` apunta a Kubono Dev Free con clave publicable; vacío mantiene el juego offline sin llamadas API. No se inicializan salas ni música de duetos; backend Python y pruebas históricas siguen aparte. `supabase/setup.sql` consolida RLS, cuotas y CAS aplicados en Dev; el borrado privilegiado vive en kubono_private, con envoltorio invoker. Alta/login, aislamiento y copia completa reales verificados; recuperación por enlace local en pruebas. [Configuración y límites](CUENTA_Y_RESPALDO.md).
+`main.js` espera `account-entry.js:requireAccount()` antes del runtime. Sin configuración o sin primer acceso no hay mundo; una sesión previa puede abrir offline ante error de red, pero no ante rechazo válido de Auth. `cloud-account.js` sustituye la inicialización histórica de `connection.js`; no hay salas ni duetos activos.
 
-Recuperación de desarrollo: `recovery.html` valida el token con `cloud-recovery.js`, cambia la clave y cierra esa sesión; sin persistencia ni sincronización de partida. `scripts/serve-recovery.py` sirve solo los archivos necesarios en localhost:3000. El correo usa el enlace predeterminado, sin plantilla personalizada.
+`cloud-client.js` usa Auth/Data REST HTTPS con clave publicable y tokens persistentes por origen, renovación compartida y validación de identidad. `progress.js` separa claves locales por usuario y mantiene ámbito remoto compatible. `cloud-sync.js` usa baseline canónica, CAS y copias previas para reconciliar sin decidir por saldo/fecha. `cloud-account.js` comprueba/sube cada cinco segundos cuando corresponde, al reanudar y con intento de salida. Si ambas copias avanzaron pide elegir; no hay controles de respaldo normales.
 
-`cloud-sync.js` conserva una referencia canónica por usuario/mundo y hace comparación de tres copias al reanudar: local intacta permite recuperar remoto; cambios divergentes detienen envío. Lectura periódica de 15 s, CAS en cada escritura, respaldo de reemplazos manuales y envío adicional de salida con keepalive acotado. La referencia completa evita decidir por saldo/fecha; fallos de cuota conservan la copia local y requieren elección al reabrir.
+`cloud-config.js` apunta a Kubono Dev Free; vacío bloquea el acceso. `supabase/setup.sql` describe el esquema aplicado, no se reaplica sobre Dev. Borrado privilegiado en `kubono_private` con envoltorio invoker, comprobación de autenticación reciente y RLS/cuotas/revisiones por cuenta. La eliminación actual conserva los archivos locales; revisar la política antes de afirmar borrado total.
 
-Alpha.55: sesión localStorage con migración de sessionStorage y lectura compartida al consultar usuario/token. Reconciliación inicial automática: primera subida si no existe remoto, recuperación en dispositivo sin progreso y elección solo ante divergencias. Controles de elección ocultos mientras la sincronización esté resuelta.
-
-Alpha.56 elimina la entrada visible a exportación/importación y descarga remota. Cuenta conserva login persistente, sincronización automática cada 5 s y resolución excepcional de divergencias. Copias internas previas y CAS se conservan. Ediciones locales con remoto intacto no generan conflictos falsos.
-
-Alpha.57: `main.js` espera `requireAccount()` antes de crear el runtime. `progress.js` separa almacenamiento local por accountUserId y expone cloudScope estable para el remoto. Frame/guardado verifican la identidad; logout/cambio recargan a la entrada. No hay bypass de acceso por URL ni bandera de producción. Fixtures de gameplay instrumentan main sustituyendo solo su llamada de admisión, mientras la prueba de cuentas verifica la llamada real.
+`recovery.html`/`cloud-recovery.js` validan el enlace de desarrollo, permiten cambiar clave y limpian esa sesión sin sincronizar partida. El callback hardcoded localhost:3000 y su aviso de UI requieren cambios al preparar producción. `scripts/serve-recovery.py` sirve el mínimo local. Correo de desarrollo, no SMTP público contratado. Detalles/evidencia en [Cuenta y progreso](CUENTA_Y_RESPALDO.md).
 
 ## Retención operativa de desarrollo
 

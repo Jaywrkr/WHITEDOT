@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Pulido final autorizado por Jay
 
 Continuación solicitada durante la auditoría de cierre: auditar, guardar hallazgos, resolverlos y subir cada bloque en su rama. UI y guía mínimas, prioridad móvil. Jay crea PR y merge; no publicar main. Las fases F1–F9 anteriores conservan su estado. Esta lista no reinicia ni sustituye su implementación.

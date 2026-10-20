@@ -1,48 +1,39 @@
-# WHITEDOT
+# Kubono · repositorio WHITEDOT
 
-Un píxel blanco en un mundo negro: explorar, descubrir y hacer música al viajar. Proyecto de Jay · [Jugar](https://whitedot-inky.vercel.app).
+Un cubo, un universo y música al viajar. Exploración con una base electrónica, mezclas de otras familias musicales, cristales, rarezas y actividades resueltas con el cubo. Nombre comercial aprobado: **Kubono**; el código, los identificadores y algunos textos todavía conservan WHITEDOT. No se ha completado el cambio de marca dentro del producto.
 
-Versión en desarrollo: **2.3.0-alpha.58**. La versión publicada depende del último despliegue de `main`; una rama subida no equivale a producción.
+Versión del código: **2.3.0-alpha.58**. Estado documental: **20 de octubre de 2026**. Rama de trabajo: `feature/account-recovery-link`; no equivale a main integrado ni a publicación en tiendas. El estado del sitio existente no se verificó en esta revisión.
 
-## Jugar y avanzar
+## Empezar aquí
 
-- En el Camino, romper diez cristales distintos con pulsos manuales abre el Mundo automáticamente.
-- En el Mundo, los cristales requieren 1/2/3 impactos y entregan 1/3/5 chispas. Algunos corren al primer golpe; romper uno puede golpear a sus vecinos. La abundancia cambia por región; el paseo automático no recoge.
-- Los fragmentos tienen centro blanco y halo dorado. Algunos son cian, escapan brevemente y añaden 3 chispas al valor normal. Recogerlos guarda cada pago por separado.
-- Las chispas se guardan por partida. El agotamiento de cristales persiste durante el día; recargar no repite el pago.
-- Al ganar las primeras 20 chispas aparece Saltar en la pantalla principal. Cada salto cuesta 20; el botón permanece visible después de gastar. Menú → Viajar y chispas conserva el regreso gratuito y las apariencias por 40/80/150.
-- Seis tótems de color, ahora 16 veces más raros, celebran su primer despertar con un espectáculo propio. Aparecen solos o en grupos de dos o tres, en las tres capas. Despiértalos con pulsos, acompaña su esfera o sigue su orientación. Gana su tarjeta y 2 chispas por lugar al día.
-- Menú → Guía de juego permite consultar controles, descubrimientos y guardado, o repetir las ayudas. Viajar y chispas reúne compras y metas opcionales.
-- Viaje musical distingue seis familias ampliadas con patrones propios: funk/disco, dub/reggae, jazz/bossa, afro/latino, folk/cuerdas y ambient/cámara. Se pueden buscar por su nombre.
-- Veinte hallazgos excepcionales dan tarjetas y regalos visuales permanentes para Tu cubo, con frases musicales originales.
-- Treinta tipos de actividad aparecen en portales raros, con versiones por semilla. Se resuelven moviendo el cubo; la puerta permite salir. Cada lugar completado entrega 5 chispas una sola vez.
-- Ajustes permite ocultar los textos de la exploración; los menús y avisos de guardado siguen disponibles.
-- Después de los diez cristales puedes volver al Camino y seguir rompiendo sin sumar.
-- Una pista dorada discreta anticipa travesuras cercanas sin revelar su solución. Diez travesuras ocasionales responden al movimiento del cubo: imitadores, lluvia ascendente, sombras, público y otras sorpresas. Dan 3 chispas una sola vez por lugar.
-- 120 logros nuevos conectan estas situaciones con actividades, hallazgos y esculturas, con avisos breves y silenciosos agrupados; la Bitácora marca los logros sin consultar.
-- Tarjetas, colecciones, logros secretos, distancia, títulos y una meta opcional acompañan el viaje. Los avisos breves no detienen el movimiento.
+- **[Traspaso a Claude](HANDOFF_CLAUDE.md):** estado real, evidencia, pendientes y puntos de revisión.
+- **[Índice de documentación](docs/README.md):** qué archivo consultar para cada tema.
+- [Plan de lanzamiento](docs/PLAN_LANZAMIENTO.md): decisiones aprobadas y entregables abiertos.
+- [AGENTS.md](AGENTS.md): reglas para trabajar en este repositorio.
 
-Para jugar se necesita una cuenta de correo y contraseña. La sesión permanece y el avance se sincroniza automáticamente entre dispositivos; solo se pide elegir si hay avances incompatibles. Después del primer acceso se puede continuar sin conexión con el progreso local de esa cuenta. No hay botones de guardar ni respaldar en el flujo normal. La economía no permite intercambio entre jugadores.
+## Juego y cuenta actuales
+
+- Camino de diez cristales rotos para entrar al Mundo; minería, fragmentos, saltos de pago y regreso gratuito. Saltar se muestra al acumular 20 chispas ganadas, cuesta 20 y permanece visible tras gastar. Apariencias por 40/80/150 chispas.
+- Seis esculturas raras, veinte hallazgos, treinta tipos de actividad por semilla y diez encuentros traviesos. Tarjetas, colecciones y logros acompañan el viaje. [Catálogo y recompensas](docs/HALLAZGOS_Y_ACTIVIDADES.md).
+- Cuenta obligatoria por correo/contraseña, sesión persistente y progreso automático entre dispositivos. Sin invitado, demo ni botones normales de guardar/respaldar. Solo las divergencias reales requieren elegir una copia.
+- Tras el primer acceso puede continuar offline con la sesión y partida locales; la sincronización necesita red y no garantiza el último cambio si el sistema cierra el proceso antes de enviarlo. La cuenta no concede compras compartidas entre tiendas.
+- Música generada con Web Audio, gráficos Canvas y módulos ES nativos. Sin dependencias npm del cliente ni compilación del juego web. Los duetos Python son históricos y no forman parte del lanzamiento.
 
 ## Ejecutar localmente
 
-Requiere Python para servir archivos; el juego usa módulos ES, Canvas 2D y Web Audio, sin instalación npm ni compilación.
+Desde la raíz, con Python:
 
 ```sh
 python -m http.server 8000
 ```
 
-Abrir `http://localhost:8000`. Para cuenta opcional y respaldo en desarrollo, consultar [Cuenta y respaldo](docs/CUENTA_Y_RESPALDO.md). El backend de [servidor y duetos](docs/SERVIDOR_Y_DUETOS.md) queda como prototipo histórico fuera de este lanzamiento.
+Abrir `http://localhost:8000`. El código usa Kubono Dev: se necesita una cuenta existente o alta confirmada, no hay bypass de acceso. La recuperación aún requiere el [callback local](docs/CUENTA_Y_RESPALDO.md); la configuración pública está pendiente. No subir contraseñas, sesiones, copias privadas ni claves de firma al repositorio.
 
-## Documentación
+[Android de prueba](android/README.md) contiene el empaquetado, instalación, firma estable y evidencia del emulador. No hay todavía AAB de tienda, proyecto iOS ni builds desktop aceptados.
 
-- [Plan de lanzamiento](docs/PLAN_LANZAMIENTO.md): calendario propuesto, marca, precio, tiendas, comunicación y próximas decisiones.
-- [AGENTS.md](AGENTS.md): reglas de trabajo y verificación.
-- [Arquitectura](docs/ARQUITECTURA.md): mapa técnico y límites actuales.
-- [Hallazgos y actividades](docs/HALLAZGOS_Y_ACTIVIDADES.md): catálogo actual, gestos y recompensas.
-- [Verificación](docs/VERIFICACION.md): comandos y alcance de las pruebas.
-- [CAMBIOS.md](CAMBIOS.md): entregas recientes.
-- [CREDITOS.md](CREDITOS.md): autoría, tipografías y licencias.
-- [Historial](docs/historial/README.md): planes, cierres y documentación anterior; no constituye trabajo pendiente autorizado.
+## Trabajo y licencia
 
+El trabajo de Supabase quedó **detenido por petición de Jay** para esta revisión documental. Su limpieza de auditoría de siete días sigue preparada pero no aplicada; no continuarla por leer un plan. No publicar, contratar, comprar, crear PR ni integrar main sin autorización. Ver [verificación](docs/VERIFICACION.md) para reutilizar evidencia y ejecutar solo comprobaciones necesarias.
+
+[Cambios recientes](CAMBIOS.md) · [Créditos](CREDITOS.md) · [Historial](docs/historial/README.md).
 Código y contenido: [todos los derechos reservados](LICENSE). Las tipografías conservan sus propias licencias.

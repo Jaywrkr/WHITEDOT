@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Referencias y criterios de composición
 
 Referencias de intención elegidas por Jay; material generado original. Se comparan decisiones de composición y producción. No son presets de artistas ni un análisis ya realizado sobre sus grabaciones.

@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 ## Profundización posterior
 
 > Estado al 13 de octubre de 2026: Documento histórico de encuentros; las cajas visibles fueron sustituidas por suelo resonante. Consultar el inventario vigente antes de reutilizar propuestas. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).

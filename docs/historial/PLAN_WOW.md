@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Cuaderno vivo · veinte mejoras autorizadas
 
 Cada rama parte de la anterior; Jay crea PR y merge. Base: 5ab5952. Música de fondo preservada. La propuesta integral de siete fases sigue pendiente de decisión.

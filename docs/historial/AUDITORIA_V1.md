@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # WHITEDOT · auditoría de cierre V1 RC1
 
 **13 de octubre de 2026 · candidata `1.0.0-rc.1` · rama `audit/v1-closure`.** Base auditada: `f4c112b`, que incluye culturas y mascota. Main remoto comprobado: `8096c8d` (#77). Esta rama contiene todas esas entregas y las correcciones de cierre: **un único PR hacia main basta**, sin volver a aplicar las ramas anteriores.

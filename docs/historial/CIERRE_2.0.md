@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # WHITEDOT 2.0.0-rc.9 · cierre integrado
 
 Los ocho bloques están implementados en ramas encadenadas; Jay crea PR y merge. Esta candidata reúne auditoría, reparaciones, primer nivel, viajes, Bitácora, tarjetas, cincuenta caminantes y revisión musical. Codex no modificó main; las integraciones de Jay se registran abajo.

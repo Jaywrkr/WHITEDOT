@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Dirección musical · siete fases
 
 Autorizado por Jay el 16 de octubre de 2026. Continúa F8 del pulido (`24e0d1a`). El cierre F9 anterior se incorpora a la auditoría final de este ciclo. No reiniciar planes históricos ni perder las entregas F2–F8.

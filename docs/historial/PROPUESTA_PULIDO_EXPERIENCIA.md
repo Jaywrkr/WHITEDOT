@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Pulir la experiencia · propuesta tras Perplexity y Gemini
 
 Estado: propuesta, no autorización para ejecutar estas fases. Jay pidió contrastar dos textos basados en el README, sin que sus autores hayan jugado. La ampliación de habitantes de Reencuentro 7 sigue siendo un trabajo anterior autorizado y separado.

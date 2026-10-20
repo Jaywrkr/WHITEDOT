@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Revisión de Claude, nitidez musical y dirección del proyecto
 
 > Estado al 13 de octubre de 2026: Informe histórico de la revisión de Claude y nitidez inicial. Fallos/pendientes y permisos anotados corresponden a esa base, no al main vigente. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).

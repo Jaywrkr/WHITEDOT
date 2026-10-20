@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Probar la ampliación completa
 
 Rama final: `feat/posmusica-08-cierre`. Incluye las entregas anteriores. [Preview de la revisión funcional 93016d0](https://whitedot-hzk5j07ss-jaywrkr-1498s-projects.vercel.app). Vercel informa despliegue correcto; la comprobación procede del estado de GitHub, no de una prueba física. No necesitas parámetros dev.

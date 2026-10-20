@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Laboratorio Vivo · ciclo entregado
 
 Jay autorizó L1–L7 consecutivamente. Una rama amplia por fase; cada hija parte de su padre cuando no esté integrado. Commit y push; Jay mantiene PR/merge. No detenerse a pedir confirmación entre fases. La aceptación física pendiente del cierre anterior conserva su alcance.

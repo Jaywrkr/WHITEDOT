@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 ## Chispas · economía, recorrido y avisos
 
 Rama `feat/sparks-progression`, desde main remoto `81856a3`. Primera etapa del plan acordado: una moneda por partida, saldo conservado, total ganado/gastado y minería diaria persistente. Daño, rotura y recogida se guardan; ni recargar ni volver al mismo cristal duplica el pago. Las operaciones revierten saldo/propiedad si falla la escritura, y el salto guarda destino y coste juntos. Las demostraciones no generan saldo; sus tarjetas se marcan como muestras. Se conservan formatos futuros y el progreso anterior.

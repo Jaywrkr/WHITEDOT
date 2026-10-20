@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Viaje y ecosistemas reactivos
 
 Petición vigente de Jay, posterior a la mejora integral. Dos ramas dependientes; Jay crea PR y merge. No sustituir mapas, progreso ni catálogo. La ampliación visual está autorizada explícitamente.

@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Cierre de implementación · Reencuentro
 
 Versión 2.3.0-alpha.23. Seis fases iniciales y ampliación 7 implementadas desde main `2f9cf3e`; Jay crea PR y merge en orden. La rama final contiene las anteriores. No se hizo merge ni push a main. El cierre de publicación queda condicionado a CI completo y escucha física.

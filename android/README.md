@@ -1,51 +1,53 @@
-# Android · vista previa instalable
+# Android de Kubono · vista previa de cuentas
 
-Se reutiliza el juego actual en un WebView con archivos incluidos mediante `WebViewAssetLoader`. Desde alpha.57 requiere cuenta: el primer acceso necesita conexión; una sesión anterior permite continuar offline. No añade anuncios, cobros ni contenido. Android 8 o superior y Android System WebView actualizado; la primera comprobación se realiza en un emulador Android 15.
+Estado documental: 20 de octubre de 2026. Juego empaquetado en WebView con assets HTTPS locales mediante `WebViewAssetLoader`; mismo cliente, sin añadir anuncios/cobros. Android 8 o superior y WebView actualizado. Validado en emulador Android 15, no en Android físico ni en una compra de tienda.
 
-## Obtener y probar
+## Edición actual y firma
 
-El workflow **Android installable preview** compila y prueba solo esta rama. Su artefacto `WHITEDOT-Android-preview` contiene `WHITEDOT-preview.apk`, SHA-256, resultados, capturas y un vídeo corto del emulador. No publica en Google Play.
+| Elemento | Estado vigente |
+|---|---|
+| Paquete de prueba activo | `com.jaywrkr.whitedot.accounts` (`-PaccountPreview`) |
+| Versión de código | 2.3.0-alpha.58; requiere cuenta en el primer acceso y conserva sesión/progreso local para offline posterior |
+| Workflow | [Android account preview](../.github/workflows/android-account-preview.yml), rama `feature/account-recovery-link` y disparo manual |
+| Artefacto | `Kubono-account-preview`: APK de cuenta, instrumentación, par `.accounts.signingprobe`, SHA256SUMS y certificado público; retención de nuevos artefactos 7 días |
+| Firma estable de prueba | Secreto CI `KUBONO_ACCOUNT_PREVIEW_KEYSTORE_B64`; ausencia detiene el build, no genera otra identidad. Archivo temporal eliminado al finalizar |
+| Copia privada local | `AndroidPlayer/signing/kubono-account-preview.p12`, fuera del repositorio y excluida de la limpieza de respaldos. Conservar copia externa segura |
+| Firma de tienda | Pendiente; esta clave/edición debug no es una entrega comercial |
 
-Sin teléfono: ver el vídeo y las capturas; para jugar, instalar Android Studio, crear un dispositivo en Device Manager y arrastrar el APK a su emulador. El emulador requiere virtualización disponible en el PC. No es necesario instalar el entorno Android para revisar el vídeo.
+No imprimir claves ni tokens. No basar la firma en una caché efímera. La aplicación usa un origen local propio: sus credenciales no aparecen automáticamente desde Safari/Chrome; el progreso online llega al entrar con la misma cuenta. No hay botones normales de guardar/importar/exportar. El adaptador conserva soporte técnico para selectores de archivos, no una interfaz de respaldo manual para el jugador.
 
-En un Android prestado, abrir el APK y permitir la instalación desde esa fuente. La edición de prueba usa `com.jaywrkr.whitedot.preview`. No desinstalar para actualizar: usar otro APK de la misma firma o `adb install -r WHITEDOT-preview.apk`. Desinstalar elimina los datos locales. La firma debug se conserva en caché de CI, pero no es una clave de producción ni tiene conservación garantizada; guardar una copia desde el menú antes de sustituir esta vista previa.
+## Jugar en el computador preparado
 
-El progreso del navegador llega automáticamente al entrar con la misma cuenta y conexión. No hay acciones manuales de exportación/importación en el flujo normal. La app usa su propio origen HTTPS local estable. Los archivos se abren/guardan mediante el selector de Android, sin permiso general de almacenamiento. Exportación limitada a 64 MiB en este primer contenedor.
+En este entorno Windows, `AndroidPlayer/Jugar-WHITEDOT.ps1` abre `emulator-5580` y el APK `Kubono-accounts.apk`. Ese directorio está fuera del repositorio: no se obtiene al clonar GitHub. El lanzador y su marcador de hash se actualizaron tras validar la migración.
+
+Para actualizar una instalación con la misma firma y applicationId:
+
+```sh
+adb install -r Kubono-accounts.apk
+```
+
+No desinstalar para una actualización normal: borra datos privados. Si Android rechaza la firma, detenerse y comprobar certificado/paquete; no generar otra clave ni borrar la partida para ocultar el problema.
 
 ## Compilar
 
-JDK 17, Android SDK 36, Gradle 8.13 y Node 18 o superior:
+JDK 17, SDK 36, Gradle 8.13 y Node 18 o superior. Para compilar la edición de cuentas con la clave retenida, definir `KUBONO_ACCOUNT_KEYSTORE` con su ruta privada y ejecutar:
 
 ```sh
-gradle -p android assembleDebug assembleDebugAndroidTest
+gradle -p android assembleDebug assembleDebugAndroidTest -PaccountPreview --no-daemon
 ```
 
-El APK queda en `android/app/build/outputs/apk/debug/app-debug.apk`. Gradle copia los assets a su directorio de compilación; no modifica los módulos originales ni añade dependencias npm al juego. La actualización/offline pertenece al APK, por lo que su copia no incluye el service worker web. El sellado de metadatos reutiliza `stamp-deploy.mjs` con revisión y fecha de compilación reales.
+Salida Gradle: `android/app/build/outputs/apk/debug/app-debug.apk`. El workflow la copia al nombre `Kubono-accounts.apk`. No instalar una compilación local con clave distinta encima de la validada. Sin `-PaccountPreview`, la configuración usa el sufijo histórico `.preview`; no es el paquete activo de cuentas.
 
-## Resultado de esta vista previa
+Gradle genera assets sin cambiar originales; el APK gestiona su actualización y no incluye el service worker web. El sellado usa revisión/hora reales y el mecanismo existente. `versionCode` comercial y AAB release están pendientes; las propiedades de versión/paquete de `.signingprobe` son solo para probar actualizaciones aisladas.
 
-[CI Android aprobado](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39277322334) sobre `7aeae6a`: APK firmado debug, Android 15 emulado y dos pruebas instrumentadas aprobadas. El artefacto descargado está en `outputs/android-preview/`, fuera del repositorio, con vídeo/capturas y SHA-256 verificado. Android muestra su aviso estándar de pantalla completa en el primer arranque; forma parte del sistema operativo. La reinstalación de prueba usa el mismo APK con `install -r`, no certifica migraciones futuras de formatos.
+## Evidencia y alcance
 
-## Alcance de las pruebas
+- [CI estable 39337750907](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39337750907), fuente `165a356`: APKs/hashes/certificado comprobados; prueba aislada v1→v2 conserva guardado de 137 chispas y compra dust. La fixture espera que WebView escriba en disco antes de salir.
+- [CI de retención 39455805125](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39455805125), fuente `32e2102`: compilación aprobada con retención de siete días. No equivale a repetir la aceptación funcional.
+- Instalación inicial alpha.57: Jay entró y confirmó saldo igual a PC/iPhone; puerta `requiresAccountBeforeWorld` probada en WebView real.
+- La firma alpha.57 se perdió con el runner. La migración única a alpha.58 fue autorizada: restauración exacta de 280 archivos, sesión conectada, 52 chispas/72 ganadas/20 gastadas, también tras `install -r` y reapertura en frío. Está completada, no pendiente. El respaldo privado de rollback es temporal y tiene limpieza local programada.
+- Los tests históricos de audio/Home/rotación/offline del APK previo no prueban por sí solos el flujo de cuenta actual. CI compila los APKs de cuentas; las comprobaciones instrumentadas citadas se ejecutaron aparte en el emulador local.
 
-Contrato de assets, compilación e instalación reales; arranque sin wifi/datos; gesto táctil y AudioContext; menú/Atrás; Home/regreso; rotación; reinstalación conservando saldo y compra. El APK que se entrega no expone `runtime`: la instrumentación de AudioContext vive únicamente en el APK separado de pruebas. Capturas y vídeo proceden del emulador, no de un navegador con dimensiones móviles.
+Pendientes de tienda: firma/upload key y respaldo, identificador final y versionCode, AAB sin depuración, Play Console y pruebas requeridas, Android físico/escucha humana, WebView/Android adicionales y archivos por proveedor. No hay publicación ni contratación autorizadas.
 
-Pendientes antes de tienda: dispositivo físico y escucha humana, probar completamente selección/importación/exportación de archivos en diferentes proveedores Android, versiones adicionales de Android/WebView, clave de publicación y configuración de Play Console. Esta firma debug no sirve como entrega de pago.
-
-Referencia técnica: [contenido local en WebView](https://developer.android.com/develop/ui/views/layout/webapps/load-local-content).
-
-## Comprobación acotada de cuentas
-
-`Android account preview` genera APK y APK de instrumentación en la rama de cuentas, sin publicar en tienda. Usa `-PaccountPreview` para `com.jaywrkr.whitedot.accounts`: instalación separada, sin borrar ni reemplazar los datos de la vista previa anterior. Firma debug exclusiva de prueba. El producto normal conserva su applicationId; no es una nueva edición comercial.
-
-Prueba nueva: `requiresAccountBeforeWorld` sobre una instalación limpia comprueba la entrada obligatoria en el WebView real. Después Jay introduce su contraseña directamente en el emulador para comprobar el saldo con Supabase y la reapertura; nunca enviar la contraseña al chat. Los dos recorridos históricos anteriores son evidencia de un APK previo sin cuentas, no aceptación del nuevo acceso.
-
-Resultado alpha.57: [compilación 0481194 aprobada](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39334695709); ambos APKs descargados y SHA-256 contrastado con el manifiesto. Instalación separada en emulator-5580; `requiresAccountBeforeWorld` real aprobado (`OK (1 test)`, 5,25 s). Pantalla de entrada capturada y app abierta para que Jay introduzca su clave. Pendiente todavía acceso/saldo/reapertura con Supabase real; no equivale a dispositivo físico ni compra de tienda. El acceso local anterior tiene copia y ahora abre el APK de cuentas, sin borrar la aplicación previa.
-
-Aceptación Android completada (emulador, alpha.57): Jay inició sesión y confirmó saldo igual al PC/iPhone. Se forzó cierre del proceso y apertura en frío sin volver a introducir credenciales; el juego volvió con 52 chispas visibles. No equivale a Android físico ni iOS nativo. Correo/callbacks de producción, privacidad/operación, compra de tiendas y cierre de eliminación de cuenta desde UI siguen separados de esta prueba.
-
-Actualización alpha.58: compilación 39335918044 aprobada, ambos SHA-256 verificados. Android rechazó `install -r` por firma diferente; la app alpha.57 y sus datos/sesión siguen intactos. No se desinstaló ni se cambió el lanzador a un APK incompatible. Los logs confirmaron que el path de caché anterior no existía, por lo que la primera clave debug no quedó conservada y no es recuperable desde el certificado público del APK.
-
-Workflow corregido: archivo debug explícito en KUBONO_ACCOUNT_KEYSTORE, generado antes de compilar, conectado a signingConfigs y conservado en la caché correcta; artefacto con huella pública de firma. La caché no es un respaldo permanente de claves: antes de tienda hace falta clave de publicación custodiada fuera de CI/cache. No reinstalar borrando datos para ocultar un error de firma.
-
-Firma de pruebas estable: CI exige `KUBONO_ACCOUNT_PREVIEW_KEYSTORE_B64` (secreto del repositorio); si falta, falla sin generar otra clave. Copia privada local fuera del repositorio en `AndroidPlayer/signing/kubono-account-preview.p12`; conservar copia externa antes de cambiar de computador. No es la clave de tienda. Se elimina el archivo temporal tras compilar. La prueba de actualización usa dos versiones de `.accounts.signingprobe`, separadas de la partida real; no autoriza desinstalar `.accounts` con firma antigua.
+[Cuenta/progreso](../docs/CUENTA_Y_RESPALDO.md) · [Verificación](../docs/VERIFICACION.md) · [Contenido local oficial de WebView](https://developer.android.com/develop/ui/views/layout/webapps/load-local-content).

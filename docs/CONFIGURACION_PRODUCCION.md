@@ -1,5 +1,7 @@
 # Configuración para lanzar cuentas y guardados
 
+Revisión documental: 20 de octubre de 2026. Borrador no publicado; la configuración de Supabase está detenida por petición de Jay para revisar el proyecto. [Índice vigente](README.md).
+
 Preparado el 19 de octubre de 2026. Lista de preparación; no autoriza publicar, contratar, comprar dominio, crear proyectos o modificar servicios. Continuación de D06/D20/D22 del [plan](PLAN_LANZAMIENTO.md), sin otro catálogo de tareas.
 
 ## Datos que debe confirmar Jay
@@ -7,7 +9,7 @@ Preparado el 19 de octubre de 2026. Lista de preparación; no autoriza publicar,
 - [ ] Nombre legal del responsable, país y correo público de soporte/privacidad. El Gmail usado en pruebas no se convierte automáticamente en contacto público.
 - [ ] Primeros mercados y quién atenderá solicitudes; ajustar privacidad y bases legales al responsable y a esos mercados.
 - [x] Público objetivo de 16 años o más, aprobado por Jay el 19 de octubre de 2026; clasificación de tienda y obligaciones locales se cierran por separado.
-- [x] Plazos aprobados por Jay el 19 de octubre de 2026 según la tabla siguiente; configuración, retención de proveedores y excepciones justificadas siguen pendientes.
+- [x] Plazos aprobados por Jay el 19 de octubre de 2026 según la tabla siguiente; controles aplicados y pendientes diferenciados abajo; retención de proveedores y excepciones justificadas por cerrar.
 
 `playkubono.com` es dominio previsto, no comprado. No existen aún URLs públicas de privacidad o eliminación.
 
@@ -57,11 +59,11 @@ No repetir PC/iPhone/emulador, RLS, sincronización o actualización ya aprobado
 | Logs locales de emulador sin actividad | Solo `emulator.log` y `emulator-error.log` vencidos por última modificación; no es una purga por registro de un log activo |
 | Seguridad local | No recorre carpetas ni acepta enlaces/reparse points; nunca incluye `signing`, APK activo, sesión ni almacenamiento del juego. Margen de una hora para barrido horario. PC apagado o usuario desconectado retrasan la limpieza |
 | Comprobación local | Fixture vencida eliminada; backup reciente y clave ficticia preservados; dry-run no elimina. Aplicación real inicial: 0 archivos vencidos, 0 borrados; tarea Ready, repetición PT1H, clave y backup reales presentes |
-| Supabase, auditoría Auth | Pendiente: ambos intentos de escritura expiraron (`Invalid or expired requestState`); lectura posterior confirma pg_cron no instalado. Configuración reproducible en `supabase/retention.sql`, aún NO aplicada |
+| Supabase, auditoría Auth | Pendiente: los intentos de escritura expiraron (`Invalid or expired requestState`); la última lectura confirmó pg_cron no instalado. El panel requiere iniciar sesión y el intento OAuth vía GitHub fue bloqueado por revisión automática; trabajo detenido, no reintentar autenticación en una revisión documental. Configuración reproducible en `supabase/retention.sql`, aún NO aplicada |
 | Datos existentes | Lectura posterior: 1 usuario, 2 guardados, saldo principal 52, 0 registros de auditoría; sin borrado de cuenta o partida |
 
 Para desactivar solo la limpieza local, deshabilitar la tarea `Kubono-LocalRetention`; no borrar la clave de firma. Actualizar la copia instalada del script si cambia la versión del repositorio. No se crea ninguna automatización de seguimiento del chat.
 
-Pendientes técnicos, además de datos legales/correo: aplicar/verificar el SQL de auditoría cuando Supabase permita escrituras; confirmar retención de logs administrados por proveedores (no ajustada aquí); preparar exportación completa cifrada y restauración de Auth/guardados con borrados reaplicados. La tarea local rota copias existentes, no crea respaldos de producción. Soporte de 90 días y objetivo de eliminación de 7 días siguen pendientes del buzón y responsable.
+Pendientes técnicos, además de datos legales/correo: aplicar/verificar el SQL de auditoría cuando Jay autorice reanudar y Supabase permita escrituras; confirmar retención de logs administrados por proveedores (no ajustada aquí); preparar exportación completa cifrada y restauración de Auth/guardados con borrados reaplicados. La tarea local rota copias existentes, no crea respaldos de producción. Soporte de 90 días y objetivo de eliminación de 7 días siguen pendientes del buzón y responsable.
 
 Fuentes de configuración: [API de retención de GitHub](https://docs.github.com/en/rest/actions/permissions#set-artifact-and-log-retention-settings-for-a-repository), [auditoría Auth](https://supabase.com/docs/guides/auth/audit-logs), [Cron y limpieza de su historial](https://supabase.com/docs/guides/cron/quickstart). La escritura pendiente no autoriza a ejecutar el SQL sin revisar primero si ya se aplicó.
