@@ -90,9 +90,9 @@ La presentación alpha.50 aclara el saldo de chispas y refuerza el contraste de 
 
 `cloud-client.js` usa Auth/Data REST HTTPS con clave publicable y tokens persistentes por origen, renovación compartida y validación de identidad. `progress.js` separa claves locales por usuario y mantiene ámbito remoto compatible. `cloud-sync.js` usa baseline canónica, CAS y copias previas para reconciliar sin decidir por saldo/fecha. `cloud-account.js` comprueba/sube cada cinco segundos cuando corresponde, al reanudar y con intento de salida. Si ambas copias avanzaron pide elegir; no hay controles de respaldo normales.
 
-`cloud-config.js` apunta a Kubono Dev Free; vacío bloquea el acceso. `supabase/setup.sql` describe el esquema aplicado, no se reaplica sobre Dev. Borrado privilegiado en `kubono_private` con envoltorio invoker, comprobación de autenticación reciente y RLS/cuotas/revisiones por cuenta. La eliminación actual conserva los archivos locales; revisar la política antes de afirmar borrado total.
+`cloud-config.js` apunta a Kubono Dev Free y define `recoveryUrl`; vacío bloquea el acceso. `supabase/setup.sql` describe el esquema aplicado, no se reaplica sobre Dev. Borrado privilegiado en `kubono_private` con envoltorio invoker, comprobación de autenticación reciente y RLS/cuotas/revisiones por cuenta. Tras el RPC, `cloud-sync.js:purgeUserStorage` elimina en ese dispositivo solo las claves locales de la cuenta borrada; otros dispositivos conservan su copia.
 
-`recovery.html`/`cloud-recovery.js` validan el enlace de desarrollo, permiten cambiar clave y limpian esa sesión sin sincronizar partida. El callback hardcoded localhost:3000 y su aviso de UI requieren cambios al preparar producción. `scripts/serve-recovery.py` sirve el mínimo local. Correo de desarrollo, no SMTP público contratado. Detalles/evidencia en [Cuenta y progreso](CUENTA_Y_RESPALDO.md).
+`recovery.html`/`cloud-recovery.js` validan el enlace, permiten cambiar clave y limpian esa sesión sin sincronizar partida. `cloud-client.js` valida `recoveryUrl` (local HTTP o HTTPS limpio) y lo envía como `redirect_to`; el aviso del puerto 3000 solo aparece con destino local. `scripts/serve-recovery.py` sirve el mínimo local. Correo de desarrollo, no SMTP público contratado. Detalles/evidencia en [Cuenta y progreso](CUENTA_Y_RESPALDO.md).
 
 ## Retención operativa de desarrollo
 

@@ -33,9 +33,9 @@ try:
    page.wait_for_function('!!window.__r?.openSparks')
    page.evaluate("()=>{__r.S.sound=false;__r.S.firstJourney.skipped=true;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}")
    for button,panel in [('bSparks','mSparks'),('bGuide','mGuide'),('bCube','mCube'),('bFavorites','mFavorites'),('bProfile','mProfile'),('bSettings','mSettings'),('bSaveTools','mSaveTools'),('bAch','mJournal')]:
-    page.locator('#bMenu').click();page.evaluate('(window.__r||window.__testRuntime).openSaveTools()') if button=='bSaveTools' else page.locator('#'+button).click();dialog=page.locator('#'+panel);dialog.wait_for(state='visible')
+    page.locator('#bMenu').click();page.evaluate("document.getElementById('mMenu').hidden=true;(window.__r||window.__testRuntime).openSaveTools()") if button=='bSaveTools' else page.locator('#'+button).click();dialog=page.locator('#'+panel);dialog.wait_for(state='visible')
     if panel=='mGuide':
-     page.locator('#guideGlossary').click();assert 'décimo abre el Mundo automáticamente' in dialog.inner_text();assert '20' in dialog.inner_text();assert 'Guardar copia' in dialog.inner_text()
+     page.locator('#guideGlossary').click();assert 'décimo abre el Mundo automáticamente' in dialog.inner_text();assert '20' in dialog.inner_text();assert 'Entra en tu cuenta' in dialog.inner_text()
     assert dialog.locator('.sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2'),(width,panel,'horizontal overflow')
     assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),(width,panel,'page overflow')
     sheet=dialog.locator('.sheet');sheet.evaluate('e=>e.scrollTop=e.scrollHeight')

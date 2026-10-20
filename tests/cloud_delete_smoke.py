@@ -26,7 +26,8 @@ try:
   page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.route('**/src/cloud-config.js',lambda r:r.fulfill(body="export const CLOUD_CONFIG={url:'https://fixture.supabase.co',publishableKey:'sb_publishable_fixture'};",content_type='text/javascript'))
   page.route('https://fixture.supabase.co/**',api)
-  page.add_init_script("localStorage.setItem('other-account-sentinel','untouched');if(!sessionStorage.getItem('seeded')){sessionStorage.setItem('seeded','yes');localStorage.setItem('kubono:auth:https://fixture.supabase.co',"+json.dumps(json.dumps(session))+");}")
+  # An unowned legacy save and another account's keys must survive; only the deleted account's copies go.
+  page.add_init_script("localStorage.setItem('other-account-sentinel','untouched');localStorage.setItem('kubono:user:someone-else:pixel-blanco-v4','{\"sparks\":9}');if(!sessionStorage.getItem('seeded')){sessionStorage.setItem('seeded','yes');localStorage.setItem('pixel-blanco-v4','{\"sparks\":24,\"mode\":\"camino\"}');localStorage.setItem('kubono:auth:https://fixture.supabase.co',"+json.dumps(json.dumps(session))+");}")
   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.connectionTick');page.locator('#returnContinue').click()
   if page.locator('#hcGo').is_visible():page.locator('#hcGo').click()
   page.evaluate("()=>{__r.S.sparks=3;__r.save();dispatchEvent(new Event('focus'));}")
@@ -41,6 +42,9 @@ try:
   assert page.evaluate('typeof window.__r')=='undefined';assert page.locator('#accountGuest').is_hidden()
   assert page.evaluate("localStorage.getItem('kubono:auth:https://fixture.supabase.co')") is None
   assert page.evaluate("localStorage.getItem('other-account-sentinel')")=='untouched'
+  assert page.evaluate("Object.keys(localStorage).filter(k=>k.includes(':disposable:'))")==[]
+  assert page.evaluate("JSON.parse(localStorage.getItem('pixel-blanco-v4')).sparks")==24
+  assert page.evaluate("localStorage.getItem('kubono:user:someone-else:pixel-blanco-v4')")=='{"sparks":9}'
   browser.close()
- print('PASS deletion UI: cancellation, confirmed reauthentication/RPC, cleared login and return to gate; fixture only, hosted account untouched')
+ print('PASS deletion UI: cancellation, confirmed reauthentication/RPC, cleared login, local purge limited to the deleted account and return to gate; fixture only, hosted account untouched')
 finally:server.shutdown();server.server_close()

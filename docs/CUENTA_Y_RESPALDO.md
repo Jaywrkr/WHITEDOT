@@ -1,6 +1,6 @@
-# Cuenta y progreso automático · alpha.58
+# Cuenta y progreso automático · alpha.59
 
-Revisión documental: 20 de octubre de 2026. La configuración de Supabase está **detenida por petición de Jay** para revisar documentación con Claude. No ejecutar pendientes por leer esta guía.
+Revisión: 20 de octubre de 2026. La configuración de Supabase está **detenida por petición de Jay**. Alpha.59 solo cambia el destino configurable de recuperación y el borrado local al eliminar la cuenta; no ejecutar otros pendientes por leer esta guía.
 
 ## Funcionamiento vigente
 
@@ -30,13 +30,13 @@ python scripts/serve-recovery.py
 
 Abrir el enlace del correo en ese computador con `http://localhost:3000/` activo y autorizado en Auth → URL Configuration. La página limpia el fragmento, valida Auth y no persiste los tokens del enlace. No compartir contraseña, códigos o enlace en el chat.
 
-`src/cloud-client.js` conserva ese destino hardcoded; `src/cloud-account.js` muestra un aviso de servidor local. La producción requiere código y configuración de URLs/correo, no solo tocar Site URL.
+El destino es `recoveryUrl` en `src/cloud-config.js`; `cloudConfig()` solo admite `http://localhost` o `127.0.0.1` para desarrollo y HTTPS sin credenciales ni fragmento para producción. `src/cloud-account.js` muestra el aviso del puerto 3000 únicamente con destino local. La producción requiere publicar `recovery.html`, fijar el valor final y permitirlo en Auth → URL Configuration junto al correo; no solo tocar Site URL.
 
 ## Eliminación y retención
 
-Confirmación y reautenticación recientes antes del RPC. Se eliminan sesiones del servidor, usuario y guardados online; después se limpia la sesión solicitante y se vuelve a la entrada. Alpha.58 mantiene la sesión durante reautenticación para evitar la recarga prematura.
+Credenciales, confirmación y reautenticación recientes antes del RPC. Se eliminan sesiones del servidor, usuario y guardados online; después `purgeUserStorage` borra en ese dispositivo las claves `kubono:user:`, `kubono:cloud:` y `kubono:before-cloud-replace:` de la cuenta eliminada, se limpia la sesión solicitante y se vuelve a la entrada. Otras cuentas, la partida antigua sin dueño y la marca `kubono:legacy-owner` no se tocan. Alpha.58 mantiene la sesión durante reautenticación para evitar la recarga prematura.
 
-**Las partidas locales, copias de conflictos y archivos exportados no se borran automáticamente.** No prometer purga remota de dispositivos offline ni revocación instantánea de cada JWT emitido. Alcance y pendientes en [Eliminación](ELIMINACION_DATOS.md) y [Privacidad](PRIVACIDAD.md).
+**Otros dispositivos y los archivos exportados conservan su copia.** No prometer purga remota de dispositivos offline ni revocación instantánea de cada JWT emitido. Alcance y pendientes en [Eliminación](ELIMINACION_DATOS.md) y [Privacidad](PRIVACIDAD.md).
 
 Plazos aprobados y configuración real en [Producción](CONFIGURACION_PRODUCCION.md). GitHub y limpieza local están configurados; `supabase/retention.sql` no está aplicado por errores del conector y el trabajo está detenido. No hay exportación completa/rotación de la base de producción configurada.
 
@@ -47,7 +47,8 @@ Plazos aprobados y configuración real en [Producción](CONFIGURACION_PRODUCCION
 | PC y Safari normal iPhone | Jay confirmó persistencia tras cerrar/reabrir y saldo automático igual. Un diagnóstico previo en otra pestaña privada no medía el mismo almacenamiento |
 | Android emulado | Acceso real, migración a firma estable, 280 archivos restaurados idénticos y actualización/reapertura sin contraseña; último saldo comprobado 52, 72 ganadas y 20 gastadas |
 | RLS, CAS y RPC | Aislamiento entre dos usuarios, anonimato rechazado y datos desechables borrados en transacciones revertidas; nunca se borró la cuenta de Jay |
-| UI de eliminación | Cancelar/reautenticar/RPC/retorno a entrada con Auth/REST simulado. No equivale a borrar un usuario alojado desde esa UI |
+| UI de eliminación | Cancelar/reautenticar/RPC/purga local limitada a la cuenta/retorno a entrada con Auth/REST simulado (`tests/cloud_delete_smoke.py`, alpha.59 local). No equivale a borrar un usuario alojado desde esa UI |
+| Destino de recuperación | `tests/cloud-account.mjs` valida local/HTTPS, rechaza otros esquemas y comprueba el `redirect_to` enviado. Ningún correo real se envió con el destino configurable |
 | Código y empaquetado | Pruebas enfocadas y auditorías registradas; [CI Android estable](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39337750907) y [CI de configuración posterior](https://github.com/Jaywrkr/WHITEDOT/actions/runs/39455805125) aprobados |
 
 No certificar a partir de esto dispositivo Android físico, app iOS, builds desktop, correo público o despliegue actual. Una lectura puntual del saldo no prueba una futura sincronización. La fixture `live-verification` quedó en Dev porque se canceló su limpieza; no reintentar ese borrado sin autorización.

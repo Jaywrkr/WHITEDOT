@@ -43,7 +43,7 @@ try:
     page.locator('#bMenu').click()
     if control in ['bSky','bSession']:page.locator('#bAch').click()
     if control=='bSaveTools':
-     assert page.locator('#bSaveTools').is_hidden();page.evaluate('(window.__r||window.__testRuntime).openSaveTools()')
+     assert page.locator('#bSaveTools').is_hidden();page.evaluate("document.getElementById('mMenu').hidden=true;(window.__r||window.__testRuntime).openSaveTools()")
     else:page.locator('#'+control).click()
     page.wait_for_function('(id)=>!document.getElementById(id).hidden',arg=modal)
     metrics=page.locator('#'+modal+' .sheet').evaluate('e=>({x:e.getBoundingClientRect().x,right:e.getBoundingClientRect().right,y:e.getBoundingClientRect().y,bottom:e.getBoundingClientRect().bottom,sw:e.scrollWidth,cw:e.clientWidth})')
