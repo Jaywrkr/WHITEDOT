@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Cierre de mejora integral · 2.3.0-alpha.14
 
 Diez fases implementadas sobre la recuperación musical `faa0fe9`. Es una consolidación de lo existente: no añade catálogos, carreras ni persecuciones. Jay conserva PR y merge; Codex no ha hecho merge ni push a main.

@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Mascota y Tu cubo
 
 Entrega del 13 de octubre de 2026. Rama `feat/pet-and-cube`, sobre `feat/phase-06-cultural-exploration` (`165c376`). Main sigue en `8096c8d` (#77): integrar primero culturas y después esta rama; Jay crea los PR y hace merge. Una sola rama agrupa ambos sistemas, pruebas y documentación.

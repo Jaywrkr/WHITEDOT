@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Experiencia viva · plan autorizado
 
 Jay autorizó las catorce fases. Una rama por fase, encadenadas. Codex commit/push; Jay PR/merge. Base inicial: main e351584 (PR #129 integra L7). Revisión posterior: main 88c96b0 integra fases 1–13 por Jay (PR #142). No reiniciar planes históricos.

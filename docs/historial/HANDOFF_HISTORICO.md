@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Archivo íntegro del handoff anterior
 
 > Conservado sin recortar el texto previo al traspaso del 13 de octubre de 2026. Contiene estados, autorizaciones y conteos de sus sesiones originales; no describe el estado vigente ni autoriza acciones nuevas. Leer primero [HANDOFF.md](HANDOFF.md), [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md) y [PENDIENTES.md](PENDIENTES.md).

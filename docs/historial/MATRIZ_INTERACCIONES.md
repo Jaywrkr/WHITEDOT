@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Integración musical del pulido
 
 Esta matriz vincula gesto, voz y señal. No certifica calidad artística en altavoces físicos. La escucha final usa el mismo volumen de salida; la prioridad baja el acompañamiento, sin subir el máster.

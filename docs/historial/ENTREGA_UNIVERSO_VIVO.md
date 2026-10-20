@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Entrega del universo vivo
 
 Diez ramas encadenadas desde `docs/universe-150-phases`. Jay revisa y crea los PR en orden; no se publica ni se hace merge automáticamente. El plan de 150 ideas es la visión; este registro distingue el comportamiento entregado de los límites y pendientes.

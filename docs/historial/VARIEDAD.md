@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 > **RC6 ya integrada:** main incluye `9b5fe00`. [Nuevo plan: 50 propuestas](UNIVERSO_50_IDEAS.md), con beneficios temporales de cajas como prioridad. Estas ideas aún no se implementaron; el historial de abajo conserva su fecha.
 
 > **RC6 vigente:** interfaz integrada en `polish/coherent-game-ui`. [Auditoría, decisiones y capturas](AUDITORIA_INTERFAZ.md). Los catálogos y límites musicales se mantienen; el contenido anterior conserva su fecha histórica.

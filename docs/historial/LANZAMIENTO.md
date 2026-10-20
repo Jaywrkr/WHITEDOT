@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Lanzamiento · @jaywrkr
 
 Contenido para anunciar WHITEDOT 1.1. Formato J: una idea por pantalla, texto que se entiende sin audio, cierre con *Simple.* Los visuales salen del propio juego: grabar set (4:5) y compartir día.

@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Reencuentro · música e identidad del universo
 
 Autorizado por Jay después de identificar `acd766f` en su captura. Seis ramas iniciales y una ampliación autorizada de habitantes, desde main `2f9cf3e`, que ya incluye viaje y reacciones. Jay hace PR y merge. No reiniciar mundos ni colecciones. La referencia anterior `15bbe77` queda como antecedente, no como sustituto de la captura.

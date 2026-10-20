@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Fase 1 · Base fiable para un universo ampliable
 
 > Estado al 13 de octubre de 2026: Entrega integrada por #68. Sus cifras/versiones describen el bloque original; el estado vigente reconoce Original y Paisajes vivos. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).

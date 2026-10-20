@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Laboratorio Vivo · revisión integrada
 
 Candidata 2.1.0-alpha.7. Este documento cubre L1–L7; no sustituye la aceptación física del cierre 2.0. El agente entrega ramas; Jay conserva PR/merge y publicación.

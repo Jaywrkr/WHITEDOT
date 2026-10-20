@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Cobertura de las 150 ideas · entrega alpha
 
 > Matriz histórica de la entrega alpha, anterior al cierre 2.0. Las mejoras posteriores se registran en [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md), [AUDITORIA_CIERRE_2.0.md](AUDITORIA_CIERRE_2.0.md) y [PLAN_PULIDO_FINAL.md](PLAN_PULIDO_FINAL.md). Esta matriz no se presenta como un recuento actualizado de toda la candidata.

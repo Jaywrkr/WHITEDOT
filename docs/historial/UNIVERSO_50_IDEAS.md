@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 > **Ampliado por petición posterior:** [150 propuestas en diez fases](UNIVERSO_150_IDEAS_FASES.md). Esta lista de 50 se conserva íntegra como origen; la nueva contiene una tabla de correspondencia.
 
 # Próximo universo: 50 propuestas

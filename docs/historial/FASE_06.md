@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Fase 6 · guardianes y exploración musical
 
 Rama `feat/phase-06-cultural-exploration`, desde **main 8096c8d**, PR #77 de Claude. Una rama reúne revisión de base, primer bloque cultural, Vasto, paseo visible, laboratorio y mejoras de golondrinas. Jay prueba y crea PR/merge.

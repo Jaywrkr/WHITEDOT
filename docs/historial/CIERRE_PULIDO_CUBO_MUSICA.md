@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Cierre · Cubo, colección y música
 
 Candidata `2.2.0-rc.1`. F8 `24e0d1a` continúa en `feat/musica-01-motor`; la auditoría final se entrega en F7 de [Dirección musical](PLAN_DIRECCION_MUSICAL.md). Jay crea PR y merge. Este cierre reúne las nueve fases de [PLAN_PULIDO_CUBO_MUSICA.md](PLAN_PULIDO_CUBO_MUSICA.md); no reabre los planes históricos.

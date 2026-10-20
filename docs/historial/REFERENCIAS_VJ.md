@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Referencias VJ de Jay
 
 Se revisó el repositorio público [Jaywrkr/TDAI2026](https://github.com/Jaywrkr/TDAI2026), revisión `0ef40446331225ec82cfeb35d91bef1b772f21a4`. Su README describe un rig de TouchDesigner con 98 escenas. Se leyeron los documentos completos siguientes y se inspeccionaron sus cuatro previews. No se ejecutó TouchDesigner ni se importaron shaders, proyectos, texturas o grabaciones.

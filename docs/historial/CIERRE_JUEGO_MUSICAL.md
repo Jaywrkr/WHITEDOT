@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Entrega prioritaria · Radio recuperada
 
 Versión `2.3.0-alpha.4`, rama `feat/juego-04-interpretacion`, base `347e922`. [Comparación histórica y alcance](RECUPERACION_MUSICAL.md). Auditoría sin errores/avisos, 108 suites Node afectadas, 72 marcos históricos de nueve estilos, recorrido móvil de producción y seis mezclas renderizadas aprobados. Evidencia propia en scripts/juego-04-validation.json; no equivale al cierre de las doce fases ni a escucha física/deploy. Ampliación nueva de gestos de F4 pendiente. Jay mantiene PR/merge.

@@ -7,11 +7,14 @@ android {
         applicationId 'com.jaywrkr.whitedot'
         minSdk 26
         targetSdk 36
-        versionCode 1
+        versionCode = (project.findProperty('previewVersionCode') ?: '1').toInteger()
         versionName gameVersion + '-android-preview'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
-    buildTypes { debug { applicationIdSuffix '.preview' } }
+    buildTypes { debug { applicationIdSuffix '.preview'; if (project.hasProperty('accountPreview')) applicationIdSuffix (project.hasProperty('signingProbe') ? '.accounts.signingprobe' : '.accounts') } }
+    if (project.hasProperty('accountPreview') && System.getenv('KUBONO_ACCOUNT_KEYSTORE')) {
+        signingConfigs.debug.storeFile = file(System.getenv('KUBONO_ACCOUNT_KEYSTORE'))
+    }
     sourceSets.main.assets.srcDir layout.buildDirectory.dir('generated/gameAssets')
     sourceSets.main.res.srcDir layout.buildDirectory.dir('generated/gameRes')
 }

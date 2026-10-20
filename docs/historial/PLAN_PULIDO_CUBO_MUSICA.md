@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 <!-- direccion-musical-actual -->
 El ciclo vigente es [Dirección musical, siete fases](PLAN_DIRECCION_MUSICAL.md), autorizado el 16 de octubre. F2–F8 de pulido conservadas; su cierre conjunto continúa en la auditoría musical final.
 <!-- /direccion-musical-actual -->

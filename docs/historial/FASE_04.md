@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Fase 4 · gestos y color de instalaciones
 
 > Estado al 13 de octubre de 2026: Bloque de gestos/color integrado por #73, incluidas restauración fuera de alcance y protección de vistas previas ante ondas. No cierra todas las familias propuestas de fase 4. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).

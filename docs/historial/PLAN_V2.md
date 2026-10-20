@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 > **Reemplazado por [PLAN_2.0.md](PLAN_2.0.md)** como plan vigente. Lo de abajo queda como contexto.
 
 > **Versión cerrada: 1.1.0** ([CIERRE_V1.md](CIERRE_V1.md)). Producción en Vercel. Entra aquí todo lo que surja de la [aceptación](ACEPTACION_V1.md) y no bloquee jugar, oír o guardar, más los 40 parciales y 2 pendientes de [COBERTURA_150_UNIVERSO.md](COBERTURA_150_UNIVERSO.md). Duetos públicos necesitan un host propio para `server/app.py`.

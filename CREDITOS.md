@@ -1,4 +1,4 @@
-# Créditos de WHITEDOT
+# Créditos de Kubono · repositorio WHITEDOT
 
 Proyecto de Jay · [@jaywrkr](https://instagram.com/jaywrkr). Juego, gráficos procedurales y música sintetizada por el código del repositorio; no se distribuyen grabaciones de los artistas citados como referencias musicales. Los estudios culturales usan frases sintéticas originales inspiradas en tradiciones, no obras históricas importadas.
 
@@ -14,7 +14,7 @@ Las tres bajo **SIL Open Font License 1.1**, conservada íntegramente junto a lo
 
 **Todos los derechos reservados.** El código, los gráficos, los textos y la música generada son de Jay; ver [LICENSE](LICENSE). La OFL solo aplica a las tipografías.
 
-El juego actual guarda la partida en el navegador y permite descargar respaldos/sets explícitamente. El cliente estático no incluye un servicio de cuentas desplegado ni usa micrófono. Existe un [servidor opcional de cuentas y duetos](docs/SERVIDOR_Y_DUETOS.md), con sus propios límites de operación.
+El cliente actual genera música sin grabar micrófono. Cuenta obligatoria, sesión persistente y progreso local/online usan Supabase Dev; no hay controles normales de respaldo manual. El [servidor Python de duetos](docs/SERVIDOR_Y_DUETOS.md) es histórico y no forma parte del lanzamiento. Tratamiento de datos en [Privacidad](docs/PRIVACIDAD.md), borrador no publicado. Estas notas no equivalen a una aceptación de tiendas ni alteran las licencias.
 
 Los siete motores avanzados, tablas, granos y modelos de cuerda/membrana son síntesis original. No incluyen presets de Arturia ni nuevas grabaciones externas. Las referencias culturales describen inspiración, no autoría ni interpretación auténtica de una tradición.
 

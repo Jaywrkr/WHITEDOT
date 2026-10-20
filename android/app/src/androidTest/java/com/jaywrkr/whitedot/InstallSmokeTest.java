@@ -81,6 +81,32 @@ public class InstallSmokeTest {
         assertTrue(activity.scriptErrors.toString(), activity.scriptErrors.isEmpty());
         instrumentation.runOnMainSync(() -> activity.finish());
     }
+    @Test public void requiresAccountBeforeWorld() throws Exception {
+        start();
+        until("document.body.dataset.accountLocked==='true'&&!document.getElementById('mConnection').hidden");
+        assertEquals("true", js("document.getElementById('accountGuest').hidden"));
+        assertEquals("true", js("document.getElementById('connectionClose').hidden"));
+        assertEquals("null", js("localStorage.getItem('pixel-blanco-v4')"));
+        assertTrue(activity.scriptErrors.toString(), activity.scriptErrors.isEmpty());
+        screenshot("android-account-required.png");
+        instrumentation.runOnMainSync(() -> activity.finish());
+    }
+    @Test public void prepareSigningUpdateFixture() throws Exception {
+        assertTrue("Only disposable signing probe may seed a save", instrumentation.getTargetContext().getPackageName().endsWith(".signingprobe"));
+        start();
+        js("localStorage.setItem('kubono:user:signing-fixture:pixel-blanco-v4',JSON.stringify({sparks:137,sparkEconomy:{purchases:{dust:true},equipped:'dust'}}));localStorage.setItem('android-update-probe','137:dust')");
+        // WebView commits localStorage asynchronously; let the fixture reach disk before the test process exits.
+        Thread.sleep(6000);
+        instrumentation.runOnMainSync(() -> activity.finish());
+    }
+    @Test public void verifySigningUpdateFixture() throws Exception {
+        assertTrue("Only disposable signing probe may verify a fixture", instrumentation.getTargetContext().getPackageName().endsWith(".signingprobe"));
+        start();
+        assertEquals("\"137:dust\"", js("localStorage.getItem('android-update-probe')"));
+        assertEquals("true", js("(()=>{const s=JSON.parse(localStorage.getItem('kubono:user:signing-fixture:pixel-blanco-v4'));return s.sparks===137&&s.sparkEconomy.purchases.dust&&s.sparkEconomy.equipped==='dust';})()"));
+        assertTrue(activity.scriptErrors.toString(), activity.scriptErrors.isEmpty());
+        instrumentation.runOnMainSync(() -> activity.finish());
+    }
     @Test public void preservesSaveAfterApkReplacement() throws Exception {
         start();
         assertEquals("\"137:dust\"", js("localStorage.getItem('android-update-probe')"));

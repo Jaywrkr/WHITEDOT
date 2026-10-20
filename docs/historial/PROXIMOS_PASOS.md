@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Dirección vigente tras Claude y fase 6
 
 Consultar [FASE_06.md](FASE_06.md), [PENDIENTES.md](PENDIENTES.md) y [HANDOFF.md](HANDOFF.md). Materia/vida/FX/códigos/grabación ya integrados; jardín modular/rastro anteriores retirados. Esta rama incorpora guardianes culturales, puertas y recuerdos, Vasto, paseo y laboratorio 54. La relación cultural profunda, narrativa y teléfono real siguen pendientes.

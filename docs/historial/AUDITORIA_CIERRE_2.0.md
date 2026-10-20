@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Auditoría y soluciones · cierre 2.0
 
 Base auditada en F10, con soluciones continuadas en las ramas de PLAN_PULIDO_FINAL.md. Main no se modifica. Este registro distingue defectos corregidos, mejoras de experiencia y aceptación externa; una propuesta no equivale a una función terminada.

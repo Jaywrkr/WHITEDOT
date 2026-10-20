@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Libro de hallazgos · RC5
 
 Rama **feat/rare-discovery-cards**, sobre **feat/minimal-discoveries (30d337f)**. Versión **1.0.0-rc.5**. Commit/push; Jay crea PR/merge. La rama reúne todos sus padres pendientes; no altera main ni publica. [Entrega anterior](EXPANSION_RITMICA.md) · [Handoff](HANDOFF.md).

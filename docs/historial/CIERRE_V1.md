@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # WHITEDOT · Cierre V1
 
 > **Tipografía vigente:** Jay pidió Geist Mono en todo, incluidos títulos, Canvas y exportaciones. Las propuestas de Silkscreen/JetBrains de abajo son históricas; prevalece [AGENTS.md](../../AGENTS.md).

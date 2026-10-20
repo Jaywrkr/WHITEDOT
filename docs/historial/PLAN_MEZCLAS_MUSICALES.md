@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Música nueva como descubrimiento · propuesta de Jay
 
 **Continuación:** [PLAN_CIERRE_2.0.md](PLAN_CIERRE_2.0.md) consolida el trabajo posterior en diez fases. M1 ya está en `main 6702093`. F1 de cierre une paisaje, material, poblaciones y carácter sonoro; no completa los híbridos, síntesis modular ni el 100 % global. Los alcances y criterios musicales de este documento se conservan en F3–F6/F8–F10.

@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Aceptación V1
 
 Esto no lo cubren las pruebas automáticas: lo haces tú con teléfonos y personas reales. Usa la **vista previa de Vercel** de la rama, o producción después del merge. Anota cada fallo con teléfono, navegador y qué hiciste. **Solo se corrige en V1 lo que impide jugar, oír o guardar.** Todo lo demás va a [PLAN_V2.md](PLAN_V2.md).

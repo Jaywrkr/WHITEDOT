@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Auditoría · Dirección musical
 
 Candidata `2.2.0-rc.1`. Rama final `feat/musica-07-auditoria`, desde F6 `97f7c98`. Contiene las siete fases musicales y sus antecesoras de pulido. Jay crea PR y merge; Codex no publica main.

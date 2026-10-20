@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Recuperación del carácter musical
 
 Petición de Jay: recuperar la música de hace unas 30 horas, mezclándola con los avances actuales. Entrega en `feat/juego-04-interpretacion`, desde `347e922`, versión `2.3.0-alpha.4`. Jay conserva PR y merge. La ampliación nueva de gestos de F4 queda pendiente; esta entrega atiende primero la recuperación solicitada.

@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Cierre 2.0 · diez fases
 
 Orden acordado con Jay después de M1. Consolida los planes anteriores: no son diez fases más encima de cada lista histórica. Jay autoriza implementar F1–F10 consecutivamente, con commit y push por fase. Jay crea PR y merge. No publicar main desde estas ramas.

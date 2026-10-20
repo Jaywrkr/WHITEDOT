@@ -1,3 +1,5 @@
+> **ARCHIVO HISTÓRICO — NO VIGENTE.** Conserva el texto de otra revisión; no certifica el estado actual ni autoriza ejecutar fases, pendientes o instrucciones. Consultar [traspaso actual](../../HANDOFF_CLAUDE.md) e [índice vigente](../README.md).
+
 # Dirección del juego: una práctica creativa que se vuelve mundo
 
 > Estado al 13 de octubre de 2026: Dirección narrativa y recomendaciones conservadas, no una historia completa ya implementada. Cajas visibles fueron sustituidas por suelo; guardar escenas/ideas permanece descartado. [Estado actual](ESTADO_ACTUAL.md) · [Pendientes](PENDIENTES.md) · [Handoff](HANDOFF.md).
