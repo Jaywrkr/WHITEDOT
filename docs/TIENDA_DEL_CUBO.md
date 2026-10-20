@@ -1,6 +1,6 @@
 # Tienda del cubo
 
-Diseño aprobado por Jay el 20 de octubre de 2026: «me gusta todo». Esta guía es el catálogo de la tienda de chispas y su orden de construcción; no es un backlog de lanzamiento (ese sigue siendo D01–D22). Estado: tanda 0 hecha en alpha.61 (ranuras en `src/cube-shop-model.js`, compras antiguas migradas a su ranura, tienda ordenada por ranura). Tanda 1 hecha en alpha.62: las 17 piezas de Movimiento y Cuerpo, dibujadas en `src/cube-shop-art.js`. «Dado» cambia con cada cristal roto, no con cada golpe. Tanda 2 hecha en alpha.63: Ojos, Hábitos y Accesorios (13 piezas), dibujados sobre el cubo en píxeles enteros; con cara, el cubo se dibuja con al menos 10 px aunque el nivel lo haga más pequeño. Rubor se enciende con una tarjeta rara nueva; Saludo guiña hacia la criatura que se acerca; Estornudo ocurre en aire de esporas, polvo o niebla; Mareo tras seis giros en tres segundos.
+Diseño aprobado por Jay el 20 de octubre de 2026: «me gusta todo». Esta guía es el catálogo de la tienda de chispas y su orden de construcción; no es un backlog de lanzamiento (ese sigue siendo D01–D22). Estado: tanda 0 hecha en alpha.61 (ranuras en `src/cube-shop-model.js`, compras antiguas migradas a su ranura, tienda ordenada por ranura). Tanda 1 hecha en alpha.62: las 17 piezas de Movimiento y Cuerpo, dibujadas en `src/cube-shop-art.js`. «Dado» cambia con cada cristal roto, no con cada golpe. Tanda 2 hecha en alpha.63: Ojos, Hábitos y Accesorios (13 piezas), dibujados sobre el cubo en píxeles enteros; con cara, el cubo se dibuja con al menos 10 px aunque el nivel lo haga más pequeño. Rubor se enciende con una tarjeta rara nueva; Saludo guiña hacia la criatura que se acerca; Estornudo ocurre en aire de esporas, polvo o niebla; Mareo tras seis giros en tres segundos. Tanda 3 hecha en alpha.64: Rastros y Compañeros (10 piezas) en `src/cube-shop-world.js`. Arcoíris aparece al romper tres cristales en 1,2 segundos. Huellas del día y Fantasma de ayer guardan un recorrido acotado en `S.cubeRoute` (600 pasos de hoy, 120 puntos del último día jugado); el Fantasma lo repite en miniatura alrededor del cubo para verse siempre.
 
 ## Reglas
 
@@ -92,7 +92,7 @@ Uno a la vez · comparte ranura con los rastros ganados.
 | Cometa | 350 ✦ | Estela larga que se curva con tus giros. | 3 |
 | Huellas del día | 400 ✦ | Tus pasos quedan hasta medianoche. | 3 |
 | Jardín | 500 ✦ | Crecen flores donde pasas. | 3 |
-| Arcoíris | 600 ✦ | Solo aparece tras una cadena de cristales perfecta. | 3 |
+| Arcoíris | 600 ✦ | Aparece tras romper tres cristales en cadena. | 3 |
 | Notas pisables | 1000 ✦ | Deja notas que suenan al volver a pisarlas: loops caminando. | 5 |
 
 ### Compañero
@@ -104,9 +104,9 @@ Uno a la vez.
 | Órbita personal | 150 ✦ | Ya existe. Tres luces giran alrededor. | 0 |
 | Nube | 300 ✦ | Una nube pequeña llueve sobre el cubo. | 3 |
 | Pájaro | 400 ✦ | Se posa encima cuando te quedas quieto. | 3 |
-| Imitador | 500 ✦ | Mini cubo que copia tus giros con retraso. | 3 |
+| Imitador | 500 ✦ | Mini cubo que repite tu camino con retraso. | 3 |
 | Satélite DJ | 600 ✦ | Un disquito que gira marcando el tempo. | 3 |
-| Fantasma de ayer | 800 ✦ | Tu recorrido del día anterior, como eco transparente. | 3 |
+| Fantasma de ayer | 800 ✦ | Tu recorrido del día anterior, en miniatura y transparente. | 3 |
 
 ### Forma del pulso
 

@@ -1,6 +1,10 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.63**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.64**. Las entradas describen su revisión, no certifican producción.
+
+## Tienda del cubo, tanda 3 · alpha.64
+
+Rastros: Grafiti (pinta el suelo con los colores de la música y se borra en 25 s), Cometa, Huellas del día, Jardín (flores que crecen y se marchitan en 45 s) y Arcoíris (12 s tras romper tres cristales en 1,2 s). Compañeros: Nube, Pájaro (se posa encima al parar), Imitador (repite tu camino con 0,7 s de retraso, sin alejarse), Satélite DJ (avanza un octavo de vuelta por pulso; sin sonido gira despacio) y Fantasma de ayer (tu recorrido del día anterior en miniatura alrededor del cubo). 4750 ✦. Nuevo `cube-shop-world.js` con dos ganchos en `render.js`: rastros antes del cubo y compañero después. Huellas y Fantasma guardan `S.cubeRoute`: hasta 600 pasos de hoy y 120 puntos del último día jugado, solo en superficie y solo con una de esas piezas puesta; el resto vive en memoria y se reinicia al saltar. `tests/cube_trails_smoke.py` compra y equipa las 10, comprueba el arcoíris tras una cadena, el paso de hoy a ayer y la recarga.
 
 ## Tienda del cubo, tanda 2 · alpha.63
 
