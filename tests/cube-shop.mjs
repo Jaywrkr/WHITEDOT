@@ -15,6 +15,10 @@ q=normalizeSparkEconomy({purchases:{dust:true},wear:{trail:'dust',companion:'orb
 // A piece written by a newer version is kept while owned, so an older device does not erase it.
 q=normalizeSparkEconomy({purchases:{'motion:roll':true},wear:{motion:'motion:roll'},on:{'sound:hihat':true}},10,'d');assert.deepEqual(q.wear,{motion:'motion:roll'});assert.deepEqual(q.on,{});
 q=normalizeSparkEconomy({purchases:{'sound:hihat':true},on:{'sound:hihat':true}},10,'d');assert.deepEqual(q.on,{'sound:hihat':true});
+// Batch 2: one eye and one accessory worn at a time, habits switched on together.
+const batch2=CUBE_SHOP.filter(p=>['eyes','habits','accessory'].includes(p.slot));assert.equal(batch2.length,13);assert.equal(batch2.reduce((a,p)=>a+p.cost,0),900);
+q=normalizeSparkEconomy({purchases:Object.fromEntries(batch2.map(p=>[p.id,true])),wear:{eyes:'eyes:sleepy',accessory:'acc:hat',habits:'habit:yawn'},on:{'habit:yawn':true,'habit:dizzy':true,'eyes:curious':true}},10,'d');
+assert.deepEqual(q.wear,{eyes:'eyes:sleepy',accessory:'acc:hat'});assert.deepEqual(q.on,{'habit:yawn':true,'habit:dizzy':true});
 // Normalizing twice is stable.
 assert.deepEqual(normalizeWear(q,q.purchases,q.equipped),{wear:q.wear,on:q.on});
-console.log('PASS cube shop slots, former purchases migrated to their slots, three pieces worn together and newer pieces preserved');
+console.log('PASS cube shop slots, former purchases migrated to their slots, three pieces worn together and newer pieces preserved; eyes, habits and accessories by slot');

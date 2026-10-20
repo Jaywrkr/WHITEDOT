@@ -38,7 +38,20 @@ export const CUBE_SHOP=Object.freeze([
  {id:'body:origami',slot:'body',name:'Origami',cost:700,text:'Se despliega como papel al lanzar un pulso.',art:'<path d="M85 25l5-12 5 12M85 35l5 12 5-12M85 25l-12 5 12 5M95 25l12 5-12 5"/>'},
  {id:'body:assembly',slot:'body',name:'Ensamblaje',cost:800,text:'Hecho de píxeles que se separan al quedarte quieto.',art:'<path d="M74 22h4M102 22h4M74 38h4M102 38h4M90 14v4M90 42v4"/>'},
  {id:'body:disco',slot:'body',name:'Bola de disco',cost:900,text:'Facetas y puntos de luz que giran en el suelo.',art:'<path d="M50 44h2M62 50h2M118 46h2M128 40h2M40 38h2M138 52h2"/>'},
- {id:'body:swarm',slot:'body',name:'Enjambre',cost:1200,text:'Cuatro mini cubos que te siguen y se reúnen al parar.',art:'<rect x="66" y="22" width="5" height="5"/><rect x="58" y="32" width="5" height="5"/><rect x="108" y="22" width="5" height="5"/><rect x="116" y="32" width="5" height="5"/>'}
+ {id:'body:swarm',slot:'body',name:'Enjambre',cost:1200,text:'Cuatro mini cubos que te siguen y se reúnen al parar.',art:'<rect x="66" y="22" width="5" height="5"/><rect x="58" y="32" width="5" height="5"/><rect x="108" y="22" width="5" height="5"/><rect x="116" y="32" width="5" height="5"/>'},
+ {id:'eyes:serious',slot:'eyes',name:'Serio',cost:40,text:'Mirada recta y tranquila.',art:'<path d="M86 23h3M91 23h3"/>'},
+ {id:'eyes:sleepy',slot:'eyes',name:'Dormilón',cost:60,text:'Párpados a media asta; sueña si te paras.',art:'<path d="M106 14h4l-4 5h4M114 8h3l-3 4h3"/>'},
+ {id:'eyes:curious',slot:'eyes',name:'Curioso',cost:60,text:'Mira lo más interesante que tiene cerca.',art:'<path d="M104 30h18M118 26l4 4-4 4"/>'},
+ {id:'eyes:naughty',slot:'eyes',name:'Travieso',cost:80,text:'Guiña y mira de reojo.',art:'<path d="M104 18q6-6 12 0"/>'},
+ {id:'eyes:blush',slot:'eyes',name:'Rubor',cost:80,text:'Se sonroja al encontrar una tarjeta rara.',art:'<path d="M74 32h4M102 32h4" stroke-opacity=".6"/>'},
+ {id:'habit:yawn',slot:'habits',name:'Bostezo',cost:50,text:'Bosteza si te quedas quieto un rato.',art:'<path d="M106 18q6-8 12 0"/>'},
+ {id:'habit:greet',slot:'habits',name:'Saludo',cost:60,text:'Guiña a las criaturas que se acercan.',art:'<circle cx="130" cy="30" r="3"/><path d="M104 26q6-4 12 0"/>'},
+ {id:'habit:sneeze',slot:'habits',name:'Estornudo',cost:80,text:'Estornuda chispas en zonas con esporas, polvo o niebla.',art:'<path d="M104 24h3M108 30h4M104 36h3M116 22h2M118 38h2"/>'},
+ {id:'habit:dizzy',slot:'habits',name:'Mareo',cost:120,text:'Se marea si das muchas vueltas seguidas.',art:'<path d="M82 14h2M96 12h2M89 9h2"/><path d="M70 30a20 10 0 1 0 40 0" stroke-dasharray="2 3"/>'},
+ {id:'acc:mustache',slot:'accessory',name:'Bigote',cost:50,text:'Bigote de píxel.',art:'<path d="M84 39h12M84 39v2M96 39v2"/>'},
+ {id:'acc:hat',slot:'accessory',name:'Gorrito',cost:60,text:'Gorrito de fiesta.',art:'<path d="M85 24l5-14 5 14"/><circle cx="90" cy="9" r="1.5"/>'},
+ {id:'acc:shades',slot:'accessory',name:'Gafas de sol',cost:80,text:'Gafas negras de dos píxeles.',art:'<path d="M78 28h24M80 28v4h7v-4M93 28v4h7v-4"/>'},
+ {id:'acc:monocle',slot:'accessory',name:'Monóculo',cost:80,text:'Monóculo con cadenita.',art:'<circle cx="99" cy="28" r="4"/><path d="M102 31q4 10 0 18"/>'}
 ].map(Object.freeze));
 export const shopPiece=id=>CUBE_SHOP.find(p=>p.id===id)||null;
 export const shopSlot=id=>CUBE_SHOP_SLOTS.find(s=>s.id===id)||null;

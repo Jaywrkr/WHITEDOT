@@ -100,7 +100,7 @@ export function initialize(runtime) {
     runtime.drawCubeShopUnder?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);
     runtime.cx.save();runtime.cubeVisualTransform?.(runtime.cx,runtime.W/2,runtime.H/2);runtime.cubeShopTransform?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.cx.globalAlpha=1;runtime.cx.fillStyle=playerColor;
     const ritual=runtime.inWorld()&&(runtime.quietState?.stage>=6||runtime.hasPower?.('cometa'));
-    if(runtime.inWorld()&&runtime.drawSurpriseBody?.(runtime.cx,runtime.W/2,runtime.H/2,s,t)){}else if(ritual){runtime.cx.translate(runtime.W/2,runtime.H/2);runtime.cx.rotate(Math.sin(t/600)*.12);runtime.cx.fillRect(-s/2,-s/2,s,s);}else if(runtime.drawCubeShopBody?.(runtime.cx,runtime.W/2,runtime.H/2,s,t,playerColor)){}else runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));runtime.cx.restore();
+    if(runtime.inWorld()&&runtime.drawSurpriseBody?.(runtime.cx,runtime.W/2,runtime.H/2,s,t)){}else if(ritual){runtime.cx.translate(runtime.W/2,runtime.H/2);runtime.cx.rotate(Math.sin(t/600)*.12);runtime.cx.fillRect(-s/2,-s/2,s,s);}else{if(!runtime.drawCubeShopBody?.(runtime.cx,runtime.W/2,runtime.H/2,s,t,playerColor))runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));runtime.drawCubeShopOver?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);}runtime.cx.restore();
     if(!runtime.inWorld()||runtime.surpriseStyle?.shape==='cube')runtime.drawCubeSurface?.(t,b,s);
     runtime.drawWonderGift?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);
     // El pixel siempre se distingue: halo suave y anillo fino en el Mundo.
