@@ -31,8 +31,8 @@ try:
   assert page.evaluate('__r.wonderGifts.length')==20
   assert page.evaluate('__r.S.rareBook.items.filter(c=>c.type.startsWith("wonder:")).length')==20
   page.locator('#bMenu').click();page.locator('#bCube').click();assert page.locator('#cubeWonder option').count()==21
-  page.locator('#cubeWonder').select_option(first['kind']);page.locator('#cubeApply').click();assert page.evaluate('__r.S.cube.wonder')==first['kind']
-  page.locator('#bMenu').click();page.locator('#bCube').click();page.locator('#cubeWonder').select_option(fixtures[1]['kind']);page.evaluate("()=>{Storage.prototype.setItem=function(){throw Error('quota equip')};}");page.locator('#cubeApply').click();assert page.evaluate('__r.S.cube.wonder')==first['kind'];page.evaluate('()=>{Storage.prototype.setItem=originalSet;}');page.locator('#cubeClose').click()
+  page.locator('#cubeWonder').select_option(first['kind']);page.locator('#cubeClose').click();assert page.evaluate('__r.S.cube.wonder')==first['kind']
+  page.locator('#bMenu').click();page.locator('#bCube').click();page.evaluate("()=>{Storage.prototype.setItem=function(){throw Error('quota equip')};}");page.locator('#cubeWonder').select_option(fixtures[1]['kind']);assert page.evaluate('__r.S.cube.wonder')==first['kind'];page.evaluate('()=>{Storage.prototype.setItem=originalSet;}');page.locator('#cubeClose').click()
   from browser_helpers import keep_place_on_reload
   keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.wonderTick');page.locator('#returnContinue').click();assert page.evaluate('__r.wonderGifts.length')==20;assert page.evaluate('__r.S.cube.wonder')==first['kind']
   # Exercise the real sculpture finish hook with a natural one-pulse guide.

@@ -10,7 +10,7 @@ class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
 # Lit pixels around the cube, outside its own square: trails and companions add them.
-AROUND="""()=>{const c=document.getElementById('w'),x=c.getContext('2d'),r=40,cx=Math.floor(c.width/2),cy=Math.floor(c.height/2),d=x.getImageData(cx-r,cy-r,r*2,r*2).data;let lit=0;for(let j=0;j<r*2;j++)for(let i=0;i<r*2;i++){if(Math.abs(i-r)<10&&Math.abs(j-r)<10)continue;const k=(j*r*2+i)*4;if(d[k]+d[k+1]+d[k+2]>150)lit++;}return lit;}"""
+AROUND="""()=>{const c=document.getElementById('w'),x=c.getContext('2d'),r=40,cx=Math.floor(c.width/2),cy=Math.floor(c.height/2),d=x.getImageData(cx-r,cy-r,r*2,r*2).data;let lit=0;for(let j=0;j<r*2;j++)for(let i=0;i<r*2;i++){if(Math.abs(i-r)<5&&Math.abs(j-r)<5)continue;const k=(j*r*2+i)*4;if(d[k]+d[k+1]+d[k+2]>150)lit++;}return lit;}"""
 try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
@@ -42,8 +42,11 @@ try:
   page.evaluate('__r.save()');steps=len(route['today']);page.reload();page.wait_for_function('!!window.__r?.sparkEconomy')
   assert page.evaluate("__r.sparkEconomy.wear")=={'trail':'trail:steps','companion':'pet:ghost'}
   kept=page.evaluate('__r.S.cubeRoute');assert kept['yday']=='2000-01-01' and len(kept['today'])>=steps-1,kept
-  page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.evaluate('__r.openSparks()')
-  assert [page.locator(f'#sparkShop article[data-slot="{s}"]').count() for s in ('trail','companion')]==[6,6]
+  page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.evaluate("__r.openCube('wear')")
+  assert page.locator('#cubeTrails [data-shop-piece]').count()==5 and page.locator('[data-owned-slot="companion"] [data-shop-piece]').count()==5
+  # One trail at a time: an earned trail takes off the bought one, and a bought one sets the earned trail to none.
+  page.locator('#cubeTrails [data-cube-style-value="dots"]').click();assert 'trail' not in page.evaluate("__r.sparkEconomy.wear")
+  page.locator('[data-shop-piece="trail:comet"]').click();assert page.evaluate("__r.sparkEconomy.wear.trail")=='trail:comet' and page.evaluate('__r.cubeSettings().trail')=='none'
   assert not errors,errors;browser.close()
  print('PASS 10 trail and companion pieces bought, worn moving and still, rainbow after a chain, today\'s steps and yesterday\'s walk kept, persisted after reload and listed by slot',flush=True)
 finally:server.shutdown();server.server_close()

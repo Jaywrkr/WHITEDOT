@@ -37,13 +37,14 @@ try:
   assert page.evaluate('(id)=>__r.savedCrystal(id).collected',crystal_id)
   page.evaluate("""()=>{__r.S.sparks=100;__r.sparkEconomy.earned=100+__r.sparkEconomy.spent;__r.save();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);__r.openSparks();}""")
   assert page.locator('#sparkJump').inner_text()=='Saltar · 20 ✦'
-  assert page.locator('#sparkJump').evaluate('e=>e.closest("#mSparks")!==null')
-  page.locator('[data-spark-preview="orbit"]').click()
-  assert page.locator('#sparkPreview svg').count()==1
+  assert page.locator('#sparkJump').evaluate('e=>e.closest("#cubePanelTravel")!==null')
+  # The shop shows a picture drawn by the game; buying puts the piece on and moves it out of the shop into Llevar.
+  page.locator('#cubeTabShop').click();assert page.locator('#sparkShop [data-piece="orbit"] img').evaluate('e=>e.complete&&e.naturalWidth>0')
   page.locator('[data-spark-buy="dust"]').click()
   assert page.evaluate('__r.S.sparks')==60
-  page.locator('[data-spark-equip="dust"]').click()
-  assert page.evaluate('__r.sparkEconomy.equipped')=='dust'
+  assert page.evaluate('__r.sparkEconomy.equipped')=='dust';assert page.locator('#sparkShop [data-piece="dust"]').count()==0
+  page.locator('#cubeTabWear').click();assert page.locator('#cubeTrails [data-shop-piece="dust"]').get_attribute('aria-pressed')=='true'
+  page.locator('#cubeTabShop').click()
   # A failed write cannot take payment or grant ownership.
   page.evaluate("""()=>{window.originalSet=Storage.prototype.setItem;Storage.prototype.setItem=function(){throw Error('quota fixture')};}""")
   # Raise the balance fixture so failure reaches persistence rather than affordability.
@@ -51,11 +52,11 @@ try:
   page.locator('[data-spark-buy="facet"]').click()
   assert page.evaluate('__r.S.sparks')==100
   assert not page.evaluate('!!__r.sparkEconomy.purchases.facet')
-  assert 'No se guardó' in page.locator('#sparkStatus').inner_text()
+  assert 'No se guardó' in page.locator('#cubeHint').inner_text()
   page.evaluate('Storage.prototype.setItem=originalSet;__r.save();__r.S.sparks=60;__r.sparkEconomy.earned=60+__r.sparkEconomy.spent;__r.save();')
-  page.locator('#sparkJump').click()
+  page.locator('#cubeTabTravel').click();page.locator('#sparkJump').click()
   assert page.evaluate('__r.S.sparks')==40
-  assert page.locator('#mSparks').is_hidden()
+  assert page.locator('#mCube').is_hidden()
   paid=page.evaluate('({x:__r.S.wx,y:__r.S.wy})')
   page.evaluate('__r.openSparks()');page.locator('#sparkBack').click()
   assert page.evaluate('__r.S.sparks')==40
@@ -73,13 +74,13 @@ try:
   page.evaluate('__r.openSparks()')
   assert 'Completada' in page.locator('#sparkSets').inner_text()
   page.locator('#sparkGoalSelect').select_option('shop:orbit')
-  page.locator('#sparkClose').click()
+  page.locator('#cubeClose').click()
   assert 'Órbita personal' in page.locator('#sparkGoal').inner_text()
   for width,height in [(390,844),(844,390),(1280,800)]:
    page.set_viewport_size({'width':width,'height':height});page.evaluate('__r.openSparks()')
-   assert page.locator('#mSparks .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2')
+   assert page.locator('#mCube .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2')
    page.screenshot(path=str(ROOT.parent/f'sparks-hub-{width}.png'))
-   page.locator('#sparkClose').click()
+   page.locator('#cubeClose').click()
   # The actual rare-card producer gives a timed status, never a forced inspection.
   page.evaluate("""()=>{const r=__r;r.noticeLane.quietRoutine();r.collectRareCard('relic:ordinary',{id:'notice-fixture',x:r.S.wx,y:r.S.wy});}""")
   page.wait_for_function('__r.noticeLane.owner==="rare"',timeout=15000)

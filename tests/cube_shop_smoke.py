@@ -33,10 +33,12 @@ try:
   assert page.evaluate("__r.sparkEconomy.wear")=={'motion':'motion:roll','body':'body:dice'}
   page.evaluate('__r.save()');page.reload();page.wait_for_function('!!window.__r?.sparkEconomy')
   assert page.evaluate("__r.sparkEconomy.wear")=={'motion':'motion:roll','body':'body:dice'}
-  # The shop lists the pieces grouped by slot.
-  page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.evaluate('__r.openSparks()')
-  slots=page.locator('#sparkShop .spark-slot').all_text_contents();assert 'Movimiento' in slots and 'Cuerpo' in slots,slots
-  assert page.locator('#sparkShop article[data-slot="motion"]').count()==8 and page.locator('#sparkShop article[data-slot="body"]').count()==9
+  # Bought pieces leave the shop and wait in Llevar, each with its picture.
+  page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.evaluate("__r.openCube('shop')")
+  assert page.locator('#sparkShop article[data-slot="motion"]').count()==0 and page.locator('#sparkShop article[data-slot="body"]').count()==0
+  page.locator('#cubeTabWear').click()
+  assert page.locator('[data-owned-slot="motion"] [data-shop-piece]').count()==8 and page.locator('[data-owned-slot="body"] [data-shop-piece]').count()==9
+  assert page.locator('[data-owned-slot="motion"] [data-shop-piece="motion:roll"]').get_attribute('aria-pressed')=='true'
   assert not errors,errors;browser.close()
- print('PASS 17 movement and body pieces bought, worn, visible moving and still, persisted after reload and listed by slot',flush=True)
+ print('PASS 17 movement and body pieces bought, worn, visible moving and still, persisted after reload and listed by slot in Llevar',flush=True)
 finally:server.shutdown();server.server_close()

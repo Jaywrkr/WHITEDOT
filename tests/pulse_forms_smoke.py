@@ -17,12 +17,11 @@ try:
   for width,height in [(390,844),(844,390),(1280,800)]:
    page.set_viewport_size({'width':width,'height':height});page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=pulses&layout=wide&generation=2');page.wait_for_function('!!window.__r?.cubeSettings')
    page.evaluate('''async()=>{const r=__r,{DISCOVERY_ELEMENTS}=await import('/src/element-book-model.js');r.S.sound=false;r.S.elementBook={version:1,found:Object.fromEntries(DISCOVERY_ELEMENTS.map(e=>[e.id,{day:'2026-10-16'}]))};document.querySelectorAll('.modal').forEach(m=>m.hidden=true);document.getElementById('bCube').click();}''')
-   page.locator('#cubeTabMotion').click();assert page.locator('#cubePulseCount').inner_text()=='Ondas 50/50';assert page.locator('#cubePulses button').count()==5
+   assert page.locator('#cubePulseCount').inner_text()=='Ondas 50/50';assert page.locator('#cubePulses button').count()==5
    page.locator('#cubePulseFamily').select_option('laser');page.locator('[data-pulse-form="laser-3"]').click();assert page.locator('[data-pulse-form="laser-3"]').get_attribute('aria-pressed')=='true';assert page.locator('#cubePulses').evaluate('e=>e.contains(document.activeElement)')
    assert page.evaluate('!__r.ac'),'the preview must never start Web Audio'
-   page.locator('#cubeClose').click();assert page.evaluate('__r.cubeSettings().pulse!=="laser-3"'),'cancel must not save the draft'
-   page.evaluate('document.getElementById("bCube").click()');page.locator('#cubePulseFamily').select_option('laser');page.locator('[data-pulse-form="laser-3"]').click();page.locator('#cubeApply').click();assert page.evaluate('__r.cubeSettings().pulse==="laser-3"')
+   page.locator('#cubeClose').click();assert page.evaluate('__r.cubeSettings().pulse==="laser-3"'),'choosing a pulse wears it at once'
    page.evaluate('document.getElementById("bCube").click()');assert page.locator('#cubePulseFamily').input_value()=='laser';assert page.locator('[data-pulse-form="laser-3"]').get_attribute('aria-pressed')=='true'
-   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');assert not errors,errors;page.screenshot(path=f'/tmp/whitedot-pulses-{width}.png');print('PASS earned pulse families, five options, silent draft, cancel/apply and focus at '+str(width),flush=True)
+   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');assert not errors,errors;page.screenshot(path=f'/tmp/whitedot-pulses-{width}.png');print('PASS earned pulse families, five options, silent instant choice and focus at '+str(width),flush=True)
   b.close()
 finally:server.shutdown()
