@@ -1,5 +1,5 @@
 // New namespace: existing terrain, seeds and musical RNG are never consumed.
-export const TOTEM_CELL=1400,TOTEM_RATE=.015,TOTEM_DAILY_LIMIT=64;
+export const TOTEM_CELL=1400,TOTEM_RATE=.03,TOTEM_DAILY_LIMIT=64;
 const cup='M-18 -27Q0 -30 18 -27L18 -16Q18 -8 8 -5L6 0H-6L-8 -5Q-18 -8 -18 -16Z';
 export const TOTEMS=Object.freeze({
  stack:{name:'Torre violeta',action:'stack',voice:'gota',colors:['#59004e','#df38dd','#270024'],pieces:[{path:cup,y:0},{path:cup,y:-27},{path:cup,y:-54}]},

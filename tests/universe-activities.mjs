@@ -4,7 +4,9 @@ import {drawActivity} from '../src/universe-activities-art.js';
 const seedOf=s=>{let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;};
 assert.equal(ACTIVITIES.length,30);assert.equal(new Set(ACTIVITIES.map(d=>d.id)).size,30);
 const seen=new Set();let sites=0;for(let x=-80;x<80;x++)for(let y=-80;y<80;y++){const a=activityCell(x,y,seedOf);assert.deepEqual(a,activityCell(x,y,seedOf));assert(a.length<=1);for(const o of a){seen.add(o.kind);sites++;}}
-assert.equal(seen.size,30);assert(sites>1200&&sites<1900);
+assert.equal(seen.size,30);assert(sites>3000&&sites<4700);
+// Raising the rate only adds portals: every site placed at the former 6 % keeps its cell, kind and position.
+for(let x=-80;x<80;x++)for(let y=-80;y<80;y++)if((seedOf('activities:place:v1:superficie:'+x+','+y)>>>0)/4294967296<.06)assert.equal(activityCell(x,y,seedOf).length,1);
 const advance=(l,s,n=1)=>{for(let i=0;i<n;i++)updateActivity(l,s,.05);};
 function visit(l,s,i){s.x=l.nodes[i].x;s.y=l.nodes[i].y;advance(l,s);s.x=1.5;s.y=l.n-1.5;advance(l,s);}
 function mazeRoute(l){const start=Math.floor(l.spawn.y)*l.n+Math.floor(l.spawn.x),goal=Math.floor(l.goal.y)*l.n+Math.floor(l.goal.x),queue=[start],prev=new Map([[start,null]]);for(let a=0;a<queue.length&&!prev.has(goal);a++){const k=queue[a],x=k%l.n,y=Math.floor(k/l.n);for(const [dx,dy]of [[1,0],[-1,0],[0,1],[0,-1]]){const i=(y+dy)*l.n+x+dx;if(x+dx<0||x+dx>=l.n||y+dy<0||y+dy>=l.n||!l.floor[i]||prev.has(i))continue;prev.set(i,k);queue.push(i);}}assert(prev.has(goal),'every maze has an actual reachable goal');const path=[];for(let k=goal;k!==null;k=prev.get(k))path.push({x:k%l.n+.5,y:Math.floor(k/l.n)+.5});return path.reverse();}

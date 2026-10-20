@@ -1,5 +1,9 @@
 import assert from 'node:assert/strict';
-import {normalizeSparkEconomy,creditSparks,debitSparks,claimSparkReward,sparkSetProgress,SPARK_JUMP_COST} from '../src/sparks-model.js';
+import {normalizeSparkEconomy,creditSparks,debitSparks,claimSparkReward,sparkSetProgress,SPARK_JUMP_COST,universeProgress,SPARK_UNIVERSE} from '../src/sparks-model.js';
+import {ACTIVITIES} from '../src/universe-activities-model.js';
+import {WONDERS} from '../src/musical-wonders-model.js';
+import {MISCHIEF} from '../src/universe-mischief-model.js';
+import {TOTEM_KINDS} from '../src/sculpture-totems-model.js';
 import {initialize} from '../src/sparks.js';
 const day='2026-10-16';let s={sparks:42,todayKey:day};s.sparkEconomy=normalizeSparkEconomy(null,s.sparks,day);assert.equal(s.sparkEconomy.earned,42);
 assert.equal(creditSparks(s,3),3);assert(debitSparks(s,20));assert(!debitSparks(s,999));assert.equal(s.sparks,25);assert.equal(s.sparkEconomy.earned-s.sparkEconomy.spent,s.sparks);
@@ -13,6 +17,7 @@ globalThis.document={hidden:false,querySelector:()=>null,querySelectorAll:()=>[]
 function runtime(state){const nodes={};const $=id=>nodes[id]||=( {hidden:false,textContent:'',innerHTML:'',dataset:{},classList:{toggle(){}},addEventListener(){}} );const r={S:state,$,inWorld:()=>state.mode==='world',save:()=>{if(fail)return false;saved=structuredClone(r.S);return true;},toast(){},W:390,H:844,playerProfile:{distanceUnits:0},jumpPracticePlace:()=>true,returnPracticePlace:()=>true};initialize(r);return r;}
 let r=runtime({mode:'world',todayKey:day,sparks:200,pathCrystals:[],playerProfile:{distanceUnits:0}});
 assert(r.buySparkStyle('dust'));assert.equal(r.S.sparks,160);assert(!r.buySparkStyle('dust'));assert.equal(r.S.sparks,160);assert(r.equipSparkStyle('dust'));assert(!r.equipSparkStyle('orbit'));
+{const calls=[];r.cx={save(){},restore(){},fillRect:(...a)=>calls.push(a),beginPath(){},moveTo(){},lineTo(){},closePath(){},stroke(){}};r.S.wx=0;r.S.wy=0;r.S.reducedMotion=true;r.drawSparkCosmetics(1);assert(calls.length>=6,'reduced motion still shows the bought dust');r.S.reducedMotion=false;}
 fail=true;assert(!r.buySparkStyle('facet'));assert.equal(r.S.sparks,160);assert(!r.sparkEconomy.purchases.facet);fail=false;
 const ticket=r.reserveSparkJump();assert(ticket);assert.equal(r.S.sparks,160-SPARK_JUMP_COST);r.cancelSparkJump(ticket);assert.equal(r.S.sparks,160);assert.equal(r.sparkEconomy.stats.jumps,0);
 const crystal={id:'a',x:20,y:0,size:2,value:3};assert.equal(r.crystalTransaction(crystal,'hit').hits,1);fail=true;assert.equal(r.crystalTransaction(crystal,'hit'),null);assert.equal(r.savedCrystal('a').hits,1);fail=false;
@@ -46,3 +51,11 @@ const beforeBeyond=structuredClone(beyond.S),extra={id:'path:extra',x:90,y:0,siz
 assert(beyond.crystalTransaction(extra,'hit',true).broken);assert(beyond.savedCrystal(extra.id).collected);assert.equal(beyond.S.sparks,10);assert.deepEqual(beyond.S.pathCrystals,beforeBeyond.pathCrystals);assert.equal(beyond.S.todayLight,10);assert.equal(beyond.S.totalLight,10);assert.equal(beyond.sparkEconomy.stats.broken,0);
 fail=true;assert.equal(beyond.crystalTransaction({...extra,id:'path:failed'},'hit',true),null);assert(!beyond.savedCrystal('path:failed'));fail=false;
 console.log('PASS returning Camino crystals break without currency, daily light, objective or badge farming; failed writes roll back');
+
+// The universe closes when every activity type, wonder, mischief scene and sculpture shape has been found.
+const fullSet=(list,v=true)=>Object.fromEntries(list.map(d=>[d.id??d,v]));
+const empty=universeProgress({});assert.equal(empty.need,ACTIVITIES.length+WONDERS.length+MISCHIEF.length+TOTEM_KINDS.length);assert.equal(empty.value,0);assert(!empty.complete);
+const full={activities:{version:1,types:fullSet(ACTIVITIES)},musicalWonders:{version:1,found:fullSet(WONDERS),totems:fullSet(TOTEM_KINDS)},mischief:{version:1,counts:fullSet(MISCHIEF,1),sculptures:{}}};
+assert(universeProgress(full).complete);delete full.musicalWonders.found[WONDERS[0].id];const almost=universeProgress(full);assert(!almost.complete);assert.equal(almost.value,almost.need-1);
+assert.equal(SPARK_UNIVERSE.parts.length,4);
+console.log('PASS universe completion counts every activity type, wonder, mischief scene and sculpture shape');

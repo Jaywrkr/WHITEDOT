@@ -1,6 +1,11 @@
 import {normalizeTotemClaims} from './sculpture-totems-model.js';
 import {fragmentMask} from './crystal-play-model.js';
 import {livingDefinition} from './living-catalog.js';
+import {adventureValue} from './adventure-achievements.js';
+import {ACTIVITIES} from './universe-activities-model.js';
+import {WONDERS} from './musical-wonders-model.js';
+import {MISCHIEF} from './universe-mischief-model.js';
+import {TOTEM_KINDS} from './sculpture-totems-model.js';
 // One local wallet. Claims and depletion travel with the exported save.
 export const SPARK_JUMP_COST=20,SPARK_SITE_LIMIT=8192;
 export const sparkNumber=n=>Number.isFinite(n)?Math.min(Number.MAX_SAFE_INTEGER,Math.max(0,Math.floor(n))):0;
@@ -27,6 +32,9 @@ export const SPARK_BADGES=Object.freeze([
  {id:'last',name:'Un último cristal',text:'Rompe diez cristales después del Camino.',reward:5},
  {id:'taxi',name:'Sin pedir un taxi',text:'Camina un kilómetro sin pagar un salto.',reward:5}
 ]);
+// The visible end of the collection: every activity type, wonder, mischief scene and sculpture shape, counted with the achievement metrics.
+export const SPARK_UNIVERSE=Object.freeze({id:'universe',name:'Universo completo',title:'Lo conozco todo',parts:Object.freeze([['activityTypes','Actividades',ACTIVITIES.length],['wonders','Hallazgos',WONDERS.length],['storyTypes','Travesuras',MISCHIEF.length],['totems','Esculturas',TOTEM_KINDS.length]])});
+export function universeProgress(s){const parts=SPARK_UNIVERSE.parts.map(([metric,name,need])=>({metric,name,need,value:Math.min(need,Math.max(0,adventureValue(metric,s||{})||0))})),value=parts.reduce((a,p)=>a+p.value,0),need=parts.reduce((a,p)=>a+p.need,0);return {parts,value,need,complete:value===need};}
 export const SPARK_MILESTONES=Object.freeze([
  {meters:1000,title:'Ya salí de casa'}, {meters:5000,title:'Me fui un rato'}, {meters:10000,title:'Conozco el camino'}
 ]);

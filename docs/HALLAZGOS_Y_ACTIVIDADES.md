@@ -4,7 +4,7 @@ Catálogo vigente del código alpha.58, revisado documentalmente el 20 de octubr
 
 ## Encuentros
 
-Las seis esculturas existentes aparecen dieciséis veces menos que antes. Cada forma tiene una celebración geométrica de 4,8 segundos la primera vez y de 1,2 segundos al repetir. Mantienen sus interacciones y premios.
+Las seis esculturas aparecen en el 3% de sus celdas; subir la tasa solo añadió lugares, sin mover los existentes. Cada forma tiene una celebración geométrica de 4,8 segundos la primera vez y de 1,2 segundos al repetir. Mantienen sus interacciones y premios.
 
 Los veinte hallazgos se descubren por contacto con el cubo. Cada uno entrega una tarjeta y un adorno permanente, equipable en Apariencia. Sus frases originales usan la síntesis y armonía existentes: son inspiraciones musicales, no grabaciones ni reproducciones de canciones.
 
