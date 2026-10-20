@@ -81,7 +81,7 @@ with sync_playwright() as p:
   assert page.locator('#rareNotice').is_hidden() and page.locator('#celebration').is_hidden(),'findings wait until recording stops'
   page.locator('#recBadge').click()
   page.wait_for_function("!document.getElementById('mSet').hidden",timeout=15000)
-  assert page.evaluate('window.__testRuntime.lastSet.size')>1000 and page.locator('#setDownload').get_attribute('download').startswith('whitedot-set-')
+  assert page.evaluate('window.__testRuntime.lastSet.size')>1000 and page.locator('#setDownload').get_attribute('download').startswith('kubono-set-')
   page.locator('#setClose').click()
   assert not errors,errors
   print(label+': strings bend/strum, prism rotate/save/cancel, membrane roll, chorus/phaser/freeze, place code, set recording PASS',flush=True);c.close();b.close()

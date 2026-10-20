@@ -44,8 +44,8 @@ export function initialize(runtime) {
     x.fillStyle=runtime.GOLD;x.font='28px "Geist Mono", monospace';x.fillText('MÚSICA ESCUCHADA',80,850);
     const names=s.genres.map(id=>runtime.GEN[id]?.name||id);x.fillStyle='#fff';x.font='30px "Geist Mono", monospace';
     (names.length?names.slice(0,5):['Una sesión de exploración']).forEach((name,i)=>x.fillText(name,80,925+i*45,920));
-    x.fillStyle='#8a8a8f';x.font='26px "Geist Mono", monospace';x.fillText('WHITEDOT · PIXEL BLANCO · @jaywrkr',80,1250);
-    runtime.$('shareImg').src=c.toDataURL('image/png');runtime.$('shareImg').alt='Resumen de mi sesión en WHITEDOT';runtime.$('mSession').hidden=true;runtime.$('mShare').hidden=false;
+    x.fillStyle='#8a8a8f';x.font='26px "Geist Mono", monospace';x.fillText('KUBONO · @jaywrkr',80,1250);
+    runtime.$('shareImg').src=c.toDataURL('image/png');runtime.$('shareImg').alt='Resumen de mi sesión en Kubono';runtime.$('mSession').hidden=true;runtime.$('mShare').hidden=false;
   }
   Object.defineProperties(runtime,{syncSession:{get:()=>syncSession},beginSession:{get:()=>beginSession},finishSession:{get:()=>finishSession},sessionTime:{get:()=>sessionTime},sessionAction:{get:()=>sessionAction},sessionVisit:{get:()=>sessionVisit},sessionInstrument:{get:()=>sessionInstrument},sessionSummary:{get:()=>sessionSummary},openSession:{get:()=>openSession},shareSession:{get:()=>shareSession}});
   if(runtime.inWorld())beginSession();
