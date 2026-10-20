@@ -19,10 +19,10 @@ Preparado el 19 de octubre de 2026. Lista de preparación; no autoriza publicar,
 |---|---|---|
 | Entorno | Decidir proyecto final o conversión controlada de Dev; separar datos de pruebas y usuarios reales. No reaplicar `setup.sql` sobre el proyecto existente | Pendiente; Dev Free intacto |
 | Correo | Elegir envío apto para cualquier comprador; verificar remitente/dominio, cuotas, confirmación y recuperación. No confundir correo de desarrollo con servicio final | Sin proveedor contratado |
-| Recuperación | Sustituir `http://localhost:3000/` hardcoded en `src/cloud-client.js` y el aviso de servidor local de `src/cloud-account.js`; configurar destino final de alta en Auth y página `recovery.html` | Requiere cambio de código posterior, no solo panel |
+| Recuperación | Fijar `recoveryUrl` en `src/cloud-config.js` con la página pública HTTPS de `recovery.html`, permitirla en Auth → URL Configuration y definir el destino de alta | Código listo desde alpha.59 (valor local por defecto, aviso condicional); página pública y valor final pendientes |
 | URLs | Site URL y lista exacta de redirecciones HTTPS en Supabase; separar localhost/LAN de producción. Definir retorno a web/app para cada plataforma | Pendiente; sin comodines amplios |
 | Privacidad | Completar [borrador](PRIVACIDAD.md), retención y proveedores; preparar URL pública accesible y enlazarla desde app/tiendas | Texto preparado, no publicado |
-| Eliminación | Activar recurso web con canal real de solicitud; designar responsable y aplicar plazos aprobados. Alinear borrado local y aviso de app con [procedimiento](ELIMINACION_DATOS.md) | Pendiente; RPC online existente |
+| Eliminación | Activar recurso web con canal real de solicitud; designar responsable y aplicar plazos aprobados según [procedimiento](ELIMINACION_DATOS.md) | Pendiente el canal; RPC online y purga local del dispositivo solicitante existentes (alpha.59) |
 | Acceso y datos | Mantener RLS por propietario, claves publicables en cliente y secretos solo en administración/CI; revisar expiración de JWT y detección de revocación en dispositivos | Base comprobada; revisión final sobre configuración definitiva |
 | Protección y capacidad | Límites de Auth, envío, solicitudes y guardados; supervisar espacio/egreso/usuarios y alertas. No activar planes/add-ons automáticamente | Presupuestar con uso real |
 | Respaldos | Definir exportación cifrada, ubicación fuera del proyecto, responsable, frecuencia, ventana de retención y restauración con borrados reaplicados | No configurado por estos documentos |

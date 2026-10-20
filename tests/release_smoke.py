@@ -13,6 +13,7 @@ try:
   b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   for size in [{'width':320,'height':640},{'width':390,'height':844},{'width':844,'height':390}]:
    page=b.new_page(viewport=size,has_touch=True);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()', 'null'),content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=release&layout=wide&generation=2');page.wait_for_function('document.body.classList.contains("world-mode")')
    assert page.locator('#releaseVersion').inner_text()=='v'+version
    assert page.locator('#releaseDeploy').inner_text()=='deploy sin registrar'
@@ -24,6 +25,7 @@ try:
    assert page.locator('#releaseBadge').evaluate('(e)=>getComputedStyle(e).pointerEvents')=='none'
    assert page.locator('#releaseBadge').is_visible();assert not errors,errors;page.close()
   page=b.new_page(viewport={'width':390,'height':844})
+  page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()', 'null'),content_type='text/javascript'))
   stamp={'version':version,'deployedAt':'2026-10-14T12:04:00.000Z','revision':'abcdef0'}
   page.route('**/src/release-info.js',lambda route:route.fulfill(body='export const RELEASE='+json.dumps(stamp)+';',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=release&layout=wide&generation=2');page.wait_for_function('document.body.classList.contains("world-mode")')

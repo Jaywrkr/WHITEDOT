@@ -8,11 +8,11 @@ Preparado el 19 de octubre de 2026. Instrucciones actuales y procedimiento de pr
 
 **Eliminar tu cuenta de Kubono**
 
-En el juego abre **Menú → Cuenta → Eliminar cuenta**, escribe el correo y la contraseña de tu cuenta y confirma. Al completarse se eliminan tu cuenta y tus partidas online. La acción no solicita un reembolso ni elimina las operaciones que la tienda conserve por su cuenta.
+En el juego abre **Menú → Cuenta → Eliminar cuenta**, escribe el correo y la contraseña de tu cuenta y confirma. Al completarse se eliminan tu cuenta, tus partidas online y la partida de esa cuenta guardada en el dispositivo desde el que lo pides. La acción no solicita un reembolso ni elimina las operaciones que la tienda conserve por su cuenta.
 
 Si ya no tienes la aplicación o no puedes entrar, solicita la eliminación en **[correo público pendiente]**, con el asunto «Eliminar cuenta de Kubono» y el correo de la cuenta. No envíes contraseñas, códigos ni enlaces de recuperación. Antes de borrar verificaremos que la cuenta es tuya. Objetivo aprobado: resolver en **7 días tras verificar identidad**. El buzón y el procedimiento deben estar operativos antes de publicar.
 
-El borrado actual conserva las partidas locales en tus dispositivos. Puedes quitarlas borrando los datos del sitio o de la aplicación; esa operación puede afectar a otras cuentas de la misma instalación. Las copias exportadas se eliminan por separado. Retención aprobada para producción: registros técnicos bajo nuestro control hasta 7 días; soporte 90 días desde el cierre; respaldos gestionados con rotación de 7 días. Antes de publicar falta aplicar estos plazos y confirmar los propios de proveedores y cualquier excepción legal justificada. Reaplicar los borrados antes de poner en servicio una restauración.
+Otros dispositivos donde hayas jugado conservan su copia local hasta que borres los datos del sitio o de la aplicación; esa operación puede afectar a otras cuentas de la misma instalación. Las copias exportadas se eliminan por separado. Retención aprobada para producción: registros técnicos bajo nuestro control hasta 7 días; soporte 90 días desde el cierre; respaldos gestionados con rotación de 7 días. Antes de publicar falta aplicar estos plazos y confirmar los propios de proveedores y cualquier excepción legal justificada. Reaplicar los borrados antes de poner en servicio una restauración.
 
 ## Alcance técnico comprobado
 
@@ -21,7 +21,7 @@ El borrado actual conserva las partidas locales en tus dispositivos. Puedes quit
 | Identidad y sesiones del servidor | `kubono_delete_account` elimina `auth.sessions` y `auth.users`; exige autenticación reciente | No equiparar borrado de sesiones a caducidad inmediata de todo JWT ya emitido |
 | Partidas online de la cuenta | Eliminación en cascada de `kubono_saves` | Mantener este alcance al añadir futuras tablas |
 | Sesión del dispositivo que solicita | El cliente limpia su sesión tras éxito y vuelve a la entrada | No anunciar éxito si falla el RPC |
-| Guardados locales y copias de conflictos | Se conservan, como advierte el diálogo actual | Recomendado antes de tienda: limpiar solo datos locales de la cuenta eliminada y alinear el aviso; requiere cambio de código separado |
+| Guardados locales y copias de conflictos | Alpha.59: `purgeUserStorage` borra en el dispositivo solicitante solo las claves de la cuenta eliminada; otras cuentas y la partida antigua sin dueño permanecen. El diálogo lo anuncia antes de confirmar | Comprobado con Auth/REST simulado; no repetido sobre una cuenta alojada |
 | Otros dispositivos offline | No hay borrado remoto del almacenamiento | Definir limpieza al confirmar revocación online, sin tratar una caída de red como orden de borrado |
 | Registros, soporte y respaldos de operación | Plazos aprobados; controles de CI/copia local aplicados, resto pendiente según configuración de producción | Responsable y plazos de proveedores pendientes; aplicar la política de conservación |
 

@@ -2,7 +2,7 @@
 
 Un cubo, un universo y música al viajar. Exploración con una base electrónica, mezclas de otras familias musicales, cristales, rarezas y actividades resueltas con el cubo. Nombre comercial aprobado: **Kubono**; el código, los identificadores y algunos textos todavía conservan WHITEDOT. No se ha completado el cambio de marca dentro del producto.
 
-Versión del código: **2.3.0-alpha.58**. Estado documental: **20 de octubre de 2026**. Rama de trabajo: `feature/account-recovery-link`; no equivale a main integrado ni a publicación en tiendas. El estado del sitio existente no se verificó en esta revisión.
+Versión del código: **2.3.0-alpha.59**. Estado documental: **20 de octubre de 2026**. Rama de trabajo: `claude/charming-darwin-dvbfc7`, creada desde `feature/account-recovery-link`; no equivale a main integrado ni a publicación en tiendas. `main` ya exige cuenta (alpha.57) y su CI de navegador está en rojo; ver [traspaso](HANDOFF_CLAUDE.md). El estado del sitio existente no se verificó en esta revisión.
 
 ## Empezar aquí
 
@@ -15,7 +15,7 @@ Versión del código: **2.3.0-alpha.58**. Estado documental: **20 de octubre de 
 
 - Camino de diez cristales rotos para entrar al Mundo; minería, fragmentos, saltos de pago y regreso gratuito. Saltar se muestra al acumular 20 chispas ganadas, cuesta 20 y permanece visible tras gastar. Apariencias por 40/80/150 chispas.
 - Seis esculturas raras, veinte hallazgos, treinta tipos de actividad por semilla y diez encuentros traviesos. Tarjetas, colecciones y logros acompañan el viaje. [Catálogo y recompensas](docs/HALLAZGOS_Y_ACTIVIDADES.md).
-- Cuenta obligatoria por correo/contraseña, sesión persistente y progreso automático entre dispositivos. Sin invitado, demo ni botones normales de guardar/respaldar. Solo las divergencias reales requieren elegir una copia.
+- Cuenta obligatoria por correo/contraseña, sesión persistente y progreso automático entre dispositivos. Sin invitado, demo ni botones normales de guardar/respaldar. Solo las divergencias reales requieren elegir una copia. Eliminar la cuenta borra las copias online y la partida de esa cuenta en el dispositivo que lo pide.
 - Tras el primer acceso puede continuar offline con la sesión y partida locales; la sincronización necesita red y no garantiza el último cambio si el sistema cierra el proceso antes de enviarlo. La cuenta no concede compras compartidas entre tiendas.
 - Música generada con Web Audio, gráficos Canvas y módulos ES nativos. Sin dependencias npm del cliente ni compilación del juego web. Los duetos Python son históricos y no forman parte del lanzamiento.
 
@@ -27,7 +27,7 @@ Desde la raíz, con Python:
 python -m http.server 8000
 ```
 
-Abrir `http://localhost:8000`. El código usa Kubono Dev: se necesita una cuenta existente o alta confirmada, no hay bypass de acceso. La recuperación aún requiere el [callback local](docs/CUENTA_Y_RESPALDO.md); la configuración pública está pendiente. No subir contraseñas, sesiones, copias privadas ni claves de firma al repositorio.
+Abrir `http://localhost:8000`. El código usa Kubono Dev: se necesita una cuenta existente o alta confirmada, no hay bypass de acceso. La recuperación usa el destino `recoveryUrl` de `src/cloud-config.js`, hoy el [callback local](docs/CUENTA_Y_RESPALDO.md); la página pública y su valor final están pendientes. No subir contraseñas, sesiones, copias privadas ni claves de firma al repositorio.
 
 [Android de prueba](android/README.md) contiene el empaquetado, instalación, firma estable y evidencia del emulador. No hay todavía AAB de tienda, proyecto iOS ni builds desktop aceptados.
 

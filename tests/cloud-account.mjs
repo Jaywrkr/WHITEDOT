@@ -1,7 +1,7 @@
 import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
 import {cloudConfig,createCloudClient} from '../src/cloud-client.js';
-import {createCloudSync} from '../src/cloud-sync.js';
+import {createCloudSync,purgeUserStorage} from '../src/cloud-sync.js';
 const config={url:'https://fixture.supabase.co',publishableKey:'sb_publishable_fixture'};
 const memory=()=>{const m=new Map();return {getItem:k=>m.get(k)??null,setItem:(k,v)=>m.set(k,v),removeItem:k=>m.delete(k),m};};
 assert.equal(cloudConfig({}),null);assert.throws(()=>cloudConfig({...config,url:'http://evil.test'}));assert.throws(()=>cloudConfig({...config,publishableKey:'service_role_secret'}));
@@ -57,3 +57,15 @@ const reauthStorage=memory();let releaseAuth;let gateAuth=null;
 const reauthClient=createCloudClient(config,{storage:reauthStorage,now:()=>now,fetcher:async(url,options)=>{if(gateAuth&&url.includes('/token?'))await gateAuth;return fetcher(url,options);}});
 await reauthClient.login('fixture@example.test','fixture-password-123');gateAuth=new Promise(r=>releaseAuth=r);const deleting=reauthClient.erase('fixture-password-123');assert(reauthClient.user(),'reauthentication keeps the old identity until Auth responds');releaseAuth();await deleting;assert.equal(reauthClient.user(),null);
 console.log('PASS deletion reauthentication retains admission until confirmed account removal');
+
+// Recovery destination: local callback by default, the published HTTPS page in production, never another scheme or host style.
+assert.equal(cloudConfig(config).recoveryUrl,'http://localhost:3000/');assert.equal(cloudConfig(config).recoveryLocal,true);
+const published=cloudConfig({...config,recoveryUrl:'https://playkubono.com/recovery.html'});assert.equal(published.recoveryUrl,'https://playkubono.com/recovery.html');assert.equal(published.recoveryLocal,false);
+for(const recoveryUrl of ['http://evil.test/','javascript:alert(1)','https://user:pw@playkubono.com/','https://playkubono.com/#token','not a url'])assert.throws(()=>cloudConfig({...config,recoveryUrl}),recoveryUrl);
+const publishedClient=createCloudClient({...config,recoveryUrl:'https://playkubono.com/recovery.html'},{fetcher,storage:memory(),now:()=>now});await publishedClient.recover('fixture@example.test');assert(requests.at(-1).url.endsWith('redirect_to='+encodeURIComponent('https://playkubono.com/recovery.html')));assert.equal(publishedClient.recoveryLocal,false);
+// Deleting an account purges only that account's local saves, sync references and conflict copies.
+const purgeStore=(()=>{const m=new Map();return {get length(){return m.size;},key:i=>[...m.keys()][i]??null,getItem:k=>m.get(k)??null,setItem:(k,v)=>m.set(k,v),removeItem:k=>m.delete(k),m};})();
+for(const k of ['kubono:user:one:pixel-blanco-v4','kubono:user:one:pixel-blanco-v4:before-restore','kubono:cloud:one:pixel-blanco-v4','kubono:before-cloud-replace:one:pixel-blanco-v4','kubono:user:two:pixel-blanco-v4','kubono:cloud:two:pixel-blanco-v4','pixel-blanco-v4','kubono:legacy-owner','kubono:auth:https://fixture.supabase.co'])purgeStore.setItem(k,'x');
+assert.equal(purgeUserStorage(purgeStore,'one'),4);assert.deepEqual([...purgeStore.m.keys()].sort(),['kubono:auth:https://fixture.supabase.co','kubono:cloud:two:pixel-blanco-v4','kubono:legacy-owner','kubono:user:two:pixel-blanco-v4','pixel-blanco-v4']);
+assert.equal(purgeUserStorage(purgeStore,null),0);assert.equal(purgeUserStorage(null,'one'),0);
+console.log('PASS recovery destination validation and local purge limited to the deleted account');

@@ -56,9 +56,9 @@ Los IDs se conservan para el tracker local. Los criterios siguientes sustituyen 
 | D17 | Steam y decisión itch.io | Pendiente; no se ha pagado una tarifa por esta preparación |
 | D18 | Web/PWA coherente con compra y cuentas | Pendiente de decisión comercial y configuración pública; sin demo |
 | D19 | Evaluar viabilidad de consolas | Sin viabilidad confirmada; no ejecutar port |
-| D20 | Cuenta/correo/recuperación/eliminación | Núcleo y enlaces locales comprobados; correo/callbacks públicos y coherencia del borrado local pendientes |
+| D20 | Cuenta/correo/recuperación/eliminación | Núcleo y enlaces locales comprobados; destino de recuperación configurable y borrado local del dispositivo solicitante en código (alpha.59); correo, página pública y valor final de `recoveryUrl` pendientes |
 | D21 | Continuidad automática y conflictos | Aprobado funcional PC/Safari iPhone/APK emulado; no reabrir salvo cambio o fallo concreto. Plataformas finales en D05/D15/D16 |
-| D22 | RLS, operación, retención, respaldo y cierre final | RLS/CAS y evidencia de cuentas aprobados; retención Supabase, respaldo completo/restore, soporte y producción pendientes. Trabajo Supabase detenido |
+| D22 | RLS, operación, retención, respaldo y cierre final | RLS/CAS y evidencia de cuentas aprobados; CI de navegador en rojo en `main` con fixtures corregidas en rama pendiente de PR; retención Supabase, respaldo completo/restore, soporte y producción pendientes. Trabajo Supabase detenido |
 
 ## Secuencia y calendario
 

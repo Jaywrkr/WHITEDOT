@@ -4,7 +4,11 @@ export function cloudConfig(config){
  const url=new URL(config.url);
  if(url.protocol!=='https:'||!/^[-a-z0-9]+\.supabase\.co$/.test(url.hostname)||url.username||url.password||url.search||url.hash||!['','/'].includes(url.pathname))throw Error('Proyecto Supabase no válido.');
  if(!/^sb_publishable_[A-Za-z0-9_-]+$/.test(config.publishableKey))throw Error('Usa solo una clave publicable de Supabase.');
- return {url:url.origin,key:config.publishableKey};
+ // Recovery links land on a page we control: the local callback while developing or the published HTTPS page.
+ let recovery;try{recovery=new URL(config.recoveryUrl||'http://localhost:3000/');}catch(_){throw Error('Destino de recuperación no válido.');}
+ const recoveryLocal=recovery.protocol==='http:'&&['localhost','127.0.0.1'].includes(recovery.hostname);
+ if(!recoveryLocal&&recovery.protocol!=='https:'||recovery.username||recovery.password||recovery.hash)throw Error('Destino de recuperación no válido.');
+ return {url:url.origin,key:config.publishableKey,recoveryUrl:recovery.href,recoveryLocal};
 }
 export function createCloudClient(config,{fetcher=globalThis.fetch,storage,now=()=>Date.now()}={}){
  const c=cloudConfig(config);if(!c)return null;
@@ -30,7 +34,7 @@ export function createCloudClient(config,{fetcher=globalThis.fetch,storage,now=(
   if(!refreshing){const version=epoch;refreshing=request('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:{refresh_token:session.refresh_token}}).then(data=>{syncStored();if(version!==epoch)throw Error('El acceso cambió. Vuelve a entrar.');accept(data);return session.access_token;}).catch(e=>{if(version===epoch&&[400,401].includes(e.status))forget();throw e;}).finally(()=>{refreshing=null;});}return refreshing;
  }
  async function auth(path,body){syncStored();const version=++epoch;const data=await request('/auth/v1/'+path,{method:'POST',body});syncStored();if(version!==epoch)throw Error('El acceso cambió.');if(data?.access_token)return accept(data);forget();return null;}
- return {user,async identity(){try{const data=await request('/auth/v1/user',{token:await token()});if(!data?.id||data.id!==session?.user?.id)throw Object.assign(Error('Acceso no válido.'),{status:401});return data;}catch(e){if([400,401,403].includes(e.status))forget();throw e;}},login:(email,password)=>auth('token?grant_type=password',{email,password}),signup:(email,password)=>auth('signup',{email,password}),verify:(email,code,type='signup')=>auth('verify',{email,token:code,type}),recover:email=>request('/auth/v1/recover?redirect_to='+encodeURIComponent('http://localhost:3000/'),{method:'POST',body:{email}}),
+ return {user,recoveryUrl:c.recoveryUrl,recoveryLocal:c.recoveryLocal,async identity(){try{const data=await request('/auth/v1/user',{token:await token()});if(!data?.id||data.id!==session?.user?.id)throw Object.assign(Error('Acceso no válido.'),{status:401});return data;}catch(e){if([400,401,403].includes(e.status))forget();throw e;}},login:(email,password)=>auth('token?grant_type=password',{email,password}),signup:(email,password)=>auth('signup',{email,password}),verify:(email,code,type='signup')=>auth('verify',{email,token:code,type}),recover:email=>request('/auth/v1/recover?redirect_to='+encodeURIComponent(c.recoveryUrl),{method:'POST',body:{email}}),
   async password(password){const t=await token();await request('/auth/v1/user',{method:'PUT',token:t,body:{password}});},
   async logout(){const old=session?.access_token;forget();if(old)try{await request('/auth/v1/logout?scope=local',{method:'POST',token:old,body:{}});}catch(_){/* Local sign-out must also work offline. */}},
   async read(scope){const t=await token();const rows=await request('/rest/v1/kubono_saves?scope=eq.'+encodeURIComponent(scope)+'&select=revision,state,updated_at',{token:t});if(!Array.isArray(rows)||rows.length>1)throw Error('Copia remota no válida.');return rows[0]||null;},

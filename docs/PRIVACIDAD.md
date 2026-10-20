@@ -32,9 +32,9 @@ Antes de publicar se documentarán las condiciones contractuales, bases legales 
 
 La cuenta y el avance online se mantienen mientras utilizas el servicio y hasta su eliminación. No hay una purga automática por inactividad configurada. Se aplican HTTPS y controles de acceso por cuenta; ninguna medida garantiza seguridad absoluta.
 
-Puedes eliminar la cuenta desde **Menú → Cuenta → Eliminar cuenta**, confirmando tus credenciales. El sistema actual elimina el usuario, sus sesiones del servidor y sus partidas online. Conserva las partidas locales y las copias de conflictos en los dispositivos: cerrar sesión o eliminar la cuenta no equivale a borrar esos archivos. Las sesiones de otros dispositivos pueden tardar en detectar la eliminación; una copia offline no se borra a distancia.
+Puedes eliminar la cuenta desde **Menú → Cuenta → Eliminar cuenta**, confirmando tus credenciales. El sistema actual elimina el usuario, sus sesiones del servidor, sus partidas online y la partida de esa cuenta guardada en el dispositivo desde el que lo pides. Cerrar sesión no borra la partida local. Las sesiones de otros dispositivos pueden tardar en detectar la eliminación; una copia offline no se borra a distancia.
 
-Para retirar las copias locales, borra los datos del sitio en el navegador o los datos de la aplicación desde el sistema operativo; esto puede borrar también partidas de otras cuentas que usen esa misma instalación. Los archivos que hayas exportado o respaldado fuera del juego requieren eliminación por separado. Consulta [Eliminación de datos](ELIMINACION_DATOS.md).
+Para retirar las copias de otros dispositivos, borra los datos del sitio en el navegador o los datos de la aplicación desde el sistema operativo; esto puede borrar también partidas de otras cuentas que usen esa misma instalación. Los archivos que hayas exportado o respaldado fuera del juego requieren eliminación por separado. Consulta [Eliminación de datos](ELIMINACION_DATOS.md).
 
 Política aprobada por Jay el 19 de octubre de 2026 para producción:
 

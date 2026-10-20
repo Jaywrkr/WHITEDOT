@@ -39,6 +39,20 @@ La conversión automática CRLF de licencias puede alterar sus hashes: comparar 
 
 Desde alpha.57, los recorridos de gameplay/audio que ya instrumentaban main sustituyen explícitamente `await requireAccount()` por `null` en su copia de prueba. Aíslan componentes y conservan sus aserciones; no certifican acceso ni añaden una bandera al producto. `cloud_account_smoke.py` usa la admisión real con Auth/REST simulado y comprueba bloqueo antes del mundo, registro, cuenta persistente/offline, separación entre usuarios y logout. `offline_smoke.py` comprueba el shell offline y que un usuario sin sesión siga bloqueado.
 
+## Estado de CI y correcciones de fixtures (alpha.59)
+
+`Universe foundation checks` quedó en rojo en `main` al integrar la cuenta obligatoria (runs de los PR #230–#232 y de sus merges): `logic` y los tres `audio` verdes, `browser` 122/130 en `997b232`. Antes de las cuentas fallaban solo `foundation_smoke.py` y `pwa_updates_smoke.py`. Causas y correcciones en esta rama, todas en pruebas o CI, sin cambiar el producto:
+
+- `release_smoke.py` no instrumentaba `main.js` y esperaba el mundo ante la puerta de cuenta: ahora sustituye `requireAccount()` como el resto.
+- `interface_smoke.py`, `music_menu_smoke.py`, `panel_polish_smoke.py` y `foundation_smoke.py` abrían el menú y llamaban a `openSaveTools()`; sin el botón `bSaveTools`, el menú quedaba abierto bajo el panel y el lienzo seguía `inert`. Las fixtures cierran el menú antes de abrir el panel.
+- `panel_polish_smoke.py` esperaba «Guardar copia» en el glosario; comprueba el texto vigente «Entra en tu cuenta».
+- `smoke.py` esperaba la radio vecina con una pausa fija; usa `wait_for_function`.
+- `cloud_account_smoke.py` fallaba al abrir el menú cuando la segunda pestaña de la misma cuenta ya había abierto el panel de divergencia; la fixture lo tolera. El comportamiento del producto no cambió.
+- `pwa_updates_smoke.py` archiva `8924f16` con `git archive`; el job `browser` de `checks.yml` usa `fetch-depth: 0`.
+- `tests/version-bump.mjs` fallaba desde `3175b41` porque el README pasó a decir «Versión del código» y `bump-version.mjs` solo reconocía «Versión en desarrollo»; la selección de impacto documental no lo ejecutó. El script acepta ambas etiquetas.
+
+Evidencia local del 20 de octubre sobre alpha.59: `cloud-account.mjs`, `cloud-handoff.mjs`, `cloud-recovery.mjs` y los recorridos `release_smoke`, `panel_polish_smoke`, `music_menu_smoke`, `interface_smoke`, `foundation_smoke`, `smoke`, `cloud_account_smoke`, `cloud_delete_smoke` y `pwa_updates_smoke` en PASS con Chromium local, uno por uno. El catálogo completo de navegador y audio no se ejecutó en local; CI no ha corrido sobre esta rama porque no existe PR. No declarar CI verde hasta leer el run.
+
 ## Evidencia de cuentas y Android que se puede reutilizar
 
 - PC y Safari normal iPhone: aceptación humana de sesión persistente y saldo automático. Android emulado: cuenta real, migración autorizada con 280 archivos idénticos, actualización/reapertura conservando 52 chispas y sesión. Es evidencia de esos recorridos, no de paquetes iOS/desktop o dispositivos Android físicos.

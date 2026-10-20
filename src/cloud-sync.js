@@ -4,6 +4,15 @@ export function cloudStateKey(state){
  const clean=(value,root=false,path='')=>Array.isArray(value)?value.map(v=>clean(v,false,path)):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().filter(k=>(!root||!['session','lastSession','livingSeconds'].includes(k))&&(path!=='playerProfile'||!['activeSeconds','worldSeconds','caminoSeconds','houseSeconds','sessions'].includes(k))).map(k=>[k,clean(value[k],false,root?k:path+'.'+k)])):value;
  return JSON.stringify(clean(state,true));
 }
+// After the account is gone online, drop only its local saves, sync references and conflict copies.
+// Unowned legacy saves, other accounts and the ownership marker stay untouched.
+export function purgeUserStorage(storage,userId){
+ if(!userId||!storage)return 0;
+ const prefixes=['kubono:user:'+userId+':','kubono:cloud:'+userId+':','kubono:before-cloud-replace:'+userId+':'];
+ let keys=[];try{keys=typeof storage.key==='function'&&Number.isFinite(storage.length)?Array.from({length:storage.length},(_,i)=>storage.key(i)):Object.keys(storage);}catch(_){return 0;}
+ let removed=0;for(const k of keys)if(typeof k==='string'&&prefixes.some(p=>k.startsWith(p)))try{storage.removeItem(k);removed++;}catch(_){}
+ return removed;
+}
 export function createCloudSync({client,storage,now=()=>Date.now(),onStatus=()=>{}}){
  let scope=null,owner=null,revision=0,ready=false,busy=false,generation=0,last='',lastAttempt=0,baseline=null,baseRevision=0;
  const metadata=()=>`kubono:cloud:${owner}:${scope}`;

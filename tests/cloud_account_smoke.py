@@ -37,6 +37,8 @@ def started(page):
  if page.locator('#hcGo').is_visible():page.locator('#hcGo').click()
  page.evaluate('__r.S.sound=false')
 def account(page):
+ # A second tab of the same account may already show the divergence panel; the menu is inert behind it.
+ if page.locator('#mConnection').is_visible():return
  page.locator('#bMenu').click();page.locator('#bConnection').click()
 def wait_remote(page,uid,sparks):
  deadline=time.monotonic()+15

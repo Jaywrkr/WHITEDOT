@@ -18,7 +18,7 @@ try:
    page.evaluate("__testRuntime.S.ach.fixture='2026-10-13';__testRuntime.S.studio.slots={'0,0':'luz'};__testRuntime.addFavorite('Mi música');__testRuntime.save()")
    assert page.evaluate('__testRuntime.favorites[0].address.seed')=='foundation-lab'
    def open_tools():
-    page.locator('#bMenu').click();page.evaluate('(window.__r||window.__testRuntime).openSaveTools()');assert page.locator('#mSaveTools').is_visible()
+    page.evaluate("document.getElementById('mMenu').hidden=true;(window.__r||window.__testRuntime).openSaveTools()");assert page.locator('#mSaveTools').is_visible()
    open_tools()
    with page.expect_download() as event:page.locator('#saveExport').click()
    raw=Path(event.value.path()).read_bytes();backup=json.loads(raw);assert backup['state']['ach']['fixture']=='2026-10-13';assert backup['worldIdentity']['layout']=='classic'
