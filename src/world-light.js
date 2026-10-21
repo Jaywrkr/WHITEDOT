@@ -20,5 +20,5 @@ export function initialize(runtime){
   for(const f of flies){if(!calm){f.x=((f.x-dx*f.z+Math.sin(t/900+f.p)*.35)%W+W)%W;f.y=((f.y-dy*f.z+Math.cos(t/1100+f.p)*.3)%H+H)%H;}const glow=calm?.6:.35+.65*Math.max(0,Math.sin(t/420+f.p));c.globalAlpha=glow*L.night;c.fillStyle='#d8f27a';c.fillRect(Math.round(f.x),Math.round(f.y),2,2);c.globalAlpha=glow*L.night*.25;c.fillRect(Math.round(f.x)-1,Math.round(f.y)-1,4,4);}
   c.restore();
  }
- Object.defineProperties(runtime,{drawWorldLight:{get:()=>draw},worldLight:{get:()=>()=>current}});
+ Object.defineProperties(runtime,{drawWorldLight:{get:()=>draw},worldLight:{get:()=>()=>current},worldFireflies:{get:()=>()=>flies.map(f=>[Math.round(f.x),Math.round(f.y)])}});
 }

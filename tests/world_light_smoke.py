@@ -16,15 +16,18 @@ try:
   page=browser.new_page(viewport={'width':390,'height':844});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()','null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=world-light&layout=wide&generation=2');page.wait_for_function('!!window.__r?.drawWorldLight')
-  page.evaluate("""()=>{const r=__r,s=r.S;document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true);s.sound=false;s.firstJourney.skipped=true;s.pathCrystals=Array.from({length:10},(_,i)=>'shop:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();s.livingSeconds=150;}""")
+  page.evaluate("""()=>{const r=__r,s=r.S;document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true);s.sound=false;s.firstJourney.skipped=true;s.pathCrystals=Array.from({length:10},(_,i)=>'shop:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();}""")
+  # Noon of this region's light cycle (world-visibility-model: each region shifts its day by a quarter-step offset).
+  noon_at=page.evaluate("(()=>{const off=__r.seedOf('living:climate:v1:'+__r.MU.dnaT.key)%4;return (((.25-off/4)%1+1)%1)*600;})()")
+  page.evaluate(f'__r.S.livingSeconds={noon_at}')
   page.wait_for_function('__r.worldVisibility.day>.95',timeout=15000);noon=page.evaluate('__r.worldLight()');assert noon['darkness']<.02 and noon['fireflies']==0,noon
-  page.evaluate('__r.S.livingSeconds=450');page.wait_for_function('__r.worldVisibility.day<.05',timeout=15000);page.wait_for_timeout(300)
+  page.evaluate(f'__r.S.livingSeconds={noon_at+300}');page.wait_for_function('__r.worldVisibility.day<.05',timeout=15000);page.wait_for_timeout(300)
   night=page.evaluate('__r.worldLight()');assert night['darkness']>.35 and night['fireflies']>=10 and night['stars']>noon['stars'],night
   lit=page.evaluate(LIGHT);assert lit['mid']>lit['edge'],lit
   # Reduced motion keeps fireflies where they are.
   page.evaluate('__r.S.reducedMotion=true');page.wait_for_timeout(200)
-  a=page.screenshot(clip={'x':0,'y':0,'width':390,'height':300});page.wait_for_timeout(400);b=page.screenshot(clip={'x':0,'y':0,'width':390,'height':300})
-  assert a==b,'still fireflies under reduced motion'
+  a=page.evaluate('__r.worldFireflies()');page.wait_for_timeout(400);b=page.evaluate('__r.worldFireflies()')
+  assert a and a==b,'still fireflies under reduced motion'
   # Underground keeps its own darkness: no night layer there.
   page.evaluate("()=>{__r.S.reducedMotion=false;__r.S.layer='bajo';}");page.wait_for_timeout(200)
   assert not errors,errors;browser.close()
