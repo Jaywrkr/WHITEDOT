@@ -9,7 +9,8 @@ export function initialize(runtime){
  // Extra sway for a blade at x,y: a gust band moving along the day's wind, plus the cube's wake.
  function sway(x,y,t,h,distance,px,py){
   if(calm())return 0;direction();const phase=(x*dx+y*dy)/240-t/650,gust=Math.max(0,Math.sin(phase))**6*(.55+.45*Math.sin(t/9000));
-  let s=gust*h*.45*(dx>=0?1:-1);if(distance<44){const k=1-distance/44;s+=Math.sign(x-px||1)*k*k*h*.6;}return s;
+  // Hierba (cube shop) opens the grass wider and further.
+  let s=gust*h*.45*(dx>=0?1:-1);const wide=runtime.cubeShopGrassWide?.(),reach=wide?90:44;if(distance<reach){const k=1-distance/reach;s+=Math.sign(x-px||1)*k*k*h*(wide?1.2:.6);}return s;
  }
  function raining(){return !!runtime.rainingNow&&runtime.inWorld()&&(!runtime.S.layer||runtime.S.layer==='superficie');}
  function draw(t,dt){
