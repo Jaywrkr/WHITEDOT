@@ -15,6 +15,7 @@ Actualizada el 20 de octubre de 2026. Este índice distingue estado actual, deci
 | [Android](../android/README.md) | APK de cuentas, firma estable, migración y alcance del emulador |
 | [Hallazgos y actividades](HALLAZGOS_Y_ACTIVIDADES.md) | Contenido, gestos y recompensas, no una lista de funciones pendientes |
 | [Fases 2026](FASES_2026.md) | Plan vigente de fases (mundo vivo y pendientes), una rama por fase |
+| [Casa viva](CASA_VIVA.md) | Propuesta de la nueva Casa recorrible, su integración y sus fases (pendiente de aprobación) |
 | [Tienda del cubo](TIENDA_DEL_CUBO.md) | Catálogo aprobado de piezas compradas con chispas, ranuras, precios y orden de construcción por tandas |
 | [Verificación](VERIFICACION.md) | Pruebas enfocadas frente a cierre completo, CI y límites de evidencia |
 | [Plan de lanzamiento](PLAN_LANZAMIENTO.md) | Único catálogo vigente de entregables D01–D22 y decisiones comerciales |
