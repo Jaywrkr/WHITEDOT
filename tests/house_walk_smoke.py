@@ -28,7 +28,7 @@ try:
    page.keyboard.down('ArrowUp');page.wait_for_function("__r.houseStand().climbing");page.keyboard.up('ArrowUp');page.wait_for_function("__r.houseStand().room==='azotea'&&!__r.houseStand().climbing",timeout=5000)
    page.evaluate("__r.houseWalkTo('sotano',.8)");page.wait_for_function("__r.houseStand().room==='sotano'&&__r.houseSettled()",timeout=15000)
    # Tapping a room walks there; tapping a locked one only explains.
-   page.evaluate(hide);rect=page.evaluate('__r.houseRoomRect("sotano")');start=page.evaluate('__r.houseStand().fx');page.locator('#w').click(force=True,position={'x':max(rect['x']+rect['w']*.2,30),'y':rect['y']+rect['h']*.9});page.wait_for_function("__r.houseSettled()",timeout=8000)
+   page.evaluate(hide);rect=page.evaluate('__r.houseRoomRect("sotano")');start=page.evaluate('__r.houseStand().fx');page.locator('#w').click(force=True,position={'x':max(rect['x']+rect['w']*.2,30),'y':rect['y']+rect['h']*.05});page.wait_for_function("__r.houseSettled()",timeout=8000)
    assert page.evaluate('__r.houseStand().room')=='sotano' and page.evaluate('__r.houseStand().fx')<start-80,'a tap walks there'
    # The overview fits the whole house; the room on screen gets smaller.
    page.evaluate(hide);before=page.evaluate('__r.houseRoomRect("sala").w');page.locator('#houseOverview').click();page.wait_for_function('__r.houseSettled()');assert page.evaluate('__r.houseRoomRect("sala").w')<before;page.locator('#houseOverview').click()

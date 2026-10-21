@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.89**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.90**. Las entradas describen su revisión, no certifican producción.
+
+## Casa viva · C2 · Colección viva · alpha.90
+
+Rama `claude/casa-c2-coleccion`, sobre `claude/casa-c1-caminar`. Lo que coleccionas aparece en la Casa. Mirar nunca cambia la partida.
+
+- **Cuadros en la Sala:** las cuatro tarjetas más raras, con su retrato real y el marco del color de su rareza. Un cuadro vacío anima a buscar más.
+- **Estante de trofeos:** un trofeo por cada una de las siete categorías de logros (Camino, Mundo, Música, Vida, Colección, Casa, Secretos). Es dorado si ya ganaste alguno y crece y se llena según la parte completada.
+- **Vitrinas en el Sótano:** las seis últimas piezas compradas en la tienda, con su imagen.
+- **Jardín de voces:** cada voz es una planta en maceta debajo del lugar donde suena.
+- **Criaturas de visita:** las que conociste pasean por su planta, descansan y a veces se acercan al cubo; la mascota lo sigue. El pulso, con la tecla de pulso, las hace saltar con un corazón.
+- **Mirar:** tocar un cuadro, un trofeo, una vitrina o una criatura dice qué es, sin caminar.
+- **Coste:** 2,8 ms por fotograma en la Casa con todo a la vista (5,3 ms en el Mundo, misma medición).
+- **Pruebas:**
+  - Nuevas: `house-collection.mjs` (Node) y `house_collection_smoke.py` en móvil y computadora.
+  - `house_walk_smoke.py` toca una zona libre de la pared.
+  - En PASS: `house_v2`, `experience_garden`, `smoke`, `wonders`, los pulsos del Camino y del Mundo, los gestos de la tienda y los 188 conjuntos de Node.
 
 ## Casa viva · C1 · Casa caminable · alpha.89
 

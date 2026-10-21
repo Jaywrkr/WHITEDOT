@@ -43,6 +43,10 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 - **Cámara:** encuadra la planta del cubo en la franja libre entre los contadores y el panel; «Ver casa» la muestra entera.
 - **Dibujo:** las paredes, los muebles y la luz de la hora se dibujan una vez por escala, hora y habitaciones abiertas en un lienzo aparte. El cielo y el suelo se pintan cada fotograma a lo ancho de la pantalla.
 - **Cubo:** se dibuja con `drawStage`, igual que en la tienda, sin el aro del pulso, y lleva todo lo comprado.
+- **Colección:** `house-collection.js` solo lee la partida y la expone en la Casa.
+  - Cuadros con las tarjetas más raras (`rarePortrait` convertido en imagen), un trofeo por categoría de logros y vitrinas con las últimas piezas compradas (`pieceImage`).
+  - Las voces del jardín se ven como plantas en maceta. Las criaturas vistas pasean por su planta y la mascota sigue al cubo.
+  - El pulso (`housePulse`) las hace saltar. Tocar algo lo nombra sin caminar.
 - **Controles:** el render pasa los `dx/dy` del fotograma a la Casa. Las flechas caminan y suben o bajan escaleras; tocar una habitación lleva al cubo hasta allí, cambiando de planta por las escaleras.
 - **Datos:** `S.house` va por la versión 2, la de la casa de muñecas (ver [Casa viva](CASA_VIVA.md)). Conserva los objetos `{kind,room,x,y}`: x es el paso del compás y y la altura en la pared, que marca la nota. Añade `decor`, `tints` y `capsules`, siempre normalizados. La versión 1 se migra en el momento; una versión mayor se abre solo para leer.
 - **Códigos:** WH1 si la casa solo tiene objetos (lo leen versiones anteriores) y WH2 si lleva adornos o colores; se leen los dos.
