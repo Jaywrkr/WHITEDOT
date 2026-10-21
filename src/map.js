@@ -69,7 +69,7 @@ export function initialize(runtime){
   $("mapZoom").textContent=zoom==='mundo'?'Ver cerca':'Ver todo';
   $("mapNote").textContent=`${m.favorites.length} favoritos (◇) · ${m.reached.length} hitos visitados · ${m.heard.length} oídos sin visitar (?) · ${Object.keys(runtime.S.anomalies||{}).length} rarezas (✶)${m.camp?' · ⌂ tu Estudio':''}`;
  }
- function open(){$("mMap").hidden=false;render();runtime.unlock('mapa1');}
+ function open(){runtime.openJournal?.('places');render();runtime.unlock('mapa1');}
  async function share(){
   await Promise.all([document.fonts.load('400 14px "Geist Mono"'),document.fonts.load('600 14px "Geist Mono"'),document.fonts.load('400 24px "Geist Mono"')]);
   const c=document.createElement("canvas");c.width=1080;c.height=1350;const x=c.getContext("2d");x.fillStyle="#000";x.fillRect(0,0,1080,1350);
@@ -78,9 +78,9 @@ export function initialize(runtime){
   x.font='28px "Geist Mono", monospace';x.fillStyle="#8a8a8f";x.fillText(`DÍA ${runtime.displayDay()} · SOLO LO QUE VI`,104,206);
   x.fillStyle="#fff";x.font='600 34px "Geist Mono", monospace';x.fillText(`REGIONES ${m.cells.length}`,100,1160);x.fillText(`CONTINENTES ${m.continents}`,440,1160);x.fillText(`RÉCORD ${m.record}`,820,1160);
   x.fillStyle="#8a8a8f";x.font='26px "Geist Mono", monospace';x.fillText("KUBONO  ·  @jaywrkr",100,1250);
-  runtime.$("shareImg").alt="Mi mapa en Kubono";runtime.$("shareImg").src=c.toDataURL("image/png");$("mMap").hidden=true;runtime.$("mShare").hidden=false;
+  runtime.$("shareImg").alt="Mi mapa en Kubono";runtime.$("shareImg").src=c.toDataURL("image/png");runtime.$("mJournal").hidden=true;runtime.$("mShare").hidden=false;
  }
- $("bMap").onclick=open;$("mapClose").onclick=()=>{$("mMap").hidden=true;};
+ $("bMap").onclick=open;$("mapClose").onclick=()=>{runtime.$("mJournal").hidden=true;};
  $("mapZoom").onclick=()=>{zoom=zoom==='mundo'?'cerca':'mundo';render();};$("mapShare").onclick=share;
- Object.defineProperties(runtime,{openMap:{get:()=>open}});
+ Object.defineProperties(runtime,{openMap:{get:()=>open},renderMap:{get:()=>render}});
 }

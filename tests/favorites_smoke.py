@@ -20,7 +20,7 @@ with sync_playwright() as p:
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
   page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();complete_path_fixture(page);page.locator('#cExplore').click();page.locator('#hwGo').click()
-  page.locator('#bMenu').click();page.locator('#bFavorites').click();assert page.locator('#mFavorites').is_visible()
+  page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-tab="places"]').click();assert page.locator('#journalFavPart').is_visible()
   page.locator('#favName').fill('Mi música <favorita>');page.locator('#favSave').click()
   assert page.locator('[data-favorite]').count()==1
   page.locator('#favSearch').fill('sin coincidencias 999');assert page.locator('[data-favorite]').count()==0
@@ -28,13 +28,13 @@ with sync_playwright() as p:
   page.locator('#favSearch').fill('')
   page.locator('[data-favorite] summary').click();page.locator('[data-favorite] input').fill('Rincón de dub');page.locator('[data-favorite] button').filter(has_text='Renombrar').click()
   point=page.evaluate('window.__testRuntime.favorites[0]');assert point['name']=='Rincón de dub' and point['layer']=='superficie'
-  page.locator('#favoritesClose').click();keep_place_on_reload(page);page.reload(wait_until='domcontentloaded')
+  page.locator('#journalClose').click();keep_place_on_reload(page);page.reload(wait_until='domcontentloaded')
   page.wait_for_function('window.__testRuntime && window.__testRuntime.favorites.length===1')
   assert page.evaluate('window.__testRuntime.favorites[0].name')=='Rincón de dub'
   page.locator('#bMenu').click();page.locator('#bAch').click();assert 'Rincón de dub' in page.locator('#journalBody').inner_text();page.locator('#journalClose').click()
-  page.locator('#bMenu').click();page.locator('#bFavorites').click();page.screenshot(path=f'/tmp/whitedot-favorites-{label}.png')
+  page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-tab="places"]').click();page.screenshot(path=f'/tmp/whitedot-favorites-{label}.png')
   page.locator('[data-favorite] summary').click();page.locator('[data-favorite] button').filter(has_text='Borrar').click();assert page.evaluate('window.__testRuntime.favorites.length')==0
-  page.locator('#favoritesClose').click()
+  page.locator('#journalClose').click()
   # Same-day reopen keeps the place; a save left in the Mundo from another day receives the new arrival.
   same=page.evaluate("()=>{const r=__testRuntime,s=r.S;s.destination=null;r.save();return {x:s.wx,y:s.wy,arrivals:s.practiceTravel.arrivals||0};}")
   page.goto(URL);page.wait_for_function('!!window.__testRuntime?.dailyArrival')

@@ -62,13 +62,13 @@ with sync_playwright() as p:
   page.wait_for_timeout(600);assert page.evaluate('window.__testRuntime.fx.freezeOut.gain.value')<.1
   page.locator('#fxClose').click()
   # Código de lugar: copiar el de aquí y abrirlo guarda un favorito orientado.
-  page.locator('#bMenu').click();page.locator('#bFavorites').click()
+  page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-tab="places"]').click()
   page.locator('.favorite-tools > summary').click();page.locator('#placeShare').click();page.wait_for_function("document.getElementById('placeCode').value.startsWith('WD1-')")
   page.evaluate("()=>{const r=window.__testRuntime;document.getElementById('placeCode').value=r.placeCode().replace(/^WD1-.*/,(c)=>c);}")
   code=page.evaluate("(()=>{const r=window.__testRuntime;r.S.wx+=4000;return document.getElementById('placeCode').value})()")
   page.locator('#placeOpen').click();page.wait_for_function("window.__testRuntime.S.destination&&window.__testRuntime.favorites.some(p=>p.shared)")
   assert 'Guardado' in page.locator('#placeCodeInfo').inner_text()
-  if page.locator('#favoritesClose').is_visible():page.locator('#favoritesClose').click()
+  if page.locator('#journalClose').is_visible():page.locator('#journalClose').click()
   # Grabar set: 2 s y detener produce un video descargable.
   # A real finding may precede recording. Read it through its own controls first.
   for panel,button in [('#celebration','#celebrationDismiss'),('#rareNotice','#rareNoticeDismiss')]:

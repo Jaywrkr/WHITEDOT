@@ -39,7 +39,7 @@ try:
    page.locator('#mMenu summary').click()
    page.keyboard.press('Escape');page.wait_for_function('document.activeElement.id==="bMenu"')
    assert not page.locator('#w').evaluate('(e)=>e.inert')
-   for control,modal in [('bMusicSettings','mMusic'),('bCube','mCube'),('bFavorites','mFavorites'),('bAch','mJournal'),('bMap','mMap'),('bSettings','mSettings'),('bSaveTools','mSaveTools')]:
+   for control,modal in [('bMusicSettings','mMusic'),('bCube','mCube'),('bAch','mJournal'),('bMap','mJournal'),('bSettings','mSettings'),('bSaveTools','mSaveTools')]:
     page.locator('#bMenu').click()
     if control in ['bSky','bSession']:page.locator('#bAch').click()
     if control=='bSaveTools':

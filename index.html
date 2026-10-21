@@ -88,15 +88,7 @@
   <button class="ico" id="bStyles" aria-label="Elegir estilo musical" hidden>Estilos</button>
   <button class="ico round" id="bMenu" aria-label="Menú"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
 </div>
-<div class="modal" id="mProfile" role="dialog" aria-modal="true" aria-labelledby="profileTitle" hidden><div class="sheet profile-sheet">
- <h2 id="profileTitle">Tu perfil</h2>
- <div class="profile-identity"><svg id="profileAvatar" viewBox="0 0 64 64" aria-hidden="true"><path d="M4 32h14M46 32h14M32 4v14M32 46v14"/><rect x="24" y="24" width="16" height="16"/></svg><div><label for="profileName">Tu nombre</label><div class="profile-name-row"><input id="profileName" type="text" maxlength="24" placeholder="Explorador" autocomplete="nickname"><button id="profileNameSave">Guardar nombre</button></div></div></div>
- <p id="profileSaveStatus" role="status"></p><p id="profileSince"></p>
- <dl class="profile-metrics"><div><dt>Tiempo activo</dt><dd id="profileTime"></dd></div><div><dt>Distancia caminada</dt><dd id="profileDistance"></dd></div><div><dt>Sesiones medidas</dt><dd id="profileSessions"></dd></div><div><dt>Días con luz</dt><dd id="profileDays"></dd></div></dl>
- <h3>Tu universo descubierto</h3><dl class="profile-metrics compact"><div><dt>Lugares</dt><dd id="profilePlaces"></dd></div><div><dt>Estilos escuchados</dt><dd id="profileGenres"></dd></div><div><dt>Instrumentos escuchados</dt><dd id="profileInstruments"></dd></div><div><dt>Familias encontradas</dt><dd id="profileElements"></dd></div><div><dt>Tarjetas</dt><dd id="profileCards"></dd></div><div><dt>Cajas abiertas</dt><dd id="profileBoxes"></dd></div><div><dt>Logros</dt><dd id="profileAchievements"></dd></div></dl>
- <details><summary>Tiempo por espacio</summary><dl class="profile-breakdown"><dt>Camino</dt><dd id="profileCaminoTime"></dd><dt>Mundo</dt><dd id="profileWorldTime"></dd><dt>Casa</dt><dd id="profileHouseTime"></dd></dl><p>No cuenta menús, segundo plano ni saltos como distancia.</p><p>La distancia usa la escala interna del juego.</p></details>
- <div class="row"><button id="profileCollection">Ver colección</button><button id="profilePlacesLink">Volver a tus lugares</button></div><p>Tu progreso viaja con tu cuenta.</p><button id="profileClose">Volver</button>
-</div></div>
+
 
 <div class="modal lite" id="mCube" role="dialog" aria-modal="true" aria-labelledby="cubeTitle" hidden><div class="sheet cube-sheet">
  <header class="cube-head"><h2 id="cubeTitle">Tu cubo</h2><strong id="sparkBalance"></strong><button id="cubeClose" class="sheet-close" aria-label="Cerrar Tu cubo">×</button></header>
@@ -155,8 +147,6 @@
     </div></section>
     <section class="menu-group"><h3>Tu espacio</h3><div class="tiles">
       <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
-      <button id="bFavorites"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Favoritos</span></button>
-      <button id="bProfile"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="4" width="6" height="6"/><path d="M5 21v-4a7 7 0 0114 0v4"/></svg><span>Tu perfil</span></button>
     </div></section>
     <section class="menu-group"><h3>Crear</h3><div class="tiles">
       <button id="bTools" aria-expanded="false" title="Efectos, eco de 2 compases y desplegar Estudio" hidden><svg viewBox="0 0 24 24"><path d="M6 4v16M12 4v16M18 4v16M4 9h4M10 15h4M16 7h4"/></svg><span>Herramientas</span></button>
@@ -183,7 +173,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.75</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.76</span><small id="releaseDeploy">deploy sin registrar</small></div>
     <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>
@@ -284,9 +274,16 @@
   </div>
 </div>
 
-<div class="modal" id="mMap" role="dialog" aria-modal="true" aria-labelledby="mapTitle" hidden>
+
+
+<div class="modal" id="mJournal" role="dialog" aria-modal="true" aria-labelledby="journalTitle" hidden>
   <div class="sheet">
-    <h2 id="mapTitle">Tu mapa</h2>
+    <h2 id="journalTitle">Bitácora</h2>
+    <div class="journal-tabs" aria-label="Secciones de la Bitácora"><button data-journal-tab="today">Hoy</button><button data-journal-tab="collection">Colección</button><button data-journal-tab="places">Lugares</button><button data-journal-tab="music">Música</button><button data-journal-tab="achievements">Logros</button><button data-journal-tab="you">Tú</button></div>
+    <div id="journalFilters" hidden><input id="journalSearch" type="search" placeholder="Busca una pieza" aria-label="Buscar colección"><select id="journalGroup" aria-label="Tipo de colección"><option value="todo">Todo</option><option value="cubo">Cubo</option><option value="casa">Casa</option><option value="elementos">Elementos</option><option value="linajes">Linajes</option><option value="tarjetas">Tarjetas</option><option value="caminantes">Caminantes</option><option value="formas">Formas</option></select><select id="journalOwnership" aria-label="Piezas ganadas o pendientes"><option value="todo">Todo</option><option value="ganado">Ganado</option><option value="pendiente">Pendiente</option></select></div>
+    <button id="sessionShare">Compartir sesión</button><button id="journalNext">Lo próximo</button><button id="journalMore" hidden>Ver más</button>
+    <div id="journalParts" hidden><section id="journalMapPart" class="journal-part" aria-label="Mapa">
+    
     <canvas class="sky" id="mapCv" width="720" height="720" aria-label="Mapa de lo que exploraste"></canvas>
     <div class="kv">
       <div><b id="mRegions">0</b><span>Regiones</span></div>
@@ -294,16 +291,19 @@
       <div><b id="mRecord">0</b><span>Récord</span></div>
     </div>
     <p id="mapNote"></p>
-    <div class="row"><button id="mapZoom">Ver cerca</button><button id="mapShare" class="gold">Compartir</button><button id="mapClose">Cerrar</button></div>
-  </div>
-</div>
-
-<div class="modal" id="mJournal" role="dialog" aria-modal="true" aria-labelledby="journalTitle" hidden>
-  <div class="sheet">
-    <h2 id="journalTitle">Bitácora</h2>
-    <div class="journal-tabs" aria-label="Secciones de la Bitácora"><button data-journal-tab="today">Hoy</button><button data-journal-tab="collection">Colección</button><button data-journal-tab="places">Lugares</button><button data-journal-tab="music">Música</button><button data-journal-tab="achievements">Logros</button></div>
-    <div id="journalFilters" hidden><input id="journalSearch" type="search" placeholder="Busca una pieza" aria-label="Buscar colección"><select id="journalGroup" aria-label="Tipo de colección"><option value="todo">Todo</option><option value="cubo">Cubo</option><option value="casa">Casa</option><option value="elementos">Elementos</option><option value="linajes">Linajes</option><option value="tarjetas">Tarjetas</option><option value="caminantes">Caminantes</option><option value="formas">Formas</option></select><select id="journalOwnership" aria-label="Piezas ganadas o pendientes"><option value="todo">Todo</option><option value="ganado">Ganado</option><option value="pendiente">Pendiente</option></select></div>
-    <button id="sessionShare">Compartir sesión</button><button id="journalNext">Lo próximo</button><button id="journalMore" hidden>Ver más</button>
+    <div class="row"><button id="mapZoom">Ver cerca</button><button id="mapShare" class="gold">Compartir</button><button id="mapClose" hidden>Cerrar</button></div>
+  </section><section id="journalFavPart" class="journal-part" aria-label="Lugares guardados">
+ <button id="favReturn" hidden>Volver al punto anterior</button><form id="favForm" class="favorite-form"><label for="favName">Nombre de este punto</label><input id="favName" maxlength="60" autocomplete="off"><button id="favSave" type="submit">Guardar aquí</button></form>
+ <p id="favNote"></p>
+ <label class="favorite-search" for="favSearch">Buscar lugares</label><input id="favSearch" type="search" placeholder="Nombre, estilo o paisaje" autocomplete="off"><p id="favCount" role="status"></p><details class="favorite-tools"><summary>Códigos y opciones de viaje</summary><p>Cada visita empieza en otro lugar.</p><select id="arrivalMode" hidden aria-label="Preferencia anterior"><option value="explore">Descubrir otro lugar</option><option value="continue">Continuar donde estaba</option></select><div class="place-code"><label for="placeCode">Código de lugar</label><input id="placeCode" maxlength="400" autocomplete="off" spellcheck="false" placeholder="Pega un código WD1-…"><div class="row"><button id="placeShare">Copiar código de aquí</button><button id="placeOpen">Abrir código</button></div><small id="placeCodeInfo"></small></div><div class="row"><button id="favStudio" disabled>Orientar al Estudio</button><button id="favWalk">Paseo musical</button></div></details><div id="favoritesBody" class="scroll"></div><div class="row"><button id="favoritesClose" hidden>Cerrar</button></div></section><section id="journalYouPart" class="journal-part profile-sheet" aria-label="Tú">
+ 
+ <div class="profile-identity"><svg id="profileAvatar" viewBox="0 0 64 64" aria-hidden="true"><path d="M4 32h14M46 32h14M32 4v14M32 46v14"/><rect x="24" y="24" width="16" height="16"/></svg><div><label for="profileName">Tu nombre</label><div class="profile-name-row"><input id="profileName" type="text" maxlength="24" placeholder="Explorador" autocomplete="nickname"><button id="profileNameSave">Guardar nombre</button></div></div></div>
+ <p id="profileSaveStatus" role="status"></p><p id="profileSince"></p>
+ <dl class="profile-metrics"><div><dt>Tiempo activo</dt><dd id="profileTime"></dd></div><div><dt>Distancia caminada</dt><dd id="profileDistance"></dd></div><div><dt>Sesiones medidas</dt><dd id="profileSessions"></dd></div><div><dt>Días con luz</dt><dd id="profileDays"></dd></div></dl>
+ <h3>Tu universo descubierto</h3><dl class="profile-metrics compact"><div><dt>Lugares</dt><dd id="profilePlaces"></dd></div><div><dt>Estilos escuchados</dt><dd id="profileGenres"></dd></div><div><dt>Instrumentos escuchados</dt><dd id="profileInstruments"></dd></div><div><dt>Familias encontradas</dt><dd id="profileElements"></dd></div><div><dt>Tarjetas</dt><dd id="profileCards"></dd></div><div><dt>Cajas abiertas</dt><dd id="profileBoxes"></dd></div><div><dt>Logros</dt><dd id="profileAchievements"></dd></div></dl>
+ <details><summary>Tiempo por espacio</summary><dl class="profile-breakdown"><dt>Camino</dt><dd id="profileCaminoTime"></dd><dt>Mundo</dt><dd id="profileWorldTime"></dd><dt>Casa</dt><dd id="profileHouseTime"></dd></dl><p>No cuenta menús, segundo plano ni saltos como distancia.</p><p>La distancia usa la escala interna del juego.</p></details>
+ <div class="row"><button id="profileCollection">Ver colección</button><button id="profilePlacesLink">Volver a tus lugares</button></div><p>Tu progreso viaja con tu cuenta.</p><button id="profileClose" hidden>Volver</button>
+</section></div>
     <div class="scroll" id="journalBody" aria-live="polite"></div>
     <label id="rareCodeFallback" hidden>Código del hallazgo · selecciónalo y copia<textarea id="rarePlaceCode" readonly aria-label="Código de lugar del hallazgo"></textarea></label>
     <button id="bSky"><svg viewBox="0 0 24 24"><path d="M5 17l5-6 4 3 5-8"/><circle cx="5" cy="17" r="1.5"/><circle cx="10" cy="11" r="1.5"/><circle cx="14" cy="14" r="1.5"/><circle cx="19" cy="6" r="1.5"/></svg><span>Constelación</span></button><button id="bSession"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>Sesión</span></button><button id="journalClose">Cerrar</button>
@@ -353,12 +353,7 @@
   </div>
 </div>
 
-<div class="modal" id="mFavorites" role="dialog" aria-modal="true" aria-labelledby="favoritesTitle" hidden>
- <div class="sheet"><h2 id="favoritesTitle">Favoritos musicales</h2>
- <button id="favReturn" hidden>Volver al punto anterior</button><form id="favForm" class="favorite-form"><label for="favName">Nombre de este punto</label><input id="favName" maxlength="60" autocomplete="off"><button id="favSave" type="submit">Guardar aquí</button></form>
- <p id="favNote"></p>
- <label class="favorite-search" for="favSearch">Buscar lugares</label><input id="favSearch" type="search" placeholder="Nombre, estilo o paisaje" autocomplete="off"><p id="favCount" role="status"></p><details class="favorite-tools"><summary>Códigos y opciones de viaje</summary><p>Cada visita empieza en otro lugar.</p><select id="arrivalMode" hidden aria-label="Preferencia anterior"><option value="explore">Descubrir otro lugar</option><option value="continue">Continuar donde estaba</option></select><div class="place-code"><label for="placeCode">Código de lugar</label><input id="placeCode" maxlength="400" autocomplete="off" spellcheck="false" placeholder="Pega un código WD1-…"><div class="row"><button id="placeShare">Copiar código de aquí</button><button id="placeOpen">Abrir código</button></div><small id="placeCodeInfo"></small></div><div class="row"><button id="favStudio" disabled>Orientar al Estudio</button><button id="favWalk">Paseo musical</button></div></details><div id="favoritesBody" class="scroll"></div><div class="row"><button id="favoritesClose">Cerrar</button></div></div>
-</div>
+
 <div id="labBar" class="lab-bar" hidden>
  <div class="lab-head"><button id="labPrev" aria-label="Elemento anterior">‹</button><div class="lab-title"><strong id="labName"></strong><span id="labMeta"></span></div><button id="labNext" aria-label="Elemento siguiente">›</button></div>
  <ul id="labTry"></ul>
