@@ -55,7 +55,8 @@ with sync_playwright() as p:
   assert page.evaluate('deepObject.state.dialogue.events.length')==0,'ambient must not teach'
   page.mouse.click(30,height/2);page.wait_for_function('deepObject.state.dialogue.events.length>0');page.evaluate('deepObject.state.dialogue.events=[]')
   # One event-loop turn keeps the harmonic center stable for this exact interval assertion.
-  page.evaluate("()=>{const r=__testRuntime;for(const [step,degree]of [[0,0],[4,2],[12,4],[24,2]]){deepObject.state.dialogue.elapsed=r.SIX*step;r.playVoice('pulso',degree,r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'player');}document.getElementById('bMenu').click();}")
+  # A late note from the click above may arrive after the wait; clearing in this same turn keeps only the phrase.
+  page.evaluate("()=>{const r=__testRuntime;deepObject.state.dialogue.events=[];for(const [step,degree]of [[0,0],[4,2],[12,4],[24,2]]){deepObject.state.dialogue.elapsed=r.SIX*step;r.playVoice('pulso',degree,r.ac.currentTime+.05,r.regionOfPos(r.S.wx,r.S.wy),false,.1,null,'player');}document.getElementById('bMenu').click();}")
   assert page.evaluate('deepObject.state.dialogue.events.length')==4
   taught=page.evaluate('deepObject.state.dialogue.events');assert [(n['degree']-taught[0]['degree'])%7 for n in taught]==[0,2,4,2],taught
   # Pause in the teaching turn; a delayed automation click can cross the idle timeout.
