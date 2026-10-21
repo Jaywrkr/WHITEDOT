@@ -1,6 +1,6 @@
 {
   "renders": 25,
-  "maxPeak": 0.8791258931159973,
+  "maxPeak": 0.8875827789306641,
   "sampleRates": [
     44100,
     48000
@@ -9,11 +9,8 @@
     {
       "kind": "drum",
       "parameter": 0.05,
-      "peak": 0.8789865374565125,
-      "rms": -13.217834032209652,
-      "emittedNotes": 4,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0.008461538461533635,
+      "peak": 0.8738183379173279,
+      "rms": -13.11039646736342,
       "notes": [
         {
           "kind": "micro:drum",
@@ -28,6 +25,10 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         },
@@ -36,7 +37,7 @@
           "instrument": "kick",
           "role": "perc",
           "note": 67,
-          "time": 4.145846153846154,
+          "time": 4.145384615384616,
           "tones": [
             57,
             60,
@@ -44,6 +45,10 @@
             67,
             71
           ],
+          "pitches": [
+            67
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         },
@@ -60,6 +65,10 @@
             67,
             71
           ],
+          "pitches": [
+            69
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -68,7 +77,7 @@
           "instrument": "clap",
           "role": "perc",
           "note": 60,
-          "time": 7.607384615384603,
+          "time": 7.606923076923065,
           "tones": [
             57,
             60,
@@ -76,19 +85,23 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0.008461538461533635,
+      "emittedNotes": 4,
+      "trailNotes": 0
     },
     {
       "kind": "drum",
       "parameter": 0.95,
-      "peak": 0.8769792318344116,
-      "rms": -13.234864940272686,
-      "emittedNotes": 4,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0.008461538461533635,
+      "peak": 0.8768835663795471,
+      "rms": -13.055862212965621,
       "notes": [
         {
           "kind": "micro:drum",
@@ -103,6 +116,10 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         },
@@ -111,7 +128,7 @@
           "instrument": "kick",
           "role": "perc",
           "note": 67,
-          "time": 4.145846153846154,
+          "time": 4.145384615384616,
           "tones": [
             57,
             60,
@@ -119,6 +136,10 @@
             67,
             71
           ],
+          "pitches": [
+            67
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         },
@@ -135,6 +156,10 @@
             67,
             71
           ],
+          "pitches": [
+            69
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -143,7 +168,7 @@
           "instrument": "clap",
           "role": "perc",
           "note": 60,
-          "time": 7.607384615384603,
+          "time": 7.606923076923065,
           "tones": [
             57,
             60,
@@ -151,33 +176,41 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0.008461538461533635,
+      "emittedNotes": 4,
+      "trailNotes": 0
     },
     {
       "kind": "acid",
       "parameter": 0.05,
-      "peak": 0.8742246627807617,
-      "rms": -12.842655370263818,
-      "emittedNotes": 3,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.8729614615440369,
+      "rms": -13.069861651973545,
       "notes": [
         {
           "kind": "micro:acid",
           "instrument": "mi_acid",
           "role": "bajo",
-          "note": 52,
+          "note": 53,
           "time": 2.1,
           "tones": [
-            57,
-            60,
-            64,
-            67,
-            71
+            59,
+            62,
+            65,
+            69,
+            72
           ],
+          "pitches": [
+            53
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -188,12 +221,16 @@
           "note": 52,
           "time": 4.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            52
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -201,42 +238,50 @@
           "kind": "micro:acid",
           "instrument": "mi_acid",
           "role": "bajo",
-          "note": 48,
+          "note": 55,
           "time": 6.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            55
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 3,
+      "trailNotes": 0
     },
     {
       "kind": "acid",
       "parameter": 0.95,
-      "peak": 0.8746214509010315,
-      "rms": -12.87038258043609,
-      "emittedNotes": 3,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.8728742599487305,
+      "rms": -13.103703895417944,
       "notes": [
         {
           "kind": "micro:acid",
           "instrument": "mi_acid",
           "role": "bajo",
-          "note": 52,
+          "note": 53,
           "time": 2.1,
           "tones": [
-            57,
-            60,
-            64,
-            67,
-            71
+            59,
+            62,
+            65,
+            69,
+            72
           ],
+          "pitches": [
+            53
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -247,12 +292,16 @@
           "note": 52,
           "time": 4.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            52
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -260,28 +309,32 @@
           "kind": "micro:acid",
           "instrument": "mi_acid",
           "role": "bajo",
-          "note": 48,
+          "note": 55,
           "time": 6.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            55
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 3,
+      "trailNotes": 0
     },
     {
       "kind": "analog",
       "parameter": 0.05,
-      "peak": 0.8735889196395874,
-      "rms": -14.134341970026455,
-      "emittedNotes": 3,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.8737428784370422,
+      "rms": -16.305476559659947,
       "notes": [
         {
           "kind": "micro:analog",
@@ -296,6 +349,10 @@
             67,
             71
           ],
+          "pitches": [
+            52
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -312,6 +369,10 @@
             67,
             71
           ],
+          "pitches": [
+            52
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -328,19 +389,23 @@
             67,
             71
           ],
+          "pitches": [
+            48
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 3,
+      "trailNotes": 0
     },
     {
       "kind": "analog",
       "parameter": 0.95,
-      "peak": 0.8734813928604126,
-      "rms": -13.837492025416553,
-      "emittedNotes": 3,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.8726503849029541,
+      "rms": -15.856987558429179,
       "notes": [
         {
           "kind": "micro:analog",
@@ -355,6 +420,10 @@
             67,
             71
           ],
+          "pitches": [
+            52
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -371,6 +440,10 @@
             67,
             71
           ],
+          "pitches": [
+            52
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -387,19 +460,23 @@
             67,
             71
           ],
+          "pitches": [
+            48
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 3,
+      "trailNotes": 0
     },
     {
       "kind": "poly",
       "parameter": 0.05,
-      "peak": 0.8738701939582825,
-      "rms": -24.99084992145109,
-      "emittedNotes": 2,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 8.881784197001252e-16,
+      "peak": 0.8736825585365295,
+      "rms": -21.492534252790946,
       "notes": [
         {
           "kind": "micro:poly",
@@ -414,6 +491,12 @@
             67,
             71
           ],
+          "pitches": [
+            57,
+            60,
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -430,19 +513,25 @@
             67,
             71
           ],
+          "pitches": [
+            57,
+            60,
+            64
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 8.881784197001252e-16,
+      "emittedNotes": 2,
+      "trailNotes": 0
     },
     {
       "kind": "poly",
       "parameter": 0.95,
-      "peak": 0.8730687499046326,
-      "rms": -24.71450263158892,
-      "emittedNotes": 2,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 8.881784197001252e-16,
+      "peak": 0.8731383681297302,
+      "rms": -20.597215997124568,
       "notes": [
         {
           "kind": "micro:poly",
@@ -457,6 +546,12 @@
             67,
             71
           ],
+          "pitches": [
+            57,
+            60,
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -473,19 +568,25 @@
             67,
             71
           ],
+          "pitches": [
+            57,
+            60,
+            64
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 8.881784197001252e-16,
+      "emittedNotes": 2,
+      "trailNotes": 0
     },
     {
       "kind": "fm",
       "parameter": 0.05,
-      "peak": 0.8768990635871887,
-      "rms": -12.666624058888091,
-      "emittedNotes": 5,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0.0017647058823531125,
+      "peak": 0.8776506185531616,
+      "rms": -13.060517654873362,
       "notes": [
         {
           "kind": "micro:fm",
@@ -500,6 +601,10 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         },
@@ -516,6 +621,10 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         },
@@ -532,6 +641,10 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         },
@@ -548,6 +661,10 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -564,19 +681,23 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0.0017647058823531125,
+      "emittedNotes": 5,
+      "trailNotes": 0
     },
     {
       "kind": "fm",
       "parameter": 0.95,
-      "peak": 0.8755408525466919,
-      "rms": -12.682264716584585,
-      "emittedNotes": 5,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0.0017647058823531125,
+      "peak": 0.8875827789306641,
+      "rms": -12.95202103306157,
       "notes": [
         {
           "kind": "micro:fm",
@@ -591,6 +712,10 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         },
@@ -607,6 +732,10 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         },
@@ -623,6 +752,10 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         },
@@ -639,6 +772,10 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -655,19 +792,23 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0.0017647058823531125,
+      "emittedNotes": 5,
+      "trailNotes": 0
     },
     {
       "kind": "wave",
       "parameter": 0.05,
-      "peak": 0.8766095042228699,
-      "rms": -13.072989763735324,
-      "emittedNotes": 4,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0.008461538461533635,
+      "peak": 0.8729106783866882,
+      "rms": -12.993488638215648,
       "notes": [
         {
           "kind": "micro:wave",
@@ -682,6 +823,10 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         },
@@ -690,7 +835,7 @@
           "instrument": "wavetable",
           "role": "lead",
           "note": 55,
-          "time": 4.145846153846154,
+          "time": 4.145384615384616,
           "tones": [
             57,
             60,
@@ -698,6 +843,10 @@
             67,
             71
           ],
+          "pitches": [
+            55
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         },
@@ -714,6 +863,10 @@
             67,
             71
           ],
+          "pitches": [
+            57
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -722,7 +875,7 @@
           "instrument": "wavetable",
           "role": "lead",
           "note": 60,
-          "time": 7.607384615384603,
+          "time": 7.606923076923065,
           "tones": [
             57,
             60,
@@ -730,19 +883,23 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0.008461538461533635,
+      "emittedNotes": 4,
+      "trailNotes": 0
     },
     {
       "kind": "wave",
       "parameter": 0.95,
-      "peak": 0.8769804239273071,
-      "rms": -13.072958002175028,
-      "emittedNotes": 4,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0.008461538461533635,
+      "peak": 0.8732424974441528,
+      "rms": -12.905633639235646,
       "notes": [
         {
           "kind": "micro:wave",
@@ -757,6 +914,10 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         },
@@ -765,7 +926,7 @@
           "instrument": "wavetable",
           "role": "lead",
           "note": 55,
-          "time": 4.145846153846154,
+          "time": 4.145384615384616,
           "tones": [
             57,
             60,
@@ -773,6 +934,10 @@
             67,
             71
           ],
+          "pitches": [
+            55
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         },
@@ -789,6 +954,10 @@
             67,
             71
           ],
+          "pitches": [
+            57
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -797,7 +966,7 @@
           "instrument": "wavetable",
           "role": "lead",
           "note": 60,
-          "time": 7.607384615384603,
+          "time": 7.606923076923065,
           "tones": [
             57,
             60,
@@ -805,33 +974,43 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0.008461538461533635,
+      "emittedNotes": 4,
+      "trailNotes": 0
     },
     {
       "kind": "grain",
       "parameter": 0.05,
-      "peak": 0.8742006421089172,
-      "rms": -12.823614091666789,
-      "emittedNotes": 3,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.8729601502418518,
+      "rms": -13.056259282367808,
       "notes": [
         {
           "kind": "micro:grain",
           "instrument": "graincloud",
           "role": "acorde",
-          "note": 64,
+          "note": 65,
           "time": 2.1,
           "tones": [
-            57,
-            60,
-            64,
-            67,
-            71
+            59,
+            62,
+            65,
+            69,
+            72
           ],
+          "pitches": [
+            59,
+            62,
+            65
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -839,15 +1018,21 @@
           "kind": "micro:grain",
           "instrument": "graincloud",
           "role": "acorde",
-          "note": 69,
+          "note": 64,
           "time": 4.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            64,
+            67,
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -855,42 +1040,54 @@
           "kind": "micro:grain",
           "instrument": "graincloud",
           "role": "acorde",
-          "note": 60,
+          "note": 67,
           "time": 6.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            64,
+            67,
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 3,
+      "trailNotes": 0
     },
     {
       "kind": "grain",
       "parameter": 0.95,
-      "peak": 0.8746253252029419,
-      "rms": -12.867404326563015,
-      "emittedNotes": 3,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.8732571005821228,
+      "rms": -13.079492685965048,
       "notes": [
         {
           "kind": "micro:grain",
           "instrument": "graincloud",
           "role": "acorde",
-          "note": 64,
+          "note": 65,
           "time": 2.1,
           "tones": [
-            57,
-            60,
-            64,
-            67,
-            71
+            59,
+            62,
+            65,
+            69,
+            72
           ],
+          "pitches": [
+            59,
+            62,
+            65
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -898,15 +1095,21 @@
           "kind": "micro:grain",
           "instrument": "graincloud",
           "role": "acorde",
-          "note": 69,
+          "note": 64,
           "time": 4.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            64,
+            67,
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -914,28 +1117,34 @@
           "kind": "micro:grain",
           "instrument": "graincloud",
           "role": "acorde",
-          "note": 60,
+          "note": 67,
           "time": 6.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            64,
+            67,
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 3,
+      "trailNotes": 0
     },
     {
       "kind": "slice",
       "parameter": 0.05,
-      "peak": 0.8733657002449036,
-      "rms": -14.11590620183322,
-      "emittedNotes": 3,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.8737428188323975,
+      "rms": -16.32412887275941,
       "notes": [
         {
           "kind": "micro:slice",
@@ -950,6 +1159,10 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -966,6 +1179,10 @@
             67,
             71
           ],
+          "pitches": [
+            69
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -982,19 +1199,23 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 3,
+      "trailNotes": 0
     },
     {
       "kind": "slice",
       "parameter": 0.95,
-      "peak": 0.8734154105186462,
-      "rms": -13.931556846813596,
-      "emittedNotes": 3,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.8726766109466553,
+      "rms": -16.164006928005595,
       "notes": [
         {
           "kind": "micro:slice",
@@ -1009,6 +1230,10 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -1025,6 +1250,10 @@
             67,
             71
           ],
+          "pitches": [
+            69
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -1041,19 +1270,23 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 3,
+      "trailNotes": 0
     },
     {
       "kind": "ring",
       "parameter": 0.05,
-      "peak": 0.8738701939582825,
-      "rms": -25.516677303314196,
-      "emittedNotes": 2,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 8.881784197001252e-16,
+      "peak": 0.8736826777458191,
+      "rms": -21.641818423166825,
       "notes": [
         {
           "kind": "micro:ring",
@@ -1068,6 +1301,10 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -1084,19 +1321,23 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 8.881784197001252e-16,
+      "emittedNotes": 2,
+      "trailNotes": 0
     },
     {
       "kind": "ring",
       "parameter": 0.95,
-      "peak": 0.8733158111572266,
-      "rms": -25.13023086617674,
-      "emittedNotes": 2,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 8.881784197001252e-16,
+      "peak": 0.8731526732444763,
+      "rms": -20.70209680432101,
       "notes": [
         {
           "kind": "micro:ring",
@@ -1111,6 +1352,10 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -1127,19 +1372,23 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 8.881784197001252e-16,
+      "emittedNotes": 2,
+      "trailNotes": 0
     },
     {
       "kind": "arp",
       "parameter": 0.05,
-      "peak": 0.8791258931159973,
-      "rms": -13.14664022084573,
-      "emittedNotes": 5,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0.0017647058823531125,
+      "peak": 0.881525993347168,
+      "rms": -13.357238860411918,
       "notes": [
         {
           "kind": "micro:arp",
@@ -1154,6 +1403,10 @@
             67,
             71
           ],
+          "pitches": [
+            57
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         },
@@ -1170,6 +1423,10 @@
             67,
             71
           ],
+          "pitches": [
+            57
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         },
@@ -1186,6 +1443,10 @@
             67,
             71
           ],
+          "pitches": [
+            57
+          ],
+          "strongBeat": false,
           "morph": 0.05,
           "gridError": 0
         },
@@ -1202,6 +1463,10 @@
             67,
             71
           ],
+          "pitches": [
+            57
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         },
@@ -1218,19 +1483,23 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.05,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0.0017647058823531125,
+      "emittedNotes": 5,
+      "trailNotes": 0
     },
     {
       "kind": "arp",
       "parameter": 0.95,
-      "peak": 0.875853955745697,
-      "rms": -13.061453112703397,
-      "emittedNotes": 5,
-      "trailNotes": 0,
-      "maxOnsetErrorSeconds": 0.0017647058823531125,
+      "peak": 0.8875823020935059,
+      "rms": -13.222937970754655,
       "notes": [
         {
           "kind": "micro:arp",
@@ -1245,6 +1514,10 @@
             67,
             71
           ],
+          "pitches": [
+            57
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         },
@@ -1261,6 +1534,10 @@
             67,
             71
           ],
+          "pitches": [
+            57
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         },
@@ -1277,6 +1554,10 @@
             67,
             71
           ],
+          "pitches": [
+            57
+          ],
+          "strongBeat": false,
           "morph": 0.95,
           "gridError": 0
         },
@@ -1293,6 +1574,10 @@
             67,
             71
           ],
+          "pitches": [
+            57
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         },
@@ -1309,33 +1594,40 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.95,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0.0017647058823531125,
+      "emittedNotes": 5,
+      "trailNotes": 0
     },
     {
       "kind": "arcos",
-      "parameter": null,
-      "peak": 0.8784897327423096,
-      "rms": -13.691032197419677,
-      "emittedNotes": 7,
-      "trailNotes": 7,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.872760534286499,
+      "rms": -13.352088019261299,
       "notes": [
         {
           "kind": "micro:drum",
           "instrument": "kick",
           "role": "perc",
-          "note": 60,
+          "note": 62,
           "time": 2.1,
           "tones": [
-            57,
-            60,
-            64,
-            67,
-            71
+            59,
+            62,
+            65,
+            69,
+            72
           ],
+          "pitches": [
+            62
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1343,15 +1635,19 @@
           "kind": "micro:drum",
           "instrument": "snare",
           "role": "perc",
-          "note": 60,
+          "note": 67,
           "time": 4.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            67
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1359,15 +1655,19 @@
           "kind": "micro:drum",
           "instrument": "clap",
           "role": "perc",
-          "note": 64,
+          "note": 59,
           "time": 5.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1375,15 +1675,19 @@
           "kind": "micro:drum",
           "instrument": "clap",
           "role": "perc",
-          "note": 60,
+          "note": 67,
           "time": 6.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            67
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1391,15 +1695,19 @@
           "kind": "micro:drum",
           "instrument": "hat",
           "role": "perc",
-          "note": 64,
+          "note": 59,
           "time": 7.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1416,6 +1724,10 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1432,33 +1744,42 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 7,
+      "trailNotes": 7
     },
     {
       "kind": "cintas",
-      "parameter": null,
-      "peak": 0.8784888386726379,
-      "rms": -14.07145708740056,
-      "emittedNotes": 7,
-      "trailNotes": 7,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.8727606534957886,
+      "rms": -13.6114025573082,
       "notes": [
         {
           "kind": "micro:poly",
           "instrument": "mi_poly",
           "role": "acorde",
-          "note": 60,
+          "note": 62,
           "time": 2.1,
           "tones": [
-            57,
-            60,
-            64,
-            67,
-            71
+            59,
+            62,
+            65,
+            69,
+            72
           ],
+          "pitches": [
+            59,
+            62,
+            65
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1466,15 +1787,21 @@
           "kind": "micro:poly",
           "instrument": "mi_poly",
           "role": "acorde",
-          "note": 60,
+          "note": 67,
           "time": 4.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            64,
+            67,
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1482,15 +1809,21 @@
           "kind": "micro:poly",
           "instrument": "mi_poly",
           "role": "acorde",
-          "note": 64,
+          "note": 59,
           "time": 5.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            64,
+            67,
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1498,15 +1831,21 @@
           "kind": "micro:poly",
           "instrument": "mi_poly",
           "role": "acorde",
-          "note": 60,
+          "note": 67,
           "time": 6.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            64,
+            67,
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1514,15 +1853,21 @@
           "kind": "micro:poly",
           "instrument": "mi_poly",
           "role": "acorde",
-          "note": 64,
+          "note": 59,
           "time": 7.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            64,
+            67,
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1539,6 +1884,12 @@
             67,
             71
           ],
+          "pitches": [
+            57,
+            60,
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1555,33 +1906,42 @@
             67,
             71
           ],
+          "pitches": [
+            57,
+            60,
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 7,
+      "trailNotes": 7
     },
     {
       "kind": "diamantes",
-      "parameter": null,
-      "peak": 0.8784898519515991,
-      "rms": -13.631841777620208,
-      "emittedNotes": 7,
-      "trailNotes": 7,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.8727604150772095,
+      "rms": -13.346154310278857,
       "notes": [
         {
           "kind": "micro:slice",
           "instrument": "mi_slice",
           "role": "perc",
-          "note": 64,
+          "note": 65,
           "time": 2.1,
           "tones": [
-            57,
-            60,
-            64,
-            67,
-            71
+            59,
+            62,
+            65,
+            69,
+            72
           ],
+          "pitches": [
+            65
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1589,31 +1949,19 @@
           "kind": "micro:slice",
           "instrument": "mi_slice",
           "role": "perc",
-          "note": 64,
+          "note": 59,
           "time": 4.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
-          "morph": 0.5454545454545454,
-          "gridError": 0
-        },
-        {
-          "kind": "micro:slice",
-          "instrument": "mi_slice",
-          "role": "perc",
-          "note": 69,
-          "time": 5.1,
-          "tones": [
-            57,
-            60,
-            64,
-            67,
-            71
+          "pitches": [
+            59
           ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1622,14 +1970,18 @@
           "instrument": "mi_slice",
           "role": "perc",
           "note": 64,
-          "time": 6.1,
+          "time": 5.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1637,15 +1989,39 @@
           "kind": "micro:slice",
           "instrument": "mi_slice",
           "role": "perc",
-          "note": 69,
-          "time": 7.1,
+          "note": 59,
+          "time": 6.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            59
+          ],
+          "strongBeat": true,
+          "morph": 0.5454545454545454,
+          "gridError": 0
+        },
+        {
+          "kind": "micro:slice",
+          "instrument": "mi_slice",
+          "role": "perc",
+          "note": 64,
+          "time": 7.1,
+          "tones": [
+            64,
+            67,
+            71,
+            74,
+            77
+          ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1662,6 +2038,10 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1678,33 +2058,40 @@
             67,
             71
           ],
+          "pitches": [
+            69
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 7,
+      "trailNotes": 7
     },
     {
       "kind": "puntos",
-      "parameter": null,
-      "peak": 0.8784893751144409,
-      "rms": -13.688255986823032,
-      "emittedNotes": 7,
-      "trailNotes": 7,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.8727604746818542,
+      "rms": -13.393991431085794,
       "notes": [
         {
           "kind": "micro:fm",
           "instrument": "mi_fm",
           "role": "lead",
-          "note": 60,
+          "note": 62,
           "time": 2.1,
           "tones": [
-            57,
-            60,
-            64,
-            67,
-            71
+            59,
+            62,
+            65,
+            69,
+            72
           ],
+          "pitches": [
+            62
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1712,15 +2099,19 @@
           "kind": "micro:fm",
           "instrument": "mi_fm",
           "role": "lead",
-          "note": 60,
+          "note": 67,
           "time": 4.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            67
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1728,15 +2119,19 @@
           "kind": "micro:fm",
           "instrument": "mi_fm",
           "role": "lead",
-          "note": 64,
+          "note": 59,
           "time": 5.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1744,15 +2139,19 @@
           "kind": "micro:fm",
           "instrument": "mi_fm",
           "role": "lead",
-          "note": 60,
+          "note": 67,
           "time": 6.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            67
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1760,15 +2159,19 @@
           "kind": "micro:fm",
           "instrument": "mi_fm",
           "role": "lead",
-          "note": 64,
+          "note": 59,
           "time": 7.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1785,6 +2188,10 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1801,33 +2208,40 @@
             67,
             71
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 7,
+      "trailNotes": 7
     },
     {
       "kind": "duplicador",
-      "parameter": null,
-      "peak": 0.8784893155097961,
-      "rms": -13.741180622232857,
-      "emittedNotes": 7,
-      "trailNotes": 7,
-      "maxOnsetErrorSeconds": 0,
+      "peak": 0.8727607131004333,
+      "rms": -13.473107456893365,
       "notes": [
         {
           "kind": "micro:arp",
           "instrument": "resonantpluck",
           "role": "lead",
-          "note": 57,
+          "note": 59,
           "time": 2.1,
           "tones": [
-            57,
-            60,
-            64,
-            67,
-            71
+            59,
+            62,
+            65,
+            69,
+            72
           ],
+          "pitches": [
+            59
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1835,15 +2249,19 @@
           "kind": "micro:arp",
           "instrument": "resonantpluck",
           "role": "lead",
-          "note": 57,
+          "note": 64,
           "time": 4.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1851,15 +2269,19 @@
           "kind": "micro:arp",
           "instrument": "resonantpluck",
           "role": "lead",
-          "note": 60,
+          "note": 67,
           "time": 5.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            67
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1867,15 +2289,19 @@
           "kind": "micro:arp",
           "instrument": "resonantpluck",
           "role": "lead",
-          "note": 57,
+          "note": 64,
           "time": 6.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            64
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1883,15 +2309,19 @@
           "kind": "micro:arp",
           "instrument": "resonantpluck",
           "role": "lead",
-          "note": 60,
+          "note": 67,
           "time": 7.1,
           "tones": [
-            57,
-            60,
             64,
             67,
-            71
+            71,
+            74,
+            77
           ],
+          "pitches": [
+            67
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1908,6 +2338,10 @@
             67,
             71
           ],
+          "pitches": [
+            57
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         },
@@ -1924,10 +2358,17 @@
             67,
             71
           ],
+          "pitches": [
+            60
+          ],
+          "strongBeat": true,
           "morph": 0.5454545454545454,
           "gridError": 0
         }
-      ]
+      ],
+      "maxOnsetErrorSeconds": 0,
+      "emittedNotes": 7,
+      "trailNotes": 7
     }
   ]
 }

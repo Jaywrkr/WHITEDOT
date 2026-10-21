@@ -1,6 +1,6 @@
 # Casa viva
 
-Propuesta del 21 de octubre de 2026, a partir de la idea de Luca: una casa como la base de Astro Bot, donde todo lo que consigues está a la vista, se puede recorrer y responde. No es backlog de lanzamiento (ese sigue siendo D01–D22). Pendiente de aprobación de Jay; las preguntas para Luca están al final.
+Propuesta del 21 de octubre de 2026, a partir de la idea de Luca: una casa como la base de Astro Bot, donde todo lo que consigues está a la vista, se puede recorrer y responde. No es backlog de lanzamiento (ese sigue siendo D01–D22). Aprobada por Jay el 21 de octubre como casa de muñecas; sus respuestas están al final. Las seis fases (C0–C5) están hechas en ramas encadenadas; integrarlas es decisión de Jay.
 
 ## Cómo es hoy
 
@@ -68,6 +68,7 @@ Orden de merge: C0 → C5. C0 y C1 son las más delicadas (datos y controles); a
 - **C2** (alpha.90): colección viva.
 - **C3** (alpha.91): todo suena.
 - **C4** (alpha.92): crece y juega.
+- **C5** (alpha.93): visitas, Bitácora y menú, accesibilidad y cierre. Casa 2,7 ms por fotograma frente a 4,7 ms del Mundo (móvil 390×844 a 2×, sin sonido, todo a la vista).
 
 ## Respuestas de Jay (21 de octubre)
 

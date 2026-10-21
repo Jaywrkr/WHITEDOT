@@ -8,7 +8,9 @@
       "y": 32488,
       "genre": "heart",
       "stats": {
-        "drawn": 16
+        "drawn": 0,
+        "examined": 28,
+        "clear": 21
       },
       "overflow": false,
       "lab": false,
@@ -21,7 +23,9 @@
       "y": -21008,
       "genre": "heart",
       "stats": {
-        "drawn": 16
+        "drawn": 11,
+        "examined": 28,
+        "clear": 0
       },
       "overflow": false,
       "lab": false,
@@ -34,7 +38,9 @@
       "y": 44351,
       "genre": "downtempo",
       "stats": {
-        "drawn": 14
+        "drawn": 0,
+        "examined": 28,
+        "clear": 28
       },
       "overflow": false,
       "lab": false,
@@ -47,7 +53,9 @@
       "y": -10653,
       "genre": "boombap",
       "stats": {
-        "drawn": 16
+        "drawn": 0,
+        "examined": 28,
+        "clear": 28
       },
       "overflow": false,
       "lab": false,
@@ -60,7 +68,9 @@
       "y": -10283,
       "genre": "ambient",
       "stats": {
-        "drawn": 14
+        "drawn": 0,
+        "examined": 24,
+        "clear": 24
       },
       "overflow": false,
       "lab": false,
@@ -73,7 +83,9 @@
       "y": 1172,
       "genre": "tribal",
       "stats": {
-        "drawn": 17
+        "drawn": 0,
+        "examined": 28,
+        "clear": 28
       },
       "overflow": false,
       "lab": false,
@@ -86,7 +98,9 @@
       "y": -10727,
       "genre": "downtempo",
       "stats": {
-        "drawn": 18
+        "drawn": 0,
+        "examined": 28,
+        "clear": 28
       },
       "overflow": false,
       "lab": false,
@@ -99,7 +113,9 @@
       "y": 13980,
       "genre": "boombap",
       "stats": {
-        "drawn": 11
+        "drawn": 0,
+        "examined": 28,
+        "clear": 28
       },
       "overflow": false,
       "lab": false,
