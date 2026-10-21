@@ -21,5 +21,8 @@ Regla común: cada fase mide su coste por fotograma antes y después, respeta el
 | 13 | `claude/tienda-tanda-5` | Tienda 5 · Sonido | Voces del pulso, sonido del cubo y notas pisables. |
 | 14 | `claude/tienda-tanda-6` | Tienda 6 · El mundo reacciona y locuras | Según el catálogo. |
 | 15 | `claude/tienda-tanda-7` | Tienda 7 · Habilidades y economía | Habilidades y ajuste de precios con la medición de minería. |
+| 16 | `claude/fase-e-menu` | E · Menú profesional | Cabecera con tu cubo y resumen, tarjetas con ayuda, filas de lista. |
+| 17 | `claude/fase-f-cuenta` | F · Cuenta sin fricción | Entrar una vez; después Kubono te recuerda sin pantallas de espera. |
+| 18 | `claude/fase-g-revision` | G · Revisión integral | Catálogo completo de navegador y audio y lo que haga falta corregir. |
 
-El estado de cada fase se registra en [CAMBIOS](../CAMBIOS.md) al cerrarla. Las quince quedaron hechas en sus ramas (alpha.68 a alpha.82); falta crear los PR e integrarlas en este orden.
+El estado de cada fase se registra en [CAMBIOS](../CAMBIOS.md) al cerrarla. Las quince primeras quedaron hechas en sus ramas (alpha.68 a alpha.82); E, F y G se añadieron el 21 de octubre a petición de Jay. Falta crear los PR e integrarlas en este orden.

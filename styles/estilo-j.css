@@ -454,7 +454,7 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 
 /* Silent unread marker without changing button layout. */
 #bAch.has-unread svg{stroke:var(--earned)}
-#bAch.has-unread span::after{content:" ·";color:var(--earned)}
+#bAch.has-unread span::after{content:"";display:inline-block;width:6px;height:6px;margin-left:8px;vertical-align:middle;background:var(--earned)}
 /* Tu cubo: one place for wearing, buying and travelling. Pictures are drawn by the game; gold marks what was earned. */
 .modal .sheet.cube-sheet{width:min(720px,calc(100vw - 24px));max-width:720px;max-height:min(88dvh,calc(100dvh - var(--safe-top,0px) - var(--safe-bottom,0px) - 24px));padding-top:0}
 .cube-head{display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:2;background:#000;padding:16px 0 8px}.cube-head h2{flex:1;margin:0}.cube-head strong{color:#f0d27a;font:500 16px var(--mono);white-space:nowrap}
@@ -474,3 +474,18 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 .cube-sheet #cubeHint:empty{display:none}.cube-sheet .cube-preview{margin:0;border-bottom:0}
 #cubePanelTravel h3{font:500 13px var(--mono);margin:0 0 8px}
 .cube-sheet .spark-grid h3{display:flex;justify-content:space-between;gap:6px}.cube-sheet .spark-grid h3 span{color:#f0d27a;font-weight:400;white-space:nowrap}
+
+/* Menu: who and where on top, four cards to play, then quiet list rows. */
+.menu-who{display:flex;align-items:center;gap:12px;min-width:0}
+.menu-who>div{min-width:0}
+.menu-who h2{margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu-who small{display:block;color:var(--dim);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#menuAvatar{flex:0 0 auto;width:28px;height:28px;background:#fff;box-shadow:0 0 0 4px #000,0 0 0 5px var(--line)}
+.menu-group.primary .tiles button{align-items:flex-start;justify-content:flex-start;gap:14px;text-align:left;padding:14px 12px}
+.menu-group.primary .tiles button span{display:flex;flex-direction:column;gap:4px;font-size:13px}
+.menu-group.primary .tiles button small{font:400 11px/1.35 var(--mono);color:var(--dim);letter-spacing:0}
+.menu-group:not(.primary) .tiles{grid-template-columns:1fr;gap:0}
+.menu-group:not(.primary) .tiles button{position:relative;justify-content:flex-start;gap:12px;min-height:48px;padding:12px 28px 12px 4px;font-size:13px;text-align:left}
+.menu-group:not(.primary) .tiles button::after{content:"›";position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:16px}
+.menu-group:not(.primary) .tiles button:hover,.menu-group:not(.primary) .tiles button:focus-visible{background:#ffffff0d}
+@media(min-width:600px){.menu-group:not(.primary) .tiles{grid-template-columns:1fr 1fr;column-gap:16px}}

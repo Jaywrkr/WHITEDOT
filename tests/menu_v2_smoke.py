@@ -16,7 +16,9 @@ try:
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__testRuntime?.styleUI');page.evaluate('document.getElementById("returnContinue").click();document.querySelectorAll(".modal").forEach(m=>m.hidden=true)')
    page.locator('#bMenu').click();assert page.locator('.menu-group.primary .tiles button').count()==4
-   assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Tu espacio','Crear','Más']
+   assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Tu viaje','Crear','General']
+   assert page.locator('#menuTitle').inner_text() and '✦' in page.locator('#menuSummary').inner_text(),'the menu opens on who and where'
+   assert page.locator('#bWorldHint').inner_text() in ('Explorar el Mundo','Volver al Camino')
    assert page.locator('#mMenu #bSoft').count()==0 and page.locator('#mMenu #bSession').count()==0
    page.locator('#bMusicSettings').click();before=page.evaluate('({waves:window.__testRuntime.waves.length,context:!!window.__testRuntime.ac})')
    page.locator('#rVolume').fill('25');page.locator('#rVolume').dispatch_event('change');assert page.evaluate('window.__testRuntime.S.outputVolume')==.25
