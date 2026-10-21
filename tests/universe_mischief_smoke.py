@@ -79,11 +79,11 @@ try:
     page.wait_for_function('id=>__r.savedCrystal(id)?.broken',arg=q['id'])
    page.wait_for_function('id=>!!__r.S.mischief.done[id]',arg=o['id']);assert page.evaluate('kind=>__r.S.mischief.counts[kind]',kind)==1
    print('PASS natural '+kind+' keyboard/contact completion',flush=True)
-  page.wait_for_function('Object.keys(__r.S.ach).some(id=>id.startsWith("adventure:"))');assert page.evaluate('__r.ACH.length')==370
+  page.wait_for_function('Object.keys(__r.S.ach).some(id=>id.startsWith("adventure:"))');assert page.evaluate('__r.ACH.length')==376
   page.locator('#bMenu').click();page.locator('#bAch').click();page.evaluate('__r.openJournal("achievements")');assert 'Logros' in page.locator('#journalBody').inner_text();assert page.locator('#mJournal .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2');page.screenshot(path=str(ROOT.parent/'mischief-achievements-390.png'))
   page.locator('#mJournal .sheet-close').click()
   count=page.evaluate('Object.keys(__r.S.mischief.done).length');assert count==len(cases)
   from browser_helpers import keep_place_on_reload
   keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.mischiefTick');page.locator('#returnContinue').click();assert page.evaluate('Object.keys(__r.S.mischief.done).length')==count
-  assert not errors,errors;browser.close();print('PASS '+str(len(cases))+' natural scenes, existing real mining, native sculpture orbit, menu pause, persisted claims/reload and 370-entry journal',flush=True)
+  assert not errors,errors;browser.close();print('PASS '+str(len(cases))+' natural scenes, existing real mining, native sculpture orbit, menu pause, persisted claims/reload and 376-entry journal',flush=True)
 finally:server.shutdown();server.server_close()

@@ -67,6 +67,7 @@ Orden de merge: C0 → C5. C0 y C1 son las más delicadas (datos y controles); a
 - **C1** (alpha.89): casa de muñecas caminable.
 - **C2** (alpha.90): colección viva.
 - **C3** (alpha.91): todo suena.
+- **C4** (alpha.92): crece y juega.
 
 ## Respuestas de Jay (21 de octubre)
 

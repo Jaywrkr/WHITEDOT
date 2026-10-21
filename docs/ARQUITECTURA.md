@@ -52,6 +52,13 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - pasar junto a un objeto lo toca una vez (`brush`, 22 unidades, 2,5 s de espera por objeto);
   - el pulso toca la voz del cubo y los cuatro objetos más cercanos en arpegio, y las criaturas cercanas responden con un pío;
   - los sonidos del cubo comprados en la tienda (`cube-shop-sound.js`) siguen sus pasos en la Casa con `houseMotion`.
+- **Crecer:** una habitación se abre por días jugados o por logros ganados, lo que llegue antes (`roomOpens`): Jardín 3 días u 8 logros, Azotea 7 o 20, Sótano 14 o 40. Ninguna se cierra.
+- **Cápsulas:** `house-capsules.js` pone una máquina en la Sala.
+  - Cada cápsula cuesta 60 ✦ y da un adorno (12), una pieza que suena (6) o un color para un objeto colocado (8 colores). Nada se repite.
+  - El premio sale de un hash del número de cápsula, sin tocar el azar del juego. Primero salen piezas de habitaciones abiertas y cada tercera cápsula pinta si hay objetos.
+  - Se guardan en `decor`, `tints` y `capsules` de `S.house` y viajan en el código WH2. Las chispas solo se descuentan si la partida se guarda.
+  - Las piezas que suenan entran al secuenciador como los objetos y se pueden arrastrar.
+- **Taller:** la mesa del Sótano abre el Taller de siempre; el botón «Taller» del panel se conserva.
 - **Controles:** el render pasa los `dx/dy` del fotograma a la Casa. Las flechas caminan y suben o bajan escaleras; tocar una habitación lleva al cubo hasta allí, cambiando de planta por las escaleras.
 - **Datos:** `S.house` va por la versión 2, la de la casa de muñecas (ver [Casa viva](CASA_VIVA.md)). Conserva los objetos `{kind,room,x,y}`: x es el paso del compás y y la altura en la pared, que marca la nota. Añade `decor`, `tints` y `capsules`, siempre normalizados. La versión 1 se migra en el momento; una versión mayor se abre solo para leer.
 - **Códigos:** WH1 si la casa solo tiene objetos (lo leen versiones anteriores) y WH2 si lleva adornos o colores; se leen los dos.
@@ -114,7 +121,7 @@ Tu cubo es el único lugar para cambiar el cubo (alpha.65): pestañas Llevar (lo
 
 `S.mischief` versión 1 conserva hasta 4096 lugares completados, contadores por tipo, trucos y esculturas. Cada premio de tres chispas guarda reclamación y saldo juntos; un fallo revierte ambos y espera dos segundos para reintentar. Repetir no paga ni aumenta contadores. Escenas incompletas son efímeras. Versiones futuras se preservan sin conceder premios.
 
-`adventure-achievements.js` añade 120 reglas al catálogo anterior: total registrado 370, incluido el logro retirado existente. Los premios de logros nuevos se guardan en lote y revierten fechas/recompensas ante error. No añaden chispas. Los avisos de logros se agrupan en la cola silenciosa existente; `journal.achievementSeen` conserva IDs consultados como registro compatible con respaldos. Partidas anteriores parten de sus logros actuales sin avisos retroactivos; la marca se borra al consultar Logros, con reversión si falla guardar. `activities.types` conserva tipos completados y se reconstruye para partidas anteriores a partir de sitios deterministas, sin repetir pagos. Las metas de logros usan datos propios conocidos de cada versión.
+`adventure-achievements.js` añade 120 reglas al catálogo anterior: total registrado 370, incluido el logro retirado existente. `house-capsules.js` añade seis logros de la Casa (376); se ganan en la Casa, no solo en el Mundo. Los premios de logros nuevos se guardan en lote y revierten fechas/recompensas ante error. No añaden chispas. Los avisos de logros se agrupan en la cola silenciosa existente; `journal.achievementSeen` conserva IDs consultados como registro compatible con respaldos. Partidas anteriores parten de sus logros actuales sin avisos retroactivos; la marca se borra al consultar Logros, con reversión si falla guardar. `activities.types` conserva tipos completados y se reconstruye para partidas anteriores a partir de sitios deterministas, sin repetir pagos. Las metas de logros usan datos propios conocidos de cada versión.
 
 La presentación alpha.50 aclara el saldo de chispas y refuerza el contraste de minerales y fragmentos sin cambiar minería, posiciones ni pagos. Una única pista dorada anticipa la travesura no completada más cercana entre 95 y 320 unidades, dentro de pantalla, sin sonidos, textos, interacción o sitios nuevos. Respeta pausa, capas, paseo automático, movimiento reducido y separación entre escenas.
 

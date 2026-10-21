@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.91**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.92**. Las entradas describen su revisión, no certifican producción.
+
+## Casa viva · C4 · Crece y juega · alpha.92
+
+Rama `claude/casa-c4-crece`, sobre `claude/casa-c3-sonido`. La Casa crece contigo y tiene un juguete.
+
+- **Habitaciones:** se abren por días o por logros, lo que llegue antes. Jardín: 3 días u 8 logros. Azotea: 7 o 20. Sótano: 14 o 40. Nadie pierde una habitación abierta.
+- **Máquina de cápsulas:** está en la Sala. El primer toque dice el precio; el segundo gira. Cada cápsula cuesta 60 ✦, unos cinco minutos de juego.
+  - Da 12 adornos (reloj con la hora real, cometa, luna de papel, baúl…), 6 piezas que suenan (campanas, caja de música, gong…) o un color nuevo para un objeto colocado.
+  - Nada se repite. Las piezas que suenan tocan en el compás de la Casa y se pueden mover.
+  - Las chispas solo se cobran si la partida se guarda.
+- **Logros de la Casa:** seis nuevos (primera cápsula, diez cápsulas, todos los adornos, todos los sonidos, tres colores y la mesa del Taller). El libro pasa de 370 a 376 logros.
+- **Taller:** la mesa del Sótano abre el Taller. «Desplegar Estudio aquí» ahora dice «Desplegar Taller aquí».
+- **Pruebas:**
+  - Nuevas: `house-capsules.mjs` (Node) y `house_capsules_smoke.py` en móvil y computadora.
+  - `achievements_v2_smoke`, `universe_mischief_smoke` y `universe-mischief-runtime` cuentan 376 logros.
+  - En PASS: `house_walk`, `house_v2`, `house_collection`, `house_sound`, `experience_garden`, `wonders`, `journal_v2`, `journal_scale`, `house_mix` y `smoke`.
 
 ## Casa viva · C3 · Todo suena · alpha.91
 
