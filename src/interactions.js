@@ -24,7 +24,7 @@ export function initialize(runtime) {
     if(runtime.activityActive)return;
     origin=origin==='ambient'?'ambient':'player';
     if(origin==='player'){runtime.cubeShopTap?.();runtime.cubeShopWildTap?.();}
-    if(runtime.S.mode==="studio")return;runtime.audio();const ms=performance.now();if(ms-lastSonar<700)return;lastSonar=ms;
+    if(runtime.S.mode==="studio"){if(origin==="player")runtime.housePulse?.();return;}runtime.audio();const ms=performance.now();if(ms-lastSonar<700)return;lastSonar=ms;
     if(origin==='player'){runtime.markInput?.();runtime.visualGesture?.();}
     if(origin==='player')runtime.firstJourneyEvent?.('pulse');
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.layerPulse?.();return;}

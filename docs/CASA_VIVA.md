@@ -65,6 +65,7 @@ Orden de merge: C0 → C5. C0 y C1 son las más delicadas (datos y controles); a
 
 - **C0** (alpha.88): datos versión 2, migración y códigos WH2.
 - **C1** (alpha.89): casa de muñecas caminable.
+- **C2** (alpha.90): colección viva.
 
 ## Respuestas de Jay (21 de octubre)
 
