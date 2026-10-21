@@ -23,7 +23,8 @@ assert.equal(capsulePrize(normalizeHouse({decor:CAPSULE_PIECES.map(p=>({id:p.id,
 const saved=normalizeHouse(JSON.parse(JSON.stringify(h)),0,0);assert.equal(saved.decor.length,18);assert.equal(saved.capsules.count,40);assert(saved.tints['obj:origen']);
 const visit=decodeHouse(encodeHouse(saved));assert.equal(visit.decor.length,18);assert.equal(visit.tints['obj:origen'],saved.tints['obj:origen']);
 // Sounding pieces join the sequencer.
-assert.equal(capsuleObjects(saved).length,6);assert(capsuleObjects(saved).every(o=>capsuleDefinition(o)));assert.equal(capsuleDefinition({kind:'decor:reloj'}),null);
+assert.equal(capsuleObjects(saved).length,1,'only the open Sala sounds on day one');assert.equal(capsuleObjects(normalizeHouse(saved,14,0)).length,6);assert.equal(capsuleObjects({unlocked:['x'],decor:[{id:'sound:gong',room:'x',x:.5,y:.5}]}).length,0,'an unknown room never reaches the sequencer');
+const all=normalizeHouse(saved,14,0);assert(capsuleObjects(all).every(o=>capsuleDefinition(o)));assert.equal(capsuleDefinition({kind:'decor:reloj'}),null);
 // House achievements read only the house.
 assert.equal(HOUSE_ACHIEVEMENTS.length,6);assert(HOUSE_ACHIEVEMENTS.every(p=>p.category==='Casa'&&p.adventure));
 const s={house:{...saved,workbench:true}};for(const p of HOUSE_ACHIEVEMENTS)assert.equal(adventureProgress(p,s).ratio,1,p.id);

@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.94**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.95**. Las entradas describen su revisión, no certifican producción.
+
+## L1 · Candidato · Revisión de la Casa · alpha.95
+
+Rama `claude/l1-candidato`, sobre `claude/casa-c6-viaje`. Revisión de código de todas las fases de la Casa antes del candidato.
+
+- **Toques:** la mesa del Taller, la máquina y el motor solo responden con el cubo al lado; desde lejos, tocarlos camina hasta allí. Un objeto colgado delante se toca primero. Los toques fuera de las paredes (suelo, partes bajas) también caminan.
+- **Solo lectura:** una marca de solo lectura guardada por una versión anterior ya no bloquea para siempre la casa.
+- **Visitas:** un código manipulado con una habitación desconocida ya no rompe la música. Las piezas que suenan en habitaciones cerradas callan. Al visitar se guarda antes el lugar del cubo en tu casa.
+- **Corrección de C5:** «Puertas abiertas» siempre contó las criaturas que visitan tu casa; C5 lo había cambiado por error a casas visitadas. Vuelve a decir «Recibe N visitas diferentes» y las casas que visitas se guardan aparte (`visitedHouses`), sin logro.
+- **Pruebas:** `house-v2.mjs` y `house-capsules.mjs` cubren los arreglos; recorridos de la Casa, Taller, visitas, Jardín y `smoke` en PASS.
 
 ## Casa viva · C6 · La casa viaja contigo · alpha.94
 
@@ -24,8 +34,7 @@ Rama `claude/casa-c6-viaje`, sobre `claude/casa-c5-visitas`. Pedido de Jay: que 
 Rama `claude/casa-c5-visitas`, sobre `claude/casa-c4-crece`. Cierra la Casa viva.
 
 - **Visitas:** un código WH2 abre la casa de otra persona con sus adornos y colores. Se recorre y se escucha, pero no se cambia ni se gasta nada. El código no lleva nombre.
-  - Cada casa distinta cuenta una vez para los logros «Puertas abiertas», que ahora dicen «Visita N casas diferentes». Tu propio código no cuenta.
-  - Antes, esos logros no se podían ganar.
+  - Cada casa distinta se guarda una vez; tu propio código no cuenta. (Corregido en L1: «Puertas abiertas» sigue contando las criaturas que te visitan.)
 - **Bitácora:** «Ver en tu casa» en Colección y Logros.
 - **Menú:** la tarjeta Casa dice qué hay de nuevo: cuadros nuevos, trofeos nuevos o una cápsula lista.
 - **Accesibilidad:**

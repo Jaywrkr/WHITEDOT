@@ -1,4 +1,4 @@
-import {HOUSE_OBJECTS} from './house-model.js';
+import {HOUSE_OBJECTS,HOUSE_ROOMS} from './house-model.js';
 import {roomBox,wallPoint} from './house-view.js';
 import {debitSparks} from './sparks-model.js';
 import {prefersReducedMotion} from './frame-state.js';
@@ -50,7 +50,7 @@ export function applyPrize(house,prize){
 }
 // Sounding pieces join the house like any placed object: same sequencer, same walls.
 export const capsuleDefinition=o=>CAPSULE_SOUNDS.find(p=>p.id===o?.kind)||null;
-export const capsuleObjects=house=>(house?.decor||[]).filter(d=>CAPSULE_SOUNDS.some(p=>p.id===d.id)).map(d=>({kind:d.id,room:d.room,x:d.x,y:d.y,capsule:true}));
+export const capsuleObjects=house=>(house?.decor||[]).filter(d=>CAPSULE_SOUNDS.some(p=>p.id===d.id)&&(house.unlocked||['sala']).includes(d.room)&&HOUSE_ROOMS.some(r=>r.id===d.room)).map(d=>({kind:d.id,room:d.room,x:d.x,y:d.y,capsule:true}));
 // House achievements: earned in the house itself.
 const rule=(id,name,description,metric,threshold)=>Object.freeze({id:'house:'+id,name,description,metric,threshold,category:'Casa',hidden:false,tier:threshold>=10?'oro':threshold>=3?'plata':'bronce',adventure:true});
 export const HOUSE_ACHIEVEMENTS=Object.freeze([
@@ -99,11 +99,11 @@ export function initialize(runtime){
   const name=prize.type==='tint'?'Color nuevo para '+(HOUSE_OBJECTS.find(d=>d.id===prize.kind)?.name||'un objeto'):prize.piece.name+' · '+({sala:'Sala',jardin:'Jardín',azotea:'Azotea',sotano:'Bodega'})[prize.piece.room];
   runtime.toast('<em>Cápsula</em> · '+name);return prize;}
  // A tap on the machine asks first; a second tap within four seconds turns the knob.
- function tap(hx,hy){const h=runtime.currentHouse?.();if(!h)return false;
-  if(Math.abs(hx-MACHINE.x)<=MACHINE.w/2+4&&hy<=MACHINE.floor&&hy>=MACHINE.floor-MACHINE.h-6){if(h.readOnly||runtime.houseVisiting?.()){runtime.toast('De visita, la máquina no gira.');return true;}
+ function tap(hx,hy){const h=runtime.currentHouse?.();if(!h)return false;const st=runtime.houseStand?.(),at=(x0,x1)=>!st||st.floor===1&&st.fx>=x0&&st.fx<=x1;
+  if(Math.abs(hx-MACHINE.x)<=MACHINE.w/2+4&&hy<=MACHINE.floor&&hy>=MACHINE.floor-MACHINE.h-6&&at(MACHINE.x-40,MACHINE.x+40)){if(h.readOnly||runtime.houseVisiting?.()){runtime.toast('De visita, la máquina no gira.');return true;}
    const now=performance.now();if(now-armedAt<4000){armedAt=-1e9;open();}else{armedAt=now;runtime.toast('Cápsula · '+CAPSULE_PRICE+' ✦. Toca otra vez para girar.');}return true;}
-  if((h.unlocked||[]).includes('sotano')&&hx>=ENGINE.x0&&hx<=ENGINE.x1&&hy>=ENGINE.top&&hy<=ENGINE.bottom){runtime.toast('Motor de la casa · la lleva contigo.');return true;}
-  if(hx>=WORKBENCH.x0&&hx<=WORKBENCH.x1&&hy>=WORKBENCH.top&&hy<=WORKBENCH.bottom){if(h.readOnly||runtime.houseVisiting?.())return false;
+  if((h.unlocked||[]).includes('sotano')&&hx>=ENGINE.x0&&hx<=ENGINE.x1&&hy>=ENGINE.top&&hy<=ENGINE.bottom&&(!st||st.floor===2&&st.fx>=ENGINE.x0-40&&st.fx<=ENGINE.x1+40)){runtime.toast('Motor de la casa · la lleva contigo.');return true;}
+  if(hx>=WORKBENCH.x0&&hx<=WORKBENCH.x1&&hy>=WORKBENCH.top&&hy<=WORKBENCH.bottom&&at(WORKBENCH.x0-10,WORKBENCH.x1+10)){if(h.readOnly||runtime.houseVisiting?.())return false;
    if(h.workbench!==true){h.workbench=true;runtime.save();}runtime.houseOpenWorkshop?.();return true;}
   return false;}
  function draw(c,{toScreen,k,t,calm:still,house,cube,night=0}){

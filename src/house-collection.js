@@ -69,7 +69,7 @@ export function initialize(runtime){
    if(id==='pet:luciernaga'){c.fillRect(-2,-1,4,2);}else if(id.startsWith('pet:')){c.beginPath();c.moveTo(-7,Math.sin(t/280)*2);c.lineTo(0,0);c.lineTo(7,Math.sin(t/280)*2);c.stroke();}else livingGlyph(c,{shape:livingDefinition(id)?.shape||'moth',size:7,phase:i},calm?0:t);
    if(near&&sinceHop<1.2){c.fillStyle='#e58fb0';c.globalAlpha=Math.max(0,1-sinceHop/1.2);c.fillRect(-2,-16-sinceHop*10,2,2);c.fillRect(1,-16-sinceHop*10,2,2);c.fillRect(-1,-15-sinceHop*10,3,2);}
    c.restore();hits.push({x:p.x-10,y:p.y-12,w:20,h:20,text:(id.startsWith('pet:')?'Tu mascota':livingDefinition(id)?.name||'Criatura')+' · de visita'});
-   if(runtime.S.house&&!runtime.S.house.readOnly&&!runtime.S.house.knownVisitors?.[id])runtime.S.house.knownVisitors={...runtime.S.house.knownVisitors,[id]:true};}
+   if(runtime.S.house&&!runtime.S.house.readOnly&&!runtime.houseVisiting?.()&&!runtime.S.house.knownVisitors?.[id])runtime.S.house.knownVisitors={...runtime.S.house.knownVisitors,[id]:true};}
   c.restore();
  }
  // What is under a tap, to name it.
