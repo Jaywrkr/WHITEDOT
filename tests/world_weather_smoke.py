@@ -23,6 +23,10 @@ try:
   page.evaluate("""async()=>{const {stormsNear}=await import('/src/alive.js');const r=__r,RP=r.REG*r.WCH,u=r.S.wx/RP,v=r.S.wy/RP,best=stormsNear(u,v,Date.now()).sort((a,b)=>b.life*b.r-a.life*a.r)[0];r.S.wx=best.x*RP;r.S.wy=best.y*RP;}""")
   page.wait_for_function('__r.rainingNow&&__r.weatherSplashes()>3',timeout=20000)
   page.screenshot(path='/tmp/kubono-weather-rain.png')
+  # A full panel pauses the light drops: none move, none land on the cube, no note plays behind it.
+  page.evaluate("()=>{const r=__r;r.rain.push({x:r.S.wx,y:r.S.wy-30,vy:120});document.getElementById('mSettings').hidden=false;}");page.wait_for_timeout(150)
+  held=page.evaluate("()=>({drops:__r.rain.map(q=>q.y),queue:__r.MU.queue.length})");page.wait_for_timeout(1200)
+  assert page.evaluate("__r.rain.map(q=>q.y)")==held['drops'] and page.evaluate('__r.MU.queue.length')<=held['queue'],'drops wait behind a panel'
   # Sound on at night and in rain: the beds start without errors.
   page.mouse.click(30,400);page.evaluate("()=>{__r.S.sound=true;__r.audio?.();__r.S.livingSeconds+=300;}");page.wait_for_timeout(2500)
   # Reduced motion: no gust, no wake, no splashes.

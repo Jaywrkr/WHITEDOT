@@ -53,6 +53,8 @@ try:
     assert not undersized,(modal,undersized)
     assert page.locator('#'+modal).evaluate('(e)=>e.contains(document.activeElement)')
     if modal=='mMusic':
+     # Sound is a light panel: the world keeps playing behind it, so a falling drop caught now would be a real note, not the panel's.
+     page.evaluate('__testRuntime.rain.length=0')
      before=page.evaluate('({style:__testRuntime.S.style,waves:__testRuntime.waves.length,queue:__testRuntime.MU.queue.length})')
      page.wait_for_timeout(80)
      assert page.evaluate('__testRuntime.S.style')==before['style'], 'opening settings cannot alter music'

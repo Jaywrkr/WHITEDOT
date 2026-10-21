@@ -500,3 +500,25 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 .settings-hint{grid-column:1/-1;margin:-2px 0 6px;font-size:11px;color:var(--dim)}
 .settings-diagnostic{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
 .settings-diagnostic p{margin:0;font-size:12px;color:var(--dim)}
+
+/* One close mark in every panel, centred with its title. */
+.panel-heading,.menu-heading{display:flex;align-items:center;justify-content:space-between}
+.sheet-close{display:inline-flex;align-items:center;justify-content:center;height:44px}
+.sheet-close svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.5;fill:none}
+.sheet-close:hover,.sheet-close:focus-visible{color:var(--ink)}
+/* A file choice in Spanish: the browser's own control stays for keyboard and tests, out of sight. */
+.file-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.file-pick{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:6px 12px;cursor:pointer}
+.file-pick>:first-child{grid-column:1/-1}
+.file-pick-button{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--line);color:var(--ink);font-size:12px}
+.file-pick:hover .file-pick-button,.file-input:focus-visible+*{border-color:var(--ink)}
+.file-pick-name{font-size:12px;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mSaveTools .file-pick:has(+ .file-input:focus-visible) .file-pick-button{outline:2px solid var(--ink);outline-offset:2px}
+
+/* Ajustes: each choice on its own line, full width; the two switches read as list rows. */
+#mSettings .menu-prefs{grid-template-columns:1fr;gap:6px}
+#mSettings .menu-prefs select{width:100%}
+#mSettings .menu-prefs>label{margin-top:8px}
+#mSettings .tiles{display:grid;grid-template-columns:1fr;gap:0;margin-top:12px}
+#mSettings .tiles button{justify-content:flex-start;gap:12px;min-height:48px;padding:12px 4px;border:0;border-bottom:1px solid var(--line);background:transparent;font-size:13px;text-align:left}
+#mSettings .tiles button[aria-pressed="true"]{color:var(--ink)}

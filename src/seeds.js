@@ -13,10 +13,12 @@ export function initialize(runtime){
 
  let prototype=true;
  function open(test=true){
-  prototype=test;runtime.$('seedSummary').textContent=test?'Compara mundos desde el centro. Tu partida habitual queda separada.':'Tu progreso de cada semilla se conserva.';select.hidden=label.hidden=!test;runtime.$("mSeeds").querySelector("h2").textContent=test?"Semillas de prueba":"Viaja a otra semilla";submit.textContent=test?"Probar":"Viajar";
+  prototype=test;const tools=test||document.body.classList.contains('dev');for(const id of ['seedPresets','seedGeneration','seedLayout'])$(id).hidden=!tools;for(const l of $('mSeeds').querySelectorAll('label[for="seedGeneration"],label[for="seedLayout"]'))l.hidden=!tools;
+  runtime.$('seedSummary').textContent=test?'Compara mundos desde el centro. Tu partida habitual queda separada.':'Tu progreso de cada semilla se conserva.';select.hidden=label.hidden=!test;runtime.$("mSeeds").querySelector("h2").textContent=test?"Semillas de prueba":"Viaja a otra semilla";submit.textContent=test?"Probar":"Viajar";
   select.value=new URLSearchParams(location.search).get('encounter')||'';$('seedValue').value=runtime.S.previewSeed||'original';$('seedLayout').value=runtime.S.previewLayout||'wide';$('seedGeneration').value=runtime.S.previewSeed?String(runtime.worldIdentity.generatorVersion):'2';
   const d=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);
-  $('seedInfo').textContent=`${runtime.S.previewSeed?(prototype?'Prueba: ':'Semilla: ')+runtime.S.previewSeed:'Partida habitual'} · ${d.worldFamily?.name||d.ecology?.name||runtime.BIOMES[d.z].name} · ${runtime.GEN[d.genre].name} · ${d.bpm} BPM · Biomas de ${runtime.REG*runtime.WCH} unidades`;
+  const place=d.worldFamily?.name||d.ecology?.name||runtime.BIOMES[d.z].name;
+  $('seedInfo').textContent=tools?`${runtime.S.previewSeed?(prototype?'Prueba: ':'Semilla: ')+runtime.S.previewSeed:'Partida habitual'} · ${place} · ${runtime.GEN[d.genre].name} · ${d.bpm} BPM · Biomas de ${runtime.REG*runtime.WCH} unidades`:`${runtime.S.previewSeed?'Semilla '+runtime.S.previewSeed:'Tu partida'} · ${place} · ${runtime.GEN[d.genre].name}`;
   $('mSeeds').hidden=false;
  }
  function saveBeforeLeaving(){runtime.S.collected=[...runtime.collected];if(runtime.save())return true;runtime.toast('No se pudo guardar. Seguimos en este mundo.');return false;}

@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.86**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.87**. Las entradas describen su revisión, no certifican producción.
+
+## Fase I · Textos y paneles · alpha.87
+
+Rama `claude/fase-i-textos`, sobre `claude/fase-h2-calidad`. Revisión con capturas de los 23 paneles en móvil y computadora y de todos sus textos visibles.
+
+- **Cerrar:** la «×» de texto, diminuta y desalineada, pasa a ser una X dibujada del mismo tamaño en todos los paneles, centrada con el título.
+- **Guardar copia:** el selector de archivo del navegador salía en inglés («Choose File / No file chosen»). Ahora es un botón «Elegir archivo» con el nombre del archivo o «Ningún archivo elegido».
+- **Viaja a otra semilla:** fuera del modo de desarrollo ya no muestra semillas de prueba (Blobs, Basalto…), opciones técnicas de paisaje y espacio ni «Biomas de 3600 unidades». El jugador ve dónde está: semilla, lugar y estilo.
+- **Ajustes:** cada opción en su línea a lo ancho (el selector de paseo ya no se corta) y los interruptores «Modo» y «Datos del mundo» como filas de lista.
+- **Gotas de luz:** con un panel completo abierto se detienen y dejan de aparecer. Antes podían caer sobre el cubo y sonar con el juego pausado. Los paneles ligeros (Sonido, Tu cubo) mantienen el mundo vivo detrás, como antes.
+- **Textos:** no quedan textos en inglés ni palabras de prueba visibles para el jugador; los términos (chispas, Bitácora, Tu cubo) se usan igual en todo el juego.
+- **Pruebas:**
+  - `interface_smoke.py` fallaba a veces porque una gota caía sobre el cubo durante la medición. Ahora retira las gotas antes de medir y pasa 6 de 6.
+  - `world_weather_smoke.py` comprueba que las gotas esperan detrás de un panel.
 
 ## Fase H · Estabilidad · alpha.86
 

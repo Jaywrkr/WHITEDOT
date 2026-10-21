@@ -91,7 +91,7 @@
 
 
 <div class="modal lite" id="mCube" role="dialog" aria-modal="true" aria-labelledby="cubeTitle" hidden><div class="sheet cube-sheet">
- <header class="cube-head"><h2 id="cubeTitle">Tu cubo</h2><strong id="sparkBalance"></strong><button id="cubeClose" class="sheet-close" aria-label="Cerrar Tu cubo">×</button></header>
+ <header class="cube-head"><h2 id="cubeTitle">Tu cubo</h2><strong id="sparkBalance"></strong><button id="cubeClose" class="sheet-close" aria-label="Cerrar Tu cubo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>
  <div id="cubePreview" class="cube-preview" role="img" aria-label="Tu cubo con lo que llevas"><canvas id="cubePreviewCanvas" aria-hidden="true"></canvas><i></i></div>
  <p id="cubeHint" role="status"></p>
  <div id="cubeTabs" class="cube-tabs" role="tablist" aria-label="Tu cubo"><button id="cubeTabWear" role="tab" data-cube-tab="wear" aria-controls="cubePanelWear" aria-selected="true">Llevar</button><button id="cubeTabShop" role="tab" data-cube-tab="shop" aria-controls="cubePanelShop" aria-selected="false" tabindex="-1">Tienda</button><button id="cubeTabTravel" role="tab" data-cube-tab="travel" aria-controls="cubePanelTravel" aria-selected="false" tabindex="-1">Viaje</button></div>
@@ -134,10 +134,10 @@
 <div class="zone" id="zone" aria-live="polite"><small id="zMood"></small><b id="zName"></b><span id="zDo"></span></div>
 
 <div class="modal" id="mSeeds" hidden><div class="sheet"><h2>Semillas de prueba</h2><p id="seedSummary">Tu progreso de cada semilla se conserva.</p><p id="seedInfo"></p><label for="seedGeneration">Paisaje</label><select id="seedGeneration"><option value="2">Paisajes vivos · explorar</option><option value="1">Original · volver y comparar</option></select><label for="seedLayout">Espacio</label><select id="seedLayout"><option value="immense">Inmenso · regiones de 100.800</option><option value="grand">Gran territorio · regiones de 50.400</option><option value="vasto">Vasto · regiones de 18.000</option><option value="wide">Amplio · más espacio</option><option value="classic">Clásico · comparar</option></select><form id="seedForm" class="row"><label for="seedValue">Semilla</label><input id="seedValue" maxlength="40" autocomplete="off"><button type="submit">Probar</button></form><div class="row" id="seedPresets"><button data-seed="blobs-01">Blobs I</button><button data-seed="blobs-02">Blobs II</button><button data-seed="bosque-01">Otra tierra</button><button data-seed="humedal-01">Humedal</button><button data-seed="salinas-01">Salinas</button><button data-seed="basalto-01">Basalto</button><button data-seed="micelio-01">Micelio</button></div><div class="row"><button id="seedNext">Otra semilla</button><button id="seedCenter">Volver al centro</button><button id="seedOriginal">Mi partida</button><button id="seedClose">Cerrar</button></div></div></div>
-<div class="modal" id="mSaveTools" hidden><div class="sheet"><h2>Guardar copia</h2><p>Tu progreso y tus lugares, en un archivo. Guárdalo.</p><p id="saveStatus" role="status"></p><div class="row"><button id="saveExport">Exportar esta partida</button><button id="saveOriginal" hidden>Exportar original conservado</button><button id="saveRecover" hidden>Recuperar copia válida</button></div><label for="saveImportFile">Elegir copia de esta partida</label><input id="saveImportFile" type="file" accept="application/json,.json"><p>Restaurar reemplaza esta partida. Antes se guarda una copia.</p><div class="row"><button id="saveImportApply" disabled>Restaurar copia elegida</button><button id="saveToolsClose">Cerrar</button></div></div></div>
+<div class="modal" id="mSaveTools" hidden><div class="sheet"><h2>Guardar copia</h2><p>Tu progreso y tus lugares, en un archivo. Guárdalo.</p><p id="saveStatus" role="status"></p><div class="row"><button id="saveExport">Exportar esta partida</button><button id="saveOriginal" hidden>Exportar original conservado</button><button id="saveRecover" hidden>Recuperar copia válida</button></div><label for="saveImportFile" class="file-pick"><span>Elegir copia de esta partida</span><span class="file-pick-button">Elegir archivo</span><span id="saveImportName" class="file-pick-name">Ningún archivo elegido</span></label><input id="saveImportFile" class="file-input" type="file" accept="application/json,.json"><p>Restaurar reemplaza esta partida. Antes se guarda una copia.</p><div class="row"><button id="saveImportApply" disabled>Restaurar copia elegida</button><button id="saveToolsClose">Cerrar</button></div></div></div>
 <div class="modal menu" id="mMenu" hidden>
   <div class="sheet menu-sheet">
-    <header class="menu-heading"><div class="menu-who"><i id="menuAvatar" aria-hidden="true"></i><div><h2 id="menuTitle">Kubono</h2><small id="menuSummary">Tu espacio</small></div></div><button id="mnClose" class="sheet-close" aria-label="Cerrar menú">×</button></header>
+    <header class="menu-heading"><div class="menu-who"><i id="menuAvatar" aria-hidden="true"></i><div><h2 id="menuTitle">Kubono</h2><small id="menuSummary">Tu espacio</small></div></div><button id="mnClose" class="sheet-close" aria-label="Cerrar menú"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>
     <div class="menu-sections">
     <section class="menu-group primary"><h3>Jugar</h3><div class="tiles">
       <button id="bCube"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/><path d="M3 3h3M18 21h3"/></svg><span>Tu cubo<small>Llevar, tienda y viaje</small></span></button>
@@ -173,7 +173,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.86</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.87</span><small id="releaseDeploy">deploy sin registrar</small></div>
     <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>

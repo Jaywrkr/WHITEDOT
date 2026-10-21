@@ -10,9 +10,9 @@ export function initialize(runtime){
  }
  function apply(){if(!pending)return;try{runtime.stopAutopilot?.();runtime.saveStore.restore(pending);pending=null;location.reload();}catch(error){text('No se pudo restaurar: '+error.message);}}
  function recover(){try{runtime.saveStore.recover();location.reload();}catch(error){text('No se pudo recuperar: '+error.message);}}
- function open(){pending=null;$('saveImportFile').value='';reading++;refresh();panel.hidden=false;}
+ function open(){pending=null;$('saveImportFile').value='';$('saveImportName').textContent='Ningún archivo elegido';reading++;refresh();panel.hidden=false;}
  function tick(){const s=runtime.storageStatus;if(s.kind==='ok'){lastNotice='';return;}if(s.kind!==lastNotice&&runtime.toast){lastNotice=s.kind;runtime.toast('No pudimos guardar en este dispositivo. Tu progreso necesita atención.');}}
- $('bSaveTools').onclick=open;$('saveToolsClose').onclick=()=>{panel.hidden=true;reading++;pending=null;};$('saveExport').onclick=exportCurrent;$('saveImportFile').onchange=e=>choose(e.target.files[0]);$('saveImportApply').onclick=apply;$('saveRecover').onclick=recover;
+ $('bSaveTools').onclick=open;$('saveToolsClose').onclick=()=>{panel.hidden=true;reading++;pending=null;};$('saveExport').onclick=exportCurrent;$('saveImportFile').onchange=e=>{const f=e.target.files[0];$('saveImportName').textContent=f?f.name.slice(0,60):'Ningún archivo elegido';choose(f);};$('saveImportApply').onclick=apply;$('saveRecover').onclick=recover;
  $('saveOriginal').onclick=()=>download(runtime.saveStore.original(),'kubono-original-conservado.json');
  Object.defineProperties(runtime,{saveToolsTick:{get:()=>tick},openSaveTools:{get:()=>open}});
 }
