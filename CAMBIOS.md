@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.80**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.81**. Las entradas describen su revisión, no certifican producción.
+
+## Tienda · tanda 6 · El mundo reacciona y Locuras · alpha.81
+
+Rama `claude/tienda-tanda-6`, sobre `claude/tienda-tanda-5`. Once piezas (7350 ✦) en `src/cube-shop-wild.js`, solo dibujo:
+
+- **El mundo reacciona:** Linterna (luz cálida en el Subsuelo y farolillo junto al cubo), Hierba (se aparta más ancho y más lejos), Charcos (fijos por lugar; reflejan el cubo al pisarlos y hacen ondas con lluvia), Séquito (tres criaturas conocidas siguen tu camino) y Tu constelación (tu inicial en estrellas, más clara de noche).
+- **Locuras:** Morse (tu nombre en el reloj de la música), Mochila (tus tres últimas tarjetas), Pantalla (BPM y género, bajo el cubo), Holograma (tu tarjeta más rara), Disfraces (tres pulsos seguidos: esfera, pirámide o dodecaedro un minuto) y Piel VJ (franjas que laten en los colores de la región).
+- Todas tienen versión quieta con movimiento reducido y su imagen en la tienda es su dibujo real.
+- Pruebas: `cube-shop-wild.mjs` (Node) y `cube_wild_smoke.py` (compra, juego en movimiento y quieto, recarga, Llevar).
 
 ## Tienda · tanda 5 · Sonido · alpha.80
 

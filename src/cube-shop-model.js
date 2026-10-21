@@ -85,7 +85,18 @@ export const CUBE_SHOP=Object.freeze([
  {id:'sound:hum',slot:'sound',name:'Tarareo',cost:600,text:'Quieto, tararea bajito la melodía de la región.',art:''},
  {id:'sound:dj',slot:'sound',name:'Modo DJ',cost:700,text:'Scratch al cambiar de dirección.',art:''},
  {id:'sound:antenna',slot:'sound',name:'Antena',cost:900,text:'Oye de lejos la radio de la región vecina.',art:''},
- {id:'trail:notes',slot:'trail',name:'Notas pisables',cost:1000,text:'Deja notas que suenan al volver a pisarlas: loops caminando.',art:''}
+ {id:'trail:notes',slot:'trail',name:'Notas pisables',cost:1000,text:'Deja notas que suenan al volver a pisarlas: loops caminando.',art:''},
+ {id:'world:lantern',slot:'world',name:'Linterna',cost:250,text:'Luz propia en el Subsuelo.',art:''},
+ {id:'world:grass',slot:'world',name:'Hierba',cost:300,text:'La hierba se aparta a tu paso.',art:''},
+ {id:'world:puddles',slot:'world',name:'Charcos',cost:400,text:'Los charcos reflejan el cubo.',art:''},
+ {id:'world:retinue',slot:'world',name:'Séquito',cost:500,text:'Tres criaturas te siguen un rato.',art:''},
+ {id:'world:constellation',slot:'world',name:'Tu constelación',cost:800,text:'Las estrellas forman tu inicial.',art:''},
+ {id:'wild:morse',slot:'wild',name:'Morse',cost:300,text:'Parpadea tu nombre en morse.',art:''},
+ {id:'wild:backpack',slot:'wild',name:'Mochila',cost:500,text:'Lleva colgadas tus tres últimas tarjetas.',art:''},
+ {id:'wild:screen',slot:'wild',name:'Pantalla',cost:600,text:'Muestra el BPM o el género que suena.',art:''},
+ {id:'wild:hologram',slot:'wild',name:'Holograma',cost:700,text:'Proyecta encima tu tarjeta más rara.',art:''},
+ {id:'wild:costume',slot:'wild',name:'Disfraces',cost:1500,text:'Tres pulsos seguidos: esfera, pirámide o dodecaedro durante un minuto.',art:''},
+ {id:'wild:vjskin',slot:'wild',name:'Piel VJ',cost:1500,text:'Los visuales VJ sobre el cuerpo del cubo.',art:''}
 ].map(Object.freeze));
 export const shopPiece=id=>CUBE_SHOP.find(p=>p.id===id)||null;
 export const shopSlot=id=>CUBE_SHOP_SLOTS.find(s=>s.id===id)||null;
