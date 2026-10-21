@@ -61,7 +61,18 @@ Cada fase va en su rama encadenada a la anterior. Yo hago commit y push; Jay cre
 
 Orden de merge: C0 → C5. C0 y C1 son las más delicadas (datos y controles); a partir de C2 cada fase añade sin tocar lo anterior.
 
-## Preguntas para Luca y Jay
+## Respuestas de Jay (21 de octubre)
+
+- **Vista:** por decidir entre primera persona y casa de muñecas. Se hicieron bocetos de ambas.
+  - Recomendación: casa de muñecas. Se ve todo de un vistazo, el cubo se ve con su vestuario, encaja en Canvas 2D y en el estilo de píxeles, y es ligera en móviles.
+  - La primera persona exige un motor de rayos nuevo, esconde al cubo y sus piezas de la tienda, y puede marear en pantallas pequeñas.
+  - Posible término medio: casa de muñecas y, al acercarse a un cuadro o una vitrina, una vista de cerca en primera persona.
+- **Orden al entrar:** el de la propuesta. Primero las criaturas, luego los trofeos y la música.
+- **Máquina de cápsulas:** de todo. Adornos, colores para los objetos y sonidos nuevos.
+- **Piezas de sonido de la tienda:** sí suenan dentro de la Casa.
+- **Nombre del dueño al visitar:** solo cuando el juego tenga varios jugadores. Hasta entonces el código de visita no lleva nombre.
+
+## Preguntas originales
 
 1. ¿La Casa se ve desde arriba, como el Mundo, o de lado, como una casa de muñecas en corte?
 2. ¿Qué te gustaría encontrar al entrar: tus criaturas, tus trofeos o tu música sonando?
