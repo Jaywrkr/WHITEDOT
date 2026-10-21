@@ -22,7 +22,7 @@ try:
    page.locator('#rVolume').fill('25');page.locator('#rVolume').dispatch_event('change');assert page.evaluate('window.__testRuntime.S.outputVolume')==.25
    assert page.evaluate('window.__testRuntime.musicVolume()')==.25
    assert page.evaluate('!!window.__testRuntime.ac')==before['context'];assert page.evaluate('window.__testRuntime.waves.length')<=before['waves']
-   page.locator('#muClose').click();page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#voiceMode').select_option('guia');page.locator('#autoIntent').select_option('vida')
+   page.locator('#voiceMode').select_option('guia');page.locator('#muClose').click();page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#autoIntent').select_option('vida')
    assert page.evaluate('window.__testRuntime.S.voiceMode')=='guia';page.keyboard.press('Escape');page.reload();page.wait_for_function('!!window.__testRuntime?.styleUI');assert page.evaluate('window.__testRuntime.S.outputVolume')==.25
    assert not errors,errors;print('PASS clean groups, one sound sheet, silent volume and persisted settings at '+str(width),flush=True);page.close()
   b.close()
