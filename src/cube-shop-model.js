@@ -101,8 +101,10 @@ export const CUBE_SHOP=Object.freeze([
  {id:'skill:sprint',slot:'skills',name:'Sprint',cost:600,text:'Al arrancar tras parar, un acelerón breve. Se recarga en 6 s.',art:''},
  {id:'skill:glide',slot:'skills',name:'Planeo',cost:750,text:'En el Cielo, toca y planea unos segundos antes de bajar.',art:''}
 ].map(Object.freeze));
-export const shopPiece=id=>CUBE_SHOP.find(p=>p.id===id)||null;
-export const shopSlot=id=>CUBE_SHOP_SLOTS.find(s=>s.id===id)||null;
+// Asked many times per frame: looked up by map.
+const PIECES=new Map(CUBE_SHOP.map(p=>[p.id,p])),SLOTS=new Map(CUBE_SHOP_SLOTS.map(s=>[s.id,s]));
+export const shopPiece=id=>PIECES.get(id)||null;
+export const shopSlot=id=>SLOTS.get(id)||null;
 const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
 const safeKey=k=>typeof k==='string'&&k.length>0&&k.length<80&&!['__proto__','constructor','prototype'].includes(k);
 // wear: one piece per single slot; on: pieces switched on in slots that allow many.

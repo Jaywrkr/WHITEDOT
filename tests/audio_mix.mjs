@@ -101,7 +101,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
    if(r.inhabitantFixture&&tick>=40&&tick%80===40)r.beatSoon(time=>r.playVoice('habitante',0,time,r.MU.dnaT,false,.65,r.inhabitantFixture,'player'),null,'player');
    if(r.microFixture&&tick>=40&&tick%20===0){r.microFixture.entry++;r.playVoice(scene,Math.floor(tick/20)%3*2,clock+.13,r.MU.dnaT,false,.65,r.microFixture,'player');}
    if(ecology&&tick%16===0)sources.slice(0,4).forEach((source,i)=>{r.playVoice('ecology:'+['reed','pod','lichen','stone'][i]+':'+['bass','groove','space','groove'][i],i,clock+.13,r.MU.dnaT,false,.5,source,'player');ecologyNotes++;});
-   if(shopPieces)r.drawCubeShopSoundUnder(blankCanvas,0,0,10,clock*1000);
+   if(shopPieces){r.cubeShopFilterTick();r.drawCubeShopSoundUnder(blankCanvas,0,0,10,clock*1000);}
    if(dense&&tick%10===0)sources.forEach((source,i)=>r.playVoice(worldSeed?'forma:'+r.MU.dnaT.species[i%r.MU.dnaT.species.length].id:['arbol','cristal','pulso','luz'][i%4],i,clock+.13,r.MU.dnaT,true,.9,source,scene?'player':'ambient'));
   }
   rendering=true;const buffer=await context.startRendering();window.__mixCapture?.(buffer);const data=Array.from({length:2},(_,i)=>buffer.getChannelData(i));

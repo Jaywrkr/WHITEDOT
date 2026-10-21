@@ -1,6 +1,6 @@
 {
   "renders": 8,
-  "maxPeak": 0.8795167207717896,
+  "maxPeak": 0.8795154094696045,
   "sampleRates": [
     44100,
     48000
@@ -10,7 +10,7 @@
       "kind": "voice",
       "piece": "voice:808",
       "genre": "minimaltechno",
-      "peak": 0.8725674152374268,
+      "peak": 0.8725675344467163,
       "hotFraction": 0,
       "notes": 160,
       "ids": [
@@ -32,7 +32,7 @@
       "kind": "voice",
       "piece": "voice:acid",
       "genre": "afro",
-      "peak": 0.8775159120559692,
+      "peak": 0.8775160312652588,
       "hotFraction": 0,
       "notes": 160,
       "ids": [
@@ -43,7 +43,7 @@
       "kind": "voice",
       "piece": "voice:vocal",
       "genre": "ambient",
-      "peak": 0.2280891090631485,
+      "peak": 0.2280910164117813,
       "hotFraction": 0,
       "notes": 160,
       "ids": [
@@ -54,7 +54,7 @@
       "kind": "voice",
       "piece": "voice:scratch",
       "genre": "dnb",
-      "peak": 0.8795167207717896,
+      "peak": 0.8795154094696045,
       "hotFraction": 0,
       "notes": 160,
       "ids": [
@@ -75,7 +75,7 @@
     {
       "kind": "walk",
       "genre": "deep",
-      "peak": 0.8735387921333313,
+      "peak": 0.8735376000404358,
       "hotFraction": 0,
       "sounds": {
         "voice": 54,
@@ -95,7 +95,7 @@
     {
       "kind": "walk",
       "genre": "minimaltechno",
-      "peak": 0.8726376891136169,
+      "peak": 0.8726378679275513,
       "hotFraction": 0,
       "sounds": {
         "voice": 44,
