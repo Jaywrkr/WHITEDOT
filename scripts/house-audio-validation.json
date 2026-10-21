@@ -1,6 +1,6 @@
 {
   "renders": 6,
-  "maxPeak": 0.9068666696548462,
+  "maxPeak": 0.9068666100502014,
   "sampleRates": [
     44100,
     48000
@@ -5510,7 +5510,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8760570883750916,
+      "fullPeak": 0.8760573267936707,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -8221,8 +8221,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8760570883750916,
-      "rmsDb": -12.563700529916371,
+      "peak": 0.8760573267936707,
+      "rmsDb": -12.563711747978584,
       "hotFraction": 0
     },
     {
@@ -13631,7 +13631,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.5672687292098999,
+      "fullPeak": 0.5672681927680969,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -16129,7 +16129,7 @@
       "glassRoles": [],
       "sampleRate": 44100,
       "peak": 0.567196786403656,
-      "rmsDb": -19.85288641498351,
+      "rmsDb": -19.85265564927227,
       "hotFraction": 0
     },
     {
@@ -24034,7 +24034,7 @@
       "glassRoles": [],
       "sampleRate": 48000,
       "peak": 0.8772731423377991,
-      "rmsDb": -11.537870660608275,
+      "rmsDb": -11.537907165824933,
       "hotFraction": 0
     },
     {
@@ -30989,7 +30989,7 @@
       "glassRoles": [],
       "sampleRate": 44100,
       "peak": 0.5669539570808411,
-      "rmsDb": -25.744661463954795,
+      "rmsDb": -25.744659273784908,
       "hotFraction": 0
     },
     {
@@ -36790,7 +36790,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.9068666696548462,
+      "fullPeak": 0.9068666100502014,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -40099,8 +40099,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.9068666696548462,
-      "rmsDb": -14.328626627788035,
+      "peak": 0.9068666100502014,
+      "rmsDb": -14.328625844127934,
       "hotFraction": 0
     },
     {
@@ -47917,7 +47917,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.5670933723449707,
+      "fullPeak": 0.5670933127403259,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -50379,8 +50379,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.5670933723449707,
-      "rmsDb": -21.071574714604935,
+      "peak": 0.5670933127403259,
+      "rmsDb": -21.071542948051246,
       "hotFraction": 0
     }
   ]

@@ -61,6 +61,11 @@ Cada fase va en su rama encadenada a la anterior. Yo hago commit y push; Jay cre
 
 Orden de merge: C0 → C5. C0 y C1 son las más delicadas (datos y controles); a partir de C2 cada fase añade sin tocar lo anterior.
 
+## Estado
+
+- **C0** (alpha.88): datos versión 2, migración y códigos WH2.
+- **C1** (alpha.89): casa de muñecas caminable.
+
 ## Respuestas de Jay (21 de octubre)
 
 - **Vista:** por decidir entre primera persona y casa de muñecas. Se hicieron bocetos de ambas.

@@ -38,8 +38,8 @@ export function initialize(runtime) {
       case "luna":runtime.cx.arc(x,y,s*.85,0,6.283);runtime.cx.fill();break;}}
   const geo=()=>{const m=Math.min(runtime.W,runtime.H-260);return{X:runtime.W/2,Y:runtime.H/2,base:m*.13,gap:m*.095};};
   function visStep(){if(!runtime.ac)return -1;const n=runtime.ac.currentTime;let s=-1;for(const q of runtime.MU.sq)if(q.t<=n)s=q.s;return s;}
-  function studioStep(t,dt,b){
-    if(runtime.houseActive?.())return runtime.houseStep(t,dt,b);
+  function studioStep(t,dt,b,dx=0,dy=0){
+    if(runtime.houseActive?.())return runtime.houseStep(t,dt,b,dx,dy);
     runtime.camX=0;runtime.camY=0;
     const {X,Y,base,gap}=geo(),col=runtime.S.color,cur=visStep(),ms=performance.now();
     runtime.cx.strokeStyle=col;runtime.cx.lineWidth=1;

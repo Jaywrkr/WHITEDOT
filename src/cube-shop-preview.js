@@ -17,11 +17,11 @@ export function makeStage({ink='#fff',color='#fff',W=120,H=80}={}){
 }
 export function wearOnStage(stage,ids){const q=blank();for(const id of ids){const p=shopPiece(id);if(!p)continue;q.purchases[id]=true;if(shopSlot(p.slot)?.many)q.on[id]=true;else q.wear[p.slot]=id;}q.stats=stage.rt.sparkEconomy.stats||q.stats;stage.rt.sparkEconomy=q;}
 // One frame: the same order the game uses (trail, under, body, face, companion) plus the three first pieces, which the game draws elsewhere.
-export function drawStage(stage,c,x,y,s,color='#fff'){
+export function drawStage(stage,c,x,y,s,color='#fff',{pulseLook=true}={}){
  const {rt,S,clock}=stage,t=clock.t,q=rt.sparkEconomy,wear=id=>q.wear?.[shopPiece(id)?.slot]===id;rt.camX=S.wx;rt.camY=S.wy;
  rt.drawCubeShopTrails(c,x,y,s,t);rt.drawCubeShopSoundUnder(c,x,y,s,t);rt.drawCubeShopWildUnder(c,x,y,s,t);
  if(wear('dust')){c.save();c.fillStyle='#fff';for(let i=0;i<7;i++){c.globalAlpha=.55-i*.06;c.fillRect(Math.round(x-s-4-i*5),Math.round(y+s*.3+Math.sin(i*1.7)*3),1,1);}c.restore();}
- const look=SHOP_PULSES.find(id=>wear(id));if(look)drawShopPulse(c,look,x,y,stage.pulseRadius||s*1.9,{alpha:.7,color,charge:1,gap:s*.7,reduced:S.reducedMotion});
+ const look=pulseLook&&SHOP_PULSES.find(id=>wear(id));if(look)drawShopPulse(c,look,x,y,stage.pulseRadius||s*1.9,{alpha:.7,color,charge:1,gap:s*.7,reduced:S.reducedMotion});
  rt.drawCubeShopUnder(c,x,y,s,t);
  c.save();rt.cubeShopTransform(c,x,y,s,t);rt.cubeShopGestureTransform(c,x,y,s,t);c.globalAlpha=1;c.fillStyle=color;if(!rt.drawCubeShopCostume(c,x,y,s,t,color)&&!rt.drawCubeShopBody(c,x,y,s,t,color))c.fillRect(Math.round(x-s/2),Math.round(y-s/2),Math.round(s),Math.round(s));rt.drawCubeShopSkin(c,x,y,s,t);rt.drawCubeShopOver(c,x,y,s,t);c.restore();
  rt.drawCubeShopCompanion(c,x,y,s,t);rt.drawCubeShopGestures(c,x,y,s,t);rt.drawCubeShopSoundOver(c,x,y,s,t);rt.drawCubeShopWildOver(c,x,y,s,t);rt.drawCubeShopSkills(c,x,y,s,t);
