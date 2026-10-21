@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {installNoticeLane} from './notice-lane.js';
 import {POWERS} from './expansion-music.js';
 import {livingDefinition} from './living-catalog.js';
@@ -10,7 +11,7 @@ import {queueRareNotice} from './rare-card-model.js';
 const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function initialize(runtime){
  const $=runtime.$,lane=installNoticeLane(runtime);let owner=null,queue=[],shown=null,remaining=0,page=0,fullNoticed=false,filter='todo',roleFilter='todo',effects=[],noticeTimes=new Map();
- const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!$('voice').classList.contains('expanded')&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!$('voice').classList.contains('expanded')&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function hide(){const notice=$('rareNotice');notice.dataset.inspect='false';lane.hide(notice);document.body.classList.remove('rare-reveal');}
  function dismiss(){const focused=$('rareNotice').contains(document.activeElement);shown=null;remaining=0;hide();lane.release('rare');if(queue.length)lane.request('rare',{level:2});if(focused)$('w').focus({preventScroll:true});}
  function location(card){return card.precision==='unknown'?'Lugar original no registrado':`${card.regionName} · ${Math.round(card.address.x)}, ${Math.round(card.address.y)}${card.precision==='region'?' · centro aproximado':''}`;}

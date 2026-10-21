@@ -1,10 +1,11 @@
+import {prefersReducedMotion} from './frame-state.js';
 import {normalizeRoute,rollRoute,ROUTE_TODAY} from './cube-shop-model.js';
 // Cube shop batch 3: trails under the cube and companions around it. Drawing only: reach, collisions and music are untouched.
 // Only Huellas del día and Fantasma de ayer keep data (S.cubeRoute, bounded); the rest lives in memory and resets on a jump.
 export function initialize(runtime){
  let owner=null,lastT=null,last=null,layer='',moved=0,routeStep=0,paint=[],comet=[],flowers=[],history=[],rainbowUntil=-1,breaks=[],lastBroken=null,stopped=0,bird={x:0,y:0,perch:0},cloud={x:0,y:0},dj={a:0,target:0,lastBeat:0};
  const q=()=>runtime.sparkEconomy||{},on=slot=>runtime.inWorld()?q().wear?.[slot]||'':'';
- const still=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
+ const still=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  const ink=(part='lead')=>runtime.musicInk?.(null,part)||'#fff';
  const surface=()=>!runtime.S.layer||runtime.S.layer==='superficie';
  function reset(){paint=[];comet=[];flowers=[];history=[];last=null;lastT=null;moved=0;routeStep=0;}

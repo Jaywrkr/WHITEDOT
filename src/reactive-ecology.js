@@ -1,9 +1,10 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {createReactiveEcology} from './reactive-ecology-model.js';
 import {territoryInk} from './territory-transition.js';
 export function initialize(runtime){
  let owner=null,model=null,scope='',pointer=null,pendingTap=null,active=false;
- const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
- function allowed(){return runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');}
+ const reduced=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
+ function allowed(){return runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])');}
  function tick(dt){
   const currentScope=runtime.worldIdentity?.seed+':'+(runtime.S.layer||'superficie');
   if(owner!==runtime.S||scope!==currentScope){owner=runtime.S;scope=currentScope;model=createReactiveEcology(runtime.seedOf);pendingTap=null;}

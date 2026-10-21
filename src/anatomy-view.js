@@ -1,10 +1,11 @@
+import {prefersReducedMotion} from './frame-state.js';
 import {nativeVisualDescriptor,facetPoints} from './native-visual.js';
 import {anatomyOf,drawAnatomy} from './anatomy.js';
 import {elementInk,musicalInk} from './visual.js';
 // Weak ownership: visiting more places cannot grow an anatomy registry indefinitely.
 export function initialize(runtime){
  const profiles=new WeakMap(),c=runtime.cx;
- const reduce=()=>globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+ const reduce=()=>prefersReducedMotion();
  function profile(o,definition,d){let a=profiles.get(o);if(!a){a=anatomyOf(definition,d.worldFamily,runtime.seedOf);profiles.set(o,a);}return a;}
  function paintSpecies(sp,o,x,y,t,beat,blob=false){
   const d=runtime.regionOfPos(o.hx??o.x,o.hy??o.y);

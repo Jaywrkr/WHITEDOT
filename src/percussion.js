@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {expandedRhythm} from './ecoregions.js';
 import {RHYTHM_ELEMENTS,NEW_PERCUSSION,createRhythmElements,additionalRhythmElements,rhythmPattern} from './percussion-model.js';
 import {contactEntry} from './contact.js';
@@ -7,7 +8,7 @@ import {WORLD_VISUAL,elementInk,elementAlpha} from './visual.js';
 export function initialize(runtime){
  const cache=new Map();let owner=runtime.S,labKind=null,labObject=null,active=null,budget={bar:-1,hits:0,manual:0};
  const surface=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie';
- const available=()=>surface()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
+ const available=()=>surface()&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])');
  const audible=()=>available()&&runtime.S.sound&&runtime.ac?.state==='running';
  function reset(){cache.clear();active=null;labObject=null;budget={bar:-1,hits:0,manual:0};owner=runtime.S;}
  function nearby(radius=400){

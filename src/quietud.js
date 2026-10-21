@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js';
 // Quietud viva y atmósfera de color.
 // Si te quedas en un sitio, el lugar cambia por etapas: sube el color, entra una voz nueva, llegan visitas,
@@ -33,7 +34,7 @@ export function initialize(runtime){
   const b=runtime.body,d=runtime.MU.dnaT;if(!b?.ready)return;
   if(b.jump||!state.anchor||Math.hypot(S().wx-state.anchor.x,S().wy-state.anchor.y)>90||d?.key!==state.key){
    state.anchor={x:S().wx,y:S().wy};state.key=d?.key;state.seconds=quietStart(S().listened[d?.key]);state.stage=quietStage(state.seconds);state.visitors=[];return;}
-  if(document.querySelector('.modal:not([hidden])')||runtime.scanning||!S().sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running'||b.speed>12)return;
+  if(openSurface('.modal:not([hidden])')||runtime.scanning||!S().sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running'||b.speed>12)return;
   state.seconds+=dt;const k=quietStage(state.seconds);if(k>state.stage)enterStage(k);
   state.bloom+=((state.stage>=1?Math.min(1,.35+state.stage*.13):0)-state.bloom)*Math.min(1,dt*.4);
   state.pulse=Math.max(0,state.pulse-dt*.35);
@@ -41,7 +42,7 @@ export function initialize(runtime){
  }
  // Voz del lugar (etapa 2+): una línea lenta con el instrumento del lugar; las visitas puntean.
  function step(s,bar,time){
-  if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])')||runtime.scanning||!S().sound||runtime.ac?.state!=='running'||state.stage<2)return;const d=runtime.MU.dnaA;if(!d)return;
+  if(!surface()||document.hidden||openSurface('.modal:not([hidden])')||runtime.scanning||!S().sound||runtime.ac?.state!=='running'||state.stage<2)return;const d=runtime.MU.dnaA;if(!d)return;
   const ct=runtime.chordTones?.()||[60,64,67],inst=runtime.MU.radio?.hookI||hookInstruments(d.genre,runtime.GEN[d.genre])[0],profile=musicalCharacter(d.genre),anchor={id:'quiet:'+d.key,x:S().wx,y:S().wy},emit=(n,v,source=anchor)=>{runtime.hookInst?.(inst,hookPitch(inst,n,profile),time,v,d);runtime.soundCue?.(source,'lead',time);};
   if(s===0&&bar%2===0)emit(ct[(bar/2)%ct.length],runtime.vel?.(.045)||.045);
   if(s===8&&bar%4===1&&state.stage>=4)emit(ct[(bar+1)%ct.length],runtime.vel?.(.03)||.03);

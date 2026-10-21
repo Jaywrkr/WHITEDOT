@@ -1,3 +1,4 @@
+import {prefersReducedMotion} from './frame-state.js';
 import {wonderPortrait} from './musical-wonders-art.js';
 import {normalizeCube} from './cube-model.js';
 import {CUBE_DEFAULTS,wardrobeByType,cubeStyleUnlocked} from './wardrobe-model.js';
@@ -36,7 +37,7 @@ export function initialize(runtime){
   for(const p of owned.filter(p=>p.slot==='trail'))$('cubeTrails').append(pieceButton(p.id));
   return owned.length;
  }
- const still=()=>!!(S().reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
+ const still=()=>!!(S().reducedMotion||prefersReducedMotion());
  function drawPanel(){const current=settings(),s=safe(),focused=document.activeElement?.dataset,pulseFocus=focused?.pulseForm,pieceFocus=focused?.shopPiece,focus=focused?.cubeStyleType?{type:focused.cubeStyleType,value:focused.cubeStyleValue}:null,groups={color:'cubeColors',material:'cubeMaterials',form:'cubeForms',trail:'cubeTrails',halo:'cubeHalos',aura:'cubeAuras',voice:'cubeVoices'};let owned=0;
   for(const [type,id]of Object.entries(groups)){$(id).replaceChildren();for(const p of wardrobeByType(type).slice().sort((a,b)=>Number(unlocked(b))-Number(unlocked(a)))){const ok=unlocked(p);if(ok)owned++;const b=document.createElement('button');b.type='button';b.className=type==='color'?'cube-swatch':'cube-option';b.dataset.locked=String(!ok);b.dataset.earned=String(ok&&!p.free);b.setAttribute('aria-label',p.name);b.setAttribute('aria-pressed',String(ok&&s[type]===p.value&&!(type==='trail'&&shopTrail())));b.title=ok?p.name:p.hint;
     if(type==='color'){b.style.background=ok?p.value:'#000';if(!ok)b.textContent='□';}else b.textContent=(ok?'':'□ ')+p.name;

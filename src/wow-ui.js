@@ -1,7 +1,8 @@
+import {prefersReducedMotion} from './frame-state.js';
 import {cardTilt} from './wow-model.js';
 export function initialize(runtime){
  let active=null,pressed=null,selected=null;
- const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
+ const reduced=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  function unselect(){selected?.classList.remove('wow-selected');selected=null;}
  function select(target){
   const node=target?.closest?.('.rare-card[data-card-id]');if(!node?.dataset?.cardId)return;

@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {BOX_SURPRISES} from './box-surprises-model.js';
 import {installNoticeLane} from './notice-lane.js';
 import {createCelebrationQueue,openingFragments} from './celebration-model.js';
@@ -8,7 +9,7 @@ import {rarePortrait} from './rare-card-art.js';
 import {cardSerial,cardKey} from './rare-card-model.js';
 export function initialize(runtime){
  const $=runtime.$,lane=installNoticeLane(runtime),queue=createCelebrationQueue(),panel=$('celebration'),opening=[],motion=matchMedia('(prefers-reduced-motion: reduce)');let owner=runtime.S,current=null,age=0;const knownPowers=new Set();
- const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])')&&!$('voice').classList.contains('expanded');
+ const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])')&&!$('voice').classList.contains('expanded');
  function boxCard(card){return card.type.startsWith('box:');}
  function box(box){const power=POWERS[box.power];if(!power)return;const d=runtime.regionOfPos(box.x,box.y);
   opening.push({x:box.x,y:box.y,age:0,seed:runtime.seedOf('celebration:opening:v2:'+box.id),power:box.power});if(opening.length>6)opening.shift();

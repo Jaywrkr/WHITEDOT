@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {DISCOVERY_ELEMENTS,elementFamily,discoveryElement,migrateElementBook,knownElementFound} from './element-book-model.js';
 const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function initialize(runtime){
@@ -5,7 +6,7 @@ export function initialize(runtime){
  const ensure=()=>{if(owner!==runtime.S){runtime.S.elementBook=migrateElementBook(runtime.S);owner=runtime.S;}return runtime.S.elementBook;};
  function ui(){const b=ensure(),n=Object.keys(knownElementFound(b)).length,e=runtime.$('elementCount');if(b.version>1){e.textContent='Elementos · versión posterior';e.title='Tus hallazgos siguen guardados. Actualiza para continuar.';return;}e.textContent=`Elementos ${n}/${DISCOVERY_ELEMENTS.length}`;e.title=`${n} familias descubiertas de ${DISCOVERY_ELEMENTS.length}; los ejemplares repetidos no suman.`;}
  function record(kind,region){
-  if(typeof kind!=='string'||!runtime.inWorld()||document.hidden||runtime.scanning||document.querySelector('.modal:not([hidden])'))return false;
+  if(typeof kind!=='string'||!runtime.inWorld()||document.hidden||runtime.scanning||openSurface('.modal:not([hidden])'))return false;
   if(runtime.realTravel&&runtime.S.lastDay!==runtime.S.todayKey)runtime.onFirstLight();
   const id=elementFamily(kind,kind.startsWith('forma:')&&runtime.blobHabitat?.(region));if(!discoveryElement(id))return false;
   const b=ensure();if(b.version>1||b.found[id])return false;

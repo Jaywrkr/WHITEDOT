@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {installVivid} from './visual.js';
 // Canvas, input de movimiento y estado visual temporal.
 export function initialize(runtime) {
@@ -10,7 +11,7 @@ export function initialize(runtime) {
   addEventListener("keydown",e=>{
     const focusedMenu=e.target===document.getElementById('bMenu')&&runtime.inWorld();
     if(e.target!==document.body&&e.target!==cv&&!(focusedMenu&&['arrowright','arrowleft','arrowup','arrowdown','w','a','s','d'].includes(e.key.toLowerCase())))return;
-    if(runtime.noticeLane?.inspecting||document.querySelector('.modal:not([hidden])'))return;
+    if(runtime.noticeLane?.inspecting||openSurface('.modal:not([hidden])'))return;
     if(e.key==='Escape'){runtime.stopAutopilot?.();return;}
     const key=e.key.toLowerCase();if(['arrowright','arrowleft','arrowup','arrowdown','w','a','s','d'].includes(key)){keys[key]=1;runtime.audio();if(e.key.startsWith('Arrow'))e.preventDefault();}
     if(e.code==='Space'&&!e.repeat){e.preventDefault();runtime.sonar();}
@@ -55,12 +56,12 @@ export function initialize(runtime) {
     if(runtime.fingerTouch&&(runtime.glassPointerUp?.(e)||runtime.materiaPointerUp?.(e)||runtime.vidaPointerUp?.(e)||runtime.mirrorPointerUp?.(e)||runtime.depthUp?.(e)||runtime.encounterUp?.(e)||runtime.ecologyUp?.(e)||runtime.creativePointerUp?.(e)))return;
     if(e.pointerId!==activePointer)return;
     cancelHold();
-    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!document.querySelector('.modal:not([hidden])')){if(!runtime.fingerTouch||(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY)&&!runtime.creativeTap?.(e.clientX,e.clientY)))runtime.sonar();}   // sin modo dedo, un toque siempre es el pulso del cubo
+    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!openSurface('.modal:not([hidden])')){if(!runtime.fingerTouch||(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY)&&!runtime.creativeTap?.(e.clientX,e.clientY)))runtime.sonar();}   // sin modo dedo, un toque siempre es el pulso del cubo
     runtime.stopScanner();runtime.tapStart=null;ptr=null;activePointer=null;held=dragging=fromOverlay=false;
   };
   addEventListener("pointerup",up);addEventListener("pointercancel",up);cv.addEventListener("lostpointercapture",up);
   cv.addEventListener("contextmenu",e=>e.preventDefault());
-  addEventListener("keydown",e=>{if(e.code==="KeyE"&&!e.repeat&&(e.target===document.body||e.target===cv||e.target===document.getElementById('bMenu'))&&!document.querySelector('.modal:not([hidden])'))runtime.startScanner();});
+  addEventListener("keydown",e=>{if(e.code==="KeyE"&&!e.repeat&&(e.target===document.body||e.target===cv||e.target===document.getElementById('bMenu'))&&!openSurface('.modal:not([hidden])'))runtime.startScanner();});
   addEventListener("keyup",e=>{if(e.code==="KeyE")runtime.stopScanner();});
   addEventListener("blur",()=>{cancelHold();activePointer=null;ptr=null;runtime.tapStart=null;for(const key in keys)keys[key]=0;runtime.stopScanner();});
 

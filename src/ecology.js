@@ -1,9 +1,10 @@
+import {openSurface} from './frame-state.js';
 import {elementInk,elementAlpha} from './visual.js';
 import {contactEntry} from './contact.js';
 export function initialize(runtime){
  let gesture=null,lastEmission=-Infinity;
  const surface=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie';
- const playable=()=>surface()&&!runtime.scanning&&!document.hidden&&!document.querySelector('.modal:not([hidden])');
+ const playable=()=>surface()&&!runtime.scanning&&!document.hidden&&!openSurface('.modal:not([hidden])');
  const audible=()=>playable()&&runtime.S.sound&&runtime.ac?.state==='running';
  const kind=o=>`ecology:${o.kind}:${o.channel}`;
  const motif=o=>((o.variant+Math.round(o.bend*3))%8+8)%8;

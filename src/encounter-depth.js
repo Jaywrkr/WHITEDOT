@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {FAMILIES,encounterRole} from './encounter-families.js';
 import {MAX_THREADS,toggleThread,threadScore,threadArrangement,createBox,paintBoxStep,moveBoxPart,boxPart,boxArrangement,startDialogue,captureDialogue,finishDialogue,dialogueReply} from './encounter-depth-model.js';
 import {CHANNEL_NAMES} from './influence.js';
@@ -11,7 +12,7 @@ export function boxLidAt(x,y){return Math.hypot(x,y-56)<16;}
 export function boxSlotAt(x,y){for(let i=0;i<3;i++)if(distance({x,y},boxPartPoint(i))<20)return i;return null;}
 export function initialize(runtime){
  let gesture=null,armed=null,guidedAnimal=null,previous=runtime.S;const identities=new WeakMap();
- const playable=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
+ const playable=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])');
  const active=()=>playable()&&runtime.S.sound&&runtime.ac?.state==='running';
  const point=e=>({x:runtime.S.wx+e.clientX-runtime.W/2,y:runtime.S.wy+e.clientY-runtime.H/2});
  const objects=()=>runtime.encounterObjects||[];

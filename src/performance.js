@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {GENRE_CHARACTERS} from './musical-character.js';
 import {PERFORMANCE_INSTRUMENTS} from './performance-instruments.js';
 const form=(id,name,characters,steps,degrees,keys)=>Object.freeze({id,name,characters:characters.split(' '),steps,degrees,keys:keys.split(' ')});
@@ -21,7 +22,7 @@ export function performanceVoice(raw,region,kind,source,seedOf){
  return {...raw,instrument,low:role==='bajo'||role==='perc'?36:45,high:role==='bajo'?54:role==='perc'?57:67};
 }
 export function initialize(runtime){let owner=null,queue=[],last=-Infinity;
- const active=()=>runtime.inWorld()&&runtime.S.sound&&runtime.ac?.state==='running'&&!runtime.duetRoom&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
+ const active=()=>runtime.inWorld()&&runtime.S.sound&&runtime.ac?.state==='running'&&!runtime.duetRoom&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])');
  function tick(){if(owner!==runtime.S){owner=runtime.S;queue=[];last=-Infinity;}if(!active())queue=[];}
  function reply(o,time,region){tick();if(!active()||!runtime.MU.radio?.labScore||o.id?.startsWith('living:lab:')||runtime.MU.step-last<64)return;last=runtime.MU.step;const f=fieldFusion(region,o,runtime.seedOf);if(!f)return;
   const role=runtime.getVoice('living:'+o.kind,region,o).role,pool=pools[role]||pools.lead;

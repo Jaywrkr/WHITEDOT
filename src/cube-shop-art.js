@@ -1,3 +1,4 @@
+import {prefersReducedMotion} from './frame-state.js';
 import {wearing} from './cube-shop-model.js';
 // Cube shop art: movement and body (batch 1), eyes, habits and accessories (batch 2). Drawing only: collisions, reach, saves and music are untouched.
 // Every piece has a still variant, so nothing bought disappears when motion is reduced.
@@ -7,7 +8,7 @@ export function initialize(runtime){
  const wear=()=>runtime.sparkEconomy?.wear||{};
  const on=slot=>runtime.inWorld()?wear()[slot]||'':'';
  const has=id=>runtime.inWorld()&&wearing(runtime.sparkEconomy,id);
- const still=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
+ const still=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  // Movement is read from the player's world position, once per frame.
  function sample(t){
   if(lastT===null||t-lastT>500||t<lastT){lastT=t;lastX=runtime.S.wx;lastY=runtime.S.wy;return 0;}

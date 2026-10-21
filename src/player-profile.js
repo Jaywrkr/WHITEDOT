@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {normalizeProfile,createProfileTracker,profileSummary,formatPlayTime,formatDistance} from './player-profile-model.js';
 export function initialize(runtime){
  const $=runtime.$,tracker=createProfileTracker();let owner=null,refresh=0,walked=0;
@@ -8,7 +9,7 @@ export function initialize(runtime){
   $('profileName').value=p.name||'';$('profileName').disabled=future;$('profileNameSave').disabled=future;$('profileSaveStatus').textContent='';$('profileAvatar').style.setProperty('--profile-ink',runtime.cubeColor?.()||'#fff');
  }
  function open(){render();$('mMenu').hidden=true;$('mProfile').hidden=false;}
- function tick(dt,paused=false){const p=ensure();tracker.tick(p,runtime.S,{dt,active:!paused&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])'),maxSpeed:runtime.SPEED||800,worldKey:JSON.stringify(runtime.worldIdentity||{}),walkedUnits:walked});walked=0;const label='Caminado · '+(p.version===1?formatDistance(p.distanceUnits):'—');if($('walkDistance').textContent!==label)$('walkDistance').textContent=label;refresh+=Math.min(1,Math.max(0,dt||0));if(!$('mProfile').hidden&&refresh>1){refresh=0;for(const [id,value]of [['profileTime',formatPlayTime(p.activeSeconds)],['profileDistance',formatDistance(p.distanceUnits)]])$(id).textContent=p.version===1?value:'—';}}
+ function tick(dt,paused=false){const p=ensure();tracker.tick(p,runtime.S,{dt,active:!paused&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])'),maxSpeed:runtime.SPEED||800,worldKey:JSON.stringify(runtime.worldIdentity||{}),walkedUnits:walked});walked=0;const label='Caminado · '+(p.version===1?formatDistance(p.distanceUnits):'—');if($('walkDistance').textContent!==label)$('walkDistance').textContent=label;refresh+=Math.min(1,Math.max(0,dt||0));if(!$('mProfile').hidden&&refresh>1){refresh=0;for(const [id,value]of [['profileTime',formatPlayTime(p.activeSeconds)],['profileDistance',formatDistance(p.distanceUnits)]])$(id).textContent=p.version===1?value:'—';}}
  $('bProfile').onclick=open;$('profileClose').onclick=()=>{$('mProfile').hidden=true;runtime.save();};
  $('profileNameSave').onclick=()=>{const p=ensure();if(p.version!==1)return;const before=p.name;p.name=$('profileName').value.trim().slice(0,24);if(!runtime.save()){p.name=before;$('profileSaveStatus').textContent='No se guardó. Intenta otra vez.';}else{$('profileName').value=p.name;$('profileSaveStatus').textContent='Nombre guardado en este dispositivo.';}};
  $('profileCollection').onclick=()=>{$('mProfile').hidden=true;runtime.openJournal('collection');};$('profilePlacesLink').onclick=()=>{$('mProfile').hidden=true;runtime.openFavorites();};

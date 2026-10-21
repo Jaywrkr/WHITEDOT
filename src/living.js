@@ -1,3 +1,4 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {festiveBand} from './lab-score.js';
 import {expandedChunk} from './ecoregions.js';
 import {distanceOpacity,detailBlend} from './world-visibility-model.js';
@@ -16,7 +17,7 @@ export const LIVING_GROUPS=['flora','fauna','architecture'];
 const HINTS={contacto:'Pasa el cubo para tocar',quietud:'Escucha quieto a su lado',orbita:'Rodea con el cubo',presion:'Entra despacio y permanece',cruce:'Cruza despacio',respuesta:'Toca y escucha la respuesta',seguir:'Camina a su lado'};
 export function initialize(runtime){
  const chunks=new BoundedMap(48);let owner=runtime.S,clock=0,barPlayed=-1,lab=null;
- const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
+ const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])');
  function chunk(x,y){
   const layer=runtime.S.layer||'superficie',key=layer+':'+x+','+y;
   if(!chunks.has(key)){
@@ -63,7 +64,7 @@ export function initialize(runtime){
   if(bar%8===7&&score.family!=='free'&&o.energy>.75)emit(o,shifted+runtime.SIX*2,false,'ambient');
  }
  function preload(radius){near(radius);}
- function draw(t){if(!runtime.inWorld())return;const c=runtime.cx,radius=runtime.worldVisibility?.radius||750,objects=near(radius+80),reduced=runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;let label=null;
+ function draw(t){if(!runtime.inWorld())return;const c=runtime.cx,radius=runtime.worldVisibility?.radius||750,objects=near(radius+80),reduced=runtime.S.reducedMotion||prefersReducedMotion();let label=null;
   c.save();for(const o of objects){const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),fade=distanceOpacity(d,radius);if(!fade)continue;if(d<110&&(!label||d<label.d))label={o,d};
    const family=o.worldFamily,detail=o.group==='architecture'?1:detailBlend(d,runtime.visualDetail?.detailQuality??1),alpha=fade*(.55+o.lit*.35)*(.25+.75*(o.awake??1));
    if(detail<1){c.globalAlpha=alpha*(1-detail)*.33;c.fillStyle=elementInk('glass',o.hue);c.fillRect(o.x+runtime.W/2-runtime.S.wx,o.y+runtime.H/2-runtime.S.wy,2,2);}

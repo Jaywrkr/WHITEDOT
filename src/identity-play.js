@@ -1,9 +1,10 @@
+import {openSurface} from './frame-state.js';
 import {normalizeConstellations,constellationPoints,keepConstellation,constellationPlot} from './constellation-model.js';
 import {supportedWorld,placeAddress} from './world-identity.js';
 const safe=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function initialize(runtime){let owner=null,showAll=false;
  function book(){if(owner!==runtime.S){owner=runtime.S;owner.musicalConstellations=normalizeConstellations(owner.musicalConstellations);}return owner.musicalConstellations;}
- function gesture(source,voice,note){if(!runtime.S.session||!runtime.S.sound||runtime.ac?.state!=='running'||runtime.musicVolume?.()===0||document.hidden||document.querySelector('.modal:not([hidden])')||!source?.id||!Number.isFinite(source.x)||!Number.isFinite(source.y))return;
+ function gesture(source,voice,note){if(!runtime.S.session||!runtime.S.sound||runtime.ac?.state!=='running'||runtime.musicVolume?.()===0||document.hidden||openSurface('.modal:not([hidden])')||!source?.id||!Number.isFinite(source.x)||!Number.isFinite(source.y))return;
   const points=runtime.S.session.constellation||=[];if(points.length>=32||points.some(p=>p.id===source.id))return;points.push({id:source.id,x:source.x,y:source.y,role:voice.role,instrument:voice.instrument,note});
  }
  function capture(){const s=runtime.S.session;if(!s)return null;const points=constellationPoints(s.constellation),cardIds=points.flatMap(p=>runtime.rareCards.filter(c=>c.sourceId===p.id).map(c=>c.id));const c=keepConstellation(book(),{points,day:runtime.S.todayKey,address:placeAddress(runtime.musicalAddress(),runtime.S.wx,runtime.S.wy,runtime.S.layer||'superficie'),cardIds});if(c){runtime.save();runtime.refreshJournal?.();}return c;}

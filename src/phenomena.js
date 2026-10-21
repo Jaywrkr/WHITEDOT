@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {contactEntry} from './contact.js';
 import {claimInstallationBar} from './installations.js';
 import {musicalCharacter,hookPitch,hookInstruments} from './musical-character.js';
@@ -26,7 +27,7 @@ export function initialize(runtime){
  }
  function phenomenonVoice(o){const region=runtime.regionOfPos(o.hx,o.hy),g=runtime.GEN[region.genre];return {role:o.kind==='bird'?'lead':o.kind==='shaker'?'perc':'bajo',instrument:o.kind==='bird'?hookInstruments(region.genre,g)[o.voiceIndex%hookInstruments(region.genre,g).length]:o.kind==='shaker'?['wood','conga','rim','shaker','tom'][runtime.seedOf('phenomenon:material:v1:'+region.key+':'+o.voiceIndex)%5]:g.bassI};}
  function cue(o,time){if(!o.cues.some(t=>Math.abs(t-time)<.025)){o.cues.push(time);if(o.cues.length>4)o.cues.shift();}}
- const playable=()=>typeof document==='undefined'||(!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])'));
+ const playable=()=>typeof document==='undefined'||(!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])'));
  const audible=()=>playable()&&runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&runtime.S.sound&&runtime.ac?.state==='running';
  function triggerPhenomenon(o,time,origin='player'){
   if(!audible()||time<o.next)return false;

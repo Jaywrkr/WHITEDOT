@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.67**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.68**. Las entradas describen su revisión, no certifican producción.
+
+## Fase R · Rendimiento · alpha.68
+
+Rama `claude/fase-r-rendimiento`, sobre `claude/charming-darwin-dvbfc7` (alpha.67). Primera de las [Fases 2026](docs/FASES_2026.md).
+
+- Cada fotograma preguntaba unas 150 veces si había un panel abierto (`document.querySelector`) y 78 veces si se pedía movimiento reducido (`matchMedia`). Ahora `frame-state.js` contesta una vez por fotograma y los 68 módulos lo leen de ahí. Fuera del fotograma (teclas, temporizadores) se sigue preguntando directamente.
+- La niebla dibujaba 18 degradados por fotograma; ahora reutiliza una mancha ya pintada por tono.
+- Las partículas tienen un tope de 400.
+- Con la pestaña oculta, el audio se suspende y vuelve como estaba al regresar.
+
+Medido en Chromium local sin GPU, recorrido con sonido: media de 12,1 a 6,1 ms por fotograma, p95 de 16,2 a 9,0 ms. No equivale a una medición en un móvil físico.
 
 ## Rendimiento con muchas piezas · alpha.67
 

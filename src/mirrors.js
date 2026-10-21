@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {claimInstallationBar} from './installations.js';
 import {WORLD_VISUAL,elementInk,localGlowRadius} from './visual.js';
 import {ROLES} from './journal.js';
@@ -90,7 +91,7 @@ export function initialize(runtime){
  function open(site){runtime.closeGlass?.();runtime.closePatchGarden?.();selected=site;remember(site);$('mirrorPanel').hidden=false;panel();if(!S().help.mirrors){S().help.mirrors=true;runtime.say(runtime.VOZ.mirrors,'Espejos musicales');}}
  function cancel(){if(drag){drag.site.mirrors.forEach((m,i)=>m.angle=drag.angles[i]);if(drag.saved)drag.owner.mirrorSites[drag.site.id]=drag.saved;else delete drag.owner.mirrorSites[drag.site.id];drag=null;}}
  function close(){cancel();selected=null;$('mirrorPanel').hidden=true;runtime.save();}
- const available=()=>surface()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
+ const available=()=>surface()&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])');
  const worldPoint=e=>({x:S().wx+e.clientX-runtime.W/2,y:S().wy+e.clientY-runtime.H/2});
  function down(e){
   if(drag)return true;
