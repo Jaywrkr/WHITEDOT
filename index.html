@@ -157,9 +157,9 @@
       <button id="bWorlds"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c5 4 5 12 0 16M12 4c-5 4-5 12 0 16"/></svg><span>Viajar a otra semilla</span></button>
       <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
       <button id="bJumpBack" hidden><span>Volver al salto</span></button>
-      <button id="bSettings"><span>Ajustes</span></button>
-      <button id="bGuide"><span>Guía de juego</span></button>
-      <button id="bConnection"><span>Cuenta</span></button>
+      <button id="bSettings"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg><span>Ajustes</span></button>
+      <button id="bGuide"><svg viewBox="0 0 24 24"><path d="M5 4h6a2 2 0 012 2v14a2 2 0 00-2-2H5zM19 4h-4a2 2 0 00-2 2v14a2 2 0 012-2h4z"/></svg><span>Guía de juego</span></button>
+      <button id="bConnection"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Cuenta</span></button>
       <button id="bSaveTools" hidden><svg viewBox="0 0 24 24"><path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 15h8v6"/></svg><span>Guardar copia</span></button>
       <button id="pwaUpdate" hidden><span>Actualizar versión disponible</span></button>
     </div></section>
@@ -173,7 +173,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.78</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.79</span><small id="releaseDeploy">deploy sin registrar</small></div>
     <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>
@@ -393,7 +393,7 @@
 
 <div class="modal" id="mSettings" hidden><div class="sheet"><h2>Ajustes</h2><div class="menu-prefs"><label for="autoIntent">Paseo automático</label><select id="autoIntent"><option value="paisaje">Paisaje y descanso</option><option value="vida">Vida y relaciones</option><option value="hallazgos">Encuentros y hallazgos</option><option value="afinidad">Afinidad entre favoritos</option><option value="contraste">Contraste entre favoritos</option></select><div class="universe-texts-group"><label class="universe-texts-setting"><input id="universeTexts" type="checkbox" checked aria-describedby="universeTextsHint">Textos del paisaje</label><p id="universeTextsHint">Oculta mensajes del universo. Conserva controles y avisos de guardado.</p></div></div><div class="tiles"><button id="bCreateMode" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg><span>Modo: explorar</span></button><button id="bDetails" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v1M12 11v6"/></svg><span>Datos del mundo</span></button></div><div class="row"><button id="settingsClose">Cerrar</button></div></div></div>
 
-<div id="housePanel" class="house-panel" hidden><span id="houseCount"></span><details id="houseGardenTools"><summary>Jardín de voces</summary><p>Reúne cuatro tarjetas. Mueve sus voces en el plano.</p><div id="gardenSlots"></div><button id="gardenSave">Conservar jardín</button><select id="gardenSets" aria-label="Tus jardines"><option value="">Tus jardines</option></select></details><label for="houseObjects">Objeto</label><select id="houseObjects"></select><p id="houseHint"></p><div class="row"><button id="houseWalk">Camina</button><button id="housePlace">Coloca</button><button id="houseErase">Retira</button><button id="houseWorkshop">Taller</button><button id="houseShare">Código</button><button id="houseExit">Volver</button></div></div>
+<div id="housePanel" class="house-panel" hidden><div class="row house-modes"><button id="houseWalk" aria-pressed="true">Camina</button><button id="housePlace" aria-pressed="false">Coloca</button><button id="houseErase" aria-pressed="false">Retira</button></div><p class="house-status"><span id="houseCount"></span> · <span id="houseHint"></span></p><div id="housePick" class="house-pick" hidden><label for="houseObjects">Objeto</label><select id="houseObjects"></select></div><details id="houseGardenTools"><summary>Jardín de voces</summary><p>Reúne cuatro tarjetas. Mueve sus voces en el plano.</p><div id="gardenSlots"></div><button id="gardenSave">Conservar jardín</button><select id="gardenSets" aria-label="Tus jardines"><option value="">Tus jardines</option></select></details><div class="row house-more"><button id="houseWorkshop">Taller</button><button id="houseShare">Código</button><button id="houseExit">Volver</button></div></div>
 <div class="modal" id="mHouseCode" hidden><div class="sheet"><h2>Comparte tu casa</h2><p>Visita con un código. Tu colección sigue contigo.</p><textarea id="houseCode" aria-label="Código de casa" maxlength="16000"></textarea><p id="houseCodeInfo"></p><div class="row"><button id="houseVisit">Visita</button><button id="houseCodeClose">Cerrar</button></div></div></div>
 </body>
 </html>

@@ -27,7 +27,7 @@ export function initialize(runtime){
   if(now==='camino'){s.mode='world';runtime.exitWorld?.(false);return;}
   const day=s.lastWorldDay;s.mode='camino';s.lastWorldDay=s.todayKey;runtime.enterWorld?.({automatic:true});if(!runtime.inWorld())s.lastWorldDay=day;}
  function snapshot(){if(scopeState!==runtime.S||sync.scope!==(runtime.cloudScope||runtime.saveStore.key))throw Error('La partida cambió. Abre Cuenta de nuevo.');if(!runtime.save())throw Error('No pudimos guardar en este dispositivo. No reemplazamos tu avance online.');return validateSave(runtime.S,runtime.fresh(),runtime.worldIdentity);}
- $('bConnection').hidden=false;$('bConnection').textContent='Cuenta';$('connectionRooms').hidden=true;
+ $('bConnection').hidden=false;($('bConnection').querySelector('span')||$('bConnection')).textContent='Cuenta';$('connectionRooms').hidden=true;
  $('bConnection').onclick=()=>{$('mMenu').hidden=true;$('mConnection').hidden=false;if(client&&!recovery)run(inspect);else ui();};$('connectionClose').onclick=()=>{$('mConnection').hidden=true;};
  function credentials(){if(!$('accountForm').reportValidity())return null;return [$('accountName').value.trim(),$('accountPassword').value];}
  $('accountForm').onsubmit=e=>{e.preventDefault();const values=credentials();if(!values||!client)return;run(async()=>{sync.reset();checked=false;recovery=false;try{await client.login(...values);if(runtime.accountClient&&client.user()?.id!==runtime.accountUserId){location.reload();return;}}finally{$('accountPassword').value='';}if(runtime.accountClient&&client.user()?.id!==runtime.accountUserId)return;await inspect();});};
