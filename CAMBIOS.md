@@ -1,6 +1,10 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.76**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.77**. Las entradas describen su revisión, no certifican producción.
+
+## Fase B · Sonido en un panel · alpha.77
+
+Rama `claude/fase-b-sonido`, sobre `claude/fase-a-tu-viaje`. El menú ya no repite el control de volumen: volumen, energía, sonido sí/no, calma, repetir y Estilo de La Voz (que sale de Ajustes) viven en el panel «Sonido». El selector conserva su ID y su comportamiento. Recorridos adaptados: `volume_control_smoke.py` y `menu_v2_smoke.py`.
 
 ## Fase A · Tu viaje en la Bitácora · alpha.76
 
