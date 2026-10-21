@@ -21,7 +21,7 @@ export function initialize(runtime){
  }
  function changeNotice(amount){if(!amount)return;delta=clock<deltaUntil&&Math.sign(delta)===Math.sign(amount)?delta+amount:amount;deltaUntil=clock+1.5;if(amount>0&&!jumpAvailable&&book().earned>=SPARK_JUMP_COST){jumpAvailable=true;jumpUntil=clock+3;notice('Ya puedes saltar');}}
  function notice(title,text=''){runtime.toast?.(title+(text?' · '+text:''),{level:2,category:'spark-result',detail:'sparks',ttl:120000});}
- function crystal(o,action,path=false,fragment=null){
+ function crystal(o,action,path=false,fragment=null,dim=false){
   const q=book();if(q.version!==1||runtime.labMode||owner.previewSeed&&!runtime.realTravel)return null;
   const prior=q.sites[o.id];if(!prior&&Object.keys(q.sites).length>=SPARK_SITE_LIMIT)return null;
   if(action==='hit'&&prior?.broken||action==='collect'&&(!prior?.broken||prior.collected))return prior?{...prior}:null;
@@ -29,7 +29,7 @@ export function initialize(runtime){
   let amount=0,result=null,first=false;
   const ok=commit(next=>{const p=next.sites[o.id]||{x:o.x,y:o.y,size:o.size,value:o.value,hits:0,broken:false,collected:false,rare:!path&&o.rare===true,fragments:0};
    if(action==='hit'){p.hits++;p.broken=p.hits>=o.size;if(p.broken){if(!path||owner.pathCrystals.length<10)next.stats.broken++;if(path){p.collected=true;p.fragments=fragmentMask(p);if(owner.pathCrystals.length<10){first=!owner.pathCrystals.length;owner.pathCrystals.push(o.id);owner.todayLight=(owner.todayLight||0)+1;owner.totalLight=(owner.totalLight||0)+1;amount=creditSparks(owner,o.value);}}}}
-   else if(action==='collect'){const remaining=crystalFragments(p,p.rare===true).filter(f=>!((p.fragments||0)&(1<<f.index))&&(fragment===null||fragment===f.index));if(!remaining.length)return false;for(const f of remaining){p.fragments=(p.fragments||0)|(1<<f.index);amount+=creditSparks(owner,f.value);}p.collected=p.fragments===fragmentMask(p);}else return false;
+   else if(action==='collect'){const remaining=crystalFragments(p,p.rare===true).filter(f=>!((p.fragments||0)&(1<<f.index))&&(fragment===null||fragment===f.index));if(!remaining.length)return false;for(const f of remaining){p.fragments=(p.fragments||0)|(1<<f.index);amount+=creditSparks(owner,dim&&f.rare?1:f.value);}p.collected=p.fragments===fragmentMask(p);}else return false;
    next.sites[o.id]=p;result={...p};
   });
   if(!ok)return null;if(amount)changeNotice(amount);if(action==='hit'&&result.broken&&!path)worldBroken++;if(first)runtime.onFirstLight?.();if(path)runtime.hud?.();return result;
@@ -44,7 +44,7 @@ export function initialize(runtime){
   const ticket={balance:owner.sparks,economy:structuredClone(q)};debitSparks(owner,SPARK_JUMP_COST);q.stats.jumps++;q.stats.sinceJump=0;return ticket;
  }
  function cancelJump(ticket){if(ticket){owner.sparks=ticket.balance;owner.sparkEconomy=ticket.economy;}}
- function confirmJump(){lastJump={at:clock};segment=0;anchor=null;sessionDistance=0;newCards=new Set();neighbors=new Set();trail=[];lastTrail=null;changeNotice(-SPARK_JUMP_COST);notice('Salto realizado','Vuelve gratis al punto anterior');}
+ function confirmJump(place=''){lastJump={at:clock};segment=0;anchor=null;sessionDistance=0;newCards=new Set();neighbors=new Set();trail=[];lastTrail=null;changeNotice(-SPARK_JUMP_COST);notice(place?'Llegaste · '+place:'Salto realizado','Vuelve gratis al punto anterior');}
  function returned(){if(lastJump&&clock-lastJump.at<30)award('badge:wrong',0,'No era por aquí','Volviste antes de treinta segundos.');lastJump=null;}
  function award(id,value,title,text){if(Object.hasOwn(book().claims,id))return false;let amount=0;const ok=commit(()=>{const before=owner.sparks;if(!claimSparkReward(owner,id,value,title,text))return false;amount=owner.sparks-before;});if(ok){changeNotice(amount);notice(title,text+(amount?' · +'+amount+' chispas':''));}return ok;}
  function inspect(id){if(inspector.id!==id)inspector={id,count:0};inspector.count++;}

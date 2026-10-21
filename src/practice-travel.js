@@ -76,7 +76,10 @@ export function initialize(runtime){
   if(!point){runtime.toast('No encontré otro lugar. Intenta otra vez.');return false;}
   state.previous={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};state.recent.push(point.identity.id+'~'+(point.hybrid?.id||'native'));state.recent=state.recent.slice(-8);state.sounds=[...state.sounds,practiceSoundIdentity(point.band,point.identity)].slice(-8);
   const ticket=runtime.reserveSparkJump?.();if(ticket===false)return false;
-  if(!move(point,state,runtime.labMode?()=>runtime.labGo(point.band?'band:'+point.band.id:'music:'+point.identity.id):null)){runtime.cancelSparkJump?.(ticket);return false;}runtime.confirmSparkJump?.();if(!runtime.confirmSparkJump)runtime.toast(`${point.region.worldFamily?.name||runtime.BIOMES[point.region.z].name} · ${point.band?.festive?point.band.name:point.identity.name}`);return true;
+  if(!move(point,state,runtime.labMode?()=>runtime.labGo(point.band?'band:'+point.band.id:'music:'+point.identity.id):null)){runtime.cancelSparkJump?.(ticket);return false;}const place=`${point.region.worldFamily?.name||runtime.BIOMES[point.region.z].name} · ${point.band?.festive?point.band.name:point.identity.name}`;runtime.confirmSparkJump?.(place);if(!runtime.confirmSparkJump)runtime.toast(place);
+  // The arrival is celebrated with two notes of the new place's music, on the beat.
+  if(runtime.S.sound&&runtime.ac?.state==='running')runtime.beatSoon?.(time=>{const tones=runtime.chordTones?.()||[];for(let i=0;i<2&&tones.length;i++)runtime.hookInst?.('feltpiano',tones[i%tones.length]+12,time+i*(runtime.SIX||.125)*2,runtime.vel(.06),point.region);},null,'player');
+  return true;
  }
  function back(){const p=runtime.S.practiceTravel?.previous;if(!runtime.inWorld()||blocked()||!validPoint(p)||!runtime.save())return false;
   const here={x:runtime.S.wx,y:runtime.S.wy,layer:runtime.S.layer||'superficie'};const state={...normalizePracticeTravel(runtime.S.practiceTravel),previous:here};if(!move(p,state))return false;runtime.sparkReturn?.();$('mMenu').hidden=true;return true;}

@@ -65,7 +65,7 @@ export function initialize(runtime){
   const before=S().sparks,next=runtime.crystalTransaction(o,'hit',path);if(!next)return false;
   const site={...prior,...next,flash:seconds+.25};impact(o,site,prior?.run||o);
   if(o.runner&&!path&&!prior?.hits&&!site.broken){site.run={x:o.x,y:o.y,age:0,trail:[]};}
-  if(site.broken){site.drop=site.run?{x:site.run.x,y:site.run.y}:o;site.run=null;site.particles=particles(o,site);if(!path){const chain=source||{hit:new Set([o.id]),budget:CRYSTAL_CHAIN_LIMIT};chains.push({x:prior?.run?.x??o.x,y:prior?.run?.y??o.y,at:seconds,chain});chains=chains.slice(-12);}}
+  if(site.broken){site.drop=site.run?{x:site.run.x,y:site.run.y}:o;site.run=null;site.particles=particles(o,site);if(!path){const chain=source||{hit:new Set([o.id]),budget:CRYSTAL_CHAIN_LIMIT};chain.broken=(chain.broken||0)+1;chains.push({x:prior?.run?.x??o.x,y:prior?.run?.y??o.y,at:seconds,chain});chains=chains.slice(-12);}}
   sites.set(o.id,site);if(S().sparks>before)runtime.showSparkPickup?.(S().sparks-before,position());return true;
  }
  function tickChains(){
@@ -95,13 +95,14 @@ export function initialize(runtime){
   for(const p of site.particles){
    if((site.fragments||0)&(1<<p.index))continue;
    p.age+=step;const old={x:p.x,y:p.y};
-   if(p.rare&&!reduced())Object.assign(p,moveEscape(p,p.home,pos,step,p.age,100,78));
+   // A rare fragment runs for five seconds; caught while it runs it keeps its bonus, after that it dims to 1.
+   if(p.rare&&!reduced())Object.assign(p,moveEscape(p,p.home,pos,step,p.age,180,120,5));
    const dx=pos.x-p.x,dy=pos.y-p.y,d=Math.hypot(dx,dy),reach=p.rare&&!reduced()?32:70;
    // Common fragments retain their original collection radius; rare ones invite a short chase.
-   if(d<reach&&(!p.rare||p.age>2||reduced())){
+   if(d<reach){
     const travel=step*180;if(!reduced()&&d>3){const k=Math.min(1,travel/d);p.x+=dx*k;p.y+=dy*k;}
     if(d<=travel+3||reduced()){
-     const before=S().sparks,next=runtime.crystalTransaction(o,'collect',path,p.index);
+     const before=S().sparks,next=runtime.crystalTransaction(o,'collect',path,p.index,p.rare&&!reduced()&&p.age>5);
      if(next){Object.assign(site,next);if(S().sparks>before)runtime.showSparkPickup?.(S().sparks-before,{x:p.x,y:p.y});}
     }
    }
@@ -121,11 +122,11 @@ export function initialize(runtime){
    if(site?.broken){
     if(!site.collected)for(const p of site.particles||[]){
      if((site.fragments||0)&(1<<p.index))continue;
-     const x=p.x+ox,y=p.y+oy+(reduced()?0:Math.sin(seconds*2+p.index)*2),ink=p.rare?'#77e8ff':'#e9ca7d';
+     const x=p.x+ox,y=p.y+oy+(reduced()?0:Math.sin(seconds*2+p.index)*2),dim=p.rare&&!reduced()&&p.age>5,ink=dim?'#7f8d92':p.rare?'#77e8ff':'#e9ca7d';
      c.fillStyle=c.strokeStyle=ink;for(let i=0;i<(p.trail?.length||0);i++){c.globalAlpha=opacity*.15*(i+1)/p.trail.length;c.fillRect(p.trail[i].x+ox-1,p.trail[i].y+oy-1,2,2);}
      c.globalAlpha=opacity*.3;c.beginPath();c.arc(x,y,p.rare?12:10,0,Math.PI*2);c.fill();
      c.globalAlpha=opacity*(reduced()?1:.85+.15*Math.sin(seconds*2));c.beginPath();c.moveTo(x,y-6);c.lineTo(x+4,y);c.lineTo(x,y+6);c.lineTo(x-4,y+1);c.closePath();c.fill();c.fillStyle='#fff';c.fillRect(x-1,y-2,2,3);
-     if(p.rare){c.lineWidth=1;c.beginPath();c.moveTo(x+5,y-8);c.lineTo(x+5,y-3);c.moveTo(x+2.5,y-5.5);c.lineTo(x+7.5,y-5.5);c.stroke();if(d<130){c.font='10px "Geist Mono",monospace';c.textAlign='center';c.fillText('+'+p.value+' ✦',x,y-15);}}
+     if(p.rare){c.lineWidth=1;c.beginPath();c.moveTo(x+5,y-8);c.lineTo(x+5,y-3);c.moveTo(x+2.5,y-5.5);c.lineTo(x+7.5,y-5.5);c.stroke();if(d<130){c.font='10px "Geist Mono",monospace';c.textAlign='center';c.fillText('+'+(dim?1:p.value)+' ✦',x,y-15);}}
     }
     continue;
    }
@@ -148,7 +149,9 @@ export function initialize(runtime){
     c.beginPath();c.moveTo(x,y-size*2);c.lineTo(x+size,y);c.lineTo(x-size,y+size);c.closePath();c.fill();
    }
   }
-  if(!reduced())for(const wave of chains){const age=seconds-wave.at;c.globalAlpha=Math.max(0,1-age/.65)*.3;c.strokeStyle='#d3eef2';c.lineWidth=1;c.beginPath();c.arc(wave.x+ox,wave.y+oy,Math.min(CRYSTAL_CHAIN_RADIUS,age*900),0,Math.PI*2);c.stroke();}
+  // A chain's streak is readable: each ring brightens with the breaks so far, and from the third one the newest shows ×N.
+  if(!reduced())for(const wave of chains){const age=seconds-wave.at,n=wave.chain?.broken||1;c.globalAlpha=Math.max(0,1-age/.65)*Math.min(.8,.3+(n-1)*.1);c.strokeStyle=n>2?'#e9ca7d':'#d3eef2';c.lineWidth=n>2?1.5:1;c.beginPath();c.arc(wave.x+ox,wave.y+oy,Math.min(CRYSTAL_CHAIN_RADIUS,age*900),0,Math.PI*2);c.stroke();}
+  const streak=chains.filter(w=>(w.chain?.broken||0)>2).at(-1);if(streak){c.globalAlpha=Math.max(0,1-(seconds-streak.at)/.65);c.fillStyle='#e9ca7d';c.font='600 14px "Geist Mono",monospace';c.textAlign='center';c.fillText('×'+streak.chain.broken,streak.x+ox,streak.y+oy-22);}
   c.restore();
  }
  function opacityForFeedback(p){const pos=position(),d=Math.hypot(p.x-pos.x,p.y-pos.y);return runtime.worldOpacity?.(d)??Math.max(0,1-d/500);}

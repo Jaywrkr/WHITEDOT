@@ -1,6 +1,30 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.74**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.75**. Las entradas describen su revisión, no certifican producción.
+
+## Fase 3 · Diversión · alpha.75
+
+Rama `claude/fase-3-diversion`, sobre `claude/fase-v6-sucesos`. Los ocho ajustes aprobados de la revisión:
+
+1. **Carrera real:**
+   - la meta está a 300–380 u, en el sentido contrario a donde llegaste;
+   - cuenta 3·2·1 con las notas de la escena;
+   - el rival corre a 150 u/s (110 con movimiento reducido) y puede ganar;
+   - el texto muestra el tiempo y el resultado («Ganaste la carrera» o «Tu rival llegó primero»).
+2. **Fragmento raro:** huye 5 s, hasta 180 u y a 120 u/s, y se puede atrapar mientras corre. Si escapa se apaga y vale 1 ✦ en lugar de su bonificación. La máscara guardada no cambia.
+3. **Racha de cadena:** cada aro se aviva con las roturas; desde la tercera aparece «×N» en dorado.
+4. **Eco que compite:** su recorrido completo, el eco como cubo con ojos, «Tú 12,3 s · tu eco 14,0 s» y al final «Ganaste a tu eco» o «Tu eco fue más rápido».
+5. **Encuentros:**
+   - la sombra deja sus pistas a 160 u, corre a 120 u/s y solo cuenta (y se ve) la siguiente;
+   - la lluvia sube de verdad y hay que atrapar las gotas a su altura;
+   - el imitador y la procesión muestran su progreso («gira 1/2», «140/220»).
+6. **Volumen:** travesuras de 0,012/0,014 a 0,06/0,09 y final de actividad de 0,018 a 0,06; los tótems siguen más fuertes (0,28).
+7. **Encadenar encuentros:** tras resolver uno, la espera baja de 45 a 12 s y durante los 20 s siguientes la pista dorada alcanza 600 u (en el borde de la pantalla si queda fuera).
+8. **Llegada de salto:** el aviso nombra la familia y el estilo del lugar, y suenan dos notas de su música a tempo.
+
+**Pruebas:** nueva `tests/fun-tweaks.mjs`. Dos pruebas se adaptan a los cambios aprobados:
+- `crystal_play_smoke.py` persigue sin esperar a que el fragmento se pare y sosteniendo la tecla;
+- `universe_mischief_mix.py` admite la nueva ganancia, con pico de 0,87 y sin saturación.
 
 ## Fase V6 · Sucesos vivos · alpha.74
 

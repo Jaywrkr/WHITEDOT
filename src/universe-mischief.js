@@ -7,11 +7,11 @@ import {musicFamily} from './music-families.js';
 export function playMischiefNote(r,index,time,source=null){
  if(!r.S.sound||r.ac?.state!=='running')return false;
  const d=r.regionOfPos(source?.x??r.S.wx,source?.y??r.S.wy),tones=r.chordTones(),instrument=musicFamily(d.genre)?.leads[0]||'p_gutguitar';if(!tones.length)return false;
- const emit=()=>{for(let i=0;i<(index===6?3:1);i++){const at=time+i*(r.SIX||.125)*2,note=tones[(index===6?i:index)%tones.length];r.hookInst(instrument,note,at,r.vel(index===6?.014:.012),d);r.mischiefAudioCue?.({instrument,note,time:at,index,gain:index===6?.014:.012});}};
+ const emit=()=>{for(let i=0;i<(index===6?3:1);i++){const at=time+i*(r.SIX||.125)*2,note=tones[(index===6?i:index)%tones.length];r.hookInst(instrument,note,at,r.vel(index===6?.09:.06),d);r.mischiefAudioCue?.({instrument,note,time:at,index,gain:index===6?.09:.06});}};
  if(r.withVoiceOrigin)r.withVoiceOrigin('player',emit);else emit();return true;
 }
 export function initialize(r){
- let owner=null,scope='',cache=new Map(),scene=null,clock=0,cooldown=0,blocked=null,queued=false,musicBar=-1,musicHits=0,frozenTimes=new WeakMap();
+ let owner=null,scope='',cache=new Map(),scene=null,clock=0,cooldown=0,streakUntil=0,blocked=null,queued=false,musicBar=-1,musicHits=0,frozenTimes=new WeakMap();
  const reach=s=>s&&['twin','farewell'].includes(s.kind)?1400:650;
  const reduced=()=>!!(r.S.reducedMotion||prefersReducedMotion()),
   active=()=>r.inWorld()&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!document.hidden&&!r.scanning&&!r.noticeLane?.inspecting&&!r.houseActive?.()&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
@@ -39,12 +39,12 @@ export function initialize(r){
   if(r.autopilotState?.mode==='wander'&&!r.autopilotState.paused){scene=null;return;}
   const player={x:r.S.wx,y:r.S.wy};if(scene&&Math.hypot(scene.x-player.x,scene.y-player.y)>reach(scene)){blocked=scene.id;scene=null;cooldown=clock+15;queued=false;}
   if(!scene){if(clock<cooldown)return;const candidates=sites().filter(o=>o.id!==blocked&&Math.hypot(o.x-player.x,o.y-player.y)<95);for(const o of candidates){scene=prepare(o);if(scene){frozenTimes=new WeakMap();break;}}if(!scene){if(!sites().some(o=>o.id===blocked&&Math.hypot(o.x-player.x,o.y-player.y)<150))blocked=null;return;}}
-  if(scene.done){if(!scene.paid)finish();scene.celebration=(scene.celebration||0)+step;music();if(scene.paid&&scene.celebration>3){blocked=scene.id;scene=null;cooldown=clock+45;queued=false;}return;}
+  if(scene.done){if(!scene.paid)finish();scene.celebration=(scene.celebration||0)+step;music();if(scene.paid&&scene.celebration>3){blocked=scene.id;scene=null;cooldown=clock+12;streakUntil=clock+32;queued=false;}return;}
   if(scene.kind==='helper'&&scene.target){const view=r.crystalState?.near?.find(o=>o.id===scene.target.id),point=view&&(view.run||view.drop||view);if(point)scene.target={...scene.target,x:point.x,y:point.y};}
   const before=scene.stage;stepMischief(scene,player,step,{reduced:reduced(),broken:!!(scene.target&&r.savedCrystal?.(scene.target.id)?.broken),totem:r.totemNear?.(110)?.[0]});
   if(scene.kind==='audience'&&scene.stage===3&&before!==3&&scene.festival){const t=r.totemNear?.(110)?.[0];if(t)r.celebrateTotem?.(t);}
   if(scene.done)finish();music();
  }
  const frozen=o=>r.inWorld()&&!r.activityActive&&!!scene&&scene.kind==='breath'&&scene.stage===1&&!scene.done&&Math.hypot(o.x-scene.x,o.y-scene.y)<130;
- Object.defineProperties(r,{mischiefTick:{get:()=>tick},drawMischief:{get:()=>()=>{if(active()){if(!scene&&clock>=cooldown&&!(r.autopilotState?.mode==='wander'&&!r.autopilotState.paused))drawMischiefClue(r,sites(),reduced());drawMischief(r,scene,reduced());}}},mischiefFrozen:{get:()=>frozen},mischiefTime:{get:()=>(o,t)=>{if(!frozen(o))return t;if(!frozenTimes.has(o))frozenTimes.set(o,t);return frozenTimes.get(o);}},mischiefHush:{get:()=>active()&&!!scene&&scene.kind==='breath'&&scene.stage===1&&!scene.done},mischiefDancing:{get:()=>id=>!!scene&&scene.kind==='dance'&&scene.target?.id===id},mischiefNear:{get:()=>sites},mischiefState:{get:()=>({book:book(),scene,cache:cache.size,clock})}});book();
+ Object.defineProperties(r,{mischiefTick:{get:()=>tick},drawMischief:{get:()=>()=>{if(active()){if(!scene&&clock>=cooldown&&!(r.autopilotState?.mode==='wander'&&!r.autopilotState.paused))drawMischiefClue(r,sites(),reduced(),clock<streakUntil?600:320);drawMischief(r,scene,reduced());}}},mischiefFrozen:{get:()=>frozen},mischiefTime:{get:()=>(o,t)=>{if(!frozen(o))return t;if(!frozenTimes.has(o))frozenTimes.set(o,t);return frozenTimes.get(o);}},mischiefHush:{get:()=>active()&&!!scene&&scene.kind==='breath'&&scene.stage===1&&!scene.done},mischiefDancing:{get:()=>id=>!!scene&&scene.kind==='dance'&&scene.target?.id===id},mischiefNear:{get:()=>sites},mischiefState:{get:()=>({book:book(),scene,cache:cache.size,clock})}});book();
 }

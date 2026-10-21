@@ -43,13 +43,19 @@ try:
    keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.sparkTick');page.locator('#returnContinue').click()
    assert page.evaluate('__r.S.sparks')==23
    assert page.evaluate('id=>__r.savedCrystal(id).fragments',rare_id)==mask
-   page.wait_for_timeout(2200)
-   for _ in range(60):
+   # The rare fragment runs for five seconds: chase it straight away to keep its bonus.
+   held=None
+   for _ in range(150):
     info=page.evaluate('''id=>{const s=__r.savedCrystal(id);if(s.collected)return {done:true};const o=__r.crystalState.near.find(p=>p.id===id),p=o?.particles?.find(p=>p.rare);if(!p)throw Error('Missing persisted rare fragment');return {dx:p.x-__r.S.wx,dy:p.y-__r.S.wy};}''',rare_id)
     if info.get('done'):break
     if abs(info['dx'])>abs(info['dy']):key='ArrowRight' if info['dx']>0 else 'ArrowLeft'
     else:key='ArrowDown' if info['dy']>0 else 'ArrowUp'
-    page.keyboard.down(key);page.wait_for_timeout(120);page.keyboard.up(key)
+    # Hold the direction like a player chasing it; switch only when the fragment changes side.
+    if key!=held:
+     if held:page.keyboard.up(held)
+     page.keyboard.down(key);held=key
+    page.wait_for_timeout(40)
+   if held:page.keyboard.up(held)
    page.wait_for_function('id=>__r.savedCrystal(id).collected',arg=rare_id)
    assert page.evaluate('__r.S.sparks')==27,'the cian fragment pays one plus three bonus sparks'
    before=page.evaluate('__r.S.sparks');keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.sparkTick');page.locator('#returnContinue').click();page.wait_for_timeout(300)

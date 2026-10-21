@@ -19,7 +19,9 @@ export function drawActivity(r,l,s,t,paid=false){
  if(['race','tracks','echoes'].includes(id))for(const [i,p]of l.route.entries()){
   if(id==='tracks'&&i>s.next+2)continue;const q=point(p);c.strokeStyle=i===s.next?'#fff':ink;c.globalAlpha=i<s.next?.25:1;symbol(c,q.x,q.y,id==='tracks'?i%2:0,i===s.next?10:4);
  }c.globalAlpha=1;
- if(id==='race'&&s.ghost?.length){const p=s.ghost.find(p=>p[2]>=s.time)||s.ghost.at(-1);const q=point({x:p[0],y:p[1]});c.globalAlpha=.35;c.fillStyle=ink;c.fillRect(q.x-5,q.y-5,10,10);c.globalAlpha=1;}
+ // The echo competes: its whole route faintly, and itself as a cube with eyes at the same moment of your run.
+ if(id==='race'&&s.ghost?.length){c.globalAlpha=.14;c.strokeStyle=ink;c.lineWidth=1;c.beginPath();s.ghost.forEach((g,i)=>{const q=point({x:g[0],y:g[1]});i?c.lineTo(q.x,q.y):c.moveTo(q.x,q.y);});c.stroke();
+  const p=s.ghost.find(p=>p[2]>=s.time)||s.ghost.at(-1);const q=point({x:p[0],y:p[1]});c.globalAlpha=.45;c.fillStyle=ink;c.fillRect(q.x-5,q.y-5,10,10);c.globalAlpha=.9;c.fillStyle='#000';c.fillRect(q.x-3,q.y-2,2,2);c.fillRect(q.x+1,q.y-2,2,2);c.globalAlpha=1;}
  if(l.def.family==='rotate'){
   c.strokeStyle=ink;c.globalAlpha=.3;c.beginPath();const first=point(l.nodes[0]);c.moveTo(first.x-T,first.y);for(const node of l.nodes){const q=point(node);c.lineTo(q.x,q.y);}c.stroke();c.globalAlpha=1;
   if(id==='observatory'||id==='fold'){const q=point({x:8.5,y:8.5});for(let i=0;i<4;i++){c.save();c.translate(q.x,q.y);c.rotate(s.values[i]*Math.PI/2);c.strokeStyle=s.values[i]===l.solution[i]?'#e9ca7d':ink;c.beginPath();c.ellipse(0,0,(2+i*.5)*T,(.6+i*.4)*T,0,0,Math.PI*1.7);c.stroke();c.restore();}}
@@ -60,7 +62,7 @@ export function drawActivity(r,l,s,t,paid=false){
  c.strokeStyle='#fff';c.strokeRect(exit.x-12,exit.y-16,24,32);c.beginPath();c.moveTo(exit.x,exit.y-4);c.lineTo(exit.x,exit.y+9);c.lineTo(exit.x-5,exit.y+4);c.moveTo(exit.x,exit.y+9);c.lineTo(exit.x+5,exit.y+4);c.stroke();
  const reset=point({x:3.5,y:l.n-1.5});if(id!=='maze'&&id!=='islands'){c.strokeStyle='#7d8b95';c.beginPath();c.arc(reset.x,reset.y,10,.5,Math.PI*2);c.stroke();}
  c.fillStyle='#fff';c.fillRect(r.W/2-5,r.H/2-5,10,10);
- if(r.S.universeTexts!==false){c.fillStyle='#fff';c.textAlign='center';c.font='14px "Geist Mono",monospace';c.fillText(l.def.name,r.W/2,32,r.W-30);c.fillStyle='#b0bdc4';c.font='11px "Geist Mono",monospace';c.fillText(s.done?(paid?'Completado · +5 ✦':'Completado · Recuerdo conservado'):l.def.hint,r.W/2,54,r.W-30);c.fillText('Puerta ↓ salir · Círculo ↻ reiniciar',r.W/2,r.H-86,r.W-30);}
+ if(r.S.universeTexts!==false){c.fillStyle='#fff';c.textAlign='center';c.font='14px "Geist Mono",monospace';c.fillText(l.def.name,r.W/2,32,r.W-30);c.fillStyle='#b0bdc4';c.font='11px "Geist Mono",monospace';const echo=id==='race'&&s.ghost?.length?s.ghost.at(-1)[2]:null,versus=echo===null?'':s.done?(s.time<=echo?' · Ganaste a tu eco':' · Tu eco fue más rápido'):'';c.fillText(s.done?(paid?'Completado · +5 ✦':'Completado · Recuerdo conservado')+versus:echo===null?l.def.hint:'Tú '+s.time.toFixed(1)+' s · tu eco '+echo.toFixed(1)+' s',r.W/2,54,r.W-30);c.fillText('Puerta ↓ salir · Círculo ↻ reiniciar',r.W/2,r.H-86,r.W-30);}
  c.restore();
 }
 export function drawActivityPortal(r,o,definition,done,fill=0){
