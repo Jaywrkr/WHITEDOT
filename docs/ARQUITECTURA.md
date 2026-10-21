@@ -100,7 +100,7 @@ La presentación alpha.50 aclara el saldo de chispas y refuerza el contraste de 
 
 ## Cuenta obligatoria y sincronización Supabase
 
-`main.js` espera `account-entry.js:requireAccount()` antes del runtime. Sin configuración o sin primer acceso no hay mundo; una sesión previa puede abrir offline ante error de red, pero no ante rechazo válido de Auth. `cloud-account.js` sustituye la inicialización histórica de `connection.js`; no hay salas ni duetos activos.
+`main.js` espera `account-entry.js:requireAccount()` antes del runtime. Sin configuración o sin primer acceso no hay mundo. Con una sesión guardada el juego arranca sin esperar a la red y la identidad se comprueba en segundo plano; si Auth la rechaza, el cliente la olvida y `cloud-account.js` recarga a la entrada. `cloud-account.js` sustituye la inicialización histórica de `connection.js`; no hay salas ni duetos activos.
 
 `cloud-client.js` usa Auth/Data REST HTTPS con clave publicable y tokens persistentes por origen, renovación compartida y validación de identidad. `progress.js` separa claves locales por usuario y mantiene ámbito remoto compatible. `cloud-sync.js` usa baseline canónica, CAS y copias previas para reconciliar sin decidir por saldo/fecha. `cloud-account.js` comprueba/sube cada cinco segundos cuando corresponde, al reanudar y con intento de salida. Si ambas copias avanzaron pide elegir; no hay controles de respaldo normales. Al restaurar una copia que está en el otro modo, `cloud-account.js:settleMode` pasa por `exitWorld`/`enterWorld` para que región, sesión y música sigan al modo, conservando el lugar restaurado.
 

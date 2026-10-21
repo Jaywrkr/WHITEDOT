@@ -489,3 +489,9 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 .menu-group:not(.primary) .tiles button::after{content:"›";position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:16px}
 .menu-group:not(.primary) .tiles button:hover,.menu-group:not(.primary) .tiles button:focus-visible{background:#ffffff0d}
 @media(min-width:600px){.menu-group:not(.primary) .tiles{grid-template-columns:1fr 1fr;column-gap:16px}}
+
+/* Sign-in: room between fields, the main action first. */
+#accountForm label{display:block;margin-top:14px}
+#accountForm input{margin-top:6px;width:100%}
+#accountForm .row{margin-top:16px}
+#accountCodeBox{margin-top:12px}

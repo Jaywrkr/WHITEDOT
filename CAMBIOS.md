@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.83**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.84**. Las entradas describen su revisión, no certifican producción.
+
+## Fase F · Cuenta sin fricción · alpha.84
+
+Rama `claude/fase-f-cuenta`, sobre `claude/fase-e-menu`. Sin cambios en la configuración de Supabase.
+
+- **Con sesión guardada:** el juego arranca al momento, sin hoja de acceso ni espera de red; la identidad se comprueba en segundo plano. Si Auth la rechaza, el juego vuelve solo a la entrada.
+- **Entrada:** título Kubono, «Entrar» como acción principal, el último correo ya escrito y el cursor en la clave; los botones dicen «Entrando…», «Creando…» o «Confirmando…» mientras trabajan.
+- **Alta:** si el correo pide confirmación, el código se escribe en la misma hoja y entras directamente.
+- El correo recordado se borra al eliminar la cuenta.
+- Recorrido nuevo `account_flow_smoke.py` (Auth simulado y lento, sesión revocada, código de alta); `cloud_account_smoke.py`, `cloud_delete_smoke.py` y `cloud_recovery_smoke.py` en PASS.
 
 ## Fase E · Menú profesional · alpha.83
 
