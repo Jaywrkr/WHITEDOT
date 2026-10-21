@@ -15,7 +15,7 @@ try:
    page=b.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[];page.on('pageerror',lambda e:(errors.append(str(e)),print('PAGE ERROR '+str(e),flush=True)))
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__testRuntime?.openJournal');page.evaluate('()=>{document.getElementById("returnContinue").click();document.querySelectorAll(".modal").forEach(m=>m.hidden=true);window.__testRuntime.openJournal("today");}')
-   assert page.locator('[data-journal-tab]').all_text_contents()==['Hoy','Colección','Lugares','Música','Logros']
+   assert page.locator('[data-journal-tab]').all_text_contents()==['Hoy','Colección','Lugares','Música','Logros','Tú']
    page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('cubo');assert page.locator('.album-piece').count()==50
    page.locator('#journalOwnership').select_option('pendiente');assert page.locator('.album-piece').count()==43
    page.locator('#journalSearch').fill('Aurora');assert page.locator('.album-piece').count()==1;assert 'Juega 180 días' in page.locator('#journalBody').inner_text()
@@ -23,6 +23,6 @@ try:
    page.locator('[data-journal-tab="places"]').click();assert page.locator('#journalSky').is_visible()
    page.locator('[data-journal-tab="achievements"]').click();assert all(x in page.locator('#journalBody').inner_text() for x in ['Camino','Mundo','Música','Vida','Colección','Casa','Secretos'])
    assert page.locator('[data-journal-detail][open]').count()==0;page.locator('[data-journal-detail="achievement:Música"] > summary').click();page.locator('#journalBody').evaluate('e=>e.scrollTop=120');page.locator('[data-journal-tab="music"]').click();page.locator('[data-journal-tab="achievements"]').click();assert page.locator('[data-journal-detail="achievement:Música"]').get_attribute('open') is not None;assert page.locator('#journalBody').evaluate('e=>e.scrollTop')>50;page.screenshot(path=f'/tmp/whitedot-journal-compact-{width}.png');page.locator('#journalNext').click();assert page.locator('#mJournal').is_hidden();assert not page.evaluate('!!window.__testRuntime.ac')
-   assert not errors,errors;print('PASS five sections, silent search/silhouettes, 52-genre ring, constellation and next-step voice at '+str(width),flush=True);page.close()
+   assert not errors,errors;print('PASS six sections, silent search/silhouettes, 52-genre ring, constellation and next-step voice at '+str(width),flush=True);page.close()
   b.close()
 finally:server.shutdown()
