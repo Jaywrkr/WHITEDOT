@@ -5,7 +5,7 @@ export function initialize(runtime) {
   /* ---------- canvas ---------- */
   const cv=document.getElementById("w"),cx=installVivid(cv.getContext("2d"));   // paleta viva: más variedad de color en el mundo
   let W=0,H=0,DPR=1;
-  function resize(){DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cx.setTransform(DPR,0,0,DPR,0,0);}
+  function resize(){DPR=Math.min(devicePixelRatio||1,runtime.lightQuality?.()?1:2);W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cx.setTransform(DPR,0,0,DPR,0,0);}
   addEventListener("resize",resize);resize();
   const keys={};let ptr=null;
   addEventListener("keydown",e=>{
@@ -72,6 +72,7 @@ export function initialize(runtime) {
 
   Object.defineProperties(runtime, {
     cx: { get: () => cx },
+    resizeCanvas: { get: () => resize },
     W: { get: () => W, set: value => { W = value; } },
     H: { get: () => H, set: value => { H = value; } },
     keys: { get: () => keys },

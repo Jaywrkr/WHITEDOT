@@ -15,7 +15,7 @@ export function initialize(runtime){
  function raining(){return !!runtime.rainingNow&&runtime.inWorld()&&(!runtime.S.layer||runtime.S.layer==='superficie');}
  function draw(t,dt){
   if(!raining()||calm()){splashes.length=0;return;}const c=runtime.cx,W=runtime.W,H=runtime.H,n=Math.min(3,Math.floor(dt*60*(1+(runtime.MU?.storm||0)*2))+(Math.random()<.5?1:0));
-  for(let i=0;i<n&&splashes.length<36;i++)splashes.push({x:Math.random()*W,y:H*.25+Math.random()*H*.75,a:0});
+  for(let i=0;i<n&&splashes.length<(runtime.lightQuality?.()?14:36);i++)splashes.push({x:Math.random()*W,y:H*.25+Math.random()*H*.75,a:0});
   c.save();c.strokeStyle='#cfe3ff';c.lineWidth=1;
   for(const s of splashes){s.a+=dt/.45;const r=1+s.a*6;c.globalAlpha=.32*(1-s.a);c.beginPath();c.ellipse(s.x,s.y,r,r*.35,0,0,6.283);c.stroke();}
   splashes=splashes.filter(s=>s.a<1);c.restore();
