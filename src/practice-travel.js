@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {explorationContext,explorationContrast} from './exploration-context.js';
 import {territoryNucleus} from './territory-journey.js';
 import {labScore} from './lab-score.js';
@@ -68,7 +69,7 @@ export function initialize(runtime){
   runtime.waves.length=0;runtime.clearSoundCues?.();runtime.clearMusicalFrames?.();runtime.curRegion=null;runtime.RP=null;
   if(updateAddress&&!runtime.labMode&&typeof location!=='undefined'&&typeof history!=='undefined'){const url=new URL(location.href);url.searchParams.set('addr',encodePlace(placeAddress(runtime.worldIdentity,point.x,point.y,point.layer)));history.replaceState(null,'',url.href);}
   runtime.hud();ui();return true;}
- function jump(){if(!runtime.inWorld()||blocked()||document.querySelector('.modal:not([hidden])'))return false;
+ function jump(){if(!runtime.inWorld()||blocked()||openSurface('.modal:not([hidden])'))return false;
   // Commit the current place/progress before replacing coordinates. UI itself emits no note.
   if(!runtime.save())return false;
   const state=normalizePracticeTravel(runtime.S.practiceTravel),random=runtime.rng(runtime.seedOf(`travel:practice:v1:${Date.now()}:${counter++}`)),point=choosePracticePlace(runtime,random,state.recent,counter%3===0,state.sounds,state.sights);

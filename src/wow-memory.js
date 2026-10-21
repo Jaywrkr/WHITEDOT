@@ -1,3 +1,4 @@
+import {prefersReducedMotion} from './frame-state.js';
 // Visual signatures use saved addresses only; never sample another world's generator.
 function hash(text){let h=2166136261;for(let i=0;i<text.length;i++)h=Math.imul(h^text.charCodeAt(i),16777619);return h>>>0;}
 export function favoriteSignature(point={}){
@@ -18,7 +19,7 @@ import {sameWorld} from './world-identity.js';
 const RETURN_KEY='whitedot:wow:return:v1';
 export function initialize(runtime){
  let pending=null,age=0,visible=false;
- const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
+ const reduced=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  function clear(){try{globalThis.sessionStorage?.removeItem(RETURN_KEY);}catch(_){}pending=null;visible=false;}
  function remember(point){
   clear();if(!point?.address||!sameWorld(point.address,point.address)||!Number.isFinite(point.address.x)||!Number.isFinite(point.address.y))return;

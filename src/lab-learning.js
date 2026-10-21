@@ -1,7 +1,8 @@
+import {openSurface} from './frame-state.js';
 import {normalizeLabLearning,responseMatches} from './lab-learning-model.js';
 export function initialize(runtime){
  let owner=null,lesson=null,lastTime=0;
- const audible=()=>runtime.inWorld()&&runtime.S.sound&&runtime.musicVolume?.()>0&&runtime.ac?.state==='running'&&!document.hidden&&!document.querySelector('.modal:not([hidden])')&&!runtime.scanning&&!runtime.duetRoom;
+ const audible=()=>runtime.inWorld()&&runtime.S.sound&&runtime.musicVolume?.()>0&&runtime.ac?.state==='running'&&!document.hidden&&!openSurface('.modal:not([hidden])')&&!runtime.scanning&&!runtime.duetRoom;
  function book(){if(owner!==runtime.S){owner=runtime.S;owner.labLearning=normalizeLabLearning(owner.labLearning);lesson=null;}return owner.labLearning;}
  function begin(){if(book().version!==1)return false;lesson={stage:'choose',times:[],age:0};runtime.$('mGuide').hidden=true;lastTime=runtime.ac?.currentTime||0;return true;}
  function heard(kind,index,time,region,source,origin){

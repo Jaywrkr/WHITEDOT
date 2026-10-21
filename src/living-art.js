@@ -1,8 +1,9 @@
+import {prefersReducedMotion} from './frame-state.js';
 // Original, small line glyphs. All color belongs to the encounter, never the background.
 import {drawAnatomy,anatomyOf} from './anatomy.js';
 export function livingGlyph(c,o,t){
  if(!o.anatomy&&'frond chime cap fan cluster kite ribbon spinner spiral hare lantern centipede harp cairn gate nest wheel'.split(' ').includes(o.shape))o={...o,anatomy:anatomyOf(o)};
- if(o.anatomy){drawAnatomy(c,o.anatomy,o.size,globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches?0:o.phase);return;}
+ if(o.anatomy){drawAnatomy(c,o.anatomy,o.size,prefersReducedMotion()?0:o.phase);return;}
  const s=o.size,p=o.phase+Math.sin(t/1200+o.phase)*.12;c.beginPath();
  switch(o.shape){
  case 'branch':case 'roots':c.moveTo(0,s);c.quadraticCurveTo(Math.sin(p)*s*.3,0,0,-s);for(const side of [-1,1]){c.moveTo(0,-s*.2);c.quadraticCurveTo(side*s*.6,-s*.8,side*s,-s*.65);}break;

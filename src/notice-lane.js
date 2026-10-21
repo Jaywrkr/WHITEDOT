@@ -1,3 +1,4 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 // One visible notice, ordered by importance, with a real exit interval.
 export const NOTICE_STYLES=Object.freeze({
  1:Object.freeze({seconds:1.8,ttl:8000,cooldown:18000,pending:1}),
@@ -18,8 +19,8 @@ export function createNoticeLane(){
 export function installNoticeLane(runtime){
  if(runtime.noticeLane)return runtime.noticeLane;
  const model=createNoticeLane(),timed=new Map(),callbacks=new Map(),hides=new WeakMap(),recent=new Map(),started=new Map(),panelIDs={rareNotice:'rare'};let state=runtime.S,last=performance.now(),quiet=0;
- const blocked=()=>!globalThis.document||document.hidden||!!runtime.setRecording||!!runtime.jam?.loop?.rec||!!runtime.jam?.loop?.armed||!!document.querySelector('.modal:not([hidden]),.fxpanel:not([hidden]),.glasspanel:not([hidden]),#mirrorPanel:not([hidden])');
- const reduced=()=>runtime.S?.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+ const blocked=()=>!globalThis.document||document.hidden||!!runtime.setRecording||!!runtime.jam?.loop?.rec||!!runtime.jam?.loop?.armed||!!openSurface('.modal:not([hidden]),.fxpanel:not([hidden]),.glasspanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const reduced=()=>runtime.S?.reducedMotion||prefersReducedMotion();
  const idOf=panel=>panelIDs[panel.id]||panel.id;
  const panels=()=>document.querySelectorAll('#toast,#phrase,#zone,#voice,#rareNotice,#celebration');
  function show(panel){
@@ -47,7 +48,7 @@ export function installNoticeLane(runtime){
   request(id,{level:Math.max(...slot.queue.map(e=>e.level),slot.current?.level||1)});return true;
  }
  function quietRoutine(){for(const [id,slot]of timed)if(['zone','phrase','toast'].includes(id)){slot.queue.length=0;slot.current=null;model.cancel(id);slot.panel.hidden=true;slot.panel.classList.remove('on');}if(['zone','phrase','toast'].includes(document.body.dataset.notice))document.body.dataset.notice='';}
- const api={quietRoutine,request,claim,release,cancel:model.cancel,blocked,show,hide,enqueue,register:(id,fn)=>callbacks.set(id,fn),get owner(){return model.owner;},get pending(){return model.pending;},get inspecting(){return !!globalThis.document?.querySelector('[data-inspect="true"]:not([hidden]):not(.notice-leaving)');}};
+ const api={quietRoutine,request,claim,release,cancel:model.cancel,blocked,show,hide,enqueue,register:(id,fn)=>callbacks.set(id,fn),get owner(){return model.owner;},get pending(){return model.pending;},get inspecting(){return !!openSurface('[data-inspect="true"]:not([hidden]):not(.notice-leaving)');}};
  function tick(){const now=performance.now(),dt=Math.max(0,Math.min(.1,(now-last)/1000));last=now;
   if(state!==runtime.S){state=runtime.S;model.clear();recent.clear();started.clear();quiet=0;for(const slot of timed.values()){slot.queue.length=0;slot.current=null;hide(slot.panel);}}
   for(const [id,slot]of timed)if(slot.current?.seconds===Infinity&&runtime.storageStatus?.kind==='ok'){slot.current=null;hide(slot.panel);release(id);}

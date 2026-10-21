@@ -1,6 +1,7 @@
+import {prefersReducedMotion} from './frame-state.js';
 // Visual feedback stays silent. Resume audio in the original touch gesture.
 export function initialize(runtime){
- const reduced=()=>runtime.S?.reducedMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const reduced=()=>runtime.S?.reducedMotion||prefersReducedMotion();
  document.addEventListener('click',event=>{const button=event.target.closest('button');if(!button||button.disabled||reduced())return;
   button.getAnimations().filter(a=>a.id==='control-press').forEach(a=>a.cancel());
   const animation=button.animate([{scale:'.98',translate:'0 1px'},{scale:'1',translate:'0 0'}],{duration:160,easing:'ease-out'});animation.id='control-press';

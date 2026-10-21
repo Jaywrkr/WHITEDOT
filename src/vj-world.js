@@ -1,8 +1,9 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {VJ_CELL,visualSegment,segmentOpacity,encounterOf,moveVisitor,cometOf} from './vj-model.js';
 import {drawVisualSegment,distantSegmentLayout,visualPlate} from './vj-art.js';
 export function initialize(runtime){
  const cache=new Map(),visitors=new Map(),plates=new Map(),gestures=[];let owner=runtime.S,seconds=0,lastGesture=-10;
- const reduced=()=>runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+ const reduced=()=>runtime.S.reducedMotion||prefersReducedMotion();
  const active=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie';
  function reset(){cache.clear();visitors.clear();plates.clear();gestures.length=0;seconds=0;lastGesture=-10;owner=runtime.S;}
  function nearby(){if(owner!==runtime.S)reset();if(!active())return [];const out=[],cx=Math.floor(runtime.S.wx/VJ_CELL),cy=Math.floor(runtime.S.wy/VJ_CELL);
@@ -10,7 +11,7 @@ export function initialize(runtime){
   while(cache.size>48){const key=cache.keys().next().value;cache.delete(key);visitors.delete(key);}return out;
  }
  function gesture(x=runtime.S.wx,y=runtime.S.wy){if(!active()||seconds-lastGesture<.18)return;lastGesture=seconds;gestures.push({x,y,at:seconds,hue:(runtime.seedOf('vj:gesture:'+Math.round(x/50)+','+Math.round(y/50))>>>0)%360});if(gestures.length>8)gestures.shift();}
- function draw(t,dt,ox,oy,paused=false){if(!active())return;const items=nearby(),still=reduced(),blocked=paused||document.hidden||runtime.scanning||runtime.noticeLane?.inspecting||document.querySelector('.modal:not([hidden])');if(!blocked)seconds+=Math.min(.05,Math.max(0,dt));
+ function draw(t,dt,ox,oy,paused=false){if(!active())return;const items=nearby(),still=reduced(),blocked=paused||document.hidden||runtime.scanning||runtime.noticeLane?.inspecting||openSurface('.modal:not([hidden])');if(!blocked)seconds+=Math.min(.05,Math.max(0,dt));
   const c=runtime.cx,reach=runtime.worldVisibility?.radius||650;
   for(const q of items){const alpha=segmentOpacity(q,runtime.S.wx,runtime.S.wy,reach);if(alpha<.001)continue;
    const {x,y,radius:r}=distantSegmentLayout(q,{x:runtime.S.wx,y:runtime.S.wy},runtime.W,runtime.H);if(x+r<0||x-r>runtime.W||y+r<0||y-r>runtime.H)continue;

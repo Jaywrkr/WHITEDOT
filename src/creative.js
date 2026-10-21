@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {influenceProfile} from './influence.js';
 // A first visit has a direction, without obliging anyone to record a loop.
 export const JOURNEY=['Camino','Escuchar un lugar','Transformar su música','Crear en el Estudio'];
@@ -16,7 +17,7 @@ export function initialize(runtime){
  modeButton.onclick=()=>{runtime.S.relaxedCreate=!runtime.S.relaxedCreate;modeUI();runtime.save();runtime.hud();};modeUI();
  const state=()=>runtime.S.creativeJourney||=( {world:false,transformed:false,studio:false} );
  let previousMode=null,subtractIndex=0,gesture=null,lastAction=-Infinity,hintClock=0;
- const available=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!runtime.scanning&&!document.hidden&&!document.querySelector('.modal:not([hidden])');
+ const available=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!runtime.scanning&&!document.hidden&&!openSurface('.modal:not([hidden])');
  function down(e){
   if(!available()||!e.isPrimary||gesture)return false;
   const x=runtime.S.wx+e.clientX-runtime.W/2,y=runtime.S.wy+e.clientY-runtime.H/2;
@@ -65,7 +66,7 @@ export function initialize(runtime){
   if(advanceOpenChallenge(challenge,channel,verb)&&!wasDone){runtime.unlock('composicionAbierta');runtime.S.journal.creative||={};runtime.S.journal.creative[region.key]='Dos partes transformadas de dos maneras';}
  }
  function draw(){
-  if(!runtime.inWorld()||runtime.scanning||document.hidden||document.querySelector('.modal:not([hidden])')||runtime.MU.speed>.12)return;
+  if(!runtime.inWorld()||runtime.scanning||document.hidden||openSurface('.modal:not([hidden])')||runtime.MU.speed>.12)return;
   const nearest=(runtime.MU.near||[]).filter(o=>o.kind==='rotor'||o.kind==='resonator').sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy))[0];
   if(!nearest||Math.hypot(nearest.x-runtime.S.wx,nearest.y-runtime.S.wy)>65)return;
   if(runtime.nearbyMateria?.(200).length)return;   // la materia ya muestra su propia ayuda: no se pisan los textos

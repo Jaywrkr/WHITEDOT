@@ -1,18 +1,19 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {createMotion,WOW_LIMITS,lookVector,greetingPose,formationOffset} from './wow-model.js';
 export function initialize(runtime){
  let greetings=new WeakMap();const formation=new WeakMap(),seenBeams=new WeakSet(),markedWaves=new WeakMap();let nextSlot=0;
  const motion=createMotion(),cubeMotion=createMotion();let cubeMode=null,cubeLayer=null,cubeOwner=null,cubeLean=0,cubePaused=true;let owner=null,layer=null,dust=[],seconds=0,nearby=[],pending=[],ripples=[],flashes=[],memory=[],marks=[],clusters=[],lastPosition=null;
- const reduced=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
+ const reduced=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  function sources(){
   const surface=(runtime.S.layer||'superficie')==='superficie';
   const pool=[...(surface?runtime.MU?.near||[]:[]),...(surface?runtime.MU?.walkerFollowers||[]:[]),...(runtime.livingNear?.(140)||[]),...(surface?runtime.microNear?.(140)||[]:[]),...(surface?runtime.inhabitantsNear?.(140)||[]:[])].filter(Boolean).map(o=>o.object||o);
   return [...new Set(pool)].filter(o=>Number.isFinite(o.x)&&Number.isFinite(o.y)&&Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<140).sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy)).slice(0,WOW_LIMITS.nearby);
  }
- const blocked=()=>!runtime.inWorld()||document.hidden||runtime.scanning||runtime.$?.('rareNotice')?.dataset.inspect==='true'||!!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const blocked=()=>!runtime.inWorld()||document.hidden||runtime.scanning||runtime.$?.('rareNotice')?.dataset.inspect==='true'||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function tick(dt,paused=false){
   const mode=runtime.inWorld()?'world':runtime.S.mode,world=mode==='world',x=world?runtime.S.wx:runtime.S.px,y=world?runtime.S.wy:runtime.S.py;
   if(cubeOwner!==runtime.S||cubeMode!==mode||cubeLayer!==runtime.S.layer){cubeOwner=runtime.S;cubeMode=mode;cubeLayer=runtime.S.layer;cubeMotion.reset();cubeLean=0;}
-  cubePaused=paused||document.hidden||runtime.scanning||runtime.noticeLane?.inspecting||runtime.$?.('rareNotice')?.dataset.inspect==='true'||!['world','camino'].includes(mode)||!!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+  cubePaused=paused||document.hidden||runtime.scanning||runtime.noticeLane?.inspecting||runtime.$?.('rareNotice')?.dataset.inspect==='true'||!['world','camino'].includes(mode)||!!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
   const move=cubeMotion.step(x,y,dt,cubePaused||reduced()),target=move.moving?Math.cos(move.angle)*.055:0;
   cubeLean=cubePaused||reduced()||move.angle===undefined?0:cubeLean+(target-cubeLean)*(1-Math.exp(-Math.max(0,Math.min(.05,dt||0))*18));
   runtime.cardFocusTick?.();runtime.favoriteReturnTick?.(dt,paused||blocked());

@@ -1,3 +1,4 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {MICRO_INSTRUMENTS,microChunk,microVoice,microPath,microPattern} from './micro-instruments-model.js';
 import {contactEntry} from './contact.js';
 import {polarDelta} from './body.js';
@@ -5,7 +6,7 @@ import {claimInstallationBar} from './installations.js';
 export function initialize(runtime){
  const cache=new Map();let owner=runtime.S,clock=0,lastAmbient=-1;
  const surface=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!runtime.labMode;
- const active=()=>surface()&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden])');
+ const active=()=>surface()&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!openSurface('.modal:not([hidden])');
  function reset(){owner=runtime.S;cache.clear();clock=0;lastAmbient=-1;}
  function nearby(radius=500){
   if(owner!==runtime.S)reset();if(!surface())return [];radius=Math.max(0,Math.min(1200,radius));const out=[],size=runtime.WCH,{wx,wy}=runtime.S;
@@ -49,7 +50,7 @@ export function initialize(runtime){
  }
  function pulse(origin='player'){if(!active())return false;let changed=false;for(const o of nearby(170).slice(0,2))changed=touch(o,origin)||changed;return changed;}
  function draw(t,ox,oy,radius){
-  if(!surface())return;const c=runtime.cx,now=runtime.ac?.currentTime??-100,still=runtime.S.reducedMotion||matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!surface())return;const c=runtime.cx,now=runtime.ac?.currentTime??-100,still=runtime.S.reducedMotion||prefersReducedMotion();
   for(const o of nearby(Math.min(radius+40,1200))){const distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),elapsed=now-(o.onset??-1000),lit=runtime.S.sound&&elapsed>=0?Math.max(0,1-elapsed/.65):0,fade=runtime.worldOpacity?.(distance)??Math.max(0,1-distance/radius);if(fade<=.001)continue;
    c.save();c.translate(o.x+ox,o.y+oy);const response=runtime.reactivePose?.(o.id);if(response){c.translate(response.x,response.y);c.rotate(response.rotation);c.scale(response.sx,response.sy);}c.globalAlpha=fade*(.45+lit*.55);c.strokeStyle=runtime.musicInk?.(o,MICRO_INSTRUMENTS[o.kind].role)||'#fff';c.fillStyle=c.strokeStyle;c.lineWidth=lit?1.4:1;
    const scale=1+(still?0:lit*.15);c.scale(scale,scale);c.stroke(new Path2D(microPath(o.kind)));

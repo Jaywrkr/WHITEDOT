@@ -1,3 +1,4 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {TOTEM_DAILY_LIMIT} from './sculpture-totems-model.js';
 import {CUBE_SHOP_SLOTS,shopPiece,shopSlot,wearing} from './cube-shop-model.js';
 import {pieceImage} from './cube-shop-preview.js';
@@ -8,7 +9,7 @@ import {SPARK_JUMP_COST,SPARK_SITE_LIMIT,SPARK_SHOP,SPARK_SETS,SPARK_BADGES,SPAR
 const escape=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function initialize(runtime){
  const $=runtime.$;let owner=null,day='',clock=0,refresh=0,lastDistance=0,sessionDistance=0,segment=0,anchor=null,home=null,homeTime=0,newCards=new Set(),neighbors=new Set(),worldBroken=0,inspector={id:'',count:0},lastJump=null,delta=0,deltaUntil=0,trail=[],lastTrail=null,pickups=[],jumpAvailable=false,jumpUntil=0;
- const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function book(){
   if(owner!==runtime.S){owner=runtime.S;owner.sparkEconomy=normalizeSparkEconomy(owner.sparkEconomy,owner.sparks,owner.todayKey);day=owner.todayKey;clock=0;refresh=0;lastDistance=sparkNumber(owner.playerProfile?.distanceUnits);sessionDistance=0;segment=0;anchor=home=null;homeTime=0;newCards=new Set();neighbors=new Set();worldBroken=0;inspector={id:'',count:0};lastJump=null;trail=[];lastTrail=null;delta=0;deltaUntil=0;pickups=[];jumpAvailable=owner.sparkEconomy.earned>=SPARK_JUMP_COST;jumpUntil=0;}
   const q=owner.sparkEconomy;if(q.version===1&&day!==owner.todayKey){day=owner.todayKey;q.day=day;q.sites={};q.totems={};}
@@ -80,7 +81,7 @@ export function initialize(runtime){
   const m=SPARK_MILESTONES.find(p=>'distance:'+p.meters===goal);if(m)return q.claims['distance:'+m.meters]?m.title+' · Meta cumplida':'Camina · '+Math.min(Math.floor((owner.playerProfile?.distanceUnits||0)/10),m.meters)+'/'+m.meters+' m';return '';
  }
  function render(){const q=book();if(q.version!==1){$('sparkStatus').textContent='Actualiza para usar estas chispas.';$('sparkShop').innerHTML='';$('sparkJump').disabled=true;return;}const p=sparkSetProgress(owner);$('sparkBalance').textContent='✦ '+sparkNumber(owner.sparks);$('sparkLedger').textContent='Ganadas '+q.earned+' · Gastadas '+q.spent;
-  const ink=runtime.musicInk?.(null,'lead')||'#fff',color=runtime.cubeColor?.()||'#fff',reduced=!!(owner.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches),left=SPARK_SHOP.filter(p=>!q.purchases[p.id]);
+  const ink=runtime.musicInk?.(null,'lead')||'#fff',color=runtime.cubeColor?.()||'#fff',reduced=!!(owner.reducedMotion||prefersReducedMotion()),left=SPARK_SHOP.filter(p=>!q.purchases[p.id]);
   // The shop lists only what you do not have; each picture is drawn by the game itself.
   $('sparkShop').innerHTML=left.length?CUBE_SHOP_SLOTS.filter(slot=>left.some(p=>p.slot===slot.id)).map(slot=>'<h4 class="spark-slot">'+slot.name+'</h4>'+left.filter(p=>p.slot===slot.id).map(p=>'<article data-slot="'+slot.id+'" data-piece="'+p.id+'" data-afford="'+(sparkNumber(owner.sparks)>=p.cost)+'"><img class="spark-picture" alt="" src="'+pieceImage(p.id,{color,ink,reduced})+'"><h3>'+p.name+' <span>'+p.cost+' ✦</span></h3><p>'+p.text+'</p><button data-spark-buy="'+p.id+'" aria-label="Comprar '+p.name+' por '+p.cost+' chispas">'+(sparkNumber(owner.sparks)>=p.cost?'Comprar':'Faltan '+(p.cost-sparkNumber(owner.sparks))+' ✦')+'</button></article>').join('')).join(''):'<p class="spark-empty">Ya tienes todo lo de la tienda.</p>';
   const u=universeProgress(owner);
@@ -101,12 +102,12 @@ export function initialize(runtime){
  }
  function drawPickups(){
   pickups=pickups.filter(p=>clock-p.at<1);if(!pickups.length)return;
-  const c=runtime.cx,still=owner.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches,rect=$('sparkTotal').getBoundingClientRect?.(),target={x:rect?rect.x+rect.width/2:runtime.W-40,y:rect?rect.y+rect.height/2:45};
+  const c=runtime.cx,still=owner.reducedMotion||prefersReducedMotion(),rect=$('sparkTotal').getBoundingClientRect?.(),target={x:rect?rect.x+rect.width/2:runtime.W-40,y:rect?rect.y+rect.height/2:45};
   c.save();c.font='600 14px "Geist Mono",monospace';c.textAlign='center';c.fillStyle='#e9ca7d';
   for(const p of pickups){const age=clock-p.at,k=still?0:age*age;c.globalAlpha=Math.min(1,(1-age)*2);c.fillText('+'+p.amount+' ✦',p.x+(target.x-p.x)*k,p.y-18+(target.y-p.y+18)*k);if(!still){c.strokeStyle='#fff';c.globalAlpha=(1-age)*.35;c.beginPath();c.arc(p.x,p.y,4+age*12,0,Math.PI*2);c.stroke();}}
   c.restore();
  }
- function draw(t){const q=book();if(active())drawPickups();if(!active()||!Object.keys(q.wear||{}).length&&!Object.keys(q.on||{}).length)return;const c=runtime.cx,x=runtime.W/2,y=runtime.H/2,still=owner.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;c.save();c.strokeStyle=c.fillStyle='#fff';c.lineWidth=.8;
+ function draw(t){const q=book();if(active())drawPickups();if(!active()||!Object.keys(q.wear||{}).length&&!Object.keys(q.on||{}).length)return;const c=runtime.cx,x=runtime.W/2,y=runtime.H/2,still=owner.reducedMotion||prefersReducedMotion();c.save();c.strokeStyle=c.fillStyle='#fff';c.lineWidth=.8;
   if(wearing(q,'orbit')){for(let i=0;i<3;i++){const a=i*Math.PI*2/3+(still?0:t/1300);c.globalAlpha=.55;c.fillRect(x+Math.cos(a)*20-1,y+Math.sin(a)*20-1,2,2);}}
   if(wearing(q,'facet'))for(const w of runtime.waves||[]){c.globalAlpha=Math.max(0,1-w.r/w.max)*.3;c.beginPath();c.moveTo(w.x+runtime.W/2-owner.wx,w.y+runtime.H/2-owner.wy-w.r);c.lineTo(w.x+runtime.W/2-owner.wx+w.r,w.y+runtime.H/2-owner.wy);c.lineTo(w.x+runtime.W/2-owner.wx,w.y+runtime.H/2-owner.wy+w.r);c.lineTo(w.x+runtime.W/2-owner.wx-w.r,w.y+runtime.H/2-owner.wy);c.closePath();c.stroke();}
   // Reduced motion keeps the purchase visible: a still scatter of dust at the cube's feet instead of a moving trail.

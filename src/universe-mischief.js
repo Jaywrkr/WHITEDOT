@@ -1,3 +1,4 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {MISCHIEF,MISCHIEF_CELL,mischiefCell,normalizeMischief,createMischief,stepMischief} from './universe-mischief-model.js';
 import {drawMischief,drawMischiefClue} from './universe-mischief-art.js';
 import {crystalField} from './crystal-sparks.js';
@@ -12,8 +13,8 @@ export function playMischiefNote(r,index,time,source=null){
 export function initialize(r){
  let owner=null,scope='',cache=new Map(),scene=null,clock=0,cooldown=0,blocked=null,queued=false,musicBar=-1,musicHits=0,frozenTimes=new WeakMap();
  const reach=s=>s&&['twin','farewell'].includes(s.kind)?1400:650;
- const reduced=()=>!!(r.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches),
-  active=()=>r.inWorld()&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!document.hidden&&!r.scanning&&!r.noticeLane?.inspecting&&!r.houseActive?.()&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const reduced=()=>!!(r.S.reducedMotion||prefersReducedMotion()),
+  active=()=>r.inWorld()&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!document.hidden&&!r.scanning&&!r.noticeLane?.inspecting&&!r.houseActive?.()&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function book(){const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie')+':'+r.S.todayKey;if(owner!==r.S||scope!==key){owner=r.S;scope=key;owner.mischief=normalizeMischief(owner.mischief);cache=new Map();scene=null;frozenTimes=new WeakMap();clock=cooldown=0;blocked=null;queued=false;}return owner.mischief;}
  function sites(){book();const out=[],x=Math.floor(r.S.wx/MISCHIEF_CELL),y=Math.floor(r.S.wy/MISCHIEF_CELL);for(let a=x-1;a<=x+1;a++)for(let b=y-1;b<=y+1;b++){const key=a+','+b;if(!cache.has(key)){cache.set(key,mischiefCell(a,b,r.seedOf,r.S.layer||'superficie'));while(cache.size>48)cache.delete(cache.keys().next().value);}for(const o of cache.get(key))if(Math.hypot(o.x-r.S.wx,o.y-r.S.wy)<650&&!r.regionOfPos(o.x,o.y).sea)out.push(o);}
   for(const o of r.totemNear?.(550)||[])out.push({id:'mischief:'+o.id,kind:'dance',x:o.x,y:o.y,seed:r.seedOf('mischief:dance:'+o.id)>>>0,target:o});return out;

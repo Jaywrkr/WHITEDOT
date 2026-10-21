@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {consonantPitch} from './musical-conductor.js';
 import {PET_SPECIES,normalizePet,createPet,petStage,learnPet,growPet,petFormationEligible,petFromBox} from './pet-model.js';
 import {musicalCharacter,hookPitch,inRegister} from './musical-character.js';
@@ -8,7 +9,7 @@ export function initialize(runtime){
  const S=()=>runtime.S;let owner=S(),clock=0,lastHeard=-Infinity,lastBar=-1,reservedBar=-1,pending=null,contact=false,lastGuide=-Infinity,target=null,saveAt=0,lastPosition=null,bond=new Map();
  const state={x:S().wx+50,y:S().wy+25,ready:false,sleep:0,lit:0,trail:[],hint:null};
  S().pet=normalizePet(S().pet);
- const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
+ const active=()=>runtime.inWorld()&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])');
  const audible=()=>active()&&S().sound&&runtime.ac?.state==='running'&&runtime.currentPocket?.()?.kind!=='quiet'&&!runtime.cultureListening;
  function reset(){pending=null;contact=false;lastBar=-1;reservedBar=-1;lastHeard=-Infinity;target=null;lastPosition=null;bond.clear();Object.assign(state,{ready:false,sleep:0,lit:0,trail:[],hint:null});}
  function ensure(){if(owner!==S()){owner=S();S().pet=normalizePet(S().pet);reset();}return S().pet;}

@@ -1,3 +1,4 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {WONDERS,WONDER_CELL,wonderCell,wonderDefinition,normalizeWonders} from './musical-wonders-model.js';
 import {drawWonder,drawWonderGift,drawMagicShow} from './musical-wonders-art.js';
 import {playWonderNote} from './musical-wonders-audio.js';
@@ -5,8 +6,8 @@ import {makeRareCard,normalizeRareBook,storeRareCard} from './rare-card-model.js
 import {pulseCrossed} from './pulse-forms.js';
 export function initialize(r){
  let owner=null,scope='',cache=new Map(),clock=0,queue=[],show=null,song=null,last=null;
- const reduced=()=>r.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
- const active=()=>r.inWorld()&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!document.hidden&&!r.scanning&&!r.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const reduced=()=>r.S.reducedMotion||prefersReducedMotion();
+ const active=()=>r.inWorld()&&!r.activityActive&&!r.labMode&&!(r.S.previewSeed&&!r.realTravel)&&!document.hidden&&!r.scanning&&!r.noticeLane?.inspecting&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  function book(){
   const key=JSON.stringify(r.worldIdentity)+':'+(r.S.layer||'superficie');
   if(owner!==r.S||scope!==key){owner=r.S;scope=key;owner.musicalWonders=normalizeWonders(owner.musicalWonders);cache=new Map();clock=0;queue=[];show=song=null;last=null;}

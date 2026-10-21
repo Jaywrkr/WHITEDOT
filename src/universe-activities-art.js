@@ -1,8 +1,9 @@
+import {prefersReducedMotion} from './frame-state.js';
 import {ACTIVITY_TILE as T} from './universe-activities-model.js';
 const palette=['#9de0d6','#d2b1ed','#e9ca7d','#c7db9a','#a8bfdc'];
 function symbol(c,x,y,shape,r=8){c.beginPath();if(shape%6===0)c.arc(x,y,r,0,Math.PI*2);else if(shape%6===1)c.rect(x-r,y-r,r*2,r*2);else{const count=3+shape%4;for(let i=0;i<=count;i++){const a=i*Math.PI*2/count-Math.PI/2;i?c.lineTo(x+Math.cos(a)*r,y+Math.sin(a)*r):c.moveTo(x+Math.cos(a)*r,y+Math.sin(a)*r);}c.closePath();}c.stroke();}
 export function drawActivity(r,l,s,t,paid=false){
- const c=r.cx,id=l.def.id,ink=palette[l.def.index%5],ox=r.W/2-s.x*T,oy=r.H/2-s.y*T,still=r.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches,clock=still?0:s.time;
+ const c=r.cx,id=l.def.id,ink=palette[l.def.index%5],ox=r.W/2-s.x*T,oy=r.H/2-s.y*T,still=r.S.reducedMotion||prefersReducedMotion(),clock=still?0:s.time;
  c.save();c.globalAlpha=1;c.fillStyle='#000';c.fillRect(0,0,r.W,r.H);c.lineWidth=1;
  const minX=Math.max(0,Math.floor(-ox/T)-1),maxX=Math.min(l.n,Math.ceil((r.W-ox)/T)+1),minY=Math.max(0,Math.floor(-oy/T)-1),maxY=Math.min(l.n,Math.ceil((r.H-oy)/T)+1);
  for(let y=minY;y<maxY;y++)for(let x=minX;x<maxX;x++){

@@ -1,3 +1,4 @@
+import {prefersReducedMotion} from './frame-state.js';
 import {ecosystemAt} from './ecosystem-field.js';
 import {visualHash,distanceOpacity} from './world-visibility-model.js';
 import {decorativeField} from './territory-presentation.js';
@@ -23,7 +24,7 @@ export function initialize(runtime){
   drawn=0;examined=0;clear=0;if(!runtime.inWorld()||runtime.S.layer!=='superficie'&&runtime.S.layer)return;
   const s=runtime.S,radius=runtime.worldVisibility?.radius||750,step=180,
    halfX=Math.min(runtime.W/2+90,radius),halfY=Math.min(runtime.H/2+90,radius);
-  const reduced=runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const reduced=runtime.S.reducedMotion||prefersReducedMotion();
   c.save();c.lineWidth=1;
   for(let x=Math.floor((s.wx-halfX)/step);x<=Math.floor((s.wx+halfX)/step);x++)for(let y=Math.floor((s.wy-halfY)/step);y<=Math.floor((s.wy+halfY)/step);y++){
    const wx=(x+.5)*step,wy=(y+.5)*step,d=runtime.regionOfPos(wx,wy),f=d.worldFamily;if(!f||f.quiet)continue;

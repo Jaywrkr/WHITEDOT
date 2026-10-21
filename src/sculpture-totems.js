@@ -1,10 +1,11 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {TOTEMS,TOTEM_CELL,totemCell} from './sculpture-totems-model.js';
 import {drawTotem} from './sculpture-totems-art.js';
 import {pulseCrossed} from './pulse-forms.js';
 import {crystalField} from './crystal-sparks.js';
 // Reuse quiet native voices and the existing harmonic frame and per-bar budgets.
 export function playTotemResponse(runtime,objects,time){
- if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running'||document.hidden||runtime.scanning||runtime.noticeLane?.inspecting||document.querySelector('.modal:not([hidden])'))return 0;
+ if(!runtime.inWorld()||!runtime.S.sound||runtime.ac?.state!=='running'||document.hidden||runtime.scanning||runtime.noticeLane?.inspecting||openSurface('.modal:not([hidden])'))return 0;
  let count=0;for(const [i,o]of objects.slice(0,3).entries()){
   if(Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)>220||!TOTEMS[o.kind])continue;
   const at=time+i*(runtime.SIX||.125)*2,gain=i?.14:.28;
@@ -14,8 +15,8 @@ export function playTotemResponse(runtime,objects,time){
 export function initialize(runtime){
  let owner=null,scope='',cache=new Map(),clock=0,seen=new WeakMap(),replied=new WeakSet();
  const layer=()=>runtime.S.layer||'superficie';
- const active=()=>runtime.inWorld()&&!runtime.labMode&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
- const reduced=()=>runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+ const active=()=>runtime.inWorld()&&!runtime.labMode&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const reduced=()=>runtime.S.reducedMotion||prefersReducedMotion();
  function nearby(radius=650){
   const key=JSON.stringify(runtime.worldIdentity)+':'+layer()+':'+runtime.S.todayKey;
   if(owner!==runtime.S||scope!==key){owner=runtime.S;scope=key;cache=new Map();clock=0;seen=new WeakMap();replied=new WeakSet(runtime.waves||[]);}

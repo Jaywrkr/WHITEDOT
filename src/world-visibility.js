@@ -1,3 +1,4 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {territoryInk} from './territory-transition.js';
 import {deviceDetail,fogTarget,blendFog,distanceOpacity,preloadCells,visualHash,DEPTH_PLANES,planePoint} from './world-visibility-model.js';
 export function initialize(runtime){
@@ -8,7 +9,7 @@ export function initialize(runtime){
   if(owner!==runtime.S){owner=runtime.S;fog=null;lastCell='';pending=[];footprints=[];lastPos=null;groundKinds.clear();groundSeed=runtime.seedOf('visual:depth:v2');}
   if(elapsed>0&&elapsed<.25){averageMs+=(elapsed*1000-averageMs)*.02;frames++;slow=averageMs>23?slow+1:Math.max(0,slow-2);if(slow>120&&quality>0){quality--;slow=0;}}
   detailQuality+=(quality-detailQuality)*Math.min(1,dt*.7);
-  const still=runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches,playing=runtime.S.sound&&(runtime.musicVolume?.()??1)>0&&runtime.ac?.state==='running'&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
+  const still=runtime.S.reducedMotion||prefersReducedMotion(),playing=runtime.S.sound&&(runtime.musicVolume?.()??1)>0&&runtime.ac?.state==='running'&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])');
   breathing=!still&&playing;const targetBreath=breathing?Math.max(0,Math.min(1,runtime.beat?.()||0)):0;breath+=(targetBreath-breath)*Math.min(1,dt*12);
   const s=runtime.S,d=runtime.regionOfPos(s.wx,s.wy),biome=runtime.BIOMES[d.z].id;
   const surface=d.sea||biome==='lago'?'agua':biome;if(!groundKinds.size)groundKinds.set(surface,1);else if(!groundKinds.has(surface))groundKinds.set(surface,0);
@@ -18,7 +19,7 @@ export function initialize(runtime){
   if(cell!==lastCell){lastCell=cell;pending=preloadCells(s.wx,s.wy,runtime.WCH,runtime.W,runtime.H).filter(([x,y])=>!runtime.wchunks.has(x+','+y));runtime.preloadLiving?.(fog.radius+runtime.WCH);}
   // Bound work per frame; visible cells are already loaded by worldStep.
   for(let i=0;i<2&&pending.length;i++){const [x,y]=pending.shift();runtime.wchunk(x,y);}
-  if(!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])')){
+  if(!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])')){
    if(lastPos&&Math.hypot(s.wx-lastPos.x,s.wy-lastPos.y)>20&&Math.hypot(s.wx-lastPos.x,s.wy-lastPos.y)<150){footprints.push({x:s.wx,y:s.wy,age:0,layer:s.layer||'superficie'});lastPos={x:s.wx,y:s.wy};}
    if(!lastPos||Math.hypot(s.wx-lastPos.x,s.wy-lastPos.y)>=150)lastPos={x:s.wx,y:s.wy};
    for(const p of footprints)p.age+=dt*(1+fog.wet*2);footprints=footprints.filter(p=>p.age<12).slice(-80);

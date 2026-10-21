@@ -1,24 +1,25 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {BOX_SURPRISES,SURPRISE_IDS,surpriseFor,normalizeSurprise,surpriseStyle} from './box-surprises-model.js';
 import {createPowerClock} from './power-clock.js';
 export function initialize(runtime){
  const clock=createPowerClock(BOX_SURPRISES,{stack:1}),$=runtime.$,path=[],marks=[];let owner=null,last=null,prior=null,returnPoint=null,lastNote=null;
- const reduced=()=>runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+ const reduced=()=>runtime.S.reducedMotion||prefersReducedMotion();
  const surface=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie';
  function ensure(){if(owner===runtime.S)return;owner=runtime.S;const raw=normalizeSurprise(owner.boxSurprises);owner.boxSurprises=raw;clock.restore(raw);path.length=marks.length=0;last=null;lastNote=null;returnPoint=raw.returnPoint&&Number.isFinite(raw.returnPoint.x)&&Number.isFinite(raw.returnPoint.y)?{...raw.returnPoint}:null;prior=null;}
  const ids=()=>{ensure();return SURPRISE_IDS.filter(id=>clock.powers[id]>clock.now());};
  function snapshot(){ensure();const raw=runtime.S.boxSurprises;if(raw?.version>1)return raw;const data=clock.snapshot();return {...raw,...data,remaining:{...raw.remaining,...data.remaining},elapsed:{...raw.elapsed,...data.elapsed},returnPoint};}
- function ui(){const current=ids()[0],panel=$('surpriseHud');if(!panel)return;panel.hidden=!current||!surface()||document.hidden||!!runtime.noticeLane?.inspecting||!!document.querySelector('.modal:not([hidden])');if(current){$('surpriseName').textContent=BOX_SURPRISES[current].name;$('surpriseTime').textContent=Math.ceil((clock.powers[current]-clock.now())/1000)+' s';$('surpriseUndo').textContent=returnPoint?'Volver':'Deshacer';}}
+ function ui(){const current=ids()[0],panel=$('surpriseHud');if(!panel)return;panel.hidden=!current||!surface()||document.hidden||!!runtime.noticeLane?.inspecting||!!openSurface('.modal:not([hidden])');if(current){$('surpriseName').textContent=BOX_SURPRISES[current].name;$('surpriseTime').textContent=Math.ceil((clock.powers[current]-clock.now())/1000)+' s';$('surpriseUndo').textContent=returnPoint?'Volver':'Deshacer';}}
  function clear(returning=false){ensure();if(owner.boxSurprises?.version>1)return false;if(returning&&returnPoint){if(!runtime.travelPracticePoint?.(returnPoint))return false;returnPoint=null;}clock.clear();path.length=marks.length=0;last=null;owner.boxSurprises=snapshot();ui();runtime.save?.();return true;}
  function give(id){ensure();if(!Object.hasOwn(BOX_SURPRISES,id)||owner.boxSurprises?.version>1)return false;const def=BOX_SURPRISES[id];if(def.teleport){if(!runtime.canPracticeTravel?.())return false;const old={x:owner.wx,y:owner.wy,layer:owner.layer||'superficie'};let point=null;const rng=runtime.rng(runtime.seedOf('box:surprise:trip:v1:'+old.x+','+old.y));for(let i=0;i<12;i++){const a=rng()*Math.PI*2,d=900+rng()*1500,x=old.x+Math.cos(a)*d,y=old.y+Math.sin(a)*d;if(Math.abs(x)>1e12-1e6||Math.abs(y)>1e12-1e6||runtime.regionOfPos(x,y).sea)continue;point={x,y,layer:'superficie'};break;}if(!point||!runtime.travelPracticePoint(point))return false;returnPoint=old;}
   else returnPoint=null;
   clock.clear();clock.give(id);path.length=0;last=null;owner.boxSurprises=snapshot();ui();return true;
  }
  function fromBox(box){const id=surpriseFor(box,runtime.seedOf);if(id&&give(id)){box.surprise=id;runtime.visualGesture?.();}return id;}
- function tick(dt,paused=false){ensure();if(owner.boxSurprises?.version>1)return;const active=surface()&&!paused&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden])');clock.tick(runtime.activeFrameSeconds??dt,active);const current=ids()[0],def=BOX_SURPRISES[current];
+ function tick(dt,paused=false){ensure();if(owner.boxSurprises?.version>1)return;const active=surface()&&!paused&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!openSurface('.modal:not([hidden])');clock.tick(runtime.activeFrameSeconds??dt,active);const current=ids()[0],def=BOX_SURPRISES[current];
   if(active){if(prior&&!current){returnPoint=null;path.length=marks.length=0;}const x=owner.wx,y=owner.wy;if(last&&Math.hypot(x-last.x,y-last.y)>400){path.length=0;last=null;}if(!last)last={x,y};const moved=Math.hypot(x-last.x,y-last.y)>10;if(def&&moved){if(def.trail||def.copies)path.push({x,y,age:0});if(def.marks&&marks.length<24)marks.push({x,y,age:0});last={x,y};}if(def?.erase)for(let i=marks.length-1;i>=0;i--)if(Math.hypot(marks[i].x-x,marks[i].y-y)<100)marks.splice(i,1);for(const p of path)p.age+=dt;for(const p of marks)p.age+=dt;while(path.length&&(path[0].age>2||path.length>36))path.shift();while(marks[0]?.age>18)marks.shift();}prior=current;ui();}
  function step(s,bar,time){
   const current=ids()[0],family={arcos:'drum',cintas:'poly',diamantes:'slice',puntos:'fm',duplicador:'arp'}[current];
-  if(!family||!surface()||!runtime.S.sound||runtime.ac?.state!=='running'||document.hidden||runtime.scanning||runtime.noticeLane?.inspecting||document.querySelector('.modal:not([hidden])')||(runtime.body?.speed||0)<25||!path.length||![0,8].includes(s))return;
+  if(!family||!surface()||!runtime.S.sound||runtime.ac?.state!=='running'||document.hidden||runtime.scanning||runtime.noticeLane?.inspecting||openSurface('.modal:not([hidden])')||(runtime.body?.speed||0)<25||!path.length||![0,8].includes(s))return;
   const key=bar+':'+s;if(lastNote===key)return;
   const source={id:'surprise:trail:'+current,x:owner.wx,y:owner.wy,kind:family,variant:runtime.seedOf('box:trail:voice:v1:'+current)%64,entry:bar+s/8,parameter:Math.min(1,(runtime.body?.speed||0)/220)};
   if(runtime.playVoice?.('micro:'+family,s===8?2:0,time,runtime.regionOfPos(source.x,source.y),false,.32,source,'player')===true){lastNote=key;runtime.surpriseNoteCue?.({id:current,time:runtime.musicalTime?.(time)??time,family,source});}

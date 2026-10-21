@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {consonantPitch} from './musical-conductor.js';
 import {culturalResidents,culturalResonators} from './heritage.js';
 import {CULTURES,ARTIFACTS,createSanctuary,normalizeCultureBook,captureStone,cultureNotes} from './culture-model.js';
@@ -8,7 +9,7 @@ const TAU=Math.PI*2;
 export function initialize(runtime){
  const S=()=>runtime.S,cache=new Map();let owner=S(),lesson=null,sequence=[],door=null,contacts=new Set(),clock=0,lastReplay=-Infinity;
  S().cultures=normalizeCultureBook(S().cultures);
- const active=()=>runtime.inWorld()&&(S().layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
+ const active=()=>runtime.inWorld()&&(S().layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])');
  const audible=()=>active()&&S().sound&&runtime.ac?.state==='running';
  const dist=p=>Math.hypot(p.x-S().wx,p.y-S().wy);
  function ensureOwner(){if(owner!==S()){owner=S();S().cultures=normalizeCultureBook(S().cultures);reset();}}

@@ -1,3 +1,4 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {crystalPlay,crystalFragments,moveEscape,CRYSTAL_CHAIN_RADIUS,CRYSTAL_CHAIN_LIMIT} from './crystal-play-model.js';
 import {pulseCrossed} from './pulse-forms.js';
 const CELL=200,MAX_SITES=8192;
@@ -20,8 +21,8 @@ export function pathCrystalField(px,pathY,day){
 export function initialize(runtime){
  let owner=null,scope='',sites=new Map(),seen=new WeakMap(),stale=new WeakSet(),near=[],seconds=0,shownUntil=0,gain=0,lastGain=0,cell='',chains=[],feedback=[];
  const S=()=>runtime.S,position=()=>runtime.inWorld()?{x:S().wx,y:S().wy}:{x:S().px,y:S().py};
- const active=()=>(S().mode==='camino'||runtime.inWorld()&&(S().layer||'superficie')==='superficie')&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!document.querySelector('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
- const reduced=()=>!!(S().reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
+ const active=()=>(S().mode==='camino'||runtime.inWorld()&&(S().layer||'superficie')==='superficie')&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const reduced=()=>!!(S().reducedMotion||prefersReducedMotion());
  function ensure(){
   const key=JSON.stringify(runtime.worldIdentity||{})+':'+S().todayKey;
   if(owner!==S()||scope!==key){owner=S();scope=key;sites=new Map();seen=new WeakMap();stale=new WeakSet(runtime.waves||[]);near=[];cell='';gain=0;shownUntil=0;seconds=0;chains=[];feedback=[];owner.sparks=normalizeSparks(owner.sparks);owner.pathCrystals||=[];}

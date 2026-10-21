@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 // Fase 5 · Vida e intercambio musical (runtime). El cubo es quien toca:
 // - Pasar el cubo por un ave = tu llamada (más arriba en la bandada, más aguda). En dos compases te la devuelven.
 // - Quieto cerca: confían y se acercan. Si después te mueves, te siguen en formación y repiten tu llamada
@@ -17,7 +18,7 @@ export function initialize(runtime){
  const heard=[];   // últimas notas que causó el jugador (para el ave lira)
  S().vida=normalizeVida(S().vida);
  const surface=()=>runtime.inWorld()&&(S().layer||'superficie')==='superficie';
- const available=()=>surface()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
+ const available=()=>surface()&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])');
  const audible=()=>available()&&S().sound&&runtime.ac?.state==='running'&&runtime.currentPocket?.()?.kind!=='quiet';
  const season=()=>runtime.MU.season?.id||'';
  function region(x,y){

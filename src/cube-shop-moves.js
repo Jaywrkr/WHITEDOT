@@ -1,3 +1,4 @@
+import {prefersReducedMotion} from './frame-state.js';
 import {wearing} from './cube-shop-model.js';
 import {SHOP_PULSES} from './cube-shop-pulse.js';
 // Cube shop batch 4: gestures and the bought pulse look. Drawing only: they never move the cube, change reach or play sound.
@@ -6,7 +7,7 @@ import {SHOP_PULSES} from './cube-shop-pulse.js';
 export function initialize(runtime){
  let owner=null,lastT=null,lastX=0,lastY=0,stopped=0,speed=0,sector=null,turns=[],taps=[],flipAt=-1e9,danceUntil=-1,victoryAt=-1e9,victoryPending=false,wins=null,awards=null,confetti=[];
  const q=()=>runtime.sparkEconomy||{},has=id=>runtime.inWorld()&&wearing(q(),id);
- const still=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
+ const still=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  const count=v=>v&&typeof v==='object'?Object.keys(v).length:0;
  function sample(t){
   const S=runtime.S;if(owner!==S){owner=S;lastT=null;wins=awards=null;confetti=[];victoryPending=false;}

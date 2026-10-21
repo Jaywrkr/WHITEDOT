@@ -1,10 +1,11 @@
+import {prefersReducedMotion} from './frame-state.js';
 import {normalizeRoute,rollRoute,ROUTE_TODAY} from './cube-shop-model.js';
 // Cube shop batch 3: trails under the cube and companions around it. Drawing only: reach, collisions and music are untouched.
 // Only Huellas del día and Fantasma de ayer keep data (S.cubeRoute, bounded); the rest lives in memory and resets on a jump.
 export function initialize(runtime){
  let owner=null,lastT=null,last=null,layer='',moved=0,routeStep=0,paint=[],comet=[],flowers=[],history=[],rainbowUntil=-1,breaks=[],lastBroken=null,stopped=0,bird={x:0,y:0,perch:0},cloud={x:0,y:0},dj={a:0,target:0,lastBeat:0};
  const q=()=>runtime.sparkEconomy||{},on=slot=>runtime.inWorld()?q().wear?.[slot]||'':'';
- const still=()=>!!(runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches);
+ const still=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  const ink=(part='lead')=>runtime.musicInk?.(null,part)||'#fff';
  const surface=()=>!runtime.S.layer||runtime.S.layer==='superficie';
  function reset(){paint=[];comet=[];flowers=[];history=[];last=null;lastT=null;moved=0;routeStep=0;}
@@ -29,7 +30,9 @@ export function initialize(runtime){
   if(piece==='trail:graffiti'){
    if(dt&&moved>0){const p=paint.at(-1);if(!p||Math.hypot(p.x-wx,p.y-wy)>=12){paint.push({x:wx,y:wy,t,color:ink(paint.length%9<3?'perc':'lead'),join:!!p&&Math.hypot(p.x-wx,p.y-wy)<40});if(paint.length>220)paint.shift();}}
    paint=paint.filter(p=>t-p.t<25000);c.lineCap='round';c.lineWidth=3;
-   for(let i=1;i<paint.length;i++){const a=paint[i-1],b=paint[i];if(!b.join)continue;c.globalAlpha=.45*(1-(t-b.t)/25000);c.strokeStyle=b.color;c.beginPath();c.moveTo(a.x+ox,a.y+oy);c.lineTo(b.x+ox,b.y+oy);c.stroke();}
+   // Segments are grouped by colour and five fading steps, so a long painting costs a few strokes, not hundreds.
+   const groups=new Map();for(let i=1;i<paint.length;i++){const a=paint[i-1],b=paint[i];if(!b.join)continue;const step=Math.min(4,Math.floor((t-b.t)/5000)),key=b.color+'|'+step;let g=groups.get(key);if(!g)groups.set(key,g={color:b.color,step,segs:[]});g.segs.push(a,b);}
+   for(const g of groups.values()){c.globalAlpha=.45*(1-(g.step+.5)/5);c.strokeStyle=g.color;c.beginPath();for(let i=0;i<g.segs.length;i+=2){c.moveTo(g.segs[i].x+ox,g.segs[i].y+oy);c.lineTo(g.segs[i+1].x+ox,g.segs[i+1].y+oy);}c.stroke();}
   }
   if(piece==='trail:comet'){
    const tail=history.filter(p=>t-p.t<(calm?400:1300));

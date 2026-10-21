@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {PRODUCTION_EXPERIMENT_NAMES,productionExperimentEvents} from './production-experiments.js';
 import {musicalCharacter,inRegister} from './musical-character.js';
 // Production uses restrained rhythmic/tonal color; explicit lab modes retain free experiments.
@@ -26,7 +27,7 @@ export function initialize(runtime){
  }
  const scaleNote=(d,i,oct=0)=>{const sc=d.scale||[0,2,4,5,7,9,11],tr=(runtime.BIOMES[d.z]?.tr||0)+(d.trOff||0);return 57+tr+sc[((i%sc.length)+sc.length)%sc.length]+12*(oct+Math.floor(i/sc.length));};
  function step(s,bar,time){
-  if(!runtime.inWorld()||(S().layer||'superficie')!=='superficie'||!S().sound||runtime.ac?.state!=='running'||document.hidden||document.querySelector('.modal:not([hidden])'))return;const x=compute(),d=runtime.MU.dnaT;if(x<.3||!d)return;
+  if(!runtime.inWorld()||(S().layer||'superficie')!=='superficie'||!S().sound||runtime.ac?.state!=='running'||document.hidden||openSurface('.modal:not([hidden])'))return;const x=compute(),d=runtime.MU.dnaT;if(x<.3||!d)return;
   if(runtime.duetRoom)return;
   if(runtime.unifiedMusic===true&&!runtime.labMode){
    const frame=runtime.musicalFrame?.(time),chords=frame?.chords||runtime.chordTones(),instrument=runtime.MU.radio?.labScore?.production?.comp||'p_cellobody';

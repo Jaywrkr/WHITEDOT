@@ -1,3 +1,4 @@
+import {prefersReducedMotion,beginFrame,endFrame} from './frame-state.js';
 import {windLevel} from './territory-journey.js';
 import {moveWalker,drawWalker} from './walker-forms.js';
 import {contactEntry} from './contact.js';
@@ -27,7 +28,9 @@ export function initialize(runtime) {
 
   /* ---------- loop ---------- */
   let scheduledFrame=null;
-  function frame(t){
+  // One frame's answers to "is a panel open?" are shared by every module drawn in it.
+  function frame(t){beginFrame();try{frameBody(t);}finally{endFrame();}}
+  function frameBody(t){
     if(runtime.accountClient&&runtime.accountClient.user()?.id!==runtime.accountUserId){location.reload();return;}
     if(scheduledFrame!==null)cancelAnimationFrame(scheduledFrame);
     runtime.universeTextsTick?.();runtime.achievementsTick?.(Math.min(.1,Math.max(0,(t-(frame.l||t))/1000)));runtime.connectionTick?.();runtime.saveToolsTick?.();runtime.focusUITick?.();runtime.syncSession();if(!runtime.activityActive){runtime.glassTick?.();runtime.mirrorTick?.();}
@@ -87,7 +90,7 @@ export function initialize(runtime) {
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
     runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWonders?.();runtime.drawActivityPortals?.();runtime.drawMischief?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawDistantColors?.(true);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
-    runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);
+    runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);if(runtime.parts.length>400)runtime.parts.splice(0,runtime.parts.length-400);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
     runtime.pulse=Math.max(0,runtime.pulse-dt*1.5);
     const s=Math.max(ds,runtime.inWorld()?runtime.cubeShopMinSize?.()||0:0)*(1+runtime.pulse*.6+b*.08)*(runtime.inWorld()?runtime.surpriseStyle?.scale||1:1);
@@ -110,7 +113,7 @@ export function initialize(runtime) {
     // Joystick visible mientras arrastras.
     if(runtime.ptr?.ox!=null){const c=runtime.cx;c.globalAlpha=.28;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.arc(runtime.ptr.ox,runtime.ptr.oy,55,0,6.283);c.stroke();c.globalAlpha=.5;c.fillStyle='#fff';c.beginPath();c.arc(runtime.ptr.x,runtime.ptr.y,9,0,6.283);c.fill();c.globalAlpha=1;}
     if(runtime.flash>0){runtime.flash=Math.max(0,runtime.flash-dt*2.5);runtime.cx.globalAlpha=runtime.flash*.6;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.2;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,24+(1-runtime.flash)*42,0,Math.PI*2);runtime.cx.stroke();}
-    if(runtime.enterFx>0){runtime.enterFx=Math.max(0,runtime.enterFx-dt*.6);const still=runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches,k=still?.6:1-runtime.enterFx;runtime.cx.globalAlpha=runtime.enterFx*.35;runtime.cx.strokeStyle=runtime.musicInk?.(null,'acorde')||'#fff';runtime.cx.lineWidth=1.2;
+    if(runtime.enterFx>0){runtime.enterFx=Math.max(0,runtime.enterFx-dt*.6);const still=runtime.S.reducedMotion||prefersReducedMotion(),k=still?.6:1-runtime.enterFx;runtime.cx.globalAlpha=runtime.enterFx*.35;runtime.cx.strokeStyle=runtime.musicInk?.(null,'acorde')||'#fff';runtime.cx.lineWidth=1.2;
       for(let i=0;i<3;i++){const rr=Math.max(0,k-i*.12)*Math.min(54,runtime.W*.14,runtime.H*.14);runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,rr,0,6.283);runtime.cx.stroke();}
       // Keep the entry response local; the world background stays black.
     }
@@ -124,13 +127,16 @@ export function initialize(runtime) {
     const dn=runtime.inWorld()?runtime.MU.dnaT:null,air=dn?dn.air:"claro";
     if(runtime.inWorld()){drawAir(dn,1-runtime.MU.nbW,t,0);if(runtime.MU.nb)drawAir(runtime.MU.nb,runtime.MU.nbW,t,37);}
   }
+  // One soft fog puff per tint, drawn once and reused: fog used to build 18 gradients every frame.
+  const puffs=new Map();
+  function fogPuff(r,g,b){const key=[r,g,b].map(v=>Math.round(v/8)*8).join(',');let cv=puffs.get(key);if(cv)return cv;cv=document.createElement('canvas');cv.width=cv.height=320;const c=cv.getContext('2d'),grad=c.createRadialGradient(160,160,0,160,160,160);grad.addColorStop(0,'rgba('+key+',.045)');grad.addColorStop(1,'rgba(200,200,210,0)');c.fillStyle=grad;c.fillRect(0,0,320,320);if(puffs.size>32)puffs.delete(puffs.keys().next().value);puffs.set(key,cv);return cv;}
   function drawAir(dn,wt,t,off){const air=dn?dn.air:"claro",pal=dn?dn.pal:null;
     if(air!=="claro"&&wt>.02){const n=Math.round((air==="niebla"?18:70)*wt);
       for(let i=0;i<n;i++){const s=runtime.STARS[(i+off)%runtime.STARS.length],z=.25+(i%5)*.12;let x,y,col,al,w=1,h=1;
         if(air==="polvo"){x=((s.x*runtime.W*3+t*(.05+runtime.MU.speed*.12)*(1+z)-runtime.camX*z)%runtime.W+runtime.W)%runtime.W;y=((s.y*runtime.H*2+Math.sin(t/900+i)*8-runtime.camY*z)%runtime.H+runtime.H)%runtime.H;col=pal.sand;al=.22;w=2;}
         else if(air==="esporas"){x=((s.x*runtime.W*2+Math.sin(t/2500+i)*20-runtime.camX*z)%runtime.W+runtime.W)%runtime.W;y=((s.y*runtime.H*2-t*.012*(1+z)-runtime.camY*z)%runtime.H+runtime.H)%runtime.H;col=pal.acc;al=.12+.2*Math.max(0,Math.sin(t/600+i));w=h=2;}
         else if(air==="ceniza"){x=((s.x*runtime.W*2+t*.006-runtime.camX*z)%runtime.W+runtime.W)%runtime.W;y=((s.y*runtime.H*2+t*.02*(1+z)-runtime.camY*z)%runtime.H+runtime.H)%runtime.H;col="#9a9a9f";al=.22;w=h=2;}
-        else{x=((s.x*runtime.W*2+t*.004-runtime.camX*.3)%runtime.W+runtime.W)%runtime.W;y=((s.y*runtime.H*2-runtime.camY*.3)%runtime.H+runtime.H)%runtime.H;const g=runtime.cx.createRadialGradient(x,y,0,x,y,160);g.addColorStop(0,'rgba('+[runtime.worldVisibility?.red??150,runtime.worldVisibility?.green??185,runtime.worldVisibility?.blue??225].map(Math.round).join(',')+',.045)');g.addColorStop(1,"rgba(200,200,210,0)");runtime.cx.globalAlpha=1;runtime.cx.fillStyle=g;runtime.cx.fillRect(x-160,y-160,320,320);continue;}
+        else{x=((s.x*runtime.W*2+t*.004-runtime.camX*.3)%runtime.W+runtime.W)%runtime.W;y=((s.y*runtime.H*2-runtime.camY*.3)%runtime.H+runtime.H)%runtime.H;runtime.cx.globalAlpha=1;runtime.cx.drawImage(fogPuff(runtime.worldVisibility?.red??150,runtime.worldVisibility?.green??185,runtime.worldVisibility?.blue??225),x-160,y-160);continue;}
         runtime.cx.globalAlpha=Math.min(1,al);runtime.cx.fillStyle=col;runtime.cx.fillRect(x,y,w,h);}}
   }
   function ambientStars(t,dt,b){const dn=runtime.inWorld()?runtime.MU.dnaT:null,air=dn?dn.air:"claro";
@@ -403,7 +409,9 @@ export function initialize(runtime) {
   }
 
 
-  document.addEventListener('visibilitychange',()=>{frame.l=performance.now();runtime.activeFrameSeconds=0;});
+  document.addEventListener('visibilitychange',()=>{frame.l=performance.now();runtime.activeFrameSeconds=0;
+    // A hidden tab plays nothing anyway: suspending the audio clock saves battery; it resumes as it was.
+    const ac=runtime.ac;if(!ac)return;if(document.hidden){if(ac.state==='running'){runtime.audioRestOnHide=true;ac.suspend?.().catch(()=>{});}}else if(runtime.audioRestOnHide){runtime.audioRestOnHide=false;if(runtime.S.sound)ac.resume?.().catch(()=>{});}});
   Object.defineProperties(runtime, {
     frame: { get: () => frame },
   });

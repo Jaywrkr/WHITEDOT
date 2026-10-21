@@ -23,7 +23,8 @@ try:
   page.locator('#bMenu').click();page.locator('#bMusicSettings').click()
   before=page.evaluate('({waves:__testRuntime.waves.length,context:__testRuntime.ac})')
   assert page.locator('#bLivingMusic').is_hidden()
-  assert page.evaluate('__testRuntime.waves.length')==before['waves']
+  # Opening the sound sheet fires no pulse; the wave from the earlier tap may finish meanwhile.
+  assert page.evaluate('__testRuntime.waves.length')<=before['waves']
   page.evaluate('__testRuntime.S.livingMusic=false;__testRuntime.save()')
   page.locator('#muClose').click();page.wait_for_function('__testRuntime.MU.radio?.labScore?.electronic')
   assert page.evaluate('JSON.stringify(__testRuntime.MU.dnaT)')==first['world']

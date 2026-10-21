@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {claimInstallationBar} from './installations.js';
 import {WORLD_VISUAL,elementInk} from './visual.js';
 import {glassShape,glassColor} from './glass-music.js';
@@ -65,11 +66,11 @@ export function initialize(runtime){
   if(!match)return false;
   runtime.audio();runtime.stopAutopilot();runtime.ptr=null;runtime.tapStart=null;open(match.site,match.pane);state.drag={pointer:e.pointerId,angles:[...match.site.angles]};try{$('w').setPointerCapture(e.pointerId);}catch(_){}e.preventDefault();return true;
  }
- function move(e){if(state.drag?.pointer!==e.pointerId)return false;if(document.hidden||document.querySelector('.modal:not([hidden])')||!onSurface()){cancel();return true;}const p=screen(state.site);turn(state.site,state.pane,Math.atan2(e.clientY-p.y,e.clientX-p.x));e.preventDefault();return true;}
+ function move(e){if(state.drag?.pointer!==e.pointerId)return false;if(document.hidden||openSurface('.modal:not([hidden])')||!onSurface()){cancel();return true;}const p=screen(state.site);turn(state.site,state.pane,Math.atan2(e.clientY-p.y,e.clientX-p.x));e.preventDefault();return true;}
  function up(e){if(state.drag?.pointer!==e.pointerId)return false;if(e.type!=='pointerup')cancel();else state.drag=null;runtime.save();return true;}
- function tick(){if(document.hidden||document.querySelector('.modal:not([hidden])'))cancel();if(previousState!==S()){state.drag=null;state.site=null;cache.clear();previousState=S();S().glassSites=normalizeGlassSites(S().glassSites);close();}if(state.site&&(!onSurface()||Math.hypot(state.site.x-S().wx,state.site.y-S().wy)>220))close();}
+ function tick(){if(document.hidden||openSurface('.modal:not([hidden])'))cancel();if(previousState!==S()){state.drag=null;state.site=null;cache.clear();previousState=S();S().glassSites=normalizeGlassSites(S().glassSites);close();}if(state.site&&(!onSurface()||Math.hypot(state.site.x-S().wx,state.site.y-S().wy)>220))close();}
  function step(step,bar,time){
-  if(!onSurface()||document.hidden||document.querySelector('.modal:not([hidden])')||!S().sound||runtime.ac?.state!=='running'||runtime.currentPocket?.()?.kind==='quiet')return;
+  if(!onSurface()||document.hidden||openSurface('.modal:not([hidden])')||!S().sound||runtime.ac?.state!=='running'||runtime.currentPocket?.()?.kind==='quiet')return;
   for(const site of nearby(300)){
    if(!S().glassSites[site.id]?.seen)continue;const p=glassParameters(site.angles),pane=Math.floor(bar/p.stride)%3;
    if(bar%p.stride===0&&step===p.accents[pane]&&claimInstallationBar(runtime,bar)){emit(site,pane,time);break;}
@@ -78,7 +79,7 @@ export function initialize(runtime){
  function sources(){return nearby(250).flatMap(site=>site.plates.map((o,i)=>({object:o,kind:`installation:glass:${i}`,name:o.name,distance:Math.hypot(o.x-S().wx,o.y-S().wy)})));}
  // Cuerpo: el cubo engancha el aro de un vidrio al pasar por su asa y lo arrastra girando a su alrededor.
  function bodyStep(){
-  const b=runtime.body;if(state.drag||!b?.ready||document.querySelector('.modal:not([hidden])')||runtime.scanning)return;
+  const b=runtime.body;if(state.drag||!b?.ready||openSurface('.modal:not([hidden])')||runtime.scanning)return;
   for(const site of nearby(200)){
    const cur={x:b.x-site.x,y:b.y-site.y},r=Math.hypot(cur.x,cur.y);
    if(site.grab!=null){const R=glassHandleRadius(site.grab);if(b.jump||Math.abs(r-R)>12){site.grab=null;remember(site);runtime.save();continue;}turn(site,site.grab,Math.atan2(cur.y,cur.x));continue;}

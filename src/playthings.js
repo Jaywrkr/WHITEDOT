@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {contactEntry} from './contact.js';
 import {influenceProfile,CHANNEL_NAMES} from './influence.js';
 import {WORLD_VISUAL,elementInk,elementAlpha} from './visual.js';
@@ -39,7 +40,7 @@ export function initialize(runtime) {
     for(const o of chunk.playthings||[]) {
       stepPlaything(o,dt);
       const distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),wave=runtime.waves.length&&runtime.hitW(o.x,o.y);
-      const contact=distance<Math.min(runtime.pxSize(),22)/2+o.size+6,entered=contactEntry(o,contact,!runtime.scanning&&!document.hidden&&!document.querySelector('.modal:not([hidden])'));
+      const contact=distance<Math.min(runtime.pxSize(),22)/2+o.size+6,entered=contactEntry(o,contact,!runtime.scanning&&!document.hidden&&!openSurface('.modal:not([hidden])'));
       if(now>o.cd&&(entered||wave)) {
         o.cd=now+(o.personality?.cooldown||850);runtime.recordElement?.('toy:'+o.kind,runtime.regionOfPos(o.hx,o.hy));
         reactPlaything(o,runtime.S.wx,runtime.S.wy);runtime.MU.act+=.15;runtime.touched();
@@ -47,7 +48,7 @@ export function initialize(runtime) {
         runtime.burst(o.x,o.y,5,true);
       }
       if(o.kind==='resonator'||o.kind==='rotor'){
-        const active=runtime.S.sound&&runtime.ac?.state==='running'&&!runtime.scanning&&!document.hidden&&!document.querySelector('.modal:not([hidden])');
+        const active=runtime.S.sound&&runtime.ac?.state==='running'&&!runtime.scanning&&!document.hidden&&!openSurface('.modal:not([hidden])');
         const tending=active&&distance<48&&runtime.MU.speed<.08;
         if(active)o.growth=Math.max(0,Math.min(1,(o.growth||0)+dt*(tending?1/6:-1/12)));
         if(tending){const region=runtime.regionOfPos(o.hx,o.hy),p=influenceProfile(region,'toy:'+o.kind,o,runtime.seedOf,runtime.rng);runtime.driveInfluence?.(region,p.channel,o.growth,p.variant);if(o.growth>.5)runtime.creativeAction?.(p.channel,'cultivate');o.influenceName=CHANNEL_NAMES[p.channel];if(o.growth>.95)runtime.unlock('cultivarMusica');}

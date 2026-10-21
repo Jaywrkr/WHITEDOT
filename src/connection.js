@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {roomTransport,duetVoice} from './duet-model.js';
 import {sameWorld} from './world-identity.js';
 import {validateSave,makeBackup} from './save-store.js';
@@ -32,10 +33,10 @@ export function initialize(runtime){
  async function poll(){if(polling||!room||document.hidden)return;polling=true;const code=room.code,started=Date.now();try{if(owner!==runtime.S||!runtime.inWorld()||runtime.S.layer!==room.layer||!sameWorld(runtime.worldIdentity,room.world)){await leave();return;}const data=await api('rooms/'+code+'/presence','POST',{x:runtime.S.wx,y:runtime.S.wy,color:runtime.cubeColor?.()||'#ffffff',after:cursor});if(room?.code===code)receive(data,started);}catch(error){if(room?.code===code){room=null;pending=[];status(error.message+' · Continúas en modo local.');ui();}}finally{polling=false;}}
  function tick(){if(owner!==runtime.S){owner=runtime.S;if(room)leave();}if(room&&performance.now()-pollAt>250){pollAt=performance.now();poll();}}
  function transport(audioNow){if(!room||document.hidden||!runtime.inWorld())return null;const result=roomTransport(room,Date.now()+offset,audioNow,firstSync?null:runtime.MU.step);firstSync=false;return result;}
- function capture(kind,index,time,region,source){if(!room||document.hidden||document.querySelector('.modal:not([hidden])'))return false;const now=performance.now();if(now-lastEvent<220)return true;lastEvent=now;
+ function capture(kind,index,time,region,source){if(!room||document.hidden||openSurface('.modal:not([hidden])'))return false;const now=performance.now();if(now-lastEvent<220)return true;lastEvent=now;
   runtime.recordElement?.(kind,region);api('rooms/'+room.code+'/event','POST',{kind,index:((Math.round(index)%7)+7)%7,variant:source?.variant%256||0,after:cursor}).then(data=>{if(room?.code===data.code)receive(data,Date.now());}).catch(error=>status(error.message));return true;
  }
- function step(s,bar,time){if(!room||!runtime.S.sound||document.hidden||document.querySelector('.modal:not([hidden])'))return;const nowStep=runtime.MU.step,ready=pending.filter(e=>e.step<=nowStep),max=ready.slice(0,2);pending=pending.filter(e=>e.step>nowStep);const d=runtime.regionOfPos(room.x,room.y);
+ function step(s,bar,time){if(!room||!runtime.S.sound||document.hidden||openSurface('.modal:not([hidden])'))return;const nowStep=runtime.MU.step,ready=pending.filter(e=>e.step<=nowStep),max=ready.slice(0,2);pending=pending.filter(e=>e.step>nowStep);const d=runtime.regionOfPos(room.x,room.y);
   for(const event of max){if(nowStep-event.step>4)continue;runtime.playVoice(event.kind,event.index,time,d,false,.42,{id:'duet:'+event.seq,x:event.x,y:event.y,variant:event.variant,duetSlot:event.slot},'duet');runtime.duetNoteCue?.({step:nowStep,target:event.step,slot:event.slot,degree:runtime.MU.deg});}
  }
  function voice(v,slot,d){return duetVoice(v,slot,runtime.GEN[d.genre]);}

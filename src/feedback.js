@@ -1,3 +1,4 @@
+import {prefersReducedMotion} from './frame-state.js';
 import {territoryInk} from './territory-transition.js';
 import {musicalInk} from './visual.js';
 // Audio onset uses the audio clock; drawing uses the monotonic display clock.
@@ -44,7 +45,7 @@ export function initialize(runtime) {
     for(const cue of cues) {
       const {source,role,age}=cue;
       if(Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)>radius)continue;
-      const reduced=runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches,r=12+(reduced?0:age*(role==='bajo'?28:20));
+      const reduced=runtime.S.reducedMotion||prefersReducedMotion(),r=12+(reduced?0:age*(role==='bajo'?28:20));
       ctx.save();ctx.translate(source.x+ox,source.y+oy);
       const foreground=['player','field','lesson'].includes(cue.origin);
       ctx.strokeStyle=musicInk(source,role);ctx.lineWidth=(role==='bajo'?2:1.6)+(foreground?.4:0);ctx.globalAlpha=(1-age)*(foreground?.98:.42);

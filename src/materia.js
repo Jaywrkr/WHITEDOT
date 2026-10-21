@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 // Tres familias nuevas de materia (fase 4): cuerdas tensables, prisma de luz y membrana resonante.
 // Gestos directos sobre el objeto, sin paneles: tensar y soltar, rasguear, girar, apretar y redoblar.
 // Todo cuantizado a tempo con la escala del lugar; presupuesto ambiental compartido con otras instalaciones.
@@ -12,7 +13,7 @@ export function initialize(runtime){
  const cache=new Map(),S=()=>runtime.S,$=runtime.$;let previousState=runtime.S,drag=null;
  S().materiaSites=normalizeMateriaSites(S().materiaSites);
  const surface=()=>runtime.inWorld()&&(S().layer||'superficie')==='superficie';
- const available=()=>surface()&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
+ const available=()=>surface()&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])');
  function nearby(radius=600){
   if(!surface())return [];const size=runtime.REG*runtime.WCH,rx=Math.floor(S().wx/size),ry=Math.floor(S().wy/size),out=[];
   for(let x=rx-1;x<=rx+1;x++)for(let y=ry-1;y<=ry+1;y++){
@@ -125,7 +126,7 @@ export function initialize(runtime){
   if(drag?.mode==='press'&&s%2===0&&runtime.MU.step!==drag.rollFrom&&available())strike(drag.site,{...drag.hit,volume:drag.hit.volume*.7},'player');
   // Cubo posado sobre la membrana: redobla a corcheas siguiendo dónde está.
   if(s%2===0&&available())for(const site of nearby(200))if(site.kind==='membrane'&&site.inside&&site.hit&&runtime.MU.step!==site.rollFrom&&(runtime.body?.speed||0)<40)strike(site,{...site.hit,volume:site.hit.volume*.7},'player');
-  if(!surface()||document.hidden||document.querySelector('.modal:not([hidden])')||!S().sound||runtime.ac?.state!=='running'||runtime.currentPocket?.()?.kind==='quiet')return;
+  if(!surface()||document.hidden||openSurface('.modal:not([hidden])')||!S().sound||runtime.ac?.state!=='running'||runtime.currentPocket?.()?.kind==='quiet')return;
   for(const site of nearby(320)){
    if(!S().materiaSites[site.id]?.seen||drag?.site===site)continue;
    if(site.kind==='prism'&&bar%2===0&&s===0){const lit=prismLit(site.angle,site.offset);if(lit.length&&claimInstallationBar(runtime,bar)){const k=lit[Math.floor(bar/2)%lit.length];voice(site,Math.min(4,k),PRISM_DEGREES[k],time,.07,'ambient');lightUp(site,time);break;}}

@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 // Exploration gets the screen; tools and detailed counters are explicit choices.
 export function initialize(runtime){
  const $=runtime.$;let mode=null,details=null;
@@ -14,6 +15,6 @@ export function initialize(runtime){
  $('bMenu').addEventListener('click',closeTools);
  for(const id of ['bFx','bLoop','bDeploy'])$(id).addEventListener('click',closeTools);
  addEventListener('pointerdown',e=>{if(e.target===$('w'))closeTools();});
- addEventListener('keydown',e=>{if(e.key==='Escape'){closeTools();if(!document.querySelector('.modal:not([hidden])')){if(runtime.fxState?.open)$('fxClose').click();runtime.closeMirrors?.();runtime.stopScanner?.();}}});
+ addEventListener('keydown',e=>{if(e.key==='Escape'){closeTools();if(!openSurface('.modal:not([hidden])')){if(runtime.fxState?.open)$('fxClose').click();runtime.closeMirrors?.();runtime.stopScanner?.();}}});
  sync();Object.defineProperties(runtime,{focusUITick:{get:()=>sync},closeWorldTools:{get:()=>closeTools}});
 }

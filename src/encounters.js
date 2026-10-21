@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {FAMILIES,createFamilyState,familyInfluence,familyArrange,regionalFamilyInfluence,encounterRole} from './encounter-families.js';
 import {claimInstallationBar} from './installations.js';
 import {groveNodes} from './connection-groves.js';
@@ -16,8 +17,8 @@ export function createEncounters(cx,cy,size,region,seedOf,rng){
 }
 export function initialize(runtime){
  const cache=new Map();let visible=[],gesture=null,lastBar=-Infinity,previous=runtime.S;
- const active=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])')&&runtime.S.sound&&runtime.ac?.state==='running';
- const playable=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!document.querySelector('.modal:not([hidden])');
+ const active=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])')&&runtime.S.sound&&runtime.ac?.state==='running';
+ const playable=()=>runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!document.hidden&&!runtime.scanning&&!openSurface('.modal:not([hidden])');
  const requestedParam=new URLSearchParams(location.search).get('encounter'),requestedNow=()=>runtime.labEncounter||requestedParam;   // el laboratorio puede pedir una familia sin recargar
  function chunk(x,y){
   const key=`${x},${y}`;if(!cache.has(key)){

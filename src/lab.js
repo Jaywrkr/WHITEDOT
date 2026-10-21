@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {microChunk} from './micro-instruments-model.js';
 import {inhabitantPractice} from './pixel-life-model.js';
 import {nativeVisualFamily,nativePractice} from './native-visual.js';
@@ -104,7 +105,7 @@ export function initialize(runtime){
  // ---------- interfaz ----------
  const bar=$('labBar');bar.hidden=false;document.body.classList.add('lab');
  // La barra se aparta cuando hay una hoja abierta (notas, favoritos, menú…).
- setInterval(()=>{bar.hidden=!!document.querySelector('.modal:not([hidden])');},200);
+ setInterval(()=>{bar.hidden=!!openSurface('.modal:not([hidden])');},200);
  function draw(){
   const e=labElement(book.current),i=LAB_ELEMENTS.indexOf(e),n=book.notes[e.id];
   $('labName').textContent=e.name;$('labMeta').textContent=`${e.group} · ${i+1} de ${LAB_ELEMENTS.length}${n?.verdict?' · '+LAB_VERDICTS[n.verdict]:''}`;

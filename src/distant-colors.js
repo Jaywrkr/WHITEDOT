@@ -1,3 +1,4 @@
+import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {cloudBreath} from './wow-model.js';
 import {explorationContext} from './exploration-context.js';
 import {territoryNucleus} from './territory-journey.js';
@@ -28,8 +29,8 @@ export function initialize(runtime){
  const cache=new Map(),signals=new Map();let seconds=0,owner=null,hintCell='';
  function draw(outside=false){
   if(!runtime.inWorld()||(runtime.S.layer||'superficie')==='bajo')return;
-  if(!outside&&!document.hidden&&!document.querySelector('.modal:not([hidden])'))seconds+=Math.min(.05,runtime.activeFrameSeconds||0);
-  const c=runtime.cx,px=runtime.S.wx*GALAXY_PARALLAX,py=runtime.S.wy*GALAXY_PARALLAX,w=runtime.W,h=runtime.H,reduced=runtime.S.reducedMotion||globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  if(!outside&&!document.hidden&&!openSurface('.modal:not([hidden])'))seconds+=Math.min(.05,runtime.activeFrameSeconds||0);
+  const c=runtime.cx,px=runtime.S.wx*GALAXY_PARALLAX,py=runtime.S.wy*GALAXY_PARALLAX,w=runtime.W,h=runtime.H,reduced=runtime.S.reducedMotion||prefersReducedMotion();
   const items=[];
   for(let x=Math.floor((px-w/2-340)/900);x<=Math.floor((px+w/2+340)/900);x++)for(let y=Math.floor((py-h/2-340)/900);y<=Math.floor((py+h/2+340)/900);y++){
    const key=x+','+y;if(!cache.has(key)){cache.set(key,distantCloud(x,y,runtime.seedOf));while(cache.size>64)cache.delete(cache.keys().next().value);}

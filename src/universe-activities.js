@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {WONDERS} from './musical-wonders-model.js';
 import {playWonderNote} from './musical-wonders-audio.js';
 import {ACTIVITIES,ACTIVITY_CELL,ACTIVITY_TILE,activityCell,activityDefinition,activityLevel,activityState,moveActivity,updateActivity,normalizeActivities} from './universe-activities-model.js';
@@ -18,9 +19,9 @@ export function initialize(r){
   const economy=r.sparkEconomy;if(!economy||economy.version!==1)return false;const before={balance:r.S.sparks,economy:structuredClone(economy)};
   const previousTypes={...q.types};q.types={...q.types,[a.o.kind]:true};q.done[a.o.id]=true;const amount=creditSparks(r.S,5);economy.log.push({title:a.level.def.name,text:'Actividad completada · +'+amount+' chispas',at:r.S.todayKey});economy.log=economy.log.slice(-80);
   if(r.save()===false){delete q.done[a.o.id];q.types=previousTypes;r.S.sparks=before.balance;r.S.sparkEconomy=before.economy;return false;}a.paid=true;
-  const active=a;if(r.S.sound&&r.ac?.state==='running')r.beatSoon?.(time=>{if(current!==active||!ready()||document.querySelector('.modal:not([hidden])')||!r.S.sound)return;const tones=r.chordTones();for(let i=0;i<3;i++)r.hookInst('feltpiano',tones[i%tones.length],time+i*(r.SIX||.125)*2,r.vel(.018),r.regionOfPos(r.S.wx,r.S.wy));},null,'player');return true;
+  const active=a;if(r.S.sound&&r.ac?.state==='running')r.beatSoon?.(time=>{if(current!==active||!ready()||openSurface('.modal:not([hidden])')||!r.S.sound)return;const tones=r.chordTones();for(let i=0;i<3;i++)r.hookInst('feltpiano',tones[i%tones.length],time+i*(r.SIX||.125)*2,r.vel(.018),r.regionOfPos(r.S.wx,r.S.wy));},null,'player');return true;
  }
- function tick(dt,paused=false){book();if(current||paused||!ready()||document.querySelector('.modal:not([hidden])'))return;clock+=Math.max(0,Math.min(.05,dt||0));const p={x:r.S.wx,y:r.S.wy},moved=last?Math.hypot(p.x-last.x,p.y-last.y):0;last=p;
+ function tick(dt,paused=false){book();if(current||paused||!ready()||openSurface('.modal:not([hidden])'))return;clock+=Math.max(0,Math.min(.05,dt||0));const p={x:r.S.wx,y:r.S.wy},moved=last?Math.hypot(p.x-last.x,p.y-last.y):0;last=p;
   if(r.autopilotState?.mode==='wander'&&!r.autopilotState.paused)return;
   const near=portals().find(o=>Math.hypot(o.x-p.x,o.y-p.y)<38);if(blocked&&!portals().some(o=>o.id===blocked&&Math.hypot(o.x-p.x,o.y-p.y)<120))blocked=null;
   if(!near||near.id===blocked||moved>2){hold=0;waiting=null;return;}
@@ -30,7 +31,7 @@ export function initialize(r){
   book();if(!current)return;if(!r.inWorld()||current.scope!==scope){leave();return;}const a=current,s=a.state,l=a.level,stopped=paused||!ready();
   if(!stopped){clock+=Math.max(0,Math.min(.05,dt||0));const speed=(r.SPEED||250)/ACTIVITY_TILE,walk=moveActivity(l,s,dx*speed*dt,dy*speed*dt);if(walk)r.recordWalk?.(walk*ACTIVITY_TILE);
    const result=updateActivity(l,s,dt);
-   if(result.event&&!s.done&&l.def.id!=='silence'&&r.S.sound&&r.ac?.state==='running'){const instance=a,note=s.touch[0]??s.next%6;r.beatSoon?.(time=>{if(current===instance&&ready()&&!document.querySelector('.modal:not([hidden])'))playWonderNote(r,WONDERS[(l.def.index+note)%20],note%6,time);},null,'player');}
+   if(result.event&&!s.done&&l.def.id!=='silence'&&r.S.sound&&r.ac?.state==='running'){const instance=a,note=s.touch[0]??s.next%6;r.beatSoon?.(time=>{if(current===instance&&ready()&&!openSurface('.modal:not([hidden])'))playWonderNote(r,WONDERS[(l.def.index+note)%20],note%6,time);},null,'player');}
    if(s.done)finish();
    if(Math.hypot(s.x-l.exit.x,s.y-l.exit.y)<.6){leave();return;}
    if(l.def.id!=='maze'&&l.def.id!=='islands'&&Math.hypot(s.x-3.5,s.y-(l.n-1.5))<.55){a.resetHold+=dt;if(a.resetHold>1.2){const ghost=s.ghost;a.state=activityState(l);if(ghost)a.state.ghost=ghost;book().progress[a.o.id]=a.state;a.resetHold=0;r.save();}}else a.resetHold=0;

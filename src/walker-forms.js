@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {interactionInstruments,expressiveBassInstruments} from './musical-character.js';
 // Fifty original miniature silhouettes. Independent hashes preserve old map placement.
 const BODIES=['Brote','Órbita','Nudo','Vela','Pulso'],HEADS=['lente','antena','semilla','doble luz','corona'];
@@ -28,6 +29,6 @@ export function moveWalker(k,f,player,dt,time,target=null){dt=Math.max(0,Math.mi
 }
 export function initialize(runtime){let owner=runtime.S,heard=new WeakMap();
  function record(form){const s=runtime.S;s.walkerForms=s.walkerForms&&typeof s.walkerForms==='object'&&!Array.isArray(s.walkerForms)?s.walkerForms:{};if(!Object.hasOwn(s.walkerForms,form.id)){s.walkerForms[form.id]={day:s.todayKey};runtime.save?.();}}
- function hear({degree,time,region}){if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running'||document.hidden||runtime.scanning||document.querySelector('.modal:not([hidden])'))return;if(owner!==runtime.S){owner=runtime.S;heard=new WeakMap();}const bar=Math.floor(time/(runtime.SIX*16));for(const k of (runtime.MU.walkerFollowers||[]).slice(0,2)){if(k.follow<=0||Math.hypot(k.x-runtime.S.wx,k.y-runtime.S.wy)>300||heard.get(k)===bar)continue;heard.set(k,bar);const voice=runtime.getVoice('caminante',region,k),index=((degree+2-runtime.MU.deg-voice.degree)%7+7)%7,at=time+runtime.SIX*voice.response;runtime.playVoice('caminante',index,at,region,false,.45,k,'ambient');runtime.walkerNoteCue?.({form:k.walkerForm?.id,role:voice.role,instrument:voice.instrument,at,index});}}
+ function hear({degree,time,region}){if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running'||document.hidden||runtime.scanning||openSurface('.modal:not([hidden])'))return;if(owner!==runtime.S){owner=runtime.S;heard=new WeakMap();}const bar=Math.floor(time/(runtime.SIX*16));for(const k of (runtime.MU.walkerFollowers||[]).slice(0,2)){if(k.follow<=0||Math.hypot(k.x-runtime.S.wx,k.y-runtime.S.wy)>300||heard.get(k)===bar)continue;heard.set(k,bar);const voice=runtime.getVoice('caminante',region,k),index=((degree+2-runtime.MU.deg-voice.degree)%7+7)%7,at=time+runtime.SIX*voice.response;runtime.playVoice('caminante',index,at,region,false,.45,k,'ambient');runtime.walkerNoteCue?.({form:k.walkerForm?.id,role:voice.role,instrument:voice.instrument,at,index});}}
  Object.defineProperties(runtime,{walkerHear:{get:()=>hear},recordWalkerForm:{get:()=>record}});
 }

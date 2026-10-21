@@ -1,3 +1,4 @@
+import {openSurface} from './frame-state.js';
 import {contactEntry} from './contact.js';
 export const RELIC_RATE=1/48,MAGICAL_RELIC_RATE=1/384;
 // A separate seed keeps terrain and existing object identities unchanged.
@@ -53,7 +54,7 @@ export function initialize(runtime) {
       if(!echoes.has(site.id)){echoes.set(site.id,{...site,touching:false});while(echoes.size>64)echoes.delete(echoes.keys().next().value);}out.push(echoes.get(site.id));}return out;
   }
   function echoTick(){
-    const available=runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!globalThis.document?.hidden&&!globalThis.document?.querySelector('.modal:not([hidden])')&&!runtime.scanning;
+    const available=runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&!globalThis.document?.hidden&&!openSurface('.modal:not([hidden])')&&!runtime.scanning;
     for(const o of recoveredRelics()){const distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);if(contactEntry(o,distance<22,available)&&runtime.S.sound&&runtime.ac?.state==='running'){const state=runtime.S;runtime.beatSoon(t=>{if(state===runtime.S&&Math.hypot(o.x-state.wx,o.y-state.wy)<70)runtime.playVoice('reliquia',0,t,runtime.regionOfPos(o.x,o.y),true,.6,o,'player');},null,'player');}}
   }
   function drawEchoes(ox,oy,radius){if(!runtime.inWorld()||(runtime.S.layer||'superficie')!=='superficie')return;const c=runtime.cx;
