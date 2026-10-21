@@ -38,7 +38,12 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 ## Casa
 
-`house.js` dibuja la Casa y recibe los gestos, `house-model.js` guarda los datos y `house-audio.js` la hace sonar; `collection-garden.js` añade el Jardín de voces.
+`house.js` mueve el cubo, lleva la cámara y recibe los gestos, `house-view.js` dibuja la casa de muñecas, `house-model.js` guarda los datos y `house-audio.js` la hace sonar; `collection-garden.js` añade el Jardín de voces.
+- **Vista:** la casa vive en unidades propias de 1000 de ancho, con tres plantas: Azotea, Sala y Jardín, y Sótano. Las escaleras están dentro de la Sala y la puerta une Sala y Jardín.
+- **Cámara:** encuadra la planta del cubo en la franja libre entre los contadores y el panel; «Ver casa» la muestra entera.
+- **Dibujo:** las paredes, los muebles y la luz de la hora se dibujan una vez por escala, hora y habitaciones abiertas en un lienzo aparte. El cielo y el suelo se pintan cada fotograma a lo ancho de la pantalla.
+- **Cubo:** se dibuja con `drawStage`, igual que en la tienda, sin el aro del pulso, y lleva todo lo comprado.
+- **Controles:** el render pasa los `dx/dy` del fotograma a la Casa. Las flechas caminan y suben o bajan escaleras; tocar una habitación lleva al cubo hasta allí, cambiando de planta por las escaleras.
 - **Datos:** `S.house` va por la versión 2, la de la casa de muñecas (ver [Casa viva](CASA_VIVA.md)). Conserva los objetos `{kind,room,x,y}`: x es el paso del compás y y la altura en la pared, que marca la nota. Añade `decor`, `tints` y `capsules`, siempre normalizados. La versión 1 se migra en el momento; una versión mayor se abre solo para leer.
 - **Códigos:** WH1 si la casa solo tiene objetos (lo leen versiones anteriores) y WH2 si lleva adornos o colores; se leen los dos.
 

@@ -1,6 +1,31 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.88**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.89**. Las entradas describen su revisión, no certifican producción.
+
+## Casa viva · C1 · Casa caminable · alpha.89
+
+Rama `claude/casa-c1-caminar`, sobre `claude/casa-c0-modelo`. La Casa deja de ser un plano de cuatro cuadros y pasa a ser una casa de muñecas vista en corte.
+
+- **Plantas:** Azotea arriba, Sala y Jardín al medio, Sótano bajo tierra.
+- **Detalles:** tejado de tejas con chimenea, cielo y estrellas según la hora real, suelo con hierba y paredes distintas en cada habitación.
+  - Sala: rayas, ventana, sofá, alfombra y lámpara.
+  - Jardín: invernadero, macetas y enredadera.
+  - Azotea: baranda, telescopio y guirnalda de luces.
+  - Sótano: ladrillos, tuberías, el banco del Taller y una lámpara.
+  - De noche las lámparas iluminan.
+- **Caminar:**
+  - El cubo camina con las mismas teclas que en el Mundo y sube o baja con las flechas en las escaleras.
+  - Tocar una habitación lo lleva hasta allí, también a otra planta.
+  - Las paredes lo detienen, la puerta a una habitación cerrada no se abre y al tocar una habitación cerrada se explica cuántos días faltan.
+- **Vista:** la cámara encuadra la planta del cubo entre los contadores y el panel; «Ver casa» muestra la casa entera.
+- **El cubo** lleva todo lo que compraste en la tienda, igual que en el Mundo.
+- **La música se ve:** en cada habitación, una luz recorre el compás y los objetos brillan al sonar. La izquierda-derecha sigue siendo el tiempo y la altura en la pared la nota; el secuenciador suena igual.
+- **Se conserva:** colocar, mover, retirar, el Jardín de voces, el Taller, las visitas y la posición del cubo al recargar.
+- **Coste:** 2,1 ms por fotograma en la Casa, frente a 5,2 ms en el Mundo en la misma medición (móvil 390×844 a 2×, sin sonido).
+- **Pruebas:**
+  - Nuevo `house_walk_smoke.py` en móvil y computadora.
+  - `house_v2_smoke.py` y `experience_garden_smoke.py` adaptados a habitaciones rectangulares; esperan a que la cámara se asiente.
+  - En PASS: `smoke`, `wonders`, `interface`, `panel_polish`, `accessibility`, `visual_closure`, recorridos de la tienda, `house_mix`, `experience_garden_mix` y los 187 conjuntos de Node.
 
 ## Casa viva · C0 · Base · alpha.88
 

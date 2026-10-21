@@ -44,7 +44,8 @@ export function initialize(runtime) {
     else{const l=Math.hypot(dx,dy);if(l){dx/=l;dy/=l;}}
     const manual=Math.hypot(dx,dy)>.01,automatic=!runtime.activityActive&&runtime.autopilotVector?.(dt,manual,modal||runtime.scanning||document.hidden||runtime.S.mode==="studio");
     if(!manual&&automatic){dx=automatic.dx;dy=automatic.dy;}
-    if(modal||runtime.scanning||runtime.S.mode==="studio"){dx=dy=0;}
+    // The house walks with the same keys; the radial workshop does not move.
+    if(modal||runtime.scanning||runtime.S.mode==="studio"&&!runtime.houseActive?.()){dx=dy=0;}
     runtime.cubeShopFilterTick?.();
     if(runtime.activityActive){runtime.activityFrame(t,dt,dx,dy,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.sparkTick?.(0,true);runtime.drawSparkEconomyHUD?.();scheduledFrame=requestAnimationFrame(frame);return;}
     const sp=Math.hypot(dx,dy);
@@ -86,7 +87,7 @@ export function initialize(runtime) {
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);runtime.cameraBegin?.(dt);
     runtime.drawDistantColors?.();
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
-    const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED*boost):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
+    const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b,dx,dy):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED*boost):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
     runtime.crystalTick?.(dt,modal);runtime.totemTick?.(dt,modal);runtime.wonderTick?.(dt,modal);runtime.activityWorldTick?.(dt,modal);runtime.mischiefTick?.(dt,modal);runtime.wowTick?.(dt,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.sparkTick?.(dt,modal);runtime.reactiveTick?.(dt);runtime.inhabitantTick?.(dt);runtime.drawInhabitants?.();
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.drawDuet?.();runtime.petTick?.(dt);runtime.drawPet?.(t);

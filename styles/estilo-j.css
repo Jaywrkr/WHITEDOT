@@ -522,3 +522,6 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 #mSettings .tiles{display:grid;grid-template-columns:1fr;gap:0;margin-top:12px}
 #mSettings .tiles button{justify-content:flex-start;gap:12px;min-height:48px;padding:12px 4px;border:0;border-bottom:1px solid var(--line);background:transparent;font-size:13px;text-align:left}
 #mSettings .tiles button[aria-pressed="true"]{color:var(--ink)}
+
+/* Dollhouse panel: four actions in the lower row. */
+.house-panel .house-more{grid-template-columns:repeat(4,minmax(0,1fr))}
