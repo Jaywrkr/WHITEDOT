@@ -3,7 +3,7 @@ import {CUBE_SHOP,shopPiece} from '../src/cube-shop-model.js';
 import {SHOP_VOICES,SHOP_SOUNDS,playShopVoice,playHum,playRadio,playStepNote,playScratch,filterCutoff,stepDegree,fit,initialize} from '../src/cube-shop-sound.js';
 // Batch 5 pieces, as listed in docs/TIENDA_DEL_CUBO.md.
 const batch5=[...SHOP_VOICES,...SHOP_SOUNDS,'trail:notes'].map(shopPiece);
-assert(batch5.every(Boolean));assert.equal(batch5.length,12);assert.equal(batch5.reduce((a,p)=>a+p.cost,0),6050);
+assert(batch5.every(Boolean));assert.equal(batch5.length,12);assert.equal(batch5.reduce((a,p)=>a+p.cost,0),3025);
 assert(SHOP_VOICES.every(id=>shopPiece(id).slot==='pulseVoice'));assert(SHOP_SOUNDS.every(id=>shopPiece(id).slot==='sound'));assert.equal(shopPiece('trail:notes').slot,'trail');
 assert.equal(new Set(CUBE_SHOP.map(p=>p.id)).size,CUBE_SHOP.length);
 // A small offline graph: every node records what it was asked to do.
@@ -49,4 +49,4 @@ for(let i=0;i<80;i++)walk(-2,0,1);for(const item of queue.splice(0))item.fn(.3);
 for(let i=0;i<20;i++){walk(0,0,10);for(const item of queue.splice(0))item.fn(.4);}assert(r.cubeShopSounds().hum>=1,'standing still hums');
 r.S.wx=300;r.S.wy=0;for(let i=0;i<20;i++){t+=1100;walk(0,0,2);for(const item of queue.splice(0))item.fn(.5);}assert(r.cubeShopSounds().radio>=1&&r.cubeShopSounds().neighbour==='1,0','the antenna hears the neighbour');
 r.sparkEconomy={wear:{},on:{}};walk(0,0,2);assert.equal(r.mfilt.frequency.events.at(-1),18000,'taking the filter off opens the music again');
-console.log('PASS batch 5: 12 sound pieces and 6050 sparks, six voices in range and level, quiet cube sounds, filter by speed, deterministic step notes, silent while muted');
+console.log('PASS batch 5: 12 sound pieces and 3025 sparks, six voices in range and level, quiet cube sounds, filter by speed, deterministic step notes, silent while muted');

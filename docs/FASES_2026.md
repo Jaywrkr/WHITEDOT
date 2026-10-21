@@ -22,4 +22,4 @@ Regla común: cada fase mide su coste por fotograma antes y después, respeta el
 | 14 | `claude/tienda-tanda-6` | Tienda 6 · El mundo reacciona y locuras | Según el catálogo. |
 | 15 | `claude/tienda-tanda-7` | Tienda 7 · Habilidades y economía | Habilidades y ajuste de precios con la medición de minería. |
 
-El estado de cada fase se registra en [CAMBIOS](../CAMBIOS.md) al cerrarla.
+El estado de cada fase se registra en [CAMBIOS](../CAMBIOS.md) al cerrarla. Las quince quedaron hechas en sus ramas (alpha.68 a alpha.82); falta crear los PR e integrarlas en este orden.

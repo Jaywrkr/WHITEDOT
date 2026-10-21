@@ -97,7 +97,7 @@ export function initialize(runtime){
    p.age+=step;const old={x:p.x,y:p.y};
    // A rare fragment runs for five seconds; caught while it runs it keeps its bonus, after that it dims to 1.
    if(p.rare&&!reduced())Object.assign(p,moveEscape(p,p.home,pos,step,p.age,180,120,5));
-   const dx=pos.x-p.x,dy=pos.y-p.y,d=Math.hypot(dx,dy),reach=p.rare&&!reduced()?32:70;
+   const dx=pos.x-p.x,dy=pos.y-p.y,d=Math.hypot(dx,dy),reach=(p.rare&&!reduced()?32:70)*(runtime.cubeShopMagnet?.()||1);
    // Common fragments retain their original collection radius; rare ones invite a short chase.
    if(d<reach){
     const travel=step*180;if(!reduced()&&d>3){const k=Math.min(1,travel/d);p.x+=dx*k;p.y+=dy*k;}

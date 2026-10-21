@@ -3,6 +3,7 @@ import {initialize as cubeShopWorld} from './cube-shop-world.js';
 import {initialize as cubeShopMoves} from './cube-shop-moves.js';
 import {initialize as cubeShopSound,drawSoundGlyph,SHOP_VOICES} from './cube-shop-sound.js';
 import {initialize as cubeShopWild,drawWildGlyph} from './cube-shop-wild.js';
+import {initialize as cubeShopSkills} from './cube-shop-skills.js';
 import {drawShopPulse,SHOP_PULSES} from './cube-shop-pulse.js';
 import {shopPiece,shopSlot} from './cube-shop-model.js';
 // Pictures of cube shop pieces drawn by the game's own art code on a small stage, never by hand.
@@ -11,7 +12,7 @@ const blank=()=>({version:1,purchases:{},wear:{},on:{},stats:{broken:0}});
 export function makeStage({ink='#fff',color='#fff',W=120,H=80}={}){
  const S={wx:0,wy:0,reducedMotion:false,rareBook:{items:[]},ach:{},activities:{done:{}},layer:'superficie',todayKey:'2026-01-02',worldSeed:'stage'},clock={t:1000,beat:0};
  const rt={S,MU:{near:[],dnaT:{air:'claro'}},W,H,camX:0,camY:0,pulse:0,parts:[],sparkEconomy:blank(),inWorld:()=>true,musicInk:(_,part)=>part==='perc'?'#f0d27a':ink,cubeColor:()=>color,beat:()=>clock.beat};
- cubeShopArt(rt);cubeShopWorld(rt);cubeShopMoves(rt);cubeShopSound(rt);cubeShopWild(rt);
+ cubeShopArt(rt);cubeShopWorld(rt);cubeShopMoves(rt);cubeShopSound(rt);cubeShopWild(rt);cubeShopSkills(rt);
  return {rt,S,clock};
 }
 export function wearOnStage(stage,ids){const q=blank();for(const id of ids){const p=shopPiece(id);if(!p)continue;q.purchases[id]=true;if(shopSlot(p.slot)?.many)q.on[id]=true;else q.wear[p.slot]=id;}q.stats=stage.rt.sparkEconomy.stats||q.stats;stage.rt.sparkEconomy=q;}
@@ -23,7 +24,7 @@ export function drawStage(stage,c,x,y,s,color='#fff'){
  const look=SHOP_PULSES.find(id=>wear(id));if(look)drawShopPulse(c,look,x,y,stage.pulseRadius||s*1.9,{alpha:.7,color,charge:1,gap:s*.7,reduced:S.reducedMotion});
  rt.drawCubeShopUnder(c,x,y,s,t);
  c.save();rt.cubeShopTransform(c,x,y,s,t);rt.cubeShopGestureTransform(c,x,y,s,t);c.globalAlpha=1;c.fillStyle=color;if(!rt.drawCubeShopCostume(c,x,y,s,t,color)&&!rt.drawCubeShopBody(c,x,y,s,t,color))c.fillRect(Math.round(x-s/2),Math.round(y-s/2),Math.round(s),Math.round(s));rt.drawCubeShopSkin(c,x,y,s,t);rt.drawCubeShopOver(c,x,y,s,t);c.restore();
- rt.drawCubeShopCompanion(c,x,y,s,t);rt.drawCubeShopGestures(c,x,y,s,t);rt.drawCubeShopSoundOver(c,x,y,s,t);rt.drawCubeShopWildOver(c,x,y,s,t);
+ rt.drawCubeShopCompanion(c,x,y,s,t);rt.drawCubeShopGestures(c,x,y,s,t);rt.drawCubeShopSoundOver(c,x,y,s,t);rt.drawCubeShopWildOver(c,x,y,s,t);rt.drawCubeShopSkills(c,x,y,s,t);
  for(const id of ['world:puddles','world:grass','world:constellation'])if(q.on?.[id])drawWildGlyph(c,id,x,y,s,t,{color,ink:rt.musicInk(null,'lead'),calm:S.reducedMotion});
  // A stage is silent, so a sound piece shows the mark it makes when it sounds.
  for(const id of [...SHOP_VOICES,'sound:hat','sound:filter','sound:hum','sound:dj','trail:notes'])if(wear(id)||q.on?.[id]){const k=1.6;c.save();c.translate(x,y);c.scale(k,k);drawSoundGlyph(c,id,0,0,s/k,t,{color,ink:rt.musicInk(null,'lead'),calm:S.reducedMotion});c.restore();}
@@ -43,6 +44,7 @@ const SCENES={
  'trail:notes':{walk:2.2},'sound:antenna':{still:.3},'sound:hat':{walk:.6},'sound:filter':{walk:.6},'sound:dj':{walk:.6},'sound:hum':{still:.3},
  'world:lantern':{still:.3,layer:'bajo'},'world:grass':{walk:.6,still:.2},'world:puddles':{still:.3},'world:retinue':{walk:1.2,still:.2},'world:constellation':{still:.3},
  'wild:morse':{still:.3,calm:true},'wild:backpack':{still:.3,cards:true},'wild:screen':{still:.3},'wild:hologram':{still:.3,cards:true},'wild:costume':{still:.6,costume:true},'wild:vjskin':{still:.3},
+ 'skill:magnet':{still:.5,magnet:true},'skill:sprint':{still:.6,walk:.25,sprint:true},'skill:glide':{still:1,layer:'cielo',glide:true},
  'motion:blink':{walk:.7,beat:true},'motion:roll':{walk:.9},'motion:legs':{walk:.55},'motion:pogo':{walk:.62},'motion:jelly':{walk:.6,still:.08},'motion:worm':{walk:.66},'motion:skate':{walk:.8},'motion:float':{walk:.3,still:.4}
 };
 const defaultScene=id=>id.startsWith('eyes:')||id.startsWith('acc:')?{walk:.4,still:.4}:id.startsWith('body:')?{walk:.3,still:.3}:{walk:.8};
@@ -51,8 +53,10 @@ export function playScene(stage,c,id,{x,y,s,W,H,color='#fff',scene=SCENES[id]||d
  const {rt,S,clock}=stage,step=16,speed=110;
  if(scene.air)rt.MU.dnaT={air:scene.air};if(scene.layer)S.layer=scene.layer;if(scene.cards)S.rareBook={items:['raro','singular','mitico'].map((tier,i)=>({id:'stage:'+i,odds:{tier}}))};if(scene.costume)for(let i=0;i<3;i++)rt.cubeShopWildTap();if(scene.ghost)S.cubeRoute={version:1,day:S.todayKey,today:[],yday:'2026-01-01',yesterday:[[0,0],[60,-20],[120,10],[150,70],[90,110],[20,80],[-10,30]]};
  let frames=[];const walk=Math.round((scene.walk||0)*1000/step),stop=Math.round((scene.still||0)*1000/step),circle=Math.round((scene.circle||0)*1000/step);
- for(let i=0;i<walk;i++)frames.push('walk');for(let i=0;i<circle;i++)frames.push('circle');for(let i=0;i<stop;i++)frames.push('still');if(!frames.length)frames=['still'];
+ for(let i=0;i<walk;i++)frames.push('walk');for(let i=0;i<circle;i++)frames.push('circle');for(let i=0;i<stop;i++)frames.push('still');if(scene.sprint)frames.reverse();if(!frames.length)frames=['still'];
+ if(scene.glide)rt.cubeShopGlide();if(scene.magnet)for(let i=0;i<8;i++){const a=i*Math.PI/4;rt.parts.push({x:S.wx+Math.cos(a)*42,y:S.wy+Math.sin(a)*30,vx:-Math.cos(a)*40,vy:-Math.sin(a)*30,l:1.4});}
  frames.forEach((kind,i)=>{
+  if(scene.sprint)rt.cubeShopBoost(step/1000,kind==='walk');
   clock.t+=step;clock.beat=scene.beat&&i===frames.length-4?1:0;rt.pulse=scene.pulse&&i>frames.length-4?scene.pulse:0;
   if(kind==='walk'){S.wx+=speed*step/1000;S.wy=Math.sin(S.wx/40)*6;}
   if(kind==='circle'){const a=i*.16;S.wx+=Math.cos(a)*4;S.wy+=Math.sin(a)*4;}

@@ -24,7 +24,7 @@ try:
   page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)")
   before=page.evaluate('__r.S.sparks')
   for pid in pieces:assert page.evaluate('id=>__r.buySparkStyle(id)',pid),pid
-  assert before-page.evaluate('__r.S.sparks')==7350
+  assert before-page.evaluate('__r.S.sparks')==3675
   assert all(page.evaluate('id=>__r.sparkEconomy.on[id]===true',p) for p in pieces)
   assert page.evaluate('__r.cubeShopGrassWide()')
   # Three pulses put on a costume; the body is no longer a square.
@@ -46,5 +46,5 @@ try:
   assert page.locator('[data-owned-slot="world"] [data-shop-piece]').count()==5 and page.locator('[data-owned-slot="wild"] [data-shop-piece]').count()==6
   page.locator('[data-owned-slot="wild"] [data-shop-piece="wild:costume"]').click();assert page.evaluate("__r.sparkEconomy.on['wild:costume']")!=True
   assert not errors,errors;browser.close()
- print('PASS 11 world and wild pieces: own pictures, bought for 7350 sparks, costume by three pulses, retinue, marks drawn moving and still, kept after reload and listed in Llevar',flush=True)
+ print('PASS 11 world and wild pieces: own pictures, bought for 3675 sparks, costume by three pulses, retinue, marks drawn moving and still, kept after reload and listed in Llevar',flush=True)
 finally:server.shutdown()

@@ -26,7 +26,7 @@ try:
   before=page.evaluate('__r.S.sparks')
   page.evaluate("__r.S.cube.voice='metal'")
   for pid in pieces:assert page.evaluate('id=>__r.buySparkStyle(id)',pid),pid
-  assert before-page.evaluate('__r.S.sparks')==6050
+  assert before-page.evaluate('__r.S.sparks')==3025
   # The last voice bought is worn; buying a voice puts the earned one back to the place's own.
   assert page.evaluate('__r.sparkEconomy.wear.pulseVoice')=='voice:chord' and page.evaluate('__r.S.cube.voice')=='natural'
   assert page.evaluate('__r.sparkEconomy.wear.trail')=='trail:notes' and all(page.evaluate('id=>__r.sparkEconomy.on[id]===true',p) for p in ['sound:hat','sound:filter','sound:hum','sound:dj','sound:antenna'])
@@ -42,10 +42,12 @@ try:
   # Muted: the cube keeps its marks and plays nothing new.
   page.evaluate('__r.S.sound=false');counts=page.evaluate('__r.cubeShopSounds()');page.keyboard.down('d');page.wait_for_timeout(800);page.keyboard.up('d');after=page.evaluate('__r.cubeShopSounds()')
   assert after['hat']==counts['hat'] and after['step']==counts['step'],(counts,after)
+  # The antenna stands above the cube: compare the same spot with and without it, moving and still.
+  LIT="()=>{const c=document.getElementById('w'),x=c.getContext('2d'),w=c.width,h=c.height,d=x.getImageData(Math.floor(w/2-12),Math.floor(h/2-60),24,60).data;let n=0;for(let i=0;i<d.length;i+=4)if(d[i]+d[i+1]+d[i+2]>300)n++;return n;}"
   for reduced in (False,True):
    page.evaluate('r=>{__r.S.reducedMotion=r;}',reduced);page.wait_for_timeout(900)
-   lit=page.evaluate("()=>{const c=document.getElementById('w'),x=c.getContext('2d'),w=c.width,h=c.height,d=x.getImageData(Math.floor(w/2-20),Math.floor(h/2-70),40,50).data;let n=0;for(let i=0;i<d.length;i+=4)if(d[i]+d[i+1]+d[i+2]>300)n++;return n;}")
-   assert lit>3,('antenna above the cube',reduced,lit)
+   on=page.evaluate(LIT);page.evaluate("__r.unequipSparkStyle('sound:antenna')");page.wait_for_timeout(200);off=page.evaluate(LIT);page.evaluate("__r.equipSparkStyle('sound:antenna')");page.wait_for_timeout(200)
+   assert on>off+3,('antenna above the cube',reduced,on,off)
   page.evaluate('__r.save()');page.reload();page.wait_for_function('!!window.__r?.sparkEconomy')
   assert page.evaluate('__r.sparkEconomy.wear.pulseVoice')=='voice:bell' and page.evaluate("__r.sparkEconomy.on['sound:antenna']")==True
   page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.evaluate("__r.openCube('shop')")
@@ -55,5 +57,5 @@ try:
   # Choosing a bought voice in Llevar takes the voice off; choosing an earned one would put back natural first.
   page.locator('[data-owned-slot="pulseVoice"] [data-shop-piece="voice:bell"]').click();assert page.evaluate('__r.sparkEconomy.wear.pulseVoice||""')==''
   assert not errors,errors;browser.close()
- print('PASS 12 sound pieces: own pictures, bought for 6050 sparks, bell heard on the pulse, hats, filter, scratch, step notes and humming in play, silent when muted, antenna visible moving and still, kept after reload and listed in Llevar',flush=True)
+ print('PASS 12 sound pieces: own pictures, bought for 3025 sparks, bell heard on the pulse, hats, filter, scratch, step notes and humming in play, silent when muted, antenna visible moving and still, kept after reload and listed in Llevar',flush=True)
 finally:server.shutdown()

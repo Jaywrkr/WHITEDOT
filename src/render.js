@@ -53,7 +53,9 @@ export function initialize(runtime) {
     runtime.MU.E+=(target-runtime.MU.E)*Math.min(1,dt/(target>runtime.MU.E?2.5:6));
     runtime.MU.still=sp<.05?runtime.MU.still+dt:0;
     runtime.MU.dirY+=(dy*sp-runtime.MU.dirY)*Math.min(1,dt*1.5);
-    const movementSpeed=runtime.SPEED*(runtime.inWorld()?movementMultiplier(runtime.S.wx,runtime.S.wy,runtime.REG*runtime.WCH,runtime.regionOfPos,runtime.seedOf):1);
+    // Sprint (cube shop skill) only answers the player's own input, never the autopilot.
+    const boost=runtime.inWorld()?runtime.cubeShopBoost?.(dt,manual&&!modal&&!runtime.scanning)||1:1;
+    const movementSpeed=runtime.SPEED*boost*(runtime.inWorld()?movementMultiplier(runtime.S.wx,runtime.S.wy,runtime.REG*runtime.WCH,runtime.regionOfPos,runtime.seedOf):1);
     runtime.MU.dist+=sp*movementSpeed*dt;if(runtime.MU.dist>650)runtime.MU.pending=true;
     if(runtime.S.mode!=="studio"){
       if(dx<-.6&&Math.abs(dy)<.35)runtime.leftT+=dt;else if(dx>-.2||Math.abs(dy)>.5)runtime.leftT=0;if(runtime.leftT>=90)runtime.unlock("alreves");
@@ -83,7 +85,7 @@ export function initialize(runtime) {
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);runtime.cameraBegin?.(dt);
     runtime.drawDistantColors?.();
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
-    const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
+    const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED*boost):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
     runtime.crystalTick?.(dt,modal);runtime.totemTick?.(dt,modal);runtime.wonderTick?.(dt,modal);runtime.activityWorldTick?.(dt,modal);runtime.mischiefTick?.(dt,modal);runtime.wowTick?.(dt,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.sparkTick?.(dt,modal);runtime.reactiveTick?.(dt);runtime.inhabitantTick?.(dt);runtime.drawInhabitants?.();
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.drawDuet?.();runtime.petTick?.(dt);runtime.drawPet?.(t);
@@ -106,7 +108,7 @@ export function initialize(runtime) {
     const ritual=runtime.inWorld()&&(runtime.quietState?.stage>=6||runtime.hasPower?.('cometa'));
     if(runtime.inWorld()&&runtime.drawSurpriseBody?.(runtime.cx,runtime.W/2,runtime.H/2,s,t)){}else if(ritual){runtime.cx.translate(runtime.W/2,runtime.H/2);runtime.cx.rotate(Math.sin(t/600)*.12);runtime.cx.fillRect(-s/2,-s/2,s,s);}else{if(!runtime.drawCubeShopCostume?.(runtime.cx,runtime.W/2,runtime.H/2,s,t,playerColor)&&!runtime.drawCubeShopBody?.(runtime.cx,runtime.W/2,runtime.H/2,s,t,playerColor))runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));runtime.drawCubeShopSkin?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopOver?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);}runtime.cx.restore();
     if(!runtime.inWorld()||runtime.surpriseStyle?.shape==='cube')runtime.drawCubeSurface?.(t,b,s);
-    runtime.drawWonderGift?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopCompanion?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopGestures?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopSoundOver?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopWildOver?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);
+    runtime.drawWonderGift?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopCompanion?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopGestures?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopSoundOver?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopWildOver?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopSkills?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);
     // El pixel siempre se distingue: halo suave y anillo fino en el Mundo.
     if(runtime.inWorld()){const c=runtime.cx,hx=runtime.W/2,hy=runtime.H/2,g=c.createRadialGradient(hx,hy,0,hx,hy,s*2.6);g.addColorStop(0,'rgba(255,255,255,.22)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(hx-s*2.6,hy-s*2.6,s*5.2,s*5.2);
       c.globalAlpha=.55;c.strokeStyle='#fff';c.lineWidth=1;c.strokeRect(Math.round(hx-s/2)-3.5,Math.round(hy-s/2)-3.5,Math.round(s)+7,Math.round(s)+7);c.globalAlpha=1;}

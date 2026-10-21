@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.81**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.82**. Las entradas describen su revisión, no certifican producción.
+
+## Tienda · tanda 7 · Habilidades y economía · alpha.82
+
+Rama `claude/tienda-tanda-7`, sobre `claude/tienda-tanda-6`. Las únicas piezas que ayudan a jugar, en `src/cube-shop-skills.js`, cada una con su límite:
+
+- **Imán corto:** recoge fragmentos un 35 % más lejos.
+- **Sprint:** al arrancar tras medio segundo quieto, un acelerón de un segundo; se recarga en seis. Sin botones nuevos y solo con tu propio movimiento, nunca con el piloto automático.
+- **Planeo:** en el Cielo, el toque de bajar se convierte en 2,5 s de planeo que puedes dirigir; aterriza donde termina sobre tierra y sobre el mar sigue hasta 6 s y avisa.
+- **Economía:** las 78 piezas nuevas cuestan la mitad (catálogo 33790 → 17030 ✦; las tres primeras igual). Con 10 a 14 ✦/min medidos, la tienda completa pasa de 40–56 h a 20–28 h de juego activo. Lo ya comprado no cambia.
+- Pruebas: `cube-shop-skills.mjs` (Node) y `cube_skills_smoke.py` (compra, sprint y recarga, planeo y aterrizaje, recarga de página); sumas de tandas anteriores actualizadas a los nuevos precios.
 
 ## Tienda · tanda 6 · El mundo reacciona y Locuras · alpha.81
 
