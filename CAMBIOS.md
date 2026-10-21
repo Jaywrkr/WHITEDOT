@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.71**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.72**. Las entradas describen su revisión, no certifican producción.
+
+## Fase V4 · El mundo respira la música · alpha.72
+
+Rama `claude/fase-v4-musica`, sobre `claude/fase-v3-fauna`. Con sonido:
+
+- el primer tiempo de cada compás tiñe levemente el mundo con el color de la música, algo más cada cuatro compases;
+- cada fuente que suena (criaturas, plantas, objetos) suelta un aro de luz, hasta 10 a la vez;
+- la hierba guarda algo del pulso.
+
+Sin sonido no pasa nada; con movimiento reducido, ni aros que crecen ni oleadas.
+
+Es solo dibujo y no cambia la música. `feedback.js` expone `soundCuesNow` para reutilizar sus avisos de nota.
+
+Archivo nuevo: `world-music.js`. Recorrido: `tests/world_music_smoke.py`.
 
 ## Fase V3 · Fauna que convive · alpha.71
 
