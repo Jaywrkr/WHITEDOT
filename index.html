@@ -129,7 +129,7 @@
  <button id="musicTravelConnections">Explora redes musicales</button>
  <button id="musicTravelFull">Escucha un ensamble completo</button></div><button id="musicTravelBack" hidden>Volver al lugar anterior</button>
  <div class="row"><button id="musicTravelGenres" aria-pressed="true">Estilos</button><button id="musicTravelHybrids" aria-pressed="false">Cruces</button></div><p id="musicTravelCount"></p><label for="musicTravelSearch">Busca un estilo o cruce</label><input id="musicTravelSearch" type="search" maxlength="60" autocomplete="off">
- <p id="musicTravelStatus" role="status" aria-live="polite"></p><div id="musicTravelList" class="scroll"></div><button id="musicTravelClose">Volver</button>
+ <p id="musicTravelStatus" role="status" aria-live="polite"></p><div id="musicTravelList" class="scroll"></div><button id="musicTravelClose">Cerrar</button>
 </div></div>
 <div class="zone" id="zone" aria-live="polite"><small id="zMood"></small><b id="zName"></b><span id="zDo"></span></div>
 
@@ -147,12 +147,12 @@
     </div></section>
     <section class="menu-group"><h3>Tu espacio</h3><div class="tiles">
       <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
+      <button id="bMusicSettings"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h14M9 3v6M15 9v6M11 15v6"/></svg><span>Sonido</span></button>
     </div></section>
     <section class="menu-group"><h3>Crear</h3><div class="tiles">
       <button id="bTools" aria-expanded="false" title="Efectos, eco de 2 compases y desplegar Estudio" hidden><svg viewBox="0 0 24 24"><path d="M6 4v16M12 4v16M18 4v16M4 9h4M10 15h4M16 7h4"/></svg><span>Herramientas</span></button>
       <button id="bRecord"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="9"/></svg><span>Grabar set</span></button>
     </div></section>
-    <section class="menu-group"><h3>Sonido</h3><div class="tiles"><button id="bMusicSettings"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h14M9 3v6M15 9v6M11 15v6"/></svg><span>Sonido</span></button></div></section>
     <section class="menu-group"><h3>Más</h3><div class="tiles">
       <button id="bWorlds"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c5 4 5 12 0 16M12 4c-5 4-5 12 0 16"/></svg><span>Viajar a otra semilla</span></button>
       <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
@@ -173,7 +173,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.77</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.78</span><small id="releaseDeploy">deploy sin registrar</small></div>
     <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>
@@ -323,7 +323,7 @@
     <div class="tiles"><button id="bSound"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg><span>Música</span></button><button id="bSoft" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 5v14M16 7v10M20 10v4"/></svg><span>Calma</span></button><button id="bAutoPins" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 8v8M8 12h8"/></svg><span>Repetir: no</span></button></div>
     <div class="music-voice"><label for="voiceMode">Estilo de La Voz</label><select id="voiceMode"><option value="discreta">Discreta</option><option value="guia">Guía de gestos</option><option value="poetica">Poética</option></select><p>Cómo te habla el universo mientras suena.</p></div>
     <button id="bLivingMusic" hidden>Música electrónica generativa</button>
-    <div class="row"><button id="muClose" class="gold">Listo</button><button id="muMute" hidden>Silenciar</button></div>
+    <div class="row"><button id="muClose" class="gold">Cerrar</button><button id="muMute" hidden>Silenciar</button></div>
   </div>
 </div>
 
@@ -360,7 +360,7 @@
  <ul id="labTry"></ul>
  <div class="lab-actions"><button id="labHere">Ponerme enfrente</button><button id="labSolo" aria-pressed="false">Solo</button><button id="labNotes">Notas</button><button id="labGallery">Catálogo</button></div>
 </div>
-<div class="modal" id="contentGallery" role="dialog" aria-modal="true" aria-labelledby="contentGalleryTitle" hidden><div class="sheet"><h2 id="contentGalleryTitle">Catálogo del universo</h2><p>Abre cada práctica para ver y escuchar el elemento real.</p><label for="contentGallerySearch">Buscar elementos</label><input id="contentGallerySearch" type="search" autocomplete="off"><p id="contentGalleryCount"></p><div id="contentGalleryRows"></div><p id="contentGalleryMore" hidden>Filtra para ver las siguientes entradas.</p><button id="contentGalleryClose">Volver</button></div></div>
+<div class="modal" id="contentGallery" role="dialog" aria-modal="true" aria-labelledby="contentGalleryTitle" hidden><div class="sheet"><h2 id="contentGalleryTitle">Catálogo del universo</h2><p>Abre cada práctica para ver y escuchar el elemento real.</p><label for="contentGallerySearch">Buscar elementos</label><input id="contentGallerySearch" type="search" autocomplete="off"><p id="contentGalleryCount"></p><div id="contentGalleryRows"></div><p id="contentGalleryMore" hidden>Filtra para ver las siguientes entradas.</p><button id="contentGalleryClose">Cerrar</button></div></div>
 <div class="modal" id="mLab" role="dialog" aria-modal="true" aria-labelledby="labSheetName" hidden><div class="sheet">
  <h2 id="labSheetName"></h2>
  <div class="row" id="labVerdicts"></div>
@@ -391,9 +391,9 @@
 <script type="module" src="./src/main.js"></script>
 
 
-<div class="modal" id="mSettings" hidden><div class="sheet"><h2>Ajustes</h2><div class="menu-prefs"><label for="autoIntent">Paseo automático</label><select id="autoIntent"><option value="paisaje">Paisaje y descanso</option><option value="vida">Vida y relaciones</option><option value="hallazgos">Encuentros y hallazgos</option><option value="afinidad">Afinidad entre favoritos</option><option value="contraste">Contraste entre favoritos</option></select><div class="universe-texts-group"><label class="universe-texts-setting"><input id="universeTexts" type="checkbox" checked aria-describedby="universeTextsHint">Textos del paisaje</label><p id="universeTextsHint">Oculta mensajes del universo. Conserva controles y avisos de guardado.</p></div></div><div class="tiles"><button id="bCreateMode" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg><span>Modo: explorar</span></button><button id="bDetails" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v1M12 11v6"/></svg><span>Datos del mundo</span></button></div><div class="row"><button id="settingsClose">Volver</button></div></div></div>
+<div class="modal" id="mSettings" hidden><div class="sheet"><h2>Ajustes</h2><div class="menu-prefs"><label for="autoIntent">Paseo automático</label><select id="autoIntent"><option value="paisaje">Paisaje y descanso</option><option value="vida">Vida y relaciones</option><option value="hallazgos">Encuentros y hallazgos</option><option value="afinidad">Afinidad entre favoritos</option><option value="contraste">Contraste entre favoritos</option></select><div class="universe-texts-group"><label class="universe-texts-setting"><input id="universeTexts" type="checkbox" checked aria-describedby="universeTextsHint">Textos del paisaje</label><p id="universeTextsHint">Oculta mensajes del universo. Conserva controles y avisos de guardado.</p></div></div><div class="tiles"><button id="bCreateMode" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg><span>Modo: explorar</span></button><button id="bDetails" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v1M12 11v6"/></svg><span>Datos del mundo</span></button></div><div class="row"><button id="settingsClose">Cerrar</button></div></div></div>
 
 <div id="housePanel" class="house-panel" hidden><span id="houseCount"></span><details id="houseGardenTools"><summary>Jardín de voces</summary><p>Reúne cuatro tarjetas. Mueve sus voces en el plano.</p><div id="gardenSlots"></div><button id="gardenSave">Conservar jardín</button><select id="gardenSets" aria-label="Tus jardines"><option value="">Tus jardines</option></select></details><label for="houseObjects">Objeto</label><select id="houseObjects"></select><p id="houseHint"></p><div class="row"><button id="houseWalk">Camina</button><button id="housePlace">Coloca</button><button id="houseErase">Retira</button><button id="houseWorkshop">Taller</button><button id="houseShare">Código</button><button id="houseExit">Volver</button></div></div>
-<div class="modal" id="mHouseCode" hidden><div class="sheet"><h2>Comparte tu casa</h2><p>Visita con un código. Tu colección sigue contigo.</p><textarea id="houseCode" aria-label="Código de casa" maxlength="16000"></textarea><p id="houseCodeInfo"></p><div class="row"><button id="houseVisit">Visita</button><button id="houseCodeClose">Volver</button></div></div></div>
+<div class="modal" id="mHouseCode" hidden><div class="sheet"><h2>Comparte tu casa</h2><p>Visita con un código. Tu colección sigue contigo.</p><textarea id="houseCode" aria-label="Código de casa" maxlength="16000"></textarea><p id="houseCodeInfo"></p><div class="row"><button id="houseVisit">Visita</button><button id="houseCodeClose">Cerrar</button></div></div></div>
 </body>
 </html>
