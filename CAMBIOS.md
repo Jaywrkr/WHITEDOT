@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.84**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.85**. Las entradas describen su revisión, no certifican producción.
+
+## Fase G · Revisión integral · alpha.85
+
+Rama `claude/fase-g-revision`, sobre `claude/fase-f-cuenta`. Revisión del código nuevo (tienda, menú, cuenta) y cierre completo local.
+
+- **Filtro (tienda):** la música ya no se queda apagada al salir del Mundo, entrar en Casa o empezar una actividad; el filtro se revisa al inicio de cada fotograma y solo actúa en la superficie del Mundo.
+- **Subsuelo y Cielo:** el movimiento se mide en la escala de la capa (1:8 y 1:6); hi-hat y Modo DJ ya no se disparan con poco movimiento y el Séquito solo aparece en la superficie.
+- **Menú en Casa:** el resumen dice «Casa», no «Camino».
+- **Rendimiento:** catálogo consultado por mapa, morse calculado una vez por nombre y la Hierba preguntada una vez por fotograma en vez de una vez por brizna.
+- **Medición** (Chromium local, 390×844, sin sonido, paseo de 6 s): 3,8 ms por fotograma sin piezas; 5,3 ms (p95 7,9) con 26 piezas puestas, nuevas y antiguas. Presupuesto: 16,6 ms.
+- **Cierre completo local** sobre esta rama, antes del arreglo de `audio_mix.mjs`: navegador 143/146 y audio con un fallo.
+  - `interface_smoke` y `sparks_notice_smoke` fallaron por carga con dos trabajadores y pasan al repetirlos.
+  - `shop_sound_mix` falló porque el arnés no llamaba a la revisión del filtro; corregido, pasa.
+  - `encounter_depth_smoke` es intermitente desde antes de estas fases: falla 3 de 3 en `main` (alpha.66) y también falló en su CI (run 39538532680). En estas ramas pasa casi siempre. En los fallos, la primera de las cuatro notas enseñadas queda con otro desfase armónico que las demás. No se tocó la prueba; queda pendiente de diagnóstico.
+- La rama de la tanda 7 pasó el catálogo de navegador completo, 145/145. `crystal_play_smoke` falló una vez en una ejecución suelta y pasó las dos siguientes.
+- No verificado: CI de estas ramas (no hay PR), escucha física y dispositivos reales.
 
 ## Fase F · Cuenta sin fricción · alpha.84
 
