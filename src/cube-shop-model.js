@@ -61,7 +61,19 @@ export const CUBE_SHOP=Object.freeze([
  {id:'pet:bird',slot:'companion',name:'Pájaro',cost:400,text:'Vuela contigo y se posa encima al parar.',art:'<path d="M86 16l3 2 3-2M92 16l3 2 3-2"/>'},
  {id:'pet:mimic',slot:'companion',name:'Imitador',cost:500,text:'Mini cubo que repite tu camino con retraso.',art:'<rect x="56" y="27" width="5" height="5"/><path d="M63 30h14" stroke-dasharray="2 2"/>'},
  {id:'pet:dj',slot:'companion',name:'Satélite DJ',cost:600,text:'Un disquito que gira marcando el tempo.',art:'<circle cx="114" cy="18" r="5"/><circle cx="114" cy="18" r="1"/><path d="M90 30m-22 0a22 12 0 1 0 44 0a22 12 0 1 0-44 0" stroke-opacity=".25"/>'},
- {id:'pet:ghost',slot:'companion',name:'Fantasma de ayer',cost:800,text:'Repite en miniatura tu recorrido de ayer.',art:'<path d="M66 20q10-12 22-4t20 6q8 10-4 16t-24 2q-16 0-14-20" stroke-opacity=".35"/><rect x="104" y="20" width="5" height="5" stroke-opacity=".5"/>'}
+ {id:'pet:ghost',slot:'companion',name:'Fantasma de ayer',cost:800,text:'Repite en miniatura tu recorrido de ayer.',art:'<path d="M66 20q10-12 22-4t20 6q8 10-4 16t-24 2q-16 0-14-20" stroke-opacity=".35"/><rect x="104" y="20" width="5" height="5" stroke-opacity=".5"/>'},
+ {id:'pulse:square',slot:'pulse',name:'Cuadrado',cost:40,text:'Onda cuadrada, con el alcance de siempre.',art:''},
+ {id:'pulse:star',slot:'pulse',name:'Estrella',cost:80,text:'Onda en estrella.',art:''},
+ {id:'pulse:double',slot:'pulse',name:'Doble anillo',cost:100,text:'Dos ondas casi juntas.',art:''},
+ {id:'pulse:spiral',slot:'pulse',name:'Espiral',cost:150,text:'La onda gira al abrirse.',art:''},
+ {id:'pulse:bolt',slot:'pulse',name:'Rayo',cost:250,text:'La onda se quiebra en zigzag.',art:''},
+ {id:'pulse:echo',slot:'pulse',name:'Eco rítmico',cost:400,text:'Dos ecos siguen a la onda, a corcheas.',art:''},
+ {id:'pulse:charged',slot:'pulse',name:'Cargado',cost:600,text:'Cuanto más esperas entre pulsos, más brilla el siguiente. Nunca llega más lejos.',art:''},
+ {id:'gesture:pose',slot:'gestures',name:'Pose',cost:100,text:'Quieto cinco segundos: posa.',art:''},
+ {id:'gesture:flip',slot:'gestures',name:'Voltereta',cost:150,text:'Dos pulsos seguidos: da una vuelta.',art:''},
+ {id:'gesture:confetti',slot:'gestures',name:'Confeti',cost:200,text:'Confeti de píxeles al ganar un logro.',art:''},
+ {id:'gesture:dance',slot:'gestures',name:'Baile',cost:300,text:'Da vueltas en círculo y se pone a bailar.',art:''},
+ {id:'gesture:victory',slot:'gestures',name:'Baile de victoria',cost:400,text:'Celebra al completar una actividad.',art:''}
 ].map(Object.freeze));
 export const shopPiece=id=>CUBE_SHOP.find(p=>p.id===id)||null;
 export const shopSlot=id=>CUBE_SHOP_SLOTS.find(s=>s.id===id)||null;

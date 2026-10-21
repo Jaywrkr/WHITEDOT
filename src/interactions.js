@@ -1,8 +1,9 @@
 import {decorativeField} from './territory-presentation.js';
-import {selectedPulse,pulseCrossed,drawPulse} from './pulse-forms.js';
+import {PULSE_FORMS,selectedPulse,pulseCrossed,drawPulse} from './pulse-forms.js';
+import {drawShopPulse} from './cube-shop-pulse.js';
 // Pulsos, física y respuestas de los objetos.
 export function initialize(runtime) {
-  let emptyP=0,waves=[],lastSonar=0,tapStart=null,rain=[],beams=[];
+  let emptyP=0,waves=[],lastSonar=0,lastLook=0,tapStart=null,rain=[],beams=[];
   function beatSoon(fn,vis,origin="player"){if(runtime.ac)runtime.MU.q8.push({fn:q=>runtime.withVoiceOrigin?runtime.withVoiceOrigin(origin,()=>fn(q)):fn(q),vis});else if(vis)vis();}
   function pushO(o,fx,fy,force){const dx=o.x-fx,dy=o.y-fy,d=Math.hypot(dx,dy)||1;o.vx=(o.vx||0)+dx/d*force/(o.personality?.mass||1);o.vy=(o.vy||0)+dy/d*force/(o.personality?.mass||1);}
   function physics(o,dt,list,bound){
@@ -18,10 +19,11 @@ export function initialize(runtime) {
   function hitW(x,y){for(const w of waves){if(!pulseCrossed(w,x,y))continue;if(!w.form||w.form.id==='ring-0'){runtime.wowPulseHit?.(x,y,w);return w;}const key=x.toFixed(2)+','+y.toFixed(2);w.contacts||=new Set();if(w.contacts.has(key)||w.contacts.size>=256)continue;w.contacts.add(key);runtime.wowPulseHit?.(x,y,w);return w;}return null;}
   function wsoon(w,fn){if(w.n++<12)runtime.soon(fn,w.origin||"player");}
   function updWaves(dt,ox,oy){for(const w of waves){w.prev=w.r;w.r+=dt*420;if(w.r>=w.max&&runtime.inWorld()){if(runtime.RP&&runtime.RP.type==="pulsoGrande")runtime.retoSet("pulsoGrande",Math.max(runtime.RP.val,w.n));if(w.n===0){emptyP++;if(emptyP>=10)runtime.unlock("dj");}else emptyP=0;}}waves=waves.filter(w=>w.r<w.max);
-    for(const w of waves){runtime.cx.globalAlpha=(1-w.r/w.max)*.6;runtime.cx.strokeStyle=w.color||runtime.S.color;runtime.cx.lineWidth=1.5;drawPulse(runtime.cx,w.form||selectedPulse({}),w.x+ox,w.y+oy,w.r,!!runtime.S.reducedMotion);}}
+    for(const w of waves){if(w.look){drawShopPulse(runtime.cx,w.look,w.x+ox,w.y+oy,w.r,{alpha:(1-w.r/w.max)*.6,color:w.color||runtime.S.color,charge:w.charge||0,reduced:!!runtime.S.reducedMotion});continue;}runtime.cx.globalAlpha=(1-w.r/w.max)*.6;runtime.cx.strokeStyle=w.color||runtime.S.color;runtime.cx.lineWidth=1.5;drawPulse(runtime.cx,w.form||selectedPulse({}),w.x+ox,w.y+oy,w.r,!!runtime.S.reducedMotion);}}
   function sonar(origin='player'){
     if(runtime.activityActive)return;
     origin=origin==='ambient'?'ambient':'player';
+    if(origin==='player')runtime.cubeShopTap?.();
     if(runtime.S.mode==="studio")return;runtime.audio();const ms=performance.now();if(ms-lastSonar<700)return;lastSonar=ms;
     if(origin==='player'){runtime.markInput?.();runtime.visualGesture?.();}
     if(origin==='player')runtime.firstJourneyEvent?.('pulse');
@@ -30,7 +32,10 @@ export function initialize(runtime) {
     if(origin==='player'&&runtime.inWorld())runtime.portalPulse?.(runtime.onBeatNow());   // ritual de portales: pulsos seguidos en el beat
     if(runtime.inWorld()&&(runtime.S.layer||"superficie")!=="superficie")return;
     if(origin==='player'&&runtime.inWorld()){runtime.sessionAction("pulse");runtime.pulseRelics();}
-    const x=runtime.inWorld()?runtime.S.wx:runtime.S.px,y=runtime.inWorld()?runtime.S.wy:runtime.S.py;waves.push({x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0,origin,form:runtime.inWorld()?selectedPulse(runtime.S):selectedPulse({}),color:runtime.inWorld()?runtime.cubeColor?.():null});
+    const x=runtime.inWorld()?runtime.S.wx:runtime.S.px,y=runtime.inWorld()?runtime.S.wy:runtime.S.py;
+    // A bought look changes only the drawing: its wave keeps the reach of the original pulse.
+    const look=origin==='player'&&runtime.inWorld()?runtime.cubeShopPulseLook?.()||'':'',charge=look==='pulse:charged'?Math.min(1,(ms-lastLook)/4000):0;if(look)lastLook=ms;
+    waves.push({x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0,origin,form:look?PULSE_FORMS[0]:runtime.inWorld()?selectedPulse(runtime.S):selectedPulse({}),look,charge,color:runtime.inWorld()?runtime.cubeColor?.():null});
     if(origin==='player'&&runtime.inWorld()&&runtime.RP&&runtime.RP.type==="pulsos"){runtime.RP.pst=runtime.onBeatNow()?runtime.RP.pst+1:0;runtime.retoSet("pulsos",runtime.RP.pst);}
     runtime.MU.act+=.25;runtime.pulse=Math.max(runtime.pulse,.6);runtime.soon(t=>{if(runtime.inWorld())runtime.playVoice('pulso',0,t,runtime.regionOfPos(x,y),true,1,{x,y},origin);else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08),2));}},origin);
   }

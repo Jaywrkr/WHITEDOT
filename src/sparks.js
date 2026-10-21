@@ -1,6 +1,7 @@
 import {TOTEM_DAILY_LIMIT} from './sculpture-totems-model.js';
 import {CUBE_SHOP_SLOTS,shopPiece,shopSlot,wearing} from './cube-shop-model.js';
 import {pieceImage} from './cube-shop-preview.js';
+import {SHOP_PULSES} from './cube-shop-pulse.js';
 import {crystalFragments,fragmentMask} from './crystal-play-model.js';
 import {POWERS,POWER_IDS} from './expansion-music.js';
 import {SPARK_JUMP_COST,SPARK_SITE_LIMIT,SPARK_SHOP,SPARK_SETS,SPARK_BADGES,SPARK_MILESTONES,SPARK_UNIVERSE,universeProgress,sparkNumber,normalizeSparkEconomy,creditSparks,debitSparks,claimSparkReward,sparkSetProgress} from './sparks-model.js';
@@ -66,7 +67,7 @@ export function initialize(runtime){
  function buy(id){const p=SPARK_SHOP.find(p=>p.id===id),q=book();if(!p||q.version!==1||q.purchases[id])return false;
   if(sparkNumber(owner.sparks)<p.cost){$('cubeHint').textContent='Te faltan '+(p.cost-sparkNumber(owner.sparks))+' ✦ para '+p.name+'.';return false;}
   if(!commit(next=>{if(!debitSparks(owner,p.cost))return false;next.purchases[id]=owner.todayKey||true;next.log.push({title:p.name,text:'Compra permanente · '+p.cost+' chispas',at:owner.todayKey});next.log=next.log.slice(-80);})){ $('cubeHint').textContent='No se guardó. Conservamos tus chispas.';return false;}
-  changeNotice(-p.cost);equip(id);if(p.slot==='trail'&&runtime.cubeSettings?.()?.trail!=='none')runtime.chooseCubeStyle?.('trail','none');render();runtime.renderCube?.();$('cubeHint').textContent='Ya llevas '+p.name+'. Está en Llevar.';notice('Compraste '+p.name,'Ya lo llevas');return true;
+  changeNotice(-p.cost);equip(id);if(p.slot==='trail'&&runtime.cubeSettings?.()?.trail!=='none')runtime.chooseCubeStyle?.('trail','none');if(SHOP_PULSES.includes(id)&&(runtime.cubeSettings?.()?.pulse||'ring-0')!=='ring-0')runtime.chooseCubeStyle?.('pulse','ring-0');render();runtime.renderCube?.();$('cubeHint').textContent='Ya llevas '+p.name+'. Está en Llevar.';notice('Compraste '+p.name,'Ya lo llevas');return true;
  }
  // Each slot holds one piece (or several where the slot allows many); '' takes everything off.
  function equip(id){const q0=book();if(q0.version!==1)return false;if(id&&(!q0.purchases[id]||!shopPiece(id)))return false;const ok=commit(q=>{q.wear={...(q.wear||{})};q.on={...(q.on||{})};if(!id){q.wear={};q.on={};q.equipped='';return;}const p=shopPiece(id);if(shopSlot(p.slot)?.many)q.on[id]=true;else q.wear[p.slot]=id;q.equipped=id;});if(ok){trail=[];render();}return ok;}

@@ -25,6 +25,10 @@ let r=normalizeRoute({day:'2026-10-19',today:[[1.4,2.6],['x',1],[1,2,3],[Infinit
 assert.equal(r.today.length,600);assert.deepEqual(r.today[0],[100,100]);assert.equal(r.yday,'');assert.deepEqual(r.yesterday,[]);assert.equal(r.future,7);
 r=rollRoute(r,'2026-10-20');assert.equal(r.day,'2026-10-20');assert.deepEqual(r.today,[]);assert.equal(r.yday,'2026-10-19');assert.equal(r.yesterday.length,120);assert.deepEqual(r.yesterday.at(-1),[699,699]);
 assert.equal(rollRoute(r,'2026-10-20'),r);assert.equal(rollRoute(r,'2026-10-21').yday,'2026-10-19');assert.equal(thinRoute([[0,0],[1,1]]).length,2);
+// Batch 4: pulse looks (one at a time, facet included) and gestures (several at once).
+const batch4=CUBE_SHOP.filter(p=>/^(pulse|gesture):/.test(p.id));assert.equal(batch4.length,12);assert.equal(batch4.reduce((a,p)=>a+p.cost,0),2770);
+r=normalizeSparkEconomy({purchases:Object.fromEntries(batch4.map(p=>[p.id,true])),wear:{pulse:'pulse:star',gestures:'gesture:pose'},on:{'gesture:pose':true,'gesture:flip':true,'pulse:echo':true}},10,'d');
+assert.deepEqual(r.wear,{pulse:'pulse:star'});assert.deepEqual(r.on,{'gesture:pose':true,'gesture:flip':true});
 // Normalizing twice is stable.
 assert.deepEqual(normalizeWear(q,q.purchases,q.equipped),{wear:q.wear,on:q.on});
-console.log('PASS cube shop slots, former purchases migrated to their slots, three pieces worn together and newer pieces preserved; eyes, habits and accessories by slot; bounded route for steps and ghost');
+console.log('PASS cube shop slots, former purchases migrated to their slots, three pieces worn together and newer pieces preserved; eyes, habits and accessories by slot; bounded route for steps and ghost; pulse looks and gestures by slot');
