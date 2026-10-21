@@ -1,4 +1,4 @@
-import {prefersReducedMotion} from './frame-state.js';
+import {prefersReducedMotion,frameMemo} from './frame-state.js';
 import {wearing} from './cube-shop-model.js';
 import {livingGlyph} from './living-art.js';
 // Cube shop batch 6: the world reacts and wild pieces. Drawing only: nothing here moves the cube, sounds or changes play.
@@ -55,6 +55,7 @@ export function drawWildGlyph(c,id,x,y,s,t,{color='#fff',ink='#fff',calm=false}=
  c.restore();
 }
 export function initialize(runtime){
+ let morseName=null,morse=[];const morseOf=name=>{if(name!==morseName){morseName=name;morse=morseUnits(name);}return morse;};
  let owner=null,taps=[],costume=null,costumeAt=-1e9,turn=0,trail=[],lastT=null;
  const counts={costumes:0};
  const q=()=>runtime.sparkEconomy||{},has=id=>runtime.inWorld()&&wearing(q(),id);
@@ -68,7 +69,8 @@ export function initialize(runtime){
  function drawBody(c,x,y,s,t,color){own();const shape=costumeNow();if(!shape)return false;drawCostume(c,shape,x,y,s,t,{color,calm:calm()});if(has('wild:vjskin'))drawSkin(c,x,y,s,t,{inks:[ink('lead'),ink('perc'),color],beat:runtime.beat?.()||0,calm:calm(),shape});return true;}
  function drawSkinOver(c,x,y,s,t){if(!has('wild:vjskin')||costumeNow())return;drawSkin(c,x,y,s,t,{inks:[ink('lead'),ink('perc'),runtime.cubeColor?.()||'#fff'],beat:runtime.beat?.()||0,calm:calm()});}
  // Hierba: the grass opens wider and further as the cube passes.
- const grassWide=()=>has('world:grass')&&layer()==='superficie';
+ // Asked once per grass blade: answered once per frame.
+ const grassWide=()=>frameMemo('shop:grass-wide',()=>has('world:grass')&&layer()==='superficie');
  function puddles(c,x,y,s,t){
   const S=runtime.S,ox=x-S.wx,oy=y-S.wy,seed=S.worldSeed||'',W=runtime.W,H=runtime.H,still=calm(),rain=!!runtime.rainingNow;
   const i0=Math.floor((S.wx-W/2)/PUDDLE_CELL)-1,i1=Math.floor((S.wx+W/2)/PUDDLE_CELL)+1,j0=Math.floor((S.wy-H/2)/PUDDLE_CELL)-1,j1=Math.floor((S.wy+H/2)/PUDDLE_CELL)+1;let shown=0;
@@ -100,7 +102,7 @@ export function initialize(runtime){
   if(has('world:lantern')&&layer()==='bajo'){const g=c.createRadialGradient(x,y,0,x,y,150);g.addColorStop(0,'rgba(255,214,150,.32)');g.addColorStop(1,'rgba(255,214,150,0)');c.save();c.fillStyle=g;c.fillRect(x-150,y-150,300,300);c.restore();}
   if(has('world:puddles')&&layer()==='superficie')puddles(c,x,y,s,t);
   if(grassWide()&&calm())drawWildGlyph(c,'world:grass',x,y,s,t,{calm:true});
-  if(has('world:retinue'))retinue(c,x,y,s,t);
+  if(has('world:retinue')&&layer()==='superficie')retinue(c,x,y,s,t);
  }
  function drawOver(c,x,y,s,t){
   if(!runtime.inWorld())return;own();c.save();c.globalAlpha=1;try{overPieces(c,x,y,s,t);}finally{c.restore();}
@@ -109,7 +111,7 @@ export function initialize(runtime){
   const still=calm(),lead=ink('lead'),color=runtime.cubeColor?.()||'#fff';
   if(has('world:lantern')){const lx=Math.round(x-s/2-7),ly=Math.round(y-s/2-2+(still?0:Math.sin(t/500)*1.5));c.save();c.fillStyle='#fff';c.fillRect(lx+1,ly-3,1,3);c.strokeStyle='#f0d27a';c.strokeRect(lx-1.5,ly+.5,5,6);c.fillStyle='#f0d27a';c.globalAlpha=layer()==='bajo'?1:.6;c.fillRect(lx,ly+2,2,3);c.restore();}
   if(has('world:constellation')&&layer()!=='bajo'&&runtime.W>=240)constellation(c,t);
-  if(has('wild:morse')){const units=morseUnits(runtime.S.playerProfile?.name||'Kubono'),unit=Math.round((runtime.SIX||.125)*2*1000),on=still?1:units[Math.floor(t/unit)%units.length];c.save();c.fillStyle=on?'#fff':'#ffffff44';c.fillRect(Math.round(x+s/2+3),Math.round(y-s/2-7),4,4);c.restore();}
+  if(has('wild:morse')){const units=morseOf(runtime.S.playerProfile?.name||'Kubono'),unit=Math.round((runtime.SIX||.125)*2*1000),on=still?1:units[Math.floor(t/unit)%units.length];c.save();c.fillStyle=on?'#fff':'#ffffff44';c.fillRect(Math.round(x+s/2+3),Math.round(y-s/2-7),4,4);c.restore();}
   if(has('wild:backpack')){const cards=recentCards(runtime.S.rareBook);c.save();for(let k=0;k<3;k++){const swing=still?0:Math.sin(t/420+k)*1.5,cx=Math.round(x-s/2-4-k*5+swing),cy=Math.round(y-2+k*3);c.globalAlpha=cards[k]?1:.4;c.strokeStyle='#ffffff66';c.beginPath();c.moveTo(x-s/2,y-s/2+2);c.lineTo(cx+2,cy);c.stroke();cardGlyph(c,cards[k]||null,cx,cy,5,7);}c.restore();}
   if(has('wild:screen')){const rg=runtime.MU?.dnaA||runtime.MU?.dnaT,bpm=Math.round(rg?.bpm||runtime.MU?.bpm||120),genre=runtime.GEN?.[rg?.genre]?.name||'',show=still||!genre||Math.floor(t/3000)%2===0?bpm+' BPM':genre.slice(0,14);c.save();c.font='9px "Geist Mono", monospace';c.textAlign='center';const w=Math.ceil(c.measureText?.(show)?.width||show.length*5.5)+6,sx=Math.round(x-w/2),sy=Math.round(y+s/2+8);c.fillStyle='#000';c.fillRect(sx,sy,w,12);c.strokeStyle=lead;c.strokeRect(sx+.5,sy+.5,w-1,11);c.fillStyle=lead;c.fillText(show,Math.round(x),sy+9);c.restore();}
   if(has('wild:hologram')){const card=rarestCard(runtime.S.rareBook),hx=Math.round(x),hy=Math.round(y-s/2-24);c.save();c.globalAlpha=.25;c.fillStyle=TIER_INK[card?.odds?.tier]||'#9fe8ff';c.beginPath();c.moveTo(x-s/4,y-s/2);c.lineTo(hx-9,hy+12);c.lineTo(hx+9,hy+12);c.lineTo(x+s/4,y-s/2);c.closePath();c.fill();c.globalAlpha=.85;cardGlyph(c,card,hx-7,hy-8,14,20);c.globalAlpha=.25;c.fillStyle='#000';for(let k=still?0:Math.floor(t/80)%3;k<20;k+=3)c.fillRect(hx-7,hy-8+k,14,1);c.restore();}

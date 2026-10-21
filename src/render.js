@@ -45,6 +45,7 @@ export function initialize(runtime) {
     const manual=Math.hypot(dx,dy)>.01,automatic=!runtime.activityActive&&runtime.autopilotVector?.(dt,manual,modal||runtime.scanning||document.hidden||runtime.S.mode==="studio");
     if(!manual&&automatic){dx=automatic.dx;dy=automatic.dy;}
     if(modal||runtime.scanning||runtime.S.mode==="studio"){dx=dy=0;}
+    runtime.cubeShopFilterTick?.();
     if(runtime.activityActive){runtime.activityFrame(t,dt,dx,dy,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.sparkTick?.(0,true);runtime.drawSparkEconomyHUD?.();scheduledFrame=requestAnimationFrame(frame);return;}
     const sp=Math.hypot(dx,dy);
     runtime.MU.speed+=(sp-runtime.MU.speed)*Math.min(1,dt*3);

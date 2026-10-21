@@ -83,7 +83,7 @@ export function initialize(runtime){
  function sample(t){
   const S=runtime.S;if(owner!==S){owner=S;lastT=null;marks=[];lastMark=null;lastFast=null;}
   if(lastT===null||t<lastT||t-lastT>500){lastT=t;lastX=S.wx;lastY=S.wy;return 0;}
-  const dt=(t-lastT)/1000,dx=S.wx-lastX,dy=S.wy-lastY;lastT=t;lastX=S.wx;lastY=S.wy;const moved=Math.hypot(dx,dy);
+  const dt=(t-lastT)/1000,dx=S.wx-lastX,dy=S.wy-lastY,scale=S.layer==='bajo'?8:S.layer==='cielo'?6:1;lastT=t;lastX=S.wx;lastY=S.wy;const moved=Math.hypot(dx,dy)/scale;
   if(moved>400)return 0;
   speed=speed*.7+moved/Math.max(dt,.001)*.3;stopped=speed<8?stopped+dt:0;
   // Modo DJ: moving fast again in a very different direction soon after, like pulling a record back.
@@ -103,13 +103,14 @@ export function initialize(runtime){
   for(const m of marks){if(m===lastMark||t-m.born<1200||t-m.hit<1000||Math.hypot(S.wx-m.x,S.wy-m.y)>14)continue;m.hit=t;if(sound)queue(time=>{const n=noteOf(region(),m.degree,60,79);if(n==null)return;playStepNote(runtime.ac,runtime.bus,time,n,level(.06));counts.step++;});}
  }
  function filterTick(){
-  const want=has('sound:filter')&&surface()&&runtime.S.sound&&!runtime.inPond&&runtime.ac&&runtime.mfilt;
+  // Only while walking the World surface: Camino, Casa and activities always hear the music open.
+  const want=has('sound:filter')&&surface()&&runtime.S.mode==='world'&&!runtime.activityActive&&runtime.S.sound&&!runtime.inPond&&runtime.ac&&runtime.mfilt;
   if(!want){if(cutoff!==null&&runtime.mfilt&&runtime.ac&&!runtime.inPond)runtime.mfilt.frequency.setTargetAtTime(18000,runtime.ac.currentTime,.3);cutoff=null;return;}
   const target=filterCutoff(speed);if(cutoff===null||Math.abs(target-cutoff)/cutoff>.08){cutoff=target;runtime.mfilt.frequency.setTargetAtTime(target,runtime.ac.currentTime,.25);counts.filter++;}
  }
  // Under the cube: step notes on the ground.
  function drawUnder(c,x,y,s,t){
-  if(!runtime.inWorld())return;const moved=sample(t);sounds(t,moved);stepNotes(t,moved);filterTick();
+  if(!runtime.inWorld())return;const moved=sample(t);sounds(t,moved);stepNotes(t,moved);
   if(!has('trail:notes')||!surface())return;const S=runtime.S,ox=x-S.wx,oy=y-S.wy,ink=runtime.musicInk?.(null,'lead')||'#fff',still=calm();c.save();c.fillStyle=ink;
   for(const m of marks){const sx=m.x+ox,sy=m.y+oy;if(sx<-8||sy<-8||sx>runtime.W+8||sy>runtime.H+8)continue;const glow=Math.max(0,1-(t-m.hit)/600);c.globalAlpha=.45+glow*.55;c.fillRect(Math.round(sx-1),Math.round(sy),3,2);c.fillRect(Math.round(sx+1),Math.round(sy-5),1,5);if(glow&&!still){c.globalAlpha=glow*.6;c.strokeStyle=ink;c.strokeRect(Math.round(sx-5)+.5,Math.round(sy-7)+.5,11,11);}}
   if(still&&!marks.length)drawSoundGlyph(c,'trail:notes',x,y,s,t,{ink,calm:true,alpha:.7});
@@ -125,6 +126,6 @@ export function initialize(runtime){
   if(has('sound:filter')&&speed>40)drawSoundGlyph(c,'sound:filter',x,y,s,t,{ink,calm:still,alpha:Math.min(.8,speed/160)});
   if(glyph&&voiceId()===glyph&&fade(glyphAt)>0)drawSoundGlyph(c,glyph,x,y,s,t,{ink,calm:still,alpha:fade(glyphAt)});
  }
- Object.defineProperties(runtime,{cubeShopPulseVoice:{get:()=>pulseVoice},playCubeShopVoice:{get:()=>play},drawCubeShopSoundUnder:{get:()=>drawUnder},drawCubeShopSoundOver:{get:()=>drawOver},
+ Object.defineProperties(runtime,{cubeShopPulseVoice:{get:()=>pulseVoice},cubeShopFilterTick:{get:()=>filterTick},playCubeShopVoice:{get:()=>play},drawCubeShopSoundUnder:{get:()=>drawUnder},drawCubeShopSoundOver:{get:()=>drawOver},
   cubeShopSounds:{get:()=>()=>({...counts,speed,stopped,cutoff,marks:marks.length,neighbour:neighbour?.region?.key||null})}});
 }
