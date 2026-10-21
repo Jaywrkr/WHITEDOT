@@ -88,7 +88,7 @@ export function initialize(runtime) {
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.drawDuet?.();runtime.petTick?.(dt);runtime.drawPet?.(t);
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
-    runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWonders?.();runtime.drawActivityPortals?.();runtime.drawMischief?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawDistantColors?.(true);
+    runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWonders?.();runtime.drawActivityPortals?.();runtime.drawMischief?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawWorldLight?.(t);runtime.drawDistantColors?.(true);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);if(runtime.parts.length>400)runtime.parts.splice(0,runtime.parts.length-400);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
@@ -140,7 +140,7 @@ export function initialize(runtime) {
         runtime.cx.globalAlpha=Math.min(1,al);runtime.cx.fillStyle=col;runtime.cx.fillRect(x,y,w,h);}}
   }
   function ambientStars(t,dt,b){const dn=runtime.inWorld()?runtime.MU.dnaT:null,air=dn?dn.air:"claro";
-    const id=runtime.BIOMES[runtime.S.mode==="studio"?(runtime.S.studio.biome||0):Math.max(0,runtime.curZone)].id,starA=(id==="vacio"?2.5:id==="cueva"?.2:1)*(air==="niebla"?.3:1);
+    const id=runtime.BIOMES[runtime.S.mode==="studio"?(runtime.S.studio.biome||0):Math.max(0,runtime.curZone)].id,starA=(id==="vacio"?2.5:id==="cueva"?.2:1)*(air==="niebla"?.3:1)*(runtime.inWorld()?runtime.worldLight?.()?.stars??1:1);
     runtime.cx.fillStyle="#fff";
     for(const s of runtime.STARS){const x=((s.x*runtime.W*2-runtime.camX*.03)%runtime.W+runtime.W)%runtime.W,y=((s.y*runtime.H*2-runtime.camY*.03)%runtime.H+runtime.H)%runtime.H;runtime.cx.globalAlpha=Math.min(1,s.a*starA*(.7+.3*Math.sin(t/900+s.x*50)));runtime.cx.fillRect(x,y,s.s,s.s);}
     const wind=id==="dunas"?40+runtime.MU.speed*120:id==="tormenta"?25:5;

@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.68**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.69**. Las entradas describen su revisión, no certifican producción.
+
+## Fase V1 · Luz y hora · alpha.69
+
+Rama `claude/fase-v1-luz`, sobre `claude/fase-r-rendimiento`. El ciclo de día del mundo (diez minutos, ya existía y solo movía la niebla) se ve:
+
+- **Noche:** un azul profundo cubre todo menos la linterna del cubo, las estrellas brillan más y salen luciérnagas (6 a 16 puntos).
+- **Amanecer y atardecer:** un tinte cálido al amanecer y rosado al atardecer.
+- **Hora real:** si es de noche en la hora del jugador, las noches del mundo son algo más oscuras.
+
+Solo en la superficie; con movimiento reducido, las luciérnagas quedan quietas.
+
+Coste: un degradado y unos 16 puntos por fotograma.
+
+Archivos: `world-light-model.js` (pura, `tests/world-light.mjs`) y `world-light.js`. Recorrido: `tests/world_light_smoke.py`.
 
 ## Fase R · Rendimiento · alpha.68
 
