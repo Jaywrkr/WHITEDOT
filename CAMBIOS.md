@@ -1,6 +1,14 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.77**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.78**. Las entradas describen su revisión, no certifican producción.
+
+## Fase C · Menú y paneles · alpha.78
+
+Rama `claude/fase-c-menu`, sobre `claude/fase-b-sonido`.
+
+- **Menú:** cuatro grupos (Jugar, Tu espacio, Crear, Más); «Sonido» se une a la Bitácora en Tu espacio en lugar de ocupar un grupo para él solo.
+- **Botones de cierre:** todos dicen «Cerrar» salvo los que nombran una acción («Seguir jugando», «Volver al mundo»); antes se mezclaban Volver, Listo y Cerrar.
+- **Guía:** «Laboratorio» y «Practicar» se quedan: son la lección de escucha y el recorrido de práctica, no botones de prueba.
 
 ## Fase B · Sonido en un panel · alpha.77
 
