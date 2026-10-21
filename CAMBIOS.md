@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.79**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.80**. Las entradas describen su revisión, no certifican producción.
+
+## Tienda · tanda 5 · Sonido · alpha.80
+
+Rama `claude/tienda-tanda-5`, sobre `claude/fase-d-casa`. Doce piezas nuevas (6050 ✦) en `src/cube-shop-sound.js`:
+
+- **Voz del pulso** (una a la vez): Bombo 808, Campana FM, Ácido, Corte vocal, Scratch y Acorde. Sintetizadas en el bus de música con la nota del pulso; Acorde toca la armonía de la región. Elegir una voz ganada quita la comprada y al revés.
+- **Sonido del cubo** (varias a la vez): Hi-hat al caminar (corcheas), Filtro (la música se abre al acelerar), Tarareo (quieto, tararea bajito), Modo DJ (scratch al dar media vuelta) y Antena (oye la región vecina).
+- **Notas pisables** (rastro): deja una nota cada pocos pasos; al volver a pisarla suena. El mismo camino toca siempre la misma melodía.
+- Con el sonido apagado o un panel abierto no suena nada nuevo; las marcas se siguen viendo. Cada pieza enseña una marca junto al cubo al sonar, y esa marca es su imagen en la tienda.
+- Pruebas: `cube-shop-sound.mjs` (Node), `cube_sound_smoke.py` (compra, juego, silencio, recarga) y `shop_sound_mix.py` (renders a 44,1/48 kHz, pico 0,88 sin saturación; `scripts/shop-sound-audio-validation.json`). `audio_mix.mjs` acepta `shopPieces`.
 
 ## Fase D · Casa y Crear · alpha.79
 
