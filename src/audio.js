@@ -597,6 +597,7 @@ export function initialize(runtime) {
     resetMusicJourney: {get:()=>resetMusicJourney},
     windG: { get: () => windG, set: value => { windG = value; } },
     windF: { get: () => windF, set: value => { windF = value; } },
+    noiseBuffer: { get: () => noiseBuf },
     audio: { get: () => audio },
     hz: { get: () => hz },
     rnd: { get: () => rnd },

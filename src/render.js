@@ -88,7 +88,7 @@ export function initialize(runtime) {
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
     runtime.drawDuet?.();runtime.petTick?.(dt);runtime.drawPet?.(t);
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
-    runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWonders?.();runtime.drawActivityPortals?.();runtime.drawMischief?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawWorldLight?.(t);runtime.drawDistantColors?.(true);
+    runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWonders?.();runtime.drawActivityPortals?.();runtime.drawMischief?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawWeather?.(t,dt);runtime.drawWorldLight?.(t);runtime.weatherBeds?.();runtime.drawDistantColors?.(true);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);if(runtime.parts.length>400)runtime.parts.splice(0,runtime.parts.length-400);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
@@ -182,7 +182,7 @@ export function initialize(runtime) {
     {const RS=runtime.REG*runtime.WCH,lx=((runtime.S.wx%RS)+RS)%RS,ly=((runtime.S.wy%RS)+RS)%RS,ed=[lx,RS-lx,ly,RS-ly],i=ed.indexOf(Math.min(...ed)),de=ed[i],BAND=900;
      if(de<BAND){runtime.MU.nb=runtime.regionOfPos(runtime.S.wx+[-1,1,0,0][i]*(de+10),runtime.S.wy+[0,0,-1,1][i]*(de+10));runtime.MU.nbW=.5*(1-de/BAND);}else{runtime.MU.nb=null;runtime.MU.nbW=0;}}
     if(runtime.MU.confNb&&runtime.MU.confNb!==runtime.MU.dnaT){runtime.MU.nb=runtime.MU.confNb;runtime.MU.nbW=Math.max(runtime.MU.nbW,.45);}   // confluencia de ríos
-    const evt=runtime.eventOf(rg),ev=(runtime.MU.storm||0)>.15?'lluvia':evt?evt[0]:null;   // dentro de una tormenta llueven notasif(runtime.RP&&runtime.RP.type==="quieto"&&runtime.MU.still>0)runtime.retoSet("quieto",runtime.MU.still);
+    const evt=runtime.eventOf(rg),ev=(runtime.MU.storm||0)>.15?'lluvia':evt?evt[0]:null;runtime.rainingNow=ev==='lluvia';   // dentro de una tormenta llueven notasif(runtime.RP&&runtime.RP.type==="quieto"&&runtime.MU.still>0)runtime.retoSet("quieto",runtime.MU.still);
     const id=runtime.BIOMES[z].id;
     if(ev==="aurora"){runtime.cx.lineWidth=6;for(let i=0;i<3;i++){runtime.cx.strokeStyle=`hsl(${(rg.hue+i*35)%360},80%,65%)`;runtime.cx.globalAlpha=.16+b*.06;runtime.cx.beginPath();for(let x=0;x<=runtime.W;x+=10){const y=70+i*20+Math.sin(x/130+t/1500+i)*16;x?runtime.cx.lineTo(x,y):runtime.cx.moveTo(x,y);}runtime.cx.stroke();}}
     const soundR=(ev==="eclipse"?.6:1)*runtime.clamp(runtime.lightR()*1.1,170,360)*(1+Math.min(runtime.shownStreak(),30)/30*.7)*(id==="cueva"?.6:1)*(1+b*.05),R=(runtime.worldVisibility?.lightRadius??soundR/(1+b*.05))*(1+b*.05),ox=runtime.W/2-runtime.S.wx,oy=runtime.H/2-runtime.S.wy,ms=performance.now();
@@ -233,7 +233,7 @@ export function initialize(runtime) {
         if(d>R+30&&gr.lit<=0)continue;
         if(gr.tall&&d<R)runtime.seen("arbol");
         const al=Math.max(Math.max(0,1-d/R)*(gr.tall?.5:.4),gr.lit*.6);if(al<.02)continue;
-        const sw=Math.sin(t/(gr.personality?.period||(gr.tall?1300:800))+gr.ph)*gr.h*(gr.personality?.sway||(gr.tall?.15:.3))+(gr.lit>0?b*2:0);
+        const sw=Math.sin(t/(gr.personality?.period||(gr.tall?1300:800))+gr.ph)*gr.h*(gr.personality?.sway||(gr.tall?.15:.3))+(gr.lit>0?b*2:0)+(runtime.windSway?.(gr.x,gr.y,t,gr.h*(gr.tall?.4:1),d,runtime.S.wx,runtime.S.wy)||0);
         runtime.cx.globalAlpha=Math.min(1,al)*(runtime.worldOpacity?.(d,R+30)??1);runtime.cx.fillStyle=gr.lit>.6?(gr.tall?runtime.musicInk?.(gr)||'#fff':"#fff"):c.pal?c.pal.soft:"#c9c9cf";
         runtime.cx.fillRect(gr.x+ox,gr.y+oy-gr.h,1,gr.h);runtime.cx.fillRect(gr.x+ox+sw,gr.y+oy-gr.h-2,1,2);
         if(gr.tall&&gr.lit>.2){runtime.cx.globalAlpha=gr.lit*.5*(runtime.worldOpacity?.(d,R+30)??1);runtime.cx.fillRect(gr.x+ox+sw-1,gr.y+oy-gr.h-3,3,3);}

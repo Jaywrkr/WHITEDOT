@@ -1,6 +1,21 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.69**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.70**. Las entradas describen su revisión, no certifican producción.
+
+## Fase V2 · Clima y viento · alpha.70
+
+Rama `claude/fase-v2-clima`, sobre `claude/fase-v1-luz`.
+
+- **Viento:** ráfagas que cruzan el campo en la dirección del viento del día (cambia cada día).
+- **Paso del cubo:** la hierba se aparta a ambos lados.
+- **Lluvia:** cuando llueve (tormenta o lluvia de notas), el suelo muestra salpicaduras, hasta 36 a la vez.
+- **Sonido:**
+  - lluvia de fondo, ruido filtrado y muy bajo;
+  - de noche, fuera de mar, cueva, vacío y dunas, grillos breves repartidos a izquierda y derecha.
+
+Todo pasa por el bus del juego y queda en silencio con el sonido apagado. Con movimiento reducido no hay ráfagas, estela ni salpicaduras.
+
+Archivo nuevo: `world-weather.js`. `audio.js` expone `noiseBuffer` para reutilizar el ruido existente. Recorrido: `tests/world_weather_smoke.py`.
 
 ## Fase V1 · Luz y hora · alpha.69
 
