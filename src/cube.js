@@ -5,6 +5,7 @@ import {cubeSurface,cubeAura,cubeHalo,cubeTrailPreview} from './cube-art.js';
 import {PULSE_FAMILIES,PULSE_FORMS,ownedPulses,pulseForm,pulseHint,drawPulse} from './pulse-forms.js';
 import {CUBE_SHOP,shopPiece,wearing} from './cube-shop-model.js';
 import {makeStage,drawStage,pieceImage} from './cube-shop-preview.js';
+import {SHOP_PULSES} from './cube-shop-pulse.js';
 export function initialize(runtime){
  const S=()=>runtime.S,$=runtime.$;let owner=null,path=[],last=null,hint='',tab='wear',pulseFamily='ring',stage=null;
  function settings(){if(owner!==S()){owner=S();S().cube=normalizeCube(S().cube||{color:S().color},S().ach,S().rewards);path=[];last=null;hint='';}return S().cube;}
@@ -18,12 +19,14 @@ export function initialize(runtime){
   if(!runtime.save()){S().cube=previous;S().color=color;hint='No se guardó. Intenta otra vez.';drawPanel();return false;}
   // One trail at a time: an earned trail takes off a bought one.
   if(type==='trail'&&value!=='none'&&shopTrail())runtime.unequipSparkStyle?.(shopTrail());
+  // Likewise one pulse shape: an earned shape takes off a bought look.
+  if(type==='pulse'&&value!=='ring-0'&&SHOP_PULSES.includes(shop().wear?.pulse))runtime.unequipSparkStyle?.(shop().wear.pulse);
   drawPanel();return true;
  }
  function close(){hint='';$('mCube').hidden=true;}
  function wearPiece(id){const q=shop(),piece=shopPiece(id);if(!piece)return;
   if(wearing(q,id)){if(!runtime.unequipSparkStyle?.(id))hint='No se guardó. Intenta otra vez.';}
-  else if(runtime.equipSparkStyle?.(id)){if(piece.slot==='trail'&&settings().trail!=='none')choose('trail','none');}else hint='No se guardó. Intenta otra vez.';
+  else if(runtime.equipSparkStyle?.(id)){if(piece.slot==='trail'&&settings().trail!=='none')choose('trail','none');if(SHOP_PULSES.includes(id)&&(settings().pulse||'ring-0')!=='ring-0')choose('pulse','ring-0');}else hint='No se guardó. Intenta otra vez.';
   drawPanel();
  }
  function pieceButton(id){const q=shop(),p=shopPiece(id),b=document.createElement('button');b.type='button';b.className='cube-piece';b.dataset.shopPiece=id;b.dataset.earned='false';b.setAttribute('aria-pressed',String(wearing(q,id)));b.title=p.text;

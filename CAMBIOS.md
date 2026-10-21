@@ -1,6 +1,31 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.65**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.66**. Las entradas describen su revisión, no certifican producción.
+
+## Tienda del cubo, tanda 4 · alpha.66
+
+**Formas del pulso** (cada onda lleva su forma; el alcance es siempre el del pulso original):
+- Cuadrado, Estrella, Doble anillo, Espiral y Rayo.
+- Eco rítmico: dos ecos detrás de la onda, a una corchea.
+- Cargado: brilla más cuanto más esperas entre pulsos, hasta 4 s. Sustituye a «mantén pulsado» para no cambiar los controles.
+
+Una forma a la vez: comprar o elegir una devuelve la forma ganada al pulso original, y elegir una ganada la quita.
+
+**Gestos** (puedes llevar varios):
+- Pose: quieto 5 s.
+- Voltereta: dos pulsos seguidos.
+- Confeti: al ganar un logro o una recompensa de chispas.
+- Baile: cuatro giros en 2,5 s.
+- Baile de victoria: al volver de una actividad completada.
+
+2770 ✦ en total. Nuevos `cube-shop-pulse.js` (dibujo de formas, también usado por las imágenes de la tienda) y `cube-shop-moves.js` (gestos), con un gancho más en `render.js`.
+
+`tests/cube_moves_smoke.py` comprueba:
+- las 12 piezas, en movimiento y quietas;
+- que cada onda lleva la forma con el alcance y la forma de impacto del pulso original;
+- la exclusión de formas;
+- que cada gesto salta con su causa real;
+- que todo se conserva tras recargar.
 
 ## Tu cubo, un solo lugar · alpha.65
 

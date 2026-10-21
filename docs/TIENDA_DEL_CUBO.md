@@ -1,6 +1,6 @@
 # Tienda del cubo
 
-Diseño aprobado por Jay el 20 de octubre de 2026: «me gusta todo». Esta guía es el catálogo de la tienda de chispas y su orden de construcción; no es un backlog de lanzamiento (ese sigue siendo D01–D22). Estado: tanda 0 hecha en alpha.61 (ranuras en `src/cube-shop-model.js`, compras antiguas migradas a su ranura, tienda ordenada por ranura). Tanda 1 hecha en alpha.62: las 17 piezas de Movimiento y Cuerpo, dibujadas en `src/cube-shop-art.js`. «Dado» cambia con cada cristal roto, no con cada golpe. Tanda 2 hecha en alpha.63: Ojos, Hábitos y Accesorios (13 piezas), dibujados sobre el cubo en píxeles enteros; con cara, el cubo se dibuja con al menos 10 px aunque el nivel lo haga más pequeño. Rubor se enciende con una tarjeta rara nueva; Saludo guiña hacia la criatura que se acerca; Estornudo ocurre en aire de esporas, polvo o niebla; Mareo tras seis giros en tres segundos. Tanda 3 hecha en alpha.64: Rastros y Compañeros (10 piezas) en `src/cube-shop-world.js`. Arcoíris aparece al romper tres cristales en 1,2 segundos. Huellas del día y Fantasma de ayer guardan un recorrido acotado en `S.cubeRoute` (600 pasos de hoy, 120 puntos del último día jugado); el Fantasma lo repite en miniatura alrededor del cubo para verse siempre.
+Diseño aprobado por Jay el 20 de octubre de 2026: «me gusta todo». Esta guía es el catálogo de la tienda de chispas y su orden de construcción; no es un backlog de lanzamiento (ese sigue siendo D01–D22). Estado: tanda 0 hecha en alpha.61 (ranuras en `src/cube-shop-model.js`, compras antiguas migradas a su ranura, tienda ordenada por ranura). Tanda 1 hecha en alpha.62: las 17 piezas de Movimiento y Cuerpo, dibujadas en `src/cube-shop-art.js`. «Dado» cambia con cada cristal roto, no con cada golpe. Tanda 2 hecha en alpha.63: Ojos, Hábitos y Accesorios (13 piezas), dibujados sobre el cubo en píxeles enteros; con cara, el cubo se dibuja con al menos 10 px aunque el nivel lo haga más pequeño. Rubor se enciende con una tarjeta rara nueva; Saludo guiña hacia la criatura que se acerca; Estornudo ocurre en aire de esporas, polvo o niebla; Mareo tras seis giros en tres segundos. Tanda 3 hecha en alpha.64: Rastros y Compañeros (10 piezas) en `src/cube-shop-world.js`. Arcoíris aparece al romper tres cristales en 1,2 segundos. Huellas del día y Fantasma de ayer guardan un recorrido acotado en `S.cubeRoute` (600 pasos de hoy, 120 puntos del último día jugado); el Fantasma lo repite en miniatura alrededor del cubo para verse siempre. Tanda 4 hecha en alpha.66: Formas del pulso y Gestos (12 piezas) en `src/cube-shop-pulse.js` y `src/cube-shop-moves.js`. Una forma comprada solo cambia el dibujo; la onda alcanza como el pulso original, y elegirla devuelve la forma ganada al pulso original (una forma a la vez). «Cargado» brilla según la espera entre pulsos en lugar de mantener pulsado, para no cambiar los controles.
 
 ## Reglas
 
@@ -120,8 +120,8 @@ Una a la vez · mismo alcance.
 | Doble anillo | 100 ✦ | Dos ondas casi juntas. | 4 |
 | Espiral | 150 ✦ | La onda gira al abrirse. | 4 |
 | Rayo | 250 ✦ | La onda se quiebra en zigzag. | 4 |
-| Eco rítmico | 400 ✦ | El pulso se repite en eco a corcheas. | 4 |
-| Cargado | 600 ✦ | Mantén pulsado: sale con más brillo, nunca con más alcance. | 4 |
+| Eco rítmico | 400 ✦ | Dos ecos siguen a la onda, a corcheas. | 4 |
+| Cargado | 600 ✦ | Cuanto más esperas entre pulsos (hasta 4 s), más brilla el siguiente; nunca llega más lejos. | 4 |
 
 ### Voz del pulso
 
@@ -155,10 +155,10 @@ Todos los comprados activos.
 | Pieza | Precio | Qué hace | Tanda |
 |---|---|---|---|
 | Pose | 100 ✦ | Quieto cinco segundos: posa. | 4 |
-| Voltereta | 150 ✦ | Doble toque: da una vuelta. | 4 |
+| Voltereta | 150 ✦ | Dos pulsos seguidos: da una vuelta. | 4 |
 | Confeti | 200 ✦ | Confeti de píxeles al ganar un logro. | 4 |
 | Baile | 300 ✦ | Gira en círculo y baila. | 4 |
-| Baile de victoria | 400 ✦ | Al completar una actividad o ganar una carrera. | 4 |
+| Baile de victoria | 400 ✦ | Al completar una actividad (las carreras son actividades). | 4 |
 
 ### El mundo reacciona
 

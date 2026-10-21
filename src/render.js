@@ -99,11 +99,11 @@ export function initialize(runtime) {
       if(runtime.MU.groove>=2){runtime.cx.fillStyle=runtime.musicInk?.(null,'perc')||'#fff';runtime.cx.font='600 12px "Geist Mono", monospace';runtime.cx.textAlign="center";runtime.cx.fillText("EN TIEMPO ×"+runtime.MU.groove,runtime.W/2,runtime.H/2-s-18-(1-runtime.grooveFx)*10);runtime.cx.textAlign="left";}}
     runtime.drawCubeShopTrails?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);
     runtime.drawCubeShopUnder?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);
-    runtime.cx.save();runtime.cubeVisualTransform?.(runtime.cx,runtime.W/2,runtime.H/2);runtime.cubeShopTransform?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.cx.globalAlpha=1;runtime.cx.fillStyle=playerColor;
+    runtime.cx.save();runtime.cubeVisualTransform?.(runtime.cx,runtime.W/2,runtime.H/2);runtime.cubeShopTransform?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.cubeShopGestureTransform?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.cx.globalAlpha=1;runtime.cx.fillStyle=playerColor;
     const ritual=runtime.inWorld()&&(runtime.quietState?.stage>=6||runtime.hasPower?.('cometa'));
     if(runtime.inWorld()&&runtime.drawSurpriseBody?.(runtime.cx,runtime.W/2,runtime.H/2,s,t)){}else if(ritual){runtime.cx.translate(runtime.W/2,runtime.H/2);runtime.cx.rotate(Math.sin(t/600)*.12);runtime.cx.fillRect(-s/2,-s/2,s,s);}else{if(!runtime.drawCubeShopBody?.(runtime.cx,runtime.W/2,runtime.H/2,s,t,playerColor))runtime.cx.fillRect(Math.round(runtime.W/2-s/2),Math.round(runtime.H/2-s/2),Math.round(s),Math.round(s));runtime.drawCubeShopOver?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);}runtime.cx.restore();
     if(!runtime.inWorld()||runtime.surpriseStyle?.shape==='cube')runtime.drawCubeSurface?.(t,b,s);
-    runtime.drawWonderGift?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopCompanion?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);
+    runtime.drawWonderGift?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopCompanion?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);runtime.drawCubeShopGestures?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);
     // El pixel siempre se distingue: halo suave y anillo fino en el Mundo.
     if(runtime.inWorld()){const c=runtime.cx,hx=runtime.W/2,hy=runtime.H/2,g=c.createRadialGradient(hx,hy,0,hx,hy,s*2.6);g.addColorStop(0,'rgba(255,255,255,.22)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(hx-s*2.6,hy-s*2.6,s*5.2,s*5.2);
       c.globalAlpha=.55;c.strokeStyle='#fff';c.lineWidth=1;c.strokeRect(Math.round(hx-s/2)-3.5,Math.round(hy-s/2)-3.5,Math.round(s)+7,Math.round(s)+7);c.globalAlpha=1;}

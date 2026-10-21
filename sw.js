@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.3.0-alpha.65';
+const CACHE='whitedot-2.3.0-alpha.66';
 const SHELL=[
  "./src/account-entry.js",
  "./recovery.html", "./src/cloud-recovery.js",
@@ -10,7 +10,7 @@ const SHELL=[
  "./src/universe-activities-model.js","./src/universe-activities-art.js","./src/universe-activities.js","./src/universe-texts.js",
  "./src/musical-wonders-model.js","./src/musical-wonders-audio.js","./src/musical-wonders-art.js","./src/musical-wonders.js",
  "./src/sculpture-totems-model.js","./src/sculpture-totems-art.js","./src/sculpture-totems.js",
- "./src/sparks-model.js", "./src/cube-shop-model.js", "./src/cube-shop-art.js", "./src/cube-shop-world.js", "./src/cube-shop-preview.js", "./src/sparks.js",
+ "./src/sparks-model.js", "./src/cube-shop-model.js", "./src/cube-shop-art.js", "./src/cube-shop-world.js", "./src/cube-shop-preview.js", "./src/cube-shop-pulse.js", "./src/cube-shop-moves.js", "./src/sparks.js",
  "./src/crystal-sparks.js","./src/crystal-play-model.js",
  "./src/wow-memory.js",
  "./src/wow-ui.js",
