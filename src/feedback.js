@@ -66,5 +66,5 @@ export function initialize(runtime) {
       }ctx.restore();
     }
   }
-  Object.defineProperties(runtime,{musicInk:{get:()=>musicInk},clearSoundCues:{get:()=>()=>buffer.clear()},soundCue:{get:()=>soundCue},filterCue:{get:()=>filterCue},drawSoundCues:{get:()=>drawSoundCues}});
+  Object.defineProperties(runtime,{musicInk:{get:()=>musicInk},clearSoundCues:{get:()=>()=>buffer.clear()},soundCue:{get:()=>soundCue},soundCuesNow:{get:()=>()=>buffer.active(performance.now())},filterCue:{get:()=>filterCue},drawSoundCues:{get:()=>drawSoundCues}});
 }
