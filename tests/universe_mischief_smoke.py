@@ -40,7 +40,12 @@ try:
    page.screenshot(path=str(ROOT.parent/f'mischief-{kind}-390.png'))
    if kind=='rain':
     page.locator('#bMenu').click();age=page.evaluate('__r.mischiefState.scene.age');page.wait_for_timeout(350);assert page.evaluate('__r.mischiefState.scene.age')==age;page.locator('#mnClose').click()
-    for q in page.evaluate('__r.mischiefState.scene.drops'):move(page,q['x'],q['y'])
+    # The drops really rise: chase each one at its current height until it is caught.
+    for i in range(8):
+     for _ in range(40):
+      q=page.evaluate('i=>{const s=__r.mischiefState.scene;return s?.done||s.collected.includes(i)?null:{x:s.drops[i].x,y:s.drops[i].y-(s.drops[i].rise||0)}}',i)
+      if q is None:break
+      move(page,q['x'],q['y'])
    elif kind=='imitator':
     for dx,dy in [(70,0),(70,70),(-30,70),(-30,-25)]:move(page,o['x']+dx,o['y']+dy)
     page.wait_for_function('__r.mischiefState.scene?.done')
