@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.72**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.73**. Las entradas describen su revisión, no certifican producción.
+
+## Fase V5 · Cámara y sensación · alpha.73
+
+Rama `claude/fase-v5-sensacion`, sobre `claude/fase-v4-musica` (incluye el arreglo de prueba de la fase R).
+
+Una transformación envuelve el mundo y el cubo, así que todos los sistemas siguen alineados:
+
+- **Anticipación:** al caminar, la vista se adelanta hasta 18 px en la dirección de la marcha y vuelve al centro al parar. No se aplica mientras hay un dedo en la pantalla, para que los toques caigan donde se apunta.
+- **Golpe de zoom:** romper un cristal da un toque breve (2 %); una cadena de tres o más, un 4,5 % con una pequeña sacudida.
+- **Tormenta:** truenos y rayos sacuden la vista suavemente.
+
+Controles, joystick y avisos quedan fuera de la transformación. Con movimiento reducido no hay nada de esto.
+
+Archivo nuevo: `world-camera.js`. Recorrido: `tests/world_camera_smoke.py`.
 
 ## Fase V4 · El mundo respira la música · alpha.72
 
@@ -70,7 +84,7 @@ Rama `claude/fase-r-rendimiento`, sobre `claude/charming-darwin-dvbfc7` (alpha.6
 - Las partículas tienen un tope de 400.
 - Con la pestaña oculta, el audio se suspende y vuelve como estaba al regresar.
 
-Medido en Chromium local sin GPU, recorrido con sonido: media de 12,1 a 6,1 ms por fotograma, p95 de 16,2 a 9,0 ms. No equivale a una medición en un móvil físico.
+Medido en Chromium local sin GPU, recorrido con sonido: media de 12,1 a 6,1 ms por fotograma, p95 de 16,2 a 9,0 ms. No equivale a una medición en un móvil físico. Catálogo de navegador local: `lab_score_smoke.py` comparaba el número de ondas en dos momentos y la onda de su propio toque podía terminar entre medias; ahora comprueba que abrir Sonido no lanza pulsos.
 
 ## Rendimiento con muchas piezas · alpha.67
 
