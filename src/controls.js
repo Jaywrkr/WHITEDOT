@@ -14,7 +14,7 @@ export function initialize(runtime) {
   runtime.$("bMenu").onclick=()=>{volumeUI();menuSummary();runtime.houseMenuNote?.();runtime.$("mMenu").hidden=false;};runtime.$("mnClose").onclick=()=>{runtime.$("mMenu").hidden=true;};
   document.querySelectorAll("#mMenu .tiles button,#mMenu .devbox button").forEach(b=>b.addEventListener("click",()=>{if(b.id!=="dReset")runtime.$("mMenu").hidden=true;}));
   runtime.$("bPrimary").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else motion.enter(runtime.$('bPrimary'));};
-  runtime.$("bStudio").onclick=runtime.enterStudio;runtime.$("bDeploy").onclick=runtime.deployStudio;runtime.$("stExit").onclick=runtime.exitStudio;
+  runtime.$("bStudio").onclick=runtime.enterStudio;runtime.$("bDeploy").onclick=runtime.deployStudio;runtime.$("stExit").onclick=()=>runtime.houseBack();
   runtime.$("oDeploy").onclick=()=>{runtime.$("mOut").hidden=true;runtime.deployStudio();};
   runtime.$("bag").onclick=e=>{const b=e.target.closest("button");if(!b)return;runtime.selSample=b.dataset.s;runtime.renderBag();};
   runtime.$("swatches").onclick=e=>{const b=e.target.closest("button"),cube=runtime.cubeSettings?.();if(!b||b.disabled||cube&&cube.version!==2)return;runtime.S.color=runtime.COLORS[+b.dataset.c][0];runtime.S.cube={...cube,color:runtime.S.color};runtime.renderBag();runtime.save();};

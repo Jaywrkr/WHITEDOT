@@ -39,7 +39,8 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 ## Casa
 
 `house.js` mueve el cubo, lleva la cámara y recibe los gestos, `house-view.js` dibuja la casa de muñecas, `house-model.js` guarda los datos y `house-audio.js` la hace sonar; `collection-garden.js` añade el Jardín de voces.
-- **Vista:** la casa vive en unidades propias de 1000 de ancho, con tres plantas: Azotea, Sala y Jardín, y Sótano. Las escaleras están dentro de la Sala y la puerta une Sala y Jardín.
+- **Historia:** la casa viaja con el cubo. Se abre donde estás (menú Casa, el botón de la casa en el Mundo o «Abrir la casa aquí»): aterriza sobre cuatro patas con tres propulsores y una antena, y el suelo y las formas de fuera son las del bioma donde aterrizó (`LANDSCAPES`). El lugar anterior queda como campamento en el mapa. Fuera del Mundo se abre en el último lugar.
+- **Vista:** la casa vive en unidades propias de 1000 de ancho, con tres plantas: Azotea, Sala y Jardín, y Bodega (id `sotano`). Las escaleras están dentro de la Sala y la puerta une Sala y Jardín.
 - **Cámara:** encuadra la planta del cubo en la franja libre entre los contadores y el panel; «Ver casa» la muestra entera.
 - **Dibujo:** las paredes, los muebles y la luz de la hora se dibujan una vez por escala, hora y habitaciones abiertas en un lienzo aparte. El cielo y el suelo se pintan cada fotograma a lo ancho de la pantalla.
 - **Cubo:** se dibuja con `drawStage`, igual que en la tienda, sin el aro del pulso, y lleva todo lo comprado.
@@ -58,7 +59,8 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - El premio sale de un hash del número de cápsula, sin tocar el azar del juego. Primero salen piezas de habitaciones abiertas y cada tercera cápsula pinta si hay objetos.
   - Se guardan en `decor`, `tints` y `capsules` de `S.house` y viajan en el código WH2. Las chispas solo se descuentan si la partida se guarda.
   - Las piezas que suenan entran al secuenciador como los objetos y se pueden arrastrar.
-- **Taller:** la mesa del Sótano abre el Taller de siempre; el botón «Taller» del panel se conserva.
+- **Taller:** es la mesa de la Sala y está abierta desde el primer día. Abre el panel radial de siempre; «Volver a la casa» regresa a la Casa. Ya no hay otra entrada al Taller. La Bodega guarda el motor de la casa.
+- **Panel:** cuatro botones: Coloca (alterna con caminar), Ver casa, Código y Volver. Para guardar un objeto se arrastra fuera de la casa. Las herramientas del Jardín de voces solo aparecen con el cubo en el Jardín.
 - **Visitas:** un código WH1 o WH2 abre otra casa en `visit`, de solo lectura: se camina y se escucha, pero no se coloca, no se gasta y no se guarda nada de ella. El código no lleva nombre. Cada casa distinta visitada se cuenta una vez en `knownVisitors` (con un hash del código); el código propio no cuenta.
 - **Guía:** `house-guide.js` cuenta en una frase cada habitación en `#houseSummary` (región en vivo, solo para lectores de pantalla) y dice qué hay cerca. Enter usa la máquina o la mesa. Al entrar se guarda `seen`; la tarjeta Casa del menú anuncia cuadros nuevos, trofeos nuevos o una cápsula lista. La Bitácora tiene «Ver en tu casa» en Colección y Logros.
 - **Controles:** el render pasa los `dx/dy` del fotograma a la Casa. Las flechas caminan y suben o bajan escaleras; tocar una habitación lleva al cubo hasta allí, cambiando de planta por las escaleras.

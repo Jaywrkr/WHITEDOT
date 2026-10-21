@@ -68,6 +68,7 @@ Orden de merge: C0 → C5. C0 y C1 son las más delicadas (datos y controles); a
 - **C2** (alpha.90): colección viva.
 - **C3** (alpha.91): todo suena.
 - **C4** (alpha.92): crece y juega.
+- **C6** (alpha.94): la casa viaja contigo. Casa y Taller son una sola entrada; panel de cuatro botones.
 - **C5** (alpha.93): visitas, Bitácora y menú, accesibilidad y cierre. Casa 2,7 ms por fotograma frente a 4,7 ms del Mundo (móvil 390×844 a 2×, sin sonido, todo a la vista).
 
 ## Respuestas de Jay (21 de octubre)
