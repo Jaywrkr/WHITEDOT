@@ -1,6 +1,7 @@
 import {MISCHIEF} from './universe-mischief-model.js';
 import {ACTIVITIES} from './universe-activities-model.js';
 import {WONDERS} from './musical-wonders-model.js';
+import {houseValue} from './house-capsules.js';
 const names={
  helper:['Abogado de las piedras','Departamento de asuntos minerales','Sindicato del cuarzo','El cristal tiene representante'],
  imitator:['Profesor de baile dudoso','No hagas exactamente eso','Academia de pasos torcidos','Coreógrafo de accidentes'],
@@ -30,6 +31,7 @@ export const ADVENTURE_ACHIEVEMENTS=Object.freeze([...story,...activities,...won
 const truthCount=v=>Object.values(v||{}).filter(x=>x===true||typeof x==='object'&&x!==null).length;
 export function adventureValue(metric,s){
  const q=s.mischief?.version===1?s.mischief:{},[kind,id]=metric.split(':');
+ if(kind==='house')return houseValue(metric,s);
  if(kind==='story')return Number.isSafeInteger(q.counts?.[id])?Math.max(0,q.counts[id]):0;
  if(kind==='trick')return q.tricks?.[id]===true?1:0;
  if(kind==='wonder')return s.musicalWonders?.version===1&&s.musicalWonders.found?.[id]===true?1:0;
