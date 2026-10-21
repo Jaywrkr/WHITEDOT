@@ -2,6 +2,17 @@
 
 Estado: 21 de octubre de 2026. Código **2.3.0-alpha.95**. Las entradas describen su revisión, no certifican producción.
 
+## L2 · Material de tienda (borradores)
+
+Rama `claude/l2-tienda`, sobre `claude/l1-candidato`. Sin cambios en el juego ni en la versión.
+
+- **`scripts/store-media.py`:** abre el juego real y genera en `outputs/tienda/` (fuera de Git):
+  - 30 capturas en los tamaños de Google Play, App Store y Steam;
+  - iconos y gráficos de tienda sin canal alfa;
+  - tres clips de 12–14 s con el audio real del juego.
+- **[Material de tienda](docs/TIENDAS.md):** fichas en español e inglés, guion de tráiler, textos de landing y press kit. La ficha en inglés avisa que el juego está en español.
+- **Plan de lanzamiento:** D07, D08, D09 y D11 pasan a borrador; falta la aprobación de Jay y la identidad violeta, que está fuera de Git.
+
 ## L1 · Candidato · Revisión de la Casa · alpha.95
 
 Rama `claude/l1-candidato`, sobre `claude/casa-c6-viaje`. Revisión de código de todas las fases de la Casa antes del candidato.
