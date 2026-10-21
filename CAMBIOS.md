@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.66**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.67**. Las entradas describen su revisión, no certifican producción.
+
+## Rendimiento con muchas piezas · alpha.67
+
+Medido en Chromium local sin GPU, como tiempo de dibujo por fotograma tras un recorrido en ocho:
+
+| Piezas puestas | Media | p95 |
+|---|---|---|
+| Ninguna | 8,3 ms | 12,8 ms |
+| 16 piezas (Patitas, Enjambre, cara, cuatro hábitos, Jardín, Imitador, Eco rítmico y los cinco gestos) | 9,6 ms | 13,7 ms |
+| Grafiti, Bola de disco y Fantasma | 9,8 ms | 14,1 ms |
+
+Grafiti costaba 10,8 ms de media porque trazaba cada tramo por separado. Ahora agrupa los tramos por color y cinco pasos de desvanecimiento, con el mismo aspecto. La variación entre mediciones ronda ±0,8 ms. No equivale a una medición en un móvil físico.
 
 ## Tienda del cubo, tanda 4 · alpha.66
 

@@ -29,7 +29,9 @@ export function initialize(runtime){
   if(piece==='trail:graffiti'){
    if(dt&&moved>0){const p=paint.at(-1);if(!p||Math.hypot(p.x-wx,p.y-wy)>=12){paint.push({x:wx,y:wy,t,color:ink(paint.length%9<3?'perc':'lead'),join:!!p&&Math.hypot(p.x-wx,p.y-wy)<40});if(paint.length>220)paint.shift();}}
    paint=paint.filter(p=>t-p.t<25000);c.lineCap='round';c.lineWidth=3;
-   for(let i=1;i<paint.length;i++){const a=paint[i-1],b=paint[i];if(!b.join)continue;c.globalAlpha=.45*(1-(t-b.t)/25000);c.strokeStyle=b.color;c.beginPath();c.moveTo(a.x+ox,a.y+oy);c.lineTo(b.x+ox,b.y+oy);c.stroke();}
+   // Segments are grouped by colour and five fading steps, so a long painting costs a few strokes, not hundreds.
+   const groups=new Map();for(let i=1;i<paint.length;i++){const a=paint[i-1],b=paint[i];if(!b.join)continue;const step=Math.min(4,Math.floor((t-b.t)/5000)),key=b.color+'|'+step;let g=groups.get(key);if(!g)groups.set(key,g={color:b.color,step,segs:[]});g.segs.push(a,b);}
+   for(const g of groups.values()){c.globalAlpha=.45*(1-(g.step+.5)/5);c.strokeStyle=g.color;c.beginPath();for(let i=0;i<g.segs.length;i+=2){c.moveTo(g.segs[i].x+ox,g.segs[i].y+oy);c.lineTo(g.segs[i+1].x+ox,g.segs[i+1].y+oy);}c.stroke();}
   }
   if(piece==='trail:comet'){
    const tail=history.filter(p=>t-p.t<(calm?400:1300));
