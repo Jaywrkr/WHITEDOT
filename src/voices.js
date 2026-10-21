@@ -94,7 +94,7 @@ export function initialize(runtime) {
     }
     if(runtime.MU?.radio?.labScore&&!source?.labSynth&&!kind.startsWith('micro:')&&kind!=='habitante')raw=labInteractionVoice(raw,labScore(region,runtime.seedOf,runtime.rng),kind,source,runtime.seedOf);
     if(runtime.MU?.radio?.labScore&&!kind.startsWith('micro:')&&kind!=='habitante')raw=performanceVoice(raw,region,kind,source,runtime.seedOf);
-    if(kind==='pulso')raw=cubePulseVoice(raw,runtime.S.cube?.voice);
+    if(kind==='pulso')raw=runtime.cubeShopPulseVoice?.(raw)||cubePulseVoice(raw,runtime.S.cube?.voice);
     return hybridRegister(voiceRegister(raw,region.genre),hybridIdentity(region,runtime.seedOf,runtime.rng));
   }
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
@@ -135,6 +135,7 @@ export function initialize(runtime) {
       const articulation={...expression,...(kind.startsWith('micro:')?microArticulation(source):{}),technique:runtime.cardTechnique?.(source)|| (source?.expression==='staccato'?'muted':source?.expression==='glide'?'slide':voice.technique||'normal')};
       if(source){source.musicRole=voice.role;source.musicInstrument=voice.instrument;}
       const emit=()=>{
+        if(voice.instrument?.startsWith?.('shop:')&&runtime.playCubeShopVoice?.(voice.instrument,n,t,v,hitFrame))return;
         if(kind.startsWith('micro:'))runtime.microVoiceCue?.({kind,instrument:voice.instrument,role:voice.role,note:n,time:t,tones:hitFrame?.chords||[],pitches:voice.role==='acorde'&&hitFrame?hitFrame.chords.slice(0,3).map(n=>fitRegister(n,voice.low,voice.high)):[n],strongBeat:!!hitFrame&&(hitFrame.step+Math.round((t-hitFrame.time)/hitFrame.six))%4===0,morph:articulation.morph});
         if(kind.startsWith('micro:')&&voice.role==='bajo'&&runtime.playNewInstrument?.(voice.instrument,n,t,v,articulation)){runtime.recordInstrument?.(voice.instrument);return;}
         if(kind==='micro:drum'&&electronicDrum(runtime,voice.instrument,t,v,microKit(region,runtime.seedOf)))return;

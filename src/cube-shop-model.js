@@ -73,7 +73,19 @@ export const CUBE_SHOP=Object.freeze([
  {id:'gesture:flip',slot:'gestures',name:'Voltereta',cost:150,text:'Dos pulsos seguidos: da una vuelta.',art:''},
  {id:'gesture:confetti',slot:'gestures',name:'Confeti',cost:200,text:'Confeti de píxeles al ganar un logro.',art:''},
  {id:'gesture:dance',slot:'gestures',name:'Baile',cost:300,text:'Da vueltas en círculo y se pone a bailar.',art:''},
- {id:'gesture:victory',slot:'gestures',name:'Baile de victoria',cost:400,text:'Celebra al completar una actividad.',art:''}
+ {id:'gesture:victory',slot:'gestures',name:'Baile de victoria',cost:400,text:'Celebra al completar una actividad.',art:''},
+ {id:'voice:808',slot:'pulseVoice',name:'Bombo 808',cost:250,text:'Golpe grave y redondo.',art:''},
+ {id:'voice:bell',slot:'pulseVoice',name:'Campana FM',cost:250,text:'Campana metálica brillante.',art:''},
+ {id:'voice:acid',slot:'pulseVoice',name:'Ácido',cost:300,text:'Squelch tipo 303.',art:''},
+ {id:'voice:vocal',slot:'pulseVoice',name:'Corte vocal',cost:350,text:'Sílaba cortada y afinada.',art:''},
+ {id:'voice:scratch',slot:'pulseVoice',name:'Scratch',cost:400,text:'Arrastre de vinilo.',art:''},
+ {id:'voice:chord',slot:'pulseVoice',name:'Acorde',cost:500,text:'El pulso suena en la armonía de la región.',art:''},
+ {id:'sound:hat',slot:'sound',name:'Hi-hat al caminar',cost:300,text:'Pasos a tempo.',art:''},
+ {id:'sound:filter',slot:'sound',name:'Filtro',cost:500,text:'Al acelerar, la música se abre como un barrido.',art:''},
+ {id:'sound:hum',slot:'sound',name:'Tarareo',cost:600,text:'Quieto, tararea bajito la melodía de la región.',art:''},
+ {id:'sound:dj',slot:'sound',name:'Modo DJ',cost:700,text:'Scratch al cambiar de dirección.',art:''},
+ {id:'sound:antenna',slot:'sound',name:'Antena',cost:900,text:'Oye de lejos la radio de la región vecina.',art:''},
+ {id:'trail:notes',slot:'trail',name:'Notas pisables',cost:1000,text:'Deja notas que suenan al volver a pisarlas: loops caminando.',art:''}
 ].map(Object.freeze));
 export const shopPiece=id=>CUBE_SHOP.find(p=>p.id===id)||null;
 export const shopSlot=id=>CUBE_SHOP_SLOTS.find(s=>s.id===id)||null;

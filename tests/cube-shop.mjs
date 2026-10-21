@@ -20,7 +20,7 @@ const batch2=CUBE_SHOP.filter(p=>['eyes','habits','accessory'].includes(p.slot))
 q=normalizeSparkEconomy({purchases:Object.fromEntries(batch2.map(p=>[p.id,true])),wear:{eyes:'eyes:sleepy',accessory:'acc:hat',habits:'habit:yawn'},on:{'habit:yawn':true,'habit:dizzy':true,'eyes:curious':true}},10,'d');
 assert.deepEqual(q.wear,{eyes:'eyes:sleepy',accessory:'acc:hat'});assert.deepEqual(q.on,{'habit:yawn':true,'habit:dizzy':true});
 // Batch 3: trails and companions, and the bounded route kept by Huellas del día and Fantasma de ayer.
-const batch3=CUBE_SHOP.filter(p=>['trail','companion'].includes(p.slot)&&p.id.includes(':'));assert.equal(batch3.length,10);assert.equal(batch3.reduce((a,p)=>a+p.cost,0),4750);
+const batch3=CUBE_SHOP.filter(p=>['trail','companion'].includes(p.slot)&&p.id.includes(':')&&p.id!=='trail:notes');assert.equal(batch3.length,10);assert.equal(batch3.reduce((a,p)=>a+p.cost,0),4750);
 let r=normalizeRoute({day:'2026-10-19',today:[[1.4,2.6],['x',1],[1,2,3],[Infinity,0],...Array.from({length:700},(_,i)=>[i,i])],yday:'nope',yesterday:'x',future:7});
 assert.equal(r.today.length,600);assert.deepEqual(r.today[0],[100,100]);assert.equal(r.yday,'');assert.deepEqual(r.yesterday,[]);assert.equal(r.future,7);
 r=rollRoute(r,'2026-10-20');assert.equal(r.day,'2026-10-20');assert.deepEqual(r.today,[]);assert.equal(r.yday,'2026-10-19');assert.equal(r.yesterday.length,120);assert.deepEqual(r.yesterday.at(-1),[699,699]);

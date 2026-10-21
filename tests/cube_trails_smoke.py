@@ -19,7 +19,7 @@ try:
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=cube-trails&layout=wide&generation=2');page.wait_for_function('!!window.__r?.buySparkStyle&&!!window.__r?.drawCubeShopCompanion')
   page.evaluate("""()=>{const r=__r,s=r.S;document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true);s.sound=false;s.firstJourney.skipped=true;s.pathCrystals=Array.from({length:10},(_,i)=>'shop:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();s.sparks=20000;s.sparkEconomy.earned=s.sparkEconomy.spent+20000;r.save();}""")
   page.wait_for_function('__r.inWorld()')
-  pieces=page.evaluate("async()=>{const m=await import('/src/cube-shop-model.js');return m.CUBE_SHOP.filter(p=>/^(trail|pet):/.test(p.id)).map(p=>p.id);}")
+  pieces=page.evaluate("async()=>{const m=await import('/src/cube-shop-model.js');return m.CUBE_SHOP.filter(p=>/^(trail|pet):/.test(p.id)&&p.id!=='trail:notes').map(p=>p.id);}")
   assert len(pieces)==10,pieces
   for pid in pieces:assert page.evaluate('id=>__r.buySparkStyle(id)',pid),pid
   hide="document.querySelectorAll('.modal').forEach(m=>m.hidden=true)"

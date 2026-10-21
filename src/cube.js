@@ -22,12 +22,14 @@ export function initialize(runtime){
   if(type==='trail'&&value!=='none'&&shopTrail())runtime.unequipSparkStyle?.(shopTrail());
   // Likewise one pulse shape: an earned shape takes off a bought look.
   if(type==='pulse'&&value!=='ring-0'&&SHOP_PULSES.includes(shop().wear?.pulse))runtime.unequipSparkStyle?.(shop().wear.pulse);
+  // And one pulse voice: an earned voice takes off a bought one.
+  if(type==='voice'&&value!=='natural'&&shop().wear?.pulseVoice)runtime.unequipSparkStyle?.(shop().wear.pulseVoice);
   drawPanel();return true;
  }
  function close(){hint='';$('mCube').hidden=true;}
  function wearPiece(id){const q=shop(),piece=shopPiece(id);if(!piece)return;
   if(wearing(q,id)){if(!runtime.unequipSparkStyle?.(id))hint='No se guardó. Intenta otra vez.';}
-  else if(runtime.equipSparkStyle?.(id)){if(piece.slot==='trail'&&settings().trail!=='none')choose('trail','none');if(SHOP_PULSES.includes(id)&&(settings().pulse||'ring-0')!=='ring-0')choose('pulse','ring-0');}else hint='No se guardó. Intenta otra vez.';
+  else if(runtime.equipSparkStyle?.(id)){if(piece.slot==='trail'&&settings().trail!=='none')choose('trail','none');if(SHOP_PULSES.includes(id)&&(settings().pulse||'ring-0')!=='ring-0')choose('pulse','ring-0');if(piece.slot==='pulseVoice'&&(settings().voice||'natural')!=='natural')choose('voice','natural');}else hint='No se guardó. Intenta otra vez.';
   drawPanel();
  }
  function pieceButton(id){const q=shop(),p=shopPiece(id),b=document.createElement('button');b.type='button';b.className='cube-piece';b.dataset.shopPiece=id;b.dataset.earned='false';b.setAttribute('aria-pressed',String(wearing(q,id)));b.title=p.text;
@@ -39,7 +41,7 @@ export function initialize(runtime){
  }
  const still=()=>!!(S().reducedMotion||prefersReducedMotion());
  function drawPanel(){const current=settings(),s=safe(),focused=document.activeElement?.dataset,pulseFocus=focused?.pulseForm,pieceFocus=focused?.shopPiece,focus=focused?.cubeStyleType?{type:focused.cubeStyleType,value:focused.cubeStyleValue}:null,groups={color:'cubeColors',material:'cubeMaterials',form:'cubeForms',trail:'cubeTrails',halo:'cubeHalos',aura:'cubeAuras',voice:'cubeVoices'};let owned=0;
-  for(const [type,id]of Object.entries(groups)){$(id).replaceChildren();for(const p of wardrobeByType(type).slice().sort((a,b)=>Number(unlocked(b))-Number(unlocked(a)))){const ok=unlocked(p);if(ok)owned++;const b=document.createElement('button');b.type='button';b.className=type==='color'?'cube-swatch':'cube-option';b.dataset.locked=String(!ok);b.dataset.earned=String(ok&&!p.free);b.setAttribute('aria-label',p.name);b.setAttribute('aria-pressed',String(ok&&s[type]===p.value&&!(type==='trail'&&shopTrail())));b.title=ok?p.name:p.hint;
+  for(const [type,id]of Object.entries(groups)){$(id).replaceChildren();for(const p of wardrobeByType(type).slice().sort((a,b)=>Number(unlocked(b))-Number(unlocked(a)))){const ok=unlocked(p);if(ok)owned++;const b=document.createElement('button');b.type='button';b.className=type==='color'?'cube-swatch':'cube-option';b.dataset.locked=String(!ok);b.dataset.earned=String(ok&&!p.free);b.setAttribute('aria-label',p.name);b.setAttribute('aria-pressed',String(ok&&s[type]===p.value&&!(type==='trail'&&shopTrail())&&!(type==='voice'&&shop().wear?.pulseVoice)));b.title=ok?p.name:p.hint;
     if(type==='color'){b.style.background=ok?p.value:'#000';if(!ok)b.textContent='□';}else b.textContent=(ok?'':'□ ')+p.name;
     b.dataset.cubeStyleType=type;b.dataset.cubeStyleValue=p.value;b.disabled=current.version!==2;b.onclick=()=>choose(type,p.value);$(id).append(b);}}
   const bought=drawOwned();
