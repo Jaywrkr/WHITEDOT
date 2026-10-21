@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.87**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.88**. Las entradas describen su revisión, no certifican producción.
+
+## Casa viva · C0 · Base · alpha.88
+
+Rama `claude/casa-c0-modelo`, sobre `claude/casa-plan`. Primera fase de la nueva Casa en vista de casa de muñecas (plan en [Casa viva](docs/CASA_VIVA.md)). Sin cambios visibles.
+
+- **Datos versión 2:**
+  - Se conservan objetos, habitaciones, posición y visitantes; los datos desconocidos se guardan sin tocar.
+  - Se añaden adornos, colores de objetos y cápsulas, siempre normalizados.
+  - El secuenciador suena igual.
+  - Una casa de una versión futura se abre solo para leer.
+- **Código para visitar:** si la casa solo tiene objetos sigue siendo WH1, que leen versiones anteriores; con adornos o colores es WH2. Se leen los dos.
+- Una casa completa ocupa menos de 50 KB dentro de la partida.
+- **Pruebas:**
+  - Nueva `house-v2.mjs`.
+  - En PASS: `house.mjs`, `house_v2_smoke`, `experience_garden_smoke`, `wonders_smoke`, `experience_future_smoke`, `cloud_account_smoke`, el render `house_mix` (pico 0,91) y los 187 conjuntos de Node.
+  - Catálogo completo de navegador de la rama `claude/fase-i-textos`: 147/147.
 
 ## Fase I · Textos y paneles · alpha.87
 

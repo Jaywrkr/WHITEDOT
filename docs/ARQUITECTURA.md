@@ -36,6 +36,12 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 `cube-shop-model.js` define las 14 ranuras y las piezas construidas; `sparkEconomy.wear` guarda una pieza por ranura simple y `sparkEconomy.on` las de ranuras múltiples, y `equipped` se conserva para dispositivos sin actualizar. `cube-shop-art.js` dibuja Movimiento, Cuerpo, Ojos, Hábitos y Accesorios desde `render.js` con cuatro ganchos (debajo del cubo, transformación, cuerpo y encima del cuerpo, dentro de su transformación; el de encima no se usa con cuerpos sorpresa ni ritual). `cubeShopMinSize` sube a 10 px el tamaño dibujado del cubo mientras se lleva cara; no cambia alcance ni colisiones. `cube-shop-world.js` dibuja Rastros (antes del cubo, en coordenadas del mundo) y Compañeros (después del cubo). `S.cubeRoute` (`normalizeRoute`/`rollRoute` en el modelo) guarda los pasos de hoy y el último día jugado, acotados, solo en superficie. `cube-shop-moves.js` añade gestos (transformación y dibujo tras el compañero) y expone `cubeShopPulseLook`; `interactions.js` guarda esa forma en cada onda del jugador (`look`, `charge`) y le pone la forma de impacto `ring-0`, así que el alcance no cambia; `cube-shop-pulse.js` la dibuja, solo en el Mundo y sin tocar colisiones, alcance, guardado ni música; cada pieza tiene variante estática con movimiento reducido. Catálogo y tandas en [Tienda del cubo](TIENDA_DEL_CUBO.md).
 
+## Casa
+
+`house.js` dibuja la Casa y recibe los gestos, `house-model.js` guarda los datos y `house-audio.js` la hace sonar; `collection-garden.js` añade el Jardín de voces.
+- **Datos:** `S.house` va por la versión 2, la de la casa de muñecas (ver [Casa viva](CASA_VIVA.md)). Conserva los objetos `{kind,room,x,y}`: x es el paso del compás y y la altura en la pared, que marca la nota. Añade `decor`, `tints` y `capsules`, siempre normalizados. La versión 1 se migra en el momento; una versión mayor se abre solo para leer.
+- **Códigos:** WH1 si la casa solo tiene objetos (lo leen versiones anteriores) y WH2 si lleva adornos o colores; se leen los dos.
+
 ## Esculturas del universo
 
 `sculpture-totems-model.js` define seis formas, sus siluetas y un hash independiente. Celdas de 1400 unidades: 3% con encuentro (alpha.61; antes 1,5%), aproximadamente dos tercios solitarios y el resto grupos de dos o tres. Presencia determinista en superficie, bajo y cielo, sin consumir RNG anterior ni cambiar mapas. `sculpture-totems-art.js` comparte formas/degradados entre Canvas y tarjetas SVG.
