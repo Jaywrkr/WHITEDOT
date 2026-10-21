@@ -14,7 +14,7 @@ Rama `claude/fase-g-revision`, sobre `claude/fase-f-cuenta`. Revisión del códi
 - **Cierre completo local** sobre esta rama, antes del arreglo de `audio_mix.mjs`: navegador 143/146 y audio con un fallo.
   - `interface_smoke` y `sparks_notice_smoke` fallaron por carga con dos trabajadores y pasan al repetirlos.
   - `shop_sound_mix` falló porque el arnés no llamaba a la revisión del filtro; corregido, pasa.
-  - `encounter_depth_smoke` es intermitente desde antes de estas fases: falla 3 de 3 en `main` (alpha.66) y también falló en su CI (run 39538532680). En estas ramas pasa casi siempre. En los fallos, la primera de las cuatro notas enseñadas queda con otro desfase armónico que las demás. No se tocó la prueba; queda pendiente de diagnóstico.
+  - `encounter_depth_smoke` es intermitente desde antes de estas fases: falla 3 de 3 en `main` (alpha.66) y también falló en su CI (run 39538532680). En estas ramas falló 2 de 7 veces. En los fallos, la primera de las cuatro notas enseñadas queda con otro desfase armónico que las demás. No se tocó la prueba; queda pendiente de diagnóstico.
 - La rama de la tanda 7 pasó el catálogo de navegador completo, 145/145. `crystal_play_smoke` falló una vez en una ejecución suelta y pasó las dos siguientes.
 - No verificado: CI de estas ramas (no hay PR), escucha física y dispositivos reales.
 
