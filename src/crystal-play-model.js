@@ -10,9 +10,9 @@ export function crystalFragments(o,rare=o.rare===true){
  return Array.from({length:count},(_,i)=>({index:i,value:Math.floor(total/count)+(i<total%count?1:0)+(rare&&i===count-1?3:0),rare:rare&&i===count-1}));
 }
 export const fragmentMask=o=>(1<<crystalFragments(o,false).length)-1;
-export function moveEscape(point,origin,player,dt,age,limit=90,speed=70){
+export function moveEscape(point,origin,player,dt,age,limit=90,speed=70,lasts=2){
  const dx=point.x-player.x,dy=point.y-player.y,d=Math.hypot(dx,dy)||1;
- if(age>2||d>150)return {...point};
+ if(age>lasts||d>150)return {...point};
  let x=point.x+dx/d*speed*dt,y=point.y+dy/d*speed*dt;
  const distance=Math.hypot(x-origin.x,y-origin.y);
  if(distance>limit){x=origin.x+(x-origin.x)*limit/distance;y=origin.y+(y-origin.y)*limit/distance;}
