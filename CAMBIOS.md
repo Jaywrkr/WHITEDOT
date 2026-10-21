@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.90**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.91**. Las entradas describen su revisión, no certifican producción.
+
+## Casa viva · C3 · Todo suena · alpha.91
+
+Rama `claude/casa-c3-sonido`, sobre `claude/casa-c2-coleccion`. La Casa se escucha al recorrerla.
+
+- **Al pasar:** el cubo toca cada objeto junto al que camina, una vez cada 2,5 s.
+- **Pulso:** suena la voz del cubo y después los cuatro objetos más cercanos, en arpegio. Las criaturas cercanas responden con un pío corto.
+- **Ambiente:** cada habitación tiene su aire. La Sala queda en silencio, el Jardín tiene hojas, la Azotea viento y el Sótano un zumbido. Todo se apaga al salir, con el sonido apagado o con un panel abierto.
+- **Tienda:** los sonidos comprados para el cubo (sombrero, zumbido, notas al pisar, filtro) también suenan en la Casa.
+- **Pruebas:**
+  - Nuevas: `house_sound_smoke.py` y `house_ambience_mix.py`. Los cuatro ambientes quedan por debajo de 0,08 de pico a 44,1 y 48 kHz.
+  - En PASS: `house_walk`, `house_collection`, `house_v2`, `experience_garden`, `cube_sound`, `house_mix`, `experience_garden_mix`, `shop_sound_mix` y `smoke`.
 
 ## Casa viva · C2 · Colección viva · alpha.90
 

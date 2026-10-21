@@ -31,7 +31,7 @@ const pictures=new Map();
 function pieceImg(id,color){const key=id+'|'+color;if(pictures.has(key))return pictures.get(key);const entry={img:null,ready:false};pictures.set(key,entry);if(typeof Image!=='function')return entry;const url=pieceImage(id,{color});if(url){const img=new Image();img.onload=()=>{entry.ready=true;};img.src=url;entry.img=img;}return entry;}
 function cup(c,x,y,s,fill){c.beginPath();c.moveTo(x-s*.5,y-s);c.lineTo(x+s*.5,y-s);c.quadraticCurveTo(x+s*.5,y-s*.35,x,y-s*.3);c.quadraticCurveTo(x-s*.5,y-s*.35,x-s*.5,y-s);c.closePath();if(fill)c.fill();c.stroke();c.beginPath();c.moveTo(x,y-s*.3);c.lineTo(x,y-s*.08);c.moveTo(x-s*.3,y);c.lineTo(x+s*.3,y);c.stroke();}
 export function initialize(runtime){
- const creatures=new Map();let owner=null,hop=-1e9,hopAt=null;const hits=[];
+ const creatures=new Map();let owner=null,hop=-1e9,hopAt=null,chirps=0;const hits=[];
  function own(){if(owner!==runtime.S){owner=runtime.S;creatures.clear();}}
  // Each visitor wanders its floor: walks to a spot, rests, sometimes comes close to the cube.
  function creature(id,i,unlocked,t){let s=creatures.get(id);const rooms=['sala','jardin','azotea'].filter(r=>unlocked.includes(r));if(!rooms.length)return null;
@@ -42,8 +42,9 @@ export function initialize(runtime){
   if(calm){continue;}
   if(s.goal===null&&t>s.rest){const near=cube&&cube.floor===b.floor&&Math.random()<.35;s.goal=near?Math.max(b.x+20,Math.min(b.x+b.w-20,cube.x+(i%2?50:-50))):b.x+30+Math.random()*(b.w-60);}
   if(s.goal!==null){const d=s.goal-s.x,v=Math.sign(d)*Math.min(Math.abs(d),(id.startsWith('pet:')?70:40)*dt);s.x+=v;if(v)s.flip=Math.sign(v);if(Math.abs(d)<2){s.goal=null;s.rest=t+2000+Math.random()*4000;}}}}
- // A pulse in the house: nearby creatures hop.
- function pulse(at){hop=performance.now();hopAt=at;}
+ // A pulse: nearby creatures hop and answer with a short chirp, one after another.
+ function pulse(at){hop=performance.now();hopAt=at;const ac=runtime.ac;if(!runtime.S.sound||ac?.state!=='running'||!runtime.bus)return;let i=0;
+  for(const [id,s]of creatures){if(roomBox(s.room).floor!==at.floor||Math.abs(s.x-at.x)>220)continue;const t=ac.currentTime+.08+i*.09,o=ac.createOscillator(),g=ac.createGain(),f=900+((id.length*137)%600);o.type='sine';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*1.6,t+.07);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.02,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+.12);o.connect(g).connect(runtime.bus);o.start(t);o.stop(t+.14);chirps++;i++;}}
  function draw(c,{toScreen,k,t,dt,calm,house,cube}){
   own();hits.length=0;const unlocked=house.unlocked||['sala'];const sala=roomBox('sala');c.save();c.lineWidth=1;
   // Frames: the rarest cards, framed in their tier colour.
@@ -73,5 +74,5 @@ export function initialize(runtime){
  }
  // What is under a tap, to name it.
  function lookAt(x,y){return hits.find(h=>x>=h.x&&x<=h.x+h.w&&y>=h.y&&y<=h.y+h.h)?.text||null;}
- Object.defineProperties(runtime,{drawHouseCollection:{get:()=>draw},houseCollectionLook:{get:()=>lookAt},houseCollectionPulse:{get:()=>pulse},houseCollectionState:{get:()=>()=>({creatures:[...creatures.values()].map(s=>({id:s.id,room:s.room,x:s.x})),hits:hits.length})}});
+ Object.defineProperties(runtime,{drawHouseCollection:{get:()=>draw},houseCollectionLook:{get:()=>lookAt},houseCollectionPulse:{get:()=>pulse},houseCollectionState:{get:()=>()=>({creatures:[...creatures.values()].map(s=>({id:s.id,room:s.room,x:s.x})),hits:hits.length,chirps})}});
 }
