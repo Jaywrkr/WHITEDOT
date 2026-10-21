@@ -24,7 +24,7 @@ try:
    page.wait_for_function('!document.getElementById("w").inert')
    page.locator('#bMenu').click()
    assert page.locator('#w').evaluate('(e)=>e.inert'), 'canvas cannot receive focus behind a modal'
-   assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Tu espacio','Crear','Más']
+   assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Tu viaje','Crear','General']
    # Optional account stays available; without configuration it explains local-only mode.
    page.wait_for_function('!document.getElementById("bConnection").hidden')
    page.locator('#mMenu .sheet').evaluate('e=>e.scrollTop=e.scrollHeight')

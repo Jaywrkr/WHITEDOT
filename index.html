@@ -137,15 +137,15 @@
 <div class="modal" id="mSaveTools" hidden><div class="sheet"><h2>Guardar copia</h2><p>Tu progreso y tus lugares, en un archivo. Guárdalo.</p><p id="saveStatus" role="status"></p><div class="row"><button id="saveExport">Exportar esta partida</button><button id="saveOriginal" hidden>Exportar original conservado</button><button id="saveRecover" hidden>Recuperar copia válida</button></div><label for="saveImportFile">Elegir copia de esta partida</label><input id="saveImportFile" type="file" accept="application/json,.json"><p>Restaurar reemplaza esta partida. Antes se guarda una copia.</p><div class="row"><button id="saveImportApply" disabled>Restaurar copia elegida</button><button id="saveToolsClose">Cerrar</button></div></div></div>
 <div class="modal menu" id="mMenu" hidden>
   <div class="sheet menu-sheet">
-    <header class="menu-heading"><div><small>Tu espacio</small><h2 id="menuTitle">Kubono</h2></div><button id="mnClose" class="sheet-close" aria-label="Cerrar menú">×</button></header>
+    <header class="menu-heading"><div class="menu-who"><i id="menuAvatar" aria-hidden="true"></i><div><h2 id="menuTitle">Kubono</h2><small id="menuSummary">Tu espacio</small></div></div><button id="mnClose" class="sheet-close" aria-label="Cerrar menú">×</button></header>
     <div class="menu-sections">
     <section class="menu-group primary"><h3>Jugar</h3><div class="tiles">
-      <button id="bCube"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/><path d="M3 3h3M18 21h3"/></svg><span>Tu cubo</span></button>
-      <button id="bWorld"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/></svg><span>Mundo</span></button>
-      <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Casa</span></button>
-      <button id="bMap"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mapa</span></button>
+      <button id="bCube"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/><path d="M3 3h3M18 21h3"/></svg><span>Tu cubo<small>Llevar, tienda y viaje</small></span></button>
+      <button id="bWorld"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/></svg><span>Mundo<small id="bWorldHint">Explorar el Mundo</small></span></button>
+      <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Casa<small>Tus objetos y el taller</small></span></button>
+      <button id="bMap"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mapa<small>Lugares y favoritos</small></span></button>
     </div></section>
-    <section class="menu-group"><h3>Tu espacio</h3><div class="tiles">
+    <section class="menu-group"><h3>Tu viaje</h3><div class="tiles">
       <button id="bAch"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M12 14v4M8 20h8M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3"/></svg><span>Bitácora</span></button>
       <button id="bMusicSettings"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h14M9 3v6M15 9v6M11 15v6"/></svg><span>Sonido</span></button>
     </div></section>
@@ -153,7 +153,7 @@
       <button id="bTools" aria-expanded="false" title="Efectos, eco de 2 compases y desplegar Estudio" hidden><svg viewBox="0 0 24 24"><path d="M6 4v16M12 4v16M18 4v16M4 9h4M10 15h4M16 7h4"/></svg><span>Herramientas</span></button>
       <button id="bRecord"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="9"/></svg><span>Grabar set</span></button>
     </div></section>
-    <section class="menu-group"><h3>Más</h3><div class="tiles">
+    <section class="menu-group"><h3>General</h3><div class="tiles">
       <button id="bWorlds"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c5 4 5 12 0 16M12 4c-5 4-5 12 0 16"/></svg><span>Viajar a otra semilla</span></button>
       <button id="bShare"><svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v7h14v-7"/></svg><span>Compartir</span></button>
       <button id="bJumpBack" hidden><span>Volver al salto</span></button>
@@ -173,7 +173,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.82</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.83</span><small id="releaseDeploy">deploy sin registrar</small></div>
     <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>

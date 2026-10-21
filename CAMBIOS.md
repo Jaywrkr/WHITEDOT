@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.82**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.83**. Las entradas describen su revisión, no certifican producción.
+
+## Fase E · Menú profesional · alpha.83
+
+Rama `claude/fase-e-menu`, sobre `claude/tienda-tanda-7`.
+
+- **Cabecera:** tu cubo en su color, tu nombre (o Kubono) y un resumen con tus chispas y el lugar donde estás.
+- **Jugar:** cuatro tarjetas con título y una línea que dice qué hay dentro; la de Mundo/Camino cambia su ayuda según dónde estés.
+- **Resto:** filas de lista con icono y flecha, una columna en el móvil y dos en pantallas anchas. Grupos: Jugar, Tu viaje, Crear y General.
+- **Logros nuevos:** un punto dorado en la Bitácora en lugar del «·».
+- Recorridos `menu_v2_smoke.py` e `interface_smoke.py` adaptados a los grupos nuevos.
 
 ## Tienda · tanda 7 · Habilidades y economía · alpha.82
 
