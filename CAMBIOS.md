@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.78**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.79**. Las entradas describen su revisión, no certifican producción.
+
+## Fase D · Casa y Crear · alpha.79
+
+Rama `claude/fase-d-casa`, sobre `claude/fase-c-menu`.
+
+- **Casa:** el panel se ordena en dos filas siempre visibles. Arriba los modos (Camina, Coloca, Retira), con el activo en blanco; abajo Taller, Código y Volver, que antes quedaban ocultos bajo el borde. El selector de objeto solo aparece al colocar. En horizontal el panel pasa a la derecha y deja libre el plano.
+- **Casa:** el anuncio de la región ya no tapa las habitaciones.
+- **Grabar set:** con el sonido apagado, grabar lo enciende en lugar de no hacer nada.
+- **Menú:** Ajustes, Guía de juego y Cuenta llevan icono y la misma letra que el resto; «Cuenta» ya no pierde su estilo al iniciar la cuenta.
+- Recorrido `house_v2_smoke.py`: comprueba que todas las acciones de la casa estén a la vista.
 
 ## Fase C · Menú y paneles · alpha.78
 

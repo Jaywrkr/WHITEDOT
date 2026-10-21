@@ -190,9 +190,10 @@ body:has(#celebration:not([hidden])) .voice:not(.expanded){top:auto;bottom:calc(
 .journal-progress .available{stroke:#fff;transform:rotate(-90deg);transform-origin:center}
 
 /* The house is part of the canvas. Its tools stay below the rooms. */
-.house-panel{position:fixed;left:16px;right:16px;bottom:calc(var(--safe-bottom) + 12px);padding:8px;background:#000;border-top:1px solid #ffffff33;max-height:25vh;overflow:auto;font:12px var(--mono);z-index:12}
-.house-panel[hidden]{display:none}.house-panel>span{margin-right:12px}.house-panel label{color:#ffffff99}.house-panel select{max-width:calc(100% - 70px);min-height:44px}.house-panel p{margin:4px 0}.house-panel .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.house-panel button{font-size:11px;min-height:44px;padding:8px 4px;border:1px solid #ffffff33;background:#000;color:#fff}
-@media(max-height:440px){.house-panel{left:8px;right:8px;bottom:8px;padding:4px;max-height:24vh}.house-panel .row{grid-template-columns:repeat(6,minmax(0,1fr))}.house-panel p{display:none}}
+.house-panel{position:fixed;left:16px;right:16px;bottom:calc(var(--safe-bottom) + 12px);padding:8px;background:#000;border-top:1px solid #ffffff33;max-height:40vh;display:grid;gap:6px;overflow:auto;font:12px var(--mono);z-index:12}
+.house-panel[hidden],.house-pick[hidden]{display:none}.house-status{color:#ffffff99}.house-pick{display:flex;align-items:center;gap:8px}.house-panel button[aria-pressed="true"]{background:#fff;color:#000;border-color:#fff}.house-panel details>p{color:#ffffff99}.house-panel label{color:#ffffff99}.house-panel select{max-width:calc(100% - 70px);min-height:44px}.house-panel p{margin:4px 0}.house-panel .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.house-panel button{font-size:11px;min-height:44px;padding:8px 4px;border:1px solid #ffffff33;background:#000;color:#fff}
+body.studio #phrase{visibility:hidden}
+@media(max-height:440px){.house-panel{left:auto;right:8px;bottom:8px;top:auto;width:min(300px,calc(50vw - 110px));padding:4px;max-height:calc(100vh - 16px)}.house-panel details>p{display:none}}
 
 /* Place actions stay together; editing never crowds the album. */
 .place-shortcuts{display:flex;align-items:center;max-width:calc(100vw - 100px);pointer-events:auto;gap:2px}.place-shortcuts .era{background:transparent;border:0;min-height:44px;padding:0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.place-shortcuts .era:disabled{opacity:1;cursor:default}.place-shortcuts #quickSave{background:#000;border:0;color:#fff;font-size:22px;min-width:44px;min-height:44px;padding:0;flex:none}.place-shortcuts #quickSave[hidden]{display:none}

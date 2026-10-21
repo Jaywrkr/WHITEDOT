@@ -67,6 +67,8 @@ export function initialize(runtime){
   if(rec.recorder)return stop();
   const type=recordingType(),cv=$('w');
   if(!type||!cv.captureStream){runtime.toast('<em>Grabar</em> · este navegador no permite grabar el juego');return false;}
+  // A set is music: tapping Grabar with the sound off turns it on instead of refusing.
+  if(!runtime.S.sound)$('bSound')?.click();
   runtime.audio();const out=runtime.outputStage?.master||runtime.outputStage?.headroom,ac=runtime.ac;if(!out||!ac?.createMediaStreamDestination){runtime.toast('<em>Grabar</em> · activa el sonido primero');return false;}
   try{
    rec.out=out;rec.dest=ac.createMediaStreamDestination();out.connect(rec.dest);
