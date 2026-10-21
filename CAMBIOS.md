@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.70**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.71**. Las entradas describen su revisión, no certifican producción.
+
+## Fase V3 · Fauna que convive · alpha.71
+
+Rama `claude/fase-v3-fauna`, sobre `claude/fase-v2-clima`. Las criaturas de las tres familias (especies del suelo, habitantes de píxel y fauna de la capa viva):
+
+- se mecen al pulso de la música;
+- duermen con una «z» lejos del cubo: las de la capa viva siguen su propio descanso, el resto duermen dos de cada tres de noche; cerca del cubo despiertan;
+- de día, dos vecinas de la misma especie se saludan con un corazón de píxel.
+
+Cada 45 a 100 s cruza el cielo una bandada: pájaros de día, murciélagos de noche.
+
+Es solo dibujo: movimiento, sonido y reglas de captura no cambian. Con movimiento reducido no hay balanceo, corazones ni bandadas.
+
+La lista de criaturas vivas cercanas (`livingNear`) se calcula una vez por fotograma con `frameMemo`, en lugar de cuatro.
+
+Archivo nuevo: `world-fauna.js`. Recorrido: `tests/world_fauna_smoke.py`.
 
 ## Fase V2 · Clima y viento · alpha.70
 
