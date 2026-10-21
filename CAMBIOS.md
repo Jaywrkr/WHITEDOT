@@ -1,6 +1,24 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.73**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.74**. Las entradas describen su revisión, no certifican producción.
+
+## Fase V6 · Sucesos vivos · alpha.74
+
+Rama `claude/fase-v6-sucesos`, sobre `claude/fase-v5-sensacion`. Sucesos que llegan solos, uno a la vez, con 90 a 180 s entre ellos (el primero tras 40 a 80 s), solo en superficie y fuera de actividades:
+
+- **Estrellas fugaces:** de noche.
+- **Festival de luces:** unos 12 s de motas que suben del suelo con los colores de la música.
+- **Brisa de luz:** de día, una franja cálida que cruza el campo.
+
+Son decorativos: sin premios, sonido ni texto, y ninguno con movimiento reducido.
+
+**Medición de las fases V1–V6 juntas** (Chromium local sin GPU):
+- sin sonido: 3,7 ms por fotograma de media sin piezas y 3,8 ms con 16 piezas, frente a 8,3 y 9,6 ms antes de la fase R;
+- con sonido: 7,0 ms, frente a 6,1 ms tras R y 12,1 ms antes.
+
+Los módulos `world-*.js` no aparecen entre los que más consumen.
+
+Archivo nuevo: `world-happenings.js`. Recorrido: `tests/world_happenings_smoke.py`.
 
 ## Fase V5 · Cámara y sensación · alpha.73
 
