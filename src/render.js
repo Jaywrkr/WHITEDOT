@@ -29,7 +29,7 @@ export function initialize(runtime) {
   /* ---------- loop ---------- */
   let scheduledFrame=null;
   // One frame's answers to "is a panel open?" are shared by every module drawn in it.
-  function frame(t){beginFrame();try{frameBody(t);}finally{endFrame();}}
+  function frame(t){beginFrame();try{frameBody(t);}finally{runtime.cameraEnd?.();endFrame();}}
   function frameBody(t){
     if(runtime.accountClient&&runtime.accountClient.user()?.id!==runtime.accountUserId){location.reload();return;}
     if(scheduledFrame!==null)cancelAnimationFrame(scheduledFrame);
@@ -80,7 +80,7 @@ export function initialize(runtime) {
     runtime.performanceTick?.();runtime.firstJourneyTick?.();
     runtime.updateScanner();runtime.fxTick?.(dt);
     const b=runtime.beat();runtime.drawCubePreview?.(t,b);
-    runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);
+    runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);runtime.cameraBegin?.(dt);
     runtime.drawDistantColors?.();
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
@@ -110,6 +110,7 @@ export function initialize(runtime) {
     // El pixel siempre se distingue: halo suave y anillo fino en el Mundo.
     if(runtime.inWorld()){const c=runtime.cx,hx=runtime.W/2,hy=runtime.H/2,g=c.createRadialGradient(hx,hy,0,hx,hy,s*2.6);g.addColorStop(0,'rgba(255,255,255,.22)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(hx-s*2.6,hy-s*2.6,s*5.2,s*5.2);
       c.globalAlpha=.55;c.strokeStyle='#fff';c.lineWidth=1;c.strokeRect(Math.round(hx-s/2)-3.5,Math.round(hy-s/2)-3.5,Math.round(s)+7,Math.round(s)+7);c.globalAlpha=1;}
+    runtime.drawSparkCosmetics?.(t);runtime.cameraEnd?.();
     // Joystick visible mientras arrastras.
     if(runtime.ptr?.ox!=null){const c=runtime.cx;c.globalAlpha=.28;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.arc(runtime.ptr.ox,runtime.ptr.oy,55,0,6.283);c.stroke();c.globalAlpha=.5;c.fillStyle='#fff';c.beginPath();c.arc(runtime.ptr.x,runtime.ptr.y,9,0,6.283);c.fill();c.globalAlpha=1;}
     if(runtime.flash>0){runtime.flash=Math.max(0,runtime.flash-dt*2.5);runtime.cx.globalAlpha=runtime.flash*.6;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.2;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,24+(1-runtime.flash)*42,0,Math.PI*2);runtime.cx.stroke();}
@@ -118,7 +119,6 @@ export function initialize(runtime) {
       // Keep the entry response local; the world background stays black.
     }
     runtime.cx.globalAlpha=1;
-    runtime.drawSparkCosmetics?.(t);
     runtime.drawSparkHUD?.();runtime.drawSparkEconomyHUD?.();
     scheduledFrame=requestAnimationFrame(frame);
   }
@@ -293,7 +293,7 @@ export function initialize(runtime) {
     }
     if(pondNow!==runtime.inPond){runtime.inPond=pondNow;if(runtime.mfilt)runtime.mfilt.frequency.setTargetAtTime(runtime.inPond?650:18000,runtime.ac.currentTime,.25);if(runtime.inPond)runtime.beatSoon(q=>runtime.playVoice('agua',0,q,rg));}
     // tormenta: rayos en el beat
-    if(runtime.MU.boltAt&&runtime.ac&&runtime.ac.currentTime>=runtime.MU.boltAt){runtime.MU.boltAt=0;if(id==="tormenta"){const a=runtime.rnd()*6.28,d=60+runtime.rnd()*R,x=runtime.S.wx+Math.cos(a)*d,y=runtime.S.wy+Math.sin(a)*d;
+    if(runtime.MU.boltAt&&runtime.ac&&runtime.ac.currentTime>=runtime.MU.boltAt){runtime.MU.boltAt=0;runtime.cameraKick?.(0,1.5);if(id==="tormenta"){const a=runtime.rnd()*6.28,d=60+runtime.rnd()*R,x=runtime.S.wx+Math.cos(a)*d,y=runtime.S.wy+Math.sin(a)*d;
       const pts=[[x,y-runtime.H]];for(let i=1;i<=8;i++)pts.push([x+(runtime.rnd()-.5)*60*(1-i/9),y-runtime.H+runtime.H*i/8]);runtime.bolts.push({pts,l:1});runtime.flash=Math.max(runtime.flash,.5);runtime.now(q=>runtime.thunder(q,{x,y}));}}
     runtime.bolts=runtime.bolts.filter(bo=>(bo.l-=dt*3)>0);
     for(const bo of runtime.bolts){runtime.cx.globalAlpha=bo.l;runtime.cx.strokeStyle="#fff";runtime.cx.lineWidth=2;runtime.cx.beginPath();bo.pts.forEach(([x,y],i)=>runtime.cx[i?"lineTo":"moveTo"](x+ox,y+oy));runtime.cx.stroke();}
