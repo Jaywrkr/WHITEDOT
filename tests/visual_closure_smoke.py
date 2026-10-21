@@ -18,10 +18,10 @@ try:
    page.evaluate('''()=>{const r=__r;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.S.mode='camino';r.S.sound=false;r.S.todayLight=1;r.S.help.camino=true;r.S.help.mundo=true;r.hud();}''')
    page.locator('#bPrimary').click();page.wait_for_function('__r.inWorld()');assert page.locator('#bPrimary').is_enabled()
    # Existing profile UI is silent and uses the current collection, never generated awards.
-   before=page.evaluate('__r.waves.length');page.locator('#bMenu').click();page.locator('#bProfile').click();assert page.locator('#mProfile').is_visible();page.locator('#profileName').fill('Jay '+str(width));page.locator('#profileNameSave').click();assert 'guardado' in page.locator('#profileSaveStatus').inner_text()
-   assert page.locator('#mProfile').evaluate('e=>e.contains(document.activeElement)');assert page.evaluate('__r.waves.length')<=before
+   before=page.evaluate('__r.waves.length');page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-tab="you"]').click();assert page.locator('#journalYouPart').is_visible();page.locator('#profileName').fill('Jay '+str(width));page.locator('#profileNameSave').click();assert 'guardado' in page.locator('#profileSaveStatus').inner_text()
+   assert page.locator('#mJournal').evaluate('e=>e.contains(document.activeElement)');assert page.evaluate('__r.waves.length')<=before
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');assert page.locator('.profile-sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
-   page.screenshot(path=f'/tmp/whitedot-profile-{width}.png');page.locator('#profileClose').click()
+   page.screenshot(path=f'/tmp/whitedot-profile-{width}.png');page.locator('#journalClose').click()
    # Guide actions remain reachable while its descriptive content scrolls.
    page.locator('#bMenu').click();page.locator('#bGuide').click();assert page.locator('#guideJourney li').count()==4
    page.locator('#guideGlossary').click();assert page.locator('#guideClose').bounding_box()['y']+page.locator('#guideClose').bounding_box()['height']<=height

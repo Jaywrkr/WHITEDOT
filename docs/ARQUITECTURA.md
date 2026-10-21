@@ -22,6 +22,10 @@ Vercel sirve la raíz. `scripts/vercel-build.mjs` sella el artefacto con revisi�
 
 La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por partida. El saldo es local; no es una economía competitiva ni un registro remoto. Los formatos futuros se conservan. Destellos y constelación personal siguen fuera de esta implementación.
 
+## Bitácora
+
+`journal.js` reúne Hoy, Colección, Lugares, Música, Logros y Tú. Las secciones de `map.js`, `favorites.js` y `player-profile.js` viven en `#journalParts` (oculto) y `render()` las mueve a `#journalBody` en Lugares (mapa y favoritos) y Tú (perfil). Sus módulos abren la Bitácora con `openJournal('places'|'you')` y exponen `renderMap`, `renderFavorites` y `renderProfile`.
+
 ## Luz del mundo
 
 `world-light-model.js` traduce `worldVisibility.day` (ciclo de diez minutos de `world-visibility-model.js`) y la hora local a noche, amanecer, atardecer, estrellas y luciérnagas. `world-light.js` lo dibuja tras la niebla, solo en superficie: un degradado con la linterna del cubo libre y luciérnagas en pantalla. `render.js` multiplica el brillo de las estrellas por `worldLight().stars`.

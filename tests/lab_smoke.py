@@ -36,7 +36,7 @@ with sync_playwright() as p:
    found[eid]=(round(st['x']),round(st['y']))
   if eid in ('materia:prism','family:animal','toy:rotor','phenomenon:bird','glass'):page.screenshot(path=f"/tmp/whitedot-lab-{eid.replace(':','-')}.png")
   if tool=='fx':assert page.locator('#fxPanel').is_visible();page.locator('#fxClose').click()
-  if tool=='favorites':assert page.locator('#mFavorites').is_visible();page.locator('#favoritesClose').click()
+  if tool=='favorites':assert page.locator('#journalFavPart').is_visible();page.locator('#journalClose').click()
  # Cada elemento del mundo da una posición distinta (se encontró algo de verdad).
  positions=[v for k,v in found.items() if not k.startswith('family:')];assert len(set(positions))==len(positions),found
  assert all(found[k]==found['family:box'] for k in found if k.startswith('family:')),'families share the lab stage'

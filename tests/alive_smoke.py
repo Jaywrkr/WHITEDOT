@@ -39,7 +39,7 @@ with sync_playwright() as p:
   # Confluencia: dos ríos, la música del otro río se mezcla.
   page.evaluate('''()=>{const r=window.__testRuntime;const size=r.REG*r.WCH,x=-298777.2998213768/3600*size,y=-89475.62042623758/3600*size,q=r.riverAt(x,y);if(!q?.conf)throw Error('verified native confluence changed');r.S.wx=x;r.S.wy=y;}''')
   page.wait_for_function('!!window.__testRuntime.MU.confNb && !!window.__testRuntime.S.ach.confluencia')
-  page.locator('#bMenu').click();page.locator('#bMap').click();page.locator('#mapClose').click()
+  page.locator('#bMenu').click();page.locator('#bMap').click();page.locator('#journalClose').click()
   assert not errors,errors
   print(label+': moving storm with rain and thunder, season card, footprints and camps, confluence mix PASS',flush=True);c.close();b.close()
 server.shutdown()

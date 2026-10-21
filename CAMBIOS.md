@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 20 de octubre de 2026. Código **2.3.0-alpha.75**. Las entradas describen su revisión, no certifican producción.
+Estado: 20 de octubre de 2026. Código **2.3.0-alpha.76**. Las entradas describen su revisión, no certifican producción.
+
+## Fase A · Tu viaje en la Bitácora · alpha.76
+
+Rama `claude/fase-a-tu-viaje`, sobre `claude/fase-3-diversion`. Mapa, Favoritos y Perfil dejan de ser paneles sueltos y pasan a la Bitácora:
+
+- **Lugares:** primero el mapa (con sus cifras, «Ver cerca» y «Compartir»), después guardar y buscar lugares, y debajo los recuerdos y la constelación.
+- **Tú:** pestaña nueva con el perfil (nombre, tiempo, distancia y universo descubierto).
+- **Menú:** «Tu espacio» queda solo con «Bitácora»; desaparecen «Favoritos» y «Tu perfil». «Mapa» (Jugar) y el nombre del lugar arriba siguen siendo atajos y abren la Bitácora en Lugares.
+
+Las secciones conservan todos sus IDs y eventos: la Bitácora las coloca en su cuerpo al cambiar de pestaña y las guarda en un contenedor oculto al salir, así que nunca dejan de existir en el documento.
+
+Se adaptaron 13 recorridos que abrían los paneles antiguos para que entren por la Bitácora.
 
 ## Fase 3 · Diversión · alpha.75
 

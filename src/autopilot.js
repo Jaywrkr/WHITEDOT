@@ -39,7 +39,7 @@ export function initialize(runtime){
   if(runtime.S.sound)runtime.audio();runtime.navigationTick();const layer=runtime.S.layer||'superficie';
   if(mode==='destination'&&(!runtime.navigationState?.sameLayer||runtime.navigationState.arrived)){runtime.toast('<em>Autopilot</em> · Elige un destino en esta capa.');return false;}
   if(mode==='wander')runtime.cancelDestination();
-  pulses.reset();engine.start(mode,layer,runtime.seedOf(`paseo:${runtime.MU.dnaT?.key}`)/4294967296*Math.PI*2);$('mFavorites').hidden=true;ui();return true;
+  pulses.reset();engine.start(mode,layer,runtime.seedOf(`paseo:${runtime.MU.dnaT?.key}`)/4294967296*Math.PI*2);$('mJournal').hidden=true;ui();return true;
  }
  function vector(dt,manual,paused){
   const s=runtime.S,result=engine.vector(dt,{manual,paused,active:runtime.inWorld(),studio:s.mode==='studio'&&s.prevMode==='world',layer:s.layer||'superficie',x:s.wx,y:s.wy,target:runtime.navigationState?.target,localTarget:runtime.autopilotAim?.(),speed:runtime.SPEED,seaAhead:(s.layer||'superficie')==='superficie'?angle=>{const size=runtime.REG*runtime.WCH;for(const d of [90,220]){const x=s.wx+Math.cos(angle)*d,y=s.wy+Math.sin(angle)*d;if(runtime.continents.at(Math.floor(x/size),Math.floor(y/size)).sea)return true;}return false;}:null});

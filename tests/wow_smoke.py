@@ -39,7 +39,7 @@ try:
    assert page.locator('.rare-card.wow-selected').count()==0
    thumb=page.locator('.favorite-signature svg').first
    assert thumb.is_visible()
-   assert page.locator('#mFavorites').evaluate("e=>e.scrollWidth<=e.clientWidth+2")
+   assert page.locator('#mJournal .sheet').evaluate("e=>e.scrollWidth<=e.clientWidth+2")
    assert thumb.get_attribute('aria-hidden')=='true'
    page.evaluate("()=>{if(__r.S.sound)throw Error('UI changed sound setting')}")
    page.screenshot(path=f'/tmp/whitedot-wow-{width}.png')
