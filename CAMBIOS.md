@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.85**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.86**. Las entradas describen su revisión, no certifican producción.
+
+## Fase H · Estabilidad · alpha.86
+
+Ramas `claude/fase-h-estabilidad` (ya en `main`) y `claude/fase-h2-calidad`, sobre `main`.
+
+- **Pruebas que fallaban a veces:**
+  - `encounter_depth_smoke.py`: una nota tardía del clic anterior ocupaba el primer lugar de la frase. Ahora la prueba borra las notas en el mismo turno en que toca la frase.
+  - `crystal_play_smoke.py`: la persecución usaba una sola flecha a la vez. Ahora persigue en diagonal, como un jugador.
+  - Ambas pasan 6 de 6 veces. No eran errores del juego.
+- **Calidad gráfica:** Ajustes ofrece Automática, Alta y Ligera. En Automática, si el dispositivo dibuja más lento que unos 40 fotogramas por segundo en dos muestras seguidas, pasa a ligera hasta cerrar el juego: lienzo a 1× en vez de 2×, como máximo 150 partículas en vez de 400 y menos salpicaduras de lluvia. La elección se guarda.
+- **Diagnóstico:** los errores que ocurren al jugar se guardan en el dispositivo (los últimos 20, sin datos personales) y Ajustes los copia con «Copiar diagnóstico». Política de privacidad actualizada.
+- Pruebas nuevas: `quality-diagnostic.mjs` (Node) y `quality_diagnostic_smoke.py` (calidad a 1× y 2×, cambio automático, recarga, error registrado y copiado). Recorridos de Ajustes, menú, clima, cámara y `smoke` en PASS.
 
 ## Fase G · Revisión integral · alpha.85
 

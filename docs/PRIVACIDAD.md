@@ -18,7 +18,7 @@ Kubono es un juego de exploración y música. Responsable: **[nombre legal y pa�
 | Datos técnicos de las solicitudes, como IP, hora y errores | Entregar y proteger el servicio, diagnosticar fallos | Proveedores de infraestructura, según su configuración de registros |
 | Mensajes que envíes a soporte | Resolver incidencias y solicitudes sobre tus datos | Buzón de soporte y herramientas que finalmente se seleccionen |
 
-Las coordenadas del cubo son del mundo virtual, no tu ubicación GPS. La música se genera en el dispositivo; el cliente revisado no graba micrófono. No incorpora SDK publicitario ni de analítica de terceros. Los registros de infraestructura se tratan por separado: no se declara que el juego «no recoge datos».
+Si el juego falla, guarda en este dispositivo los últimos 20 errores (mensaje, archivo, línea, versión y hora; sin partida, nombre ni correo). No se envían a ningún sitio: solo salen si eliges **Ajustes → Copiar diagnóstico** y pegas el texto, que también incluye la versión del navegador. Las coordenadas del cubo son del mundo virtual, no tu ubicación GPS. La música se genera en el dispositivo; el cliente revisado no graba micrófono. No incorpora SDK publicitario ni de analítica de terceros. Los registros de infraestructura se tratan por separado: no se declara que el juego «no recoge datos».
 
 ## Proveedores y transferencias
 

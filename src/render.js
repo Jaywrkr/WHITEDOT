@@ -29,7 +29,7 @@ export function initialize(runtime) {
   /* ---------- loop ---------- */
   let scheduledFrame=null;
   // One frame's answers to "is a panel open?" are shared by every module drawn in it.
-  function frame(t){beginFrame();try{frameBody(t);}finally{runtime.cameraEnd?.();endFrame();}}
+  function frame(t){runtime.qualityTick?.(t);beginFrame();try{frameBody(t);}finally{runtime.cameraEnd?.();endFrame();}}
   function frameBody(t){
     if(runtime.accountClient&&runtime.accountClient.user()?.id!==runtime.accountUserId){location.reload();return;}
     if(scheduledFrame!==null)cancelAnimationFrame(scheduledFrame);
@@ -93,7 +93,7 @@ export function initialize(runtime) {
     runtime.clueTick?.();runtime.clueDraw?.();runtime.encounterDraw?.();if(!runtime.encounterSources?.().length)runtime.creativeDraw?.();
     runtime.drawCrystals?.();runtime.drawTotems?.();runtime.drawWonders?.();runtime.drawActivityPortals?.();runtime.drawMischief?.();runtime.drawWowWorld?.();runtime.drawFavoriteReturn?.();runtime.drawReactiveWorld?.();runtime.drawAtlas?.();runtime.drawRareFinding?.();runtime.drawCelebration?.();runtime.drawWorldFog?.(t);runtime.drawWeather?.(t,dt);runtime.drawFauna?.(t,dt);runtime.drawWorldMusic?.(t,dt);runtime.drawHappenings?.(t,dt);runtime.drawWorldLight?.(t);runtime.weatherBeds?.();runtime.drawDistantColors?.(true);
     const ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;
-    runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);if(runtime.parts.length>400)runtime.parts.splice(0,runtime.parts.length-400);
+    runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);const cap=runtime.lightQuality?.()?150:400;if(runtime.parts.length>cap)runtime.parts.splice(0,runtime.parts.length-cap);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
     runtime.pulse=Math.max(0,runtime.pulse-dt*1.5);
     const s=Math.max(ds,runtime.inWorld()?runtime.cubeShopMinSize?.()||0:0)*(1+runtime.pulse*.6+b*.08)*(runtime.inWorld()?runtime.surpriseStyle?.scale||1:1);
