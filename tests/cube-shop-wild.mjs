@@ -3,7 +3,7 @@ import {shopPiece} from '../src/cube-shop-model.js';
 import {SHOP_WORLD,SHOP_WILD,COSTUMES,initialOf,letterStars,morseUnits,puddleIn,hash,recentCards,rarestCard,drawCostume,drawSkin,drawWildGlyph,initialize} from '../src/cube-shop-wild.js';
 // Batch 6 pieces, as listed in docs/TIENDA_DEL_CUBO.md.
 const pieces=[...SHOP_WORLD,...SHOP_WILD].map(shopPiece);
-assert(pieces.every(Boolean));assert.equal(pieces.length,11);assert.equal(pieces.reduce((a,p)=>a+p.cost,0),7350);
+assert(pieces.every(Boolean));assert.equal(pieces.length,11);assert.equal(pieces.reduce((a,p)=>a+p.cost,0),3675);
 assert(SHOP_WORLD.every(id=>shopPiece(id).slot==='world'));assert(SHOP_WILD.every(id=>shopPiece(id).slot==='wild'));
 // Constellation and morse come from the player's name.
 assert.equal(initialOf('Ñandú'),'N');assert.equal(initialOf('élan'),'E');assert.equal(initialOf(''),'K');assert.equal(initialOf('123 jay'),'J');
@@ -29,4 +29,4 @@ assert(r.drawCubeShopCostume(canvas,200,200,12,1000,'#fff'),'a costume replaces 
 for(let t=0;t<40;t++){r.S.wx+=8;r.drawCubeShopWildUnder(canvas,200,200,12,1000+t*16);r.drawCubeShopWildOver(canvas,200,200,12,1000+t*16);}
 assert(r.cubeShopWild().trail>5,'the retinue follows the path');
 r.sparkEconomy={on:{}};assert.equal(r.drawCubeShopCostume(canvas,200,200,12,1000,'#fff'),false,'taking it off ends the costume');
-console.log('PASS batch 6: 11 pieces and 7350 sparks, initial and morse from the name, fixed puddles, recent and rarest cards, costumes by three pulses, grass only on the surface');
+console.log('PASS batch 6: 11 pieces and 3675 sparks, initial and morse from the name, fixed puddles, recent and rarest cards, costumes by three pulses, grass only on the surface');

@@ -62,7 +62,8 @@ export function initialize(runtime){
  }
  // En el Cielo, un toque baja en el punto de abajo (si es tierra).
  function layerPulse(){
-  const s=S();if(layer()==='cielo'){if(isSeaPx(s.wx,s.wy)){runtime.toast('<em>Cielo</em> · abajo hay mar. Busca tierra para bajar');return;}surface(s.wx,s.wy,'<em>Bajaste</em> · '+(runtime.regionOfPos(s.wx,s.wy).name));}
+  const s=S();if(layer()==='cielo'&&runtime.cubeShopGlide?.())return;
+  if(layer()==='cielo'){if(isSeaPx(s.wx,s.wy)){runtime.toast('<em>Cielo</em> · abajo hay mar. Busca tierra para bajar');return;}surface(s.wx,s.wy,'<em>Bajaste</em> · '+(runtime.regionOfPos(s.wx,s.wy).name));}
   else if(layer()==='bajo')runtime.toast('<em>Subsuelo</em> · busca una columna de luz para salir');
  }
  // Música de la capa: una región sintética (no se registra como lugar visitado).

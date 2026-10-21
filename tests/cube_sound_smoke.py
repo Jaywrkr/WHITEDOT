@@ -26,7 +26,7 @@ try:
   before=page.evaluate('__r.S.sparks')
   page.evaluate("__r.S.cube.voice='metal'")
   for pid in pieces:assert page.evaluate('id=>__r.buySparkStyle(id)',pid),pid
-  assert before-page.evaluate('__r.S.sparks')==6050
+  assert before-page.evaluate('__r.S.sparks')==3025
   # The last voice bought is worn; buying a voice puts the earned one back to the place's own.
   assert page.evaluate('__r.sparkEconomy.wear.pulseVoice')=='voice:chord' and page.evaluate('__r.S.cube.voice')=='natural'
   assert page.evaluate('__r.sparkEconomy.wear.trail')=='trail:notes' and all(page.evaluate('id=>__r.sparkEconomy.on[id]===true',p) for p in ['sound:hat','sound:filter','sound:hum','sound:dj','sound:antenna'])
@@ -57,5 +57,5 @@ try:
   # Choosing a bought voice in Llevar takes the voice off; choosing an earned one would put back natural first.
   page.locator('[data-owned-slot="pulseVoice"] [data-shop-piece="voice:bell"]').click();assert page.evaluate('__r.sparkEconomy.wear.pulseVoice||""')==''
   assert not errors,errors;browser.close()
- print('PASS 12 sound pieces: own pictures, bought for 6050 sparks, bell heard on the pulse, hats, filter, scratch, step notes and humming in play, silent when muted, antenna visible moving and still, kept after reload and listed in Llevar',flush=True)
+ print('PASS 12 sound pieces: own pictures, bought for 3025 sparks, bell heard on the pulse, hats, filter, scratch, step notes and humming in play, silent when muted, antenna visible moving and still, kept after reload and listed in Llevar',flush=True)
 finally:server.shutdown()

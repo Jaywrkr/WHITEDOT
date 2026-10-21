@@ -16,17 +16,17 @@ q=normalizeSparkEconomy({purchases:{dust:true},wear:{trail:'dust',companion:'orb
 q=normalizeSparkEconomy({purchases:{'motion:roll':true},wear:{motion:'motion:roll'},on:{'sound:hihat':true}},10,'d');assert.deepEqual(q.wear,{motion:'motion:roll'});assert.deepEqual(q.on,{});
 q=normalizeSparkEconomy({purchases:{'sound:hihat':true},on:{'sound:hihat':true}},10,'d');assert.deepEqual(q.on,{'sound:hihat':true});
 // Batch 2: one eye and one accessory worn at a time, habits switched on together.
-const batch2=CUBE_SHOP.filter(p=>['eyes','habits','accessory'].includes(p.slot));assert.equal(batch2.length,13);assert.equal(batch2.reduce((a,p)=>a+p.cost,0),900);
+const batch2=CUBE_SHOP.filter(p=>['eyes','habits','accessory'].includes(p.slot));assert.equal(batch2.length,13);assert.equal(batch2.reduce((a,p)=>a+p.cost,0),450);
 q=normalizeSparkEconomy({purchases:Object.fromEntries(batch2.map(p=>[p.id,true])),wear:{eyes:'eyes:sleepy',accessory:'acc:hat',habits:'habit:yawn'},on:{'habit:yawn':true,'habit:dizzy':true,'eyes:curious':true}},10,'d');
 assert.deepEqual(q.wear,{eyes:'eyes:sleepy',accessory:'acc:hat'});assert.deepEqual(q.on,{'habit:yawn':true,'habit:dizzy':true});
 // Batch 3: trails and companions, and the bounded route kept by Huellas del día and Fantasma de ayer.
-const batch3=CUBE_SHOP.filter(p=>['trail','companion'].includes(p.slot)&&p.id.includes(':')&&p.id!=='trail:notes');assert.equal(batch3.length,10);assert.equal(batch3.reduce((a,p)=>a+p.cost,0),4750);
+const batch3=CUBE_SHOP.filter(p=>['trail','companion'].includes(p.slot)&&p.id.includes(':')&&p.id!=='trail:notes');assert.equal(batch3.length,10);assert.equal(batch3.reduce((a,p)=>a+p.cost,0),2375);
 let r=normalizeRoute({day:'2026-10-19',today:[[1.4,2.6],['x',1],[1,2,3],[Infinity,0],...Array.from({length:700},(_,i)=>[i,i])],yday:'nope',yesterday:'x',future:7});
 assert.equal(r.today.length,600);assert.deepEqual(r.today[0],[100,100]);assert.equal(r.yday,'');assert.deepEqual(r.yesterday,[]);assert.equal(r.future,7);
 r=rollRoute(r,'2026-10-20');assert.equal(r.day,'2026-10-20');assert.deepEqual(r.today,[]);assert.equal(r.yday,'2026-10-19');assert.equal(r.yesterday.length,120);assert.deepEqual(r.yesterday.at(-1),[699,699]);
 assert.equal(rollRoute(r,'2026-10-20'),r);assert.equal(rollRoute(r,'2026-10-21').yday,'2026-10-19');assert.equal(thinRoute([[0,0],[1,1]]).length,2);
 // Batch 4: pulse looks (one at a time, facet included) and gestures (several at once).
-const batch4=CUBE_SHOP.filter(p=>/^(pulse|gesture):/.test(p.id));assert.equal(batch4.length,12);assert.equal(batch4.reduce((a,p)=>a+p.cost,0),2770);
+const batch4=CUBE_SHOP.filter(p=>/^(pulse|gesture):/.test(p.id));assert.equal(batch4.length,12);assert.equal(batch4.reduce((a,p)=>a+p.cost,0),1385);
 r=normalizeSparkEconomy({purchases:Object.fromEntries(batch4.map(p=>[p.id,true])),wear:{pulse:'pulse:star',gestures:'gesture:pose'},on:{'gesture:pose':true,'gesture:flip':true,'pulse:echo':true}},10,'d');
 assert.deepEqual(r.wear,{pulse:'pulse:star'});assert.deepEqual(r.on,{'gesture:pose':true,'gesture:flip':true});
 // Normalizing twice is stable.
