@@ -59,6 +59,8 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - Se guardan en `decor`, `tints` y `capsules` de `S.house` y viajan en el código WH2. Las chispas solo se descuentan si la partida se guarda.
   - Las piezas que suenan entran al secuenciador como los objetos y se pueden arrastrar.
 - **Taller:** la mesa del Sótano abre el Taller de siempre; el botón «Taller» del panel se conserva.
+- **Visitas:** un código WH1 o WH2 abre otra casa en `visit`, de solo lectura: se camina y se escucha, pero no se coloca, no se gasta y no se guarda nada de ella. El código no lleva nombre. Cada casa distinta visitada se cuenta una vez en `knownVisitors` (con un hash del código); el código propio no cuenta.
+- **Guía:** `house-guide.js` cuenta en una frase cada habitación en `#houseSummary` (región en vivo, solo para lectores de pantalla) y dice qué hay cerca. Enter usa la máquina o la mesa. Al entrar se guarda `seen`; la tarjeta Casa del menú anuncia cuadros nuevos, trofeos nuevos o una cápsula lista. La Bitácora tiene «Ver en tu casa» en Colección y Logros.
 - **Controles:** el render pasa los `dx/dy` del fotograma a la Casa. Las flechas caminan y suben o bajan escaleras; tocar una habitación lleva al cubo hasta allí, cambiando de planta por las escaleras.
 - **Datos:** `S.house` va por la versión 2, la de la casa de muñecas (ver [Casa viva](CASA_VIVA.md)). Conserva los objetos `{kind,room,x,y}`: x es el paso del compás y y la altura en la pared, que marca la nota. Añade `decor`, `tints` y `capsules`, siempre normalizados. La versión 1 se migra en el momento; una versión mayor se abre solo para leer.
 - **Códigos:** WH1 si la casa solo tiene objetos (lo leen versiones anteriores) y WH2 si lleva adornos o colores; se leen los dos.

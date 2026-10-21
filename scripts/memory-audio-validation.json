@@ -1,0 +1,1349 @@
+{
+  "renders": 6,
+  "maxPeak": 0.8743353486061096,
+  "rows": [
+    {
+      "shopNotes": [],
+      "shopSounds": null,
+      "mischiefNotes": [],
+      "audioNotes": [
+        {
+          "instrument": "pluck",
+          "note": 48,
+          "time": 0.3419354838709677,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 0.09845941004902126,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "hollow",
+          "note": 57,
+          "time": 0.09845941004902126,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 1.0662062239178849,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 52,
+          "time": 1.3093987531882505,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 1.791220878555951,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 2.033518826098633,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "hollow",
+          "note": 57,
+          "time": 2.033518826098633,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 3.0066741873521616,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 52,
+          "time": 3.2433424869246443,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 3.7278146806946353,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 48,
+          "time": 4.212903225806454,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 3.9713585857720775,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "hollow",
+          "note": 57,
+          "time": 3.9713585857720775,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 4.940412877936581,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 52,
+          "time": 5.1820511204010336,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 5.6639414695133645,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 5.90627903229972,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "hollow",
+          "note": 57,
+          "time": 5.90627903229972,
+          "origin": "track",
+          "region": "0,0"
+        }
+      ],
+      "musicFamily": null,
+      "wonderNotes": [],
+      "totemNotes": [],
+      "inhabitantNotes": [],
+      "referenceOrigin": null,
+      "territoryFrames": [],
+      "restoredBackbone": null,
+      "magnetNotes": [],
+      "microNotes": [],
+      "surpriseNotes": [],
+      "fullPeak": 0.872489333152771,
+      "experimentalNotes": [],
+      "tempoFrames": [
+        {
+          "time": 0.1,
+          "bpm": 124,
+          "target": 124,
+          "region": "0,0"
+        },
+        {
+          "time": 2.035483870967743,
+          "bpm": 124,
+          "target": 124,
+          "region": "0,0"
+        },
+        {
+          "time": 3.9709677419354867,
+          "bpm": 124,
+          "target": 124,
+          "region": "0,0"
+        },
+        {
+          "time": 5.90645161290323,
+          "bpm": 124,
+          "target": 124,
+          "region": "0,0"
+        }
+      ],
+      "phrasing": null,
+      "productionIdentity": null,
+      "conductorOnsets": [],
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "minimal",
+          "room": 0.25,
+          "space": 0,
+          "echo": 0.18,
+          "feedback": 0.22
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "electronicCount": null,
+      "electronicLayers": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "silence-bass",
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "minimal-hush",
+      "worldFamily": "orbital",
+      "hookI": "hollow",
+      "brightness": 3400,
+      "deferredDisconnects": 43,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {
+        "pluck": 15,
+        "kick": 13,
+        "hollow": 4,
+        "hat": 12,
+        "rim": 9,
+        "wood": 6
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "minimal",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": "weaver",
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.872489333152771,
+      "rmsDb": -13.69858615062304,
+      "hotFraction": 0,
+      "restored": false
+    },
+    {
+      "shopNotes": [],
+      "shopSounds": null,
+      "mischiefNotes": [],
+      "audioNotes": [
+        {
+          "instrument": "pluck",
+          "note": 47,
+          "time": 1.3096774193548388,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 50,
+          "time": 1.7935483870967743,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 0.10257601048238577,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "hollow",
+          "note": 57,
+          "time": 0.10257601048238577,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 52,
+          "time": 1.3093987531882505,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 43,
+          "time": 1.791220878555951,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 2.033518826098633,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "hollow",
+          "note": 57,
+          "time": 2.033518826098633,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 52,
+          "time": 3.242079026808183,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 43,
+          "time": 3.730613193160887,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 47,
+          "time": 5.180645161290325,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 50,
+          "time": 5.664516129032261,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 3.9713585857720775,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "hollow",
+          "note": 57,
+          "time": 3.9713585857720775,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 52,
+          "time": 5.182745709460833,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 43,
+          "time": 5.66600513465751,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 5.907625419486739,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "hollow",
+          "note": 57,
+          "time": 5.907625419486739,
+          "origin": "track",
+          "region": "0,0"
+        }
+      ],
+      "musicFamily": null,
+      "wonderNotes": [],
+      "totemNotes": [],
+      "inhabitantNotes": [],
+      "referenceOrigin": null,
+      "territoryFrames": [],
+      "restoredBackbone": null,
+      "magnetNotes": [],
+      "microNotes": [],
+      "surpriseNotes": [],
+      "fullPeak": 0.8724239468574524,
+      "experimentalNotes": [],
+      "tempoFrames": [
+        {
+          "time": 0.1,
+          "bpm": 124,
+          "target": 124,
+          "region": "0,0"
+        },
+        {
+          "time": 2.035483870967743,
+          "bpm": 124,
+          "target": 124,
+          "region": "0,0"
+        },
+        {
+          "time": 3.9709677419354867,
+          "bpm": 124,
+          "target": 124,
+          "region": "0,0"
+        },
+        {
+          "time": 5.90645161290323,
+          "bpm": 124,
+          "target": 124,
+          "region": "0,0"
+        }
+      ],
+      "phrasing": null,
+      "productionIdentity": null,
+      "conductorOnsets": [],
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "minimal",
+          "room": 0.25,
+          "space": 0,
+          "echo": 0.18,
+          "feedback": 0.22
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "electronicCount": null,
+      "electronicLayers": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": "silence-bass",
+      "advancedNotes": [],
+      "modularGraphs": [
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal"
+      ],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "minimal-hush",
+      "worldFamily": "orbital",
+      "hookI": "hollow",
+      "brightness": 3400,
+      "deferredDisconnects": 92,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {
+        "pluck": 14,
+        "kick": 13,
+        "hollow": 4,
+        "hat": 12,
+        "rim": 9,
+        "wood": 6
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "minimal",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": "weaver",
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.8724239468574524,
+      "rmsDb": -13.755352433273988,
+      "hotFraction": 0,
+      "restored": true
+    },
+    {
+      "shopNotes": [],
+      "shopSounds": null,
+      "mischiefNotes": [],
+      "audioNotes": [
+        {
+          "instrument": "pluck",
+          "note": 48,
+          "time": 0.35,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 0.09845941004902126,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 57,
+          "time": 0.09845941004902126,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 1.1006005573719742,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 60,
+          "time": 1.2437466532122343,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 52,
+          "time": 1.3479302870668473,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 60,
+          "time": 1.7409078756514937,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 1.8475161453131588,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 2.1033845416232944,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 57,
+          "time": 2.1033845416232944,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 3.0971172708440573,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 60,
+          "time": 3.2415046098791063,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 52,
+          "time": 3.3513734819330274,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 60,
+          "time": 3.7385293515678497,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 3.8521697667986157,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 48,
+          "time": 4.35,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 4.100551806291565,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 57,
+          "time": 4.100551806291565,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 5.098274450821802,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 60,
+          "time": 5.238440376469866,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 52,
+          "time": 5.349981270495801,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 60,
+          "time": 5.741844400016591,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 5.848380221573636,
+          "origin": "track",
+          "region": "0,0"
+        }
+      ],
+      "musicFamily": null,
+      "wonderNotes": [],
+      "totemNotes": [],
+      "inhabitantNotes": [],
+      "referenceOrigin": null,
+      "territoryFrames": [],
+      "restoredBackbone": null,
+      "magnetNotes": [],
+      "microNotes": [],
+      "surpriseNotes": [],
+      "fullPeak": 0.8743331432342529,
+      "experimentalNotes": [],
+      "tempoFrames": [
+        {
+          "time": 0.1,
+          "bpm": 120,
+          "target": 120,
+          "region": "0,0"
+        },
+        {
+          "time": 2.1,
+          "bpm": 120,
+          "target": 120,
+          "region": "0,0"
+        },
+        {
+          "time": 4.1,
+          "bpm": 120,
+          "target": 120,
+          "region": "0,0"
+        }
+      ],
+      "phrasing": null,
+      "productionIdentity": null,
+      "conductorOnsets": [],
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "deep",
+          "room": 0.36,
+          "space": 0.04,
+          "echo": 0.2,
+          "feedback": 0.24
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "electronicCount": null,
+      "electronicLayers": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "jazz-shadow",
+      "worldFamily": null,
+      "hookI": "reed",
+      "brightness": 6675,
+      "deferredDisconnects": 54,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {
+        "pluck": 14,
+        "kick": 12,
+        "reed": 9,
+        "shaker": 24,
+        "hat": 12,
+        "clap": 6,
+        "organ": 9,
+        "wood": 6
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "deep",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": "weaver",
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.8743331432342529,
+      "rmsDb": -12.74659907626339,
+      "hotFraction": 0,
+      "restored": false
+    },
+    {
+      "shopNotes": [],
+      "shopSounds": null,
+      "mischiefNotes": [],
+      "audioNotes": [
+        {
+          "instrument": "pluck",
+          "note": 47,
+          "time": 1.35,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 50,
+          "time": 1.85,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 0.10257601048238577,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 57,
+          "time": 0.10257601048238577,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 60,
+          "time": 1.2437466532122343,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 52,
+          "time": 1.3479302870668473,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 60,
+          "time": 1.7409078756514937,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 43,
+          "time": 1.8475161453131588,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 2.1033845416232944,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 57,
+          "time": 2.1033845416232944,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 60,
+          "time": 3.2446880108173937,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 52,
+          "time": 3.352240562085062,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 60,
+          "time": 3.7423908438365907,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 43,
+          "time": 3.8487774085644633,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 47,
+          "time": 5.35,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 50,
+          "time": 5.85,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 45,
+          "time": 4.100551806291565,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 57,
+          "time": 4.100551806291565,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 60,
+          "time": 5.238300899060443,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 52,
+          "time": 5.353461746182292,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "reed",
+          "note": 60,
+          "time": 5.744886449001729,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "pluck",
+          "note": 43,
+          "time": 5.851921970680356,
+          "origin": "track",
+          "region": "0,0"
+        }
+      ],
+      "musicFamily": null,
+      "wonderNotes": [],
+      "totemNotes": [],
+      "inhabitantNotes": [],
+      "referenceOrigin": null,
+      "territoryFrames": [],
+      "restoredBackbone": null,
+      "magnetNotes": [],
+      "microNotes": [],
+      "surpriseNotes": [],
+      "fullPeak": 0.8743353486061096,
+      "experimentalNotes": [],
+      "tempoFrames": [
+        {
+          "time": 0.1,
+          "bpm": 120,
+          "target": 120,
+          "region": "0,0"
+        },
+        {
+          "time": 2.1,
+          "bpm": 120,
+          "target": 120,
+          "region": "0,0"
+        },
+        {
+          "time": 4.1,
+          "bpm": 120,
+          "target": 120,
+          "region": "0,0"
+        }
+      ],
+      "phrasing": null,
+      "productionIdentity": null,
+      "conductorOnsets": [],
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "deep",
+          "room": 0.36,
+          "space": 0.04,
+          "echo": 0.2,
+          "feedback": 0.24
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "electronicCount": null,
+      "electronicLayers": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal"
+      ],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "jazz-shadow",
+      "worldFamily": null,
+      "hookI": "reed",
+      "brightness": 6675,
+      "deferredDisconnects": 110,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {
+        "pluck": 13,
+        "kick": 12,
+        "reed": 9,
+        "shaker": 24,
+        "hat": 12,
+        "clap": 6,
+        "organ": 9,
+        "wood": 6
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "deep",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": "weaver",
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.8743353486061096,
+      "rmsDb": -12.72118195079335,
+      "hotFraction": 0,
+      "restored": true
+    },
+    {
+      "shopNotes": [],
+      "shopSounds": null,
+      "mischiefNotes": [],
+      "audioNotes": [
+        {
+          "instrument": "sub",
+          "note": 48,
+          "time": 0.48461538461538467,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "bowed",
+          "note": 57,
+          "time": 0.1,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "bowed",
+          "note": 57,
+          "time": 0.09845941004902126,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "bowed",
+          "note": 57,
+          "time": 3.176614828978738,
+          "origin": "track",
+          "region": "0,0"
+        }
+      ],
+      "musicFamily": null,
+      "wonderNotes": [],
+      "totemNotes": [],
+      "inhabitantNotes": [],
+      "referenceOrigin": null,
+      "territoryFrames": [],
+      "restoredBackbone": null,
+      "magnetNotes": [],
+      "microNotes": [],
+      "surpriseNotes": [],
+      "fullPeak": 0.626075267791748,
+      "experimentalNotes": [],
+      "tempoFrames": [
+        {
+          "time": 0.1,
+          "bpm": 78,
+          "target": 78,
+          "region": "0,0"
+        },
+        {
+          "time": 3.176923076923078,
+          "bpm": 78,
+          "target": 78,
+          "region": "0,0"
+        }
+      ],
+      "phrasing": null,
+      "productionIdentity": null,
+      "conductorOnsets": [],
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "ambient",
+          "room": 0.72,
+          "space": 0.78,
+          "echo": 0.55,
+          "feedback": 0.39
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "electronicCount": null,
+      "electronicLayers": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "ambient-string",
+      "worldFamily": null,
+      "hookI": "bowed",
+      "brightness": 6510,
+      "deferredDisconnects": 19,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {
+        "sub": 1,
+        "bowed": 3,
+        "wood": 2
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "ambient",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": "weaver",
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.12738966941833496,
+      "rmsDb": -40.097838815254434,
+      "hotFraction": 0,
+      "restored": false
+    },
+    {
+      "shopNotes": [],
+      "shopSounds": null,
+      "mischiefNotes": [],
+      "audioNotes": [
+        {
+          "instrument": "sub",
+          "note": 47,
+          "time": 2.023076923076923,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "sub",
+          "note": 50,
+          "time": 2.7923076923076926,
+          "origin": "ambient",
+          "region": "0,0"
+        },
+        {
+          "instrument": "bowed",
+          "note": 57,
+          "time": 0.1,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "bowed",
+          "note": 57,
+          "time": 0.10257601048238577,
+          "origin": "track",
+          "region": "0,0"
+        },
+        {
+          "instrument": "bowed",
+          "note": 57,
+          "time": 3.1752433953090367,
+          "origin": "track",
+          "region": "0,0"
+        }
+      ],
+      "musicFamily": null,
+      "wonderNotes": [],
+      "totemNotes": [],
+      "inhabitantNotes": [],
+      "referenceOrigin": null,
+      "territoryFrames": [],
+      "restoredBackbone": null,
+      "magnetNotes": [],
+      "microNotes": [],
+      "surpriseNotes": [],
+      "fullPeak": 0.3419009745121002,
+      "experimentalNotes": [],
+      "tempoFrames": [
+        {
+          "time": 0.1,
+          "bpm": 78,
+          "target": 78,
+          "region": "0,0"
+        },
+        {
+          "time": 3.176923076923078,
+          "bpm": 78,
+          "target": 78,
+          "region": "0,0"
+        }
+      ],
+      "phrasing": null,
+      "productionIdentity": null,
+      "conductorOnsets": [],
+      "productionSpaces": [
+        {
+          "time": 0.1,
+          "genre": "ambient",
+          "room": 0.72,
+          "space": 0.78,
+          "echo": 0.55,
+          "feedback": 0.39
+        }
+      ],
+      "performanceNotes": [],
+      "labEvolution": null,
+      "labPerformance": [],
+      "lessonNotes": [],
+      "labBand": null,
+      "electronicCount": null,
+      "electronicLayers": null,
+      "cultureNotes": [],
+      "foregroundNotes": [],
+      "materialStrikes": [],
+      "hybrid": null,
+      "advancedNotes": [],
+      "modularGraphs": [
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal",
+        "modulator>filter:cv|source>filter:signal"
+      ],
+      "actorSeconds": 0,
+      "ecologyPhase": null,
+      "actorIntent": null,
+      "identity": "ambient-string",
+      "worldFamily": null,
+      "hookI": "bowed",
+      "brightness": 6510,
+      "deferredDisconnects": 46,
+      "scene": null,
+      "filterMotion": null,
+      "instrumentHits": {
+        "sub": 2,
+        "bowed": 3,
+        "wood": 2
+      },
+      "petNotes": [],
+      "percussionNotes": [],
+      "cultureHeard": false,
+      "testInstrument": null,
+      "instrumentNotes": 0,
+      "genre": "ambient",
+      "dense": true,
+      "soft": false,
+      "fx": false,
+      "influenced": false,
+      "worldSeed": "",
+      "generation": 1,
+      "ecology": false,
+      "ecologyNotes": 0,
+      "encounter": "weaver",
+      "deep": false,
+      "installation": null,
+      "trail": false,
+      "glass": false,
+      "trailNotes": 0,
+      "glassNotes": 0,
+      "glassRoles": [],
+      "sampleRate": 48000,
+      "peak": 0.3419009745121002,
+      "rmsDb": -30.482986018864988,
+      "hotFraction": 0,
+      "restored": true
+    }
+  ]
+}

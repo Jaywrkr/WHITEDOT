@@ -10,64 +10,64 @@
     {
       "instrument": "p_tinepiano",
       "sampleRate": 44100,
-      "peak": 0.030292067676782608,
-      "energy": 0.4408220820099221,
+      "peak": 0.030292069539427757,
+      "energy": 0.4408221143797337,
       "late": 0
     },
     {
       "instrument": "p_panreed",
       "sampleRate": 48000,
-      "peak": 0.019585413858294487,
-      "energy": 0.2596126029910432,
+      "peak": 0.019585411995649338,
+      "energy": 0.2596125936157247,
       "late": 0
     },
     {
       "instrument": "p_cellobody",
       "sampleRate": 44100,
       "peak": 0.009252195246517658,
-      "energy": 0.15436820554474,
-      "late": 2.94775084180569e-12
+      "energy": 0.1543681886834088,
+      "late": 2.94775076452118e-12
     },
     {
       "instrument": "velvetbass",
       "sampleRate": 48000,
-      "peak": 0.03530746325850487,
-      "energy": 0.8891941112569769,
+      "peak": 0.03530745953321457,
+      "energy": 0.8891941153713786,
       "late": 0
     },
     {
       "instrument": "phasekeys",
       "sampleRate": 44100,
       "peak": 0.031050650402903557,
-      "energy": 0.55272256124822,
+      "energy": 0.5527225613339383,
       "late": 0
     },
     {
       "instrument": "snare:0",
       "sampleRate": 48000,
       "peak": 0.031264327466487885,
-      "energy": 0.12374282903330186,
+      "energy": 0.12374283104505766,
       "late": 0
     },
     {
       "instrument": "snare:1",
       "sampleRate": 48000,
       "peak": 0.02266654372215271,
-      "energy": 0.046211462429881375,
+      "energy": 0.04621146258842277,
       "late": 0
     },
     {
       "instrument": "snare:2",
       "sampleRate": 48000,
       "peak": 0.03639299049973488,
-      "energy": 0.13921578058900025,
+      "energy": 0.13921578062245735,
       "late": 0
     },
     {
       "instrument": "snare:3",
       "sampleRate": 48000,
       "peak": 0.034701280295848846,
-      "energy": 0.12312486265466362,
+      "energy": 0.12312486431215199,
       "late": 0
     }
   ],
@@ -76,26 +76,26 @@
       "genre": "minimaltechno",
       "scene": "living:deer",
       "sampleRate": 48000,
-      "peak": 0.8726567625999451,
-      "rmsDb": -13.37937244494552,
+      "peak": 0.8759105801582336,
+      "rmsDb": -13.185975981462011,
       "hotFraction": 0,
       "instrumentHits": {
         "kick": 18,
-        "p_foldbass": 15,
-        "skinpluck": 7,
+        "fm": 17,
+        "organ": 18,
         "phasekeys": 15,
         "p_roundbass": 7,
         "living:bajo": 7,
         "p_violaswell": 60,
         "clav": 20,
-        "wood": 49,
+        "wood": 48,
         "p_claypot": 38,
         "p_tinepiano": 60,
         "p_feltmallet": 20,
         "hat": 17,
-        "rim": 2,
-        "p_cellobody": 4,
-        "feltkeys": 1
+        "rim": 4,
+        "tom": 4,
+        "p_cellobody": 2
       },
       "onsets": 165,
       "maxOnsetError": 0.008461538461533635
@@ -104,63 +104,65 @@
       "genre": "garage",
       "scene": "living:breath-tree",
       "sampleRate": 44100,
-      "peak": 0.8728870153427124,
-      "rmsDb": -10.88641882064573,
+      "peak": 0.8790560960769653,
+      "rmsDb": -11.52464411859912,
       "hotFraction": 0,
       "instrumentHits": {
-        "kick": 14,
-        "velvetbass": 15,
-        "feltpiano": 30,
+        "kick": 13,
+        "organb": 17,
+        "organ": 17,
+        "keys": 36,
         "p_feltmallet": 15,
         "p_cellobody": 6,
         "living:acorde": 6,
         "p_violaswell": 60,
-        "wood": 43,
+        "feltpiano": 20,
+        "wood": 40,
         "rim": 38,
         "p_gutguitar": 71,
-        "rhodes": 22,
-        "hat": 27,
+        "rhodes": 20,
+        "hat": 53,
         "snare": 9,
         "p_softhorn": 1,
-        "p_panreed": 4
+        "p_panreed": 2
       },
       "onsets": 165,
-      "maxOnsetError": 0.00840291773519386
+      "maxOnsetError": 0.007500000000001172
     },
     {
       "genre": "afro",
       "scene": "living:reeds",
       "sampleRate": 48000,
-      "peak": 0.8726958632469177,
-      "rmsDb": -13.971263461208691,
+      "peak": 0.8725748658180237,
+      "rmsDb": -16.235753900330078,
       "hotFraction": 0,
       "instrumentHits": {
-        "kick": 16,
+        "kick": 8,
         "conga": 20,
-        "p_woodybass": 20,
-        "kalimba": 10,
+        "p_woodybass": 26,
         "living:bajo": 6,
         "p_violaswell": 48,
-        "p_gutguitar": 16,
-        "wood": 32,
+        "p_gutguitar": 32,
+        "wood": 44,
         "p_waterdrum": 30,
         "p_cellobody": 48,
-        "p_panreed": 16
+        "p_panreed": 16,
+        "shaker": 16
       },
       "onsets": 132,
-      "maxOnsetError": 0.007468403077567132
+      "maxOnsetError": 0.004718403077567324
     },
     {
       "genre": "nudisco",
       "scene": "living:moth",
       "sampleRate": 44100,
-      "peak": 0.8725656270980835,
-      "rmsDb": -13.389768000502933,
+      "peak": 0.8724748492240906,
+      "rmsDb": -14.655513986076638,
       "hotFraction": 0,
       "instrumentHits": {
         "kick": 16,
-        "p_roundbass": 14,
-        "clav": 45,
+        "p_roundbass": 24,
+        "clav": 52,
         "p_gutguitar": 12,
         "living:lead": 6,
         "p_violaswell": 48,
@@ -168,9 +170,8 @@
         "strings": 32,
         "p_cellobody": 48,
         "hat": 16,
-        "wood": 7,
-        "clap": 8,
-        "cowbell": 2
+        "wood": 8,
+        "clap": 8
       },
       "onsets": 132,
       "maxOnsetError": 0.0017288004253059597

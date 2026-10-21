@@ -1,6 +1,23 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.92**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.93**. Las entradas describen su revisión, no certifican producción.
+
+## Casa viva · C5 · Visitas y cierre · alpha.93
+
+Rama `claude/casa-c5-visitas`, sobre `claude/casa-c4-crece`. Cierra la Casa viva.
+
+- **Visitas:** un código WH2 abre la casa de otra persona con sus adornos y colores. Se recorre y se escucha, pero no se cambia ni se gasta nada. El código no lleva nombre.
+  - Cada casa distinta cuenta una vez para los logros «Puertas abiertas», que ahora dicen «Visita N casas diferentes». Tu propio código no cuenta.
+  - Antes, esos logros no se podían ganar.
+- **Bitácora:** «Ver en tu casa» en Colección y Logros.
+- **Menú:** la tarjeta Casa dice qué hay de nuevo: cuadros nuevos, trofeos nuevos o una cápsula lista.
+- **Accesibilidad:**
+  - un lector de pantalla oye en una frase qué hay en la habitación y qué está cerca;
+  - Enter usa la máquina de cápsulas o la mesa del Taller.
+- **Rendimiento:** 2,7 ms por fotograma en la Casa con todo a la vista, frente a 4,7 ms en el Mundo (móvil 390×844 a 2×, sin sonido).
+- **Pruebas:**
+  - Nuevas: `house-guide.mjs` (Node) y `house_visit_smoke.py` en móvil y computadora.
+  - Cierre completo: 190 conjuntos de Node, auditoría sin errores, 152/152 recorridos de navegador y 54/54 renders de audio.
 
 ## Casa viva · C4 · Crece y juega · alpha.92
 

@@ -1,12 +1,12 @@
 {
   "renders": 3,
-  "maxPeak": 0.8772338628768921,
+  "maxPeak": 0.8809735774993896,
   "rows": [
     {
       "from": "dnb",
       "to": "ambient",
-      "peak": 0.8772338628768921,
-      "rmsDb": -22.863594629602435,
+      "peak": 0.8809735774993896,
+      "rmsDb": -19.763851954114074,
       "hotFraction": 0,
       "tempoFrames": [
         {
@@ -89,21 +89,23 @@
         }
       ],
       "instruments": {
-        "kick": 6,
+        "kick": 4,
         "hat": 16,
-        "p_softreese": 10,
-        "p_bassclarinet": 6,
+        "reese": 24,
+        "keys": 8,
         "p_tinepiano": 3,
-        "wood": 4,
+        "wood": 8,
         "snare": 4,
-        "rim": 2
+        "silkstrings": 9,
+        "p_bassclarinet": 18,
+        "p_gutguitar": 2
       }
     },
     {
       "from": "ambient",
       "to": "dnb",
-      "peak": 0.8743721842765808,
-      "rmsDb": -12.408750724992796,
+      "peak": 0.8798946142196655,
+      "rmsDb": -14.349495661511625,
       "hotFraction": 0,
       "tempoFrames": [
         {
@@ -222,23 +224,23 @@
         }
       ],
       "instruments": {
-        "kick": 50,
-        "hat": 112,
-        "p_softreese": 73,
-        "p_bassclarinet": 30,
+        "silkstrings": 1,
+        "p_bassclarinet": 3,
+        "p_gutguitar": 1,
+        "kick": 36,
+        "hat": 143,
+        "reese": 198,
+        "keys": 56,
         "p_tinepiano": 27,
-        "wood": 28,
-        "snare": 28,
-        "rim": 14,
-        "p_claypot": 10,
-        "resonantpluck": 3
+        "wood": 71,
+        "snare": 36
       }
     },
     {
       "from": "garage",
       "to": "afro",
-      "peak": 0.8747771978378296,
-      "rmsDb": -12.31717047681622,
+      "peak": 0.8765957355499268,
+      "rmsDb": -15.872510305292511,
       "hotFraction": 0,
       "tempoFrames": [
         {
@@ -333,18 +335,20 @@
         }
       ],
       "instruments": {
-        "kick": 56,
-        "p_roundbass": 12,
-        "rhodes": 6,
-        "hat": 12,
+        "kick": 27,
+        "organb": 10,
+        "organ": 10,
+        "rhodes": 8,
+        "hat": 16,
         "snare": 4,
-        "conga": 42,
-        "sub": 43,
-        "p_wireharp": 23,
+        "rim": 6,
+        "conga": 60,
+        "p_woodybass": 61,
+        "p_panreed": 55,
         "p_feltmallet": 39,
-        "shaker": 64,
-        "rim": 14,
-        "p_tinepiano": 12
+        "wood": 36,
+        "shaker": 48,
+        "p_tinepiano": 8
       }
     }
   ]

@@ -98,7 +98,7 @@ export function initialize(runtime){
   runtime.toast('<em>Cápsula</em> · '+name);return prize;}
  // A tap on the machine asks first; a second tap within four seconds turns the knob.
  function tap(hx,hy){const h=runtime.currentHouse?.();if(!h)return false;
-  if(Math.abs(hx-MACHINE.x)<=MACHINE.w/2+4&&hy<=MACHINE.floor&&hy>=MACHINE.floor-MACHINE.h-6){if(h.readOnly||runtime.houseVisiting?.()){runtime.toast('La máquina es de esta casa.');return true;}
+  if(Math.abs(hx-MACHINE.x)<=MACHINE.w/2+4&&hy<=MACHINE.floor&&hy>=MACHINE.floor-MACHINE.h-6){if(h.readOnly||runtime.houseVisiting?.()){runtime.toast('De visita, la máquina no gira.');return true;}
    const now=performance.now();if(now-armedAt<4000){armedAt=-1e9;open();}else{armedAt=now;runtime.toast('Cápsula · '+CAPSULE_PRICE+' ✦. Toca otra vez para girar.');}return true;}
   if((h.unlocked||[]).includes('sotano')&&hx>=WORKBENCH.x0&&hx<=WORKBENCH.x1&&hy>=WORKBENCH.top&&hy<=WORKBENCH.bottom){if(h.readOnly||runtime.houseVisiting?.())return false;
    if(h.workbench!==true){h.workbench=true;runtime.save();}runtime.houseOpenWorkshop?.();return true;}
