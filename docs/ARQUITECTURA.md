@@ -47,6 +47,11 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - Cuadros con las tarjetas más raras (`rarePortrait` convertido en imagen), un trofeo por categoría de logros y vitrinas con las últimas piezas compradas (`pieceImage`).
   - Las voces del jardín se ven como plantas en maceta. Las criaturas vistas pasean por su planta y la mascota sigue al cubo.
   - El pulso (`housePulse`) las hace saltar. Tocar algo lo nombra sin caminar.
+- **Sonido:** `house-audio.js` toca los objetos en su paso del compás y, además:
+  - un ambiente por habitación (`createAmbience`): Sala en silencio, hojas en el Jardín, viento en la Azotea y zumbido en el Sótano, que se apaga al salir, con sonido apagado o con un panel abierto;
+  - pasar junto a un objeto lo toca una vez (`brush`, 22 unidades, 2,5 s de espera por objeto);
+  - el pulso toca la voz del cubo y los cuatro objetos más cercanos en arpegio, y las criaturas cercanas responden con un pío;
+  - los sonidos del cubo comprados en la tienda (`cube-shop-sound.js`) siguen sus pasos en la Casa con `houseMotion`.
 - **Controles:** el render pasa los `dx/dy` del fotograma a la Casa. Las flechas caminan y suben o bajan escaleras; tocar una habitación lleva al cubo hasta allí, cambiando de planta por las escaleras.
 - **Datos:** `S.house` va por la versión 2, la de la casa de muñecas (ver [Casa viva](CASA_VIVA.md)). Conserva los objetos `{kind,room,x,y}`: x es el paso del compás y y la altura en la pared, que marca la nota. Añade `decor`, `tints` y `capsules`, siempre normalizados. La versión 1 se migra en el momento; una versión mayor se abre solo para leer.
 - **Códigos:** WH1 si la casa solo tiene objetos (lo leen versiones anteriores) y WH2 si lleva adornos o colores; se leen los dos.

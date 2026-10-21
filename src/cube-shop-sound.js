@@ -58,13 +58,15 @@ export function drawSoundGlyph(c,id,x,y,s,t,{color='#fff',ink='#fff',alpha=1,cal
 export function initialize(runtime){
  let owner=null,lastT=null,lastX=0,lastY=0,speed=0,stopped=0,lastFast=null,djAt=-1e9,hatPending=-1e9,humPending=-1e9,radioPending=-1e9,eighth=0,glyphAt=-1e9,glyph='',humAt=-1e9,radioAt=-1e9,hatAt=-1e9,cutoff=null,neighbour=null,neighbourAt=-1e9,marks=[],lastMark=null;
  const counts={voice:0,hat:0,hum:0,dj:0,radio:0,step:0,filter:0};
- const q=()=>runtime.sparkEconomy||{},has=id=>runtime.inWorld()&&wearing(q(),id);
+ // The cube sounds wherever it is seen: the World and the house.
+ const here=()=>runtime.inWorld()||!!runtime.houseActive?.(),house=()=>!!runtime.houseActive?.();
+ const q=()=>runtime.sparkEconomy||{},has=id=>here()&&wearing(q(),id);
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
- const surface=()=>(runtime.S.layer||'superficie')==='superficie';
- const live=()=>!!(runtime.S.sound&&runtime.ac&&runtime.bus&&runtime.inWorld()&&!globalThis.document?.hidden&&!openSurface('.modal:not([hidden])'));
+ const surface=()=>!house()&&(runtime.S.layer||'superficie')==='superficie';
+ const live=()=>!!(runtime.S.sound&&runtime.ac&&runtime.bus&&here()&&!globalThis.document?.hidden&&!openSurface('.modal:not([hidden])'));
  const level=x=>runtime.vel?.(x)??x;
  const queue=fn=>{runtime.MU?.q8?.push({fn:time=>{if(live())fn(time);}});};
- const voiceId=()=>{const id=q().wear?.pulseVoice||'';return runtime.inWorld()&&SHOP_VOICES.includes(id)?id:'';};
+ const voiceId=()=>{const id=q().wear?.pulseVoice||'';return here()&&SHOP_VOICES.includes(id)?id:'';};
  // getVoice hands the pulse to a bought voice; the voice keeps its role so loops and budgets treat it the same.
  function pulseVoice(raw){const id=voiceId();return id?Object.freeze({...raw,instrument:'shop:'+id,volume:.82}):null;}
  function play(instrument,n,t,v,frame){
@@ -81,9 +83,9 @@ export function initialize(runtime){
   return neighbour;
  }
  function sample(t){
-  const S=runtime.S;if(owner!==S){owner=S;lastT=null;marks=[];lastMark=null;lastFast=null;}
-  if(lastT===null||t<lastT||t-lastT>500){lastT=t;lastX=S.wx;lastY=S.wy;return 0;}
-  const dt=(t-lastT)/1000,dx=S.wx-lastX,dy=S.wy-lastY,scale=S.layer==='bajo'?8:S.layer==='cielo'?6:1;lastT=t;lastX=S.wx;lastY=S.wy;const moved=Math.hypot(dx,dy)/scale;
+  const S=runtime.S,pos=house()?runtime.houseMotion?.()||{x:S.wx,y:S.wy}:{x:S.wx,y:S.wy};if(owner!==S){owner=S;lastT=null;marks=[];lastMark=null;lastFast=null;}
+  if(lastT===null||t<lastT||t-lastT>500){lastT=t;lastX=pos.x;lastY=pos.y;return 0;}
+  const dt=(t-lastT)/1000,dx=pos.x-lastX,dy=pos.y-lastY,scale=!house()&&S.layer==='bajo'?8:!house()&&S.layer==='cielo'?6:1;lastT=t;lastX=pos.x;lastY=pos.y;const moved=Math.hypot(dx,dy)/scale;
   if(moved>400)return 0;
   speed=speed*.7+moved/Math.max(dt,.001)*.3;stopped=speed<8?stopped+dt:0;
   // Modo DJ: moving fast again in a very different direction soon after, like pulling a record back.
@@ -126,6 +128,6 @@ export function initialize(runtime){
   if(has('sound:filter')&&speed>40)drawSoundGlyph(c,'sound:filter',x,y,s,t,{ink,calm:still,alpha:Math.min(.8,speed/160)});
   if(glyph&&voiceId()===glyph&&fade(glyphAt)>0)drawSoundGlyph(c,glyph,x,y,s,t,{ink,calm:still,alpha:fade(glyphAt)});
  }
- Object.defineProperties(runtime,{cubeShopPulseVoice:{get:()=>pulseVoice},cubeShopFilterTick:{get:()=>filterTick},playCubeShopVoice:{get:()=>play},drawCubeShopSoundUnder:{get:()=>drawUnder},drawCubeShopSoundOver:{get:()=>drawOver},
+ Object.defineProperties(runtime,{cubeShopPulseVoice:{get:()=>pulseVoice},cubeShopFilterTick:{get:()=>filterTick},cubeShopSoundTick:{get:()=>t=>{if(!here())return;const moved=sample(t);sounds(t,moved);}},playCubeShopVoice:{get:()=>play},drawCubeShopSoundUnder:{get:()=>drawUnder},drawCubeShopSoundOver:{get:()=>drawOver},
   cubeShopSounds:{get:()=>()=>({...counts,speed,stopped,cutoff,marks:marks.length,neighbour:neighbour?.region?.key||null})}});
 }

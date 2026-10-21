@@ -2,7 +2,7 @@
 
 Un cubo, un universo y música al viajar. Exploración con una base electrónica, mezclas de otras familias musicales, cristales, rarezas y actividades resueltas con el cubo. Todo lo que ve el jugador dice **Kubono**; el repositorio, el paquete Android y los identificadores internos de guardado y caché conservan WHITEDOT para no perder progreso ni actualizaciones.
 
-Versión del código: **2.3.0-alpha.90**. Estado documental: **20 de octubre de 2026**. Rama de trabajo: `claude/charming-darwin-dvbfc7`, creada desde `main` (`7afd804`); no equivale a main integrado ni a publicación en tiendas. El estado del sitio existente no se verificó en esta revisión.
+Versión del código: **2.3.0-alpha.91**. Estado documental: **20 de octubre de 2026**. Rama de trabajo: `claude/charming-darwin-dvbfc7`, creada desde `main` (`7afd804`); no equivale a main integrado ni a publicación en tiendas. El estado del sitio existente no se verificó en esta revisión.
 
 ## Empezar aquí
 
