@@ -39,7 +39,7 @@ export function initialize(runtime){
  function recover(){if(!runtime.journeyQuiet?.()||!runtime.inWorld?.())return false;const id=biomeId(),c=colors();if(c[id])return false;c[id]=true;if(runtime.save()===false){delete c[id];return false;}reencuentro.at=performance.now();reencuentro.id=id;runtime.enterFx=Math.max(runtime.enterFx||0,1);return true;}
  function applyFilter(){const want=pale()?'saturate(.12) brightness(.92)':'';if(want!==filter){filter=want;const cv=runtime.$('w');if(cv){cv.style.transition='filter 1.6s ease';cv.style.filter=want;}}}
  function draw(t,b){
-  applyFilter();if(!runtime.inWorld?.()||(runtime.S.layer||'superficie')!=='superficie')return;const c=runtime.cx,W=runtime.W,H=runtime.H,id=biomeId(),ink=LANDSCAPES[id]||'#ffffff',still=calm(),beat=still?.4:b||0,shape=shapeOf(id);
+  applyFilter();if(!runtime.inWorld?.()||(runtime.S.layer||'superficie')!=='superficie')return;const c=runtime.cx,W=runtime.W,H=runtime.H,id=biomeId(),ink=runtime.placeColor?runtime.placeColor(id,LANDSCAPES[id]||'#ffffff'):LANDSCAPES[id]||'#ffffff',still=calm(),beat=still?.4:b||0,shape=shapeOf(id);
   c.save();
   // The biome's light, breathing with the beat.
   const g=c.createRadialGradient(W*.5,H*.62,0,W*.5,H*.62,Math.max(W,H)*.75);g.addColorStop(0,rgba(ink,.05+.07*beat));g.addColorStop(1,'rgba(0,0,0,0)');c.globalAlpha=1;c.fillStyle=g;c.fillRect(0,0,W,H);

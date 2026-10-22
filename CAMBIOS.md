@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.101**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.102**. Las entradas describen su revisión, no certifican producción.
+
+## Viaje · Fase 6 · Festival y accesibilidad · alpha.102
+
+Rama `claude/viaje-f6-festival`, sobre `claude/viaje-f5-final`.
+
+- **Build de festival:** `?festival=1` abre los primeros 15 minutos (Camino, Llanura y Lago).
+  - Sin cuenta y siempre en el Viaje; el menú no muestra Cuenta ni el cambio de modo.
+  - Guarda aparte: nunca toca la partida del jugador ni la nube.
+  - Tras el Lago, el Refugio toca tu frase y la deja en pantalla. «Otra persona» empieza de nuevo para quien sigue.
+- **Daltonismo:** «Colores para daltonismo» en Ajustes cambia los colores de lugares y capítulos por una paleta que se distingue con daltonismo. Se recuerda.
+- **Coste:** en el navegador de pruebas el Viaje cuesta lo mismo por fotograma que el Mundo libre. Falta medir en teléfonos reales.
+- **Pruebas:** nuevas `festival-color.mjs` y `festival_smoke.py` (móvil y computadora); `journey-finale.mjs` cubre el final de festival.
 
 ## Viaje · Fase 5 · Momentos firma y final · alpha.101
 
