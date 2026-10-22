@@ -127,6 +127,8 @@ export function initialize(runtime) {
     // Joystick visible mientras arrastras.
     if(runtime.ptr?.ox!=null){const c=runtime.cx;c.globalAlpha=.28;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.arc(runtime.ptr.ox,runtime.ptr.oy,55,0,6.283);c.stroke();c.globalAlpha=.5;c.fillStyle='#fff';c.beginPath();c.arc(runtime.ptr.x,runtime.ptr.y,9,0,6.283);c.fill();c.globalAlpha=1;}
     runtime.drawJourneyLine?.(runtime.cx,runtime.W,runtime.H,t);runtime.drawJourneyChapters?.(runtime.cx,runtime.W,runtime.H,t);
+    // Without vibration (iPhone) a pulse on time makes the cube glow gold for one beat (journey-pulse.js).
+    if(runtime.cubeGlow>0){runtime.cubeGlow=Math.max(0,runtime.cubeGlow-dt/((runtime.SIX||.15)*4));runtime.cx.globalAlpha=runtime.cubeGlow*.9;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=2;runtime.cx.strokeRect(Math.round(runtime.W/2-s/2-4),Math.round(runtime.H/2-s/2-4),Math.round(s+8),Math.round(s+8));runtime.cx.globalAlpha=1;}
     if(runtime.flash>0){runtime.flash=Math.max(0,runtime.flash-dt*2.5);runtime.cx.globalAlpha=runtime.flash*.6;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.2;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,24+(1-runtime.flash)*42,0,Math.PI*2);runtime.cx.stroke();}
     if(runtime.enterFx>0){runtime.enterFx=Math.max(0,runtime.enterFx-dt*.6);const still=runtime.S.reducedMotion||prefersReducedMotion(),k=still?.6:1-runtime.enterFx;runtime.cx.globalAlpha=runtime.enterFx*.35;runtime.cx.strokeStyle=runtime.musicInk?.(null,'acorde')||'#fff';runtime.cx.lineWidth=1.2;
       for(let i=0;i<3;i++){const rr=Math.max(0,k-i*.12)*Math.min(54,runtime.W*.14,runtime.H*.14);runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,rr,0,6.283);runtime.cx.stroke();}

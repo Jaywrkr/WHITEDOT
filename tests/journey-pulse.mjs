@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {THEME,ON_TIME,PULSE_GAP,beatDistance,themePitch,playCello,initialize} from '../src/journey-pulse.js';
+import {THEME,ON_TIME,PULSE_GAP,beatDistance,nearestBeat,heardTime,onTime,outputLatency,themePitch,playCello,initialize} from '../src/journey-pulse.js';
 // The theme: six notes, two bars of eighths, starting and ending on the tonic.
 assert.equal(THEME.length,6);assert.equal(THEME.reduce((a,[,l])=>a+l,0),16);assert.equal(THEME[0][0],0);assert.equal(THEME.at(-1)[0],0);
 // Distance to the nearest beat, including the one that is about to come.
@@ -26,7 +26,20 @@ assert(r.flash>0,'a gold flash answers');
 r.S.haptics=false;clock+=500;r.ac.currentTime+=.5;r.MU.bq=[r.ac.currentTime];r.journeyPulse();assert.equal(vib.length,6,'vibration can be turned off');
 clock+=500;r.ac.currentTime+=.5;r.MU.bq=[r.ac.currentTime];r.journeyPulse();assert.equal(r.journeyPulseState().degree,THEME[1][0],'the next theme degree goes to the pulse');
 clock+=500;r.ac.currentTime+=.25;r.MU.bq=[r.ac.currentTime-.25];r.journeyPulse();assert.equal(r.journeyPulseState().degree,null,'off the beat: no theme degree');
+// Judged when the finger touches, not when it lifts: a touch on the beat lifted 150 ms later is on time; a touch 150 ms
+// early is not. The output latency (headphones) is taken off: a touch 180 ms after a beat heard 180 ms late is on time.
+clock+=500;r.ac.currentTime+=.5;r.MU.bq=[r.ac.currentTime];const touched=clock;clock+=150;r.ac.currentTime+=.15;assert.equal(r.journeyPulse(touched),true,'touched on the beat, lifted later');
+clock+=500;r.ac.currentTime+=.5;r.MU.bq=[r.ac.currentTime+.15];assert.equal(r.journeyPulse(clock),false,'touched 150 ms before the beat');
+clock+=500;r.ac.currentTime+=.5;r.MU.bq=[r.ac.currentTime-.18];r.ac.outputLatency=.18;assert.equal(r.journeyPulse(),true,'Bluetooth delay is taken off');assert.equal(outputLatency(r.ac),.18);r.ac.outputLatency=0;
+assert.equal(outputLatency({outputLatency:5}),.4,'absurd latencies are capped');assert.equal(outputLatency(null),0);
+assert.equal(nearestBeat(1.02,[0,.5,1],.5),1);assert.equal(nearestBeat(1.4,[0,.5,1],.5),1.5,'the next beat counts');assert.equal(nearestBeat(1,[],.5),null);
+assert.equal(heardTime({currentTime:2,outputLatency:.1},900,1000),2-.1-.1);assert.equal(onTime({currentTime:2},[2.07],.5,1000,1000),true);assert.equal(onTime({currentTime:2},[2.09],.5,1000,1000),false,'one window for the whole game');
+// On time, the state carries the theme note and the beat it answers; without vibration the cube glows instead.
+clock+=500;r.ac.currentTime+=.5;r.MU.bq=[r.ac.currentTime];Object.defineProperty(globalThis,"navigator",{value:{},configurable:true});r.cubeGlow=0;r.S.haptics=true;assert.equal(r.journeyPulse(),true);
+const st=r.journeyPulseState();assert(Number.isFinite(st.midi)&&st.beat===r.MU.bq[0]&&Array.isArray(st.scale));assert.equal(r.cubeGlow,1,'iPhone: the cube glows gold');
+// A pulse the finger sent too soon leaves a faint mark instead of vanishing.
+const before=r.journeyPulseState().marks;r.journeyPulseDropped();assert.equal(r.journeyPulseState().marks,Math.min(24,before+1));
 // The Line draws on an inert canvas.
 const c=new Proxy({},{get:(o,k)=>k in o?o[k]:()=>{},set:(o,k,v)=>{o[k]=v;return true;}});globalThis.document={querySelector:()=>null,querySelectorAll:()=>[]};r.drawJourneyLine(c,390,844,0);
 performance.now=realNow;
-console.log('PASS journey pulse: six-note theme in two bars, on-time window '+ON_TIME*1000+' ms, theme notes in every scale and range, phrase every six hits, vibration and its setting, the theme in the voice of the pulse, the Line draws');
+console.log('PASS journey pulse: six-note theme in two bars, on-time window '+ON_TIME*1000+' ms, theme notes in every scale and range, phrase every six hits, vibration and its setting, judged at the touch with the headphones delay taken off, one window for the game, a glow without vibration, dropped pulses marked, the Line draws');

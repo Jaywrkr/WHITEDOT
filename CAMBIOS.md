@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.128**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.129**. Las entradas describen su revisión, no certifican producción.
+
+## Fase 1 · El pulso justo · alpha.129
+
+Rama `claude/fase1-pulso`, sobre `claude/fase0-base` (alpha.128, dependencia explícita).
+
+El pulso a tiempo es el verbo del juego; la auditoría encontró que era injusto y que no sonaba a tema.
+
+- **Se juzga al tocar:** el acierto cuenta cuando el dedo toca, no cuando se levanta (antes el táctil iba siempre tarde frente al teclado).
+- **Descuenta los auriculares:** el juicio y el cursor de la Línea restan la latencia de salida del dispositivo (Bluetooth incluido).
+- **Un solo margen:** ±80 ms para el Viaje, los rituales de portal, los retos y el groove (antes ±60 y ±90).
+- **El tema suena:** cada acierto toca al instante la nota exacta del tema con un instrumento melódico del lugar, y luego su tercera y su quinta. Antes la nota se movía con el acorde y en más de la mitad de las regiones el pulso era percusión o acordes. En el Camino el acierto ya suena distinto del fallo.
+- **Ningún toque se pierde:** un toque cuenta hasta 450 ms (antes 240) y un pulso demasiado seguido deja una marca gris en la Línea.
+- **iPhone:** sin vibración, el cubo brilla en dorado durante un tiempo.
+- **Dedo quieto y luego caminar:** si el dedo descansa y abre el escáner, al moverlo el escáner se cierra y el cubo camina (antes no se movía).
+- Pendiente: escucha y prueba de Jay en iPhone con auriculares; medir la latencia real en dispositivos.
+- Verificación local: 209 suites Node, 11 recorridos de navegador y 3 mezclas de audio en PASS. `guide_smoke.py` falló una vez esperando el Mundo tras recargar y pasó en las dos repeticiones con el mismo código: queda anotado como recorrido inestable.
 
 ## Fase 0 · Base protegida · alpha.128
 

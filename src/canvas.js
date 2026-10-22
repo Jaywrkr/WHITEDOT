@@ -42,7 +42,9 @@ export function initialize(runtime) {
   addEventListener("pointermove",e=>{
     if(runtime.housePointerMove?.(e))return;
     if(runtime.fingerTouch&&(runtime.glassPointerMove?.(e)||runtime.materiaPointerMove?.(e)||runtime.vidaPointerMove?.(e)||runtime.mirrorPointerMove?.(e)||runtime.depthMove?.(e)||runtime.encounterMove?.(e)||runtime.ecologyMove?.(e)||runtime.creativePointerMove?.(e)))return;
-    if(e.pointerId!==activePointer||held||!runtime.tapStart)return;
+    if(e.pointerId!==activePointer||!runtime.tapStart)return;
+    // A finger that rested long enough to open the scanner and then moves wants to walk: close the scanner and walk.
+    if(held){if(Math.hypot(e.clientX-runtime.tapStart.x,e.clientY-runtime.tapStart.y)<20)return;held=false;runtime.stopScanner();runtime.tapStart={...runtime.tapStart,x:e.clientX,y:e.clientY};}
     if(Math.hypot(e.clientX-runtime.tapStart.x,e.clientY-runtime.tapStart.y)>=14){if(!dragging&&fromOverlay)runtime.audio();dragging=true;cancelHold();}
     if(runtime.inWorld()&&dragging){
       // Joystick flotante: la dirección es hacia donde mueves el dedo desde donde empezaste, en cualquier parte de la pantalla.
@@ -56,7 +58,7 @@ export function initialize(runtime) {
     if(runtime.fingerTouch&&(runtime.glassPointerUp?.(e)||runtime.materiaPointerUp?.(e)||runtime.vidaPointerUp?.(e)||runtime.mirrorPointerUp?.(e)||runtime.depthUp?.(e)||runtime.encounterUp?.(e)||runtime.ecologyUp?.(e)||runtime.creativePointerUp?.(e)))return;
     if(e.pointerId!==activePointer)return;
     cancelHold();
-    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<240&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!openSurface('.modal:not([hidden])')){if(!runtime.fingerTouch||(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY)&&!runtime.creativeTap?.(e.clientX,e.clientY)))runtime.sonar();}   // sin modo dedo, un toque siempre es el pulso del cubo
+    if(e.type==="pointerup"&&!held&&!dragging&&!fromOverlay&&runtime.tapStart&&performance.now()-runtime.tapStart.t<450&&!blocked(document.elementFromPoint(e.clientX,e.clientY))&&!openSurface('.modal:not([hidden])')){if(!runtime.fingerTouch||(!runtime.tapEcho?.(e.clientX,e.clientY)&&!runtime.tapMirror?.(e.clientX,e.clientY)&&!runtime.tapPatch?.(e.clientX,e.clientY)&&!runtime.creativeTap?.(e.clientX,e.clientY)))runtime.sonar('player',runtime.tapStart.t);}   // sin modo dedo, un toque siempre es el pulso del cubo
     runtime.stopScanner();runtime.tapStart=null;ptr=null;activePointer=null;held=dragging=fromOverlay=false;
   };
   addEventListener("pointerup",up);addEventListener("pointercancel",up);cv.addEventListener("lostpointercapture",up);

@@ -37,6 +37,11 @@ try:
    if state()['inWorld']:break
    walk(8);tap()
   s=state();assert s['inWorld'] and s['crystals']>=10,('ten crystals open the World',s)
+  # In the World a finger that rests (the scanner opens at 0.5 s) and then moves still walks the cube.
+  page.wait_for_timeout(600);x0=page.evaluate('__r.S.wx');touch('touchStart',195,422);page.wait_for_timeout(700)
+  for i in range(16):touch('touchMove',195+i*8,422);page.wait_for_timeout(60)
+  page.wait_for_timeout(500);touch('touchEnd');page.wait_for_timeout(200)
+  moved=page.evaluate('__r.S.wx')-x0;assert moved>100,('a resting finger that moves walks',moved);assert not page.evaluate('!!__r.scanning'),'the scanner closed'
   # One frame that throws must not freeze the game: frames keep coming and the error reaches the error log.
   page.evaluate("()=>{const c=__r.cx,fill=c.fillRect;c.fillRect=function(){c.fillRect=fill;throw new Error('fase0: one failing frame');};}")
   page.wait_for_timeout(300);start=page.evaluate('window.__frames');page.wait_for_timeout(1500);ran=page.evaluate('window.__frames')-start
@@ -44,5 +49,5 @@ try:
   assert 'fase0: one failing frame' in page.evaluate("localStorage.getItem('kubono:errores')||''"),'the error is still recorded'
   errors=[e for e in errors if 'fase0: one failing frame' not in e];assert not errors,errors
   browser.close()
- print('PASS a real player on a phone: Journey by default, real touch walks the Camino, taps break its ten crystals and open the World, and a failing frame does not freeze the game',flush=True)
+ print('PASS a real player on a phone: Journey by default, real touch walks the Camino, taps break its ten crystals and open the World, a resting finger still walks, and a failing frame does not freeze the game',flush=True)
 finally:server.shutdown()

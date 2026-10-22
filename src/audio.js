@@ -1,3 +1,4 @@
+import {onTime} from './journey-pulse.js';
 import {createTerritoryJourney,approachJourneyTempo} from './territory-journey.js';
 import {approachTempo,transitionGain,sparseFoundationGain} from './territory-transition.js';
 import {createMusicalConductor} from './musical-conductor.js';
@@ -330,7 +331,8 @@ export function initialize(runtime) {
     let n=sc[i];if((MU.step+1)%4===0)n=snap(n,chordTones());
     MU.mel=n;return n;
   }
-  function onBeatNow(){if(!ac)return false;const n=ac.currentTime;let best=9;MU.bq.forEach(b=>best=Math.min(best,Math.abs(n-b)));const l=MU.bq[MU.bq.length-1];if(l!==undefined)best=Math.min(best,Math.abs(n-(l+SIX*4)));return best<.09;}
+  // On time for rituals, challenges and the groove: the same window and latency as the Journey (journey-pulse.js).
+  function onBeatNow(atMs){return onTime(ac,MU.bq,SIX*4,atMs,performance.now());}
   let grooveFx=0;
   function playerNote(v=.1,gold=false){
     if(!ac)return;

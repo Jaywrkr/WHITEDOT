@@ -62,7 +62,7 @@ Seis notas en **grados de la escala** (0 = tónica) y duraciones en corcheas, do
 | Grado | 0 | 1 | 4 | 3 | 2 | 0 |
 | Corcheas | 3 | 1 | 4 | 2 | 2 | 4 |
 
-- **La voz del tema es la del pulso:** el pulso a tiempo toca la siguiente nota del tema con el instrumento del lugar y responde con un arpegio corto (tercera y quinta) en la rejilla del ritmo, un poco más fuerte que un pulso fuera de tiempo. No hay un sintetizador aparte. En la Plenitud, el final y el acompañante el tema suena con un tono suave (triángulo y seno, sin diente de sierra): la sierra grave con vibrato sonaba como una bocina sobre la música.
+- **El tema en tus manos:** el pulso a tiempo toca al instante la siguiente nota exacta del tema con un instrumento melódico del lugar (si el pulso del lugar es de percusión o bajo, el género presta uno de sus instrumentos principales) y responde con su tercera y su quinta en la rejilla. El acierto se juzga al tocar, descontando el retraso de los auriculares, con un margen de ±80 ms igual en todo el juego. En el Camino el acierto también suena distinto del fallo. No hay un sintetizador aparte. En la Plenitud, el final y el acompañante el tema suena con un tono suave (triángulo y seno, sin diente de sierra): la sierra grave con vibrato sonaba como una bocina sobre la música.
 - **Se reharmoniza con la escala de cada capítulo:**
   - Camino y Llanura: menor, en La;
   - Lago: lidio, en Do;

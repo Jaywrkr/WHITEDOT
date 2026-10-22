@@ -129,14 +129,15 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 `journey-pulse.js` juzga cada pulso del jugador en el Camino y el Mundo ([El Viaje](VIAJE.md)).
 
-- **Siempre suena:** el pulso entra en la rejilla como siempre. Entre dos pulsos debe haber 240 ms (antes 700), solo para que un dedo no inunde la cola.
-- **A tiempo** (±60 ms del pulso, con `MU.bq`):
-  - toca la siguiente nota del **tema del cubo** (`THEME`: seis grados y dieciséis corcheas) con la voz del pulso del lugar: `journeyPulse` devuelve si fue a tiempo y `interactions.js` pasa el grado del tema a `playVoice('pulso', …)` con `source.accent`, que cambia la respuesta por un arpegio (tercera y quinta) en la misma voz, sin sintetizador aparte;
-  - vibra con `navigator.vibrate`, si el ajuste «Vibración» lo permite;
+- **Siempre suena:** fuera de tiempo el pulso entra en la rejilla como siempre. Entre dos pulsos debe haber 240 ms; un pulso demasiado seguido deja una marca gris tenue en la Línea (`journeyPulseDropped`) en vez de desaparecer.
+- **Cuándo se juzga:** en el momento en que el dedo toca (`canvas.js` pasa `tapStart.t` a `sonar`), no al soltarlo, y descontando la latencia de salida (`outputLatency`, hasta 0,4 s): el jugador contesta a lo que oye, no a lo que el reloj programó. Un toque cuenta hasta 450 ms; el escáner se abre a los 500 ms y, si el dedo luego se mueve, se cierra y el cubo camina.
+- **A tiempo** (±80 ms, `ON_TIME`; el mismo margen y la misma latencia para rituales de portal, retos «pulsos» y el groove vía `onTime`/`onBeatNow`):
+  - toca **al instante** la siguiente nota del **tema del cubo** (`THEME`), exacta, sin moverla por el acorde ni por el grado de la región: `voices.js` `playTheme` usa la voz del pulso si es melódica y, si es de percusión o bajo, un instrumento principal del género elegido por hash de la región; después la tercera y la quinta en la rejilla. En el Camino toca la nota del tema con el `pluck`;
+  - vibra con `navigator.vibrate`, si el ajuste «Vibración» lo permite; sin vibración (iPhone) el cubo brilla en dorado un tiempo (`cubeGlow`);
   - deja un destello dorado;
   - seis aciertos completan la frase, con una vibración distinta.
 - **Fuera de tiempo:** solo suena el pulso de siempre.
-- **La Línea:** una línea fina en el 80 % de la altura dibuja el compás (16 marcas), un cursor dorado en el paso actual y un pico por cada pulso: dorado y alto si fue a tiempo, blanco y bajo si no. No aparece con paneles abiertos ni en actividades.
+- **La Línea:** una línea fina en el 80 % de la altura dibuja el compás (16 marcas), un cursor dorado en el paso que se oye (reloj menos latencia) y un pico por cada pulso: dorado y alto si fue a tiempo, blanco y bajo si no. No aparece con paneles abiertos ni en actividades.
 - **Datos:** el tema es dato fijo y no consume el RNG antiguo. El juicio solo guarda contadores de sesión; el guardado solo recibe `S.haptics`.
 
 ## Refugio (antes Casa)
