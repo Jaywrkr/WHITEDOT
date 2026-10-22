@@ -19,6 +19,7 @@ Actualizada el 20 de octubre de 2026. Este índice distingue estado actual, deci
 | [Tienda del cubo](TIENDA_DEL_CUBO.md) | Catálogo aprobado de piezas compradas con chispas, ranuras, precios y orden de construcción por tandas |
 | [Verificación](VERIFICACION.md) | Pruebas enfocadas frente a cierre completo, CI y límites de evidencia |
 | [Plan de lanzamiento](PLAN_LANZAMIENTO.md) | Único catálogo vigente de entregables D01–D22 y decisiones comerciales |
+| [Material de tienda](TIENDAS.md) | Fichas ES/EN, capturas, iconos, clips, guion de tráiler, landing y press kit (borradores) |
 | [Configuración de producción](CONFIGURACION_PRODUCCION.md) | Controles aplicados, proveedores/correo pendientes y retención |
 | [Privacidad](PRIVACIDAD.md) | Borrador no publicado, público 16+, tratamiento y plazos aprobados |
 | [Eliminación](ELIMINACION_DATOS.md) | Borrado online actual, copias locales conservadas y procedimiento de soporte pendiente |
