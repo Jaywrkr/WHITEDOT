@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.103**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.104**. Las entradas describen su revisión, no certifican producción.
+
+## Viaje · Momentos de los capítulos 1–3 · alpha.104
+
+Rama `claude/viaje-f8-momentos`, sobre `claude/viaje-f7-medida`.
+
+- **Llanura:** un faro a lo lejos con su propia voz, que crece al acercarte. Al llegar, late con el compás.
+- **Lago:** cinco lotos alrededor. Una nota a tiempo junto a uno lo abre y responde una quinta arriba.
+- **Bosque:** la primera criatura que te sigue. Repite tus notas una octava abajo y te acompaña hasta el Vacío, donde no puede entrar.
+- **Sin palabras:** en el Viaje el Mundo ya no muestra pistas ni etiquetas escritas, ni avisos de voz. El Mundo libre las conserva.
+- **Final:** bajo el tema suenan un latido y la criatura que te siguió. Render de 25 s con pico 0,53, sin saturación.
+- **Pruebas:** nuevas `journey-moments.mjs` y `journey_moments_smoke.py` (móvil y computadora).
 
 ## Viaje · Fase 7 · Medida · alpha.103
 
