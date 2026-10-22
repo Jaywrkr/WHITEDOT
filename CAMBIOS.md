@@ -1,6 +1,14 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.123**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.124**. Las entradas describen su revisión, no certifican producción.
+
+## Superbiomas: los bordes · alpha.124
+
+Rama `claude/super-bordes`, sobre `claude/super-fusion` (alpha.123). Fase 16 de [El universo](docs/UNIVERSO.md).
+
+- **Sigue a la música de verdad:** el movimiento de las capas usa la familia que está sonando, no la del suelo bajo el cubo, así que cambia cuando cambia la música.
+- **En el compás:** al pasar de un superbioma a otro, el cambio espera al primer tiempo del compás y se mezcla durante un compás entero.
+- **Sin cambios a medias:** si vuelves antes del primer tiempo, no cambia nada.
 
 ## Superbiomas: la fusión · alpha.123
 
