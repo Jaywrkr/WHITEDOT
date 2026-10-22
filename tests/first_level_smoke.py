@@ -22,6 +22,8 @@ try:
    page.wait_for_function('__testRuntime.firstJourneyState.next==="light"')
    page.wait_for_function('document.getElementById("firstJourney").dataset.step==="light"&&document.getElementById("firstJourneyProgress").textContent.includes("/10")')
    page.locator('#firstJourneyText').wait_for(state='visible')
+   # The text changes a moment after the step on a slow machine: wait for it rather than read it once.
+   page.wait_for_function('document.getElementById("firstJourneyText").innerText.includes("cristales")',timeout=5000)
    assert 'cristales' in page.locator('#firstJourneyText').inner_text();assert '/10' in page.locator('#firstJourneyProgress').inner_text()
    for i in range(10):
     if page.evaluate('__testRuntime.inWorld()'):break

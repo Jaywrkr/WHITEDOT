@@ -24,8 +24,9 @@ try:
    assert report['crossings']==5 and report['maxJump']<8,report
    assert report['cache']<=48 and report['blackEdge']==0 and report['near']==1,report
    assert report['shell']>1,report
-   page.evaluate('()=>{const r=__testRuntime;window.__trailCount=r.visualDetail.footprints;window.__oldPosition=[r.S.wx,r.S.wy];}')
-   page.locator('#bMenu').click();page.wait_for_timeout(200)
+   page.evaluate('()=>{const r=__testRuntime;window.__oldPosition=[r.S.wx,r.S.wy];}')
+   # Count once the menu is open: a slow machine can draw a frame between the click and the pause.
+   page.locator('#bMenu').click();page.wait_for_timeout(100);page.evaluate('()=>{window.__trailCount=__testRuntime.visualDetail.footprints;}');page.wait_for_timeout(300)
    assert page.evaluate('__testRuntime.visualDetail.footprints')==page.evaluate('__trailCount'),'menu must pause footprints'
    page.locator('#mnClose').click()
    page.screenshot(path=f'/tmp/whitedot-v2-f1-world-{width}.png')

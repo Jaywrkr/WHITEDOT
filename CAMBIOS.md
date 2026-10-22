@@ -2,6 +2,15 @@
 
 Estado: 22 de octubre de 2026. Código **2.3.0-alpha.120**. Las entradas describen su revisión, no certifican producción.
 
+## CI de navegador estable · sin versión
+
+Rama `claude/ci-navegador`, sobre `main` (alpha.120). Solo pruebas; el juego no cambia.
+
+En GitHub fallaban dos recorridos que en local pasan, por tiempos de una máquina lenta:
+
+- `first_level_smoke.py` leía el texto del primer paso una sola vez; ahora espera a que diga «cristales».
+- `world_visibility_smoke.py` contaba las huellas antes de abrir el menú, y en ese intervalo podía caducar o sumarse una; ahora cuenta con el menú ya abierto y comprueba que no cambien.
+
 ## El acento del pulso a tiempo · alpha.120
 
 Rama `claude/pulso-acento`, sobre `main` (alpha.119).
