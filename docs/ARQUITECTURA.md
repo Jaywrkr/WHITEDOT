@@ -84,8 +84,6 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 **Universo:** las 11 regiones conservan sus ids y cambian de nombre y color (`data.js`, `house-view.js` `LANDSCAPES`, `ecology-model.js`, `ecoregions.js`); ver [El universo](UNIVERSO.md). El final del Viaje toma sus colores de `LANDSCAPES`.
 
-**Voz del pulso:** el pulso del jugador no usa el instrumento del lugar: `voices.js` le da la campana del cubo (`cube-bell.js`, `cube:bell`, La4–La5) y la toca `playCubeBell`. Las voces compradas (`cube-voice.js`, tienda) parten de ese registro. Así se oye en el altavoz de un celular.
-
 **Tempo de los géneros:** el mapa elige el género de cada lugar por su campo de tempo (`neighborhoods.js`, `continents.js`). Cuando un género cambia su rango para sonar distinto, `genre-tempo.js` conserva el rango original (`PICK_BPM`) para elegir y para el tempo guardado de cada lugar, así el mapa queda idéntico. Al sonar, `audio.js` y el aviso de lugar usan `soundingBpm`, que lleva ese tempo al mismo punto del rango nuevo. `genre-map.mjs` lo fija con una huella de `main`.
 
 **Momentos raros:** `universe-rare.js` decide por hash de región y compás si llega el momento raro de la región; `universe-layers.js` lo llama cada fotograma (`universeRareTick`). Lo visto se cuenta en `S.universe.rare`.
@@ -129,7 +127,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 - **Siempre suena:** el pulso entra en la rejilla como siempre. Entre dos pulsos debe haber 240 ms (antes 700), solo para que un dedo no inunde la cola.
 - **A tiempo** (±60 ms del pulso, con `MU.bq`):
-  - toca la siguiente nota del **tema del cubo** (`THEME`: seis grados y dieciséis corcheas) con su voz propia, `playCello`, en la escala y transposición del lugar;
+  - toca la siguiente nota del **tema del cubo** (`THEME`: seis grados y dieciséis corcheas) con la voz del pulso del lugar: `journeyPulse` devuelve si fue a tiempo y `interactions.js` pasa el grado del tema a `playVoice('pulso', …)`, sin sintetizador aparte;
   - vibra con `navigator.vibrate`, si el ajuste «Vibración» lo permite;
   - deja un destello dorado;
   - seis aciertos completan la frase, con una vibración distinta.

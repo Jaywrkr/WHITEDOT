@@ -1,12 +1,12 @@
 {
   "renders": 3,
-  "maxPeak": 0.8813516497612,
+  "maxPeak": 0.8813517689704895,
   "rows": [
     {
       "from": "dnb",
       "to": "ambient",
       "peak": 0.8776708841323853,
-      "rmsDb": -20.087823260110227,
+      "rmsDb": -20.08781745163624,
       "hotFraction": 0,
       "tempoFrames": [
         {
@@ -104,8 +104,8 @@
     {
       "from": "ambient",
       "to": "dnb",
-      "peak": 0.8813516497612,
-      "rmsDb": -14.055705566409088,
+      "peak": 0.8813517689704895,
+      "rmsDb": -14.055722132517625,
       "hotFraction": 0,
       "tempoFrames": [
         {
@@ -245,8 +245,8 @@
     {
       "from": "garage",
       "to": "afro",
-      "peak": 0.8765953183174133,
-      "rmsDb": -15.872506789612949,
+      "peak": 0.8765959143638611,
+      "rmsDb": -15.872493928623463,
       "hotFraction": 0,
       "tempoFrames": [
         {

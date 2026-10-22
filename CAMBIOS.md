@@ -1,19 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.117**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.118**. Las entradas describen su revisión, no certifican producción.
 
-## El pulso en el celular · alpha.117
+## El pulso a tiempo · alpha.118
 
-Rama `claude/pulso-celular`, sobre `main`.
+Rama `claude/pulso-tiempo`, sobre `main` (alpha.117).
 
-En un teléfono, tocar el pulso sonaba como una silla arrastrándose o un pito de camión. Medido en el juego real:
+Jay encontró el sonido que molestaba en el iPhone con auriculares: aparecía al pulsar **a tiempo**, cuando la marca de la Línea se vuelve dorada. Era el chelo sintetizado del tema (una sierra grave con vibrato), que sonaba como una bocina o una silla arrastrándose.
 
-- **Causa:** el pulso tomaba el instrumento del género del lugar (23 distintos: bajos, arco, sierra, órgano…) y entre el 60 % y el 99 % de su sonido quedaba por debajo de 300 Hz, donde el altavoz de un celular casi no suena. Solo llegaba el roce del bajo o los armónicos ásperos. Al tocar a tiempo, además sonaba la voz del tema, una sierra grave: el 70 % bajo 300 Hz.
-- **El pulso es la campana del cubo:** una voz fija, limpia y corta (seno con su octava que se apaga rápido), entre La4 y La5 y siempre en la escala del lugar. En el juego, el 100 % de su sonido queda donde suena un celular, en los ocho géneros medidos (`cube-bell.js`).
-- **La voz del tema:** onda triangular con octava senoidal, sin sierra, una octava más alta (Do4–Mi5). En un celular llega el 56 % (antes, el 16 %).
-- **Voces de pulso compradas:** suben a 64–79, donde se oyen en el celular.
-- **Pruebas:** nueva `pulse_phone_mix.py` (campana y tema en un altavoz de celular, sin saturación); `voices.mjs`, `wardrobe.mjs`, `musical_character.mjs` y `journey-pulse.mjs` siguen el nuevo registro.
-- **Pendiente:** los objetos que responden a la onda del pulso usan los instrumentos del lugar; en IDM, Tribal o Deep casi todo es grave (93–99 % bajo 300 Hz) y en un celular puede seguir raspando.
+- **Sin sintetizador aparte:** el pulso a tiempo toca la siguiente nota del tema con su propia voz, el instrumento del lugar.
+- **El tema en la Plenitud, el final y el acompañante:** el mismo chelo pero suave, triángulo y seno sin diente de sierra.
+- **Se deshace alpha.117:** el pulso vuelve a la voz de la región, como antes; se retiran la campana del cubo y el cambio de registro de las voces compradas.
+- La marca dorada, el destello, la vibración y la frase de seis aciertos no cambian.
 
 ## Universo · Sin restos terrestres · alpha.116
 

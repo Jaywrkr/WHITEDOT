@@ -34,8 +34,7 @@ for(let x=0;x<30;x++) {
  const region=runtime.regionOfPos(x*3600+900,900);
  const profile=createRegionalVoices(region,runtime.BIOMES,runtime.GEN,runtime.seedOf,runtime.rng);
  for(const [kind,rawVoice]of Object.entries(profile)) {
-  // The pulse is the cube's own bell (cube-bell.js): its range is its own, not the genre's.
-  const voice=kind==='pulso'?runtime.getVoice(kind,region):hybridRegister(voiceRegister(rawVoice,region.genre),hybridIdentity(region,runtime.seedOf,runtime.rng));
+  const voice=hybridRegister(voiceRegister(rawVoice,region.genre),hybridIdentity(region,runtime.seedOf,runtime.rng));
   calls.length=0;runtime.playVoice(kind,3,1,region,true);
   assert(calls.length>0);
   for(const call of calls)if(call.n!==undefined) {

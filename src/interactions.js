@@ -25,8 +25,8 @@ export function initialize(runtime) {
     origin=origin==='ambient'?'ambient':'player';
     if(origin==='player'){runtime.cubeShopTap?.();runtime.cubeShopWildTap?.();}
     if(runtime.S.mode==="studio"){if(origin==="player")runtime.housePulse?.();return;}runtime.audio();const ms=performance.now();if(ms-lastSonar<240)return;lastSonar=ms;
-    // Playing on time: the theme answers a pulse on the beat (journey-pulse.js); the grid places every pulse.
-    if(origin==='player'&&(runtime.inWorld()||runtime.S.mode==='camino'))runtime.journeyPulse?.();
+    // Playing on time: a pulse on the beat plays the next theme note in its own voice (journey-pulse.js); the grid places every pulse.
+    const theme=origin==='player'&&(runtime.inWorld()||runtime.S.mode==='camino')&&runtime.journeyPulse?.()===true?runtime.journeyPulseState().degree||0:0;
     if(origin==='player'&&runtime.inWorld())runtime.universePulse?.();
     if(origin==='player'){runtime.markInput?.();runtime.visualGesture?.();}
     if(origin==='player')runtime.firstJourneyEvent?.('pulse');
@@ -40,7 +40,7 @@ export function initialize(runtime) {
     const look=origin==='player'&&runtime.inWorld()?runtime.cubeShopPulseLook?.()||'':'',charge=look==='pulse:charged'?Math.min(1,(ms-lastLook)/4000):0;if(look)lastLook=ms;
     waves.push({x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0,origin,form:look?PULSE_FORMS[0]:runtime.inWorld()?selectedPulse(runtime.S):selectedPulse({}),look,charge,color:runtime.inWorld()?runtime.cubeColor?.():null});
     if(origin==='player'&&runtime.inWorld()&&runtime.RP&&runtime.RP.type==="pulsos"){runtime.RP.pst=runtime.onBeatNow()?runtime.RP.pst+1:0;runtime.retoSet("pulsos",runtime.RP.pst);}
-    runtime.MU.act+=.25;runtime.pulse=Math.max(runtime.pulse,.6);runtime.soon(t=>{if(runtime.inWorld())runtime.playVoice('pulso',0,t,runtime.regionOfPos(x,y),true,1,{x,y},origin);else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08),2));}},origin);
+    runtime.MU.act+=.25;runtime.pulse=Math.max(runtime.pulse,.6);runtime.soon(t=>{if(runtime.inWorld())runtime.playVoice('pulso',theme,t,runtime.regionOfPos(x,y),true,1,{x,y},origin);else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08),2));}},origin);
   }
   function boing(m,t,v){const o=runtime.ac.createOscillator(),g=runtime.ac.createGain();o.type="sine";o.frequency.setValueAtTime(runtime.hz(m+12),t);o.frequency.exponentialRampToValueAtTime(runtime.hz(m),t+.12);runtime.env(g,t,.004,v,.35);o.connect(g).connect(runtime.bus);const sv=runtime.ac.createGain();sv.gain.value=.3;g.connect(sv).connect(runtime.verbIn);o.start(t);o.stop(t+.5);}
   function propSound(k,i,t,region){runtime.playVoice(k,i,t,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy));}
