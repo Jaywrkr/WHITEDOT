@@ -17,6 +17,8 @@ Rama `claude/viaje-f2-entrada`, sobre `claude/viaje-f1-pulso`.
 - **Pruebas:**
   - nuevas: `journey-mode.mjs` y `journey_entry_smoke.py`, que simula a un jugador nuevo real en móvil y computadora;
   - `account_flow_smoke` prueba la cuenta opcional: entrar sin cuenta, registrarse desde el menú con el progreso local conservado, sesión lenta, sesión caducada y juego local recordado.
+  - `cloud_account_smoke` y `cloud_delete_smoke` siguen la cuenta opcional (sin configuración se juega local; tras borrar la cuenta se sigue en local).
+  - Catálogo de navegador: 151 de 154 en la primera pasada; las dos de nube pasan tras actualizarlas. `world_visibility_smoke` falla igual en la base anterior al Viaje (las huellas caducan a los 12 s mientras corre la prueba en computadora): no es de esta fase.
 
 ## Viaje · Fase 1 · El pulso · alpha.97
 
