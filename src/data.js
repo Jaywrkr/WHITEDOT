@@ -71,7 +71,7 @@ export function initialize(runtime) {
   const EXTRA_GPOOL={llanura:["progressive","microhouse"],bosque:["microhouse","dnb"],lago:["progressive","dubstep"],ruinas:["minimaltechno","electro"],jardin:["microhouse","progressive"],dunas:["electro","dubstep"],cristales:["electro","dnb"],faros:["progressive","minimaltechno"],tormenta:["minimaltechno","dnb","dubstep"],cueva:["dubstep","minimaltechno"],vacio:[]};
   const FILL=[[.15,"Casi vacío"],[.45,"Escaso"],[1,"Normal"],[1.7,"Lleno"],[2.6,"Muy lleno"]];
   const PROPK={llanura:"piedra",bosque:"hongo",jardin:"campanilla",dunas:"cactus",tormenta:"antena",cueva:"gota",vacio:"astro"};
-  const SPECIES=[["luciernaga","Luciérnagas","Huyen si te acercas. Si las tocas, suenan."],["arbol","Árboles de luz","Crecen en el bosque y brillan cuando pasas."],["estanque","Agua","Bajo el agua todo suena distinto."],["bandada","Bandadas","Cruzan el cielo. Vuela con ellas."],["caminante","Caminantes","Si te quedas cerca, te siguen y cantan contigo."]];
+  const SPECIES=[["luciernaga","Motas vivas","Huyen si te acercas. Si las tocas, suenan."],["arbol","Estrellas fijas","Laten en el Cúmulo y brillan cuando pasas."],["estanque","Ondas","Dentro de una onda todo suena distinto."],["bandada","Enjambres","Cruzan el espacio. Viaja con ellos."],["caminante","Caminantes","Si te quedas cerca, te siguen y cantan contigo."]];
   const ACH=[
    ["fosilRitmo","Un pulso antiguo","Despertaste un fósil de ritmo raro.",1],
    ["elementos10","Diez maneras de escuchar","Descubriste diez familias de elementos."],
@@ -93,8 +93,8 @@ export function initialize(runtime) {
    ["fx_chorus","Doble","Activaste el chorus."],
    ["fx_phaser","Fase","Activaste el phaser."],
    ["fx_freeze","Congelado","Congelaste un instante de música."],
-   ["bandada1","Te contestaron","Una bandada te devolvió tu llamada."],
-   ["bandadaAmiga","Confianza","Te quedaste quieto y una bandada vino a cantar a tu lado."],
+   ["bandada1","Te contestaron","Un enjambre te devolvió tu llamada."],
+   ["bandadaAmiga","Confianza","Te quedaste quieto y un enjambre vino a cantar a tu lado."],
    ["luciernagasSync","Al unísono","Las luciérnagas se sincronizaron contigo.",1],
    ["aveLira","Ave lira","Encontraste un ave lira: la que imita todo.",1],
    ["experimental1","Otro modo de escuchar","Entraste en una zona de música experimental."],
@@ -108,10 +108,10 @@ export function initialize(runtime) {
    ["poder_iman","Imán","Lo pequeño te siguió."],
    ["poder_pincel","Pincel sonoro","Tu camino dejó notas."],
    ["poder_companero","Compañero","Una luz te acompañó."],
-   ["formacion","En formación","Una bandada voló contigo medio minuto repitiendo tu llamada."],
+   ["formacion","En formación","Un enjambre viajó contigo medio minuto repitiendo tu llamada."],
    ["liraCopia","Imitado","Un ave lira copió lo que tocaste.",1],
-   ["flor1","Florecida","Una mata creció hasta florecer."],
-   ["jardinVivo","Jardín vivo","Tres matas crecidas al mismo tiempo.",1],
+   ["flor1","Abierta","Una espora creció hasta abrirse."],
+   ["jardinVivo","Semillero vivo","Tres esporas abiertas al mismo tiempo.",1],
    ["cuerda1","Tensión","Tensaste y soltaste una cuerda."],
    ["cuerdaTensa","Al límite","Soltaste una cuerda tensada al máximo.",1],
    ["prisma1","Abanico","Giraste un prisma de luz."],
@@ -134,12 +134,12 @@ export function initialize(runtime) {
    ["e100","100 estrellas","Tu constelación tiene 100 estrellas."],
    ["zona5","Explorador","Descubriste 5 zonas."],
    ["atlas","Atlas completo","Descubriste las 11 zonas."],
-   ["faro","Primer faro","Encendiste un faro."],
-   ["banda","Tu banda","Encendiste los 3 instrumentos de los faros."],
-   ["jardinero","Jardinero","Sembraste 4 flores en un jardín."],
-   ["tambor","Tambor","Tocaste 8 pilares en las ruinas."],
+   ["faro","Primer púlsar","Encendiste un púlsar."],
+   ["banda","Tu banda","Encendiste los 3 instrumentos de los púlsares."],
+   ["jardinero","Sembrador","Sembraste 4 esporas de luz."],
+   ["tambor","Tambor","Tocaste 8 fragmentos en los Restos."],
    ["compania","Compañía","Un caminante te siguió."],
-   ["vuelo","Vuelo","Volaste con una bandada."],
+   ["vuelo","Vuelo","Viajaste con un enjambre."],
    ["hito1","Lo oíste primero","Llegaste a un hito que escuchaste desde lejos."],
    ["hito10","Coleccionista de horizontes","Llegaste a 10 hitos."],
    ["continente3","Turista de continentes","Pisaste 3 continentes."],
@@ -197,11 +197,11 @@ export function initialize(runtime) {
    ["alreves","Al revés","90 s caminando solo hacia la izquierda.",1],
    ["dj","Gritando al vacío","10 pulsos seguidos sin que nada suene.",1],
    ["fiesta","Fiesta de dos","Dos caminantes te siguen al mismo tiempo.",1],
-   ["ballena","Ballena","90 s seguidos bajo el agua.",1],
+   ["ballena","Inmersión","90 s seguidos dentro de una onda.",1],
    ["esquivador","Esquivador","45 s moviéndote en el Mundo sin tocar ninguna luz.",1],
-   ["insistente","Insistente","Golpeaste el mismo pilar 25 veces.",1]
+   ["insistente","Insistente","Golpeaste el mismo fragmento 25 veces.",1]
   ];
-  const SAMPLES={luz:"Luz",cristal:"Cristal",pilar:"Pilar",loto:"Loto",arbol:"Árbol",luciernaga:"Luciérnaga",flor:"Flor",faro:"Faro",reverso:"Reverso",canon:"Canon",frenesi:"Frenesí",detenido:"Tiempo quieto",espejo:"Espejo",luna:"Luna de oro"};
+  const SAMPLES={luz:"Luz",cristal:"Cristal",pilar:"Fragmento",loto:"Onda",arbol:"Estrella",luciernaga:"Mota",flor:"Espora",faro:"Púlsar",reverso:"Reverso",canon:"Canon",frenesi:"Frenesí",detenido:"Tiempo quieto",espejo:"Espejo",luna:"Luna de oro"};
   const COLORS=CUBE_COLORS;
   // La Voz: estilo J. Directa, con cariño por debajo, máximo 12 palabras.
   // "~~antes~~ después" se muestra tachado y corregido, como en los posts de Jay.
@@ -244,8 +244,8 @@ export function initialize(runtime) {
    quiet_ritual:"Cinco minutos. Este lugar ya te conoce.",
    formacion:"Te siguen y repiten tu llamada. Ahora tienes banda. Y viaja contigo.",
    liraCopia:"El ave lira te copió. Con adornos. Mejor que el original.",
-   flor1:"Floreció. Porque volviste. Así funciona casi todo.",
-   jardinVivo:"Tres matas crecidas. Esto ya es un jardín. Y tú, jardinero.",
+   flor1:"Se abrió. Porque volviste. Así funciona casi todo.",
+   jardinVivo:"Tres esporas abiertas. Esto ya es un semillero. Y tú, sembrador.",
    cuerda1:"Soltaste la cuerda. Sonó. Así de simple.",
    cuerdaTensa:"La tensaste hasta el borde. Nadie se rompió. Esta vez.",
    prisma1:"La luz se abre en colores y los colores suenan.",
@@ -269,12 +269,12 @@ export function initialize(runtime) {
    e100:"Cien estrellas. Esto ya no es suerte. Es hábito.",
    zona5:"Cinco zonas. Explorador oficial. No hay medalla física, lo siento.",
    atlas:"Atlas completo. Conoces el mapa mejor que quien lo hizo.",
-   faro:"Encendiste un faro. Ahora suenas como alguien que sabe lo que hace.",
-   banda:"Tres faros. Tienes banda. Y no tienes que pagarles.",
-   jardinero:"Cuatro flores. Plantaste música. Literalmente.",
-   tambor:"Ocho pilares golpeados. Los vecinos no van a estar contentos.",
+   faro:"Encendiste un púlsar. Ahora suenas como alguien que sabe lo que hace.",
+   banda:"Tres púlsares. Tienes banda. Y no tienes que pagarles.",
+   jardinero:"Cuatro esporas. Sembraste música. Literalmente.",
+   tambor:"Ocho fragmentos golpeados. Los vecinos no van a estar contentos.",
    compania:"Alguien te sigue. Tranquilo, es un caminante. Solo quiere cantar.",
-   vuelo:"Volaste con la bandada. No tienes alas. Detalles.",
+   vuelo:"Viajaste con el enjambre. No tienes alas. Detalles.",
    vida:"Encontraste toda la vida que hay. Por ahora.",
    under:"Tormenta solar a máxima energía. Esto ya es un club. Sin portero.",
    r3:"Tres días seguidos. Ahí empieza todo.",
@@ -294,9 +294,9 @@ export function initialize(runtime) {
    alreves:"Noventa segundos a la izquierda. El mapa sigue por todos lados.",
    dj:"Diez pulsos sin respuesta. El mundo no está de humor. Insiste.",
    fiesta:"Dos caminantes te siguen. Ya es una fiesta. Nadie trajo hielo.",
-   ballena:"Noventa segundos bajo el agua. Los pixeles no respiran. Lo comprobaste.",
+   ballena:"Noventa segundos dentro de una onda. Los pixeles no respiran. Lo comprobaste.",
    esquivador:"Un juego de luces sin tocar luces. Compromiso total.",
-   insistente:"Veinticinco golpes al mismo pilar. Él no te hizo nada.",
+   insistente:"Veinticinco golpes al mismo fragmento. Él no te hizo nada.",
    forma1:"Una forma nueva. Nadie la había visto. Ya tiene nombre.",
    cat25:"Veinticinco formas. Ya tienes una colección. No se la enseñes a cualquiera.",
    cat100:"Cien formas. La persona más rara de este mundo. Cumplido.",

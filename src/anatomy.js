@@ -26,12 +26,13 @@ export function anatomyPath(a,phase=0){
  const put=(op,...v)=>p.push(op+v.map(n=>Number(n.toFixed(4))).join(' '));
  const M=(x,y)=>put('M',x,y),L=(x,y)=>put('L',x,y),Q=(x,y,a,b)=>put('Q',x,y,a,b),C=(...v)=>put('C',...v);
  const ellipse=(x,y,rx,ry)=>{M(x+rx,y);C(x+rx,y+ry*.56,x+rx*.56,y+ry,x,y+ry);C(x-rx*.56,y+ry,x-rx,y+ry*.56,x-rx,y);C(x-rx,y-ry*.56,x-rx*.56,y-ry,x,y-ry);C(x+rx*.56,y-ry,x+rx,y-ry*.56,x+rx,y);};
- const branch=(n,root=false)=>{M(0,h);Q(sway,-h*.2,g.lean,-h);for(let k=1;k<=n;k++){const y=h-k*2*h/(n+1);for(const side of [-1,1]){M(g.lean*k/(n+1),y);Q(side*w*.4,y-h*.28,side*w*(.5+k/(n+1)*.45),y-h*.24);if(root){L(side*w*.9,y);L(side*w*.65,y+.12);}}}};
+ // Flora is seen from above (docs/UNIVERSO.md): arms spread out from a centre instead of rising from a ground line.
+ const branch=(n,root=false)=>{for(let k=0;k<n+2;k++){const a=k*6.283/(n+2)+g.lean+sway,x=Math.cos(a)*w,y=Math.sin(a)*h;M(0,0);Q(Math.cos(a+.35)*w*.5,Math.sin(a+.35)*h*.5,x,y);if(root){M(x,y);L(Math.cos(a+.3)*w*1.15,Math.sin(a+.3)*h*1.15);M(x,y);L(Math.cos(a-.3)*w*1.15,Math.sin(a-.3)*h*1.15);}}};
  switch(a.shape){
 
- case 'frond':M(0,h);Q(-w*.2,0,0,-h);for(let k=0;k<g.limbs+2;k++){const y=h-k*2*h/(g.limbs+2);for(const side of [-1,1]){M(0,y);Q(side*w,y-h*.4,side*w*.7,y-h*.5);}}break;
+ case 'frond':for(let k=0;k<=g.limbs*4+8;k++){const a=k*.42+g.lean,r=k/(g.limbs*4+8),x=Math.cos(a)*w*r,y=Math.sin(a)*h*r;k?L(x,y):M(x,y);if(k%3===2){M(x,y);L(x+Math.cos(a+1.6)*.12,y+Math.sin(a+1.6)*.12);M(x,y);}}break;
  case 'chime':M(-w,-h*.8);Q(0,-h,w,-h*.8);for(let k=0;k<g.limbs;k++){const x=-w+2*w*(k+.5)/g.limbs;M(x,-h*.8);L(x,h*(.3+k/g.limbs*.5));ellipse(x,h*(.3+k/g.limbs*.5),.08,.06);}break;
- case 'cap':M(-w,0);Q(0,-h*1.2,w,0);Q(0,h*.25,-w,0);M(-.1,0);L(-.1,h);M(.1,0);L(.1,h);break;
+ case 'cap':ellipse(0,0,w,h*.85);ellipse(0,0,w*.35,h*.3);for(let k=0;k<g.limbs+4;k++){const a=k*6.283/(g.limbs+4);M(Math.cos(a)*w*.35,Math.sin(a)*h*.3);L(Math.cos(a)*w*.95,Math.sin(a)*h*.8);}break;
  case 'fan':for(let k=0;k<g.limbs+2;k++){const a=-Math.PI+(k+.5)*Math.PI/(g.limbs+2);M(0,h*.5);Q(Math.cos(a)*w*.3,0,Math.cos(a)*w,Math.sin(a)*h);}break;
  case 'cluster':for(let k=0;k<g.lobes;k++){const a=k*2.4;ellipse(Math.cos(a)*w*.55,Math.sin(a)*h*.45,.1+(k%2)*.08,.12);}break;
  case 'kite':M(0,-h);Q(w*.4,-h*.2,w,0);Q(w*.4,h*.2,0,h*.45);Q(-w*.4,h*.2,-w,0);Q(-w*.4,-h*.2,0,-h);M(0,h*.4);Q(-w*.3,h*.8,0,h);break;
@@ -48,15 +49,15 @@ export function anatomyPath(a,phase=0){
  case 'wheel':ellipse(0,0,w,h);for(let k=0;k<g.limbs+2;k++){const a=k*6.283/(g.limbs+2)+phase*.1;M(0,0);L(Math.cos(a)*w,Math.sin(a)*h);}break;
  case 'branch':branch(g.limbs);break;
  case 'roots':branch(g.limbs,true);M(-w,h*.6);Q(0,-h*1.1,w,h*.6);break;
- case 'pods':for(let k=0;k<g.limbs;k++){const x=(k-(g.limbs-1)/2)*.32;M(x,h*.65);Q(x+sway,0,x,-h*.25);ellipse(x+sway,-h*.45,.1,.2+(k%2)*.08);}break;
+ case 'pods':for(let k=0;k<g.limbs;k++){const a=k*6.283/g.limbs+sway,x=Math.cos(a)*w*.7,y=Math.sin(a)*h*.7;M(0,0);L(x*.6,y*.6);ellipse(x,y,.1+(k%2)*.05,.1+(k%2)*.05);}break;
  case 'vine':M(-w,h*.6);C(-w*.2,-h,w*.2,h,w,-h*.5);for(let k=0;k<g.limbs;k++){const x=-w+2*w*k/g.limbs;M(x,Math.sin(k)*.2);Q(x+.2,-.35,x+.35,-.15);}break;
  case 'worm':for(let k=0;k<g.segments;k++){const x=(k-(g.segments-1)/2)*.24,y=Math.sin(k*.9+phase*.3)*.16;ellipse(x,y,.14,.17*(1-k/g.segments*.35));}break;
  case 'network':for(let k=0;k<g.limbs+1;k++){const a=k*6.283/(g.limbs+1),x=Math.cos(a)*w,y=Math.sin(a)*h;M(0,0);Q(x*.2+sway,y*.8,x,y);ellipse(x,y,.08,.06);}break;
- case 'flower':for(let k=0;k<g.lobes;k++){const a=k*6.283/g.lobes;M(0,0);Q(Math.cos(a-.4)*w,Math.sin(a-.4)*h,Math.cos(a)*w,Math.sin(a)*h);Q(Math.cos(a+.4)*w,Math.sin(a+.4)*h,0,0);}break;
- case 'reeds':for(let k=0;k<g.limbs;k++){const x=(k-(g.limbs-1)/2)*.3;M(x,h);Q(x+sway,-h*.3,x+g.lean,-h*(.7+k/g.limbs*.3));ellipse(x+g.lean,-h*(.7+k/g.limbs*.3),.045,.12);}break;
+ case 'flower':for(let k=0;k<g.lobes;k++){const a=k*6.283/g.lobes+sway,x=Math.cos(a)*w,y=Math.sin(a)*h;M(0,0);L(x,y);ellipse(x,y,.05,.05);}ellipse(0,0,.1,.1);break;
+ case 'reeds':for(let k=0;k<g.limbs;k++){const a=k*6.283/g.limbs+g.lean,r=.4+k/g.limbs*.5;ellipse(Math.cos(a)*w*r,Math.sin(a)*h*r,.06,.06);}ellipse(0,0,w*.25,h*.25);break;
  case 'moss':for(let k=0;k<g.segments;k++){const a=k*2.4;ellipse(Math.cos(a)*w*.65,Math.sin(a)*h*.4,.14,.09);}break;
  case 'lichen':for(let k=0;k<g.limbs+1;k++){const a=k*2.4,x=Math.cos(a)*w*.6,y=Math.sin(a)*h*.5;M(x-.13,y);L(x,y-.15);L(x+.16,y+.03);L(x-.06,y+.15);put('Z');}break;
- case 'cactus':M(-.14,h);L(-.14,-h*.65);Q(0,-h,.14,-h*.65);L(.14,h);for(let k=0;k<g.limbs;k++){const side=k%2?1:-1,y=h*.5-k*.25;M(side*.14,y);Q(side*w,y+.1,side*w,y-.25);}break;
+ case 'cactus':ellipse(0,0,.18,.18);for(let k=0;k<g.limbs+3;k++){const a=k*6.283/(g.limbs+3)+g.lean;M(Math.cos(a)*.18,Math.sin(a)*.18);L(Math.cos(a)*w,Math.sin(a)*h);M(Math.cos(a)*w*.7,Math.sin(a)*h*.7);L(Math.cos(a+.25)*w*.85,Math.sin(a+.25)*h*.85);}break;
  case 'seed':ellipse(0,0,w*.45,h);M(0,-h);Q(w*.8,-h,w,-h*.25);break;
  case 'manta':for(const side of [-1,1]){M(0,-h*.2);Q(side*w*.5,-h*(g.spread+sway),side*w,0);Q(side*w*.4,h*.3,0,h*.15);}M(0,h*.1);Q(w*.2,h*.6,0,h);break;
  case 'moth':for(const side of [-1,1]){M(0,0);C(side*w,-h,side*w*1.1,h*.1,side*.1,0);M(0,0);Q(side*w*.85,h,side*.13,h*.6);}M(0,-h*.3);L(0,h*.8);break;

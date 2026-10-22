@@ -66,9 +66,9 @@ export function initialize(runtime){
    const g=cx.createRadialGradient(ex,ey,0,ex,ey,260);g.addColorStop(0,`rgba(120,130,160,${.18*k+(weather.flash||0)*.25})`);g.addColorStop(1,'rgba(0,0,0,0)');cx.globalAlpha=1;cx.fillStyle=g;cx.fillRect(ex-260,ey-260,520,520);}
   // Dentro: cielo más oscuro y relámpagos.
   if(weather.i>.05){cx.globalAlpha=weather.i*.28;cx.fillStyle='#05060a';cx.fillRect(0,0,W,H);
-   // Cortina de lluvia inclinada con el viento.
-   const [wx]=windOf(Date.now()),n=Math.round(40+90*weather.i);cx.strokeStyle='#9fb4d8';cx.lineWidth=1;cx.globalAlpha=.18+.22*weather.i;cx.beginPath();
-   for(let k=0;k<n;k++){const sx=((k*97.3+t*.9*(1+k%3))%(W+80))-40,sy=((k*57.1+t*1.4*(1+k%2))%(H+60))-30;cx.moveTo(sx,sy);cx.lineTo(sx-wx*6,sy+14);}cx.stroke();
+   // Vista desde arriba: polvo estelar que cae sobre el plano; cada mota destella y deja un anillo pequeño.
+   const [wx]=windOf(Date.now()),n=Math.round(40+90*weather.i);cx.strokeStyle='#9fb4d8';cx.fillStyle='#cfe0ff';cx.lineWidth=1;
+   for(let k=0;k<n;k++){const life=((t/700+k*.37)%1),sx=((k*97.3+wx*t*.02)%(W+40)+W+40)%(W+40)-20,sy=((k*57.1)%(H+40)+H+40)%(H+40)-20;cx.globalAlpha=(.18+.22*weather.i)*(1-life);if(life<.2)cx.fillRect(Math.round(sx),Math.round(sy),2,2);else{cx.beginPath();cx.arc(sx,sy,1+life*6,0,6.283);cx.stroke();}}
    if((weather.flash||0)>.05){cx.globalAlpha=weather.flash*.22*weather.i;cx.fillStyle='#dfe8ff';cx.fillRect(0,0,W,H);}}
   weather.flash=Math.max(0,(weather.flash||0)-dt*3);
   // Partículas de la estación (pocas, en pantalla).

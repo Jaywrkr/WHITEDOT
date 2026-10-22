@@ -66,12 +66,13 @@ export function initialize(runtime){
   for(const o of chunk.ecologyObjects||[]){const d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);if(d>R*1.2)continue;
    const sw=Math.sin(t/o.personality.period+o.phase)*3+o.bend*10,s=o.size*(1+o.charge*.15);
    c.save();c.translate(o.x+ox,o.y+oy);c.globalAlpha=elementAlpha(d,R,o.lit)*.7;c.strokeStyle=elementInk(o.material,chunk.pal?runtime.regionOfPos(o.hx,o.hy).hue:190,o.lit>.1);c.fillStyle=c.strokeStyle;c.lineWidth=1.2;c.beginPath();
-   if(o.kind==='reed'){for(let i=-1;i<=1;i++){c.moveTo(i*4,3);c.quadraticCurveTo(i*4+sw*.5,-s*.5,i*4+sw,-s);c.moveTo(i*4+sw-2,-s+2);c.lineTo(i*4+sw+2,-s+2);}}
+   // Seen from above: reeds are three short rays from a centre, swaying as a turn.
+   if(o.kind==='reed'){for(let i=0;i<3;i++){const a=i*Math.PI*2/3+sw*.05;c.moveTo(0,0);c.lineTo(Math.cos(a)*s,Math.sin(a)*s);c.moveTo(Math.cos(a)*s+2,Math.sin(a)*s);c.arc(Math.cos(a)*s,Math.sin(a)*s,2,0,Math.PI*2);}}
    else if(o.kind==='pod'){c.rotate(sw*.04);c.ellipse(0,0,s*.6,s,0,0,Math.PI*2);c.moveTo(0,-s);c.quadraticCurveTo(sw,0,0,s);}
    else if(o.kind==='lichen'){for(let i=0;i<5;i++){const a=i*Math.PI*2/5;c.moveTo(0,0);c.quadraticCurveTo(Math.cos(a+.4)*s*.5,Math.sin(a+.4)*s*.5,Math.cos(a)*s,Math.sin(a)*s);}}
    else if(o.kind==='stone'){c.ellipse(0,0,s,s*.55,sw*.03,0,Math.PI*2);for(let i=-1;i<=1;i++){c.moveTo(-s*.65,i*4);c.lineTo(s*.65,i*4+sw*.2);}}
    else if(o.kind==='filament'){c.moveTo(-s,0);c.bezierCurveTo(-s/2,-s+sw,s/2,s+sw,s,0);}
-   else {c.moveTo(0,s);c.lineTo(sw,-s);for(let i=-1;i<=1;i++){c.moveTo(sw*.5,0);c.lineTo(i*s,-s*.5+Math.abs(i)*sw*.3);}}
+   else {for(let i=0;i<4;i++){const a=i*Math.PI/2+sw*.04;c.moveTo(0,0);c.lineTo(Math.cos(a)*s,Math.sin(a)*s);c.moveTo(Math.cos(a)*s*.5,Math.sin(a)*s*.5);c.lineTo(Math.cos(a+.6)*s*.8,Math.sin(a+.6)*s*.8);}}
    c.stroke();if(o.charge>.12){c.globalAlpha*=.6;c.beginPath();c.arc(0,0,s+5,-Math.PI/2,-Math.PI/2+o.charge*Math.PI*2);c.stroke();}c.restore();
   }
  }

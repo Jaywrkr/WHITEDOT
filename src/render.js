@@ -243,16 +243,20 @@ export function initialize(runtime) {
         const al=Math.max(Math.max(0,1-d/R)*(gr.tall?.5:.4),gr.lit*.6);if(al<.02)continue;
         const sw=Math.sin(t/(gr.personality?.period||(gr.tall?1300:800))+gr.ph)*gr.h*(gr.personality?.sway||(gr.tall?.15:.3))+(gr.lit>0?b*2:0)+(runtime.windSway?.(gr.x,gr.y,t,gr.h*(gr.tall?.4:1),d,runtime.S.wx,runtime.S.wy)||0)+(runtime.musicSway?.(b,gr.h)||0);
         runtime.cx.globalAlpha=Math.min(1,al)*(runtime.worldOpacity?.(d,R+30)??1);runtime.cx.fillStyle=gr.lit>.6?(gr.tall?runtime.musicInk?.(gr)||'#fff':"#fff"):c.pal?c.pal.soft:"#c9c9cf";
-        runtime.cx.fillRect(gr.x+ox,gr.y+oy-gr.h,1,gr.h);runtime.cx.fillRect(gr.x+ox+sw,gr.y+oy-gr.h-2,1,2);
-        if(gr.tall&&gr.lit>.2){runtime.cx.globalAlpha=gr.lit*.5*(runtime.worldOpacity?.(d,R+30)??1);runtime.cx.fillRect(gr.x+ox+sw-1,gr.y+oy-gr.h-3,3,3);}
+        // Seen from above: a mote of light, or for the tall ones a small star that turns with the wind.
+        const gx=gr.x+ox,gy=gr.y+oy;if(gr.tall){const a=sw*.08,k=2+gr.h*.04;runtime.cx.fillRect(Math.round(gx+Math.cos(a)*k),Math.round(gy+Math.sin(a)*k),1,1);runtime.cx.fillRect(Math.round(gx-Math.cos(a)*k),Math.round(gy-Math.sin(a)*k),1,1);runtime.cx.fillRect(Math.round(gx-Math.sin(a)*k),Math.round(gy+Math.cos(a)*k),1,1);runtime.cx.fillRect(Math.round(gx+Math.sin(a)*k),Math.round(gy-Math.cos(a)*k),1,1);runtime.cx.fillRect(Math.round(gx),Math.round(gy),1,1);}
+        else runtime.cx.fillRect(Math.round(gx+sw*.1),Math.round(gy),1,1);
+        if(gr.tall&&gr.lit>.2){runtime.cx.globalAlpha=gr.lit*.5*(runtime.worldOpacity?.(d,R+30)??1);runtime.cx.fillRect(Math.round(gx)-1,Math.round(gy)-1,3,3);}
       }
       // pilares: tambores
       for(const p of c.pillars){const d=Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy);
         const pw=runtime.waves.length&&runtime.hitW(p.x,p.y);if(pw){p.hit=1;runtime.wsoon(pw,p.snd);}
-        if(contactEntry(p,d<p.w/2+ds/2+6,!paused&&!runtime.scanning)&&ms>p.cd){p.cd=ms+(p.personality?.cooldown||600);runtime.MU.act+=.35;runtime.touched();p.hits=(p.hits||0)+1;if(p.hits>=25)runtime.unlock("insistente");if(!p.given){p.given=1;runtime.gain("pilar");}runtime.chain(c.pillars,p,0,new Set(),5);runtime.S.drums++;if(runtime.S.drums>=8)runtime.unlock("tambor");runtime.burst(p.x,p.y-p.h/2,6,false);}
+        if(contactEntry(p,d<p.w/2+ds/2+6,!paused&&!runtime.scanning)&&ms>p.cd){p.cd=ms+(p.personality?.cooldown||600);runtime.MU.act+=.35;runtime.touched();p.hits=(p.hits||0)+1;if(p.hits>=25)runtime.unlock("insistente");if(!p.given){p.given=1;runtime.gain("pilar");}runtime.chain(c.pillars,p,0,new Set(),5);runtime.S.drums++;if(runtime.S.drums>=8)runtime.unlock("tambor");runtime.burst(p.x,p.y,6,false);}
         if(d<soundR)nearO.push(p);p.hit=Math.max(0,p.hit-dt*3);if(d>R+80&&!p.hit)continue;const al=Math.max(0,1-d/(R+80));
-        runtime.cx.globalAlpha=Math.min(1,al*.5+p.hit*.6)*(runtime.worldOpacity?.(d,R+80)??1);runtime.cx.strokeStyle=p.hit>.1?runtime.musicInk?.(p,'perc')||'#fff':(c.pal?c.pal.main:"#fff");runtime.cx.lineWidth=1;runtime.cx.strokeRect(p.x+ox-p.w/2,p.y+oy-p.h,p.w,p.h);
-        runtime.cx.globalAlpha=Math.min(1,al*.12+p.hit*.4)*(runtime.worldOpacity?.(d,R+80)??1);runtime.cx.fillStyle=p.hit>.1?runtime.musicInk?.(p,'perc')||'#fff':"#fff";runtime.cx.fillRect(p.x+ox-p.w/2,p.y+oy-p.h,p.w,p.h);if(p.hit<.1)runtime.touchRing(p.x+ox,p.y+oy-p.h/2,d,R,b);}
+        runtime.cx.globalAlpha=Math.min(1,al*.5+p.hit*.6)*(runtime.worldOpacity?.(d,R+80)??1);runtime.cx.strokeStyle=p.hit>.1?runtime.musicInk?.(p,'perc')||'#fff':(c.pal?c.pal.main:"#fff");runtime.cx.lineWidth=1;
+        // Seen from above: a fragment of an old orbit, a broken ring as wide as the drum, taller drums with more arcs.
+        const px=p.x+ox,py=p.y+oy,pr=p.w/2+2,arcs=1+Math.min(3,Math.floor(p.h/30));for(let k=0;k<arcs;k++){const a=k*6.283/arcs+p.w;runtime.cx.beginPath();runtime.cx.arc(px,py,pr+k*2,a,a+3.6/arcs);runtime.cx.stroke();}
+        runtime.cx.globalAlpha=Math.min(1,al*.12+p.hit*.4)*(runtime.worldOpacity?.(d,R+80)??1);runtime.cx.fillStyle=p.hit>.1?runtime.musicInk?.(p,'perc')||'#fff':"#fff";runtime.cx.beginPath();runtime.cx.arc(px,py,pr*.6,0,6.283);runtime.cx.fill();if(p.hit<.1)runtime.touchRing(px,py,d,R,b);}
       // cristales: arpegios
       for(const k of c.crystals){const d=Math.hypot(k.x-runtime.S.wx,k.y-runtime.S.wy);
         const kw=runtime.waves.length&&runtime.hitW(k.x,k.y);if(kw){k.lit=1;runtime.wsoon(kw,k.snd);}
@@ -378,7 +382,8 @@ export function initialize(runtime) {
       if(d<R*1.2)runtime.seen("bandada");
       runtime.cx.fillStyle="#fff";
       for(const q of f.b){const x=f.x+q.ox+Math.sin(t/400+q.ph)*6,y=f.y+q.oy+Math.cos(t/520+q.ph)*5,e=Math.hypot(x-runtime.S.wx,y-runtime.S.wy);if(e>vis)continue;
-        const flap=Math.sin(t/90+q.ph)>0;runtime.cx.globalAlpha=Math.max(0,1-e/vis);runtime.cx.fillRect(x+ox-1,y+oy-(flap?1:0),flap?3:2,flap?1:2);}
+        // A swarm of lights crossing, seen from above: each blinks softly, no wings.
+        runtime.cx.globalAlpha=Math.max(0,1-e/vis)*(.6+.4*Math.sin(t/300+q.ph));runtime.cx.fillRect(Math.round(x+ox),Math.round(y+oy),2,2);}
     }
     runtime.drawLandmarks?.(t,dt,ox,oy);runtime.drawPortals?.(t,ox,oy,b);
     // Only local clues: no global arrow or player-relative spawning.

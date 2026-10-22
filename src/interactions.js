@@ -54,15 +54,21 @@ export function initialize(runtime) {
       case "gota":runtime.cx.moveTo(x,y-s);runtime.cx.quadraticCurveTo(x+s*.8,y+s*.3,x,y+s*.6);runtime.cx.quadraticCurveTo(x-s*.8,y+s*.3,x,y-s);runtime.cx.stroke();break;
       case "astro":runtime.cx.fillRect(x-s,y-.75,s*2,1.5);runtime.cx.fillRect(x-.75,y-s,1.5,s*2);runtime.cx.fillRect(x-1.5,y-1.5,3,3);break;}}
   function plantSound(pt,q,region,traits,source){runtime.playVoice('planta:'+pt.t,traits?.degree||0,q,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy),false,traits?.volume||1,source);}
-  function drawPlant(o,x,y,t,b){if(runtime.drawNativePlant?.(o,x,y,t))return;const pt=o.pt,h=o.h,sw=Math.sin(t/(o.personality?.period||1100)+o.ph)*h*(o.personality?.sway||.08)+o.sw*Math.sin(t/60)*3,lit=o.lit>.1,c=lit?runtime.musicInk?.(o)||'#fff':`hsl(${pt.hue},28%,${lit?70:52}%)`,c2=lit?"#fff":`hsl(${pt.hue},60%,70%)`;
-    runtime.cx.fillStyle=c;runtime.cx.strokeStyle=c;runtime.cx.lineWidth=1;
+  // Seen from above, the World's small life is light, not plants (docs/UNIVERSO.md): each kind keeps its place, sound
+  // and touch, and draws as a small form of the universe. hierba: a few motes; flor: a four-pointed star; arbusto: a
+  // little cluster; helecho: a spiral; junco: a ring; coral: a crystal.
+  function drawPlant(o,x,y,t,b){const pt=o.pt,h=o.h,turn=Math.sin(t/(o.personality?.period||1100)+o.ph)*(o.personality?.sway||.08)*2+o.sw*Math.sin(t/60)*.3,lit=o.lit>.1,c=lit?runtime.musicInk?.(o)||'#fff':`hsl(${pt.hue},28%,62%)`,c2=lit?"#fff":`hsl(${pt.hue},60%,72%)`,r=3+h*.12+(lit?2:0)+b;
+    const X=runtime.cx;X.fillStyle=c;X.strokeStyle=c;X.lineWidth=1;
     switch(pt.t){
-      case "hierba":runtime.cx.fillRect(x,y-h*.5,1,h*.5);runtime.cx.fillRect(x+sw*.5,y-h*.5-2,1,2);break;
-      case "flor":runtime.cx.beginPath();runtime.cx.moveTo(x,y);runtime.cx.quadraticCurveTo(x,y-h*.6,x+sw,y-h);runtime.cx.stroke();runtime.cx.fillStyle=c2;for(let i=0;i<pt.pet;i++){const a=i/pt.pet*6.283+o.ph;runtime.cx.fillRect(x+sw+Math.cos(a)*3-1,y-h+Math.sin(a)*3-1,2,2);}runtime.cx.fillStyle=lit?runtime.musicInk?.(o)||'#fff':"#fff";runtime.cx.fillRect(x+sw-1,y-h-1,2,2);break;
-      case "arbusto":for(let i=0;i<5;i++){const a=-Math.PI/2+(i-2)*.38,l=h*.55*(i%2?.8:1);runtime.cx.beginPath();runtime.cx.moveTo(x,y);runtime.cx.lineTo(x+Math.cos(a)*l+sw*.5,y+Math.sin(a)*l);runtime.cx.stroke();runtime.cx.fillStyle=c2;runtime.cx.fillRect(x+Math.cos(a)*l+sw*.5-1,y+Math.sin(a)*l-1,2,2);runtime.cx.fillStyle=c;}break;
-      case "helecho":runtime.cx.beginPath();runtime.cx.moveTo(x,y);runtime.cx.quadraticCurveTo(x+h*.3,y-h*.6,x+sw+h*.15,y-h);runtime.cx.stroke();for(let i=1;i<6;i++){const k=i/6,px=x+(sw+h*.15)*k*k+h*.3*k*(1-k)*2,py=y-h*k;runtime.cx.fillRect(px-3,py,3,1);runtime.cx.fillRect(px+1,py-1,3,1);}break;
-      case "junco":runtime.cx.fillRect(x+sw*.3,y-h*1.3,1,h*1.3);runtime.cx.fillStyle=c2;runtime.cx.fillRect(x+sw*.3-1,y-h*1.3-4,3,5);break;
-      case "coral":runtime.cx.beginPath();runtime.cx.moveTo(x,y);runtime.cx.lineTo(x,y-h*.5);runtime.cx.lineTo(x-h*.3+sw*.3,y-h);runtime.cx.moveTo(x,y-h*.5);runtime.cx.lineTo(x+h*.3+sw*.3,y-h*.85);runtime.cx.moveTo(x-h*.15,y-h*.75);runtime.cx.lineTo(x-h*.35,y-h*.7);runtime.cx.stroke();break;}}
+      case "hierba":for(let i=0;i<3;i++){const a=o.ph+i*2.1+turn;X.fillRect(Math.round(x+Math.cos(a)*r*.8),Math.round(y+Math.sin(a)*r*.8),1,1);}break;
+      case "flor":X.beginPath();for(let i=0;i<4;i++){const a=i*Math.PI/2+turn;X.moveTo(x,y);X.lineTo(x+Math.cos(a)*r,y+Math.sin(a)*r);}X.stroke();X.fillStyle=c2;X.fillRect(Math.round(x)-1,Math.round(y)-1,2,2);break;
+      case "arbusto":for(let i=0;i<5;i++){const a=o.ph+i*1.26+turn,d=r*(i%2?.5:.9);X.fillStyle=i%2?c:c2;X.fillRect(Math.round(x+Math.cos(a)*d)-1,Math.round(y+Math.sin(a)*d)-1,2,2);}break;
+      case "helecho":X.beginPath();for(let k=0;k<=12;k++){const a=o.ph+turn+k*.5,d=k/12*r*1.3;k?X.lineTo(x+Math.cos(a)*d,y+Math.sin(a)*d):X.moveTo(x,y);}X.stroke();break;
+      case "junco":X.beginPath();X.arc(x,y,r*.8,0,6.283);X.stroke();X.fillStyle=c2;X.fillRect(Math.round(x)-1,Math.round(y)-1,2,2);break;
+      case "coral":X.beginPath();X.moveTo(x,y-r);X.lineTo(x+r*.7,y);X.lineTo(x,y+r);X.lineTo(x-r*.7,y);X.closePath();X.stroke();if(lit){X.fillStyle=c2;X.fill();}break;
+      default:X.fillRect(Math.round(x)-1,Math.round(y)-1,2,2);
+    }
+  }
   function hash2(a,b){let h=(a*374761393+b*668265263)|0;h=Math.imul(h^(h>>>13),1274126177);return ((h^(h>>>16))>>>0)/4294967296;}
   function drawGround(ox,oy,R,t){const G=24,x0=Math.floor((runtime.S.wx-R)/G),x1=Math.floor((runtime.S.wx+R)/G),y0=Math.floor((runtime.S.wy-R)/G),y1=Math.floor((runtime.S.wy+R)/G);let lastC=null,lastK="";
     for(let ix=x0;ix<=x1;ix++)for(let iy=y0;iy<=y1;iy++){const wx=ix*G,wy=iy*G,d=Math.hypot(wx-runtime.S.wx,wy-runtime.S.wy);if(d>R)continue;

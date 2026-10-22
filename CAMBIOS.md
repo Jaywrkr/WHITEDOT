@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.115**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.116**. Las entradas describen su revisión, no certifican producción.
+
+## Universo · Sin restos terrestres · alpha.116
+
+Rama `claude/universo-limpieza`, sobre `claude/universo-raros`.
+
+Lo que todavía se veía de perfil o terrestre ahora se ve desde arriba, como parte del universo. Nada cambia de sitio, de sonido ni de forma de tocarse:
+
+- **Hierba y árboles de luz:** motas y pequeñas estrellas que giran con el viento, sin tallos.
+- **Pilares de Restos:** fragmentos de órbitas (anillos rotos) en vez de columnas.
+- **Plantas y flores:** formas radiales: motas, estrellas de cuatro puntas, racimos, espirales, anillos y cristales. Las de la vida del mundo (helechos, ramas, juncos, cactus, setas, flores) también salen de un centro.
+- **Plantas que se riegan:** esporas que abren un rayo por etapa.
+- **Bandadas de pájaros y murciélagos:** enjambres de luces, sin alas.
+- **Lluvia inclinada:** polvo estelar que cae sobre el plano, destella y deja un anillo pequeño.
+- **Textos:** especies, nombres de muestras, logros y frases dicen motas, estrellas fijas, ondas, enjambres, fragmentos, esporas y púlsares en vez de luciérnagas, árboles, agua, bandadas, pilares, flores y faros.
+- **Pruebas:** nueva `universe-cleanup.mjs` (cada planta se dibuja centrada en su sitio; ningún nombre de vida terrestre); `anatomy.mjs` sigue comprobando que cada individuo es distinto.
+- **Pendiente:** algunas criaturas siguen siendo de la Tierra (ciervo, tortuga, ballena) y los hitos «Árbol madre» y «Ciudad de formas».
 
 ## Universo · Fase 6 · Momentos raros · alpha.115
 

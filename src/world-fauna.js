@@ -26,7 +26,7 @@ export function initialize(runtime){
   const surface=runtime.inWorld()&&(!runtime.S.layer||runtime.S.layer==='superficie');
   if(surface&&!quiet){
    if(!crossing&&t>crossAt){const bats=night()>.6,left=Math.random()<.5;crossing={bats,left,y:H*(.12+Math.random()*.25),x:left?-60:W+60,v:(bats?70:45)*(left?1:-1),n:bats?5+Math.floor(Math.random()*4):6+Math.floor(Math.random()*5),seed:Math.random()*10};crossAt=t+45000+Math.random()*55000;}
-   if(crossing){crossing.x+=crossing.v*dt;c.strokeStyle=crossing.bats?'#9aa3c7':'#e8e8e8';c.lineWidth=1;c.globalAlpha=.55;for(let i=0;i<crossing.n;i++){const fx=crossing.x-Math.sign(crossing.v)*(i%3)*14-Math.sign(crossing.v)*Math.floor(i/3)*22,fy=crossing.y+((i%3)-1)*10+Math.sin(t/(crossing.bats?120:260)+i+crossing.seed)*(crossing.bats?3:2),flap=Math.sin(t/(crossing.bats?70:160)+i)>0?-3:1;c.beginPath();c.moveTo(fx-4,fy+flap);c.lineTo(fx,fy);c.lineTo(fx+4,fy+flap);c.stroke();}if(crossing.x<-200||crossing.x>W+200)crossing=null;}
+   if(crossing){crossing.x+=crossing.v*dt;c.strokeStyle=crossing.bats?'#9aa3c7':'#e8e8e8';c.lineWidth=1;c.globalAlpha=.55;for(let i=0;i<crossing.n;i++){const fx=crossing.x-Math.sign(crossing.v)*(i%3)*14-Math.sign(crossing.v)*Math.floor(i/3)*22,fy=crossing.y+((i%3)-1)*10+Math.sin(t/(crossing.bats?120:260)+i+crossing.seed)*(crossing.bats?3:2),flap=Math.sin(t/(crossing.bats?70:160)+i)>0?-3:1;c.fillStyle=c.strokeStyle;c.globalAlpha=.55+.3*(flap>0?1:0);c.fillRect(Math.round(fx)-1,Math.round(fy)-1,2,2);}if(crossing.x<-200||crossing.x>W+200)crossing=null;}
   }else crossing=null;
   c.restore();
  }
