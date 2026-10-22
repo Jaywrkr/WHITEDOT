@@ -10,7 +10,7 @@ export function initialize(runtime) {
     runtime.toast("<em>Forma nueva</em> · "+sp.name+" · "+runtime.S.catN);runtime.unlock("forma1");if(runtime.S.catN>=25)runtime.unlock("cat25");if(runtime.S.catN>=100)runtime.unlock("cat100");if(runtime.S.catN>=500)runtime.unlock("cat500");runtime.save();}
   function showRegion(d,first){
     const el=document.getElementById("zone");const render=()=>{
-    const hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng);const se=!d.sea&&d.continent?runtime.seasonOf?.(d.continent.id):null;document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+(hybrid?" × "+hybrid.name:"")+" · "+soundingBpm(d,runtime.GEN)+" BPM"+(se?" · "+se.name:"");
+    const hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng);const se=!d.sea&&d.continent?runtime.seasonOf?.(d.continent.id):null;const sb=runtime.superbiomeOf?.(d,runtime.S.wx,runtime.S.wy);document.getElementById("zMood").textContent=(sb?sb.name+" — ":"")+runtime.GEN[d.genre].name+(hybrid?" × "+hybrid.name:"")+" · "+soundingBpm(d,runtime.GEN)+" BPM"+(se?" · "+se.name:"");
     document.getElementById("zName").textContent=d.worldFamily?.name||d.ecology?.name||d.name;
     document.getElementById("zDo").textContent=(d.sea?(runtime.newRegionAt?.(runtime.S.wx,runtime.S.wy)?.name||"Abismo de silencio"):d.continent?d.continent.name:"")+(d.sea||d.continent?" · ":"")+gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
     };render();notices.enqueue('zone',el,()=>{},first?3.2:2.2,'region:'+d.key,()=>runtime.inWorld()&&runtime.MU.dnaT?.key===d.key,{level:1,category:'territorio',coalesce:true});
@@ -33,6 +33,7 @@ export function initialize(runtime) {
     const ev=runtime.eventOf(d);if(ev&&!runtime.S.events[ev[0]+":"+d.key+runtime.S.todayKey]){runtime.S.events[ev[0]+":"+d.key+runtime.S.todayKey]=1;runtime.S.events[ev[0]]=1;runtime.unlock("evento1");if(runtime.EVENTS.every(e=>runtime.S.events[e[0]]))runtime.unlock("eventos4");runtime.say(runtime.VOZ[ev[0]],"Evento · "+ev[1]);}
     if(newPlace){runtime.S.places[d.key]=1;runtime.S.placesN=(runtime.S.placesN||0)+1;if(runtime.S.placesN>=10)runtime.unlock("lugar10");if(runtime.S.placesN>=50)runtime.unlock("lugar50");if(runtime.S.placesN>=200)runtime.unlock("lugar200");}
     if(z!==runtime.curZone){runtime.curZone=z;enterZone(z);}
+    runtime.recordSuperbiome?.(runtime.superbiomeOf?.(d,runtime.S.wx,runtime.S.wy));   // superbiomes.js
     showRegion(d,newPlace);continentChange(d);farLands(d);runtime.enterAnomaly?.(d);
     if(newPlace&&runtime.S.placesN%15===0)setTimeout(()=>runtime.rumor?.(),6000);
     runtime.save();

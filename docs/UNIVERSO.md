@@ -56,7 +56,22 @@ Un superbioma es una región más una **familia musical**. Las 10 familias que s
 9. Tribal, afro y andino
 10. Disco y jazz
 
-Los 52 géneros quedan como variaciones dentro de cada familia. Antes, la música separa a los géneros gemelos: medido, 25 de 52 van entre 115 y 130 BPM y hay 26 parejas casi iguales.
+Los 52 géneros quedan como variaciones dentro de cada familia (`superbiomes.js`):
+
+| Familia | Géneros |
+|---|---|
+| Ambient | Ambient, Dub profundo, Berlin School |
+| Downtempo | Downtempo, Boom bap, Lo-fi hip hop, G-funk, Trap |
+| Dub | Dub techno, Dubstep |
+| House | Deep, Minimal, Rominimal, Progressive, Microhouse, Tech house, Melodic, Chicago, Acid house, Garage house, Ghetto, Tropical y Organic house |
+| Techno | Acid techno, Minimal techno, Melodic techno, Detroit techno, Algorave, IDM |
+| Breaks | Breaks, UK garage, Baltimore club, Jersey club, Broken beat |
+| Drum & bass | Drum & bass, Liquid, Footwork |
+| Electro | Electro, Electro robótico, Darkwave / EBM, Electro de Detroit, Miami bass |
+| Tribal | Afro house, Tribal, Electrónica andina, Amapiano |
+| Disco | Nu-disco, Cosmic disco, Boogie, Electro-funk, Jazztronica, Soulful house |
+
+**Combinaciones que valen:** las diez regiones de los continentes con cualquiera de las diez familias, y el Abismo (Vacío, Aurora, Cometas, Constelaciones y Nebulosa oscura) solo con Ambient, porque el mar entre continentes siempre tiene música tranquila. Son 105 superbiomas. Cada lugar ya tiene región y género, así que su superbioma sale de datos que ya existen y el mapa no se mueve. Se nombran con la región y la familia: «Marea · Dub», «Púlsares · Techno». Antes, la música separa a los géneros gemelos: medido, 25 de 52 van entre 115 y 130 BPM y hay 26 parejas casi iguales.
 
 ## Fases
 
@@ -85,6 +100,7 @@ Orden: los bloques visual (1–6) y musical (7–12) se alternan. Los superbioma
 
 ## Estado
 
+- **Fase 13 · Modelo de superbiomas** (alpha.121): diez familias para los 52 géneros y 105 combinaciones válidas. En el mundo principal (61 × 61 regiones) aparecen 62. Al entrar a una región, su aviso empieza por el superbioma (`Polvo · House — Deep house · 120 BPM`), y el primer día que se oye cada uno queda en `S.universe.super`. El reparto (fase 14) decidirá cómo llegan los que faltan, como Drum & bass en Polvo o Restos.
 - **Fase 1 · Nombres** (alpha.106): nombres del universo para las 11 regiones, sus ecologías y ecorregiones; colores separados (la pareja más cercana, Anillos y Púlsares, a distancia 72 en RGB); consejos de cada región y el Abismo de silencio. Pendiente: los objetos que aún se ven y se nombran como antes (pilares, faros, flores, agua) cambian con sus dibujos en las fases 2–4.
 - **Fase 2 · Capas** (alpha.107): `universe-layers.js` dibuja las tres capas de cada región sobre el suelo del Mundo, en celdas de 150, 120 y 110 px que se mueven al 35, 70 y 100 % de la cámara. Cerca del borde de una región las celdas de las dos se mezclan (150 px a cada lado). Polvo tiene su bruma, granos con estela de viento y motas que se apartan del cubo y vuelven en 1,5 s; el Vacío no dibuja nada. El aire de cada región es un ruido filtrado con ganancia máxima 0,012 (unos −38 dB), muy bajo la música. Polvo ya no dibuja hierba en el suelo. Coste: en el navegador de pruebas no se distingue del ruido de medida.
 - **Sin restos terrestres** (alpha.116): hierba, árboles de luz, pilares, plantas, flora de la vida del mundo, plantas que se riegan, bandadas y lluvia se dibujan desde arriba; los textos de vida y logros usan palabras del universo. Pendiente: criaturas terrestres (ciervo, tortuga, ballena) y los hitos «Árbol madre» y «Ciudad de formas».
