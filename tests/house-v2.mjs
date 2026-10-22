@@ -22,4 +22,6 @@ const future={version:3,objects:[{kind:'x',room:'y'}],rooms3d:{a:1}};const kept=
 // Size: a full house with all objects, decor and colours stays small inside the save.
 const full=normalizeHouse({objects:HOUSE_OBJECTS.map((d,i)=>({kind:d.id,room:HOUSE_ROOMS[i%4].id,x:i/40,y:.5})),unlocked:HOUSE_ROOMS.map(r=>r.id),decor:Array.from({length:60},(_,i)=>({id:'deco:'+i,room:'sala',x:.5,y:.5})),tints:Object.fromEntries(HOUSE_OBJECTS.map(d=>[d.id,'#ffffff'])),capsules:{count:999,items:Object.fromEntries(Array.from({length:60},(_,i)=>['deco:'+i,true]))}},14);
 assert(JSON.stringify(full).length<50000,JSON.stringify(full).length);assert(encodeHouse(full).length<16000);assert.equal(decodeHouse(encodeHouse(full)).objects.length,40);
+// A read-only mark saved by an older build never locks a current house.
+{const back=normalizeHouse({version:2,readOnly:true,objects:[],unlocked:['sala']});assert(!back.readOnly);assert(!('readOnly' in JSON.parse(JSON.stringify(back))));}
 console.log('PASS house v2: v1 migrates in place, sequencer unchanged, new fields cleaned, WH1 kept for plain houses, WH2 for decor and colours, newer houses read-only, full house under 50 KB');

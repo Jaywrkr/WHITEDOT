@@ -20,6 +20,8 @@ try:
    # Day one, but eight achievements: the Jardín is open, the Azotea is not.
    page.evaluate("()=>{"+hide+";const r=__r,s=r.S;s.sound=false;s.totalDays=0;s.ach={};for(let i=0;i<8;i++)s.ach['old'+i]='2026-10-21';s.sparks=200;s.sparkEconomy.earned=s.sparkEconomy.spent+200;s.house={...s.house,objects:[{kind:'obj:origen',room:'sala',x:.5,y:.4}],unlocked:['sala'],playerRoom:'sala'};r.save();r.enterHouse();}")
    page.wait_for_function('__r.houseSettled()');assert page.evaluate('__r.currentHouse().unlocked')==['sala','jardin']
+   # From afar a tap on the machine walks to it; standing at it, the first tap asks.
+   page.evaluate("()=>{"+hide+";__r.houseWalkTo('sala',.34);}");page.wait_for_function("__r.houseSettled()&&Math.abs(__r.houseStand().fx-204)<10",timeout=8000)
    # The machine: the first tap asks, the second turns the knob and takes 60 sparks.
    page.evaluate(hide);spot=page.evaluate('__r.houseToScreen(204,505)');page.locator('#w').click(force=True,position=spot);page.wait_for_timeout(150)
    assert page.evaluate('__r.currentHouse().capsules.count')==0;assert page.evaluate('__r.S.sparks')==200
