@@ -2,6 +2,20 @@
 
 Estado: 21 de octubre de 2026. Código **2.3.0-alpha.96**. Las entradas describen su revisión, no certifican producción.
 
+## Viaje · Fase 0 · Papel
+
+Rama `claude/viaje-f0-papel`, sobre `claude/casa-c7-refugio`. Solo diseño y documentación; el juego no cambia.
+
+- **Panel creativo:** diez perfiles simulados de creadores (Mizuguchi, Iwai, Matsuura, Simogo, Proteus, Jenova Chen, Roset, Ken Wong, Pope y Wintory) analizaron Kubono y acordaron un plan para competir en el IGF. Jay aprobó seguirlo.
+- **[El Viaje](docs/VIAJE.md):**
+  - el juego principal pasa a ser un viaje de 7 capítulos y unos 40 minutos con final; después se abre el Mundo libre;
+  - el verbo es tocar a tiempo;
+  - un tema de seis notas para el cubo, reharmonizado por capítulo;
+  - el color se gana capítulo a capítulo;
+  - incluye los primeros 5 minutos sin texto y la lista de lo que se oculta durante el Viaje.
+- **Decisiones registradas:** cuenta opcional con guardado local (en el [plan de lanzamiento](docs/PLAN_LANZAMIENTO.md) y en AGENTS.md), economía oculta durante el Viaje y un músico coautor pendiente.
+- **Render de trabajo del tema:** 69 s por los siete capítulos, pico 0,62, fuera de Git.
+
 ## Refugio · C7 · alpha.96
 
 Rama `claude/casa-c7-refugio`, sobre `claude/l2-tienda`. Pedido de Jay: la Casa se veía infantil y no encajaba con un juego abstracto y musical. Se rediseña sin tocar lo ganado.
