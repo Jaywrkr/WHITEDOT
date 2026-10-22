@@ -202,7 +202,7 @@ export function initialize(runtime) {
       for(let i=runtime.rain.length-1;i>=0;i--){const q=runtime.rain[i];if(!paused)q.y+=q.vy*dt;const d=Math.hypot(q.x-runtime.S.wx,q.y-runtime.S.wy);if(!paused&&d<runtime.pxSize()/2+14){runtime.rain.splice(i,1);runtime.playerNote(.12);runtime.burst(q.x,q.y,5,true);continue;}
         if(q.y>runtime.S.wy+R*1.4){runtime.rain.splice(i,1);continue;}runtime.cx.globalAlpha=Math.min(1,Math.max(.15,1-d/(R*1.3)))*(runtime.worldOpacity?.(d,R*1.4)??1);runtime.cx.fillStyle=runtime.musicInk?.(q,'perc')||'#fff';runtime.cx.fillRect(q.x+ox-1,q.y+oy-6,2,7);}}else if(runtime.rain.length)runtime.rain=[];
     runtime.drawVJWorld?.(t,dt,ox,oy,paused);
-    runtime.drawDepthGround?.(t);runtime.drawWorldFamilyGround?.(t);runtime.drawGround(ox,oy,R,t);
+    runtime.drawDepthGround?.(t);runtime.drawWorldFamilyGround?.(t);runtime.drawGround(ox,oy,R,t);runtime.drawUniverseLayers?.(t,b);
     runtime.drawRivers?.(t,ox,oy);runtime.drawAlive?.(t,dt,ox,oy,'ground');
     runtime.updWaves(dt,ox,oy);
     const span=Math.max(R*1.8+60,(runtime.worldVisibility?.radius||0)+100);

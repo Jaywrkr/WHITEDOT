@@ -84,6 +84,8 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 **Universo:** las 11 regiones conservan sus ids y cambian de nombre y color (`data.js`, `house-view.js` `LANDSCAPES`, `ecology-model.js`, `ecoregions.js`); ver [El universo](UNIVERSO.md). El final del Viaje toma sus colores de `LANDSCAPES`.
 
+**Capas del universo:** `universe-layers.js` dibuja, después del suelo (`render.js`, `worldStep`), tres capas por región (lejos, medio y cerca) con su propio parallax, mezcla en los bordes y un aire de región muy bajo (`REGION_SOUND_MAX`). Cada región se añade en `STYLES`; el Vacío es `null`. Los puntos salen de un hash con avalancha (`rand`), no del azar antiguo.
+
 **Regla de cámara:** el Mundo se ve siempre desde arriba, infinito en todas las direcciones y sin horizonte; solo el Refugio se ve de lado.
 
 `world-sheet.js` dibuja, en la superficie del Mundo y antes que el resto, la luz del bioma:

@@ -38,7 +38,7 @@ export function initialize(runtime){
     c.globalAlpha=population*opacity(dist)*(.028+(plane===1?.04:0))*(.6+fog.day*.4)*(.15+decorativeField(wx,wy,runtime.seedOf));
     c.globalAlpha*=1+breath*.5*Math.max(0,1-dist/240);const alpha=c.globalAlpha;for(const [biome,weight]of groundKinds){c.globalAlpha=alpha*weight;
     if(biome==='agua'){const wave=Math.sin(t/1800+h*9)*3;c.fillRect(p.x+wave,p.y,4+plane*4,1);}
-    else if(['bosque','jardin','llanura'].includes(biome)&&plane===1){const sway=Math.sin(t/1400+h*12)*3*(.4+Math.abs(runtime.livingEnvironment?.wind||0));c.beginPath();c.moveTo(p.x,p.y);c.lineTo(p.x+sway,p.y-4-h*5);c.stroke();}
+    else if(['bosque','jardin'].includes(biome)&&plane===1){const sway=Math.sin(t/1400+h*12)*3*(.4+Math.abs(runtime.livingEnvironment?.wind||0));c.beginPath();c.moveTo(p.x,p.y);c.lineTo(p.x+sway,p.y-4-h*5);c.stroke();}
     else{c.fillRect(p.x,p.y,plane===1?2:1,1);if(biome==='ruinas'||biome==='cueva'){c.beginPath();c.moveTo(p.x,p.y);c.lineTo(p.x+4,p.y-2);c.stroke();}}}
    }
   }
