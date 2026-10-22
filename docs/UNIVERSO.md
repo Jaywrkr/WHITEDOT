@@ -100,6 +100,18 @@ Orden: los bloques visual (1–6) y musical (7–12) se alternan. Los superbioma
 
 ## Estado
 
+- **Fase 15 · Fusión** (alpha.123): `superbiome-fusion.js` da a cada familia su forma de mover las capas de la región en la que suena; la forma y el color de la región no cambian.
+  - **Ambient:** casi quieto, a 0,45 de velocidad, y el pulso apenas se nota.
+  - **Downtempo:** lento, a 0,75.
+  - **Dub:** lento, a 0,6, y la capa media deja un eco más tenue 0,4 s detrás.
+  - **House:** late con el bombo.
+  - **Techno:** rápido, a 1,35, con golpe seco y movimiento en líneas rectas.
+  - **Breaks:** a 1,2, con saltos en los golpes fuertes.
+  - **Drum & bass:** muy rápido, a 1,7, con saltos más grandes.
+  - **Electro:** a 1,2, se enciende o se apaga en el pulso, en líneas rectas.
+  - **Tribal:** la capa media se balancea con el compás.
+  - **Disco:** las capas lejana y media giran un poco alrededor del centro.
+  - Con movimiento reducido no hay giro, eco ni saltos. El reloj de la región nunca salta al cambiar de familia.
 - **Fase 14 · Reparto** (alpha.122): Jay eligió no tocar el mapa. `scripts/superbiome-census.mjs` cuenta las regiones de cada superbioma en seis mundos (1846 de continente y 800 del Abismo) y escribe `src/superbiome-rarity.js`: 70 comunes (al menos 0,5 % de las regiones), 31 raros, 3 muy raros (Drum & bass en Polvo, Cúmulo y Anillos) y 1 ausente (Restos · Drum & bass). El aviso de región marca los raros: «Marea · Dub (raro)». La prueba repite el censo y exige la misma tabla.
 - **Fase 13 · Modelo de superbiomas** (alpha.121): diez familias para los 52 géneros y 105 combinaciones válidas. En el mundo principal (61 × 61 regiones) aparecen 62. Al entrar a una región, su aviso empieza por el superbioma (`Polvo · House — Deep house · 120 BPM`), y el primer día que se oye cada uno queda en `S.universe.super`. El reparto (fase 14) decidirá cómo llegan los que faltan, como Drum & bass en Polvo o Restos.
 - **Fase 1 · Nombres** (alpha.106): nombres del universo para las 11 regiones, sus ecologías y ecorregiones; colores separados (la pareja más cercana, Anillos y Púlsares, a distancia 72 en RGB); consejos de cada región y el Abismo de silencio. Pendiente: los objetos que aún se ven y se nombran como antes (pilares, faros, flores, agua) cambian con sus dibujos en las fases 2–4.

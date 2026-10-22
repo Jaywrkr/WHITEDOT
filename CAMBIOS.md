@@ -1,6 +1,21 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.122**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.123**. Las entradas describen su revisión, no certifican producción.
+
+## Superbiomas: la fusión · alpha.123
+
+Rama `claude/super-fusion`, sobre `claude/super-mapa` (alpha.122). Fase 15 de [El universo](docs/UNIVERSO.md).
+
+Lo que se ve sigue a la música: cada región conserva su forma y su color, pero se mueve como la familia que suena en ella.
+
+- **Ambient:** casi quieto.
+- **Dub:** lento, con eco.
+- **House:** late con el bombo.
+- **Techno:** rápido y en líneas rectas.
+- **Drum & bass:** corre a ráfagas.
+- **Disco:** gira un poco.
+- **Las demás:** Downtempo, Breaks, Electro y Tribal tienen también su propio movimiento.
+- Con movimiento reducido no hay giro, eco ni saltos. Mapa, música y progreso no cambian.
 
 ## Superbiomas: el reparto · alpha.122
 

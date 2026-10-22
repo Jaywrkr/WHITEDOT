@@ -2,6 +2,7 @@ import {prefersReducedMotion} from './frame-state.js';
 import {LANDSCAPES} from './house-view.js';
 import {hash} from './world-sheet.js';
 import {newRegionById} from './universe-regions.js';
+import {fusionOf,snapAxis,createClock} from './superbiome-fusion.js';
 // A hash with full avalanche: keys that differ in one character land far apart (no clumps of points).
 export function rand(key){let h=hash(key);h^=h>>>16;h=Math.imul(h,0x85ebca6b);h^=h>>>13;h=Math.imul(h,0xc2b2ae35);h^=h>>>16;return (h>>>0)/4294967296;}
 // The universe seen from above (docs/UNIVERSO.md): every region draws three layers on the World's surface.
@@ -161,7 +162,9 @@ function lattice(c,x,y,s,f,gap,style){const h=gap*.866,j0=Math.floor(f.uy/h),j1=
 // How far a point is pushed by the cube's recent path: the furrow it opens closes in about a second and a half.
 export function partAt(px,py,trail,now,radius=70,push=18){let ox=0,oy=0;for(const p of trail){const age=(now-p.at)/1500;if(age>=1)continue;const dx=px-p.x,dy=py-p.y,d=Math.hypot(dx,dy);if(d<1||d>=radius)continue;const k=(1-d/radius)*(1-age)*push/d;ox+=dx*k;oy+=dy*k;}const m=Math.hypot(ox,oy);return m>push?[ox/m*push,oy/m*push]:[ox,oy];}
 export function initialize(runtime){
- const trail=[];let lastTrail=0,air=null,airFor='',rest=0,lastPulse=-1e9;const stats={cells:0,regions:{},constellations:0};
+ const trail=[];let lastTrail=0,air=null,airFor='',rest=0,lastPulse=-1e9;const stats={cells:0,regions:{},constellations:0,family:null};
+ // Fusion (superbiome-fusion.js): the family heard here, looked up a few times a second, and the region's clock.
+ const clock=createClock();let family=null,familyAt=-1e9;
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  const ids=()=>runtime.BIOMES.map(b=>b.id);
  // The region of a point: its biome, or in the Abyss one of the new regions (universe-regions.js).
@@ -188,14 +191,21 @@ export function initialize(runtime){
   if(now-lastTrail>80){trail.push({x:runtime.S.wx,y:runtime.S.wy,at:now});lastTrail=now;if(trail.length>24)trail.shift();}
   // How long the cube has rested (Esporas open): 0 moving, 1 after about a second still.
   const speed=runtime.MU?.speed||0;rest=speed<12?Math.min(1,rest+.03):0;
+  if(now-familyAt>250){familyAt=now;family=runtime.superbiomeHere?.()?.family||null;}const fx=fusionOf(family),ft=clock(t,still?1:fx.speed),fb=still?beat:fx.beat(beat);stats.family=family;
   const screenTrail=still?[]:trail.map(p=>({x:W/2+(p.x-camX),y:H/2+(p.y-camY),at:p.at})),bar=barPhase(),beatIndex=beatCount();stats.cells=0;stats.regions={};c.save();c.globalAlpha=1;c.globalCompositeOperation="source-over";c.shadowBlur=0;
-  for(const layer of ['far','mid','near']){const depth=LAYER_DEPTH[layer];
+  // One pass of a layer; dub draws its middle layer again, fainter and a moment behind.
+  const passes=layer=>layer==='mid'&&fx.echo&&!still?[{at:0,alpha:1},{at:-420,alpha:fx.echo}]:[{at:0,alpha:1}];
+  for(const layer of ['far','mid','near'])for(const pass of passes(layer)){const depth=LAYER_DEPTH[layer];c.save();c.globalAlpha=pass.alpha;
+   // Disco sways the far and middle layers around the centre; tribal swings the middle one; breaks and drum & bass jump.
+   if(!still&&layer!=='near'){const turn=fx.spin?Math.sin(ft/4000)*fx.spin:0,swing=layer==='mid'&&fx.sway?Math.sin(bar*Math.PI*2)*fx.sway:0,jump=layer==='mid'&&fx.burst?fx.burst*fb*fb:0;
+    if(turn){c.translate(W/2,H/2);c.rotate(turn);c.translate(-W/2,-H/2);}if(swing||jump)c.translate(swing+jump,jump*.4);}
    // Cells live on a plane that moves at `depth` of the camera; the region of a cell is the one under its centre now.
    const size=LAYER_CELL[layer],ox=camX*depth-W/2,oy=camY*depth-H/2,i0=Math.floor(ox/size)-1,j0=Math.floor(oy/size)-1,i1=Math.ceil((ox+W)/size),j1=Math.ceil((oy+H)/size);
    for(let i=i0;i<=i1;i++)for(let j=j0;j<=j1;j++){const sx=i*size-ox,sy=j*size-oy,wx=camX+(sx+size/2-W/2),wy=camY+(sy+size/2-H/2),key=layer+':'+i+','+j,id=cellRegion(wx,wy,runtime.WCH||900,regionAt,key),st=STYLES[id]?.[layer];if(!st)continue;
-    const f={t,beat,still,bar,beatIndex,done:id==='constelaciones'&&doneAt(wx,wy),accent:newRegionById(id)?.accent||'#ffffff',ux:i*size,uy:j*size,rest,pulseAge:(now-lastPulse)/1000,cubeX:W/2+(runtime.S.wx-camX),cubeY:H/2+(runtime.S.wy-camY),ink:runtime.placeColor?runtime.placeColor(id,LANDSCAPES[id]||newRegionById(id)?.color||'#ffffff'):LANDSCAPES[id]||newRegionById(id)?.color||'#ffffff',wind:rand('wind:'+id+':'+Math.floor(wx/(runtime.WCH||900))+','+Math.floor(wy/(runtime.WCH||900)))*Math.PI*2,
+    const f={t:ft+pass.at,beat:fb,still,bar,beatIndex,done:id==='constelaciones'&&doneAt(wx,wy),accent:newRegionById(id)?.accent||'#ffffff',ux:i*size,uy:j*size,rest,pulseAge:(now-lastPulse)/1000,cubeX:W/2+(runtime.S.wx-camX),cubeY:H/2+(runtime.S.wy-camY),ink:runtime.placeColor?runtime.placeColor(id,LANDSCAPES[id]||newRegionById(id)?.color||'#ffffff'):LANDSCAPES[id]||newRegionById(id)?.color||'#ffffff',wind:rand('wind:'+id+':'+Math.floor(wx/(runtime.WCH||900))+','+Math.floor(wy/(runtime.WCH||900)))*Math.PI*2,
      part:(px,py)=>layer!=='near'?[0,0]:partAt(px,py,screenTrail,now)};
-    st.draw(c,sx,sy,size,id+':'+key,f);stats.cells++;stats.regions[id]=(stats.regions[id]||0)+1;}}
+    if(fx.axis&&!still)f.wind=snapAxis(f.wind);
+    st.draw(c,sx,sy,size,id+':'+key,f);stats.cells++;stats.regions[id]=(stats.regions[id]||0)+1;}c.restore();}
   // The cube's wake in regions that have one (Marea): rings spreading from where it passed.
   const hereId=regionAt(runtime.S.wx,runtime.S.wy);if(STYLES[hereId]?.wake&&!still){const ink=runtime.placeColor?runtime.placeColor(hereId,LANDSCAPES[hereId]):LANDSCAPES[hereId];c.lineWidth=1;
    for(const p of screenTrail.filter((_,i)=>i%5===0)){const age=(now-p.at)/1600;if(age>=1)continue;c.strokeStyle=rgba(ink,.4*(1-age));c.beginPath();c.arc(p.x,p.y,6+age*34,0,6.283);c.stroke();}}
@@ -205,5 +215,5 @@ export function initialize(runtime){
   // The region's rare moment, if this bar brings one (universe-rare.js).
   {const k=runtime.regionOfPos?.(runtime.S.wx,runtime.S.wy)?.key;if(k!=null)runtime.universeRareTick?.(c,W,H,{here:hereId,key:k,bar:Math.floor(beatIndex/4),ink:runtime.placeColor?runtime.placeColor(hereId,LANDSCAPES[hereId]||newRegionById(hereId)?.color||'#ffffff'):LANDSCAPES[hereId]||newRegionById(hereId)?.color||'#ffffff',accent:newRegionById(hereId)?.accent,cubeX:W/2+(runtime.S.wx-camX),cubeY:H/2+(runtime.S.wy-camY),t});}
   sound(regionAt(runtime.S.wx,runtime.S.wy),Math.min(1,(runtime.MU?.speed||0)/200));}
- Object.defineProperties(runtime,{universePulse:{get:()=>()=>{lastPulse=performance.now();}},drawUniverseLayers:{get:()=>draw},universeLayers:{get:()=>()=>({here:regionAt(runtime.S.wx,runtime.S.wy),constellations:stats.constellations,cells:stats.cells,regions:{...stats.regions},air:airFor,airGain:air?air.g.gain.value:0})}});
+ Object.defineProperties(runtime,{universePulse:{get:()=>()=>{lastPulse=performance.now();}},drawUniverseLayers:{get:()=>draw},universeLayers:{get:()=>()=>({here:regionAt(runtime.S.wx,runtime.S.wy),family:stats.family,constellations:stats.constellations,cells:stats.cells,regions:{...stats.regions},air:airFor,airGain:air?air.g.gain.value:0})}});
 }
