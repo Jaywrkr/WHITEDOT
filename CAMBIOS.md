@@ -1,6 +1,23 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.93**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.94**. Las entradas describen su revisión, no certifican producción.
+
+## Casa viva · C6 · La casa viaja contigo · alpha.94
+
+Rama `claude/casa-c6-viaje`, sobre `claude/casa-c5-visitas`. Pedido de Jay: que la Casa tenga sentido en la historia, menos botones, y Casa y Taller en uno solo.
+
+- **Historia:** el cubo lleva su casa. Se abre donde estás y aterriza con propulsores; tiene patas, una antena que parpadea y, fuera, el suelo y el paisaje del bioma donde aterrizó (dunas, árboles, cristales, faros…). El lugar anterior queda como campamento.
+- **Una sola entrada:** el menú Casa, el botón de la casa en el Mundo y «Abrir la casa aquí» hacen lo mismo. «Desplegar Taller aquí» ya no existe.
+- **Taller:** es la mesa de la Sala, abierta desde el primer día. «Volver a la casa» regresa a la Casa.
+- **Bodega:** el Sótano pasa a llamarse Bodega y guarda el motor de la casa en lugar de la mesa.
+- **Menos botones:** el panel pasa de ocho botones a cuatro: Coloca, Ver casa, Código y Volver.
+  - Caminar es lo normal; Coloca se activa y se desactiva.
+  - Para guardar un objeto, se arrastra fuera de la casa (antes, Retira).
+  - El Jardín de voces solo aparece cuando el cubo está en el Jardín.
+- **Textos:** la tarjeta Casa del menú dice «Tu casa viaja contigo»; La Voz lo cuenta la primera vez.
+- **Pruebas:**
+  - `smoke`, `wonders`, `alive`, `house_v2`, `house_capsules`, `experience_garden` y `house-guide` siguen el camino nuevo (mesa del Taller, Jardín para sus herramientas).
+  - Cierre: 190 conjuntos de Node, auditoría sin errores, 152/152 recorridos de navegador y renders de la Casa (`house_mix`, `experience_garden_mix`, `house_ambience_mix`) sin saturación.
 
 ## Casa viva · C5 · Visitas y cierre · alpha.93
 

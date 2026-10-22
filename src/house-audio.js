@@ -1,7 +1,7 @@
 import {openSurface} from './frame-state.js';
 import {INSTRUMENT_SPECS} from './instruments.js';
 import {HOUSE_OBJECTS,HOUSE_ROOMS,houseStep,houseDegree,houseGain,houseRegister,houseSelection} from './house-model.js';
-// Each room has its own quiet air: leaves in the Jardín, wind on the Azotea, a low hum in the Sótano; the Sala is still.
+// Each room has its own quiet air: leaves in the Jardín, wind on the Azotea, a low hum in the hold (Bodega); the Sala is still.
 export const AMBIENCE=Object.freeze({sala:{noise:0,cut:400,tone:0},jardin:{noise:.012,cut:3200,tone:0,sway:.006},azotea:{noise:.018,cut:650,tone:0,sway:.008},sotano:{noise:.006,cut:240,tone:.01}});
 export function createAmbience(ac,out,noise){
  const src=ac.createBufferSource(),filter=ac.createBiquadFilter(),air=ac.createGain(),lfo=ac.createOscillator(),depth=ac.createGain(),hum=ac.createOscillator(),humGain=ac.createGain();

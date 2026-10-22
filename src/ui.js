@@ -19,7 +19,7 @@ export function initialize(runtime) {
     runtime.elementBookUI?.();
     const fill=$("barfill"),goal=$("goal"),gr=$("goalR");
     $("bDeploy").hidden=!runtime.inWorld();
-    if(runtime.S.mode==="studio"){const house=runtime.houseActive?.(),n=house?runtime.currentHouse().objects.length:Object.keys(runtime.S.studio.slots).length;$("era").textContent=house?"Casa":"Taller · "+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/(house?40:64)*100)+"%";goal.textContent=(house?"Casa · ":"Taller · ")+n+" sonando";gr.textContent=house?"Camina. Coloca. Escucha.":"Toca un punto";}
+    if(runtime.S.mode==="studio"){const house=runtime.houseActive?.(),n=house?runtime.currentHouse().objects.length:Object.keys(runtime.S.studio.slots).length;$("era").textContent=(house?"Casa · ":"Taller · ")+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/(house?40:64)*100)+"%";goal.textContent=(house?"Casa · ":"Taller · ")+n+" sonando";gr.textContent=house?"Camina. Coloca. Escucha.":"Toca un punto";}
     else if(runtime.inWorld()){fill.style.width="100%";
       goal.textContent=dist?"Eco cercano · escucha y pulsa":"Lugares "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
       gr.textContent="Sin reloj";}

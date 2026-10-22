@@ -85,8 +85,8 @@ export function initialize(runtime) {
     if(back==="world"&&(runtime.S.layer||"superficie")!=="superficie"){runtime.restoreLayerMusic?.();}else if(back==="world"){runtime.curZone=runtime.biomeOfPos(runtime.S.wx,runtime.S.wy);runtime.setBiome(runtime.curZone);const rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);runtime.MU.dnaT=rg;runtime.curRegion=rg.key;}else{runtime.setBiome(0);runtime.MU.dnaT=null;}
     runtime.parts=[];document.getElementById("dock").hidden=false;document.getElementById("studioPanel").hidden=true;runtime.retoUI();runtime.save();runtime.hud();
   }
-  function deployStudio(){{const st=runtime.S.studio;if(st.x!=null&&Math.hypot(st.x-runtime.S.wx,st.y-runtime.S.wy)>400){(runtime.S.camps||=[]).push([Math.round(st.x),Math.round(st.y)]);if(runtime.S.camps.length>30)runtime.S.camps.shift();}}   // el campamento anterior queda como recuerdo
-    runtime.S.studio.x=runtime.S.wx;runtime.S.studio.y=runtime.S.wy;runtime.S.studio.biome=runtime.biomeOfPos(runtime.S.wx,runtime.S.wy);runtime.say(runtime.VOZ.deploy);runtime.save();enterStudio();}
+  // The Taller lives in the house: opening it here lands the house where you are (the last landing stays as a camp).
+  function deployStudio(){const before=runtime.S.house?.landed;runtime.landHouse();if(before)runtime.say(runtime.VOZ.deploy);}
 
   Object.defineProperties(runtime, {
     colorOk: { get: () => colorOk },

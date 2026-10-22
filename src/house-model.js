@@ -1,6 +1,6 @@
 import {LIVING_CATALOG} from './living-catalog.js';
 import {POWER_IDS,POWERS} from './expansion-music.js';
-export const HOUSE_ROOMS=Object.freeze([{id:'sala',name:'Sala',days:0,found:0,cut:8000,echo:.03},{id:'jardin',name:'Jardín',days:3,found:8,cut:4500,echo:.02},{id:'azotea',name:'Azotea',days:7,found:20,cut:6500,echo:.08},{id:'sotano',name:'Sótano',days:14,found:40,cut:2400,echo:.05}]);
+export const HOUSE_ROOMS=Object.freeze([{id:'sala',name:'Sala',days:0,found:0,cut:8000,echo:.03},{id:'jardin',name:'Jardín',days:3,found:8,cut:4500,echo:.02},{id:'azotea',name:'Azotea',days:7,found:20,cut:6500,echo:.08},{id:'sotano',name:'Bodega',days:14,found:40,cut:2400,echo:.05}]);
 const biomes=['llanura','bosque','lago','dunas','cristales','jardin','ruinas','cueva','tormenta','faros','vacio'];
 export const HOUSE_OBJECTS=Object.freeze([
  {id:'obj:origen',name:'Pulso de casa',source:'cube:color:ffffff',instrument:'sub',role:'bajo',shape:'square'},

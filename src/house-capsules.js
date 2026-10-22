@@ -23,7 +23,7 @@ export const CAPSULE_DECOR=Object.freeze([
 ]);
 export const CAPSULE_SOUNDS=Object.freeze([
  piece('sound:campanas','Campanas de viento','jardin',.3,.12,'branch',{role:'lead',instrument:'metalkeys'}),
- piece('sound:cajita','Caja de música','sala',.34,.95,'box',{role:'lead',instrument:'kalimba'}),
+ piece('sound:cajita','Caja de música','sala',.62,.8,'box',{role:'lead',instrument:'kalimba'}),
  piece('sound:gong','Gong','sotano',.26,.62,'pod',{role:'perc',instrument:'tom'}),
  piece('sound:xilofono','Xilófono','azotea',.22,.82,'square',{role:'lead',instrument:'rhodes'}),
  piece('sound:organillo','Organillo','sotano',.2,.85,'box',{role:'lead',instrument:'reed'}),
@@ -31,9 +31,11 @@ export const CAPSULE_SOUNDS=Object.freeze([
 ]);
 export const CAPSULE_TINTS=Object.freeze(['#ff8a8a','#8ad1ff','#a6f08a','#d4a6ff','#ffd27a','#7af0d8','#ffffff','#f0a6c8']);
 export const CAPSULE_PIECES=Object.freeze([...CAPSULE_DECOR,...CAPSULE_SOUNDS]);
-// The machine stands on the Sala floor under the window; the Taller is the basement workbench.
+// The machine stands on the Sala floor under the window; the Taller is the Sala workbench.
 export const MACHINE=Object.freeze({x:204,floor:540,w:44,h:70});
-export const WORKBENCH=Object.freeze({x0:756,x1:936,top:658,bottom:780});
+export const WORKBENCH=Object.freeze({x0:264,x1:414,top:410,bottom:540});
+// The engine in the hold (Bodega) is what lets the house travel.
+export const ENGINE=Object.freeze({x0:796,x1:936,top:610,bottom:780});
 export function hash(text){let h=2166136261;for(const ch of String(text)){h^=ch.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;}
 // What the next capsule gives. New pieces for open rooms come first; every third capsule paints a placed object.
 export function capsulePrize(house,kinds=[]){
@@ -94,13 +96,14 @@ export function initialize(runtime){
   if(!debitSparks(S,CAPSULE_PRICE))return null;applyPrize(h,prize);
   if(runtime.save()===false){S.sparks=before.sparks;S.sparkEconomy=before.economy;h.decor=before.decor;h.tints=before.tints;h.capsules=before.capsules;runtime.toast('No se guardó. Conservas tus chispas.');return null;}
   spinAt=performance.now();last=prize;opened++;jingle();runtime.hud?.();
-  const name=prize.type==='tint'?'Color nuevo para '+(HOUSE_OBJECTS.find(d=>d.id===prize.kind)?.name||'un objeto'):prize.piece.name+' · '+({sala:'Sala',jardin:'Jardín',azotea:'Azotea',sotano:'Sótano'})[prize.piece.room];
+  const name=prize.type==='tint'?'Color nuevo para '+(HOUSE_OBJECTS.find(d=>d.id===prize.kind)?.name||'un objeto'):prize.piece.name+' · '+({sala:'Sala',jardin:'Jardín',azotea:'Azotea',sotano:'Bodega'})[prize.piece.room];
   runtime.toast('<em>Cápsula</em> · '+name);return prize;}
  // A tap on the machine asks first; a second tap within four seconds turns the knob.
  function tap(hx,hy){const h=runtime.currentHouse?.();if(!h)return false;
   if(Math.abs(hx-MACHINE.x)<=MACHINE.w/2+4&&hy<=MACHINE.floor&&hy>=MACHINE.floor-MACHINE.h-6){if(h.readOnly||runtime.houseVisiting?.()){runtime.toast('De visita, la máquina no gira.');return true;}
    const now=performance.now();if(now-armedAt<4000){armedAt=-1e9;open();}else{armedAt=now;runtime.toast('Cápsula · '+CAPSULE_PRICE+' ✦. Toca otra vez para girar.');}return true;}
-  if((h.unlocked||[]).includes('sotano')&&hx>=WORKBENCH.x0&&hx<=WORKBENCH.x1&&hy>=WORKBENCH.top&&hy<=WORKBENCH.bottom){if(h.readOnly||runtime.houseVisiting?.())return false;
+  if((h.unlocked||[]).includes('sotano')&&hx>=ENGINE.x0&&hx<=ENGINE.x1&&hy>=ENGINE.top&&hy<=ENGINE.bottom){runtime.toast('Motor de la casa · la lleva contigo.');return true;}
+  if(hx>=WORKBENCH.x0&&hx<=WORKBENCH.x1&&hy>=WORKBENCH.top&&hy<=WORKBENCH.bottom){if(h.readOnly||runtime.houseVisiting?.())return false;
    if(h.workbench!==true){h.workbench=true;runtime.save();}runtime.houseOpenWorkshop?.();return true;}
   return false;}
  function draw(c,{toScreen,k,t,calm:still,house,cube,night=0}){
@@ -114,7 +117,7 @@ export function initialize(runtime){
   for(let i=0;i<9;i++){const a=i*2.4+(still?0:spin*8),r=w*(.12+.22*((i*37)%10)/10);c.fillStyle=CAPSULE_TINTS[i%CAPSULE_TINTS.length];c.beginPath();c.arc(base.x+Math.cos(a)*r,cy+w*.12+Math.sin(a)*r*.6,Math.max(1.5,w*.08),0,6.283);c.fill();}
   if(spin>0&&last&&!still){c.fillStyle=last.type==='tint'?last.color:'#f0d27a';c.globalAlpha=spin;c.beginPath();c.arc(base.x+w*.6,base.y-hh*.1-(1-spin)*hh*.6,Math.max(3,w*.14),0,6.283);c.fill();c.globalAlpha=1;}
   // Near the workbench, a quiet label says what it is.
-  if((house.unlocked||[]).includes('sotano')&&cube?.floor===2&&cube.x>=WORKBENCH.x0-30&&cube.x<=WORKBENCH.x1+30){const p=toScreen((WORKBENCH.x0+WORKBENCH.x1)/2,WORKBENCH.top-8);c.font='11px "Geist Mono", monospace';c.textAlign='center';c.fillStyle='#f0d27a';c.fillText('Taller · toca la mesa',p.x,p.y);c.textAlign='start';}
+  if(cube?.floor===1&&cube.x>=WORKBENCH.x0-10&&cube.x<=WORKBENCH.x1+10){const p=toScreen((WORKBENCH.x0+WORKBENCH.x1)/2,WORKBENCH.top-8);c.font='11px "Geist Mono", monospace';c.textAlign='center';c.fillStyle='#f0d27a';c.fillText('Taller · toca la mesa',p.x,p.y);c.textAlign='start';}
   c.restore();}
  Object.defineProperties(runtime,{drawHouseCapsules:{get:()=>draw},houseCapsuleTap:{get:()=>tap},openHouseCapsule:{get:()=>open},capsuleObjects:{get:()=>capsuleObjects},capsuleDefinition:{get:()=>capsuleDefinition},
   houseCapsuleState:{get:()=>()=>({opened,last,price:CAPSULE_PRICE,next:runtime.currentHouse?capsulePrize(runtime.currentHouse(),kindsOf(runtime.currentHouse())):null})}});
