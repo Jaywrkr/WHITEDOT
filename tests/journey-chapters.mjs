@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {CHAPTERS,WORLD_CHAPTERS,STATE_CAP,VOID_CAP,VOID_ECHO_AFTER,stateCap,normalizeChapters,chapterState,findBiome,initialize} from '../src/journey-chapters.js';
+import {CHAPTERS,WORLD_CHAPTERS,STATE_CAP,STORM_FLOOR,STATE_FLOOR,stateFloor,VOID_CAP,VOID_ECHO_AFTER,stateCap,normalizeChapters,chapterState,findBiome,initialize} from '../src/journey-chapters.js';
 assert.deepEqual(CHAPTERS,['camino','llanura','lago','bosque','tormenta','vacio','refugio']);assert.equal(WORLD_CHAPTERS.length,5);
 assert(STATE_CAP.silencio<STATE_CAP.llegada&&STATE_CAP.llegada<STATE_CAP.pertenencia&&STATE_CAP.pertenencia<STATE_CAP.plenitud);
 // Saved chapters are cleaned; a player already in the World starts at chapter 1.
@@ -28,13 +28,13 @@ r.journeyQuiet=()=>false;r.drawJourneyChapters(c,390,844,48);
 r.journeyQuiet=()=>true;
 // The last world chapter leads to the Refugio and its finale.
 // The Tormenta: each note on time brings a bolt down on the beat; its Plenitud is a bar of bolts.
-assert.equal(stateCap('plenitud','vacio'),VOID_CAP);assert.equal(stateCap('llegada','lago'),STATE_CAP.llegada);
+assert.equal(stateCap('plenitud','vacio'),VOID_CAP);assert.equal(stateFloor('plenitud','lago'),STATE_FLOOR.plenitud);assert.equal(stateFloor('pertenencia','lago'),null);assert.equal(stateFloor('plenitud','vacio'),null);assert(stateFloor('plenitud','tormenta')>STATE_FLOOR.plenitud,'the climax');assert.equal(stateCap('llegada','lago'),STATE_CAP.llegada);
 r.ac={currentTime:10};r.S.journey.chapter=4;r.curZone=3;clock+=1000;r.drawJourneyChapters(c,390,844,60);assert.equal(r.journeyChapter().id,'tormenta');
-r.journeyChapterPulse(true,52);assert.equal(r.journeyChapter().moments.bolts,1);r.drawJourneyChapters(c,390,844,61);assert.equal(r.MU.boltAt,10,'the bolt falls now');
+assert.equal(r.MU.journeyFloor,null,'the climax waits for you');r.journeyChapterPulse(true,52);assert.equal(r.journeyChapter().moments.bolts,1);r.drawJourneyChapters(c,390,844,61);assert.equal(r.MU.boltAt,10,'the bolt falls now');assert.equal(r.MU.journeyFloor,STORM_FLOOR.pertenencia,'playing holds the storm up');
 r.MU.boltAt=0;for(let i=0;i<5;i++)r.journeyChapterPulse(true,52);r.MU.boltAt=1;assert.equal(r.journeyPhrase(),true);assert.equal(r.journeyChapter().moments.bolts,10,'five more and a bar of four');
 r.biomeOfPos=(x,y)=>y>=600?4:3;r.journeyTravel();assert.equal(r.journeyChapter().id,'vacio');assert.equal(r.journeyChapter().moments.storm,0,'bolts stay in the Tormenta');
 // The Vacío: the cube alone; after eight notes the creatures repeat each note; the phrase needs them.
-r.curZone=4;r.drawJourneyChapters(c,390,844,70);assert.equal(r.MU.journeyCap,VOID_CAP);
+r.curZone=4;r.drawJourneyChapters(c,390,844,70);assert.equal(r.MU.journeyCap,VOID_CAP);assert.equal(r.MU.journeyFloor,null);
 for(let i=0;i<VOID_ECHO_AFTER;i++)r.journeyChapterPulse(true,60);assert.equal(r.journeyChapter().moments.echoes,0);assert.equal(r.journeyPhrase(),false,'not before the creatures come back');
 for(let i=0;i<4;i++)r.journeyChapterPulse(true,62);assert.equal(r.journeyChapter().moments.echoes,4);r.drawJourneyChapters(c,390,844,80);assert.equal(r.journeyPhrase(),true);
 let finale=0;r.journeyFinale=()=>finale++;assert.equal(r.journeyTravel(),true);assert.equal(finale,1);assert.equal(r.journeyChapter().id,'refugio');

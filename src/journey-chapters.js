@@ -10,6 +10,11 @@ export const WORLD_CHAPTERS=Object.freeze(['llanura','lago','bosque','tormenta',
 // How loud the music may get in each state, as a cap on its energy.
 export const STATE_CAP=Object.freeze({llegada:.38,pertenencia:.66,plenitud:1,silencio:.16});
 export const SILENCE_BARS=8;
+// Held up from below (Phase 7, measured in a full playthrough as voices per second): every Plenitud is fuller than its
+// Pertenencia, and the Tormenta, the climax, is the fullest moment once you play. The Vacío stays alone.
+export const STATE_FLOOR=Object.freeze({plenitud:.8});
+export const STORM_FLOOR=Object.freeze({pertenencia:.6,plenitud:.92});
+export const stateFloor=(state,id)=>id==='vacio'?null:(id==='tormenta'?STORM_FLOOR:STATE_FLOOR)[state]||null;
 // The Vacío: the cube alone (a very low cap), and after this many notes the creatures come back and repeat them.
 export const VOID_CAP=.1,VOID_ECHO_AFTER=8,VOID_PHRASE=12;
 // The cap of a state in a chapter: in the Vacío the music never rises above the cube.
@@ -62,9 +67,9 @@ export function initialize(runtime){
  // Entering the World in the Journey starts chapter 1 in the Llanura.
  function arrive(){const j=own();if(!active()||j.chapter!==0)return;j.chapter=1;const ids=runtime.BIOMES.map(b=>b.id);if(biomeId()!=='llanura'){const spot=findBiome('llanura',{x:runtime.S.wx,y:runtime.S.wy},(x,y)=>ids[runtime.biomeOfPos(x,y)],(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea);if(spot){runtime.S.wx=spot.x;runtime.S.wy=spot.y;}}runtime.save();}
  let finaleAsked=false;
- function tick(){if(!active()){runtime.MU&&(runtime.MU.journeyCap=null);return;}arrive();
+ function tick(){if(!active()){if(runtime.MU){runtime.MU.journeyCap=null;runtime.MU.journeyFloor=null;}return;}arrive();
   // A Journey saved in the Refugio before its finale finished plays it again.
-  if(current()==='refugio'&&!own().finished&&!finaleAsked&&runtime.journeyFinale){finaleAsked=true;runtime.journeyFinale();return;}const st=stateNow();if(runtime.MU)runtime.MU.journeyCap=st?stateCap(st,current()):null;
+  if(current()==='refugio'&&!own().finished&&!finaleAsked&&runtime.journeyFinale){finaleAsked=true;runtime.journeyFinale();return;}const st=stateNow();if(runtime.MU){runtime.MU.journeyCap=st?stateCap(st,current()):null;runtime.MU.journeyFloor=inChapter()?stateFloor(st,current()):null;}
   if(storm.length&&runtime.MU&&!runtime.MU.boltAt&&runtime.ac&&storm[0]<=runtime.ac.currentTime+.02){runtime.MU.boltAt=Math.max(storm.shift(),runtime.ac.currentTime);}
   if(portal&&Math.hypot(runtime.S.wx-portal.x,runtime.S.wy-portal.y)<34)travel();}
  // The portal in the World, and seven small marks on the Line's right end: gold for done, white for here.

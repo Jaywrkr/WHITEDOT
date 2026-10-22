@@ -41,6 +41,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 `journey-chapters.js` ordena el Viaje como un disco de siete capítulos: Camino, Llanura, Lago, Bosque, Tormenta, Vacío y Refugio. Se guarda en `S.journey` (`chapter`, `done`, `notes`) y se normaliza sin tocar versiones futuras.
 
 - **Estados:** cada capítulo del Mundo pasa por Llegada, Pertenencia y Plenitud. El estado pone un tope a la energía de la música (`MU.journeyCap` en `audio.js`): .38, .66 y 1. Sin tocar durante 8 compases baja a .16 y espera.
+- **Suelos:** la Plenitud también sostiene la energía desde abajo (`MU.journeyFloor`, .8); en la Tormenta, al tocar, .6 y .92, para que sea el momento más denso. El Vacío no tiene suelo. Se miden con `scripts/journey-curve.py`, que juega el Viaje entero y cuenta voces por segundo.
 - **Notas:** cada pulso a tiempo en el bioma del capítulo guarda su nota (hasta 16 por capítulo) para el final.
 - **Plenitud:** completar el tema allí marca el capítulo, devuelve el color (`world-sheet.js`), toca el tema entero con su octava y abre un portal dorado. Entrar en él lleva al bioma del capítulo siguiente, buscado en anillos sobre el mapa del Mundo (sin mar).
 - **Faro:** lejos del bioma del capítulo, una columna dorada en el borde de la pantalla señala hacia él.
@@ -61,7 +62,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 - **Tormenta** (`journey-chapters.js`): cada nota a tiempo en su capítulo pone un rayo en el beat (usa `MU.boltAt`, el rayo existente de `render.js`); su Plenitud es un compás de cuatro rayos.
 - **Vacío:** el tope de la música baja a .1 (el cubo solo). Tras ocho notas, las criaturas repiten cada nota un compás después, una octava arriba, y se encienden alrededor del cubo. El tema solo se completa con ellas (12 notas). El Vacío es el mar entre continentes: es el único capítulo que se busca en el mar.
 - **Final** (`journey-finale.js`): al cruzar el último portal el cubo aterriza en el Refugio y una capa propia (`#journeyFinale`, con su lienzo y su `requestAnimationFrame`) toca tu viaje:
-  - hasta seis notas tuyas por capítulo, en orden, con el color de cada capítulo; luego el tema en La mayor dos veces, la segunda a la quinta (`finaleScore`);
+  - hasta seis notas tuyas por capítulo, en orden, con el color de cada capítulo, sobre un pedal de La; luego el tema en La mayor dos veces, la segunda a la quinta, sobre el acorde de La mayor (`finaleScore`);
   - el cielo se vuelve dorado y la imagen se aleja; tres segundos de silencio; créditos;
   - al terminar (o al tocar la pantalla tras 2 s) guarda `S.journey.finished` y pasa a Mundo libre. Si el guardado falla, el Viaje sigue abierto.
   - El sonido pasa por su propia ganancia, que se apaga al saltar. Sin dependencias del motor de música.

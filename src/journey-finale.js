@@ -25,7 +25,10 @@ export function initialize(runtime){
  const now=()=>performance.now()/1000;
  function overlay(){let el=document.getElementById('journeyFinale');if(!el){el=document.createElement('div');el.id='journeyFinale';el.setAttribute('role','dialog');el.setAttribute('aria-label','Final del Viaje');el.innerHTML='<canvas></canvas><div class="journey-credits" aria-live="polite"></div>';document.body.appendChild(el);}el.hidden=false;return el;}
  // Sound: through its own gain, so skipping fades it out.
+ // A soft held tone: the Refugio's pedal and chord under the cube's voice.
+ function hold(ac,out,t,midi,seconds,volume){const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.setValueAtTime(440*2**((midi-69)/12),t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(volume,t+1.2);g.gain.setValueAtTime(volume,t+Math.max(1.2,seconds-1.5));g.gain.exponentialRampToValueAtTime(.0001,t+seconds);o.connect(g);g.connect(out);o.start(t);o.stop(t+seconds+.1);}
  function play(score){const ac=runtime.ac;if(!runtime.S.sound||!ac||!runtime.bus)return null;const out=ac.createGain();out.gain.setValueAtTime(1,ac.currentTime);out.connect(runtime.bus);const t0=ac.currentTime+GATHER;
+  const theme=score.find(n=>n.chapter==='refugio')?.at??0,end=scoreLength(score);if(theme>0)hold(ac,out,t0,45,theme+1,.05);for(const m of [45,57,61,64])hold(ac,out,t0+theme,m,end-theme+1.5,m===45?.05:.03);
   for(const n of score){const len=n.eighths*EIGHTH,last=n.chapter==='refugio';playCello(ac,out,t0+n.at,n.midi,len,last?.14:.12);if(last)playCello(ac,out,t0+n.at,n.midi-12,len,.07);}return out;}
  function start(options={}){const j=runtime.S.journey,festival=!!options.festival;if(run||!j||(j.finished&&!festival)){if(!run)runtime.landHouse?.();return false;}
   document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});runtime.landHouse?.();const score=finaleScore(j.notes,festival?FESTIVAL_CHAPTERS:WORLD_CHAPTERS),el=overlay();el.querySelector('.journey-again')?.remove();el.querySelector('.journey-credits').replaceChildren();

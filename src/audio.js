@@ -249,6 +249,7 @@ export function initialize(runtime) {
     let E=calm?Math.min(MU.E,.2):runtime.S.mode==="camino"?Math.min(Math.max(MU.E,.04*caminoN),.2+.06*caminoN):Math.min(vitCap,Math.max(MU.E,MU.radio?.energy||0));
     if(runtime.inWorld()&&!calm){if(MU.river)E=Math.max(E,.3+.45*MU.river);if(MU.anomaly==='luna')E=Math.max(E,.85);}   // río abajo sube la energía; la luna lo abre todo
     // The Journey's chapter states cap the energy: arrival, belonging, fullness, or a waiting pedal (journey-chapters.js).
+    if(runtime.inWorld()&&!calm&&MU.journeyFloor)E=Math.max(E,MU.journeyFloor);
     if(runtime.inWorld()&&MU.journeyCap!=null)E=Math.min(E,MU.journeyCap);
     const A=live&&MU.dnaA?MU.dnaA:null,G=A?runtime.GEN[A.genre]:runtime.GEN.ambient,nb=runtime.inWorld()&&musicNeighbor()&&musicNeighbor()!==A?musicNeighbor():null,w=nb?musicBlend():0;
     if(s%4===0){MU.bq.push(t);if(MU.bq.length>8)MU.bq.shift();}
