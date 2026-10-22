@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict';
-import {THEME,ON_TIME,PULSE_GAP,beatDistance,themePitch,playCello,initialize} from '../src/journey-pulse.js';
+import {THEME,THEME_LOW,THEME_HIGH,ON_TIME,PULSE_GAP,beatDistance,themePitch,playCello,initialize} from '../src/journey-pulse.js';
 // The theme: six notes, two bars of eighths, starting and ending on the tonic.
 assert.equal(THEME.length,6);assert.equal(THEME.reduce((a,[,l])=>a+l,0),16);assert.equal(THEME[0][0],0);assert.equal(THEME.at(-1)[0],0);
 // Distance to the nearest beat, including the one that is about to come.
 assert.equal(beatDistance(10.02,[9,9.5,10],.5),.019999999999999574);assert(beatDistance(10.45,[9.5,10],.5)<.06,'the next beat counts');assert.equal(beatDistance(1,[],.5),Infinity);
-// Theme notes follow the scale of each place and stay in the cello's range.
-for(const scale of [[0,2,3,5,7,8,10],[0,2,4,6,7,9,11],[0,2,3,5,7,9,10]])for(const tr of [-7,-5,0,3,7])for(const [d] of THEME){const n=themePitch(d,scale,tr);assert(n>=48&&n<=64,n);assert(scale.includes(((n-57-tr)%12+12)%12),'in the scale');}
-assert.equal(themePitch(0,null),57,'a missing scale falls back to minor on A');
+// Theme notes follow the scale of each place and stay where a phone speaker sounds (C4–E5).
+for(const scale of [[0,2,3,5,7,8,10],[0,2,4,6,7,9,11],[0,2,3,5,7,9,10]])for(const tr of [-7,-5,0,3,7])for(const [d] of THEME){const n=themePitch(d,scale,tr);assert(n>=THEME_LOW&&n<=THEME_HIGH&&THEME_LOW>=60,n);assert(scale.includes(((n-57-tr)%12+12)%12),'in the scale');}
+assert.equal(themePitch(0,null),69,'a missing scale falls back to minor on A, an octave up');
 // The cello voice: every node starts and stops, nothing loud.
 const nodes=[];const param=()=>({setValueAtTime(){},exponentialRampToValueAtTime(v){assert(v>0);},linearRampToValueAtTime(){}});
 const node=k=>{const n={k,connect(o){return o;},start(t){this.at=t;},stop(t){this.end=t;},frequency:param(),detune:param(),gain:param(),Q:param()};nodes.push(n);return n;};

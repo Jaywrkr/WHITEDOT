@@ -20,6 +20,7 @@ import {encounterVoice} from './encounter-families.js';
 import {rhythmVoice} from './percussion-model.js';
 import {blobVoice} from './blobs.js';
 import {hybridIdentity,hybridRegister} from './musical-hybrids.js';
+import {CUBE_BELL,cubeBellVoice} from './cube-bell.js';
 // Identidad musical estable por región; el aspecto no fija el instrumento.
 const ROLES = ['bajo', 'perc', 'acorde', 'lead', 'agudo'];
 const PROPS = {llanura:'piedra',bosque:'hongo',jardin:'campanilla',dunas:'cactus',tormenta:'antena',cueva:'gota',vacio:'astro'};
@@ -94,7 +95,8 @@ export function initialize(runtime) {
     }
     if(runtime.MU?.radio?.labScore&&!source?.labSynth&&!kind.startsWith('micro:')&&kind!=='habitante')raw=labInteractionVoice(raw,labScore(region,runtime.seedOf,runtime.rng),kind,source,runtime.seedOf);
     if(runtime.MU?.radio?.labScore&&!kind.startsWith('micro:')&&kind!=='habitante')raw=performanceVoice(raw,region,kind,source,runtime.seedOf);
-    if(kind==='pulso')raw=runtime.cubeShopPulseVoice?.(raw)||cubePulseVoice(raw,runtime.S.cube?.voice);
+    // The pulse is the cube's own voice, high enough for a phone speaker (cube-bell.js); bought voices keep that range.
+    if(kind==='pulso'){const cube=cubeBellVoice(raw);return runtime.cubeShopPulseVoice?.(cube)||cubePulseVoice(cube,runtime.S.cube?.voice);}
     return hybridRegister(voiceRegister(raw,region.genre),hybridIdentity(region,runtime.seedOf,runtime.rng));
   }
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
@@ -136,6 +138,7 @@ export function initialize(runtime) {
       if(source){source.musicRole=voice.role;source.musicInstrument=voice.instrument;}
       const emit=()=>{
         if(voice.instrument?.startsWith?.('shop:')&&runtime.playCubeShopVoice?.(voice.instrument,n,t,v,hitFrame))return;
+        if(voice.instrument===CUBE_BELL&&runtime.playCubeBell?.(n,t,v))return;
         if(kind.startsWith('micro:'))runtime.microVoiceCue?.({kind,instrument:voice.instrument,role:voice.role,note:n,time:t,tones:hitFrame?.chords||[],pitches:voice.role==='acorde'&&hitFrame?hitFrame.chords.slice(0,3).map(n=>fitRegister(n,voice.low,voice.high)):[n],strongBeat:!!hitFrame&&(hitFrame.step+Math.round((t-hitFrame.time)/hitFrame.six))%4===0,morph:articulation.morph});
         if(kind.startsWith('micro:')&&voice.role==='bajo'&&runtime.playNewInstrument?.(voice.instrument,n,t,v,articulation)){runtime.recordInstrument?.(voice.instrument);return;}
         if(kind==='micro:drum'&&electronicDrum(runtime,voice.instrument,t,v,microKit(region,runtime.seedOf)))return;
