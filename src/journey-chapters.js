@@ -1,6 +1,7 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {THEME,themePitch,playCello} from './journey-pulse.js';
 import {FESTIVAL_CHAPTERS} from './festival.js';
+import {familyOf} from './superbiomes.js';
 // The Journey, phase 4: the album. Seven chapters, five of them biomes of the World. In each one the music climbs
 // through three states (Llegada, Pertenencia, Plenitud): completing the cube's theme on time there is its Plenitud,
 // the theme plays whole, the chapter is kept and a gold portal opens to the next. If the player stops playing, the
@@ -28,6 +29,13 @@ export function chapterState(hits,done){return done?'plenitud':hits>0?'pertenenc
 // The nearest place of a biome, searched in rings around a point on the World's grid. Never the sea, except for the
 // Vacío, which is the open sea between continents.
 export function findBiome(want,from,biomeAt,isSea,step=300,rings=60){for(let d=1;d<=rings;d++)for(let a=0;a<16;a++){const x=Math.round(from.x+Math.cos(a/16*6.283)*d*step),y=Math.round(from.y+Math.sin(a/16*6.283)*d*step);if(biomeAt(x,y)===want&&(want==='vacio'||!isSea(x,y)))return {x,y};}return null;}
+// Superbiomes in the Journey (docs/UNIVERSO.md, phase 18): each chapter goes to a fixed superbiome, its region with the
+// music family that fits its feeling. The map is not changed: the chapter looks for a place of that region whose music
+// is of that family, trying the families in order, and falls back to any place of the region.
+export const CHAPTER_FAMILIES=Object.freeze({llanura:Object.freeze(['house','downtempo']),lago:Object.freeze(['downtempo','dub','ambient']),bosque:Object.freeze(['disco','house']),tormenta:Object.freeze(['techno','electro','breaks','dub']),vacio:Object.freeze(['ambient'])});
+export function findChapter(want,from,biomeAt,isSea,familyAt,step=300,rings=60){
+ for(const family of CHAPTER_FAMILIES[want]||[]){const spot=findBiome(want,from,(x,y)=>biomeAt(x,y)===want&&familyAt(x,y)===family?want:null,isSea,step,rings);if(spot)return {...spot,family};}
+ const spot=findBiome(want,from,biomeAt,isSea,step,rings);return spot?{...spot,family:null}:null;}
 export function initialize(runtime){
  let owner=null,hits=0,lastPulse=-1e9,portal=null;const storm=[],echoes=[];const moments={bolts:0,echoes:0};
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
@@ -36,6 +44,9 @@ export function initialize(runtime){
  const active=()=>!!(runtime.journeyQuiet?.()&&runtime.inWorld?.()&&(runtime.S.layer||'superficie')==='superficie');
  const current=()=>CHAPTERS[own().chapter];
  const biomeId=()=>runtime.BIOMES?.[Math.max(0,runtime.curZone)]?.id;
+ // The chapter's place: its region with the chapter's music family when the map has one nearby (findChapter).
+ const find=(id,from,step,rings)=>{const ids=runtime.BIOMES.map(b=>b.id);return findChapter(id,from,(x,y)=>ids[runtime.biomeOfPos(x,y)],(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea,(x,y)=>familyOf(runtime.regionOfPos?.(x,y)?.genre)?.id||null,step,rings);};
+ const familyHere=()=>familyOf(runtime.regionOfPos?.(runtime.S.wx,runtime.S.wy)?.genre)?.id||null;
  const inChapter=()=>active()&&WORLD_CHAPTERS.includes(current())&&biomeId()===current();
  function stateNow(){if(!active())return null;const j=own();const bars=(performance.now()-lastPulse)/1000/((runtime.SIX||.15)*16);if(bars>SILENCE_BARS&&!portal)return 'silencio';return chapterState(inChapter()?hits:0,!!j.done[current()]);}
  // Every pulse of the player: on-time theme notes are remembered for the finale.
@@ -58,14 +69,14 @@ export function initialize(runtime){
   // The festival build ends after the Lago, in the Refugio, with your phrase.
   if(runtime.festival&&!FESTIVAL_CHAPTERS.includes(id)){portal=null;finaleAsked=true;if(runtime.journeyFinale)runtime.journeyFinale({festival:true});else runtime.landHouse?.();return true;}
   if(id==='refugio'){j.chapter=next;portal=null;finaleAsked=true;runtime.save();if(runtime.journeyFinale)runtime.journeyFinale();else runtime.landHouse?.();return true;}
-  const ids=runtime.BIOMES.map(b=>b.id),spot=findBiome(id,{x:runtime.S.wx,y:runtime.S.wy},(x,y)=>ids[runtime.biomeOfPos(x,y)],(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea);if(!spot)return false;
+  const spot=find(id,{x:runtime.S.wx,y:runtime.S.wy});if(!spot)return false;
   const before={chapter:j.chapter,wx:runtime.S.wx,wy:runtime.S.wy};j.chapter=next;runtime.S.wx=spot.x;runtime.S.wy=spot.y;if(runtime.save()===false){j.chapter=before.chapter;runtime.S.wx=before.wx;runtime.S.wy=before.wy;return false;}
   portal=null;hits=0;storm.length=0;echoes.length=0;lastPulse=performance.now();runtime.enterFx=1;return true;}
  // Where the chapter's biome is, refreshed every few seconds while the player is away from it.
  let way=null,wayAt=-1e9,wayFor='';
- function beacon(){if(!WORLD_CHAPTERS.includes(current())||inChapter()||portal||biomeId()===current())return null;const now=performance.now();if(wayFor!==current()||now-wayAt>3000){wayAt=now;wayFor=current();const ids=runtime.BIOMES.map(b=>b.id);way=findBiome(current(),{x:runtime.S.wx,y:runtime.S.wy},(x,y)=>ids[runtime.biomeOfPos(x,y)],(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea,300,30);}return way;}
+ function beacon(){if(!WORLD_CHAPTERS.includes(current())||inChapter()||portal||biomeId()===current())return null;const now=performance.now();if(wayFor!==current()||now-wayAt>3000){wayAt=now;wayFor=current();way=find(current(),{x:runtime.S.wx,y:runtime.S.wy},300,30);}return way;}
  // Entering the World in the Journey starts chapter 1 in the Llanura.
- function arrive(){const j=own();if(!active()||j.chapter!==0)return;j.chapter=1;const ids=runtime.BIOMES.map(b=>b.id);if(biomeId()!=='llanura'){const spot=findBiome('llanura',{x:runtime.S.wx,y:runtime.S.wy},(x,y)=>ids[runtime.biomeOfPos(x,y)],(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea);if(spot){runtime.S.wx=spot.x;runtime.S.wy=spot.y;}}runtime.save();}
+ function arrive(){const j=own();if(!active()||j.chapter!==0)return;j.chapter=1;if(biomeId()!=='llanura'||familyHere()!==CHAPTER_FAMILIES.llanura[0]){const spot=find('llanura',{x:runtime.S.wx,y:runtime.S.wy});if(spot){runtime.S.wx=spot.x;runtime.S.wy=spot.y;}}runtime.save();}
  let finaleAsked=false;
  function tick(){if(!active()){if(runtime.MU){runtime.MU.journeyCap=null;runtime.MU.journeyFloor=null;}return;}arrive();
   // A Journey saved in the Refugio before its finale finished plays it again.
