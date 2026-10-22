@@ -86,3 +86,32 @@ Orden: los bloques visual (1–6) y musical (7–12) se alternan. Los superbioma
 ## Estado
 
 - **Fase 1 · Nombres** (alpha.106): nombres del universo para las 11 regiones, sus ecologías y ecorregiones; colores separados (la pareja más cercana, Anillos y Púlsares, a distancia 72 en RGB); consejos de cada región y el Abismo de silencio. Pendiente: los objetos que aún se ven y se nombran como antes (pilares, faros, flores, agua) cambian con sus dibujos en las fases 2–4.
+- **Fase 7 · Medida de la música:** `scripts/genre-distance.py` renderiza los 52 géneros con el programador real y compara tempo, ritmo (16 pasos por compás), timbre (8 bandas) y densidad. La línea es la mayor distancia de un mismo género consigo mismo en otras variaciones (10 géneros), más un cuarto.
+
+## Medida de los géneros (Fase 7)
+
+Revisión `claude/musica-medida`, renders de 12 s a 44,1 kHz, pico máximo 0,89. Línea: 0,125. **16 parejas quedan por debajo**, entre 16 géneros:
+
+| Distancia | Pareja |
+|---|---|
+| 0,061 | Electro ~ Electro robótico |
+| 0,068 | Melodic house ~ Soulful y gospel house |
+| 0,069 | Melodic house ~ Garage house (Nueva York) |
+| 0,077 | Breaks ~ Electro |
+| 0,082 | Drum & bass ~ Liquid drum & bass |
+| 0,084 | Cosmic disco ~ Boogie |
+| 0,093 | Progressive house ~ Melodic house |
+| 0,097 | Progressive house ~ Soulful y gospel house |
+| 0,102 | Soulful y gospel house ~ Garage house (Nueva York) |
+| 0,105 | Progressive house ~ Chicago house |
+| 0,106 | Progressive house ~ Garage house (Nueva York) |
+| 0,112 | Deep house ~ Melodic house |
+| 0,116 | Melodic house ~ Acid house |
+| 0,116 | Acid house ~ Soulful y gospel house |
+| 0,118 | Deep house ~ Progressive house |
+| 0,124 | Boom bap ~ G-funk |
+
+- **El grupo house es el problema mayor:** Melodic, Soulful, Garage house, Progressive, Chicago, Deep y Acid house se confunden entre sí (11 de las 16 parejas).
+- **Otros gemelos:** Electro, Electro robótico y Breaks; Drum & bass y Liquid; Cosmic disco y Boogie; Boom bap y G-funk.
+- **Distintos ya:** los otros 36 géneros superan la línea con todos.
+- **Límite:** es una medida para guiar la escucha, no un juicio artístico. Las parejas se escuchan antes de cambiar nada.

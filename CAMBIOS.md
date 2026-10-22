@@ -2,6 +2,13 @@
 
 Estado: 21 de octubre de 2026. Código **2.3.0-alpha.106**. Las entradas describen su revisión, no certifican producción.
 
+## Música · Fase 7 · Medida de los géneros
+
+Rama `claude/musica-medida`, sobre `claude/universo-nombres`. Solo herramienta y documentación; el juego no cambia.
+
+- **Medidor:** `scripts/genre-distance.py` renderiza los 52 géneros con el motor real y compara tempo, ritmo, timbre y densidad. Deja un informe y clips de las parejas más parecidas para escucharlas.
+- **Resultado:** 16 parejas casi gemelas entre 16 géneros; 11 de ellas en el grupo house. Tabla en `docs/UNIVERSO.md`.
+
 ## Universo · Fase 1 · Nombres · alpha.106
 
 Rama `claude/universo-nombres`, sobre `main`.
