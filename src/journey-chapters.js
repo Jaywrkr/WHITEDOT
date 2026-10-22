@@ -33,9 +33,11 @@ export function findBiome(want,from,biomeAt,isSea,step=300,rings=60){for(let d=1
 // music family that fits its feeling. The map is not changed: the chapter looks for a place of that region whose music
 // is of that family, trying the families in order, and falls back to any place of the region.
 export const CHAPTER_FAMILIES=Object.freeze({llanura:Object.freeze(['house','downtempo']),lago:Object.freeze(['downtempo','dub','ambient']),bosque:Object.freeze(['disco','house']),tormenta:Object.freeze(['techno','electro','breaks','dub']),vacio:Object.freeze(['ambient'])});
-export function findChapter(want,from,biomeAt,isSea,familyAt,step=300,rings=60){
+// The portal carries the cube, so the search for the superbiome reaches far (200 rings, about 60 000 px); the fallback
+// to any place of the region stays near.
+export function findChapter(want,from,biomeAt,isSea,familyAt,step=300,rings=200){
  for(const family of CHAPTER_FAMILIES[want]||[]){const spot=findBiome(want,from,(x,y)=>biomeAt(x,y)===want&&familyAt(x,y)===family?want:null,isSea,step,rings);if(spot)return {...spot,family};}
- const spot=findBiome(want,from,biomeAt,isSea,step,rings);return spot?{...spot,family:null}:null;}
+ const spot=findBiome(want,from,biomeAt,isSea,step,Math.min(rings,60));return spot?{...spot,family:null}:null;}
 export function initialize(runtime){
  let owner=null,hits=0,lastPulse=-1e9,portal=null;const storm=[],echoes=[];const moments={bolts:0,echoes:0};
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());

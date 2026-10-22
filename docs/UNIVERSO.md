@@ -88,7 +88,7 @@ Los 52 géneros quedan como variaciones dentro de cada familia (`superbiomes.js`
 | 9 | `claude/musica-robotica` | Electro, Detroit, EBM y Robotic |
 | 10 | `claude/musica-groove` | Melodic, Nu-disco, Soulful, Broken beat, Cosmic, Jazztronica y Boogie |
 | 11 | `claude/musica-resto` | Los demás gemelos y el abanico de tempos |
-| 12 | `claude/musica-firmas` | Sonido firma de los 52 y medida final |
+| 12 | — | Sustituida: las 10 familias y la fusión dan la identidad; la medida final quedó en la fase 11 |
 | 13 | `claude/super-modelo` | Qué es un superbioma y qué combinaciones valen |
 | 14 | `claude/super-mapa` | Reparto en el universo sin mover lo explorado |
 | 15 | `claude/super-fusion` | Lo visual sigue a la música y la música al lugar |
@@ -100,6 +100,12 @@ Orden: los bloques visual (1–6) y musical (7–12) se alternan. Los superbioma
 
 ## Estado
 
+- **Pendientes revisados** (alpha.127):
+  - **Sin restos terrestres:** las criaturas, plantas y construcciones del mundo tienen nombres del universo; se conservan sus ids para no tocar los guardados. Cometa resonante, Asteroide lento y Sombra del vacío sustituyen al ciervo, la tortuga y la ballena, y el satélite, el prisma y la chispa tienen dibujo propio.
+  - **Hitos vistos desde arriba:** Estrella guía, Nebulosa madre, Cúmulo de formas, Monolito y Baliza; ninguno sube de una línea de suelo. El escáner nombra fuentes de ondas, órbitas rotas, chispas, estrellas de luz, destellos y púlsares.
+  - **Onda del pulso:** de los objetos que responden a una misma onda, solo uno grave suena; así muchos graves juntos ya no retumban.
+  - **Fase 12:** sustituida. Las 10 familias, la fusión y los bordes ya dan identidad a cada lugar, y la medida de la fase 11 (0 parejas de géneros bajo la línea) sigue valiendo porque ningún género cambió desde entonces.
+  - **Viaje:** los capítulos buscan su superbioma hasta unos 60 000 px, porque el portal lleva el cubo. En seis mundos Marea encuentra su familia en cinco y Tormenta solar en todos.
 - **Fase 18 · Viaje** (alpha.126): cada capítulo del Viaje busca su superbioma sin cambiar el mapa. Prueba las familias en orden y, si ninguna está cerca, va al lugar más cercano de su región (`CHAPTER_FAMILIES`, `findChapter`):
   - **Polvo:** House, luego Downtempo.
   - **Marea:** Downtempo, Dub o Ambient.
@@ -125,7 +131,7 @@ Orden: los bloques visual (1–6) y musical (7–12) se alternan. Los superbioma
 - **Fase 13 · Modelo de superbiomas** (alpha.121): diez familias para los 52 géneros y 105 combinaciones válidas. En el mundo principal (61 × 61 regiones) aparecen 62. Al entrar a una región, su aviso empieza por el superbioma (`Polvo · House — Deep house · 120 BPM`), y el primer día que se oye cada uno queda en `S.universe.super`. El reparto (fase 14) decidirá cómo llegan los que faltan, como Drum & bass en Polvo o Restos.
 - **Fase 1 · Nombres** (alpha.106): nombres del universo para las 11 regiones, sus ecologías y ecorregiones; colores separados (la pareja más cercana, Anillos y Púlsares, a distancia 72 en RGB); consejos de cada región y el Abismo de silencio. Pendiente: los objetos que aún se ven y se nombran como antes (pilares, faros, flores, agua) cambian con sus dibujos en las fases 2–4.
 - **Fase 2 · Capas** (alpha.107): `universe-layers.js` dibuja las tres capas de cada región sobre el suelo del Mundo, en celdas de 150, 120 y 110 px que se mueven al 35, 70 y 100 % de la cámara. Cerca del borde de una región las celdas de las dos se mezclan (150 px a cada lado). Polvo tiene su bruma, granos con estela de viento y motas que se apartan del cubo y vuelven en 1,5 s; el Vacío no dibuja nada. El aire de cada región es un ruido filtrado con ganancia máxima 0,012 (unos −38 dB), muy bajo la música. Polvo ya no dibuja hierba en el suelo. Coste: en el navegador de pruebas no se distingue del ruido de medida.
-- **Sin restos terrestres** (alpha.116): hierba, árboles de luz, pilares, plantas, flora de la vida del mundo, plantas que se riegan, bandadas y lluvia se dibujan desde arriba; los textos de vida y logros usan palabras del universo. Pendiente: criaturas terrestres (ciervo, tortuga, ballena) y los hitos «Árbol madre» y «Ciudad de formas».
+- **Sin restos terrestres** (alpha.116): hierba, árboles de luz, pilares, plantas, flora de la vida del mundo, plantas que se riegan, bandadas y lluvia se dibujan desde arriba; los textos de vida y logros usan palabras del universo. Completado en alpha.127.
 - **Fase 6 · Momentos raros** (alpha.115): `universe-rare.js` da un momento raro a cada región salvo el Vacío, con probabilidad 1/48 por compás según el hash del lugar y el compás; dura 4,5 s y se cuenta en `S.universe.rare`.
 - **Fase 5 · Regiones nuevas** (alpha.114): Aurora, Cometas, Constelaciones (se unen al completar el tema, guardado en `S.universe.constellations`) y Nebulosa oscura, en el Abismo. Las figuras de constelación ya están en la Bitácora (fase 17).
 - **Fase 4 · El resto de regiones** (alpha.113): Restos, Esporas, Anillos, Prisma, Púlsares y Pozo con sus tres capas y su aire. Las diez regiones con detalle ya están dibujadas. El pulso del jugador llega a las capas (`universePulse`) para la onda del Prisma. Pendiente: los objetos que aún vienen de antes (pilares de Restos, plantas, flores, lluvia inclinada) y las regiones nuevas.

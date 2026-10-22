@@ -5,11 +5,11 @@ import {elementInk,WORLD_VISUAL,localGlowRadius} from './visual.js';
 // Posiciones fijas por semilla, iguales para todos. Sin flechas ni brújula.
 
 export const LANDMARK_TYPES={
- torre:{name:'Torre de luz',sea:false},
- arbol:{name:'Árbol madre',sea:false},
- ciudad:{name:'Ciudad de formas',sea:false},
+ torre:{name:'Estrella guía',sea:false},
+ arbol:{name:'Nebulosa madre',sea:false},
+ ciudad:{name:'Cúmulo de formas',sea:false},
  monolito:{name:'Monolito',sea:false},
- faro:{name:'Faro',sea:true}
+ faro:{name:'Baliza',sea:true}
 };
 export const HEAR=11000,SENSE=5500,MAX_AUDIBLE=2;
 const LAND_P=1/10,SEA_P=1/6;   // escasos: un hito tiene que ser un acontecimiento
@@ -85,11 +85,16 @@ export function initialize(runtime){
  function shape(cx,lm,x,y,t,al,col,lit){
   const maxSize=Math.min(runtime.W,runtime.H)*.28/280,s=Math.min(lm.size,maxSize);cx.save();cx.strokeStyle=col;cx.fillStyle=col;cx.lineWidth=WORLD_VISUAL.line;cx.globalAlpha=al*(.5+lit*.3);
   switch(lm.type){
-   case 'torre':{const h=280*s;cx.beginPath();cx.moveTo(x,y);cx.lineTo(x,y-h);cx.moveTo(x-5,y-h*.9);cx.lineTo(x+5,y-h*.9);cx.stroke();break;}
-   case 'arbol':{cx.beginPath();cx.moveTo(x,y);cx.lineTo(x,y-110*s);for(let i=0;i<3;i++){const a=(i-1)*.8-Math.PI/2;cx.moveTo(x,y-80*s);cx.quadraticCurveTo(x+Math.cos(a)*40*s,y-100*s,x+Math.cos(a)*70*s,y-110*s+Math.sin(a)*40*s);}cx.stroke();break;}
+   // Seen from above (docs/UNIVERSO.md): nothing rises from a ground line.
+   // Estrella guía: a bright core with a cross flare and two slow rings.
+   case 'torre':{const r=60*s,k=(t/2600)%1;cx.beginPath();cx.arc(x,y,4,0,6.283);cx.fill();cx.moveTo(x-r,y);cx.lineTo(x+r,y);cx.moveTo(x,y-r);cx.lineTo(x,y+r);cx.stroke();for(const q of [k,(k+.5)%1]){cx.globalAlpha=al*(1-q)*.6;cx.beginPath();cx.arc(x,y,8+q*r*1.6,0,6.283);cx.stroke();}break;}
+   // Nebulosa madre: three spiral arms turning slowly around a core.
+   case 'arbol':{const turn=t/9000;cx.beginPath();cx.arc(x,y,3,0,6.283);cx.fill();cx.beginPath();for(let i=0;i<3;i++){const a0=turn+i*2.094;for(let k=0;k<=24;k++){const a=a0+k*.16,r=(4+k*3.2)*s*2;k?cx.lineTo(x+Math.cos(a)*r,y+Math.sin(a)*r):cx.moveTo(x+Math.cos(a)*r,y+Math.sin(a)*r);}}cx.stroke();break;}
    case 'ciudad':{for(let i=0;i<8;i++){const a=i*2.4,r=(20+i*9)*s,px=x+Math.cos(a)*r,py=y+Math.sin(a)*r*.6;cx.beginPath();cx.arc(px,py,2+(i%3),0,6.283);cx.stroke();}break;}
-   case 'monolito':{cx.strokeRect(x-12*s,y-170*s,24*s,170*s);cx.beginPath();cx.moveTo(x,y-135*s);cx.lineTo(x,y-110*s);cx.stroke();break;}
-   case 'faro':{const a=t/1400,R=localGlowRadius(runtime.W,runtime.H,65);cx.beginPath();cx.moveTo(x,y);cx.lineTo(x,y-35);cx.moveTo(x,y-35);cx.lineTo(x+Math.cos(a)*R,y-35+Math.sin(a)*R);cx.stroke();break;}
+   // Monolito: a black slab lying in space, its edge lit.
+   case 'monolito':{const w=40*s,h=90*s;cx.fillStyle='#000';cx.fillRect(x-w/2,y-h/2,w,h);cx.strokeRect(x-w/2,y-h/2,w,h);break;}
+   // Baliza: a point in the Abyss and a beam sweeping around it.
+   case 'faro':{const a=t/1400,R=localGlowRadius(runtime.W,runtime.H,65);cx.beginPath();cx.arc(x,y,3,0,6.283);cx.fill();cx.beginPath();cx.moveTo(x,y);cx.lineTo(x+Math.cos(a)*R,y+Math.sin(a)*R);cx.stroke();break;}
   }
   cx.restore();
   if(lm.d<420){cx.globalAlpha=Math.min(1,(420-lm.d)/200);cx.fillStyle=col;cx.font='10px "Geist Mono", monospace';cx.textAlign='center';cx.fillText(lm.name,x,y+22);cx.globalAlpha=1;}

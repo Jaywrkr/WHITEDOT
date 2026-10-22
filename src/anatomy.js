@@ -61,12 +61,13 @@ export function anatomyPath(a,phase=0){
  case 'seed':ellipse(0,0,w*.45,h);M(0,-h);Q(w*.8,-h,w,-h*.25);break;
  case 'manta':for(const side of [-1,1]){M(0,-h*.2);Q(side*w*.5,-h*(g.spread+sway),side*w,0);Q(side*w*.4,h*.3,0,h*.15);}M(0,h*.1);Q(w*.2,h*.6,0,h);break;
  case 'moth':for(const side of [-1,1]){M(0,0);C(side*w,-h,side*w*1.1,h*.1,side*.1,0);M(0,0);Q(side*w*.85,h,side*.13,h*.6);}M(0,-h*.3);L(0,h*.8);break;
- case 'deer':M(-w,h*.2);L(-w*.6,-h*.3);L(w*.25,-h*.2);L(w*.5,-h*.8);for(const x of [-w*.5,w*.2]){M(x,-h*.2);L(x+.1,h);}for(let k=0;k<g.limbs;k++){M(w*.5,-h*.8);L(w*.5+(k-(g.limbs-1)/2)*.17,-h*1.12);}break;
- case 'turtle':M(-w,0);Q(0,-h*1.2,w,0);L(-w,0);ellipse(w,0,.12,.1);for(const side of [-1,1]){M(side*w*.55,0);L(side*w*.7,h*.25);}if(g.ribs){M(0,0);L(0,-h*.55);}break;
+ // Seen from above (docs/UNIVERSO.md): a comet, an asteroid and a shadow of the void instead of a deer, a turtle and a whale.
+ case 'deer':ellipse(w*.6,0,.12,.12);for(let k=0;k<g.limbs+2;k++){const y=(k-(g.limbs+1)/2)*h*.25;M(w*.5,0);Q(0,y*.5+sway*2,-w,y);}break;
+ case 'turtle':for(let k=0;k<=9;k++){const a=k*6.283/9,r=.75+.2*Math.sin(k*2.7);const x=Math.cos(a)*w*r,y=Math.sin(a)*h*r;k?L(x,y):M(x,y);}put('Z');ellipse(w*.2,-h*.15,.12,.1);if(g.ribs)ellipse(-w*.3,h*.2,.08,.07);break;
  case 'beetle':ellipse(0,0,w*.5,h*.8);M(0,-h*.8);L(0,h*.8);for(let k=0;k<3;k++)for(const side of [-1,1]){M(side*w*.4,(k-1)*h*.4);L(side*w,(k-1)*h*.7);}break;
  case 'crab':ellipse(0,0,w,h*.4);for(const side of [-1,1]){M(side*w*.7,-h*.1);L(side*w*1.1,-h*.7);L(side*w*.8,-h*.8);for(let k=0;k<g.limbs;k++){M(side*w*.6,k*.12);L(side*w*(1-k*.05),h*.5+k*.1);}}break;
  case 'jelly':M(-w,0);C(-w,-h,w,-h,w,0);L(-w,0);for(let k=0;k<g.limbs;k++){const x=(k-(g.limbs-1)/2)*.3;M(x,0);Q(x+sway*3,h*.5,x,h);}break;
- case 'whale':M(-w,0);C(-w,-h*.5,w*.7,-h*.7,w,0);Q(w*.3,h*.35,-w,0);M(w*.6,0);L(w,h*.6);L(w*.95,-h*.2);break;
+ case 'whale':ellipse(0,0,w,h*.5);ellipse(0,0,w*.55,h*.25);break;
  case 'blob':for(let k=0;k<=24;k++){const a=k*6.283/24,r=.8+Math.sin(a*g.lobes+phase*.2)*.13;const x=Math.cos(a)*w*r,y=Math.sin(a)*h*r;k?L(x,y):M(x,y);}put('Z');break;
  case 'mill':ellipse(0,0,.18,.18);for(let k=0;k<g.limbs+1;k++){const a=k*6.283/(g.limbs+1)+phase*.12;M(Math.cos(a)*.2,Math.sin(a)*.2);L(Math.cos(a)*w,Math.sin(a)*h);L(Math.cos(a+.2)*w*.7,Math.sin(a+.2)*h*.7);}break;
  case 'arches':for(let k=0;k<g.limbs;k++){const x=(k-(g.limbs-1)/2)*.32;M(x-.13,h*.6);Q(x,-h,x+.13,h*.6);}break;

@@ -1,6 +1,21 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.126**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.127**. Las entradas describen su revisión, no certifican producción.
+
+## Pendientes revisados · alpha.127
+
+Rama `claude/pendientes`, sobre `claude/super-viaje` (alpha.126).
+
+Jay pidió revisar los cuatro pendientes después de todo lo implementado y arreglarlos.
+
+- **Sin restos terrestres:**
+  - las criaturas son Cometa resonante, Asteroide lento y Sombra del vacío (antes ciervo, tortuga y ballena), además de Satélite reloj, Prisma andante y Chispa del eco;
+  - las plantas y construcciones tienen nombres del universo;
+  - los hitos se ven desde arriba: Estrella guía, Nebulosa madre, Cúmulo de formas, Monolito y Baliza.
+- **La onda del pulso:** de los objetos que responden a una misma onda, solo uno grave suena; así muchos graves juntos ya no retumban.
+- **Fase 12 (firmas musicales):** se sustituye; las familias, la fusión y los bordes ya dan la identidad, y la medida de géneros no cambió.
+- **El Viaje:** los capítulos buscan su superbioma mucho más lejos. En el mundo principal todos llegan: Polvo · House, Marea · Downtempo, Cúmulo · Disco, Tormenta solar · Techno y Vacío · Ambient.
+- Ids, guardados, mapa y música de cada lugar no cambian.
 
 ## Superbiomas: el Viaje · alpha.126
 

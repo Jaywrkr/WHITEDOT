@@ -102,6 +102,8 @@ export function initialize(runtime) {
     const magnetic=!!magnetSource;if(magnetic&&!source)source=magnetSource;
     time=runtime.musicalTime?.(time)??time;
     const raw=getVoice(kind,region,source),voice=origin==='duet'?runtime.duetVoice?.(raw,source?.duetSlot,region)||raw:raw;
+    // One bass voice per pulse wave: the others in the same wave stay quiet (interactions.js, currentWave).
+    const wave=runtime.currentWave;if(wave&&kind!=='pulso'&&voice.role==='bajo'){if(wave.bass)return;wave.bass=true;}
     if(runtime.unifiedMusic===true&&!runtime.labMode&&!runtime.duetRoom&&origin==='player'&&source&&runtime.inWorld()){
       const key=(runtime.MU.dnaA?.key||region.key)+':'+Math.floor(runtime.MU.step/16);
       if(budgetOwner!==runtime.S||budgetKey!==key){budgetOwner=runtime.S;budgetKey=key;manualHits=0;sourceHits.clear();}

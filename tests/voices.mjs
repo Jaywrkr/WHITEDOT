@@ -68,3 +68,7 @@ const hear=()=>{calls.length=0;runtime.withVoiceOrigin('field',()=>runtime.playV
 const base=hear(),boosted=runtime.withMagnetVoice(source,hear),ratio=magnetVoiceGain(runtime.getVoice('arbol',d).role);
 assert(base.length>0);assert.equal(boosted.length,base.length);assert(boosted.every((v,i)=>Math.abs(v-base[i]*ratio)<1e-12));assert.deepEqual(hear(),base);assert.throws(()=>runtime.withMagnetVoice(source,()=>{throw Error('restore');}));assert.deepEqual(hear(),base);
 console.log('PASS magnet voices rise by their role, preserve notes and restore gain after errors');
+// A pulse wave over many low objects keeps one bass voice; other roles all answer.
+{const region=runtime.regionOfPos(900,900),bassKind=Object.keys(createRegionalVoices(region,runtime.BIOMES,runtime.GEN,runtime.seedOf,runtime.rng)).find(k=>k!=='pulso'&&runtime.getVoice(k,region).role==='bajo');
+ if(bassKind){const wave={n:0};Object.defineProperty(runtime,'currentWave',{get:()=>wave,configurable:true});calls.length=0;runtime.playVoice(bassKind,0,1,region);const first=calls.length;runtime.playVoice(bassKind,1,1,region);assert(first>0);assert.equal(calls.length,first,'second bass in the same wave stays quiet');
+  Object.defineProperty(runtime,'currentWave',{get:()=>null,configurable:true});calls.length=0;runtime.playVoice(bassKind,1,1,region);assert(calls.length>0,'outside a wave it sounds');console.log('PASS one bass voice per pulse wave');}}

@@ -4,7 +4,7 @@ import { POCKET_NAMES } from './pockets.js';
 import { TOY_NAMES } from './playthings.js';
 
 import { ROLES, INSTRUMENTS, MODES } from './journal.js';
-const NAMES={props:null,lotus:'Loto',crystals:'Cristal',pillars:'Pilar',flies:'Luciérnaga',grass:'Árbol',flowers:'Flor',stal:'Gota',motes:'Luz',walkers:'Caminante',beacons:'Faro'};
+const NAMES={props:null,lotus:'Fuente de ondas',crystals:'Cristal',pillars:'Órbita rota',flies:'Chispa',grass:'Estrella de luz',flowers:'Destello',stal:'Gota de luz',motes:'Luz',walkers:'Caminante',beacons:'Púlsar'};
 const KINDS={lotus:'loto',crystals:'cristal',pillars:'pilar',flies:'luciernaga',grass:'arbol',flowers:'planta:flor',stal:'gota',motes:'luz',walkers:'caminante',beacons:'faro'};
 export function nearbySources(chunks,x,y,radius=250) {
   const items=[];
