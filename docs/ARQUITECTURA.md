@@ -36,6 +36,20 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 `cube-shop-model.js` define las 14 ranuras y las piezas construidas; `sparkEconomy.wear` guarda una pieza por ranura simple y `sparkEconomy.on` las de ranuras múltiples, y `equipped` se conserva para dispositivos sin actualizar. `cube-shop-art.js` dibuja Movimiento, Cuerpo, Ojos, Hábitos y Accesorios desde `render.js` con cuatro ganchos (debajo del cubo, transformación, cuerpo y encima del cuerpo, dentro de su transformación; el de encima no se usa con cuerpos sorpresa ni ritual). `cubeShopMinSize` sube a 10 px el tamaño dibujado del cubo mientras se lleva cara; no cambia alcance ni colisiones. `cube-shop-world.js` dibuja Rastros (antes del cubo, en coordenadas del mundo) y Compañeros (después del cubo). `S.cubeRoute` (`normalizeRoute`/`rollRoute` en el modelo) guarda los pasos de hoy y el último día jugado, acotados, solo en superficie. `cube-shop-moves.js` añade gestos (transformación y dibujo tras el compañero) y expone `cubeShopPulseLook`; `interactions.js` guarda esa forma en cada onda del jugador (`look`, `charge`) y le pone la forma de impacto `ring-0`, así que el alcance no cambia; `cube-shop-pulse.js` la dibuja, solo en el Mundo y sin tocar colisiones, alcance, guardado ni música; cada pieza tiene variante estática con movimiento reducido. Catálogo y tandas en [Tienda del cubo](TIENDA_DEL_CUBO.md).
 
+## Viaje · pulso a tiempo
+
+`journey-pulse.js` juzga cada pulso del jugador en el Camino y el Mundo ([El Viaje](VIAJE.md)).
+
+- **Siempre suena:** el pulso entra en la rejilla como siempre. Entre dos pulsos debe haber 240 ms (antes 700), solo para que un dedo no inunde la cola.
+- **A tiempo** (±60 ms del pulso, con `MU.bq`):
+  - toca la siguiente nota del **tema del cubo** (`THEME`: seis grados y dieciséis corcheas) con su voz propia, `playCello`, en la escala y transposición del lugar;
+  - vibra con `navigator.vibrate`, si el ajuste «Vibración» lo permite;
+  - deja un destello dorado;
+  - seis aciertos completan la frase, con una vibración distinta.
+- **Fuera de tiempo:** solo suena el pulso de siempre.
+- **La Línea:** una línea fina en el 80 % de la altura dibuja el compás (16 marcas), un cursor dorado en el paso actual y un pico por cada pulso: dorado y alto si fue a tiempo, blanco y bajo si no. No aparece con paneles abiertos ni en actividades.
+- **Datos:** el tema es dato fijo y no consume el RNG antiguo. El juicio solo guarda contadores de sesión; el guardado solo recibe `S.haptics`.
+
 ## Refugio (antes Casa)
 
 `house.js` mueve el cubo, lleva la cámara y recibe los gestos; `house-view.js` dibuja las cámaras; `house-model.js` guarda los datos; `house-audio.js` la hace sonar; `house-collection.js` muestra la colección; `house-capsules.js` el Prisma, el disco del Taller y el Núcleo; `house-guide.js` la cuenta en palabras; `collection-garden.js` añade el Jardín de voces. Los ids internos (`house`, `sala`, `jardin`, `azotea`, `sotano`, `decor:*`) no cambian para no tocar partidas.

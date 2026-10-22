@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.96**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.97**. Las entradas describen su revisión, no certifican producción.
+
+## Viaje · Fase 1 · El pulso · alpha.97
+
+Rama `claude/viaje-f1-pulso`, sobre `claude/viaje-f0-papel`. El verbo del Viaje: tocar a tiempo.
+
+- **A tiempo** (±60 ms del pulso): el pulso toca la siguiente nota del **tema del cubo** con su voz de chelo, en la escala del lugar. Vibra y deja un destello dorado. Seis aciertos completan el tema, con una vibración distinta.
+- **Fuera de tiempo:** suena el pulso de siempre, sin tema ni vibración. Nunca suena mal.
+- **Ritmo:** entre pulsos hay 240 ms en lugar de 700. La rejilla del compás ya los ordena.
+- **La Línea:** en la parte baja de la pantalla se dibuja el compás con un cursor dorado y un pico por cada pulso, dorado si fue a tiempo.
+- **Ajustes:** nuevo «Vibración», que se guarda.
+- **Pruebas:**
+  - nuevas: `journey-pulse.mjs` y `journey_pulse_smoke.py` en móvil y computadora;
+  - en PASS: `smoke`, `interface`, `accessibility`, `crystal_sparks`, `cube_moves`, `jam`, `world_music` y `cube_sound`. Esta última falló dos veces con otra prueba pesada en paralelo y pasó dos veces sola; también pasa en la rama base.
 
 ## Viaje · Fase 0 · Papel
 

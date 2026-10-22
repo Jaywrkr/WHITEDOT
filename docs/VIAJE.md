@@ -112,6 +112,10 @@ Todo se oculta, no se borra; los datos y lo comprado se conservan y vuelven en e
 - **Sistemas:** tienda, saltos de pago, anuncios de logros (se siguen ganando en silencio), travesuras, actividades por semilla, tarjetas como lista, Subsuelo y Cielo, autopiloto y voces del pulso a la venta.
 - **Texto:** el Viaje no tiene texto salvo el título y «Pulso». Menús, ajustes y fichas se traducen al inglés.
 
+## Estado
+
+- **Fase 1 · El pulso** (alpha.97): pulso a tiempo con el tema del cubo, vibración con ajuste, la Línea del compás y 240 ms entre pulsos. Pendiente para fases siguientes: congelar la imagen 60 ms al romper, los fragmentos en la escala y que los cristales sumen notas a la frase del capítulo (Fase 4).
+
 ## Fases siguientes
 
 Detalle completo en el informe del panel. Cada fase, en su rama:
