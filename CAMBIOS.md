@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.98**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.99**. Las entradas describen su revisión, no certifican producción.
+
+## Viaje · Fase 3 · El Mundo como lámina · alpha.99
+
+Rama `claude/viaje-f3-lamina`, sobre `claude/viaje-f2-entrada`.
+
+- **Luz del bioma:** el color del lugar llena la pantalla con una luz que respira con el compás.
+- **Siluetas:** cada bioma tiene sus formas grandes y tenues, en dos capas con parallax lento. Hay colinas, árboles, agua, columnas, tallos, dunas, cristales, faros, nubes y cuevas; el Vacío queda vacío. Salen de un hash, no del azar del juego.
+- **El color se gana:** en el Viaje, un bioma nuevo se ve pálido. Completar el tema del cubo a tiempo allí le devuelve su color para siempre. Quien ya exploraba conserva sus colores; el Mundo libre siempre tiene color.
+- **Camino:** cada cristal roto suma voces a la canción; en el Viaje la etiqueta del cristal dice solo «Pulso».
+- **Silencio:** en el Viaje los logros se ganan sin aviso (se anuncian al volver al Mundo libre) y se oculta la caja del continente.
+- **Coste:** de 4 a 6 ms por fotograma en el Mundo (móvil 390×844 a 2×), como antes.
+- **Pruebas:** nuevas `world-sheet.mjs` y `world_sheet_smoke.py` (móvil y computadora); `journey-mode.mjs` cubre la siembra de colores.
 
 ## Viaje · Fase 2 · Entrar y callar · alpha.98
 

@@ -36,6 +36,21 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 `cube-shop-model.js` define las 14 ranuras y las piezas construidas; `sparkEconomy.wear` guarda una pieza por ranura simple y `sparkEconomy.on` las de ranuras múltiples, y `equipped` se conserva para dispositivos sin actualizar. `cube-shop-art.js` dibuja Movimiento, Cuerpo, Ojos, Hábitos y Accesorios desde `render.js` con cuatro ganchos (debajo del cubo, transformación, cuerpo y encima del cuerpo, dentro de su transformación; el de encima no se usa con cuerpos sorpresa ni ritual). `cubeShopMinSize` sube a 10 px el tamaño dibujado del cubo mientras se lleva cara; no cambia alcance ni colisiones. `cube-shop-world.js` dibuja Rastros (antes del cubo, en coordenadas del mundo) y Compañeros (después del cubo). `S.cubeRoute` (`normalizeRoute`/`rollRoute` en el modelo) guarda los pasos de hoy y el último día jugado, acotados, solo en superficie. `cube-shop-moves.js` añade gestos (transformación y dibujo tras el compañero) y expone `cubeShopPulseLook`; `interactions.js` guarda esa forma en cada onda del jugador (`look`, `charge`) y le pone la forma de impacto `ring-0`, así que el alcance no cambia; `cube-shop-pulse.js` la dibuja, solo en el Mundo y sin tocar colisiones, alcance, guardado ni música; cada pieza tiene variante estática con movimiento reducido. Catálogo y tandas en [Tienda del cubo](TIENDA_DEL_CUBO.md).
 
+## Viaje · el Mundo como lámina
+
+`world-sheet.js` dibuja, en la superficie del Mundo y antes que el resto, la lámina del bioma:
+
+- **Luz:** un degradado radial con el color del bioma (`LANDSCAPES` de `house-view.js`) que respira con el pulso del compás (`beat()`), fijo con movimiento reducido.
+- **Siluetas:** dos capas con parallax lento (5 % y 14 % de la cámara), ancladas en el 74 % y el 90 % de la altura.
+  - Las formas dependen del bioma: colinas, árboles, agua, columnas, tallos, dunas, cristales, faros, nubes, cuevas; el Vacío queda vacío.
+  - Su forma y posición salen de un hash del bioma y la baldosa, sin consumir el RNG antiguo.
+- **Color que se gana:** solo en el Viaje y en la superficie, un bioma sin recuperar se ve pálido (filtro CSS `saturate(.12)` en el lienzo, con transición de 1,6 s).
+  - Completar el tema del cubo a tiempo en ese bioma (`journey-pulse.js`) lo recupera para siempre en `S.journey.colors`.
+  - Al cargar por primera vez, los colores se siembran con los biomas ya explorados (`journey-mode.js`); un jugador nuevo empieza sin ninguno.
+  - El Mundo libre siempre tiene color.
+- **Camino:** cada cristal roto sube la energía de la música (`audio.js`), así que la canción suma voces hasta abrir el Mundo. En el Viaje la etiqueta del cristal dice solo «Pulso».
+- **Silencio del Viaje:** los avisos de logros esperan al Mundo libre y la caja de texto del continente se oculta.
+
 ## Viaje · entrada y modo
 
 - **Cuenta opcional** (`account-entry.js`):

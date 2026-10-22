@@ -5,7 +5,9 @@ export const JOURNEY_VERSION=1;
 // Automated browsers (the test suite) start new saves in the free World so existing flows keep their controls;
 // the Journey is tested on purpose.
 export function journeyDefault(s,automated=false){const reached=(s?.pathCrystals?.length||0)>=10||!!s?.lastWorldDay||s?.mode==='world';return reached||automated?'libre':'viaje';}
-export function normalizeJourney(raw,s,automated=false){const q=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};if(Number.isInteger(q.version)&&q.version>JOURNEY_VERSION)return q;return {...q,version:JOURNEY_VERSION,mode:q.mode==='viaje'||q.mode==='libre'?q.mode:journeyDefault(s,automated)};}
+export function normalizeJourney(raw,s,automated=false){const q=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};if(Number.isInteger(q.version)&&q.version>JOURNEY_VERSION)return q;// Colours already explored when the Journey first loads are yours; a new player starts with none.
+ const colors=q.colors&&typeof q.colors==='object'&&!Array.isArray(q.colors)?q.colors:Object.fromEntries(Object.keys(s?.zones||{}).map(k=>[k,true]));
+ return {...q,version:JOURNEY_VERSION,mode:q.mode==='viaje'||q.mode==='libre'?q.mode:journeyDefault(s,automated),colors};}
 const automated=()=>{try{return !!globalThis.navigator?.webdriver;}catch(_){return false;}};
 export function initialize(runtime){
  const $=runtime.$;let owner=null;
