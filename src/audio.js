@@ -500,12 +500,12 @@ export function initialize(runtime) {
         if(L1&&s===8)snare(t,vel(.13));
         if(L2&&[2,5,10,13].includes(s))hatC(tt,vel(.02));
         if(L3&&s===15)hatO(tt,vel(.025));break;
+      // Drum & bass: the fast cut-up break. Ghost snares always run under the backbeat and the hats fill every sixteenth.
       case "dnb":
-        if(L1&&(s===0||s===[6,10,11][variation]))kick2(t,vel(.25),55,.17);
+        if(L1&&(s===0||s===[10,10,11][variation]))kick2(t,vel(.25),55,.17);
         if(L1&&(s===4||s===12))snare(t,vel(.1));
-        if(L2&&s%2===0)hatC(tt,vel(.02));
-        if(L3&&s%4===3)hatC(tt,vel(.008));
-        if(L3&&s===[7,9,15][variation])snare(tt,vel(.035));break;
+        if(L2&&(s===7||s===9||s===15))snare(tt,vel(.035));
+        if(L2)hatC(tt,vel(s%2?.009:.02));break;
       case "tropical":
         if(L1&&s%4===0)kick2(t,vel(.24),50,.28);
         if(L2&&[3,6,10,14].includes(s))conga(tt,[180,250,320][variation],vel(.085));

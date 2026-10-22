@@ -1,6 +1,21 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.111**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.112**. Las entradas describen su revisión, no certifican producción.
+
+## Música · Fase 11 · Los últimos gemelos · alpha.112
+
+Rama `claude/musica-resto`, sobre `claude/musica-groove`.
+
+| Género | Tempo | Firma |
+|---|---|---|
+| Boom bap | 86–90 | Bombo grave, caja seca en 2 y 4, hi-hats en corcheas con swing |
+| G-funk | 94–98 | Más relajado: bombo en el 1 y el 3, palmada con la caja, hi-hats en cada semicorchea |
+| Liquid drum & bass | 168–172 | El dos pasos suave: bombo en el 1 y en el «y» del 3, hi-hats solo a contratiempo, acordes dos veces por compás |
+| Drum & bass | 174–178 | El break rápido: cajas fantasma bajo el backbeat y hi-hats en cada semicorchea |
+
+- **Medida:** Drum & bass ~ Liquid pasó de 0,082 a 0,222; Boom bap ~ G-funk, de 0,124 a 0,324.
+- **Los 52 géneros:** medidos de nuevo, ninguna pareja queda bajo la línea (antes 16). La más cercana es Deep house ~ Tribal, a 0,13. Pico máximo de los renders: 0,89.
+- **El mapa no cambia** (`genre-tempo.js`, `genre-map.mjs`).
 
 ## Música · Fase 10 · Groove · alpha.111
 
