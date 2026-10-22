@@ -3,6 +3,7 @@ import {BoundedMap,CACHE_LIMITS} from './cache.js';
 // Funciones puras y deterministas (misma semilla para todos). Unidades: regiones
 // (una región = REG×WCH px). Se calculan bajo demanda y se guardan en caché.
 import {FAMILIES,familyOf} from './rhythms.js';
+import {pickRange} from './genre-tempo.js';
 
 export const CONTINENT_VERSION=1;
 const CELL=10;                 // celda de semillas de continente, en regiones
@@ -31,7 +32,7 @@ export function createContinents(seedOf,rng,genres,options={}){
  const salt=n=>options.variant?seedOf('continent-noise:'+n):n;
  const seeds=new BoundedMap(CACHE_LIMITS.continentSeeds),regions=new BoundedMap(CACHE_LIMITS.continentRegions);
  // Familias de géneros con su tempo central, para dar identidad a cada continente.
- const fams={};for(const [id,g]of Object.entries(genres)){const f=familyOf(id);(fams[f]||=[]).push((g.bpm[0]+g.bpm[1])/2);}
+ const fams={};for(const [id,g]of Object.entries(genres)){const f=familyOf(id),[a,b]=pickRange(id,g);(fams[f]||=[]).push((a+b)/2);}
  const famList=Object.keys(fams).filter(f=>FAMILIES[f]);
  
  function seedOfCell(i,j){

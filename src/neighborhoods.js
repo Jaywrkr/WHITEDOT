@@ -7,6 +7,7 @@ export function musicalField(rx,ry,seedOf,rng) {
  return {tempo:values[0],fifths:Math.round(values[1]),warm:values[2]>.5};
 }
 import {familyOf} from './rhythms.js';
+import {pickRange} from './genre-tempo.js';
 const AFFINITY=6;          // cuánto prefiere un continente los géneros de su familia
 // Contexto musical de una región: campo de tempo suave + identidad del continente.
 export function musicalContext(rx,ry,seedOf,rng,contAt){
@@ -14,7 +15,7 @@ export function musicalContext(rx,ry,seedOf,rng,contAt){
  if(!c||!c.continent)return {...field,family:null,sea:!!c?.sea};
  const k=c.continent;return {tempo:Math.max(66,Math.min(178,k.tempo+(field.tempo-121)*.5)),fifths:k.fifths,warm:field.warm,family:k.family,sea:c.sea};
 }
-const candidatesFor=(ids,genres,tempo)=>{const cost=ids.map(id=>Math.max(genres[id].bpm[0]-tempo,tempo-genres[id].bpm[1],0)),best=Math.min(...cost);return ids.map((_,i)=>i).filter(i=>cost[i]<=best+5);};
+const candidatesFor=(ids,genres,tempo)=>{const cost=ids.map(id=>{const [a,b]=pickRange(id,genres[id]);return Math.max(a-tempo,tempo-b,0);}),best=Math.min(...cost);return ids.map((_,i)=>i).filter(i=>cost[i]<=best+5);};
 const WEIGHT_CACHE=new Map();
 // Ajuste iterativo sobre 61×61 regiones: busca pesos tales que cada género ocupe una parte
 // similar del mundo, respetando el tempo local y la preferencia de familia de cada continente.
@@ -41,7 +42,7 @@ export function applyNeighborhood(region,biomes,genres,seedOf,rng,contAt,scope='
   let pick=r()*total;region.genre=candidates[candidates.length-1];
   for(const id of candidates){pick-=wt(id);if(pick<=0){region.genre=id;break;}}
  }
- const g=genres[region.genre];region.bpm=Math.round(Math.max(g.bpm[0],Math.min(g.bpm[1],field.tempo)));
+ const g=genres[region.genre],[lo,hi]=pickRange(region.genre,g);region.bpm=Math.round(Math.max(lo,Math.min(hi,field.tempo)));
  // Todo el continente comparte tonalidad: cruzar a otro se oye como un cambio de tono.
  const pitch=((field.fifths*7)%12+12)%12;region.trOff=(pitch>5?pitch-12:pitch)-biomes[region.z].tr;
  const modes=field.warm?[[0,2,4,5,7,9,10],[0,2,4,5,7,9,11]]:[[0,2,3,5,7,9,10],[0,2,3,5,7,8,10]];

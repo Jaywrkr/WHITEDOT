@@ -20,6 +20,7 @@ Cada house tiene ahora una firma que se oye en los primeros compases:
 
 - **Medida (52 géneros):** de 16 parejas casi gemelas quedan 5, ninguna house (antes 11). Las que quedan son de las fases siguientes: Electro, Electro robótico y Breaks; Drum & bass y Liquid; Cosmic disco y Boogie; Boom bap y G-funk. Pico máximo de los renders: 0,89.
 - Separar solo por tempo movía el problema a otros géneros (Progressive se acercaba a Detroit, Acid house al techno); por eso las firmas son sobre todo de ritmo.
+- **El mapa no cambia:** cada lugar conserva su género, su región y su tempo guardado. El mapa sigue usando el rango de tempo original (`genre-tempo.js`); solo la música, al sonar, lleva ese tempo al mismo punto del rango nuevo, y el aviso de lugar muestra el tempo que suena. Comprobado en 1.326 regiones de dos mundos con la huella de `main` (prueba nueva `genre-map.mjs`); `ecology.mjs` y `neighborhoods.mjs` comprueban el tempo guardado en el rango original.
 - La música de los lugares con estos géneros cambia de batería y de tempo, a propósito. Nada más cambia.
 - `genre-distance.py` ya mide un solo género, para probar variantes.
 

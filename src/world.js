@@ -13,6 +13,7 @@ import { createPlaythings } from './playthings.js';
 import { createContinents, strangeness } from './continents.js';
 import { anomalyAt, applyAnomaly } from './wonders.js';
 import {createWorldFamily} from './world-families.js';
+import {pickRange} from './genre-tempo.js';
 
 // Generación procedural del camino, regiones y reliquias.
 export function initialize(runtime) {
@@ -84,7 +85,7 @@ export function initialize(runtime) {
     {const id=runtime.BIOMES[z].id,pool=runtime.GPOOL[id];d.genre=origin?"minimal":pool[Math.floor(r()*pool.length)];const extra=runtime.EXTRA_GPOOL[id],er=runtime.rng(runtime.seedOf("extra-genres:v1:"+key));
      if(!origin&&extra.length&&er()<.45)d.genre=extra[Math.floor(er()*extra.length)];
      const G=runtime.GEN[d.genre];
-     d.bpm=Math.round(G.bpm[0]+r()*(G.bpm[1]-G.bpm[0]));const fr=r();d.fill=origin?runtime.FILL[2]:fr<.15?runtime.FILL[0]:fr<.35?runtime.FILL[1]:fr<.65?runtime.FILL[2]:fr<.85?runtime.FILL[3]:runtime.FILL[4];
+     const [b0,b1]=pickRange(d.genre,G);d.bpm=Math.round(b0+r()*(b1-b0));const fr=r();d.fill=origin?runtime.FILL[2]:fr<.15?runtime.FILL[0]:fr<.35?runtime.FILL[1]:fr<.65?runtime.FILL[2]:fr<.85?runtime.FILL[3]:runtime.FILL[4];
      d.track.bassI=G.bassI;d.track.hookI=G.hookP[Math.floor(r()*G.hookP.length)];}
     applyPalette(d,runtime.BIOMES[z].id,origin,runtime.seedOf,runtime.rng);
     d.continent=cont?{id:cont.id,name:cont.name,family:cont.family,familyName:cont.familyName,tonic:cont.tonic,size:cont.size,hue:cont.hue}:null;

@@ -4,6 +4,7 @@ import {initialize as data} from '../src/data.js';import {initialize as progress
 import {ECOLOGIES,climateField,ecologyVoice} from '../src/ecology-model.js';
 import {worldIdentity,supportedWorld,sameWorld} from '../src/world-identity.js';import {previewKey} from '../src/seeds.js';
 import {createGrammar} from '../src/grammar.js';import {createRegionalVoices} from '../src/voices.js';
+import {pickRange} from '../src/genre-tempo.js';
 const storage=new Map();globalThis.localStorage={getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)};
 const make=(seed='',generation=1,layout='classic')=>{globalThis.location={search:seed?'?testSeed='+seed+'&layout='+layout+'&generation='+generation:''};const r={};data(r);progress(r);world(r);r.S.todayKey='2026-10-13';return r;};
 // Captured from phase 1, not from the new generator: recipes and real chunk positions must remain identical.
@@ -20,7 +21,8 @@ for(let i=0;i<1200;i++){
  const x=(i%40-20)*10800+5400,y=(Math.floor(i/40)-15)*10800+5400,d=live.regionOfPos(x,y),c=live.wchunk(Math.floor(x/900),Math.floor(y/900));
  discovered.add(d.ecology.id);assert(c.ecologyObjects.length<=4);assert(c.ecologyObjects.every(o=>live.contentDirectory.get('ecology:'+o.kind).biomes.includes(live.BIOMES[c.z].id)));objects+=c.ecologyObjects.length;
  if(d.sea)assert.equal(c.ecologyObjects.length,0);
- const g=live.GEN[d.genre];assert(d.bpm>=g.bpm[0]&&d.bpm<=(d.anomaly?.type==='frenesi'?178:g.bpm[1]));assert(Math.abs(d.tuneCents)<=12);assert.deepEqual(d.scale.length,7);
+ // The map keeps each place's tempo in the genre's choosing range (genre-tempo.js); the music retunes it when playing.
+ const g=live.GEN[d.genre],[lo,hi]=pickRange(d.genre,g);assert(d.bpm>=lo&&d.bpm<=(d.anomaly?.type==='frenesi'?178:hi));assert(Math.abs(d.tuneCents)<=12);assert.deepEqual(d.scale.length,7);
  assert(createGrammar(d,live.seedOf,live.rng).hookLimit<=4);
  const voices=createRegionalVoices(d,live.BIOMES,live.GEN,live.seedOf,live.rng);assert(Object.values(voices).every(v=>v.role!=='agudo'&&v.high<=69));
 }

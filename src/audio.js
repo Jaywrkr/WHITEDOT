@@ -14,6 +14,7 @@ import {blendProductionSpace} from './territory-presentation.js';
 import {familyDrums,createAmbientPunctuation} from './music-families.js';
 import {ambientSoloist} from './ambient-score.js';
 import {electronicDrum} from './electronic-ensemble.js';
+import {soundingBpm} from './genre-tempo.js';
 
 // Motor musical, síntesis y programación de Web Audio.
 export function initialize(runtime) {
@@ -221,7 +222,7 @@ export function initialize(runtime) {
       }else if(journeyFrame)resetMusicJourney();
       if(MU.biome!==biome||MU.dnaA!==desired){if(conducted()&&MU.dnaA&&desired&&MU.dnaA.key!==desired.key&&!journeyFrame?.swap)enteredAt=MU.step>>4;MU.biome=biome;MU.dnaA=desired;MU.tr=BI().tr+(MU.dnaA?MU.dnaA.trOff:0);MU.pending=true;MU.harmonyRegion=null;}
       const nb=runtime.inWorld()?musicNeighbor():null,w=nb?musicBlend():0;
-      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;let target=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld())target+=MU.seasonBpm||0;if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)target=Math.round(target*.55);BPM=runtime.duetBPM?.()||(journeyFrame&&!journeyFrame.initial?approachJourneyTempo(BPM,target):conducted()&&enteredAt>-Infinity?approachTempo(BPM,target):target);SIX=60/BPM/4;runtime.tempoCue?.({time:t,bpm:BPM,target,region:MU.dnaA?.key});delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
+      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?soundingBpm(a2,runtime.GEN):76,bB=nb?soundingBpm(nb,runtime.GEN):bA;let target=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld())target+=MU.seasonBpm||0;if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)target=Math.round(target*.55);BPM=runtime.duetBPM?.()||(journeyFrame&&!journeyFrame.initial?approachJourneyTempo(BPM,target):conducted()&&enteredAt>-Infinity?approachTempo(BPM,target):target);SIX=60/BPM/4;runtime.tempoCue?.({time:t,bpm:BPM,target,region:MU.dnaA?.key});delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
       if(!runtime.inWorld()&&(MU.pending||(MU.step-MU.lastChange>16*(6+Math.floor(rnd()*4)))))changeChord(t);
       if(BI().id==="tormenta"&&runtime.inWorld()&&(MU.step/16)%2===0&&rnd()<.75)MU.boltAt=t+SIX*(rnd()<.5?0:8);
     }
