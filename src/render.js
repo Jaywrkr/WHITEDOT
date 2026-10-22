@@ -1,5 +1,6 @@
 import {prefersReducedMotion,beginFrame,endFrame} from './frame-state.js';
 import {windLevel} from './territory-journey.js';
+import {AMBIENCE_LEVEL} from './ambience.js';
 import {moveWalker,drawWalker} from './walker-forms.js';
 import {contactEntry} from './contact.js';
 import { movementMultiplier } from './gravity.js';
@@ -71,7 +72,8 @@ export function initialize(runtime) {
       }
       if(runtime.S.mode==="camino"&&!runtime.isFree()&&runtime.MU.still>25&&!runtime.idleSaid&&runtime.S.help.camino){runtime.idleSaid=true;runtime.say(runtime.VOZ.idle);}
     }
-    if(runtime.windG)runtime.windG.gain.setTargetAtTime(runtime.inWorld()&&(runtime.BI().id==="dunas"||(runtime.MU.dnaT&&runtime.MU.dnaT.air==="polvo"))?windLevel(runtime.MU.speed,runtime.MU.E):0,runtime.ac.currentTime,.8);
+    runtime.ambienceTick?.();   // the ambience breathes with the beat (ambience.js)
+    if(runtime.windG)runtime.windG.gain.setTargetAtTime(runtime.inWorld()&&(runtime.BI().id==="dunas"||(runtime.MU.dnaT&&runtime.MU.dnaT.air==="polvo"))?windLevel(runtime.MU.speed,runtime.MU.E)*AMBIENCE_LEVEL:0,runtime.ac.currentTime,.8);
     if(runtime.windF)runtime.windF.frequency.setTargetAtTime(180+runtime.MU.speed*220,runtime.ac.currentTime,.8);
 
     runtime.surpriseTick?.(dt,modal);

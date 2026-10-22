@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.118**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.119**. Las entradas describen su revisión, no certifican producción.
+
+## El ambiente bajo la música · alpha.119
+
+Rama `claude/ambiente-leve`, sobre `claude/pulso-tiempo`.
+
+Jay pidió que el ruido propio de algunos biomas sea leve: es un juego para hacer música y el ambiente debe acompañarla, como fondo.
+
+- **A la mitad:** el aire de cada región, la lluvia, el viento y los insectos pasan por un solo nivel de ambiente, unos 6 dB más bajo que antes.
+- **Respira con el compás:** el ambiente baja un poco en cada pulso y vuelve antes del siguiente, así se mueve con la música en vez de sonar plano.
+- **En la tonalidad:** las bandas estrechas del aire y el canto de los insectos se afinan a la nota más cercana de la escala que suena.
+- Los mapas, la música y el progreso no cambian.
 
 ## El pulso a tiempo · alpha.118
 
