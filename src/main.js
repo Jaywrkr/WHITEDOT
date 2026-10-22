@@ -21,7 +21,6 @@ import {initialize as houseGuide} from './house-guide.js';
 import {initialize as journeyPulse} from './journey-pulse.js';
 import {initialize as journeyMode} from './journey-mode.js';
 import {initialize as worldSheet} from './world-sheet.js';
-import {initialize as cubeBell} from './cube-bell.js';
 import {initialize as universeLayers} from './universe-layers.js';
 import {initialize as universeRegions} from './universe-regions.js';
 import {initialize as universeRare} from './universe-rare.js';
@@ -230,7 +229,7 @@ musicTravel(runtime);
 distantColors(runtime);vjWorld(runtime);reactiveEcology(runtime);
 crystalSparks(runtime);pixelLife(runtime);wowFeel(runtime);wowUI(runtime);wowMemory(runtime);
 houseAudio(runtime);house(runtime);
-onboarding(runtime);labLearning(runtime);sparks(runtime);cubeShopArt(runtime);cubeShopWorld(runtime);cubeShopMoves(runtime);cubeShopSound(runtime);cubeShopWild(runtime);cubeShopSkills(runtime);houseCollection(runtime);houseCapsules(runtime);houseGuide(runtime);festival(runtime);colorSafe(runtime);journeyPulse(runtime);journeyMode(runtime);cubeBell(runtime);worldSheet(runtime);universeRegions(runtime);universeLayers(runtime);universeRare(runtime);journeyChapters(runtime);journeyFinale(runtime);journeyMoments(runtime);errorLog(runtime);frameQuality(runtime);worldLight(runtime);worldWeather(runtime);worldFauna(runtime);worldMusic(runtime);worldCamera(runtime);worldHappenings(runtime);sculptureTotems(runtime);musicalWonders(runtime);universeActivities(runtime);universeTexts(runtime);universeMischief(runtime);
+onboarding(runtime);labLearning(runtime);sparks(runtime);cubeShopArt(runtime);cubeShopWorld(runtime);cubeShopMoves(runtime);cubeShopSound(runtime);cubeShopWild(runtime);cubeShopSkills(runtime);houseCollection(runtime);houseCapsules(runtime);houseGuide(runtime);festival(runtime);colorSafe(runtime);journeyPulse(runtime);journeyMode(runtime);worldSheet(runtime);universeRegions(runtime);universeLayers(runtime);universeRare(runtime);journeyChapters(runtime);journeyFinale(runtime);journeyMoments(runtime);errorLog(runtime);frameQuality(runtime);worldLight(runtime);worldWeather(runtime);worldFauna(runtime);worldMusic(runtime);worldCamera(runtime);worldHappenings(runtime);sculptureTotems(runtime);musicalWonders(runtime);universeActivities(runtime);universeTexts(runtime);universeMischief(runtime);
 runtime.styleUI();runtime.hud();
 // The Journey starts with no window at all; the free World keeps its welcome.
 if(!runtime.S.help.camino&&!runtime.journeyQuiet?.())runtime.$("mHelpC").hidden=false;

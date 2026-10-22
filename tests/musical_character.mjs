@@ -40,7 +40,7 @@ const calls=[];Object.assign(r,{ac:{},MU:{deg:0,radio:{genre:'dub',melodyRest:tr
   hookInst:(instrument,n)=>calls.push({n:n+(instrument==='glass'?12:0)}),bassInst:(instrument,n)=>calls.push({n})});
 for(const key of ['kick','conga','wood','rim','shaker','tom','guiro','timbale','clap','hatHit','snare'])r[key]=()=>calls.push({});
 voices(r);
-const region={...origin,key:'gesture:dub',genre:'dub'},kind=Object.entries(createRegionalVoices(region,r.BIOMES,r.GEN,r.seedOf,r.rng)).find(([k,v])=>v.role==='lead'&&k!=='pulso')[0];   // the pulse is the cube's bell (cube-bell.js), above the genre's range on purpose
+const region={...origin,key:'gesture:dub',genre:'dub'},kind=Object.entries(createRegionalVoices(region,r.BIOMES,r.GEN,r.seedOf,r.rng)).find(([,v])=>v.role==='lead')[0];
 r.playVoice(kind,0,1,region,false,1,null,'ambient');assert.equal(calls.length,0);
 r.playVoice(kind,0,1,region,false,1,null,'player');assert(calls.length>0);assert(calls.every(c=>c.n<=65));
 assert.equal(JSON.stringify(origin),snapshot,'musical policy changed saved world DNA');
