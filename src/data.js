@@ -10,30 +10,30 @@ export function initialize(runtime) {
   const ERAS=[[30,"I · Pixel"],[90,"II · Línea"],[180,"III · Forma"],[270,"IV · Luz"],[365,"V · Constelación"],[1e9,"∞ · Sin final"]];
   // Cada zona: escala, ritmo, timbre y una forma propia de tocar música.
   const BIOMES=[
-   {id:"llanura",name:"Llanura",minD:0,w:3,scale:[0,2,3,5,7,8,10],tr:0,bpm:0,kit:"soft",tim:0,desc:"Pasto y luciérnagas. Todo empieza aquí."},
-   {id:"bosque",name:"Bosque",minD:1,w:3,scale:[0,2,3,5,7,9,10],tr:-2,bpm:-4,kit:"broken",tim:1,desc:"Los árboles de luz suenan cuando pasas."},
-   {id:"lago",name:"Lago",minD:1,w:2,scale:[0,2,4,6,7,9,11],tr:3,bpm:-12,kit:"float",tim:2,desc:"Bajo el agua todo suena distinto. Toca los lotos."},
-   {id:"ruinas",name:"Ruinas",minD:2,w:2,scale:[0,1,3,5,7,8,10],tr:-4,bpm:0,kit:"tribal",tim:3,desc:"Los pilares son tambores. Choca con ellos."},
-   {id:"jardin",name:"Jardín",minD:2,w:2,scale:[0,2,4,5,7,9,11],tr:5,bpm:-6,kit:"soft",tim:1,desc:"Quédate quieto para sembrar. Cada flor repite tu nota."},
-   {id:"dunas",name:"Dunas",minD:3,w:2,scale:[0,1,4,5,7,8,10],tr:-1,bpm:-14,kit:"half",tim:3,desc:"El viento suena con tu velocidad."},
-   {id:"cristales",name:"Cristales",minD:3,w:2,scale:[0,2,4,5,7,9,11],tr:7,bpm:6,kit:"garage",tim:4,desc:"Cada cristal es un arpegio."},
-   {id:"faros",name:"Faros",minD:3,w:2,scale:[0,2,4,5,7,9,10],tr:2,bpm:0,kit:"soft",tim:0,desc:"Enciende faros. Cada uno suma un instrumento."},
-   {id:"tormenta",name:"Tormenta",minD:4,w:2,scale:[0,2,3,5,7,8,10],tr:-5,bpm:14,kit:"techno",tim:5,desc:"El ácido sigue tu velocidad. Los rayos caen en el beat."},
-   {id:"cueva",name:"Cueva",minD:4,w:2,scale:[0,1,3,5,7,8,10],tr:-7,bpm:-22,kit:"heart",tim:2,desc:"Todo lo que tocas vuelve en eco."},
+   {id:"llanura",name:"Polvo",minD:0,w:3,scale:[0,2,3,5,7,8,10],tr:0,bpm:0,kit:"soft",tim:0,desc:"Polvo de estrellas a la deriva. Todo empieza aquí."},
+   {id:"bosque",name:"Cúmulo",minD:1,w:3,scale:[0,2,3,5,7,9,10],tr:-2,bpm:-4,kit:"broken",tim:1,desc:"Racimos de estrellas que suenan cuando pasas."},
+   {id:"lago",name:"Marea",minD:1,w:2,scale:[0,2,4,6,7,9,11],tr:3,bpm:-12,kit:"float",tim:2,desc:"Ondas de gravedad: aquí todo suena distinto."},
+   {id:"ruinas",name:"Restos",minD:2,w:2,scale:[0,1,3,5,7,8,10],tr:-4,bpm:0,kit:"tribal",tim:3,desc:"Órbitas rotas. Los fragmentos son tambores."},
+   {id:"jardin",name:"Esporas",minD:2,w:2,scale:[0,2,4,5,7,9,11],tr:5,bpm:-6,kit:"soft",tim:1,desc:"Quédate quieto: cada semilla de luz repite tu nota."},
+   {id:"dunas",name:"Anillos",minD:3,w:2,scale:[0,1,4,5,7,8,10],tr:-1,bpm:-14,kit:"half",tim:3,desc:"El anillo de un planeta. El viento suena con tu velocidad."},
+   {id:"cristales",name:"Prisma",minD:3,w:2,scale:[0,2,4,5,7,9,11],tr:7,bpm:6,kit:"garage",tim:4,desc:"Una malla de luz. Cada nodo es un arpegio."},
+   {id:"faros",name:"Púlsares",minD:3,w:2,scale:[0,2,4,5,7,9,10],tr:2,bpm:0,kit:"soft",tim:0,desc:"Enciende púlsares. Cada uno suma un instrumento."},
+   {id:"tormenta",name:"Tormenta solar",minD:4,w:2,scale:[0,2,3,5,7,8,10],tr:-5,bpm:14,kit:"techno",tim:5,desc:"El ácido sigue tu velocidad. Las llamaradas caen en el beat."},
+   {id:"cueva",name:"Pozo",minD:4,w:2,scale:[0,1,3,5,7,8,10],tr:-7,bpm:-22,kit:"heart",tim:2,desc:"Todo cae hacia el centro. Lo que tocas vuelve en eco."},
    {id:"vacio",name:"Vacío",minD:6,w:1,scale:[0,2,4,6,7,9,11],tr:0,bpm:-30,kit:"none",tim:2,desc:"Nada. Solo tú y tus notas."}
   ];
   const LAYERS=["Arpegio","Sub","Campanas"];
   const ZINFO={
-   llanura:["Calma","Minimal ambient",["Recoge luces","Toca piedras y luciérnagas","Pulso: toca la pantalla"]],
-   bosque:["Curioso","Broken beat",["Pasa entre los árboles de luz","Salta sobre los hongos: suenan graves"]],
-   lago:["Sereno","Ambient",["Entra al agua: todo suena distinto","Toca los lotos"]],
-   ruinas:["Tenso","Tribal",["Choca los pilares: son tambores","Lanza un pulso entre ellos"]],
-   jardin:["Alegre","Deep house",["Quédate quieto para sembrar","Toca las campanillas"]],
-   dunas:["Hipnótico","Half-time",["Corre: el viento suena con tu velocidad","Toca los cactus"]],
-   cristales:["Brillante","UK garage",["Toca los cristales: cada uno es un arpegio","Un pulso los hace sonar todos"]],
-   faros:["Épico","Progresivo",["Enciende los faros: cada uno suma un instrumento"]],
-   tormenta:["Intenso","Acid techno",["Corre: el ácido sube con tu velocidad","Toca las antenas","Los rayos caen en el beat"]],
-   cueva:["Oscuro","Dub",["Todo lo que tocas vuelve en eco","Toca las gotas"]],
+   llanura:["Calma","Minimal ambient",["Recoge luces","Toca las motas que brillan","Pulso: toca la pantalla"]],
+   bosque:["Curioso","Broken beat",["Pasa entre los racimos de luz","Salta sobre los puntos graves: suenan bajo"]],
+   lago:["Sereno","Ambient",["Entra en la onda: todo suena distinto","Toca los anillos que flotan"]],
+   ruinas:["Tenso","Tribal",["Choca los fragmentos: son tambores","Lanza un pulso entre ellos"]],
+   jardin:["Alegre","Deep house",["Quédate quieto para sembrar luz","Toca las campanillas"]],
+   dunas:["Hipnótico","Half-time",["Corre: el viento suena con tu velocidad","Toca las piedras del anillo"]],
+   cristales:["Brillante","UK garage",["Toca los nodos: cada uno es un arpegio","Un pulso los hace sonar todos"]],
+   faros:["Épico","Progresivo",["Enciende los púlsares: cada uno suma un instrumento"]],
+   tormenta:["Intenso","Acid techno",["Corre: el ácido sube con tu velocidad","Toca las antenas","Las llamaradas caen en el beat"]],
+   cueva:["Oscuro","Dub",["Todo lo que tocas vuelve en eco","Toca las gotas de luz"]],
    vacio:["Infinito","Ambient",["Solo tú, tus notas y los astros"]]
   };
   const VARS=[["claro","Claro"],["espeso","Espeso"],["humedo","Húmedo"],["eco","De eco"],["brillo","Brillante"]];
@@ -276,7 +276,7 @@ export function initialize(runtime) {
    compania:"Alguien te sigue. Tranquilo, es un caminante. Solo quiere cantar.",
    vuelo:"Volaste con la bandada. No tienes alas. Detalles.",
    vida:"Encontraste toda la vida que hay. Por ahora.",
-   under:"Tormenta a máxima energía. Esto ya es un club. Sin portero.",
+   under:"Tormenta solar a máxima energía. Esto ya es un club. Sin portero.",
    r3:"Tres días seguidos. Ahí empieza todo.",
    r7:"Siete días. Una semana sin fallarte. Eso vale más que cualquier logro.",
    r30:"Treinta días. Esto ya es parte de quién eres.",
@@ -323,7 +323,7 @@ export function initialize(runtime) {
    studioEmpty:"Tu Taller empieza vacío. Elige un sonido y toca un punto.",
    firstPlace:"Primera pieza. Suma otra o deja espacio. Escuchar también crea.",
    lampOut:"El Mundo sigue abierto. Explora a tu ritmo.",
-   mar:"Mar de silencio. Nada aquí. Por eso se oye todo.",
+   mar:"Abismo de silencio. Nada aquí. Por eso se oye todo.",
    continente:"Otro continente, otro tono. Escucha cómo se transforma la música al cruzar.",
    oasis:"Oasis. Te dije que el vacío era la subida.",
    hito:"Un hito. Lo oíste antes de verlo. Así funciona esto.",

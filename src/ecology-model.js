@@ -4,17 +4,17 @@ const clamp=x=>Math.max(0,Math.min(1,x)),smooth=x=>x*x*(3-2*x);
 const row=(id,name,terrain,flora,ground,material)=>Object.freeze({id,name,terrain,flora,ground,material});
 // Local ecologies reuse the 11 base biomes; these are distinct compositions, not new genre IDs.
 export const ECOLOGIES=Object.freeze({
- llanura:[row('estepa','Estepa de hilos','ridges','hierba','arena','air'),row('pradera','Pradera de semillas','roots','flor','musgo','wood'),row('tundra','Tundra luminosa','flecks','arbusto','piedra','glass')],
- bosque:[row('canopia','Canopia de filamentos','roots','helecho','musgo','wood'),row('micelio','Bosque de micelio','cells','arbusto','musgo','wood'),row('bambu','Bosque de juncos','ridges','junco','musgo','air')],
- lago:[row('humedal','Humedal de pulsos','ripples','junco','agua','wood'),row('manglar','Manglar de luz','roots','arbusto','musgo','wood'),row('laguna','Laguna de vidrio','cells','coral','agua','glass')],
- ruinas:[row('basalto','Ruinas de basalto','cells','coral','piedra','metal'),row('terrazas','Terrazas dormidas','ridges','hierba','piedra','wood'),row('oxido','Ruinas de cobre','flecks','arbusto','ceniza','metal')],
- jardin:[row('polen','Jardín de polen','flecks','flor','musgo','air'),row('raices','Jardín de raíces','roots','helecho','musgo','wood'),row('vainas','Jardín de vainas','ripples','arbusto','musgo','glass')],
- dunas:[row('salinas','Salinas resonantes','cells','coral','arena','glass'),row('sedas','Dunas de seda','ridges','hierba','arena','air'),row('oasis','Oasis de cobre','ripples','junco','arena','metal')],
- cristales:[row('geodas','Campo de geodas','cells','coral','cristal','glass'),row('agujas','Agujas de luz','ridges','junco','cristal','metal'),row('escarcha','Cristales de escarcha','flecks','helecho','piedra','air')],
- faros:[row('acantilado','Acantilados de eco','ridges','hierba','piedra','metal'),row('mareas','Faros de marea','ripples','junco','musgo','glass'),row('bruma','Faros de bruma','flecks','arbusto','piedra','air')],
- tormenta:[row('fulgurita','Campo de fulguritas','roots','coral','ceniza','glass'),row('magnetico','Llanura magnética','cells','arbusto','piedra','metal'),row('nubes','Archipiélago de nubes','ripples','junco','ceniza','air')],
- cueva:[row('hongos','Gruta de esporas','roots','helecho','musgo','wood'),row('estalactitas','Gruta de agujas','ridges','coral','piedra','metal'),row('subterraneo','Lago subterráneo','ripples','junco','cristal','glass')],
- vacio:[row('silencio','Mar de silencio','flecks',null,null,'air'),row('sal','Mar de sal','ripples',null,null,'glass'),row('constelacion','Vacío de constelaciones','cells',null,null,'air')]
+ llanura:[row('estepa','Polvo de hilos','ridges','hierba','arena','air'),row('pradera','Polvo de semillas','roots','flor','musgo','wood'),row('tundra','Polvo helado','flecks','arbusto','piedra','glass')],
+ bosque:[row('canopia','Cúmulo de filamentos','roots','helecho','musgo','wood'),row('micelio','Cúmulo enredado','cells','arbusto','musgo','wood'),row('bambu','Cúmulo de agujas','ridges','junco','musgo','air')],
+ lago:[row('humedal','Marea de pulsos','ripples','junco','agua','wood'),row('manglar','Marea de luz','roots','arbusto','musgo','wood'),row('laguna','Marea de vidrio','cells','coral','agua','glass')],
+ ruinas:[row('basalto','Restos de basalto','cells','coral','piedra','metal'),row('terrazas','Órbitas dormidas','ridges','hierba','piedra','wood'),row('oxido','Restos de cobre','flecks','arbusto','ceniza','metal')],
+ jardin:[row('polen','Esporas de polen','flecks','flor','musgo','air'),row('raices','Esporas trenzadas','roots','helecho','musgo','wood'),row('vainas','Esporas en vaina','ripples','arbusto','musgo','glass')],
+ dunas:[row('salinas','Anillo de sal','cells','coral','arena','glass'),row('sedas','Anillo de seda','ridges','hierba','arena','air'),row('oasis','Anillo de cobre','ripples','junco','arena','metal')],
+ cristales:[row('geodas','Prisma de geodas','cells','coral','cristal','glass'),row('agujas','Agujas de luz','ridges','junco','cristal','metal'),row('escarcha','Prisma helado','flecks','helecho','piedra','air')],
+ faros:[row('acantilado','Púlsares de eco','ridges','hierba','piedra','metal'),row('mareas','Púlsares de marea','ripples','junco','musgo','glass'),row('bruma','Púlsares en bruma','flecks','arbusto','piedra','air')],
+ tormenta:[row('fulgurita','Llamaradas de vidrio','roots','coral','ceniza','glass'),row('magnetico','Campo magnético','cells','arbusto','piedra','metal'),row('nubes','Archipiélago de plasma','ripples','junco','ceniza','air')],
+ cueva:[row('hongos','Pozo de esporas','roots','helecho','musgo','wood'),row('estalactitas','Pozo de agujas','ridges','coral','piedra','metal'),row('subterraneo','Pozo de cristal','ripples','junco','cristal','glass')],
+ vacio:[row('silencio','Abismo de silencio','flecks',null,null,'air'),row('sal','Abismo de sal','ripples',null,null,'glass'),row('constelacion','Vacío de constelaciones','cells',null,null,'air')]
 });
 export const ECOLOGY_CONTENT=Object.freeze([
  {id:'ecology:reed',name:'Junco de pulso',kind:'life',biomes:['llanura','bosque','lago','jardin','faros'],actions:['touch','bend','listen'],materials:['wood','air'],roles:['bass','groove','space'],rarity:.62,cell:'chunk'},

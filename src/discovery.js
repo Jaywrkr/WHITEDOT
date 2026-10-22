@@ -11,7 +11,7 @@ export function initialize(runtime) {
     const el=document.getElementById("zone");const render=()=>{
     const hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng);const se=!d.sea&&d.continent?runtime.seasonOf?.(d.continent.id):null;document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+(hybrid?" × "+hybrid.name:"")+" · "+d.bpm+" BPM"+(se?" · "+se.name:"");
     document.getElementById("zName").textContent=d.worldFamily?.name||d.ecology?.name||d.name;
-    document.getElementById("zDo").textContent=(d.sea?"Mar de silencio":d.continent?d.continent.name:"")+(d.sea||d.continent?" · ":"")+gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
+    document.getElementById("zDo").textContent=(d.sea?"Abismo de silencio":d.continent?d.continent.name:"")+(d.sea||d.continent?" · ":"")+gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
     };render();notices.enqueue('zone',el,()=>{},first?3.2:2.2,'region:'+d.key,()=>runtime.inWorld()&&runtime.MU.dnaT?.key===d.key,{level:1,category:'territorio',coalesce:true});
   }
 
@@ -42,7 +42,7 @@ export function initialize(runtime) {
   function announce(text,big){runtime.showPhrase(text,big);}
   function continentChange(d){
     const S=runtime.S;S.continents||={};
-    if(d.sea){if(!wasSea){wasSea=true;announce("Mar de silencio",false);if(!S.help.mar){S.help.mar=true;runtime.say(runtime.VOZ.mar);}}return;}
+    if(d.sea){if(!wasSea){wasSea=true;announce("Abismo de silencio",false);if(!S.help.mar){S.help.mar=true;runtime.say(runtime.VOZ.mar);}}return;}
     const crossed=wasSea&&lastLand!==null&&d.continent&&d.continent.id!==lastLand;if(crossed)runtime.unlock('mar1');
     wasSea=false;const k=d.continent;if(!k||k.id===lastLand)return;
     const first=lastLand!==null;lastLand=k.id;

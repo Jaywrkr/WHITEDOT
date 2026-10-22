@@ -26,9 +26,9 @@ with sync_playwright() as p:
    try{for(let bar=0;bar<4;bar++)r.horizonBar(ac.currentTime+.1,bar);}finally{ac.createStereoPanner=orig;}
    return {pans:pans.map(p=>p.pan.value),d:lm.d};}''')
   assert res['pans'] and any(v>0 for v in res['pans']) and len(res['pans'])<=2*5,res  # la torre suena a la derecha; máximo dos hitos
-  # Mar de silencio: bioma vacío, aviso y música adelgazada.
+  # Abismo de silencio: bioma vacío, aviso y música adelgazada.
   page.evaluate('''()=>{const r=window.__testRuntime;let s;for(let x=-15;x<=15&&!s;x++)for(let y=-15;y<=15&&!s;y++){const c=r.continents.at(x,y);if(c.sea&&c.depth>.5)s=[x,y];}r.S.wx=s[0]*3600+1800;r.S.wy=s[1]*3600+1800;}''')
-  page.wait_for_function('document.getElementById("zDo").textContent.includes("Mar de silencio")')
+  page.wait_for_function('document.getElementById("zDo").textContent.includes("Abismo de silencio")')
   page.wait_for_function('window.__testRuntime.MU.vit<.15')
   # Oasis después de un desierto: drop.
   page.evaluate('''()=>{const r=window.__testRuntime;let o;for(let x=-80;x<80&&!o;x++)for(let y=-80;y<80&&!o;y++){const px=x*900+450,py=y*900+450;if(!r.continents.at(Math.floor(x/4),Math.floor(y/4)).sea&&r.vitalityAt(px,py)>.95)o=[px,py];}window.__oasisBefore=r.S.oasisN||0;r.MU.lowT=20;r.S.wx=o[0];r.S.wy=o[1];r.MU.vit=.9;}''')

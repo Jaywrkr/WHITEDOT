@@ -2,10 +2,11 @@ import {prefersReducedMotion} from './frame-state.js';
 import {THEME,themePitch,playCello} from './journey-pulse.js';
 import {WORLD_CHAPTERS} from './journey-chapters.js';
 import {FESTIVAL_CHAPTERS} from './festival.js';
+import {LANDSCAPES} from './house-view.js';
 // The Journey, phase 5: the finale. In the Refugio the cube's journey plays back: the notes you played on time in
 // each chapter, in order, then the theme in A major twice, the second time a fifth up. The sky turns gold, the
 // picture pulls back, a silence, the credits, and the free World opens.
-export const CHAPTER_COLORS=Object.freeze({llanura:'#f0c27a',lago:'#8ad1ff',bosque:'#7fbf6a',tormenta:'#b8b8ff',vacio:'#ffffff',refugio:'#f0d27a'});
+export const CHAPTER_COLORS=Object.freeze({llanura:LANDSCAPES.llanura,lago:LANDSCAPES.lago,bosque:LANDSCAPES.bosque,tormenta:LANDSCAPES.tormenta,vacio:'#ffffff',refugio:'#f0d27a'});
 export const MAJOR=Object.freeze([0,2,4,5,7,9,11]);
 // Seconds: one eighth, the gathering before the first note, the silence after the last and the credits.
 export const EIGHTH=.25,GATHER=1.6,SILENCE=3,CREDITS=7;

@@ -22,6 +22,8 @@ Guía de diseño de la Fase 0 del panel creativo (22 de octubre de 2026). Jay ap
 
 ## Los capítulos
 
+Desde alpha.106 los lugares tienen nombres del universo ([El universo](UNIVERSO.md)): Llanura es **Polvo**, Lago es **Marea**, Bosque es **Cúmulo** y Tormenta es **Tormenta solar**. Las tablas de abajo conservan los nombres con que se diseñaron.
+
 | Cap. | Lugar | Duración | Sentimiento | Color que se recupera | Tema | Qué pasa |
 |---|---|---|---|---|---|---|
 | 0 | Camino | 3 min | Soledad, escucha | Papel: blanco y gris | Fragmento de 2 notas | Negro, un punto. Cada cristal suma un instrumento; al décimo la canción está completa y el horizonte se abre |
