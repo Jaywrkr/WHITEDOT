@@ -51,6 +51,11 @@ for(let x=0;x<30;x++) {
   assert.deepEqual(runtime.getVoice(kind,region),voice);
  }
 }
+// A pulse on time answers with an arpeggio in its own voice: its note, the third and the fifth, quieter each time.
+for(let x=0;x<30;x++){const region=runtime.regionOfPos(x*3600+900,900),voice=runtime.getVoice('pulso',region);if(voice.role==='perc')continue;
+ calls.length=0;runtime.playVoice('pulso',0,1,region,true,1.25,{x:900,y:900,accent:true});const pitched=calls.filter(c=>c.n!==undefined),times=[...new Set(pitched.map(c=>c.t))].sort((a,b)=>a-b),at=t=>pitched.filter(c=>c.t===t);
+ assert.equal(times.length,3,'on time: three hits');assert(new Set(pitched.map(c=>c.n)).size>=2,'the accent moves');assert(Math.max(...at(times[2]).map(c=>c.v))<Math.max(...at(times[0]).map(c=>c.v)));
+ for(const c of pitched)assert(c.n>=voice.low&&c.n<=voice.high);}
 const encountered=new Set();
 for(let x=-20;x<=20;x++)for(let y=-20;y<=20;y++)encountered.add(runtime.regionOfPos(x*3600+900,y*3600+900).genre);
 for(const genre of ['electro','progressive','microhouse','minimaltechno','dubstep','dnb'])assert(encountered.has(genre),`${genre}: unavailable in world`);

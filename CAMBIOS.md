@@ -1,6 +1,12 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.119**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.120**. Las entradas describen su revisión, no certifican producción.
+
+## El acento del pulso a tiempo · alpha.120
+
+Rama `claude/pulso-acento`, sobre `main` (alpha.119).
+
+Sin el chelo, Jay no notaba diferencia entre un pulso a tiempo y uno fuera de tiempo. Ahora el pulso a tiempo responde con un arpegio corto en la voz del lugar: su nota, la tercera y la quinta, en la rejilla del ritmo y un poco más fuerte. Suena al bioma y al género en que estás; el pulso fuera de tiempo no cambia.
 
 ## El ambiente bajo la música · alpha.119
 

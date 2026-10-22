@@ -129,7 +129,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 - **Siempre suena:** el pulso entra en la rejilla como siempre. Entre dos pulsos debe haber 240 ms (antes 700), solo para que un dedo no inunde la cola.
 - **A tiempo** (±60 ms del pulso, con `MU.bq`):
-  - toca la siguiente nota del **tema del cubo** (`THEME`: seis grados y dieciséis corcheas) con la voz del pulso del lugar: `journeyPulse` devuelve si fue a tiempo y `interactions.js` pasa el grado del tema a `playVoice('pulso', …)`, sin sintetizador aparte;
+  - toca la siguiente nota del **tema del cubo** (`THEME`: seis grados y dieciséis corcheas) con la voz del pulso del lugar: `journeyPulse` devuelve si fue a tiempo y `interactions.js` pasa el grado del tema a `playVoice('pulso', …)` con `source.accent`, que cambia la respuesta por un arpegio (tercera y quinta) en la misma voz, sin sintetizador aparte;
   - vibra con `navigator.vibrate`, si el ajuste «Vibración» lo permite;
   - deja un destello dorado;
   - seis aciertos completan la frase, con una vibración distinta.

@@ -166,7 +166,10 @@ export function initialize(runtime) {
     const strength = voice.role === 'bajo' ? .15 : voice.role === 'perc' ? .12 : voice.role === 'agudo' ? .03 : .075;
     hit(time,index%7,strength);
     if(origin==='player'&&kind!=='caminante')runtime.walkerHear?.({degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region});
-    if (full) {const reply=time+runtime.SIX*voice.response;hit(runtime.musicalTime?.(reply)??reply,index%7,strength*.45);}
+    // A pulse on time (source.accent) answers with a rising arpeggio in the same voice: its note, the third and the
+    // fifth on the grid, so it sounds like the place and its rhythm, never like a separate instrument.
+    if (full&&kind==='pulso'&&source?.accent) {for(const [k,steps,gain] of [[2,voice.response,.6],[4,voice.response+2,.45]]){const at=time+runtime.SIX*steps;hit(runtime.musicalTime?.(at)??at,(index+k)%7,strength*gain);}}
+    else if (full) {const reply=time+runtime.SIX*voice.response;hit(runtime.musicalTime?.(reply)??reply,index%7,strength*.45);}
     return true;
   }
   Object.defineProperties(runtime, {
