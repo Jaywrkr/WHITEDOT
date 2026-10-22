@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.125**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.126**. Las entradas describen su revisión, no certifican producción.
+
+## Superbiomas: el Viaje · alpha.126
+
+Rama `claude/super-viaje`, sobre `claude/super-coleccion` (alpha.125). Fase 18 de [El universo](docs/UNIVERSO.md), la última de superbiomas.
+
+Cada capítulo del Viaje va a un superbioma que encaja con lo que siente, sin cambiar el mapa:
+
+- **Polvo · House:** curiosidad.
+- **Marea:** calma, con Downtempo, Dub o Ambient.
+- **Cúmulo · Disco:** compañía.
+- **Tormenta solar:** tensión, con Techno, Electro, Breaks o Dub.
+- **Vacío · Ambient:** el cubo solo.
+- **Si no hay uno cerca:** el capítulo va al lugar más cercano de su región, como antes.
+- En los seis mundos medidos, Polvo, Cúmulo y Vacío casi siempre llegan a su superbioma; Marea y Tormenta solar solo cuando el mapa lo tiene cerca.
 
 ## Superbiomas: la colección · alpha.125
 

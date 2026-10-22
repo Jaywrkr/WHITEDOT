@@ -100,6 +100,13 @@ Orden: los bloques visual (1–6) y musical (7–12) se alternan. Los superbioma
 
 ## Estado
 
+- **Fase 18 · Viaje** (alpha.126): cada capítulo del Viaje busca su superbioma sin cambiar el mapa. Prueba las familias en orden y, si ninguna está cerca, va al lugar más cercano de su región (`CHAPTER_FAMILIES`, `findChapter`):
+  - **Polvo:** House, luego Downtempo.
+  - **Marea:** Downtempo, Dub o Ambient.
+  - **Cúmulo:** Disco, luego House.
+  - **Tormenta solar:** Techno, Electro, Breaks o Dub.
+  - **Vacío:** siempre Ambient.
+  - **Medido en seis mundos:** Polvo, Cúmulo y Vacío casi siempre llegan a su superbioma. Marea y Tormenta solar solo cuando el mapa lo tiene cerca, porque las Mareas tranquilas son raras.
 - **Fase 17 · Colección** (alpha.125): en la Bitácora, la pestaña de lugares tiene el mapa de superbiomas, una fila por región y una columna por familia, con el Abismo solo en Ambient. Lo oído sale en dorado con su día; lo que falta, en contorno y marcado si es raro (◇), muy raro (◆) o si no aparece (×). Debajo, las constelaciones unidas, cada una con su figura (hasta 12).
 - **Fase 16 · Bordes** (alpha.124): el movimiento sigue a la familia que suena de verdad (`MU.dnaA`), no a la que hay bajo el cubo, así que cambia cuando cambia la música. El cambio espera al siguiente primer tiempo del compás y se mezcla durante un compás entero (`createBorder`, `blend`). Si la música vuelve antes del primer tiempo, no hay cambio.
 - **Fase 15 · Fusión** (alpha.123): `superbiome-fusion.js` da a cada familia su forma de mover las capas de la región en la que suena; la forma y el color de la región no cambian.
