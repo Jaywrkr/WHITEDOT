@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.120**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.121**. Las entradas describen su revisión, no certifican producción.
+
+## Superbiomas: el modelo · alpha.121
+
+Rama `claude/super-modelo`, sobre `main` (alpha.120). Fase 13 de [El universo](docs/UNIVERSO.md).
+
+- **Diez familias** agrupan los 52 géneros (Ambient, Downtempo, Dub, House, Techno, Breaks, Drum & bass, Electro, Tribal y Disco).
+- **Un superbioma es una región más una familia:** «Marea · Dub», «Púlsares · Techno». Valen las diez regiones de los continentes con cualquier familia y el Abismo solo con Ambient: 105 en total.
+- **Se ven y se guardan:** el aviso al entrar a una región empieza por su superbioma, y el primer día que oyes cada uno queda guardado para la colección.
+- El mapa, la música y el progreso no cambian.
 
 ## CI de navegador estable · sin versión
 
