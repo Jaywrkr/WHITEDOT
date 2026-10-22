@@ -1,67 +1,72 @@
 {
   "renders": 56,
-  "maxPeak": 0.9014095067977905,
+  "maxPeak": 0.9030889868736267,
   "rows": [
     {
-      "genre": "baltimore",
-      "peak": 0.8745229840278625,
-      "rmsDb": -12.923254504542038,
-      "count": 8,
+      "genre": "miamibass",
+      "peak": 0.8803063631057739,
+      "rmsDb": -8.849150724735384,
+      "count": 10,
       "instruments": {
-        "kick": 27,
-        "hat": 44,
-        "machine": 11,
-        "vocalform": 21,
+        "kick": 17,
+        "hat": 49,
+        "sub": 11,
+        "saw": 17,
         "p_cellobody": 18,
         "wood": 22,
+        "p_bassclarinet": 14,
         "snare": 11,
-        "clap": 15,
+        "clap": 11,
+        "p_gutguitar": 2,
+        "resonantpluck": 5,
+        "cowbell": 1
+      },
+      "notes": [],
+      "production": "bass",
+      "type": "native"
+    },
+    {
+      "genre": "detroit",
+      "peak": 0.8779361248016357,
+      "rmsDb": -12.353171152873427,
+      "count": 10,
+      "instruments": {
+        "kick": 23,
+        "hat": 111,
+        "fm": 29,
+        "saw": 11,
+        "p_cellobody": 21,
+        "phasekeys": 14,
+        "rim": 30,
+        "clap": 11,
+        "p_feltmallet": 2,
         "p_gutguitar": 5
       },
       "notes": [],
-      "production": "blues",
+      "production": "melodic",
       "type": "native"
     },
     {
-      "genre": "techhouse",
-      "peak": 0.8725338578224182,
-      "rmsDb": -13.025222316198876,
-      "count": 7,
+      "genre": "melodictechno",
+      "peak": 0.8726600408554077,
+      "rmsDb": -13.374435212824167,
+      "count": 4,
       "instruments": {
         "kick": 22,
-        "roll": 27,
-        "keys": 12,
-        "p_cellobody": 9,
-        "wood": 11,
-        "hat": 21,
-        "rim": 11,
+        "roll": 32,
+        "saw": 6,
+        "hat": 22,
+        "rim": 16,
         "clap": 11
       },
       "notes": [],
-      "production": "minimal",
-      "type": "native"
-    },
-    {
-      "genre": "minimaltechno",
-      "peak": 0.8725326657295227,
-      "rmsDb": -13.526286706937285,
-      "count": 6,
-      "instruments": {
-        "kick": 22,
-        "fm": 16,
-        "phasekeys": 12,
-        "p_fmharp": 9,
-        "hat": 22,
-        "rim": 28
-      },
-      "notes": [],
-      "production": "minimal",
+      "production": "italo",
       "type": "native"
     },
     {
       "genre": "rominimal",
       "peak": 0.8724852800369263,
-      "rmsDb": -13.38048221062123,
+      "rmsDb": -13.38047651703215,
       "count": 8,
       "instruments": {
         "kick": 20,
@@ -78,8 +83,8 @@
     },
     {
       "genre": "ambient",
-      "peak": 0.47193479537963867,
-      "rmsDb": -20.693441350912064,
+      "peak": 0.4719407260417938,
+      "rmsDb": -20.693442108033217,
       "count": 2,
       "instruments": {
         "p_bassclarinet": 6,
@@ -90,49 +95,28 @@
       "type": "native"
     },
     {
-      "genre": "chicago",
-      "peak": 0.8761838674545288,
-      "rmsDb": -13.322713758372391,
-      "count": 4,
+      "genre": "microhouse",
+      "peak": 0.8725064396858215,
+      "rmsDb": -14.702566257830625,
+      "count": 8,
       "instruments": {
         "kick": 20,
-        "pluck": 11,
-        "organ": 10,
-        "hat": 40,
-        "shaker": 15,
-        "clap": 10,
-        "conga": 10
+        "roll": 26,
+        "phasekeys": 10,
+        "p_cellobody": 15,
+        "shaker": 20,
+        "hat": 20,
+        "wood": 15,
+        "p_feltmallet": 4
       },
       "notes": [],
-      "production": "warm",
-      "type": "native"
-    },
-    {
-      "genre": "miamibass",
-      "peak": 0.8778566122055054,
-      "rmsDb": -8.572134862449698,
-      "count": 10,
-      "instruments": {
-        "kick": 16,
-        "hat": 48,
-        "sub": 6,
-        "rhodes": 17,
-        "p_feltmallet": 18,
-        "p_cellobody": 17,
-        "shaker": 21,
-        "snare": 11,
-        "clap": 11,
-        "resonantpluck": 2,
-        "p_tinepiano": 5
-      },
-      "notes": [],
-      "production": "bass",
+      "production": "minimal",
       "type": "native"
     },
     {
       "genre": "brokenbeat",
-      "peak": 0.8818744421005249,
-      "rmsDb": -14.245387267644407,
+      "peak": 0.8797902464866638,
+      "rmsDb": -14.213352711802623,
       "count": 10,
       "instruments": {
         "kick": 16,
@@ -152,44 +136,47 @@
       "type": "native"
     },
     {
-      "genre": "melodic",
-      "peak": 0.874245285987854,
-      "rmsDb": -12.897438197358515,
-      "count": 6,
+      "genre": "progressive",
+      "peak": 0.8743865489959717,
+      "rmsDb": -14.798417271849376,
+      "count": 9,
       "instruments": {
-        "kick": 20,
-        "rubber": 20,
-        "strings": 25,
-        "phasekeys": 9,
-        "hat": 20,
+        "kick": 21,
+        "hat": 82,
+        "pluck": 41,
+        "organ": 22,
+        "p_gutguitar": 18,
+        "p_feltmallet": 12,
         "shaker": 20,
-        "clap": 10
+        "clap": 5,
+        "phasekeys": 4
       },
       "notes": [],
       "production": "melodic",
       "type": "native"
     },
     {
-      "genre": "tribal",
-      "peak": 0.872864842414856,
-      "rmsDb": -15.65641582917739,
-      "count": 4,
+      "genre": "melodic",
+      "peak": 0.8725212216377258,
+      "rmsDb": -11.950242282958783,
+      "count": 7,
       "instruments": {
-        "kick": 10,
-        "conga": 25,
-        "p_woodybass": 24,
-        "wood": 14,
-        "p_gutguitar": 19,
-        "shaker": 19
+        "kick": 19,
+        "rubber": 15,
+        "rhodes": 5,
+        "p_feltmallet": 9,
+        "shaker": 38,
+        "wood": 19,
+        "tom": 9
       },
       "notes": [],
-      "production": "afro",
+      "production": "melodic",
       "type": "native"
     },
     {
       "genre": "minimal",
-      "peak": 0.873455822467804,
-      "rmsDb": -13.77129432632012,
+      "peak": 0.8739140629768372,
+      "rmsDb": -13.755878817312874,
       "count": 9,
       "instruments": {
         "kick": 21,
@@ -207,34 +194,35 @@
       "type": "native"
     },
     {
-      "genre": "progressive",
-      "peak": 0.8768181204795837,
-      "rmsDb": -13.201056803701954,
-      "count": 5,
+      "genre": "techhouse",
+      "peak": 0.8724940419197083,
+      "rmsDb": -13.731653890516727,
+      "count": 6,
       "instruments": {
         "kick": 21,
-        "pluck": 41,
-        "organ": 32,
-        "hat": 20,
-        "shaker": 20,
+        "roll": 21,
+        "resonantpluck": 11,
+        "rhodes": 9,
+        "hat": 21,
+        "rim": 26,
         "clap": 10
       },
       "notes": [],
-      "production": "melodic",
+      "production": "minimal",
       "type": "native"
     },
     {
       "genre": "garagehouse",
-      "peak": 0.8729833960533142,
-      "rmsDb": -14.156300394330124,
+      "peak": 0.8730269074440002,
+      "rmsDb": -14.023739524924698,
       "count": 8,
       "instruments": {
         "kick": 20,
         "organb": 30,
-        "organ": 58,
+        "organ": 60,
         "p_gutguitar": 15,
         "wood": 15,
-        "hat": 35,
+        "hat": 20,
         "clap": 10,
         "p_softhorn": 2
       },
@@ -244,8 +232,8 @@
     },
     {
       "genre": "electrofunk",
-      "peak": 0.8733245730400085,
-      "rmsDb": -13.868089416304475,
+      "peak": 0.8726277351379395,
+      "rmsDb": -13.83221075155338,
       "count": 9,
       "instruments": {
         "kick": 18,
@@ -264,8 +252,8 @@
     },
     {
       "genre": "amapiano",
-      "peak": 0.8724939227104187,
-      "rmsDb": -14.878955493477504,
+      "peak": 0.8731463551521301,
+      "rmsDb": -15.024500455439915,
       "count": 6,
       "instruments": {
         "kick": 9,
@@ -282,8 +270,8 @@
     },
     {
       "genre": "ghetto",
-      "peak": 0.8733970522880554,
-      "rmsDb": -13.731308776985927,
+      "peak": 0.8725030422210693,
+      "rmsDb": -14.000066839136968,
       "count": 10,
       "instruments": {
         "kick": 29,
@@ -304,8 +292,8 @@
     },
     {
       "genre": "algorave",
-      "peak": 0.873289167881012,
-      "rmsDb": -13.55178762219188,
+      "peak": 0.8726966977119446,
+      "rmsDb": -13.496419581855527,
       "count": 4,
       "instruments": {
         "kick": 13,
@@ -322,8 +310,8 @@
     },
     {
       "genre": "jersey",
-      "peak": 0.8732165694236755,
-      "rmsDb": -10.999222879191334,
+      "peak": 0.8970831036567688,
+      "rmsDb": -11.117364779236638,
       "count": 5,
       "instruments": {
         "kick": 32,
@@ -339,8 +327,8 @@
     },
     {
       "genre": "garage",
-      "peak": 0.8808918595314026,
-      "rmsDb": -14.156120570741876,
+      "peak": 0.8804904222488403,
+      "rmsDb": -14.39897472270678,
       "count": 9,
       "instruments": {
         "kick": 9,
@@ -359,8 +347,8 @@
     },
     {
       "genre": "berlin",
-      "peak": 0.8724881410598755,
-      "rmsDb": -14.603710371917062,
+      "peak": 0.8729935884475708,
+      "rmsDb": -14.701156725624898,
       "count": 7,
       "instruments": {
         "kick": 4,
@@ -377,8 +365,8 @@
     },
     {
       "genre": "jazztronica",
-      "peak": 0.8724433183670044,
-      "rmsDb": -12.642820381454882,
+      "peak": 0.8725059628486633,
+      "rmsDb": -12.66805069761549,
       "count": 10,
       "instruments": {
         "kick": 12,
@@ -398,8 +386,8 @@
     },
     {
       "genre": "andean",
-      "peak": 0.8724325299263,
-      "rmsDb": -15.499077359087748,
+      "peak": 0.8724367618560791,
+      "rmsDb": -15.513198267421533,
       "count": 7,
       "instruments": {
         "kick": 5,
@@ -414,43 +402,28 @@
       "type": "native"
     },
     {
-      "genre": "organic",
-      "peak": 0.8724446892738342,
-      "rmsDb": -20.383832668291674,
-      "count": 6,
-      "instruments": {
-        "kick": 5,
-        "p_woodybass": 9,
-        "p_cellobody": 14,
-        "kalimba": 9,
-        "wood": 9,
-        "shaker": 4
-      },
-      "notes": [],
-      "production": "organic",
-      "type": "native"
-    },
-    {
-      "genre": "idm",
-      "peak": 0.8794415593147278,
-      "rmsDb": -13.159357632585259,
-      "count": 4,
+      "genre": "cosmic",
+      "peak": 0.8733935952186584,
+      "rmsDb": -13.878334618319762,
+      "count": 8,
       "instruments": {
         "kick": 18,
-        "machine": 22,
-        "membrane": 15,
-        "hat": 14,
-        "shaker": 18,
-        "snare": 9
+        "p_roundbass": 27,
+        "p_softhorn": 23,
+        "p_barkkeys": 15,
+        "hat": 18,
+        "wood": 9,
+        "clap": 9,
+        "rhodes": 4
       },
       "notes": [],
-      "production": "broken",
+      "production": "disco",
       "type": "native"
     },
     {
       "genre": "trap",
-      "peak": 0.8741904497146606,
-      "rmsDb": -8.085631261492727,
+      "peak": 0.8741825222969055,
+      "rmsDb": -8.085631889556181,
       "count": 10,
       "instruments": {
         "kick": 19,
@@ -471,8 +444,8 @@
     },
     {
       "genre": "acid",
-      "peak": 0.8966401219367981,
-      "rmsDb": -13.241454417949125,
+      "peak": 0.8966395854949951,
+      "rmsDb": -13.241481668206367,
       "count": 4,
       "instruments": {
         "kick": 23,
@@ -489,7 +462,7 @@
     {
       "genre": "detroitelectro",
       "peak": 0.874300479888916,
-      "rmsDb": -11.762777286943166,
+      "rmsDb": -11.76281078773097,
       "count": 7,
       "instruments": {
         "kick": 23,
@@ -505,47 +478,66 @@
       "type": "native"
     },
     {
-      "genre": "detroit",
-      "peak": 0.880437433719635,
-      "rmsDb": -13.430404484444312,
-      "count": 4,
-      "instruments": {
-        "kick": 22,
-        "hat": 110,
-        "fm": 23,
-        "strings": 6,
-        "rim": 13,
-        "shaker": 27,
-        "clap": 11
-      },
-      "notes": [],
-      "production": "guitar",
-      "type": "native"
-    },
-    {
       "genre": "breaks",
-      "peak": 0.8823503255844116,
-      "rmsDb": -14.635359326240245,
+      "peak": 0.8823725581169128,
+      "rmsDb": -13.393979143013121,
       "count": 9,
       "instruments": {
         "kick": 11,
         "hat": 45,
-        "reese": 44,
-        "saw": 11,
-        "resonantpluck": 21,
-        "p_panreed": 18,
-        "snare": 12,
-        "shaker": 10,
-        "p_feltmallet": 5
+        "reese": 56,
+        "rhodes": 18,
+        "p_feltmallet": 21,
+        "shaker": 23,
+        "p_tinepiano": 18,
+        "snare": 16,
+        "p_panreed": 5
       },
       "notes": [],
       "production": "bass",
       "type": "native"
     },
     {
+      "genre": "acidhouse",
+      "peak": 0.9030889868736267,
+      "rmsDb": -14.327796725745792,
+      "count": 4,
+      "instruments": {
+        "kick": 22,
+        "acid": 44,
+        "hollow": 12,
+        "hat": 44,
+        "wood": 22,
+        "clap": 5
+      },
+      "notes": [],
+      "production": "minimal",
+      "type": "native"
+    },
+    {
+      "genre": "baltimore",
+      "peak": 0.8740947842597961,
+      "rmsDb": -12.601545936942681,
+      "count": 9,
+      "instruments": {
+        "kick": 29,
+        "hat": 45,
+        "machine": 14,
+        "phasekeys": 23,
+        "p_feltmallet": 21,
+        "p_tinepiano": 18,
+        "snare": 11,
+        "clap": 15,
+        "p_panreed": 5
+      },
+      "notes": [],
+      "production": "guitar",
+      "type": "native"
+    },
+    {
       "genre": "electro",
-      "peak": 0.8815969228744507,
-      "rmsDb": -14.179264609048147,
+      "peak": 0.8786445260047913,
+      "rmsDb": -14.232311078763802,
       "count": 4,
       "instruments": {
         "kick": 18,
@@ -561,8 +553,8 @@
     },
     {
       "genre": "deep",
-      "peak": 0.8725462555885315,
-      "rmsDb": -12.155957197840795,
+      "peak": 0.8725688457489014,
+      "rmsDb": -12.274794949693046,
       "count": 9,
       "instruments": {
         "kick": 16,
@@ -580,30 +572,26 @@
       "type": "native"
     },
     {
-      "genre": "microhouse",
-      "peak": 0.8725464344024658,
-      "rmsDb": -14.635433845623677,
-      "count": 10,
+      "genre": "tribal",
+      "peak": 0.8737447261810303,
+      "rmsDb": -15.713682782675509,
+      "count": 4,
       "instruments": {
-        "kick": 21,
-        "roll": 42,
-        "marimba": 12,
-        "phasekeys": 18,
-        "hat": 20,
-        "p_feltmallet": 16,
-        "rim": 20,
-        "wood": 15,
-        "p_tinepiano": 2,
-        "p_cellobody": 4
+        "kick": 10,
+        "conga": 25,
+        "p_woodybass": 24,
+        "wood": 14,
+        "p_panreed": 19,
+        "shaker": 19
       },
       "notes": [],
-      "production": "minimal",
+      "production": "afro",
       "type": "native"
     },
     {
       "genre": "downtempo",
-      "peak": 0.8724395036697388,
-      "rmsDb": -17.160110803331996,
+      "peak": 0.8724038600921631,
+      "rmsDb": -17.357786393389926,
       "count": 10,
       "instruments": {
         "kick": 5,
@@ -621,8 +609,8 @@
     },
     {
       "genre": "nudisco",
-      "peak": 0.8725681900978088,
-      "rmsDb": -13.603592985878016,
+      "peak": 0.8725379109382629,
+      "rmsDb": -13.655318085340317,
       "count": 9,
       "instruments": {
         "kick": 19,
@@ -641,8 +629,8 @@
     },
     {
       "genre": "tropical",
-      "peak": 0.8726094961166382,
-      "rmsDb": -15.795379164019288,
+      "peak": 0.8729926347732544,
+      "rmsDb": -15.613960261233743,
       "count": 4,
       "instruments": {
         "kick": 10,
@@ -658,8 +646,8 @@
     },
     {
       "genre": "dubstep",
-      "peak": 0.881579577922821,
-      "rmsDb": -12.549207425284559,
+      "peak": 0.8810494542121887,
+      "rmsDb": -12.558765670022932,
       "count": 8,
       "instruments": {
         "kick": 12,
@@ -676,89 +664,67 @@
       "type": "native"
     },
     {
-      "genre": "robotic",
-      "peak": 0.8809852004051208,
-      "rmsDb": -13.525920415759995,
-      "count": 8,
-      "instruments": {
-        "kick": 17,
-        "hat": 44,
-        "machine": 27,
-        "vocalform": 6,
-        "phasekeys": 18,
-        "wood": 22,
-        "snare": 11,
-        "p_fmharp": 5
-      },
-      "notes": [],
-      "production": "machine",
-      "type": "native"
-    },
-    {
-      "genre": "afro",
-      "peak": 0.8727613687515259,
-      "rmsDb": -15.463740415669633,
+      "genre": "ebm",
+      "peak": 0.8739722371101379,
+      "rmsDb": -12.332310886048752,
       "count": 5,
       "instruments": {
-        "kick": 11,
-        "conga": 26,
-        "p_woodybass": 26,
-        "p_gutguitar": 26,
-        "wood": 15,
-        "shaker": 20
-      },
-      "notes": [],
-      "production": "afro",
-      "type": "native"
-    },
-    {
-      "genre": "ebm",
-      "peak": 0.8736342191696167,
-      "rmsDb": -11.975500412001836,
-      "count": 10,
-      "instruments": {
-        "kick": 22,
-        "machine": 38,
-        "phasekeys": 11,
-        "p_cellobody": 18,
-        "hat": 21,
-        "p_tinepiano": 13,
-        "shaker": 21,
-        "snare": 11,
-        "rim": 10,
-        "p_fmharp": 2,
-        "p_bassclarinet": 5
+        "kick": 20,
+        "machine": 35,
+        "organ": 10,
+        "shaker": 20,
+        "hat": 20,
+        "snare": 10,
+        "rim": 9
       },
       "notes": [],
       "production": "minimal",
       "type": "native"
     },
     {
-      "genre": "melodictechno",
-      "peak": 0.8735722303390503,
-      "rmsDb": -13.47677600323852,
+      "genre": "chicago",
+      "peak": 0.8760009407997131,
+      "rmsDb": -13.968465161251448,
       "count": 10,
       "instruments": {
-        "kick": 22,
-        "roll": 27,
-        "saw": 17,
-        "p_tinepiano": 18,
-        "hat": 21,
-        "clap": 11,
-        "wood": 16,
-        "p_cellobody": 12,
-        "p_gutguitar": 2,
-        "rim": 5,
-        "p_panreed": 5
+        "kick": 21,
+        "pluck": 21,
+        "rhodes": 6,
+        "p_gutguitar": 18,
+        "hat": 42,
+        "p_tinepiano": 17,
+        "clap": 10,
+        "conga": 10,
+        "shaker": 15,
+        "p_cellobody": 2,
+        "p_softhorn": 4
       },
       "notes": [],
-      "production": "melodic",
+      "production": "warm",
+      "type": "native"
+    },
+    {
+      "genre": "organic",
+      "peak": 0.8724448680877686,
+      "rmsDb": -20.067536884056175,
+      "count": 9,
+      "instruments": {
+        "kick": 5,
+        "p_woodybass": 9,
+        "kalimba": 15,
+        "p_feltmallet": 14,
+        "p_gutguitar": 9,
+        "wood": 9,
+        "shaker": 4
+      },
+      "notes": [],
+      "production": "organic",
       "type": "native"
     },
     {
       "genre": "footwork",
-      "peak": 0.8742021918296814,
-      "rmsDb": -8.588092584019172,
+      "peak": 0.8741942644119263,
+      "rmsDb": -8.588078430282996,
       "count": 4,
       "instruments": {
         "kick": 34,
@@ -774,43 +740,65 @@
       "type": "native"
     },
     {
-      "genre": "soulful",
-      "peak": 0.8724247813224792,
-      "rmsDb": -11.936104729836865,
-      "count": 4,
+      "genre": "robotic",
+      "peak": 0.8821483254432678,
+      "rmsDb": -13.297155966641544,
+      "count": 5,
       "instruments": {
-        "kick": 16,
-        "velvetbass": 21,
-        "rhodes": 21,
-        "shaker": 21,
-        "wood": 10,
-        "rim": 10
+        "kick": 17,
+        "hat": 44,
+        "machine": 27,
+        "vocalform": 17,
+        "shaker": 22,
+        "snare": 11
       },
       "notes": [],
-      "production": "warm",
+      "production": "italo",
       "type": "native"
     },
     {
-      "genre": "cosmic",
-      "peak": 0.8731667995452881,
-      "rmsDb": -13.79226556874525,
-      "count": 5,
+      "genre": "minimaltechno",
+      "peak": 0.8725011944770813,
+      "rmsDb": -13.645788946202133,
+      "count": 8,
       "instruments": {
-        "kick": 18,
-        "p_roundbass": 27,
-        "hat": 18,
-        "wood": 9,
-        "p_softhorn": 18,
-        "clap": 9
+        "kick": 22,
+        "fm": 19,
+        "hollow": 11,
+        "p_gutguitar": 18,
+        "rim": 21,
+        "hat": 21,
+        "p_barkkeys": 5
       },
       "notes": [],
-      "production": "disco",
+      "production": "minimal",
+      "type": "native"
+    },
+    {
+      "genre": "afro",
+      "peak": 0.8730834722518921,
+      "rmsDb": -15.617716345914229,
+      "count": 10,
+      "instruments": {
+        "kick": 10,
+        "conga": 25,
+        "p_woodybass": 25,
+        "p_gutguitar": 25,
+        "p_feltmallet": 15,
+        "wood": 15,
+        "kalimba": 8,
+        "shaker": 19,
+        "p_cellobody": 2,
+        "p_tinepiano": 2
+      },
+      "notes": [],
+      "production": "afro",
       "type": "native"
     },
     {
       "genre": "liquid",
-      "peak": 0.9014095067977905,
-      "rmsDb": -11.866730587026586,
+      "peak": 0.8826130628585815,
+      "rmsDb": -11.80319173312183,
       "count": 7,
       "instruments": {
         "kick": 21,
@@ -826,9 +814,27 @@
       "type": "native"
     },
     {
+      "genre": "idm",
+      "peak": 0.8802146911621094,
+      "rmsDb": -12.904369918630872,
+      "count": 7,
+      "instruments": {
+        "kick": 25,
+        "machine": 7,
+        "reed": 26,
+        "p_panreed": 12,
+        "hat": 19,
+        "snare": 12,
+        "shaker": 18
+      },
+      "notes": [],
+      "production": "broken",
+      "type": "native"
+    },
+    {
       "genre": "dub",
-      "peak": 0.872481107711792,
-      "rmsDb": -13.67980765197463,
+      "peak": 0.8724809885025024,
+      "rmsDb": -13.67961613160012,
       "count": 8,
       "instruments": {
         "kick": 10,
@@ -845,8 +851,8 @@
     },
     {
       "genre": "dnb",
-      "peak": 0.8811457753181458,
-      "rmsDb": -12.491886719210196,
+      "peak": 0.8811386227607727,
+      "rmsDb": -12.491890064629468,
       "count": 6,
       "instruments": {
         "kick": 14,
@@ -862,65 +868,48 @@
       "type": "native"
     },
     {
-      "genre": "acidhouse",
-      "peak": 0.872527539730072,
-      "rmsDb": -12.524613547518538,
-      "count": 5,
-      "instruments": {
-        "kick": 21,
-        "acid": 56,
-        "clav": 11,
-        "shaker": 10,
-        "hat": 20,
-        "clap": 10
-      },
-      "notes": [],
-      "production": "minimal",
-      "type": "native"
-    },
-    {
-      "genre": "boogie",
-      "peak": 0.8734111189842224,
-      "rmsDb": -14.256250627254776,
-      "count": 6,
-      "instruments": {
-        "kick": 18,
-        "p_roundbass": 26,
-        "p_cellobody": 9,
-        "hat": 17,
-        "wood": 9,
-        "clav": 17,
-        "clap": 9
-      },
-      "notes": [],
-      "production": "disco",
-      "type": "native"
-    },
-    {
-      "genre": "boombap",
-      "peak": 0.8724470138549805,
-      "rmsDb": -13.609980540175485,
+      "genre": "soulful",
+      "peak": 0.872513473033905,
+      "rmsDb": -11.584450617888962,
       "count": 10,
       "instruments": {
-        "kick": 12,
-        "velvetbass": 16,
-        "p_gutguitar": 16,
-        "p_cellobody": 12,
-        "shaker": 16,
-        "p_tapepiano": 9,
-        "wood": 8,
-        "rim": 8,
-        "p_softhorn": 1,
-        "clav": 4
+        "kick": 15,
+        "velvetbass": 20,
+        "rhodes": 20,
+        "p_gutguitar": 15,
+        "shaker": 20,
+        "p_tinepiano": 12,
+        "wood": 10,
+        "rim": 10,
+        "p_cellobody": 2,
+        "p_softhorn": 4
       },
       "notes": [],
       "production": "warm",
       "type": "native"
     },
     {
+      "genre": "boogie",
+      "peak": 0.8725746273994446,
+      "rmsDb": -13.885420306277684,
+      "count": 6,
+      "instruments": {
+        "kick": 18,
+        "p_roundbass": 26,
+        "p_gutguitar": 22,
+        "p_tinepiano": 9,
+        "hat": 17,
+        "wood": 9,
+        "clap": 9
+      },
+      "notes": [],
+      "production": "guitar",
+      "type": "native"
+    },
+    {
       "genre": "gfunk",
-      "peak": 0.8726334571838379,
-      "rmsDb": -14.251674479027196,
+      "peak": 0.8726962208747864,
+      "rmsDb": -14.235651862596331,
       "count": 6,
       "instruments": {
         "kick": 16,
@@ -936,17 +925,37 @@
       "type": "native"
     },
     {
-      "genre": "lofi",
-      "peak": 0.872435450553894,
-      "rmsDb": -13.169487213676623,
-      "count": 7,
+      "genre": "boombap",
+      "peak": 0.87245112657547,
+      "rmsDb": -12.869077799315834,
+      "count": 9,
       "instruments": {
-        "kick": 11,
+        "kick": 12,
+        "velvetbass": 16,
+        "rhodes": 16,
+        "p_gutguitar": 12,
+        "shaker": 15,
+        "p_tinepiano": 9,
+        "wood": 8,
+        "rim": 8,
+        "p_softhorn": 4
+      },
+      "notes": [],
+      "production": "warm",
+      "type": "native"
+    },
+    {
+      "genre": "lofi",
+      "peak": 0.8724887371063232,
+      "rmsDb": -14.333653124785297,
+      "count": 6,
+      "instruments": {
+        "kick": 10,
         "velvetbass": 14,
-        "feltpiano": 15,
-        "p_tinepiano": 6,
+        "clav": 6,
         "shaker": 14,
         "wood": 7,
+        "p_gutguitar": 11,
         "rim": 7
       },
       "notes": [],
@@ -955,8 +964,8 @@
     },
     {
       "genre": "heart",
-      "peak": 0.38406383991241455,
-      "rmsDb": -22.615654532173583,
+      "peak": 0.3840297758579254,
+      "rmsDb": -22.615654333822206,
       "count": 3,
       "instruments": {
         "p_tapepiano": 6,
@@ -969,8 +978,8 @@
     },
     {
       "genre": "trap",
-      "peak": 0.8747278451919556,
-      "rmsDb": -7.609854322536778,
+      "peak": 0.8747289180755615,
+      "rmsDb": -7.609813280235804,
       "count": 10,
       "instruments": {
         "kick": 41,
@@ -1031,27 +1040,25 @@
       "type": "libre"
     },
     {
-      "genre": "detroit",
-      "peak": 0.8804045915603638,
-      "rmsDb": -13.33682436172908,
+      "genre": "acidhouse",
+      "peak": 0.8725735545158386,
+      "rmsDb": -13.890201111171,
       "count": 4,
       "instruments": {
         "kick": 45,
-        "hat": 220,
-        "fm": 46,
-        "strings": 12,
-        "rim": 30,
-        "shaker": 54,
-        "wood": 17,
-        "clap": 26,
-        "tom": 7
+        "acid": 100,
+        "hollow": 15,
+        "hat": 86,
+        "wood": 60,
+        "tom": 6,
+        "clap": 10
       },
       "notes": [
         {
           "mode": "irregular",
           "step": 3,
           "bar": 0,
-          "time": 0.4409090909090909,
+          "time": 0.44615384615384623,
           "kind": "wood",
           "tones": [
             62,
@@ -1064,7 +1071,7 @@
           "mode": "irregular",
           "step": 6,
           "bar": 0,
-          "time": 0.7818181818181819,
+          "time": 0.7923076923076925,
           "kind": "tom",
           "tones": [
             62,
@@ -1077,7 +1084,7 @@
           "mode": "irregular",
           "step": 3,
           "bar": 4,
-          "time": 1.4636363636363632,
+          "time": 1.484615384615385,
           "kind": "wood",
           "tones": [
             62,
@@ -1090,7 +1097,7 @@
           "mode": "irregular",
           "step": 6,
           "bar": 4,
-          "time": 1.8045454545454538,
+          "time": 1.8307692307692311,
           "kind": "tom",
           "tones": [
             62,
@@ -1103,7 +1110,7 @@
           "mode": "irregular",
           "step": 10,
           "bar": 4,
-          "time": 2.2590909090909084,
+          "time": 2.2923076923076926,
           "kind": "wood",
           "tones": [
             62,
@@ -1116,7 +1123,7 @@
           "mode": "irregular",
           "step": 14,
           "bar": 4,
-          "time": 2.7136363636363634,
+          "time": 2.7538461538461543,
           "kind": "wood",
           "tones": [
             62,
@@ -1129,7 +1136,7 @@
           "mode": "irregular",
           "step": 3,
           "bar": 6,
-          "time": 5.099999999999998,
+          "time": 5.176923076923074,
           "kind": "wood",
           "tones": [
             62,
@@ -1142,7 +1149,7 @@
           "mode": "irregular",
           "step": 6,
           "bar": 6,
-          "time": 5.440909090909088,
+          "time": 5.5230769230769186,
           "kind": "tom",
           "tones": [
             62,
@@ -1155,7 +1162,7 @@
           "mode": "irregular",
           "step": 10,
           "bar": 6,
-          "time": 5.895454545454541,
+          "time": 5.9846153846153785,
           "kind": "wood",
           "tones": [
             62,
@@ -1168,7 +1175,7 @@
           "mode": "irregular",
           "step": 14,
           "bar": 6,
-          "time": 6.349999999999994,
+          "time": 6.446153846153838,
           "kind": "wood",
           "tones": [
             62,
@@ -1181,12 +1188,12 @@
           "mode": "irregular",
           "step": 3,
           "bar": 8,
-          "time": 8.736363636363624,
+          "time": 8.869230769230754,
           "kind": "wood",
           "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         },
@@ -1194,12 +1201,12 @@
           "mode": "irregular",
           "step": 6,
           "bar": 8,
-          "time": 9.077272727272714,
+          "time": 9.215384615384599,
           "kind": "tom",
           "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         },
@@ -1207,12 +1214,12 @@
           "mode": "irregular",
           "step": 10,
           "bar": 8,
-          "time": 9.531818181818167,
+          "time": 9.676923076923059,
           "kind": "wood",
           "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         },
@@ -1220,12 +1227,12 @@
           "mode": "irregular",
           "step": 14,
           "bar": 8,
-          "time": 9.98636363636362,
+          "time": 10.138461538461518,
           "kind": "wood",
           "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         },
@@ -1233,12 +1240,12 @@
           "mode": "irregular",
           "step": 3,
           "bar": 10,
-          "time": 12.37272727272725,
+          "time": 12.561538461538433,
           "kind": "wood",
           "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         },
@@ -1246,12 +1253,12 @@
           "mode": "irregular",
           "step": 6,
           "bar": 10,
-          "time": 12.71363636363634,
+          "time": 12.907692307692278,
           "kind": "tom",
           "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         },
@@ -1259,12 +1266,12 @@
           "mode": "irregular",
           "step": 10,
           "bar": 10,
-          "time": 13.168181818181793,
+          "time": 13.369230769230738,
           "kind": "wood",
           "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         },
@@ -1272,12 +1279,12 @@
           "mode": "irregular",
           "step": 14,
           "bar": 10,
-          "time": 13.622727272727246,
+          "time": 13.830769230769198,
           "kind": "wood",
           "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         },
@@ -1285,12 +1292,12 @@
           "mode": "irregular",
           "step": 3,
           "bar": 12,
-          "time": 16.009090909090876,
+          "time": 16.253846153846116,
           "kind": "wood",
           "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         },
@@ -1298,12 +1305,12 @@
           "mode": "irregular",
           "step": 6,
           "bar": 12,
-          "time": 16.349999999999966,
+          "time": 16.599999999999966,
           "kind": "tom",
           "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         },
@@ -1311,12 +1318,12 @@
           "mode": "irregular",
           "step": 10,
           "bar": 12,
-          "time": 16.80454545454542,
+          "time": 17.061538461538433,
           "kind": "wood",
           "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         },
@@ -1324,12 +1331,12 @@
           "mode": "irregular",
           "step": 14,
           "bar": 12,
-          "time": 17.259090909090872,
+          "time": 17.5230769230769,
           "kind": "wood",
           "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         },
@@ -1337,46 +1344,33 @@
           "mode": "irregular",
           "step": 3,
           "bar": 14,
-          "time": 19.645454545454502,
+          "time": 19.94615384615385,
           "kind": "wood",
           "tones": [
-            70,
-            74,
-            77
-          ],
-          "note": null
-        },
-        {
-          "mode": "irregular",
-          "step": 6,
-          "bar": 14,
-          "time": 19.986363636363592,
-          "kind": "tom",
-          "tones": [
-            70,
-            74,
-            77
+            62,
+            65,
+            69
           ],
           "note": null
         }
       ],
-      "production": "guitar",
+      "production": "minimal",
       "type": "irregular"
     },
     {
       "genre": "progressive",
-      "peak": 0.8735807538032532,
-      "rmsDb": -13.190681782190348,
+      "peak": 0.8725701570510864,
+      "rmsDb": -14.78405843170938,
       "count": 8,
       "instruments": {
-        "kick": 40,
-        "pluck": 40,
+        "kick": 42,
+        "hat": 163,
+        "pluck": 41,
         "strings": 29,
-        "p_cellobody": 33,
-        "hat": 40,
-        "rim": 31,
-        "clap": 20,
+        "p_cellobody": 36,
+        "rim": 32,
         "p_tinepiano": 6,
+        "clap": 9,
         "p_gutguitar": 9
       },
       "notes": [
@@ -1384,7 +1378,7 @@
           "mode": "micro",
           "step": 0,
           "bar": 4,
-          "time": 1.1,
+          "time": 1.2065573770491804,
           "kind": "voice",
           "tones": [
             52,
@@ -1397,7 +1391,7 @@
           "mode": "micro",
           "step": 0,
           "bar": 4,
-          "time": 1.1,
+          "time": 1.2065573770491804,
           "kind": "voice",
           "tones": [
             52,
@@ -1410,7 +1404,7 @@
           "mode": "micro",
           "step": 0,
           "bar": 4,
-          "time": 1.1,
+          "time": 1.2065573770491804,
           "kind": "voice",
           "tones": [
             52,
@@ -1423,7 +1417,7 @@
           "mode": "micro",
           "step": 0,
           "bar": 12,
-          "time": 17.1,
+          "time": 16.944262295081927,
           "kind": "voice",
           "tones": [
             59,
@@ -1436,7 +1430,7 @@
           "mode": "micro",
           "step": 0,
           "bar": 12,
-          "time": 17.1,
+          "time": 16.944262295081927,
           "kind": "voice",
           "tones": [
             59,
@@ -1449,7 +1443,7 @@
           "mode": "micro",
           "step": 0,
           "bar": 12,
-          "time": 17.1,
+          "time": 16.944262295081927,
           "kind": "voice",
           "tones": [
             59,
@@ -1464,8 +1458,8 @@
     },
     {
       "genre": "dub",
-      "peak": 0.8724151253700256,
-      "rmsDb": -14.327383357987944,
+      "peak": 0.8724149465560913,
+      "rmsDb": -14.327379979334173,
       "count": 8,
       "instruments": {
         "kick": 19,

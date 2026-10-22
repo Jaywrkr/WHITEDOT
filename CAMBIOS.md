@@ -1,6 +1,28 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.107**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.108**. Las entradas describen su revisión, no certifican producción.
+
+## Música · Fase 8 · Las house · alpha.108
+
+Rama `claude/musica-house`, sobre `claude/universo-capas`.
+
+Cada house tiene ahora una firma que se oye en los primeros compases:
+
+| Género | Tempo | Firma |
+|---|---|---|
+| Melodic house | 114–118 | Sin palmada: un tom grave cierra el compás, solo shaker arriba y cuerdas cada dos compases |
+| Deep house | 118–122 | Golpe de aro en vez de palmada, hi-hats cerrados suaves, acordes de órgano largos |
+| Soulful y gospel house | 118–121 | Palmadas en cada tiempo, congas, órgano y más swing |
+| Garage house (Nueva York) | 119–121 | El swing más marcado, hi-hats en la última semicorchea de cada tiempo y shaker que salta |
+| Progressive house | 122–125 | Hi-hats en cada semicorchea, una sola palmada por compás, bombo corto; el hi-hat abierto llega cuando todo suena |
+| Chicago house | 124–126 | Piano en cada contratiempo, palmada en el 2 y el 4, hi-hat abierto y congas |
+| Acid house | 127–130 | Solo la línea ácida en el bajo, una palmada por compás y cencerro |
+
+- **Medida (52 géneros):** de 16 parejas casi gemelas quedan 5, ninguna house (antes 11). Las que quedan son de las fases siguientes: Electro, Electro robótico y Breaks; Drum & bass y Liquid; Cosmic disco y Boogie; Boom bap y G-funk. Pico máximo de los renders: 0,89.
+- Separar solo por tempo movía el problema a otros géneros (Progressive se acercaba a Detroit, Acid house al techno); por eso las firmas son sobre todo de ritmo.
+- **El mapa no cambia:** cada lugar conserva su género, su región y su tempo guardado. El mapa sigue usando el rango de tempo original (`genre-tempo.js`); solo la música, al sonar, lleva ese tempo al mismo punto del rango nuevo, y el aviso de lugar muestra el tempo que suena. Comprobado en 1.326 regiones de dos mundos con la huella de `main` (prueba nueva `genre-map.mjs`); `ecology.mjs` y `neighborhoods.mjs` comprueban el tempo guardado en el rango original.
+- La música de los lugares con estos géneros cambia de batería y de tempo, a propósito. Nada más cambia.
+- `genre-distance.py` ya mide un solo género, para probar variantes.
 
 ## Universo · Fase 2 · Capas · alpha.107
 

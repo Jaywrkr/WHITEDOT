@@ -14,6 +14,7 @@ import {blendProductionSpace} from './territory-presentation.js';
 import {familyDrums,createAmbientPunctuation} from './music-families.js';
 import {ambientSoloist} from './ambient-score.js';
 import {electronicDrum} from './electronic-ensemble.js';
+import {soundingBpm} from './genre-tempo.js';
 
 // Motor musical, síntesis y programación de Web Audio.
 export function initialize(runtime) {
@@ -221,7 +222,7 @@ export function initialize(runtime) {
       }else if(journeyFrame)resetMusicJourney();
       if(MU.biome!==biome||MU.dnaA!==desired){if(conducted()&&MU.dnaA&&desired&&MU.dnaA.key!==desired.key&&!journeyFrame?.swap)enteredAt=MU.step>>4;MU.biome=biome;MU.dnaA=desired;MU.tr=BI().tr+(MU.dnaA?MU.dnaA.trOff:0);MU.pending=true;MU.harmonyRegion=null;}
       const nb=runtime.inWorld()?musicNeighbor():null,w=nb?musicBlend():0;
-      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?a2.bpm:76,bB=nb?nb.bpm:bA;let target=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld())target+=MU.seasonBpm||0;if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)target=Math.round(target*.55);BPM=runtime.duetBPM?.()||(journeyFrame&&!journeyFrame.initial?approachJourneyTempo(BPM,target):conducted()&&enteredAt>-Infinity?approachTempo(BPM,target):target);SIX=60/BPM/4;runtime.tempoCue?.({time:t,bpm:BPM,target,region:MU.dnaA?.key});delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
+      const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?soundingBpm(a2,runtime.GEN):76,bB=nb?soundingBpm(nb,runtime.GEN):bA;let target=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld())target+=MU.seasonBpm||0;if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)target=Math.round(target*.55);BPM=runtime.duetBPM?.()||(journeyFrame&&!journeyFrame.initial?approachJourneyTempo(BPM,target):conducted()&&enteredAt>-Infinity?approachTempo(BPM,target):target);SIX=60/BPM/4;runtime.tempoCue?.({time:t,bpm:BPM,target,region:MU.dnaA?.key});delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
       if(!runtime.inWorld()&&(MU.pending||(MU.step-MU.lastChange>16*(6+Math.floor(rnd()*4)))))changeChord(t);
       if(BI().id==="tormenta"&&runtime.inWorld()&&(MU.step/16)%2===0&&rnd()<.75)MU.boltAt=t+SIX*(rnd()<.5?0:8);
     }
@@ -460,7 +461,8 @@ export function initialize(runtime) {
       case "ambient":if(L2&&!arrangement?.melodyRest&&s===0&&bar%2===0&&!DO)hookInst('bowed',inRegister(ct[0],45,64),t,vel(.018));break;
       case "downtempo":if(L1&&(s===0||s===10))kick2(t,vel(.26),58,.35);if(L2&&s===8)snare(tt,vel(.09));if(L2&&s%4===2)hatC(tt,vel(.03));if(L3&&s%2===1&&r()<.4)hatC(tt,vel(.012));break;
       case "dub":if(L1&&s%4===0)kick2(t,vel(.22),48,.4);if(L2&&s%4===2)hatC(tt,vel(.025));if(L3&&(s===3||s===11)&&r()<.7&&!DO)dubChord(ct,tt);if(L3&&s%2===1&&r()<.3)shaker(tt,vel(.012));break;
-      case "deep":if(L1&&s%4===0)kick2(t,vel(.28),52,.32);if(L2&&(s===4||s===12))clap(t,vel(.07));if(L2&&s%4===2)hatO(tt,vel(.035));if(L3&&s%2===1)shaker(tt,vel(.015));if(L3&&(s===6||s===14)&&r()<.6&&!DO)organChord(ct,tt);break;
+      // Deep house: smoky and round. A side-stick instead of the clap, soft closed hats, long organ chords.
+      case "deep":if(L1&&s%4===0)kick2(t,vel(.28),52,.34);if(L2&&(s===4||s===12))rim(tt,vel(.05));if(L2&&s%4===2)hatC(tt,vel(.02));if(L3&&s%2===1)shaker(tt,vel(.012));if(L3&&(s===6||s===14)&&r()<.6&&!DO)organChord(ct,tt);break;
       case "afro":{if(L1&&s%4===0)kick2(t,vel(.27),50,.3);const C={2:250,3:180,6:250,7:320,10:180,11:250,14:320};if(L2&&C[s]&&r()<.85)conga(tt,C[s],vel(.12));if(L2&&[0,3,6,10,12].includes(s))clave(tt,vel(.035));if(L3&&s%2===1)shaker(tt,vel(.018));if(L3&&(s===4||s===12))clap(t,vel(.05));break;}
       case "minimal":if(L1&&s%4===0)kick2(t,vel(.26),55,.25);if(L2&&s%4===2)hatC(tt,vel(.03));if(L2&&[3,7,13].includes(s)&&r()<.6)rim(tt,vel(.05));if(L3&&s%4===1&&r()<.4&&!DO)blip(ct[1],tt,vel(.025));break;
       case "rominimal":if(L1&&s%4===0&&!(s===12&&bar%4===3))kick2(t,vel(.26),52,.28);if(L2&&s%2===1)shaker(tt,vel(s%4===3?.026:.016));if(L2&&[3,6,11,15].includes(s)&&r()<.75)wood(tt,vel(.05));if(L3&&(s===4||s===12)&&r()<.5)rim(tt,vel(.04));break;
@@ -473,11 +475,13 @@ export function initialize(runtime) {
         if(L1&&(s===4||s===12))snare(tt,vel(.1));
         if(L2&&s%2===0)hatC(tt,vel(.025));
         if(L3&&s===[3,11,15][variation])rim(tt,vel(.045));break;
+      // Progressive house: rolling. Closed hats on every sixteenth, one clap per bar, a tight kick; the open hat
+      // only arrives when the track is full.
       case "progressive":
-        if(L1&&s%4===0)kick2(t,vel(.27),50,.32);
-        if(L2&&(s===4||s===12))clap(t,vel(.065));
-        if(L2&&s%4===2)hatO(tt,vel(.03));
-        if(L3&&s%2===1)shaker(tt,vel(.012));
+        if(L1&&s%4===0)kick2(t,vel(.27),50,.24);
+        if(L2&&s===12)clap(t,vel(.06));
+        if(L2)hatC(tt,vel(s%4===2?.022:.012));
+        if(L3&&s%4===2)hatO(tt,vel(.022));
         if(L3&&s===[6,10,14][variation]&&!DO)organChord(ct,tt);break;
       case "microhouse":
         if(L1&&s%4===0&&!(s===12&&variation===2))kick2(t,vel(.22),55,.19);
@@ -506,11 +510,13 @@ export function initialize(runtime) {
         if(L2&&(s===2||s===10))runtime.guiro(tt,vel(.024));
         if(L3&&s===15&&bar%4===3)runtime.timbale(tt,vel(.06));
         if(L2&&s%2===1)shaker(tt,vel(.014));break;
+      // Melodic house: space for the melody. No clap: a low tom answers at the end of the bar, only a shaker on top,
+      // and strings every two bars.
       case "melodic":
-        if(L1&&s%4===0)kick2(t,vel(.26),49,.32);
-        if(L2&&(s===4||s===12))clap(t,vel(.055));
-        if(L2&&s%4===2)hatO(tt,vel(.025));
-        if(L3&&s===0&&bar%4===0&&!DO)ct.slice(0,3).forEach(n=>hookInst('strings',n,t,vel(.025)));break;
+        if(L1&&s%4===0)kick2(t,vel(.26),49,.36);
+        if(L2&&(s===10||s===14))tom(tt,s===10?90:72,vel(.06));
+        if(L2&&s%2===1)shaker(tt,vel(.011));
+        if(L3&&s===0&&bar%2===0&&!DO)ct.slice(0,3).forEach(n=>hookInst('strings',n,t,vel(.025)));break;
       case "robotic":
         if(L1&&[0,7,10].includes(s))kick2(t,vel(.27),48,.22);
         if(L1&&(s===4||s===12))snare(t,vel(.085));

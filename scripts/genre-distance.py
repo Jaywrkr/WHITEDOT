@@ -68,10 +68,10 @@ def dist(a,b):
 pairs=sorted(({'a':rows[i]['id'],'b':rows[j]['id'],'distance':dist(rows[i],rows[j])} for i in range(len(rows)) for j in range(i+1,len(rows))),key=lambda p:p['distance'])
 self=[dist({**g,**a},{**g,**b}) for g,a,b in calib]
 LINE=round(max(self)*1.25,3) if self else .2
-report={'genres':len(rows),'line':LINE,'sameGenre':[{'id':g['id'],'distance':d} for (g,_,_),d in zip(calib,self)],'close':[p for p in pairs if p['distance']<LINE],'closest':pairs[:30],'nearest':{r['id']:min((p for p in pairs if r['id'] in (p['a'],p['b'])),key=lambda p:p['distance']) for r in rows},'rows':rows}
+report={'genres':len(rows),'line':LINE,'sameGenre':[{'id':g['id'],'distance':d} for (g,_,_),d in zip(calib,self)],'close':[p for p in pairs if p['distance']<LINE],'closest':pairs[:30],'nearest':{r['id']:min((p for p in pairs if r['id'] in (p['a'],p['b'])),key=lambda p:p['distance']) for r in rows} if pairs else {},'rows':rows}
 (OUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=1))
 # Clips for listening: the closest pairs, 8 s each, one after the other with a short silence.
 clips=OUT/'parejas';clips.mkdir(exist_ok=True)
 for p in pairs[:args.clips]:
  subprocess.run(['ffmpeg','-y','-loglevel','error','-t','8','-i',str(OUT/f"{p['a']}.wav"),'-t','8','-i',str(OUT/f"{p['b']}.wav"),'-filter_complex','[0][1]concat=n=2:v=0:a=1,apad=pad_dur=0','-b:a','128k',str(clips/f"{p['a']}-vs-{p['b']}.mp3")],check=True)
-print(f"PASS measured {len(rows)} genres: {len(report['close'])} pairs under the line {LINE}; closest {pairs[0]['a']}~{pairs[0]['b']} ({pairs[0]['distance']})",flush=True)
+print(f"PASS measured {len(rows)} genres: {len(report['close'])} pairs under the line {LINE}"+(f"; closest {pairs[0]['a']}~{pairs[0]['b']} ({pairs[0]['distance']})" if pairs else ""),flush=True)
