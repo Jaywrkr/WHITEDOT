@@ -12,7 +12,7 @@ export function initialize(runtime) {
     const el=document.getElementById("zone");const render=()=>{
     const hybrid=hybridIdentity(d,runtime.seedOf,runtime.rng);const se=!d.sea&&d.continent?runtime.seasonOf?.(d.continent.id):null;document.getElementById("zMood").textContent=runtime.GEN[d.genre].name+(hybrid?" × "+hybrid.name:"")+" · "+soundingBpm(d,runtime.GEN)+" BPM"+(se?" · "+se.name:"");
     document.getElementById("zName").textContent=d.worldFamily?.name||d.ecology?.name||d.name;
-    document.getElementById("zDo").textContent=(d.sea?"Abismo de silencio":d.continent?d.continent.name:"")+(d.sea||d.continent?" · ":"")+gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
+    document.getElementById("zDo").textContent=(d.sea?(runtime.newRegionAt?.(runtime.S.wx,runtime.S.wy)?.name||"Abismo de silencio"):d.continent?d.continent.name:"")+(d.sea||d.continent?" · ":"")+gravityOf(d,runtime.seedOf).name+" · "+gravityOf(d,runtime.seedOf).movement;
     };render();notices.enqueue('zone',el,()=>{},first?3.2:2.2,'region:'+d.key,()=>runtime.inWorld()&&runtime.MU.dnaT?.key===d.key,{level:1,category:'territorio',coalesce:true});
   }
 
@@ -38,12 +38,12 @@ export function initialize(runtime) {
     runtime.save();
   }
   // Escala grande: aviso al cambiar de continente o entrar a un mar de silencio.
-  let lastLand=null,wasSea=false;
+  let lastLand=null,wasSea=false,lastNew=null;
   // El aviso grande espera a que no haya tarjeta, toast ni Voz en pantalla (si no, la interfaz lo oculta).
   function announce(text,big){runtime.showPhrase(text,big);}
   function continentChange(d){
     const S=runtime.S;S.continents||={};
-    if(d.sea){if(!wasSea){wasSea=true;announce("Abismo de silencio",false);if(!S.help.mar){S.help.mar=true;runtime.say(runtime.VOZ.mar);}}return;}
+    if(d.sea){const nueva=runtime.newRegionAt?.(runtime.S.wx,runtime.S.wy);if(nueva&&nueva.id!==lastNew){lastNew=nueva.id;announce(nueva.name,false);}else if(!nueva)lastNew=null;if(!wasSea){wasSea=true;if(!nueva)announce("Abismo de silencio",false);if(!S.help.mar){S.help.mar=true;runtime.say(runtime.VOZ.mar);}}return;}
     const crossed=wasSea&&lastLand!==null&&d.continent&&d.continent.id!==lastLand;if(crossed)runtime.unlock('mar1');
     wasSea=false;const k=d.continent;if(!k||k.id===lastLand)return;
     const first=lastLand!==null;lastLand=k.id;
