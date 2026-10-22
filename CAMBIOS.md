@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.114**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.115**. Las entradas describen su revisión, no certifican producción.
+
+## Universo · Fase 6 · Momentos raros · alpha.115
+
+Rama `claude/universo-raros`, sobre `claude/universo-nuevas`.
+
+Cada región tiene un momento raro que llega de vez en cuando (más o menos cada 48 compases en la misma región) y dura unos segundos:
+
+- **Polvo:** un remolino. **Cúmulo:** un racimo que te rodea. **Marea:** todas las fuentes laten juntas.
+- **Restos:** la órbita se cierra. **Esporas:** floración en cadena. **Anillos:** pasa la sombra de un planeta.
+- **Prisma:** un arcoíris desde el cubo. **Púlsares:** dos haces se cruzan y destellan. **Tormenta solar:** una eyección cruza la pantalla.
+- **Pozo:** el espacio se dobla. **Aurora:** cambia de color. **Cometas:** lluvia de cometas. **Constelaciones:** una figura grande en el cielo. **Nebulosa oscura:** una estrella nace.
+- **Vacío:** nada; esa es su firma.
+- Cuándo llega sale de un hash del lugar y del compás, no del azar antiguo. Cada momento visto se cuenta en la partida (`S.universe.rare`) para la colección. Con movimiento reducido se cuenta pero no se dibuja.
+- **Pruebas:** nuevas `universe-rare.mjs` y `universe_rare_smoke.py` (móvil y computadora).
 
 ## Universo · Fase 5 · Regiones nuevas · alpha.114
 
