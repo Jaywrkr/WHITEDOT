@@ -30,7 +30,7 @@ export function initialize(runtime){
   const ac=runtime.ac,now=performance.now();if(now-lastAt<PULSE_GAP)return null;lastAt=now;
   const on=!!ac&&beatDistance(ac.currentTime,runtime.MU?.bq,(runtime.SIX||.15)*4)<=ON_TIME;state.lastOn=on;marks.push({at:now,step:stepNow(),on});if(marks.length>24)marks.shift();
   if(!on){state.misses++;return false;}
-  state.hits++;const [degree,eighths]=THEME[state.next],{scale,tr}=scaleNow(),midi=themePitch(degree,scale,tr);state.next=(state.next+1)%THEME.length;if(state.next===0)state.phrases++;
+  state.hits++;const [degree,eighths]=THEME[state.next],{scale,tr}=scaleNow(),midi=themePitch(degree,scale,tr);state.next=(state.next+1)%THEME.length;if(state.next===0){state.phrases++;runtime.recoverJourneyColor?.();}
   state.notes.push(midi);if(state.notes.length>12)state.notes.shift();
   vibrate(state.next===0?[12,40,18]:12);runtime.flash=Math.max(runtime.flash||0,.7);
   if(runtime.S.sound&&ac)runtime.soon?.(t=>{if(runtime.bus)playCello(ac,runtime.bus,t,midi,eighths*(runtime.SIX||.15)*2,.13);},'player');

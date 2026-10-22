@@ -88,6 +88,7 @@ export function initialize(runtime) {
     runtime.cx.fillStyle="#000";runtime.cx.fillRect(0,0,runtime.W,runtime.H);runtime.cameraBegin?.(dt);
     runtime.drawDistantColors?.();
     if(runtime.inWorld()||runtime.S.mode==="studio"){ambientStars(t,dt,b);if(runtime.inWorld())runtime.drawAtmosphere?.(t);ambient(t,dt,b);}
+    runtime.drawWorldSheet?.(t,b);
     const ds=runtime.S.mode==="studio"?runtime.studioStep(t,dt,b,dx,dy):runtime.inWorld()?(runtime.S.layer&&runtime.S.layer!=='superficie'?runtime.layerStep(t,dt,dx,dy,b,modal,runtime.SPEED*boost):worldStep(t,dt,dx,dy,b,modal,movementSpeed)):caminoStep(t,dt,dx,dy,b);
     runtime.crystalTick?.(dt,modal);runtime.totemTick?.(dt,modal);runtime.wonderTick?.(dt,modal);runtime.activityWorldTick?.(dt,modal);runtime.mischiefTick?.(dt,modal);runtime.wowTick?.(dt,modal);runtime.profileTick?.(runtime.activeFrameSeconds,modal);runtime.sparkTick?.(dt,modal);runtime.reactiveTick?.(dt);runtime.inhabitantTick?.(dt);runtime.drawInhabitants?.();
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.drawLivingTerrain?.();runtime.livingTick?.(dt);runtime.drawLiving?.(t);}
