@@ -27,6 +27,7 @@ export function initialize(runtime) {
     if(runtime.S.mode==="studio"){if(origin==="player")runtime.housePulse?.();return;}runtime.audio();const ms=performance.now();if(ms-lastSonar<240)return;lastSonar=ms;
     // Playing on time: the theme answers a pulse on the beat (journey-pulse.js); the grid places every pulse.
     if(origin==='player'&&(runtime.inWorld()||runtime.S.mode==='camino'))runtime.journeyPulse?.();
+    if(origin==='player'&&runtime.inWorld())runtime.universePulse?.();
     if(origin==='player'){runtime.markInput?.();runtime.visualGesture?.();}
     if(origin==='player')runtime.firstJourneyEvent?.('pulse');
     if(runtime.inWorld()&&runtime.S.layer&&runtime.S.layer!=='superficie'){runtime.layerPulse?.();return;}
