@@ -3,11 +3,12 @@ import assert from 'node:assert/strict';
 import {REFERENCE_GENRES,REFERENCE_STEPS,REFERENCE_BASS,referenceRhythm} from '../src/references.js';
 import {createRegionalVoices} from '../src/voices.js';import {INSTRUMENTS} from '../src/journal.js';
 import {initialize as data} from '../src/data.js';import {initialize as progress} from '../src/progress.js';import {initialize as world} from '../src/world.js';
+import {pickRange} from '../src/genre-tempo.js';
 globalThis.localStorage={getItem:()=>null,setItem(){}};const r={};data(r);progress(r);world(r);const found=new Map();
 for(let x=-30;x<=30;x++)for(let y=-30;y<=30;y++){const d=r.regionOfPos(x*3600+900,y*3600+900);if(REFERENCE_GENRES[d.genre])found.set(d.genre,d);}
 assert.equal(found.size,12,'some musical references are unreachable');const rhythms=new Set();
 for(const [id,g]of Object.entries(REFERENCE_GENRES)){
- const d=found.get(id);assert(g.bpm[0]<=d.bpm&&d.bpm<=g.bpm[1]);assert(g.scales.some(s=>JSON.stringify(s)===JSON.stringify(d.scale)));
+ const d=found.get(id);assert(pickRange(id,g)[0]<=d.bpm&&d.bpm<=pickRange(id,g)[1]);assert(g.scales.some(s=>JSON.stringify(s)===JSON.stringify(d.scale)));
  const voices=createRegionalVoices(d,r.BIOMES,r.GEN,r.seedOf,r.rng);for(const v of Object.values(voices)){
   assert(INSTRUMENTS[v.instrument],`missing instrument explanation: ${v.instrument}`);
   if(v.role==='bajo')assert(expressiveBassInstruments(id,g).includes(v.instrument));else if(v.role==='perc')assert(g.percP.includes(v.instrument));else assert(interactionInstruments(id,g,v.role).includes(v.instrument));

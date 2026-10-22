@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.110**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.111**. Las entradas describen su revisión, no certifican producción.
+
+## Música · Fase 10 · Groove · alpha.111
+
+Rama `claude/musica-groove`, sobre `claude/musica-robotica`.
+
+| Género | Tempo | Firma |
+|---|---|---|
+| Boogie | 98–104 | Funk post-disco: bombo sincopado (no en cada tiempo), caja y palmada, hi-hats en corcheas |
+| Cosmic disco | 110–116 | Espacial y recto: sin palmada, timbales que caen como ecos y cuerdas al cerrar el compás |
+
+- **Medida:** Cosmic disco ~ Boogie pasó de 0,084 a 0,478. Ninguno queda bajo la línea con otro género (el más cercano, Cosmic disco ~ Amapiano, a 0,144).
+- Melodic house, Nu-disco, Soulful, Broken beat y Jazztronica ya se distinguían tras la fase de las house; no cambian.
+- **El mapa no cambia** (`genre-tempo.js`, `genre-map.mjs`); `references.mjs` comprueba el tempo guardado en el rango original.
 
 ## Música · Fase 9 · Las robóticas · alpha.110
 
