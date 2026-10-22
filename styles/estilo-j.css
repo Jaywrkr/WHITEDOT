@@ -529,3 +529,6 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 /* The Journey keeps the screen quiet: counters, shop and extra menus are hidden, not removed (journey-mode.js). */
 body.journey-quiet .free-only{display:none!important}
 body.journey-quiet :is(#day,#era,#walkDistance,#elementCount,#sparkCount,#sparkGoal,#sparkTitleHud,.hud .stats,#goal,#goalR,#bJump,#bStyles,#firstJourney,#phrase){visibility:hidden!important;pointer-events:none!important}
+
+/* Journey finale: the Refugio plays your journey, then the credits. */
+#journeyFinale{position:fixed;inset:0;z-index:90;background:#000;cursor:pointer}#journeyFinale canvas{position:absolute;inset:0;width:100%;height:100%}#journeyFinale .journey-credits{position:absolute;left:0;right:0;top:30%;text-align:center;font:12px/2.2 var(--mono);color:#fff;pointer-events:none}#journeyFinale .journey-credits p{margin:0;opacity:0;animation:journeyCredit 1.4s ease forwards}#journeyFinale .journey-title{font-size:22px;letter-spacing:.2em;color:#f0d27a;margin-bottom:18px}@keyframes journeyCredit{to{opacity:1}}@media (prefers-reduced-motion:reduce){#journeyFinale .journey-credits p{animation:none;opacity:1}}
