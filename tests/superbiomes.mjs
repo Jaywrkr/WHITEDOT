@@ -7,7 +7,7 @@ assert.equal(FAMILIES.length,10);const all=FAMILIES.flatMap(f=>f.genres);assert.
 for(const g of Object.keys(r.GEN))assert(familyOf(g),g+' has a family');
 // Valid combinations: every continent region with every family; the Abyss only with Ambient.
 assert.equal(SUPERBIOME_COUNT,105);assert(valid('llanura','dnb'));assert(valid('aurora','ambient'));assert(!valid('vacio','house'));assert(!valid('cometas','techno'));assert(!valid('mar','ambient'));
-assert.deepEqual({...superbiome('lago','dub','Marea')},{id:'lago:dub',region:'lago',family:'dub',name:'Marea · Dub'});assert.equal(superbiome('vacio','deep'),null);
+assert.deepEqual({...superbiome('lago','dub','Marea')},{id:'lago:dub',region:'lago',family:'dub',name:'Marea · Dub',rarity:'raro'});assert.equal(superbiome('vacio','deep'),null);
 // The real map: every place of the main world lands in a valid superbiome, and the continents show many of them.
 initialize(r);r.newRegionAt=()=>null;const seen=new Set();
 for(let x=-30;x<=30;x++)for(let y=-30;y<=30;y++){const pos=[(x+.5)*r.WCH,(y+.5)*r.WCH],place=r.regionOfPos(...pos),sb=r.superbiomeOf(place,...pos);assert(sb,place.key+' '+place.genre);assert(valid(sb.region,sb.family));seen.add(sb.id);}

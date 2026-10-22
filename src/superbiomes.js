@@ -1,4 +1,5 @@
 import {newRegionById} from './universe-regions.js';
+import {SUPERBIOME_RARITY} from './superbiome-rarity.js';
 // Superbiomes (docs/UNIVERSO.md, phase 13): a region of the universe plus a music family. The 52 genres fold into 10
 // families that are told apart by ear; every place already has a region and a genre, so its superbiome comes from
 // data it already has and the map does not move. A superbiome seen for the first time is kept in S.universe.super.
@@ -22,9 +23,12 @@ export const LAND_REGIONS=Object.freeze(['llanura','bosque','lago','ruinas','jar
 export const ABYSS_REGIONS=Object.freeze(['vacio','aurora','cometas','constelaciones','nebulosa']);
 export const valid=(region,family)=>LAND_REGIONS.includes(region)?FAMILIES.some(f=>f.id===family):ABYSS_REGIONS.includes(region)&&family==='ambient';
 export const SUPERBIOME_COUNT=LAND_REGIONS.length*FAMILIES.length+ABYSS_REGIONS.length;
+// How often each superbiome appears (phase 14, scripts/superbiome-census.mjs): comun, raro, muy-raro or ausente. The
+// map is never changed to fill the rare ones; they are simply harder to find.
+export const RARITY_LABEL=Object.freeze({raro:'raro','muy-raro':'muy raro'});
 // The superbiome of a region id and a genre: its id is region:family and its name joins the two ("Polvo · House").
-export function superbiome(region,genre,regionName){const f=familyOf(genre);if(!f||!valid(region,f.id))return null;
- return Object.freeze({id:region+':'+f.id,region,family:f.id,name:(regionName||region)+' · '+f.name});}
+export function superbiome(region,genre,regionName){const f=familyOf(genre);if(!f||!valid(region,f.id))return null;const id=region+':'+f.id;
+ return Object.freeze({id,region,family:f.id,name:(regionName||region)+' · '+f.name,rarity:SUPERBIOME_RARITY[id]||'comun'});}
 export function initialize(runtime){
  const nameOf=id=>newRegionById(id)?.name||runtime.BIOMES?.find(b=>b.id===id)?.name||id;
  // The superbiome of a place (a region from regionOfPos), its new region in the Abyss when it has one.

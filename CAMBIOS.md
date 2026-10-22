@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.121**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.122**. Las entradas describen su revisión, no certifican producción.
+
+## Superbiomas: el reparto · alpha.122
+
+Rama `claude/super-mapa`, sobre `main` (alpha.121). Fase 14 de [El universo](docs/UNIVERSO.md).
+
+Jay eligió no tocar el mapa: los superbiomas quedan donde ya estaban y los que salen poco son raros.
+
+- **Censo de seis mundos:** 70 superbiomas comunes, 31 raros, 3 muy raros (Drum & bass en Polvo, Cúmulo y Anillos) y 1 que no aparece (Restos · Drum & bass).
+- **Se ve al entrar:** el aviso marca los raros, por ejemplo «Marea · Dub (raro)».
+- El mapa, la música y el progreso no cambian; la tabla sale de `scripts/superbiome-census.mjs` y la prueba repite el censo.
 
 ## Superbiomas: el modelo · alpha.121
 
