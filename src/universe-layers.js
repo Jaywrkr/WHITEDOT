@@ -200,6 +200,8 @@ export function initialize(runtime){
   // Inside the Nebulosa oscura only what the cube lights can be seen.
   if(STYLES[hereId]?.dark){const g=c.createRadialGradient(W/2+(runtime.S.wx-camX),H/2+(runtime.S.wy-camY),60,W/2+(runtime.S.wx-camX),H/2+(runtime.S.wy-camY),Math.max(W,H)*.6);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.72)');c.fillStyle=g;c.fillRect(0,0,W,H);}
   c.restore();constellationTick();
+  // The region's rare moment, if this bar brings one (universe-rare.js).
+  {const k=runtime.regionOfPos?.(runtime.S.wx,runtime.S.wy)?.key;if(k!=null)runtime.universeRareTick?.(c,W,H,{here:hereId,key:k,bar:Math.floor(beatIndex/4),ink:runtime.placeColor?runtime.placeColor(hereId,LANDSCAPES[hereId]||newRegionById(hereId)?.color||'#ffffff'):LANDSCAPES[hereId]||newRegionById(hereId)?.color||'#ffffff',accent:newRegionById(hereId)?.accent,cubeX:W/2+(runtime.S.wx-camX),cubeY:H/2+(runtime.S.wy-camY),t});}
   sound(regionAt(runtime.S.wx,runtime.S.wy),Math.min(1,(runtime.MU?.speed||0)/200));}
  Object.defineProperties(runtime,{universePulse:{get:()=>()=>{lastPulse=performance.now();}},drawUniverseLayers:{get:()=>draw},universeLayers:{get:()=>()=>({here:regionAt(runtime.S.wx,runtime.S.wy),constellations:stats.constellations,cells:stats.cells,regions:{...stats.regions},air:airFor,airGain:air?air.g.gain.value:0})}});
 }
