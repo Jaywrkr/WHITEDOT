@@ -14,5 +14,5 @@ const [d,p,w]=await Promise.all(['data','progress','world'].map(n=>import(new UR
 const ids=r.BIOMES.map(b=>b.id);let from={x:450,y:450};const got={};
 for(const id of WORLD_CHAPTERS){const spot=findChapter(id,from,(x,y)=>ids[r.biomeOfPos(x,y)],(x,y)=>!!r.regionOfPos(x,y).sea,(x,y)=>familyOf(r.regionOfPos(x,y).genre)?.id);assert(spot,id);assert.equal(ids[r.biomeOfPos(spot.x,spot.y)],id);
  if(spot.family)assert.equal(familyOf(r.regionOfPos(spot.x,spot.y).genre).id,spot.family);got[id]=spot.family;from=spot;}
-assert.deepEqual(got,{llanura:'house',lago:null,bosque:'disco',tormenta:'dub',vacio:'ambient'});
-console.log('PASS journey superbiomes: each chapter prefers its families in order, falls back to its region, and the main world lands Polvo · House, the nearest Marea (no calm one nearby), Cúmulo · Disco, Tormenta solar · Dub and Vacío · Ambient');
+assert.deepEqual(got,{llanura:'house',lago:'downtempo',bosque:'disco',tormenta:'techno',vacio:'ambient'});
+console.log('PASS journey superbiomes: each chapter prefers its families in order, falls back to its region, and the main world lands Polvo · House, Marea · Downtempo, Cúmulo · Disco, Tormenta solar · Techno and Vacío · Ambient');

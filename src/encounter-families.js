@@ -10,7 +10,7 @@ export const FAMILIES={
   tap(s){s.a=(s.a+.25)%1;},drag(s,x,y){s.a=clamp(.5+x/160);s.b=clamp(.5-y/150);},
   influence(s){return {groove:(s.a-.5)*1.5,space:(s.b-.5)*1.1};},figure(s){return Math.floor(s.a*7);},
   arrange(track,s){const phase=Math.floor(s.a*8),width=1+Math.floor(s.b*3);track.bass=track.bass.map((n,i)=>i===0||(i+phase)%8<width?n:-1);return track;}},
- flower:{name:'Flor de presión',hint:'Quédate para abrir pétalos · toca uno y arrastra su tensión',role:'space',shape:'flower',
+ flower:{name:'Estrella de presión',hint:'Quédate para abrir pétalos · toca uno y arrastra su tensión',role:'space',shape:'flower',
   tap(s){s.a=(s.a+.26)%1;},drag(s,x,y){s.a=clamp(.5+x/150);s.b=clamp(.5-y/130);},
   influence(s){const channel=['bass','groove','melody','space'][Math.min(3,Math.floor(s.a*4))];return {[channel]:(s.b-.5)*1.8*(.25+s.charge*.75)};},figure(s){return (Math.floor(s.a*4)+Math.floor(s.b*4))%8;},
   arrange(track,s){const petal=Math.min(3,Math.floor(s.a*4));if(petal===2)track.hook=track.hook.map((n,i)=>n>=0&&i%4!==0?(n+Math.round(s.b*2))%7:n);if(petal===3&&s.b>.6)track.hook=track.hook.map((n,i)=>i%8===0?n:-1);return track;}},
