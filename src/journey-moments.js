@@ -42,16 +42,20 @@ export function initialize(runtime){
   c.save();
   if(inside&&id==='llanura'){if(!m.faro){m.faro={...placeFaro(here(),inBiome('llanura')),reached:false};runtime.save();}
    const f=m.faro,d=Math.hypot(f.x-runtime.S.wx,f.y-runtime.S.wy);faroTone(d);if(!f.reached&&d<FARO_REACH){f.reached=true;counts.faro++;if(runtime.save()===false)f.reached=false;runtime.enterFx=Math.max(runtime.enterFx||0,.6);}
-   const x=sx(f.x),y=sy(f.y),ink=runtime.placeColor?.('llanura','#f0c27a')||'#f0c27a';c.globalAlpha=.85;c.fillStyle='#ffffff';c.fillRect(Math.round(x)-2,Math.round(y)-34,4,34);c.fillRect(Math.round(x)-5,Math.round(y)-38,10,4);
-   const glow=f.reached?.6+.4*beat:.35;c.globalAlpha=glow;c.fillStyle=ink;c.fillRect(Math.round(x)-3,Math.round(y)-44,6,6);
-   if(!still){const a=t/900;c.globalAlpha=.12*glow;c.beginPath();c.moveTo(x,y-41);c.lineTo(x+Math.cos(a)*160,y-41+Math.sin(a)*24-12);c.lineTo(x+Math.cos(a)*160,y-41+Math.sin(a)*24+12);c.closePath();c.fill();}}
+   // A pulsar seen from above: a bright core, a halo and a beam that sweeps the ground around it.
+   const x=sx(f.x),y=sy(f.y),ink=runtime.placeColor?.('faros','#fff36a')||'#fff36a',glow=f.reached?.6+.4*beat:.4;
+   if(!still){const a=t/900;c.globalAlpha=.1*glow;c.fillStyle=ink;c.beginPath();c.moveTo(x,y);c.lineTo(x+Math.cos(a-.12)*170,y+Math.sin(a-.12)*170);c.lineTo(x+Math.cos(a+.12)*170,y+Math.sin(a+.12)*170);c.closePath();c.fill();}
+   c.globalAlpha=.25*glow;c.strokeStyle=ink;c.lineWidth=1;c.beginPath();c.arc(x,y,9+4*beat,0,6.283);c.stroke();
+   c.globalAlpha=.9;c.fillStyle=ink;c.fillRect(Math.round(x)-2,Math.round(y)-2,5,5);c.fillStyle='#ffffff';c.fillRect(Math.round(x)-1,Math.round(y)-1,3,3);}
   if(inside&&id==='lago'){if(!m.lotos){m.lotos={...here(),open:Array(LOTUS_COUNT).fill(false)};runtime.save();}const ink=runtime.placeColor?.('lago','#8ad1ff')||'#8ad1ff',now=performance.now();
    for(let i=0;i<LOTUS_COUNT;i++){const p=lotusAt(m.lotos,i),x=sx(p.x),y=sy(p.y),open=m.lotos.open[i],fresh=lit.find(l=>l.i===i&&now-l.at<900),r=open?7+(fresh&&!still?4*(1-(now-fresh.at)/900):0):3;
-    c.globalAlpha=open?.9:.45;c.strokeStyle=open?ink:'#ffffff';c.lineWidth=1;for(let k=0;k<(open?6:3);k++){const a=k/(open?6:3)*6.283+(still?0:t/3000);c.beginPath();c.ellipse(x+Math.cos(a)*r*.6,y+Math.sin(a)*r*.35,r*.5,r*.22,a,0,6.283);c.stroke();}
+    // A wave source: closed, a dot in a ring; open, rings that keep spreading from it.
+    c.strokeStyle=open?ink:'#ffffff';c.lineWidth=1;const rings=open?3:1;for(let k=0;k<rings;k++){const grow=still?k/rings:((t/1600+k/rings)%1),rr=open?r+grow*18:r+2;c.globalAlpha=(open?.8:.45)*(open?1-grow:1);c.beginPath();c.arc(x,y,rr,0,6.283);c.stroke();}
     c.globalAlpha=open?.9:.5;c.fillStyle=open?ink:'#ffffff';c.fillRect(Math.round(x)-1,Math.round(y)-1,2,2);}}
   // The creature: it walks a little behind you, on your trail.
   if(m.companion&&id!=='vacio'){trail.push({x:runtime.S.wx,y:runtime.S.wy,sang:trail[trail.length-1]?.sang||0});if(trail.length>40)trail.shift();const p=trail[0],x=sx(p.x-18),y=sy(p.y+14),sang=performance.now()-(trail[trail.length-1].sang||0)<500;
-   c.globalAlpha=1;c.fillStyle=sang?(runtime.placeColor?.('bosque','#7fbf6a')||'#7fbf6a'):'#ffffff';const hop=still?0:Math.abs(Math.sin(t/220))*2;c.fillRect(Math.round(x)-3,Math.round(y-hop)-3,6,6);c.fillStyle='#000';c.fillRect(Math.round(x)-1,Math.round(y-hop)-2,1,1);c.fillRect(Math.round(x)+1,Math.round(y-hop)-2,1,1);}
+   // A small cluster of three stars from the Cúmulo, turning slowly; it lights up when it repeats your note.
+   c.globalAlpha=1;c.fillStyle=sang?(runtime.placeColor?.('bosque','#6fe08a')||'#6fe08a'):'#ffffff';for(let k=0;k<3;k++){const a=k/3*6.283+(still?0:t/700);c.fillRect(Math.round(x+Math.cos(a)*4)-1,Math.round(y+Math.sin(a)*4)-1,k?2:3,k?2:3);}}
   c.restore();}
  Object.defineProperties(runtime,{journeyMomentNote:{get:()=>note},drawJourneyMoments:{get:()=>draw},journeyMoments:{get:()=>()=>({...JSON.parse(JSON.stringify(own())),tone:!!tone,counts:{...counts}})}});
 }

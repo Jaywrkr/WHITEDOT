@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.108**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.109**. Las entradas describen su revisión, no certifican producción.
+
+## Universo · Fase 3 · Regiones del Viaje · alpha.109
+
+Rama `claude/universo-viaje`, sobre `claude/musica-house`.
+
+- **Marea:** anillos que se abren uno por compás desde fuentes fijas y una estela de ondas detrás del cubo.
+- **Cúmulo:** racimos de estrellas que se encienden en secuencia al acercarte y estrellas que parpadean en el beat.
+- **Tormenta solar:** arcos de plasma, llamaradas en el beat que dejan un anillo y descargas vistas desde arriba.
+- **Sonido:** cada región tiene su aire, muy por debajo de la música.
+- **Viaje desde arriba:** el faro es un púlsar con haz giratorio, los lotos son fuentes de ondas, la criatura es un racimo de tres estrellas y el faro de regreso es una luz con flecha en el borde, sin columna.
+- **Pruebas:** `universe-layers.mjs` y `universe_layers_smoke.py` cubren las cuatro regiones.
 
 ## Música · Fase 8 · Las house · alpha.108
 

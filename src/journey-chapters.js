@@ -80,7 +80,10 @@ export function initialize(runtime){
   // The creatures of the Vacío around the cube: they light up when they repeat a note.
   if(current()==='vacio'&&inChapter()&&hits>VOID_ECHO_AFTER){const n=Math.max(2,Object.keys(j.done).length),now=performance.now();for(let i=0;i<n;i++){const a=i/n*6.283+(still?0:t/4000),x=W/2+Math.cos(a)*70,y=H/2+Math.sin(a)*46,lit=echoes.some(e=>now>=e.at&&now-e.at<400);c.globalAlpha=lit?.95:.35;c.fillStyle='#ffffff';c.fillRect(Math.round(x)-2,Math.round(y)-2,lit?5:4,lit?5:4);}}
   // Away from the chapter's biome, a beacon at the edge of the screen shows the way back.
-  const way=beacon();if(way){const a=Math.atan2(way.y-runtime.S.wy,way.x-runtime.S.wx),ex=W/2+Math.cos(a)*(W/2-18),ey=H/2+Math.sin(a)*(H/2-60),bx=Math.max(14,Math.min(W-14,ex)),by=Math.max(70,Math.min(H-120,ey)),glow=still?.8:.55+.3*Math.sin(t/500);c.fillStyle='#f0d27a';for(let i=0;i<10;i++){c.globalAlpha=glow*.55*(i+1)/10;c.fillRect(bx-2,by-80+i*10,4,10);}c.globalAlpha=1;c.fillStyle='#f0d27a';c.fillRect(bx-2,by+18,4,4);}
+  const way=beacon();if(way){const a=Math.atan2(way.y-runtime.S.wy,way.x-runtime.S.wx),ex=W/2+Math.cos(a)*(W/2-18),ey=H/2+Math.sin(a)*(H/2-60),bx=Math.max(14,Math.min(W-14,ex)),by=Math.max(70,Math.min(H-120,ey)),glow=still?.8:.55+.3*Math.sin(t/500);
+   // Seen from above: a gold light at the edge with a halo and a chevron pointing the way.
+   c.globalAlpha=.25*glow;c.strokeStyle='#f0d27a';c.lineWidth=1;c.beginPath();c.arc(bx,by,10,0,6.283);c.stroke();c.globalAlpha=glow;c.fillStyle='#f0d27a';c.fillRect(Math.round(bx)-2,Math.round(by)-2,4,4);
+   c.beginPath();c.moveTo(bx+Math.cos(a)*16,by+Math.sin(a)*16);c.lineTo(bx+Math.cos(a+2.5)*9,by+Math.sin(a+2.5)*9);c.moveTo(bx+Math.cos(a)*16,by+Math.sin(a)*16);c.lineTo(bx+Math.cos(a-2.5)*9,by+Math.sin(a-2.5)*9);c.stroke();c.globalAlpha=1;}
   const y=Math.round(H*.8)+.5,x1=W-Math.max(24,W*.12),gap=9;c.globalAlpha=1;
   WORLD_CHAPTERS.forEach((id,i)=>{const x=x1-(WORLD_CHAPTERS.length-1-i)*gap,isHere=current()===id;c.fillStyle=j.done[id]?'#f0d27a':isHere?'#ffffff':'#ffffff40';c.globalAlpha=isHere&&!j.done[id]&&!still?.6+.4*Math.sin(t/300):1;c.fillRect(Math.round(x)-1,y+9,3,3);});
   c.restore();}

@@ -31,6 +31,35 @@ export const STYLES={
   near:{draw(c,x,y,s,key,f){c.fillStyle=rgba(f.ink,.7+.3*f.beat);
    for(let i=0;i<6;i++){let px=x+rand(key+':x'+i)*s,py=y+rand(key+':y'+i)*s;const [ox,oy]=f.part(px,py);c.fillRect(Math.round(px+ox)-1,Math.round(py+oy)-1,2,2);}}},
   sound:{kind:'hiss',band:6000,gain:.006,bySpeed:.006}
+ },
+ lago:{
+  // Marea: far, huge faint rings opening slowly; mid, wave sources that send a ring on every bar; near, small floating
+  // rings. The cube leaves its own wake (`wake`).
+  far:{draw(c,x,y,s,key,f){const p=f.still?.5:(f.t/9000+rand(key+':p'))%1;c.strokeStyle=rgba(f.ink,.1*(1-p));c.lineWidth=1;c.beginPath();c.arc(x+rand(key+':x')*s,y+rand(key+':y')*s,8+p*90,0,6.283);c.stroke();}},
+  mid:{draw(c,x,y,s,key,f){if(rand(key+':on')<.45)return;const cx=x+rand(key+':x')*s,cy=y+rand(key+':y')*s;c.fillStyle=rgba(f.ink,.7);c.fillRect(Math.round(cx)-1,Math.round(cy)-1,2,2);c.lineWidth=1;
+   for(let k=0;k<2;k++){const p=f.still?.3+k*.4:(f.bar+k*.5)%1;c.strokeStyle=rgba(f.ink,(.45+.2*f.beat)*(1-p));c.beginPath();c.arc(cx,cy,4+p*60,0,6.283);c.stroke();}}},
+  near:{draw(c,x,y,s,key,f){c.lineWidth=1;for(let i=0;i<2;i++){const px=x+rand(key+':x'+i)*s,py=y+rand(key+':y'+i)*s,[ox,oy]=f.part(px,py),r=2+rand(key+':r'+i)*3;c.strokeStyle=rgba(f.ink,.5+.3*f.beat);c.beginPath();c.arc(px+ox,py+oy,r,0,6.283);c.stroke();}}},
+  wake:true,
+  sound:{kind:'hiss',band:260,q:4,gain:.007,bySpeed:.003}
+ },
+ bosque:{
+  // Cúmulo: far, little galaxies; mid, clusters of 5–12 stars that light in sequence when the cube comes near;
+  // near, single bright stars that blink on the beat.
+  far:{draw(c,x,y,s,key,f){c.fillStyle=rgba(f.ink,.12);const cx=x+rand(key+':x')*s,cy=y+rand(key+':y')*s;for(let i=0;i<5;i++)c.fillRect(Math.round(cx+(rand(key+':a'+i)-.5)*10),Math.round(cy+(rand(key+':b'+i)-.5)*5),1,1);}},
+  mid:{draw(c,x,y,s,key,f){if(rand(key+':on')<.35)return;const cx=x+rand(key+':x')*s,cy=y+rand(key+':y')*s,n=5+Math.floor(rand(key+':n')*8),near=Math.hypot(cx-f.cubeX,cy-f.cubeY)<130,seq=f.still?n:Math.floor(f.t/110)%(n+4);
+   for(let i=0;i<n;i++){const a=rand(key+':a'+i)*6.283,d=4+rand(key+':d'+i)*16,lit=near&&i<seq,tw=f.still?.5:.5+.5*Math.sin(f.t/600+i*1.7);c.fillStyle=rgba(lit?'#ffffff':f.ink,lit?.95:.3+.35*tw);const z=lit||i===0?2:1;c.fillRect(Math.round(cx+Math.cos(a)*d),Math.round(cy+Math.sin(a)*d),z,z);}}},
+  near:{draw(c,x,y,s,key,f){if(rand(key+':on')<.5)return;const px=x+rand(key+':x')*s,py=y+rand(key+':y')*s,on=(Math.floor(rand(key+':k')*4)===f.beatIndex%4);c.fillStyle=rgba(f.ink,on?.6+.4*f.beat:.35);c.fillRect(Math.round(px)-1,Math.round(py)-1,2,2);}},
+  sound:{kind:'hiss',band:9500,q:2,gain:.004,bySpeed:.002}
+ },
+ tormenta:{
+  // Tormenta solar: far, the boiling surface of a star; mid, plasma arcs between two points that flicker; near,
+  // flares that fall on the beat and leave a ring, a few in red.
+  far:{draw(c,x,y,s,key,f){for(let i=0;i<2;i++){const r=10+rand(key+':r'+i)*22,b=f.still?.5:.5+.5*Math.sin(f.t/1700+rand(key+':p'+i)*6);c.fillStyle=rgba(f.ink,.05+.05*b);c.beginPath();c.arc(x+rand(key+':x'+i)*s,y+rand(key+':y'+i)*s,r,0,6.283);c.fill();}}},
+  mid:{draw(c,x,y,s,key,f){if(rand(key+':on')<.4)return;const ax=x+rand(key+':x')*s,ay=y+rand(key+':y')*s,a=rand(key+':a')*6.283,l=24+rand(key+':l')*40,bx=ax+Math.cos(a)*l,by=ay+Math.sin(a)*l,h=(f.still?.6:.4+.6*Math.abs(Math.sin(f.t/180+rand(key+':f')*9)))*(10+l*.4);
+   c.strokeStyle=rgba(f.ink,.35+.45*f.beat);c.lineWidth=1;c.beginPath();c.moveTo(ax,ay);c.quadraticCurveTo((ax+bx)/2-Math.sin(a)*h,(ay+by)/2+Math.cos(a)*h,bx,by);c.stroke();}},
+  near:{draw(c,x,y,s,key,f){if(f.still||rand(key+':on')<.55)return;const pick=Math.floor(rand(key+':b')*4);if(pick!==f.beatIndex%4)return;const px=x+rand(key+':x')*s,py=y+rand(key+':y')*s,red=rand(key+':red')<.2,ink=red?'#ff6a6a':f.ink,p=1-f.beat;
+   c.fillStyle=rgba(ink,f.beat);c.fillRect(Math.round(px)-2,Math.round(py)-2,4,4);c.strokeStyle=rgba(ink,.6*(1-p));c.lineWidth=1;c.beginPath();c.arc(px,py,4+p*26,0,6.283);c.stroke();}},
+  sound:{kind:'hiss',band:1800,q:.6,gain:.006,bySpeed:.004}
  }
 };
 // How far a point is pushed by the cube's recent path: the furrow it opens closes in about a second and a half.
@@ -43,21 +72,27 @@ export function initialize(runtime){
  // The region's own air: one quiet looped noise, filtered, its gain far under the music.
  function sound(id,speed){const st=STYLES[id]?.sound,ac=runtime.ac;if(!ac||!runtime.bus||!runtime.S.sound){stopAir();return 0;}
   if(!st){stopAir();return 0;}if(!air||airFor!==id){stopAir();const len=ac.sampleRate*2,buf=ac.createBuffer(1,len,ac.sampleRate),d=buf.getChannelData(0);let seed=hash('air:'+id);for(let i=0;i<len;i++){seed=Math.imul(seed^seed>>>15,2246822519)>>>0;d[i]=seed/2147483648-1;}
-   const src=ac.createBufferSource(),f=ac.createBiquadFilter(),g=ac.createGain();src.buffer=buf;src.loop=true;f.type='bandpass';f.frequency.setValueAtTime(st.band,ac.currentTime);f.Q.setValueAtTime(.8,ac.currentTime);g.gain.setValueAtTime(.0001,ac.currentTime);src.connect(f);f.connect(g);g.connect(runtime.bus);src.start();air={src,g};airFor=id;}
+   const src=ac.createBufferSource(),f=ac.createBiquadFilter(),g=ac.createGain();src.buffer=buf;src.loop=true;f.type='bandpass';f.frequency.setValueAtTime(st.band,ac.currentTime);f.Q.setValueAtTime(st.q||.8,ac.currentTime);g.gain.setValueAtTime(.0001,ac.currentTime);src.connect(f);f.connect(g);g.connect(runtime.bus);src.start();air={src,g};airFor=id;}
   const v=Math.min(REGION_SOUND_MAX,st.gain+st.bySpeed*Math.min(1,speed));air.g.gain.setTargetAtTime(Math.max(.0001,v),ac.currentTime,.4);return v;}
+ // Where we are in the bar (0..1) and which beat, from the scheduler's beat times.
+ function barPhase(){const ac=runtime.ac,bq=runtime.MU?.bq;if(!ac||!bq?.length)return (performance.now()/2000)%1;const bar=(runtime.SIX||.15)*16,last=bq[bq.length-1];return (((ac.currentTime-last)/bar)%1+1)%1;}
+ function beatCount(){const ac=runtime.ac,bq=runtime.MU?.bq;if(!ac||!bq?.length)return Math.floor(performance.now()/500);return Math.floor((ac.currentTime-bq[0])/((runtime.SIX||.15)*4));}
  function stopAir(){if(!air)return;const ac=runtime.ac;try{air.g.gain.setTargetAtTime(.0001,ac.currentTime,.3);air.src.stop(ac.currentTime+1.2);}catch(_){}air=null;airFor='';}
  function draw(t,b){
   const surface=runtime.inWorld?.()&&(runtime.S.layer||'superficie')==='superficie';if(!surface){stopAir();return;}
   const c=runtime.cx,W=runtime.W,H=runtime.H,camX=runtime.camX??runtime.S.wx,camY=runtime.camY??runtime.S.wy,still=calm(),beat=still?.3:b||0,now=performance.now();
   if(now-lastTrail>80){trail.push({x:runtime.S.wx,y:runtime.S.wy,at:now});lastTrail=now;if(trail.length>24)trail.shift();}
-  const screenTrail=still?[]:trail.map(p=>({x:W/2+(p.x-camX),y:H/2+(p.y-camY),at:p.at}));stats.cells=0;stats.regions={};c.save();c.globalAlpha=1;c.globalCompositeOperation="source-over";c.shadowBlur=0;
+  const screenTrail=still?[]:trail.map(p=>({x:W/2+(p.x-camX),y:H/2+(p.y-camY),at:p.at})),bar=barPhase(),beatIndex=beatCount();stats.cells=0;stats.regions={};c.save();c.globalAlpha=1;c.globalCompositeOperation="source-over";c.shadowBlur=0;
   for(const layer of ['far','mid','near']){const depth=LAYER_DEPTH[layer];
    // Cells live on a plane that moves at `depth` of the camera; the region of a cell is the one under its centre now.
    const size=LAYER_CELL[layer],ox=camX*depth-W/2,oy=camY*depth-H/2,i0=Math.floor(ox/size)-1,j0=Math.floor(oy/size)-1,i1=Math.ceil((ox+W)/size),j1=Math.ceil((oy+H)/size);
    for(let i=i0;i<=i1;i++)for(let j=j0;j<=j1;j++){const sx=i*size-ox,sy=j*size-oy,wx=camX+(sx+size/2-W/2),wy=camY+(sy+size/2-H/2),key=layer+':'+i+','+j,id=cellRegion(wx,wy,runtime.WCH||900,regionAt,key),st=STYLES[id]?.[layer];if(!st)continue;
-    const f={t,beat,still,ink:runtime.placeColor?runtime.placeColor(id,LANDSCAPES[id]||'#ffffff'):LANDSCAPES[id]||'#ffffff',wind:rand('wind:'+id+':'+Math.floor(wx/(runtime.WCH||900))+','+Math.floor(wy/(runtime.WCH||900)))*Math.PI*2,
+    const f={t,beat,still,bar,beatIndex,cubeX:W/2+(runtime.S.wx-camX),cubeY:H/2+(runtime.S.wy-camY),ink:runtime.placeColor?runtime.placeColor(id,LANDSCAPES[id]||'#ffffff'):LANDSCAPES[id]||'#ffffff',wind:rand('wind:'+id+':'+Math.floor(wx/(runtime.WCH||900))+','+Math.floor(wy/(runtime.WCH||900)))*Math.PI*2,
      part:(px,py)=>layer!=='near'?[0,0]:partAt(px,py,screenTrail,now)};
     st.draw(c,sx,sy,size,id+':'+key,f);stats.cells++;stats.regions[id]=(stats.regions[id]||0)+1;}}
+  // The cube's wake in regions that have one (Marea): rings spreading from where it passed.
+  const hereId=regionAt(runtime.S.wx,runtime.S.wy);if(STYLES[hereId]?.wake&&!still){const ink=runtime.placeColor?runtime.placeColor(hereId,LANDSCAPES[hereId]):LANDSCAPES[hereId];c.lineWidth=1;
+   for(const p of screenTrail.filter((_,i)=>i%5===0)){const age=(now-p.at)/1600;if(age>=1)continue;c.strokeStyle=rgba(ink,.4*(1-age));c.beginPath();c.arc(p.x,p.y,6+age*34,0,6.283);c.stroke();}}
   c.restore();
   sound(regionAt(runtime.S.wx,runtime.S.wy),Math.min(1,(runtime.MU?.speed||0)/200));}
  Object.defineProperties(runtime,{drawUniverseLayers:{get:()=>draw},universeLayers:{get:()=>()=>({cells:stats.cells,regions:{...stats.regions},air:airFor,airGain:air?air.g.gain.value:0})}});

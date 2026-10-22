@@ -300,9 +300,10 @@ export function initialize(runtime) {
       if(runtime.MU.still===0)runtime.planted=false;
     }
     if(pondNow!==runtime.inPond){runtime.inPond=pondNow;if(runtime.mfilt)runtime.mfilt.frequency.setTargetAtTime(runtime.inPond?650:18000,runtime.ac.currentTime,.25);if(runtime.inPond)runtime.beatSoon(q=>runtime.playVoice('agua',0,q,rg));}
-    // tormenta: rayos en el beat
+    // tormenta solar: descargas en el beat, vistas desde arriba
     if(runtime.MU.boltAt&&runtime.ac&&runtime.ac.currentTime>=runtime.MU.boltAt){runtime.MU.boltAt=0;runtime.cameraKick?.(0,1.5);if(id==="tormenta"){const a=runtime.rnd()*6.28,d=60+runtime.rnd()*R,x=runtime.S.wx+Math.cos(a)*d,y=runtime.S.wy+Math.sin(a)*d;
-      const pts=[[x,y-runtime.H]];for(let i=1;i<=8;i++)pts.push([x+(runtime.rnd()-.5)*60*(1-i/9),y-runtime.H+runtime.H*i/8]);runtime.bolts.push({pts,l:1});runtime.flash=Math.max(runtime.flash,.5);runtime.now(q=>runtime.thunder(q,{x,y}));}}
+      // Seen from above: a discharge that branches out from where it falls, not a bolt from the sky.
+      const dir=runtime.rnd()*6.28,pts=[[x,y]];for(let i=1;i<=8;i++){const d=i*9,w=(runtime.rnd()-.5)*14;pts.push([x+Math.cos(dir)*d-Math.sin(dir)*w,y+Math.sin(dir)*d+Math.cos(dir)*w]);}runtime.bolts.push({pts,l:1});runtime.flash=Math.max(runtime.flash,.5);runtime.now(q=>runtime.thunder(q,{x,y}));}}
     runtime.bolts=runtime.bolts.filter(bo=>(bo.l-=dt*3)>0);
     for(const bo of runtime.bolts){runtime.cx.globalAlpha=bo.l;runtime.cx.strokeStyle="#fff";runtime.cx.lineWidth=2;runtime.cx.beginPath();bo.pts.forEach(([x,y],i)=>runtime.cx[i?"lineTo":"moveTo"](x+ox,y+oy));runtime.cx.stroke();}
     // vida
