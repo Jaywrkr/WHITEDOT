@@ -49,7 +49,7 @@ Eres un cubo en un universo que suena. Cada lugar tiene su música, y lo que hac
 - **Tu cubo, a tu manera.** Más de ochenta piezas para cambiar cómo se ve, se mueve y suena.
 - **Una bitácora de todo.** Lugares, géneros escuchados y 376 logros.
 
-Pago único. Sin anuncios ni suscripciones, y las chispas no se venden. Requiere una cuenta con correo para guardar tu avance.
+Pago único. Sin anuncios ni suscripciones, y las chispas no se venden. Se juega sin cuenta; una cuenta con correo guarda tu avance en la nube.
 
 ## Store listing in English
 
@@ -69,7 +69,7 @@ You are a cube in a universe that sounds. Every place has its own music, and wha
 - **Your cube, your way.** Over eighty pieces that change how it looks, moves and sounds.
 - **A journal of everything.** Places, genres you have heard and 376 achievements.
 
-One-time purchase. No ads, no subscriptions, sparks are never sold. An account with email is required to keep your progress. Text is in Spanish.
+One-time purchase. No ads, no subscriptions, sparks are never sold. No account needed to play; an account with email keeps your progress in the cloud. Text is in Spanish.
 
 ## Tráiler (guion, 30–45 s)
 

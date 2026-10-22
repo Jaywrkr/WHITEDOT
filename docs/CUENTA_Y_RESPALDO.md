@@ -4,7 +4,7 @@ Revisión: 20 de octubre de 2026. La configuración de Supabase está **detenida
 
 ## Funcionamiento vigente
 
-- Cuenta obligatoria por correo/contraseña, confirmación y recuperación por enlace. Sin invitado, demo ni otros proveedores. `main.js` espera `requireAccount()` antes de crear el runtime; configuración vacía no abre el mundo.
+- Cuenta opcional por correo/contraseña, con confirmación y recuperación por enlace (aprobada el 22 de octubre, [El Viaje](VIAJE.md)). Sin otros proveedores. `requireAccount()` ya no bloquea: sin sesión el juego empieza con guardado local; la hoja solo vuelve a quien tuvo cuenta en el dispositivo y no eligió «Jugar sin cuenta». La primera cuenta del dispositivo adopta la partida local.
 - Sesión persistente en localStorage, sin guardar contraseña. Al abrir, una sesión guardada arranca el juego al instante y se valida con Auth en segundo plano; se renueva para solicitudes. Sin red se sigue jugando; si Auth la rechaza, se olvida y el juego vuelve a la entrada. La entrada recuerda el último correo en este dispositivo (`kubono:last-email`, nunca la clave; se borra al eliminar la cuenta) y permite confirmar el alta con el código del correo sin salir de ella.
 - Guardado local periódico y conciliación online automática cada cinco segundos cuando corresponde, al reanudar y con intento adicional al salir. No hay botones normales de guardar/recuperar/respaldar; la salida no garantiza envío si el sistema mata el proceso.
 - Primera copia remota ausente se sube; dispositivo sin avance propio recupera la remota. Si la local no avanzó, se adopta el remoto; cambios solo locales se envían. Si ambas avanzaron, se detiene el reemplazo y se pide elegir, preservando copias. No sumar balances ni decidir por fecha o saldo máximo.

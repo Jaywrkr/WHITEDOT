@@ -525,3 +525,7 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 
 /* Dollhouse panel: four actions in the lower row. */
 .house-panel .house-more{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+/* The Journey keeps the screen quiet: counters, shop and extra menus are hidden, not removed (journey-mode.js). */
+body.journey-quiet .free-only{display:none!important}
+body.journey-quiet :is(#day,#era,#walkDistance,#elementCount,#sparkCount,#sparkGoal,#sparkTitleHud,.hud .stats,#goal,#goalR,#bJump,#bStyles,#firstJourney){visibility:hidden!important;pointer-events:none!important}

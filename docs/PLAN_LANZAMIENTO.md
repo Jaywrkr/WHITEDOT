@@ -11,7 +11,7 @@
 | Promesa | Un cubo y un universo que suena. La música electrónica y su mezcla con otras familias son parte central de la comunicación |
 | Modelo | Pago único US$2,99 móvil / US$4,99 escritorio, sin anuncios, suscripciones ni venta de chispas. Precios locales y licencia/recibos por tienda pendientes |
 | Presupuesto | US$350 iniciales aprobados; no autoriza compras ni altas de pago. Tasas anotadas previamente: Play 25, Apple 99/año, Steam 100 por juego, antes de impuestos/conversión; revalidarlas al tramitar |
-| Acceso | **Cambio aprobado por Jay el 22 de octubre ([El Viaje](VIAJE.md)):** cuenta opcional. Se juega con guardado local desde el primer toque; la cuenta se ofrece después para guardar en la nube y migra el progreso local. Hasta que se construya (Fase 2), el código sigue con cuenta obligatoria. Sin demo comercial; el build de festival es un recorte privado para jurados |
+| Acceso | **Cambio aprobado por Jay el 22 de octubre ([El Viaje](VIAJE.md)):** cuenta opcional. Se juega con guardado local desde el primer toque; la cuenta se ofrece después para guardar en la nube y migra el progreso local. Construida en la Fase 2 (alpha.98). Sin demo comercial; el build de festival es un recorte privado para jurados |
 | Plataformas | Preparación conjunta Android, iOS/iPadOS, web/PWA y Windows/macOS/Linux; cada una sale al estar lista/aprobada. Consolas solo evaluación, sin port/fecha prometidos |
 | Público | Objetivo de 16 años o más; clasificación de contenido por tienda aparte. Mercados, país/editor y correo público aún pendientes |
 | Datos | Plazos aprobados en [Producción](CONFIGURACION_PRODUCCION.md); algunos controles aplicados, otros pendientes. No equivale a privacidad/configuración final publicadas |

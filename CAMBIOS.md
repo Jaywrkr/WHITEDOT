@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.97**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.98**. Las entradas describen su revisión, no certifican producción.
+
+## Viaje · Fase 2 · Entrar y callar · alpha.98
+
+Rama `claude/viaje-f2-entrada`, sobre `claude/viaje-f1-pulso`.
+
+- **Sin cuenta para empezar:** la primera visita juega al instante con guardado local.
+  - Desde el menú, «Cuenta» permite crear o entrar en una cuenta. La partida local pasa a la cuenta si es la primera del dispositivo.
+  - En el Mundo, un aviso ofrece una vez guardar en la nube.
+  - Si una sesión caduca, vuelve la hoja con el correo recordado y la opción «Jugar sin cuenta», que se recuerda.
+- **Viaje silencioso:** los jugadores nuevos empiezan en el Viaje.
+  - Sin ventana de bienvenida, sin Día, Era, Caminado ni chispas, sin Saltar ni Estilos, sin meta escrita.
+  - Menú corto: Mundo, Refugio, Sonido, Ajustes, Cuenta y «Mundo libre».
+- **Mundo libre:** un toque devuelve todo (tienda, mapa, Bitácora, crear, semillas, compartir, guía) y se recuerda. Quien ya llegó al Mundo empieza aquí y no pierde nada.
+- **Pruebas:**
+  - nuevas: `journey-mode.mjs` y `journey_entry_smoke.py`, que simula a un jugador nuevo real en móvil y computadora;
+  - `account_flow_smoke` prueba la cuenta opcional: entrar sin cuenta, registrarse desde el menú con el progreso local conservado, sesión lenta, sesión caducada y juego local recordado.
 
 ## Viaje · Fase 1 · El pulso · alpha.97
 
