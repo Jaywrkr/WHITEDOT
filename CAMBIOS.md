@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.104**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.105**. Las entradas describen su revisión, no certifican producción.
+
+## Mundo cenital · Fase 1 · Quitar lo lateral · alpha.105
+
+Rama `claude/mundo-cenital-limpio`, sobre `main`.
+
+- **Regla de cámara:** el Mundo se ve siempre desde arriba, infinito en todas las direcciones; solo el Refugio se ve de lado.
+- **Sin horizonte:** se quitan las siluetas de perfil de cada bioma (colinas, agua, árboles, nubes…), que hacían parecer el Mundo un camino.
+- **Luz:** la luz del bioma queda centrada en el cubo y sigue latiendo con el compás. El color que se gana en el Viaje no cambia.
+- **Pruebas:** `world-sheet.mjs` y `world_sheet_smoke.py` comprueban que solo se dibuja la luz, sin formas ni horizonte.
 
 ## Viaje · Momentos de los capítulos 1–3 · alpha.104
 

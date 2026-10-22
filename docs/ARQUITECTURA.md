@@ -82,12 +82,12 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 ## Viaje · el Mundo como lámina
 
-`world-sheet.js` dibuja, en la superficie del Mundo y antes que el resto, la lámina del bioma:
+**Regla de cámara:** el Mundo se ve siempre desde arriba, infinito en todas las direcciones y sin horizonte; solo el Refugio se ve de lado.
 
-- **Luz:** un degradado radial con el color del bioma (`LANDSCAPES` de `house-view.js`) que respira con el pulso del compás (`beat()`), fijo con movimiento reducido.
-- **Siluetas:** dos capas con parallax lento (5 % y 14 % de la cámara), ancladas en el 74 % y el 90 % de la altura.
-  - Las formas dependen del bioma: colinas, árboles, agua, columnas, tallos, dunas, cristales, faros, nubes, cuevas; el Vacío queda vacío.
-  - Su forma y posición salen de un hash del bioma y la baldosa, sin consumir el RNG antiguo.
+`world-sheet.js` dibuja, en la superficie del Mundo y antes que el resto, la luz del bioma:
+
+- **Luz:** un degradado radial centrado en el cubo, con el color del bioma (`LANDSCAPES` de `house-view.js`), que respira con el pulso del compás (`beat()`); fijo con movimiento reducido.
+- Las siluetas laterales con horizonte (alpha.99–104) se quitaron: rompían la vista cenital.
 - **Color que se gana:** solo en el Viaje y en la superficie, un bioma sin recuperar se ve pálido (filtro CSS `saturate(.12)` en el lienzo, con transición de 1,6 s).
   - Completar el tema del cubo a tiempo en ese bioma (`journey-pulse.js`) lo recupera para siempre en `S.journey.colors`.
   - Al cargar por primera vez, los colores se siembran con los biomas ya explorados (`journey-mode.js`); un jugador nuevo empieza sin ninguno.
