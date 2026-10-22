@@ -117,6 +117,7 @@ Todo se oculta, no se borra; los datos y lo comprado se conservan y vuelven en e
 - **Fase 1 · El pulso** (alpha.97): pulso a tiempo con el tema del cubo, vibración con ajuste, la Línea del compás y 240 ms entre pulsos. Pendiente para fases siguientes: congelar la imagen 60 ms al romper, los fragmentos en la escala y que los cristales sumen notas a la frase del capítulo (Fase 4).
 - **Fase 2 · Entrar y callar** (alpha.98): sin cuenta al empezar (la cuenta se ofrece después y adopta el progreso local), sin ventana de bienvenida en el Viaje, HUD sin cifras, menú corto y botón Mundo libre / Viaje. Pendiente: el Camino mudo con su guion de 5 minutos (que cada cristal sume un instrumento y el horizonte se abra) va con la Fase 3, junto a la lámina del Mundo.
 - **Fase 3 · El Mundo como lámina** (alpha.99): luz del bioma que late, siluetas con parallax, color que se gana completando el tema, Camino cuya canción crece con cada cristal y la palabra «Pulso». Pendiente: el faro con voz, el sonido que crece al acercarse y las tres clases visuales con contorno (quedan para la Fase 4, con los capítulos).
+- **Fase 4 · El disco** (alpha.100): siete capítulos guardados, con Llegada, Pertenencia y Plenitud como topes de la música, pedal tras 8 compases sin tocar, notas recordadas para el final, portal al capítulo siguiente y faro hacia el bioma del capítulo. Pendiente: los momentos firma de cada capítulo (Tormenta, Vacío) y el final, en la Fase 5.
 
 ## Fases siguientes
 

@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.99**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.100**. Las entradas describen su revisión, no certifican producción.
+
+## Viaje · Fase 4 · El disco · alpha.100
+
+Rama `claude/viaje-f4-disco`, sobre `claude/viaje-f3-lamina`.
+
+- **Siete capítulos:** Camino, Llanura, Lago, Bosque, Tormenta, Vacío y Refugio, guardados en la partida. Entrar al Mundo en el Viaje empieza en la Llanura.
+- **Tres estados:** al llegar la música queda contenida; al tocar a tiempo crece; al completar el tema llega la Plenitud. Si no tocas en 8 compases, baja a un pedal y espera.
+- **Plenitud:** el tema suena entero con su octava, el lugar recupera su color y se abre un portal dorado al capítulo siguiente.
+- **Faro:** si te alejas del bioma del capítulo, una columna dorada en el borde señala el camino.
+- **Tus notas:** cada nota a tiempo se guarda por capítulo para el final.
+- **Línea:** cinco marcas muestran los capítulos cumplidos y el actual.
+- **Pruebas:** nuevas `journey-chapters.mjs` y `journey_chapters_smoke.py` (móvil y computadora).
 
 ## Viaje · Fase 3 · El Mundo como lámina · alpha.99
 
