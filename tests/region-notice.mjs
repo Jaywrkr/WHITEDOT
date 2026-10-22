@@ -9,7 +9,7 @@ try{
  assert.match(nodes.zDo.textContent,/Continente/);assert.match(nodes.zMood.textContent,/Primavera/);
  // Same key is coalesced/rate-limited, but the current metadata is still refreshed.
  r.showRegion({key:'1,2',genre:'minimal',name:'Mar',bpm:85,sea:true},false);
- assert.match(nodes.zDo.textContent,/Mar de silencio/);assert.match(nodes.zMood.textContent,/85 BPM/);assert.equal(nodes.zName.textContent,'Mar');
+ assert.match(nodes.zDo.textContent,/Abismo de silencio/);assert.match(nodes.zMood.textContent,/85 BPM/);assert.equal(nodes.zName.textContent,'Mar');
  r.showRegion({key:'0,0',genre:'minimal',name:'Origen',bpm:110},false);assert.match(nodes.zDo.textContent,/Gravedad normal/);
  console.log('PASS current sea, gravity, tempo and season metadata survives notice coalescing without extra presentations');
 }finally{globalThis.setInterval=interval;globalThis.document=doc;}

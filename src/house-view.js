@@ -64,7 +64,8 @@ export function createShellCache(){let key='',canvas=null;
   return canvas;};
 }
 // The light of the biome where the Refugio opened, over black with drifting dust, every frame.
-export const LANDSCAPES=Object.freeze({llanura:'#a6f08a',bosque:'#7fbf6a',lago:'#8ad1ff',ruinas:'#d8c39a',jardin:'#f0a6c8',dunas:'#f0c27a',cristales:'#8ad1ff',faros:'#f0d27a',tormenta:'#b8b8ff',cueva:'#c9a27a',vacio:'#ffffff'});
+// One clearly separate colour per region of the universe (docs/UNIVERSO.md).
+export const LANDSCAPES=Object.freeze({llanura:'#eb9a3c',bosque:'#6fe08a',lago:'#5cc8ff',ruinas:'#a88c6a',jardin:'#ff8fc8',dunas:'#f3e6b0',cristales:'#9ef0e6',faros:'#fff36a',tormenta:'#b48cff',cueva:'#ff4f3a',vacio:'#ffffff'});
 const rgba=(hex,a)=>{const n=parseInt(hex.slice(1),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;};
 export function paintBackdrop(c,W,H,night,t,calm,{biome='llanura'}={}){const ink=LANDSCAPES[biome]||LANDSCAPES.llanura;
  c.fillStyle='#000';c.fillRect(0,0,W,H);const g=c.createRadialGradient(W*.72,H*.3,0,W*.72,H*.3,Math.max(W,H)*.75);g.addColorStop(0,rgba(ink,.11-.04*night));g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);

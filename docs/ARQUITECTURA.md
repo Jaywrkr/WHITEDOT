@@ -82,6 +82,8 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 ## Viaje · el Mundo como lámina
 
+**Universo:** las 11 regiones conservan sus ids y cambian de nombre y color (`data.js`, `house-view.js` `LANDSCAPES`, `ecology-model.js`, `ecoregions.js`); ver [El universo](UNIVERSO.md). El final del Viaje toma sus colores de `LANDSCAPES`.
+
 **Regla de cámara:** el Mundo se ve siempre desde arriba, infinito en todas las direcciones y sin horizonte; solo el Refugio se ve de lado.
 
 `world-sheet.js` dibuja, en la superficie del Mundo y antes que el resto, la luz del bioma:

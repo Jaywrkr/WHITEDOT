@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.105**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.106**. Las entradas describen su revisión, no certifican producción.
+
+## Universo · Fase 1 · Nombres · alpha.106
+
+Rama `claude/universo-nombres`, sobre `main`.
+
+- **Las 11 regiones del universo:** Polvo, Cúmulo, Marea, Restos, Esporas, Anillos, Prisma, Púlsares, Tormenta solar, Pozo y Vacío. Sus ids no cambian: mapas, música y guardados siguen igual.
+- **Colores separados:** cada región tiene un color propio; Polvo y Cúmulo ya no comparten verde. El final del Viaje usa los mismos.
+- **Textos:** consejos de cada región, ecologías locales y ecorregiones con nombres del universo. El mar entre continentes es el Abismo de silencio.
+- **Guía:** nueva `docs/UNIVERSO.md`, con las regiones, las reglas, los superbiomas y sus 18 fases.
+- **Pruebas:** nueva `universe-names.mjs`: ids intactos, ninguna palabra de paisaje terrestre en nombres y consejos, colores separados.
 
 ## Mundo cenital · Fase 1 · Quitar lo lateral · alpha.105
 

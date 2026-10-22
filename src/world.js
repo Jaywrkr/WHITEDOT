@@ -39,7 +39,7 @@ export function initialize(runtime) {
     const rx=Math.floor(cx/runtime.REG),ry=Math.floor(cy/runtime.REG),d=Math.max(Math.abs(rx),Math.abs(ry))*2;
     if(d===0){if(!runtime.S.worldSeed)return 0;const home=expanded&&homeEcologyBiome(runtime.S.worldSeed);if(home)return runtime.BIOMES.findIndex(b=>b.id===home);const candidates=runtime.BIOMES.map((b,i)=>i).filter(i=>runtime.BIOMES[i].id!=='vacio');return candidates[runtime.seedOf('seed-home-biome')%candidates.length];}
     const key=rx+","+ry;if(runtime.bcache.has(key))return runtime.bcache.get(key);
-    if(continents.at(rx,ry).sea){runtime.bcache.set(key,VACIO);return VACIO;}   // mar de silencio
+    if(continents.at(rx,ry).sea){runtime.bcache.set(key,VACIO);return VACIO;}   // abismo de silencio
     const r=runtime.rng(runtime.seedOf("zona:"+key));r();
     const el=runtime.BIOMES.map((b,i)=>[i,b]).filter(([,b])=>b.minD<=d);
     if(expanded){const res=chooseEcologyBiome(rx,ry,el,runtime.seedOf,runtime.rng);runtime.bcache.set(key,res);return res;}
