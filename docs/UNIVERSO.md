@@ -100,6 +100,7 @@ Orden: los bloques visual (1–6) y musical (7–12) se alternan. Los superbioma
 
 ## Estado
 
+- **Fase 16 · Bordes** (alpha.124): el movimiento sigue a la familia que suena de verdad (`MU.dnaA`), no a la que hay bajo el cubo, así que cambia cuando cambia la música. El cambio espera al siguiente primer tiempo del compás y se mezcla durante un compás entero (`createBorder`, `blend`). Si la música vuelve antes del primer tiempo, no hay cambio.
 - **Fase 15 · Fusión** (alpha.123): `superbiome-fusion.js` da a cada familia su forma de mover las capas de la región en la que suena; la forma y el color de la región no cambian.
   - **Ambient:** casi quieto, a 0,45 de velocidad, y el pulso apenas se nota.
   - **Downtempo:** lento, a 0,75.

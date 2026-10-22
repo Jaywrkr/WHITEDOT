@@ -26,3 +26,20 @@ export const snapAxis=a=>Math.round(a/(Math.PI/2))*(Math.PI/2);
 // The clock of the region: it starts at the frame time, runs at the family's speed and never jumps when the family
 // changes (at speed 1 it is the frame time itself).
 export function createClock(){let fused=null,last=null;return (t,speed=1)=>{if(fused===null){fused=last=t;return t;}const dt=Math.max(0,t-last);last=t;return fused+=dt*speed;};}
+// Borders (phase 16): two motions mixed, k from 0 (all `a`) to 1 (all `b`). Numbers are blended; a straight line holds
+// until the mix is past half.
+export function blend(a,b,k){if(k<=0)return a;if(k>=1)return b;const mix=key=>(a[key]||0)*(1-k)+(b[key]||0)*k;
+ return {speed:a.speed*(1-k)+b.speed*k,beat:x=>a.beat(x)*(1-k)+b.beat(x)*k,axis:k<.5?!!a.axis:!!b.axis,echo:mix('echo'),burst:mix('burst'),spin:mix('spin'),sway:mix('sway')};}
+// The change of family waits for the next downbeat of the music and then mixes over one bar, so crossing from one
+// superbiome to another lands on the bar. `step(target, bar, now, barMs)` takes the family the music plays now, the
+// position in the bar (0..1) and the bar's length, and returns the motion to draw.
+export function createBorder(){let from=null,to=null,start=null,lastBar=null,pending=null;
+ const state=()=>({from,to,pending,mixing:start!==null});
+ function step(target,bar,now,barMs){const downbeat=lastBar!==null&&bar<lastBar;lastBar=bar;
+  if(to===null){to=target;return {fx:fusionOf(to),family:to,k:1};}
+  pending=target===to?null:target;   // going back before the downbeat cancels the change
+  if(pending!==null&&start===null&&downbeat){from=to;to=pending;pending=null;start=now;}
+  if(start===null)return {fx:fusionOf(to),family:to,k:1};
+  const k=Math.min(1,(now-start)/Math.max(1,barMs));if(k>=1){start=null;from=null;return {fx:fusionOf(to),family:to,k:1};}
+  return {fx:blend(fusionOf(from),fusionOf(to),k),family:to,k};}
+ return Object.assign(step,{state});}
