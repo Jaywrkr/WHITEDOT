@@ -9,7 +9,7 @@ export const REFERENCE_GENRES={
  jazztronica:{name:'Jazztronica',bpm:[94,118],sw:.22,pt:0,bassI:'rubber',bassP:['rubber','sub'],hookP:['rhodes','clav'],percP:['rim','shaker','wood'],scales:WARM,melodyDegrees:[0,2,4,6],pad:.12},
  berlin:{name:'Berlin School',bpm:[90,116],sw:.02,pt:5,bassI:'fm',bassP:['fm','sub'],hookP:['organ','strings'],percP:['wood','shaker','rim'],scales:MINOR,pad:.25},
  idm:{name:'IDM',bpm:[100,150],sw:.06,pt:3,bassI:'machine',bassP:['machine','fm'],hookP:['metalkeys','kalimba'],percP:['rim','wood','timbale','hat'],scales:MINOR,pad:.06},
- liquid:{name:'Liquid drum & bass',bpm:[168,176],sw:.02,pt:0,bassI:'sub',bassP:['sub','reese'],hookP:['rhodes','strings'],percP:['kick','rim','shaker','hat'],scales:WARM,pad:.2},
+ liquid:{name:'Liquid drum & bass',bpm:[168,172],sw:.02,pt:0,bassI:'sub',bassP:['sub','reese'],hookP:['rhodes','strings'],percP:['kick','rim','shaker','hat'],scales:WARM,pad:.2},
  ebm:{name:'Darkwave / EBM',bpm:[118,138],sw:.02,pt:5,bassI:'machine',bassP:['machine','acid'],hookP:['vocalform','organ'],percP:['kick','rim','hat'],scales:MINOR,pad:.1},
  algorave:{name:'Algorave',bpm:[118,150],sw:.04,pt:3,bassI:'fm',bassP:['fm','machine'],hookP:['metalkeys','clav'],percP:['wood','rim','shaker','timbale'],scales:MINOR,pad:0}
 };
@@ -28,7 +28,8 @@ export function referenceRhythm(id,variation=0){
   jazztronica:{kick:[0,10],rim:[4,12],hat:[2,7,10,15],wood:[6],chord:[0]},
   berlin:{kick:[0],hat:[6,14],wood:[3,11]},
   idm:{kick:[0,6,9,14],snare:[5,12],hat:[2,7,11],timbale:[3,15]},
-  liquid:{kick:[0,6,10],snare:[4,12],hat:EIGHT,shaker:[3,7,11,15],chord:[0]},
+  // Liquid: the smooth two-step. Kick on one and the and of three, hats only off the beat, chords twice a bar.
+  liquid:{kick:[0,10],snare:[4,12],hat:OFF,shaker:[3,7,11,15],chord:[0,8]},
   ebm:{kick:FOUR,snare:[4,12],hat:OFF,rim:[7,15]},
   algorave:{kick:[0,8],hat:[2,6,10,14],wood:Array.from({length:16},(_,i)=>i).filter(i=>((i+variation)*5)%16<5),timbale:[11]}
  };

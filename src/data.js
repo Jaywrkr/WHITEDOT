@@ -60,7 +60,7 @@ export function initialize(runtime) {
    microhouse:{name:"Microhouse",bpm:[120,126],sw:.18,pt:1,bassI:"roll",hookP:["marimba","keys"]},
    minimaltechno:{name:"Minimal techno",bpm:[126,134],sw:.06,pt:3,bassI:"fm",hookP:["organ","keys"]},
    dubstep:{name:"Dubstep",bpm:[136,144],sw:.12,pt:5,bassI:"reese",hookP:["organ","saw"]},
-   dnb:{name:"Drum & bass",bpm:[166,174],sw:.02,pt:5,bassI:"reese",hookP:["keys","organ"]},
+   dnb:{name:"Drum & bass",bpm:[174,178],sw:.02,pt:5,bassI:"reese",hookP:["keys","organ"]},
    heart:{name:"Dub profundo",bpm:[68,76],sw:0,pt:2,bassI:"sub",hookP:["flute"],pad:.5},
    ...WORLD_GENRES,
    ...REFERENCE_GENRES,
