@@ -87,6 +87,14 @@ Orden: los bloques visual (1–6) y musical (7–12) se alternan. Los superbioma
 
 - **Fase 1 · Nombres** (alpha.106): nombres del universo para las 11 regiones, sus ecologías y ecorregiones; colores separados (la pareja más cercana, Anillos y Púlsares, a distancia 72 en RGB); consejos de cada región y el Abismo de silencio. Pendiente: los objetos que aún se ven y se nombran como antes (pilares, faros, flores, agua) cambian con sus dibujos en las fases 2–4.
 - **Fase 2 · Capas** (alpha.107): `universe-layers.js` dibuja las tres capas de cada región sobre el suelo del Mundo, en celdas de 150, 120 y 110 px que se mueven al 35, 70 y 100 % de la cámara. Cerca del borde de una región las celdas de las dos se mezclan (150 px a cada lado). Polvo tiene su bruma, granos con estela de viento y motas que se apartan del cubo y vuelven en 1,5 s; el Vacío no dibuja nada. El aire de cada región es un ruido filtrado con ganancia máxima 0,012 (unos −38 dB), muy bajo la música. Polvo ya no dibuja hierba en el suelo. Coste: en el navegador de pruebas no se distingue del ruido de medida.
+- **Fase 3 · Regiones del Viaje** (alpha.109):
+  - **Marea:** anillos enormes y lentos a lo lejos, fuentes que sueltan un anillo por compás y una estela de ondas detrás del cubo.
+  - **Cúmulo:** galaxias pequeñas a lo lejos, racimos de 5–12 estrellas que se encienden en secuencia cuando el cubo se acerca y estrellas que parpadean en el beat.
+  - **Tormenta solar:** superficie que hierve, arcos de plasma que tiemblan y llamaradas en el beat que dejan un anillo, algunas en rojo. Las descargas existentes se ven desde arriba (se ramifican desde donde caen, no caen del cielo).
+  - Cada una tiene su aire propio, muy bajo: un zumbido grave (Marea), un brillo agudo (Cúmulo) y un chisporroteo (Tormenta solar).
+  - **Momentos del Viaje vistos desde arriba:** el faro de Polvo es un púlsar (núcleo, halo y un haz que barre el suelo); los lotos de la Marea son fuentes de ondas; la criatura del Cúmulo es un racimo de tres estrellas; el faro de regreso es una luz dorada en el borde con una flecha, sin columna vertical.
+  - El Cúmulo ya no dibuja hierba en el suelo.
+  - Pendiente: la flora y los objetos que aún vienen de antes (plantas, flores, lluvia inclinada del clima) cambian en las fases 4 y 6.
 - **Fase 8 · Las house** (alpha.108): Deep, Progressive y Melodic house dejan de compartir batería; Chicago, Acid, Soulful y Garage house separan tempo y firma. Medida completa: de 16 parejas bajo la línea quedan 5 y ninguna es house; quedan Electro, Electro robótico y Breaks, Drum & bass y Liquid, Cosmic disco y Boogie, Boom bap y G-funk.
 - **Fase 7 · Medida de la música:** `scripts/genre-distance.py` renderiza los 52 géneros con el programador real y compara tempo, ritmo (16 pasos por compás), timbre (8 bandas) y densidad. La línea es la mayor distancia de un mismo género consigo mismo en otras variaciones (10 géneros), más un cuarto.
 
