@@ -39,7 +39,7 @@ export function initialize(runtime) {
   rs.oninput=()=>{runtime.S.musicEnergy=runtime.S.style=rs.value/100;styleUI();};
   rs.onchange=()=>runtime.save();
   runtime.$("bSound").onclick=()=>{runtime.S.sound=!runtime.S.sound;styleUI();runtime.audio();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);runtime.toast(runtime.S.sound?"<em>Música</em> · activada":"<em>Música</em> · en silencio");runtime.save();};
-  runtime.$("bSettings").onclick=()=>{runtime.$("mMenu").hidden=true;runtime.$("mSettings").hidden=false;};
+  runtime.$("bSettings").onclick=()=>{runtime.$("mMenu").hidden=true;runtime.$("haptics").checked=runtime.S.haptics!==false;runtime.$("mSettings").hidden=false;};runtime.$("haptics").onchange=e=>{runtime.S.haptics=e.target.checked;runtime.save();if(e.target.checked)runtime.journeyVibrate?.(12);};
   runtime.$("settingsClose").onclick=()=>runtime.$("mSettings").hidden=true;
   function volumeUI(){const value=Math.round(Math.max(0,Math.min(1,Number.isFinite(runtime.S.outputVolume)?runtime.S.outputVolume:1))*100);for(const id of ['rVolume','rMenuVolume']){if(!runtime.$(id))continue;runtime.$(id).value=value;runtime.$(id).setAttribute('aria-valuetext',value+'%');}for(const id of ['volumeNow','menuVolumeNow'])if(runtime.$(id))runtime.$(id).textContent=value+'%';}
   for(const id of ['rVolume','rMenuVolume']){if(!runtime.$(id))continue;runtime.$(id).oninput=e=>{const value=Number(e.target.value);if(!Number.isFinite(value))return;runtime.S.outputVolume=Math.max(0,Math.min(1,value/100));volumeUI();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);};runtime.$(id).onchange=()=>runtime.save();}volumeUI();
