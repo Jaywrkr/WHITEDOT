@@ -49,6 +49,17 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 - **Refugio:** tras el Vacío, el portal llama a `runtime.journeyFinale` si existe; si no, aterriza en el Refugio.
 - Nada consume el azar antiguo: los lugares salen del mapa del Mundo.
 
+## Viaje · momentos de los primeros capítulos
+
+`journey-moments.js` guarda sus lugares en `S.journey.moments`, a partir del mapa y la posición del jugador:
+
+- **Llanura:** un faro a 520 de donde llegas, en la Llanura y fuera del mar. Su voz es un tono sostenido en la quinta del lugar que crece al acercarte (se oye hasta 900) y calla fuera del capítulo. Al alcanzarlo, late con el compás.
+- **Lago:** cinco lotos en anillo. Una nota a tiempo junto a uno lo abre, y el loto canta esa nota una quinta arriba una corchea después.
+- **Bosque:** la primera nota a tiempo trae una criatura que camina detrás de ti y repite cada nota una octava abajo, medio compás después. No entra en el Vacío.
+- `journey-chapters.js` pasa cada nota a tiempo (`journeyMomentNote`) y dibuja los momentos con el capítulo actual.
+- **Sin palabras:** en el Viaje el lienzo del Mundo no dibuja texto (`journey-mode.js` envuelve `fillText` y `strokeText`) y se ocultan los avisos `#voice` y `#zone`. Los avisos de guardado siguen.
+- **Final más lleno:** bajo el tema suenan un latido suave en cada negra y, si te siguió, la criatura respondiendo cada nota.
+
 ## Viaje · festival y accesibilidad
 
 - **Festival** (`festival.js`): `?festival=1` abre los primeros 15 minutos (Camino, Llanura y Lago).

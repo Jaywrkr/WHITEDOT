@@ -39,7 +39,7 @@ export function initialize(runtime){
  const inChapter=()=>active()&&WORLD_CHAPTERS.includes(current())&&biomeId()===current();
  function stateNow(){if(!active())return null;const j=own();const bars=(performance.now()-lastPulse)/1000/((runtime.SIX||.15)*16);if(bars>SILENCE_BARS&&!portal)return 'silencio';return chapterState(inChapter()?hits:0,!!j.done[current()]);}
  // Every pulse of the player: on-time theme notes are remembered for the finale.
- function pulse(on,midi){lastPulse=performance.now();if(!on||!inChapter())return;hits++;const j=own(),id=current();(j.notes[id]||=[]).push(midi);if(j.notes[id].length>16)j.notes[id].splice(0,j.notes[id].length-16);
+ function pulse(on,midi){lastPulse=performance.now();if(!on||!inChapter())return;hits++;const j=own(),id=current();(j.notes[id]||=[]).push(midi);runtime.journeyMomentNote?.(id,midi);if(j.notes[id].length>16)j.notes[id].splice(0,j.notes[id].length-16);
   // The Tormenta: every note on time brings a bolt down on the beat.
   if(id==='tormenta'&&runtime.ac){storm.push(runtime.ac.currentTime);moments.bolts++;}
   // The Vacío: after eight notes the creatures that followed you come back and repeat each one, a bar later.
@@ -73,7 +73,7 @@ export function initialize(runtime){
   if(storm.length&&runtime.MU&&!runtime.MU.boltAt&&runtime.ac&&storm[0]<=runtime.ac.currentTime+.02){runtime.MU.boltAt=Math.max(storm.shift(),runtime.ac.currentTime);}
   if(portal&&Math.hypot(runtime.S.wx-portal.x,runtime.S.wy-portal.y)<34)travel();}
  // The portal in the World, and seven small marks on the Line's right end: gold for done, white for here.
- function draw(c,W,H,t){tick();if(!active()||openSurface('.modal:not([hidden])'))return;const j=own(),still=calm();c.save();
+ function draw(c,W,H,t){tick();if(!active()){runtime.drawJourneyMoments?.(c,W,H,t,null,false);return;}if(openSurface('.modal:not([hidden])'))return;const j=own(),still=calm();runtime.drawJourneyMoments?.(c,W,H,t,current(),inChapter());c.save();
   if(portal){const x=W/2+(portal.x-(runtime.camX??runtime.S.wx)),y=H/2+(portal.y-(runtime.camY??runtime.S.wy)),grow=Math.min(1,(performance.now()-portal.at)/900),r=22*grow;
    const g=c.createRadialGradient(x,y,0,x,y,r*2.4);g.addColorStop(0,'rgba(240,210,122,.35)');g.addColorStop(1,'rgba(240,210,122,0)');c.fillStyle=g;c.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8);
    c.strokeStyle='#f0d27a';c.lineWidth=1.5;for(let i=0;i<3;i++){c.globalAlpha=.9-i*.25;c.beginPath();c.arc(x,y,r*(1-i*.25),still?0:t/600+i,(still?0:t/600+i)+Math.PI*1.6);c.stroke();}}

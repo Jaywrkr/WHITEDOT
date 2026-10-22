@@ -17,6 +17,9 @@ export function initialize(runtime){
  function set(mode){const j=own();if(j.version>JOURNEY_VERSION||(mode!=='viaje'&&mode!=='libre')||j.mode===mode)return false;const before=j.mode,seen=runtime.S.help?.camino;j.mode=mode;if(mode==='libre'&&runtime.S.help)runtime.S.help.camino=true;if(runtime.save()===false){j.mode=before;if(runtime.S.help)runtime.S.help.camino=seen;return false;}apply();runtime.hud?.();return true;}
  // Playing without an account: once in the World, the cloud is offered once, quietly.
  function offerCloud(){const S=runtime.S;if(S.cloudOffered||!runtime.accountClient||runtime.accountClient.user?.()||!runtime.inWorld?.())return;S.cloudOffered=true;runtime.save();runtime.toast?.('Guarda tu avance en la nube: Menú → Cuenta.');}
+ // The Journey has no words in the World: hints and labels on the World's canvas are not drawn (docs/VIAJE.md).
+ function silenceCanvas(){const c=runtime.cx;if(!c||c.__journeyQuiet)return;c.__journeyQuiet=true;for(const k of ['fillText','strokeText']){const draw=c[k];c[k]=function(...a){if(quiet()&&runtime.inWorld?.())return;return draw.apply(this,a);};}}
+ silenceCanvas();
  $('bJourneyMode').onclick=()=>{set(quiet()?'libre':'viaje');$('mMenu').hidden=true;};
  apply();
  // A save restored from the cloud or another scope may bring its own mode.
