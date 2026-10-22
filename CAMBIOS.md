@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.124**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.125**. Las entradas describen su revisión, no certifican producción.
+
+## Superbiomas: la colección · alpha.125
+
+Rama `claude/super-coleccion`, sobre `claude/super-bordes` (alpha.124). Fase 17 de [El universo](docs/UNIVERSO.md).
+
+- **Mapa de superbiomas en la Bitácora:** en la pestaña de lugares hay una cuadrícula con las regiones en filas y las familias en columnas. El Abismo solo tiene Ambient.
+- **Oído en dorado:** cada superbioma oído sale con su día; los que faltan salen en contorno y dicen si son raros, muy raros o si no aparecen.
+- **Constelaciones:** las que uniste aparecen con su figura.
+- Los guardados con datos raros o futuros no rompen la Bitácora.
 
 ## Superbiomas: los bordes · alpha.124
 

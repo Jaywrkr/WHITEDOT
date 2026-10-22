@@ -1,4 +1,5 @@
 import {MICRO_SYNTHS} from './micro-synthesis.js';
+import {superbiomeSection} from './superbiome-journal.js';
 import {TECHNIQUE_INSTRUMENTS} from './instrument-techniques.js';
 import {WALKER_FORMS,walkerPortrait} from './walker-forms.js';
 import {HYBRID_STYLES} from './musical-hybrids.js';
@@ -111,7 +112,7 @@ export function initialize(runtime) {
     runtime.$('sessionShare').hidden=tab!=='today'||!runtime.sessionSummary?.();
     runtime.$('rareCodeFallback').hidden=true;
     runtime.$('journalFilters').hidden=tab!=='collection';runtime.$('journalSearch').hidden=group==='formas';runtime.$('journalOwnership').hidden=['formas','tarjetas'].includes(group);runtime.$('journalMore').hidden=true;const parts=['journalMapPart','journalFavPart','journalYouPart'].map(id=>runtime.$(id)),holder=runtime.$('journalParts');holder.append(...parts);
-    runtime.$('journalBody').innerHTML=tab==='you'?'':({today,places:()=>places()+constellation(),collection,music,achievements})[tab]();if(tab==='places'){const canvas=document.getElementById('journalSky');runtime.drawSky?.(canvas.getContext('2d'),20,20,280,180);}
+    runtime.$('journalBody').innerHTML=tab==='you'?'':({today,places:()=>places()+superbiomeSection(runtime.S,id=>runtime.BIOMES?.find(b=>b.id===id)?.name)+constellation(),collection,music,achievements})[tab]();if(tab==='places'){const canvas=document.getElementById('journalSky');runtime.drawSky?.(canvas.getContext('2d'),20,20,280,180);}
     // One place for your journey: the map and your saved places lead Lugares, your profile is Tú.
     if(tab==='places'){runtime.$('journalBody').prepend(parts[0],parts[1]);runtime.renderMap?.();runtime.renderFavorites?.();}
     if(tab==='you'){runtime.$('journalBody').append(parts[2]);runtime.renderProfile?.();}
