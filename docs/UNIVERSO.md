@@ -86,6 +86,7 @@ Orden: los bloques visual (1–6) y musical (7–12) se alternan. Los superbioma
 ## Estado
 
 - **Fase 1 · Nombres** (alpha.106): nombres del universo para las 11 regiones, sus ecologías y ecorregiones; colores separados (la pareja más cercana, Anillos y Púlsares, a distancia 72 en RGB); consejos de cada región y el Abismo de silencio. Pendiente: los objetos que aún se ven y se nombran como antes (pilares, faros, flores, agua) cambian con sus dibujos en las fases 2–4.
+- **Fase 2 · Capas** (alpha.107): `universe-layers.js` dibuja las tres capas de cada región sobre el suelo del Mundo, en celdas de 150, 120 y 110 px que se mueven al 35, 70 y 100 % de la cámara. Cerca del borde de una región las celdas de las dos se mezclan (150 px a cada lado). Polvo tiene su bruma, granos con estela de viento y motas que se apartan del cubo y vuelven en 1,5 s; el Vacío no dibuja nada. El aire de cada región es un ruido filtrado con ganancia máxima 0,012 (unos −38 dB), muy bajo la música. Polvo ya no dibuja hierba en el suelo. Coste: en el navegador de pruebas no se distingue del ruido de medida.
 - **Fase 7 · Medida de la música:** `scripts/genre-distance.py` renderiza los 52 géneros con el programador real y compara tempo, ritmo (16 pasos por compás), timbre (8 bandas) y densidad. La línea es la mayor distancia de un mismo género consigo mismo en otras variaciones (10 géneros), más un cuarto.
 
 ## Medida de los géneros (Fase 7)

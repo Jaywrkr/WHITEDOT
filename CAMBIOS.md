@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.106**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.107**. Las entradas describen su revisión, no certifican producción.
+
+## Universo · Fase 2 · Capas · alpha.107
+
+Rama `claude/universo-capas`, sobre `claude/musica-medida`.
+
+- **Tres capas desde arriba:** cada región dibuja una capa lejana que se mueve lento (sensación de profundidad), una de textura y una cercana que responde al cubo. Se mueven en todas las direcciones, sin horizonte.
+- **Polvo:** bruma ámbar, granos con estela de viento y motas que se apartan al paso del cubo y vuelven a cerrarse. Ya no hay hierba en su suelo.
+- **Vacío:** no dibuja nada ni suena.
+- **Bordes:** al cruzar de región, las dos se mezclan durante unos 300 px.
+- **Sonido:** cada región tiene un aire propio, muy por debajo de la música (Polvo: un siseo fino que sube un poco con tu velocidad).
+- **Pruebas:** nuevas `universe-layers.mjs` y `universe_layers_smoke.py` (móvil y computadora).
+  - `world_visibility_smoke` sigue fallando como antes del Viaje (las huellas caducan durante la prueba en computadora); no es de esta fase.
+  - El aire de región no entra en los renders de música (`audio_mix.mjs` no carga las capas); su nivel se comprueba en la prueba de navegador.
 
 ## Música · Fase 7 · Medida de los géneros
 
