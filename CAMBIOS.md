@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.112**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.113**. Las entradas describen su revisión, no certifican producción.
+
+## Universo · Fase 4 · El resto de regiones · alpha.113
+
+Rama `claude/universo-resto`, sobre `claude/musica-resto`.
+
+- **Restos:** órbitas enteras a lo lejos, arcos rotos que giran muy lento y fragmentos que se apartan del cubo. Es la única región que no late.
+- **Esporas:** semillas que respiran; si te quedas quieto, las cercanas se abren en estrellas de cuatro puntas que laten.
+- **Anillos:** el anillo de un planeta visto desde arriba: bandas curvas que se deslizan y piedritas que viajan por ellas y cambian de banda en el beat.
+- **Prisma:** una malla cristalina; un nodo se enciende en cada beat y tu pulso la recorre hacia afuera.
+- **Púlsares:** destellos lejanos con su propio ritmo y púlsares con un haz que gira y destella en el beat.
+- **Pozo:** discos negros con un anillo de luz que gira más rápido en el beat; el polvo cae en espiral hacia el centro.
+- **Sonido:** cada región tiene su aire, muy por debajo de la música.
+- **Coste:** en el navegador de pruebas, unos 5 ms más por fotograma en Prisma y Pozo (390×844 a 2×, con otra prueba en paralelo). Falta medir en teléfonos.
+- **Pruebas:** `universe-layers.mjs` y `universe_layers_smoke.py` cubren las diez regiones.
 
 ## Música · Fase 11 · Los últimos gemelos · alpha.112
 
