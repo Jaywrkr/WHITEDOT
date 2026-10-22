@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.102**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.103**. Las entradas describen su revisión, no certifican producción.
+
+## Viaje · Fase 7 · Medida · alpha.103
+
+Rama `claude/viaje-f7-medida`, sobre `claude/viaje-f6-festival`.
+
+- **Medida automática:** `scripts/journey-curve.py` juega el Viaje entero y mide nivel y voces por segundo en cada estado. Resultados en `docs/VIAJE.md`.
+- **Tormenta:** al tocar, la música se sostiene desde abajo; pasa de 46 a 59 voces por segundo y es el clímax del juego.
+- **Plenitud:** sostiene la música en todos los capítulos menos el Vacío.
+- **Final:** tus notas suenan sobre un pedal de La y el tema sobre el acorde de La mayor. Render de 25 s con pico 0,46, sin saturación.
+- **Pruebas:** `journey-chapters.mjs` cubre los suelos de la música.
 
 ## Viaje · Fase 6 · Festival y accesibilidad · alpha.102
 

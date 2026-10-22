@@ -120,6 +120,21 @@ Todo se oculta, no se borra; los datos y lo comprado se conservan y vuelven en e
 - **Fase 4 · El disco** (alpha.100): siete capítulos guardados, con Llegada, Pertenencia y Plenitud como topes de la música, pedal tras 8 compases sin tocar, notas recordadas para el final, portal al capítulo siguiente y faro hacia el bioma del capítulo. Pendiente: los momentos firma de cada capítulo (Tormenta, Vacío) y el final, en la Fase 5.
 - **Fase 5 · Momentos firma y final** (alpha.101): rayos en el beat de tus notas en la Tormenta, el cubo solo en el Vacío con criaturas que repiten tus notas, y el final: el Refugio toca tu viaje, cielo dorado, silencio, créditos y Mundo libre. Pendiente: la criatura del Bosque que te sigue, los lotos del Lago y la Llanura con faro propio (momentos de los capítulos 1–3); los créditos son provisionales hasta que Jay los revise.
 - **Fase 6 · Festival y accesibilidad** (alpha.102): `?festival=1` abre los primeros 15 minutos sin cuenta y con guardado propio; termina en el Refugio con tu frase y «Otra persona». Paleta para daltonismo en Ajustes. Coste: en el navegador de pruebas (sin GPU, 390×844 a 2×) el Viaje y el Mundo libre cuestan lo mismo por fotograma. Pendiente: medir en teléfonos reales y traducir menús al inglés.
+- **Fase 7 · Medida** (alpha.103): `scripts/journey-curve.py` juega el Viaje entero como un jugador simulado y mide, cada medio segundo, el nivel y las voces por segundo (densidad, la medida de intensidad del panel). Con ella se ajustaron la Tormenta, la Plenitud y el final. Las pruebas con personas siguen pendientes.
+
+## Medida de la curva (Fase 7)
+
+Recorrido simulado de 200 s (Llanura a final), navegador de pruebas, revisión `claude/viaje-f7-medida`. Densidad en voces por segundo:
+
+| Estado | Llanura | Lago | Bosque | Tormenta | Vacío |
+|---|---|---|---|---|---|
+| Llegada | 14 | 19 | 12 | 11 | 5 |
+| Pertenencia (tocando) | 37 | 20 | 31 | 59 | 23 |
+| Plenitud | 26 | 21 | 39 | 48 | 10 |
+
+- **Cumple:** la Tormenta es el momento más denso; el Vacío, el más vacío (−48 dB al llegar); el silencio tras 8 compases baja al nivel de la Llegada; la Plenitud suena 5–8 dB más fuerte que la Pertenencia.
+- **Falta:** el nivel general casi no cambia (el máster lo sostiene), así que la intensidad se lee en densidad. En la Llanura y el Lago la Plenitud no es más densa que tocar: la diferencia la dan el tema completo y el color. El final dura 35 s y es un solo con pedal y acorde.
+- **Límite:** jugador simulado, sin personas. La curva por minuto de arriba se compara cuando haya pruebas reales.
 
 ## Fases siguientes
 
