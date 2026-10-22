@@ -48,6 +48,14 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 - **Refugio:** tras el Vacío, el portal llama a `runtime.journeyFinale` si existe; si no, aterriza en el Refugio.
 - Nada consume el azar antiguo: los lugares salen del mapa del Mundo.
 
+## Viaje · festival y accesibilidad
+
+- **Festival** (`festival.js`): `?festival=1` abre los primeros 15 minutos (Camino, Llanura y Lago).
+  - Sin cuenta (`main.js` no llama a `requireAccount`) y siempre en el Viaje; el menú oculta Cuenta y el cambio de modo (`body.festival`).
+  - Guarda en su propia clave local, `kubono:festival` (`progress.js`), así nunca toca la partida del jugador ni la nube.
+  - Tras la Plenitud del Lago, el portal lleva al final de festival: solo Llanura y Lago, la frase se queda en pantalla y «Otra persona» borra solo esa clave y recarga.
+- **Daltonismo** (`color-safe.js`): «Colores para daltonismo» en Ajustes guarda `S.colorSafe`. `runtime.placeColor(id,base)` da tonos Okabe–Ito a lugares y capítulos; lo usan la lámina del Mundo y el final. El blanco sigue marcando estados y el dorado lo ganado.
+
 ## Viaje · momentos firma y final
 
 - **Tormenta** (`journey-chapters.js`): cada nota a tiempo en su capítulo pone un rayo en el beat (usa `MU.boltAt`, el rayo existente de `render.js`); su Plenitud es un compás de cuatro rayos.

@@ -11,7 +11,7 @@ export function normalizeJourney(raw,s,automated=false){const q=raw&&typeof raw=
 const automated=()=>{try{return !!globalThis.navigator?.webdriver;}catch(_){return false;}};
 export function initialize(runtime){
  const $=runtime.$;let owner=null;
- function own(){if(owner!==runtime.S){owner=runtime.S;owner.journey=normalizeJourney(owner.journey,owner,automated());}return owner.journey;}
+ function own(){if(owner!==runtime.S){owner=runtime.S;owner.journey=normalizeJourney(owner.journey,owner,!runtime.festival&&automated());}return owner.journey;}
  const quiet=()=>own().mode==='viaje';
  function apply(){const j=own(),b=$('bJourneyMode');document.body.classList.toggle('journey-quiet',j.mode==='viaje');if(b){const free=j.mode==='libre',label=b.querySelector('span');if(label)label.firstChild.textContent=free?'Viaje':'Mundo libre';b.querySelector('small').textContent=free?'Pantalla tranquila':'Todo a la vista';b.setAttribute('aria-pressed',String(free));}}
  function set(mode){const j=own();if(j.version>JOURNEY_VERSION||(mode!=='viaje'&&mode!=='libre')||j.mode===mode)return false;const before=j.mode,seen=runtime.S.help?.camino;j.mode=mode;if(mode==='libre'&&runtime.S.help)runtime.S.help.camino=true;if(runtime.save()===false){j.mode=before;if(runtime.S.help)runtime.S.help.camino=seen;return false;}apply();runtime.hud?.();return true;}

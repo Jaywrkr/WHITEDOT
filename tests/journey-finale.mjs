@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {finaleScore,scoreLength,MAJOR,EIGHTH,NOTES_PER_CHAPTER,CREDIT_LINES,CHAPTER_COLORS,initialize} from '../src/journey-finale.js';
+import {finaleScore,scoreLength,MAJOR,EIGHTH,NOTES_PER_CHAPTER,CREDIT_LINES,FESTIVAL_LINES,CHAPTER_COLORS,initialize} from '../src/journey-finale.js';
 import {THEME,themePitch} from '../src/journey-pulse.js';
 // The score: your notes per chapter in the Journey's order (up to six each), then the theme twice in A major, the second a fifth up.
 const score=finaleScore({lago:[60,62],llanura:[57,59,60,62,64,65,67,69],otro:[50],vacio:['x',64]});
@@ -11,9 +11,9 @@ assert.equal(score[1].at,2*EIGHTH);assert.equal(scoreLength(finaleScore({})),32*
 assert(Object.keys(CHAPTER_COLORS).length===6&&CREDIT_LINES[0]==='Kubono');
 // Runtime: the finale lands in the Refugio, keeps the end and opens the free World; it never plays twice.
 let frames=[],landed=0,saves=0,clock=0,mode='viaje';const toasts=[];performance.now=()=>clock;
-const el={hidden:true,children:[],setAttribute(){},querySelector:k=>k==='canvas'?canvas:credits,appendChild(){}},canvas={width:0,height:0,getContext:()=>new Proxy({},{get:(o,k)=>k in o?o[k]:k==='createLinearGradient'?()=>({addColorStop(){}}):()=>{},set:(o,k,v)=>{o[k]=v;return true;}})},credits={lines:[],replaceChildren(...l){this.lines=l;}};
+const el={hidden:true,children:[],setAttribute(){},querySelector:k=>k==='canvas'?canvas:k==='.journey-again'?null:credits,appendChild(b){this.children.push(b);}},canvas={width:0,height:0,getContext:()=>new Proxy({},{get:(o,k)=>k in o?o[k]:k==='createLinearGradient'?()=>({addColorStop(){}}):()=>{},set:(o,k,v)=>{o[k]=v;return true;}})},credits={lines:[],replaceChildren(...l){this.lines=l;}};
 let created=null;
-globalThis.document={getElementById:()=>created,createElement:()=>{if(!created){created=el;return el;}return {style:{},set textContent(v){this.text=v;}};},body:{appendChild(){}},querySelectorAll:()=>[{hidden:false}]};
+globalThis.document={getElementById:()=>created,createElement:()=>{if(!created){created=el;return el;}return {style:{}};},body:{appendChild(){}},querySelectorAll:()=>[{hidden:false}]};
 globalThis.innerWidth=390;globalThis.innerHeight=844;globalThis.devicePixelRatio=2;globalThis.requestAnimationFrame=f=>frames.push(f);
 const r={S:{journey:{version:1,mode:'viaje',chapter:6,notes:{llanura:[57,59]}},sound:false},landHouse:()=>landed++,save:()=>{saves++;return true;},toast:t=>toasts.push(t),
  journeyMode:()=>mode,setJourneyMode:m=>{mode=m;r.S.journey.mode=m;return true;}};
@@ -28,4 +28,10 @@ assert.equal(r.journeyFinale(),false,'only once');assert.equal(landed,2,'later i
 const r2={...r,S:{journey:{version:1,mode:'viaje',chapter:6,notes:{}},sound:false}};mode='viaje';initialize(r2);created.hidden=true;r2.journeyFinale();clock+=1000;el.onclick();assert(r2.journeyFinaleState().running,'not in the first two seconds');clock+=1500;el.onclick();assert.equal(r2.journeyFinaleState().skipped,true);assert.equal(r2.S.journey.finished,true);
 // A failed save keeps the Journey open.
 const r3={...r,S:{journey:{version:1,mode:'libre',chapter:6,notes:{}},sound:false},save:()=>false};mode='libre';initialize(r3);r3.journeyFinale();r3.journeyFinaleSkip();assert.equal(r3.S.journey.finished,undefined);
-console.log('PASS journey finale: your notes per chapter then the theme twice in major, gold sky and credits, the end is kept and the free World opens, once, skippable, safe on a failed save');
+// The festival build: only the Llanura and the Lago, your phrase stays on screen and «Otra persona» starts again.
+assert.deepEqual([...new Set(finaleScore({llanura:[57],lago:[60],bosque:[55]},['llanura','lago']).map(n=>n.chapter))],['llanura','lago','refugio']);
+let restarts=0;const r4={...r,S:{journey:{version:1,mode:'viaje',chapter:2,notes:{llanura:[57],bosque:[55]},finished:true},sound:false},festivalRestart:()=>restarts++};mode='viaje';el.children=[];initialize(r4);
+assert.equal(r4.journeyFinale({festival:true}),true,'the festival plays even on a finished save');assert.equal(r4.journeyFinaleState().notes,1+12);
+clock+=1e6;frames.splice(0).forEach(f=>f());assert.equal(r4.journeyFinaleState().running,false);assert.equal(credits.lines.length,FESTIVAL_LINES.length);assert.equal(mode,'viaje','the festival never opens the free World');
+const again=el.children.find(b=>b.id==='journeyAgain');assert(again&&again.textContent==='Otra persona');again.onclick();assert.equal(restarts,1);
+console.log('PASS journey finale: your notes per chapter then the theme twice in major, gold sky and credits, the end is kept and the free World opens, once, skippable, safe on a failed save; the festival ends on your phrase and starts again for the next player');

@@ -1,5 +1,6 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {THEME,themePitch,playCello} from './journey-pulse.js';
+import {FESTIVAL_CHAPTERS} from './festival.js';
 // The Journey, phase 4: the album. Seven chapters, five of them biomes of the World. In each one the music climbs
 // through three states (Llegada, Pertenencia, Plenitud): completing the cube's theme on time there is its Plenitud,
 // the theme plays whole, the chapter is kept and a gold portal opens to the next. If the player stops playing, the
@@ -49,6 +50,8 @@ export function initialize(runtime){
   plenitude();runtime.enterFx=Math.max(runtime.enterFx||0,1);portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:performance.now()};return true;}
  // Through the portal: the next chapter's biome, found on the map near here.
  function travel(){const j=own();if(j.chapter>=CHAPTERS.length-1)return false;const next=j.chapter+1,id=CHAPTERS[next];
+  // The festival build ends after the Lago, in the Refugio, with your phrase.
+  if(runtime.festival&&!FESTIVAL_CHAPTERS.includes(id)){portal=null;finaleAsked=true;if(runtime.journeyFinale)runtime.journeyFinale({festival:true});else runtime.landHouse?.();return true;}
   if(id==='refugio'){j.chapter=next;portal=null;finaleAsked=true;runtime.save();if(runtime.journeyFinale)runtime.journeyFinale();else runtime.landHouse?.();return true;}
   const ids=runtime.BIOMES.map(b=>b.id),spot=findBiome(id,{x:runtime.S.wx,y:runtime.S.wy},(x,y)=>ids[runtime.biomeOfPos(x,y)],(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea);if(!spot)return false;
   const before={chapter:j.chapter,wx:runtime.S.wx,wy:runtime.S.wy};j.chapter=next;runtime.S.wx=spot.x;runtime.S.wy=spot.y;if(runtime.save()===false){j.chapter=before.chapter;runtime.S.wx=before.wx;runtime.S.wy=before.wy;return false;}
