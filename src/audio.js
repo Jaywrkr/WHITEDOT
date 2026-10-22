@@ -467,13 +467,15 @@ export function initialize(runtime) {
       case "minimal":if(L1&&s%4===0)kick2(t,vel(.26),55,.25);if(L2&&s%4===2)hatC(tt,vel(.03));if(L2&&[3,7,13].includes(s)&&r()<.6)rim(tt,vel(.05));if(L3&&s%4===1&&r()<.4&&!DO)blip(ct[1],tt,vel(.025));break;
       case "rominimal":if(L1&&s%4===0&&!(s===12&&bar%4===3))kick2(t,vel(.26),52,.28);if(L2&&s%2===1)shaker(tt,vel(s%4===3?.026:.016));if(L2&&[3,6,11,15].includes(s)&&r()<.75)wood(tt,vel(.05));if(L3&&(s===4||s===12)&&r()<.5)rim(tt,vel(.04));break;
       case "acid":if(L1&&s%4===0)kick2(t,vel(.34),60,.25);if(L2&&s%2===1)hatC(tt,vel(.02));if(L2&&s%4===2)hatO(t,vel(.04));if(L3&&(s===4||s===12))clap(t,vel(.06));break;
-      case "breaks":if(L1&&(s===0||s===10))kick2(t,vel(.3),58,.25);if(L1&&(s===4||s===12))snare(tt,vel(.12));if(L2&&(s===7||s===14)&&r()<.5)snare(tt,vel(.04));if(L2&&s%2===0)hatC(tt,vel(.025));if(L3&&s===11&&r()<.5)kick2(t,vel(.18),58,.2);break;
+      // Breaks: a cut-up breakbeat, faster than electro. Ghost snares always answer, an open hat lifts the end of the bar.
+      case "breaks":if(L1&&(s===0||s===10))kick2(t,vel(.3),58,.25);if(L1&&(s===4||s===12))snare(tt,vel(.12));if(L2&&(s===7||s===9||s===15))snare(tt,vel(.045));if(L2&&s%2===0)hatC(tt,vel(.025));if(L2&&s===14)hatO(tt,vel(.03));if(L3&&s===11&&r()<.5)kick2(t,vel(.18),58,.2);break;
       case "garage":if(L1&&[0,7,10].includes(s)&&(s===0||r()<.75))kick2(t,vel(.27),55,.25);if(L1&&(s===4||s===12))snare(tt,vel(.1));if(L2&&s%2===1)hatC(tt,vel(.02));if(L3&&s%4===2)hatO(tt,vel(.03));break;
       case "tribal":{const T={0:70,3:95,6:70,8:130,11:95,14:70,15:110};if(L1&&s===0)kick2(t,vel(.25),50,.3);if(L1&&T[s]&&r()<.8)tom(tt,T[s],vel(.15));if(L2&&s%2===1)shaker(tt,vel(.018));if(L3&&(s===2||s===10))conga(tt,280,vel(.08));break;}
+      // Electro: the 808 machine. Syncopated kicks, a clap with the snare, and closed hats on every sixteenth.
       case "electro":
         if(L1&&[0,variation===1?6:7,10].includes(s))kick2(t,vel(.28),54,.24);
-        if(L1&&(s===4||s===12))snare(tt,vel(.1));
-        if(L2&&s%2===0)hatC(tt,vel(.025));
+        if(L1&&(s===4||s===12)){snare(tt,vel(.09));clap(t,vel(.04));}
+        if(L2)hatC(tt,vel(s%2?.012:.022));
         if(L3&&s===[3,11,15][variation])rim(tt,vel(.045));break;
       // Progressive house: rolling. Closed hats on every sixteenth, one clap per bar, a tight kick; the open hat
       // only arrives when the track is full.
@@ -517,10 +519,12 @@ export function initialize(runtime) {
         if(L2&&(s===10||s===14))tom(tt,s===10?90:72,vel(.06));
         if(L2&&s%2===1)shaker(tt,vel(.011));
         if(L3&&s===0&&bar%2===0&&!DO)ct.slice(0,3).forEach(n=>hookInst('strings',n,t,vel(.025)));break;
+      // Electro robótico: slow and exact. A straight kick on the first and third beat, metallic hats only off the beat,
+      // and the timbale answering like a machine.
       case "robotic":
-        if(L1&&[0,7,10].includes(s))kick2(t,vel(.27),48,.22);
+        if(L1&&(s===0||s===8))kick2(t,vel(.27),48,.22);
         if(L1&&(s===4||s===12))snare(t,vel(.085));
-        if(L2&&s%2===0)hatC(tt,vel(.02));
+        if(L2&&s%4===2)hatC(tt,vel(.024));
         if(L3&&s===[3,11,15][variation])runtime.timbale(tt,vel(.04));break;
       case "nudisco":
         if(L1&&s%4===0)kick2(t,vel(.25),53,.25);

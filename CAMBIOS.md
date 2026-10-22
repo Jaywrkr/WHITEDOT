@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.109**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.110**. Las entradas describen su revisión, no certifican producción.
+
+## Música · Fase 9 · Las robóticas · alpha.110
+
+Rama `claude/musica-robotica`, sobre `claude/universo-viaje`.
+
+| Género | Tempo | Firma |
+|---|---|---|
+| Electro robótico | 108–114 | Lento y exacto: bombo en el 1 y el 3, hi-hat metálico solo a contratiempo, timbal que contesta como una máquina |
+| Electro | 124–130 | La caja de ritmos 808: bombos sincopados, palmada junto a la caja, hi-hats en cada semicorchea |
+| Breaks | 132–138 | Breakbeat cortado: cajas fantasma que siempre contestan y hi-hat abierto al final del compás |
+
+- **Medida:** Electro ~ Electro robótico pasó de 0,061 a 0,346; Breaks ~ Electro, de 0,077 a más de 0,2. Ninguno de los tres queda bajo la línea con otro género (el más cercano, Electro robótico ~ Electro funk, a 0,14).
+- **El mapa no cambia:** los tres guardan su rango original (`genre-tempo.js`); el mapa es idéntico al de `main` (`genre-map.mjs`) y `palettes.mjs` comprueba el tempo guardado en ese rango.
 
 ## Universo · Fase 3 · Regiones del Viaje · alpha.109
 

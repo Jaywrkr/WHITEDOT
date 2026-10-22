@@ -3,7 +3,8 @@
 // original range: every place keeps its genre and its saved tempo, exactly as before. Only the music, when it plays,
 // moves that tempo to the same relative point of the new range (soundingBpm). Only retuned genres are listed.
 export const PICK_BPM=Object.freeze({
- progressive:[120,128],melodic:[118,124],chicago:[120,126],acidhouse:[120,126],soulful:[120,124],garagehouse:[118,124]
+ progressive:[120,128],melodic:[118,124],chicago:[120,126],acidhouse:[120,126],soulful:[120,124],garagehouse:[118,124],
+ breaks:[126,134],electro:[124,136],robotic:[124,132]
 });
 export const pickRange=(id,g)=>PICK_BPM[id]||g.bpm;
 // A tempo of the original range, placed at the same point of the genre's playing range.
