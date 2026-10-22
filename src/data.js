@@ -56,7 +56,7 @@ export function initialize(runtime) {
    garage:{name:"UK garage",bpm:[130,134],sw:.33,pt:4,bassI:"organb",hookP:["keys","glass"]},
    tribal:{name:"Tribal",bpm:[116,122],sw:.12,pt:3,bassI:"fm",hookP:["marimba","organ"]},
    electro:{name:"Electro",bpm:[124,136],sw:.05,pt:5,bassI:"fm",hookP:["saw","keys"]},
-   progressive:{name:"Progressive house",bpm:[120,128],sw:.04,pt:0,bassI:"pluck",hookP:["saw","keys","organ"],pad:.3},
+   progressive:{name:"Progressive house",bpm:[122,125],sw:.04,pt:0,bassI:"pluck",hookP:["saw","keys","organ"],pad:.3},
    microhouse:{name:"Microhouse",bpm:[120,126],sw:.18,pt:1,bassI:"roll",hookP:["marimba","keys"]},
    minimaltechno:{name:"Minimal techno",bpm:[126,134],sw:.06,pt:3,bassI:"fm",hookP:["organ","keys"]},
    dubstep:{name:"Dubstep",bpm:[136,144],sw:.12,pt:5,bassI:"reese",hookP:["organ","saw"]},

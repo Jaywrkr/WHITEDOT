@@ -1,6 +1,6 @@
 export const WORLD_GENRES={
  tropical:{scales:[[0,2,4,5,7,9,11],[0,2,4,5,7,9,10]],name:'Tropical house',bpm:[108,116],sw:.12,pt:1,bassI:'rubber',bassP:['rubber','sub'],hookP:['steel','kalimba'],percP:['conga','guiro','timbale','shaker'],pad:.12},
- melodic:{scales:[[0,2,3,5,7,8,10],[0,2,3,5,7,9,10]],name:'Melodic house',bpm:[118,124],sw:.04,pt:0,bassI:'rubber',bassP:['rubber','sub'],hookP:['rhodes','strings'],percP:['kick','rim','shaker'],pad:.3},
+ melodic:{scales:[[0,2,3,5,7,8,10],[0,2,3,5,7,9,10]],name:'Melodic house',bpm:[114,118],sw:.04,pt:0,bassI:'rubber',bassP:['rubber','sub'],hookP:['rhodes','strings'],percP:['kick','rim','shaker'],pad:.3},
  robotic:{scales:[[0,1,3,5,7,8,10],[0,2,3,5,7,8,10]],name:'Electro robótico',bpm:[124,132],sw:.02,pt:5,bassI:'machine',bassP:['machine','fm'],hookP:['vocalform','metalkeys'],percP:['kick','rim','timbale','hat'],pad:0},
  nudisco:{scales:[[0,2,4,5,7,9,10],[0,2,3,5,7,9,10]],name:'Nu-disco',bpm:[112,122],sw:.16,pt:0,bassI:'rubber',bassP:['rubber','pluck'],hookP:['clav','brass','rhodes'],percP:['kick','clap','guiro','shaker'],pad:.15}
 };
