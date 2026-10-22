@@ -21,7 +21,7 @@ try:
    page.locator('#journalSearch').fill('Aurora');assert page.locator('.album-piece').count()==1;assert 'Juega 180 días' in page.locator('#journalBody').inner_text()
    assert not page.evaluate('!!window.__testRuntime.ac');page.locator('[data-journal-tab="music"]').click();assert '0 de 52' in page.locator('#journalBody').inner_text()
    page.locator('[data-journal-tab="places"]').click();assert page.locator('#journalSky').is_visible()
-   page.locator('[data-journal-tab="achievements"]').click();assert all(x in page.locator('#journalBody').inner_text() for x in ['Camino','Mundo','Música','Vida','Colección','Casa','Secretos'])
+   page.locator('[data-journal-tab="achievements"]').click();assert all(x in page.locator('#journalBody').inner_text() for x in ['Camino','Mundo','Música','Vida','Colección','Refugio','Secretos'])
    assert page.locator('[data-journal-detail][open]').count()==0;page.locator('[data-journal-detail="achievement:Música"] > summary').click();page.locator('#journalBody').evaluate('e=>e.scrollTop=120');page.locator('[data-journal-tab="music"]').click();page.locator('[data-journal-tab="achievements"]').click();assert page.locator('[data-journal-detail="achievement:Música"]').get_attribute('open') is not None;assert page.locator('#journalBody').evaluate('e=>e.scrollTop')>50;page.screenshot(path=f'/tmp/whitedot-journal-compact-{width}.png');page.locator('#journalNext').click();assert page.locator('#mJournal').is_hidden();assert not page.evaluate('!!window.__testRuntime.ac')
    assert not errors,errors;print('PASS six sections, silent search/silhouettes, 52-genre ring, constellation and next-step voice at '+str(width),flush=True);page.close()
   b.close()

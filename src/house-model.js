@@ -1,6 +1,6 @@
 import {LIVING_CATALOG} from './living-catalog.js';
 import {POWER_IDS,POWERS} from './expansion-music.js';
-export const HOUSE_ROOMS=Object.freeze([{id:'sala',name:'Sala',days:0,found:0,cut:8000,echo:.03},{id:'jardin',name:'Jardín',days:3,found:8,cut:4500,echo:.02},{id:'azotea',name:'Azotea',days:7,found:20,cut:6500,echo:.08},{id:'sotano',name:'Bodega',days:14,found:40,cut:2400,echo:.05}]);
+export const HOUSE_ROOMS=Object.freeze([{id:'sala',name:'Eco',days:0,found:0,cut:8000,echo:.03},{id:'jardin',name:'Jardín de voces',days:3,found:8,cut:4500,echo:.02},{id:'azotea',name:'Cielo',days:7,found:20,cut:6500,echo:.08},{id:'sotano',name:'Raíz',days:14,found:40,cut:2400,echo:.05}]);
 const biomes=['llanura','bosque','lago','dunas','cristales','jardin','ruinas','cueva','tormenta','faros','vacio'];
 export const HOUSE_OBJECTS=Object.freeze([
  {id:'obj:origen',name:'Pulso de casa',source:'cube:color:ffffff',instrument:'sub',role:'bajo',shape:'square'},
@@ -30,12 +30,12 @@ export const houseGain=(o,player)=>Math.max(.12,Math.min(.65,.65-Math.hypot(o.x-
 export function placeHouseObject(house,kind,room,x,y){if(house.readOnly||!Number.isFinite(x)||!Number.isFinite(y)||!house.unlocked.includes(room)||!HOUSE_OBJECTS.some(p=>p.id===kind))return false;const p={kind,room,x:Math.max(0,Math.min(1,x)),y:Math.max(0,Math.min(1,y))};const existing=house.objects.findIndex(p=>p.kind===kind);if(existing>=0)house.objects[existing]={...house.objects[existing],...p};else if(house.objects.length<HOUSE_OBJECTS.length)house.objects.push(p);else return false;return true;}
 const b64=text=>btoa(text).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''),unb64=text=>atob(text.replace(/-/g,'+').replace(/_/g,'/'));
 // A house with only objects keeps the WH1 code older versions can read; decor or colours need WH2.
-export function encodeHouse(house){if(house.readOnly||house.version>HOUSE_VERSION)throw Error('Esta casa necesita una versión más reciente.');const safe=normalizeHouse(house),o=safe.objects.filter(p=>HOUSE_OBJECTS.some(d=>d.id===p?.kind)).map(p=>[p.kind,p.room,Math.round(p.x*1000),Math.round(p.y*1000)]);
+export function encodeHouse(house){if(house.readOnly||house.version>HOUSE_VERSION)throw Error('Este refugio necesita una versión más reciente.');const safe=normalizeHouse(house),o=safe.objects.filter(p=>HOUSE_OBJECTS.some(d=>d.id===p?.kind)).map(p=>[p.kind,p.room,Math.round(p.x*1000),Math.round(p.y*1000)]);
  const d=safe.decor.filter(x=>HOUSE_ROOMS.some(r=>r.id===x.room)).map(x=>[x.id,x.room,Math.round(x.x*1000),Math.round(x.y*1000)]),t=safe.tints;
  if(!d.length&&!Object.keys(t).length)return 'WH1-'+b64(JSON.stringify({v:1,r:safe.unlocked,o}));
  return 'WH2-'+b64(JSON.stringify({v:2,r:safe.unlocked,o,d,t}));}
 const row=r=>Array.isArray(r)&&r.length===4&&typeof r[0]==='string'&&Number.isFinite(r[2])&&Number.isFinite(r[3]);
-export function decodeHouse(text){if(typeof text!=='string'||!/^WH[12]-/.test(text)||text.length>16000)throw Error('Código de casa inválido.');let p;try{p=JSON.parse(unb64(text.slice(4)));}catch(_){throw Error('Código de casa dañado.');}
- const v=Number(text[2]);if(p?.v!==v||!Array.isArray(p.o)||p.o.length>40||!p.o.every(row)||v===2&&(!Array.isArray(p.d)||p.d.length>60||!p.d.every(row)))throw Error('Casa incompatible.');
+export function decodeHouse(text){if(typeof text!=='string'||!/^WH[12]-/.test(text)||text.length>16000)throw Error('Código de refugio inválido.');let p;try{p=JSON.parse(unb64(text.slice(4)));}catch(_){throw Error('Código de refugio dañado.');}
+ const v=Number(text[2]);if(p?.v!==v||!Array.isArray(p.o)||p.o.length>40||!p.o.every(row)||v===2&&(!Array.isArray(p.d)||p.d.length>60||!p.d.every(row)))throw Error('Refugio incompatible.');
  return normalizeHouse({unlocked:p.r,objects:p.o.map(([kind,room,x,y])=>({kind,room,x:x/1000,y:y/1000})),decor:(p.d||[]).map(([id,room,x,y])=>({id,room,x:x/1000,y:y/1000})),tints:p.t});}
 export function houseSelection(objects,step,bar){const matches=objects.filter(p=>houseStep(p)===step),offset=(bar*4)%Math.max(1,matches.length);return matches.slice(offset,offset+4).concat(matches.slice(0,Math.max(0,offset+4-matches.length))).slice(0,Math.min(4,matches.length));}

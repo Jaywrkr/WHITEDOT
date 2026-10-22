@@ -36,36 +36,23 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 `cube-shop-model.js` define las 14 ranuras y las piezas construidas; `sparkEconomy.wear` guarda una pieza por ranura simple y `sparkEconomy.on` las de ranuras múltiples, y `equipped` se conserva para dispositivos sin actualizar. `cube-shop-art.js` dibuja Movimiento, Cuerpo, Ojos, Hábitos y Accesorios desde `render.js` con cuatro ganchos (debajo del cubo, transformación, cuerpo y encima del cuerpo, dentro de su transformación; el de encima no se usa con cuerpos sorpresa ni ritual). `cubeShopMinSize` sube a 10 px el tamaño dibujado del cubo mientras se lleva cara; no cambia alcance ni colisiones. `cube-shop-world.js` dibuja Rastros (antes del cubo, en coordenadas del mundo) y Compañeros (después del cubo). `S.cubeRoute` (`normalizeRoute`/`rollRoute` en el modelo) guarda los pasos de hoy y el último día jugado, acotados, solo en superficie. `cube-shop-moves.js` añade gestos (transformación y dibujo tras el compañero) y expone `cubeShopPulseLook`; `interactions.js` guarda esa forma en cada onda del jugador (`look`, `charge`) y le pone la forma de impacto `ring-0`, así que el alcance no cambia; `cube-shop-pulse.js` la dibuja, solo en el Mundo y sin tocar colisiones, alcance, guardado ni música; cada pieza tiene variante estática con movimiento reducido. Catálogo y tandas en [Tienda del cubo](TIENDA_DEL_CUBO.md).
 
-## Casa
+## Refugio (antes Casa)
 
-`house.js` mueve el cubo, lleva la cámara y recibe los gestos, `house-view.js` dibuja la casa de muñecas, `house-model.js` guarda los datos y `house-audio.js` la hace sonar; `collection-garden.js` añade el Jardín de voces.
-- **Historia:** la casa viaja con el cubo. Se abre donde estás (menú Casa, el botón de la casa en el Mundo o «Abrir la casa aquí»): aterriza sobre cuatro patas con tres propulsores y una antena, y el suelo y las formas de fuera son las del bioma donde aterrizó (`LANDSCAPES`). El lugar anterior queda como campamento en el mapa. Fuera del Mundo se abre en el último lugar.
-- **Vista:** la casa vive en unidades propias de 1000 de ancho, con tres plantas: Azotea, Sala y Jardín, y Bodega (id `sotano`). Las escaleras están dentro de la Sala y la puerta une Sala y Jardín.
-- **Cámara:** encuadra la planta del cubo en la franja libre entre los contadores y el panel; «Ver casa» la muestra entera.
-- **Dibujo:** las paredes, los muebles y la luz de la hora se dibujan una vez por escala, hora y habitaciones abiertas en un lienzo aparte. El cielo y el suelo se pintan cada fotograma a lo ancho de la pantalla.
-- **Cubo:** se dibuja con `drawStage`, igual que en la tienda, sin el aro del pulso, y lleva todo lo comprado.
-- **Colección:** `house-collection.js` solo lee la partida y la expone en la Casa.
-  - Cuadros con las tarjetas más raras (`rarePortrait` convertido en imagen), un trofeo por categoría de logros y vitrinas con las últimas piezas compradas (`pieceImage`).
-  - Las voces del jardín se ven como plantas en maceta. Las criaturas vistas pasean por su planta y la mascota sigue al cubo.
-  - El pulso (`housePulse`) las hace saltar. Tocar algo lo nombra sin caminar.
-- **Sonido:** `house-audio.js` toca los objetos en su paso del compás y, además:
-  - un ambiente por habitación (`createAmbience`): Sala en silencio, hojas en el Jardín, viento en la Azotea y zumbido en el Sótano, que se apaga al salir, con sonido apagado o con un panel abierto;
-  - pasar junto a un objeto lo toca una vez (`brush`, 22 unidades, 2,5 s de espera por objeto);
-  - el pulso toca la voz del cubo y los cuatro objetos más cercanos en arpegio, y las criaturas cercanas responden con un pío;
-  - los sonidos del cubo comprados en la tienda (`cube-shop-sound.js`) siguen sus pasos en la Casa con `houseMotion`.
-- **Crecer:** una habitación se abre por días jugados o por logros ganados, lo que llegue antes (`roomOpens`): Jardín 3 días u 8 logros, Azotea 7 o 20, Sótano 14 o 40. Ninguna se cierra.
-- **Cápsulas:** `house-capsules.js` pone una máquina en la Sala.
-  - Cada cápsula cuesta 60 ✦ y da un adorno (12), una pieza que suena (6) o un color para un objeto colocado (8 colores). Nada se repite.
-  - El premio sale de un hash del número de cápsula, sin tocar el azar del juego. Primero salen piezas de habitaciones abiertas y cada tercera cápsula pinta si hay objetos.
-  - Se guardan en `decor`, `tints` y `capsules` de `S.house` y viajan en el código WH2. Las chispas solo se descuentan si la partida se guarda.
-  - Las piezas que suenan entran al secuenciador como los objetos y se pueden arrastrar.
-- **Taller:** es la mesa de la Sala y está abierta desde el primer día. Abre el panel radial de siempre; «Volver a la casa» regresa a la Casa. Ya no hay otra entrada al Taller. La Bodega guarda el motor de la casa.
-- **Panel:** cuatro botones: Coloca (alterna con caminar), Ver casa, Código y Volver. Para guardar un objeto se arrastra fuera de la casa. Las herramientas del Jardín de voces solo aparecen con el cubo en el Jardín.
-- **Visitas:** un código WH1 o WH2 abre otra casa en `visit`, de solo lectura: se camina y se escucha, pero no se coloca, no se gasta y no se guarda nada de ella. El código no lleva nombre. Cada casa distinta visitada se guarda una vez en `visitedHouses` (con un hash del código); el código propio no cuenta. `knownVisitors` sigue siendo de las criaturas que te visitan (logros «Puertas abiertas»).
-- **Guía:** `house-guide.js` cuenta en una frase cada habitación en `#houseSummary` (región en vivo, solo para lectores de pantalla) y dice qué hay cerca. Enter usa la máquina o la mesa. Al entrar se guarda `seen`; la tarjeta Casa del menú anuncia cuadros nuevos, trofeos nuevos o una cápsula lista. La Bitácora tiene «Ver en tu casa» en Colección y Logros.
-- **Controles:** el render pasa los `dx/dy` del fotograma a la Casa. Las flechas caminan y suben o bajan escaleras; tocar una habitación lleva al cubo hasta allí, cambiando de planta por las escaleras.
-- **Datos:** `S.house` va por la versión 2, la de la casa de muñecas (ver [Casa viva](CASA_VIVA.md)). Conserva los objetos `{kind,room,x,y}`: x es el paso del compás y y la altura en la pared, que marca la nota. Añade `decor`, `tints` y `capsules`, siempre normalizados. La versión 1 se migra en el momento; una versión mayor se abre solo para leer.
-- **Códigos:** WH1 si la casa solo tiene objetos (lo leen versiones anteriores) y WH2 si lleva adornos o colores; se leen los dos.
+`house.js` mueve el cubo, lleva la cámara y recibe los gestos; `house-view.js` dibuja las cámaras; `house-model.js` guarda los datos; `house-audio.js` la hace sonar; `house-collection.js` muestra la colección; `house-capsules.js` el Prisma, el disco del Taller y el Núcleo; `house-guide.js` la cuenta en palabras; `collection-garden.js` añade el Jardín de voces. Los ids internos (`house`, `sala`, `jardin`, `azotea`, `sotano`, `decor:*`) no cambian para no tocar partidas.
+
+- **Historia:** el Refugio viaja con el cubo. Se abre donde estás (menú, botón del Mundo u «Abrir el Refugio aquí») y se despliega desde el cubo: todo crece desde él y aparece (`unfold`). Fuera solo hay negro, polvo y la luz del bioma (`LANDSCAPES`). El lugar anterior queda como campamento.
+- **Cámaras:** Cielo (`azotea`), Eco (`sala`), Jardín de voces (`jardin`) y Raíz (`sotano`), en unidades propias de 1000 de ancho y tres niveles. Cada cámara es una partitura: esquinas, suelo, cinco líneas tenues y dieciséis marcas del compás; la luz y la marca dorada siguen el paso que suena. Entre niveles hay hilos de luz donde estaban las escaleras.
+- **Dibujo:** las cámaras y los hilos se dibujan una vez por escala y cámaras abiertas en un lienzo aparte; el fondo, cada fotograma.
+- **Cubo:** se dibuja con `drawStage`, como en la tienda, y lleva todo lo comprado.
+- **Colección:** solo lee la partida. Paneles de luz con las tarjetas más raras, una constelación con una estrella por categoría de logros, columnas de cristal con las últimas piezas compradas, voces del jardín como tallos de luz, y las criaturas vistas y la mascota de visita. El pulso las hace saltar; tocar algo lo nombra.
+- **Sonido:** los objetos suenan en su paso del compás, al pasar junto a ellos (una vez cada 2,5 s) y con el pulso (arpegio de los cuatro más cercanos); las criaturas responden. Cada cámara tiene su aire, que se apaga al salir, con sonido apagado o con un panel abierto.
+- **Crecer:** una cámara se abre por días o por logros, lo que llegue antes (`roomOpens`): Jardín de voces 3 u 8, Cielo 7 o 20, Raíz 14 o 40.
+- **Prisma:** cada giro cuesta 60 ✦ y da un ornamento (12), una pieza que suena (6) o un color para un objeto colocado. Nada se repite; el premio sale de un hash del número de giro. Las chispas solo se descuentan si la partida se guarda. Se toca con el cubo al lado: el primer toque avisa y el segundo gira.
+- **Taller:** su disco radial flota en Eco y abre el panel de siempre; «Volver al Refugio» regresa. No hay otra entrada al Taller.
+- **Panel:** Coloca (alterna con caminar), Ver refugio, Código y Volver. Un objeto se guarda arrastrándolo fuera. Las herramientas del Jardín de voces aparecen con el cubo en esa cámara.
+- **Datos:** `S.house` versión 2: objetos `{kind,room,x,y}` (x es el paso del compás, y la nota), `decor`, `tints`, `capsules`, `visitedHouses` y `knownVisitors` (criaturas que te visitan). La versión 1 se migra en el momento; una mayor se abre solo para leer.
+- **Visitas:** un código WH1 o WH2 abre otro Refugio solo para mirar y escuchar; no lleva nombre.
+- **Guía:** `#houseSummary` dice en una frase qué hay en la cámara y qué está cerca; Enter usa el Prisma o el disco. La tarjeta Refugio del menú anuncia paneles nuevos, logros nuevos o el Prisma listo.
 
 ## Esculturas del universo
 

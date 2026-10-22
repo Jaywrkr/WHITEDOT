@@ -5,7 +5,7 @@ import {pieceImage} from './cube-shop-preview.js';
 import {livingGlyph} from './living-art.js';
 import {livingDefinition} from './living-catalog.js';
 import {roomBox,FLOORS} from './house-view.js';
-// What you collected, on show in the dollhouse: frames, a trophy shelf, showcases and creatures. Only reads the save.
+// What you collected, on show in the Refugio: light panels, a constellation of achievements, glass columns and creatures. Only reads the save.
 const TIER_RANK={mitico:4,legendario:3,singular:2,raro:1},TIER_INK={raro:'#9fe8ff',singular:'#bda5f5',legendario:'#bda5f5',mitico:'#f0d27a'};
 export const GALLERY=Object.freeze([{x:262,y:40},{x:330,y:40},{x:398,y:40},{x:466,y:40}].map(Object.freeze));
 export const SHOWCASES=Object.freeze([290,356,422,488,554,620].map(x=>Object.freeze({x,w:52,h:96})));
@@ -29,7 +29,6 @@ export function portraitImage(card){
 }
 const pictures=new Map();
 function pieceImg(id,color){const key=id+'|'+color;if(pictures.has(key))return pictures.get(key);const entry={img:null,ready:false};pictures.set(key,entry);if(typeof Image!=='function')return entry;const url=pieceImage(id,{color});if(url){const img=new Image();img.onload=()=>{entry.ready=true;};img.src=url;entry.img=img;}return entry;}
-function cup(c,x,y,s,fill){c.beginPath();c.moveTo(x-s*.5,y-s);c.lineTo(x+s*.5,y-s);c.quadraticCurveTo(x+s*.5,y-s*.35,x,y-s*.3);c.quadraticCurveTo(x-s*.5,y-s*.35,x-s*.5,y-s);c.closePath();if(fill)c.fill();c.stroke();c.beginPath();c.moveTo(x,y-s*.3);c.lineTo(x,y-s*.08);c.moveTo(x-s*.3,y);c.lineTo(x+s*.3,y);c.stroke();}
 export function initialize(runtime){
  const creatures=new Map();let owner=null,hop=-1e9,hopAt=null,chirps=0;const hits=[];
  function own(){if(owner!==runtime.S){owner=runtime.S;creatures.clear();}}
@@ -47,20 +46,21 @@ export function initialize(runtime){
   for(const [id,s]of creatures){if(roomBox(s.room).floor!==at.floor||Math.abs(s.x-at.x)>220)continue;const t=ac.currentTime+.08+i*.09,o=ac.createOscillator(),g=ac.createGain(),f=900+((id.length*137)%600);o.type='sine';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*1.6,t+.07);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.02,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+.12);o.connect(g).connect(runtime.bus);o.start(t);o.stop(t+.14);chirps++;i++;}}
  function draw(c,{toScreen,k,t,dt,calm,house,cube}){
   own();hits.length=0;const unlocked=house.unlocked||['sala'];const sala=roomBox('sala');c.save();c.lineWidth=1;
-  // Frames: the rarest cards, framed in their tier colour.
-  if(unlocked.includes('sala')){const cards=galleryCards(runtime.rareCards);for(const [i,slot]of GALLERY.entries()){const card=cards[i],p=toScreen(sala.x+slot.x,sala.y+slot.y),w=54*k,h=44*k;c.fillStyle='#0a0a0c';c.fillRect(p.x,p.y,w,h);c.strokeStyle=card?TIER_INK[card.odds?.tier]||'#ffffff':'#ffffff33';c.lineWidth=Math.max(1,2*k);c.strokeRect(p.x,p.y,w,h);c.lineWidth=1;c.strokeStyle='#ffffff22';c.beginPath();c.moveTo(p.x+w/2,p.y);c.lineTo(p.x+w/2,p.y-10*k);c.stroke();
+  // Light panels: the rarest cards, outlined in their tier colour.
+  if(unlocked.includes('sala')){const cards=galleryCards(runtime.rareCards);for(const [i,slot]of GALLERY.entries()){const card=cards[i],p=toScreen(sala.x+slot.x,sala.y+slot.y),w=54*k,h=44*k;c.strokeStyle=card?TIER_INK[card.odds?.tier]||'#ffffff':'#ffffff40';c.globalAlpha=card?.8:1;if(!card)c.setLineDash?.([3,4]);c.strokeRect(Math.round(p.x)+.5,Math.round(p.y)+.5,Math.round(w),Math.round(h));c.setLineDash?.([]);c.globalAlpha=1;
    if(card){const pic=portraitImage(card);if(pic.ready)c.drawImage(pic.img,p.x+3*k,p.y+3*k,w-6*k,h-6*k);hits.push({x:p.x,y:p.y,w,h,text:card.name+' · '+({raro:'Raro',singular:'Singular',legendario:'Legendario',mitico:'Mítico'}[card.odds?.tier]||'Tarjeta')});}
-   else{c.fillStyle='#ffffff22';c.font=Math.max(8,9*k)+'px "Geist Mono", monospace';c.fillText('?',p.x+w/2-3,p.y+h/2+3);hits.push({x:p.x,y:p.y,w,h,text:'Un cuadro vacío: encuentra tarjetas raras para colgarlas.'});}}
-   // Trophy shelf: one cup per category, gold once you have one, fuller as you earn more.
-   const rows=trophyShelf(runtime.S.ach,runtime.ACH,a=>runtime.achievementMeta?.(a)||{category:'Camino'}),sh=toScreen(sala.x+SHELF.x,sala.y+SHELF.y);c.strokeStyle='#ffffff88';c.beginPath();c.moveTo(sh.x,sh.y);c.lineTo(sh.x+SHELF.w*k,sh.y);c.stroke();c.fillStyle='#ffffff18';c.fillRect(sh.x,sh.y,SHELF.w*k,3*k);
-   for(const [i,row]of rows.entries()){const share=row.total?row.earned/row.total:0,x=sh.x+(14+i*27)*k,size=(10+share*10)*k;c.strokeStyle=row.earned?'#f0d27a':'#ffffff44';c.fillStyle=row.earned?`rgba(240,210,122,${.25+.75*share})`:'transparent';cup(c,x,sh.y-1,size,row.earned>0);hits.push({x:x-size/2,y:sh.y-size-4,w:size,h:size+4,text:row.category+' · '+row.earned+' de '+row.total+' logros'});}}
-  // Showcases in the basement: what you bought in the shop.
-  if(unlocked.includes('sotano')){const b=roomBox('sotano'),list=showcasePieces(runtime.sparkEconomy),color=runtime.cubeColor?.()||'#fff';for(const [i,v]of SHOWCASES.entries()){const p=toScreen(b.x+v.x,b.y+b.h-v.h-6),w=v.w*k,h=v.h*k,id=list[i];c.fillStyle='#9fd7ff0c';c.fillRect(p.x,p.y,w,h);c.strokeStyle='#9fd7ff66';c.strokeRect(p.x,p.y,w,h);c.strokeStyle='#9fd7ff22';c.beginPath();c.moveTo(p.x+w*.2,p.y+4);c.lineTo(p.x+w*.05,p.y+h*.4);c.stroke();c.fillStyle='#ffffff22';c.fillRect(p.x-2*k,p.y+h,w+4*k,4*k);
+   else{hits.push({x:p.x,y:p.y,w,h,text:'Un panel vacío: encuentra tarjetas raras para encenderlo.'});}}
+   // A constellation of achievements: one star per category, gold and brighter as you earn more.
+   const rows=trophyShelf(runtime.S.ach,runtime.ACH,a=>runtime.achievementMeta?.(a)||{category:'Camino'}),stars=rows.map((row,i)=>({row,p:toScreen(sala.x+SHELF.x+14+i*27,sala.y+SHELF.y-6+((i*37)%3-1)*8)}));
+   c.strokeStyle='#f0d27a55';c.beginPath();stars.forEach(({p},i)=>i?c.lineTo(p.x,p.y):c.moveTo(p.x,p.y));c.stroke();
+   for(const {row,p}of stars){const share=row.total?row.earned/row.total:0,size=Math.max(2,(2+share*3)*k*1.4);c.fillStyle=row.earned?'#f0d27a':'#ffffff55';c.globalAlpha=row.earned?.55+.45*share:1;c.fillRect(Math.round(p.x-size/2),Math.round(p.y-size/2),Math.round(size),Math.round(size));c.globalAlpha=1;hits.push({x:p.x-8,y:p.y-8,w:16,h:16,text:row.category.replace('Casa','Refugio')+' · '+row.earned+' de '+row.total+' logros'});}}
+  // Glass columns in the Raíz: what you bought in the shop.
+  if(unlocked.includes('sotano')){const b=roomBox('sotano'),list=showcasePieces(runtime.sparkEconomy),color=runtime.cubeColor?.()||'#fff';for(const [i,v]of SHOWCASES.entries()){const p=toScreen(b.x+v.x,b.y+b.h-v.h-6),w=v.w*k,h=v.h*k,id=list[i];c.strokeStyle='#cfe6ff59';c.strokeRect(Math.round(p.x)+.5,Math.round(p.y)+.5,Math.round(w),Math.round(h));c.strokeStyle='#9fd7ff22';c.beginPath();c.moveTo(p.x+w*.2,p.y+4);c.lineTo(p.x+w*.05,p.y+h*.4);c.stroke();c.fillStyle='#ffffff22';c.fillRect(p.x-2*k,p.y+h,w+4*k,4*k);
    if(id){const pic=pieceImg(id,color);if(pic.ready){const iw=w-4*k,ih=iw*68/102;c.save();c.globalCompositeOperation='lighten';c.drawImage(pic.img,p.x+2*k,p.y+h*.38-ih/2,iw,ih);c.restore();}const piece=CUBE_SHOP.find(q=>q.id===id);hits.push({x:p.x,y:p.y,w,h,text:(piece?.name||'Pieza')+' · comprada en la tienda'});}
-   else hits.push({x:p.x,y:p.y,w,h,text:'Vitrina vacía: lo que compres en la tienda aparece aquí.'});}}
-  // Garden voices: each one a plant in a pot under where it sounds.
+   else hits.push({x:p.x,y:p.y,w,h,text:'Columna vacía: lo que compres en la tienda aparece aquí.'});}}
+  // Garden voices: each one a stem of light rising from the floor to where it sounds.
   for(const o of (runtime.gardenObjects?.(house)||[]).filter(o=>o.gardenCard&&unlocked.includes(o.room))){const b=roomBox(o.room),top=toScreen(b.x+18+o.x*(b.w-36),b.y+26+o.y*(b.h-52)),base=toScreen(b.x+18+o.x*(b.w-36),b.y+b.h),card=runtime.rareCards?.find(q=>q.id===o.cardId),ink=TIER_INK[card?.odds?.tier]||'#9fd7c7';
-   c.strokeStyle='#5f8a4e';c.beginPath();c.moveTo(base.x,base.y-14*k);c.quadraticCurveTo(base.x+8*k,(base.y+top.y)/2,top.x,top.y+8*k);c.stroke();c.fillStyle='#1d1610';c.strokeStyle='#ffffff66';c.beginPath();c.moveTo(base.x-11*k,base.y-14*k);c.lineTo(base.x+11*k,base.y-14*k);c.lineTo(base.x+8*k,base.y);c.lineTo(base.x-8*k,base.y);c.closePath();c.fill();c.stroke();
+   c.strokeStyle=ink;c.globalAlpha=.45;c.beginPath();c.moveTo(base.x,base.y);c.quadraticCurveTo(base.x+6*k,(base.y+top.y)/2,top.x,top.y+6*k);c.stroke();c.globalAlpha=1;
    c.fillStyle=ink;c.globalAlpha=.35;c.beginPath();c.arc(top.x,top.y,10*k,0,6.283);c.fill();c.globalAlpha=1;}
   // Visitors: the creatures you met, and your pet following you.
   const list=visitors(runtime.S.livingSeen,runtime.S.pet);stepCreatures(list.filter(id=>!id.startsWith('pet:')),unlocked,t,dt,cube,calm);const sinceHop=(performance.now()-hop)/1000;
