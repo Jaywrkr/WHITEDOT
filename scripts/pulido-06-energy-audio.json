@@ -1,11 +1,11 @@
 {
   "renders": 4,
-  "maxPeak": 0.8728330731391907,
+  "maxPeak": 0.8728334903717041,
   "rows": [
     {
       "energySetting": 0,
-      "peak": 0.8727633357048035,
-      "rmsDb": -12.178967646837744,
+      "peak": 0.8727631568908691,
+      "rmsDb": -12.178983515306685,
       "hotFraction": 0,
       "genre": "deep",
       "instruments": {
@@ -19,8 +19,8 @@
     },
     {
       "energySetting": 0.5,
-      "peak": 0.8728329539299011,
-      "rmsDb": -12.150238688919764,
+      "peak": 0.8728334903717041,
+      "rmsDb": -12.150140793918247,
       "hotFraction": 0,
       "genre": "deep",
       "instruments": {
@@ -35,8 +35,8 @@
     },
     {
       "energySetting": 1,
-      "peak": 0.8728079199790955,
-      "rmsDb": -12.144852635691407,
+      "peak": 0.8728093504905701,
+      "rmsDb": -12.144776944284523,
       "hotFraction": 0,
       "genre": "deep",
       "instruments": {
@@ -51,8 +51,8 @@
     },
     {
       "energySetting": null,
-      "peak": 0.8728330731391907,
-      "rmsDb": -12.150256347395405,
+      "peak": 0.8728309869766235,
+      "rmsDb": -12.150203579954544,
       "hotFraction": 0,
       "genre": "deep",
       "instruments": {
