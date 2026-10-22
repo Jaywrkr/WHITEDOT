@@ -20,14 +20,15 @@ export function initialize(runtime){
   for(const s of splashes){s.a+=dt/.45;const r=1+s.a*6;c.globalAlpha=.32*(1-s.a);c.beginPath();c.ellipse(s.x,s.y,r,r*.35,0,0,6.283);c.stroke();}
   splashes=splashes.filter(s=>s.a<1);c.restore();
  }
- // Sound beds share the game's bus, stay at zero with sound off, and fade rather than switch.
+ // Sound beds go through the shared ambience (ambience.js), stay at zero with sound off and fade rather than switch;
+ // insects sing notes of the key that is playing.
  function beds(){
   const ac=runtime.ac,bus=runtime.bus;if(!ac||!bus||!runtime.noiseBuffer)return;
-  if(!bedsReady){bedsReady=true;const src=ac.createBufferSource();src.buffer=runtime.noiseBuffer;src.loop=true;const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=1400;const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=7000;const g=ac.createGain();g.gain.value=0;src.connect(hp).connect(lp).connect(g).connect(bus);src.start();rain={g};}
+  if(!bedsReady){bedsReady=true;const src=ac.createBufferSource();src.buffer=runtime.noiseBuffer;src.loop=true;const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=1400;const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=7000;const g=ac.createGain();g.gain.value=0;src.connect(hp).connect(lp).connect(g).connect(runtime.ambienceBus||bus);src.start();rain={g};}
   const on=runtime.S.sound&&runtime.inWorld(),target=on&&raining()?.012+.02*Math.min(1,runtime.MU?.storm||0):0;rain.g.gain.setTargetAtTime(target,ac.currentTime,.8);
   const night=runtime.worldLight?.()?.night||0,biome=runtime.BI?.()?.id||'';
-  if(on&&!raining()&&night>.6&&!['mar','cueva','vacio','dunas'].includes(biome)&&(!runtime.S.layer||runtime.S.layer==='superficie')&&ac.currentTime>insectsAt){insectsAt=ac.currentTime+1.4+Math.random()*2.2;chirp(ac,bus,ac.currentTime+.05,night);}
+  if(on&&!raining()&&night>.6&&!['mar','cueva','vacio','dunas'].includes(biome)&&(!runtime.S.layer||runtime.S.layer==='superficie')&&ac.currentTime>insectsAt){insectsAt=ac.currentTime+1.4+Math.random()*2.2;chirp(ac,runtime.ambienceBus||bus,ac.currentTime+.05,night);}
  }
- function chirp(ac,bus,t,night){const pan=ac.createStereoPanner?.();const f=4200+Math.random()*900,v=.0045*night;for(let i=0;i<3;i++){const o=ac.createOscillator(),g=ac.createGain(),at=t+i*.07;o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,at);g.gain.linearRampToValueAtTime(v,at+.008);g.gain.exponentialRampToValueAtTime(.0001,at+.05);o.connect(g);if(pan){pan.pan.value=Math.random()*1.6-.8;g.connect(pan);}else g.connect(bus);o.start(at);o.stop(at+.06);}if(pan)pan.connect(bus);}
+ function chirp(ac,bus,t,night){const pan=ac.createStereoPanner?.();const f=runtime.ambienceInKey?.(4200+Math.random()*900)??4200,v=.0045*night;for(let i=0;i<3;i++){const o=ac.createOscillator(),g=ac.createGain(),at=t+i*.07;o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,at);g.gain.linearRampToValueAtTime(v,at+.008);g.gain.exponentialRampToValueAtTime(.0001,at+.05);o.connect(g);if(pan){pan.pan.value=Math.random()*1.6-.8;g.connect(pan);}else g.connect(bus);o.start(at);o.stop(at+.06);}if(pan)pan.connect(bus);}
  Object.defineProperties(runtime,{windSway:{get:()=>sway},drawWeather:{get:()=>draw},weatherBeds:{get:()=>beds},weatherSplashes:{get:()=>()=>splashes.length}});
 }

@@ -171,10 +171,12 @@ export function initialize(runtime){
  let phrasesSeen=null;
  function constellationTick(){const st=runtime.journeyPulseState?.();if(!st)return;if(phrasesSeen===null||st.phrases<phrasesSeen){phrasesSeen=st.phrases;return;}if(st.phrases===phrasesSeen)return;phrasesSeen=st.phrases;
   if(regionAt(runtime.S.wx,runtime.S.wy)!=='constelaciones')return;const k=runtime.regionOfPos(runtime.S.wx,runtime.S.wy).key,u=(runtime.S.universe||={});u.constellations||={};if(u.constellations[k])return;u.constellations[k]=true;if(runtime.save()===false){delete u.constellations[k];return;}stats.constellations++;runtime.enterFx=Math.max(runtime.enterFx||0,.8);}
- // The region's own air: one quiet looped noise, filtered, its gain far under the music.
+ // The region's own air: one quiet looped noise, filtered, its gain far under the music. It goes through the shared
+ // ambience (ambience.js), which breathes with the beat; a narrow band is tuned to the key that is playing.
  function sound(id,speed){const st=STYLES[id]?.sound,ac=runtime.ac;if(!ac||!runtime.bus||!runtime.S.sound){stopAir();return 0;}
   if(!st){stopAir();return 0;}if(!air||airFor!==id){stopAir();const len=ac.sampleRate*2,buf=ac.createBuffer(1,len,ac.sampleRate),d=buf.getChannelData(0);let seed=hash('air:'+id);for(let i=0;i<len;i++){seed=Math.imul(seed^seed>>>15,2246822519)>>>0;d[i]=seed/2147483648-1;}
-   const src=ac.createBufferSource(),f=ac.createBiquadFilter(),g=ac.createGain();src.buffer=buf;src.loop=true;f.type='bandpass';f.frequency.setValueAtTime(st.band,ac.currentTime);f.Q.setValueAtTime(st.q||.8,ac.currentTime);g.gain.setValueAtTime(.0001,ac.currentTime);src.connect(f);f.connect(g);g.connect(runtime.bus);src.start();air={src,g};airFor=id;}
+   const src=ac.createBufferSource(),f=ac.createBiquadFilter(),g=ac.createGain();src.buffer=buf;src.loop=true;f.type='bandpass';f.frequency.setValueAtTime(st.band,ac.currentTime);f.Q.setValueAtTime(st.q||.8,ac.currentTime);g.gain.setValueAtTime(.0001,ac.currentTime);src.connect(f);f.connect(g);g.connect(runtime.ambienceBus||runtime.bus);src.start();air={src,g,f,band:st.band};airFor=id;}
+  const band=(st.q||.8)>=3?runtime.ambienceInKey?.(st.band)??st.band:st.band;if(Math.abs(band-air.band)>.5){air.band=band;air.f.frequency.setValueAtTime(band,ac.currentTime);}
   const v=Math.min(REGION_SOUND_MAX,st.gain+st.bySpeed*Math.min(1,speed));air.g.gain.setTargetAtTime(Math.max(.0001,v),ac.currentTime,.4);return v;}
  // Where we are in the bar (0..1) and which beat, from the scheduler's beat times.
  function barPhase(){const ac=runtime.ac,bq=runtime.MU?.bq;if(!ac||!bq?.length)return (performance.now()/2000)%1;const bar=(runtime.SIX||.15)*16,last=bq[bq.length-1];return (((ac.currentTime-last)/bar)%1+1)%1;}
