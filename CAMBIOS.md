@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.127**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.128**. Las entradas describen su revisión, no certifican producción.
+
+## Fase 0 · Base protegida · alpha.128
+
+Rama `claude/fase0-base`, sobre `main` (alpha.127). Primera fase del plan de la auditoría del 22 de octubre; no cambia lo que se siente al jugar.
+
+- **El juego no se congela:** si un fotograma falla, el siguiente llega igual y el error queda en el registro. Antes, una sola excepción dejaba la imagen fija para siempre (medido: 0 fotogramas después del error).
+- **CI repartida:** la prueba de navegador corre en cuatro grupos con un trabajador cada uno y 30 minutos de límite, en Node 22. Se quitan disparadores de ramas que ya no existen y el workflow «Focused browser closure».
+- **Movimiento reducido de verdad:** seis sistemas (momentos raros, cartas raras, forma del pulso de la tienda, ramas de encuentros, cajas y caminantes) solo miraban un ajuste que nada asigna; ahora siguen también la preferencia del sistema (`calmMotion`).
+- **Dueto retirado:** `connection.js`, `duet-model.js` y sus pruebas salen del juego y de la descarga.
+- **Una prueba que juega como una persona:** `player_touch_smoke.py` recorre el Camino con toques reales en un teléfono y entra al Mundo, y comprueba que un fotograma fallido no congela el juego.
+- **Prueba sin conexión al día:** `offline_smoke.py` esperaba la hoja de cuenta obligatoria y fallaba desde alpha.98 (en CI no llegaba a correr porque el catálogo de navegador fallaba antes). Ahora comprueba que, sin red, el juego arranca desde la caché sin pedir cuenta.
+- **Documentación al día:** traspaso nuevo (el anterior, de alpha.66, va al historial), README, arquitectura, plan y créditos dicen lo mismo: cuenta opcional.
+- **Pendiente:** el resultado de la CI se lee en el PR; ninguna integración debe hacerse con ella en rojo.
 
 ## Pendientes revisados · alpha.127
 

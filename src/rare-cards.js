@@ -1,4 +1,4 @@
-import {openSurface} from './frame-state.js';
+import {openSurface,calmMotion} from './frame-state.js';
 import {installNoticeLane} from './notice-lane.js';
 import {POWERS} from './expansion-music.js';
 import {livingDefinition} from './living-catalog.js';
@@ -120,7 +120,7 @@ export function initialize(runtime){
   if(point&&runtime.selectDestination?.(point.id))$('mJournal').hidden=true;
   else if(!point)runtime.toast?.(runtime.storageStatus.kind==='ok'?'Favoritos lleno · libera un lugar para orientarte.':'No se pudo guardar en este dispositivo.');
  }
- function drawFinding(){const c=runtime.cx;if(!runtime.inWorld()||document.hidden)return;c.save();for(const e of effects){if(e.layer!==(runtime.S.layer||'superficie'))continue;const x=e.x-runtime.S.wx+runtime.W/2,y=e.y-runtime.S.wy+runtime.H/2,rr=12+(runtime.S.reducedMotion?0:e.age*16);c.globalAlpha=(1-e.age/2)*.7;c.strokeStyle=e.ink;c.lineWidth=1;for(let i=0;i<4;i++){const a=i*Math.PI/2;c.beginPath();c.moveTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);c.lineTo(x+Math.cos(a)*(rr+5),y+Math.sin(a)*(rr+5));c.stroke();}}c.restore();}
+ function drawFinding(){const c=runtime.cx;if(!runtime.inWorld()||document.hidden)return;c.save();for(const e of effects){if(e.layer!==(runtime.S.layer||'superficie'))continue;const x=e.x-runtime.S.wx+runtime.W/2,y=e.y-runtime.S.wy+runtime.H/2,rr=12+(calmMotion(runtime.S)?0:e.age*16);c.globalAlpha=(1-e.age/2)*.7;c.strokeStyle=e.ink;c.lineWidth=1;for(let i=0;i<4;i++){const a=i*Math.PI/2;c.beginPath();c.moveTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);c.lineTo(x+Math.cos(a)*(rr+5),y+Math.sin(a)*(rr+5));c.stroke();}}c.restore();}
  runtime.$('journalBody').addEventListener('change',event=>{if(!['rareFilter','rareRole'].includes(event.target.id))return;if(event.target.id==='rareFilter')filter=event.target.value;else roleFilter=event.target.value;page=0;runtime.refreshJournal?.();document.getElementById(event.target.id)?.focus();});
  $('rareNoticeDismiss').onclick=dismiss;$('rareNoticeContinue').onclick=dismiss;
  $('rareNoticeOpen').onclick=()=>{if(!shown)return;const id=shown.id,index=ensure().items.findIndex(c=>c.id===id);filter=roleFilter='todo';page=Math.floor(Math.max(0,ensure().items.length-1-index)/RARE_PAGE_SIZE);dismiss();runtime.openJournal('rares',{finding:id});};

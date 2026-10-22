@@ -1,4 +1,4 @@
-import {prefersReducedMotion,beginFrame,endFrame} from './frame-state.js';
+import {prefersReducedMotion,calmMotion,beginFrame,endFrame} from './frame-state.js';
 import {windLevel} from './territory-journey.js';
 import {AMBIENCE_LEVEL} from './ambience.js';
 import {moveWalker,drawWalker} from './walker-forms.js';
@@ -6,6 +6,8 @@ import {contactEntry} from './contact.js';
 import { movementMultiplier } from './gravity.js';
 
 // Loop, simulación y dibujo del juego.
+// Consecutive failing frames (about two seconds) before the loop stops and asks for a reload.
+export const FRAME_FAILURE_LIMIT=120;
 export function initialize(runtime) {
   /* ---------- glifos ---------- */
   function glyph(x,i,px,py,s){
@@ -30,7 +32,10 @@ export function initialize(runtime) {
   /* ---------- loop ---------- */
   let scheduledFrame=null;
   // One frame's answers to "is a panel open?" are shared by every module drawn in it.
-  function frame(t){runtime.qualityTick?.(t);beginFrame();try{frameBody(t);}finally{runtime.cameraEnd?.();endFrame();}}
+  // An error inside one frame must not freeze the game: the next frame is asked for anyway and the error still reaches
+  // the error log. Only if every frame keeps failing (FRAME_FAILURE_LIMIT in a row) does the loop stop and say so.
+  let failures=0;
+  function frame(t){try{runtime.qualityTick?.(t);beginFrame();frameBody(t);failures=0;}catch(error){failures++;if(scheduledFrame!==null)cancelAnimationFrame(scheduledFrame);scheduledFrame=failures<FRAME_FAILURE_LIMIT?requestAnimationFrame(frame):null;if(failures===FRAME_FAILURE_LIMIT)runtime.toast?.('Algo falló. Recarga el juego.');throw error;}finally{runtime.cameraEnd?.();endFrame();}}
   function frameBody(t){
     if(runtime.accountClient&&(runtime.accountClient.user()?.id||null)!==runtime.accountUserId){location.reload();return;}
     runtime.journeyModeTick?.();
@@ -359,7 +364,7 @@ export function initialize(runtime) {
         const vis=R*1.7;if(d>vis+400)continue;if(d<R*1.2)runtime.seen("caminante");
         runtime.cx.fillStyle="#fff";
         k.trail.forEach(([p,q],i)=>{const e=Math.hypot(p-runtime.S.wx,q-runtime.S.wy),al=(i/k.trail.length)*.25*Math.max(0,1-e/vis);if(al>.01){runtime.cx.globalAlpha=al;runtime.cx.fillRect(p+ox-1,q+oy-1,2,2);}});
-        if(d<vis){runtime.cx.globalAlpha=Math.max(0,1-d/vis)*(runtime.worldOpacity?.(d,vis)??1);runtime.cx.strokeStyle=runtime.musicInk?.(k)||'#fff';drawWalker(runtime.cx,form,k.x+ox,k.y+oy,t,runtime.S.reducedMotion);if(k.follow>0&&d<140){runtime.cx.globalAlpha*=.65;runtime.cx.font='10px "Geist Mono",monospace';runtime.cx.textAlign='center';runtime.cx.fillText(form.name,k.x+ox,k.y+oy-16);}}
+        if(d<vis){runtime.cx.globalAlpha=Math.max(0,1-d/vis)*(runtime.worldOpacity?.(d,vis)??1);runtime.cx.strokeStyle=runtime.musicInk?.(k)||'#fff';drawWalker(runtime.cx,form,k.x+ox,k.y+oy,t,calmMotion(runtime.S));if(k.follow>0&&d<140){runtime.cx.globalAlpha*=.65;runtime.cx.font='10px "Geist Mono",monospace';runtime.cx.textAlign='center';runtime.cx.fillText(form.name,k.x+ox,k.y+oy-16);}}
       }
       for(let i=c.motes.length-1;i>=0;i--){const m=c.motes[i],d=Math.hypot(m.x-runtime.S.wx,m.y-runtime.S.wy);
         if(d<ds/2+10){c.motes.splice(i,1);runtime.playerNote(.13);runtime.burst(m.x,m.y,5,runtime.grooveFx>.9);continue;}

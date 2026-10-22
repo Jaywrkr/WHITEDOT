@@ -33,7 +33,7 @@ Cuenta compartida y guardado automático no conceden cross-buy. La sincronizaci�
 
 ## Entregables vigentes
 
-Los IDs se conservan para el tracker local. Los criterios siguientes sustituyen los que hablaban de demo, cuenta opcional o respaldo manual.
+Los IDs se conservan para el tracker local. Los criterios siguientes sustituyen los que hablaban de demo o respaldo manual; la cuenta es opcional desde el 22 de octubre (tabla de decisiones).
 
 | ID | Entrega | Estado y siguiente condición |
 |---|---|---|

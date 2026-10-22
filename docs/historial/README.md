@@ -28,6 +28,7 @@ Se conservó el texto previo de CAMBIOS, del plan de lanzamiento y del prototipo
 - [CIERRE_MEJORA_INTEGRAL.md](CIERRE_MEJORA_INTEGRAL.md)
 - [CIERRE_PULIDO_CUBO_MUSICA.md](CIERRE_PULIDO_CUBO_MUSICA.md)
 - [CIERRE_REENCUENTRO.md](CIERRE_REENCUENTRO.md)
+- [HANDOFF_ALPHA66.md](HANDOFF_ALPHA66.md): traspaso del 20 de octubre (alpha.66, cuenta obligatoria), sustituido por el actual
 - [CIERRE_V1.md](CIERRE_V1.md)
 - [COBERTURA_150_UNIVERSO.md](COBERTURA_150_UNIVERSO.md)
 - [CUBO_Y_EXPANSION.md](CUBO_Y_EXPANSION.md)

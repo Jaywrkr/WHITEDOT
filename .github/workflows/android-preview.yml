@@ -1,8 +1,7 @@
 name: Android installable preview
+# Run by hand: the branch that used to trigger it no longer exists.
 on:
-  push:
-    branches: ['android/installable-preview']
-    paths-ignore: ['**/*.md']
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -13,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

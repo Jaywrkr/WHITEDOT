@@ -25,7 +25,7 @@ npm run test:browser
 npm run test:audio
 ```
 
-CI está definido en [checks.yml](../.github/workflows/checks.yml), con navegador y tres grupos de audio. No integrar con comprobaciones pendientes o fallidas. El catálogo de navegador conserva un límite de 145 segundos por recorrido y hasta dos trabajadores; su contenedor admite 40 minutos, igual que el job de CI, para no cortar todo el catálogo a los 15 minutos. No ejecutar varias suites pesadas simultáneamente ni desactivar aserciones. Documentar por separado CI, pruebas locales, escucha física, dispositivos reales y despliegue.
+CI está definido en [checks.yml](../.github/workflows/checks.yml), con cuatro grupos de navegador y tres de audio, en Node 22. **No integrar con comprobaciones pendientes o fallidas**: desde el 22 de octubre `main` recibió integraciones con el navegador en rojo. Cada grupo de navegador (`WHITEDOT_BROWSER_SHARD=i/4`) corre un cuarto del catálogo con un trabajador y un límite de 30 minutos; con un solo runner y dos trabajadores el catálogo tardaba unos 38 de sus 40 minutos y perdía carreras distintas en cada ejecución. Cada recorrido conserva su límite de 145 segundos y `offline_smoke.py` corre en el primer grupo. `player_touch_smoke.py` juega como una persona (sin marca de automatización, toques reales, sin atajos de runtime): las demás pruebas de navegador usan el Mundo libre y el «modo dedo» que activa `navigator.webdriver`. No ejecutar varias suites pesadas simultáneamente ni desactivar aserciones. Documentar por separado CI, pruebas locales, escucha física, dispositivos reales y despliegue.
 
 ## Entorno Windows
 
