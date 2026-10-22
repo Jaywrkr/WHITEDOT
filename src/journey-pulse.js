@@ -9,15 +9,17 @@ export const ON_TIME=.06;
 export const PULSE_GAP=120;
 // Distance from now to the nearest beat, from the recent beat times and the expected next one.
 export function beatDistance(now,beats,bar){let best=Infinity;for(const b of beats||[])best=Math.min(best,Math.abs(now-b));const last=beats?.[beats.length-1];if(last!==undefined&&bar>0)best=Math.min(best,Math.abs(now-(last+bar)));return best;}
-// A theme note in the scale of the place, kept in the cello's range.
-export function themePitch(degree,scale,transpose=0){const sc=Array.isArray(scale)&&scale.length===7?scale:[0,2,3,5,7,8,10];let n=57+transpose+sc[((degree%7)+7)%7]+12*Math.floor(degree/7);while(n<48)n+=12;while(n>64)n-=12;return n;}
-// The cube's own voice: a bowed tone, the same everywhere.
+// A theme note in the scale of the place, kept between C4 and E5, where a phone speaker sounds full.
+export const THEME_LOW=60,THEME_HIGH=76;
+export function themePitch(degree,scale,transpose=0){const sc=Array.isArray(scale)&&scale.length===7?scale:[0,2,3,5,7,8,10];let n=57+transpose+sc[((degree%7)+7)%7]+12*Math.floor(degree/7);while(n<THEME_LOW)n+=12;while(n>THEME_HIGH)n-=12;return n;}
+// The cube's own voice for the theme: a soft bowed tone, the same everywhere. Triangle and sine, no sawtooth: a
+// sawtooth this low reaches a phone speaker only as a nasal honk.
 export function playCello(ac,out,t,midi,seconds,volume){
  const hz=440*2**((midi-69)/12),o=ac.createOscillator(),o2=ac.createOscillator(),f=ac.createBiquadFilter(),g=ac.createGain(),lfo=ac.createOscillator(),depth=ac.createGain(),end=t+seconds;
- o.type='sawtooth';o2.type='triangle';o.frequency.setValueAtTime(hz,t);o2.frequency.setValueAtTime(hz,t);o2.detune.setValueAtTime(4,t);lfo.frequency.setValueAtTime(5.2,t);depth.gain.setValueAtTime(hz*.006,t);lfo.connect(depth);depth.connect(o.frequency);depth.connect(o2.frequency);
- f.type='lowpass';f.Q.setValueAtTime(.7,t);f.frequency.setValueAtTime(900,t);f.frequency.linearRampToValueAtTime(2200,t+seconds*.4);
- g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(volume,t+.08);g.gain.setValueAtTime(volume,t+seconds*.75);g.gain.exponentialRampToValueAtTime(.0001,end+.25);
- o.connect(f);o2.connect(f);f.connect(g);g.connect(out);for(const n of [o,o2,lfo]){n.start(t);n.stop(end+.3);}return hz;}
+ o.type='triangle';o2.type='sine';o.frequency.setValueAtTime(hz,t);o2.frequency.setValueAtTime(hz*2,t);lfo.frequency.setValueAtTime(5,t);depth.gain.setValueAtTime(hz*.004,t);lfo.connect(depth);depth.connect(o.frequency);depth.connect(o2.frequency);
+ f.type='lowpass';f.Q.setValueAtTime(.5,t);f.frequency.setValueAtTime(1600,t);f.frequency.linearRampToValueAtTime(2400,t+seconds*.4);
+ g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(volume,t+.06);g.gain.setValueAtTime(volume,t+seconds*.75);g.gain.exponentialRampToValueAtTime(.0001,end+.25);
+ const g2=ac.createGain();g2.gain.setValueAtTime(.25,t);o.connect(f);o2.connect(g2);g2.connect(f);f.connect(g);g.connect(out);for(const n of [o,o2,lfo]){n.start(t);n.stop(end+.3);}return hz;}
 export function initialize(runtime){
  const state={hits:0,misses:0,phrases:0,next:0,lastOn:null,vibrations:0,notes:[]};let lastAt=-1e9;const marks=[];
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());

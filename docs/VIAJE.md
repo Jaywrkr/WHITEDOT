@@ -62,7 +62,7 @@ Seis notas en **grados de la escala** (0 = tónica) y duraciones en corcheas, do
 | Grado | 0 | 1 | 4 | 3 | 2 | 0 |
 | Corcheas | 3 | 1 | 4 | 2 | 2 | 4 |
 
-- **Una sola voz para el cubo, siempre la misma:** un chelo sintetizado (diente de sierra con triángulo, filtro que se abre, vibrato lento). La voz no se vende ni cambia por bioma.
+- **Una sola voz para el cubo, siempre la misma:** un arco suave (onda triangular con su octava senoidal, filtro que se abre, vibrato lento), entre Do4 y Mi5 para que suene en el altavoz de un celular. Desde alpha.117 no usa diente de sierra: en un celular solo llegaba como un graznido. La voz no se vende ni cambia por bioma.
 - **Se reharmoniza con la escala de cada capítulo:**
   - Camino y Llanura: menor, en La;
   - Lago: lidio, en Do;
