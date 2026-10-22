@@ -124,11 +124,11 @@ export function initialize(runtime){
   for(const pl of nearbyPlants(radius+120)){const fade=runtime.worldOpacity?.(dist(pl),radius+120)??1;
    const g=growth(pl),stage=plantStage(g),x=pl.x+ox,y=pl.y+oy,h=10+g*14,sway=Math.sin(t/900+pl.offset)*3+pl.lean*10;pl.lit=Math.max(0,pl.lit-dt*1.5);
    ctx.save();ctx.translate(x,y);ctx.lineWidth=WORLD_VISUAL.line;ctx.strokeStyle=elementInk('wood',pl.hue,pl.lit>.4);ctx.globalAlpha=(.55+pl.lit*.4)*fade;
-   ctx.beginPath();ctx.moveTo(0,0);ctx.quadraticCurveTo(sway*.5,-h*.5,sway,-h);ctx.stroke();
-   for(let i=0;i<Math.max(1,stage+1);i++){const ly=-h*(.25+i*.18),side=i%2?1:-1;ctx.beginPath();ctx.moveTo(sway*(.25+i*.18),ly);ctx.quadraticCurveTo(sway*.3+side*8,ly-6,sway*.3+side*(10+pl.form*2),ly-1);ctx.stroke();}
-   if(stage>=4){ctx.fillStyle=`hsl(${pl.hue},70%,62%)`;ctx.globalAlpha=(.7+pl.lit*.3)*fade;for(let k=0;k<5;k++){const a=k/5*TAU+t/2400;ctx.beginPath();ctx.arc(sway+Math.cos(a)*5,-h+Math.sin(a)*5,2.4,0,TAU);ctx.fill();}}
-   else{ctx.fillStyle=elementInk('wood',pl.hue,true);ctx.globalAlpha=(.6)*fade;ctx.beginPath();ctx.arc(sway,-h,1.8+stage*.6,0,TAU);ctx.fill();}
-   if(dist(pl)<120)label(ctx,stage>=4?'Florecida · tócala con el cubo':'Quédate cerca: crece · tócala con el cubo',0,18);
+   // Seen from above: a spore of light that opens a ray for each stage; open, it shines with five points around it.
+   const turn=sway*.02,r=3+g*7;ctx.beginPath();for(let i=0;i<Math.max(1,stage+1);i++){const a=turn+i*TAU/Math.max(3,stage+1);ctx.moveTo(0,0);ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);}ctx.stroke();
+   if(stage>=4){ctx.fillStyle=`hsl(${pl.hue},70%,62%)`;ctx.globalAlpha=(.7+pl.lit*.3)*fade;for(let k=0;k<5;k++){const a=k/5*TAU+t/2400;ctx.beginPath();ctx.arc(Math.cos(a)*(r+4),Math.sin(a)*(r+4),2.4,0,TAU);ctx.fill();}}
+   else{ctx.fillStyle=elementInk('wood',pl.hue,true);ctx.globalAlpha=(.6)*fade;ctx.beginPath();ctx.arc(0,0,1.8+stage*.6,0,TAU);ctx.fill();}
+   if(dist(pl)<120)label(ctx,stage>=4?'Abierta · tócala con el cubo':'Quédate cerca: crece · tócala con el cubo',0,18);
    ctx.restore();
   }
   for(const f of nearbyFlocks(radius+200)){const fade=runtime.worldOpacity?.(dist(f),radius+200)??1;
