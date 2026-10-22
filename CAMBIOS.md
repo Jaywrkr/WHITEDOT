@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.100**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.101**. Las entradas describen su revisión, no certifican producción.
+
+## Viaje · Fase 5 · Momentos firma y final · alpha.101
+
+Rama `claude/viaje-f5-final`, sobre `claude/viaje-f4-disco`.
+
+- **Tormenta:** cada nota a tiempo trae un rayo en el beat; su Plenitud es un compás de cuatro rayos.
+- **Vacío:** la música calla y queda el cubo solo. Tras ocho notas vuelven las criaturas que te siguieron y repiten cada nota un compás después. El tema se completa con ellas.
+- **Final:** el último portal lleva al Refugio, que toca tu viaje.
+  - Primero tus notas de cada capítulo, en orden y con su color; luego el tema en mayor, dos veces.
+  - El cielo se vuelve dorado y la imagen se aleja. Silencio. Créditos.
+  - Se abre el Mundo libre y se recuerda. Se puede saltar tocando la pantalla.
+- **Arreglo:** la nota que completa el tema ahora cuenta para el capítulo.
+- **Sonido:** render del final de 25 s con pico 0,40, sin saturación.
+- **Pruebas:** nuevas `journey-finale.mjs` y `journey_finale_smoke.py` (móvil y computadora); `journey-chapters.mjs` cubre Tormenta y Vacío.
 
 ## Viaje · Fase 4 · El disco · alpha.100
 

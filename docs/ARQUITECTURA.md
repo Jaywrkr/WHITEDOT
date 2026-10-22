@@ -48,6 +48,18 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 - **Refugio:** tras el Vacío, el portal llama a `runtime.journeyFinale` si existe; si no, aterriza en el Refugio.
 - Nada consume el azar antiguo: los lugares salen del mapa del Mundo.
 
+## Viaje · momentos firma y final
+
+- **Tormenta** (`journey-chapters.js`): cada nota a tiempo en su capítulo pone un rayo en el beat (usa `MU.boltAt`, el rayo existente de `render.js`); su Plenitud es un compás de cuatro rayos.
+- **Vacío:** el tope de la música baja a .1 (el cubo solo). Tras ocho notas, las criaturas repiten cada nota un compás después, una octava arriba, y se encienden alrededor del cubo. El tema solo se completa con ellas (12 notas). El Vacío es el mar entre continentes: es el único capítulo que se busca en el mar.
+- **Final** (`journey-finale.js`): al cruzar el último portal el cubo aterriza en el Refugio y una capa propia (`#journeyFinale`, con su lienzo y su `requestAnimationFrame`) toca tu viaje:
+  - hasta seis notas tuyas por capítulo, en orden, con el color de cada capítulo; luego el tema en La mayor dos veces, la segunda a la quinta (`finaleScore`);
+  - el cielo se vuelve dorado y la imagen se aleja; tres segundos de silencio; créditos;
+  - al terminar (o al tocar la pantalla tras 2 s) guarda `S.journey.finished` y pasa a Mundo libre. Si el guardado falla, el Viaje sigue abierto.
+  - El sonido pasa por su propia ganancia, que se apaga al saltar. Sin dependencias del motor de música.
+- Las notas a tiempo llegan al capítulo antes de comprobar la frase, así la nota que completa el tema cuenta.
+- Una partida guardada en el Refugio sin final lo vuelve a tocar al entrar al Mundo.
+
 ## Viaje · el Mundo como lámina
 
 `world-sheet.js` dibuja, en la superficie del Mundo y antes que el resto, la lámina del bioma:
