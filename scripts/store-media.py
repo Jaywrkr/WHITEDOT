@@ -35,8 +35,8 @@ def scenes(p,prefix):
  shots=[]
  def snap(name):clean(p);path=OUT/'capturas'/f'{prefix}-{name}.png';p.screenshot(path=str(path));shots.append(path.name)
  p.evaluate(PLACE);p.evaluate('__r.startAutopilot?.()');p.wait_for_timeout(6000);snap('1-mundo')
- p.evaluate('__r.stopAutopilot?.()');p.evaluate("()=>{"+HIDE+";__r.landHouse();}");p.wait_for_function('__r.houseSettled()',timeout=15000);p.wait_for_timeout(400);snap('2-casa')
- p.evaluate(HIDE);p.locator('#houseOverview').click();p.wait_for_function('__r.houseSettled()');p.wait_for_timeout(400);snap('3-casa-entera');p.locator('#houseOverview').click()
+ p.evaluate('__r.stopAutopilot?.()');p.evaluate("()=>{"+HIDE+";__r.landHouse();}");p.wait_for_function('__r.houseSettled()',timeout=15000);p.wait_for_timeout(400);snap("2-refugio")
+ p.evaluate(HIDE);p.locator('#houseOverview').click();p.wait_for_function('__r.houseSettled()');p.wait_for_timeout(400);snap("3-refugio-entero");p.locator('#houseOverview').click()
  p.evaluate("()=>{const r=__r;for(const [k,v] of Object.entries({'0,0':'luz','0,4':'cristal','0,8':'luz','0,12':'cristal','1,2':'pilar','1,6':'loto','1,10':'pilar','1,14':'arbol','2,0':'flor','2,5':'luciernaga','2,11':'faro'}))r.S.studio.slots[k]=v;r.houseOpenWorkshop();}");p.wait_for_timeout(1200);snap('4-taller')
  p.evaluate("()=>{__r.houseBack();__r.exitHouse();}");p.wait_for_timeout(800)
  p.evaluate("()=>{"+HIDE+";document.getElementById('bCube').click();}");p.wait_for_timeout(300);p.evaluate("document.getElementById('cubeTabShop').click()");p.wait_for_timeout(600);p.screenshot(path=str(OUT/'capturas'/f'{prefix}-5-tienda.png'));shots.append(f'{prefix}-5-tienda.png')
@@ -86,7 +86,7 @@ try:
   if 'clips' in ONLY:
    (OUT/'clips').mkdir(parents=True,exist_ok=True);(OUT/'_video').mkdir(parents=True,exist_ok=True);report['clips']=[]
    report['clips'].append(clip(b,'clip-mundo-vertical',540,960,1,14,[('js',PLACE),('js','__r.startAutopilot?.()'),('wait',13000)]))
-   report['clips'].append(clip(b,'clip-casa-vertical',540,960,1,12,[('js',"()=>{"+HIDE+";__r.landHouse();}"),('wait',3000),('js',"__r.houseWalkTo('jardin',.5)"),('wait',4000),('js','__r.housePulse()'),('wait',4000)]))
+   report['clips'].append(clip(b,'clip-refugio-vertical',540,960,1,12,[('js',"()=>{"+HIDE+";__r.landHouse();}"),('wait',3000),('js',"__r.houseWalkTo('jardin',.5)"),('wait',4000),('js','__r.housePulse()'),('wait',4000)]))
    report['clips'].append(clip(b,'clip-mundo-horizontal',960,540,1,14,[('js',PLACE),('js','__r.startAutopilot?.()'),('wait',13000)]))
   b.close()
 finally:server.shutdown()

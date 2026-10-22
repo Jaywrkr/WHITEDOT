@@ -2,7 +2,7 @@ import {openSurface} from './frame-state.js';
 import {HOUSE_ROOMS,HOUSE_OBJECTS} from './house-model.js';
 import {CAPSULE_PIECES,CAPSULE_PRICE,MACHINE,WORKBENCH,capsulePrize} from './house-capsules.js';
 // House phase C5: the house told in words, used from the keyboard and announced from the menu.
-const FIXED={sala:'cuadros, trofeos, la mesa del Taller y la máquina de cápsulas',jardin:'el jardín de voces',azotea:'el cielo y el telescopio',sotano:'vitrinas y el motor de la casa'};
+const FIXED={sala:'paneles de tarjetas, la constelación de logros, el disco del Taller y el Prisma',jardin:'las voces de tus tarjetas',azotea:'ornamentos y luz',sotano:'columnas de cristal y el Núcleo'};
 const placed=h=>(h.objects||[]).filter(o=>o&&HOUSE_OBJECTS.some(d=>d.id===o.kind));
 // One short sentence per room: what is there, then what is close enough to use.
 export function roomSummary(house,room,near=''){
@@ -10,21 +10,21 @@ export function roomSummary(house,room,near=''){
  const parts=[n?n+(n===1?' objeto':' objetos'):'',...decor.slice(0,4),decor.length>4?'y '+(decor.length-4)+' más':'',FIXED[room]].filter(Boolean);
  return r.name+': '+parts.join(', ')+'.'+(near?' Cerca: '+near+'. Pulsa Enter.':'');}
 // What the cube can use from where it stands.
-export function nearThing(stand,house){if(!stand)return '';if(stand.floor===1&&Math.abs(stand.fx-MACHINE.x)<40)return 'máquina de cápsulas';if(stand.floor===1&&stand.fx>=WORKBENCH.x0-10&&stand.fx<=WORKBENCH.x1+10)return 'mesa del Taller';return '';}
+export function nearThing(stand,house){if(!stand)return '';if(stand.floor===1&&Math.abs(stand.fx-MACHINE.x)<40)return 'Prisma';if(stand.floor===1&&stand.fx>=WORKBENCH.x0-40&&stand.fx<=WORKBENCH.x1+40)return 'disco del Taller';return '';}
 // The menu card says what is new in the house since the last time in it.
 export function houseNews(s){const h=s.house||{},seen=h.seen&&typeof h.seen==='object'?h.seen:null,cards=Array.isArray(s.rareBook?.items)?s.rareBook.items.length:0,ach=Object.keys(s.ach||{}).length;
- if(seen&&Number.isSafeInteger(seen.cards)&&cards>seen.cards){const k=cards-seen.cards;return k===1?'Un cuadro nuevo':k+' cuadros nuevos';}
+ if(seen&&Number.isSafeInteger(seen.cards)&&cards>seen.cards){const k=cards-seen.cards;return k===1?'Un panel nuevo':k+' paneles nuevos';}
  if(seen&&Number.isSafeInteger(seen.ach)&&ach>seen.ach)return 'Trofeos nuevos';
- if(!h.readOnly&&(s.sparks||0)>=CAPSULE_PRICE&&capsulePrize(h,placed(h).map(o=>o.kind)))return 'Cápsula lista · '+CAPSULE_PRICE+' ✦';
- return 'Tu casa viaja contigo';}
+ if(!h.readOnly&&(s.sparks||0)>=CAPSULE_PRICE&&capsulePrize(h,placed(h).map(o=>o.kind)))return 'Prisma listo · '+CAPSULE_PRICE+' ✦';
+ return 'Tu Refugio viaja contigo';}
 export const houseSeen=s=>({cards:Array.isArray(s.rareBook?.items)?s.rareBook.items.length:0,ach:Object.keys(s.ach||{}).length});
 export function initialize(runtime){
  let said='';
  function tick(){if(!runtime.houseActive?.())return;const h=runtime.currentHouse(),stand=runtime.houseStand(),text=roomSummary(h,stand.room,nearThing(stand,h));if(text!==said){said=text;const el=runtime.$('houseSummary');if(el)el.textContent=text;}}
  function menuNote(){const el=document.querySelector('#bStudio small');if(el)el.textContent=houseNews(runtime.S);}
- // Enter uses what is nearby: the machine (asks, then turns) or the workbench.
+ // Enter uses what is nearby: the Prism (asks, then turns) or the Taller disc.
  addEventListener('keydown',e=>{if(e.key!=='Enter'||e.repeat||!runtime.houseActive?.()||e.target?.closest?.('input,textarea,select,button,a,summary')||openSurface('.modal:not([hidden])'))return;
   const h=runtime.currentHouse(),near=nearThing(runtime.houseStand(),h);if(!near)return;e.preventDefault();
-  if(near==='mesa del Taller')runtime.houseCapsuleTap?.((WORKBENCH.x0+WORKBENCH.x1)/2,(WORKBENCH.top+WORKBENCH.bottom)/2);else runtime.houseCapsuleTap?.(MACHINE.x,MACHINE.floor-MACHINE.h/2);});
+  if(near==='disco del Taller')runtime.houseCapsuleTap?.((WORKBENCH.x0+WORKBENCH.x1)/2,(WORKBENCH.top+WORKBENCH.bottom)/2);else runtime.houseCapsuleTap?.(MACHINE.x,MACHINE.floor-MACHINE.h/2);});
  Object.defineProperties(runtime,{houseGuideTick:{get:()=>tick},houseMenuNote:{get:()=>menuNote},houseSeenNow:{get:()=>()=>houseSeen(runtime.S)}});
 }

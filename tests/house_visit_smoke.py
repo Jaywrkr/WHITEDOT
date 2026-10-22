@@ -36,9 +36,9 @@ try:
    page.locator('#houseExit').click()
    # Keyboard: walk to the machine, Enter asks, Enter again turns it; the room is told in words.
    page.evaluate("()=>{"+hide+";__r.enterHouse();__r.houseWalkTo('sala',.34);}");page.wait_for_function("__r.houseSettled()&&__r.houseStand().room==='sala'",timeout=8000)
-   page.wait_for_function("document.getElementById('houseSummary').textContent.includes('Cerca: máquina de cápsulas')")
+   page.wait_for_function("document.getElementById('houseSummary').textContent.includes('Cerca: Prisma')")
    page.evaluate(hide);page.locator('#w').focus();page.keyboard.press('Enter');assert page.evaluate('__r.currentHouse().capsules.count')==0;page.keyboard.press('Enter');page.wait_for_function('__r.currentHouse().capsules.count===1')
-   assert page.evaluate("document.getElementById('houseSummary').textContent").startswith('Sala: 1 objeto')
+   assert page.evaluate("document.getElementById('houseSummary').textContent").startswith('Eco: 1 objeto')
    # The menu card says what is new; the Bitácora leads into the house.
    page.locator('#houseExit').click();page.evaluate("()=>{"+hide+";__r.S.ach['test:nuevo']='2026-10-21';}");page.locator('#bMenu').click();assert page.locator('#bStudio small').inner_text()=='Trofeos nuevos'
    page.evaluate("()=>{"+hide+";__r.openJournal('achievements');}");page.locator('[data-journal-house]').first.click();page.wait_for_function('__r.houseActive()');assert page.locator('#mJournal').is_hidden()

@@ -1,6 +1,27 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.95**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.96**. Las entradas describen su revisión, no certifican producción.
+
+## Refugio · C7 · alpha.96
+
+Rama `claude/casa-c7-refugio`, sobre `claude/l2-tienda`. Pedido de Jay: la Casa se veía infantil y no encajaba con un juego abstracto y musical. Se rediseña sin tocar lo ganado.
+
+- **Nombre:** la Casa pasa a llamarse **Refugio**. Las cámaras son Cielo, Eco, Jardín de voces y Raíz.
+- **Forma:**
+  - cuatro cámaras de líneas finas en el negro, sin tejado, muebles ni ladrillos;
+  - cada cámara es una partitura: cinco líneas tenues y dieciséis marcas del compás, con la luz y la marca dorada siguiendo lo que suena;
+  - hilos de luz en lugar de escaleras.
+- **Despliegue:** el Refugio se abre desde el cubo con un pulso. Fuera solo hay polvo y la luz del bioma.
+- **Piezas:**
+  - la máquina de cápsulas pasa a ser el **Prisma**, al mismo precio y con los mismos premios;
+  - el Taller es su **disco** radial flotando en Eco;
+  - el motor pasa a ser el **Núcleo**, que late en la Raíz.
+- **Colección:** paneles de luz con tus tarjetas, una constelación dorada con tus logros, columnas de cristal con tus piezas y tallos de luz para las voces del jardín.
+- **Ornamentos:** los 12 adornos se conservan con formas abstractas: Órbita (marca la hora real), Brote de luz, Esfera, Lluvia lenta, Destellos, Lámpara, Vela, Brújula, Arco, Media luna, Monolito y Partitura.
+- **Textos:** menú, botones, La Voz, Bitácora y logros dicen Refugio. Logros del Prisma renombrados; sus ids no cambian.
+- **Se conserva:** chispas, premios, objetos, colores, logros, visitas, Taller y sonido.
+- **Pruebas:** 190 conjuntos de Node, auditoría sin errores, 152/152 recorridos de navegador y renders de audio del Refugio sin saturación. Las pruebas usan los textos nuevos.
+- **Tienda:** las fichas y el guion hablan del Refugio; `store-media.py` guarda `*-refugio*`.
 
 ## L2 · Material de tienda (borradores)
 

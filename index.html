@@ -81,7 +81,7 @@
   <div class="sp"></div>
   <button class="ico round" id="bFx" aria-label="Mesa de efectos" title="Mesa de efectos" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><path d="M6 4v16M12 4v16M18 4v16"/><path d="M4 9h4M10 15h4M16 7h4"/></svg></button>
   <button class="ico round" id="bLoop" aria-label="Grabar un eco de 2 compases" title="Eco: grabar 2 compases" hidden><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 8v4l3 2"/></svg></button>
-  <button class="ico round" id="bDeploy" aria-label="Abrir la casa aquí" title="Abrir la casa aquí" hidden><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg></button>
+  <button class="ico round" id="bDeploy" aria-label="Abrir el Refugio aquí" title="Abrir el Refugio aquí" hidden><svg viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/><rect x="10" y="10" width="4" height="4"/></svg></button>
   <button class="ico round" id="bAuto" aria-label="Iniciar paseo musical" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></svg></button>
 
   <button class="ico" id="bJump" hidden>Saltar · 20 ✦</button>
@@ -142,7 +142,7 @@
     <section class="menu-group primary"><h3>Jugar</h3><div class="tiles">
       <button id="bCube"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/><path d="M3 3h3M18 21h3"/></svg><span>Tu cubo<small>Llevar, tienda y viaje</small></span></button>
       <button id="bWorld"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16"/></svg><span>Mundo<small id="bWorldHint">Explorar el Mundo</small></span></button>
-      <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg><span>Casa<small>Tu casa viaja contigo</small></span></button>
+      <button id="bStudio"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/><rect x="10" y="10" width="4" height="4"/></svg><span>Refugio<small>Tu Refugio viaja contigo</small></span></button>
       <button id="bMap"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Mapa<small>Lugares y favoritos</small></span></button>
     </div></section>
     <section class="menu-group"><h3>Tu viaje</h3><div class="tiles">
@@ -173,7 +173,7 @@
       <button id="dAtlas">Ritmos</button>
       <button id="dLab">Laboratorio</button>
     </div></details>
-    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.95</span><small id="releaseDeploy">deploy sin registrar</small></div>
+    <div class="menu-foot"><div class="release-badge" id="releaseBadge"><span id="releaseVersion">v2.3.0-alpha.96</span><small id="releaseDeploy">deploy sin registrar</small></div>
     <span class="menu-footnote">Simple.</span></div>
   </div>
 </div>
@@ -181,7 +181,7 @@
 <div class="studio" id="studioPanel" hidden>
   <div class="bag" id="bag"></div>
   <div class="swatches" id="swatches"></div>
-  <div class="row"><button id="stExit" class="gold">Volver a la casa</button><button id="stClear">Vaciar</button></div>
+  <div class="row"><button id="stExit" class="gold">Volver al Refugio</button><button id="stClear">Vaciar</button></div>
 </div>
 
 <div class="modal" id="mHelpC" hidden>
@@ -219,7 +219,7 @@
  <p>Consérvalas en la Bitácora. Vuelve a tocarlas donde las encontraste.</p>
  <p><b>Instrumentos vivos.</b> Tócalos, quédate o rodéalos. Escucha cómo cambia su filtro.</p>
  <p><b>Cajas.</b> Descubre poderes temporales. Su tarjeta conserva el encuentro.</p>
- <p><b>Casa.</b> Coloca voces ganadas. Muévelas y compón tu espacio.</p>
+ <p><b>Refugio.</b> Coloca voces ganadas. Muévelas y compón tu espacio.</p>
  <p><b>Favoritos.</b> Guarda un lugar y regresa mediante su dirección.</p>
  <h3>Un universo travieso</h3><p>Acércate, camina, rodea o espera: algunas presencias imitan, compiten o te acompañan. Completar un encuentro da tres chispas una vez por lugar. Sus logros quedan en la Bitácora.</p>
  <h3>Avanzar a tu ritmo</h3><p><b>Camino.</b> Rompe diez cristales. El décimo abre el Mundo automáticamente.</p>
@@ -253,7 +253,7 @@
       <div><b id="oStreak">0</b><span>Racha</span></div>
     </div>
     <p>El Mundo sigue abierto. Vuelve cuando quieras.</p>
-    <div class="row"><button id="oDeploy" class="gold">Abrir la casa aquí</button><button id="oSky">Ver constelación</button><button id="oSession">Resumen</button><button id="oClose">Cerrar</button></div>
+    <div class="row"><button id="oDeploy" class="gold">Abrir el Refugio aquí</button><button id="oSky">Ver constelación</button><button id="oSession">Resumen</button><button id="oClose">Cerrar</button></div>
   </div>
 </div>
 
@@ -280,7 +280,7 @@
   <div class="sheet">
     <h2 id="journalTitle">Bitácora</h2>
     <div class="journal-tabs" aria-label="Secciones de la Bitácora"><button data-journal-tab="today">Hoy</button><button data-journal-tab="collection">Colección</button><button data-journal-tab="places">Lugares</button><button data-journal-tab="music">Música</button><button data-journal-tab="achievements">Logros</button><button data-journal-tab="you">Tú</button></div>
-    <div id="journalFilters" hidden><input id="journalSearch" type="search" placeholder="Busca una pieza" aria-label="Buscar colección"><select id="journalGroup" aria-label="Tipo de colección"><option value="todo">Todo</option><option value="cubo">Cubo</option><option value="casa">Casa</option><option value="elementos">Elementos</option><option value="linajes">Linajes</option><option value="tarjetas">Tarjetas</option><option value="caminantes">Caminantes</option><option value="formas">Formas</option></select><select id="journalOwnership" aria-label="Piezas ganadas o pendientes"><option value="todo">Todo</option><option value="ganado">Ganado</option><option value="pendiente">Pendiente</option></select></div>
+    <div id="journalFilters" hidden><input id="journalSearch" type="search" placeholder="Busca una pieza" aria-label="Buscar colección"><select id="journalGroup" aria-label="Tipo de colección"><option value="todo">Todo</option><option value="cubo">Cubo</option><option value="casa">Refugio</option><option value="elementos">Elementos</option><option value="linajes">Linajes</option><option value="tarjetas">Tarjetas</option><option value="caminantes">Caminantes</option><option value="formas">Formas</option></select><select id="journalOwnership" aria-label="Piezas ganadas o pendientes"><option value="todo">Todo</option><option value="ganado">Ganado</option><option value="pendiente">Pendiente</option></select></div>
     <button id="sessionShare">Compartir sesión</button><button id="journalNext">Lo próximo</button><button id="journalMore" hidden>Ver más</button>
     <div id="journalParts" hidden><section id="journalMapPart" class="journal-part" aria-label="Mapa">
     
@@ -301,7 +301,7 @@
  <p id="profileSaveStatus" role="status"></p><p id="profileSince"></p>
  <dl class="profile-metrics"><div><dt>Tiempo activo</dt><dd id="profileTime"></dd></div><div><dt>Distancia caminada</dt><dd id="profileDistance"></dd></div><div><dt>Sesiones medidas</dt><dd id="profileSessions"></dd></div><div><dt>Días con luz</dt><dd id="profileDays"></dd></div></dl>
  <h3>Tu universo descubierto</h3><dl class="profile-metrics compact"><div><dt>Lugares</dt><dd id="profilePlaces"></dd></div><div><dt>Estilos escuchados</dt><dd id="profileGenres"></dd></div><div><dt>Instrumentos escuchados</dt><dd id="profileInstruments"></dd></div><div><dt>Familias encontradas</dt><dd id="profileElements"></dd></div><div><dt>Tarjetas</dt><dd id="profileCards"></dd></div><div><dt>Cajas abiertas</dt><dd id="profileBoxes"></dd></div><div><dt>Logros</dt><dd id="profileAchievements"></dd></div></dl>
- <details><summary>Tiempo por espacio</summary><dl class="profile-breakdown"><dt>Camino</dt><dd id="profileCaminoTime"></dd><dt>Mundo</dt><dd id="profileWorldTime"></dd><dt>Casa</dt><dd id="profileHouseTime"></dd></dl><p>No cuenta menús, segundo plano ni saltos como distancia.</p><p>La distancia usa la escala interna del juego.</p></details>
+ <details><summary>Tiempo por espacio</summary><dl class="profile-breakdown"><dt>Camino</dt><dd id="profileCaminoTime"></dd><dt>Mundo</dt><dd id="profileWorldTime"></dd><dt>Refugio</dt><dd id="profileHouseTime"></dd></dl><p>No cuenta menús, segundo plano ni saltos como distancia.</p><p>La distancia usa la escala interna del juego.</p></details>
  <div class="row"><button id="profileCollection">Ver colección</button><button id="profilePlacesLink">Volver a tus lugares</button></div><p>Tu progreso viaja con tu cuenta.</p><button id="profileClose" hidden>Volver</button>
 </section></div>
     <div class="scroll" id="journalBody" aria-live="polite"></div>
@@ -393,7 +393,7 @@
 
 <div class="modal" id="mSettings" hidden><div class="sheet"><h2>Ajustes</h2><div class="menu-prefs"><label for="autoIntent">Paseo automático</label><select id="autoIntent"><option value="paisaje">Paisaje y descanso</option><option value="vida">Vida y relaciones</option><option value="hallazgos">Encuentros y hallazgos</option><option value="afinidad">Afinidad entre favoritos</option><option value="contraste">Contraste entre favoritos</option></select><label for="graphicsQuality">Calidad gráfica</label><select id="graphicsQuality" aria-describedby="graphicsQualityHint"><option value="auto">Automática</option><option value="alta">Alta</option><option value="ligera">Ligera</option></select><p id="graphicsQualityHint" class="settings-hint"></p><div class="universe-texts-group"><label class="universe-texts-setting"><input id="universeTexts" type="checkbox" checked aria-describedby="universeTextsHint">Textos del paisaje</label><p id="universeTextsHint">Oculta mensajes del universo. Conserva controles y avisos de guardado.</p></div></div><div class="tiles"><button id="bCreateMode" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg><span>Modo: explorar</span></button><button id="bDetails" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v1M12 11v6"/></svg><span>Datos del mundo</span></button></div><div class="settings-diagnostic"><p id="diagnosticInfo" role="status"></p><button id="diagnosticCopy">Copiar diagnóstico</button></div><div class="row"><button id="settingsClose">Cerrar</button></div></div></div>
 
-<div id="housePanel" class="house-panel" hidden><p class="house-status"><span id="houseCount"></span> · <span id="houseHint"></span></p><p id="houseSummary" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p><div id="housePick" class="house-pick" hidden><label for="houseObjects">Objeto</label><select id="houseObjects"></select></div><details id="houseGardenTools"><summary>Jardín de voces</summary><p>Reúne cuatro tarjetas. Mueve sus voces en el plano.</p><div id="gardenSlots"></div><button id="gardenSave">Conservar jardín</button><select id="gardenSets" aria-label="Tus jardines"><option value="">Tus jardines</option></select></details><div class="row house-more"><button id="housePlace" aria-pressed="false">Coloca</button><button id="houseOverview" aria-pressed="false">Ver casa</button><button id="houseShare">Código</button><button id="houseExit">Volver</button></div></div>
-<div class="modal" id="mHouseCode" hidden><div class="sheet"><h2>Comparte tu casa</h2><p>Visita con un código. Tu colección sigue contigo.</p><textarea id="houseCode" aria-label="Código de casa" maxlength="16000"></textarea><p id="houseCodeInfo"></p><div class="row"><button id="houseVisit">Visita</button><button id="houseCodeClose">Cerrar</button></div></div></div>
+<div id="housePanel" class="house-panel" hidden><p class="house-status"><span id="houseCount"></span> · <span id="houseHint"></span></p><p id="houseSummary" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p><div id="housePick" class="house-pick" hidden><label for="houseObjects">Objeto</label><select id="houseObjects"></select></div><details id="houseGardenTools"><summary>Jardín de voces</summary><p>Reúne cuatro tarjetas. Mueve sus voces en el plano.</p><div id="gardenSlots"></div><button id="gardenSave">Conservar jardín</button><select id="gardenSets" aria-label="Tus jardines"><option value="">Tus jardines</option></select></details><div class="row house-more"><button id="housePlace" aria-pressed="false">Coloca</button><button id="houseOverview" aria-pressed="false">Ver refugio</button><button id="houseShare">Código</button><button id="houseExit">Volver</button></div></div>
+<div class="modal" id="mHouseCode" hidden><div class="sheet"><h2>Comparte tu Refugio</h2><p>Visita con un código. Tu colección sigue contigo.</p><textarea id="houseCode" aria-label="Código de refugio" maxlength="16000"></textarea><p id="houseCodeInfo"></p><div class="row"><button id="houseVisit">Visita</button><button id="houseCodeClose">Cerrar</button></div></div></div>
 </body>
 </html>

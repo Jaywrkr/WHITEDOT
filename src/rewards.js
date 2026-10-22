@@ -7,6 +7,6 @@ export function initialize(runtime){
  function award(id,options={}){return changed(awardReward(book(),id,catalog,{at:new Date().toISOString(),...options})?[id]:[]).length>0;}
  function source(kind,value,options={}){if(Object.hasOwn(book().sources,kind+':'+value))return [];return changed(rewardSource(book(),kind,value,catalog,{at:new Date().toISOString(),...options}));}
  function owns(id){return ownsReward(book(),id);}
- function card(){const b=book(),earned=catalog.filter(p=>ownsReward(b,p.id));return '<article class="journal-card"><h3>Tu colección</h3><p>'+earned.length+' de '+catalog.length+' piezas</p>'+Object.entries(REWARD_RARITIES).map(([id,r])=>'<p>'+escape(r.name)+' · '+earned.filter(p=>p.rarity===id).length+'</p>').join('')+'<p>Viste tu cubo. Haz música en tu casa.</p></article>';}
+ function card(){const b=book(),earned=catalog.filter(p=>ownsReward(b,p.id));return '<article class="journal-card"><h3>Tu colección</h3><p>'+earned.length+' de '+catalog.length+' piezas</p>'+Object.entries(REWARD_RARITIES).map(([id,r])=>'<p>'+escape(r.name)+' · '+earned.filter(p=>p.rarity===id).length+'</p>').join('')+'<p>Viste tu cubo. Haz música en tu Refugio.</p></article>';}
  book();Object.defineProperties(runtime,{rewardPieces:{get:()=>catalog.map(p=>({...p,...book().items[p.id],owned:ownsReward(book(),p.id),obtainedAt:book().items[p.id]?.obtainedAt||null}))},rewardCatalog:{get:()=>catalog},rewardBook:{get:()=>book()},awardReward:{get:()=>award},recordRewardSource:{get:()=>source},ownsReward:{get:()=>owns},rewardCollectionCard:{get:()=>card}});
 }
