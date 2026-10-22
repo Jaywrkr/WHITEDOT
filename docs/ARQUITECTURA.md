@@ -36,6 +36,22 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 `cube-shop-model.js` define las 14 ranuras y las piezas construidas; `sparkEconomy.wear` guarda una pieza por ranura simple y `sparkEconomy.on` las de ranuras múltiples, y `equipped` se conserva para dispositivos sin actualizar. `cube-shop-art.js` dibuja Movimiento, Cuerpo, Ojos, Hábitos y Accesorios desde `render.js` con cuatro ganchos (debajo del cubo, transformación, cuerpo y encima del cuerpo, dentro de su transformación; el de encima no se usa con cuerpos sorpresa ni ritual). `cubeShopMinSize` sube a 10 px el tamaño dibujado del cubo mientras se lleva cara; no cambia alcance ni colisiones. `cube-shop-world.js` dibuja Rastros (antes del cubo, en coordenadas del mundo) y Compañeros (después del cubo). `S.cubeRoute` (`normalizeRoute`/`rollRoute` en el modelo) guarda los pasos de hoy y el último día jugado, acotados, solo en superficie. `cube-shop-moves.js` añade gestos (transformación y dibujo tras el compañero) y expone `cubeShopPulseLook`; `interactions.js` guarda esa forma en cada onda del jugador (`look`, `charge`) y le pone la forma de impacto `ring-0`, así que el alcance no cambia; `cube-shop-pulse.js` la dibuja, solo en el Mundo y sin tocar colisiones, alcance, guardado ni música; cada pieza tiene variante estática con movimiento reducido. Catálogo y tandas en [Tienda del cubo](TIENDA_DEL_CUBO.md).
 
+## Viaje · entrada y modo
+
+- **Cuenta opcional** (`account-entry.js`):
+  - sin sesión, el juego empieza al instante con guardado local (la clave sin usuario de siempre);
+  - con sesión, empieza al instante y se comprueba en segundo plano, como antes, y se recuerda su correo;
+  - la hoja de cuenta solo vuelve a quien ya tuvo cuenta en el dispositivo (correo recordado) y no eligió «Jugar sin cuenta» (`kubono:local-play`);
+  - entrar o crear cuenta desde el menú recarga dentro de la cuenta, y `progress.js` adopta la partida local si es la primera cuenta del dispositivo;
+  - las comparaciones de usuario tratan «sin usuario» como `null`, para no recargar en bucle;
+  - una vez en el Mundo, se ofrece la nube con un aviso, una sola vez (`S.cloudOffered`).
+- **Modo** (`journey-mode.js`, `S.journey`):
+  - **Viaje** (`viaje`): `body.journey-quiet` oculta Día, Era, Caminado, chispas, Saltar, Estilos, la meta y las pistas de texto; del menú oculta Tu cubo, Mapa, Bitácora, Crear, semillas, Compartir y Guía (`.free-only`);
+  - **Mundo libre** (`libre`): todo como antes;
+  - quien ya llegó al Mundo empieza en Mundo libre y los jugadores nuevos en el Viaje; el botón «Mundo libre / Viaje» del menú cambia y se guarda;
+  - en navegadores automatizados las partidas nuevas empiezan en Mundo libre, para que las pruebas existentes conserven sus controles; el Viaje se prueba a propósito;
+  - el Viaje no abre la bienvenida del Camino.
+
 ## Viaje · pulso a tiempo
 
 `journey-pulse.js` juzga cada pulso del jugador en el Camino y el Mundo ([El Viaje](VIAJE.md)).

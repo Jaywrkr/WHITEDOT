@@ -37,14 +37,15 @@ try:
   page.locator('#bMenu').click();page.locator('#bConnection').click();page.wait_for_function("!document.getElementById('accountDelete').disabled")
   page.locator('#accountName').fill('disposable@example.test');page.locator('#accountPassword').fill('fixture-password-123')
   page.once('dialog',lambda d:d.dismiss());page.locator('#accountDelete').click();assert deletes==0 and wallet
-  page.once('dialog',lambda d:d.accept());page.locator('#accountDelete').click();page.wait_for_function("document.body.dataset.accountLocked==='true'&&typeof window.__r==='undefined'")
+  page.once('dialog',lambda d:d.accept());page.locator('#accountDelete').click();page.wait_for_function("window.__r?.accountUserId===null&&!!window.__r?.connectionTick",timeout=15000)
   assert deleted and deletes==1 and wallet is None
-  assert page.evaluate('typeof window.__r')=='undefined';assert page.locator('#accountGuest').is_hidden()
+  # The account is optional: after deleting it the game goes on locally, with no sheet in the way.
+  assert page.locator('#mConnection').is_hidden() and page.evaluate("document.body.dataset.accountLocked")!='true'
   assert page.evaluate("localStorage.getItem('kubono:auth:https://fixture.supabase.co')") is None
   assert page.evaluate("localStorage.getItem('other-account-sentinel')")=='untouched'
   assert page.evaluate("Object.keys(localStorage).filter(k=>k.includes(':disposable:'))")==[]
   assert page.evaluate("JSON.parse(localStorage.getItem('pixel-blanco-v4')).sparks")==24
   assert page.evaluate("localStorage.getItem('kubono:user:someone-else:pixel-blanco-v4')")=='{"sparks":9}'
   browser.close()
- print('PASS deletion UI: cancellation, confirmed reauthentication/RPC, cleared login, local purge limited to the deleted account and return to gate; fixture only, hosted account untouched')
+ print('PASS deletion UI: cancellation, confirmed reauthentication/RPC, cleared login, local purge limited to the deleted account and local play afterwards; fixture only, hosted account untouched')
 finally:server.shutdown();server.server_close()

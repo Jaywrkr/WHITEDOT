@@ -17,6 +17,7 @@ import {initialize as houseCollection} from './house-collection.js';
 import {initialize as houseCapsules} from './house-capsules.js';
 import {initialize as houseGuide} from './house-guide.js';
 import {initialize as journeyPulse} from './journey-pulse.js';
+import {initialize as journeyMode} from './journey-mode.js';
 import {initialize as worldLight} from './world-light.js';
 import {initialize as worldWeather} from './world-weather.js';
 import {initialize as worldFauna} from './world-fauna.js';
@@ -218,9 +219,10 @@ musicTravel(runtime);
 distantColors(runtime);vjWorld(runtime);reactiveEcology(runtime);
 crystalSparks(runtime);pixelLife(runtime);wowFeel(runtime);wowUI(runtime);wowMemory(runtime);
 houseAudio(runtime);house(runtime);
-onboarding(runtime);labLearning(runtime);sparks(runtime);cubeShopArt(runtime);cubeShopWorld(runtime);cubeShopMoves(runtime);cubeShopSound(runtime);cubeShopWild(runtime);cubeShopSkills(runtime);houseCollection(runtime);houseCapsules(runtime);houseGuide(runtime);journeyPulse(runtime);errorLog(runtime);frameQuality(runtime);worldLight(runtime);worldWeather(runtime);worldFauna(runtime);worldMusic(runtime);worldCamera(runtime);worldHappenings(runtime);sculptureTotems(runtime);musicalWonders(runtime);universeActivities(runtime);universeTexts(runtime);universeMischief(runtime);
+onboarding(runtime);labLearning(runtime);sparks(runtime);cubeShopArt(runtime);cubeShopWorld(runtime);cubeShopMoves(runtime);cubeShopSound(runtime);cubeShopWild(runtime);cubeShopSkills(runtime);houseCollection(runtime);houseCapsules(runtime);houseGuide(runtime);journeyPulse(runtime);journeyMode(runtime);errorLog(runtime);frameQuality(runtime);worldLight(runtime);worldWeather(runtime);worldFauna(runtime);worldMusic(runtime);worldCamera(runtime);worldHappenings(runtime);sculptureTotems(runtime);musicalWonders(runtime);universeActivities(runtime);universeTexts(runtime);universeMischief(runtime);
 runtime.styleUI();runtime.hud();
-if(!runtime.S.help.camino)runtime.$("mHelpC").hidden=false;
+// The Journey starts with no window at all; the free World keeps its welcome.
+if(!runtime.S.help.camino&&!runtime.journeyQuiet?.())runtime.$("mHelpC").hidden=false;
 returnEntrance(runtime);
 // Precalcula el reparto de géneros (unos cientos de ms) mientras el jugador está en el Camino, no al cruzar la primera frontera.
 setTimeout(()=>{try{runtime.regionOfPos(5*runtime.REG*runtime.WCH,0);}catch(e){}},1200);

@@ -33,9 +33,14 @@ def prepare(page,configured=True):
 def login(page,email='one@example.test',password='fixture-password-123'):
  page.locator('#accountName').fill(email);page.locator('#accountPassword').fill(password);page.locator('#accountForm button[type=submit]').click()
 def started(page):
- page.wait_for_function('!!window.__r?.connectionTick');page.locator('#returnContinue').click()
+ page.wait_for_function('!!window.__r?.connectionTick')
+ if page.locator('#returnContinue').is_visible():page.locator('#returnContinue').click()
  if page.locator('#hcGo').is_visible():page.locator('#hcGo').click()
  page.evaluate('__r.S.sound=false')
+def sign_in(page,email='one@example.test',password='fixture-password-123'):
+ # The account is optional: on a device that never had one the game starts locally and Cuenta is in the menu.
+ if not page.locator('#mConnection').is_visible():started(page);account(page)
+ login(page,email,password)
 def account(page):
  # A second tab of the same account may already show the divergence panel; the menu is inert behind it.
  # The panel can also open between the check and the click, leaving the menu inert: retry instead of racing it.
@@ -51,17 +56,18 @@ def wait_remote(page,uid,sparks):
 try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH'),args=['--no-sandbox']);context=browser.new_context(viewport={'width':390,'height':844},service_workers='block');page=context.new_page();prepare(page,False)
-  assert page.locator('#mConnection').is_visible();assert page.locator('#accountRegister').is_disabled();assert page.evaluate('typeof window.__r')=='undefined';assert page.evaluate('localStorage.length')==0
-  page.close();context.close();context=browser.new_context(viewport={'width':390,'height':844},service_workers='block');page=context.new_page();prepare(page)
-  assert page.locator('#accountGuest').is_hidden();assert page.locator('#connectionClose').is_hidden();page.keyboard.press('Escape');assert page.locator('#mConnection').is_visible();assert page.evaluate('typeof window.__r')=='undefined'
-  # An old unowned save is copied once, never removed or assigned to another account.
-  page.evaluate("localStorage.setItem('pixel-blanco-v4',JSON.stringify({sparks:24,mode:'camino'}))")
-  login(page,password='bad-password-123');page.wait_for_function("document.getElementById('connectionStatus').textContent.includes('verificar')");assert page.evaluate('typeof window.__r')=='undefined'
-  page.locator('#accountPassword').fill('fixture-password-123');page.locator('#accountRegister').click();page.wait_for_function("document.getElementById('connectionStatus').textContent.includes('confirmación')");assert page.evaluate('typeof window.__r')=='undefined';assert page.locator('#accountPassword').input_value()==''
-  login(page);started(page);wait_remote(page,'one',24);assert page.evaluate("__r.saveStore.key.includes('kubono:user:one:')");assert page.evaluate("!!localStorage.getItem('pixel-blanco-v4')")
+  # Without cloud configuration the game still starts, locally, with no sheet.
+  page.wait_for_function('!!window.__r?.connectionTick');assert page.locator('#mConnection').is_hidden() and page.evaluate('__r.accountUserId') is None
+  page.close();context.close();context=browser.new_context(viewport={'width':390,'height':844},service_workers='block');page=context.new_page()
+  # An old unowned save is played locally first, then copied once to the first account, never removed or assigned to another.
+  page.add_init_script("if(!sessionStorage.getItem('seeded')){sessionStorage.setItem('seeded','yes');localStorage.setItem('pixel-blanco-v4',JSON.stringify({sparks:24,mode:'camino'}));}")
+  prepare(page);started(page);assert page.locator('#mConnection').is_hidden() and page.evaluate('__r.accountUserId') is None and page.evaluate('__r.S.sparks')==24
+  account(page);login(page,password='bad-password-123');page.wait_for_function("document.getElementById('connectionStatus').textContent.includes('verificar')");assert page.evaluate('__r.accountUserId') is None
+  page.locator('#accountPassword').fill('fixture-password-123');page.locator('#accountRegister').click();page.wait_for_function("document.getElementById('connectionStatus').textContent.includes('confirmación')");assert page.evaluate('__r.accountUserId') is None;assert page.locator('#accountPassword').input_value()==''
+  login(page);page.wait_for_function("window.__r?.accountUserId==='one'",timeout=15000);started(page);wait_remote(page,'one',24);assert page.evaluate("__r.saveStore.key.includes('kubono:user:one:')");assert page.evaluate("!!localStorage.getItem('pixel-blanco-v4')")
   page.evaluate("()=>{__r.S.sparks=4;__r.S.sparkEconomy.spent=20;__r.save();dispatchEvent(new Event('focus'));}");wait_remote(page,'one',4)
   page.close();page=context.new_page();prepare(page);started(page);assert page.evaluate('__r.S.sparks')==4
-  phoneContext=browser.new_context(viewport={'width':390,'height':844},service_workers='block');phone=phoneContext.new_page();prepare(phone);login(phone);started(phone);phone.wait_for_function('__r.S.sparks===4')
+  phoneContext=browser.new_context(viewport={'width':390,'height':844},service_workers='block');phone=phoneContext.new_page();prepare(phone);sign_in(phone);phone.wait_for_function("window.__r?.accountUserId==='one'",timeout=15000);started(phone);phone.wait_for_function('__r.S.sparks===4')
   online=False;phone.evaluate("()=>{__r.S.sparks=7;__r.save();dispatchEvent(new Event('focus'));}");phone.reload();started(phone);assert phone.evaluate('__r.S.sparks')==7;assert remote['one']['state']['sparks']==4
   online=True;phone.evaluate("dispatchEvent(new Event('online'))");wait_remote(phone,'one',7);page.evaluate("dispatchEvent(new Event('focus'))");page.wait_for_function('__r.S.sparks===7')
   # A new account must start separately, even with another account's data on disk.
@@ -69,13 +75,13 @@ try:
   login(page,'two@example.test');started(page);wait_remote(page,'two',0);assert page.evaluate("__r.saveStore.key.includes('kubono:user:two:')");assert remote['one']['state']['sparks']==7
   other=context.new_page();prepare(other);started(other);assert other.evaluate('__r.accountUserId')=='two'
   account(page);page.locator('#accountLogout').click();other.wait_for_function("document.body.dataset.accountLocked==='true'");assert other.evaluate('typeof window.__r')=='undefined'
-  assert page.locator('#accountGuest').is_hidden();assert not any('/rooms' in p for p in calls)
+  assert page.locator('#accountGuest').is_visible() and page.locator('#accountGuest').inner_text()=='Jugar sin cuenta';assert not any('/rooms' in p for p in calls)
   # Choosing the online copy from the Camino while this device is in the Mundo must leave the Mundo cleanly: no region or world music left behind.
-  desk=browser.new_context(viewport={'width':390,'height':844},service_workers='block').new_page();prepare(desk);login(desk,'two@example.test');started(desk)
+  desk=browser.new_context(viewport={'width':390,'height':844},service_workers='block').new_page();prepare(desk);sign_in(desk,'two@example.test');desk.wait_for_function("window.__r?.accountUserId==='two'",timeout=15000);started(desk)
   desk.evaluate("()=>{const r=__r;r.S.pathCrystals=Array.from({length:10},(_,i)=>'fixture:'+i);r.enterWorld({automatic:true});r.save();dispatchEvent(new Event('focus'));}")
   deadline=time.monotonic()+15
   while remote.get('two',{}).get('state',{}).get('mode')!='world' and time.monotonic()<deadline:desk.wait_for_timeout(100)
-  mobile=browser.new_context(viewport={'width':390,'height':844},service_workers='block').new_page();prepare(mobile);login(mobile,'two@example.test');started(mobile);mobile.wait_for_function('__r.inWorld()')
+  mobile=browser.new_context(viewport={'width':390,'height':844},service_workers='block').new_page();prepare(mobile);sign_in(mobile,'two@example.test');mobile.wait_for_function("window.__r?.accountUserId==='two'",timeout=15000);started(mobile);mobile.wait_for_function('__r.inWorld()')
   mobile.evaluate("()=>{__r.exitWorld(false);__r.S.sparks=11;__r.save();dispatchEvent(new Event('focus'));}")
   deadline=time.monotonic()+15
   while remote.get('two',{}).get('state',{}).get('mode')!='camino' and time.monotonic()<deadline:mobile.wait_for_timeout(100)
@@ -84,5 +90,5 @@ try:
   desk.once('dialog',lambda d:d.accept());desk.locator('#cloudPull').click();desk.wait_for_function('__r.S.sparks===11&&!__r.inWorld()')
   desk.wait_for_timeout(500);assert desk.evaluate('__r.curRegion') is None;assert not desk.evaluate('!!__r.MU.dnaT');assert 'world-mode' not in desk.evaluate('document.body.className')
   page.screenshot(path=str(ROOT.parent/'account-required-mobile.png'));browser.close()
- print('PASS mandatory account: no world before Auth, invalid/signup gate, legacy preservation, persistent/offline reopen, automatic PC/phone balance, account isolation, cross-tab logout and clean Mundo-to-Camino restore; mocked Auth/REST only')
+ print('PASS optional account with the cloud: local play without configuration or account, invalid/signup from Cuenta, legacy preservation, persistent/offline reopen, automatic PC/phone balance, account isolation, cross-tab logout and clean Mundo-to-Camino restore; mocked Auth/REST only')
 finally:server.shutdown();server.server_close()

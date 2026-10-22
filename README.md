@@ -2,7 +2,7 @@
 
 Un cubo, un universo y música al viajar. Exploración con una base electrónica, mezclas de otras familias musicales, cristales, rarezas y actividades resueltas con el cubo. Todo lo que ve el jugador dice **Kubono**; el repositorio, el paquete Android y los identificadores internos de guardado y caché conservan WHITEDOT para no perder progreso ni actualizaciones.
 
-Versión del código: **2.3.0-alpha.97**. Estado documental: **20 de octubre de 2026**. Rama de trabajo: `claude/charming-darwin-dvbfc7`, creada desde `main` (`7afd804`); no equivale a main integrado ni a publicación en tiendas. El estado del sitio existente no se verificó en esta revisión.
+Versión del código: **2.3.0-alpha.98**. Estado documental: **20 de octubre de 2026**. Rama de trabajo: `claude/charming-darwin-dvbfc7`, creada desde `main` (`7afd804`); no equivale a main integrado ni a publicación en tiendas. El estado del sitio existente no se verificó en esta revisión.
 
 ## Empezar aquí
 
@@ -15,7 +15,7 @@ Versión del código: **2.3.0-alpha.97**. Estado documental: **20 de octubre de 
 
 - Camino de diez cristales rotos para entrar al Mundo; minería, fragmentos, saltos de pago y regreso gratuito. Saltar se muestra al acumular 20 chispas ganadas, cuesta 20 y permanece visible tras gastar. Todo lo del cubo está en **Tu cubo**: Llevar (lo ganado y lo comprado), Tienda (solo lo que falta, con su dibujo real) y Viaje (saltar, volver, metas).
 - Seis esculturas raras, veinte hallazgos, treinta tipos de actividad por semilla y diez encuentros traviesos. Tarjetas, colecciones y logros acompañan el viaje. [Catálogo y recompensas](docs/HALLAZGOS_Y_ACTIVIDADES.md).
-- Cuenta obligatoria por correo/contraseña, sesión persistente y progreso automático entre dispositivos. Sin invitado, demo ni botones normales de guardar/respaldar. Solo las divergencias reales requieren elegir una copia. Eliminar la cuenta borra las copias online y la partida de esa cuenta en el dispositivo que lo pide.
+- Cuenta opcional (desde alpha.98): se juega al instante con guardado local; la cuenta por correo/contraseña se ofrece después, adopta el progreso local y lo sincroniza entre dispositivos con sesión persistente. Sin demo ni botones normales de guardar/respaldar. Solo las divergencias reales requieren elegir una copia. Eliminar la cuenta borra las copias online y la partida de esa cuenta en el dispositivo que lo pide.
 - Tras el primer acceso puede continuar offline con la sesión y partida locales; la sincronización necesita red y no garantiza el último cambio si el sistema cierra el proceso antes de enviarlo. La cuenta no concede compras compartidas entre tiendas.
 - Música generada con Web Audio, gráficos Canvas y módulos ES nativos. Sin dependencias npm del cliente ni compilación del juego web. Los duetos Python son históricos y no forman parte del lanzamiento.
 
