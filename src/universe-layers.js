@@ -1,6 +1,7 @@
 import {prefersReducedMotion} from './frame-state.js';
 import {LANDSCAPES} from './house-view.js';
 import {hash} from './world-sheet.js';
+import {newRegionById} from './universe-regions.js';
 // A hash with full avalanche: keys that differ in one character land far apart (no clumps of points).
 export function rand(key){let h=hash(key);h^=h>>>16;h=Math.imul(h,0x85ebca6b);h^=h>>>13;h=Math.imul(h,0xc2b2ae35);h^=h>>>16;return (h>>>0)/4294967296;}
 // The universe seen from above (docs/UNIVERSO.md): every region draws three layers on the World's surface.
@@ -112,6 +113,44 @@ export const STYLES={
    c.fillStyle='#000';c.beginPath();c.arc(cx,cy,r,0,6.283);c.fill();c.strokeStyle=rgba(f.ink,.75);c.lineWidth=2;c.setLineDash?.([5,4]);c.lineDashOffset=-a*8;c.beginPath();c.ellipse(cx,cy,r+6,(r+6)*.45,.3,0,6.283);c.stroke();c.setLineDash?.([]);c.lineWidth=1;}},
   near:{draw(c,x,y,s,key,f){c.fillStyle=rgba(f.ink,.55);for(let i=0;i<4;i++){const p=f.still?.5:((f.t/6000+rand(key+':p'+i))%1),a=rand(key+':a'+i)*6.283+p*9,r=(1-p)*s*.5;c.fillRect(Math.round(x+s/2+Math.cos(a)*r),Math.round(y+s/2+Math.sin(a)*r),1,1);}}},
   sound:{kind:'hiss',band:120,q:2,gain:.006,bySpeed:.002}
+ },
+ // The new regions, in the Abyss between continents (universe-regions.js).
+ aurora:{
+  // Aurora: a faint veil of colour far away; curtains of light that ripple with the music and part when you pass;
+  // a few sparks in the second colour.
+  far:{draw(c,x,y,s,key,f){c.fillStyle=rgba(rand(key+':c')<.5?f.ink:f.accent,.05);c.beginPath();c.ellipse(x+rand(key+':x')*s,y+rand(key+':y')*s,50+rand(key+':r')*40,16,rand(key+':a')*3.14,0,6.283);c.fill();}},
+  mid:{draw(c,x,y,s,key,f){if(rand(key+':on')<.3)return;const base=y+rand(key+':y')*s,amp=10+6*f.beat,ph=rand(key+':p')*6,ink=rand(key+':c')<.7?f.ink:f.accent;c.lineWidth=1;
+   for(let u=0;u<=s;u+=5){const px=x+u,wave=Math.sin((f.ux+u)/110+(f.still?0:f.t/1500)+ph)*amp,py=base+wave,away=Math.max(0,1-Math.hypot(px-f.cubeX,py-f.cubeY)/90),len=14+8*Math.sin((f.ux+u)/40+ph);
+    c.strokeStyle=rgba(ink,.28*(1-away*.8));c.beginPath();c.moveTo(px,py+away*16*Math.sign(py-f.cubeY||1));c.lineTo(px,py+len+away*16*Math.sign(py-f.cubeY||1));c.stroke();}}},
+  near:{draw(c,x,y,s,key,f){c.fillStyle=rgba(f.accent,.5+.4*f.beat);for(let i=0;i<2;i++)c.fillRect(Math.round(x+rand(key+':x'+i)*s),Math.round(y+rand(key+':y'+i)*s),1,1);}},
+  sound:{kind:'hiss',band:1200,q:1,gain:.004,bySpeed:.001}
+ },
+ cometas:{
+  // Cometas: thin streaks crossing far away; comets with a head and a tail passing on a diagonal; icy dust.
+  far:{draw(c,x,y,s,key,f){const p=f.still?.5:((f.t/14000+rand(key+':p'))%1);c.strokeStyle=rgba(f.ink,.1);c.lineWidth=1;const px=x+p*s,py=y+rand(key+':y')*s;c.beginPath();c.moveTo(px,py);c.lineTo(px-40,py-14);c.stroke();}},
+  mid:{draw(c,x,y,s,key,f){if(rand(key+':on')<.6)return;const p=f.still?.5:((f.t/(2600+rand(key+':v')*2600)+rand(key+':p'))%1),a=.35+rand(key+':a')*.4,px=x+p*s*1.4-s*.2,py=y+rand(key+':y')*s+p*s*.4;
+   for(let k=0;k<12;k++){c.fillStyle=rgba(f.ink,.9*(1-k/12));c.fillRect(Math.round(px-Math.cos(a)*k*4),Math.round(py-Math.sin(a)*k*4),k?1:3,k?1:3);}}},
+  near:{draw(c,x,y,s,key,f){c.fillStyle=rgba(f.ink,.35+.3*f.beat);for(let i=0;i<4;i++){const px=x+rand(key+':x'+i)*s,py=y+rand(key+':y'+i)*s,[ox,oy]=f.part(px,py);c.fillRect(Math.round(px+ox),Math.round(py+oy),1,1);}}},
+  sound:{kind:'hiss',band:5200,q:2,gain:.003,bySpeed:.004}
+ },
+ constelaciones:{
+  // Constelaciones: fixed stars far away; groups of five to seven stars that pulse while the figure is open; when you
+  // complete the cube's theme in the region, they join with gold lines, for good.
+  far:{draw(c,x,y,s,key,f){c.fillStyle=rgba(f.ink,.4);for(let i=0;i<5;i++)c.fillRect(Math.round(x+rand(key+':x'+i)*s),Math.round(y+rand(key+':y'+i)*s),1,1);}},
+  mid:{draw(c,x,y,s,key,f){if(rand(key+':on')<.5)return;const n=5+Math.floor(rand(key+':n')*3),pts=[];for(let i=0;i<n;i++)pts.push([x+s*.15+rand(key+':x'+i)*s*.7,y+s*.15+rand(key+':y'+i)*s*.7]);
+   if(f.done){c.strokeStyle=rgba(f.accent,.7);c.lineWidth=1;c.beginPath();pts.forEach(([px,py],i)=>i?c.lineTo(px,py):c.moveTo(px,py));c.stroke();}
+   pts.forEach(([px,py],i)=>{c.fillStyle=rgba(f.done?f.accent:f.ink,f.done?.95:.7+.3*(i===f.beatIndex%n?f.beat:0));c.fillRect(Math.round(px)-1,Math.round(py)-1,2,2);});}},
+  near:{draw(c,x,y,s,key,f){if(rand(key+':on')<.7)return;c.fillStyle=rgba(f.ink,.6);c.fillRect(Math.round(x+rand(key+':x')*s),Math.round(y+rand(key+':y')*s),1,1);}},
+  sound:{kind:'hiss',band:8200,q:10,gain:.002,bySpeed:.001}
+ },
+ nebulosa:{
+  // Nebulosa oscura: black clouds that hide the stars, red edges moving slowly; inside, only what the cube lights
+  // can be seen (`dark`).
+  far:{draw(c,x,y,s,key,f){c.fillStyle='rgba(0,0,0,.5)';for(let i=0;i<2;i++){c.beginPath();c.arc(x+rand(key+':x'+i)*s,y+rand(key+':y'+i)*s,24+rand(key+':r'+i)*30,0,6.283);c.fill();}}},
+  mid:{draw(c,x,y,s,key,f){if(rand(key+':on')<.4)return;const cx=x+rand(key+':x')*s,cy=y+rand(key+':y')*s,r=18+rand(key+':r')*24,a=rand(key+':a')*6.283+(f.still?0:f.t/9000);c.strokeStyle=rgba(f.ink,.3);c.lineWidth=1;c.beginPath();c.arc(cx,cy,r,a,a+2.2);c.stroke();}},
+  near:{draw(c,x,y,s,key,f){c.fillStyle=rgba(f.ink,.4+.3*f.beat);if(rand(key+':on')<.5)c.fillRect(Math.round(x+rand(key+':x')*s),Math.round(y+rand(key+':y')*s),1,1);}},
+  dark:true,
+  sound:{kind:'hiss',band:90,q:3,gain:.006,bySpeed:.001}
  }
 };
 // Curved bands of a planetary ring, on the layer's plane so they continue across cells.
@@ -122,10 +161,16 @@ function lattice(c,x,y,s,f,gap,style){const h=gap*.866,j0=Math.floor(f.uy/h),j1=
 // How far a point is pushed by the cube's recent path: the furrow it opens closes in about a second and a half.
 export function partAt(px,py,trail,now,radius=70,push=18){let ox=0,oy=0;for(const p of trail){const age=(now-p.at)/1500;if(age>=1)continue;const dx=px-p.x,dy=py-p.y,d=Math.hypot(dx,dy);if(d<1||d>=radius)continue;const k=(1-d/radius)*(1-age)*push/d;ox+=dx*k;oy+=dy*k;}const m=Math.hypot(ox,oy);return m>push?[ox/m*push,oy/m*push]:[ox,oy];}
 export function initialize(runtime){
- const trail=[];let lastTrail=0,air=null,airFor='',rest=0,lastPulse=-1e9;const stats={cells:0,regions:{}};
+ const trail=[];let lastTrail=0,air=null,airFor='',rest=0,lastPulse=-1e9;const stats={cells:0,regions:{},constellations:0};
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  const ids=()=>runtime.BIOMES.map(b=>b.id);
- const regionAt=(x,y)=>ids()[runtime.biomeOfPos(x,y)]||'vacio';
+ // The region of a point: its biome, or in the Abyss one of the new regions (universe-regions.js).
+ const regionAt=(x,y)=>{const id=ids()[runtime.biomeOfPos(x,y)]||'vacio';return id==='vacio'?runtime.newRegionAt?.(x,y)?.id||'vacio':id;};
+ // Constellations completed by finishing the theme in their region, kept in S.universe.constellations by region key.
+ const doneAt=(x,y)=>{const k=runtime.regionOfPos?.(x,y)?.key;return !!(k&&runtime.S.universe?.constellations?.[k]);};
+ let phrasesSeen=null;
+ function constellationTick(){const st=runtime.journeyPulseState?.();if(!st)return;if(phrasesSeen===null||st.phrases<phrasesSeen){phrasesSeen=st.phrases;return;}if(st.phrases===phrasesSeen)return;phrasesSeen=st.phrases;
+  if(regionAt(runtime.S.wx,runtime.S.wy)!=='constelaciones')return;const k=runtime.regionOfPos(runtime.S.wx,runtime.S.wy).key,u=(runtime.S.universe||={});u.constellations||={};if(u.constellations[k])return;u.constellations[k]=true;if(runtime.save()===false){delete u.constellations[k];return;}stats.constellations++;runtime.enterFx=Math.max(runtime.enterFx||0,.8);}
  // The region's own air: one quiet looped noise, filtered, its gain far under the music.
  function sound(id,speed){const st=STYLES[id]?.sound,ac=runtime.ac;if(!ac||!runtime.bus||!runtime.S.sound){stopAir();return 0;}
   if(!st){stopAir();return 0;}if(!air||airFor!==id){stopAir();const len=ac.sampleRate*2,buf=ac.createBuffer(1,len,ac.sampleRate),d=buf.getChannelData(0);let seed=hash('air:'+id);for(let i=0;i<len;i++){seed=Math.imul(seed^seed>>>15,2246822519)>>>0;d[i]=seed/2147483648-1;}
@@ -146,13 +191,15 @@ export function initialize(runtime){
    // Cells live on a plane that moves at `depth` of the camera; the region of a cell is the one under its centre now.
    const size=LAYER_CELL[layer],ox=camX*depth-W/2,oy=camY*depth-H/2,i0=Math.floor(ox/size)-1,j0=Math.floor(oy/size)-1,i1=Math.ceil((ox+W)/size),j1=Math.ceil((oy+H)/size);
    for(let i=i0;i<=i1;i++)for(let j=j0;j<=j1;j++){const sx=i*size-ox,sy=j*size-oy,wx=camX+(sx+size/2-W/2),wy=camY+(sy+size/2-H/2),key=layer+':'+i+','+j,id=cellRegion(wx,wy,runtime.WCH||900,regionAt,key),st=STYLES[id]?.[layer];if(!st)continue;
-    const f={t,beat,still,bar,beatIndex,ux:i*size,uy:j*size,rest,pulseAge:(now-lastPulse)/1000,cubeX:W/2+(runtime.S.wx-camX),cubeY:H/2+(runtime.S.wy-camY),ink:runtime.placeColor?runtime.placeColor(id,LANDSCAPES[id]||'#ffffff'):LANDSCAPES[id]||'#ffffff',wind:rand('wind:'+id+':'+Math.floor(wx/(runtime.WCH||900))+','+Math.floor(wy/(runtime.WCH||900)))*Math.PI*2,
+    const f={t,beat,still,bar,beatIndex,done:id==='constelaciones'&&doneAt(wx,wy),accent:newRegionById(id)?.accent||'#ffffff',ux:i*size,uy:j*size,rest,pulseAge:(now-lastPulse)/1000,cubeX:W/2+(runtime.S.wx-camX),cubeY:H/2+(runtime.S.wy-camY),ink:runtime.placeColor?runtime.placeColor(id,LANDSCAPES[id]||newRegionById(id)?.color||'#ffffff'):LANDSCAPES[id]||newRegionById(id)?.color||'#ffffff',wind:rand('wind:'+id+':'+Math.floor(wx/(runtime.WCH||900))+','+Math.floor(wy/(runtime.WCH||900)))*Math.PI*2,
      part:(px,py)=>layer!=='near'?[0,0]:partAt(px,py,screenTrail,now)};
     st.draw(c,sx,sy,size,id+':'+key,f);stats.cells++;stats.regions[id]=(stats.regions[id]||0)+1;}}
   // The cube's wake in regions that have one (Marea): rings spreading from where it passed.
   const hereId=regionAt(runtime.S.wx,runtime.S.wy);if(STYLES[hereId]?.wake&&!still){const ink=runtime.placeColor?runtime.placeColor(hereId,LANDSCAPES[hereId]):LANDSCAPES[hereId];c.lineWidth=1;
    for(const p of screenTrail.filter((_,i)=>i%5===0)){const age=(now-p.at)/1600;if(age>=1)continue;c.strokeStyle=rgba(ink,.4*(1-age));c.beginPath();c.arc(p.x,p.y,6+age*34,0,6.283);c.stroke();}}
-  c.restore();
+  // Inside the Nebulosa oscura only what the cube lights can be seen.
+  if(STYLES[hereId]?.dark){const g=c.createRadialGradient(W/2+(runtime.S.wx-camX),H/2+(runtime.S.wy-camY),60,W/2+(runtime.S.wx-camX),H/2+(runtime.S.wy-camY),Math.max(W,H)*.6);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.72)');c.fillStyle=g;c.fillRect(0,0,W,H);}
+  c.restore();constellationTick();
   sound(regionAt(runtime.S.wx,runtime.S.wy),Math.min(1,(runtime.MU?.speed||0)/200));}
- Object.defineProperties(runtime,{universePulse:{get:()=>()=>{lastPulse=performance.now();}},drawUniverseLayers:{get:()=>draw},universeLayers:{get:()=>()=>({cells:stats.cells,regions:{...stats.regions},air:airFor,airGain:air?air.g.gain.value:0})}});
+ Object.defineProperties(runtime,{universePulse:{get:()=>()=>{lastPulse=performance.now();}},drawUniverseLayers:{get:()=>draw},universeLayers:{get:()=>()=>({here:regionAt(runtime.S.wx,runtime.S.wy),constellations:stats.constellations,cells:stats.cells,regions:{...stats.regions},air:airFor,airGain:air?air.g.gain.value:0})}});
 }

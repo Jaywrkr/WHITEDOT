@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 21 de octubre de 2026. Código **2.3.0-alpha.113**. Las entradas describen su revisión, no certifican producción.
+Estado: 21 de octubre de 2026. Código **2.3.0-alpha.114**. Las entradas describen su revisión, no certifican producción.
+
+## Universo · Fase 5 · Regiones nuevas · alpha.114
+
+Rama `claude/universo-nuevas`, sobre `claude/universo-resto`.
+
+Cuatro regiones nuevas llenan parte del Abismo de silencio, el espacio entre continentes que antes era todo igual. El mapa, los continentes y la música de cada lugar no cambian; en el Viaje no aparecen, para que el Vacío siga solo.
+
+- **Aurora:** cortinas de luz que ondulan con la música y se abren al pasar, en verde agua y magenta.
+- **Cometas:** cometas con cabeza y cola que cruzan en diagonal, estelas lejanas y polvo de hielo.
+- **Constelaciones:** grupos de estrellas que laten; si completas el tema allí, se unen con líneas doradas para siempre.
+- **Nebulosa oscura:** nubes negras de borde rojo; dentro solo se ve lo que ilumina el cubo.
+- **Reparto:** unas 4 de cada 10 regiones del Abismo, elegidas por un hash de la región; el resto sigue siendo Vacío.
+- **Aviso y sonido:** el aviso de lugar dice su nombre; cada una tiene su aire, muy por debajo de la música.
+- **Pruebas:** nuevas `universe-regions.mjs` y `universe_regions_smoke.py` (móvil y computadora).
 
 ## Universo · Fase 4 · El resto de regiones · alpha.113
 

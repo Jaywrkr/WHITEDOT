@@ -34,7 +34,7 @@ El mar entre continentes es el **Abismo de silencio** (región `vacio`). Las eco
 
 ## Regiones nuevas
 
-Aparecen solo lejos del centro, más allá de donde empieza el Vacío, para no cambiar lo ya explorado. Antes de añadirlas se verifica con mapas guardados.
+Viven en el Abismo de silencio, el espacio entre continentes (`universe-regions.js`): unas 4 de cada 10 regiones del Abismo muestran una, elegida por un hash de la región; el resto sigue siendo Vacío. No son biomas del generador, así que el mapa, los continentes, la música y lo ya explorado no cambian. En el Viaje no aparecen.
 
 - **Aurora:** cortinas de luz que ondulan y se abren al pasar.
 - **Cometas:** estelas en diagonal; a tiempo, dejan una nota.
@@ -87,6 +87,7 @@ Orden: los bloques visual (1–6) y musical (7–12) se alternan. Los superbioma
 
 - **Fase 1 · Nombres** (alpha.106): nombres del universo para las 11 regiones, sus ecologías y ecorregiones; colores separados (la pareja más cercana, Anillos y Púlsares, a distancia 72 en RGB); consejos de cada región y el Abismo de silencio. Pendiente: los objetos que aún se ven y se nombran como antes (pilares, faros, flores, agua) cambian con sus dibujos en las fases 2–4.
 - **Fase 2 · Capas** (alpha.107): `universe-layers.js` dibuja las tres capas de cada región sobre el suelo del Mundo, en celdas de 150, 120 y 110 px que se mueven al 35, 70 y 100 % de la cámara. Cerca del borde de una región las celdas de las dos se mezclan (150 px a cada lado). Polvo tiene su bruma, granos con estela de viento y motas que se apartan del cubo y vuelven en 1,5 s; el Vacío no dibuja nada. El aire de cada región es un ruido filtrado con ganancia máxima 0,012 (unos −38 dB), muy bajo la música. Polvo ya no dibuja hierba en el suelo. Coste: en el navegador de pruebas no se distingue del ruido de medida.
+- **Fase 5 · Regiones nuevas** (alpha.114): Aurora, Cometas, Constelaciones (se unen al completar el tema, guardado en `S.universe.constellations`) y Nebulosa oscura, en el Abismo. Pendiente: llevar las figuras de constelación a la Bitácora (va con la colección de superbiomas).
 - **Fase 4 · El resto de regiones** (alpha.113): Restos, Esporas, Anillos, Prisma, Púlsares y Pozo con sus tres capas y su aire. Las diez regiones con detalle ya están dibujadas. El pulso del jugador llega a las capas (`universePulse`) para la onda del Prisma. Pendiente: los objetos que aún vienen de antes (pilares de Restos, plantas, flores, lluvia inclinada) y las regiones nuevas.
 - **Fase 11 · Los últimos gemelos** (alpha.112): Boom bap y G-funk, Drum & bass y Liquid quedan separados por ritmo y tempo. **Medida final de los 52 géneros: 0 parejas bajo la línea (antes 16)**; la más cercana, Deep house ~ Tribal, a 0,13.
 - **Fase 10 · Groove** (alpha.111): Boogie baja a 98–104 con bombo sincopado; Cosmic disco queda en 110–116, sin palmada y con timbales. De 0,084 a 0,478 entre ellos.
