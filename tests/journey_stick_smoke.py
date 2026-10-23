@@ -36,7 +36,7 @@ try:
    page.wait_for_function("__r.journeyStick().attached>=3",timeout=3000);page.wait_for_function("document.body.textContent.includes('se pega')",timeout=5000)
    assert page.evaluate('__r.S.sparks')==sparks,'no sparks in the Journey'
    # Full bar: the gold cloud comes beside the cube; one pulse on time swallows it and the portal to the Lago opens.
-   page.evaluate("()=>{__r.S.journey.stick.points=120;}");page.wait_for_function("!!__r.journeyStick().cloud",timeout=3000)
+   page.evaluate("()=>{__r.S.journey.stick.points=150;}");page.wait_for_function("!!__r.journeyStick().cloud",timeout=3000)
    c=page.evaluate('__r.journeyStick().cloud');assert ((c['x']-page.evaluate('__r.S.wx'))**2+(c['y']-page.evaluate('__r.S.wy'))**2)**.5<120,c
    page.wait_for_function("document.body.textContent.includes('nube dorada')",timeout=5000)
    page.evaluate("__r.journeyGamePulse(false)");assert not page.evaluate('__r.journeyStick().swallowed'),'off time it waits'

@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.153**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.154**. Las entradas describen su revisión, no certifican producción.
+
+## F12 · Primer minuto · alpha.154
+
+Rama `claude/f12-primer-minuto`, desde `main`.
+
+- **La barra late antes del primer pulso:** en el Camino y en un capítulo del Viaje, si pasan cinco segundos sin cuadros abiertos y sin ningún pulso, la barra de arriba se ilumina suave en cada tiempo de la música (a 120 BPM antes de que suene, como en un teléfono antes del primer toque). El primer pulso la apaga. Se suma al dedo fantasma de la pista.
+- **Llanura más larga:** meta 150 (antes 60). Jay la terminó en menos de un minuto ya sabiendo jugar; con esta meta debería durar unos 2:30. Los demás capítulos se miden en su prueba antes de tocarlos.
+- **Plan nuevo F12–F19** en [El mundo](docs/MUNDO.md): victoria con la música que suena (F13), ritmos distintos por lugar (F14, con el reparto aprobado), Faros, Ruinas y Cueva (F15–F17), Mundo salvaje (F18) y cierre con personas (F19).
+- CI: las pruebas de navegador pasan de 4 a 6 grupos; con las pruebas de los lugares, dos grupos superaban los 30 minutos y se cancelaban.
+- Pruebas: `tests/bar-beat-hint.mjs`, `tests/bar_beat_hint_smoke.py` (teléfono y escritorio: no bajo la bienvenida, sí cinco segundos después, se apaga con el primer pulso); `journey_stick_smoke` usa la meta nueva. Límite: la duración de la Llanura es una estimación a partir del tiempo de Jay.
 
 ## F11 · Cristales · alpha.153
 

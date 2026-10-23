@@ -6,7 +6,7 @@ import {beatGlow as glowNow,worldCamera,sayOnce,chapterToast} from './journey-ga
 // Small things are many and fill a little, big ones are few and fill a lot. When the bar is full a gold cloud comes
 // beside the cube, and one last pulse on time swallows it: the Llanura is complete.
 // Places and kinds come from hashes of the map cell, never from the old random sequence.
-export const STICK_GOAL=60,STICK_CELL=150,STICK_REACH=90,STICK_GONE_LIMIT=800,STICK_CLOUD_GAP=70;
+export const STICK_GOAL=150,STICK_CELL=150,STICK_REACH=90,STICK_GONE_LIMIT=800,STICK_CLOUD_GAP=70;
 export const STICK_KINDS=Object.freeze([
  Object.freeze({id:'mota',value:1,r:3,weight:.45}),Object.freeze({id:'chispa',value:3,r:6,weight:.32}),
  Object.freeze({id:'piedra',value:8,r:9,weight:.15}),Object.freeze({id:'cometa',value:20,r:13,weight:.08})]);

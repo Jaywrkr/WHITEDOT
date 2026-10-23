@@ -26,17 +26,18 @@ jobs:
       - run: node scripts/reencuentro-audit.mjs /tmp/reencuentro-audit.json
       - run: npm run audit:universe -- 2000 2
       - run: npm run audit:universe -- 2000 2 2 classic
-  # The browser catalogue is split in four shards with one worker each: on one shared runner with two workers it took
-  # about 38 of its 40 minutes and different flows lost races every run.
+  # The browser catalogue is split in six shards with one worker each: on one shared runner with two workers it took
+  # about 38 of its 40 minutes and different flows lost races every run; with the places' smokes four shards passed
+  # 30 minutes.
   browser:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4]
+        shard: [1, 2, 3, 4, 5, 6]
     env:
-      WHITEDOT_BROWSER_SHARD: ${{ matrix.shard }}/4
+      WHITEDOT_BROWSER_SHARD: ${{ matrix.shard }}/6
       WHITEDOT_BROWSER_WORKERS: '1'
     steps:
       # pwa_updates_smoke.py archives the real pre-closure release from history.
