@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.141**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.142**. Las entradas describen su revisión, no certifican producción.
+
+## F0 · El Viaje por juegos en `main` · alpha.142
+
+Rama `claude/f0-viaje-juegos`, desde `main` (alpha.141, con los cinco capítulos integrados en las PR #315–#319). Primera fase del plan aprobado en [El mundo](docs/MUNDO.md).
+
+- **[El mundo](docs/MUNDO.md):** el plan completo, F0–F16, con chispas para comprar y estrellas para avanzar y ganar.
+- **`?capitulo=`** (`llanura`, `lago`, `bosque`, `tormenta`, `vacio`): abre el Viaje directamente en ese capítulo, sin cuenta y con su propio guardado; cada carga empieza el capítulo de nuevo.
+- **El festival** juega el Lago nuevo: termina al abrir la flor dorada.
+- Cada juego vuelve a leer su estado si el guardado lo reemplaza.
+- Pruebas: `tests/chapter_test_smoke.py`; `tests/festival_smoke.py` usa el Lago nuevo.
 
 ## Viaje por juegos · Vacío «Suelta» · alpha.141
 

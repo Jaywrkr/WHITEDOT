@@ -26,7 +26,7 @@ export function normalizeLasso(raw){const q=raw&&typeof raw==='object'&&!Array.i
 export function initialize(runtime){
  let owner=null,state=null,caught=new Set(),misses=0,shiver=0,friendPulse=0,loops=0,armed=null;const trail=[],flying=[],orbit=[],toBar=[];
  const calm=()=>calmMotion(runtime.S);
- function own(){const j=runtime.S.journey||{};if(owner!==runtime.S){owner=runtime.S;j.lasso=normalizeLasso(j.lasso);state=j.lasso;caught=new Set(state.caught);trail.length=0;flying.length=0;orbit.length=0;toBar.length=0;armed=null;}return state;}
+ function own(){const j=runtime.S.journey||{};if(owner!==runtime.S||j.lasso!==state){owner=runtime.S;j.lasso=normalizeLasso(j.lasso);state=j.lasso;caught=new Set(state.caught);trail.length=0;flying.length=0;orbit.length=0;toBar.length=0;armed=null;}return state;}
  const inBosque=(x,y)=>runtime.BIOMES[runtime.biomeOfPos(x,y)]?.id==='bosque';
  const active=()=>!!runtime.journeyGamePlaying?.('bosque');
  const audible=()=>runtime.S.sound&&runtime.ac&&runtime.bus;

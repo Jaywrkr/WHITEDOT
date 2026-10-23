@@ -126,16 +126,16 @@ Todo se oculta, no se borra; los datos y lo comprado se conservan y vuelven en e
 - **Fase 8 · Momentos de los capítulos 1–3** (alpha.104): faro con voz en la Llanura, lotos que responden al tema en el Lago, la criatura del Bosque que te sigue e imita, el Mundo sin palabras en el Viaje y un final con latido y la criatura. Pendiente: pruebas con personas, el músico coautor y los créditos definitivos.
 
 - **Prototipo «Pégate»** (alpha.137, rama `claude/viaje-pegate`, aprobado por Jay tras probarlo el 23 de octubre, pendiente de integrar): en la Llanura lo que late con el beat se pega al cubo con un pulso a tiempo y llena la barra según su tamaño (motas 1, cruces 3, rombos 8, cometas 20; meta 120); fuera de tiempo nada se mueve. Con la barra llena una nube dorada llega junto al cubo y se traga con un pulso a tiempo. `?faro=1` conserva el faro para comparar.
-- **Viaje por juegos** (arco aprobado por Jay el 23 de octubre): cada capítulo mantiene una regla, solo a tiempo pasa algo, llena la barra y cierra con algo dorado y un pulso a tiempo; cada uno añade un verbo.
+- **Viaje por juegos** (arco aprobado por Jay el 23 de octubre; plan completo en [El mundo](MUNDO.md)): cada capítulo mantiene una regla, solo a tiempo pasa algo, llena la barra y cierra con algo dorado y un pulso a tiempo; cada uno añade un verbo.
 
 | Capítulo | Verbo | Juego | Estado |
 |---|---|---|---|
 | Camino | Romper | Cristales a tiempo | Hecho |
-| Llanura | Pegar | Lo que late se pega y el cubo crece; la nube dorada | Prototipo, alpha.137 |
-| Lago | Encadenar | Una onda enciende racimos de flores en cadena; la flor dorada | Prototipo, alpha.138 |
-| Bosque | Rodear | Una estela que cierra un círculo alrededor de luciérnagas; la criatura se une | Prototipo, alpha.139 |
-| Tormenta | Bailar | Estar en el círculo del rayo y devolverlo a tiempo; el ojo de la tormenta | Prototipo, alpha.140 |
-| Vacío | Soltar | Lo que pegaste se vuelve estrellas que cantan tu nota; el cubo vuelve a su tamaño; tu luz dorada | Prototipo, alpha.141 |
+| Llanura | Pegar | Lo que late se pega y el cubo crece; la nube dorada | En `main`, alpha.141 |
+| Lago | Encadenar | Una onda enciende racimos de flores en cadena; la flor dorada | En `main`, alpha.141 |
+| Bosque | Rodear | Una estela que cierra un círculo alrededor de luciérnagas; la criatura se une | En `main`, alpha.141 |
+| Tormenta | Bailar | Estar en el círculo del rayo y devolverlo a tiempo; el ojo de la tormenta | En `main`, alpha.141 |
+| Vacío | Soltar | Lo que pegaste se vuelve estrellas que cantan tu nota; el cubo vuelve a su tamaño; tu luz dorada | En `main`, alpha.141 |
 | Refugio | Escuchar | Tu viaje suena entero | Hecho |
 - **Sin monedas en el Viaje** (decisión de Jay, 23 de octubre): las chispas son del Mundo libre; el Camino del Viaje da luz sin chispas y los cristales del Mundo no aparecen en los capítulos.
 - **Fase 7 de la auditoría · Pruebas con personas** (alpha.136): notas en el teléfono con `?prueba=1` y guía de las sesiones en [Pruebas con personas](PRUEBAS_CON_PERSONAS.md). Faltan las sesiones.

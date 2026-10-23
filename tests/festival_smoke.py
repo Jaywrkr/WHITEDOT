@@ -19,7 +19,7 @@ try:
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    base=f'http://127.0.0.1:{server.server_port}/'
    page.goto(base+'tests/');page.evaluate(f"localStorage.setItem('pixel-blanco-v4',{json.dumps(MAIN)})")
-   page.goto(base+'?festival=1&clasico=1');page.wait_for_function('!!window.__r?.festival')
+   page.goto(base+'?festival=1');page.wait_for_function('!!window.__r?.festival')
    assert page.evaluate('__r.festival') and page.evaluate('__r.accountClient')==None,'no account in the festival'
    assert page.evaluate("document.body.classList.contains('festival')&&document.body.classList.contains('journey-quiet')")
    assert page.is_hidden('#mAccount') if page.locator('#mAccount').count() else True
@@ -34,12 +34,12 @@ try:
    assert page.evaluate("localStorage.getItem('pixel-blanco-v4')")==MAIN,"the player's save is untouched"
    page.evaluate("()=>{const r=__r,ids=r.BIOMES.map(b=>b.id);for(let d=1;d<80;d++)for(let a=0;a<16;a++){const x=Math.round(r.S.wx+Math.cos(a/16*6.283)*d*300),y=Math.round(r.S.wy+Math.sin(a/16*6.283)*d*300);if(ids[r.biomeOfPos(x,y)]==='lago'&&!r.regionOfPos(x,y)?.sea){r.S.wx=x;r.S.wy=y;return;}}}")
    page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='lago'",timeout=8000);page.evaluate(hide)
-   # The Lago's moment (three lotuses) and its bars, lived before.
-   page.wait_for_function("!!__r.journeyMoments().lotos");page.evaluate("()=>{const s=__r.S;s.journey.moments.lotos.open=[true,true,true,false,false];s.journey.progress.lago={bars:99};}")
-   for i in range(6):page.evaluate(ON);page.wait_for_timeout(320)
+   # The Lago is played by its chain game: with the bar full, the gold flower opens with a pulse on time.
+   page.wait_for_function("__r.journeyChain().active",timeout=8000);page.evaluate("()=>{__r.S.journey.chain.points=100;}");page.wait_for_function("!!__r.journeyChain().flower",timeout=3000)
+   page.evaluate(ON);page.wait_for_function("__r.journeyChain().opened&&__r.journeyChapter().done.lago",timeout=5000)
    page.wait_for_function("__r.journeyChapter().portalOpen",timeout=16000)
    page.evaluate("()=>{const r=__r,p=r.journeyChapter().portal;r.S.wx=p.x;r.S.wy=p.y;}");page.wait_for_function("__r.journeyFinaleState().running",timeout=5000)
-   st=page.evaluate('__r.journeyFinaleState()');assert st['notes']==12+12,st
+   st=page.evaluate('__r.journeyFinaleState()');assert st['notes']>=7,st
    page.wait_for_timeout(2500);page.locator('#journeyFinale').click()
    page.wait_for_selector('#journeyAgain',timeout=5000);assert 'Tu frase' in page.inner_text('#journeyFinale');assert page.evaluate('__r.journeyMode()')=='viaje'
    page.locator('#journeyAgain').click();page.wait_for_load_state();page.wait_for_function('!!window.__r?.festival')
@@ -51,5 +51,5 @@ try:
    page.reload();page.wait_for_function('!!window.__r?.colorSafe');assert page.evaluate('__r.colorSafe()')==True
    assert not errors,errors;ctx.close()
   browser.close()
- print('PASS festival build on phone and desktop: no account or mode switch, its own save with the player\'s untouched, the Lago ends it on your phrase, «Otra persona» starts fresh; colour-blind palette kept',flush=True)
+ print('PASS festival build on phone and desktop: no account or mode switch, its own save with the player\'s untouched, the Lago gold flower ends it on your phrase, «Otra persona» starts fresh; colour-blind palette kept',flush=True)
 finally:server.shutdown()

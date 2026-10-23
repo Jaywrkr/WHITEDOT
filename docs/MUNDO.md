@@ -1,0 +1,136 @@
+# El mundo de Kubono: Viaje, 11 lugares y Refugio
+
+Diseño aprobado por Jay el 23 de octubre de 2026. Es la fuente única del plan por fases F0–F16. Estado de cada fase: en [Cambios](../CAMBIOS.md). Una decisión aprobada no equivale a construida ni probada con personas.
+
+## Las cuatro capas
+
+| Capa | Qué es | Para qué sirve |
+|---|---|---|
+| **Viaje** (prólogo, 15–17 min) | Cinco capítulos con historia: Llanura, Lago, Bosque, Tormenta y Vacío, más el Camino y el Refugio | Aprender los cinco primeros verbos y llegar a casa |
+| **Los 11 lugares** | Retos fijos, cada uno con su juego y tres estrellas | Avanzar: las estrellas abren lugares y ganan el juego |
+| **Mundo salvaje** | El mundo infinito alrededor | Explorar, encuentros sorpresa, chispas y coleccionables |
+| **Refugio** | La casa, en el centro del anillo | Trofeos, estrellas, mapa, tienda, espejo, logros y Bitácora |
+
+## Reglas fijas
+
+1. **Solo a tiempo pasa algo** en los lugares y en el Viaje. En el Mundo libre se toca cuando se quiera; a tiempo da más chispas.
+2. **Cada lugar:** una barra, un verbo, un objeto dorado al final y un último pulso a tiempo para cerrarlo.
+3. **Nadie pierde:** no hay derrota; solo más o menos estrellas y chispas.
+4. **Texto mínimo:** una idea por mensaje. Solo los logros del narrador hablan con gracia.
+5. **Nada ganado se borra:** los guardados se migran.
+
+## Chispas y estrellas
+
+| | Chispas ✦ | Estrellas ★ |
+|---|---|---|
+| Para qué | Comprar: tienda del cubo y salto lejano | Avanzar: abrir lugares y ganar el juego |
+| De dónde | Jugar: lugares, Mundo libre, encuentros, remezcla diaria y algunos logros | Solo los retos de los 11 lugares |
+| ¿Se gastan? | Sí | Nunca; como máximo 33 |
+| En el Viaje | No aparecen | Se dan al terminarlo |
+
+### Estrellas de cada lugar
+
+| Estrella | Cómo |
+|---|---|
+| ★ Completo | Cerrar el objeto dorado |
+| ★★ Ritmo | Completarlo con al menos el 85 % de pulsos a tiempo |
+| ★★★ Maestro | Se abre con ★★: tempo +10 %, barra ×1,5 y margen a tiempo más estrecho; completarlo con al menos el 80 % a tiempo |
+
+Sin sonido se gana ★; ★★ y ★★★ piden escuchar. Al terminar el Viaje cada capítulo da su ★, y su ★★ si se jugó con el 85 % a tiempo; quien ya lo había terminado recibe esas mismas estrellas.
+
+### Desbloqueos
+
+| Lugar | Verbo | Estrellas |
+|---|---|---|
+| Llanura | Pegar | Viaje |
+| Lago | Encadenar | Viaje |
+| Bosque | Rodear | Viaje |
+| Tormenta | Bailar | Viaje |
+| Vacío | Soltar | Viaje |
+| Jardín | Sembrar | 5 |
+| Dunas | Surfear | 8 |
+| Cristales | Resonar | 12 |
+| Faros | Guiar | 16 |
+| Ruinas | Reconstruir | 20 |
+| Cueva | Eco | 24 |
+| **Ganar el juego** («Tu canción» completa) | | 33 |
+
+Los verbos de los seis lugares nuevos son propuestas: cada uno se diseña en una página antes de construirlo.
+
+### Chispas
+
+| Entrada | Chispas |
+|---|---|
+| Ronda completada en un lugar | 10 + 1 por cada 10 % a tiempo (10–20) |
+| Ronda Maestro | El doble (20–40) |
+| Mundo libre | Lo de siempre; a tiempo ×2; con racha de 8 o más, ×3 |
+| Encuentro salvaje | 15 |
+| Remezcla diaria | 30, y 20 más con récord |
+| Logros | 0–25 |
+
+Cada lugar da chispas completas en sus tres primeras rondas del día y la mitad después. La tienda se reajusta para que el catálogo completo cueste unas 8–10 horas de juego; el viaje rápido a lugares visitados es gratis y el salto lejano conserva su precio. Una simulación valida los números antes de fijarlos (F3).
+
+## Tiempos
+
+| Qué | Duración |
+|---|---|
+| Viaje completo | 15–17 min |
+| Un lugar | 2:30–3:00 (la Llanura hasta 3:30) |
+| Un lugar Maestro | 3–4 min |
+| Del Refugio a cualquier portal, a pie | 30–60 s |
+| Encuentro salvaje | ~30 s |
+
+## Dónde están y cómo se llega
+
+- Los 11 portales dorados forman un anillo alrededor del Refugio, cada uno en su bioma. Cada portal suena, más fuerte cuanto más cerca; los cerrados muestran las estrellas que piden.
+- Una flecha en el borde de la pantalla señala el lugar más cercano sin jugar; el mapa los muestra todos con sus estrellas.
+- Viaje rápido desde la mesa del mapa del Refugio o desde el menú, a lugares ya visitados.
+- No hay orden obligatorio: se juega cualquiera de los abiertos.
+
+## El Refugio
+
+- **Sala de trofeos:** el objeto dorado de cada lugar completado; al tocarlo suena su capa de música.
+- **Muro de estrellas**, **mesa del mapa** y **puerta al anillo**.
+- Siguen las cápsulas, la colección, la guía, la tienda, el espejo y las visitas; en una visita se ven las estrellas del dueño.
+
+## Tu canción
+
+Cada lugar da una capa de una canción en el tono del jugador. El final del Viaje junta las cinco primeras y abre el mundo («Tu mundo se abrió: 11 lugares, 33 estrellas», botón Explorar). Con las 33 estrellas suenan las once juntas: es ganar el juego.
+
+## Logros del narrador
+
+Unos 40 logros con voz burlona, al estilo de *Dungeon Crawler Carl*. Los actuales se reescriben o se retiran sin perder lo ganado. Jay aprueba primero una muestra de 20.
+
+## Fases
+
+Cada fase sale de `main` actualizado, en su rama, y se integra cuando Jay la aprueba.
+
+| Fase | Rama | Qué | Terminada cuando |
+|---|---|---|---|
+| F0 · El Viaje por juegos en `main` | `claude/f0-viaje-juegos` | Los cinco capítulos en `main` (PR #315–#319), el festival con el Lago nuevo, `?capitulo=` y este documento | El Viaje se juega de punta a punta en `main` |
+| F1 · Ritmo de los niveles | `claude/f1-ritmo` | Llanura meta 70; Lago y Bosque meta 220; primer círculo de la Tormenta junto al cubo; el Vacío suelta en el «1» y pide cielo libre | Una partida real da 2:30–3:00 por nivel en `?prueba=1` |
+| F2 · Sonido de victoria | `claude/f2-victoria` | Drop electrónico por género al completar, en lugar del violonchelo; mezcla de los cinco juegos | Los cinco cierres suenan a celebración |
+| F3 · Economía de chispas | `claude/f3-chispas` | Tabla de chispas, límite diario, ×2/×3 a tiempo, tienda reajustada y simulación | La simulación cuadra y ningún saldo baja |
+| F4 · Lugares y estrellas | `claude/f4-estrellas` | Ronda, Maestro, récords, estrellas retroactivas y pantalla de resultado | Los cinco lugares dan sus estrellas y chispas |
+| F5 · El anillo | `claude/f5-anillo` | Portales, flecha, mapa y viaje rápido | Cualquier portal a 30–60 s de la puerta |
+| F6 · El Refugio como centro | `claude/f6-refugio` | Trofeos, muro de estrellas, mesa del mapa y puerta | La casa dice qué tengo, qué falta y a dónde voy |
+| F7 · Tu canción | `claude/f7-cancion` | Capas por lugar, final del Viaje y final verdadero | Se entiende qué se logró sin explicación |
+| F8 · Logros del narrador | `claude/f8-logros` | ~40 logros nuevos y revisión de los actuales | Jay aprueba los textos; nadie pierde un logro |
+| F9–F14 · Lugares nuevos | `claude/f9-jardin` … `claude/f14-cueva` | Jardín, Dunas, Cristales, Faros, Ruinas y Cueva: juego, objeto dorado, capa, trofeo y Maestro | Cada uno pasa la lista y la prueba de Jay |
+| F15 · Mundo salvaje | `claude/f15-salvaje` | Encuentros de 30 s y remezcla diaria | Explorar lejos da algo cada 1–2 minutos |
+| F16 · Cierre con personas | `claude/f16-cierre` | Sesiones con `?prueba=1`, ajuste final, rendimiento, material de tienda | Las notas cumplen los tiempos |
+
+## Cuándo una fase está terminada
+
+Regla «solo a tiempo» y textos breves; capturas en teléfono, teléfono horizontal y escritorio, con paleta para daltonismo y movimiento reducido; renders de mezcla de lo que cambió; guardado migrado y sincronizado sin pérdidas; pruebas de lógica y navegador sin desactivar ninguna; `?medir=1` sin empeorar; documentación al día; y una lista de cinco minutos para el teléfono de Jay. Lo que falle se corrige dentro de esa fase.
+
+## Fuera de este plan
+
+Duetos en línea, más de 11 lugares, la configuración de la cuenta (Supabase sigue en pausa) y la publicación en tiendas.
+
+## Herramientas de prueba
+
+- `?capitulo=llanura` (o `lago`, `bosque`, `tormenta`, `vacio`): abre el Viaje directamente en ese capítulo, sin cuenta y con un guardado propio (`kubono:capitulo`); cada carga empieza el capítulo de nuevo.
+- `?clasico=1`: los capítulos anteriores, para comparar mientras dure el cambio.
+- `?prueba=1` y `?prueba=ver`: las notas de las pruebas con personas ([guía](PRUEBAS_CON_PERSONAS.md)).
+- `?festival=1`: los primeros 15 minutos sin cuenta, con «Otra persona».

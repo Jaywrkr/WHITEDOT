@@ -26,7 +26,7 @@ export function normalizeStick(raw){const q=raw&&typeof raw==='object'&&!Array.i
 export function initialize(runtime){
  let owner=null,state=null,gone=new Set(),streak=0,stuck=0,misses=0,cubeWobble=0,cloudPulse=0,hinted=false;const flying=[],toBar=[],attached=[];
  const calm=()=>calmMotion(runtime.S);
- function own(){const j=runtime.S.journey||{};if(owner!==runtime.S){owner=runtime.S;j.stick=normalizeStick(j.stick);state=j.stick;gone=new Set(state.gone);flying.length=0;toBar.length=0;attached.length=0;streak=0;}return state;}
+ function own(){const j=runtime.S.journey||{};if(owner!==runtime.S||j.stick!==state){owner=runtime.S;j.stick=normalizeStick(j.stick);state=j.stick;gone=new Set(state.gone);flying.length=0;toBar.length=0;attached.length=0;streak=0;}return state;}
  const ids=()=>runtime.BIOMES.map(b=>b.id);
  const inLlanura=(x,y)=>ids()[runtime.biomeOfPos(x,y)]==='llanura'&&!runtime.regionOfPos?.(x,y)?.sea;
  const active=()=>!!runtime.journeyGamePlaying?.('llanura');
