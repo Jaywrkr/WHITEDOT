@@ -10,6 +10,7 @@ Rama `claude/f0-viaje-juegos`, desde `main` (alpha.141, con los cinco capítulos
 - **`?capitulo=`** (`llanura`, `lago`, `bosque`, `tormenta`, `vacio`): abre el Viaje directamente en ese capítulo, sin cuenta y con su propio guardado; cada carga empieza el capítulo de nuevo.
 - **El festival** juega el Lago nuevo: termina al abrir la flor dorada.
 - Cada juego vuelve a leer su estado si el guardado lo reemplaza.
+- El saludo de regreso ya no reabre la bienvenida del Camino si ya se dio por vista (`?capitulo=` la dejaba encima del capítulo).
 - Pruebas: `tests/chapter_test_smoke.py`; `tests/festival_smoke.py` usa el Lago nuevo.
 
 ## Viaje por juegos · Vacío «Suelta» · alpha.141

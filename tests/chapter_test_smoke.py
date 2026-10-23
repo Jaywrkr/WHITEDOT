@@ -24,6 +24,7 @@ try:
     page.wait_for_function(f"__r.journeyChapter().id==='{chapter}'&&__r.BIOMES[__r.curZone]?.id==='{chapter}'&&__r.{game}().active",timeout=20000)
     ch=page.evaluate('__r.journeyChapter()');assert not ch['done'].get(chapter),ch
     assert page.evaluate('__r.journeyMode()')=='viaje'
+    assert page.locator('#mHelpC').is_hidden() and page.locator('#mHelpW').is_hidden(),'no welcome over the chapter'
     assert page.evaluate("localStorage.getItem('pixel-blanco-v4')")==MAIN,"the player's save is untouched"
     assert page.evaluate("!!localStorage.getItem('kubono:capitulo')"),'the test keeps its own save'
    # Every load starts the chapter again from an empty bar.
