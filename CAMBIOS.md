@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.131**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.132**. Las entradas describen su revisión, no certifican producción.
+
+## Fase 4 · Rendimiento real · alpha.132
+
+Rama `claude/fase4-rendimiento`, sobre `claude/fase3-coherencia` (alpha.131, dependencia explícita).
+
+- **La calidad ligera aligera de verdad:** antes solo bajaba la resolución y las partículas; ahora las capas del universo dibujan la mitad de sus puntos y la vida de píxeles solo las 12 criaturas más cercanas. Medido en el navegador de pruebas: de 4185 a 2256 puntos por fotograma (54 %).
+- **Medir en tu teléfono:** abre el juego con `?medir=1` y una esquina muestra la mediana y el percentil 95 del tiempo de fotograma, la calidad y la densidad de píxeles. No se envía nada.
+- Verificación local: 212 suites Node, auditoría sin errores y recorridos del universo, calidad, visibilidad, interfaz y el general en PASS.
+- Pendiente (necesita tu teléfono): medir en tu iPhone y en un Android la fluidez, la batería y el audio con llamadas o al bloquear. Con esos datos se decide si simplificar más el dibujo.
 
 ## Fase 3 · Coherencia · alpha.131
 
