@@ -25,7 +25,7 @@ export function initialize(runtime){
  let owner=null,state=null,misses=0,shiver=0,lightPulse=0;const rising=[],songs=[];
  const calm=()=>calmMotion(runtime.S);
  function own(){const j=runtime.S.journey||{};if(owner!==runtime.S||j.release!==state){owner=runtime.S;j.release=normalizeRelease(j.release);state=j.release;rising.length=0;songs.length=0;}
-  if(!state.total)state.total=releaseTotal(j.stick?.gone?.length);return state;}
+  if(!state.total)state.total=Math.round(releaseTotal(j.stick?.gone?.length)*(runtime.placeGoalScale?.()||1));return state;}
  const active=()=>!!runtime.journeyGamePlaying?.('vacio');
  const audible=()=>runtime.S.sound&&runtime.ac&&runtime.bus;
  const done=()=>own().released>=own().total;

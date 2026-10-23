@@ -14,9 +14,9 @@ export const STICK_KINDS=Object.freeze([
 export function cellItem(cx,cy,seed='stick:v1'){const key=seed+':'+cx+','+cy;if(hashKey(key)>.85)return null;let k=hashKey(key+':k'),kind=STICK_KINDS[0];
  for(const option of STICK_KINDS){if(k<option.weight){kind=option;break;}k-=option.weight;}
  return {id:cx+','+cy,kind:kind.id,value:kind.value,r:kind.r,x:Math.round((cx+.15+.7*hashKey(key+':x'))*STICK_CELL),y:Math.round((cy+.15+.7*hashKey(key+':y'))*STICK_CELL)};}
-export const stickProgress=points=>Math.max(0,Math.min(1,points/STICK_GOAL));
+export const stickProgress=(points,goal=STICK_GOAL)=>Math.max(0,Math.min(1,points/goal));
 // How big the cube is drawn: from its usual size to a little over three times, with the bar.
-export const cubeScale=points=>1+2.2*stickProgress(points);
+export const cubeScale=(points,goal=STICK_GOAL)=>1+2.2*stickProgress(points,goal);
 // The first prototype kept a size from 3 to 40; it becomes points on the same bar.
 export function normalizeStick(raw){const q=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};
  const points=Number.isFinite(q.points)?Math.max(0,Math.min(STICK_GOAL,q.points)):Number.isFinite(q.size)?Math.round(Math.max(0,Math.min(1,(q.size-3)/37))*STICK_GOAL):0;
@@ -24,6 +24,8 @@ export function normalizeStick(raw){const q=raw&&typeof raw==='object'&&!Array.i
  const gone=Array.isArray(q.gone)?q.gone.filter(id=>typeof id==='string'&&/^-?\d+,-?\d+$/.test(id)).slice(-STICK_GONE_LIMIT):[];
  return {points,cloud,gone,swallowed:q.swallowed===true,hinted:q.hinted===true};}
 export function initialize(runtime){
+ // A Maestro round in a place asks for half as much again (places.js, plan F4).
+ const goal=()=>STICK_GOAL*(runtime.placeGoalScale?.()||1);
  let owner=null,state=null,gone=new Set(),streak=0,stuck=0,misses=0,cubeWobble=0,cloudPulse=0,hinted=false;const flying=[],toBar=[],attached=[];
  const calm=()=>calmMotion(runtime.S);
  function own(){const j=runtime.S.journey||{};if(owner!==runtime.S||j.stick!==state){owner=runtime.S;j.stick=normalizeStick(j.stick);state=j.stick;gone=new Set(state.gone);flying.length=0;toBar.length=0;attached.length=0;streak=0;}return state;}
@@ -31,17 +33,17 @@ export function initialize(runtime){
  const inLlanura=(x,y)=>ids()[runtime.biomeOfPos(x,y)]==='llanura'&&!runtime.regionOfPos?.(x,y)?.sea;
  const active=()=>!!runtime.journeyGamePlaying?.('llanura');
  const audible=()=>runtime.S.sound&&runtime.ac&&runtime.bus;
- const full=()=>own().points>=STICK_GOAL;
+ const full=()=>own().points>=goal();
  function near(radius){const out=[],x0=Math.floor((runtime.S.wx-radius)/STICK_CELL),x1=Math.floor((runtime.S.wx+radius)/STICK_CELL),y0=Math.floor((runtime.S.wy-radius)/STICK_CELL),y1=Math.floor((runtime.S.wy+radius)/STICK_CELL);
   for(let i=x0;i<=x1;i++)for(let j=y0;j<=y1;j++){const it=cellItem(i,j);if(!it||gone.has(it.id)||!inLlanura(it.x,it.y))continue;it.d=Math.hypot(it.x-runtime.S.wx,it.y-runtime.S.wy);if(it.d<=radius)out.push(it);}
   return out.sort((a,b)=>a.d-b.d);}
- const reach=()=>STICK_REACH+12*cubeScale(own().points);
+ const reach=()=>STICK_REACH+12*cubeScale(own().points,goal());
  const beatGlow=()=>glowNow(runtime);
  // A short note in the key for each thing that sticks: smaller things sound higher.
  function pop(value,delay=0){if(!audible())return;const ct=runtime.chordTones?.()||[60,64,67];runtime.soon?.(t=>{let m=ct[(stuck+value)%ct.length]+(value>=8?0:12);while(m>84)m-=12;runtime.pluck?.(m,t+delay,runtime.vel?.(.09)??.09,2);},'player');}
- function stick(it,k){gone.add(it.id);state.gone.push(it.id);if(state.gone.length>STICK_GONE_LIMIT)state.gone.splice(0,state.gone.length-STICK_GONE_LIMIT);const before=state.points;state.points=Math.min(STICK_GOAL,state.points+it.value);stuck++;
+ function stick(it,k){gone.add(it.id);state.gone.push(it.id);if(state.gone.length>STICK_GONE_LIMIT)state.gone.splice(0,state.gone.length-STICK_GONE_LIMIT);const before=state.points;state.points=Math.min(goal(),state.points+it.value);stuck++;
   flying.push({...it,at:performance.now()+k*90});toBar.push({value:it.value,at:performance.now()+k*90+280,from:before});pop(it.value,k*.06);
-  if(before<STICK_GOAL&&state.points>=STICK_GOAL)arrive();}
+  if(before<goal()&&state.points>=goal())arrive();}
  // The bar is full: the gold cloud comes beside the cube.
  function arrive(){const s=own();if(s.cloud)return;s.cloud={x:Math.round(runtime.S.wx+STICK_CLOUD_GAP),y:Math.round(runtime.S.wy-STICK_CLOUD_GAP*.5)};cloudPulse=1;
   chapterToast(runtime,'llanura','La nube dorada llegó: tócala a tiempo.');}
@@ -58,7 +60,7 @@ export function initialize(runtime){
  // The cloud stays beside the cube while you walk.
  function tick(){const s=own();if(full()&&!s.cloud)arrive();if(s.cloud){const dx=runtime.S.wx+STICK_CLOUD_GAP-s.cloud.x,dy=runtime.S.wy-STICK_CLOUD_GAP*.5-s.cloud.y;if(Math.hypot(dx,dy)>4){s.cloud.x+=dx*.08;s.cloud.y+=dy*.08;}}
   // The music grows with the bar: what sticks to you plays.
-  const MU=runtime.MU,p=stickProgress(s.points);if(MU&&p>0){MU.journeyFloor=Math.max(MU.journeyFloor||0,.2+.6*p);if(MU.journeyCap!=null)MU.journeyCap=Math.max(MU.journeyCap,.4+.6*p);}}
+  const MU=runtime.MU,p=stickProgress(s.points,goal());if(MU&&p>0){MU.journeyFloor=Math.max(MU.journeyFloor||0,.2+.6*p);if(MU.journeyCap!=null)MU.journeyCap=Math.max(MU.journeyCap,.4+.6*p);}}
  const camera=()=>worldCamera(runtime);
  // Under the cube: the place dims, the things that stick shine with the beat, and the gold cloud.
  function drawUnder(c,W,H,t){if(!active())return;tell();tick();const s=own(),still=calm(),cam=camera(),sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),glow=beatGlow(),gold=runtime.GOLD||'#f0d27a',r=reach();
@@ -78,7 +80,7 @@ export function initialize(runtime){
    for(let i=0;i<30;i++){const a=i*2.4+(still?0:t/3000),rr=(i%7)/7*28;c.globalAlpha=.8*(1-rr/40);c.fillRect(Math.round(gx+Math.cos(a)*rr)-1,Math.round(gy+Math.sin(a)*rr)-1,2,2);}}
   c.restore();}
  // Over the cube: things flying to it and stuck around it, and a gold drop to the bar for each one.
- function draw(c,W,H,t){if(!active())return;const s=own(),still=calm(),cam=camera(),sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),now=performance.now(),scale=cubeScale(s.points),gold=runtime.GOLD||'#f0d27a';
+ function draw(c,W,H,t){if(!active())return;const s=own(),still=calm(),cam=camera(),sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),now=performance.now(),scale=cubeScale(s.points,goal()),gold=runtime.GOLD||'#f0d27a';
   c.save();
   for(let i=flying.length-1;i>=0;i--){const f=flying[i],k=Math.max(0,Math.min(1,(now-f.at)/280));if(k>=1){flying.splice(i,1);attached.push({kind:f.kind,a:hashKey(f.id)*6.283,d:.6+.4*hashKey(f.id+':d')});if(attached.length>48)attached.shift();cubeWobble=Math.max(cubeWobble,.5);continue;}
    const x=sx(f.x+(runtime.S.wx-f.x)*k),y=sy(f.y+(runtime.S.wy-f.y)*k);c.globalAlpha=1;c.fillStyle=gold;c.fillRect(Math.round(x)-3,Math.round(y)-3,6,6);}
@@ -86,9 +88,9 @@ export function initialize(runtime){
   for(const a of attached){const ang=a.a+spin,rr=ring*a.d+shiver*Math.sin(t/30+a.a);c.globalAlpha=.9;c.fillStyle=a.kind==='mota'?'#ffffff':gold;const z=a.kind==='mota'?3:a.kind==='chispa'?4:a.kind==='piedra'?5:6;c.fillRect(Math.round(cx+Math.cos(ang)*rr)-z/2,Math.round(cy+Math.sin(ang)*rr)-z/2,z,z);}
   // The drop flies to where the bar is filling: bigger things, bigger drops.
   const left=16,right=W-16,barY=42;
-  for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*stickProgress(d.from+d.value),e=1-(1-k)*(1-k),z=2+Math.min(6,d.value/3);
+  for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*stickProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=2+Math.min(6,d.value/3);
    c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
   c.restore();}
- runtime.registerJourneyGame?.('llanura',{pulse,under:drawUnder,over:draw,progress:()=>stickProgress(own().points),growth:()=>cubeScale(own().points)});
- Object.defineProperties(runtime,{journeyStick:{get:()=>()=>({active:active(),points:own().points,progress:stickProgress(own().points),stuck,misses,attached:attached.length,flying:flying.length,cloud:own().cloud?{...own().cloud}:null,swallowed:own().swallowed,near:near(reach()).map(it=>({id:it.id,kind:it.kind,value:it.value}))})}});
+ runtime.registerJourneyGame?.('llanura',{pulse,under:drawUnder,over:draw,progress:()=>stickProgress(own().points,goal()),growth:()=>cubeScale(own().points,goal())});
+ Object.defineProperties(runtime,{journeyStick:{get:()=>()=>({active:active(),points:own().points,progress:stickProgress(own().points,goal()),stuck,misses,attached:attached.length,flying:flying.length,cloud:own().cloud?{...own().cloud}:null,swallowed:own().swallowed,near:near(reach()).map(it=>({id:it.id,kind:it.kind,value:it.value}))})}});
 }

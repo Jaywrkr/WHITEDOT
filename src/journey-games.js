@@ -13,13 +13,15 @@ export function chapterToast(runtime,id,text,delay=600,ttl=15000){setTimeout(()=
 export function sayOnce(runtime,flags,key,text,id,delay=1500){if(flags[key])return false;flags[key]=true;runtime.save?.();chapterToast(runtime,id,text,delay,12000);return true;}
 export function initialize(runtime){
  const games={};
- const current=()=>runtime.journeyChapter?.()?.id;
  const game=id=>classicJourney()?null:games[id]||null;
  // A game is playing when its chapter is the current one, not yet kept, in the Journey's World, on the surface.
- const playing=id=>{const ch=runtime.journeyChapter?.();return !!(game(id)&&ch&&ch.id===id&&!ch.done?.[id]&&runtime.journeyQuiet?.()&&runtime.inWorld?.()&&(runtime.S.layer||'superficie')==='superficie');};
+ // Or a round of its place after the Journey (places.js, plan F4), in the free World.
+ const surface=()=>runtime.inWorld?.()&&(runtime.S.layer||'superficie')==='superficie';
+ const playing=id=>{if(!game(id)||!surface())return false;if(runtime.placeRun?.()?.id===id)return true;const ch=runtime.journeyChapter?.();return !!(ch&&ch.id===id&&!ch.done?.[id]&&runtime.journeyQuiet?.());};
+ const current=()=>runtime.placeRun?.()?.id||runtime.journeyChapter?.()?.id;
  const now=()=>{const id=current();return playing(id)?games[id]:null;};
  Object.defineProperties(runtime,{registerJourneyGame:{get:()=>(id,g)=>{games[id]=g;}},journeyGame:{get:()=>game},journeyGamePlaying:{get:()=>playing},
-  journeyGamePulse:{get:()=>(on,beat)=>now()?.pulse(on,beat||{})??null},journeyGameProgress:{get:()=>id=>game(id)?.progress()??null},
+  journeyGamePulse:{get:()=>(on,beat)=>{const g=now();if(!g)return null;runtime.placeHear?.(current(),on,beat||{});return g.pulse(on,beat||{});}},journeyGameProgress:{get:()=>id=>game(id)?.progress()??null},
   drawJourneyGamesUnder:{get:()=>(c,W,H,t)=>now()?.under?.(c,W,H,t)},drawJourneyGames:{get:()=>(c,W,H,t)=>now()?.over?.(c,W,H,t)},
   cubeGrowth:{get:()=>()=>now()?.growth?.()||1}});
 }

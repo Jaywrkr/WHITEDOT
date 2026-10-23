@@ -565,3 +565,9 @@ body.journey-quiet.world-focus .bar{display:block}
 /* Notes of the tests with people (?prueba=ver): plain text to copy, above the entrance. */
 #mPlaytest{z-index:130}
 .playtest-text{max-height:50vh;overflow:auto;white-space:pre-wrap;font-family:inherit;font-size:12px;line-height:1.6;color:var(--ink);background:#000;border:1px solid var(--line);padding:10px;margin:8px 0;user-select:text;-webkit-user-select:text}
+/* A round's card (places.js): three stars, gold when earned, the new ones lit. */
+#placeStars{display:flex;gap:14px;font-size:34px;line-height:1;font-family:system-ui,sans-serif;margin:6px 0 12px;color:var(--faint)}
+#placeStars span{font-size:34px!important;line-height:1}
+#placeStars .got{color:#f0d27a}
+#placeStars .new{text-shadow:0 0 14px #f0d27a}
+.sheet .place-rows{list-style:none;margin:0 0 10px;padding:0;font-size:13px;line-height:1.8;color:var(--dim)}

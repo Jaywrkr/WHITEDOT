@@ -105,7 +105,7 @@ export function initialize(runtime){
   // A chapter played by its own game (journey-games.js) ends with that game's gold close, not with the theme.
   if(runtime.journeyGame?.(id))return false;return complete(id);}
  // A chapter kept: Plenitud, the theme in tutti and, after it, the portal to the next one.
- function complete(id=current()){const j=own();if(j.done[id]||current()!==id)return false;j.done[id]=true;if(runtime.save()===false){delete j.done[id];return false;}
+ function complete(id=current()){if(runtime.placeFinish?.(id))return true;const j=own();if(j.done[id]||current()!==id)return false;j.done[id]=true;if(runtime.save()===false){delete j.done[id];return false;}runtime.placeChapterKept?.(id);
   // The Tormenta's Plenitud: a bar of bolts, one on every beat.
   if(id==='tormenta'&&runtime.ac){const beat=(runtime.SIX||.15)*4;for(let i=1;i<=4;i++)storm.push(runtime.ac.currentTime+i*beat);moments.bolts+=4;}
   const drop=plenitude(id);runtime.enterFx=Math.max(runtime.enterFx||0,1);const theme=drop||THEME.reduce((s,[,l])=>s+l,0)*(runtime.SIX||.15)*2*1000;portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:performance.now()+Math.max(PORTAL_WAIT,theme)};return true;}
