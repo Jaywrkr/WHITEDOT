@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {CHAPTERS,WORLD_CHAPTERS,STATE_CAP,STORM_FLOOR,STATE_FLOOR,stateFloor,VOID_CAP,VOID_ECHO_AFTER,stateCap,normalizeChapters,chapterState,findBiome,initialize,CHAPTER_BARS,PORTAL_WAIT,momentLived,barsLived,LOTUS_GOAL,FOLLOW_GOAL,BOLT_GOAL} from '../src/journey-chapters.js';
+import {CHAPTERS,WORLD_CHAPTERS,STATE_CAP,STORM_FLOOR,STATE_FLOOR,stateFloor,VOID_CAP,VOID_ECHO_AFTER,stateCap,normalizeChapters,chapterState,findBiome,initialize,CHAPTER_BARS,PORTAL_WAIT,momentLived,barsLived,chapterProgress,LOTUS_GOAL,FOLLOW_GOAL,BOLT_GOAL} from '../src/journey-chapters.js';
 assert.deepEqual(CHAPTERS,['camino','llanura','lago','bosque','tormenta','vacio','refugio']);assert.equal(WORLD_CHAPTERS.length,5);
 assert(STATE_CAP.silencio<STATE_CAP.llegada&&STATE_CAP.llegada<STATE_CAP.pertenencia&&STATE_CAP.pertenencia<STATE_CAP.plenitud);
 // Saved chapters are cleaned; a player already in the World starts at chapter 1.
@@ -15,6 +15,10 @@ assert.equal(momentLived('bosque',{walk:FOLLOW_GOAL},{}),false,'the creature mus
 assert.equal(momentLived('tormenta',{bolts:BOLT_GOAL-1}),false);assert.equal(momentLived('vacio',{echoes:1}),true);
 assert.equal(barsLived('lago',{bars:CHAPTER_BARS.lago-1}),false);assert.equal(barsLived('lago',{bars:CHAPTER_BARS.lago}),true);
 assert(Object.values(CHAPTER_BARS).every(b=>b>=24),'each chapter lasts minutes, not seconds');
+// The bar at the top: half the moment, half the bars; full once both are there, and full when kept.
+assert.equal(chapterProgress('llanura',{},{}),0);assert.equal(chapterProgress('llanura',{bars:CHAPTER_BARS.llanura/2},{}),.25);assert.equal(chapterProgress('llanura',{},{faro:{reached:true}}),.5);
+assert.equal(chapterProgress('lago',{},{lotos:{open:[true,false,false,false,false]}}),.5/3);assert.equal(chapterProgress('tormenta',{bolts:2,bars:CHAPTER_BARS.tormenta},{}),.75);
+assert.equal(chapterProgress('vacio',{echoes:1,bars:999},{}),1);assert.equal(chapterProgress('bosque',{},{},true),1);
 assert.equal(normalizeChapters({chapter:99}).chapter,0);
 assert.equal(chapterState(0,false),'llegada');assert.equal(chapterState(3,false),'pertenencia');assert.equal(chapterState(0,true),'plenitud');
 // The nearest place of a biome on the map.
@@ -32,6 +36,7 @@ for(let i=0;i<6;i++){clock+=400;r.journeyChapterPulse(true,57+i,i*4);}assert.equ
 r.journeyChapterPulse(false);assert.equal(r.journeyChapter().hits,6,'misses do not count');
 // Bars count while you play in the chapter: a bar is two seconds at this tempo.
 for(let i=0;i<8;i++){clock+=250;r.drawJourneyChapters(c,390,844,i);}assert(Math.abs(r.journeyChapter().progress.bars-1)<.01,r.journeyChapter().progress);
+{const before=saves;for(let i=0;i<60;i++){clock+=250;if(i%8===0)r.journeyChapterPulse(false);r.drawJourneyChapters(c,390,844,i);}assert(r.journeyChapter().progress.bars>8&&saves>before,'the stay is saved every eight bars');}
 assert.equal(r.journeyPhrase(),false,'six hits are not enough: the lighthouse is not reached');
 r.S.journey.moments={faro:{x:500,y:0,reached:true}};assert.equal(r.journeyChapter().lived,true);assert.equal(r.journeyPhrase(),false,'nor the bars');
 r.S.journey.progress.llanura.bars=CHAPTER_BARS.llanura;assert.equal(r.journeyPhrase(),true);assert.equal(r.journeyChapter().state,'plenitud');assert(r.journeyChapter().portal);assert.equal(r.journeyPhrase(),false,'only once');

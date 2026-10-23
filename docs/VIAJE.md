@@ -145,6 +145,9 @@ Cada capítulo se cumple **viviendo su momento y quedándose en su música**, no
 - **Final:** toca tus notas con tu ritmo (la distancia entre aciertos, de una a tres negras). Las partidas anteriores, sin ritmo guardado, suenan en negras. Mientras suena, el Refugio y la música del Mundo callan: hay silencio real antes de los créditos.
 - **Sin avisos durante el Viaje:** los avisos cotidianos esperan; los problemas (guardado, errores) sí se muestran. La oferta de la nube llega en el Mundo libre.
 - **Mundo libre cerrado hasta el final** (decisión 6A): el botón no aparece y no se puede elegir. Quien ya lo había alcanzado lo conserva.
+- **Hacia el momento:** a los 3 s de llegar al capítulo, mientras el faro o los lotos estén fuera de la pantalla, una luz tenue en el borde, con su color, señala hacia ellos.
+- **La barra de arriba** se llena con el capítulo: la mitad con su momento y la mitad con los compases; se vuelve dorada al cumplirlo.
+- **Al llegar al Mundo libre**, «Tu cubo» se marca y un aviso dice para qué son las chispas.
 - **Dedo fantasma** (decisión 7A): tras 4 s sin tocar, un dedo translúcido arrastra hacia la derecha y luego toca en el beat. Se va al primer toque. Sin palabras.
 - Guardado: `S.journey.steps` (cuándo sonó cada nota), `S.journey.progress` (compases, paseo, rayos y ecos por capítulo) y `S.journey.free`. Se normalizan; las partidas viejas no pierden nada.
 

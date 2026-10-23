@@ -10,7 +10,7 @@ export function initialize(runtime) {
   runtime.$("hcGo").onclick=()=>{runtime.S.help.camino=true;runtime.$("mHelpC").hidden=true;if(runtime.S.sound)runtime.audio();if(!runtime.S.voiceStart){runtime.S.voiceStart=true;setTimeout(()=>runtime.say(runtime.VOZ.start),900);}runtime.save();};
   // The menu opens on who you are and where: name, cube, sparks and place.
   function menuSummary(){const S=runtime.S,$=runtime.$,name=(S.playerProfile?.name||'').trim();$("menuTitle").textContent=name||'Kubono';$("menuAvatar").style.background=runtime.cubeColor?.()||'#fff';
-   const place=S.mode==='studio'?'Refugio':runtime.inWorld()?((S.layer&&S.layer!=='superficie')?(S.layer==='bajo'?'Subsuelo':'Cielo'):runtime.regionOfPos?.(S.wx,S.wy)?.name):'Camino';$("menuSummary").textContent=['✦ '+Math.floor(S.sparks||0)+' chispas',place].filter(Boolean).join(' · ');}
+   const place=S.mode==='studio'?'Refugio':runtime.inWorld()?((S.layer&&S.layer!=='superficie')?(S.layer==='bajo'?'Subsuelo':'Cielo'):runtime.regionOfPos?.(S.wx,S.wy)?.name):'Camino';$("menuSummary").textContent=[runtime.journeyQuiet?.()?'':'✦ '+Math.floor(S.sparks||0)+' chispas',place].filter(Boolean).join(' · ');}
   runtime.$("bMenu").onclick=()=>{volumeUI();menuSummary();runtime.houseMenuNote?.();runtime.$("mMenu").hidden=false;};runtime.$("mnClose").onclick=()=>{runtime.$("mMenu").hidden=true;};
   document.querySelectorAll("#mMenu .tiles button,#mMenu .devbox button").forEach(b=>b.addEventListener("click",()=>{if(b.id!=="dReset")runtime.$("mMenu").hidden=true;}));
   runtime.$("bPrimary").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else motion.enter(runtime.$('bPrimary'));};

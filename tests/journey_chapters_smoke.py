@@ -23,6 +23,7 @@ try:
    # Six notes on time are not enough: the Llanura asks for its lighthouse and its bars (phase 2).
    for i in range(6):page.evaluate(ON);page.wait_for_timeout(320)
    ch=page.evaluate('__r.journeyChapter()');assert not ch['portal'] and not ch['done'].get('llanura') and ch['progress'].get('bars',0)>0,ch
+   assert 0<float(page.evaluate("document.getElementById('barfill').style.width").rstrip('%'))<50,'the bar at the top fills with the stay'
    page.wait_for_function("!!__r.journeyMoments().faro");page.evaluate("()=>{const s=__r.S;s.journey.moments.faro.reached=true;s.journey.progress.llanura.bars=99;}")
    for i in range(6):page.evaluate(ON);page.wait_for_timeout(320)
    page.wait_for_function("__r.journeyChapter().portal");assert not page.evaluate('__r.journeyChapter().portalOpen'),'the portal waits for the theme'

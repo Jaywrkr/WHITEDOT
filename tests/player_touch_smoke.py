@@ -40,7 +40,7 @@ try:
    touch('touchStart',195,422)
    for i in range(steps):touch('touchMove',195+i*6,422);page.wait_for_timeout(60)
    page.wait_for_timeout(300);touch('touchEnd');page.wait_for_timeout(120)
-  tap()   # the first touch dismisses the greeting
+  tap()   # the first touch starts the music (the Journey has no greeting); before a beat it breaks nothing
   before=state()['px'];walk();assert state()['px']>before+100,('a held finger walks the cube',before,state())
   # The music has started; a tap between beats breaks no crystal in the Journey, a tap on the beat breaks one.
   page.wait_for_function('__r.ac?.state==="running"&&__r.MU.bq.length>1',timeout=10000)
