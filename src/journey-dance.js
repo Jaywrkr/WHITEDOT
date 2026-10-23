@@ -7,7 +7,7 @@ import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
 // starts again. Off time nothing happens. With the bar full the eye of the storm comes beside the cube, and one pulse
 // on time closes it.
 // Where the circles fall comes from hashes of their count, never from the old random sequence.
-export const DANCE_GOAL=100,DANCE_RADIUS=42,DANCE_LIFE_BARS=1.5,DANCE_NEAR=100,DANCE_FAR=170,DANCE_EYE_GAP=70;
+export const DANCE_GOAL=250,DANCE_FIRST=28,DANCE_RADIUS=42,DANCE_LIFE_BARS=1.5,DANCE_NEAR=100,DANCE_FAR=170,DANCE_EYE_GAP=70;
 // Returned in a row: 10, then 15, then 20.
 export const danceValue=row=>10+5*Math.max(0,Math.min(2,row-1));
 export const danceProgress=points=>Math.max(0,Math.min(1,points/DANCE_GOAL));
@@ -26,7 +26,8 @@ export function initialize(runtime){
  const barMs=()=>(runtime.SIX||.15)*16*1000;
  const inside=()=>!!target&&Math.hypot(runtime.S.wx-target.x,runtime.S.wy-target.y)<=DANCE_RADIUS;
  function thunder(x,y,mine){runtime.flash=Math.max(runtime.flash||0,mine?.8:.5);runtime.cameraKick?.(0,mine?2:1.5);if(runtime.S.sound&&runtime.ac)runtime.now?.(q=>runtime.thunder?.(q,{x,y}));}
- function spawn(){const s=own();target={...danceSpot(s.count,{x:runtime.S.wx,y:runtime.S.wy}),at:performance.now(),n:s.count};s.count++;}
+ // The first circle of the chapter appears right beside the cube, so the rule is learnt at once (plan F1).
+ function spawn(){const s=own(),first=s.count===0,from={x:runtime.S.wx,y:runtime.S.wy},spot=first?{x:Math.round(from.x+DANCE_FIRST),y:from.y}:danceSpot(s.count,from);target={...spot,at:performance.now(),n:s.count};s.count++;}
  function arrive(){const s=own();if(s.eye)return;target=null;s.eye={x:Math.round(runtime.S.wx+DANCE_EYE_GAP),y:Math.round(runtime.S.wy-DANCE_EYE_GAP*.5)};eyePulse=1;runtime.save?.();
   chapterToast(runtime,'tormenta','El ojo de la tormenta llegó: tócalo a tiempo.');}
  function close(){const s=own();if(s.closed)return 'done';s.closed=true;if(runtime.save?.()===false){s.closed=false;return null;}runtime.enterFx=1;thunder(runtime.S.wx,runtime.S.wy,true);runtime.journeyComplete?.('tormenta');return 'close';}

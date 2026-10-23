@@ -8,6 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
+ON1="""()=>new Promise(res=>{const r=__r;const tick=()=>{const ac=r.ac,sq=r.MU.sq||[];const lat=ac?(ac.outputLatency||ac.baseLatency||0):0;const e=sq.find(e=>e.s%16===0&&Math.abs(ac.currentTime-lat-e.t)<.02);if(e){r.sonar('player');return res(e.t);}requestAnimationFrame(tick);};tick();})"""
 ON="""()=>new Promise(res=>{const r=__r;const tick=()=>{const ac=r.ac,bq=r.MU.bq,bar=r.SIX*4;if(ac&&bq.length){const last=bq[bq.length-1],next=last>ac.currentTime?last:last+bar*Math.ceil((ac.currentTime-last)/bar),d=Math.min(...bq.map(b=>Math.abs(ac.currentTime-b)),Math.abs(next-ac.currentTime));if(d<.02){r.sonar('player');return res(d);}}requestAnimationFrame(tick);};tick();})"""
 try:
  with sync_playwright() as pw:
@@ -25,11 +26,11 @@ try:
    st=page.evaluate('__r.journeyRelease()');assert st['total']==14 and st['released']==0,st
    assert page.evaluate('__r.cubeGrowth()')>2,'the cube arrives carrying what stuck'
    page.evaluate("__r.journeyGamePulse(false)");assert page.evaluate('__r.journeyRelease().released')==0,'off time nothing'
-   for i in range(5):page.evaluate(ON);page.wait_for_timeout(330)
+   for i in range(5):page.evaluate("()=>{__r.S.wx+=400;}");page.wait_for_timeout(150);page.evaluate(ON1);page.wait_for_timeout(330)
    st=page.evaluate('__r.journeyRelease()');assert st['released']>=4 and st['stars']==st['released'],st
    assert float(page.evaluate("document.getElementById('barfill').style.width").rstrip('%'))>0,'the bar fills'
    if width==390 and os.environ.get('RELEASE_SHOT'):page.wait_for_timeout(900);page.screenshot(path=os.environ['RELEASE_SHOT'])
-   page.evaluate("()=>{for(let i=0;i<20;i++)__r.journeyGamePulse(true);}");page.wait_for_function("!!__r.journeyRelease().light",timeout=3000)
+   page.evaluate("()=>{for(let i=0;i<20;i++){__r.S.wx+=400;__r.journeyGamePulse(true,{step:0});}}");page.wait_for_function("!!__r.journeyRelease().light",timeout=3000)
    assert abs(page.evaluate('__r.cubeGrowth()')-1)<1e-9,'tiny again'
    page.wait_for_timeout(300);page.evaluate(ON);page.wait_for_function("__r.journeyRelease().lit&&__r.journeyChapter().done.vacio",timeout=5000);page.wait_for_function("__r.journeyChapter().portal",timeout=10000)
    page.reload();page.wait_for_function('!!window.__r?.journeyRelease');assert page.evaluate("__r.S.journey.done.vacio")==True and page.evaluate("__r.S.journey.release.lit")==True

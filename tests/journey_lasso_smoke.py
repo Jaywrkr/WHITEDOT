@@ -32,11 +32,11 @@ try:
    page.evaluate(circle);st=page.evaluate('__r.journeyLasso()');assert st['closed'] and st['inside']==n,st
    page.evaluate("__r.journeyGamePulse(false)");assert page.evaluate('__r.journeyLasso().points')==0,'off time nothing'
    if width==390 and os.environ.get('LASSO_SHOT'):page.screenshot(path=os.environ['LASSO_SHOT'])
-   page.evaluate(ON);page.wait_for_function(f"__r.journeyLasso().caught>={n}",timeout=5000);st=page.evaluate('__r.journeyLasso()');assert st['points']==min(5,n)*n,st
+   page.evaluate(ON);page.wait_for_function(f"__r.journeyLasso().caught>={n}",timeout=5000);st=page.evaluate('__r.journeyLasso()');assert st['points']==min(3,n)*n,st
    assert float(page.evaluate("document.getElementById('barfill').style.width").rstrip('%'))>0,'the bar fills'
    assert page.evaluate('__r.S.journey.lasso.hinted'),'the rule is told once'
    # Full bar: the creature comes beside the cube; a pulse on time makes it the companion and opens the portal.
-   page.evaluate("()=>{__r.S.journey.lasso.points=100;}");page.wait_for_function("!!__r.journeyLasso().friend",timeout=3000)
+   page.evaluate("()=>{__r.S.journey.lasso.points=240;}");page.wait_for_function("!!__r.journeyLasso().friend",timeout=3000)
    page.evaluate("__r.journeyGamePulse(false)");assert not page.evaluate('__r.journeyLasso().joined'),'off time it waits'
    page.evaluate(ON);page.wait_for_function("__r.journeyLasso().joined&&__r.journeyChapter().done.bosque&&__r.journeyMoments().companion",timeout=5000);page.wait_for_function("__r.journeyChapter().portal",timeout=10000)
    page.reload();page.wait_for_function('!!window.__r?.journeyLasso');assert page.evaluate("__r.S.journey.done.bosque")==True and page.evaluate("__r.S.journey.lasso.joined")==True and page.evaluate("__r.S.journey.moments.companion")==True

@@ -35,7 +35,7 @@ try:
    page.evaluate("()=>{const r=__r,ids=r.BIOMES.map(b=>b.id);for(let d=1;d<80;d++)for(let a=0;a<16;a++){const x=Math.round(r.S.wx+Math.cos(a/16*6.283)*d*300),y=Math.round(r.S.wy+Math.sin(a/16*6.283)*d*300);if(ids[r.biomeOfPos(x,y)]==='lago'&&!r.regionOfPos(x,y)?.sea){r.S.wx=x;r.S.wy=y;return;}}}")
    page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='lago'",timeout=8000);page.evaluate(hide)
    # The Lago is played by its chain game: with the bar full, the gold flower opens with a pulse on time.
-   page.wait_for_function("__r.journeyChain().active",timeout=8000);page.evaluate("()=>{__r.S.journey.chain.points=100;}");page.wait_for_function("!!__r.journeyChain().flower",timeout=3000)
+   page.wait_for_function("__r.journeyChain().active",timeout=8000);page.evaluate("()=>{__r.S.journey.chain.points=340;}");page.wait_for_function("!!__r.journeyChain().flower",timeout=3000)
    page.evaluate(ON);page.wait_for_function("__r.journeyChain().opened&&__r.journeyChapter().done.lago",timeout=5000)
    page.wait_for_function("__r.journeyChapter().portalOpen",timeout=16000)
    page.evaluate("()=>{const r=__r,p=r.journeyChapter().portal;r.S.wx=p.x;r.S.wy=p.y;}");page.wait_for_function("__r.journeyFinaleState().running",timeout=5000)
