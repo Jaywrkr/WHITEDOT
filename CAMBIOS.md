@@ -10,6 +10,8 @@ Rama `claude/fase5-llave`, sobre `main` (alpha.132). Jay aprobó esta idea de la
 - **Llaves en la Bitácora:** cada una se guarda una vez, con su día; en Lugares aparecen como «Llaves · n».
 - Solo en el Mundo libre: durante el Viaje, el tema es de los capítulos.
 - **Camino más claro** (lo notó Jay en iPhone): un pulso fuera de tiempo llega al cristal y lo hace temblar sin romperlo, y los cristales brillan en cada beat. Antes no pasaba nada y parecían rotos.
+- **La Línea dice la verdad** (también de Jay): el pico de un acierto se dibuja en el beat que acertaste, sobre su marca; antes salía donde estaba el cursor un instante después del toque y parecía fuera de tiempo.
+- **Dedo fantasma más discreto:** no aparece mientras el dedo camina (antes solo contaba el toque inicial y aparecía al caminar más de 4 s), y después de 3 aciertos espera 20 s sin tocar.
 - Verificación local: 213 suites Node, auditoría sin errores, `theme_key_smoke.py` nueva y recorridos del pulso, capítulos, coherencia y sin conexión, más las mezclas `exploration_mix.py` y `journey_mix.py`, en PASS.
 - Medida de Jay en iPhone (Camino, calidad alta): p50 17 ms y p95 17 ms, 60 imágenes por segundo estables. Falta medir el Mundo.
 

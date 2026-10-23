@@ -38,7 +38,9 @@ export function initialize(runtime){
  function vibrate(ms){if(!haptics()||typeof navigator==='undefined'||typeof navigator.vibrate!=='function')return false;try{navigator.vibrate(ms);state.vibrations++;return true;}catch(_){return false;}}
  function scaleNow(){const MU=runtime.MU||{};return {scale:MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,tr:MU.tr||0};}
  // The Line's cursor follows what is heard: the audio clock minus the output latency.
- function stepNow(){const ac=runtime.ac,sq=runtime.MU?.sq;if(!ac||!sq?.length)return 0;const heard=ac.currentTime-outputLatency(ac);let last=null;for(const e of sq)if(e.t<=heard)last=e;if(!last)return sq[0].s%16;return (last.s+Math.min(.99,Math.max(0,heard-last.t)/(runtime.SIX||.15)))%16;}
+ // The step of the bar at a time on the audio clock, from the steps the music scheduled.
+ function stepAt(time){const sq=runtime.MU?.sq;if(!sq?.length)return 0;let last=null;for(const e of sq)if(e.t<=time)last=e;if(!last)return sq[0].s%16;return (last.s+Math.min(.99,Math.max(0,time-last.t)/(runtime.SIX||.15)))%16;}
+ function stepNow(){const ac=runtime.ac;if(!ac)return 0;return stepAt(ac.currentTime-outputLatency(ac));}
  // Judge one player pulse touched at atMs (performance.now(); defaults to now). Returns whether it was on time; never
  // blocks the pulse itself. On time, state.midi is the theme note to play and state.beat the beat it answers.
  function judge(atMs){
@@ -46,7 +48,9 @@ export function initialize(runtime){
   // With the sound off there is no beat to meet (phase 3 of the plan): every pulse counts, so the Journey can still be
   // played without hearing it; the chapters still ask for their moments and bars.
   const silent=!runtime.S.sound||!ac||!runtime.MU?.bq?.length;
-  const bar=(runtime.SIX||.15)*4,heard=ac?heardTime(ac,at,now):0,on=silent||beatDistance(heard,runtime.MU?.bq,bar)<=ON_TIME;state.lastOn=on;marks.push({at:now,step:stepNow(),on});if(marks.length>24)marks.shift();
+  const bar=(runtime.SIX||.15)*4,heard=ac?heardTime(ac,at,now):0,on=silent||beatDistance(heard,runtime.MU?.bq,bar)<=ON_TIME;state.lastOn=on;
+  // The peak sits where you touched (what you heard then), and on time it sits on the beat you answered.
+  const beatAt=on&&!silent?nearestBeat(heard,runtime.MU?.bq,bar):null,step=!ac?0:beatAt!==null?Math.round(stepAt(beatAt))%16:stepAt(heard);marks.push({at:now,step,on});if(marks.length>24)marks.shift();
   state.degree=null;state.midi=null;state.beat=null;if(!on){state.misses++;runtime.journeyChapterPulse?.(false);return false;}
   state.hits++;const [degree]=THEME[state.next],{scale,tr}=scaleNow(),midi=themePitch(degree,scale,tr);state.degree=degree;state.midi=midi;state.scale=scale;state.tr=tr;state.beat=nearestBeat(heard,runtime.MU?.bq,bar);state.next=(state.next+1)%THEME.length;
   // The chapter hears the note first, so the note that completes the theme counts.
@@ -67,5 +71,5 @@ export function initialize(runtime){
   c.restore();}
  // Each chapter starts its theme from the first note.
  function reset(){state.next=0;}
- Object.defineProperties(runtime,{journeyPulse:{get:()=>judge},journeyPulseReset:{get:()=>reset},journeyPulseDropped:{get:()=>dropped},drawJourneyLine:{get:()=>draw},journeyPulseState:{get:()=>()=>({...state,notes:[...state.notes],marks:marks.length})},journeyVibrate:{get:()=>vibrate}});
+ Object.defineProperties(runtime,{journeyPulse:{get:()=>judge},journeyPulseReset:{get:()=>reset},journeyPulseDropped:{get:()=>dropped},drawJourneyLine:{get:()=>draw},journeyPulseState:{get:()=>()=>({...state,notes:[...state.notes],marks:marks.length,lastMark:marks.length?{...marks[marks.length-1]}:null})},journeyVibrate:{get:()=>vibrate}});
 }

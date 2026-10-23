@@ -11,7 +11,9 @@ globalThis.addEventListener=(k,f)=>{listeners[k]=f;};globalThis.document={hidden
 const r={S:{mode:'camino'},journeyQuiet:()=>true,inWorld:()=>false};initialize(r);const draws=[];const ctx=new Proxy({},{get:(o,k)=>k in o?o[k]:()=>draws.push(k),set:(o,k,v)=>{o[k]=v;return true;}});
 r.drawJourneyHint(ctx,390,844);assert.equal(r.journeyHint().showing,false);assert.equal(draws.length,0);
 clock=HINT_IDLE+10;assert.equal(r.journeyHint().showing,true);r.drawJourneyHint(ctx,390,844);assert(draws.includes('arc'),'a finger is drawn');
-listeners.pointerdown();assert.equal(r.journeyHint().showing,false,'a touch hides it');assert(['touchstart','keydown'].every(k=>listeners[k]));
+listeners.pointerdown();assert.equal(r.journeyHint().showing,false,'a touch hides it');
+clock+=HINT_IDLE*2;r.ptr={x:1,y:1};assert.equal(r.journeyHint().showing,false,'never while a finger walks');r.ptr=null;assert.equal(r.journeyHint().showing,true);listeners.touchmove();assert.equal(r.journeyHint().showing,false,'moving counts as playing');
+r.journeyPulseState=()=>({hits:3});clock+=HINT_IDLE*2;assert.equal(r.journeyHint().showing,false,'once you play on time it waits longer');clock+=20000;assert.equal(r.journeyHint().showing,true);r.journeyPulseState=undefined;listeners.pointerdown();assert(['touchstart','touchmove','pointermove','keydown'].every(k=>listeners[k]));
 clock+=HINT_IDLE*2;r.journeyQuiet=()=>false;assert.equal(r.journeyHint().showing,false,'never in the free World');
 r.journeyQuiet=()=>true;r.journeyFinaleState=()=>({running:true});assert.equal(r.journeyHint().showing,false,'never in the finale');
 performance.now=realNow;

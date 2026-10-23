@@ -132,7 +132,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - quien ya llegó al Mundo empieza en Mundo libre y los jugadores nuevos en el Viaje; el botón «Mundo libre / Viaje» del menú cambia y se guarda;
   - el Mundo libre se abre al terminar el Viaje (`S.journey.free`, `freeOpen`): antes el botón está oculto y `setJourneyMode('libre')` no hace nada; quien ya estaba en Mundo libre lo conserva;
   - durante el Viaje `ui.js` no muestra avisos cotidianos (sí los importantes y los pedidos con `force`, como el enlace a otra semilla);
-  - `journey-hint.js`: tras 4 s sin entrada en el Viaje, un dedo fantasma arrastra y toca en el beat; se va al primer toque;
+  - `journey-hint.js`: tras 4 s sin entrada en el Viaje (20 s después de 3 aciertos), un dedo fantasma arrastra y toca en el beat; se va al primer toque y nunca sale con un dedo apoyado o moviéndose;
   - en navegadores automatizados las partidas nuevas empiezan en Mundo libre, para que las pruebas existentes conserven sus controles; el Viaje se prueba a propósito;
   - el Viaje no abre la bienvenida del Camino.
 
@@ -149,7 +149,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - seis aciertos completan la frase, con una vibración distinta.
 - **Sin sonido** (sonido apagado o sin beats todavía): cada pulso cuenta como a tiempo, para que el Viaje se pueda jugar sin oírlo; los capítulos siguen pidiendo sus momentos y compases.
 - **Fuera de tiempo:** solo suena el pulso de siempre. En el Camino del Viaje la onda fuera de tiempo no rompe cristales y la onda a tiempo rompe uno (`pathWaveCounts` en `crystal-sparks.js`); la fuera de tiempo hace temblar el cristal (`miss`) y los cristales brillan en cada beat; el Camino libre sigue igual.
-- **La Línea:** una línea fina en el 80 % de la altura dibuja el compás (16 marcas), un cursor dorado en el paso que se oye (reloj menos latencia) y un pico por cada pulso: dorado y alto si fue a tiempo, blanco y bajo si no. No aparece con paneles abiertos ni en actividades.
+- **La Línea:** una línea fina en el 80 % de la altura dibuja el compás (16 marcas), un cursor dorado en el paso que se oye (reloj menos latencia) y un pico por cada pulso, en el paso que oíste al tocar (a tiempo, sobre el beat acertado): dorado y alto si fue a tiempo, blanco y bajo si no. No aparece con paneles abiertos ni en actividades.
 - **Datos:** el tema es dato fijo y no consume el RNG antiguo. El juicio solo guarda contadores de sesión; el guardado solo recibe `S.haptics`.
 
 ## Refugio (antes Casa)
