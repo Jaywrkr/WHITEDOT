@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.147**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.148**. Las entradas describen su revisión, no certifican producción.
+
+## F6 · El Refugio como centro · alpha.148
+
+Rama `claude/f6-refugio`, sobre `claude/f5-anillo` (dependencia explícita).
+
+- **Muro de estrellas:** en la Sala, «LUGARES · ★ N / 33»; en la barra de la casa, el botón «★ N / 33».
+- **Sala de trofeos:** once zócalos; cada lugar con su ★ pone ahí el objeto dorado de su juego (pegar, cadena, lazo, espiral, estrella), más brillante con cada estrella. Al tocarlo dice su lugar, sus estrellas y su % a tiempo, y suena su nota en tres pasos (su capa de la canción llega en F7).
+- **Mesa de lugares:** tocar el muro o «★ N / 33» abre Lugares: los once con sus estrellas, su % o lo que piden, «Sin visitar», la siguiente meta («Jardín se abre con 5 ★. Faltan 2.») e «Ir» a los ya visitados.
+- **Puerta al anillo:** «Salir al anillo» e «Ir» dejan el Refugio; «Ir» te deja junto al portal.
+- En una visita a otro Refugio no se muestran tus estrellas.
+- Pruebas: `tests/refugio-lugares.mjs` y `tests/refugio_lugares_smoke.py` (teléfono y escritorio); las seis pruebas de navegador de la casa siguen pasando. Límites: en una visita aún no se ven las estrellas del dueño (el código de casa no las lleva); la capa musical de cada trofeo llega en F7.
 
 ## F5 · El anillo · alpha.147
 

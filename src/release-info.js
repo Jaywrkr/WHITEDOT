@@ -1,2 +1,2 @@
 // Stamp only the published artifact with the real deployment time.
-export const RELEASE=Object.freeze({version: '2.3.0-alpha.147',deployedAt: null,revision: null});
+export const RELEASE=Object.freeze({version: '2.3.0-alpha.148',deployedAt: null,revision: null});
