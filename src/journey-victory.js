@@ -9,7 +9,8 @@ export const VICTORY_STYLES=Object.freeze({
  tormenta:Object.freeze({genre:'techno',kick:'four',clap:true,hat:'sixteen',chords:null,bass:'rumble',lead:'acid',echo:false}),
  vacio:Object.freeze({genre:'ambient',kick:null,clap:false,hat:null,chords:'pad',bass:null,lead:'bell',echo:true}),
  jardin:Object.freeze({genre:'garage',kick:'four',clap:true,hat:'sixteen',chords:'echo',bass:'octave',lead:'triangle',echo:true}),
- dunas:Object.freeze({genre:'afro',kick:'four',clap:false,hat:'sixteen',chords:'off',bass:'root',lead:'square',echo:false})});
+ dunas:Object.freeze({genre:'afro',kick:'four',clap:false,hat:'sixteen',chords:'off',bass:'root',lead:'square',echo:false}),
+ cristales:Object.freeze({genre:'trance',kick:'four',clap:true,hat:'off',chords:'pad',bass:'octave',lead:'bell',echo:true})});
 export const RISER_BARS=1,DROP_BARS=2,SILENCE_BEATS=.5;
 // The whole drop in seconds, for a sixteenth of the given length: riser, silence and the drop.
 export const victorySeconds=six=>(RISER_BARS*16+SILENCE_BEATS*4+DROP_BARS*16)*six;

@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.152**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.153**. Las entradas describen su revisión, no certifican producción.
+
+## F11 · Cristales · alpha.153
+
+Rama `claude/f11-cristales`, sobre `claude/f10-dunas` (dependencia explícita).
+
+- **Resuena:** nueve cristales alrededor de donde empieza la ronda, tres de cada nota (triángulo, rombo y hexágono). Un pulso a tiempo cerca hace sonar los cristales al alcance; cada uno sigue sonando unos 16 tiempos mientras su arco dorado se apaga. Fuera de tiempo no suena nada.
+- **Acorde:** cuando suenan a la vez las tres notas distintas, forman un acorde: vale mucho más y los tres callan para empezar el siguiente. Tres marcas bajo el cubo muestran qué notas suenan.
+- **Final:** con la barra llena llega un cristal dorado; un pulso a tiempo lo hace cantar. Su drop es trance y su trofeo, un hexágono. Se abre con 12 ★; `?lugar=cristales`.
+- **Ritmo:** meta 260. Media de 100 rondas simuladas: 2:27 con el 70 % a tiempo, 2:03 con el 90 %, 3:29 en Maestro (sonido de 15 tiempos y barra ×1,5). Es un modelo.
+- El fondo se oscurece un poco más que en otros lugares: la malla de triángulos del bioma competía con los cristales.
+- Pruebas: `tests/journey-resonance.mjs`, `tests/resonance_smoke.py` (teléfono y escritorio), `victory_mix.py` con ocho drops.
 
 ## F10 · Dunas · alpha.152
 
