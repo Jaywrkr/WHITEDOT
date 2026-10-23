@@ -23,7 +23,9 @@ try:
    # Off the beat: it sounds, but no theme note and no vibration.
    page.evaluate(ON%'false');page.wait_for_timeout(300);s=page.evaluate('__r.journeyPulseState()');assert s['misses']==1 and s['hits']==0 and page.evaluate('__vib.length')==0,s
    # Six on the beat: the theme plays note by note and the phrase completes.
-   for i in range(6):page.evaluate(ON%'true');page.wait_for_timeout(320)
+   for i in range(6):
+    page.evaluate(ON%'true');m=page.evaluate('__r.journeyPulseState().lastMark');page.wait_for_timeout(320)
+    assert m['on'] and m['step']%4==0,('an on-time peak sits on a beat of the Line',m)
    s=page.evaluate('__r.journeyPulseState()');assert s['hits']==6 and s['phrases']==1 and len(s['notes'])==6,s;assert page.evaluate('__vib.length')==6
    # The Line: a band of light across the lower part of the screen.
    lit=page.evaluate("()=>{const c=__r.cx,d=c.getTransform().a,y=Math.round(__r.H*.8*d),img=c.getImageData(0,y-6*d,c.canvas.width,12*d).data;let n=0;for(let i=0;i<img.length;i+=4)if(img[i]+img[i+1]+img[i+2]>150)n++;return n;}")
