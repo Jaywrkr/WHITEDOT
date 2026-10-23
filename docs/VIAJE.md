@@ -133,7 +133,7 @@ Todo se oculta, no se borra; los datos y lo comprado se conservan y vuelven en e
 | Camino | Romper | Cristales a tiempo | Hecho |
 | Llanura | Pegar | Lo que late se pega y el cubo crece; la nube dorada | Prototipo, alpha.137 |
 | Lago | Encadenar | Una onda enciende racimos de flores en cadena; la flor dorada | Prototipo, alpha.138 |
-| Bosque | Rodear | Una estela que cierra un círculo alrededor de luciérnagas | Pendiente |
+| Bosque | Rodear | Una estela que cierra un círculo alrededor de luciérnagas; la criatura se une | Prototipo, alpha.139 |
 | Tormenta | Bailar | Estar en el círculo del rayo y devolverlo a tiempo | Pendiente |
 | Vacío | Soltar | Lo que pegaste se vuelve estrellas y el cubo vuelve a ser pequeño | Pendiente |
 | Refugio | Escuchar | Tu viaje suena entero | Hecho |

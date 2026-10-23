@@ -40,7 +40,8 @@ export function initialize(runtime){
   if(id==='lago'&&m.lotos&&!runtime.journeyGame?.('lago')){let best=-1,dist=Infinity;for(let i=0;i<LOTUS_COUNT;i++){const p=lotusAt(m.lotos,i),d=Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy);if(d<dist){dist=d;best=i;}}
    if(best>=0&&dist<LOTUS_NEAR){const was=m.lotos.open[best];m.lotos.open[best]=true;if(!was&&runtime.save()===false)m.lotos.open[best]=false;lit.push({i:best,at:performance.now()});if(lit.length>8)lit.shift();counts.lotus++;
     if(audible())runtime.soon?.(t=>{const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.setValueAtTime(440*2**((midi+7-69)/12),t+eighth);g.gain.setValueAtTime(.0001,t+eighth);g.gain.exponentialRampToValueAtTime(.08,t+eighth+.01);g.gain.exponentialRampToValueAtTime(.0001,t+eighth+1.4);o.connect(g);g.connect(runtime.bus);o.start(t+eighth);o.stop(t+eighth+1.5);},'player');}}
-  if(id==='bosque'&&!m.companion){m.companion=true;if(runtime.save()===false)delete m.companion;}
+  // With «Rodea» (journey-lasso.js) the creature joins at the end of the Bosque, not with the first note.
+  if(id==='bosque'&&!m.companion&&!runtime.journeyGame?.('bosque')){m.companion=true;if(runtime.save()===false)delete m.companion;}
   if(m.companion&&id!=='vacio'){counts.companion++;if(audible())runtime.soon?.(t=>playCello(ac,runtime.bus,t+eighth*4,midi-12,eighth,.06),'player');trail.length&&(trail[trail.length-1].sang=performance.now());}}
  // Each frame in a chapter: place what is missing, tune the lighthouse, move the creature.
  function draw(c,W,H,t,id,inside){if(!id){stopTone();return;}const m=own();if(!inside||id!=='llanura')stopTone();if(!inside&&!(m.companion&&id!=='vacio'))return;const still=calm(),cam={x:runtime.camX??runtime.S.wx,y:runtime.camY??runtime.S.wy},sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),beat=still?.5:beatNow();
