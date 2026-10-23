@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.146**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.147**. Las entradas describen su revisión, no certifican producción.
+
+## F5 · El anillo · alpha.147
+
+Rama `claude/f5-anillo`, sobre `claude/f4-estrellas` (dependencia explícita).
+
+- **Portales:** los 11 lugares forman un anillo dorado alrededor del Refugio, a 6000 px de su puerta (unos 32 s a pie). Si un portal cae en el mar, se corre por su radio hasta tierra. El anillo sigue al Refugio cuando se mueve; antes del primer Refugio queda donde se abrió el Mundo libre.
+- **Entrar:** caminar hacia un portal abierto empieza su ronda. Con ★★, primero «Jugar» o «Maestro». Uno cerrado avisa cuántas ★ pide y cuántas tienes.
+- **Sin palabras en la pantalla tranquila:** las estrellas se dibujan; un cerrado muestra un arco dorado con las ★ que llevas de las que pide. Con «Todo a la vista» también se escriben el nombre y lo que pide.
+- **Sonido:** en cada «1» del compás suena la nota del portal más cercano (una por lugar), más fuerte al acercarse; los cerrados, más bajo.
+- **Flecha:** en el borde de la pantalla, hacia el lugar abierto más cercano que aún no has visitado o que no tiene su ★.
+- **Volver:** «Salir» en la tarjeta, «Dejar la ronda» en el menú (solo durante una ronda) y una recarga a mitad de ronda te dejan junto al portal.
+- **Mapa:** los portales con sus estrellas, y «Ir a» con los lugares ya visitados: viaje rápido gratis junto a su portal.
+- **`?anillo=1`:** el Mundo libre tras el Viaje, sin ronda, con el guardado de prueba de `?lugar=`.
+- Pruebas: `tests/places-ring.mjs` y `tests/ring_smoke.py` (teléfono y escritorio). Límites: los portales aún no están en su bioma (la ronda sí lleva a él); la mesa del mapa del Refugio llega en F6; no se midió el paseo con personas.
 
 ## F4 · Lugares y estrellas · alpha.146
 
