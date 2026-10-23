@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.138**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.139**. Las entradas describen su revisión, no certifican producción.
+
+## Viaje por juegos · Bosque «Rodea» · alpha.139
+
+Rama `claude/viaje-bosque`, sobre `claude/viaje-lago` (alpha.138, dependencia explícita).
+
+- **Bosque · rodear:** el cubo deja una estela de luz de 5 s. Al dar una vuelta alrededor de un grupo de luciérnagas la estela se cierra: el interior se ilumina con el beat y las luciérnagas de dentro se marcan. Un pulso a tiempo las atrapa todas; cada una vale tantas como se atraparon juntas (hasta 5). Meta: 100. Fuera de tiempo no pasa nada.
+- La vuelta cerrada se mantiene 1,5 s, para poder levantar el dedo y tocar.
+- **La criatura del Bosque** llega junto al cubo con la barra llena; un pulso a tiempo la hace tu compañera para el resto del Viaje.
+- Pruebas: `tests/journey-lasso.mjs` y `tests/journey_lasso_smoke.py`.
 
 ## Viaje por juegos · Lago «Encadena» · alpha.138
 
