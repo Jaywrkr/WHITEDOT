@@ -1,0 +1,23 @@
+import {calmMotion} from './frame-state.js';
+// The Journey's chapter games (Jay's decision of 23 October): every chapter keeps one rule, only a pulse on time does
+// something, and adds one verb of its own: stick in the Llanura, chain in the Lago, and so on (docs/VIAJE.md). Each
+// game fills the bar at the top and ends with something gold that one last pulse on time closes. While they are
+// prototypes, «?clasico=1» (or the older «?faro=1») keeps the previous chapters to compare.
+export const classicJourney=(search=globalThis.location?.search)=>/[?&](faro|clasico)=1\b/.test(search||'');
+// How much the beat is sounding now, 1 on the beat fading to 0 over two sixteenths: what things breathe with.
+export function beatGlow(runtime){if(calmMotion(runtime.S)||!runtime.ac||!runtime.MU?.bq?.length)return 0;const now=runtime.ac.currentTime;let last=-Infinity;for(const b of runtime.MU.bq)if(b<=now)last=Math.max(last,b);return Math.max(0,1-(now-last)/((runtime.SIX||.15)*2));}
+export const worldCamera=runtime=>({x:runtime.camX??runtime.S.wx,y:runtime.camY??runtime.S.wy});
+// One short line, once per save, said a moment after the chapter starts.
+export function sayOnce(runtime,flags,key,text,delay=1500){if(flags[key])return false;flags[key]=true;runtime.save?.();setTimeout(()=>runtime.toast?.(text,{level:2,ttl:12000,coalesce:false,force:true}),delay);return true;}
+export function initialize(runtime){
+ const games={};
+ const current=()=>runtime.journeyChapter?.()?.id;
+ const game=id=>classicJourney()?null:games[id]||null;
+ // A game is playing when its chapter is the current one, not yet kept, in the Journey's World, on the surface.
+ const playing=id=>{const ch=runtime.journeyChapter?.();return !!(game(id)&&ch&&ch.id===id&&!ch.done?.[id]&&runtime.journeyQuiet?.()&&runtime.inWorld?.()&&(runtime.S.layer||'superficie')==='superficie');};
+ const now=()=>{const id=current();return playing(id)?games[id]:null;};
+ Object.defineProperties(runtime,{registerJourneyGame:{get:()=>(id,g)=>{games[id]=g;}},journeyGame:{get:()=>game},journeyGamePlaying:{get:()=>playing},
+  journeyGamePulse:{get:()=>on=>now()?.pulse(on)??null},journeyGameProgress:{get:()=>id=>game(id)?.progress()??null},
+  drawJourneyGamesUnder:{get:()=>(c,W,H,t)=>now()?.under?.(c,W,H,t)},drawJourneyGames:{get:()=>(c,W,H,t)=>now()?.over?.(c,W,H,t)},
+  cubeGrowth:{get:()=>()=>now()?.growth?.()||1}});
+}

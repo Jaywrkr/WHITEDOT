@@ -19,7 +19,7 @@ try:
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    base=f'http://127.0.0.1:{server.server_port}/'
    page.goto(base+'tests/');page.evaluate(f"localStorage.setItem('pixel-blanco-v4',{json.dumps(MAIN)})")
-   page.goto(base+'?festival=1');page.wait_for_function('!!window.__r?.festival')
+   page.goto(base+'?festival=1&clasico=1');page.wait_for_function('!!window.__r?.festival')
    assert page.evaluate('__r.festival') and page.evaluate('__r.accountClient')==None,'no account in the festival'
    assert page.evaluate("document.body.classList.contains('festival')&&document.body.classList.contains('journey-quiet')")
    assert page.is_hidden('#mAccount') if page.locator('#mAccount').count() else True

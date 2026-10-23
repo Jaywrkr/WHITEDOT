@@ -1,5 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
+import {beatGlow as glowNow,worldCamera} from './journey-games.js';
 // «Pégate» (prototype for the Llanura, chosen by Jay on 23 October): things around the cube beat with the music; a
 // pulse on time next to one sticks it to the cube, it sounds and fills the bar at the top. Off time nothing moves.
 // Small things are many and fill a little, big ones are few and fill a lot. When the bar is full a gold cloud comes
@@ -28,17 +29,14 @@ export function initialize(runtime){
  function own(){const j=runtime.S.journey||{};if(owner!==runtime.S){owner=runtime.S;j.stick=normalizeStick(j.stick);state=j.stick;gone=new Set(state.gone);flying.length=0;toBar.length=0;attached.length=0;streak=0;}return state;}
  const ids=()=>runtime.BIOMES.map(b=>b.id);
  const inLlanura=(x,y)=>ids()[runtime.biomeOfPos(x,y)]==='llanura'&&!runtime.regionOfPos?.(x,y)?.sea;
- // While it is a prototype, «?faro=1» keeps the old Llanura (the lighthouse) to compare both.
- const on=()=>!(typeof location!=='undefined'&&/[?&]faro=1\b/.test(location.search||''));
- const active=()=>{if(!on())return false;const ch=runtime.journeyChapter?.();return !!(ch&&ch.id==='llanura'&&!ch.done?.llanura&&runtime.journeyQuiet?.()&&runtime.inWorld?.()&&(runtime.S.layer||'superficie')==='superficie');};
+ const active=()=>!!runtime.journeyGamePlaying?.('llanura');
  const audible=()=>runtime.S.sound&&runtime.ac&&runtime.bus;
  const full=()=>own().points>=STICK_GOAL;
  function near(radius){const out=[],x0=Math.floor((runtime.S.wx-radius)/STICK_CELL),x1=Math.floor((runtime.S.wx+radius)/STICK_CELL),y0=Math.floor((runtime.S.wy-radius)/STICK_CELL),y1=Math.floor((runtime.S.wy+radius)/STICK_CELL);
   for(let i=x0;i<=x1;i++)for(let j=y0;j<=y1;j++){const it=cellItem(i,j);if(!it||gone.has(it.id)||!inLlanura(it.x,it.y))continue;it.d=Math.hypot(it.x-runtime.S.wx,it.y-runtime.S.wy);if(it.d<=radius)out.push(it);}
   return out.sort((a,b)=>a.d-b.d);}
  const reach=()=>STICK_REACH+12*cubeScale(own().points);
- // How much the beat is sounding now, 1 on the beat fading to 0: what things breathe with.
- function beatGlow(){if(calm()||!runtime.ac||!runtime.MU?.bq?.length)return 0;const now=runtime.ac.currentTime;let last=-Infinity;for(const b of runtime.MU.bq)if(b<=now)last=Math.max(last,b);return Math.max(0,1-(now-last)/((runtime.SIX||.15)*2));}
+ const beatGlow=()=>glowNow(runtime);
  // A short note in the key for each thing that sticks: smaller things sound higher.
  function pop(value,delay=0){if(!audible())return;const ct=runtime.chordTones?.()||[60,64,67];runtime.soon?.(t=>{let m=ct[(stuck+value)%ct.length]+(value>=8?0:12);while(m>84)m-=12;runtime.pluck?.(m,t+delay,runtime.vel?.(.09)??.09,2);},'player');}
  function stick(it,k){gone.add(it.id);state.gone.push(it.id);if(state.gone.length>STICK_GONE_LIMIT)state.gone.splice(0,state.gone.length-STICK_GONE_LIMIT);const before=state.points;state.points=Math.min(STICK_GOAL,state.points+it.value);stuck++;
@@ -61,7 +59,7 @@ export function initialize(runtime){
  function tick(){const s=own();if(full()&&!s.cloud)arrive();if(s.cloud){const dx=runtime.S.wx+STICK_CLOUD_GAP-s.cloud.x,dy=runtime.S.wy-STICK_CLOUD_GAP*.5-s.cloud.y;if(Math.hypot(dx,dy)>4){s.cloud.x+=dx*.08;s.cloud.y+=dy*.08;}}
   // The music grows with the bar: what sticks to you plays.
   const MU=runtime.MU,p=stickProgress(s.points);if(MU&&p>0){MU.journeyFloor=Math.max(MU.journeyFloor||0,.2+.6*p);if(MU.journeyCap!=null)MU.journeyCap=Math.max(MU.journeyCap,.4+.6*p);}}
- const camera=()=>({x:runtime.camX??runtime.S.wx,y:runtime.camY??runtime.S.wy});
+ const camera=()=>worldCamera(runtime);
  // Under the cube: the place dims, the things that stick shine with the beat, and the gold cloud.
  function drawUnder(c,W,H,t){if(!active())return;tell();tick();const s=own(),still=calm(),cam=camera(),sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),glow=beatGlow(),gold=runtime.GOLD||'#f0d27a',r=reach();
   c.save();c.globalAlpha=.4;c.fillStyle='#000';c.fillRect(0,0,W,H);
@@ -91,7 +89,6 @@ export function initialize(runtime){
   for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*stickProgress(d.from+d.value),e=1-(1-k)*(1-k),z=2+Math.min(6,d.value/3);
    c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
   c.restore();}
- Object.defineProperties(runtime,{journeyStickOn:{get:on},journeyStickPulse:{get:()=>pulse},drawJourneyStickUnder:{get:()=>drawUnder},drawJourneyStick:{get:()=>draw},
-  cubeGrowth:{get:()=>()=>active()?cubeScale(own().points):1},journeyStickProgress:{get:()=>()=>stickProgress(own().points)},
-  journeyStick:{get:()=>()=>({active:active(),points:own().points,progress:stickProgress(own().points),stuck,misses,attached:attached.length,flying:flying.length,cloud:own().cloud?{...own().cloud}:null,swallowed:own().swallowed,near:near(reach()).map(it=>({id:it.id,kind:it.kind,value:it.value}))})}});
+ runtime.registerJourneyGame?.('llanura',{pulse,under:drawUnder,over:draw,progress:()=>stickProgress(own().points),growth:()=>cubeScale(own().points)});
+ Object.defineProperties(runtime,{journeyStick:{get:()=>()=>({active:active(),points:own().points,progress:stickProgress(own().points),stuck,misses,attached:attached.length,flying:flying.length,cloud:own().cloud?{...own().cloud}:null,swallowed:own().swallowed,near:near(reach()).map(it=>({id:it.id,kind:it.kind,value:it.value}))})}});
 }

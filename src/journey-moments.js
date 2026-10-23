@@ -37,7 +37,7 @@ export function initialize(runtime){
   tone.g.gain.setTargetAtTime(Math.max(.0001,v),ac.currentTime,.3);return v;}
  // A note played on time in a chapter (from journey-chapters.js).
  function note(id,midi){const m=own(),ac=runtime.ac,eighth=(runtime.SIX||.15)*2;
-  if(id==='lago'&&m.lotos){let best=-1,dist=Infinity;for(let i=0;i<LOTUS_COUNT;i++){const p=lotusAt(m.lotos,i),d=Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy);if(d<dist){dist=d;best=i;}}
+  if(id==='lago'&&m.lotos&&!runtime.journeyGame?.('lago')){let best=-1,dist=Infinity;for(let i=0;i<LOTUS_COUNT;i++){const p=lotusAt(m.lotos,i),d=Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy);if(d<dist){dist=d;best=i;}}
    if(best>=0&&dist<LOTUS_NEAR){const was=m.lotos.open[best];m.lotos.open[best]=true;if(!was&&runtime.save()===false)m.lotos.open[best]=false;lit.push({i:best,at:performance.now()});if(lit.length>8)lit.shift();counts.lotus++;
     if(audible())runtime.soon?.(t=>{const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.setValueAtTime(440*2**((midi+7-69)/12),t+eighth);g.gain.setValueAtTime(.0001,t+eighth);g.gain.exponentialRampToValueAtTime(.08,t+eighth+.01);g.gain.exponentialRampToValueAtTime(.0001,t+eighth+1.4);o.connect(g);g.connect(runtime.bus);o.start(t+eighth);o.stop(t+eighth+1.5);},'player');}}
   if(id==='bosque'&&!m.companion){m.companion=true;if(runtime.save()===false)delete m.companion;}
@@ -45,8 +45,8 @@ export function initialize(runtime){
  // Each frame in a chapter: place what is missing, tune the lighthouse, move the creature.
  function draw(c,W,H,t,id,inside){if(!id){stopTone();return;}const m=own();if(!inside||id!=='llanura')stopTone();if(!inside&&!(m.companion&&id!=='vacio'))return;const still=calm(),cam={x:runtime.camX??runtime.S.wx,y:runtime.camY??runtime.S.wy},sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),beat=still?.5:beatNow();
   c.save();
-  // With «Pégate» (journey-stick.js) the Llanura has no lighthouse: its goal is the giant to swallow.
-  if(inside&&id==='llanura'&&!runtime.journeyStickOn){if(!m.faro){m.faro={...placeFaro(here(),inBiome('llanura')),reached:false};runtime.save();}
+  // A chapter played by its own game (journey-games.js) has no lighthouse or lotuses: the game is its moment.
+  if(inside&&id==='llanura'&&!runtime.journeyGame?.('llanura')){if(!m.faro){m.faro={...placeFaro(here(),inBiome('llanura')),reached:false};runtime.save();}
    const f=m.faro,d=Math.hypot(f.x-runtime.S.wx,f.y-runtime.S.wy);faroTone(d);if(!f.reached&&d<FARO_REACH){f.reached=true;counts.faro++;if(runtime.save()===false)f.reached=false;runtime.enterFx=Math.max(runtime.enterFx||0,.6);}
    // A pulsar seen from above: a bright core, a halo and a beam that sweeps the ground around it.
    // Before you reach it, it calls (phase 6, Jay could not find it): a long beam that sweeps past the screen and a ring
@@ -56,7 +56,7 @@ export function initialize(runtime){
    c.globalAlpha=(calling?.55:.25)*glow;c.strokeStyle=ink;c.lineWidth=1;c.beginPath();c.arc(x,y,9+4*beat,0,6.283);c.stroke();
    if(calling){const open=still?.5:1-beat;c.globalAlpha=.5*(1-open);c.beginPath();c.arc(x,y,14+open*46,0,6.283);c.stroke();}
    const core=calling?7:5;c.globalAlpha=.95;c.fillStyle=ink;c.fillRect(Math.round(x-core/2),Math.round(y-core/2),core,core);c.fillStyle='#ffffff';c.fillRect(Math.round(x)-1,Math.round(y)-1,3,3);}
-  if(inside&&id==='lago'){if(!m.lotos){m.lotos={...here(),open:Array(LOTUS_COUNT).fill(false)};runtime.save();}const ink=runtime.placeColor?.('lago','#8ad1ff')||'#8ad1ff',now=performance.now();
+  if(inside&&id==='lago'&&!runtime.journeyGame?.('lago')){if(!m.lotos){m.lotos={...here(),open:Array(LOTUS_COUNT).fill(false)};runtime.save();}const ink=runtime.placeColor?.('lago','#8ad1ff')||'#8ad1ff',now=performance.now();
    for(let i=0;i<LOTUS_COUNT;i++){const p=lotusAt(m.lotos,i),x=sx(p.x),y=sy(p.y),open=m.lotos.open[i],fresh=lit.find(l=>l.i===i&&now-l.at<900),r=open?7+(fresh&&!still?4*(1-(now-fresh.at)/900):0):3;
     // A wave source: closed, a dot in a ring; open, rings that keep spreading from it.
     c.strokeStyle=open?ink:'#ffffff';c.lineWidth=1;const rings=open?3:1;for(let k=0;k<rings;k++){const grow=still?k/rings:((t/1600+k/rings)%1),rr=open?r+grow*18:r+2;c.globalAlpha=(open?.8:.45)*(open?1-grow:1);c.beginPath();c.arc(x,y,rr,0,6.283);c.stroke();}
@@ -64,8 +64,8 @@ export function initialize(runtime){
   // The way to the moment, once it has been out of sight for a while: a faint light at the edge, in the place's colour.
   // Its own colour even while the Journey's colours are still pale (the colour-blind palette when chosen).
   const vivid=(id,base)=>runtime.S.colorSafe?runtime.placeColor?.(id,base)||base:base;
-  guiding=null;const target=inside&&id==='llanura'&&m.faro&&!m.faro.reached?{x:m.faro.x,y:m.faro.y,ink:vivid('faros','#fff36a')}
-   :inside&&id==='lago'&&m.lotos&&m.lotos.open.filter(Boolean).length<3?(()=>{let best=null;for(let i=0;i<LOTUS_COUNT;i++){if(m.lotos.open[i])continue;const p=lotusAt(m.lotos,i),d=Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy);if(!best||d<best.d)best={...p,d};}return best&&{x:best.x,y:best.y,ink:vivid('lago','#8ad1ff')};})():null;
+  guiding=null;const target=inside&&id==='llanura'&&!runtime.journeyGame?.('llanura')&&m.faro&&!m.faro.reached?{x:m.faro.x,y:m.faro.y,ink:vivid('faros','#fff36a')}
+   :inside&&id==='lago'&&!runtime.journeyGame?.('lago')&&m.lotos&&m.lotos.open.filter(Boolean).length<3?(()=>{let best=null;for(let i=0;i<LOTUS_COUNT;i++){if(m.lotos.open[i])continue;const p=lotusAt(m.lotos,i),d=Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy);if(!best||d<best.d)best={...p,d};}return best&&{x:best.x,y:best.y,ink:vivid('lago','#8ad1ff')};})():null;
   const now=performance.now();if(!target){seekFor='';}else if(seekFor!==id){seekFor=id;seekSince=now;}
   if(target&&now-seekSince>=MOMENT_GUIDE_AFTER){const e=edgePoint(target.x-cam.x,target.y-cam.y,W,H);if(e){guiding=id;const glow=still?.7:.45+.25*beat;
    c.globalAlpha=.45*glow;c.strokeStyle=target.ink;c.lineWidth=1.5;c.beginPath();c.arc(e.x,e.y,14+(still?0:4*beat),0,6.283);c.stroke();c.globalAlpha=glow;c.fillStyle=target.ink;c.fillRect(Math.round(e.x)-3,Math.round(e.y)-3,6,6);
