@@ -97,7 +97,8 @@ export function initialize(runtime){
  function echo(midi){const ac=runtime.ac,bar=(runtime.SIX||.15)*16;moments.echoes++;progress('vacio').echoes=(progress('vacio').echoes||0)+1;echoes.push({at:performance.now()+bar*1000,midi});if(echoes.length>8)echoes.shift();
   if(runtime.S.sound&&ac&&runtime.bus)runtime.soon?.(t=>{const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.setValueAtTime(440*2**((midi+12-69)/12),t+bar);g.gain.setValueAtTime(.0001,t+bar);g.gain.exponentialRampToValueAtTime(.07,t+bar+.02);g.gain.exponentialRampToValueAtTime(.0001,t+bar+.9);o.connect(g);g.connect(runtime.bus);o.start(t+bar);o.stop(t+bar+1);},'player');}
  // The whole theme, once, in tutti: the cube's voice with its octave below.
- function plenitude(){const ac=runtime.ac;if(!runtime.S.sound||!ac||!runtime.bus)return;runtime.soon?.(t=>{const MU=runtime.MU||{},scale=MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,eighth=(runtime.SIX||.15)*2;let at=t;for(const [d,l]of THEME){const m=themePitch(d,scale,MU.tr||0);playCello(ac,runtime.bus,at,m,l*eighth,.15);playCello(ac,runtime.bus,at,m-12,l*eighth,.08);at+=l*eighth;}},'player');}
+ // A chapter kept sounds as a drop in its genre (journey-victory.js, plan F2); the cello theme stays only as a fallback.
+ function plenitude(id){if(runtime.journeyVictory){const ms=runtime.journeyVictory(id);if(ms>0)return ms;}const ac=runtime.ac;if(!runtime.S.sound||!ac||!runtime.bus)return 0;runtime.soon?.(t=>{const MU=runtime.MU||{},scale=MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,eighth=(runtime.SIX||.15)*2;let at=t;for(const [d,l]of THEME){const m=themePitch(d,scale,MU.tr||0);playCello(ac,runtime.bus,at,m,l*eighth,.15);playCello(ac,runtime.bus,at,m-12,l*eighth,.08);at+=l*eighth;}},'player');}
  // A completed theme in the chapter's biome, once its moment is lived and its bars played: Plenitud, and the portal to
  // the next chapter after the theme sounds in tutti.
  function phrase(){if(!inChapter())return false;const j=own(),id=current();if(j.done[id]||(id==='vacio'&&hits<VOID_PHRASE)||!ready(id))return false;
@@ -107,7 +108,7 @@ export function initialize(runtime){
  function complete(id=current()){const j=own();if(j.done[id]||current()!==id)return false;j.done[id]=true;if(runtime.save()===false){delete j.done[id];return false;}
   // The Tormenta's Plenitud: a bar of bolts, one on every beat.
   if(id==='tormenta'&&runtime.ac){const beat=(runtime.SIX||.15)*4;for(let i=1;i<=4;i++)storm.push(runtime.ac.currentTime+i*beat);moments.bolts+=4;}
-  plenitude();runtime.enterFx=Math.max(runtime.enterFx||0,1);const theme=THEME.reduce((s,[,l])=>s+l,0)*(runtime.SIX||.15)*2*1000;portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:performance.now()+Math.max(PORTAL_WAIT,theme)};return true;}
+  const drop=plenitude(id);runtime.enterFx=Math.max(runtime.enterFx||0,1);const theme=drop||THEME.reduce((s,[,l])=>s+l,0)*(runtime.SIX||.15)*2*1000;portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:performance.now()+Math.max(PORTAL_WAIT,theme)};return true;}
  // Through the portal: the next chapter's biome, found on the map near here.
  function travel(){const j=own();if(j.chapter>=CHAPTERS.length-1)return false;const next=j.chapter+1,id=CHAPTERS[next];
   // The festival build ends after the Lago, in the Refugio, with your phrase.

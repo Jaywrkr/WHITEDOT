@@ -41,6 +41,8 @@ try:
    page.wait_for_function("document.body.textContent.includes('nube dorada')",timeout=5000)
    page.evaluate("__r.journeyGamePulse(false)");assert not page.evaluate('__r.journeyStick().swallowed'),'off time it waits'
    page.evaluate(ON);page.wait_for_function("__r.journeyStick().swallowed&&__r.journeyChapter().done.llanura",timeout=5000);page.wait_for_function("__r.journeyChapter().portal",timeout=10000)
+   # The drop (plan F2): the music's filter closes for the riser and opens again; the portal waits for the drop.
+   lp0=page.evaluate('__r.fx.lp.frequency.value');page.wait_for_function("__r.journeyChapter().portalOpen",timeout=15000);assert page.evaluate('__r.fx.lp.frequency.value')>=min(2000,lp0)-1,'the filter opens again after the drop'
    page.reload();page.wait_for_function('!!window.__r?.journeyStick');assert page.evaluate("__r.S.journey.done.llanura")==True and page.evaluate("__r.S.journey.stick.swallowed")==True
    assert not errors,errors;page.close()
   browser.close()
