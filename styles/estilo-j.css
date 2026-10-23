@@ -594,3 +594,5 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 .narrator-line,.journal-card .narrator-line{color:#f0d27a;font-style:italic;margin:4px 0}#toast small{display:block;margin-top:4px;color:#ffffffcc;font-size:12px;line-height:1.4}
 /* F12: before the first pulse, the bar beats with the music. */
 .bar.beat-hint{background:rgba(255,255,255,calc(.14 + var(--beat,0) * .4));box-shadow:0 0 calc(var(--beat,0) * 12px) rgba(255,255,255,calc(var(--beat,0) * .5))}
+
+.lugares-remix{color:var(--gold,#f0d27a);font-size:12px;margin:8px 0 0}
