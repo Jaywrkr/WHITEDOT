@@ -568,6 +568,10 @@ body.journey-quiet.world-focus .bar{display:block}
 /* A round's card (places.js): three stars, gold when earned, the new ones lit. */
 #placeStars{display:flex;gap:14px;font-size:34px;line-height:1;font-family:system-ui,sans-serif;margin:6px 0 12px;color:var(--faint)}
 #placeStars span{font-size:34px!important;line-height:1}
-#placeStars .got{color:#f0d27a}
+#placeStars .got,#portalStars .got{color:#f0d27a}
+#portalStars{display:flex;gap:14px;line-height:1;font-family:system-ui,sans-serif;margin:6px 0 12px;color:var(--faint)}
+#portalStars span{font-size:34px!important;line-height:1}
+.ring-travel h3{margin:12px 0 6px;font-size:12px;color:var(--dim);font-weight:400}
+.ring-travel .row{flex-wrap:wrap}
 #placeStars .new{text-shadow:0 0 14px #f0d27a}
 .sheet .place-rows{list-style:none;margin:0 0 10px;padding:0;font-size:13px;line-height:1.8;color:var(--dim)}

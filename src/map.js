@@ -13,7 +13,7 @@ export function mapData(runtime){
  const heard=Object.entries(S.heardLm||{}).filter(([id])=>!S.landmarks?.[id]).map(([id,[rx,ry,type]])=>({id,rx,ry,type}));
  const me=[Math.floor(S.wx/RP),Math.floor(S.wy/RP)],camp=S.studio?.x!=null?[S.studio.x/RP,S.studio.y/RP]:null;
  const continents=new Set(cells.filter(c=>c.cont&&!c.sea).map(c=>c.cont)).size;
- return {favorites:(S.favorites?.items||[]).filter(p=>p.layer==='superficie'),cells,reached,heard,me,pos:[S.wx/RP,S.wy/RP],camp,continents,record:S.maxRing||0,RP};
+ return {ring:runtime.ringPortals?.()||[],favorites:(S.favorites?.items||[]).filter(p=>p.layer==='superficie'),cells,reached,heard,me,pos:[S.wx/RP,S.wy/RP],camp,continents,record:S.maxRing||0,RP};
 }
 
 export function drawMap(runtime,x,X,Y,W,H,zoom){
@@ -21,6 +21,7 @@ export function drawMap(runtime,x,X,Y,W,H,zoom){
  if(zoom==='cerca'){x0=m.pos[0]-7;x1=m.pos[0]+7;y0=m.pos[1]-7;y1=m.pos[1]+7;}
  else{x0=Math.min(-1,m.pos[0]-1);y0=Math.min(-1,m.pos[1]-1);x1=Math.max(2,m.pos[0]+2);y1=Math.max(2,m.pos[1]+2);
   for(const c of m.cells){x0=Math.min(x0,c.rx-1);y0=Math.min(y0,c.ry-1);x1=Math.max(x1,c.rx+2);y1=Math.max(y1,c.ry+2);}
+  for(const q of m.ring){x0=Math.min(x0,q.x/m.RP-1);y0=Math.min(y0,q.y/m.RP-1);x1=Math.max(x1,q.x/m.RP+1);y1=Math.max(y1,q.y/m.RP+1);}
   for(const h of m.heard){x0=Math.min(x0,h.rx-1);y0=Math.min(y0,h.ry-1);x1=Math.max(x1,h.rx+2);y1=Math.max(y1,h.ry+2);}
   const span=Math.max(x1-x0,y1-y0,12),cx=(x0+x1)/2,cy=(y0+y1)/2;x0=cx-span/2;x1=cx+span/2;y0=cy-span/2;y1=cy+span/2;}
  const s=Math.min(W/(x1-x0),H/(y1-y0)),ox=X+(W-(x1-x0)*s)/2-x0*s,oy=Y+(H-(y1-y0)*s)/2-y0*s,P=(a,b)=>[ox+a*s,oy+b*s];
@@ -53,6 +54,9 @@ export function drawMap(runtime,x,X,Y,W,H,zoom){
   x.globalAlpha=1;x.fillStyle=col;x.beginPath();for(let i=0;i<10;i++){const r=i%2?z*.45:z,an=i/10*6.283-Math.PI/2;i?x.lineTo(px+Math.cos(an)*r,py+Math.sin(an)*r):x.moveTo(px+Math.cos(an)*r,py+Math.sin(an)*r);}x.closePath();x.fill();}
  // Favoritos propios, sin revelar terreno adicional.
  for(const p of m.favorites){const [px,py]=P(p.x/m.RP,p.y/m.RP);x.globalAlpha=.9;x.strokeStyle='#9fe8ff';x.lineWidth=1.5;x.beginPath();x.moveTo(px,py-6);x.lineTo(px+5,py);x.lineTo(px,py+6);x.lineTo(px-5,py);x.closePath();x.stroke();}
+ // Los once lugares del anillo: dorados los abiertos, con sus estrellas; grises los que aún piden estrellas.
+ for(const q of m.ring){const [px,py]=P(q.x/m.RP,q.y/m.RP),z=Math.max(5,Math.min(11,s*.4));x.globalAlpha=q.open?1:.6;x.strokeStyle=q.open?runtime.GOLD:'#8a8a8f';x.lineWidth=2;x.beginPath();x.arc(px,py,z,0,6.283);x.stroke();
+  for(let i=0;i<3;i++){x.fillStyle=i<q.stars?runtime.GOLD:'#ffffff30';x.fillRect(px-7+i*5.5,py+z+4,3,3);}}
  // Origen, campamento y tú.
  {const [px,py]=P(.5,.5);x.globalAlpha=.8;x.strokeStyle='#fff';x.lineWidth=1.5;x.beginPath();x.arc(px,py,Math.max(5,s*.35),0,6.283);x.stroke();}
  if(m.camp){const [px,py]=P(m.camp[0],m.camp[1]),z=Math.max(6,Math.min(12,s*.45));x.globalAlpha=1;x.strokeStyle=runtime.GOLD;x.lineWidth=2;x.beginPath();x.moveTo(px-z,py);x.lineTo(px,py-z);x.lineTo(px+z,py);x.lineTo(px+z,py+z);x.lineTo(px-z,py+z);x.closePath();x.stroke();}
@@ -67,7 +71,8 @@ export function initialize(runtime){
   const c=$("mapCv"),x=c.getContext("2d"),m=drawMap(runtime,x,0,0,c.width,c.height,zoom);
   $("mRegions").textContent=m.cells.length;$("mConts").textContent=m.continents;$("mRecord").textContent=m.record;
   $("mapZoom").textContent=zoom==='mundo'?'Ver cerca':'Ver todo';
-  $("mapNote").textContent=`${m.favorites.length} favoritos (◇) · ${m.reached.length} hitos visitados · ${m.heard.length} oídos sin visitar (?) · ${Object.keys(runtime.S.anomalies||{}).length} rarezas (✶)${m.camp?' · ⌂ tu Estudio':''}`;
+  $("mapNote").textContent=`${m.favorites.length} favoritos (◇) · ${m.reached.length} hitos visitados · ${m.heard.length} oídos sin visitar (?) · ${Object.keys(runtime.S.anomalies||{}).length} rarezas (✶)${m.camp?' · ⌂ tu Estudio':''}${m.ring.length?` · ${m.ring.filter(q=>q.open).length} lugares abiertos (○)`:''}`;
+  runtime.renderRingTravel?.();
  }
  function open(){runtime.openJournal?.('places');render();runtime.unlock('mapa1');}
  async function share(){
