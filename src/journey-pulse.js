@@ -46,8 +46,9 @@ export function initialize(runtime){
  function judge(atMs){
   const ac=runtime.ac,now=performance.now();if(now-lastAt<PULSE_GAP)return null;lastAt=now;const at=Number.isFinite(atMs)?atMs:now;
   // With the sound off there is no beat to meet (phase 3 of the plan): every pulse counts, so the Journey can still be
-  // played without hearing it; the chapters still ask for their moments and bars.
-  const silent=!runtime.S.sound||!ac||!runtime.MU?.bq?.length;
+  // played without hearing it; the chapters still ask for their moments and bars. While the music is only starting
+  // (sound on, no beat yet) a pulse is simply not on time: the first touch must not teach that timing does not matter.
+  const silent=!runtime.S.sound;
   const bar=(runtime.SIX||.15)*4,heard=ac?heardTime(ac,at,now):0,on=silent||beatDistance(heard,runtime.MU?.bq,bar)<=ON_TIME;state.lastOn=on;
   // The peak sits where you touched (what you heard then), and on time it sits on the beat you answered.
   const beatAt=on&&!silent?nearestBeat(heard,runtime.MU?.bq,bar):null,step=!ac?0:beatAt!==null?Math.round(stepAt(beatAt))%16:stepAt(heard);marks.push({at:now,step,on});if(marks.length>24)marks.shift();

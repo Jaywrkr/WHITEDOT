@@ -5,7 +5,8 @@ export function initialize(runtime){
  const panel=runtime.$('returnEntrance');let timer=null,hiddenAt=null,guide=null;
  function close(){clearTimeout(timer);timer=null;if(!panel.hidden)panel.hidden=true;if(guide){guide.hidden=false;guide=null;}}
  function show(){
-  if(document.hidden||!panel.hidden)return false;
+  // The Journey has no words (docs/VIAJE.md): it opens on black and the point of light, without a greeting.
+  if(document.hidden||!panel.hidden||runtime.journeyQuiet?.())return false;
   const modal=openSurface('.modal:not([hidden])');if(modal&&modal.id!=='mHelpC')return false;
   if(modal){guide=modal;guide.hidden=true;}
   runtime.$('returnPhrase').textContent=phrases[runtime.seedOf('return:phrase:v1:'+(runtime.S.practiceTravel?.arrivals||0))%phrases.length];
