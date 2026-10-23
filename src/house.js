@@ -59,7 +59,7 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
    if(!visit&&!h.readOnly&&action==='place'){const d=HOUSE_OBJECTS.find(p=>p.id===selected);if(!houseOwns(d,runtime.S))return;placeHouseObject(h,selected,r.id,x,y);runtime.now(t=>runtime.playHouseObject(h.objects.find(p=>p.kind===selected),t,h));}
    else if(!visit&&!h.readOnly&&action==='erase'){if(near){if(nearest.gardenCard){const b=runtime.gardenState;b.cards=b.cards.filter(id=>id!==nearest.cardId);}else h.objects=h.objects.filter(o=>o!==nearest);}}
    else if(near)runtime.now(t=>runtime.playHouseObject(nearest,t,h));
-   else{const hp=toHouse(px,py);if(action==='walk'&&runtime.houseCapsuleTap?.(hp.x,hp.y))return;const look=action==='walk'&&runtime.houseCollectionLook?.(px,py);if(look){runtime.toast(look);return;}target={floor:b.floor,fx:toHouse(px,py).x};}
+   else{const hp=toHouse(px,py);if(action==='walk'&&runtime.houseCapsuleTap?.(hp.x,hp.y))return;const shelf=action==='walk'?runtime.houseLugaresLook?.(px,py):null;if(shelf!=null){if(shelf)runtime.toast(shelf,{level:2,category:'refugio'});return;}const look=action==='walk'&&runtime.houseCollectionLook?.(px,py);if(look){runtime.toast(look);return;}target={floor:b.floor,fx:toHouse(px,py).x};}
    if(!visit&&!h.readOnly)runtime.save();palette();return;}}
  function draw(t,dt,beat,dx=0,dy=0){const c=runtime.cx,h=current(),step=lastT===null?0:Math.min(.1,Math.max(0,(t-lastT)/1000));lastT=t;
   if(!h.readOnly&&!landing&&!openSurface('.modal:not([hidden])'))walkStep(h,step,dx,dy);camera(step);const g=geometry(),k=g.k,o0=toScreen(0,0),night=houseNight(),ink=runtime.musicInk?.(null,'lead')||'#f0d27a';
@@ -85,7 +85,7 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
   c.globalAlpha=fade;if(drag?.point){const rr=roomRect(drag.point.room),def=HOUSE_OBJECTS.find(p=>p.id===drag.kind);c.save();c.globalAlpha=.55;c.translate(rr.x+drag.point.x*rr.w,rr.y+drag.point.y*rr.h);c.strokeStyle='#fff';livingGlyph(c,{shape:def?.shape||'seed',size:9,phase:0},t);c.strokeRect(-14,-14,28,28);c.restore();}
   runtime.cubeShopSoundTick?.(t);
   // Frames, trophies, showcases, garden plants and visiting creatures.
-  runtime.drawHouseCollection?.(c,{toScreen,k,t,dt:step,calm:calm(),house:h,cube:{floor,x:cubeAt().x}});
+  runtime.drawHouseCollection?.(c,{toScreen,k,t,dt:step,calm:calm(),house:h,cube:{floor,x:cubeAt().x}});runtime.drawHouseLugares?.(c,{toScreen,k,t,calm:calm(),house:h});
   // Capsule decorations, the capsule machine and the Taller label.
   runtime.drawHouseCapsules?.(c,{toScreen,k,t,calm:calm(),house:h,cube:{floor,x:cubeAt().x},night});runtime.houseGuideTick?.();
   c.restore();
