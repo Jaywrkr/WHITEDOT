@@ -41,7 +41,7 @@ export function initialize(runtime){
  function chime(index){if(!runtime.S.sound||!runtime.pluck||!runtime.now)return;runtime.audio?.();runtime.now(t=>{const base=60+(runtime.MU?.tr||0)+PORTAL_NOTES[index],six=runtime.SIX||.125;[0,4,7].forEach((d,i)=>runtime.pluck(base+d,t+i*six*2,.09,2));});}
  // A touch on the shelf: the trophy's place and stars, or the wall opening Lugares.
  function look(px,py){if(visiting())return null;const h=hits.find(b=>px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h);if(!h)return null;if(h.open){open();return '';}
-  const p=PLACES[h.index],d=data(),best=d?.best?.[p.id];lastTap=p.id;if(stars(p.id)[0])layer(p.id,h.index);
+  const p=PLACES[h.index],d=data(),best=d?.best?.[p.id];lastTap=p.id;if(stars(p.id)[0]){layer(p.id,h.index);runtime.narrate?.('trophy');}
   if(!placeOpen(d,p.id,runtime.S.journey))return p.game?`${p.name} · se abre con ${p.need} ★`:`${p.name} · pronto`;
   return `${p.name} ${glyphs(p.id)}${best?` · ${Math.round(best.onTime*100)} % a tiempo`:''}`;}
  // Lugares: every place with its stars and what it asks; «Ir» to the ones already entered; the door to the ring.
