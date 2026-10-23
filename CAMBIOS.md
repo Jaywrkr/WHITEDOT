@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.139**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.140**. Las entradas describen su revisión, no certifican producción.
+
+## Viaje por juegos · Tormenta «Baila» · alpha.140
+
+Rama `claude/viaje-tormenta`, sobre `claude/viaje-bosque` (alpha.139, dependencia explícita).
+
+- **Tormenta · bailar:** la tormenta marca un círculo cerca del cubo y su rayo cae en un compás y medio (un arco alrededor cuenta el tiempo). Dentro del círculo y a tiempo devuelves el rayo al cielo: 10, 15 y 20 puntos seguidos. El rayo que no devuelves cae blanco y la racha empieza de nuevo. Meta: 100. A tiempo fuera del círculo, o fuera de tiempo dentro, no pasa nada.
+- La tormenta solo descarga en los círculos; los rayos sueltos de antes se callan en este capítulo.
+- **El ojo de la tormenta** llega junto al cubo con la barra llena y se cierra con un pulso a tiempo.
+- Pruebas: `tests/journey-dance.mjs` y `tests/journey_dance_smoke.py`.
 
 ## Viaje por juegos · Bosque «Rodea» · alpha.139
 
