@@ -26,8 +26,8 @@ export function initialize(runtime){
  function spots(){const c=center();if(!c)return [];if(!cache||cache.x!==c.x||cache.y!==c.y)cache={x:c.x,y:c.y,spots:portalSpots(c,(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea)};return cache.spots;}
  const stars=id=>data()?.stars?.[id]||[false,false,false];
  // Into a portal: a round; with its ★★, first the choice of the Maestro one.
- function enter(spot){const d=data(),from=besidePortal(spot,center()||spot);if(!placeOpen(d,spot.id,runtime.S.journey)){const p=PLACES.find(x=>x.id===spot.id),have=starCount(d);if(said!==spot.id){said=spot.id;runtime.toast?.(p.game?`${p.name}: pide ${p.need} ★. Tienes ${have}.`:`${p.name}: pronto.`,{force:true});}return;}
-  d.seen[spot.id]=true;if(stars(spot.id)[1]){choose(spot.id,from);return;}runtime.startPlace?.(spot.id,{from});}
+ function enter(spot){const d=data(),from=besidePortal(spot,center()||spot);if(!placeOpen(d,spot.id,runtime.S.journey)){const p=PLACES.find(x=>x.id===spot.id),have=starCount(d);if(said!==spot.id){said=spot.id;runtime.toast?.(p.game?`${p.name}: pide ${p.need} ★. Tienes ${have}.`:`${p.name}: pronto.`,{force:true});}runtime.narrate?.('locked');return;}
+  d.seen[spot.id]=true;runtime.narrate?.('portal');if(stars(spot.id)[1]){choose(spot.id,from);return;}runtime.startPlace?.(spot.id,{from});}
  function choose(id,from){const box=$('mPortal');if(!box){runtime.startPlace?.(id,{from});return;}$('portalTitle').textContent=name(id);$('portalStars').innerHTML=stars(id).map(x=>`<span class="${x?'got':''}">★</span>`).join('');
   const go=maestro=>{box.hidden=true;runtime.startPlace?.(id,{maestro,from});};$('portalPlay').onclick=()=>go(false);$('portalMaestro').onclick=()=>go(true);$('portalClose').onclick=()=>{box.hidden=true;};box.hidden=false;}
  function tick(){if(!active()||openSurface('.modal:not([hidden])')){inside=null;return;}const S=runtime.S,near=spots().find(s=>Math.hypot(s.x-S.wx,s.y-S.wy)<PORTAL_REACH);
@@ -55,7 +55,7 @@ export function initialize(runtime){
   spots().forEach((s,i)=>{const d=Math.hypot(s.x-S.wx,s.y-S.wy);if(d<far){far=d;best=s;index=i;}});if(!best)return;
   const near=1-far/PORTAL_HEAR,open=placeOpen(data(),best.id,S.journey);runtime.pluck(60+(runtime.MU?.tr||0)+PORTAL_NOTES[index],time,(open?.09:.035)*near*near,2);}
  // Fast travel from the map to the places already entered: beside their portal, free.
- function travel(id){if(!active())return false;const s=spots().find(q=>q.id===id);if(!s||!data().seen[id])return false;const p=besidePortal(s,center()||s);runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.enterFx=1;$('mJournal')&&($('mJournal').hidden=true);runtime.save?.();return true;}
+ function travel(id){if(!active())return false;const s=spots().find(q=>q.id===id);if(!s||!data().seen[id])return false;const p=besidePortal(s,center()||s);runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.narrate?.('travel');runtime.enterFx=1;$('mJournal')&&($('mJournal').hidden=true);runtime.save?.();return true;}
  function travelList(){const box=$('ringTravel');if(!box)return;const d=data(),seen=active()?PLACES.filter(p=>d.seen[p.id]):[];box.hidden=!seen.length;box.innerHTML=seen.length?'<h3>Ir a</h3><div class="row"></div>':'';
   const row=box.querySelector('.row');for(const p of seen){const b=document.createElement('button');b.textContent=`${p.name} ${'★'.repeat(stars(p.id).filter(Boolean).length)}`.trim();b.onclick=()=>travel(p.id);row.appendChild(b);}}
  // Leaving a round from the menu: only shown while a round is being played.

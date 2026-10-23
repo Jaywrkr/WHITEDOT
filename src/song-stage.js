@@ -28,7 +28,7 @@ export function initialize(runtime){
   document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});const el=overlay(),text=el.querySelector('.song-stage-text');
   const from={};if(final)SONG_IDS.forEach((id,i)=>{from[id]=i*FINAL_ENTRY_BARS;});const bars=final?SONG_IDS.length*FINAL_ENTRY_BARS+FINAL_TAIL_BARS:8,list=final?SONG_IDS:ids;
   runtime.audio?.();const handle=runtime.playSong?.(list,{bars,from})||null;run={el,final,handle,ids:list,from,bars,at:performance.now(),length:bars*16*SONG_SIX*1000};
-  if(final){state.finals++;text.replaceChildren();}else{text.textContent=`Tu canción · ${ids.length} de ${SONG_IDS.length}`;}state.opened++;
+  if(final){state.finals++;text.replaceChildren();runtime.narrate?.('won');}else{runtime.narrate?.('song');text.textContent=`Tu canción · ${ids.length} de ${SONG_IDS.length}`;}state.opened++;
   el.querySelector('#songAgain').hidden=final;el.querySelector('#songAgain').onclick=()=>open();el.querySelector('#songClose').textContent=final?'Seguir':'Cerrar';el.querySelector('#songClose').onclick=close;
   requestAnimationFrame(frame);return true;}
  function close(){if(!run)return;run.handle?.stop();run.el.hidden=true;run=null;}

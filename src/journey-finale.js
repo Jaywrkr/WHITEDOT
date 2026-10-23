@@ -53,7 +53,7 @@ export function initialize(runtime){
   run.el.hidden=true;run.el.onclick=null;run.el.querySelector?.('.journey-explore')?.remove?.();run=null;state.skipped=skipped;
   // The end of the Journey is kept; the free World opens.
   j.finished=true;const kept=runtime.journeyMode?.()==='libre'?runtime.save()!==false:!!runtime.setJourneyMode?.('libre');if(!kept){delete j.finished;return;}
-  state.finished++;runtime.toast?.('Se abre el Mundo libre.');unveil();}
+  state.finished++;runtime.narrate?.('journeyDone');runtime.toast?.('Se abre el Mundo libre.');unveil();}
  // From the quiet Journey to everything at once was abrupt (phase 6 of the plan): the counters and buttons of the free
  // World fade in one after another, and the menu marks that it has new things until it is opened.
  // The sparks earned on the way were hidden in the Journey: once in the free World, Tu cubo is marked and one short

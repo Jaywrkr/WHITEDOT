@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.149**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.150**. Las entradas describen su revisión, no certifican producción.
+
+## F8 · Logros del narrador · alpha.150
+
+Rama `claude/f8-logros`, sobre `claude/f7-cancion` (dependencia explícita).
+
+- **El narrador:** los logros hablan con voz burlona, al estilo de *Dungeon Crawler Carl*, para todas las edades. Al ganar uno, el aviso muestra el título y debajo su frase; en la Bitácora, la frase va en dorado bajo cada logro ganado.
+- **Nada ganado se pierde:** 40 logros que ya existían conservan su id, su título y su fecha; solo cambia su voz (Día 1, El Mundo, Cajas, Cometa, Freeze, Contratiempo, Atlas, Rachas, la Luna de oro…).
+- **23 logros nuevos** para los lugares, las estrellas, el anillo y tu canción: Una estrella, Ritmo, Maestro, Cinco Maestros, Casi ritmo, Con prisa, Sin prisa, Inquilino, Contra ti, Turismo intensivo, 10/20/33 estrellas, Puerta cerrada, Conocido del anillo, A medias, Caminar es de otros, Presumido, Fan número uno y Prólogo; y tres secretos (Sospechoso, Valiente, Madrugada).
+- Se ganan solos al cerrar una ronda, al tocar un portal cerrado, al dejar una ronda, al viajar rápido, al tocar un trofeo, al escuchar tu canción y al terminar el Viaje. Varios a la vez se anuncian juntos («4 logros nuevos»), como antes.
+- Pruebas: `tests/narrator.mjs` (cada frase pertenece a un logro que existe, ningún id nuevo reutiliza uno viejo, frases de 20 palabras o menos, lo que gana cada ronda); `achievements_v2_smoke` y `universe_mischief_smoke` cuentan 376 + 23 logros. Límite: Jay aprobó el tono de la muestra; el resto de textos se revisa con él.
 
 ## F7 · Tu canción · alpha.149
 

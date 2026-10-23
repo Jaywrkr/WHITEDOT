@@ -79,7 +79,7 @@ try:
     page.wait_for_function('id=>__r.savedCrystal(id)?.broken',arg=q['id'])
    page.wait_for_function('id=>!!__r.S.mischief.done[id]',arg=o['id']);assert page.evaluate('kind=>__r.S.mischief.counts[kind]',kind)==1
    print('PASS natural '+kind+' keyboard/contact completion',flush=True)
-  page.wait_for_function('Object.keys(__r.S.ach).some(id=>id.startsWith("adventure:"))');assert page.evaluate('__r.ACH.length')==376
+  page.wait_for_function('Object.keys(__r.S.ach).some(id=>id.startsWith("adventure:"))');assert page.evaluate('__r.ACH.length')==376+23
   page.locator('#bMenu').click();page.locator('#bAch').click();page.evaluate('__r.openJournal("achievements")');assert 'Logros' in page.locator('#journalBody').inner_text();assert page.locator('#mJournal .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2');page.screenshot(path=str(ROOT.parent/'mischief-achievements-390.png'))
   page.locator('#mJournal .sheet-close').click()
   count=page.evaluate('Object.keys(__r.S.mischief.done).length');assert count==len(cases)
