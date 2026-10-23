@@ -19,7 +19,8 @@ try:
    assert page.evaluate('__r.microNear(150).length')>0
    page.evaluate("()=>{const r=__r;r.S.sound=true;r.audio();window.__source=r.microNear(150)[0];r.S.wx=__source.x-45;r.S.wy=__source.y;r.stopAutopilot?.();}");page.wait_for_timeout(180)
    page.evaluate('__r.S.wx=__source.x;__r.S.wy=__source.y');page.wait_for_function('__notes.length>0',timeout=15000)
-   assert page.evaluate("Object.keys(__r.S.elementBook.found).some(k=>k.startsWith('micro:'))")
+   # The collection is written a moment after the first note sounds: wait for it rather than read it at once.
+   page.wait_for_function("Object.keys(__r.S.elementBook.found).some(k=>k.startsWith('micro:'))",timeout=5000)
    assert page.evaluate('__notes.every(n=>Number.isFinite(n.note)&&n.note>=30&&n.note<=81)')
    page.screenshot(path=f'/tmp/whitedot-micro-{width}.png')
    page.locator('#bMenu').click();page.wait_for_timeout(250);count=page.evaluate('__notes.length');page.wait_for_timeout(350);assert page.evaluate('__notes.length')==count,'menus cannot keep triggering the held instrument'
