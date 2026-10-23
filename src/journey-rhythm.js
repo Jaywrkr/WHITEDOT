@@ -11,9 +11,10 @@ export const RHYTHMS=Object.freeze({
  uno:Object.freeze({steps:Object.freeze([0]),judge:Object.freeze([0,4,8,12]),name:'El «1»',guide:false}),
  mezcla:Object.freeze({steps:Object.freeze([0,4,6]),name:'1 · 2 · y',say:'Aquí el ritmo es «1 · 2 · y».'}),
  siembra:Object.freeze({steps:Object.freeze([0,2,4,6,8,10,12,14]),name:'Siembra a tiempo, riega en el «y»'}),
- acorde:Object.freeze({steps:Object.freeze([0,2,4]),name:'1 · y · 2',say:'Aquí el acorde es «1 · y · 2».'})});
+ acorde:Object.freeze({steps:Object.freeze([0,2,4]),name:'1 · y · 2',say:'Aquí el acorde es «1 · y · 2».'}),
+ faro:Object.freeze({steps:Object.freeze([0,8,10]),name:'1 · 3 · y',say:'El faro destella en «1 · 3 · y».'})});
 // The places as rounds (plan F4) and the Journey's chapters: the table Jay approved on 23 October.
-export const PLACE_RHYTHMS=Object.freeze({llanura:'tiempo',lago:'contra',bosque:'tiempo',tormenta:'mezcla',vacio:'uno',jardin:'siembra',dunas:'contra',cristales:'acorde'});
+export const PLACE_RHYTHMS=Object.freeze({llanura:'tiempo',lago:'contra',bosque:'tiempo',tormenta:'mezcla',vacio:'uno',jardin:'siembra',dunas:'contra',cristales:'acorde',faros:'faro'});
 export const JOURNEY_RHYTHMS=Object.freeze({llanura:'tiempo',lago:'tiempo',bosque:'tiempo',tormenta:'mezcla',vacio:'uno'});
 // Whether a step of the bar (0–15) is on the beat, or on the «y» halfway to the next one.
 export const onBeat=step=>Number.isFinite(step)&&Math.round(step)%4===0;

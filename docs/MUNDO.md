@@ -120,7 +120,7 @@ Cada fase sale de `main` actualizado, en su rama, y se integra cuando Jay la apr
 | F12 · Primer minuto | `claude/f12-primer-minuto` | Pista en la barra antes del primer pulso; Llanura a 2:30–3:00 para quien ya sabe jugar | Alguien nuevo da su primer pulso sin ayuda; la Llanura dura lo que debe |
 | F13 · Victoria con tu música | `claude/f13-victoria-musica` | Los cierres salen de la música que suena: filtro, silencio y la misma canción con algo más (su capa y el tema), en su tono y tempo | Hecho; falta la escucha de Jay |
 | F14 · Ritmos | `claude/f14-ritmos` | Contratiempo, el «1» y patrones; guía de puntos bajo el cubo; el reparto de abajo | Hecho; falta que Jay lo juegue |
-| F15 · Faros | `claude/f15-faros` | Guiar, con su ritmo | Pasa la lista y la prueba de Jay |
+| F15 · Faros | `claude/f15-faros` | Guiar, con su ritmo | Hecho; falta la prueba de Jay |
 | F16 · Ruinas | `claude/f16-ruinas` | Reconstruir, con su ritmo | Igual |
 | F17 · Cueva | `claude/f17-cueva` | Eco: repetir el patrón que canta | Igual; con ella se llega a las 33 ★ |
 | F18 · Mundo salvaje | `claude/f18-salvaje` | Encuentros de 30 s y remezcla diaria | Explorar lejos da algo cada 1–2 minutos |
@@ -140,7 +140,8 @@ Plan revisado por Jay el 23 de octubre tras jugar F0–F11: las F12–F19 sustit
 | Jardín | — | Sembrar a tiempo, regar a contratiempo |
 | Dunas | — | La cresta en el «y» |
 | Cristales | — | Acorde en «1 · y · 2» |
-| Faros, Ruinas, Cueva | — | Un patrón propio cada uno (la Cueva: repetir el que canta) |
+| Faros | — | Destellos en «1 · 3 · y» |
+| Ruinas, Cueva | — | Un patrón propio cada uno (la Cueva: repetir el que canta) |
 
 En el Viaje cada capítulo enseña un ritmo nuevo solo cuando toca: los tres primeros a tiempo, la Tormenta la primera mezcla y el Vacío el «1».
 

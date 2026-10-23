@@ -17,6 +17,7 @@ function trophy(c,game,x,y,r){c.beginPath();
  if(game==='chain'){for(const d of [-1,0,1]){c.moveTo(x+d*r*.8+r*.35,y);c.arc(x+d*r*.8,y,r*.35,0,6.283);}c.fill();return;}
  if(game==='lasso'){c.lineWidth=Math.max(1,r*.3);c.arc(x,y,r*.75,0,6.283);c.stroke();return;}
  if(game==='resonance'){c.lineWidth=Math.max(1,r*.25);for(let k=0;k<6;k++){const a=-Math.PI/2+k/6*6.283;k?c.lineTo(x+Math.cos(a)*r,y+Math.sin(a)*r):c.moveTo(x+Math.cos(a)*r,y+Math.sin(a)*r);}c.closePath();c.stroke();c.fillRect(x-r*.25,y-r*.25,r*.5,r*.5);return;}
+ if(game==='guide'){c.moveTo(x-r*.45,y+r);c.lineTo(x+r*.45,y+r);c.lineTo(x+r*.25,y-r*.4);c.lineTo(x-r*.25,y-r*.4);c.closePath();c.fill();c.beginPath();c.arc(x,y-r*.75,r*.3,0,6.283);c.fill();return;}
  if(game==='surf'){c.lineWidth=Math.max(1,r*.3);c.moveTo(x-r,y+r*.3);c.quadraticCurveTo(x-r*.3,y-r*1.1,x+r*.2,y-r*.2);c.quadraticCurveTo(x-r*.2,y+r*.1,x+r,y+r*.3);c.stroke();return;}
  if(game==='garden'){for(let k=0;k<5;k++){const a=k*1.2566-Math.PI/2;c.moveTo(x+Math.cos(a)*r*.55+r*.35,y+Math.sin(a)*r*.55);c.arc(x+Math.cos(a)*r*.55,y+Math.sin(a)*r*.55,r*.35,0,6.283);}c.fill();return;}
  if(game==='dance'){c.lineWidth=Math.max(1,r*.25);for(let i=0;i<=24;i++){const a=i/24*9.4,q=r*.12+i/24*r*.8;i?c.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q):c.moveTo(x+Math.cos(a)*q,y+Math.sin(a)*q);}c.stroke();return;}
