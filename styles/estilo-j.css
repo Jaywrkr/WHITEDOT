@@ -65,7 +65,7 @@ body.world-mode #bPrimary{padding:0 6px}
 #bJump{padding:0 10px;min-width:72px;min-height:44px;font-family:var(--mono);flex-shrink:0}
 #bStyles{padding:0 8px;min-width:70px;min-height:44px;flex-shrink:0}
 body.world-mode:not(.tools-open) .dock>button#bStyles{display:inline-flex}
-#mMusicTravel .sheet{max-width:440px}#mMusicTravel h2{font-size:17px}#mMusicTravel p,#mMusicTravel label{font-size:11px}#musicTravelSearch{width:100%;min-width:0;box-sizing:border-box}#musicTravelList{max-height:48dvh;margin:8px 0}.music-destination{display:flex;align-items:center;gap:8px;border-top:1px solid #ffffff22}.music-destination button{flex:1;min-width:0;min-height:44px;font-size:12px;text-align:left;background:#000;border:0;padding:10px 4px}.music-destination span{font-size:9px;color:#ffffff88;flex-shrink:0}.music-destination .music-heard{color:#f0d27a}#autopilotHud #autoPulse{min-width:74px;font-size:10px;padding:0 6px}
+#mMusicTravel .sheet{max-width:440px}#mMusicTravel h2{font-size:17px}#mMusicTravel p,#mMusicTravel label{font-size:11px}#musicTravelSearch{width:100%;min-width:0;box-sizing:border-box}#musicTravelList{max-height:48dvh;margin:8px 0}.music-destination{display:flex;align-items:center;gap:8px;border-top:1px solid #ffffff22}.music-destination button{flex:1;min-width:0;min-height:44px;font-size:12px;text-align:left;background:#000;border:0;padding:10px 4px}.music-destination span{font-size:11px;color:#ffffff88;flex-shrink:0}.music-destination .music-heard{color:#f0d27a}#autopilotHud #autoPulse{min-width:74px;font-size:11px;padding:0 6px}
 body.world-mode .dock{flex-wrap:wrap}
 
 /* Voice: one line, no label, white edge. */
@@ -104,7 +104,7 @@ body:not(.dev):not(.seed-travel) #bWorlds,body:not(.dev) p:has(> #guideCatalog){
 .rare-card{background:var(--void)}
 .rare-notice{background:var(--void);border-color:#ffffff33}
 .rare-notice-copy strong{font-family:var(--display);font-weight:400;font-size:14px}
-.rare-notice-copy small{font-size:10px}
+.rare-notice-copy small{font-size:11px}
 /* Landscape laboratory keeps its raised dock on the right. */
 @media(max-height:440px){body.lab .rare-notice{left:16px;right:auto}}
 .scanner{background:var(--void);border-color:var(--line)}
@@ -144,7 +144,7 @@ body:not(.dev):not(.seed-travel) #bWorlds,body:not(.dev) p:has(> #guideCatalog){
 /* Earned world moments: one compact, straight-edged card, never a menu sound. */
 .celebration{position:fixed;z-index:19;right:16px;top:calc(var(--safe-top) + 64px);width:280px;max-width:calc(100vw - 32px);max-height:26vh;overflow:auto;padding:10px;background:#000;border:1px solid #f0d27a66;border-left:2px solid #f0d27a;display:grid;grid-template-columns:64px minmax(0,1fr);gap:3px 10px;box-sizing:border-box;pointer-events:none;animation:find-reveal .38s ease-out}
 .celebration[hidden]{display:none}.celebration>div{grid-row:1/6;color:#f0d27a;align-self:center}.celebration svg{width:64px;height:64px}.celebration .rare-glyph,.celebration .rare-sparks{stroke:currentColor;fill:none}.celebration .rare-orbit{stroke:#ffffff44;fill:none}
-.celebration strong{font-family:var(--display);font-size:14px;font-weight:500;padding-right:24px;line-height:1.3}.celebration p{font:12px/1.4 var(--mono);margin:0}.celebration small{font:10px/1.4 var(--mono);color:#f0d27a}.celebration span{font:12px var(--mono)}
+.celebration strong{font-family:var(--display);font-size:14px;font-weight:500;padding-right:24px;line-height:1.3}.celebration p{font:12px/1.4 var(--mono);margin:0}.celebration small{font:11px/1.4 var(--mono);color:#f0d27a}.celebration span{font:12px var(--mono)}
 #celebrationPlace{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--dim)}#celebrationSerial{grid-column:1;color:var(--dim)}#celebrationSignature:empty{display:none}
 .celebration button{pointer-events:auto;min-height:44px;font:12px var(--mono);border:0;background:#000;color:#fff}.celebration #celebrationDismiss{position:absolute;right:0;top:0;min-width:44px;width:44px;font-size:18px}.celebration #celebrationShare{grid-column:2;text-align:right}.celebration[data-level="0"]>div,.celebration[data-level="0"] p,.celebration[data-level="0"] #celebrationSerial{display:none}.celebration[data-level="2"] strong{font-size:16px}
 .celebration[data-power="campo"] .rare-orbit{stroke:#f0d27a66;stroke-dasharray:2 5}.celebration[data-power="cometa"] .rare-orbit{stroke-dasharray:50 190}.celebration[data-power="brujula"] .rare-orbit{stroke-dasharray:1 19}.celebration[data-power="iman"] .rare-orbit{stroke-dasharray:90 29}.celebration[data-power="pincel"] .rare-orbit{stroke-dasharray:4 8}.celebration[data-power="companero"] .rare-orbit{stroke-dasharray:10 20}
@@ -209,30 +209,30 @@ body.world-focus .goal{display:none}
 .place-shortcuts #quickSave{display:inline-flex;align-items:center;justify-content:center}
 
 /* First encounter: small graphic score, one action, no new world controls. */
-.welcome-score{max-width:280px;margin:8px auto 20px;color:#fff}.welcome-score svg{display:block;width:100%;height:64px;fill:none;stroke:currentColor;stroke-width:1}.welcome-score rect{fill:#fff}.welcome-score div{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.06em}.journey-symbol{width:40px;height:24px;flex-shrink:0;fill:none;stroke:#fff;stroke-width:1}.journey-symbol rect{fill:#fff}.first-journey-hint{align-items:center}.first-journey-hint[data-step="voice"] .journey-symbol circle{r:6}.first-journey-hint[data-step="save"] .journey-symbol path{stroke-dasharray:2 3}#mHelpW .sheet{max-width:400px}#mHelpW h2{font-size:clamp(16px,4.3vw,21px)}#mHelpW p{font-size:12px;line-height:1.7}
+.welcome-score{max-width:280px;margin:8px auto 20px;color:#fff}.welcome-score svg{display:block;width:100%;height:64px;fill:none;stroke:currentColor;stroke-width:1}.welcome-score rect{fill:#fff}.welcome-score div{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.06em}.journey-symbol{width:40px;height:24px;flex-shrink:0;fill:none;stroke:#fff;stroke-width:1}.journey-symbol rect{fill:#fff}.first-journey-hint{align-items:center}.first-journey-hint[data-step="voice"] .journey-symbol circle{r:6}.first-journey-hint[data-step="save"] .journey-symbol path{stroke-dasharray:2 3}#mHelpW .sheet{max-width:400px}#mHelpW h2{font-size:clamp(16px,4.3vw,21px)}#mHelpW p{font-size:12px;line-height:1.7}
 @media(max-height:500px){.welcome-score{margin:0 auto 8px}.welcome-score svg{height:38px}#mHelpW p{margin:8px 0}}
 
 #bPrimary:not([hidden])::after,#cExplore::after{content:"";display:inline-block;width:4px;height:4px;margin-left:8px;background:currentColor;animation:entry-invitation 2.4s ease-in-out 3}#bPrimary:not(.gold)::after{display:none}@keyframes entry-invitation{50%{transform:translateX(4px);opacity:.35}}@media(prefers-reduced-motion:reduce){#bPrimary::after,#cExplore::after{animation:none}}
 
-#mFavorites .sheet{max-width:540px}#mFavorites h2{font-size:18px}#mFavorites .favorite-form{display:grid;grid-template-columns:1fr auto;gap:6px}#mFavorites .favorite-form label{grid-column:1/-1;font-size:10px}#mFavorites input{min-width:0}.favorite-tools{margin:8px 0 14px;border-bottom:1px solid #ffffff24;padding-bottom:10px}.favorite-tools summary{font-size:11px;padding:10px 0;cursor:pointer}.favorite-search{font-size:10px}.favorite-card{padding:12px!important;margin:8px 0!important}.favorite-card h3{font-size:13px;margin:0 0 6px}.favorite-card p{font-size:10px;line-height:1.6}.favorite-card>button{min-height:44px;width:100%;margin-bottom:6px}#favCount,#favNote{font-size:10px}.favorite-card details summary{font-size:10px;padding:10px 0}
+#mFavorites .sheet{max-width:540px}#mFavorites h2{font-size:18px}#mFavorites .favorite-form{display:grid;grid-template-columns:1fr auto;gap:6px}#mFavorites .favorite-form label{grid-column:1/-1;font-size:11px}#mFavorites input{min-width:0}.favorite-tools{margin:8px 0 14px;border-bottom:1px solid #ffffff24;padding-bottom:10px}.favorite-tools summary{font-size:11px;padding:10px 0;cursor:pointer}.favorite-search{font-size:11px}.favorite-card{padding:12px!important;margin:8px 0!important}.favorite-card h3{font-size:13px;margin:0 0 6px}.favorite-card p{font-size:11px;line-height:1.6}.favorite-card>button{min-height:44px;width:100%;margin-bottom:6px}#favCount,#favNote{font-size:11px}.favorite-card details summary{font-size:11px;padding:10px 0}
 
-.card-ability{display:flex;gap:8px;align-items:baseline;border-top:1px solid #ffffff24;border-bottom:1px solid #ffffff24;padding:8px 0;margin:8px 0}.card-ability b{font-size:11px}.card-ability span{font-size:9px;line-height:1.7}.rare-portrait{position:relative}.rare-card header small{letter-spacing:.1em}#rareNotice:not([hidden]) .rare-glyph{animation:found-voice .8s ease-out 1}@keyframes found-voice{from{opacity:.15;transform:scale(.8)}to{opacity:1;transform:scale(1)}}@media(prefers-reduced-motion:reduce){#rareNotice .rare-glyph{animation:none}}
+.card-ability{display:flex;gap:8px;align-items:baseline;border-top:1px solid #ffffff24;border-bottom:1px solid #ffffff24;padding:8px 0;margin:8px 0}.card-ability b{font-size:11px}.card-ability span{font-size:11px;line-height:1.7}.rare-portrait{position:relative}.rare-card header small{letter-spacing:.1em}#rareNotice:not([hidden]) .rare-glyph{animation:found-voice .8s ease-out 1}@keyframes found-voice{from{opacity:.15;transform:scale(.8)}to{opacity:1;transform:scale(1)}}@media(prefers-reduced-motion:reduce){#rareNotice .rare-glyph{animation:none}}
 
-.atlas-summary svg{display:block;width:120px;height:24px;fill:none;stroke:#bda5f5;stroke-width:1}.atlas-summary p,.atlas-summary small{font-size:10px;line-height:1.7}
+.atlas-summary svg{display:block;width:120px;height:24px;fill:none;stroke:#bda5f5;stroke-width:1}.atlas-summary p,.atlas-summary small{font-size:11px;line-height:1.7}
 #musicTravelList{max-height:36dvh}#mMusicTravel .sheet>button{min-height:44px;font-size:11px}#mMusicTravel .sheet>p{margin:8px 0}
 
-#houseGardenTools{font-size:10px;max-width:100%;margin:4px 0}#houseGardenTools summary{padding:8px;cursor:pointer}#houseGardenTools p{font-size:10px}#gardenSlots{display:flex;flex-wrap:wrap;gap:4px}#gardenSlots button{font-size:9px;min-height:44px}#gardenSave,#gardenSets{font-size:10px;min-height:40px}
+#houseGardenTools{font-size:11px;max-width:100%;margin:4px 0}#houseGardenTools summary{padding:8px;cursor:pointer}#houseGardenTools p{font-size:11px}#gardenSlots{display:flex;flex-wrap:wrap;gap:4px}#gardenSlots button{font-size:11px;min-height:44px}#gardenSave,#gardenSets{font-size:11px;min-height:40px}
 
-#mirrorPanel{max-width:min(280px,calc(100vw - 24px));background:#000}#mirrorPanel label,#mirrorInfo{font-size:10px;line-height:1.6}#mirrorPanel h3{font-size:12px}
+#mirrorPanel{max-width:min(280px,calc(100vw - 24px));background:#000}#mirrorPanel label,#mirrorInfo{font-size:11px;line-height:1.6}#mirrorPanel h3{font-size:12px}
 
-.musical-constellation svg{display:block;width:100%;max-width:240px;height:120px;stroke:#ffffff55;fill:#fff;stroke-width:.7}.musical-constellation svg path{fill:none}.musical-constellation summary{padding:12px 0;font-size:11px}.constellation-summary p,.constellation-summary small{font-size:10px;line-height:1.7}
+.musical-constellation svg{display:block;width:100%;max-width:240px;height:120px;stroke:#ffffff55;fill:#fff;stroke-width:.7}.musical-constellation svg path{fill:none}.musical-constellation summary{padding:12px 0;font-size:11px}.constellation-summary p,.constellation-summary small{font-size:11px;line-height:1.7}
 
 /* The musical function stays visible; provenance and export unfold on demand. */
-.rare-primary-actions{display:grid;gap:6px}.rare-primary-actions button{min-height:44px;width:100%;font-size:11px;white-space:normal}.rare-card-details{border-top:1px solid #ffffff24}.rare-card-details>summary{min-height:44px}.rare-card:focus{outline:1px solid #fff;outline-offset:2px}.rare-portrait svg{max-height:110px}.rare-book-head select{min-height:44px;max-width:100%;margin-bottom:8px}.rare-book-head label{display:block;font-size:10px}.rare-grid{align-items:start}
+.rare-primary-actions{display:grid;gap:6px}.rare-primary-actions button{min-height:44px;width:100%;font-size:11px;white-space:normal}.rare-card-details{border-top:1px solid #ffffff24}.rare-card-details>summary{min-height:44px}.rare-card:focus{outline:1px solid #fff;outline-offset:2px}.rare-portrait svg{max-height:110px}.rare-book-head select{min-height:44px;max-width:100%;margin-bottom:8px}.rare-book-head label{display:block;font-size:11px}.rare-grid{align-items:start}
 
-.rare-book-head{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px}.rare-book-head>h3{grid-column:1/-1;grid-row:1;font-size:12px;margin:0 0 8px}.rare-book-head>label{grid-row:2}.rare-book-head>select{grid-row:3;width:100%;min-width:0;font-size:11px}.rare-book-head>p{grid-column:1/-1;font-size:10px;margin:4px 0 12px}.rare-book-head>label[for=rareFilter],#rareFilter{grid-column:1}.rare-book-head>label[for=rareRole],#rareRole{grid-column:2}
+.rare-book-head{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px}.rare-book-head>h3{grid-column:1/-1;grid-row:1;font-size:12px;margin:0 0 8px}.rare-book-head>label{grid-row:2}.rare-book-head>select{grid-row:3;width:100%;min-width:0;font-size:11px}.rare-book-head>p{grid-column:1/-1;font-size:11px;margin:4px 0 12px}.rare-book-head>label[for=rareFilter],#rareFilter{grid-column:1}.rare-book-head>label[for=rareRole],#rareRole{grid-column:2}
 
-.music-travel-shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:6px}.music-travel-shortcuts button{min-height:44px;font-size:10px;white-space:normal}.music-travel-shortcuts #musicTravelFull{grid-column:1/-1}#musicTravelBack{min-height:44px;font-size:11px;width:100%;margin-top:6px}
+.music-travel-shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:6px}.music-travel-shortcuts button{min-height:44px;font-size:11px;white-space:normal}.music-travel-shortcuts #musicTravelFull{grid-column:1/-1}#musicTravelBack{min-height:44px;font-size:11px;width:100%;margin-top:6px}
 
 /* One notice lane. Exit completes before another message enters. */
 #toast,#phrase,#zone,#voice:not(.expanded){position:fixed;inset:auto;top:calc(var(--safe-top,0px) + 64px);left:50%;bottom:auto;width:max-content;max-width:min(360px,calc(100vw - 32px));box-sizing:border-box;transform:translate(-50%,-10px);opacity:0;transition:opacity .24s ease,transform .26s ease;z-index:35;pointer-events:none;background:#000;border:1px solid #ffffff30;padding:12px;font:12px/1.6 var(--mono);visibility:visible}
@@ -250,7 +250,7 @@ body.world-focus .goal{display:none}
 .rare-notice-copy{grid-column:1/-1;display:grid;gap:10px;min-width:0}#rareNoticeName,#celebrationName{font:500 clamp(16px,5vw,22px)/1.35 var(--mono);color:#fff;white-space:normal;overflow-wrap:anywhere;padding-right:0}
 #celebrationName,#celebrationTier,#celebrationEffect,#celebrationSurpriseName,#celebrationSurprise,#celebrationTime,#celebrationPlace,#celebrationSerial,#celebrationSignature{grid-column:1/-1;grid-row:auto;white-space:normal;overflow-wrap:anywhere}
 #rareNoticeTier,#rareNoticeOdds,#celebrationTier,#celebrationTime{font:11px/1.6 var(--mono);color:var(--rare-ink,#f0d27a)}
-#rareNoticeWhere,#rareNoticeSerial,#celebrationPlace,#celebrationSerial{font:10px/1.6 var(--mono);color:#ffffff99;white-space:normal;overflow-wrap:anywhere}
+#rareNoticeWhere,#rareNoticeSerial,#celebrationPlace,#celebrationSerial{font:11px/1.6 var(--mono);color:#ffffff99;white-space:normal;overflow-wrap:anywhere}
 #rareNoticeAbility,#celebrationEffect{font:12px/1.6 var(--mono);margin:0}
 #rareNotice button,#celebration button{position:static;grid-column:auto;grid-row:auto;min-height:44px;min-width:44px;width:auto;padding:10px 12px;box-sizing:border-box;background:#000;border:1px solid #ffffff40;color:#fff;font:12px var(--mono);pointer-events:auto;text-align:center}
 #rareNotice #rareNoticeDismiss,#celebration #celebrationDismiss{position:absolute;top:0;right:0;width:44px;border:0;font-size:20px}
@@ -272,14 +272,14 @@ body.first-journey #zone,body.first-journey #phrase{visibility:hidden}
 .notice-leaving *{pointer-events:none!important}
 
 /* Temporary surprises: one quiet, reversible action above the dock. */
-.surprise-hud{position:fixed;z-index:25;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;max-width:calc(100vw - 24px);padding:4px 8px;background:#000;border:1px solid #ffffff30;font-size:10px;white-space:nowrap}
-.surprise-hud[hidden]{display:none}.surprise-hud button{min-height:44px;min-width:44px;padding:5px 9px;font-size:10px}.surprise-hud small{color:#aaa}#celebrationSurprise:empty{display:none}#celebrationSurprise{color:#bdb5e8;max-width:32ch;line-height:1.5}
+.surprise-hud{position:fixed;z-index:25;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;max-width:calc(100vw - 24px);padding:4px 8px;background:#000;border:1px solid #ffffff30;font-size:11px;white-space:nowrap}
+.surprise-hud[hidden]{display:none}.surprise-hud button{min-height:44px;min-width:44px;padding:5px 9px;font-size:11px}.surprise-hud small{color:#aaa}#celebrationSurprise:empty{display:none}#celebrationSurprise{color:#bdb5e8;max-width:32ch;line-height:1.5}
 @media(max-height:450px){.surprise-hud{bottom:calc(env(safe-area-inset-bottom,0px) + 60px)}}
 
 body:has(#surpriseHud:not([hidden])) .first-journey-hint{bottom:calc(var(--safe-bottom) + 144px)}
 
 /* Profile stays in the menu; it does not add HUD noise or an account requirement. */
-.profile-sheet{max-width:500px!important}.profile-sheet h2{font-size:18px}.profile-sheet h3{font-size:12px;font-weight:500;margin:20px 0 10px}.profile-sheet p,.profile-sheet label,.profile-sheet summary{font-size:10px;line-height:1.6}.profile-identity{display:flex;align-items:center;gap:12px}.profile-identity>div{min-width:0;flex:1}#profileAvatar{width:56px;height:56px;flex:none;fill:none;stroke:var(--profile-ink,#fff);stroke-width:.7}#profileAvatar rect{fill:var(--profile-ink,#fff);stroke:none}.profile-name-row{display:flex;gap:6px;margin-top:5px}.profile-name-row input{min-width:0;width:100%;font:16px var(--mono);padding:7px;box-sizing:border-box}.profile-name-row button{flex:none;font-size:10px;min-height:44px;padding:5px 8px}.profile-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin:14px 0}.profile-metrics>div{padding:14px 8px 14px 0;border-top:1px solid #ffffff24;min-width:0}.profile-metrics dt{font-size:10px;color:#aaa;line-height:1.5}.profile-metrics dd{margin:5px 0 0;color:#fff;font:500 20px/1.3 var(--mono);overflow-wrap:anywhere}.profile-metrics.compact dd{font-size:16px}.profile-breakdown{display:grid;grid-template-columns:1fr auto;font-size:11px}.profile-breakdown dd{margin:0}.profile-sheet summary{min-height:44px;display:flex;align-items:center;cursor:pointer}.profile-sheet .row{display:flex;flex-wrap:wrap;gap:6px}.profile-sheet button{min-height:44px;min-width:44px;font-size:11px}.profile-sheet .row>button{flex:1}#profileSince{color:#aaa}#profileSaveStatus:empty{display:none}#profileSaveStatus{color:#fff}
+.profile-sheet{max-width:500px!important}.profile-sheet h2{font-size:18px}.profile-sheet h3{font-size:12px;font-weight:500;margin:20px 0 10px}.profile-sheet p,.profile-sheet label,.profile-sheet summary{font-size:11px;line-height:1.6}.profile-identity{display:flex;align-items:center;gap:12px}.profile-identity>div{min-width:0;flex:1}#profileAvatar{width:56px;height:56px;flex:none;fill:none;stroke:var(--profile-ink,#fff);stroke-width:.7}#profileAvatar rect{fill:var(--profile-ink,#fff);stroke:none}.profile-name-row{display:flex;gap:6px;margin-top:5px}.profile-name-row input{min-width:0;width:100%;font:16px var(--mono);padding:7px;box-sizing:border-box}.profile-name-row button{flex:none;font-size:11px;min-height:44px;padding:5px 8px}.profile-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin:14px 0}.profile-metrics>div{padding:14px 8px 14px 0;border-top:1px solid #ffffff24;min-width:0}.profile-metrics dt{font-size:11px;color:#aaa;line-height:1.5}.profile-metrics dd{margin:5px 0 0;color:#fff;font:500 20px/1.3 var(--mono);overflow-wrap:anywhere}.profile-metrics.compact dd{font-size:16px}.profile-breakdown{display:grid;grid-template-columns:1fr auto;font-size:11px}.profile-breakdown dd{margin:0}.profile-sheet summary{min-height:44px;display:flex;align-items:center;cursor:pointer}.profile-sheet .row{display:flex;flex-wrap:wrap;gap:6px}.profile-sheet button{min-height:44px;min-width:44px;font-size:11px}.profile-sheet .row>button{flex:1}#profileSince{color:#aaa}#profileSaveStatus:empty{display:none}#profileSaveStatus{color:#fff}
 @media(max-width:360px){.profile-identity{gap:6px}#profileAvatar{width:36px;height:36px}.profile-name-row{flex-wrap:wrap}.profile-metrics dd{font-size:18px}}
 
 #celebrationSurpriseName:empty{display:none}#celebrationSurpriseName{color:#bdb5e8;font:11px/1.6 var(--mono)}
@@ -293,15 +293,15 @@ body:has(#surpriseHud:not([hidden])) .first-journey-hint{bottom:calc(var(--safe-
 .music-travel-shortcuts #musicTravelFull{grid-column:auto}
 
 /* Optional illustrated guide; the game keeps a single small contextual hint. */
-.guide-journey{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;list-style:none;padding:0;margin:16px 0}.guide-journey li{display:grid;grid-template-columns:28px minmax(0,1fr);align-items:center;gap:4px 8px;padding:10px;border:1px solid var(--line);font-size:11px;min-width:0}.guide-journey li[aria-current]{border-color:#aaa}.guide-journey svg{grid-row:span 2;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1}.guide-journey span{overflow-wrap:anywhere}.guide-journey small{grid-column:2;font-size:9px}.guide-journey li[data-complete]{color:#ddd}.journey-progress{font-size:9px;color:var(--dim);white-space:nowrap}.guide-sheet .row{flex-wrap:wrap}.guide-sheet .row button{min-height:44px}
-@media(max-width:360px){.guide-journey{gap:6px}.guide-journey li{padding:8px;gap:3px 6px;font-size:10px}}
+.guide-journey{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;list-style:none;padding:0;margin:16px 0}.guide-journey li{display:grid;grid-template-columns:28px minmax(0,1fr);align-items:center;gap:4px 8px;padding:10px;border:1px solid var(--line);font-size:11px;min-width:0}.guide-journey li[aria-current]{border-color:#aaa}.guide-journey svg{grid-row:span 2;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1}.guide-journey span{overflow-wrap:anywhere}.guide-journey small{grid-column:2;font-size:11px}.guide-journey li[data-complete]{color:#ddd}.journey-progress{font-size:11px;color:var(--dim);white-space:nowrap}.guide-sheet .row{flex-wrap:wrap}.guide-sheet .row button{min-height:44px}
+@media(max-width:360px){.guide-journey{gap:6px}.guide-journey li{padding:8px;gap:3px 6px;font-size:11px}}
 
 .modal .guide-sheet{display:flex;flex-direction:column;overflow:hidden!important;max-height:calc(100dvh - 48px);box-sizing:border-box}.modal .guide-sheet>.guide-content{flex:1 1 auto}.guide-sheet>h2{flex:none}.guide-content{min-height:0;overflow:auto;overscroll-behavior:contain;padding-right:2px}.guide-sheet>.row{flex:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding-top:10px;margin-top:8px;border-top:1px solid var(--line)}.guide-sheet>.row button{font-size:11px;margin:0}.guide-sheet #guideClose{grid-column:1/-1}.guide-journey{letter-spacing:.02em}
 
 /* X1 discreet context; X2 useful event; X3 earned manual discovery. */
 #toast[data-notice-level="1"],#phrase[data-notice-level="1"],#zone[data-notice-level="1"]{width:max-content;max-width:min(280px,calc(100vw - 32px));padding:6px 10px;border-color:#ffffff20;font:11px/1.5 var(--mono);max-height:18dvh;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #toast[data-notice-level="1"] em{color:#ddd;font-style:normal}
-#zone[data-notice-level="1"] #zDo{display:none}#zone[data-notice-level="1"] #zName{font:11px/1.5 var(--mono);max-width:100%;overflow:hidden;text-overflow:ellipsis}#zone[data-notice-level="1"] #zMood{font:9px/1.5 var(--mono);color:#aaa}
+#zone[data-notice-level="1"] #zDo{display:none}#zone[data-notice-level="1"] #zName{font:11px/1.5 var(--mono);max-width:100%;overflow:hidden;text-overflow:ellipsis}#zone[data-notice-level="1"] #zMood{font:11px/1.5 var(--mono);color:#aaa}
 #toast[data-notice-level="2"],#phrase[data-notice-level="2"],#voice[data-notice-level="2"]:not(.expanded){max-width:min(320px,calc(100vw - 32px));padding:10px 12px;max-height:24dvh;overflow:auto;font:12px/1.5 var(--mono)}
 body:has(#voice.on:not([hidden])) .first-journey-hint{visibility:hidden}
 
@@ -323,7 +323,7 @@ body:has(#voice.on:not([hidden])) .first-journey-hint{visibility:hidden}
 .cube-preview{min-height:71px}.cube-sheet>.panel-heading,.cube-sheet>.row:last-child{flex-shrink:0}
 
 /* Returning is brief and silent; the universe remains the main interface. */
-.walk-distance{color:#ffffff80;font-size:10px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.walk-distance{color:#ffffff80;font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .modal.return-entrance{padding:0;background:#000;z-index:120}
 .return-entrance button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;width:100%;height:100%;border:0;background:#000;color:#fff;font:400 12px "Geist Mono",monospace;letter-spacing:.04em}
 .return-entrance svg{width:24px;height:48px;fill:none;stroke:#fff;stroke-width:1;stroke-dasharray:100;animation:return-light 1.4s ease-out both}
@@ -372,19 +372,19 @@ body.ui-reduced-motion #rareNoticeArt::after{display:none}
 
 /* The wallet follows the distance label, including safe-area and responsive layout. */
 .spark-count{display:flex;gap:8px;align-items:center;font:600 14px/1.5 var(--mono);color:var(--earned);font-variant-numeric:tabular-nums}
-.spark-count.collecting{color:var(--earned)}#sparkGain{font-size:10px;color:var(--earned)}
+.spark-count.collecting{color:var(--earned)}#sparkGain{font-size:11px;color:var(--earned)}
 .return-entrance .return-signature{animation-delay:.7s;font-size:11px}
 
 /* Two feedback forms: wallet delta and one silent, brief card. */
-.spark-goal{max-width:180px;min-height:24px;padding:2px 0;border:0;background:#000;color:#ffffff90;font:10px/1.5 var(--mono);text-align:right}
-.spark-title{max-width:180px;color:var(--earned);font:10px/1.5 var(--mono);text-align:right}
+.spark-goal{max-width:180px;min-height:24px;padding:2px 0;border:0;background:#000;color:#ffffff90;font:11px/1.5 var(--mono);text-align:right}
+.spark-title{max-width:180px;color:var(--earned);font:11px/1.5 var(--mono);text-align:right}
 .sparks-sheet{width:min(720px,calc(100vw - 24px));max-height:88dvh;overflow:auto}.sparks-sheet header{display:flex;justify-content:space-between;align-items:center}.sparks-sheet section{margin:20px 0}.sparks-sheet select{width:100%;min-height:44px;font:16px var(--mono);background:#000;color:#fff;border:1px solid #fff5}.sparks-sheet small{display:block;color:#ffffff80}.spark-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.spark-grid article{border:1px solid #fff3;padding:12px;min-width:0}.spark-grid svg,#sparkPreview svg{width:100%;height:60px;stroke:#fff;fill:none;stroke-width:1}.spark-grid button{font-size:11px;margin-top:8px}.sparks-sheet details{margin:18px 0}.sparks-sheet p{font-size:12px;line-height:1.6}
 #rareNotice[data-layout="compact"],#celebration[data-layout="compact"]{position:fixed;top:calc(var(--safe-top,0px) + 74px);bottom:auto;left:50%;transform:translateX(-50%);width:min(320px,calc(100vw - 32px));max-height:180px;background:#000;border:1px solid #fff4;padding:12px;z-index:35}
 #rareNotice[data-layout="compact"] #rareNoticeArt,#rareNotice[data-layout="compact"] #rareNoticeSerial,#rareNotice[data-layout="compact"] #rareNoticeOdds,#rareNotice[data-layout="compact"] #rareNoticeContinue,#rareNotice[data-layout="compact"] #rareNoticeWhere,#rareNotice[data-layout="compact"] #rareNoticeAbility,#celebration[data-layout="compact"] #celebrationArt,#celebration[data-layout="compact"] #celebrationSerial,#celebration[data-layout="compact"] #celebrationPlace,#celebration[data-layout="compact"] #celebrationShare{display:none}
 #toast[data-detail="sparks"]{pointer-events:auto;cursor:pointer}
 @media(max-width:480px){.spark-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.spark-goal{max-width:155px}}
 
-.spark-power{max-width:190px;font:10px/1.5 var(--mono);color:var(--earned);text-align:right}.spark-power button{min-height:26px;padding:2px 6px;font-size:10px}#toast[data-detail="save"]{pointer-events:auto;cursor:pointer}
+.spark-power{max-width:190px;font:11px/1.5 var(--mono);color:var(--earned);text-align:right}.spark-power button{min-height:26px;padding:2px 6px;font-size:11px}#toast[data-detail="save"]{pointer-events:auto;cursor:pointer}
 
 .spark-goal,.spark-power button{pointer-events:auto}
 
@@ -446,7 +446,7 @@ body.activity-open .dock>button:not(#bMenu){display:none!important}
 body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not(.expanded),#rareNotice[data-layout="compact"],#celebration[data-layout="compact"],#firstJourney){visibility:hidden!important;pointer-events:none!important}
 
 /* Gifts stay legible with zero or twenty discoveries; actions remain in the editor. */
-.cube-gift{border:1px solid var(--line);padding:12px;margin:12px 0 20px;min-width:0}.cube-gift-summary{display:grid;grid-template-columns:56px minmax(0,1fr);align-items:center;gap:12px}.cube-gift h3{font-size:12px;line-height:1.6;margin:0;overflow-wrap:anywhere}.cube-gift p{font-size:11px;line-height:1.6;margin:6px 0!important}.cube-gift small{color:#c7ab6c;font-size:10px}.cube-gift label{display:block;font-size:11px;margin-top:12px}#cubeGiftPortrait{width:56px;height:64px;display:grid;place-items:center}#cubeGiftPortrait svg{width:56px;height:64px}#cubeWonder{font-size:14px;margin-bottom:0;max-width:100%}.universe-texts-group{grid-column:1/-1;border-top:1px solid var(--line);padding-top:12px}.universe-texts-group p{font-size:11px;line-height:1.7;color:#aaa;margin:4px 0 8px}.universe-texts-setting{min-height:44px;cursor:pointer}.menu-prefs{min-width:0}.menu-prefs select{max-width:100%;min-width:0}
+.cube-gift{border:1px solid var(--line);padding:12px;margin:12px 0 20px;min-width:0}.cube-gift-summary{display:grid;grid-template-columns:56px minmax(0,1fr);align-items:center;gap:12px}.cube-gift h3{font-size:12px;line-height:1.6;margin:0;overflow-wrap:anywhere}.cube-gift p{font-size:11px;line-height:1.6;margin:6px 0!important}.cube-gift small{color:#c7ab6c;font-size:11px}.cube-gift label{display:block;font-size:11px;margin-top:12px}#cubeGiftPortrait{width:56px;height:64px;display:grid;place-items:center}#cubeGiftPortrait svg{width:56px;height:64px}#cubeWonder{font-size:14px;margin-bottom:0;max-width:100%}.universe-texts-group{grid-column:1/-1;border-top:1px solid var(--line);padding-top:12px}.universe-texts-group p{font-size:11px;line-height:1.7;color:#aaa;margin:4px 0 8px}.universe-texts-setting{min-height:44px;cursor:pointer}.menu-prefs{min-width:0}.menu-prefs select{max-width:100%;min-width:0}
 
 .music-destination span{flex:0 1 46%;min-width:0;line-height:1.6;overflow-wrap:anywhere}.music-destination button{line-height:1.6;overflow-wrap:anywhere}
 
@@ -463,10 +463,10 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 .cube-sheet #cubeHint{min-height:1.6em;margin:4px 0}
 .cube-group{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#ffffff80;margin:24px 0 4px;padding-top:12px;border-top:1px solid var(--line)}
 .cube-sheet [data-owned-slot][hidden]{display:none}
-.cube-options .cube-piece{display:flex;flex-direction:column;align-items:center;gap:4px;width:96px;min-height:0;padding:4px;font-size:10px}
+.cube-options .cube-piece{display:flex;flex-direction:column;align-items:center;gap:4px;width:96px;min-height:0;padding:4px;font-size:11px}
 .cube-piece img,.spark-picture{display:block;width:100%;aspect-ratio:3/2;image-rendering:pixelated;background:#000}
 .cube-piece span{overflow-wrap:anywhere;text-align:center}
-.cube-sheet .spark-grid article{gap:6px;padding:8px}.cube-sheet .spark-grid h3{font-size:12px;margin:0}.cube-sheet .spark-grid article p{font-size:10px;line-height:1.5;color:#ffffffb3}
+.cube-sheet .spark-grid article{gap:6px;padding:8px}.cube-sheet .spark-grid h3{font-size:12px;margin:0}.cube-sheet .spark-grid article p{font-size:11px;line-height:1.5;color:#ffffffb3}
 .spark-grid article[data-afford="false"] button{color:#ffffff80;border-color:#ffffff33}
 .spark-empty{grid-column:1/-1}
 #cubePanelTravel section{margin:16px 0;padding-top:12px;border-top:1px solid var(--line)}#cubePanelTravel select{width:100%;min-height:44px;font:16px var(--mono);background:#000;color:#fff;border:1px solid #fff5}#cubePanelTravel small{display:block;color:#ffffff80}#cubePanelTravel details>summary{min-height:44px;padding-block:12px;border-top:1px solid var(--line);cursor:pointer}
@@ -540,10 +540,16 @@ body.festival :is(#bJourneyMode,#bConnection){display:none!important}#journeyFin
 .super-map p{color:var(--dim);font-size:12px;margin:0 0 8px}
 .super-scroll{overflow-x:auto;max-width:100%}
 .super-grid{border-collapse:collapse;font-size:11px}
-.super-grid th{font-weight:400;color:var(--dim);padding:2px 4px 2px 0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:92px;font-size:10px}
+.super-grid th{font-weight:400;color:var(--dim);padding:2px 4px 2px 0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:92px;font-size:11px}
 .super-cell{width:20px;min-width:20px;height:20px;padding:0;text-align:center;border:1px solid var(--line);color:var(--dim)}
 .super-cell.got{color:var(--void);background:var(--gold);border-color:var(--gold)}
 .super-cell.none{color:var(--faint)}
 .super-figures{display:flex;flex-wrap:wrap;gap:8px}
 .super-figures svg{width:48px;height:36px;fill:var(--gold);stroke:var(--gold);stroke-width:.6}
 .super-figures polyline{fill:none}
+.rare-list ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:4px 12px}.rare-list li{font-size:12px;color:var(--dim);border:1px solid var(--line);padding:4px 6px}.rare-list li.got{color:var(--gold);border-color:var(--gold)}
+/* Phase 3: on phones the notices start below the top-right counters, so a notice never covers «Próximo salto». */
+.spark-goal{max-width:none;white-space:nowrap}
+@media (max-width:520px){#toast,#phrase,#zone{top:calc(var(--safe-top,0px) + 112px)}}
+#bJourneyMode small{display:block;font-size:11px}
+small{font-size:max(11px,.85em)}

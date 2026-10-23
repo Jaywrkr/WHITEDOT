@@ -28,14 +28,14 @@ summary{min-height:44px;cursor:pointer;align-content:center;font-size:12px;color
 .day{font-size:20px;line-height:1.25;letter-spacing:0}
 .era,body.world-focus .era{font-size:11px;letter-spacing:.015em;line-height:1.5;text-transform:none}
 .hud-right{max-width:50%}
-.release-badge,.release-badge small{font-size:10px;color:var(--dim);letter-spacing:0;line-height:1.3}
-.release-badge small{font-size:9px;color:#90969b;white-space:normal}
-.element-count{font-size:10px;line-height:1.4;margin-top:4px}
-.stats{font-size:10px;gap:10px;letter-spacing:.03em}
+.release-badge,.release-badge small{font-size:11px;color:var(--dim);letter-spacing:0;line-height:1.3}
+.release-badge small{font-size:11px;color:#90969b;white-space:normal}
+.element-count{font-size:11px;line-height:1.4;margin-top:4px}
+.stats{font-size:11px;gap:10px;letter-spacing:.03em}
 .bar{top:calc(var(--safe-top) + 84px)}
 .goal{top:calc(var(--safe-top) + 95px);font-size:11px;letter-spacing:0;line-height:1.5;text-transform:none}
 .reto{top:calc(var(--safe-top) + 123px);font-size:11px;letter-spacing:0;text-transform:none}
-body.world-focus .goal{top:calc(var(--safe-top) + 38px);left:var(--gutter);right:auto;font-size:10px;letter-spacing:0}
+body.world-focus .goal{top:calc(var(--safe-top) + 38px);left:var(--gutter);right:auto;font-size:11px;letter-spacing:0}
 .dock{gap:10px;padding:0 var(--gutter) calc(var(--safe-bottom) + 16px);z-index:20}
 .ico{height:48px;min-height:48px;background:#090b0dcc;border:1px solid #ffffff26;border-radius:24px}
 .ico.round{width:48px;min-width:48px}
@@ -43,7 +43,7 @@ body.world-focus .goal{top:calc(var(--safe-top) + 38px);left:var(--gutter);right
 body.world-mode.tools-open #bPrimary{display:none}
 body.world-mode.tools-open .dock{flex-wrap:wrap;row-gap:8px}
 body.world-mode.tools-open .dock #bFx,body.world-mode.tools-open .dock #bLoop,body.world-mode.tools-open .dock #bDeploy{position:relative}
-body.world-mode.tools-open #bFx::after,body.world-mode.tools-open #bLoop::after,body.world-mode.tools-open #bDeploy::after{position:absolute;bottom:52px;font:10px/1.2 var(--mono);color:var(--dim);pointer-events:none}
+body.world-mode.tools-open #bFx::after,body.world-mode.tools-open #bLoop::after,body.world-mode.tools-open #bDeploy::after{position:absolute;bottom:52px;font:11px/1.2 var(--mono);color:var(--dim);pointer-events:none}
 body.world-mode.tools-open #bFx::after{content:"Efectos"}body.world-mode.tools-open #bLoop::after{content:"Eco"}body.world-mode.tools-open #bDeploy::after{content:"Estudio"}
 
 /* Every modal is an intentional sheet, with a calm, consistent surface. */
@@ -61,7 +61,7 @@ body.world-mode.tools-open #bFx::after{content:"Efectos"}body.world-mode.tools-o
 .steps div{background:transparent;border-bottom:1px solid var(--line);padding:12px 0;font-size:12px;align-items:flex-start;gap:12px}
 .steps div:last-child{border:0}.steps i{font-family:var(--mono);font-size:12px;line-height:1.5;min-width:16px}
 .kv div{background:transparent;padding:12px;border-left:1px solid var(--line)}
-.kv div:first-child{border-left:0;padding-left:0}.kv b{font-family:var(--mono);font-size:24px;line-height:1.4}.kv span{letter-spacing:.03em;font-size:10px}
+.kv div:first-child{border-left:0;padding-left:0}.kv b{font-family:var(--mono);font-size:24px;line-height:1.4}.kv span{letter-spacing:.03em;font-size:11px}
 .sky{border-radius:var(--control-radius)}
 canvas.sky{max-height:45dvh;object-fit:contain;background:#030405;border-color:var(--line)}
 .card img{border-radius:var(--control-radius);max-height:60dvh;object-fit:contain;user-select:auto;-webkit-touch-callout:default}
@@ -72,7 +72,7 @@ canvas.sky{max-height:45dvh;object-fit:contain;background:#030405;border-color:v
 
 /* A compact directory, not a wall of unrelated squares. */
 .modal .menu-sheet{max-width:700px;padding:20px}
-.menu-heading small{font-size:10px;letter-spacing:.05em;color:var(--dim)}
+.menu-heading small{font-size:11px;letter-spacing:.05em;color:var(--dim)}
 .menu-heading h2{margin:6px 0 0;font-size:21px}
 .menu-sections{display:grid;grid-template-columns:1fr 1fr;gap:20px 24px}
 .menu-group{min-width:0}
@@ -85,7 +85,7 @@ canvas.sky{max-height:45dvh;object-fit:contain;background:#030405;border-color:v
 .devbox{border-top:1px solid var(--line);padding-top:4px}
 .devbox summary{font-size:11px;letter-spacing:0;text-transform:none}
 .devbox button{font-size:11px;min-height:44px;letter-spacing:0;padding:8px 12px}
-.release-id,.menu-footnote{font-size:10px;color:var(--dim);letter-spacing:0}
+.release-id,.menu-footnote{font-size:11px;color:var(--dim);letter-spacing:0}
 .menu-footnote{margin-left:auto}
 
 /* Places and the book share the same card and segmented navigation. */
@@ -109,44 +109,44 @@ canvas.sky{max-height:45dvh;object-fit:contain;background:#030405;border-color:v
 .cube-options button{font-size:11px;min-height:44px}.cube-options button:disabled{opacity:.4}
 .cube-options .cube-swatch{border:5px solid var(--surface);border-radius:50%}
 .rare-card{border-radius:var(--radius);background:radial-gradient(ellipse at 50% 28%,color-mix(in srgb,var(--rare-ink) 5%,transparent),transparent 65%),#080a0d;box-shadow:none}
-.rare-card h3{font:500 16px/1.5 var(--mono)}.rare-card header,.rare-card header small{font-size:10px}
-.rare-card p{font-size:12px;color:var(--dim)}.rare-card .rare-biome,.rare-card .rare-provenance,.rare-odds small{font-size:10px;color:var(--dim)}
+.rare-card h3{font:500 16px/1.5 var(--mono)}.rare-card header,.rare-card header small{font-size:11px}
+.rare-card p{font-size:12px;color:var(--dim)}.rare-card .rare-biome,.rare-card .rare-provenance,.rare-odds small{font-size:11px;color:var(--dim)}
 .rare-actions button,.rare-card summary{font-size:11px;min-height:44px}.rare-card summary{display:list-item;padding-top:12px}
 #rarePlaceCode{font-size:12px;user-select:text}
 
 /* One context surface at a time. Critical recording control stays available. */
 .voice,body.world-focus .voice{top:calc(var(--safe-top) + 148px);left:var(--gutter);right:var(--gutter);border:1px solid var(--line);border-left:1px solid #f0d27a66;border-radius:var(--control-radius);background:#050709ed;padding:10px 12px;gap:4px;max-width:380px;min-height:44px;z-index:5}
-.voice small{font-size:10px;letter-spacing:.03em}.voice span{font-size:12px;line-height:1.5}
+.voice small{font-size:11px;letter-spacing:.03em}.voice span{font-size:12px;line-height:1.5}
 body.world-focus .voice{top:calc(var(--safe-top) + 80px)}
 body.world-focus .voice:not(.expanded) span{-webkit-line-clamp:1}
 .voice.expanded span{max-height:23dvh;user-select:text}
 .zone{bottom:calc(var(--safe-bottom) + 84px);gap:4px}
 .zone b,body.world-focus .zone b{font:500 16px/1.4 var(--mono)}
-.zone small{font-size:10px;letter-spacing:.03em}.zone span{font-size:11px}
+.zone small{font-size:11px;letter-spacing:.03em}.zone span{font-size:11px}
 .toast{border:1px solid var(--line);border-radius:var(--control-radius);background:#080a0dee;bottom:calc(var(--safe-bottom) + 84px);font-size:11px;line-height:1.5;padding:10px 12px;letter-spacing:0;text-transform:none;white-space:normal;text-align:center;max-width:min(420px,calc(100vw - 32px));width:max-content;z-index:25}
 .phrase,body.world-focus .phrase{font-size:12px;line-height:1.6;max-width:300px;margin-left:auto;margin-right:auto}
 .routehud{bottom:calc(var(--safe-bottom) + 84px);padding:8px 10px;border-color:var(--line);border-radius:var(--radius);background:#080a0dee;gap:8px}
-.routehud strong{font-size:12px;font-weight:500}.routehud small{font-size:10px;line-height:1.5}
+.routehud strong{font-size:12px;font-weight:500}.routehud small{font-size:11px;line-height:1.5}
 .routehud button{width:44px;min-width:44px;height:44px;border-color:transparent}
 body:has(.toast.on) .routehud{bottom:calc(var(--safe-bottom) + 150px)}
 body:has(.routehud:not([hidden])) .zone,body:has(.routehud:not([hidden])) .phrase{visibility:hidden}
 .scanner{max-height:28dvh;border-radius:var(--radius);border-color:#f0d27a44;bottom:calc(var(--safe-bottom) + 84px);padding:12px 14px;background:#080a0dee}
 .scanner h2{font:500 13px/1.5 var(--mono);margin-bottom:6px}
-.scanner p,.scanner li{font-size:11px;line-height:1.5;margin:4px 0}.scanner small{font-size:10px;line-height:1.4}
+.scanner p,.scanner li{font-size:11px;line-height:1.5;margin:4px 0}.scanner small{font-size:11px;line-height:1.4}
 .fxpanel,.glasspanel{border-radius:var(--radius);border-color:#ffffff26;background:var(--surface);padding:14px;gap:10px;z-index:30}
 .fxhead{letter-spacing:0;text-transform:none;font-size:11px;flex-wrap:nowrap;line-height:1.5}
-.fxhead small{font-size:11px}.fxhead span{font-size:10px;min-width:0;overflow-wrap:anywhere}
+.fxhead small{font-size:11px}.fxhead span{font-size:11px;min-width:0;overflow-wrap:anywhere}
 .fxhead button{min-width:44px;height:44px;font-size:22px;border-color:transparent}
 .fxpad{height:clamp(96px,16dvh,150px);border-radius:var(--control-radius);border-color:var(--line);overflow:hidden;touch-action:none}
 .fxpad i{width:14px;height:14px;margin:-7px;border-width:1px;box-shadow:0 0 12px #f0d27a33}
-.fxpad em{font-size:10px;letter-spacing:0;text-transform:none}
+.fxpad em{font-size:11px;letter-spacing:0;text-transform:none}
 .fxbtns{gap:6px}.fxbtns button{font-size:11px;min-height:44px;padding:8px 4px}
 .glasspanel input{height:44px}.glasspanel label,.glasspanel p{font-size:12px}
 body:has(#fxPanel:not([hidden])) .voice,body:has(#fxPanel:not([hidden])) .rare-notice{visibility:hidden;pointer-events:none}
 body:has(#fxPanel:not([hidden])) .toast{top:calc(var(--safe-top) + 80px);bottom:auto}
 .rare-notice{top:calc(var(--safe-top) + 80px);border-radius:var(--radius);background:#080a0df5}
-.rare-notice-copy small{font-size:9px;letter-spacing:0}.rare-notice-copy strong{font-size:12px}
-.rare-notice-copy span{font-size:10px}.rare-notice button{font-size:11px}
+.rare-notice-copy small{font-size:11px;letter-spacing:0}.rare-notice-copy strong{font-size:12px}
+.rare-notice-copy span{font-size:11px}.rare-notice button{font-size:11px}
 .rec-badge{left:var(--gutter);top:auto;bottom:calc(var(--safe-bottom) + 84px);transform:none;min-height:44px;background:#100809f2;z-index:40;font-size:11px;animation:none;max-width:calc(100vw - 32px)}
 body:has(#recBadge:not([hidden])) .routehud,body:has(#recBadge:not([hidden])) .toast,body:has(#recBadge:not([hidden])) .zone{bottom:calc(var(--safe-bottom) + 150px)}
 body:has(.modal:not([hidden])) .dock,body:has(.modal:not([hidden])) .studio,body:has(.modal:not([hidden])) .voice,body:has(.modal:not([hidden])) .toast,body:has(.modal:not([hidden])) .zone,body:has(.modal:not([hidden])) .phrase,body:has(.modal:not([hidden])) .fxpanel,body:has(.modal:not([hidden])) .glasspanel,body:has(.modal:not([hidden])) .rec-badge{visibility:hidden;pointer-events:none}
@@ -154,7 +154,7 @@ body:has(.modal:not([hidden])) .dock,body:has(.modal:not([hidden])) .studio,body
 /* The Studio and developer lab use the same language as the world. */
 .studio{padding:12px var(--gutter) calc(var(--safe-bottom) + 16px);background:linear-gradient(transparent,#000e 24%);gap:10px;z-index:20}
 .bag{gap:6px;touch-action:pan-x;scrollbar-width:thin}.bag button{min-height:44px;border-radius:22px;font-size:11px;letter-spacing:0}
-.swatches{gap:8px}.swatches span{font-size:10px;letter-spacing:.03em}.swatches button{width:44px;height:44px;border:10px solid #000}
+.swatches{gap:8px}.swatches span{font-size:11px;letter-spacing:.03em}.swatches button{width:44px;height:44px;border:10px solid #000}
 .lab-bar{left:var(--gutter);right:var(--gutter);border-radius:var(--radius);border-color:var(--line);background:#080a0dee;font-size:11px;max-height:150px}
 .lab-title strong{font:500 12px/1.5 var(--mono)}.lab-head button{min-width:44px;min-height:44px;border-color:transparent}
 .lab-actions button{font-size:11px;min-height:44px;letter-spacing:0}
@@ -167,15 +167,15 @@ body:has(.modal:not([hidden])) .dock,body:has(.modal:not([hidden])) .studio,body
  .modal .sheet{padding:16px;max-height:calc(100dvh - var(--safe-top) - var(--safe-bottom) - 24px)}
  .sheet h2{font-size:20px}.menu-sections{grid-template-columns:1fr;gap:14px}
  .tiles button{min-height:44px;font-size:11px;padding:8px}
- .menu-heading h2{font-size:20px}.menu-footnote{font-size:9px}
- .release-badge{font-size:10px}.release-badge small{font-size:9px}.element-count{font-size:10px}
+ .menu-heading h2{font-size:20px}.menu-footnote{font-size:11px}
+ .release-badge{font-size:11px}.release-badge small{font-size:11px}.element-count{font-size:11px}
  #mJournal:has(.rare-grid) .sheet{width:100%}
  .journal-tabs button{min-width:76px;flex-basis:28%}
 }
 @media(max-width:360px){
  :root{--gutter:12px}.dock{gap:8px}.ico.round{width:48px;min-width:48px}
- .tiles button{gap:6px;font-size:10px}.menu-heading h2{font-size:18px}
- .menu-footnote{display:none}.routehud{left:12px;right:12px}.routehud small{font-size:9px}
+ .tiles button{gap:6px;font-size:11px}.menu-heading h2{font-size:18px}
+ .menu-footnote{display:none}.routehud{left:12px;right:12px}.routehud small{font-size:11px}
 }
 @media(max-height:500px){
  .modal,.modal.menu,.modal.lite{align-items:center;padding:calc(var(--safe-top) + 8px) 12px calc(var(--safe-bottom) + 8px)}
@@ -184,8 +184,8 @@ body:has(.modal:not([hidden])) .dock,body:has(.modal:not([hidden])) .studio,body
  .menu-sections{grid-template-columns:1fr 1fr;gap:14px 18px}
  .fxpanel{max-height:calc(100dvh - var(--safe-top) - var(--safe-bottom) - 96px);bottom:calc(var(--safe-bottom) + 76px);padding:10px;gap:6px}
  .fxpad{height:84px}.fxbtns{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
- .fxbtns button{font-size:10px;padding:5px 2px}
- .scanner{max-height:30dvh}.scanner p,.scanner li{font-size:10px}
+ .fxbtns button{font-size:11px;padding:5px 2px}
+ .scanner{max-height:30dvh}.scanner p,.scanner li{font-size:11px}
  .rare-notice{top:calc(var(--safe-top) + 68px)}
  .studio{max-width:620px;margin:auto}
 }

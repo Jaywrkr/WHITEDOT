@@ -40,10 +40,10 @@ Cada lugar entrega cinco chispas una sola vez. Repetirlo no vuelve a pagar. No h
 | Actividad | Acción |
 |---|---|
 | Laberinto colosal | Encuentra el centro y regresa por la puerta. |
-| Jardín de espejos | Pisa los mecanismos hasta llevar la luz al destino. |
+| Campo de espejos | Pisa los mecanismos hasta llevar la luz al destino. |
 | Constelación caída | Empuja cada estrella hacia su marca. |
 | Orquesta dormida | Despierta las voces acercando el cubo. |
-| Río de islas | Sigue las plataformas hasta la otra orilla. |
+| Corriente de islas | Sigue las plataformas hasta la otra orilla. |
 | Bosque de ecos | Sigue la presencia que responde. |
 | Ruina que se reconstruye | Empuja las piezas sobre sus cimientos. |
 | Caravana perdida | Reúne a las criaturas y acompáñalas al refugio. |
@@ -53,13 +53,13 @@ Cada lugar entrega cinco chispas una sola vez. Repetirlo no vuelve a pagar. No h
 | Campo de dominó gigante | Orienta las piezas y observa la reacción. |
 | Santuario del silencio | Apaga las presencias para recuperar la calma. |
 | Máquina abandonada | Conecta los conductos para despertar la máquina. |
-| Mar de luciérnagas | Guía las luces hacia el refugio de su color. |
+| Mar de destellos | Guía las luces hacia el refugio de su color. |
 | Planeta plegable | Gira los sectores y conecta el camino al centro. |
 | Cazador de sombras | Encuentra la silueta que coincide con la señal. |
 | Catedral de acordes | Reproduce con las columnas la figura del portón. |
 | Excavación de cristal | Quédate sobre las grietas para descubrir lo enterrado. |
 | Tren sin vías | Orienta las vías; el tren espera si falta un tramo. |
-| Jardín de gravedad | Acércate para atraer las esferas a sus destinos. |
+| Campo de gravedad | Acércate para atraer las esferas a sus destinos. |
 | Archivo de recuerdos | Ordena los fragmentos en sus pedestales. |
 | Tormenta embotellada | Ajusta las válvulas hasta llenar cada marca. |
 | Teatro de criaturas | Coloca a los personajes en sus lugares del escenario. |

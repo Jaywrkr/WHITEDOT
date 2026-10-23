@@ -27,6 +27,10 @@ npm run test:audio
 
 CI está definido en [checks.yml](../.github/workflows/checks.yml), con cuatro grupos de navegador y tres de audio, en Node 22. **No integrar con comprobaciones pendientes o fallidas**: desde el 22 de octubre `main` recibió integraciones con el navegador en rojo. Cada grupo de navegador (`WHITEDOT_BROWSER_SHARD=i/4`) corre un cuarto del catálogo con un trabajador y un límite de 30 minutos; con un solo runner y dos trabajadores el catálogo tardaba unos 38 de sus 40 minutos y perdía carreras distintas en cada ejecución. Cada recorrido conserva su límite de 145 segundos y `offline_smoke.py` corre en el primer grupo. `player_touch_smoke.py` juega como una persona (sin marca de automatización, toques reales, sin atajos de runtime): las demás pruebas de navegador usan el Mundo libre y el «modo dedo» que activa `navigator.webdriver`. No ejecutar varias suites pesadas simultáneamente ni desactivar aserciones. Documentar por separado CI, pruebas locales, escucha física, dispositivos reales y despliegue.
 
+## Medir en un teléfono real
+
+Abrir el juego (o la vista previa de Vercel) con `?medir=1`: una esquina muestra `p50`, `p95` (ms por fotograma, últimos 300), la calidad (alta o ligera) y la densidad de píxeles. Anotar dispositivo, navegador, lugar (por ejemplo Polvo del Mundo y un capítulo del Viaje), calidad, y cómo se comporta el audio al recibir una llamada, al bloquear y al volver. El navegador de pruebas no tiene GPU: sus tiempos no representan un teléfono.
+
 ## Entorno Windows
 
 La conversión automática CRLF de licencias puede alterar sus hashes: comparar con los bytes originales de Git sin modificar licencias ni registrar ajustes locales. Algunas suites antiguas importan rutas absolutas Windows como módulos; un adaptador ESM externo puede ser necesario. Registrar esas adaptaciones, sin presentar una limitación ambiental como fallo del juego.

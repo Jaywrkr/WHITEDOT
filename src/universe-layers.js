@@ -23,6 +23,9 @@ const rgba=(hex,a)=>{const n=parseInt(hex.slice(1),16);return `rgba(${n>>16&255}
 export function cellRegion(x,y,size,regionAt,key){const own=regionAt(x,y),fx=((x%size)+size)%size,fy=((y%size)+size)%size,toEdge=Math.min(fx,size-fx,fy,size-fy);
  if(toEdge>=BORDER)return own;const nx=fx<size/2?x-BORDER*2:x+BORDER*2,ny=fy<size/2?y-BORDER*2:y+BORDER*2,ex=Math.min(fx,size-fx),ey=Math.min(fy,size-fy),other=ex<ey?regionAt(nx,y):regionAt(x,ny);
  if(other===own)return own;return rand(key+':mix')<.5*(1-toEdge/BORDER)?other:own;}
+// Light quality (phase 4 of the plan): the layers keep their look with half their points. While a layer draws, every
+// other fillRect is skipped, always the same ones, so nothing flickers. Returns the function that puts it back.
+export function thinRects(c){const fill=c.fillRect;let n=0;c.fillRect=function(...a){if(n++&1)return;return fill.apply(this,a);};return ()=>{c.fillRect=fill;};}
 // The regions' layers. Each draws one cell: (x,y) its top-left corner on screen, s its size, key its hash key.
 export const STYLES={
  vacio:null,
@@ -198,8 +201,9 @@ export function initialize(runtime){
   if(now-familyAt>250){familyAt=now;family=familyOf(runtime.MU?.dnaA?.genre)?.id||runtime.superbiomeHere?.()?.family||null;}
   const mixed=border(family,bar,now,(runtime.SIX||.15)*16000),fx=mixed.fx,ft=clock(t,still?1:fx.speed),fb=still?beat:fx.beat(beat);stats.family=mixed.family;mixK=mixed.k;stats.cells=0;stats.regions={};c.save();c.globalAlpha=1;c.globalCompositeOperation="source-over";c.shadowBlur=0;
   // One pass of a layer; dub draws its middle layer again, fainter and a moment behind.
-  const passes=layer=>layer==='mid'&&fx.echo&&!still?[{at:0,alpha:1},{at:-420,alpha:fx.echo}]:[{at:0,alpha:1}];
-  for(const layer of ['far','mid','near'])for(const pass of passes(layer)){const depth=LAYER_DEPTH[layer];c.save();c.globalAlpha=pass.alpha;
+  const light=!!runtime.lightQuality?.();stats.light=light;
+  const passes=layer=>layer==='mid'&&fx.echo&&!still&&!light?[{at:0,alpha:1},{at:-420,alpha:fx.echo}]:[{at:0,alpha:1}];
+  for(const layer of ['far','mid','near'])for(const pass of passes(layer)){const depth=LAYER_DEPTH[layer];c.save();c.globalAlpha=pass.alpha;const thick=light?thinRects(c):null;
    // Disco sways the far and middle layers around the centre; tribal swings the middle one; breaks and drum & bass jump.
    if(!still&&layer!=='near'){const turn=fx.spin?Math.sin(ft/4000)*fx.spin:0,swing=layer==='mid'&&fx.sway?Math.sin(bar*Math.PI*2)*fx.sway:0,jump=layer==='mid'&&fx.burst?fx.burst*fb*fb:0;
     if(turn){c.translate(W/2,H/2);c.rotate(turn);c.translate(-W/2,-H/2);}if(swing||jump)c.translate(swing+jump,jump*.4);}
@@ -209,7 +213,7 @@ export function initialize(runtime){
     const f={t:ft+pass.at,beat:fb,still,bar,beatIndex,done:id==='constelaciones'&&doneAt(wx,wy),accent:newRegionById(id)?.accent||'#ffffff',ux:i*size,uy:j*size,rest,pulseAge:(now-lastPulse)/1000,cubeX:W/2+(runtime.S.wx-camX),cubeY:H/2+(runtime.S.wy-camY),ink:runtime.placeColor?runtime.placeColor(id,LANDSCAPES[id]||newRegionById(id)?.color||'#ffffff'):LANDSCAPES[id]||newRegionById(id)?.color||'#ffffff',wind:rand('wind:'+id+':'+Math.floor(wx/(runtime.WCH||900))+','+Math.floor(wy/(runtime.WCH||900)))*Math.PI*2,
      part:(px,py)=>layer!=='near'?[0,0]:partAt(px,py,screenTrail,now)};
     if(fx.axis&&!still)f.wind=snapAxis(f.wind);
-    st.draw(c,sx,sy,size,id+':'+key,f);stats.cells++;stats.regions[id]=(stats.regions[id]||0)+1;}c.restore();}
+    st.draw(c,sx,sy,size,id+':'+key,f);stats.cells++;stats.regions[id]=(stats.regions[id]||0)+1;}thick?.();c.restore();}
   // The cube's wake in regions that have one (Marea): rings spreading from where it passed.
   const hereId=regionAt(runtime.S.wx,runtime.S.wy);if(STYLES[hereId]?.wake&&!still){const ink=runtime.placeColor?runtime.placeColor(hereId,LANDSCAPES[hereId]):LANDSCAPES[hereId];c.lineWidth=1;
    for(const p of screenTrail.filter((_,i)=>i%5===0)){const age=(now-p.at)/1600;if(age>=1)continue;c.strokeStyle=rgba(ink,.4*(1-age));c.beginPath();c.arc(p.x,p.y,6+age*34,0,6.283);c.stroke();}}

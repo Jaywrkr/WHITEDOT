@@ -50,10 +50,11 @@ export function initialize(runtime){
   }
   if(tap){const candidates=nearby(700).filter(o=>Math.hypot(o.x-tap.x,o.y-tap.y)<30).sort((a,b)=>Math.hypot(a.x-tap.x,a.y-tap.y)-Math.hypot(b.x-tap.x,b.y-tap.y));if(candidates[0])respond(candidates[0]);tap=null;}
  }
- function nearby(reach=500){return [...items,...travellers.values()].filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<reach).sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy)).slice(0,24);}
+ // In light quality only the twelve nearest are drawn (phase 4 of the plan); touch still reaches the usual ones.
+ function nearby(reach=500,limit=24){return [...items,...travellers.values()].filter(o=>Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy)<reach).sort((a,b)=>Math.hypot(a.x-runtime.S.wx,a.y-runtime.S.wy)-Math.hypot(b.x-runtime.S.wx,b.y-runtime.S.wy)).slice(0,limit);}
  function draw(){
   if(!surface()||owner!==runtime.S)return;const c=runtime.cx,s=runtime.S,still=reduced(),ox=runtime.W/2-s.wx,oy=runtime.H/2-s.wy;
-  for(const o of nearby(Math.min(700,runtime.worldVisibility?.radius||500))){const d=Math.hypot(o.x-s.wx,o.y-s.wy),fade=runtime.worldOpacity?.(d)??Math.max(0,1-d/500);if(fade<.005)continue;
+  for(const o of nearby(Math.min(700,runtime.worldVisibility?.radius||500),runtime.lightQuality?.()?12:24)){const d=Math.hypot(o.x-s.wx,o.y-s.wy),fade=runtime.worldOpacity?.(d)??Math.max(0,1-d/500);if(fade<.005)continue;
    const phaseTime=(runtime.mischiefTime?.(o,seconds*1000)??seconds*1000)/1000,g=o.genome,p=still?0:phaseTime/g.period+g.phase,age=seconds-(o.responseAt??-10),response=age>=0&&age<1?Math.sin(age*Math.PI):0;
    let pixels=geometry.get(g);if(!pixels){pixels=pixelGeometry(g);geometry.set(g,pixels);}
    const lift=runtime.faunaBob?.(o,runtime.beat?.()||0,d)||0;c.save();c.translate(o.x+ox,o.y+oy+(still?0:o.pose||0)-lift);runtime.wowObjectTransform?.(c,o);if(!still){c.rotate((o.rotation||0)+Math.sin(p*2)*response*.25);c.scale(1+response*.16,1-response*.1);}

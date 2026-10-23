@@ -23,7 +23,7 @@ export function createRewardsCatalog(achievements=[]){
   ...LIVING_CATALOG.map(d=>piece('lineage:'+d.id,d.name,'material',d.id==='whale'?'epica':'rara','lineage',d.id,'Encuentra y toca este linaje.')),
   ...LIVING_STUDIES.map(d=>piece('study:'+d.id,d.name,'memory','epica','study',d.id,'Despierta una construcción que guarde este estudio.')),
   ...POWER_IDS.map(id=>piece('box:'+id,POWERS[id].name,'memory','rara','box',id,'Abre una caja con este poder.')),
-  ...[1,3,7,14,30,90,180].map((days,i)=>piece('days:'+days,'Constancia · '+days,'memory',['comun','poco_comun','poco_comun','rara','rara','epica','mitica'][i],'constancy',String(days),'Juega '+days+' días; no necesitan ser seguidos.')),
+  ...[1,3,7,14,30,90,180].map((days,i)=>piece('days:'+days,'Días · '+days,'memory',['comun','poco_comun','poco_comun','rara','rara','epica','mitica'][i],'constancy',String(days),'Juega '+days+' días; no necesitan ser seguidos.')),
   ...['lluvia','tormenta','convergencia'].map((id,i)=>piece('weather:'+id,'Clima · '+id,'memory',['poco_comun','rara','epica'][i],'weather',id,'Escucha este clima dentro del mundo.')),
   ...['superficie','bajo','cielo'].map((id,i)=>piece('layer:'+id,['Superficie','Subsuelo','Cielo'][i],'memory',i?'rara':'comun','layer',id,'Visita esta capa.')),
   ...['raro','singular','mitico'].map((id,i)=>piece('finding:'+id,'Hallazgo · '+id,'memory',['rara','epica','mitica'][i],'finding',id,'Encuentra una tarjeta de esta rareza.')),

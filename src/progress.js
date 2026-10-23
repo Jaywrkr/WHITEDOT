@@ -52,7 +52,8 @@ export function initialize(runtime) {
   function level(){return Math.floor(S.totalLight/runtime.PER_LEVEL)+1;}
   function pxSize(){return Math.min(6+(level()-1)*1.6,64);}
   function lightR(){return 90+pxSize()*6;}
-  function lampMax(){return Math.min(60,10+shownStreak())*60;}
+  // Days you came back only add up: missing a day takes nothing away (decision 5A).
+  function lampMax(){return Math.min(60,10+(S.totalDays||0))*60;}
   // Keep the finite legacy API and saved history; exploration no longer expires.
   function lampLeft(){return lampMax();}
 
@@ -75,7 +76,7 @@ export function initialize(runtime) {
     runtime.unlock("dia1");
     [[3,"r3"],[7,"r7"],[30,"r30"],[100,"r100"],[365,"r365"]].forEach(([n,id])=>{if(S.streak>=n)runtime.unlock(id);});
     [[10,"t10"],[30,"t30"],[100,"t100"]].forEach(([n,id])=>{if(S.totalDays>=n)runtime.unlock(id);});
-    runtime.showPhrase(S.streak>1?"Racha de "+S.streak+". Sigue.":runtime.PHRASES[0]);
+    runtime.showPhrase(runtime.PHRASES[0]);
   }
 
 

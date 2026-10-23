@@ -43,7 +43,10 @@ export function initialize(runtime){
  // blocks the pulse itself. On time, state.midi is the theme note to play and state.beat the beat it answers.
  function judge(atMs){
   const ac=runtime.ac,now=performance.now();if(now-lastAt<PULSE_GAP)return null;lastAt=now;const at=Number.isFinite(atMs)?atMs:now;
-  const bar=(runtime.SIX||.15)*4,heard=ac?heardTime(ac,at,now):0,on=!!ac&&beatDistance(heard,runtime.MU?.bq,bar)<=ON_TIME;state.lastOn=on;marks.push({at:now,step:stepNow(),on});if(marks.length>24)marks.shift();
+  // With the sound off there is no beat to meet (phase 3 of the plan): every pulse counts, so the Journey can still be
+  // played without hearing it; the chapters still ask for their moments and bars.
+  const silent=!runtime.S.sound||!ac||!runtime.MU?.bq?.length;
+  const bar=(runtime.SIX||.15)*4,heard=ac?heardTime(ac,at,now):0,on=silent||beatDistance(heard,runtime.MU?.bq,bar)<=ON_TIME;state.lastOn=on;marks.push({at:now,step:stepNow(),on});if(marks.length>24)marks.shift();
   state.degree=null;state.midi=null;state.beat=null;if(!on){state.misses++;runtime.journeyChapterPulse?.(false);return false;}
   state.hits++;const [degree]=THEME[state.next],{scale,tr}=scaleNow(),midi=themePitch(degree,scale,tr);state.degree=degree;state.midi=midi;state.scale=scale;state.tr=tr;state.beat=nearestBeat(heard,runtime.MU?.bq,bar);state.next=(state.next+1)%THEME.length;
   // The chapter hears the note first, so the note that completes the theme counts.

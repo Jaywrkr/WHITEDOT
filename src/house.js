@@ -74,7 +74,7 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
   for(const th of THREADS)if(th.rooms.every(r=>h.unlocked.includes(r))){const d=toScreen(th.x,th.y0+(calm()?.5:(t/3200)%1)*(th.y1-th.y0));c.fillStyle=ink;c.fillRect(Math.round(d.x-1.5),Math.round(d.y-1.5),3,3);}
   // The bar walks across each open room: a soft light on the current step.
   const now=runtime.ac?.currentTime??0;while(cues.length>1&&cues[1].time<=now)cues.shift();const cue=cues[0]&&cues[0].time<=now&&now-cues[0].time<.6?cues[0]:null;
-  for(const r of HOUSE_ROOMS){const b=roomBox(r.id),rect=roomRect(r.id),ok=h.unlocked.includes(r.id),label=toScreen(b.x+26,b.y+22);c.font='10px "Geist Mono", monospace';c.letterSpacing='2px';c.fillStyle=ok?'#ffffff8c':'#ffffff4d';c.fillText((ok?r.name:r.name+' · '+r.days+' días o '+r.found+' logros').toLocaleUpperCase('es'),label.x,label.y);c.letterSpacing='0px';
+  for(const r of HOUSE_ROOMS){const b=roomBox(r.id),rect=roomRect(r.id),ok=h.unlocked.includes(r.id),label=toScreen(b.x+26,b.y+22);c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.fillStyle=ok?'#ffffff8c':'#ffffff4d';c.fillText((ok?r.name:r.name+' · '+r.days+' días o '+r.found+' logros').toLocaleUpperCase('es'),label.x,label.y);c.letterSpacing='0px';
    if(!ok)continue;
    if(cue&&runtime.S.sound&&!calm()){const x=rect.x+(cue.s+.5)/16*rect.w,grad=c.createLinearGradient(0,rect.y,0,rect.y+rect.h);grad.addColorStop(0,'rgba(255,255,255,0)');grad.addColorStop(1,'rgba(255,255,255,.10)');c.fillStyle=grad;c.fillRect(x-rect.w/40,rect.y-20,rect.w/20,rect.h+46);}
    // The bar under each chamber: sixteen ticks, the current one in gold.

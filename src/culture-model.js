@@ -6,7 +6,7 @@ export const CULTURES=Object.freeze({
  sabana:{name:'Campanas de sabana',reference:'Patrones de campana africana y respuesta',scale:[0,3,5,7,10],instrument:'membrane',rhythm:[0,4,9,13],hue:55,glyph:2},
  oasis:{name:'Patios del horizonte',reference:'Color interválico de hijaz, en afinación temperada',scale:[0,1,4,5,7,8,10],instrument:'hollow',rhythm:[0,3,8,11],hue:280,glyph:3},
  norte:{name:'Voces del norte',reference:'Llamadas, respiración y paisaje nórdico',scale:[0,2,5,7,9],instrument:'bowed',rhythm:[0,5,9,14],hue:195,glyph:4},
- corriente:{name:'Río de cinco notas',reference:'Desarrollo modal inspirado en tradiciones de India',scale:[0,2,4,7,9],instrument:'kalimba',rhythm:[0,2,7,12],hue:320,glyph:5},
+ corriente:{name:'Corriente de cinco notas',reference:'Desarrollo modal inspirado en tradiciones de India',scale:[0,2,4,7,9],instrument:'kalimba',rhythm:[0,2,7,12],hue:320,glyph:5},
  tinta:{name:'Jardines de tinta',reference:'Color de escala in japonesa',scale:[0,1,5,7,8],instrument:'flute',rhythm:[0,6,10,14],hue:355,glyph:6},
  cauce:{name:'Cauces de cobre',reference:'Síncopa inspirada en cumbia electrónica',scale:[0,2,3,5,7,9,10],instrument:'clav',rhythm:[0,3,7,10],hue:110,glyph:7},
 });

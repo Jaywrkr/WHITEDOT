@@ -9,10 +9,10 @@ import {voiceRegister} from './musical-character.js';
 const TAU=Math.PI*2,clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
 export const SPECIES={
- golondrina:{name:'Golondrinas de eco',count:[4,7],channel:'melody',pool:['flute','pluck','kalimba'],low:62,high:79,speed:1.3,hue:30},
- grulla:{name:'Grullas graves',count:[3,4],channel:'bass',pool:['reed','hollow','bowed'],low:38,high:55,speed:.55,hue:200},
- luciernaga:{name:'Luciérnagas de pulso',count:[6,9],channel:'groove',pool:['glass','bell','steel'],low:67,high:84,speed:.35,hue:60},
- lira:{name:'Ave lira',count:[1,1],channel:'melody',pool:['flute','vocalform'],low:60,high:81,speed:.9,hue:45,rare:true}
+ golondrina:{name:'Meteoros de eco',count:[4,7],channel:'melody',pool:['flute','pluck','kalimba'],low:62,high:79,speed:1.3,hue:30},
+ grulla:{name:'Planetas graves',count:[3,4],channel:'bass',pool:['reed','hollow','bowed'],low:38,high:55,speed:.55,hue:200},
+ luciernaga:{name:'Estrellas de pulso',count:[6,9],channel:'groove',pool:['glass','bell','steel'],low:67,high:84,speed:.35,hue:60},
+ lira:{name:'Quásar imitador',count:[1,1],channel:'melody',pool:['flute','vocalform'],low:60,high:81,speed:.9,hue:45,rare:true}
 };
 export const SPECIES_IDS=Object.keys(SPECIES);
 const POOLS={llanura:['golondrina','grulla'],bosque:['golondrina','luciernaga'],lago:['grulla','luciernaga'],ruinas:['golondrina','grulla'],jardin:['luciernaga','golondrina'],dunas:['grulla','golondrina'],cristales:['luciernaga','golondrina'],faros:['golondrina','grulla'],tormenta:['grulla'],cueva:['luciernaga']};

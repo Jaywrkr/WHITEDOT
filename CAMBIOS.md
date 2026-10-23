@@ -1,6 +1,28 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.130**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.132**. Las entradas describen su revisión, no certifican producción.
+
+## Fase 4 · Rendimiento real · alpha.132
+
+Rama `claude/fase4-rendimiento`, sobre `claude/fase3-coherencia` (alpha.131, dependencia explícita).
+
+- **La calidad ligera aligera de verdad:** antes solo bajaba la resolución y las partículas; ahora las capas del universo dibujan la mitad de sus puntos y la vida de píxeles solo las 12 criaturas más cercanas. Medido en el navegador de pruebas: de 4185 a 2256 puntos por fotograma (54 %).
+- **Medir en tu teléfono:** abre el juego con `?medir=1` y una esquina muestra la mediana y el percentil 95 del tiempo de fotograma, la calidad y la densidad de píxeles. No se envía nada.
+- Verificación local: 212 suites Node, auditoría sin errores y recorridos del universo, calidad, visibilidad, interfaz y el general en PASS.
+- Pendiente (necesita tu teléfono): medir en tu iPhone y en un Android la fluidez, la batería y el audio con llamadas o al bloquear. Con esos datos se decide si simplificar más el dibujo.
+
+## Fase 3 · Coherencia · alpha.131
+
+Rama `claude/fase3-coherencia`, sobre `claude/fase2-viaje` (alpha.130, dependencia explícita).
+
+- **Sin restos terrestres, de verdad:** golondrinas, grullas, luciérnagas, el ave lira, bandadas, ríos y jardines pasan a Meteoros de eco, Planetas graves, Estrellas de pulso, el Quásar imitador, enjambres, corrientes y campos. Los ids no cambian. La prueba revisa ahora todas las cadenas, no una lista fija.
+- **La racha deja de castigar** (5A): el Mundo crece con los días que vuelves y no encoge si faltas. Se ven «Días», no «Racha». Fuera las frases de disciplina; la tarjeta para compartir muestra los lugares escuchados. `streak` y `best` se conservan.
+- **Superbiomas completables:** el contador es n/104; el que nunca aparece solo cuenta si lo oyes.
+- **Momentos raros:** suenan con dos notas suaves del acorde y se listan en la Bitácora.
+- **Lectura:** ningún texto por debajo de 11 px; en el teléfono los avisos ya no tapan «Próximo salto»; el botón de modo se lee en dos líneas y Mundo y «Viajar a otra semilla» tienen iconos distintos.
+- **Sin sonido:** con el sonido apagado cada pulso cuenta como a tiempo, así el Viaje se puede completar sin oírlo.
+- Queda: «Tierra de Origen» no se renombró, porque forma parte de la huella fija del mapa.
+- Verificación local: 211 suites Node, auditoría sin errores, catálogo de navegador 161/163 y luego los 2 fallos corregidos en PASS (`mobile_smoke.py`: la burbuja de voz se queda arriba; `house_visit_smoke.py`: arreglo del Refugio de la Fase 2), nueva `coherence_smoke.py`, y las mezclas `exploration_mix.py` y `universe_mischief_mix.py` en PASS.
 
 ## Fase 2 · El Viaje con tiempo · alpha.130
 
@@ -21,7 +43,7 @@ El Viaje duraba lo que tardabas en acertar seis veces por capítulo. Ahora cada 
 - **Arreglo:** un capítulo cumplido antes de recargar vuelve a abrir su portal (antes quedaba sin salida).
 - **Arreglo:** «Trofeos nuevos» en el menú ya no reaparece por un logro que llegó mientras estabas dentro del Refugio: al salir también cuenta como visto (la CI lo detectaba de forma intermitente en `house_visit_smoke.py`).
 - **Sin sonido:** en el Camino, si no suena música (sonido apagado o audio sin arrancar), cualquier pulso rompe un cristal, uno por pulso.
-- Pendiente: medir la duración con personas; escucha de Jay en iPhone. Los capítulos del Mundo siguen necesitando música para acertar: con el sonido apagado no se pueden completar (viene de antes; se revisa en la Fase 3).
+- Pendiente: medir la duración con personas; escucha de Jay en iPhone. Los capítulos del Mundo seguían necesitando música para acertar: resuelto en la Fase 3.
 - Verificación local: 210 suites Node, auditoría sin errores, 24 recorridos de navegador (Viaje, festival, final, toque real, cristales, guía, sin conexión y los que juegan sin marca de automatización) y la mezcla del ambiente del Refugio en PASS. La duración no se midió: el jugador simulado de `journey-curve.py` no vive los momentos.
 
 ## Fase 1 · El pulso justo · alpha.129

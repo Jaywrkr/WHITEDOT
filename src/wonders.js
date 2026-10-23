@@ -111,9 +111,9 @@ export function initialize(runtime){
   riverState.on=on;riverState.down=on?r.down:0;runtime.MU.river=on?r.down:0;
   // Confluencia: el otro río trae la música de río arriba; se mezcla como en una frontera.
   if(on&&r.conf){runtime.MU.confNb=runtime.regionOfPos(S.wx-r.other[0]*2*RP(),S.wy-r.other[1]*2*RP());
-   if(!riverState.inConf){riverState.inConf=true;S.confluences=(S.confluences||0)+1;runtime.toast('<em>Confluencia</em> · dos ríos, dos músicas');runtime.unlock('confluencia');}}
+   if(!riverState.inConf){riverState.inConf=true;S.confluences=(S.confluences||0)+1;runtime.toast('<em>Confluencia</em> · dos corrientes, dos músicas');runtime.unlock('confluencia');}}
   else{runtime.MU.confNb=null;riverState.inConf=false;}
-  if(on){riverState.time+=dt;if(!S.help.rio){S.help.rio=true;runtime.say(runtime.VOZ.rio,'Río');}if(riverState.time>60)runtime.unlock('rio1');}
+  if(on){riverState.time+=dt;if(!S.help.rio){S.help.rio=true;runtime.say(runtime.VOZ.rio,'Corriente');}if(riverState.time>60)runtime.unlock('rio1');}
  }
  // Cada compás en un río: unas gotas descendentes a tempo; más río abajo, más gotas.
  function riverBar(t){
