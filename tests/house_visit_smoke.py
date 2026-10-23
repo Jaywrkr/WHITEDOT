@@ -42,7 +42,12 @@ try:
    # The menu card says what is new; the Bitácora leads into the house.
    page.locator('#houseExit').click();page.evaluate("()=>{"+hide+";__r.S.ach['test:nuevo']='2026-10-21';}");page.locator('#bMenu').click();assert page.locator('#bStudio small').inner_text()=='Trofeos nuevos'
    page.evaluate("()=>{"+hide+";__r.openJournal('achievements');}");page.locator('[data-journal-house]').first.click();page.wait_for_function('__r.houseActive()');assert page.locator('#mJournal').is_hidden()
-   page.evaluate(hide);page.locator('#houseExit').click();page.locator('#bMenu').click();assert page.locator('#bStudio small').inner_text()!='Trofeos nuevos','seen once you are in'
+   # Seen once you are in: the house counts every trophy there was when you left. One the game awards a moment later
+   # (a slow machine can earn one between leaving and opening the menu) is new, and the menu may say so.
+   page.evaluate(hide);page.locator('#houseExit').click();seen=page.evaluate("__r.currentHouse().seen.ach");held=page.evaluate("Object.keys(__r.S.ach)")
+   assert 'test:nuevo' in held and seen>=len(held),'seen once you are in'
+   page.locator('#bMenu').click();now=page.evaluate("Object.keys(__r.S.ach)");note=page.locator('#bStudio small').inner_text()
+   assert note!='Trofeos nuevos' or len(now)>seen,('only a trophy earned after leaving is new',[k for k in now if k not in held])
    assert not errors,errors;page.close()
   browser.close()
  print('PASS house visits and closing on phone and desktop: WH2 visit read-only and kept once, own code not counted, no spending or changes at home, Enter uses the machine, room summary, menu news and Bitácora link',flush=True)
