@@ -13,9 +13,11 @@ export const RHYTHMS=Object.freeze({
  siembra:Object.freeze({steps:Object.freeze([0,2,4,6,8,10,12,14]),name:'Siembra a tiempo, riega en el «y»'}),
  acorde:Object.freeze({steps:Object.freeze([0,2,4]),name:'1 · y · 2',say:'Aquí el acorde es «1 · y · 2».'}),
  faro:Object.freeze({steps:Object.freeze([0,8,10]),name:'1 · 3 · y',say:'El faro destella en «1 · 3 · y».'}),
- ruina:Object.freeze({steps:Object.freeze([0,6,8,12]),name:'1 · 2y · 3 · 4',say:'Las Ruinas piden «1 · 2y · 3 · 4».'})});
+ ruina:Object.freeze({steps:Object.freeze([0,6,8,12]),name:'1 · 2y · 3 · 4',say:'Las Ruinas piden «1 · 2y · 3 · 4».'}),
+ // The Cueva's pattern changes every call: any eighth is on time, and its game draws what it sang (journey-echo.js).
+ eco:Object.freeze({steps:Object.freeze([0,2,4,6,8,10,12,14]),name:'Lo que canta la cueva',guide:false})});
 // The places as rounds (plan F4) and the Journey's chapters: the table Jay approved on 23 October.
-export const PLACE_RHYTHMS=Object.freeze({llanura:'tiempo',lago:'contra',bosque:'tiempo',tormenta:'mezcla',vacio:'uno',jardin:'siembra',dunas:'contra',cristales:'acorde',faros:'faro',ruinas:'ruina'});
+export const PLACE_RHYTHMS=Object.freeze({llanura:'tiempo',lago:'contra',bosque:'tiempo',tormenta:'mezcla',vacio:'uno',jardin:'siembra',dunas:'contra',cristales:'acorde',faros:'faro',ruinas:'ruina',cueva:'eco'});
 export const JOURNEY_RHYTHMS=Object.freeze({llanura:'tiempo',lago:'tiempo',bosque:'tiempo',tormenta:'mezcla',vacio:'uno'});
 // Whether a step of the bar (0–15) is on the beat, or on the «y» halfway to the next one.
 export const onBeat=step=>Number.isFinite(step)&&Math.round(step)%4===0;

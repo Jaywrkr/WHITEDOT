@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.158**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.159**. Las entradas describen su revisión, no certifican producción.
+
+## F17 · Cueva · alpha.159
+
+Rama `claude/f17-cueva`, sobre `claude/f16-ruinas` (dependencia explícita).
+
+- **Eco:** la cueva canta un patrón durante un compás y tú lo repites en el siguiente. Bajo el cubo, ocho casillas son las corcheas del compás: mientras canta se encienden en rojo sus pasos; mientras respondes, esperan los tuyos y se vuelven doradas.
+- Todos los pasos a tiempo y ninguno de más es un eco: vale 6 más 2 por paso y el siguiente patrón tiene un paso más (de 2 a 5). Una respuesta con errores suma 2 por paso acertado y acorta el siguiente. El patrón siempre empieza en el «1».
+- El secuenciador de la música canta la llamada, así que siempre cae en su compás.
+- **Final:** con la barra llena cae una gota dorada; un pulso a tiempo la atrapa. Su trofeo son ondas de eco. Se abre con 24 ★; `?lugar=cueva`.
+- **Con la Cueva, los once lugares tienen juego: ya se pueden ganar las 33 ★.**
+- Meta 250. Media de 30 jugadores simulados: 2:27 con el 75 % a tiempo, 1:34 con el 90 % (los patrones largos valen más), 3:08 en Maestro.
+- Pruebas: `tests/journey-echo.mjs`, `tests/echo_smoke.py` (teléfono y escritorio). Las pruebas de navegador de Faros, Ruinas y ritmos pulsan teniendo en cuenta la latencia de salida.
 
 ## F16 · Ruinas · alpha.158
 
