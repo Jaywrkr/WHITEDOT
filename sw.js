@@ -1,5 +1,5 @@
 // Complete local shell; UI controls do not trigger musical events.
-const CACHE='whitedot-2.3.0-alpha.134';
+const CACHE='whitedot-2.3.0-alpha.136';
 const SHELL=[
  "./src/account-entry.js",
  "./recovery.html", "./src/cloud-recovery.js",
@@ -58,7 +58,7 @@ const SHELL=[
  "./src/journal-model.js",
  "./src/achievements-model.js",
  "./src/achievements.js",
- "./src/house.js", "./src/house-view.js", "./src/house-collection.js", "./src/house-capsules.js", "./src/house-guide.js", "./src/journey-pulse.js", "./src/journey-mode.js", "./src/world-sheet.js", "./src/ambience.js", "./src/universe-layers.js", "./src/universe-regions.js", "./src/superbiomes.js", "./src/superbiome-rarity.js", "./src/superbiome-fusion.js", "./src/superbiome-journal.js", "./src/universe-rare.js", "./src/genre-tempo.js", "./src/journey-chapters.js", "./src/journey-finale.js", "./src/journey-hint.js", "./src/theme-key.js", "./src/journey-moments.js", "./src/festival.js", "./src/color-safe.js",
+ "./src/house.js", "./src/house-view.js", "./src/house-collection.js", "./src/house-capsules.js", "./src/house-guide.js", "./src/journey-pulse.js", "./src/journey-mode.js", "./src/world-sheet.js", "./src/ambience.js", "./src/universe-layers.js", "./src/universe-regions.js", "./src/superbiomes.js", "./src/superbiome-rarity.js", "./src/superbiome-fusion.js", "./src/superbiome-journal.js", "./src/universe-rare.js", "./src/genre-tempo.js", "./src/journey-chapters.js", "./src/journey-finale.js", "./src/journey-hint.js","./src/playtest.js", "./src/theme-key.js", "./src/journey-moments.js", "./src/festival.js", "./src/color-safe.js",
  "./src/house-model.js",
  "./src/house-audio.js",
 

@@ -562,3 +562,6 @@ body.journey-unveil :is(#bJump,#bStyles,#bAuto,#quickSave){animation:journey-unv
 @media (prefers-reduced-motion:reduce){body.journey-unveil *{animation:none!important}}
 /* Phase 6: in the Journey's chapters the bar at the top shows the chapter's way, also in the World. */
 body.journey-quiet.world-focus .bar{display:block}
+/* Notes of the tests with people (?prueba=ver): plain text to copy, above the entrance. */
+#mPlaytest{z-index:130}
+.playtest-text{max-height:50vh;overflow:auto;white-space:pre-wrap;font-family:inherit;font-size:12px;line-height:1.6;color:var(--ink);background:#000;border:1px solid var(--line);padding:10px;margin:8px 0;user-select:text;-webkit-user-select:text}
