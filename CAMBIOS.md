@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.145**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.146**. Las entradas describen su revisión, no certifican producción.
+
+## F4 · Lugares y estrellas · alpha.146
+
+Rama `claude/f4-estrellas`, sobre `claude/f3-chispas` (dependencia explícita).
+
+- **Rondas:** tras el Viaje, cada capítulo es un lugar que se puede volver a jugar. Una ronda es su juego con la barra vacía, en su bioma, y termina con su objeto dorado y su drop.
+- **Estrellas:** ★ al completar; ★★ con el 85 % de pulsos a tiempo; ★★★ en la versión Maestro (se abre con ★★: tempo +10 %, barra ×1,5 y margen a tiempo más estrecho) con el 80 %. Sin sonido, solo ★. Las estrellas no dan chispas.
+- **Del Viaje:** al cumplir un capítulo se gana su ★, y su ★★ si se jugó con el 85 % a tiempo. Quien ya lo había cumplido recibe su ★.
+- **Chispas:** cada ronda paga 60–120 ✦ según el % a tiempo (Maestro el doble; desde la cuarta del día en ese lugar, la mitad).
+- **Tarjeta de resultado:** las tres estrellas (las nuevas brillan), qué pide cada una con tu %, el tiempo, las chispas, «récord», y los botones «Otra vez», «Maestro» y «Salir».
+- El estado del capítulo del Viaje no se pierde: se guarda aparte durante la ronda y vuelve al terminar. Una ronda a medias se descarta al recargar.
+- Las estrellas viven en `S.lugares`: `S.places` ya guarda las regiones visitadas del mapa y no se toca.
+- **`?lugar=lago`** (`&maestro=1`) prueba una ronda con su propio guardado. Los portales para entrar llegan en F5.
+- Pruebas: `tests/places.mjs` y `tests/places_smoke.py` (incluye recarga). Límite: no se probó la sincronización en la nube de `S.lugares`.
 
 ## F3 · Economía de chispas · alpha.145
 

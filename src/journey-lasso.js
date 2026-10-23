@@ -12,7 +12,7 @@ export const LASSO_GOAL=240,LASSO_CELL=220,LASSO_TRAIL_MS=8000,LASSO_HOLD_MS=150
 export function cellFireflies(cx,cy,seed='lasso:v1'){const key=seed+':'+cx+','+cy;if(hashKey(key)>.5)return [];const n=3+Math.floor(4*hashKey(key+':n')),x0=(cx+.3+.4*hashKey(key+':x'))*LASSO_CELL,y0=(cy+.3+.4*hashKey(key+':y'))*LASSO_CELL,out=[];
  for(let k=0;k<n;k++){const a=hashKey(key+':a'+k)*6.283,d=10+45*hashKey(key+':d'+k);out.push({id:cx+','+cy+','+k,x:Math.round(x0+Math.cos(a)*d),y:Math.round(y0+Math.sin(a)*d),phase:hashKey(key+':p'+k)*6.283});}return out;}
 export const lassoValue=count=>Math.max(1,Math.min(3,count));
-export const lassoProgress=points=>Math.max(0,Math.min(1,points/LASSO_GOAL));
+export const lassoProgress=(points,goal=LASSO_GOAL)=>Math.max(0,Math.min(1,points/goal));
 // Shoelace area and the ray test: the loop the trail closes, and what is inside it.
 export function loopArea(points){let a=0;for(let i=0;i<points.length;i++){const p=points[i],q=points[(i+1)%points.length];a+=p.x*q.y-q.x*p.y;}return Math.abs(a)/2;}
 export function insideLoop(points,x,y){let inside=false;for(let i=0,j=points.length-1;i<points.length;j=i++){const p=points[i],q=points[j];if((p.y>y)!==(q.y>y)&&x<(q.x-p.x)*(y-p.y)/(q.y-p.y)+p.x)inside=!inside;}return inside;}
@@ -24,13 +24,15 @@ export function normalizeLasso(raw){const q=raw&&typeof raw==='object'&&!Array.i
  return {points:Number.isFinite(q.points)?Math.max(0,Math.min(LASSO_GOAL,q.points)):0,caught:Array.isArray(q.caught)?q.caught.filter(id=>typeof id==='string'&&/^-?\d+,-?\d+,\d$/.test(id)).slice(-LASSO_CAUGHT_LIMIT):[],
   friend,joined:q.joined===true,hinted:q.hinted===true,best:Number.isInteger(q.best)?Math.max(0,Math.min(99,q.best)):0};}
 export function initialize(runtime){
+ // A Maestro round in a place asks for half as much again (places.js, plan F4).
+ const goal=()=>LASSO_GOAL*(runtime.placeGoalScale?.()||1);
  let owner=null,state=null,caught=new Set(),misses=0,shiver=0,friendPulse=0,loops=0,armed=null;const trail=[],flying=[],orbit=[],toBar=[];
  const calm=()=>calmMotion(runtime.S);
  function own(){const j=runtime.S.journey||{};if(owner!==runtime.S||j.lasso!==state){owner=runtime.S;j.lasso=normalizeLasso(j.lasso);state=j.lasso;caught=new Set(state.caught);trail.length=0;flying.length=0;orbit.length=0;toBar.length=0;armed=null;}return state;}
  const inBosque=(x,y)=>runtime.BIOMES[runtime.biomeOfPos(x,y)]?.id==='bosque';
  const active=()=>!!runtime.journeyGamePlaying?.('bosque');
  const audible=()=>runtime.S.sound&&runtime.ac&&runtime.bus;
- const full=()=>own().points>=LASSO_GOAL;
+ const full=()=>own().points>=goal();
  const here=()=>({x:runtime.S.wx,y:runtime.S.wy});
  function fireflies(x,y,radius){const out=[],x0=Math.floor((x-radius)/LASSO_CELL),x1=Math.floor((x+radius)/LASSO_CELL),y0=Math.floor((y-radius)/LASSO_CELL),y1=Math.floor((y+radius)/LASSO_CELL);
   for(let i=x0;i<=x1;i++)for(let j=y0;j<=y1;j++)for(const f of cellFireflies(i,j)){if(caught.has(f.id)||!inBosque(f.x,f.y))continue;if(Math.hypot(f.x-x,f.y-y)<=radius)out.push(f);}return out;}
@@ -51,14 +53,14 @@ export function initialize(runtime){
   loops++;const value=lassoValue(near.length),before=s.points;
   for(const [k,f] of near.entries()){caught.add(f.id);s.caught.push(f.id);flying.push({...f,at:now+k*60});}
   if(s.caught.length>LASSO_CAUGHT_LIMIT)s.caught.splice(0,s.caught.length-LASSO_CAUGHT_LIMIT);
-  s.points=Math.min(LASSO_GOAL,s.points+value*near.length);if(near.length>s.best)s.best=near.length;toBar.push({value:value*near.length,from:before,at:now+300});chord(near.length);
-  if(before<LASSO_GOAL&&s.points>=LASSO_GOAL)arrive();runtime.save?.();return 'catch';}
+  s.points=Math.min(goal(),s.points+value*near.length);if(near.length>s.best)s.best=near.length;toBar.push({value:value*near.length,from:before,at:now+300});chord(near.length);
+  if(before<goal()&&s.points>=goal())arrive();runtime.save?.();return 'catch';}
  function tick(){const s=own(),now=performance.now(),p=here(),last=trail[trail.length-1];
   if(!last||Math.hypot(p.x-last.x,p.y-last.y)>=8){trail.push({...p,at:now});if(trail.length>LASSO_TRAIL_MAX)trail.shift();}
   while(trail.length&&now-trail[0].at>LASSO_TRAIL_MS)trail.shift();
   if(full()&&!s.friend)arrive();
   if(s.friend&&!s.joined){const dx=runtime.S.wx-LASSO_FRIEND_GAP-s.friend.x,dy=runtime.S.wy+LASSO_FRIEND_GAP*.4-s.friend.y;if(Math.hypot(dx,dy)>4){s.friend.x+=dx*.08;s.friend.y+=dy*.08;}}
-  const MU=runtime.MU,q=lassoProgress(s.points);if(MU&&q>0){MU.journeyFloor=Math.max(MU.journeyFloor||0,.2+.6*q);if(MU.journeyCap!=null)MU.journeyCap=Math.max(MU.journeyCap,.4+.6*q);}}
+  const MU=runtime.MU,q=lassoProgress(s.points,goal());if(MU&&q>0){MU.journeyFloor=Math.max(MU.journeyFloor||0,.2+.6*q);if(MU.journeyCap!=null)MU.journeyCap=Math.max(MU.journeyCap,.4+.6*q);}}
  // Under the cube: the forest dims, fireflies blink with the beat, the trail glows and its closing line turns gold.
  function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Da una vuelta alrededor de las luciérnagas y toca a tiempo.','bosque');tick();
   const still=calm(),cam=worldCamera(runtime),sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),glow=beatGlow(runtime),gold=runtime.GOLD||'#f0d27a',now=performance.now();
@@ -85,10 +87,10 @@ export function initialize(runtime){
   for(const o of orbit){const a=o.a+(still?0:t/1500);c.globalAlpha=.8;c.fillStyle='#fff6c8';c.fillRect(Math.round(cx+Math.cos(a)*o.d)-1,Math.round(cy+Math.sin(a)*o.d)-1,3,3);}
   if(shiver>0&&!still){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}
   const left=16,right=W-16,barY=42;
-  for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*lassoProgress(d.from+d.value),e=1-(1-k)*(1-k),z=Math.min(10,3+d.value/3);
+  for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*lassoProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=Math.min(10,3+d.value/3);
    c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
   c.restore();}
- runtime.registerJourneyGame?.('bosque',{pulse,under,over,progress:()=>lassoProgress(own().points)});
- Object.defineProperties(runtime,{journeyLasso:{get:()=>()=>{const s=own(),now=performance.now(),loop=loopNow(now);return {active:active(),points:s.points,progress:lassoProgress(s.points),caught:s.caught.length,best:s.best,loops,misses,trail:trail.length,closed:!!loop,
+ runtime.registerJourneyGame?.('bosque',{pulse,under,over,progress:()=>lassoProgress(own().points,goal())});
+ Object.defineProperties(runtime,{journeyLasso:{get:()=>()=>{const s=own(),now=performance.now(),loop=loopNow(now);return {active:active(),points:s.points,progress:lassoProgress(s.points,goal()),caught:s.caught.length,best:s.best,loops,misses,trail:trail.length,closed:!!loop,
   inside:loop?fireflies(runtime.S.wx,runtime.S.wy,600).filter(f=>insideLoop(loop,f.x,f.y)).length:0,friend:s.friend?{...s.friend}:null,joined:s.joined};}},journeyLassoTick:{get:()=>()=>{if(active())tick();}}});
 }

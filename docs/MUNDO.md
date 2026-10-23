@@ -131,6 +131,7 @@ Duetos en línea, más de 11 lugares, la configuración de la cuenta (Supabase s
 ## Herramientas de prueba
 
 - `?capitulo=llanura` (o `lago`, `bosque`, `tormenta`, `vacio`): abre el Viaje directamente en ese capítulo, sin cuenta y con un guardado propio (`kubono:capitulo`); cada carga empieza el capítulo de nuevo.
+- `?lugar=lago` (o `llanura`, `bosque`, `tormenta`, `vacio`; `&maestro=1` para la Maestro): una ronda del lugar con el Viaje terminado, sin cuenta y con su propio guardado (`kubono:lugar`).
 - `?clasico=1`: los capítulos anteriores, para comparar mientras dure el cambio.
 - `?prueba=1` y `?prueba=ver`: las notas de las pruebas con personas ([guía](PRUEBAS_CON_PERSONAS.md)).
 - `?festival=1`: los primeros 15 minutos sin cuenta, con «Otra persona».

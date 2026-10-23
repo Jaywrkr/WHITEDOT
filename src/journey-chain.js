@@ -15,27 +15,29 @@ export function cellFlowers(cx,cy,seed='chain:v1'){const key=seed+':'+cx+','+cy;
  return out;}
 // The nth flower of a chain is worth n, up to five: one flower alone is worth little, a long chain a lot.
 export const chainValue=step=>Math.max(1,Math.min(5,step));
-export const chainProgress=points=>Math.max(0,Math.min(1,points/CHAIN_GOAL));
+export const chainProgress=(points,goal=CHAIN_GOAL)=>Math.max(0,Math.min(1,points/goal));
 export function normalizeChain(raw){const q=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};
  const flower=q.flower&&Number.isFinite(q.flower.x)&&Number.isFinite(q.flower.y)?{x:Math.round(q.flower.x),y:Math.round(q.flower.y)}:null;
  return {points:Number.isFinite(q.points)?Math.max(0,Math.min(CHAIN_GOAL,q.points)):0,lit:Array.isArray(q.lit)?q.lit.filter(id=>typeof id==='string'&&/^-?\d+,-?\d+,\d$/.test(id)).slice(-CHAIN_LIT_LIMIT):[],
   flower,opened:q.opened===true,hinted:q.hinted===true,best:Number.isInteger(q.best)?Math.max(0,Math.min(999,q.best)):0};}
 export function initialize(runtime){
+ // A Maestro round in a place asks for half as much again (places.js, plan F4).
+ const goal=()=>CHAIN_GOAL*(runtime.placeGoalScale?.()||1);
  let owner=null,state=null,lit=new Set(),misses=0,shiver=0,flowerPulse=0,chains=0;const waves=[],glows=[],toBar=[],tells={};
  const calm=()=>calmMotion(runtime.S);
  function own(){const j=runtime.S.journey||{};if(owner!==runtime.S||j.chain!==state){owner=runtime.S;j.chain=normalizeChain(j.chain);state=j.chain;lit=new Set(state.lit);waves.length=0;glows.length=0;toBar.length=0;}return state;}
  const inLago=(x,y)=>runtime.BIOMES[runtime.biomeOfPos(x,y)]?.id==='lago';
  const active=()=>!!runtime.journeyGamePlaying?.('lago');
  const audible=()=>runtime.S.sound&&runtime.ac&&runtime.bus;
- const full=()=>own().points>=CHAIN_GOAL;
+ const full=()=>own().points>=goal();
  function flowers(x,y,radius){const out=[],x0=Math.floor((x-radius)/CHAIN_CELL),x1=Math.floor((x+radius)/CHAIN_CELL),y0=Math.floor((y-radius)/CHAIN_CELL),y1=Math.floor((y+radius)/CHAIN_CELL);
   for(let i=x0-1;i<=x1+1;i++)for(let j=y0-1;j<=y1+1;j++)for(const f of cellFlowers(i,j)){if(!inLago(f.x,f.y))continue;f.d=Math.hypot(f.x-x,f.y-y);if(f.d<=radius)out.push(f);}return out;}
  // Each flower of a chain sounds the next tone of the chord, an octave up every three: the chain is an arpeggio.
  function note(step){if(!audible())return;const ct=runtime.chordTones?.()||[60,64,67];runtime.soon?.(t=>{let m=ct[(step-1)%ct.length]+12*Math.floor((step-1)/ct.length)+12;while(m>88)m-=12;runtime.pluck?.(m,t,runtime.vel?.(.08)??.08,2);},'player');}
- function light(f,step){lit.add(f.id);state.lit.push(f.id);if(state.lit.length>CHAIN_LIT_LIMIT)state.lit.splice(0,state.lit.length-CHAIN_LIT_LIMIT);const before=state.points,value=chainValue(step);state.points=Math.min(CHAIN_GOAL,state.points+value);
+ function light(f,step){lit.add(f.id);state.lit.push(f.id);if(state.lit.length>CHAIN_LIT_LIMIT)state.lit.splice(0,state.lit.length-CHAIN_LIT_LIMIT);const before=state.points,value=chainValue(step);state.points=Math.min(goal(),state.points+value);
   glows.push({x:f.x,y:f.y,at:performance.now()});if(glows.length>60)glows.shift();toBar.push({value,from:before,at:performance.now()+200});if(step>state.best)state.best=step;note(step);
   if(step<CHAIN_STEPS&&waves.length<40)waves.push({x:f.x,y:f.y,r:CHAIN_NEXT,step:step+1,at:performance.now()+CHAIN_WAVE_MS*.6});
-  if(before<CHAIN_GOAL&&state.points>=CHAIN_GOAL)arrive();}
+  if(before<goal()&&state.points>=goal())arrive();}
  function arrive(){const s=own();if(s.flower)return;s.flower={x:Math.round(runtime.S.wx+CHAIN_FLOWER_GAP),y:Math.round(runtime.S.wy-CHAIN_FLOWER_GAP*.5)};flowerPulse=1;runtime.save?.();
   chapterToast(runtime,'lago','La flor dorada llegó: tócala a tiempo.');}
  function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(runtime.save?.()===false){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=1;i<=6;i++)note(i);runtime.journeyComplete?.('lago');return 'open';}
@@ -51,7 +53,7 @@ export function initialize(runtime){
   if(changed)runtime.save?.();
   if(full()&&!s.flower)arrive();
   if(s.flower){const dx=runtime.S.wx+CHAIN_FLOWER_GAP-s.flower.x,dy=runtime.S.wy-CHAIN_FLOWER_GAP*.5-s.flower.y;if(Math.hypot(dx,dy)>4){s.flower.x+=dx*.08;s.flower.y+=dy*.08;}}
-  const MU=runtime.MU,p=chainProgress(s.points);if(MU&&p>0){MU.journeyFloor=Math.max(MU.journeyFloor||0,.2+.6*p);if(MU.journeyCap!=null)MU.journeyCap=Math.max(MU.journeyCap,.4+.6*p);}}
+  const MU=runtime.MU,p=chainProgress(s.points,goal());if(MU&&p>0){MU.journeyFloor=Math.max(MU.journeyFloor||0,.2+.6*p);if(MU.journeyCap!=null)MU.journeyCap=Math.max(MU.journeyCap,.4+.6*p);}}
  // Under the cube: the water dims, flowers breathe with the beat, lit ones glow gold, ripples spread.
  function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Toca a tiempo junto a una flor: la onda las enciende.','lago');tick();
   const still=calm(),cam=worldCamera(runtime),sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),glow=beatGlow(runtime),gold=runtime.GOLD||'#f0d27a',now=performance.now();
@@ -74,10 +76,10 @@ export function initialize(runtime){
  function over(c,W,H){if(!active())return;const now=performance.now(),gold=runtime.GOLD||'#f0d27a',cam=worldCamera(runtime),cx=W/2+(runtime.S.wx-cam.x),cy=H/2+(runtime.S.wy-cam.y);c.save();
   if(shiver>0&&!calm()){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}
   const left=16,right=W-16,barY=42;
-  for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*chainProgress(d.from+d.value),e=1-(1-k)*(1-k),z=2+d.value;
+  for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*chainProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=2+d.value;
    c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
   c.restore();}
- runtime.registerJourneyGame?.('lago',{pulse,under,over,progress:()=>chainProgress(own().points)});
- Object.defineProperties(runtime,{journeyChain:{get:()=>()=>{const s=own();return {active:active(),points:s.points,progress:chainProgress(s.points),lit:s.lit.length,best:s.best,chains,misses,waves:waves.length,flower:s.flower?{...s.flower}:null,opened:s.opened,
+ runtime.registerJourneyGame?.('lago',{pulse,under,over,progress:()=>chainProgress(own().points,goal())});
+ Object.defineProperties(runtime,{journeyChain:{get:()=>()=>{const s=own();return {active:active(),points:s.points,progress:chainProgress(s.points,goal()),lit:s.lit.length,best:s.best,chains,misses,waves:waves.length,flower:s.flower?{...s.flower}:null,opened:s.opened,
   near:flowers(runtime.S.wx,runtime.S.wy,CHAIN_FIRST).filter(f=>!lit.has(f.id)).map(f=>f.id)};}}});
 }

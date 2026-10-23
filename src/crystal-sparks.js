@@ -27,7 +27,7 @@ export function initialize(runtime){
  const S=()=>runtime.S,position=()=>runtime.inWorld()?{x:S().wx,y:S().wy}:{x:S().px,y:S().py};
  // Sparks belong to the free World (decision of 23 October): in the Journey the Camino's crystals give light but no
  // sparks, and the World's crystals are not there, so a pulse in a chapter only touches what the chapter asks for.
- const active=()=>(S().mode==='camino'||runtime.inWorld()&&(S().layer||'superficie')==='superficie'&&!runtime.journeyQuiet?.())&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const active=()=>(S().mode==='camino'||runtime.inWorld()&&(S().layer||'superficie')==='superficie'&&!runtime.journeyQuiet?.()&&!runtime.placeRun?.())&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  const reduced=()=>!!(S().reducedMotion||prefersReducedMotion());
  const journeyPath=()=>S().mode==='camino'&&!!runtime.journeyQuiet?.();
  const timed=()=>S().sound!==false;
