@@ -13,7 +13,9 @@ Rama `claude/fase6-experiencia`, sobre `claude/fase5-llave` (alpha.133, dependen
 - **Guardado:** los compases de cada capítulo se guardan cada 8; salir y volver no pierde la estancia.
 - **Qué hacer en cada capítulo** (Jay no sabía qué hacer al entrar al Mundo):
   - la barra de arriba, la misma del Camino, se llena con el capítulo: la mitad con su momento y la mitad con los compases tocando; dorada cuando el capítulo se cumple;
-  - una luz tenue en el borde, con su color, señala el faro o el loto más cercano a los 3 s de llegar, mientras estén fuera de la pantalla. Sin palabras.
+  - una luz en el borde señala el faro o el loto más cercano a los 3 s de llegar, mientras estén fuera de la pantalla. Sin palabras;
+  - el faro sin alcanzar llama: haz largo que barre la pantalla y un anillo que se abre en cada beat (antes casi no se veía: halo al 10 % y haz al 4 %);
+  - la barra de arriba se ve también en el Mundo durante el Viaje (antes la ocultaba el modo Mundo).
 - **Para qué sirven las chispas:** al pasar al Mundo libre, «Tu cubo» lleva un punto dorado y un aviso dice «Tus ✦ cambian tu cubo: Menú → Tu cubo.», una sola vez.
 - Pendiente: al terminar el Viaje llegan juntos varios avisos (Mundo libre, color nuevo, logros); conviene ordenarlos tras las pruebas con personas.
 - Verificación local: 214 suites Node, nuevas `start_over_smoke.py` y `start-over.mjs`, y recorridos del Viaje, final, festival, interfaz, coherencia, paseo automático y sin conexión en PASS.

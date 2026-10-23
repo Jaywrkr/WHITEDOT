@@ -560,3 +560,5 @@ body.journey-unveil :is(#day,#era,#walkDistance,#sparkCount,#sparkGoal){animatio
 body.journey-unveil :is(#bJump,#bStyles,#bAuto,#quickSave){animation:journey-unveil 1.6s ease 2.6s both}
 :is(#bMenu,#bCube).has-new{position:relative}:is(#bMenu,#bCube).has-new::after{content:'';position:absolute;top:8px;right:8px;width:6px;height:6px;background:var(--gold)}
 @media (prefers-reduced-motion:reduce){body.journey-unveil *{animation:none!important}}
+/* Phase 6: in the Journey's chapters the bar at the top shows the chapter's way, also in the World. */
+body.journey-quiet.world-focus .bar{display:block}
