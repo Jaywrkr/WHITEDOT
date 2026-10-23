@@ -13,7 +13,7 @@ assert(!placeOpen(n,'llanura',{done:{}}),'closed during the Journey');assert(pla
 const realNow=Date.now;let clock=1e9;Date.now=()=>clock;globalThis.setTimeout=()=>0;
 const r={S:{wx:0,wy:0,sound:true,sparks:5,todayKey:'2026-10-23',journey:{finished:true,done:{llanura:true,lago:true,bosque:true,tormenta:true,vacio:true},chain:{points:340,opened:true,hinted:true}}},
  BIOMES:[{id:'llanura'},{id:'lago'}],biomeOfPos:(x,y)=>x>1000?1:0,regionOfPos:()=>({}),MU:{},save:()=>true,hud(){},$:()=>null};
-initialize(r);assert.equal(r.places().count,5);
+r.S.places={'0,0':1,'3,-2':1};initialize(r);assert.equal(r.places().count,5);assert.deepEqual(r.S.places,{'0,0':1,'3,-2':1},'the visited regions of the map are never touched');assert(r.S.lugares.stars);
 assert.equal(r.startPlace('lago',{maestro:true}),false,'Maestro asks ★★ first');
 assert.equal(r.startPlace('lago'),true);assert(r.S.wx>1000,'taken to the Lago');assert.deepEqual(r.S.journey.chain,{hinted:true},'an empty bar, the rule already told');
 for(let i=0;i<20;i++)r.placeHear('lago',i<18,{});assert.deepEqual(r.places().run,{id:'lago',maestro:false,hits:18,total:20});

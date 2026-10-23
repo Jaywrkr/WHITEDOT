@@ -21,7 +21,7 @@ export function initialize(runtime){
   // The Journey finished: every chapter kept, the free World open; then the round (and its ★★ first, for a Maestro one).
   const S=runtime.S,j=S.journey;j.mode='viaje';j.free=true;j.finished=true;j.chapter=6;j.done={...(j.done||{}),llanura:true,lago:true,bosque:true,tormenta:true,vacio:true};S.pathCrystals=Array.from({length:10},(_,i)=>'lugar:'+i);S.help={...(S.help||{}),camino:true,mundo:true};if(S.firstJourney&&typeof S.firstJourney==='object')S.firstJourney.skipped=true;
   for(const m of ['mHelpC','mHelpW','returnEntrance'])runtime.$?.(m)&&(runtime.$(m).hidden=true);runtime.applyJourneyMode?.();runtime.save?.();if(runtime.worldReady())runtime.enterWorld({automatic:true});
-  if(place.maestro){const st=runtime.S.places?.stars?.[place.id];if(st)st[1]=true;else{runtime.places?.();runtime.S.places.stars[place.id][1]=true;}}runtime.startPlace(place.id,{maestro:place.maestro});};setTimeout(go,0);return;}
+  if(place.maestro){const st=runtime.S.lugares?.stars?.[place.id];if(st)st[1]=true;else{runtime.places?.();runtime.S.lugares.stars[place.id][1]=true;}}runtime.startPlace(place.id,{maestro:place.maestro});};setTimeout(go,0);return;}
  if(!id)return;
  // Once the game is ready: into the World, and through to the chapter's place.
  let tries=0;const start=()=>{if(!runtime.S?.journey||!runtime.journeyChapter||!runtime.enterWorld||!runtime.worldReady){if(tries++<200)setTimeout(start,50);return;}

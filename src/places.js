@@ -6,6 +6,7 @@ import {creditSparks,normalizeSparkEconomy} from './sparks-model.js';
 // the chapter's game from an empty bar, closed by its gold thing. Stars are for going forward and winning: ★ complete,
 // ★★ with 85 % of pulses on time, ★★★ the Maestro version (unlocked by ★★: tempo +10 %, bar ×1.5, narrower window)
 // with 80 % on time. Sparks come from playing: each round pays by spark-rules.js. Stars never pay sparks.
+// They live in S.lugares: S.places already holds the regions visited, for the map and the Bitácora.
 export const PLACES_VERSION=1;
 export const PLACES=Object.freeze([
  {id:'llanura',verb:'Pegar',game:'stick',need:0},{id:'lago',verb:'Encadenar',game:'chain',need:0},{id:'bosque',verb:'Rodear',game:'lasso',need:0},
@@ -30,7 +31,7 @@ export const starCount=places=>PLACE_IDS.reduce((a,id)=>a+(places?.stars?.[id]||
 export const placeOpen=(places,id,journey)=>{const p=PLACES.find(x=>x.id===id);return !!(p&&p.game&&freeOpen(journey)&&starCount(places)>=p.need);};
 export function initialize(runtime){
  let owner=null,state=null,shown=null;
- function own(){if(owner!==runtime.S){owner=runtime.S;runtime.S.places=normalizePlaces(runtime.S.places,runtime.S.journey);state=runtime.S.places;
+ function own(){if(owner!==runtime.S){owner=runtime.S;runtime.S.lugares=normalizePlaces(runtime.S.lugares,runtime.S.journey);state=runtime.S.lugares;
    // A round left open by a reload is dropped: the chapter's own state comes back as it was.
    if(state.run){restore(state.run);state.run=null;}}
   // A chapter kept in the Journey is always a ★ of its place, whenever it was kept.
