@@ -89,7 +89,8 @@ export function initialize(runtime){
   const steps=j.steps[id]||(notes.length?null:(j.steps[id]=[]));notes.push(midi);if(steps){if(Number.isInteger(step)&&step>=0)steps.push(step);else delete j.steps[id];}
   runtime.journeyMomentNote?.(id,midi);if(notes.length>16){notes.splice(0,notes.length-16);j.steps[id]?.splice(0,j.steps[id].length-16);}
   // The Tormenta: every note on time brings your own bolt down on the beat; once yours fall, the storm's stop.
-  if(id==='tormenta'&&runtime.ac){storm.push(runtime.ac.currentTime);moments.bolts++;progress(id).bolts=(progress(id).bolts||0)+1;}
+  // With «Baila» (journey-dance.js) your bolts are the ones you return from its circles.
+  if(id==='tormenta'&&runtime.ac&&!runtime.journeyGame?.('tormenta')){storm.push(runtime.ac.currentTime);moments.bolts++;progress(id).bolts=(progress(id).bolts||0)+1;}
   // The Vacío: after eight notes the creatures that followed you come back and repeat each one, a bar later.
   if(id==='vacio'&&hits>VOID_ECHO_AFTER)echo(midi);}
  function echo(midi){const ac=runtime.ac,bar=(runtime.SIX||.15)*16;moments.echoes++;progress('vacio').echoes=(progress('vacio').echoes||0)+1;echoes.push({at:performance.now()+bar*1000,midi});if(echoes.length>8)echoes.shift();
@@ -122,7 +123,7 @@ export function initialize(runtime){
  let finaleAsked=false;
  function tick(){if(!active()){if(runtime.MU){runtime.MU.journeyCap=null;runtime.MU.journeyFloor=null;}return;}arrive();
   // A Journey saved in the Refugio before its finale finished plays it again.
-  if(current()==='refugio'&&!own().finished&&!finaleAsked&&runtime.journeyFinale){finaleAsked=true;runtime.journeyFinale();return;}const st=stateNow(),id=current(),here=inChapter();if(runtime.MU){runtime.MU.journeyCap=st?stateCap(st,id):null;runtime.MU.journeyFloor=here?stateFloor(st,id):null;runtime.MU.journeyOwnBolts=here&&id==='tormenta'&&(progress(id).bolts||0)>0;}
+  if(current()==='refugio'&&!own().finished&&!finaleAsked&&runtime.journeyFinale){finaleAsked=true;runtime.journeyFinale();return;}const st=stateNow(),id=current(),here=inChapter();if(runtime.MU){runtime.MU.journeyCap=st?stateCap(st,id):null;runtime.MU.journeyFloor=here?stateFloor(st,id):null;runtime.MU.journeyOwnBolts=here&&id==='tormenta'&&((progress(id).bolts||0)>0||!!runtime.journeyGame?.('tormenta'));}
   // The stay: bars count only while you play in the chapter; in the Bosque, the walk with the creature.
   const now=performance.now(),dt=Math.max(0,Math.min(.25,(now-lastTick)/1000));lastTick=now;
   if(here&&!own().done[id]&&st!=='silencio'){const p=progress(id),before=Math.floor((p.bars||0)/8);p.bars=Math.min(9999,(p.bars||0)+dt/((runtime.SIX||.15)*16));

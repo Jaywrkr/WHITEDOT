@@ -134,7 +134,7 @@ Todo se oculta, no se borra; los datos y lo comprado se conservan y vuelven en e
 | Llanura | Pegar | Lo que late se pega y el cubo crece; la nube dorada | Prototipo, alpha.137 |
 | Lago | Encadenar | Una onda enciende racimos de flores en cadena; la flor dorada | Prototipo, alpha.138 |
 | Bosque | Rodear | Una estela que cierra un círculo alrededor de luciérnagas; la criatura se une | Prototipo, alpha.139 |
-| Tormenta | Bailar | Estar en el círculo del rayo y devolverlo a tiempo | Pendiente |
+| Tormenta | Bailar | Estar en el círculo del rayo y devolverlo a tiempo; el ojo de la tormenta | Prototipo, alpha.140 |
 | Vacío | Soltar | Lo que pegaste se vuelve estrellas y el cubo vuelve a ser pequeño | Pendiente |
 | Refugio | Escuchar | Tu viaje suena entero | Hecho |
 - **Sin monedas en el Viaje** (decisión de Jay, 23 de octubre): las chispas son del Mundo libre; el Camino del Viaje da luz sin chispas y los cristales del Mundo no aparecen en los capítulos.
