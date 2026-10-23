@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.155**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.156**. Las entradas describen su revisión, no certifican producción.
+
+## F14 · Ritmos · alpha.156
+
+Rama `claude/f14-ritmos`, sobre `claude/f13-victoria-musica` (dependencia explícita).
+
+- **Cada lugar con su ritmo** (tabla aprobada en [El mundo](docs/MUNDO.md)): el Lago como lugar y las Dunas en el «y»; la Tormenta «1 · 2 · y» (también en el Viaje); los Cristales «1 · y · 2»; el Jardín siembra y cosecha a tiempo y riega en el «y». Llanura y Bosque siguen a tiempo; el Vacío, en el «1».
+- **Solo cuenta el paso del ritmo:** un pulso en otro paso, aunque caiga en un tiempo, no hace nada. La marca de la Línea se pone en el paso que respondiste.
+- **Guía de puntos bajo el cubo:** ocho corcheas; las que cuentan se ven, el «1» en dorado, la del momento brilla y un aro marca el último acierto. La primera vez que aparece un ritmo nuevo, una línea lo dice.
+- Dos corcheas seguidas están a 250 ms a 120 BPM y el toque descartaba pulsos a menos de 240 ms; con un ritmo de corcheas ese límite baja a dos tercios de una corchea.
+- La ola de las Dunas pasa en el «y».
+- Pruebas: `tests/journey-rhythm.mjs`; `tests/rhythm_smoke.py` (Lago, Cristales y Tormenta del Viaje: sus pasos cuentan, los demás no); `garden_smoke` siembra en el tiempo y riega en el «y»; `surf_smoke` comprueba la ola en el «y»; los pulsos de prueba de 19 pruebas siguen el ritmo del lugar. Límite: la simulación del Jardín da el mismo tiempo (2:24); los demás tiempos no se volvieron a medir.
 
 ## F13 · Victoria con tu música · alpha.155
 

@@ -119,7 +119,7 @@ Cada fase sale de `main` actualizado, en su rama, y se integra cuando Jay la apr
 | F9–F11 · Jardín, Dunas, Cristales | `claude/f9-jardin` … `claude/f11-cristales` | Juego, objeto dorado, capa, trofeo y Maestro | Hechos (en `main`) |
 | F12 · Primer minuto | `claude/f12-primer-minuto` | Pista en la barra antes del primer pulso; Llanura a 2:30–3:00 para quien ya sabe jugar | Alguien nuevo da su primer pulso sin ayuda; la Llanura dura lo que debe |
 | F13 · Victoria con tu música | `claude/f13-victoria-musica` | Los cierres salen de la música que suena: filtro, silencio y la misma canción con algo más (su capa y el tema), en su tono y tempo | Hecho; falta la escucha de Jay |
-| F14 · Ritmos | `claude/f14-ritmos` | Contratiempo, el «1» y patrones; guía de puntos bajo el cubo; el reparto de abajo | Cada lugar se siente distinto |
+| F14 · Ritmos | `claude/f14-ritmos` | Contratiempo, el «1» y patrones; guía de puntos bajo el cubo; el reparto de abajo | Hecho; falta que Jay lo juegue |
 | F15 · Faros | `claude/f15-faros` | Guiar, con su ritmo | Pasa la lista y la prueba de Jay |
 | F16 · Ruinas | `claude/f16-ruinas` | Reconstruir, con su ritmo | Igual |
 | F17 · Cueva | `claude/f17-cueva` | Eco: repetir el patrón que canta | Igual; con ella se llega a las 33 ★ |
@@ -143,6 +143,8 @@ Plan revisado por Jay el 23 de octubre tras jugar F0–F11: las F12–F19 sustit
 | Faros, Ruinas, Cueva | — | Un patrón propio cada uno (la Cueva: repetir el que canta) |
 
 En el Viaje cada capítulo enseña un ritmo nuevo solo cuando toca: los tres primeros a tiempo, la Tormenta la primera mezcla y el Vacío el «1».
+
+Cómo se juega (`journey-rhythm.js`): solo cuenta un pulso en un paso del ritmo, con la misma ventana de siempre; en otro paso, aunque sea un tiempo, no hace nada. Bajo el cubo, ocho puntos son las corcheas del compás: los que cuentan se ven, el «1» en dorado, y el del momento brilla más. La primera vez que un ritmo nuevo empieza, una línea lo dice. El Vacío conserva su espera suave y sus propios cuatro puntos. En el Jardín, el tiempo siembra y cosecha y el «y» riega; en las Dunas la ola pasa en el «y».
 
 ## Cuándo una fase está terminada
 

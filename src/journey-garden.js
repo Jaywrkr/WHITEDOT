@@ -1,8 +1,10 @@
 import {calmMotion} from './frame-state.js';
 import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
+import {onBeat,onAnd} from './journey-rhythm.js';
 // «Siembra» (the Jardín, plan F9, docs/MUNDO.md): eight beds around where the round began. A pulse on time on an
 // empty bed sows a seed; every pulse on time grows the plants within reach one step (seed, sprout, bud, flower); a
-// pulse on time on a flower picks it and the bed is free again. A plant nobody tends for eight bars wilts one step,
+// pulse on time on a flower picks it and the bed is free again. Since plan F14 its rhythm splits the verbs: sow and
+// pick on the beat, water on the «y» (journey-rhythm.js). A plant nobody tends for eight bars wilts one step,
 // so you walk between beds and choose what to care for. Each flower adds a note to an arpeggio, the Jardín's layer of
 // your song. With the bar full a gold tree comes beside the cube and one pulse on time makes it bloom. Off time,
 // nothing happens.
@@ -16,13 +18,14 @@ export function normalizeGarden(raw){const q=raw&&typeof raw==='object'&&!Array.
  const beds=Array.from({length:GARDEN_BEDS},(_,i)=>{const b=Array.isArray(q.beds)?q.beds[i]:null;return {stage:Number.isInteger(b?.stage)?Math.max(0,Math.min(4,b.stage)):0,care:Number.isFinite(b?.care)?b.care:0};});
  return {points:Number.isFinite(q.points)?Math.max(0,q.points):0,center:pt(q.center),beds,blooms:Number.isInteger(q.blooms)?Math.max(0,q.blooms):0,tree:pt(q.tree),opened:q.opened===true,hinted:q.hinted===true};}
 // One pulse on time at a point: sow the empty bed underneath, grow what is within reach, pick a flower underneath.
-// Pure: returns the events and the points, so the game and the tests agree.
-export function gardenPulse(state,pos,now,{reach=GARDEN_REACH,goal=GARDEN_GOAL}={}){const spots=bedSpots(state.center),events=[];let gained=0;
+// With its rhythm (plan F14) a pulse on the beat sows and picks ('sow') and one on the «y» waters, so what is within
+// reach grows ('water'); without a mode (sound off) one pulse does both. Pure: the game and the tests agree.
+export function gardenPulse(state,pos,now,{reach=GARDEN_REACH,goal=GARDEN_GOAL,mode=null}={}){const sow=mode!=='water',water=mode!=='sow';const spots=bedSpots(state.center),events=[];let gained=0;
  const near=spots.map((p,i)=>({i,d:Math.hypot(p.x-pos.x,p.y-pos.y)})).filter(e=>e.d<=reach).sort((a,b)=>a.d-b.d),under=near.find(e=>e.d<=GARDEN_BED_R+18);
  // The bed underneath: a flower is picked; an empty bed is sown. Then everything else within reach grows.
- let touched=null;if(under){const b=state.beds[under.i];if(b.stage===4){b.stage=0;b.care=now;gained+=GARDEN_VALUES.pick;events.push({kind:'pick',bed:under.i});touched=under.i;}
+ let touched=null;if(under&&sow){const b=state.beds[under.i];if(b.stage===4){b.stage=0;b.care=now;gained+=GARDEN_VALUES.pick;events.push({kind:'pick',bed:under.i});touched=under.i;}
   else if(b.stage===0){b.stage=1;b.care=now;gained+=GARDEN_VALUES.sow;events.push({kind:'sow',bed:under.i});touched=under.i;}}
- for(const e of near){if(e.i===touched)continue;const b=state.beds[e.i];if(b.stage>=1&&b.stage<=3){b.stage++;b.care=now;if(b.stage===4){gained+=GARDEN_VALUES.bloom;state.blooms++;events.push({kind:'bloom',bed:e.i});}else{gained+=GARDEN_VALUES.grow;events.push({kind:'grow',bed:e.i,stage:b.stage});}}else if(b.stage===4)b.care=now;}
+ if(water)for(const e of near){if(e.i===touched)continue;const b=state.beds[e.i];if(b.stage>=1&&b.stage<=3){b.stage++;b.care=now;if(b.stage===4){gained+=GARDEN_VALUES.bloom;state.blooms++;events.push({kind:'bloom',bed:e.i});}else{gained+=GARDEN_VALUES.grow;events.push({kind:'grow',bed:e.i,stage:b.stage});}}else if(b.stage===4)b.care=now;}
  state.points=Math.min(goal,state.points+gained);return {gained,events};}
 // Plants nobody tended for too long go back one step, and the clock starts again.
 export function gardenWilt(state,now,barSeconds,bars=GARDEN_WILT_BARS){const limit=bars*barSeconds*1000,out=[];state.beds.forEach((b,i)=>{if(b.stage>0&&now-b.care>limit){b.stage--;b.care=now;out.push(i);}});return out;}
@@ -41,8 +44,9 @@ export function initialize(runtime){
  function note(step,soft=false){if(!audible())return;const ct=runtime.chordTones?.()||[60,64,67];runtime.soon?.(t=>{let m=ct[step%ct.length]+12*Math.floor(step/ct.length%2)+12;while(m>86)m-=12;runtime.pluck?.(m,t,(soft?.04:.08),2);},'player');}
  function arrive(){const s=own();if(s.tree)return;s.tree={x:Math.round(runtime.S.wx+GARDEN_TREE_GAP),y:Math.round(runtime.S.wy-GARDEN_TREE_GAP*.5)};treePulse=1;runtime.save?.();chapterToast(runtime,'jardin','El árbol dorado llegó: tócalo a tiempo.');}
  function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(runtime.save?.()===false){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<6;i++)note(i);runtime.journeyComplete?.('jardin');return 'open';}
- function pulse(on){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}if(full()){if(!s.tree)arrive();return open();}
-  const before=s.points,r=gardenPulse(s,{x:runtime.S.wx,y:runtime.S.wy},performance.now(),{goal:goal()}),spots=bedSpots(s.center),now=performance.now();
+ function pulse(on,beat={}){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}if(full()){if(!s.tree)arrive();return open();}
+  const mode=beat.silent||runtime.journeyRhythm?.()?.key!=='siembra'?null:onAnd(beat.step)?'water':onBeat(beat.step)?'sow':null;
+  const before=s.points,r=gardenPulse(s,{x:runtime.S.wx,y:runtime.S.wy},performance.now(),{goal:goal(),mode}),spots=bedSpots(s.center),now=performance.now();
   for(const e of r.events){const p=spots[e.bed];glows.push({x:p.x,y:p.y,at:now,kind:e.kind});if(e.kind==='bloom')note(s.blooms-1);else if(e.kind==='grow')note(e.stage,true);}if(glows.length>40)glows.splice(0,glows.length-40);
   if(r.gained)toBar.push({value:r.gained,from:before,at:now+150});if(r.events.length)runtime.save?.();if(before<goal()&&s.points>=goal())arrive();return r.events.length?'grow':'still';}
  function tick(){const s=own(),now=performance.now();if(gardenWilt(s,now,bar(),wiltBars()).length)runtime.save?.();if(full()&&!s.tree)arrive();
@@ -55,7 +59,7 @@ export function initialize(runtime){
   if(stage===2){c.beginPath();c.ellipse(x+sway+3,y-1,3,1.5,-.5,0,6.283);c.fill();return;}
   const tx=x+sway,ty=y+6-h;if(stage===3){c.beginPath();c.ellipse(tx,ty-2,2.5,4,0,0,6.283);c.fill();return;}
   const open=4+(still?0:glow*1.5);for(let k=0;k<5;k++){const a=k*1.2566+(still?0:t/6000);c.beginPath();c.ellipse(tx+Math.cos(a)*open,ty+Math.sin(a)*open,3.2,2,a,0,6.283);c.fill();}c.fillStyle=gold;c.fillRect(Math.round(tx)-2,Math.round(ty)-2,4,4);}
- function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Siembra a tiempo. Cuida lo que crece.','jardin');tick();
+ function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Siembra a tiempo. Riega en el «y».','jardin');tick();
   const still=calm(),cam=worldCamera(runtime),sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),glow=beatGlow(runtime),gold=runtime.GOLD||'#f0d27a',now=performance.now(),limit=wiltBars()*bar()*1000;
   c.save();c.globalAlpha=.4;c.fillStyle='#000';c.fillRect(0,0,W,H);
   bedSpots(s.center).forEach((p,i)=>{const b=s.beds[i],x=sx(p.x),y=sy(p.y),near=Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy)<=GARDEN_REACH;

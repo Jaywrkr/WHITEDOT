@@ -23,6 +23,9 @@ try:
    assert page.evaluate('__r.places().count')>=8,'the test save has the eight ★ the Dunas ask'
    page.evaluate("()=>{__r.S.sound=true;__r.audio();}");page.wait_for_function("__r.ac?.state==='running'&&__r.MU.bq.length>1&&__r.journeySurf().active&&__r.journeySurf().waves.length===2",timeout=20000)
    # Inside the ring but a beat early: nothing. On its beat: a ride, and the cube is carried along.
+   # Plan F14: the Dunas count on the «y», and the crest passes there, half a beat from the beats.
+   assert page.evaluate('__r.journeyRhythmState()')['rhythm']=='contra'
+   off=page.evaluate("()=>{const r=__r,b=r.SIX*4,w=r.journeySurf().waves[0],last=r.MU.bq[r.MU.bq.length-1];return (((w.at-last)%b)+b)%b/b;}");assert abs(off-.5)<.02,off
    assert page.evaluate(RIDE,-1)=='still' and page.evaluate('__r.journeySurf().rides')==0
    assert page.evaluate(RIDE,0)=='ride';s=page.evaluate('__r.journeySurf()');assert s['rides']==1 and s['streak']==1 and s['points']==2,s
    assert page.evaluate(RIDE,0)=='ride' and page.evaluate('__r.journeySurf().points')==5,'the second in a row is worth three'
