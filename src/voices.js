@@ -98,6 +98,10 @@ export function initialize(runtime) {
     if(kind==='pulso')raw=runtime.cubeShopPulseVoice?.(raw)||cubePulseVoice(raw,runtime.S.cube?.voice);
     return hybridRegister(voiceRegister(raw,region.genre),hybridIdentity(region,runtime.seedOf,runtime.rng));
   }
+  // A pulse on time plays the cube's theme instead of its own voice (journey-pulse.js); everything that listens to the
+  // pulse (the laboratory, the looper, the living things, the pet…) still hears it, through hearVoice, without a sound.
+  let listenOnly=false;
+  function hearVoice(...args){listenOnly=true;try{return playVoice(...args);}finally{listenOnly=false;}}
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
     if (!runtime.ac || !region) return;
     const magnetic=!!magnetSource;if(magnetic&&!source)source=magnetSource;
@@ -119,6 +123,7 @@ export function initialize(runtime) {
     if(origin==='player'){runtime.vidaHear?.(kind,index,time);runtime.powerHear?.(index);}   // el ave lira escucha lo que tocas   // el looper guarda lo que causas tú
     if(origin==='player')runtime.petHear?.({degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,source});
     if(origin==='player'&&(!source||Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<360))runtime.depthHear?.({origin,degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,layer:runtime.S.layer||'superficie'});
+    if(listenOnly)return;
     const frame=runtime.musicalFrame?.(time);
     const note = (degree,harmonicFrame=frame,onset=time) => {
       const harmonicRegion=harmonicFrame?.region||(origin==='band'?(runtime.MU.dnaA||region):region),scale=harmonicRegion.scale,
@@ -186,7 +191,7 @@ export function initialize(runtime) {
     for(const note of notes){if(voice.instrument?.startsWith?.('shop:')&&runtime.playCubeShopVoice?.(voice.instrument,note.n,note.t,note.v,null))continue;runtime.hookInst(voice.instrument,note.n,note.t,note.v,region);}
     return {instrument:voice.instrument,notes:notes.map(x=>x.n)};}
   Object.defineProperties(runtime, {
-    playTheme:{get:()=>playTheme},
+    playTheme:{get:()=>playTheme},hearVoice:{get:()=>hearVoice},
     withMagnetVoice:{get:()=>withMagnetVoice},
     currentVoiceOrigin:{get:()=>voiceOrigin},
     withVoiceOrigin: {get:()=>withVoiceOrigin},
