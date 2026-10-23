@@ -1,3 +1,4 @@
+import {calmMotion} from './frame-state.js';
 import {decorativeField} from './territory-presentation.js';
 import {PULSE_FORMS,selectedPulse,pulseCrossed,drawPulse} from './pulse-forms.js';
 import {drawShopPulse} from './cube-shop-pulse.js';
@@ -22,14 +23,16 @@ export function initialize(runtime) {
   let currentWave=null;
   function wsoon(w,fn){if(w.n++<12)runtime.soon(t=>{const before=currentWave;currentWave=w;try{fn(t);}finally{currentWave=before;}},w.origin||"player");}
   function updWaves(dt,ox,oy){for(const w of waves){w.prev=w.r;w.r+=dt*420;if(w.r>=w.max&&runtime.inWorld()){if(runtime.RP&&runtime.RP.type==="pulsoGrande")runtime.retoSet("pulsoGrande",Math.max(runtime.RP.val,w.n));if(w.n===0){emptyP++;if(emptyP>=10)runtime.unlock("dj");}else emptyP=0;}}waves=waves.filter(w=>w.r<w.max);
-    for(const w of waves){if(w.look){drawShopPulse(runtime.cx,w.look,w.x+ox,w.y+oy,w.r,{alpha:(1-w.r/w.max)*.6,color:w.color||runtime.S.color,charge:w.charge||0,reduced:!!runtime.S.reducedMotion});continue;}runtime.cx.globalAlpha=(1-w.r/w.max)*.6;runtime.cx.strokeStyle=w.color||runtime.S.color;runtime.cx.lineWidth=1.5;drawPulse(runtime.cx,w.form||selectedPulse({}),w.x+ox,w.y+oy,w.r,!!runtime.S.reducedMotion);}}
-  function sonar(origin='player'){
+    for(const w of waves){if(w.look){drawShopPulse(runtime.cx,w.look,w.x+ox,w.y+oy,w.r,{alpha:(1-w.r/w.max)*.6,color:w.color||runtime.S.color,charge:w.charge||0,reduced:calmMotion(runtime.S)});continue;}runtime.cx.globalAlpha=(1-w.r/w.max)*.6;runtime.cx.strokeStyle=w.color||runtime.S.color;runtime.cx.lineWidth=1.5;drawPulse(runtime.cx,w.form||selectedPulse({}),w.x+ox,w.y+oy,w.r,calmMotion(runtime.S));}}
+  // atMs: when the finger touched (performance.now()); the pulse is judged then, not when the finger lifts.
+  function sonar(origin='player',atMs=null){
     if(runtime.activityActive)return;
     origin=origin==='ambient'?'ambient':'player';
     if(origin==='player'){runtime.cubeShopTap?.();runtime.cubeShopWildTap?.();}
-    if(runtime.S.mode==="studio"){if(origin==="player")runtime.housePulse?.();return;}runtime.audio();const ms=performance.now();if(ms-lastSonar<240)return;lastSonar=ms;
-    // Playing on time: a pulse on the beat plays the next theme note in its own voice (journey-pulse.js); the grid places every pulse.
-    const theme=origin==='player'&&(runtime.inWorld()||runtime.S.mode==='camino')&&runtime.journeyPulse?.()===true?runtime.journeyPulseState().degree||0:null;
+    if(runtime.S.mode==="studio"){if(origin==="player")runtime.housePulse?.();return;}runtime.audio();const ms=performance.now();if(ms-lastSonar<240){if(origin==='player')runtime.journeyPulseDropped?.();return;}lastSonar=ms;
+    // Playing on time (journey-pulse.js): the pulse plays the next theme note at once, in a melodic voice of the place,
+    // with its third and fifth on the grid. Off the beat, the grid places the pulse as always.
+    const hit=origin==='player'&&(runtime.inWorld()||runtime.S.mode==='camino')&&runtime.journeyPulse?.(atMs)===true?runtime.journeyPulseState():null;
     if(origin==='player'&&runtime.inWorld())runtime.universePulse?.();
     if(origin==='player'){runtime.markInput?.();runtime.visualGesture?.();}
     if(origin==='player')runtime.firstJourneyEvent?.('pulse');
@@ -41,9 +44,12 @@ export function initialize(runtime) {
     const x=runtime.inWorld()?runtime.S.wx:runtime.S.px,y=runtime.inWorld()?runtime.S.wy:runtime.S.py;
     // A bought look changes only the drawing: its wave keeps the reach of the original pulse.
     const look=origin==='player'&&runtime.inWorld()?runtime.cubeShopPulseLook?.()||'':'',charge=look==='pulse:charged'?Math.min(1,(ms-lastLook)/4000):0;if(look)lastLook=ms;
-    waves.push({x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0,origin,form:look?PULSE_FORMS[0]:runtime.inWorld()?selectedPulse(runtime.S):selectedPulse({}),look,charge,color:runtime.inWorld()?runtime.cubeColor?.():null});
+    waves.push({x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0,origin,beat:!!hit,form:look?PULSE_FORMS[0]:runtime.inWorld()?selectedPulse(runtime.S):selectedPulse({}),look,charge,color:runtime.inWorld()?runtime.cubeColor?.():null});
     if(origin==='player'&&runtime.inWorld()&&runtime.RP&&runtime.RP.type==="pulsos"){runtime.RP.pst=runtime.onBeatNow()?runtime.RP.pst+1:0;runtime.retoSet("pulsos",runtime.RP.pst);}
-    runtime.MU.act+=.25;runtime.pulse=Math.max(runtime.pulse,.6);runtime.soon(t=>{if(runtime.inWorld())runtime.playVoice('pulso',theme??0,t,runtime.regionOfPos(x,y),true,theme===null?1:1.25,theme===null?{x,y}:{x,y,accent:true},origin);else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08),2));}},origin);
+    runtime.MU.act+=.25;runtime.pulse=Math.max(runtime.pulse,.6);
+    if(hit&&runtime.ac){const now=runtime.ac.currentTime,t=Math.max(now+.01,Number.isFinite(hit.beat)&&hit.beat>now?hit.beat:0);
+     if(runtime.inWorld()){const region=runtime.regionOfPos(x,y);runtime.hearVoice?.('pulso',0,t,region,true,1,{x,y},origin);runtime.playTheme(hit.midi,hit.degree,t,region,hit.scale,hit.tr);}else runtime.pluck(hit.midi+12,t,runtime.vel(.1),2);return;}
+    runtime.soon(t=>{if(runtime.inWorld())runtime.playVoice('pulso',0,t,runtime.regionOfPos(x,y),true,1,{x,y},origin);else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08),2));}},origin);
   }
   function boing(m,t,v){const o=runtime.ac.createOscillator(),g=runtime.ac.createGain();o.type="sine";o.frequency.setValueAtTime(runtime.hz(m+12),t);o.frequency.exponentialRampToValueAtTime(runtime.hz(m),t+.12);runtime.env(g,t,.004,v,.35);o.connect(g).connect(runtime.bus);const sv=runtime.ac.createGain();sv.gain.value=.3;g.connect(sv).connect(runtime.verbIn);o.start(t);o.stop(t+.5);}
   function propSound(k,i,t,region){runtime.playVoice(k,i,t,region||runtime.regionOfPos(runtime.S.wx,runtime.S.wy));}

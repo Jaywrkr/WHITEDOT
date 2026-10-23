@@ -1,3 +1,4 @@
+import {themePitch} from './journey-pulse.js';
 import {voiceExpression} from './voice-expression.js';
 import {inhabitantVoice} from './pixel-life-model.js';
 import {microVoice,microArticulation,microKit} from './micro-instruments-model.js';
@@ -97,6 +98,10 @@ export function initialize(runtime) {
     if(kind==='pulso')raw=runtime.cubeShopPulseVoice?.(raw)||cubePulseVoice(raw,runtime.S.cube?.voice);
     return hybridRegister(voiceRegister(raw,region.genre),hybridIdentity(region,runtime.seedOf,runtime.rng));
   }
+  // A pulse on time plays the cube's theme instead of its own voice (journey-pulse.js); everything that listens to the
+  // pulse (the laboratory, the looper, the living things, the pet…) still hears it, through hearVoice, without a sound.
+  let listenOnly=false;
+  function hearVoice(...args){listenOnly=true;try{return playVoice(...args);}finally{listenOnly=false;}}
   function playVoice(kind, index, time, region, full=false, volume=1, source=null, origin=voiceOrigin) {
     if (!runtime.ac || !region) return;
     const magnetic=!!magnetSource;if(magnetic&&!source)source=magnetSource;
@@ -118,6 +123,7 @@ export function initialize(runtime) {
     if(origin==='player'){runtime.vidaHear?.(kind,index,time);runtime.powerHear?.(index);}   // el ave lira escucha lo que tocas   // el looper guarda lo que causas tú
     if(origin==='player')runtime.petHear?.({degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,source});
     if(origin==='player'&&(!source||Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<360))runtime.depthHear?.({origin,degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region,layer:runtime.S.layer||'superficie'});
+    if(listenOnly)return;
     const frame=runtime.musicalFrame?.(time);
     const note = (degree,harmonicFrame=frame,onset=time) => {
       const harmonicRegion=harmonicFrame?.region||(origin==='band'?(runtime.MU.dnaA||region):region),scale=harmonicRegion.scale,
@@ -168,13 +174,24 @@ export function initialize(runtime) {
     const strength = voice.role === 'bajo' ? .15 : voice.role === 'perc' ? .12 : voice.role === 'agudo' ? .03 : .075;
     hit(time,index%7,strength);
     if(origin==='player'&&kind!=='caminante')runtime.walkerHear?.({degree:((runtime.MU.deg+voice.degree+index)%7+7)%7,time,region});
-    // A pulse on time (source.accent) answers with a rising arpeggio in the same voice: its note, the third and the
-    // fifth on the grid, so it sounds like the place and its rhythm, never like a separate instrument.
-    if (full&&kind==='pulso'&&source?.accent) {for(const [k,steps,gain] of [[2,voice.response,.6],[4,voice.response+2,.45]]){const at=time+runtime.SIX*steps;hit(runtime.musicalTime?.(at)??at,(index+k)%7,strength*gain);}}
-    else if (full) {const reply=time+runtime.SIX*voice.response;hit(runtime.musicalTime?.(reply)??reply,index%7,strength*.45);}
+    if (full) {const reply=time+runtime.SIX*voice.response;hit(runtime.musicalTime?.(reply)??reply,index%7,strength*.45);}
     return true;
   }
+  // A pulse on time plays the cube's theme (journey-pulse.js): the exact theme note, never moved by the chord or the
+  // region's degree, in a melodic voice of the place. The pulse's own voice when it is melodic; otherwise (percussion,
+  // bass) one of the genre's lead instruments, chosen by a hash of the region. Then the third and the fifth on the grid.
+  const MELODIC=new Set(['lead','agudo','acorde']);
+  function themeVoice(region){const pulse=getVoice('pulso',region);if(MELODIC.has(pulse.role))return pulse;
+    const list=interactionInstruments(region.genre,runtime.GEN?.[region.genre],'lead'),pick=list[(runtime.seedOf?.('theme-voice:v1:'+region.key)>>>0)%Math.max(1,list.length)]||'pluck';
+    return {role:'lead',instrument:pick,low:57,high:81,volume:1};}
+  function fold(n,low,high){while(n<low)n+=12;while(n>high)n-=12;return n;}
+  function playTheme(midi,degree,time,region,scale,tr=0){if(!runtime.ac||!region||!Number.isFinite(midi))return null;
+    const voice=themeVoice(region),n=fold(midi,voice.low??57,Math.max((voice.low??57)+12,voice.high??81)),v=runtime.vel(.1*(voice.volume??1)),notes=[{n,t:time,v}];
+    for(const [k,steps,gain] of [[2,2,.6],[4,4,.45]]){let m=themePitch(degree+k,scale,tr);while(m<=n)m+=12;while(m>n+12)m-=12;const at=time+(runtime.SIX||.15)*steps;notes.push({n:m,t:runtime.musicalTime?.(at)??at,v:v*gain});}
+    for(const note of notes){if(voice.instrument?.startsWith?.('shop:')&&runtime.playCubeShopVoice?.(voice.instrument,note.n,note.t,note.v,null))continue;runtime.hookInst(voice.instrument,note.n,note.t,note.v,region);}
+    return {instrument:voice.instrument,notes:notes.map(x=>x.n)};}
   Object.defineProperties(runtime, {
+    playTheme:{get:()=>playTheme},hearVoice:{get:()=>hearVoice},
     withMagnetVoice:{get:()=>withMagnetVoice},
     currentVoiceOrigin:{get:()=>voiceOrigin},
     withVoiceOrigin: {get:()=>withVoiceOrigin},

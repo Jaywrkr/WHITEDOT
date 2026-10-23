@@ -14,6 +14,8 @@ if mode not in flows:raise SystemExit('Use browser or audio')
 # Keep named order, but never omit a newly added audio regression.
 flows['audio']+=sorted(p.name for p in (ROOT/'tests').glob('*_mix.py') if p.name not in flows['audio'])
 selected=flows[mode]
+# The offline flow runs once, in the first browser shard.
+if mode=='browser' and os.environ.get('WHITEDOT_BROWSER_SHARD','1/1').split('/')[0]!='1':selected=[f for f in selected if f!='offline_smoke.py']
 if mode=='audio' and os.environ.get('WHITEDOT_AUDIO_SHARD'):
  try:shard,total=map(int,os.environ['WHITEDOT_AUDIO_SHARD'].split('/'))
  except ValueError:raise SystemExit('WHITEDOT_AUDIO_SHARD must be index/total')

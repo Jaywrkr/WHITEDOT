@@ -30,7 +30,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 `world-light-model.js` traduce `worldVisibility.day` (ciclo de diez minutos de `world-visibility-model.js`) y la hora local a noche, amanecer, atardecer, estrellas y luciérnagas. `world-light.js` lo dibuja tras la niebla, solo en superficie: un degradado con la linterna del cubo libre y luciérnagas en pantalla. `render.js` multiplica el brillo de las estrellas por `worldLight().stars`.
 
-`error-log.js` se carga primero y guarda en `localStorage` (`kubono:errores`) los últimos 20 errores sin datos personales; Ajustes los copia como diagnóstico. `frame-quality.js` mide el intervalo entre fotogramas: con dos muestras lentas seguidas (mediana >25 ms) pasa a calidad ligera (lienzo a 1×, menos partículas y salpicaduras) durante la sesión; `S.quality` fija Automática, Alta o Ligera. En navegadores automatizados el cambio automático queda apagado y las pruebas lo alimentan con `qualityProbe`. `frame-state.js` contesta una vez por fotograma si hay un panel abierto (`openSurface`) y el movimiento reducido del sistema (`prefersReducedMotion`); fuera del fotograma consulta directamente.
+`error-log.js` se carga primero y guarda en `localStorage` (`kubono:errores`) los últimos 20 errores sin datos personales; Ajustes los copia como diagnóstico. Un error dentro de un fotograma no detiene el bucle (`render.js` `frame`): se pide el siguiente fotograma igualmente y el error sigue llegando al registro; solo tras `FRAME_FAILURE_LIMIT` (120) fotogramas fallidos seguidos se detiene y pide recargar. El movimiento reducido se decide siempre con `calmMotion(S)` de `frame-state.js` (ajuste del jugador o preferencia del sistema); `S.reducedMotion` solo no basta, porque nada lo asigna fuera de las vistas previas. `frame-quality.js` mide el intervalo entre fotogramas: con dos muestras lentas seguidas (mediana >25 ms) pasa a calidad ligera (lienzo a 1×, menos partículas y salpicaduras) durante la sesión; `S.quality` fija Automática, Alta o Ligera. En navegadores automatizados el cambio automático queda apagado y las pruebas lo alimentan con `qualityProbe`. `frame-state.js` contesta una vez por fotograma si hay un panel abierto (`openSurface`) y el movimiento reducido del sistema (`prefersReducedMotion`); fuera del fotograma consulta directamente.
 
 ## Tienda del cubo
 
@@ -38,12 +38,14 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 ## Viaje · capítulos
 
-`journey-chapters.js` ordena el Viaje como un disco de siete capítulos: Camino, Llanura, Lago, Bosque, Tormenta, Vacío y Refugio. Se guarda en `S.journey` (`chapter`, `done`, `notes`) y se normaliza sin tocar versiones futuras.
+`journey-chapters.js` ordena el Viaje como un disco de siete capítulos: Camino, Llanura, Lago, Bosque, Tormenta, Vacío y Refugio. Se guarda en `S.journey` (`chapter`, `done`, `notes`, `steps`, `progress`) y se normaliza sin tocar versiones futuras.
 
 - **Estados:** cada capítulo del Mundo pasa por Llegada, Pertenencia y Plenitud. El estado pone un tope a la energía de la música (`MU.journeyCap` en `audio.js`): .38, .66 y 1. Sin tocar durante 8 compases baja a .16 y espera.
 - **Suelos:** la Plenitud también sostiene la energía desde abajo (`MU.journeyFloor`, .8); en la Tormenta, al tocar, .6 y .92, para que sea el momento más denso. El Vacío no tiene suelo. Se miden con `scripts/journey-curve.py`, que juega el Viaje entero y cuenta voces por segundo.
-- **Notas:** cada pulso a tiempo en el bioma del capítulo guarda su nota (hasta 16 por capítulo) para el final.
-- **Plenitud:** completar el tema allí marca el capítulo, devuelve el color (`world-sheet.js`), toca el tema entero con su octava y abre un portal dorado. Entrar en él lleva al bioma del capítulo siguiente, buscado en anillos sobre el mapa del Mundo (sin mar).
+- **Notas:** cada pulso a tiempo en el bioma del capítulo guarda su nota (hasta 16 por capítulo) y, al lado, la semicorchea de la música en que sonó (`steps`), para que el final toque tu ritmo.
+- **Cumplir un capítulo** (Fase 2 del plan): `momentLived` (faro alcanzado, 3 lotos, 600 px con la criatura, 4 rayos propios, un eco) y `barsLived` (`CHAPTER_BARS`, compases contados en `progress` solo mientras se toca). Sin los dos, el tema completo no da Plenitud. Al llegar a cada capítulo el tema vuelve a su primera nota (`journeyPulseReset`).
+- **Rayos propios:** en la Tormenta, `MU.boltMine` dibuja tu rayo dorado junto al cubo y `MU.journeyOwnBolts` calla los rayos automáticos de `audio.js` sin cambiar sus sorteos.
+- **Plenitud:** completar el tema allí marca el capítulo, devuelve el color (`world-sheet.js`), toca el tema entero con su octava y, cuando termina (`PORTAL_WAIT`, al menos 4 s), abre un portal dorado. Un capítulo cumplido antes de recargar vuelve a abrir su portal. Entrar en él lleva al bioma del capítulo siguiente, buscado en anillos sobre el mapa del Mundo (sin mar).
 - **Faro:** lejos del bioma del capítulo, una columna dorada en el borde de la pantalla señala hacia él.
 - **Línea:** cinco marcas al final de la Línea: dorado para los capítulos cumplidos, blanco para el actual.
 - **Refugio:** tras el Vacío, el portal llama a `runtime.journeyFinale` si existe; si no, aterriza en el Refugio.
@@ -73,10 +75,10 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 - **Tormenta** (`journey-chapters.js`): cada nota a tiempo en su capítulo pone un rayo en el beat (usa `MU.boltAt`, el rayo existente de `render.js`); su Plenitud es un compás de cuatro rayos.
 - **Vacío:** el tope de la música baja a .1 (el cubo solo). Tras ocho notas, las criaturas repiten cada nota un compás después, una octava arriba, y se encienden alrededor del cubo. El tema solo se completa con ellas (12 notas). El Vacío es el mar entre continentes: es el único capítulo que se busca en el mar.
 - **Final** (`journey-finale.js`): al cruzar el último portal el cubo aterriza en el Refugio y una capa propia (`#journeyFinale`, con su lienzo y su `requestAnimationFrame`) toca tu viaje:
-  - hasta seis notas tuyas por capítulo, en orden, con el color de cada capítulo, sobre un pedal de La; luego el tema en La mayor dos veces, la segunda a la quinta, sobre el acorde de La mayor (`finaleScore`);
+  - hasta seis notas tuyas por capítulo, en orden y con tu ritmo (`noteLengths`, de una a tres negras según la distancia entre aciertos; en negras si la partida no guardó `steps`), con el color de cada capítulo, sobre un pedal de La; luego el tema en La mayor dos veces, la segunda a la quinta, sobre el acorde de La mayor (`finaleScore`);
   - el cielo se vuelve dorado y la imagen se aleja; tres segundos de silencio; créditos;
   - al terminar (o al tocar la pantalla tras 2 s) guarda `S.journey.finished` y pasa a Mundo libre. Si el guardado falla, el Viaje sigue abierto.
-  - El sonido pasa por su propia ganancia, que se apaga al saltar. Sin dependencias del motor de música.
+  - El sonido pasa por su propia ganancia, que se apaga al saltar. Mientras suena, `audio.js` no programa pasos de la música y `house-audio.js` (`houseQuiet`) calla objetos y ambiente del Refugio: los tres segundos antes de los créditos son silencio real.
 - Las notas a tiempo llegan al capítulo antes de comprobar la frase, así la nota que completa el tema cuenta.
 - Una partida guardada en el Refugio sin final lo vuelve a tocar al entrar al Mundo.
 
@@ -117,11 +119,14 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - la hoja de cuenta solo vuelve a quien ya tuvo cuenta en el dispositivo (correo recordado) y no eligió «Jugar sin cuenta» (`kubono:local-play`);
   - entrar o crear cuenta desde el menú recarga dentro de la cuenta, y `progress.js` adopta la partida local si es la primera cuenta del dispositivo;
   - las comparaciones de usuario tratan «sin usuario» como `null`, para no recargar en bucle;
-  - una vez en el Mundo, se ofrece la nube con un aviso, una sola vez (`S.cloudOffered`).
+  - una vez en el Mundo libre, se ofrece la nube con un aviso, una sola vez (`S.cloudOffered`); nunca durante el Viaje.
 - **Modo** (`journey-mode.js`, `S.journey`):
   - **Viaje** (`viaje`): `body.journey-quiet` oculta Día, Era, Caminado, chispas, Saltar, Estilos, la meta y las pistas de texto; del menú oculta Tu cubo, Mapa, Bitácora, Crear, semillas, Compartir y Guía (`.free-only`);
   - **Mundo libre** (`libre`): todo como antes;
   - quien ya llegó al Mundo empieza en Mundo libre y los jugadores nuevos en el Viaje; el botón «Mundo libre / Viaje» del menú cambia y se guarda;
+  - el Mundo libre se abre al terminar el Viaje (`S.journey.free`, `freeOpen`): antes el botón está oculto y `setJourneyMode('libre')` no hace nada; quien ya estaba en Mundo libre lo conserva;
+  - durante el Viaje `ui.js` no muestra avisos cotidianos (sí los importantes y los pedidos con `force`, como el enlace a otra semilla);
+  - `journey-hint.js`: tras 4 s sin entrada en el Viaje, un dedo fantasma arrastra y toca en el beat; se va al primer toque;
   - en navegadores automatizados las partidas nuevas empiezan en Mundo libre, para que las pruebas existentes conserven sus controles; el Viaje se prueba a propósito;
   - el Viaje no abre la bienvenida del Camino.
 
@@ -129,14 +134,15 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 `journey-pulse.js` juzga cada pulso del jugador en el Camino y el Mundo ([El Viaje](VIAJE.md)).
 
-- **Siempre suena:** el pulso entra en la rejilla como siempre. Entre dos pulsos debe haber 240 ms (antes 700), solo para que un dedo no inunde la cola.
-- **A tiempo** (±60 ms del pulso, con `MU.bq`):
-  - toca la siguiente nota del **tema del cubo** (`THEME`: seis grados y dieciséis corcheas) con la voz del pulso del lugar: `journeyPulse` devuelve si fue a tiempo y `interactions.js` pasa el grado del tema a `playVoice('pulso', …)` con `source.accent`, que cambia la respuesta por un arpegio (tercera y quinta) en la misma voz, sin sintetizador aparte;
-  - vibra con `navigator.vibrate`, si el ajuste «Vibración» lo permite;
+- **Siempre suena:** fuera de tiempo el pulso entra en la rejilla como siempre. Entre dos pulsos debe haber 240 ms; un pulso demasiado seguido deja una marca gris tenue en la Línea (`journeyPulseDropped`) en vez de desaparecer.
+- **Cuándo se juzga:** en el momento en que el dedo toca (`canvas.js` pasa `tapStart.t` a `sonar`), no al soltarlo, y descontando la latencia de salida (`outputLatency`, hasta 0,4 s): el jugador contesta a lo que oye, no a lo que el reloj programó. Un toque cuenta hasta 450 ms; el escáner se abre a los 500 ms y, si el dedo luego se mueve, se cierra y el cubo camina.
+- **A tiempo** (±80 ms, `ON_TIME`; el mismo margen y la misma latencia para rituales de portal, retos «pulsos» y el groove vía `onTime`/`onBeatNow`):
+  - toca **al instante** la siguiente nota del **tema del cubo** (`THEME`), exacta, sin moverla por el acorde ni por el grado de la región: `voices.js` `playTheme` usa la voz del pulso si es melódica y, si es de percusión o bajo, un instrumento principal del género elegido por hash de la región; después la tercera y la quinta en la rejilla. En el Camino toca la nota del tema con el `pluck`;
+  - vibra con `navigator.vibrate`, si el ajuste «Vibración» lo permite; sin vibración (iPhone) el cubo brilla en dorado un tiempo (`cubeGlow`);
   - deja un destello dorado;
   - seis aciertos completan la frase, con una vibración distinta.
-- **Fuera de tiempo:** solo suena el pulso de siempre.
-- **La Línea:** una línea fina en el 80 % de la altura dibuja el compás (16 marcas), un cursor dorado en el paso actual y un pico por cada pulso: dorado y alto si fue a tiempo, blanco y bajo si no. No aparece con paneles abiertos ni en actividades.
+- **Fuera de tiempo:** solo suena el pulso de siempre. En el Camino del Viaje la onda fuera de tiempo no rompe cristales y la onda a tiempo rompe uno (`pathWaveCounts` en `crystal-sparks.js`); el Camino libre sigue igual.
+- **La Línea:** una línea fina en el 80 % de la altura dibuja el compás (16 marcas), un cursor dorado en el paso que se oye (reloj menos latencia) y un pico por cada pulso: dorado y alto si fue a tiempo, blanco y bajo si no. No aparece con paneles abiertos ni en actividades.
 - **Datos:** el tema es dato fijo y no consume el RNG antiguo. El juicio solo guarda contadores de sesión; el guardado solo recibe `S.haptics`.
 
 ## Refugio (antes Casa)
@@ -219,9 +225,9 @@ Tu cubo es el único lugar para cambiar el cubo (alpha.65): pestañas Llevar (lo
 
 La presentación alpha.50 aclara el saldo de chispas y refuerza el contraste de minerales y fragmentos sin cambiar minería, posiciones ni pagos. Una única pista dorada anticipa la travesura no completada más cercana entre 95 y 320 unidades, dentro de pantalla, sin sonidos, textos, interacción o sitios nuevos. Respeta pausa, capas, paseo automático, movimiento reducido y separación entre escenas.
 
-## Cuenta obligatoria y sincronización Supabase
+## Cuenta opcional y sincronización Supabase
 
-`main.js` espera `account-entry.js:requireAccount()` antes del runtime. Sin configuración o sin primer acceso no hay mundo. Con una sesión guardada el juego arranca sin esperar a la red y la identidad se comprueba en segundo plano; si Auth la rechaza, el cliente la olvida y `cloud-account.js` recarga a la entrada. `cloud-account.js` sustituye la inicialización histórica de `connection.js`; no hay salas ni duetos activos.
+`main.js` espera `account-entry.js:requireAccount()` antes del runtime, pero sin sesión el juego arranca al instante con guardado local: la hoja de cuenta solo vuelve a quien ya tuvo cuenta en ese dispositivo y no eligió jugar sin ella (desde alpha.98). Con una sesión guardada el juego arranca sin esperar a la red y la identidad se comprueba en segundo plano; si Auth la rechaza, el cliente la olvida y `cloud-account.js` recarga a la entrada. `cloud-account.js` sustituye la inicialización histórica de `connection.js`, retirado en la Fase 0 junto con `duet-model.js`; no hay salas ni duetos. Algunos módulos aún consultan ganchos opcionales del dueto (`runtime.duet*?.()`), que no existen y no hacen nada.
 
 `cloud-client.js` usa Auth/Data REST HTTPS con clave publicable y tokens persistentes por origen, renovación compartida y validación de identidad. `progress.js` separa claves locales por usuario y mantiene ámbito remoto compatible. `cloud-sync.js` usa baseline canónica, CAS y copias previas para reconciliar sin decidir por saldo/fecha. `cloud-account.js` comprueba/sube cada cinco segundos cuando corresponde, al reanudar y con intento de salida. Si ambas copias avanzaron pide elegir; no hay controles de respaldo normales. Al restaurar una copia que está en el otro modo, `cloud-account.js:settleMode` pasa por `exitWorld`/`enterWorld` para que región, sesión y música sigan al modo, conservando el lugar restaurado.
 

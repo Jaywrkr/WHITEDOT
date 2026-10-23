@@ -34,7 +34,7 @@ Desde alpha.106 los lugares tienen nombres del universo ([El universo](UNIVERSO.
 | 5 | Vacío | 5 min | Pérdida | Todo se apaga | El cubo solo | La criatura no puede entrar. Tras ocho notas, las criaturas que te siguieron vuelven y repiten tus notas |
 | 6 | Refugio | 3 min | Regreso | Dorado y todo junto | Tema completo con tu viaje | Final: el Refugio toca tu viaje. Silencio. Créditos. Se abre el Mundo libre |
 
-Total: unos 40 minutos. **Los primeros 15 minutos (capítulos 0–2) forman un arco cerrado** y son el build de festival, con una pantalla final que muestra tu frase.
+Total diseñado: unos 40 minutos. **Jay decidió el 22 de octubre que el Viaje dure 15–20 minutos** (decisión 2B) y se mida con personas antes de alargarlo; las duraciones de la tabla son las del diseño original. **Los primeros 15 minutos (capítulos 0–2) forman un arco cerrado** y son el build de festival, con una pantalla final que muestra tu frase.
 
 ## Curva emocional
 
@@ -62,7 +62,7 @@ Seis notas en **grados de la escala** (0 = tónica) y duraciones en corcheas, do
 | Grado | 0 | 1 | 4 | 3 | 2 | 0 |
 | Corcheas | 3 | 1 | 4 | 2 | 2 | 4 |
 
-- **La voz del tema es la del pulso:** el pulso a tiempo toca la siguiente nota del tema con el instrumento del lugar y responde con un arpegio corto (tercera y quinta) en la rejilla del ritmo, un poco más fuerte que un pulso fuera de tiempo. No hay un sintetizador aparte. En la Plenitud, el final y el acompañante el tema suena con un tono suave (triángulo y seno, sin diente de sierra): la sierra grave con vibrato sonaba como una bocina sobre la música.
+- **El tema en tus manos:** el pulso a tiempo toca al instante la siguiente nota exacta del tema con un instrumento melódico del lugar (si el pulso del lugar es de percusión o bajo, el género presta uno de sus instrumentos principales) y responde con su tercera y su quinta en la rejilla. El acierto se juzga al tocar, descontando el retraso de los auriculares, con un margen de ±80 ms igual en todo el juego. En el Camino el acierto también suena distinto del fallo. No hay un sintetizador aparte. En la Plenitud, el final y el acompañante el tema suena con un tono suave (triángulo y seno, sin diente de sierra): la sierra grave con vibrato sonaba como una bocina sobre la música.
 - **Se reharmoniza con la escala de cada capítulo:**
   - Camino y Llanura: menor, en La;
   - Lago: lidio, en Do;
@@ -124,6 +124,29 @@ Todo se oculta, no se borra; los datos y lo comprado se conservan y vuelven en e
 - **Fase 6 · Festival y accesibilidad** (alpha.102): `?festival=1` abre los primeros 15 minutos sin cuenta y con guardado propio; termina en el Refugio con tu frase y «Otra persona». Paleta para daltonismo en Ajustes. Coste: en el navegador de pruebas (sin GPU, 390×844 a 2×) el Viaje y el Mundo libre cuestan lo mismo por fotograma. Pendiente: medir en teléfonos reales y traducir menús al inglés.
 - **Fase 7 · Medida** (alpha.103): `scripts/journey-curve.py` juega el Viaje entero como un jugador simulado y mide, cada medio segundo, el nivel y las voces por segundo (densidad, la medida de intensidad del panel). Con ella se ajustaron la Tormenta, la Plenitud y el final. Las pruebas con personas siguen pendientes.
 - **Fase 8 · Momentos de los capítulos 1–3** (alpha.104): faro con voz en la Llanura, lotos que responden al tema en el Lago, la criatura del Bosque que te sigue e imita, el Mundo sin palabras en el Viaje y un final con latido y la criatura. Pendiente: pruebas con personas, el músico coautor y los créditos definitivos.
+
+## Plan de la auditoría · Fase 2 · El Viaje con tiempo (alpha.130)
+
+Cada capítulo se cumple **viviendo su momento y quedándose en su música**, no con seis aciertos:
+
+| Capítulo | Momento | Compases mínimos tocando |
+|---|---|---|
+| Llanura | llegar al faro | 48 |
+| Lago | abrir 3 lotos | 56 |
+| Bosque | caminar 600 px con la criatura | 56 |
+| Tormenta | 4 rayos tuyos | 64 |
+| Vacío | que las criaturas repitan una nota | 40 |
+
+- Los compases solo cuentan mientras tocas (hasta 8 compases después del último pulso). A los tempos de cada familia suman unos 10 minutos de música; con el Camino, los trayectos y el final, la estimación es 15–18 minutos. **Es una estimación**: se mide con personas en la Fase 7 del plan.
+- Con el momento y los compases, el tema completo trae la Plenitud. El portal se abre **después** del tema en tutti (al menos 4 s).
+- Cada capítulo empieza el tema desde la primera nota.
+- **Camino:** en el Viaje solo un pulso a tiempo rompe cristal, y uno por pulso (el más cercano). Cada cristal ya sumaba un instrumento.
+- **Tormenta:** tus rayos caen dorados y cerca del cubo; cuando cae el primero, la tormenta deja de lanzar los suyos.
+- **Final:** toca tus notas con tu ritmo (la distancia entre aciertos, de una a tres negras). Las partidas anteriores, sin ritmo guardado, suenan en negras. Mientras suena, el Refugio y la música del Mundo callan: hay silencio real antes de los créditos.
+- **Sin avisos durante el Viaje:** los avisos cotidianos esperan; los problemas (guardado, errores) sí se muestran. La oferta de la nube llega en el Mundo libre.
+- **Mundo libre cerrado hasta el final** (decisión 6A): el botón no aparece y no se puede elegir. Quien ya lo había alcanzado lo conserva.
+- **Dedo fantasma** (decisión 7A): tras 4 s sin tocar, un dedo translúcido arrastra hacia la derecha y luego toca en el beat. Se va al primer toque. Sin palabras.
+- Guardado: `S.journey.steps` (cuándo sonó cada nota), `S.journey.progress` (compases, paseo, rayos y ecos por capítulo) y `S.journey.free`. Se normalizan; las partidas viejas no pierden nada.
 
 ## Medida de la curva (Fase 7)
 

@@ -4,7 +4,7 @@ import {WORLD_CHAPTERS} from './journey-chapters.js';
 import {FESTIVAL_CHAPTERS} from './festival.js';
 import {LANDSCAPES} from './house-view.js';
 // The Journey, phase 5: the finale. In the Refugio the cube's journey plays back: the notes you played on time in
-// each chapter, in order, then the theme in A major twice, the second time a fifth up. The sky turns gold, the
+// each chapter, in order and with your rhythm, then the theme in A major twice, the second time a fifth up. The sky turns gold, the
 // picture pulls back, a silence, the credits, and the free World opens.
 export const CHAPTER_COLORS=Object.freeze({llanura:LANDSCAPES.llanura,lago:LANDSCAPES.lago,bosque:LANDSCAPES.bosque,tormenta:LANDSCAPES.tormenta,vacio:'#ffffff',refugio:'#f0d27a'});
 export const MAJOR=Object.freeze([0,2,4,5,7,9,11]);
@@ -14,9 +14,14 @@ export const NOTES_PER_CHAPTER=6;
 export const CREDIT_LINES=Object.freeze(['Kubono','Tu viaje','Jay · diseño y código','Luca · primer jugador','Gracias por tocar']);
 // The festival build ends on your phrase, and the next player starts again.
 export const FESTIVAL_LINES=Object.freeze(['Kubono','Tu frase','Los primeros 15 minutos','Gracias por tocar']);
-// The score of the finale: up to six of your notes per chapter (a quarter each), then the theme twice.
-export function finaleScore(notes,chapters=WORLD_CHAPTERS){
- const out=[];for(const id of chapters){const n=Array.isArray(notes?.[id])?notes[id].filter(Number.isFinite).slice(-NOTES_PER_CHAPTER):[];for(const midi of n)out.push({midi,eighths:2,chapter:id});}
+// Your rhythm: the gap to your next note in the same chapter, in quarters (one to three), from the music's sixteenths
+// saved beside the notes. Older saves without them play a quarter each.
+export function noteLengths(steps,count){const out=Array(count).fill(2);if(!Array.isArray(steps)||steps.length!==count)return out;
+ for(let i=0;i<count-1;i++){const gap=steps[i+1]-steps[i];if(Number.isFinite(gap)&&gap>0)out[i]=2*Math.max(1,Math.min(3,Math.round(gap/4)));}return out;}
+// The score of the finale: up to six of your notes per chapter, with your rhythm, then the theme twice.
+export function finaleScore(notes,chapters=WORLD_CHAPTERS,steps={}){
+ const out=[];for(const id of chapters){const raw=Array.isArray(notes?.[id])?notes[id]:[],keep=raw.map((m,i)=>Number.isFinite(m)?i:-1).filter(i=>i>=0).slice(-NOTES_PER_CHAPTER),st=Array.isArray(steps?.[id])&&steps[id].length===raw.length?keep.map(i=>steps[id][i]):null,len=noteLengths(st,keep.length);
+  keep.forEach((i,k)=>out.push({midi:raw[i],eighths:len[k],chapter:id}));}
  for(const shift of [0,7])for(const [d,l] of THEME)out.push({midi:themePitch(d,MAJOR,shift),eighths:l,chapter:'refugio'});
  let at=0;for(const n of out){n.at=at;at+=n.eighths*EIGHTH;}return out;}
 export const scoreLength=score=>score.reduce((s,n)=>s+n.eighths*EIGHTH,0);
@@ -36,7 +41,7 @@ export function initialize(runtime){
   if(runtime.S.journey?.moments?.companion)for(const n of score)if(n.chapter==='refugio')playCello(ac,out,t0+n.at+EIGHTH*4,n.midi-12,n.eighths*EIGHTH,.045);
   for(const n of score){const len=n.eighths*EIGHTH,last=n.chapter==='refugio';playCello(ac,out,t0+n.at,n.midi,len,last?.14:.12);if(last)playCello(ac,out,t0+n.at,n.midi-12,len,.07);}return out;}
  function start(options={}){const j=runtime.S.journey,festival=!!options.festival;if(run||!j||(j.finished&&!festival)){if(!run)runtime.landHouse?.();return false;}
-  document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});runtime.landHouse?.();const score=finaleScore(j.notes,festival?FESTIVAL_CHAPTERS:WORLD_CHAPTERS),el=overlay();el.querySelector('.journey-again')?.remove();el.querySelector('.journey-credits').replaceChildren();
+  document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});runtime.landHouse?.();const score=finaleScore(j.notes,festival?FESTIVAL_CHAPTERS:WORLD_CHAPTERS,j.steps),el=overlay();el.querySelector('.journey-again')?.remove();el.querySelector('.journey-credits').replaceChildren();
   run={el,score,festival,at:now(),length:scoreLength(score),gain:play(score),credits:false};state.played++;
   el.onclick=()=>{if(run&&now()-run.at>2)finish(true);};requestAnimationFrame(frame);return true;}
  function finish(skipped=false){if(!run)return;const j=runtime.S.journey,ac=runtime.ac;if(run.gain&&ac){run.gain.gain.setTargetAtTime(.0001,ac.currentTime,.3);}

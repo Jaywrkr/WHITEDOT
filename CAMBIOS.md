@@ -1,6 +1,58 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.127**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.130**. Las entradas describen su revisión, no certifican producción.
+
+## Fase 2 · El Viaje con tiempo · alpha.130
+
+Rama `claude/fase2-viaje`, sobre `claude/fase1-pulso` (alpha.129, dependencia explícita).
+
+El Viaje duraba lo que tardabas en acertar seis veces por capítulo. Ahora cada capítulo se vive (decisión 2B: 15–20 minutos).
+
+- **Capítulos con momento y tiempo:** la Plenitud pide el momento del capítulo (faro, 3 lotos, paseo con la criatura, 4 rayos tuyos, el eco del Vacío) y un mínimo de compases tocando (48–64). Estimación: 15–18 minutos en total, por medir con personas.
+- **Portal tras el tema:** se abre cuando el tema termina de sonar en tutti, no encima.
+- **Tema desde el principio:** cada capítulo empieza el tema por su primera nota.
+- **Camino a tiempo:** en el Viaje solo un pulso a tiempo rompe cristal, y uno por pulso.
+- **Mi rayo:** en la Tormenta tus rayos caen dorados junto al cubo y la tormenta deja de lanzar los suyos.
+- **El final toca tu ritmo:** se guarda cuándo sonó cada nota; las partidas viejas suenan en negras.
+- **Silencio real:** durante el final callan la música del Mundo y los objetos del Refugio.
+- **Sin avisos en el Viaje:** los cotidianos esperan (la nube se ofrece en el Mundo libre); los problemas se muestran.
+- **Mundo libre cerrado hasta el final** (6A). Quien ya lo tenía lo conserva.
+- **Dedo fantasma** (7A): tras 4 s sin tocar, enseña a arrastrar y tocar en el beat. Sin palabras.
+- **Arreglo:** un capítulo cumplido antes de recargar vuelve a abrir su portal (antes quedaba sin salida).
+- **Arreglo:** «Trofeos nuevos» en el menú ya no reaparece por un logro que llegó mientras estabas dentro del Refugio: al salir también cuenta como visto (la CI lo detectaba de forma intermitente en `house_visit_smoke.py`).
+- **Sin sonido:** en el Camino, si no suena música (sonido apagado o audio sin arrancar), cualquier pulso rompe un cristal, uno por pulso.
+- Pendiente: medir la duración con personas; escucha de Jay en iPhone. Los capítulos del Mundo siguen necesitando música para acertar: con el sonido apagado no se pueden completar (viene de antes; se revisa en la Fase 3).
+- Verificación local: 210 suites Node, auditoría sin errores, 24 recorridos de navegador (Viaje, festival, final, toque real, cristales, guía, sin conexión y los que juegan sin marca de automatización) y la mezcla del ambiente del Refugio en PASS. La duración no se midió: el jugador simulado de `journey-curve.py` no vive los momentos.
+
+## Fase 1 · El pulso justo · alpha.129
+
+Rama `claude/fase1-pulso`, sobre `claude/fase0-base` (alpha.128, dependencia explícita).
+
+El pulso a tiempo es el verbo del juego; la auditoría encontró que era injusto y que no sonaba a tema.
+
+- **Se juzga al tocar:** el acierto cuenta cuando el dedo toca, no cuando se levanta (antes el táctil iba siempre tarde frente al teclado).
+- **Descuenta los auriculares:** el juicio y el cursor de la Línea restan la latencia de salida del dispositivo (Bluetooth incluido).
+- **Un solo margen:** ±80 ms para el Viaje, los rituales de portal, los retos y el groove (antes ±60 y ±90).
+- **El tema suena:** cada acierto toca al instante la nota exacta del tema con un instrumento melódico del lugar, y luego su tercera y su quinta. Antes la nota se movía con el acorde y en más de la mitad de las regiones el pulso era percusión o acordes. En el Camino el acierto ya suena distinto del fallo.
+- **Ningún toque se pierde:** un toque cuenta hasta 450 ms (antes 240) y un pulso demasiado seguido deja una marca gris en la Línea.
+- **iPhone:** sin vibración, el cubo brilla en dorado durante un tiempo.
+- **Arreglo posterior:** un pulso a tiempo en el Mundo dejó de llegar a lo que escucha el pulso (laboratorio, looper, seres vivos, mascota): sonaba el tema y nada más. Ahora lo oyen igual, sin sonido propio (`hearVoice`). La CI lo detectaba de forma intermitente en `lab_learning_smoke.py`.
+- **Dedo quieto y luego caminar:** si el dedo descansa y abre el escáner, al moverlo el escáner se cierra y el cubo camina (antes no se movía).
+- Pendiente: escucha y prueba de Jay en iPhone con auriculares; medir la latencia real en dispositivos.
+- Verificación local: 209 suites Node, 11 recorridos de navegador y 3 mezclas de audio en PASS. `guide_smoke.py` falló una vez esperando el Mundo tras recargar y pasó en las dos repeticiones con el mismo código: queda anotado como recorrido inestable.
+
+## Fase 0 · Base protegida · alpha.128
+
+Rama `claude/fase0-base`, sobre `main` (alpha.127). Primera fase del plan de la auditoría del 22 de octubre; no cambia lo que se siente al jugar.
+
+- **El juego no se congela:** si un fotograma falla, el siguiente llega igual y el error queda en el registro. Antes, una sola excepción dejaba la imagen fija para siempre (medido: 0 fotogramas después del error).
+- **CI repartida:** la prueba de navegador corre en cuatro grupos con un trabajador cada uno y 30 minutos de límite, en Node 22. Se quitan disparadores de ramas que ya no existen y el workflow «Focused browser closure».
+- **Movimiento reducido de verdad:** seis sistemas (momentos raros, cartas raras, forma del pulso de la tienda, ramas de encuentros, cajas y caminantes) solo miraban un ajuste que nada asigna; ahora siguen también la preferencia del sistema (`calmMotion`).
+- **Dueto retirado:** `connection.js`, `duet-model.js` y sus pruebas salen del juego y de la descarga.
+- **Una prueba que juega como una persona:** `player_touch_smoke.py` recorre el Camino con toques reales en un teléfono y entra al Mundo, y comprueba que un fotograma fallido no congela el juego.
+- **Prueba sin conexión al día:** `offline_smoke.py` esperaba la hoja de cuenta obligatoria y fallaba desde alpha.98 (en CI no llegaba a correr porque el catálogo de navegador fallaba antes). Ahora comprueba que, sin red, el juego arranca desde la caché sin pedir cuenta.
+- **Documentación al día:** traspaso nuevo (el anterior, de alpha.66, va al historial), README, arquitectura, plan y créditos dicen lo mismo: cuenta opcional.
+- **Pendiente:** el resultado de la CI se lee en el PR; ninguna integración debe hacerse con ella en rojo.
 
 ## Pendientes revisados · alpha.127
 

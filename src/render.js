@@ -1,4 +1,4 @@
-import {prefersReducedMotion,beginFrame,endFrame} from './frame-state.js';
+import {prefersReducedMotion,calmMotion,beginFrame,endFrame} from './frame-state.js';
 import {windLevel} from './territory-journey.js';
 import {AMBIENCE_LEVEL} from './ambience.js';
 import {moveWalker,drawWalker} from './walker-forms.js';
@@ -6,6 +6,8 @@ import {contactEntry} from './contact.js';
 import { movementMultiplier } from './gravity.js';
 
 // Loop, simulación y dibujo del juego.
+// Consecutive failing frames (about two seconds) before the loop stops and asks for a reload.
+export const FRAME_FAILURE_LIMIT=120;
 export function initialize(runtime) {
   /* ---------- glifos ---------- */
   function glyph(x,i,px,py,s){
@@ -30,7 +32,10 @@ export function initialize(runtime) {
   /* ---------- loop ---------- */
   let scheduledFrame=null;
   // One frame's answers to "is a panel open?" are shared by every module drawn in it.
-  function frame(t){runtime.qualityTick?.(t);beginFrame();try{frameBody(t);}finally{runtime.cameraEnd?.();endFrame();}}
+  // An error inside one frame must not freeze the game: the next frame is asked for anyway and the error still reaches
+  // the error log. Only if every frame keeps failing (FRAME_FAILURE_LIMIT in a row) does the loop stop and say so.
+  let failures=0;
+  function frame(t){try{runtime.qualityTick?.(t);beginFrame();frameBody(t);failures=0;}catch(error){failures++;if(scheduledFrame!==null)cancelAnimationFrame(scheduledFrame);scheduledFrame=failures<FRAME_FAILURE_LIMIT?requestAnimationFrame(frame):null;if(failures===FRAME_FAILURE_LIMIT)runtime.toast?.('Algo falló. Recarga el juego.');throw error;}finally{runtime.cameraEnd?.();endFrame();}}
   function frameBody(t){
     if(runtime.accountClient&&(runtime.accountClient.user()?.id||null)!==runtime.accountUserId){location.reload();return;}
     runtime.journeyModeTick?.();
@@ -121,7 +126,9 @@ export function initialize(runtime) {
     runtime.drawSparkCosmetics?.(t);runtime.cameraEnd?.();
     // Joystick visible mientras arrastras.
     if(runtime.ptr?.ox!=null){const c=runtime.cx;c.globalAlpha=.28;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.arc(runtime.ptr.ox,runtime.ptr.oy,55,0,6.283);c.stroke();c.globalAlpha=.5;c.fillStyle='#fff';c.beginPath();c.arc(runtime.ptr.x,runtime.ptr.y,9,0,6.283);c.fill();c.globalAlpha=1;}
-    runtime.drawJourneyLine?.(runtime.cx,runtime.W,runtime.H,t);runtime.drawJourneyChapters?.(runtime.cx,runtime.W,runtime.H,t);
+    runtime.drawJourneyLine?.(runtime.cx,runtime.W,runtime.H,t);runtime.drawJourneyChapters?.(runtime.cx,runtime.W,runtime.H,t);runtime.drawJourneyHint?.(runtime.cx,runtime.W,runtime.H);
+    // Without vibration (iPhone) a pulse on time makes the cube glow gold for one beat (journey-pulse.js).
+    if(runtime.cubeGlow>0){runtime.cubeGlow=Math.max(0,runtime.cubeGlow-dt/((runtime.SIX||.15)*4));runtime.cx.globalAlpha=runtime.cubeGlow*.9;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=2;runtime.cx.strokeRect(Math.round(runtime.W/2-s/2-4),Math.round(runtime.H/2-s/2-4),Math.round(s+8),Math.round(s+8));runtime.cx.globalAlpha=1;}
     if(runtime.flash>0){runtime.flash=Math.max(0,runtime.flash-dt*2.5);runtime.cx.globalAlpha=runtime.flash*.6;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.2;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,24+(1-runtime.flash)*42,0,Math.PI*2);runtime.cx.stroke();}
     if(runtime.enterFx>0){runtime.enterFx=Math.max(0,runtime.enterFx-dt*.6);const still=runtime.S.reducedMotion||prefersReducedMotion(),k=still?.6:1-runtime.enterFx;runtime.cx.globalAlpha=runtime.enterFx*.35;runtime.cx.strokeStyle=runtime.musicInk?.(null,'acorde')||'#fff';runtime.cx.lineWidth=1.2;
       for(let i=0;i<3;i++){const rr=Math.max(0,k-i*.12)*Math.min(54,runtime.W*.14,runtime.H*.14);runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,rr,0,6.283);runtime.cx.stroke();}
@@ -307,11 +314,12 @@ export function initialize(runtime) {
     }
     if(pondNow!==runtime.inPond){runtime.inPond=pondNow;if(runtime.mfilt)runtime.mfilt.frequency.setTargetAtTime(runtime.inPond?650:18000,runtime.ac.currentTime,.25);if(runtime.inPond)runtime.beatSoon(q=>runtime.playVoice('agua',0,q,rg));}
     // tormenta solar: descargas en el beat, vistas desde arriba
-    if(runtime.MU.boltAt&&runtime.ac&&runtime.ac.currentTime>=runtime.MU.boltAt){runtime.MU.boltAt=0;runtime.cameraKick?.(0,1.5);if(id==="tormenta"){const a=runtime.rnd()*6.28,d=60+runtime.rnd()*R,x=runtime.S.wx+Math.cos(a)*d,y=runtime.S.wy+Math.sin(a)*d;
+    if(runtime.MU.boltAt&&runtime.ac&&runtime.ac.currentTime>=runtime.MU.boltAt){runtime.MU.boltAt=0;const mine=!!runtime.MU.boltMine;runtime.MU.boltMine=false;runtime.cameraKick?.(0,1.5);if(id==="tormenta"){const a=runtime.rnd()*6.28,d=mine?30+runtime.rnd()*50:60+runtime.rnd()*R,x=runtime.S.wx+Math.cos(a)*d,y=runtime.S.wy+Math.sin(a)*d;
       // Seen from above: a discharge that branches out from where it falls, not a bolt from the sky.
-      const dir=runtime.rnd()*6.28,pts=[[x,y]];for(let i=1;i<=8;i++){const d=i*9,w=(runtime.rnd()-.5)*14;pts.push([x+Math.cos(dir)*d-Math.sin(dir)*w,y+Math.sin(dir)*d+Math.cos(dir)*w]);}runtime.bolts.push({pts,l:1});runtime.flash=Math.max(runtime.flash,.5);runtime.now(q=>runtime.thunder(q,{x,y}));}}
+      const dir=runtime.rnd()*6.28,pts=[[x,y]];for(let i=1;i<=8;i++){const d=i*9,w=(runtime.rnd()-.5)*14;pts.push([x+Math.cos(dir)*d-Math.sin(dir)*w,y+Math.sin(dir)*d+Math.cos(dir)*w]);}runtime.bolts.push({pts,l:1,mine});runtime.flash=Math.max(runtime.flash,.5);runtime.now(q=>runtime.thunder(q,{x,y}));}}
     runtime.bolts=runtime.bolts.filter(bo=>(bo.l-=dt*3)>0);
-    for(const bo of runtime.bolts){runtime.cx.globalAlpha=bo.l;runtime.cx.strokeStyle="#fff";runtime.cx.lineWidth=2;runtime.cx.beginPath();bo.pts.forEach(([x,y],i)=>runtime.cx[i?"lineTo":"moveTo"](x+ox,y+oy));runtime.cx.stroke();}
+    // Your bolts in the Journey's Tormenta fall gold, close to the cube; the storm's are white.
+    for(const bo of runtime.bolts){runtime.cx.globalAlpha=bo.l;runtime.cx.strokeStyle=bo.mine?runtime.GOLD||"#f0d27a":"#fff";runtime.cx.lineWidth=2;runtime.cx.beginPath();bo.pts.forEach(([x,y],i)=>runtime.cx[i?"lineTo":"moveTo"](x+ox,y+oy));runtime.cx.stroke();}
     // vida
     let follow=false,followers=0;runtime.MU.walkerFollowers=[];
     for(let a=a0;a<=a1;a++)for(let bb=b0;bb<=b1;bb++){
@@ -359,7 +367,7 @@ export function initialize(runtime) {
         const vis=R*1.7;if(d>vis+400)continue;if(d<R*1.2)runtime.seen("caminante");
         runtime.cx.fillStyle="#fff";
         k.trail.forEach(([p,q],i)=>{const e=Math.hypot(p-runtime.S.wx,q-runtime.S.wy),al=(i/k.trail.length)*.25*Math.max(0,1-e/vis);if(al>.01){runtime.cx.globalAlpha=al;runtime.cx.fillRect(p+ox-1,q+oy-1,2,2);}});
-        if(d<vis){runtime.cx.globalAlpha=Math.max(0,1-d/vis)*(runtime.worldOpacity?.(d,vis)??1);runtime.cx.strokeStyle=runtime.musicInk?.(k)||'#fff';drawWalker(runtime.cx,form,k.x+ox,k.y+oy,t,runtime.S.reducedMotion);if(k.follow>0&&d<140){runtime.cx.globalAlpha*=.65;runtime.cx.font='10px "Geist Mono",monospace';runtime.cx.textAlign='center';runtime.cx.fillText(form.name,k.x+ox,k.y+oy-16);}}
+        if(d<vis){runtime.cx.globalAlpha=Math.max(0,1-d/vis)*(runtime.worldOpacity?.(d,vis)??1);runtime.cx.strokeStyle=runtime.musicInk?.(k)||'#fff';drawWalker(runtime.cx,form,k.x+ox,k.y+oy,t,calmMotion(runtime.S));if(k.follow>0&&d<140){runtime.cx.globalAlpha*=.65;runtime.cx.font='10px "Geist Mono",monospace';runtime.cx.textAlign='center';runtime.cx.fillText(form.name,k.x+ox,k.y+oy-16);}}
       }
       for(let i=c.motes.length-1;i>=0;i--){const m=c.motes[i],d=Math.hypot(m.x-runtime.S.wx,m.y-runtime.S.wy);
         if(d<ds/2+10){c.motes.splice(i,1);runtime.playerNote(.13);runtime.burst(m.x,m.y,5,runtime.grooveFx>.9);continue;}

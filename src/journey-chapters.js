@@ -19,11 +19,34 @@ export const stateFloor=(state,id)=>id==='vacio'?null:(id==='tormenta'?STORM_FLO
 // The Vacío: the cube alone (a very low cap), and after this many notes the creatures come back and repeat them.
 export const VOID_CAP=.1,VOID_ECHO_AFTER=8,VOID_PHRASE=12;
 // The cap of a state in a chapter: in the Vacío the music never rises above the cube.
+// Phase 2 of the plan (El Viaje con tiempo): a chapter is complete when you live its moment and stay a while in its
+// music, not with six hits. The moment: the lighthouse reached, three lotuses open, the creature following you for a
+// walk, four bolts of your own, the creatures' echo. The stay: bars played in the chapter (counted only while you
+// play). Together the five chapters, the Camino and the finale aim at 15 to 20 minutes (docs/VIAJE.md).
+// About ten minutes of music in all at each family's tempo (house 122, downtempo 93, disco 118, techno 128, ambient 78):
+// an estimate until people play it (phase 7 of the plan).
+export const CHAPTER_BARS=Object.freeze({llanura:48,lago:56,bosque:56,tormenta:64,vacio:40});
+export const LOTUS_GOAL=3,FOLLOW_GOAL=600,BOLT_GOAL=4,ECHO_GOAL=1;
+// The portal opens after the theme in tutti: at least four seconds of Plenitud first.
+export const PORTAL_WAIT=4000;
+// Whether a chapter's moment was lived, from its saved progress and the moments of journey-moments.js.
+export function momentLived(id,progress={},moments={}){
+ if(id==='llanura')return moments.faro?.reached===true;
+ if(id==='lago')return (moments.lotos?.open||[]).filter(Boolean).length>=LOTUS_GOAL;
+ if(id==='bosque')return moments.companion===true&&(progress.walk||0)>=FOLLOW_GOAL;
+ if(id==='tormenta')return (progress.bolts||0)>=BOLT_GOAL;
+ if(id==='vacio')return (progress.echoes||0)>=ECHO_GOAL;
+ return true;}
+export const barsLived=(id,progress={})=>(progress.bars||0)>=(CHAPTER_BARS[id]||0);
 export function stateCap(state,id){const cap=STATE_CAP[state]??null;return cap!=null&&id==='vacio'?Math.min(cap,VOID_CAP):cap;}
 export function normalizeChapters(j,inWorld=false){
  const q=j&&typeof j==='object'?j:{},chapter=Number.isInteger(q.chapter)&&q.chapter>=0&&q.chapter<CHAPTERS.length?q.chapter:inWorld?1:0;
- const done={},notes={};for(const id of CHAPTERS){if(q.done?.[id]===true)done[id]=true;const n=Array.isArray(q.notes?.[id])?q.notes[id].filter(m=>Number.isFinite(m)&&m>=24&&m<=96).slice(-16):[];if(n.length)notes[id]=n;}
- return {chapter,done,notes};}
+ const done={},notes={},steps={},progress={},count=(v,max)=>Number.isFinite(v)&&v>0?Math.min(max,v):0;
+ for(const id of CHAPTERS){if(q.done?.[id]===true)done[id]=true;const raw=Array.isArray(q.notes?.[id])?q.notes[id]:[],keep=raw.map((m,i)=>Number.isFinite(m)&&m>=24&&m<=96?i:-1).filter(i=>i>=0).slice(-16),n=keep.map(i=>raw[i]);if(n.length)notes[id]=n;
+  // When each note sounded (the music's sixteenth), kept beside the notes so the finale plays your rhythm; older saves have none.
+  const st=Array.isArray(q.steps?.[id])&&q.steps[id].length===raw.length?keep.map(i=>q.steps[id][i]):null;if(n.length&&st?.every(v=>Number.isInteger(v)&&v>=0))steps[id]=st;
+  const p=q.progress?.[id],out={};if(p&&typeof p==='object'){for(const [k,max] of [['bars',9999],['walk',99999],['bolts',999],['echoes',999]]){const v=count(p[k],max);if(v)out[k]=k==='bars'||k==='walk'?Math.round(v*10)/10:Math.floor(v);}}if(Object.keys(out).length)progress[id]=out;}
+ return {chapter,done,notes,steps,progress};}
 // The state of a chapter from its on-time hits and whether it is done.
 export function chapterState(hits,done){return done?'plenitud':hits>0?'pertenencia':'llegada';}
 // The nearest place of a biome, searched in rings around a point on the World's grid. Never the sea, except for the
@@ -42,7 +65,11 @@ export function initialize(runtime){
  let owner=null,hits=0,lastPulse=-1e9,portal=null;const storm=[],echoes=[];const moments={bolts:0,echoes:0};
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  const journey=()=>runtime.S.journey||{};
- function own(){if(owner!==runtime.S){owner=runtime.S;const j=journey();Object.assign(j,normalizeChapters(j,runtime.inWorld?.()));hits=0;portal=null;storm.length=0;echoes.length=0;lastPulse=performance.now();}return journey();}
+ function own(){if(owner!==runtime.S){owner=runtime.S;const j=journey();Object.assign(j,normalizeChapters(j,runtime.inWorld?.()));hits=0;portal=null;storm.length=0;echoes.length=0;lastPulse=lastTick=performance.now();lastSpot=null;}return journey();}
+ let lastTick=0,lastSpot=null;
+ const progress=id=>{const j=own();return (j.progress[id]||={});};
+ const ready=id=>momentLived(id,progress(id),journey().moments||{})&&barsLived(id,progress(id));
+ const portalOpen=()=>!!portal&&performance.now()>=portal.at;
  const active=()=>!!(runtime.journeyQuiet?.()&&runtime.inWorld?.()&&(runtime.S.layer||'superficie')==='superficie');
  const current=()=>CHAPTERS[own().chapter];
  const biomeId=()=>runtime.BIOMES?.[Math.max(0,runtime.curZone)]?.id;
@@ -52,20 +79,24 @@ export function initialize(runtime){
  const inChapter=()=>active()&&WORLD_CHAPTERS.includes(current())&&biomeId()===current();
  function stateNow(){if(!active())return null;const j=own();const bars=(performance.now()-lastPulse)/1000/((runtime.SIX||.15)*16);if(bars>SILENCE_BARS&&!portal)return 'silencio';return chapterState(inChapter()?hits:0,!!j.done[current()]);}
  // Every pulse of the player: on-time theme notes are remembered for the finale.
- function pulse(on,midi){lastPulse=performance.now();if(!on||!inChapter())return;hits++;const j=own(),id=current();(j.notes[id]||=[]).push(midi);runtime.journeyMomentNote?.(id,midi);if(j.notes[id].length>16)j.notes[id].splice(0,j.notes[id].length-16);
-  // The Tormenta: every note on time brings a bolt down on the beat.
-  if(id==='tormenta'&&runtime.ac){storm.push(runtime.ac.currentTime);moments.bolts++;}
+ function pulse(on,midi,step){lastPulse=performance.now();if(!on||!inChapter())return;hits++;const j=own(),id=current(),notes=(j.notes[id]||=[]);
+  // Steps stay beside the notes only while every note has one.
+  const steps=j.steps[id]||(notes.length?null:(j.steps[id]=[]));notes.push(midi);if(steps){if(Number.isInteger(step)&&step>=0)steps.push(step);else delete j.steps[id];}
+  runtime.journeyMomentNote?.(id,midi);if(notes.length>16){notes.splice(0,notes.length-16);j.steps[id]?.splice(0,j.steps[id].length-16);}
+  // The Tormenta: every note on time brings your own bolt down on the beat; once yours fall, the storm's stop.
+  if(id==='tormenta'&&runtime.ac){storm.push(runtime.ac.currentTime);moments.bolts++;progress(id).bolts=(progress(id).bolts||0)+1;}
   // The Vacío: after eight notes the creatures that followed you come back and repeat each one, a bar later.
   if(id==='vacio'&&hits>VOID_ECHO_AFTER)echo(midi);}
- function echo(midi){const ac=runtime.ac,bar=(runtime.SIX||.15)*16;moments.echoes++;echoes.push({at:performance.now()+bar*1000,midi});if(echoes.length>8)echoes.shift();
+ function echo(midi){const ac=runtime.ac,bar=(runtime.SIX||.15)*16;moments.echoes++;progress('vacio').echoes=(progress('vacio').echoes||0)+1;echoes.push({at:performance.now()+bar*1000,midi});if(echoes.length>8)echoes.shift();
   if(runtime.S.sound&&ac&&runtime.bus)runtime.soon?.(t=>{const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.setValueAtTime(440*2**((midi+12-69)/12),t+bar);g.gain.setValueAtTime(.0001,t+bar);g.gain.exponentialRampToValueAtTime(.07,t+bar+.02);g.gain.exponentialRampToValueAtTime(.0001,t+bar+.9);o.connect(g);g.connect(runtime.bus);o.start(t+bar);o.stop(t+bar+1);},'player');}
  // The whole theme, once, in tutti: the cube's voice with its octave below.
  function plenitude(){const ac=runtime.ac;if(!runtime.S.sound||!ac||!runtime.bus)return;runtime.soon?.(t=>{const MU=runtime.MU||{},scale=MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,eighth=(runtime.SIX||.15)*2;let at=t;for(const [d,l]of THEME){const m=themePitch(d,scale,MU.tr||0);playCello(ac,runtime.bus,at,m,l*eighth,.15);playCello(ac,runtime.bus,at,m-12,l*eighth,.08);at+=l*eighth;}},'player');}
- // A completed theme in the chapter's biome: Plenitud, and the portal to the next chapter.
- function phrase(){if(!inChapter())return false;const j=own(),id=current();if(j.done[id]||(id==='vacio'&&hits<VOID_PHRASE))return false;j.done[id]=true;if(runtime.save()===false){delete j.done[id];return false;}
+ // A completed theme in the chapter's biome, once its moment is lived and its bars played: Plenitud, and the portal to
+ // the next chapter after the theme sounds in tutti.
+ function phrase(){if(!inChapter())return false;const j=own(),id=current();if(j.done[id]||(id==='vacio'&&hits<VOID_PHRASE)||!ready(id))return false;j.done[id]=true;if(runtime.save()===false){delete j.done[id];return false;}
   // The Tormenta's Plenitud: a bar of bolts, one on every beat.
   if(id==='tormenta'&&runtime.ac){const beat=(runtime.SIX||.15)*4;for(let i=1;i<=4;i++)storm.push(runtime.ac.currentTime+i*beat);moments.bolts+=4;}
-  plenitude();runtime.enterFx=Math.max(runtime.enterFx||0,1);portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:performance.now()};return true;}
+  plenitude();runtime.enterFx=Math.max(runtime.enterFx||0,1);const theme=THEME.reduce((s,[,l])=>s+l,0)*(runtime.SIX||.15)*2*1000;portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:performance.now()+Math.max(PORTAL_WAIT,theme)};return true;}
  // Through the portal: the next chapter's biome, found on the map near here.
  function travel(){const j=own();if(j.chapter>=CHAPTERS.length-1)return false;const next=j.chapter+1,id=CHAPTERS[next];
   // The festival build ends after the Lago, in the Refugio, with your phrase.
@@ -73,21 +104,28 @@ export function initialize(runtime){
   if(id==='refugio'){j.chapter=next;portal=null;finaleAsked=true;runtime.save();if(runtime.journeyFinale)runtime.journeyFinale();else runtime.landHouse?.();return true;}
   const spot=find(id,{x:runtime.S.wx,y:runtime.S.wy});if(!spot)return false;
   const before={chapter:j.chapter,wx:runtime.S.wx,wy:runtime.S.wy};j.chapter=next;runtime.S.wx=spot.x;runtime.S.wy=spot.y;if(runtime.save()===false){j.chapter=before.chapter;runtime.S.wx=before.wx;runtime.S.wy=before.wy;return false;}
-  portal=null;hits=0;storm.length=0;echoes.length=0;lastPulse=performance.now();runtime.enterFx=1;return true;}
+  portal=null;hits=0;storm.length=0;echoes.length=0;lastPulse=performance.now();lastSpot=null;runtime.journeyPulseReset?.();runtime.enterFx=1;return true;}
  // Where the chapter's biome is, refreshed every few seconds while the player is away from it.
  let way=null,wayAt=-1e9,wayFor='';
  function beacon(){if(!WORLD_CHAPTERS.includes(current())||inChapter()||portal||biomeId()===current())return null;const now=performance.now();if(wayFor!==current()||now-wayAt>3000){wayAt=now;wayFor=current();way=find(current(),{x:runtime.S.wx,y:runtime.S.wy},300,30);}return way;}
  // Entering the World in the Journey starts chapter 1 in the Llanura.
- function arrive(){const j=own();if(!active()||j.chapter!==0)return;j.chapter=1;if(biomeId()!=='llanura'||familyHere()!==CHAPTER_FAMILIES.llanura[0]){const spot=find('llanura',{x:runtime.S.wx,y:runtime.S.wy});if(spot){runtime.S.wx=spot.x;runtime.S.wy=spot.y;}}runtime.save();}
+ function arrive(){const j=own();if(!active()||j.chapter!==0)return;j.chapter=1;runtime.journeyPulseReset?.();if(biomeId()!=='llanura'||familyHere()!==CHAPTER_FAMILIES.llanura[0]){const spot=find('llanura',{x:runtime.S.wx,y:runtime.S.wy});if(spot){runtime.S.wx=spot.x;runtime.S.wy=spot.y;}}runtime.save();}
  let finaleAsked=false;
  function tick(){if(!active()){if(runtime.MU){runtime.MU.journeyCap=null;runtime.MU.journeyFloor=null;}return;}arrive();
   // A Journey saved in the Refugio before its finale finished plays it again.
-  if(current()==='refugio'&&!own().finished&&!finaleAsked&&runtime.journeyFinale){finaleAsked=true;runtime.journeyFinale();return;}const st=stateNow();if(runtime.MU){runtime.MU.journeyCap=st?stateCap(st,current()):null;runtime.MU.journeyFloor=inChapter()?stateFloor(st,current()):null;}
-  if(storm.length&&runtime.MU&&!runtime.MU.boltAt&&runtime.ac&&storm[0]<=runtime.ac.currentTime+.02){runtime.MU.boltAt=Math.max(storm.shift(),runtime.ac.currentTime);}
-  if(portal&&Math.hypot(runtime.S.wx-portal.x,runtime.S.wy-portal.y)<34)travel();}
+  if(current()==='refugio'&&!own().finished&&!finaleAsked&&runtime.journeyFinale){finaleAsked=true;runtime.journeyFinale();return;}const st=stateNow(),id=current(),here=inChapter();if(runtime.MU){runtime.MU.journeyCap=st?stateCap(st,id):null;runtime.MU.journeyFloor=here?stateFloor(st,id):null;runtime.MU.journeyOwnBolts=here&&id==='tormenta'&&(progress(id).bolts||0)>0;}
+  // The stay: bars count only while you play in the chapter; in the Bosque, the walk with the creature.
+  const now=performance.now(),dt=Math.max(0,Math.min(.25,(now-lastTick)/1000));lastTick=now;
+  if(here&&!own().done[id]&&st!=='silencio'){const p=progress(id);p.bars=Math.min(9999,(p.bars||0)+dt/((runtime.SIX||.15)*16));
+   if(id==='bosque'&&journey().moments?.companion&&lastSpot)p.walk=Math.min(99999,(p.walk||0)+Math.min(40,Math.hypot(runtime.S.wx-lastSpot.x,runtime.S.wy-lastSpot.y)));}
+  lastSpot={x:runtime.S.wx,y:runtime.S.wy};
+  // A chapter kept before a reload, but not yet left: its portal opens again beside you.
+  if(here&&own().done[id]&&!portal)portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:now};
+  if(storm.length&&runtime.MU&&!runtime.MU.boltAt&&runtime.ac&&storm[0]<=runtime.ac.currentTime+.02){runtime.MU.boltAt=Math.max(storm.shift(),runtime.ac.currentTime);runtime.MU.boltMine=true;}
+  if(portalOpen()&&Math.hypot(runtime.S.wx-portal.x,runtime.S.wy-portal.y)<34)travel();}
  // The portal in the World, and seven small marks on the Line's right end: gold for done, white for here.
  function draw(c,W,H,t){tick();if(!active()){runtime.drawJourneyMoments?.(c,W,H,t,null,false);return;}if(openSurface('.modal:not([hidden])'))return;const j=own(),still=calm();runtime.drawJourneyMoments?.(c,W,H,t,current(),inChapter());c.save();
-  if(portal){const x=W/2+(portal.x-(runtime.camX??runtime.S.wx)),y=H/2+(portal.y-(runtime.camY??runtime.S.wy)),grow=Math.min(1,(performance.now()-portal.at)/900),r=22*grow;
+  if(portalOpen()){const x=W/2+(portal.x-(runtime.camX??runtime.S.wx)),y=H/2+(portal.y-(runtime.camY??runtime.S.wy)),grow=Math.min(1,(performance.now()-portal.at)/900),r=22*grow;
    const g=c.createRadialGradient(x,y,0,x,y,r*2.4);g.addColorStop(0,'rgba(240,210,122,.35)');g.addColorStop(1,'rgba(240,210,122,0)');c.fillStyle=g;c.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8);
    c.strokeStyle='#f0d27a';c.lineWidth=1.5;for(let i=0;i<3;i++){c.globalAlpha=.9-i*.25;c.beginPath();c.arc(x,y,r*(1-i*.25),still?0:t/600+i,(still?0:t/600+i)+Math.PI*1.6);c.stroke();}}
   // The creatures of the Vacío around the cube: they light up when they repeat a note.
@@ -101,5 +139,5 @@ export function initialize(runtime){
   WORLD_CHAPTERS.forEach((id,i)=>{const x=x1-(WORLD_CHAPTERS.length-1-i)*gap,isHere=current()===id;c.fillStyle=j.done[id]?'#f0d27a':isHere?'#ffffff':'#ffffff40';c.globalAlpha=isHere&&!j.done[id]&&!still?.6+.4*Math.sin(t/300):1;c.fillRect(Math.round(x)-1,y+9,3,3);});
   c.restore();}
  Object.defineProperties(runtime,{journeyChapterPulse:{get:()=>pulse},journeyPhrase:{get:()=>phrase},journeyTravel:{get:()=>travel},drawJourneyChapters:{get:()=>draw},
-  journeyChapter:{get:()=>()=>({moments:{...moments,storm:storm.length},beacon:!!(active()&&beacon()),chapter:own().chapter,id:current(),state:stateNow(),hits,portal:portal?{x:portal.x,y:portal.y}:null,done:{...own().done},notes:Object.fromEntries(Object.entries(own().notes).map(([k,v])=>[k,[...v]]))})}});
+  journeyChapter:{get:()=>()=>({moments:{...moments,storm:storm.length},progress:{...progress(current())},lived:momentLived(current(),progress(current()),journey().moments||{}),bars:barsLived(current(),progress(current())),portalOpen:portalOpen(),beacon:!!(active()&&beacon()),chapter:own().chapter,id:current(),state:stateNow(),hits,portal:portal?{x:portal.x,y:portal.y}:null,done:{...own().done},notes:Object.fromEntries(Object.entries(own().notes).map(([k,v])=>[k,[...v]]))})}});
 }

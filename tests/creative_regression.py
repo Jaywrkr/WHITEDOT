@@ -6,6 +6,14 @@ ROOT=Path(__file__).resolve().parents[1]
 flows=sorted(p for p in (ROOT/'tests').glob('*smoke.py') if p.name!='offline_smoke.py')
 # The principal existing journey also validates controls, Studio and reload.
 if ROOT/'tests/smoke.py' not in flows:flows.append(ROOT/'tests/smoke.py')
+# CI splits the catalogue across runners (WHITEDOT_BROWSER_SHARD=index/total): every flow runs in exactly one shard,
+# each runner has its own CPU, so flows no longer race each other on one shared machine.
+if os.environ.get('WHITEDOT_BROWSER_SHARD'):
+ try:shard,total=map(int,os.environ['WHITEDOT_BROWSER_SHARD'].split('/'))
+ except ValueError:raise SystemExit('WHITEDOT_BROWSER_SHARD must be index/total')
+ if not 1<=shard<=total<=len(flows):raise SystemExit('Invalid browser shard')
+ flows=flows[shard-1::total]
+ print(f'Browser shard {shard}/{total}: {len(flows)} flows',flush=True)
 def run(path):
  result=subprocess.run([sys.executable,str(ROOT/'scripts/browser-processes.py'),'--timeout=145',sys.executable,str(path)],cwd=ROOT,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=150)
  (Path('/tmp')/('whitedot-review-'+path.stem+'.txt')).write_text(result.stdout)

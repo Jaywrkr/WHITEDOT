@@ -2,7 +2,7 @@ name: Universe foundation checks
 on:
   pull_request:
   push:
-    branches: [main, 'feat/posmusica-08-cierre', 'mejora/10-cierre', 'feat/ecosistemas-reactivos', 'feat/reencuentro-06-auditoria', 'feat/reencuentro-07-habitantes', 'feat/reencuentro-08-pulsos', 'integration/wow-10', 'feat/wow-20-regresos']
+    branches: [main]
     # Documentation-only updates do not change the validated runtime.
     # Pull requests still run every suite without path filters.
     paths-ignore:
@@ -20,15 +20,24 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - run: npm run audit:release
       - run: npm test
       - run: node scripts/reencuentro-audit.mjs /tmp/reencuentro-audit.json
       - run: npm run audit:universe -- 2000 2
       - run: npm run audit:universe -- 2000 2 2 classic
+  # The browser catalogue is split in four shards with one worker each: on one shared runner with two workers it took
+  # about 38 of its 40 minutes and different flows lost races every run.
   browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    env:
+      WHITEDOT_BROWSER_SHARD: ${{ matrix.shard }}/4
+      WHITEDOT_BROWSER_WORKERS: '1'
     steps:
       # pwa_updates_smoke.py archives the real pre-closure release from history.
       - uses: actions/checkout@v4
@@ -36,7 +45,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -56,7 +65,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'

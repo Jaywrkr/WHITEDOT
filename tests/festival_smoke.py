@@ -34,8 +34,10 @@ try:
    assert page.evaluate("localStorage.getItem('pixel-blanco-v4')")==MAIN,"the player's save is untouched"
    page.evaluate("()=>{const r=__r,ids=r.BIOMES.map(b=>b.id);for(let d=1;d<80;d++)for(let a=0;a<16;a++){const x=Math.round(r.S.wx+Math.cos(a/16*6.283)*d*300),y=Math.round(r.S.wy+Math.sin(a/16*6.283)*d*300);if(ids[r.biomeOfPos(x,y)]==='lago'&&!r.regionOfPos(x,y)?.sea){r.S.wx=x;r.S.wy=y;return;}}}")
    page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='lago'",timeout=8000);page.evaluate(hide)
+   # The Lago's moment (three lotuses) and its bars, lived before.
+   page.wait_for_function("!!__r.journeyMoments().lotos");page.evaluate("()=>{const s=__r.S;s.journey.moments.lotos.open=[true,true,true,false,false];s.journey.progress.lago={bars:99};}")
    for i in range(6):page.evaluate(ON);page.wait_for_timeout(320)
-   page.wait_for_function("__r.journeyChapter().portal",timeout=12000)
+   page.wait_for_function("__r.journeyChapter().portalOpen",timeout=16000)
    page.evaluate("()=>{const r=__r,p=r.journeyChapter().portal;r.S.wx=p.x;r.S.wy=p.y;}");page.wait_for_function("__r.journeyFinaleState().running",timeout=5000)
    st=page.evaluate('__r.journeyFinaleState()');assert st['notes']==12+12,st
    page.wait_for_timeout(2500);page.locator('#journeyFinale').click()

@@ -1,3 +1,4 @@
+import {calmMotion} from './frame-state.js';
 import {hashKey} from './universe-regions.js';
 // The rare moments of the universe (docs/UNIVERSO.md, phase 6): one per region, something that happens seldom and is
 // remembered. Whether a bar brings one comes from a hash of the region and the bar, never the old random sequence;
@@ -32,7 +33,7 @@ const DRAW={
 };
 export function initialize(runtime){
  let active=null,lastBar=null;const seen={};
- const calm=()=>!!(runtime.S.reducedMotion);
+ const calm=()=>calmMotion(runtime.S);
  function record(id){const u=(runtime.S.universe||={});u.rare||={};const before=u.rare[id];u.rare[id]=(before||0)+1;seen[id]=(seen[id]||0)+1;if(runtime.save()===false){if(before)u.rare[id]=before;else delete u.rare[id];}}
  function start(id,now){if(!DRAW[id])return false;active={id,at:now};record(id);return true;}
  // Called by the layers each frame with the region here, its key and the bar count.
