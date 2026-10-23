@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow as glowNow,worldCamera} from './journey-games.js';
+import {beatGlow as glowNow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
 // «Pégate» (prototype for the Llanura, chosen by Jay on 23 October): things around the cube beat with the music; a
 // pulse on time next to one sticks it to the cube, it sounds and fills the bar at the top. Off time nothing moves.
 // Small things are many and fill a little, big ones are few and fill a lot. When the bar is full a gold cloud comes
@@ -44,7 +44,7 @@ export function initialize(runtime){
   if(before<STICK_GOAL&&state.points>=STICK_GOAL)arrive();}
  // The bar is full: the gold cloud comes beside the cube.
  function arrive(){const s=own();if(s.cloud)return;s.cloud={x:Math.round(runtime.S.wx+STICK_CLOUD_GAP),y:Math.round(runtime.S.wy-STICK_CLOUD_GAP*.5)};cloudPulse=1;
-  setTimeout(()=>runtime.toast?.('La nube dorada llegó: tócala a tiempo.',{level:2,ttl:15000,coalesce:false,force:true}),600);}
+  chapterToast(runtime,'llanura','La nube dorada llegó: tócala a tiempo.');}
  function swallow(){const s=own();if(s.swallowed)return 'done';s.swallowed=true;if(runtime.save?.()===false){s.swallowed=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<5;i++)pop(8,i*.12);runtime.journeyComplete?.('llanura');return 'swallow';}
  // Every pulse of the player in the Llanura (journey-pulse.js). Only on time something happens: off time the things stay
  // where they are and only the cube shivers.
@@ -54,7 +54,7 @@ export function initialize(runtime){
   const list=near(reach());if(!list.length){streak=0;return null;}
   streak++;list.slice(0,streak>=3?3:1).forEach(stick);runtime.save?.();return 'stick';}
  // Once per save, the only rule in one line.
- function tell(){const s=own();if(hinted||s.hinted)return;hinted=true;s.hinted=true;runtime.save?.();setTimeout(()=>runtime.toast?.('Toca a tiempo cerca de lo que brilla: se pega.',{level:2,ttl:12000,coalesce:false,force:true}),1500);}
+ function tell(){if(hinted)return;hinted=true;sayOnce(runtime,own(),'hinted','Toca a tiempo cerca de lo que brilla: se pega.','llanura');}
  // The cloud stays beside the cube while you walk.
  function tick(){const s=own();if(full()&&!s.cloud)arrive();if(s.cloud){const dx=runtime.S.wx+STICK_CLOUD_GAP-s.cloud.x,dy=runtime.S.wy-STICK_CLOUD_GAP*.5-s.cloud.y;if(Math.hypot(dx,dy)>4){s.cloud.x+=dx*.08;s.cloud.y+=dy*.08;}}
   // The music grows with the bar: what sticks to you plays.

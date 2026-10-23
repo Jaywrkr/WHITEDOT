@@ -135,7 +135,7 @@ Todo se oculta, no se borra; los datos y lo comprado se conservan y vuelven en e
 | Lago | Encadenar | Una onda enciende racimos de flores en cadena; la flor dorada | Prototipo, alpha.138 |
 | Bosque | Rodear | Una estela que cierra un círculo alrededor de luciérnagas; la criatura se une | Prototipo, alpha.139 |
 | Tormenta | Bailar | Estar en el círculo del rayo y devolverlo a tiempo; el ojo de la tormenta | Prototipo, alpha.140 |
-| Vacío | Soltar | Lo que pegaste se vuelve estrellas y el cubo vuelve a ser pequeño | Pendiente |
+| Vacío | Soltar | Lo que pegaste se vuelve estrellas que cantan tu nota; el cubo vuelve a su tamaño; tu luz dorada | Prototipo, alpha.141 |
 | Refugio | Escuchar | Tu viaje suena entero | Hecho |
 - **Sin monedas en el Viaje** (decisión de Jay, 23 de octubre): las chispas son del Mundo libre; el Camino del Viaje da luz sin chispas y los cristales del Mundo no aparecen en los capítulos.
 - **Fase 7 de la auditoría · Pruebas con personas** (alpha.136): notas en el teléfono con `?prueba=1` y guía de las sesiones en [Pruebas con personas](PRUEBAS_CON_PERSONAS.md). Faltan las sesiones.

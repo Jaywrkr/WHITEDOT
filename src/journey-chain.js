@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
 // «Encadena» (the Lago, chapter 2 of the Journey's games, Jay's decision of 23 October): flowers float on the water and
 // breathe with the beat. A pulse on time sends a ripple from the cube; every flower it reaches lights up, sounds a note
 // a step higher, and sends its own ripple to the flowers beside it. Longer chains fill the bar faster. Off time nothing
@@ -37,7 +37,7 @@ export function initialize(runtime){
   if(step<CHAIN_STEPS&&waves.length<40)waves.push({x:f.x,y:f.y,r:CHAIN_NEXT,step:step+1,at:performance.now()+CHAIN_WAVE_MS*.6});
   if(before<CHAIN_GOAL&&state.points>=CHAIN_GOAL)arrive();}
  function arrive(){const s=own();if(s.flower)return;s.flower={x:Math.round(runtime.S.wx+CHAIN_FLOWER_GAP),y:Math.round(runtime.S.wy-CHAIN_FLOWER_GAP*.5)};flowerPulse=1;runtime.save?.();
-  setTimeout(()=>runtime.toast?.('La flor dorada llegó: tócala a tiempo.',{level:2,ttl:15000,coalesce:false,force:true}),600);}
+  chapterToast(runtime,'lago','La flor dorada llegó: tócala a tiempo.');}
  function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(runtime.save?.()===false){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=1;i<=6;i++)note(i);runtime.journeyComplete?.('lago');return 'open';}
  // Only on time: a ripple from the cube. Off time the cube shivers and nothing else moves.
  function pulse(on){if(!active())return null;own();if(!on){misses++;shiver=1;return 'miss';}
@@ -53,7 +53,7 @@ export function initialize(runtime){
   if(s.flower){const dx=runtime.S.wx+CHAIN_FLOWER_GAP-s.flower.x,dy=runtime.S.wy-CHAIN_FLOWER_GAP*.5-s.flower.y;if(Math.hypot(dx,dy)>4){s.flower.x+=dx*.08;s.flower.y+=dy*.08;}}
   const MU=runtime.MU,p=chainProgress(s.points);if(MU&&p>0){MU.journeyFloor=Math.max(MU.journeyFloor||0,.2+.6*p);if(MU.journeyCap!=null)MU.journeyCap=Math.max(MU.journeyCap,.4+.6*p);}}
  // Under the cube: the water dims, flowers breathe with the beat, lit ones glow gold, ripples spread.
- function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Toca a tiempo junto a una flor: la onda las enciende.');tick();
+ function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Toca a tiempo junto a una flor: la onda las enciende.','lago');tick();
   const still=calm(),cam=worldCamera(runtime),sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),glow=beatGlow(runtime),gold=runtime.GOLD||'#f0d27a',now=performance.now();
   c.save();c.globalAlpha=.4;c.fillStyle='#000';c.fillRect(0,0,W,H);
   for(const f of flowers(cam.x,cam.y,Math.max(W,H)*.75)){const x=sx(f.x),y=sy(f.y),on=lit.has(f.id),near=!on&&Math.hypot(f.x-runtime.S.wx,f.y-runtime.S.wy)<=CHAIN_FIRST,z=f.r*(1+(on?0:.25*glow));

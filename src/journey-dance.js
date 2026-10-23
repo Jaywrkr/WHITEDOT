@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
 // «Baila» (the Tormenta, chapter 4 of the Journey's games, Jay's decision of 23 October): the storm marks a circle on
 // the ground near the cube, and a bolt will fall there in a bar and a half. Step into the circle and pulse on time: you
 // send the bolt back to the sky. Each one returned in a row is worth more. A bolt you miss falls white and the row
@@ -28,7 +28,7 @@ export function initialize(runtime){
  function thunder(x,y,mine){runtime.flash=Math.max(runtime.flash||0,mine?.8:.5);runtime.cameraKick?.(0,mine?2:1.5);if(runtime.S.sound&&runtime.ac)runtime.now?.(q=>runtime.thunder?.(q,{x,y}));}
  function spawn(){const s=own();target={...danceSpot(s.count,{x:runtime.S.wx,y:runtime.S.wy}),at:performance.now(),n:s.count};s.count++;}
  function arrive(){const s=own();if(s.eye)return;target=null;s.eye={x:Math.round(runtime.S.wx+DANCE_EYE_GAP),y:Math.round(runtime.S.wy-DANCE_EYE_GAP*.5)};eyePulse=1;runtime.save?.();
-  setTimeout(()=>runtime.toast?.('El ojo de la tormenta llegó: tócalo a tiempo.',{level:2,ttl:15000,coalesce:false,force:true}),600);}
+  chapterToast(runtime,'tormenta','El ojo de la tormenta llegó: tócalo a tiempo.');}
  function close(){const s=own();if(s.closed)return 'done';s.closed=true;if(runtime.save?.()===false){s.closed=false;return null;}runtime.enterFx=1;thunder(runtime.S.wx,runtime.S.wy,true);runtime.journeyComplete?.('tormenta');return 'close';}
  // Only on time, and only inside the circle: the bolt goes back up. Off time the cube shivers.
  function pulse(on){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}
@@ -46,7 +46,7 @@ export function initialize(runtime){
  // A discharge seen from above: branches out from where it falls.
  function bolt(c,x,y,seed,k,ink){c.globalAlpha=Math.max(0,1-k);c.strokeStyle=ink;c.lineWidth=2;for(let b=0;b<3;b++){const dir=hashKey(seed+':'+b)*6.283;c.beginPath();c.moveTo(x,y);for(let i=1;i<=6;i++){const d=i*10,w=(hashKey(seed+':'+b+':'+i)-.5)*14;c.lineTo(x+Math.cos(dir)*d-Math.sin(dir)*w,y+Math.sin(dir)*d+Math.cos(dir)*w);}c.stroke();}}
  // Under the cube: the place dims; the circle waits, filling as its bolt comes; bolts that fell or went back up.
- function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Entra en el círculo y toca a tiempo: devuelves el rayo.');tick();
+ function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Entra en el círculo y toca a tiempo: devuelves el rayo.','tormenta');tick();
   const still=calm(),cam=worldCamera(runtime),sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),glow=beatGlow(runtime),gold=runtime.GOLD||'#f0d27a',now=performance.now();
   c.save();c.globalAlpha=.4;c.fillStyle='#000';c.fillRect(0,0,W,H);
   if(target){const x=sx(target.x),y=sy(target.y),k=Math.min(1,(now-target.at)/(barMs()*DANCE_LIFE_BARS)),here=inside();

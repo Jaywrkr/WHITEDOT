@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
 // «Rodea» (the Bosque, chapter 3 of the Journey's games, Jay's decision of 23 October): the cube leaves a trail of light
 // for a few seconds. Walk around a group of fireflies until the trail closes (the closing line turns gold) and pulse
 // on time: every firefly inside is caught. Each one is worth as many as were caught together, up to five, so wide
@@ -37,7 +37,7 @@ export function initialize(runtime){
  // Caught together, they sound together: a chord, one tone per firefly.
  function chord(count){if(!audible())return;const ct=runtime.chordTones?.()||[60,64,67];runtime.soon?.(t=>{for(let k=0;k<Math.min(5,count);k++){let m=ct[k%ct.length]+12*Math.floor(k/ct.length)+12;while(m>88)m-=12;runtime.pluck?.(m,t+k*.03,runtime.vel?.(.07)??.07,2);}},'player');}
  function arrive(){const s=own();if(s.friend)return;s.friend={x:Math.round(runtime.S.wx-LASSO_FRIEND_GAP),y:Math.round(runtime.S.wy+LASSO_FRIEND_GAP*.4)};friendPulse=1;runtime.save?.();
-  setTimeout(()=>runtime.toast?.('La criatura del bosque llegó: tócala a tiempo.',{level:2,ttl:15000,coalesce:false,force:true}),600);}
+  chapterToast(runtime,'bosque','La criatura del bosque llegó: tócala a tiempo.');}
  // The creature joins: it is the companion of journey-moments.js from now on.
  function join(){const s=own();if(s.joined)return 'done';s.joined=true;const m=runtime.S.journey.moments||(runtime.S.journey.moments={});const had=m.companion;m.companion=true;
   if(runtime.save?.()===false){s.joined=false;if(!had)delete m.companion;return null;}runtime.enterFx=1;runtime.flash=1;chord(5);runtime.journeyComplete?.('bosque');return 'join';}
@@ -60,7 +60,7 @@ export function initialize(runtime){
   if(s.friend&&!s.joined){const dx=runtime.S.wx-LASSO_FRIEND_GAP-s.friend.x,dy=runtime.S.wy+LASSO_FRIEND_GAP*.4-s.friend.y;if(Math.hypot(dx,dy)>4){s.friend.x+=dx*.08;s.friend.y+=dy*.08;}}
   const MU=runtime.MU,q=lassoProgress(s.points);if(MU&&q>0){MU.journeyFloor=Math.max(MU.journeyFloor||0,.2+.6*q);if(MU.journeyCap!=null)MU.journeyCap=Math.max(MU.journeyCap,.4+.6*q);}}
  // Under the cube: the forest dims, fireflies blink with the beat, the trail glows and its closing line turns gold.
- function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Da una vuelta alrededor de las luciérnagas y toca a tiempo.');tick();
+ function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Da una vuelta alrededor de las luciérnagas y toca a tiempo.','bosque');tick();
   const still=calm(),cam=worldCamera(runtime),sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),glow=beatGlow(runtime),gold=runtime.GOLD||'#f0d27a',now=performance.now();
   c.save();c.globalAlpha=.4;c.fillStyle='#000';c.fillRect(0,0,W,H);
   const loop=loopNow(now),inside=loop?new Set(fireflies(runtime.S.wx,runtime.S.wy,600).filter(f=>insideLoop(loop,f.x,f.y)).map(f=>f.id)):new Set();

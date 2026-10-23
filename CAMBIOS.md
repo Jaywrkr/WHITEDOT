@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.140**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.141**. Las entradas describen su revisión, no certifican producción.
+
+## Viaje por juegos · Vacío «Suelta» · alpha.141
+
+Rama `claude/viaje-vacio`, sobre `claude/viaje-tormenta` (alpha.140, dependencia explícita). Con ella el Viaje entero se juega con la regla de Jay: solo a tiempo pasa algo.
+
+- **Vacío · soltar:** el cubo llega cargando lo que se le pegó en la Llanura (entre 12 y 24 cosas) y algo más grande. Cada pulso a tiempo suelta una: sube, se vuelve estrella donde estás y, un compás después, canta tu nota una octava arriba. Las estrellas se unen en una constelación. El cubo vuelve a su tamaño.
+- **Tu luz dorada** llega junto al cubo al soltarlo todo; un pulso a tiempo abre el camino al Refugio.
+- En este Vacío las criaturas no repiten tus notas: lo hacen tus estrellas.
+- Las pistas de cada capítulo se descartan si ya no estás en él cuando les toca salir.
+- Pruebas: `tests/journey-release.mjs` y `tests/journey_release_smoke.py`.
 
 ## Viaje por juegos · Tormenta «Baila» · alpha.140
 

@@ -92,7 +92,8 @@ export function initialize(runtime){
   // With «Baila» (journey-dance.js) your bolts are the ones you return from its circles.
   if(id==='tormenta'&&runtime.ac&&!runtime.journeyGame?.('tormenta')){storm.push(runtime.ac.currentTime);moments.bolts++;progress(id).bolts=(progress(id).bolts||0)+1;}
   // The Vacío: after eight notes the creatures that followed you come back and repeat each one, a bar later.
-  if(id==='vacio'&&hits>VOID_ECHO_AFTER)echo(midi);}
+  // With «Suelta» (journey-release.js) your stars sing your notes back instead of the creatures.
+  if(id==='vacio'&&hits>VOID_ECHO_AFTER&&!runtime.journeyGame?.('vacio'))echo(midi);}
  function echo(midi){const ac=runtime.ac,bar=(runtime.SIX||.15)*16;moments.echoes++;progress('vacio').echoes=(progress('vacio').echoes||0)+1;echoes.push({at:performance.now()+bar*1000,midi});if(echoes.length>8)echoes.shift();
   if(runtime.S.sound&&ac&&runtime.bus)runtime.soon?.(t=>{const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.setValueAtTime(440*2**((midi+12-69)/12),t+bar);g.gain.setValueAtTime(.0001,t+bar);g.gain.exponentialRampToValueAtTime(.07,t+bar+.02);g.gain.exponentialRampToValueAtTime(.0001,t+bar+.9);o.connect(g);g.connect(runtime.bus);o.start(t+bar);o.stop(t+bar+1);},'player');}
  // The whole theme, once, in tutti: the cube's voice with its octave below.
@@ -143,7 +144,7 @@ export function initialize(runtime){
    const g=c.createRadialGradient(x,y,0,x,y,r*2.4);g.addColorStop(0,'rgba(240,210,122,.35)');g.addColorStop(1,'rgba(240,210,122,0)');c.fillStyle=g;c.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8);
    c.strokeStyle='#f0d27a';c.lineWidth=1.5;for(let i=0;i<3;i++){c.globalAlpha=.9-i*.25;c.beginPath();c.arc(x,y,r*(1-i*.25),still?0:t/600+i,(still?0:t/600+i)+Math.PI*1.6);c.stroke();}}
   // The creatures of the Vacío around the cube: they light up when they repeat a note.
-  if(current()==='vacio'&&inChapter()&&hits>VOID_ECHO_AFTER){const n=Math.max(2,Object.keys(j.done).length),now=performance.now();for(let i=0;i<n;i++){const a=i/n*6.283+(still?0:t/4000),x=W/2+Math.cos(a)*70,y=H/2+Math.sin(a)*46,lit=echoes.some(e=>now>=e.at&&now-e.at<400);c.globalAlpha=lit?.95:.35;c.fillStyle='#ffffff';c.fillRect(Math.round(x)-2,Math.round(y)-2,lit?5:4,lit?5:4);}}
+  if(current()==='vacio'&&inChapter()&&hits>VOID_ECHO_AFTER&&!runtime.journeyGame?.('vacio')){const n=Math.max(2,Object.keys(j.done).length),now=performance.now();for(let i=0;i<n;i++){const a=i/n*6.283+(still?0:t/4000),x=W/2+Math.cos(a)*70,y=H/2+Math.sin(a)*46,lit=echoes.some(e=>now>=e.at&&now-e.at<400);c.globalAlpha=lit?.95:.35;c.fillStyle='#ffffff';c.fillRect(Math.round(x)-2,Math.round(y)-2,lit?5:4,lit?5:4);}}
   // Away from the chapter's biome, a beacon at the edge of the screen shows the way back.
   const way=beacon();if(way){const a=Math.atan2(way.y-runtime.S.wy,way.x-runtime.S.wx),ex=W/2+Math.cos(a)*(W/2-18),ey=H/2+Math.sin(a)*(H/2-60),bx=Math.max(14,Math.min(W-14,ex)),by=Math.max(70,Math.min(H-120,ey)),glow=still?.8:.55+.3*Math.sin(t/500);
    // Seen from above: a gold light at the edge with a halo and a chevron pointing the way.
