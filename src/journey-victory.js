@@ -1,61 +1,50 @@
 import {THEME,themePitch} from './journey-pulse.js';
-// The sound of a chapter kept (plan F2, docs/MUNDO.md): Jay found the cello theme sad and not electronic. Now it is a
-// drop in the chapter's own genre: a bar of rising noise while the music is filtered down, half a beat of silence,
-// then two bars with the full beat and the cube's theme on a synth lead. Each chapter has its style.
-export const VICTORY_STYLES=Object.freeze({
- llanura:Object.freeze({genre:'house',kick:'four',clap:true,hat:'off',chords:'off',bass:null,lead:'square',echo:false}),
- lago:Object.freeze({genre:'dub',kick:'half',clap:true,hat:'off',chords:'echo',bass:'root',lead:'triangle',echo:true}),
- bosque:Object.freeze({genre:'disco',kick:'four',clap:true,hat:'sixteen',chords:'off',bass:'octave',lead:'sawtooth',echo:false}),
- tormenta:Object.freeze({genre:'techno',kick:'four',clap:true,hat:'sixteen',chords:null,bass:'rumble',lead:'acid',echo:false}),
- vacio:Object.freeze({genre:'ambient',kick:null,clap:false,hat:null,chords:'pad',bass:null,lead:'bell',echo:true}),
- jardin:Object.freeze({genre:'garage',kick:'four',clap:true,hat:'sixteen',chords:'echo',bass:'octave',lead:'triangle',echo:true}),
- dunas:Object.freeze({genre:'afro',kick:'four',clap:false,hat:'sixteen',chords:'off',bass:'root',lead:'square',echo:false}),
- cristales:Object.freeze({genre:'trance',kick:'four',clap:true,hat:'off',chords:'pad',bass:'octave',lead:'bell',echo:true})});
+import {layerStep,songChord} from './song.js';
+// The sound of a place kept (plan F13, docs/MUNDO.md): it comes out of the music already playing. For a bar the
+// music's filter closes under a rising noise; the last half beat is silence; on the «1» the same music comes back in
+// its key and tempo, with the place's layer of Tu canción (song.js) in the live chord and the cube's theme on top.
+// Jay asked for it after F12: the old drops in their own genres did not sit with the rest of the music.
+export const VICTORY_LEADS=Object.freeze({llanura:'square',lago:'triangle',bosque:'sawtooth',tormenta:'acid',vacio:'bell',jardin:'triangle',dunas:'square',cristales:'bell',faros:'square',ruinas:'sawtooth',cueva:'triangle'});
 export const RISER_BARS=1,DROP_BARS=2,SILENCE_BEATS=.5;
-// The whole drop in seconds, for a sixteenth of the given length: riser, silence and the drop.
-export const victorySeconds=six=>(RISER_BARS*16+SILENCE_BEATS*4+DROP_BARS*16)*six;
-// When each hit falls inside the drop, in sixteenths from its start: what the style plays, testable without audio.
-export function dropPattern(style){const hits=[];for(let s=0;s<DROP_BARS*16;s++){const beat=s%4===0,off=s%4===2;
- if(style.kick==='four'&&beat||style.kick==='half'&&s%8===0)hits.push({s,what:'kick'});
- if(style.clap&&(style.kick==='half'?s%16===8:s%8===4))hits.push({s,what:'clap'});
- if(style.hat==='off'&&off||style.hat==='sixteen')hits.push({s,what:'hat',open:style.hat==='off'});
- if((style.chords==='off'||style.chords==='echo')&&off)hits.push({s,what:'chord'});
- if(style.bass==='octave'&&s%2===0)hits.push({s,what:'bass',octave:(s/2)%2===1});
- if(style.bass==='root'&&s%8===0)hits.push({s,what:'bass'});
- if(style.bass==='rumble'&&!beat&&s%2===0)hits.push({s,what:'bass'});}
- if(style.chords==='pad')hits.push({s:0,what:'pad'});return hits;}
+// The whole close in seconds, for a sixteenth of the given length: the build (its last half beat silent) and the drop.
+export const victorySeconds=six=>(RISER_BARS+DROP_BARS)*16*six;
+// When the silence starts, in sixteenths from the start of the build.
+export const silenceStep=()=>RISER_BARS*16-SILENCE_BEATS*4;
+// What the place adds in the drop, sixteenth by sixteenth, over the chord the world plays in each bar.
+export function dropEvents(id,chordAt){const out=[];for(let s=0;s<DROP_BARS*16;s++)out.push(...layerStep(id,s,songChord(chordAt(Math.floor(s/16)))));return out;}
 export function initialize(runtime){
- const hz=m=>440*2**((m-69)/12);
- // A short synth voice: detuned oscillators through a low-pass with its own envelope.
+ const hz=m=>440*2**((m-69)/12);let run=null;
+ // A short synth voice for the theme: detuned oscillators through a low-pass with its own envelope.
  function synth(ac,out,m,t,dur,type,v,cut=2400,detune=[-8,0,8],sweep=0){const f=ac.createBiquadFilter(),g=ac.createGain();f.type='lowpass';f.Q.value=sweep?9:.7;f.frequency.setValueAtTime(cut,t);if(sweep){f.frequency.exponentialRampToValueAtTime(cut*sweep,t+dur*.4);f.frequency.exponentialRampToValueAtTime(cut,t+dur);}
   g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.01);g.gain.setValueAtTime(v*.8,t+dur*.6);g.gain.exponentialRampToValueAtTime(.0001,t+dur);f.connect(g);g.connect(out);
   for(const d of detune){const o=ac.createOscillator();o.type=type==='acid'?'sawtooth':type;o.frequency.value=hz(m);o.detune.value=d;o.connect(f);o.start(t);o.stop(t+dur+.05);}}
- // Echo for dub and ambient: the same send repeated on dotted eighths, fading.
- function withEcho(fn,t,six,times=3){for(let k=0;k<=times;k++)fn(t+k*six*3,Math.pow(.45,k));}
  function riser(ac,out,t,len){const buf=runtime.noiseBuffer;if(!buf)return;const s=ac.createBufferSource();s.buffer=buf;s.loop=true;const f=ac.createBiquadFilter(),g=ac.createGain();f.type='bandpass';f.Q.value=1.2;f.frequency.setValueAtTime(300,t);f.frequency.exponentialRampToValueAtTime(7000,t+len);
   g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.09,t+len*.95);g.gain.exponentialRampToValueAtTime(.0001,t+len);s.connect(f);f.connect(g);g.connect(out);s.start(t);s.stop(t+len+.05);}
  function crash(ac,out,t){const buf=runtime.noiseBuffer;if(!buf)return;const s=ac.createBufferSource();s.buffer=buf;const f=ac.createBiquadFilter(),g=ac.createGain();f.type='highpass';f.frequency.value=5000;g.gain.setValueAtTime(.08,t);g.gain.exponentialRampToValueAtTime(.0001,t+1.6);s.connect(f);f.connect(g);g.connect(out);s.start(t);s.stop(t+1.7);}
- // The music under the riser closes its filter and opens again on the drop: the build every DJ uses.
- function filterBuild(t,len){const lp=runtime.fx?.lp;if(!lp)return;const f=lp.frequency,open=Math.max(2000,f.value);f.cancelScheduledValues(t);f.setValueAtTime(open,t);f.exponentialRampToValueAtTime(380,t+len);f.setValueAtTime(open,t+len+SILENCE_BEATS*4*(runtime.SIX||.15));}
- // The next «1» of the bar the music scheduled, or a moment from now.
+ // The music closes its filter under the riser and opens again on the drop: the build every DJ uses.
+ function filterBuild(t,len,drop){const lp=runtime.fx?.lp;if(!lp)return;const f=lp.frequency,open=Math.max(2000,f.value);f.cancelScheduledValues(t);f.setValueAtTime(open,t);f.exponentialRampToValueAtTime(380,t+len);f.setValueAtTime(open,drop);}
+ // Half a beat of real silence: the whole output dips, reverb tails too, and is back whole on the «1».
+ function hush(from,drop){const g=runtime.outputStage?.headroom?.gain;if(!g)return;const keep=g.value>.5?g.value:.92;g.cancelScheduledValues(from-.02);g.setValueAtTime(keep,from-.02);g.linearRampToValueAtTime(.0001,from);g.setValueAtTime(.0001,drop-.004);g.linearRampToValueAtTime(keep,drop);}
+ // The next «1» the music scheduled, or a moment from now.
  function nextBar(now){const sq=runtime.MU?.sq||[];let best=null;for(const e of sq)if(e.s%16===0&&e.t>now+.05&&(best===null||e.t<best))best=e.t;return best??now+.08;}
- function play(id){const style=VICTORY_STYLES[id],ac=runtime.ac,bus=runtime.bus;if(!style||!runtime.S.sound||!ac||!bus)return 0;
-  // Its own level, under the music's: the drop sits on top of what is already playing.
-  const out=ac.createGain();out.gain.value=.72;out.connect(bus);const six=runtime.SIX||.15,MU=runtime.MU||{},scale=MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,tr=MU.tr||0;
-  const t0=nextBar(ac.currentTime),riserLen=RISER_BARS*16*six,drop=t0+riserLen+SILENCE_BEATS*4*six,ct=runtime.chordTones?.()||[57,60,64],root=Math.min(...ct)%12+36;
-  riser(ac,out,t0,riserLen);filterBuild(t0,riserLen);crash(ac,out,drop);if(runtime.kick)runtime.kick(drop,.45*.72);
-  for(const h of dropPattern(style)){const t=drop+h.s*six;
-   if(h.what==='kick'&&h.s>0)runtime.kick?.(t,(style.genre==='techno'?.45:.38)*.72);
-   else if(h.what==='clap')runtime.clap?.(t,.3*.72);
-   else if(h.what==='hat')runtime.hatHit?.(t,(h.open?.12:.07)*.72);
-   else if(h.what==='chord'){const fn=(at,k)=>ct.forEach(m=>synth(ac,out,m+12,at,six*1.6,'sawtooth',.035*k,2600));style.echo?withEcho(fn,t,six,2):fn(t,1);}
-   else if(h.what==='bass')synth(ac,out,root+(h.octave?12:0),t,six*(style.bass==='root'?6:1.6),style.bass==='rumble'?'sawtooth':'square',style.bass==='rumble'?.05:.07,style.bass==='rumble'?300:900,[0]);
-   else if(h.what==='pad')ct.forEach(m=>synth(ac,out,m+12,t,DROP_BARS*16*six,'sawtooth',.03,900,[-12,-4,4,12]));}
-  // The cube's theme on the lead, two octaves of brightness, starting on the drop.
+ // The world's chord now, from the sequencer (audio.js), or A minor without it.
+ const chord=()=>runtime.chordTones?.()||[57,60,64];
+ function play(id){const lead=VICTORY_LEADS[id],ac=runtime.ac,bus=runtime.bus;if(!lead||!runtime.S.sound||!ac||!bus)return 0;run?.out.disconnect?.();
+  // Its own level, under the music's: the place sits on top of what is already playing.
+  const out=ac.createGain();out.gain.value=.6;out.connect(bus);const six=runtime.SIX||.15,MU=runtime.MU||{},scale=MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,tr=MU.tr||0;
+  const t0=nextBar(ac.currentTime),build=RISER_BARS*16*six,quiet=t0+silenceStep()*six,drop=t0+build;
+  riser(ac,out,t0,quiet-t0);filterBuild(t0,quiet-t0,drop);hush(quiet,drop);crash(ac,out,drop);runtime.kick?.(drop,.3);
+  // The place's layer follows the music step by step (victoryMusicStep), so it plays the chord the world plays.
+  run={id,out,drop,six,end:drop+DROP_BARS*16*six,played:new Set(),bars:{}};
+  // The cube's theme on the lead, an octave up, in the music's key, from the drop.
   let at=drop;const eighth=six*2;for(const [d,l] of THEME){const m=themePitch(d,scale,tr)+12,len=l*eighth;
-   if(style.lead==='bell')withEcho((tt,k)=>runtime.pluck?.(m,tt,.08*.72*k,2),at,six,2);
-   else{const fn=(tt,k)=>synth(ac,out,m,tt,len*.9,style.lead,.06*k,style.lead==='acid'?700:3200,style.lead==='acid'?[0]:[-6,0,6],style.lead==='acid'?6:0);style.echo?withEcho(fn,at,six,1):fn(at,1);}
+   if(lead==='bell')for(let k=0;k<3;k++)runtime.pluck?.(m,at+k*six*3,.08*.6*Math.pow(.45,k),2);
+   else synth(ac,out,m,at,len*.9,lead,.05,lead==='acid'?700:3200,lead==='acid'?[0]:[-6,0,6],lead==='acid'?6:0);
    at+=len;}
-  return (drop+DROP_BARS*16*six-ac.currentTime)*1000;}
- Object.defineProperties(runtime,{journeyVictory:{get:()=>play}});
+  return (run.end-ac.currentTime)*1000;}
+ // Called by the sequencer on every sixteenth: inside the drop, the place's layer hits in the chord just set.
+ function step(s,t){if(!run)return;if(t>=run.end+.01){run=null;return;}const k=Math.round((t-run.drop)/run.six);if(k<0||k>=DROP_BARS*16||run.played.has(k))return;run.played.add(k);
+  const bar=Math.floor(k/16);if(!run.bars[bar])run.bars[bar]=chord().slice();
+  for(const e of layerStep(run.id,k,songChord(run.bars[bar])))runtime.songHit?.(run.out,e,t,run.six);}
+ Object.defineProperties(runtime,{journeyVictory:{get:()=>play},victoryMusicStep:{get:()=>step},journeyVictoryState:{get:()=>()=>run?{id:run.id,drop:run.drop,end:run.end,played:run.played.size,chords:{...run.bars}}:null}});
 }

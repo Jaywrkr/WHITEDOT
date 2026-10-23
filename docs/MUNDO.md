@@ -109,7 +109,7 @@ Cada fase sale de `main` actualizado, en su rama, y se integra cuando Jay la apr
 |---|---|---|---|
 | F0 · El Viaje por juegos en `main` | `claude/f0-viaje-juegos` | Los cinco capítulos en `main` (PR #315–#319), el festival con el Lago nuevo, `?capitulo=` y este documento | El Viaje se juega de punta a punta en `main` |
 | F1 · Ritmo de los niveles | `claude/f1-ritmo` | Llanura meta 60; Lago 340; Bosque 240 (luciérnaga hasta 3); Tormenta 250; primer círculo de la Tormenta junto al cubo; el Vacío suelta en el «1» y pide cielo libre | Una partida real da 2:30–3:00 por nivel en `?prueba=1` |
-| F2 · Sonido de victoria | `claude/f2-victoria` | Drop electrónico por género al completar, en lugar del violonchelo; mezcla de los cinco juegos | Los cinco cierres suenan a celebración |
+| F2 · Sonido de victoria | `claude/f2-victoria` | Drop electrónico por género al completar, en lugar del violonchelo; mezcla de los cinco juegos | Sustituido por F13 |
 | F3 · Economía de chispas | `claude/f3-chispas` | Tabla de chispas, límite diario, ×2/×3 a tiempo, tienda reajustada y simulación | La simulación cuadra y ningún saldo baja |
 | F4 · Lugares y estrellas | `claude/f4-estrellas` | Ronda, Maestro, récords, estrellas retroactivas y pantalla de resultado | Los cinco lugares dan sus estrellas y chispas |
 | F5 · El anillo | `claude/f5-anillo` | Portales, flecha, mapa y viaje rápido | Cualquier portal a 30–60 s de la puerta |
@@ -118,7 +118,7 @@ Cada fase sale de `main` actualizado, en su rama, y se integra cuando Jay la apr
 | F8 · Logros del narrador | `claude/f8-logros` | ~40 logros nuevos y revisión de los actuales | Jay aprueba los textos; nadie pierde un logro |
 | F9–F11 · Jardín, Dunas, Cristales | `claude/f9-jardin` … `claude/f11-cristales` | Juego, objeto dorado, capa, trofeo y Maestro | Hechos (en `main`) |
 | F12 · Primer minuto | `claude/f12-primer-minuto` | Pista en la barra antes del primer pulso; Llanura a 2:30–3:00 para quien ya sabe jugar | Alguien nuevo da su primer pulso sin ayuda; la Llanura dura lo que debe |
-| F13 · Victoria con tu música | `claude/f13-victoria-musica` | Los cierres salen de la música que suena: filtro, silencio y la misma canción con algo más (su capa y el tema), en su tono y tempo | Ningún cierre suena ajeno a la música del lugar |
+| F13 · Victoria con tu música | `claude/f13-victoria-musica` | Los cierres salen de la música que suena: filtro, silencio y la misma canción con algo más (su capa y el tema), en su tono y tempo | Hecho; falta la escucha de Jay |
 | F14 · Ritmos | `claude/f14-ritmos` | Contratiempo, el «1» y patrones; guía de puntos bajo el cubo; el reparto de abajo | Cada lugar se siente distinto |
 | F15 · Faros | `claude/f15-faros` | Guiar, con su ritmo | Pasa la lista y la prueba de Jay |
 | F16 · Ruinas | `claude/f16-ruinas` | Reconstruir, con su ritmo | Igual |
