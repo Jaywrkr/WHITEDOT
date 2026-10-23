@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {RARE,RARE_CHANCE,RARE_SECONDS,rareStarts,initialize} from '../src/universe-rare.js';
+import {RARE,RARE_CHANCE,RARE_SECONDS,RARE_NOTES,RARE_VOLUME,rareStarts,rareChime,rareSection,initialize} from '../src/universe-rare.js';
 import {STYLES} from '../src/universe-layers.js';
 import {NEW_REGIONS} from '../src/universe-regions.js';
 // One rare moment for every region but the Void, about once every 48 bars, fixed by region and bar.
@@ -20,5 +20,15 @@ for(const id of Object.keys(RARE)){r.universeRare(id);for(const p of [.1,.5,.9])
 assert.equal(Object.keys(r.universeRareState().kept).length,Object.keys(RARE).length);
 // Reduced motion: still counted, not drawn.
 r.S.reducedMotion=true;r.universeRare('lago');clock+=500;calls.length=0;r.universeRareTick(c,390,844,{...ctx(bar),here:'lago'});assert.equal(calls.length,0);
+// Phase 3: each moment sounds two soft notes of the playing chord, a beat apart, and only with sound on.
+for(const id of Object.keys(RARE)){const n=rareChime(id,60,[60,63,67]);assert.equal(n.length,RARE_NOTES);for(const m of n){assert(m>=67&&m<=79,id+' '+m);assert([0,3,7].includes(((m-60)%12+12)%12),id+' in the chord: '+m);}}
+assert.deepEqual(rareChime('lago',60,[60,63,67]),rareChime('lago',60,[60,63,67]),'fixed by the moment');assert(RARE_VOLUME<=.04,'under the music');
+const sched=[],osc=[];const ac={state:'running',currentTime:1,createOscillator:()=>{const o={type:'',frequency:{setValueAtTime:(f)=>osc.push(f)},connect(){},start(){},stop(){}};return o;},createGain:()=>({gain:{setValueAtTime(){},exponentialRampToValueAtTime(){}},connect(){}})};
+const q={S:{sound:true},ac,bus:{},SIX:.125,root:()=>57,chordTones:()=>[57,60,64],soon:(f,o)=>{sched.push(o);f(2);},save:()=>true};initialize(q);q.universeRare('cometas');assert.equal(q.universeRareState().chimes,1);assert.equal(osc.length,2,'two notes');assert.deepEqual(sched,['ambient']);
+q.S.sound=false;q.universeRare('lago');assert.equal(q.universeRareState().chimes,1,'silent without sound');
+// The Journal lists every moment: seen by name in gold with a count, the rest only by their place.
+const html=rareSection({universe:{rare:{lago:2,dunas:1,x:'<b>'}}},id=>id==='lago'?'Marea':null);
+assert.match(html,/Momentos raros · 2\/14/);assert.equal((html.match(/<li/g)||[]).length,Object.keys(RARE).length);assert.match(html,/class="got" data-rare="lago">Todas las fuentes · Marea · 2/);assert.match(html,/data-rare="faros">faros · por ver/);assert(!html.includes('<b>'));
+assert.match(rareSection({}),/Momentos raros · 0\/14/);
 performance.now=realNow;
-console.log('PASS universe rare moments: one per region but the Void, about once every 48 bars by region and bar, drawn from above for a few seconds, counted in the save, not drawn with reduced motion');
+console.log('PASS universe rare moments: two soft notes of the playing chord each, listed in the Journal; one per region but the Void, about once every 48 bars by region and bar, drawn from above for a few seconds, counted in the save, not drawn with reduced motion');

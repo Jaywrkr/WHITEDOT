@@ -127,7 +127,7 @@ export function initialize(runtime){
    if(p.kind==='grieta'){cx.beginPath();cx.moveTo(x-22,y-4);cx.lineTo(x-8,y+3);cx.lineTo(x+2,y-5);cx.lineTo(x+12,y+4);cx.lineTo(x+24,y-2);cx.stroke();}
    else{for(let i=0;i<5;i++){cx.globalAlpha=al*(.25+.15*i);cx.strokeRect(x-10+i*2,y-12-i*14,20-i*4,8);}}
    for(let i=0;i<p.need;i++){const a=-Math.PI/2+i/p.need*6.283;cx.globalAlpha=al*(i<done?1:.3);cx.fillStyle=cx.strokeStyle;cx.beginPath();cx.arc(x+Math.cos(a)*34,y+Math.sin(a)*34,3+(i<done?b*2:0),0,6.283);cx.fill();}
-   if(p.d<220){cx.globalAlpha=al;cx.fillStyle=cx.strokeStyle;cx.font='10px "Geist Mono", monospace';cx.textAlign='center';cx.fillText(`${p.kind==='grieta'?'Grieta al Subsuelo':'Escalera al Cielo'} · ${p.need} pulsos en el beat`,x,y+54);}}
+   if(p.d<220){cx.globalAlpha=al;cx.fillStyle=cx.strokeStyle;cx.font='11px "Geist Mono", monospace';cx.textAlign='center';cx.fillText(`${p.kind==='grieta'?'Grieta al Subsuelo':'Escalera al Cielo'} · ${p.need} pulsos en el beat`,x,y+54);}}
   cx.globalAlpha=1;
  }
 

@@ -106,6 +106,7 @@ Orden: los bloques visual (1–6) y musical (7–12) se alternan. Los superbioma
   - **Onda del pulso:** de los objetos que responden a una misma onda, solo uno grave suena; así muchos graves juntos ya no retumban.
   - **Fase 12:** sustituida. Las 10 familias, la fusión y los bordes ya dan identidad a cada lugar, y la medida de la fase 11 (0 parejas de géneros bajo la línea) sigue valiendo porque ningún género cambió desde entonces.
   - **Viaje:** los capítulos buscan su superbioma hasta unos 60 000 px, porque el portal lleva el cubo. En seis mundos Marea encuentra su familia en cinco y Tormenta solar en todos.
+- **Plan de la auditoría · Fase 3 · Coherencia** (alpha.131): quedaban nombres terrestres en la vida del Mundo y sus voces. Ahora son Meteoros de eco, Planetas graves, Estrellas de pulso, el Quásar imitador, enjambres y corrientes (ids intactos); `universe-cleanup.mjs` revisa todas las cadenas de voces, logros, especies, vida y mascota. Los momentos raros suenan y se listan en la Bitácora; el contador de superbiomas se puede completar (104, más el ausente si alguien lo oye). Queda «Tierra de Origen»: el nombre forma parte de la huella fija del mapa.
 - **Fase 18 · Viaje** (alpha.126): cada capítulo del Viaje busca su superbioma sin cambiar el mapa. Prueba las familias en orden y, si ninguna está cerca, va al lugar más cercano de su región (`CHAPTER_FAMILIES`, `findChapter`):
   - **Polvo:** House, luego Downtempo.
   - **Marea:** Downtempo, Dub o Ambient.

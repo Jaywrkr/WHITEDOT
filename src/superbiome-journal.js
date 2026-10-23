@@ -10,7 +10,10 @@ export const FIGURE=Object.freeze([[.2,.25],[.35,.18],[.5,.3],[.62,.22],[.78,.35
 const day=value=>typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)?new Date(value+'T12:00:00').toLocaleDateString('es',{day:'numeric',month:'short'}):'';
 // Heard superbiomes from a save, ignoring anything malformed or unknown (a future save may hold more).
 export function heardOf(S){const raw=S?.universe?.super;if(!raw||typeof raw!=='object'||Array.isArray(raw))return {};return Object.fromEntries(Object.entries(raw).filter(([id])=>id in SUPERBIOME_RARITY));}
-export function superbiomeProgress(S){return {heard:Object.keys(heardOf(S)).length,total:SUPERBIOME_COUNT};}
+// The count can be completed (phase 3 of the plan): the total leaves out the superbiomes that never appear, unless one
+// was heard after all (another world may have it), and then it counts in both.
+export const ABSENT=Object.freeze(Object.keys(SUPERBIOME_RARITY).filter(id=>SUPERBIOME_RARITY[id]==='ausente'));
+export function superbiomeProgress(S){const heard=heardOf(S),found=ABSENT.filter(id=>id in heard).length;return {heard:Object.keys(heard).length,total:SUPERBIOME_COUNT-ABSENT.length+found};}
 function cell(id,name,heard){const r=SUPERBIOME_RARITY[id],got=id in heard,mark=got?'●':r==='ausente'?'×':r==='muy-raro'?'◆':r==='raro'?'◇':'·',
  note=got?(day(heard[id])?'oído el '+day(heard[id]):'oído'):r==='ausente'?'no aparece':RARITY_LABEL[r]||'por oír';
  return `<td class="super-cell${got?' got':''}${r==='ausente'?' none':''}" data-superbiome="${escape(id)}" title="${escape(name+' · '+note)}" aria-label="${escape(name+', '+note)}">${mark}</td>`;}

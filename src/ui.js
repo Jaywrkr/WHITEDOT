@@ -14,7 +14,7 @@ export function initialize(runtime) {
     const pocket=runtime.currentPocket?.();
     $("day").textContent="DÍA "+d;$("era").textContent=runtime.inWorld()?(runtime.MU.dnaT?runtime.MU.dnaT.name+(runtime.S.worldDetails?" · "+(pocket?POCKET_NAMES[pocket.kind]:explorationContext(runtime.MU.dnaT,runtime.S.wx,runtime.S.wy,runtime.seedOf).label):''):"El Mundo"):"Era "+era(d);
     $("quickSave").hidden=!runtime.inWorld();$("era").disabled=!runtime.inWorld();
-    $("streak").textContent=runtime.shownStreak();$("starsN").textContent=runtime.S.stars.length;$("size").textContent=runtime.level();
+    $("streak").textContent=runtime.S.totalDays||0;$("starsN").textContent=runtime.S.stars.length;$("size").textContent=runtime.level();
     $("bar").classList.toggle("free",runtime.isFree());
     runtime.elementBookUI?.();
     const fill=$("barfill"),goal=$("goal"),gr=$("goalR");
@@ -48,9 +48,9 @@ export function initialize(runtime) {
   function exitWorld(out){
     runtime.finishSession();
     runtime.closeGlass?.();runtime.closeMirrors?.();runtime.stopAutopilot?.();runtime.resetJam?.();runtime.fxReset?.();    runtime.S.layer='superficie';runtime.MU.layer='superficie';runtime.resetContinent?.();runtime.MU.vit=null;runtime.MU.lowT=0;runtime.S.mode="camino";runtime.setBiome(0);runtime.MU.dnaT=null;runtime.MU.vari=-1;runtime.MU.near=[];runtime.MU.singers=[];runtime.curRegion=null;runtime.RP=null;runtime.retoUI();runtime.MU.layers=new Set();runtime.MU.flowers=[];runtime.MU.follower=false;if(runtime.inPond&&runtime.mfilt){runtime.inPond=false;runtime.mfilt.frequency.setTargetAtTime(18000,runtime.ac.currentTime,.2);}runtime.save();hud();
-    if(out){runtime.say(runtime.VOZ.lampOut);$("oToday").textContent=runtime.relicsGot();$("oStars").textContent=runtime.S.stars.length;$("oStreak").textContent=runtime.shownStreak();$("mOut").hidden=false;}
+    if(out){runtime.say(runtime.VOZ.lampOut);$("oToday").textContent=runtime.relicsGot();$("oStars").textContent=runtime.S.stars.length;$("oStreak").textContent=runtime.S.totalDays||0;$("mOut").hidden=false;}
   }
-  function openCap(){$("cDay").textContent=runtime.displayDay();$("cStreak").textContent=runtime.shownStreak();$("cSize").textContent=runtime.level();$("cLamp").textContent="Explora sin límite de tiempo.";$("mCap").hidden=false;}
+  function openCap(){$("cDay").textContent=runtime.displayDay();$("cStreak").textContent=runtime.S.totalDays||0;$("cSize").textContent=runtime.level();$("cLamp").textContent="Explora sin límite de tiempo.";$("mCap").hidden=false;}
 
 
   Object.defineProperties(runtime, {

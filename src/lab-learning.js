@@ -38,7 +38,7 @@ export function initialize(runtime){
   if(!lesson||!audible())return;const c=runtime.cx,source=lesson.source,
    text={choose:'Acércate a una voz para escucharla.',call:'Escucha dos llamadas.',listening:'Escucha dos llamadas.',reply:'Pulsa dos veces con ese mismo espacio.',done:'Encontraste el pulso compartido.'}[lesson.stage],
    x=source?source.x+ox:runtime.W/2,y=source?source.y+oy:runtime.H/2;
-  c.save();c.globalAlpha=.72;c.fillStyle='#fff';c.textAlign='center';c.font='9px "Geist Mono", monospace';c.fillText(text,Math.max(110,Math.min(runtime.W-110,x)),Math.max(100,Math.min(runtime.H-100,y+48)),220);c.restore();
+  c.save();c.globalAlpha=.72;c.fillStyle='#fff';c.textAlign='center';c.font='11px "Geist Mono", monospace';c.fillText(text,Math.max(110,Math.min(runtime.W-110,x)),Math.max(100,Math.min(runtime.H-100,y+48)),220);c.restore();
  }
  function card(){const b=book();return b.version===1&&b.completed?`<article class="journal-card"><h3>Escuchar y responder</h3><p>${b.roles.length} papeles musicales explorados.</p></article>`:'';}
  runtime.$('guideLabPractice').onclick=begin;

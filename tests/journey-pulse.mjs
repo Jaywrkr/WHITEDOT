@@ -42,4 +42,6 @@ const before=r.journeyPulseState().marks;r.journeyPulseDropped();assert.equal(r.
 // The Line draws on an inert canvas.
 const c=new Proxy({},{get:(o,k)=>k in o?o[k]:()=>{},set:(o,k,v)=>{o[k]=v;return true;}});globalThis.document={querySelector:()=>null,querySelectorAll:()=>[]};r.drawJourneyLine(c,390,844,0);
 performance.now=realNow;
+// Phase 3: with the sound off every pulse counts, so the Journey can be played without hearing it.
+{const q={S:{sound:false,mode:'camino'},MU:{bq:[]},BIOMES:[{scale:[0,2,3,5,7,8,10]}],SIX:.125,inWorld:()=>false};initialize(q);assert.equal(q.journeyPulse(),true,'sound off: on time');}
 console.log('PASS journey pulse: six-note theme in two bars, on-time window '+ON_TIME*1000+' ms, theme notes in every scale and range, phrase every six hits, vibration and its setting, judged at the touch with the headphones delay taken off, one window for the game, a glow without vibration, dropped pulses marked, the Line draws');

@@ -73,7 +73,7 @@ export function initialize(runtime){
   for(const f of nearbyFlocks(900)){
    if(dist(f)<260)see(f.species);
    // Formación: si confían y te mueves, te siguen; se refresca mientras vayan contigo.
-   if(f.trust>=.6&&player.speed>20&&dist(f)<200){if(!(f.follow>0)&&!S().help.vidaFormacion){S().help.vidaFormacion=true;runtime.toast('<em>Bandada</em> · te siguen en formación y repiten tu llamada');}f.follow=FOLLOW_SECONDS;traveling.add(f);while(traveling.size>2)traveling.delete(traveling.values().next().value);}
+   if(f.trust>=.6&&player.speed>20&&dist(f)<200){if(!(f.follow>0)&&!S().help.vidaFormacion){S().help.vidaFormacion=true;runtime.toast('<em>Enjambre</em> · te siguen en formación y repiten tu llamada');}f.follow=FOLLOW_SECONDS;traveling.add(f);while(traveling.size>2)traveling.delete(traveling.values().next().value);}
    if(f.follow>0){f.follow-=dt;f.followTime=(f.followTime||0)+dt;if(f.followTime>30)runtime.unlock('formacion');}else f.followTime=0;
    if(f.species==='golondrina'){
     f.formation=(f.follow>0&&f.trust>=.6&&player.speed>20&&dist(f)<180)?(f.formation||0)+dt:0;
@@ -82,7 +82,7 @@ export function initialize(runtime){
    }
    for(const ev of stepFlock(f,dt,clock,player)){
     if(ev==='scatter'&&audible()){runtime.beatSoon(t=>sing(f,[0,1,2].map(i=>({step:i,degree:4-i*2,volume:.07,member:i%f.members.length})),t),null,'ambient');}
-    if(ev==='gather'){runtime.unlock('bandadaAmiga');if(!S().help.vidaConfianza){S().help.vidaConfianza=true;runtime.toast('<em>Bandada</em> · confían en ti: se acercan y cantan más');}}
+    if(ev==='gather'){runtime.unlock('bandadaAmiga');if(!S().help.vidaConfianza){S().help.vidaConfianza=true;runtime.toast('<em>Enjambre</em> · confían en ti: se acercan y cantan más');}}
     if(ev==='sync')runtime.unlock('luciernagasSync');
    }
    runtime.petBond?.(f,dt);
@@ -118,7 +118,7 @@ export function initialize(runtime){
  }
  function sources(){return [...nearbyFlocks(260).map(f=>({object:f,kind:`vida:${f.species}:0`,name:SPECIES[f.species].name,distance:dist(f)})),...nearbyPlants(200).map(p=>({object:p,kind:'vida:plant:0',name:'Flora que crece',distance:dist(p)}))];}
  // ---------- dibujo ----------
- function label(ctx,text,x,y){ctx.globalAlpha=.8;ctx.fillStyle=WORLD_VISUAL.gold;ctx.font='10px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText(text,Math.max(120,Math.min(runtime.W-120,x)),y,runtime.W-24);}
+ function label(ctx,text,x,y){ctx.globalAlpha=.8;ctx.fillStyle=WORLD_VISUAL.gold;ctx.font='11px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText(text,Math.max(120,Math.min(runtime.W-120,x)),y,runtime.W-24);}
  function draw(t,dt,ox,oy,radius){
   tick(dt);if(!surface())return;const ctx=runtime.cx;
   for(const pl of nearbyPlants(radius+120)){const fade=runtime.worldOpacity?.(dist(pl),radius+120)??1;
@@ -155,12 +155,12 @@ export function initialize(runtime){
    f.copying=Math.max(0,(f.copying||0)-dt*.25);f.waiting=Math.max(0,(f.waiting||0)-dt*.05);
    if(f.hintBox){const a=Math.atan2(f.hintBox.y-f.y,f.hintBox.x-f.x);ctx.save();ctx.translate(f.x+ox,f.y+oy);ctx.rotate(a);ctx.strokeStyle=runtime.GOLD;ctx.globalAlpha=(.5)*fade;ctx.beginPath();ctx.moveTo(30,-4);ctx.lineTo(38,0);ctx.lineTo(30,4);ctx.stroke();ctx.restore();}
    if(dist(f)<220){
-    const text=f.copying>0?'Ave lira · copia lo que tocaste':f.answerBar>=0?'Te contestan en dos compases…':f.follow>0?`${spec.name} · vuelan contigo${f.species==='golondrina'?' · '+Math.min(120,Math.floor(f.formation||0))+'/120 s':''}`:f.trust>=.6?`${spec.name} · confían en ti · muévete y te siguen`:f.species==='luciernaga'?`Quieto: se sincronizan · ${Math.round(f.sync*100)} %`:'Pasa el cubo por un ave · quieto, se acercan';
+    const text=f.copying>0?'Quásar imitador · copia lo que tocaste':f.answerBar>=0?'Te contestan en dos compases…':f.follow>0?`${spec.name} · viajan contigo${f.species==='golondrina'?' · '+Math.min(120,Math.floor(f.formation||0))+'/120 s':''}`:f.trust>=.6?`${spec.name} · confían en ti · muévete y te siguen`:f.species==='luciernaga'?`Quieto: se sincronizan · ${Math.round(f.sync*100)} %`:'Pasa el cubo por el enjambre · quieto, se acercan';
     label(ctx,text,f.x+ox,f.y+oy+64);}
    ctx.restore();
   }
  }
- runtime.ACH.push(['formacionDosMinutos','Viajar juntos','Mantén una formación de golondrinas en movimiento durante dos minutos.']);
+ runtime.ACH.push(['formacionDosMinutos','Viajar juntos','Mantén una formación de meteoros en movimiento durante dos minutos.']);
  Object.defineProperties(runtime,{vidaPointerDown:{get:()=>down},vidaPointerMove:{get:()=>move},vidaPointerUp:{get:()=>up},drawVida:{get:()=>draw},vidaStep:{get:()=>step},vidaSources:{get:()=>sources},vidaHear:{get:()=>hear},
   nearbyFlocks:{get:()=>nearbyFlocks},nearbyPlants:{get:()=>nearbyPlants},vidaPlayed:{get:()=>played},touchBird:{get:()=>touchBird},waterPlant:{get:()=>waterPlant}});
 }

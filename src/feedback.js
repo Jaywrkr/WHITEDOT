@@ -59,7 +59,7 @@ export function initialize(runtime) {
       else {ctx.arc(0,0,r,0,Math.PI*2);if(role==='acorde')for(let i=1;i<3;i++){ctx.moveTo(r+i*4,0);ctx.arc(0,0,r+i*4,0,Math.PI*2);}}
       ctx.stroke();
       const filter=cue.filter;
-      if(foreground&&!named&&Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<65&&age<.7){named=true;ctx.font='9px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillStyle=ctx.strokeStyle;
+      if(foreground&&!named&&Math.hypot(source.x-runtime.S.wx,source.y-runtime.S.wy)<65&&age<.7){named=true;ctx.font='11px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillStyle=ctx.strokeStyle;
        const name={bajo:'Bajo',perc:'Ritmo',acorde:'Acorde',lead:'Melodía',agudo:'Detalle'}[role]||'';ctx.fillText(name+(filter?' · Filtro'+(filter.slope?' '+filter.slope+' dB':''):''),0,-28,180);}
       if(filter){
        const phase=filter.end>filter.start?age:1-age;ctx.lineWidth=.8;for(let i=0;i<filter.stages;i++){ctx.beginPath();ctx.arc(0,0,9+i*3,-Math.PI/2,-Math.PI/2+Math.PI*2*(.2+phase*.7));ctx.stroke();}

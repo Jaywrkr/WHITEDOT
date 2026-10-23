@@ -11,6 +11,16 @@ export const RARE=Object.freeze({
  dunas:'Sombra de un planeta',cristales:'Arcoíris',faros:'Haces cruzados',tormenta:'Eyección',cueva:'El espacio se dobla',
  aurora:'Cambio de color',cometas:'Lluvia de cometas',constelaciones:'Figura nocturna',nebulosa:'Una estrella nace'
 });
+// Each moment sounds (phase 3 of the plan): two soft notes of the chord that is playing, a beat apart, high up and under
+// the music. Which chord tones comes from the moment's name, never the random sequence.
+export const RARE_NOTES=2,RARE_VOLUME=.03;
+export function rareChime(id,root,tones){const ct=Array.isArray(tones)&&tones.length?tones:[0,4,7],base=Number.isFinite(root)?root:57,h=hashKey('rare:chime:'+id),fold=n=>{while(n<67)n+=12;while(n>79)n-=12;return n;};
+ const a=ct[Math.floor(h*ct.length)%ct.length]-ct[0],b=ct[(Math.floor(h*ct.length)+1)%ct.length]-ct[0];return [fold(base+a),fold(base+b)];}
+// The moments in the Journal: seen ones by name, in gold, with how many times; the rest only by their place.
+const escapeHtml=v=>String(v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[ch]);
+export function rareSection(S,regionName=id=>id){const kept=S?.universe?.rare&&typeof S.universe.rare==='object'?S.universe.rare:{},ids=Object.keys(RARE),seen=ids.filter(id=>Number(kept[id])>0);
+ const items=ids.map(id=>{const n=Math.floor(Number(kept[id])||0),place=escapeHtml(regionName(id)||id);return n>0?`<li class="got" data-rare="${id}">${escapeHtml(RARE[id])} · ${place}${n>1?' · '+n:''}</li>`:`<li data-rare="${id}">${place} · por ver</li>`;}).join('');
+ return `<section class="super-map rare-list" aria-label="Momentos raros"><h3>Momentos raros · ${seen.length}/${ids.length}</h3><ul>${items}</ul></section>`;}
 export const rareStarts=(regionKey,id,bar)=>!!RARE[id]&&hashKey('rare:v1:'+regionKey+':'+bar)<RARE_CHANCE;
 const rgba=(hex,a)=>{const n=parseInt(hex.slice(1),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${Math.max(0,Math.min(1,a))})`;};
 const SPECTRUM=['#ff6a6a','#ffb35a','#fff36a','#7fe08a','#5cc8ff','#b48cff'];
@@ -35,11 +45,14 @@ export function initialize(runtime){
  let active=null,lastBar=null;const seen={};
  const calm=()=>calmMotion(runtime.S);
  function record(id){const u=(runtime.S.universe||={});u.rare||={};const before=u.rare[id];u.rare[id]=(before||0)+1;seen[id]=(seen[id]||0)+1;if(runtime.save()===false){if(before)u.rare[id]=before;else delete u.rare[id];}}
- function start(id,now){if(!DRAW[id])return false;active={id,at:now};record(id);return true;}
+ let chimes=0;
+ function chime(id){const ac=runtime.ac;if(!runtime.S.sound||!ac||ac.state!=='running'||!runtime.bus||!runtime.soon)return;const notes=rareChime(id,runtime.root?.(),runtime.chordTones?.()),beat=(runtime.SIX||.15)*4;chimes++;
+  runtime.soon(t=>notes.forEach((m,i)=>{const at=t+i*beat,o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.setValueAtTime(440*2**((m-69)/12),at);g.gain.setValueAtTime(.0001,at);g.gain.exponentialRampToValueAtTime(RARE_VOLUME,at+.02);g.gain.exponentialRampToValueAtTime(.0001,at+1.6);o.connect(g);g.connect(runtime.bus);o.start(at);o.stop(at+1.7);}),'ambient');}
+ function start(id,now){if(!DRAW[id])return false;active={id,at:now};record(id);chime(id);return true;}
  // Called by the layers each frame with the region here, its key and the bar count.
  function tick(c,W,H,{here,key,bar,ink,accent,cubeX,cubeY,t}){const now=performance.now();
   if(!active&&bar!==lastBar&&lastBar!==null&&rareStarts(key,here,bar))start(here,now);lastBar=bar;
   if(!active)return;const p=(now-active.at)/1000/RARE_SECONDS;if(p>=1||(active.id!==here&&p>.2)){active=null;return;}
   if(calm())return;c.save();c.globalAlpha=1;DRAW[active.id](c,W,H,cubeX,cubeY,p,ink,t,accent||'#ffffff');c.restore();}
- Object.defineProperties(runtime,{universeRareTick:{get:()=>tick},universeRare:{get:()=>id=>start(id,performance.now())},universeRareState:{get:()=>()=>({active:active?.id||null,seen:{...seen},kept:{...(runtime.S.universe?.rare||{})}})}});
+ Object.defineProperties(runtime,{universeRareTick:{get:()=>tick},universeRare:{get:()=>id=>start(id,performance.now())},universeRareState:{get:()=>()=>({active:active?.id||null,chimes,seen:{...seen},kept:{...(runtime.S.universe?.rare||{})}})}});
 }

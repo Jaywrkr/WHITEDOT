@@ -149,7 +149,7 @@ export function initialize(runtime){
     for(let i=0;i<STRING_COUNT;i++){const sy=stringY(i),bend=site.bends[i],vib=(site.vib[i]||0)*7*Math.sin(t/18+i);
      ctx.strokeStyle=elementInk('metal',site.hue+i*18,(site.vib[i]||0)>.4);ctx.globalAlpha=.55+(site.vib[i]||0)*.4;ctx.lineWidth=i<2?2:1.2;
      ctx.beginPath();ctx.moveTo(-STRING_HALF,sy);ctx.quadraticCurveTo(site.att?.i===i?Math.max(-STRING_HALF+8,Math.min(STRING_HALF-8,S().wx-site.x)):drag?.site===site&&drag.string===i?drag.x0:0,sy+bend*2+vib,STRING_HALF,sy);ctx.stroke();}
-    if(near){ctx.globalAlpha=.8;ctx.fillStyle=elementInk('glass',site.hue,true);ctx.font='10px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText('Empuja o cruza las cuerdas',0,72);}
+    if(near){ctx.globalAlpha=.8;ctx.fillStyle=elementInk('glass',site.hue,true);ctx.font='11px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText('Empuja o cruza las cuerdas',0,72);}
    }else if(site.kind==='prism'){
     // Haz blanco que entra por el oeste y sale abierto en colores que se superponen (mezcla aditiva).
     ctx.globalAlpha=.5;ctx.strokeStyle='#fff';ctx.beginPath();ctx.moveTo(-PRISM_RADIUS-20,0);ctx.lineTo(0,0);ctx.stroke();
@@ -164,14 +164,14 @@ export function initialize(runtime){
      const sz=on?7+f*2+Math.sin(t/180+k)*.5:5;ctx.globalAlpha=on?.95:.3;ctx.strokeStyle=on?elementInk('glass',site.hue,true):elementInk('glass',site.hue+k*40);ctx.fillStyle=col;
      ctx.beginPath();ctx.moveTo(rx,ry-sz);ctx.lineTo(rx+sz*.7,ry);ctx.lineTo(rx,ry+sz);ctx.lineTo(rx-sz*.7,ry);ctx.closePath();if(on){ctx.globalAlpha=.75;ctx.fill();ctx.globalAlpha=.95;}ctx.stroke();}
     ctx.rotate(site.angle);ctx.globalAlpha=.85;ctx.strokeStyle=ink;ctx.beginPath();for(let i=0;i<3;i++){const a=i/3*TAU-Math.PI/2;ctx[i?'lineTo':'moveTo'](Math.cos(a)*26,Math.sin(a)*26);}ctx.closePath();ctx.stroke();ctx.globalAlpha=.12;ctx.fillStyle=ink;ctx.fill();ctx.rotate(-site.angle);
-    if(near){ctx.globalAlpha=.8;ctx.fillStyle=elementInk('glass',site.hue,true);ctx.font='10px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText(`Rodéalo con el cubo para girarlo · ${lit.length} de ${PRISM_RECEPTORS} cristales`,0,PRISM_RADIUS+30);}
+    if(near){ctx.globalAlpha=.8;ctx.fillStyle=elementInk('glass',site.hue,true);ctx.font='11px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText(`Rodéalo con el cubo para girarlo · ${lit.length} de ${PRISM_RECEPTORS} cristales`,0,PRISM_RADIUS+30);}
    }else{
     site.ripples=site.ripples.filter(r=>(r.a-=dt*1.4)>0);for(const r of site.ripples){r.r+=dt*60;ctx.globalAlpha=r.a*.6;ctx.strokeStyle=ink;ctx.beginPath();ctx.arc(0,0,Math.min(MEMBRANE_RADIUS,r.r),0,TAU);ctx.stroke();}
     ctx.globalAlpha=.8;ctx.strokeStyle=ink;ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,MEMBRANE_RADIUS,0,TAU);ctx.stroke();ctx.lineWidth=WORLD_VISUAL.line;
     ctx.globalAlpha=.3;ctx.beginPath();ctx.arc(0,0,MEMBRANE_RADIUS*.42,0,TAU);ctx.stroke();
     if(site.inside&&site.p){ctx.globalAlpha=.5;ctx.strokeStyle=elementInk('glass',site.hue,true);ctx.beginPath();ctx.arc(0,0,MEMBRANE_RADIUS*(1+.04*Math.sin(t/60)),0,TAU);ctx.stroke();}
     if(drag?.site===site&&drag.p){ctx.globalAlpha=.6;ctx.fillStyle=elementInk('glass',site.hue,true);ctx.beginPath();ctx.arc(drag.p.x,drag.p.y,6,0,TAU);ctx.fill();}
-    if(near){ctx.globalAlpha=.8;ctx.fillStyle=elementInk('glass',site.hue,true);ctx.font='10px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText('Entra con el cubo · quédate encima para redoblar',0,MEMBRANE_RADIUS+24);}
+    if(near){ctx.globalAlpha=.8;ctx.fillStyle=elementInk('glass',site.hue,true);ctx.font='11px "Geist Mono", monospace';ctx.textAlign='center';ctx.fillText('Entra con el cubo · quédate encima para redoblar',0,MEMBRANE_RADIUS+24);}
    }
    ctx.restore();
   }

@@ -75,7 +75,7 @@ export function initialize(runtime){
    drawTotem(c,o,{light:lit,progress:o.progress||0,ball:still?(b?.phase==='out'?55*b.direction:0):ball,lean,dance:clock*8,still});
    if(b){const tx=b.direction*55,ty=-10;c.strokeStyle='#ffffff66';c.lineWidth=1;c.setLineDash([2,5]);c.beginPath();c.arc(tx,ty,18,0,Math.PI*2);c.stroke();c.setLineDash([]);}
    if(o.target&&o.done>clock){const dx=o.target.x-o.x,dy=o.target.y-o.y,d=Math.hypot(dx,dy)||1;c.strokeStyle='#fff';c.lineWidth=1;c.setLineDash([2,5]);c.beginPath();c.moveTo(0,-35);c.lineTo(dx/d*75,dy/d*75-35);c.stroke();c.setLineDash([]);c.fillStyle='#fff';c.fillRect(dx/d*75-2,dy/d*75-37,4,4);}
-   if(distance<150){c.globalAlpha=fade*.85;c.font='10px "Geist Mono",monospace';c.textAlign='center';c.fillStyle='#fff';const action=TOTEMS[o.kind].action,text=o.done>clock?(o.target?(o.target.crystal?'Un cristal por aquí':'Otra voz por aquí'):'Despierto') : b?'Acompaña la esfera':action==='stack'?'Pulsa · '+(o.progress||0)+'/3':'Lanza un pulso';c.fillText(text,0,19);}
+   if(distance<150){c.globalAlpha=fade*.85;c.font='11px "Geist Mono",monospace';c.textAlign='center';c.fillStyle='#fff';const action=TOTEMS[o.kind].action,text=o.done>clock?(o.target?(o.target.crystal?'Un cristal por aquí':'Otra voz por aquí'):'Despierto') : b?'Acompaña la esfera':action==='stack'?'Pulsa · '+(o.progress||0)+'/3':'Lanza un pulso';c.fillText(text,0,19);}
    c.restore();
   }
  }

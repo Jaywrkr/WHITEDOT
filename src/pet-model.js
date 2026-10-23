@@ -1,9 +1,9 @@
 export const PET_BOX_DENOMINATOR=128;
 // Persistent companionship. No offline decay, feeding, payment or species menu.
 export const PET_SPECIES={
- golondrina:{name:'Golondrina de eco',role:'melody',pool:['reed','kalimba','flute'],hue:30},
- grulla:{name:'Grulla de tierra',role:'bass',pool:['sub','hollow','bowed'],hue:200},
- luciernaga:{name:'Luciérnaga de pulso',role:'groove',pool:['wood','conga','rim'],hue:70}
+ golondrina:{name:'Meteoro de eco',role:'melody',pool:['reed','kalimba','flute'],hue:30},
+ grulla:{name:'Planeta grave',role:'bass',pool:['sub','hollow','bowed'],hue:200},
+ luciernaga:{name:'Estrella de pulso',role:'groove',pool:['wood','conga','rim'],hue:70}
 };
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 export function normalizePet(raw){

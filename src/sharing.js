@@ -20,7 +20,7 @@ export function initialize(runtime) {
   function openSky(){
     const c=runtime.$("skyCv"),x=c.getContext("2d");x.fillStyle="#000";x.fillRect(0,0,720,720);drawSky(x,50,50,620,620);
     const days=new Set(runtime.S.stars.map(s=>s.d));
-    runtime.$("kStars").textContent=runtime.S.stars.length;runtime.$("kDays").textContent=days.size;runtime.$("kStreak").textContent=runtime.shownStreak();
+    runtime.$("kStars").textContent=runtime.S.stars.length;runtime.$("kDays").textContent=days.size;runtime.$("kStreak").textContent=runtime.S.totalDays||0;
     runtime.$("kList").innerHTML=runtime.S.stars.length?runtime.S.stars.slice().reverse().map((s,i)=>`<div class="q"><span class="px"></span><span>${runtime.ECOS[s.p]}<small>ESTRELLA ${runtime.S.stars.length-i} · ${s.d}${s.name?" · "+s.name:""}</small></span></div>`).join(""):`<div><span class="px"></span><span class="q">Completa el camino, entra al Mundo y busca ecos antiguos.</span></div>`;
     runtime.$("mSky").hidden=false;
   }
@@ -43,8 +43,8 @@ export function initialize(runtime) {
     x.font='96px "Geist Mono", monospace';x.fillText(kind==="sky"?runtime.S.stars.length+" ESTRELLAS":"DÍA "+runtime.displayDay(),100,96);
     x.font='28px "Geist Mono", monospace';x.fillStyle="#8a8a8f";x.fillText((kind==="sky"?"MI CONSTELACIÓN · "+Object.keys(runtime.S.zones).length+" ZONAS":"ERA "+runtime.era(runtime.displayDay())).toUpperCase(),104,216);
     x.fillStyle="#fff";x.font='600 34px "Geist Mono", monospace';
-    x.fillText("RACHA "+runtime.shownStreak(),100,1040);x.fillText("ESTRELLAS "+runtime.S.stars.length,430,1040);x.fillText("TAMAÑO "+runtime.level(),800,1040);
-    x.font='40px "Geist Mono", monospace';x.fillText(runtime.shownStreak()>1?"No fallé. "+runtime.shownStreak()+" días seguidos.":"Hoy sumé.",100,1120);
+    x.fillText("DÍAS "+(runtime.S.totalDays||0),100,1040);x.fillText("ESTRELLAS "+runtime.S.stars.length,430,1040);x.fillText("TAMAÑO "+runtime.level(),800,1040);
+    x.font='40px "Geist Mono", monospace';{const heard=Object.keys(runtime.S.zones||{}).length;x.fillText(heard>1?heard+" lugares escuchados.":"Hoy escuché.",100,1120);}
     x.fillStyle="#8a8a8f";x.font='26px "Geist Mono", monospace';x.fillText("KUBONO  ·  @jaywrkr",100,1236);x.fillStyle="#fff";x.font='30px "Geist Mono", monospace';x.textAlign="right";x.fillText("SIMPLE.",980,1232);x.textAlign="left";
     runtime.$("shareImg").alt=kind==="sky"?"Mi constelación en Kubono":"Mi día en Kubono";
     runtime.$("shareImg").src=c.toDataURL("image/png");runtime.$("mShare").hidden=false;

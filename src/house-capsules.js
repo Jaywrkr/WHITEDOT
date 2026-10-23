@@ -110,7 +110,7 @@ export function initialize(runtime){
  function draw(c,{toScreen,k,t,calm:still,house,cube,night=0}){
   c.save();c.globalAlpha=1;
   for(const d of house.decor||[]){const p=CAPSULE_DECOR.find(q=>q.id===d.id),b=roomBox(d.room);if(!p||!b||!(house.unlocked||[]).includes(d.room))continue;const w=wallPoint(b,d.x,d.y),s=toScreen(w.x,w.y);c.save();c.translate(Math.round(s.x),Math.round(s.y));drawDecor(c,p.shape,Math.max(10,26*k),t,{night,calm:still});c.restore();}
-  const now=performance.now(),spin=Math.max(0,1-(now-spinAt)/900),armed=now-armedAt<4000,label=(text,x,y,on)=>{c.font='9px "Geist Mono", monospace';c.letterSpacing='2px';c.textAlign='center';c.fillStyle=on?'#f0d27a':'#ffffff73';c.fillText(text,x,y);c.textAlign='start';c.letterSpacing='0px';};
+  const now=performance.now(),spin=Math.max(0,1-(now-spinAt)/900),armed=now-armedAt<4000,label=(text,x,y,on)=>{c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.textAlign='center';c.fillStyle=on?'#f0d27a':'#ffffff73';c.fillText(text,x,y);c.textAlign='start';c.letterSpacing='0px';};
   // The Prism: a slowly turning triangular prism with sparks inside; it spins when it gives something.
   {const p=toScreen(MACHINE.x,MACHINE.floor-36),sz=24*k,a=(still?0:t/2400)+spin*9,near=cube?.floor===1&&Math.abs(cube.x-MACHINE.x)<40,pts=[0,1,2].map(i=>[Math.cos(a+i*2.094)*sz,Math.sin(a+i*2.094)*sz*.35]);
    c.strokeStyle=armed?'#f0d27a':'#ffffff';c.globalAlpha=.9;for(const yy of [-sz,sz*.6]){c.beginPath();pts.forEach(([x,y],i)=>i?c.lineTo(p.x+x,p.y+yy+y):c.moveTo(p.x+x,p.y+yy+y));c.closePath();c.stroke();}pts.forEach(([x,y])=>{c.beginPath();c.moveTo(p.x+x,p.y-sz+y);c.lineTo(p.x+x,p.y+sz*.6+y);c.stroke();});
