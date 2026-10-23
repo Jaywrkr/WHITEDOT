@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.157**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.158**. Las entradas describen su revisión, no certifican producción.
+
+## F16 · Ruinas · alpha.158
+
+Rama `claude/f16-ruinas`, sobre `claude/f15-faros` (dependencia explícita).
+
+- **Reconstruye:** ocho columnas rotas en anillo; algunas conservan una o dos piedras. Junto a una columna, toca el patrón de las Ruinas, «1 · 2y · 3 · 4». Tres de sus cuatro pasos en un mismo compás ponen una piedra (los cuatro en Maestro). Bajo la columna, tres marcas cuentan los pasos de este compás.
+- **Arcos:** una columna tiene siete piedras. Dos columnas enteras vecinas levantan un arco dorado, que vale más.
+- **Final:** con la barra llena llega una piedra dorada; un pulso a tiempo la coloca. Su trofeo es un arco. Se abre con 20 ★; `?lugar=ruinas`.
+- Meta 265 de 284 posibles; en Maestro, toda la ruina. Simulación (modelo, jugador que no se distrae): 2:13 con el 75 % a tiempo, 1:51 con el 90 %, 4:15 en Maestro. Una persona tardará algo más.
+- Pruebas: `tests/journey-rebuild.mjs`, `tests/rebuild_smoke.py` (teléfono y escritorio).
 
 ## F15 · Faros · alpha.157
 
