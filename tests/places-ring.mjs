@@ -13,7 +13,7 @@ assert.deepEqual(portalSpots(c,()=>true),spots);
 const journey={finished:true,done:{llanura:true,lago:true,bosque:true,tormenta:true,vacio:true}},places=normalizePlaces(null,journey);
 assert.equal(nextPortal(spots,places,{done:{}},c),null,'nothing during the Journey');
 const near=nextPortal(spots,places,journey,{x:spots[2].x+10,y:spots[2].y});assert.equal(near.id,'bosque');
-for(const id of ['llanura','lago','bosque','tormenta','vacio'])places.seen[id]=true;assert.equal(nextPortal(spots,places,journey,c).id,'jardin','the five entered and with their ★: the Jardín, opened by them (F9), is next');places.seen.jardin=true;places.stars.jardin[0]=true;assert.equal(nextPortal(spots,places,journey,c),null,'the Dunas have no game yet');
+for(const id of ['llanura','lago','bosque','tormenta','vacio'])places.seen[id]=true;assert.equal(nextPortal(spots,places,journey,c).id,'jardin','the five entered and with their ★: the Jardín, opened by them (F9), is next');places.seen.jardin=true;places.stars.jardin[0]=true;assert.equal(nextPortal(spots,places,journey,c),null,'the Dunas ask eight stars');
 // Back from a round: beside the portal, toward the Refugio, out of its reach so it does not open again at once.
 const b=besidePortal(spots[0],c),d=Math.hypot(b.x-spots[0].x,b.y-spots[0].y);assert(d>PORTAL_REACH*2);assert(Math.hypot(b.x-c.x,b.y-c.y)<RING_RADIUS);
 // Saves: the ring's centre and the portals entered are kept; junk is dropped.

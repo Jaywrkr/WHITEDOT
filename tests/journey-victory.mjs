@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import {VICTORY_STYLES,RISER_BARS,DROP_BARS,victorySeconds,dropPattern,initialize} from '../src/journey-victory.js';
 // One electronic style per chapter, in its genre, and one for each place built after them (the Jardín, plan F9).
-assert.deepEqual(Object.keys(VICTORY_STYLES),['llanura','lago','bosque','tormenta','vacio','jardin']);
-assert.deepEqual(Object.values(VICTORY_STYLES).map(s=>s.genre),['house','dub','disco','techno','ambient','garage']);
+assert.deepEqual(Object.keys(VICTORY_STYLES),['llanura','lago','bosque','tormenta','vacio','jardin','dunas']);
+assert.deepEqual(Object.values(VICTORY_STYLES).map(s=>s.genre),['house','dub','disco','techno','ambient','garage','afro']);
 // A bar of riser, half a beat of silence and two bars of drop.
 assert.equal(RISER_BARS,1);assert.equal(DROP_BARS,2);assert.equal(victorySeconds(.125),(16+2+32)*.125);
 const count=(id,what)=>dropPattern(VICTORY_STYLES[id]).filter(h=>h.what===what).length;

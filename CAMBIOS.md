@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.151**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.152**. Las entradas describen su revisión, no certifican producción.
+
+## F10 · Dunas · alpha.152
+
+Rama `claude/f10-dunas`, sobre `claude/f9-jardin` (dependencia explícita).
+
+- **Surfea:** olas de arena cruzan las dunas, una por compás. Un círculo marca dónde pasará la cresta de la próxima y un arco alrededor se cierra hasta su tiempo. Dentro del círculo, un pulso a tiempo justo cuando pasa la cresta la surfea: la ola te empuja y la barra se llena. Dentro del círculo pero en otro tiempo, o fuera de tiempo, no pasa nada.
+- **Racha:** 2, 3 y 4 por ola seguida (marcas doradas bajo el cubo); dejar pasar una ola empieza de nuevo. En Maestro el círculo es más pequeño y la barra ×1,5.
+- **Final:** con la barra llena llega una ola dorada; surfearla cierra la ronda. Su drop es afro house y su trofeo, una ola.
+- **Se abre con 8 ★.** `?lugar=dunas` da a su guardado de prueba las estrellas que pide.
+- Las olas siguen la rejilla de tiempos de la música aunque cambie de tempo (al llegar a las Dunas o en Maestro).
+- **Ritmo:** meta 150. Media de 200 rondas simuladas (una ola cada dos segundos): 2:33 surfeando el 65 %, 1:41 con el 85 %, 3:48 en Maestro. Es un modelo.
+- Pruebas: `tests/journey-surf.mjs`, `tests/surf_smoke.py` (teléfono y escritorio), `victory_mix.py` con siete drops.
 
 ## F9 · Jardín · alpha.151
 

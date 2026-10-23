@@ -27,12 +27,12 @@ try:
  with sync_playwright() as p:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   page=b.new_page();page.goto(f'http://127.0.0.1:{server.server_port}/tests/')
-  rows=[page.evaluate(RENDER,cid) for cid in ['llanura','lago','bosque','tormenta','vacio','jardin']]
+  rows=[page.evaluate(RENDER,cid) for cid in ['llanura','lago','bosque','tormenta','vacio','jardin','dunas']]
   for r in rows:
    assert r['ms']>0 and 0<r['peak']<.75 and r['hot']==0,('headroom over the music',r)
    assert r['riserLate']>r['riserEarly']+6,('the riser rises',r)
    assert r['gap']<r['drop']-12,('half a beat of silence before the drop',r)
    assert r['drop']>r['riserEarly']+6 and r['drop']>-40,('the drop is the loudest part',r)
   (ROOT/'scripts/victory-audio-validation.json').write_text(json.dumps({'renders':rows},indent=2)+'\n')
-  print('PASS six drops (five chapters and the Jardín) render as a rising bar, a half beat of silence and a louder drop with the theme; peak %.3f'%max(r['peak'] for r in rows),flush=True);b.close()
+  print('PASS seven drops (five chapters, the Jardín and the Dunas) render as a rising bar, a half beat of silence and a louder drop with the theme; peak %.3f'%max(r['peak'] for r in rows),flush=True);b.close()
 finally:server.shutdown()
