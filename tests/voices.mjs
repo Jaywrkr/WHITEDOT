@@ -58,7 +58,10 @@ for(let x=0;x<30;x++){const region=runtime.regionOfPos(x*3600+900,900);roles.add
  for(const [degree] of THEME){const midi=themePitch(degree,scale,0);calls.length=0;const out=runtime.playTheme(midi,degree,1,region,scale,0);
   assert(out&&out.notes.length===3);assert.equal(((out.notes[0]-midi)%12+12)%12,0,'the theme note itself, in some octave');assert(out.notes[1]>out.notes[0]&&out.notes[2]>out.notes[0]);
   const hooks=calls.filter(c=>c.type==='hook');assert.equal(hooks.length,3,'three melodic notes, no percussion or chords');assert(hooks[0].t===1&&hooks[1].t>1&&hooks[2].t>hooks[1].t);assert(hooks[2].v<hooks[0].v);}}
-assert(roles.has('perc')||roles.has('bajo'),'regions whose pulse is not melodic are covered');console.log('PASS the theme on time: exact note in a melodic voice in every region, third and fifth after');}
+assert(roles.has('perc')||roles.has('bajo'),'regions whose pulse is not melodic are covered');
+// The pulse's listeners still hear a pulse on time (the laboratory, the looper, the living…), with no sound of its own.
+{const region=runtime.regionOfPos(900,900),heard=[],before=runtime.labLearningHear;runtime.labLearningHear=(...a)=>heard.push(a);calls.length=0;runtime.hearVoice('pulso',0,1,region,true,1,{x:900,y:900},'player');
+ assert.equal(heard.length,1);assert.equal(heard[0][0],'pulso');assert.equal(calls.length,0,'silent');runtime.labLearningHear=before;}console.log('PASS the theme on time: exact note in a melodic voice in every region, third and fifth after');}
 const encountered=new Set();
 for(let x=-20;x<=20;x++)for(let y=-20;y<=20;y++)encountered.add(runtime.regionOfPos(x*3600+900,y*3600+900).genre);
 for(const genre of ['electro','progressive','microhouse','minimaltechno','dubstep','dnb'])assert(encountered.has(genre),`${genre}: unavailable in world`);

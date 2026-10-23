@@ -36,6 +36,7 @@ El pulso a tiempo es el verbo del juego; la auditoría encontró que era injusto
 - **El tema suena:** cada acierto toca al instante la nota exacta del tema con un instrumento melódico del lugar, y luego su tercera y su quinta. Antes la nota se movía con el acorde y en más de la mitad de las regiones el pulso era percusión o acordes. En el Camino el acierto ya suena distinto del fallo.
 - **Ningún toque se pierde:** un toque cuenta hasta 450 ms (antes 240) y un pulso demasiado seguido deja una marca gris en la Línea.
 - **iPhone:** sin vibración, el cubo brilla en dorado durante un tiempo.
+- **Arreglo posterior:** un pulso a tiempo en el Mundo dejó de llegar a lo que escucha el pulso (laboratorio, looper, seres vivos, mascota): sonaba el tema y nada más. Ahora lo oyen igual, sin sonido propio (`hearVoice`). La CI lo detectaba de forma intermitente en `lab_learning_smoke.py`.
 - **Dedo quieto y luego caminar:** si el dedo descansa y abre el escáner, al moverlo el escáner se cierra y el cubo camina (antes no se movía).
 - Pendiente: escucha y prueba de Jay en iPhone con auriculares; medir la latencia real en dispositivos.
 - Verificación local: 209 suites Node, 11 recorridos de navegador y 3 mezclas de audio en PASS. `guide_smoke.py` falló una vez esperando el Mundo tras recargar y pasó en las dos repeticiones con el mismo código: queda anotado como recorrido inestable.
