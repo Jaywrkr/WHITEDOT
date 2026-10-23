@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.156**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.157**. Las entradas describen su revisión, no certifican producción.
+
+## F15 · Faros · alpha.157
+
+Rama `claude/f15-faros`, sobre `claude/f14-ritmos` (dependencia explícita).
+
+- **Guía:** el cubo es un faro. Seis barcos esperan perdidos en la oscuridad alrededor del puerto, donde empieza la ronda. Un pulso a tiempo cerca de un barco lo enciende: te sigue dos compases, y cada pulso a tiempo cerca lo mantiene encendido. Llévalo encendido al puerto y atraca. Otro barco ocupa su lugar.
+- **Convoy:** un barco vale 4; cada otro barco encendido que venga con él suma 2 (hasta 10). Traer varios a la vez rinde más.
+- **Ritmo:** destellos en «1 · 3 · y». El haz gira con el compás desde el cubo y destella al tocar.
+- Una flecha dorada en el borde señala el puerto mientras llevas barcos; si no llevas, una blanca señala el barco más cercano.
+- **Final:** con la barra llena llega un barco dorado; un pulso a tiempo lo enciende. Su trofeo es un faro. Se abre con 16 ★; `?lugar=faros`.
+- Meta 260. Simulación (modelo): 2:28 con el 75 % a tiempo, 2:23 con el 90 %, 3:30 en Maestro.
+- Pruebas: `tests/journey-guide.mjs`, `tests/guide_smoke.py` (teléfono y escritorio).
 
 ## F14 · Ritmos · alpha.156
 
