@@ -9,6 +9,7 @@ Rama `claude/fase5-llave`, sobre `main` (alpha.132). Jay aprobó esta idea de la
 - **El universo reconoce el tema:** en el Mundo libre, completar el tema a tiempo junto a un hito hace que el hito toque su motivo y luego el tema contigo. En un superbioma raro, el lugar lo contesta una quinta arriba.
 - **Llaves en la Bitácora:** cada una se guarda una vez, con su día; en Lugares aparecen como «Llaves · n».
 - Solo en el Mundo libre: durante el Viaje, el tema es de los capítulos.
+- **Camino más claro** (lo notó Jay en iPhone): un pulso fuera de tiempo llega al cristal y lo hace temblar sin romperlo, y los cristales brillan en cada beat. Antes no pasaba nada y parecían rotos.
 - Verificación local: 213 suites Node, auditoría sin errores, `theme_key_smoke.py` nueva y recorridos del pulso, capítulos, coherencia y sin conexión, más las mezclas `exploration_mix.py` y `journey_mix.py`, en PASS.
 - Medida de Jay en iPhone (Camino, calidad alta): p50 17 ms y p95 17 ms, 60 imágenes por segundo estables. Falta medir el Mundo.
 

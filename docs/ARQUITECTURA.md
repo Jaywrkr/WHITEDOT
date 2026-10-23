@@ -148,7 +148,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - deja un destello dorado;
   - seis aciertos completan la frase, con una vibración distinta.
 - **Sin sonido** (sonido apagado o sin beats todavía): cada pulso cuenta como a tiempo, para que el Viaje se pueda jugar sin oírlo; los capítulos siguen pidiendo sus momentos y compases.
-- **Fuera de tiempo:** solo suena el pulso de siempre. En el Camino del Viaje la onda fuera de tiempo no rompe cristales y la onda a tiempo rompe uno (`pathWaveCounts` en `crystal-sparks.js`); el Camino libre sigue igual.
+- **Fuera de tiempo:** solo suena el pulso de siempre. En el Camino del Viaje la onda fuera de tiempo no rompe cristales y la onda a tiempo rompe uno (`pathWaveCounts` en `crystal-sparks.js`); la fuera de tiempo hace temblar el cristal (`miss`) y los cristales brillan en cada beat; el Camino libre sigue igual.
 - **La Línea:** una línea fina en el 80 % de la altura dibuja el compás (16 marcas), un cursor dorado en el paso que se oye (reloj menos latencia) y un pico por cada pulso: dorado y alto si fue a tiempo, blanco y bajo si no. No aparece con paneles abiertos ni en actividades.
 - **Datos:** el tema es dato fijo y no consume el RNG antiguo. El juicio solo guarda contadores de sesión; el guardado solo recibe `S.haptics`.
 

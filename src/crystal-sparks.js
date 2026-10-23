@@ -29,6 +29,11 @@ export function initialize(runtime){
  const reduced=()=>!!(S().reducedMotion||prefersReducedMotion());
  const journeyPath=()=>S().mode==='camino'&&!!runtime.journeyQuiet?.();
  const timed=()=>!!(S().sound&&runtime.ac?.state==='running'&&runtime.MU?.bq?.length);
+ // A pulse off the beat in the Journey's Camino reaches the crystal but does not break it: it shivers, so the player
+ // sees it was touched and learns it wants the beat. Crystals there also brighten on every beat.
+ const missed=new Map();let misses=0;
+ function miss(o,wave){let hits=seen.get(wave);if(!hits){hits=new Set();seen.set(wave,hits);}if(hits.has(o.id))return;hits.add(o.id);if(wave.spent||sites.get(o.id)?.broken)return;missed.set(o.id,seconds+.3);misses++;}
+ function beatGlow(){if(!journeyPath()||!timed()||reduced())return 0;const ac=runtime.ac,bq=runtime.MU.bq;let last=-Infinity;for(const b of bq)if(b<=ac.currentTime)last=Math.max(last,b);return Math.max(0,1-(ac.currentTime-last)/((runtime.SIX||.15)*2));}
  function ensure(){
   const key=JSON.stringify(runtime.worldIdentity||{})+':'+S().todayKey;
   if(owner!==S()||scope!==key){owner=S();scope=key;sites=new Map();seen=new WeakMap();stale=new WeakSet(runtime.waves||[]);near=[];cell='';gain=0;shownUntil=0;seconds=0;chains=[];feedback=[];owner.sparks=normalizeSparks(owner.sparks);owner.pathCrystals||=[];}
@@ -45,7 +50,7 @@ export function initialize(runtime){
    let site=sites.get(o.id);
    if(!site&&sites.size>=MAX_SITES)continue;
    if(!site?.broken)for(const wave of runtime.waves||[]){
-    if(stale.has(wave)||wave.origin!=='player'||!pulseCrossed(wave,o.x,o.y)||path&&!pathWaveCounts(wave,journeyPath(),timed()))continue;
+    if(stale.has(wave)||wave.origin!=='player'||!pulseCrossed(wave,o.x,o.y))continue;if(path&&!pathWaveCounts(wave,journeyPath(),timed())){miss(o,wave);continue;}
     let hits=seen.get(wave);if(!hits){hits=new Set();seen.set(wave,hits);}if(hits.has(o.id))continue;hits.add(o.id);if(path)wave.spent=true;
     if(!site){site={hits:0,flash:0,broken:false,collected:false};sites.set(o.id,site);}
     site.hits++;site.flash=seconds+.18;if(site.hits<o.size)impact(o,site);
@@ -90,7 +95,7 @@ export function initialize(runtime){
   if(site?.run){const old={x:site.run.x,y:site.run.y};site.run.age+=step;if(!reduced()&&!(runtime.autopilotState?.mode==='wander'&&!runtime.autopilotState.paused))Object.assign(site.run,moveEscape(site.run,o,pos,step,site.run.age));if(Math.hypot(site.run.x-old.x,site.run.y-old.y)>1){site.run.trail.push(old);site.run.trail=site.run.trail.slice(-6);}else site.run.trail=site.run.trail.slice(1);}
   const point=site?.run||o;
   for(const wave of runtime.waves||[]){
-   if(stale.has(wave)||wave.origin!=='player'||!pulseCrossed(wave,point.x,point.y)||path&&!pathWaveCounts(wave,journeyPath(),timed()))continue;
+   if(stale.has(wave)||wave.origin!=='player'||!pulseCrossed(wave,point.x,point.y))continue;if(path&&!pathWaveCounts(wave,journeyPath(),timed())){miss(o,wave);continue;}
    let hits=seen.get(wave);if(!hits){hits=new Set();seen.set(wave,hits);}if(hits.has(o.id))continue;hits.add(o.id);
    if(site?.broken){runtime.inspectSpentCrystal?.(o.id);continue;}
    if(path)wave.spent=true;hit(o,path);site=sites.get(o.id);
@@ -136,13 +141,13 @@ export function initialize(runtime){
     }
     continue;
    }
-   const recoil=!reduced()&&site?.flash>seconds?Math.sin((site.flash-seconds)*55)*(site.flash-seconds)/.25:0;
+   const flash=Math.max(site?.flash||0,missed.get(o.id)||0),recoil=!reduced()&&flash>seconds?Math.sin((flash-seconds)*55)*(flash-seconds)/.25:0,glow=beatGlow();
    const x=(site?.run?.x??o.x)+ox+recoil*1.8,y=(site?.run?.y??o.y)+oy+Math.abs(recoil)*.6;
    if(site?.run){if(!reduced()){c.fillStyle='#d3eef2';for(const p of site.run.trail){c.globalAlpha=opacity*.2;c.fillRect(p.x+ox,p.y+oy+6,1,1);}c.globalAlpha=opacity;}const leg=reduced()?0:Math.sin(seconds*24)*3;c.strokeStyle='#d3eef2';c.lineWidth=1.3;c.beginPath();c.moveTo(x-3,y+4);c.lineTo(x-6-leg,y+10);c.moveTo(x+3,y+4);c.lineTo(x+6+leg,y+10);c.stroke();}
-   if(site?.flash>seconds){c.strokeStyle='#fff';c.lineWidth=2;}else c.lineWidth=1.2;
+   if(flash>seconds){c.strokeStyle='#fff';c.lineWidth=2;}else c.lineWidth=1.2;
    for(let i=0;i<o.size;i++){
     const px=x+(i-(o.size-1)/2)*6,h=9+(i%2)*4;
-    c.beginPath();c.moveTo(px-3,y+4);c.lineTo(px-4,y-h+4);c.lineTo(px,y-h);c.lineTo(px+4,y-h+4);c.lineTo(px+3,y+4);c.closePath();c.globalAlpha=opacity*.28;c.fill();c.globalAlpha=opacity;c.stroke();
+    c.beginPath();c.moveTo(px-3,y+4);c.lineTo(px-4,y-h+4);c.lineTo(px,y-h);c.lineTo(px+4,y-h+4);c.lineTo(px+3,y+4);c.closePath();c.globalAlpha=opacity*(.28+.45*glow);c.fill();c.globalAlpha=opacity;c.stroke();
     c.globalAlpha=opacity*.5;c.beginPath();c.moveTo(px,y-h);c.lineTo(px+1,y-h+5);c.lineTo(px,y+4);c.moveTo(px-4,y-h+4);c.lineTo(px+1,y-h+5);c.lineTo(px+4,y-h+4);c.stroke();c.globalAlpha=opacity;
    }
    if(site?.hits){c.strokeStyle='#fff';c.lineWidth=site.hits===o.size-1?2:1;c.shadowColor='#fff';c.shadowBlur=site.flash>seconds?8:0;c.beginPath();c.moveTo(x-4,y-5);c.lineTo(x+2,y-2);c.lineTo(x-1,y+2);if(site.hits>1)c.lineTo(x+5,y+3);c.stroke();c.shadowBlur=0;}
@@ -167,5 +172,5 @@ export function initialize(runtime){
   counter.hidden=!['camino','world'].includes(S().mode);total.textContent='✦ '+normalizeSparks(S().sparks);
   const visible=seconds<shownUntil;counter.classList.toggle('collecting',visible);delta.textContent=visible?'+'+gain:'';
  }
- Object.defineProperties(runtime,{crystalTick:{get:()=>tick},drawCrystals:{get:()=>draw},drawSparkHUD:{get:()=>drawHUD},crystalState:{get:()=>({total:normalizeSparks(S().sparks),sites:sites.size,feedback:feedback.length,near:near.map(o=>({...o,...sites.get(o.id)}))})}});
+ Object.defineProperties(runtime,{crystalTick:{get:()=>tick},drawCrystals:{get:()=>draw},drawSparkHUD:{get:()=>drawHUD},crystalState:{get:()=>({misses,total:normalizeSparks(S().sparks),sites:sites.size,feedback:feedback.length,near:near.map(o=>({...o,...sites.get(o.id)}))})}});
 }

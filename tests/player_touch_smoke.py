@@ -44,7 +44,7 @@ try:
   before=state()['px'];walk();assert state()['px']>before+100,('a held finger walks the cube',before,state())
   # The music has started; a tap between beats breaks no crystal in the Journey, a tap on the beat breaks one.
   page.wait_for_function('__r.ac?.state==="running"&&__r.MU.bq.length>1',timeout=10000)
-  beat_tap(off=int(page.evaluate('__r.SIX*2000')));assert state()['crystals']==0,('an offbeat tap breaks nothing',state())
+  beat_tap(off=int(page.evaluate('__r.SIX*2000')));assert state()['crystals']==0,('an offbeat tap breaks nothing',state());assert page.evaluate('__r.crystalState.misses')>=1,'but the crystal shivers: it was touched'
   for _ in range(6):
    if state()['crystals']>=1:break
    beat_tap()
