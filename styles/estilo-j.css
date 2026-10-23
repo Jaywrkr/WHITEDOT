@@ -551,7 +551,7 @@ body.festival :is(#bJourneyMode,#bConnection){display:none!important}#journeyFin
 /* Phase 3: on phones the notices start below the top-right counters, so a notice never covers «Próximo salto». */
 .spark-goal{max-width:none;white-space:nowrap}
 @media (max-width:520px){#toast,#phrase,#zone{top:calc(var(--safe-top,0px) + 112px)}}
-#bJourneyMode small{display:block;font-size:11px}
+:is(#bJourneyMode,#bStartOver) small{display:block;font-size:11px}
 small{font-size:max(11px,.85em)}
 .key-list ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:4px 12px}.key-list li{font-size:12px;color:var(--gold);border:1px solid var(--gold);padding:4px 6px}
 /* Phase 6: after the Journey's finale the free World's counters and buttons fade in, one after another. */

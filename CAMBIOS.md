@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.133**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.134**. Las entradas describen su revisión, no certifican producción.
+
+## Fase 6 · Experiencia completa · alpha.134
+
+Rama `claude/fase6-experiencia`, sobre `claude/fase5-llave` (alpha.133, dependencia explícita). Recorrido como jugador nuevo en un teléfono, de abrir el juego al Mundo libre.
+
+- **Empezar de cero** (Ajustes): dos toques empiezan una partida nueva y guardan la actual; «Volver a la partida anterior» la recupera. Con una cuenta abierta no se ofrece, para que la nube no tome la partida vacía como la más nueva.
+- **El Viaje callado desde el principio:** sin saludo al abrir, el menú sin chispas, y sin el atajo de lugares ni el paseo automático mientras viajas. Ajustes muestra solo lo que sirve en el Viaje.
+- **El primer toque no regala:** antes del primer beat un pulso no cuenta como a tiempo; solo con el sonido apagado cuenta cualquier pulso.
+- **Del final al Mundo libre:** al salir del Refugio, los contadores y botones aparecen poco a poco y el menú lleva un punto dorado hasta abrirlo.
+- **Guardado:** los compases de cada capítulo se guardan cada 8; salir y volver no pierde la estancia.
+- Verificación local: 214 suites Node, nuevas `start_over_smoke.py` y `start-over.mjs`, y recorridos del Viaje, final, festival, interfaz, coherencia, paseo automático y sin conexión en PASS.
 
 ## Fase 5 · El tema como llave · alpha.133
 

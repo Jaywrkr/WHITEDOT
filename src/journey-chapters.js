@@ -116,7 +116,9 @@ export function initialize(runtime){
   if(current()==='refugio'&&!own().finished&&!finaleAsked&&runtime.journeyFinale){finaleAsked=true;runtime.journeyFinale();return;}const st=stateNow(),id=current(),here=inChapter();if(runtime.MU){runtime.MU.journeyCap=st?stateCap(st,id):null;runtime.MU.journeyFloor=here?stateFloor(st,id):null;runtime.MU.journeyOwnBolts=here&&id==='tormenta'&&(progress(id).bolts||0)>0;}
   // The stay: bars count only while you play in the chapter; in the Bosque, the walk with the creature.
   const now=performance.now(),dt=Math.max(0,Math.min(.25,(now-lastTick)/1000));lastTick=now;
-  if(here&&!own().done[id]&&st!=='silencio'){const p=progress(id);p.bars=Math.min(9999,(p.bars||0)+dt/((runtime.SIX||.15)*16));
+  if(here&&!own().done[id]&&st!=='silencio'){const p=progress(id),before=Math.floor((p.bars||0)/8);p.bars=Math.min(9999,(p.bars||0)+dt/((runtime.SIX||.15)*16));
+   // Kept every eight bars, so leaving and coming back never loses the stay (phase 6 of the plan).
+   if(Math.floor(p.bars/8)>before)runtime.save();
    if(id==='bosque'&&journey().moments?.companion&&lastSpot)p.walk=Math.min(99999,(p.walk||0)+Math.min(40,Math.hypot(runtime.S.wx-lastSpot.x,runtime.S.wy-lastSpot.y)));}
   lastSpot={x:runtime.S.wx,y:runtime.S.wy};
   // A chapter kept before a reload, but not yet left: its portal opens again beside you.

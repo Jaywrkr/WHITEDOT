@@ -32,6 +32,7 @@ for(let i=0;i<6;i++){clock+=400;r.journeyChapterPulse(true,57+i,i*4);}assert.equ
 r.journeyChapterPulse(false);assert.equal(r.journeyChapter().hits,6,'misses do not count');
 // Bars count while you play in the chapter: a bar is two seconds at this tempo.
 for(let i=0;i<8;i++){clock+=250;r.drawJourneyChapters(c,390,844,i);}assert(Math.abs(r.journeyChapter().progress.bars-1)<.01,r.journeyChapter().progress);
+{const before=saves;for(let i=0;i<60;i++){clock+=250;if(i%8===0)r.journeyChapterPulse(false);r.drawJourneyChapters(c,390,844,i);}assert(r.journeyChapter().progress.bars>8&&saves>before,'the stay is saved every eight bars');}
 assert.equal(r.journeyPhrase(),false,'six hits are not enough: the lighthouse is not reached');
 r.S.journey.moments={faro:{x:500,y:0,reached:true}};assert.equal(r.journeyChapter().lived,true);assert.equal(r.journeyPhrase(),false,'nor the bars');
 r.S.journey.progress.llanura.bars=CHAPTER_BARS.llanura;assert.equal(r.journeyPhrase(),true);assert.equal(r.journeyChapter().state,'plenitud');assert(r.journeyChapter().portal);assert.equal(r.journeyPhrase(),false,'only once');

@@ -12,7 +12,7 @@ Vercel sirve la raíz. `scripts/vercel-build.mjs` sella el artefacto con revisi�
 
 ## Progreso y chispas
 
-- `progress.js`, `save-store.js` y `save-tools.js`: estado, normalización y respaldos locales.
+- `progress.js`, `save-store.js` y `save-tools.js`: estado, normalización y respaldos locales. «Empezar de cero» (Ajustes) restaura una partida nueva con `saveStore.restore`, que deja la actual en `:before-restore` para «Volver a la partida anterior»; no se ofrece con cuenta abierta.
 - `crystal-sparks.js`: distribución determinista independiente, dibujo, impactos manuales y recogida. Camino: diez roturas únicas para entrar automáticamente. En el Mundo añade corredores, fragmentos fugitivos y cadenas; no crea pulsos musicales.
 - `crystal-play-model.js`: variantes con hash independiente, reparto de fragmentos y escape acotado. Un fragmento raro añade 3 chispas; su máscara de recogida persiste en `sparkEconomy.sites`. Los registros antiguos agotados no recuperan premios. Cadenas de hasta ocho impactos adicionales por rotura inicial, radio 240; corredores y fragmentos se detienen tras dos segundos, a un máximo de 90/100 unidades. Movimiento reducido conserva las recompensas sin persecución.
 - `sparks-model.js`: catálogo, normalización y reglas puras. `sparks.js`: operaciones, compras, colecciones, logros, títulos y metas; pinta la Tienda y el Viaje dentro de Tu cubo (`cube.js`).
@@ -132,6 +132,8 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - quien ya llegó al Mundo empieza en Mundo libre y los jugadores nuevos en el Viaje; el botón «Mundo libre / Viaje» del menú cambia y se guarda;
   - el Mundo libre se abre al terminar el Viaje (`S.journey.free`, `freeOpen`): antes el botón está oculto y `setJourneyMode('libre')` no hace nada; quien ya estaba en Mundo libre lo conserva;
   - durante el Viaje `ui.js` no muestra avisos cotidianos (sí los importantes y los pedidos con `force`, como el enlace a otra semilla);
+  - el Viaje abre sin saludo (`return-entrance.js`), el menú no muestra chispas y se ocultan `#quickSave`, `#bAuto` y en Ajustes el paseo automático, los textos del paisaje y «Modo: explorar» (`.free-only`);
+  - al terminar el final, `journey-finale.js` (`unveil`) hace aparecer el HUD del Mundo libre al salir del Refugio y marca el menú con un punto dorado hasta abrirlo;
   - `journey-hint.js`: tras 4 s sin entrada en el Viaje (20 s después de 3 aciertos), un dedo fantasma arrastra y toca en el beat; se va al primer toque y nunca sale con un dedo apoyado o moviéndose;
   - en navegadores automatizados las partidas nuevas empiezan en Mundo libre, para que las pruebas existentes conserven sus controles; el Viaje se prueba a propósito;
   - el Viaje no abre la bienvenida del Camino.
