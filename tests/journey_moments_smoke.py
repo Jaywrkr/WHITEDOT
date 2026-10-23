@@ -31,7 +31,7 @@ try:
    # Out of sight for a while, a faint light at the edge points to it (phase 6 of the plan).
    if width==390:
     assert page.evaluate("__r.journeyMoments().guide")==None
-    page.evaluate("()=>{const r=__r,f=r.journeyMoments().faro;r.S.wx=f.x-700;r.S.wy=f.y;}");page.wait_for_function("__r.journeyMoments().guide==='llanura'",timeout=26000)
+    page.evaluate("()=>{const r=__r,f=r.journeyMoments().faro;r.S.wx=f.x-700;r.S.wy=f.y;}");page.wait_for_function("__r.journeyMoments().guide==='llanura'",timeout=8000)
    page.evaluate("()=>{const r=__r,f=r.journeyMoments().faro;r.S.wx=f.x;r.S.wy=f.y;}");page.wait_for_function("__r.journeyMoments().faro.reached")
    # The Lago: a note on time next to a lotus opens it.
    page.evaluate("()=>{const r=__r;r.S.journey.chapter=2;r.S.journey.done={...r.S.journey.done,llanura:true};}");page.evaluate(GO,'lago');page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='lago'",timeout=8000);page.evaluate(hide)

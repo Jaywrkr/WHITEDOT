@@ -11,7 +11,11 @@ Rama `claude/fase6-experiencia`, sobre `claude/fase5-llave` (alpha.133, dependen
 - **El primer toque no regala:** antes del primer beat un pulso no cuenta como a tiempo; solo con el sonido apagado cuenta cualquier pulso.
 - **Del final al Mundo libre:** al salir del Refugio, los contadores y botones aparecen poco a poco y el menú lleva un punto dorado hasta abrirlo.
 - **Guardado:** los compases de cada capítulo se guardan cada 8; salir y volver no pierde la estancia.
-- **Encontrar el faro y los lotos** (pregunta de Jay): si llevas 20 s en el capítulo sin vivir su momento y está fuera de la pantalla, una luz tenue en el borde, con su color, señala hacia él. Sin palabras.
+- **Qué hacer en cada capítulo** (Jay no sabía qué hacer al entrar al Mundo):
+  - la barra de arriba, la misma del Camino, se llena con el capítulo: la mitad con su momento y la mitad con los compases tocando; dorada cuando el capítulo se cumple;
+  - una luz tenue en el borde, con su color, señala el faro o el loto más cercano a los 3 s de llegar, mientras estén fuera de la pantalla. Sin palabras.
+- **Para qué sirven las chispas:** al pasar al Mundo libre, «Tu cubo» lleva un punto dorado y un aviso dice «Tus ✦ cambian tu cubo: Menú → Tu cubo.», una sola vez.
+- Pendiente: al terminar el Viaje llegan juntos varios avisos (Mundo libre, color nuevo, logros); conviene ordenarlos tras las pruebas con personas.
 - Verificación local: 214 suites Node, nuevas `start_over_smoke.py` y `start-over.mjs`, y recorridos del Viaje, final, festival, interfaz, coherencia, paseo automático y sin conexión en PASS.
 
 ## Fase 5 · El tema como llave · alpha.133

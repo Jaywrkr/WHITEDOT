@@ -15,8 +15,8 @@ export function placeFaro(from,inPlace){for(let i=0;i<8;i++){const a=-Math.PI/4+
 export const lotusAt=(center,i)=>({x:Math.round(center.x+Math.cos(i/LOTUS_COUNT*6.283)*LOTUS_RING),y:Math.round(center.y+Math.sin(i/LOTUS_COUNT*6.283)*LOTUS_RING*.6)});
 // The lighthouse's voice: louder as you come near, silent beyond hearing.
 // When the moment of a chapter is out of sight for a while (the lighthouse, the lotuses), a faint light at the edge of
-// the screen points to it: no words, and only after this long in the chapter without living it (phase 6 of the plan).
-export const MOMENT_GUIDE_AFTER=20000;
+// the screen points to it: no words, a moment after arriving in the chapter and until it is lived (phase 6 of the plan).
+export const MOMENT_GUIDE_AFTER=3000;
 // Where the edge light sits for a target off screen (dx, dy from the cube, in px); null when the target is on screen.
 export function edgePoint(dx,dy,W,H,margin=18){if(Math.abs(dx)<W/2-margin&&Math.abs(dy)<H/2-margin)return null;const a=Math.atan2(dy,dx),ex=W/2+Math.cos(a)*(W/2-margin),ey=H/2+Math.sin(a)*(H/2-margin);return {x:Math.max(margin,Math.min(W-margin,ex)),y:Math.max(70,Math.min(H-120,ey)),a};}
 export const faroVolume=d=>d>=FARO_HEAR?0:.05*(1-d/FARO_HEAR)**1.5;

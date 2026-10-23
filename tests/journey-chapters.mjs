@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {CHAPTERS,WORLD_CHAPTERS,STATE_CAP,STORM_FLOOR,STATE_FLOOR,stateFloor,VOID_CAP,VOID_ECHO_AFTER,stateCap,normalizeChapters,chapterState,findBiome,initialize,CHAPTER_BARS,PORTAL_WAIT,momentLived,barsLived,LOTUS_GOAL,FOLLOW_GOAL,BOLT_GOAL} from '../src/journey-chapters.js';
+import {CHAPTERS,WORLD_CHAPTERS,STATE_CAP,STORM_FLOOR,STATE_FLOOR,stateFloor,VOID_CAP,VOID_ECHO_AFTER,stateCap,normalizeChapters,chapterState,findBiome,initialize,CHAPTER_BARS,PORTAL_WAIT,momentLived,barsLived,chapterProgress,LOTUS_GOAL,FOLLOW_GOAL,BOLT_GOAL} from '../src/journey-chapters.js';
 assert.deepEqual(CHAPTERS,['camino','llanura','lago','bosque','tormenta','vacio','refugio']);assert.equal(WORLD_CHAPTERS.length,5);
 assert(STATE_CAP.silencio<STATE_CAP.llegada&&STATE_CAP.llegada<STATE_CAP.pertenencia&&STATE_CAP.pertenencia<STATE_CAP.plenitud);
 // Saved chapters are cleaned; a player already in the World starts at chapter 1.
@@ -15,6 +15,10 @@ assert.equal(momentLived('bosque',{walk:FOLLOW_GOAL},{}),false,'the creature mus
 assert.equal(momentLived('tormenta',{bolts:BOLT_GOAL-1}),false);assert.equal(momentLived('vacio',{echoes:1}),true);
 assert.equal(barsLived('lago',{bars:CHAPTER_BARS.lago-1}),false);assert.equal(barsLived('lago',{bars:CHAPTER_BARS.lago}),true);
 assert(Object.values(CHAPTER_BARS).every(b=>b>=24),'each chapter lasts minutes, not seconds');
+// The bar at the top: half the moment, half the bars; full once both are there, and full when kept.
+assert.equal(chapterProgress('llanura',{},{}),0);assert.equal(chapterProgress('llanura',{bars:CHAPTER_BARS.llanura/2},{}),.25);assert.equal(chapterProgress('llanura',{},{faro:{reached:true}}),.5);
+assert.equal(chapterProgress('lago',{},{lotos:{open:[true,false,false,false,false]}}),.5/3);assert.equal(chapterProgress('tormenta',{bolts:2,bars:CHAPTER_BARS.tormenta},{}),.75);
+assert.equal(chapterProgress('vacio',{echoes:1,bars:999},{}),1);assert.equal(chapterProgress('bosque',{},{},true),1);
 assert.equal(normalizeChapters({chapter:99}).chapter,0);
 assert.equal(chapterState(0,false),'llegada');assert.equal(chapterState(3,false),'pertenencia');assert.equal(chapterState(0,true),'plenitud');
 // The nearest place of a biome on the map.

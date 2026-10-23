@@ -53,8 +53,13 @@ export function initialize(runtime){
   state.finished++;runtime.toast?.('Se abre el Mundo libre.');unveil();}
  // From the quiet Journey to everything at once was abrupt (phase 6 of the plan): the counters and buttons of the free
  // World fade in one after another, and the menu marks that it has new things until it is opened.
+ // The sparks earned on the way were hidden in the Journey: once in the free World, Tu cubo is marked and one short
+ // notice says what they are for (once per game).
+ function sparksHint(){const j=runtime.S.journey;if(!j||j.sparksHint)return;j.sparksHint=true;runtime.save?.();const cube=document.getElementById('bCube');
+  if(cube?.classList){cube.classList.add('has-new');cube.addEventListener('click',()=>cube.classList.remove('has-new'),{once:true});}
+  setTimeout(()=>runtime.toast?.('Tus ✦ cambian tu cubo: Menú → Tu cubo.',{level:2,ttl:60000,coalesce:false}),2600);}
  // The finale lands in the Refugio: the unveiling waits until you step out into the World (for up to ten minutes).
- function unveil(waited=0){const body=document.body;if(typeof runtime.inWorld==='function'&&!runtime.inWorld()&&waited<600){setTimeout(()=>unveil(waited+1),1000);if(waited)return;}else{body?.classList?.add('journey-unveil');setTimeout(()=>body?.classList?.remove('journey-unveil'),7000);if(waited)return;}
+ function unveil(waited=0){const body=document.body;if(typeof runtime.inWorld==='function'&&!runtime.inWorld()&&waited<600){setTimeout(()=>unveil(waited+1),1000);if(waited)return;}else{body?.classList?.add('journey-unveil');setTimeout(()=>body?.classList?.remove('journey-unveil'),7000);sparksHint();if(waited)return;}
   const menu=document.getElementById('bMenu'),sheet=document.getElementById('mMenu');if(!menu?.classList)return;menu.classList.add('has-new');
   if(sheet&&typeof MutationObserver==='function'){const seen=new MutationObserver(()=>{if(!sheet.hidden){menu.classList.remove('has-new');seen.disconnect();}});seen.observe(sheet,{attributes:true,attributeFilter:['hidden']});}}
  function credits(r){r.credits=true;const box=r.el.querySelector('.journey-credits');box.replaceChildren(...(r.festival?FESTIVAL_LINES:CREDIT_LINES).map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.9}s`;if(i===0)p.className='journey-title';return p;}));}

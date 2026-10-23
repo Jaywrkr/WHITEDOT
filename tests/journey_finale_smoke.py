@@ -43,7 +43,10 @@ try:
    # (the finale lands in the Refugio; the menu is outside it).
    assert not page.evaluate("document.body.classList.contains('journey-unveil')"),'not while in the Refugio' 
    assert page.evaluate("document.getElementById('bMenu').classList.contains('has-new')")
-   page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#houseExit').click();page.wait_for_function("document.body.classList.contains('journey-unveil')",timeout=5000);page.locator('#bMenu').click();page.wait_for_function("!document.getElementById('bMenu').classList.contains('has-new')")
+   page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#houseExit').click();page.wait_for_function("document.body.classList.contains('journey-unveil')",timeout=5000)
+   # And the sparks earned on the way: Tu cubo is marked and one notice says what they are for.
+   page.wait_for_function("document.getElementById('toast').textContent.includes('Tu cubo')",timeout=30000);assert page.evaluate("document.getElementById('bCube').classList.contains('has-new')") and page.evaluate('__r.S.journey.sparksHint')==True
+   page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#bMenu').click();page.wait_for_function("!document.getElementById('bMenu').classList.contains('has-new')")
    page.reload();page.wait_for_function('!!window.__r?.journeyFinale');assert page.evaluate("__r.S.journey.finished")==True and page.evaluate("__r.journeyMode()")=='libre'
    assert not page.evaluate("document.body.classList.contains('journey-quiet')")
    assert not errors,errors;page.close()

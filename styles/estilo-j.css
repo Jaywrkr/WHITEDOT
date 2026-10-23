@@ -558,5 +558,5 @@ small{font-size:max(11px,.85em)}
 @keyframes journey-unveil{from{opacity:0}to{opacity:1}}
 body.journey-unveil :is(#day,#era,#walkDistance,#sparkCount,#sparkGoal){animation:journey-unveil 1.6s ease 1s both}
 body.journey-unveil :is(#bJump,#bStyles,#bAuto,#quickSave){animation:journey-unveil 1.6s ease 2.6s both}
-#bMenu.has-new{position:relative}#bMenu.has-new::after{content:'';position:absolute;top:8px;right:8px;width:6px;height:6px;background:var(--gold)}
+:is(#bMenu,#bCube).has-new{position:relative}:is(#bMenu,#bCube).has-new::after{content:'';position:absolute;top:8px;right:8px;width:6px;height:6px;background:var(--gold)}
 @media (prefers-reduced-motion:reduce){body.journey-unveil *{animation:none!important}}

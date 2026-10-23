@@ -37,6 +37,11 @@ export function momentLived(id,progress={},moments={}){
  if(id==='tormenta')return (progress.bolts||0)>=BOLT_GOAL;
  if(id==='vacio')return (progress.echoes||0)>=ECHO_GOAL;
  return true;}
+// How far a chapter has come, 0 to 1, for the bar at the top (the same one that fills with the Camino's crystals):
+// half for its moment (in steps where it has them) and half for its bars; done is 1 (phase 6 of the plan).
+export function chapterProgress(id,progress={},moments={},done=false){if(done)return 1;const need=CHAPTER_BARS[id];if(!need)return 0;
+ const lotus=(moments.lotos?.open||[]).filter(Boolean).length,moment=momentLived(id,progress,moments)?1:id==='lago'?Math.min(1,lotus/LOTUS_GOAL):id==='bosque'?(moments.companion?Math.min(1,(progress.walk||0)/FOLLOW_GOAL):0):id==='tormenta'?Math.min(1,(progress.bolts||0)/BOLT_GOAL):0;
+ return Math.min(1,.5*moment+.5*Math.min(1,(progress.bars||0)/need));}
 export const barsLived=(id,progress={})=>(progress.bars||0)>=(CHAPTER_BARS[id]||0);
 export function stateCap(state,id){const cap=STATE_CAP[state]??null;return cap!=null&&id==='vacio'?Math.min(cap,VOID_CAP):cap;}
 export function normalizeChapters(j,inWorld=false){
@@ -121,6 +126,8 @@ export function initialize(runtime){
    if(Math.floor(p.bars/8)>before)runtime.save();
    if(id==='bosque'&&journey().moments?.companion&&lastSpot)p.walk=Math.min(99999,(p.walk||0)+Math.min(40,Math.hypot(runtime.S.wx-lastSpot.x,runtime.S.wy-lastSpot.y)));}
   lastSpot={x:runtime.S.wx,y:runtime.S.wy};
+  // The bar at the top shows the chapter's way: white while it fills, gold once the chapter is kept.
+  if(WORLD_CHAPTERS.includes(id)){const fill=document.getElementById?.('barfill');if(fill){const p=chapterProgress(id,progress(id),journey().moments||{},!!own().done[id]),w=(Math.round(p*200)/2)+'%';if(fill.style.width!==w)fill.style.width=w;fill.parentElement?.classList.toggle('free',!!own().done[id]);}}
   // A chapter kept before a reload, but not yet left: its portal opens again beside you.
   if(here&&own().done[id]&&!portal)portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:now};
   if(storm.length&&runtime.MU&&!runtime.MU.boltAt&&runtime.ac&&storm[0]<=runtime.ac.currentTime+.02){runtime.MU.boltAt=Math.max(storm.shift(),runtime.ac.currentTime);runtime.MU.boltMine=true;}

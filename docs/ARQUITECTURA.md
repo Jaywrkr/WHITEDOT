@@ -48,7 +48,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 - **Cumplir un capítulo** (Fase 2 del plan): `momentLived` (faro alcanzado, 3 lotos, 600 px con la criatura, 4 rayos propios, un eco) y `barsLived` (`CHAPTER_BARS`, compases contados en `progress` solo mientras se toca). Sin los dos, el tema completo no da Plenitud. Al llegar a cada capítulo el tema vuelve a su primera nota (`journeyPulseReset`).
 - **Rayos propios:** en la Tormenta, `MU.boltMine` dibuja tu rayo dorado junto al cubo y `MU.journeyOwnBolts` calla los rayos automáticos de `audio.js` sin cambiar sus sorteos.
 - **Plenitud:** completar el tema allí marca el capítulo, devuelve el color (`world-sheet.js`), toca el tema entero con su octava y, cuando termina (`PORTAL_WAIT`, al menos 4 s), abre un portal dorado. Un capítulo cumplido antes de recargar vuelve a abrir su portal. Entrar en él lleva al bioma del capítulo siguiente, buscado en anillos sobre el mapa del Mundo (sin mar).
-- **Faro:** lejos del bioma del capítulo, una columna dorada en el borde de la pantalla señala hacia él. Dentro, `journey-moments.js` señala con una luz tenue de su color el faro o el loto cerrado más cercano cuando lleva 20 s sin vivirse y está fuera de la pantalla (`MOMENT_GUIDE_AFTER`, `edgePoint`).
+- **Faro:** lejos del bioma del capítulo, una columna dorada en el borde de la pantalla señala hacia él. Dentro, `journey-moments.js` señala con una luz tenue de su color el faro o el loto cerrado más cercano a los 3 s de llegar mientras no se viva y esté fuera de la pantalla (`MOMENT_GUIDE_AFTER`, `edgePoint`). La barra superior (`#barfill`) muestra `chapterProgress`: mitad momento, mitad compases; dorada al cumplir el capítulo.
 - **Línea:** cinco marcas al final de la Línea: dorado para los capítulos cumplidos, blanco para el actual.
 - **Refugio:** tras el Vacío, el portal llama a `runtime.journeyFinale` si existe; si no, aterriza en el Refugio.
 - Nada consume el azar antiguo: los lugares salen del mapa del Mundo.
@@ -133,7 +133,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - el Mundo libre se abre al terminar el Viaje (`S.journey.free`, `freeOpen`): antes el botón está oculto y `setJourneyMode('libre')` no hace nada; quien ya estaba en Mundo libre lo conserva;
   - durante el Viaje `ui.js` no muestra avisos cotidianos (sí los importantes y los pedidos con `force`, como el enlace a otra semilla);
   - el Viaje abre sin saludo (`return-entrance.js`), el menú no muestra chispas y se ocultan `#quickSave`, `#bAuto` y en Ajustes el paseo automático, los textos del paisaje y «Modo: explorar» (`.free-only`);
-  - al terminar el final, `journey-finale.js` (`unveil`) hace aparecer el HUD del Mundo libre al salir del Refugio y marca el menú con un punto dorado hasta abrirlo;
+  - al terminar el final, `journey-finale.js` (`unveil`) hace aparecer el HUD del Mundo libre al salir del Refugio y marca el menú con un punto dorado hasta abrirlo; marca también «Tu cubo» y avisa una vez para qué son las chispas (`S.journey.sparksHint`);
   - `journey-hint.js`: tras 4 s sin entrada en el Viaje (20 s después de 3 aciertos), un dedo fantasma arrastra y toca en el beat; se va al primer toque y nunca sale con un dedo apoyado o moviéndose;
   - en navegadores automatizados las partidas nuevas empiezan en Mundo libre, para que las pruebas existentes conserven sus controles; el Viaje se prueba a propósito;
   - el Viaje no abre la bienvenida del Camino.
