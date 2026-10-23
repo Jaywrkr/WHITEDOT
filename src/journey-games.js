@@ -7,8 +7,10 @@ export const classicJourney=(search=globalThis.location?.search)=>/[?&](faro|cla
 // How much the beat is sounding now, 1 on the beat fading to 0 over two sixteenths: what things breathe with.
 export function beatGlow(runtime){if(calmMotion(runtime.S)||!runtime.ac||!runtime.MU?.bq?.length)return 0;const now=runtime.ac.currentTime;let last=-Infinity;for(const b of runtime.MU.bq)if(b<=now)last=Math.max(last,b);return Math.max(0,1-(now-last)/((runtime.SIX||.15)*2));}
 export const worldCamera=runtime=>({x:runtime.camX??runtime.S.wx,y:runtime.camY??runtime.S.wy});
-// One short line, once per save, said a moment after the chapter starts.
-export function sayOnce(runtime,flags,key,text,delay=1500){if(flags[key])return false;flags[key]=true;runtime.save?.();setTimeout(()=>runtime.toast?.(text,{level:2,ttl:12000,coalesce:false,force:true}),delay);return true;}
+// One short line said a moment later, dropped if by then the player has left the chapter (the notice lane may hold it).
+export function chapterToast(runtime,id,text,delay=600,ttl=15000){setTimeout(()=>runtime.toast?.(text,{level:2,ttl,coalesce:false,force:true,valid:()=>!!runtime.journeyGamePlaying?.(id)}),delay);}
+// The chapter's rule, once per save, a moment after it starts.
+export function sayOnce(runtime,flags,key,text,id,delay=1500){if(flags[key])return false;flags[key]=true;runtime.save?.();chapterToast(runtime,id,text,delay,12000);return true;}
 export function initialize(runtime){
  const games={};
  const current=()=>runtime.journeyChapter?.()?.id;
