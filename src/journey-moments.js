@@ -45,7 +45,8 @@ export function initialize(runtime){
  // Each frame in a chapter: place what is missing, tune the lighthouse, move the creature.
  function draw(c,W,H,t,id,inside){if(!id){stopTone();return;}const m=own();if(!inside||id!=='llanura')stopTone();if(!inside&&!(m.companion&&id!=='vacio'))return;const still=calm(),cam={x:runtime.camX??runtime.S.wx,y:runtime.camY??runtime.S.wy},sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),beat=still?.5:beatNow();
   c.save();
-  if(inside&&id==='llanura'){if(!m.faro){m.faro={...placeFaro(here(),inBiome('llanura')),reached:false};runtime.save();}
+  // With «Pégate» (journey-stick.js) the Llanura has no lighthouse: its goal is the giant to swallow.
+  if(inside&&id==='llanura'&&!runtime.journeyStickOn){if(!m.faro){m.faro={...placeFaro(here(),inBiome('llanura')),reached:false};runtime.save();}
    const f=m.faro,d=Math.hypot(f.x-runtime.S.wx,f.y-runtime.S.wy);faroTone(d);if(!f.reached&&d<FARO_REACH){f.reached=true;counts.faro++;if(runtime.save()===false)f.reached=false;runtime.enterFx=Math.max(runtime.enterFx||0,.6);}
    // A pulsar seen from above: a bright core, a halo and a beam that sweeps the ground around it.
    // Before you reach it, it calls (phase 6, Jay could not find it): a long beam that sweeps past the screen and a ring

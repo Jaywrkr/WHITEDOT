@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.134**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.135**. Las entradas describen su revisión, no certifican producción.
+
+## Prototipo «Pégate» en la Llanura · alpha.135
+
+Rama `claude/viaje-pegate`, sobre `claude/fase6-experiencia` (alpha.134, dependencia explícita). Prototipo para que Jay y Luca lo prueben; no se integra en `main` sin su visto bueno.
+
+- **La Llanura sin faro:** el cubo empieza diminuto. Un pulso a tiempo junto a algo pequeño lo pega al cubo y suena; fuera de tiempo, rebota con un «boing».
+- **Crecer:** solo se pega lo que mide hasta la mitad del cubo; tres aciertos seguidos atraen tres cosas. El cubo se dibuja más grande, la barra de arriba se llena y la música sube con él.
+- **El gigante:** una nube de polvo te empuja mientras eres pequeño. Al tamaño completo se vuelve dorada; tragarla cumple la Llanura y abre el portal al Lago.
+- **Dos pistas breves:** «Toca a tiempo cerca de algo: se pega.» al llegar, y «Ya eres grande: trágate la nube dorada.» al llegar al tamaño completo.
+- **Comparar:** `?faro=1` conserva la Llanura anterior con el faro.
+- Pruebas: `tests/journey-stick.mjs` y `tests/journey_stick_smoke.py`; las pruebas del faro abren con `?faro=1`.
 
 ## Fase 6 · Experiencia completa · alpha.134
 

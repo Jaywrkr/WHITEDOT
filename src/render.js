@@ -106,7 +106,7 @@ export function initialize(runtime) {
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);const cap=runtime.lightQuality?.()?150:400;if(runtime.parts.length>cap)runtime.parts.splice(0,runtime.parts.length-cap);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
     runtime.pulse=Math.max(0,runtime.pulse-dt*1.5);
-    const s=Math.max(ds,runtime.inWorld()?runtime.cubeShopMinSize?.()||0:0)*(1+runtime.pulse*.6+b*.08)*(runtime.inWorld()?runtime.surpriseStyle?.scale||1:1);
+    const s=Math.max(ds,runtime.inWorld()?runtime.cubeShopMinSize?.()||0:0)*(1+runtime.pulse*.6+b*.08)*(runtime.inWorld()?runtime.surpriseStyle?.scale||1:1)*(runtime.cubeGrowth?.()||1);
     runtime.drawCubeStyle?.(t,dt,b,s);runtime.drawSurprises?.(t,ox,oy);
     const playerColor=runtime.inWorld()?(runtime.cubeColor?.()||'#fff'):'#fff';
     if(runtime.pulse){runtime.cx.globalAlpha=runtime.pulse*.5;runtime.cx.strokeStyle=playerColor;runtime.cx.lineWidth=1;const rr=s*(1+(1-runtime.pulse)*4);runtime.cx.strokeRect(runtime.W/2-rr/2,runtime.H/2-rr/2,rr,rr);}

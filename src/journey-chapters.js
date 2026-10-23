@@ -98,7 +98,11 @@ export function initialize(runtime){
  function plenitude(){const ac=runtime.ac;if(!runtime.S.sound||!ac||!runtime.bus)return;runtime.soon?.(t=>{const MU=runtime.MU||{},scale=MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,eighth=(runtime.SIX||.15)*2;let at=t;for(const [d,l]of THEME){const m=themePitch(d,scale,MU.tr||0);playCello(ac,runtime.bus,at,m,l*eighth,.15);playCello(ac,runtime.bus,at,m-12,l*eighth,.08);at+=l*eighth;}},'player');}
  // A completed theme in the chapter's biome, once its moment is lived and its bars played: Plenitud, and the portal to
  // the next chapter after the theme sounds in tutti.
- function phrase(){if(!inChapter())return false;const j=own(),id=current();if(j.done[id]||(id==='vacio'&&hits<VOID_PHRASE)||!ready(id))return false;j.done[id]=true;if(runtime.save()===false){delete j.done[id];return false;}
+ function phrase(){if(!inChapter())return false;const j=own(),id=current();if(j.done[id]||(id==='vacio'&&hits<VOID_PHRASE)||!ready(id))return false;
+  // «Pégate» (prototype): the Llanura ends when the cube swallows its giant (journey-stick.js), not with the theme.
+  if(id==='llanura'&&runtime.journeyStickOn)return false;return complete(id);}
+ // A chapter kept: Plenitud, the theme in tutti and, after it, the portal to the next one.
+ function complete(id=current()){const j=own();if(j.done[id]||current()!==id)return false;j.done[id]=true;if(runtime.save()===false){delete j.done[id];return false;}
   // The Tormenta's Plenitud: a bar of bolts, one on every beat.
   if(id==='tormenta'&&runtime.ac){const beat=(runtime.SIX||.15)*4;for(let i=1;i<=4;i++)storm.push(runtime.ac.currentTime+i*beat);moments.bolts+=4;}
   plenitude();runtime.enterFx=Math.max(runtime.enterFx||0,1);const theme=THEME.reduce((s,[,l])=>s+l,0)*(runtime.SIX||.15)*2*1000;portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:performance.now()+Math.max(PORTAL_WAIT,theme)};return true;}
@@ -127,13 +131,13 @@ export function initialize(runtime){
    if(id==='bosque'&&journey().moments?.companion&&lastSpot)p.walk=Math.min(99999,(p.walk||0)+Math.min(40,Math.hypot(runtime.S.wx-lastSpot.x,runtime.S.wy-lastSpot.y)));}
   lastSpot={x:runtime.S.wx,y:runtime.S.wy};
   // The bar at the top shows the chapter's way: white while it fills, gold once the chapter is kept.
-  if(WORLD_CHAPTERS.includes(id)){const fill=document.getElementById?.('barfill');if(fill){const p=chapterProgress(id,progress(id),journey().moments||{},!!own().done[id]),w=(Math.round(p*200)/2)+'%';if(fill.style.width!==w)fill.style.width=w;fill.parentElement?.classList.toggle('free',!!own().done[id]);}}
+  if(WORLD_CHAPTERS.includes(id)){const fill=document.getElementById?.('barfill');if(fill){const p=id==='llanura'&&runtime.journeyStickOn&&!own().done[id]?runtime.journeyStickProgress():chapterProgress(id,progress(id),journey().moments||{},!!own().done[id]),w=(Math.round(p*200)/2)+'%';if(fill.style.width!==w)fill.style.width=w;fill.parentElement?.classList.toggle('free',!!own().done[id]);}}
   // A chapter kept before a reload, but not yet left: its portal opens again beside you.
   if(here&&own().done[id]&&!portal)portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:now};
   if(storm.length&&runtime.MU&&!runtime.MU.boltAt&&runtime.ac&&storm[0]<=runtime.ac.currentTime+.02){runtime.MU.boltAt=Math.max(storm.shift(),runtime.ac.currentTime);runtime.MU.boltMine=true;}
   if(portalOpen()&&Math.hypot(runtime.S.wx-portal.x,runtime.S.wy-portal.y)<34)travel();}
  // The portal in the World, and seven small marks on the Line's right end: gold for done, white for here.
- function draw(c,W,H,t){tick();if(!active()){runtime.drawJourneyMoments?.(c,W,H,t,null,false);return;}if(openSurface('.modal:not([hidden])'))return;const j=own(),still=calm();runtime.drawJourneyMoments?.(c,W,H,t,current(),inChapter());c.save();
+ function draw(c,W,H,t){tick();if(!active()){runtime.drawJourneyMoments?.(c,W,H,t,null,false);return;}if(openSurface('.modal:not([hidden])'))return;const j=own(),still=calm();runtime.drawJourneyMoments?.(c,W,H,t,current(),inChapter());runtime.drawJourneyStick?.(c,W,H,t);c.save();
   if(portalOpen()){const x=W/2+(portal.x-(runtime.camX??runtime.S.wx)),y=H/2+(portal.y-(runtime.camY??runtime.S.wy)),grow=Math.min(1,(performance.now()-portal.at)/900),r=22*grow;
    const g=c.createRadialGradient(x,y,0,x,y,r*2.4);g.addColorStop(0,'rgba(240,210,122,.35)');g.addColorStop(1,'rgba(240,210,122,0)');c.fillStyle=g;c.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8);
    c.strokeStyle='#f0d27a';c.lineWidth=1.5;for(let i=0;i<3;i++){c.globalAlpha=.9-i*.25;c.beginPath();c.arc(x,y,r*(1-i*.25),still?0:t/600+i,(still?0:t/600+i)+Math.PI*1.6);c.stroke();}}
@@ -147,6 +151,6 @@ export function initialize(runtime){
   const y=Math.round(H*.8)+.5,x1=W-Math.max(24,W*.12),gap=9;c.globalAlpha=1;
   WORLD_CHAPTERS.forEach((id,i)=>{const x=x1-(WORLD_CHAPTERS.length-1-i)*gap,isHere=current()===id;c.fillStyle=j.done[id]?'#f0d27a':isHere?'#ffffff':'#ffffff40';c.globalAlpha=isHere&&!j.done[id]&&!still?.6+.4*Math.sin(t/300):1;c.fillRect(Math.round(x)-1,y+9,3,3);});
   c.restore();}
- Object.defineProperties(runtime,{journeyChapterPulse:{get:()=>pulse},journeyPhrase:{get:()=>phrase},journeyTravel:{get:()=>travel},drawJourneyChapters:{get:()=>draw},
+ Object.defineProperties(runtime,{journeyChapterPulse:{get:()=>pulse},journeyPhrase:{get:()=>phrase},journeyComplete:{get:()=>complete},journeyTravel:{get:()=>travel},drawJourneyChapters:{get:()=>draw},
   journeyChapter:{get:()=>()=>({moments:{...moments,storm:storm.length},progress:{...progress(current())},lived:momentLived(current(),progress(current()),journey().moments||{}),bars:barsLived(current(),progress(current())),portalOpen:portalOpen(),beacon:!!(active()&&beacon()),chapter:own().chapter,id:current(),state:stateNow(),hits,portal:portal?{x:portal.x,y:portal.y}:null,done:{...own().done},notes:Object.fromEntries(Object.entries(own().notes).map(([k,v])=>[k,[...v]]))})}});
 }
