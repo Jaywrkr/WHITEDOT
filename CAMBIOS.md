@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.143**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.144**. Las entradas describen su revisión, no certifican producción.
+
+## F2 · Sonido de victoria · alpha.144
+
+Rama `claude/f2-victoria`, sobre `claude/f1-ritmo` (dependencia explícita). A Jay el sonido al completar un nivel le pareció horrible, triste y nada electrónico: era el tema en violonchelo.
+
+- **El drop:** al cerrar un capítulo, desde el siguiente «1»: un compás de ruido que sube mientras la música se filtra hacia abajo, medio tiempo de silencio y dos compases con el beat completo y el tema del cubo en un sintetizador. El filtro de la música se abre de golpe en el drop.
+- **Un estilo por capítulo:** Llanura house (bombo a negras, palmas, acordes a contratiempo), Lago dub (medio tiempo, ecos), Bosque disco (bajo en octavas, charles en semicorcheas), Tormenta techno (bombo duro, bajo grave, línea ácida) y Vacío ambient (sin percusión: un pad y el tema en campanas con eco).
+- El portal se abre al terminar el drop. Sin sonido no suena nada y el portal espera lo de siempre.
+- **Mezcla:** `tests/victory_mix.py` renderiza los cinco drops: sube, hay silencio antes del drop, el drop es lo más fuerte y el pico queda en 0,57 (margen sobre la música). Los sonidos de los cinco juegos se revisaron por nivel frente a los del juego; no se renderizaron aparte.
+- Pruebas: `tests/journey-victory.mjs`, `tests/victory_mix.py`; la prueba de la Llanura comprueba que el filtro de la música se vuelve a abrir.
 
 ## F1 · Ritmo de los niveles · alpha.143
 
