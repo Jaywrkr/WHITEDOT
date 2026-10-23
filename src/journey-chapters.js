@@ -140,7 +140,10 @@ export function initialize(runtime){
   if(storm.length&&runtime.MU&&!runtime.MU.boltAt&&runtime.ac&&storm[0]<=runtime.ac.currentTime+.02){runtime.MU.boltAt=Math.max(storm.shift(),runtime.ac.currentTime);runtime.MU.boltMine=true;}
   if(portalOpen()&&Math.hypot(runtime.S.wx-portal.x,runtime.S.wy-portal.y)<34)travel();}
  // The portal in the World, and seven small marks on the Line's right end: gold for done, white for here.
- function draw(c,W,H,t){tick();if(!active()){runtime.drawJourneyMoments?.(c,W,H,t,null,false);return;}if(openSurface('.modal:not([hidden])'))return;const j=own(),still=calm();runtime.drawJourneyMoments?.(c,W,H,t,current(),inChapter());runtime.drawJourneyGames?.(c,W,H,t);c.save();
+ // A round of a place (places.js): its bar shows the round's progress, in either screen mode; with «Todo a la vista»
+ // the Journey's own drawing is off, so the game's top layer is drawn here.
+ function roundBar(){const run=runtime.placeRun?.();document.body?.classList?.toggle('place-round',!!run);if(!run)return false;const fill=document.getElementById?.('barfill'),p=runtime.journeyGameProgress?.(run.id);if(fill&&p!=null){const w=(Math.round(p*200)/2)+'%';if(fill.style.width!==w)fill.style.width=w;fill.parentElement?.classList.toggle('free',false);}return true;}
+ function draw(c,W,H,t){tick();const round=roundBar();if(!active()){runtime.drawJourneyMoments?.(c,W,H,t,null,false);if(round&&!openSurface('.modal:not([hidden])'))runtime.drawJourneyGames?.(c,W,H,t);return;}if(openSurface('.modal:not([hidden])'))return;const j=own(),still=calm();runtime.drawJourneyMoments?.(c,W,H,t,current(),inChapter());runtime.drawJourneyGames?.(c,W,H,t);c.save();
   if(portalOpen()){const x=W/2+(portal.x-(runtime.camX??runtime.S.wx)),y=H/2+(portal.y-(runtime.camY??runtime.S.wy)),grow=Math.min(1,(performance.now()-portal.at)/900),r=22*grow;
    const g=c.createRadialGradient(x,y,0,x,y,r*2.4);g.addColorStop(0,'rgba(240,210,122,.35)');g.addColorStop(1,'rgba(240,210,122,0)');c.fillStyle=g;c.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8);
    c.strokeStyle='#f0d27a';c.lineWidth=1.5;for(let i=0;i<3;i++){c.globalAlpha=.9-i*.25;c.beginPath();c.arc(x,y,r*(1-i*.25),still?0:t/600+i,(still?0:t/600+i)+Math.PI*1.6);c.stroke();}}

@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.150**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.151**. Las entradas describen su revisión, no certifican producción.
+
+## F9 · Jardín · alpha.151
+
+Rama `claude/f9-jardin`, sobre `claude/f8-logros` (dependencia explícita).
+
+- **Siembra:** ocho parcelas alrededor de donde empieza la ronda, cerca y lejos alternadas. Un pulso a tiempo sobre una parcela vacía siembra; cada pulso a tiempo hace crecer lo que hay al alcance (semilla, brote, capullo, flor); sobre una flor, la recoge y la parcela queda libre. Fuera de tiempo no pasa nada.
+- **Cuidar:** una planta sin atender ocho compases se marchita un paso. Un arco dorado alrededor de cada planta muestra el tiempo que le queda; parpadea al final. En Maestro, seis compases y barra ×1,5.
+- **Sonido:** cada flor añade la nota siguiente de un arpegio sobre el acorde (la capa del Jardín en tu canción); su cierre suena a garage.
+- **Final:** con la barra llena llega un árbol dorado; un pulso a tiempo lo hace florecer y cierra la ronda con estrellas, chispas y su tarjeta. Su trofeo es una flor.
+- **Abre con 5 ★:** el Viaje terminado ya lo abre; su portal está en el anillo y `?lugar=jardin` lo prueba.
+- **Arreglo para todas las rondas (F4):** con «Todo a la vista», la barra de arriba no se veía ni mostraba el avance de la ronda, y los efectos sobre el cubo no se dibujaban. Ahora la barra sigue la ronda en los dos modos.
+- **Ritmo:** meta 360. Un jugador simulado (150 px/s, un pulso por segundo, un segundo para situarse en cada parcela) tarda 2:24 con el 75 % a tiempo, 2:08 con el 90 % y 3:31 en Maestro; una persona tarda algo más. Es un modelo, no una medida con personas.
+- Pruebas: `tests/journey-garden.mjs` (lógica y ritmo), `tests/garden_smoke.py` (teléfono y escritorio, los dos modos de pantalla), `victory_mix.py` con seis drops; `places`, `places-ring`, `refugio-lugares` y sus pruebas de navegador ahora usan las Dunas como lugar cerrado.
 
 ## F8 · Logros del narrador · alpha.150
 

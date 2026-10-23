@@ -37,7 +37,7 @@ try:
    page.wait_for_timeout(400);assert not page.evaluate('__r.places().run'),'standing beside it does not open it again'
    page.locator('#bMenu').click();assert not page.locator('#bLeavePlace').is_visible();page.locator('#mnClose').click()
    # A closed portal asks for stars.
-   walk_in(page,'jardin');page.wait_for_timeout(400);assert not page.evaluate('__r.places().run')
+   walk_in(page,'dunas');page.wait_for_timeout(400);assert not page.evaluate('__r.places().run')
    # With ★★, a portal asks Jugar or Maestro.
    page.evaluate("()=>{__r.S.lugares.stars.bosque[1]=true;}");walk_in(page,'bosque');page.wait_for_function("!document.getElementById('mPortal').hidden",timeout=3000)
    assert page.locator('#portalStars .got').count()==2;page.locator('#portalMaestro').click();page.wait_for_function("__r.places().run?.maestro===true&&__r.places().run.id==='bosque'",timeout=5000)

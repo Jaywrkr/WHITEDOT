@@ -27,7 +27,7 @@ try:
    wall=next(h for h in page.evaluate('__r.houseLugaresState().hits') if h.get('open'))
    page.mouse.click(wall['x']+20,wall['y']+wall['h']/2);page.wait_for_function("!document.getElementById('mLugares').hidden",timeout=3000)
    rows=page.locator('#lugaresList li');assert rows.count()==11
-   assert 'Jardín llega pronto' in page.inner_text('#lugaresNext')
+   assert 'Dunas se abre con 8 ★. Faltan 2.' in page.inner_text('#lugaresNext')
    assert page.locator('#lugaresList button').count()==1,'Ir only to the places already entered'
    page.locator('#lugaresClose').click();assert page.evaluate("document.getElementById('mLugares').hidden")
    # The house bar opens it too; «Ir» leaves the Refugio beside the Lago's portal.

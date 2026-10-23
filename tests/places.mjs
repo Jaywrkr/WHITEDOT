@@ -8,7 +8,7 @@ assert.deepEqual(roundStars({onTime:.82,maestro:true}),[true,false,true]);assert
 // Saves: a chapter kept in the Journey is a ★ of its place, even from before; a future version is kept untouched.
 const n=normalizePlaces(null,{done:{llanura:true,lago:true}});assert.deepEqual(n.stars.llanura,[true,false,false]);assert.equal(starCount(n),2);
 const future={version:9,x:1};assert.equal(normalizePlaces(future),future);
-assert(!placeOpen(n,'llanura',{done:{}}),'closed during the Journey');assert(placeOpen(n,'llanura',{finished:true}));assert(!placeOpen(n,'jardin',{finished:true}),'the Jardín asks five stars and has no game yet');
+assert(!placeOpen(n,'llanura',{done:{}}),'closed during the Journey');assert(placeOpen(n,'llanura',{finished:true}));assert(!placeOpen(n,'jardin',{finished:true}),'the Jardín asks five stars');assert(placeOpen(normalizePlaces(null,{done:{llanura:true,lago:true,bosque:true,tormenta:true,vacio:true}}),'jardin',{finished:true}),'with the five of the Journey the Jardín opens (plan F9)');assert(!placeOpen(normalizePlaces({stars:{dunas:[true]}},{}),'dunas',{finished:true}),'the Dunas have no game yet');
 // Runtime: a round of the Lago, stars, sparks, record, and the chapter's own state back as it was.
 const realNow=Date.now;let clock=1e9;Date.now=()=>clock;globalThis.setTimeout=()=>0;
 const r={S:{wx:0,wy:0,sound:true,sparks:5,todayKey:'2026-10-23',journey:{finished:true,done:{llanura:true,lago:true,bosque:true,tormenta:true,vacio:true},chain:{points:340,opened:true,hinted:true}}},
