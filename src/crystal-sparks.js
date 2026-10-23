@@ -25,7 +25,9 @@ export function pathCrystalField(px,pathY,day){
 export function initialize(runtime){
  let owner=null,scope='',sites=new Map(),seen=new WeakMap(),stale=new WeakSet(),near=[],seconds=0,shownUntil=0,gain=0,lastGain=0,cell='',chains=[],feedback=[];
  const S=()=>runtime.S,position=()=>runtime.inWorld()?{x:S().wx,y:S().wy}:{x:S().px,y:S().py};
- const active=()=>(S().mode==='camino'||runtime.inWorld()&&(S().layer||'superficie')==='superficie')&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
+ // Sparks belong to the free World (decision of 23 October): in the Journey the Camino's crystals give light but no
+ // sparks, and the World's crystals are not there, so a pulse in a chapter only touches what the chapter asks for.
+ const active=()=>(S().mode==='camino'||runtime.inWorld()&&(S().layer||'superficie')==='superficie'&&!runtime.journeyQuiet?.())&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  const reduced=()=>!!(S().reducedMotion||prefersReducedMotion());
  const journeyPath=()=>S().mode==='camino'&&!!runtime.journeyQuiet?.();
  const timed=()=>S().sound!==false;
@@ -120,7 +122,7 @@ export function initialize(runtime){
    if(!reduced()&&Math.hypot(p.x-old.x,p.y-old.y)>.3){p.trail.push(old);p.trail=p.trail.slice(-5);}else p.trail=p.trail.slice(1);
   }
  }
- function earn(value){S().sparks=normalizeSparks(S().sparks+value);gain=seconds-lastGain<1?gain+value:value;lastGain=seconds;shownUntil=seconds+3;runtime.save?.();}
+ function earn(value){if(runtime.journeyQuiet?.())return;S().sparks=normalizeSparks(S().sparks+value);gain=seconds-lastGain<1?gain+value:value;lastGain=seconds;shownUntil=seconds+3;runtime.save?.();}
  function draw(){
   ensure();if(!active())return;
   const c=runtime.cx,pos=position(),ox=runtime.W/2-runtime.camX,oy=runtime.H/2-runtime.camY;

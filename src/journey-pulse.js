@@ -49,7 +49,7 @@ export function initialize(runtime){
   // played without hearing it; the chapters still ask for their moments and bars. While the music is only starting
   // (sound on, no beat yet) a pulse is simply not on time: the first touch must not teach that timing does not matter.
   const silent=!runtime.S.sound;
-  const bar=(runtime.SIX||.15)*4,heard=ac?heardTime(ac,at,now):0,on=silent||beatDistance(heard,runtime.MU?.bq,bar)<=ON_TIME;state.lastOn=on;
+  const bar=(runtime.SIX||.15)*4,heard=ac?heardTime(ac,at,now):0,on=silent||beatDistance(heard,runtime.MU?.bq,bar)<=ON_TIME;state.lastOn=on;runtime.journeyStickPulse?.(on);
   // The peak sits where you touched (what you heard then), and on time it sits on the beat you answered.
   const beatAt=on&&!silent?nearestBeat(heard,runtime.MU?.bq,bar):null,step=!ac?0:beatAt!==null?Math.round(stepAt(beatAt))%16:stepAt(heard);marks.push({at:now,step,on});if(marks.length>24)marks.shift();
   state.degree=null;state.midi=null;state.beat=null;if(!on){state.misses++;runtime.journeyChapterPulse?.(false);return false;}

@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.136**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.137**. Las entradas describen su revisión, no certifican producción.
+
+## «Pégate» tras la prueba de Jay · alpha.137
+
+Rama `claude/viaje-pegate`, con `main` (alpha.136) integrado. Decisiones de Jay del 23 de octubre:
+
+- **Sin monedas en el Viaje:** las chispas quedan para el Mundo libre. Los cristales del Camino dan luz pero no chispas, y los cristales del Mundo no aparecen mientras viajas.
+- **Solo a tiempo pasa algo:** fuera de tiempo nada se mueve ni desaparece; solo tiembla el cubo. A tiempo, lo cercano se pega.
+- **Todo se pega y llena según su tamaño:** motas (1), cruces (3), rombos (8) y cometas (20); las pequeñas abundan, las grandes escasean. La barra pide 120 y cada cosa pegada lanza una gota dorada hacia ella.
+- **Se ve qué atrapar:** lo que se pega late con el beat y tiene halo; lo que está al alcance brilla más y tiembla. El resto del lugar se atenúa.
+- **La nube dorada llega sola:** con la barra llena aparece junto al cubo y lo sigue; se traga con un pulso a tiempo.
 
 ## Fase 7 · Pruebas con personas · alpha.136
 
@@ -10,6 +20,17 @@ Rama `claude/fase7-personas`, desde `main` (alpha.134). El número alpha.135 lo 
 - `?prueba=ver` las muestra para copiarlas; borrar pide dos toques; `?prueba=0` las apaga. Viven en `kubono:prueba`, fuera de la partida.
 - **Guía de las sesiones:** [Pruebas con personas](docs/PRUEBAS_CON_PERSONAS.md), con el festival (`?festival=1&prueba=1`), qué decir, qué no hacer y cinco preguntas.
 - Pruebas: `tests/playtest.mjs` y `tests/playtest_smoke.py`.
+
+## Prototipo «Pégate» en la Llanura · alpha.135
+
+Rama `claude/viaje-pegate`, sobre `claude/fase6-experiencia` (alpha.134, dependencia explícita). Prototipo para que Jay y Luca lo prueben; no se integra en `main` sin su visto bueno.
+
+- **La Llanura sin faro:** el cubo empieza diminuto. Un pulso a tiempo junto a algo pequeño lo pega al cubo y suena; fuera de tiempo, rebota con un «boing».
+- **Crecer:** solo se pega lo que mide hasta la mitad del cubo; tres aciertos seguidos atraen tres cosas. El cubo se dibuja más grande, la barra de arriba se llena y la música sube con él.
+- **El gigante:** una nube de polvo te empuja mientras eres pequeño. Al tamaño completo se vuelve dorada; tragarla cumple la Llanura y abre el portal al Lago.
+- **Dos pistas breves:** «Toca a tiempo cerca de algo: se pega.» al llegar, y «Ya eres grande: trágate la nube dorada.» al llegar al tamaño completo.
+- **Comparar:** `?faro=1` conserva la Llanura anterior con el faro.
+- Pruebas: `tests/journey-stick.mjs` y `tests/journey_stick_smoke.py`; las pruebas del faro abren con `?faro=1`.
 
 ## Fase 6 · Experiencia completa · alpha.134
 

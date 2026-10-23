@@ -15,7 +15,7 @@ try:
   for width,height in [(390,844),(1280,800)]:
    page=browser.new_page(viewport={'width':width,'height':height});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()','null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
-   page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.journeyFinale')
+   page.goto(f'http://127.0.0.1:{server.server_port}/?faro=1');page.wait_for_function('!!window.__r?.journeyFinale')
    hide="document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)"
    # A Journey in the Tormenta, with notes kept from earlier chapters.
    page.evaluate("()=>{"+hide+";const r=__r,s=r.S;s.sound=true;s.firstJourney.skipped=true;s.journey.mode='viaje';s.journey.chapter=4;s.journey.done={llanura:true,lago:true,bosque:true};s.journey.notes={llanura:[57,59,64],lago:[60,62],bosque:[55,57]};s.pathCrystals=Array.from({length:10},(_,i)=>'shop:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();r.save();r.audio();}")
