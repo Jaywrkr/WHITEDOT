@@ -11,7 +11,7 @@ export const PLACES_VERSION=1;
 export const PLACES=Object.freeze([
  {id:'llanura',name:'Llanura',verb:'Pegar',game:'stick',need:0},{id:'lago',name:'Lago',verb:'Encadenar',game:'chain',need:0},{id:'bosque',name:'Bosque',verb:'Rodear',game:'lasso',need:0},
  {id:'tormenta',name:'Tormenta',verb:'Bailar',game:'dance',need:0},{id:'vacio',name:'Vacío',verb:'Soltar',game:'release',need:0},
- {id:'jardin',name:'Jardín',verb:'Sembrar',game:'garden',need:5},{id:'dunas',name:'Dunas',verb:'Surfear',game:'surf',need:8},{id:'cristales',name:'Cristales',verb:'Resonar',game:null,need:12},
+ {id:'jardin',name:'Jardín',verb:'Sembrar',game:'garden',need:5},{id:'dunas',name:'Dunas',verb:'Surfear',game:'surf',need:8},{id:'cristales',name:'Cristales',verb:'Resonar',game:'resonance',need:12},
  {id:'faros',name:'Faros',verb:'Guiar',game:null,need:16},{id:'ruinas',name:'Ruinas',verb:'Reconstruir',game:null,need:20},{id:'cueva',name:'Cueva',verb:'Eco',game:null,need:24}].map(Object.freeze));
 export const PLACE_IDS=Object.freeze(PLACES.map(p=>p.id));
 export const RHYTHM_STAR=.85,MAESTRO_STAR=.8,MAESTRO_TEMPO=1.1,MAESTRO_GOAL=1.5,MAESTRO_WINDOW=.06,TOTAL_STARS=33;
