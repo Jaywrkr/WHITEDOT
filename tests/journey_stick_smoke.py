@@ -26,7 +26,7 @@ try:
    near="""async()=>{const m=await import('./src/journey-stick.js'),r=__r,cx=Math.floor(r.S.wx/m.STICK_CELL),cy=Math.floor(r.S.wy/m.STICK_CELL),taken=new Set(r.S.journey.stick.gone);let best=null;
     for(let i=cx-6;i<=cx+6;i++)for(let j=cy-6;j<=cy+6;j++){const it=m.cellItem(i,j);if(!it||taken.has(it.id)||r.BIOMES[r.biomeOfPos(it.x,it.y)].id!=='llanura')continue;const d=Math.hypot(it.x-r.S.wx,it.y-r.S.wy);if(!best||d<best.d)best={...it,d};}
     r.S.wx=best.x+4;r.S.wy=best.y;return best.id;}"""
-   page.evaluate(near);before=page.evaluate('__r.journeyStick()');page.evaluate("__r.journeyStickPulse(false)");after=page.evaluate('__r.journeyStick()')
+   page.evaluate(near);before=page.evaluate('__r.journeyStick()');page.evaluate("__r.journeyGamePulse(false)");after=page.evaluate('__r.journeyStick()')
    assert after['points']==0 and after['near']==before['near'] and after['misses']==1,after
    grew=0
    for i in range(4):
@@ -39,7 +39,7 @@ try:
    page.evaluate("()=>{__r.S.journey.stick.points=120;}");page.wait_for_function("!!__r.journeyStick().cloud",timeout=3000)
    c=page.evaluate('__r.journeyStick().cloud');assert ((c['x']-page.evaluate('__r.S.wx'))**2+(c['y']-page.evaluate('__r.S.wy'))**2)**.5<120,c
    page.wait_for_function("document.body.textContent.includes('nube dorada')",timeout=5000)
-   page.evaluate("__r.journeyStickPulse(false)");assert not page.evaluate('__r.journeyStick().swallowed'),'off time it waits'
+   page.evaluate("__r.journeyGamePulse(false)");assert not page.evaluate('__r.journeyStick().swallowed'),'off time it waits'
    page.evaluate(ON);page.wait_for_function("__r.journeyStick().swallowed&&__r.journeyChapter().done.llanura",timeout=5000);page.wait_for_function("__r.journeyChapter().portal",timeout=10000)
    page.reload();page.wait_for_function('!!window.__r?.journeyStick');assert page.evaluate("__r.S.journey.done.llanura")==True and page.evaluate("__r.S.journey.stick.swallowed")==True
    assert not errors,errors;page.close()

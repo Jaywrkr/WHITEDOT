@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.137**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.138**. Las entradas describen su revisión, no certifican producción.
+
+## Viaje por juegos · Lago «Encadena» · alpha.138
+
+Rama `claude/viaje-lago`, sobre `claude/viaje-pegate` (alpha.137, dependencia explícita). Arco aprobado por Jay el 23 de octubre: cada capítulo conserva la regla «solo a tiempo pasa algo», llena la barra y termina con algo dorado que cierra un pulso a tiempo; cada uno añade un verbo.
+
+- **Lago · encadenar:** las flores crecen en racimos de 3 a 7, en línea. Un pulso a tiempo lanza una onda desde el cubo; cada flor que alcanza se enciende, suena un tono más arriba y pasa la onda a la siguiente. La enésima flor de una cadena vale n (hasta 5), así que las cadenas largas llenan más. Meta: 100. Fuera de tiempo no pasa nada.
+- **La flor dorada** llega junto al cubo con la barra llena y se abre con un pulso a tiempo.
+- Sin lotos en este Lago. `?clasico=1` (o `?faro=1`) conserva los capítulos anteriores para comparar.
+- Los juegos de capítulo comparten un registro (`journey-games.js`); el «Pégate» se pasó a él.
+- Pruebas: `tests/journey-chain.mjs` y `tests/journey_chain_smoke.py`; el festival se prueba con `?clasico=1`.
 
 ## «Pégate» tras la prueba de Jay · alpha.137
 
