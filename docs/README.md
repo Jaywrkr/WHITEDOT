@@ -20,6 +20,7 @@ Actualizada el 20 de octubre de 2026. Este índice distingue estado actual, deci
 | [Verificación](VERIFICACION.md) | Pruebas enfocadas frente a cierre completo, CI y límites de evidencia |
 | [Plan de lanzamiento](PLAN_LANZAMIENTO.md) | Único catálogo vigente de entregables D01–D22 y decisiones comerciales |
 | [El universo](UNIVERSO.md) | Regiones del universo, regla de cámara, sonido, superbiomas y sus 18 fases |
+| [Pruebas con personas](PRUEBAS_CON_PERSONAS.md) | Fase 7: cómo hacer las sesiones, las notas del teléfono (`?prueba=1`) y qué se envía |
 | [El Viaje](VIAJE.md) | Diseño aprobado: capítulos, curva, tema del cubo, color, primeros 5 minutos y lo que se oculta |
 | [Material de tienda](TIENDAS.md) | Fichas ES/EN, capturas, iconos, clips, guion de tráiler, landing y press kit (borradores) |
 | [Configuración de producción](CONFIGURACION_PRODUCCION.md) | Controles aplicados, proveedores/correo pendientes y retención |

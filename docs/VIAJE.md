@@ -126,6 +126,7 @@ Todo se oculta, no se borra; los datos y lo comprado se conservan y vuelven en e
 - **Fase 8 · Momentos de los capítulos 1–3** (alpha.104): faro con voz en la Llanura, lotos que responden al tema en el Lago, la criatura del Bosque que te sigue e imita, el Mundo sin palabras en el Viaje y un final con latido y la criatura. Pendiente: pruebas con personas, el músico coautor y los créditos definitivos.
 
 - **Prototipo «Pégate»** (alpha.135, rama `claude/viaje-pegate`, pendiente de la prueba de Jay y Luca): en la Llanura el cubo crece pegándose lo que toca a tiempo y termina tragándose la nube gigante; `?faro=1` conserva el faro para comparar.
+- **Fase 7 de la auditoría · Pruebas con personas** (alpha.136): notas en el teléfono con `?prueba=1` y guía de las sesiones en [Pruebas con personas](PRUEBAS_CON_PERSONAS.md). Faltan las sesiones.
 
 ## Plan de la auditoría · Fase 2 · El Viaje con tiempo (alpha.130)
 
