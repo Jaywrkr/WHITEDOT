@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.144**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.145**. Las entradas describen su revisión, no certifican producción.
+
+## F3 · Economía de chispas · alpha.145
+
+Rama `claude/f3-chispas`, sobre `claude/f2-victoria` (dependencia explícita). Las chispas sirven para comprar; las estrellas, para avanzar y ganar.
+
+- **Tocar a tiempo vale más en el Mundo libre:** lo que rompe un pulso a tiempo da el doble de chispas, y desde el octavo pulso a tiempo seguido, el triple. El «+n ✦» lo dice en dorado: «×2», «×3». La racha se rompe fuera de tiempo o tras 4 s sin tocar. Sin sonido no hay multiplicador, porque sin beat todo pulso cuenta como a tiempo.
+- **Rondas de los lugares** (se usarán en F4): 60 ✦ + 6 por cada 10 % a tiempo (60–120), Maestro el doble; desde la cuarta ronda del día en un mismo lugar, la mitad.
+- **Simulación** (`scripts/spark-economy.mjs`): la minería medida a ×2 y ×3 es exactamente el doble y el triple; con la mitad del tiempo en lugares, la tienda completa (17 030 ✦, sin cambiar precios) lleva unas 9,4 horas tocando a tiempo seis de cada diez pulsos y unas 7 tocando nueve de cada diez. Antes, de 20 a 28 horas. Es un modelo, no una medida con personas.
+- Pruebas: `tests/spark-rules.mjs`, `tests/spark-economy-sim.mjs` y `tests/spark_rhythm_smoke.py`.
 
 ## F2 · Sonido de victoria · alpha.144
 

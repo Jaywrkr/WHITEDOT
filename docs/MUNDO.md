@@ -61,14 +61,14 @@ Los verbos de los seis lugares nuevos son propuestas: cada uno se diseña en una
 
 | Entrada | Chispas |
 |---|---|
-| Ronda completada en un lugar | 10 + 1 por cada 10 % a tiempo (10–20) |
-| Ronda Maestro | El doble (20–40) |
+| Ronda completada en un lugar | 60 + 6 por cada 10 % a tiempo (60–120) |
+| Ronda Maestro | El doble (120–240) |
 | Mundo libre | Lo de siempre; a tiempo ×2; con racha de 8 o más, ×3 |
 | Encuentro salvaje | 15 |
 | Remezcla diaria | 30, y 20 más con récord |
 | Logros | 0–25 |
 
-Cada lugar da chispas completas en sus tres primeras rondas del día y la mitad después. La tienda se reajusta para que el catálogo completo cueste unas 8–10 horas de juego; el viaje rápido a lugares visitados es gratis y el salto lejano conserva su precio. Una simulación valida los números antes de fijarlos (F3).
+Cada lugar da chispas completas en sus tres primeras rondas del día y la mitad después. La tienda conserva sus precios (17 030 ✦): con estas reglas el catálogo completo lleva unas 9,4 horas a quien toca a tiempo seis de cada diez pulsos y unas 7 a quien toca nueve de cada diez, según `scripts/spark-economy.mjs` (F3; un modelo, no una medida con personas). El viaje rápido a lugares visitados es gratis y el salto lejano conserva su precio.
 
 ## Tiempos
 

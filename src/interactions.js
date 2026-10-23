@@ -44,7 +44,7 @@ export function initialize(runtime) {
     const x=runtime.inWorld()?runtime.S.wx:runtime.S.px,y=runtime.inWorld()?runtime.S.wy:runtime.S.py;
     // A bought look changes only the drawing: its wave keeps the reach of the original pulse.
     const look=origin==='player'&&runtime.inWorld()?runtime.cubeShopPulseLook?.()||'':'',charge=look==='pulse:charged'?Math.min(1,(ms-lastLook)/4000):0;if(look)lastLook=ms;
-    waves.push({x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0,origin,beat:!!hit,form:look?PULSE_FORMS[0]:runtime.inWorld()?selectedPulse(runtime.S):selectedPulse({}),look,charge,color:runtime.inWorld()?runtime.cubeColor?.():null});
+    waves.push({x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0,origin,beat:!!hit,mult:origin==='player'?runtime.sparkLastMultiplier?.()||1:1,form:look?PULSE_FORMS[0]:runtime.inWorld()?selectedPulse(runtime.S):selectedPulse({}),look,charge,color:runtime.inWorld()?runtime.cubeColor?.():null});
     if(origin==='player'&&runtime.inWorld()&&runtime.RP&&runtime.RP.type==="pulsos"){runtime.RP.pst=runtime.onBeatNow()?runtime.RP.pst+1:0;runtime.retoSet("pulsos",runtime.RP.pst);}
     runtime.MU.act+=.25;runtime.pulse=Math.max(runtime.pulse,.6);
     if(hit&&runtime.ac){const now=runtime.ac.currentTime,t=Math.max(now+.01,Number.isFinite(hit.beat)&&hit.beat>now?hit.beat:0);

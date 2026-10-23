@@ -41,7 +41,7 @@ export function normalizeSparkEconomy(raw,balance=0,day=''){
  const q=object(raw)?raw:{},sites={};
  if(q.day===day&&object(q.sites))for(const [id,p]of Object.entries(q.sites).slice(0,SPARK_SITE_LIMIT)){
   if(!safeKey(id)||!object(p)||![p.x,p.y].every(Number.isFinite)||![1,2,3].includes(p.size))continue;
-  const hits=Math.min(p.size,sparkNumber(p.hits)),mask=fragmentMask(p),broken=hits>=p.size,fragments=broken?(p.collected===true?mask:sparkNumber(p.fragments)&mask):0;sites[id]={x:p.x,y:p.y,size:p.size,value:[1,3,5][p.size-1],hits,broken,rare:!id.startsWith('path:')&&p.rare===true,fragments,collected:broken&&fragments===mask};
+  const hits=Math.min(p.size,sparkNumber(p.hits)),mask=fragmentMask(p),broken=hits>=p.size,fragments=broken?(p.collected===true?mask:sparkNumber(p.fragments)&mask):0;sites[id]={...(broken&&[2,3].includes(p.mult)?{mult:p.mult}:{}),x:p.x,y:p.y,size:p.size,value:[1,3,5][p.size-1],hits,broken,rare:!id.startsWith('path:')&&p.rare===true,fragments,collected:broken&&fragments===mask};
  }
  const spent=Math.min(sparkNumber(q.spent),Number.MAX_SAFE_INTEGER-sparkNumber(balance));
  return {...q,version:1,day,sites,totems:q.day===day?normalizeTotemClaims(q.totems):{},earned:sparkNumber(balance)+spent,spent,purchases:record(q.purchases),claims:record(q.claims),

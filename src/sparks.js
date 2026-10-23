@@ -5,6 +5,7 @@ import {pieceImage} from './cube-shop-preview.js';
 import {SHOP_PULSES} from './cube-shop-pulse.js';
 import {crystalFragments,fragmentMask} from './crystal-play-model.js';
 import {POWERS,POWER_IDS} from './expansion-music.js';
+import {rhythmMultiplier,nextStreak} from './spark-rules.js';
 import {SPARK_JUMP_COST,SPARK_SITE_LIMIT,SPARK_SHOP,SPARK_SETS,SPARK_BADGES,SPARK_MILESTONES,SPARK_UNIVERSE,universeProgress,sparkNumber,normalizeSparkEconomy,creditSparks,debitSparks,claimSparkReward,sparkSetProgress} from './sparks-model.js';
 const escape=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function initialize(runtime){
@@ -21,15 +22,20 @@ export function initialize(runtime){
  }
  function changeNotice(amount){if(!amount)return;delta=clock<deltaUntil&&Math.sign(delta)===Math.sign(amount)?delta+amount:amount;deltaUntil=clock+1.5;if(amount>0&&!jumpAvailable&&book().earned>=SPARK_JUMP_COST){jumpAvailable=true;jumpUntil=clock+3;notice('Ya puedes saltar');}}
  function notice(title,text=''){runtime.toast?.(title+(text?' · '+text:''),{level:2,category:'spark-result',detail:'sparks',ttl:120000});}
- function crystal(o,action,path=false,fragment=null,dim=false){
+ // The free World's rhythm (plan F3): each player pulse, judged by journey-pulse.js, updates the streak; the wave it
+ // sends carries the multiplier for what it breaks: on time ×2, from the eighth in a row ×3. Never in the Journey.
+ let streak=0,lastRhythm=-1e9,lastMult=1;
+ function rhythmPulse(on){const now=performance.now();// Without sound there is no beat to meet: every pulse counts as on time there, so it earns no multiplier.
+  if(runtime.journeyQuiet?.()||!runtime.inWorld?.()||!runtime.S.sound){streak=0;lastMult=1;return 1;}streak=nextStreak(streak,on,now-lastRhythm);lastRhythm=now;lastMult=rhythmMultiplier(on,streak);return lastMult;}
+ function crystal(o,action,path=false,fragment=null,dim=false,mult=1){mult=[1,2,3].includes(mult)?mult:1;
   const q=book();if(q.version!==1||runtime.labMode||owner.previewSeed&&!runtime.realTravel)return null;
   const prior=q.sites[o.id];if(!prior&&Object.keys(q.sites).length>=SPARK_SITE_LIMIT)return null;
   if(action==='hit'&&prior?.broken||action==='collect'&&(!prior?.broken||prior.collected))return prior?{...prior}:null;
   if(path&&owner.pathCrystals.includes(o.id))return prior?{...prior}:null;
   let amount=0,result=null,first=false;
   const ok=commit(next=>{const p=next.sites[o.id]||{x:o.x,y:o.y,size:o.size,value:o.value,hits:0,broken:false,collected:false,rare:!path&&o.rare===true,fragments:0};
-   if(action==='hit'){p.hits++;p.broken=p.hits>=o.size;if(p.broken){if(!path||owner.pathCrystals.length<10)next.stats.broken++;if(path){p.collected=true;p.fragments=fragmentMask(p);if(owner.pathCrystals.length<10){first=!owner.pathCrystals.length;owner.pathCrystals.push(o.id);owner.todayLight=(owner.todayLight||0)+1;owner.totalLight=(owner.totalLight||0)+1;if(!runtime.journeyQuiet?.())amount=creditSparks(owner,o.value);}}}}
-   else if(action==='collect'){const remaining=crystalFragments(p,p.rare===true).filter(f=>!((p.fragments||0)&(1<<f.index))&&(fragment===null||fragment===f.index));if(!remaining.length)return false;for(const f of remaining){p.fragments=(p.fragments||0)|(1<<f.index);amount+=creditSparks(owner,dim&&f.rare?1:f.value);}p.collected=p.fragments===fragmentMask(p);}else return false;
+   if(action==='hit'){p.hits++;p.broken=p.hits>=o.size;if(p.broken){if(!path||owner.pathCrystals.length<10)next.stats.broken++;if(path){p.collected=true;p.fragments=fragmentMask(p);if(owner.pathCrystals.length<10){first=!owner.pathCrystals.length;owner.pathCrystals.push(o.id);owner.todayLight=(owner.todayLight||0)+1;owner.totalLight=(owner.totalLight||0)+1;if(!runtime.journeyQuiet?.())amount=creditSparks(owner,o.value*mult);}}else if(mult>1)p.mult=mult;}}
+   else if(action==='collect'){const remaining=crystalFragments(p,p.rare===true).filter(f=>!((p.fragments||0)&(1<<f.index))&&(fragment===null||fragment===f.index));if(!remaining.length)return false;for(const f of remaining){p.fragments=(p.fragments||0)|(1<<f.index);amount+=creditSparks(owner,(dim&&f.rare?1:f.value)*(p.mult||1));}p.collected=p.fragments===fragmentMask(p);}else return false;
    next.sites[o.id]=p;result={...p};
   });
   if(!ok)return null;if(amount)changeNotice(amount);if(action==='hit'&&result.broken&&!path)worldBroken++;if(first)runtime.onFirstLight?.();if(path)runtime.hud?.();return result;
@@ -95,16 +101,16 @@ export function initialize(runtime){
  }
  function open(tab='travel'){runtime.openCube?.(tab);render();}
  function hud(){const q=book(),total=$('sparkTotal'),gain=$('sparkGain');if(!total)return;total.textContent='✦ '+sparkNumber(owner.sparks)+' chispas';gain.textContent=clock<deltaUntil?(delta>0?'+':'')+delta:'';$('sparkCount').classList.toggle('collecting',clock<deltaUntil);$('bJump').classList.toggle('spark-ready',clock<jumpUntil);$('sparkGoal').textContent=goalText();$('sparkGoal').hidden=!runtime.inWorld()||!goalText();$('sparkTitleHud').textContent=q.title||'';const powers=POWER_IDS.filter(id=>(runtime.powerSecondsLeft?.(id)||0)>0);$('sparkPowerHud').hidden=!runtime.inWorld()||!powers.length;$('sparkPowerText').textContent=powers.map(id=>POWERS[id].name+' '+Math.ceil(runtime.powerSecondsLeft(id))+' s').join(' · ');}
- function pickup(amount,point){
+ function pickup(amount,point,mult=1){
   if(!(amount>0))return;const q=book(),last=pickups.at(-1);
-  if(last&&clock-last.at<.12){last.amount+=amount;return;}
-  pickups.push({amount,at:clock,x:runtime.W/2+(point.x-(runtime.inWorld()?owner.wx:owner.px)),y:runtime.H/2+(point.y-(runtime.inWorld()?owner.wy:owner.py))});pickups=pickups.slice(-5);
+  if(last&&clock-last.at<.12){last.amount+=amount;last.mult=Math.max(last.mult||1,mult);return;}
+  pickups.push({amount,mult,at:clock,x:runtime.W/2+(point.x-(runtime.inWorld()?owner.wx:owner.px)),y:runtime.H/2+(point.y-(runtime.inWorld()?owner.wy:owner.py))});pickups=pickups.slice(-5);
  }
  function drawPickups(){
   pickups=pickups.filter(p=>clock-p.at<1);if(!pickups.length)return;
   const c=runtime.cx,still=owner.reducedMotion||prefersReducedMotion(),rect=$('sparkTotal').getBoundingClientRect?.(),target={x:rect?rect.x+rect.width/2:runtime.W-40,y:rect?rect.y+rect.height/2:45};
   c.save();c.font='600 14px "Geist Mono",monospace';c.textAlign='center';c.fillStyle='#e9ca7d';
-  for(const p of pickups){const age=clock-p.at,k=still?0:age*age;c.globalAlpha=Math.min(1,(1-age)*2);c.fillText('+'+p.amount+' ✦',p.x+(target.x-p.x)*k,p.y-18+(target.y-p.y+18)*k);if(!still){c.strokeStyle='#fff';c.globalAlpha=(1-age)*.35;c.beginPath();c.arc(p.x,p.y,4+age*12,0,Math.PI*2);c.stroke();}}
+  for(const p of pickups){const age=clock-p.at,k=still?0:age*age;c.globalAlpha=Math.min(1,(1-age)*2);c.fillText('+'+p.amount+' ✦'+(p.mult>1?' ×'+p.mult:''),p.x+(target.x-p.x)*k,p.y-18+(target.y-p.y+18)*k);if(!still){c.strokeStyle=p.mult>1?'#e9ca7d':'#fff';c.globalAlpha=(1-age)*.35;c.beginPath();c.arc(p.x,p.y,4+age*12,0,Math.PI*2);c.stroke();}}
   c.restore();
  }
  function draw(t){const q=book();if(active())drawPickups();if(!active()||!Object.keys(q.wear||{}).length&&!Object.keys(q.on||{}).length)return;const c=runtime.cx,x=runtime.W/2,y=runtime.H/2,still=owner.reducedMotion||prefersReducedMotion();c.save();c.strokeStyle=c.fillStyle='#fff';c.lineWidth=.8;
@@ -124,5 +130,5 @@ export function initialize(runtime){
  $('toast').addEventListener('keydown',e=>{if(['Enter',' '].includes(e.key)&&$('toast').dataset.detail==='save'){e.preventDefault();runtime.noticeLane?.cancel('toast');runtime.openSaveTools?.();}});
  $('sparkPowerUndo').onclick=()=>runtime.undoBoxPowers?.();
  $('toast').addEventListener('click',()=>{if($('toast').dataset.detail==='sparks')open();if($('toast').dataset.detail==='save'){runtime.noticeLane?.cancel('toast');runtime.openSaveTools?.();}});
- Object.defineProperties(runtime,{rewardTotem:{get:()=>rewardTotem},showSparkPickup:{get:()=>pickup},sparkEconomy:{get:()=>book()},sparkTick:{get:()=>tick},drawSparkEconomyHUD:{get:()=>hud},drawSparkCosmetics:{get:()=>draw},openSparks:{get:()=>open},renderSparks:{get:()=>render},buySparkStyle:{get:()=>buy},equipSparkStyle:{get:()=>equip},unequipSparkStyle:{get:()=>unequip},crystalTransaction:{get:()=>crystal},savedCrystal:{get:()=>id=>book().sites?.[id]},inspectSpentCrystal:{get:()=>inspect},sparkCardFound:{get:()=>found},sparkJumpEarned:{get:()=>()=>book().version===1&&(book().earned>=SPARK_JUMP_COST||book().stats.jumps>0)},canAffordSparkJump:{get:()=>()=>book().version===1&&sparkNumber(runtime.S.sparks)>=SPARK_JUMP_COST},reserveSparkJump:{get:()=>reserveJump},cancelSparkJump:{get:()=>cancelJump},confirmSparkJump:{get:()=>confirmJump},sparkReturn:{get:()=>returned}});book();
+ Object.defineProperties(runtime,{sparkRhythmPulse:{get:()=>rhythmPulse},sparkLastMultiplier:{get:()=>()=>lastMult},sparkStreak:{get:()=>()=>streak},rewardTotem:{get:()=>rewardTotem},showSparkPickup:{get:()=>pickup},sparkEconomy:{get:()=>book()},sparkTick:{get:()=>tick},drawSparkEconomyHUD:{get:()=>hud},drawSparkCosmetics:{get:()=>draw},openSparks:{get:()=>open},renderSparks:{get:()=>render},buySparkStyle:{get:()=>buy},equipSparkStyle:{get:()=>equip},unequipSparkStyle:{get:()=>unequip},crystalTransaction:{get:()=>crystal},savedCrystal:{get:()=>id=>book().sites?.[id]},inspectSpentCrystal:{get:()=>inspect},sparkCardFound:{get:()=>found},sparkJumpEarned:{get:()=>()=>book().version===1&&(book().earned>=SPARK_JUMP_COST||book().stats.jumps>0)},canAffordSparkJump:{get:()=>()=>book().version===1&&sparkNumber(runtime.S.sparks)>=SPARK_JUMP_COST},reserveSparkJump:{get:()=>reserveJump},cancelSparkJump:{get:()=>cancelJump},confirmSparkJump:{get:()=>confirmJump},sparkReturn:{get:()=>returned}});book();
 }
