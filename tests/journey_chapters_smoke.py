@@ -20,13 +20,18 @@ try:
    page.evaluate("()=>{"+hide+";const r=__r,s=r.S;s.sound=true;s.firstJourney.skipped=true;s.journey.mode='viaje';s.journey.chapter=0;s.journey.colors={};s.pathCrystals=Array.from({length:10},(_,i)=>'shop:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();r.save();r.audio();}")
    page.wait_for_function("__r.ac?.state==='running'&&__r.MU.bq.length>1",timeout=10000);page.wait_for_timeout(500);page.evaluate(hide);page.wait_for_function("__r.journeyChapter().id==='llanura'",timeout=10000);page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='llanura'",timeout=8000);page.evaluate(hide)
    ch=page.evaluate('__r.journeyChapter()');assert ch['state']=='llegada' and abs(page.evaluate('__r.MU.journeyCap')-.38)<1e-9,ch
+   # Six notes on time are not enough: the Llanura asks for its lighthouse and its bars (phase 2).
    for i in range(6):page.evaluate(ON);page.wait_for_timeout(320)
-   page.wait_for_function("__r.journeyChapter().portal");ch=page.evaluate('__r.journeyChapter()');assert ch['done'].get('llanura') and len(ch['notes']['llanura'])==6 and ch['state']=='plenitud',ch
+   ch=page.evaluate('__r.journeyChapter()');assert not ch['portal'] and not ch['done'].get('llanura') and ch['progress'].get('bars',0)>0,ch
+   page.wait_for_function("!!__r.journeyMoments().faro");page.evaluate("()=>{const s=__r.S;s.journey.moments.faro.reached=true;s.journey.progress.llanura.bars=99;}")
+   for i in range(6):page.evaluate(ON);page.wait_for_timeout(320)
+   page.wait_for_function("__r.journeyChapter().portal");assert not page.evaluate('__r.journeyChapter().portalOpen'),'the portal waits for the theme'
+   page.wait_for_function("__r.journeyChapter().portalOpen",timeout=8000);ch=page.evaluate('__r.journeyChapter()');assert ch['done'].get('llanura') and len(ch['notes']['llanura'])==12 and len(ch['notes']['llanura'])==len(page.evaluate('__r.S.journey.steps.llanura')) and ch['state']=='plenitud',ch
    # Walk into the portal: the next chapter, in the Lago.
    page.evaluate("()=>{const r=__r;r.S.wx+=140;r.S.wy-=40;}");page.wait_for_function("__r.journeyChapter().id==='lago'",timeout=5000);page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='lago'",timeout=8000)
    assert page.evaluate('__r.journeyChapter().state')=='llegada'
    page.reload();page.wait_for_function('!!window.__r?.journeyChapter');assert page.evaluate("__r.S.journey.chapter")==2 and page.evaluate("__r.S.journey.done.llanura")==True
    assert not errors,errors;page.close()
   browser.close()
- print('PASS Journey chapters on phone and desktop: the Llanura starts held back, the theme on time brings Plenitud and a portal, walking in travels to the Lago, kept after reload',flush=True)
+ print('PASS Journey chapters on phone and desktop: the Llanura starts held back, its lighthouse and bars with the theme on time bring Plenitud and, after the theme, a portal, walking in travels to the Lago, kept after reload',flush=True)
 finally:server.shutdown()

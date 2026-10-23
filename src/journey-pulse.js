@@ -47,7 +47,7 @@ export function initialize(runtime){
   state.degree=null;state.midi=null;state.beat=null;if(!on){state.misses++;runtime.journeyChapterPulse?.(false);return false;}
   state.hits++;const [degree]=THEME[state.next],{scale,tr}=scaleNow(),midi=themePitch(degree,scale,tr);state.degree=degree;state.midi=midi;state.scale=scale;state.tr=tr;state.beat=nearestBeat(heard,runtime.MU?.bq,bar);state.next=(state.next+1)%THEME.length;
   // The chapter hears the note first, so the note that completes the theme counts.
-  state.notes.push(midi);if(state.notes.length>12)state.notes.shift();runtime.journeyChapterPulse?.(true,midi);
+  state.notes.push(midi);if(state.notes.length>12)state.notes.shift();runtime.journeyChapterPulse?.(true,midi,Number.isInteger(runtime.MU?.step)?runtime.MU.step:undefined);
   if(state.next===0){state.phrases++;runtime.recoverJourneyColor?.();runtime.journeyPhrase?.();}
   // Without vibration (iPhone has none) the cube glows gold for a beat instead.
   if(!vibrate(state.next===0?[12,40,18]:12))runtime.cubeGlow=1;runtime.flash=Math.max(runtime.flash||0,.7);
@@ -62,5 +62,7 @@ export function initialize(runtime){
   const step=stepNow(),cx=x0+(step+.5)/16*w;c.globalAlpha=.8;c.fillStyle=runtime.GOLD||'#f0d27a';c.fillRect(Math.round(cx)-1,y-3,2,6);
   for(const m of marks){const age=(now-m.at)/1000,life=calm()?2.5:1.8;if(age>life)continue;const k=1-age/life,px=x0+(m.step+.5)/16*w,h=(m.on?18:m.dropped?4:8)*(calm()?1:.6+.4*k);c.globalAlpha=k*(m.on?.95:m.dropped?.3:.5);c.strokeStyle=m.on?(runtime.GOLD||'#f0d27a'):m.dropped?'#888888':'#ffffff';c.beginPath();c.moveTo(px-5,y);c.lineTo(px,y-h);c.lineTo(px+5,y);c.stroke();}
   c.restore();}
- Object.defineProperties(runtime,{journeyPulse:{get:()=>judge},journeyPulseDropped:{get:()=>dropped},drawJourneyLine:{get:()=>draw},journeyPulseState:{get:()=>()=>({...state,notes:[...state.notes],marks:marks.length})},journeyVibrate:{get:()=>vibrate}});
+ // Each chapter starts its theme from the first note.
+ function reset(){state.next=0;}
+ Object.defineProperties(runtime,{journeyPulse:{get:()=>judge},journeyPulseReset:{get:()=>reset},journeyPulseDropped:{get:()=>dropped},drawJourneyLine:{get:()=>draw},journeyPulseState:{get:()=>()=>({...state,notes:[...state.notes],marks:marks.length})},journeyVibrate:{get:()=>vibrate}});
 }

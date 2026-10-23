@@ -1,6 +1,7 @@
 """Play as a real player on a phone: a browser that is not marked as automated (so the Journey, the real touch controls
 and the automatic quality are on), real touch events and no runtime shortcuts. The finger dismisses the greeting, walks
-the Camino, breaks its ten crystals with taps and reaches the World. Then one failing frame must not freeze the game."""
+the Camino, breaks its ten crystals with taps on the beat (one per tap; an offbeat tap breaks none) and reaches the
+World. A ghost finger shows the gestures after four quiet seconds. Then one failing frame must not freeze the game."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -26,16 +27,34 @@ try:
   cdp=context.new_cdp_session(page)
   def touch(kind,x=0,y=0):cdp.send('Input.dispatchTouchEvent',{'type':kind,'touchPoints':[] if kind=='touchEnd' else [{'x':x,'y':y}]})
   def tap():touch('touchStart',195,422);page.wait_for_timeout(60);touch('touchEnd');page.wait_for_timeout(260)
+  # Milliseconds until the next beat the player hears (the audio clock minus the output latency).
+  NEXT="""()=>{const r=__r,ac=r.ac,bq=r.MU.bq,bar=r.SIX*4;if(!ac||!bq.length)return null;const heard=ac.currentTime-Math.min(.4,ac.outputLatency||ac.baseLatency||0);let b=bq[bq.length-1];while(b<heard+.12)b+=bar;for(const x of bq)if(x>heard+.12&&x<b)b=x;return (b-heard)*1000;}"""
+  def beat_tap(off=0):
+   ms=None
+   for _ in range(40):
+    ms=page.evaluate(NEXT)
+    if ms is not None:break
+    page.wait_for_timeout(100)
+   page.wait_for_timeout(max(0,ms-12+off));tap()
   def walk(steps=12):
    touch('touchStart',195,422)
    for i in range(steps):touch('touchMove',195+i*6,422);page.wait_for_timeout(60)
    page.wait_for_timeout(300);touch('touchEnd');page.wait_for_timeout(120)
   tap()   # the first touch dismisses the greeting
   before=state()['px'];walk();assert state()['px']>before+100,('a held finger walks the cube',before,state())
-  tap();assert state()['crystals']>=1,('a tap pulses and breaks a crystal',state())
-  for _ in range(40):
+  # The music has started; a tap between beats breaks no crystal in the Journey, a tap on the beat breaks one.
+  page.wait_for_function('__r.ac?.state==="running"&&__r.MU.bq.length>1',timeout=10000)
+  beat_tap(off=int(page.evaluate('__r.SIX*2000')));assert state()['crystals']==0,('an offbeat tap breaks nothing',state())
+  for _ in range(6):
+   if state()['crystals']>=1:break
+   beat_tap()
+  assert state()['crystals']==1,('a tap on the beat breaks one crystal',state())
+  # Four seconds without touching: the ghost finger shows the way, and leaves at the first touch.
+  page.wait_for_timeout(4300);assert page.evaluate('__r.journeyHint().showing'),'the ghost finger'
+  touch('touchStart',195,422);touch('touchEnd');assert not page.evaluate('__r.journeyHint().showing')
+  for _ in range(80):
    if state()['inWorld']:break
-   walk(8);tap()
+   walk(8);beat_tap()
   s=state();assert s['inWorld'] and s['crystals']>=10,('ten crystals open the World',s)
   # In the World a finger that rests (the scanner opens at 0.5 s) and then moves still walks the cube.
   page.wait_for_timeout(600);x0=page.evaluate('__r.S.wx');touch('touchStart',195,422);page.wait_for_timeout(700)
@@ -49,5 +68,5 @@ try:
   assert 'fase0: one failing frame' in page.evaluate("localStorage.getItem('kubono:errores')||''"),'the error is still recorded'
   errors=[e for e in errors if 'fase0: one failing frame' not in e];assert not errors,errors
   browser.close()
- print('PASS a real player on a phone: Journey by default, real touch walks the Camino, taps break its ten crystals and open the World, a resting finger still walks, and a failing frame does not freeze the game',flush=True)
+ print('PASS a real player on a phone: Journey by default, real touch walks the Camino, taps on the beat break its ten crystals one at a time (offbeat taps none), a ghost finger after four quiet seconds, a resting finger still walks, and a failing frame does not freeze the game',flush=True)
 finally:server.shutdown()

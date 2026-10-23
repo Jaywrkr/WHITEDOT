@@ -38,12 +38,14 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 ## Viaje · capítulos
 
-`journey-chapters.js` ordena el Viaje como un disco de siete capítulos: Camino, Llanura, Lago, Bosque, Tormenta, Vacío y Refugio. Se guarda en `S.journey` (`chapter`, `done`, `notes`) y se normaliza sin tocar versiones futuras.
+`journey-chapters.js` ordena el Viaje como un disco de siete capítulos: Camino, Llanura, Lago, Bosque, Tormenta, Vacío y Refugio. Se guarda en `S.journey` (`chapter`, `done`, `notes`, `steps`, `progress`) y se normaliza sin tocar versiones futuras.
 
 - **Estados:** cada capítulo del Mundo pasa por Llegada, Pertenencia y Plenitud. El estado pone un tope a la energía de la música (`MU.journeyCap` en `audio.js`): .38, .66 y 1. Sin tocar durante 8 compases baja a .16 y espera.
 - **Suelos:** la Plenitud también sostiene la energía desde abajo (`MU.journeyFloor`, .8); en la Tormenta, al tocar, .6 y .92, para que sea el momento más denso. El Vacío no tiene suelo. Se miden con `scripts/journey-curve.py`, que juega el Viaje entero y cuenta voces por segundo.
-- **Notas:** cada pulso a tiempo en el bioma del capítulo guarda su nota (hasta 16 por capítulo) para el final.
-- **Plenitud:** completar el tema allí marca el capítulo, devuelve el color (`world-sheet.js`), toca el tema entero con su octava y abre un portal dorado. Entrar en él lleva al bioma del capítulo siguiente, buscado en anillos sobre el mapa del Mundo (sin mar).
+- **Notas:** cada pulso a tiempo en el bioma del capítulo guarda su nota (hasta 16 por capítulo) y, al lado, la semicorchea de la música en que sonó (`steps`), para que el final toque tu ritmo.
+- **Cumplir un capítulo** (Fase 2 del plan): `momentLived` (faro alcanzado, 3 lotos, 600 px con la criatura, 4 rayos propios, un eco) y `barsLived` (`CHAPTER_BARS`, compases contados en `progress` solo mientras se toca). Sin los dos, el tema completo no da Plenitud. Al llegar a cada capítulo el tema vuelve a su primera nota (`journeyPulseReset`).
+- **Rayos propios:** en la Tormenta, `MU.boltMine` dibuja tu rayo dorado junto al cubo y `MU.journeyOwnBolts` calla los rayos automáticos de `audio.js` sin cambiar sus sorteos.
+- **Plenitud:** completar el tema allí marca el capítulo, devuelve el color (`world-sheet.js`), toca el tema entero con su octava y, cuando termina (`PORTAL_WAIT`, al menos 4 s), abre un portal dorado. Un capítulo cumplido antes de recargar vuelve a abrir su portal. Entrar en él lleva al bioma del capítulo siguiente, buscado en anillos sobre el mapa del Mundo (sin mar).
 - **Faro:** lejos del bioma del capítulo, una columna dorada en el borde de la pantalla señala hacia él.
 - **Línea:** cinco marcas al final de la Línea: dorado para los capítulos cumplidos, blanco para el actual.
 - **Refugio:** tras el Vacío, el portal llama a `runtime.journeyFinale` si existe; si no, aterriza en el Refugio.
@@ -73,10 +75,10 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 - **Tormenta** (`journey-chapters.js`): cada nota a tiempo en su capítulo pone un rayo en el beat (usa `MU.boltAt`, el rayo existente de `render.js`); su Plenitud es un compás de cuatro rayos.
 - **Vacío:** el tope de la música baja a .1 (el cubo solo). Tras ocho notas, las criaturas repiten cada nota un compás después, una octava arriba, y se encienden alrededor del cubo. El tema solo se completa con ellas (12 notas). El Vacío es el mar entre continentes: es el único capítulo que se busca en el mar.
 - **Final** (`journey-finale.js`): al cruzar el último portal el cubo aterriza en el Refugio y una capa propia (`#journeyFinale`, con su lienzo y su `requestAnimationFrame`) toca tu viaje:
-  - hasta seis notas tuyas por capítulo, en orden, con el color de cada capítulo, sobre un pedal de La; luego el tema en La mayor dos veces, la segunda a la quinta, sobre el acorde de La mayor (`finaleScore`);
+  - hasta seis notas tuyas por capítulo, en orden y con tu ritmo (`noteLengths`, de una a tres negras según la distancia entre aciertos; en negras si la partida no guardó `steps`), con el color de cada capítulo, sobre un pedal de La; luego el tema en La mayor dos veces, la segunda a la quinta, sobre el acorde de La mayor (`finaleScore`);
   - el cielo se vuelve dorado y la imagen se aleja; tres segundos de silencio; créditos;
   - al terminar (o al tocar la pantalla tras 2 s) guarda `S.journey.finished` y pasa a Mundo libre. Si el guardado falla, el Viaje sigue abierto.
-  - El sonido pasa por su propia ganancia, que se apaga al saltar. Sin dependencias del motor de música.
+  - El sonido pasa por su propia ganancia, que se apaga al saltar. Mientras suena, `audio.js` no programa pasos de la música y `house-audio.js` (`houseQuiet`) calla objetos y ambiente del Refugio: los tres segundos antes de los créditos son silencio real.
 - Las notas a tiempo llegan al capítulo antes de comprobar la frase, así la nota que completa el tema cuenta.
 - Una partida guardada en el Refugio sin final lo vuelve a tocar al entrar al Mundo.
 
@@ -117,11 +119,14 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - la hoja de cuenta solo vuelve a quien ya tuvo cuenta en el dispositivo (correo recordado) y no eligió «Jugar sin cuenta» (`kubono:local-play`);
   - entrar o crear cuenta desde el menú recarga dentro de la cuenta, y `progress.js` adopta la partida local si es la primera cuenta del dispositivo;
   - las comparaciones de usuario tratan «sin usuario» como `null`, para no recargar en bucle;
-  - una vez en el Mundo, se ofrece la nube con un aviso, una sola vez (`S.cloudOffered`).
+  - una vez en el Mundo libre, se ofrece la nube con un aviso, una sola vez (`S.cloudOffered`); nunca durante el Viaje.
 - **Modo** (`journey-mode.js`, `S.journey`):
   - **Viaje** (`viaje`): `body.journey-quiet` oculta Día, Era, Caminado, chispas, Saltar, Estilos, la meta y las pistas de texto; del menú oculta Tu cubo, Mapa, Bitácora, Crear, semillas, Compartir y Guía (`.free-only`);
   - **Mundo libre** (`libre`): todo como antes;
   - quien ya llegó al Mundo empieza en Mundo libre y los jugadores nuevos en el Viaje; el botón «Mundo libre / Viaje» del menú cambia y se guarda;
+  - el Mundo libre se abre al terminar el Viaje (`S.journey.free`, `freeOpen`): antes el botón está oculto y `setJourneyMode('libre')` no hace nada; quien ya estaba en Mundo libre lo conserva;
+  - durante el Viaje `ui.js` no muestra avisos cotidianos (sí los importantes y los pedidos con `force`, como el enlace a otra semilla);
+  - `journey-hint.js`: tras 4 s sin entrada en el Viaje, un dedo fantasma arrastra y toca en el beat; se va al primer toque;
   - en navegadores automatizados las partidas nuevas empiezan en Mundo libre, para que las pruebas existentes conserven sus controles; el Viaje se prueba a propósito;
   - el Viaje no abre la bienvenida del Camino.
 
@@ -136,7 +141,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - vibra con `navigator.vibrate`, si el ajuste «Vibración» lo permite; sin vibración (iPhone) el cubo brilla en dorado un tiempo (`cubeGlow`);
   - deja un destello dorado;
   - seis aciertos completan la frase, con una vibración distinta.
-- **Fuera de tiempo:** solo suena el pulso de siempre.
+- **Fuera de tiempo:** solo suena el pulso de siempre. En el Camino del Viaje la onda fuera de tiempo no rompe cristales y la onda a tiempo rompe uno (`pathWaveCounts` en `crystal-sparks.js`); el Camino libre sigue igual.
 - **La Línea:** una línea fina en el 80 % de la altura dibuja el compás (16 marcas), un cursor dorado en el paso que se oye (reloj menos latencia) y un pico por cada pulso: dorado y alto si fue a tiempo, blanco y bajo si no. No aparece con paneles abiertos ni en actividades.
 - **Datos:** el tema es dato fijo y no consume el RNG antiguo. El juicio solo guarda contadores de sesión; el guardado solo recibe `S.haptics`.
 

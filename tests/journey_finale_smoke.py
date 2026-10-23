@@ -23,17 +23,19 @@ try:
    page.wait_for_function("__r.journeyChapter().id==='tormenta'");page.wait_for_function("__r.journeyChapter().beacon||__r.BIOMES[__r.curZone]?.id==='tormenta'",timeout=8000)
    # Go to the Tormenta (the beacon knows where) and play: each note on time brings a bolt.
    page.evaluate("()=>{const r=__r,ids=r.BIOMES.map(b=>b.id);for(let d=1;d<80;d++)for(let a=0;a<16;a++){const x=Math.round(r.S.wx+Math.cos(a/16*6.283)*d*300),y=Math.round(r.S.wy+Math.sin(a/16*6.283)*d*300);if(ids[r.biomeOfPos(x,y)]==='tormenta'&&!r.regionOfPos(x,y)?.sea){r.S.wx=x;r.S.wy=y;return;}}}")
-   page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='tormenta'",timeout=8000);page.evaluate(hide)
+   page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='tormenta'",timeout=8000);page.evaluate(hide);page.evaluate("__r.S.journey.progress.tormenta={bars:99}")
    for i in range(6):page.evaluate(ON);page.wait_for_timeout(320)
-   page.wait_for_function("__r.journeyChapter().portal",timeout=8000);m=page.evaluate('__r.journeyChapter().moments');assert m['bolts']>=6,m
+   page.wait_for_function("__r.journeyChapter().portalOpen",timeout=12000);m=page.evaluate('__r.journeyChapter().moments');assert m['bolts']>=6,m
    page.evaluate("()=>{const r=__r,p=r.journeyChapter().portal;r.S.wx=p.x;r.S.wy=p.y;}");page.wait_for_function("__r.journeyChapter().id==='vacio'",timeout=5000);page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='vacio'",timeout=8000);page.evaluate(hide)
-   assert abs(page.evaluate('__r.MU.journeyCap')-.1)<1e-9
+   assert abs(page.evaluate('__r.MU.journeyCap')-.1)<1e-9;page.evaluate("__r.S.journey.progress.vacio={bars:99}")
    # In the Vacío the creatures repeat your notes after eight; the theme completes after twelve.
    for i in range(12):page.evaluate(ON);page.wait_for_timeout(320)
-   page.wait_for_function("__r.journeyChapter().portal",timeout=12000);assert page.evaluate('__r.journeyChapter().moments.echoes')>=4
+   page.wait_for_function("__r.journeyChapter().portalOpen",timeout=16000);assert page.evaluate('__r.journeyChapter().moments.echoes')>=4
    page.evaluate("()=>{const r=__r,p=r.journeyChapter().portal;r.S.wx=p.x;r.S.wy=p.y;}");page.wait_for_function("__r.journeyFinaleState().running",timeout=5000)
    assert page.is_visible('#journeyFinale');st=page.evaluate('__r.journeyFinaleState()');assert st['notes']>=7+12,st
-   page.wait_for_timeout(3000);shot=page.evaluate("()=>{const c=document.querySelector('#journeyFinale canvas'),x=c.getContext('2d').getImageData(0,0,c.width,c.height*.4|0).data;let gold=0;for(let i=0;i<x.length;i+=16)if(x[i]>x[i+2]+4)gold++;return gold;}");assert shot>50,'the sky turns gold'
+   # Only the finale sounds: the World's music stops counting beats and the hint stays away.
+   beats=page.evaluate('__r.MU.bq.at(-1)');page.wait_for_timeout(3000);assert page.evaluate('__r.MU.bq.at(-1)')==beats,'the music waits for the finale';assert not page.evaluate('__r.journeyHint().showing')
+   shot=page.evaluate("()=>{const c=document.querySelector('#journeyFinale canvas'),x=c.getContext('2d').getImageData(0,0,c.width,c.height*.4|0).data;let gold=0;for(let i=0;i<x.length;i+=16)if(x[i]>x[i+2]+4)gold++;return gold;}");assert shot>50,'the sky turns gold'
    page.wait_for_function("__r.journeyFinaleState().credits",timeout=40000);assert 'Kubono' in page.inner_text('#journeyFinale')
    page.wait_for_function("!__r.journeyFinaleState().running",timeout=15000);assert not page.is_visible('#journeyFinale')
    assert page.evaluate("__r.S.journey.finished")==True and page.evaluate("__r.journeyMode()")=='libre'

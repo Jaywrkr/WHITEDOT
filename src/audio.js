@@ -210,6 +210,8 @@ export function initialize(runtime) {
     }
   }
   function playStep(t){
+    // The Journey's finale is the only music in the Refugio: its score, then real silence before the credits.
+    if(runtime.journeyFinaleState?.().running)return;
     const s=MU.step%16,k=style(),calm=runtime.isFree()&&runtime.S.mode==="camino";
     const live=runtime.inWorld()||runtime.S.mode==="studio";
     if(s===0){
@@ -225,7 +227,9 @@ export function initialize(runtime) {
       const nb=runtime.inWorld()?musicNeighbor():null,w=nb?musicBlend():0;
       const a2=live&&MU.dnaA?MU.dnaA:null,bA=a2?soundingBpm(a2,runtime.GEN):76,bB=nb?soundingBpm(nb,runtime.GEN):bA;let target=Math.round(bA*(1-w)+bB*w);if(runtime.inWorld())target+=MU.seasonBpm||0;if(runtime.inWorld()&&MU.anomaly==='detenido'&&MU.still>1)target=Math.round(target*.55);BPM=runtime.duetBPM?.()||(journeyFrame&&!journeyFrame.initial?approachJourneyTempo(BPM,target):conducted()&&enteredAt>-Infinity?approachTempo(BPM,target):target);SIX=60/BPM/4;runtime.tempoCue?.({time:t,bpm:BPM,target,region:MU.dnaA?.key});delay.delayTime.setTargetAtTime(SIX*(runtime.inWorld()&&MU.anomaly==='canon'?4:3),t,.2);
       if(!runtime.inWorld()&&(MU.pending||(MU.step-MU.lastChange>16*(6+Math.floor(rnd()*4)))))changeChord(t);
-      if(BI().id==="tormenta"&&runtime.inWorld()&&(MU.step/16)%2===0&&rnd()<.75)MU.boltAt=t+SIX*(rnd()<.5?0:8);
+      // In the Journey's Tormenta, once your own bolts fall the storm's stop: the next ones are yours (journey-chapters.js).
+      // The draws stay the same so the music's sequence does not change.
+      if(BI().id==="tormenta"&&runtime.inWorld()&&(MU.step/16)%2===0&&rnd()<.75){const at=t+SIX*(rnd()<.5?0:8);if(!MU.journeyOwnBolts)MU.boltAt=at;}
     }
     if(runtime.inWorld()&&MU.dnaA){
       if(s===0||!MU.radio)MU.radio=radio.advance(MU.dnaA,MU.step>>4,{

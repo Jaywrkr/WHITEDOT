@@ -14,6 +14,10 @@ export function crystalField(wx,wy,seedOf){
   const o={id:key,x:a*CELL+60+(h>>>8)%80,y:b*CELL+60+(h>>>16)%80,size,value:[1,3,5][size-1]};out.push({...o,...crystalPlay(o,seedOf)});
  }return out;
 }
+// In the Journey's Camino a crystal answers only a pulse on time, and each pulse breaks one: the nearest it reaches
+// (phase 2 of the plan). Without music playing (sound off, audio not started) there is no beat to meet, so any pulse
+// breaks one. The free Camino keeps breaking whatever the wave crosses.
+export const pathWaveCounts=(wave,journey,timed=true)=>!journey||(wave.beat===true||!timed)&&!wave.spent;
 export function pathCrystalField(px,pathY,day){
  const out=[],cell=Math.floor(px/160);
  for(let i=cell-4;i<=cell+4;i++){const x=i*160+90;out.push({id:'path:'+day+':'+i,x,y:pathY(x)+(i%2?18:-18),size:1,value:1});}return out;
@@ -23,6 +27,8 @@ export function initialize(runtime){
  const S=()=>runtime.S,position=()=>runtime.inWorld()?{x:S().wx,y:S().wy}:{x:S().px,y:S().py};
  const active=()=>(S().mode==='camino'||runtime.inWorld()&&(S().layer||'superficie')==='superficie')&&!document.hidden&&!runtime.scanning&&!runtime.noticeLane?.inspecting&&!openSurface('.modal:not([hidden]),#fxPanel:not([hidden]),#mirrorPanel:not([hidden])');
  const reduced=()=>!!(S().reducedMotion||prefersReducedMotion());
+ const journeyPath=()=>S().mode==='camino'&&!!runtime.journeyQuiet?.();
+ const timed=()=>!!(S().sound&&runtime.ac?.state==='running'&&runtime.MU?.bq?.length);
  function ensure(){
   const key=JSON.stringify(runtime.worldIdentity||{})+':'+S().todayKey;
   if(owner!==S()||scope!==key){owner=S();scope=key;sites=new Map();seen=new WeakMap();stale=new WeakSet(runtime.waves||[]);near=[];cell='';gain=0;shownUntil=0;seconds=0;chains=[];feedback=[];owner.sparks=normalizeSparks(owner.sparks);owner.pathCrystals||=[];}
@@ -39,8 +45,8 @@ export function initialize(runtime){
    let site=sites.get(o.id);
    if(!site&&sites.size>=MAX_SITES)continue;
    if(!site?.broken)for(const wave of runtime.waves||[]){
-    if(stale.has(wave)||wave.origin!=='player'||!pulseCrossed(wave,o.x,o.y))continue;
-    let hits=seen.get(wave);if(!hits){hits=new Set();seen.set(wave,hits);}if(hits.has(o.id))continue;hits.add(o.id);
+    if(stale.has(wave)||wave.origin!=='player'||!pulseCrossed(wave,o.x,o.y)||path&&!pathWaveCounts(wave,journeyPath(),timed()))continue;
+    let hits=seen.get(wave);if(!hits){hits=new Set();seen.set(wave,hits);}if(hits.has(o.id))continue;hits.add(o.id);if(path)wave.spent=true;
     if(!site){site={hits:0,flash:0,broken:false,collected:false};sites.set(o.id,site);}
     site.hits++;site.flash=seconds+.18;if(site.hits<o.size)impact(o,site);
     if(site.hits>=o.size){site.broken=true;if(path){if(S().pathCrystals.length<10){if(!S().pathCrystals.length)runtime.onFirstLight?.();S().pathCrystals.push(o.id);completed=S().pathCrystals.length===10;S().todayLight=(S().todayLight||0)+1;S().totalLight=(S().totalLight||0)+1;earn(o.value);}site.rewarded=true;runtime.hud?.();}
@@ -84,10 +90,10 @@ export function initialize(runtime){
   if(site?.run){const old={x:site.run.x,y:site.run.y};site.run.age+=step;if(!reduced()&&!(runtime.autopilotState?.mode==='wander'&&!runtime.autopilotState.paused))Object.assign(site.run,moveEscape(site.run,o,pos,step,site.run.age));if(Math.hypot(site.run.x-old.x,site.run.y-old.y)>1){site.run.trail.push(old);site.run.trail=site.run.trail.slice(-6);}else site.run.trail=site.run.trail.slice(1);}
   const point=site?.run||o;
   for(const wave of runtime.waves||[]){
-   if(stale.has(wave)||wave.origin!=='player'||!pulseCrossed(wave,point.x,point.y))continue;
+   if(stale.has(wave)||wave.origin!=='player'||!pulseCrossed(wave,point.x,point.y)||path&&!pathWaveCounts(wave,journeyPath(),timed()))continue;
    let hits=seen.get(wave);if(!hits){hits=new Set();seen.set(wave,hits);}if(hits.has(o.id))continue;hits.add(o.id);
    if(site?.broken){runtime.inspectSpentCrystal?.(o.id);continue;}
-   hit(o,path);site=sites.get(o.id);
+   if(path)wave.spent=true;hit(o,path);site=sites.get(o.id);
   }
   if(!site?.broken||site.collected)return;
   site.particles||=particles(o,site);

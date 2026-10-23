@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {finaleScore,scoreLength,MAJOR,EIGHTH,NOTES_PER_CHAPTER,CREDIT_LINES,FESTIVAL_LINES,CHAPTER_COLORS,initialize} from '../src/journey-finale.js';
+import {finaleScore,noteLengths,scoreLength,MAJOR,EIGHTH,NOTES_PER_CHAPTER,CREDIT_LINES,FESTIVAL_LINES,CHAPTER_COLORS,initialize} from '../src/journey-finale.js';
 import {THEME,themePitch} from '../src/journey-pulse.js';
 // The score: your notes per chapter in the Journey's order (up to six each), then the theme twice in A major, the second a fifth up.
 const score=finaleScore({lago:[60,62],llanura:[57,59,60,62,64,65,67,69],otro:[50],vacio:['x',64]});
@@ -9,6 +9,9 @@ const theme=score.filter(n=>n.chapter==='refugio');assert.equal(theme.length,THE
 assert.deepEqual(theme.slice(0,6).map(n=>n.midi),THEME.map(([d])=>themePitch(d,MAJOR,0)));assert.deepEqual(theme.slice(6).map(n=>n.midi),THEME.map(([d])=>themePitch(d,MAJOR,7)));
 assert.equal(score[1].at,2*EIGHTH);assert.equal(scoreLength(finaleScore({})),32*EIGHTH,'an empty journey still plays the theme twice');
 assert(Object.keys(CHAPTER_COLORS).length===6&&CREDIT_LINES[0]==='Kubono');
+// Phase 2: the finale plays your rhythm, from the sixteenths saved beside your notes; older saves play quarters.
+assert.deepEqual(noteLengths([0,4,12,40],4),[2,4,6,2],'a quarter, a half, the longest gap capped, the last a quarter');assert.deepEqual(noteLengths(null,3),[2,2,2]);assert.deepEqual(noteLengths([0,4],3),[2,2,2],'mismatched steps are ignored');
+const rhythm=finaleScore({lago:[60,'x',62,64]},['lago'],{lago:[0,2,8,10]});assert.deepEqual(rhythm.slice(0,3).map(n=>[n.midi,n.eighths]),[[60,4],[62,2],[64,2]],'the gap skips the dropped note');
 // Runtime: the finale lands in the Refugio, keeps the end and opens the free World; it never plays twice.
 let frames=[],landed=0,saves=0,clock=0,mode='viaje';const toasts=[];performance.now=()=>clock;
 const el={hidden:true,children:[],setAttribute(){},querySelector:k=>k==='canvas'?canvas:k==='.journey-again'?null:credits,appendChild(b){this.children.push(b);}},canvas={width:0,height:0,getContext:()=>new Proxy({},{get:(o,k)=>k in o?o[k]:k==='createLinearGradient'?()=>({addColorStop(){}}):()=>{},set:(o,k,v)=>{o[k]=v;return true;}})},credits={lines:[],replaceChildren(...l){this.lines=l;}};

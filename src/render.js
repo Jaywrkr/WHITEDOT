@@ -126,7 +126,7 @@ export function initialize(runtime) {
     runtime.drawSparkCosmetics?.(t);runtime.cameraEnd?.();
     // Joystick visible mientras arrastras.
     if(runtime.ptr?.ox!=null){const c=runtime.cx;c.globalAlpha=.28;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.arc(runtime.ptr.ox,runtime.ptr.oy,55,0,6.283);c.stroke();c.globalAlpha=.5;c.fillStyle='#fff';c.beginPath();c.arc(runtime.ptr.x,runtime.ptr.y,9,0,6.283);c.fill();c.globalAlpha=1;}
-    runtime.drawJourneyLine?.(runtime.cx,runtime.W,runtime.H,t);runtime.drawJourneyChapters?.(runtime.cx,runtime.W,runtime.H,t);
+    runtime.drawJourneyLine?.(runtime.cx,runtime.W,runtime.H,t);runtime.drawJourneyChapters?.(runtime.cx,runtime.W,runtime.H,t);runtime.drawJourneyHint?.(runtime.cx,runtime.W,runtime.H);
     // Without vibration (iPhone) a pulse on time makes the cube glow gold for one beat (journey-pulse.js).
     if(runtime.cubeGlow>0){runtime.cubeGlow=Math.max(0,runtime.cubeGlow-dt/((runtime.SIX||.15)*4));runtime.cx.globalAlpha=runtime.cubeGlow*.9;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=2;runtime.cx.strokeRect(Math.round(runtime.W/2-s/2-4),Math.round(runtime.H/2-s/2-4),Math.round(s+8),Math.round(s+8));runtime.cx.globalAlpha=1;}
     if(runtime.flash>0){runtime.flash=Math.max(0,runtime.flash-dt*2.5);runtime.cx.globalAlpha=runtime.flash*.6;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.2;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,24+(1-runtime.flash)*42,0,Math.PI*2);runtime.cx.stroke();}
@@ -314,11 +314,12 @@ export function initialize(runtime) {
     }
     if(pondNow!==runtime.inPond){runtime.inPond=pondNow;if(runtime.mfilt)runtime.mfilt.frequency.setTargetAtTime(runtime.inPond?650:18000,runtime.ac.currentTime,.25);if(runtime.inPond)runtime.beatSoon(q=>runtime.playVoice('agua',0,q,rg));}
     // tormenta solar: descargas en el beat, vistas desde arriba
-    if(runtime.MU.boltAt&&runtime.ac&&runtime.ac.currentTime>=runtime.MU.boltAt){runtime.MU.boltAt=0;runtime.cameraKick?.(0,1.5);if(id==="tormenta"){const a=runtime.rnd()*6.28,d=60+runtime.rnd()*R,x=runtime.S.wx+Math.cos(a)*d,y=runtime.S.wy+Math.sin(a)*d;
+    if(runtime.MU.boltAt&&runtime.ac&&runtime.ac.currentTime>=runtime.MU.boltAt){runtime.MU.boltAt=0;const mine=!!runtime.MU.boltMine;runtime.MU.boltMine=false;runtime.cameraKick?.(0,1.5);if(id==="tormenta"){const a=runtime.rnd()*6.28,d=mine?30+runtime.rnd()*50:60+runtime.rnd()*R,x=runtime.S.wx+Math.cos(a)*d,y=runtime.S.wy+Math.sin(a)*d;
       // Seen from above: a discharge that branches out from where it falls, not a bolt from the sky.
-      const dir=runtime.rnd()*6.28,pts=[[x,y]];for(let i=1;i<=8;i++){const d=i*9,w=(runtime.rnd()-.5)*14;pts.push([x+Math.cos(dir)*d-Math.sin(dir)*w,y+Math.sin(dir)*d+Math.cos(dir)*w]);}runtime.bolts.push({pts,l:1});runtime.flash=Math.max(runtime.flash,.5);runtime.now(q=>runtime.thunder(q,{x,y}));}}
+      const dir=runtime.rnd()*6.28,pts=[[x,y]];for(let i=1;i<=8;i++){const d=i*9,w=(runtime.rnd()-.5)*14;pts.push([x+Math.cos(dir)*d-Math.sin(dir)*w,y+Math.sin(dir)*d+Math.cos(dir)*w]);}runtime.bolts.push({pts,l:1,mine});runtime.flash=Math.max(runtime.flash,.5);runtime.now(q=>runtime.thunder(q,{x,y}));}}
     runtime.bolts=runtime.bolts.filter(bo=>(bo.l-=dt*3)>0);
-    for(const bo of runtime.bolts){runtime.cx.globalAlpha=bo.l;runtime.cx.strokeStyle="#fff";runtime.cx.lineWidth=2;runtime.cx.beginPath();bo.pts.forEach(([x,y],i)=>runtime.cx[i?"lineTo":"moveTo"](x+ox,y+oy));runtime.cx.stroke();}
+    // Your bolts in the Journey's Tormenta fall gold, close to the cube; the storm's are white.
+    for(const bo of runtime.bolts){runtime.cx.globalAlpha=bo.l;runtime.cx.strokeStyle=bo.mine?runtime.GOLD||"#f0d27a":"#fff";runtime.cx.lineWidth=2;runtime.cx.beginPath();bo.pts.forEach(([x,y],i)=>runtime.cx[i?"lineTo":"moveTo"](x+ox,y+oy));runtime.cx.stroke();}
     // vida
     let follow=false,followers=0;runtime.MU.walkerFollowers=[];
     for(let a=a0;a<=a1;a++)for(let bb=b0;bb<=b1;bb++){
