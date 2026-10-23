@@ -36,7 +36,11 @@ try:
    # Only the finale sounds: the World's music stops counting beats and the hint stays away.
    beats=page.evaluate('__r.MU.bq.at(-1)');page.wait_for_timeout(3000);assert page.evaluate('__r.MU.bq.at(-1)')==beats,'the music waits for the finale';assert not page.evaluate('__r.journeyHint().showing')
    shot=page.evaluate("()=>{const c=document.querySelector('#journeyFinale canvas'),x=c.getContext('2d').getImageData(0,0,c.width,c.height*.4|0).data;let gold=0;for(let i=0;i<x.length;i+=16)if(x[i]>x[i+2]+4)gold++;return gold;}");assert shot>50,'the sky turns gold'
-   page.wait_for_function("__r.journeyFinaleState().credits",timeout=40000);assert 'Kubono' in page.inner_text('#journeyFinale')
+   if os.environ.get('FINALE_SHOT'):page.wait_for_timeout(6000);page.screenshot(path=os.environ['FINALE_SHOT'].replace('.png',f'-{width}.png'))
+   page.wait_for_function("__r.journeyFinaleState().credits",timeout=40000);assert 'Kubono' in page.inner_text('#journeyFinale') and 'Tu mundo se abrió' in page.inner_text('#journeyFinale')
+   assert page.locator('#journeyExplore').is_visible(),'Explorar opens the World at once'
+   if os.environ.get('FINALE_SHOT'):page.wait_for_timeout(3000);page.screenshot(path=os.environ['FINALE_SHOT'].replace('.png',f'-end-{width}.png'))
+   page.locator('#journeyExplore').click()
    page.wait_for_function("!__r.journeyFinaleState().running",timeout=15000);assert not page.is_visible('#journeyFinale')
    assert page.evaluate("__r.S.journey.finished")==True and page.evaluate("__r.journeyMode()")=='libre'
    # The free World unveils itself: its counters fade in and the menu marks it has new things until it is opened

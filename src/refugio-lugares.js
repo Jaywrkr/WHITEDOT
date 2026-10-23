@@ -36,11 +36,12 @@ export function initialize(runtime){
    for(let s=0;s<3;s++){c.globalAlpha=got[s]?.95:.25;c.fillStyle=got[s]?gold:'#ffffff';c.fillRect(Math.round(q.x-r+s*r*.8),Math.round(q.y+r*2.1),Math.max(1,Math.round(r*.4)),Math.max(1,Math.round(r*.4)));}
    hits.push({x:q.x-r*1.6,y:q.y-r*1.6,w:r*3.2,h:r*4.4,id:p.id,index:i});});
   c.restore();}
- // Its own note rising three steps: the trophy answers when you touch it (its layer of your song arrives with F7).
+ // The trophy plays its layer of your song for two bars (song.js); without it, its own note rising three steps.
+ function layer(id,index){runtime.audio?.();if(!runtime.playSong?.([id],{bars:2}))chime(index);}
  function chime(index){if(!runtime.S.sound||!runtime.pluck||!runtime.now)return;runtime.audio?.();runtime.now(t=>{const base=60+(runtime.MU?.tr||0)+PORTAL_NOTES[index],six=runtime.SIX||.125;[0,4,7].forEach((d,i)=>runtime.pluck(base+d,t+i*six*2,.09,2));});}
  // A touch on the shelf: the trophy's place and stars, or the wall opening Lugares.
  function look(px,py){if(visiting())return null;const h=hits.find(b=>px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h);if(!h)return null;if(h.open){open();return '';}
-  const p=PLACES[h.index],d=data(),best=d?.best?.[p.id];lastTap=p.id;if(stars(p.id)[0])chime(h.index);
+  const p=PLACES[h.index],d=data(),best=d?.best?.[p.id];lastTap=p.id;if(stars(p.id)[0])layer(p.id,h.index);
   if(!placeOpen(d,p.id,runtime.S.journey))return p.game?`${p.name} · se abre con ${p.need} ★`:`${p.name} · pronto`;
   return `${p.name} ${glyphs(p.id)}${best?` · ${Math.round(best.onTime*100)} % a tiempo`:''}`;}
  // Lugares: every place with its stars and what it asks; «Ir» to the ones already entered; the door to the ring.
@@ -56,6 +57,6 @@ export function initialize(runtime){
  function door(){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();}
  // The house bar shows the wall too, and opens Lugares.
  function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=`★ ${starCount(d)} / ${TOTAL_STARS}`;}
- if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;
+ if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;if($('lugaresSong'))$('lugaresSong').onclick=()=>{$('mLugares').hidden=true;runtime.openSong?.();};
  Object.defineProperties(runtime,{drawHouseLugares:{get:()=>(c,o)=>{bar();draw(c,o);}},houseLugaresLook:{get:()=>look},openLugares:{get:()=>open},houseLugaresState:{get:()=>()=>({hits:hits.map(h=>({...h})),last:lastTap})}});
 }
