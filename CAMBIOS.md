@@ -11,6 +11,7 @@ Rama `claude/fase6-experiencia`, sobre `claude/fase5-llave` (alpha.133, dependen
 - **El primer toque no regala:** antes del primer beat un pulso no cuenta como a tiempo; solo con el sonido apagado cuenta cualquier pulso.
 - **Del final al Mundo libre:** al salir del Refugio, los contadores y botones aparecen poco a poco y el menú lleva un punto dorado hasta abrirlo.
 - **Guardado:** los compases de cada capítulo se guardan cada 8; salir y volver no pierde la estancia.
+- **Encontrar el faro y los lotos** (pregunta de Jay): si llevas 20 s en el capítulo sin vivir su momento y está fuera de la pantalla, una luz tenue en el borde, con su color, señala hacia él. Sin palabras.
 - Verificación local: 214 suites Node, nuevas `start_over_smoke.py` y `start-over.mjs`, y recorridos del Viaje, final, festival, interfaz, coherencia, paseo automático y sin conexión en PASS.
 
 ## Fase 5 · El tema como llave · alpha.133

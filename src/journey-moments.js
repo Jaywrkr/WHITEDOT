@@ -14,9 +14,14 @@ export function normalizeMoments(raw){const q=raw&&typeof raw==='object'&&!Array
 export function placeFaro(from,inPlace){for(let i=0;i<8;i++){const a=-Math.PI/4+i*Math.PI/4,x=Math.round(from.x+Math.cos(a)*FARO_DISTANCE),y=Math.round(from.y+Math.sin(a)*FARO_DISTANCE);if(inPlace(x,y))return {x,y};}return {x:Math.round(from.x+FARO_DISTANCE),y:Math.round(from.y)};}
 export const lotusAt=(center,i)=>({x:Math.round(center.x+Math.cos(i/LOTUS_COUNT*6.283)*LOTUS_RING),y:Math.round(center.y+Math.sin(i/LOTUS_COUNT*6.283)*LOTUS_RING*.6)});
 // The lighthouse's voice: louder as you come near, silent beyond hearing.
+// When the moment of a chapter is out of sight for a while (the lighthouse, the lotuses), a faint light at the edge of
+// the screen points to it: no words, and only after this long in the chapter without living it (phase 6 of the plan).
+export const MOMENT_GUIDE_AFTER=20000;
+// Where the edge light sits for a target off screen (dx, dy from the cube, in px); null when the target is on screen.
+export function edgePoint(dx,dy,W,H,margin=18){if(Math.abs(dx)<W/2-margin&&Math.abs(dy)<H/2-margin)return null;const a=Math.atan2(dy,dx),ex=W/2+Math.cos(a)*(W/2-margin),ey=H/2+Math.sin(a)*(H/2-margin);return {x:Math.max(margin,Math.min(W-margin,ex)),y:Math.max(70,Math.min(H-120,ey)),a};}
 export const faroVolume=d=>d>=FARO_HEAR?0:.05*(1-d/FARO_HEAR)**1.5;
 export function initialize(runtime){
- let owner=null,tone=null,trail=[];const lit=[];const counts={faro:0,lotus:0,companion:0};
+ let owner=null,tone=null,trail=[];const lit=[];const counts={faro:0,lotus:0,companion:0};let seekFor='',seekSince=0,guiding=null;
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  function own(){const j=runtime.S.journey||{};if(owner!==runtime.S){owner=runtime.S;j.moments=normalizeMoments(j.moments);trail=[];stopTone();}j.moments||={};return j.moments;}
  const ids=()=>runtime.BIOMES.map(b=>b.id);
@@ -52,10 +57,17 @@ export function initialize(runtime){
     // A wave source: closed, a dot in a ring; open, rings that keep spreading from it.
     c.strokeStyle=open?ink:'#ffffff';c.lineWidth=1;const rings=open?3:1;for(let k=0;k<rings;k++){const grow=still?k/rings:((t/1600+k/rings)%1),rr=open?r+grow*18:r+2;c.globalAlpha=(open?.8:.45)*(open?1-grow:1);c.beginPath();c.arc(x,y,rr,0,6.283);c.stroke();}
     c.globalAlpha=open?.9:.5;c.fillStyle=open?ink:'#ffffff';c.fillRect(Math.round(x)-1,Math.round(y)-1,2,2);}}
+  // The way to the moment, once it has been out of sight for a while: a faint light at the edge, in the place's colour.
+  guiding=null;const target=inside&&id==='llanura'&&m.faro&&!m.faro.reached?{x:m.faro.x,y:m.faro.y,ink:runtime.placeColor?.('faros','#fff36a')||'#fff36a'}
+   :inside&&id==='lago'&&m.lotos&&m.lotos.open.filter(Boolean).length<3?(()=>{let best=null;for(let i=0;i<LOTUS_COUNT;i++){if(m.lotos.open[i])continue;const p=lotusAt(m.lotos,i),d=Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy);if(!best||d<best.d)best={...p,d};}return best&&{x:best.x,y:best.y,ink:runtime.placeColor?.('lago','#8ad1ff')||'#8ad1ff'};})():null;
+  const now=performance.now();if(!target){seekFor='';}else if(seekFor!==id){seekFor=id;seekSince=now;}
+  if(target&&now-seekSince>=MOMENT_GUIDE_AFTER){const e=edgePoint(target.x-cam.x,target.y-cam.y,W,H);if(e){guiding=id;const glow=still?.7:.45+.25*beat;
+   c.globalAlpha=.2*glow;c.strokeStyle=target.ink;c.lineWidth=1;c.beginPath();c.arc(e.x,e.y,12,0,6.283);c.stroke();c.globalAlpha=glow;c.fillStyle=target.ink;c.fillRect(Math.round(e.x)-2,Math.round(e.y)-2,4,4);
+   c.beginPath();c.moveTo(e.x+Math.cos(e.a)*15,e.y+Math.sin(e.a)*15);c.lineTo(e.x+Math.cos(e.a+2.5)*8,e.y+Math.sin(e.a+2.5)*8);c.moveTo(e.x+Math.cos(e.a)*15,e.y+Math.sin(e.a)*15);c.lineTo(e.x+Math.cos(e.a-2.5)*8,e.y+Math.sin(e.a-2.5)*8);c.stroke();}}
   // The creature: it walks a little behind you, on your trail.
   if(m.companion&&id!=='vacio'){trail.push({x:runtime.S.wx,y:runtime.S.wy,sang:trail[trail.length-1]?.sang||0});if(trail.length>40)trail.shift();const p=trail[0],x=sx(p.x-18),y=sy(p.y+14),sang=performance.now()-(trail[trail.length-1].sang||0)<500;
    // A small cluster of three stars from the Cúmulo, turning slowly; it lights up when it repeats your note.
    c.globalAlpha=1;c.fillStyle=sang?(runtime.placeColor?.('bosque','#6fe08a')||'#6fe08a'):'#ffffff';for(let k=0;k<3;k++){const a=k/3*6.283+(still?0:t/700);c.fillRect(Math.round(x+Math.cos(a)*4)-1,Math.round(y+Math.sin(a)*4)-1,k?2:3,k?2:3);}}
   c.restore();}
- Object.defineProperties(runtime,{journeyMomentNote:{get:()=>note},drawJourneyMoments:{get:()=>draw},journeyMoments:{get:()=>()=>({...JSON.parse(JSON.stringify(own())),tone:!!tone,counts:{...counts}})}});
+ Object.defineProperties(runtime,{journeyMomentNote:{get:()=>note},drawJourneyMoments:{get:()=>draw},journeyMoments:{get:()=>()=>({...JSON.parse(JSON.stringify(own())),guide:guiding,tone:!!tone,counts:{...counts}})}});
 }
