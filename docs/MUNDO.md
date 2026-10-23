@@ -123,7 +123,7 @@ Cada fase sale de `main` actualizado, en su rama, y se integra cuando Jay la apr
 | F15 · Faros | `claude/f15-faros` | Guiar, con su ritmo | Hecho; falta la prueba de Jay |
 | F16 · Ruinas | `claude/f16-ruinas` | Reconstruir, con su ritmo | Hecho; falta la prueba de Jay |
 | F17 · Cueva | `claude/f17-cueva` | Eco: repetir el patrón que canta | Hecho; las 33 ★ se pueden ganar; falta la prueba de Jay |
-| F18 · Mundo salvaje | `claude/f18-salvaje` | Encuentros de 30 s y remezcla diaria | Explorar lejos da algo cada 1–2 minutos |
+| F18 · Mundo salvaje | `claude/f18-salvaje` | Encuentros de 30 s y remezcla diaria | Hecho; falta la prueba de Jay |
 | F19 · Cierre con personas | `claude/f19-cierre` | Sesiones con `?prueba=1`, ajuste final, rendimiento, material de tienda | Las notas cumplen los tiempos |
 
 Plan revisado por Jay el 23 de octubre tras jugar F0–F11: las F12–F19 sustituyen a las antiguas F12–F16.

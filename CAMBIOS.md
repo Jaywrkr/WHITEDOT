@@ -1,6 +1,14 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.159**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.160**. Las entradas describen su revisión, no certifican producción.
+
+## F18 · Mundo salvaje · alpha.160
+
+Rama `claude/f18-salvaje`, sobre `claude/f17-cueva` (dependencia explícita).
+
+- **Chispa salvaje:** al explorar el Mundo libre, entre uno y dos minutos después de la anterior (y tras unos 1 200 px andados), aparece una chispa dorada por delante del cubo. Cinco pulsos a tiempo a su lado la atrapan: +15 ✦. Cada pulso la hace saltar un poco; a los 30 s se va sin castigo. Si sale de la pantalla, una flecha dorada la señala.
+- **Remezcla diaria:** cada día un lugar abierto se juega con el ritmo de otro (por ejemplo, la Llanura en «1 · 3 · y»). Está en la hoja Lugares del Refugio. Paga 30 ✦ más al cerrarla y 20 más si superas el mejor porcentaje a tiempo del día. No hay Maestro de la remezcla. Jardín, Dunas, Vacío y Cueva no se remezclan: su juego depende de su propio ritmo.
+- Pruebas: `tests/wild.mjs`, `tests/wild_smoke.py` (teléfono y escritorio). Límite: el ritmo de aparición se fijó por diseño, no se midió con personas.
 
 ## F17 · Cueva · alpha.159
 

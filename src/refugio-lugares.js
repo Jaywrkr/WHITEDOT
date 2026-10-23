@@ -57,7 +57,11 @@ export function initialize(runtime){
    stars(p.id).forEach(x=>{const s=document.createElement('i');s.textContent='★';if(x)s.className='got';st.appendChild(s);});
    const note=document.createElement('small');note.textContent=!openNow?(p.game?`★ ${p.need}`:'Pronto'):best?`${Math.round(best.onTime*100)} %`:d.seen?.[p.id]?'':'Sin visitar';
    li.append(name,st,note);if(openNow&&d.seen?.[p.id]){const go=document.createElement('button');go.textContent='Ir';go.onclick=()=>travel(p.id);li.appendChild(go);}if(!openNow)li.className='closed';list.appendChild(li);}
+  // Today's remix (wild.js, plan F18): one open place with another place's rhythm, worth more sparks.
+  const mix=runtime.dailyRemix?.(),line=$('lugaresRemixLine'),btn=$('lugaresRemix');if(line&&btn){const place=mix&&PLACES.find(p=>p.id===mix.id);line.hidden=btn.hidden=!place;
+   if(place){line.textContent=`Remezcla de hoy: ${place.name} en «${runtime.remixName?.(mix.rhythm)||mix.rhythm}».`;btn.onclick=()=>remixGo(mix);}}
   box.hidden=false;}
+ function remixGo(mix){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.startPlace?.(mix.id,{remix:mix.rhythm,from:{x:runtime.S.wx,y:runtime.S.wy}});}
  // Out of the Refugio and on to a place: the house stays where it is.
  function travel(id){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.ringTravel?.(id);}
  function door(){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();}

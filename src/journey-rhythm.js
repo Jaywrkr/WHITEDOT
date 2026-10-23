@@ -33,7 +33,7 @@ export function initialize(runtime){
  let lastHit=null;
  const calm=()=>calmMotion(runtime.S);
  // The rhythm that judges now: the round's place, or the Journey chapter whose game is playing.
- function active(){const run=runtime.placeRun?.();if(run?.id&&runtime.journeyGamePlaying?.(run.id))return rhythmFor(run.id,{place:true});
+ function active(){const run=runtime.placeRun?.();if(run?.id&&runtime.journeyGamePlaying?.(run.id))return run.remix&&RHYTHMS[run.remix]?{key:run.remix,...RHYTHMS[run.remix],remix:true}:rhythmFor(run.id,{place:true});
   const ch=runtime.journeyChapter?.();if(ch?.id&&runtime.journeyGamePlaying?.(ch.id))return rhythmFor(ch.id);return null;}
  // Which step of the bar a beat is, from the steps the music scheduled; beyond them, counted on from the nearest.
  function stepOf(b){const sq=runtime.MU?.sq||[],six=runtime.SIX||.15;let near=null;for(const e of sq)if(!near||Math.abs(e.t-b)<Math.abs(near.t-b))near=e;if(!near)return 0;
