@@ -19,6 +19,7 @@ El Viaje duraba lo que tardabas en acertar seis veces por capítulo. Ahora cada 
 - **Mundo libre cerrado hasta el final** (6A). Quien ya lo tenía lo conserva.
 - **Dedo fantasma** (7A): tras 4 s sin tocar, enseña a arrastrar y tocar en el beat. Sin palabras.
 - **Arreglo:** un capítulo cumplido antes de recargar vuelve a abrir su portal (antes quedaba sin salida).
+- **Arreglo:** «Trofeos nuevos» en el menú ya no reaparece por un logro que llegó mientras estabas dentro del Refugio: al salir también cuenta como visto (la CI lo detectaba de forma intermitente en `house_visit_smoke.py`).
 - **Sin sonido:** en el Camino, si no suena música (sonido apagado o audio sin arrancar), cualquier pulso rompe un cristal, uno por pulso.
 - Pendiente: medir la duración con personas; escucha de Jay en iPhone. Los capítulos del Mundo siguen necesitando música para acertar: con el sonido apagado no se pueden completar (viene de antes; se revisa en la Fase 3).
 - Verificación local: 210 suites Node, auditoría sin errores, 24 recorridos de navegador (Viaje, festival, final, toque real, cristales, guía, sin conexión y los que juegan sin marca de automatización) y la mezcla del ambiente del Refugio en PASS. La duración no se midió: el jugador simulado de `journey-curve.py` no vive los momentos.
