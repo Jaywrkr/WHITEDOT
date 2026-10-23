@@ -15,19 +15,25 @@ export const SONG_LAYERS=Object.freeze({
  ruinas:{name:'Acordes',color:'#a88c6a'},cueva:{name:'Eco',color:'#ff4f3a'}});
 export const SONG_IDS=Object.freeze(Object.keys(SONG_LAYERS));
 const ACID=[0,0,12,0,7,0,12,0,0,0,12,7,0,12,0,7];
+// The hits of one layer at one sixteenth, over a chord {root,tones}: the song uses its own chords, a place's victory
+// the chord the world is playing (journey-victory.js).
+export function layerStep(id,s,c){const out=[],b=s%16,add=(what,extra={})=>out.push({s,what,...extra});
+ if(id==='llanura'&&b%4===0)add('kick');
+ if(id==='lago'&&[0,6,10].includes(b))add('bass',{midi:c.root,len:3});
+ if(id==='bosque'){if(b%4===2)add('hat');if(b%8===4)add('clap');}
+ if(id==='tormenta')add('acid',{midi:c.root+12+ACID[b],accent:b%4===0});
+ if(id==='vacio'&&s%32===0)add('pad',{tones:c.tones,len:32});
+ if(id==='jardin'&&b%2===0)add('arp',{midi:c.tones[[0,1,2,1][(b/2)%4]]+12});
+ if(id==='dunas'){add('shaker',{accent:b%4===2});if(b===3||b===11)add('conga',{midi:b===3?62:57});}
+ if(id==='cristales'&&b%8===4)add('bell',{midi:c.tones[2]+12+(b===12?0:-3)});
+ if(id==='ruinas'&&b%8===6)add('stab',{tones:c.tones});
+ if(id==='cueva'&&s%32===8)add('echo',{midi:c.tones[1]+12});
+ return out;}
+// Any chord brought to the song's registers: the bass root between D2 and C♯3, the three notes from F♯3.
+export function songChord(tones){let root=tones[0],shift=0;while(root>49)root-=12;while(root<38)root+=12;while(tones[0]+shift>65)shift-=12;while(tones[0]+shift<54)shift+=12;
+ return {root,tones:tones.slice(0,3).map(m=>m+shift)};}
 // The hits of one layer over the eight bars, in sixteenths: testable without sound.
-export function layerEvents(id){const out=[],add=(s,what,extra={})=>out.push({s,what,...extra});
- for(let s=0;s<SONG_STEPS;s++){const c=chordAt(s),b=s%16;
-  if(id==='llanura'&&b%4===0)add(s,'kick');
-  if(id==='lago'&&[0,6,10].includes(b))add(s,'bass',{midi:c.root,len:3});
-  if(id==='bosque'){if(b%4===2)add(s,'hat');if(b%8===4)add(s,'clap');}
-  if(id==='tormenta')add(s,'acid',{midi:c.root+12+ACID[b],accent:b%4===0});
-  if(id==='vacio'&&s%32===0)add(s,'pad',{tones:c.tones,len:32});
-  if(id==='jardin'&&b%2===0)add(s,'arp',{midi:c.tones[[0,1,2,1][(b/2)%4]]+12});
-  if(id==='dunas'){add(s,'shaker',{accent:b%4===2});if(b===3||b===11)add(s,'conga',{midi:b===3?62:57});}
-  if(id==='cristales'&&b%8===4)add(s,'bell',{midi:c.tones[2]+12+(b===12?0:-3)});
-  if(id==='ruinas'&&b%8===6)add(s,'stab',{tones:c.tones});
-  if(id==='cueva'&&s%32===8)add(s,'echo',{midi:c.tones[1]+12});}
+export function layerEvents(id){const out=[];for(let s=0;s<SONG_STEPS;s++)out.push(...layerStep(id,s,chordAt(s)));
  // The Faros carry the cube's theme twice, in the song's key.
  if(id==='faros')for(const start of [0,64]){let at=start;for(const [d,l] of THEME){out.push({s:at,what:'lead',midi:themePitch(d,SONG_MAJOR,0)+12,len:l*2});at+=l*2;}}
  return out.sort((a,b)=>a.s-b.s);}
@@ -61,5 +67,5 @@ export function initialize(runtime){
   const handle={out,t0,six,bars,ids:[...ids],from:{...from},stop(){try{out.gain.setTargetAtTime(.0001,ac.currentTime,.15);setTimeout(()=>out.disconnect(),1200);}catch(_){}if(current===handle)current=null;}};current=handle;return handle;}
  // When each layer last hit, for the rings that pulse with it.
  function pulse(handle,id,time){if(!handle)return 0;const s=(time-handle.t0)/handle.six;if(s<(handle.from[id]||0)*16||s>handle.bars*16)return 0;const local=((s%SONG_STEPS)+SONG_STEPS)%SONG_STEPS;let last=null;for(const e of layerEvents(id))if(e.s<=local)last=e;else break;return last?Math.max(0,1-(local-last.s)/4):0;}
- Object.defineProperties(runtime,{playSong:{get:()=>play},songPulse:{get:()=>pulse},songNote:{get:()=>(handle,m,t,dur,v=.06)=>{if(handle&&runtime.ac)tone(runtime.ac,handle.out,m,t,dur,'square',v,3200,[-7,7]);}},songPlaying:{get:()=>()=>!!current&&!!runtime.ac&&runtime.ac.currentTime<current.t0+current.bars*16*current.six},stopSong:{get:()=>()=>current?.stop()}});
+ Object.defineProperties(runtime,{playSong:{get:()=>play},songPulse:{get:()=>pulse},songNote:{get:()=>(handle,m,t,dur,v=.06)=>{if(handle&&runtime.ac)tone(runtime.ac,handle.out,m,t,dur,'square',v,3200,[-7,7]);}},songHit:{get:()=>(out,e,t,six=SONG_SIX)=>{if(runtime.ac)hit(runtime.ac,out,e,t,six);}},songPlaying:{get:()=>()=>!!current&&!!runtime.ac&&runtime.ac.currentTime<current.t0+current.bars*16*current.six},stopSong:{get:()=>()=>current?.stop()}});
 }

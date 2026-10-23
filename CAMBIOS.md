@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.154**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.155**. Las entradas describen su revisión, no certifican producción.
+
+## F13 · Victoria con tu música · alpha.155
+
+Rama `claude/f13-victoria-musica`, sobre `claude/f12-primer-minuto` (dependencia explícita).
+
+- **El cierre sale de la música que suena:** durante un compás el filtro de la música se cierra bajo un ruido que sube; el último medio tiempo es silencio de verdad (también el eco); en el «1» vuelve la misma música, en su tono y tempo, con algo más encima.
+- **Lo que se suma:** la capa del lugar en Tu canción (bombo en la Llanura, bajo dub en el Lago, arpegio en el Jardín…) y el tema del cubo con el timbre del lugar. La capa la toca el secuenciador semicorchea a semicorchea, sobre el acorde que suena en el mundo en cada compás; por eso no puede desafinar.
+- Los drops de género propio (house, dub, disco…) se retiran: Jay los oyó ajenos al resto de la música.
+- Pruebas: `tests/journey-victory.mjs` (la capa sigue al acorde del mundo); `tests/victory_mix.py` renderiza los once cierres sobre una música de prueba (silencio de −109 dB, vuelta más llena, pico 0,57); `tests/victory_live_smoke.py` en el juego real (32 semicorcheas, salida y filtro enteros después, la música sigue). Límite: falta la escucha de Jay.
 
 ## F12 · Primer minuto · alpha.154
 
