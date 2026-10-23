@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.134**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.136**. Las entradas describen su revisión, no certifican producción.
+
+## Fase 7 · Pruebas con personas · alpha.136
+
+Rama `claude/fase7-personas`, desde `main` (alpha.134). El número alpha.135 lo usa el prototipo «Pégate», en su rama.
+
+- **Notas de las pruebas:** `?prueba=1` las enciende en ese teléfono. Por persona y capítulo anotan el tiempo, si lo cumplió, los pulsos a tiempo, el rato más largo sin tocar y el dedo fantasma. El juego no cambia y nada se envía.
+- `?prueba=ver` las muestra para copiarlas; borrar pide dos toques; `?prueba=0` las apaga. Viven en `kubono:prueba`, fuera de la partida.
+- **Guía de las sesiones:** [Pruebas con personas](docs/PRUEBAS_CON_PERSONAS.md), con el festival (`?festival=1&prueba=1`), qué decir, qué no hacer y cinco preguntas.
+- Pruebas: `tests/playtest.mjs` y `tests/playtest_smoke.py`.
 
 ## Fase 6 · Experiencia completa · alpha.134
 

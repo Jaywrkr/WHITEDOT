@@ -134,6 +134,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
   - durante el Viaje `ui.js` no muestra avisos cotidianos (sí los importantes y los pedidos con `force`, como el enlace a otra semilla);
   - el Viaje abre sin saludo (`return-entrance.js`), el menú no muestra chispas y se ocultan `#quickSave`, `#bAuto` y en Ajustes el paseo automático, los textos del paisaje y «Modo: explorar» (`.free-only`);
   - al terminar el final, `journey-finale.js` (`unveil`) hace aparecer el HUD del Mundo libre al salir del Refugio y marca el menú con un punto dorado hasta abrirlo; marca también «Tu cubo» y avisa una vez para qué son las chispas (`S.journey.sparksHint`);
+  - `playtest.js` (Fase 7): con `?prueba=1` (recordado en `kubono:prueba:on`) anota por sesión y capítulo el tiempo, los pulsos a tiempo (diferencias de `journeyPulseState`), la quietud más larga, el dedo fantasma (`journeyHint`) y los capítulos cumplidos, en `kubono:prueba` (30 sesiones como máximo, fuera del guardado). `?prueba=ver` abre `#mPlaytest` para copiarlas; `?prueba=0` lo apaga;
   - `journey-hint.js`: tras 4 s sin entrada en el Viaje (20 s después de 3 aciertos), un dedo fantasma arrastra y toca en el beat; se va al primer toque y nunca sale con un dedo apoyado o moviéndose;
   - en navegadores automatizados las partidas nuevas empiezan en Mundo libre, para que las pruebas existentes conserven sus controles; el Viaje se prueba a propósito;
   - el Viaje no abre la bienvenida del Camino.
