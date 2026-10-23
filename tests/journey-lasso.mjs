@@ -4,7 +4,7 @@ import {LASSO_GOAL,LASSO_CELL,cellFireflies,lassoValue,lassoProgress,loopArea,in
 // Fireflies come in groups by cell hash: one cell in two, three to six each, close to their centre.
 let groups=0;for(let i=0;i<40;i++)for(let j=0;j<40;j++){const g=cellFireflies(i,j);if(!g.length)continue;groups++;assert.deepEqual(g,cellFireflies(i,j));assert(g.length>=3&&g.length<=6);}
 assert(groups>650&&groups<950,'about half: '+groups);
-assert.deepEqual([1,3,5,8].map(lassoValue),[1,3,5,5]);assert.equal(lassoProgress(LASSO_GOAL),1);
+assert.deepEqual([1,3,5,8].map(lassoValue),[1,3,3,3]);assert.equal(lassoProgress(LASSO_GOAL),1);
 // Geometry: a square of side 100 has area 10000; its centre is inside, a point beyond is not.
 const sq=[{x:0,y:0},{x:100,y:0},{x:100,y:100},{x:0,y:100}];assert.equal(loopArea(sq),10000);assert(insideLoop(sq,50,50));assert(!insideLoop(sq,150,50));
 // A trail closes only when the cube comes back near a point at least half a second old and the loop is wide.

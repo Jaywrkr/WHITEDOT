@@ -3,15 +3,15 @@ import {calmMotion} from './frame-state.js';
 import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
 // «Rodea» (the Bosque, chapter 3 of the Journey's games, Jay's decision of 23 October): the cube leaves a trail of light
 // for a few seconds. Walk around a group of fireflies until the trail closes (the closing line turns gold) and pulse
-// on time: every firefly inside is caught. Each one is worth as many as were caught together, up to five, so wide
+// on time: every firefly inside is caught. Each one is worth as many as were caught together, up to three, so wide
 // circles fill the bar faster. Off time nothing happens. With the bar full the Bosque's creature comes beside the cube,
 // and one pulse on time makes it your companion for the rest of the Journey.
 // Places come from hashes of the map cell, never from the old random sequence.
-export const LASSO_GOAL=100,LASSO_CELL=220,LASSO_TRAIL_MS=8000,LASSO_HOLD_MS=1500,LASSO_TRAIL_MAX=160,LASSO_CLOSE=45,LASSO_MIN_AREA=2500,LASSO_CAUGHT_LIMIT=800,LASSO_FRIEND_GAP=60;
+export const LASSO_GOAL=240,LASSO_CELL=220,LASSO_TRAIL_MS=8000,LASSO_HOLD_MS=1500,LASSO_TRAIL_MAX=160,LASSO_CLOSE=45,LASSO_MIN_AREA=2500,LASSO_CAUGHT_LIMIT=800,LASSO_FRIEND_GAP=60;
 // Fireflies come in groups: one in two cells, three to six around a centre.
 export function cellFireflies(cx,cy,seed='lasso:v1'){const key=seed+':'+cx+','+cy;if(hashKey(key)>.5)return [];const n=3+Math.floor(4*hashKey(key+':n')),x0=(cx+.3+.4*hashKey(key+':x'))*LASSO_CELL,y0=(cy+.3+.4*hashKey(key+':y'))*LASSO_CELL,out=[];
  for(let k=0;k<n;k++){const a=hashKey(key+':a'+k)*6.283,d=10+45*hashKey(key+':d'+k);out.push({id:cx+','+cy+','+k,x:Math.round(x0+Math.cos(a)*d),y:Math.round(y0+Math.sin(a)*d),phase:hashKey(key+':p'+k)*6.283});}return out;}
-export const lassoValue=count=>Math.max(1,Math.min(5,count));
+export const lassoValue=count=>Math.max(1,Math.min(3,count));
 export const lassoProgress=points=>Math.max(0,Math.min(1,points/LASSO_GOAL));
 // Shoelace area and the ray test: the loop the trail closes, and what is inside it.
 export function loopArea(points){let a=0;for(let i=0;i<points.length;i++){const p=points[i],q=points[(i+1)%points.length];a+=p.x*q.y-q.x*p.y;}return Math.abs(a)/2;}

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {initialize as games} from '../src/journey-games.js';
 import {DANCE_GOAL,DANCE_RADIUS,DANCE_NEAR,DANCE_FAR,danceValue,danceProgress,danceSpot,normalizeDance,initialize} from '../src/journey-dance.js';
 // Returned in a row: 10, 15, then 20; circles fall between DANCE_NEAR and DANCE_FAR from the cube, by hash of their count.
-assert.deepEqual([1,2,3,7].map(danceValue),[10,15,20,20]);assert.equal(danceProgress(DANCE_GOAL),1);
+assert.deepEqual([1,2,3,7].map(danceValue),[10,15,20,20]);assert.equal(DANCE_GOAL,250);assert.equal(danceProgress(DANCE_GOAL),1);
 for(let n=0;n<50;n++){const p=danceSpot(n,{x:0,y:0}),d=Math.hypot(p.x,p.y);assert(d>=DANCE_NEAR-1&&d<=DANCE_FAR+1);assert.deepEqual(p,danceSpot(n,{x:0,y:0}));}
 assert.deepEqual(normalizeDance(null),{points:0,count:0,returned:0,best:0,eye:null,closed:false,hinted:false});
 // Runtime.
@@ -12,7 +12,7 @@ const r={S:{wx:0,wy:0,sound:false,journey:{}},SIX:.125,BIOMES:[{id:'tormenta'}],
 games(r);initialize(r);
 const draws=[];const ctx=new Proxy({},{get:(o,k)=>k in o?o[k]:()=>draws.push(k),set:(o,k,v)=>{o[k]=v;return true;}});
 const frame=()=>{r.drawJourneyGamesUnder(ctx,390,844,clock);r.drawJourneyGames(ctx,390,844,clock);};
-frame();let st=r.journeyDance();assert(st.target,'a circle appears');assert(r.MU.journeyOwnBolts,'the storm only strikes where the circles are');
+frame();let st=r.journeyDance();assert(st.target,'a circle appears');assert(r.journeyDance().inside,'the first one right beside the cube');r.S.wx=500;assert(r.MU.journeyOwnBolts,'the storm only strikes where the circles are');
 // Outside the circle, on time: nothing. Inside, off time: nothing. Inside, on time: the bolt goes back up.
 assert.equal(r.journeyGamePulse(true),'outside');assert.equal(r.journeyDance().points,0);
 r.S.wx=st.target.x;r.S.wy=st.target.y;assert.equal(r.journeyGamePulse(false),'miss');assert.equal(r.journeyDance().points,0);

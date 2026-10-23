@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import {initialize as games} from '../src/journey-games.js';
 import {STICK_GOAL,STICK_CELL,STICK_KINDS,cellItem,stickProgress,cubeScale,normalizeStick,initialize} from '../src/journey-stick.js';
-// Places come from hashes of the cell: the same map for everyone, and about seven cells in ten hold something.
+// Places come from hashes of the cell: the same map for everyone, and more than eight cells in ten hold something.
 let found=0;const kinds={};for(let i=0;i<40;i++)for(let j=0;j<40;j++){const it=cellItem(i,j);if(!it)continue;found++;kinds[it.kind]=(kinds[it.kind]||0)+1;assert.deepEqual(it,cellItem(i,j));assert(it.x>=i*STICK_CELL&&it.x<(i+1)*STICK_CELL&&it.y>=j*STICK_CELL&&it.y<(j+1)*STICK_CELL);}
-assert(found>900&&found<1350,'about seven in ten: '+found);assert(STICK_KINDS.every(k=>kinds[k.id]>0),'every kind appears');
+assert(found>1250&&found<1500,'more than eight in ten: '+found);assert(STICK_KINDS.every(k=>kinds[k.id]>0),'every kind appears');
 // Small things are many and fill a little; big ones are few and fill a lot (decision of 23 October).
 assert.deepEqual(STICK_KINDS.map(k=>k.value),[1,3,8,20]);assert(kinds.mota>kinds.chispa&&kinds.chispa>kinds.piedra&&kinds.piedra>kinds.cometa);
 assert.equal(stickProgress(0),0);assert.equal(stickProgress(STICK_GOAL),1);assert.equal(stickProgress(STICK_GOAL*2),1);

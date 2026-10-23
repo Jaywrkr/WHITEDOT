@@ -6,12 +6,12 @@ import {beatGlow as glowNow,worldCamera,sayOnce,chapterToast} from './journey-ga
 // Small things are many and fill a little, big ones are few and fill a lot. When the bar is full a gold cloud comes
 // beside the cube, and one last pulse on time swallows it: the Llanura is complete.
 // Places and kinds come from hashes of the map cell, never from the old random sequence.
-export const STICK_GOAL=120,STICK_CELL=150,STICK_REACH=90,STICK_GONE_LIMIT=800,STICK_CLOUD_GAP=70;
+export const STICK_GOAL=60,STICK_CELL=150,STICK_REACH=90,STICK_GONE_LIMIT=800,STICK_CLOUD_GAP=70;
 export const STICK_KINDS=Object.freeze([
- Object.freeze({id:'mota',value:1,r:3,weight:.55}),Object.freeze({id:'chispa',value:3,r:6,weight:.27}),
- Object.freeze({id:'piedra',value:8,r:9,weight:.12}),Object.freeze({id:'cometa',value:20,r:13,weight:.06})]);
-// One thing per cell at most, about seven cells in ten.
-export function cellItem(cx,cy,seed='stick:v1'){const key=seed+':'+cx+','+cy;if(hashKey(key)>.7)return null;let k=hashKey(key+':k'),kind=STICK_KINDS[0];
+ Object.freeze({id:'mota',value:1,r:3,weight:.45}),Object.freeze({id:'chispa',value:3,r:6,weight:.32}),
+ Object.freeze({id:'piedra',value:8,r:9,weight:.15}),Object.freeze({id:'cometa',value:20,r:13,weight:.08})]);
+// One thing per cell at most, more than eight cells in ten (plan F1: the Llanura took Jay eight minutes).
+export function cellItem(cx,cy,seed='stick:v1'){const key=seed+':'+cx+','+cy;if(hashKey(key)>.85)return null;let k=hashKey(key+':k'),kind=STICK_KINDS[0];
  for(const option of STICK_KINDS){if(k<option.weight){kind=option;break;}k-=option.weight;}
  return {id:cx+','+cy,kind:kind.id,value:kind.value,r:kind.r,x:Math.round((cx+.15+.7*hashKey(key+':x'))*STICK_CELL),y:Math.round((cy+.15+.7*hashKey(key+':y'))*STICK_CELL)};}
 export const stickProgress=points=>Math.max(0,Math.min(1,points/STICK_GOAL));

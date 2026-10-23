@@ -23,14 +23,15 @@ try:
     page.evaluate(f"()=>{{__r.S.journey.done.{done}=true;__r.journeyTravel();}}");page.wait_for_function(f"__r.journeyChapter().id==='{nxt}'",timeout=15000)
    page.wait_for_function("__r.BIOMES[__r.curZone]?.id==='tormenta'&&__r.journeyDance().active&&!!__r.journeyDance().target",timeout=15000);page.evaluate(hide)
    sparks=page.evaluate('__r.S.sparks')
-   page.evaluate("__r.journeyGamePulse(true)");assert page.evaluate('__r.journeyDance().points')==0,'on time outside the circle: nothing'
+   assert page.evaluate('__r.journeyDance().inside'),'the first circle appears right beside the cube'
+   page.evaluate("()=>{__r.S.wx+=300;}");page.evaluate("__r.journeyGamePulse(true)");assert page.evaluate('__r.journeyDance().points')==0,'on time outside the circle: nothing'
    page.evaluate("()=>{const t=__r.journeyDance().target;__r.S.wx=t.x;__r.S.wy=t.y;}");page.wait_for_timeout(200)
    page.evaluate("__r.journeyGamePulse(false)");assert page.evaluate('__r.journeyDance().points')==0,'off time inside: nothing'
    if width==390 and os.environ.get('DANCE_SHOT'):page.screenshot(path=os.environ['DANCE_SHOT'])
    page.evaluate("()=>{const t=__r.journeyDance().target;__r.S.wx=t.x;__r.S.wy=t.y;}");page.evaluate(ON);page.wait_for_function("__r.journeyDance().returned>=1",timeout=5000);assert page.evaluate('__r.journeyDance().points')>=10
    assert float(page.evaluate("document.getElementById('barfill').style.width").rstrip('%'))>0,'the bar fills'
    assert page.evaluate('__r.S.journey.dance.hinted') and page.evaluate('__r.S.sparks')==sparks
-   page.evaluate("()=>{__r.S.journey.dance.points=100;}");page.wait_for_function("!!__r.journeyDance().eye",timeout=3000)
+   page.evaluate("()=>{__r.S.journey.dance.points=250;}");page.wait_for_function("!!__r.journeyDance().eye",timeout=3000)
    page.evaluate("__r.journeyGamePulse(false)");assert not page.evaluate('__r.journeyDance().closed')
    page.evaluate(ON);page.wait_for_function("__r.journeyDance().closed&&__r.journeyChapter().done.tormenta",timeout=5000);page.wait_for_function("__r.journeyChapter().portal",timeout=10000)
    page.reload();page.wait_for_function('!!window.__r?.journeyDance');assert page.evaluate("__r.S.journey.done.tormenta")==True and page.evaluate("__r.S.journey.dance.closed")==True

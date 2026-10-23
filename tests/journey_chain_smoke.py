@@ -35,7 +35,7 @@ try:
    page.wait_for_function("document.body.textContent.includes('la onda las enciende')",timeout=25000)
    assert page.evaluate('__r.S.sparks')==sparks,'no sparks in the Journey'
    # Full bar: the gold flower comes beside the cube; a pulse on time opens it and the portal opens.
-   page.evaluate("()=>{__r.S.journey.chain.points=100;}");page.wait_for_function("!!__r.journeyChain().flower",timeout=3000)
+   page.evaluate("()=>{__r.S.journey.chain.points=340;}");page.wait_for_function("!!__r.journeyChain().flower",timeout=3000)
    page.wait_for_function("document.body.textContent.includes('flor dorada')",timeout=25000)
    page.evaluate("__r.journeyGamePulse(false)");assert not page.evaluate('__r.journeyChain().opened'),'off time it waits'
    page.evaluate(ON);page.wait_for_function("__r.journeyChain().opened&&__r.journeyChapter().done.lago",timeout=5000);page.wait_for_function("__r.journeyChapter().portal",timeout=10000)

@@ -6,7 +6,7 @@ import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
 // a step higher, and sends its own ripple to the flowers beside it. Longer chains fill the bar faster. Off time nothing
 // happens. With the bar full a gold flower comes beside the cube and one pulse on time opens it.
 // Places come from hashes of the map cell, never from the old random sequence.
-export const CHAIN_GOAL=100,CHAIN_CELL=260,CHAIN_FIRST=110,CHAIN_NEXT=80,CHAIN_STEPS=8,CHAIN_WAVE_MS=420,CHAIN_LIT_LIMIT=800,CHAIN_FLOWER_GAP=70;
+export const CHAIN_GOAL=340,CHAIN_CELL=320,CHAIN_FIRST=110,CHAIN_NEXT=80,CHAIN_STEPS=8,CHAIN_WAVE_MS=420,CHAIN_LIT_LIMIT=800,CHAIN_FLOWER_GAP=70;
 // Flowers grow in clusters, one in six cells of ten: three to seven flowers in a winding line, each 45–60 px from the
 // one before, so a ripple on the first one runs through the whole cluster as an arpeggio.
 export function cellFlowers(cx,cy,seed='chain:v1'){const key=seed+':'+cx+','+cy;if(hashKey(key)>.6)return [];const n=3+Math.floor(5*hashKey(key+':n'));

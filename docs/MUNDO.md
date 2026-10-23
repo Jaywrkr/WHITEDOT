@@ -108,7 +108,7 @@ Cada fase sale de `main` actualizado, en su rama, y se integra cuando Jay la apr
 | Fase | Rama | Qué | Terminada cuando |
 |---|---|---|---|
 | F0 · El Viaje por juegos en `main` | `claude/f0-viaje-juegos` | Los cinco capítulos en `main` (PR #315–#319), el festival con el Lago nuevo, `?capitulo=` y este documento | El Viaje se juega de punta a punta en `main` |
-| F1 · Ritmo de los niveles | `claude/f1-ritmo` | Llanura meta 70; Lago y Bosque meta 220; primer círculo de la Tormenta junto al cubo; el Vacío suelta en el «1» y pide cielo libre | Una partida real da 2:30–3:00 por nivel en `?prueba=1` |
+| F1 · Ritmo de los niveles | `claude/f1-ritmo` | Llanura meta 60; Lago 340; Bosque 240 (luciérnaga hasta 3); Tormenta 250; primer círculo de la Tormenta junto al cubo; el Vacío suelta en el «1» y pide cielo libre | Una partida real da 2:30–3:00 por nivel en `?prueba=1` |
 | F2 · Sonido de victoria | `claude/f2-victoria` | Drop electrónico por género al completar, en lugar del violonchelo; mezcla de los cinco juegos | Los cinco cierres suenan a celebración |
 | F3 · Economía de chispas | `claude/f3-chispas` | Tabla de chispas, límite diario, ×2/×3 a tiempo, tienda reajustada y simulación | La simulación cuadra y ningún saldo baja |
 | F4 · Lugares y estrellas | `claude/f4-estrellas` | Ronda, Maestro, récords, estrellas retroactivas y pantalla de resultado | Los cinco lugares dan sus estrellas y chispas |
