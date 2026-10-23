@@ -1,4 +1,5 @@
 import {CHAPTERS} from './journey-chapters.js';
+import {PLACES} from './places.js';
 // A chapter on its own, to test it (plan F0, docs/MUNDO.md): «?capitulo=lago» opens the Journey right in that chapter,
 // with the ones before it kept, on a save of its own and without an account, so it never touches the player's game
 // or the cloud. Every load starts the chapter again from an empty bar.
@@ -9,7 +10,7 @@ export const CHAPTER_GAME_STATE=Object.freeze({llanura:'stick',lago:'chain',bosq
 // «?lugar=lago» (plan F4): a round of that place after the Journey, on its own save; «&maestro=1» plays the Maestro one.
 // «?anillo=1» (plan F5): the same save with the Journey finished and no round, to walk the ring of portals.
 export const PLACE_TEST_KEY='kubono:lugar';
-export function placeTest(search=globalThis.location?.search){try{const q=new URLSearchParams(search||''),id=q.get('lugar');return TEST_CHAPTERS.includes(id)?{id,maestro:q.get('maestro')==='1'}:q.get('anillo')==='1'?{id:null,maestro:false}:null;}catch(_){return null;}}
+export function placeTest(search=globalThis.location?.search){try{const q=new URLSearchParams(search||''),id=q.get('lugar');return PLACES.some(p=>p.id===id&&p.game)?{id,maestro:q.get('maestro')==='1'}:q.get('anillo')==='1'?{id:null,maestro:false}:null;}catch(_){return null;}}
 export function chapterTest(search=globalThis.location?.search){try{const id=new URLSearchParams(search||'').get('capitulo');return TEST_CHAPTERS.includes(id)?id:null;}catch(_){return null;}}
 // The save as it should be on arrival: the Camino and earlier chapters done, this chapter fresh.
 export function prepareChapterTest(S,id){const j=S.journey||(S.journey={}),index=CHAPTERS.indexOf(id);if(index<1)return false;
