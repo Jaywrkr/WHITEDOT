@@ -27,7 +27,7 @@ try:
    group="""async()=>{const m=await import('./src/journey-lasso.js'),r=__r,cx=Math.floor(r.S.wx/m.LASSO_CELL),cy=Math.floor(r.S.wy/m.LASSO_CELL);
     for(let d=0;d<10;d++)for(let i=cx-d;i<=cx+d;i++)for(let j=cy-d;j<=cy+d;j++){const g=m.cellFireflies(i,j);if(g.length<3||g.some(f=>r.BIOMES[r.biomeOfPos(f.x,f.y)].id!=='bosque'))continue;
      const x=g.reduce((a,f)=>a+f.x,0)/g.length,y=g.reduce((a,f)=>a+f.y,0)/g.length;window.__g={x,y,n:g.length};return g.length;}return 0;}"""
-   circle="""async()=>{const r=__r,g=window.__g;for(let i=0;i<=48;i++){const a=i/48*6.283;r.S.wx=g.x+Math.cos(a)*110;r.S.wy=g.y+Math.sin(a)*110;await new Promise(f=>requestAnimationFrame(f));await new Promise(f=>setTimeout(f,30));}}"""
+   circle="""async()=>{const r=__r,g=window.__g;for(let i=0;i<=48;i++){const a=i/48*6.283;r.S.wx=g.x+Math.cos(a)*110;r.S.wy=g.y+Math.sin(a)*110;await new Promise(f=>requestAnimationFrame(f));}}"""
    n=page.evaluate(group);assert n>=3
    page.evaluate(circle);st=page.evaluate('__r.journeyLasso()');assert st['closed'] and st['inside']==n,st
    page.evaluate("__r.journeyGamePulse(false)");assert page.evaluate('__r.journeyLasso().points')==0,'off time nothing'

@@ -7,7 +7,7 @@ import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
 // circles fill the bar faster. Off time nothing happens. With the bar full the Bosque's creature comes beside the cube,
 // and one pulse on time makes it your companion for the rest of the Journey.
 // Places come from hashes of the map cell, never from the old random sequence.
-export const LASSO_GOAL=100,LASSO_CELL=220,LASSO_TRAIL_MS=5000,LASSO_HOLD_MS=1500,LASSO_TRAIL_MAX=160,LASSO_CLOSE=45,LASSO_MIN_AREA=2500,LASSO_CAUGHT_LIMIT=800,LASSO_FRIEND_GAP=60;
+export const LASSO_GOAL=100,LASSO_CELL=220,LASSO_TRAIL_MS=8000,LASSO_HOLD_MS=1500,LASSO_TRAIL_MAX=160,LASSO_CLOSE=45,LASSO_MIN_AREA=2500,LASSO_CAUGHT_LIMIT=800,LASSO_FRIEND_GAP=60;
 // Fireflies come in groups: one in two cells, three to six around a centre.
 export function cellFireflies(cx,cy,seed='lasso:v1'){const key=seed+':'+cx+','+cy;if(hashKey(key)>.5)return [];const n=3+Math.floor(4*hashKey(key+':n')),x0=(cx+.3+.4*hashKey(key+':x'))*LASSO_CELL,y0=(cy+.3+.4*hashKey(key+':y'))*LASSO_CELL,out=[];
  for(let k=0;k<n;k++){const a=hashKey(key+':a'+k)*6.283,d=10+45*hashKey(key+':d'+k);out.push({id:cx+','+cy+','+k,x:Math.round(x0+Math.cos(a)*d),y:Math.round(y0+Math.sin(a)*d),phase:hashKey(key+':p'+k)*6.283});}return out;}
