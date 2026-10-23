@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.148**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.149**. Las entradas describen su revisión, no certifican producción.
+
+## F7 · Tu canción · alpha.149
+
+Rama `claude/f7-cancion`, sobre `claude/f6-refugio` (dependencia explícita).
+
+- **Una canción, once capas:** ocho compases de house a 120 BPM en La mayor (La, Mi, Fa♯m, Re). Cada lugar da una capa: Llanura bombo, Lago bajo dub, Bosque palmas y platillos, Tormenta ácido, Vacío colchón, Jardín arpegio, Dunas percusión, Cristales campanas, Faros la melodía del cubo, Ruinas acordes y Cueva eco.
+- **Final del Viaje nuevo:** cada capítulo ocupa dos compases; su capa entra bajo tus notas a tiempo, con tu ritmo, y su anillo se enciende con su nombre y su verbo. Después, el tema dos veces sobre las cinco capas, y aparecen apagados los seis lugares por venir. Termina en «Tu mundo se abrió · 11 lugares · 33 ★», con los once anillos y el botón «Explorar». Ya no hay violonchelo.
+- **En el Refugio:** tocar un trofeo hace sonar su capa dos compases. En Lugares, «Tu canción» la toca con las capas ganadas: once anillos, los tuyos encendidos y latiendo, los que faltan punteados («Tu canción · 5 de 11»). La música del Mundo espera mientras suena.
+- **Ganar el juego:** con las 33 ★, al cerrar la tarjeta de la ronda, entran las once capas una por compás y termina en «Las 33 ★ · Tu canción está completa». Solo una vez; luego se escucha desde Lugares.
+- El festival conserva su final con «Otra persona».
+- Pruebas: `tests/song_mix.py` (render sin conexión: cada capa se oye, las once juntas sin saturar, pico 0,50), `tests/song_stage_smoke.py`, y `journey-finale.mjs`, `journey_finale_smoke.py` y `festival_smoke.py` actualizadas. Límite: no se escuchó en un teléfono; las capas de los seis lugares nuevos suenan desde ya, aunque sus juegos lleguen en F9–F14.
 
 ## F6 · El Refugio como centro · alpha.148
 

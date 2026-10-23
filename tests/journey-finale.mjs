@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {finaleScore,noteLengths,scoreLength,MAJOR,EIGHTH,NOTES_PER_CHAPTER,CREDIT_LINES,FESTIVAL_LINES,CHAPTER_COLORS,initialize} from '../src/journey-finale.js';
+import {finaleScore,chapterStarts,SEGMENT,noteLengths,scoreLength,MAJOR,EIGHTH,NOTES_PER_CHAPTER,CREDIT_LINES,FESTIVAL_LINES,CHAPTER_COLORS,initialize} from '../src/journey-finale.js';
 import {THEME,themePitch} from '../src/journey-pulse.js';
 // The score: your notes per chapter in the Journey's order (up to six each), then the theme twice in A major, the second a fifth up.
 const score=finaleScore({lago:[60,62],llanura:[57,59,60,62,64,65,67,69],otro:[50],vacio:['x',64]});
@@ -8,7 +8,11 @@ assert.deepEqual(score.slice(6,8).map(n=>n.chapter),['lago','lago']);assert.equa
 const theme=score.filter(n=>n.chapter==='refugio');assert.equal(theme.length,THEME.length*2);
 assert.deepEqual(theme.slice(0,6).map(n=>n.midi),THEME.map(([d])=>themePitch(d,MAJOR,0)));assert.deepEqual(theme.slice(6).map(n=>n.midi),THEME.map(([d])=>themePitch(d,MAJOR,7)));
 assert.equal(score[1].at,2*EIGHTH);assert.equal(scoreLength(finaleScore({})),32*EIGHTH,'an empty journey still plays the theme twice');
-assert(Object.keys(CHAPTER_COLORS).length===6&&CREDIT_LINES[0]==='Kubono');
+assert(Object.keys(CHAPTER_COLORS).length===6&&CREDIT_LINES[0]==='Tu mundo se abrió'&&CREDIT_LINES.includes('11 lugares · 33 ★')&&CREDIT_LINES.includes('Kubono'));
+// Plan F7: each chapter takes two bars of your song, so its layer comes in on the bar; a longer rhythm is tightened.
+assert.deepEqual(chapterStarts(score),{llanura:0,lago:SEGMENT*EIGHTH,vacio:2*SEGMENT*EIGHTH,refugio:3*SEGMENT*EIGHTH});
+const long=finaleScore({llanura:[57,59,60,62,64,65]},['llanura'],{llanura:[0,12,24,36,48,60]});assert(long.filter(n=>n.chapter==='llanura').reduce((a,n)=>a+n.eighths,0)<=SEGMENT,'six long notes fit in two bars');
+assert.equal(scoreLength(finaleScore({llanura:[57]},['llanura'])),SEGMENT*EIGHTH+32*EIGHTH);
 // Phase 2: the finale plays your rhythm, from the sixteenths saved beside your notes; older saves play quarters.
 assert.deepEqual(noteLengths([0,4,12,40],4),[2,4,6,2],'a quarter, a half, the longest gap capped, the last a quarter');assert.deepEqual(noteLengths(null,3),[2,2,2]);assert.deepEqual(noteLengths([0,4],3),[2,2,2],'mismatched steps are ignored');
 const rhythm=finaleScore({lago:[60,'x',62,64]},['lago'],{lago:[0,2,8,10]});assert.deepEqual(rhythm.slice(0,3).map(n=>[n.midi,n.eighths]),[[60,4],[62,2],[64,2]],'the gap skips the dropped note');

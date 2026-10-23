@@ -211,7 +211,7 @@ export function initialize(runtime) {
   }
   function playStep(t){
     // The Journey's finale is the only music in the Refugio: its score, then real silence before the credits.
-    if(runtime.journeyFinaleState?.().running)return;
+    if(runtime.journeyFinaleState?.().running||runtime.songPlaying?.())return;
     const s=MU.step%16,k=style(),calm=runtime.isFree()&&runtime.S.mode==="camino";
     const live=runtime.inWorld()||runtime.S.mode==="studio";
     if(s===0){

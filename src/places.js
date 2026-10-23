@@ -29,7 +29,7 @@ export function normalizePlaces(raw,journey={}){if(object(raw)&&Number.isInteger
  const journeyShare={};if(object(q.journeyShare))for(const id of WORLD_CHAPTERS){const j=q.journeyShare[id];if(object(j))journeyShare[id]={hits:Math.max(0,j.hits|0),total:Math.max(0,j.total|0),silent:j.silent===true};}
  // The ring (plan F5): its centre when there is no Refugio yet, and the portals already entered (for fast travel).
  const seen={};if(object(q.seen))for(const id of PLACE_IDS)if(q.seen[id]===true)seen[id]=true;
- return {version:PLACES_VERSION,stars,best,rounds:{day:typeof q.rounds?.day==='string'?q.rounds.day:'',counts},journeyShare,center:point(q.center),seen,run:object(q.run)&&PLACE_IDS.includes(q.run.id)?q.run:null};}
+ return {version:PLACES_VERSION,stars,best,rounds:{day:typeof q.rounds?.day==='string'?q.rounds.day:'',counts},journeyShare,center:point(q.center),seen,won:q.won===true,run:object(q.run)&&PLACE_IDS.includes(q.run.id)?q.run:null};}
 export const starCount=places=>PLACE_IDS.reduce((a,id)=>a+(places?.stars?.[id]||[]).filter(Boolean).length,0);
 export const placeOpen=(places,id,journey)=>{const p=PLACES.find(x=>x.id===id);return !!(p&&p.game&&freeOpen(journey)&&starCount(places)>=p.need);};
 export function initialize(runtime){
@@ -74,7 +74,7 @@ export function initialize(runtime){
   runtime.$('placeStars').innerHTML=['★','★','★'].map((x,i)=>`<span class="${own().stars[r.id][i]?'got':''}${r.fresh[i]?' new':''}">${x}</span>`).join('');
   runtime.$('placeRows').innerHTML=[`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo: ${pct} % a tiempo (85 %)</li>`,`<li>${r.stars[2]?'✓':'·'} Maestro: 80 % a tiempo</li>`].join('')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>');
   runtime.$('placeEarned').textContent=`${mm}:${ss} · +${r.sparks} ✦${r.record?' · récord':''}`;box.hidden=false;
-  runtime.$('placeAgain').onclick=()=>{box.hidden=true;start(r.id,{maestro:r.maestro,from:r.from});};runtime.$('placeMaestro').hidden=!own().stars[r.id][1]||r.maestro;runtime.$('placeMaestro').onclick=()=>{box.hidden=true;start(r.id,{maestro:true,from:r.from});};runtime.$('placeClose').onclick=()=>{box.hidden=true;back(r.from);runtime.save?.();};}
+  runtime.$('placeAgain').onclick=()=>{box.hidden=true;start(r.id,{maestro:r.maestro,from:r.from});};runtime.$('placeMaestro').hidden=!own().stars[r.id][1]||r.maestro;runtime.$('placeMaestro').onclick=()=>{box.hidden=true;start(r.id,{maestro:true,from:r.from});};runtime.$('placeClose').onclick=()=>{box.hidden=true;back(r.from);runtime.save?.();runtime.songFinaleCheck?.();};}
  Object.defineProperties(runtime,{placeRun:{get:()=>run},startPlace:{get:()=>start},abandonPlace:{get:()=>abandon},placeHear:{get:()=>hear},placeFinish:{get:()=>finish},placeChapterKept:{get:()=>chapterKept},placesData:{get:()=>own},
   placeGoalScale:{get:()=>()=>run()?.maestro?MAESTRO_GOAL:1},places:{get:()=>()=>{const s=own();return {stars:JSON.parse(JSON.stringify(s.stars)),count:starCount(s),best:JSON.parse(JSON.stringify(s.best)),run:s.run?{id:s.run.id,maestro:s.run.maestro,hits:s.run.hits,total:s.run.total}:null,last:shown?{...shown}:null};}}});
 }
