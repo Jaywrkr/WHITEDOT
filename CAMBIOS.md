@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 22 de octubre de 2026. Código **2.3.0-alpha.132**. Las entradas describen su revisión, no certifican producción.
+Estado: 22 de octubre de 2026. Código **2.3.0-alpha.133**. Las entradas describen su revisión, no certifican producción.
+
+## Fase 5 · El tema como llave · alpha.133
+
+Rama `claude/fase5-llave`, sobre `main` (alpha.132). Jay aprobó esta idea de la Fase 5; las otras (pregunta y respuesta, rejugar el Viaje, clip del viaje) esperan a las pruebas con personas.
+
+- **El universo reconoce el tema:** en el Mundo libre, completar el tema a tiempo junto a un hito hace que el hito toque su motivo y luego el tema contigo. En un superbioma raro, el lugar lo contesta una quinta arriba.
+- **Llaves en la Bitácora:** cada una se guarda una vez, con su día; en Lugares aparecen como «Llaves · n».
+- Solo en el Mundo libre: durante el Viaje, el tema es de los capítulos.
+- Verificación local: 213 suites Node, auditoría sin errores, `theme_key_smoke.py` nueva y recorridos del pulso, capítulos, coherencia y sin conexión, más las mezclas `exploration_mix.py` y `journey_mix.py`, en PASS.
+- Medida de Jay en iPhone (Camino, calidad alta): p50 17 ms y p95 17 ms, 60 imágenes por segundo estables. Falta medir el Mundo.
 
 ## Fase 4 · Rendimiento real · alpha.132
 
