@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.136**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.137**. Las entradas describen su revisión, no certifican producción.
+
+## «Pégate» tras la prueba de Jay · alpha.137
+
+Rama `claude/viaje-pegate`, con `main` (alpha.136) integrado. Decisiones de Jay del 23 de octubre:
+
+- **Sin monedas en el Viaje:** las chispas quedan para el Mundo libre. Los cristales del Camino dan luz pero no chispas, y los cristales del Mundo no aparecen mientras viajas.
+- **Solo a tiempo pasa algo:** fuera de tiempo nada se mueve ni desaparece; solo tiembla el cubo. A tiempo, lo cercano se pega.
+- **Todo se pega y llena según su tamaño:** motas (1), cruces (3), rombos (8) y cometas (20); las pequeñas abundan, las grandes escasean. La barra pide 120 y cada cosa pegada lanza una gota dorada hacia ella.
+- **Se ve qué atrapar:** lo que se pega late con el beat y tiene halo; lo que está al alcance brilla más y tiembla. El resto del lugar se atenúa.
+- **La nube dorada llega sola:** con la barra llena aparece junto al cubo y lo sigue; se traga con un pulso a tiempo.
 
 ## Fase 7 · Pruebas con personas · alpha.136
 

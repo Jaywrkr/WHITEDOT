@@ -1,44 +1,39 @@
 import assert from 'node:assert/strict';
-import {STICK_START,STICK_TARGET,STICK_CELL,STICK_KINDS,cellItem,canStick,grow,stickProgress,cubeScale,normalizeStick,initialize} from '../src/journey-stick.js';
+import {STICK_GOAL,STICK_CELL,STICK_KINDS,cellItem,stickProgress,cubeScale,normalizeStick,initialize} from '../src/journey-stick.js';
 // Places come from hashes of the cell: the same map for everyone, and about seven cells in ten hold something.
 let found=0;const kinds={};for(let i=0;i<40;i++)for(let j=0;j<40;j++){const it=cellItem(i,j);if(!it)continue;found++;kinds[it.kind]=(kinds[it.kind]||0)+1;assert.deepEqual(it,cellItem(i,j));assert(it.x>=i*STICK_CELL&&it.x<(i+1)*STICK_CELL&&it.y>=j*STICK_CELL&&it.y<(j+1)*STICK_CELL);}
-assert(found>900&&found<1350,'about seven in ten: '+found);assert(STICK_KINDS.every(k=>kinds[k.id]>0),'every kind appears');assert(kinds.mota>kinds.cometa*4,'small things are common');
-// Only things up to half your size stick; you grow by half of what sticks; the cube is drawn bigger as it grows.
-assert(canStick(1,STICK_START)&&!canStick(2,STICK_START)&&canStick(2,4)&&!canStick(8,15)&&canStick(8,16));
-assert.equal(grow(3,2),4);assert.equal(grow(STICK_TARGET*1.5,8),STICK_TARGET*1.5);
-assert.equal(stickProgress(STICK_START),0);assert.equal(stickProgress(STICK_TARGET),1);assert.equal(stickProgress(0),0);
-assert.equal(cubeScale(STICK_START),1);assert(cubeScale(STICK_TARGET)>3);assert.equal(cubeScale(1e6),3.2);
-// Saves: bad values return to the start, the list of taken things is bounded, nothing else is lost.
-assert.deepEqual(normalizeStick(null),{size:STICK_START,giant:null,gone:[],swallowed:false,hinted:false});
-assert.deepEqual(normalizeStick({size:12.5,giant:{x:10.4,y:-3},gone:['1,2','bad',3,'-4,5'],swallowed:true,hinted:true}),{size:12.5,giant:{x:10,y:-3},gone:['1,2','-4,5'],swallowed:true,hinted:true});
-assert.equal(normalizeStick({size:999}).size,STICK_TARGET*1.5);assert.equal(normalizeStick({gone:Array.from({length:900},(_,i)=>i+',0')}).gone.length,800);
-// Runtime: on time near something small, it sticks and the cube grows; off time it bounces away; the giant waits.
-let clock=0;const realNow=performance.now.bind(performance);performance.now=()=>clock;globalThis.setTimeout=f=>0;
+assert(found>900&&found<1350,'about seven in ten: '+found);assert(STICK_KINDS.every(k=>kinds[k.id]>0),'every kind appears');
+// Small things are many and fill a little; big ones are few and fill a lot (decision of 23 October).
+assert.deepEqual(STICK_KINDS.map(k=>k.value),[1,3,8,20]);assert(kinds.mota>kinds.chispa&&kinds.chispa>kinds.piedra&&kinds.piedra>kinds.cometa);
+assert.equal(stickProgress(0),0);assert.equal(stickProgress(STICK_GOAL),1);assert.equal(stickProgress(STICK_GOAL*2),1);
+assert.equal(cubeScale(0),1);assert(cubeScale(STICK_GOAL)>3);
+// Saves: bad values return to the start, the first prototype's size becomes points, the list of taken things is bounded.
+assert.deepEqual(normalizeStick(null),{points:0,cloud:null,gone:[],swallowed:false,hinted:false});
+assert.deepEqual(normalizeStick({points:50.5,cloud:{x:10.4,y:-3},gone:['1,2','bad',3,'-4,5'],swallowed:true,hinted:true}),{points:50.5,cloud:{x:10,y:-3},gone:['1,2','-4,5'],swallowed:true,hinted:true});
+assert.equal(normalizeStick({size:40}).points,STICK_GOAL);assert.equal(normalizeStick({size:3}).points,0);assert.equal(normalizeStick({points:999}).points,STICK_GOAL);
+assert.equal(normalizeStick({gone:Array.from({length:900},(_,i)=>i+',0')}).gone.length,800);
+// Runtime: on time near something it sticks and fills the bar by its value; off time nothing moves.
+let clock=0;const realNow=performance.now.bind(performance);performance.now=()=>clock;const timers=[];globalThis.setTimeout=f=>{timers.push(f);return 0;};
 const toasts=[],done=[];
 const r={S:{wx:0,wy:0,sound:false,journey:{}},BIOMES:[{id:'llanura'}],biomeOfPos:()=>0,regionOfPos:()=>({}),journeyChapter:()=>({id:'llanura',done:{}}),journeyQuiet:()=>true,inWorld:()=>true,save:()=>true,toast:m=>toasts.push(m),journeyComplete:id=>done.push(id),MU:{journeyFloor:0,journeyCap:.4}};
 initialize(r);
-// Put the cube on a small thing.
-let spot=null;for(let i=0;i<30&&!spot;i++)for(let j=0;j<30&&!spot;j++){const it=cellItem(i,j);if(it&&it.value===1)spot=it;}
-r.S.wx=spot.x+5;r.S.wy=spot.y;
-const near=r.journeyStick().near;assert(near.some(n=>n.id===spot.id&&n.stick));
-assert.equal(r.journeyStickPulse(true),'stick');assert.equal(r.journeyStick().size,STICK_START+.5);assert(!r.journeyStick().near.some(n=>n.id===spot.id),'taken things are gone');assert(r.S.journey.stick.gone.includes(spot.id),'and saved');
-// Off time: the nearest thing is pushed away, nothing sticks.
-let other=null;for(let i=0;i<30&&!other;i++)for(let j=0;j<30&&!other;j++){const it=cellItem(i,j);if(it&&it.value===1&&it.id!==spot.id)other=it;}
-r.S.wx=other.x;r.S.wy=other.y;const size=r.journeyStick().size;assert.equal(r.journeyStickPulse(false),'bounce');assert.equal(r.journeyStick().size,size);assert.equal(r.journeyStick().boings,1);
-// A streak of three on time pulls up to three things at once.
-r.S.journey.stick.size=30;const before=r.journeyStick().stuck;let pulls=0;for(let k=0;k<3;k++){const it=r.journeyStick().near;if(!it.length)break;r.journeyStickPulse(true);pulls++;}
-assert(r.journeyStick().stuck>=before+pulls);
-// Too big: a cometa does not stick to a tiny cube.
-r.S.journey.stick.size=STICK_START;let comet=null;for(let i=0;i<60&&!comet;i++)for(let j=0;j<60&&!comet;j++){const it=cellItem(i,j);if(it&&it.kind==='cometa')comet=it;}
-r.S.wx=comet.x;r.S.wy=comet.y;const onlyComet=r.journeyStick().near.every(n=>n.value>STICK_START*.5);if(onlyComet)assert.equal(r.journeyStickPulse(true),'too-big');
-// Draw: things, the giant and the cube are drawn, and the hint is told once.
+const find=kind=>{for(let i=0;i<80;i++)for(let j=0;j<80;j++){const it=cellItem(i,j);if(it&&it.kind===kind&&!r.S.journey.stick?.gone?.includes(it.id))return it;}};
+let comet=find('cometa');r.S.wx=comet.x+3;r.S.wy=comet.y;
+const before=JSON.stringify(r.journeyStick().near);assert.equal(r.journeyStickPulse(false),'miss');assert.equal(JSON.stringify(r.journeyStick().near),before,'off time: everything stays');assert.equal(r.journeyStick().points,0);
+assert.equal(r.journeyStickPulse(true),'stick');assert.equal(r.journeyStick().points,20,'a comet fills twenty, even on a tiny cube');assert(!r.journeyStick().near.some(n=>n.id===comet.id),'taken things are gone');assert(r.S.journey.stick.gone.includes(comet.id),'and saved');
+let mota=find('mota');r.S.wx=mota.x;r.S.wy=mota.y;const p0=r.journeyStick().points;r.journeyStickPulse(true);assert(r.journeyStick().points>p0);
+// Far from everything a pulse on time does nothing; there is no cloud before the bar is full.
+r.BIOMES=[{id:'llanura'},{id:'lago'}];r.biomeOfPos=()=>1;assert.equal(r.journeyStickPulse(true),null,'nothing to stick outside the Llanura');r.biomeOfPos=()=>0;assert.equal(r.journeyStick().cloud,null);
+// Draw: the place dims, things shine, the hint is told once.
 const draws=[];const ctx=new Proxy({},{get:(o,k)=>k in o?o[k]:()=>draws.push(k),set:(o,k,v)=>{o[k]=v;return true;}});
-r.drawJourneyStick(ctx,390,844,0);r.drawJourneyStick(ctx,390,844,16);assert(draws.includes('arc')&&draws.includes('fillRect'));assert(r.S.journey.stick.hinted);const g=r.journeyStick().giant;assert(g,'the giant is placed');
-// Touching the giant while small: pushed back. At full size: swallowed, the chapter ends once.
-clock=1000;r.S.wx=g.x;r.S.wy=g.y;r.drawJourneyStick(ctx,390,844,32);assert(Math.hypot(r.S.wx-g.x,r.S.wy-g.y)>50,'pushed back');assert.deepEqual(done,[]);
-r.S.journey.stick.size=STICK_TARGET;r.S.wx=g.x;r.S.wy=g.y;r.drawJourneyStick(ctx,390,844,48);assert.deepEqual(done,['llanura']);assert(r.journeyStick().swallowed);r.drawJourneyStick(ctx,390,844,64);assert.deepEqual(done,['llanura'],'once');
-assert(r.MU.journeyFloor>=.8,'the music has grown with the cube');assert.equal(r.cubeGrowth()>3,true);
+r.S.wx=mota.x;r.S.wy=mota.y;r.drawJourneyStickUnder(ctx,390,844,0);r.drawJourneyStick(ctx,390,844,16);assert(draws.includes('arc')&&draws.includes('fillRect'));assert(r.S.journey.stick.hinted);timers.splice(0).forEach(f=>f());assert(toasts.some(t=>/brilla/.test(t)));
+// Full bar: the gold cloud comes beside the cube and follows it; off time it waits; one pulse on time swallows it, once.
+r.S.journey.stick.points=STICK_GOAL;r.drawJourneyStickUnder(ctx,390,844,32);const c=r.journeyStick().cloud;assert(c&&Math.hypot(c.x-r.S.wx,c.y-r.S.wy)<100,'beside the cube');timers.splice(0).forEach(f=>f());assert(toasts.some(t=>/nube dorada/.test(t)));
+r.S.wx+=500;for(let i=0;i<120;i++)r.drawJourneyStickUnder(ctx,390,844,40+i);const c2=r.journeyStick().cloud;assert(Math.hypot(c2.x-r.S.wx,c2.y-r.S.wy)<100,'it follows');
+assert.equal(r.journeyStickPulse(false),'miss');assert.deepEqual(done,[]);
+assert.equal(r.journeyStickPulse(true),'swallow');assert.deepEqual(done,['llanura']);assert(r.journeyStick().swallowed);
+assert(r.MU.journeyFloor>=.8,'the music has grown with the bar');
 // Outside the Llanura chapter it does nothing.
 r.journeyChapter=()=>({id:'lago',done:{}});assert.equal(r.journeyStickPulse(true),null);assert.equal(r.cubeGrowth(),1);
 performance.now=realNow;
-console.log('PASS journey stick: things placed by cell hash, only half your size sticks, you grow by half, off time bounces, streaks pull three, saves bounded, the giant pushes back until you are big and is swallowed once');
+console.log('PASS journey stick: things placed by cell hash, many small and few big filling the bar by value, off time nothing moves, the full bar brings the gold cloud beside the cube and one pulse on time swallows it once');
