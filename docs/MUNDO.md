@@ -116,9 +116,33 @@ Cada fase sale de `main` actualizado, en su rama, y se integra cuando Jay la apr
 | F6 · El Refugio como centro | `claude/f6-refugio` | Trofeos, muro de estrellas, mesa del mapa y puerta | La casa dice qué tengo, qué falta y a dónde voy |
 | F7 · Tu canción | `claude/f7-cancion` | Capas por lugar, final del Viaje y final verdadero | Se entiende qué se logró sin explicación |
 | F8 · Logros del narrador | `claude/f8-logros` | ~40 logros nuevos y revisión de los actuales | Jay aprueba los textos; nadie pierde un logro |
-| F9–F14 · Lugares nuevos | `claude/f9-jardin` … `claude/f14-cueva` | Jardín, Dunas, Cristales, Faros, Ruinas y Cueva: juego, objeto dorado, capa, trofeo y Maestro | Cada uno pasa la lista y la prueba de Jay |
-| F15 · Mundo salvaje | `claude/f15-salvaje` | Encuentros de 30 s y remezcla diaria | Explorar lejos da algo cada 1–2 minutos |
-| F16 · Cierre con personas | `claude/f16-cierre` | Sesiones con `?prueba=1`, ajuste final, rendimiento, material de tienda | Las notas cumplen los tiempos |
+| F9–F11 · Jardín, Dunas, Cristales | `claude/f9-jardin` … `claude/f11-cristales` | Juego, objeto dorado, capa, trofeo y Maestro | Hechos (en `main`) |
+| F12 · Primer minuto | `claude/f12-primer-minuto` | Pista en la barra antes del primer pulso; Llanura a 2:30–3:00 para quien ya sabe jugar | Alguien nuevo da su primer pulso sin ayuda; la Llanura dura lo que debe |
+| F13 · Victoria con tu música | `claude/f13-victoria-musica` | Los cierres salen de la música que suena: filtro, silencio y la misma canción con algo más (su capa y el tema), en su tono y tempo | Ningún cierre suena ajeno a la música del lugar |
+| F14 · Ritmos | `claude/f14-ritmos` | Contratiempo, el «1» y patrones; guía de puntos bajo el cubo; el reparto de abajo | Cada lugar se siente distinto |
+| F15 · Faros | `claude/f15-faros` | Guiar, con su ritmo | Pasa la lista y la prueba de Jay |
+| F16 · Ruinas | `claude/f16-ruinas` | Reconstruir, con su ritmo | Igual |
+| F17 · Cueva | `claude/f17-cueva` | Eco: repetir el patrón que canta | Igual; con ella se llega a las 33 ★ |
+| F18 · Mundo salvaje | `claude/f18-salvaje` | Encuentros de 30 s y remezcla diaria | Explorar lejos da algo cada 1–2 minutos |
+| F19 · Cierre con personas | `claude/f19-cierre` | Sesiones con `?prueba=1`, ajuste final, rendimiento, material de tienda | Las notas cumplen los tiempos |
+
+Plan revisado por Jay el 23 de octubre tras jugar F0–F11: las F12–F19 sustituyen a las antiguas F12–F16.
+
+### Ritmo de cada lugar (F14, aprobado)
+
+| Lugar | En el Viaje | Como lugar |
+|---|---|---|
+| Llanura | A tiempo | A tiempo |
+| Lago | A tiempo | Contratiempo («y») |
+| Bosque | A tiempo | A tiempo |
+| Tormenta | Mezcla «1 · 2 · y» | Mezcla «1 · 2 · y» |
+| Vacío | El «1» | El «1» |
+| Jardín | — | Sembrar a tiempo, regar a contratiempo |
+| Dunas | — | La cresta en el «y» |
+| Cristales | — | Acorde en «1 · y · 2» |
+| Faros, Ruinas, Cueva | — | Un patrón propio cada uno (la Cueva: repetir el que canta) |
+
+En el Viaje cada capítulo enseña un ritmo nuevo solo cuando toca: los tres primeros a tiempo, la Tormenta la primera mezcla y el Vacío el «1».
 
 ## Cuándo una fase está terminada
 
