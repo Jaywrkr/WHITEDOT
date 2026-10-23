@@ -39,6 +39,11 @@ try:
    page.wait_for_function("__r.journeyFinaleState().credits",timeout=40000);assert 'Kubono' in page.inner_text('#journeyFinale')
    page.wait_for_function("!__r.journeyFinaleState().running",timeout=15000);assert not page.is_visible('#journeyFinale')
    assert page.evaluate("__r.S.journey.finished")==True and page.evaluate("__r.journeyMode()")=='libre'
+   # The free World unveils itself: its counters fade in and the menu marks it has new things until it is opened
+   # (the finale lands in the Refugio; the menu is outside it).
+   assert not page.evaluate("document.body.classList.contains('journey-unveil')"),'not while in the Refugio' 
+   assert page.evaluate("document.getElementById('bMenu').classList.contains('has-new')")
+   page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#houseExit').click();page.wait_for_function("document.body.classList.contains('journey-unveil')",timeout=5000);page.locator('#bMenu').click();page.wait_for_function("!document.getElementById('bMenu').classList.contains('has-new')")
    page.reload();page.wait_for_function('!!window.__r?.journeyFinale');assert page.evaluate("__r.S.journey.finished")==True and page.evaluate("__r.journeyMode()")=='libre'
    assert not page.evaluate("document.body.classList.contains('journey-quiet')")
    assert not errors,errors;page.close()
