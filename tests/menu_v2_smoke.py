@@ -15,7 +15,7 @@ try:
    page=b.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[];page.on('pageerror',lambda e:(errors.append(str(e)),print('PAGE ERROR '+str(e),flush=True)))
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__testRuntime?.styleUI');page.evaluate('document.getElementById("returnContinue").click();document.querySelectorAll(".modal").forEach(m=>m.hidden=true)')
-   page.locator('#bMenu').click();assert page.locator('.menu-group.primary .tiles button').count()==4
+   page.locator('#bMenu').click();assert page.locator('.menu-group.primary .tiles button:not([hidden])').count()==4 and not page.locator('#bLeavePlace').is_visible(),'four tiles in Jugar; «Dejar la ronda» only during a round'
    assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Tu viaje','Crear','General']
    assert page.locator('#menuTitle').inner_text() and '✦' in page.locator('#menuSummary').inner_text(),'the menu opens on who and where'
    assert page.locator('#bWorldHint').inner_text() in ('Explorar el Mundo','Volver al Camino')
