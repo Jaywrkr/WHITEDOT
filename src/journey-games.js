@@ -22,6 +22,6 @@ export function initialize(runtime){
  const now=()=>{const id=current();return playing(id)?games[id]:null;};
  Object.defineProperties(runtime,{registerJourneyGame:{get:()=>(id,g)=>{games[id]=g;}},journeyGame:{get:()=>game},journeyGamePlaying:{get:()=>playing},
   journeyGamePulse:{get:()=>(on,beat)=>{const g=now();if(!g)return null;runtime.placeHear?.(current(),on,beat||{});return g.pulse(on,beat||{});}},journeyGameProgress:{get:()=>id=>game(id)?.progress()??null},
-  drawJourneyGamesUnder:{get:()=>(c,W,H,t)=>now()?.under?.(c,W,H,t)},drawJourneyGames:{get:()=>(c,W,H,t)=>now()?.over?.(c,W,H,t)},
+  drawJourneyGamesUnder:{get:()=>(c,W,H,t)=>now()?.under?.(c,W,H,t)},drawJourneyGames:{get:()=>(c,W,H,t)=>{const g=now();if(!g)return;g.over?.(c,W,H,t);runtime.drawRhythmGuide?.(c,W,H,t);}},
   cubeGrowth:{get:()=>()=>now()?.growth?.()||1}});
 }

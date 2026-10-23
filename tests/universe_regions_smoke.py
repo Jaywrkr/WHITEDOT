@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[1];SHOTS=os.environ.get('UNIVERSE_SHOTS')
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
-ON="""()=>new Promise(res=>{const r=__r;const tick=()=>{const ac=r.ac,bq=r.MU.bq,bar=r.SIX*4;if(ac&&bq.length){const last=bq[bq.length-1],next=last>ac.currentTime?last:last+bar*Math.ceil((ac.currentTime-last)/bar),d=Math.min(...bq.map(b=>Math.abs(ac.currentTime-b)),Math.abs(next-ac.currentTime));if(d<.02){r.sonar('player');return res(d);}}requestAnimationFrame(tick);};tick();})"""
+ON="""()=>new Promise(res=>{const r=__r;const tick=()=>{const ac=r.ac,bq=r.MU.bq,bar=r.SIX*4;if(ac&&bq.length){const last=bq[bq.length-1],next=last>ac.currentTime?last:last+bar*Math.ceil((ac.currentTime-last)/bar),own=r.journeyRhythmTarget?.(ac.currentTime),d=own?(own.hit?own.hit.dist:1):Math.min(...bq.map(b=>Math.abs(ac.currentTime-b)),Math.abs(next-ac.currentTime));if(d<.02){r.sonar('player');return res(d);}}requestAnimationFrame(tick);};tick();})"""
 # The centre of a sea region holding the wanted new region, searched on the region grid.
 GO="""want=>{const r=__r,W=r.WCH||900;for(let d=1;d<200;d++)for(let a=0;a<32;a++){const x=Math.floor((900+Math.cos(a/32*6.283)*d*W)/W)*W+W/2,y=Math.floor((900+Math.sin(a/32*6.283)*d*W)/W)*W+W/2;if(r.newRegionAt(x,y)?.id===want){r.S.wx=x;r.S.wy=y;return [x,y];}}return null;}"""
 try:

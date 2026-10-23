@@ -5,6 +5,7 @@ import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
 // crest of the next wave will pass, and an arc around it closes until its beat. Be in the ring and pulse on time as
 // the crest passes: you ride it, it pushes you along, and the bar fills. Waves ridden in a row are worth more; letting
 // one pass starts the streak again. With the bar full a gold wave comes; riding it ends the round. Off time, nothing.
+// Since plan F14 the crest passes on the «y», between two beats (journey-rhythm.js).
 export const SURF_GOAL=150,SURF_EVERY=4,SURF_BAND=46,SURF_MAESTRO_BAND=34,SURF_NEAR=90,SURF_FAR=170,SURF_PUSH=70,SURF_AHEAD=4;
 // A ride is worth two, plus one for each wave ridden before it in a row, up to four.
 export const surfValue=streak=>Math.min(4,2+Math.max(0,streak|0));
@@ -25,9 +26,10 @@ export function initialize(runtime){
  const audible=()=>runtime.S.sound&&runtime.ac&&runtime.bus;
  const full=()=>own().points>=goal();
  const beatSec=()=>(runtime.SIX||.125)*4;
- // The beat grid: the last beat the music scheduled, and every beat after it.
- function nextBeat(after){const bq=runtime.MU?.bq||[],b=beatSec();if(!bq.length)return null;let t=bq[bq.length-1];while(t<after)t+=b;return t;}
- function nearestBeat(t){const bq=runtime.MU?.bq||[],b=beatSec();if(!bq.length)return t;const base=bq[bq.length-1];return base+Math.round((t-base)/b)*b;}
+ // The crest's grid (plan F14): the «y» halfway between the beats the music scheduled, so the crest passes off the beat.
+ const and=()=>runtime.journeyRhythm?.()?.key==='contra'?beatSec()/2:0;
+ function nextBeat(after){const bq=runtime.MU?.bq||[],b=beatSec();if(!bq.length)return null;let t=bq[bq.length-1]+and();while(t<after)t+=b;return t;}
+ function nearestBeat(t){const bq=runtime.MU?.bq||[],b=beatSec();if(!bq.length)return t;const base=bq[bq.length-1]+and();return base+Math.round((t-base)/b)*b;}
  // Keep two waves on the way, every other beat, the first a few beats ahead so there is time to walk to its ring.
  function feed(){const s=own(),now=runtime.ac?.currentTime;if(now==null)return;
   // The music can change its tempo (a new place, a Maestro round): the waves on the way move to the beats it plays now.
@@ -49,7 +51,7 @@ export function initialize(runtime){
  // A wave of sand: a curved crest across the dunes, travelling along its direction and passing the ring on its beat.
  function crest(c,x,y,dir,gold,alpha,still,t){const nx=Math.cos(dir+Math.PI/2),ny=Math.sin(dir+Math.PI/2),len=150;c.globalAlpha=alpha;c.strokeStyle=gold?runtime.GOLD||'#f0d27a':'#ffffff';c.lineWidth=gold?3:2;
   c.beginPath();for(let i=-10;i<=10;i++){const k=i/10,bend=-Math.cos(k*1.57)*14,wob=still?0:Math.sin(t/300+i)*1.5;const px=x+nx*k*len+Math.cos(dir)*(bend+wob),py=y+ny*k*len+Math.sin(dir)*(bend+wob);i===-10?c.moveTo(px,py):c.lineTo(px,py);}c.stroke();}
- function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Espera la ola en el círculo. Súbete a tiempo.','dunas');tick();
+ function under(c,W,H,t){if(!active())return;const s=own();sayOnce(runtime,s,'hinted','Espera la ola en el círculo. Súbete en el «y».','dunas');tick();
   const still=calm(),cam=worldCamera(runtime),sx=x=>W/2+(x-cam.x),sy=y=>H/2+(y-cam.y),glow=beatGlow(runtime),gold=runtime.GOLD||'#f0d27a',now=runtime.ac?.currentTime??0,b=beatSec(),speed=SURF_FAR*1.4/(SURF_EVERY*b);
   c.save();c.globalAlpha=.35;c.fillStyle='#000';c.fillRect(0,0,W,H);
   waves.forEach((w,i)=>{const x=sx(w.x),y=sy(w.y),left=w.at-now,inside=Math.hypot(runtime.S.wx-w.x,runtime.S.wy-w.y)<=band(),first=i===0;

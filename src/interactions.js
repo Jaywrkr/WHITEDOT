@@ -29,7 +29,7 @@ export function initialize(runtime) {
     if(runtime.activityActive)return;
     origin=origin==='ambient'?'ambient':'player';
     if(origin==='player'){runtime.cubeShopTap?.();runtime.cubeShopWildTap?.();}
-    if(runtime.S.mode==="studio"){if(origin==="player")runtime.housePulse?.();return;}runtime.audio();const ms=performance.now();if(ms-lastSonar<240){if(origin==='player')runtime.journeyPulseDropped?.();return;}lastSonar=ms;
+    if(runtime.S.mode==="studio"){if(origin==="player")runtime.housePulse?.();return;}runtime.audio();const ms=performance.now();if(ms-lastSonar<(runtime.journeyRhythmGap?.()??240)){if(origin==='player')runtime.journeyPulseDropped?.();return;}lastSonar=ms;
     // Playing on time (journey-pulse.js): the pulse plays the next theme note at once, in a melodic voice of the place,
     // with its third and fifth on the grid. Off the beat, the grid places the pulse as always.
     const hit=origin==='player'&&(runtime.inWorld()||runtime.S.mode==='camino')&&runtime.journeyPulse?.(atMs)===true?runtime.journeyPulseState():null;

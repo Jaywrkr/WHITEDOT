@@ -49,13 +49,16 @@ export function initialize(runtime){
   // played without hearing it; the chapters still ask for their moments and bars. While the music is only starting
   // (sound on, no beat yet) a pulse is simply not on time: the first touch must not teach that timing does not matter.
   const silent=!runtime.S.sound;
-  const bar=(runtime.SIX||.15)*4,heard=ac?heardTime(ac,at,now):0,on=silent||beatDistance(heard,runtime.MU?.bq,bar)<=(runtime.MU?.onTimeWindow||ON_TIME);state.lastOn=on;runtime.sparkRhythmPulse?.(on);
+  // A place or chapter with a rhythm of its own (journey-rhythm.js, plan F14) counts its steps instead of the beat.
+  const bar=(runtime.SIX||.15)*4,heard=ac?heardTime(ac,at,now):0,window=runtime.MU?.onTimeWindow||ON_TIME,own=ac&&!silent?runtime.journeyRhythmTarget?.(heard):null;
+  const on=silent||(own?!!own.hit&&own.hit.dist<=window:beatDistance(heard,runtime.MU?.bq,bar)<=window);state.lastOn=on;runtime.sparkRhythmPulse?.(on);
   // The peak sits where you touched (what you heard then), and on time it sits on the beat you answered.
-  const beatAt=on&&!silent?nearestBeat(heard,runtime.MU?.bq,bar):null,step=!ac?0:beatAt!==null?Math.round(stepAt(beatAt))%16:stepAt(heard);marks.push({at:now,step,on});if(marks.length>24)marks.shift();
+  const beatAt=on&&!silent?(own?own.hit.time:nearestBeat(heard,runtime.MU?.bq,bar)):null,step=!ac?0:beatAt!==null?(own?own.hit.step:Math.round(stepAt(beatAt))%16):stepAt(heard);marks.push({at:now,step,on});if(marks.length>24)marks.shift();
+  if(on&&!silent)runtime.journeyRhythmHit?.(step);
   // The chapter game hears every pulse, with the step of the bar it answered (0 is the «1»).
   runtime.journeyGamePulse?.(on,{step:Number.isFinite(step)?Math.round(step)%16:null,silent});
   state.degree=null;state.midi=null;state.beat=null;if(!on){state.misses++;runtime.journeyChapterPulse?.(false);return false;}
-  state.hits++;const [degree]=THEME[state.next],{scale,tr}=scaleNow(),midi=themePitch(degree,scale,tr);state.degree=degree;state.midi=midi;state.scale=scale;state.tr=tr;state.beat=nearestBeat(heard,runtime.MU?.bq,bar);state.next=(state.next+1)%THEME.length;
+  state.hits++;const [degree]=THEME[state.next],{scale,tr}=scaleNow(),midi=themePitch(degree,scale,tr);state.degree=degree;state.midi=midi;state.scale=scale;state.tr=tr;state.beat=beatAt??nearestBeat(heard,runtime.MU?.bq,bar);state.next=(state.next+1)%THEME.length;
   // The chapter hears the note first, so the note that completes the theme counts.
   state.notes.push(midi);if(state.notes.length>12)state.notes.shift();runtime.journeyChapterPulse?.(true,midi,Number.isInteger(runtime.MU?.step)?runtime.MU.step:undefined);
   if(state.next===0){state.phrases++;runtime.recoverJourneyColor?.();runtime.journeyPhrase?.();runtime.themeKeyPhrase?.();}

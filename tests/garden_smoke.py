@@ -10,7 +10,9 @@ ROOT=Path(__file__).resolve().parents[1]
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
-ON="""()=>new Promise(res=>{const r=__r;const tick=()=>{const ac=r.ac,bq=r.MU.bq,bar=r.SIX*4;if(ac&&bq.length){const last=bq[bq.length-1],next=last>ac.currentTime?last:last+bar*Math.ceil((ac.currentTime-last)/bar),d=Math.min(...bq.map(b=>Math.abs(ac.currentTime-b)),Math.abs(next-ac.currentTime));if(d<.02){r.sonar('player');return res(d);}}requestAnimationFrame(tick);};tick();})"""
+ON="""()=>new Promise(res=>{const r=__r;const tick=()=>{const ac=r.ac,bq=r.MU.bq,bar=r.SIX*4;if(ac&&bq.length){const last=bq[bq.length-1],next=last>ac.currentTime?last:last+bar*Math.ceil((ac.currentTime-last)/bar),own=r.journeyRhythmTarget?.(ac.currentTime),d=own?(own.hit?own.hit.dist:1):Math.min(...bq.map(b=>Math.abs(ac.currentTime-b)),Math.abs(next-ac.currentTime));if(d<.02){r.sonar('player');return res(d);}}requestAnimationFrame(tick);};tick();})"""
+# A pulse on time on the beat (part 0) or on the «y» (part 2) of the Jardín's rhythm (plan F14).
+ON_PART="""(part)=>new Promise(res=>{const r=__r;const tick=()=>{const own=r.ac&&r.journeyRhythmTarget?.(r.ac.currentTime);if(own?.hit&&own.hit.dist<.02&&own.hit.step%4===part){r.sonar('player');return res(own.hit.step);}requestAnimationFrame(tick);};tick();})"""
 try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
@@ -22,8 +24,13 @@ try:
    g=page.evaluate('__r.journeyGarden()');assert g['points']==0 and len(g['spots'])==8,g
    # Stand on the first bed and play on time: it is sown and grows.
    s=g['spots'][0];page.evaluate(f"()=>{{__r.S.wx={s['x']};__r.S.wy={s['y']};}}")
-   for i in range(3):page.evaluate(ON);page.wait_for_timeout(330)
-   g=page.evaluate('__r.journeyGarden()');assert g['beds'][0]['stage']>=2 and g['points']>0,g
+   assert page.evaluate('__r.journeyRhythmState()')['rhythm']=='siembra'
+   # On the «y» an empty bed stays empty; on the beat it is sown; on the «y» it grows.
+   page.evaluate(ON_PART,2);page.wait_for_timeout(200);assert page.evaluate('__r.journeyGarden().beds[0].stage')==0,'watering sows nothing'
+   page.evaluate(ON_PART,0);page.wait_for_timeout(200);assert page.evaluate('__r.journeyGarden().beds[0].stage')==1,'sown on the beat'
+   page.evaluate(ON_PART,0);page.wait_for_timeout(200);assert page.evaluate('__r.journeyGarden().beds[0].stage')==1,'the beat does not grow'
+   page.evaluate(ON_PART,2);page.wait_for_timeout(200)
+   g=page.evaluate('__r.journeyGarden()');assert g['beds'][0]['stage']==2 and g['points']>0,g
    # Off time nothing grows.
    before=page.evaluate('__r.journeyGarden().beds[0].stage');page.evaluate("()=>__r.journeyGamePulse(false,{step:3})");assert page.evaluate('__r.journeyGarden().beds[0].stage')==before
    # The bar shows the round in both screen modes.
@@ -34,7 +41,7 @@ try:
    if os.environ.get('GARDEN_SHOT'):
     for i in range(1,4):
      q=g['spots'][i];page.evaluate(f"()=>{{__r.S.wx={q['x']};__r.S.wy={q['y']};}}")
-     for k in range(2+i):page.evaluate(ON);page.wait_for_timeout(330)
+     for k in range(2+i):page.evaluate(ON_PART,0 if k==0 else 2);page.wait_for_timeout(200)
     page.evaluate(f"()=>{{__r.S.wx={g['center']['x']};__r.S.wy={g['center']['y']}-40;}}");page.wait_for_timeout(600);page.screenshot(path=os.environ['GARDEN_SHOT'].replace('.png',f'-{width}.png'))
    # The bar full: the gold tree, and one pulse on time ends the round.
    page.evaluate("()=>{__r.S.journey.garden.points=__r.journeyGarden().goal;}");page.wait_for_function("!!__r.journeyGarden().tree",timeout=3000)
