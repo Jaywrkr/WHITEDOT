@@ -32,6 +32,7 @@ Rama `claude/f0-viaje-juegos`, desde `main` (alpha.141, con los cinco capítulos
 - **`?capitulo=`** (`llanura`, `lago`, `bosque`, `tormenta`, `vacio`): abre el Viaje directamente en ese capítulo, sin cuenta y con su propio guardado; cada carga empieza el capítulo de nuevo.
 - **El festival** juega el Lago nuevo: termina al abrir la flor dorada.
 - Cada juego vuelve a leer su estado si el guardado lo reemplaza.
+- **Bosque:** la estela dura 8 s (antes 5): una vuelta a paso normal tarda unos 4,6 s y en un teléfono lento no llegaba a cerrarse.
 - El saludo de regreso ya no reabre la bienvenida del Camino si ya se dio por vista (`?capitulo=` la dejaba encima del capítulo).
 - Pruebas: `tests/chapter_test_smoke.py`; `tests/festival_smoke.py` usa el Lago nuevo.
 
