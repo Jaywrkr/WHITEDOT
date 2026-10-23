@@ -11,7 +11,7 @@ class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
 # Pulse when a given step of the bar (0–15) is heard, from the steps the music scheduled.
-AT_STEP="""(want)=>new Promise(res=>{const r=__r;const tick=()=>{const t=r.ac.currentTime;const e=(r.MU.sq||[]).find(q=>q.s%16===want&&Math.abs(q.t-t)<.015);if(e){r.sonar('player');return res(r.journeyPulseState());}requestAnimationFrame(tick);};tick();})"""
+AT_STEP="""(want)=>new Promise(res=>{const r=__r;const tick=()=>{const t=r.ac.currentTime-Math.min(.4,r.ac.outputLatency||r.ac.baseLatency||0);const e=(r.MU.sq||[]).find(q=>q.s%16===want&&Math.abs(q.t-t)<.015);if(e){r.sonar('player');return res(r.journeyPulseState());}requestAnimationFrame(tick);};tick();})"""
 CASES=[('?lugar=lago',"__r.places().run?.id==='lago'",'contra',[2,10],[0,4]),
        ('?lugar=cristales',"__r.places().run?.id==='cristales'",'acorde',[0,2,4],[8,6]),
        ('?capitulo=tormenta',"__r.journeyChapter?.()?.id==='tormenta'",'mezcla',[0,4,6],[8,2])]
