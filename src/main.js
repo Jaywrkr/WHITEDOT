@@ -1,6 +1,7 @@
 import {initialize as errorLog} from './error-log.js';
 import {requireAccount} from './account-entry.js';
 import {isFestival,initialize as festival} from './festival.js';
+import {chapterTest,initialize as chapterTestStart} from './chapter-test.js';
 import {initialize as colorSafe} from './color-safe.js';
 import {initialize as frameQuality} from './frame-quality.js';
 import {initialize as universeMischief} from './universe-mischief.js';
@@ -156,8 +157,8 @@ import {initialize as wowFeel} from './wow-feel.js';
 import { initialize as atlas } from './atlas.js';
 
 // Initialize once, in the same order as the original game. Never expose runtime on window.
-// The festival build plays without an account, on its own save.
-const accountClient = isFestival()?null:await requireAccount();
+// The festival build and a single chapter test (?capitulo=) play without an account, on their own save.
+const accountClient = isFestival()||chapterTest()?null:await requireAccount();
 const runtime = Object.create(null);
 Object.defineProperties(runtime,{accountClient:{value:accountClient},accountUserId:{value:accountClient?.user()?.id||null}});
 Object.defineProperty(runtime,'unifiedMusic',{value:true});
@@ -240,7 +241,7 @@ musicTravel(runtime);
 distantColors(runtime);vjWorld(runtime);reactiveEcology(runtime);
 crystalSparks(runtime);pixelLife(runtime);wowFeel(runtime);wowUI(runtime);wowMemory(runtime);
 houseAudio(runtime);house(runtime);
-onboarding(runtime);labLearning(runtime);sparks(runtime);cubeShopArt(runtime);cubeShopWorld(runtime);cubeShopMoves(runtime);cubeShopSound(runtime);cubeShopWild(runtime);cubeShopSkills(runtime);houseCollection(runtime);houseCapsules(runtime);houseGuide(runtime);festival(runtime);colorSafe(runtime);journeyPulse(runtime);journeyMode(runtime);worldSheet(runtime);universeRegions(runtime);ambience(runtime);superbiomes(runtime);universeLayers(runtime);universeRare(runtime);journeyChapters(runtime);journeyFinale(runtime);journeyMoments(runtime);journeyHint(runtime);themeKey(runtime);journeyGames(runtime);journeyStick(runtime);journeyChain(runtime);journeyLasso(runtime);journeyDance(runtime);journeyRelease(runtime);playtest(runtime);errorLog(runtime);frameQuality(runtime);worldLight(runtime);worldWeather(runtime);worldFauna(runtime);worldMusic(runtime);worldCamera(runtime);worldHappenings(runtime);sculptureTotems(runtime);musicalWonders(runtime);universeActivities(runtime);universeTexts(runtime);universeMischief(runtime);
+onboarding(runtime);labLearning(runtime);sparks(runtime);cubeShopArt(runtime);cubeShopWorld(runtime);cubeShopMoves(runtime);cubeShopSound(runtime);cubeShopWild(runtime);cubeShopSkills(runtime);houseCollection(runtime);houseCapsules(runtime);houseGuide(runtime);festival(runtime);colorSafe(runtime);journeyPulse(runtime);journeyMode(runtime);worldSheet(runtime);universeRegions(runtime);ambience(runtime);superbiomes(runtime);universeLayers(runtime);universeRare(runtime);journeyChapters(runtime);journeyFinale(runtime);journeyMoments(runtime);journeyHint(runtime);themeKey(runtime);journeyGames(runtime);journeyStick(runtime);journeyChain(runtime);journeyLasso(runtime);journeyDance(runtime);journeyRelease(runtime);chapterTestStart(runtime);playtest(runtime);errorLog(runtime);frameQuality(runtime);worldLight(runtime);worldWeather(runtime);worldFauna(runtime);worldMusic(runtime);worldCamera(runtime);worldHappenings(runtime);sculptureTotems(runtime);musicalWonders(runtime);universeActivities(runtime);universeTexts(runtime);universeMischief(runtime);
 runtime.styleUI();runtime.hud();
 // The Journey starts with no window at all; the free World keeps its welcome.
 if(!runtime.S.help.camino&&!runtime.journeyQuiet?.())runtime.$("mHelpC").hidden=false;

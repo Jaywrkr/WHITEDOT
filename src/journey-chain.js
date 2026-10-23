@@ -23,7 +23,7 @@ export function normalizeChain(raw){const q=raw&&typeof raw==='object'&&!Array.i
 export function initialize(runtime){
  let owner=null,state=null,lit=new Set(),misses=0,shiver=0,flowerPulse=0,chains=0;const waves=[],glows=[],toBar=[],tells={};
  const calm=()=>calmMotion(runtime.S);
- function own(){const j=runtime.S.journey||{};if(owner!==runtime.S){owner=runtime.S;j.chain=normalizeChain(j.chain);state=j.chain;lit=new Set(state.lit);waves.length=0;glows.length=0;toBar.length=0;}return state;}
+ function own(){const j=runtime.S.journey||{};if(owner!==runtime.S||j.chain!==state){owner=runtime.S;j.chain=normalizeChain(j.chain);state=j.chain;lit=new Set(state.lit);waves.length=0;glows.length=0;toBar.length=0;}return state;}
  const inLago=(x,y)=>runtime.BIOMES[runtime.biomeOfPos(x,y)]?.id==='lago';
  const active=()=>!!runtime.journeyGamePlaying?.('lago');
  const audible=()=>runtime.S.sound&&runtime.ac&&runtime.bus;

@@ -17,6 +17,8 @@ Los primeros 15 minutos (Camino, Llanura y Lago), el arco cerrado de la decisió
 - Abrir una vez `…/?festival=1&prueba=1`. El festival juega sin cuenta, con su propio guardado, y no toca la partida de nadie. `prueba=1` queda encendido en ese teléfono.
 - Cinco personas, de una en una. Que al menos dos no jueguen videojuegos.
 
+Para probar un capítulo suelto: `…/?capitulo=tormenta` (sin cuenta, con guardado propio; cada carga empieza de nuevo).
+
 ## Durante la sesión
 
 1. Decir solo: «Es un juego de música. Juega como quieras; yo no puedo ayudarte. Dime en voz alta lo que piensas».

@@ -20,7 +20,7 @@ export function normalizeDance(raw){const q=raw&&typeof raw==='object'&&!Array.i
 export function initialize(runtime){
  let owner=null,state=null,target=null,row=0,misses=0,fallen=0,shiver=0,eyePulse=0,wait=0;const strikes=[],toBar=[];
  const calm=()=>calmMotion(runtime.S);
- function own(){const j=runtime.S.journey||{};if(owner!==runtime.S){owner=runtime.S;j.dance=normalizeDance(j.dance);state=j.dance;target=null;row=0;strikes.length=0;toBar.length=0;}return state;}
+ function own(){const j=runtime.S.journey||{};if(owner!==runtime.S||j.dance!==state){owner=runtime.S;j.dance=normalizeDance(j.dance);state=j.dance;target=null;row=0;strikes.length=0;toBar.length=0;}return state;}
  const active=()=>!!runtime.journeyGamePlaying?.('tormenta');
  const full=()=>own().points>=DANCE_GOAL;
  const barMs=()=>(runtime.SIX||.15)*16*1000;
