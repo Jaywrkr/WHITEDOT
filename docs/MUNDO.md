@@ -199,7 +199,7 @@ El panel (tercera sesión, media 7,5) pidió cerrar lo que H1–H7 dejó a media
 | Fase | Rama | Qué |
 |---|---|---|
 | I1 · Coherencia | `claude/i1-coherencia` | Hecho: el narrador ya no habla en avisos (solo en la tarjeta y la Bitácora); entre los créditos y el primer portal no se anuncia ningún logro ni el aviso de ✦; fuera los «Rompe…»; la tarjeta y el narrador sin cifras de umbral |
-| I2 · Que se vea | `claude/i2-se-vea` | Cubo de 24–36 px también en el Camino y los lugares; el color ganado lava la pantalla; la columna dorada se ve desde lejos |
+| I2 · Que se vea | `claude/i2-se-vea` | Hecho: el cubo mide 24–36 px en el Camino, el Mundo y los lugares (6 px antes en el Camino); el bioma recuperado lava toda la pantalla con su color (24 % de los píxeles en el anillo, antes 5–9 %); la columna dorada del portal siguiente se ve desde cualquier sitio y, fuera de pantalla, queda en el borde de su lado en vez de la flecha |
 | I3 · Un solo instante | `claude/i3-instante` | Brillo, vibración y cámara cuando suena la nota; la Línea anticipa; calibración solo en las negras y fuera del canto |
 | I4 · El final que respira | `claude/i4-final` | Notas de los 11 lugares con su ritmo y en la escala del mundo; el tema calla hasta su momento; silencio; chelo; ≥ 60 s |
 | I5 · Decisiones | `claude/i5-decisiones` | ★★ 75 %, ★★★ 70 %; `?festival=1` hasta los créditos |

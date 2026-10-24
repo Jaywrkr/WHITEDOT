@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.168**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.169**. Las entradas describen su revisión, no certifican producción.
+
+## I2 · Que se vea · alpha.169
+
+Rama `claude/i2-se-vea`, sobre `claude/i1-coherencia` (dependencia explícita).
+
+- **El cubo se lee en todas partes:** 1,6× su tamaño, entre 24 y 36 px, en el Camino (antes 6 px), el Mundo y los lugares; las caras caben siempre.
+- **El color ganado se ve:** un bioma recuperado lava toda la pantalla con su color además de la luz alrededor del cubo. En el anillo, el 24 % de la pantalla tiene color (antes 5–9 %, medido en capturas de teléfono).
+- **La columna dorada desde lejos:** el portal siguiente del camino se marca desde cualquier distancia; fuera de pantalla, la columna queda en el borde de su lado y sustituye a la flecha (`edgeColumn`).
+- Pruebas: `cube_face_smoke.py` (24–36 px) y `places-ring.mjs` (columna en el borde).
 
 ## I1 · Coherencia · alpha.168
 
