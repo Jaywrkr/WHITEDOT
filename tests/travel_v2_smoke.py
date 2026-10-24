@@ -16,7 +16,7 @@ try:
   page.reload();page.wait_for_function('window.__testRuntime?.S.wx===-4200&&window.__testRuntime.S.wy===7100&&window.__testRuntime.S.layer==="bajo"');assert page.evaluate('window.__testRuntime.S.ach.retained')=='2026-10-14';assert 30<=page.evaluate('window.__testRuntime.S.lampUsed')<35
   page.evaluate('()=>{const r=window.__testRuntime;document.querySelectorAll(".modal").forEach(m=>m.hidden=true);r.recordElement("pulso",r.regionOfPos(r.S.wx,r.S.wy));r.recordElement("pulso",r.regionOfPos(r.S.wx,r.S.wy));r.save();}')
   assert page.evaluate('window.__testRuntime.S.totalDays')==1
-  page.locator('#bMenu').click();page.locator('#bWorlds').click();assert page.locator('#seedEncounter').is_hidden();assert page.locator('#mSeeds h2').inner_text()=='Viaja a otra semilla'
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bWorlds').click();assert page.locator('#seedEncounter').is_hidden();assert page.locator('#mSeeds h2').inner_text()=='Viaja a otra semilla'
   page.locator('#seedCenter').click();page.wait_for_function('!!window.__testRuntime&&window.__testRuntime.S.wx===window.__testRuntime.REG*window.__testRuntime.WCH/2&&window.__testRuntime.S.layer==="superficie"');assert 'center=' not in page.url
   assert not errors,errors;print('PASS real travel keeps exact coordinates/layer/progress on reload, hides test scenes and supports explicit center');b.close()
 finally:server.shutdown()

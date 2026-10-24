@@ -46,7 +46,7 @@ def account(page):
  # The panel can also open between the check and the click, leaving the menu inert: retry instead of racing it.
  for _ in range(4):
   if page.locator('#mConnection').is_visible():return
-  try:page.locator('#bMenu').click(timeout=4000);page.locator('#bConnection').click(timeout=4000);return
+  try:page.locator('#bMenu').click(timeout=4000);(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bConnection').click(timeout=4000);return
   except Exception:pass
  assert page.locator('#mConnection').is_visible()
 def wait_remote(page,uid,sparks):

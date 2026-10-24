@@ -37,7 +37,7 @@ try:
   # Later, from the menu: a sign-up that asks for the code here, then the game reloads into the account.
   page.wait_for_function("!document.getElementById('mHelpC').hidden");page.locator('#hcGo').click()
   page.evaluate("()=>{const r=__r;r.S.totalLight=42;r.save();}")
-  page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#bMenu').click();page.locator('#bConnection').click();assert page.locator('#mConnection').is_visible()
+  page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bConnection').click();assert page.locator('#mConnection').is_visible()
   state['confirm']=True;page.locator('#accountName').fill('one@example.test');page.locator('#accountPassword').fill('fixture-password-123');page.locator('#accountRegister').click()
   page.wait_for_function("document.getElementById('connectionStatus').textContent.length>0")
   state['confirm']=False;page.locator('#accountPassword').fill('fixture-password-123');page.locator('#accountForm button[type=submit]').click()
@@ -58,7 +58,7 @@ try:
   page.reload();page.wait_for_function('!!window.__r?.connectionTick');assert page.locator('#mConnection').is_hidden(),'local play is remembered'
   # Signing in again from the menu returns to the account.
   state['identity']=200;page.wait_for_timeout(500);page.locator('#hcGo').click() if page.locator('#hcGo').is_visible() else None
-  page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#bMenu').click();page.locator('#bConnection').click()
+  page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bConnection').click()
   page.locator('#accountName').fill('one@example.test');page.locator('#accountPassword').fill('fixture-password-123');page.locator('#accountForm button[type=submit]').click()
   page.wait_for_function("window.__r?.accountUserId==='one'",timeout=15000)
   assert not errors,errors;browser.close()

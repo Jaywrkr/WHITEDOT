@@ -89,6 +89,13 @@ body.world-mode .dock{flex-wrap:wrap}
 .menu-group:not(.primary) .tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
 .menu-group:not(.primary) .tiles button{border:0;border-bottom:1px solid var(--line);padding:8px 2px;font-size:13px}
 .menu-group:not(.primary) .tiles svg{width:16px;height:16px}
+/* Plan I6: «Más» folds the secondary entries under one quiet line. */
+.menu-more>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px}
+.menu-more>summary::-webkit-details-marker{display:none}
+.menu-more>summary h3{margin:0}
+.menu-more>summary::after{content:'+';color:var(--dim);font:400 12px/1 var(--display)}
+.menu-more[open]>summary::after{content:'−'}
+.menu-more[open]>summary{margin-bottom:8px}
 .menu-foot{display:flex;align-items:flex-end;gap:12px;border-top:1px solid var(--line);padding-top:12px}
 .menu-foot .release-badge{position:static;text-align:left;pointer-events:none}
 .menu-foot .release-badge,.menu-foot .release-badge small{display:block;font-size:11px;color:var(--dim)}

@@ -14,7 +14,7 @@ try:
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=laboratorio&generation=2&layout=wide&lab=1');page.wait_for_function('window.__testRuntime?.labMode')
   page.evaluate('window.__lessonNotes=[];__testRuntime.labLearningNoteCue=n=>__lessonNotes.push(n);document.getElementById("returnContinue").click();document.querySelectorAll(".modal").forEach(m=>m.hidden=true);__testRuntime.labGo("synth:skinbass")')
-  page.locator('#bMenu').click();page.locator('#bGuide').click();page.locator('#guideLabPractice').click()
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bGuide').click();page.locator('#guideLabPractice').click()
   assert page.evaluate('__testRuntime.labLearningState.stage')=='choose';assert page.evaluate('__lessonNotes.length')==0
   page.mouse.move(195,422);page.mouse.down();page.mouse.move(195,534,steps=10);page.wait_for_function('__testRuntime.labLearningState?.stage!=="choose"');page.mouse.up()
   page.wait_for_function('__testRuntime.labLearningState?.stage==="reply"',timeout=20000)

@@ -32,7 +32,7 @@ try:
   page.wait_for_function('(eyeDraws>'+str(before['eyes'])+'+10)&&(__r.wowState.seconds>'+str(before['time'])+'+.3)')
   assert page.evaluate('__r.inhabitantsNear(130).length')>0
   assert not sessions, sessions  # Unconfigured cloud never probes the retired same-origin API.
-  assert page.locator('#bConnection').get_attribute('hidden') is None
+  assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bConnection').get_attribute('hidden') is None
   assert not errors, errors
   browser.close()
  print('PASS real inhabitant eyes and successive animation frames with optional cloud unconfigured and no legacy API request')

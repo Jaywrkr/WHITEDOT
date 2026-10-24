@@ -24,7 +24,7 @@ try:
    page.wait_for_function('!document.getElementById("w").inert')
    page.locator('#bMenu').click()
    assert page.locator('#w').evaluate('(e)=>e.inert'), 'canvas cannot receive focus behind a modal'
-   assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Tu viaje','Crear','General']
+   assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Más']
    # Optional account stays available; without configuration it explains local-only mode.
    page.wait_for_function('!document.getElementById("bConnection").hidden')
    page.locator('#mMenu .sheet').evaluate('e=>e.scrollTop=e.scrollHeight')
@@ -32,19 +32,19 @@ try:
    assert close['y']>=0 and close['y']+close['height']<=height, 'close stays visible while menu scrolls'
    page.locator('#mMenu .sheet').evaluate('e=>e.scrollTop=0')
    # A native summary participates in the focus loop, including reverse Tab.
-   page.locator('#mMenu summary').focus();page.keyboard.press('Tab')
+   page.locator('#mMenu .devbox summary').focus();page.keyboard.press('Tab')
    assert page.evaluate('document.getElementById("mMenu").contains(document.activeElement)')
-   page.locator('#mMenu summary').click();page.locator('#dFill').focus();page.keyboard.press('Shift+Tab')
+   page.locator('#mMenu .devbox summary').click();page.locator('#dFill').focus();page.keyboard.press('Shift+Tab')
    assert page.evaluate('document.activeElement.tagName')=='SUMMARY'
-   page.locator('#mMenu summary').click()
+   page.locator('#mMenu .devbox summary').click()
    page.keyboard.press('Escape');page.wait_for_function('document.activeElement.id==="bMenu"')
    assert not page.locator('#w').evaluate('(e)=>e.inert')
    for control,modal in [('bMusicSettings','mMusic'),('bCube','mCube'),('bAch','mJournal'),('bMap','mJournal'),('bSettings','mSettings'),('bSaveTools','mSaveTools')]:
     page.locator('#bMenu').click()
-    if control in ['bSky','bSession']:page.locator('#bAch').click()
+    if control in ['bSky','bSession']:(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click()
     if control=='bSaveTools':
-     assert page.locator('#bSaveTools').is_hidden();page.evaluate("document.getElementById('mMenu').hidden=true;(window.__r||window.__testRuntime).openSaveTools()")
-    else:page.locator('#'+control).click()
+     assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bSaveTools').is_hidden();page.evaluate("document.getElementById('mMenu').hidden=true;(window.__r||window.__testRuntime).openSaveTools()")
+    else:page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')");page.locator('#'+control).click()
     page.wait_for_function('(id)=>!document.getElementById(id).hidden',arg=modal)
     metrics=page.locator('#'+modal+' .sheet').evaluate('e=>({x:e.getBoundingClientRect().x,right:e.getBoundingClientRect().right,y:e.getBoundingClientRect().y,bottom:e.getBoundingClientRect().bottom,sw:e.scrollWidth,cw:e.clientWidth})')
     assert metrics['x']>=0 and metrics['right']<=width+1 and metrics['y']>=0 and metrics['bottom']<=height+1, (modal,metrics)
@@ -67,7 +67,7 @@ try:
     page.locator('#'+modal+' .sheet-close').click()
     assert page.locator('#'+modal).is_hidden()
     page.wait_for_function('!document.getElementById("w").inert')
-   page.locator('#bMenu').click();page.locator('#bTools').click()
+   page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bTools').click()
    page.wait_for_function('document.activeElement.id==="bFx"')
    buttons=page.locator('#dock button:visible').evaluate_all('bs=>bs.map(b=>{const r=b.getBoundingClientRect();return {id:b.id,x:r.x,right:r.right,h:r.height,w:r.width}})')
    assert all(b['x']>=0 and b['right']<=width+1 and b['h']>=44 and b['w']>=44 for b in buttons),buttons

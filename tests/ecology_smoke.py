@@ -39,7 +39,7 @@ try:
    page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true);__testRuntime.openJournal()");page.locator('[data-journal-detail="Paisajes vivos"] > summary').click();assert 'Paisajes vivos' in page.locator('#journalBody').inner_text();assert 'Junco de pulso' in page.locator('#journalBody').inner_text()
    page.evaluate("document.querySelectorAll('.modal').forEach(m=>m.hidden=true)");page.screenshot(path=f'/tmp/whitedot-phase2-humedal-{width}.png')
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');assert not errors,errors
-   page.locator('#bMenu').click();page.locator('#bWorlds').click();assert page.locator('#seedGeneration').input_value()=='2'
+   page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bWorlds').click();assert page.locator('#seedGeneration').input_value()=='2'
    page.select_option('#seedGeneration','1');page.locator('#seedForm button[type="submit"]').click();page.wait_for_function('window.__testRuntime?.worldIdentity.generatorVersion===1');assert page.evaluate('__testRuntime.REG*__testRuntime.WCH')==7200;assert page.evaluate('__testRuntime.favorites.length')==0
    print(f'PASS {width}x{height}: live habitat, gestures/cancel, groove roles, pause/mute, cultivation, journal, favorite/backup isolation and original-world comparison',flush=True);context.close()
   browser.close()

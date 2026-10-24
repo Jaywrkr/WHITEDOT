@@ -44,7 +44,7 @@ try:
    page.wait_for_function('__testRuntime.firstJourneyState.next==="save"')
    page.locator('#quickSave').click();page.locator('#era').click();assert page.locator('#firstJourney').is_hidden();page.locator('[data-favorite] summary').click();page.locator('[data-favorite] input').fill('Mi primera voz');page.get_by_role('button',name='Renombrar',exact=True).click();page.locator('#journalClose').click();page.locator('#quickSave').click();assert page.locator('#journalFavPart').is_visible();assert page.evaluate('__testRuntime.favorites.length===1&&__testRuntime.favorites[0].name==="Mi primera voz"');page.locator('#journalClose').click()
    page.wait_for_function('__testRuntime.firstJourneyState.next===null');assert page.locator('#firstJourney').is_hidden()
-   page.locator('#bMenu').click();page.locator('#bGuide').click();page.evaluate('window.__lessonContext=__testRuntime.ac;window.__lessonPulses=__testRuntime.S.session.pulses');page.locator('#guidePractice').click()
+   page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bGuide').click();page.evaluate('window.__lessonContext=__testRuntime.ac;window.__lessonPulses=__testRuntime.S.session.pulses');page.locator('#guidePractice').click()
    # A live source may already answer a previous wave after closing the menu.
    # Replay must remain active without manufacturing a pulse or saving a place.
    page.wait_for_function('["voice","pulse"].includes(__testRuntime.firstJourneyState.next)')

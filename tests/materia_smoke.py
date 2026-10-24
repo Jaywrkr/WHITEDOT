@@ -53,7 +53,7 @@ with sync_playwright() as p:
   assert page.evaluate('!!window.__testRuntime.S.ach.membrana1 && !!window.__testRuntime.S.ach.materia3')
   page.screenshot(path=f'/tmp/whitedot-membrane-{label}.png')
   # Efectos nuevos.
-  page.locator('#bMenu').click();page.locator('#bTools').click();page.locator('#bFx').click()
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bTools').click();page.locator('#bFx').click()
   for k in ['Chorus','Phaser','Freeze']:page.locator('#fx'+k).click()
   page.wait_for_timeout(300)
   st=page.evaluate('(()=>{const f=window.__testRuntime.fx;return [f.chorusSend.gain.value,f.phaserSend.gain.value,f.freezeFb.gain.value,f.freezeOut.gain.value]})()')
@@ -62,7 +62,7 @@ with sync_playwright() as p:
   page.wait_for_timeout(600);assert page.evaluate('window.__testRuntime.fx.freezeOut.gain.value')<.1
   page.locator('#fxClose').click()
   # Código de lugar: copiar el de aquí y abrirlo guarda un favorito orientado.
-  page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-tab="places"]').click()
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click();page.locator('[data-journal-tab="places"]').click()
   page.locator('.favorite-tools > summary').click();page.locator('#placeShare').click();page.wait_for_function("document.getElementById('placeCode').value.startsWith('WD1-')")
   page.evaluate("()=>{const r=window.__testRuntime;document.getElementById('placeCode').value=r.placeCode().replace(/^WD1-.*/,(c)=>c);}")
   code=page.evaluate("(()=>{const r=window.__testRuntime;r.S.wx+=4000;return document.getElementById('placeCode').value})()")
@@ -73,7 +73,7 @@ with sync_playwright() as p:
   # A real finding may precede recording. Read it through its own controls first.
   for panel,button in [('#celebration','#celebrationDismiss'),('#rareNotice','#rareNoticeDismiss')]:
    if page.locator(panel).is_visible():page.locator(button).click();page.locator(panel).wait_for(state='hidden')
-  page.locator('#bMenu').click();page.locator('#bRecord').click();page.wait_for_function('window.__testRuntime.setRecording')
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bRecord').click();page.wait_for_function('window.__testRuntime.setRecording')
   count=page.evaluate('window.__testRuntime.rareCards.length')
   page.evaluate("()=>{const r=window.__testRuntime;r.collectRareCard('fossil',{id:'fixture:recording',x:r.S.wx,y:r.S.wy});}")
   page.wait_for_timeout(2200)

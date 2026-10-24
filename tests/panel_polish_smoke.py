@@ -33,7 +33,7 @@ try:
    page.wait_for_function('!!window.__r?.openSparks')
    page.evaluate("()=>{__r.S.sound=false;__r.S.firstJourney.skipped=true;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}")
    for button,panel in [('bGuide','mGuide'),('bCube','mCube'),('bSettings','mSettings'),('bSaveTools','mSaveTools'),('bAch','mJournal')]:
-    page.locator('#bMenu').click();page.evaluate("document.getElementById('mMenu').hidden=true;(window.__r||window.__testRuntime).openSaveTools()") if button=='bSaveTools' else page.locator('#'+button).click();dialog=page.locator('#'+panel);dialog.wait_for(state='visible')
+    page.locator('#bMenu').click();page.evaluate("document.getElementById('mMenu').hidden=true;(window.__r||window.__testRuntime).openSaveTools()") if button=='bSaveTools' else (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#'+button).click();dialog=page.locator('#'+panel);dialog.wait_for(state='visible')
     if panel=='mGuide':
      page.locator('#guideGlossary').click();assert 'décimo abre el Mundo automáticamente' in dialog.inner_text();assert '20' in dialog.inner_text();assert 'Entra en tu cuenta' in dialog.inner_text()
     assert dialog.locator('.sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2'),(width,panel,'horizontal overflow')
@@ -48,7 +48,7 @@ try:
     if panel in ['mGuide','mCube']:page.screenshot(path=str(ROOT.parent/f'panel-{panel}-{width}.png'))
     page.keyboard.press('Escape');assert dialog.is_hidden()
    page.locator('#bMenu').click();page.screenshot(path=str(ROOT.parent/f'panel-menu-{width}.png'));page.keyboard.press('Escape')
-   page.emulate_media(reduced_motion='reduce');page.locator('#bMenu').click();assert page.locator('#bGuide').evaluate('e=>getComputedStyle(e).transitionDuration')=='0s';page.keyboard.press('Escape');page.emulate_media(reduced_motion='no-preference')
+   page.emulate_media(reduced_motion='reduce');page.locator('#bMenu').click();assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bGuide').evaluate('e=>getComputedStyle(e).transitionDuration')=='0s';page.keyboard.press('Escape');page.emulate_media(reduced_motion='no-preference')
    print(f'PASS {width}x{height}: eight panels, overflow, reachable close controls, focus containment, current guide and reduced motion',flush=True)
   assert not errors,errors
   browser.close()

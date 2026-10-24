@@ -28,7 +28,7 @@ with sync_playwright() as p:
   page.wait_for_timeout(800);page.screenshot(path=f'/tmp/whitedot-farlands-{label}.png')
   # Afinación: hz desplaza la nota según MU.tune solo en el Mundo.
   assert page.evaluate('(()=>{const r=window.__testRuntime,old=r.MU.tune;r.MU.tune=50;const a=r.hz(69);r.MU.tune=old;return Math.abs(a-440*Math.pow(2,50/1200))<1e-6})()')
-  page.locator('#bMenu').click();page.locator('#bMap').click();assert page.locator('#journalMapPart').is_visible()
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bMap').click();assert page.locator('#journalMapPart').is_visible()
   assert int(page.locator('#mRegions').inner_text())>=10 and int(page.locator('#mRecord').inner_text())>=60
   page.screenshot(path=f'/tmp/whitedot-map-{label}.png')
   page.locator('#mapZoom').click();page.screenshot(path=f'/tmp/whitedot-map-near-{label}.png')

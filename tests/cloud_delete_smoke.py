@@ -34,7 +34,7 @@ try:
   deadline=time.monotonic()+15
   while (not wallet or wallet['state']['sparks']!=3) and time.monotonic()<deadline:page.wait_for_timeout(100)
   assert wallet['state']['sparks']==3
-  page.locator('#bMenu').click();page.locator('#bConnection').click();page.wait_for_function("!document.getElementById('accountDelete').disabled")
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bConnection').click();page.wait_for_function("!document.getElementById('accountDelete').disabled")
   page.locator('#accountName').fill('disposable@example.test');page.locator('#accountPassword').fill('fixture-password-123')
   page.once('dialog',lambda d:d.dismiss());page.locator('#accountDelete').click();assert deletes==0 and wallet
   page.once('dialog',lambda d:d.accept());page.locator('#accountDelete').click();page.wait_for_function("window.__r?.accountUserId===null&&!!window.__r?.connectionTick",timeout=15000)
