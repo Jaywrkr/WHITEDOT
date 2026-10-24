@@ -236,11 +236,11 @@ La respuesta del cubo en `wow-feel.js` usa una pose local de presentación para 
 
 ## Prototipo histórico Python
 
-[Servidor y duetos](SERVIDOR_Y_DUETOS.md) conserva un backend Python/SQLite fuera del lanzamiento y de la inicialización actual. El 404 histórico de `/api/session` no explica el fallo del render; no sustituir el flujo Supabase vigente por esa API. Los límites del prototipo están archivados.
+`server/` conserva un backend Python/SQLite fuera del lanzamiento y de la inicialización actual. El 404 histórico de `/api/session` no explica el fallo del render; no sustituir el flujo Supabase vigente por esa API. Solo lo usa `tests/server_api.py`.
 
 ## Evidencia
 
-La entrega de chispas registra comandos, huellas y límites en [su informe](../scripts/sparks-progression-validation.json). Los documentos de [historial](historial/README.md) describen revisiones anteriores; sus estados y cifras no certifican la revisión actual.
+La entrega de chispas registra comandos, huellas y límites en [su informe](../scripts/sparks-progression-validation.json). Los documentos históricos se borraron del árbol el 24 de octubre; siguen en Git (`git show 5914ca9:docs/historial/NOMBRE.md`) y no certifican la revisión actual.
 
 ## Familias musicales y repetición ambiental
 

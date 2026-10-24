@@ -1,6 +1,6 @@
 # Verificación
 
-Revisión documental: 20 de octubre de 2026. [Traspaso/evidencia actual](../HANDOFF_CLAUDE.md). Esta revisión no reejecuta baterías de juego, audio ni servicios.
+Revisión documental: 20 de octubre de 2026. [Traspaso/evidencia actual](../HANDOFF.md). Esta revisión no reejecuta baterías de juego, audio ni servicios.
 
 Desde la raíz, con Node 18 o superior:
 

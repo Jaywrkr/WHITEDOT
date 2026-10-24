@@ -1,40 +1,38 @@
-# Documentación vigente de Kubono
+# Documentación de Kubono
 
-Actualizada el 20 de octubre de 2026. Este índice distingue estado actual, decisiones de lanzamiento y evidencia histórica. El código y los registros de una revisión concreta prevalecen sobre una frase antigua; una contradicción se investiga, no autoriza a cambiar el juego.
+Actualizada el 24 de octubre de 2026. Cada tema tiene una sola guía; si dos documentos se contradicen, manda el código y se corrige la guía.
 
-## Orden de lectura para revisar el proyecto
+## Orden de lectura
 
-1. [Traspaso actual a Claude](../HANDOFF_CLAUDE.md).
-2. [Reglas de trabajo](../AGENTS.md) y [README](../README.md).
-3. La guía del área concreta, según la tabla. No hace falta leer todos los planes históricos.
+1. [Traspaso](../HANDOFF.md): estado y lo que pide Jay ahora.
+2. [Reglas de trabajo](../AGENTS.md).
+3. La guía del tema, según la tabla.
 
-| Documento | Fuente para |
+## Guías
+
+| Documento | Para qué |
 |---|---|
-| [Arquitectura](ARQUITECTURA.md) | Módulos, admisión, audio/render, persistencia y límites técnicos |
-| [Cuenta y progreso](CUENTA_Y_RESPALDO.md) | Login obligatorio, sincronización automática, recuperación, eliminación y evidencia real |
-| [Android](../android/README.md) | APK de cuentas, firma estable, migración y alcance del emulador |
-| [Hallazgos y actividades](HALLAZGOS_Y_ACTIVIDADES.md) | Contenido, gestos y recompensas, no una lista de funciones pendientes |
-| [Fases 2026](FASES_2026.md) | Plan vigente de fases (mundo vivo y pendientes), una rama por fase |
-| [Casa viva](CASA_VIVA.md) | Propuesta de la nueva Casa recorrible, su integración y sus fases (pendiente de aprobación) |
-| [Tienda del cubo](TIENDA_DEL_CUBO.md) | Catálogo aprobado de piezas compradas con chispas, ranuras, precios y orden de construcción por tandas |
-| [Verificación](VERIFICACION.md) | Pruebas enfocadas frente a cierre completo, CI y límites de evidencia |
-| [Plan de lanzamiento](PLAN_LANZAMIENTO.md) | Único catálogo vigente de entregables D01–D22 y decisiones comerciales |
-| [El universo](UNIVERSO.md) | Regiones del universo, regla de cámara, sonido, superbiomas y sus 18 fases |
-| [Pruebas con personas](PRUEBAS_CON_PERSONAS.md) | Fase 7: cómo hacer las sesiones, las notas del teléfono (`?prueba=1`) y qué se envía |
-| [El mundo](MUNDO.md) | Plan aprobado F0–F16: Viaje, 11 lugares con estrellas, chispas, anillo, Refugio, canción y logros |
-| [El Viaje](VIAJE.md) | Diseño aprobado: capítulos, curva, tema del cubo, color, primeros 5 minutos y lo que se oculta |
-| [Material de tienda](TIENDAS.md) | Fichas ES/EN, capturas, iconos, clips, guion de tráiler, landing y press kit (borradores) |
-| [Configuración de producción](CONFIGURACION_PRODUCCION.md) | Controles aplicados, proveedores/correo pendientes y retención |
-| [Privacidad](PRIVACIDAD.md) | Borrador no publicado, público 16+, tratamiento y plazos aprobados |
-| [Eliminación](ELIMINACION_DATOS.md) | Borrado online actual, copias locales conservadas y procedimiento de soporte pendiente |
-| [Cambios](../CAMBIOS.md) | Resumen reciente; detalles anteriores archivados con su revisión |
-| [Créditos](../CREDITOS.md) | Autoría y licencias; no sustituye la política de privacidad |
-| [Servidor y duetos](SERVIDOR_Y_DUETOS.md) | Aviso de que el prototipo Python no es el backend del lanzamiento |
+| [Panel creativo](PANEL.md) | Cómo funciona el panel simulado, sus notas, decisiones de Jay y cómo hacer la próxima sesión. Informes en [panel/](panel/) |
+| [El mundo](MUNDO.md) | Diseño vigente: cuatro capas, 11 lugares, estrellas, chispas, Refugio, Tu canción, planes H e I y herramientas de prueba |
+| [El Viaje](VIAJE.md) | Capítulos, curva, tema del cubo, color y primeros minutos |
+| [Arquitectura](ARQUITECTURA.md) | Módulos, render, audio, guardado y límites técnicos |
+| [Verificación](VERIFICACION.md) | Qué pruebas ejecutar y cuándo |
+| [Pruebas con personas](PRUEBAS_CON_PERSONAS.md) | Cómo hacer sesiones con jugadores (`?prueba=1`); aún no hay ninguna |
+| [El universo](UNIVERSO.md) | Regiones, cámara, sonido y superbiomas del Mundo libre |
+| [Hallazgos y actividades](HALLAZGOS_Y_ACTIVIDADES.md) | Contenido ya construido: esculturas, hallazgos, actividades y premios |
+| [Tienda del cubo](TIENDA_DEL_CUBO.md) | Catálogo de piezas compradas con chispas |
+| [Casa viva](CASA_VIVA.md) | La casa recorrible del Refugio y su secuenciador |
+| [Cuenta y progreso](CUENTA_Y_RESPALDO.md) | Cuenta opcional, sincronización, recuperación y borrado |
+| [Plan de lanzamiento](PLAN_LANZAMIENTO.md) | Backlog D01–D22 y decisiones comerciales |
+| [Material de tienda](TIENDAS.md) | Borradores de fichas, capturas y tráiler |
+| [Configuración de producción](CONFIGURACION_PRODUCCION.md) | Lo aplicado y lo pendiente en los servicios |
+| [Privacidad](PRIVACIDAD.md) · [Eliminación de datos](ELIMINACION_DATOS.md) | Borradores no publicados |
+| [Referencias VJ](REFERENCIAS_VJ.md) | Procedencia de los cuatro motivos VJ (para [Créditos](../CREDITOS.md)) |
+| [Android](../android/README.md) | APK de prueba |
+| [Cambios](../CAMBIOS.md) | Lo integrado desde alpha.142 |
 
-## Reglas de mantenimiento
+## Reglas
 
-- Las decisiones nuevas sustituyen las antiguas; no añadir párrafos contradictorios al final de las guías.
-- Separar «aprobado», «implementado», «configurado», «probado» y «publicado». Una prueba aislada o simulada no prueba el servicio real; un APK no prueba iOS ni Android físico.
-- Los plazos de privacidad aprobados no significan que todos los proveedores ya los apliquen. El estado efectivo se registra en Configuración de producción.
-- No duplicar pendientes en varios planes. El traspaso resume y enlaza D01–D22; no inicia su ejecución.
-- [Archivo histórico](historial/README.md): referencias y hechos de otras revisiones. Ninguna fase antigua autoriza trabajo nuevo.
+- Una decisión nueva reemplaza a la antigua en su guía; no se añaden párrafos que la contradigan.
+- Separar **aprobado**, **construido**, **probado** y **publicado**. Un bot o una captura no prueban lo que siente una persona.
+- Los documentos antiguos (planes, cierres, traspasos anteriores) se borraron del árbol el 24 de octubre. Siguen en Git: `git show 5914ca9:docs/historial/NOMBRE.md`. Ninguno autoriza trabajo nuevo.

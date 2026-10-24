@@ -1,6 +1,6 @@
 # Kubono · plan hasta las primeras ventas
 
-**Estado: 20 de octubre de 2026.** Guía única de decisiones y entregables D01–D22. Preparar no autoriza ejecutar el catálogo completo, pagar o publicar. Jay pidió detener la configuración de Supabase y preparar documentación para revisión con Claude. [Traspaso actual](../HANDOFF_CLAUDE.md).
+**Estado: 20 de octubre de 2026.** Guía única de decisiones y entregables D01–D22. Preparar no autoriza ejecutar el catálogo completo, pagar o publicar. Jay pidió detener la configuración de Supabase y preparar documentación para revisión con un agente. [Traspaso actual](../HANDOFF.md).
 
 ## Decisiones aprobadas y límites
 
@@ -16,7 +16,7 @@
 | Público | Objetivo de 16 años o más; clasificación de contenido por tienda aparte. Mercados, país/editor y correo público aún pendientes |
 | Datos | Plazos aprobados en [Producción](CONFIGURACION_PRODUCCION.md); algunos controles aplicados, otros pendientes. No equivale a privacidad/configuración final publicadas |
 
-La revisión inicial de marca del 19 de octubre encontró una coincidencia china de clase 4 (aceites/lubricantes), sin registro europeo encontrado en las consultas y sin resultado en Madrid Monitor. Global Brand Database no fue accesible; búsqueda fonética SENADI pendiente. No es certificación jurídica ni disponibilidad actual del dominio. [Registro de consultas y fuentes](historial/PLAN_LANZAMIENTO_ANTES_REVISION.md).
+La revisión inicial de marca del 19 de octubre encontró una coincidencia china de clase 4 (aceites/lubricantes), sin registro europeo encontrado en las consultas y sin resultado en Madrid Monitor. Global Brand Database no fue accesible; búsqueda fonética SENADI pendiente. No es certificación jurídica ni disponibilidad actual del dominio. Registro de consultas y fuentes (en Git: `docs/historial/PLAN_LANZAMIENTO_ANTES_REVISION.md`, revisión 5914ca9).
 
 Cuenta compartida y guardado automático no conceden cross-buy. La sincronización está comprobada entre navegador, Safari iPhone y APK emulado; no afirmar aceptación iOS nativa, desktop, compras o tiendas.
 
@@ -67,7 +67,7 @@ Los IDs se conservan para el tracker local. Los criterios siguientes sustituyen 
 3. Preparar paquetes y materiales compartidos, conservando prioridad paralela por plataforma. Validar solo lo nuevo/afectado y registrar evidencia específica de cada canal.
 4. Candidato por canal: formularios, precio, firma, pruebas exigidas y experiencia humana real. Publicar solo tras aprobación/autorización explícitas; no esperar a que todas las plataformas estén aprobadas el mismo día.
 
-La ventana original de ocho semanas (19 oct–13 dic 2026) es una **estimación histórica no revalidada**, no un compromiso de salida. Reestimar al confirmar recursos, cuentas y bloqueos; no añadir funciones para justificar retrasos. [Plan anterior](historial/PLAN_LANZAMIENTO_ANTES_REVISION.md).
+La ventana original de ocho semanas (19 oct–13 dic 2026) es una **estimación histórica no revalidada**, no un compromiso de salida. Reestimar al confirmar recursos, cuentas y bloqueos; no añadir funciones para justificar retrasos. Plan anterior (en Git: `docs/historial/PLAN_LANZAMIENTO_ANTES_REVISION.md`, revisión 5914ca9).
 
 ## Comunicación y venta
 
