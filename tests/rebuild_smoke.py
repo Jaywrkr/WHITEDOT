@@ -12,7 +12,7 @@ class Handler(SimpleHTTPRequestHandler):
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
 ON="""()=>new Promise(res=>{const r=__r;const tick=()=>{const ac=r.ac,bq=r.MU.bq,bar=r.SIX*4;if(ac&&bq.length){const last=bq[bq.length-1],next=last>ac.currentTime?last:last+bar*Math.ceil((ac.currentTime-last)/bar),own=r.journeyRhythmTarget?.(ac.currentTime),d=own?(own.hit?own.hit.dist:1):Math.min(...bq.map(b=>Math.abs(ac.currentTime-b)),Math.abs(next-ac.currentTime));if(d<.02){r.sonar('player');return res(d);}}requestAnimationFrame(tick);};tick();})"""
 # Pulse when a given step of the bar is heard .
-AT_STEP="""(want)=>new Promise(res=>{const r=__r;const tick=()=>{const t=r.ac.currentTime-Math.min(.4,r.ac.outputLatency||r.ac.baseLatency||0);const e=(r.MU.sq||[]).find(q=>q.s%16===want&&Math.abs(q.t-t)<.015);if(e){r.sonar('player');return res(r.journeyPulseState().lastOn);}requestAnimationFrame(tick);};tick();})"""
+AT_STEP="""(want)=>new Promise(res=>{const r=__r;const tick=()=>{const t=r.ac.currentTime-Math.min(.4,r.ac.outputLatency||r.ac.baseLatency||0);const e=(r.MU.sq||[]).find(q=>q.s%16===want&&t>=q.t-.012&&t<q.t+.03);if(e){r.sonar('player');return res(r.journeyPulseState().lastOn);}requestAnimationFrame(tick);};tick();})"""
 try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])

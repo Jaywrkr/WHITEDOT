@@ -1,6 +1,6 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.161**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.162**. Las entradas describen su revisión, no certifican producción.
 
 ## H2 · Que se sienta · alpha.162
 
@@ -10,7 +10,8 @@ Rama `claude/h2-que-se-sienta`, sobre `claude/h1-que-se-vea` (dependencia explí
 - **Una sola guía:** los pasos que cuenta el lugar se levantan en la Línea (el «1» en dorado cuando cuenta). Se quitan los puntos bajo el cubo y los del Vacío.
 - **El lugar canta su patrón antes:** al empezar una ronda o un capítulo con ritmo, durante dos compases desde el siguiente «1» suenan un golpe y una nota en cada paso que cuenta, y la Línea brilla con ellos. Se retiran las frases «Aquí se toca en el «y»…».
 - **El cubo cambia con la racha (Vibri):** cada 4 aciertos seguidos gana una forma (esquinas, rombo, doble marco dorado que gira); un fallo quita una, nunca todas.
-- Pruebas: `tests/rhythm-calibration.mjs` (un jugador simulado 150 ms tarde pasa de fuera de tiempo a tiempo); `tests/journey-rhythm.mjs` (formas y canto de dos compases).
+- **Ruinas, arreglo:** los pulsos se agrupan por compás con el reloj de audio. Antes se redondeaba una hora del reloj de la página y, si el compás empezaba cerca del borde del redondeo, tres pasos del mismo compás contaban en dos compases distintos y no ponían piedra.
+- Pruebas: `tests/rhythm-calibration.mjs` (un jugador simulado 150 ms tarde pasa de fuera de tiempo a tiempo); `tests/journey-rhythm.mjs` (formas y canto de dos compases). Las pruebas de navegador que pulsan en un paso concreto aceptan el primer fotograma tras el paso (antes podían saltarlo).
 
 ## H1 · Que se vea · alpha.161
 

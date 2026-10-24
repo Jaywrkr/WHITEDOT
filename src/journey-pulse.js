@@ -67,7 +67,7 @@ export function initialize(runtime){
   // How far from its target this touch was, signed, for the calibration of the first pulses.
   if(ac&&!silent){const target=own?.hit?.time??nearestBeat(heard,runtime.MU?.bq,bar);if(Number.isFinite(target))runtime.calibrationSample?.(heard-target);}
   // The chapter game hears every pulse, with the step of the bar it answered (0 is the «1»).
-  runtime.journeyGamePulse?.(on,{step:Number.isFinite(step)?Math.round(step)%16:null,silent});
+  runtime.journeyGamePulse?.(on,{step:Number.isFinite(step)?Math.round(step)%16:null,silent,at:Number.isFinite(beatAt)?beatAt:null});
   // The wild World hears it too: a wild spark beside the cube hops on time (wild.js, plan F18).
   runtime.wildPulse?.(on);
   if(!silent){form=formStep(form,on);formAt=performance.now();}
