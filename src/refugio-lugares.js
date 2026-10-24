@@ -55,7 +55,7 @@ export function initialize(runtime){
   const list=$('lugaresList');list.replaceChildren();for(const p of PLACES){const li=document.createElement('li'),openNow=placeOpen(d,p.id,runtime.S.journey),best=d.best?.[p.id];
    const name=document.createElement('span');name.className='lugar-name';name.textContent=p.name;const st=document.createElement('span');st.className='lugar-stars';st.setAttribute('aria-label',`${stars(p.id).filter(Boolean).length} de 3 estrellas`);
    stars(p.id).forEach(x=>{const s=document.createElement('i');s.textContent='★';if(x)s.className='got';st.appendChild(s);});
-   const note=document.createElement('small');note.textContent=!openNow?(p.game?`★ ${p.need}`:'Pronto'):best?`${Math.round(best.onTime*100)} %`:d.seen?.[p.id]?'':'Sin visitar';
+   const note=document.createElement('small');note.textContent=!openNow?(p.game?`★ ${p.need}`:'Pronto'):best?`${Math.round(best.onTime*100)} %`:d.seen?.[p.id]||stars(p.id)[0]?'':'Sin visitar';
    li.append(name,st,note);if(openNow&&d.seen?.[p.id]){const go=document.createElement('button');go.textContent='Ir';go.onclick=()=>travel(p.id);li.appendChild(go);}if(!openNow)li.className='closed';list.appendChild(li);}
   // Today's remix (wild.js, plan F18): one open place with another place's rhythm, worth more sparks.
   const mix=runtime.dailyRemix?.(),line=$('lugaresRemixLine'),btn=$('lugaresRemix');if(line&&btn){const place=mix&&PLACES.find(p=>p.id===mix.id);line.hidden=btn.hidden=!place;

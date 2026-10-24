@@ -124,7 +124,7 @@ Cada fase sale de `main` actualizado, en su rama, y se integra cuando Jay la apr
 | F16 · Ruinas | `claude/f16-ruinas` | Reconstruir, con su ritmo | Hecho; falta la prueba de Jay |
 | F17 · Cueva | `claude/f17-cueva` | Eco: repetir el patrón que canta | Hecho; las 33 ★ se pueden ganar; falta la prueba de Jay |
 | F18 · Mundo salvaje | `claude/f18-salvaje` | Encuentros de 30 s y remezcla diaria | Hecho; falta la prueba de Jay |
-| F19 · Cierre con personas | `claude/f19-cierre` | Sesiones con `?prueba=1`, ajuste final, rendimiento, material de tienda | Las notas cumplen los tiempos |
+| F19 · Cierre con personas (pasa a H7) | `claude/f19-cierre` | Sesiones con `?prueba=1`, ajuste final, rendimiento, material de tienda | Las notas cumplen los tiempos |
 
 Plan revisado por Jay el 23 de octubre tras jugar F0–F11: las F12–F19 sustituyen a las antiguas F12–F16.
 
@@ -147,6 +147,34 @@ Plan revisado por Jay el 23 de octubre tras jugar F0–F11: las F12–F19 sustit
 En el Viaje cada capítulo enseña un ritmo nuevo solo cuando toca: los tres primeros a tiempo, la Tormenta la primera mezcla y el Vacío el «1».
 
 Cómo se juega (`journey-rhythm.js`): solo cuenta un pulso en un paso del ritmo, con la misma ventana de siempre; en otro paso, aunque sea un tiempo, no hace nada. Bajo el cubo, ocho puntos son las corcheas del compás: los que cuentan se ven, el «1» en dorado, y el del momento brilla más. La primera vez que un ritmo nuevo empieza, una línea lo dice. El Vacío conserva su espera suave y sus propios cuatro puntos. En el Jardín, el tiempo siembra y cosecha y el «y» riega; en las Dunas la ola pasa en el «y».
+
+## Plan integrado H1–H7 (24 de octubre)
+
+El panel creativo revisó el juego por segunda vez (media 7,2; antes 6,4) y Jay aprobó el plan el 24 de octubre. Una idea une todo: **tocas a tiempo → avanzas por un camino → lo que ganas se vuelve tu canción**.
+
+Decisiones de Jay (aprobadas; se aplican en la fase indicada, hasta entonces rige lo de arriba):
+
+| Tema | Decisión | Fase |
+|---|---|---|
+| Desbloqueos | Los lugares del anillo se abren **en orden**, al completar el anterior, como pistas de un disco | H3 |
+| Ganar | Completar los 11 lugares (11 ★) hace sonar el final verdadero. Las 33 ★ dan la **versión maestra** | H3–H4 |
+| Estrellas | No abren puertas: hacen crecer tu canción (★ fragmento, ★★ capa completa, ★★★ variación) | H4 |
+| Tu canción | Hecha con el mismo motor que la música del juego, en tu tono; no un house aparte | H4 |
+| Chispas | Fuera de tiempo, 0 ✦ también en el Mundo libre. La tienda sigue abierta (oculta solo en el Viaje). Las chispas solo compran | H5 |
+| Texto | Viaje sin rótulos; lugares, una frase la primera vez; el narrador solo en la tarjeta final y la Bitácora | H5 |
+| Mundo libre tras el Viaje | Sigue con todo a la vista | — |
+| Modo Libre por lugar | Sí: jugar con la música del lugar sin barra ni estrellas | H3 |
+| Festival | Pendiente de Jay (recomendación: solo el Viaje y el final) | H7 |
+
+| Fase | Rama | Qué |
+|---|---|---|
+| H1 · Que se vea | `claude/h1-que-se-vea` | Lugares sin «Sin visitar» con ★; brillo dorado y onda dorada en cada acierto; cubo de 16–30 px en el Mundo; el gris de un lugar no recuperado solo en el suelo (el oro sigue dorado); color recuperado como tono; cerrar un lugar recupera su color |
+| H2 · Que se sienta | `claude/h2-que-se-sienta` | Calibrar el retraso con los primeros pulsos y en Ajustes; una sola guía de ritmo; cada lugar canta su patrón antes; el cubo cambia de forma con la racha |
+| H3 · El camino | `claude/h3-camino` | Orden de pistas, luz al portal siguiente, portal siguiente tras la ronda, modo Libre, ganar con 11 |
+| H4 · Tu canción | `claude/h4-cancion` | Capas con el motor del juego y niveles por estrella; final verdadero con tus notas; versión maestra |
+| H5 · Reglas claras | `claude/h5-reglas` | 0 ✦ fuera de tiempo; Viaje sin rótulos; narrador en su sitio; menú más corto |
+| H6 · Mundo que se escucha | `claude/h6-escucha` | Voces salvajes que se encuentran con el oído; portales que suenan desde su dirección |
+| H7 · Medir y personas | `claude/h7-medir` | Simulación de 2 h (60, 75 y 90 % a tiempo); festival; sesiones con Luca |
 
 ## Cuándo una fase está terminada
 

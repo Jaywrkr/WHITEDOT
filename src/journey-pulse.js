@@ -64,8 +64,9 @@ export function initialize(runtime){
   // The chapter hears the note first, so the note that completes the theme counts.
   state.notes.push(midi);if(state.notes.length>12)state.notes.shift();runtime.journeyChapterPulse?.(true,midi,Number.isInteger(runtime.MU?.step)?runtime.MU.step:undefined);
   if(state.next===0){state.phrases++;runtime.recoverJourneyColor?.();runtime.journeyPhrase?.();runtime.themeKeyPhrase?.();}
-  // Without vibration (iPhone has none) the cube glows gold for a beat instead.
-  if(!vibrate(state.next===0?[12,40,18]:12))runtime.cubeGlow=1;runtime.flash=Math.max(runtime.flash||0,.7);
+  // The cube glows gold for a beat on every hit, and the phone vibrates too where it can (plan H1: the hit is seen,
+  // heard and felt at once).
+  vibrate(state.next===0?[12,40,18]:12);runtime.cubeGlow=1;runtime.flash=Math.max(runtime.flash||0,.7);
   return true;}
  // A pulse the finger sent too soon after the last one: a faint grey mark, so a touch never vanishes unseen.
  function dropped(){marks.push({at:performance.now(),step:stepNow(),on:false,dropped:true});if(marks.length>24)marks.shift();}
