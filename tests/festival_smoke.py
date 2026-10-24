@@ -38,7 +38,10 @@ try:
    page.wait_for_function("__r.journeyChain().active",timeout=8000);page.evaluate("()=>{__r.S.journey.chain.points=340;}");page.wait_for_function("!!__r.journeyChain().flower",timeout=3000)
    page.evaluate(ON);page.wait_for_function("__r.journeyChain().opened&&__r.journeyChapter().done.lago",timeout=5000)
    page.wait_for_function("__r.journeyChapter().portalOpen",timeout=16000)
-   page.evaluate("()=>{const r=__r,p=r.journeyChapter().portal;r.S.wx=p.x;r.S.wy=p.y;}");page.wait_for_function("__r.journeyFinaleState().running",timeout=5000)
+   # Plan I5: the festival is the whole Journey; after the Lago its portal leads on to the Bosque, not to the end.
+   page.evaluate("()=>{const r=__r,p=r.journeyChapter().portal;r.S.wx=p.x;r.S.wy=p.y;}");page.wait_for_function("(__r.S.journey.chapter||0)===3",timeout=5000);assert not page.evaluate("__r.journeyFinaleState().running")
+   # From the Vacío the last portal opens the Refugio's finale, the festival's.
+   page.evaluate("()=>{const j=__r.S.journey;j.chapter=5;j.done={llanura:true,lago:true,bosque:true,tormenta:true,vacio:true};__r.save();__r.journeyTravel();}");page.wait_for_function("__r.journeyFinaleState().running",timeout=5000)
    st=page.evaluate('__r.journeyFinaleState()');assert st['notes']>=7,st
    page.wait_for_timeout(2500);page.locator('#journeyFinale').click()
    page.wait_for_selector('#journeyAgain',timeout=5000);assert 'Tu frase' in page.inner_text('#journeyFinale');assert page.evaluate('__r.journeyMode()')=='viaje'
@@ -51,5 +54,5 @@ try:
    page.reload();page.wait_for_function('!!window.__r?.colorSafe');assert page.evaluate('__r.colorSafe()')==True
    assert not errors,errors;ctx.close()
   browser.close()
- print('PASS festival build on phone and desktop: no account or mode switch, its own save with the player\'s untouched, the Lago gold flower ends it on your phrase, «Otra persona» starts fresh; colour-blind palette kept',flush=True)
+ print('PASS festival build on phone and desktop: no account or mode switch, its own save with the player\'s untouched, the Lago leads on to the Bosque, the Vacío portal ends it on your phrase, «Otra persona» starts fresh; colour-blind palette kept',flush=True)
 finally:server.shutdown()

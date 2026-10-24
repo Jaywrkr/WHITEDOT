@@ -1,6 +1,14 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.171**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.172**. Las entradas describen su revisión, no certifican producción.
+
+## I5 · Decisiones de Jay · alpha.172
+
+Rama `claude/i5-decisiones`, sobre `claude/i4-final` (dependencia explícita). Jay aprobó las recomendaciones de la tercera sesión del panel.
+
+- **★★ al 75 %** de pulsos a tiempo (antes 85 %) y **★★★ al 70 %** en la ronda Maestro (antes 80 %). En el modelo de dos horas, el jugador que acierta 75 de cada 100 llega a 28 ★ y su canción nunca pasa más de 11 min sin crecer (antes 85 min parada tras ganar). El del 60 % sigue sin ★★.
+- **Festival = el Viaje entero:** `?festival=1` ya no termina tras el Lago; sigue por el Bosque, la Tormenta y el Vacío, y el último portal abre el final del Refugio con tu frase y «Otra persona». Créditos: «El Viaje».
+- Pruebas: `places.mjs` (75/70 %), `play-curve.mjs` (sin muro al 75 %), `festival-color.mjs`, `journey-finale.mjs` y `festival_smoke.py` (el Lago lleva al Bosque; el Vacío al final).
 
 ## I4 · El final que respira · alpha.171
 

@@ -17,7 +17,9 @@ export const PLACES=Object.freeze([
  {id:'jardin',name:'Jardín',verb:'Sembrar',game:'garden'},{id:'dunas',name:'Dunas',verb:'Surfear',game:'surf'},{id:'cristales',name:'Cristales',verb:'Resonar',game:'resonance'},
  {id:'faros',name:'Faros',verb:'Guiar',game:'guide'},{id:'ruinas',name:'Ruinas',verb:'Reconstruir',game:'rebuild'},{id:'cueva',name:'Cueva',verb:'Eco',game:'echo'}].map(Object.freeze));
 export const PLACE_IDS=Object.freeze(PLACES.map(p=>p.id));
-export const RHYTHM_STAR=.85,MAESTRO_STAR=.8,MAESTRO_TEMPO=1.1,MAESTRO_GOAL=1.5,MAESTRO_WINDOW=.06,TOTAL_STARS=33;
+// Plan I5 (Jay, 24 October, third panel): ★★ at 75 % on time and ★★★ at 70 % in the Maestro round (they were 85 and
+// 80 %; the two-hour model showed the song stopping after the win for anyone below 85 %).
+export const RHYTHM_STAR=.75,MAESTRO_STAR=.7,MAESTRO_TEMPO=1.1,MAESTRO_GOAL=1.5,MAESTRO_WINDOW=.06,TOTAL_STARS=33;
 const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
 const point=v=>object(v)&&Number.isFinite(v.x)&&Number.isFinite(v.y)?{x:Math.round(v.x),y:Math.round(v.y)}:null;
 const share=(hits,total)=>total>0?Math.max(0,Math.min(1,hits/total)):0;

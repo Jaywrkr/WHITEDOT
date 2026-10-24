@@ -51,6 +51,6 @@ export function simulate(profile,{mine=null,rhythmStar=RHYTHM_STAR,maestroStar=M
 export function curve(rules={}){const mine={2:minePerMinute(2),3:minePerMinute(3)};return PROFILES.map(p=>simulate(p,{mine,...rules}));}
 const line=r=>`${r.id} %  victoria ${r.won??'—'} min · 33★ ${r.master??'—'} · ★ a los 60 min ${r.stars60}, a los 120 ${r.stars120} · ${r.bought120} piezas · mayor hueco ${r.longestGap} min desde el ${r.gapFrom} ${r.rule?'(cumple)':'(NO cumple 12 min)'} · sin que crezca la canción ${r.songGap} min desde el ${r.songGapFrom} ${r.songRule?'(cumple)':'(NO cumple)'}`;
 if(import.meta.url===`file://${process.argv[1]}`){const all=curve();
- console.log('Reglas de hoy (★★ 85 %, ★★★ 80 % en Maestro):');for(const r of all)console.log(line(r));
- console.log('Variante para decidir (★★ 75 %, ★★★ 70 % en Maestro):');for(const r of curve({rhythmStar:.75,maestroStar:.7}))console.log(line(r));
+ console.log('Reglas de hoy (★★ 75 %, ★★★ 70 % en Maestro):');for(const r of all)console.log(line(r));
+ console.log('Antes de I5 (★★ 85 %, ★★★ 80 %):');for(const r of curve({rhythmStar:.85,maestroStar:.8}))console.log(line(r));
  if(process.argv.includes('--json'))console.log(JSON.stringify(all.map(({events,...r})=>r),null,1));}

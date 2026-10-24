@@ -3,9 +3,9 @@ import {PLACES,PLACE_IDS,TOTAL_STARS,roundStars,normalizePlaces,starCount,placeO
 // Eleven places, 33 stars; the five of the Journey open after it, the six new ones in order, each after the one before
 // it (plan H3).
 assert.equal(PLACES.length,11);assert.equal(TOTAL_STARS,33);assert.deepEqual(PLACE_IDS.map(previousPlace),[null,null,null,null,null,'vacio','jardin','dunas','cristales','faros','ruinas']);
-// Stars of a round: ★ always; ★★ 85 % on time with sound; ★★★ a Maestro round with 80 %.
-assert.deepEqual(roundStars({onTime:.5}),[true,false,false]);assert.deepEqual(roundStars({onTime:.9}),[true,true,false]);assert.deepEqual(roundStars({onTime:.9,sound:false}),[true,false,false]);
-assert.deepEqual(roundStars({onTime:.82,maestro:true}),[true,false,true]);assert.deepEqual(roundStars({onTime:.9,maestro:true}),[true,true,true]);
+// Stars of a round: ★ always; ★★ 75 % on time with sound; ★★★ a Maestro round with 70 % (plan I5; 85 and 80 before).
+assert.deepEqual(roundStars({onTime:.5}),[true,false,false]);assert.deepEqual(roundStars({onTime:.75}),[true,true,false]);assert.deepEqual(roundStars({onTime:.74}),[true,false,false]);assert.deepEqual(roundStars({onTime:.9,sound:false}),[true,false,false]);
+assert.deepEqual(roundStars({onTime:.72,maestro:true}),[true,false,true]);assert.deepEqual(roundStars({onTime:.69,maestro:true}),[true,false,false]);assert.deepEqual(roundStars({onTime:.9,maestro:true}),[true,true,true]);
 // Saves: a chapter kept in the Journey is a ★ of its place, even from before; a future version is kept untouched.
 const n=normalizePlaces(null,{done:{llanura:true,lago:true}});assert.deepEqual(n.stars.llanura,[true,false,false]);assert.equal(starCount(n),2);
 const future={version:9,x:1};assert.equal(normalizePlaces(future),future);
@@ -28,7 +28,7 @@ for(let i=0;i<20;i++)r.placeHear('lago',i<18,{});assert.deepEqual(r.places().run
 clock+=150000;assert.equal(r.placeFinish('lago'),true);
 let st=r.places();assert.deepEqual(st.stars.lago,[true,true,false]);assert.equal(st.last.sparks,114,'60 + 6×9');assert.equal(r.S.sparks,5+114);assert.equal(st.best.lago.ms,150000);assert.equal(st.run,null);
 assert.deepEqual(r.S.journey.chain,{points:340,opened:true,hinted:true},'the Journey chapter as it was');
-// Maestro now open: ★★★ with 80 %, tempo and window while it lasts, sparks doubled.
+// Maestro now open: ★★★ with 70 %, tempo and window while it lasts, sparks doubled.
 assert.equal(r.startPlace('lago',{maestro:true}),true);assert.equal(r.MU.tempoScale,1.1);assert.equal(r.MU.onTimeWindow,.06);assert.equal(r.placeGoalScale(),1.5);
 for(let i=0;i<10;i++)r.placeHear('lago',i<8,{});r.placeFinish('lago');st=r.places();assert.deepEqual(st.stars.lago,[true,true,true]);assert.equal(st.last.sparks,2*(60+48));assert.equal(r.MU.tempoScale,1);assert.equal(st.count,7);
 // From the fourth round of the day in a place, half.

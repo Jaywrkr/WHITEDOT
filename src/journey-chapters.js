@@ -111,9 +111,9 @@ export function initialize(runtime){
   const drop=plenitude(id);runtime.enterFx=Math.max(runtime.enterFx||0,1);const theme=drop||THEME.reduce((s,[,l])=>s+l,0)*(runtime.SIX||.15)*2*1000;portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:performance.now()+Math.max(PORTAL_WAIT,theme)};return true;}
  // Through the portal: the next chapter's biome, found on the map near here.
  function travel(){const j=own();if(j.chapter>=CHAPTERS.length-1)return false;const next=j.chapter+1,id=CHAPTERS[next];
-  // The festival build ends after the Lago, in the Refugio, with your phrase.
+  // A festival build with fewer chapters would end early, in the Refugio, with your phrase (since plan I5 it has all five).
   if(runtime.festival&&!FESTIVAL_CHAPTERS.includes(id)){portal=null;finaleAsked=true;if(runtime.journeyFinale)runtime.journeyFinale({festival:true});else runtime.landHouse?.();return true;}
-  if(id==='refugio'){j.chapter=next;portal=null;finaleAsked=true;runtime.save();if(runtime.journeyFinale)runtime.journeyFinale();else runtime.landHouse?.();return true;}
+  if(id==='refugio'){j.chapter=next;portal=null;finaleAsked=true;runtime.save();if(runtime.journeyFinale)runtime.journeyFinale(runtime.festival?{festival:true}:undefined);else runtime.landHouse?.();return true;}
   const spot=find(id,{x:runtime.S.wx,y:runtime.S.wy});if(!spot)return false;
   const before={chapter:j.chapter,wx:runtime.S.wx,wy:runtime.S.wy};j.chapter=next;runtime.S.wx=spot.x;runtime.S.wy=spot.y;if(runtime.save()===false){j.chapter=before.chapter;runtime.S.wx=before.wx;runtime.S.wy=before.wy;return false;}
   portal=null;hits=0;storm.length=0;echoes.length=0;lastPulse=performance.now();lastSpot=null;runtime.journeyPulseReset?.();runtime.enterFx=1;return true;}
