@@ -71,7 +71,7 @@ try:
   page.wait_for_function('!document.getElementById("bJump").hidden&&!document.getElementById("bJump").disabled')
   page.locator('#bJump').click();page.wait_for_function('!!__r.S.practiceTravel.previous')
   assert page.evaluate('__r.S.sparks')==before_jump-20
-  page.locator('#bMenu').click();page.locator('#bJumpBack').click();assert page.evaluate('__r.S.sparks')==before_jump-20
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJumpBack').click();assert page.evaluate('__r.S.sparks')==before_jump-20
   from browser_helpers import keep_place_on_reload
   snapshot=page.evaluate('({sparks:__r.S.sparks,cards:__r.S.rareBook.items.length,broken:__r.sparkEconomy.stats.broken})')
   keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.sparkTick');page.locator('#returnContinue').click()

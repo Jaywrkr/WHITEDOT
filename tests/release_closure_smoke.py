@@ -21,7 +21,7 @@ try:
    assert page.locator('#sparkCount').is_visible();assert page.locator('#sparkCount').evaluate('e=>{const b=e.getBoundingClientRect();return b.x>=0&&b.right<=innerWidth}')
    page.evaluate("()=>{__r.S.ach['release-fixture']='2026-10-18';__r.ACH.push(['release-fixture','Ensayo de cierre','Prueba']);__r.achievementEarned(['release-fixture']);__r.save();}")
    page.wait_for_function("document.getElementById('bAch').classList.contains('has-unread')")
-   page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-tab=achievements]').click()
+   page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click();page.locator('[data-journal-tab=achievements]').click()
    page.wait_for_function("!document.getElementById('bAch').classList.contains('has-unread')")
    assert page.locator('#mJournal .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2')
    page.screenshot(path=str(ROOT.parent/f'closure-logros-{width}.png'));page.locator('#mJournal .sheet-close').click()

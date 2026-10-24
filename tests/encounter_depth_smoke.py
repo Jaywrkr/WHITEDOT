@@ -77,7 +77,7 @@ with sync_playwright() as p:
   page.wait_for_function('deepObject.state.dialogue.phase==="replying"')
   page.touchscreen.tap(center['x'],center['y']);page.touchscreen.tap(center['x'],center['y']);assert page.evaluate('deepObject.state.dialogue.phase')=='idle';assert page.evaluate('deepObject.state.dialogue.empty')
   page.screenshot(path=f'/tmp/whitedot-depth-animal-{width}.png')
-  page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-detail="Tu recorrido creativo"] > summary').click();assert 'Frases respondidas' in page.locator('#journalBody').inner_text()
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click();page.locator('[data-journal-detail="Tu recorrido creativo"] > summary').click();assert 'Frases respondidas' in page.locator('#journalBody').inner_text()
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   assert not errors,errors
   print(f'PASS {width}x{height}: free threads, removal/cancellation, editable box parts, learned phrase, silent ambient exclusion, pause and real reply audio',flush=True)

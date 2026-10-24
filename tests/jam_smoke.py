@@ -19,9 +19,9 @@ with sync_playwright() as p:
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
   page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();complete_path_fixture(page);page.locator('#cExplore').click();page.locator('#hwGo').click()
-  page.locator('#bMenu').click();page.locator('#bTools').click();assert page.locator('#bLoop').is_visible()
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bTools').click();assert page.locator('#bLoop').is_visible()
   # Eco: armar, tocar durante la grabación, y comprobar que el bucle se repite.
-  page.locator('#bMenu').click();page.locator('#bTools').click();page.locator('#bLoop').click();page.wait_for_function('!!window.__testRuntime.jam.loop.rec')
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bTools').click();page.locator('#bLoop').click();page.wait_for_function('!!window.__testRuntime.jam.loop.rec')
   for i in range(4):page.evaluate('window.__testRuntime.sonar()');page.wait_for_timeout(750)
   page.wait_for_function('window.__testRuntime.jam.loop.ecos.length===1',timeout=20000)
   n=page.evaluate('window.__testRuntime.jam.loop.ecos[0].events.length');assert n>=1,n
@@ -38,7 +38,7 @@ with sync_playwright() as p:
   assert page.evaluate('window.__testRuntime.jam.loop.ecos.length')==0
   # El botón junto a otro eco sigue sirviendo de alternativa.
   page.evaluate('()=>{const r=window.__testRuntime;r.jam.loop.ecos.push({x:r.S.wx,y:r.S.wy,layer:r.S.layer||"superficie",events:[],start:r.MU.step});}')
-  page.locator('#bMenu').click();page.locator('#bTools').click();page.locator('#bLoop').click();assert page.evaluate('window.__testRuntime.jam.loop.ecos.length')==0
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bTools').click();page.locator('#bLoop').click();assert page.evaluate('window.__testRuntime.jam.loop.ecos.length')==0
   page.locator('#bMenu').click();page.locator('#bMusicSettings').click();page.locator('#bAutoPins').click();page.locator('#muClose').click()
   # Banda: unir criaturas de distintos papeles y comprobar que tocan a tempo.
   roles=page.evaluate('''()=>{const r=window.__testRuntime,got=new Set();for(let x=-3;x<=3&&got.size<4;x++)for(let y=-3;y<=3&&got.size<4;y++){const d=r.regionOfPos(x*3600+1800,y*3600+1800);

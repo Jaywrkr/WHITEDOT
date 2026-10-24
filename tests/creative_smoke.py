@@ -31,7 +31,7 @@ with sync_playwright() as p:
   page.wait_for_timeout(100);page.mouse.move(width/2+70,height/2);page.mouse.down();page.mouse.move(width/2+110,height/2-50,steps=10);page.mouse.up();page.wait_for_timeout(100)
   assert page.evaluate('prism.rotation>.5'),page.evaluate('({rotation:prism.rotation,near:__testRuntime.MU.near.includes(prism),mode:__testRuntime.S.mode,layer:__testRuntime.S.layer,modals:[...document.querySelectorAll(".modal:not([hidden])")].map(m=>m.id),ptr:__testRuntime.ptr,point:{x:prism.x-__testRuntime.S.wx,y:prism.y-__testRuntime.S.wy}})')
   assert page.evaluate(f'Math.hypot(__testRuntime.S.wx-{pos["x"]},__testRuntime.S.wy-{pos["y"]})<1'),'instrument drag moved player'
-  page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-detail="Tu recorrido creativo"] > summary').click();assert page.locator('#journalBody').inner_text().find('Tu recorrido creativo')>=0
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click();page.locator('[data-journal-detail="Tu recorrido creativo"] > summary').click();assert page.locator('#journalBody').inner_text().find('Tu recorrido creativo')>=0
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   assert not errors,errors
   print(f'PASS creative gestures, subtraction, open challenge, quiet composing and journal at {width}x{height}',flush=True)

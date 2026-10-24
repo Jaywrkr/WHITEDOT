@@ -29,7 +29,7 @@ try:
    if width==390:page.screenshot(path=str(ROOT.parent/'jump-phone.png'))
    page.reload();page.wait_for_function('__testRuntime?.inWorld()');page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true)')
    current=page.evaluate('({x:__testRuntime.S.wx,y:__testRuntime.S.wy})');assert abs(current['x']-state['x'])<1 and abs(current['y']-state['y'])<1,(state,current)
-   page.locator('#bMenu').click();page.locator('#bJumpBack').click();page.wait_for_function('document.getElementById("mMenu").hidden')
+   page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJumpBack').click();page.wait_for_function('document.getElementById("mMenu").hidden')
    back=page.evaluate('({x:__testRuntime.S.wx,y:__testRuntime.S.wy,layer:__testRuntime.S.layer,kept:__testRuntime.S.cat.held})')
    assert abs(back['x']-before['x'])<1 and abs(back['y']-before['y'])<1 and back['layer']==before['layer'] and back['kept'],back
    assert not errors,errors;page.close();b.close()

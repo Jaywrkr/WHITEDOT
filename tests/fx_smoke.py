@@ -19,7 +19,7 @@ with sync_playwright() as p:
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
   page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();complete_path_fixture(page);page.locator('#cExplore').click();page.locator('#hwGo').click()
-  page.locator('#bMenu').click();page.locator('#bTools').click();page.locator('#bFx').click();assert page.locator('#fxPanel').is_visible()
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bTools').click();page.locator('#bFx').click();assert page.locator('#fxPanel').is_visible()
   box=page.locator('#fxPad').bounding_box();before=page.evaluate('[window.__testRuntime.S.wx,window.__testRuntime.S.wy]')
   page.mouse.move(box['x']+box['width']*.1,box['y']+box['height']*.2);page.mouse.down();page.wait_for_timeout(400)
   st=page.evaluate('(()=>{const f=window.__testRuntime.fx;return [f.lp.frequency.value,f.verbSend.gain.value]})()');assert st[0]<1500 and st[1]>.4,st

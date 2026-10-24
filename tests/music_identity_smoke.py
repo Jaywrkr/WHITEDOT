@@ -34,7 +34,7 @@ try:
   assert page.evaluate('__testRuntime.livingNear()[0].mind.version')==1
   page.locator('#bMenu').click()
   assert page.evaluate('''()=>[...document.querySelectorAll('#mMenu *')].filter(e=>e.getClientRects().length&&e.textContent.trim()).every(e=>getComputedStyle(e).fontFamily.includes('Geist Mono'))''')
-  page.locator('#bMap').click();page.locator('#mapShare').click()
+  (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bMap').click();page.locator('#mapShare').click()
   page.wait_for_function('!document.getElementById("mShare").hidden&&document.getElementById("shareImg").src.startsWith("data:image/png")')
   assert page.evaluate('__fonts.length>0&&__fonts.every(f=>f.includes("Geist Mono"))'),page.evaluate('__fonts')
   page.screenshot(path='/tmp/whitedot-m1-geist-export.png')

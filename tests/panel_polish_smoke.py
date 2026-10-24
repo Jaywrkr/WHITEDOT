@@ -48,7 +48,7 @@ try:
     if panel in ['mGuide','mCube']:page.screenshot(path=str(ROOT.parent/f'panel-{panel}-{width}.png'))
     page.keyboard.press('Escape');assert dialog.is_hidden()
    page.locator('#bMenu').click();page.screenshot(path=str(ROOT.parent/f'panel-menu-{width}.png'));page.keyboard.press('Escape')
-   page.emulate_media(reduced_motion='reduce');page.locator('#bMenu').click();assert page.locator('#bGuide').evaluate('e=>getComputedStyle(e).transitionDuration')=='0s';page.keyboard.press('Escape');page.emulate_media(reduced_motion='no-preference')
+   page.emulate_media(reduced_motion='reduce');page.locator('#bMenu').click();assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bGuide').evaluate('e=>getComputedStyle(e).transitionDuration')=='0s';page.keyboard.press('Escape');page.emulate_media(reduced_motion='no-preference')
    print(f'PASS {width}x{height}: eight panels, overflow, reachable close controls, focus containment, current guide and reduced motion',flush=True)
   assert not errors,errors
   browser.close()

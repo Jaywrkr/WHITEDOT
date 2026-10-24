@@ -56,7 +56,7 @@ try:
    keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.sparkTick')
    page.locator('#returnContinue').click();page.locator('#bJump').wait_for(state='visible')
    assert page.locator('#bJump').is_disabled()
-   page.locator('#bMenu').click();page.locator('#bJumpBack').click()
+   page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJumpBack').click()
    assert page.evaluate('__r.S.sparks')==0
    assert page.evaluate('p=>Math.hypot(__r.S.wx-p.x,__r.S.wy-p.y)<1',before)
    page.screenshot(path=str(ROOT.parent/f'entry-earned-jump-{width}.png'))

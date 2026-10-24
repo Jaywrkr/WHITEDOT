@@ -34,7 +34,7 @@ with sync_playwright() as p:
   assert page.evaluate(f'Math.hypot(__testRuntime.S.wx-{before["x"]},__testRuntime.S.wy-{before["y"]})<1'),kind+' moved player'
   assert page.evaluate('!__testRuntime.scanning')
   page.locator('#bMenu').click();page.wait_for_timeout(100);frozen=page.evaluate('JSON.stringify(enc.state)');page.wait_for_timeout(250);assert page.evaluate('JSON.stringify(enc.state)')==frozen,kind+' changed during menu'
-  page.locator('#mnClose').click();page.locator('#bMenu').click();page.locator('#bAch').click();assert kind=='cloud' or len(page.locator('#journalBody').inner_text())>0
+  page.locator('#mnClose').click();page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click();assert kind=='cloud' or len(page.locator('#journalBody').inner_text())>0
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   assert not errors,errors
   print('PASS mobile encounter '+kind+': touch, drag, no unwanted movement, menu pause, journal and no runtime error',flush=True)

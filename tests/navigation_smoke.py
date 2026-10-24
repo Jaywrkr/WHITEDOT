@@ -21,7 +21,7 @@ with sync_playwright() as p:
   page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();complete_path_fixture(page);page.locator('#cExplore').click();page.locator('#hwGo').click()
   point=page.evaluate("()=>{const r=window.__testRuntime;return r.addFavorite('Regreso de prueba');}")
   page.evaluate("window.__testRuntime.S.wx+=500;window.__testRuntime.S.wy-=300")
-  page.locator('#bMenu').click();page.locator('#bAch').click();page.locator('[data-journal-tab="places"]').click();page.locator('[data-favorite] summary').click();page.locator('[data-favorite] button').filter(has_text='Orientar').click()
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click();page.locator('[data-journal-tab="places"]').click();page.locator('[data-favorite] summary').click();page.locator('[data-favorite] button').filter(has_text='Orientar').click()
   page.wait_for_function('!document.getElementById("routeHud").hidden');assert 'pasos' in page.locator('#routeDetail').inner_text()
   page.screenshot(path=f'/tmp/whitedot-navigation-{label}.png')
   page.evaluate("()=>{const r=window.__testRuntime,p=r.favorites[0];r.S.wx=p.x;r.S.wy=p.y;r.navigationTick();}")

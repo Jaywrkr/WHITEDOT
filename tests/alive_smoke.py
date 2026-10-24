@@ -34,12 +34,12 @@ with sync_playwright() as p:
   # Huellas y campamento anterior.
   for i in range(6):page.evaluate(f'()=>{{const r=window.__testRuntime;r.S.wx+=200;}}');page.wait_for_timeout(60)
   assert page.evaluate('window.__testRuntime.S.steps.length')>=5
-  page.evaluate('()=>{const r=window.__testRuntime;r.S.studio.x=0;r.S.studio.y=0;}');page.locator('#bMenu').click();page.locator('#bTools').click();page.locator('#bDeploy').click();page.wait_for_timeout(300)
+  page.evaluate('()=>{const r=window.__testRuntime;r.S.studio.x=0;r.S.studio.y=0;}');page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bTools').click();page.locator('#bDeploy').click();page.wait_for_timeout(300)
   assert page.evaluate('(window.__testRuntime.S.camps||[]).length')>=1;assert page.evaluate('window.__testRuntime.houseActive()'),'opening the house here lands it';page.locator('#houseExit').click()
   # Confluencia: dos ríos, la música del otro río se mezcla.
   page.evaluate('''()=>{const r=window.__testRuntime;const size=r.REG*r.WCH,x=-298777.2998213768/3600*size,y=-89475.62042623758/3600*size,q=r.riverAt(x,y);if(!q?.conf)throw Error('verified native confluence changed');r.S.wx=x;r.S.wy=y;}''')
   page.wait_for_function('!!window.__testRuntime.MU.confNb && !!window.__testRuntime.S.ach.confluencia')
-  page.locator('#bMenu').click();page.locator('#bMap').click();page.locator('#journalClose').click()
+  page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bMap').click();page.locator('#journalClose').click()
   assert not errors,errors
   print(label+': moving storm with rain and thunder, season card, footprints and camps, confluence mix PASS',flush=True);c.close();b.close()
 server.shutdown()
