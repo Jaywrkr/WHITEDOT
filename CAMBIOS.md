@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.166**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.167**. Las entradas describen su revisión, no certifican producción.
+
+## H7 · Medir · alpha.167
+
+Rama `claude/h7-medir`, sobre `claude/h6-escucha` (dependencia explícita).
+
+- **Modelo de las dos primeras horas** (`scripts/play-curve.mjs`, prueba `tests/play-curve.mjs`): tres jugadores al 60, 75 y 90 % a tiempo, del Viaje a los 11 lugares en orden y luego ★★ y Maestro. Los tres ganan antes de 40 minutos y nunca pasan más de 7 sin una novedad (la regla del panel es 12).
+- **Hallazgo:** con ★★ al 85 %, a quien acierta 60 o 75 de cada 100 la canción deja de crecer tras ganar (80–85 min sin una capa nueva). El modelo compara la variante ★★ 75 % / ★★★ 70 %. No se cambió ninguna regla: lo decide Jay (`docs/MUNDO.md`, «Las dos primeras horas»).
+- `scripts/journey-curve.py` (nivel y densidad del Viaje en el navegador) sigue igual: dos horas no caben en un navegador; el modelo nuevo mide el progreso, no el audio.
+- Pendientes: festival (recomendación: solo el Viaje), sesiones con Luca y escucha en un teléfono.
 
 ## H6 · Mundo que se escucha · alpha.166
 

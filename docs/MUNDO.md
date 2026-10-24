@@ -175,7 +175,22 @@ Decisiones de Jay (aprobadas; se aplican en la fase indicada, hasta entonces rig
 | H4 · Tu canción | `claude/h4-cancion` | Capas con el motor del juego y niveles por estrella; final verdadero con tus notas; versión maestra (hecho) |
 | H5 · Reglas claras | `claude/h5-reglas` | 0 ✦ fuera de tiempo; Viaje sin rótulos; narrador en su sitio (hecho). Menú más corto: pendiente, ver CAMBIOS |
 | H6 · Mundo que se escucha | `claude/h6-escucha` | Hecho: la chispa salvaje canta en cada pulso desde su lado (la flecha solo sin sonido); el portal más cercano suena en el «1» desde su lado y el siguiente del camino, en el «3», se oye ya desde el Refugio. La remezcla diaria sigue igual |
-| H7 · Medir y personas | `claude/h7-medir` | Simulación de 2 h (60, 75 y 90 % a tiempo); festival; sesiones con Luca |
+| H7 · Medir y personas | `claude/h7-medir` | Hecho el modelo (`scripts/play-curve.mjs`, ver «Las dos primeras horas»). Pendientes de Jay: festival y el umbral de ★★. Sesiones con Luca: sin hacer |
+
+### Las dos primeras horas (modelo H7, 24 de octubre)
+
+`node scripts/play-curve.mjs` juega tres jugadores simulados: el Viaje, los lugares en orden y, tras ganar, vuelta a por ★★ y Maestro (tres intentos por lugar, con práctica). Rondas según las simulaciones de cada lugar; chispas según `spark-rules.js` y la tienda de menor a mayor precio. **Es un modelo, no una medida con personas.**
+
+| A tiempo | Gana (11 lugares) | ★ a los 60 / 120 min | Mayor hueco sin novedad | Sin que crezca la canción |
+|---|---|---|---|---|
+| 60 % | 40 min | 11 / 11 | 7 min | 80 min, desde que gana |
+| 75 % | 36 min | 11 / 11 | 6 min | 85 min, desde que gana |
+| 90 % | 33 min | 24 / 33 (33 ★ a los 94 min) | 6 min | 6 min |
+
+- **La regla de 12 minutos se cumple** contando las piezas de la tienda como novedad.
+- **El muro de ★★ sigue ahí:** con ★★ al 85 %, quien acierta 75 de cada 100 gana y después su canción no crece en hora y media. Con ★★ al 75 % (y ★★★ al 70 % en Maestro) ese jugador llega a 28 ★ en dos horas y nunca pasa 11 min sin que crezca. **Decisión de Jay:** dejar el 85 %, bajarlo o dar ★★ también por mejorar la propia marca.
+- **Festival:** recomendación, que el jurado vea solo el Viaje y su final (`?festival=1`), sin anillo, remezcla ni tienda. Pendiente de Jay.
+- Las sesiones con Luca (`?prueba=1`) siguen pendientes; el modelo no sustituye verle jugar.
 
 ## Cuándo una fase está terminada
 
