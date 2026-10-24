@@ -27,10 +27,11 @@ try:
   for pid in pieces:assert page.evaluate('id=>__r.buySparkStyle(id)',pid),pid
   hide="document.querySelectorAll('.modal').forEach(m=>m.hidden=true)"
   page.evaluate(f"()=>{{__r.equipSparkStyle('');__r.S.reducedMotion=true;{hide}}}");page.wait_for_timeout(200)
-  plain=page.evaluate(FACE);small=page.evaluate(WIDTH);assert page.evaluate('__r.pxSize()')==6 and small<10,small
-  # A face needs room: at level 1 the cube is drawn at 10 px while one is worn, and goes back to 6 px without it.
-  page.evaluate(f"()=>{{__r.equipSparkStyle('eyes:serious');{hide}}}");page.wait_for_timeout(200);assert page.evaluate(WIDTH)>=10,page.evaluate(WIDTH)
-  page.evaluate(f"()=>{{__r.equipSparkStyle('');{hide}}}");page.wait_for_timeout(200);assert page.evaluate(WIDTH)<10
+  plain=page.evaluate(FACE);small=page.evaluate(WIDTH);assert page.evaluate('__r.pxSize()')==6 and 14<=small<20,small
+  # A face needs room: at level 1 the cube is drawn larger while one is worn, and goes back without it. Since plan H1
+  # the World draws the cube 1.6× (16–30 px), so plain is 16 px and with a face about 27.
+  page.evaluate(f"()=>{{__r.equipSparkStyle('eyes:serious');{hide}}}");page.wait_for_timeout(200);assert page.evaluate(WIDTH)>=22,page.evaluate(WIDTH)
+  page.evaluate(f"()=>{{__r.equipSparkStyle('');{hide}}}");page.wait_for_timeout(200);assert page.evaluate(WIDTH)<20
   for pid in [p for p in pieces if not p.startswith('habit:')]:
    for reduced in (False,True):
     page.evaluate("([id,reduced])=>{const r=__r;r.equipSparkStyle('');r.equipSparkStyle(id);r.S.reducedMotion=reduced;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}",[pid,reduced])
