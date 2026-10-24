@@ -40,15 +40,19 @@ export function initialize(runtime){
  const full=()=>own().points>=goal();
  const barMs=()=>(runtime.SIX||.125)*16*1000;
  const patternSteps=()=>runtime.journeyRhythm?.()?.steps||[0,6,8,12];
- // Which bar a pulse belongs to: the time its bar began, counted in bars.
- function barOf(step){const start=performance.now()-(Number.isFinite(step)?step:0)*(runtime.SIX||.125)*1000;return Math.round(start/barMs());}
+ // Which bar a pulse belongs to. Its bar began at the step's time on the audio clock minus the step; pulses whose bars
+ // began within half a bar of each other are the same bar. (Rounding a clock time to bars split one bar in two when
+ // it began near a rounding edge: three steps then laid nothing.)
+ let lastBar=null;
+ function barOf(step,at){const six=runtime.SIX||.125,start=Number.isFinite(at)?at-(Number.isFinite(step)?step:0)*six:performance.now()/1000-(Number.isFinite(step)?step:0)*six;
+  if(lastBar&&Math.abs(start-lastBar.start)<six*8)return lastBar.id;lastBar={start,id:(lastBar?.id||0)+1};return lastBar.id;}
  // A stone is a low knock and its note; an arch, the chord.
  function knock(height,arch=false){if(!audible())return;runtime.soon?.(t=>{const ct=runtime.chordTones?.()||[60,64,67];runtime.kick?.(t,.18);let m=ct[height%ct.length]+12;while(m>84)m-=12;runtime.pluck?.(m,t,.08,2);if(arch)ct.slice(0,3).forEach((n,k)=>runtime.pluck?.(n+24,t+k*(runtime.SIX||.125),.06,2));},'player');}
  function arrive(){const s=own();if(s.gold)return;s.gold={x:Math.round(runtime.S.wx+RUINS_GOLD_GAP),y:Math.round(runtime.S.wy-RUINS_GOLD_GAP*.5)};goldPulse=1;runtime.save?.();chapterToast(runtime,'ruinas','Llegó la piedra dorada: colócala a tiempo.');}
  function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(runtime.save?.()===false){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<4;i++)knock(i,i===3);runtime.journeyComplete?.('ruinas');return 'open';}
  function pulse(on,beat={}){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}if(full()){if(!s.gold)arrive();return open();}
   const step=beat.silent?patternSteps()[(s.pending?.steps?.length||0)%patternSteps().length]:beat.step;
-  const before=s.points,now=performance.now(),r=rebuildPulse(s,{x:runtime.S.wx,y:runtime.S.wy},{bar:beat.silent?(s.pending?.laid?s.pending.bar+1:(s.pending?.bar??0)):barOf(step),step,need:need(),goal:goal(),steps:patternSteps()}),spots=pillarSpots(s.center);
+  const before=s.points,now=performance.now(),r=rebuildPulse(s,{x:runtime.S.wx,y:runtime.S.wy},{bar:beat.silent?(s.pending?.laid?s.pending.bar+1:(s.pending?.bar??0)):barOf(step,beat.at),step,need:need(),goal:goal(),steps:patternSteps()}),spots=pillarSpots(s.center);
   for(const e of r.events){if(e.kind==='stone'){knock(e.height);glows.push({x:spots[e.pillar].x,y:spots[e.pillar].y,at:now,kind:'stone'});}else if(e.kind==='arch'){knock(0,true);const a=spots[e.from],b=spots[e.to];glows.push({x:(a.x+b.x)/2,y:(a.y+b.y)/2,at:now,kind:'arch'});}}
   if(glows.length>40)glows.splice(0,glows.length-40);if(r.gained){toBar.push({value:r.gained,from:before,at:now+150});runtime.save?.();}if(before<goal()&&s.points>=goal())arrive();
   return r.events.some(e=>e.kind==='stone')?'stone':r.events.length?'beat':'still';}
@@ -65,7 +69,7 @@ export function initialize(runtime){
   spots.forEach((p,i)=>{const x=sx(p.x),y=sy(p.y),h=s.stones[i],near=i===here,whole=h===RUINS_STONES;
    c.globalAlpha=near?.6:.3;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(x,y+4,RUINS_REACH*.35,0,6.283);c.stroke();
    for(let k=0;k<RUINS_STONES;k++){const yy=y-k*7-6;if(k<h){c.globalAlpha=near||whole?1:.75;c.fillStyle=whole?gold:'#ffffff';c.fillRect(Math.round(x-7),Math.round(yy),14,6);}else{c.globalAlpha=near?.45:.18;c.strokeStyle='#ffffff';c.setLineDash?.([2,2]);c.strokeRect(Math.round(x-7)+.5,Math.round(yy)+.5,13,5);c.setLineDash?.([]);}}
-   if(near){const q=s.pending&&s.pending.pillar===i&&s.pending.bar===barOf(runtime.journeyRhythmState?.()?.step??0)?s.pending.steps.length:0,n=need();for(let k=0;k<n;k++){c.globalAlpha=k<q?1:.35;c.fillStyle=k<q?gold:'#ffffff';c.fillRect(Math.round(x-n*5+k*10+2),Math.round(y+14),6,3);}}});
+   if(near){const q=s.pending&&s.pending.pillar===i&&s.pending.bar===lastBar?.id&&runtime.ac&&Math.abs((runtime.ac.currentTime-(runtime.journeyRhythmState?.()?.step??0)*(runtime.SIX||.125))-lastBar.start)<(runtime.SIX||.125)*8?s.pending.steps.length:0,n=need();for(let k=0;k<n;k++){c.globalAlpha=k<q?1:.35;c.fillStyle=k<q?gold:'#ffffff';c.fillRect(Math.round(x-n*5+k*10+2),Math.round(y+14),6,3);}}});
   for(const g of glows){const k=(now-g.at)/(g.kind==='arch'?900:600);if(k>1)continue;c.globalAlpha=.85*(1-k);c.strokeStyle=g.kind==='arch'?gold:'#ffffff';c.lineWidth=g.kind==='arch'?2.5:1.5;c.beginPath();c.arc(sx(g.x),sy(g.y)-20,10+k*(g.kind==='arch'?44:22),0,6.283);c.stroke();}
   if(s.gold&&!s.opened){const gx=sx(s.gold.x),gy=sy(s.gold.y),breath=still?0:Math.sin(t/700)*3+goldPulse*Math.sin(t/40)*5;goldPulse=Math.max(0,goldPulse-.02);
    c.globalAlpha=.25+.35*glow;c.fillStyle=gold;c.beginPath();c.arc(gx,gy,30+breath+6*glow,0,6.283);c.fill();c.globalAlpha=1;c.fillRect(Math.round(gx-12),Math.round(gy-6),24,12);c.fillStyle='#000';c.globalAlpha=.5;c.fillRect(Math.round(gx-12),Math.round(gy-1),24,2);}
