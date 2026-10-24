@@ -22,6 +22,8 @@ try:
    assert page.evaluate('__r.wildSpawn()') is True;sp=page.evaluate('__r.wildState().spark');sparks=page.evaluate('__r.S.sparks')
    # Far from it, nothing; beside it, five on time catch it.
    page.evaluate(f"()=>{{__r.S.wx={sp['x']}+600;__r.S.wy={sp['y']};}}");page.evaluate(ON);page.wait_for_timeout(300);assert page.evaluate('__r.wildState().spark.hops')==0
+   # Plan H6: it sings on the beat from its side, to be found by ear (600 px to its left, it is heard on the right).
+   h=page.evaluate('__r.wildState().heard');page.wait_for_function(f"__r.wildState().heard>{h}",timeout=5000)
    for k in range(5):
     s=page.evaluate('__r.wildState().spark')
     if not s:break

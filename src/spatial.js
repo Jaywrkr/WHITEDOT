@@ -4,6 +4,9 @@ export function proximityGain(source,x,y,radius=360) {
  const d=Math.min(1,Math.hypot(source.x-x,source.y-y)/radius);
  return 1-d*d*(3-2*d);
 }
+// Where a source is, left or right of the cube, as a stereo pan (plan H6): full side at `width` px, a little less than
+// hard so a voice never leaves one ear empty.
+export function directionPan(source,x,y,width=600){if(!source||!Number.isFinite(source.x)||!Number.isFinite(x))return 0;return Math.max(-.85,Math.min(.85,(source.x-x)/width*.85));}
 export function chooseNearbySource(items,x,y,random) {
  const candidates=items.filter(o=>typeof o.snd==='function'&&Number.isFinite(o.x)&&Number.isFinite(o.y));
  const weights=candidates.map(o=>proximityGain(o,x,y)),total=weights.reduce((a,b)=>a+b,0);
@@ -36,5 +39,8 @@ export function initialize(runtime) {
   [runtime.bus,runtime.verbIn,runtime.dsend]=nodes;
   try{return emit(1);}finally{[runtime.bus,runtime.verbIn,runtime.dsend]=original;}
  }
- Object.defineProperties(runtime,{spatialTick:{get:()=>spatialTick},withSpatialVoice:{get:()=>withSpatialVoice},activeSpatialCount:{get:()=>active.length}});
+ // A voice heard from a side: what `emit` sends to the bus goes through a stereo panner, freed after `seconds`.
+ function withPan(pan,emit,seconds=3){const ac=runtime.ac;if(!pan||!ac?.createStereoPanner||!runtime.bus)return emit();const p=ac.createStereoPanner(),original=runtime.bus;p.pan.value=pan;p.connect(original);runtime.bus=p;
+  try{return emit();}finally{runtime.bus=original;setTimeout(()=>p.disconnect(),seconds*1000);}}
+ Object.defineProperties(runtime,{withPan:{get:()=>withPan},spatialTick:{get:()=>spatialTick},withSpatialVoice:{get:()=>withSpatialVoice},activeSpatialCount:{get:()=>active.length}});
 }

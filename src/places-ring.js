@@ -1,12 +1,17 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {PLACES,placeOpen,starCount,nextOnPath,previousPlace} from './places.js';
 import {freeOpen} from './journey-mode.js';
+import {directionPan} from './spatial.js';
 // The ring (plan F5, docs/MUNDO.md): the eleven places as gold portals around the Refugio, about half a minute's walk
 // from its door. Each portal sounds on the bar's «1», louder as you come near; a closed one shows the stars it asks for.
 // An arrow at the edge of the screen points to the next place on the path (plan H3: in order, like the tracks of a
 // record), a column of gold light stands over its portal, and the map shows them all.
 // The ring follows the Refugio when it moves; before there is one, it stays where the free World opened.
 export const RING_RADIUS=6000,PORTAL_REACH=40,PORTAL_HEAR=1800,RING_SEA_STEP=300,RING_SEA_TRIES=6;
+// Plan H6: the next portal on the path is heard from the Refugio and beyond, softly, on the bar's «3», from its side.
+export const NEXT_HEAR=RING_RADIUS*1.6,NEXT_STEP=8;
+// How loud the beacon of the next portal is at a distance: a floor far away, more as you come near; 0 beyond its reach.
+export const beaconGain=d=>d>=NEXT_HEAR?0:.012+.04*(1-d/NEXT_HEAR)**2;
 // Notes of the portals, a pentatonic over two octaves: each place has its own.
 export const PORTAL_NOTES=Object.freeze([0,2,4,7,9,12,14,16,19,21,24]);
 // Each portal at a fixed angle, from the north clockwise; a spot at sea moves along its ray, out and in, to land.
@@ -56,9 +61,14 @@ export function initialize(runtime){
    c.beginPath();c.moveTo(bx+Math.cos(a)*16,by+Math.sin(a)*16);c.lineTo(bx+Math.cos(a+2.5)*9,by+Math.sin(a+2.5)*9);c.moveTo(bx+Math.cos(a)*16,by+Math.sin(a)*16);c.lineTo(bx+Math.cos(a-2.5)*9,by+Math.sin(a-2.5)*9);c.stroke();}}
   c.restore();}
  // On each bar's «1», the nearest portal sounds its note, louder the closer you are; a closed one, softer.
- function musicStep(step,time){if(step!==0||!runtime.S.sound||!active()||!runtime.pluck)return;const S=runtime.S;let best=null,far=PORTAL_HEAR,index=0;
-  spots().forEach((s,i)=>{const d=Math.hypot(s.x-S.wx,s.y-S.wy);if(d<far){far=d;best=s;index=i;}});if(!best)return;
-  const near=1-far/PORTAL_HEAR,open=placeOpen(data(),best.id,S.journey);runtime.pluck(60+(runtime.MU?.tr||0)+PORTAL_NOTES[index],time,(open?.09:.035)*near*near,2);}
+ // Each from its side (plan H6), so a portal off screen can be found by ear.
+ const sounds=[];
+ function sound(spot,index,time,v){const S=runtime.S,emit=()=>runtime.pluck(60+(runtime.MU?.tr||0)+PORTAL_NOTES[index],time,v,2),pan=directionPan(spot,S.wx,S.wy,900);
+  sounds.push({id:spot.id,time,v,pan});if(sounds.length>16)sounds.shift();return runtime.withPan?runtime.withPan(pan,emit):emit();}
+ function musicStep(step,time){if((step!==0&&step!==NEXT_STEP)||!runtime.S.sound||!active()||!runtime.pluck)return;const S=runtime.S;
+  if(step===NEXT_STEP){const next=nextPortal(spots(),data(),S.journey);if(!next)return;const d=Math.hypot(next.x-S.wx,next.y-S.wy);if(d<PORTAL_HEAR*.5)return;const v=beaconGain(d);if(v>0)sound(next,spots().findIndex(q=>q.id===next.id),time,v);return;}
+  let best=null,far=PORTAL_HEAR,index=0;spots().forEach((s,i)=>{const d=Math.hypot(s.x-S.wx,s.y-S.wy);if(d<far){far=d;best=s;index=i;}});if(!best)return;
+  const near=1-far/PORTAL_HEAR,open=placeOpen(data(),best.id,S.journey);sound(best,index,time,(open?.09:.035)*near*near);}
  // Fast travel from the map to the places already entered: beside their portal, free.
  function travel(id){if(!active())return false;const s=spots().find(q=>q.id===id);if(!s||!data().seen[id])return false;const p=besidePortal(s,center()||s);runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.narrate?.('travel');runtime.enterFx=1;$('mJournal')&&($('mJournal').hidden=true);runtime.save?.();return true;}
  function travelList(){const box=$('ringTravel');if(!box)return;const d=data(),seen=active()?PLACES.filter(p=>d.seen[p.id]):[];box.hidden=!seen.length;box.innerHTML=seen.length?'<h3>Ir a</h3><div class="row"></div>':'';
@@ -68,5 +78,5 @@ export function initialize(runtime){
  // The portals for the map: where each is, and whether it is open, with its stars.
  function forMap(){if(!data()||!freeOpen(runtime.S.journey))return [];const d=data();return spots().map(s=>({...s,name:name(s.id),open:placeOpen(d,s.id,runtime.S.journey),stars:stars(s.id).filter(Boolean).length}));}
  Object.defineProperties(runtime,{drawPlacesRing:{get:()=>draw},ringMusicStep:{get:()=>musicStep},ringPortals:{get:()=>forMap},ringTravel:{get:()=>travel},ringGo:{get:()=>go},renderRingTravel:{get:()=>travelList},
-  ringState:{get:()=>()=>({center:center(),spots:spots().map(s=>({...s})),next:nextPortal(spots(),data(),runtime.S.journey,{x:runtime.S.wx,y:runtime.S.wy})?.id||null,active:active()})}});
+  ringState:{get:()=>()=>({center:center(),spots:spots().map(s=>({...s})),next:nextPortal(spots(),data(),runtime.S.journey,{x:runtime.S.wx,y:runtime.S.wy})?.id||null,active:active()})},ringSounds:{get:()=>()=>sounds.map(s=>({...s}))}});
 }
