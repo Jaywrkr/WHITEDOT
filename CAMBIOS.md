@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.172**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.173**. Las entradas describen su revisión, no certifican producción.
+
+## I6 · Menos ruido y modelo honesto · alpha.173
+
+Rama `claude/i6-menos-ruido`, sobre `claude/i5-decisiones` (dependencia explícita).
+
+- **Menú de seis entradas:** Tu cubo, Mundo, Lugares (nuevo en el menú), Refugio, Sonido y Ajustes. El resto (Mapa, Bitácora, Herramientas, Grabar set, otra semilla, Compartir, Mundo libre, Guía, Cuenta…) queda plegado en «Más», cerrado por defecto. Mismos ID.
+- **Modelo honesto (`scripts/play-curve.mjs`):** la regla de 12 min cuenta solo lo que hace crecer la canción; las piezas compradas ya no la cumplen. Nuevo jugador sin sonido y un minuto de «riesgo de abandono».
+- **Lo que mide:** el jugador del 75 % y el del 90 % cumplen (máximo 10,7 y 5,6 min sin crecer). **El del 60 % y el que juega sin sonido no:** sin ★★, su canción deja de crecer al ganar (minutos 38–40) durante unos 80 min. Queda abierto; es un modelo, no una medida con personas.
+- Pruebas: `menu_v2_smoke.py` (seis entradas y «Más» cerrado), `play-curve.mjs` y las pruebas que pulsan botones del menú abren «Más» antes.
 
 ## I5 · Decisiones de Jay · alpha.172
 
