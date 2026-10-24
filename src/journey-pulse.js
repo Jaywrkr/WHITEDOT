@@ -56,7 +56,7 @@ export function initialize(runtime){
   const beatAt=on&&!silent?(own?own.hit.time:nearestBeat(heard,runtime.MU?.bq,bar)):null,step=!ac?0:beatAt!==null?(own?own.hit.step:Math.round(stepAt(beatAt))%16):stepAt(heard);marks.push({at:now,step,on});if(marks.length>24)marks.shift();
   if(on&&!silent)runtime.journeyRhythmHit?.(step);
   // The chapter game hears every pulse, with the step of the bar it answered (0 is the «1»).
-  runtime.journeyGamePulse?.(on,{step:Number.isFinite(step)?Math.round(step)%16:null,silent});
+  runtime.journeyGamePulse?.(on,{step:Number.isFinite(step)?Math.round(step)%16:null,silent,at:Number.isFinite(beatAt)?beatAt:null});
   // The wild World hears it too: a wild spark beside the cube hops on time (wild.js, plan F18).
   runtime.wildPulse?.(on);
   state.degree=null;state.midi=null;state.beat=null;if(!on){state.misses++;runtime.journeyChapterPulse?.(false);return false;}
@@ -64,8 +64,9 @@ export function initialize(runtime){
   // The chapter hears the note first, so the note that completes the theme counts.
   state.notes.push(midi);if(state.notes.length>12)state.notes.shift();runtime.journeyChapterPulse?.(true,midi,Number.isInteger(runtime.MU?.step)?runtime.MU.step:undefined);
   if(state.next===0){state.phrases++;runtime.recoverJourneyColor?.();runtime.journeyPhrase?.();runtime.themeKeyPhrase?.();}
-  // Without vibration (iPhone has none) the cube glows gold for a beat instead.
-  if(!vibrate(state.next===0?[12,40,18]:12))runtime.cubeGlow=1;runtime.flash=Math.max(runtime.flash||0,.7);
+  // The cube glows gold for a beat on every hit, and the phone vibrates too where it can (plan H1: the hit is seen,
+  // heard and felt at once).
+  vibrate(state.next===0?[12,40,18]:12);runtime.cubeGlow=1;runtime.flash=Math.max(runtime.flash||0,.7);
   return true;}
  // A pulse the finger sent too soon after the last one: a faint grey mark, so a touch never vanishes unseen.
  function dropped(){marks.push({at:performance.now(),step:stepNow(),on:false,dropped:true});if(marks.length>24)marks.shift();}

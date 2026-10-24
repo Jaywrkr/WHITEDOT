@@ -21,7 +21,7 @@ export function initialize(runtime){
  const id=chapterTest(),place=placeTest();Object.defineProperty(runtime,'chapterTest',{get:()=>id});
  if(place){let tries=0;const go=()=>{if(!runtime.S?.journey||!runtime.startPlace||!runtime.enterWorld||!runtime.worldReady){if(tries++<200)setTimeout(go,50);return;}
   // The Journey finished: every chapter kept, the free World open; then the round (and its ★★ first, for a Maestro one).
-  const S=runtime.S,j=S.journey;j.mode='viaje';j.free=true;j.finished=true;j.chapter=6;j.done={...(j.done||{}),llanura:true,lago:true,bosque:true,tormenta:true,vacio:true};S.pathCrystals=Array.from({length:10},(_,i)=>'lugar:'+i);S.help={...(S.help||{}),camino:true,mundo:true};if(S.firstJourney&&typeof S.firstJourney==='object')S.firstJourney.skipped=true;
+  const S=runtime.S,j=S.journey;j.mode='viaje';j.free=true;j.finished=true;j.chapter=6;j.done={...(j.done||{}),llanura:true,lago:true,bosque:true,tormenta:true,vacio:true};j.colors={...(j.colors||{}),llanura:true,lago:true,bosque:true,tormenta:true,vacio:true};S.pathCrystals=Array.from({length:10},(_,i)=>'lugar:'+i);S.help={...(S.help||{}),camino:true,mundo:true};if(S.firstJourney&&typeof S.firstJourney==='object')S.firstJourney.skipped=true;
   for(const m of ['mHelpC','mHelpW','returnEntrance'])runtime.$?.(m)&&(runtime.$(m).hidden=true);runtime.applyJourneyMode?.();runtime.save?.();if(runtime.worldReady())runtime.enterWorld({automatic:true});
   if(!place.id)return;
   // A place that asks more stars than the Journey gives: the test save gets them from the places before it.

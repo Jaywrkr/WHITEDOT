@@ -110,7 +110,7 @@ La minería diaria conserva daño, rotura y recogida hasta 8192 sitios por parti
 
 - **Luz:** un degradado radial centrado en el cubo, con el color del bioma (`LANDSCAPES` de `house-view.js`), que respira con el pulso del compás (`beat()`); fijo con movimiento reducido.
 - Las siluetas laterales con horizonte (alpha.99–104) se quitaron: rompían la vista cenital.
-- **Color que se gana:** solo en el Viaje y en la superficie, un bioma sin recuperar se ve pálido (filtro CSS `saturate(.12)` en el lienzo, con transición de 1,6 s).
+- **Color que se gana:** solo en el Viaje y en la superficie, un bioma sin recuperar se ve pálido. Desde H1 el gris no es un filtro CSS de toda la pantalla: `drawWorldSheetGrey` pinta una mezcla `saturation` (88 %) y un velo negro del 8 % sobre el suelo, justo antes de los juegos, el cubo y los portales, así el oro sigue dorado; aparece y se va en ~1,6 s. Un bioma recuperado se tiñe de su color (luz del 18–30 %). Cerrar la ronda de un lugar (`places.js`) recupera el color de su bioma. El cubo del Mundo se dibuja a 1,6× su tamaño, entre 16 y 30 px (`cubeView` en `render.js`).
   - Completar el tema del cubo a tiempo en ese bioma (`journey-pulse.js`) lo recupera para siempre en `S.journey.colors`.
   - Al cargar por primera vez, los colores se siembran con los biomas ya explorados (`journey-mode.js`); un jugador nuevo empieza sin ninguno.
   - El Mundo libre siempre tiene color.

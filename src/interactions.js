@@ -23,7 +23,7 @@ export function initialize(runtime) {
   let currentWave=null;
   function wsoon(w,fn){if(w.n++<12)runtime.soon(t=>{const before=currentWave;currentWave=w;try{fn(t);}finally{currentWave=before;}},w.origin||"player");}
   function updWaves(dt,ox,oy){for(const w of waves){w.prev=w.r;w.r+=dt*420;if(w.r>=w.max&&runtime.inWorld()){if(runtime.RP&&runtime.RP.type==="pulsoGrande")runtime.retoSet("pulsoGrande",Math.max(runtime.RP.val,w.n));if(w.n===0){emptyP++;if(emptyP>=10)runtime.unlock("dj");}else emptyP=0;}}waves=waves.filter(w=>w.r<w.max);
-    for(const w of waves){if(w.look){drawShopPulse(runtime.cx,w.look,w.x+ox,w.y+oy,w.r,{alpha:(1-w.r/w.max)*.6,color:w.color||runtime.S.color,charge:w.charge||0,reduced:calmMotion(runtime.S)});continue;}runtime.cx.globalAlpha=(1-w.r/w.max)*.6;runtime.cx.strokeStyle=w.color||runtime.S.color;runtime.cx.lineWidth=1.5;drawPulse(runtime.cx,w.form||selectedPulse({}),w.x+ox,w.y+oy,w.r,calmMotion(runtime.S));}}
+    for(const w of waves){if(w.look){drawShopPulse(runtime.cx,w.look,w.x+ox,w.y+oy,w.r,{alpha:(1-w.r/w.max)*.6,color:w.color||runtime.S.color,charge:w.charge||0,reduced:calmMotion(runtime.S)});continue;}runtime.cx.globalAlpha=(1-w.r/w.max)*(w.beat?.85:.6);runtime.cx.strokeStyle=w.beat?runtime.GOLD||'#f0d27a':w.color||runtime.S.color;runtime.cx.lineWidth=w.beat?2:1.5;drawPulse(runtime.cx,w.form||selectedPulse({}),w.x+ox,w.y+oy,w.r,calmMotion(runtime.S));}}
   // atMs: when the finger touched (performance.now()); the pulse is judged then, not when the finger lifts.
   function sonar(origin='player',atMs=null){
     if(runtime.activityActive)return;

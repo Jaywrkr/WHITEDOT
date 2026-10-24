@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.160**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.161**. Las entradas describen su revisión, no certifican producción.
+
+## H1 · Que se vea · alpha.161
+
+Rama `claude/h1-que-se-vea`, desde `main`. Primera fase del plan integrado que Jay aprobó tras la segunda sesión del panel ([El mundo](docs/MUNDO.md)).
+
+- **El acierto se ve siempre:** el cubo brilla en dorado en cada pulso a tiempo, también en teléfonos que vibran (antes solo sin vibración). La onda de un pulso a tiempo es dorada y algo más gruesa.
+- **El cubo se ve en el teléfono:** en el Mundo se dibuja 1,6 veces su tamaño, entre 16 y 30 px (antes 6–22). Solo cambia el dibujo: alcances, choques y el crecimiento por nivel siguen igual.
+- **El oro sigue dorado:** el gris de un lugar aún sin color ya no filtra toda la pantalla; se pinta solo sobre el suelo, antes de los juegos, el cubo y los portales.
+- **Color como tono:** un lugar con su color recuperado se tiñe más de él (luz del 18–30 % en vez de 5–12 %).
+- **Cerrar un lugar recupera su color** para siempre.
+- **Lugares:** un lugar con ★ ya no dice «Sin visitar»; la remezcla deja de ser un segundo botón dorado.
+- **Ruinas, arreglo** (visto en la CI de esta fase): los pulsos se agrupan por compás con el reloj de audio; redondear una hora del reloj de la página podía partir un compás en dos y tres pasos no ponían piedra. Las pruebas que pulsan en un paso concreto aceptan el primer fotograma tras el paso.
+- `cube_face_smoke` mide el cubo nuevo: 16 px sin cara, unos 27 con ella.
+- Pruebas: `world-sheet.mjs` y `world_sheet_smoke.py` comprueban el gris en el lienzo y la pantalla sin filtro. `?anillo=1` y `?lugar=` siembran los colores de los cinco capítulos, como una partida real tras el Viaje.
 
 ## F18 · Mundo salvaje · alpha.160
 
