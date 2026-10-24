@@ -1,6 +1,6 @@
 """Tu canción (plan F7): in the Refugio, a trophy plays its layer; Lugares → «Tu canción» opens eleven rings with the
-layers you have won lit and beating, the rest dim, while the World's music waits; with the 33 stars the true finale
-brings every layer in, once, and ends on «Las 33 ★»."""
+layers you have won lit and beating, the rest dim, while the World's music waits; with the eleven places complete the
+true finale brings every layer in, once, and ends on «Los 11 lugares»; the 33 stars bring the master version, once."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -31,14 +31,17 @@ try:
    if os.environ.get('SONG_SHOT'):page.screenshot(path=os.environ['SONG_SHOT'].replace('.png',f'-{width}.png'))
    page.locator('#songClose').click();assert not page.evaluate('__r.songStageState().running')
    page.wait_for_function("!__r.songPlaying()",timeout=3000)
-   # With the 33 stars: the true finale, once.
-   page.evaluate(f"()=>{{for(const id of {ALL})__r.S.lugares.stars[id]=[true,true,true];}}")
-   assert page.evaluate('__r.songFinaleCheck()')==True;st=page.evaluate('__r.songStageState()');assert st['final'] and len(st['ids'])==11,st
+   # The eleven complete (plan H3): the true finale, once.
+   page.evaluate(f"()=>{{for(const id of {ALL})__r.S.lugares.stars[id][0]=true;}}")
+   assert page.evaluate('__r.songFinaleCheck()')==True;st=page.evaluate('__r.songStageState()');assert st['final'] and not st['master'] and len(st['ids'])==11,st
    assert page.evaluate('__r.songFinaleCheck()')==False,'only once';assert page.evaluate('__r.S.lugares.won')==True
-   page.wait_for_function("__r.songStageState().credits",timeout=30000);assert 'Las 33 ★' in page.inner_text('#songStage')
+   page.wait_for_function("__r.songStageState().credits",timeout=30000);assert 'Los 11 lugares' in page.inner_text('#songStage')
+   # The 33 stars: the master version, once.
+   page.evaluate(f"()=>{{for(const id of {ALL})__r.S.lugares.stars[id]=[true,true,true];}}")
+   assert page.evaluate('__r.songFinaleCheck()')==True and page.evaluate('__r.songStageState().master')==True;assert page.evaluate('__r.songFinaleCheck()')==False and page.evaluate('__r.S.lugares.master')==True
    if os.environ.get('SONG_SHOT'):page.wait_for_timeout(2500);page.screenshot(path=os.environ['SONG_SHOT'].replace('.png',f'-final-{width}.png'))
    page.locator('#songClose').click();assert not page.evaluate('__r.songStageState().running')
    assert not errors,errors;page.close()
   browser.close()
- print('PASS Tu canción on phone and desktop: a trophy plays its layer, «Tu canción» shows eleven rings with the five won layers while the World waits, and the 33 stars bring the true finale once',flush=True)
+ print('PASS Tu canción on phone and desktop: a trophy plays its layer, «Tu canción» shows eleven rings with the five won layers while the World waits, the eleven places bring the true finale once and the 33 stars the master version once',flush=True)
 finally:server.shutdown()

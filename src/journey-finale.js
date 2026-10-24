@@ -15,7 +15,7 @@ export const MAJOR=Object.freeze([0,2,4,5,7,9,11]);
 // Seconds: one eighth, the gathering before the first note, the silence after the last and the credits.
 export const EIGHTH=.25,GATHER=1.6,SILENCE=2,CREDITS=7,SEGMENT=16;
 export const NOTES_PER_CHAPTER=6;
-export const CREDIT_LINES=Object.freeze(['Tu mundo se abrió','11 lugares · 33 ★','Kubono','Jay · diseño y código','Luca · primer jugador']);
+export const CREDIT_LINES=Object.freeze(['Tu mundo se abrió','Once lugares te esperan','Kubono','Jay · diseño y código','Luca · primer jugador']);
 // The festival build ends on your phrase, and the next player starts again.
 export const FESTIVAL_LINES=Object.freeze(['Kubono','Tu frase','Los primeros 15 minutos','Gracias por tocar']);
 // Your rhythm: the gap to your next note in the same chapter, in quarters (one to three), from the music's sixteenths

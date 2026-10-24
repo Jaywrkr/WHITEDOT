@@ -23,9 +23,9 @@ Diseño aprobado por Jay el 23 de octubre de 2026. Es la fuente única del plan 
 
 | | Chispas ✦ | Estrellas ★ |
 |---|---|---|
-| Para qué | Comprar: tienda del cubo y salto lejano | Avanzar: abrir lugares y ganar el juego |
+| Para qué | Comprar: tienda del cubo y salto lejano | Ganar (★ de los 11 lugares) y hacer crecer tu canción |
 | De dónde | Jugar: lugares, Mundo libre, encuentros, remezcla diaria y algunos logros | Solo los retos de los 11 lugares |
-| ¿Se gastan? | Sí | Nunca; como máximo 33 |
+| ¿Se gastan? | Sí | Nunca; como máximo 33 (11 ganan; 33 son la versión maestra) |
 | En el Viaje | No aparecen | Se dan al terminarlo |
 
 ### Estrellas de cada lugar
@@ -38,24 +38,25 @@ Diseño aprobado por Jay el 23 de octubre de 2026. Es la fuente única del plan 
 
 Sin sonido se gana ★; ★★ y ★★★ piden escuchar. Al terminar el Viaje cada capítulo da su ★, y su ★★ si se jugó con el 85 % a tiempo; quien ya lo había terminado recibe esas mismas estrellas.
 
-### Desbloqueos
+### El camino (plan H3)
 
-| Lugar | Verbo | Estrellas |
-|---|---|---|
-| Llanura | Pegar | Viaje |
-| Lago | Encadenar | Viaje |
-| Bosque | Rodear | Viaje |
-| Tormenta | Bailar | Viaje |
-| Vacío | Soltar | Viaje |
-| Jardín | Sembrar | 5 |
-| Dunas | Surfear | 8 |
-| Cristales | Resonar | 12 |
-| Faros | Guiar | 16 |
-| Ruinas | Reconstruir | 20 |
-| Cueva | Eco | 24 |
-| **Ganar el juego** («Tu canción» completa) | | 33 |
+Tras el Viaje, el anillo se abre **en orden**, como las pistas de un disco: cada lugar se abre al completar el anterior.
 
-Los verbos de los seis lugares nuevos son propuestas: cada uno se diseña en una página antes de construirlo.
+| Pista | Lugar | Verbo | Se abre |
+|---|---|---|---|
+| 1–5 | Llanura, Lago, Bosque, Tormenta, Vacío | Pegar, Encadenar, Rodear, Bailar, Soltar | Al terminar el Viaje |
+| 6 | Jardín | Sembrar | Al completar el Vacío |
+| 7 | Dunas | Surfear | Al completar el Jardín |
+| 8 | Cristales | Resonar | Al completar las Dunas |
+| 9 | Faros | Guiar | Al completar los Cristales |
+| 10 | Ruinas | Reconstruir | Al completar los Faros |
+| 11 | Cueva | Eco | Al completar las Ruinas |
+| **Ganar** | Los 11 completos (11 ★): suena el final verdadero de tu canción | | |
+| **Versión maestra** | Las 33 ★ | | |
+
+- Una columna de luz dorada y la flecha del borde señalan el siguiente lugar del camino. La tarjeta de la ronda tiene «Siguiente · lugar», que lleva a su portal y empieza su ronda.
+- Un lugar ya completo ofrece **Jugar**, **Libre** (su música y su verbo, sin barra, estrellas ni chispas) y **Maestro** (con ★★).
+- Nadie pierde una puerta: un guardado de antes conserva abiertos los lugares que sus estrellas ya abrían (`kept`), y un lugar con su ★ o ya visitado sigue abierto.
 
 ### Chispas
 
@@ -95,7 +96,7 @@ Cada lugar da chispas completas en sus tres primeras rondas del día y la mitad 
 
 ## Tu canción
 
-Cada lugar da una capa de una canción en el tono del jugador. El final del Viaje junta las cinco primeras y abre el mundo («Tu mundo se abrió: 11 lugares, 33 estrellas», botón Explorar). Con las 33 estrellas suenan las once juntas: es ganar el juego.
+Cada lugar da una capa de una canción. El final del Viaje junta las cinco primeras y abre el mundo («Tu mundo se abrió · Once lugares te esperan», botón Explorar). Con los 11 lugares completos suenan las once juntas: es ganar el juego («Los 11 lugares»). Con las 33 ★ vuelve como versión maestra («Las 33 ★»). En H4 la canción se rehace con el motor del juego.
 
 ## Logros del narrador
 
@@ -170,7 +171,7 @@ Decisiones de Jay (aprobadas; se aplican en la fase indicada, hasta entonces rig
 |---|---|---|
 | H1 · Que se vea | `claude/h1-que-se-vea` | Lugares sin «Sin visitar» con ★; brillo dorado y onda dorada en cada acierto; cubo de 16–30 px en el Mundo; el gris de un lugar no recuperado solo en el suelo (el oro sigue dorado); color recuperado como tono; cerrar un lugar recupera su color |
 | H2 · Que se sienta | `claude/h2-que-se-sienta` | Calibrar el retraso con los primeros pulsos y en Ajustes; una sola guía de ritmo; cada lugar canta su patrón antes; el cubo cambia de forma con la racha (hecho) |
-| H3 · El camino | `claude/h3-camino` | Orden de pistas, luz al portal siguiente, portal siguiente tras la ronda, modo Libre, ganar con 11 |
+| H3 · El camino | `claude/h3-camino` | Orden de pistas, luz al portal siguiente, portal siguiente tras la ronda, modo Libre, ganar con 11 (hecho) |
 | H4 · Tu canción | `claude/h4-cancion` | Capas con el motor del juego y niveles por estrella; final verdadero con tus notas; versión maestra |
 | H5 · Reglas claras | `claude/h5-reglas` | 0 ✦ fuera de tiempo; Viaje sin rótulos; narrador en su sitio; menú más corto |
 | H6 · Mundo que se escucha | `claude/h6-escucha` | Voces salvajes que se encuentran con el oído; portales que suenan desde su dirección |
