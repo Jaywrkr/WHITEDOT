@@ -46,7 +46,12 @@ try:
   LIT="()=>{const c=document.getElementById('w'),x=c.getContext('2d'),w=c.width,h=c.height,d=x.getImageData(Math.floor(w/2-12),Math.floor(h/2-60),24,60).data;let n=0;for(let i=0;i<d.length;i+=4)if(d[i]+d[i+1]+d[i+2]>300)n++;return n;}"
   for reduced in (False,True):
    page.evaluate('r=>{__r.S.reducedMotion=r;}',reduced);page.wait_for_timeout(900)
-   on=page.evaluate(LIT);page.evaluate("__r.unequipSparkStyle('sound:antenna')");page.wait_for_timeout(200);off=page.evaluate(LIT);page.evaluate("__r.equipSparkStyle('sound:antenna')");page.wait_for_timeout(200)
+   # The median of five frames each way: a passing wave or the Line can light one frame on a slow runner.
+   def lit():
+    v=[]
+    for _ in range(5):v.append(page.evaluate(LIT));page.wait_for_timeout(120)
+    return sorted(v)[2]
+   on=lit();page.evaluate("__r.unequipSparkStyle('sound:antenna')");page.wait_for_timeout(200);off=lit();page.evaluate("__r.equipSparkStyle('sound:antenna')");page.wait_for_timeout(200)
    assert on>off+3,('antenna above the cube',reduced,on,off)
   page.evaluate('__r.save()');page.reload();page.wait_for_function('!!window.__r?.sparkEconomy')
   assert page.evaluate('__r.sparkEconomy.wear.pulseVoice')=='voice:bell' and page.evaluate("__r.sparkEconomy.on['sound:antenna']")==True
