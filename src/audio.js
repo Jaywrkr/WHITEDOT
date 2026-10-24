@@ -290,7 +290,7 @@ export function initialize(runtime) {
       };const emit=()=>runtime.withVoiceOrigin?runtime.withVoiceOrigin('track',accompany):accompany();if(runtime.withAccompaniment)runtime.withAccompaniment(emit);else emit();
     }
     // tu Estudio: cada pieza suena en su paso
-    runtime.houseMusicStep?.(s,t);runtime.ringMusicStep?.(s,t);runtime.victoryMusicStep?.(s,t);runtime.echoMusicStep?.(s,t);if(runtime.S.mode==="studio"&&!runtime.houseActive?.()){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);runtime.studioHit[key]=performance.now()+(t-ac.currentTime)*1000;}}}
+    runtime.houseMusicStep?.(s,t);runtime.ringMusicStep?.(s,t);runtime.victoryMusicStep?.(s,t);runtime.echoMusicStep?.(s,t);runtime.rhythmMusicStep?.(s,t);if(runtime.S.mode==="studio"&&!runtime.houseActive?.()){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);runtime.studioHit[key]=performance.now()+(t-ac.currentTime)*1000;}}}
     // faros: instrumentos que encendiste
     if(runtime.inWorld()&&(runtime.S.layer||"superficie")==="superficie"){
       if(MU.layers.has(0)&&s%2===0)runtime.playVoice('faro',0,t+jit(),MU.dnaA,false,.4);

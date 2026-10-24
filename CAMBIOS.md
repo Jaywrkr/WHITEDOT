@@ -2,6 +2,16 @@
 
 Estado: 23 de octubre de 2026. Código **2.3.0-alpha.161**. Las entradas describen su revisión, no certifican producción.
 
+## H2 · Que se sienta · alpha.162
+
+Rama `claude/h2-que-se-sienta`, sobre `claude/h1-que-se-vea` (dependencia explícita).
+
+- **Calibración sin menú:** los primeros 12 pulsos cerca de un tiempo miden cuánto tarde oyen y tocan este jugador, este teléfono y estos auriculares. Si coinciden (la mitad central dentro de 60 ms), ese retraso se guarda y cuenta en todo «a tiempo». Quien toca disperso no queda «calibrado»: se sigue midiendo. En Ajustes, «Ajustar el tiempo» lo mueve de 10 en 10 ms o lo mide otra vez.
+- **Una sola guía:** los pasos que cuenta el lugar se levantan en la Línea (el «1» en dorado cuando cuenta). Se quitan los puntos bajo el cubo y los del Vacío.
+- **El lugar canta su patrón antes:** al empezar una ronda o un capítulo con ritmo, durante dos compases desde el siguiente «1» suenan un golpe y una nota en cada paso que cuenta, y la Línea brilla con ellos. Se retiran las frases «Aquí se toca en el «y»…».
+- **El cubo cambia con la racha (Vibri):** cada 4 aciertos seguidos gana una forma (esquinas, rombo, doble marco dorado que gira); un fallo quita una, nunca todas.
+- Pruebas: `tests/rhythm-calibration.mjs` (un jugador simulado 150 ms tarde pasa de fuera de tiempo a tiempo); `tests/journey-rhythm.mjs` (formas y canto de dos compases).
+
 ## H1 · Que se vea · alpha.161
 
 Rama `claude/h1-que-se-vea`, desde `main`. Primera fase del plan integrado que Jay aprobó tras la segunda sesión del panel ([El mundo](docs/MUNDO.md)).

@@ -596,3 +596,5 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 .bar.beat-hint{background:rgba(255,255,255,calc(.14 + var(--beat,0) * .4));box-shadow:0 0 calc(var(--beat,0) * 12px) rgba(255,255,255,calc(var(--beat,0) * .5))}
 
 .lugares-remix{color:var(--gold,#f0d27a);font-size:12px;margin:8px 0 0}
+
+.latency-setting{display:flex;align-items:center;gap:8px;margin:6px 0}.latency-setting span{flex:1}.latency-setting button{min-width:36px}.latency-setting output{min-width:56px;text-align:center}

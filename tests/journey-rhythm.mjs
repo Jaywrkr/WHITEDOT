@@ -19,3 +19,12 @@ assert.equal(at(10,RHYTHMS.mezcla.steps).step,0);assert.equal(at(10.5,RHYTHMS.me
 assert.equal(at(11.75,RHYTHMS.contra.steps).step,14);assert(at(11.75,RHYTHMS.contra.steps).dist<1e-9);assert.equal(at(9.75,RHYTHMS.contra.steps).step,14);
 assert.equal(rhythmTarget(1,[],.5,stepOf,[0]),null);
 console.log('PASS journey rhythm: Jay\'s table of rhythms by place and chapter, and the nearest step each counts on the music\'s grid');
+// Plan H2: the cube's form follows the run of hits on time (Vibri): +1 every four, -1 for a miss, never all at once.
+import {formStep,FORM_EVERY,FORM_MAX} from '../src/journey-pulse.js';
+{let f={};for(let i=0;i<FORM_EVERY*FORM_MAX+5;i++)f=formStep(f,true);assert.equal(f.level,FORM_MAX);f=formStep(f,false);assert.equal(f.level,FORM_MAX-1,'a miss takes one form away');f=formStep(f,false);f=formStep(f,false);f=formStep(f,false);assert.equal(f.level,0);
+ for(let i=0;i<FORM_EVERY-1;i++)f=formStep(f,true);assert.equal(f.level,0);f=formStep(f,true);assert.equal(f.level,1);}
+// The place sings its pattern for two bars before asking for it.
+import {SING_BARS} from '../src/journey-rhythm.js';
+{const {initialize}=await import('../src/journey-rhythm.js');const hits=[];const r={S:{sound:true},SIX:.125,placeRun:()=>({id:'lago',startedAt:1}),journeyGamePlaying:()=>true,journeyChapter:()=>null,hatHit:(t,v)=>hits.push(t),pluck:()=>{},chordTones:()=>[60,64,67]};initialize(r);
+ r.drawRhythmGuide();for(let k=-3;k<SING_BARS*16+8;k++)r.rhythmMusicStep(((k%16)+16)%16,10+k*.125);assert.equal(hits.length,4*SING_BARS,'the «y» of each beat, two bars');assert(Math.abs(hits[0]-(10+2*.125))<1e-9,'from the next «1»');}
+console.log('PASS journey rhythm (H2): the cube gains a form every four hits and loses one per miss; a place sings its pattern for two bars from the next «1»');

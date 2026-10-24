@@ -9,6 +9,10 @@ export const THEME=Object.freeze([[0,3],[1,1],[4,4],[3,2],[2,2],[0,4]].map(Objec
 export const ON_TIME=.08;
 // Shortest gap between two pulses: the grid already places them, this only keeps a finger from flooding it.
 export const PULSE_GAP=120;
+// The cube's form (plan H2, Matsuura's Vibri): every four hits on time in a row it gains a form, up to three; a miss
+// takes one away, never all. Testable without drawing.
+export const FORM_EVERY=4,FORM_MAX=3;
+export function formStep(f,on){const q={level:f?.level|0,run:f?.run|0};if(on){q.run++;if(q.run>=FORM_EVERY&&q.level<FORM_MAX){q.level++;q.run=0;}}else{q.level=Math.max(0,q.level-1);q.run=0;}return q;}
 // The nearest beat to a time, from the recent beat times and the expected next one (null without beats).
 export function nearestBeat(now,beats,bar){let best=null;const consider=b=>{if(best===null||Math.abs(now-b)<Math.abs(now-best))best=b;};for(const b of beats||[])consider(b);const last=beats?.[beats.length-1];if(last!==undefined&&bar>0)consider(last+bar);return best;}
 // Distance from now to the nearest beat.
@@ -18,7 +22,12 @@ export const outputLatency=ac=>{const v=Number(ac?.outputLatency||ac?.baseLatenc
 // The moment the player heard, on the audio clock: when the finger touched (atMs, from performance.now(); a tap is
 // judged when the finger goes down, not when it lifts) minus the output latency, because the player answers what
 // reaches the ear, not what the clock scheduled.
-export function heardTime(ac,atMs,nowMs){const late=Number.isFinite(atMs)&&Number.isFinite(nowMs)?Math.max(0,Math.min(1,(nowMs-atMs)/1000)):0;return (ac?.currentTime||0)-late-outputLatency(ac);}
+// Plus the player's own delay, measured from their first pulses (rhythm-calibration.js, plan H2): some phones and
+// headphones are later than they say, and some players hear the beat a little late.
+let NUDGE=0;
+export const latencyNudge=()=>NUDGE;
+export function setLatencyNudge(v){NUDGE=Number.isFinite(v)?Math.max(-.08,Math.min(.3,v)):0;return NUDGE;}
+export function heardTime(ac,atMs,nowMs){const late=Number.isFinite(atMs)&&Number.isFinite(nowMs)?Math.max(0,Math.min(1,(nowMs-atMs)/1000)):0;return (ac?.currentTime||0)-late-outputLatency(ac)-NUDGE;}
 // Whether a touch at atMs was on a beat (shared by every system that asks «on time?»).
 export const onTime=(ac,beats,bar,atMs,nowMs)=>!!ac&&beatDistance(heardTime(ac,atMs,nowMs),beats,bar)<=ON_TIME;
 // A theme note in the scale of the place, as the chapters hear it.
@@ -32,7 +41,7 @@ export function playCello(ac,out,t,midi,seconds,volume){
  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(volume,t+.06);g.gain.setValueAtTime(volume,t+seconds*.75);g.gain.exponentialRampToValueAtTime(.0001,end+.25);
  const g2=ac.createGain();g2.gain.setValueAtTime(.25,t);o.connect(f);o2.connect(g2);g2.connect(f);f.connect(g);g.connect(out);for(const n of [o,o2,lfo]){n.start(t);n.stop(end+.3);}return hz;}
 export function initialize(runtime){
- const state={hits:0,misses:0,phrases:0,next:0,lastOn:null,degree:null,vibrations:0,notes:[]};let lastAt=-1e9;const marks=[];
+ const state={hits:0,misses:0,phrases:0,next:0,lastOn:null,degree:null,vibrations:0,notes:[]};let form={level:0,run:0},formAt=0;let lastAt=-1e9;const marks=[];
  const calm=()=>calmMotion(runtime.S);
  const haptics=()=>runtime.S.haptics!==false;
  function vibrate(ms){if(!haptics()||typeof navigator==='undefined'||typeof navigator.vibrate!=='function')return false;try{navigator.vibrate(ms);state.vibrations++;return true;}catch(_){return false;}}
@@ -55,10 +64,13 @@ export function initialize(runtime){
   // The peak sits where you touched (what you heard then), and on time it sits on the beat you answered.
   const beatAt=on&&!silent?(own?own.hit.time:nearestBeat(heard,runtime.MU?.bq,bar)):null,step=!ac?0:beatAt!==null?(own?own.hit.step:Math.round(stepAt(beatAt))%16):stepAt(heard);marks.push({at:now,step,on});if(marks.length>24)marks.shift();
   if(on&&!silent)runtime.journeyRhythmHit?.(step);
+  // How far from its target this touch was, signed, for the calibration of the first pulses.
+  if(ac&&!silent){const target=own?.hit?.time??nearestBeat(heard,runtime.MU?.bq,bar);if(Number.isFinite(target))runtime.calibrationSample?.(heard-target);}
   // The chapter game hears every pulse, with the step of the bar it answered (0 is the «1»).
   runtime.journeyGamePulse?.(on,{step:Number.isFinite(step)?Math.round(step)%16:null,silent});
   // The wild World hears it too: a wild spark beside the cube hops on time (wild.js, plan F18).
   runtime.wildPulse?.(on);
+  if(!silent){form=formStep(form,on);formAt=performance.now();}
   state.degree=null;state.midi=null;state.beat=null;if(!on){state.misses++;runtime.journeyChapterPulse?.(false);return false;}
   state.hits++;const [degree]=THEME[state.next],{scale,tr}=scaleNow(),midi=themePitch(degree,scale,tr);state.degree=degree;state.midi=midi;state.scale=scale;state.tr=tr;state.beat=beatAt??nearestBeat(heard,runtime.MU?.bq,bar);state.next=(state.next+1)%THEME.length;
   // The chapter hears the note first, so the note that completes the theme counts.
@@ -74,11 +86,20 @@ export function initialize(runtime){
  function draw(c,W,H,t){
   if(!(runtime.inWorld?.()||runtime.S.mode==='camino')||runtime.activityActive||openSurface('.modal:not([hidden])'))return;const y=Math.round(H*.8)+.5,x0=Math.max(24,W*.12),x1=W-x0,w=x1-x0,now=performance.now();
   c.save();c.lineWidth=1;c.strokeStyle='#ffffff';c.globalAlpha=.16;c.beginPath();c.moveTo(x0,y);c.lineTo(x1,y);c.stroke();
-  for(let i=0;i<16;i++){c.globalAlpha=i%4?.18:.35;c.fillStyle='#fff';c.fillRect(Math.round(x0+(i+.5)/16*w),y-(i%4?1:2),1,i%4?2:4);}
+  // One guide (plan H2): the steps the place counts stand up on the Line, the «1» in gold when it counts; the others
+  // stay small. While the place sings its pattern (journey-rhythm.js) they glow on their beat.
+  const counted=runtime.journeyRhythmState?.()?.steps||[0,4,8,12],sing=runtime.rhythmSinging?.()||null;
+  for(let i=0;i<16;i++){const on=counted.includes(i),one=on&&i===0,lit=sing&&sing.step===i&&on?1-sing.age:0;c.globalAlpha=on?.55+.45*lit:(i%4?.14:.25);c.fillStyle=one?(runtime.GOLD||'#f0d27a'):'#fff';const hgt=on?6+6*lit:(i%4?2:3);c.fillRect(Math.round(x0+(i+.5)/16*w)-(on?1:0),y-hgt/2,on?2:1,hgt);}
   const step=stepNow(),cx=x0+(step+.5)/16*w;c.globalAlpha=.8;c.fillStyle=runtime.GOLD||'#f0d27a';c.fillRect(Math.round(cx)-1,y-3,2,6);
   for(const m of marks){const age=(now-m.at)/1000,life=calm()?2.5:1.8;if(age>life)continue;const k=1-age/life,px=x0+(m.step+.5)/16*w,h=(m.on?18:m.dropped?4:8)*(calm()?1:.6+.4*k);c.globalAlpha=k*(m.on?.95:m.dropped?.3:.5);c.strokeStyle=m.on?(runtime.GOLD||'#f0d27a'):m.dropped?'#888888':'#ffffff';c.beginPath();c.moveTo(px-5,y);c.lineTo(px,y-h);c.lineTo(px+5,y);c.stroke();}
   c.restore();}
+ // The cube's form around it: corners, then a diamond, then a gold double frame that turns. Drawn over the cube.
+ function drawForm(c,x,y,s,t){if(!form.level||!(runtime.inWorld?.()||runtime.S.mode==='camino'))return;const gold=runtime.GOLD||'#f0d27a',still=calm(),fresh=Math.max(0,1-(performance.now()-formAt)/400),r=s/2+6;c.save();c.lineWidth=1.5;
+  c.globalAlpha=.8;c.strokeStyle='#ffffff';for(const [dx,dy] of [[-1,-1],[1,-1],[1,1],[-1,1]]){c.beginPath();c.moveTo(x+dx*r,y+dy*(r-4));c.lineTo(x+dx*r,y+dy*r);c.lineTo(x+dx*(r-4),y+dy*r);c.stroke();}
+  if(form.level>=2){const d=r+6;c.globalAlpha=.6+.3*fresh;c.beginPath();c.moveTo(x,y-d);c.lineTo(x+d,y);c.lineTo(x,y+d);c.lineTo(x-d,y);c.closePath();c.stroke();}
+  if(form.level>=3){const a=still?0:t/900,d=r+12;c.globalAlpha=.85;c.strokeStyle=gold;c.translate(x,y);c.rotate(a);c.strokeRect(-d,-d,d*2,d*2);c.rotate(Math.PI/4);c.strokeRect(-d*.8,-d*.8,d*1.6,d*1.6);}
+  c.restore();}
  // Each chapter starts its theme from the first note.
  function reset(){state.next=0;}
- Object.defineProperties(runtime,{journeyPulse:{get:()=>judge},journeyPulseReset:{get:()=>reset},journeyPulseDropped:{get:()=>dropped},drawJourneyLine:{get:()=>draw},journeyPulseState:{get:()=>()=>({...state,notes:[...state.notes],marks:marks.length,lastMark:marks.length?{...marks[marks.length-1]}:null})},journeyVibrate:{get:()=>vibrate}});
+ Object.defineProperties(runtime,{journeyPulse:{get:()=>judge},journeyPulseReset:{get:()=>reset},journeyPulseDropped:{get:()=>dropped},drawJourneyLine:{get:()=>draw},journeyPulseState:{get:()=>()=>({...state,notes:[...state.notes],marks:marks.length,lastMark:marks.length?{...marks[marks.length-1]}:null})},journeyVibrate:{get:()=>vibrate},drawCubeForm:{get:()=>drawForm},cubeForm:{get:()=>()=>({...form})}});
 }
