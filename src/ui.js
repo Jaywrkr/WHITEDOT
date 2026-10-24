@@ -23,7 +23,7 @@ export function initialize(runtime) {
     else if(runtime.inWorld()){if(!runtime.journeyQuiet?.())fill.style.width="100%";   // in the Journey the chapter sets it (journey-chapters.js)
       goal.textContent=dist?"Eco cercano · escucha y pulsa":"Lugares "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
       gr.textContent="Sin reloj";}
-    else{const n=runtime.S.pathCrystals.length;fill.style.width=(n*10)+"%";goal.textContent="Rompe cristales · "+n+" / 10";gr.textContent="Acércate y lanza un pulso";}
+    else{const n=runtime.S.pathCrystals.length;fill.style.width=(n*10)+"%";goal.textContent="Cristales · "+n+" / 10";gr.textContent="Acércate y lanza un pulso";}
     const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary");$("bWorld").querySelector("span").firstChild.nodeValue=runtime.inWorld()?"Camino":"Mundo";$("bWorldHint").textContent=runtime.inWorld()?"Volver al Camino":"Explorar el Mundo";
     bp.hidden=!(canWorld||runtime.inWorld());$("bPrimaryL").textContent=runtime.inWorld()?"Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=runtime.inWorld()?"scaleX(-1)":"";
   }
@@ -37,7 +37,7 @@ export function initialize(runtime) {
 
 
   function enterWorld({automatic=false}={}){
-    if(!runtime.worldReady()){toast("Rompe diez cristales del Camino para entrar.");return;}
+    if(!runtime.worldReady()){toast("Abre el Mundo con diez cristales del Camino.");return;}
     runtime.beginSession();if(runtime.S.sound)runtime.audio();if(runtime.S.lastWorldDay!==runtime.S.todayKey){if(runtime.dailyArrival?.()){ /* Previous place remains available through Volver al salto. */ }else if(runtime.S.studio.x!=null){runtime.S.wx=runtime.S.studio.x;runtime.S.wy=runtime.S.studio.y;{const rp=runtime.REG*runtime.WCH,ring=Math.max(Math.abs(Math.floor(runtime.S.wx/rp)),Math.abs(Math.floor(runtime.S.wy/rp)));if(ring>=3)setTimeout(()=>runtime.toast(`<em>Campamento</em> · a ${ring} regiones del Origen`),2600);if(ring>=3&&!runtime.S.help.camp){runtime.S.help.camp=true;setTimeout(()=>runtime.say(runtime.VOZ.campamento),4000);}}}runtime.S.lastWorldDay=runtime.S.todayKey;}runtime.zoneHops=0;runtime.S.mode="world";runtime.curZone=-1;{const rg=runtime.regionOfPos(runtime.S.wx,runtime.S.wy);runtime.curRegion=rg.key;runtime.enterRegion(rg,rg.z);}runtime.MU.layers=new Set();
     runtime.todayRelics();runtime.enterFx=1;runtime.flocks=[];
     runtime.jamUI?.();

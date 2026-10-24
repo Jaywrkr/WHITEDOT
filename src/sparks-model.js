@@ -27,7 +27,7 @@ export const SPARK_BADGES=Object.freeze([
  {id:'errand',name:'Venía por una cosa',text:'Descubre tres tarjetas distintas en un paseo.',reward:5},
  {id:'wrong',name:'No era por aquí',text:'Regresa antes de treinta segundos de tu salto.',reward:0},
  {id:'neighbors',name:'Coleccionista de vecinos',text:'Encuentra tres tipos de vecinos en un paseo.',reward:5},
- {id:'last',name:'Un último cristal',text:'Rompe diez cristales después del Camino.',reward:5},
+ {id:'last',name:'Un último cristal',text:'Abre diez cristales después del Camino.',reward:5},
  {id:'taxi',name:'Sin pedir un taxi',text:'Camina un kilómetro sin pagar un salto.',reward:5}
 ]);
 // The visible end of the collection: every activity type, wonder, mischief scene and sculpture shape, counted with the achievement metrics.

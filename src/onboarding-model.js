@@ -1,7 +1,7 @@
 export const FIRST_JOURNEY_VERSION=1;
 export const FIRST_JOURNEY_STEPS=[
  ['move','Arrastra para acercarte a un cristal.'],
- ['light','Lanza pulsos. Rompe diez cristales para abrir el Mundo.'],
+ ['light','Toca a tiempo junto a diez cristales para abrir el Mundo.'],
  ['world','El décimo cristal abre el Mundo automáticamente.'],
  ['voice','Descubre una voz. Acerca tu cubo a un elemento.'],
  ['pulse','Toca un espacio vacío para lanzar un pulso.'],

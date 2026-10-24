@@ -192,6 +192,19 @@ Decisiones de Jay (aprobadas; se aplican en la fase indicada, hasta entonces rig
 - **Festival:** recomendación, que el jurado vea solo el Viaje y su final (`?festival=1`), sin anillo, remezcla ni tienda. Pendiente de Jay.
 - Las sesiones con Luca (`?prueba=1`) siguen pendientes; el modelo no sustituye verle jugar.
 
+## Plan I1–I6 (tercera sesión del panel, 24 de octubre)
+
+El panel (tercera sesión, media 7,5) pidió cerrar lo que H1–H7 dejó a medias. Jay aprobó el plan y las recomendaciones: **★★ al 75 %**, **★★★ al 70 % en Maestro** y **festival con el Viaje entero hasta los créditos**.
+
+| Fase | Rama | Qué |
+|---|---|---|
+| I1 · Coherencia | `claude/i1-coherencia` | Hecho: el narrador ya no habla en avisos (solo en la tarjeta y la Bitácora); entre los créditos y el primer portal no se anuncia ningún logro ni el aviso de ✦; fuera los «Rompe…»; la tarjeta y el narrador sin cifras de umbral |
+| I2 · Que se vea | `claude/i2-se-vea` | Cubo de 24–36 px también en el Camino y los lugares; el color ganado lava la pantalla; la columna dorada se ve desde lejos |
+| I3 · Un solo instante | `claude/i3-instante` | Brillo, vibración y cámara cuando suena la nota; la Línea anticipa; calibración solo en las negras y fuera del canto |
+| I4 · El final que respira | `claude/i4-final` | Notas de los 11 lugares con su ritmo y en la escala del mundo; el tema calla hasta su momento; silencio; chelo; ≥ 60 s |
+| I5 · Decisiones | `claude/i5-decisiones` | ★★ 75 %, ★★★ 70 %; `?festival=1` hasta los créditos |
+| I6 · Menos ruido | `claude/i6-menos-ruido` | Menú de 6 entradas y «Más»; modelo de dos horas sin contar compras como novedad |
+
 ## Cuándo una fase está terminada
 
 Regla «solo a tiempo» y textos breves; capturas en teléfono, teléfono horizontal y escritorio, con paleta para daltonismo y movimiento reducido; renders de mezcla de lo que cambió; guardado migrado y sincronizado sin pérdidas; pruebas de lógica y navegador sin desactivar ninguna; `?medir=1` sin empeorar; documentación al día; y una lista de cinco minutos para el teléfono de Jay. Lo que falle se corrige dentro de esa fase.
