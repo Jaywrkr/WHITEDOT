@@ -19,13 +19,14 @@ RENDER='''async()=>{const song=await import('/src/song.js'),stage=await import('
  song.initialize(r);stage.initialize(r);r.openSong({final:true,master:true});for(let k=0;k<plan.bars*16;k++)r.songStageStep(k%16,.05+k*six);
  const buf=await ac.startRendering(),s=buf.getChannelData(0);let peak=0,hot=0;for(const v of s){const a=Math.abs(v);if(a>peak)peak=a;if(a>.99)hot++;}
  const rms=(a,b)=>{let q=0,n=0;for(let i=Math.floor(a*sr);i<Math.min(s.length,Math.floor(b*sr));i++){q+=s[i]*s[i];n++;}return 10*Math.log10(q/Math.max(1,n)+1e-12);};
- r.closeSong();return {bars:plan.bars,peak,hot,early:rms(.05,.05+16*six),full:rms(.05+10*16*six,.05+11*16*six)};}'''
+ r.closeSong();return {bars:plan.bars,peak,hot,early:rms(.05,.05+16*six),full:rms(.05+plan.endAt*16*six,.05+(plan.endAt+1)*16*six)};}'''
 try:
  with sync_playwright() as p:
   b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox'])
   page=b.new_page();page.goto(f'http://127.0.0.1:{server.server_port}/tests/')
   r=page.evaluate(RENDER)
   assert r['hot']==0 and r['peak']<.8,('headroom over the World',r)
+  # Plan I4: the Faros melody waits for the theme, so «full» is the tail, where every layer plays.
   assert r['full']>r['early']+3,('fuller as the layers come in',r)
   print('PASS Tu canción master finale over the World: %d bars, eleven layers in their variation, your notes and the theme; peak %.3f, fuller as layers come in'%(r['bars'],r['peak']),flush=True);b.close()
 finally:server.shutdown()

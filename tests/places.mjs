@@ -40,4 +40,6 @@ r.startPlace('tormenta');r.S.journey.dance={points:99};const saved=JSON.parse(JS
 // The Journey: a chapter played on time gives its ★★ when kept.
 const r3={...r,S:{wx:0,wy:0,sound:true,journey:{done:{}}}};initialize(r3);for(let i=0;i<10;i++)r3.placeHear('llanura',true,{});r3.placeChapterKept('llanura');assert.deepEqual(r3.places().stars.llanura,[true,true,false]);
 Date.now=realNow;
+// Plan I4: the steps of your notes are kept beside them, only when there is one for each note.
+{const n=normalizePlaces({version:2,notes:{lago:[60,62],cueva:[67]},noteSteps:{lago:[0,6],cueva:[1,2],jardin:[3]}});assert.deepEqual(n.noteSteps,{lago:[0,6]});assert.deepEqual(normalizePlaces({}).noteSteps,{});}
 console.log('PASS places: eleven places and 33 stars, the Journey gives ★ (★★ if played on time), a round gives stars, sparks and a record and gives back the chapter, Maestro opens with ★★ (tempo, window, ×1.5), half from the fourth round, only ★ without sound, an open round dropped on reload');

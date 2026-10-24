@@ -1,4 +1,4 @@
-import {THEME,themePitch} from './journey-pulse.js';
+import {THEME,themePitch,playCello} from './journey-pulse.js';
 // Tu canción (plan F7, docs/MUNDO.md): each of the eleven places gives one layer of one song, eight bars of house at
 // 120 BPM in A major (A, E, F♯m, D; two bars each). The Journey's finale builds it from your five chapters; the
 // Refugio plays it with the layers you have won; with the 33 stars all eleven sound together: that is winning.
@@ -55,6 +55,7 @@ export function initialize(runtime){
  function conga(ac,out,t,m,v){const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(hz(m)*1.3,t);o.frequency.exponentialRampToValueAtTime(hz(m),t+.05);env(g,t,v,.003,.18);o.connect(g);g.connect(out);o.start(t);o.stop(t+.25);}
  // One hit of a layer, at its time: every voice goes through the song's own gain, so stopping fades all of it.
  function hit(ac,out,e,t,six){switch(e.what){
+  case 'cello':return playCello(ac,out,t,e.midi,e.len*six,e.soft?.05:.09);
   case 'kick':return kick(ac,out,t,.5);
   case 'bass':return tone(ac,out,e.midi,t,e.len*six,'square',.11,500,[0],2);
   case 'hat':return noise(ac,out,t,.09,.1,'highpass',7000);
