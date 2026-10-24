@@ -32,6 +32,13 @@ export function layerStep(id,s,c){const out=[],b=s%16,add=(what,extra={})=>out.p
 // Any chord brought to the song's registers: the bass root between D2 and C♯3, the three notes from F♯3.
 export function songChord(tones){let root=tones[0],shift=0;while(root>49)root-=12;while(root<38)root+=12;while(tones[0]+shift>65)shift-=12;while(tones[0]+shift<54)shift+=12;
  return {root,tones:tones.slice(0,3).map(m=>m+shift)};}
+// A layer as the stars have grown it (plan H4): ★ a fragment (every other bar), ★★ the whole layer, ★★★ its variation
+// (the notes doubled an octave up, softer, and the beats answered two sixteenths later, softer). 0 is silent.
+const PITCHED=new Set(['bass','acid','arp','bell','lead','echo','conga']),CHORDAL=new Set(['pad','stab']);
+export function tierStep(id,s,c,tier){if(!(tier>0))return [];if(tier===1&&Math.floor(s/16)%2===1)return [];const out=layerStep(id,s,c).map(e=>({...e}));
+ if(tier>=3){for(const e of layerStep(id,s,c)){if(PITCHED.has(e.what))out.push({...e,midi:e.midi+12,soft:true});else if(CHORDAL.has(e.what))out.push({...e,tones:e.tones.map(m=>m+12),soft:true});}
+  for(const e of layerStep(id,s-2,c))if(!PITCHED.has(e.what)&&!CHORDAL.has(e.what)&&!out.some(q=>q.what===e.what))out.push({...e,s,soft:true});}
+ return out;}
 // The hits of one layer over the eight bars, in sixteenths: testable without sound.
 export function layerEvents(id){const out=[];for(let s=0;s<SONG_STEPS;s++)out.push(...layerStep(id,s,chordAt(s)));
  // The Faros carry the cube's theme twice, in the song's key.

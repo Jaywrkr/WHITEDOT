@@ -96,7 +96,7 @@ Cada lugar da chispas completas en sus tres primeras rondas del día y la mitad 
 
 ## Tu canción
 
-Cada lugar da una capa de una canción. El final del Viaje junta las cinco primeras y abre el mundo («Tu mundo se abrió · Once lugares te esperan», botón Explorar). Con los 11 lugares completos suenan las once juntas: es ganar el juego («Los 11 lugares»). Con las 33 ★ vuelve como versión maestra («Las 33 ★»). En H4 la canción se rehace con el motor del juego.
+Cada lugar da una capa de una canción. El final del Viaje junta las cinco primeras y abre el mundo («Tu mundo se abrió · Once lugares te esperan», botón Explorar). Con los 11 lugares completos suenan las once juntas: es ganar el juego («Los 11 lugares»). Con las 33 ★ vuelve como versión maestra («Las 33 ★»). Desde H4 la canción es la música del propio juego: el Mundo sigue sonando en su tono y tempo, y encima entra la capa de cada lugar ganado sobre el acorde que suena. Las estrellas la hacen crecer: ★ un fragmento (un compás de cada dos), ★★ la capa entera, ★★★ su variación (una octava arriba y con eco). El final con los 11: las capas entran una por compás, luego tus notas de cada lugar en orden y al final el tema del cubo; la versión maestra lo toca todo en su variación. Los trofeos del Refugio tocan su capa dos compases sobre la música.
 
 ## Logros del narrador
 
@@ -172,7 +172,7 @@ Decisiones de Jay (aprobadas; se aplican en la fase indicada, hasta entonces rig
 | H1 · Que se vea | `claude/h1-que-se-vea` | Lugares sin «Sin visitar» con ★; brillo dorado y onda dorada en cada acierto; cubo de 16–30 px en el Mundo; el gris de un lugar no recuperado solo en el suelo (el oro sigue dorado); color recuperado como tono; cerrar un lugar recupera su color |
 | H2 · Que se sienta | `claude/h2-que-se-sienta` | Calibrar el retraso con los primeros pulsos y en Ajustes; una sola guía de ritmo; cada lugar canta su patrón antes; el cubo cambia de forma con la racha (hecho) |
 | H3 · El camino | `claude/h3-camino` | Orden de pistas, luz al portal siguiente, portal siguiente tras la ronda, modo Libre, ganar con 11 (hecho) |
-| H4 · Tu canción | `claude/h4-cancion` | Capas con el motor del juego y niveles por estrella; final verdadero con tus notas; versión maestra |
+| H4 · Tu canción | `claude/h4-cancion` | Capas con el motor del juego y niveles por estrella; final verdadero con tus notas; versión maestra (hecho) |
 | H5 · Reglas claras | `claude/h5-reglas` | 0 ✦ fuera de tiempo; Viaje sin rótulos; narrador en su sitio; menú más corto |
 | H6 · Mundo que se escucha | `claude/h6-escucha` | Voces salvajes que se encuentran con el oído; portales que suenan desde su dirección |
 | H7 · Medir y personas | `claude/h7-medir` | Simulación de 2 h (60, 75 y 90 % a tiempo); festival; sesiones con Luca |
