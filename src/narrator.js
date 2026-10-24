@@ -46,7 +46,7 @@ export const NARRATOR_LINES=Object.freeze({
  mito1:'La Luna de oro. Nadie te va a creer. Toma captura.',
  // The places, the stars, the ring and your song.
  lugarEstrella:'Una estrella. Los astrónomos no se enteraron. Yo sí.',
- lugarRitmo:'Ochenta y cinco por ciento a tiempo. El otro quince queda entre nosotros.',
+ lugarRitmo:'A tiempo casi siempre. El resto queda entre nosotros.',
  lugarMaestro:'Maestro. Ya puedes pedir que te llamen así. Nadie lo hará.',
  lugarMaestro5:'Cinco Maestros. Ya no es suerte. O sí, pero muchísima.',
  lugarCasi:'Menos de la mitad a tiempo. El ritmo te saluda desde lejos.',
@@ -72,7 +72,7 @@ export const NARRATOR_LINES=Object.freeze({
 // The new achievements: id, title, how it is earned, and whether it is secret until earned.
 export const NARRATOR_ACHIEVEMENTS=Object.freeze([
  ['lugarEstrella','Una estrella','Gana tu primera ★ en un lugar.'],
- ['lugarRitmo','Ritmo','Gana una ★★ con el 85 % a tiempo.'],
+ ['lugarRitmo','Ritmo','Gana una ★★ tocando a tiempo.'],
  ['lugarMaestro','Maestro','Gana una ★★★ en una ronda Maestro.'],
  ['lugarMaestro5','Cinco Maestros','Gana cinco ★★★.'],
  ['lugarCasi','Casi ritmo','Termina una ronda con menos de la mitad a tiempo.'],

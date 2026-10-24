@@ -83,7 +83,7 @@ export function initialize(runtime) {
     const r=Math.random(), gold=r<(m.off?.25:.05), big=!gold&&r<(m.off?.6:.25);
     const val=gold?10:big?3:1, before=runtime.level();
     const first=runtime.S.todayLight===0,added=Math.min(val,runtime.CAP-runtime.S.todayLight);runtime.S.todayLight+=added;runtime.S.totalLight+=added;
-    if(first)runtime.toast?.('Sigue el Camino. Rompe diez cristales.');
+    if(first)runtime.toast?.('Sigue el Camino. Abre el Mundo con diez cristales.');
     runtime.playerNote(big?.17:.14,gold);
     if(gold){runtime.flash=1;runtime.unlock("dorada");}
     burst(m.x,m.y,gold?18:6,gold||runtime.grooveFx>.9);

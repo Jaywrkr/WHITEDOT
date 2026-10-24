@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.167**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.168**. Las entradas describen su revisión, no certifican producción.
+
+## I1 · Coherencia · alpha.168
+
+Rama `claude/i1-coherencia`, desde `main`. Tercera sesión del panel: restos que contradecían las decisiones de Jay.
+
+- **El narrador solo en la tarjeta y la Bitácora:** los avisos de logro ya no llevan su frase.
+- **Calma tras los créditos:** entre el final del Viaje y el primer portal no se anuncia ningún logro (quedan en la Bitácora) y desaparece el aviso «Tus ✦ cambian tu cubo»; Tu cubo queda marcado.
+- **Fuera «Rompe…»:** el Camino, la ayuda y los avisos hablan de tocar a tiempo y de abrir el Mundo con diez cristales.
+- **Sin cifras de umbral:** la tarjeta dice «Ritmo · X % a tiempo» y «Maestro», y el narrador ya no dice «Ochenta y cinco por ciento».
+- Pruebas: `release-closure.mjs` (aviso sin narrador y calma tras los créditos) y `journey_finale_smoke.py` (marca sin aviso).
 
 ## H7 · Medir · alpha.167
 
