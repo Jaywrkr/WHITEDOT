@@ -27,9 +27,9 @@ let mota=find('mota');r.S.wx=mota.x;r.S.wy=mota.y;const p0=r.journeyStick().poin
 r.BIOMES=[{id:'llanura'},{id:'lago'}];r.biomeOfPos=()=>1;assert.equal(r.journeyGamePulse(true),null,'nothing to stick outside the Llanura');r.biomeOfPos=()=>0;assert.equal(r.journeyStick().cloud,null);
 // Draw: the place dims, things shine, the hint is told once.
 const draws=[];const ctx=new Proxy({},{get:(o,k)=>k in o?o[k]:()=>draws.push(k),set:(o,k,v)=>{o[k]=v;return true;}});
-r.S.wx=mota.x;r.S.wy=mota.y;r.drawJourneyGamesUnder(ctx,390,844,0);r.drawJourneyGames(ctx,390,844,16);assert(draws.includes('arc')&&draws.includes('fillRect'));assert(r.S.journey.stick.hinted);timers.splice(0).forEach(f=>f());assert(toasts.some(t=>/brilla/.test(t)));
+r.S.wx=mota.x;r.S.wy=mota.y;r.drawJourneyGamesUnder(ctx,390,844,0);r.drawJourneyGames(ctx,390,844,16);assert(draws.includes('arc')&&draws.includes('fillRect'));assert(r.S.journey.stick.hinted);timers.splice(0).forEach(f=>f());assert(!toasts.some(t=>/brilla/.test(t)),'the Journey has no lines (plan H5)');
 // Full bar: the gold cloud comes beside the cube and follows it; off time it waits; one pulse on time swallows it, once.
-r.S.journey.stick.points=STICK_GOAL;r.drawJourneyGamesUnder(ctx,390,844,32);const c=r.journeyStick().cloud;assert(c&&Math.hypot(c.x-r.S.wx,c.y-r.S.wy)<100,'beside the cube');timers.splice(0).forEach(f=>f());assert(toasts.some(t=>/nube dorada/.test(t)));
+r.S.journey.stick.points=STICK_GOAL;r.drawJourneyGamesUnder(ctx,390,844,32);const c=r.journeyStick().cloud;assert(c&&Math.hypot(c.x-r.S.wx,c.y-r.S.wy)<100,'beside the cube');timers.splice(0).forEach(f=>f());assert(!toasts.some(t=>/nube dorada/.test(t)),'the Journey has no lines (plan H5)');
 r.S.wx+=500;for(let i=0;i<120;i++)r.drawJourneyGamesUnder(ctx,390,844,40+i);const c2=r.journeyStick().cloud;assert(Math.hypot(c2.x-r.S.wx,c2.y-r.S.wy)<100,'it follows');
 assert.equal(r.journeyGamePulse(false),'miss');assert.deepEqual(done,[]);
 assert.equal(r.journeyGamePulse(true),'swallow');assert.deepEqual(done,['llanura']);assert(r.journeyStick().swallowed);

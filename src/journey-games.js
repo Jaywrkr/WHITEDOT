@@ -8,9 +8,12 @@ export const classicJourney=(search=globalThis.location?.search)=>/[?&](faro|cla
 export function beatGlow(runtime){if(calmMotion(runtime.S)||!runtime.ac||!runtime.MU?.bq?.length)return 0;const now=runtime.ac.currentTime;let last=-Infinity;for(const b of runtime.MU.bq)if(b<=now)last=Math.max(last,b);return Math.max(0,1-(now-last)/((runtime.SIX||.15)*2));}
 export const worldCamera=runtime=>({x:runtime.camX??runtime.S.wx,y:runtime.camY??runtime.S.wy});
 // One short line said a moment later, dropped if by then the player has left the chapter (the notice lane may hold it).
-export function chapterToast(runtime,id,text,delay=600,ttl=15000){setTimeout(()=>runtime.toast?.(text,{level:2,ttl,coalesce:false,force:true,valid:()=>!!runtime.journeyGamePlaying?.(id)}),delay);}
+// Plan H5: the Journey has no lines at all (its rules are shown by the gesture, the bar and the place singing its
+// pattern); a place says each line once per save, the first time, and never again.
+export function chapterToast(runtime,id,text,delay=600,ttl=15000){if(!runtime.placeRun?.()&&runtime.journeyQuiet?.())return false;const j=runtime.S.journey||(runtime.S.journey={}),said=j.lines&&typeof j.lines==='object'&&!Array.isArray(j.lines)?j.lines:(j.lines={});if(said[text])return false;said[text]=true;runtime.save?.();
+ setTimeout(()=>runtime.toast?.(text,{level:2,ttl,coalesce:false,force:true,valid:()=>!!runtime.journeyGamePlaying?.(id)}),delay);return true;}
 // The chapter's rule, once per save, a moment after it starts.
-export function sayOnce(runtime,flags,key,text,id,delay=1500){if(flags[key])return false;flags[key]=true;runtime.save?.();chapterToast(runtime,id,text,delay,12000);return true;}
+export function sayOnce(runtime,flags,key,text,id,delay=1500){if(flags[key])return false;flags[key]=true;runtime.save?.();return chapterToast(runtime,id,text,delay,12000);}
 export function initialize(runtime){
  const games={};
  const game=id=>classicJourney()?null:games[id]||null;

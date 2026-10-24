@@ -22,9 +22,9 @@ clock+=600;frame();st=r.journeyDance();assert(st.target&&st.target.n===1);r.S.wx
 // A bolt not returned falls white after a bar and a half, and the row starts again.
 clock+=600;frame();st=r.journeyDance();r.S.wx=st.target.x+500;clock+=.125*16*1000*1.5+10;frame();assert.equal(r.journeyDance().fallen,1);assert.equal(r.journeyDance().row,0);
 clock+=700;frame();st=r.journeyDance();r.S.wx=st.target.x;r.S.wy=st.target.y;r.journeyGamePulse(true);assert.equal(r.journeyDance().points,35,'a new row starts at ten');
-frame();assert(r.S.journey.dance.hinted);timers.splice(0).forEach(f=>f());assert(toasts.some(t=>/círculo/.test(t)));
+frame();assert(r.S.journey.dance.hinted);timers.splice(0).forEach(f=>f());assert(!toasts.some(t=>/círculo/.test(t)),'the Journey has no lines (plan H5)');
 // Full bar: no more circles; the eye comes beside the cube; a pulse on time closes it, once.
-r.S.journey.dance.points=DANCE_GOAL;frame();st=r.journeyDance();assert(st.eye&&!st.target);timers.splice(0).forEach(f=>f());assert(toasts.some(t=>/ojo de la tormenta/.test(t)));
+r.S.journey.dance.points=DANCE_GOAL;frame();st=r.journeyDance();assert(st.eye&&!st.target);timers.splice(0).forEach(f=>f());assert(!toasts.some(t=>/ojo de la tormenta/.test(t)),'the Journey has no lines (plan H5)');
 assert.equal(r.journeyGamePulse(false),'miss');assert.deepEqual(done,[]);assert.equal(r.journeyGamePulse(true),'close');assert.deepEqual(done,['tormenta']);
 assert(draws.includes('arc'));
 performance.now=realNow;

@@ -75,7 +75,7 @@ export function initialize(runtime){
  function particles(o,site){return crystalFragments(o,site.rare===true).map(p=>({...p,x:(site.drop?.x??o.x)+Math.cos(p.index*2.399)*14,y:(site.drop?.y??o.y)+Math.sin(p.index*2.399)*14,home:site.drop||o,age:0,trail:[]}));}
  function hit(o,path,source=null,mult=1){
   const prior=sites.get(o.id)||runtime.savedCrystal(o.id);if(prior?.broken)return false;
-  const before=S().sparks,next=runtime.crystalTransaction(o,'hit',path,null,false,source?.mult||mult);if(!next)return false;
+  const before=S().sparks,next=runtime.crystalTransaction(o,'hit',path,null,false,source?.mult??mult);if(!next)return false;
   const site={...prior,...next,flash:seconds+.25};impact(o,site,prior?.run||o);
   if(o.runner&&!path&&!prior?.hits&&!site.broken){site.run={x:o.x,y:o.y,age:0,trail:[]};}
   if(site.broken){site.drop=site.run?{x:site.run.x,y:site.run.y}:o;site.run=null;site.particles=particles(o,site);if(!path){const chain=source||{hit:new Set([o.id]),budget:CRYSTAL_CHAIN_LIMIT,mult};chain.broken=(chain.broken||0)+1;chains.push({x:prior?.run?.x??o.x,y:prior?.run?.y??o.y,at:seconds,chain});chains=chains.slice(-12);}}
@@ -100,7 +100,7 @@ export function initialize(runtime){
    if(stale.has(wave)||wave.origin!=='player'||!pulseCrossed(wave,point.x,point.y))continue;if(path&&!pathWaveCounts(wave,journeyPath(),timed())){miss(o,wave);continue;}
    let hits=seen.get(wave);if(!hits){hits=new Set();seen.set(wave,hits);}if(hits.has(o.id))continue;hits.add(o.id);
    if(site?.broken){runtime.inspectSpentCrystal?.(o.id);continue;}
-   if(path)wave.spent=true;hit(o,path,null,wave.mult||1);site=sites.get(o.id);
+   if(path)wave.spent=true;hit(o,path,null,wave.mult??1);site=sites.get(o.id);
   }
   if(!site?.broken||site.collected)return;
   site.particles||=particles(o,site);

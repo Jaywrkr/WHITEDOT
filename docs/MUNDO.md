@@ -13,10 +13,10 @@ Diseño aprobado por Jay el 23 de octubre de 2026. Es la fuente única del plan 
 
 ## Reglas fijas
 
-1. **Solo a tiempo pasa algo** en los lugares y en el Viaje. En el Mundo libre se toca cuando se quiera; a tiempo da más chispas.
+1. **Solo a tiempo pasa algo**, en todas partes. En el Mundo libre se toca cuando se quiera y todo suena, pero solo a tiempo da chispas (desde H5).
 2. **Cada lugar:** una barra, un verbo, un objeto dorado al final y un último pulso a tiempo para cerrarlo.
 3. **Nadie pierde:** no hay derrota; solo más o menos estrellas y chispas.
-4. **Texto mínimo:** una idea por mensaje. Solo los logros del narrador hablan con gracia.
+4. **Texto mínimo:** el Viaje no tiene rótulos; cada lugar dice cada frase una sola vez, la primera. El narrador habla solo en la tarjeta de la ronda y en la Bitácora.
 5. **Nada ganado se borra:** los guardados se migran.
 
 ## Chispas y estrellas
@@ -64,12 +64,12 @@ Tras el Viaje, el anillo se abre **en orden**, como las pistas de un disco: cada
 |---|---|
 | Ronda completada en un lugar | 60 + 6 por cada 10 % a tiempo (60–120) |
 | Ronda Maestro | El doble (120–240) |
-| Mundo libre | Lo de siempre; a tiempo ×2; con racha de 8 o más, ×3 |
+| Mundo libre | Fuera de tiempo, 0 (desde H5); a tiempo ×2; con racha de 8 o más, ×3 |
 | Encuentro salvaje | 15 |
 | Remezcla diaria | 30, y 20 más con récord |
 | Logros | 0–25 |
 
-Cada lugar da chispas completas en sus tres primeras rondas del día y la mitad después. La tienda conserva sus precios (17 030 ✦): con estas reglas el catálogo completo lleva unas 9,4 horas a quien toca a tiempo seis de cada diez pulsos y unas 7 a quien toca nueve de cada diez, según `scripts/spark-economy.mjs` (F3; un modelo, no una medida con personas). El viaje rápido a lugares visitados es gratis y el salto lejano conserva su precio.
+Cada lugar da chispas completas en sus tres primeras rondas del día y la mitad después. La tienda conserva sus precios (17 030 ✦): con estas reglas el catálogo completo lleva unas 10,5 horas a quien toca a tiempo seis de cada diez pulsos y unas 7,2 a quien toca nueve de cada diez (desde H5, fuera de tiempo no da chispas), según `scripts/spark-economy.mjs` (F3; un modelo, no una medida con personas). El viaje rápido a lugares visitados es gratis y el salto lejano conserva su precio.
 
 ## Tiempos
 
@@ -173,7 +173,7 @@ Decisiones de Jay (aprobadas; se aplican en la fase indicada, hasta entonces rig
 | H2 · Que se sienta | `claude/h2-que-se-sienta` | Calibrar el retraso con los primeros pulsos y en Ajustes; una sola guía de ritmo; cada lugar canta su patrón antes; el cubo cambia de forma con la racha (hecho) |
 | H3 · El camino | `claude/h3-camino` | Orden de pistas, luz al portal siguiente, portal siguiente tras la ronda, modo Libre, ganar con 11 (hecho) |
 | H4 · Tu canción | `claude/h4-cancion` | Capas con el motor del juego y niveles por estrella; final verdadero con tus notas; versión maestra (hecho) |
-| H5 · Reglas claras | `claude/h5-reglas` | 0 ✦ fuera de tiempo; Viaje sin rótulos; narrador en su sitio; menú más corto |
+| H5 · Reglas claras | `claude/h5-reglas` | 0 ✦ fuera de tiempo; Viaje sin rótulos; narrador en su sitio (hecho). Menú más corto: pendiente, ver CAMBIOS |
 | H6 · Mundo que se escucha | `claude/h6-escucha` | Voces salvajes que se encuentran con el oído; portales que suenan desde su dirección |
 | H7 · Medir y personas | `claude/h7-medir` | Simulación de 2 h (60, 75 y 90 % a tiempo); festival; sesiones con Luca |
 

@@ -1,4 +1,4 @@
-"""Plan F3: in the free World a pulse on time doubles the sparks of what it breaks (shown ×2 in gold), from the eighth in a row it triples them, off time they stay as they were, and without sound there is no multiplier."""
+"""Plan F3 and H5: in the free World a pulse on time doubles the sparks of what it breaks (shown ×2 in gold), from the eighth in a row it triples them, off time it still breaks but earns nothing (plan H5), and without sound there is no multiplier."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -19,7 +19,7 @@ def mine(page,size,pulse):
  page.wait_for_timeout(500);before=page.evaluate('__r.S.sparks')
  for i in range(size):page.evaluate(pulse);page.wait_for_timeout(700)
  page.wait_for_function(f"__r.crystalState.near.find(o=>o.id==='{o['id']}')?.collected",timeout=8000)
- return o,page.evaluate('__r.S.sparks')-before,page.evaluate(f"__r.sparkEconomy.sites['{o['id']}'].mult||1")
+ return o,page.evaluate('__r.S.sparks')-before,page.evaluate(f"__r.sparkEconomy.sites['{o['id']}'].mult??1")
 try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required'])
@@ -28,8 +28,8 @@ try:
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=laboratorio&layout=wide&generation=2&travel=1');page.wait_for_function('!!window.__r?.crystalTick')
   page.evaluate("()=>{const r=__r;r.S.sound=true;r.S.firstJourney.skipped=true;r.S.wx=5000;r.S.wy=5200;r.stopAutopilot?.();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.audio();}")
   page.wait_for_function("__r.ac?.state==='running'&&__r.MU.bq.length>1",timeout=10000)
-  # Off time: the crystal's own value.
-  o,gain,m=mine(page,1,OFF);assert m==1 and gain>=o['value'],(gain,m,o)
+  # Off time (plan H5): the crystal breaks and its fragments are gathered, but they earn nothing.
+  o,gain,m=mine(page,1,OFF);assert m==0 and gain==0,(gain,m,o)
   # On time: double, kept in the save, and the pickup says ×2.
   o,gain,m=mine(page,1,ON);assert m==2 and gain>=2*o['value'],(gain,m,o)
   # Eight on time in a row: triple.
@@ -39,5 +39,5 @@ try:
   # Without sound there is no beat: no multiplier.
   page.evaluate("()=>{__r.S.sound=false;}");o,gain,m=mine(page,1,"()=>__r.sonar('player')");assert m==1,(gain,m,o)
   assert not errors,errors;browser.close()
- print('PASS spark rhythm: off time a crystal keeps its value, on time it is worth double (saved), from eight in a row triple, without sound no multiplier',flush=True)
+ print('PASS spark rhythm: off time a crystal breaks but earns nothing, on time it is worth double (saved), from eight in a row triple, without sound no multiplier',flush=True)
 finally:server.shutdown()

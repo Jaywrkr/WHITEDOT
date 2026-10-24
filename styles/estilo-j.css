@@ -598,3 +598,5 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 .lugares-remix{color:var(--gold,#f0d27a);font-size:12px;margin:8px 0 0}
 
 .latency-setting{display:flex;align-items:center;gap:8px;margin:6px 0}.latency-setting span{flex:1}.latency-setting button{min-width:36px}.latency-setting output{min-width:56px;text-align:center}
+
+.place-narrator{font-size:12px;color:var(--gold,#f0d27a);margin:6px 0 0}

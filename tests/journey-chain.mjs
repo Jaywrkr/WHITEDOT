@@ -28,7 +28,7 @@ assert(st.points>st.lit,'a chain is worth more than its flowers');
 // Lit flowers do not light again.
 const p1=st.points;assert.equal(r.journeyGamePulse(true),'ripple');for(let i=0;i<60;i++){clock+=50;frame();}assert(r.journeyChain().lit>=st.lit);
 // Full bar: the gold flower comes beside the cube; off time it waits; a pulse on time opens it, once.
-r.S.journey.chain.points=CHAIN_GOAL;frame();const fl=r.journeyChain().flower;assert(fl&&Math.hypot(fl.x-r.S.wx,fl.y-r.S.wy)<100);timers.splice(0).forEach(f=>f());assert(toasts.some(t=>/flor dorada/.test(t)));
+r.S.journey.chain.points=CHAIN_GOAL;frame();const fl=r.journeyChain().flower;assert(fl&&Math.hypot(fl.x-r.S.wx,fl.y-r.S.wy)<100);timers.splice(0).forEach(f=>f());assert(!toasts.some(t=>/flor dorada/.test(t)),'the Journey has no lines (plan H5)');
 assert.equal(r.journeyGamePulse(false),'miss');assert.deepEqual(done,[]);assert.equal(r.journeyGamePulse(true),'open');assert.deepEqual(done,['lago']);assert(r.journeyChain().opened);
 assert(draws.includes('arc'));assert(r.MU.journeyFloor>=.8);
 // Classic chapters keep the lotuses: the game is not played there.

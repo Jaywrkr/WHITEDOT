@@ -33,12 +33,12 @@ try:
     page.evaluate(near);b=page.evaluate('__r.journeyStick().points');page.evaluate(ON);page.wait_for_timeout(320);grew+=page.evaluate('__r.journeyStick().points')>b
    st=page.evaluate('__r.journeyStick()');assert grew>=3 and st['points']>0 and st['stuck']>=3,st
    assert float(page.evaluate("document.getElementById('barfill').style.width").rstrip('%'))>0,'the bar fills'
-   page.wait_for_function("__r.journeyStick().attached>=3",timeout=3000);page.wait_for_function("document.body.textContent.includes('se pega')",timeout=5000)
+   page.wait_for_function("__r.journeyStick().attached>=3",timeout=3000);page.wait_for_timeout(1500);assert not page.evaluate("document.body.textContent.includes('se pega')"),'the Journey has no lines (plan H5)'
    assert page.evaluate('__r.S.sparks')==sparks,'no sparks in the Journey'
    # Full bar: the gold cloud comes beside the cube; one pulse on time swallows it and the portal to the Lago opens.
    page.evaluate("()=>{__r.S.journey.stick.points=150;}");page.wait_for_function("!!__r.journeyStick().cloud",timeout=3000)
    c=page.evaluate('__r.journeyStick().cloud');assert ((c['x']-page.evaluate('__r.S.wx'))**2+(c['y']-page.evaluate('__r.S.wy'))**2)**.5<120,c
-   page.wait_for_function("document.body.textContent.includes('nube dorada')",timeout=5000)
+   page.wait_for_timeout(1500);assert not page.evaluate("document.body.textContent.includes('nube dorada')"),'the Journey has no lines (plan H5)'
    page.evaluate("__r.journeyGamePulse(false)");assert not page.evaluate('__r.journeyStick().swallowed'),'off time it waits'
    page.evaluate(ON);page.wait_for_function("__r.journeyStick().swallowed&&__r.journeyChapter().done.llanura",timeout=5000);page.wait_for_function("__r.journeyChapter().portal",timeout=10000)
    # The drop (plan F2): the music's filter closes for the riser and opens again; the portal waits for the drop.

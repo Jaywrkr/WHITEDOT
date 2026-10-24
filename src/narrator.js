@@ -114,7 +114,7 @@ export function initialize(runtime){
   const stars=Object.values(d.stars||{}).reduce((a,s)=>a+s.filter(Boolean).length,0),maestros=Object.values(d.stars||{}).filter(s=>s[2]).length;
   for(const id of roundAchievements({...r,roundsBefore:(d.best?.[r.id]?.rounds||1)-1},{stars,maestros,places:n.places,hour:new Date().getHours()}))unlock(id);}
  // Everything else that happens in the ring, the Refugio and your song.
- function event(kind){if(kind==='locked')unlock('portalCerrado');else if(kind==='abandon')unlock('rondaMedias');else if(kind==='trophy')unlock('trofeoTocado');else if(kind==='journeyDone')unlock('viajeFin');else if(kind==='won')unlock('estrellas33');
+ function event(kind){if(kind==='locked')unlock('portalCerrado');else if(kind==='abandon')unlock('rondaMedias');else if(kind==='trophy')unlock('trofeoTocado');else if(kind==='journeyDone')unlock('viajeFin');else if(kind==='won'){const d=runtime.placesData?.(),stars=Object.values(d?.stars||{}).reduce((a,s)=>a+s.filter(Boolean).length,0);if(stars>=33)unlock('estrellas33');}
   else if(kind==='travel'&&bump('travel')>=10)unlock('viajeRapido10');else if(kind==='song'&&bump('song')>=5)unlock('cancionFan');
   else if(kind==='portal'){const seen=runtime.placesData?.()?.seen||{};if(['llanura','lago','bosque','tormenta','vacio'].every(id=>seen[id]))unlock('portales5');}}
  Object.defineProperties(runtime,{narrateRound:{get:()=>round},narrate:{get:()=>event},narratorLine:{get:()=>narratorLine}});

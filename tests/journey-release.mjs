@@ -22,7 +22,7 @@ assert.equal(r.journeyGamePulse(true,{step:4}),'wait','on time but not on the 1'
 assert.equal(r.journeyGamePulse(true,{step:0}),'release');st=r.journeyRelease();assert.equal(st.released,1);assert.equal(st.stars,1);assert(r.S.journey.release.stars[0].y<0);
 assert.equal(r.journeyGamePulse(true,{step:0}),'crowded','each star wants its own sky');assert.equal(r.journeyRelease().released,1);
 for(let i=1;i<15;i++){r.S.wx+=400;assert.equal(r.journeyGamePulse(true,{step:0}),'release');}st=r.journeyRelease();assert.equal(st.released,15);assert.equal(r.cubeGrowth(),1,'tiny again');assert(st.light,'its gold light comes');
-frame();timers.splice(0).forEach(f=>f());assert(toasts.some(t=>/estrella/.test(t))&&toasts.some(t=>/Tu luz/.test(t)));
+frame();timers.splice(0).forEach(f=>f());assert(!toasts.some(t=>/estrella/.test(t))&&!toasts.some(t=>/Tu luz/.test(t)),'the Journey has no lines (plan H5)');
 assert.equal(r.journeyGamePulse(false),'miss');assert.deepEqual(done,[]);assert.equal(r.journeyGamePulse(true,{step:8}),'light','the light closes on any beat');assert.deepEqual(done,['vacio']);
 assert(draws.includes('arc')&&draws.includes('fillRect'));
 // Without a Llanura game the cube still carries twelve.
