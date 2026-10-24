@@ -1,5 +1,3 @@
-import {calmMotion} from './frame-state.js';
-import {worldCamera,chapterToast} from './journey-games.js';
 // Ritmos (plan F14, docs/MUNDO.md): Jay found every place asked for the same thing, the beat. Now each place has its
 // own rhythm: on the beat, on the «y» between beats, on the «1», or a pattern. Only a pulse on one of its steps is on
 // time. A row of dots under the cube shows the bar in eighths: the steps that count are lit, the «1» in gold, and the
@@ -28,10 +26,10 @@ export function rhythmTarget(heard,beats,beatLen,stepOf,steps){if(!beats?.length
  for(const b of list){const sb=stepOf(b);if(!Number.isFinite(sb))continue;for(let k=0;k<4;k++){const s=(sb+k)%16;if(!steps.includes(s))continue;const t=b+k*six,d=Math.abs(heard-t);if(!best||d<best.dist)best={time:t,step:s,dist:d};}}
  return best;}
 // The rhythm for a place round or a chapter, by its id; the free World keeps the beat (null).
+export const SING_BARS=2;
 export function rhythmFor(id,{place=false}={}){const key=(place?PLACE_RHYTHMS:JOURNEY_RHYTHMS)[id];return key?{key,...RHYTHMS[key]}:null;}
 export function initialize(runtime){
  let lastHit=null;
- const calm=()=>calmMotion(runtime.S);
  // The rhythm that judges now: the round's place, or the Journey chapter whose game is playing.
  function active(){const run=runtime.placeRun?.();if(run?.id&&runtime.journeyGamePlaying?.(run.id))return run.remix&&RHYTHMS[run.remix]?{key:run.remix,...RHYTHMS[run.remix],remix:true}:rhythmFor(run.id,{place:true});
   const ch=runtime.journeyChapter?.();if(ch?.id&&runtime.journeyGamePlaying?.(ch.id))return rhythmFor(ch.id);return null;}
@@ -46,16 +44,19 @@ export function initialize(runtime){
  // Pulses closer than 240 ms are dropped (interactions.js); a rhythm with two eighths in a row needs them a little
  // closer, so the gap becomes two thirds of an eighth at the music's tempo.
  function gap(){const r=active();if(!r)return null;const st=r.judge||r.steps;if(!st.some(s=>st.includes((s+2)%16)))return null;return Math.min(240,Math.round((runtime.SIX||.15)*2*1000*2/3));}
- // Its line, once per save, when a round or chapter with a rhythm of its own begins.
- function sayRhythm(r,id){if(!r?.say)return;const j=runtime.S.journey||(runtime.S.journey={}),said=j.rhythmSaid&&typeof j.rhythmSaid==='object'&&!Array.isArray(j.rhythmSaid)?j.rhythmSaid:(j.rhythmSaid={});if(said[r.key])return;said[r.key]=true;runtime.save?.();chapterToast(runtime,id,r.say,3200,12000);}
  // The dots under the cube: eight eighths of the bar; the steps that count lit, the «1» gold, the one of now brighter.
- function guide(c,W,H){const r=active();if(!r||r.guide===false)return;const id=runtime.placeRun?.()?.id||runtime.journeyChapter?.()?.id;sayRhythm(r,id);const step=stepNow();if(step===null)return;
-  const cam=worldCamera(runtime),cx=W/2+(runtime.S.wx-cam.x),cy=H/2+(runtime.S.wy-cam.y),y=cy+36*Math.max(1,Math.min(1.6,runtime.cubeGrowth?.()||1)),gold=runtime.GOLD||'#f0d27a',now=Math.floor(step/2),still=calm();c.save();
-  for(let i=0;i<8;i++){const s=i*2,counts=r.steps.includes(s),x=cx-28+i*8,big=i%2===0,z=counts?(big?5:4):2;c.globalAlpha=counts?(i===now?1:.45):(i===now?.45:.25);c.fillStyle=counts&&s===0?gold:'#ffffff';c.fillRect(Math.round(x-z/2),Math.round(y-z/2),z,z);}
-  if(lastHit&&performance.now()-lastHit.at<450){const k=(performance.now()-lastHit.at)/450;c.globalAlpha=1-k;c.strokeStyle=gold;c.lineWidth=1.5;c.beginPath();c.arc(cx-28+Math.round(lastHit.step/2)*8,y,5+(still?0:8*k),0,6.283);c.stroke();}
-  c.restore();}
+ // Since plan H2 the Line is the one guide (journey-pulse.js draws the counted steps on it): no dots under the cube,
+ // and no line of text. When a round or a chapter with a rhythm starts, the place sings its pattern for two bars from
+ // the next «1» before asking for it: a click and a note on each step it counts, the Line glowing with it.
+ let singing=null,singKey=null;
+ function guide(){const r=active(),id=runtime.placeRun?.()?.id||runtime.journeyChapter?.()?.id,key=r&&r.key!=='eco'?`${id}:${r.key}:${runtime.placeRun?.()?.startedAt||''}`:null;
+  if(key!==singKey){singKey=key;singing=key?{steps:r.steps,bars:SING_BARS,start:null,played:0,last:null}:null;}}
+ function sing(s,t){if(!singing)return;if(singing.start===null){if(s!==0)return;singing.start=t;}const k=Math.round((t-singing.start)/(runtime.SIX||.15));if(k<0)return;if(k>=singing.bars*16){singing=null;return;}
+  if(!singing.steps.includes(k%16)||!runtime.S.sound)return;singing.played++;singing.last={step:k%16,at:t};runtime.hatHit?.(t,k%16===0?.14:.09);const ct=runtime.chordTones?.()||[60,64,67];let m=ct[0]+24+(k%16===0?0:7);while(m>88)m-=12;runtime.pluck?.(m,t,k%16===0?.07:.05,2);}
+ // The step being sung now and how long ago, for the Line.
+ function singingNow(){const ac=runtime.ac;if(!singing?.last||!ac)return null;const age=(ac.currentTime-singing.last.at)/((runtime.SIX||.15)*2);return age>=0&&age<1?{step:singing.last.step,age}:null;}
  // journey-pulse.js tells which step a pulse on time answered, for the ring on its dot.
  function hit(step){if(Number.isFinite(step))lastHit={step:Math.round(step)%16,at:performance.now()};}
- Object.defineProperties(runtime,{journeyRhythm:{get:()=>active},journeyRhythmTarget:{get:()=>target},drawRhythmGuide:{get:()=>guide},journeyRhythmHit:{get:()=>hit},journeyRhythmGap:{get:()=>gap},
-  journeyRhythmState:{get:()=>()=>{const r=active();return {rhythm:r?.key||null,steps:r?[...r.steps]:null,guide:!!r&&r.guide!==false,step:stepNow(),lastHit:lastHit?{...lastHit}:null};}}});
+ Object.defineProperties(runtime,{journeyRhythm:{get:()=>active},journeyRhythmTarget:{get:()=>target},drawRhythmGuide:{get:()=>guide},rhythmMusicStep:{get:()=>sing},rhythmSinging:{get:()=>singingNow},journeyRhythmHit:{get:()=>hit},journeyRhythmGap:{get:()=>gap},
+  journeyRhythmState:{get:()=>()=>{const r=active();return {rhythm:r?.key||null,steps:r?[...r.steps]:null,guide:!!r&&r.guide!==false,step:stepNow(),lastHit:lastHit?{...lastHit}:null,singing:singing?{bars:singing.bars,played:singing.played,started:singing.start!==null}:null};}}});
 }

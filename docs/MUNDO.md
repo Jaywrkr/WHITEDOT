@@ -146,7 +146,7 @@ Plan revisado por Jay el 23 de octubre tras jugar F0–F11: las F12–F19 sustit
 
 En el Viaje cada capítulo enseña un ritmo nuevo solo cuando toca: los tres primeros a tiempo, la Tormenta la primera mezcla y el Vacío el «1».
 
-Cómo se juega (`journey-rhythm.js`): solo cuenta un pulso en un paso del ritmo, con la misma ventana de siempre; en otro paso, aunque sea un tiempo, no hace nada. Bajo el cubo, ocho puntos son las corcheas del compás: los que cuentan se ven, el «1» en dorado, y el del momento brilla más. La primera vez que un ritmo nuevo empieza, una línea lo dice. El Vacío conserva su espera suave y sus propios cuatro puntos. En el Jardín, el tiempo siembra y cosecha y el «y» riega; en las Dunas la ola pasa en el «y».
+Cómo se juega (`journey-rhythm.js`): solo cuenta un pulso en un paso del ritmo, con la misma ventana de siempre; en otro paso, aunque sea un tiempo, no hace nada. Desde H2 la guía es la Línea: los pasos que cuentan se levantan en ella (el «1» en dorado), y al empezar el lugar canta su patrón dos compases antes de pedirlo, sin texto. El Vacío conserva su espera suave y sus propios cuatro puntos. En el Jardín, el tiempo siembra y cosecha y el «y» riega; en las Dunas la ola pasa en el «y».
 
 ## Plan integrado H1–H7 (24 de octubre)
 
@@ -169,7 +169,7 @@ Decisiones de Jay (aprobadas; se aplican en la fase indicada, hasta entonces rig
 | Fase | Rama | Qué |
 |---|---|---|
 | H1 · Que se vea | `claude/h1-que-se-vea` | Lugares sin «Sin visitar» con ★; brillo dorado y onda dorada en cada acierto; cubo de 16–30 px en el Mundo; el gris de un lugar no recuperado solo en el suelo (el oro sigue dorado); color recuperado como tono; cerrar un lugar recupera su color |
-| H2 · Que se sienta | `claude/h2-que-se-sienta` | Calibrar el retraso con los primeros pulsos y en Ajustes; una sola guía de ritmo; cada lugar canta su patrón antes; el cubo cambia de forma con la racha |
+| H2 · Que se sienta | `claude/h2-que-se-sienta` | Calibrar el retraso con los primeros pulsos y en Ajustes; una sola guía de ritmo; cada lugar canta su patrón antes; el cubo cambia de forma con la racha (hecho) |
 | H3 · El camino | `claude/h3-camino` | Orden de pistas, luz al portal siguiente, portal siguiente tras la ronda, modo Libre, ganar con 11 |
 | H4 · Tu canción | `claude/h4-cancion` | Capas con el motor del juego y niveles por estrella; final verdadero con tus notas; versión maestra |
 | H5 · Reglas claras | `claude/h5-reglas` | 0 ✦ fuera de tiempo; Viaje sin rótulos; narrador en su sitio; menú más corto |
