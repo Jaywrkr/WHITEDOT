@@ -39,7 +39,11 @@ try:
     assert page.evaluate("id=>__r.cubeShopWearing(id)",pid),pid
     assert page.evaluate(MARKS)>20,pid
     if reduced and pid!='acc:hat':
-     dark=page.evaluate(FACE);assert dark>plain,(pid,dark,plain)
+     # The sleepy eyes doze after a second still (calm): on a slow runner that second can pass, so they are seen walking.
+     if pid=='eyes:sleepy':page.keyboard.down('d');page.wait_for_timeout(120)
+     dark=page.evaluate(FACE)
+     if pid=='eyes:sleepy':page.keyboard.up('d')
+     assert dark>plain,(pid,dark,plain)
     page.screenshot(path=str(SHOTS/f"{pid.replace(':','-')}{'-still' if reduced else ''}.png"),clip={'x':195-60,'y':422-60,'width':120,'height':120})
   # Habits switch on together and each one is set off by something that already happens in the world.
   page.evaluate(f"()=>{{const r=__r;r.equipSparkStyle('');r.S.reducedMotion=false;for(const id of ['habit:yawn','habit:greet','habit:sneeze','habit:dizzy','eyes:blush'])r.equipSparkStyle(id);{hide}}}")
