@@ -108,7 +108,7 @@ export function initialize(runtime) {
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);const cap=runtime.lightQuality?.()?150:400;if(runtime.parts.length>cap)runtime.parts.splice(0,runtime.parts.length-cap);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
     runtime.pulse=Math.max(0,runtime.pulse-dt*1.5);
-    const s=Math.max(ds,runtime.inWorld()?runtime.cubeShopMinSize?.()||0:0)*(runtime.inWorld()?cubeView(ds):1)*(1+runtime.pulse*.6+b*.08)*(runtime.inWorld()?runtime.surpriseStyle?.scale||1:1)*(runtime.cubeGrowth?.()||1);
+    const big=runtime.inWorld()||runtime.S.mode==='camino',base=Math.max(ds,runtime.inWorld()?runtime.cubeShopMinSize?.()||0:0),s=base*(big?cubeView(base):1)*(1+runtime.pulse*.6+b*.08)*(runtime.inWorld()?runtime.surpriseStyle?.scale||1:1)*(runtime.cubeGrowth?.()||1);
     runtime.drawCubeStyle?.(t,dt,b,s);runtime.drawSurprises?.(t,ox,oy);
     const playerColor=runtime.inWorld()?(runtime.cubeColor?.()||'#fff'):'#fff';
     if(runtime.pulse){runtime.cx.globalAlpha=runtime.pulse*.5;runtime.cx.strokeStyle=playerColor;runtime.cx.lineWidth=1;const rr=s*(1+(1-runtime.pulse)*4);runtime.cx.strokeRect(runtime.W/2-rr/2,runtime.H/2-rr/2,rr,rr);}
@@ -182,8 +182,9 @@ export function initialize(runtime) {
     return sz;
   }
 
-  // The cube is drawn larger in the World so it reads on a phone (plan H1): 1.6× its size, between 16 and 30 px.
-  const cubeView=ds=>ds>0?Math.max(16,Math.min(30,ds*1.6))/ds:1;
+  // The cube is drawn larger so it reads on a phone (plan H1, widened in I2 to the Camino and the places): 1.6× its
+  // size, between 24 and 36 px, face pieces included.
+  const CUBE_MIN=24,CUBE_MAX=36,cubeView=ds=>ds>0?Math.max(CUBE_MIN,Math.min(CUBE_MAX,ds*1.6))/ds:1;
   function worldStep(t,dt,dx,dy,b,paused=false,movementSpeed=runtime.SPEED){
     const sz=runtime.pxSize(),ds=Math.min(sz,22);
     if(runtime.MU.anomaly==='invertida'){dx=-dx;dy=-dy;}   // rareza: arriba es abajo

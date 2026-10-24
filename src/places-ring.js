@@ -17,6 +17,8 @@ export const PORTAL_NOTES=Object.freeze([0,2,4,7,9,12,14,16,19,21,24]);
 // Each portal at a fixed angle, from the north clockwise; a spot at sea moves along its ray, out and in, to land.
 export function portalSpots(center,isSea=()=>false){return PLACES.map((p,i)=>{const a=-Math.PI/2+i/PLACES.length*2*Math.PI,at=r=>({x:Math.round(center.x+Math.cos(a)*r),y:Math.round(center.y+Math.sin(a)*r)});
  for(let k=0;k<=RING_SEA_TRIES*2;k++){const q=at(RING_RADIUS+(k%2?1:-1)*Math.ceil(k/2)*RING_SEA_STEP);if(!isSea(q.x,q.y))return {id:p.id,...q};}return {id:p.id,...at(RING_RADIUS)};});}
+// Where the column of the next portal stands when the portal is off screen: at the edge on its side (plan I2).
+export function edgeColumn(x,y,W,H,m=12){return {x:Math.max(m,Math.min(W-m,x))};}
 // The portal the arrow shows: the nearest open place never entered, or still without its ★; none once all are done.
 export function nextPortal(spots,places,journey,from){const path=nextOnPath(places,journey);return path&&spots.find(q=>q.id===path.id)||null;}
 // Where you stand when you come back from a round: a step from the portal, toward the Refugio, outside its reach.
@@ -55,10 +57,11 @@ export function initialize(runtime){
    // With «Todo a la vista», its name and what it asks are written too.
    c.globalAlpha=1;c.textAlign='center';c.textBaseline='top';c.font='12px "Geist Mono", monospace';c.fillStyle=open?'#ffffff':'#8a8a8f';c.fillText(p.name,x,y+r+(open?24:14));}
   const next=nextPortal(spots(),d,S.journey,{x:S.wx,y:S.wy});if(next){const x=W/2+next.x-cx,y=H/2+next.y-cy;
-   // The next place on the path: a column of gold light over its portal, seen from far.
-   if(x>-60&&x<W+60&&y>-40){const col=c.createLinearGradient(x,y,x,Math.max(0,y-H));col.addColorStop(0,'rgba(240,210,122,.38)');col.addColorStop(1,'rgba(240,210,122,0)');c.globalAlpha=still?.8:.7+.3*Math.sin(t/600);c.fillStyle=col;c.fillRect(x-9,Math.max(0,y-H),18,Math.min(H,y));}if(x<0||x>W||y<0||y>H){const a=Math.atan2(next.y-S.wy,next.x-S.wx),bx=Math.max(14,Math.min(W-14,W/2+Math.cos(a)*(W/2-18))),by=Math.max(70,Math.min(H-120,H/2+Math.sin(a)*(H/2-60))),glow=still?.8:.55+.3*Math.sin(t/500);
-   c.globalAlpha=.25*glow;c.strokeStyle=gold;c.lineWidth=1;c.beginPath();c.arc(bx,by,10,0,6.283);c.stroke();c.globalAlpha=glow;c.fillStyle=gold;c.fillRect(Math.round(bx)-2,Math.round(by)-2,4,4);
-   c.beginPath();c.moveTo(bx+Math.cos(a)*16,by+Math.sin(a)*16);c.lineTo(bx+Math.cos(a+2.5)*9,by+Math.sin(a+2.5)*9);c.moveTo(bx+Math.cos(a)*16,by+Math.sin(a)*16);c.lineTo(bx+Math.cos(a-2.5)*9,by+Math.sin(a-2.5)*9);c.stroke();}}
+   // The next place on the path: a column of gold light over its portal. Plan I2: seen from anywhere; off screen the
+   // column stands at the edge on its side (it replaces the old arrow), fainter the farther the portal is.
+   const col=(cx2,from,to,a)=>{const g=c.createLinearGradient(cx2,from,cx2,to);g.addColorStop(0,'rgba(240,210,122,.38)');g.addColorStop(1,'rgba(240,210,122,0)');c.globalAlpha=a*(still?.8:.7+.3*Math.sin(t/600));c.fillStyle=g;c.fillRect(cx2-9,Math.min(from,to),18,Math.abs(to-from));};
+   if(x>-60&&x<W+60&&y>-40&&y<H+40)col(x,Math.min(H,y),Math.max(0,y-H),1);
+   else{const e=edgeColumn(x,y,W,H),far=Math.hypot(next.x-S.wx,next.y-S.wy);col(e.x,H,0,Math.max(.45,1-far/(RING_RADIUS*2)));}}
   c.restore();}
  // On each bar's «1», the nearest portal sounds its note, louder the closer you are; a closed one, softer.
  // Each from its side (plan H6), so a portal off screen can be found by ear.

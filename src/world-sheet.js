@@ -32,6 +32,8 @@ export function initialize(runtime){
   c.save();
   // The biome's light around the cube, breathing with the beat: seen from above, centred, with no horizon.
   const g=c.createRadialGradient(W*.5,H*.5,0,W*.5,H*.5,Math.max(W,H)*.75);g.addColorStop(0,rgba(ink,pale()?.05+.07*beat:.18+.12*beat));g.addColorStop(1,'rgba(0,0,0,0)');c.globalAlpha=1;c.fillStyle=g;c.fillRect(0,0,W,H);
+  // Plan I2: a recovered biome washes the whole screen with its colour, not only a light around the cube.
+  if(!pale()&&colors()[id]){c.globalAlpha=.11+.04*beat;c.fillStyle=ink;c.fillRect(0,0,W,H);}
   c.restore();last=id;}
  Object.defineProperties(runtime,{drawWorldSheet:{get:()=>draw},drawWorldSheetGrey:{get:()=>drawGrey},journeyColors:{get:()=>()=>({...colors()})},recoverJourneyColor:{get:()=>recover},worldSheetState:{get:()=>()=>({biome:biomeId(),pale:!!pale(),filter,grey,reencuentro:{...reencuentro}})}});
 }
