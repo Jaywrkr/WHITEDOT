@@ -20,7 +20,7 @@ try:
    page=browser.new_page(viewport={'width':width,'height':height});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?lugar=dunas');page.wait_for_function("!!window.__r?.places&&__r.places().run?.id==='dunas'",timeout=20000)
-   assert page.evaluate('__r.places().count')>=8,'the test save has the eight ★ the Dunas ask'
+   assert page.evaluate('!!__r.places().stars.jardin?.[0]'),'the test save completes the Jardín, which opens the Dunas'
    page.evaluate("()=>{__r.S.sound=true;__r.audio();}");page.wait_for_function("__r.ac?.state==='running'&&__r.MU.bq.length>1&&__r.journeySurf().active&&__r.journeySurf().waves.length===2",timeout=20000)
    # Inside the ring but a beat early: nothing. On its beat: a ride, and the cube is carried along.
    # Plan F14: the Dunas count on the «y», and the crest passes there, half a beat from the beats.
