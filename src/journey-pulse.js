@@ -45,7 +45,7 @@ export function playCello(ac,out,t,midi,seconds,volume){
  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(volume,t+.06);g.gain.setValueAtTime(volume,t+seconds*.75);g.gain.exponentialRampToValueAtTime(.0001,end+.25);
  const g2=ac.createGain();g2.gain.setValueAtTime(.25,t);o.connect(f);o2.connect(g2);g2.connect(f);f.connect(g);g.connect(out);for(const n of [o,o2,lfo]){n.start(t);n.stop(end+.3);}return hz;}
 export function initialize(runtime){
- const state={hits:0,misses:0,phrases:0,next:0,lastOn:null,degree:null,vibrations:0,notes:[]};let form={level:0,run:0},formAt=0;let lastAt=-1e9;const marks=[];
+ const state={hits:0,misses:0,phrases:0,next:0,lastOn:null,degree:null,vibrations:0,notes:[],noteSteps:[]};let form={level:0,run:0},formAt=0;let lastAt=-1e9;const marks=[];
  const calm=()=>calmMotion(runtime.S);
  const haptics=()=>runtime.S.haptics!==false;
  function vibrate(ms){if(!haptics()||typeof navigator==='undefined'||typeof navigator.vibrate!=='function')return false;try{navigator.vibrate(ms);state.vibrations++;return true;}catch(_){return false;}}
@@ -79,7 +79,7 @@ export function initialize(runtime){
   state.degree=null;state.midi=null;state.beat=null;if(!on){state.misses++;runtime.journeyChapterPulse?.(false);return false;}
   state.hits++;const [degree]=THEME[state.next],{scale,tr}=scaleNow(),midi=themePitch(degree,scale,tr);state.degree=degree;state.midi=midi;state.scale=scale;state.tr=tr;state.beat=beatAt??nearestBeat(heard,runtime.MU?.bq,bar);state.next=(state.next+1)%THEME.length;
   // The chapter hears the note first, so the note that completes the theme counts.
-  state.notes.push(midi);if(state.notes.length>12)state.notes.shift();runtime.journeyChapterPulse?.(true,midi,Number.isInteger(runtime.MU?.step)?runtime.MU.step:undefined);
+  state.notes.push(midi);state.noteSteps.push(Number.isFinite(step)?Math.round(step)%16:null);if(state.notes.length>12){state.notes.shift();state.noteSteps.shift();}runtime.journeyChapterPulse?.(true,midi,Number.isInteger(runtime.MU?.step)?runtime.MU.step:undefined);
   if(state.next===0){state.phrases++;runtime.recoverJourneyColor?.();runtime.journeyPhrase?.();runtime.themeKeyPhrase?.();}
   // The cube glows gold for a beat on every hit, the phone vibrates where it can and the cube punches (plan H1). Plan
   // I3: all of it lands when the note is heard, not when the finger touched, so light, touch and sound are one instant.
@@ -109,5 +109,5 @@ export function initialize(runtime){
   c.restore();}
  // Each chapter starts its theme from the first note.
  function reset(){state.next=0;}
- Object.defineProperties(runtime,{journeyPulse:{get:()=>judge},journeyPulseReset:{get:()=>reset},journeyPulseDropped:{get:()=>dropped},drawJourneyLine:{get:()=>draw},journeyPulseState:{get:()=>()=>({...state,notes:[...state.notes],marks:marks.length,lastMark:marks.length?{...marks[marks.length-1]}:null})},journeyVibrate:{get:()=>vibrate},drawCubeForm:{get:()=>drawForm},cubeForm:{get:()=>()=>({...form})}});
+ Object.defineProperties(runtime,{journeyPulse:{get:()=>judge},journeyPulseReset:{get:()=>reset},journeyPulseDropped:{get:()=>dropped},drawJourneyLine:{get:()=>draw},journeyPulseState:{get:()=>()=>({...state,notes:[...state.notes],noteSteps:[...state.noteSteps],marks:marks.length,lastMark:marks.length?{...marks[marks.length-1]}:null})},journeyVibrate:{get:()=>vibrate},drawCubeForm:{get:()=>drawForm},cubeForm:{get:()=>()=>({...form})}});
 }

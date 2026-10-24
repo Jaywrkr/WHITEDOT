@@ -37,7 +37,7 @@ try:
    page.evaluate(f"()=>{{for(const id of {ALL})__r.S.lugares.stars[id][0]=true;}}")
    assert page.evaluate('__r.songFinaleCheck()')==True;st=page.evaluate('__r.songStageState()');assert st['final'] and not st['master'] and len(st['ids'])==11,st
    assert page.evaluate('__r.songFinaleCheck()')==False,'only once';assert page.evaluate('__r.S.lugares.won')==True
-   page.wait_for_function("__r.songStageState().credits",timeout=45000);assert 'Los 11 lugares' in page.inner_text('#songStage')
+   page.wait_for_function("__r.songStageState().credits",timeout=90000);assert 'Los 11 lugares' in page.inner_text('#songStage')
    # The 33 stars: the master version, once.
    page.evaluate(f"()=>{{for(const id of {ALL})__r.S.lugares.stars[id]=[true,true,true];}}")
    assert page.evaluate('__r.songFinaleCheck()')==True and page.evaluate('__r.songStageState().master')==True and set(page.evaluate('__r.songStageState().tiers').values())=={3},'the master version: every layer in its variation';assert page.evaluate('__r.songFinaleCheck()')==False and page.evaluate('__r.S.lugares.master')==True

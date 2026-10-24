@@ -36,9 +36,11 @@ export function normalizePlaces(raw,journey={}){if(object(raw)&&Number.isInteger
  const seen={};if(object(q.seen))for(const id of PLACE_IDS)if(q.seen[id]===true)seen[id]=true;
  // Your notes from each place's last round (plan H4): up to eight, for the finale of your song.
  const notes={};if(object(q.notes))for(const id of PLACE_IDS){const v=q.notes[id];if(Array.isArray(v)){const m=v.filter(n=>Number.isInteger(n)&&n>=36&&n<=96).slice(-8);if(m.length)notes[id]=m;}}
+ // And the step of the bar each was played on (plan I4), kept only while every note has one.
+ const noteSteps={};if(object(q.noteSteps))for(const id of Object.keys(notes)){const v=q.noteSteps[id];if(Array.isArray(v)&&v.length===notes[id].length&&v.every(s=>Number.isInteger(s)&&s>=0&&s<16))noteSteps[id]=[...v];}
  const kept={};if(object(q.kept))for(const id of PLACE_IDS)if(q.kept[id]===true)kept[id]=true;
  if(legacy){const have=PLACE_IDS.reduce((a,id)=>a+stars[id].filter(Boolean).length,0);for(const [id,need] of Object.entries(LEGACY_NEED))if(have>=need)kept[id]=true;}
- return {version:PLACES_VERSION,stars,best,rounds:{day:typeof q.rounds?.day==='string'?q.rounds.day:'',counts},journeyShare,center:point(q.center),seen,kept,notes,won:q.won===true,master:q.master===true,run:object(q.run)&&PLACE_IDS.includes(q.run.id)?q.run:null};}
+ return {version:PLACES_VERSION,stars,best,rounds:{day:typeof q.rounds?.day==='string'?q.rounds.day:'',counts},journeyShare,center:point(q.center),seen,kept,notes,noteSteps,won:q.won===true,master:q.master===true,run:object(q.run)&&PLACE_IDS.includes(q.run.id)?q.run:null};}
 export const starCount=places=>PLACE_IDS.reduce((a,id)=>a+(places?.stars?.[id]||[]).filter(Boolean).length,0);
 // The place before this one on the path: the Journey's five open together; each later one follows the one before it.
 export const previousPlace=id=>{const i=PLACE_IDS.indexOf(id);return i>WORLD_CHAPTERS.length-1?PLACE_IDS[i-1]:null;};
@@ -87,7 +89,7 @@ export function initialize(runtime){
   const extra=r.remix?runtime.remixDone?.(onTime)||null:null;
   const b=s.best[id]||(s.best[id]={onTime:0,ms:null,rounds:0});const record=onTime>b.onTime||b.ms===null||ms<b.ms;b.onTime=Math.max(b.onTime,onTime);b.ms=b.ms===null?ms:Math.min(b.ms,ms);b.rounds++;
   const j=runtime.S.journey;if(j&&typeof j==='object'){if(!j.colors||typeof j.colors!=='object')j.colors={};j.colors[id]=true;}
-  {const played=(runtime.journeyPulseState?.()?.notes||[]).filter(n=>Number.isInteger(n)).slice(-8);if(played.length)s.notes[id]=played;}
+  {const ps=runtime.journeyPulseState?.()||{},all=(ps.notes||[]).map((n,i)=>[n,ps.noteSteps?.[i]]).filter(([n])=>Number.isInteger(n)).slice(-8);if(all.length){s.notes[id]=all.map(([n])=>n);s.noteSteps||={};if(all.every(([,st])=>Number.isInteger(st)))s.noteSteps[id]=all.map(([,st])=>st);else delete s.noteSteps[id];}}
   shown={id,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;runtime.narrateRound?.(shown);runtime.journeyVictory?.(id);runtime.save?.();runtime.hud?.();setTimeout(results,1200);return true;}
  // Leaving a round from the menu: nothing earned, the chapter's state back, and you are at the portal again.
  function abandon(){const s=own();if(!s.run)return false;const from=s.run.from;restore(s.run);s.run=null;back(from);runtime.narrate?.('abandon');runtime.save?.();runtime.hud?.();return true;}

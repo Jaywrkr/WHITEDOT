@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.170**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.171**. Las entradas describen su revisión, no certifican producción.
+
+## I4 · El final que respira · alpha.171
+
+Rama `claude/i4-final`, sobre `claude/i3-instante` (dependencia explícita).
+
+- **Tus notas de los 11 lugares:** el final de «Tu canción» toma las notas de la última ronda de cada lugar y, para los cinco del Viaje que no hayas rejugado, las de su capítulo (antes solo sonaban las de 6 lugares).
+- **Con tu ritmo y en la escala del mundo:** cada nota suena en el paso del compás en que la tocaste (se guarda `S.lugares.noteSteps`, normalizado) y se lleva a la nota más cercana de la escala que suena (`snapToScale`).
+- **El tema es un momento:** la capa de Faros ya no repite el tema durante el final; tras tus notas, un compás de silencio y el chelo toca el tema dos veces, la segunda una quinta arriba. Los créditos salen al final, no antes.
+- **Al menos un minuto:** a tempo rápido, las capas siguen sonando tras el tema hasta llegar a 60 s.
+- **No hecho:** el ritardando. El final suena sobre el secuenciador del mundo, que no puede frenar una sola canción.
+- Pruebas: `song-tiers.mjs`, `places.mjs`, `song_stage_smoke.py` (créditos con más margen) y `song_stage_mix.py` (render: pico 0,389; «lleno» medido en la cola).
 
 ## I3 · Un solo instante · alpha.170
 
