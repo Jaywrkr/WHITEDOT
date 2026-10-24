@@ -19,7 +19,7 @@ try:
    page=browser.new_page(viewport={'width':width,'height':height});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?lugar=cristales');page.wait_for_function("!!window.__r?.places&&__r.places().run?.id==='cristales'",timeout=20000)
-   assert page.evaluate('__r.places().count')>=12,'the test save has the twelve ★ the Cristales ask'
+   assert page.evaluate('!!__r.places().stars.dunas?.[0]'),'the test save completes the Dunas, which open the Cristales'
    page.evaluate("()=>{__r.S.sound=true;__r.audio();}");page.wait_for_function("__r.ac?.state==='running'&&__r.MU.bq.length>1&&__r.journeyResonance().active",timeout=20000)
    spots=page.evaluate('__r.journeyResonance().spots')
    # Off time near a crystal: nothing rings.
