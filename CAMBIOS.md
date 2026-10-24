@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.163**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.164**. Las entradas describen su revisión, no certifican producción.
+
+## H4 · Tu canción · alpha.164
+
+Rama `claude/h4-cancion`, sobre `claude/h3-camino` (dependencia explícita).
+
+- **Tu canción es la música del juego:** ya no es un house aparte en La mayor a 120 BPM que callaba el Mundo. El Mundo sigue sonando en su tono y tempo, y el secuenciador añade encima, desde el siguiente «1», la capa de cada lugar ganado sobre el acorde que suena.
+- **Las estrellas la hacen crecer:** ★ un fragmento (un compás de cada dos), ★★ la capa entera, ★★★ su variación (una octava arriba, más suave, y los golpes con eco). La capa de los Faros es el tema del cubo en el tono del lugar.
+- **El final con los 11 (60–90 s según el tempo):** las capas entran una por compás; después, tus notas de cada lugar en orden (las 8 últimas de su mejor ronda, un compás por lugar); al final, el tema del cubo sobre todo. La versión maestra (33 ★) lo toca todo en su variación.
+- **Trofeos:** tocar uno en el Refugio suena su capa dos compases, con sus estrellas, sobre la música.
+- Las notas de cada lugar se guardan en `S.lugares.notes` (hasta 8, normalizadas).
+- Pruebas: `tests/song-tiers.mjs` (niveles, plan del final, tus notas y el tema); `tests/song_stage_mix.py` (el final maestro renderizado sobre una música de prueba: pico 0,39, más lleno al entrar las capas); `song_stage_smoke.py` comprueba que el Mundo sigue sonando debajo. Límite: falta oírlo en un teléfono.
 
 ## H3 · El camino · alpha.163
 

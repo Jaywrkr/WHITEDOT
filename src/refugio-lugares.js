@@ -42,8 +42,9 @@ export function initialize(runtime){
    for(let s=0;s<3;s++){c.globalAlpha=got[s]?.95:.25;c.fillStyle=got[s]?gold:'#ffffff';c.fillRect(Math.round(q.x-r+s*r*.8),Math.round(q.y+r*2.1),Math.max(1,Math.round(r*.4)),Math.max(1,Math.round(r*.4)));}
    hits.push({x:q.x-r*1.6,y:q.y-r*1.6,w:r*3.2,h:r*4.4,id:p.id,index:i});});
   c.restore();}
- // The trophy plays its layer of your song for two bars (song.js); without it, its own note rising three steps.
- function layer(id,index){runtime.audio?.();if(!runtime.playSong?.([id],{bars:2}))chime(index);}
+ // The trophy plays its layer of your song for two bars (song-stage.js); without sound, its own note rising three steps.
+ // Since plan H4 over the music that is playing, at the stars it has, like the song itself.
+ function layer(id,index){runtime.audio?.();if(!runtime.songLayerPreview?.(id))chime(index);}
  function chime(index){if(!runtime.S.sound||!runtime.pluck||!runtime.now)return;runtime.audio?.();runtime.now(t=>{const base=60+(runtime.MU?.tr||0)+PORTAL_NOTES[index],six=runtime.SIX||.125;[0,4,7].forEach((d,i)=>runtime.pluck(base+d,t+i*six*2,.09,2));});}
  // A touch on the shelf: the trophy's place and stars, or the wall opening Lugares.
  function look(px,py){if(visiting())return null;const h=hits.find(b=>px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h);if(!h)return null;if(h.open){open();return '';}
