@@ -32,11 +32,11 @@ try:
    page.evaluate(ON);page.wait_for_function(f"__r.journeyChain().lit>={n}",timeout=8000);st=page.evaluate('__r.journeyChain()')
    assert st['best']>=3 and st['points']>st['lit'],st
    assert float(page.evaluate("document.getElementById('barfill').style.width").rstrip('%'))>0,'the bar fills'
-   page.wait_for_function("document.body.textContent.includes('la onda las enciende')",timeout=25000)
+   page.wait_for_timeout(2000);assert not page.evaluate("document.body.textContent.includes('la onda las enciende')"),'the Journey has no lines (plan H5)'
    assert page.evaluate('__r.S.sparks')==sparks,'no sparks in the Journey'
    # Full bar: the gold flower comes beside the cube; a pulse on time opens it and the portal opens.
    page.evaluate("()=>{__r.S.journey.chain.points=340;}");page.wait_for_function("!!__r.journeyChain().flower",timeout=3000)
-   page.wait_for_function("document.body.textContent.includes('flor dorada')",timeout=25000)
+   page.wait_for_timeout(1500);assert not page.evaluate("document.body.textContent.includes('flor dorada')"),'the Journey has no lines (plan H5)'
    page.evaluate("__r.journeyGamePulse(false)");assert not page.evaluate('__r.journeyChain().opened'),'off time it waits'
    page.evaluate(ON);page.wait_for_function("__r.journeyChain().opened&&__r.journeyChapter().done.lago",timeout=5000);page.wait_for_function("__r.journeyChapter().portal",timeout=10000)
    page.reload();page.wait_for_function('!!window.__r?.journeyChain');assert page.evaluate("__r.S.journey.done.lago")==True and page.evaluate("__r.S.journey.chain.opened")==True and page.evaluate("__r.S.journey.chain.lit.length")>=n

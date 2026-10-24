@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.164**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.165**. Las entradas describen su revisión, no certifican producción.
+
+## H5 · Reglas claras · alpha.165
+
+Rama `claude/h5-reglas`, sobre `claude/h4-cancion` (dependencia explícita).
+
+- **Solo a tiempo da chispas, también en el Mundo libre:** fuera de tiempo el pulso suena y rompe, pero vale ×0 (antes ×1); a tiempo ×2 y con racha de 8, ×3. Sin sonido no hay compás que cumplir y todo cuenta ×1. La simulación de la economía da la tienda completa en 10,5 h a quien acierta seis de cada diez (antes 9,4) y en 7,2 h a quien acierta nueve (antes 7,0).
+- **El Viaje sin rótulos:** los capítulos ya no escriben sus reglas ni avisan del objeto dorado; lo enseñan el gesto, la barra que late y el lugar que canta su patrón.
+- **Cada lugar dice cada frase una vez**, la primera vez, y nunca más (guardado en `S.journey.lines`).
+- **El narrador en su sitio:** durante una ronda no aparece ningún aviso de logro; la tarjeta de la ronda dice el logro ganado con la frase del narrador. Fuera de las rondas, como siempre. El logro «Treinta y tres» llega con las 33 ★, no con los 11 lugares.
+- **Menú:** no se acortó. Ya está en grupos («Jugar» y el resto) y unas 30 pruebas pulsan sus botones; recortarlo merece su propia fase con Jay.
+- Pruebas actualizadas: `spark-rules.mjs` y `spark_rhythm_smoke.py` (fuera de tiempo rompe pero no da), `spark-economy-sim.mjs`, y los juegos del Viaje (`journey-*.mjs`, `journey_stick_smoke.py`, `journey_chain_smoke.py`) comprueban que no hay rótulos.
 
 ## H4 · Tu canción · alpha.164
 

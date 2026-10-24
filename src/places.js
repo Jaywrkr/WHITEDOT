@@ -97,6 +97,8 @@ export function initialize(runtime){
   runtime.$('placeStars').innerHTML=['★','★','★'].map((x,i)=>`<span class="${own().stars[r.id][i]?'got':''}${r.fresh[i]?' new':''}">${x}</span>`).join('');
   runtime.$('placeRows').innerHTML=[`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo: ${pct} % a tiempo (85 %)</li>`,`<li>${r.stars[2]?'✓':'·'} Maestro: 80 % a tiempo</li>`].join('')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>');
   runtime.$('placeEarned').textContent=`${mm}:${ss} · +${r.sparks+(r.extra?.sparks||0)} ✦${r.record||r.extra?.record?' · récord':''}`;box.hidden=false;
+  // The narrator speaks here, in the card, never during play (plan H5).
+  const said=runtime.takePendingLine?.(),nar=runtime.$('placeNarrator');if(nar){nar.hidden=!said;nar.textContent=said?`${said.title} · ${said.line}`:'';}
   runtime.$('placeAgain').onclick=()=>{box.hidden=true;start(r.id,{maestro:r.maestro,from:r.from,remix:r.remix});};runtime.$('placeMaestro').hidden=!own().stars[r.id][1]||r.maestro;runtime.$('placeMaestro').onclick=()=>{box.hidden=true;start(r.id,{maestro:true,from:r.from});};runtime.$('placeClose').onclick=()=>{box.hidden=true;back(r.from);runtime.save?.();runtime.songFinaleCheck?.();};
   // The next track on the path, straight from the card (plan H3); none once all eleven are complete.
   const next=nextOnPath(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Siguiente · ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGo?.(next.id);};}}}
