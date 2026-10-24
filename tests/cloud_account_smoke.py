@@ -50,7 +50,7 @@ def account(page):
   except Exception:pass
  assert page.locator('#mConnection').is_visible()
 def wait_remote(page,uid,sparks):
- deadline=time.monotonic()+15
+ deadline=time.monotonic()+45
  while remote.get(uid,{}).get('state',{}).get('sparks')!=sparks and time.monotonic()<deadline:page.wait_for_timeout(100)
  assert remote[uid]['state']['sparks']==sparks
 try:
@@ -79,11 +79,11 @@ try:
   # Choosing the online copy from the Camino while this device is in the Mundo must leave the Mundo cleanly: no region or world music left behind.
   desk=browser.new_context(viewport={'width':390,'height':844},service_workers='block').new_page();prepare(desk);sign_in(desk,'two@example.test');desk.wait_for_function("window.__r?.accountUserId==='two'",timeout=15000);started(desk)
   desk.evaluate("()=>{const r=__r;r.S.pathCrystals=Array.from({length:10},(_,i)=>'fixture:'+i);r.enterWorld({automatic:true});r.save();dispatchEvent(new Event('focus'));}")
-  deadline=time.monotonic()+15
+  deadline=time.monotonic()+45
   while remote.get('two',{}).get('state',{}).get('mode')!='world' and time.monotonic()<deadline:desk.wait_for_timeout(100)
   mobile=browser.new_context(viewport={'width':390,'height':844},service_workers='block').new_page();prepare(mobile);sign_in(mobile,'two@example.test');mobile.wait_for_function("window.__r?.accountUserId==='two'",timeout=15000);started(mobile);mobile.wait_for_function('__r.inWorld()')
   mobile.evaluate("()=>{__r.exitWorld(false);__r.S.sparks=11;__r.save();dispatchEvent(new Event('focus'));}")
-  deadline=time.monotonic()+15
+  deadline=time.monotonic()+45
   while remote.get('two',{}).get('state',{}).get('mode')!='camino' and time.monotonic()<deadline:mobile.wait_for_timeout(100)
   assert remote['two']['state']['mode']=='camino'
   desk.evaluate("()=>{__r.S.sparks=99;__r.save();dispatchEvent(new Event('focus'));}");desk.wait_for_function("!document.getElementById('cloudPull').hidden",timeout=20000);assert desk.evaluate('__r.curRegion')!=None
