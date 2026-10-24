@@ -35,10 +35,10 @@ assert.equal(r.journeyFinale(),false,'only once');assert.equal(landed,2,'later i
 const r2={...r,S:{journey:{version:1,mode:'viaje',chapter:6,notes:{}},sound:false}};mode='viaje';initialize(r2);created.hidden=true;r2.journeyFinale();clock+=1000;el.onclick();assert(r2.journeyFinaleState().running,'not in the first two seconds');clock+=1500;el.onclick();assert.equal(r2.journeyFinaleState().skipped,true);assert.equal(r2.S.journey.finished,true);
 // A failed save keeps the Journey open.
 const r3={...r,S:{journey:{version:1,mode:'libre',chapter:6,notes:{}},sound:false},save:()=>false};mode='libre';initialize(r3);r3.journeyFinale();r3.journeyFinaleSkip();assert.equal(r3.S.journey.finished,undefined);
-// The festival build: only the Llanura and the Lago, your phrase stays on screen and «Otra persona» starts again.
+// The festival build: the whole Journey since plan I5, your phrase stays on screen and «Otra persona» starts again.
 assert.deepEqual([...new Set(finaleScore({llanura:[57],lago:[60],bosque:[55]},['llanura','lago']).map(n=>n.chapter))],['llanura','lago','refugio']);
 let restarts=0;const r4={...r,S:{journey:{version:1,mode:'viaje',chapter:2,notes:{llanura:[57],bosque:[55]},finished:true},sound:false},festivalRestart:()=>restarts++};mode='viaje';el.children=[];initialize(r4);
-assert.equal(r4.journeyFinale({festival:true}),true,'the festival plays even on a finished save');assert.equal(r4.journeyFinaleState().notes,1+12);
+assert.equal(r4.journeyFinale({festival:true}),true,'the festival plays even on a finished save');assert.equal(r4.journeyFinaleState().notes,2+12,'the Llanura and the Bosque, both in the festival');
 clock+=1e6;frames.splice(0).forEach(f=>f());assert.equal(r4.journeyFinaleState().running,false);assert.equal(credits.lines.length,FESTIVAL_LINES.length);assert.equal(mode,'viaje','the festival never opens the free World');
 const again=el.children.find(b=>b.id==='journeyAgain');assert(again&&again.textContent==='Otra persona');again.onclick();assert.equal(restarts,1);
 console.log('PASS journey finale: your notes per chapter then the theme twice in major, gold sky and credits, the end is kept and the free World opens, once, skippable, safe on a failed save; the festival ends on your phrase and starts again for the next player');

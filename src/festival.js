@@ -1,8 +1,9 @@
-// The festival build (docs/VIAJE.md): the first 15 minutes of the Journey, Camino, Llanura and Lago, as a closed arc.
+// The festival build (docs/VIAJE.md): the whole Journey, Camino to the Refugio's finale, as a closed arc (plan I5; it
+// ended after the Lago before).
 // Opened with ?festival=1. It plays in the Journey, without an account, on its own local save, so it never touches
 // a player's game; it ends in the Refugio with your phrase, and «Otra persona» starts again for the next player.
 export const FESTIVAL_KEY='kubono:festival';
-export const FESTIVAL_CHAPTERS=Object.freeze(['llanura','lago']);
+export const FESTIVAL_CHAPTERS=Object.freeze(['llanura','lago','bosque','tormenta','vacio']);
 export function isFestival(search=globalThis.location?.search){try{return new URLSearchParams(search||'').get('festival')==='1';}catch(_){return false;}}
 export function initialize(runtime){
  const on=isFestival();

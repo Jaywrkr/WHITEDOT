@@ -33,10 +33,10 @@ Diseño aprobado por Jay el 23 de octubre de 2026. Es la fuente única del plan 
 | Estrella | Cómo |
 |---|---|
 | ★ Completo | Cerrar el objeto dorado |
-| ★★ Ritmo | Completarlo con al menos el 85 % de pulsos a tiempo |
-| ★★★ Maestro | Se abre con ★★: tempo +10 %, barra ×1,5 y margen a tiempo más estrecho; completarlo con al menos el 80 % a tiempo |
+| ★★ Ritmo | Completarlo con al menos el 75 % de pulsos a tiempo (85 % hasta I5) |
+| ★★★ Maestro | Se abre con ★★: tempo +10 %, barra ×1,5 y margen a tiempo más estrecho; completarlo con al menos el 70 % a tiempo (80 % hasta I5) |
 
-Sin sonido se gana ★; ★★ y ★★★ piden escuchar. Al terminar el Viaje cada capítulo da su ★, y su ★★ si se jugó con el 85 % a tiempo; quien ya lo había terminado recibe esas mismas estrellas.
+Sin sonido se gana ★; ★★ y ★★★ piden escuchar. Al terminar el Viaje cada capítulo da su ★, y su ★★ si se jugó con el 75 % a tiempo; quien ya lo había terminado recibe esas mismas estrellas.
 
 ### El camino (plan H3)
 
@@ -188,7 +188,7 @@ Decisiones de Jay (aprobadas; se aplican en la fase indicada, hasta entonces rig
 | 90 % | 33 min | 24 / 33 (33 ★ a los 94 min) | 6 min | 6 min |
 
 - **La regla de 12 minutos se cumple** contando las piezas de la tienda como novedad.
-- **El muro de ★★ sigue ahí:** con ★★ al 85 %, quien acierta 75 de cada 100 gana y después su canción no crece en hora y media. Con ★★ al 75 % (y ★★★ al 70 % en Maestro) ese jugador llega a 28 ★ en dos horas y nunca pasa 11 min sin que crezca. **Decisión de Jay:** dejar el 85 %, bajarlo o dar ★★ también por mejorar la propia marca.
+- **El muro de ★★ (resuelto en I5):** con ★★ al 85 %, quien acierta 75 de cada 100 gana y después su canción no crece en hora y media. Con ★★ al 75 % (y ★★★ al 70 % en Maestro) ese jugador llega a 28 ★ en dos horas y nunca pasa 11 min sin que crezca. **Decisión de Jay:** dejar el 85 %, bajarlo o dar ★★ también por mejorar la propia marca.
 - **Festival:** recomendación, que el jurado vea solo el Viaje y su final (`?festival=1`), sin anillo, remezcla ni tienda. Pendiente de Jay.
 - Las sesiones con Luca (`?prueba=1`) siguen pendientes; el modelo no sustituye verle jugar.
 
@@ -202,7 +202,7 @@ El panel (tercera sesión, media 7,5) pidió cerrar lo que H1–H7 dejó a media
 | I2 · Que se vea | `claude/i2-se-vea` | Hecho: el cubo mide 24–36 px en el Camino, el Mundo y los lugares (6 px antes en el Camino); el bioma recuperado lava toda la pantalla con su color (24 % de los píxeles en el anillo, antes 5–9 %); la columna dorada del portal siguiente se ve desde cualquier sitio y, fuera de pantalla, queda en el borde de su lado en vez de la flecha |
 | I3 · Un solo instante | `claude/i3-instante` | Hecho: el brillo dorado, la vibración y un golpe del cubo llegan cuando suena la nota (hasta 250 ms después del toque), no al tocar; en la Línea, los pasos que cuentan crecen y se encienden en los cuatro pasos antes de que llegue el cursor; la calibración solo mide en las negras y nunca mientras el lugar canta su patrón |
 | I4 · El final que respira | `claude/i4-final` | Hecho: el final usa tus notas de los 11 lugares (las de los capítulos del Viaje si no los rejugaste), en los pasos en que las tocaste y llevadas a la escala del mundo; la capa de Faros calla hasta que suena el tema; un compás de silencio; el chelo toca el tema dos veces (la segunda una quinta arriba); los créditos al final; al menos 60 s. Sin ritardando: el secuenciador del mundo no frena una sola canción |
-| I5 · Decisiones | `claude/i5-decisiones` | ★★ 75 %, ★★★ 70 %; `?festival=1` hasta los créditos |
+| I5 · Decisiones | `claude/i5-decisiones` | Hecho: ★★ al 75 % y ★★★ al 70 % en Maestro; el modelo da al jugador del 75 % 28 ★ en dos horas y nunca más de 11 min sin capa nueva (el del 60 % sigue sin ★★: su canción no crece tras ganar). `?festival=1` es el Viaje entero, de la Llanura a los créditos del Refugio |
 | I6 · Menos ruido | `claude/i6-menos-ruido` | Menú de 6 entradas y «Más»; modelo de dos horas sin contar compras como novedad |
 
 ## Cuándo una fase está terminada
