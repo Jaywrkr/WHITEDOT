@@ -28,16 +28,22 @@ try:
    # A portal on screen, and the arrow to the nearest one from the centre.
    s=spot(page,'lago');page.evaluate(f"()=>{{__r.S.wx={s['x']};__r.S.wy={s['y']+150};}}");page.wait_for_timeout(500)
    if os.environ.get('RING_SHOT'):page.screenshot(path=os.environ['RING_SHOT'].replace('.png',f'-{width}.png'))
-   # Into the Lago: its round starts, and the portal is remembered for fast travel.
-   walk_in(page,'lago');page.wait_for_function("__r.places().run?.id==='lago'",timeout=5000)
+   # Into the Lago, complete from the Journey (plan H3): Jugar, Libre, and Maestro only with ★★; Jugar starts its round.
+   walk_in(page,'lago');page.wait_for_function("!document.getElementById('mPortal').hidden",timeout=3000)
+   assert page.locator('#portalFree').is_visible() and not page.locator('#portalMaestro').is_visible()
+   page.locator('#portalPlay').click();page.wait_for_function("__r.places().run?.id==='lago'",timeout=5000)
    assert page.evaluate('__r.S.lugares.seen.lago')==True
    # «Dejar la ronda» shows only during a round and brings you back to the portal.
    page.locator('#bMenu').click();assert page.locator('#bLeavePlace').is_visible();page.locator('#bLeavePlace').click()
    page.wait_for_function("!__r.places().run",timeout=3000);assert near(page,'lago'),'back beside the Lago portal'
    page.wait_for_timeout(400);assert not page.evaluate('__r.places().run'),'standing beside it does not open it again'
    page.locator('#bMenu').click();assert not page.locator('#bLeavePlace').is_visible();page.locator('#mnClose').click()
-   # A closed portal asks for stars.
-   walk_in(page,'dunas');page.wait_for_timeout(400);assert not page.evaluate('__r.places().run')
+   # A closed portal opens after the one before it (plan H3): the Dunas wait for the Jardín; the light points to the Jardín.
+   walk_in(page,'dunas');page.wait_for_timeout(400);assert not page.evaluate('__r.places().run');assert page.evaluate('__r.ringState().next')=='jardin'
+   # Libre: the place's music with no bar or stars.
+   walk_in(page,'llanura');page.wait_for_function("!document.getElementById('mPortal').hidden",timeout=3000);page.locator('#portalFree').click()
+   page.wait_for_function("__r.places().run?.free===true",timeout=5000);page.wait_for_timeout(300);assert not page.evaluate("document.body.classList.contains('place-round')"),'no bar in Libre'
+   page.locator('#bMenu').click();page.locator('#bLeavePlace').click();page.wait_for_function("!__r.places().run",timeout=3000)
    # With ★★, a portal asks Jugar or Maestro.
    page.evaluate("()=>{__r.S.lugares.stars.bosque[1]=true;}");walk_in(page,'bosque');page.wait_for_function("!document.getElementById('mPortal').hidden",timeout=3000)
    assert page.locator('#portalStars .got').count()==2;page.locator('#portalMaestro').click();page.wait_for_function("__r.places().run?.maestro===true&&__r.places().run.id==='bosque'",timeout=5000)
@@ -52,5 +58,5 @@ try:
    page.evaluate("()=>{__r.S.studio.x=__r.S.wx+20000;__r.S.studio.y=__r.S.wy;}");moved=page.evaluate('__r.ringState().center');assert abs(moved['x']-c['x'])>15000,moved
    assert not errors,errors;page.close()
   browser.close()
- print('PASS places ring on phone and desktop: eleven portals around the Refugio, walking in starts a round, closed ones ask for stars, ★★ asks Jugar or Maestro, leaving and reloading bring you back to the portal, fast travel from the map, the ring follows the Refugio',flush=True)
+ print('PASS places ring on phone and desktop: eleven portals around the Refugio, a complete place asks Jugar, Libre (no bar) or Maestro with ★★, closed ones open after the one before it, leaving and reloading bring you back to the portal, fast travel from the map, the ring follows the Refugio',flush=True)
 finally:server.shutdown()

@@ -1,14 +1,22 @@
 import assert from 'node:assert/strict';
-import {PLACES,PLACE_IDS,TOTAL_STARS,roundStars,normalizePlaces,starCount,placeOpen,initialize} from '../src/places.js';
-// Eleven places, 33 stars; the five of the Journey open after it, the six new ones by stars.
-assert.equal(PLACES.length,11);assert.equal(TOTAL_STARS,33);assert.deepEqual(PLACES.filter(p=>p.need).map(p=>p.need),[5,8,12,16,20,24]);
+import {PLACES,PLACE_IDS,TOTAL_STARS,roundStars,normalizePlaces,starCount,placeOpen,previousPlace,nextOnPath,allComplete,initialize} from '../src/places.js';
+// Eleven places, 33 stars; the five of the Journey open after it, the six new ones in order, each after the one before
+// it (plan H3).
+assert.equal(PLACES.length,11);assert.equal(TOTAL_STARS,33);assert.deepEqual(PLACE_IDS.map(previousPlace),[null,null,null,null,null,'vacio','jardin','dunas','cristales','faros','ruinas']);
 // Stars of a round: ★ always; ★★ 85 % on time with sound; ★★★ a Maestro round with 80 %.
 assert.deepEqual(roundStars({onTime:.5}),[true,false,false]);assert.deepEqual(roundStars({onTime:.9}),[true,true,false]);assert.deepEqual(roundStars({onTime:.9,sound:false}),[true,false,false]);
 assert.deepEqual(roundStars({onTime:.82,maestro:true}),[true,false,true]);assert.deepEqual(roundStars({onTime:.9,maestro:true}),[true,true,true]);
 // Saves: a chapter kept in the Journey is a ★ of its place, even from before; a future version is kept untouched.
 const n=normalizePlaces(null,{done:{llanura:true,lago:true}});assert.deepEqual(n.stars.llanura,[true,false,false]);assert.equal(starCount(n),2);
 const future={version:9,x:1};assert.equal(normalizePlaces(future),future);
-assert(!placeOpen(n,'llanura',{done:{}}),'closed during the Journey');assert(placeOpen(n,'llanura',{finished:true}));assert(!placeOpen(n,'jardin',{finished:true}),'the Jardín asks five stars');assert(placeOpen(normalizePlaces(null,{done:{llanura:true,lago:true,bosque:true,tormenta:true,vacio:true}}),'jardin',{finished:true}),'with the five of the Journey the Jardín opens (plan F9)');assert(!placeOpen(normalizePlaces({stars:{dunas:[true]}},{}),'dunas',{finished:true}),'the Dunas ask eight stars');
+assert(!placeOpen(n,'llanura',{done:{}}),'closed during the Journey');assert(placeOpen(n,'llanura',{finished:true}));assert(!placeOpen(n,'jardin',{finished:true}),'the Jardín comes after the Vacío');assert(placeOpen(normalizePlaces(null,{done:{llanura:true,lago:true,bosque:true,tormenta:true,vacio:true}}),'jardin',{finished:true}),'with the five of the Journey the Jardín opens (plan F9)');assert(!placeOpen(normalizePlaces({stars:{jardin:[false,true]}},{}),'dunas',{finished:true}),'the Dunas wait for the Jardín complete, whatever the stars');
+assert(placeOpen(normalizePlaces({stars:{jardin:[true]}},{}),'dunas',{finished:true}),'the Jardín complete opens the Dunas');
+assert(placeOpen(normalizePlaces({stars:{dunas:[true]}},{}),'dunas',{finished:true}),'a place already complete stays open');
+// A version-1 save keeps every door its stars had opened (old ladder 5, 8, 12…); a fresh one follows the path.
+{const v1=normalizePlaces({version:1,stars:Object.fromEntries(['llanura','lago','bosque'].map(id=>[id,[true,true,true]]))},{});assert(v1.kept.jardin&&v1.kept.dunas&&!v1.kept.cristales);assert(placeOpen(v1,'dunas',{finished:true}));assert.equal(v1.version,2);
+ assert.equal(nextOnPath(v1,{finished:true}).id,'tormenta','the next on the path: the first open and not complete');}
+// Winning is the eleven complete; the 33 stars are the master version.
+{const eleven=normalizePlaces({stars:Object.fromEntries(PLACE_IDS.map(id=>[id,[true]]))},{});assert(allComplete(eleven));assert.equal(starCount(eleven),11);assert.equal(nextOnPath(eleven,{finished:true}),null);}
 // Runtime: a round of the Lago, stars, sparks, record, and the chapter's own state back as it was.
 const realNow=Date.now;let clock=1e9;Date.now=()=>clock;globalThis.setTimeout=()=>0;
 const r={S:{wx:0,wy:0,sound:true,sparks:5,todayKey:'2026-10-23',journey:{finished:true,done:{llanura:true,lago:true,bosque:true,tormenta:true,vacio:true},chain:{points:340,opened:true,hinted:true}}},

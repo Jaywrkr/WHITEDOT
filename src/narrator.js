@@ -60,7 +60,7 @@ export const NARRATOR_LINES=Object.freeze({
  lugarTres:'Tres lugares distintos en un día. Turismo intensivo.',
  estrellas10:'Diez estrellas. Empieza a parecer un plan.',
  estrellas20:'Veinte estrellas. Ya no puedes decir que fue casualidad.',
- estrellas33:'Treinta y tres estrellas. Ganaste. Ahora sal un rato: el sol también es un lugar.',
+ estrellas33:'Treinta y tres estrellas. La versión maestra. Ahora sal un rato: el sol también es un lugar.',
  portalCerrado:'Empujaste un portal cerrado. Muy fuerte. Muy inútil.',
  portales5:'Visitaste los cinco portales. El anillo ya te conoce de vista.',
  rondaMedias:'Dejaste la ronda a medias. El objeto dorado llora en silencio.',

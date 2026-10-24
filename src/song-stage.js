@@ -1,11 +1,13 @@
 import {prefersReducedMotion} from './frame-state.js';
 import {SONG_LAYERS,SONG_IDS,SONG_SIX} from './song.js';
-import {PLACES,TOTAL_STARS,starCount} from './places.js';
+import {PLACES,TOTAL_STARS,starCount,allComplete} from './places.js';
 // The song seen (plan F7): eleven rings, one per place. A layer you have won lights its ring in its colour and the ring
 // beats with it; one you have not is a dim dashed ring, so what is missing is plain without words. The Refugio's
-// «Tu canción» plays what you have; with the 33 stars, every layer comes in one bar after another: that is winning.
+// «Tu canción» plays what you have; with the eleven places complete, every layer comes in one bar after another: that
+// is winning (plan H3). With the 33 stars the same moment comes again as the master version.
 export const FINAL_ENTRY_BARS=1,FINAL_TAIL_BARS=4;
-export const FINAL_LINES=Object.freeze(['Las 33 ★','Tu canción está completa','Kubono','Jay · diseño y código','Luca · primer jugador']);
+export const FINAL_LINES=Object.freeze(['Los 11 lugares','Tu canción está completa','Kubono','Jay · diseño y código','Luca · primer jugador']);
+export const MASTER_LINES=Object.freeze(['Las 33 ★','La versión maestra','Kubono','Jay · diseño y código','Luca · primer jugador']);
 export function ringLayout(W,H,n=SONG_IDS.length){const R=Math.min(W*.36,H*.3),cx=W/2,cy=H*.44,r=Math.max(14,Math.min(26,Math.min(W,H)*.045));
  return Array.from({length:n},(_,i)=>{const a=-Math.PI/2+i/n*2*Math.PI;return {x:cx+Math.cos(a)*R,y:cy+Math.sin(a)*R,r};});}
 // Draw the rings: `lit` says which layers sound, `beat(id)` how hard each is hitting now (0–1), `shown` how many to draw.
@@ -24,10 +26,10 @@ export function initialize(runtime){
  function overlay(){let el=document.getElementById('songStage');if(!el){el=document.createElement('div');el.id='songStage';el.setAttribute('role','dialog');el.setAttribute('aria-label','Tu canción');
   el.innerHTML='<canvas></canvas><div class="song-stage-text" aria-live="polite"></div><div class="song-stage-row"><button id="songAgain">Otra vez</button><button id="songClose">Cerrar</button></div>';document.body.appendChild(el);}el.hidden=false;return el;}
  // Open the stage: your song as it is, or (final) the eleven layers coming in one after another.
- function open({final=false}={}){const ids=won();if(!ids.length&&!final){runtime.toast?.('Gana una ★ y empieza tu canción.',{level:2});return false;}if(run)close();
+ function open({final=false,master=false}={}){const ids=won();if(!ids.length&&!final){runtime.toast?.('Gana una ★ y empieza tu canción.',{level:2});return false;}if(run)close();
   document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});const el=overlay(),text=el.querySelector('.song-stage-text');
   const from={};if(final)SONG_IDS.forEach((id,i)=>{from[id]=i*FINAL_ENTRY_BARS;});const bars=final?SONG_IDS.length*FINAL_ENTRY_BARS+FINAL_TAIL_BARS:8,list=final?SONG_IDS:ids;
-  runtime.audio?.();const handle=runtime.playSong?.(list,{bars,from})||null;run={el,final,handle,ids:list,from,bars,at:performance.now(),length:bars*16*SONG_SIX*1000};
+  runtime.audio?.();const handle=runtime.playSong?.(list,{bars,from})||null;run={el,final,master,handle,ids:list,from,bars,at:performance.now(),length:bars*16*SONG_SIX*1000};
   if(final){state.finals++;text.replaceChildren();runtime.narrate?.('won');}else{runtime.narrate?.('song');text.textContent=`Tu canción · ${ids.length} de ${SONG_IDS.length}`;}state.opened++;
   el.querySelector('#songAgain').hidden=final;el.querySelector('#songAgain').onclick=()=>open();el.querySelector('#songClose').textContent=final?'Seguir':'Cerrar';el.querySelector('#songClose').onclick=close;
   requestAnimationFrame(frame);return true;}
@@ -40,10 +42,14 @@ export function initialize(runtime){
   const shown=run.final?Math.min(SONG_IDS.length,Math.floor(ms/1000/(16*SONG_SIX))+1):SONG_IDS.length;
   drawSongRings(c,W,H,{lit:id=>sounding(id,ms),beat:id=>runtime.songPulse?.(run.handle,id,time)||(still?0:.3+.3*Math.sin(ms/300+id.length)),shown,still,color:(id,f)=>runtime.placeColor?.(id,f)||f});
   // The final: once every layer is in, the words and the credits.
-  if(run.final&&ms>=SONG_IDS.length*FINAL_ENTRY_BARS*16*SONG_SIX*1000&&!run.credits){run.credits=true;const box=el.querySelector('.song-stage-text');box.replaceChildren(...FINAL_LINES.map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.8}s`;if(i===0)p.className='journey-title';return p;}));}
+  if(run.final&&ms>=SONG_IDS.length*FINAL_ENTRY_BARS*16*SONG_SIX*1000&&!run.credits){run.credits=true;const box=el.querySelector('.song-stage-text');box.replaceChildren(...(run.master?MASTER_LINES:FINAL_LINES).map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.8}s`;if(i===0)p.className='journey-title';return p;}));}
   if(ms>run.length+1500&&!run.final){el.querySelector('.song-stage-text').textContent=`Tu canción · ${run.ids.length} de ${SONG_IDS.length}`;}
   requestAnimationFrame(frame);}
- // With the 33 stars, once: the true finale, after the round's card is closed.
- function check(){const d=data();if(!d||d.won||starCount(d)<TOTAL_STARS)return false;d.won=true;if(runtime.save?.()===false){delete d.won;return false;}return open({final:true});}
- Object.defineProperties(runtime,{openSong:{get:()=>open},closeSong:{get:()=>close},songFinaleCheck:{get:()=>check},songStageState:{get:()=>()=>({...state,running:!!run,final:!!run?.final,ids:run?[...run.ids]:[],credits:!!run?.credits})}});
+ // With the eleven places complete, once: the true finale, after the round's card is closed. With the 33 stars, once
+ // more: the master version.
+ function check(){const d=data();if(!d)return false;
+  if(!d.won&&allComplete(d)){d.won=true;if(runtime.save?.()===false){delete d.won;return false;}return open({final:true});}
+  if(d.won&&!d.master&&starCount(d)>=TOTAL_STARS){d.master=true;if(runtime.save?.()===false){d.master=false;return false;}return open({final:true,master:true});}
+  return false;}
+ Object.defineProperties(runtime,{openSong:{get:()=>open},closeSong:{get:()=>close},songFinaleCheck:{get:()=>check},songStageState:{get:()=>()=>({...state,running:!!run,final:!!run?.final,master:!!run?.master,ids:run?[...run.ids]:[],credits:!!run?.credits})}});
 }

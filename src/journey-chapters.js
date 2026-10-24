@@ -142,7 +142,8 @@ export function initialize(runtime){
  // The portal in the World, and seven small marks on the Line's right end: gold for done, white for here.
  // A round of a place (places.js): its bar shows the round's progress, in either screen mode; with «Todo a la vista»
  // the Journey's own drawing is off, so the game's top layer is drawn here.
- function roundBar(){const run=runtime.placeRun?.();document.body?.classList?.toggle('place-round',!!run);if(!run)return false;const fill=document.getElementById?.('barfill'),p=runtime.journeyGameProgress?.(run.id);if(fill&&p!=null){const w=(Math.round(p*200)/2)+'%';if(fill.style.width!==w)fill.style.width=w;fill.parentElement?.classList.toggle('free',false);}return true;}
+ // A Libre round (plan H3) has no bar: only the place and its music.
+ function roundBar(){const run=runtime.placeRun?.();document.body?.classList?.toggle('place-round',!!run&&!run.free);if(!run||run.free)return false;const fill=document.getElementById?.('barfill'),p=runtime.journeyGameProgress?.(run.id);if(fill&&p!=null){const w=(Math.round(p*200)/2)+'%';if(fill.style.width!==w)fill.style.width=w;fill.parentElement?.classList.toggle('free',false);}return true;}
  function draw(c,W,H,t){tick();const round=roundBar();if(!active()){runtime.drawJourneyMoments?.(c,W,H,t,null,false);if(round&&!openSurface('.modal:not([hidden])'))runtime.drawJourneyGames?.(c,W,H,t);return;}if(openSurface('.modal:not([hidden])'))return;const j=own(),still=calm();runtime.drawJourneyMoments?.(c,W,H,t,current(),inChapter());runtime.drawJourneyGames?.(c,W,H,t);c.save();
   if(portalOpen()){const x=W/2+(portal.x-(runtime.camX??runtime.S.wx)),y=H/2+(portal.y-(runtime.camY??runtime.S.wy)),grow=Math.min(1,(performance.now()-portal.at)/900),r=22*grow;
    const g=c.createRadialGradient(x,y,0,x,y,r*2.4);g.addColorStop(0,'rgba(240,210,122,.35)');g.addColorStop(1,'rgba(240,210,122,0)');c.fillStyle=g;c.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8);

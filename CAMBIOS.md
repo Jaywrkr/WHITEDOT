@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.162**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.163**. Las entradas describen su revisión, no certifican producción.
+
+## H3 · El camino · alpha.163
+
+Rama `claude/h3-camino`, sobre `claude/h2-que-se-sienta` (dependencia explícita).
+
+- **En orden:** tras el Viaje, Jardín → Dunas → Cristales → Faros → Ruinas → Cueva; cada uno se abre al completar el anterior. Ya no hacen falta ★★ para avanzar: un niño que acierta el 75 % llega al final.
+- **Ganar = los 11 completos.** Suena el final verdadero («Los 11 lugares»). Con las 33 ★ vuelve, una vez, como versión maestra («Las 33 ★»).
+- **Luz al siguiente:** una columna dorada sobre el portal del siguiente lugar del camino; la flecha del borde apunta a él.
+- **«Siguiente · lugar»** en la tarjeta de la ronda: lleva a su portal y empieza su ronda.
+- **Modo Libre:** un lugar completo ofrece Jugar, Libre y Maestro (con ★★). Libre no tiene barra, estrellas ni chispas; al cerrar su objeto dorado vuelve al portal con su música.
+- Textos: un portal cerrado dice «X se abre al completar Y»; Lugares dice «Siguiente: X»; los créditos del Viaje, «Once lugares te esperan».
+- **Guardados:** versión 2 de `S.lugares`. Un guardado de antes conserva abiertos los lugares que sus estrellas abrían (`kept`). Nada se borra.
+- Pruebas actualizadas a las reglas nuevas: `places.mjs`, `places-ring.mjs`, `refugio-lugares.mjs`, `journey-finale.mjs`, `ring_smoke.py` (Libre sin barra), `refugio_lugares_smoke.py`, `song_stage_smoke.py` (final con 11 y versión maestra con 33), `places_smoke.py` («Siguiente · Jardín»).
 
 ## H2 · Que se sienta · alpha.162
 

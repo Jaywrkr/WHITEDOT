@@ -1,4 +1,4 @@
-import {PLACES,TOTAL_STARS,starCount,placeOpen} from './places.js';
+import {PLACES,TOTAL_STARS,starCount,placeOpen,previousPlace,allComplete,nextOnPath} from './places.js';
 import {PORTAL_NOTES} from './places-ring.js';
 import {roomBox} from './house-view.js';
 // The Refugio as the centre (plan F6, docs/MUNDO.md): it says what you have, what is missing and where to go.
@@ -6,11 +6,11 @@ import {roomBox} from './house-view.js';
 // the wall of stars (★ N / 33). In the house bar, «★ N / 33» opens Lugares: the map table (every place with its stars,
 // record and what it asks; fast travel to the ones already entered) and the door to the ring.
 export const TROPHY_SHELF=Object.freeze({x:34,y:76,gap:19});
-// What comes next: the first closed place and the stars it still asks for; null once every place is open.
-export function nextUnlock(places,journey){const have=starCount(places);for(const p of PLACES)if(!placeOpen(places,p.id,journey)&&p.need>0)return {id:p.id,name:p.name,need:p.need,missing:Math.max(0,p.need-have),ready:have>=p.need&&!p.game};return null;}
-// One line under the wall: the next place to open, or the song once all 33 are won.
-export function nextLine(places,journey){const have=starCount(places);if(have>=TOTAL_STARS)return 'Las 33 ★. Tu canción está completa.';const n=nextUnlock(places,journey);
- if(!n)return `Faltan ${TOTAL_STARS-have} ★ para tu canción.`;return n.ready?`${n.name} llega pronto. Ya tienes sus ${n.need} ★.`:`${n.name} se abre con ${n.need} ★. Faltan ${n.missing}.`;}
+// What comes next on the path (plan H3): the first closed place and the one to complete before it; null once all are open.
+export function nextUnlock(places,journey){for(const p of PLACES)if(p.game&&!placeOpen(places,p.id,journey)){const prev=PLACES.find(q=>q.id===previousPlace(p.id));return {id:p.id,name:p.name,after:prev?.id||null,afterName:prev?.name||''};}return null;}
+// One line under the wall: the place to play next, or the song once the eleven are complete, or the master version.
+export function nextLine(places,journey){const have=starCount(places);if(have>=TOTAL_STARS)return 'Las 33 ★. La versión maestra de tu canción.';if(allComplete(places))return `Tu canción está completa. ${TOTAL_STARS-have} ★ para la versión maestra.`;
+ const n=nextOnPath(places,journey);return n?`Siguiente: ${n.name}.`:'';}
 // A trophy for each verb: the gold thing of its game, drawn small.
 function trophy(c,game,x,y,r){c.beginPath();
  if(game==='stick'){c.rect(x-r*.7,y-r*.7,r*1.4,r*1.4);c.fill();return;}
@@ -48,14 +48,14 @@ export function initialize(runtime){
  // A touch on the shelf: the trophy's place and stars, or the wall opening Lugares.
  function look(px,py){if(visiting())return null;const h=hits.find(b=>px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h);if(!h)return null;if(h.open){open();return '';}
   const p=PLACES[h.index],d=data(),best=d?.best?.[p.id];lastTap=p.id;if(stars(p.id)[0]){layer(p.id,h.index);runtime.narrate?.('trophy');}
-  if(!placeOpen(d,p.id,runtime.S.journey))return p.game?`${p.name} · se abre con ${p.need} ★`:`${p.name} · pronto`;
+  if(!placeOpen(d,p.id,runtime.S.journey)){const prev=PLACES.find(q=>q.id===previousPlace(p.id));return p.game&&prev?`${p.name} · tras ${prev.name}`:`${p.name} · pronto`;}
   return `${p.name} ${glyphs(p.id)}${best?` · ${Math.round(best.onTime*100)} % a tiempo`:''}`;}
  // Lugares: every place with its stars and what it asks; «Ir» to the ones already entered; the door to the ring.
  function open(){const box=$('mLugares'),d=data();if(!box||!d)return;const have=starCount(d);$('lugaresCount').textContent=`★ ${have} / ${TOTAL_STARS}`;$('lugaresNext').textContent=nextLine(d,runtime.S.journey);
   const list=$('lugaresList');list.replaceChildren();for(const p of PLACES){const li=document.createElement('li'),openNow=placeOpen(d,p.id,runtime.S.journey),best=d.best?.[p.id];
    const name=document.createElement('span');name.className='lugar-name';name.textContent=p.name;const st=document.createElement('span');st.className='lugar-stars';st.setAttribute('aria-label',`${stars(p.id).filter(Boolean).length} de 3 estrellas`);
    stars(p.id).forEach(x=>{const s=document.createElement('i');s.textContent='★';if(x)s.className='got';st.appendChild(s);});
-   const note=document.createElement('small');note.textContent=!openNow?(p.game?`★ ${p.need}`:'Pronto'):best?`${Math.round(best.onTime*100)} %`:d.seen?.[p.id]||stars(p.id)[0]?'':'Sin visitar';
+   const note=document.createElement('small');note.textContent=!openNow?(p.game?'Cerrado':'Pronto'):best?`${Math.round(best.onTime*100)} %`:d.seen?.[p.id]||stars(p.id)[0]?'':'Sin visitar';
    li.append(name,st,note);if(openNow&&d.seen?.[p.id]){const go=document.createElement('button');go.textContent='Ir';go.onclick=()=>travel(p.id);li.appendChild(go);}if(!openNow)li.className='closed';list.appendChild(li);}
   // Today's remix (wild.js, plan F18): one open place with another place's rhythm, worth more sparks.
   const mix=runtime.dailyRemix?.(),line=$('lugaresRemixLine'),btn=$('lugaresRemix');if(line&&btn){const place=mix&&PLACES.find(p=>p.id===mix.id);line.hidden=btn.hidden=!place;

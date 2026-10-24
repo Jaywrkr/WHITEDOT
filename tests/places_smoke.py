@@ -31,6 +31,8 @@ try:
    page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=5000)
    assert page.locator('#placeStars .got').count()>=1 and 'a tiempo' in page.inner_text('#placeRows') and '✦' in page.inner_text('#placeEarned')
    if width==390 and os.environ.get('PLACE_SHOT'):page.screenshot(path=os.environ['PLACE_SHOT'])
+   # Plan H3: the card's gold button goes to the next place on the path, the Jardín after the Journey's five.
+   assert page.locator('#placeNext').is_visible() and page.inner_text('#placeNext')=='Siguiente · Jardín',page.inner_text('#placeNext')
    # Otra vez: a new round from an empty bar.
    page.locator('#placeAgain').click();page.wait_for_function("__r.places().run?.id==='lago'&&__r.journeyChain().points===0",timeout=5000)
    page.evaluate('__r.abandonPlace()');assert page.evaluate('__r.places().run')==None
