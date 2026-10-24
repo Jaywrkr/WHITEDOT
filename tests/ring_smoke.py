@@ -25,6 +25,13 @@ try:
    ring=page.evaluate('__r.ringState()');assert len(ring['spots'])==11 and ring['next'],ring
    c=ring['center']
    for s in ring['spots']:assert 5000<math.hypot(s['x']-c['x'],s['y']-c['y'])<8000,s
+   # Plan H6: from the Refugio the next portal is heard, softly, on the «3» and from its side.
+   page.evaluate("()=>{__r.S.sound=true;__r.audio();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}");page.wait_for_function("__r.ac?.state==='running'",timeout=20000)
+   nx=spot(page,ring['next']);page.evaluate(f"()=>{{__r.S.wx={c['x']}+({nx['x']}-{c['x']})*.3;__r.S.wy={c['y']}+({nx['y']}-{c['y']})*.3;}}")
+   page.wait_for_function(f"__r.ringSounds().some(s=>s.id==='{ring['next']}')",timeout=8000)
+   heard=[s for s in page.evaluate('__r.ringSounds()') if s['id']==ring['next']][-1];side=nx['x']-page.evaluate('__r.S.wx')
+   assert heard['v']>0 and (abs(side)<50 or (heard['pan']>0)==(side>0)),(heard,side)
+   page.evaluate("()=>{__r.S.sound=false;}")
    # A portal on screen, and the arrow to the nearest one from the centre.
    s=spot(page,'lago');page.evaluate(f"()=>{{__r.S.wx={s['x']};__r.S.wy={s['y']+150};}}");page.wait_for_timeout(500)
    if os.environ.get('RING_SHOT'):page.screenshot(path=os.environ['RING_SHOT'].replace('.png',f'-{width}.png'))

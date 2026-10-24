@@ -4,11 +4,16 @@ import {freeOpen} from './journey-mode.js';
 import {PLACES,placeOpen} from './places.js';
 import {RHYTHMS,PLACE_RHYTHMS} from './journey-rhythm.js';
 import {creditSparks,normalizeSparkEconomy} from './sparks-model.js';
+import {directionPan} from './spatial.js';
 // The wild World (plan F18, docs/MUNDO.md): exploring far gives something every one or two minutes. A wild spark
-// turns up ahead of the cube; five pulses on time beside it within 30 s catch it (15 ✦). And every day one place is
+// turns up ahead of the cube, singing on the beat from its side (plan H6); five pulses on time beside it within 30 s catch it (15 ✦). And every day one place is
 // remixed: its game with another place's rhythm, worth 30 ✦ more, and 20 more for beating the day's best.
 export const WILD_AFTER=60000,WILD_SURE=120000,WILD_WALK=1200,WILD_LIFE=30000,WILD_HOPS=5,WILD_REACH=120,WILD_HOP=150,WILD_AHEAD=150,WILD_SPARKS=15;
 export const REMIX_SPARKS=30,REMIX_RECORD=20;
+// Plan H6: the spark is found by ear. It sings on every beat from its side, louder as you come near; the arrow at the
+// edge of the screen is only for playing without sound.
+export const WILD_HEAR=900;
+export const wildGain=d=>.02+.07*Math.max(0,1-d/WILD_HEAR)**2;
 // Places whose game reads the beat in its own way keep their rhythm: the Jardín, Dunas, Vacío and Cueva are not remixed.
 export const REMIX_PLACES=Object.freeze(['llanura','lago','bosque','tormenta','cristales','faros','ruinas']);
 export const REMIX_RHYTHMS=Object.freeze(['contra','mezcla','acorde','faro','ruina']);
@@ -25,7 +30,7 @@ export const remixSparks=(onTime,best)=>REMIX_SPARKS+(onTime>best?REMIX_RECORD:0
 // each spark) places the moment between one and two minutes.
 export function wildDue(sinceMs,walked,draw){return walked>=WILD_WALK&&sinceMs>=WILD_AFTER+Math.max(0,Math.min(1,draw))*(WILD_SURE-WILD_AFTER);}
 export function initialize(runtime){
- let owner=null,state=null,spark=null,last=performance.now(),walked=0,prev=null,roll=Math.random();const glows=[];
+ let owner=null,state=null,spark=null,heard=0,last=performance.now(),walked=0,prev=null,roll=Math.random();const glows=[];
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  const today=()=>runtime.S.todayKey||'';
  function own(){if(owner!==runtime.S){owner=runtime.S;runtime.S.wild=normalizeWild(runtime.S.wild);state=runtime.S.wild;spark=null;}if(state.day!==today()){state.day=today();state.today=0;}return state;}
@@ -46,16 +51,19 @@ export function initialize(runtime){
    c.globalAlpha=1;c.strokeStyle=gold;c.lineWidth=2;c.beginPath();for(let i=0;i<=30;i++){const a=i/30*9.4+(still?0:t/300),q=2+i/30*r;i?c.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q):c.moveTo(x+Math.cos(a)*q,y+Math.sin(a)*q);}c.stroke();
    c.globalAlpha=.8;c.beginPath();c.arc(x,y,r+8,-Math.PI/2,-Math.PI/2+Math.max(0,left)*6.283);c.stroke();
    for(let k=0;k<WILD_HOPS;k++){c.globalAlpha=k<spark.hops?1:.3;c.fillStyle=k<spark.hops?gold:'#ffffff';c.fillRect(Math.round(x-WILD_HOPS*4+k*8+2),Math.round(y+r+12),4,4);}}
-  else{const a=Math.atan2(y-H/2,x-W/2),m=24,k=Math.min((W/2-m)/Math.abs(Math.cos(a)||1e-6),(H/2-m)/Math.abs(Math.sin(a)||1e-6)),ex=W/2+Math.cos(a)*k,ey=H/2+Math.sin(a)*k;c.globalAlpha=.9;c.fillStyle=gold;c.beginPath();c.moveTo(ex+Math.cos(a)*9,ey+Math.sin(a)*9);c.lineTo(ex+Math.cos(a+2.5)*7,ey+Math.sin(a+2.5)*7);c.lineTo(ex+Math.cos(a-2.5)*7,ey+Math.sin(a-2.5)*7);c.closePath();c.fill();}
+  else if(!S.sound){const a=Math.atan2(y-H/2,x-W/2),m=24,k=Math.min((W/2-m)/Math.abs(Math.cos(a)||1e-6),(H/2-m)/Math.abs(Math.sin(a)||1e-6)),ex=W/2+Math.cos(a)*k,ey=H/2+Math.sin(a)*k;c.globalAlpha=.9;c.fillStyle=gold;c.beginPath();c.moveTo(ex+Math.cos(a)*9,ey+Math.sin(a)*9);c.lineTo(ex+Math.cos(a+2.5)*7,ey+Math.sin(a+2.5)*7);c.lineTo(ex+Math.cos(a-2.5)*7,ey+Math.sin(a-2.5)*7);c.closePath();c.fill();}
   for(let i=glows.length-1;i>=0;i--){const g=glows[i],k=(now-g.at)/500;if(k>1){glows.splice(i,1);continue;}c.globalAlpha=.8*(1-k);c.strokeStyle=gold;c.lineWidth=1.5;c.beginPath();c.arc(W/2+g.x-cx,H/2+g.y-cy,10+k*30,0,6.283);c.stroke();}
   c.restore();}
+ // On every beat the spark sings a note of the chord, from where it is.
+ function musicStep(step,time){if(step%4||!spark||!runtime.S.sound||!active()||!runtime.pluck)return;const S=runtime.S,ct=runtime.chordTones?.()||[60,64,67],d=Math.hypot(spark.x-S.wx,spark.y-S.wy),
+  emit=()=>runtime.pluck(ct[(step/4)%ct.length|0]+24,time,wildGain(d),2),pan=directionPan(spark,S.wx,S.wy,WILD_HEAR*.6);heard++;runtime.withPan?runtime.withPan(pan,emit):emit();}
  // Today's remix, for the Lugares sheet and the places' rounds.
  function remix(){const d=runtime.placesData?.();if(!d)return null;return dailyRemix(today(),d,runtime.S.journey,id=>PLACE_RHYTHMS[id]);}
  // A remixed round closed: what it pays on top, and the day's best kept.
  function remixDone(onTime){const s=own().remix;if(s.day!==today()){s.day=today();s.best=0;}const n=remixSparks(onTime,s.best),record=onTime>s.best;s.best=Math.max(s.best,onTime);s.done++;
   runtime.S.sparkEconomy=normalizeSparkEconomy(runtime.S.sparkEconomy,runtime.S.sparks,today());return {sparks:creditSparks(runtime.S,n),record};}
  const remixName=key=>RHYTHMS[key]?.name||key;
- Object.defineProperties(runtime,{drawWild:{get:()=>draw},wildPulse:{get:()=>pulse},dailyRemix:{get:()=>remix},remixDone:{get:()=>remixDone},remixName:{get:()=>remixName},
-  wildState:{get:()=>()=>{const s=own();return {active:active(),caught:s.caught,today:s.today,walked,since:performance.now()-last,spark:spark?{x:spark.x,y:spark.y,hops:spark.hops}:null,remix:remix(),remixBest:s.remix.day===today()?s.remix.best:0};}},
+ Object.defineProperties(runtime,{drawWild:{get:()=>draw},wildMusicStep:{get:()=>musicStep},wildPulse:{get:()=>pulse},dailyRemix:{get:()=>remix},remixDone:{get:()=>remixDone},remixName:{get:()=>remixName},
+  wildState:{get:()=>()=>{const s=own();return {active:active(),heard,caught:s.caught,today:s.today,walked,since:performance.now()-last,spark:spark?{x:spark.x,y:spark.y,hops:spark.hops}:null,remix:remix(),remixBest:s.remix.day===today()?s.remix.best:0};}},
   wildSpawn:{get:()=>()=>{if(active())spawn();return !!spark;}}});
 }

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {proximityGain,chooseNearbySource,initialize} from '../src/spatial.js';
+import {proximityGain,chooseNearbySource,directionPan,initialize} from '../src/spatial.js';
 import {initialize as effects} from '../src/effects.js';
 const source={x:0,y:0};let previous=1;
 for(let d=0;d<=400;d++){const gain=proximityGain(source,d,0);assert(gain<=previous&&gain>=0&&gain<=1);previous=gain;}
@@ -21,4 +21,10 @@ for(let i=0;i<100;i++)r.withSpatialVoice(source,1.2,()=>{});assert.equal(r.activ
 r.S.wx=180;let fallback;r.withSpatialVoice(source,1.2,gain=>fallback=gain);assert.equal(fallback,.5);
 r.ac.currentTime=4.3;r.spatialTick();assert.equal(r.activeSpatialCount,0);assert(local.every(n=>n.disconnects===1));
 r.S.sound=false;r.withSpatialVoice(source,5,gain=>assert.equal(gain,.5));assert.equal(r.activeSpatialCount,0);
-console.log('PASS: smooth distance curve, nearby selection, live moving-source gain, effect isolation, bounded routing and cleanup');
+// Plan H6: a source to the right is heard on the right, never fully in one ear; straight ahead or behind, centred.
+assert.equal(directionPan({x:0,y:-500},0,0),0);assert(directionPan({x:300,y:0},0,0)>0&&directionPan({x:-300,y:0},0,0)<0);assert.equal(directionPan({x:5000,y:0},0,0),.85);assert.equal(directionPan({x:-5000,y:0},0,0),-.85);assert.equal(directionPan(null,0,0),0);
+{const panners=[];r.ac.createStereoPanner=()=>{const p={pan:{value:0},connect(t){p.to=t;return t;},disconnect(){p.off=true;}};panners.push(p);return p;};const before=r.bus;let inside;
+ r.withPan(.5,()=>{inside=r.bus;});assert.equal(panners.length,1);assert.equal(inside,panners[0]);assert.equal(panners[0].pan.value,.5);assert.equal(panners[0].to,before);assert.equal(r.bus,before);
+ r.withPan(0,()=>{inside=r.bus;});assert.equal(inside,before);assert.equal(panners.length,1,'centred voices need no panner');
+ assert.throws(()=>r.withPan(-.4,()=>{throw Error('x');}));assert.equal(r.bus,before);}
+console.log('PASS: direction pans left and right and routes through a panner; smooth distance curve, nearby selection, live moving-source gain, effect isolation, bounded routing and cleanup');

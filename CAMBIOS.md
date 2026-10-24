@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.165**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.166**. Las entradas describen su revisión, no certifican producción.
+
+## H6 · Mundo que se escucha · alpha.166
+
+Rama `claude/h6-escucha`, sobre `claude/h5-reglas` (dependencia explícita).
+
+- **La chispa salvaje se encuentra con el oído:** canta una nota del acorde en cada pulso, desde su lado (izquierda o derecha) y más fuerte cuanto más cerca. La flecha en el borde de la pantalla solo aparece con el sonido apagado.
+- **Los portales suenan desde su dirección:** el más cercano, en el «1», como antes, pero desde su lado. El siguiente del camino suena suave en el «3» desde mucho más lejos (se oye ya en el Refugio) y guía hasta él.
+- La remezcla diaria no cambia.
+- Pruebas: `spatial.mjs` (paneo y su cadena), `wild.mjs`, `places-ring.mjs`; `wild_smoke.py` comprueba que la chispa canta y `ring_smoke.py` que el siguiente portal se oye desde su lado. No se oyó en un teléfono ni con auriculares.
 
 ## H5 · Reglas claras · alpha.165
 

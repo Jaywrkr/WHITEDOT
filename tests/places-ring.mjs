@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {RING_RADIUS,PORTAL_REACH,portalSpots,nextPortal,besidePortal} from '../src/places-ring.js';
+import {RING_RADIUS,PORTAL_REACH,NEXT_HEAR,beaconGain,portalSpots,nextPortal,besidePortal} from '../src/places-ring.js';
 import {normalizePlaces,PLACE_IDS} from '../src/places.js';
 // Eleven portals in a ring around the Refugio, about half a minute's walk (190 px/s) from its door.
 const c={x:1000,y:-500},spots=portalSpots(c);assert.deepEqual(spots.map(s=>s.id),PLACE_IDS);
@@ -23,4 +23,6 @@ const b=besidePortal(spots[0],c),d=Math.hypot(b.x-spots[0].x,b.y-spots[0].y);ass
 // Saves: the ring's centre and the portals entered are kept; junk is dropped.
 const n=normalizePlaces({center:{x:12.4,y:'x'},seen:{lago:true,bosque:1,nada:true}},journey);assert.equal(n.center,null);assert.deepEqual(n.seen,{lago:true});
 assert.deepEqual(normalizePlaces({center:{x:12.4,y:-3}},journey).center,{x:12,y:-3});
+// Plan H6: the next portal is heard from the Refugio (a ring's radius away), louder as you come near, not beyond its reach.
+assert(beaconGain(RING_RADIUS)>0);assert(beaconGain(1000)>beaconGain(RING_RADIUS));assert.equal(beaconGain(NEXT_HEAR),0);assert(beaconGain(0)<.06,'a beacon stays under the music');
 console.log('PASS places ring: eleven fixed portals 30–60 s from the Refugio, moved off the sea, an arrow and a column of light to the next place on the path, back beside the portal, centre and entered portals kept');

@@ -174,7 +174,7 @@ Decisiones de Jay (aprobadas; se aplican en la fase indicada, hasta entonces rig
 | H3 · El camino | `claude/h3-camino` | Orden de pistas, luz al portal siguiente, portal siguiente tras la ronda, modo Libre, ganar con 11 (hecho) |
 | H4 · Tu canción | `claude/h4-cancion` | Capas con el motor del juego y niveles por estrella; final verdadero con tus notas; versión maestra (hecho) |
 | H5 · Reglas claras | `claude/h5-reglas` | 0 ✦ fuera de tiempo; Viaje sin rótulos; narrador en su sitio (hecho). Menú más corto: pendiente, ver CAMBIOS |
-| H6 · Mundo que se escucha | `claude/h6-escucha` | Voces salvajes que se encuentran con el oído; portales que suenan desde su dirección |
+| H6 · Mundo que se escucha | `claude/h6-escucha` | Hecho: la chispa salvaje canta en cada pulso desde su lado (la flecha solo sin sonido); el portal más cercano suena en el «1» desde su lado y el siguiente del camino, en el «3», se oye ya desde el Refugio. La remezcla diaria sigue igual |
 | H7 · Medir y personas | `claude/h7-medir` | Simulación de 2 h (60, 75 y 90 % a tiempo); festival; sesiones con Luca |
 
 ## Cuándo una fase está terminada
