@@ -108,7 +108,7 @@ export function initialize(runtime) {
     runtime.parts=runtime.parts.filter(p=>(p.l-=dt*1.6)>0);const cap=runtime.lightQuality?.()?150:400;if(runtime.parts.length>cap)runtime.parts.splice(0,runtime.parts.length-cap);
     for(const p of runtime.parts){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.94;p.vy*=.94;runtime.cx.globalAlpha=p.l;runtime.cx.fillStyle=p.g?runtime.musicInk?.(p)||'#fff':runtime.S.color;runtime.cx.fillRect(p.x+ox-1,p.y+oy-1,2,2);}
     runtime.pulse=Math.max(0,runtime.pulse-dt*1.5);
-    const big=runtime.inWorld()||runtime.S.mode==='camino',base=Math.max(ds,runtime.inWorld()?runtime.cubeShopMinSize?.()||0:0),s=base*(big?cubeView(base):1)*(1+runtime.pulse*.6+b*.08)*(runtime.inWorld()?runtime.surpriseStyle?.scale||1:1)*(runtime.cubeGrowth?.()||1);
+    const big=runtime.inWorld()||runtime.S.mode==='camino',base=Math.max(ds,runtime.inWorld()?runtime.cubeShopMinSize?.()||0:0),s=base*(big?cubeView(base):1)*(1+runtime.pulse*.6+b*.08+(runtime.cubeKick||0)*.18)*(runtime.inWorld()?runtime.surpriseStyle?.scale||1:1)*(runtime.cubeGrowth?.()||1);
     runtime.drawCubeStyle?.(t,dt,b,s);runtime.drawSurprises?.(t,ox,oy);
     const playerColor=runtime.inWorld()?(runtime.cubeColor?.()||'#fff'):'#fff';
     if(runtime.pulse){runtime.cx.globalAlpha=runtime.pulse*.5;runtime.cx.strokeStyle=playerColor;runtime.cx.lineWidth=1;const rr=s*(1+(1-runtime.pulse)*4);runtime.cx.strokeRect(runtime.W/2-rr/2,runtime.H/2-rr/2,rr,rr);}
@@ -131,6 +131,7 @@ export function initialize(runtime) {
     runtime.drawJourneyLine?.(runtime.cx,runtime.W,runtime.H,t);runtime.drawJourneyChapters?.(runtime.cx,runtime.W,runtime.H,t);runtime.drawPlacesRing?.(runtime.cx,runtime.W,runtime.H,t);runtime.drawWild?.(runtime.cx,runtime.W,runtime.H,t);runtime.drawJourneyHint?.(runtime.cx,runtime.W,runtime.H);runtime.barBeatHint?.();
     // Without vibration (iPhone) a pulse on time makes the cube glow gold for one beat (journey-pulse.js).
     runtime.drawCubeForm?.(runtime.cx,runtime.W/2,runtime.H/2,s,t);
+    if(runtime.cubeKick>0)runtime.cubeKick=Math.max(0,runtime.cubeKick-dt*8);
     if(runtime.cubeGlow>0){runtime.cubeGlow=Math.max(0,runtime.cubeGlow-dt/((runtime.SIX||.15)*4));runtime.cx.globalAlpha=runtime.cubeGlow*.9;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=2;runtime.cx.strokeRect(Math.round(runtime.W/2-s/2-4),Math.round(runtime.H/2-s/2-4),Math.round(s+8),Math.round(s+8));runtime.cx.globalAlpha=1;}
     if(runtime.flash>0){runtime.flash=Math.max(0,runtime.flash-dt*2.5);runtime.cx.globalAlpha=runtime.flash*.6;runtime.cx.strokeStyle=runtime.GOLD;runtime.cx.lineWidth=1.2;runtime.cx.beginPath();runtime.cx.arc(runtime.W/2,runtime.H/2,24+(1-runtime.flash)*42,0,Math.PI*2);runtime.cx.stroke();}
     if(runtime.enterFx>0){runtime.enterFx=Math.max(0,runtime.enterFx-dt*.6);const still=runtime.S.reducedMotion||prefersReducedMotion(),k=still?.6:1-runtime.enterFx;runtime.cx.globalAlpha=runtime.enterFx*.35;runtime.cx.strokeStyle=runtime.musicInk?.(null,'acorde')||'#fff';runtime.cx.lineWidth=1.2;

@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 23 de octubre de 2026. Código **2.3.0-alpha.169**. Las entradas describen su revisión, no certifican producción.
+Estado: 23 de octubre de 2026. Código **2.3.0-alpha.170**. Las entradas describen su revisión, no certifican producción.
+
+## I3 · Un solo instante · alpha.170
+
+Rama `claude/i3-instante`, sobre `claude/i2-se-vea` (dependencia explícita).
+
+- **Luz, tacto y sonido a la vez:** en un acierto, el brillo dorado del cubo, la vibración y un pequeño golpe del cubo se programan para el momento en que suena la nota (`landDelay`: entre 0 y 250 ms después del toque, contando la latencia de salida). Con movimiento reducido no hay golpe.
+- **La Línea anticipa:** cada paso que cuenta crece y se enciende durante los cuatro pasos anteriores a que llegue el cursor (`approach`).
+- **Calibración más segura:** solo mide sobre las negras (en el Jardín o la Cueva, que cuentan corcheas, podía tomar el paso equivocado) y nunca mientras el lugar canta su patrón.
+- Pruebas: `journey-pulse.mjs` (`landDelay`, `approach`).
 
 ## I2 · Que se vea · alpha.169
 

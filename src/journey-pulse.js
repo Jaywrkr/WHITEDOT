@@ -18,6 +18,10 @@ export function nearestBeat(now,beats,bar){let best=null;const consider=b=>{if(b
 // Distance from now to the nearest beat.
 export function beatDistance(now,beats,bar){const b=nearestBeat(now,beats,bar);return b===null?Infinity:Math.abs(now-b);}
 // How late the speaker or headphones play what the audio clock says (Bluetooth can add a fifth of a second).
+// How long until a note scheduled at `beat` (audio clock) is heard, in ms: never negative, at most a quarter second.
+// How near the cursor is to a step it is coming to: 1 on it, falling to 0 four steps before (plan I3).
+export const approach=(step,now)=>{const ahead=((step-now)%16+16)%16;return ahead<4?1-ahead/4:0;};
+export const landDelay=(beat,now,latency=0)=>Math.max(0,Math.min(250,Math.round((beat+latency-now)*1000)));
 export const outputLatency=ac=>{const v=Number(ac?.outputLatency||ac?.baseLatency||0);return Number.isFinite(v)?Math.max(0,Math.min(.4,v)):0;};
 // The moment the player heard, on the audio clock: when the finger touched (atMs, from performance.now(); a tap is
 // judged when the finger goes down, not when it lifts) minus the output latency, because the player answers what
@@ -65,7 +69,8 @@ export function initialize(runtime){
   const beatAt=on&&!silent?(own?own.hit.time:nearestBeat(heard,runtime.MU?.bq,bar)):null,step=!ac?0:beatAt!==null?(own?own.hit.step:Math.round(stepAt(beatAt))%16):stepAt(heard);marks.push({at:now,step,on});if(marks.length>24)marks.shift();
   if(on&&!silent)runtime.journeyRhythmHit?.(step);
   // How far from its target this touch was, signed, for the calibration of the first pulses.
-  if(ac&&!silent){const target=own?.hit?.time??nearestBeat(heard,runtime.MU?.bq,bar);if(Number.isFinite(target))runtime.calibrationSample?.(heard-target);}
+  // Plan I3: only on the quarters (an eighth pattern could take the wrong step) and never while the place sings.
+  if(ac&&!silent&&!runtime.rhythmSinging?.()&&(!own?.hit||own.hit.step%4===0)){const target=own?.hit?.time??nearestBeat(heard,runtime.MU?.bq,bar);if(Number.isFinite(target))runtime.calibrationSample?.(heard-target);}
   // The chapter game hears every pulse, with the step of the bar it answered (0 is the «1»).
   runtime.journeyGamePulse?.(on,{step:Number.isFinite(step)?Math.round(step)%16:null,silent,at:Number.isFinite(beatAt)?beatAt:null});
   // The wild World hears it too: a wild spark beside the cube hops on time (wild.js, plan F18).
@@ -76,9 +81,10 @@ export function initialize(runtime){
   // The chapter hears the note first, so the note that completes the theme counts.
   state.notes.push(midi);if(state.notes.length>12)state.notes.shift();runtime.journeyChapterPulse?.(true,midi,Number.isInteger(runtime.MU?.step)?runtime.MU.step:undefined);
   if(state.next===0){state.phrases++;runtime.recoverJourneyColor?.();runtime.journeyPhrase?.();runtime.themeKeyPhrase?.();}
-  // The cube glows gold for a beat on every hit, and the phone vibrates too where it can (plan H1: the hit is seen,
-  // heard and felt at once).
-  vibrate(state.next===0?[12,40,18]:12);runtime.cubeGlow=1;runtime.flash=Math.max(runtime.flash||0,.7);
+  // The cube glows gold for a beat on every hit, the phone vibrates where it can and the cube punches (plan H1). Plan
+  // I3: all of it lands when the note is heard, not when the finger touched, so light, touch and sound are one instant.
+  const phrase=state.next===0,land=()=>{vibrate(phrase?[12,40,18]:12);runtime.cubeGlow=1;runtime.cubeKick=calm()?0:1;runtime.flash=Math.max(runtime.flash||0,.7);};
+  const wait=ac&&Number.isFinite(state.beat)?landDelay(state.beat,ac.currentTime,outputLatency(ac)):0;state.landIn=wait;if(wait>0)setTimeout(land,wait);else land();
   return true;}
  // A pulse the finger sent too soon after the last one: a faint grey mark, so a touch never vanishes unseen.
  function dropped(){marks.push({at:performance.now(),step:stepNow(),on:false,dropped:true});if(marks.length>24)marks.shift();}
@@ -89,7 +95,9 @@ export function initialize(runtime){
   // One guide (plan H2): the steps the place counts stand up on the Line, the «1» in gold when it counts; the others
   // stay small. While the place sings its pattern (journey-rhythm.js) they glow on their beat.
   const counted=runtime.journeyRhythmState?.()?.steps||[0,4,8,12],sing=runtime.rhythmSinging?.()||null;
-  for(let i=0;i<16;i++){const on=counted.includes(i),one=on&&i===0,lit=sing&&sing.step===i&&on?1-sing.age:0;c.globalAlpha=on?.55+.45*lit:(i%4?.14:.25);c.fillStyle=one?(runtime.GOLD||'#f0d27a'):'#fff';const hgt=on?6+6*lit:(i%4?2:3);c.fillRect(Math.round(x0+(i+.5)/16*w)-(on?1:0),y-hgt/2,on?2:1,hgt);}
+  // Plan I3: the Line anticipates; a counted step grows and brightens over the four steps before the cursor reaches it.
+  const now16=stepNow();
+  for(let i=0;i<16;i++){const on=counted.includes(i),one=on&&i===0,lit=sing&&sing.step===i&&on?1-sing.age:0,come=on?approach(i,now16):0;c.globalAlpha=Math.min(1,on?.45+.45*lit+.45*come:(i%4?.14:.25));c.fillStyle=one?(runtime.GOLD||'#f0d27a'):'#fff';const hgt=on?5+6*lit+8*come:(i%4?2:3);c.fillRect(Math.round(x0+(i+.5)/16*w)-(on?1:0),y-hgt/2,on?2:1,hgt);}
   const step=stepNow(),cx=x0+(step+.5)/16*w;c.globalAlpha=.8;c.fillStyle=runtime.GOLD||'#f0d27a';c.fillRect(Math.round(cx)-1,y-3,2,6);
   for(const m of marks){const age=(now-m.at)/1000,life=calm()?2.5:1.8;if(age>life)continue;const k=1-age/life,px=x0+(m.step+.5)/16*w,h=(m.on?18:m.dropped?4:8)*(calm()?1:.6+.4*k);c.globalAlpha=k*(m.on?.95:m.dropped?.3:.5);c.strokeStyle=m.on?(runtime.GOLD||'#f0d27a'):m.dropped?'#888888':'#ffffff';c.beginPath();c.moveTo(px-5,y);c.lineTo(px,y-h);c.lineTo(px+5,y);c.stroke();}
   c.restore();}

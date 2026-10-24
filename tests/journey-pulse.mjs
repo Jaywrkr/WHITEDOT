@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {THEME,ON_TIME,PULSE_GAP,beatDistance,nearestBeat,heardTime,onTime,outputLatency,themePitch,playCello,initialize} from '../src/journey-pulse.js';
+import {THEME,ON_TIME,PULSE_GAP,beatDistance,nearestBeat,heardTime,onTime,outputLatency,themePitch,playCello,initialize,landDelay,approach} from '../src/journey-pulse.js';
 // The theme: six notes, two bars of eighths, starting and ending on the tonic.
 assert.equal(THEME.length,6);assert.equal(THEME.reduce((a,[,l])=>a+l,0),16);assert.equal(THEME[0][0],0);assert.equal(THEME.at(-1)[0],0);
 // Distance to the nearest beat, including the one that is about to come.
@@ -44,4 +44,7 @@ const c=new Proxy({},{get:(o,k)=>k in o?o[k]:()=>{},set:(o,k,v)=>{o[k]=v;return 
 performance.now=realNow;
 // Phase 3: with the sound off every pulse counts, so the Journey can be played without hearing it.
 {const q={S:{sound:false,mode:'camino'},MU:{bq:[]},BIOMES:[{scale:[0,2,3,5,7,8,10]}],SIX:.125,inWorld:()=>false};initialize(q);assert.equal(q.journeyPulse(),true,'sound off: on time');}
+// Plan I3: the hit lands when the note is heard (never before, at most 250 ms later); the Line's steps grow as the cursor comes.
+assert.equal(landDelay(10.1,10,0),100);assert.equal(landDelay(10.1,10,.05),150);assert.equal(landDelay(9.9,10,0),0);assert.equal(landDelay(11,10,0),250);
+assert.equal(approach(4,4),1);assert.equal(approach(4,3),.75);assert.equal(approach(4,0),0);assert.equal(approach(0,15),.75);assert.equal(approach(4,5),0);
 console.log('PASS journey pulse: six-note theme in two bars, on-time window '+ON_TIME*1000+' ms, theme notes in every scale and range, phrase every six hits, vibration and its setting, judged at the touch with the headphones delay taken off, one window for the game, a glow without vibration, dropped pulses marked, the Line draws');
