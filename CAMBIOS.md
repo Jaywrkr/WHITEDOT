@@ -36,6 +36,8 @@ Rama `claude/h1-que-se-vea`, desde `main`. Primera fase del plan integrado que J
 - **Color como tono:** un lugar con su color recuperado se tiñe más de él (luz del 18–30 % en vez de 5–12 %).
 - **Cerrar un lugar recupera su color** para siempre.
 - **Lugares:** un lugar con ★ ya no dice «Sin visitar»; la remezcla deja de ser un segundo botón dorado.
+- **Ruinas, arreglo** (visto en la CI de esta fase): los pulsos se agrupan por compás con el reloj de audio; redondear una hora del reloj de la página podía partir un compás en dos y tres pasos no ponían piedra. Las pruebas que pulsan en un paso concreto aceptan el primer fotograma tras el paso.
+- `cube_face_smoke` mide el cubo nuevo: 16 px sin cara, unos 27 con ella.
 - Pruebas: `world-sheet.mjs` y `world_sheet_smoke.py` comprueban el gris en el lienzo y la pantalla sin filtro. `?anillo=1` y `?lugar=` siembran los colores de los cinco capítulos, como una partida real tras el Viaje.
 
 ## F18 · Mundo salvaje · alpha.160
