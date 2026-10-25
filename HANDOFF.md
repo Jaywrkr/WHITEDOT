@@ -1,6 +1,6 @@
 # Traspaso · cierre K1–K6
 
-**Código 2.3.0-alpha.182.** Leer [AGENTS](AGENTS.md), [auditoría 6](docs/panel/sesion-6/informe.md) y [plan](docs/panel/sesion-6/plan.md).
+**Código 2.3.0-alpha.183.** Leer [AGENTS](AGENTS.md), [auditoría 6](docs/panel/sesion-6/informe.md) y [plan](docs/panel/sesion-6/plan.md).
 
 ## Petición vigente
 
@@ -11,7 +11,7 @@ Priorizar caminar: «Seguir» orienta, no transporta automáticamente al acabar 
 | Fase | Rama | Estado técnico |
 |---|---|---|
 | K1 · Guía al anillo | `pulido/k1-guia-anillo` | Entregada |
-| K2 · Economía de chispas | `pulido/k2-economia-chispas` | Pendiente |
+| K2 · Economía de chispas | `pulido/k2-economia-chispas` | Entregada |
 | K3 · Final del Viaje | `pulido/k3-final-viaje` | Pendiente |
 | K4 · Interfaz clara | `pulido/k4-interfaz-clara` | Pendiente |
 | K5 · Recorrido contextual | `pulido/k5-recorrido-contextual` | Pendiente |
@@ -19,7 +19,7 @@ Priorizar caminar: «Seguir» orienta, no transporta automáticamente al acabar 
 
 ## Última comprobación
 
-K1: 245 suites Node, 110 pruebas de impacto, auditoría estática y ring_smoke en teléfono/escritorio aprobados. La prueba comprueba que Seguir no cobra ni transporta, y que mover la casa no mueve el anillo. Escucha y aceptación humana pendientes.
+K2: 245 suites Node, auditoría de release y sparks_economy_smoke aprobados. Navegador: valores 1/2/3, crédito único tras recarga, compra, salto/regreso y recuperación de escritura. Pendientes con multiplicador cero cubiertos en lógica.
 
 Una entrega técnica no sustituye la escucha física de Jay ni cinco sesiones sin ayuda. Los IDs y pendientes humanos permanecen en [el registro](docs/panel/sesion-4/seguimiento.json). La auditoría 6 vale7,2 provisional antes de las correcciones; no se eleva esa nota por un commit.
 

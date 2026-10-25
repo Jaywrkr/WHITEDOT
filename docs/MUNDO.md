@@ -239,3 +239,7 @@ Detalle, comprobaciones y aceptación pendiente en [Cierre](PULIDO_CIERRE.md) y 
 ## K1 · orientación corregida (alpha.182)
 
 «Seguir hacia…» y «Seguir» en Lugares activan rumbo a pie, sin salto ni gasto, incluso antes de visitar el portal. Nombre y distancia acompañan una señal bidimensional. El anillo migra su referencia desde el Refugio vigente y después permanece estable aunque la casa se despliegue en otro lugar. Una escritura fallida conserva el guardado anterior. Las tablas históricas donde el anillo seguía la casa describen la regla sustituida.
+
+## K2 · valor base de fragmentos (alpha.183)
+
+Jay sustituye la regla H5 de moneda: en Mundo libre recoger siempre da el valor base×1; romper a tiempo×2 y desde ocho aciertos seguidos×3. La multiplicación corresponde al golpe que rompe el cristal y se cobra al recoger cada fragmento. Pendientes antiguos con×0 recuperan su valor base; los fragmentos ya recogidos no se vuelven a pagar. Estrellas, retos, precios y saldo conservan sus reglas; no cambian síntesis ni distribución.

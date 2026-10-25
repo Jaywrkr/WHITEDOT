@@ -446,3 +446,7 @@ Rama `audit/panel-6-experiencia-real`, desde main `3c5fd7b6`, misma versión alp
 ## alpha.182 · K1 · guía a pie al anillo
 
 Desde la auditoría `7476aa7a`, rama `pulido/k1-guia-anillo`. Seguir hacia el siguiente lugar orienta sin mover ni cobrar. Nombre/distancia, indicador de ocho rumbos y ancla del anillo migrada desde la ubicación vigente, independiente de la casa portátil. Si falla guardar, se revierte la migración. El siguiente resultado también propone caminar. Música, generación y estrellas conservadas.
+
+## alpha.183 · K2 · recoger siempre tiene valor
+
+Rama `pulido/k2-economia-chispas` desde K1. Fuera de tempo×1, a tiempo×2 y racha×3. Recuperación de pendientes con multiplicador cero, sin reemitir fragmentos cobrados ni alterar saldo/precios/estrellas. Simulación económica alineada con esa regla. Música y mundo conservados.

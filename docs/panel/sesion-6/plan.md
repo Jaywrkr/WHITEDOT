@@ -63,3 +63,7 @@
 
 - K1 · alpha.182: rumbo con nombre/distancia, ocho direcciones y ancla migrada durable. «Seguir» no teletransporta ni cobra. Pruebas de anillo incluyen escritura fallida y despliegue de Refugio.
 - K2–K6: pendientes en este commit. Las referencias a un acceso directo automático del plan inicial quedan sustituidas por la guía a pie aprobada.
+
+## K2 · economía de chispas · implementada alpha.183
+
+Fragmento recogido: base×1 fuera de tempo, ×2 a tiempo y ×3 desde ocho aciertos. Repara pendientes con×0 sin duplicar pagos. Reglas de estrellas y premios de ronda intactas. El simulador económico usa ahora la minería base fuera de tempo.

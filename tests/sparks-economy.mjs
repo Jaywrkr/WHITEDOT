@@ -66,3 +66,7 @@ assert.deepEqual(w.sparkEconomy.wear,{trail:'dust',pulse:'facet',companion:'orbi
 const reloaded=normalizeSparkEconomy(structuredClone(saved.sparkEconomy),saved.sparks,day);assert.deepEqual(reloaded.wear,{trail:'dust',companion:'orbit'});
 assert(w.equipSparkStyle(''));assert.deepEqual(w.sparkEconomy.wear,{});assert.equal(w.sparkEconomy.equipped,'');}
 console.log('PASS pieces worn per slot, removal keeps the rest, saved wear survives reload and everything comes off at once');
+
+// K2: every collected fragment keeps its value; rhythm is a bonus, not a condition.
+for(const mult of [0,1,2,3]){const w=runtime({mode:'world',todayKey:day,sparks:0,pathCrystals:[]});const o={id:'base:'+mult,x:0,y:0,size:1,value:1};w.crystalTransaction(o,'hit',false,null,false,mult);w.crystalTransaction(o,'collect');assert.equal(w.S.sparks,Math.max(1,mult));w.crystalTransaction(o,'collect');assert.equal(w.S.sparks,Math.max(1,mult),'no duplicate credit');}
+{const w=runtime({mode:'world',todayKey:day,sparks:0,pathCrystals:[]}),o={id:'legacy-zero',x:0,y:0,size:2,value:3};w.crystalTransaction(o,'hit');w.crystalTransaction(o,'hit');w.savedCrystal(o.id);w.sparkEconomy.sites[o.id].mult=0;w.crystalTransaction(o,'collect');assert.equal(w.S.sparks,3,'pending zero-multiplier fragments recover base value');const restored=runtime(structuredClone(w.S));restored.crystalTransaction(o,'collect');assert.equal(restored.S.sparks,3,'a reload never pays collected fragments again');}
