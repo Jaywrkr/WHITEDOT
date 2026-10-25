@@ -110,7 +110,7 @@ export function initialize(runtime){
   if(id==='tormenta'&&runtime.ac){const beat=(runtime.SIX||.15)*4;for(let i=1;i<=4;i++)storm.push(runtime.ac.currentTime+i*beat);moments.bolts+=4;}
   const drop=plenitude(id);runtime.enterFx=Math.max(runtime.enterFx||0,1);const theme=drop||THEME.reduce((s,[,l])=>s+l,0)*(runtime.SIX||.15)*2*1000;portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:performance.now()+Math.max(PORTAL_WAIT,theme)};return true;}
  // Through the portal: the next chapter's biome, found on the map near here.
- function travel(){const j=own();if(j.chapter>=CHAPTERS.length-1)return false;const next=j.chapter+1,id=CHAPTERS[next];
+ function travel(){runtime.cancelJourneyVictory?.();const j=own();if(j.chapter>=CHAPTERS.length-1)return false;const next=j.chapter+1,id=CHAPTERS[next];
   // A festival build with fewer chapters would end early, in the Refugio, with your phrase (since plan I5 it has all five).
   if(runtime.festival&&!FESTIVAL_CHAPTERS.includes(id)){portal=null;finaleAsked=true;if(runtime.journeyFinale)runtime.journeyFinale({festival:true});else runtime.landHouse?.();return true;}
   if(id==='refugio'){j.chapter=next;portal=null;finaleAsked=true;runtime.save();if(runtime.journeyFinale)runtime.journeyFinale(runtime.festival?{festival:true}:undefined);else runtime.landHouse?.();return true;}

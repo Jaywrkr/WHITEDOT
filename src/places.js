@@ -66,11 +66,12 @@ export function initialize(runtime){
  const gameKey=id=>PLACES.find(p=>p.id===id)?.game;
  function restore(run){const j=runtime.S.journey||{},key=gameKey(run.id);if(key){if(run.stash===undefined)delete j[key];else j[key]=run.stash;}const MU=runtime.MU;if(MU){MU.tempoScale=1;MU.onTimeWindow=null;}}
  // Back to the portal the round was entered from.
- function back(from){const p=point(from);if(p){runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.enterFx=1;}}
+ function back(from){runtime.cancelJourneyVictory?.();const p=point(from);if(p){runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.enterFx=1;}}
  const today=()=>runtime.S.todayKey||'';
  const run=()=>own().run;
  // Start a round: the chapter's game from an empty bar, in the place's biome. The Journey's own state is kept aside.
  function start(id,{maestro=false,from=null,remix=null,free=false}={}){const s=own();if(s.run||!placeOpen(s,id,runtime.S.journey)||maestro&&!s.stars[id][1]||free&&(maestro||remix||!complete(s,id)))return false;
+  runtime.cancelJourneyVictory?.();
   // Today's remix (wild.js, plan F18): only the day's place, with the day's rhythm, never as Maestro.
   const daily=remix?runtime.dailyRemix?.():null;if(remix&&(maestro||!daily||daily.id!==id||daily.rhythm!==remix))return false;const j=runtime.S.journey||(runtime.S.journey={}),key=gameKey(id),stash=j[key];
   const spot=findBiome(id,{x:runtime.S.wx,y:runtime.S.wy},(x,y)=>runtime.BIOMES[runtime.biomeOfPos(x,y)]?.id,(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea);
@@ -99,7 +100,7 @@ export function initialize(runtime){
   const b=s.best[id]||(s.best[id]={onTime:0,ms:null,rounds:0});const record=onTime>b.onTime||b.ms===null||ms<b.ms;b.onTime=Math.max(b.onTime,onTime);b.ms=b.ms===null?ms:Math.min(b.ms,ms);b.rounds++;
   const j=runtime.S.journey;if(j&&typeof j==='object'){if(!j.colors||typeof j.colors!=='object')j.colors={};j.colors[id]=true;}
   {const ps=runtime.journeyPulseState?.()||{},all=(ps.notes||[]).map((n,i)=>[n,ps.noteSteps?.[i]]).filter(([n])=>Number.isInteger(n)).slice(-8);if(all.length){s.notes[id]=all.map(([n])=>n);s.noteSteps||={};if(all.every(([,st])=>Number.isInteger(st)))s.noteSteps[id]=all.map(([,st])=>st);else delete s.noteSteps[id];}}
-  const result={id,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.journeyVictory?.(id);runtime.hud?.();setTimeout(results,1200);return true;}
+  const result={id,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.journeyVictory?.(id);runtime.hud?.();setTimeout(()=>{if(shown===result&&!run())results();},1200);return true;}
  // Leaving a round from the menu: nothing earned, the chapter's state back, and you are at the portal again.
  function abandon(){const s=own();if(!s.run)return false;const from=s.run.from;restore(s.run);s.run=null;back(from);runtime.narrate?.('abandon');runtime.save?.();runtime.hud?.();return true;}
  // The round's card: the three stars, what each asks, and what you earned. Silent buttons.

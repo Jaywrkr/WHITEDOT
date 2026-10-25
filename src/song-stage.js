@@ -49,7 +49,7 @@ export function stageEvents(plan,k,chord,{tiers={},notes={},steps={},scale,tr=0}
   // On the steps you played them when they were kept (two at most on one step), else one every eighth.
   const idx=Array.isArray(st)&&st.length===ns.length?st.map((s,i)=>s===b?i:-1).filter(i=>i>=0).slice(0,2):b%2===0?[b/2]:[];
   for(const i of idx){const m=ns[i];if(Number.isFinite(m))out.push({what:'lead',midi:snapToScale(m,scale,tr)+12,len:2,layer:id,mine:true});}}
- if(plan.final&&bar>=plan.themeAt&&bar<plan.endAt){const local=k-plan.themeAt*16,pass=local>=32?1:0;let at=0;for(const [d,l] of THEME){if(at===local-pass*32)out.push({what:'cello',midi:themePitch(d,scale,tr)+12+(pass?7:0),len:l*2,theme:true,second:!!pass});at+=l*2;}}
+ if(plan.final&&bar>=plan.themeAt&&bar<plan.endAt){const local=k-plan.themeAt*16,pass=local>=32?1:0;let at=0;for(const [d,l] of THEME){if(at===local-pass*32)out.push({what:'cello',midi:snapToScale(themePitch(d,scale,tr)+12+(pass?7:0),scale,tr),len:l*2,theme:true,second:!!pass});at+=l*2;}}
  return out;}
 export function initialize(runtime){
  let run=null;const state={opened:0,finals:0};

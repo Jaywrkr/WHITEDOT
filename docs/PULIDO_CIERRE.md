@@ -7,7 +7,7 @@ Se conservan semillas, RNG, mapas, distribución, criaturas, paleta, formas, com
 | Fase | Rama | Estado |
 |---|---|---|
 | J1 · Base fiable | `pulido/j1-base-fiable` | Corregida y probada localmente |
-| J2 · Cierre musical | `pulido/j2-cierre-musical` | Pendiente |
+| J2 · Cierre musical | `pulido/j2-cierre-musical` | Corregida; escucha de Jay pendiente |
 | J3 · UI de producción | `pulido/j3-interfaz-produccion` | Pendiente |
 | J4 · Una meta | `pulido/j4-meta-compartida` | Pendiente |
 | J5 · Continuidad | `pulido/j5-continuidad` | Pendiente |
@@ -25,3 +25,13 @@ Pruebas y aceptación de cada fase se anotan aquí. CI del candidato, teléfono 
 Validación J1: auditoría de release sin errores; 241 suites Node; `house_visit_smoke.py`, `blobs_smoke.py`, `cloud_account_smoke.py`, `places_smoke.py` y `journey_stick_smoke.py` aprobados en Chromium. Las tres primeras reproducen los flujos citados por las anotaciones del CI base; su comprobación completa en el candidato queda para J7. No se afirma CI verde ni prueba física.
 
 Teléfono J1: completar un lugar, cerrar la tarjeta, recargar y comprobar estrellas/chispas; abrir otra vez y verificar el récord. Los fallos de almacenamiento se validan con fixtures, sin provocar pérdidas en una partida personal.
+
+## J2 · Cierre dentro de la música
+
+El cierre añade dos compases de la misma capa que el lugar aporta a Tu canción, sobre el acorde y reloj vivos. No crea riser, crash o lead independiente ni automatiza filtro, silencio global o volumen de la radio. Viajar, repetir y salir cancelan su salida propia; la tarjeta pendiente no reaparece sobre una ronda nueva.
+
+Cristales toma la tercera o quinta del acorde en vez de restar tres semitonos fijos. La segunda pasada del tema final conserva su intención de quinta, ajustada a la escala vigente. Se mantienen todas las voces, ritmos y generadores de la base.
+
+Validación: 242 suites Node y auditoría estática aprobadas. Armonía comprobada en los once biomas, doce transposiciones y siete grados; cierre vivo, once renders de victoria (pico máximo 0,179), capas de Tu canción (0,485) y final maestro (0,389) aprobados. La prueba offline compara la misma base con/sin cierre: idéntica antes y después, filtro y salida intactos. No certifica gusto musical.
+
+Teléfono J2: completar un lugar, escuchar su entrada breve y repetir o salir mientras termina; la música base debe continuar. Abrir Tu canción y reconocer la capa. Falta la aceptación auditiva de Jay; no se cambian géneros ni territorios para lograrla.

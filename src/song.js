@@ -25,7 +25,7 @@ export function layerStep(id,s,c){const out=[],b=s%16,add=(what,extra={})=>out.p
  if(id==='vacio'&&s%32===0)add('pad',{tones:c.tones,len:32});
  if(id==='jardin'&&b%2===0)add('arp',{midi:c.tones[[0,1,2,1][(b/2)%4]]+12});
  if(id==='dunas'){add('shaker',{accent:b%4===2});if(b===3||b===11)add('conga',{midi:b===3?62:57});}
- if(id==='cristales'&&b%8===4)add('bell',{midi:c.tones[2]+12+(b===12?0:-3)});
+ if(id==='cristales'&&b%8===4)add('bell',{midi:c.tones[b===12?2:1]+12});
  if(id==='ruinas'&&b%8===6)add('stab',{tones:c.tones});
  if(id==='cueva'&&s%32===8)add('echo',{midi:c.tones[1]+12});
  return out;}

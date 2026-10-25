@@ -94,7 +94,7 @@
       "id": "A01",
       "area": "Audio",
       "priority": "P1",
-      "status": "abierto-confirmado",
+      "status": "corregido-tecnico",
       "phase": "J2",
       "title": "El cierre sigue usando un remate externo",
       "evidence": [
@@ -106,13 +106,25 @@
         "src/places.js:95"
       ],
       "observed": "Añade un riser 300–7000 Hz, crash por encima de 5 kHz y tema agudo con lead propio por bioma. Jay rechaza cómo suena. Once renders no saturan (pico máximo 0,573), lo que no certifica gusto ni integración. La tarjeta se programa a 1,2 s; el cierre de tres compases dura unos 6 s a 120 BPM. Falta verificar la continuidad si se cambia de lugar antes de que termine.",
-      "acceptance": "El cierre acentúa/varía una voz y una capa de lo que suena, en su compás, acorde y timbre. Sin fanfarria, riser, crash o lead ajenos obligatorios. La misma contribución se reconoce después en Tu canción. Jay lo aprueba al oírlo. Mostrar el resultado y permitir la siguiente escena con un contrato de final/cancelación musical; no dejar notas antiguas invadiendo otro mundo."
+      "acceptance": "El cierre acentúa/varía una voz y una capa de lo que suena, en su compás, acorde y timbre. Sin fanfarria, riser, crash o lead ajenos obligatorios. La misma contribución se reconoce después en Tu canción. Jay lo aprueba al oírlo. Mostrar el resultado y permitir la siguiente escena con un contrato de final/cancelación musical; no dejar notas antiguas invadiendo otro mundo.",
+      "resolution": {
+        "phase": "J2",
+        "tests": [
+          "tests/journey-victory.mjs",
+          "tests/song-harmony.mjs",
+          "tests/victory_mix.py",
+          "tests/victory_live_smoke.py",
+          "tests/song_mix.py",
+          "tests/song_stage_mix.py"
+        ],
+        "limits": "Escucha de Jay y comprobación final del candidato pendientes; radio y generación intactas."
+      }
     },
     {
       "id": "A02",
       "area": "Armonía",
       "priority": "P1",
-      "status": "abierto-reproducido",
+      "status": "corregido-tecnico",
       "phase": "J2",
       "title": "La capa de Cristales puede salir de escala",
       "evidence": [
@@ -122,13 +134,25 @@
         "evidencia/contratos.json"
       ],
       "observed": "La resta fija de tres semitonos genera MIDI 73 (Do♯) sobre La menor/La-Do-Mi. También se reproduce sobre un acorde menor dentro de la escala mayor de Prisma. La usan cierre y canción.",
-      "acceptance": "Los eventos melódicos de cada capa respetan el marco armónico vigente, incluidas sus tensiones intencionales. Pruebas de escalas/acordes y render real de cierre, trofeo y canción."
+      "acceptance": "Los eventos melódicos de cada capa respetan el marco armónico vigente, incluidas sus tensiones intencionales. Pruebas de escalas/acordes y render real de cierre, trofeo y canción.",
+      "resolution": {
+        "phase": "J2",
+        "tests": [
+          "tests/journey-victory.mjs",
+          "tests/song-harmony.mjs",
+          "tests/victory_mix.py",
+          "tests/victory_live_smoke.py",
+          "tests/song_mix.py",
+          "tests/song_stage_mix.py"
+        ],
+        "limits": "Escucha de Jay y comprobación final del candidato pendientes; radio y generación intactas."
+      }
     },
     {
       "id": "A03",
       "area": "Armonía",
       "priority": "P1",
-      "status": "abierto-reproducido",
+      "status": "corregido-tecnico",
       "phase": "J2",
       "title": "La quinta fija del final introduce alteraciones",
       "evidence": [
@@ -136,7 +160,19 @@
         "evidencia/contratos.json"
       ],
       "observed": "La segunda pasada del tema suma siete semitonos: en La menor la nota Si se convierte en Fa♯. No pasa por snapToScale al emitir ese chelo.",
-      "acceptance": "La segunda pasada conserva su intención y usa conducción/quinta compatible con el marco actual; no se elimina el tema ni se modifica la radio base."
+      "acceptance": "La segunda pasada conserva su intención y usa conducción/quinta compatible con el marco actual; no se elimina el tema ni se modifica la radio base.",
+      "resolution": {
+        "phase": "J2",
+        "tests": [
+          "tests/journey-victory.mjs",
+          "tests/song-harmony.mjs",
+          "tests/victory_mix.py",
+          "tests/victory_live_smoke.py",
+          "tests/song_mix.py",
+          "tests/song_stage_mix.py"
+        ],
+        "limits": "Escucha de Jay y comprobación final del candidato pendientes; radio y generación intactas."
+      }
     },
     {
       "id": "U01",

@@ -2,6 +2,13 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.174**. Las entradas describen su revisión, no certifican producción.
 
+## J2 · Cierre musical · alpha.176
+
+- Cierre con la capa ganada en el acorde vivo; fuera riser, crash, lead ajeno y corte de salida.
+- Cancelación de notas del cierre al cambiar de escena; la radio no se automatiza.
+- Cristales y segunda pasada del final respetan su marco armónico.
+- 242 suites, cierre vivo y renders de victoria/canción/final aprobados. Escucha de Jay pendiente.
+
 ## J1 · Base fiable · alpha.175
 
 - Premios de ronda durables y reintentos sin duplicación en los once lugares.

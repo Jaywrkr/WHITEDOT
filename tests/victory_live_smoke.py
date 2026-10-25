@@ -18,14 +18,15 @@ try:
   page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?lugar=jardin');page.wait_for_function("!!window.__r?.places&&__r.places().run?.id==='jardin'",timeout=20000)
   page.evaluate("()=>{__r.S.sound=true;__r.audio();}");page.wait_for_function("__r.ac?.state==='running'&&__r.MU.bq.length>1",timeout=20000)
-  ms=page.evaluate("__r.journeyVictory('jardin')");six=page.evaluate('__r.SIX');assert abs(ms/1000-48*six)<16*six,(ms,six)
+  base=page.evaluate('({gain:__r.outputStage.headroom.gain.value,filter:__r.fx.lp.frequency.value})');ms=page.evaluate("__r.journeyVictory('jardin')");six=page.evaluate('__r.SIX');assert 0<=ms/1000-32*six<=16*six+.001,(ms,six)
   steps=page.evaluate("__r.MU.step");seen=page.evaluate(WATCH)
   last=seen[-1];assert last['played']==32,('the sequencer drove all 32 sixteenths of the drop',last)
   # Each bar's layer took the chord the world was playing as that bar began.
   for bar,tones in last['chords'].items():assert len(tones)>=3,last
-  assert page.evaluate("Math.abs(__r.outputStage.headroom.gain.value-.92)<.01"),'the output whole again after the silence'
-  assert page.evaluate("__r.fx.lp.frequency.value")>=2000,'the filter open again'
+  assert abs(page.evaluate('__r.outputStage.headroom.gain.value')-base['gain'])<.01,'close leaves the output alone'
+  # The environment may move its own filter; the close itself never automates it (unit/offline contract).
+  page.evaluate("__r.journeyVictory('jardin');__r.cancelJourneyVictory()");assert page.evaluate('__r.journeyVictoryState()') is None
   page.wait_for_timeout(600);assert page.evaluate("__r.MU.step")>steps+16,'the music went on all along'
   assert not errors,errors
-  print('PASS a place closes out of the live music: the sequencer plays its layer for the 32 sixteenths in the world chord, then the output and filter are whole and the music goes on',flush=True);browser.close()
+  print('PASS existing layer follows the live chord for two bars, output is unchanged, cancellation works and the radio continues',flush=True);browser.close()
 finally:server.shutdown()
