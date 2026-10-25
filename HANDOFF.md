@@ -6,11 +6,11 @@
 
 Solucionar los hallazgos de la auditoría conservando cómo se generan la música y los mundos. Se mantiene la música base que le gusta, semillas, RNG, mapas, biomas, distribución, criaturas y arte. El sonido de victoria sí se integra en la capa ganada; las notas incorrectas de la capa/final se corrigen localmente. No hay otra expansión aprobada.
 
-Jay crea PR y merge. No hacer push a main. Supabase continúa en pausa.
+Jay autorizó integrar toda esta entrega en `main` el 25 de octubre. La integración reúne el cubo pequeño, ambas auditorías y J1–J7 desde `e6c0a3a6`, sin otros cambios de juego. Para tareas posteriores vuelve a regir el flujo habitual: rama, commit y push; Jay crea PR y merge. Supabase continúa en pausa.
 
-## Ramas, en orden
+## Historial de la entrega unificada
 
-Si aún no están integradas: `fix/cubo-pequeno` (04ae8bdd), `audit/panel-4-cierre` (3673f2ec). Las siguientes están encadenadas:
+La entrega incluye `fix/cubo-pequeno` (04ae8bdd) y `audit/panel-4-cierre` (3673f2ec). Las fases siguientes se reúnen en una sola integración; no hace falta volver a integrarlas por separado:
 
 | Rama | Commit | Qué |
 |---|---|---|
@@ -20,7 +20,7 @@ Si aún no están integradas: `fix/cubo-pequeno` (04ae8bdd), `audit/panel-4-cier
 | `pulido/j4-meta-compartida` | `a72bc22b` | Una meta según el estado; once lugares frente a 33 estrellas |
 | `pulido/j5-continuidad` | `b898b9d7` | Volver al final existente con las notas actuales; modelo honesto |
 | `pulido/j6-sincronia` | `99a3e525` | Acento al instante emitido + salida estimada, sin cambiar el tiempo sonoro |
-| `pulido/j7-cierre` | Ver HEAD de la rama | Verificación, dos límites de guardado y conteo de cierre por pasos vivos |
+| `pulido/j7-cierre` | `e6c0a3a6` | Verificación, dos límites de guardado y conteo de cierre por pasos vivos |
 
 J7 añade D03 (posición tras entrada fallida) y D04 (tarjeta tras sustituir S), encontrados durante la comprobación. El cierre cuenta dos compases del secuenciador aun si el tempo cambia. Son correcciones de integración; no modifican el secuenciador ni sus géneros.
 

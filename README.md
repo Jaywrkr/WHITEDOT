@@ -2,7 +2,7 @@
 
 Un cubo, un universo que suena. Tocas a tiempo y el mundo responde con música.
 
-Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.181**, rama `pulido/j7-cierre`, desde `pulido/j6-sincronia` (99a3e525), basada en `main` 676ac511. No está publicado en tiendas.
+Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.181**, entrega unificada de las fases J1–J7 y sus auditorías (cierre `e6c0a3a6`, desde `main` 676ac511). No está publicado en tiendas.
 
 ## Empezar aquí
 

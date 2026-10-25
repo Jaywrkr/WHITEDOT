@@ -2,6 +2,10 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.181**. Las entradas describen su revisión, no certifican producción.
 
+## Entrega unificada · alpha.181
+
+Jay autorizó integrar el cierre completo en `main`: cubo pequeño, auditorías y fases J1–J7, hasta `e6c0a3a6`. Se conserva exactamente ese código; esta integración solo actualiza el estado documental y verifica el conjunto en GitHub. La versión no cambia y la aceptación física/de publicación sigue separada.
+
 ## J7 · Comprobación y cierre técnico · alpha.181
 
 - Posición y parámetros conservados al fallar una entrada; tarjeta anterior invalidada al sustituir la partida.
