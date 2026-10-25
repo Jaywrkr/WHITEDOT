@@ -68,7 +68,7 @@ export function initialize(runtime){
  function door(){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();}
  // The house bar shows the wall too, and opens Lugares.
  function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=d.readOnly?'Actualizar lugares':`${gameObjective(runtime.S,d).completed||0}/11 lugares`;}
- if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;if($('lugaresSong'))$('lugaresSong').onclick=()=>{$('mLugares').hidden=true;runtime.openSong?.();};
+ if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;if($('lugaresSong'))$('lugaresSong').onclick=()=>{$('mLugares').hidden=true;if(runtime.replaySong)runtime.replaySong();else runtime.openSong?.();};
  // Plan I6: Lugares is one of the menu's six entries.
  const entry=$('bLugares');if(entry)entry.onclick=()=>{$('mMenu')&&($('mMenu').hidden=true);open();};
  Object.defineProperties(runtime,{drawHouseLugares:{get:()=>(c,o)=>{bar();draw(c,o);}},houseLugaresLook:{get:()=>look},openLugares:{get:()=>open},houseLugaresState:{get:()=>()=>({hits:hits.map(h=>({...h})),last:lastTap})}});

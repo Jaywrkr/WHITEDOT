@@ -73,7 +73,7 @@ export function initialize(runtime){
   document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});const el=overlay(),text=el.querySelector('.song-stage-text'),list=final?SONG_IDS:ids;runtime.audio?.();
   run={...begin({ids:list,final,master}),el};
   if(final){state.finals++;text.replaceChildren();runtime.narrate?.('won');}else{runtime.narrate?.('song');text.textContent=`Tu canción · ${ids.length} de ${SONG_IDS.length}`;}state.opened++;
-  el.querySelector('#songAgain').hidden=final;el.querySelector('#songAgain').onclick=()=>open();el.querySelector('#songClose').textContent=final?'Seguir':'Cerrar';el.querySelector('#songClose').onclick=close;
+  el.querySelector('#songAgain').hidden=final;el.querySelector('#songAgain').onclick=()=>open({final,master});el.querySelector('#songClose').textContent=final?'Seguir':'Cerrar';el.querySelector('#songClose').onclick=close;
   requestAnimationFrame(frame);return true;}
  // A trophy in the Refugio: its layer, at its stars, for two bars over the music.
  function preview(id){if(run&&!run.preview)return false;if(!runtime.S.sound||!runtime.ac||!runtime.bus)return false;run=begin({ids:[id],preview:true});return true;}
@@ -96,7 +96,7 @@ export function initialize(runtime){
   const shown=run.final?Math.min(SONG_IDS.length,bar+1):SONG_IDS.length;
   drawSongRings(c,W,H,{lit:id=>sounding(id)||!run.final&&run.ids.includes(id),beat:id=>pulse(id,time)||(still?0:.3+.3*Math.sin(ms/300+id.length)),shown,still,color:(id,f)=>runtime.placeColor?.(id,f)||f});
   // The final: the words and the credits once the theme has sounded (plan I4: at the end, not before your notes).
-  if(run.final&&bar>=run.plan.endAt&&!run.credits){run.credits=true;const box=el.querySelector('.song-stage-text');box.replaceChildren(...(run.master?MASTER_LINES:FINAL_LINES).map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.8}s`;if(i===0)p.className='journey-title';return p;}));}
+  if(run.final&&bar>=run.plan.endAt&&!run.credits){run.credits=true;el.querySelector('#songAgain').hidden=false;const box=el.querySelector('.song-stage-text');box.replaceChildren(...(run.master?MASTER_LINES:FINAL_LINES).map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.8}s`;if(i===0)p.className='journey-title';return p;}));}
   requestAnimationFrame(frame);}
  // With the eleven places complete, once: the true finale, after the round's card is closed. With the 33 stars, once
  // more: the master version.
@@ -104,6 +104,6 @@ export function initialize(runtime){
   if(!d.won&&allComplete(d)){d.won=true;if(runtime.save?.()===false){delete d.won;return false;}return open({final:true});}
   if(d.won&&!d.master&&starCount(d)>=TOTAL_STARS){d.master=true;if(runtime.save?.()===false){d.master=false;return false;}return open({final:true,master:true});}
   return false;}
- Object.defineProperties(runtime,{openSong:{get:()=>open},closeSong:{get:()=>close},songFinaleCheck:{get:()=>check},songStageStep:{get:()=>step},songLayerPreview:{get:()=>preview},
-  songStageState:{get:()=>()=>({...state,running:!!run&&!run.preview,preview:!!run?.preview,final:!!run?.final,master:!!run?.master,ids:run?[...run.ids]:[],credits:!!run?.credits,k:run?.k??-1,bars:run?.plan?.bars||0,tiers:run?{...run.tiers}:{}})}});
+ Object.defineProperties(runtime,{openSong:{get:()=>open},replaySong:{get:()=>()=>open({final:allComplete(data()),master:starCount(data())>=TOTAL_STARS})},closeSong:{get:()=>close},songFinaleCheck:{get:()=>check},songStageStep:{get:()=>step},songLayerPreview:{get:()=>preview},
+  songStageState:{get:()=>()=>({...state,running:!!run&&!run.preview,preview:!!run?.preview,final:!!run?.final,master:!!run?.master,ids:run?[...run.ids]:[],credits:!!run?.credits,k:run?.k??-1,bars:run?.plan?.bars||0,tiers:run?{...run.tiers}:{},personalNotes:run?Object.fromEntries(Object.entries(run.notes).map(([id,ns])=>[id,[...ns]])):{}})}});
 }

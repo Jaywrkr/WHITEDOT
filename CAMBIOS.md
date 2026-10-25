@@ -2,6 +2,13 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.174**. Las entradas describen su revisión, no certifican producción.
 
+## J5 · Continuidad creativa · alpha.179
+
+- La tarjeta confirma cuándo se conserva tu frase para el final.
+- Tu canción desde Lugares permite volver al final existente, con las notas actuales; Otra vez repite esa versión.
+- El modelo separa capas ganadas e interpretaciones completadas. No predice abandono ni cuenta compras como música.
+- Mismos generadores, instrumentos y arreglo del final; sin contenido adicional.
+
 ## J4 · Una meta compartida · alpha.178
 
 - Guía y menú leen el capítulo o siguiente lugar real; experiencias extra claramente opcionales.

@@ -284,7 +284,7 @@
       "id": "P01",
       "area": "Continuidad",
       "priority": "P1",
-      "status": "riesgo-modelado",
+      "status": "integrado-pendiente-personas",
       "phase": "J5",
       "title": "Tras ganar, el crecimiento por estrellas se estanca",
       "evidence": [
@@ -294,7 +294,16 @@
         "evidencia/progresion.json"
       ],
       "observed": "El modelo da 80,1 y 81,8 min sin capas nuevas para 60 % y sin sonido. No prueba música idéntica ni abandono real: las notas personales se actualizan al rejugar, y el mundo sigue variando.",
-      "acceptance": "Distinguir final de campaña y continuidad creativa. Hacer perceptible lo que ya cambia con tus notas, sin contar compras como música ni bajar 75/70 % por esta auditoría. Medir interés con personas."
+      "acceptance": "Distinguir final de campaña y continuidad creativa. Hacer perceptible lo que ya cambia con tus notas, sin contar compras como música ni bajar 75/70 % por esta auditoría. Medir interés con personas.",
+      "resolution": {
+        "phase": "J5",
+        "tests": [
+          "tests/creative_continuity_smoke.py",
+          "tests/play-curve.mjs",
+          "tests/places_smoke.py"
+        ],
+        "limits": "No se alteran umbrales ni generadores. El modelo conserva el hueco de capas; disfrute y permanencia no medidos."
+      }
     },
     {
       "id": "T01",

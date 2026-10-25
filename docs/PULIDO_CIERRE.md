@@ -10,7 +10,7 @@ Se conservan semillas, RNG, mapas, distribución, criaturas, paleta, formas, com
 | J2 · Cierre musical | `pulido/j2-cierre-musical` | Corregida; escucha de Jay pendiente |
 | J3 · UI de producción | `pulido/j3-interfaz-produccion` | Corregida y probada localmente |
 | J4 · Una meta | `pulido/j4-meta-compartida` | Corregida y probada localmente |
-| J5 · Continuidad | `pulido/j5-continuidad` | Pendiente |
+| J5 · Continuidad | `pulido/j5-continuidad` | Integrada; interés humano pendiente |
 | J6 · Sincronía | `pulido/j6-sincronia` | Pendiente |
 | J7 · Comprobación final | `pulido/j7-cierre` | Pendiente |
 
@@ -53,3 +53,13 @@ La hoja y el acceso del Refugio priorizan lugares completos /11. Las estrellas /
 Validación: 243 suites Node, auditoría estática, `refugio_lugares_smoke.py`, `recorrido_smoke.py` (cuatro tamaños) y `journey_entry_smoke.py` aprobados. El contrato recorre los once siguientes destinos y comprueba que el saldo no cambia la meta. El diseño del mundo no se modifica.
 
 Teléfono J4: consultar Guía, menú y Lugares en la misma partida; deben señalar el mismo destino. En Refugio se ve /11 y en Lugares se distingue la maestría /33. No hace falta comprar nada para completar lugares.
+
+## J5 · Continuidad creativa
+
+La ronda distingue si conservó una frase nueva o la misma. Desde Lugares → Tu canción, una partida con los once completos puede reproducir el final existente con sus notas actuales. Al llegar a los créditos, Otra vez repite esa misma versión; no paga premios ni modifica las marcas de victoria. No cambia el arreglo ni la síntesis del final.
+
+El modelo conserva los huecos sin capas nuevas (80,1/81,8 min en 60 %/sin sonido); también informa de 25 interpretaciones completadas en esos perfiles. Eso no demuestra 25 melodías diferentes ni disfrute: el modelo no genera sus notas. Se retira la predicción textual de abandono, conservando `quitAt` por compatibilidad como inicio de un hueco estructural.
+
+Validación: 243 suites, auditoría estática, `creative_continuity_smoke.py` y `places_smoke.py` aprobados. La prueba abre dos veces el final con frases guardadas diferentes y comprueba que no hay otra recompensa. Los renders de ese mismo arreglo están aprobados en J2; aquí solo cambia su acceso. Interés y comprensión con personas quedan pendientes.
+
+Teléfono J5: después de ganar, tocar otra ronda, abrir Lugares → Tu canción y escuchar el final con la frase guardada. En los créditos, Otra vez. No es necesario ganar más estrellas ni comprar para volver a escucharlo.
