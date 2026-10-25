@@ -71,3 +71,7 @@ Fragmento recogido: base×1 fuera de tempo, ×2 a tiempo y ×3 desde ocho aciert
 ## K3 · final5 · implementada alpha.184
 
 Arreglo local en escala/tono/tempo de salida, sin la cama fija de La mayor; voces existentes por capítulo, ácido menos denso y tema suave. Las notas guardadas no se alteran. Silencio local y cancelación al salir; círculos ligados a ataques. Pruebas incluyen todos los biomas y un render específico de esta misma ruta. Aceptación física de Jay permanece pendiente.
+
+## K4 · interfaz clara · implementada alpha.185
+
+Una continuación y tres destinos; Bitácora/Ajustes secundarios, sonido dentro de Ajustes. Herramientas agrupadas por contexto. El aviso de región muestra nombre y estilo/tempo, sin la cadena extensa de metadatos. Columnas y textos se ajustan al ancho real. Ayuda de guardar junto al marcador; K5 evita su reaparición al terminar el Viaje. Menús silenciosos, arte del mundo conservado.

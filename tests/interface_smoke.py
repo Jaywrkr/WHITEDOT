@@ -44,7 +44,10 @@ try:
     if control in ['bSky','bSession']:(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bAch').click()
     if control=='bSaveTools':
      assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bSaveTools').is_hidden();page.evaluate("document.getElementById('mMenu').hidden=true;(window.__r||window.__testRuntime).openSaveTools()")
-    else:page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')");page.locator('#'+control).click()
+    else:
+     page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')")
+     if control=='bMusicSettings':page.locator('#bSettings').click()
+     page.locator('#'+control).click()
     page.wait_for_function('(id)=>!document.getElementById(id).hidden',arg=modal)
     metrics=page.locator('#'+modal+' .sheet').evaluate('e=>({x:e.getBoundingClientRect().x,right:e.getBoundingClientRect().right,y:e.getBoundingClientRect().y,bottom:e.getBoundingClientRect().bottom,sw:e.scrollWidth,cw:e.clientWidth})')
     assert metrics['x']>=0 and metrics['right']<=width+1 and metrics['y']>=0 and metrics['bottom']<=height+1, (modal,metrics)

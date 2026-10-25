@@ -1,3 +1,4 @@
+import {freeOpen} from './journey-mode.js';
 import {explorationContext} from './exploration-context.js';
 import {installNoticeLane} from './notice-lane.js';
 import { POCKET_NAMES } from './pockets.js';
@@ -24,7 +25,7 @@ export function initialize(runtime) {
       goal.textContent=dist?"Eco cercano · escucha y pulsa":"Lugares "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
       gr.textContent="Sin reloj";}
     else{const n=runtime.S.pathCrystals.length;fill.style.width=(n*10)+"%";goal.textContent="Cristales · "+n+" / 10";gr.textContent="Acércate y lanza un pulso";}
-    const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary");$("bWorld").querySelector("span").firstChild.nodeValue=runtime.inWorld()?"Camino":"Mundo";$("bWorldHint").textContent=runtime.inWorld()?"Volver al Camino":"Explorar el Mundo";
+    const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary");$("bWorld").querySelector("span").firstChild.nodeValue=freeOpen(runtime.S.journey)?"Explorar":runtime.inWorld()?"Camino":"Mundo";$("bWorldHint").textContent=freeOpen(runtime.S.journey)?"Explorar el Mundo":runtime.inWorld()?"Volver al Camino":"Explorar el Mundo";
     bp.hidden=!(canWorld||runtime.inWorld());$("bPrimaryL").textContent=runtime.inWorld()?"Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=runtime.inWorld()?"scaleX(-1)":"";
   }
   function showPhrase(t,big){const p=$('phrase');lane.enqueue('phrase',p,()=>{p.textContent=t;p.classList.toggle('big',!!big);},big?5:3.2,String(t),()=>true,{level:big?2:1,category:'ambiente',coalesce:true});}

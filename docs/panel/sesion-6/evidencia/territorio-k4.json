@@ -1,0 +1,273 @@
+{
+  "revision": "3da51c4d66e0ceacb5636f4c1bdc94482dbdef9d",
+  "version": "2.3.0-alpha.185",
+  "runtimeDirty": true,
+  "runtimeDigest": "83aa3a31cf9136a7784f3c6fad004cc55bac64fd483b3a92eae73bff2d43d766",
+  "scope": "Local scripted production-appearance fixtures, normal hostname and webdriver=false; no human testing",
+  "states": [
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Microhouse · 120 BPM",
+          "client": 137,
+          "scroll": 137,
+          "rect": {
+            "left": 91.59375,
+            "right": 228.40625
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 137,
+          "scroll": 137,
+          "rect": {
+            "left": 91.59375,
+            "right": 228.40625
+          },
+          "overflow": "hidden",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": false,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "territorio-x1-control",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Microhouse · 120 BPM",
+          "client": 137,
+          "scroll": 137,
+          "rect": {
+            "left": 126.59375,
+            "right": 263.40625
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 137,
+          "scroll": 137,
+          "rect": {
+            "left": 126.59375,
+            "right": 263.40625
+          },
+          "overflow": "hidden",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": false,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "territorio-x1-control",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Microhouse · 120 BPM",
+          "client": 137,
+          "scroll": 137,
+          "rect": {
+            "left": 353.59375,
+            "right": 490.40625
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 137,
+          "scroll": 137,
+          "rect": {
+            "left": 353.59375,
+            "right": 490.40625
+          },
+          "overflow": "hidden",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": false,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "territorio-x1-control",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Microhouse · 120 BPM",
+          "client": 137,
+          "scroll": 137,
+          "rect": {
+            "left": 571.59375,
+            "right": 708.40625
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 137,
+          "scroll": 137,
+          "rect": {
+            "left": 571.59375,
+            "right": 708.40625
+          },
+          "overflow": "hidden",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": false,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "territorio-x1-control",
+      "viewport": [
+        1280,
+        800
+      ]
+    }
+  ]
+}

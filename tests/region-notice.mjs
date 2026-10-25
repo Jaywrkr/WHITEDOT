@@ -6,10 +6,10 @@ globalThis.document={hidden:false,querySelector:()=>null,getElementById:id=>node
 try{
  const r={S:{},GEN:{minimal:{name:'Minimal'}},seedOf:()=>1,rng:()=>()=>.5,seasonOf:()=>({name:'Primavera'})};discovery(r);
  r.showRegion({key:'1,2',genre:'minimal',name:'Tierra',bpm:124,continent:{id:'a',name:'Continente'}},true);
- assert.match(nodes.zDo.textContent,/Continente/);assert.match(nodes.zMood.textContent,/Primavera/);
+ assert.match(nodes.zDo.textContent,/Continente/);assert.equal(nodes.zMood.textContent,'Minimal · 124 BPM','compact notice prioritizes style and actual tempo');
  // Same key is coalesced/rate-limited, but the current metadata is still refreshed.
  r.showRegion({key:'1,2',genre:'minimal',name:'Mar',bpm:85,sea:true},false);
  assert.match(nodes.zDo.textContent,/Abismo de silencio/);assert.match(nodes.zMood.textContent,/85 BPM/);assert.equal(nodes.zName.textContent,'Mar');
  r.showRegion({key:'0,0',genre:'minimal',name:'Origen',bpm:110},false);assert.match(nodes.zDo.textContent,/Gravedad normal/);
- console.log('PASS current sea, gravity, tempo and season metadata survives notice coalescing without extra presentations');
+ console.log('PASS current sea, gravity, tempo metadata in the compact notice survives notice coalescing without extra presentations');
 }finally{globalThis.setInterval=interval;globalThis.document=doc;}

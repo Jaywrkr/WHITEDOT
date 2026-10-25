@@ -454,3 +454,7 @@ Rama `pulido/k2-economia-chispas` desde K1. Fuera de tempo×1, a tiempo×2 y rac
 ## alpha.184 · K3 · final5 en su contexto musical
 
 Rama `pulido/k3-final-viaje` desde K2. El final de cinco círculos interpreta las notas guardadas en escala/tono y tempo de salida (90–150 BPM), con las mismas voces existentes, entradas separadas y menor ácido. La cama y las frases comparten armonía; una envolvente local deja silencio real antes de créditos y se cancela al salir. Cada círculo sigue ataques de su capa. No se modifican radio, instrumentos, generadores o MIDI guardados.
+
+## alpha.185 · K4 · menú y avisos adaptables
+
+Rama `pulido/k4-interfaz-clara` desde K3. Continuar/Seguir principal, tres destinos, utilidades discretas y sonido en Ajustes, conservando IDs/capacidades. Explorar en la partida terminada conserva el Mundo. Avisos territoriales cortos con columnas mínimas y ajuste de línea; ayuda de guardar situada junto al marcador. No cambia música o dibujo del mundo.
