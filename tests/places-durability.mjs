@@ -5,8 +5,8 @@ const timers=[],oldTimer=globalThis.setTimeout;globalThis.setTimeout=f=>{timers.
 try{
  for(const {id,game} of PLACES){
   let failed=false,disk,calls=0;
-  const r={S:{wx:0,wy:0,sound:true,sparks:7,todayKey:'2026-10-25',journey:{finished:true,done:Object.fromEntries(PLACES.map(p=>[p.id,true])),[game]:{points:91}},lugares:{version:2,kept:Object.fromEntries(PLACES.map(p=>[p.id,true]))},wild:{remix:{best:0}}},BIOMES:[{id}],biomeOfPos:()=>0,regionOfPos:()=>({}),MU:{},$:()=>null,hud(){},narrateRound(){calls++;},journeyVictory(){calls++;},journeyPulseState:()=>({notes:[60,64],noteSteps:[0,6]}),save(){if(failed)return false;disk=structuredClone(this.S);return true;}};
-  initialize(r);assert(r.startPlace(id));for(let n=0;n<10;n++)r.placeHear(id,true,{});
+  const r={S:{wx:0,wy:0,sound:true,sparks:7,todayKey:'2026-10-25',journey:{finished:true,done:Object.fromEntries(PLACES.map(p=>[p.id,true])),[game]:{points:91}},lugares:{version:2,kept:Object.fromEntries(PLACES.map(p=>[p.id,true]))},wild:{remix:{best:0}}},BIOMES:[{id}],biomeOfPos:()=>0,regionOfPos:()=>({}),MU:{},$:()=>null,hud(){},narrateRound(){calls++;},journeyVictory(){calls++;},journeyPulseState:()=>({notes:[90,91],noteSteps:[7,15]}),save(){if(failed)return false;disk=structuredClone(this.S);return true;}};
+  initialize(r);assert(r.startPlace(id));for(let n=0;n<10;n++)r.placeHear(id,true,n<2?{midi:[60,64][n],step:[0,6][n]}:{});
   const previous=structuredClone(r.S),placesRef=r.S.lugares,journeyRef=r.S.journey;
   failed=true;assert.equal(r.placeFinish(id),false);assert.deepEqual(r.S,previous,'failed finish rolls back every affected field');assert.equal(r.S.lugares,placesRef);assert.equal(r.S.journey,journeyRef);assert.equal(calls,0,'never celebrate unsaved rewards');assert.equal(r.places().last,null);assert.equal(disk.sparks,7);
   failed=false;assert(r.placeFinish(id));assert.equal(r.S.sparks,127);assert.deepEqual(disk,r.S);assert.equal(r.placeFinish(id),false,'retry cannot pay twice');assert.equal(calls,2);assert.deepEqual(r.S.lugares.notes[id],[60,64]);

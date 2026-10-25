@@ -88,12 +88,12 @@ export function initialize(runtime){
   // Today's remix (wild.js, plan F18): only the day's place, with the day's rhythm, never as Maestro.
   const daily=remix?runtime.dailyRemix?.():null;if(remix&&(maestro||!daily||daily.id!==id||daily.rhythm!==remix))return false;const position={wx:runtime.S.wx,wy:runtime.S.wy},j=runtime.S.journey||(runtime.S.journey={}),key=gameKey(id),stash=j[key];
   const spot=findBiome(id,{x:runtime.S.wx,y:runtime.S.wy},(x,y)=>runtime.BIOMES[runtime.biomeOfPos(x,y)]?.id,(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea);
-  s.run={id,maestro:!!maestro,...(remix?{remix}:{}),...(free?{free:true}:{}),from:point(from),startedAt:Date.now(),hits:0,total:0,silent:false,stash:stash===undefined?undefined:JSON.parse(JSON.stringify(stash))};
+  s.run={id,maestro:!!maestro,...(remix?{remix}:{}),...(free?{free:true}:{}),from:point(from),startedAt:Date.now(),hits:0,total:0,silent:false,notes:[],noteSteps:[],stash:stash===undefined?undefined:JSON.parse(JSON.stringify(stash))};
   j[key]={hinted:stash?.hinted===true};if(spot){runtime.S.wx=spot.x;runtime.S.wy=spot.y;}
   const MU=runtime.MU,prior=MU?{scale:MU.tempoScale,window:MU.onTimeWindow,hasScale:Object.hasOwn(MU,'tempoScale'),hasWindow:Object.hasOwn(MU,'onTimeWindow')}:null;if(MU){MU.tempoScale=maestro?MAESTRO_TEMPO:1;MU.onTimeWindow=maestro?MAESTRO_WINDOW:null;}
   if(runtime.save?.()===false){restore(s.run);s.run=null;Object.assign(runtime.S,position);if(MU){if(prior.hasScale)MU.tempoScale=prior.scale;else delete MU.tempoScale;if(prior.hasWindow)MU.onTimeWindow=prior.window;else delete MU.onTimeWindow;}return false;}runtime.enterFx=1;return true;}
  // Every pulse a game hears while a round or a Journey chapter is being played.
- function hear(id,on,beat={}){const s=own();if(s.readOnly)return;if(s.run&&s.run.id===id){s.run.total++;if(on)s.run.hits++;if(beat.silent)s.run.silent=true;return;}
+ function hear(id,on,beat={}){const s=own();if(s.readOnly)return;if(s.run&&s.run.id===id){s.run.total++;if(on){s.run.hits++;if(Number.isInteger(beat.midi)&&beat.midi>=36&&beat.midi<=96){(s.run.notes||=[]).push(beat.midi);(s.run.noteSteps||=[]).push(Number.isInteger(beat.step)&&beat.step>=0&&beat.step<16?beat.step:null);if(s.run.notes.length>8){s.run.notes.shift();s.run.noteSteps.shift();}}}if(beat.silent)s.run.silent=true;return;}
   if(WORLD_CHAPTERS.includes(id)){const j=s.journeyShare[id]||(s.journeyShare[id]={hits:0,total:0,silent:false});j.total++;if(on)j.hits++;if(beat.silent)j.silent=true;}}
  function grant(id,stars){const s=own(),got=s.stars[id],fresh=stars.map((x,i)=>x&&!got[i]);stars.forEach((x,i)=>{if(x)got[i]=true;});return fresh;}
  // A Journey chapter kept: its ★, and its ★★ if it was played on time with sound.
@@ -113,7 +113,7 @@ export function initialize(runtime){
   const extra=r.remix?runtime.remixDone?.(onTime)||null:null;
   const b=s.best[id]||(s.best[id]={onTime:0,ms:null,rounds:0});const record=onTime>b.onTime||b.ms===null||ms<b.ms;b.onTime=Math.max(b.onTime,onTime);b.ms=b.ms===null?ms:Math.min(b.ms,ms);b.rounds++;
   const j=runtime.S.journey;if(j&&typeof j==='object'){if(!j.colors||typeof j.colors!=='object')j.colors={};j.colors[id]=true;}
-  {const ps=runtime.journeyPulseState?.()||{},all=(ps.notes||[]).map((n,i)=>[n,ps.noteSteps?.[i]]).filter(([n])=>Number.isInteger(n)).slice(-8);if(all.length){s.notes[id]=all.map(([n])=>n);s.noteSteps||={};if(all.every(([,st])=>Number.isInteger(st)))s.noteSteps[id]=all.map(([,st])=>st);else delete s.noteSteps[id];}}
+  {const all=(r.notes||[]).map((n,i)=>[n,r.noteSteps?.[i]]).filter(([n])=>Number.isInteger(n)&&n>=36&&n<=96).slice(-8);if(all.length){s.notes[id]=all.map(([n])=>n);s.noteSteps||={};if(all.every(([,st])=>Number.isInteger(st)))s.noteSteps[id]=all.map(([,st])=>st);else delete s.noteSteps[id];}}
   const personal=s.notes[id]?.length?JSON.stringify([s.notes[id],s.noteSteps?.[id]])!==JSON.stringify([before.lugares.notes?.[id],before.lugares.noteSteps?.[id]])?'changed':'kept':null;
   const result={id,personal,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.journeyVictory?.(id);runtime.hud?.();setTimeout(()=>{if(shown===result&&!run())results();},1200);return true;}
  // Leaving a round from the menu: nothing earned, the chapter's state back, and you are at the portal again.

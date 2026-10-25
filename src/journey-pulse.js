@@ -80,12 +80,13 @@ export function initialize(runtime){
   // Plan I3: only on the quarters (an eighth pattern could take the wrong step) and never while the place sings.
   if(ac&&!silent&&!runtime.rhythmSinging?.()&&(!own?.hit||own.hit.step%4===0)){const target=own?.hit?.time??nearestBeat(heard,runtime.MU?.bq,bar);if(Number.isFinite(target))runtime.calibrationSample?.(heard-target);}
   // The chapter game hears every pulse, with the step of the bar it answered (0 is the «1»).
-  runtime.journeyGamePulse?.(on,{step:Number.isFinite(step)?Math.round(step)%16:null,silent,at:Number.isFinite(beatAt)?beatAt:null});
+  const played=on?(()=>{const [degree]=THEME[state.next],{scale,tr}=scaleNow();return {degree,scale,tr,midi:themePitch(degree,scale,tr)};})():null;
+  runtime.journeyGamePulse?.(on,{midi:played?.midi,step:Number.isFinite(step)?Math.round(step)%16:null,silent,at:Number.isFinite(beatAt)?beatAt:null});
   // The wild World hears it too: a wild spark beside the cube hops on time (wild.js, plan F18).
   runtime.wildPulse?.(on);
   if(!silent){form=formStep(form,on);formAt=performance.now();}
   state.degree=null;state.midi=null;state.beat=null;if(!on){state.misses++;runtime.journeyChapterPulse?.(false);return false;}
-  state.hits++;const [degree]=THEME[state.next],{scale,tr}=scaleNow(),midi=themePitch(degree,scale,tr);state.degree=degree;state.midi=midi;state.scale=scale;state.tr=tr;state.beat=beatAt??nearestBeat(heard,runtime.MU?.bq,bar);state.next=(state.next+1)%THEME.length;
+  state.hits++;const {degree,scale,tr,midi}=played;state.degree=degree;state.midi=midi;state.scale=scale;state.tr=tr;state.beat=beatAt??nearestBeat(heard,runtime.MU?.bq,bar);state.next=(state.next+1)%THEME.length;
   // The chapter hears the note first, so the note that completes the theme counts.
   state.notes.push(midi);state.noteSteps.push(Number.isFinite(step)?Math.round(step)%16:null);if(state.notes.length>12){state.notes.shift();state.noteSteps.shift();}runtime.journeyChapterPulse?.(true,midi,Number.isInteger(runtime.MU?.step)?runtime.MU.step:undefined);
   if(state.next===0){state.phrases++;runtime.recoverJourneyColor?.();runtime.journeyPhrase?.();runtime.themeKeyPhrase?.();}

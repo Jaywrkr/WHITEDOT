@@ -1,6 +1,13 @@
 # Cambios recientes de Kubono
 
-Estado: 25 de octubre de 2026. Código **2.3.0-alpha.189**. Las entradas describen su revisión, no certifican producción.
+Estado: 25 de octubre de 2026. Código **2.3.0-alpha.190**. Las entradas describen su revisión, no certifican producción.
+
+## L2 · Tu frase propia · alpha.190
+
+- Captura de hasta ocho notas por ronda, registrada antes del cierre del objeto dorado; incluye el último pulso.
+- No toma notas del historial general ni de la ronda anterior. Sin notas nuevas válidas, conserva la frase guardada.
+- Premio y frase comparten guardado con rollback; reintento sin pago duplicado.
+- 248 suites y cierre dorado real aprobados. Motor, voces, escalas y generación del mundo conservados.
 
 ## L1 · Aprender jugando · alpha.189
 

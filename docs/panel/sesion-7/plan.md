@@ -16,6 +16,6 @@ Prioridad inmediata: que Jay escuche K7 y compruebe brújula/salida. Si rechaza 
 | Fase | Versión | Estado |
 |---|---|---|
 | L1 | alpha.189 | Implementada y verificada técnicamente; comprensión humana pendiente |
-| L2 | — | En preparación |
-| L3 | — | Pendiente |
+| L2 | alpha.190 | Captura por ronda y último gesto verificados |
+| L3 | — | En preparación |
 | L4 | — | Pendiente; requiere separar pruebas técnicas y humanas |

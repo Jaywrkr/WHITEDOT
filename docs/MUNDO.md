@@ -253,3 +253,7 @@ La flecha rodea el cubo a48px; nombre y metros quedan90px arriba, separados de O
 ## L1 · Aprender jugando (alpha.189)
 
 La guía muestra tres pasos del lugar activo; en Jardín permite repetir una demostración silenciosa. Tras falta de progreso aparece brevemente una semilla o gotas junto al círculo. Los valores, alcance y ritmo de los once juegos no cambian. La explicación se conserva como vista después de presentarse, no por encolarse. [Entrega L](ENTREGA_L.md).
+
+## L2 · La frase de cada ronda (alpha.190)
+
+Cada ronda captura sus últimas ocho notas válidas y los pasos de su ritmo. El pulso que termina se captura antes de guardar el premio. Los historiales de otros lugares no se mezclan. Una ronda sin frase nueva mantiene la anterior; escribir mal conserva la ronda para reintentar. La música generativa y el arreglo de reproducción no cambian.

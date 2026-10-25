@@ -1,6 +1,6 @@
 # Traspaso · fases L
 
-Código **2.3.0-alpha.189**. Jay autorizó ejecutar L1–L4 sin confirmación entre fases. Una rama por fase desde K7; commit y push, Jay PR/merge. [Entrega](docs/ENTREGA_L.md), [plan y estado](docs/panel/sesion-7/plan.md). L1 verificada:247 suites, auditoría y primer ciclo del Jardín con controles reales. L2 sigue. No tocar música generativa, mapas, cubo ni servicios. La aprobación en teléfono y cinco sesiones no se inventan.
+Código **2.3.0-alpha.190**. Jay autorizó ejecutar L1–L4 sin confirmación entre fases. Una rama por fase desde K7; commit y push, Jay PR/merge. [Entrega](docs/ENTREGA_L.md), [plan y estado](docs/panel/sesion-7/plan.md). L1 verificada:247 suites, auditoría y primer ciclo del Jardín con controles reales. L2 verificada:248 suites y cierre dorado real; captura local con nota final y rollback. L3 sigue. No tocar música generativa, mapas, cubo ni servicios. La aprobación en teléfono y cinco sesiones no se inventan.
 
 ## Antecedentes K7
 
