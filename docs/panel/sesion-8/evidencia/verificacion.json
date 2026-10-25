@@ -1,0 +1,27 @@
+{
+  "revision": "a850ceee",
+  "version": "2.3.0-alpha.192",
+  "runtimeChanges": false,
+  "staticAudit": {
+    "errors": [],
+    "warnings": []
+  },
+  "freshEvidence": {
+    "gameScreens": 16,
+    "uiStates": 24,
+    "musicSymbolicChecks": 71,
+    "styles": 52,
+    "influences": 18
+  },
+  "sourceProbes": [
+    "8 stored notes at one step yield 2 personal events",
+    "Judged step0 becomes stored campaign step2 when scheduler is advanced"
+  ],
+  "browserProbes": "Height-only resize remains stale in two finales; held tap dispatch delay246ms with sound disabled, not acoustic latency.",
+  "limits": [
+    "No physical listening, device benchmark or human usability jury",
+    "Four reviewers mainly source based; visual reviewer also saw new captures",
+    "No full suite repeated for documentation only",
+    "Current sources and version remain identical; fixes are proposals"
+  ]
+}

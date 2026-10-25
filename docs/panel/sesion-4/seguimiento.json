@@ -744,6 +744,146 @@
         "../sesion-7/informe.md"
       ],
       "acceptance": "Esperar, omitir y Explorar abren Mundo con rumbo Jardín y progreso conservado."
+    },
+    {
+      "id": "U14",
+      "area": "Aprendizaje",
+      "priority": "P1",
+      "status": "verificado-propuesto-sin-implementar",
+      "phase": "M1",
+      "title": "La guía no ofrece la lección del capítulo activo",
+      "evidence": [
+        "src/voice-guide.js:24; src/journey-games.js:13",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+    },
+    {
+      "id": "S02",
+      "area": "Respuesta táctil",
+      "priority": "P1",
+      "status": "verificado-propuesto-sin-implementar",
+      "phase": "M3",
+      "title": "Juicio en apoyo y despacho al soltar el dedo",
+      "evidence": [
+        "src/canvas.js:38,61; src/journey-pulse.js:26",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+    },
+    {
+      "id": "A06",
+      "area": "Frase reproducida",
+      "priority": "P1",
+      "status": "verificado-propuesto-sin-implementar",
+      "phase": "M2",
+      "title": "El final descarta notas del mismo paso",
+      "evidence": [
+        "src/song-stage.js:48–51",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+    },
+    {
+      "id": "A07",
+      "area": "Memoria temporal",
+      "priority": "P2",
+      "status": "verificado-propuesto-sin-implementar",
+      "phase": "M2",
+      "title": "Capítulos guardan paso del scheduler en lugar del juzgado",
+      "evidence": [
+        "src/journey-pulse.js:77,91; src/journey-chapters.js:89",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+    },
+    {
+      "id": "A08",
+      "area": "Arco musical",
+      "priority": "P2",
+      "status": "verificado-propuesto-sin-implementar",
+      "phase": "M3",
+      "title": "Compás de silencio no coordina fondo del final11",
+      "evidence": [
+        "src/song-stage.js:43; src/audio.js:214,277–293",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+    },
+    {
+      "id": "U15",
+      "area": "Jerarquía textual",
+      "priority": "P2",
+      "status": "verificado-propuesto-sin-implementar",
+      "phase": "M1",
+      "title": "Títulos y subtítulos concatenados en Más",
+      "evidence": [
+        "index.html:157–158; styles/estilo-j.css:492",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+    },
+    {
+      "id": "U16",
+      "area": "Acción anunciada",
+      "priority": "P2",
+      "status": "verificado-propuesto-sin-implementar",
+      "phase": "M1",
+      "title": "Eco anuncia grabar donde su acción es borrar",
+      "evidence": [
+        "src/jam.js:50–54,148; index.html:84",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+    },
+    {
+      "id": "S03",
+      "area": "Regla de Vacío",
+      "priority": "P2",
+      "status": "verificado-propuesto-sin-implementar",
+      "phase": "M2",
+      "title": "Acierto premiado en tiempos donde el juego espera",
+      "evidence": [
+        "src/journey-rhythm.js:9; src/journey-release.js:42",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+    },
+    {
+      "id": "S04",
+      "area": "Reloj audiovisual",
+      "priority": "P2",
+      "status": "verificado-propuesto-sin-implementar",
+      "phase": "M3",
+      "title": "Luces de ecos y objetos no aplican la misma referencia audible",
+      "evidence": [
+        "src/jam.js:95,123; src/wow-feel.js:41–46",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+    },
+    {
+      "id": "U17",
+      "area": "Viewport",
+      "priority": "P2",
+      "status": "verificado-propuesto-sin-implementar",
+      "phase": "M3",
+      "title": "Finales no actualizan buffer si cambia solo la altura",
+      "evidence": [
+        "src/journey-finale.js:90; src/song-stage.js:91",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
     }
   ]
 }

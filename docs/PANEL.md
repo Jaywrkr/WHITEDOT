@@ -1,6 +1,8 @@
 # El panel creativo de Kubono
 
-Guía para repetir la auditoría. **Sesión vigente: [séptima](panel/sesion-7/informe.md), alpha.187 evaluada y candidatura alpha.188. Referencia7,7; feedback real reabre cierre musical y ubicación del rumbo. K7 los corrige técnicamente; nueva escucha pendiente.** La [sexta sesión](panel/sesion-6/informe.md) incorpora el feedback real de Jay: acceso al anillo, final5 y menú. K1–K6 corrigen esos puntos; el cierre técnico y sus pendientes están en CIERRE_K.md, conservando la generación musical y del universo. La evidencia técnica se separa de la aceptación de Jay, las personas y el despliegue. La siguiente sesión conservará los IDs abiertos; no abre contenido nuevo ni cambia la base para mejorar una nota simulada.
+Guía para repetir la auditoría. **Sesión vigente: [octava, ciega](panel/sesion-8/informe.md), alpha.192.** Cinco revisores nuevos con dos lentes cada uno, sin historial ni puntuaciones anteriores. Media provisional6,83; Audio técnico sin escucha. Hallazgos y propuestas documentados; runtime intacto. [Método](panel/sesion-8/expediente.md).
+
+La revisión ciega del usuario prevalece sobre las comparaciones históricas del procedimiento de abajo: primero puntuar sin notas anteriores; después cruzar hallazgos con el registro para conservar IDs. El coordinador conserva contexto operativo, los revisores no lo heredan. No se borra el historial del proyecto ni progreso de jugadores.
 
 ## 1. Qué es
 
@@ -166,3 +168,7 @@ Los expedientes y análisis citan rutas y versiones de su día (por ejemplo `3-e
 ## Fases L implementadas
 
 Jay autorizó L1–L4 después de K7. [Entrega](ENTREGA_L.md) y [evidencia](panel/sesion-7/evidencia/cierre-l.json): ayudas y comprensión, frase por ronda, persistencia y accesibilidad. Cierre técnico de L4 con humanos/CI pendientes. Nota de referencia7,7 sin subida automática; A04/V01/P01 y comprensión/lector real conservan sus límites.
+
+## Octava sesión · revisión ciega
+
+[Informe](panel/sesion-8/informe.md) · [expediente](panel/sesion-8/expediente.md) · [propuesta M1–M4](panel/sesion-8/plan.md). Diez lentes, rúbrica exigente y alcance por revisor. Categorías y promedio calculados desde notas independientes, sin comparación ni subida por versiones. No son opiniones reales ni escucha humana.

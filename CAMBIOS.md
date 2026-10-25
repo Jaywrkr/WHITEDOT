@@ -2,6 +2,10 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.192**. Las entradas describen su revisión, no certifican producción.
 
+## Octava auditoría · revisión ciega de alpha.192
+
+Rama documental `audit/panel-8-revision-ciega`, desde L4 `a850ceee`; misma versión y runtime intacto. Cinco revisores nuevos, diez lentes simuladas sin notas previas; media6,83 por rúbrica exigente.16 capturas y24 paneles actuales,71 comprobaciones musicales simbólicas y sondas de frase, tiempo, input y tamaño de finales. Audio técnico sin escucha; notas sensoriales provisionales. Diez hallazgos nuevos enlazados después de puntuar; M1–M4 propuestos sin implementar. Informe en docs/panel/sesion-8/informe.md.
+
 ## L4 · Validación técnica · alpha.192
 
 - Camino táctil, marcha al Jardín, premios y final11 comprobados en recorridos enfocados.

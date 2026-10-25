@@ -10,7 +10,7 @@ Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, e
 |---|---|
 | Saber dónde está el proyecto y qué toca ahora | [HANDOFF.md](HANDOFF.md) |
 | Ver las fases L | [Entrega](docs/ENTREGA_L.md) |
-| Revisar la auditoría actual | [Panel 7](docs/panel/sesion-7/informe.md) y [fases L](docs/panel/sesion-7/plan.md) |
+| Revisar la auditoría actual | [Panel 8 ciego](docs/panel/sesion-8/informe.md) y [propuestas](docs/panel/sesion-8/plan.md) |
 | Ver el cierre conservando música y mundos | [Entrega K1–K6](docs/CIERRE_K.md) y [auditoría](docs/panel/sesion-6/informe.md) |
 | Repetir la auditoría del panel creativo | [docs/PANEL.md](docs/PANEL.md) |
 | Trabajar en el código | [AGENTS.md](AGENTS.md) y [Arquitectura](docs/ARQUITECTURA.md) |
