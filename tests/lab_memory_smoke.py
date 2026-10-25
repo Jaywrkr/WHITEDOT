@@ -19,7 +19,7 @@ try:
   page.evaluate('''async code=>{const {decodePlace}=await import('/src/share-tools.js');__testRuntime.visitWorldAddress(decodePlace(code).address);}''',saved['code'])
   page.wait_for_function('window.__testRuntime?.S.livingMusic===false&&__testRuntime.S.cat.held')
   assert page.evaluate('__testRuntime.S.wx')==round(saved['address']['x'])
-  page.locator('#bMenu').click();page.locator('#bMusicSettings').click();assert page.locator('#bLivingMusic').is_hidden()
+  page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bMusicSettings').click();assert page.locator('#bLivingMusic').is_hidden()
   page.locator('#muClose').click();page.locator('#w').click(position={'x':30,'y':300});page.wait_for_function('__testRuntime.MU.radio?.labScore?.electronic')
   assert not errors,errors;print('PASS legacy music addresses retain coordinates and progress while production uses one electronic foundation',flush=True);b.close()
 finally:server.shutdown()

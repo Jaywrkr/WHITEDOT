@@ -18,13 +18,13 @@ try:
   assert initial['musicalDrones']==0,initial
   assert initial['boost'],initial
   # Volume lives in one place: the Sound sheet.
-  page.locator('#bMenu').click();before=page.evaluate('__testRuntime.waves.length');assert page.locator('#rMenuVolume').count()==0;page.locator('#bMusicSettings').click();page.locator('#rVolume').fill('25');page.locator('#rVolume').dispatch_event('change')
+  page.locator('#bMenu').click();before=page.evaluate('__testRuntime.waves.length');assert page.locator('#rMenuVolume').count()==0;page.locator('#bSettings').click();page.locator('#bMusicSettings').click();page.locator('#rVolume').fill('25');page.locator('#rVolume').dispatch_event('change')
   assert page.locator('#volumeNow').inner_text()=='25%'
   assert page.locator('#rVolume').input_value()=='25'
   assert page.evaluate('__testRuntime.musicVolume()')==.25
   assert page.evaluate('__testRuntime.waves.length')==before
   assert page.locator('#volumeNow').inner_text()=='25%';page.locator('#rVolume').fill('0');page.locator('#rVolume').dispatch_event('change');assert page.evaluate('__testRuntime.musicVolume()')==0
   page.locator('#muClose').click();page.reload();page.wait_for_function('!!window.__testRuntime?.styleUI');assert page.evaluate('__testRuntime.S.outputVolume')==0
-  page.evaluate('document.getElementById("returnContinue").click();document.querySelectorAll(".modal").forEach(m=>m.hidden=true)');page.locator('#bMenu').click();page.locator('#bMusicSettings').click();assert page.locator('#rVolume').input_value()=='0'
+  page.evaluate('document.getElementById("returnContinue").click();document.querySelectorAll(".modal").forEach(m=>m.hidden=true)');page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bMusicSettings').click();assert page.locator('#rVolume').input_value()=='0'
   assert not errors,errors;print('PASS silent single-place volume, persisted zero, protected 1.5x makeup gain and no automatic organ oscillator bank');b.close()
 finally:server.shutdown()

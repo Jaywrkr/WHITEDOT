@@ -22,10 +22,11 @@ export function initialize(runtime) {
     $("bDeploy").hidden=!runtime.inWorld();
     if(runtime.S.mode==="studio"){const house=runtime.houseActive?.(),n=house?runtime.currentHouse().objects.length:Object.keys(runtime.S.studio.slots).length;$("era").textContent=(house?"Refugio · ":"Taller · ")+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/(house?40:64)*100)+"%";goal.textContent=(house?"Refugio · ":"Taller · ")+n+" sonando";gr.textContent=house?"Camina. Coloca. Escucha.":"Toca un punto";}
     else if(runtime.inWorld()){if(!runtime.journeyQuiet?.())fill.style.width="100%";   // in the Journey the chapter sets it (journey-chapters.js)
-      goal.textContent=dist?"Eco cercano · escucha y pulsa":"Lugares "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
+      goal.textContent=dist?"Eco cercano · escucha y pulsa":"Regiones "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
       gr.textContent="Sin reloj";}
     else{const n=runtime.S.pathCrystals.length;fill.style.width=(n*10)+"%";goal.textContent="Cristales · "+n+" / 10";gr.textContent="Acércate y lanza un pulso";}
     const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary");$("bWorld").querySelector("span").firstChild.nodeValue=freeOpen(runtime.S.journey)?"Explorar":runtime.inWorld()?"Camino":"Mundo";$("bWorldHint").textContent=freeOpen(runtime.S.journey)?"Explorar el Mundo":runtime.inWorld()?"Volver al Camino":"Explorar el Mundo";
+    const destination=runtime.inWorld()?$('menuMore')?.querySelector('.tiles'):$('dock');if(destination&&bp.parentElement!==destination){if(runtime.inWorld())destination.appendChild(bp);else destination.insertBefore(bp,destination.firstChild);}
     bp.hidden=!(canWorld||runtime.inWorld());$("bPrimaryL").textContent=runtime.inWorld()?"Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=runtime.inWorld()?"scaleX(-1)":"";
   }
   function showPhrase(t,big){const p=$('phrase');lane.enqueue('phrase',p,()=>{p.textContent=t;p.classList.toggle('big',!!big);},big?5:3.2,String(t),()=>true,{level:big?2:1,category:'ambiente',coalesce:true});}

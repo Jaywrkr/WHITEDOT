@@ -24,7 +24,7 @@ try:
    # The menu is short: the shop, map, journal and creation tools wait in the free World.
    page.locator('#bMenu').click();assert all(page.locator('#'+i).is_hidden() for i in ['bCube','bMap','bAch','bRecord','bWorlds','bShare'])
    page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')")
-   assert all(page.locator('#'+i).is_visible() for i in ['bWorld','bStudio','bMusicSettings','bSettings','bConnection'])
+   assert all(page.locator('#'+i).is_visible() for i in ['bWorld','bStudio','bSettings','bConnection'])
    # The free World is closed until the Journey ends (decision 6A): no switch, and asking for it does nothing.
    assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJourneyMode').is_hidden() and page.evaluate("__r.setJourneyMode('libre')")==False and page.evaluate('__r.journeyMode()')=='viaje'
    page.evaluate("()=>{__r.S.journey.finished=true;__r.applyJourneyMode();}");assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJourneyMode').is_visible()
