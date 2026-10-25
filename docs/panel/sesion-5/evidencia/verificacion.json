@@ -1,0 +1,82 @@
+{
+  "version": "2.3.0-alpha.181",
+  "baseRuntime": "99a3e525",
+  "runtimeDigest": "8aef24a3c19785900dd5a2c3b58fc0c0f4a9fa6b42608e41942d22522aa9237e",
+  "scope": "Local automated checks; no human, deployment or remote-CI acceptance claim.",
+  "node": {
+    "command": "npm test",
+    "suites": 245,
+    "result": "PASS",
+    "version": "2.3.0-alpha.181"
+  },
+  "browserCatalog": {
+    "command": "CHROMIUM_PATH=/usr/bin/chromium WHITEDOT_BROWSER_WORKERS=2 npm run test:browser",
+    "version": "2.3.0-alpha.180",
+    "flows": 188,
+    "passed": 186,
+    "exitCode": 1,
+    "failures": [
+      "journal_v2_smoke.py: old Lugares label after intended Mapa rename",
+      "seed_travel_gate_smoke.py: local synthetic host passed through proxy; runtime unavailable"
+    ],
+    "offlineNotRunInThisBatch": true
+  },
+  "focusedBrowser": {
+    "version": "2.3.0-alpha.181",
+    "result": "PASS",
+    "flows": [
+      "journal_v2_smoke.py",
+      "seed_travel_gate_smoke.py",
+      "places_smoke.py",
+      "journey_stick_smoke.py",
+      "cloud_account_smoke.py",
+      "victory_live_smoke.py",
+      "offline_smoke.py",
+      "places_durability_smoke.py"
+    ],
+    "scope": "Two corrected failures, affected save/close paths and offline. Unaffected full-catalogue results reused; no claim of a second full catalogue on alpha.181."
+  },
+  "audio": {
+    "current": "victory_mix.py: 11 renders PASS, unchanged base/filter/output and no clipping",
+    "reused": [
+      "song_mix.py from J2, synthesis/arrangement unchanged",
+      "song_stage_mix.py from J2, synthesis/arrangement unchanged",
+      "journey_mix.py from J6, main generation and sound scheduling unchanged"
+    ],
+    "fullCurrentAudioSuiteRepeated": false
+  },
+  "ui": {
+    "states": 64,
+    "sizes": [
+      [
+        320,
+        568
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        844,
+        390
+      ],
+      [
+        1280,
+        800
+      ]
+    ],
+    "dev": false,
+    "pageErrors": 0,
+    "overflows": 0,
+    "smallTextUnder11px": 0,
+    "targetsUnder24px": 0,
+    "scope": "Scripted normal-host fixtures, not human comprehension or physical devices"
+  },
+  "preservation": "305 protected files, UI SVGs and rule/voice/drawing sections PASS; reviewed integration modules explicit",
+  "remoteCandidateCI": false,
+  "deploymentVerified": false,
+  "humanAcceptance": false,
+  "readyForReview": true,
+  "releaseReady": false,
+  "distinctBrowserFlowsCovered": 190
+}

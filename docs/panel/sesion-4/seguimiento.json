@@ -23,7 +23,7 @@
       "id": "S01",
       "area": "Fiabilidad",
       "priority": "P0",
-      "status": "diagnosticado-validado-enfoque",
+      "status": "corregido-local-ci-pendiente",
       "phase": "J1",
       "title": "CI del main base en rojo",
       "evidence": [
@@ -33,13 +33,9 @@
       "observed": "En main 676ac511 fallan browser (1), (3) y (4); logic y audio (1–3) pasan. El agregador browser-audio falla. Los logs no pudieron descargarse por el proxy (403); causa de cada flujo sin diagnosticar.",
       "acceptance": "Identificar flujos y causas con sus logs; reproducirlos; corregir sin retirar aserciones y completar los seis grupos de navegador y tres de audio en el candidato.",
       "resolution": {
-        "phase": "J1",
-        "tests": [
-          "tests/house_visit_smoke.py",
-          "tests/cloud_account_smoke.py",
-          "tests/blobs_smoke.py"
-        ],
-        "limits": "CI completo del candidato pendiente en J7; no se afirma verde."
+        "phase": "J1 y J7",
+        "evidence": "docs/panel/sesion-5/evidencia/verificacion.json",
+        "limits": "Catálogo inicial y repeticiones locales aprobadas según registro; CI remoto del candidato depende del PR de Jay."
       }
     },
     {
@@ -57,13 +53,19 @@
       "observed": "Con save() devolviendo false al terminar, placeFinish devuelve true: RAM tiene dos estrellas y 120 chispas, disco conserva cero. Es un contrato con persistencia simulada, no una prueba real de cuota.",
       "acceptance": "Premio, récord, notas, color y cierre se conservan juntos o se revierten/reintentan con aviso claro. Recarga tras un fallo no pierde un premio anunciado ni permite duplicarlo.",
       "resolution": {
-        "phase": "J1",
+        "phase": "J1 y J7",
         "tests": [
           "tests/places-durability.mjs",
           "tests/places.mjs",
           "tests/places_smoke.py"
         ],
-        "limits": "Aceptación y catálogo completo del candidato en J7."
+        "limits": "Catálogo inicial y regresiones posteriores documentados; aceptación física en V01.",
+        "followup": "J7 verifica el controlador real de la nube y conserva la referencia del objeto al revertir para permitir otro intento.",
+        "additionalTests": [
+          "tests/places-boundaries.mjs",
+          "tests/journey_stick_smoke.py",
+          "tests/places_durability_smoke.py"
+        ]
       }
     },
     {
@@ -117,7 +119,8 @@
           "tests/song_mix.py",
           "tests/song_stage_mix.py"
         ],
-        "limits": "Escucha de Jay y comprobación final del candidato pendientes; radio y generación intactas."
+        "limits": "Escucha de Jay y comprobación final del candidato pendientes; radio y generación intactas.",
+        "followup": "J7 cuenta dos compases por pasos vivos al cambiar tempo; regresión de reloj variable y once renders actuales aprobados."
       }
     },
     {
@@ -344,6 +347,53 @@
       ],
       "observed": "Hay feedback de Jay y pruebas automatizadas; no sesiones documentadas de nuevos jugadores ni validación instrumentada de estos cierres en teléfono. Esta revisión no verifica deploy, tiendas o cuenta en producción.",
       "acceptance": "Cinco sesiones sin ayuda, al menos dos personas sin hábito de jugar; Jay acepta cubo y cierre en su teléfono; candidato con lógica/navegador/audio verdes y revisión de despliegue. Supabase permanece en pausa."
+    },
+    {
+      "id": "D03",
+      "area": "Persistencia y posición",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J7",
+      "title": "Entrar a una ronda con guardado fallido cambia la posición",
+      "evidence": [
+        "tests/places-boundaries.mjs"
+      ],
+      "observed": "Antes de J7, con save()===false, startPlace devuelve false pero deja wx=1200 en lugar de 0 en la fixture. No se afirma pérdida de una partida real.",
+      "acceptance": "La entrada fallida devuelve posición y capítulo previos; ronda inactiva y estado durable intacto.",
+      "resolution": {
+        "phase": "J7",
+        "tests": [
+          "tests/places-boundaries.mjs",
+          "tests/places_smoke.py",
+          "tests/cloud_account_smoke.py"
+        ],
+        "limits": "Fixtures y navegador, no teléfono físico."
+      }
+    },
+    {
+      "id": "D04",
+      "area": "Estado de interfaz",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J7",
+      "title": "Un guardado sustituido conserva la última tarjeta de recompensa",
+      "evidence": [
+        "tests/places-boundaries.mjs"
+      ],
+      "observed": "Tras sustituir S en una fixture, places().last devuelve la ronda del estado anterior. La tarjeta pendiente debe pertenecer al guardado que la ganó.",
+      "acceptance": "Cambiar el objeto de partida invalida tarjeta y callbacks anteriores; no cambia su progreso guardado.",
+      "resolution": {
+        "phase": "J7",
+        "tests": [
+          "tests/places-boundaries.mjs",
+          "tests/places_smoke.py",
+          "tests/cloud_account_smoke.py"
+        ],
+        "limits": "Fixtures y navegador, no teléfono físico.",
+        "additionalTests": [
+          "tests/places_durability_smoke.py"
+        ]
+      }
     }
   ]
 }

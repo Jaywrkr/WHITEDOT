@@ -12,7 +12,7 @@ Se conservan semillas, RNG, mapas, distribución, criaturas, paleta, formas, com
 | J4 · Una meta | `pulido/j4-meta-compartida` | Corregida y probada localmente |
 | J5 · Continuidad | `pulido/j5-continuidad` | Integrada; interés humano pendiente |
 | J6 · Sincronía | `pulido/j6-sincronia` | Corregida; medición física pendiente |
-| J7 · Comprobación final | `pulido/j7-cierre` | Pendiente |
+| J7 · Comprobación final | `pulido/j7-cierre` | Técnica completa; aceptación/CI pendientes |
 
 ## J1
 
@@ -71,3 +71,15 @@ La nota mantiene exactamente su expresión anterior de tiempo; `pulseNoteTime` p
 Validación: 244 suites Node, auditoría estática, `player_touch_smoke.py` y `journey_pulse_smoke.py` aprobados. La prueba de reloj cubre salidas 0/50/180/400 ms, cancelación y equivalencia exacta de la programación sonora. `journey_mix.py` también aprueba dos mezclas reales en movimiento de 30 s (picos 0,873/0,883), con relevo de territorios, armonía y salida protegida. La medida de Bluetooth o altavoz físico sigue pendiente; se respeta la estimación del navegador, no se inventa una calibración real.
 
 Teléfono J6: tocar a tiempo con altavoz y después con auriculares; comparar el acento con la nota. Abrir un panel o cambiar de capítulo mientras hay retraso: no debe llegar un destello de la escena anterior. No cambia ninguna nota, ritmo o figura.
+
+## J7 · Comprobación del candidato
+
+El catálogo inicial usa `99a3e525`, alpha.180. El candidato final alpha.181 añade las correcciones de J7, con regresiones enfocadas y 245 suites, desde las seis ramas anteriores. Las pruebas de esta fase se registran en la [quinta sesión](panel/sesion-5/informe.md). El guardián `scripts/pulido-preservation.mjs` compara los generadores, radio, estilos, assets y SVG con 04ae8bdd; también comprueba reglas puras de los once juegos y síntesis de las capas. Es una comprobación de preservación, no una medida de belleza musical.
+
+Los renders afectados aprobados se reutilizan cuando su código no cambia; el catálogo de navegador se ejecuta una sola vez sobre el candidato, con las dos tareas que admite el runner. Se documenta cualquier fallo y su causa, sin retirar recorridos. No se declara CI remoto, despliegue, teléfono físico o aceptación humana por tener pruebas locales.
+
+J7 cerró D03 (posición/parámetros tras entrada fallida), D04 (tarjeta al sustituir partida) y el reintento real de D01 conservando la referencia del objeto jugado al revertir. El cierre de victoria cuenta pasos del secuenciador incluso si cambia el tempo; no cambia el secuenciador. En el modelo las interpretaciones tampoco se suman a `novelties60`.
+
+El lote inicial aprobó 186/188 recorridos; las dos expectativas de fixtures corregidas aprobaron en la repetición. Offline, los caminos afectados y la medición de 64 estados también aprobaron. Se reutilizan los demás resultados sin afirmar otro lote entero sobre alpha.181. Véase el registro completo de versiones y límites en la quinta sesión.
+
+La regresión nueva `places_durability_smoke.py` también aprueba: fallo de escritura en el navegador, reintento del objeto real, un solo premio persistido y tarjeta visible invalidada tras sustituir S. No usa una partida personal.

@@ -1,4 +1,4 @@
-"""The Refugio as the centre (plan F6): in your own Refugio, the Sala shows LUGARES · ★ N / 33 and a shelf of eleven trophies; touching one says its place and stars, touching the wall or «★ N / 33» in the house bar opens Lugares with every place, the next one on the path and «Ir» to the ones entered; «Ir» and «Salir al anillo» leave the Refugio for the World."""
+"""The Refugio as the centre (plan F6): in your own Refugio, the Sala shows LUGARES · ★ N / 33 and a shelf of eleven trophies; touching one says its place and stars, touching the wall or the completed /11 count in the house bar opens Lugares with every place, the next one on the path and «Ir» to the ones entered; «Ir» and «Salir al anillo» leave the Refugio for the World."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -41,5 +41,5 @@ try:
    page.wait_for_function("!__r.houseActive()&&__r.S.mode==='world'",timeout=5000)
    assert not errors,errors;page.close()
   browser.close()
- print('PASS Refugio as the centre on phone and desktop: ★ N / 33 on the wall and in the house bar, a shelf of eleven trophies that answer when touched, Lugares with the next place on the path and «Ir» to the ones entered, and the door to the ring',flush=True)
+ print('PASS Refugio as the centre on phone and desktop: ★ N / 33 on the wall and completed /11 in the house bar, a shelf of eleven trophies that answer when touched, Lugares with the next place on the path and «Ir» to the ones entered, and the door to the ring',flush=True)
 finally:server.shutdown()

@@ -4,9 +4,13 @@ from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
-import threading,os,shutil,json,subprocess
+import threading,os,shutil,json,subprocess,hashlib
 from datetime import datetime,timezone
 ROOT=Path(__file__).resolve().parents[1];OUT=Path(os.environ.get('OUT','panel-capturas'));OUT.mkdir(parents=True,exist_ok=True)
+def snapshot():
+ files=sorted((ROOT/'src').glob('*.js'))+[ROOT/'index.html',ROOT/'package.json',ROOT/'sw.js'];digest=hashlib.sha256()
+ for f in files:digest.update(str(f.relative_to(ROOT)).encode()+b'\0'+f.read_bytes())
+ return {'revision':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'version':json.loads((ROOT/'package.json').read_text())['version'],'runtimeDirty':subprocess.run(['git','diff','--quiet','HEAD','--','src','index.html','package.json','sw.js','styles'],cwd=ROOT).returncode!=0,'runtimeDigest':digest.hexdigest()}
 class H(SimpleHTTPRequestHandler):
  def log_message(self,*a):pass
 srv=ThreadingHTTPServer(('127.0.0.1',0),partial(H,directory=str(ROOT)));threading.Thread(target=srv.serve_forever,daemon=True).start()
@@ -30,6 +34,6 @@ try:
    p.screenshot(path=str(OUT/f'{name}.png'));records.append({'file':name+'.png','query':q,'forcedPanel':extra,'state':state,'pageErrors':errors});p.close()
   b.close()
   revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
-  (OUT/'manifest.json').write_text(json.dumps({'revision':revision,'capturedAt':datetime.now(timezone.utc).isoformat(),'viewport':[390,844],'scope':'Local scripted fixtures; normal hostname gate and webdriver=false; no human or physical listening claims','captures':records},ensure_ascii=False,indent=2)+'\n')
+  (OUT/'manifest.json').write_text(json.dumps({**snapshot(),'capturedAt':datetime.now(timezone.utc).isoformat(),'viewport':[390,844],'scope':'Local scripted fixtures; normal hostname gate and webdriver=false; no human or physical listening claims','captures':records},ensure_ascii=False,indent=2)+'\n')
 finally:srv.shutdown();srv.server_close()
 print('ok',OUT)

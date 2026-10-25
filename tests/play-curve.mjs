@@ -6,7 +6,7 @@ const all=curve(),again=curve();assert.deepEqual(all.map(({events,...r})=>r),aga
 for(const r of all){const kinds=r.events.map(e=>e.kind);assert.equal(kinds.slice(0,7).join(),'viaje,viaje,viaje,viaje,viaje,viaje,viaje');
  const order=r.events.filter(e=>e.kind==='lugar').map(e=>e.what);assert.deepEqual(order,['jardin','dunas','cristales','faros','ruinas','cueva']);
  // Everyone wins (the eleven places) within the first hour.
- assert(r.won&&r.won<60,r);assert.equal(r.interestMeasured,false);assert(r.completedInterpretations>0);assert(r.interpretationGap<=r.songGap);assert(r.events.every(e=>e.t<=HORIZON));
+ assert(r.won&&r.won<60,r);assert.equal(r.interestMeasured,false);assert(r.completedInterpretations>0);assert.equal(r.novelties60,r.events.filter(e=>e.t<=60&&!['salvaje','interpretacion'].includes(e.kind)).length,'replayed interpretations are not new layers or discoveries');assert(r.interpretationGap<=r.songGap);assert(r.events.every(e=>e.t<=HORIZON));
  // Plan I6: the rule counts only what grows the song; pieces bought are reported apart and never pass it.
  assert.equal(r.rule,r.songGap<=NOVELTY_GAP);assert(r.withPurchasesGap<=r.songGap);assert.equal(r.quitAt===null,r.rule);}
 const by=id=>all.find(r=>r.id===id);

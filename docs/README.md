@@ -39,3 +39,5 @@ Actualizada el 24 de octubre de 2026. Cada tema tiene una sola guía; si dos doc
 - Los documentos antiguos (planes, cierres, traspasos anteriores) se borraron del árbol el 24 de octubre. Siguen en Git: `git show 5914ca9:docs/historial/NOMBRE.md`. Ninguno autoriza trabajo nuevo.
 
 [Cierre de la auditoría 4 · fases J1–J7](PULIDO_CIERRE.md): correcciones autorizadas, evidencia y límites.
+
+[Quinta sesión del panel](panel/sesion-5/informe.md): reevaluación de las correcciones sin rehacer música ni mundos.

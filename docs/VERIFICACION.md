@@ -1,6 +1,6 @@
 # Verificación
 
-Revisión documental: 20 de octubre de 2026. [Traspaso/evidencia actual](../HANDOFF.md). Esta revisión no reejecuta baterías de juego, audio ni servicios.
+Guía de comprobación. [Traspaso y evidencia actual](../HANDOFF.md). Las evidencias de cada revisión se distinguen al final; un resultado antiguo no certifica el candidato actual.
 
 Desde la raíz, con Node 18 o superior:
 
@@ -78,3 +78,7 @@ El cierre completo previo a integrar/publicar sigue vigente cuando corresponda; 
 ## Auditoría 4 · instantánea comprobada
 
 El main base 676ac511, run 40139955994, tiene logic y los tres grupos de audio aprobados, pero browser 1/3/4 fallidos y el agregador en rojo. La descarga de logs se bloqueó por el proxy; la causa individual no se diagnosticó. Datos en [CI base](panel/sesion-4/evidencia/ci-base.json). Los recorridos enfocados y los 11 renders locales de esta sesión no sustituyen el catálogo completo. La rama del cubo pasó 240 suites Node y caras; la auditoría añade mediciones y propuestas, no las corrige por documentarlas.
+
+## Cierre J1–J7 · 25 de octubre
+
+Resultados y límites del candidato en la [quinta sesión](panel/sesion-5/informe.md). Incluye preservación de generadores/arte, catálogo inicial completo y regresiones enfocadas posteriores. No confundir las pruebas locales con CI remoto, teléfono físico o despliegue. Los renders ya aprobados se reutilizan si no cambió su síntesis/arreglo, sin ejecutar audio pesado y navegador pesado a la vez.

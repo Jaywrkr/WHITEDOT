@@ -1,6 +1,16 @@
 # Cambios recientes de Kubono
 
-Estado: 25 de octubre de 2026. Código **2.3.0-alpha.174**. Las entradas describen su revisión, no certifican producción.
+Estado: 25 de octubre de 2026. Código **2.3.0-alpha.181**. Las entradas describen su revisión, no certifican producción.
+
+## J7 · Comprobación y cierre técnico · alpha.181
+
+- Posición y parámetros conservados al fallar una entrada; tarjeta anterior invalidada al sustituir la partida.
+- Reintento real del objeto final conserva su referencia; cierre cuenta compases vivos con tempo variable.
+- 245 suites, regresiones enfocadas, offline y 64 estados de UI aprobados; catálogo inicial y repeticiones documentados.
+- Auditoría posterior por los mismos diez perfiles simulados; evidencia y pendientes separados de la aceptación humana.
+- Guardia reproducible de 305 archivos protegidos, arte SVG y reglas originales.
+- Registro conserva cada ID y sus pruebas; no declara producción o un 10 por simulación.
+- Ramas encadenadas J1–J7; Jay mantiene PR y merge. Ver `docs/panel/sesion-5/informe.md`.
 
 ## J6 · Sincronía · alpha.180
 

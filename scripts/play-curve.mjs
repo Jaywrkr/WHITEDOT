@@ -3,8 +3,8 @@
 // novelty (a chapter, a new place, a star that grows the song, a piece bought, the win) and the longest stretch without
 // one; the panel's rule is never more than 12 minutes. A model of play time, not a measurement of people.
 // Plan I6 (Chen, third panel): the rule counts only what grows the song (a chapter, a place, a star, the win); pieces
-// bought no longer pass it. A fourth player plays without sound (only ★ can be won), and each profile says when the
-// start of the first structural gap longer than the rule (not a prediction of abandonment). The calibration is not modelled.
+// bought no longer pass it. A fourth player plays without sound (only ★ can be won), and each profile reports the
+// start of its first structural gap longer than the rule (not a prediction of abandonment). The calibration is not modelled.
 import {PLACES,RHYTHM_STAR,MAESTRO_STAR,MAESTRO_TEMPO,MAESTRO_GOAL,TOTAL_STARS} from '../src/places.js';
 import {roundSparks} from '../src/spark-rules.js';
 import {CUBE_SHOP} from '../src/cube-shop-model.js';
@@ -53,7 +53,7 @@ export function simulate(profile,{mine=null,rhythmStar=RHYTHM_STAR,maestroStar=M
  const marks=[0,...events.filter(e=>['viaje','lugar','★★','★★★','victoria','maestro'].includes(e.kind)&&e.t<=end).map(e=>e.t),end];let quit=null;for(let i=1;i<marks.length;i++)if(marks[i]-marks[i-1]>NOVELTY_GAP){quit=+marks[i-1].toFixed(1);break;}
  const at60=events.filter(e=>e.t<=60),starsAt=m=>events.filter(e=>e.t<=m&&['viaje','lugar','★★','★★★'].includes(e.kind)&&!(e.kind==='viaje'&&!stars[e.what])).length;
  return {id:profile.id,onTime:profile.onTime,won:won&&+won.toFixed(1),master:master&&+master.toFixed(1),stars60:starsAt(60),stars120:starsAt(HORIZON),bought120:events.filter(e=>e.kind==='compra').length,
-  completedInterpretations:events.filter(e=>e.kind==='interpretacion').length,interpretationGap:longest(['viaje','lugar','★★','★★★','victoria','maestro','interpretacion']).gap,interestMeasured:false,withPurchasesGap:any.gap,songGap:song.gap,songGapFrom:song.from,rule:song.gap<=NOVELTY_GAP,quitAt:quit,sound,novelties60:at60.filter(e=>e.kind!=='salvaje').length,events};}
+  completedInterpretations:events.filter(e=>e.kind==='interpretacion').length,interpretationGap:longest(['viaje','lugar','★★','★★★','victoria','maestro','interpretacion']).gap,interestMeasured:false,withPurchasesGap:any.gap,songGap:song.gap,songGapFrom:song.from,rule:song.gap<=NOVELTY_GAP,quitAt:quit,sound,novelties60:at60.filter(e=>!['salvaje','interpretacion'].includes(e.kind)).length,events};}
 export function curve(rules={}){const mine={1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)};return PROFILES.map(p=>simulate(p,{mine,...rules}));}
 const line=r=>`${r.sound?r.id+' %':r.id}  victoria ${r.won??'—'} min · 33★ ${r.master??'—'} · ★ a los 60 min ${r.stars60}, a los 120 ${r.stars120} · ${r.bought120} piezas · sin nuevas capas ${r.songGap} min desde el ${r.songGapFrom} ${r.rule?'(cumple 12 min)':'(NO cumple 12 min)'} · ${r.completedInterpretations} interpretaciones · disfrute no medido · con compras, mayor hueco ${r.withPurchasesGap} min`;
 if(import.meta.url===`file://${process.argv[1]}`){const all=curve();

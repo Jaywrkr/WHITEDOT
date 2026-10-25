@@ -1,54 +1,45 @@
 # Traspaso para el siguiente agente
 
-**Código 2.3.0-alpha.174 · cuarta auditoría completa.** Leer antes [AGENTS.md](AGENTS.md).
+**Código 2.3.0-alpha.181 · auditoría corregida conservando generadores.** Leer [AGENTS](AGENTS.md), [Cierre](docs/PULIDO_CIERRE.md) y [quinta sesión](docs/panel/sesion-5/informe.md).
 
-## Estado y ramas
+## Qué autorizó Jay
 
-- Main auditado: `676ac511`, alpha.173, PR #352. Obtener main actualizado antes de otra tarea.
-- `fix/cubo-pequeno`, **04ae8bdd**, desde ese main: cubo natural de 6–12 px, mínimo existente de 10 px con caras; pulsos/poderes conservados. Física, música, economía y guardados intactos.
-- `audit/panel-4-cierre`, **desde 04ae8bdd**: diez análisis, expediente, capturas, medidas, registro de hallazgos e informe. Solo documentación y herramientas de auditoría. No implementa J1–J7.
-- Jay crea PR y merge: primero cubo, después auditoría. La subida de una rama no certifica CI, despliegue ni aceptación física.
+Solucionar los hallazgos de la auditoría conservando cómo se generan la música y los mundos. Se mantiene la música base que le gusta, semillas, RNG, mapas, biomas, distribución, criaturas y arte. El sonido de victoria sí se integra en la capa ganada; las notas incorrectas de la capa/final se corrigen localmente. No hay otra expansión aprobada.
 
-## Qué pidió Jay y qué se entregó
+Jay crea PR y merge. No hacer push a main. Supabase continúa en pausa.
 
-Jay autorizó el cubo y la auditoría; pidió esperar al informe para decidir acciones. Reportó un cierre desagradable, ajeno a la música, inconsistencias de UI y la necesidad de una presentación de producción. Quiere integrar economía, juego, mundo y canción antes de ampliar contenido.
+## Ramas, en orden
 
-La [cuarta sesión](docs/panel/sesion-4/informe.md) da **7,7/10**, antes 7,5, como juicio **simulado**, no opinión real de los diez autores ni prueba humana. [Panel y método](docs/PANEL.md).
+Si aún no están integradas: `fix/cubo-pequeno` (04ae8bdd), `audit/panel-4-cierre` (3673f2ec). Las siguientes están encadenadas:
 
-Hallazgos principales:
-1. El cierre aún crea riser/crash y un lead propio; no basta con seguir tempo/tono.
-2. Cristales y la quinta fija del final pueden emitir notas fuera de escala en contextos válidos.
-3. Un cierre con `save()===false` anuncia estrellas/chispas no durables; el lector de un formato futuro lanza excepción.
-4. La guía y varios usos de Viaje/Lugares no comparten la misma meta. Ganar once lugares y dominar 33 estrellas necesitan jerarquías distintas.
-5. El modelo muestra 80,1/81,8 min sin nuevas capas para 60 %/sin sonido, pero no mide audio idéntico ni abandono real: las frases se actualizan.
-6. El main base tiene navegador 1/3/4 en rojo; lógica y los tres grupos de audio están verdes. La descarga de logs quedó bloqueada por el proxy.
+| Rama | Commit | Qué |
+|---|---|---|
+| `pulido/j1-base-fiable` | `8212e0de` | Premio durable, reintento, lector futuro y carreras de fixtures |
+| `pulido/j2-cierre-musical` | `b78295a9` | Capa en compás/acorde vivo, sin fanfarria; dos correcciones de armonía |
+| `pulido/j3-interfaz-produccion` | `9398291d` | Nombres claros, metadatos en Ajustes y paneles sin superposición |
+| `pulido/j4-meta-compartida` | `a72bc22b` | Una meta según el estado; once lugares frente a 33 estrellas |
+| `pulido/j5-continuidad` | `b898b9d7` | Volver al final existente con las notas actuales; modelo honesto |
+| `pulido/j6-sincronia` | `99a3e525` | Acento al instante emitido + salida estimada, sin cambiar el tiempo sonoro |
+| `pulido/j7-cierre` | Ver HEAD de la rama | Verificación, dos límites de guardado y conteo de cierre por pasos vivos |
 
-El registro canónico es [seguimiento.json](docs/panel/sesion-4/seguimiento.json): 14 IDs, evidencia, fase y criterio. K01 corregido técnicamente; aceptación física en V01. El resto sigue abierto.
+J7 añade D03 (posición tras entrada fallida) y D04 (tarjeta tras sustituir S), encontrados durante la comprobación. El cierre cuenta dos compases del secuenciador aun si el tempo cambia. Son correcciones de integración; no modifican el secuenciador ni sus géneros.
 
-## Siguiente trabajo: ejecutar J1–J7 con el motor conservado
+## Evidencia
 
-Plan propuesto en el informe:
-- J1 base fiable: CI, premio durable, formato futuro.
-- J2 cierre dentro de la música: timbre, armonía y continuidad al pasar de lugar.
-- J3 UI de producción y vocabulario coherente.
-- J4 una meta actual compartida por guía/menú/anillo/Refugio.
-- J5 continuidad creativa con lo ya construido.
-- J6 sincronía con latencias altas.
-- J7 comprobar cada ID, sesiones con personas y panel 5.
+La [quinta sesión](docs/panel/sesion-5/informe.md) separa catálogo inicial, regresiones repetidas, renders reutilizables y pruebas físicas. Notas provisionales **8,1**, antes 7,7, del mismo agente con diez lentes simuladas; no jurado independiente ni escucha humana.
 
-**Jay autorizó ejecutar las correcciones el 25 de octubre, conservando la generación musical y del universo.** Estado y evidencia por fase en [Cierre](docs/PULIDO_CIERRE.md). Cada corrección deberá registrar revisión, regresión y aceptación junto al ID; la siguiente auditoría conserva lo no resuelto y puede subir o bajar la nota. Meta vigente orientativa 8,7 por el método, además de cero P0/P1 abiertos y validación del candidato. No perseguir el 10 con nuevas funciones o cambios de criterio.
+`scripts/pulido-preservation.mjs` comprueba 305 archivos protegidos idénticos a 04ae8bdd, SVGs y secciones de reglas/síntesis/dibujo. Enumera los 26 módulos de integración revisados; no afirma que todo el árbol sea idéntico.
 
-## Evidencia y límites
+- 245 suites Node y auditoría de release aprobadas en alpha.181.
+- Catálogo inicial alpha.180: 186/188; dos fixtures corregidas y repetidas con éxito en alpha.181. Offline y caminos afectados también aprobados. Se reutiliza lo no afectado; no se afirma otro catálogo entero sobre alpha.181.
+- 64 estados de UI normal en cuatro tamaños; sin errores o desbordamientos en esas muestras. Once renders actuales de cierre; capas/final/movimiento conservan sus renders aprobados.
+- Detalle de comandos, versiones, evidencias y límites en la quinta sesión. No se afirma CI remoto, despliegue o prueba física.
 
-- 240 suites Node, auditoría de release, caras del cubo, tacto real de navegador: aprobados localmente.
-- 16 capturas a 390×844 y 60 estados en cuatro tamaños; hostname normal sin modo dev. Estado forzado para inspección, no juego humano.
-- 11 renders offline de cierres: máximo 0,573, sin clipping en esa muestra. No prueban belleza ni todos los arreglos.
-- CI base consultado: run [40139955994](https://github.com/Jaywrkr/WHITEDOT/actions/runs/40139955994), no CI de estas ramas.
-- No suite completa de navegador/audio local, despliegue Vercel ni prueba física de esta entrega. Hay feedback de Jay; faltan sesiones de nuevos jugadores y escucha instrumentada de los cierres en teléfono.
-- Prototipo y catálogo técnico están ocultos en el origen normal. Laboratorio de la guía es una práctica musical legítima. El fallback local de fecha no demuestra un fallo del despliegue.
+## Pendiente real
 
-## Límites vigentes
+- V01: Jay acepta el tamaño del cubo y el cierre en teléfono; altavoz y auriculares. Cinco sesiones sin ayuda (dos personas sin hábito de jugar).
+- P01: verificar interés después de ganar; el modelo conserva el hueco estructural de capas y no predice disfrute o abandono.
+- CI del candidato y despliegue real: las pruebas locales no los sustituyen. No integrar con checks requeridos pendientes/fallidos.
+- Meta orientativa 8,7 no alcanzada por certificación. No perseguir 10 añadiendo funciones o alterando la base que Jay pidió conservar.
 
-Música base, mapas, progreso y umbrales 75/70 % se conservan. Cubo pequeño; no proponer agrandarlo. **Supabase sigue en pausa**; no tocar SQL, servicios o credenciales. D01–D22 de lanzamiento siguen en su guía y no se reabren por esta auditoría. El juego no está publicado en tiendas.
-
-Referencias de diseño: [Mundo](docs/MUNDO.md), [Viaje](docs/VIAJE.md). Técnica: [Arquitectura](docs/ARQUITECTURA.md), [Verificación](docs/VERIFICACION.md).
+El registro de la sesión 4 conserva los 14 hallazgos originales y añade D03–D04. Cada estado técnico incluye pruebas y límites. La siguiente sesión vuelve a los pendientes concretos; no genera otro plan infinito. D01–D22 de lanzamiento permanecen en su guía, sin reabrir servicios o tiendas por esta entrega.

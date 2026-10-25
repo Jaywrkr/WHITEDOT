@@ -1,0 +1,2326 @@
+{
+  "revision": "99a3e5251ce021cc5f56ff408ab4e9c6e30fade9",
+  "version": "2.3.0-alpha.181",
+  "runtimeDirty": true,
+  "runtimeDigest": "8aef24a3c19785900dd5a2c3b58fc0c0f4a9fa6b42608e41942d22522aa9237e",
+  "scope": "Local scripted production-appearance fixtures, normal hostname and webdriver=false; no human testing",
+  "states": [
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "mundo-libre",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar",
+        "Más"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "menu",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar",
+        "Más"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes",
+        "MapaRegiones y favoritos"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "menu-mas",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "CUERPO Y CARA"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas",
+        "Blanco",
+        "Cian",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "cubo-llevar",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "Gelatina 75 ✦",
+        "Patinador 100 ✦"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas",
+        "Faltan 75 ✦",
+        "Faltan 100 ✦"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "cubo-tienda",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "Saltar"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas",
+        "Saltar · 20 ✦",
+        "Volver gratis"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "cubo-viaje",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Sonido"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Sonido",
+        "rVolume",
+        "Intensidad del arreglo",
+        "Sonido: no",
+        "Calma",
+        "Repetir: no"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMusic"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "sonido",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Ajustes"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Ajustes",
+        "Paisaje y descanso Vida y relaciones Encuentros y hallazgos Afinidad entre favoritos Contraste entre favoritos",
+        "Automática Alta Ligera",
+        "−",
+        "+",
+        "Medir otra vez"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mSettings"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "ajustes",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Guía de juego",
+        "Tu siguiente paso"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Guía de juego",
+        "Escuchar y responder",
+        "Practicar",
+        "Seguir jugando"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mGuide"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "guia",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora",
+        "Sesión en curso",
+        "Tu actividad",
+        "Descubrimientos"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Compartir sesión",
+        "Lo próximo"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "bitacora-hoy",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Buscar colección",
+        "Todo Cubo Refugio Elementos Linajes Tarjetas Caminantes Formas",
+        "Todo Ganado Pendiente",
+        "Lo próximo",
+        "Ver más",
+        "Ver en tu refugio"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "bitacora-coleccion",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora",
+        "Tu música deja una figura",
+        "Cruces musicales"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Lo próximo",
+        "Conservar constelación"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "bitacora-musica",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Lo próximo",
+        "Ver en tu refugio"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "bitacora-logros",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Lo próximo",
+        "profileName",
+        "Guardar nombre"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "bitacora-tu",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Lugares 5 / 11"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Remezcla"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mLugares"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "lugares",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Completo"
+      ],
+      "visibleButtons": [
+        "Omfe",
+        "Guardar este lugar",
+        "Salto disponible · 20 ✦",
+        "Siguiente · Jardín",
+        "Otra vez",
+        "Maestro"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mPlace"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "resultado",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "mundo-libre",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar",
+        "Más"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "menu",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar",
+        "Más"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes",
+        "MapaRegiones y favoritos",
+        "Bitácora",
+        "Herramientas",
+        "Grabar set",
+        "Compartir",
+        "Volver al salto"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "menu-mas",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "CUERPO Y CARA"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas",
+        "Blanco",
+        "Cian",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "Liso",
+        "□ Grano",
+        "□ Madera",
+        "□ Vidrio",
+        "□ Metal",
+        "□ Agua",
+        "□ Tela",
+        "□ Estelar",
+        "Cubo",
+        "□ Doble",
+        "□ Esquinas",
+        "□ Estrías",
+        "□ Cuatro luces",
+        "□ Latido"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "cubo-llevar",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "Gelatina 75 ✦",
+        "Patinador 100 ✦",
+        "Pogo 125 ✦",
+        "Gusano 150 ✦"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas",
+        "Faltan 75 ✦",
+        "Faltan 100 ✦",
+        "Faltan 125 ✦",
+        "Faltan 150 ✦"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "cubo-tienda",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "Saltar",
+        "Colecciones",
+        "Universo completo",
+        "Primera banda"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas",
+        "Saltar · 20 ✦",
+        "Volver gratis",
+        "Sin meta Ahorrar para un salto Polvo viajero Pulso facetado Órbita personal Gelatina Patinador Pogo Gusano Ing"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "cubo-viaje",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Sonido"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Sonido",
+        "rVolume",
+        "Intensidad del arreglo",
+        "Sonido: no",
+        "Calma",
+        "Repetir: no",
+        "Discreta Guía de gestos Poética",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMusic"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "sonido",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Ajustes"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Ajustes",
+        "Paisaje y descanso Vida y relaciones Encuentros y hallazgos Afinidad entre favoritos Contraste entre favoritos",
+        "Automática Alta Ligera",
+        "−",
+        "+",
+        "Medir otra vez",
+        "haptics",
+        "colorSafe",
+        "universeTexts",
+        "Modo: explorar",
+        "Datos del mundo",
+        "Empezar de cero Se guarda una copia",
+        "Copiar diagnóstico"
+      ],
+      "technicalText": [
+        {
+          "id": "releaseVersion",
+          "text": "v2.3.0-alpha.181"
+        }
+      ],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mSettings"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "ajustes",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Guía de juego",
+        "Tu siguiente paso"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Guía de juego",
+        "Cómo jugar y guardar",
+        "Escuchar y responder",
+        "Practicar",
+        "Seguir jugando"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mGuide"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "guia",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora",
+        "Sesión en curso",
+        "Tu actividad",
+        "Descubrimientos",
+        "Música compartida"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Compartir sesión",
+        "Lo próximo",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "bitacora-hoy",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora",
+        "Cian",
+        "Puntos"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Buscar colección",
+        "Todo Cubo Refugio Elementos Linajes Tarjetas Caminantes Formas",
+        "Todo Ganado Pendiente",
+        "Lo próximo",
+        "Ver más",
+        "Ver en tu refugio"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "bitacora-coleccion",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora",
+        "Tu música deja una figura",
+        "Cruces musicales",
+        "Colores de síntesis",
+        "Géneros",
+        "Escalas",
+        "Instrumentos"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Lo próximo",
+        "Conservar constelación",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "bitacora-musica",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Lo próximo",
+        "Ver en tu refugio",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "bitacora-logros",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora",
+        "Tu universo descubierto"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Lo próximo",
+        "profileName",
+        "Guardar nombre",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "bitacora-tu",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Lugares 5 / 11"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Remezcla",
+        "Tu canción",
+        "Salir al anillo",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mLugares"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "lugares",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Completo"
+      ],
+      "visibleButtons": [
+        "Omfe",
+        "Guardar este lugar",
+        "Salto disponible · 20 ✦",
+        "Siguiente · Jardín",
+        "Otra vez",
+        "Maestro",
+        "Salir"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mPlace"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "resultado",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "mundo-libre",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "menu",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "menu-mas",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "CUERPO Y CARA"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "cubo-llevar",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "cubo-tienda",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "cubo-viaje",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Sonido"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Sonido",
+        "rVolume",
+        "Intensidad del arreglo",
+        "Sonido: no",
+        "Calma"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMusic"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "sonido",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Ajustes"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Ajustes",
+        "Paisaje y descanso Vida y relaciones Encuentros y hallazgos Afinidad entre favoritos Contraste entre favoritos",
+        "Automática Alta Ligera",
+        "−",
+        "+",
+        "Medir otra vez",
+        "haptics"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mSettings"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "ajustes",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Guía de juego"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Guía de juego",
+        "Escuchar y responder",
+        "Practicar",
+        "Seguir jugando"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mGuide"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "guia",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora",
+        "Sesión en curso"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Compartir sesión",
+        "Lo próximo"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "bitacora-hoy",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Buscar colección",
+        "Todo Cubo Refugio Elementos Linajes Tarjetas Caminantes Formas",
+        "Todo Ganado Pendiente",
+        "Lo próximo",
+        "Ver más"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "bitacora-coleccion",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora",
+        "Tu música deja una figura"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Lo próximo",
+        "Conservar constelación"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "bitacora-musica",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Lo próximo",
+        "Ver en tu refugio"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "bitacora-logros",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Lo próximo",
+        "profileName",
+        "Guardar nombre"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "bitacora-tu",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Lugares 5 / 11"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mLugares"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "lugares",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Completo"
+      ],
+      "visibleButtons": [
+        "Omfe",
+        "Guardar este lugar",
+        "Salto disponible · 20 ✦",
+        "Siguiente · Jardín",
+        "Otra vez",
+        "Maestro"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mPlace"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "resultado",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "mundo-libre",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar",
+        "Más"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "menu",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar",
+        "Más"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes",
+        "MapaRegiones y favoritos",
+        "Bitácora",
+        "Herramientas",
+        "Grabar set",
+        "Compartir",
+        "Volver al salto",
+        "Vista completa Cambiar a tranquila",
+        "Guía de juego",
+        "Cuenta"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "menu-mas",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "CUERPO Y CARA",
+        "Regalos del universo"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas",
+        "Blanco",
+        "Cian",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "□",
+        "Liso",
+        "□ Grano",
+        "□ Madera",
+        "□ Vidrio",
+        "□ Metal",
+        "□ Agua",
+        "□ Tela",
+        "□ Estelar",
+        "Cubo",
+        "□ Doble",
+        "□ Esquinas",
+        "□ Estrías",
+        "□ Cuatro luces",
+        "□ Latido"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "cubo-llevar",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "Gelatina 75 ✦",
+        "Patinador 100 ✦",
+        "Pogo 125 ✦"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas",
+        "Faltan 75 ✦",
+        "Faltan 100 ✦",
+        "Faltan 125 ✦"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "cubo-tienda",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "Saltar",
+        "Colecciones",
+        "Universo completo",
+        "Primera banda",
+        "Vecinos extraños"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas",
+        "Saltar · 20 ✦",
+        "Volver gratis",
+        "Sin meta Ahorrar para un salto Polvo viajero Pulso facetado Órbita personal Gelatina Patinador Pogo Gusano Ing"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "cubo-viaje",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Sonido"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Sonido",
+        "rVolume",
+        "Intensidad del arreglo",
+        "Sonido: no",
+        "Calma",
+        "Repetir: no",
+        "Discreta Guía de gestos Poética",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMusic"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "sonido",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Ajustes"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Ajustes",
+        "Paisaje y descanso Vida y relaciones Encuentros y hallazgos Afinidad entre favoritos Contraste entre favoritos",
+        "Automática Alta Ligera",
+        "−",
+        "+",
+        "Medir otra vez",
+        "haptics",
+        "colorSafe",
+        "universeTexts",
+        "Modo: explorar",
+        "Datos del mundo",
+        "Empezar de cero Se guarda una copia",
+        "Copiar diagnóstico"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mSettings"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "ajustes",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Guía de juego",
+        "Tu siguiente paso"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Guía de juego",
+        "Cómo jugar y guardar",
+        "Escuchar y responder",
+        "Practicar",
+        "Seguir jugando"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mGuide"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "guia",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora",
+        "Sesión en curso",
+        "Tu actividad",
+        "Descubrimientos",
+        "Música compartida"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Compartir sesión",
+        "Lo próximo",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "bitacora-hoy",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora",
+        "Cian",
+        "Puntos"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Buscar colección",
+        "Todo Cubo Refugio Elementos Linajes Tarjetas Caminantes Formas",
+        "Todo Ganado Pendiente",
+        "Lo próximo",
+        "Ver más",
+        "Ver en tu refugio"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "bitacora-coleccion",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora",
+        "Tu música deja una figura",
+        "Cruces musicales",
+        "Colores de síntesis",
+        "Géneros",
+        "Escalas",
+        "Instrumentos",
+        "Sets"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Lo próximo",
+        "Conservar constelación",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "bitacora-musica",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Lo próximo",
+        "Ver en tu refugio",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "bitacora-logros",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Bitácora",
+        "Tu universo descubierto"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Bitácora",
+        "Hoy",
+        "Colección",
+        "Mapa",
+        "Música",
+        "Logros",
+        "Tú",
+        "Lo próximo",
+        "profileName",
+        "Guardar nombre",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mJournal"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "bitacora-tu",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Lugares 5 / 11"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Remezcla",
+        "Tu canción",
+        "Salir al anillo",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mLugares"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "lugares",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Completo"
+      ],
+      "visibleButtons": [
+        "Omfe",
+        "Guardar este lugar",
+        "Salto disponible · 20 ✦",
+        "Siguiente · Jardín",
+        "Otra vez",
+        "Maestro",
+        "Salir"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mPlace"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "resultado",
+      "viewport": [
+        1280,
+        800
+      ]
+    }
+  ]
+}

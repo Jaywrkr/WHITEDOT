@@ -1,6 +1,6 @@
 # El panel creativo de Kubono
 
-Guía para repetir la auditoría. La [cuarta sesión](panel/sesion-4/informe.md) está completa sobre alpha.174; sus fases J1–J7 esperan la decisión de Jay. La próxima será la quinta, sobre las correcciones que autorice y sus evidencias. Los perfiles son simulados y las notas pueden subir o bajar.
+Guía para repetir la auditoría. La [quinta sesión](panel/sesion-5/informe.md) revisa las correcciones J1–J6 conservando la generación musical y del universo. La evidencia técnica se separa de la aceptación de Jay, las personas y el despliegue. La siguiente sesión conservará los IDs abiertos; no abre contenido nuevo ni cambia la base para mejorar una nota simulada.
 
 ## 1. Qué es
 
@@ -48,6 +48,7 @@ La **media** de cada perfil es la media de sus seis notas. La fila del panel es 
 | 2 | 24 oct | alpha.160 | 7,0 | 8,3 | 8,0 | 6,9 | 6,4 | 6,6 | **7,2** | G1–G7, construido como H1–H7 |
 | 3 | 24 oct | alpha.167 | 7,3 | 8,5 | 8,2 | 7,3 | 7,1 | 6,9 | **7,5** | I1–I6 |
 | 4 | 25 oct | alpha.174 | 7,7 | 7,8 | 8,4 | 7,7 | 7,7 | 7,3 | **7,7** | J1–J7 propuestas, sin ejecutar |
+| 5 | 25 oct | alpha.181 | 7,7 | 8,0 | 8,4 | 8,1 | 8,3 | 8,0 | **8,1** | J1–J6 corregidas; aceptación y candidato pendientes |
 
 Lo que se construyó con cada plan está en [CAMBIOS](../CAMBIOS.md) (H1–H7, I1–I6) y en [El mundo](MUNDO.md).
 
@@ -121,7 +122,9 @@ A Jay **no le gusta el cubo grande; le gusta pequeño.** La I2 lo agrandó a 24�
 - La legibilidad se busca por otros medios: contraste, el brillo dorado al acertar, Vibri, la Línea, el halo o el color alrededor, nunca el tamaño.
 - **Construido en alpha.174**, rama `fix/cubo-pequeno`, desde main 676ac511: 6–12 px de tamaño natural antes de pulsos y efectos temporales; las caras conservan el mínimo existente de 10 px. `CUBE_MIN`, `CUBE_MAX` y `cubeView` en `src/render.js` solo cambian el dibujo. El tamaño exacto lo confirma Jay en su teléfono.
 
-## 8. Qué quedó abierto tras la tercera sesión
+## 8. Antecedentes de la tercera sesión
+
+Registro histórico. El estado vigente está en la quinta sesión y el cierre J1–J7; estas ideas no autorizan tareas nuevas.
 
 - **El cubo pequeño:** construido en alpha.174; aceptación física de Jay pendiente.
 - **Perfiles modelados del 60 % y sin sonido:** según `scripts/play-curve.mjs`, no consiguen ★★ y pasan unos 80 minutos sin nuevas capas tras ganar. Sus notas y el mundo sí pueden variar; el modelo no mide abandono. Los perfiles de 75 % y 90 % no superan doce minutos entre capas.
@@ -129,15 +132,13 @@ A Jay **no le gusta el cubo grande; le gusta pequeño.** La I2 lo agrandó a 24�
 - Hay feedback de Jay, incluido el rechazo al cierre musical. Faltan sesiones documentadas de nuevos jugadores y validación instrumentada de calibración, paneo, faro y final en teléfono. Guía: [Pruebas con personas](PRUEBAS_CON_PERSONAS.md).
 - Ideas sin consenso: Libre que no se acaba y Tu canción tocable capa a capa (Iwai); el anillo como acorde (Proteus); pasar de un lugar al siguiente sin tarjeta (Simogo).
 
-## 9. Petición para la siguiente sesión, tras las correcciones autorizadas
+## 9. Próxima comprobación
 
-Copia esto en Codex o ChatGPT con el repositorio abierto:
-
-> Lee `AGENTS.md`, `HANDOFF.md`, `docs/PANEL.md` y `docs/panel/sesion-4/seguimiento.json`. Cuando Jay autorice la reevaluación, haz la **quinta sesión** siguiendo la sección 5: captura con el hostname normal, mide y escribe diez análisis y el informe en `docs/panel/sesion-5/`. Compara con la cuarta, conserva el cubo pequeño y los criterios, y vuelve a cada ID. Solo cierra un hallazgo con su revisión, regresión y aceptación. Distingue bot, modelo, escucha física, CI y despliegue. La nota puede subir o bajar. No implementes otro plan ni contenido por hacer la auditoría.
+Leer `AGENTS.md`, `HANDOFF.md`, el cierre J1–J7 y el registro de hallazgos. La quinta sesión ya revisa las correcciones. Cuando Jay aporte escucha o sesiones con personas, añadir su evidencia a V01/P01/T01 y conservar lo aún no comprobado. Una nueva sesión completa solo se repite si hay cambios que evaluar o nueva evidencia; no rehace la quinta ni abre otra expansión automáticamente.
 
 ## 10. Ciclo de cierre
 
-La petición actual de Jay exige integrar lo existente antes de ampliar. El registro de la sesión 4 contiene ID, prioridad, evidencia, fase y criterio de cierre. Cada fase autorizada añade revisión y resultado de su regresión. La reevaluación conserva los abiertos; ni un commit, ni una nota mayor, ni un test aislado los cierra. La meta orientativa sigue en 8,7, acompañada de candidato verde y aceptación humana; no hay garantía de un 10 simulado.
+Jay autorizó solucionar los hallazgos conservando la generación musical y del universo. Se integra lo existente antes de ampliar. El registro de la sesión 4 contiene ID, prioridad, evidencia, fase y criterio de cierre. Cada fase autorizada añade revisión y resultado de su regresión. La reevaluación conserva los abiertos; ni un commit, ni una nota mayor, ni un test aislado los cierra. La meta orientativa sigue en 8,7, acompañada de candidato verde y aceptación humana; no hay garantía de un 10 simulado.
 
 ## 11. Archivo
 
@@ -145,6 +146,8 @@ La petición actual de Jay exige integrar lo existente antes de ampliar. El regi
 - [Sesión 2](panel/sesion-2/informe.md) · [expediente](panel/sesion-2/expediente.md) · diez análisis en `panel/sesion-2/`.
 - [Sesión 3](panel/sesion-3/informe.md) · [expediente](panel/sesion-3/expediente.md) · diez análisis en `panel/sesion-3/`.
 
-- [Sesión 4](panel/sesion-4/informe.md) · [expediente](panel/sesion-4/expediente.md) · [registro de 14 hallazgos](panel/sesion-4/seguimiento.json) · diez análisis y evidencia reproducible en `panel/sesion-4/`.
+- [Sesión 4](panel/sesion-4/informe.md) · [expediente](panel/sesion-4/expediente.md) · [registro de hallazgos y seguimiento](panel/sesion-4/seguimiento.json) · diez análisis y evidencia reproducible en `panel/sesion-4/`.
 
 Los expedientes y análisis citan rutas y versiones de su día (por ejemplo `3-extra-mz/`). Esas capturas no están en Git; se rehacen con `scripts/panel-capture.py`.
+
+- [Sesión 5](panel/sesion-5/informe.md) · [expediente](panel/sesion-5/expediente.md) · [preservación](panel/sesion-5/evidencia/preservacion.json). Notas provisionales del mismo agente, no jurado independiente ni escucha humana.

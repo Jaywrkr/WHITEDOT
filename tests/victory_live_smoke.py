@@ -1,6 +1,4 @@
-"""A place's close in the running game (plan F13): the world's music keeps playing under it, the sequencer drives the
-place's layer for the two bars of the drop in the chord the world plays, the output is whole again afterwards and the
-music goes on."""
+"""The existing won layer follows the live sequencer/chord for two bars; the radio and output continue untouched."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer

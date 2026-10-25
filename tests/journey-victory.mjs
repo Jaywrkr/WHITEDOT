@@ -30,3 +30,8 @@ assert.equal(w.journeyVictoryState(),null,'over once the drop ends');
 const onlyGain={...ac,createOscillator(){throw Error('independent synth');},createBufferSource(){throw Error('noise');},createBiquadFilter(){throw Error('filter');}};
 const v={...w,ac:onlyGain,MU:{sq:[{t:.5,s:0}]}};initialize(v);v.journeyVictory('lago');v.victoryMusicStep(0,.5);assert(v.journeyVictoryState());v.cancelJourneyVictory();const n=hits.length;v.victoryMusicStep(4,1);assert.equal(hits.length,n,'no old notes after cancellation');assert.equal(v.journeyVictoryState(),null);
 console.log('PASS victory uses the existing song layer and live chord, never automates the radio, and cancels old notes on travel');
+
+// Two live bars, including a tempo change: the close counts sequencer steps instead of fixed seconds.
+{const heard=[],r={...w,MU:{sq:[]},SIX:.125,songHit:(out,e,t)=>heard.push({...e,t})};initialize(r);r.journeyVictory('jardin');let t=1;
+ for(let k=0;k<=32;k++){r.SIX=k<16?.125:.09;r.victoryMusicStep(k%16,t);t+=r.SIX;}
+ assert.equal(heard.length,16);assert.equal(r.journeyVictoryState(),null,'two bars end on the live grid after the tempo changes');}

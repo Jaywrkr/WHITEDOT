@@ -1,0 +1,134 @@
+{
+  "scope": "Ten simulated lenses by the same agent, not independent human judges. Provisional design/integration scores, no human listening claim.",
+  "axes": [
+    "Visual",
+    "Audio",
+    "Creatividad",
+    "Sensación",
+    "Cohesión",
+    "Pulido"
+  ],
+  "profiles": [
+    {
+      "name": "Tetsuya Mizuguchi",
+      "scores": [
+        8,
+        8,
+        8.5,
+        8.5,
+        8.5,
+        8
+      ],
+      "mean": 8.25
+    },
+    {
+      "name": "Toshio Iwai",
+      "scores": [
+        7.5,
+        8,
+        8.5,
+        8,
+        8,
+        8
+      ],
+      "mean": 8.0
+    },
+    {
+      "name": "Masaya Matsuura",
+      "scores": [
+        7.5,
+        8,
+        8.5,
+        8.5,
+        8.5,
+        8
+      ],
+      "mean": 8.166666666666666
+    },
+    {
+      "name": "Simogo",
+      "scores": [
+        8,
+        8,
+        8.5,
+        8,
+        8.5,
+        8
+      ],
+      "mean": 8.166666666666666
+    },
+    {
+      "name": "Ed Key y David Kanaga",
+      "scores": [
+        8,
+        8,
+        8.5,
+        8,
+        8,
+        8
+      ],
+      "mean": 8.083333333333334
+    },
+    {
+      "name": "Jenova Chen",
+      "scores": [
+        7.5,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "mean": 7.916666666666667
+    },
+    {
+      "name": "Conrad Roset",
+      "scores": [
+        8,
+        8,
+        8.5,
+        8,
+        8.5,
+        8
+      ],
+      "mean": 8.166666666666666
+    },
+    {
+      "name": "Ken Wong",
+      "scores": [
+        7.5,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "mean": 7.916666666666667
+    },
+    {
+      "name": "Lucas Pope",
+      "scores": [
+        7.5,
+        8,
+        8,
+        8,
+        8.5,
+        8
+      ],
+      "mean": 8.0
+    },
+    {
+      "name": "Austin Wintory",
+      "scores": [
+        7.5,
+        8,
+        8.5,
+        8,
+        8.5,
+        8
+      ],
+      "mean": 8.083333333333334
+    }
+  ],
+  "mean": 8.075
+}

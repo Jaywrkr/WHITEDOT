@@ -3,9 +3,13 @@ from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
-import threading,os,shutil,json,subprocess
+import threading,os,shutil,json,subprocess,hashlib
 ROOT=Path(__file__).resolve().parents[1]
 OUT=Path(os.environ.get('OUT','/tmp/kubono-panel-4'));OUT.mkdir(parents=True,exist_ok=True)
+def snapshot():
+ files=sorted((ROOT/'src').glob('*.js'))+[ROOT/'index.html',ROOT/'package.json',ROOT/'sw.js'];digest=hashlib.sha256()
+ for f in files:digest.update(str(f.relative_to(ROOT)).encode()+b'\0'+f.read_bytes())
+ return {'revision':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'version':json.loads((ROOT/'package.json').read_text())['version'],'runtimeDirty':subprocess.run(['git','diff','--quiet','HEAD','--','src','index.html','package.json','sw.js','styles'],cwd=ROOT).returncode!=0,'runtimeDigest':digest.hexdigest()}
 class H(SimpleHTTPRequestHandler):
  def log_message(self,*a):pass
 srv=ThreadingHTTPServer(('127.0.0.1',0),partial(H,directory=str(ROOT)))
@@ -31,7 +35,9 @@ CASES=[
  ('sonido',"r.$('bMusicSettings').click()"),('ajustes',"r.$('bSettings').click()"),('guia',"r.$('bGuide').click()"),
  ('bitacora-hoy',"r.openJournal('today')"),('bitacora-coleccion',"r.openJournal('collection')"),
  ('bitacora-musica',"r.openJournal('music')"),('bitacora-logros',"r.openJournal('achievements')"),
- ('bitacora-tu',"r.openJournal('you')"),('lugares',"r.openLugares()")]
+ ('bitacora-tu',"r.openJournal('you')"),('lugares',"r.openLugares()"),
+ ('resultado',"return (async()=>{r.S.lugares.stars.lago[1]=true;if(!r.startPlace('lago'))throw Error('Result fixture failed to start');for(let i=0;i<8;i++){r.journeyPulse();await new Promise(ok=>setTimeout(ok,130));}if(!r.placeFinish('lago'))throw Error('Result fixture failed to finish');await new Promise(ok=>setTimeout(ok,1400));})()")]
+
 rows=[]
 try:
  with sync_playwright() as pw:
@@ -54,5 +60,5 @@ try:
    page.close()
   b.close()
 finally:srv.shutdown();srv.server_close()
-(OUT/'ui-medidas.json').write_text(json.dumps({'revision':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'scope':'Local scripted production-appearance fixtures, normal hostname and webdriver=false; no human testing','states':rows},ensure_ascii=False,indent=2)+'\n')
+(OUT/'ui-medidas.json').write_text(json.dumps({**snapshot(),'scope':'Local scripted production-appearance fixtures, normal hostname and webdriver=false; no human testing','states':rows},ensure_ascii=False,indent=2)+'\n')
 print('PASS',len(rows),'UI states, no page errors; observations in',OUT,flush=True)

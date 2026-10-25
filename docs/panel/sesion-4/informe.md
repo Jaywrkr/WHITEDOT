@@ -146,3 +146,7 @@ Hay feedback de Jay sobre el cierre y la UI, pero faltan sesiones documentadas c
 2. PR de `audit/panel-4-cierre` después; su dependencia es esa rama y añade documentación/herramientas de auditoría, sin otro cambio del juego.
 3. En el preview del cubo, abrir una partida normal, caminar y equipar una cara ya disponible. Confirmar tamaño y lectura; no hace falta añadir `?dev=1`.
 4. Revisar J1–J7 y decidir el ciclo. La reparación de los cierres musicales sigue como propuesta J2.
+
+## Seguimiento posterior
+
+Jay autorizó J1–J7 conservando la generación musical y los mundos. Este informe describe la instantánea 04ae8bdd; no se reescribe como si sus fallos ya no hubieran existido. Estado de correcciones y pruebas en [Cierre de la auditoría](../../PULIDO_CIERRE.md); reevaluación del candidato en [Sesión 5](../sesion-5/informe.md).
