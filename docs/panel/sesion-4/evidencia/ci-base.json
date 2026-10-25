@@ -1,0 +1,183 @@
+{
+  "scope": "GitHub check-runs of base main 676ac511, not this branch or a deployment",
+  "checks": [
+    {
+      "name": "browser-audio",
+      "status": "completed",
+      "conclusion": "failure",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40139955994/job/121015564170"
+    },
+    {
+      "name": "audio (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40139955994/job/121009406133"
+    },
+    {
+      "name": "browser (3)",
+      "status": "completed",
+      "conclusion": "failure",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40139955994/job/121009406116"
+    },
+    {
+      "name": "browser (6)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40139955994/job/121009406113"
+    },
+    {
+      "name": "browser (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40139955994/job/121009406090"
+    },
+    {
+      "name": "audio (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40139955994/job/121009406089"
+    },
+    {
+      "name": "audio (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40139955994/job/121009406074"
+    },
+    {
+      "name": "browser (4)",
+      "status": "completed",
+      "conclusion": "failure",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40139955994/job/121009406068"
+    },
+    {
+      "name": "browser (5)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40139955994/job/121009406064"
+    },
+    {
+      "name": "logic",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40139955994/job/121009406047"
+    },
+    {
+      "name": "browser (1)",
+      "status": "completed",
+      "conclusion": "failure",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40139955994/job/121009405913"
+    }
+  ],
+  "runId": "40139955994",
+  "jobs": [
+    {
+      "id": 121009405913,
+      "name": "browser (1)",
+      "conclusion": "failure",
+      "started": "2026-10-24T22:46:09Z",
+      "completed": "2026-10-24T22:59:34Z",
+      "failedSteps": [
+        {
+          "name": "Run npm run test:browser",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    {
+      "id": 121009406047,
+      "name": "logic",
+      "conclusion": "success",
+      "started": "2026-10-24T22:46:09Z",
+      "completed": "2026-10-24T22:47:15Z",
+      "failedSteps": []
+    },
+    {
+      "id": 121009406064,
+      "name": "browser (5)",
+      "conclusion": "success",
+      "started": "2026-10-24T22:46:09Z",
+      "completed": "2026-10-24T23:01:34Z",
+      "failedSteps": []
+    },
+    {
+      "id": 121009406068,
+      "name": "browser (4)",
+      "conclusion": "failure",
+      "started": "2026-10-24T22:46:09Z",
+      "completed": "2026-10-24T23:01:42Z",
+      "failedSteps": [
+        {
+          "name": "Run npm run test:browser",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    {
+      "id": 121009406074,
+      "name": "audio (2)",
+      "conclusion": "success",
+      "started": "2026-10-24T22:46:09Z",
+      "completed": "2026-10-24T23:03:18Z",
+      "failedSteps": []
+    },
+    {
+      "id": 121009406089,
+      "name": "audio (3)",
+      "conclusion": "success",
+      "started": "2026-10-24T22:46:09Z",
+      "completed": "2026-10-24T23:16:02Z",
+      "failedSteps": []
+    },
+    {
+      "id": 121009406090,
+      "name": "browser (2)",
+      "conclusion": "success",
+      "started": "2026-10-24T22:46:09Z",
+      "completed": "2026-10-24T22:59:33Z",
+      "failedSteps": []
+    },
+    {
+      "id": 121009406113,
+      "name": "browser (6)",
+      "conclusion": "success",
+      "started": "2026-10-24T22:46:09Z",
+      "completed": "2026-10-24T22:56:37Z",
+      "failedSteps": []
+    },
+    {
+      "id": 121009406116,
+      "name": "browser (3)",
+      "conclusion": "failure",
+      "started": "2026-10-24T22:46:09Z",
+      "completed": "2026-10-24T22:59:40Z",
+      "failedSteps": [
+        {
+          "name": "Run npm run test:browser",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    {
+      "id": 121009406133,
+      "name": "audio (1)",
+      "conclusion": "success",
+      "started": "2026-10-24T22:46:09Z",
+      "completed": "2026-10-24T23:15:34Z",
+      "failedSteps": []
+    },
+    {
+      "id": 121015564170,
+      "name": "browser-audio",
+      "conclusion": "failure",
+      "started": "2026-10-24T23:16:04Z",
+      "completed": "2026-10-24T23:16:06Z",
+      "failedSteps": [
+        {
+          "name": "Run test \"$WHITEDOT_BROWSER_RESULT\" = success",
+          "conclusion": "failure"
+        }
+      ]
+    }
+  ],
+  "logAccess": "La consulta de descarga de logs fue bloqueada por el proxy (403). Los pasos fallidos sí se comprobaron; la causa de cada recorrido sigue sin diagnosticar."
+}

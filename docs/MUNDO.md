@@ -1,6 +1,6 @@
 # El mundo de Kubono: Viaje, 11 lugares y Refugio
 
-Diseño aprobado por Jay el 23 de octubre de 2026. Es la fuente única del plan por fases F0–F16. Estado de cada fase: en [Cambios](../CAMBIOS.md). Una decisión aprobada no equivale a construida ni probada con personas.
+Diseño aprobado por Jay el 23 de octubre de 2026. Es la guía del juego y sus reglas. El cierre vigente es [J1–J7](PULIDO_CIERRE.md); las tablas anteriores conservan su contexto histórico. Estado de cada fase: en [Cambios](../CAMBIOS.md). Una decisión aprobada no equivale a construida ni probada con personas.
 
 ## Las cuatro capas
 
@@ -18,7 +18,7 @@ Diseño aprobado por Jay el 23 de octubre de 2026. Es la fuente única del plan 
 3. **Nadie pierde:** no hay derrota; solo más o menos estrellas y chispas.
 4. **Texto mínimo:** el Viaje no tiene rótulos; cada lugar dice cada frase una sola vez, la primera. El narrador habla solo en la tarjeta de la ronda y en la Bitácora.
 5. **Nada ganado se borra:** los guardados se migran.
-6. **El cubo es pequeño** (Jay, 24 de octubre): no se agranda para que se lea; se busca con contraste, brillo y color. La I2 lo agrandó a 24–36 px y queda pendiente devolverlo a pequeño ([Panel](PANEL.md#nuevo-24-de-octubre-el-cubo-pequeño)).
+6. **El cubo es pequeño** (Jay, 24 de octubre): no se agranda para que se lea; se busca con contraste, brillo y color. La I2 lo agrandó a 24–36 px; alpha.174 vuelve al tamaño natural de 6–12 px (10 px mínimos con cara), antes de pulsos y efectos temporales ([Panel](PANEL.md#nuevo-24-de-octubre-el-cubo-pequeño)).
 
 ## Chispas y estrellas
 
@@ -120,7 +120,7 @@ Cada fase sale de `main` actualizado, en su rama, y se integra cuando Jay la apr
 | F8 · Logros del narrador | `claude/f8-logros` | ~40 logros nuevos y revisión de los actuales | Jay aprueba los textos; nadie pierde un logro |
 | F9–F11 · Jardín, Dunas, Cristales | `claude/f9-jardin` … `claude/f11-cristales` | Juego, objeto dorado, capa, trofeo y Maestro | Hechos (en `main`) |
 | F12 · Primer minuto | `claude/f12-primer-minuto` | Pista en la barra antes del primer pulso; Llanura a 2:30–3:00 para quien ya sabe jugar | Alguien nuevo da su primer pulso sin ayuda; la Llanura dura lo que debe |
-| F13 · Victoria con tu música | `claude/f13-victoria-musica` | Los cierres salen de la música que suena: filtro, silencio y la misma canción con algo más (su capa y el tema), en su tono y tempo | Hecho; falta la escucha de Jay |
+| F13 · Victoria con tu música | `claude/f13-victoria-musica` | Diseño anterior con filtro, silencio y tema | Sustituido por J2: capa ganada, sin fanfarria ni corte de la radio; escucha de Jay pendiente |
 | F14 · Ritmos | `claude/f14-ritmos` | Contratiempo, el «1» y patrones; guía de puntos bajo el cubo; el reparto de abajo | Hecho; falta que Jay lo juegue |
 | F15 · Faros | `claude/f15-faros` | Guiar, con su ritmo | Hecho; falta la prueba de Jay |
 | F16 · Ruinas | `claude/f16-ruinas` | Reconstruir, con su ritmo | Hecho; falta la prueba de Jay |
@@ -223,3 +223,15 @@ Duetos en línea, más de 11 lugares, la configuración de la cuenta (Supabase s
 - `?clasico=1`: los capítulos anteriores, para comparar mientras dure el cambio.
 - `?prueba=1` y `?prueba=ver`: las notas de las pruebas con personas ([guía](PRUEBAS_CON_PERSONAS.md)).
 - `?festival=1`: el Viaje entero hasta los créditos del Refugio, sin cuenta, con «Otra persona» (desde I5).
+
+## Auditoría 4 y continuidad
+
+La [sesión 4](panel/sesion-4/informe.md) propuso J1–J7. Jay autorizó sus correcciones conservando la generación musical y del universo; estado en [Cierre](PULIDO_CIERRE.md). El modelo de 80 minutos sin capas nuevas no mide audio idéntico ni abandono real: `places.js` actualiza las notas personales al rejugar y la radio sigue variando. Deben distinguirse terminar los once lugares, la versión maestra de 33 estrellas, comprar con chispas y seguir creando. La propuesta conserva las reglas aprobadas y la música base; el cierre musical y la durabilidad de los premios requieren correcciones documentadas en su registro.
+
+## Estado tras las correcciones J1–J7
+
+Se conservan generación musical, semillas, mapas, biomas, distribución y arte. El cierre reutiliza la capa ganada en el acorde y compás vivos; no cambia filtro o salida de la radio. Cristales y la segunda pasada del tema final usan notas compatibles con su marco.
+
+Las rondas anuncian premios después de guardarlos y admiten reintento seguro. Lugares y Refugio priorizan /11; /33 es maestría. La guía y el menú leen el siguiente destino del mismo estado. Tras completar los once, Lugares → Tu canción vuelve al final existente con tus notas actuales; no hay otra recompensa por oírlo.
+
+Detalle, comprobaciones y aceptación pendiente en [Cierre](PULIDO_CIERRE.md) y [quinta sesión](panel/sesion-5/informe.md). No se declara publicación ni cambia Supabase.

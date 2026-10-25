@@ -1,0 +1,102 @@
+{
+  "scope": "Pure runtime contracts, synthetic valid harmony and mocked save failure. Not human play or a real storage-quota test.",
+  "harmony": {
+    "scale": [
+      0,
+      2,
+      3,
+      5,
+      7,
+      8,
+      10
+    ],
+    "chord": [
+      57,
+      60,
+      64
+    ],
+    "events": [
+      {
+        "s": 4,
+        "what": "bell",
+        "midi": 73
+      }
+    ],
+    "outsideScale": [
+      {
+        "s": 4,
+        "what": "bell",
+        "midi": 73
+      }
+    ],
+    "finalSecondTheme": [
+      76,
+      78,
+      83,
+      81,
+      79,
+      76
+    ],
+    "outsideSecondTheme": [
+      78
+    ],
+    "currentPrismaContext": {
+      "scale": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        9,
+        11
+      ],
+      "transpose": 7,
+      "chord": [
+        73,
+        76,
+        80
+      ],
+      "events": [
+        {
+          "s": 4,
+          "what": "bell",
+          "midi": 77
+        }
+      ],
+      "description": "C# minor is diatonic in E major. Emitted MIDI 77 (F natural) is outside that scale."
+    }
+  },
+  "saveFailure": {
+    "finishReturned": true,
+    "ramStars": [
+      true,
+      true,
+      false
+    ],
+    "diskStars": [
+      false,
+      false,
+      false
+    ],
+    "ramSparks": 120,
+    "diskSparks": 0
+  },
+  "futureState": {
+    "state": {
+      "version": 9,
+      "unknown": "keep"
+    },
+    "error": "SyntaxError: \"undefined\" is not valid JSON"
+  },
+  "timing": {
+    "outputLatencyMs": 400,
+    "returnedVisualDelayMs": 250,
+    "earlyMs": 150,
+    "scope": "Pure scheduling limit, not a measured phone"
+  },
+  "closeTiming": {
+    "at120BpmSeconds": 6,
+    "resultCardDelaySeconds": 1.2,
+    "scope": "Source contract: results timer in places.js, not a measured user transition"
+  }
+}

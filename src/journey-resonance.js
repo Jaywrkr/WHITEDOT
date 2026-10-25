@@ -1,5 +1,5 @@
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
 // «Resuena» (the Cristales, plan F11, docs/MUNDO.md): nine crystals around where the round began, three of each note
 // (triangle, diamond, hexagon). A pulse on time makes the crystals within reach ring; a ringing crystal keeps sounding
 // for a few beats while its arc fades. When the three different notes ring at once they make a chord: it is worth far
@@ -34,7 +34,7 @@ export function initialize(runtime){
  // Each note is a tone of the chord, high and bright: three crystals ringing together sound the chord.
  function tone(note,soft){if(!audible())return;runtime.soon?.(t=>{const ct=runtime.chordTones?.()||[60,64,67];let m=ct[note%ct.length]+24;while(m>96)m-=12;runtime.pluck?.(m,t,soft?.05:.09,2);},'player');}
  function arrive(){const s=own();if(s.gold)return;s.gold={x:Math.round(runtime.S.wx+RES_GOLD_GAP),y:Math.round(runtime.S.wy-RES_GOLD_GAP*.5)};goldPulse=1;runtime.save?.();chapterToast(runtime,'cristales','El cristal dorado llegó: hazlo cantar a tiempo.');}
- function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(runtime.save?.()===false){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<3;i++)tone(i);runtime.journeyComplete?.('cristales');return 'open';}
+ function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(!commitJourneyClose(runtime,'cristales')){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<3;i++)tone(i);return 'open';}
  function pulse(on){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}if(full()){if(!s.gold)arrive();return open();}
   const before=s.points,now=performance.now(),r=resonancePulse(s,{x:runtime.S.wx,y:runtime.S.wy},now,{ringMs:ringMs(),goal:goal()}),spots=crystalSpots(s.center);
   for(const e of r.events){if(e.kind==='ring'){tone(e.note,true);glows.push({x:spots[e.crystal].x,y:spots[e.crystal].y,at:now,kind:'ring'});}else{for(let k=0;k<3;k++)tone(k);for(const i of e.crystals)glows.push({x:spots[i].x,y:spots[i].y,at:now,kind:'chord'});}}

@@ -16,9 +16,9 @@ def instrument(page,production):
 def hidden(page,selector):return page.evaluate(f"getComputedStyle(document.querySelector('{selector}')).display")=='none'
 try:
  with sync_playwright() as pw:
-  browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox',f'--host-resolver-rules=MAP kubono.test 127.0.0.1'])
+  browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--no-proxy-server',f'--host-resolver-rules=MAP kubono.localhost 127.0.0.1'])
   page=browser.new_page(viewport={'width':390,'height':844});errors=[];page.on('pageerror',lambda e:errors.append(str(e)));instrument(page,True)
-  page.goto(f'http://kubono.test:{port}/');page.wait_for_function('!!window.__r?.visitWorldAddress')
+  response=page.goto(f'http://kubono.localhost:{port}/');assert response.status==200,'the production-appearance fixture must reach its local server';page.wait_for_function('!!window.__r?.visitWorldAddress')
   assert not page.evaluate("document.body.classList.contains('dev')"),'production host must not enable development tools'
   assert hidden(page,'#bWorlds') and hidden(page,'p:has(> #guideCatalog)') and hidden(page,'.devbox')
   if page.locator('#returnContinue').is_visible():page.locator('#returnContinue').click()
@@ -29,7 +29,7 @@ try:
   page.wait_for_function("document.getElementById('toast').textContent.includes('otra semilla')",timeout=8000)
   # A player already in another seed keeps the panel, so they can return to the original world.
   seeded=browser.new_page(viewport={'width':390,'height':844});instrument(seeded,True)
-  seeded.goto(f'http://kubono.test:{port}/?testSeed=otra&layout=wide&generation=2&travel=1');seeded.wait_for_function('!!window.__r?.visitWorldAddress')
+  seeded.goto(f'http://kubono.localhost:{port}/?testSeed=otra&layout=wide&generation=2&travel=1');seeded.wait_for_function('!!window.__r?.visitWorldAddress')
   assert not hidden(seeded,'#bWorlds')
   # Development keeps the tools.
   dev=browser.new_page(viewport={'width':390,'height':844});instrument(dev,False)

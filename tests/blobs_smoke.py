@@ -16,6 +16,7 @@ with sync_playwright() as p:
  for label,size in [('mobile',{'width':390,'height':844}),('desktop',{'width':1280,'height':800})]:
   b=p.chromium.launch(executable_path=CHROMIUM,args=['--no-sandbox'])
   c=b.new_context(viewport=size,has_touch=label=='mobile');page=c.new_page();page.set_default_timeout(10000);errors=[];page.on('pageerror',lambda e:errors.append(e.stack))
+  page.add_init_script("window.__mainOnLoad=localStorage.getItem('pixel-blanco-v4');")
   page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
   page.goto(URL,wait_until='domcontentloaded');page.wait_for_function('!document.getElementById("mHelpC").hidden');page.locator('#hcGo').click()
   page.locator('#bMenu').click();page.locator('#mMenu .devbox > summary').click();page.locator('#dFill').click();complete_path_fixture(page);page.locator('#cExplore').click();page.locator('#hwGo').click()
@@ -25,7 +26,8 @@ with sync_playwright() as p:
   baseline=page.evaluate('()=>{window.__testRuntime.S.sound=false;window.__testRuntime.S.arrivalMode="continue";window.__testRuntime.applyComfort();window.__testRuntime.save();return localStorage.getItem("pixel-blanco-v4");}')
   page.locator('[data-seed="blobs-01"]').click();page.wait_for_url('**testSeed=blobs-01*');page.wait_for_function('window.__testRuntime?.S.previewSeed==="blobs-01" && window.__testRuntime.S.mode==="world"')
   first=page.evaluate('()=>{const r=window.__testRuntime,d=r.regionOfPos(r.S.wx,r.S.wy);if(r.S.wx!==r.REG*r.WCH/2||r.S.wy!==r.S.wx)throw Error("not centered");return JSON.stringify([d.z,d.genre,d.track,d.species,d.ground,d.air]);}')
-  assert page.evaluate('localStorage.getItem("pixel-blanco-v4")')==baseline
+  # Main may autosave during navigation. The preview must preserve the exact bytes present when it starts.
+  assert page.evaluate('localStorage.getItem("pixel-blanco-v4")===window.__mainOnLoad')
   page.evaluate("()=>{const r=window.__testRuntime;if(r.REG!==12||r.worldIdentity.generatorVersion!==2)throw Error('expanded wide world missing');const c=r.wchunk(Math.floor(r.S.wx/r.WCH),Math.floor(r.S.wy/r.WCH)),v=r.sceneChunk(c);if(v.grass.length>c.grass.length||v.sp.length>c.sp.length)throw Error('clutter not reduced');if(!v.sp.some(o=>o.id?.startsWith('nursery:')&&Math.hypot(o.x-r.S.wx,o.y-r.S.wy)<120))throw Error('no blob near center');if(!r.blobHabitat(r.regionOfPos(r.S.wx,r.S.wy)))throw Error('blob habitat missing');const voices=c.sp.map(o=>r.getVoice('forma:'+o.s.id,r.regionOfPos(r.S.wx,r.S.wy)));if(voices.some(v=>v.role==='agudo'||v.high>72))throw Error('blob voices too high');}")
   page.locator('#w').click(position={'x':30,'y':300});page.wait_for_function('window.__testRuntime.ac.state==="running"')
   page.evaluate("()=>{const r=window.__testRuntime,c=r.sceneChunk(r.wchunk(Math.floor(r.S.wx/r.WCH),Math.floor(r.S.wy/r.WCH))),o=c.sp.find(o=>o.id?.startsWith('nursery:')),ac=r.ac,osc=ac.createOscillator.bind(ac),buffer=ac.createBufferSource.bind(ac);let n=0;ac.createOscillator=()=>{n++;return osc();};ac.createBufferSource=()=>{n++;return buffer();};try{r.withVoiceOrigin('player',()=>r.speciesSound(o.s,ac.currentTime+.08,true,o.personality,o));if(!n)throw Error('blob has no audible voice');}finally{ac.createOscillator=osc;ac.createBufferSource=buffer;}}")

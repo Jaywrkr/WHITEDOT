@@ -183,9 +183,9 @@ export function initialize(runtime) {
     return sz;
   }
 
-  // The cube is drawn larger so it reads on a phone (plan H1, widened in I2 to the Camino and the places): 1.6× its
-  // size, between 24 and 36 px, face pieces included.
-  const CUBE_MIN=24,CUBE_MAX=36,cubeView=ds=>ds>0?Math.max(CUBE_MIN,Math.min(CUBE_MAX,ds*1.6))/ds:1;
+  // Keep the cube small: natural size, capped at 12 px before temporary pulses.
+  // Equipped faces keep their existing 10 px minimum; collisions still use ds.
+  const CUBE_MIN=6,CUBE_MAX=12,cubeView=ds=>ds>0?Math.max(CUBE_MIN,Math.min(CUBE_MAX,ds))/ds:1;
   function worldStep(t,dt,dx,dy,b,paused=false,movementSpeed=runtime.SPEED){
     const sz=runtime.pxSize(),ds=Math.min(sz,22);
     if(runtime.MU.anomaly==='invertida'){dx=-dx;dy=-dy;}   // rareza: arriba es abajo

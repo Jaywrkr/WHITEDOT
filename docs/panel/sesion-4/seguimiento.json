@@ -1,0 +1,401 @@
+{
+  "version": 1,
+  "scope": "Auditoría simulada histórica. Jay autoriza J1–J7 preservando generación musical y mundos; correcciones y límites en docs/PULIDO_CIERRE.md.",
+  "base": "676ac511",
+  "audited": "04ae8bdd",
+  "findings": [
+    {
+      "id": "K01",
+      "area": "Visual",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J0",
+      "title": "Cubo pequeño",
+      "evidence": [
+        "src/render.js:186",
+        "tests/cube_face_smoke.py:31",
+        "capturas/01-capitulo-llanura.png"
+      ],
+      "observed": "La I2 imponía 24–36 px. La rama 04ae8bdd restituye 6–12 px naturales y 10 px mínimos con cara; conserva pulsos y poderes.",
+      "acceptance": "Recorrido de caras y tacto aprobado; Jay acepta tamaño y localización en su teléfono. La aceptación física queda en V01."
+    },
+    {
+      "id": "S01",
+      "area": "Fiabilidad",
+      "priority": "P0",
+      "status": "corregido-ci-aprobado",
+      "phase": "J1",
+      "title": "CI del main base en rojo",
+      "evidence": [
+        "evidencia/ci-base.json",
+        ".github/workflows/checks.yml:34"
+      ],
+      "observed": "En main 676ac511 fallan browser (1), (3) y (4); logic y audio (1–3) pasan. El agregador browser-audio falla. Los logs no pudieron descargarse por el proxy (403); causa de cada flujo sin diagnosticar.",
+      "acceptance": "Identificar flujos y causas con sus logs; reproducirlos; corregir sin retirar aserciones y completar los seis grupos de navegador y tres de audio en el candidato.",
+      "resolution": {
+        "phase": "J1 y J7",
+        "evidence": "docs/panel/sesion-5/evidencia/verificacion.json",
+        "limits": "CI completo de integración aprobado; aceptación física y publicación en tiendas siguen en V01.",
+        "ci": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278",
+        "ciHead": "6be023dfaa5bef19766288dd7b5b86fb726be101"
+      }
+    },
+    {
+      "id": "D01",
+      "area": "Economía y progreso",
+      "priority": "P0",
+      "status": "corregido-tecnico",
+      "phase": "J1",
+      "title": "Una ronda anuncia éxito aunque guardar falle",
+      "evidence": [
+        "src/places.js:85",
+        "src/places.js:95",
+        "evidencia/contratos.json"
+      ],
+      "observed": "Con save() devolviendo false al terminar, placeFinish devuelve true: RAM tiene dos estrellas y 120 chispas, disco conserva cero. Es un contrato con persistencia simulada, no una prueba real de cuota.",
+      "acceptance": "Premio, récord, notas, color y cierre se conservan juntos o se revierten/reintentan con aviso claro. Recarga tras un fallo no pierde un premio anunciado ni permite duplicarlo.",
+      "resolution": {
+        "phase": "J1 y J7",
+        "tests": [
+          "tests/places-durability.mjs",
+          "tests/places.mjs",
+          "tests/places_smoke.py"
+        ],
+        "limits": "Catálogo inicial y regresiones posteriores documentados; aceptación física en V01.",
+        "followup": "J7 verifica el controlador real de la nube y conserva la referencia del objeto al revertir para permitir otro intento.",
+        "additionalTests": [
+          "tests/places-boundaries.mjs",
+          "tests/journey_stick_smoke.py",
+          "tests/places_durability_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "D02",
+      "area": "Compatibilidad",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J1",
+      "title": "Formato futuro preservado pero lector falla",
+      "evidence": [
+        "src/places.js:28",
+        "src/places.js:109",
+        "evidencia/contratos.json"
+      ],
+      "observed": "normalizePlaces preserva {version:9,unknown:'keep'}, pero places() lanza SyntaxError por JSON.parse(undefined). La conservación de bytes no basta para abrir la UI con seguridad.",
+      "acceptance": "Formato desconocido queda intacto, legible como incompatible y sin operaciones de escritura; ningún frame ni panel se congela.",
+      "resolution": {
+        "phase": "J1",
+        "tests": [
+          "tests/places-durability.mjs",
+          "tests/places.mjs",
+          "tests/places_smoke.py"
+        ],
+        "limits": "Aceptación y catálogo completo del candidato en J7."
+      }
+    },
+    {
+      "id": "A01",
+      "area": "Audio",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J2",
+      "title": "El cierre sigue usando un remate externo",
+      "evidence": [
+        "src/journey-victory.js:7",
+        "src/journey-victory.js:17",
+        "src/journey-victory.js:36",
+        "src/journey-victory.js:40",
+        "evidencia/cierres-audio.json",
+        "src/places.js:95"
+      ],
+      "observed": "Añade un riser 300–7000 Hz, crash por encima de 5 kHz y tema agudo con lead propio por bioma. Jay rechaza cómo suena. Once renders no saturan (pico máximo 0,573), lo que no certifica gusto ni integración. La tarjeta se programa a 1,2 s; el cierre de tres compases dura unos 6 s a 120 BPM. Falta verificar la continuidad si se cambia de lugar antes de que termine.",
+      "acceptance": "El cierre acentúa/varía una voz y una capa de lo que suena, en su compás, acorde y timbre. Sin fanfarria, riser, crash o lead ajenos obligatorios. La misma contribución se reconoce después en Tu canción. Jay lo aprueba al oírlo. Mostrar el resultado y permitir la siguiente escena con un contrato de final/cancelación musical; no dejar notas antiguas invadiendo otro mundo.",
+      "resolution": {
+        "phase": "J2",
+        "tests": [
+          "tests/journey-victory.mjs",
+          "tests/song-harmony.mjs",
+          "tests/victory_mix.py",
+          "tests/victory_live_smoke.py",
+          "tests/song_mix.py",
+          "tests/song_stage_mix.py"
+        ],
+        "limits": "Escucha de Jay y comprobación final del candidato pendientes; radio y generación intactas.",
+        "followup": "J7 cuenta dos compases por pasos vivos al cambiar tempo; regresión de reloj variable y once renders actuales aprobados."
+      }
+    },
+    {
+      "id": "A02",
+      "area": "Armonía",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J2",
+      "title": "La capa de Cristales puede salir de escala",
+      "evidence": [
+        "src/song.js:28",
+        "src/journey-victory.js:48",
+        "src/song-stage.js:44",
+        "evidencia/contratos.json"
+      ],
+      "observed": "La resta fija de tres semitonos genera MIDI 73 (Do♯) sobre La menor/La-Do-Mi. También se reproduce sobre un acorde menor dentro de la escala mayor de Prisma. La usan cierre y canción.",
+      "acceptance": "Los eventos melódicos de cada capa respetan el marco armónico vigente, incluidas sus tensiones intencionales. Pruebas de escalas/acordes y render real de cierre, trofeo y canción.",
+      "resolution": {
+        "phase": "J2",
+        "tests": [
+          "tests/journey-victory.mjs",
+          "tests/song-harmony.mjs",
+          "tests/victory_mix.py",
+          "tests/victory_live_smoke.py",
+          "tests/song_mix.py",
+          "tests/song_stage_mix.py"
+        ],
+        "limits": "Escucha de Jay y comprobación final del candidato pendientes; radio y generación intactas."
+      }
+    },
+    {
+      "id": "A03",
+      "area": "Armonía",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J2",
+      "title": "La quinta fija del final introduce alteraciones",
+      "evidence": [
+        "src/song-stage.js:52",
+        "evidencia/contratos.json"
+      ],
+      "observed": "La segunda pasada del tema suma siete semitonos: en La menor la nota Si se convierte en Fa♯. No pasa por snapToScale al emitir ese chelo.",
+      "acceptance": "La segunda pasada conserva su intención y usa conducción/quinta compatible con el marco actual; no se elimina el tema ni se modifica la radio base.",
+      "resolution": {
+        "phase": "J2",
+        "tests": [
+          "tests/journey-victory.mjs",
+          "tests/song-harmony.mjs",
+          "tests/victory_mix.py",
+          "tests/victory_live_smoke.py",
+          "tests/song_mix.py",
+          "tests/song_stage_mix.py"
+        ],
+        "limits": "Escucha de Jay y comprobación final del candidato pendientes; radio y generación intactas."
+      }
+    },
+    {
+      "id": "U01",
+      "area": "Interfaz",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J3",
+      "title": "Tres sentidos distintos de Viaje",
+      "evidence": [
+        "index.html:97",
+        "src/journey-mode.js:20",
+        "src/journey-mode.js:27",
+        "capturas/ui-cubo-viaje.png",
+        "capturas/ui-menu-mas.png"
+      ],
+      "observed": "El Viaje es la historia; Viaje en Tu cubo agrupa chispas/saltos; Viaje en el menú alterna densidad visual. El anillo y los favoritos también comparten Lugares.",
+      "acceptance": "Una palabra por función. La ruta principal y el cambio de vista se distinguen, con los mismos IDs, progreso y funciones existentes.",
+      "resolution": {
+        "phase": "J3",
+        "tests": [
+          "tests/release_smoke.py",
+          "tests/journey_entry_smoke.py",
+          "tests/menu_v2_smoke.py",
+          "scripts/panel-measures.py"
+        ],
+        "limits": "Aspecto normal simulado; aceptación física en J7."
+      }
+    },
+    {
+      "id": "U02",
+      "area": "Presentación de producción",
+      "priority": "P2",
+      "status": "corregido-tecnico",
+      "phase": "J3",
+      "title": "Terminología interna en rutas normales",
+      "evidence": [
+        "index.html:234",
+        "src/lab-learning.js:8",
+        "src/release-model.js:15",
+        "capturas/ui-guia.png",
+        "evidencia/ui-medidas.json"
+      ],
+      "observed": "Laboratorio abre una práctica musical legítima, no el panel Prototipo. Puede llamarse Escuchar y responder. Alpha/build/fecha aparecen en el menú; deploy sin registrar es el fallback local no sellado, no un defecto probado de Vercel.",
+      "acceptance": "Inventario de superficies normales sin rótulos de demo; prácticas útiles permanecen. Trazabilidad técnica en Ajustes/Acerca de sin simular una publicación que aún no existe.",
+      "resolution": {
+        "phase": "J3",
+        "tests": [
+          "tests/release_smoke.py",
+          "tests/journey_entry_smoke.py",
+          "tests/menu_v2_smoke.py",
+          "scripts/panel-measures.py"
+        ],
+        "limits": "Aspecto normal simulado; aceptación física en J7."
+      }
+    },
+    {
+      "id": "U03",
+      "area": "Objetivo",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J4",
+      "title": "La guía aún dirige a metas anteriores",
+      "evidence": [
+        "index.html:211",
+        "index.html:215",
+        "src/voice-guide.js",
+        "capturas/ui-guia.png"
+      ],
+      "observed": "La guía recomienda cuatro experiencias antiguas y la meta de Tu cubo, mientras el juego principal pide el capítulo actual o el siguiente del anillo.",
+      "acceptance": "La guía, menú, portal, resultado y Refugio señalan el mismo siguiente paso según el estado real. Se conservan las prácticas como ayuda contextual.",
+      "resolution": {
+        "phase": "J4",
+        "tests": [
+          "tests/game-objective.mjs",
+          "tests/refugio_lugares_smoke.py",
+          "tests/recorrido_smoke.py",
+          "tests/journey_entry_smoke.py"
+        ],
+        "limits": "Comprensión con personas nuevas pendiente en J7; reglas y generación intactas."
+      }
+    },
+    {
+      "id": "U04",
+      "area": "Objetivo y economía",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J4",
+      "title": "33 estrellas domina al objetivo de once lugares",
+      "evidence": [
+        "src/refugio-lugares.js:12",
+        "src/refugio-lugares.js:35",
+        "src/refugio-lugares.js:56",
+        "capturas/ui-lugares.png"
+      ],
+      "observed": "La hoja enfatiza ★ 5/33. Ganar requiere completar once lugares; 33 es la versión maestra. La distinción existe en el código pero no ocupa la jerarquía principal.",
+      "acceptance": "Se distinguen lugares completados /11, estrellas /33 y chispas para comprar. Ninguna compra o salto se presenta como progreso necesario para ganar.",
+      "resolution": {
+        "phase": "J4",
+        "tests": [
+          "tests/game-objective.mjs",
+          "tests/refugio_lugares_smoke.py",
+          "tests/recorrido_smoke.py",
+          "tests/journey_entry_smoke.py"
+        ],
+        "limits": "Comprensión con personas nuevas pendiente en J7; reglas y generación intactas."
+      }
+    },
+    {
+      "id": "P01",
+      "area": "Continuidad",
+      "priority": "P1",
+      "status": "integrado-pendiente-personas",
+      "phase": "J5",
+      "title": "Tras ganar, el crecimiento por estrellas se estanca",
+      "evidence": [
+        "scripts/play-curve.mjs:19",
+        "scripts/play-curve.mjs:33",
+        "src/places.js:94",
+        "evidencia/progresion.json"
+      ],
+      "observed": "El modelo da 80,1 y 81,8 min sin capas nuevas para 60 % y sin sonido. No prueba música idéntica ni abandono real: las notas personales se actualizan al rejugar, y el mundo sigue variando.",
+      "acceptance": "Distinguir final de campaña y continuidad creativa. Hacer perceptible lo que ya cambia con tus notas, sin contar compras como música ni bajar 75/70 % por esta auditoría. Medir interés con personas.",
+      "resolution": {
+        "phase": "J5",
+        "tests": [
+          "tests/creative_continuity_smoke.py",
+          "tests/play-curve.mjs",
+          "tests/places_smoke.py"
+        ],
+        "limits": "No se alteran umbrales ni generadores. El modelo conserva el hueco de capas; disfrute y permanencia no medidos."
+      }
+    },
+    {
+      "id": "T01",
+      "area": "Sensación",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J6",
+      "title": "La sincronía visual tiene un techo de 250 ms",
+      "evidence": [
+        "src/journey-pulse.js:24",
+        "src/journey-pulse.js:25",
+        "evidencia/contratos.json"
+      ],
+      "observed": "Con salida de 400 ms, admitida por outputLatency, landDelay devuelve 250 ms: el acento puede adelantarse al oído al menos 150 ms. Es una prueba matemática, no una medida de Bluetooth real.",
+      "acceptance": "Contacto inmediato y acento musical se distinguen. El acento sigue el instante de salida estimado; verificar ventanas/latencias altas y confirmar en teléfono, sin cambiar las notas base.",
+      "resolution": {
+        "phase": "J6",
+        "tests": [
+          "tests/pulse-output-timing.mjs",
+          "tests/journey-pulse.mjs",
+          "tests/player_touch_smoke.py",
+          "tests/journey_pulse_smoke.py"
+        ],
+        "limits": "Estimación del navegador; medición física en teléfono/auriculares pendiente."
+      }
+    },
+    {
+      "id": "V01",
+      "area": "Cierre",
+      "priority": "P1",
+      "status": "pendiente-aceptacion",
+      "phase": "J7",
+      "title": "Falta aceptación humana y del candidato publicado",
+      "evidence": [
+        "docs/PRUEBAS_CON_PERSONAS.md",
+        "HANDOFF.md",
+        "capturas/manifest.json"
+      ],
+      "observed": "Hay feedback de Jay y pruebas automatizadas; no sesiones documentadas de nuevos jugadores ni validación instrumentada de estos cierres en teléfono. Esta revisión no verifica deploy, tiendas o cuenta en producción.",
+      "acceptance": "Cinco sesiones sin ayuda, al menos dos personas sin hábito de jugar; Jay acepta cubo y cierre en su teléfono; candidato con lógica/navegador/audio verdes y revisión de despliegue. Supabase permanece en pausa."
+    },
+    {
+      "id": "D03",
+      "area": "Persistencia y posición",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J7",
+      "title": "Entrar a una ronda con guardado fallido cambia la posición",
+      "evidence": [
+        "tests/places-boundaries.mjs"
+      ],
+      "observed": "Antes de J7, con save()===false, startPlace devuelve false pero deja wx=1200 en lugar de 0 en la fixture. No se afirma pérdida de una partida real.",
+      "acceptance": "La entrada fallida devuelve posición y capítulo previos; ronda inactiva y estado durable intacto.",
+      "resolution": {
+        "phase": "J7",
+        "tests": [
+          "tests/places-boundaries.mjs",
+          "tests/places_smoke.py",
+          "tests/cloud_account_smoke.py"
+        ],
+        "limits": "Fixtures y navegador, no teléfono físico."
+      }
+    },
+    {
+      "id": "D04",
+      "area": "Estado de interfaz",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "J7",
+      "title": "Un guardado sustituido conserva la última tarjeta de recompensa",
+      "evidence": [
+        "tests/places-boundaries.mjs"
+      ],
+      "observed": "Tras sustituir S en una fixture, places().last devuelve la ronda del estado anterior. La tarjeta pendiente debe pertenecer al guardado que la ganó.",
+      "acceptance": "Cambiar el objeto de partida invalida tarjeta y callbacks anteriores; no cambia su progreso guardado.",
+      "resolution": {
+        "phase": "J7",
+        "tests": [
+          "tests/places-boundaries.mjs",
+          "tests/places_smoke.py",
+          "tests/cloud_account_smoke.py"
+        ],
+        "limits": "Fixtures y navegador, no teléfono físico.",
+        "additionalTests": [
+          "tests/places_durability_smoke.py"
+        ]
+      }
+    }
+  ]
+}

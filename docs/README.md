@@ -12,6 +12,7 @@ Actualizada el 24 de octubre de 2026. Cada tema tiene una sola guía; si dos doc
 
 | Documento | Para qué |
 |---|---|
+| [Auditoría 4](panel/sesion-4/informe.md) | Diez análisis, evidencia, 14 hallazgos y J1–J7 propuestas; registro para cerrar el ciclo |
 | [Panel creativo](PANEL.md) | Cómo funciona el panel simulado, sus notas, decisiones de Jay y cómo hacer la próxima sesión. Informes en [panel/](panel/) |
 | [El mundo](MUNDO.md) | Diseño vigente: cuatro capas, 11 lugares, estrellas, chispas, Refugio, Tu canción, planes H e I y herramientas de prueba |
 | [El Viaje](VIAJE.md) | Capítulos, curva, tema del cubo, color y primeros minutos |
@@ -36,3 +37,7 @@ Actualizada el 24 de octubre de 2026. Cada tema tiene una sola guía; si dos doc
 - Una decisión nueva reemplaza a la antigua en su guía; no se añaden párrafos que la contradigan.
 - Separar **aprobado**, **construido**, **probado** y **publicado**. Un bot o una captura no prueban lo que siente una persona.
 - Los documentos antiguos (planes, cierres, traspasos anteriores) se borraron del árbol el 24 de octubre. Siguen en Git: `git show 5914ca9:docs/historial/NOMBRE.md`. Ninguno autoriza trabajo nuevo.
+
+[Cierre de la auditoría 4 · fases J1–J7](PULIDO_CIERRE.md): correcciones autorizadas, evidencia y límites.
+
+[Quinta sesión del panel](panel/sesion-5/informe.md): reevaluación de las correcciones sin rehacer música ni mundos.

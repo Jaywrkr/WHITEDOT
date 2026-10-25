@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
 // «Suelta» (the Vacío, chapter 5 of the Journey's games, Jay's decision of 23 October): the cube arrives carrying what
 // stuck to it in the Llanura. Each pulse on time lets one thing go: it rises, becomes a star where you are and, a bar
 // later, sings your note back. The cube grows lighter and smaller with each one, and the bar fills. When the last
@@ -33,7 +33,7 @@ export function initialize(runtime){
  function sing(midi){if(!audible()||!Number.isFinite(midi))return;const bar=(runtime.SIX||.15)*16;runtime.soon?.(t=>runtime.pluck?.(Math.min(96,midi+12),t+bar,runtime.vel?.(.06)??.06,3),'player');songs.push(performance.now()+bar*1000);if(songs.length>8)songs.shift();}
  function arrive(){const s=own();if(s.light)return;s.light={x:Math.round(runtime.S.wx+RELEASE_LIGHT_GAP),y:Math.round(runtime.S.wy-RELEASE_LIGHT_GAP*.5)};lightPulse=1;runtime.save?.();
   chapterToast(runtime,'vacio','Tu luz llegó: tócala a tiempo.');}
- function light(){const s=own();if(s.lit)return 'done';s.lit=true;if(runtime.save?.()===false){s.lit=false;return null;}runtime.enterFx=1;runtime.flash=1;runtime.journeyComplete?.('vacio');return 'light';}
+ function light(){const s=own();if(s.lit)return 'done';s.lit=true;if(!commitJourneyClose(runtime,'vacio')){s.lit=false;return null;}runtime.enterFx=1;runtime.flash=1;return 'light';}
  // Only on time: one thing lets go and becomes a star. Off time the cube shivers.
  let crowded=null,early=0;
  function pulse(on,beat={}){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}

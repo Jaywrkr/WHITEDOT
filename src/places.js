@@ -1,11 +1,11 @@
-import {findBiome,WORLD_CHAPTERS} from './journey-chapters.js';
+import {findBiome,WORLD_CHAPTERS,CHAPTERS} from './journey-chapters.js';
 import {freeOpen} from './journey-mode.js';
 import {roundSparks} from './spark-rules.js';
 import {creditSparks,normalizeSparkEconomy} from './sparks-model.js';
 // The eleven places (plan F4, docs/MUNDO.md). After the Journey each chapter is a place you can play again: a round is
 // the chapter's game from an empty bar, closed by its gold thing. Stars are for going forward and winning: ★ complete,
-// ★★ with 85 % of pulses on time, ★★★ the Maestro version (unlocked by ★★: tempo +10 %, bar ×1.5, narrower window)
-// with 80 % on time. Sparks come from playing: each round pays by spark-rules.js. Stars never pay sparks.
+// ★★ with 75 % of pulses on time, ★★★ the Maestro version (unlocked by ★★: tempo +10 %, bar ×1.5, narrower window)
+// with 70 % on time. Sparks come from playing: each round pays by spark-rules.js. Stars never pay sparks.
 // They live in S.lugares: S.places already holds the regions visited, for the map and the Bitácora.
 // Plan H3 (24 October): the ring opens in order, like the tracks of a record: each place after the Journey opens when
 // the one before it is complete. Completing all eleven wins the game; the 33 stars are the master version of your song.
@@ -23,7 +23,7 @@ export const RHYTHM_STAR=.75,MAESTRO_STAR=.7,MAESTRO_TEMPO=1.1,MAESTRO_GOAL=1.5,
 const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
 const point=v=>object(v)&&Number.isFinite(v.x)&&Number.isFinite(v.y)?{x:Math.round(v.x),y:Math.round(v.y)}:null;
 const share=(hits,total)=>total>0?Math.max(0,Math.min(1,hits/total)):0;
-// Stars a round earns: ★ always on completion; ★★ with sound and 85 % on time; ★★★ only in a Maestro round, with 80 %.
+// Stars a round earns: ★ always on completion; ★★ with sound and 75 % on time; ★★★ only in a Maestro round, with 70 %.
 export function roundStars({onTime,maestro=false,sound=true}){return [true,!maestro&&sound&&onTime>=RHYTHM_STAR||maestro&&sound&&onTime>=RHYTHM_STAR,maestro&&sound&&onTime>=MAESTRO_STAR];}
 export function normalizePlaces(raw,journey={}){if(object(raw)&&Number.isInteger(raw.version)&&raw.version>PLACES_VERSION)return raw;const q=object(raw)?raw:{};
  // A version-1 save: every place its stars had open stays open (the old ladder asked 5, 8, 12, 16, 20 and 24 ★).
@@ -48,13 +48,29 @@ export const starCount=places=>PLACE_IDS.reduce((a,id)=>a+(places?.stars?.[id]||
 export const previousPlace=id=>{const i=PLACE_IDS.indexOf(id);return i>WORLD_CHAPTERS.length-1?PLACE_IDS[i-1]:null;};
 export const complete=(places,id)=>places?.stars?.[id]?.[0]===true;
 export const allComplete=places=>PLACE_IDS.every(id=>complete(places,id));
-export const placeOpen=(places,id,journey)=>{const p=PLACES.find(x=>x.id===id);if(!p||!p.game||!freeOpen(journey))return false;const prev=previousPlace(id);
+export const placeOpen=(places,id,journey)=>{const p=PLACES.find(x=>x.id===id);if(!p||!p.game||places?.version>PLACES_VERSION||places?.readOnly||!freeOpen(journey))return false;const prev=previousPlace(id);
  return !prev||complete(places,prev)||complete(places,id)||places?.seen?.[id]===true||places?.kept?.[id]===true;};
 // The next place on the path: the first one open and not complete, in order; null once all eleven are.
 export const nextOnPath=(places,journey)=>PLACES.find(p=>p.game&&placeOpen(places,p.id,journey)&&!complete(places,p.id))||null;
+// A read-only objective shared by guide, menu and progress sheets. It never moves the player or spends currency.
+export function gameObjective(s,places=normalizePlaces(s.lugares,s.journey)){
+ if(places?.readOnly||places?.version>PLACES_VERSION)return {kind:'update',id:null,line:'Estos lugares necesitan una versión más reciente.',progress:'Tu progreso se conserva.'};
+ if(!freeOpen(s.journey)){
+  const n=Math.min(10,s.pathCrystals?.length||0),chapter=Math.max(0,Math.min(CHAPTERS.length-1,s.journey?.chapter||0)),id=CHAPTERS[chapter];
+  if(!chapter&&n<10)return {kind:'journey',id:'camino',line:'Toca a tiempo junto a los cristales.',progress:`${n}/10 cristales · abre el Mundo`};
+  if(id==='refugio')return {kind:'journey',id,line:'Escucha tu canción en el Refugio.',progress:'El Viaje está llegando a casa.'};
+  const next=s.journey?.done?.[id]?CHAPTERS[chapter+1]:id==='camino'?'llanura':id,name=PLACES.find(p=>p.id===next)?.name||'Refugio';
+  return {kind:'journey',id:next,line:s.journey?.done?.[id]?`Cruza el portal hacia ${name}.`:`Toca a tiempo en ${name}.`,progress:'El Viaje · escucha y sigue la luz.'};
+ }
+ const completed=PLACE_IDS.filter(id=>complete(places,id)).length,stars=starCount(places),next=nextOnPath(places,s.journey);
+ return {kind:next?'place':'create',id:next?.id||null,line:next?`Siguiente: ${next.name}.`:'Tu canción está completa. Explora a tu ritmo.',progress:`${completed}/11 lugares · ★ ${stars}/33`,completed,stars};
+}
+function restoreTree(target,copy){for(const k of Object.keys(target))if(!Object.hasOwn(copy,k))delete target[k];for(const [k,v] of Object.entries(copy)){if(object(v)&&object(target[k]))restoreTree(target[k],v);else if(Array.isArray(v)&&Array.isArray(target[k]))target[k].splice(0,target[k].length,...v);else target[k]=v;}}
 export function initialize(runtime){
  let owner=null,state=null,shown=null;
- function own(){if(owner!==runtime.S){owner=runtime.S;runtime.S.lugares=normalizePlaces(runtime.S.lugares,runtime.S.journey);state=runtime.S.lugares;
+ function own(){if(owner!==runtime.S){if(owner){const card=runtime.$?.('mPlace');if(card)card.hidden=true;}shown=null;owner=runtime.S;runtime.S.lugares=normalizePlaces(runtime.S.lugares,runtime.S.journey);state=runtime.S.lugares;
+   // A future format remains untouched on disk and in S; readers get a safe, locked view.
+   if(state.version>PLACES_VERSION)state={...normalizePlaces(null),version:state.version,readOnly:true};
    // A round left open by a reload is dropped: the chapter's own state comes back as it was.
    if(state.run){restore(state.run);back(state.run.from);state.run=null;}}
   // A chapter kept in the Journey is always a ★ of its place, whenever it was kept.
@@ -63,28 +79,34 @@ export function initialize(runtime){
  const gameKey=id=>PLACES.find(p=>p.id===id)?.game;
  function restore(run){const j=runtime.S.journey||{},key=gameKey(run.id);if(key){if(run.stash===undefined)delete j[key];else j[key]=run.stash;}const MU=runtime.MU;if(MU){MU.tempoScale=1;MU.onTimeWindow=null;}}
  // Back to the portal the round was entered from.
- function back(from){const p=point(from);if(p){runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.enterFx=1;}}
+ function back(from){runtime.cancelJourneyVictory?.();const p=point(from);if(p){runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.enterFx=1;}}
  const today=()=>runtime.S.todayKey||'';
  const run=()=>own().run;
  // Start a round: the chapter's game from an empty bar, in the place's biome. The Journey's own state is kept aside.
  function start(id,{maestro=false,from=null,remix=null,free=false}={}){const s=own();if(s.run||!placeOpen(s,id,runtime.S.journey)||maestro&&!s.stars[id][1]||free&&(maestro||remix||!complete(s,id)))return false;
+  runtime.cancelJourneyVictory?.();
   // Today's remix (wild.js, plan F18): only the day's place, with the day's rhythm, never as Maestro.
-  const daily=remix?runtime.dailyRemix?.():null;if(remix&&(maestro||!daily||daily.id!==id||daily.rhythm!==remix))return false;const j=runtime.S.journey||(runtime.S.journey={}),key=gameKey(id),stash=j[key];
+  const daily=remix?runtime.dailyRemix?.():null;if(remix&&(maestro||!daily||daily.id!==id||daily.rhythm!==remix))return false;const position={wx:runtime.S.wx,wy:runtime.S.wy},j=runtime.S.journey||(runtime.S.journey={}),key=gameKey(id),stash=j[key];
   const spot=findBiome(id,{x:runtime.S.wx,y:runtime.S.wy},(x,y)=>runtime.BIOMES[runtime.biomeOfPos(x,y)]?.id,(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea);
   s.run={id,maestro:!!maestro,...(remix?{remix}:{}),...(free?{free:true}:{}),from:point(from),startedAt:Date.now(),hits:0,total:0,silent:false,stash:stash===undefined?undefined:JSON.parse(JSON.stringify(stash))};
   j[key]={hinted:stash?.hinted===true};if(spot){runtime.S.wx=spot.x;runtime.S.wy=spot.y;}
-  const MU=runtime.MU;if(MU){MU.tempoScale=maestro?MAESTRO_TEMPO:1;MU.onTimeWindow=maestro?MAESTRO_WINDOW:null;}
-  if(runtime.save?.()===false){restore(s.run);s.run=null;return false;}runtime.enterFx=1;return true;}
+  const MU=runtime.MU,prior=MU?{scale:MU.tempoScale,window:MU.onTimeWindow,hasScale:Object.hasOwn(MU,'tempoScale'),hasWindow:Object.hasOwn(MU,'onTimeWindow')}:null;if(MU){MU.tempoScale=maestro?MAESTRO_TEMPO:1;MU.onTimeWindow=maestro?MAESTRO_WINDOW:null;}
+  if(runtime.save?.()===false){restore(s.run);s.run=null;Object.assign(runtime.S,position);if(MU){if(prior.hasScale)MU.tempoScale=prior.scale;else delete MU.tempoScale;if(prior.hasWindow)MU.onTimeWindow=prior.window;else delete MU.onTimeWindow;}return false;}runtime.enterFx=1;return true;}
  // Every pulse a game hears while a round or a Journey chapter is being played.
- function hear(id,on,beat={}){const s=own();if(s.run&&s.run.id===id){s.run.total++;if(on)s.run.hits++;if(beat.silent)s.run.silent=true;return;}
+ function hear(id,on,beat={}){const s=own();if(s.readOnly)return;if(s.run&&s.run.id===id){s.run.total++;if(on)s.run.hits++;if(beat.silent)s.run.silent=true;return;}
   if(WORLD_CHAPTERS.includes(id)){const j=s.journeyShare[id]||(s.journeyShare[id]={hits:0,total:0,silent:false});j.total++;if(on)j.hits++;if(beat.silent)j.silent=true;}}
  function grant(id,stars){const s=own(),got=s.stars[id],fresh=stars.map((x,i)=>x&&!got[i]);stars.forEach((x,i)=>{if(x)got[i]=true;});return fresh;}
  // A Journey chapter kept: its ★, and its ★★ if it was played on time with sound.
- function chapterKept(id){const s=own();if(!WORLD_CHAPTERS.includes(id))return;const j=s.journeyShare[id]||{hits:0,total:0};grant(id,[true,!j.silent&&share(j.hits,j.total)>=RHYTHM_STAR,false]);}
+ function chapterKept(id){const s=own();if(s.readOnly||!WORLD_CHAPTERS.includes(id))return;const j=s.journeyShare[id]||{hits:0,total:0};grant(id,[true,!j.silent&&share(j.hits,j.total)>=RHYTHM_STAR,false]);}
  // The gold thing of a round closed: stars, sparks, record, and the chapter's state back as it was.
- function finish(id){const s=own(),r=s.run;if(!r||r.id!==id)return false;
+ function finish(id){const s=own(),r=s.run;if(s.readOnly||!r||r.id!==id)return false;
+  // Reward, record, personal notes, remix and restored chapter are one durable operation.
+  const game=gameKey(id),playing=runtime.S.journey?.[game];
+  const keys=['lugares','journey','sparkEconomy','sparks','wild','rewards'],before=Object.fromEntries(keys.map(k=>[k,structuredClone(runtime.S[k])])),tempo=runtime.MU?.tempoScale,window=runtime.MU?.onTimeWindow;
+  function rollback(){if(runtime.S.journey&&game){if(playing===undefined)delete runtime.S.journey[game];else runtime.S.journey[game]=playing;}for(const k of keys){if(before[k]===undefined)delete runtime.S[k];else if(object(before[k])&&object(runtime.S[k]))restoreTree(runtime.S[k],before[k]);else runtime.S[k]=before[k];}if(runtime.MU){runtime.MU.tempoScale=tempo;runtime.MU.onTimeWindow=window;}return false;}
+  function commit(){return runtime.save?.()!==false;}
   // Libre (plan H3): only the music of the place; no stars, no sparks, no card. Back to its portal.
-  if(r.free){restore(r);s.run=null;shown=null;runtime.journeyVictory?.(id);back(r.from);runtime.save?.();runtime.hud?.();return true;}const onTime=share(r.hits,r.total),sound=runtime.S.sound!==false&&!r.silent,ms=Date.now()-r.startedAt;
+  if(r.free){const pos={wx:runtime.S.wx,wy:runtime.S.wy};restore(r);s.run=null;back(r.from);if(!commit()){Object.assign(runtime.S,pos);return rollback();}shown=null;runtime.journeyVictory?.(id);runtime.hud?.();return true;}const onTime=share(r.hits,r.total),sound=runtime.S.sound!==false&&!r.silent,ms=Date.now()-r.startedAt;
   if(s.rounds.day!==today()){s.rounds.day=today();s.rounds.counts={};}const roundsToday=s.rounds.counts[id]||0;s.rounds.counts[id]=roundsToday+1;
   const stars=roundStars({onTime,maestro:r.maestro,sound}),fresh=grant(id,stars);
   runtime.S.sparkEconomy=normalizeSparkEconomy(runtime.S.sparkEconomy,runtime.S.sparks,runtime.S.todayKey);const sparks=creditSparks(runtime.S,roundSparks(onTime,{maestro:r.maestro,roundsToday}));
@@ -92,14 +114,15 @@ export function initialize(runtime){
   const b=s.best[id]||(s.best[id]={onTime:0,ms:null,rounds:0});const record=onTime>b.onTime||b.ms===null||ms<b.ms;b.onTime=Math.max(b.onTime,onTime);b.ms=b.ms===null?ms:Math.min(b.ms,ms);b.rounds++;
   const j=runtime.S.journey;if(j&&typeof j==='object'){if(!j.colors||typeof j.colors!=='object')j.colors={};j.colors[id]=true;}
   {const ps=runtime.journeyPulseState?.()||{},all=(ps.notes||[]).map((n,i)=>[n,ps.noteSteps?.[i]]).filter(([n])=>Number.isInteger(n)).slice(-8);if(all.length){s.notes[id]=all.map(([n])=>n);s.noteSteps||={};if(all.every(([,st])=>Number.isInteger(st)))s.noteSteps[id]=all.map(([,st])=>st);else delete s.noteSteps[id];}}
-  shown={id,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;runtime.narrateRound?.(shown);runtime.journeyVictory?.(id);runtime.save?.();runtime.hud?.();setTimeout(results,1200);return true;}
+  const personal=s.notes[id]?.length?JSON.stringify([s.notes[id],s.noteSteps?.[id]])!==JSON.stringify([before.lugares.notes?.[id],before.lugares.noteSteps?.[id]])?'changed':'kept':null;
+  const result={id,personal,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.journeyVictory?.(id);runtime.hud?.();setTimeout(()=>{if(shown===result&&!run())results();},1200);return true;}
  // Leaving a round from the menu: nothing earned, the chapter's state back, and you are at the portal again.
  function abandon(){const s=own();if(!s.run)return false;const from=s.run.from;restore(s.run);s.run=null;back(from);runtime.narrate?.('abandon');runtime.save?.();runtime.hud?.();return true;}
  // The round's card: the three stars, what each asks, and what you earned. Silent buttons.
- function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;const pct=Math.round(r.onTime*100),mm=Math.floor(r.ms/60000),ss=String(Math.round(r.ms/1000)%60).padStart(2,'0');
+ function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=Math.round(r.onTime*100),mm=Math.floor(r.ms/60000),ss=String(Math.round(r.ms/1000)%60).padStart(2,'0');
   runtime.$('placeTitle').textContent=r.maestro?'Maestro':r.remix?'Remezcla':'Completo';
   runtime.$('placeStars').innerHTML=['★','★','★'].map((x,i)=>`<span class="${own().stars[r.id][i]?'got':''}${r.fresh[i]?' new':''}">${x}</span>`).join('');
-  runtime.$('placeRows').innerHTML=[`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % a tiempo</li>`,`<li>${r.stars[2]?'✓':'·'} Maestro</li>`].join('')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>');
+  runtime.$('placeRows').innerHTML=[`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % a tiempo</li>`,`<li>${r.stars[2]?'✓':'·'} Maestro</li>`].join('')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>')+(r.personal?`<li>${r.personal==='changed'?'Tu frase queda':'Tu frase sigue'} en el final de Tu canción.</li>`:'');
   runtime.$('placeEarned').textContent=`${mm}:${ss} · +${r.sparks+(r.extra?.sparks||0)} ✦${r.record||r.extra?.record?' · récord':''}`;box.hidden=false;
   // The narrator speaks here, in the card, never during play (plan H5).
   const said=runtime.takePendingLine?.(),nar=runtime.$('placeNarrator');if(nar){nar.hidden=!said;nar.textContent=said?`${said.title} · ${said.line}`:'';}

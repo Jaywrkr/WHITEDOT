@@ -1,53 +1,49 @@
 # Traspaso para el siguiente agente
 
-**24 de octubre de 2026 · código 2.3.0-alpha.173 en `main`.** Vale para Codex, ChatGPT, Claude o cualquier otro agente. Lee antes [AGENTS.md](AGENTS.md).
+**Código 2.3.0-alpha.181 · auditoría corregida conservando generadores.** Leer [AGENTS](AGENTS.md), [Cierre](docs/PULIDO_CIERRE.md) y [quinta sesión](docs/panel/sesion-5/informe.md).
 
-## Qué pide Jay ahora
+## Qué autorizó Jay
 
-1. **Una cuarta sesión del panel creativo**, hecha igual que las tres anteriores. Todo está en [docs/PANEL.md](docs/PANEL.md): quiénes son, cómo se puntúa, los pasos, el formato, el historial de notas, lo que ya decidió y la petición lista para copiar.
-2. **El cubo, pequeño.** A Jay no le gusta grande. La I2 lo agrandó a 24–36 px y hay que volver a un cubo pequeño (`src/render.js:188`, aplicado en `src/render.js:111`). El panel no debe pedir que crezca otra vez.
+Solucionar los hallazgos de la auditoría conservando cómo se generan la música y los mundos. Se mantiene la música base que le gusta, semillas, RNG, mapas, biomas, distribución, criaturas y arte. El sonido de victoria sí se integra en la capa ganada; las notas incorrectas de la capa/final se corrigen localmente. No hay otra expansión aprobada.
 
-No se cambia el código del juego por la auditoría hasta que Jay apruebe su plan.
+Entrega integrada en `main` por el PR #353, con autorización expresa de Jay el 25 de octubre. La integración reúne el cubo pequeño, ambas auditorías y J1–J7 desde `e6c0a3a6`, sin otros cambios de juego. Para tareas posteriores vuelve a regir el flujo habitual: rama, commit y push; Jay crea PR y merge. Supabase continúa en pausa.
 
-## Qué es Kubono hoy
+## Historial de la entrega unificada
 
-- Juego musical para teléfono, web y escritorio. Eres un cubo; **tocar a tiempo** es el único verbo. Nunca suena mal; solo a tiempo cuenta.
-- **El Viaje** (Camino + Llanura, Lago, Bosque, Tormenta y Vacío, ~15–20 min) termina en el **Refugio**, que toca **tu canción**. Después se abre el **Mundo libre**: un anillo de **11 lugares** que se abren en orden, cada uno con ★ (completar), ★★ (75 % a tiempo) y ★★★ (Maestro, 70 %). Se gana con los once; las 33 ★ son la versión maestra.
-- Cada ★ suma una capa de su lugar a la música del mundo. Chispas solo por tocar a tiempo; con ellas se compran piezas del cubo.
-- Diseño: [El mundo](docs/MUNDO.md) y [El Viaje](docs/VIAJE.md). Código: [Arquitectura](docs/ARQUITECTURA.md).
+La entrega incluye `fix/cubo-pequeno` (04ae8bdd) y `audit/panel-4-cierre` (3673f2ec). Las fases siguientes se reúnen en una sola integración; no hace falta volver a integrarlas por separado:
 
-## Lo último que se hizo
+| Rama | Commit | Qué |
+|---|---|---|
+| `pulido/j1-base-fiable` | `8212e0de` | Premio durable, reintento, lector futuro y carreras de fixtures |
+| `pulido/j2-cierre-musical` | `b78295a9` | Capa en compás/acorde vivo, sin fanfarria; dos correcciones de armonía |
+| `pulido/j3-interfaz-produccion` | `9398291d` | Nombres claros, metadatos en Ajustes y paneles sin superposición |
+| `pulido/j4-meta-compartida` | `a72bc22b` | Una meta según el estado; once lugares frente a 33 estrellas |
+| `pulido/j5-continuidad` | `b898b9d7` | Volver al final existente con las notas actuales; modelo honesto |
+| `pulido/j6-sincronia` | `99a3e525` | Acento al instante emitido + salida estimada, sin cambiar el tiempo sonoro |
+| `pulido/j7-cierre` | `e6c0a3a6` | Verificación, dos límites de guardado y conteo de cierre por pasos vivos |
 
-El panel (tercera sesión, media 7,5) pidió el plan **I1–I6** y se integró completo en `main` con la CI en verde (PR #346–#351):
+J7 añade D03 (posición tras entrada fallida) y D04 (tarjeta tras sustituir S), encontrados durante la comprobación. El cierre cuenta dos compases del secuenciador aun si el tempo cambia. Son correcciones de integración; no modifican el secuenciador ni sus géneros.
 
-- I1 narrador solo en la tarjeta y la Bitácora; fuera los «Rompe…».
-- I2 cubo de 24–36 px (Jay lo rechaza: ver arriba), color del bioma en toda la pantalla y columna dorada del siguiente portal visible desde lejos.
-- I3 luz, vibración y golpe del cubo cuando suena la nota; la Línea anticipa.
-- I4 el final usa tus notas de los 11 lugares, en tu ritmo y en la escala; el chelo toca el tema dos veces.
-- I5 ★★ al 75 %, ★★★ al 70 %; `?festival=1` es el Viaje entero.
-- I6 menú de seis entradas y «Más»; modelo de dos horas que no cuenta compras.
+## Evidencia
 
-Detalle en [CAMBIOS](CAMBIOS.md).
+La [quinta sesión](docs/panel/sesion-5/informe.md) separa catálogo inicial, regresiones repetidas, renders reutilizables y pruebas físicas. Notas provisionales **8,1**, antes 7,7, del mismo agente con diez lentes simuladas; no jurado independiente ni escucha humana.
 
-## Lo que no se sabe
+`scripts/pulido-preservation.mjs` comprueba 305 archivos protegidos idénticos a 04ae8bdd, SVGs y secciones de reglas/síntesis/dibujo. Enumera los 26 módulos de integración revisados; no afirma que todo el árbol sea idéntico.
 
-- **Nadie salvo Jay ha jugado** y nadie lo ha oído en un teléfono con auriculares. Todo lo medido sale de bots, capturas y modelos.
-- Según el modelo, el jugador del 60 % y el que juega sin sonido no ganan ★★ y su canción deja de crecer al ganar (hacia el minuto 38–40). Está sin resolver.
-- El despliegue de Vercel no se comprobó en esta revisión.
+- 245 suites Node y auditoría de release aprobadas en alpha.181.
+- Catálogo local inicial alpha.180: 186/188; dos fixtures corregidas y repetidas en alpha.181. Después, el CI de integración aprobó el catálogo completo de navegador y audio en alpha.181.
+- 64 estados de UI normal en cuatro tamaños; sin errores o desbordamientos en esas muestras. Once renders actuales de cierre; capas/final/movimiento conservan sus renders aprobados.
+- Detalle de comandos, versiones, evidencias y límites en la quinta sesión. CI completo de integración aprobado; no se afirma prueba física o publicación en tiendas.
 
-## Límites que siguen
+## Pendiente real
 
-- **Supabase en pausa**: no configurar nada de la cuenta en la nube.
-- Nunca pedir ni escribir contraseñas, tokens o claves.
-- El backlog de lanzamiento es [D01–D22](docs/PLAN_LANZAMIENTO.md); no se ejecuta sin petición.
-- La música le gusta a Jay: no se rehace.
+- V01: Jay acepta el tamaño del cubo y el cierre en teléfono; altavoz y auriculares. Cinco sesiones sin ayuda (dos personas sin hábito de jugar).
+- P01: verificar interés después de ganar; el modelo conserva el hueco estructural de capas y no predice disfrute o abandono.
+- CI de integración aprobado. Despliegue efectivo y aceptación humana se comprueban por separado; las futuras integraciones siguen requiriendo sus checks.
+- Meta orientativa 8,7 no alcanzada por certificación. No perseguir 10 añadiendo funciones o alterando la base que Jay pidió conservar.
 
-## Cómo comprobar
+El registro de la sesión 4 conserva los 14 hallazgos originales y añade D03–D04. Cada estado técnico incluye pruebas y límites. La siguiente sesión vuelve a los pendientes concretos; no genera otro plan infinito. D01–D22 de lanzamiento permanecen en su guía, sin reabrir servicios o tiendas por esta entrega.
 
-```sh
-npm test                          # 240 suites de Node
-node scripts/release-audit.mjs    # auditoría de publicación
-CHROMIUM_PATH=/opt/pw-browsers/chromium python3 tests/menu_v2_smoke.py   # un recorrido de navegador
-```
+## Integración confirmada
 
-Más en [Verificación](docs/VERIFICACION.md).
+[PR #353](https://github.com/Jaywrkr/WHITEDOT/pull/353) · [CI completo](https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278): lógica, seis grupos de navegador, tres de audio y agregador aprobados antes de incorporar el código. El runtime coincide con `e6c0a3a6`; esta actualización añade solo el estado documental y la evidencia de CI.

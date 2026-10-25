@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
 // «Rodea» (the Bosque, chapter 3 of the Journey's games, Jay's decision of 23 October): the cube leaves a trail of light
 // for a few seconds. Walk around a group of fireflies until the trail closes (the closing line turns gold) and pulse
 // on time: every firefly inside is caught. Each one is worth as many as were caught together, up to three, so wide
@@ -42,7 +42,7 @@ export function initialize(runtime){
   chapterToast(runtime,'bosque','La criatura del bosque llegó: tócala a tiempo.');}
  // The creature joins: it is the companion of journey-moments.js from now on.
  function join(){const s=own();if(s.joined)return 'done';s.joined=true;const m=runtime.S.journey.moments||(runtime.S.journey.moments={});const had=m.companion;m.companion=true;
-  if(runtime.save?.()===false){s.joined=false;if(!had)delete m.companion;return null;}runtime.enterFx=1;runtime.flash=1;chord(5);runtime.journeyComplete?.('bosque');return 'join';}
+  if(!commitJourneyClose(runtime,'bosque')){s.joined=false;if(!had)delete m.companion;return null;}runtime.enterFx=1;runtime.flash=1;chord(5);return 'join';}
  // A loop stays closed for a moment after the cube drifts off its start: on a phone you lift the finger to tap.
  function loopNow(now){const loop=closedLoop(trail,here(),now);if(loop){armed={loop,at:now};return loop;}return armed&&now-armed.at<LASSO_HOLD_MS?armed.loop:null;}
  // Only on time: if the trail is closed around fireflies, they are caught. Off time the cube shivers.

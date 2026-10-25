@@ -15,7 +15,7 @@ try:
    page=b.new_page(viewport={'width':width,'height':height},has_touch=True);errors=[];page.on('pageerror',lambda e:(errors.append(str(e)),print('PAGE ERROR '+str(e),flush=True)))
    page.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text().replace('await requireAccount()', 'null')+'\nwindow.__testRuntime=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__testRuntime?.openJournal');page.evaluate('()=>{document.getElementById("returnContinue").click();document.querySelectorAll(".modal").forEach(m=>m.hidden=true);window.__testRuntime.openJournal("today");}')
-   assert page.locator('[data-journal-tab]').all_text_contents()==['Hoy','Colección','Lugares','Música','Logros','Tú']
+   assert page.locator('[data-journal-tab]').all_text_contents()==['Hoy','Colección','Mapa','Música','Logros','Tú']
    page.locator('[data-journal-tab="collection"]').click();page.locator('#journalGroup').select_option('cubo');assert page.locator('.album-piece').count()==50
    page.locator('#journalOwnership').select_option('pendiente');assert page.locator('.album-piece').count()==43
    page.locator('#journalSearch').fill('Aurora');assert page.locator('.album-piece').count()==1;assert 'Juega 180 días' in page.locator('#journalBody').inner_text()

@@ -1,0 +1,65 @@
+{
+  "scope": "Complete GitHub integration CI before merge; same runtime as e6c0a3a6. Does not certify physical acceptance or a store release.",
+  "runId": 40164328278,
+  "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278",
+  "head": "6be023dfaa5bef19766288dd7b5b86fb726be101",
+  "base": "676ac511",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "logic",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278/job/121082148433"
+    },
+    {
+      "name": "audio (3)",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278/job/121082148482"
+    },
+    {
+      "name": "browser (6)",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278/job/121082148506"
+    },
+    {
+      "name": "audio (2)",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278/job/121082148507"
+    },
+    {
+      "name": "browser (2)",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278/job/121082148516"
+    },
+    {
+      "name": "audio (1)",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278/job/121082148520"
+    },
+    {
+      "name": "browser (4)",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278/job/121082148532"
+    },
+    {
+      "name": "browser (3)",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278/job/121082148533"
+    },
+    {
+      "name": "browser (1)",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278/job/121082148536"
+    },
+    {
+      "name": "browser (5)",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278/job/121082148565"
+    },
+    {
+      "name": "browser-audio",
+      "conclusion": "success",
+      "url": "https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278/job/121087878996"
+    }
+  ]
+}

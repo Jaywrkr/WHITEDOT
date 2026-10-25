@@ -16,11 +16,14 @@ playCello(ac0,{},1,57,.5,.13);assert(nodes.filter(n=>n.k==='osc').every(n=>n.at=
 // separate synth is queued), vibrates and counts the phrase.
 const vib=[];Object.defineProperty(globalThis,"navigator",{value:{vibrate:p=>{vib.push(p);return true;}},configurable:true});
 const queued=[];let clock=0;const realNow=performance.now.bind(performance);performance.now=()=>clock;
+const realTimer=setTimeout,realClear=clearTimeout,timers=new Map();let timerId=0;
+globalThis.setTimeout=(f,ms)=>{const id=++timerId;timers.set(id,{f,at:clock+ms});return id;};globalThis.clearTimeout=id=>timers.delete(id);
+const flush=()=>{for(const [id,v] of [...timers]){clock=Math.max(clock,v.at);timers.delete(id);v.f();}};
 const r={S:{sound:true,mode:'camino'},MU:{bq:[0,.5,1],sq:[{t:.9,s:6}],tr:0,biome:0},BIOMES:[{scale:[0,2,3,5,7,8,10]}],SIX:.125,ac:{currentTime:1.25},bus:{},soon:fn=>queued.push(fn),inWorld:()=>false,flash:0};
 initialize(r);
 clock=1000;assert.equal(r.journeyPulse(),false,'a quarter beat away is off time');assert.equal(queued.length,0);assert.equal(vib.length,0);
 clock=1050;assert.equal(r.journeyPulse(),null,'too soon after the last pulse');
-for(let i=0;i<6;i++){clock+=500;r.ac.currentTime=1.5+i*.5+.01;r.MU.bq=[r.ac.currentTime-.01];assert.equal(r.journeyPulse(),true);}
+for(let i=0;i<6;i++){clock+=500;r.ac.currentTime=1.5+i*.5+.01;r.MU.bq=[r.ac.currentTime-.01];assert.equal(r.journeyPulse(),true);flush();}
 const s=r.journeyPulseState();assert.equal(s.hits,6);assert.equal(s.misses,1);assert.equal(s.phrases,1,'six on-time pulses complete the theme');assert.equal(s.next,0);assert.equal(queued.length,0,'no separate synth');assert.equal(vib.length,6);assert.deepEqual(vib.at(-1),[12,40,18],'the end of the phrase feels different');
 assert(r.flash>0,'a gold flash answers');
 r.S.haptics=false;clock+=500;r.ac.currentTime+=.5;r.MU.bq=[r.ac.currentTime];r.journeyPulse();assert.equal(vib.length,6,'vibration can be turned off');
@@ -36,15 +39,15 @@ assert.equal(nearestBeat(1.02,[0,.5,1],.5),1);assert.equal(nearestBeat(1.4,[0,.5
 assert.equal(heardTime({currentTime:2,outputLatency:.1},900,1000),2-.1-.1);assert.equal(onTime({currentTime:2},[2.07],.5,1000,1000),true);assert.equal(onTime({currentTime:2},[2.09],.5,1000,1000),false,'one window for the whole game');
 // On time, the state carries the theme note and the beat it answers; without vibration the cube glows instead.
 clock+=500;r.ac.currentTime+=.5;r.MU.bq=[r.ac.currentTime];Object.defineProperty(globalThis,"navigator",{value:{},configurable:true});r.cubeGlow=0;r.S.haptics=true;assert.equal(r.journeyPulse(),true);
-const st=r.journeyPulseState();assert(Number.isFinite(st.midi)&&st.beat===r.MU.bq[0]&&Array.isArray(st.scale));assert.equal(r.cubeGlow,1,'iPhone: the cube glows gold');
+flush();const st=r.journeyPulseState();assert(Number.isFinite(st.midi)&&st.beat===r.MU.bq[0]&&Array.isArray(st.scale));assert.equal(r.cubeGlow,1,'iPhone: the cube glows gold');
 // A pulse the finger sent too soon leaves a faint mark instead of vanishing.
 const before=r.journeyPulseState().marks;r.journeyPulseDropped();assert.equal(r.journeyPulseState().marks,Math.min(24,before+1));
 // The Line draws on an inert canvas.
 const c=new Proxy({},{get:(o,k)=>k in o?o[k]:()=>{},set:(o,k,v)=>{o[k]=v;return true;}});globalThis.document={querySelector:()=>null,querySelectorAll:()=>[]};r.drawJourneyLine(c,390,844,0);
-performance.now=realNow;
+flush();performance.now=realNow;globalThis.setTimeout=realTimer;globalThis.clearTimeout=realClear;
 // Phase 3: with the sound off every pulse counts, so the Journey can be played without hearing it.
 {const q={S:{sound:false,mode:'camino'},MU:{bq:[]},BIOMES:[{scale:[0,2,3,5,7,8,10]}],SIX:.125,inWorld:()=>false};initialize(q);assert.equal(q.journeyPulse(),true,'sound off: on time');}
-// Plan I3: the hit lands when the note is heard (never before, at most 250 ms later); the Line's steps grow as the cursor comes.
-assert.equal(landDelay(10.1,10,0),100);assert.equal(landDelay(10.1,10,.05),150);assert.equal(landDelay(9.9,10,0),0);assert.equal(landDelay(11,10,0),250);
+// Plan I3: the hit lands when the note is heard (never before, including the full estimated output delay); the Line's steps grow as the cursor comes.
+assert.equal(landDelay(10.1,10,0),100);assert.equal(landDelay(10.1,10,.05),150);assert.equal(landDelay(9.9,10,0),0);assert.equal(landDelay(11,10,0),1000);
 assert.equal(approach(4,4),1);assert.equal(approach(4,3),.75);assert.equal(approach(4,0),0);assert.equal(approach(0,15),.75);assert.equal(approach(4,5),0);
 console.log('PASS journey pulse: six-note theme in two bars, on-time window '+ON_TIME*1000+' ms, theme notes in every scale and range, phrase every six hits, vibration and its setting, judged at the touch with the headphones delay taken off, one window for the game, a glow without vibration, dropped pulses marked, the Line draws');

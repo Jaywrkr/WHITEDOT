@@ -1,0 +1,125 @@
+{
+  "renders": [
+    {
+      "id": "llanura",
+      "ms": 4500,
+      "peak": 0.17868000268936157,
+      "hot": 0,
+      "contributionDb": -34.49432453678704,
+      "beforeDifference": 2.9802322387695312e-08,
+      "tailDifference": 2.9802322387695312e-08,
+      "filter": 3500,
+      "headroom": 0.9200000166893005
+    },
+    {
+      "id": "lago",
+      "ms": 4500,
+      "peak": 0.11316429823637009,
+      "hot": 0,
+      "contributionDb": -35.686091365401694,
+      "beforeDifference": 2.9802322387695312e-08,
+      "tailDifference": 2.9802322387695312e-08,
+      "filter": 3500,
+      "headroom": 0.9200000166893005
+    },
+    {
+      "id": "bosque",
+      "ms": 4500,
+      "peak": 0.08579594641923904,
+      "hot": 0,
+      "contributionDb": -55.875524536183654,
+      "beforeDifference": 2.9802322387695312e-08,
+      "tailDifference": 2.2351741790771484e-08,
+      "filter": 3500,
+      "headroom": 0.9200000166893005
+    },
+    {
+      "id": "tormenta",
+      "ms": 4500,
+      "peak": 0.09208070486783981,
+      "hot": 0,
+      "contributionDb": -43.85575628546845,
+      "beforeDifference": 2.2351741790771484e-08,
+      "tailDifference": 2.2351741790771484e-08,
+      "filter": 3500,
+      "headroom": 0.9200000166893005
+    },
+    {
+      "id": "vacio",
+      "ms": 4500,
+      "peak": 0.08640071749687195,
+      "hot": 0,
+      "contributionDb": -46.84301439241041,
+      "beforeDifference": 2.60770320892334e-08,
+      "tailDifference": 2.9802322387695312e-08,
+      "filter": 3500,
+      "headroom": 0.9200000166893005
+    },
+    {
+      "id": "jardin",
+      "ms": 4500,
+      "peak": 0.09126690775156021,
+      "hot": 0,
+      "contributionDb": -44.6282502176108,
+      "beforeDifference": 2.2351741790771484e-08,
+      "tailDifference": 2.9802322387695312e-08,
+      "filter": 3500,
+      "headroom": 0.9200000166893005
+    },
+    {
+      "id": "dunas",
+      "ms": 4500,
+      "peak": 0.0930311307311058,
+      "hot": 0,
+      "contributionDb": -51.42512382144648,
+      "beforeDifference": 0,
+      "tailDifference": 0,
+      "filter": 3500,
+      "headroom": 0.9200000166893005
+    },
+    {
+      "id": "cristales",
+      "ms": 4500,
+      "peak": 0.08995721489191055,
+      "hot": 0,
+      "contributionDb": -41.00891171731257,
+      "beforeDifference": 2.2351741790771484e-08,
+      "tailDifference": 2.7939677238464355e-07,
+      "filter": 3500,
+      "headroom": 0.9200000166893005
+    },
+    {
+      "id": "faros",
+      "ms": 4500,
+      "peak": 0.10125350207090378,
+      "hot": 0,
+      "contributionDb": -40.40815585381967,
+      "beforeDifference": 0,
+      "tailDifference": 0,
+      "filter": 3500,
+      "headroom": 0.9200000166893005
+    },
+    {
+      "id": "ruinas",
+      "ms": 4500,
+      "peak": 0.10261412709951401,
+      "hot": 0,
+      "contributionDb": -50.17345974257977,
+      "beforeDifference": 2.2351741790771484e-08,
+      "tailDifference": 2.9802322387695312e-08,
+      "filter": 3500,
+      "headroom": 0.9200000166893005
+    },
+    {
+      "id": "cueva",
+      "ms": 4500,
+      "peak": 0.08821813017129898,
+      "hot": 0,
+      "contributionDb": -48.74261445139133,
+      "beforeDifference": 2.9802322387695312e-08,
+      "tailDifference": 2.2351741790771484e-08,
+      "filter": 3500,
+      "headroom": 0.9200000166893005
+    }
+  ]
+}

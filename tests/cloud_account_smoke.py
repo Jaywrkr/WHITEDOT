@@ -34,6 +34,8 @@ def login(page,email='one@example.test',password='fixture-password-123'):
  page.locator('#accountName').fill(email);page.locator('#accountPassword').fill(password);page.locator('#accountForm button[type=submit]').click()
 def started(page):
  page.wait_for_function('!!window.__r?.connectionTick')
+ # Runtime appears before the initial reconciliation finishes. Await that boundary before mutating the fixture.
+ if page.evaluate('__r.accountUserId'):page.wait_for_function("!document.getElementById('accountLogout').disabled",timeout=20000)
  if page.locator('#returnContinue').is_visible():page.locator('#returnContinue').click()
  if page.locator('#hcGo').is_visible():page.locator('#hcGo').click()
  page.evaluate('__r.S.sound=false')

@@ -1,4 +1,4 @@
-import {PLACES,TOTAL_STARS,starCount,placeOpen,previousPlace,allComplete,nextOnPath} from './places.js';
+import {PLACES,TOTAL_STARS,starCount,placeOpen,previousPlace,allComplete,nextOnPath,gameObjective} from './places.js';
 import {PORTAL_NOTES} from './places-ring.js';
 import {roomBox} from './house-view.js';
 // The Refugio as the centre (plan F6, docs/MUNDO.md): it says what you have, what is missing and where to go.
@@ -52,7 +52,7 @@ export function initialize(runtime){
   if(!placeOpen(d,p.id,runtime.S.journey)){const prev=PLACES.find(q=>q.id===previousPlace(p.id));return p.game&&prev?`${p.name} · tras ${prev.name}`:`${p.name} · pronto`;}
   return `${p.name} ${glyphs(p.id)}${best?` · ${Math.round(best.onTime*100)} % a tiempo`:''}`;}
  // Lugares: every place with its stars and what it asks; «Ir» to the ones already entered; the door to the ring.
- function open(){const box=$('mLugares'),d=data();if(!box||!d)return;const have=starCount(d);$('lugaresCount').textContent=`★ ${have} / ${TOTAL_STARS}`;$('lugaresNext').textContent=nextLine(d,runtime.S.journey);
+ function open(){const box=$('mLugares'),d=data();if(!box||!d)return;const have=starCount(d),goal=gameObjective(runtime.S,d);$('lugaresCount').textContent=d.readOnly?'':`${goal.completed||0} / 11`;$('lugaresNext').textContent=d.readOnly?goal.line:`${nextLine(d,runtime.S.journey)} · ★ ${have}/${TOTAL_STARS}`;
   const list=$('lugaresList');list.replaceChildren();for(const p of PLACES){const li=document.createElement('li'),openNow=placeOpen(d,p.id,runtime.S.journey),best=d.best?.[p.id];
    const name=document.createElement('span');name.className='lugar-name';name.textContent=p.name;const st=document.createElement('span');st.className='lugar-stars';st.setAttribute('aria-label',`${stars(p.id).filter(Boolean).length} de 3 estrellas`);
    stars(p.id).forEach(x=>{const s=document.createElement('i');s.textContent='★';if(x)s.className='got';st.appendChild(s);});
@@ -67,8 +67,8 @@ export function initialize(runtime){
  function travel(id){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.ringTravel?.(id);}
  function door(){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();}
  // The house bar shows the wall too, and opens Lugares.
- function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=`★ ${starCount(d)} / ${TOTAL_STARS}`;}
- if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;if($('lugaresSong'))$('lugaresSong').onclick=()=>{$('mLugares').hidden=true;runtime.openSong?.();};
+ function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=d.readOnly?'Actualizar lugares':`${gameObjective(runtime.S,d).completed||0}/11 lugares`;}
+ if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;if($('lugaresSong'))$('lugaresSong').onclick=()=>{$('mLugares').hidden=true;if(runtime.replaySong)runtime.replaySong();else runtime.openSong?.();};
  // Plan I6: Lugares is one of the menu's six entries.
  const entry=$('bLugares');if(entry)entry.onclick=()=>{$('mMenu')&&($('mMenu').hidden=true);open();};
  Object.defineProperties(runtime,{drawHouseLugares:{get:()=>(c,o)=>{bar();draw(c,o);}},houseLugaresLook:{get:()=>look},openLugares:{get:()=>open},houseLugaresState:{get:()=>()=>({hits:hits.map(h=>({...h})),last:lastTap})}});

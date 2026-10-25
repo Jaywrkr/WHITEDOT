@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
 // «Baila» (the Tormenta, chapter 4 of the Journey's games, Jay's decision of 23 October): the storm marks a circle on
 // the ground near the cube, and a bolt will fall there in a bar and a half. Step into the circle and pulse on time: you
 // send the bolt back to the sky. Each one returned in a row is worth more. A bolt you miss falls white and the row
@@ -32,7 +32,7 @@ export function initialize(runtime){
  function spawn(){const s=own(),first=s.count===0,from={x:runtime.S.wx,y:runtime.S.wy},spot=first?{x:Math.round(from.x+DANCE_FIRST),y:from.y}:danceSpot(s.count,from);target={...spot,at:performance.now(),n:s.count};s.count++;}
  function arrive(){const s=own();if(s.eye)return;target=null;s.eye={x:Math.round(runtime.S.wx+DANCE_EYE_GAP),y:Math.round(runtime.S.wy-DANCE_EYE_GAP*.5)};eyePulse=1;runtime.save?.();
   chapterToast(runtime,'tormenta','El ojo de la tormenta llegó: tócalo a tiempo.');}
- function close(){const s=own();if(s.closed)return 'done';s.closed=true;if(runtime.save?.()===false){s.closed=false;return null;}runtime.enterFx=1;thunder(runtime.S.wx,runtime.S.wy,true);runtime.journeyComplete?.('tormenta');return 'close';}
+ function close(){const s=own();if(s.closed)return 'done';s.closed=true;if(!commitJourneyClose(runtime,'tormenta')){s.closed=false;return null;}runtime.enterFx=1;thunder(runtime.S.wx,runtime.S.wy,true);return 'close';}
  // Only on time, and only inside the circle: the bolt goes back up. Off time the cube shivers.
  function pulse(on){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}
   if(full()){if(!s.eye)arrive();return close();}

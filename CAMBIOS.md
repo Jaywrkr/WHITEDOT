@@ -1,6 +1,79 @@
 # Cambios recientes de Kubono
 
-Estado: 24 de octubre de 2026. Código **2.3.0-alpha.173**. Las entradas describen su revisión, no certifican producción.
+Estado: 25 de octubre de 2026. Código **2.3.0-alpha.181**. Las entradas describen su revisión, no certifican producción.
+
+## Entrega unificada · alpha.181
+
+Jay autorizó integrar el cierre completo en `main`: cubo pequeño, auditorías y fases J1–J7, hasta `e6c0a3a6`. Se conserva exactamente ese código; esta integración solo actualiza el estado documental y verifica el conjunto en GitHub. La versión no cambia y la aceptación física/de publicación sigue separada.
+
+## J7 · Comprobación y cierre técnico · alpha.181
+
+- Posición y parámetros conservados al fallar una entrada; tarjeta anterior invalidada al sustituir la partida.
+- Reintento real del objeto final conserva su referencia; cierre cuenta compases vivos con tempo variable.
+- 245 suites, regresiones enfocadas, offline y 64 estados de UI aprobados; catálogo inicial y repeticiones documentados.
+- Auditoría posterior por los mismos diez perfiles simulados; evidencia y pendientes separados de la aceptación humana.
+- Guardia reproducible de 305 archivos protegidos, arte SVG y reglas originales.
+- Registro conserva cada ID y sus pruebas; no declara producción o un 10 por simulación.
+- Ramas encadenadas J1–J7; Jay mantiene PR y merge. Ver `docs/panel/sesion-5/informe.md`.
+
+## J6 · Sincronía · alpha.180
+
+- El acento visual sigue el instante real programado de la nota y su salida estimada, hasta 400 ms.
+- Sin recorte artificial a 250 ms; cancelación al reiniciar o cambiar de escena y sin respuestas tardías en segundo plano.
+- Se conserva exactamente la regla de programación sonora; contacto y movimiento reducido intactos.
+
+## J5 · Continuidad creativa · alpha.179
+
+- La tarjeta confirma cuándo se conserva tu frase para el final.
+- Tu canción desde Lugares permite volver al final existente, con las notas actuales; Otra vez repite esa versión.
+- El modelo separa capas ganadas e interpretaciones completadas. No predice abandono ni cuenta compras como música.
+- Mismos generadores, instrumentos y arreglo del final; sin contenido adicional.
+
+## J4 · Una meta compartida · alpha.178
+
+- Guía y menú leen el capítulo o siguiente lugar real; experiencias extra claramente opcionales.
+- Lugares y Refugio priorizan completar once; estrellas de maestría y chispas se distinguen.
+- La guía permanece accesible durante el Viaje. No se alteran desbloqueos, economía ni posición.
+
+## J3 · UI de producción · alpha.177
+
+- Viaje queda para la campaña: el selector dice Vista y la pestaña de recursos, Chispas.
+- Mapa distingue las regiones guardadas de los once Lugares.
+- Escuchar y responder conserva la práctica musical; diagnóstico de versión en Ajustes.
+- El resultado de ronda espera a que cierre otro panel. Diseño, controles e IDs conservados.
+
+## J2 · Cierre musical · alpha.176
+
+- Cierre con la capa ganada en el acorde vivo; fuera riser, crash, lead ajeno y corte de salida.
+- Cancelación de notas del cierre al cambiar de escena; la radio no se automatiza.
+- Cristales y segunda pasada del final respetan su marco armónico.
+- 242 suites, cierre vivo y renders de victoria/canción/final aprobados. Escucha de Jay pendiente.
+
+## J1 · Base fiable · alpha.175
+
+- Premios de ronda durables y reintentos sin duplicación en los once lugares.
+- Lectura segura de formatos futuros, conservados sin mutación.
+- Pruebas de visitas, semillas y cuenta esperan sus límites reales de operación.
+- Generación musical, mundos, aspecto y umbrales conservados. Evidencia en `docs/PULIDO_CIERRE.md`.
+
+## Cuarta auditoría · sin otra versión
+
+Rama `audit/panel-4-cierre`, dependiente de `fix/cubo-pequeno` (04ae8bdd). No cambia el juego respecto a esa revisión.
+
+- Diez lentes simuladas, expediente e informe: media orientativa 7,7 (antes 7,5). No son opiniones reales de los autores.
+- 16 capturas con gate normal, 60 estados de UI en cuatro tamaños, modelo de dos horas y 11 renders de cierre. Tacto real de navegador aprobado; no personas ni teléfono físico.
+- Contratos reproducidos: notas fuera de escala en capa/final, premio anunciado con guardado fallido, lector de formato futuro y límite de sincronía. El CI del main base tiene tres grupos de navegador fallidos; no se certifica como verde.
+- Registro de 14 hallazgos y plan J1–J7, pendiente de Jay. Música base y contenido se conservan; Supabase sigue en pausa.
+- Herramientas `panel-capture.py` y `panel-measures.py` evitan confundir el modo de desarrollo con el aspecto normal. Evidencia en `docs/panel/sesion-4/`.
+
+## Cubo pequeño · alpha.174
+
+Rama `fix/cubo-pequeno`, desde `main` 676ac511. Petición de Jay: quitar la ampliación general de la I2.
+
+- Tamaño natural, entre 6 y 12 px antes de pulsos y efectos temporales. Las caras equipadas conservan su mínimo existente de 10 px.
+- No cambian alcance, colisiones, movimiento, música, economía, guardados ni posiciones.
+- Verificado: 240 suites Node y `cube_face_smoke.py` (13 piezas, caras visibles, movimiento, hábitos, persistencia y tamaño real del cubo).
+- El tamaño definitivo requiere la aceptación de Jay en su teléfono. No se afirma despliegue ni CI de esta rama.
 
 ## Documentación y panel · sin versión
 
@@ -359,3 +432,7 @@ Rama `claude/f0-viaje-juegos`, desde `main` (alpha.141, con los cinco capítulos
 ## Antes de alpha.142
 
 Las entradas anteriores (alpha.58–alpha.141: universo, superbiomas, fases 0–7, Viaje por juegos) se quitaron de este archivo el 24 de octubre de 2026. Siguen en Git: `git show 5914ca9:CAMBIOS.md`.
+
+## Integración confirmada en main
+
+[PR #353](https://github.com/Jaywrkr/WHITEDOT/pull/353) · [CI de integración](https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278) aprobado: lógica, seis grupos de navegador, tres de audio y agregador. Se conserva alpha.181 y el mismo runtime; aceptación humana y tiendas permanecen pendientes.

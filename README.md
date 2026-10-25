@@ -2,13 +2,14 @@
 
 Un cubo, un universo que suena. Tocas a tiempo y el mundo responde con música.
 
-Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.173**, en `main` (24 de octubre de 2026). No está publicado en tiendas.
+Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.181**, fases J1–J7 y sus auditorías integradas en `main` por el PR #353 (cierre `e6c0a3a6`, desde `main` 676ac511). No está publicado en tiendas.
 
 ## Empezar aquí
 
 | Si quieres… | Lee |
 |---|---|
 | Saber dónde está el proyecto y qué toca ahora | [HANDOFF.md](HANDOFF.md) |
+| Ver el cierre conservando música y mundos | [Quinta auditoría](docs/panel/sesion-5/informe.md) y [fases J1–J7](docs/PULIDO_CIERRE.md) |
 | Repetir la auditoría del panel creativo | [docs/PANEL.md](docs/PANEL.md) |
 | Trabajar en el código | [AGENTS.md](AGENTS.md) y [Arquitectura](docs/ARQUITECTURA.md) |
 | Encontrar cualquier otro documento | [Índice](docs/README.md) |
@@ -16,7 +17,7 @@ Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, e
 ## El juego
 
 - **El Viaje:** el Camino y cinco capítulos (Llanura, Lago, Bosque, Tormenta, Vacío). Termina en el Refugio, que toca tu canción.
-- **El Mundo libre:** un anillo de 11 lugares que se abren en orden. Cada uno da ★, ★★ (75 % a tiempo) y ★★★ (Maestro). Cada estrella suma una capa a la música del mundo.
+- **El Mundo libre:** un anillo de 11 lugares que se abren en orden. Cada uno da ★, ★★ (75 % a tiempo) y ★★★ (Maestro). Las estrellas amplían las capas de tu canción.
 - **Tu cubo:** piezas que se compran con chispas, que solo se ganan tocando a tiempo.
 - Cuenta opcional: se juega al instante con guardado local.
 

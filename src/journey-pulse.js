@@ -18,10 +18,12 @@ export function nearestBeat(now,beats,bar){let best=null;const consider=b=>{if(b
 // Distance from now to the nearest beat.
 export function beatDistance(now,beats,bar){const b=nearestBeat(now,beats,bar);return b===null?Infinity:Math.abs(now-b);}
 // How late the speaker or headphones play what the audio clock says (Bluetooth can add a fifth of a second).
-// How long until a note scheduled at `beat` (audio clock) is heard, in ms: never negative, at most a quarter second.
+// How long until a scheduled note reaches the estimated output; high-latency devices keep their full delay.
 // How near the cursor is to a step it is coming to: 1 on it, falling to 0 four steps before (plan I3).
 export const approach=(step,now)=>{const ahead=((step-now)%16+16)%16;return ahead<4?1-ahead/4:0;};
-export const landDelay=(beat,now,latency=0)=>Math.max(0,Math.min(250,Math.round((beat+latency-now)*1000)));
+export const landDelay=(beat,now,latency=0)=>[beat,now,latency].every(Number.isFinite)?Math.max(0,Math.round((beat+latency-now)*1000)):0;
+// Same scheduling rule the pulse already uses; visuals follow the emitted note, not a past judged beat.
+export const pulseNoteTime=(now,beat)=>Math.max(now+.01,Number.isFinite(beat)&&beat>now?beat:0);
 export const outputLatency=ac=>{const v=Number(ac?.outputLatency||ac?.baseLatency||0);return Number.isFinite(v)?Math.max(0,Math.min(.4,v)):0;};
 // The moment the player heard, on the audio clock: when the finger touched (atMs, from performance.now(); a tap is
 // judged when the finger goes down, not when it lifts) minus the output latency, because the player answers what
@@ -45,10 +47,16 @@ export function playCello(ac,out,t,midi,seconds,volume){
  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(volume,t+.06);g.gain.setValueAtTime(volume,t+seconds*.75);g.gain.exponentialRampToValueAtTime(.0001,end+.25);
  const g2=ac.createGain();g2.gain.setValueAtTime(.25,t);o.connect(f);o2.connect(g2);g2.connect(f);f.connect(g);g.connect(out);for(const n of [o,o2,lfo]){n.start(t);n.stop(end+.3);}return hz;}
 export function initialize(runtime){
- const state={hits:0,misses:0,phrases:0,next:0,lastOn:null,degree:null,vibrations:0,notes:[],noteSteps:[]};let form={level:0,run:0},formAt=0;let lastAt=-1e9;const marks=[];
+ const state={hits:0,misses:0,phrases:0,next:0,lastOn:null,degree:null,vibrations:0,notes:[],noteSteps:[]};let form={level:0,run:0},formAt=0;let lastAt=-1e9;const marks=[];const pending=new Set();let lastLanding=null,epoch=0;
  const calm=()=>calmMotion(runtime.S);
  const haptics=()=>runtime.S.haptics!==false;
  function vibrate(ms){if(!haptics()||typeof navigator==='undefined'||typeof navigator.vibrate!=='function')return false;try{navigator.vibrate(ms);state.vibrations++;return true;}catch(_){return false;}}
+ function scheduleLanding(time){const f=lastLanding;if(!f)return;if(f.timer!==undefined){clearTimeout(f.timer);pending.delete(f.timer);}
+  const ac=runtime.ac,wait=runtime.S.sound&&ac?landDelay(time,ac.currentTime,outputLatency(ac)):0;state.landIn=wait;f.due=performance.now()+wait;
+  const land=()=>{pending.delete(f.timer);if(f.epoch!==epoch||f.owner!==runtime.S||f.mode!==runtime.S.mode||f.layer!==runtime.S.layer||globalThis.document?.hidden||openSurface('.modal:not([hidden])')||performance.now()-f.due>150||runtime.S.sound&&runtime.ac?.state&&runtime.ac.state!=='running')return;
+   vibrate(f.phrase?[12,40,18]:12);runtime.cubeGlow=1;runtime.cubeKick=calm()?0:1;runtime.flash=Math.max(runtime.flash||0,.7);};
+  if(wait>0){f.timer=setTimeout(land,wait);pending.add(f.timer);if(pending.size>12){const first=pending.values().next().value;clearTimeout(first);pending.delete(first);}}else land();
+ }
  function scaleNow(){const MU=runtime.MU||{};return {scale:MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,tr:MU.tr||0};}
  // The Line's cursor follows what is heard: the audio clock minus the output latency.
  // The step of the bar at a time on the audio clock, from the steps the music scheduled.
@@ -83,8 +91,8 @@ export function initialize(runtime){
   if(state.next===0){state.phrases++;runtime.recoverJourneyColor?.();runtime.journeyPhrase?.();runtime.themeKeyPhrase?.();}
   // The cube glows gold for a beat on every hit, the phone vibrates where it can and the cube punches (plan H1). Plan
   // I3: all of it lands when the note is heard, not when the finger touched, so light, touch and sound are one instant.
-  const phrase=state.next===0,land=()=>{vibrate(phrase?[12,40,18]:12);runtime.cubeGlow=1;runtime.cubeKick=calm()?0:1;runtime.flash=Math.max(runtime.flash||0,.7);};
-  const wait=ac&&Number.isFinite(state.beat)?landDelay(state.beat,ac.currentTime,outputLatency(ac)):0;state.landIn=wait;if(wait>0)setTimeout(land,wait);else land();
+  lastLanding={owner:runtime.S,mode:runtime.S.mode,layer:runtime.S.layer,phrase:state.next===0,epoch};
+  scheduleLanding(ac?pulseNoteTime(ac.currentTime,state.beat):0);
   return true;}
  // A pulse the finger sent too soon after the last one: a faint grey mark, so a touch never vanishes unseen.
  function dropped(){marks.push({at:performance.now(),step:stepNow(),on:false,dropped:true});if(marks.length>24)marks.shift();}
@@ -108,6 +116,6 @@ export function initialize(runtime){
   if(form.level>=3){const a=still?0:t/900,d=r+12;c.globalAlpha=.85;c.strokeStyle=gold;c.translate(x,y);c.rotate(a);c.strokeRect(-d,-d,d*2,d*2);c.rotate(Math.PI/4);c.strokeRect(-d*.8,-d*.8,d*1.6,d*1.6);}
   c.restore();}
  // Each chapter starts its theme from the first note.
- function reset(){state.next=0;}
- Object.defineProperties(runtime,{journeyPulse:{get:()=>judge},journeyPulseReset:{get:()=>reset},journeyPulseDropped:{get:()=>dropped},drawJourneyLine:{get:()=>draw},journeyPulseState:{get:()=>()=>({...state,notes:[...state.notes],noteSteps:[...state.noteSteps],marks:marks.length,lastMark:marks.length?{...marks[marks.length-1]}:null})},journeyVibrate:{get:()=>vibrate},drawCubeForm:{get:()=>drawForm},cubeForm:{get:()=>()=>({...form})}});
+ function reset(){state.next=0;epoch++;for(const timer of pending)clearTimeout(timer);pending.clear();lastLanding=null;}
+ Object.defineProperties(runtime,{journeyPulse:{get:()=>judge},journeyPulseScheduled:{get:()=>scheduleLanding},journeyPulseReset:{get:()=>reset},journeyPulseDropped:{get:()=>dropped},drawJourneyLine:{get:()=>draw},journeyPulseState:{get:()=>()=>({...state,notes:[...state.notes],noteSteps:[...state.noteSteps],marks:marks.length,lastMark:marks.length?{...marks[marks.length-1]}:null})},journeyVibrate:{get:()=>vibrate},drawCubeForm:{get:()=>drawForm},cubeForm:{get:()=>()=>({...form})}});
 }

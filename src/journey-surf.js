@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
 // «Surfea» (the Dunas, plan F10, docs/MUNDO.md): waves of sand cross the dunes in time. A ring of sand shows where the
 // crest of the next wave will pass, and an arc around it closes until its beat. Be in the ring and pulse on time as
 // the crest passes: you ride it, it pushes you along, and the bar fills. Waves ridden in a row are worth more; letting
@@ -38,7 +38,7 @@ export function initialize(runtime){
   while(waves.length<2){const last=waves[waves.length-1],at=last?last.at+SURF_EVERY*beatSec():nextBeat(now+SURF_AHEAD*beatSec());if(at==null)return;
    const spot=waveSpot(s.n,last?{x:last.x,y:last.y}:{x:runtime.S.wx,y:runtime.S.wy});waves.push({...spot,at,n:s.n,gold:full()&&!s.gold});s.n++;}}
  function note(streak){if(!audible())return;runtime.soon?.(t=>{const ct=runtime.chordTones?.()||[60,64,67];runtime.pluck?.(ct[streak%ct.length]+12+12*(streak>=ct.length?1:0),t,.08,1);runtime.hatHit?.(t,.08);},'player');}
- function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(runtime.save?.()===false){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<6;i++)note(i);runtime.journeyComplete?.('dunas');return 'open';}
+ function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(!commitJourneyClose(runtime,'dunas')){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<6;i++)note(i);return 'open';}
  function pulse(on,beat={}){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}const now=runtime.ac?.currentTime??0,heard=nearestBeat(now),pos={x:runtime.S.wx,y:runtime.S.wy};
   const w=waves.find(q=>!q.ridden&&rides(q,pos,heard,{band:band()}));if(!w)return 'still';w.ridden=true;
   if(w.gold){s.gold=true;return open();}

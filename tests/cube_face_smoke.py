@@ -11,8 +11,8 @@ class Handler(SimpleHTTPRequestHandler):
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
 # Lit pixels around the cube, and dark pixels inside its square: eyes and accessories add the latter.
 MARKS="""()=>{const c=document.getElementById('w'),x=c.getContext('2d'),w=c.width,h=c.height,r=24,d=x.getImageData(Math.floor(w/2-r),Math.floor(h/2-r),r*2,r*2).data;let lit=0;for(let i=0;i<d.length;i+=4){const v=d[i]+d[i+1]+d[i+2];if(v>240)lit++;}return lit;}"""
-# The face is looked for over the cube as the World draws it since plan I2 (1.6×, 24–36 px; render.js cubeView).
-FACE="""()=>{const c=document.getElementById('w'),x=c.getContext('2d'),s=Math.round(Math.max(24,Math.min(36,Math.max(__r.pxSize(),__r.cubeShopMinSize())*1.6))),L=Math.round(c.width/2-s/2),T=Math.round(c.height/2-s/2),d=x.getImageData(L+1,T+1,s-2,s-2).data;let dark=0;for(let i=0;i<d.length;i+=4)if(d[i]+d[i+1]+d[i+2]<200)dark++;return dark;}"""
+# Inspect the interior at the actual small size, including the existing face minimum.
+FACE="""()=>{const c=document.getElementById('w'),x=c.getContext('2d'),s=Math.round(Math.max(6,Math.min(12,Math.max(Math.min(__r.pxSize(),22),__r.cubeShopMinSize())))),L=Math.round(c.width/2-s/2),T=Math.round(c.height/2-s/2),d=x.getImageData(L+1,T+1,s-2,s-2).data;let dark=0;for(let i=0;i<d.length;i+=4)if(d[i]+d[i+1]+d[i+2]<200)dark++;return dark;}"""
 # Width of the cube's square, measured on the row just below its centre.
 WIDTH="""()=>{const c=document.getElementById('w'),x=c.getContext('2d'),y=Math.floor(c.height/2)+2,d=x.getImageData(0,y,c.width,1).data,mid=Math.floor(c.width/2);let a=mid,b=mid;const on=i=>d[i*4]+d[i*4+1]+d[i*4+2]>600;while(a>0&&on(a-1))a--;while(b<c.width-1&&on(b+1))b++;return b-a+1;}"""
 try:
@@ -28,11 +28,10 @@ try:
   for pid in pieces:assert page.evaluate('id=>__r.buySparkStyle(id)',pid),pid
   hide="document.querySelectorAll('.modal').forEach(m=>m.hidden=true)"
   page.evaluate(f"()=>{{__r.equipSparkStyle('');__r.S.reducedMotion=true;{hide}}}");page.wait_for_timeout(200)
-  plain=page.evaluate(FACE);small=page.evaluate(WIDTH);assert page.evaluate('__r.pxSize()')==6 and 22<=small<28,small
-  # A face needs room. Since plan I2 the World draws every cube at 24–36 px, so a face always fits: plain and with a
-  # face the level-1 cube measures about 24 px.
-  page.evaluate(f"()=>{{__r.equipSparkStyle('eyes:serious');{hide}}}");page.wait_for_timeout(200);assert 22<=page.evaluate(WIDTH)<28,page.evaluate(WIDTH)
-  page.evaluate(f"()=>{{__r.equipSparkStyle('');{hide}}}");page.wait_for_timeout(200);assert page.evaluate(WIDTH)<28
+  plain=page.evaluate(FACE);small=page.evaluate(WIDTH);assert page.evaluate('__r.pxSize()')==6 and 6<=small<=8,small
+  # Faces retain their established minimum without enlarging every plain cube.
+  page.evaluate(f"()=>{{__r.equipSparkStyle('eyes:serious');{hide}}}");page.wait_for_timeout(200);assert 10<=page.evaluate(WIDTH)<=12,page.evaluate(WIDTH)
+  page.evaluate(f"()=>{{__r.equipSparkStyle('');{hide}}}");page.wait_for_timeout(200);assert page.evaluate(WIDTH)<=8
   for pid in [p for p in pieces if not p.startswith('habit:')]:
    for reduced in (False,True):
     page.evaluate("([id,reduced])=>{const r=__r;r.equipSparkStyle('');r.equipSparkStyle(id);r.S.reducedMotion=reduced;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}",[pid,reduced])

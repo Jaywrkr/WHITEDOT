@@ -1,6 +1,6 @@
 # Verificación
 
-Revisión documental: 20 de octubre de 2026. [Traspaso/evidencia actual](../HANDOFF.md). Esta revisión no reejecuta baterías de juego, audio ni servicios.
+Guía de comprobación. [Traspaso y evidencia actual](../HANDOFF.md). Las evidencias de cada revisión se distinguen al final; un resultado antiguo no certifica el candidato actual.
 
 Desde la raíz, con Node 18 o superior:
 
@@ -25,7 +25,7 @@ npm run test:browser
 npm run test:audio
 ```
 
-CI está definido en [checks.yml](../.github/workflows/checks.yml), con cuatro grupos de navegador y tres de audio, en Node 22. **No integrar con comprobaciones pendientes o fallidas**: desde el 22 de octubre `main` recibió integraciones con el navegador en rojo. Cada grupo de navegador (`WHITEDOT_BROWSER_SHARD=i/4`) corre un cuarto del catálogo con un trabajador y un límite de 30 minutos; con un solo runner y dos trabajadores el catálogo tardaba unos 38 de sus 40 minutos y perdía carreras distintas en cada ejecución. Cada recorrido conserva su límite de 145 segundos y `offline_smoke.py` corre en el primer grupo. `player_touch_smoke.py` juega como una persona (sin marca de automatización, toques reales, sin atajos de runtime): las demás pruebas de navegador usan el Mundo libre y el «modo dedo» que activa `navigator.webdriver`. No ejecutar varias suites pesadas simultáneamente ni desactivar aserciones. Documentar por separado CI, pruebas locales, escucha física, dispositivos reales y despliegue.
+CI está definido en [checks.yml](../.github/workflows/checks.yml), con seis grupos de navegador y tres de audio, en Node 22. **No integrar con comprobaciones pendientes o fallidas**: desde el 22 de octubre `main` recibió integraciones con el navegador en rojo. Cada grupo de navegador (`WHITEDOT_BROWSER_SHARD=i/6`) corre un sexto del catálogo con un trabajador y un límite de 30 minutos; con un solo runner y dos trabajadores el catálogo tardaba unos 38 de sus 40 minutos y perdía carreras distintas en cada ejecución. Cada recorrido conserva su límite de 145 segundos y `offline_smoke.py` corre en el primer grupo. `player_touch_smoke.py` juega como una persona (sin marca de automatización, toques reales, sin atajos de runtime): las demás pruebas de navegador usan el Mundo libre y el «modo dedo» que activa `navigator.webdriver`. No ejecutar varias suites pesadas simultáneamente ni desactivar aserciones. Documentar por separado CI, pruebas locales, escucha física, dispositivos reales y despliegue.
 
 ## Medir en un teléfono real
 
@@ -74,3 +74,15 @@ Evidencia local del 20 de octubre sobre alpha.59: `cloud-account.mjs`, `cloud-ha
 Comprobar enlaces locales de todos los Markdown, separación vigente/histórico, coherencia con los símbolos/contratos citados y `git diff --check`. Ejecutar auditoría estática y consultar `test:impact -- --base SHA --list` antes de decidir qué pruebas corresponden. Si los únicos cambios son Markdown, no volver a probar login, recuperación, dispositivos o audio. Los pushes/PR pueden disparar automáticamente workflows según sus filtros: no atribuirles resultados sin leerlos.
 
 El cierre completo previo a integrar/publicar sigue vigente cuando corresponda; una limpieza documental no lo sustituye ni lo dispara por sí sola. No afirmar «todo probado» con una selección enfocada.
+
+## Auditoría 4 · instantánea comprobada
+
+El main base 676ac511, run 40139955994, tiene logic y los tres grupos de audio aprobados, pero browser 1/3/4 fallidos y el agregador en rojo. La descarga de logs se bloqueó por el proxy; la causa individual no se diagnosticó. Datos en [CI base](panel/sesion-4/evidencia/ci-base.json). Los recorridos enfocados y los 11 renders locales de esta sesión no sustituyen el catálogo completo. La rama del cubo pasó 240 suites Node y caras; la auditoría añade mediciones y propuestas, no las corrige por documentarlas.
+
+## Cierre J1–J7 · 25 de octubre
+
+Resultados y límites del candidato en la [quinta sesión](panel/sesion-5/informe.md). Incluye preservación de generadores/arte, catálogo inicial completo y regresiones enfocadas posteriores. No confundir las pruebas locales con CI remoto, teléfono físico o despliegue. Los renders ya aprobados se reutilizan si no cambió su síntesis/arreglo, sin ejecutar audio pesado y navegador pesado a la vez.
+
+## Integración de alpha.181 en main
+
+[CI completo de integración](https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278) aprobado antes del merge: lógica, seis grupos de navegador, tres de audio y agregador. Runtime `6be023df`, idéntico al cierre `e6c0a3a6`; el registro posterior solo actualiza documentos y evidencia. [Detalle](panel/sesion-5/evidencia/ci-integracion.json). Las limitaciones físicas y de publicación siguen en [HANDOFF](../HANDOFF.md).

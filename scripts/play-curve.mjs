@@ -3,8 +3,8 @@
 // novelty (a chapter, a new place, a star that grows the song, a piece bought, the win) and the longest stretch without
 // one; the panel's rule is never more than 12 minutes. A model of play time, not a measurement of people.
 // Plan I6 (Chen, third panel): the rule counts only what grows the song (a chapter, a place, a star, the win); pieces
-// bought no longer pass it. A fourth player plays without sound (only ★ can be won), and each profile says when a
-// player is likely to leave: the start of the first stretch longer than the rule. The calibration is not modelled.
+// bought no longer pass it. A fourth player plays without sound (only ★ can be won), and each profile reports the
+// start of its first structural gap longer than the rule (not a prediction of abandonment). The calibration is not modelled.
 import {PLACES,RHYTHM_STAR,MAESTRO_STAR,MAESTRO_TEMPO,MAESTRO_GOAL,TOTAL_STARS} from '../src/places.js';
 import {roundSparks} from '../src/spark-rules.js';
 import {CUBE_SHOP} from '../src/cube-shop-model.js';
@@ -31,7 +31,7 @@ export function simulate(profile,{mine=null,rhythmStar=RHYTHM_STAR,maestroStar=M
  const share=(id,maestro)=>{const n=tries[id]=(tries[id]||0)+1;return Math.max(0,Math.min(1,profile.onTime+(hashKey(`curve:${profile.id}:${id}:${n}`)-.5)*2*SPREAD+Math.min(PRACTICE_MAX,PRACTICE*(n-1))-(maestro?MAESTRO_COST:0)));};
  function round(id,maestro=false){const q=share(id,maestro),s=stars[id],had=s.filter(Boolean).length;t+=WALK+roundMinutes(id,q,maestro);rounds++;
   if(!s[0]){s[0]=true;note('lugar',id);}if(sound&&q>=rhythmStar&&!s[1]){s[1]=true;note('★★',id);}if(sound&&maestro&&q>=maestroStar&&!s[2]){s[2]=true;note('★★★',id);}
-  sparks+=roundSparks(q,{maestro});buy();
+  note('interpretacion',id);sparks+=roundSparks(q,{maestro});buy();
   if(!won&&PLACES.every(p=>stars[p.id][0])){won=t;note('victoria','once lugares');}if(!master&&count()===TOTAL_STARS){master=t;note('maestro','33 ★');}
   if(rounds%WANDER_EVERY===0){t+=WANDER;sparks+=WANDER*world+15;note('salvaje','chispa');buy();}
   return s.filter(Boolean).length>had;}
@@ -49,13 +49,13 @@ export function simulate(profile,{mine=null,rhythmStar=RHYTHM_STAR,maestroStar=M
  const end=Math.min(HORIZON,master??HORIZON);
  function longest(kinds){const m=[0,...events.filter(e=>kinds.includes(e.kind)&&e.t<=end).map(e=>e.t),end];let gap=0,from=0;for(let i=1;i<m.length;i++)if(m[i]-m[i-1]>gap){gap=m[i]-m[i-1];from=m[i-1];}return {gap:+gap.toFixed(1),from:+from.toFixed(1)};}
  const any=longest(['viaje','lugar','★★','★★★','victoria','maestro','compra']),song=longest(['viaje','lugar','★★','★★★','victoria','maestro']);
- // When a player is likely to leave: the start of the first stretch without a song novelty longer than the rule.
+ // Structural gap only. quitAt retains its legacy field name; this model cannot predict abandonment or enjoyment.
  const marks=[0,...events.filter(e=>['viaje','lugar','★★','★★★','victoria','maestro'].includes(e.kind)&&e.t<=end).map(e=>e.t),end];let quit=null;for(let i=1;i<marks.length;i++)if(marks[i]-marks[i-1]>NOVELTY_GAP){quit=+marks[i-1].toFixed(1);break;}
  const at60=events.filter(e=>e.t<=60),starsAt=m=>events.filter(e=>e.t<=m&&['viaje','lugar','★★','★★★'].includes(e.kind)&&!(e.kind==='viaje'&&!stars[e.what])).length;
  return {id:profile.id,onTime:profile.onTime,won:won&&+won.toFixed(1),master:master&&+master.toFixed(1),stars60:starsAt(60),stars120:starsAt(HORIZON),bought120:events.filter(e=>e.kind==='compra').length,
-  withPurchasesGap:any.gap,songGap:song.gap,songGapFrom:song.from,rule:song.gap<=NOVELTY_GAP,quitAt:quit,sound,novelties60:at60.filter(e=>e.kind!=='salvaje').length,events};}
+  completedInterpretations:events.filter(e=>e.kind==='interpretacion').length,interpretationGap:longest(['viaje','lugar','★★','★★★','victoria','maestro','interpretacion']).gap,interestMeasured:false,withPurchasesGap:any.gap,songGap:song.gap,songGapFrom:song.from,rule:song.gap<=NOVELTY_GAP,quitAt:quit,sound,novelties60:at60.filter(e=>!['salvaje','interpretacion'].includes(e.kind)).length,events};}
 export function curve(rules={}){const mine={1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)};return PROFILES.map(p=>simulate(p,{mine,...rules}));}
-const line=r=>`${r.sound?r.id+' %':r.id}  victoria ${r.won??'—'} min · 33★ ${r.master??'—'} · ★ a los 60 min ${r.stars60}, a los 120 ${r.stars120} · ${r.bought120} piezas · sin que crezca la canción ${r.songGap} min desde el ${r.songGapFrom} ${r.rule?'(cumple 12 min)':'(NO cumple 12 min)'} · ${r.quitAt===null?'sin riesgo de abandono':'riesgo de abandono hacia el minuto '+r.quitAt} · con compras, mayor hueco ${r.withPurchasesGap} min`;
+const line=r=>`${r.sound?r.id+' %':r.id}  victoria ${r.won??'—'} min · 33★ ${r.master??'—'} · ★ a los 60 min ${r.stars60}, a los 120 ${r.stars120} · ${r.bought120} piezas · sin nuevas capas ${r.songGap} min desde el ${r.songGapFrom} ${r.rule?'(cumple 12 min)':'(NO cumple 12 min)'} · ${r.completedInterpretations} interpretaciones · disfrute no medido · con compras, mayor hueco ${r.withPurchasesGap} min`;
 if(import.meta.url===`file://${process.argv[1]}`){const all=curve();
  console.log('Reglas de hoy (★★ 75 %, ★★★ 70 % en Maestro):');for(const r of all)console.log(line(r));
  console.log('Antes de I5 (★★ 85 %, ★★★ 80 %):');for(const r of curve({rhythmStar:.85,maestroStar:.8}))console.log(line(r));
