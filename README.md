@@ -2,13 +2,14 @@
 
 Un cubo, un universo que suena. Tocas a tiempo y el mundo responde con música.
 
-Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.187**, cierre K1–K6 en ramas encadenadas ([estado](HANDOFF.md)). No está publicado en tiendas.
+Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.188**, cierre K1–K7 en ramas encadenadas ([estado](HANDOFF.md)). No está publicado en tiendas.
 
 ## Empezar aquí
 
 | Si quieres… | Lee |
 |---|---|
 | Saber dónde está el proyecto y qué toca ahora | [HANDOFF.md](HANDOFF.md) |
+| Revisar la auditoría actual | [Panel 7](docs/panel/sesion-7/informe.md) y [plan propuesto](docs/panel/sesion-7/plan.md) |
 | Ver el cierre conservando música y mundos | [Entrega K1–K6](docs/CIERRE_K.md) y [auditoría](docs/panel/sesion-6/informe.md) |
 | Repetir la auditoría del panel creativo | [docs/PANEL.md](docs/PANEL.md) |
 | Trabajar en el código | [AGENTS.md](AGENTS.md) y [Arquitectura](docs/ARQUITECTURA.md) |
@@ -16,7 +17,7 @@ Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, e
 
 ## El juego
 
-- **El Viaje:** el Camino y cinco capítulos (Llanura, Lago, Bosque, Tormenta, Vacío). Termina en el Refugio, que toca tu canción.
+- **El Viaje:** el Camino y cinco capítulos (Llanura, Lago, Bosque, Tormenta, Vacío). Su cierre recuerda tu canción y te deja en el Mundo libre. El Refugio queda disponible.
 - **El Mundo libre:** un anillo de 11 lugares que se abren en orden. Cada uno da ★, ★★ (75 % a tiempo) y ★★★ (Maestro). Las estrellas amplían las capas de tu canción.
 - **Tu cubo:** piezas que se compran con chispas: recoger da valor base y tocar a tiempo da más.
 - Cuenta opcional: se juega al instante con guardado local.

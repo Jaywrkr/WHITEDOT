@@ -1,28 +1,19 @@
-# Traspaso · cierre K1–K6
+# Traspaso · K7 y séptima auditoría
 
-**Código 2.3.0-alpha.187.** Leer [AGENTS](AGENTS.md), [auditoría 6](docs/panel/sesion-6/informe.md) y [plan](docs/panel/sesion-6/plan.md).
+**Código 2.3.0-alpha.188.** Leer AGENTS, [séptimo informe](docs/panel/sesion-7/informe.md) y [plan propuesto](docs/panel/sesion-7/plan.md).
 
-## Petición vigente
+## Entrega vigente
 
-Jay aprobó ejecutar las seis fases, una rama por fase encadenada, commit y push. Jay conserva PR y merge; la excepción anterior de integrar en main terminó con el PR #353. No pedir aprobación entre fases. K1 parte de la auditoría `7476aa7a`, sobre main `3c5fd7b6`; cada fase siguiente parte de la anterior.
+Jay pidió brújula/metraje junto al cubo, arreglar otra vez el final5 rechazado, salir al Mundo libre y nueva revisión integral. Rama `pulido/k7-rumbo-y-despedida`, desde K6 `ceb33ca9`. K1–K6 siguen encadenadas; [orden](docs/CIERRE_K.md). Jay conserva PR/merge; no push a main. Main comprobado al empezar: `3c5fd7b6`.
 
-Priorizar caminar: «Seguir» orienta, no transporta automáticamente al acabar el Vacío. Fragmentos fuera de tempo tienen valor base×1, a tiempo×2 y racha×3. Revisar ayuda de guardar tras el Vacío. Corregir final5 sin rehacer música generativa, mapas, biomas, flora, fauna o arte del cubo pequeño. Preservar guardados, formatos futuros y fallos de escritura. Supabase y tiendas continúan en pausa.
+K7: brújula48px alrededor del cubo y texto90px arriba, sin recibir toques ni cambiar movimiento/piezas; sigue cameraOffset. Destino favorito/casa tiene prioridad, Seguir al anillo lo sustituye. Final5 usa otro arreglo local: voces suaves existentes, notas sobre acorde, registro medio sin duplicación aguda; no squarebass/acid/sawpad. Original MIDI, síntesis, radio y generadores preservados. Todas las salidas normales abren Mundo y señalan Jardín, sin transportarse allí. Festival intacto; fallo de guardado deja cierre reintentable.
 
-| Fase | Rama | Estado técnico |
-|---|---|---|
-| K1 · Guía al anillo | `pulido/k1-guia-anillo` | Entregada |
-| K2 · Economía de chispas | `pulido/k2-economia-chispas` | Entregada |
-| K3 · Final del Viaje | `pulido/k3-final-viaje` | Entregada |
-| K4 · Interfaz clara | `pulido/k4-interfaz-clara` | Entregada |
-| K5 · Recorrido contextual | `pulido/k5-recorrido-contextual` | Entregada |
-| K6 · Validación de cierre | `pulido/k6-validacion-cierre` | Entregada |
+## Panel y próximos pasos
 
-## Última comprobación
+Referencia **7,7/10** sobre alpha.187, incorporando prueba real de Jay; alpha.188 es candidatura técnica. No subir nota por renders. Jay acepta organización del menú; final5 sigue pendiente de su nueva escucha. Revisión de diez lentes con dos agentes de lectura, no opiniones reales ni jurado humano.
 
-K6: 246 suites Node, auditoría estática, 297 archivos protegidos, 48 muestras UI normales/texto doble y recorridos afectados aprobados. Marcha a Jardín sin warp/gasto, estrella y rumbo a Dunas después de recargar. Cinco renders final5 y396 contextos; aceptación en teléfono, cinco sesiones y CI de PR pendientes. Detalle en docs/CIERRE_K.md.
+Hallazgos nuevos: aprendizaje Jardín/otros lugares, ayudas consumidas antes de verse, favoritos editados sin rollback, notas por ronda/último gesto y foco de finales dinámicos. Plan L1–L4 propuesto, **no implementado ni autorizado todavía**. Canonical: docs/panel/sesion-4/seguimiento.json conserva evidencia anterior y nueva.
 
-Una entrega técnica no sustituye la escucha física de Jay ni cinco sesiones sin ayuda. Los IDs y pendientes humanos permanecen en [el registro](docs/panel/sesion-4/seguimiento.json). La auditoría 6 vale7,2 provisional antes de las correcciones; no se eleva esa nota por un commit.
+## Verificación y límites
 
-## Base preservada
-
-Alpha.181 y J1–J7 están en main por [PR #353](https://github.com/Jaywrkr/WHITEDOT/pull/353). [Sesión5](docs/panel/sesion-5/informe.md): CI completo de integración aprobado; nueva experiencia real de Jay reabrió navegación/aceptación y añadió final5 como A04. Base radio/generadores preservada; final5 es un arreglo autorizado distinto de los cierres breves y final11.
+Resultados actuales en [verificacion.json](docs/panel/sesion-7/evidencia/verificacion.json). Pruebas enfocadas de brújula, movimiento y tres salidas con audio; renders final5, Node y auditoría. No equivalen al catálogo completo de PR, cinco sesiones ni escucha física. Guardados no se borran. Supabase, servicios y tiendas siguen en pausa.

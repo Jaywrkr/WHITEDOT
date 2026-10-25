@@ -1,15 +1,13 @@
 import {prefersReducedMotion} from './frame-state.js';
-import {THEME,themePitch,playCello} from './journey-pulse.js';
+import {THEME,themePitch} from './journey-pulse.js';
 import {WORLD_CHAPTERS} from './journey-chapters.js';
 import {FESTIVAL_CHAPTERS} from './festival.js';
 import {LANDSCAPES} from './house-view.js';
-import {SONG_IDS,layerStep,songChord} from './song.js';
+import {SONG_IDS,songChord} from './song.js';
 import {drawSongRings,snapToScale} from './song-stage.js';
 import {PLACES} from './places.js';
-// The Journey, phase 5: the finale. In the Refugio the cube's journey plays back as your song (plan F7, song.js): each
-// chapter takes two bars, its layer comes in under the notes you played on time there, with your rhythm, and its ring
-// lights with its name and verb; then the theme in A major twice over the five layers, the second time a fifth up.
-// Six dim rings say what is still to come; the sky turns gold, a silence, «Tu mundo se abrió» and «Explorar».
+// The Journey's local closing arrangement. Saved notes keep their rhythm; their interpretation shares each chord.
+// Five rings recall the chapters, six dim rings invite you onward. Every normal exit leads to the free World.
 export const CHAPTER_COLORS=Object.freeze({llanura:LANDSCAPES.llanura,lago:LANDSCAPES.lago,bosque:LANDSCAPES.bosque,tormenta:LANDSCAPES.tormenta,vacio:'#ffffff',refugio:'#f0d27a'});
 export const MAJOR=Object.freeze([0,2,4,5,7,9,11]);
 // Seconds: one eighth, the gathering before the first note, the silence after the last and the credits.
@@ -35,16 +33,26 @@ export const chapterStarts=score=>{const out={};for(const n of score)if(!(n.chap
 // K3: a local interpretation of the saved phrase, in the departing world's scale and tempo.
 // The original MIDI and its timing remain in the save. No radio/voice generator changes.
 export function finaleContext(runtime={}){const source=runtime.MU?.dnaA?.scale||runtime.BIOMES?.[runtime.curZone]?.scale,scale=Array.isArray(source)&&source.length===7&&source.every(Number.isFinite)?source:[...MAJOR];return {scale:[...scale],tr:Number.isFinite(runtime.MU?.tr)?runtime.MU.tr:0,six:Math.max(.1,Math.min(1/6,runtime.SIX||.125))};}
-export function finaleArrangement(score,context={scale:MAJOR,tr:0,six:.125}){const {scale,tr,six}=context,length=scoreLength(score),starts=chapterStarts(score),events=[],theme=starts.refugio??0,voice={llanura:'arp',lago:'bass',bosque:'bell',tormenta:'arp',vacio:'cello'};
+export function finaleArrangement(score,context={scale:MAJOR,tr:0,six:.125}){const {scale,tr,six}=context,length=scoreLength(score),starts=chapterStarts(score),events=[],theme=starts.refugio??0;
  const chord=step=>{const d=step*six>=theme?0:[0,4,5,3][Math.floor(step/32)%4];return songChord([0,2,4].map(k=>57+tr+scale[(d+k)%7]+12*Math.floor((d+k)/7)));};
- for(let step=0;step*six<length-1e-6;step++){const c=chord(step);for(const id of SONG_IDS.slice(0,5)){if((!(id in starts)&&!(theme>0))||step*six<(starts[id]??theme)||id==='tormenta'&&step%2)continue;for(const e of layerStep(id,step,c))events.push({...e,...(Number.isFinite(e.midi)?{midi:snapToScale(e.midi,scale,tr)}:{}),at:step*six,layer:id,group:'bed'});}}
- let ti=0;for(const n of score){const thematic=n.chapter==='refugio',pass=Math.floor(ti/THEME.length),raw=thematic?themePitch(THEME[ti++%THEME.length][0],scale,tr+(pass?7:0)):n.midi;
-  const midi=snapToScale(raw,scale,tr),what=thematic?'cello':voice[n.chapter]||'arp';events.push({what,midi:midi+(what==='bass'?0:12),len:(n.seconds??n.eighths*EIGHTH)/six*.86,at:n.at,layer:n.chapter,group:'phrase'});}
+ // Scale membership alone was not enough: old square bass, resonant acid and saw pad still changed the character.
+ // Only this finale substitutes those attacks with existing soft voices, leaving the radio and song.js untouched.
+ for(let step=0;step*six<length-1e-6;step++){const c=chord(step),b=step%16,add=(id,e)=>{if(step*six>=(starts[id]??theme))events.push({...e,at:step*six,layer:id,group:'bed'});};
+  if(b%4===0)add('llanura',{what:'kick',level:.65});
+  if(b===0||b===10)add('lago',{what:'cello',midi:c.root,len:3,soft:true,level:.65});
+  if(b===2||b===10)add('bosque',{what:'hat',level:.28});
+  if(b===4||b===12)add('bosque',{what:'clap',level:.25});
+  if(b===3||b===11)add('tormenta',{what:'arp',midi:c.tones[(step>>4)%3],soft:true,level:.5});
+  if(b===0)add('vacio',{what:'cello',midi:c.tones[2],len:8,soft:true,level:.28});
+ }
+ // Bring each recalled note to the current chord, in a shared middle register. No automatic octave-up doubling.
+ const voiced=(m,c)=>{let target=snapToScale(m,scale,tr);while(target<52)target+=12;while(target>76)target-=12;let best=target,far=Infinity;for(const tone of c.tones)for(let o=-2;o<=2;o++){const n=tone+12*o,d=Math.abs(n-target);if(n>=52&&n<=76&&(d<far||d===far&&n<best)){best=n;far=d;}}return best;};
+ let ti=0;for(let i=0;i<score.length;i++){const n=score[i],thematic=n.chapter==='refugio',raw=thematic?themePitch(THEME[ti++%THEME.length][0],scale,tr):n.midi,c=chord(Math.round(n.at/six)),next=score[i+1]?.at??length,seconds=Math.min(n.seconds??n.eighths*EIGHTH,next-n.at,length-n.at);
+  if(seconds<=0)continue;events.push({what:thematic?'cello':'arp',midi:voiced(raw,c),len:Math.max(.1,seconds/six*.8),soft:true,at:n.at,layer:n.chapter,group:'phrase',level:thematic?.8:.9});}
  return events.sort((a,b)=>a.at-b.at);}
 export function playFinale(runtime,score,context,at){const ac=runtime.ac;if(!runtime.S.sound||!ac||!runtime.bus||!runtime.songHit)return null;const out=ac.createGain(),bed=ac.createGain(),phrase=ac.createGain(),end=at+scoreLength(score);out.connect(runtime.bus);bed.gain.value=.36;phrase.gain.value=.42;bed.connect(out);phrase.connect(out);
  out.gain.setValueAtTime(1,at);out.gain.setValueAtTime(1,Math.max(at,end-.45));out.gain.linearRampToValueAtTime(0,end);
- const acid=ac.createGain();acid.gain.value=.45;acid.connect(bed);
- for(const e of finaleArrangement(score,context))runtime.songHit(e.group==='phrase'?phrase:e.what==='acid'?acid:bed,e,at+e.at,context.six);
+ const lanes=new Map();for(const e of finaleArrangement(score,context)){const key=e.group+':'+e.level;if(!lanes.has(key)){const lane=ac.createGain();lane.gain.value=e.level??1;lane.connect(e.group==='phrase'?phrase:bed);lanes.set(key,lane);}runtime.songHit(lanes.get(key),e,at+e.at,context.six);}
  return out;}
 export function initialize(runtime){
  let run=null;const state={played:0,skipped:false,finished:0};
@@ -54,17 +62,17 @@ export function initialize(runtime){
  // Sound: your song (song.js) through its own gain, so skipping fades it out. Each chapter's layer comes in at its two
  // bars; the local arrangement interprets your notes over the same harmonic frame.
  function play(score,context){const ac=runtime.ac;return ac?playFinale(runtime,score,context,ac.currentTime+GATHER):null;}
- function start(options={}){const j=runtime.S.journey,festival=!!options.festival;if(run||!j||(j.finished&&!festival)){if(!run)runtime.landHouse?.();return false;}
-  document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});const context=finaleContext(runtime),ratio=context.six/.125;runtime.landHouse?.();const score=finaleScore(j.notes,festival?FESTIVAL_CHAPTERS:WORLD_CHAPTERS,j.steps).map(n=>({...n,at:n.at*ratio,seconds:n.eighths*EIGHTH*ratio})),el=overlay();el.querySelector('.journey-again')?.remove();el.querySelector('.journey-explore')?.remove?.();el.querySelector('.journey-credits').replaceChildren();
+ function start(options={}){const j=runtime.S.journey,festival=!!options.festival;if(run||!j||(j.finished&&!festival))return false;
+  document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});runtime.cancelJourneyVictory?.();runtime.stopSong?.();const context=finaleContext(runtime),ratio=context.six/.125;runtime.landHouse?.();const score=finaleScore(j.notes,festival?FESTIVAL_CHAPTERS:WORLD_CHAPTERS,j.steps).map(n=>({...n,at:n.at*ratio,seconds:n.eighths*EIGHTH*ratio})),el=overlay();el.querySelector('.journey-again')?.remove();el.querySelector('.journey-explore')?.remove?.();el.querySelector('.journey-credits').replaceChildren();
   run={el,score,context,events:finaleArrangement(score,context),festival,at:now(),length:scoreLength(score),gain:play(score,context),soundEnd:(runtime.ac?.currentTime||0)+GATHER+scoreLength(score),credits:false};state.played++;
   el.onclick=()=>{if(run&&now()-run.at>2)finish(true);};requestAnimationFrame(frame);return true;}
  function finish(skipped=false){if(!run)return;const j=runtime.S.journey,ac=runtime.ac;if(run.gain&&ac){const g=run.gain.gain;if(typeof g.cancelAndHoldAtTime==='function')g.cancelAndHoldAtTime(ac.currentTime);else{const end=run.soundEnd,held=Math.min(1,Math.max(0,(end-ac.currentTime)/.45));g.cancelScheduledValues(ac.currentTime);g.setValueAtTime(held,ac.currentTime);}g.setTargetAtTime(.0001,ac.currentTime,.12);}
   // The festival keeps your phrase on screen and waits for the next player.
   if(run.festival){const el=run.el;el.onclick=null;if(!run.credits)credits(run);const again=document.createElement('button');again.className='journey-again';again.id='journeyAgain';again.textContent='Otra persona';again.onclick=()=>runtime.festivalRestart?.();el.appendChild(again);run=null;state.skipped=skipped;state.finished++;return;}
-  run.el.hidden=true;run.el.onclick=null;run.el.querySelector?.('.journey-explore')?.remove?.();run=null;state.skipped=skipped;
   // The end of the Journey is kept; the free World opens.
-  j.finished=true;const kept=runtime.journeyMode?.()==='libre'?runtime.save()!==false:!!runtime.setJourneyMode?.('libre');if(!kept){delete j.finished;return;}
-  state.finished++;runtime.firstJourneyTick?.();runtime.narrate?.('journeyDone');runtime.toast?.('Se abre el Mundo libre.');unveil();}
+  const wasFinished=j.finished;j.finished=true;const kept=runtime.journeyMode?.()==='libre'?runtime.save()!==false:!!runtime.setJourneyMode?.('libre');if(!kept){if(wasFinished===undefined)delete j.finished;else j.finished=wasFinished;return;}
+  run.el.hidden=true;run.el.onclick=null;run.el.querySelector?.('.journey-explore')?.remove?.();run=null;state.skipped=skipped;
+  state.finished++;runtime.exitHouse?.();runtime.ringGuide?.();runtime.save?.();runtime.firstJourneyTick?.();runtime.narrate?.('journeyDone');runtime.toast?.('Se abre el Mundo libre.');unveil();}
  // From the quiet Journey to everything at once was abrupt (phase 6 of the plan): the counters and buttons of the free
  // World fade in one after another, and the menu marks that it has new things until it is opened.
  // The sparks earned on the way were hidden in the Journey: once in the free World, Tu cubo is marked and one short
@@ -72,13 +80,13 @@ export function initialize(runtime){
  function sparksHint(){const j=runtime.S.journey;if(!j||j.sparksHint)return;j.sparksHint=true;runtime.save?.();const cube=document.getElementById('bCube');
   if(cube?.classList){cube.classList.add('has-new');cube.addEventListener('click',()=>cube.classList.remove('has-new'),{once:true});}
   }
- // The finale lands in the Refugio: the unveiling waits until you step out into the World (for up to ten minutes).
+ // All normal exits now unveil the World. Keep the guard for failed/blocked transitions.
  function unveil(waited=0){const body=document.body;if(typeof runtime.inWorld==='function'&&!runtime.inWorld()&&waited<600){setTimeout(()=>unveil(waited+1),1000);if(waited)return;}else{body?.classList?.add('journey-unveil');setTimeout(()=>body?.classList?.remove('journey-unveil'),7000);sparksHint();if(waited)return;}
   const menu=document.getElementById('bMenu'),sheet=document.getElementById('mMenu');if(!menu?.classList)return;menu.classList.add('has-new');
   if(sheet&&typeof MutationObserver==='function'){const seen=new MutationObserver(()=>{if(!sheet.hidden){menu.classList.remove('has-new');seen.disconnect();}});seen.observe(sheet,{attributes:true,attributeFilter:['hidden']});}}
  function credits(r){r.credits=true;const box=r.el.querySelector('.journey-credits');box.replaceChildren(...(r.festival?FESTIVAL_LINES:CREDIT_LINES).map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.9}s`;if(i===0)p.className='journey-title';return p;}));
   // «Explorar»: straight into the free World, without waiting for the credits to end.
-  if(!r.festival){const go=document.createElement('button');go.className='journey-explore';go.id='journeyExplore';go.textContent='Explorar a pie';go.onclick=e=>{e?.stopPropagation?.();finish(false);if(runtime.S.journey?.finished){runtime.exitHouse?.();runtime.ringGuide?.();}};r.el.appendChild(go);}}
+  if(!r.festival){const go=document.createElement('button');go.className='journey-explore';go.id='journeyExplore';go.textContent='Explorar a pie';go.onclick=e=>{e?.stopPropagation?.();finish(false);};r.el.appendChild(go);}}
  function frame(){if(!run)return;const el=run.el,cv=el.querySelector('canvas'),W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);if(cv.width!==Math.round(W*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
   const c=cv.getContext('2d'),t=now()-run.at,music=t-GATHER,end=run.length,still=calm();c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
   // The sky turns gold while your journey plays, and goes dark in the silence.

@@ -1,0 +1,12 @@
+{
+  "base": "ceb33ca9",
+  "changedSource": [
+    "src/journey-finale.js",
+    "src/places-ring.js",
+    "src/release-info.js"
+  ],
+  "protectedSourceAndAssets": 325,
+  "digest": "ccbe072746d7eba6998a2d761aa65556cc86227765a48ec777491779d859a879",
+  "scope": "Full source/assets compared with K6; only finale, ring integration and release metadata differ. Styles/layout authorized separately.",
+  "status": "PASS"
+}

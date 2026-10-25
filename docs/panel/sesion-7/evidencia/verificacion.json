@@ -1,0 +1,69 @@
+{
+  "version": "2.3.0-alpha.188",
+  "base": "ceb33ca9",
+  "branch": "pulido/k7-rumbo-y-despedida",
+  "scope": "Technical local evidence, fixtures and read-only simulated review; no listening or human usability certification.",
+  "checks": [
+    {
+      "command": "npm run test:impact -- --base ceb33ca9",
+      "result": "PASS",
+      "detail": "19 Node suites selected; repeated after documentation, PASS. Complete npm test run also passed."
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "detail": "246 Node suites."
+    },
+    {
+      "command": "node scripts/release-audit.mjs",
+      "result": "PASS",
+      "detail": "0 errors, 0 warnings."
+    },
+    {
+      "command": "node scripts/pulido-preservation.mjs",
+      "result": "PASS",
+      "detail": "297 protected files byte-identical to original small-cube base. Sandbox initially blocked a child Git; rerun authorized and passed."
+    },
+    {
+      "command": "node tests/journey-finale-harmony.mjs",
+      "result": "PASS",
+      "detail": "396 scale/transpose/tempo contexts; saved MIDI untouched; middle register and no rejected voices."
+    },
+    {
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/journey_finale_mix.py",
+      "result": "PASS",
+      "detail": "Five actual player renders; max raw-bus peak0.144, zero clipping, silent tail and early/late exit."
+    },
+    {
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/compass_handoff_smoke.py",
+      "result": "PASS",
+      "detail": "Four viewports, normal/double text, no button overlap or pointer capture; keyboard moves; one owner for navigation; actual sound-on automatic/skip/button endings in World with Jardín route. First attempt fixture had no house anchor, corrected explicit fixture then passed."
+    },
+    {
+      "command": "CHROMIUM_PATH=/usr/bin/chromium python3 tests/journey_finale_smoke.py",
+      "result": "PASS",
+      "detail": "Tormenta/Vacio to final, phone and desktop; live sound, credits, World and retained completion."
+    },
+    {
+      "command": "Compare K6 source and assets byte-for-byte",
+      "result": "PASS",
+      "detail": "325 preserved source/assets; changed source only finale, places-ring and release-info."
+    },
+    {
+      "command": "OUT=/tmp/kubono-panel-7-capturas python3 scripts/panel-capture.py",
+      "result": "PASS",
+      "detail": "16 new 390x844 states; normal hostname, webdriver=false, sound engine running, no page errors. Representative captures retained; no human play."
+    },
+    {
+      "command": "Check local Markdown targets and git diff --check",
+      "result": "PASS",
+      "detail": "113 Markdown files, 363 local links, zero missing; no whitespace errors."
+    }
+  ],
+  "limits": [
+    "Jay has not yet accepted the new finale audio or compass.",
+    "No full browser/audio catalogue rerun; affected tests only, as requested.",
+    "Full PR CI and five unaided sessions pending.",
+    "No main push, services or store release."
+  ]
+}

@@ -1,5 +1,7 @@
 # Entrega K1–K6 · alpha.187
 
+**Continuación autorizada:** K7 (`pulido/k7-rumbo-y-despedida`, alpha.188) parte de K6 y se integra después. Corrige rumbo/coda/salida según nueva prueba de Jay. [Estado y auditoría actual](panel/sesion-7/informe.md). Este documento conserva evidencia histórica de K1–K6.
+
 Las seis fases están implementadas técnicamente. Rama por fase, encadenadas desde auditoría `7476aa7a` y main `3c5fd7b6`. Jay conserva PR y merge; no se integra esta entrega en main por parte del agente.
 
 | Fase | Rama | Versión | Commit de la fase |
@@ -9,7 +11,7 @@ Las seis fases están implementadas técnicamente. Rama por fase, encadenadas de
 | K3 | `pulido/k3-final-viaje` | alpha.184 | `3da51c4d` |
 | K4 | `pulido/k4-interfaz-clara` | alpha.185 | `3af4da37` |
 | K5 | `pulido/k5-recorrido-contextual` | alpha.186 | `a0ccfffe` |
-| K6 | `pulido/k6-validacion-cierre` | alpha.187 | `este commit` |
+| K6 | `pulido/k6-validacion-cierre` | alpha.187 | `ceb33ca9` |
 
 Integrar en ese orden. Cada rama posterior incluye la anterior; no volver a incorporar por separado la rama de auditoría. No borrar las ramas para probarlas. Si main cambia por otro trabajo, comprobar el candidato conjunto antes de integrar.
 

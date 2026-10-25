@@ -6,7 +6,7 @@ Diseño aprobado por Jay el 23 de octubre de 2026. Es la guía del juego y sus r
 
 | Capa | Qué es | Para qué sirve |
 |---|---|---|
-| **Viaje** (prólogo, 15–17 min) | Cinco capítulos con historia: Llanura, Lago, Bosque, Tormenta y Vacío, más el Camino y el Refugio | Aprender los cinco primeros verbos y llegar a casa |
+| **Viaje** (prólogo, 15–17 min) | Cinco capítulos con historia: Llanura, Lago, Bosque, Tormenta y Vacío, más el Camino y el Refugio | Aprender cinco verbos y abrir el Mundo libre |
 | **Los 11 lugares** | Retos fijos, cada uno con su juego y tres estrellas | Avanzar: las estrellas abren lugares y ganan el juego |
 | **Mundo salvaje** | El mundo infinito alrededor | Explorar, encuentros sorpresa, chispas y coleccionables |
 | **Refugio** | La casa, en el centro del anillo | Trofeos, estrellas, mapa, tienda, espejo, logros y Bitácora |
@@ -55,7 +55,7 @@ Tras el Viaje, el anillo se abre **en orden**, como las pistas de un disco: cada
 | **Ganar** | Los 11 completos (11 ★): suena el final verdadero de tu canción | | |
 | **Versión maestra** | Las 33 ★ | | |
 
-- Una columna de luz dorada y la flecha del borde señalan el siguiente lugar del camino. La tarjeta de la ronda tiene «Siguiente · lugar», que lleva a su portal y empieza su ronda.
+- Una columna de luz señala el portal; una brújula junto al cubo indica rumbo/metraje. La tarjeta de la ronda ofrece Seguir: caminar hacia el siguiente lugar, sin llevar allí automáticamente.
 - Un lugar ya completo ofrece **Jugar**, **Libre** (su música y su verbo, sin barra, estrellas ni chispas) y **Maestro** (con ★★).
 - Nadie pierde una puerta: un guardado de antes conserva abiertos los lugares que sus estrellas ya abrían (`kept`), y un lugar con su ★ o ya visitado sigue abierto.
 
@@ -97,7 +97,7 @@ Cada lugar da chispas completas en sus tres primeras rondas del día y la mitad 
 
 ## Tu canción
 
-Cada lugar da una capa de una canción. El final del Viaje junta las cinco primeras y abre el mundo («Tu mundo se abrió · Once lugares te esperan», botón Explorar). Con los 11 lugares completos suenan las once juntas: es ganar el juego («Los 11 lugares»). Con las 33 ★ vuelve como versión maestra («Las 33 ★»). Desde H4 la canción es la música del propio juego: el Mundo sigue sonando en su tono y tempo, y encima entra la capa de cada lugar ganado sobre el acorde que suena. Las estrellas la hacen crecer: ★ un fragmento (un compás de cada dos), ★★ la capa entera, ★★★ su variación (una octava arriba y con eco). El final con los 11: las capas entran una por compás, luego tus notas de cada lugar en orden y al final el tema del cubo; la versión maestra lo toca todo en su variación. Los trofeos del Refugio tocan su capa dos compases sobre la música.
+Cada lugar da una capa de una canción. El final del Viaje junta las cinco primeras y abre el mundo («Tu mundo se abrió · Cinco completos. Quedan seis por descubrir.», botón Explorar). Con los 11 lugares completos suenan las once juntas: es ganar el juego («Los 11 lugares»). Con las 33 ★ vuelve como versión maestra («Las 33 ★»). Desde H4 la canción es la música del propio juego: el Mundo sigue sonando en su tono y tempo, y encima entra la capa de cada lugar ganado sobre el acorde que suena. Las estrellas la hacen crecer: ★ un fragmento (un compás de cada dos), ★★ la capa entera, ★★★ su variación (una octava arriba y con eco). El final con los 11: las capas entran una por compás, luego tus notas de cada lugar en orden y al final el tema del cubo; la versión maestra lo toca todo en su variación. Los trofeos del Refugio tocan su capa dos compases sobre la música.
 
 ## Logros del narrador
 
@@ -245,3 +245,7 @@ Detalle, comprobaciones y aceptación pendiente en [Cierre](PULIDO_CIERRE.md) y 
 Jay sustituye la regla H5 de moneda: en Mundo libre recoger siempre da el valor base×1; romper a tiempo×2 y desde ocho aciertos seguidos×3. La multiplicación corresponde al golpe que rompe el cristal y se cobra al recoger cada fragmento. Pendientes antiguos con×0 recuperan su valor base; los fragmentos ya recogidos no se vuelven a pagar. Estrellas, retos, precios y saldo conservan sus reglas; no cambian síntesis ni distribución.
 
 Estado vigente K1–K6: [entrega alpha.187](CIERRE_K.md). Las cifras históricas H5 de duración de tienda usaban×0 fuera de tempo; K2 cambia esa base. La simulación actual está en `scripts/spark-economy.mjs`; no son medidas de personas. El viaje rápido voluntario admite los capítulos ya completos, sin exigir descubrir de nuevo su portal.
+
+## K7 · rumbo junto al cubo (alpha.188)
+
+La flecha rodea el cubo a48px; nombre y metros quedan90px arriba, separados de Otro paisaje. No intercepta el dedo ni cambia tamaño, movimiento o personalización. Un destino explícito a casa/favorito tiene prioridad; Seguir al anillo lo sustituye. El final5 abre el Mundo libre por todas sus salidas normales; no deja en casa ni transporta a Jardín. [Auditoría actual y siguientes mejoras propuestas](panel/sesion-7/informe.md).

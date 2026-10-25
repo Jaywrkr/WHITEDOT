@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "scope": "Auditoría simulada histórica. Jay autoriza J1–J7 preservando generación musical y mundos; correcciones y límites en docs/PULIDO_CIERRE.md.",
+  "scope": "Registro canónico de auditorías simuladas J/K. Séptima sesión añade feedback real y correcciones K7; no jurado humano ni aceptación musical inventada.",
   "base": "676ac511",
   "audited": "04ae8bdd",
   "findings": [
@@ -457,7 +457,7 @@
       "id": "A04",
       "area": "Audio final del Viaje",
       "priority": "P1",
-      "status": "corregido-tecnico-aceptacion-pendiente",
+      "status": "corregido-k7-aceptacion-reabierta",
       "phase": "K3",
       "title": "El final5 conserva otra cama y frases no adaptadas",
       "evidence": [
@@ -476,13 +476,19 @@
         "result": "PASS",
         "evidence": "../sesion-6/evidencia/verificacion-k6.json",
         "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      },
+      "feedback7": "Jay rechaza el final5 anterior / informa solape de rumbo; K7 corrige causas. Aceptación nueva pendiente.",
+      "closureK7": {
+        "version": "2.3.0-alpha.188",
+        "evidence": "../sesion-7/evidencia/verificacion.json",
+        "limits": "Técnico; no escucha humana."
       }
     },
     {
       "id": "U05",
       "area": "Orientación",
       "priority": "P1",
-      "status": "corregido-tecnico-aceptacion-pendiente",
+      "status": "corregido-k7-aceptacion-reabierta",
       "phase": "K1",
       "title": "El faro pierde la dirección vertical",
       "evidence": [
@@ -500,6 +506,12 @@
         "result": "PASS",
         "evidence": "../sesion-6/evidencia/verificacion-k6.json",
         "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      },
+      "feedback7": "Jay rechaza el final5 anterior / informa solape de rumbo; K7 corrige causas. Aceptación nueva pendiente.",
+      "closureK7": {
+        "version": "2.3.0-alpha.188",
+        "evidence": "../sesion-7/evidencia/verificacion.json",
+        "limits": "Técnico; no escucha humana."
       }
     },
     {
@@ -548,7 +560,8 @@
         "result": "PASS",
         "evidence": "../sesion-6/evidencia/verificacion-k6.json",
         "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
-      }
+      },
+      "feedback7": "Jay: le gusta cómo está organizado el menú. Conservarlo; aceptación parcial real, no cinco sesiones."
     },
     {
       "id": "U08",
@@ -617,6 +630,90 @@
         ],
         "result": "PASS"
       }
+    },
+    {
+      "id": "U10",
+      "area": "Didáctica",
+      "priority": "P1",
+      "status": "pendiente-propuesto",
+      "phase": "L1",
+      "title": "Aprender las reglas de los lugares",
+      "observed": "Jardín no distingue con claridad posición, siembra y riego.",
+      "evidence": [
+        "src/journey-garden.js:23–29,48,62",
+        "../sesion-7/informe.md"
+      ],
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit."
+    },
+    {
+      "id": "U11",
+      "area": "Ayudas",
+      "priority": "P1",
+      "status": "pendiente-propuesto",
+      "phase": "L1",
+      "title": "Ayuda consumida antes de presentarse",
+      "observed": "Flags se guardan antes de mostrar; rechazo/caducidad puede perder la explicación.",
+      "evidence": [
+        "src/journey-games.js:13–16",
+        "../sesion-7/informe.md"
+      ],
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit."
+    },
+    {
+      "id": "D05",
+      "area": "Persistencia",
+      "priority": "P1",
+      "status": "pendiente-propuesto",
+      "phase": "L3",
+      "title": "Edición durable de favoritos",
+      "observed": "Renombre, borrado y notas no tratan fallo de guardado.",
+      "evidence": [
+        "src/favorites.js:42–43,54",
+        "../sesion-7/informe.md"
+      ],
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit."
+    },
+    {
+      "id": "A05",
+      "area": "Frase propia",
+      "priority": "P2",
+      "status": "pendiente-propuesto",
+      "phase": "L2",
+      "title": "Notas delimitadas por ronda",
+      "observed": "Buffer global puede arrastrar notas; último gesto se registra después de cerrar.",
+      "evidence": [
+        "src/places.js:86–118; src/journey-pulse.js:83,90",
+        "../sesion-7/informe.md"
+      ],
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit."
+    },
+    {
+      "id": "U12",
+      "area": "Accesibilidad",
+      "priority": "P2",
+      "status": "pendiente-propuesto",
+      "phase": "L3",
+      "title": "Cierres dinámicos fuera del manejo de foco",
+      "observed": "Final5 no pertenece a lista inicial de paneles accesibles.",
+      "evidence": [
+        "src/accessibility.js:5,41; src/journey-finale.js",
+        "../sesion-7/informe.md"
+      ],
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit."
+    },
+    {
+      "id": "U13",
+      "area": "Continuidad",
+      "priority": "P1",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "K7",
+      "title": "Todas las salidas al Mundo libre",
+      "observed": "Jay pide no quedar en el Refugio tras final5; K7 centraliza las tres salidas.",
+      "evidence": [
+        "src/journey-finale.js",
+        "../sesion-7/informe.md"
+      ],
+      "acceptance": "Esperar, omitir y Explorar abren Mundo con rumbo Jardín y progreso conservado."
     }
   ]
 }

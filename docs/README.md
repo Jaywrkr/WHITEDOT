@@ -12,6 +12,7 @@ Actualizada el 25 de octubre de 2026. Cada tema tiene una sola guía; si dos doc
 
 | Documento | Para qué |
 |---|---|
+| [Auditoría 7](panel/sesion-7/informe.md) y [plan L1–L4](panel/sesion-7/plan.md) | K7: rumbo/coda/salida corregidos; próximos problemas propuestos y nota con feedback real |
 | [Entrega K1–K6](CIERRE_K.md) | Ramas, correcciones verificadas y prueba en teléfono |
 | [Auditoría 6](panel/sesion-6/informe.md) y [plan K1–K5](panel/sesion-6/plan.md) | Feedback real, acceso al anillo, final5 y UI; propuesta sin implementar |
 | [Auditoría 4](panel/sesion-4/informe.md) | Diez análisis, evidencia, 14 hallazgos y J1–J7 propuestas; registro para cerrar el ciclo |

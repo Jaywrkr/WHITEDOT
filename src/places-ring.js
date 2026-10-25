@@ -20,6 +20,9 @@ export function portalSpots(center,isSea=()=>false){return PLACES.map((p,i)=>{co
  for(let k=0;k<=RING_SEA_TRIES*2;k++){const q=at(RING_RADIUS+(k%2?1:-1)*Math.ceil(k/2)*RING_SEA_STEP);if(!isSea(q.x,q.y))return {id:p.id,...q};}return {id:p.id,...at(RING_RADIUS)};});}
 // Where the column of the next portal stands when the portal is off screen: at the edge on its side (plan I2).
 export function routeEdge(dx,dy,W,H){const cx=W/2,cy=H/2,top=Math.min(144,H*.28),bottom=Math.max(top+32,H-148),rx=Math.max(1,cx-24),ry=dy<0?Math.max(1,cy-top):Math.max(1,bottom-cy),k=Math.min(1,rx/Math.max(1,Math.abs(dx)),ry/Math.max(1,Math.abs(dy)));return {x:cx+dx*k,y:cy+dy*k,angle:Math.atan2(dy,dx)};}
+// A quiet compass around the small cube, outside its body and ordinary pulse frames.
+// It is only a drawing: no hit region, movement input or customization is changed.
+export function routeCompass(dx,dy,W,H,offset={x:0,y:0}){const angle=Math.atan2(dy,dx),r=Math.min(48,W*.16,H*.16);return {x:W/2+offset.x+Math.cos(angle)*r,y:H/2+offset.y+Math.sin(angle)*r,angle};}
 export function edgeColumn(x,y,W,H,m=12){return {x:Math.max(m,Math.min(W-m,x))};}
 // The portal the arrow shows: the nearest open place never entered, or still without its ★; none once all are done.
 export function nextPortal(spots,places,journey,from){const path=nextOnPath(places,journey);return path&&spots.find(q=>q.id===path.id)||null;}
@@ -35,8 +38,8 @@ export function initialize(runtime){
  function center(){const S=runtime.S,d=data();if(!d)return null;if(d.ringFixed&&d.center)return d.center;
   const st=S.studio,p=st&&Number.isFinite(st.x)&&Number.isFinite(st.y)?{x:Math.round(st.x),y:Math.round(st.y)}:d.center||{x:Math.round(S.wx),y:Math.round(S.wy)};
   if(d.readOnly)return p;const before=d.center,fixed=d.ringFixed;d.center=p;d.ringFixed=true;if(runtime.save?.()===false){d.center=before;d.ringFixed=fixed;}return p;}
- function route(){if(owner!==runtime.S){owner=runtime.S;target=null;}if(!active())return null;const d=data(),next=nextPortal(spots(),d,runtime.S.journey),aim=target&&spots().find(s=>s.id===target&&placeOpen(d,s.id,runtime.S.journey)&&!stars(s.id)[0])||next;if(!aim)return null;return {...aim,name:name(aim.id),dx:aim.x-runtime.S.wx,dy:aim.y-runtime.S.wy,distance:Math.hypot(aim.x-runtime.S.wx,aim.y-runtime.S.wy)};}
- function guide(id){for(const key of ['mMenu','mLugares','mPlace','mGuide'])if($(key))$(key).hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();if(runtime.S.mode==='camino'&&freeOpen(runtime.S.journey))runtime.enterWorld?.({automatic:true});if(!active())return false;const aim=spots().find(s=>s.id===(id||nextPortal(spots(),data(),runtime.S.journey)?.id)&&placeOpen(data(),s.id,runtime.S.journey));if(!aim)return false;owner=runtime.S;target=aim.id;runtime.stopAutopilot?.();return true;}
+ function route(){if(owner!==runtime.S){owner=runtime.S;target=null;}if(!active()||runtime.S.destination)return null;const d=data(),next=nextPortal(spots(),d,runtime.S.journey),aim=target&&spots().find(s=>s.id===target&&placeOpen(d,s.id,runtime.S.journey)&&!stars(s.id)[0])||next;if(!aim)return null;return {...aim,name:name(aim.id),dx:aim.x-runtime.S.wx,dy:aim.y-runtime.S.wy,distance:Math.hypot(aim.x-runtime.S.wx,aim.y-runtime.S.wy)};}
+ function guide(id){for(const key of ['mMenu','mLugares','mPlace','mGuide'])if($(key))$(key).hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();if(runtime.S.mode==='camino'&&freeOpen(runtime.S.journey))runtime.enterWorld?.({automatic:true});if(!active())return false;const aim=spots().find(s=>s.id===(id||nextPortal(spots(),data(),runtime.S.journey)?.id)&&placeOpen(data(),s.id,runtime.S.journey));if(!aim)return false;if(runtime.S.destination)runtime.cancelDestination?.();owner=runtime.S;target=aim.id;runtime.stopAutopilot?.();return true;}
 
  function spots(){const c=center();if(!c)return [];if(!cache||cache.x!==c.x||cache.y!==c.y)cache={x:c.x,y:c.y,spots:portalSpots(c,(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea)};return cache.spots;}
  const stars=id=>data()?.stars?.[id]||[false,false,false];
@@ -54,7 +57,7 @@ export function initialize(runtime){
  // A star drawn, not written: the quiet screen of the Journey draws no words in the World (journey-mode.js).
  function star(c,x,y,r){c.beginPath();for(let i=0;i<10;i++){const q=i%2?r*.45:r,a=i/10*6.283-Math.PI/2;i?c.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q):c.moveTo(x+Math.cos(a)*q,y+Math.sin(a)*q);}c.closePath();c.fill();}
  // The portals on screen and, when the next one is not in view, a gold arrow at the edge pointing to it.
- function draw(c,W,H,t){tick();const info=$('ringRoute'),aim=route(),visible=!!aim&&!openSurface('.modal:not([hidden])');if(info){info.hidden=!visible;if(visible)info.textContent=`${aim.name} · ${formatDistance(aim.distance)}`;}if(!active()||openSurface('.modal:not([hidden])'))return;const S=runtime.S,d=data(),cx=runtime.camX??S.wx,cy=runtime.camY??S.wy,still=calm(),gold=runtime.GOLD||'#f0d27a';c.save();
+ function draw(c,W,H,t){tick();const info=$('ringRoute'),aim=route(),visible=!!aim&&!openSurface('.modal:not([hidden])'),offset=runtime.cameraOffset?.()||{x:0,y:0};if(info){info.hidden=!visible;if(visible){info.textContent=`${aim.name} · ${formatDistance(aim.distance)}`;info.style.setProperty('--route-x',offset.x+'px');info.style.setProperty('--route-y',offset.y+'px');}}if(!active()||openSurface('.modal:not([hidden])'))return;const S=runtime.S,d=data(),cx=runtime.camX??S.wx,cy=runtime.camY??S.wy,still=calm(),gold=runtime.GOLD||'#f0d27a';c.save();
   for(const s of spots()){const x=W/2+s.x-cx,y=H/2+s.y-cy;if(x<-80||x>W+80||y<-80||y>H+80)continue;const open=placeOpen(d,s.id,S.journey),r=24,turn=still?0:t/700;
    if(open){const g=c.createRadialGradient(x,y,0,x,y,r*2.4);g.addColorStop(0,'rgba(240,210,122,.32)');g.addColorStop(1,'rgba(240,210,122,0)');c.globalAlpha=1;c.fillStyle=g;c.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8);}
    c.strokeStyle=open?gold:'#8a8a8f';c.lineWidth=1.5;for(let i=0;i<3;i++){c.globalAlpha=(open?.9:.45)-i*.2;c.beginPath();c.arc(x,y,r*(1-i*.25),turn+i,turn+i+Math.PI*1.6);c.stroke();}
@@ -63,13 +66,13 @@ export function initialize(runtime){
    else{c.globalAlpha=.25;c.strokeStyle='#ffffff';c.lineWidth=2;c.beginPath();c.arc(x,y,r+7,0,6.283);c.stroke();c.globalAlpha=.6;c.fillStyle='#8a8a8f';star(c,x,y,6);}
    // With «Todo a la vista», its name and what it asks are written too.
    c.globalAlpha=1;c.textAlign='center';c.textBaseline='top';c.font='12px "Geist Mono", monospace';c.fillStyle=open?'#ffffff':'#8a8a8f';c.fillText(p.name,x,y+r+(open?24:14));}
-  const next=nextPortal(spots(),d,S.journey,{x:S.wx,y:S.wy});if(next){const x=W/2+next.x-cx,y=H/2+next.y-cy;
+  const next=!S.destination&&nextPortal(spots(),d,S.journey,{x:S.wx,y:S.wy});if(next){const x=W/2+next.x-cx,y=H/2+next.y-cy;
    // The next place on the path: a column of gold light over its portal. Plan I2: seen from anywhere; off screen the
    // column stands at the edge on its side (it replaces the old arrow), fainter the farther the portal is.
    const col=(cx2,from,to,a)=>{const g=c.createLinearGradient(cx2,from,cx2,to);g.addColorStop(0,'rgba(240,210,122,.38)');g.addColorStop(1,'rgba(240,210,122,0)');c.globalAlpha=a*(still?.8:.7+.3*Math.sin(t/600));c.fillStyle=g;c.fillRect(cx2-9,Math.min(from,to),18,Math.abs(to-from));};
    if(x>-60&&x<W+60&&y>-40&&y<H+40)col(x,Math.min(H,y),Math.max(0,y-H),1);
    else{const e=edgeColumn(x,y,W,H),far=Math.hypot(next.x-S.wx,next.y-S.wy);col(e.x,H,0,Math.max(.45,1-far/(RING_RADIUS*2)));}}
-  if(aim&&!runtime.firstJourneyState?.next){const e=routeEdge(aim.dx,aim.dy,W,H);c.save();c.translate(e.x,e.y);c.rotate(e.angle);c.globalAlpha=.9;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.moveTo(-7,-5);c.lineTo(1,0);c.lineTo(-7,5);c.stroke();c.restore();}
+  if(aim&&!runtime.firstJourneyState?.next){const e=routeCompass(aim.dx,aim.dy,W,H,offset);c.save();c.translate(e.x,e.y);c.rotate(e.angle);c.globalAlpha=.8;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.moveTo(-7,-5);c.lineTo(1,0);c.lineTo(-7,5);c.stroke();c.restore();}
   c.restore();}
  // On each bar's «1», the nearest portal sounds its note, louder the closer you are; a closed one, softer.
  // Each from its side (plan H6), so a portal off screen can be found by ear.

@@ -1,5 +1,7 @@
 # El Viaje
 
+**Vigente alpha.188:** el final5 es un arreglo local suave en su contexto; esperar, omitir y Explorar dejan al jugador en el Mundo libre con rumbo a Jardín. La casa queda voluntaria. K3/K5 y el diseño original de abajo describen revisiones anteriores; [cambios K7](panel/sesion-7/informe.md).
+
 Guía de diseño de la Fase 0 del panel creativo (22 de octubre de 2026). Jay aprobó seguir lo que el panel acordó: el juego principal es **el Viaje**, actualmente 15–20 minutos en 7 capítulos con un final, y después se abre **el Mundo libre** con todo lo que existe hoy. Esta guía fija la forma; cada fase siguiente la construye en su rama.
 
 ## Decisiones aprobadas por Jay
@@ -211,3 +213,9 @@ El final5 usa el contexto de salida: misma escala/transposición, tempo acotado9
 ## K5 · paso al Mundo libre (alpha.186)
 
 El final explica cinco lugares completos y seis nuevos. Explorar a pie sale del Refugio y señala Jardín, sin llevar allí automáticamente. El antiguo tutorial de seis pasos deja de presentarse solo tras terminar el Viaje; conserva los hechos y puede repetirse con Practicar. Guardar un favorito sigue siendo opcional; los errores reales de guardado siguen visibles. Guía, menú y ruta leen el mismo objetivo.
+
+## K7 · cierre y salida (alpha.188)
+
+El final interpreta las notas sobre el acorde, en registro52–76, sin duplicación aguda. Se sustituyen solo aquí bajo cuadrado, ácido y pad de sierra por voces suaves existentes y percusión contenida. Se conserva el ritmo de la frase y sus datos guardados; hay huecos entre notas y envolvente de salida. Radio, síntesis, final11 y mundos intactos. Escucha agradable pendiente de Jay: los renders no la certifican.
+
+Esperar al final, omitirlo y pulsar Explorar abren Mundo libre y rumbo a Jardín. No se salta al portal ni se cobra. Festival espera a Otra persona. Un fallo al guardar mantiene el cierre visible para reintentar.

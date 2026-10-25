@@ -17,12 +17,12 @@ assert.equal(scoreLength(finaleScore({llanura:[57]},['llanura'])),SEGMENT*EIGHTH
 assert.deepEqual(noteLengths([0,4,12,40],4),[2,4,6,2],'a quarter, a half, the longest gap capped, the last a quarter');assert.deepEqual(noteLengths(null,3),[2,2,2]);assert.deepEqual(noteLengths([0,4],3),[2,2,2],'mismatched steps are ignored');
 const rhythm=finaleScore({lago:[60,'x',62,64]},['lago'],{lago:[0,2,8,10]});assert.deepEqual(rhythm.slice(0,3).map(n=>[n.midi,n.eighths]),[[60,4],[62,2],[64,2]],'the gap skips the dropped note');
 // Runtime: the finale lands in the Refugio, keeps the end and opens the free World; it never plays twice.
-let frames=[],landed=0,saves=0,clock=0,mode='viaje';const toasts=[];performance.now=()=>clock;
+let frames=[],landed=0,exited=0,guided=0,cancelled=0,saves=0,clock=0,mode='viaje';const toasts=[];performance.now=()=>clock;
 const el={hidden:true,children:[],setAttribute(){},querySelector:k=>k==='canvas'?canvas:k==='.journey-again'?null:credits,appendChild(b){this.children.push(b);}},canvas={width:0,height:0,getContext:()=>new Proxy({},{get:(o,k)=>k in o?o[k]:k==='createLinearGradient'?()=>({addColorStop(){}}):()=>{},set:(o,k,v)=>{o[k]=v;return true;}})},credits={lines:[],replaceChildren(...l){this.lines=l;}};
 let created=null;
 globalThis.document={getElementById:()=>created,createElement:()=>{if(!created){created=el;return el;}return {style:{}};},body:{appendChild(){}},querySelectorAll:()=>[{hidden:false}]};
 globalThis.innerWidth=390;globalThis.innerHeight=844;globalThis.devicePixelRatio=2;globalThis.requestAnimationFrame=f=>frames.push(f);
-const r={S:{journey:{version:1,mode:'viaje',chapter:6,notes:{llanura:[57,59]}},sound:false},landHouse:()=>landed++,save:()=>{saves++;return true;},toast:t=>toasts.push(t),
+const r={S:{journey:{version:1,mode:'viaje',chapter:6,notes:{llanura:[57,59]}},sound:false},landHouse:()=>landed++,exitHouse:()=>exited++,ringGuide:()=>guided++,cancelJourneyVictory:()=>cancelled++,stopSong:()=>cancelled++,save:()=>{saves++;return true;},toast:t=>toasts.push(t),
  journeyMode:()=>mode,setJourneyMode:m=>{mode=m;r.S.journey.mode=m;return true;}};
 initialize(r);assert.equal(r.journeyFinale(),true);assert.equal(landed,1);assert.equal(el.hidden,false);
 const st=r.journeyFinaleState();assert(st.running&&st.notes===2+12);
@@ -30,11 +30,11 @@ const step=s=>{clock+=s*1000;const f=frames.splice(0);f.forEach(fn=>fn());};
 step(1);assert.equal(r.journeyFinaleState().credits,false);
 step(st.seconds-7+.1);assert.equal(r.journeyFinaleState().credits,true,'credits after the silence');assert.equal(credits.lines.length,CREDIT_LINES.length);
 step(7);assert.equal(r.journeyFinaleState().running,false);assert.equal(r.S.journey.finished,true);assert.equal(mode,'libre');assert.deepEqual(toasts,['Se abre el Mundo libre.']);
-assert.equal(r.journeyFinale(),false,'only once');assert.equal(landed,2,'later it just lands in the Refugio');
+assert.equal(r.journeyFinale(),false,'only once');assert.equal(landed,1,'finished replay never sends you to the Refugio');assert.equal(exited,1);assert.equal(guided,1);assert.equal(cancelled,2,'no leftover victory or song at the start');
 // Skipping after two seconds ends it the same way.
-const r2={...r,S:{journey:{version:1,mode:'viaje',chapter:6,notes:{}},sound:false}};mode='viaje';initialize(r2);created.hidden=true;r2.journeyFinale();clock+=1000;el.onclick();assert(r2.journeyFinaleState().running,'not in the first two seconds');clock+=1500;el.onclick();assert.equal(r2.journeyFinaleState().skipped,true);assert.equal(r2.S.journey.finished,true);
+const r2={...r,S:{journey:{version:1,mode:'viaje',chapter:6,notes:{}},sound:false}};mode='viaje';initialize(r2);created.hidden=true;r2.journeyFinale();clock+=1000;el.onclick();assert(r2.journeyFinaleState().running,'not in the first two seconds');clock+=1500;el.onclick();assert.equal(r2.journeyFinaleState().skipped,true);assert.equal(r2.S.journey.finished,true);assert.equal(exited,2,'skipping exits to the free World too');
 // A failed save keeps the Journey open.
-const r3={...r,S:{journey:{version:1,mode:'libre',chapter:6,notes:{}},sound:false},save:()=>false};mode='libre';initialize(r3);r3.journeyFinale();r3.journeyFinaleSkip();assert.equal(r3.S.journey.finished,undefined);
+const r3={...r,S:{journey:{version:1,mode:'libre',chapter:6,notes:{}},sound:false},save:()=>false};mode='libre';initialize(r3);r3.journeyFinale();r3.journeyFinaleSkip();assert.equal(r3.S.journey.finished,undefined);assert(r3.journeyFinaleState().running&&!el.hidden,'failed save retains an actionable finale');r3.save=()=>true;r3.journeyFinaleSkip();assert(r3.S.journey.finished&&!r3.journeyFinaleState().running,'retry closes safely');
 // The festival build: the whole Journey since plan I5, your phrase stays on screen and «Otra persona» starts again.
 assert.deepEqual([...new Set(finaleScore({llanura:[57],lago:[60],bosque:[55]},['llanura','lago']).map(n=>n.chapter))],['llanura','lago','refugio']);
 let restarts=0;const r4={...r,S:{journey:{version:1,mode:'viaje',chapter:2,notes:{llanura:[57],bosque:[55]},finished:true},sound:false},festivalRestart:()=>restarts++};mode='viaje';el.children=[];initialize(r4);
