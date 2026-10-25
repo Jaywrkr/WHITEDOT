@@ -249,3 +249,7 @@ Estado vigente K1–K6: [entrega alpha.187](CIERRE_K.md). Las cifras históricas
 ## K7 · rumbo junto al cubo (alpha.188)
 
 La flecha rodea el cubo a48px; nombre y metros quedan90px arriba, separados de Otro paisaje. No intercepta el dedo ni cambia tamaño, movimiento o personalización. Un destino explícito a casa/favorito tiene prioridad; Seguir al anillo lo sustituye. El final5 abre el Mundo libre por todas sus salidas normales; no deja en casa ni transporta a Jardín. [Auditoría actual y siguientes mejoras propuestas](panel/sesion-7/informe.md).
+
+## L1 · Aprender jugando (alpha.189)
+
+La guía muestra tres pasos del lugar activo; en Jardín permite repetir una demostración silenciosa. Tras falta de progreso aparece brevemente una semilla o gotas junto al círculo. Los valores, alcance y ritmo de los once juegos no cambian. La explicación se conserva como vista después de presentarse, no por encolarse. [Entrega L](ENTREGA_L.md).

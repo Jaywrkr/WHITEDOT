@@ -7,13 +7,29 @@ export const classicJourney=(search=globalThis.location?.search)=>/[?&](faro|cla
 // How much the beat is sounding now, 1 on the beat fading to 0 over two sixteenths: what things breathe with.
 export function beatGlow(runtime){if(calmMotion(runtime.S)||!runtime.ac||!runtime.MU?.bq?.length)return 0;const now=runtime.ac.currentTime;let last=-Infinity;for(const b of runtime.MU.bq)if(b<=now)last=Math.max(last,b);return Math.max(0,1-(now-last)/((runtime.SIX||.15)*2));}
 export const worldCamera=runtime=>({x:runtime.camX??runtime.S.wx,y:runtime.camY??runtime.S.wy});
-// One short line said a moment later, dropped if by then the player has left the chapter (the notice lane may hold it).
-// Plan H5: the Journey has no lines at all (its rules are shown by the gesture, the bar and the place singing its
-// pattern); a place says each line once per save, the first time, and never again.
-export function chapterToast(runtime,id,text,delay=600,ttl=15000){if(!runtime.placeRun?.()&&runtime.journeyQuiet?.())return false;const j=runtime.S.journey||(runtime.S.journey={}),said=j.lines&&typeof j.lines==='object'&&!Array.isArray(j.lines)?j.lines:(j.lines={});if(said[text])return false;said[text]=true;runtime.save?.();
- setTimeout(()=>runtime.toast?.(text,{level:2,ttl,coalesce:false,force:true,valid:()=>!!runtime.journeyGamePlaying?.(id)}),delay);return true;}
-// The chapter's rule, once per save, a moment after it starts.
-export function sayOnce(runtime,flags,key,text,id,delay=1500){if(flags[key])return false;flags[key]=true;runtime.save?.();return chapterToast(runtime,id,text,delay,12000);}
+// A lesson is learned only after its notice was actually presented, never while merely queued.
+const lessonTickets=new WeakMap();
+export function chapterToast(runtime,id,text,delay=600,ttl=15000,onShown=()=>{}){
+ const owner=runtime.S;if(!owner||owner.journey?.version>1||!runtime.placeRun?.()&&runtime.journeyQuiet?.())return false;
+ if(owner.journey?.lines?.[text])return false;let pending=lessonTickets.get(owner);if(!pending){pending=new Map();lessonTickets.set(owner,pending);}const key=id+':'+text,now=performance.now();if((pending.get(key)||0)>now)return false;pending.set(key,now+delay+ttl+1000);
+ const valid=()=>runtime.S===owner&&!!runtime.journeyGamePlaying?.(id);
+ setTimeout(()=>{if(!valid()){pending.delete(key);return;}const accepted=runtime.toast?.(text,{level:2,ttl,coalesce:false,force:true,valid,onShown:()=>{if(!valid())return;pending.delete(key);const j=owner.journey||(owner.journey={}),old=j.lines;j.lines=old&&typeof old==='object'&&!Array.isArray(old)?old:{};j.lines[text]=true;const undo=onShown();if(runtime.save?.()===false){delete j.lines[text];if(!old)delete j.lines;undo?.();pending.set(key,performance.now()+5000);}}});if(accepted===false||accepted==null)pending.delete(key);},delay);return true;
+}
+export function sayOnce(runtime,flags,key,text,id,delay=1500){if(flags[key])return false;return chapterToast(runtime,id,text,delay,12000,()=>{const old=flags[key];flags[key]=true;return ()=>{if(old===undefined)delete flags[key];else flags[key]=old;};});}
+// Recoverable, silent explanations for every existing verb. One step at a time, no permanent HUD.
+export const PLACE_LESSONS=Object.freeze({
+ llanura:['Acércate a lo que brilla.','Pulsa en el golpe para que se pegue.','Llena la barra. Pulsa la nube dorada.'],
+ lago:['Acércate a una flor.','Pulsa en el golpe: la onda conecta flores.','Pulsa la flor dorada al llenar la barra.'],
+ bosque:['Rodea un grupo de luciérnagas.','Cierra la vuelta y pulsa en el golpe.','Pulsa la criatura dorada al llenar la barra.'],
+ tormenta:['Entra en el círculo.','Pulsa cuando llega el rayo, siguiendo la Línea.','Pulsa el ojo dorado al llenar la barra.'],
+ vacio:['Pulsa en el primer golpe del compás.','Muévete para dejar espacio entre estrellas.','Pulsa tu luz dorada al llenar la barra.'],
+ jardin:['Entra en un círculo vacío.','En el golpe siembras; entre golpes riegas.','Al florecer, pulsa en el golpe para cosechar.'],
+ dunas:['Espera dentro del círculo.','Pulsa entre golpes cuando pase la ola.','Sube a la ola dorada para terminar.'],
+ cristales:['Acércate a un grupo de cristales.','Sigue la Línea: haz resonar tres distintos juntos.','Pulsa el cristal dorado para terminar.'],
+ faros:['Acércate a un barco.','Sigue la Línea para encenderlo y guiarlo.','Llévalos al puerto. Enciende el barco dorado.'],
+ ruinas:['Ponte junto a una columna.','Sigue la Línea para colocar sus piedras.','Coloca la piedra dorada para terminar.'],
+ cueva:['Escucha y mira la frase de la cueva.','Repítela con tus pulsos.','Atrapa la gota dorada para terminar.']
+});
 // The chapter/round owns the save: never persist a closed object before its reward commits.
 export const commitJourneyClose=(runtime,id)=>runtime.journeyComplete?runtime.journeyComplete(id)!==false:runtime.save?.()!==false;
 export function initialize(runtime){

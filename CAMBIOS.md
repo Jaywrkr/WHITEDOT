@@ -1,6 +1,13 @@
 # Cambios recientes de Kubono
 
-Estado: 25 de octubre de 2026. Código **2.3.0-alpha.188**. Las entradas describen su revisión, no certifican producción.
+Estado: 25 de octubre de 2026. Código **2.3.0-alpha.189**. Las entradas describen su revisión, no certifican producción.
+
+## L1 · Aprender jugando · alpha.189
+
+- Once reglas recuperables en la guía, tres pasos por lugar.
+- Jardín muestra círculo, semilla y riego sin cambiar su estado ni producir audio. Ayuda breve por falta de progreso, retirada al cosechar y repetible a voluntad.
+- Ayudas guardadas como vistas al presentarse realmente; rechazo, cola, fallo de escritura y partida sustituida no inventan aprendizaje.
+- 247 suites, auditoría y ciclo real de flor/cosecha en320/390/1280 aprobados. Comprensión sin ayuda humana pendiente.
 
 ## K7 · Rumbo cercano y despedida · alpha.188
 

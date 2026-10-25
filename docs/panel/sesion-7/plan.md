@@ -1,6 +1,6 @@
-# Plan posterior a K7 · propuesto
+# Plan posterior a K7 · autorizado
 
-No es autorización para ejecutarlo todavía. Mejorar lo existente conservando música generativa, arte, mundos, guardados y menú aceptado. Una rama por fase si Jay lo aprueba; desde K7 o su integración, conservando dependencia explícita.
+Jay autorizó ejecutar L1–L4 en el siguiente mensaje «hazlo». La aceptación con personas y teléfono físico permanece pendiente hasta obtener esa evidencia. Mejorar lo existente conservando música generativa, arte, mundos, guardados y menú aceptado. Una rama por fase si Jay lo aprueba; desde K7 o su integración, conservando dependencia explícita.
 
 | Fase | Rama propuesta | Qué cambia | Bien cuando |
 |---|---|---|---|
@@ -10,3 +10,12 @@ No es autorización para ejecutarlo todavía. Mejorar lo existente conservando m
 | L4 · Aceptar el recorrido | `pulido/l4-aceptacion` | Evaluar Camino→Jardín y Jardín→final11; cinco sesiones sin ayuda, dos no habituales; escuchar cierres en teléfono, completar CI de integración y actualizar mismos IDs. | Evidencia técnica verde y aceptación real diferenciadas; problemas corregidos dentro del alcance antes de declarar versión lista. |
 
 Prioridad inmediata: que Jay escuche K7 y compruebe brújula/salida. Si rechaza el cierre otra vez, se itera A04 con esa evidencia, sin rehacer radio ni abrir más instrumentos. El panel mantiene referencia7,7 hasta nueva aceptación; la meta8,7 no sustituye las pruebas ni justifica prometer10.
+
+## Estado de ejecución
+
+| Fase | Versión | Estado |
+|---|---|---|
+| L1 | alpha.189 | Implementada y verificada técnicamente; comprensión humana pendiente |
+| L2 | — | En preparación |
+| L3 | — | Pendiente |
+| L4 | — | Pendiente; requiere separar pruebas técnicas y humanas |

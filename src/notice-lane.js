@@ -42,7 +42,7 @@ export function installNoticeLane(runtime){
   let slot=timed.get(id);if(!slot){slot={panel,queue:[],current:null,left:0};timed.set(id,slot);}
   if(key&&(slot.current?.key===key||slot.queue.some(e=>e.key===key)))return false;
   if(options.coalesce)slot.queue=slot.queue.filter(e=>e.category!==category);
-  slot.queue.push({render,seconds:options.persistent?Infinity:options.level?style.seconds:seconds,detail:options.detail|| (options.persistent?'save':''),key,category,level,valid,paced:options.level!==undefined,expires:now+(options.ttl??style.ttl)});
+  slot.queue.push({render,onShown:options.onShown,seconds:options.persistent?Infinity:options.level?style.seconds:seconds,detail:options.detail|| (options.persistent?'save':''),key,category,level,valid,paced:options.level!==undefined,expires:now+(options.ttl??style.ttl)});
   slot.queue.sort((a,b)=>b.level-a.level);while(slot.queue.length>(slot.queue.every(e=>e.level===1)?1:8))slot.queue.pop();
   recent.set(duplicate,now);if(recent.size>120)recent.delete(recent.keys().next().value);
   request(id,{level:Math.max(...slot.queue.map(e=>e.level),slot.current?.level||1)});return true;
@@ -63,8 +63,8 @@ export function installNoticeLane(runtime){
     while(slot.queue[0]?.level===1&&now-(started.get(1)??-Infinity)<NOTICE_STYLES[1].cooldown)slot.queue.shift();
     if(!slot.queue.length){model.cancel(id);continue;}
     request(id,{level:slot.queue[0].level});if(slot.queue[0].paced&&slot.queue[0].level===2&&now-(started.get(2)??-Infinity)<NOTICE_STYLES[2].cooldown)continue;if(!claim(id))continue;
-    slot.current=slot.queue.shift();slot.left=slot.current.seconds;started.set(slot.current.level,now);slot.panel.dataset.detail=slot.current.detail;slot.panel.dataset.noticeLevel=String(slot.current.level);slot.current.render();if(slot.current.seconds===Infinity){slot.panel.setAttribute('role','button');slot.panel.tabIndex=0;}else{slot.panel.removeAttribute('role');slot.panel.removeAttribute('tabindex');}show(slot.panel);
-   }else if(show(slot.panel)){slot.left-=dt;if(slot.left<=0){hide(slot.panel);slot.current=null;release(id);if(slot.queue.length)request(id,{level:slot.queue[0].level});}}
+    slot.current=slot.queue.shift();slot.left=slot.current.seconds;started.set(slot.current.level,now);slot.panel.dataset.detail=slot.current.detail;slot.panel.dataset.noticeLevel=String(slot.current.level);slot.current.render();if(slot.current.seconds===Infinity){slot.panel.setAttribute('role','button');slot.panel.tabIndex=0;}else{slot.panel.removeAttribute('role');slot.panel.removeAttribute('tabindex');}if(show(slot.panel)){slot.current.onShown?.();slot.current.onShown=null;}
+   }else if(show(slot.panel)){const shown=slot.current.onShown;slot.current.onShown=null;shown?.();slot.left-=dt;if(slot.left<=0){hide(slot.panel);slot.current=null;release(id);if(slot.queue.length)request(id,{level:slot.queue[0].level});}}
   }
   for(const fn of callbacks.values())fn(dt);
   // A producer bypassing show() still cannot display a second notice.

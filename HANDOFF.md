@@ -1,8 +1,8 @@
-# Traspaso · K7 y séptima auditoría
+# Traspaso · fases L
 
-**Código 2.3.0-alpha.188.** Leer AGENTS, [séptimo informe](docs/panel/sesion-7/informe.md) y [plan propuesto](docs/panel/sesion-7/plan.md).
+Código **2.3.0-alpha.189**. Jay autorizó ejecutar L1–L4 sin confirmación entre fases. Una rama por fase desde K7; commit y push, Jay PR/merge. [Entrega](docs/ENTREGA_L.md), [plan y estado](docs/panel/sesion-7/plan.md). L1 verificada:247 suites, auditoría y primer ciclo del Jardín con controles reales. L2 sigue. No tocar música generativa, mapas, cubo ni servicios. La aprobación en teléfono y cinco sesiones no se inventan.
 
-## Entrega vigente
+## Antecedentes K7
 
 Jay pidió brújula/metraje junto al cubo, arreglar otra vez el final5 rechazado, salir al Mundo libre y nueva revisión integral. Rama `pulido/k7-rumbo-y-despedida`, desde K6 `ceb33ca9`. K1–K6 siguen encadenadas; [orden](docs/CIERRE_K.md). Jay conserva PR/merge; no push a main. Main comprobado al empezar: `3c5fd7b6`.
 
@@ -12,7 +12,7 @@ K7: brújula48px alrededor del cubo y texto90px arriba, sin recibir toques ni ca
 
 Referencia **7,7/10** sobre alpha.187, incorporando prueba real de Jay; alpha.188 es candidatura técnica. No subir nota por renders. Jay acepta organización del menú; final5 sigue pendiente de su nueva escucha. Revisión de diez lentes con dos agentes de lectura, no opiniones reales ni jurado humano.
 
-Hallazgos nuevos: aprendizaje Jardín/otros lugares, ayudas consumidas antes de verse, favoritos editados sin rollback, notas por ronda/último gesto y foco de finales dinámicos. Plan L1–L4 propuesto, **no implementado ni autorizado todavía**. Canonical: docs/panel/sesion-4/seguimiento.json conserva evidencia anterior y nueva.
+Hallazgos nuevos: aprendizaje Jardín/otros lugares, ayudas consumidas antes de verse, favoritos editados sin rollback, notas por ronda/último gesto y foco de finales dinámicos. L1–L4 autorizadas; estado actual en ENTREGA_L.md. Canonical: docs/panel/sesion-4/seguimiento.json conserva evidencia anterior y nueva.
 
 ## Verificación y límites
 
