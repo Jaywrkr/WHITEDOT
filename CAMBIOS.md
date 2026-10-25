@@ -450,3 +450,7 @@ Desde la auditoría `7476aa7a`, rama `pulido/k1-guia-anillo`. Seguir hacia el si
 ## alpha.183 · K2 · recoger siempre tiene valor
 
 Rama `pulido/k2-economia-chispas` desde K1. Fuera de tempo×1, a tiempo×2 y racha×3. Recuperación de pendientes con multiplicador cero, sin reemitir fragmentos cobrados ni alterar saldo/precios/estrellas. Simulación económica alineada con esa regla. Música y mundo conservados.
+
+## alpha.184 · K3 · final5 en su contexto musical
+
+Rama `pulido/k3-final-viaje` desde K2. El final de cinco círculos interpreta las notas guardadas en escala/tono y tempo de salida (90–150 BPM), con las mismas voces existentes, entradas separadas y menor ácido. La cama y las frases comparten armonía; una envolvente local deja silencio real antes de créditos y se cancela al salir. Cada círculo sigue ataques de su capa. No se modifican radio, instrumentos, generadores o MIDI guardados.

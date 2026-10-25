@@ -67,3 +67,7 @@
 ## K2 · economía de chispas · implementada alpha.183
 
 Fragmento recogido: base×1 fuera de tempo, ×2 a tiempo y ×3 desde ocho aciertos. Repara pendientes con×0 sin duplicar pagos. Reglas de estrellas y premios de ronda intactas. El simulador económico usa ahora la minería base fuera de tempo.
+
+## K3 · final5 · implementada alpha.184
+
+Arreglo local en escala/tono/tempo de salida, sin la cama fija de La mayor; voces existentes por capítulo, ácido menos denso y tema suave. Las notas guardadas no se alteran. Silencio local y cancelación al salir; círculos ligados a ataques. Pruebas incluyen todos los biomas y un render específico de esta misma ruta. Aceptación física de Jay permanece pendiente.

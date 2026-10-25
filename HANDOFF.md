@@ -1,6 +1,6 @@
 # Traspaso · cierre K1–K6
 
-**Código 2.3.0-alpha.183.** Leer [AGENTS](AGENTS.md), [auditoría 6](docs/panel/sesion-6/informe.md) y [plan](docs/panel/sesion-6/plan.md).
+**Código 2.3.0-alpha.184.** Leer [AGENTS](AGENTS.md), [auditoría 6](docs/panel/sesion-6/informe.md) y [plan](docs/panel/sesion-6/plan.md).
 
 ## Petición vigente
 
@@ -12,14 +12,14 @@ Priorizar caminar: «Seguir» orienta, no transporta automáticamente al acabar 
 |---|---|---|
 | K1 · Guía al anillo | `pulido/k1-guia-anillo` | Entregada |
 | K2 · Economía de chispas | `pulido/k2-economia-chispas` | Entregada |
-| K3 · Final del Viaje | `pulido/k3-final-viaje` | Pendiente |
+| K3 · Final del Viaje | `pulido/k3-final-viaje` | Entregada |
 | K4 · Interfaz clara | `pulido/k4-interfaz-clara` | Pendiente |
 | K5 · Recorrido contextual | `pulido/k5-recorrido-contextual` | Pendiente |
 | K6 · Validación de cierre | `pulido/k6-validacion-cierre` | Pendiente |
 
 ## Última comprobación
 
-K2: 245 suites Node, auditoría de release y sparks_economy_smoke aprobados. Navegador: valores 1/2/3, crédito único tras recarga, compra, salto/regreso y recuperación de escritura. Pendientes con multiplicador cero cubiertos en lógica.
+K3: 246 suites Node, 396 contextos de armonía/tempo, Viaje completo en navegador (teléfono y escritorio) y cinco renders del reproductor real final5 aprobados; pico0,296 sin clipping. Incluye salida durante fade y partidas con frases incompletas. Escucha física de Jay pendiente.
 
 Una entrega técnica no sustituye la escucha física de Jay ni cinco sesiones sin ayuda. Los IDs y pendientes humanos permanecen en [el registro](docs/panel/sesion-4/seguimiento.json). La auditoría 6 vale7,2 provisional antes de las correcciones; no se eleva esa nota por un commit.
 
