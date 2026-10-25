@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "scope": "Panel simulado, no opiniones reales ni pruebas con personas. Solo J0 está implementada; J1–J7 son propuestas pendientes de Jay.",
+  "scope": "Auditoría simulada histórica. Jay autoriza J1–J7 preservando generación musical y mundos; correcciones y límites en docs/PULIDO_CIERRE.md.",
   "base": "676ac511",
   "audited": "04ae8bdd",
   "findings": [
@@ -23,7 +23,7 @@
       "id": "S01",
       "area": "Fiabilidad",
       "priority": "P0",
-      "status": "abierto-confirmado",
+      "status": "diagnosticado-validado-enfoque",
       "phase": "J1",
       "title": "CI del main base en rojo",
       "evidence": [
@@ -31,13 +31,22 @@
         ".github/workflows/checks.yml:34"
       ],
       "observed": "En main 676ac511 fallan browser (1), (3) y (4); logic y audio (1–3) pasan. El agregador browser-audio falla. Los logs no pudieron descargarse por el proxy (403); causa de cada flujo sin diagnosticar.",
-      "acceptance": "Identificar flujos y causas con sus logs; reproducirlos; corregir sin retirar aserciones y completar los seis grupos de navegador y tres de audio en el candidato."
+      "acceptance": "Identificar flujos y causas con sus logs; reproducirlos; corregir sin retirar aserciones y completar los seis grupos de navegador y tres de audio en el candidato.",
+      "resolution": {
+        "phase": "J1",
+        "tests": [
+          "tests/house_visit_smoke.py",
+          "tests/cloud_account_smoke.py",
+          "tests/blobs_smoke.py"
+        ],
+        "limits": "CI completo del candidato pendiente en J7; no se afirma verde."
+      }
     },
     {
       "id": "D01",
       "area": "Economía y progreso",
       "priority": "P0",
-      "status": "abierto-reproducido",
+      "status": "corregido-tecnico",
       "phase": "J1",
       "title": "Una ronda anuncia éxito aunque guardar falle",
       "evidence": [
@@ -46,13 +55,22 @@
         "evidencia/contratos.json"
       ],
       "observed": "Con save() devolviendo false al terminar, placeFinish devuelve true: RAM tiene dos estrellas y 120 chispas, disco conserva cero. Es un contrato con persistencia simulada, no una prueba real de cuota.",
-      "acceptance": "Premio, récord, notas, color y cierre se conservan juntos o se revierten/reintentan con aviso claro. Recarga tras un fallo no pierde un premio anunciado ni permite duplicarlo."
+      "acceptance": "Premio, récord, notas, color y cierre se conservan juntos o se revierten/reintentan con aviso claro. Recarga tras un fallo no pierde un premio anunciado ni permite duplicarlo.",
+      "resolution": {
+        "phase": "J1",
+        "tests": [
+          "tests/places-durability.mjs",
+          "tests/places.mjs",
+          "tests/places_smoke.py"
+        ],
+        "limits": "Aceptación y catálogo completo del candidato en J7."
+      }
     },
     {
       "id": "D02",
       "area": "Compatibilidad",
       "priority": "P1",
-      "status": "abierto-reproducido",
+      "status": "corregido-tecnico",
       "phase": "J1",
       "title": "Formato futuro preservado pero lector falla",
       "evidence": [
@@ -61,7 +79,16 @@
         "evidencia/contratos.json"
       ],
       "observed": "normalizePlaces preserva {version:9,unknown:'keep'}, pero places() lanza SyntaxError por JSON.parse(undefined). La conservación de bytes no basta para abrir la UI con seguridad.",
-      "acceptance": "Formato desconocido queda intacto, legible como incompatible y sin operaciones de escritura; ningún frame ni panel se congela."
+      "acceptance": "Formato desconocido queda intacto, legible como incompatible y sin operaciones de escritura; ningún frame ni panel se congela.",
+      "resolution": {
+        "phase": "J1",
+        "tests": [
+          "tests/places-durability.mjs",
+          "tests/places.mjs",
+          "tests/places_smoke.py"
+        ],
+        "limits": "Aceptación y catálogo completo del candidato en J7."
+      }
     },
     {
       "id": "A01",

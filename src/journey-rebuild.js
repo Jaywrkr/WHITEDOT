@@ -1,5 +1,5 @@
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
 // «Reconstruye» (the Ruinas, plan F15–F16, docs/MUNDO.md): eight broken pillars in a ring around where the round began.
 // Beside a pillar, play the Ruinas' pattern («1 · 2y · 3 · 4», journey-rhythm.js) on time: three of its four steps in
 // one bar lay a stone (all four in the Maestro). A pillar takes seven stones; two whole pillars side by side are joined by
@@ -49,7 +49,7 @@ export function initialize(runtime){
  // A stone is a low knock and its note; an arch, the chord.
  function knock(height,arch=false){if(!audible())return;runtime.soon?.(t=>{const ct=runtime.chordTones?.()||[60,64,67];runtime.kick?.(t,.18);let m=ct[height%ct.length]+12;while(m>84)m-=12;runtime.pluck?.(m,t,.08,2);if(arch)ct.slice(0,3).forEach((n,k)=>runtime.pluck?.(n+24,t+k*(runtime.SIX||.125),.06,2));},'player');}
  function arrive(){const s=own();if(s.gold)return;s.gold={x:Math.round(runtime.S.wx+RUINS_GOLD_GAP),y:Math.round(runtime.S.wy-RUINS_GOLD_GAP*.5)};goldPulse=1;runtime.save?.();chapterToast(runtime,'ruinas','Llegó la piedra dorada: colócala a tiempo.');}
- function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(runtime.save?.()===false){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<4;i++)knock(i,i===3);runtime.journeyComplete?.('ruinas');return 'open';}
+ function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(!commitJourneyClose(runtime,'ruinas')){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<4;i++)knock(i,i===3);return 'open';}
  function pulse(on,beat={}){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}if(full()){if(!s.gold)arrive();return open();}
   const step=beat.silent?patternSteps()[(s.pending?.steps?.length||0)%patternSteps().length]:beat.step;
   const before=s.points,now=performance.now(),r=rebuildPulse(s,{x:runtime.S.wx,y:runtime.S.wy},{bar:beat.silent?(s.pending?.laid?s.pending.bar+1:(s.pending?.bar??0)):barOf(step,beat.at),step,need:need(),goal:goal(),steps:patternSteps()}),spots=pillarSpots(s.center);

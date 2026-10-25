@@ -2,6 +2,13 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.174**. Las entradas describen su revisión, no certifican producción.
 
+## J1 · Base fiable · alpha.175
+
+- Premios de ronda durables y reintentos sin duplicación en los once lugares.
+- Lectura segura de formatos futuros, conservados sin mutación.
+- Pruebas de visitas, semillas y cuenta esperan sus límites reales de operación.
+- Generación musical, mundos, aspecto y umbrales conservados. Evidencia en `docs/PULIDO_CIERRE.md`.
+
 ## Cuarta auditoría · sin otra versión
 
 Rama `audit/panel-4-cierre`, dependiente de `fix/cubo-pequeno` (04ae8bdd). No cambia el juego respecto a esa revisión.

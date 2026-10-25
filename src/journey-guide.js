@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
 // «Guía» (the Faros, plan F15, docs/MUNDO.md): the cube is a lighthouse. Small boats are lost in the dark around the
 // harbour where the round began. A pulse on time lights the boats within reach and they follow the cube for two bars;
 // each pulse on time near them keeps them following. Bring them into the harbour and they dock: a boat is worth four,
@@ -44,7 +44,7 @@ export function initialize(runtime){
  // A boat lit sounds a high note of the chord; a boat docking, the note and its fifth.
  function note(k,dock=false){if(!audible())return;runtime.soon?.(t=>{const ct=runtime.chordTones?.()||[60,64,67];let m=ct[k%ct.length]+24;while(m>93)m-=12;runtime.pluck?.(m,t,dock?.09:.05,2);if(dock)runtime.pluck?.(m+7,t+(runtime.SIX||.125)*2,.06,2);},'player');}
  function arrive(){const s=own();if(s.gold)return;s.gold={x:Math.round(runtime.S.wx+GUIDE_GOLD_GAP),y:Math.round(runtime.S.wy-GUIDE_GOLD_GAP*.5)};goldPulse=1;runtime.save?.();chapterToast(runtime,'faros','Llegó el barco dorado: enciéndelo a tiempo.');}
- function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(runtime.save?.()===false){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<4;i++)note(i,true);runtime.journeyComplete?.('faros');return 'open';}
+ function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(!commitJourneyClose(runtime,'faros')){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<4;i++)note(i,true);return 'open';}
  function pulse(on){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}if(full()){if(!s.gold)arrive();return open();}
   const now=performance.now(),r=guidePulse(s,{x:runtime.S.wx,y:runtime.S.wy},now,{followMs:followBars()*bar()*1000});flash={at:now};
   r.events.forEach((e,i)=>{const b=s.boats.find(q=>q.n===e.boat);if(e.kind==='light'){glows.push({x:b.x,y:b.y,at:now,kind:'light'});note(i);}});if(glows.length>40)glows.splice(0,glows.length-40);

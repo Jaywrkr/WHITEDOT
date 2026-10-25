@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
 // «Encadena» (the Lago, chapter 2 of the Journey's games, Jay's decision of 23 October): flowers float on the water and
 // breathe with the beat. A pulse on time sends a ripple from the cube; every flower it reaches lights up, sounds a note
 // a step higher, and sends its own ripple to the flowers beside it. Longer chains fill the bar faster. Off time nothing
@@ -40,7 +40,7 @@ export function initialize(runtime){
   if(before<goal()&&state.points>=goal())arrive();}
  function arrive(){const s=own();if(s.flower)return;s.flower={x:Math.round(runtime.S.wx+CHAIN_FLOWER_GAP),y:Math.round(runtime.S.wy-CHAIN_FLOWER_GAP*.5)};flowerPulse=1;runtime.save?.();
   chapterToast(runtime,'lago','La flor dorada llegó: tócala a tiempo.');}
- function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(runtime.save?.()===false){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=1;i<=6;i++)note(i);runtime.journeyComplete?.('lago');return 'open';}
+ function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(!commitJourneyClose(runtime,'lago')){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=1;i<=6;i++)note(i);return 'open';}
  // Only on time: a ripple from the cube. Off time the cube shivers and nothing else moves.
  function pulse(on){if(!active())return null;own();if(!on){misses++;shiver=1;return 'miss';}
   if(full()){if(!state.flower)arrive();return open();}

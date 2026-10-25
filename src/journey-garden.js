@@ -1,5 +1,5 @@
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
 import {onBeat,onAnd} from './journey-rhythm.js';
 // «Siembra» (the Jardín, plan F9, docs/MUNDO.md): eight beds around where the round began. A pulse on time on an
 // empty bed sows a seed; every pulse on time grows the plants within reach one step (seed, sprout, bud, flower); a
@@ -43,7 +43,7 @@ export function initialize(runtime){
  // Each flower adds the next note of an arpeggio over the chord: the more flowers, the longer the phrase.
  function note(step,soft=false){if(!audible())return;const ct=runtime.chordTones?.()||[60,64,67];runtime.soon?.(t=>{let m=ct[step%ct.length]+12*Math.floor(step/ct.length%2)+12;while(m>86)m-=12;runtime.pluck?.(m,t,(soft?.04:.08),2);},'player');}
  function arrive(){const s=own();if(s.tree)return;s.tree={x:Math.round(runtime.S.wx+GARDEN_TREE_GAP),y:Math.round(runtime.S.wy-GARDEN_TREE_GAP*.5)};treePulse=1;runtime.save?.();chapterToast(runtime,'jardin','El árbol dorado llegó: tócalo a tiempo.');}
- function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(runtime.save?.()===false){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<6;i++)note(i);runtime.journeyComplete?.('jardin');return 'open';}
+ function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(!commitJourneyClose(runtime,'jardin')){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<6;i++)note(i);return 'open';}
  function pulse(on,beat={}){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}if(full()){if(!s.tree)arrive();return open();}
   const mode=beat.silent||runtime.journeyRhythm?.()?.key!=='siembra'?null:onAnd(beat.step)?'water':onBeat(beat.step)?'sow':null;
   const before=s.points,r=gardenPulse(s,{x:runtime.S.wx,y:runtime.S.wy},performance.now(),{goal:goal(),mode}),spots=bedSpots(s.center),now=performance.now();

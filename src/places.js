@@ -48,13 +48,16 @@ export const starCount=places=>PLACE_IDS.reduce((a,id)=>a+(places?.stars?.[id]||
 export const previousPlace=id=>{const i=PLACE_IDS.indexOf(id);return i>WORLD_CHAPTERS.length-1?PLACE_IDS[i-1]:null;};
 export const complete=(places,id)=>places?.stars?.[id]?.[0]===true;
 export const allComplete=places=>PLACE_IDS.every(id=>complete(places,id));
-export const placeOpen=(places,id,journey)=>{const p=PLACES.find(x=>x.id===id);if(!p||!p.game||!freeOpen(journey))return false;const prev=previousPlace(id);
+export const placeOpen=(places,id,journey)=>{const p=PLACES.find(x=>x.id===id);if(!p||!p.game||places?.version>PLACES_VERSION||places?.readOnly||!freeOpen(journey))return false;const prev=previousPlace(id);
  return !prev||complete(places,prev)||complete(places,id)||places?.seen?.[id]===true||places?.kept?.[id]===true;};
 // The next place on the path: the first one open and not complete, in order; null once all eleven are.
 export const nextOnPath=(places,journey)=>PLACES.find(p=>p.game&&placeOpen(places,p.id,journey)&&!complete(places,p.id))||null;
+function restoreTree(target,copy){for(const k of Object.keys(target))if(!Object.hasOwn(copy,k))delete target[k];for(const [k,v] of Object.entries(copy)){if(object(v)&&object(target[k]))restoreTree(target[k],v);else if(Array.isArray(v)&&Array.isArray(target[k]))target[k].splice(0,target[k].length,...v);else target[k]=v;}}
 export function initialize(runtime){
  let owner=null,state=null,shown=null;
  function own(){if(owner!==runtime.S){owner=runtime.S;runtime.S.lugares=normalizePlaces(runtime.S.lugares,runtime.S.journey);state=runtime.S.lugares;
+   // A future format remains untouched on disk and in S; readers get a safe, locked view.
+   if(state.version>PLACES_VERSION)state={...normalizePlaces(null),version:state.version,readOnly:true};
    // A round left open by a reload is dropped: the chapter's own state comes back as it was.
    if(state.run){restore(state.run);back(state.run.from);state.run=null;}}
   // A chapter kept in the Journey is always a ★ of its place, whenever it was kept.
@@ -76,15 +79,19 @@ export function initialize(runtime){
   const MU=runtime.MU;if(MU){MU.tempoScale=maestro?MAESTRO_TEMPO:1;MU.onTimeWindow=maestro?MAESTRO_WINDOW:null;}
   if(runtime.save?.()===false){restore(s.run);s.run=null;return false;}runtime.enterFx=1;return true;}
  // Every pulse a game hears while a round or a Journey chapter is being played.
- function hear(id,on,beat={}){const s=own();if(s.run&&s.run.id===id){s.run.total++;if(on)s.run.hits++;if(beat.silent)s.run.silent=true;return;}
+ function hear(id,on,beat={}){const s=own();if(s.readOnly)return;if(s.run&&s.run.id===id){s.run.total++;if(on)s.run.hits++;if(beat.silent)s.run.silent=true;return;}
   if(WORLD_CHAPTERS.includes(id)){const j=s.journeyShare[id]||(s.journeyShare[id]={hits:0,total:0,silent:false});j.total++;if(on)j.hits++;if(beat.silent)j.silent=true;}}
  function grant(id,stars){const s=own(),got=s.stars[id],fresh=stars.map((x,i)=>x&&!got[i]);stars.forEach((x,i)=>{if(x)got[i]=true;});return fresh;}
  // A Journey chapter kept: its ★, and its ★★ if it was played on time with sound.
- function chapterKept(id){const s=own();if(!WORLD_CHAPTERS.includes(id))return;const j=s.journeyShare[id]||{hits:0,total:0};grant(id,[true,!j.silent&&share(j.hits,j.total)>=RHYTHM_STAR,false]);}
+ function chapterKept(id){const s=own();if(s.readOnly||!WORLD_CHAPTERS.includes(id))return;const j=s.journeyShare[id]||{hits:0,total:0};grant(id,[true,!j.silent&&share(j.hits,j.total)>=RHYTHM_STAR,false]);}
  // The gold thing of a round closed: stars, sparks, record, and the chapter's state back as it was.
- function finish(id){const s=own(),r=s.run;if(!r||r.id!==id)return false;
+ function finish(id){const s=own(),r=s.run;if(s.readOnly||!r||r.id!==id)return false;
+  // Reward, record, personal notes, remix and restored chapter are one durable operation.
+  const keys=['lugares','journey','sparkEconomy','sparks','wild','rewards'],before=Object.fromEntries(keys.map(k=>[k,structuredClone(runtime.S[k])])),tempo=runtime.MU?.tempoScale,window=runtime.MU?.onTimeWindow;
+  function rollback(){for(const k of keys){if(before[k]===undefined)delete runtime.S[k];else if(object(before[k])&&object(runtime.S[k]))restoreTree(runtime.S[k],before[k]);else runtime.S[k]=before[k];}if(runtime.MU){runtime.MU.tempoScale=tempo;runtime.MU.onTimeWindow=window;}return false;}
+  function commit(){return runtime.save?.()!==false;}
   // Libre (plan H3): only the music of the place; no stars, no sparks, no card. Back to its portal.
-  if(r.free){restore(r);s.run=null;shown=null;runtime.journeyVictory?.(id);back(r.from);runtime.save?.();runtime.hud?.();return true;}const onTime=share(r.hits,r.total),sound=runtime.S.sound!==false&&!r.silent,ms=Date.now()-r.startedAt;
+  if(r.free){const pos={wx:runtime.S.wx,wy:runtime.S.wy};restore(r);s.run=null;back(r.from);if(!commit()){Object.assign(runtime.S,pos);return rollback();}shown=null;runtime.journeyVictory?.(id);runtime.hud?.();return true;}const onTime=share(r.hits,r.total),sound=runtime.S.sound!==false&&!r.silent,ms=Date.now()-r.startedAt;
   if(s.rounds.day!==today()){s.rounds.day=today();s.rounds.counts={};}const roundsToday=s.rounds.counts[id]||0;s.rounds.counts[id]=roundsToday+1;
   const stars=roundStars({onTime,maestro:r.maestro,sound}),fresh=grant(id,stars);
   runtime.S.sparkEconomy=normalizeSparkEconomy(runtime.S.sparkEconomy,runtime.S.sparks,runtime.S.todayKey);const sparks=creditSparks(runtime.S,roundSparks(onTime,{maestro:r.maestro,roundsToday}));
@@ -92,7 +99,7 @@ export function initialize(runtime){
   const b=s.best[id]||(s.best[id]={onTime:0,ms:null,rounds:0});const record=onTime>b.onTime||b.ms===null||ms<b.ms;b.onTime=Math.max(b.onTime,onTime);b.ms=b.ms===null?ms:Math.min(b.ms,ms);b.rounds++;
   const j=runtime.S.journey;if(j&&typeof j==='object'){if(!j.colors||typeof j.colors!=='object')j.colors={};j.colors[id]=true;}
   {const ps=runtime.journeyPulseState?.()||{},all=(ps.notes||[]).map((n,i)=>[n,ps.noteSteps?.[i]]).filter(([n])=>Number.isInteger(n)).slice(-8);if(all.length){s.notes[id]=all.map(([n])=>n);s.noteSteps||={};if(all.every(([,st])=>Number.isInteger(st)))s.noteSteps[id]=all.map(([,st])=>st);else delete s.noteSteps[id];}}
-  shown={id,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;runtime.narrateRound?.(shown);runtime.journeyVictory?.(id);runtime.save?.();runtime.hud?.();setTimeout(results,1200);return true;}
+  const result={id,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.journeyVictory?.(id);runtime.hud?.();setTimeout(results,1200);return true;}
  // Leaving a round from the menu: nothing earned, the chapter's state back, and you are at the portal again.
  function abandon(){const s=own();if(!s.run)return false;const from=s.run.from;restore(s.run);s.run=null;back(from);runtime.narrate?.('abandon');runtime.save?.();runtime.hud?.();return true;}
  // The round's card: the three stars, what each asks, and what you earned. Silent buttons.

@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
 // «Eco» (the Cueva, plan F17, docs/MUNDO.md): the cave sings a pattern for one bar and you sing it back the next. Eight
 // sockets under the cube are the eighths of the bar: while the cave sings, its steps light up as they sound; while you
 // answer, they wait for you. Every step on time and none extra is an echo: it fills the bar and the next pattern is one
@@ -34,7 +34,7 @@ export function initialize(runtime){
  const heard=()=>{const ac=runtime.ac;return ac?ac.currentTime-(ac.outputLatency||ac.baseLatency||0):0;};
  function voice(step,t,soft=false){if(!audible())return;const ct=runtime.chordTones?.()||[60,64,67];let m=ct[(step/2)%ct.length]+12+(step>=8?12:0);while(m>88)m-=12;runtime.pluck?.(m,t,soft?.05:.09,2);if(!soft)runtime.pluck?.(m,t+six()*3,.035,2);}
  function arrive(){const s=own();if(s.gold)return;s.gold={x:Math.round(runtime.S.wx+ECHO_GOLD_GAP),y:Math.round(runtime.S.wy-ECHO_GOLD_GAP*.5)};goldPulse=1;runtime.save?.();chapterToast(runtime,'cueva','Cae una gota dorada: atrápala a tiempo.');}
- function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(runtime.save?.()===false){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;runtime.soon?.(t=>{for(let i=0;i<4;i++)voice(i*2,t+i*six()*2);},'player');runtime.journeyComplete?.('cueva');return 'open';}
+ function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(!commitJourneyClose(runtime,'cueva')){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;runtime.soon?.(t=>{for(let i=0;i<4;i++)voice(i*2,t+i*six()*2);},'player');return 'open';}
  // On every sixteenth of the music: a bar starts a call or an answer; inside a call, the cave sings its steps.
  function step(s,t){if(!active()){phase=null;return;}const st=own();if(full()){phase=null;return;}const bar=six()*16;
   if(s===0){if(phase?.kind==='answer'){const before=st.points,r=echoClose(st,phase.steps,{goal:goal()});glows.push({at:performance.now()+Math.max(0,(t-(runtime.ac?.currentTime||t))*1000),kind:r.ok?'echo':r.answered?'wrong':'none',len:r.pattern.length});if(glows.length>12)glows.shift();

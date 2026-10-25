@@ -25,7 +25,7 @@ Hallazgos principales:
 
 El registro canónico es [seguimiento.json](docs/panel/sesion-4/seguimiento.json): 14 IDs, evidencia, fase y criterio. K01 corregido técnicamente; aceptación física en V01. El resto sigue abierto.
 
-## Siguiente trabajo: decidir J1–J7
+## Siguiente trabajo: ejecutar J1–J7 con el motor conservado
 
 Plan propuesto en el informe:
 - J1 base fiable: CI, premio durable, formato futuro.
@@ -36,7 +36,7 @@ Plan propuesto en el informe:
 - J6 sincronía con latencias altas.
 - J7 comprobar cada ID, sesiones con personas y panel 5.
 
-**La auditoría no autoriza ejecutar esas fases.** La petición siguiente de Jay define qué se implementa. Cada corrección deberá registrar revisión, regresión y aceptación junto al ID; la siguiente auditoría conserva lo no resuelto y puede subir o bajar la nota. Meta vigente orientativa 8,7 por el método, además de cero P0/P1 abiertos y validación del candidato. No perseguir el 10 con nuevas funciones o cambios de criterio.
+**Jay autorizó ejecutar las correcciones el 25 de octubre, conservando la generación musical y del universo.** Estado y evidencia por fase en [Cierre](docs/PULIDO_CIERRE.md). Cada corrección deberá registrar revisión, regresión y aceptación junto al ID; la siguiente auditoría conserva lo no resuelto y puede subir o bajar la nota. Meta vigente orientativa 8,7 por el método, además de cero P0/P1 abiertos y validación del candidato. No perseguir el 10 con nuevas funciones o cambios de criterio.
 
 ## Evidencia y límites
 

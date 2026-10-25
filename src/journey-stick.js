@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow as glowNow,worldCamera,sayOnce,chapterToast} from './journey-games.js';
+import {beatGlow as glowNow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
 // «Pégate» (prototype for the Llanura, chosen by Jay on 23 October): things around the cube beat with the music; a
 // pulse on time next to one sticks it to the cube, it sounds and fills the bar at the top. Off time nothing moves.
 // Small things are many and fill a little, big ones are few and fill a lot. When the bar is full a gold cloud comes
@@ -47,7 +47,7 @@ export function initialize(runtime){
  // The bar is full: the gold cloud comes beside the cube.
  function arrive(){const s=own();if(s.cloud)return;s.cloud={x:Math.round(runtime.S.wx+STICK_CLOUD_GAP),y:Math.round(runtime.S.wy-STICK_CLOUD_GAP*.5)};cloudPulse=1;
   chapterToast(runtime,'llanura','La nube dorada llegó: tócala a tiempo.');}
- function swallow(){const s=own();if(s.swallowed)return 'done';s.swallowed=true;if(runtime.save?.()===false){s.swallowed=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<5;i++)pop(8,i*.12);runtime.journeyComplete?.('llanura');return 'swallow';}
+ function swallow(){const s=own();if(s.swallowed)return 'done';s.swallowed=true;if(!commitJourneyClose(runtime,'llanura')){s.swallowed=false;return null;}runtime.enterFx=1;runtime.flash=1;for(let i=0;i<5;i++)pop(8,i*.12);return 'swallow';}
  // Every pulse of the player in the Llanura (journey-pulse.js). Only on time something happens: off time the things stay
  // where they are and only the cube shivers.
  function pulse(on){if(!active())return null;const s=own();

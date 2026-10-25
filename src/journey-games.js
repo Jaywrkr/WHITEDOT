@@ -14,6 +14,8 @@ export function chapterToast(runtime,id,text,delay=600,ttl=15000){if(!runtime.pl
  setTimeout(()=>runtime.toast?.(text,{level:2,ttl,coalesce:false,force:true,valid:()=>!!runtime.journeyGamePlaying?.(id)}),delay);return true;}
 // The chapter's rule, once per save, a moment after it starts.
 export function sayOnce(runtime,flags,key,text,id,delay=1500){if(flags[key])return false;flags[key]=true;runtime.save?.();return chapterToast(runtime,id,text,delay,12000);}
+// The chapter/round owns the save: never persist a closed object before its reward commits.
+export const commitJourneyClose=(runtime,id)=>runtime.journeyComplete?runtime.journeyComplete(id)!==false:runtime.save?.()!==false;
 export function initialize(runtime){
  const games={};
  const game=id=>classicJourney()?null:games[id]||null;

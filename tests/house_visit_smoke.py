@@ -44,7 +44,9 @@ try:
    page.evaluate("()=>{"+hide+";__r.openJournal('achievements');}");page.locator('[data-journal-house]').first.click();page.wait_for_function('__r.houseActive()');assert page.locator('#mJournal').is_hidden()
    # Seen once you are in: the house counts every trophy there was when you left. One the game awards a moment later
    # (a slow machine can earn one between leaving and opening the menu) is new, and the menu may say so.
-   page.evaluate(hide);page.locator('#houseExit').click();seen=page.evaluate("__r.currentHouse().seen.ach");held=page.evaluate("Object.keys(__r.S.ach)")
+   page.evaluate(hide)
+   # Capture the exit and its boundary in one browser task: a new trophy may arrive in the next frame.
+   boundary=page.evaluate("()=>{document.getElementById('houseExit').click();return {seen:__r.currentHouse().seen.ach,held:Object.keys(__r.S.ach)};}");seen=boundary['seen'];held=boundary['held']
    assert 'test:nuevo' in held and seen>=len(held),'seen once you are in'
    page.locator('#bMenu').click();now=page.evaluate("Object.keys(__r.S.ach)");note=page.locator('#bStudio small').inner_text()
    assert note!='Trofeos nuevos' or len(now)>seen,('only a trophy earned after leaving is new',[k for k in now if k not in held])

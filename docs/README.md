@@ -37,3 +37,5 @@ Actualizada el 24 de octubre de 2026. Cada tema tiene una sola guía; si dos doc
 - Una decisión nueva reemplaza a la antigua en su guía; no se añaden párrafos que la contradigan.
 - Separar **aprobado**, **construido**, **probado** y **publicado**. Un bot o una captura no prueban lo que siente una persona.
 - Los documentos antiguos (planes, cierres, traspasos anteriores) se borraron del árbol el 24 de octubre. Siguen en Git: `git show 5914ca9:docs/historial/NOMBRE.md`. Ninguno autoriza trabajo nuevo.
+
+[Cierre de la auditoría 4 · fases J1–J7](PULIDO_CIERRE.md): correcciones autorizadas, evidencia y límites.

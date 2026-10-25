@@ -52,7 +52,7 @@ export function initialize(runtime){
   if(!placeOpen(d,p.id,runtime.S.journey)){const prev=PLACES.find(q=>q.id===previousPlace(p.id));return p.game&&prev?`${p.name} · tras ${prev.name}`:`${p.name} · pronto`;}
   return `${p.name} ${glyphs(p.id)}${best?` · ${Math.round(best.onTime*100)} % a tiempo`:''}`;}
  // Lugares: every place with its stars and what it asks; «Ir» to the ones already entered; the door to the ring.
- function open(){const box=$('mLugares'),d=data();if(!box||!d)return;const have=starCount(d);$('lugaresCount').textContent=`★ ${have} / ${TOTAL_STARS}`;$('lugaresNext').textContent=nextLine(d,runtime.S.journey);
+ function open(){const box=$('mLugares'),d=data();if(!box||!d)return;const have=starCount(d);$('lugaresCount').textContent=`★ ${have} / ${TOTAL_STARS}`;$('lugaresNext').textContent=d.readOnly?'Estos lugares necesitan una versión más reciente.':nextLine(d,runtime.S.journey);
   const list=$('lugaresList');list.replaceChildren();for(const p of PLACES){const li=document.createElement('li'),openNow=placeOpen(d,p.id,runtime.S.journey),best=d.best?.[p.id];
    const name=document.createElement('span');name.className='lugar-name';name.textContent=p.name;const st=document.createElement('span');st.className='lugar-stars';st.setAttribute('aria-label',`${stars(p.id).filter(Boolean).length} de 3 estrellas`);
    stars(p.id).forEach(x=>{const s=document.createElement('i');s.textContent='★';if(x)s.className='got';st.appendChild(s);});
