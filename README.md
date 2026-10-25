@@ -2,14 +2,14 @@
 
 Un cubo, un universo que suena. Tocas a tiempo y el mundo responde con música.
 
-Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.181**, fases J1–J7 y sus auditorías integradas en `main` por el PR #353 (cierre `e6c0a3a6`, desde `main` 676ac511). No está publicado en tiendas.
+Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.182**, cierre K1–K6 en ramas encadenadas ([estado](HANDOFF.md)). No está publicado en tiendas.
 
 ## Empezar aquí
 
 | Si quieres… | Lee |
 |---|---|
 | Saber dónde está el proyecto y qué toca ahora | [HANDOFF.md](HANDOFF.md) |
-| Ver el cierre conservando música y mundos | [Sexta auditoría](docs/panel/sesion-6/informe.md) y [plan K1–K5](docs/panel/sesion-6/plan.md) |
+| Ver el cierre conservando música y mundos | [Sexta auditoría](docs/panel/sesion-6/informe.md) y [plan K1–K6](docs/panel/sesion-6/plan.md) |
 | Repetir la auditoría del panel creativo | [docs/PANEL.md](docs/PANEL.md) |
 | Trabajar en el código | [AGENTS.md](AGENTS.md) y [Arquitectura](docs/ARQUITECTURA.md) |
 | Encontrar cualquier otro documento | [Índice](docs/README.md) |

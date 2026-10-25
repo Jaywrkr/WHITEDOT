@@ -24,6 +24,12 @@ try:
    assert page.evaluate('__r.accountClient')==None and not page.evaluate("localStorage.getItem('pixel-blanco-v4')"),'a test save of its own'
    ring=page.evaluate('__r.ringState()');assert len(ring['spots'])==11 and ring['next'],ring
    c=ring['center']
+   page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)")
+   before=page.evaluate('[__r.S.wx,__r.S.wy,__r.S.sparks]')
+   page.evaluate('__r.openLugares()');page.locator('#lugaresDoor').click()
+   page.wait_for_function("!document.getElementById('ringRoute').hidden")
+   assert page.evaluate('[__r.S.wx,__r.S.wy,__r.S.sparks]')==before,'following never teleports or charges'
+   assert page.evaluate('__r.ringRoute().id')=='jardin' and 'Jardín' in page.inner_text('#ringRoute')
    for s in ring['spots']:assert 5000<math.hypot(s['x']-c['x'],s['y']-c['y'])<8000,s
    # Plan H6: from the Refugio the next portal is heard, softly, on the «3» and from its side.
    page.evaluate("()=>{__r.S.sound=true;__r.audio();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}");page.wait_for_function("__r.ac?.state==='running'",timeout=20000)
@@ -61,8 +67,8 @@ try:
    page.evaluate('__r.openMap()');page.wait_for_function("!document.getElementById('ringTravel').hidden",timeout=3000)
    labels=page.locator('#ringTravel button').all_inner_texts();assert any(l.startswith('Lago') for l in labels) and any(l.startswith('Bosque') for l in labels),labels
    page.locator('#ringTravel button',has_text='Lago').click();assert page.evaluate("document.getElementById('mJournal').hidden") and near(page,'lago'),'fast travel to the Lago'
-   # The ring follows the Refugio.
-   page.evaluate("()=>{__r.S.studio.x=__r.S.wx+20000;__r.S.studio.y=__r.S.wy;}");moved=page.evaluate('__r.ringState().center');assert abs(moved['x']-c['x'])>15000,moved
+   # Deploying the portable Refugio never moves the migrated ring.
+   page.evaluate("()=>{__r.S.studio.x=__r.S.wx+20000;__r.S.studio.y=__r.S.wy;}");moved=page.evaluate('__r.ringState().center');assert moved==c,(moved,c)
    assert not errors,errors;page.close()
   browser.close()
  print('PASS places ring on phone and desktop: eleven portals around the Refugio, a complete place asks Jugar, Libre (no bar) or Maestro with ★★, closed ones open after the one before it, leaving and reloading bring you back to the portal, fast travel from the map, the ring follows the Refugio',flush=True)

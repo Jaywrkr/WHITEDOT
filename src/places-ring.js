@@ -2,11 +2,12 @@ import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {PLACES,placeOpen,starCount,nextOnPath,previousPlace} from './places.js';
 import {freeOpen} from './journey-mode.js';
 import {directionPan} from './spatial.js';
+import {formatDistance} from './player-profile-model.js';
 // The ring (plan F5, docs/MUNDO.md): the eleven places as gold portals around the Refugio, about half a minute's walk
 // from its door. Each portal sounds on the bar's «1», louder as you come near; a closed one shows the stars it asks for.
 // An arrow at the edge of the screen points to the next place on the path (plan H3: in order, like the tracks of a
 // record), a column of gold light stands over its portal, and the map shows them all.
-// The ring follows the Refugio when it moves; before there is one, it stays where the free World opened.
+// The ring keeps its migrated anchor even when the portable Refugio moves.
 export const RING_RADIUS=6000,PORTAL_REACH=40,PORTAL_HEAR=1800,RING_SEA_STEP=300,RING_SEA_TRIES=6;
 // Plan H6: the next portal on the path is heard from the Refugio and beyond, softly, on the bar's «3», from its side.
 export const NEXT_HEAR=RING_RADIUS*1.6,NEXT_STEP=8;
@@ -18,6 +19,7 @@ export const PORTAL_NOTES=Object.freeze([0,2,4,7,9,12,14,16,19,21,24]);
 export function portalSpots(center,isSea=()=>false){return PLACES.map((p,i)=>{const a=-Math.PI/2+i/PLACES.length*2*Math.PI,at=r=>({x:Math.round(center.x+Math.cos(a)*r),y:Math.round(center.y+Math.sin(a)*r)});
  for(let k=0;k<=RING_SEA_TRIES*2;k++){const q=at(RING_RADIUS+(k%2?1:-1)*Math.ceil(k/2)*RING_SEA_STEP);if(!isSea(q.x,q.y))return {id:p.id,...q};}return {id:p.id,...at(RING_RADIUS)};});}
 // Where the column of the next portal stands when the portal is off screen: at the edge on its side (plan I2).
+export function routeEdge(dx,dy,W,H){const cx=W/2,cy=H/2,top=Math.min(144,H*.28),bottom=Math.max(top+32,H-148),rx=Math.max(1,cx-24),ry=dy<0?Math.max(1,cy-top):Math.max(1,bottom-cy),k=Math.min(1,rx/Math.max(1,Math.abs(dx)),ry/Math.max(1,Math.abs(dy)));return {x:cx+dx*k,y:cy+dy*k,angle:Math.atan2(dy,dx)};}
 export function edgeColumn(x,y,W,H,m=12){return {x:Math.max(m,Math.min(W-m,x))};}
 // The portal the arrow shows: the nearest open place never entered, or still without its ★; none once all are done.
 export function nextPortal(spots,places,journey,from){const path=nextOnPath(places,journey);return path&&spots.find(q=>q.id===path.id)||null;}
@@ -25,12 +27,17 @@ export function nextPortal(spots,places,journey,from){const path=nextOnPath(plac
 export function besidePortal(spot,center){const d=Math.hypot(center.x-spot.x,center.y-spot.y)||1;return {x:Math.round(spot.x+(center.x-spot.x)/d*PORTAL_REACH*3),y:Math.round(spot.y+(center.y-spot.y)/d*PORTAL_REACH*3)};}
 export function initialize(runtime){
  const $=id=>runtime.$?.(id),calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
- let cache=null,inside=null,said=null;
+ let cache=null,inside=null,said=null,target=null;
  const data=()=>runtime.placesData?.();
  const name=id=>PLACES.find(p=>p.id===id)?.name||id;
  function active(){const S=runtime.S;return !!(S&&runtime.inWorld?.()&&S.mode==='world'&&(S.layer||'superficie')==='superficie'&&freeOpen(S.journey)&&!runtime.placeRun?.()&&!runtime.journeyFinaleState?.().running&&data());}
  // The Refugio is the centre; before the first one, the spot where the free World opened, kept in the save.
- function center(){const S=runtime.S,st=S.studio;if(st&&Number.isFinite(st.x)&&Number.isFinite(st.y))return {x:st.x,y:st.y};const d=data();if(!d)return null;if(!d.center){d.center={x:Math.round(S.wx),y:Math.round(S.wy)};runtime.save?.();}return d.center;}
+ function center(){const S=runtime.S,d=data();if(!d)return null;if(d.ringFixed&&d.center)return d.center;
+  const st=S.studio,p=st&&Number.isFinite(st.x)&&Number.isFinite(st.y)?{x:Math.round(st.x),y:Math.round(st.y)}:d.center||{x:Math.round(S.wx),y:Math.round(S.wy)};
+  if(d.readOnly)return p;const before=d.center,fixed=d.ringFixed;d.center=p;d.ringFixed=true;if(runtime.save?.()===false){d.center=before;d.ringFixed=fixed;}return p;}
+ function route(){if(!active())return null;const d=data(),next=nextPortal(spots(),d,runtime.S.journey),aim=target&&spots().find(s=>s.id===target&&placeOpen(d,s.id,runtime.S.journey)&&!stars(s.id)[0])||next;if(!aim)return null;return {...aim,name:name(aim.id),dx:aim.x-runtime.S.wx,dy:aim.y-runtime.S.wy,distance:Math.hypot(aim.x-runtime.S.wx,aim.y-runtime.S.wy)};}
+ function guide(id){for(const key of ['mMenu','mLugares','mPlace','mGuide'])if($(key))$(key).hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();if(!active())return false;const aim=spots().find(s=>s.id===(id||nextPortal(spots(),data(),runtime.S.journey)?.id)&&placeOpen(data(),s.id,runtime.S.journey));if(!aim)return false;target=aim.id;runtime.stopAutopilot?.();return true;}
+
  function spots(){const c=center();if(!c)return [];if(!cache||cache.x!==c.x||cache.y!==c.y)cache={x:c.x,y:c.y,spots:portalSpots(c,(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea)};return cache.spots;}
  const stars=id=>data()?.stars?.[id]||[false,false,false];
  // Into a portal: a round; with its ★★, first the choice of the Maestro one.
@@ -47,7 +54,7 @@ export function initialize(runtime){
  // A star drawn, not written: the quiet screen of the Journey draws no words in the World (journey-mode.js).
  function star(c,x,y,r){c.beginPath();for(let i=0;i<10;i++){const q=i%2?r*.45:r,a=i/10*6.283-Math.PI/2;i?c.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q):c.moveTo(x+Math.cos(a)*q,y+Math.sin(a)*q);}c.closePath();c.fill();}
  // The portals on screen and, when the next one is not in view, a gold arrow at the edge pointing to it.
- function draw(c,W,H,t){tick();if(!active()||openSurface('.modal:not([hidden])'))return;const S=runtime.S,d=data(),cx=runtime.camX??S.wx,cy=runtime.camY??S.wy,still=calm(),gold=runtime.GOLD||'#f0d27a';c.save();
+ function draw(c,W,H,t){tick();const info=$('ringRoute'),aim=route(),visible=!!aim&&!openSurface('.modal:not([hidden])');if(info){info.hidden=!visible;if(visible)info.textContent=`${aim.name} · ${formatDistance(aim.distance)}`;}if(!active()||openSurface('.modal:not([hidden])'))return;const S=runtime.S,d=data(),cx=runtime.camX??S.wx,cy=runtime.camY??S.wy,still=calm(),gold=runtime.GOLD||'#f0d27a';c.save();
   for(const s of spots()){const x=W/2+s.x-cx,y=H/2+s.y-cy;if(x<-80||x>W+80||y<-80||y>H+80)continue;const open=placeOpen(d,s.id,S.journey),r=24,turn=still?0:t/700;
    if(open){const g=c.createRadialGradient(x,y,0,x,y,r*2.4);g.addColorStop(0,'rgba(240,210,122,.32)');g.addColorStop(1,'rgba(240,210,122,0)');c.globalAlpha=1;c.fillStyle=g;c.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8);}
    c.strokeStyle=open?gold:'#8a8a8f';c.lineWidth=1.5;for(let i=0;i<3;i++){c.globalAlpha=(open?.9:.45)-i*.2;c.beginPath();c.arc(x,y,r*(1-i*.25),turn+i,turn+i+Math.PI*1.6);c.stroke();}
@@ -62,6 +69,7 @@ export function initialize(runtime){
    const col=(cx2,from,to,a)=>{const g=c.createLinearGradient(cx2,from,cx2,to);g.addColorStop(0,'rgba(240,210,122,.38)');g.addColorStop(1,'rgba(240,210,122,0)');c.globalAlpha=a*(still?.8:.7+.3*Math.sin(t/600));c.fillStyle=g;c.fillRect(cx2-9,Math.min(from,to),18,Math.abs(to-from));};
    if(x>-60&&x<W+60&&y>-40&&y<H+40)col(x,Math.min(H,y),Math.max(0,y-H),1);
    else{const e=edgeColumn(x,y,W,H),far=Math.hypot(next.x-S.wx,next.y-S.wy);col(e.x,H,0,Math.max(.45,1-far/(RING_RADIUS*2)));}}
+  if(aim){const e=routeEdge(aim.dx,aim.dy,W,H);c.save();c.translate(e.x,e.y);c.rotate(e.angle);c.globalAlpha=.9;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.moveTo(-7,-5);c.lineTo(1,0);c.lineTo(-7,5);c.stroke();c.restore();}
   c.restore();}
  // On each bar's «1», the nearest portal sounds its note, louder the closer you are; a closed one, softer.
  // Each from its side (plan H6), so a portal off screen can be found by ear.
@@ -80,6 +88,6 @@ export function initialize(runtime){
  const leave=$('bLeavePlace');if(leave){leave.onclick=()=>{$('mMenu')&&($('mMenu').hidden=true);runtime.abandonPlace?.();};$('bMenu')?.addEventListener('click',()=>{leave.hidden=!runtime.placeRun?.();});}
  // The portals for the map: where each is, and whether it is open, with its stars.
  function forMap(){if(!data()||!freeOpen(runtime.S.journey))return [];const d=data();return spots().map(s=>({...s,name:name(s.id),open:placeOpen(d,s.id,runtime.S.journey),stars:stars(s.id).filter(Boolean).length}));}
- Object.defineProperties(runtime,{drawPlacesRing:{get:()=>draw},ringMusicStep:{get:()=>musicStep},ringPortals:{get:()=>forMap},ringTravel:{get:()=>travel},ringGo:{get:()=>go},renderRingTravel:{get:()=>travelList},
+ Object.defineProperties(runtime,{drawPlacesRing:{get:()=>draw},ringMusicStep:{get:()=>musicStep},ringPortals:{get:()=>forMap},ringTravel:{get:()=>travel},ringGo:{get:()=>go},ringGuide:{get:()=>guide},ringRoute:{get:()=>route},renderRingTravel:{get:()=>travelList},
   ringState:{get:()=>()=>({center:center(),spots:spots().map(s=>({...s})),next:nextPortal(spots(),data(),runtime.S.journey,{x:runtime.S.wx,y:runtime.S.wy})?.id||null,active:active()})},ringSounds:{get:()=>()=>sounds.map(s=>({...s}))}});
 }

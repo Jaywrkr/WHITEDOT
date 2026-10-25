@@ -607,3 +607,6 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 .latency-setting{display:flex;align-items:center;gap:8px;margin:6px 0}.latency-setting span{flex:1}.latency-setting button{min-width:36px}.latency-setting output{min-width:56px;text-align:center}
 
 .place-narrator{font-size:12px;color:var(--gold,#f0d27a);margin:6px 0 0}
+
+/* K1: a quiet walking destination; the cube and universe keep their size. */
+.ring-route{position:fixed;bottom:calc(var(--safe-bottom,0px) + 140px);left:16px;right:16px;margin:0;text-align:center;font:11px/1.5 var(--mono);color:#fff;pointer-events:none;z-index:12}.ring-route[hidden]{display:none}body:has(.modal:not([hidden])) .ring-route{visibility:hidden}

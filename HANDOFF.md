@@ -1,57 +1,28 @@
-# Traspaso para el siguiente agente
+# Traspaso · cierre K1–K6
 
-**Código 2.3.0-alpha.181 · nueva evidencia de Jay, cierre no aceptado.** Leer [AGENTS](AGENTS.md), [sexta sesión](docs/panel/sesion-6/informe.md) y [plan propuesto K1–K5](docs/panel/sesion-6/plan.md).
+**Código 2.3.0-alpha.182.** Leer [AGENTS](AGENTS.md), [auditoría 6](docs/panel/sesion-6/informe.md) y [plan](docs/panel/sesion-6/plan.md).
 
-## Qué autorizó Jay
+## Petición vigente
 
-Solucionar los hallazgos de la auditoría conservando cómo se generan la música y los mundos. Se mantiene la música base que le gusta, semillas, RNG, mapas, biomas, distribución, criaturas y arte. El sonido de victoria sí se integra en la capa ganada; las notas incorrectas de la capa/final se corrigen localmente. No hay otra expansión aprobada.
+Jay aprobó ejecutar las seis fases, una rama por fase encadenada, commit y push. Jay conserva PR y merge; la excepción anterior de integrar en main terminó con el PR #353. No pedir aprobación entre fases. K1 parte de la auditoría `7476aa7a`, sobre main `3c5fd7b6`; cada fase siguiente parte de la anterior.
 
-Entrega integrada en `main` por el PR #353, con autorización expresa de Jay el 25 de octubre. La integración reúne el cubo pequeño, ambas auditorías y J1–J7 desde `e6c0a3a6`, sin otros cambios de juego. Para tareas posteriores vuelve a regir el flujo habitual: rama, commit y push; Jay crea PR y merge. Supabase continúa en pausa.
+Priorizar caminar: «Seguir» orienta, no transporta automáticamente al acabar el Vacío. Fragmentos fuera de tempo tienen valor base×1, a tiempo×2 y racha×3. Revisar ayuda de guardar tras el Vacío. Corregir final5 sin rehacer música generativa, mapas, biomas, flora, fauna o arte del cubo pequeño. Preservar guardados, formatos futuros y fallos de escritura. Supabase y tiendas continúan en pausa.
 
-## Historial de la entrega unificada
-
-La entrega incluye `fix/cubo-pequeno` (04ae8bdd) y `audit/panel-4-cierre` (3673f2ec). Las fases siguientes se reúnen en una sola integración; no hace falta volver a integrarlas por separado:
-
-| Rama | Commit | Qué |
+| Fase | Rama | Estado técnico |
 |---|---|---|
-| `pulido/j1-base-fiable` | `8212e0de` | Premio durable, reintento, lector futuro y carreras de fixtures |
-| `pulido/j2-cierre-musical` | `b78295a9` | Capa en compás/acorde vivo, sin fanfarria; dos correcciones de armonía |
-| `pulido/j3-interfaz-produccion` | `9398291d` | Nombres claros, metadatos en Ajustes y paneles sin superposición |
-| `pulido/j4-meta-compartida` | `a72bc22b` | Una meta según el estado; once lugares frente a 33 estrellas |
-| `pulido/j5-continuidad` | `b898b9d7` | Volver al final existente con las notas actuales; modelo honesto |
-| `pulido/j6-sincronia` | `99a3e525` | Acento al instante emitido + salida estimada, sin cambiar el tiempo sonoro |
-| `pulido/j7-cierre` | `e6c0a3a6` | Verificación, dos límites de guardado y conteo de cierre por pasos vivos |
+| K1 · Guía al anillo | `pulido/k1-guia-anillo` | Entregada |
+| K2 · Economía de chispas | `pulido/k2-economia-chispas` | Pendiente |
+| K3 · Final del Viaje | `pulido/k3-final-viaje` | Pendiente |
+| K4 · Interfaz clara | `pulido/k4-interfaz-clara` | Pendiente |
+| K5 · Recorrido contextual | `pulido/k5-recorrido-contextual` | Pendiente |
+| K6 · Validación de cierre | `pulido/k6-validacion-cierre` | Pendiente |
 
-J7 añade D03 (posición tras entrada fallida) y D04 (tarjeta tras sustituir S), encontrados durante la comprobación. El cierre cuenta dos compases del secuenciador aun si el tempo cambia. Son correcciones de integración; no modifican el secuenciador ni sus géneros.
+## Última comprobación
 
-## Evidencia
+K1: 245 suites Node, 110 pruebas de impacto, auditoría estática y ring_smoke en teléfono/escritorio aprobados. La prueba comprueba que Seguir no cobra ni transporta, y que mover la casa no mueve el anillo. Escucha y aceptación humana pendientes.
 
-La [quinta sesión](docs/panel/sesion-5/informe.md) separa catálogo inicial, regresiones repetidas, renders reutilizables y pruebas físicas. Notas provisionales **8,1**, antes 7,7, del mismo agente con diez lentes simuladas; no jurado independiente ni escucha humana.
+Una entrega técnica no sustituye la escucha física de Jay ni cinco sesiones sin ayuda. Los IDs y pendientes humanos permanecen en [el registro](docs/panel/sesion-4/seguimiento.json). La auditoría 6 vale7,2 provisional antes de las correcciones; no se eleva esa nota por un commit.
 
-`scripts/pulido-preservation.mjs` comprueba 305 archivos protegidos idénticos a 04ae8bdd, SVGs y secciones de reglas/síntesis/dibujo. Enumera los 26 módulos de integración revisados; no afirma que todo el árbol sea idéntico.
+## Base preservada
 
-- 245 suites Node y auditoría de release aprobadas en alpha.181.
-- Catálogo local inicial alpha.180: 186/188; dos fixtures corregidas y repetidas en alpha.181. Después, el CI de integración aprobó el catálogo completo de navegador y audio en alpha.181.
-- 64 estados de UI normal en cuatro tamaños; sin errores o desbordamientos en esas muestras. Once renders actuales de cierre; capas/final/movimiento conservan sus renders aprobados.
-- Detalle de comandos, versiones, evidencias y límites en la quinta sesión. CI completo de integración aprobado; no se afirma prueba física o publicación en tiendas.
-
-## Pendiente real
-
-- V01: Jay acepta el tamaño del cubo y el cierre en teléfono; altavoz y auriculares. Cinco sesiones sin ayuda (dos personas sin hábito de jugar).
-- P01: verificar interés después de ganar; el modelo conserva el hueco estructural de capas y no predice disfrute o abandono.
-- CI de integración aprobado. Despliegue efectivo y aceptación humana se comprueban por separado; las futuras integraciones siguen requiriendo sus checks.
-- Meta orientativa 8,7 no alcanzada por certificación. No perseguir 10 añadiendo funciones o alterando la base que Jay pidió conservar.
-
-El registro de la sesión 4 conserva los 14 hallazgos originales y añade D03–D04. Cada estado técnico incluye pruebas y límites. La siguiente sesión vuelve a los pendientes concretos; no genera otro plan infinito. D01–D22 de lanzamiento permanecen en su guía, sin reabrir servicios o tiendas por esta entrega.
-
-## Integración confirmada
-
-[PR #353](https://github.com/Jaywrkr/WHITEDOT/pull/353) · [CI completo](https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278): lógica, seis grupos de navegador, tres de audio y agregador aprobados antes de incorporar el código. El runtime coincide con `e6c0a3a6`; esta actualización añade solo el estado documental y la evidencia de CI.
-
-## Petición vigente · sexta sesión
-
-Jay probó la entrega: no encontró el anillo tras el Viaje, gastó20 chispas en un salto exploratorio, rechaza el final5 y describe menú recargado/avisos recortados. Pidió analizar con el panel y presentar fases antes de implementar. Esta rama solo documenta la revisión; no ejecuta K1–K5 ni modifica la música base o los mundos.
-
-Media provisional7,2, antes8,1: cambia la evidencia, no el código. U03/U04 se reabren y se añaden A04/U05–U08; son21 IDs en el registro canónico, conservando los16 anteriores y sus pruebas. A04 es final5; no confundirlo con la corrección A03 de final11. V01 conserva evidencia negativa de Jay y sigue abierto. Capturas adicionales por recibir.
-
-Evidencia:24 estados UI (cuatro avisos ocultos, no certificados), cuatro controles X1 con desbordamiento de hijos, modelos puros y cuatro pruebas ligeras. Sin nueva escucha del auditor ni renders. La base alpha.181 está integrada; no equivale a experiencia aceptada. Supabase continúa en pausa.
+Alpha.181 y J1–J7 están en main por [PR #353](https://github.com/Jaywrkr/WHITEDOT/pull/353). [Sesión5](docs/panel/sesion-5/informe.md): CI completo de integración aprobado; nueva experiencia real de Jay reabrió navegación/aceptación y añadió final5 como A04. Base radio/generadores preservada; final5 es un arreglo autorizado distinto de los cierres breves y final11.

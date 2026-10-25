@@ -26,7 +26,7 @@ function trophy(c,game,x,y,r){c.beginPath();
  for(let i=0;i<10;i++){const q=i%2?r*.42:r,a=i/10*6.283-Math.PI/2;i?c.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q):c.moveTo(x+Math.cos(a)*q,y+Math.sin(a)*q);}c.closePath();c.fill();}
 export function initialize(runtime){
  const $=id=>runtime.$?.(id),hits=[];let lastTap=null;
- const data=()=>runtime.placesData?.();
+ const data=()=>runtime.placesData?.();const nameOf=id=>PLACES.find(p=>p.id===id)?.name||'el Mundo';
  const stars=id=>data()?.stars?.[id]||[false,false,false];
  const glyphs=id=>stars(id).map(x=>x?'★':'☆').join('');
  const visiting=()=>!!runtime.houseVisiting?.();
@@ -52,12 +52,12 @@ export function initialize(runtime){
   if(!placeOpen(d,p.id,runtime.S.journey)){const prev=PLACES.find(q=>q.id===previousPlace(p.id));return p.game&&prev?`${p.name} · tras ${prev.name}`:`${p.name} · pronto`;}
   return `${p.name} ${glyphs(p.id)}${best?` · ${Math.round(best.onTime*100)} % a tiempo`:''}`;}
  // Lugares: every place with its stars and what it asks; «Ir» to the ones already entered; the door to the ring.
- function open(){const box=$('mLugares'),d=data();if(!box||!d)return;const have=starCount(d),goal=gameObjective(runtime.S,d);$('lugaresCount').textContent=d.readOnly?'':`${goal.completed||0} / 11`;$('lugaresNext').textContent=d.readOnly?goal.line:`${nextLine(d,runtime.S.journey)} · ★ ${have}/${TOTAL_STARS}`;
+ function open(){const box=$('mLugares'),d=data();if(!box||!d)return;const have=starCount(d),goal=gameObjective(runtime.S,d);$('lugaresCount').textContent=d.readOnly?'':`${goal.completed||0} / 11`;if($('lugaresDoor'))$('lugaresDoor').textContent=goal.id?`Seguir hacia ${nameOf(goal.id)}`:'Explorar';$('lugaresNext').textContent=d.readOnly?goal.line:`${nextLine(d,runtime.S.journey)} · ★ ${have}/${TOTAL_STARS}`;
   const list=$('lugaresList');list.replaceChildren();for(const p of PLACES){const li=document.createElement('li'),openNow=placeOpen(d,p.id,runtime.S.journey),best=d.best?.[p.id];
    const name=document.createElement('span');name.className='lugar-name';name.textContent=p.name;const st=document.createElement('span');st.className='lugar-stars';st.setAttribute('aria-label',`${stars(p.id).filter(Boolean).length} de 3 estrellas`);
    stars(p.id).forEach(x=>{const s=document.createElement('i');s.textContent='★';if(x)s.className='got';st.appendChild(s);});
    const note=document.createElement('small');note.textContent=!openNow?(p.game?'Cerrado':'Pronto'):best?`${Math.round(best.onTime*100)} %`:d.seen?.[p.id]||stars(p.id)[0]?'':'Sin visitar';
-   li.append(name,st,note);if(openNow&&d.seen?.[p.id]){const go=document.createElement('button');go.textContent='Ir';go.onclick=()=>travel(p.id);li.appendChild(go);}if(!openNow)li.className='closed';list.appendChild(li);}
+   li.append(name,st,note);if(openNow&&!stars(p.id)[0]){const follow=document.createElement('button');follow.textContent='Seguir';follow.onclick=()=>runtime.ringGuide?.(p.id);li.appendChild(follow);}if(openNow&&d.seen?.[p.id]){const go=document.createElement('button');go.textContent='Ir';go.onclick=()=>travel(p.id);li.appendChild(go);}if(!openNow)li.className='closed';list.appendChild(li);}
   // Today's remix (wild.js, plan F18): one open place with another place's rhythm, worth more sparks.
   const mix=runtime.dailyRemix?.(),line=$('lugaresRemixLine'),btn=$('lugaresRemix');if(line&&btn){const place=mix&&PLACES.find(p=>p.id===mix.id);line.hidden=btn.hidden=!place;
    if(place){line.textContent=`Remezcla de hoy: ${place.name} en «${runtime.remixName?.(mix.rhythm)||mix.rhythm}».`;btn.onclick=()=>remixGo(mix);}}
@@ -65,7 +65,7 @@ export function initialize(runtime){
  function remixGo(mix){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.startPlace?.(mix.id,{remix:mix.rhythm,from:{x:runtime.S.wx,y:runtime.S.wy}});}
  // Out of the Refugio and on to a place: the house stays where it is.
  function travel(id){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.ringTravel?.(id);}
- function door(){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();}
+ function door(){runtime.ringGuide?.();}
  // The house bar shows the wall too, and opens Lugares.
  function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=d.readOnly?'Actualizar lugares':`${gameObjective(runtime.S,d).completed||0}/11 lugares`;}
  if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;if($('lugaresSong'))$('lugaresSong').onclick=()=>{$('mLugares').hidden=true;if(runtime.replaySong)runtime.replaySong();else runtime.openSong?.();};

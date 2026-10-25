@@ -442,3 +442,7 @@ Las entradas anteriores (alpha.58–alpha.141: universo, superbiomas, fases 0–
 Rama `audit/panel-6-experiencia-real`, desde main `3c5fd7b6`, misma versión alpha.181. Revisión documental, sin cambios al juego. Se verifica la falta de acceso inicial gratuito al siguiente lugar, salto de paisaje ajeno al anillo, rumbo sin Y, centro móvil del anillo y ruta musical final5 que conservaba su arreglo anterior. Aviso X1 recortado reproducido con geometría controlada.
 
 [Sexta sesión](docs/panel/sesion-6/informe.md): media provisional7,2 frente a8,1 por nueva evidencia humana, no por una regresión de código nueva. [K1–K5](docs/panel/sesion-6/plan.md) propuestas; no implementadas. U03/U04 reabiertos; A04/U05–U08 nuevos; V01 con rechazo concreto de Jay. Pruebas y límites en el expediente; generadores, arte y progreso intactos.
+
+## alpha.182 · K1 · guía a pie al anillo
+
+Desde la auditoría `7476aa7a`, rama `pulido/k1-guia-anillo`. Seguir hacia el siguiente lugar orienta sin mover ni cobrar. Nombre/distancia, indicador de ocho rumbos y ancla del anillo migrada desde la ubicación vigente, independiente de la casa portátil. Si falla guardar, se revierte la migración. El siguiente resultado también propone caminar. Música, generación y estrellas conservadas.

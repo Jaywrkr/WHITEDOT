@@ -42,7 +42,7 @@ export function normalizePlaces(raw,journey={}){if(object(raw)&&Number.isInteger
  const noteSteps={};if(object(q.noteSteps))for(const id of Object.keys(notes)){const v=q.noteSteps[id];if(Array.isArray(v)&&v.length===notes[id].length&&v.every(s=>Number.isInteger(s)&&s>=0&&s<16))noteSteps[id]=[...v];}
  const kept={};if(object(q.kept))for(const id of PLACE_IDS)if(q.kept[id]===true)kept[id]=true;
  if(legacy){const have=PLACE_IDS.reduce((a,id)=>a+stars[id].filter(Boolean).length,0);for(const [id,need] of Object.entries(LEGACY_NEED))if(have>=need)kept[id]=true;}
- return {version:PLACES_VERSION,stars,best,rounds:{day:typeof q.rounds?.day==='string'?q.rounds.day:'',counts},journeyShare,center:point(q.center),seen,kept,notes,noteSteps,won:q.won===true,master:q.master===true,run:object(q.run)&&PLACE_IDS.includes(q.run.id)?q.run:null};}
+ return {version:PLACES_VERSION,stars,best,rounds:{day:typeof q.rounds?.day==='string'?q.rounds.day:'',counts},journeyShare,center:point(q.center),ringFixed:q.ringFixed===true,seen,kept,notes,noteSteps,won:q.won===true,master:q.master===true,run:object(q.run)&&PLACE_IDS.includes(q.run.id)?q.run:null};}
 export const starCount=places=>PLACE_IDS.reduce((a,id)=>a+(places?.stars?.[id]||[]).filter(Boolean).length,0);
 // The place before this one on the path: the Journey's five open together; each later one follows the one before it.
 export const previousPlace=id=>{const i=PLACE_IDS.indexOf(id);return i>WORLD_CHAPTERS.length-1?PLACE_IDS[i-1]:null;};
@@ -128,7 +128,7 @@ export function initialize(runtime){
   const said=runtime.takePendingLine?.(),nar=runtime.$('placeNarrator');if(nar){nar.hidden=!said;nar.textContent=said?`${said.title} · ${said.line}`:'';}
   runtime.$('placeAgain').onclick=()=>{box.hidden=true;start(r.id,{maestro:r.maestro,from:r.from,remix:r.remix});};runtime.$('placeMaestro').hidden=!own().stars[r.id][1]||r.maestro;runtime.$('placeMaestro').onclick=()=>{box.hidden=true;start(r.id,{maestro:true,from:r.from});};runtime.$('placeClose').onclick=()=>{box.hidden=true;back(r.from);runtime.save?.();runtime.songFinaleCheck?.();};
   // The next track on the path, straight from the card (plan H3); none once all eleven are complete.
-  const next=nextOnPath(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Siguiente · ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGo?.(next.id);};}}}
+  const next=nextOnPath(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Siguiente · ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id);};}}}
  Object.defineProperties(runtime,{placeRun:{get:()=>run},startPlace:{get:()=>start},abandonPlace:{get:()=>abandon},placeHear:{get:()=>hear},placeFinish:{get:()=>finish},placeChapterKept:{get:()=>chapterKept},placesData:{get:()=>own},
   placeGoalScale:{get:()=>()=>run()?.maestro?MAESTRO_GOAL:1},placeNext:{get:()=>()=>nextOnPath(own(),runtime.S.journey)?.id||null},places:{get:()=>()=>{const s=own();return {stars:JSON.parse(JSON.stringify(s.stars)),count:starCount(s),best:JSON.parse(JSON.stringify(s.best)),run:s.run?{id:s.run.id,maestro:s.run.maestro,...(s.run.remix?{remix:s.run.remix}:{}),...(s.run.free?{free:true}:{}),hits:s.run.hits,total:s.run.total}:null,last:shown?{...shown}:null};}}});
 }

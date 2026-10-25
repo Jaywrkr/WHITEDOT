@@ -235,3 +235,7 @@ Se conservan generación musical, semillas, mapas, biomas, distribución y arte.
 Las rondas anuncian premios después de guardarlos y admiten reintento seguro. Lugares y Refugio priorizan /11; /33 es maestría. La guía y el menú leen el siguiente destino del mismo estado. Tras completar los once, Lugares → Tu canción vuelve al final existente con tus notas actuales; no hay otra recompensa por oírlo.
 
 Detalle, comprobaciones y aceptación pendiente en [Cierre](PULIDO_CIERRE.md) y [quinta sesión](panel/sesion-5/informe.md). No se declara publicación ni cambia Supabase.
+
+## K1 · orientación corregida (alpha.182)
+
+«Seguir hacia…» y «Seguir» en Lugares activan rumbo a pie, sin salto ni gasto, incluso antes de visitar el portal. Nombre y distancia acompañan una señal bidimensional. El anillo migra su referencia desde el Refugio vigente y después permanece estable aunque la casa se despliegue en otro lugar. Una escritura fallida conserva el guardado anterior. Las tablas históricas donde el anillo seguía la casa describen la regla sustituida.
