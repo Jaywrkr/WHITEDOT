@@ -104,7 +104,7 @@ export function initialize(runtime){
  // Leaving a round from the menu: nothing earned, the chapter's state back, and you are at the portal again.
  function abandon(){const s=own();if(!s.run)return false;const from=s.run.from;restore(s.run);s.run=null;back(from);runtime.narrate?.('abandon');runtime.save?.();runtime.hud?.();return true;}
  // The round's card: the three stars, what each asks, and what you earned. Silent buttons.
- function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;const pct=Math.round(r.onTime*100),mm=Math.floor(r.ms/60000),ss=String(Math.round(r.ms/1000)%60).padStart(2,'0');
+ function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=Math.round(r.onTime*100),mm=Math.floor(r.ms/60000),ss=String(Math.round(r.ms/1000)%60).padStart(2,'0');
   runtime.$('placeTitle').textContent=r.maestro?'Maestro':r.remix?'Remezcla':'Completo';
   runtime.$('placeStars').innerHTML=['★','★','★'].map((x,i)=>`<span class="${own().stars[r.id][i]?'got':''}${r.fresh[i]?' new':''}">${x}</span>`).join('');
   runtime.$('placeRows').innerHTML=[`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % a tiempo</li>`,`<li>${r.stars[2]?'✓':'·'} Maestro</li>`].join('')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>');

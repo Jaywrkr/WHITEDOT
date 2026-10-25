@@ -8,7 +8,7 @@ Se conservan semillas, RNG, mapas, distribución, criaturas, paleta, formas, com
 |---|---|---|
 | J1 · Base fiable | `pulido/j1-base-fiable` | Corregida y probada localmente |
 | J2 · Cierre musical | `pulido/j2-cierre-musical` | Corregida; escucha de Jay pendiente |
-| J3 · UI de producción | `pulido/j3-interfaz-produccion` | Pendiente |
+| J3 · UI de producción | `pulido/j3-interfaz-produccion` | Corregida y probada localmente |
 | J4 · Una meta | `pulido/j4-meta-compartida` | Pendiente |
 | J5 · Continuidad | `pulido/j5-continuidad` | Pendiente |
 | J6 · Sincronía | `pulido/j6-sincronia` | Pendiente |
@@ -35,3 +35,11 @@ Cristales toma la tercera o quinta del acorde en vez de restar tres semitonos fi
 Validación: 242 suites Node y auditoría estática aprobadas. Armonía comprobada en los once biomas, doce transposiciones y siete grados; cierre vivo, once renders de victoria (pico máximo 0,179), capas de Tu canción (0,485) y final maestro (0,389) aprobados. La prueba offline compara la misma base con/sin cierre: idéntica antes y después, filtro y salida intactos. No certifica gusto musical.
 
 Teléfono J2: completar un lugar, escuchar su entrada breve y repetir o salir mientras termina; la música base debe continuar. Abrir Tu canción y reconocer la capa. Falta la aceptación auditiva de Jay; no se cambian géneros ni territorios para lograrla.
+
+## J3 · UI de producción
+
+Una función por nombre: campaña Viaje, selector Vista completa/tranquila, pestaña Chispas y Mapa de regiones/favoritos. La práctica Laboratorio pasa a Escuchar y responder. Versión y fecha reales se conservan en Ajustes con el diagnóstico; no se inventa una fecha de despliegue. Los resultados esperan si ya hay otro panel abierto.
+
+Validación: 242 suites Node, auditoría estática y recorridos `release_smoke.py`, `journey_entry_smoke.py`, `menu_v2_smoke.py` aprobados. Sesenta estados en cuatro tamaños con hostname normal: cero errores de página, desbordamientos, textos menores de 11 px o objetivos menores de 24 px en las superficies medidas. Menú inspeccionado visualmente a 390 px. No cambia ninguna hoja de estilo ni dibujo del mundo.
+
+Teléfono J3: menú → Más → cambiar Vista; Tu cubo → Chispas; guía → Escuchar y responder; Ajustes → versión. Abrir el menú mientras termina una ronda: la tarjeta espera al cierre del menú. Los controles siguen silenciosos.

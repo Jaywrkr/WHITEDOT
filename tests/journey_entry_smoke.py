@@ -28,12 +28,12 @@ try:
    # The free World is closed until the Journey ends (decision 6A): no switch, and asking for it does nothing.
    assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJourneyMode').is_hidden() and page.evaluate("__r.setJourneyMode('libre')")==False and page.evaluate('__r.journeyMode()')=='viaje'
    page.evaluate("()=>{__r.S.journey.finished=true;__r.applyJourneyMode();}");assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJourneyMode').is_visible()
-   assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJourneyMode').inner_text().startswith('Mundo libre')
+   assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJourneyMode').inner_text().startswith('Vista tranquila')
    # At the end, one tap to the free World: everything is back, and it is remembered.
    (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJourneyMode').click();assert page.evaluate('__r.journeyMode()')=='libre' and not page.evaluate("document.body.classList.contains('journey-quiet')")
    assert page.evaluate("getComputedStyle(document.getElementById('sparkCount')).visibility")=='visible'
    page.reload();page.wait_for_function('!!window.__r?.journeyMode');assert page.evaluate('__r.journeyMode()')=='libre'
-   page.wait_for_timeout(800);assert page.locator('#mHelpC').is_hidden(),'coming from the Journey, no Camino welcome';page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#bMenu').click();assert page.locator('#bCube').is_visible() and (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJourneyMode').inner_text().startswith('Viaje')
+   page.wait_for_timeout(800);assert page.locator('#mHelpC').is_hidden(),'coming from the Journey, no Camino welcome';page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#bMenu').click();assert page.locator('#bCube').is_visible() and (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJourneyMode').inner_text().startswith('Vista completa')
    (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJourneyMode').click();assert page.evaluate('__r.journeyMode()')=='viaje'
    assert not errors,errors;page.close()
   browser.close()

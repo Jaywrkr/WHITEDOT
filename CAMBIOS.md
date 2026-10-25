@@ -2,6 +2,13 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.174**. Las entradas describen su revisión, no certifican producción.
 
+## J3 · UI de producción · alpha.177
+
+- Viaje queda para la campaña: el selector dice Vista y la pestaña de recursos, Chispas.
+- Mapa distingue las regiones guardadas de los once Lugares.
+- Escuchar y responder conserva la práctica musical; diagnóstico de versión en Ajustes.
+- El resultado de ronda espera a que cierre otro panel. Diseño, controles e IDs conservados.
+
 ## J2 · Cierre musical · alpha.176
 
 - Cierre con la capa ganada en el acorde vivo; fuera riser, crash, lead ajeno y corte de salida.

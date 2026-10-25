@@ -178,7 +178,7 @@
       "id": "U01",
       "area": "Interfaz",
       "priority": "P1",
-      "status": "abierto-verificado",
+      "status": "corregido-tecnico",
       "phase": "J3",
       "title": "Tres sentidos distintos de Viaje",
       "evidence": [
@@ -189,13 +189,23 @@
         "capturas/ui-menu-mas.png"
       ],
       "observed": "El Viaje es la historia; Viaje en Tu cubo agrupa chispas/saltos; Viaje en el menú alterna densidad visual. El anillo y los favoritos también comparten Lugares.",
-      "acceptance": "Una palabra por función. La ruta principal y el cambio de vista se distinguen, con los mismos IDs, progreso y funciones existentes."
+      "acceptance": "Una palabra por función. La ruta principal y el cambio de vista se distinguen, con los mismos IDs, progreso y funciones existentes.",
+      "resolution": {
+        "phase": "J3",
+        "tests": [
+          "tests/release_smoke.py",
+          "tests/journey_entry_smoke.py",
+          "tests/menu_v2_smoke.py",
+          "scripts/panel-measures.py"
+        ],
+        "limits": "Aspecto normal simulado; aceptación física en J7."
+      }
     },
     {
       "id": "U02",
       "area": "Presentación de producción",
       "priority": "P2",
-      "status": "abierto-verificado",
+      "status": "corregido-tecnico",
       "phase": "J3",
       "title": "Terminología interna en rutas normales",
       "evidence": [
@@ -206,7 +216,17 @@
         "evidencia/ui-medidas.json"
       ],
       "observed": "Laboratorio abre una práctica musical legítima, no el panel Prototipo. Puede llamarse Escuchar y responder. Alpha/build/fecha aparecen en el menú; deploy sin registrar es el fallback local no sellado, no un defecto probado de Vercel.",
-      "acceptance": "Inventario de superficies normales sin rótulos de demo; prácticas útiles permanecen. Trazabilidad técnica en Ajustes/Acerca de sin simular una publicación que aún no existe."
+      "acceptance": "Inventario de superficies normales sin rótulos de demo; prácticas útiles permanecen. Trazabilidad técnica en Ajustes/Acerca de sin simular una publicación que aún no existe.",
+      "resolution": {
+        "phase": "J3",
+        "tests": [
+          "tests/release_smoke.py",
+          "tests/journey_entry_smoke.py",
+          "tests/menu_v2_smoke.py",
+          "scripts/panel-measures.py"
+        ],
+        "limits": "Aspecto normal simulado; aceptación física en J7."
+      }
     },
     {
       "id": "U03",
