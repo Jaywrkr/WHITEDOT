@@ -18,7 +18,7 @@ Diseño aprobado por Jay el 23 de octubre de 2026. Es la fuente única del plan 
 3. **Nadie pierde:** no hay derrota; solo más o menos estrellas y chispas.
 4. **Texto mínimo:** el Viaje no tiene rótulos; cada lugar dice cada frase una sola vez, la primera. El narrador habla solo en la tarjeta de la ronda y en la Bitácora.
 5. **Nada ganado se borra:** los guardados se migran.
-6. **El cubo es pequeño** (Jay, 24 de octubre): no se agranda para que se lea; se busca con contraste, brillo y color. La I2 lo agrandó a 24–36 px y queda pendiente devolverlo a pequeño ([Panel](PANEL.md#nuevo-24-de-octubre-el-cubo-pequeño)).
+6. **El cubo es pequeño** (Jay, 24 de octubre): no se agranda para que se lea; se busca con contraste, brillo y color. La I2 lo agrandó a 24–36 px; alpha.174 vuelve al tamaño natural de 6–12 px (10 px mínimos con cara), antes de pulsos y efectos temporales ([Panel](PANEL.md#nuevo-24-de-octubre-el-cubo-pequeño)).
 
 ## Chispas y estrellas
 

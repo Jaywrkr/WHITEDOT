@@ -119,11 +119,11 @@ A Jay **no le gusta el cubo grande; le gusta pequeño.** La I2 lo agrandó a 24�
 
 - El panel debe tomar el cubo pequeño como regla y **no volver a pedir que crezca**.
 - La legibilidad se busca por otros medios: contraste, el brillo dorado al acertar, Vibri, la Línea, el halo o el color alrededor, nunca el tamaño.
-- **Pendiente de construir** (primera tarea de la próxima fase, antes de la auditoría o dentro de J1): volver a un cubo pequeño. El tamaño sale de `CUBE_MIN`, `CUBE_MAX` y `cubeView` en `src/render.js:188`, aplicado en `src/render.js:111` (también en el Camino). Antes de la I2 medía unos 6 px en el Camino y 16–30 px en el Mundo. El tamaño exacto lo confirma Jay en su teléfono.
+- **Construido en alpha.174**, rama `fix/cubo-pequeno`, desde main 676ac511: 6–12 px de tamaño natural antes de pulsos y efectos temporales; las caras conservan el mínimo existente de 10 px. `CUBE_MIN`, `CUBE_MAX` y `cubeView` en `src/render.js` solo cambian el dibujo. El tamaño exacto lo confirma Jay en su teléfono.
 
 ## 8. Qué quedó abierto tras la tercera sesión
 
-- **El cubo pequeño** (arriba).
+- **El cubo pequeño:** construido en alpha.174; aceptación física de Jay pendiente.
 - **Jugadores del 60 % y sin sonido:** según `scripts/play-curve.mjs`, no consiguen ★★, así que su canción deja de crecer al ganar (minutos 38–40) durante unos 80 minutos; ahí podrían dejar el juego. El de 75 % y el de 90 % cumplen la regla de 12 minutos.
 - **Sin ritardando** en el final de Tu canción: el secuenciador del mundo no puede frenar una sola canción (I4).
 - **Nadie salvo Jay ha jugado** y nadie lo ha oído en un teléfono con auriculares. Calibración, paneo, faro sonoro y final no están comprobados con personas. Guía: [Pruebas con personas](PRUEBAS_CON_PERSONAS.md).

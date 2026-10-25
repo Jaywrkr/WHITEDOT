@@ -1,6 +1,15 @@
 # Cambios recientes de Kubono
 
-Estado: 24 de octubre de 2026. Código **2.3.0-alpha.173**. Las entradas describen su revisión, no certifican producción.
+Estado: 24 de octubre de 2026. Código **2.3.0-alpha.174**. Las entradas describen su revisión, no certifican producción.
+
+## Cubo pequeño · alpha.174
+
+Rama `fix/cubo-pequeno`, desde `main` 676ac511. Petición de Jay: quitar la ampliación general de la I2.
+
+- Tamaño natural, entre 6 y 12 px antes de pulsos y efectos temporales. Las caras equipadas conservan su mínimo existente de 10 px.
+- No cambian alcance, colisiones, movimiento, música, economía, guardados ni posiciones.
+- Verificado: 240 suites Node y `cube_face_smoke.py` (13 piezas, caras visibles, movimiento, hábitos, persistencia y tamaño real del cubo).
+- El tamaño definitivo requiere la aceptación de Jay en su teléfono. No se afirma despliegue ni CI de esta rama.
 
 ## Documentación y panel · sin versión
 
