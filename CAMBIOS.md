@@ -1,6 +1,13 @@
 # Cambios recientes de Kubono
 
-Estado: 25 de octubre de 2026. Código **2.3.0-alpha.190**. Las entradas describen su revisión, no certifican producción.
+Estado: 25 de octubre de 2026. Código **2.3.0-alpha.191**. Las entradas describen su revisión, no certifican producción.
+
+## L3 · Conservar y acceder · alpha.191
+
+- Renombre, notas y borrado de favoritos con rollback si escribir falla; mantiene datos y ruta.
+- Modo de llegada vuelve a su valor anterior si no se conserva.
+- Finales dinámicos con foco aislado, Tab contenido y Escape que usa su cierre real. El fondo deja de recibir acciones/avisos durante el panel.
+- 248 suites y recorridos de cuota/foco en teléfono/PC aprobados; regresiones de menús y recuperación comprobadas. Sin cambios de música generativa ni arte.
 
 ## L2 · Tu frase propia · alpha.190
 

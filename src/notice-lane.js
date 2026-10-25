@@ -19,7 +19,7 @@ export function createNoticeLane(){
 export function installNoticeLane(runtime){
  if(runtime.noticeLane)return runtime.noticeLane;
  const model=createNoticeLane(),timed=new Map(),callbacks=new Map(),hides=new WeakMap(),recent=new Map(),started=new Map(),panelIDs={rareNotice:'rare'};let state=runtime.S,last=performance.now(),quiet=0;
- const blocked=()=>!globalThis.document||document.hidden||!!runtime.setRecording||!!runtime.jam?.loop?.rec||!!runtime.jam?.loop?.armed||!!openSurface('.modal:not([hidden]),.fxpanel:not([hidden]),.glasspanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const blocked=()=>!globalThis.document||document.hidden||!!runtime.setRecording||!!runtime.jam?.loop?.rec||!!runtime.jam?.loop?.armed||!!openSurface('#journeyFinale:not([hidden]),#songStage:not([hidden]),.modal:not([hidden]),.fxpanel:not([hidden]),.glasspanel:not([hidden]),#mirrorPanel:not([hidden])');
  const reduced=()=>runtime.S?.reducedMotion||prefersReducedMotion();
  const idOf=panel=>panelIDs[panel.id]||panel.id;
  const panels=()=>document.querySelectorAll('#toast,#phrase,#zone,#voice,#rareNotice,#celebration');

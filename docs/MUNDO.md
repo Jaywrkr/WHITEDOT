@@ -257,3 +257,7 @@ La guía muestra tres pasos del lugar activo; en Jardín permite repetir una dem
 ## L2 · La frase de cada ronda (alpha.190)
 
 Cada ronda captura sus últimas ocho notas válidas y los pasos de su ritmo. El pulso que termina se captura antes de guardar el premio. Los historiales de otros lugares no se mezclan. Una ronda sin frase nueva mantiene la anterior; escribir mal conserva la ronda para reintentar. La música generativa y el arreglo de reproducción no cambian.
+
+## L3 · Edición y acceso (alpha.191)
+
+Si renombrar, borrar o editar notas falla al guardar, el favorito conserva su versión anterior. El borrado solo notifica a navegación después de confirmarse. Los formatos futuros siguen de solo lectura. Final5 y Tu canción participan del foco accesible: Tab no llega al fondo, Escape usa su salida real y los controles de juego permanecen aislados mientras el panel está abierto.
