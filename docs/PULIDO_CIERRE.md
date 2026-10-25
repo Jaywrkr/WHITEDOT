@@ -11,7 +11,7 @@ Se conservan semillas, RNG, mapas, distribución, criaturas, paleta, formas, com
 | J3 · UI de producción | `pulido/j3-interfaz-produccion` | Corregida y probada localmente |
 | J4 · Una meta | `pulido/j4-meta-compartida` | Corregida y probada localmente |
 | J5 · Continuidad | `pulido/j5-continuidad` | Integrada; interés humano pendiente |
-| J6 · Sincronía | `pulido/j6-sincronia` | Pendiente |
+| J6 · Sincronía | `pulido/j6-sincronia` | Corregida; medición física pendiente |
 | J7 · Comprobación final | `pulido/j7-cierre` | Pendiente |
 
 ## J1
@@ -63,3 +63,11 @@ El modelo conserva los huecos sin capas nuevas (80,1/81,8 min en 60 %/sin sonido
 Validación: 243 suites, auditoría estática, `creative_continuity_smoke.py` y `places_smoke.py` aprobados. La prueba abre dos veces el final con frases guardadas diferentes y comprueba que no hay otra recompensa. Los renders de ese mismo arreglo están aprobados en J2; aquí solo cambia su acceso. Interés y comprensión con personas quedan pendientes.
 
 Teléfono J5: después de ganar, tocar otra ronda, abrir Lugares → Tu canción y escuchar el final con la frase guardada. En los créditos, Otra vez. No es necesario ganar más estrellas ni comprar para volver a escucharlo.
+
+## J6 · Sincronía
+
+La nota mantiene exactamente su expresión anterior de tiempo; `pulseNoteTime` permite compartirla con la respuesta visual. El pulso confirma el instante emitido y el acento usa ese tiempo más la latencia de salida, sin recortarla a 250 ms. Hasta doce respuestas pendientes; reinicio, cambio de estado, pantalla oculta, panel abierto o callback excesivamente tardío evitan destellos fuera de contexto. Contacto inmediato y movimiento reducido se conservan.
+
+Validación: 244 suites Node, auditoría estática, `player_touch_smoke.py` y `journey_pulse_smoke.py` aprobados. La prueba de reloj cubre salidas 0/50/180/400 ms, cancelación y equivalencia exacta de la programación sonora. `journey_mix.py` también aprueba dos mezclas reales en movimiento de 30 s (picos 0,873/0,883), con relevo de territorios, armonía y salida protegida. La medida de Bluetooth o altavoz físico sigue pendiente; se respeta la estimación del navegador, no se inventa una calibración real.
+
+Teléfono J6: tocar a tiempo con altavoz y después con auriculares; comparar el acento con la nota. Abrir un panel o cambiar de capítulo mientras hay retraso: no debe llegar un destello de la escena anterior. No cambia ninguna nota, ritmo o figura.

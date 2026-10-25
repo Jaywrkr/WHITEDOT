@@ -309,7 +309,7 @@
       "id": "T01",
       "area": "Sensación",
       "priority": "P1",
-      "status": "limite-reproducido",
+      "status": "corregido-tecnico",
       "phase": "J6",
       "title": "La sincronía visual tiene un techo de 250 ms",
       "evidence": [
@@ -318,7 +318,17 @@
         "evidencia/contratos.json"
       ],
       "observed": "Con salida de 400 ms, admitida por outputLatency, landDelay devuelve 250 ms: el acento puede adelantarse al oído al menos 150 ms. Es una prueba matemática, no una medida de Bluetooth real.",
-      "acceptance": "Contacto inmediato y acento musical se distinguen. El acento sigue el instante de salida estimado; verificar ventanas/latencias altas y confirmar en teléfono, sin cambiar las notas base."
+      "acceptance": "Contacto inmediato y acento musical se distinguen. El acento sigue el instante de salida estimado; verificar ventanas/latencias altas y confirmar en teléfono, sin cambiar las notas base.",
+      "resolution": {
+        "phase": "J6",
+        "tests": [
+          "tests/pulse-output-timing.mjs",
+          "tests/journey-pulse.mjs",
+          "tests/player_touch_smoke.py",
+          "tests/journey_pulse_smoke.py"
+        ],
+        "limits": "Estimación del navegador; medición física en teléfono/auriculares pendiente."
+      }
     },
     {
       "id": "V01",

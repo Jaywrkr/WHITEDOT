@@ -1,3 +1,4 @@
+import {pulseNoteTime} from './journey-pulse.js';
 import {calmMotion} from './frame-state.js';
 import {decorativeField} from './territory-presentation.js';
 import {PULSE_FORMS,selectedPulse,pulseCrossed,drawPulse} from './pulse-forms.js';
@@ -47,7 +48,7 @@ export function initialize(runtime) {
     waves.push({x,y,r:0,prev:0,max:runtime.inWorld()?340:260,n:0,origin,beat:!!hit,mult:origin==='player'?runtime.sparkLastMultiplier?.()??1:1,form:look?PULSE_FORMS[0]:runtime.inWorld()?selectedPulse(runtime.S):selectedPulse({}),look,charge,color:runtime.inWorld()?runtime.cubeColor?.():null});
     if(origin==='player'&&runtime.inWorld()&&runtime.RP&&runtime.RP.type==="pulsos"){runtime.RP.pst=runtime.onBeatNow()?runtime.RP.pst+1:0;runtime.retoSet("pulsos",runtime.RP.pst);}
     runtime.MU.act+=.25;runtime.pulse=Math.max(runtime.pulse,.6);
-    if(hit&&runtime.ac){const now=runtime.ac.currentTime,t=Math.max(now+.01,Number.isFinite(hit.beat)&&hit.beat>now?hit.beat:0);
+    if(hit&&runtime.ac){const now=runtime.ac.currentTime,t=pulseNoteTime(now,hit.beat);runtime.journeyPulseScheduled?.(t);
      if(runtime.inWorld()){const region=runtime.regionOfPos(x,y);runtime.hearVoice?.('pulso',0,t,region,true,1,{x,y},origin);runtime.playTheme(hit.midi,hit.degree,t,region,hit.scale,hit.tr);}else runtime.pluck(hit.midi+12,t,runtime.vel(.1),2);return;}
     runtime.soon(t=>{if(runtime.inWorld())runtime.playVoice('pulso',0,t,runtime.regionOfPos(x,y),true,1,{x,y},origin);else{const ct=runtime.chordTones();[0,1,2].forEach(i=>runtime.pluck(ct[i]+12,t,runtime.vel(.08),2));}},origin);
   }

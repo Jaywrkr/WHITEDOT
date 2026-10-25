@@ -2,6 +2,12 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.174**. Las entradas describen su revisión, no certifican producción.
 
+## J6 · Sincronía · alpha.180
+
+- El acento visual sigue el instante real programado de la nota y su salida estimada, hasta 400 ms.
+- Sin recorte artificial a 250 ms; cancelación al reiniciar o cambiar de escena y sin respuestas tardías en segundo plano.
+- Se conserva exactamente la regla de programación sonora; contacto y movimiento reducido intactos.
+
 ## J5 · Continuidad creativa · alpha.179
 
 - La tarjeta confirma cuándo se conserva tu frase para el final.
