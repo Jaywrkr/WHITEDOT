@@ -41,7 +41,7 @@ export function installNoticeLane(runtime){
   if(options.coalesce&&level===1)for(const [other,slot]of timed)if(other!==id){slot.queue=slot.queue.filter(e=>e.level!==1);if(!slot.current&&!slot.queue.length)model.cancel(other);}
   let slot=timed.get(id);if(!slot){slot={panel,queue:[],current:null,left:0};timed.set(id,slot);}
   if(key&&(slot.current?.key===key||slot.queue.some(e=>e.key===key)))return false;
-  if(options.coalesce)slot.queue=slot.queue.filter(e=>e.category!==category);
+  if(options.coalesce)slot.queue=slot.queue.filter(e=>e.category!==category||e.level>level);
   slot.queue.push({render,onShown:options.onShown,seconds:options.persistent?Infinity:options.level?style.seconds:seconds,detail:options.detail|| (options.persistent?'save':''),key,category,level,valid,paced:options.level!==undefined,expires:now+(options.ttl??style.ttl)});
   slot.queue.sort((a,b)=>b.level-a.level);while(slot.queue.length>(slot.queue.every(e=>e.level===1)?1:8))slot.queue.pop();
   recent.set(duplicate,now);if(recent.size>120)recent.delete(recent.keys().next().value);

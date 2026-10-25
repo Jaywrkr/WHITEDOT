@@ -162,3 +162,7 @@ Los expedientes y análisis citan rutas y versiones de su día (por ejemplo `3-e
 ## Séptima sesión
 
 [Informe](panel/sesion-7/informe.md) · [expediente](panel/sesion-7/expediente.md) · [plan propuesto L1–L4](panel/sesion-7/plan.md). Diez lentes, revisión integral y nuevos hallazgos; se conserva el registro canónico. No son opiniones reales ni aceptación de alpha.188.
+
+## Fases L implementadas
+
+Jay autorizó L1–L4 después de K7. [Entrega](ENTREGA_L.md) y [evidencia](panel/sesion-7/evidencia/cierre-l.json): ayudas y comprensión, frase por ronda, persistencia y accesibilidad. Cierre técnico de L4 con humanos/CI pendientes. Nota de referencia7,7 sin subida automática; A04/V01/P01 y comprensión/lector real conservan sus límites.

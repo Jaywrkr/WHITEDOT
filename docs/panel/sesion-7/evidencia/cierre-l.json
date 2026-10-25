@@ -1,0 +1,164 @@
+{
+  "version": "2.3.0-alpha.192",
+  "base": "5f0c5d88",
+  "scope": "Local automated technical evidence; fixtures accelerate some goal boundaries. No human play, physical phone, listening or full CI claim.",
+  "branches": [
+    {
+      "phase": "L1",
+      "branch": "pulido/l1-aprender-jugando",
+      "version": "alpha.189",
+      "commit": "3e0d3554"
+    },
+    {
+      "phase": "L2",
+      "branch": "pulido/l2-frase-propia",
+      "version": "alpha.190",
+      "commit": "d7bfc921"
+    },
+    {
+      "phase": "L3",
+      "branch": "pulido/l3-conservar-y-acceder",
+      "version": "alpha.191",
+      "commit": "507cc746"
+    },
+    {
+      "phase": "L4",
+      "branch": "pulido/l4-aceptacion",
+      "version": "alpha.192",
+      "commit": "this commit"
+    }
+  ],
+  "checks": [
+    {
+      "phase": "L1",
+      "command": "npm test",
+      "result": "PASS",
+      "summary": "PASS: 247 Node suites with assertions (Web Audio helper excluded)"
+    },
+    {
+      "phase": "L1",
+      "command": "place_lesson_smoke.py",
+      "result": "PASS",
+      "summary": "PASS place lessons: recoverable three-step guide, silent visual replay, real movement and first flower, retired on picking at three sizes"
+    },
+    {
+      "phase": "L2",
+      "command": "npm test",
+      "result": "PASS",
+      "summary": "PASS: 248 Node suites with assertions (Web Audio helper excluded)"
+    },
+    {
+      "phase": "L2",
+      "command": "round_phrase_smoke.py",
+      "result": "PASS",
+      "summary": "PASS actual gold close: last pulse retained, previous global phrase excluded and successive rounds isolated"
+    },
+    {
+      "phase": "L2",
+      "command": "song_stage_mix.py",
+      "result": "PASS",
+      "summary": "PASS Tu canción master finale over the World: 29 bars, eleven layers in their variation, your notes and the theme; peak 0.389, fuller as layers come in"
+    },
+    {
+      "phase": "L3",
+      "command": "npm test",
+      "result": "PASS",
+      "summary": "PASS: 248 Node suites with assertions (Web Audio helper excluded)"
+    },
+    {
+      "phase": "L3",
+      "command": "edit_and_dialog_smoke.py",
+      "result": "PASS",
+      "summary": "PASS edit rollback, durable retry, dynamic song/finale focus isolation, Tab, blocked movement and real Escape closure on phone/desktop"
+    },
+    {
+      "phase": "L3",
+      "command": "accessibility_smoke.py",
+      "result": "PASS",
+      "summary": "PASS 844x390: modal focus, Tab containment, Escape return, scrollable seed controls and silent UI"
+    },
+    {
+      "phase": "L3",
+      "command": "favorite_save_failure_smoke.py",
+      "result": "PASS",
+      "summary": "PASS native favorite quota/conflict failure, honest imported-code status, unchanged disk save and successful duplicate-free retry"
+    },
+    {
+      "phase": "L4",
+      "command": "npm test",
+      "result": "PASS",
+      "summary": "PASS: 248 Node suites with assertions (Web Audio helper excluded)"
+    },
+    {
+      "phase": "L4",
+      "command": "player_touch_smoke.py",
+      "result": "PASS",
+      "summary": "PASS a real player on a phone: Journey by default, real touch walks the Camino, taps on the beat break its ten crystals one at a time (offbeat taps none), a ghost finger after four quiet seconds, a resting finger still walks, and a failing frame does not freeze the game"
+    },
+    {
+      "phase": "L4",
+      "command": "after_journey_smoke.py",
+      "result": "PASS",
+      "summary": "PASS post-Journey: no old saving prompt, facts preserved, 5/11 and six remaining, free walking guide without teleport and explicit practice"
+    },
+    {
+      "phase": "L4",
+      "command": "places_smoke.py",
+      "result": "PASS",
+      "summary": "PASS places on phone and desktop: ?lugar= plays a round on its own save, its gold close gives stars, sparks and a card with Otra vez and Salir, the next round starts empty, Maestro is faster with a narrower window and a longer bar"
+    },
+    {
+      "phase": "L4",
+      "command": "song_stage_smoke.py",
+      "result": "PASS",
+      "summary": "PASS Tu canción on phone and desktop: a trophy plays its layer, «Tu canción» shows eleven rings with the five won layers over the music of the World, the eleven places bring the true finale once and the 33 stars the master version once"
+    },
+    {
+      "phase": "L4",
+      "command": "place_lesson_smoke.py with priority collision",
+      "result": "PASS",
+      "summary": "PASS place lessons: recoverable three-step guide, silent visual replay, real movement and first flower, retired on picking at three sizes"
+    },
+    {
+      "phase": "L4",
+      "command": "test:impact --base 507cc746",
+      "result": "PASS",
+      "summary": "PASS: 116 executed, 0 cached, 0 skipped; 21757 ms. Full suite unchanged."
+    },
+    {
+      "phase": "L1",
+      "command": "node scripts/release-audit.mjs",
+      "result": "PASS",
+      "summary": "2.3.0-alpha.189:0 errors/0 warnings"
+    },
+    {
+      "phase": "L2",
+      "command": "node scripts/release-audit.mjs",
+      "result": "PASS",
+      "summary": "2.3.0-alpha.190:0 errors/0 warnings"
+    },
+    {
+      "phase": "L3",
+      "command": "node scripts/release-audit.mjs",
+      "result": "PASS",
+      "summary": "2.3.0-alpha.191:0 errors/0 warnings"
+    },
+    {
+      "phase": "L4",
+      "command": "node scripts/release-audit.mjs",
+      "result": "PASS",
+      "summary": "alpha.192:0 errors/0 warnings"
+    }
+  ],
+  "walking": "WALK {\"elapsedSeconds\": 27.7, \"initialPortalDistance\": 6000, \"walkedUnits\": 6454, \"arrival\": \"jardin\", \"spentDelta\": 0}",
+  "correctionDuringGate": "An ordinary coalescing notice could discard an important lesson in the same category. Retain higher-priority entries and give teaching its own category; actual presentation regression retained and passed at three viewports.",
+  "preservation": "322 source/style/asset files identical to K7 outside explicit integration whitelist; original game rule sections and voice implementations retained.",
+  "notClaimed": [
+    "Five unaided human sessions, including two non-gamers.",
+    "Pleasantness of final5/final11 confirmed on a physical phone.",
+    "VoiceOver or TalkBack physical device certification.",
+    "Full browser/audio catalogue or remote CI of the combined PR.",
+    "Production release, main integration, account/service changes."
+  ],
+  "status": "TECHNICAL PASS; HUMAN ACCEPTANCE AND PR CI PENDING"
+}

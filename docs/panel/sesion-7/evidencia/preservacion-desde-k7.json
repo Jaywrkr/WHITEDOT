@@ -1,0 +1,18 @@
+{
+  "base": "5f0c5d88",
+  "scope": "All source/styles/assets outside explicitly authorized learning, recording, persistence, focus and release integration. No listening claim.",
+  "changed": [
+    "src/accessibility.js",
+    "src/favorites.js",
+    "src/journey-games.js",
+    "src/journey-garden.js",
+    "src/journey-pulse.js",
+    "src/notice-lane.js",
+    "src/places.js",
+    "src/release-info.js",
+    "src/voice-guide.js"
+  ],
+  "protectedFiles": 322,
+  "digest": "92fdb41b9b3fc9f7d85988e13225ae7cfa54e59d5790bb703c52178dfc1c7287",
+  "status": "PASS"
+}

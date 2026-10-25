@@ -18,4 +18,4 @@ Prioridad inmediata: que Jay escuche K7 y compruebe brújula/salida. Si rechaza 
 | L1 | alpha.189 | Implementada y verificada técnicamente; comprensión humana pendiente |
 | L2 | alpha.190 | Captura por ronda y último gesto verificados |
 | L3 | alpha.191 | Rollback de edición y cierres accesibles verificados |
-| L4 | — | En preparación; separar pruebas técnicas y humanas |
+| L4 | alpha.192 | Cierre técnico; personas, teléfono y CI de PR pendientes |

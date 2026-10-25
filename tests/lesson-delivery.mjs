@@ -8,6 +8,8 @@ try{
  const bad={...r,S:{journey:{}},save:()=>false},pending={};sayOnce(bad,pending,'hinted','Disco lleno','jardin');timers.shift()();delivery.onShown();assert(!pending.hinted&&!bad.S.journey.lines?.['Disco lleno'],'failed write does not claim a durable lesson');
  const stale={...r,S:{journey:{}}};chapterToast(stale,'jardin','Vieja');stale.S={journey:{}};timers.shift()();assert(!stale.S.journey.lines,'old timers cannot modify a replacement save');
  assert(!chapterToast({...r,S:{journey:{version:9}}},'jardin','Futura'));
+ const late={...r,S:{journey:{}}};sayOnce(late,{},'hinted','Cambio futuro','jardin');late.S.journey={version:9,payload:{keep:true}};timers.shift()();assert.deepEqual(late.S.journey,{version:9,payload:{keep:true}},'a future format installed while waiting is never altered');
+ const malformed={...r,S:{journey:{lines:'keep'}},save:()=>false};sayOnce(malformed,{},'hinted','No guardar','jardin');timers.shift()();delivery.onShown();assert.equal(malformed.S.journey.lines,'keep','a failed acknowledgement restores exact old lines');
  assert.equal(Object.keys(PLACE_LESSONS).length,11);for(const steps of Object.values(PLACE_LESSONS)){assert.equal(steps.length,3);for(const step of steps)assert(step.split(/\s+/).length<=12);}
  console.log('PASS lessons: acknowledge real presentation, rejected requests retry, failed writes roll back, stale/future saves preserved, eleven concise recoverable rules');
 }finally{globalThis.setTimeout=old;}

@@ -635,7 +635,7 @@
       "id": "U10",
       "area": "Didáctica",
       "priority": "P1",
-      "status": "pendiente-propuesto",
+      "status": "corregido-tecnico-comprension-pendiente",
       "phase": "L1",
       "title": "Aprender las reglas de los lugares",
       "observed": "Jardín no distingue con claridad posición, siembra y riego.",
@@ -643,13 +643,19 @@
         "src/journey-garden.js:23–29,48,62",
         "../sesion-7/informe.md"
       ],
-      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit."
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit.",
+      "closureL": {
+        "phase": "L1",
+        "version": "alpha.189",
+        "evidence": "../sesion-7/evidencia/cierre-l.json",
+        "limits": "Pruebas locales y fixtures. No sesiones humanas ni certificación de lector de pantalla."
+      }
     },
     {
       "id": "U11",
       "area": "Ayudas",
       "priority": "P1",
-      "status": "pendiente-propuesto",
+      "status": "corregido-tecnico",
       "phase": "L1",
       "title": "Ayuda consumida antes de presentarse",
       "observed": "Flags se guardan antes de mostrar; rechazo/caducidad puede perder la explicación.",
@@ -657,13 +663,19 @@
         "src/journey-games.js:13–16",
         "../sesion-7/informe.md"
       ],
-      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit."
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit.",
+      "closureL": {
+        "phase": "L1",
+        "version": "alpha.189",
+        "evidence": "../sesion-7/evidencia/cierre-l.json",
+        "limits": "Pruebas locales y fixtures. No sesiones humanas ni certificación de lector de pantalla."
+      }
     },
     {
       "id": "D05",
       "area": "Persistencia",
       "priority": "P1",
-      "status": "pendiente-propuesto",
+      "status": "corregido-tecnico",
       "phase": "L3",
       "title": "Edición durable de favoritos",
       "observed": "Renombre, borrado y notas no tratan fallo de guardado.",
@@ -671,13 +683,19 @@
         "src/favorites.js:42–43,54",
         "../sesion-7/informe.md"
       ],
-      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit."
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit.",
+      "closureL": {
+        "phase": "L3",
+        "version": "alpha.191",
+        "evidence": "../sesion-7/evidencia/cierre-l.json",
+        "limits": "Pruebas locales y fixtures. No sesiones humanas ni certificación de lector de pantalla."
+      }
     },
     {
       "id": "A05",
       "area": "Frase propia",
       "priority": "P2",
-      "status": "pendiente-propuesto",
+      "status": "corregido-tecnico",
       "phase": "L2",
       "title": "Notas delimitadas por ronda",
       "observed": "Buffer global puede arrastrar notas; último gesto se registra después de cerrar.",
@@ -685,13 +703,19 @@
         "src/places.js:86–118; src/journey-pulse.js:83,90",
         "../sesion-7/informe.md"
       ],
-      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit."
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit.",
+      "closureL": {
+        "phase": "L2",
+        "version": "alpha.190",
+        "evidence": "../sesion-7/evidencia/cierre-l.json",
+        "limits": "Pruebas locales y fixtures. No sesiones humanas ni certificación de lector de pantalla."
+      }
     },
     {
       "id": "U12",
       "area": "Accesibilidad",
       "priority": "P2",
-      "status": "pendiente-propuesto",
+      "status": "corregido-tecnico-lector-pendiente",
       "phase": "L3",
       "title": "Cierres dinámicos fuera del manejo de foco",
       "observed": "Final5 no pertenece a lista inicial de paneles accesibles.",
@@ -699,7 +723,13 @@
         "src/accessibility.js:5,41; src/journey-finale.js",
         "../sesion-7/informe.md"
       ],
-      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit."
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit.",
+      "closureL": {
+        "phase": "L3",
+        "version": "alpha.191",
+        "evidence": "../sesion-7/evidencia/cierre-l.json",
+        "limits": "Pruebas locales y fixtures. No sesiones humanas ni certificación de lector de pantalla."
+      }
     },
     {
       "id": "U13",

@@ -1,6 +1,6 @@
 # Pruebas con personas
 
-Fase 7 del plan del Viaje ([El Viaje](VIAJE.md)): ver jugar a personas que no conocen Kubono y comparar lo que pasa con lo diseñado. Estado: herramienta lista desde alpha.136; **todavía no hay pruebas hechas**.
+Fase 7 del plan del Viaje ([El Viaje](VIAJE.md)): ver jugar a personas que no conocen Kubono y comparar lo que pasa con lo diseñado. Estado: herramienta lista desde alpha.136; **hay feedback real de Jay; faltan cinco sesiones instrumentadas sin ayuda**.
 
 ## Qué se prueba
 
@@ -49,3 +49,11 @@ Las notas se quedan en ese teléfono (`kubono:prueba` en el almacenamiento local
 ## Qué haremos con los resultados
 
 Comparar la duración real con la estimada (15–18 min), los momentos de quietud con los lugares donde hace falta guía, y las notas del 1 al 10 con las metas del panel. Los cambios se proponen a Jay antes de hacerse.
+
+## Aceptación de las fases L
+
+Además del Camino, observar el Jardín sin dar instrucciones externas. Registrar si reconoce el círculo, siembra, riega y logra su primera flor; si abre la guía interna, anotarlo sin impedirlo. Comprobar que guardar/editar un lugar se comprende, que cada ronda conserva su frase y que sabe regresar al juego desde los finales.
+
+Escuchar final5 y final11 en altavoz y auriculares, sin confundir claridad técnica con gusto musical. Registrar rechazo o aceptación, con el momento concreto. Para el anillo: observar rumbo, distancia, primera llegada y siguiente puerta, sin saltos pagados. No contar un bot o una fixture como una de las cinco personas.
+
+La plantilla de [ENTREGA_L.md](ENTREGA_L.md) separa aprobación humana, pruebas locales, CI y preview. No publicar una puntuación humana ni declarar cierre de producción antes de estas comprobaciones.
