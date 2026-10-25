@@ -18,3 +18,5 @@ let options;r.firstJourneyState={next:'pulse'};r.say=(text,title,value)=>options
 assert(FIRST_JOURNEY_STEPS[1][1].includes('diez cristales'));assert(FIRST_JOURNEY_STEPS[2][1].includes('automáticamente'));
 
 const learnedOnPath=normalizeFirstJourney(null);advanceFirstJourney(learnedOnPath,'pulse');advanceFirstJourney(learnedOnPath,'world');advanceFirstJourney(learnedOnPath,'voice');assert.equal(firstJourneyNext(normalizeFirstJourney(learnedOnPath))[0],'save','a pulse learned on Camino is not taught again after reload');
+
+const {lessonAvailable}=await import('../src/onboarding-model.js');assert(lessonAvailable({finished:false}));assert(!lessonAvailable({finished:true}));assert(lessonAvailable({finished:true},true));

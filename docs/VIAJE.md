@@ -207,3 +207,7 @@ Detalle completo en el informe del panel. Cada fase, en su rama:
 ## K3 · final del Viaje (alpha.184)
 
 El final5 usa el contexto de salida: misma escala/transposición, tempo acotado90–150 y ritmo guardado. Las cinco capas entran junto a sus frases interpretadas con voces existentes; el tema usa la voz suave ya disponible. El pad y las demás colas quedan bajo una envolvente que termina antes de los dos segundos de silencio. Salir cancela esa envolvente sin reabrir notas. Las frases originales permanecen intactas. Los círculos siguen ataques de cada capa. Radio y final11 no se reescriben.
+
+## K5 · paso al Mundo libre (alpha.186)
+
+El final explica cinco lugares completos y seis nuevos. Explorar a pie sale del Refugio y señala Jardín, sin llevar allí automáticamente. El antiguo tutorial de seis pasos deja de presentarse solo tras terminar el Viaje; conserva los hechos y puede repetirse con Practicar. Guardar un favorito sigue siendo opcional; los errores reales de guardado siguen visibles. Guía, menú y ruta leen el mismo objetivo.

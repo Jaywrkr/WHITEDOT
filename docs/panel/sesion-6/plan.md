@@ -75,3 +75,7 @@ Arreglo local en escala/tono/tempo de salida, sin la cama fija de La mayor; voce
 ## K4 · interfaz clara · implementada alpha.185
 
 Una continuación y tres destinos; Bitácora/Ajustes secundarios, sonido dentro de Ajustes. Herramientas agrupadas por contexto. El aviso de región muestra nombre y estilo/tempo, sin la cadena extensa de metadatos. Columnas y textos se ajustan al ancho real. Ayuda de guardar junto al marcador; K5 evita su reaparición al terminar el Viaje. Menús silenciosos, arte del mundo conservado.
+
+## K5 · recorrido contextual · implementada alpha.186
+
+Cinco de once y seis por descubrir; Explorar a pie activa rumbo desde la salida del Refugio. Guía con acción hacia el mismo destino y experiencias opcionales plegadas. La lección antigua de guardar no reaparece al terminar el Viaje, pero sus hechos se conservan y Practicar permite repetirla. K6 comprueba el recorrido caminando, la persistencia y los avisos.

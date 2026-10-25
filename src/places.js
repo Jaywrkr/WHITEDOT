@@ -63,7 +63,7 @@ export function gameObjective(s,places=normalizePlaces(s.lugares,s.journey)){
   return {kind:'journey',id:next,line:s.journey?.done?.[id]?`Cruza el portal hacia ${name}.`:`Toca a tiempo en ${name}.`,progress:'El Viaje · escucha y sigue la luz.'};
  }
  const completed=PLACE_IDS.filter(id=>complete(places,id)).length,stars=starCount(places),next=nextOnPath(places,s.journey);
- return {kind:next?'place':'create',id:next?.id||null,line:next?`Siguiente: ${next.name}.`:'Tu canción está completa. Explora a tu ritmo.',progress:`${completed}/11 lugares · ★ ${stars}/33`,completed,stars};
+ return {kind:next?'place':'create',id:next?.id||null,name:next?.name||null,remaining:PLACE_IDS.length-completed,line:next?`Siguiente: ${next.name}.`:'Tu canción está completa. Explora a tu ritmo.',progress:`${completed}/11 lugares · ★ ${stars}/33`,completed,stars};
 }
 function restoreTree(target,copy){for(const k of Object.keys(target))if(!Object.hasOwn(copy,k))delete target[k];for(const [k,v] of Object.entries(copy)){if(object(v)&&object(target[k]))restoreTree(target[k],v);else if(Array.isArray(v)&&Array.isArray(target[k]))target[k].splice(0,target[k].length,...v);else target[k]=v;}}
 export function initialize(runtime){

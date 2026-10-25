@@ -15,7 +15,7 @@ export const MAJOR=Object.freeze([0,2,4,5,7,9,11]);
 // Seconds: one eighth, the gathering before the first note, the silence after the last and the credits.
 export const EIGHTH=.25,GATHER=1.6,SILENCE=2,CREDITS=7,SEGMENT=16;
 export const NOTES_PER_CHAPTER=6;
-export const CREDIT_LINES=Object.freeze(['Tu mundo se abrió','Once lugares te esperan','Kubono','Jay · diseño y código','Luca · primer jugador']);
+export const CREDIT_LINES=Object.freeze(['Tu mundo se abrió','Cinco completos. Quedan seis por descubrir.','Kubono','Jay · diseño y código','Luca · primer jugador']);
 // The festival build ends on your phrase, and the next player starts again.
 export const FESTIVAL_LINES=Object.freeze(['Kubono','Tu frase','El Viaje','Gracias por tocar']);
 // Your rhythm: the gap to your next note in the same chapter, in quarters (one to three), from the music's sixteenths
@@ -64,7 +64,7 @@ export function initialize(runtime){
   run.el.hidden=true;run.el.onclick=null;run.el.querySelector?.('.journey-explore')?.remove?.();run=null;state.skipped=skipped;
   // The end of the Journey is kept; the free World opens.
   j.finished=true;const kept=runtime.journeyMode?.()==='libre'?runtime.save()!==false:!!runtime.setJourneyMode?.('libre');if(!kept){delete j.finished;return;}
-  state.finished++;runtime.narrate?.('journeyDone');runtime.toast?.('Se abre el Mundo libre.');unveil();}
+  state.finished++;runtime.firstJourneyTick?.();runtime.narrate?.('journeyDone');runtime.toast?.('Se abre el Mundo libre.');unveil();}
  // From the quiet Journey to everything at once was abrupt (phase 6 of the plan): the counters and buttons of the free
  // World fade in one after another, and the menu marks that it has new things until it is opened.
  // The sparks earned on the way were hidden in the Journey: once in the free World, Tu cubo is marked and one short
@@ -78,7 +78,7 @@ export function initialize(runtime){
   if(sheet&&typeof MutationObserver==='function'){const seen=new MutationObserver(()=>{if(!sheet.hidden){menu.classList.remove('has-new');seen.disconnect();}});seen.observe(sheet,{attributes:true,attributeFilter:['hidden']});}}
  function credits(r){r.credits=true;const box=r.el.querySelector('.journey-credits');box.replaceChildren(...(r.festival?FESTIVAL_LINES:CREDIT_LINES).map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.9}s`;if(i===0)p.className='journey-title';return p;}));
   // «Explorar»: straight into the free World, without waiting for the credits to end.
-  if(!r.festival){const go=document.createElement('button');go.className='journey-explore';go.id='journeyExplore';go.textContent='Explorar';go.onclick=e=>{e?.stopPropagation?.();finish(false);};r.el.appendChild(go);}}
+  if(!r.festival){const go=document.createElement('button');go.className='journey-explore';go.id='journeyExplore';go.textContent='Explorar a pie';go.onclick=e=>{e?.stopPropagation?.();finish(false);if(runtime.S.journey?.finished){runtime.exitHouse?.();runtime.ringGuide?.();}};r.el.appendChild(go);}}
  function frame(){if(!run)return;const el=run.el,cv=el.querySelector('canvas'),W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);if(cv.width!==Math.round(W*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
   const c=cv.getContext('2d'),t=now()-run.at,music=t-GATHER,end=run.length,still=calm();c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
   // The sky turns gold while your journey plays, and goes dark in the silence.

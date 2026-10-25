@@ -5,7 +5,7 @@ export const FIRST_JOURNEY_STEPS=[
  ['world','El décimo cristal abre el Mundo automáticamente.'],
  ['voice','Descubre una voz. Acerca tu cubo a un elemento.'],
  ['pulse','Toca un espacio vacío para lanzar un pulso.'],
- ['save','Guarda este lugar: toca el marcador junto a su nombre.']
+ ['save','Guarda con el marcador junto al nombre.']
 ];
 export function normalizeFirstJourney(raw,{experienced=false}={}){
  if(!raw||typeof raw!=='object'||Array.isArray(raw))raw=null;
@@ -15,3 +15,6 @@ export function normalizeFirstJourney(raw,{experienced=false}={}){
 }
 export function firstJourneyNext(state){if(state.readOnly||state.skipped)return null;return FIRST_JOURNEY_STEPS.find(([id])=>!state.facts[id])||null;}
 export function advanceFirstJourney(state,id){if(state.readOnly||state.skipped||!FIRST_JOURNEY_STEPS.some(([key])=>key===id)||state.facts[id])return false;state.facts[id]=true;if(id==='light'||id==='world')state.facts.move=true;if(id==='world')state.facts.light=true;return true;}
+
+// A completed campaign replaces the automatic starter lesson; practicing is explicit.
+export const lessonAvailable=(journey,practicing=false)=>journey?.finished!==true||practicing;

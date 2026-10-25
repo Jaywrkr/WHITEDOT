@@ -45,9 +45,9 @@ try:
    assert page.evaluate("__r.S.journey.finished")==True and page.evaluate("__r.journeyMode()")=='libre'
    # The free World unveils itself: its counters fade in and the menu marks it has new things until it is opened
    # (the finale lands in the Refugio; the menu is outside it).
-   assert not page.evaluate("document.body.classList.contains('journey-unveil')"),'not while in the Refugio' 
+   assert page.evaluate('__r.inWorld()'),'the explicit explore action leaves the Refugio on foot'
    assert page.evaluate("document.getElementById('bMenu').classList.contains('has-new')")
-   page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#houseExit').click();page.wait_for_function("document.body.classList.contains('journey-unveil')",timeout=5000)
+   page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.wait_for_function("document.body.classList.contains('journey-unveil')",timeout=5000);assert page.evaluate('__r.ringRoute().id')=='jardin'
    # And the sparks earned on the way: Tu cubo is marked, without a notice (plan I1: no text before the first portal).
    page.wait_for_function("document.getElementById('bCube').classList.contains('has-new')",timeout=30000);page.wait_for_timeout(3000);assert 'Tu cubo' not in page.evaluate("document.getElementById('toast').textContent");assert page.evaluate("document.getElementById('bCube').classList.contains('has-new')") and page.evaluate('__r.S.journey.sparksHint')==True
    page.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)");page.locator('#bMenu').click();page.wait_for_function("!document.getElementById('bMenu').classList.contains('has-new')")

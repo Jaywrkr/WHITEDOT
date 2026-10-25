@@ -8,7 +8,7 @@ assert.deepEqual(score.slice(6,8).map(n=>n.chapter),['lago','lago']);assert.equa
 const theme=score.filter(n=>n.chapter==='refugio');assert.equal(theme.length,THEME.length*2);
 assert.deepEqual(theme.slice(0,6).map(n=>n.midi),THEME.map(([d])=>themePitch(d,MAJOR,0)));assert.deepEqual(theme.slice(6).map(n=>n.midi),THEME.map(([d])=>themePitch(d,MAJOR,7)));
 assert.equal(score[1].at,2*EIGHTH);assert.equal(scoreLength(finaleScore({})),32*EIGHTH,'an empty journey still plays the theme twice');
-assert(Object.keys(CHAPTER_COLORS).length===6&&CREDIT_LINES[0]==='Tu mundo se abrió'&&CREDIT_LINES.includes('Once lugares te esperan')&&CREDIT_LINES.includes('Kubono'));
+assert(Object.keys(CHAPTER_COLORS).length===6&&CREDIT_LINES[0]==='Tu mundo se abrió'&&CREDIT_LINES.includes('Cinco completos. Quedan seis por descubrir.')&&CREDIT_LINES.includes('Kubono'));
 // Plan F7: each chapter takes two bars of your song, so its layer comes in on the bar; a longer rhythm is tightened.
 assert.deepEqual(chapterStarts(score),{llanura:0,lago:SEGMENT*EIGHTH,vacio:2*SEGMENT*EIGHTH,refugio:3*SEGMENT*EIGHTH});
 const long=finaleScore({llanura:[57,59,60,62,64,65]},['llanura'],{llanura:[0,12,24,36,48,60]});assert(long.filter(n=>n.chapter==='llanura').reduce((a,n)=>a+n.eighths,0)<=SEGMENT,'six long notes fit in two bars');
