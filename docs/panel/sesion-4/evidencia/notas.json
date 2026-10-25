@@ -1,0 +1,162 @@
+{
+  "scope": "Juicio interpretativo del panel simulado, no valoración real de los creadores. Medias de las notas originales.",
+  "axes": [
+    "Visual",
+    "Audio",
+    "Creat.",
+    "Sensación",
+    "Cohesión",
+    "Pulido"
+  ],
+  "profiles": [
+    {
+      "id": "01-mizuguchi",
+      "name": "Tetsuya Mizuguchi",
+      "scores": [
+        8,
+        7.5,
+        8.5,
+        8,
+        8,
+        7.5
+      ],
+      "mean": 7.916666666666667,
+      "previous": 7.7
+    },
+    {
+      "id": "02-iwai",
+      "name": "Toshio Iwai",
+      "scores": [
+        7.5,
+        7.5,
+        8.5,
+        8,
+        7.5,
+        7.5
+      ],
+      "mean": 7.75,
+      "previous": 7.4
+    },
+    {
+      "id": "03-matsuura",
+      "name": "Masaya Matsuura",
+      "scores": [
+        7.5,
+        8,
+        8.5,
+        8,
+        8,
+        7.5
+      ],
+      "mean": 7.916666666666667,
+      "previous": 7.8
+    },
+    {
+      "id": "04-simogo",
+      "name": "Simogo",
+      "scores": [
+        8,
+        7.5,
+        8.5,
+        7.5,
+        8,
+        7.5
+      ],
+      "mean": 7.833333333333333,
+      "previous": 7.7
+    },
+    {
+      "id": "05-proteus",
+      "name": "Ed Key y David Kanaga",
+      "scores": [
+        8,
+        8,
+        8.5,
+        7.5,
+        7.5,
+        7.5
+      ],
+      "mean": 7.833333333333333,
+      "previous": 7.3
+    },
+    {
+      "id": "06-chen",
+      "name": "Jenova Chen",
+      "scores": [
+        7.5,
+        8,
+        8,
+        7.5,
+        7.5,
+        7
+      ],
+      "mean": 7.583333333333333,
+      "previous": 7.7
+    },
+    {
+      "id": "07-roset",
+      "name": "Conrad Roset",
+      "scores": [
+        8,
+        8,
+        8.5,
+        7.5,
+        8,
+        7.5
+      ],
+      "mean": 7.916666666666667,
+      "previous": 7.3
+    },
+    {
+      "id": "08-wong",
+      "name": "Ken Wong",
+      "scores": [
+        7.5,
+        8,
+        8,
+        7.5,
+        7.5,
+        7
+      ],
+      "mean": 7.583333333333333,
+      "previous": 7.4
+    },
+    {
+      "id": "09-pope",
+      "name": "Lucas Pope",
+      "scores": [
+        7.5,
+        8,
+        8,
+        7.5,
+        7.5,
+        6.5
+      ],
+      "mean": 7.5,
+      "previous": 7.2
+    },
+    {
+      "id": "10-wintory",
+      "name": "Austin Wintory",
+      "scores": [
+        7.5,
+        7,
+        8.5,
+        7.5,
+        7.5,
+        7
+      ],
+      "mean": 7.5,
+      "previous": 7.8
+    }
+  ],
+  "axisMeans": [
+    7.7,
+    7.75,
+    8.35,
+    7.65,
+    7.7,
+    7.25
+  ],
+  "mean": 7.733333333333333
+}

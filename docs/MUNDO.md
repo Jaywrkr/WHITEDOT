@@ -223,3 +223,7 @@ Duetos en línea, más de 11 lugares, la configuración de la cuenta (Supabase s
 - `?clasico=1`: los capítulos anteriores, para comparar mientras dure el cambio.
 - `?prueba=1` y `?prueba=ver`: las notas de las pruebas con personas ([guía](PRUEBAS_CON_PERSONAS.md)).
 - `?festival=1`: el Viaje entero hasta los créditos del Refugio, sin cuenta, con «Otra persona» (desde I5).
+
+## Auditoría 4 y continuidad
+
+La [sesión 4](panel/sesion-4/informe.md) propone J1–J7, todavía sin autorización de ejecución. El modelo de 80 minutos sin capas nuevas no mide audio idéntico ni abandono real: `places.js` actualiza las notas personales al rejugar y la radio sigue variando. Deben distinguirse terminar los once lugares, la versión maestra de 33 estrellas, comprar con chispas y seguir creando. La propuesta conserva las reglas aprobadas y la música base; el cierre musical y la durabilidad de los premios requieren correcciones documentadas en su registro.

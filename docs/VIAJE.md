@@ -1,6 +1,6 @@
 # El Viaje
 
-Guía de diseño de la Fase 0 del panel creativo (22 de octubre de 2026). Jay aprobó seguir lo que el panel acordó: el juego principal es **el Viaje**, unos 40 minutos en 7 capítulos con un final, y después se abre **el Mundo libre** con todo lo que existe hoy. Esta guía fija la forma; cada fase siguiente la construye en su rama.
+Guía de diseño de la Fase 0 del panel creativo (22 de octubre de 2026). Jay aprobó seguir lo que el panel acordó: el juego principal es **el Viaje**, actualmente 15–20 minutos en 7 capítulos con un final, y después se abre **el Mundo libre** con todo lo que existe hoy. Esta guía fija la forma; cada fase siguiente la construye en su rama.
 
 ## Decisiones aprobadas por Jay
 
@@ -34,7 +34,7 @@ Desde alpha.106 los lugares tienen nombres del universo ([El universo](UNIVERSO.
 | 5 | Vacío | 5 min | Pérdida | Todo se apaga | El cubo solo | La criatura no puede entrar. Tras ocho notas, las criaturas que te siguieron vuelven y repiten tus notas |
 | 6 | Refugio | 3 min | Regreso | Dorado y todo junto | Tema completo con tu viaje | Final: el Refugio toca tu viaje. Silencio. Créditos. Se abre el Mundo libre |
 
-Total diseñado: unos 40 minutos. **Jay decidió el 22 de octubre que el Viaje dure 15–20 minutos** (decisión 2B) y se mida con personas antes de alargarlo; las duraciones de la tabla son las del diseño original. **Los primeros 15 minutos (capítulos 0–2) forman un arco cerrado** y son el build de festival, con una pantalla final que muestra tu frase.
+Total diseñado: unos 40 minutos. **Jay decidió el 22 de octubre que el Viaje dure 15–20 minutos** (decisión 2B) y se mida con personas antes de alargarlo; las duraciones de la tabla son las del diseño original. El festival vigente recorre el Viaje completo hasta el Refugio y sus créditos (I5); el recorte hasta el Lago quedó sustituido. Las duraciones de esta tabla son históricas; para las actuales, ver [El mundo](MUNDO.md).
 
 ## Curva emocional
 

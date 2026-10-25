@@ -1,6 +1,6 @@
 # El panel creativo de Kubono
 
-Guía para repetir la auditoría. Está escrita para que otro agente (Codex, ChatGPT, Claude) haga **la cuarta sesión** sin haber visto las anteriores. Jay la pidió el 24 de octubre de 2026: «que vuelva a hacer una auditoría como si fuera el panel, para ir mejorándolo».
+Guía para repetir la auditoría. La [cuarta sesión](panel/sesion-4/informe.md) está completa sobre alpha.174; sus fases J1–J7 esperan la decisión de Jay. La próxima será la quinta, sobre las correcciones que autorice y sus evidencias. Los perfiles son simulados y las notas pueden subir o bajar.
 
 ## 1. Qué es
 
@@ -47,7 +47,7 @@ La **media** de cada perfil es la media de sus seis notas. La fila del panel es 
 | 1 | 22 oct | alpha.96 | 6,5 | 7,9 | 7,9 | 5,6 | 4,8 | 6,1 | **6,4** | Fases 0–9 (el Viaje, el pulso, quitar) |
 | 2 | 24 oct | alpha.160 | 7,0 | 8,3 | 8,0 | 6,9 | 6,4 | 6,6 | **7,2** | G1–G7, construido como H1–H7 |
 | 3 | 24 oct | alpha.167 | 7,3 | 8,5 | 8,2 | 7,3 | 7,1 | 6,9 | **7,5** | I1–I6 |
-| 4 | — | alpha.173 o posterior | | | | | | | | La pides tú |
+| 4 | 25 oct | alpha.174 | 7,7 | 7,8 | 8,4 | 7,7 | 7,7 | 7,3 | **7,7** | J1–J7 propuestas, sin ejecutar |
 
 Lo que se construyó con cada plan está en [CAMBIOS](../CAMBIOS.md) (H1–H7, I1–I6) y en [El mundo](MUNDO.md).
 
@@ -85,7 +85,7 @@ Un `informe.md` con esta estructura (modelo: `panel/sesion-3/informe.md`):
 1. **Notas:** tabla de los diez, fila «Hoy», filas de las sesiones anteriores y la meta. Una línea con lo que más subió y lo que más falta.
 2. **En qué coinciden:** puntos numerados, cada uno con quién lo dijo y la prueba (`archivo:línea`, medida o captura).
 3. **Decisiones pendientes de Jay:** solo lo que necesita su elección, con la opinión del panel y **una recomendación**.
-4. **Plan:** fases con letra nueva (la próxima es **J1, J2…**), cada una con qué cambia, dónde y «Bien cuando:» (criterio medible). Primero lo que no necesita decisión.
+4. **Plan:** fases con letra nueva (la cuarta propuso **J1–J7**; la siguiente conserva los IDs abiertos antes de proponer más), cada una con qué cambia, dónde y «Bien cuando:» (criterio medible). Primero lo que no necesita decisión.
 5. **Ideas para más adelante** (sin consenso).
 6. **Lo que ningún panel puede sustituir:** jugarlo con Luca y oírlo en un teléfono.
 
@@ -124,21 +124,27 @@ A Jay **no le gusta el cubo grande; le gusta pequeño.** La I2 lo agrandó a 24�
 ## 8. Qué quedó abierto tras la tercera sesión
 
 - **El cubo pequeño:** construido en alpha.174; aceptación física de Jay pendiente.
-- **Jugadores del 60 % y sin sonido:** según `scripts/play-curve.mjs`, no consiguen ★★, así que su canción deja de crecer al ganar (minutos 38–40) durante unos 80 minutos; ahí podrían dejar el juego. El de 75 % y el de 90 % cumplen la regla de 12 minutos.
+- **Perfiles modelados del 60 % y sin sonido:** según `scripts/play-curve.mjs`, no consiguen ★★ y pasan unos 80 minutos sin nuevas capas tras ganar. Sus notas y el mundo sí pueden variar; el modelo no mide abandono. Los perfiles de 75 % y 90 % no superan doce minutos entre capas.
 - **Sin ritardando** en el final de Tu canción: el secuenciador del mundo no puede frenar una sola canción (I4).
-- **Nadie salvo Jay ha jugado** y nadie lo ha oído en un teléfono con auriculares. Calibración, paneo, faro sonoro y final no están comprobados con personas. Guía: [Pruebas con personas](PRUEBAS_CON_PERSONAS.md).
+- Hay feedback de Jay, incluido el rechazo al cierre musical. Faltan sesiones documentadas de nuevos jugadores y validación instrumentada de calibración, paneo, faro y final en teléfono. Guía: [Pruebas con personas](PRUEBAS_CON_PERSONAS.md).
 - Ideas sin consenso: Libre que no se acaba y Tu canción tocable capa a capa (Iwai); el anillo como acorde (Proteus); pasar de un lugar al siguiente sin tarjeta (Simogo).
 
-## 9. Petición para empezar la cuarta sesión
+## 9. Petición para la siguiente sesión, tras las correcciones autorizadas
 
 Copia esto en Codex o ChatGPT con el repositorio abierto:
 
-> Lee `AGENTS.md`, `HANDOFF.md` y `docs/PANEL.md`. Haz la **cuarta sesión del panel creativo de Kubono** siguiendo la sección 5 de `docs/PANEL.md`: escribe el expediente, saca las capturas con `scripts/panel-capture.py`, ejecuta `node scripts/play-curve.mjs`, escribe los diez análisis y el informe en `docs/panel/sesion-4/`, verificando cada hallazgo en el código con `archivo:línea`. Respeta las decisiones de la sección 7, sobre todo **el cubo pequeño**. Compara con `docs/panel/sesion-3/informe.md`. Propón un plan J1–Jn con criterios medibles y una recomendación para cada decisión pendiente. No cambies código del juego hasta que Jay apruebe el plan.
+> Lee `AGENTS.md`, `HANDOFF.md`, `docs/PANEL.md` y `docs/panel/sesion-4/seguimiento.json`. Cuando Jay autorice la reevaluación, haz la **quinta sesión** siguiendo la sección 5: captura con el hostname normal, mide y escribe diez análisis y el informe en `docs/panel/sesion-5/`. Compara con la cuarta, conserva el cubo pequeño y los criterios, y vuelve a cada ID. Solo cierra un hallazgo con su revisión, regresión y aceptación. Distingue bot, modelo, escucha física, CI y despliegue. La nota puede subir o bajar. No implementes otro plan ni contenido por hacer la auditoría.
 
-## 10. Archivo
+## 10. Ciclo de cierre
+
+La petición actual de Jay exige integrar lo existente antes de ampliar. El registro de la sesión 4 contiene ID, prioridad, evidencia, fase y criterio de cierre. Cada fase autorizada añade revisión y resultado de su regresión. La reevaluación conserva los abiertos; ni un commit, ni una nota mayor, ni un test aislado los cierra. La meta orientativa sigue en 8,7, acompañada de candidato verde y aceptación humana; no hay garantía de un 10 simulado.
+
+## 11. Archivo
 
 - [Sesión 1](panel/sesion-1/informe.md) · [expediente](panel/sesion-1/expediente.md) · diez análisis en `panel/sesion-1/`.
 - [Sesión 2](panel/sesion-2/informe.md) · [expediente](panel/sesion-2/expediente.md) · diez análisis en `panel/sesion-2/`.
 - [Sesión 3](panel/sesion-3/informe.md) · [expediente](panel/sesion-3/expediente.md) · diez análisis en `panel/sesion-3/`.
+
+- [Sesión 4](panel/sesion-4/informe.md) · [expediente](panel/sesion-4/expediente.md) · [registro de 14 hallazgos](panel/sesion-4/seguimiento.json) · diez análisis y evidencia reproducible en `panel/sesion-4/`.
 
 Los expedientes y análisis citan rutas y versiones de su día (por ejemplo `3-extra-mz/`). Esas capturas no están en Git; se rehacen con `scripts/panel-capture.py`.
