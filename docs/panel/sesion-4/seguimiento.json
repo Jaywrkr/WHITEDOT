@@ -123,7 +123,14 @@
         ],
         "limits": "Escucha de Jay y comprobación final del candidato pendientes; radio y generación intactas.",
         "followup": "J7 cuenta dos compases por pasos vivos al cambiar tempo; regresión de reloj variable y once renders actuales aprobados."
-      }
+      },
+      "reviews": [
+        {
+          "session": 6,
+          "evidence": "../sesion-6/informe.md",
+          "observed": "Jay comunica mejora del cierre breve; rechaza final5, registrado aparte como A04. No equivale a aceptación global de audio."
+        }
+      ]
     },
     {
       "id": "A02",
@@ -237,7 +244,7 @@
       "id": "U03",
       "area": "Objetivo",
       "priority": "P1",
-      "status": "corregido-tecnico",
+      "status": "reabierto-experiencia-jay",
       "phase": "J4",
       "title": "La guía aún dirige a metas anteriores",
       "evidence": [
@@ -257,13 +264,21 @@
           "tests/journey_entry_smoke.py"
         ],
         "limits": "Comprensión con personas nuevas pendiente en J7; reglas y generación intactas."
-      }
+      },
+      "reviews": [
+        {
+          "session": 6,
+          "evidence": "../sesion-6/informe.md",
+          "observed": "Tras completar cinco capítulos, Jay no encontró el siguiente reto; gastó20 chispas en salto exploratorio sin llegar al anillo. La corrección nominal no cierra acceso/comprensión.",
+          "nextPhase": "K1/K4"
+        }
+      ]
     },
     {
       "id": "U04",
       "area": "Objetivo y economía",
       "priority": "P1",
-      "status": "corregido-tecnico",
+      "status": "reabierto-experiencia-jay",
       "phase": "J4",
       "title": "33 estrellas domina al objetivo de once lugares",
       "evidence": [
@@ -283,7 +298,15 @@
           "tests/journey_entry_smoke.py"
         ],
         "limits": "Comprensión con personas nuevas pendiente en J7; reglas y generación intactas."
-      }
+      },
+      "reviews": [
+        {
+          "session": 6,
+          "evidence": "../sesion-6/informe.md",
+          "observed": "Tras completar cinco capítulos, Jay no encontró el siguiente reto; gastó20 chispas en salto exploratorio sin llegar al anillo. La corrección nominal no cierra acceso/comprensión.",
+          "nextPhase": "K1/K4"
+        }
+      ]
     },
     {
       "id": "P01",
@@ -348,7 +371,15 @@
         "capturas/manifest.json"
       ],
       "observed": "Hay feedback de Jay y pruebas automatizadas; no sesiones documentadas de nuevos jugadores ni validación instrumentada de estos cierres en teléfono. Esta revisión no verifica deploy, tiendas o cuenta en producción.",
-      "acceptance": "Cinco sesiones sin ayuda, al menos dos personas sin hábito de jugar; Jay acepta cubo y cierre en su teléfono; candidato con lógica/navegador/audio verdes y revisión de despliegue. Supabase permanece en pausa."
+      "acceptance": "Cinco sesiones sin ayuda, al menos dos personas sin hábito de jugar; Jay acepta cubo y cierre en su teléfono; candidato con lógica/navegador/audio verdes y revisión de despliegue. Supabase permanece en pausa.",
+      "reviews": [
+        {
+          "session": 6,
+          "evidence": "../sesion-6/informe.md",
+          "observed": "Aceptación negativa comunicada por Jay: navegación al anillo, final5 y sobrecarga del menú. No se considera una sesión instrumentada con cinco participantes.",
+          "nextPhase": "K5"
+        }
+      ]
     },
     {
       "id": "D03",
@@ -396,6 +427,76 @@
           "tests/places_durability_smoke.py"
         ]
       }
+    },
+    {
+      "id": "A04",
+      "area": "Audio final del Viaje",
+      "priority": "P1",
+      "status": "abierto-propuesto",
+      "phase": "K2",
+      "title": "El final5 conserva otra cama y frases no adaptadas",
+      "evidence": [
+        "src/journey-finale.js:28–45; src/song.js:73–78",
+        "../sesion-6/informe.md"
+      ],
+      "observed": "Partitura28 s, cama30 s y pad hasta32 s en modelo; notas crudas potencialmente ajenas a La mayor. Jay rechaza la escucha.",
+      "acceptance": "Contrato armónico y salida coherentes; silencio real, render de llegada/final y aceptación de Jay sin alterar generadores."
+    },
+    {
+      "id": "U05",
+      "area": "Orientación",
+      "priority": "P1",
+      "status": "abierto-propuesto",
+      "phase": "K1",
+      "title": "El faro pierde la dirección vertical",
+      "evidence": [
+        "src/places-ring.js:21,59–64",
+        "../sesion-6/informe.md"
+      ],
+      "observed": "Norte y sur producen la misma columna X.",
+      "acceptance": "Ocho rumbos correctos, destino/distancia discretos y funcionamiento sin sonido."
+    },
+    {
+      "id": "U06",
+      "area": "Continuidad espacial",
+      "priority": "P1",
+      "status": "abierto-propuesto",
+      "phase": "K1",
+      "title": "Desplegar el Refugio desplaza el centro del anillo",
+      "evidence": [
+        "src/house.js:51,110; src/places-ring.js:33–34",
+        "../sesion-6/informe.md"
+      ],
+      "observed": "El anillo usa studio.x/y; la casa se despliega en la posición actual.",
+      "acceptance": "Referencia estable migrada desde la vigente, ruta no obsoleta y progreso/semillas preservados."
+    },
+    {
+      "id": "U07",
+      "area": "Menú",
+      "priority": "P1",
+      "status": "abierto-propuesto",
+      "phase": "K3",
+      "title": "Las decisiones principales compiten con funciones secundarias",
+      "evidence": [
+        "index.html:147–168; ../sesion-6/capturas/menu-390.png",
+        "../sesion-6/informe.md"
+      ],
+      "observed": "Seis tarjetas principales y controles adicionales; Jay informa sobrecarga.",
+      "acceptance": "Continuar destaca, herramientas en contexto, capacidades conservadas; aceptación visual y uso sin ayuda."
+    },
+    {
+      "id": "U08",
+      "area": "Aviso territorial",
+      "priority": "P1",
+      "status": "abierto-propuesto",
+      "phase": "K3",
+      "title": "La fila territorial supera el ancho de su tarjeta",
+      "evidence": [
+        "styles/estilo-j.css:309–311; ../sesion-6/evidencia/territorio-control.json",
+        "../sesion-6/informe.md"
+      ],
+      "observed": "Control visual X1: fila464px; borde derecho530,3 en pantalla390. Temporización controlada; capturas exactas de Jay pendientes.",
+      "acceptance": "Nombres/metadata largos dentro de la tarjeta; texto legible en móvil/horizontal/ampliado; revisar hijos y capturas."
     }
   ]
 }

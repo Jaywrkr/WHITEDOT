@@ -1,0 +1,144 @@
+{
+  "scope": "Simulated design lenses, two delegated code reviews consolidated by the root agent. Not real creator opinions, an independent human jury, or auditor listening. Jay feedback is a real supplied account; device/save coordinates are unknown.",
+  "revision": "3c5fd7b6b0bf76bbd8471228ea9f0e8b2f69f256",
+  "version": "2.3.0-alpha.181",
+  "axes": [
+    "Visual",
+    "Audio",
+    "Creatividad",
+    "Sensación",
+    "Cohesión",
+    "Pulido"
+  ],
+  "profiles": [
+    {
+      "name": "Tetsuya Mizuguchi",
+      "scores": [
+        8,
+        7,
+        8.5,
+        7.5,
+        7,
+        7
+      ],
+      "mean": 7.5
+    },
+    {
+      "name": "Toshio Iwai",
+      "scores": [
+        7.5,
+        7,
+        8.5,
+        7.5,
+        7,
+        7
+      ],
+      "mean": 7.416666666666667
+    },
+    {
+      "name": "Masaya Matsuura",
+      "scores": [
+        7,
+        8,
+        8.5,
+        7,
+        6.5,
+        6.5
+      ],
+      "mean": 7.25
+    },
+    {
+      "name": "Simogo",
+      "scores": [
+        8,
+        6.5,
+        8.5,
+        7.5,
+        6.5,
+        7
+      ],
+      "mean": 7.333333333333333
+    },
+    {
+      "name": "Ed Key y David Kanaga",
+      "scores": [
+        7,
+        8,
+        8.5,
+        7,
+        7,
+        6.5
+      ],
+      "mean": 7.333333333333333
+    },
+    {
+      "name": "Jenova Chen",
+      "scores": [
+        6.5,
+        8,
+        8,
+        6.5,
+        6,
+        6
+      ],
+      "mean": 6.833333333333333
+    },
+    {
+      "name": "Conrad Roset",
+      "scores": [
+        8,
+        7,
+        8.5,
+        8,
+        7.5,
+        7
+      ],
+      "mean": 7.666666666666667
+    },
+    {
+      "name": "Ken Wong",
+      "scores": [
+        6,
+        8,
+        8,
+        6.5,
+        6.5,
+        6
+      ],
+      "mean": 6.833333333333333
+    },
+    {
+      "name": "Lucas Pope",
+      "scores": [
+        6.5,
+        8,
+        8,
+        6.5,
+        6,
+        5.5
+      ],
+      "mean": 6.75
+    },
+    {
+      "name": "Austin Wintory",
+      "scores": [
+        7.5,
+        6.5,
+        8.5,
+        7.5,
+        6.5,
+        7
+      ],
+      "mean": 7.25
+    }
+  ],
+  "axisMeans": [
+    7.2,
+    7.4,
+    8.35,
+    7.15,
+    6.65,
+    6.55
+  ],
+  "mean": 7.216666666666667
+}

@@ -1,0 +1,249 @@
+{
+  "revision": "3c5fd7b6",
+  "scope": "Pure model, synthetic valid MIDI fixture, not Jay save or listening",
+  "navigation": {
+    "radius": 6000,
+    "reach": 40,
+    "nominalSpeed": 190,
+    "nominalSeconds": 31.57894736842105,
+    "north": {
+      "x": 195
+    },
+    "south": {
+      "x": 195
+    },
+    "jardin": {
+      "id": "jardin",
+      "x": 1690,
+      "y": 5757
+    }
+  },
+  "final5": {
+    "notes": {
+      "llanura": [
+        57
+      ],
+      "lago": [
+        60
+      ],
+      "bosque": [
+        55
+      ],
+      "tormenta": [
+        51
+      ],
+      "vacio": [
+        57
+      ]
+    },
+    "scoreSeconds": 28,
+    "bedSeconds": 30,
+    "declaredSilence": [
+      28,
+      30
+    ],
+    "outOfKeyNotes": [
+      {
+        "midi": 60,
+        "eighths": 2,
+        "chapter": "lago",
+        "at": 4
+      },
+      {
+        "midi": 55,
+        "eighths": 2,
+        "chapter": "bosque",
+        "at": 8
+      },
+      {
+        "midi": 51,
+        "eighths": 2,
+        "chapter": "tormenta",
+        "at": 12
+      }
+    ],
+    "eventsDuringSilence": [
+      {
+        "id": "llanura",
+        "what": "kick",
+        "t": 28,
+        "tail": null
+      },
+      {
+        "id": "llanura",
+        "what": "kick",
+        "t": 28.5,
+        "tail": null
+      },
+      {
+        "id": "llanura",
+        "what": "kick",
+        "t": 29,
+        "tail": null
+      },
+      {
+        "id": "llanura",
+        "what": "kick",
+        "t": 29.5,
+        "tail": null
+      },
+      {
+        "id": "lago",
+        "what": "bass",
+        "t": 28,
+        "tail": 0.375
+      },
+      {
+        "id": "lago",
+        "what": "bass",
+        "t": 28.75,
+        "tail": 0.375
+      },
+      {
+        "id": "lago",
+        "what": "bass",
+        "t": 29.25,
+        "tail": 0.375
+      },
+      {
+        "id": "bosque",
+        "what": "hat",
+        "t": 28.25,
+        "tail": null
+      },
+      {
+        "id": "bosque",
+        "what": "clap",
+        "t": 28.5,
+        "tail": null
+      },
+      {
+        "id": "bosque",
+        "what": "hat",
+        "t": 28.75,
+        "tail": null
+      },
+      {
+        "id": "bosque",
+        "what": "hat",
+        "t": 29.25,
+        "tail": null
+      },
+      {
+        "id": "bosque",
+        "what": "clap",
+        "t": 29.5,
+        "tail": null
+      },
+      {
+        "id": "bosque",
+        "what": "hat",
+        "t": 29.75,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 28,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 28.125,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 28.25,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 28.375,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 28.5,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 28.625,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 28.75,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 28.875,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 29,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 29.125,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 29.25,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 29.375,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 29.5,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 29.625,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 29.75,
+        "tail": null
+      },
+      {
+        "id": "tormenta",
+        "what": "acid",
+        "t": 29.875,
+        "tail": null
+      },
+      {
+        "id": "vacio",
+        "what": "pad",
+        "t": 28,
+        "tail": 4
+      }
+    ],
+    "themeOutOfKey": []
+  }
+}

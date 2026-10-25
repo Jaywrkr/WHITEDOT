@@ -1,6 +1,6 @@
 # Documentación de Kubono
 
-Actualizada el 24 de octubre de 2026. Cada tema tiene una sola guía; si dos documentos se contradicen, manda el código y se corrige la guía.
+Actualizada el 25 de octubre de 2026. Cada tema tiene una sola guía; si dos documentos se contradicen, manda el código y se corrige la guía.
 
 ## Orden de lectura
 
@@ -12,6 +12,7 @@ Actualizada el 24 de octubre de 2026. Cada tema tiene una sola guía; si dos doc
 
 | Documento | Para qué |
 |---|---|
+| [Auditoría 6](panel/sesion-6/informe.md) y [plan K1–K5](panel/sesion-6/plan.md) | Feedback real, acceso al anillo, final5 y UI; propuesta sin implementar |
 | [Auditoría 4](panel/sesion-4/informe.md) | Diez análisis, evidencia, 14 hallazgos y J1–J7 propuestas; registro para cerrar el ciclo |
 | [Panel creativo](PANEL.md) | Cómo funciona el panel simulado, sus notas, decisiones de Jay y cómo hacer la próxima sesión. Informes en [panel/](panel/) |
 | [El mundo](MUNDO.md) | Diseño vigente: cuatro capas, 11 lugares, estrellas, chispas, Refugio, Tu canción, planes H e I y herramientas de prueba |

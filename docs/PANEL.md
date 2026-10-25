@@ -1,6 +1,6 @@
 # El panel creativo de Kubono
 
-Guía para repetir la auditoría. La [quinta sesión](panel/sesion-5/informe.md) revisa las correcciones J1–J6 conservando la generación musical y del universo. La evidencia técnica se separa de la aceptación de Jay, las personas y el despliegue. La siguiente sesión conservará los IDs abiertos; no abre contenido nuevo ni cambia la base para mejorar una nota simulada.
+Guía para repetir la auditoría. La [sexta sesión](panel/sesion-6/informe.md) incorpora el feedback real de Jay: acceso al anillo, final5 y menú. Propone K1–K5, aún sin implementar, conservando la generación musical y del universo. La evidencia técnica se separa de la aceptación de Jay, las personas y el despliegue. La siguiente sesión conservará los IDs abiertos; no abre contenido nuevo ni cambia la base para mejorar una nota simulada.
 
 ## 1. Qué es
 
@@ -49,6 +49,7 @@ La **media** de cada perfil es la media de sus seis notas. La fila del panel es 
 | 3 | 24 oct | alpha.167 | 7,3 | 8,5 | 8,2 | 7,3 | 7,1 | 6,9 | **7,5** | I1–I6 |
 | 4 | 25 oct | alpha.174 | 7,7 | 7,8 | 8,4 | 7,7 | 7,7 | 7,3 | **7,7** | J1–J7 propuestas, sin ejecutar |
 | 5 | 25 oct | alpha.181 | 7,7 | 8,0 | 8,4 | 8,1 | 8,3 | 8,0 | **8,1** | Correcciones y CI probados; aceptación humana pendiente |
+| 6 | 25 oct | alpha.181 | 7,2 | 7,4 | 8,4 | 7,2 | 6,7 | 6,6 | **7,2** | Nueva evidencia de Jay; K1–K5 propuestas, sin ejecutar |
 
 Lo que se construyó con cada plan está en [CAMBIOS](../CAMBIOS.md) (H1–H7, I1–I6) y en [El mundo](MUNDO.md).
 
@@ -98,7 +99,7 @@ Un resumen corto en español: la media nueva, las tres o cuatro cosas que más i
 
 - Español, frases cortas, una idea por frase. Sin jerga de diseño sin explicar.
 - Cifras y nombres de archivo exactos. Nada de «parece» sin decir por qué.
-- Separar siempre: **aprobado**, **construido**, **probado** (bot, captura) y **probado con personas**. Hoy nada está probado con personas.
+- Separar siempre: **aprobado**, **construido**, **probado** (bot, captura) y **probado con personas**. Existe el relato real de Jay; no equivale a cinco sesiones instrumentadas ni a una escucha del auditor.
 - No inventar citas reales de los creadores.
 
 ## 7. Lo que Jay ya decidió (no reabrir)
@@ -134,7 +135,7 @@ Registro histórico. El estado vigente está en la quinta sesión y el cierre J1
 
 ## 9. Próxima comprobación
 
-Leer `AGENTS.md`, `HANDOFF.md`, el cierre J1–J7 y el registro de hallazgos. La quinta sesión ya revisa las correcciones. Cuando Jay aporte escucha o sesiones con personas, añadir su evidencia a V01/P01/T01 y conservar lo aún no comprobado. Una nueva sesión completa solo se repite si hay cambios que evaluar o nueva evidencia; no rehace la quinta ni abre otra expansión automáticamente.
+Leer `AGENTS.md`, `HANDOFF.md`, la sexta sesión y el registro de hallazgos. El relato de Jay reabre U03/U04, añade A04/U05–U08 y aporta evidencia negativa a V01. K1–K5 son propuestas pendientes de ejecución, no correcciones ya entregadas. Incorporar las capturas adicionales y la aceptación de cada fase; conservar lo aún no comprobado. Repetir el panel cuando haya cambios o nueva evidencia, sin abrir otra expansión automáticamente.
 
 ## 10. Ciclo de cierre
 
@@ -151,3 +152,5 @@ Jay autorizó solucionar los hallazgos conservando la generación musical y del 
 Los expedientes y análisis citan rutas y versiones de su día (por ejemplo `3-extra-mz/`). Esas capturas no están en Git; se rehacen con `scripts/panel-capture.py`.
 
 - [Sesión 5](panel/sesion-5/informe.md) · [expediente](panel/sesion-5/expediente.md) · [preservación](panel/sesion-5/evidencia/preservacion.json). Notas provisionales del mismo agente, no jurado independiente ni escucha humana.
+
+- [Sesión 6](panel/sesion-6/informe.md) · [expediente](panel/sesion-6/expediente.md) · [plan K1–K5](panel/sesion-6/plan.md). Nueva evidencia de navegación y final5; no se implementa por esta revisión.

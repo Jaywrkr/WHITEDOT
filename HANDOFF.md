@@ -1,6 +1,6 @@
 # Traspaso para el siguiente agente
 
-**Código 2.3.0-alpha.181 · auditoría corregida conservando generadores.** Leer [AGENTS](AGENTS.md), [Cierre](docs/PULIDO_CIERRE.md) y [quinta sesión](docs/panel/sesion-5/informe.md).
+**Código 2.3.0-alpha.181 · nueva evidencia de Jay, cierre no aceptado.** Leer [AGENTS](AGENTS.md), [sexta sesión](docs/panel/sesion-6/informe.md) y [plan propuesto K1–K5](docs/panel/sesion-6/plan.md).
 
 ## Qué autorizó Jay
 
@@ -47,3 +47,11 @@ El registro de la sesión 4 conserva los 14 hallazgos originales y añade D03–
 ## Integración confirmada
 
 [PR #353](https://github.com/Jaywrkr/WHITEDOT/pull/353) · [CI completo](https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278): lógica, seis grupos de navegador, tres de audio y agregador aprobados antes de incorporar el código. El runtime coincide con `e6c0a3a6`; esta actualización añade solo el estado documental y la evidencia de CI.
+
+## Petición vigente · sexta sesión
+
+Jay probó la entrega: no encontró el anillo tras el Viaje, gastó20 chispas en un salto exploratorio, rechaza el final5 y describe menú recargado/avisos recortados. Pidió analizar con el panel y presentar fases antes de implementar. Esta rama solo documenta la revisión; no ejecuta K1–K5 ni modifica la música base o los mundos.
+
+Media provisional7,2, antes8,1: cambia la evidencia, no el código. U03/U04 se reabren y se añaden A04/U05–U08; son21 IDs en el registro canónico, conservando los16 anteriores y sus pruebas. A04 es final5; no confundirlo con la corrección A03 de final11. V01 conserva evidencia negativa de Jay y sigue abierto. Capturas adicionales por recibir.
+
+Evidencia:24 estados UI (cuatro avisos ocultos, no certificados), cuatro controles X1 con desbordamiento de hijos, modelos puros y cuatro pruebas ligeras. Sin nueva escucha del auditor ni renders. La base alpha.181 está integrada; no equivale a experiencia aceptada. Supabase continúa en pausa.
