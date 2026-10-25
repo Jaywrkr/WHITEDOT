@@ -125,7 +125,7 @@ export function initialize(runtime){
 
  // ---------- dibujo ----------
  function draw(t,dt,ox,oy,b){
-  const cx=runtime.cx,s=S(),W=runtime.W,H=runtime.H;
+  const cx=runtime.cx,s=S(),W=runtime.W,H=runtime.H;ui();
   // Ecos: anillos que laten cuando suenan.
   for(const e of loop.ecos){if((e.layer||"superficie")!==layer())continue;e.lit=Math.max(0,e.lit-dt*3);const x=e.x+ox,y=e.y+oy;if(x<-60||y<-60||x>W+60||y>H+60)continue;
    cx.globalAlpha=.35+.5*e.lit;cx.strokeStyle=WORLD_VISUAL.echo;cx.lineWidth=WORLD_VISUAL.line;cx.beginPath();cx.arc(x,y,14+e.lit*8,0,6.283);cx.stroke();
@@ -145,7 +145,7 @@ export function initialize(runtime){
   if(loop.rec||loop.armed){const progress=loop.rec?Math.min(1,(runtime.MU.step-loop.rec.start)/LOOP_STEPS):1;cx.globalAlpha=.8;cx.strokeStyle=loop.rec?'#ff6b6b':runtime.GOLD;cx.lineWidth=2;cx.beginPath();cx.arc(W/2,H/2,30,-Math.PI/2,-Math.PI/2+progress*Math.PI*2);cx.stroke();}
   cx.globalAlpha=1;
  }
- function ui(){const option=runtime.$('bAutoPins');if(option){option.setAttribute('aria-pressed',String(!!S().autoPins));option.querySelector('span').textContent=S().autoPins?'Repetir: sí':'Repetir: no';}const btn=runtime.$('bLoop');if(!btn)return;btn.hidden=!runtime.inWorld();btn.classList.toggle('rec',!!loop.rec);btn.classList.toggle('armed',loop.armed);}
+ function ui(){const option=runtime.$('bAutoPins');if(option){option.setAttribute('aria-pressed',String(!!S().autoPins));option.querySelector('span').textContent=S().autoPins?'Repetir: sí':'Repetir: no';}const btn=runtime.$('bLoop');if(!btn)return;btn.hidden=!runtime.inWorld();btn.classList.toggle('rec',!!loop.rec);btn.classList.toggle('armed',loop.armed);const near=loop.ecos.some(e=>(e.layer||'superficie')===layer()&&Math.hypot(e.x-S().wx,e.y-S().wy)<90);const label=loop.rec||loop.armed?'Cancelar grabación':near?'Borrar eco cercano':'Grabar un eco';btn.title=label;btn.setAttribute('aria-label',label);btn.setAttribute('aria-pressed',String(!!(loop.rec||loop.armed)));}
  function cancelRecording(){loop.armed=false;loop.rec=null;ui();}
  function reset(){for(const member of Object.values(band.members))if(member.source)member.source.follow=0;suppressed.clear();loop.armed=false;loop.rec=null;loop.ecos=[];band.members={};band.combos={};ui();}
 

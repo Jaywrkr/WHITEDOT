@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {guideLesson} from '../src/voice-guide.js';
+const r={S:{journey:{}},journeyQuiet:()=>true,journeyChapter:()=>({id:'bosque',done:{}}),journeyGameProgress:()=>.4};
+assert.equal(guideLesson(r).name,'Bosque');assert.match(guideLesson(r).steps.join(' '),/Rodea/);
+r.journeyGameProgress=()=>1;assert.match(guideLesson(r).hint,/dorada/);
+r.journeyChapter=()=>({id:'bosque',done:{bosque:true}});assert.match(guideLesson(r).hint,/portal/);
+r.placeRun=()=>({id:'jardin'});assert.equal(guideLesson(r).name,'Jardín');
+r.placeRun=()=>null;r.journeyChapter=()=>({id:'camino'});assert.equal(guideLesson(r).steps.length,3);
+r.S.journey.finished=true;assert.equal(guideLesson(r),null);
+r.journeyQuiet=()=>false;r.S.journey.finished=false;assert.equal(guideLesson(r),null);
+console.log('PASS contextual help: active campaign, close, portal, round, Camino and free exploration');
