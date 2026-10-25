@@ -232,7 +232,7 @@
       "id": "U03",
       "area": "Objetivo",
       "priority": "P1",
-      "status": "abierto-verificado",
+      "status": "corregido-tecnico",
       "phase": "J4",
       "title": "La guía aún dirige a metas anteriores",
       "evidence": [
@@ -242,13 +242,23 @@
         "capturas/ui-guia.png"
       ],
       "observed": "La guía recomienda cuatro experiencias antiguas y la meta de Tu cubo, mientras el juego principal pide el capítulo actual o el siguiente del anillo.",
-      "acceptance": "La guía, menú, portal, resultado y Refugio señalan el mismo siguiente paso según el estado real. Se conservan las prácticas como ayuda contextual."
+      "acceptance": "La guía, menú, portal, resultado y Refugio señalan el mismo siguiente paso según el estado real. Se conservan las prácticas como ayuda contextual.",
+      "resolution": {
+        "phase": "J4",
+        "tests": [
+          "tests/game-objective.mjs",
+          "tests/refugio_lugares_smoke.py",
+          "tests/recorrido_smoke.py",
+          "tests/journey_entry_smoke.py"
+        ],
+        "limits": "Comprensión con personas nuevas pendiente en J7; reglas y generación intactas."
+      }
     },
     {
       "id": "U04",
       "area": "Objetivo y economía",
       "priority": "P1",
-      "status": "abierto-verificado",
+      "status": "corregido-tecnico",
       "phase": "J4",
       "title": "33 estrellas domina al objetivo de once lugares",
       "evidence": [
@@ -258,7 +268,17 @@
         "capturas/ui-lugares.png"
       ],
       "observed": "La hoja enfatiza ★ 5/33. Ganar requiere completar once lugares; 33 es la versión maestra. La distinción existe en el código pero no ocupa la jerarquía principal.",
-      "acceptance": "Se distinguen lugares completados /11, estrellas /33 y chispas para comprar. Ninguna compra o salto se presenta como progreso necesario para ganar."
+      "acceptance": "Se distinguen lugares completados /11, estrellas /33 y chispas para comprar. Ninguna compra o salto se presenta como progreso necesario para ganar.",
+      "resolution": {
+        "phase": "J4",
+        "tests": [
+          "tests/game-objective.mjs",
+          "tests/refugio_lugares_smoke.py",
+          "tests/recorrido_smoke.py",
+          "tests/journey_entry_smoke.py"
+        ],
+        "limits": "Comprensión con personas nuevas pendiente en J7; reglas y generación intactas."
+      }
     },
     {
       "id": "P01",

@@ -1,4 +1,4 @@
-import {findBiome,WORLD_CHAPTERS} from './journey-chapters.js';
+import {findBiome,WORLD_CHAPTERS,CHAPTERS} from './journey-chapters.js';
 import {freeOpen} from './journey-mode.js';
 import {roundSparks} from './spark-rules.js';
 import {creditSparks,normalizeSparkEconomy} from './sparks-model.js';
@@ -52,6 +52,19 @@ export const placeOpen=(places,id,journey)=>{const p=PLACES.find(x=>x.id===id);i
  return !prev||complete(places,prev)||complete(places,id)||places?.seen?.[id]===true||places?.kept?.[id]===true;};
 // The next place on the path: the first one open and not complete, in order; null once all eleven are.
 export const nextOnPath=(places,journey)=>PLACES.find(p=>p.game&&placeOpen(places,p.id,journey)&&!complete(places,p.id))||null;
+// A read-only objective shared by guide, menu and progress sheets. It never moves the player or spends currency.
+export function gameObjective(s,places=normalizePlaces(s.lugares,s.journey)){
+ if(places?.readOnly||places?.version>PLACES_VERSION)return {kind:'update',id:null,line:'Estos lugares necesitan una versión más reciente.',progress:'Tu progreso se conserva.'};
+ if(!freeOpen(s.journey)){
+  const n=Math.min(10,s.pathCrystals?.length||0),chapter=Math.max(0,Math.min(CHAPTERS.length-1,s.journey?.chapter||0)),id=CHAPTERS[chapter];
+  if(!chapter&&n<10)return {kind:'journey',id:'camino',line:'Toca a tiempo junto a los cristales.',progress:`${n}/10 cristales · abre el Mundo`};
+  if(id==='refugio')return {kind:'journey',id,line:'Escucha tu canción en el Refugio.',progress:'El Viaje está llegando a casa.'};
+  const next=s.journey?.done?.[id]?CHAPTERS[chapter+1]:id==='camino'?'llanura':id,name=PLACES.find(p=>p.id===next)?.name||'Refugio';
+  return {kind:'journey',id:next,line:s.journey?.done?.[id]?`Cruza el portal hacia ${name}.`:`Toca a tiempo en ${name}.`,progress:'El Viaje · escucha y sigue la luz.'};
+ }
+ const completed=PLACE_IDS.filter(id=>complete(places,id)).length,stars=starCount(places),next=nextOnPath(places,s.journey);
+ return {kind:next?'place':'create',id:next?.id||null,line:next?`Siguiente: ${next.name}.`:'Tu canción está completa. Explora a tu ritmo.',progress:`${completed}/11 lugares · ★ ${stars}/33`,completed,stars};
+}
 function restoreTree(target,copy){for(const k of Object.keys(target))if(!Object.hasOwn(copy,k))delete target[k];for(const [k,v] of Object.entries(copy)){if(object(v)&&object(target[k]))restoreTree(target[k],v);else if(Array.isArray(v)&&Array.isArray(target[k]))target[k].splice(0,target[k].length,...v);else target[k]=v;}}
 export function initialize(runtime){
  let owner=null,state=null,shown=null;

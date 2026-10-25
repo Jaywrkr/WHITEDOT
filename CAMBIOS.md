@@ -2,6 +2,12 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.174**. Las entradas describen su revisión, no certifican producción.
 
+## J4 · Una meta compartida · alpha.178
+
+- Guía y menú leen el capítulo o siguiente lugar real; experiencias extra claramente opcionales.
+- Lugares y Refugio priorizan completar once; estrellas de maestría y chispas se distinguen.
+- La guía permanece accesible durante el Viaje. No se alteran desbloqueos, economía ni posición.
+
 ## J3 · UI de producción · alpha.177
 
 - Viaje queda para la campaña: el selector dice Vista y la pestaña de recursos, Chispas.

@@ -9,7 +9,7 @@ Se conservan semillas, RNG, mapas, distribución, criaturas, paleta, formas, com
 | J1 · Base fiable | `pulido/j1-base-fiable` | Corregida y probada localmente |
 | J2 · Cierre musical | `pulido/j2-cierre-musical` | Corregida; escucha de Jay pendiente |
 | J3 · UI de producción | `pulido/j3-interfaz-produccion` | Corregida y probada localmente |
-| J4 · Una meta | `pulido/j4-meta-compartida` | Pendiente |
+| J4 · Una meta | `pulido/j4-meta-compartida` | Corregida y probada localmente |
 | J5 · Continuidad | `pulido/j5-continuidad` | Pendiente |
 | J6 · Sincronía | `pulido/j6-sincronia` | Pendiente |
 | J7 · Comprobación final | `pulido/j7-cierre` | Pendiente |
@@ -43,3 +43,13 @@ Una función por nombre: campaña Viaje, selector Vista completa/tranquila, pest
 Validación: 242 suites Node, auditoría estática y recorridos `release_smoke.py`, `journey_entry_smoke.py`, `menu_v2_smoke.py` aprobados. Sesenta estados en cuatro tamaños con hostname normal: cero errores de página, desbordamientos, textos menores de 11 px o objetivos menores de 24 px en las superficies medidas. Menú inspeccionado visualmente a 390 px. No cambia ninguna hoja de estilo ni dibujo del mundo.
 
 Teléfono J3: menú → Más → cambiar Vista; Tu cubo → Chispas; guía → Escuchar y responder; Ajustes → versión. Abrir el menú mientras termina una ronda: la tarjeta espera al cierre del menú. Los controles siguen silenciosos.
+
+## J4 · Una meta compartida
+
+`gameObjective` lee el Camino, el capítulo y el siguiente lugar sin escribir ni viajar. Guía y menú usan esa lectura; portales y resultado conservan su mismo orden de `nextOnPath`. La guía explica el objetivo actual y distingue sus cuatro experiencias opcionales. Se puede consultar durante el Viaje.
+
+La hoja y el acceso del Refugio priorizan lugares completos /11. Las estrellas /33 siguen como maestría y las chispas siguen siendo moneda; no se cambian umbrales, precios, recompensas o puertas ganadas.
+
+Validación: 243 suites Node, auditoría estática, `refugio_lugares_smoke.py`, `recorrido_smoke.py` (cuatro tamaños) y `journey_entry_smoke.py` aprobados. El contrato recorre los once siguientes destinos y comprueba que el saldo no cambia la meta. El diseño del mundo no se modifica.
+
+Teléfono J4: consultar Guía, menú y Lugares en la misma partida; deben señalar el mismo destino. En Refugio se ve /11 y en Lugares se distingue la maestría /33. No hace falta comprar nada para completar lugares.

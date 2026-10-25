@@ -22,7 +22,7 @@ try:
    assert page.evaluate('__r.journeyMode()')=='viaje' and page.evaluate("document.body.classList.contains('journey-quiet')")
    for id in QUIET:assert page.evaluate(f"getComputedStyle(document.getElementById('{id}')).visibility")=='hidden',id
    # The menu is short: the shop, map, journal and creation tools wait in the free World.
-   page.locator('#bMenu').click();assert all(page.locator('#'+i).is_hidden() for i in ['bCube','bMap','bAch','bRecord','bWorlds','bShare','bGuide'])
+   page.locator('#bMenu').click();assert all(page.locator('#'+i).is_hidden() for i in ['bCube','bMap','bAch','bRecord','bWorlds','bShare'])
    page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')")
    assert all(page.locator('#'+i).is_visible() for i in ['bWorld','bStudio','bMusicSettings','bSettings','bConnection'])
    # The free World is closed until the Journey ends (decision 6A): no switch, and asking for it does nothing.

@@ -17,7 +17,7 @@ try:
    page.goto(f'http://127.0.0.1:{server.server_port}/?anillo=1');page.wait_for_function("!!window.__r?.ringState&&__r.ringState().active",timeout=20000)
    page.evaluate("()=>{__r.S.lugares.stars.lago=[true,true,false];__r.S.lugares.seen.lago=true;__r.landHouse();}")
    page.wait_for_function("__r.houseActive()&&!__r.houseLanding()&&__r.houseLugaresState().hits.length===12",timeout=10000)
-   assert page.locator('#houseStars').is_visible() and page.inner_text('#houseStars')=='★ 6 / 33',page.inner_text('#houseStars')
+   assert page.locator('#houseStars').is_visible() and page.inner_text('#houseStars')=='5/11 lugares',page.inner_text('#houseStars')
    if os.environ.get('REFUGIO_SHOT'):page.screenshot(path=os.environ['REFUGIO_SHOT'].replace('.png',f'-{width}.png'))
    # A trophy: its place and stars.
    hit=next(h for h in page.evaluate('__r.houseLugaresState().hits') if h.get('id')=='lago')
