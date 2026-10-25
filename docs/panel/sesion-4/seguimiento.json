@@ -244,8 +244,8 @@
       "id": "U03",
       "area": "Objetivo",
       "priority": "P1",
-      "status": "reabierto-experiencia-jay",
-      "phase": "J4",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "K1/K5/K6",
       "title": "La guía aún dirige a metas anteriores",
       "evidence": [
         "index.html:211",
@@ -272,14 +272,24 @@
           "observed": "Tras completar cinco capítulos, Jay no encontró el siguiente reto; gastó20 chispas en salto exploratorio sin llegar al anillo. La corrección nominal no cierra acceso/comprensión.",
           "nextPhase": "K1/K4"
         }
-      ]
+      ],
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/after_journey_smoke.py",
+          "tests/places-ring.mjs"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      }
     },
     {
       "id": "U04",
       "area": "Objetivo y economía",
       "priority": "P1",
-      "status": "reabierto-experiencia-jay",
-      "phase": "J4",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "K1/K2/K5/K6",
       "title": "33 estrellas domina al objetivo de once lugares",
       "evidence": [
         "src/refugio-lugares.js:12",
@@ -306,7 +316,17 @@
           "observed": "Tras completar cinco capítulos, Jay no encontró el siguiente reto; gastó20 chispas en salto exploratorio sin llegar al anillo. La corrección nominal no cierra acceso/comprensión.",
           "nextPhase": "K1/K4"
         }
-      ]
+      ],
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/game-objective.mjs",
+          "tests/sparks_economy_smoke.py"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      }
     },
     {
       "id": "P01",
@@ -378,6 +398,11 @@
           "evidence": "../sesion-6/informe.md",
           "observed": "Aceptación negativa comunicada por Jay: navegación al anillo, final5 y sobrecarga del menú. No se considera una sesión instrumentada con cinco participantes.",
           "nextPhase": "K5"
+        },
+        {
+          "phase": "K6",
+          "evidence": "../sesion-6/cierre-k6.md",
+          "result": "Correcciones técnicas y revisión del panel completadas; no se declara aceptación humana, CI remoto ni publicación."
         }
       ]
     },
@@ -432,21 +457,32 @@
       "id": "A04",
       "area": "Audio final del Viaje",
       "priority": "P1",
-      "status": "abierto-propuesto",
-      "phase": "K2",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "K3",
       "title": "El final5 conserva otra cama y frases no adaptadas",
       "evidence": [
         "src/journey-finale.js:28–45; src/song.js:73–78",
         "../sesion-6/informe.md"
       ],
       "observed": "Partitura28 s, cama30 s y pad hasta32 s en modelo; notas crudas potencialmente ajenas a La mayor. Jay rechaza la escucha.",
-      "acceptance": "Contrato armónico y salida coherentes; silencio real, render de llegada/final y aceptación de Jay sin alterar generadores."
+      "acceptance": "Contrato armónico y salida coherentes; silencio real, render de llegada/final y aceptación de Jay sin alterar generadores.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/journey-finale-harmony.mjs",
+          "tests/journey_finale_mix.py",
+          "tests/journey_finale_smoke.py"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      }
     },
     {
       "id": "U05",
       "area": "Orientación",
       "priority": "P1",
-      "status": "abierto-propuesto",
+      "status": "corregido-tecnico-aceptacion-pendiente",
       "phase": "K1",
       "title": "El faro pierde la dirección vertical",
       "evidence": [
@@ -454,13 +490,23 @@
         "../sesion-6/informe.md"
       ],
       "observed": "Norte y sur producen la misma columna X.",
-      "acceptance": "Ocho rumbos correctos, destino/distancia discretos y funcionamiento sin sonido."
+      "acceptance": "Ocho rumbos correctos, destino/distancia discretos y funcionamiento sin sonido.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/places-ring.mjs",
+          "tests/after_journey_smoke.py"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      }
     },
     {
       "id": "U06",
       "area": "Continuidad espacial",
       "priority": "P1",
-      "status": "abierto-propuesto",
+      "status": "corregido-tecnico-aceptacion-pendiente",
       "phase": "K1",
       "title": "Desplegar el Refugio desplaza el centro del anillo",
       "evidence": [
@@ -468,35 +514,109 @@
         "../sesion-6/informe.md"
       ],
       "observed": "El anillo usa studio.x/y; la casa se despliega en la posición actual.",
-      "acceptance": "Referencia estable migrada desde la vigente, ruta no obsoleta y progreso/semillas preservados."
+      "acceptance": "Referencia estable migrada desde la vigente, ruta no obsoleta y progreso/semillas preservados.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/places-ring.mjs",
+          "tests/ring_smoke.py"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      }
     },
     {
       "id": "U07",
       "area": "Menú",
       "priority": "P1",
-      "status": "abierto-propuesto",
-      "phase": "K3",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "K4",
       "title": "Las decisiones principales compiten con funciones secundarias",
       "evidence": [
         "index.html:147–168; ../sesion-6/capturas/menu-390.png",
         "../sesion-6/informe.md"
       ],
       "observed": "Seis tarjetas principales y controles adicionales; Jay informa sobrecarga.",
-      "acceptance": "Continuar destaca, herramientas en contexto, capacidades conservadas; aceptación visual y uso sin ayuda."
+      "acceptance": "Continuar destaca, herramientas en contexto, capacidades conservadas; aceptación visual y uso sin ayuda.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/menu_v2_smoke.py",
+          "tests/interface_smoke.py"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      }
     },
     {
       "id": "U08",
       "area": "Aviso territorial",
       "priority": "P1",
-      "status": "abierto-propuesto",
-      "phase": "K3",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "K4/K6",
       "title": "La fila territorial supera el ancho de su tarjeta",
       "evidence": [
         "styles/estilo-j.css:309–311; ../sesion-6/evidencia/territorio-control.json",
         "../sesion-6/informe.md"
       ],
       "observed": "Control visual X1: fila464px; borde derecho530,3 en pantalla390. Temporización controlada; capturas exactas de Jay pendientes.",
-      "acceptance": "Nombres/metadata largos dentro de la tarjeta; texto legible en móvil/horizontal/ampliado; revisar hijos y capturas."
+      "acceptance": "Nombres/metadata largos dentro de la tarjeta; texto legible en móvil/horizontal/ampliado; revisar hijos y capturas.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "docs/panel/sesion-6/evidencia/ui-k6.json",
+          "docs/panel/sesion-6/evidencia/ui-200-k6.json"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      }
+    },
+    {
+      "id": "E01",
+      "area": "Economía",
+      "priority": "P1",
+      "status": "implementado-aceptacion-pendiente",
+      "phase": "K2",
+      "title": "Valor base al recoger fuera de tempo",
+      "observed": "Regla nueva aprobada por Jay: ×1 fuera de tempo, ×2 a tiempo y ×3 con racha; pendientes×0 reparados sin doble pago.",
+      "evidence": [
+        "../sesion-6/cierre-k6.md"
+      ],
+      "acceptance": "Contrato aprobado en lógica/navegador; contraste físico de Jay pendiente.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/spark-rules.mjs",
+          "tests/sparks-economy.mjs",
+          "tests/sparks_economy_smoke.py"
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "id": "U09",
+      "area": "Ayuda contextual",
+      "priority": "P1",
+      "status": "implementado-aceptacion-pendiente",
+      "phase": "K4/K5",
+      "title": "La lección de guardar reaparece tras el Viaje",
+      "observed": "Campaña terminada oculta la lección automática; conserva hechos y ofrece Practicar. Ayuda junto al marcador si se solicita. Errores reales de guardado siguen visibles.",
+      "evidence": [
+        "../sesion-6/cierre-k6.md"
+      ],
+      "acceptance": "Contrato aprobado en lógica/navegador; contraste físico de Jay pendiente.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/after_journey_smoke.py",
+          "tests/onboarding.mjs",
+          "tests/sparks_economy_smoke.py"
+        ],
+        "result": "PASS"
+      }
     }
   ]
 }

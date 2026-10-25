@@ -3,7 +3,7 @@ from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
-import os,shutil,threading
+import os,shutil,threading,time,json
 ROOT=Path(__file__).resolve().parents[1]
 class H(SimpleHTTPRequestHandler):
  def log_message(self,*a):pass
@@ -24,6 +24,36 @@ try:
   assert 'Jardín' in p.inner_text('#guideFollow');p.locator('#guideFollow').click();p.wait_for_function('!document.getElementById("ringRoute").hidden')
   assert p.evaluate('[__r.S.wx,__r.S.wy,__r.S.sparks]')==before,'following is free and does not warp'
   assert p.evaluate('__r.ringRoute().id')=='jardin'
+  # Walk using the actual keyboard handler; never assign world coordinates or call ringGo.
+  initial=p.evaluate('({route:__r.ringRoute(),distance:__r.S.playerProfile.distanceUnits,spent:__r.sparkEconomy.spent})')
+  p.locator('#w').focus();held=set();start=time.monotonic()
+  while True:
+   observed=p.evaluate('({run:__r.placeRun()?.id,aim:__r.ringRoute()})')
+   if observed.get('run')=='jardin':break
+   assert time.monotonic()-start<110,'walking did not reach Jardín'
+   aim=observed['aim'];assert aim, 'walking guide lost its target'
+   want=set()
+   if abs(aim['dx'])>10:want.add('ArrowRight' if aim['dx']>0 else 'ArrowLeft')
+   if abs(aim['dy'])>10:want.add('ArrowDown' if aim['dy']>0 else 'ArrowUp')
+   for k in held-want:p.keyboard.up(k)
+   for k in want-held:p.keyboard.down(k)
+   held=want;p.wait_for_timeout(180)
+  for k in held:p.keyboard.up(k)
+  walking=p.evaluate('({id:__r.placeRun().id,distance:__r.S.playerProfile.distanceUnits,spent:__r.sparkEconomy.spent})')
+  assert walking['spent']==initial['spent'],'walking cannot charge a jump'
+  assert walking['distance']>initial['distance']+initial['route']['distance']*.6,(initial,walking)
+  print('WALK',json.dumps({'elapsedSeconds':round(time.monotonic()-start,1),'initialPortalDistance':round(initial['route']['distance']),'walkedUnits':round(walking['distance']-initial['distance']),'arrival':walking['id'],'spentDelta':walking['spent']-initial['spent']}),flush=True)
+  # Accelerate only the reward boundary, through its real commit function; walking above is unmodified.
+  assert p.evaluate('__r.placeFinish("jardin")')
+  p.wait_for_function('!document.getElementById("mPlace").hidden');p.locator('#placeNext').click()
+  assert p.evaluate('__r.ringRoute().id')=='dunas'
+  from browser_helpers import keep_place_on_reload
+  keep_place_on_reload(p);p.reload();p.wait_for_function('!!window.__r?.ringRoute&&__r.inWorld()');p.evaluate("__r.setJourneyMode('libre')")
+  p.evaluate("document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)")
+  assert p.evaluate('__r.S.lugares.stars.jardin[0]') and p.evaluate('__r.ringRoute().id')=='dunas','completion and next destination survive reload'
+  # Returning to Camino and following again is a valid visible action.
+  p.locator('#bMenu').click();p.evaluate("document.getElementById('menuMore').open=true");p.locator('#bPrimary').click();p.wait_for_function('__r.S.mode==="camino"')
+  p.locator('#bMenu').click();p.locator('#bContinue').click();p.wait_for_function('__r.inWorld()&&__r.ringRoute()?.id==="dunas"')
   # Explicit practice still works after completing the campaign.
   p.evaluate('__r.$("bGuide").click()');p.locator('#guidePractice').click();p.wait_for_function('__r.firstJourneyState.next==="voice"')
   assert p.locator('#firstJourney').is_visible() and 'Activa el sonido' in p.inner_text('#firstJourneyText')

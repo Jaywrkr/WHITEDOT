@@ -1,0 +1,135 @@
+{
+  "scope": "Two delegated simulated design reviews consolidated; not real creator opinions, independent human judges or listening. Measures technical integration with human acceptance pending.",
+  "version": "2.3.0-alpha.187",
+  "axes": [
+    "Visual",
+    "Audio",
+    "Creatividad",
+    "Sensación",
+    "Cohesión",
+    "Pulido"
+  ],
+  "profiles": [
+    {
+      "name": "Mizuguchi",
+      "scores": [
+        8,
+        7.5,
+        8.5,
+        8,
+        8,
+        8
+      ],
+      "mean": 8.0
+    },
+    {
+      "name": "Iwai",
+      "scores": [
+        7.5,
+        8,
+        8.5,
+        8,
+        8,
+        8
+      ],
+      "mean": 8.0
+    },
+    {
+      "name": "Matsuura",
+      "scores": [
+        7.5,
+        8,
+        8.5,
+        8,
+        8,
+        7.5
+      ],
+      "mean": 7.916666666666667
+    },
+    {
+      "name": "Simogo",
+      "scores": [
+        8,
+        7.5,
+        8.5,
+        8,
+        8,
+        8
+      ],
+      "mean": 8.0
+    },
+    {
+      "name": "Proteus",
+      "scores": [
+        8,
+        8,
+        8.5,
+        8,
+        8,
+        7.5
+      ],
+      "mean": 8.0
+    },
+    {
+      "name": "Chen",
+      "scores": [
+        7.5,
+        8,
+        8,
+        8,
+        7.5,
+        7.5
+      ],
+      "mean": 7.75
+    },
+    {
+      "name": "Roset",
+      "scores": [
+        8,
+        7.5,
+        8.5,
+        8,
+        8,
+        8
+      ],
+      "mean": 8.0
+    },
+    {
+      "name": "Wong",
+      "scores": [
+        7.5,
+        8,
+        8,
+        8,
+        7.5,
+        7.5
+      ],
+      "mean": 7.75
+    },
+    {
+      "name": "Pope",
+      "scores": [
+        7.5,
+        8,
+        8,
+        7.5,
+        7.5,
+        7.5
+      ],
+      "mean": 7.666666666666667
+    },
+    {
+      "name": "Wintory",
+      "scores": [
+        7.5,
+        7.5,
+        8.5,
+        8,
+        8,
+        8
+      ],
+      "mean": 7.916666666666667
+    }
+  ],
+  "mean": 7.9
+}

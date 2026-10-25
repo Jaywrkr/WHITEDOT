@@ -13,7 +13,7 @@ Diseño aprobado por Jay el 23 de octubre de 2026. Es la guía del juego y sus r
 
 ## Reglas fijas
 
-1. **Solo a tiempo pasa algo**, en todas partes. En el Mundo libre se toca cuando se quiera y todo suena, pero solo a tiempo da chispas (desde H5).
+1. **Solo a tiempo pasa algo**, en todas partes. En el Mundo libre recoger fragmentos da su base; romper a tiempo multiplica el valor×2 y la racha×3 (K2 sustituye H5).
 2. **Cada lugar:** una barra, un verbo, un objeto dorado al final y un último pulso a tiempo para cerrarlo.
 3. **Nadie pierde:** no hay derrota; solo más o menos estrellas y chispas.
 4. **Texto mínimo:** el Viaje no tiene rótulos; cada lugar dice cada frase una sola vez, la primera. El narrador habla solo en la tarjeta de la ronda y en la Bitácora.
@@ -65,7 +65,7 @@ Tras el Viaje, el anillo se abre **en orden**, como las pistas de un disco: cada
 |---|---|
 | Ronda completada en un lugar | 60 + 6 por cada 10 % a tiempo (60–120) |
 | Ronda Maestro | El doble (120–240) |
-| Mundo libre | Fuera de tiempo, 0 (desde H5); a tiempo ×2; con racha de 8 o más, ×3 |
+| Mundo libre | Fragmentos base×1; a tiempo ×2; con racha de8 o más, ×3 (K2) |
 | Encuentro salvaje | 15 |
 | Remezcla diaria | 30, y 20 más con récord |
 | Logros | 0–25 |
@@ -85,7 +85,7 @@ Cada lugar da chispas completas en sus tres primeras rondas del día y la mitad 
 ## Dónde están y cómo se llega
 
 - Los 11 portales dorados forman un anillo alrededor del Refugio, cada uno en su bioma. Cada portal suena, más fuerte cuanto más cerca; los cerrados muestran las estrellas que piden.
-- Una flecha en el borde de la pantalla señala el lugar más cercano sin jugar; el mapa los muestra todos con sus estrellas.
+- Una flecha bidimensional y el nombre/distancia señalan el siguiente lugar; Seguir activa rumbo a pie. El mapa muestra los once y sus estrellas.
 - Viaje rápido desde la mesa del mapa del Refugio o desde el menú, a lugares ya visitados.
 - No hay orden obligatorio: se juega cualquiera de los abiertos.
 
@@ -243,3 +243,5 @@ Detalle, comprobaciones y aceptación pendiente en [Cierre](PULIDO_CIERRE.md) y 
 ## K2 · valor base de fragmentos (alpha.183)
 
 Jay sustituye la regla H5 de moneda: en Mundo libre recoger siempre da el valor base×1; romper a tiempo×2 y desde ocho aciertos seguidos×3. La multiplicación corresponde al golpe que rompe el cristal y se cobra al recoger cada fragmento. Pendientes antiguos con×0 recuperan su valor base; los fragmentos ya recogidos no se vuelven a pagar. Estrellas, retos, precios y saldo conservan sus reglas; no cambian síntesis ni distribución.
+
+Estado vigente K1–K6: [entrega alpha.187](CIERRE_K.md). Las cifras históricas H5 de duración de tienda usaban×0 fuera de tempo; K2 cambia esa base. La simulación actual está en `scripts/spark-economy.mjs`; no son medidas de personas. El viaje rápido voluntario admite los capítulos ya completos, sin exigir descubrir de nuevo su portal.

@@ -81,7 +81,7 @@ export function initialize(runtime){
  function equip(id){const q0=book();if(q0.version!==1)return false;if(id&&(!q0.purchases[id]||!shopPiece(id)))return false;const ok=commit(q=>{q.wear={...(q.wear||{})};q.on={...(q.on||{})};if(!id){q.wear={};q.on={};q.equipped='';return;}const p=shopPiece(id);if(shopSlot(p.slot)?.many)q.on[id]=true;else q.wear[p.slot]=id;q.equipped=id;});if(ok){trail=[];render();}return ok;}
  function unequip(id){const q0=book();if(q0.version!==1||!wearing(q0,id))return false;const ok=commit(q=>{const p=shopPiece(id);q.wear={...(q.wear||{})};q.on={...(q.on||{})};if(shopSlot(p.slot)?.many)delete q.on[id];else delete q.wear[p.slot];if(q.equipped===id)q.equipped=Object.values(q.wear).find(v=>shopPiece(v))||'';});if(ok){trail=[];render();}return ok;}
  function goalText(){const q=book(),progress=sparkSetProgress(owner),goal=q.goal;
-  if(goal==='none')return '';if(goal==='jump')return owner.sparks>=SPARK_JUMP_COST?'Salto disponible · '+SPARK_JUMP_COST+' ✦':'Próximo salto · '+sparkNumber(owner.sparks)+'/'+SPARK_JUMP_COST+' ✦';
+  if(goal==='none')return '';if(goal==='jump')return owner.sparks>=SPARK_JUMP_COST?'Salto disponible · '+SPARK_JUMP_COST+' ✦':'Otro paisaje · '+sparkNumber(owner.sparks)+'/'+SPARK_JUMP_COST+' ✦';
   const p=SPARK_SHOP.find(p=>'shop:'+p.id===goal);if(p)return q.purchases[p.id]?p.name+' · Meta cumplida':p.name+' · '+Math.min(owner.sparks,p.cost)+'/'+p.cost+' ✦';
   const set=SPARK_SETS.find(p=>'set:'+p.id===goal);if(set)return set.name+' · '+(q.claims['set:'+set.id]?'Meta cumplida':Math.min(progress[set.id],set.need)+'/'+set.need);
   if(goal==='universe'){const u=universeProgress(owner);return q.claims['universe:complete']?SPARK_UNIVERSE.name+' · Meta cumplida':'Universo · '+u.value+'/'+u.need;}
@@ -123,7 +123,7 @@ export function initialize(runtime){
   c.restore();
  }
  $('sparkGoal').onclick=()=>open();
- for(const id of ['bJump','sparkJump'])$(id).textContent='Saltar · '+SPARK_JUMP_COST+' ✦';
+ for(const id of ['bJump','sparkJump'])$(id).textContent='Otro paisaje · '+SPARK_JUMP_COST+' ✦';
  $('sparkJump').onclick=()=>{if(sparkNumber(runtime.S.sparks)<SPARK_JUMP_COST){$('sparkStatus').textContent='Necesitas '+(SPARK_JUMP_COST-sparkNumber(runtime.S.sparks))+' chispas más.';return;}$('mCube').hidden=true;runtime.jumpPracticePlace();};
  $('sparkBack').onclick=()=>{$('mCube').hidden=true;runtime.returnPracticePlace();};
  $('sparkShop').onclick=e=>{const b=e.target.closest('[data-spark-buy]');if(b)buy(b.dataset.sparkBuy);};

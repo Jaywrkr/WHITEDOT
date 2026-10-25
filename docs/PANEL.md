@@ -1,6 +1,6 @@
 # El panel creativo de Kubono
 
-Guía para repetir la auditoría. La [sexta sesión](panel/sesion-6/informe.md) incorpora el feedback real de Jay: acceso al anillo, final5 y menú. Propone K1–K5, aún sin implementar, conservando la generación musical y del universo. La evidencia técnica se separa de la aceptación de Jay, las personas y el despliegue. La siguiente sesión conservará los IDs abiertos; no abre contenido nuevo ni cambia la base para mejorar una nota simulada.
+Guía para repetir la auditoría. La [sexta sesión](panel/sesion-6/informe.md) incorpora el feedback real de Jay: acceso al anillo, final5 y menú. K1–K6 corrigen esos puntos; el cierre técnico y sus pendientes están en CIERRE_K.md, conservando la generación musical y del universo. La evidencia técnica se separa de la aceptación de Jay, las personas y el despliegue. La siguiente sesión conservará los IDs abiertos; no abre contenido nuevo ni cambia la base para mejorar una nota simulada.
 
 ## 1. Qué es
 
@@ -104,7 +104,7 @@ Un resumen corto en español: la media nueva, las tres o cuatro cosas que más i
 
 ## 7. Lo que Jay ya decidió (no reabrir)
 
-- El verbo es **tocar a tiempo**. Nunca suena mal; solo a tiempo cuenta (y da chispas).
+- El verbo es **tocar a tiempo**. Se busca armonía agradable. El ritmo mejora premios; desde K2 recoger fragmentos también da su valor base fuera de tempo.
 - **El Viaje** es el juego principal (Camino y cinco capítulos, ~15–20 min) y termina en el Refugio con tu canción; después se abre el Mundo libre.
 - Once lugares en anillo, abiertos **en orden**. Se gana con los once; las 33 ★ son la versión maestra. ★ = fragmento de la capa del lugar, ★★ = capa entera, ★★★ = variación.
 - **★★ al 75 %** a tiempo; **★★★ al 70 %** en la ronda Maestro.
@@ -135,7 +135,7 @@ Registro histórico. El estado vigente está en la quinta sesión y el cierre J1
 
 ## 9. Próxima comprobación
 
-Leer `AGENTS.md`, `HANDOFF.md`, la sexta sesión y el registro de hallazgos. El relato de Jay reabre U03/U04, añade A04/U05–U08 y aporta evidencia negativa a V01. K1–K5 son propuestas pendientes de ejecución, no correcciones ya entregadas. Incorporar las capturas adicionales y la aceptación de cada fase; conservar lo aún no comprobado. Repetir el panel cuando haya cambios o nueva evidencia, sin abrir otra expansión automáticamente.
+Leer `AGENTS.md`, `HANDOFF.md`, la sexta sesión y el registro de hallazgos. El relato de Jay reabre U03/U04, añade A04/U05–U08 y aporta evidencia negativa a V01. K1–K6 están implementadas técnicamente; su verificación y pendientes humanos están en CIERRE_K.md. Incorporar las capturas adicionales y la aceptación de cada fase; conservar lo aún no comprobado. Repetir el panel cuando haya cambios o nueva evidencia, sin abrir otra expansión automáticamente.
 
 ## 10. Ciclo de cierre
 
@@ -154,3 +154,7 @@ Los expedientes y análisis citan rutas y versiones de su día (por ejemplo `3-e
 - [Sesión 5](panel/sesion-5/informe.md) · [expediente](panel/sesion-5/expediente.md) · [preservación](panel/sesion-5/evidencia/preservacion.json). Notas provisionales del mismo agente, no jurado independiente ni escucha humana.
 
 - [Sesión 6](panel/sesion-6/informe.md) · [expediente](panel/sesion-6/expediente.md) · [plan K1–K5](panel/sesion-6/plan.md). Nueva evidencia de navegación y final5; no se implementa por esta revisión.
+
+## Cierre K1–K6
+
+[Reevaluación técnica](panel/sesion-6/cierre-k6.md), alpha.187: nota provisional7,9, antes7,2; dos revisiones simuladas consolidadas, sin escucha humana. Los hallazgos corregidos conservan sus límites. V01 y P01 siguen pendientes; no se abre otro catálogo por una nota. [Entrega](CIERRE_K.md).

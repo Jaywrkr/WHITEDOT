@@ -19,7 +19,7 @@
 - Diferenciar **Otro paisaje · 20 ✦** de continuar retos. El salto exploratorio y el regreso gratis se conservan; no se cobra por el camino principal ni se promete llegar al anillo.
 - Mostrar cinco de once completos y seis por descubrir. Distinguir regiones recorridas de retos.
 
-**Bien cuando:** tras los créditos, Jardín comienza en como máximo dos acciones, desde dentro o fuera del Refugio, con saldo cero. Ocho rumbos señalan correctamente; la referencia se conserva al recargar/desplegar casa. Salto y regreso respetan saldo, posición y distancia caminada. Una migración fallida no modifica el guardado.
+**Bien cuando:** tras los créditos, el rumbo a Jardín se activa en como máximo dos acciones, con saldo cero; después se llega caminando. Ocho rumbos señalan correctamente; la referencia se conserva al recargar/desplegar casa. Salto y regreso respetan saldo, posición y distancia caminada. Una migración fallida no modifica el guardado.
 
 ## K3 · Final de cinco capítulos
 
@@ -62,7 +62,7 @@
 ## Estado de entrega
 
 - K1 · alpha.182: rumbo con nombre/distancia, ocho direcciones y ancla migrada durable. «Seguir» no teletransporta ni cobra. Pruebas de anillo incluyen escritura fallida y despliegue de Refugio.
-- K2–K6: pendientes en este commit. Las referencias a un acceso directo automático del plan inicial quedan sustituidas por la guía a pie aprobada.
+- K2–K6: completadas técnicamente en las ramas siguientes. Las referencias a un acceso directo automático del plan inicial quedan sustituidas por la guía a pie aprobada.
 
 ## K2 · economía de chispas · implementada alpha.183
 
@@ -79,3 +79,7 @@ Una continuación y tres destinos; Bitácora/Ajustes secundarios, sonido dentro 
 ## K5 · recorrido contextual · implementada alpha.186
 
 Cinco de once y seis por descubrir; Explorar a pie activa rumbo desde la salida del Refugio. Guía con acción hacia el mismo destino y experiencias opcionales plegadas. La lección antigua de guardar no reaparece al terminar el Viaje, pero sus hechos se conservan y Practicar permite repetirla. K6 comprueba el recorrido caminando, la persistencia y los avisos.
+
+## K6 · verificación técnica completada
+
+Las seis fases están implementadas; [entrega, pruebas y pendientes reales](../../CIERRE_K.md). Candidato alpha.187:246 suites,297 archivos protegidos, marcha real a Jardín y48 muestras de UI normales/texto doble. [Reevaluación](cierre-k6.md). Aceptación humana y CI del PR permanecen separados.

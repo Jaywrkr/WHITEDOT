@@ -1,6 +1,6 @@
 # Traspaso · cierre K1–K6
 
-**Código 2.3.0-alpha.186.** Leer [AGENTS](AGENTS.md), [auditoría 6](docs/panel/sesion-6/informe.md) y [plan](docs/panel/sesion-6/plan.md).
+**Código 2.3.0-alpha.187.** Leer [AGENTS](AGENTS.md), [auditoría 6](docs/panel/sesion-6/informe.md) y [plan](docs/panel/sesion-6/plan.md).
 
 ## Petición vigente
 
@@ -15,11 +15,11 @@ Priorizar caminar: «Seguir» orienta, no transporta automáticamente al acabar 
 | K3 · Final del Viaje | `pulido/k3-final-viaje` | Entregada |
 | K4 · Interfaz clara | `pulido/k4-interfaz-clara` | Entregada |
 | K5 · Recorrido contextual | `pulido/k5-recorrido-contextual` | Entregada |
-| K6 · Validación de cierre | `pulido/k6-validacion-cierre` | Pendiente |
+| K6 · Validación de cierre | `pulido/k6-validacion-cierre` | Entregada |
 
 ## Última comprobación
 
-K5: 246 suites Node, auditoría, guía en cuatro tamaños, Viaje hasta créditos en teléfono/escritorio y after_journey_smoke aprobados. El aviso antiguo de guardar no aparece automáticamente; no se borran hechos. Seguir no cobra ni teletransporta y Practicar sigue disponible.
+K6: 246 suites Node, auditoría estática, 297 archivos protegidos, 48 muestras UI normales/texto doble y recorridos afectados aprobados. Marcha a Jardín sin warp/gasto, estrella y rumbo a Dunas después de recargar. Cinco renders final5 y396 contextos; aceptación en teléfono, cinco sesiones y CI de PR pendientes. Detalle en docs/CIERRE_K.md.
 
 Una entrega técnica no sustituye la escucha física de Jay ni cinco sesiones sin ayuda. Los IDs y pendientes humanos permanecen en [el registro](docs/panel/sesion-4/seguimiento.json). La auditoría 6 vale7,2 provisional antes de las correcciones; no se eleva esa nota por un commit.
 

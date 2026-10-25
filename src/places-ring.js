@@ -27,7 +27,7 @@ export function nextPortal(spots,places,journey,from){const path=nextOnPath(plac
 export function besidePortal(spot,center){const d=Math.hypot(center.x-spot.x,center.y-spot.y)||1;return {x:Math.round(spot.x+(center.x-spot.x)/d*PORTAL_REACH*3),y:Math.round(spot.y+(center.y-spot.y)/d*PORTAL_REACH*3)};}
 export function initialize(runtime){
  const $=id=>runtime.$?.(id),calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
- let cache=null,inside=null,said=null,target=null;
+ let cache=null,inside=null,said=null,target=null,owner=null;
  const data=()=>runtime.placesData?.();
  const name=id=>PLACES.find(p=>p.id===id)?.name||id;
  function active(){const S=runtime.S;return !!(S&&runtime.inWorld?.()&&S.mode==='world'&&(S.layer||'superficie')==='superficie'&&freeOpen(S.journey)&&!runtime.placeRun?.()&&!runtime.journeyFinaleState?.().running&&data());}
@@ -35,8 +35,8 @@ export function initialize(runtime){
  function center(){const S=runtime.S,d=data();if(!d)return null;if(d.ringFixed&&d.center)return d.center;
   const st=S.studio,p=st&&Number.isFinite(st.x)&&Number.isFinite(st.y)?{x:Math.round(st.x),y:Math.round(st.y)}:d.center||{x:Math.round(S.wx),y:Math.round(S.wy)};
   if(d.readOnly)return p;const before=d.center,fixed=d.ringFixed;d.center=p;d.ringFixed=true;if(runtime.save?.()===false){d.center=before;d.ringFixed=fixed;}return p;}
- function route(){if(!active())return null;const d=data(),next=nextPortal(spots(),d,runtime.S.journey),aim=target&&spots().find(s=>s.id===target&&placeOpen(d,s.id,runtime.S.journey)&&!stars(s.id)[0])||next;if(!aim)return null;return {...aim,name:name(aim.id),dx:aim.x-runtime.S.wx,dy:aim.y-runtime.S.wy,distance:Math.hypot(aim.x-runtime.S.wx,aim.y-runtime.S.wy)};}
- function guide(id){for(const key of ['mMenu','mLugares','mPlace','mGuide'])if($(key))$(key).hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();if(!active())return false;const aim=spots().find(s=>s.id===(id||nextPortal(spots(),data(),runtime.S.journey)?.id)&&placeOpen(data(),s.id,runtime.S.journey));if(!aim)return false;target=aim.id;runtime.stopAutopilot?.();return true;}
+ function route(){if(owner!==runtime.S){owner=runtime.S;target=null;}if(!active())return null;const d=data(),next=nextPortal(spots(),d,runtime.S.journey),aim=target&&spots().find(s=>s.id===target&&placeOpen(d,s.id,runtime.S.journey)&&!stars(s.id)[0])||next;if(!aim)return null;return {...aim,name:name(aim.id),dx:aim.x-runtime.S.wx,dy:aim.y-runtime.S.wy,distance:Math.hypot(aim.x-runtime.S.wx,aim.y-runtime.S.wy)};}
+ function guide(id){for(const key of ['mMenu','mLugares','mPlace','mGuide'])if($(key))$(key).hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();if(runtime.S.mode==='camino'&&freeOpen(runtime.S.journey))runtime.enterWorld?.({automatic:true});if(!active())return false;const aim=spots().find(s=>s.id===(id||nextPortal(spots(),data(),runtime.S.journey)?.id)&&placeOpen(data(),s.id,runtime.S.journey));if(!aim)return false;owner=runtime.S;target=aim.id;runtime.stopAutopilot?.();return true;}
 
  function spots(){const c=center();if(!c)return [];if(!cache||cache.x!==c.x||cache.y!==c.y)cache={x:c.x,y:c.y,spots:portalSpots(c,(x,y)=>!!runtime.regionOfPos?.(x,y)?.sea)};return cache.spots;}
  const stars=id=>data()?.stars?.[id]||[false,false,false];
@@ -69,7 +69,7 @@ export function initialize(runtime){
    const col=(cx2,from,to,a)=>{const g=c.createLinearGradient(cx2,from,cx2,to);g.addColorStop(0,'rgba(240,210,122,.38)');g.addColorStop(1,'rgba(240,210,122,0)');c.globalAlpha=a*(still?.8:.7+.3*Math.sin(t/600));c.fillStyle=g;c.fillRect(cx2-9,Math.min(from,to),18,Math.abs(to-from));};
    if(x>-60&&x<W+60&&y>-40&&y<H+40)col(x,Math.min(H,y),Math.max(0,y-H),1);
    else{const e=edgeColumn(x,y,W,H),far=Math.hypot(next.x-S.wx,next.y-S.wy);col(e.x,H,0,Math.max(.45,1-far/(RING_RADIUS*2)));}}
-  if(aim){const e=routeEdge(aim.dx,aim.dy,W,H);c.save();c.translate(e.x,e.y);c.rotate(e.angle);c.globalAlpha=.9;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.moveTo(-7,-5);c.lineTo(1,0);c.lineTo(-7,5);c.stroke();c.restore();}
+  if(aim&&!runtime.firstJourneyState?.next){const e=routeEdge(aim.dx,aim.dy,W,H);c.save();c.translate(e.x,e.y);c.rotate(e.angle);c.globalAlpha=.9;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.moveTo(-7,-5);c.lineTo(1,0);c.lineTo(-7,5);c.stroke();c.restore();}
   c.restore();}
  // On each bar's «1», the nearest portal sounds its note, louder the closer you are; a closed one, softer.
  // Each from its side (plan H6), so a portal off screen can be found by ear.
@@ -81,8 +81,8 @@ export function initialize(runtime){
   let best=null,far=PORTAL_HEAR,index=0;spots().forEach((s,i)=>{const d=Math.hypot(s.x-S.wx,s.y-S.wy);if(d<far){far=d;best=s;index=i;}});if(!best)return;
   const near=1-far/PORTAL_HEAR,open=placeOpen(data(),best.id,S.journey);sound(best,index,time,(open?.09:.035)*near*near);}
  // Fast travel from the map to the places already entered: beside their portal, free.
- function travel(id){if(!active())return false;const s=spots().find(q=>q.id===id);if(!s||!data().seen[id])return false;const p=besidePortal(s,center()||s);runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.narrate?.('travel');runtime.enterFx=1;$('mJournal')&&($('mJournal').hidden=true);runtime.save?.();return true;}
- function travelList(){const box=$('ringTravel');if(!box)return;const d=data(),seen=active()?PLACES.filter(p=>d.seen[p.id]):[];box.hidden=!seen.length;box.innerHTML=seen.length?'<h3>Ir a</h3><div class="row"></div>':'';
+ function travel(id){if(!active())return false;const s=spots().find(q=>q.id===id);if(!s||!placeOpen(data(),id,runtime.S.journey)||!data().seen[id]&&!stars(id)[0])return false;const p=besidePortal(s,center()||s);runtime.S.wx=p.x;runtime.S.wy=p.y;runtime.narrate?.('travel');runtime.enterFx=1;$('mJournal')&&($('mJournal').hidden=true);runtime.save?.();return true;}
+ function travelList(){const box=$('ringTravel');if(!box)return;const d=data(),seen=active()?PLACES.filter(p=>d.seen[p.id]||stars(p.id)[0]):[];box.hidden=!seen.length;box.innerHTML=seen.length?'<h3>Ir a</h3><div class="row"></div>':'';
   const row=box.querySelector('.row');for(const p of seen){const b=document.createElement('button');b.textContent=`${p.name} ${'★'.repeat(stars(p.id).filter(Boolean).length)}`.trim();b.onclick=()=>travel(p.id);row.appendChild(b);}}
  // Leaving a round from the menu: only shown while a round is being played.
  const leave=$('bLeavePlace');if(leave){leave.onclick=()=>{$('mMenu')&&($('mMenu').hidden=true);runtime.abandonPlace?.();};$('bMenu')?.addEventListener('click',()=>{leave.hidden=!runtime.placeRun?.();});}

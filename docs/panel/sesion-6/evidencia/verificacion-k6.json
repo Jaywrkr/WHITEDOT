@@ -1,0 +1,123 @@
+{
+  "version": "2.3.0-alpha.187",
+  "baseMain": "3c5fd7b6",
+  "parentPhase": "a0ccfffe",
+  "scope": "K1–K6 local focused verification; no full browser/audio catalogue rerun, remote candidate CI, physical listening or independent human sessions claimed",
+  "node": {
+    "result": "PASS",
+    "suites": 246
+  },
+  "release": "PASS",
+  "preservation": {
+    "result": "PASS",
+    "protectedFiles": 297,
+    "limit": "Reviewed UI/navigation/economy/finale integration excluded explicitly; radio, generators, voice implementations and world assets remain checked"
+  },
+  "walking": {
+    "elapsedSeconds": 29.2,
+    "initialPortalDistance": 6000,
+    "walkedUnits": 6839,
+    "arrival": "jardin",
+    "spentDelta": 0
+  },
+  "walkingScope": "Keyboard controller reads route direction; no coordinate writes/ringGo during movement. Post-Journey save fixture, then real reward boundary accelerated via placeFinish, UI guide to Dunas and reload verified. Not a human discovery session.",
+  "ui": {
+    "normalStates": 24,
+    "doubleTextStates": 24,
+    "horizontalOverflows": 0,
+    "visibleChildOverflows": 0,
+    "viewports": [
+      [
+        320,
+        568
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        844,
+        390
+      ],
+      [
+        1280,
+        800
+      ]
+    ],
+    "method": "normal local hostname, webdriver=false; doubled computed text sizes are a controlled accessibility sample, not OS/device certification"
+  },
+  "audio": {
+    "contexts": 396,
+    "renders": 5,
+    "maxRawBusPeak": 0.296,
+    "auditorListening": false,
+    "limits": "Synthetic chapter phrases into actual final5 player; full game output chain and human taste are not certified by this peak. Early/late cancellation use modern hold API; fallback inspected in code."
+  },
+  "flows": {
+    "K1/ring": [
+      "PASS places ring on phone and desktop: eleven portals around the Refugio, a complete place asks Jugar, Libre (no bar) or Maestro with ★★, closed ones open after the one before it, leaving and reloading bring you back to the portal, fast travel from the map, the ring follows the Refugio"
+    ],
+    "K2/browser": [
+      "PASS persistent mining, paid/free travel, failed-write refunds, purchase/preview/equip, one-time sets, chosen goal, responsive hub, timed nonblocking cards, short boxes/undo and reload"
+    ],
+    "K3/browser": [
+      "PASS Journey finale on phone and desktop: bolts on the beat in the Tormenta, echoes in the Vacío, the Refugio plays your journey with a gold sky and credits, the free World opens and stays open"
+    ],
+    "K3/audio": [
+      "PASS actual finale5: five renders, no clipping, bounded level, silence and early exit; peak 0.296"
+    ],
+    "K4/menu": [
+      "PASS clean groups, one sound sheet, silent volume and persisted settings at 320",
+      "PASS clean groups, one sound sheet, silent volume and persisted settings at 390",
+      "PASS clean groups, one sound sheet, silent volume and persisted settings at 844"
+    ],
+    "K4/interface": [
+      "PASS UI 320×568: eight real sheets, optional account entry available in local mode, touch targets, no overflow, summary/focus return, silent settings and keyboard effects",
+      "PASS UI 360×640: eight real sheets, optional account entry available in local mode, touch targets, no overflow, summary/focus return, silent settings and keyboard effects",
+      "PASS UI 390×844: eight real sheets, optional account entry available in local mode, touch targets, no overflow, summary/focus return, silent settings and keyboard effects",
+      "PASS UI 844×390: eight real sheets, optional account entry available in local mode, touch targets, no overflow, summary/focus return, silent settings and keyboard effects",
+      "PASS UI 1280×800: eight real sheets, optional account entry available in local mode, touch targets, no overflow, summary/focus return, silent settings and keyboard effects"
+    ],
+    "K5/guide": [
+      "PASS illustrated quiet guide, factual replay, saved extensions and four native TD motifs at 320",
+      "PASS illustrated quiet guide, factual replay, saved extensions and four native TD motifs at 390",
+      "PASS illustrated quiet guide, factual replay, saved extensions and four native TD motifs at 844",
+      "PASS illustrated quiet guide, factual replay, saved extensions and four native TD motifs at 1280"
+    ],
+    "K5/journey": [
+      "PASS Journey finale on phone and desktop: bolts on the beat in the Tormenta, echoes in the Vacío, the Refugio plays your journey with a gold sky and credits, the free World opens and stays open"
+    ],
+    "K5/after": [
+      "PASS post-Journey: no old saving prompt, facts preserved, 5/11 and six remaining, free walking guide without teleport and explicit practice"
+    ],
+    "K6/walk-final": [
+      "WALK {\"elapsedSeconds\": 29.2, \"initialPortalDistance\": 6000, \"walkedUnits\": 6839, \"arrival\": \"jardin\", \"spentDelta\": 0}",
+      "PASS post-Journey: no old saving prompt, facts preserved, 5/11 and six remaining, free walking guide without teleport and explicit practice"
+    ],
+    "K6/auto": [
+      "mobile: slow autopilot, unlimited exploration, active session clock, menu pause, manual/stop cancellation and destination arrival PASS",
+      "desktop: slow autopilot, unlimited exploration, active session clock, menu pause, manual/stop cancellation and destination arrival PASS"
+    ],
+    "K6/jam": [
+      "mobile: eco records your sounds and loops them, delete, band joins by role and plays PASS",
+      "desktop: eco records your sounds and loops them, delete, band joins by role and plays PASS"
+    ],
+    "K6/fx": [
+      "mobile: fx pad filters and space, clean on release, hold, eco, robot, tape stop, does not move the pixel PASS",
+      "desktop: fx pad filters and space, clean on release, hold, eco, robot, tape stop, does not move the pixel PASS"
+    ],
+    "K6/smoke": [
+      "mobile: challenges, day rollover, paused lamp, studio persistence, sharing PASS",
+      "desktop: challenges, day rollover, paused lamp, studio persistence, sharing PASS"
+    ],
+    "K6/volume": [
+      "PASS silent single-place volume, persisted zero, protected 1.5x makeup gain and no automatic organ oscillator bank"
+    ],
+    "K6/silence": [
+      "mobile: UI keyboard does not move or pulse, settings do not pin notes, entry has no jingle and canvas still plays PASS",
+      "desktop: UI keyboard does not move or pulse, settings do not pin notes, entry has no jingle and canvas still plays PASS"
+    ]
+  },
+  "humanAcceptance": "V01 remains open; Jay must hear final5 in phone speaker/headphones and five unaided sessions remain required",
+  "remoteCandidateCI": false
+}

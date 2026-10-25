@@ -462,3 +462,9 @@ Rama `pulido/k4-interfaz-clara` desde K3. Continuar/Seguir principal, tres desti
 ## alpha.186 · K5 · guía tras el Viaje
 
 Rama `pulido/k5-recorrido-contextual` desde K4. Créditos explican cinco completados y seis nuevos; Explorar a pie sale del Refugio y activa el rumbo, sin trasladar al portal. La guía ofrece el mismo destino y agrupa experiencias opcionales. Tras terminar el Viaje se oculta la antigua lección automática de guardar sin borrar hechos; Practicar la reactiva voluntariamente. Formatos futuros y progreso se conservan.
+
+## alpha.187 · K6 · verificación e integración del cierre
+
+Rama `pulido/k6-validacion-cierre` desde K5. Marcha con teclas reales hasta Jardín sin asignar coordenadas, recompensa acelerada por el controlador real, rumbo a Dunas y recarga. Seguir también funciona tras volver al Camino; regreso al Camino queda en Más y sus controles/pruebas reflejan su ubicación. Regiones y Otro paisaje distinguen metas; viaje rápido voluntario a capítulos ya completos. Dos desbordamientos con texto doble corregidos. Guardia de preservación permite solo la integración/UI autorizadas y conserva297 archivos/voz/generación/arte.
+
+[Entrega](docs/CIERRE_K.md):246 suites,48 muestras UI y recorridos afectados aprobados; cinco renders final5 reutilizados con código sonoro intacto. Canonical U03–U09/A04/E01 actualizados; aceptación humana/CI remoto no declarados. Nota técnica provisional7,9 del panel simulado, sin escucha del auditor. Main no se modifica.
