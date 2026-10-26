@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.215**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.216**. Las entradas describen su revisión, no certifican producción.
+
+## Q1 · Reglas a la vista · 2.3.0-alpha.216
+
+Rama `panel11/q1-reglas-a-la-vista`, sobre `claude/charming-darwin-dvbfc7` (informe de la sesión 11). Nesbitt y Hodent; Roset para el dorado. D10-B de Jay para ✦.
+
+- Dorado solo para lo ganado. Las cifras de lugares van en blanco: «Lugares 5 / 11», el estante del Refugio («★ N / 33», sin «LUGARES») y la línea de remezcla. «Explorar a pie» es un botón blanco. Las marcas de no leído de Bitácora, Menú y Tu cubo van en blanco. En el mapa, la marca del Refugio también. Las ★ bajo trofeos y portales siguen doradas.
+- ✦ sigue dorada, pero ya no es mayor que ★: las tres cifras del HUD miden 11 px, peso 500. Sin hueco cuando `#sparkGain` está vacío; las tres acaban en la misma x.
+- Una cifra por concepto: `#houseStars` dice «Lugares», sin número (conserva su ID). Una palabra por cuenta: el mapa dice «portales abiertos» y «tu Refugio».
+- «Vista tranquila»: título y subtítulo dicen el estado. El subtítulo nombra Tu cubo, cifras y herramientas.
+- Un mensaje al salir del Viaje: fuera «Se abre el Mundo libre.». «Prólogo» va a la Bitácora sin aviso. El final aterriza en el Refugio sin la voz de primera visita (se oye en la primera visita real). Hasta el primer portal, un color o una pieza ganados esperan en Tu cubo sin aviso.
+- No cambia: música, cubo, mapas, guardados, umbrales ni el dorado de los objetos de juego, del cielo del final ni de los títulos de cierre.
+- Pruebas: `tests/rules-in-sight.mjs` y `tests/rules_in_sight_smoke.py` (sin píxel dorado fuera de ★/✦ en Lugares, Refugio y mapa; HUD alineado). Se actualizan `journey-finale.mjs`, `journey_finale_smoke.py` (ningún aviso entre «Tu mundo se abrió» y el primer toque) y `refugio_lugares_smoke.py`; `crystal_play_smoke.py` y `entry_jump_smoke.py` piden ahora ✦ al tamaño de ★ (antes ≥ 14 px). Auditoría, `npm test` y 49 recorridos de navegador aprobados. `verify-e-preservation` señala `achievements.js` y `celebration.js` (solo avisos). Cabeceras de `docs/VIAJE.md` y `docs/MUNDO.md` en alpha.216.
 
 ## Sesión 11 del panel · sin cambio de versión
 

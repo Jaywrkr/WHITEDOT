@@ -1,6 +1,6 @@
 # El Viaje · diseño vigente
 
-Candidato **alpha.207**. El Viaje enseña a participar en la música y abre el Mundo libre; el Refugio queda voluntario. [Reglas](MUNDO.md) · [estado y pendientes](../HANDOFF.md).
+Candidato **alpha.216**. El Viaje enseña a participar en la música y abre el Mundo libre; el Refugio queda voluntario. [Reglas](MUNDO.md) · [estado y pendientes](../HANDOFF.md).
 
 ## Recorrido
 
@@ -46,7 +46,7 @@ La aportación personal se guarda de forma aditiva y compatible: notas históric
 
 `journey-finale.js` reconstruye tus frases y el tema con voces suaves existentes, armonizadas al contexto. Su partitura abstracta y el arreglo audible son capas distintas; leer la partitura sola no demuestra cómo suena.
 
-El cierre dice solo «Tu mundo se abrió», con los seis anillos apagados; los créditos de autoría quedan para el final de los once (D5-C). La UI nombra la frase que está sonando. El fondo no salta el final al tocarlo; **Seguir explorando** se habilita tras dos segundos, y Escape/salida normal conservan el cierre. Esperar, omitir o explorar terminan en Mundo libre con rumbo al siguiente lugar. No llevan al jugador al Refugio como destino obligatorio.
+El cierre dice solo «Tu mundo se abrió», con los seis anillos apagados; los créditos de autoría quedan para el final de los once (D5-C). La UI nombra la frase que está sonando. El fondo no salta el final al tocarlo; **Seguir explorando** se habilita tras dos segundos, y Escape/salida normal conservan el cierre. Esperar, omitir o explorar terminan en Mundo libre con rumbo al siguiente lugar. **Explorar a pie** es un botón blanco. Después del cierre no sale ningún aviso de texto; «Prólogo» va a la Bitácora sin aviso (panel 11, Q1). No llevan al jugador al Refugio como destino obligatorio.
 
 Guardar el cierre debe funcionar antes de darlo por terminado. Una falla deja posibilidad de reintento. La configuración musical actual se conserva; reconocimiento y emoción requieren escucha real.
 

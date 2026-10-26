@@ -3,7 +3,8 @@ import {PORTAL_NOTES} from './places-ring.js';
 import {roomBox} from './house-view.js';
 // The Refugio as the centre (plan F6, docs/MUNDO.md): it says what you have, what is missing and where to go.
 // In the Sala, a shelf of eleven trophies: each place's gold thing once it has its ★, an empty socket before. Above it,
-// the wall of stars (★ N / 33). In the house bar, «★ N / 33» opens Lugares: the map table (every place with its stars,
+// the wall of stars (★ N / 33, white since panel 11: the stars under the trophies are the gold). In the house bar,
+// «Lugares» opens Lugares (no number since panel 11, Q1: the HUD counts them): the map table (every place with its stars,
 // record and what it asks; fast travel to the ones already entered) and the door to the ring.
 export const TROPHY_SHELF=Object.freeze({x:34,y:76,gap:19});
 // What comes next on the path (plan H3): the first closed place and the one to complete before it; null once all are open.
@@ -32,7 +33,7 @@ export function initialize(runtime){
  const visiting=()=>!!runtime.houseVisiting?.();
  // The shelf and the wall, in the Sala of your own Refugio.
  function draw(c,{toScreen,k,t,calm,house}){hits.length=0;const d=data();if(!d||visiting()||!(house?.unlocked||['sala']).includes('sala'))return;const sala=roomBox('sala'),gold='#f0d27a',have=starCount(d);c.save();
-  const label=toScreen(sala.x+TROPHY_SHELF.x,sala.y+TROPHY_SHELF.y-20);c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.textAlign='left';c.textBaseline='alphabetic';c.fillStyle=gold;c.globalAlpha=.9;c.fillText(`LUGARES · ★ ${have} / ${TOTAL_STARS}`,label.x,label.y);c.letterSpacing='0px';
+  const label=toScreen(sala.x+TROPHY_SHELF.x,sala.y+TROPHY_SHELF.y-20);c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.textAlign='left';c.textBaseline='alphabetic';c.fillStyle='#ffffff';c.globalAlpha=.9;c.fillText(`★ ${have} / ${TOTAL_STARS}`,label.x,label.y);c.letterSpacing='0px';
   const lw=Math.max(140,(PLACES.length-1)*TROPHY_SHELF.gap*k+12);hits.push({x:label.x-4,y:label.y-14,w:lw,h:20,open:true});
   PLACES.forEach((p,i)=>{const q=toScreen(sala.x+TROPHY_SHELF.x+i*TROPHY_SHELF.gap,sala.y+TROPHY_SHELF.y),r=Math.max(4,6*k),got=stars(p.id),won=got[0],shine=got.filter(Boolean).length;
    // A socket under every trophy; the trophy itself only once the place has its ★, brighter with each star.
@@ -78,7 +79,7 @@ export function initialize(runtime){
  function travel(id){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.ringTravel?.(id);}
  function door(){runtime.ringGuide?.();}
  // The house bar shows the wall too, and opens Lugares.
- function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=d.readOnly?'Actualizar lugares':`${gameObjective(runtime.S,d).completed||0}/11 lugares`;}
+ function bar(){const b=$('houseStars'),d=data();if(!b)return;b.hidden=!d||visiting();if(d)b.textContent=d.readOnly?'Actualizar lugares':'Lugares';}
  if($('houseStars'))$('houseStars').onclick=open;if($('lugaresClose'))$('lugaresClose').onclick=()=>{$('mLugares').hidden=true;};if($('lugaresDoor'))$('lugaresDoor').onclick=door;if($('lugaresSong'))$('lugaresSong').onclick=()=>{$('mLugares').hidden=true;if(runtime.replaySong)runtime.replaySong();else runtime.openSong?.();};
  // Plan I6: Lugares is one of the menu's six entries.
  const entry=$('bLugares');if(entry)entry.onclick=()=>{$('mMenu')&&($('mMenu').hidden=true);open();};

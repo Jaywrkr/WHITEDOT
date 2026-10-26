@@ -44,7 +44,8 @@ export function initialize(runtime) {
     return lane.enqueue('toast',el,()=>{el.innerHTML=html;},2.5,String(html),options.valid||(()=>true),{level:important?2:1,category:important?'atención':'cotidiano',coalesce:true,persistent:/no pudimos guardar|no se pudo guardar|otra pestaña cambió|progreso necesita atención/i.test(html),...options});}
   function unlock(id){if(runtime.S.ach[id]||runtime.achievementRetired?.(id))return;const prev=new Set(runtime.COLORS.filter(runtime.colorOk).map(c=>c[0]));runtime.S.ach[id]=runtime.S.todayKey;const a=runtime.ACH.find(x=>x[0]===id);runtime.say(runtime.VOZ[id]||"Bien. Sigue.","Logro · "+a[1],{recordOnly:true});
     // Achievement notices share the existing silent lane.
-    runtime.COLORS.forEach(c=>{if(runtime.colorOk(c)&&!prev.has(c[0]))toast("<em>Color nuevo</em> · "+c[1],{level:2,category:'ganado'});});if(runtime.save()!==false)runtime.achievementEarned?.([id]);}
+    // Panel 11 (Q1): between the Journey's credits and the first portal a new colour waits in Tu cubo, unannounced.
+    if(!runtime.achievementsCalm?.())runtime.COLORS.forEach(c=>{if(runtime.colorOk(c)&&!prev.has(c[0]))toast("<em>Color nuevo</em> · "+c[1],{level:2,category:'ganado'});});if(runtime.save()!==false)runtime.achievementEarned?.([id]);}
 
 
   function enterWorld({automatic=false}={}){

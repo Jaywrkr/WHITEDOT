@@ -381,8 +381,10 @@ body.ui-reduced-motion #rareNoticeArt::after{display:none}
 .favorite-signature svg{display:block;width:100%;height:100%}
 
 /* The wallet follows the distance label, including safe-area and responsive layout. */
-.spark-count{display:flex;gap:8px;align-items:center;font:600 14px/1.5 var(--mono);color:var(--earned);font-variant-numeric:tabular-nums}
-.spark-count.collecting{color:var(--earned)}#sparkGain{font-size:11px;color:var(--earned)}
+/* Panel 11 (Q1, D10-B): ✦ stays gold but never larger than ★; the three HUD numbers share size and weight, and the
+   empty delta leaves no gap, so they end on the same x. */
+.spark-count{display:flex;gap:0;align-items:center;font:500 11px/1.5 var(--mono);color:var(--earned);font-variant-numeric:tabular-nums}
+.spark-count.collecting{color:var(--earned)}#sparkGain{font-size:11px;color:var(--earned)}#sparkGain:not(:empty){margin-left:8px}
 .return-entrance .return-signature{animation-delay:.7s;font-size:11px}
 
 /* Two feedback forms: wallet delta and one silent, brief card. */
@@ -407,7 +409,7 @@ body.ui-reduced-motion #rareNoticeArt::after{display:none}
 #celebration[data-layout="compact"] #celebrationSurprise,#celebration[data-layout="compact"] #celebrationSignature{display:none}
 
 /* Earned sparks remain legible; one short response, never a repeating flash. */
-#sparkTotal{font:inherit;color:var(--earned)}#sparkGain{font-size:12px}.spark-count.collecting{filter:drop-shadow(0 0 4px #e9ca7d55)}
+#sparkTotal{font:inherit;color:var(--earned)}#sparkGain{font-size:11px}.spark-count.collecting{filter:drop-shadow(0 0 4px #e9ca7d55)}
 #bJump.spark-ready{animation:spark-ready 2.4s ease-out both}
 @keyframes spark-ready{0%,100%{box-shadow:none}35%{box-shadow:inset 0 0 12px #e9ca7d66;border-color:var(--earned)}}
 @media(prefers-reduced-motion:reduce){#bJump.spark-ready{animation:none;border-color:var(--earned)}}
@@ -463,8 +465,9 @@ body.activity-open :is(#toast:not([data-detail="save"]),#phrase,#zone,#voice:not
 #universeTexts,#haptics,#colorSafe{width:20px;height:20px;min-height:20px;min-width:20px;padding:0;margin:0;flex:0 0 20px}.universe-texts-group,.universe-texts-setting{min-width:0;max-width:100%}
 
 /* Silent unread marker without changing button layout. */
-#bAch.has-unread svg{stroke:var(--earned)}
-#bAch.has-unread span::after{content:"";display:inline-block;width:6px;height:6px;margin-left:8px;vertical-align:middle;background:var(--earned)}
+/* Panel 11 (Q1): notices are states, so white; gold is for what was earned. */
+#bAch.has-unread svg{stroke:var(--ink)}
+#bAch.has-unread span::after{content:"";display:inline-block;width:6px;height:6px;margin-left:8px;vertical-align:middle;background:var(--ink)}
 /* Tu cubo: one place for wearing, buying and travelling. Pictures are drawn by the game; gold marks what was earned. */
 .modal .sheet.cube-sheet{width:min(720px,calc(100vw - 24px));max-width:720px;max-height:min(88dvh,calc(100dvh - var(--safe-top,0px) - var(--safe-bottom,0px) - 24px));padding-top:0}
 .cube-head{display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:2;background:#000;padding:16px 0 8px}.cube-head h2{flex:1;margin:0}.cube-head strong{color:#f0d27a;font:500 16px var(--mono);white-space:nowrap}
@@ -574,7 +577,7 @@ small{font-size:max(11px,.85em)}
 @keyframes journey-unveil{from{opacity:0}to{opacity:1}}
 body.journey-unveil :is(#day,#era,#walkDistance,#sparkCount,#sparkGoal){animation:journey-unveil 1.6s ease 1s both}
 body.journey-unveil :is(#bJump,#bStyles,#bAuto,#quickSave){animation:journey-unveil 1.6s ease 2.6s both}
-:is(#bMenu,#bCube).has-new{position:relative}:is(#bMenu,#bCube).has-new::after{content:'';position:absolute;top:8px;right:8px;width:6px;height:6px;background:var(--gold)}
+:is(#bMenu,#bCube).has-new{position:relative}:is(#bMenu,#bCube).has-new::after{content:'';position:absolute;top:8px;right:8px;width:6px;height:6px;background:var(--ink)}
 @media (prefers-reduced-motion:reduce){body.journey-unveil *{animation:none!important}}
 /* Phase 6: in the Journey's chapters the bar at the top shows the chapter's way, also in the World. */
 body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:block}
@@ -594,9 +597,10 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 .sheet .place-rows{list-style:none;margin:0 0 10px;padding:0;font-size:13px;line-height:1.8;color:var(--dim)}
 
 /* El Refugio como centro (F6): el muro de estrellas y la mesa de lugares. */
-.house-panel .house-stars{min-height:32px;padding:4px 10px;margin-right:8px;border-color:#f0d27a66;color:#f0d27a;font-size:12px}
+/* Panel 11 (Q1): counts of places are white; the button only names Lugares (the HUD counts them). */
+.house-panel .house-stars{min-height:32px;padding:4px 10px;margin-right:8px;font-size:12px}
 .house-panel .house-stars[hidden]{display:none}
-.lugares-count{color:#f0d27a;font-size:.8em;margin-left:8px}
+.lugares-count{color:var(--ink);font-size:.8em;margin-left:8px}
 .lugares-list{list-style:none;margin:0 0 12px;padding:0;max-height:52vh;overflow:auto}
 .lugares-list li{display:grid;grid-template-columns:1fr auto 86px 48px;align-items:center;gap:8px;min-height:40px;border-bottom:1px solid #ffffff14;font-size:13px}
 .lugares-list li.closed{color:var(--dim)}
@@ -606,13 +610,13 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 .lugares-list small{color:var(--dim);font-size:12px;text-align:right}
 .lugares-list button{min-height:32px;padding:4px 8px;grid-column:4}
 #songStage{position:fixed;inset:0;z-index:90;background:#000}#songStage canvas{position:absolute;inset:0;width:100%;height:100%}#songStage .song-stage-text{position:absolute;left:16px;right:16px;top:calc(var(--safe-top,0px) + 32px);text-align:center;font:12px/2.2 var(--mono);color:#fff;pointer-events:none}#songStage .song-stage-text p{margin:0;opacity:0;animation:journeyCredit 1.4s ease forwards}#songStage .journey-title{font-size:22px;letter-spacing:.2em;color:#f0d27a;margin-bottom:8px}#songStage .song-stage-row{position:absolute;left:16px;right:16px;bottom:calc(var(--safe-bottom,0px) + 32px);display:flex;gap:8px;justify-content:center}#songStage .song-stage-row button{min-height:44px;min-width:120px;background:#000;color:#fff;border:1px solid #fff;font:12px var(--mono)}#songStage .song-stage-row button[hidden]{display:none}
-#journeyFinale .journey-explore{position:absolute;left:50%;bottom:calc(var(--safe-bottom,0px) + 48px);transform:translateX(-50%);min-height:44px;padding:0 28px;background:#f0d27a;color:#000;border:1px solid #f0d27a;font:12px var(--mono);cursor:pointer}
+#journeyFinale .journey-explore{position:absolute;left:50%;bottom:calc(var(--safe-bottom,0px) + 48px);transform:translateX(-50%);min-height:44px;padding:0 28px;background:#fff;color:#000;border:1px solid #fff;font:12px var(--mono);cursor:pointer}
 @media (prefers-reduced-motion:reduce){#songStage .song-stage-text p{animation:none;opacity:1}}
 .narrator-line,.journal-card .narrator-line{color:#f0d27a;font-style:italic;margin:4px 0}#toast small{display:block;margin-top:4px;color:#ffffffcc;font-size:12px;line-height:1.4}
 /* F12: before the first pulse, the bar beats with the music. */
 .bar.beat-hint{background:rgba(255,255,255,calc(.14 + var(--beat,0) * .4));box-shadow:0 0 calc(var(--beat,0) * 12px) rgba(255,255,255,calc(var(--beat,0) * .5))}
 
-.lugares-remix{color:var(--gold,#f0d27a);font-size:12px;margin:8px 0 0}
+.lugares-remix{color:var(--ink);font-size:12px;margin:8px 0 0}
 
 .latency-setting{display:flex;align-items:center;gap:8px;margin:6px 0}.latency-setting span{flex:1}.latency-setting button{min-width:36px}.latency-setting output{min-width:56px;text-align:center}
 

@@ -70,16 +70,17 @@ export function initialize(runtime){
  // bars; the local arrangement interprets your notes over the same harmonic frame.
  function play(score,context){const ac=runtime.ac;return ac?playFinale(runtime,score,context,ac.currentTime+GATHER):null;}
  function start(options={}){const j=runtime.S.journey,festival=!!options.festival;if(run||!j||(j.finished&&!festival))return false;
-  document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});runtime.cancelJourneyVictory?.();runtime.stopSong?.();runtime.closeSong?.();const context=finaleContext(runtime),ratio=context.six/.125;runtime.landHouse?.();const score=finaleScore(j.notes,festival?FESTIVAL_CHAPTERS:WORLD_CHAPTERS,j.steps,j.ticks).map(n=>({...n,at:n.at*ratio,seconds:n.eighths*EIGHTH*ratio})),el=overlay();el.querySelector('.journey-again')?.remove();el.querySelector('.journey-explore')?.remove?.();el.querySelector('.journey-credits').replaceChildren();
+  document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});runtime.cancelJourneyVictory?.();runtime.stopSong?.();runtime.closeSong?.();const context=finaleContext(runtime),ratio=context.six/.125;runtime.landHouse?.({quiet:true});const score=finaleScore(j.notes,festival?FESTIVAL_CHAPTERS:WORLD_CHAPTERS,j.steps,j.ticks).map(n=>({...n,at:n.at*ratio,seconds:n.eighths*EIGHTH*ratio})),el=overlay();el.querySelector('.journey-again')?.remove();el.querySelector('.journey-explore')?.remove?.();el.querySelector('.journey-credits').replaceChildren();
   run={el,score,context,events:finaleArrangement(score,context),festival,at:now(),length:scoreLength(score),gain:play(score,context),soundEnd:(runtime.ac?.currentTime||0)+GATHER+scoreLength(score),credits:false};state.played++;
   el.onclick=null;const skip=el.querySelector('#journeySkip');if(skip){skip.hidden=false;skip.disabled=true;skip.onclick=e=>{e?.stopPropagation?.();if(run&&now()-run.at>2)finish(true);};}requestAnimationFrame(frame);return true;}
  function finish(skipped=false){if(!run)return;const j=runtime.S.journey,ac=runtime.ac;if(run.gain&&ac){const g=run.gain.gain;if(typeof g.cancelAndHoldAtTime==='function')g.cancelAndHoldAtTime(ac.currentTime);else{const end=run.soundEnd,held=Math.min(1,Math.max(0,(end-ac.currentTime)/.45));g.cancelScheduledValues(ac.currentTime);g.setValueAtTime(held,ac.currentTime);}g.setTargetAtTime(.0001,ac.currentTime,.12);}
   // The festival keeps your phrase on screen and waits for the next player.
   if(run.festival){const el=run.el;el.onclick=null;if(!run.credits)credits(run);const again=document.createElement('button');again.className='journey-again';again.id='journeyAgain';again.textContent='Otra persona';again.onclick=()=>runtime.festivalRestart?.();el.appendChild(again);run=null;state.skipped=skipped;state.finished++;return;}
-  // The end of the Journey is kept; the free World opens.
+  // The end of the Journey is kept; the free World opens. Panel 11 (Q1): one message only, «Tu mundo se abrió»; no notice
+  // after it, and «Prólogo» goes to the Bitácora unannounced (its unread mark stays).
   const wasFinished=j.finished;j.finished=true;const kept=runtime.journeyMode?.()==='libre'?runtime.save()!==false:!!runtime.setJourneyMode?.('libre');if(!kept){if(wasFinished===undefined)delete j.finished;else j.finished=wasFinished;return;}
   run.el.hidden=true;run.el.onclick=null;run.el.querySelector?.('.journey-explore')?.remove?.();run=null;state.skipped=skipped;
-  state.finished++;runtime.exitHouse?.();runtime.ringGuide?.();runtime.save?.();runtime.firstJourneyTick?.();runtime.narrate?.('journeyDone');runtime.toast?.('Se abre el Mundo libre.');unveil();}
+  state.finished++;runtime.exitHouse?.();runtime.ringGuide?.();runtime.save?.();runtime.firstJourneyTick?.();runtime.narrate?.('journeyDone');runtime.quietAchievements?.();unveil();}
  // From the quiet Journey to everything at once was abrupt (phase 6 of the plan): the counters and buttons of the free
  // World fade in one after another, and the menu marks that it has new things until it is opened.
  // The sparks earned on the way were hidden in the Journey: once in the free World, Tu cubo is marked and one short

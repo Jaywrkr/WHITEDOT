@@ -58,9 +58,9 @@ export function drawMap(runtime,x,X,Y,W,H,zoom){
  // el dorado, solo en sus estrellas.
  for(const q of m.ring){const [px,py]=P(q.x/m.RP,q.y/m.RP),z=Math.max(5,Math.min(11,s*.4));x.globalAlpha=q.open?1:.6;x.strokeStyle=q.ink||(q.open?'#ffffff':'#8a8a8f');x.lineWidth=2;x.beginPath();x.arc(px,py,z,0,6.283);x.stroke();
   for(let i=0;i<3;i++){x.fillStyle=i<q.stars?runtime.GOLD:'#ffffff30';x.fillRect(px-7+i*5.5,py+z+4,3,3);}}
- // Origen, campamento y tú.
+ // Origen, campamento y tú. Panel 11 (Q1): the Refugio's mark is white; gold stays for the ★ under the portals.
  {const [px,py]=P(.5,.5);x.globalAlpha=.8;x.strokeStyle='#fff';x.lineWidth=1.5;x.beginPath();x.arc(px,py,Math.max(5,s*.35),0,6.283);x.stroke();}
- if(m.camp){const [px,py]=P(m.camp[0],m.camp[1]),z=Math.max(6,Math.min(12,s*.45));x.globalAlpha=1;x.strokeStyle=runtime.GOLD;x.lineWidth=2;x.beginPath();x.moveTo(px-z,py);x.lineTo(px,py-z);x.lineTo(px+z,py);x.lineTo(px+z,py+z);x.lineTo(px-z,py+z);x.closePath();x.stroke();}
+ if(m.camp){const [px,py]=P(m.camp[0],m.camp[1]),z=Math.max(6,Math.min(12,s*.45));x.globalAlpha=1;x.strokeStyle='#ffffff';x.lineWidth=2;x.beginPath();x.moveTo(px-z,py);x.lineTo(px,py-z);x.lineTo(px+z,py);x.lineTo(px+z,py+z);x.lineTo(px-z,py+z);x.closePath();x.stroke();}
  {const [px,py]=P(m.pos[0],m.pos[1]),z=Math.max(6,Math.min(12,s*.4));x.globalAlpha=1;x.fillStyle='#fff';x.fillRect(px-z/2,py-z/2,z,z);}
  x.restore();x.globalAlpha=1;
  return m;
@@ -75,7 +75,7 @@ export function initialize(runtime){
   // One item per span: lines break between items, never leaving a separator hanging (panel 10, Nesbitt #14).
   const rare=Object.keys(runtime.S.anomalies||{}).length,open=m.ring.filter(q=>q.open).length;
   // Panel 10 (P8): no counter at zero; regions, continents and record live in Tú (index.html #journalYouPart).
-  $("mapNote").replaceChildren(...[m.favorites.length&&`${m.favorites.length} favoritos (◇)`,m.reached.length&&`${m.reached.length} hitos visitados`,m.heard.length&&`${m.heard.length} oídos sin visitar (?)`,rare&&`${rare} rarezas (✶)`,m.camp&&'⌂ tu Estudio',open&&`${open} lugares abiertos (○)`].filter(Boolean).map(t=>{const e=document.createElement('span');e.textContent=t;return e;}));
+  $("mapNote").replaceChildren(...[m.favorites.length&&`${m.favorites.length} favoritos (◇)`,m.reached.length&&`${m.reached.length} hitos visitados`,m.heard.length&&`${m.heard.length} oídos sin visitar (?)`,rare&&`${rare} rarezas (✶)`,m.camp&&'⌂ tu Refugio',open&&`${open} portales abiertos (○)`].filter(Boolean).map(t=>{const e=document.createElement('span');e.textContent=t;return e;}));
   runtime.renderRingTravel?.();
  }
  function open(){runtime.openJournal?.('places');render();runtime.unlock('mapa1');}

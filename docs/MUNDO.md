@@ -1,6 +1,6 @@
 # El mundo de Kubono
 
-Reglas vigentes del candidato **alpha.207**. [Traspaso](../HANDOFF.md) · [El Viaje](VIAJE.md) · [mapa técnico](ARQUITECTURA.md). Los planes anteriores están construidos o registrados en sus entregas; no son una nueva lista de tareas.
+Reglas vigentes del candidato **alpha.216**. [Traspaso](../HANDOFF.md) · [El Viaje](VIAJE.md) · [mapa técnico](ARQUITECTURA.md). Los planes anteriores están construidos o registrados en sus entregas; no son una nueva lista de tareas.
 
 ## Propósito y recorrido
 
@@ -43,7 +43,7 @@ Maestro sube tempo10%, objetivo×1,5 y estrecha la ventana. Las once★ completa
 
 ## Orientación y retorno
 
-Los portales abiertos son blancos; los completos, del color de su lugar (también en el mapa y en los trofeos del Refugio). El dorado queda para las ★ (panel 10, P7, D4). En modo daltonismo, `SAFE_COLORS` da un color distinto a cada lugar. Una columna blanca y la brújula junto al cubo indican rumbo y distancia. Con el portal fuera de pantalla, la columna es una luz de 140 px en el borde, a la altura del rumbo. **Seguir hacia** activa una ruta a pie; no teletransporta al acabar la ronda. Con los once completos, objetivo y columna señalan el lugar sin ★★ con mejor porcentaje (después, sin ★★★). Con 33★ vuelve «Explora a tu ritmo». Menú → Lugares abre la lista en filas enteras, con el destino actual bajo la fila anterior, y permite viajar a los lugares habilitados para ello.
+Los portales abiertos son blancos; los completos, del color de su lugar (también en el mapa y en los trofeos del Refugio). El dorado queda para lo ganado: ★ y ✦, con ✦ nunca mayor que ★ (panel 10, P7, D4; panel 11, D10-B). Las cifras de lugares, los botones y los avisos van en blanco: «Lugares 5 / 11», la marca de no leído y el botón del Refugio. El botón del Refugio dice «Lugares», sin número; el estante dice «★ N / 33» en blanco. El mapa dice «portales abiertos» y «tu Refugio». «Vista tranquila» oculta Tu cubo, cifras y herramientas; su subtítulo lo dice. En modo daltonismo, `SAFE_COLORS` da un color distinto a cada lugar. Una columna blanca y la brújula junto al cubo indican rumbo y distancia. Con el portal fuera de pantalla, la columna es una luz de 140 px en el borde, a la altura del rumbo. **Seguir hacia** activa una ruta a pie; no teletransporta al acabar la ronda. Con los once completos, objetivo y columna señalan el lugar sin ★★ con mejor porcentaje (después, sin ★★★). Con 33★ vuelve «Explora a tu ritmo». Menú → Lugares abre la lista en filas enteras, con el destino actual bajo la fila anterior, y permite viajar a los lugares habilitados para ello.
 
 Guardar un lugar conserva semilla/identidad, capa y coordenadas. Tocar el nombre del territorio abre Favoritos en el destino guardado; **Ir a este lugar** vuelve a su dirección compatible. No se promete una instantánea congelada de la música, que sigue evolucionando.
 
@@ -53,7 +53,7 @@ Los saltos pagados, el regreso y la distancia caminada tienen reglas propias; sa
 
 Chispas✦ y estrellas★ son distintas. Las chispas compran piezas y viajes; las estrellas nunca se gastan.
 
-Un solo ★ (panel 10, P8, D3-A): ★ y «Estrellas» solo cuentan las de los lugares (`S.lugares.stars`, máximo 33). Las reliquias del Mundo (`S.stars`) se llaman «Reliquias» en la Constelación, la Bitácora y las tarjetas. En la vista completa, el HUD muestra tres cifras: ★ de 33, ✦ y lugares de 11. Día, distancia, regiones, continentes y récord están en «Tú» de la Bitácora; la meta de chispas, en Tu cubo. Ninguna hoja de primer nivel muestra un contador a cero. Cada aviso nombra como mucho un logro; los demás esperan en la Bitácora.
+Un solo ★ (panel 10, P8, D3-A): ★ y «Estrellas» solo cuentan las de los lugares (`S.lugares.stars`, máximo 33). Las reliquias del Mundo (`S.stars`) se llaman «Reliquias» en la Constelación, la Bitácora y las tarjetas. En la vista completa, el HUD muestra tres cifras: ★ de 33, ✦ y lugares de 11, al mismo tamaño y peso y alineadas a la derecha (panel 11, Q1). Día, distancia, regiones, continentes y récord están en «Tú» de la Bitácora; la meta de chispas, en Tu cubo. Ninguna hoja de primer nivel muestra un contador a cero. Cada aviso nombra como mucho un logro; los demás esperan en la Bitácora.
 
 Recoger fragmentos conserva valor base fuera de tempo. A tiempo se multiplica×2, o×3 desde la racha de ocho. Completar una ronda da60–120✦; Maestro duplica. Tras las tres primeras rondas diarias de un lugar se reduce ese premio a la mitad. Encuentros, remezclas y algunos logros tienen reglas adicionales. Fuente: `src/spark-rules.js`.
 
