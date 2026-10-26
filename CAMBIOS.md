@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.209**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.210**. Las entradas describen su revisión, no certifican producción.
+
+## P3 · El golpe junto al cubo · 2.3.0-alpha.210
+
+Rama `panel10/p3-golpe-en-el-cubo`, sobre `panel10/p2-menus`. Matsuura, Wong y Mizuguchi (panel 10).
+
+- Dedo fantasma: anillo de 1 px con punto de 3 px que nace junto al cubo. En reposo cabe en 14×14 y su centro queda a 27 px del cubo. Arrastra desde el cubo y vuelve a su lado para tocar.
+- El dedo late en los pasos del lugar (`journeyRhythmState().steps`), en tiempo audible: Dunas y Lago en 2·6·10·14, Faros en 1·3·y. Antes latía con el pulso crudo y antes de oírse.
+- Un anillo fino se cierra sobre el cubo en los cuatro pasos previos a cada paso que cuenta; llega al radio mínimo con la marca de la Línea y es dorado en el «1». El cubo no cambia de tamaño. Con movimiento reducido no se mueve.
+- Línea: base a alfa .38 sobre una franja negra (medida en captura: 97, antes 41–48). El «1» se pinta en dorado cuando cuenta.
+- Marcas de capítulo de 4 px, solo dentro de un capítulo; ya no aparecen en las rondas de lugar.
+- Las chispas doradas de los diez juegos vuelan a la posición real de `#bar`, leída una vez por tamaño, no a `barY=42`.
+- Sin cambios en música, ventana de ±80 ms, umbrales, guardados ni tamaño del cubo (6×6 px en `00-inicio`, igual que antes).
+- Pruebas: `tests/beat-by-cube.mjs` (Node) y `tests/beat_by_cube_smoke.py` (navegador). El vuelo de la chispa se prueba con su función de dibujo y la barra real, no con una ronda jugada. Sin teléfono físico ni personas.
 
 ## P2 · Menús · 2.3.0-alpha.209
 

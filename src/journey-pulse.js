@@ -21,6 +21,14 @@ export function beatDistance(now,beats,bar){const b=nearestBeat(now,beats,bar);r
 // How long until a scheduled note reaches the estimated output; high-latency devices keep their full delay.
 // How near the cursor is to a step it is coming to: 1 on it, falling to 0 four steps before (plan I3).
 export const approach=(step,now)=>{const ahead=((step-now)%16+16)%16;return ahead<4?1-ahead/4:0;};
+// Panel 10 (P3, Mizuguchi and Wong): the anticipation also reaches the cube, with light and not size. A thin ring closes
+// on the cube over the four steps before each step the place counts, reaching its smallest radius on the same step as
+// the Line's mark; gold on the «1». The cube (s) never changes. With calm motion it does not move: it only brightens.
+export const CUBE_RING_GAP=5,CUBE_RING_TRAVEL=10;
+export function cubeRing(now16,steps,s,still=false){if(!Number.isFinite(now16)||!(s>0))return null;let come=0,one=false;for(const st of steps||[]){const a=approach(st,now16);if(a>come){come=a;one=st===0;}}
+ if(come<=0)return null;const min=s/2+CUBE_RING_GAP;return {r:still?min:min+(1-come)*CUBE_RING_TRAVEL,alpha:(still?.45:.6)*come,gold:one,come};}
+// The Line's base: bright enough to read over a landscape (Wong: ≥ (90,90,90) measured), on a black band.
+export const LINE_ALPHA=.38,LINE_BACK=.7;
 export const landDelay=(beat,now,latency=0)=>[beat,now,latency].every(Number.isFinite)?Math.max(0,Math.round((beat+latency-now)*1000)):0;
 // Same scheduling rule the pulse already uses; visuals follow the emitted note, not a past judged beat.
 export const pulseNoteTime=(now,beat)=>Math.max(now+.01,Number.isFinite(beat)&&beat>now?beat:0);
@@ -114,25 +122,31 @@ export function initialize(runtime){
  // The Line: the bar drawn across the lower part of the screen, a cursor on the current step and a peak where you played.
  function draw(c,W,H,t){
   if(!(runtime.inWorld?.()||runtime.S.mode==='camino')||runtime.activityActive||openSurface('.modal:not([hidden])'))return;const y=Math.round(H*.8)+.5,x0=Math.max(24,W*.12),x1=W-x0,w=x1-x0,now=performance.now();
-  c.save();c.lineWidth=1;c.strokeStyle='#ffffff';c.globalAlpha=.16;c.beginPath();c.moveTo(x0,y);c.lineTo(x1,y);c.stroke();
+  c.save();c.lineWidth=7;c.strokeStyle='#000000';c.globalAlpha=LINE_BACK;c.beginPath();c.moveTo(x0-4,y);c.lineTo(x1+4,y);c.stroke();c.lineWidth=1;c.strokeStyle='#ffffff';c.globalAlpha=LINE_ALPHA;c.beginPath();c.moveTo(x0,y);c.lineTo(x1,y);c.stroke();
   // One guide (plan H2): the steps the place counts stand up on the Line, the «1» in gold when it counts; the others
   // stay small. While the place sings its pattern (journey-rhythm.js) they glow on their beat.
   const counted=runtime.journeyRhythmState?.()?.steps||[0,4,8,12],sing=runtime.rhythmSinging?.()||null;
   // Plan I3: the Line anticipates; a counted step grows and brightens over the four steps before the cursor reaches it.
-  const now16=stepNow();
-  for(let i=0;i<16;i++){const on=counted.includes(i),one=on&&i===0,lit=sing&&sing.step===i&&on?1-sing.age:0,come=on?approach(i,now16):0;c.globalAlpha=Math.min(1,on?.55+.35*lit+.35*come:(i%4?.14:.25));c.fillStyle='#fff';const hgt=on?(one?9:6)+6*lit+8*come:(i%4?2:3);c.fillRect(Math.round(x0+(i+.5)/16*w)-(on?1:0),y-hgt/2,one?3:on?2:1,hgt);}
+  const now16=stepNow(),gold=runtime.GOLD||'#f0d27a';
+  for(let i=0;i<16;i++){const on=counted.includes(i),one=on&&i===0,lit=sing&&sing.step===i&&on?1-sing.age:0,come=on?approach(i,now16):0;c.globalAlpha=Math.min(1,on?.6+.35*lit+.35*come:(i%4?.22:.36));c.fillStyle=one?gold:'#fff';const hgt=on?(one?9:6)+6*lit+8*come:(i%4?2:3);c.fillRect(Math.round(x0+(i+.5)/16*w)-(on?1:0),y-hgt/2,one?3:on?2:1,hgt);}
   const step=stepNow(),cx=x0+(step+.5)/16*w;c.globalAlpha=.85;c.fillStyle='#ffffff';c.fillRect(Math.round(cx)-1,y-4,2,8);
   for(const m of marks){const age=(now-m.at)/1000,life=calm()?2.5:1.8;if(age>life)continue;const k=1-age/life,px=x0+(m.step+.5)/16*w,h=(m.on?18:m.dropped?4:8)*(calm()?1:.6+.4*k);c.globalAlpha=k*(m.on?.95:m.dropped?.3:.5);c.strokeStyle=m.on&&!m.waiting?(runtime.GOLD||'#f0d27a'):m.dropped?'#888888':'#ffffff';c.beginPath();
    // An open bracket means a good beat still waiting for the place's action.
    if(m.waiting){c.moveTo(px-5,y-5);c.lineTo(px-5,y-1);c.lineTo(px+5,y-1);c.lineTo(px+5,y-5);}else{c.moveTo(px-5,y);c.lineTo(px,y-h);c.lineTo(px+5,y);}c.stroke();}
   c.restore();}
+ // The ring that closes on the cube before each counted step (cubeRing), with the Line's own clock and steps.
+ const ringLive=()=>!!runtime.ac&&!!runtime.S.sound&&!!runtime.MU?.sq?.length&&!(runtime.ac.state&&runtime.ac.state!=='running');
+ const ringNow=s=>ringLive()?cubeRing(stepNow(),runtime.journeyRhythmState?.()?.steps||[0,4,8,12],s,calm()):null;
+ function drawRing(c,x,y,s){if(!(runtime.inWorld?.()||runtime.S.mode==='camino')||runtime.activityActive||openSurface('.modal:not([hidden])'))return;
+  const ring=ringNow(s);if(!ring)return;
+  c.save();c.lineWidth=1;c.globalAlpha=ring.alpha;c.strokeStyle=ring.gold?runtime.GOLD||'#f0d27a':'#ffffff';c.beginPath();c.arc(x,y,ring.r,0,6.283);c.stroke();c.restore();}
  // The cube's form around it: corners, then a diamond, then a gold double frame that turns. Drawn over the cube.
- function drawForm(c,x,y,s,t){if(!form.level||!(runtime.inWorld?.()||runtime.S.mode==='camino'))return;const gold=runtime.GOLD||'#f0d27a',still=calm(),fresh=Math.max(0,1-(performance.now()-formAt)/400),r=s/2+6;c.save();c.lineWidth=1.5;
+ function drawForm(c,x,y,s,t){drawRing(c,x,y,s);if(!form.level||!(runtime.inWorld?.()||runtime.S.mode==='camino'))return;const gold=runtime.GOLD||'#f0d27a',still=calm(),fresh=Math.max(0,1-(performance.now()-formAt)/400),r=s/2+6;c.save();c.lineWidth=1.5;
   c.globalAlpha=.8;c.strokeStyle='#ffffff';for(const [dx,dy] of [[-1,-1],[1,-1],[1,1],[-1,1]]){c.beginPath();c.moveTo(x+dx*r,y+dy*(r-4));c.lineTo(x+dx*r,y+dy*r);c.lineTo(x+dx*(r-4),y+dy*r);c.stroke();}
   if(form.level>=2){const d=r+6;c.globalAlpha=.6+.3*fresh;c.beginPath();c.moveTo(x,y-d);c.lineTo(x+d,y);c.lineTo(x,y+d);c.lineTo(x-d,y);c.closePath();c.stroke();}
   if(form.level>=3){const a=still?0:t/900,d=r+12;c.globalAlpha=.85;c.strokeStyle=gold;c.translate(x,y);c.rotate(a);c.strokeRect(-d,-d,d*2,d*2);c.rotate(Math.PI/4);c.strokeRect(-d*.8,-d*.8,d*1.6,d*1.6);}
   c.restore();}
  // Each chapter starts its theme from the first note.
  function reset(){state.next=0;epoch++;for(const timer of pending)clearTimeout(timer);pending.clear();lastLanding=null;}
- Object.defineProperties(runtime,{journeyPulse:{get:()=>judge},journeyPulseScheduled:{get:()=>scheduleLanding},journeyPulseReset:{get:()=>reset},journeyPulseDropped:{get:()=>dropped},drawJourneyLine:{get:()=>draw},journeyPulseState:{get:()=>()=>({...state,notes:[...state.notes],noteSteps:[...state.noteSteps],marks:marks.length,lastMark:marks.length?{...marks[marks.length-1]}:null})},journeyVibrate:{get:()=>vibrate},drawCubeForm:{get:()=>drawForm},cubeForm:{get:()=>()=>({...form})}});
+ Object.defineProperties(runtime,{journeyPulse:{get:()=>judge},journeyPulseScheduled:{get:()=>scheduleLanding},journeyPulseReset:{get:()=>reset},journeyPulseDropped:{get:()=>dropped},drawJourneyLine:{get:()=>draw},journeyPulseState:{get:()=>()=>({...state,notes:[...state.notes],noteSteps:[...state.noteSteps],marks:marks.length,lastMark:marks.length?{...marks[marks.length-1]}:null})},journeyVibrate:{get:()=>vibrate},drawCubeForm:{get:()=>drawForm},cubeForm:{get:()=>()=>({...form})},journeyCubeRing:{get:()=>(s=12)=>ringNow(s)}});
 }

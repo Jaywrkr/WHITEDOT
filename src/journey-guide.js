@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose,barTarget,drawBarDrop} from './journey-games.js';
 // «Guía» (the Faros, plan F15, docs/MUNDO.md): the cube is a lighthouse. Small boats are lost in the dark around the
 // harbour where the round began. A pulse on time lights the boats within reach and they follow the cube for two bars;
 // each pulse on time near them keeps them following. Bring them into the harbour and they dock: a boat is worth four,
@@ -84,9 +84,9 @@ export function initialize(runtime){
   c.restore();}
  function over(c,W,H){if(!active())return;const now=performance.now(),gold=runtime.GOLD||'#f0d27a',cam=worldCamera(runtime),cx=W/2+(runtime.S.wx-cam.x),cy=H/2+(runtime.S.wy-cam.y);c.save();
   if(shiver>0&&!calm()){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}
-  const left=16,right=W-16,barY=42,s=own(),hx=W/2+(s.center.x-cam.x),hy=H/2+(s.center.y-cam.y);
+  const dropTo=barTarget(W),left=dropTo.left,right=dropTo.right,barY=dropTo.y,s=own(),hx=W/2+(s.center.x-cam.x),hy=H/2+(s.center.y-cam.y);
   for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*guideProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=2+Math.min(6,d.value/2);
-   c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(hx+(tx-hx)*e-z/2),Math.round(hy+(barY-hy)*e-z/2),Math.round(z),Math.round(z));}
+   drawBarDrop(c,hx,hy,tx,barY,e,z,1-k*.3,gold);}
   c.restore();}
  runtime.registerJourneyGame?.('faros',{pulse,under,over,progress:()=>guideProgress(own().points,goal())});
  Object.defineProperties(runtime,{journeyGuide:{get:()=>()=>{const s=own(),now=performance.now();return {active:active(),points:s.points,goal:goal(),progress:guideProgress(s.points,goal()),center:{...s.center},boats:s.boats.map(b=>({n:b.n,x:b.x,y:b.y,lit:lit(b,now)})),docked:s.docked,best:s.best,misses,gold:s.gold?{...s.gold}:null,opened:s.opened};}}});

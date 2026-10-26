@@ -26,6 +26,8 @@ El pulso encaja con la escala y el reloj del lugar. Los aciertos avanzan el jueg
 
 `journey-rhythm.js` distingue patrones por lugar y canta dos compases de demostración. La Línea anticipa el golpe y diferencia espera de acierto. Colas visuales usan tiempo audible estimado y conservan la nota actualmente oída aunque se programe otra futura.
 
+El golpe se ve junto al cubo (panel 10, P3). Un anillo de 1 px se cierra sobre el cubo en los cuatro pasos previos a cada paso que cuenta, con el mismo `approach` y el mismo reloj que la Línea; es dorado en el «1». No cambia el tamaño del cubo; con movimiento reducido no se mueve, solo se ilumina. El dedo fantasma es un anillo de 1 px con punto de 3 px junto al cubo (caja de 14×14, centro a ≤ 30 px). Marca los pasos del lugar (`journeyRhythmState().steps`) en tiempo audible. La Línea tiene base de alfa .38 sobre una franja negra y el «1» dorado cuando cuenta. Las marcas de capítulo miden 4 px y solo se ven dentro de un capítulo. Las chispas doradas vuelan a la posición real de `#bar` (`barTarget` en `journey-games.js`).
+
 ## Presentación y ayuda
 
 Negro, cubo pequeño, marcas contenidas y color ganado. Los rótulos del paisaje y la economía se reducen durante el Viaje. Menús y controles son silenciosos; no usan notas del tema como sonido de UI.

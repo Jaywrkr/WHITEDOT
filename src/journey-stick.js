@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow as glowNow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
+import {beatGlow as glowNow,worldCamera,sayOnce,chapterToast,commitJourneyClose,barTarget,drawBarDrop} from './journey-games.js';
 // «Pégate» (prototype for the Llanura, chosen by Jay on 23 October): things around the cube beat with the music; a
 // pulse on time next to one sticks it to the cube, it sounds and fills the bar at the top. Off time nothing moves.
 // Small things are many and fill a little, big ones are few and fill a lot. When the bar is full a gold cloud comes
@@ -87,9 +87,9 @@ export function initialize(runtime){
   const cx=W/2+(runtime.S.wx-cam.x),cy=H/2+(runtime.S.wy-cam.y),ring=6+7*scale,spin=still?0:t/2400,shiver=still?0:cubeWobble*3;cubeWobble=Math.max(0,cubeWobble-.04);
   for(const a of attached){const ang=a.a+spin,rr=ring*a.d+shiver*Math.sin(t/30+a.a);c.globalAlpha=.9;c.fillStyle=a.kind==='mota'?'#ffffff':gold;const z=a.kind==='mota'?3:a.kind==='chispa'?4:a.kind==='piedra'?5:6;c.fillRect(Math.round(cx+Math.cos(ang)*rr)-z/2,Math.round(cy+Math.sin(ang)*rr)-z/2,z,z);}
   // The drop flies to where the bar is filling: bigger things, bigger drops.
-  const left=16,right=W-16,barY=42;
+  const dropTo=barTarget(W),left=dropTo.left,right=dropTo.right,barY=dropTo.y;
   for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*stickProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=2+Math.min(6,d.value/3);
-   c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
+   drawBarDrop(c,cx,cy,tx,barY,e,z,1-k*.3,gold);}
   c.restore();}
  runtime.registerJourneyGame?.('llanura',{pulse,under:drawUnder,over:draw,progress:()=>stickProgress(own().points,goal()),growth:()=>cubeScale(own().points,goal())});
  Object.defineProperties(runtime,{journeyStick:{get:()=>()=>({active:active(),points:own().points,progress:stickProgress(own().points,goal()),stuck,misses,attached:attached.length,flying:flying.length,cloud:own().cloud?{...own().cloud}:null,swallowed:own().swallowed,near:near(reach()).map(it=>({id:it.id,kind:it.kind,value:it.value}))})}});

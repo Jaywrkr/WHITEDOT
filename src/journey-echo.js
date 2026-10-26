@@ -1,6 +1,6 @@
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose,barTarget,drawBarDrop} from './journey-games.js';
 // «Eco» (the Cueva, plan F17, docs/MUNDO.md): the cave sings a pattern for one bar and you sing it back the next. Eight
 // sockets under the cube are the eighths of the bar: while the cave sings, its steps light up as they sound; while you
 // answer, they wait for you. Every step on time and none extra is an echo: it fills the bar and the next pattern is one
@@ -70,9 +70,9 @@ export function initialize(runtime){
   c.restore();}
  function over(c,W,H){if(!active())return;const now=performance.now(),gold=runtime.GOLD||'#f0d27a',cam=worldCamera(runtime),cx=W/2+(runtime.S.wx-cam.x),cy=H/2+(runtime.S.wy-cam.y);c.save();
   if(shiver>0&&!calm()){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}
-  const left=16,right=W-16,barY=42;
+  const dropTo=barTarget(W),left=dropTo.left,right=dropTo.right,barY=dropTo.y;
   for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*echoProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=2+Math.min(6,d.value/2);
-   c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
+   drawBarDrop(c,cx,cy,tx,barY,e,z,1-k*.3,gold);}
   c.restore();}
  runtime.registerJourneyGame?.('cueva',{pulse,under,over,progress:()=>echoProgress(own().points,goal())});
  Object.defineProperties(runtime,{echoMusicStep:{get:()=>step},journeyEcho:{get:()=>()=>{const s=own();return {active:active(),points:s.points,goal:goal(),progress:echoProgress(s.points,goal()),len:s.len,n:s.n,echoes:s.echoes,best:s.best,phase:phase?{kind:phase.kind,start:phase.start,end:phase.end,pattern:[...phase.pattern],steps:[...phase.steps]}:null,misses,gold:s.gold?{...s.gold}:null,opened:s.opened};}}});

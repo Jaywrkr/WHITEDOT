@@ -1,5 +1,5 @@
 import {calmMotion} from './frame-state.js';
-import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose} from './journey-games.js';
+import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose,barTarget,drawBarDrop} from './journey-games.js';
 import {onBeat,onAnd} from './journey-rhythm.js';
 // «Siembra» (the Jardín, plan F9, docs/MUNDO.md): eight beds around where the round began. A pulse on time on an
 // empty bed sows a seed; every pulse on time grows the plants within reach one step (seed, sprout, bud, flower); a
@@ -87,9 +87,9 @@ export function initialize(runtime){
  }
  function over(c,W,H){if(!active())return;const now=performance.now(),gold=runtime.GOLD||'#f0d27a',cam=worldCamera(runtime),cx=W/2+(runtime.S.wx-cam.x),cy=H/2+(runtime.S.wy-cam.y);c.save();
   if(shiver>0&&!calm()){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}
-  lesson(c,W,H,now);const left=16,right=W-16,barY=42;
+  lesson(c,W,H,now);const dropTo=barTarget(W),left=dropTo.left,right=dropTo.right,barY=dropTo.y;
   for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*gardenProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=2+Math.min(6,d.value/2);
-   c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
+   drawBarDrop(c,cx,cy,tx,barY,e,z,1-k*.3,gold);}
   c.restore();}
  runtime.registerJourneyGame?.('jardin',{pulse,under,over,progress:()=>gardenProgress(own().points,goal())});
  Object.defineProperties(runtime,{gardenLessonReplay:{get:()=>()=>{lessonOwner=own();lessonDone=false;replay=true;lessonAt=performance.now();lastCare=0;}},gardenLessonState:{get:()=>()=>({done:lessonDone,replaying:replay,misses:lessonMiss})},journeyGarden:{get:()=>()=>{const s=own();return {active:active(),points:s.points,goal:goal(),progress:gardenProgress(s.points,goal()),center:{...s.center},beds:s.beds.map(b=>({...b})),spots:bedSpots(s.center),blooms:s.blooms,misses,tree:s.tree?{...s.tree}:null,opened:s.opened};}}});
