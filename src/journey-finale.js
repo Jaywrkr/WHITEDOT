@@ -1,5 +1,5 @@
 import {prefersReducedMotion} from './frame-state.js';
-import {THEME,themePitch} from './journey-pulse.js';
+import {THEME,themePitch,audibleTime,phraseTimeline} from './journey-pulse.js';
 import {WORLD_CHAPTERS} from './journey-chapters.js';
 import {FESTIVAL_CHAPTERS} from './festival.js';
 import {LANDSCAPES} from './house-view.js';
@@ -22,9 +22,12 @@ export function noteLengths(steps,count){const out=Array(count).fill(2);if(!Arra
  for(let i=0;i<count-1;i++){const gap=steps[i+1]-steps[i];if(Number.isFinite(gap)&&gap>0)out[i]=2*Math.max(1,Math.min(3,Math.round(gap/4)));}return out;}
 // The score of the finale: up to six of your notes per chapter, with your rhythm, each chapter in two bars of its own
 // (a longer rhythm is tightened to fit), then the theme twice.
-export function finaleScore(notes,chapters=WORLD_CHAPTERS,steps={}){
+export function finaleScore(notes,chapters=WORLD_CHAPTERS,steps={},ticks={}){
  const out=[];let at=0;for(const id of chapters){const raw=Array.isArray(notes?.[id])?notes[id]:[],keep=raw.map((m,i)=>Number.isFinite(m)?i:-1).filter(i=>i>=0).slice(-NOTES_PER_CHAPTER),st=Array.isArray(steps?.[id])&&steps[id].length===raw.length?keep.map(i=>steps[id][i]):null,len=noteLengths(st,keep.length);
-  if(!keep.length)continue;while(len.reduce((a,b)=>a+b,0)>SEGMENT){const i=len.indexOf(Math.max(...len));len[i]-=2;}
+  if(!keep.length)continue;
+  const ts=Array.isArray(ticks[id])&&ticks[id].length===raw.length?keep.map(i=>ticks[id][i]):null;
+  if(ts?.every((v,i)=>Number.isSafeInteger(v)&&v>=0&&(!i||v>=ts[i-1]))){const timing=phraseTimeline(keep.map(i=>raw[i]),st,ts);keep.forEach((i,k)=>out.push({midi:raw[i],eighths:Math.max(2,(timing[k+1]??timing[k]+4)-timing[k])/2,chapter:id,at:at+timing[k]*EIGHTH/2}));at+=Math.max(SEGMENT,Math.ceil(((timing.at(-1)||0)+4)/16)*8)*EIGHTH;continue;}
+  while(len.reduce((a,b)=>a+b,0)>SEGMENT){const i=len.indexOf(Math.max(...len));len[i]-=2;}
   let t=at;keep.forEach((i,k)=>{out.push({midi:raw[i],eighths:len[k],chapter:id,at:t});t+=len[k]*EIGHTH;});at+=SEGMENT*EIGHTH;}
  for(const shift of [0,7])for(const [d,l] of THEME){out.push({midi:themePitch(d,MAJOR,shift),eighths:l,chapter:'refugio',at});at+=l*EIGHTH;}return out;}
 export const scoreLength=score=>score.reduce((s,n)=>Math.max(s,n.at+(n.seconds??n.eighths*EIGHTH)),0);
@@ -63,7 +66,7 @@ export function initialize(runtime){
  // bars; the local arrangement interprets your notes over the same harmonic frame.
  function play(score,context){const ac=runtime.ac;return ac?playFinale(runtime,score,context,ac.currentTime+GATHER):null;}
  function start(options={}){const j=runtime.S.journey,festival=!!options.festival;if(run||!j||(j.finished&&!festival))return false;
-  document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});runtime.cancelJourneyVictory?.();runtime.stopSong?.();const context=finaleContext(runtime),ratio=context.six/.125;runtime.landHouse?.();const score=finaleScore(j.notes,festival?FESTIVAL_CHAPTERS:WORLD_CHAPTERS,j.steps).map(n=>({...n,at:n.at*ratio,seconds:n.eighths*EIGHTH*ratio})),el=overlay();el.querySelector('.journey-again')?.remove();el.querySelector('.journey-explore')?.remove?.();el.querySelector('.journey-credits').replaceChildren();
+  document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});runtime.cancelJourneyVictory?.();runtime.stopSong?.();runtime.closeSong?.();const context=finaleContext(runtime),ratio=context.six/.125;runtime.landHouse?.();const score=finaleScore(j.notes,festival?FESTIVAL_CHAPTERS:WORLD_CHAPTERS,j.steps,j.ticks).map(n=>({...n,at:n.at*ratio,seconds:n.eighths*EIGHTH*ratio})),el=overlay();el.querySelector('.journey-again')?.remove();el.querySelector('.journey-explore')?.remove?.();el.querySelector('.journey-credits').replaceChildren();
   run={el,score,context,events:finaleArrangement(score,context),festival,at:now(),length:scoreLength(score),gain:play(score,context),soundEnd:(runtime.ac?.currentTime||0)+GATHER+scoreLength(score),credits:false};state.played++;
   el.onclick=()=>{if(run&&now()-run.at>2)finish(true);};requestAnimationFrame(frame);return true;}
  function finish(skipped=false){if(!run)return;const j=runtime.S.journey,ac=runtime.ac;if(run.gain&&ac){const g=run.gain.gain;if(typeof g.cancelAndHoldAtTime==='function')g.cancelAndHoldAtTime(ac.currentTime);else{const end=run.soundEnd,held=Math.min(1,Math.max(0,(end-ac.currentTime)/.45));g.cancelScheduledValues(ac.currentTime);g.setValueAtTime(held,ac.currentTime);}g.setTargetAtTime(.0001,ac.currentTime,.12);}
@@ -88,7 +91,7 @@ export function initialize(runtime){
   // «Explorar»: straight into the free World, without waiting for the credits to end.
   if(!r.festival){const go=document.createElement('button');go.className='journey-explore';go.id='journeyExplore';go.textContent='Explorar a pie';go.onclick=e=>{e?.stopPropagation?.();finish(false);};r.el.appendChild(go);}}
  function frame(){if(!run)return;const el=run.el,cv=el.querySelector('canvas'),W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
-  const c=cv.getContext('2d'),t=now()-run.at,music=t-GATHER,end=run.length,still=calm();c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
+  const c=cv.getContext('2d'),t=now()-run.at,music=run.gain&&runtime.ac?audibleTime(runtime.ac)-(run.soundEnd-run.length):t-GATHER,end=run.length,still=calm();c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
   // The sky turns gold while your journey plays, and goes dark in the silence.
   const glow=(music<0?Math.max(0,1+music/GATHER)*.3:.35+.65*Math.min(1,music/end))*(music>end?Math.max(0,1-(music-end)/SILENCE):1);const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,`rgba(240,210,122,${.32*glow})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);
   // Your song's rings: each chapter's lights when its two bars begin, with its name and verb in the middle; with the

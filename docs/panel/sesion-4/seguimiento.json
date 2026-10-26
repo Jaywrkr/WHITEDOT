@@ -815,7 +815,13 @@
           "tests/song_stage_mix.py"
         ],
         "limits": "El paso histórico no revela su compás original; temporización compatible explícita. Reconocimiento humano pendiente."
-      }
+      },
+      "reviews": [
+        {
+          "phase": "N7",
+          "observed": "Revisión adicional corrige metadata absoluta real, cambio de tempo y época al reanudar. Regresiones reales y unitarias añadidas."
+        }
+      ]
     },
     {
       "id": "A07",
@@ -840,13 +846,19 @@
           "tests/song_stage_mix.py"
         ],
         "limits": "El paso histórico no revela su compás original; temporización compatible explícita. Reconocimiento humano pendiente."
-      }
+      },
+      "reviews": [
+        {
+          "phase": "N7",
+          "observed": "Revisión adicional corrige metadata absoluta real, cambio de tempo y época al reanudar. Regresiones reales y unitarias añadidas."
+        }
+      ]
     },
     {
       "id": "A08",
       "area": "Arco musical",
       "priority": "P2",
-      "status": "verificado-propuesto-sin-implementar",
+      "status": "corregido-tecnico-escucha-pendiente",
       "phase": "M3",
       "title": "Compás de silencio no coordina fondo del final11",
       "evidence": [
@@ -854,7 +866,17 @@
         "../sesion-8/informe.md"
       ],
       "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
-      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada."
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N7",
+        "version": "alpha.199",
+        "tests": [
+          "tests/song_pause_mix.py",
+          "tests/song-transport.mjs",
+          "tests/song_stage_smoke.py"
+        ],
+        "limits": "Salida completa medida en render; escucha física pendiente."
+      }
     },
     {
       "id": "U15",

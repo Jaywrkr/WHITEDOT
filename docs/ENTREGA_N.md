@@ -10,7 +10,7 @@ Autorizadas por Jay tras la revisión ciega de alpha.192. Meta: nueve en cada ca
 | N4 | `pulido/n4-interfaz` | Implementación técnica; aceptación pendiente |
 | N5 | `pulido/n5-recorrido` | Implementación técnica; aceptación pendiente |
 | N6 | `pulido/n6-descubrimientos` | Implementación técnica; aceptación pendiente |
-| N7 | `pulido/n7-integracion-musical` | Pendiente |
+| N7 | `pulido/n7-integracion-musical` | Implementación técnica; aceptación pendiente |
 | N8 | `pulido/n8-candidato` | Pendiente |
 
 Comprensión, emoción, aceptación sonora, rendimiento físico y puntuaciones requieren personas/dispositivos. No se sustituyen con bots, renders ni panel simulado. Supabase y tiendas siguen en pausa.
@@ -50,3 +50,9 @@ Verificación: 251 suites Node; playtest_smoke.py ampliado y after_journey_smoke
 Aviso de hallazgo permite Ver tarjeta: inspección completa voluntaria, función musical explícita, rareza/procedencia y reloj detenido hasta volver. No añade sonido ni interrumpe automáticamente. Libro conserva identidad. Cambio de interpretación revierte si guardar falla. Selector de casa agrupa disponibles y por descubrir sin ocultar objetos.
 
 Verificación: 252 suites Node; card_inspect_smoke.py y rare_cards_smoke.py aprobados en móvil/horizontal/PC; cuenta atrás y movimiento detenidos, avisos en cola, libro y40 objetos preservados. Auditoría limpia. Valor emocional pendiente con personas.
+
+## N7 · 2.3.0-alpha.199
+
+Pausa del final11 silencia toda la salida, incluidas colas, y vuelve en el paso real del tema. Reloj visual sigue salida audible. Escenario avanza por pasos de transporte, sin saltar al cambiar tempo. Metadata absoluta real, época al reanudar campaña y ritmo nuevo en final5; corregida importación de su reloj y cancelación del escenario anterior. Generadores/voces conservados.
+
+Verificación: 253 suites Node y regresiones focalizadas aprobadas. round_timing_smoke.py, journey_finale_smoke.py y song_stage_smoke.py reales aprobados; pausa completa pico0, retorno0,873; seis renders final5 pico0,144; final11 pico0,389. Sin saturación. Auditoría limpia. Escucha física pendiente.

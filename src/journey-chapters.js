@@ -72,7 +72,7 @@ export function initialize(runtime){
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  const journey=()=>runtime.S.journey||{};
  function own(){if(owner!==runtime.S){owner=runtime.S;const j=journey();Object.assign(j,normalizeChapters(j,runtime.inWorld?.()));hits=0;portal=null;storm.length=0;echoes.length=0;lastPulse=lastTick=performance.now();lastSpot=null;}return journey();}
- let lastTick=0,lastSpot=null;
+ let lastTick=0,lastSpot=null,timingOwner=null,timingId=null,lastTransportTick=null,tickOffset=0;
  const progress=id=>{const j=own();return (j.progress[id]||={});};
  const ready=id=>momentLived(id,progress(id),journey().moments||{})&&barsLived(id,progress(id));
  const portalOpen=()=>!!portal&&performance.now()>=portal.at;
@@ -88,7 +88,12 @@ export function initialize(runtime){
  function pulse(on,midi,step,tick){lastPulse=performance.now();if(!on||!inChapter())return;hits++;const j=own(),id=current(),notes=(j.notes[id]||=[]);
   // Steps stay beside the notes only while every note has one.
   const steps=j.steps[id]||(notes.length?null:(j.steps[id]=[]));notes.push(midi);if(steps){if(Number.isInteger(step)&&step>=0)steps.push(step);else delete j.steps[id];}
-  const ticks=j.ticks[id]||(notes.length===1?j.ticks[id]=[]:null);if(ticks){if(Number.isSafeInteger(tick)&&tick>=0&&(!ticks.length||tick>=ticks.at(-1)))ticks.push(tick);else delete j.ticks[id];}
+  const ticks=j.ticks[id]||(notes.length===1?j.ticks[id]=[]:null);if(ticks){if(Number.isSafeInteger(tick)&&tick>=0){
+   if(timingOwner!==runtime.S||timingId!==id){timingOwner=runtime.S;timingId=id;lastTransportTick=null;tickOffset=0;}
+   // A resumed transport has a new epoch. Keep saved timing; append at the next compatible bar.
+   if(lastTransportTick===null||tick<lastTransportTick){const previous=ticks.at(-1);if(Number.isFinite(previous))tickOffset=Math.max(tickOffset,Math.ceil((previous+1-tick)/16)*16);}
+   ticks.push(tick+tickOffset);lastTransportTick=tick;
+  }else delete j.ticks[id];}
   runtime.journeyMomentNote?.(id,midi);if(notes.length>16){notes.splice(0,notes.length-16);j.steps[id]?.splice(0,j.steps[id].length-16);j.ticks[id]?.splice(0,j.ticks[id].length-16);}
   // The Tormenta: every note on time brings your own bolt down on the beat; once yours fall, the storm's stop.
   // With «Baila» (journey-dance.js) your bolts are the ones you return from its circles.

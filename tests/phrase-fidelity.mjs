@@ -13,5 +13,9 @@ assert.deepEqual(phraseTimeline([60,62],[0,0],[0,1000]),[0,24],'long rests short
 const source={version:2,notes,noteSteps:steps,noteTicks:{lago:[0,16,32,48,64,80,96,112]}};assert.deepEqual(normalizePlaces(source).noteTicks,source.noteTicks);
 const future={version:99,payload:{keep:true}};assert.equal(normalizePlaces(future),future);
 assert.deepEqual(normalizeChapters({notes:{lago:[60,62]},steps:{lago:[0,4]},ticks:{lago:[16,20]}}).ticks.lago,[16,20]);
-const r={S:{sound:true},ac:{currentTime:10},MU:{step:2,bq:[10],sq:[{s:16,t:10}]},SIX:.125,BIOMES:[],journeyChapterPulse:(...a)=>r.captured=a};pulse(r);assert(r.journeyPulse());assert.deepEqual(r.captured,[true,57,0,16],'campaign captures judged step and absolute position, not scheduler head');
+const r={S:{sound:true},ac:{currentTime:10},MU:{step:2,bq:[10],sq:[{s:0,t:10,tick:16}]},SIX:.125,BIOMES:[],journeyChapterPulse:(...a)=>r.captured=a};pulse(r);assert(r.journeyPulse());assert.deepEqual(r.captured,[true,57,0,16],'campaign captures judged step and absolute position, not scheduler head');
 console.log('PASS phrase fidelity: eight notes survive, legacy wraps ordered, new bar positions retained, long rests bounded, future saves untouched, campaign judged time');
+const {initialize:chapters}=await import('../src/journey-chapters.js');
+const c={S:{mode:'world',wx:0,wy:0,journey:{chapter:1,notes:{llanura:[60]},steps:{llanura:[0]},ticks:{llanura:[64]}}},MU:{},BIOMES:[{id:'llanura'}],curZone:0,inWorld:()=>true,journeyQuiet:()=>true};chapters(c);
+c.journeyChapterPulse(true,62,4,4);assert.deepEqual(c.S.journey.ticks.llanura,[64,68]);c.journeyChapterPulse(true,64,8,8);assert.deepEqual(c.S.journey.ticks.llanura,[64,68,72]);
+c.S=structuredClone(c.S);c.journeyChapterPulse(true,65,0,0);assert.deepEqual(c.S.journey.ticks.llanura,[64,68,72,80],'new transport epoch appends a compatible bar without erasing old timing');

@@ -1,5 +1,5 @@
 // Real Web Audio render of the scheduler, with a virtual clock and deterministic noise.
-export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false,generation=1,ecology=false,testInstrument=null,scene=null,celebration=false,identityKey='0,0',worldPoint=null,actorEcology=false,renderSeconds=10,savedMemory=null,pulseVoice=null,livingMusic=false,evolutionBar=null,outputVolume=null,energySetting=null,productionFoundation=false,fieldMode=false,experimentalAmount=0,transitionPoint=null,microParameter=.35,heldMicro=false,journeyMotion=null,totems=null,wonderBatch=null,caminoIdle=false,mischiefBatch=false,shopPieces=null}={}) {
+export async function renderMix(genre='minimal', {dense=false,soft=false,fx=false,sampleRate=48000,influenced=false,worldSeed='',encounter=null,deep=false,installation=null,trail=false,glass=false,generation=1,ecology=false,testInstrument=null,scene=null,celebration=false,identityKey='0,0',worldPoint=null,actorEcology=false,renderSeconds=10,savedMemory=null,pulseVoice=null,livingMusic=false,evolutionBar=null,outputVolume=null,energySetting=null,productionFoundation=false,fieldMode=false,experimentalAmount=0,transitionPoint=null,microParameter=.35,heldMicro=false,journeyMotion=null,totems=null,wonderBatch=null,caminoIdle=false,mischiefBatch=false,shopPieces=null,stagePause=false}={}) {
  // Finish the real greeting before hiding its guide; otherwise its pending timer restores a modal during a render.
  document.getElementById('returnContinue')?.click();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);
  const modules=await Promise.all(['data','progress','world','audio','foreground','voices','instruments','patches','effects','spatial','influence','blobs','living-composition','world-memory','performance'].map(id=>import(`../src/${id}.js`)));
@@ -36,7 +36,7 @@ export async function renderMix(genre='minimal', {dense=false,soft=false,fx=fals
   if(pulseVoice)r.S.cube={...r.S.cube,voice:pulseVoice};
   if(outputVolume!==null)r.S.outputVolume=outputVolume;
   if(energySetting!==null)r.S.musicEnergy=energySetting;
-  r.MU.E=dense?.8:.45;r.MU.vit=1;r.MU.vari=2;r.audio();
+  r.MU.E=dense?.8:.45;r.MU.vit=1;r.MU.vari=2;r.audio();if(stagePause){r.silenceSongMix(2,stagePause==='hold'?null:4);if(stagePause==='hold')r.restoreSongMix(4);}
   const shopNotes=[],blankCanvas=new Proxy({},{get:()=>()=>{}});
   if(shopPieces){const m=await import('../src/cube-shop-sound.js');m.initialize(r);const {shopPiece,shopSlot}=await import('../src/cube-shop-model.js'),q={version:1,purchases:{},wear:{},on:{}};for(const id of shopPieces){const p=shopPiece(id);if(!p)throw Error('Unknown shop piece '+id);q.purchases[id]=true;if(shopSlot(p.slot).many)q.on[id]=true;else q.wear[p.slot]=id;}r.sparkEconomy=q;r.shopSoundCue=n=>shopNotes.push(n);}
   if(influenced){r.activeLayerRegion=()=>r.MU.dnaT;for(const k of ['bass','groove','melody'])r.driveInfluence(r.MU.dnaT,k,1,3);for(let i=0;i<100;i++)r.influenceTick(.05,false);}

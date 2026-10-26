@@ -69,7 +69,7 @@ export function initialize(runtime){
  function scaleNow(){const MU=runtime.MU||{};return {scale:MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,tr:MU.tr||0};}
  // The Line's cursor follows what is heard: the audio clock minus the output latency.
  // The step of the bar at a time on the audio clock, from the steps the music scheduled.
- function absoluteStepAt(time){const sq=runtime.MU?.sq||[],six=runtime.SIX||.15;let last=null;for(const e of sq)if(e.t<=time)last=e;if(!last)return null;return Math.max(0,Math.round(last.s+(time-last.t)/six));}
+ function absoluteStepAt(time){const sq=runtime.MU?.sq||[],six=runtime.SIX||.15;let last=null;for(const e of sq)if(e.t<=time)last=e;if(!last||!Number.isSafeInteger(last.tick))return null;return Math.max(0,Math.round(last.tick+(time-last.t)/six));}
  function stepAt(time){const sq=runtime.MU?.sq;if(!sq?.length)return 0;let last=null;for(const e of sq)if(e.t<=time)last=e;if(!last)return sq[0].s%16;return (last.s+Math.min(.99,Math.max(0,time-last.t)/(runtime.SIX||.15)))%16;}
  function stepNow(){const ac=runtime.ac;if(!ac)return 0;return stepAt(audibleTime(ac));}
  // Judge one player pulse touched at atMs (performance.now(); defaults to now). Returns whether it was on time; never

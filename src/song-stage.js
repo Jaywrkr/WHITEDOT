@@ -1,6 +1,6 @@
 import {prefersReducedMotion} from './frame-state.js';
 import {SONG_LAYERS,SONG_IDS,tierStep,songChord} from './song.js';
-import {THEME,themePitch,phraseTimeline} from './journey-pulse.js';
+import {THEME,themePitch,phraseTimeline,audibleTime} from './journey-pulse.js';
 import {PLACES,TOTAL_STARS,starCount,allComplete} from './places.js';
 // The song seen (plan F7): eleven rings, one per place. A layer you have won lights its ring in its colour and the ring
 // beats with it; one you have not is a dim dashed ring, so what is missing is plain without words. The Refugio's
@@ -52,7 +52,7 @@ export function stageEvents(plan,k,chord,{tiers={},notes={},steps={},scale,tr=0}
  if(plan.final&&bar>=plan.themeAt&&bar<plan.endAt){const local=k-plan.themeAt*16,pass=local>=32?1:0;let at=0;for(const [d,l] of THEME){if(at===local-pass*32)out.push({what:'cello',midi:snapToScale(themePitch(d,scale,tr)+12+(pass?7:0),scale,tr),len:l*2,theme:true,second:!!pass});at+=l*2;}}
  return out;}
 export function initialize(runtime){
- let run=null;const state={opened:0,finals:0};
+ let run=null,raf=null;const state={opened:0,finals:0};
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  const data=()=>runtime.placesData?.();
  const won=()=>SONG_IDS.filter(id=>data()?.stars?.[id]?.[0]);
@@ -74,22 +74,28 @@ export function initialize(runtime){
   run={...begin({ids:list,final,master}),el};
   if(final){state.finals++;text.replaceChildren();runtime.narrate?.('won');}else{runtime.narrate?.('song');text.textContent=`Tu canción · ${ids.length} de ${SONG_IDS.length}`;}state.opened++;
   el.querySelector('#songAgain').hidden=final;el.querySelector('#songAgain').onclick=()=>open({final,master});el.querySelector('#songClose').textContent=final?'Seguir':'Cerrar';el.querySelector('#songClose').onclick=close;
-  requestAnimationFrame(frame);return true;}
+  raf=requestAnimationFrame(frame);return true;}
  // A trophy in the Refugio: its layer, at its stars, for two bars over the music.
  function preview(id){if(run&&!run.preview)return false;if(!runtime.S.sound||!runtime.ac||!runtime.bus)return false;run=begin({ids:[id],preview:true});return true;}
  function release(r){if(!r)return;const ac=runtime.ac;for(const g of [r.out,r.soft])if(g&&ac){try{g.gain.setTargetAtTime(.0001,ac.currentTime,.15);setTimeout(()=>g.disconnect(),1200);}catch(_){}}}
- function close(){if(!run)return;release(run);if(run.el)run.el.hidden=true;run=null;}
+ function close(){if(!run)return;runtime.restoreSongMix?.();if(raf!==null)cancelAnimationFrame(raf);raf=null;release(run);if(run.el)run.el.hidden=true;run=null;}
  // The sequencer's sixteenth: what the playing adds now, in the chord the World plays.
- function step(s,t){if(!run)return;if(run.start===null){if(s!==0)return;run.start=t;}const six=runtime.SIX||.15,k=Math.round((t-run.start)/six);if(k<=run.k)return;run.k=k;
+ function step(s,t,tick){if(!run||!run.out||Number.isFinite(run.lastTime)&&t<=run.lastTime)return;
+  const first=run.start===null;if(first){if(s!==0)return;run.start=t;}
+  const six=runtime.SIX||.15,delta=first?0:Number.isSafeInteger(tick)&&Number.isSafeInteger(run.lastTick)&&tick>run.lastTick?tick-run.lastTick:(s-run.lastStep+16)%16||16,k=first?0:run.k+delta;
+  run.lastTime=t;run.lastStep=s;run.lastTick=tick;run.k=k;(run.clock||=[]).push({k,t,six});if(run.clock.length>128)run.clock.shift();
   if(k>=run.plan.bars*16){if(run.preview){release(run);run=null;}else run.done=true;return;}
+  if(run.final&&!run.pauseScheduled&&k>=run.plan.silenceAt*16&&k<run.plan.themeAt*16){run.pauseScheduled=true;runtime.silenceSongMix?.(t);}
+  if(run.pauseScheduled&&!run.resumeScheduled&&k>=run.plan.themeAt*16){run.resumeScheduled=true;runtime.restoreSongMix?.(t);}
   if(!run.out)return;const MU=runtime.MU||{},scale=MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,chord=runtime.chordTones?.()||[57,60,64];
   for(const e of stageEvents(run.plan,k,chord,{tiers:run.tiers,notes:run.notes,steps:run.steps,scale,tr:MU.tr||0})){runtime.songHit?.(e.soft?run.soft:run.out,e,t,six);if(e.layer)run.last[e.layer]=t;}}
  // How hard a layer is hitting now, for its ring.
  function pulse(id,time){const t=run?.last?.[id];if(!Number.isFinite(t))return 0;return Math.max(0,1-(time-t)/((runtime.SIX||.15)*4));}
  // Whether a layer sounds now: won, and already in (the final brings them in one bar after another).
- function sounding(id){if(!run||!run.ids.includes(id))return false;const bar=run.k<0?-1:Math.floor(run.k/16);return run.start!==null&&bar>=(run.plan.entry[id]||0);}
+ function visualStep(){if(!run?.out||!runtime.ac)return run?.k??-1;const now=audibleTime(runtime.ac),entry=run.clock?.findLast(e=>e.t<=now);return entry?entry.k+Math.min(.99,Math.max(0,(now-entry.t)/entry.six)):-1;}
+ function sounding(id){if(!run||!run.ids.includes(id))return false;const k=visualStep(),bar=k<0?-1:Math.floor(k/16);return run.start!==null&&bar>=(run.plan.entry[id]||0);}
  function frame(){if(!run||!run.el)return;const el=run.el,cv=el.querySelector('canvas'),W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
-  const c=cv.getContext('2d'),ms=performance.now()-run.at,still=calm(),time=runtime.ac?.currentTime??0,bar=run.k<0?0:Math.floor(run.k/16);c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
+  const c=cv.getContext('2d'),ms=performance.now()-run.at,still=calm(),time=runtime.ac?audibleTime(runtime.ac):0,bar=Math.max(0,Math.floor(visualStep()/16));c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
   const full=run.ids.filter(id=>sounding(id)).length/SONG_IDS.length,g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,`rgba(240,210,122,${.08+.3*full})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);
   // Without sound the stage still opens: the layers come in by the clock, at the World's tempo.
   if(!run.out&&run.k<run.plan.bars*16)run.k=Math.floor(ms/1000/((runtime.SIX||.125)))-1,run.start=run.start??0;
@@ -97,7 +103,7 @@ export function initialize(runtime){
   drawSongRings(c,W,H,{lit:id=>sounding(id)||!run.final&&run.ids.includes(id),beat:id=>pulse(id,time)||(still?0:.3+.3*Math.sin(ms/300+id.length)),shown,still,color:(id,f)=>runtime.placeColor?.(id,f)||f});
   // The final: the words and the credits once the theme has sounded (plan I4: at the end, not before your notes).
   if(run.final&&bar>=run.plan.endAt&&!run.credits){run.credits=true;el.querySelector('#songAgain').hidden=false;const box=el.querySelector('.song-stage-text');box.replaceChildren(...(run.master?MASTER_LINES:FINAL_LINES).map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.8}s`;if(i===0)p.className='journey-title';return p;}));}
-  requestAnimationFrame(frame);}
+  raf=requestAnimationFrame(frame);}
  // With the eleven places complete, once: the true finale, after the round's card is closed. With the 33 stars, once
  // more: the master version.
  function check(){const d=data();if(!d)return false;

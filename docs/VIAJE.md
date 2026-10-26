@@ -227,3 +227,7 @@ Tocar el área del cubo (48px de alcance táctil, dibujo pequeño intacto) emite
 ## Memoria N3
 
 Las notas nuevas conservan paso y posición absoluta (`journey.ticks` / `lugares.noteTicks`), como campos aditivos compatibles. Tu canción reserva los compases que requiera cada frase, incluidas repeticiones. Las memorias antiguas conservan sus notas: un paso igual o anterior se interpreta en el siguiente compás; no se conoce el tiempo original perdido. Pausas superiores a64 pasos se abrevian por compases completos, manteniendo su fase. Los datos guardados no se reescriben para esa interpretación.
+
+## Integración de cierre N7
+
+El transporte registra número absoluto y paso del compás por separado. Al reanudar una campaña, un transporte reiniciado se añade al siguiente compás compatible; el tiempo pasado con la app cerrada se desconoce. Final5 interpreta la posición nueva; las memorias antiguas mantienen su interpretación compatible. Final11 cuenta pasos, no segundos divididos por el último tempo: su pausa termina en el paso del tema y silencia también reverberación/eco. Salir cancela la pausa y restaura salida sin cambiar volumen elegido. La generación y los instrumentos de fondo permanecen.
