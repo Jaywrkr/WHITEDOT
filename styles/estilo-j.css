@@ -640,3 +640,11 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
  #songStage .song-stage-text{top:calc(var(--safe-top,0px) + 12px);font-size:11px;line-height:1.6}
  #songStage .journey-title,#journeyFinale .journey-title{font-size:18px;letter-spacing:.08em}
 }
+
+/* A finding stays quiet until the player chooses to inspect its card. */
+#rareNotice[data-layout="compact"] #rareNoticeContinue{display:inline-flex;min-height:44px;padding:8px;margin-top:6px}
+#rareNotice[data-layout="compact"] #rareNoticeOpen{min-height:44px;margin-top:6px}
+#rareNotice[data-layout="compact"] #rareNoticeName{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+#rareNotice[data-layout="full"] .rare-reveal-card{border-color:var(--rare-ink);box-shadow:0 0 60px #ffffff08}
+#rareNotice[data-layout="full"] #rareNoticeAbility{border-top:1px solid #ffffff26;padding-top:12px;line-height:1.65}
+#rareNotice[data-layout="full"] #rareNoticeOdds{font-variant-numeric:tabular-nums}

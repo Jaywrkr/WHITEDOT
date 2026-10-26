@@ -96,3 +96,7 @@ Diez encuentros ocasionales, con una sola escena activa. Acercarse, caminar, gir
 Los gráficos respetan movimiento reducido y Textos del paisaje. No hay botón, pantalla ni moneda nueva. Los encuentros interrumpidos se reinician al volver; premios y logros sí persisten.
 
 Los 120 logros nuevos incluyen 40 hitos de encuentros, uno por cada actividad, uno por cada hallazgo, seis de esculturas, catorce de variedad y diez secretos absurdos. Ejemplos: «Abogado de las piedras», «Me llovió al contrario», «Después de usted», «Festival sin permisos» y «Mi sombra me debe explicaciones». Los logros reconocen el progreso anterior disponible y se consultan en la Bitácora.
+
+## Tarjeta inspeccionable · N6
+
+El primer aviso importante permanece pequeño; «Ver tarjeta» abre el detalle voluntario. Allí se detienen movimiento y cuenta atrás, la música continúa y los demás avisos esperan. Incluye función musical, frecuencia condicional sin inventar probabilidades por hora, lugar e identidad. «Ver en mi libro» conserva el hallazgo seleccionado. Repeticiones no reabren continuamente la presentación. Elegir otra interpretación se revierte si no se guarda.

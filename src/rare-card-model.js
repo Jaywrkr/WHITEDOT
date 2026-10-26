@@ -84,3 +84,11 @@ export function learnCardEncounter(card,context={}){
  card.learning={...old,version:1,contexts,techniques,selected:techniques.includes(old.selected)?old.selected:'normal'};return true;
 }
 export function nextCardTechnique(card){const l=card.learning;if(!l||l.version!==1||!Array.isArray(l.techniques)||!l.techniques.length)return null;const options=l.techniques.filter(t=>Object.hasOwn(CARD_TECHNIQUES,t));if(!options.length)return null;l.selected=options[(options.indexOf(l.selected)+1)%options.length];return l.selected;}
+
+// Technique selection is durable or restored exactly; never discard the collected card.
+export function commitCardTechnique(card,save){
+ const learning=card?.learning;if(!learning||learning.version!==1)return null;
+ const had=Object.hasOwn(learning,'selected'),old=learning.selected,next=nextCardTechnique(card);if(!next)return null;
+ try{if(save()!==false)return next;}catch{}
+ if(had)learning.selected=old;else delete learning.selected;return null;
+}

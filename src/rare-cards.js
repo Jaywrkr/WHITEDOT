@@ -2,7 +2,7 @@ import {openSurface,calmMotion} from './frame-state.js';
 import {installNoticeLane} from './notice-lane.js';
 import {POWERS} from './expansion-music.js';
 import {livingDefinition} from './living-catalog.js';
-import {RARE_BOOK_LIMIT,RARE_PAGE_SIZE,CARD_TIERS,rareDefinition,rarityLabel,cardSerial,makeRareCard,normalizeRareBook,storeRareCard,cardAbility,learnCardEncounter,nextCardTechnique,CARD_TECHNIQUES} from './rare-card-model.js';
+import {RARE_BOOK_LIMIT,RARE_PAGE_SIZE,CARD_TIERS,rareDefinition,rarityLabel,cardSerial,makeRareCard,normalizeRareBook,storeRareCard,cardAbility,learnCardEncounter,commitCardTechnique,CARD_TECHNIQUES} from './rare-card-model.js';
 import {rarePortrait} from './rare-card-art.js';
 import {relicAt} from './relics.js';
 import {encodePlace} from './share-tools.js';
@@ -62,15 +62,15 @@ export function initialize(runtime){
  }
  function reveal({card,repeated}){
   const def=rareDefinition(card.type),notice=$('rareNotice');notice.style.setProperty('--rare-ink',CARD_TIERS[card.odds.tier].ink);
-  $('rareNoticeArt').innerHTML=rarePortrait(card,{scene:true});$('rareNoticeAbility').textContent=cardAbility(card).name;$('rareNoticeSerial').textContent='#'+cardSerial(card.id);$('rareNoticeTier').textContent=card.forced?'Muestra de laboratorio':CARD_TIERS[card.odds.tier].name+(repeated?' · Otro ejemplar':' · Primera voz');
+  $('rareNoticeArt').innerHTML=rarePortrait(card,{scene:true});const ability=cardAbility(card);$('rareNoticeAbility').textContent=ability.name+' · '+ability.text;$('rareNoticeSerial').textContent='#'+cardSerial(card.id);$('rareNoticeTier').textContent=card.forced?'Muestra de laboratorio':CARD_TIERS[card.odds.tier].name+(repeated?' · Otro ejemplar':' · Primera voz');
   $('rareNoticeName').textContent=card.name;$('rareNoticeWhere').textContent=location(card);$('rareNoticeWhere').title=location(card);$('rareNoticeOdds').textContent=rarityLabel(card.type,card.odds);
-  noticeTimes.set(card.type,performance.now());shown=card;remaining=3;notice.dataset.noticeLevel='2';notice.dataset.earned=String(!repeated&&!card.forced&&!card.legacy);notice.dataset.repeat=String(repeated);notice.dataset.inspect='false';notice.dataset.layout='compact';notice.setAttribute('role','status');notice.setAttribute('aria-modal','false');notice.setAttribute('aria-labelledby','rareNoticeName');lane.show(notice);document.body.classList.add('rare-reveal');
+  $('rareNoticeContinue').textContent='Ver tarjeta';$('rareNoticeOpen').textContent='Libro';noticeTimes.set(card.type,performance.now());shown=card;remaining=4.5;notice.dataset.noticeLevel='2';notice.dataset.earned=String(!repeated&&!card.forced&&!card.legacy);notice.dataset.repeat=String(repeated);notice.dataset.inspect='false';notice.dataset.layout='compact';notice.setAttribute('role','status');notice.setAttribute('aria-modal','false');notice.setAttribute('aria-labelledby','rareNoticeName');lane.show(notice);document.body.classList.add('rare-reveal');
  }
  function tick(dt){
   ensure();if(!runtime.inWorld()){effects=[];queue=[];dismiss();return;}
   if(!active()||lane.blocked()){$('rareNotice').hidden=true;return;}
   for(const e of effects)e.age+=Math.min(.1,Math.max(0,dt));effects=effects.filter(e=>e.age<2);
-  if(shown){lane.show($('rareNotice'));remaining-=Math.max(0,dt);if(remaining<=0)dismiss();}
+  if(shown){lane.show($('rareNotice'));if($('rareNotice').dataset.inspect!=='true')remaining-=Math.max(0,dt);if(remaining<=0)dismiss();}
   else if(queue.length){lane.request('rare',{level:2});if(lane.claim('rare'))reveal(queue.shift());}else lane.cancel('rare');
  }
  function cardHTML(card,index){
@@ -108,7 +108,7 @@ export function initialize(runtime){
   const button=event.target.closest('button[data-rare-copy],button[data-rare-return],button[data-rare-page],button[data-rare-png],button[data-rare-technique]');if(!button||button.disabled)return;
   if(button.dataset.rarePage){const delta=Number(button.dataset.rarePage);if(![-1,1].includes(delta))return;page+=delta;runtime.refreshJournal?.();(document.querySelector('[data-rare-page="'+button.dataset.rarePage+'"]:not(:disabled)')||document.querySelector('[data-rare-page]:not(:disabled)'))?.focus();return;}
   const index=Number(button.dataset.rareCopy??button.dataset.rareReturn??button.dataset.rarePng??button.dataset.rareTechnique),book=ensure(),card=Number.isInteger(index)&&book.items[index];if(!card||book.readOnly)return;
-  if(button.dataset.rareTechnique!==undefined){const technique=nextCardTechnique(card);if(technique){runtime.save();button.textContent='Interpretación · '+CARD_TECHNIQUES[technique];}return;}
+  if(button.dataset.rareTechnique!==undefined){const technique=commitCardTechnique(card,()=>runtime.save());if(technique)button.textContent='Interpretación · '+CARD_TECHNIQUES[technique];else runtime.toast?.('No se pudo guardar la interpretación.',{level:2});return;}
   if(button.dataset.rarePng!==undefined){await exportPNG(card);return;}if(!card.address)return;
   if(button.dataset.rareCopy!==undefined){
    const code=encodePlace(card.address,card.name);try{await navigator.clipboard.writeText(code);button.textContent='Copiado';}
@@ -122,7 +122,7 @@ export function initialize(runtime){
  }
  function drawFinding(){const c=runtime.cx;if(!runtime.inWorld()||document.hidden)return;c.save();for(const e of effects){if(e.layer!==(runtime.S.layer||'superficie'))continue;const x=e.x-runtime.S.wx+runtime.W/2,y=e.y-runtime.S.wy+runtime.H/2,rr=12+(calmMotion(runtime.S)?0:e.age*16);c.globalAlpha=(1-e.age/2)*.7;c.strokeStyle=e.ink;c.lineWidth=1;for(let i=0;i<4;i++){const a=i*Math.PI/2;c.beginPath();c.moveTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);c.lineTo(x+Math.cos(a)*(rr+5),y+Math.sin(a)*(rr+5));c.stroke();}}c.restore();}
  runtime.$('journalBody').addEventListener('change',event=>{if(!['rareFilter','rareRole'].includes(event.target.id))return;if(event.target.id==='rareFilter')filter=event.target.value;else roleFilter=event.target.value;page=0;runtime.refreshJournal?.();document.getElementById(event.target.id)?.focus();});
- $('rareNoticeDismiss').onclick=dismiss;$('rareNoticeContinue').onclick=dismiss;
+ $('rareNoticeDismiss').onclick=dismiss;$('rareNoticeContinue').onclick=()=>{if(!shown)return;const notice=$('rareNotice');if(notice.dataset.inspect==='true'){dismiss();return;}notice.dataset.layout='full';notice.dataset.inspect='true';notice.setAttribute('role','dialog');notice.setAttribute('aria-modal','true');$('rareNoticeContinue').textContent='Volver al mundo';$('rareNoticeOpen').textContent='Ver en mi libro';$('rareNoticeContinue').focus({preventScroll:true});};
  $('rareNoticeOpen').onclick=()=>{if(!shown)return;const id=shown.id,index=ensure().items.findIndex(c=>c.id===id);filter=roleFilter='todo';page=Math.floor(Math.max(0,ensure().items.length-1-index)/RARE_PAGE_SIZE);dismiss();runtime.openJournal('rares',{finding:id});};
  runtime.VOZ.tarjeta1='Un hallazgo merece memoria. Su tarjeta guarda el lugar.';
  runtime.ACH.push(['tarjeta1','Un hallazgo tiene memoria','Guardaste una tarjeta de un encuentro poco común.']);

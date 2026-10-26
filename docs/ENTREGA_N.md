@@ -9,7 +9,7 @@ Autorizadas por Jay tras la revisión ciega de alpha.192. Meta: nueve en cada ca
 | N3 | `pulido/n3-frase-fiel` | Implementación técnica; aceptación pendiente |
 | N4 | `pulido/n4-interfaz` | Implementación técnica; aceptación pendiente |
 | N5 | `pulido/n5-recorrido` | Implementación técnica; aceptación pendiente |
-| N6 | `pulido/n6-descubrimientos` | Pendiente |
+| N6 | `pulido/n6-descubrimientos` | Implementación técnica; aceptación pendiente |
 | N7 | `pulido/n7-integracion-musical` | Pendiente |
 | N8 | `pulido/n8-candidato` | Pendiente |
 
@@ -44,3 +44,9 @@ Verificación: 250 suites Node; finale_resize_smoke.py, interface_smoke.py (cinc
 Ayuda explícita distingue vuelta abierta/cerrada, luces dentro, flor próxima, círculo del rayo y falta de espacio en Vacío. Observación opcional amplía métricas por lugar: primer avance, tiempo activo/sin progreso y ayuda. No fuerza Refugio ni recorta metas sin personas; calibración de esfuerzo pendiente.
 
 Verificación: 251 suites Node; playtest_smoke.py ampliado y after_journey_smoke.py aprobados. Marcha real27,8s hacia Jardín,6465 unidades, gasto0. Auditoría limpia. Duración, emoción y deseo de continuar requieren sesiones nuevas.
+
+## N6 · 2.3.0-alpha.198
+
+Aviso de hallazgo permite Ver tarjeta: inspección completa voluntaria, función musical explícita, rareza/procedencia y reloj detenido hasta volver. No añade sonido ni interrumpe automáticamente. Libro conserva identidad. Cambio de interpretación revierte si guardar falla. Selector de casa agrupa disponibles y por descubrir sin ocultar objetos.
+
+Verificación: 252 suites Node; card_inspect_smoke.py y rare_cards_smoke.py aprobados en móvil/horizontal/PC; cuenta atrás y movimiento detenidos, avisos en cola, libro y40 objetos preservados. Auditoría limpia. Valor emocional pendiente con personas.
