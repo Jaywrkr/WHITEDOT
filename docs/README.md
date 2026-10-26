@@ -13,6 +13,7 @@ Actualizada el 25 de octubre de 2026. Cada tema tiene una sola guía; si dos doc
 | Documento | Para qué |
 |---|---|
 | [Candidato N](panel/candidato-n/informe.md) | Cierre técnico alpha.200, revisión ciega y evidencia que falta para nueve |
+| [Integración alpha.200](INTEGRACION_ALPHA_200.md) | Merge y CI completo de la pila autorizada |
 | [Entrega N1–N8](ENTREGA_N.md) | Mejoras autorizadas hacia nueve por categoría; cierre técnico separado de aceptación humana |
 | [Auditoría 7](panel/sesion-7/informe.md) y [plan L1–L4](panel/sesion-7/plan.md) | K7 y fases L; nota con feedback real y límites de aceptación |
 | [Panel 8 ciego](panel/sesion-8/informe.md) | Diez lentes sin notas previas, evaluación exigente por categoría y defectos reproducidos |

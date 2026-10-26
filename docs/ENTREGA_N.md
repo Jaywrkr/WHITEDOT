@@ -1,6 +1,6 @@
 # Objetivo excepcional · fases N
 
-Autorizadas por Jay tras la revisión ciega de alpha.192. Meta: nueve en cada categoría, pendiente de evidencia; ninguna prueba concede una nota. Dependencia inicial: auditoría8 `3a8148b5`, desde L4. Una rama por fase, cada una desde la anterior. Jay conserva PR/merge. Generación musical, semillas, arte del mundo y progreso protegidos; integración y UI revisadas.
+Autorizadas por Jay tras la revisión ciega de alpha.192. Meta: nueve en cada categoría, pendiente de evidencia; ninguna prueba concede una nota. Dependencia inicial: auditoría8 `3a8148b5`, desde L4. Una rama por fase, cada una desde la anterior. La pila está integrada en main por autorización expresa de Jay; futuras entregas vuelven al flujo habitual de PR/merge. Generación musical, semillas, arte del mundo y progreso protegidos; integración y UI revisadas.
 
 | Fase | Rama | Estado |
 |---|---|---|
@@ -61,7 +61,7 @@ Verificación: 253 suites Node y regresiones focalizadas aprobadas. round_timing
 
 Candidato alpha.200 con revisión independiente, cierres de fallos reproducidos y preservación verificada. Corregidos multitáctil, pausa retenida tras salto, abandono fallido, interpretación de fuente compartida, lectura de aprendizaje incompleto y métricas de Camino/once rondas. No se certifica nueve ni producción sin evidencia humana y CI.
 
-Verificación: 253 suites Node; regresiones de táctil, tarjetas, métricas, foco, cuota y offline aprobadas. UI24 sin desbordamientos/objetivos<24px;16 capturas nuevas;186 renders de técnicas.311 archivos protegidos idénticos a la auditoría; voces/generadores conservados. Catálogo completo/CI, teléfono y personas pendientes.
+Verificación: 253 suites Node; regresiones de táctil, tarjetas, métricas, foco, cuota y offline aprobadas. UI24 sin desbordamientos/objetivos<24px;16 capturas nuevas;186 renders de técnicas.311 archivos protegidos idénticos a la auditoría; voces/generadores conservados. Catálogo completo/CI aprobados en la integración; teléfono y personas pendientes.
 
 ## Orden y commits
 
@@ -74,16 +74,19 @@ Verificación: 253 suites Node; regresiones de táctil, tarjetas, métricas, foc
 | 5 | `pulido/n5-recorrido` | `9e454c81` | alpha.197 |
 | 6 | `pulido/n6-descubrimientos` | `91b0ef2c` | alpha.198 |
 | 7 | `pulido/n7-integracion-musical` | `c8b9194b` | alpha.199 |
-| 8 | `pulido/n8-candidato` | Ver HEAD de esta rama | alpha.200 |
+| 8 | `pulido/n8-candidato` | `2048e245` | alpha.200 |
 
 N1 depende de `audit/panel-8-revision-ciega` (`3a8148b5`), que contiene L4. Cada rama siguiente contiene la anterior. Jay mantiene PR/merge; no se garantiza ausencia de conflictos si se cambia o reescribe la base por otro lado.
 
 [Auditoría del candidato y pruebas por fase](panel/candidato-n/informe.md). Todos los criterios humanos siguen separados del cierre técnico. Prueba habitual: preview de N8; las fixtures con guardado aislado se explican en el informe. Reabrir una fase solo ante un problema concreto; no cambiar música o gráfica para fabricar una nota.
 
 
-Para conservar la ascendencia de la pila, integrar en orden mediante commits de merge. Squash/rebase de una base requiere reajustar las ramas dependientes antes de compararlas. Esta entrega no ejecuta esos merges.
+Para conservar la ascendencia de la pila, integrar en orden mediante commits de merge. Squash/rebase de una base requiere reajustar las ramas dependientes antes de compararlas. La integración actual incorpora toda la pila en un único merge autorizado.
 
 
 ## Integración autorizada por Jay
 
 La petición «Deja todo en main» autoriza reunir la pila completa hasta `2048e245` en `integracion/alpha-200-main` y fusionarla tras controles aprobados. No hace falta integrar individualmente las ocho ramas para esta entrega. Se preservan sus commits mediante merge, sin borrarlas ni cambiar la generación musical. La aceptación humana permanece pendiente.
+
+
+Integración completada mediante PR354 tras CI completo aprobado. [Merge, comprobaciones y límites](INTEGRACION_ALPHA_200.md). No es necesario crear otros PR para incorporar las fases ya contenidas.

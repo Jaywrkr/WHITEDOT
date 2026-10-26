@@ -104,3 +104,6 @@ Los ocho recorridos corregidos pasaron localmente con Chromium, uno por uno. El 
 
 
 El primer CI de integración agotó los40 minutos de `audio (2)` (run40254494290), sin completar su catálogo. Se reparten las mismas59 pruebas de audio en seis grupos aislados en lugar de tres; se conserva cada render, su límite individual y el agregador obligatorio. Se comprobó que cada prueba queda asignada exactamente una vez. No se cambian generación musical, aserciones ni umbrales.
+
+
+CI completo del PR354 aprobado sobre `3277711cb85cce21b1308d35931f161210d406c6`. [Resultado y merge](INTEGRACION_ALPHA_200.md). Las limitaciones humanas del cierre N se mantienen.
