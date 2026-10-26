@@ -1,4 +1,4 @@
-import {PLACES,TOTAL_STARS,starCount,placeOpen,previousPlace,allComplete,nextOnPath,gameObjective} from './places.js';
+import {PLACES,TOTAL_STARS,starCount,placeOpen,previousPlace,allComplete,nextOnPath,gameObjective,roundPercent} from './places.js';
 import {PORTAL_NOTES} from './places-ring.js';
 import {roomBox} from './house-view.js';
 // The Refugio as the centre (plan F6, docs/MUNDO.md): it says what you have, what is missing and where to go.
@@ -50,13 +50,13 @@ export function initialize(runtime){
  function look(px,py){if(visiting())return null;const h=hits.find(b=>px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h);if(!h)return null;if(h.open){open();return '';}
   const p=PLACES[h.index],d=data(),best=d?.best?.[p.id];lastTap=p.id;if(stars(p.id)[0]){layer(p.id,h.index);runtime.narrate?.('trophy');}
   if(!placeOpen(d,p.id,runtime.S.journey)){const prev=PLACES.find(q=>q.id===previousPlace(p.id));return p.game&&prev?`${p.name} · tras ${prev.name}`:`${p.name} · pronto`;}
-  return `${p.name} ${glyphs(p.id)}${best?` · ${Math.round(best.onTime*100)} % a tiempo`:''}`;}
+  return `${p.name} ${glyphs(p.id)}${best?` · ${roundPercent(best.onTime)} % a tiempo`:''}`;}
  // Lugares: every place with its stars and what it asks; «Ir» to the ones already entered; the door to the ring.
  function open(){const box=$('mLugares'),d=data();if(!box||!d)return;const have=starCount(d),goal=gameObjective(runtime.S,d);$('lugaresCount').textContent=d.readOnly?'':`${goal.completed||0} / 11`;if($('lugaresDoor'))$('lugaresDoor').textContent=goal.id?`Seguir hacia ${nameOf(goal.id)}`:'Explorar';$('lugaresNext').textContent=d.readOnly?goal.line:`${nextLine(d,runtime.S.journey)} · ★ ${have}/${TOTAL_STARS}`;
   const list=$('lugaresList');list.replaceChildren();for(const p of PLACES){const li=document.createElement('li'),openNow=placeOpen(d,p.id,runtime.S.journey),best=d.best?.[p.id];
    li.dataset.placeId=p.id;if(p.id===goal.id)li.setAttribute('aria-current','step');const name=document.createElement('span');name.className='lugar-name';name.textContent=p.name;const st=document.createElement('span');st.className='lugar-stars';st.setAttribute('aria-label',`${stars(p.id).filter(Boolean).length} de 3 estrellas`);
    stars(p.id).forEach(x=>{const s=document.createElement('i');s.textContent='★';if(x)s.className='got';st.appendChild(s);});
-   const note=document.createElement('small');note.textContent=!openNow?(p.game?'Cerrado':'Pronto'):best?`${Math.round(best.onTime*100)} %`:d.seen?.[p.id]||stars(p.id)[0]?'':'Sin visitar';
+   const note=document.createElement('small');note.textContent=!openNow?(p.game?'Cerrado':'Pronto'):best?`${roundPercent(best.onTime)} %`:d.seen?.[p.id]||stars(p.id)[0]?'':'Sin visitar';
    li.append(name,st,note);if(openNow&&!stars(p.id)[0]){const follow=document.createElement('button');follow.textContent='Seguir';follow.onclick=()=>runtime.ringGuide?.(p.id);li.appendChild(follow);}if(openNow&&(d.seen?.[p.id]||stars(p.id)[0])){const go=document.createElement('button');go.textContent='Ir';go.onclick=()=>travel(p.id);li.appendChild(go);}if(!openNow)li.className='closed';list.appendChild(li);}
   // Today's remix (wild.js, plan F18): one open place with another place's rhythm, worth more sparks.
   const mix=runtime.dailyRemix?.(),line=$('lugaresRemixLine'),btn=$('lugaresRemix');if(line&&btn){const place=mix&&PLACES.find(p=>p.id===mix.id);line.hidden=btn.hidden=!place;

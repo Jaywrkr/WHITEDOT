@@ -38,3 +38,6 @@ console.log('PASS song tiers (H4): ★ fragment, ★★ whole layer, ★★★ v
  assert.equal(stageCaption(plan,plan.noteStarts.bosque*16-1).text,'Tu frase · Lago');
  assert.equal(stageCaption(plan,plan.noteStarts.bosque*16).text,'Tu frase · Bosque');
  assert.equal(stageCaption(plan,plan.silenceAt*16).phase,'space');assert.equal(stageCaption(plan,plan.themeAt*16).phase,'theme');assert.equal(stageCaption(plan,plan.endAt*16).phase,'ending');}
+
+// The actual audible onset wins over future scheduled onsets; rests have zero intensity.
+{const {layerPulse}=await import('../src/song-stage.js'),hits=[{layer:'lago',t:1},{layer:'lago',t:1.25},{layer:'bosque',t:1.1}];assert.equal(layerPulse(hits,'lago',.99,.5),0);assert.equal(layerPulse(hits,'lago',1,.5),1);assert.equal(layerPulse(hits,'lago',1.125,.5),.75);assert.equal(layerPulse(hits,'lago',1.25,.5),1);assert.equal(layerPulse(hits,'lago',2,.5),0);}

@@ -126,9 +126,9 @@ export function initialize(runtime){
   runtime.narrate?.('abandon');runtime.hud?.();return true;}
  // The round's card: the three stars, what each asks, and what you earned. Silent buttons.
  function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=roundPercent(r.onTime);
-  runtime.$('placeTitle').textContent=r.maestro?'Maestro':r.remix?'Remezcla':'Completo';
-  runtime.$('placeStars').innerHTML=['★','★','★'].map((x,i)=>`<span class="${own().stars[r.id][i]?'got':''}${r.fresh[i]?' new':''}">${x}</span>`).join('');
-  runtime.$('placeRows').innerHTML=[`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % / 75 % a tiempo</li>`,`<li>${r.stars[2]?'✓':'·'} Maestro${r.maestro?` · ${pct} % / 70 %`:' · otra ronda'}</li>`].join('')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>')+(r.personal?`<li>${r.personal==='changed'?'Tu frase queda':'Tu frase sigue'} en el final de Tu canción.</li>`:'');
+  runtime.$('placeTitle').textContent=(PLACES.find(p=>p.id===r.id)?.name||r.id)+' · '+(r.maestro?'Maestro':r.remix?'Remezcla':'Completo');
+  runtime.$('placeStars').setAttribute('aria-label','Tu colección de estrellas');runtime.$('placeRows').setAttribute('aria-label','Esta ronda');runtime.$('placeStars').innerHTML='<small>Tu colección</small>'+['★','★','★'].map((x,i)=>`<span class="${own().stars[r.id][i]?'got':''}${r.fresh[i]?' new':''}">${x}</span>`).join('');
+  runtime.$('placeRows').innerHTML=['<li>Esta ronda</li>',`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % / 75 % a tiempo</li>`,`<li>${r.stars[2]?'✓':'·'} Maestro${r.maestro?` · ${pct} % / 70 %`:' · otra ronda'}</li>`].join('')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>')+(r.personal?`<li>${r.personal==='changed'?'Tu frase queda':'Tu frase sigue'} en el final de Tu canción.</li>`:'');
   runtime.$('placeEarned').textContent=`${roundTime(r.ms)} · +${r.sparks+(r.extra?.sparks||0)} ✦${r.record||r.extra?.record?' · récord':''}`;box.hidden=false;
   // The narrator speaks here, in the card, never during play (plan H5).
   const said=runtime.takePendingLine?.(),nar=runtime.$('placeNarrator');if(nar){nar.hidden=!said;nar.textContent=said?`${said.title} · ${said.line}`:'';}

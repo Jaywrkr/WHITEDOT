@@ -1,10 +1,10 @@
 # Cambios recientes de Kubono
 
-Estado: 25 de octubre de 2026. Código **2.3.0-alpha.200**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.207**. Las entradas describen su revisión, no certifican producción.
 
 ## E7 · 2.3.0-alpha.207
 
-Candidato de validación, verificador de preservación y registro de aceptación sin puntuaciones inventadas. Ajuste de concordancia en Favoritos. [Entrega](docs/ENTREGA_E.md).
+Candidato de validación, verificador de preservación y registro de aceptación sin puntuaciones inventadas. Concordancia en Favoritos; cierre con Escape, porcentajes, final del Jardín y arrastres transaccionales. Luces de patrones, Refugio y canción siguen su instante audible y respetan los silencios. [Entrega](docs/ENTREGA_E.md).
 
 ## E6 · 2.3.0-alpha.206
 

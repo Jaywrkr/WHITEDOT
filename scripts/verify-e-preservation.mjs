@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 const base='fd5dfc1939a4774714420d2098cfa3a2d38971bd';
 const git=(...args)=>execFileSync('git',args),before=path=>git('show',base+':'+path),source=path=>readFileSync(path,'utf8');
 const sha=data=>createHash('sha256').update(data).digest('hex');
-const allowed=new Set(['src/accessibility.js','src/audio.js','src/canvas.js','src/collection-garden.js','src/favorites.js','src/journal.js','src/journey-finale.js','src/journey-garden.js','src/journey-pulse.js','src/places.js','src/rare-cards.js','src/refugio-lugares.js','src/release-info.js','src/song-stage.js','src/voice-guide.js']);
+const allowed=new Set(['src/accessibility.js','src/audio.js','src/canvas.js','src/collection-garden.js','src/favorites.js','src/journal.js','src/journey-finale.js','src/journey-garden.js','src/journey-pulse.js','src/journey-rhythm.js','src/house.js','src/places.js','src/rare-cards.js','src/refugio-lugares.js','src/release-info.js','src/song-stage.js','src/voice-guide.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
 for(const file of files.filter(f=>!allowed.has(f))){const a=before(file),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];
@@ -17,6 +17,13 @@ sameSection('src/journey-garden.js','import {calmMotion','export const gardenPro
 sameSection('src/places.js','const object=','export function gameObjective','star rules, migration and existing open places');
 sameSection('src/places.js',' function start(',' // The round\'s card:','round execution, reward, restore and failed-save rollback');
 sameSection('src/collection-garden.js',' function build(',' function definition(','successful card voices, instruments, timbres and garden score');
+sameSection('src/journey-rhythm.js','export const RHYTHMS','export function initialize','all rhythm patterns, judgement grid and timing rules');
+sameSection('src/house.js',' function brush(',' function cubeAt(','Refugio object proximity and audible brush scheduling');
+sameSection('src/house.js','housePulse:{get:()=>','houseSounds:{get:()=>','Refugio pulse notes, proximity, ordering and sound scheduling');
+const singFrom=' function sing(',singTo=' // The step being sung now';
+const oldSing=section(before('src/journey-rhythm.js').toString(),singFrom,singTo),newSing=section(source('src/journey-rhythm.js'),singFrom,singTo).replace('sung.push(singing.last);if(sung.length>32)sung.shift();','');
+if(oldSing!==newSing)throw Error('Changed rhythm demonstration music');
+contracts.push({label:'rhythm demonstration audio identical beyond visual history queue',file:'src/journey-rhythm.js',sha256:sha(newSing)});
 let audio=before('src/audio.js').toString();
 const replacements=[
  ["import {onTime,audibleTime} from './journey-pulse.js';","import {onTime,audibleTime,scheduleAudibleCue} from './journey-pulse.js';"],

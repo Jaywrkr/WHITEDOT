@@ -25,7 +25,7 @@ export function guideLesson(runtime){
  if(id==='camino')return {id,name:'Camino',steps:['Acércate a un cristal.','Toca siguiendo el golpe de la música.','Recoge diez luces para abrir el Mundo.'],hint:'Toca el cubo. Arrastra el vacío para moverte.'};
  const steps=PLACE_LESSONS[id];if(!steps)return null;
  const progress=runtime.journeyGameProgress?.(id)||0,done=!round&&chapter?.done?.[id];
- let step=done||progress>=1?2:0,hint=done?'Cruza el portal dorado para continuar.':progress>=1?steps[2]:steps[0];
+ let step=done||progress>=1?2:0,hint=done?'Cruza el portal dorado para continuar.':progress>=1?(id==='jardin'?'Tu árbol dorado está listo. Pulsa en el golpe.':steps[2]):steps[0];
  if(!done&&progress<1){
   if(id==='bosque'){const g=runtime.journeyLasso?.();if(g?.closed)step=1;hint=g?.closed?(g.inside?'Tu vuelta contiene luces. Pulsa en el golpe.':'Rodea un grupo de luces dentro de tu vuelta.'):'Rodea las luciérnagas y cierra tu estela.';}
   if(id==='lago'&&runtime.journeyChain?.().near?.length){step=1;hint='Estás junto a una flor. Pulsa en el golpe.';}

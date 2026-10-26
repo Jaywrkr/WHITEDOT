@@ -41,6 +41,8 @@ export function stageCaption(plan,k){
  if(bar<plan.endAt)return {phase:'theme',text:'El tema reúne tu viaje.'};
  return {phase:'ending',text:'Tu canción sigue contigo.'};
 }
+// A future scheduled onset must not replace the event currently reaching the speaker.
+export function layerPulse(events,id,time,length){const hit=events?.findLast(e=>e.layer===id&&e.t<=time);return hit?Math.max(0,1-(time-hit.t)/length):0;}
 // The plan of a playing: how many bars, when each layer enters, when your notes and the theme come. Pure.
 export function songPlan({final=false,ids=SONG_IDS,notes={},steps={},ticks={},six=0}={}){const entry={};if(final)ids.forEach((id,i)=>{entry[id]=i*FINAL_ENTRY_BARS;});else ids.forEach(id=>{entry[id]=0;});
  if(!final)return {final:false,entry,bars:SONG_BARS_OPEN,notesAt:null,themeAt:null};
@@ -74,7 +76,7 @@ export function initialize(runtime){
  // A playing: over the World's music, from its next «1». Without the stage (a trophy), just its layer for two bars.
  function begin({ids,final=false,master=false,preview=false}){const ac=runtime.ac;let out=null,soft=null;if(runtime.S.sound&&ac&&runtime.bus){out=ac.createGain();out.gain.value=.55;out.connect(runtime.bus);soft=ac.createGain();soft.gain.value=.25;soft.connect(runtime.bus);}
   const {notes,steps,ticks}=yourNotes(),plan=preview?{final:false,entry:Object.fromEntries(ids.map(id=>[id,0])),bars:2,notesAt:null,themeAt:null}:songPlan({final,ids,notes,steps,ticks,six:runtime.SIX||.125});
-  return {ids:[...ids],final,master,preview,plan,tiers:tiersOf(ids,master),notes,steps,ticks,out,soft,start:null,k:-1,last:{},at:performance.now()};}
+  return {ids:[...ids],final,master,preview,plan,tiers:tiersOf(ids,master),notes,steps,ticks,out,soft,start:null,k:-1,last:{},hits:[],at:performance.now()};}
  // Your notes for the finale (plan I4): each place's last round, and for the Journey's five, its chapter if not replayed.
  function yourNotes(){const d=data()||{},j=runtime.S.journey||{},notes={},steps={},ticks={};for(const id of SONG_IDS){const own=d.notes?.[id];if(own?.length){notes[id]=own;if(d.noteSteps?.[id])steps[id]=d.noteSteps[id];if(d.noteTicks?.[id])ticks[id]=d.noteTicks[id];continue;}
    const ch=Array.isArray(j.notes?.[id])?j.notes[id].filter(Number.isFinite).slice(-8):[];if(ch.length){notes[id]=ch;const st=Array.isArray(j.steps?.[id])?j.steps[id].slice(-8):null;if(st&&st.length===ch.length)steps[id]=st.map(s=>Math.round(s)%16);const ts=j.ticks?.[id]?.slice(-8);if(ts?.length===ch.length)ticks[id]=ts;}}
@@ -99,9 +101,9 @@ export function initialize(runtime){
   if(run.final&&!run.pauseScheduled&&k>=run.plan.silenceAt*16&&k<run.plan.themeAt*16){run.pauseScheduled=true;runtime.silenceSongMix?.(t);}
   if(run.pauseScheduled&&!run.resumeScheduled&&k>=run.plan.themeAt*16){run.resumeScheduled=true;runtime.restoreSongMix?.(t);}
   if(!run.out)return;const MU=runtime.MU||{},scale=MU.dnaA?.scale||runtime.BIOMES?.[MU.biome||0]?.scale,chord=runtime.chordTones?.()||[57,60,64];
-  for(const e of stageEvents(run.plan,k,chord,{tiers:run.tiers,notes:run.notes,steps:run.steps,scale,tr:MU.tr||0})){runtime.songHit?.(e.soft?run.soft:run.out,e,t,six);if(e.layer)run.last[e.layer]=t;}}
+  for(const e of stageEvents(run.plan,k,chord,{tiers:run.tiers,notes:run.notes,steps:run.steps,scale,tr:MU.tr||0})){runtime.songHit?.(e.soft?run.soft:run.out,e,t,six);if(e.layer){run.last[e.layer]=t;run.hits.push({layer:e.layer,t});if(run.hits.length>256)run.hits.shift();}}}
  // How hard a layer is hitting now, for its ring.
- function pulse(id,time){const t=run?.last?.[id];if(!Number.isFinite(t))return 0;return Math.max(0,1-(time-t)/((runtime.SIX||.15)*4));}
+ function pulse(id,time){if(!run)return 0;const bar=Math.floor(visualStep()/16);if(run.final&&bar>=run.plan.silenceAt&&bar<run.plan.themeAt)return 0;return layerPulse(run.hits,id,time,(runtime.SIX||.15)*4);}
  // Whether a layer sounds now: won, and already in (the final brings them in one bar after another).
  function visualStep(){if(!run?.out||!runtime.ac)return run?.k??-1;const now=audibleTime(runtime.ac),entry=run.clock?.findLast(e=>e.t<=now);return entry?entry.k+Math.min(.99,Math.max(0,(now-entry.t)/entry.six)):-1;}
  function sounding(id){if(!run||!run.ids.includes(id))return false;const k=visualStep(),bar=k<0?-1:Math.floor(k/16);return run.start!==null&&bar>=(run.plan.entry[id]||0);}
@@ -111,7 +113,7 @@ export function initialize(runtime){
   // Without sound the stage still opens: the layers come in by the clock, at the World's tempo.
   if(!run.out&&run.k<run.plan.bars*16)run.k=Math.floor(ms/1000/((runtime.SIX||.125)))-1,run.start=run.start??0;
   const shown=run.final?Math.min(SONG_IDS.length,bar+1):SONG_IDS.length;
-  drawSongRings(c,W,H,{lit:id=>sounding(id)||!run.final&&run.ids.includes(id),beat:id=>pulse(id,time)||(still?0:.3+.3*Math.sin(ms/300+id.length)),shown,still,color:(id,f)=>runtime.placeColor?.(id,f)||f});
+  drawSongRings(c,W,H,{lit:id=>sounding(id)||!run.final&&run.ids.includes(id),beat:id=>run.out&&runtime.S.sound?pulse(id,time):(still?0:.3+.3*Math.sin(ms/300+id.length)),shown,still,color:(id,f)=>runtime.placeColor?.(id,f)||f});
   if(run.final&&!run.credits){const cue=stageCaption(run.plan,run.start===null?-1:cursor),label=(runtime.S.sound===false||runtime.musicVolume?.()===0?'Vista silenciosa · ':'')+cue.text;if(label!==run.caption){run.caption=label;el.querySelector('.song-stage-text').textContent=label;}}
   // The final: the words and the credits once the theme has sounded (plan I4: at the end, not before your notes).
   if(run.final&&bar>=run.plan.endAt&&!run.credits){run.credits=true;el.querySelector('#songAgain').hidden=false;const box=el.querySelector('.song-stage-text');box.replaceChildren(...(run.master?MASTER_LINES:FINAL_LINES).map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.8}s`;if(i===0)p.className='journey-title';return p;}));}
@@ -123,5 +125,5 @@ export function initialize(runtime){
   if(d.won&&!d.master&&starCount(d)>=TOTAL_STARS){d.master=true;if(runtime.save?.()===false){d.master=false;return false;}return open({final:true,master:true});}
   return false;}
  Object.defineProperties(runtime,{openSong:{get:()=>open},replaySong:{get:()=>()=>open({final:allComplete(data()),master:starCount(data())>=TOTAL_STARS})},closeSong:{get:()=>close},songFinaleCheck:{get:()=>check},songStageStep:{get:()=>step},songLayerPreview:{get:()=>preview},
-  songStageState:{get:()=>()=>({...state,running:!!run&&!run.preview,preview:!!run?.preview,final:!!run?.final,master:!!run?.master,ids:run?[...run.ids]:[],credits:!!run?.credits,k:run?.k??-1,bars:run?.plan?.bars||0,tiers:run?{...run.tiers}:{},personalNotes:run?Object.fromEntries(Object.entries(run.notes).map(([id,ns])=>[id,[...ns]])):{}})}});
+  songStageState:{get:()=>()=>({...state,running:!!run&&!run.preview,preview:!!run?.preview,final:!!run?.final,master:!!run?.master,ids:run?[...run.ids]:[],credits:!!run?.credits,k:run?.k??-1,bars:run?.plan?.bars||0,tiers:run?{...run.tiers}:{},pulses:run?Object.fromEntries(run.ids.map(id=>[id,pulse(id,runtime.ac?audibleTime(runtime.ac):0)])):{},personalNotes:run?Object.fromEntries(Object.entries(run.notes).map(([id,ns])=>[id,[...ns]])):{}})}});
 }

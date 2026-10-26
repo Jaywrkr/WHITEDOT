@@ -28,3 +28,14 @@ import {SING_BARS} from '../src/journey-rhythm.js';
 {const {initialize}=await import('../src/journey-rhythm.js');const hits=[];const r={S:{sound:true},SIX:.125,placeRun:()=>({id:'lago',startedAt:1}),journeyGamePlaying:()=>true,journeyChapter:()=>null,hatHit:(t,v)=>hits.push(t),pluck:()=>{},chordTones:()=>[60,64,67]};initialize(r);
  r.drawRhythmGuide();for(let k=-3;k<SING_BARS*16+8;k++)r.rhythmMusicStep(((k%16)+16)%16,10+k*.125);assert.equal(hits.length,4*SING_BARS,'the «y» of each beat, two bars');assert(Math.abs(hits[0]-(10+2*.125))<1e-9,'from the next «1»');}
 console.log('PASS journey rhythm (H2): the cube gains a form every four hits and loses one per miss; a place sings its pattern for two bars from the next «1»');
+
+// Lookahead plus output latency keeps current cues and the audible tail visible.
+{const {initialize}=await import('../src/journey-rhythm.js');let id='jardin';const played=[],r={S:{sound:true},SIX:.125,ac:{currentTime:10.4,outputLatency:.4},placeRun:()=>({id,startedAt:1}),journeyGamePlaying:()=>true,hatHit:t=>played.push(t),pluck:()=>{}};initialize(r);r.drawRhythmGuide();
+ for(let k=0;k<=6;k++)r.rhythmMusicStep(k,10+k*.125);
+ assert.equal(r.rhythmSinging().step,0,'future cues cannot replace the currently audible first beat');
+ r.ac.currentTime=10.65;assert.equal(r.rhythmSinging().step,2);
+ for(let k=7;k<=32;k++)r.rhythmMusicStep(k%16,10+k*.125);
+ r.ac.currentTime=14.15;assert.equal(r.rhythmSinging().step,30%16,'last sung note survives scheduling the end');
+ r.ac.currentTime=14.4;assert.equal(r.rhythmSinging(),null,'audible tail ends normally');
+ assert.equal(played.length,16,'the same two bars sound exactly once');id='lago';assert.equal(r.rhythmSinging(),null,'another round never inherits stale light');
+}

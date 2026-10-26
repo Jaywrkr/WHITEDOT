@@ -30,8 +30,21 @@ try:
   assert p.evaluate('__r.rareCards.length')==5
   p.evaluate('()=>{Storage.prototype.setItem=originalSet;}');p.locator('#gardenSave').click();assert p.evaluate('__r.gardenState.sets.length')==2
   p.reload();p.wait_for_function('!!window.__r?.gardenState');assert p.evaluate('__r.gardenState.cards.length===1&&__r.gardenState.sets.length===2&&__r.gardenState.extra.kept&&__r.rareCards.length===5')
+  # The same transaction also protects real dragging inside the Refugio.
+  p.evaluate("()=>{document.querySelectorAll('.modal,#returnEntrance').forEach(e=>e.hidden=true);__r.enterHouse();}");p.wait_for_function('__r.houseSettled()')
+  def card_point():
+   return p.evaluate("()=>{const r=__r,o=r.gardenObjects(r.currentHouse()).find(o=>o.gardenCard&&!o.gardenSeed),b=r.houseRoomRect(o.room);return {x:b.x+o.x*b.w,y:b.y+o.y*b.h};}")
+  def drag_card(end):
+   at=card_point();p.mouse.move(at['x'],at['y']);p.mouse.down();p.mouse.move(end['x'],end['y'],steps=5);p.mouse.up()
+  baseline=p.evaluate('JSON.stringify(__r.gardenState)');rect=p.evaluate('__r.houseRoomRect("sala")');end={'x':rect['x']+rect['w']*.7,'y':rect['y']+rect['h']*.65}
+  p.evaluate("()=>{window.originalSet=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k===__r.saveStore.key)throw Error('quota');return originalSet.call(this,k,v);};}")
+  drag_card(end);assert p.evaluate('JSON.stringify(__r.gardenState)')==baseline,'failed drag restores positions'
+  drag_card({'x':-100,'y':-100});assert p.evaluate('JSON.stringify(__r.gardenState)')==baseline,'failed drag-out restores selected voice'
+  p.evaluate('()=>{Storage.prototype.setItem=originalSet;}');drag_card(end)
+  assert p.evaluate('Object.values(__r.gardenState.positions).some(p=>Math.abs(p.x-.7)<.03)'), 'successful drag persists placement'
+  p.reload();p.wait_for_function('!!window.__r?.gardenState');assert p.evaluate('Object.values(__r.gardenState.positions).some(p=>Math.abs(p.x-.7)<.03)&&__r.gardenState.cards.length===1&&__r.rareCards.length===5')
   p.evaluate("()=>{__r.S.collectionGarden={version:9,cards:['future:voice'],future:{won:true}};document.querySelectorAll('.modal').forEach(e=>e.hidden=true);__r.openJournal('rares');}")
   assert p.locator('[data-garden-add]:enabled').count()==0 and p.evaluate('__r.gardenState.future.won&&__r.gardenState.version===9')
   assert not errors,errors;b.close()
- print('PASS garden add/remove/save/load failure rollback, nonconsumed cards, reload, future data and clear selection states')
+ print('PASS garden add/remove/save/load/drag failure rollback, nonconsumed cards, reload, future data and clear selection states')
 finally:srv.shutdown();srv.server_close()
