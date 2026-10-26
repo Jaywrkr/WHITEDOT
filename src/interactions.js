@@ -51,10 +51,11 @@ export function initialize(runtime) {
     if(origin==='player'&&runtime.inWorld()&&runtime.RP&&runtime.RP.type==="pulsos"){runtime.RP.pst=runtime.onBeatNow()?runtime.RP.pst+1:0;runtime.retoSet("pulsos",runtime.RP.pst);}
     // Panel 10 (P5, Mizuguchi): one hit, one image. A pulse on time punches the cube once, when its note is heard
     // (journey-pulse.js, cubeKick); any other pulse swells the cube when its quantized note is heard, not at the touch.
-    runtime.MU.act+=.25;if(!hit&&!runtime.ac)swell();
+    // Without sound there is no note to wait for: the cube swells at once.
+    runtime.MU.act+=.25;const silent=!runtime.ac||runtime.S.sound===false;if(silent)swell();
     if(hit&&runtime.ac){const now=runtime.ac.currentTime,t=pulseNoteTime(now,hit.beat);runtime.journeyPulseScheduled?.(t);
      if(runtime.inWorld()){const region=runtime.regionOfPos(x,y);runtime.hearVoice?.('pulso',0,t,region,true,1,{x,y},origin);runtime.playTheme(hit.midi,hit.degree,t,region,hit.scale,hit.tr);}else runtime.pluck(hit.midi+12,t,runtime.vel(.1),2);return;}
-    runtime.soon(t=>{pulseVoice(t,x,y,1,origin);scheduleAudibleCue(runtime,t,swell);},origin);
+    runtime.soon(t=>{pulseVoice(t,x,y,1,origin);if(!silent)scheduleAudibleCue(runtime,t,swell);},origin);
   }
   function swell(){runtime.pulse=Math.max(runtime.pulse||0,.6);}
   // The pulse's own voice: in the World the place's «pulso», elsewhere the chord's three notes. soft scales its volume.

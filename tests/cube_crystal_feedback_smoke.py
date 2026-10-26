@@ -21,7 +21,8 @@ try:
    page.evaluate("""async()=>{const r=__r;r.S.firstJourney.skipped=true;r.S.pathCrystals=Array.from({length:10},(_,i)=>'visual:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();const {crystalField}=await import('/src/crystal-sparks.js');let o=null;for(let i=0;i<100&&!o;i++){const field=crystalField(i*1200,0,r.seedOf);o=field.find(p=>p.size===2&&!p.runner&&!p.rare&&crystalField(p.x,p.y,r.seedOf).every(q=>q.id===p.id||Math.hypot(p.x-q.x,p.y-q.y)>400));}if(!o)throw Error('Missing isolated crystal');window.crystal=o;r.S.wx=o.x;r.S.wy=o.y-40;window.balance=r.S.sparks;}""")
    page.wait_for_timeout(950);page.mouse.click(30,height/2);page.wait_for_function('__r.savedCrystal(crystal.id)?.hits===1')
    assert page.evaluate('__r.crystalState.feedback')>0
-   assert page.evaluate('matrix().a')>1.02
+   # Panel 10 (P5): the cube swells when the pulse's note is heard, not at the touch.
+   page.wait_for_function('matrix().a>1.02',timeout=3000)
    page.screenshot(path=str(ROOT.parent/f'crystal-impact-{width}.png'))
    page.wait_for_timeout(900);page.mouse.click(30,height/2);page.wait_for_function('__r.savedCrystal(crystal.id)?.broken');page.screenshot(path=str(ROOT.parent/f'crystal-break-{width}.png'))
    page.wait_for_function('__r.savedCrystal(crystal.id)?.collected');assert page.evaluate('__r.S.sparks')==page.evaluate('balance+3'),page.evaluate('({balance,sparks:__r.S.sparks,log:__r.sparkEconomy.log,site:__r.savedCrystal(crystal.id)})')
