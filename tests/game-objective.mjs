@@ -9,3 +9,5 @@ assert.equal(gameObjective(s,{version:9}).kind,'update');assert.deepEqual(s,{jou
 console.log('PASS one objective for the Camino, chapters and eleven places; mastery and wallet distinct, future-safe and read-only');
 
 const finished={journey:{finished:true,done:{llanura:true,lago:true,bosque:true,tormenta:true,vacio:true}}};assert.equal(gameObjective(finished).remaining,6);assert.equal(gameObjective(finished).name,'Jardín');
+
+const ending=gameObjective({journey:{chapter:6}});assert.match(ending.line,/se abre el Mundo/);assert(!ending.line.includes('Refugio'));

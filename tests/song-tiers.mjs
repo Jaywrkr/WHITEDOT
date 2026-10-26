@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {tierStep,songChord,SONG_IDS} from '../src/song.js';
-import {songPlan,stageEvents,snapToScale,FINAL_ENTRY_BARS,THEME_BARS,FINAL_TAIL_BARS,SILENCE_BARS,SONG_BARS_OPEN} from '../src/song-stage.js';
+import {songPlan,stageEvents,stageCaption,snapToScale,FINAL_ENTRY_BARS,THEME_BARS,FINAL_TAIL_BARS,SILENCE_BARS,SONG_BARS_OPEN} from '../src/song-stage.js';
 // Plan H4: a layer grows with its stars: ★ a fragment (every other bar), ★★ the whole layer, ★★★ its variation.
 const c=songChord([60,64,67]),count=(id,tier,bars=2)=>{let n=0;for(let s=0;s<bars*16;s++)n+=tierStep(id,s,c,tier).length;return n;};
 for(const id of SONG_IDS){assert.equal(count(id,0),0,id);assert(count(id,1)<=count(id,2),id);assert(count(id,2)<count(id,3)||id==='faros',id);}
@@ -30,3 +30,11 @@ assert.deepEqual(at(fin.bars*16),[],'then it ends');
 // At least a minute: at 120 BPM (a sixteenth of .125 s) the layers play on until 30 bars.
 assert.equal(songPlan({final:true,notes,six:.125}).bars,30);assert(songPlan({final:true,notes,six:.09}).bars*16*.09>=60);
 console.log('PASS song tiers (H4): ★ fragment, ★★ whole layer, ★★★ variation in the chord given; the song opens eight bars; the finale brings the layers in one a bar, your notes from each place, then a bar of silence and the cube\'s theme twice on the cello, at least a minute (I4)');
+
+// Narration follows the existing phrase plan, including phrases longer than one bar.
+{const plan=songPlan({final:true,ids:['lago','bosque'],notes:{lago:[60,62,64],bosque:[65]},ticks:{lago:[0,18,38],bosque:[0]},six:.125});
+ assert.equal(stageCaption(plan,-1).phase,'waiting');assert.equal(stageCaption(plan,0).phase,'layers');
+ assert.equal(stageCaption(plan,plan.noteStarts.lago*16).text,'Tu frase · Lago');
+ assert.equal(stageCaption(plan,plan.noteStarts.bosque*16-1).text,'Tu frase · Lago');
+ assert.equal(stageCaption(plan,plan.noteStarts.bosque*16).text,'Tu frase · Bosque');
+ assert.equal(stageCaption(plan,plan.silenceAt*16).phase,'space');assert.equal(stageCaption(plan,plan.themeAt*16).phase,'theme');assert.equal(stageCaption(plan,plan.endAt*16).phase,'ending');}

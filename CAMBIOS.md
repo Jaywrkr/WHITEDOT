@@ -2,6 +2,10 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.200**. Las entradas describen su revisión, no certifican producción.
 
+## E6 · 2.3.0-alpha.206
+
+La canción identifica tu aporte en el tramo real y distingue la vista de capas del final personal. Cierre coherente hacia el Mundo libre. Música y notas guardadas intactas. [Entrega](docs/ENTREGA_E.md).
+
 ## E5 · 2.3.0-alpha.205
 
 Selección de voces clara y acceso al Refugio desde el libro. Ediciones del jardín con rollback al fallar escritura; tarjetas conservadas. Favoritos identifica trabajo pendiente sin eliminarlo. [Entrega](docs/ENTREGA_E.md).

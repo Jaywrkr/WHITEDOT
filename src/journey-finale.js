@@ -102,8 +102,8 @@ export function initialize(runtime){
   const starts=chapterStarts(run.score),chapters=SONG_IDS.filter(id=>id in starts),theme=starts.refugio??0,fade=music>end&&!run.festival?Math.max(0,1-(music-end)/SILENCE):1;
   const current=[...chapters].reverse().find(id=>music>=starts[id]&&music<theme),beatAt=(music/(run.context.six*4))%1;c.globalAlpha=fade;
   if(fade>0){c.save();c.globalAlpha=fade;drawSongRings(c,W,H,{lit:id=>id in starts&&music>=starts[id]||music>=theme&&SONG_IDS.indexOf(id)<5&&!run.festival,beat:id=>{if(still)return .4;const hit=run.events.findLast(e=>e.group==='bed'&&e.layer===id&&e.at<=music);return hit?Math.max(0,1-(music-hit.at)/(id==='vacio'?run.context.six*16:run.context.six*4)):0;},shown:music>=theme&&!run.festival?SONG_IDS.length:Math.max(1,chapters.length),still,color:(id,f)=>runtime.placeColor?.(id,CHAPTER_COLORS[id]||f)||CHAPTER_COLORS[id]||f});
-   const place=PLACES.find(p=>p.id===current),cy=H*.44;c.textAlign='center';c.textBaseline='middle';
-   if(place){c.fillStyle='#ffffff';c.font='22px "Geist Mono", monospace';c.fillText(place.name,W/2,cy-12);c.fillStyle='#f0d27a';c.font='13px "Geist Mono", monospace';c.fillText(place.verb,W/2,cy+16);}
+   const place=PLACES.find(p=>p.id===current),cy=H*.44;const label=place?'Tu frase de '+place.name:'Tu canción';if(run.label!==label){run.label=label;el.setAttribute('aria-label',label+' · Final del Viaje');}c.textAlign='center';c.textBaseline='middle';
+   if(place){c.fillStyle='#ffffff';c.font='22px "Geist Mono", monospace';c.fillText(place.name,W/2,cy-12);c.fillStyle='#f0d27a';c.font='13px "Geist Mono", monospace';c.fillText('Tu frase · '+place.verb,W/2,cy+16);}
    else if(music>=theme&&music<end){c.fillStyle='#f0d27a';c.font='18px "Geist Mono", monospace';c.fillText('Tu canción',W/2,cy);}c.restore();}
   // With the words, the eleven rings come back small below them: your five lit, six still to find.
   if(music>end&&!run.festival){const k=still?1:Math.min(1,(music-end)/SILENCE);c.save();c.globalAlpha=.85*k;c.translate(W/2,H*.68);c.scale(.55,.55);c.translate(-W/2,-H*.44);

@@ -30,6 +30,17 @@ export function drawSongRings(c,W,H,{ids=SONG_IDS,lit=()=>false,beat=()=>0,shown
   else{c.globalAlpha=.35;c.strokeStyle='#ffffff';c.lineWidth=1;c.setLineDash?.([3,4]);c.beginPath();c.arc(p.x,p.y,p.r,0,6.283);c.stroke();c.setLineDash?.([]);}
   if(names){const place=PLACES.find(q=>q.id===id);c.globalAlpha=1;c.fillStyle=on?'#ffffff':'#a0a0a0';c.font='11px "Geist Mono", monospace';c.fillText(place?.name||id,p.x,p.y+p.r+6);}});
  c.restore();return spots;}
+// Describe the audible section without changing its notes, rhythm or mix.
+export function stageCaption(plan,k){
+ if(!Number.isFinite(k)||k<0)return {phase:'waiting',text:'Tu canción está por empezar.'};
+ if(!plan?.final)return {phase:'layers',text:'Capas ganadas · Tus frases llegan al final.'};
+ const bar=Math.floor(k/16);
+ if(bar<plan.notesAt)return {phase:'layers',text:'Se unen los lugares que descubriste.'};
+ if(bar<plan.silenceAt){const id=[...(plan.noteOrder||[])].reverse().find(id=>bar>=plan.noteStarts[id]);return {phase:'phrase:'+id,text:'Tu frase · '+(PLACES.find(p=>p.id===id)?.name||'Tu interpretación')};}
+ if(bar<plan.themeAt)return {phase:'space',text:'Espacio antes del tema.'};
+ if(bar<plan.endAt)return {phase:'theme',text:'El tema reúne tu viaje.'};
+ return {phase:'ending',text:'Tu canción sigue contigo.'};
+}
 // The plan of a playing: how many bars, when each layer enters, when your notes and the theme come. Pure.
 export function songPlan({final=false,ids=SONG_IDS,notes={},steps={},ticks={},six=0}={}){const entry={};if(final)ids.forEach((id,i)=>{entry[id]=i*FINAL_ENTRY_BARS;});else ids.forEach(id=>{entry[id]=0;});
  if(!final)return {final:false,entry,bars:SONG_BARS_OPEN,notesAt:null,themeAt:null};
@@ -72,7 +83,7 @@ export function initialize(runtime){
  function open({final=false,master=false}={}){const ids=won();if(!ids.length&&!final){runtime.toast?.('Gana una ★ y empieza tu canción.',{level:2});return false;}if(run)close();
   document.querySelectorAll('.modal').forEach(m=>{m.hidden=true;});const el=overlay(),text=el.querySelector('.song-stage-text'),list=final?SONG_IDS:ids;runtime.audio?.();
   run={...begin({ids:list,final,master}),el};
-  if(final){state.finals++;text.replaceChildren();runtime.narrate?.('won');}else{runtime.narrate?.('song');text.textContent=`Tu canción · ${ids.length} de ${SONG_IDS.length}`;}state.opened++;
+  if(final){state.finals++;text.replaceChildren();runtime.narrate?.('won');}else{runtime.narrate?.('song');const personal=ids.filter(id=>run.notes[id]?.length).length;text.textContent=`Tu canción · ${ids.length} de ${SONG_IDS.length}\n`+(personal?`Frases guardadas · ${personal} ${personal===1?'lugar':'lugares'} · para el final`:'Capas ganadas · Tus frases llegan al final.');}state.opened++;
   el.querySelector('#songAgain').hidden=final;el.querySelector('#songAgain').onclick=()=>open({final,master});el.querySelector('#songClose').textContent=final?'Seguir':'Cerrar';el.querySelector('#songClose').onclick=close;
   raf=requestAnimationFrame(frame);return true;}
  // A trophy in the Refugio: its layer, at its stars, for two bars over the music.
@@ -95,12 +106,13 @@ export function initialize(runtime){
  function visualStep(){if(!run?.out||!runtime.ac)return run?.k??-1;const now=audibleTime(runtime.ac),entry=run.clock?.findLast(e=>e.t<=now);return entry?entry.k+Math.min(.99,Math.max(0,(now-entry.t)/entry.six)):-1;}
  function sounding(id){if(!run||!run.ids.includes(id))return false;const k=visualStep(),bar=k<0?-1:Math.floor(k/16);return run.start!==null&&bar>=(run.plan.entry[id]||0);}
  function frame(){if(!run||!run.el)return;const el=run.el,cv=el.querySelector('canvas'),W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
-  const c=cv.getContext('2d'),ms=performance.now()-run.at,still=calm(),time=runtime.ac?audibleTime(runtime.ac):0,bar=Math.max(0,Math.floor(visualStep()/16));c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
+  const c=cv.getContext('2d'),ms=performance.now()-run.at,still=calm(),time=runtime.ac?audibleTime(runtime.ac):0,cursor=visualStep(),bar=Math.max(0,Math.floor(cursor/16));c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
   const full=run.ids.filter(id=>sounding(id)).length/SONG_IDS.length,g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,`rgba(240,210,122,${.08+.3*full})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);
   // Without sound the stage still opens: the layers come in by the clock, at the World's tempo.
   if(!run.out&&run.k<run.plan.bars*16)run.k=Math.floor(ms/1000/((runtime.SIX||.125)))-1,run.start=run.start??0;
   const shown=run.final?Math.min(SONG_IDS.length,bar+1):SONG_IDS.length;
   drawSongRings(c,W,H,{lit:id=>sounding(id)||!run.final&&run.ids.includes(id),beat:id=>pulse(id,time)||(still?0:.3+.3*Math.sin(ms/300+id.length)),shown,still,color:(id,f)=>runtime.placeColor?.(id,f)||f});
+  if(run.final&&!run.credits){const cue=stageCaption(run.plan,run.start===null?-1:cursor),label=(runtime.S.sound===false||runtime.musicVolume?.()===0?'Vista silenciosa · ':'')+cue.text;if(label!==run.caption){run.caption=label;el.querySelector('.song-stage-text').textContent=label;}}
   // The final: the words and the credits once the theme has sounded (plan I4: at the end, not before your notes).
   if(run.final&&bar>=run.plan.endAt&&!run.credits){run.credits=true;el.querySelector('#songAgain').hidden=false;const box=el.querySelector('.song-stage-text');box.replaceChildren(...(run.master?MASTER_LINES:FINAL_LINES).map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.8}s`;if(i===0)p.className='journey-title';return p;}));}
   raf=requestAnimationFrame(frame);}

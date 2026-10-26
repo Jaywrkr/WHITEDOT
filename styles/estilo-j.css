@@ -669,3 +669,7 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 .rare-primary-actions button[data-garden-selected="true"]{border-style:dashed;color:#fff;opacity:.8}
 .rare-book-head #gardenSelectionCount{display:block;color:var(--dim);margin:8px 0}
 #favRepair{margin-bottom:12px;min-height:44px}
+
+/* One short narrative follows the existing performance, never another overlay. */
+#songStage .song-stage-text{white-space:pre-line;line-height:1.6}
+@media(max-height:500px){#songStage .song-stage-text{white-space:normal}}

@@ -62,8 +62,8 @@ export function gameObjective(s,places=normalizePlaces(s.lugares,s.journey)){
  if(!freeOpen(s.journey)){
   const n=Math.min(10,s.pathCrystals?.length||0),chapter=Math.max(0,Math.min(CHAPTERS.length-1,s.journey?.chapter||0)),id=CHAPTERS[chapter];
   if(!chapter&&n<10)return {kind:'journey',id:'camino',line:'Toca a tiempo junto a los cristales.',progress:`${n}/10 cristales · abre el Mundo`};
-  if(id==='refugio')return {kind:'journey',id,line:'Escucha tu canción en el Refugio.',progress:'El Viaje está llegando a casa.'};
-  const next=s.journey?.done?.[id]?CHAPTERS[chapter+1]:id==='camino'?'llanura':id,name=PLACES.find(p=>p.id===next)?.name||'Refugio';
+  if(id==='refugio')return {kind:'journey',id,line:'Escucha tu canción. Después se abre el Mundo.',progress:'Tu viaje reúne sus cinco capítulos.'};
+  const next=s.journey?.done?.[id]?CHAPTERS[chapter+1]:id==='camino'?'llanura':id,name=PLACES.find(p=>p.id===next)?.name||'Tu canción';
   return {kind:'journey',id:next,line:s.journey?.done?.[id]?`Cruza el portal hacia ${name}.`:`Toca a tiempo en ${name}.`,progress:'El Viaje · escucha y sigue la luz.'};
  }
  const completed=PLACE_IDS.filter(id=>complete(places,id)).length,stars=starCount(places),next=nextOnPath(places,s.journey);
@@ -134,7 +134,7 @@ export function initialize(runtime){
   const said=runtime.takePendingLine?.(),nar=runtime.$('placeNarrator');if(nar){nar.hidden=!said;nar.textContent=said?`${said.title} · ${said.line}`:'';}
   runtime.$('placeAgain').onclick=()=>{box.hidden=true;start(r.id,{maestro:r.maestro,from:r.from,remix:r.remix});};runtime.$('placeMaestro').hidden=!own().stars[r.id][1]||r.maestro;runtime.$('placeMaestro').onclick=()=>{box.hidden=true;start(r.id,{maestro:true,from:r.from});};runtime.$('placeClose').onclick=()=>{box.hidden=true;back(r.from);runtime.save?.();runtime.songFinaleCheck?.();};
   // The next track on the path, straight from the card (plan H3); none once all eleven are complete.
-  const next=nextOnPath(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Siguiente · ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id);};}}}
+  const next=nextOnPath(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Seguir hacia ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id);};}}}
  Object.defineProperties(runtime,{placeRun:{get:()=>run},startPlace:{get:()=>start},abandonPlace:{get:()=>abandon},placeHear:{get:()=>hear},placeFinish:{get:()=>finish},placeChapterKept:{get:()=>chapterKept},placesData:{get:()=>own},
   placeGoalScale:{get:()=>()=>run()?.maestro?MAESTRO_GOAL:1},placeNext:{get:()=>()=>nextOnPath(own(),runtime.S.journey)?.id||null},places:{get:()=>()=>{const s=own();return {stars:JSON.parse(JSON.stringify(s.stars)),count:starCount(s),best:JSON.parse(JSON.stringify(s.best)),run:s.run?{id:s.run.id,maestro:s.run.maestro,...(s.run.remix?{remix:s.run.remix}:{}),...(s.run.free?{free:true}:{}),hits:s.run.hits,total:s.run.total}:null,last:shown?{...shown}:null};}}});
 }

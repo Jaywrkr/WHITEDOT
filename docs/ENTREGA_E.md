@@ -9,7 +9,7 @@ Jay autorizó ejecutar las siete fases, sin confirmación entre ellas. La meta d
 | E3 | `excepcional/e3-aprender` | Implementada; pruebas locales aprobadas | Ayuda concreta en el momento necesario |
 | E4 | `excepcional/e4-interfaz` | Implementada; pruebas locales aprobadas | Lectura, desplazamiento y salida consistentes |
 | E5 | `excepcional/e5-descubrimientos` | Implementada; pruebas locales aprobadas | Hallazgo, uso y regreso comprensibles |
-| E6 | `excepcional/e6-recorrido` | Pendiente | Aportación personal y próximos pasos claros |
+| E6 | `excepcional/e6-recorrido` | Implementada; pruebas locales aprobadas | Aportación personal y próximos pasos claros |
 | E7 | `excepcional/e7-validacion` | Pendiente | Revisión independiente, regresiones y protocolo humano listo |
 
 ## Límites protegidos
@@ -47,3 +47,8 @@ Etiquetas pendientes de Tu canción legibles sin convertirlas en premios. Lugare
 ## E5 · alpha.205
 
 El libro muestra cuántas voces eliges, cuáles ya están en el jardín y cuándo está completo; acceso directo al Refugio. Función musical distingue el hallazgo de su interpretación en el jardín. Añadir/retirar voces, guardar conjuntos y cargarlos revierten si falla escribir: no anuncian éxito ni consumen tarjetas. Favoritos conserva deliberadamente trabajo pendiente para exportar/reintentar y ahora lo dice dentro de su panel, con acceso al cuidado del guardado. La ayuda de una ronda no ofrece abandonar para seguir a otro destino. Sin cambiar los instrumentos. Verificación local:253 suites Node; collection_commit_smoke.py (añadir/retirar/guardar/cargar con cuota, recarga y formato futuro), favorite_save_failure_smoke.py, experience_garden_smoke.py, card_inspect_smoke.py y rare_cards_smoke.py aprobados. Auditoría limpia. Se conserva el trabajo no guardado de favoritos y las cinco tarjetas en todos los fallos simulados; jardín de versión futura queda de solo lectura incluso al reemplazarse dentro de una partida.
+
+
+## E6 · alpha.206
+
+Tu canción distingue capas ganadas de frases guardadas para el final. En el final11, una línea sigue las secciones reales del transporte audible: lugares, frase propia, espacio y tema; indica vista silenciosa al estar silenciado. El final5 identifica tu interpretación en su subtítulo y nombre accesible. No cambia notas ni armonización. El objetivo de cierre explica la apertura del Mundo, y el resultado usa Seguir hacia como Lugares/Guía. Sin nuevas ventanas o instrumentos. Verificación local:253 suites Node; song_authorship_smoke.py (reloj real y MIDI/ticks intactos), song_stage_smoke.py (final11 y Maestro completos en móvil/PC), places_smoke.py y finale_resize_smoke.py aprobados. Auditoría limpia. La etiqueta sigue el cursor audible, no el cabezal programado; no es una escucha humana de reconocimiento.
