@@ -1,6 +1,6 @@
 # Documentación de Kubono
 
-Vigente para **alpha.207**,26 de octubre de2026. La rama de continuación es `chore/claude-handoff-cleanup`; main todavía contiene alpha.200.
+Vigente para **alpha.207** en `main` (26 de octubre de 2026, PR #355). Última revisión del panel: [sesión 10](panel/sesion-10/informe.md), con el plan P1–P8.
 
 ## Empezar
 
@@ -42,7 +42,7 @@ Estos documentos conservan hechos de su revisión; **no son fases nuevas por eje
 
 - [Integración alpha.200](INTEGRACION_ALPHA_200.md):main y CI aprobado.
 - [Entrega N](ENTREGA_N.md), [candidato N](panel/candidato-n/informe.md), [entrega L](ENTREGA_L.md), [cierre K](CIERRE_K.md) y [cierre J](PULIDO_CIERRE.md).
-- Informes del panel:[1](panel/sesion-1/informe.md), [2](panel/sesion-2/informe.md), [3](panel/sesion-3/informe.md), [4](panel/sesion-4/informe.md), [5](panel/sesion-5/informe.md), [6](panel/sesion-6/informe.md), [7](panel/sesion-7/informe.md), [8](panel/sesion-8/informe.md), [9](panel/sesion-9/informe.md).
+- Informes del panel:[1](panel/sesion-1/informe.md), [2](panel/sesion-2/informe.md), [3](panel/sesion-3/informe.md), [4](panel/sesion-4/informe.md), [5](panel/sesion-5/informe.md), [6](panel/sesion-6/informe.md), [7](panel/sesion-7/informe.md), [8](panel/sesion-8/informe.md), [9](panel/sesion-9/informe.md), [10](panel/sesion-10/informe.md).
 - [CAMBIOS](../CAMBIOS.md):cronología; la guía actual de cada sistema prevalece sobre una propuesta anterior.
 
 Los traspasos/planes retirados siguen en Git. Para la limpieza actual, revisión anterior `7f6374b3`; para el archivo eliminado el24 de octubre, `git show 5914ca9:docs/historial/NOMBRE.md`. No hace falta restaurarlos para continuar.

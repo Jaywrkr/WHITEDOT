@@ -1,5 +1,7 @@
 # El panel creativo de Kubono
 
+**Vigente: [sesión 10](panel/sesion-10/informe.md), 26 de octubre, alpha.207 en `main`.** Doce perfiles con memoria borrada; media 6,7; plan P1–P8 (ramas `panel10/…`) y decisiones D1–D6 pendientes de Jay. Lo de abajo es el método y el historial.
+
 Guía para repetir la auditoría. **Candidato vigente: [E, alpha.207](panel/candidato-e/informe.md), con revisión final y aceptación humana pendiente.** La [sesión9, alpha.200 integrada](panel/sesion-9/informe.md) conserva su7,6 provisional como referencia histórica. [Candidato técnico N](panel/candidato-n/informe.md). Diez lentes nuevas hicieron revisión ciega acotada, con capturas actuales y defectos reproducidos; las correcciones no elevan automáticamente sus notas. Diez por categoría aún sin acreditar; faltan personas, escucha y dispositivos. [Dictamen y límites](panel/candidato-n/revision-ciega.md).
 
 La revisión ciega del usuario prevalece sobre las comparaciones históricas del procedimiento de abajo: primero puntuar sin notas anteriores; después cruzar hallazgos con el registro para conservar IDs. El coordinador conserva contexto operativo, los revisores no lo heredan. No se borra el historial del proyecto ni progreso de jugadores.
@@ -24,6 +26,8 @@ El panel no juega como una persona: lee el código, mira capturas de teléfono, 
 | 8 | Ken Wong | Monument Valley, Florence | Cada pantalla una lámina; los primeros minutos; legibilidad en teléfono |
 | 9 | Lucas Pope | Papers, Please; Return of the Obra Dinn | Un verbo; legibilidad; reglas contables; menos sistemas y menús |
 | 10 | Austin Wintory | Journey, ABZÛ, The Pathless | Un tema que crece con el jugador; silencio; el final musical |
+| 11 | Celia Hodent (desde la sesión 10) | UX de Fortnite; «The Gamer's Brain» | **Menús:** jerarquía, nombres, toques hasta cada tarea, accesibilidad. Nota propia «Menús» |
+| 12 | Harry Nesbitt (desde la sesión 10) | Alto's Adventure, Alto's Odyssey | **Detalle visual:** alineación, tipografía, cortes, estados, cada captura píxel a píxel. Nota propia «Detalle visual» |
 
 Antes del panel hubo un **jurado de premios** de cinco perfiles (Marina, Ruth, Iñaki, Lucía y Tomás; ver `panel/sesion-1/expediente.md`). Sus notas aparecen como «Jurado (antes)» en la primera sesión. No hace falta repetirlo.
 
@@ -188,3 +192,10 @@ Durante una evaluación ciega, el coordinador retiene el contexto operativo. A l
 ## Candidato E · siete fases
 
 [Informe final](panel/candidato-e/informe.md) · [entrega](ENTREGA_E.md) · [aceptación](aceptacion-e.json). Diez lentes nuevas, recorte ciego y revisión posterior de los fallos detectados. Las primeras seis lecturas fueron estáticas antes de completar capturas; las cuatro visuales sí reciben el manifiesto completo. No se mezclan sus coberturas ni se convierten correcciones en puntuaciones automáticas. Música/mapas conservados; CI completo nuevo y aceptación física pendientes.
+
+## Décima sesión · desde cero, doce perfiles
+
+[Informe de Pope](panel/sesion-10/informe.md) · [expediente](panel/sesion-10/expediente.md) · doce análisis en `panel/sesion-10/`. Jay pidió borrar la memoria del panel: ningún revisor leyó sesiones, notas ni entregas anteriores. Se sumaron Celia Hodent (menús) y Harry Nesbitt (detalle visual). Material: 21 capturas estándar y 40 de menús (teléfono, horizontal y escritorio; modo Viaje y libre), sin escucha ni personas.
+
+Media **6,7** (Visual 6,9 · Audio 7,0 · Creatividad 7,5 · Sensación 6,2 · Cohesión 6,4 · Pulido 6,5); Menús 5,5; Detalle visual 5,5. No se compara con sesiones anteriores. Plan P1–P8, cada fase en `panel10/pN-…`; P6–P8 esperan las decisiones D1–D6 de Jay.
+
