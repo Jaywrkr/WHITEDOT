@@ -36,6 +36,8 @@ try:
     favorites:()=>{r.addFavorite('Mi primer lugar');r.openFavorites();},
     result:()=>{for(let i=0;i<500;i++)r.placeHear('lago',i<373,{});const real=Date.now,now=real();r.S.lugares.run.startedAt=now-59999;Date.now=()=>now;try{r.placeFinish('lago');}finally{Date.now=real;}}
    })[k]();}''',extra)
+   # Panel 10 (P4): the result card waits for the end of the round's drop.
+   if extra=='result':p.wait_for_function("!document.getElementById('mPlace').hidden",timeout=15000)
    p.wait_for_timeout(1500);p.evaluate('document.fonts.ready');assert not p.evaluate("document.body.classList.contains('dev')"),'Production capture unexpectedly shows developer controls'
    state=p.evaluate("()=>({mode:__r.S.mode,chapter:__r.S.journey?.chapter,dev:document.body.classList.contains('dev'),audio:__r.ac?.state||'none',width:innerWidth,height:innerHeight})")
    assert not errors,errors

@@ -57,8 +57,10 @@ try:
    p.wait_for_function("!document.getElementById('mPlace').hidden");p.wait_for_timeout(200)
    assert max(p.evaluate(ROWS,'#mPlace .row'))<=1,(w,h,'result buttons differ in height')
    if p.locator('#placeNext').is_visible():
-    alone=p.evaluate("()=>{const n=document.getElementById('placeNext').getBoundingClientRect();return [...document.querySelectorAll('#mPlace .row>button')].filter(x=>x.offsetParent&&x.id!=='placeNext').every(x=>Math.abs(x.getBoundingClientRect().top-n.top)>2)}")
-    assert alone,(w,h,'Seguir shares its line')
+    # Panel 10 (P4): at 74,6 % (near ★★) «Otra vez» stands beside «Seguir hacia»; nothing else shares its line.
+    beside=p.evaluate("()=>{const n=document.getElementById('placeNext').getBoundingClientRect();return [...document.querySelectorAll('#mPlace .row>button')].filter(x=>x.offsetParent&&x.id!=='placeNext'&&Math.abs(x.getBoundingClientRect().top-n.top)<=2).map(x=>x.id)}")
+    assert beside==['placeAgain'],(w,h,beside,'near ★★: only «Otra vez» beside «Seguir»')
+    assert p.evaluate("document.getElementById('placeNext').scrollHeight<=document.getElementById('placeNext').clientHeight+1"),(w,h,'Seguir fits')
    assert not errors,errors;p.close()
   # Menu in landscape: nothing of the sheet shows above its sticky heading.
   p,errors=page(b,844,390)

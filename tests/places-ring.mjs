@@ -15,7 +15,11 @@ const journey={finished:true,done:{llanura:true,lago:true,bosque:true,tormenta:t
 assert.equal(nextPortal(spots,places,{done:{}},c),null,'nothing during the Journey');
 assert.equal(nextPortal(spots,places,journey,{x:spots[2].x+10,y:spots[2].y}).id,'jardin','after the Journey: the Jardín, even beside the Bosque');
 places.stars.jardin[0]=true;assert.equal(nextPortal(spots,places,journey,c).id,'dunas','the Jardín complete: the Dunas');
-for(const id of ['dunas','cristales','faros','ruinas','cueva'])places.stars[id][0]=true;assert.equal(nextPortal(spots,places,journey,c),null,'all eleven complete');
+for(const id of ['dunas','cristales','faros','ruinas','cueva'])places.stars[id][0]=true;
+// Panel 10 (P4, D1): all eleven complete, the column stands over the place without ★★ with the best share on time.
+places.best.lago={onTime:.62,ms:1,rounds:1};places.best.cueva={onTime:.746,ms:1,rounds:1};assert.equal(nextPortal(spots,places,journey,c).id,'cueva','after the victory: nearest its ★★');
+places.stars.cueva[1]=true;assert.equal(nextPortal(spots,places,journey,c).id,'lago','then the next best');
+for(const id of PLACE_IDS)places.stars[id]=[true,true,true];assert.equal(nextPortal(spots,places,journey,c),null,'none with the 33 ★');
 // Before the Journey's places are all complete, the nearest open one still without its ★.
 const early=normalizePlaces({stars:{llanura:[true]}},{finished:true,done:{}});assert.equal(nextPortal(spots,early,{finished:true,done:{}},c).id,'lago');
 // Back from a round: beside the portal, toward the Refugio, out of its reach so it does not open again at once.

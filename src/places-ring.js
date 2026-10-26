@@ -1,5 +1,5 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
-import {PLACES,placeOpen,starCount,nextOnPath,previousPlace} from './places.js';
+import {PLACES,placeOpen,starCount,nextGoal,previousPlace} from './places.js';
 import {freeOpen} from './journey-mode.js';
 import {directionPan} from './spatial.js';
 import {formatDistance} from './player-profile-model.js';
@@ -27,8 +27,9 @@ export function routeCompass(dx,dy,W,H,offset={x:0,y:0}){const angle=Math.atan2(
 // (kept a band away from the corners), so it reads as a light on your side, not a stripe painted down the screen.
 export function edgeColumn(x,y,W,H,m=12,band=70){const dx=x-W/2,dy=y-H/2,t=Math.min(dx?(W/2-m)/Math.abs(dx):Infinity,dy?(H/2-m)/Math.abs(dy):Infinity),k=Number.isFinite(t)?Math.min(1,t):0;
  return {x:Math.max(m,Math.min(W-m,x)),y:Math.max(band,Math.min(H-band,H/2+dy*k))};}
-// The portal the arrow shows: the nearest open place never entered, or still without its ★; none once all are done.
-export function nextPortal(spots,places,journey,from){const path=nextOnPath(places,journey);return path&&spots.find(q=>q.id===path.id)||null;}
+// The portal the column shows: the next place on the path; once the eleven are complete (panel 10, P4, D1), the place
+// without ★★ with the best share on time (then ★★★); none with the 33 ★.
+export function nextPortal(spots,places,journey,from){const path=nextGoal(places,journey);return path&&spots.find(q=>q.id===path.id)||null;}
 // Where you stand when you come back from a round: a step from the portal, toward the Refugio, outside its reach.
 export function besidePortal(spot,center){const d=Math.hypot(center.x-spot.x,center.y-spot.y)||1;return {x:Math.round(spot.x+(center.x-spot.x)/d*PORTAL_REACH*3),y:Math.round(spot.y+(center.y-spot.y)/d*PORTAL_REACH*3)};}
 export function initialize(runtime){

@@ -42,7 +42,7 @@ try:
    page.evaluate("()=>{__r.S.journey.guide.points=__r.journeyGuide().goal;}");page.wait_for_function("!!__r.journeyGuide().gold",timeout=3000)
    page.evaluate(ON);page.wait_for_function("!__r.places().run",timeout=5000)
    last=page.evaluate('__r.places().last');assert last['id']=='faros' and last['stars'][0] and last['sparks']>=10,last
-   page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=5000);assert page.evaluate('__r.places().stars.faros[0]')
+   page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=15000);assert page.evaluate('__r.places().stars.faros[0]')
    assert not errors,errors;page.close()
   browser.close()
  print('PASS Faros on phone and desktop: ?lugar=faros lights a boat only on its rhythm, lit it follows the cube and docks in the harbour, the bar follows the round in both screen modes, the gold boat ends it with stars, sparks and its card',flush=True)

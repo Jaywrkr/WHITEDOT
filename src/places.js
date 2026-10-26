@@ -67,11 +67,25 @@ export function gameObjective(s,places=normalizePlaces(s.lugares,s.journey)){
   return {kind:'journey',id:next,line:s.journey?.done?.[id]?`Cruza el portal hacia ${name}.`:`Toca a tiempo en ${name}.`,progress:'El Viaje · escucha y sigue la luz.'};
  }
  const completed=PLACE_IDS.filter(id=>complete(places,id)).length,stars=starCount(places),next=nextOnPath(places,s.journey);
- return {kind:next?'place':'create',id:next?.id||null,name:next?.name||null,remaining:PLACE_IDS.length-completed,line:next?`Siguiente: ${next.name}.`:'Tu canción está completa. Explora a tu ritmo.',progress:`${completed}/11 lugares · ★ ${stars}/33`,completed,stars};
+ // Panel 10 (P4, D1): once the eleven are complete, the place nearest its next star; «Explora a tu ritmo» only with 33 ★.
+ const aim=next?null:starGoal(places,s.journey),line=next?`Siguiente: ${next.name}.`:aim?`Siguiente: ${'★'.repeat(aim.tier)} en ${aim.name}${aim.best!==null&&aim.tier===2?` · ${roundPercent(aim.best)} %`:''}.`:'Tu canción está completa. Explora a tu ritmo.';
+ return {kind:next||aim?'place':'create',id:next?.id||aim?.id||null,name:next?.name||aim?.name||null,...(aim?{tier:aim.tier}:{}),remaining:PLACE_IDS.length-completed,line,progress:`${completed}/11 lugares · ★ ${stars}/33`,completed,stars};
 }
+// After the victory (panel 10, P4, D1): the place without ★★ with the best share on time; with every ★★, the one without
+// ★★★ with the best share. Null before the eleven are complete, during the Journey and with the 33 ★.
+export function starGoal(places,journey){if(!allComplete(places))return null;const best=id=>{const b=places?.best?.[id];if(b&&Number.isFinite(b.onTime))return b.onTime;const j=places?.journeyShare?.[id];return j?.total>0?share(j.hits,j.total):null;};
+ for(const tier of [2,3]){let aim=null;for(const p of PLACES){if(places.stars?.[p.id]?.[tier-1]||!placeOpen(places,p.id,journey))continue;const b=best(p.id);if(!aim||(b??-1)>(aim.best??-1))aim={id:p.id,name:p.name,tier,best:b};}if(aim)return aim;}return null;}
+// The next step after a round or from the ring: the path first, then the nearest star.
+export const nextGoal=(places,journey)=>nextOnPath(places,journey)||starGoal(places,journey);
+// Panel 10 (P4, Pope and Matsuura): the live count of a round, without words. A tick at the end of the Line lights while
+// the round is at the share its next star asks (75 %, or 70 % in a Maestro round). Same share as the card's.
+export function roundTick(run,sound=true){if(!run||run.free||!sound||run.silent)return null;const threshold=run.maestro?MAESTRO_STAR:RHYTHM_STAR,now=share(run.hits,run.total);return {lit:run.total>0&&now>=threshold,share:now,threshold};}
+// A near miss on the card: between 70 and 74,9 % without ★★, the tenths still missing (never rounded up).
+export const NEAR_STAR=.7;
+export function nearMiss(onTime){const tenths=Math.floor(Math.max(0,Math.min(1,Number(onTime)||0))*1000);return tenths>=NEAR_STAR*1000&&tenths<RHYTHM_STAR*1000?String((RHYTHM_STAR*1000-tenths)/10).replace('.',','):null;}
 function restoreTree(target,copy){for(const k of Object.keys(target))if(!Object.hasOwn(copy,k))delete target[k];for(const [k,v] of Object.entries(copy)){if(object(v)&&object(target[k]))restoreTree(target[k],v);else if(Array.isArray(v)&&Array.isArray(target[k]))target[k].splice(0,target[k].length,...v);else target[k]=v;}}
 export function initialize(runtime){
- let owner=null,state=null,shown=null;
+ let owner=null,state=null,shown=null,cardDue=null;
  function own(){if(owner!==runtime.S){if(owner){const card=runtime.$?.('mPlace');if(card)card.hidden=true;}shown=null;owner=runtime.S;runtime.S.lugares=normalizePlaces(runtime.S.lugares,runtime.S.journey);state=runtime.S.lugares;
    // A future format remains untouched on disk and in S; readers get a safe, locked view.
    if(state.version>PLACES_VERSION)state={...normalizePlaces(null),version:state.version,readOnly:true};
@@ -119,22 +133,31 @@ export function initialize(runtime){
   const j=runtime.S.journey;if(j&&typeof j==='object'){if(!j.colors||typeof j.colors!=='object')j.colors={};j.colors[id]=true;}
   {const all=(r.notes||[]).map((n,i)=>[n,r.noteSteps?.[i],r.noteTicks?.[i]]).filter(([n])=>Number.isInteger(n)&&n>=36&&n<=96).slice(-8);if(all.length){s.notes[id]=all.map(([n])=>n);s.noteSteps||={};if(all.every(([,st])=>Number.isInteger(st)))s.noteSteps[id]=all.map(([,st])=>st);else delete s.noteSteps[id];s.noteTicks||={};if(all.every((a,i)=>Number.isSafeInteger(a[2])&&a[2]>=0&&(!i||a[2]>=all[i-1][2])))s.noteTicks[id]=all.map(a=>a[2]);else delete s.noteTicks[id];}}
   const personal=s.notes[id]?.length?JSON.stringify([s.notes[id],s.noteSteps?.[id],s.noteTicks?.[id]])!==JSON.stringify([before.lugares.notes?.[id],before.lugares.noteSteps?.[id],before.lugares.noteTicks?.[id]])?'changed':'kept':null;
-  const result={id,personal,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.journeyVictory?.(id);runtime.hud?.();setTimeout(()=>{if(shown===result&&!run())results();},1200);return true;}
+  const result={id,personal,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.quietAchievements?.();runtime.journeyVictory?.(id);runtime.hud?.();afterDrop(result);return true;}
+ // Panel 10 (P4, Simogo): the card waits for the end of the round's two-bar drop, as heard (audio clock minus the
+ // output latency); never before journeyVictoryState().end. Without sound or drop, after 1,2 s as before.
+ function afterDrop(result){const born=Date.now();let end=null;
+  const check=()=>{if(shown!==result||run())return;const v=runtime.journeyVictoryState?.(),ac=runtime.ac;if(v&&v.id===result.id){if(Number.isFinite(v.end))end=v.end;else if(Date.now()-born<12000){setTimeout(check,250);return;}}
+   const lat=Math.max(0,Math.min(.4,Number(ac?.outputLatency||ac?.baseLatency||0)||0)),heard=(ac?.currentTime||0)-lat;
+   if(end!==null&&ac&&heard<end&&Date.now()-born<12000){setTimeout(check,Math.min(1000,Math.max(30,Math.ceil((end-heard)*1000)+30)));return;}
+   cardDue=null;results();};
+  cardDue=result;setTimeout(check,1200);}
  // Leaving a round from the menu: nothing earned, the chapter's state back, and you are at the portal again.
  function abandon(){const s=own(),r=s.run;if(!r||s.readOnly)return false;const key=gameKey(r.id),playing=runtime.S.journey?.[key],position={wx:runtime.S.wx,wy:runtime.S.wy},tempo=runtime.MU?.tempoScale,window=runtime.MU?.onTimeWindow;restore(r);s.run=null;back(r.from);
   if(runtime.save?.()===false){s.run=r;if(playing===undefined)delete runtime.S.journey[key];else runtime.S.journey[key]=playing;Object.assign(runtime.S,position);if(runtime.MU){runtime.MU.tempoScale=tempo;runtime.MU.onTimeWindow=window;}runtime.toast?.('No se pudo salir. Tu ronda sigue aquí.',{level:2});return false;}
   runtime.narrate?.('abandon');runtime.hud?.();return true;}
  // The round's card: the three stars, what each asks, and what you earned. Silent buttons.
- function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=roundPercent(r.onTime);
+ function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=roundPercent(r.onTime),near=!r.maestro&&r.sound&&!own().stars[r.id][1]?nearMiss(r.onTime):null;box.toggleAttribute?.('data-near',!!near);
   runtime.$('placeTitle').textContent=(PLACES.find(p=>p.id===r.id)?.name||r.id)+' · '+(r.maestro?'Maestro':r.remix?'Remezcla':'Completo');
   runtime.$('placeStars').setAttribute('aria-label','Tu colección de estrellas');runtime.$('placeRows').setAttribute('aria-label','Esta ronda');runtime.$('placeStars').innerHTML='<small>Tu colección</small>'+['★','★','★'].map((x,i)=>`<span class="${own().stars[r.id][i]?'got':''}${r.fresh[i]?' new':''}">${x}</span>`).join('');
-  runtime.$('placeRows').innerHTML=['<li>Esta ronda</li>',`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % / 75 % a tiempo</li>`,`<li>${r.stars[2]?'✓':'·'} Maestro${r.maestro?` · ${pct} % / 70 %`:' · otra ronda'}</li>`].join('')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>')+(r.personal?`<li>${r.personal==='changed'?'Tu frase queda':'Tu frase sigue'} en el final de Tu canción.</li>`:'');
+  runtime.$('placeRows').innerHTML=['<li>Esta ronda</li>',`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % / 75 % a tiempo</li>`,near?`<li class="place-near">A ${near} de ★★</li>`:'',`<li>${r.stars[2]?'✓':'·'} Maestro${r.maestro?` · ${pct} % / 70 %`:' · otra ronda'}</li>`].join('')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>')+(r.personal?`<li>${r.personal==='changed'?'Tu frase queda':'Tu frase sigue'} en el final de Tu canción.</li>`:'');
   runtime.$('placeEarned').textContent=`${roundTime(r.ms)} · +${r.sparks+(r.extra?.sparks||0)} ✦${r.record||r.extra?.record?' · récord':''}`;box.hidden=false;
-  // The narrator speaks here, in the card, never during play (plan H5).
-  const said=runtime.takePendingLine?.(),nar=runtime.$('placeNarrator');if(nar){nar.hidden=!said;nar.textContent=said?`${said.title} · ${said.line}`:'';}
+  // Panel 10 (P4, Chen, Matsuura, Pope): the card speaks only of the round; new achievements wait in the Bitácora.
+  runtime.quietAchievements?.();const nar=runtime.$('placeNarrator');if(nar){nar.hidden=true;nar.textContent='';}
   runtime.$('placeAgain').onclick=()=>{box.hidden=true;start(r.id,{maestro:r.maestro,from:r.from,remix:r.remix});};runtime.$('placeMaestro').hidden=!own().stars[r.id][1]||r.maestro;runtime.$('placeMaestro').onclick=()=>{box.hidden=true;start(r.id,{maestro:true,from:r.from});};runtime.$('placeClose').onclick=()=>{box.hidden=true;back(r.from);runtime.save?.();runtime.songFinaleCheck?.();};
-  // The next track on the path, straight from the card (plan H3); none once all eleven are complete.
-  const next=nextOnPath(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Seguir hacia ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id);};}}}
+  // The next track on the path, straight from the card (plan H3); after the eleven, the place nearest its next star.
+  // Near ★★, «Otra vez» stands beside it (CSS: #mPlace[data-near]).
+  const next=nextGoal(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Seguir hacia ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id);};}}}
  Object.defineProperties(runtime,{placeRun:{get:()=>run},startPlace:{get:()=>start},abandonPlace:{get:()=>abandon},placeHear:{get:()=>hear},placeFinish:{get:()=>finish},placeChapterKept:{get:()=>chapterKept},placesData:{get:()=>own},
-  placeGoalScale:{get:()=>()=>run()?.maestro?MAESTRO_GOAL:1},placeNext:{get:()=>()=>nextOnPath(own(),runtime.S.journey)?.id||null},places:{get:()=>()=>{const s=own();return {stars:JSON.parse(JSON.stringify(s.stars)),count:starCount(s),best:JSON.parse(JSON.stringify(s.best)),run:s.run?{id:s.run.id,maestro:s.run.maestro,...(s.run.remix?{remix:s.run.remix}:{}),...(s.run.free?{free:true}:{}),hits:s.run.hits,total:s.run.total}:null,last:shown?{...shown}:null};}}});
+  placeGoalScale:{get:()=>()=>run()?.maestro?MAESTRO_GOAL:1},placeNext:{get:()=>()=>nextGoal(own(),runtime.S.journey)?.id||null},placeCardDue:{get:()=>()=>!!cardDue&&cardDue===shown&&!run()},roundTick:{get:()=>()=>roundTick(run(),runtime.S.sound!==false)},places:{get:()=>()=>{const s=own();return {stars:JSON.parse(JSON.stringify(s.stars)),count:starCount(s),best:JSON.parse(JSON.stringify(s.best)),run:s.run?{id:s.run.id,maestro:s.run.maestro,...(s.run.remix?{remix:s.run.remix}:{}),...(s.run.free?{free:true}:{}),hits:s.run.hits,total:s.run.total}:null,last:shown?{...shown}:null};}}});
 }

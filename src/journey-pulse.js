@@ -28,7 +28,7 @@ export const CUBE_RING_GAP=5,CUBE_RING_TRAVEL=10;
 export function cubeRing(now16,steps,s,still=false){if(!Number.isFinite(now16)||!(s>0))return null;let come=0,one=false;for(const st of steps||[]){const a=approach(st,now16);if(a>come){come=a;one=st===0;}}
  if(come<=0)return null;const min=s/2+CUBE_RING_GAP;return {r:still?min:min+(1-come)*CUBE_RING_TRAVEL,alpha:(still?.45:.6)*come,gold:one,come};}
 // The Line's base: bright enough to read over a landscape (Wong: ≥ (90,90,90) measured), on a black band.
-export const LINE_ALPHA=.38,LINE_BACK=.7;
+export const LINE_ALPHA=.38,LINE_BACK=.7,LINE_TICK_GAP=12;
 export const landDelay=(beat,now,latency=0)=>[beat,now,latency].every(Number.isFinite)?Math.max(0,Math.round((beat+latency-now)*1000)):0;
 // Same scheduling rule the pulse already uses; visuals follow the emitted note, not a past judged beat.
 export const pulseNoteTime=(now,beat)=>Math.max(now+.01,Number.isFinite(beat)&&beat>now?beat:0);
@@ -129,6 +129,9 @@ export function initialize(runtime){
   // Plan I3: the Line anticipates; a counted step grows and brightens over the four steps before the cursor reaches it.
   const now16=stepNow(),gold=runtime.GOLD||'#f0d27a';
   for(let i=0;i<16;i++){const on=counted.includes(i),one=on&&i===0,lit=sing&&sing.step===i&&on?1-sing.age:0,come=on?approach(i,now16):0;c.globalAlpha=Math.min(1,on?.6+.35*lit+.35*come:(i%4?.22:.36));c.fillStyle=one?gold:'#fff';const hgt=on?(one?9:6)+6*lit+8*come:(i%4?2:3);c.fillRect(Math.round(x0+(i+.5)/16*w)-(on?1:0),y-hgt/2,one?3:on?2:1,hgt);}
+  // Panel 10 (P4, Pope and Matsuura): during a round, one tick past the end of the Line lights gold while the share on
+  // time reaches what the next star asks (runtime.roundTick, the card's own share). No number, no new word.
+  const tick=runtime.roundTick?.();if(tick){const tx=Math.round(x1+LINE_TICK_GAP);c.globalAlpha=LINE_BACK;c.fillStyle='#000000';c.fillRect(tx-4,y-9,9,18);c.globalAlpha=tick.lit?.95:.4;c.fillStyle=tick.lit?gold:'#ffffff';const th=tick.lit?14:6;c.fillRect(tx-1,Math.round(y-th/2),2,th);}
   const step=stepNow(),cx=x0+(step+.5)/16*w;c.globalAlpha=.85;c.fillStyle='#ffffff';c.fillRect(Math.round(cx)-1,y-4,2,8);
   for(const m of marks){const age=(now-m.at)/1000,life=calm()?2.5:1.8;if(age>life)continue;const k=1-age/life,px=x0+(m.step+.5)/16*w,h=(m.on?18:m.dropped?4:8)*(calm()?1:.6+.4*k);c.globalAlpha=k*(m.on?.95:m.dropped?.3:.5);c.strokeStyle=m.on&&!m.waiting?(runtime.GOLD||'#f0d27a'):m.dropped?'#888888':'#ffffff';c.beginPath();
    // An open bracket means a good beat still waiting for the place's action.

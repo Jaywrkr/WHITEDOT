@@ -41,7 +41,7 @@ try:
    page.evaluate("()=>{__r.S.journey.rebuild.points=__r.journeyRebuild().goal;}");page.wait_for_function("!!__r.journeyRebuild().gold",timeout=3000)
    page.evaluate(ON);page.wait_for_function("!__r.places().run",timeout=5000)
    last=page.evaluate('__r.places().last');assert last['id']=='ruinas' and last['stars'][0] and last['sparks']>=10,last
-   page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=5000);assert page.evaluate('__r.places().stars.ruinas[0]')
+   page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=15000);assert page.evaluate('__r.places().stars.ruinas[0]')
    assert not errors,errors;page.close()
   browser.close()
  print('PASS Ruinas on phone and desktop: ?lugar=ruinas lays a stone for three steps of the pattern in a bar beside a pillar, off the pattern is not on time, the bar follows the round in both screen modes, the gold capstone ends it with stars, sparks and its card',flush=True)

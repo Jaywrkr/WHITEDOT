@@ -37,7 +37,7 @@ try:
    page.wait_for_function(f"__r.journeyRhythmState().rhythm==='{mix['rhythm']}'",timeout=8000)
    assert page.evaluate(f"__r.startPlace('{mix['id']}',{{remix:'tiempo'}})") is False
    page.evaluate(f"__r.placeFinish('{mix['id']}')");last=page.evaluate('__r.places().last');assert last['remix']==mix['rhythm'] and last['extra']['sparks']>=30,last
-   page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=5000);assert page.locator('#placeTitle').inner_text().endswith(' · Remezcla')
+   page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=15000);assert page.locator('#placeTitle').inner_text().endswith(' · Remezcla')
    if os.environ.get('WILD_SHOT'):page.locator('#placeClose').click();page.evaluate('__r.wildSpawn()');page.wait_for_timeout(500);page.screenshot(path=os.environ['WILD_SHOT'].replace('.png',f'-{width}.png'))
    assert not errors,errors;page.close()
   browser.close()

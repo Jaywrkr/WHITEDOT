@@ -686,6 +686,9 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 /* Buttons in one row share their height; the action that goes on leads, alone and full width. */
 .sheet .row,.guide-sheet>.row{align-items:stretch}
 .sheet .row>:is(#placeNext,#lugaresDoor,#portalPlay){flex-basis:100%;order:-1}
+/* Panel 10 (P4): near ★★ (70–74,9 %), «Otra vez» stands beside «Seguir hacia», on the first line. */
+#mPlace[data-near] .sheet .row>#placeNext{flex:1 1 170px}#mPlace[data-near] .sheet .row>#placeAgain{order:-1;flex:0 1 auto;padding-inline:18px;border-color:var(--ink)}#mPlace[data-near] .sheet .row>#placeClose{flex-basis:100%}
+.sheet .place-rows .place-near{color:var(--ink)}
 .guide-sheet #guideFollow{grid-column:1/-1;order:-1}
 /* The menu heading covers the sheet's top padding too, and the sheet fades at its foot while more lies below. */
 .modal .menu-sheet>.menu-heading{top:-17px;margin-top:-16px;padding-top:20px}

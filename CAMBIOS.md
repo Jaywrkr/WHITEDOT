@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.210**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.211**. Las entradas describen su revisión, no certifican producción.
+
+## P4 · El cierre de la ronda · 2.3.0-alpha.211
+
+Rama `panel10/p4-cierre-de-ronda`, sobre `panel10/p3-golpe-en-el-cubo`. Simogo, Chen, Matsuura y Pope (panel 10); D1 y D3 de Jay.
+
+- La tarjeta de resultado espera el fin de la caída de la victoria, tal como se oye (`journeyVictoryState().end` más la latencia de salida). Sin sonido sigue a 1,2 s.
+- La tarjeta ya no muestra logros. Los de la ronda van a la Bitácora, con su marca de no leídos y sin aviso; mientras la tarjeta espera tampoco sale ninguno.
+- Entre 70 y 74,9 % sin ★★: «A 0,4 de ★★» (décimas que faltan, sin redondear hacia arriba) y «Otra vez» junto a «Seguir hacia».
+- Cuenta en vivo sin texto: un tic al final de la Línea se enciende en dorado mientras los pulsos a tiempo alcanzan el 75 % (70 % en Maestro). Usa el mismo cálculo que la tarjeta. No sale en Libre ni sin sonido.
+- Tras la victoria (D1): objetivo, menú, columna dorada, brújula, nota guía del portal y «Seguir hacia» de la tarjeta apuntan al lugar sin ★★ con mejor porcentaje; con todas las ★★, al que no tiene ★★★. Con 33 ★ vuelve «Explora a tu ritmo».
+- Sin cambios en umbrales, redondeo, música ni guardados. El final de los once sigue llegando al cerrar la tarjeta (P6).
+- Pruebas: `tests/round-close.mjs` (Node) y `tests/round_close_smoke.py` (navegador; diez rondas del Jardín). Se actualizan `game-objective.mjs`, `places-ring.mjs` y `clean_screens_smoke.py`, que afirmaban lo anterior. En seis recorridos de lugar la espera de la tarjeta pasa de 5 a 15 s, porque ahora espera la caída. `scripts/panel-capture.py` espera a la tarjeta en `33-resultado`. Sin teléfono físico ni personas.
 
 ## P3 · El golpe junto al cubo · 2.3.0-alpha.210
 

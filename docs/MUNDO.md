@@ -43,7 +43,7 @@ Maestro sube tempo10%, objetivo×1,5 y estrecha la ventana. Las once★ completa
 
 ## Orientación y retorno
 
-Una columna y la brújula junto al cubo indican rumbo y distancia. Con el portal fuera de pantalla, la columna es una luz de 140 px en el borde, a la altura del rumbo. **Seguir hacia** activa una ruta a pie; no teletransporta al acabar la ronda. Menú → Lugares abre la lista en filas enteras, con el destino actual bajo la fila anterior, y permite viajar a los lugares habilitados para ello.
+Una columna y la brújula junto al cubo indican rumbo y distancia. Con el portal fuera de pantalla, la columna es una luz de 140 px en el borde, a la altura del rumbo. **Seguir hacia** activa una ruta a pie; no teletransporta al acabar la ronda. Con los once completos, objetivo y columna señalan el lugar sin ★★ con mejor porcentaje (después, sin ★★★). Con 33★ vuelve «Explora a tu ritmo». Menú → Lugares abre la lista en filas enteras, con el destino actual bajo la fila anterior, y permite viajar a los lugares habilitados para ello.
 
 Guardar un lugar conserva semilla/identidad, capa y coordenadas. Tocar el nombre del territorio abre Favoritos en el destino guardado; **Ir a este lugar** vuelve a su dirección compatible. No se promete una instantánea congelada de la música, que sigue evolucionando.
 
@@ -63,7 +63,7 @@ Cada lugar aporta una capa. ★ da un fragmento,★★ la capa completa y★★�
 
 El final de los cinco capítulos abre el Mundo libre. El final de once lugares reúne entradas, tus frases, una pausa y el tema;33★ ofrece la versión maestra. Ambos conservan la música aprobada. La UI sigue el transporte audible y distingue tu interpretación del acompañamiento.
 
-Los resultados nombran lugar, colección y ronda; muestran umbrales reales y siguiente paso. Salir y Escape comprueban el mismo final. Efectos de UI silenciosos.
+Los resultados nombran lugar, colección y ronda; muestran umbrales reales y siguiente paso. La tarjeta espera a que se oiga el fin de la caída de dos compases. No muestra logros: van a la Bitácora, sin aviso. Entre 70 y 74,9 % sin ★★ dice cuánto falta («A 0,4 de ★★») y pone «Otra vez» junto a «Seguir hacia». Durante la ronda, un tic al final de la Línea se enciende en dorado mientras el porcentaje alcanza la estrella siguiente (75 %; 70 % en Maestro). Salir y Escape comprueban el mismo final. Efectos de UI silenciosos.
 
 ## Ayuda
 
