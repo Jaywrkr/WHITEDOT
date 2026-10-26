@@ -1,6 +1,21 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.213**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.214**. Las entradas describen su revisión, no certifican producción.
+
+## P7 · El color se gana y se ve · 2.3.0-alpha.214
+
+Rama `panel10/p7-color-ganado`, sobre `panel10/p6-tu-cancion`. Roset, Nesbitt, Wong y Mizuguchi (panel 10); D4 de Jay.
+
+- Color del lugar (D4): portales completos, marcas de capítulo, mapa y trofeos del Refugio toman el color de su lugar (`earnedColor`, `color-safe.js`). Abiertos sin completar, en blanco; la columna y la baliza, en blanco. El dorado queda para las ★.
+- Pigmento, no velo: se quita el relleno plano del bioma recuperado. Su color entra en las formas con una mezcla `color` que deja el negro negro. La luz del bioma es un charco menor alrededor del cubo; el amanecer y el atardecer ya no tiñen toda la pantalla; la niebla es algo más fina.
+- El color vuelve en un compás (2,4–3 s): el gris se retira en un círculo desde el cubo hasta el borde, con un frente fino de su color. Con movimiento reducido, fundido del mismo largo.
+- Menos textura en Lago (dos ondas por estanque), Dunas (una de cada dos franjas) y Ruinas (marcas del suelo más tenues). Caminantes y criaturas de píxeles a un tercio de brillo en el Viaje y en las rondas.
+- El Camino del Viaje no escribe «Pulso»: el cristal cercano late con el golpe.
+- Daltonismo: `SAFE_COLORS` sin repetidos. Dunas, Cristales y Ruinas pasan a ocre, verde pálido y azul pizarra, separados en deuteranopía, protanopía y tritanopía simuladas.
+- Cueva: la llama roja se queda; los cuadros del eco pasan a blanco y dorado, todos de 7 px. Refugio: «cerca», «armado» y el paso del Taller en blanco. «Grabar»: píldora blanca con un punto cuadrado que parpadea.
+- No cambian el cubo, la música, las semillas, las posiciones ni los mapas.
+- Medida de Roset con `scripts/panel-capture.py` (390×844; «encendido» = canal máximo > 10, «color» = croma > 24). Capítulos y lugares, antes → después: Lago 34 → 14 % encendido, Dunas 57 → 19 %, Vacío 29 → 7 %, Cristales 25 → 10 %, Ruinas 15 → 8 %; máximo 19 % (Dunas). Anillo (Bosque recuperado, con niebla): mediana (33,42,37) → (3,17,8) y color 0,13 → 17,8 %. Los capítulos aún pálidos siguen grises a propósito. En un capítulo de Lago recuperado: mediana (1,7,12) y 5,5 % con color; el gris pasa de 1 a 0,05 en 2,2 s.
+- Pruebas: `tests/color-earned.mjs` (Node) y `tests/color_earned_smoke.py` (navegador). `echo_smoke.py` falla también en la rama base (la tarjeta de la Cueva no sale en 15 s); no lo causa esta fase.
 
 ## P6 · Tocar donde sea y Tu canción para todos · 2.3.0-alpha.213
 

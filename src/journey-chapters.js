@@ -147,25 +147,29 @@ export function initialize(runtime){
   if(here&&own().done[id]&&!portal)portal={x:runtime.S.wx+140,y:runtime.S.wy-40,at:now};
   if(storm.length&&runtime.MU&&!runtime.MU.boltAt&&runtime.ac&&storm[0]<=runtime.ac.currentTime+.02){runtime.MU.boltAt=Math.max(storm.shift(),runtime.ac.currentTime);runtime.MU.boltMine=true;}
   if(portalOpen()&&Math.hypot(runtime.S.wx-portal.x,runtime.S.wy-portal.y)<34)travel();}
- // The portal in the World, and seven small marks on the Line's right end: gold for done, white for here.
+ // The portal in the World, and seven small marks on the Line's right end: the place's colour for done (panel 10,
+ // P7, D4), white for here.
  // A round of a place (places.js): its bar shows the round's progress, in either screen mode; with «Todo a la vista»
  // the Journey's own drawing is off, so the game's top layer is drawn here.
  // A Libre round (plan H3) has no bar: only the place and its music.
  function roundBar(){const run=runtime.placeRun?.();document.body?.classList?.toggle('place-round',!!run&&!run.free);if(!run||run.free)return false;const fill=document.getElementById?.('barfill'),p=runtime.journeyGameProgress?.(run.id);if(fill&&p!=null){const w=(Math.round(p*200)/2)+'%';if(fill.style.width!==w)fill.style.width=w;fill.parentElement?.classList.toggle('free',false);}return true;}
  function draw(c,W,H,t){tick();const round=roundBar();if(!active()){runtime.drawJourneyMoments?.(c,W,H,t,null,false);if(round&&!openSurface('.modal:not([hidden])'))runtime.drawJourneyGames?.(c,W,H,t);return;}if(openSurface('.modal:not([hidden])'))return;const j=own(),still=calm();runtime.drawJourneyMoments?.(c,W,H,t,current(),inChapter());runtime.drawJourneyGames?.(c,W,H,t);c.save();
   if(portalOpen()){const x=W/2+(portal.x-(runtime.camX??runtime.S.wx)),y=H/2+(portal.y-(runtime.camY??runtime.S.wy)),grow=Math.min(1,(performance.now()-portal.at)/900),r=22*grow;
-   const g=c.createRadialGradient(x,y,0,x,y,r*2.4);g.addColorStop(0,'rgba(240,210,122,.35)');g.addColorStop(1,'rgba(240,210,122,0)');c.fillStyle=g;c.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8);
-   c.strokeStyle='#f0d27a';c.lineWidth=1.5;for(let i=0;i<3;i++){c.globalAlpha=.9-i*.25;c.beginPath();c.arc(x,y,r*(1-i*.25),still?0:t/600+i,(still?0:t/600+i)+Math.PI*1.6);c.stroke();}}
+   // Panel 10 (P7, D4): the portal of a chapter just completed shines with that place's colour, not gold.
+   const ink=runtime.earnedColor?.(current())||'#ffffff',n=parseInt(ink.slice(1),16),rgb=`${n>>16&255},${n>>8&255},${n&255}`;
+   const g=c.createRadialGradient(x,y,0,x,y,r*2.4);g.addColorStop(0,`rgba(${rgb},.35)`);g.addColorStop(1,`rgba(${rgb},0)`);c.fillStyle=g;c.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8);
+   c.strokeStyle=ink;c.lineWidth=1.5;for(let i=0;i<3;i++){c.globalAlpha=.9-i*.25;c.beginPath();c.arc(x,y,r*(1-i*.25),still?0:t/600+i,(still?0:t/600+i)+Math.PI*1.6);c.stroke();}}
   // The creatures of the Vacío around the cube: they light up when they repeat a note.
   if(current()==='vacio'&&inChapter()&&hits>VOID_ECHO_AFTER&&!runtime.journeyGame?.('vacio')){const n=Math.max(2,Object.keys(j.done).length),now=performance.now();for(let i=0;i<n;i++){const a=i/n*6.283+(still?0:t/4000),x=W/2+Math.cos(a)*70,y=H/2+Math.sin(a)*46,lit=echoes.some(e=>now>=e.at&&now-e.at<400);c.globalAlpha=lit?.95:.35;c.fillStyle='#ffffff';c.fillRect(Math.round(x)-2,Math.round(y)-2,lit?5:4,lit?5:4);}}
   // Away from the chapter's biome, a beacon at the edge of the screen shows the way back.
   const way=beacon();if(way){const a=Math.atan2(way.y-runtime.S.wy,way.x-runtime.S.wx),ex=W/2+Math.cos(a)*(W/2-18),ey=H/2+Math.sin(a)*(H/2-60),bx=Math.max(14,Math.min(W-14,ex)),by=Math.max(70,Math.min(H-120,ey)),glow=still?.8:.55+.3*Math.sin(t/500);
-   // Seen from above: a gold light at the edge with a halo and a chevron pointing the way.
-   c.globalAlpha=.25*glow;c.strokeStyle='#f0d27a';c.lineWidth=1;c.beginPath();c.arc(bx,by,10,0,6.283);c.stroke();c.globalAlpha=glow;c.fillStyle='#f0d27a';c.fillRect(Math.round(bx)-2,Math.round(by)-2,4,4);
+   // Seen from above: a white light at the edge with a halo and a chevron pointing the way (a state, not gold).
+   c.globalAlpha=.25*glow;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(bx,by,10,0,6.283);c.stroke();c.globalAlpha=glow;c.fillStyle='#ffffff';c.fillRect(Math.round(bx)-2,Math.round(by)-2,4,4);
    c.beginPath();c.moveTo(bx+Math.cos(a)*16,by+Math.sin(a)*16);c.lineTo(bx+Math.cos(a+2.5)*9,by+Math.sin(a+2.5)*9);c.moveTo(bx+Math.cos(a)*16,by+Math.sin(a)*16);c.lineTo(bx+Math.cos(a-2.5)*9,by+Math.sin(a-2.5)*9);c.stroke();c.globalAlpha=1;}
   // The Journey's map beside the Line (panel 10, P3): marks of 4 px, and only inside a chapter, never over a round.
+  // A chapter done keeps its colour here (P7), so the palette you earn grows mark by mark.
   if(inChapter()){const y=Math.round(H*.8),x1=W-Math.max(24,W*.12),gap=10;c.globalAlpha=1;
-   WORLD_CHAPTERS.forEach((id,i)=>{const x=x1-(WORLD_CHAPTERS.length-1-i)*gap,isHere=current()===id;c.fillStyle=j.done[id]?'#f0d27a':isHere?'#ffffff':'#ffffff40';c.globalAlpha=isHere&&!j.done[id]&&!still?.6+.4*Math.sin(t/300):1;c.fillRect(Math.round(x)-2,y+9,CHAPTER_MARK,CHAPTER_MARK);});}
+   WORLD_CHAPTERS.forEach((id,i)=>{const x=x1-(WORLD_CHAPTERS.length-1-i)*gap,isHere=current()===id;c.fillStyle=j.done[id]?runtime.earnedColor?.(id)||'#ffffff':isHere?'#ffffff':'#ffffff40';c.globalAlpha=isHere&&!j.done[id]&&!still?.6+.4*Math.sin(t/300):1;c.fillRect(Math.round(x)-2,y+9,CHAPTER_MARK,CHAPTER_MARK);});}
   c.restore();}
  Object.defineProperties(runtime,{journeyChapterPulse:{get:()=>pulse},journeyPhrase:{get:()=>phrase},journeyComplete:{get:()=>complete},journeyTravel:{get:()=>travel},drawJourneyChapters:{get:()=>draw},
   journeyChapter:{get:()=>()=>({moments:{...moments,storm:storm.length},progress:{...progress(current())},lived:momentLived(current(),progress(current()),journey().moments||{}),bars:barsLived(current(),progress(current())),portalOpen:portalOpen(),beacon:!!(active()&&beacon()),chapter:own().chapter,id:current(),state:stateNow(),hits,portal:portal?{x:portal.x,y:portal.y}:null,done:{...own().done},notes:Object.fromEntries(Object.entries(own().notes).map(([k,v])=>[k,[...v]]))})}});

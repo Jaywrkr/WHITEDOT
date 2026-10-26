@@ -43,7 +43,7 @@ Maestro sube tempo10%, objetivo×1,5 y estrecha la ventana. Las once★ completa
 
 ## Orientación y retorno
 
-Una columna y la brújula junto al cubo indican rumbo y distancia. Con el portal fuera de pantalla, la columna es una luz de 140 px en el borde, a la altura del rumbo. **Seguir hacia** activa una ruta a pie; no teletransporta al acabar la ronda. Con los once completos, objetivo y columna señalan el lugar sin ★★ con mejor porcentaje (después, sin ★★★). Con 33★ vuelve «Explora a tu ritmo». Menú → Lugares abre la lista en filas enteras, con el destino actual bajo la fila anterior, y permite viajar a los lugares habilitados para ello.
+Los portales abiertos son blancos; los completos, del color de su lugar (también en el mapa y en los trofeos del Refugio). El dorado queda para las ★ (panel 10, P7, D4). En modo daltonismo, `SAFE_COLORS` da un color distinto a cada lugar. Una columna blanca y la brújula junto al cubo indican rumbo y distancia. Con el portal fuera de pantalla, la columna es una luz de 140 px en el borde, a la altura del rumbo. **Seguir hacia** activa una ruta a pie; no teletransporta al acabar la ronda. Con los once completos, objetivo y columna señalan el lugar sin ★★ con mejor porcentaje (después, sin ★★★). Con 33★ vuelve «Explora a tu ritmo». Menú → Lugares abre la lista en filas enteras, con el destino actual bajo la fila anterior, y permite viajar a los lugares habilitados para ello.
 
 Guardar un lugar conserva semilla/identidad, capa y coordenadas. Tocar el nombre del territorio abre Favoritos en el destino guardado; **Ir a este lugar** vuelve a su dirección compatible. No se promete una instantánea congelada de la música, que sigue evolucionando.
 

@@ -154,7 +154,10 @@ export function initialize(runtime){
     c.globalAlpha=opacity*.5;c.beginPath();c.moveTo(px,y-h);c.lineTo(px+1,y-h+5);c.lineTo(px,y+4);c.moveTo(px-4,y-h+4);c.lineTo(px+1,y-h+5);c.lineTo(px+4,y-h+4);c.stroke();c.globalAlpha=opacity;
    }
    if(site?.hits){c.strokeStyle='#fff';c.lineWidth=site.hits===o.size-1?2:1;c.shadowColor='#fff';c.shadowBlur=site.flash>seconds?8:0;c.beginPath();c.moveTo(x-4,y-5);c.lineTo(x+2,y-2);c.lineTo(x-1,y+2);if(site.hits>1)c.lineTo(x+5,y+3);c.stroke();c.shadowBlur=0;}
-   if(d<85){c.globalAlpha=opacity*.8;c.font='11px "Geist Mono",monospace';c.textAlign='center';c.fillText(runtime.journeyQuiet?.()?'Pulso':'Lanza un pulso',x,y+19);}
+   // Panel 10 (P7, Mizuguchi, Roset): the Journey writes no words, not even on its Path; the near crystal blinks on
+   // the beat instead, a thin ring that opens with each pulse of the music.
+   if(d<85){if(runtime.journeyQuiet?.()){if(!reduced()&&glow>.05){c.globalAlpha=opacity*.5*glow;c.strokeStyle='#d3eef2';c.lineWidth=1;c.beginPath();c.arc(x,y-4,12+glow*5,0,Math.PI*2);c.stroke();}}
+    else{c.globalAlpha=opacity*.8;c.font='11px "Geist Mono",monospace';c.textAlign='center';c.fillText('Lanza un pulso',x,y+19);}}
   }
   if(!reduced())for(const p of feedback){
    const age=seconds-p.at,u=Math.min(1,age/.48),count=p.broken?3+p.size:3;c.globalAlpha=opacityForFeedback(p)*(1-u)**2*.7;c.strokeStyle=c.fillStyle='#d3eef2';c.lineWidth=1;

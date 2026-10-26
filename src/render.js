@@ -149,8 +149,9 @@ export function initialize(runtime) {
     if(runtime.inWorld()){drawAir(dn,1-runtime.MU.nbW,t,0);if(runtime.MU.nb)drawAir(runtime.MU.nb,runtime.MU.nbW,t,37);}
   }
   // One soft fog puff per tint, drawn once and reused: fog used to build 18 gradients every frame.
+  // Panel 10 (P7, Roset): a little thinner, so a misty ground stays near black and a recovered colour sits on shapes.
   const puffs=new Map();
-  function fogPuff(r,g,b){const key=[r,g,b].map(v=>Math.round(v/8)*8).join(',');let cv=puffs.get(key);if(cv)return cv;cv=document.createElement('canvas');cv.width=cv.height=320;const c=cv.getContext('2d'),grad=c.createRadialGradient(160,160,0,160,160,160);grad.addColorStop(0,'rgba('+key+',.045)');grad.addColorStop(1,'rgba(200,200,210,0)');c.fillStyle=grad;c.fillRect(0,0,320,320);if(puffs.size>32)puffs.delete(puffs.keys().next().value);puffs.set(key,cv);return cv;}
+  function fogPuff(r,g,b){const key=[r,g,b].map(v=>Math.round(v/8)*8).join(',');let cv=puffs.get(key);if(cv)return cv;cv=document.createElement('canvas');cv.width=cv.height=320;const c=cv.getContext('2d'),grad=c.createRadialGradient(160,160,0,160,160,160);grad.addColorStop(0,'rgba('+key+',.032)');grad.addColorStop(1,'rgba(200,200,210,0)');c.fillStyle=grad;c.fillRect(0,0,320,320);if(puffs.size>32)puffs.delete(puffs.keys().next().value);puffs.set(key,cv);return cv;}
   function drawAir(dn,wt,t,off){const air=dn?dn.air:"claro",pal=dn?dn.pal:null;
     if(air!=="claro"&&wt>.02){const n=Math.round((air==="niebla"?18:70)*wt);
       for(let i=0;i<n;i++){const s=runtime.STARS[(i+off)%runtime.STARS.length],z=.25+(i%5)*.12;let x,y,col,al,w=1,h=1;
@@ -231,14 +232,15 @@ export function initialize(runtime) {
       runtime.drawEcology?.(c,t,ox,oy,R);
       runtime.drawPocketHints(c,ox,oy,R);
       runtime.drawPlaythings(c,t,dt,ox,oy,R,nearO);
-      if(c.dunes){runtime.cx.fillStyle="#fff";const y0=Math.floor((runtime.S.wy-R)/38)*38;
-        for(let y=y0;y<runtime.S.wy+R;y+=38){if(y<bb*runtime.WCH||y>=(bb+1)*runtime.WCH)continue;for(let x=Math.max(a*runtime.WCH,runtime.S.wx-R);x<Math.min((a+1)*runtime.WCH,runtime.S.wx+R);x+=6){const yy=y+Math.sin(x/130+y*.07+t/4000)*12,d=Math.hypot(x-runtime.S.wx,yy-runtime.S.wy);if(d>R)continue;runtime.cx.globalAlpha=Math.pow(1-d/R,1.4)*.35*decorativeField(x,yy,runtime.seedOf);runtime.cx.fillRect(x+ox,yy+oy,2,1);}}}
+      // Panel 10 (P7): in Dunas, every other stripe and fainter (world-sheet.js, textureWeight).
+      if(c.dunes){runtime.cx.fillStyle="#fff";const y0=Math.floor((runtime.S.wy-R)/38)*38,texture=runtime.groundTexture?.()??1;
+        for(let y=y0;y<runtime.S.wy+R;y+=38){if(y<bb*runtime.WCH||y>=(bb+1)*runtime.WCH)continue;if(texture<1&&Math.round(y/38)%2)continue;for(let x=Math.max(a*runtime.WCH,runtime.S.wx-R);x<Math.min((a+1)*runtime.WCH,runtime.S.wx+R);x+=6){const yy=y+Math.sin(x/130+y*.07+t/4000)*12,d=Math.hypot(x-runtime.S.wx,yy-runtime.S.wy);if(d>R)continue;runtime.cx.globalAlpha=Math.pow(1-d/R,1.4)*.35*texture*decorativeField(x,yy,runtime.seedOf);runtime.cx.fillRect(x+ox,yy+oy,2,1);}}}
       for(const p of c.ponds){const d=Math.hypot(p.x-runtime.S.wx,p.y-runtime.S.wy);
         if(d<p.r)pondNow=true;
         if(d-p.r<R){if(d<R+p.r*.3)runtime.seen("estanque");const fall=Math.max(0,1-Math.max(0,d-p.r*.6)/R);
           runtime.cx.globalAlpha=.05*fall;runtime.cx.fillStyle="#fff";runtime.cx.beginPath();runtime.cx.arc(p.x+ox,p.y+oy,p.r,0,6.283);runtime.cx.fill();
-          runtime.cx.strokeStyle="#fff";runtime.cx.lineWidth=1;const ph=(t/2600)%1;
-          for(let i=0;i<3;i++){const q=(ph+i/3)%1;runtime.cx.globalAlpha=Math.min(1,(.25+b*.3)*(1-q)*fall);runtime.cx.beginPath();runtime.cx.arc(p.x+ox,p.y+oy,p.r*q,0,6.283);runtime.cx.stroke();}}}
+          runtime.cx.strokeStyle="#fff";runtime.cx.lineWidth=1;const ph=(t/2600)%1,texture=runtime.groundTexture?.()??1,rings=texture<1?2:3;
+          for(let i=0;i<rings;i++){const q=(ph+i/rings)%1;runtime.cx.globalAlpha=Math.min(1,(.25+b*.3)*(1-q)*fall*texture);runtime.cx.beginPath();runtime.cx.arc(p.x+ox,p.y+oy,p.r*q,0,6.283);runtime.cx.stroke();}}}
       for(const l of c.lotus){l.vx=(l.vx||0)+Math.sin(t/3000+l.deg)*dt*6;l.vy=(l.vy||0)+Math.cos(t/3500+l.deg)*dt*6;runtime.physics(l,dt,c.lotus,l.pond);const d=Math.hypot(l.x-runtime.S.wx,l.y-runtime.S.wy);if(d<soundR)nearO.push(l);
         const lw=runtime.waves.length&&runtime.hitW(l.x,l.y);if(lw){l.lit=1;runtime.wsoon(lw,l.snd);}
         if(contactEntry(l,d<ds/2+14,!paused&&!runtime.scanning)&&ms>l.cd){l.cd=ms+1500;runtime.MU.act+=.3;runtime.touched();if(!l.given){l.given=1;runtime.gain("loto");}runtime.pushO(l,runtime.S.wx,runtime.S.wy,140);runtime.beatSoon(q=>runtime.playVoice('loto',l.deg,q,runtime.regionOfPos(l.x,l.y),true,1,l),()=>{l.lit=1;runtime.burst(l.x,l.y,8,true);});}
@@ -360,7 +362,7 @@ export function initialize(runtime) {
           else{runtime.pushO(o,runtime.S.wx,runtime.S.wy,120);let mate=null,md=320;for(const x of c.sp){if(x!==o&&x.s===sp){const dd=Math.hypot(x.x-o.x,x.y-o.y);if(dd<md){md=dd;mate=x;}}}
             runtime.beatSoon(q=>{runtime.speciesSound(sp,q,true,o.personality,o);if(mate){runtime.speciesSound(sp,q+runtime.SIX*16,true,mate.personality,mate);setTimeout(()=>{mate.lit=1;runtime.beams.push({x1:o.x,y1:o.y,x2:mate.x,y2:mate.y,l:1});},cueDelay(runtime.ac,q+runtime.SIX*16));}},()=>{o.lit=1;});}if(runtime.RP&&runtime.RP.type==="cantar"&&sp.id.startsWith(runtime.RP.key+":")){runtime.RP.set.add(sp.id);runtime.retoSet("cantar",runtime.RP.set.size);}}
         if(d<soundR)nearO.push(o);o.lit=Math.max(0,o.lit-dt*.8);const vis=sp.mob?R*1.6:R*1.2;if(d>vis&&o.lit<=0)continue;
-        runtime.cx.globalAlpha=Math.min(1,Math.max(Math.max(0,1-d/vis)*.9,o.lit))*(runtime.worldOpacity?.(d,vis)??1);
+        runtime.cx.globalAlpha=Math.min(1,Math.max(Math.max(0,1-d/vis)*.9,o.lit))*(runtime.worldOpacity?.(d,vis)??1)*(runtime.faunaDim?.()??1);
         const faunaY=o.y+oy-(runtime.faunaBob?.(o,frozen?0:b,d)||0);if(runtime.drawNativeSpecies)runtime.drawNativeSpecies(sp,o,o.x+ox,faunaY,runtime.mischiefTime?.(o,t)??t,frozen?0:b,!!runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)));else if(runtime.blobHabitat?.(runtime.regionOfPos(o.x,o.y)))runtime.drawBlob(sp,o,o.x+ox,faunaY,t,b);else runtime.drawSprite(sp.bits,o.x+ox,faunaY,sp.cell*(1+o.lit*.4+(sp.mob?b*.15:0)),o.lit>.1?"#fff":sp.col);runtime.faunaAfter?.(o,o.x+ox,faunaY,d,t);
         if(o.lit<.1&&!runtime.S.cat[sp.id])runtime.touchRing(o.x+ox,o.y+oy,d,R,b);}
       for(const k of c.walkers){
@@ -375,7 +377,7 @@ export function initialize(runtime) {
         const vis=R*1.7;if(d>vis+400)continue;if(d<R*1.2)runtime.seen("caminante");
         runtime.cx.fillStyle="#fff";
         k.trail.forEach(([p,q],i)=>{const e=Math.hypot(p-runtime.S.wx,q-runtime.S.wy),al=(i/k.trail.length)*.25*Math.max(0,1-e/vis);if(al>.01){runtime.cx.globalAlpha=al;runtime.cx.fillRect(p+ox-1,q+oy-1,2,2);}});
-        if(d<vis){runtime.cx.globalAlpha=Math.max(0,1-d/vis)*(runtime.worldOpacity?.(d,vis)??1);runtime.cx.strokeStyle=runtime.musicInk?.(k)||'#fff';drawWalker(runtime.cx,form,k.x+ox,k.y+oy,t,calmMotion(runtime.S));if(k.follow>0&&d<140){runtime.cx.globalAlpha*=.65;runtime.cx.font='11px "Geist Mono",monospace';runtime.cx.textAlign='center';runtime.cx.fillText(form.name,k.x+ox,k.y+oy-16);}}
+        if(d<vis){runtime.cx.globalAlpha=Math.max(0,1-d/vis)*(runtime.worldOpacity?.(d,vis)??1)*(runtime.faunaDim?.()??1);runtime.cx.strokeStyle=runtime.musicInk?.(k)||'#fff';drawWalker(runtime.cx,form,k.x+ox,k.y+oy,t,calmMotion(runtime.S));if(k.follow>0&&d<140){runtime.cx.globalAlpha*=.65;runtime.cx.font='11px "Geist Mono",monospace';runtime.cx.textAlign='center';runtime.cx.fillText(form.name,k.x+ox,k.y+oy-16);}}
       }
       for(let i=c.motes.length-1;i>=0;i--){const m=c.motes[i],d=Math.hypot(m.x-runtime.S.wx,m.y-runtime.S.wy);
         if(d<ds/2+10){c.motes.splice(i,1);runtime.playerNote(.13);runtime.burst(m.x,m.y,5,runtime.grooveFx>.9);continue;}

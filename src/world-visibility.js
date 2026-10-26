@@ -27,7 +27,7 @@ export function initialize(runtime){
  }
  function opacity(distance,radius=fog?.radius||750){const near=Math.max(0,1-distance/240);return distanceOpacity(distance,radius)*(1-(breathing?.12*(1-Math.sqrt(breath))*near:0));}
  function ground(t){if(!runtime.inWorld()||!fog)return;const s=runtime.S,d=runtime.regionOfPos(s.wx,s.wy),water=groundKinds.get('agua')||0;
-  c.save();c.lineWidth=1;c.fillStyle=c.strokeStyle='#fff';
+  c.save();c.lineWidth=1;c.fillStyle=c.strokeStyle='#fff';const texture=runtime.groundTexture?.()??1;   // panel 10, P7: less in Lago, Dunas, Ruinas
   for(const plane of DEPTH_PLANES){
    const span=fog.radius/plane,step=72/plane;
    const x0=Math.floor((s.wx-span)/step),x1=Math.ceil((s.wx+span)/step),y0=Math.floor((s.wy-span)/step),y1=Math.ceil((s.wy+span)/step);
@@ -36,7 +36,7 @@ export function initialize(runtime){
     const wx=(x+h)*step,wy=(y+visualHash(y,x,groundSeed))*step,p=planePoint(wx,wy,s.wx,s.wy,runtime.W,runtime.H,plane),dist=Math.hypot(p.x-runtime.W/2,p.y-runtime.H/2);
     if(p.x<-16||p.x>runtime.W+16||p.y<-16||p.y>runtime.H+16)continue;
     c.globalAlpha=population*opacity(dist)*(.028+(plane===1?.04:0))*(.6+fog.day*.4)*(.15+decorativeField(wx,wy,runtime.seedOf));
-    c.globalAlpha*=1+breath*.5*Math.max(0,1-dist/240);const alpha=c.globalAlpha;for(const [biome,weight]of groundKinds){c.globalAlpha=alpha*weight;
+    c.globalAlpha*=(1+breath*.5*Math.max(0,1-dist/240))*texture;const alpha=c.globalAlpha;for(const [biome,weight]of groundKinds){c.globalAlpha=alpha*weight;
     if(biome==='agua'){const wave=Math.sin(t/1800+h*9)*3;c.fillRect(p.x+wave,p.y,4+plane*4,1);}
     else{c.fillRect(p.x,p.y,plane===1?2:1,1);if(biome==='ruinas'||biome==='cueva'){c.beginPath();c.moveTo(p.x,p.y);c.lineTo(p.x+4,p.y-2);c.stroke();}}}
    }

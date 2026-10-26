@@ -36,6 +36,8 @@ Ningún toque mudo: un pulso demasiado seguido (240 ms; dos tercios de corchea e
 
 Negro, cubo pequeño, marcas contenidas y color ganado. Los rótulos del paisaje y la economía se reducen durante el Viaje. Menús y controles son silenciosos; no usan notas del tema como sonido de UI.
 
+El color se gana y se ve (panel 10, P7, D4). Un bioma pálido recupera su color en un compás (2,4–3 s): el gris se retira en un círculo que nace en el cubo y llega al borde, con un frente fino de su color; con movimiento reducido, un fundido del mismo largo. Después el color va en las formas como pigmento (mezcla `color`, `world-sheet.js`), no como velo: el fondo sigue negro. El amanecer y el atardecer tiñen solo la luz del cubo. Las marcas de capítulo hechas toman el color de su lugar; el portal de un capítulo completo también. El Camino del Viaje no escribe «Pulso»: el cristal cercano late con el golpe. Durante el Viaje y las rondas, caminantes y criaturas de píxeles bajan a un tercio de brillo (`faunaDim`). Lago, Dunas y Ruinas llevan menos textura de suelo (`textureWeight`). En la Cueva, la llama roja se queda; los cuadros del eco son blancos (el canto) y dorados (tu acierto), de 7 px en una línea.
+
 La ayuda se consulta en menú → Cómo jugar y destaca una acción actual. La primera demostración enseña jugando; no depende de leer una lista larga. Los resultados y el narrador aparecen en su contexto, con salidas y foco accesibles.
 
 La aportación personal se guarda de forma aditiva y compatible: notas históricas sin ticks siguen interpretándose. No reemplazar las frases ni borrar progreso para adaptar una versión nueva.

@@ -37,7 +37,8 @@ export function initialize(runtime){
   PLACES.forEach((p,i)=>{const q=toScreen(sala.x+TROPHY_SHELF.x+i*TROPHY_SHELF.gap,sala.y+TROPHY_SHELF.y),r=Math.max(4,6*k),got=stars(p.id),won=got[0],shine=got.filter(Boolean).length;
    // A socket under every trophy; the trophy itself only once the place has its ★, brighter with each star.
    c.globalAlpha=.35;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.moveTo(q.x-r*1.2,q.y+r*1.5);c.lineTo(q.x+r*1.2,q.y+r*1.5);c.stroke();
-   if(won){c.globalAlpha=.55+.15*shine;c.fillStyle=c.strokeStyle=gold;if(shine===3&&!calm){c.save();c.globalAlpha=.18+.1*Math.sin(t/600+i);c.beginPath();c.arc(q.x,q.y,r*2,0,6.283);c.fill();c.restore();}trophy(c,p.game,q.x,q.y,r);}
+   // Panel 10 (P7, D4): the trophy of a complete place has that place's colour; its stars below stay gold.
+   if(won){c.globalAlpha=.55+.15*shine;c.fillStyle=c.strokeStyle=runtime.earnedColor?.(p.id)||'#ffffff';if(shine===3&&!calm){c.save();c.globalAlpha=.18+.1*Math.sin(t/600+i);c.beginPath();c.arc(q.x,q.y,r*2,0,6.283);c.fill();c.restore();}trophy(c,p.game,q.x,q.y,r);}
    else{c.globalAlpha=.3;c.setLineDash?.([2,2]);c.strokeStyle='#ffffff';c.strokeRect(Math.round(q.x-r*.7)+.5,Math.round(q.y-r*.7)+.5,Math.round(r*1.4),Math.round(r*1.4));c.setLineDash?.([]);}
    for(let s=0;s<3;s++){c.globalAlpha=got[s]?.95:.25;c.fillStyle=got[s]?gold:'#ffffff';c.fillRect(Math.round(q.x-r+s*r*.8),Math.round(q.y+r*2.1),Math.max(1,Math.round(r*.4)),Math.max(1,Math.round(r*.4)));}
    hits.push({x:q.x-r*1.6,y:q.y-r*1.6,w:r*3.2,h:r*4.4,id:p.id,index:i});});

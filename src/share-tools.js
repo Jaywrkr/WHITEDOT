@@ -78,7 +78,7 @@ export function initialize(runtime){
    rec.recorder.onstop=()=>finish(type);rec.recorder.onerror=()=>{stop();runtime.toast('No se pudo completar la grabación en este navegador.');};
    rec.recorder.start(1000);rec.started=Date.now();
   }catch(_){releaseCapture();rec.recorder=null;setUI();runtime.toast('Este navegador no pudo iniciar la grabación.');return false;}
-  rec.timer=setInterval(()=>{const left=MAX_SET_SECONDS-Math.floor((Date.now()-rec.started)/1000);$('recBadge').textContent=`● ${left} s`;if(left<=0)stop();},250);
+  rec.timer=setInterval(()=>{const left=MAX_SET_SECONDS-Math.floor((Date.now()-rec.started)/1000);{const n=$('recBadge').querySelector('span');if(n)n.textContent=`${left} s`;}if(left<=0)stop();},250);
   $('mMenu').hidden=true;setUI();runtime.toast('<em>Grabando</em> · hasta 60 s. Toca el punto rojo para terminar');return true;
  }
  function stop(){if(!rec.recorder)return false;clearInterval(rec.timer);try{rec.recorder.stop();}catch(_){finish(rec.recorder.mimeType);}return true;}

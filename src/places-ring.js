@@ -1,12 +1,13 @@
 import {openSurface,prefersReducedMotion} from './frame-state.js';
-import {PLACES,placeOpen,starCount,nextGoal,previousPlace} from './places.js';
+import {PLACES,placeOpen,starCount,nextGoal,previousPlace,complete} from './places.js';
 import {freeOpen} from './journey-mode.js';
 import {directionPan} from './spatial.js';
 import {formatDistance} from './player-profile-model.js';
-// The ring (plan F5, docs/MUNDO.md): the eleven places as gold portals around the Refugio, about half a minute's walk
+// The ring (plan F5, docs/MUNDO.md): the eleven places as portals around the Refugio, about half a minute's walk
 // from its door. Each portal sounds on the bar's «1», louder as you come near; a closed one shows the stars it asks for.
 // An arrow at the edge of the screen points to the next place on the path (plan H3: in order, like the tracks of a
-// record), a column of gold light stands over its portal, and the map shows them all.
+// record), a column of light stands over its portal, and the map shows them all. Panel 10 (P7, D4): an open portal is
+// white; a complete one takes the colour of its place; gold is only for its stars.
 // The ring keeps its migrated anchor even when the portable Refugio moves.
 export const RING_RADIUS=6000,PORTAL_REACH=40,PORTAL_HEAR=1800,RING_SEA_STEP=300,RING_SEA_TRIES=6;
 // Plan H6: the next portal on the path is heard from the Refugio and beyond, softly, on the bar's «3», from its side.
@@ -58,24 +59,28 @@ export function initialize(runtime){
  function tick(){if(!active()||openSurface('.modal:not([hidden])')){inside=null;return;}const S=runtime.S,near=spots().find(s=>Math.hypot(s.x-S.wx,s.y-S.wy)<PORTAL_REACH);
   // A portal acts once each time you walk into it.
   if(near&&inside!==near.id){inside=near.id;enter(near);}else if(!near){inside=null;said=null;}}
+ // The colour of a portal: its place's once complete, white while open, grey while closed.
+ const rgba=(hex,a)=>{const n=parseInt(hex.slice(1),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;};
+ function portalInk(id,open,d=data()){return !open?'#8a8a8f':complete(d,id)?runtime.earnedColor?.(id)||'#ffffff':'#ffffff';}
  // A star drawn, not written: the quiet screen of the Journey draws no words in the World (journey-mode.js).
  function star(c,x,y,r){c.beginPath();for(let i=0;i<10;i++){const q=i%2?r*.45:r,a=i/10*6.283-Math.PI/2;i?c.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q):c.moveTo(x+Math.cos(a)*q,y+Math.sin(a)*q);}c.closePath();c.fill();}
- // The portals on screen and, when the next one is not in view, a gold arrow at the edge pointing to it.
+ // The portals on screen and, when the next one is not in view, a soft light at the edge on its side.
  function draw(c,W,H,t){tick();const info=$('ringRoute'),aim=route(),visible=!!aim&&!openSurface('.modal:not([hidden])'),offset=runtime.cameraOffset?.()||{x:0,y:0};if(info){info.hidden=!visible;if(visible){info.textContent=`${aim.name} · ${formatDistance(aim.distance)}`;info.style.setProperty('--route-x',offset.x+'px');info.style.setProperty('--route-y',offset.y+'px');}}if(!active()||openSurface('.modal:not([hidden])'))return;const S=runtime.S,d=data(),cx=runtime.camX??S.wx,cy=runtime.camY??S.wy,still=calm(),gold=runtime.GOLD||'#f0d27a';c.save();
   for(const s of spots()){const x=W/2+s.x-cx,y=H/2+s.y-cy;if(x<-80||x>W+80||y<-80||y>H+80)continue;const open=placeOpen(d,s.id,S.journey),r=24,turn=still?0:t/700;
-   if(open){const g=c.createRadialGradient(x,y,0,x,y,r*2.4);g.addColorStop(0,'rgba(240,210,122,.32)');g.addColorStop(1,'rgba(240,210,122,0)');c.globalAlpha=1;c.fillStyle=g;c.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8);}
-   c.strokeStyle=open?gold:'#8a8a8f';c.lineWidth=1.5;for(let i=0;i<3;i++){c.globalAlpha=(open?.9:.45)-i*.2;c.beginPath();c.arc(x,y,r*(1-i*.25),turn+i,turn+i+Math.PI*1.6);c.stroke();}
+   const ink=portalInk(s.id,open,d);
+   if(open){const g=c.createRadialGradient(x,y,0,x,y,r*2.4);g.addColorStop(0,rgba(ink,complete(d,s.id)?.32:.16));g.addColorStop(1,rgba(ink,0));c.globalAlpha=1;c.fillStyle=g;c.fillRect(x-r*2.4,y-r*2.4,r*4.8,r*4.8);}
+   c.strokeStyle=ink;c.lineWidth=1.5;for(let i=0;i<3;i++){c.globalAlpha=(open?.9:.45)-i*.2;c.beginPath();c.arc(x,y,r*(1-i*.25),turn+i,turn+i+Math.PI*1.6);c.stroke();}
    // Open: its three stars below, gold the ones won. Closed: a grey ring and star; it opens when the one before is complete.
    const p=PLACES.find(q=>q.id===s.id);c.globalAlpha=1;if(open)stars(s.id).forEach((g,i)=>{c.fillStyle=g?gold:'#ffffff40';star(c,x+(i-1)*14,y+r+14,5.5);});
    else{c.globalAlpha=.25;c.strokeStyle='#ffffff';c.lineWidth=2;c.beginPath();c.arc(x,y,r+7,0,6.283);c.stroke();c.globalAlpha=.6;c.fillStyle='#8a8a8f';star(c,x,y,6);}
    // With «Todo a la vista», its name and what it asks are written too.
    c.globalAlpha=1;c.textAlign='center';c.textBaseline='top';c.font='12px "Geist Mono", monospace';c.fillStyle=open?'#ffffff':'#8a8a8f';c.fillText(p.name,x,y+r+(open?24:14));}
   const next=!S.destination&&nextPortal(spots(),d,S.journey,{x:S.wx,y:S.wy});if(next){const x=W/2+next.x-cx,y=H/2+next.y-cy;
-   // The next place on the path: a column of gold light over its portal. Plan I2: seen from anywhere; off screen the
+   // The next place on the path: a column of white light over its portal (a state, not something earned). Plan I2: seen from anywhere; off screen the
    // column stands at the edge on its side (it replaces the old arrow), fainter the farther the portal is.
-   const col=(cx2,from,to,a)=>{const g=c.createLinearGradient(cx2,from,cx2,to);g.addColorStop(0,'rgba(240,210,122,.38)');g.addColorStop(1,'rgba(240,210,122,0)');c.globalAlpha=a*(still?.8:.7+.3*Math.sin(t/600));c.fillStyle=g;c.fillRect(cx2-9,Math.min(from,to),18,Math.abs(to-from));};
+   const col=(cx2,from,to,a)=>{const g=c.createLinearGradient(cx2,from,cx2,to);g.addColorStop(0,'rgba(255,255,255,.3)');g.addColorStop(1,'rgba(255,255,255,0)');c.globalAlpha=a*(still?.8:.7+.3*Math.sin(t/600));c.fillStyle=g;c.fillRect(cx2-9,Math.min(from,to),18,Math.abs(to-from));};
    // At the edge: a soft upright light of 140 px, fading to every side (panel 10, Nesbitt #4).
-   const glow=(gx,gy,a)=>{c.save();c.translate(gx,gy);c.scale(1,7);const g=c.createRadialGradient(0,0,0,0,0,10);g.addColorStop(0,'rgba(240,210,122,.42)');g.addColorStop(1,'rgba(240,210,122,0)');c.globalAlpha=a*(still?.8:.7+.3*Math.sin(t/600));c.fillStyle=g;c.fillRect(-10,-10,20,20);c.restore();};
+   const glow=(gx,gy,a)=>{c.save();c.translate(gx,gy);c.scale(1,7);const g=c.createRadialGradient(0,0,0,0,0,10);g.addColorStop(0,'rgba(255,255,255,.34)');g.addColorStop(1,'rgba(255,255,255,0)');c.globalAlpha=a*(still?.8:.7+.3*Math.sin(t/600));c.fillStyle=g;c.fillRect(-10,-10,20,20);c.restore();};
    if(x>-60&&x<W+60&&y>-40&&y<H+40)col(x,Math.min(H,y),Math.max(0,y-H),1);
    else{const e=edgeColumn(x,y,W,H),far=Math.hypot(next.x-S.wx,next.y-S.wy);glow(e.x,e.y,Math.max(.45,1-far/(RING_RADIUS*2)));}}
   if(aim&&!runtime.firstJourneyState?.next){const e=routeCompass(aim.dx,aim.dy,W,H,offset);c.save();c.translate(e.x,e.y);c.rotate(e.angle);c.globalAlpha=.8;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.moveTo(-7,-5);c.lineTo(1,0);c.lineTo(-7,5);c.stroke();c.restore();}
@@ -96,7 +101,7 @@ export function initialize(runtime){
  // Leaving a round from the menu: only shown while a round is being played.
  const leave=$('bLeavePlace');if(leave){leave.onclick=()=>{$('mMenu')&&($('mMenu').hidden=true);runtime.abandonPlace?.();};$('bMenu')?.addEventListener('click',()=>{leave.hidden=!runtime.placeRun?.();});}
  // The portals for the map: where each is, and whether it is open, with its stars.
- function forMap(){if(!data()||!freeOpen(runtime.S.journey))return [];const d=data();return spots().map(s=>({...s,name:name(s.id),open:placeOpen(d,s.id,runtime.S.journey),stars:stars(s.id).filter(Boolean).length}));}
+ function forMap(){if(!data()||!freeOpen(runtime.S.journey))return [];const d=data();return spots().map(s=>{const open=placeOpen(d,s.id,runtime.S.journey);return {...s,name:name(s.id),open,complete:complete(d,s.id),ink:portalInk(s.id,open,d),stars:stars(s.id).filter(Boolean).length};});}
  Object.defineProperties(runtime,{drawPlacesRing:{get:()=>draw},ringMusicStep:{get:()=>musicStep},ringPortals:{get:()=>forMap},ringTravel:{get:()=>travel},ringGo:{get:()=>go},ringGuide:{get:()=>guide},ringRoute:{get:()=>route},renderRingTravel:{get:()=>travelList},
-  ringState:{get:()=>()=>({center:center(),spots:spots().map(s=>({...s})),next:nextPortal(spots(),data(),runtime.S.journey,{x:runtime.S.wx,y:runtime.S.wy})?.id||null,active:active()})},ringSounds:{get:()=>()=>sounds.map(s=>({...s}))}});
+  ringState:{get:()=>()=>({center:center(),spots:spots().map(s=>({...s,ink:portalInk(s.id,placeOpen(data(),s.id,runtime.S.journey))})),next:nextPortal(spots(),data(),runtime.S.journey,{x:runtime.S.wx,y:runtime.S.wy})?.id||null,active:active()})},ringSounds:{get:()=>()=>sounds.map(s=>({...s}))}});
 }

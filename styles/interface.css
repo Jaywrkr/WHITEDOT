@@ -147,7 +147,8 @@ body:has(#fxPanel:not([hidden])) .toast{top:calc(var(--safe-top) + 80px);bottom:
 .rare-notice{top:calc(var(--safe-top) + 80px);border-radius:var(--radius);background:#080a0df5}
 .rare-notice-copy small{font-size:11px;letter-spacing:0}.rare-notice-copy strong{font-size:12px}
 .rare-notice-copy span{font-size:11px}.rare-notice button{font-size:11px}
-.rec-badge{left:var(--gutter);top:auto;bottom:calc(var(--safe-bottom) + 84px);transform:none;min-height:44px;background:#100809f2;z-index:40;font-size:11px;animation:none;max-width:calc(100vw - 32px)}
+#recBadge{color:#fff;border-color:#fff}
+.rec-badge{left:var(--gutter);top:auto;bottom:calc(var(--safe-bottom) + 84px);transform:none;min-height:44px;background:#000000f2;z-index:40;font-size:11px;animation:none;max-width:calc(100vw - 32px)}
 body:has(#recBadge:not([hidden])) .routehud,body:has(#recBadge:not([hidden])) .toast,body:has(#recBadge:not([hidden])) .zone{bottom:calc(var(--safe-bottom) + 150px)}
 body:has(.modal:not([hidden])) .dock,body:has(.modal:not([hidden])) .studio,body:has(.modal:not([hidden])) .voice,body:has(.modal:not([hidden])) .toast,body:has(.modal:not([hidden])) .zone,body:has(.modal:not([hidden])) .phrase,body:has(.modal:not([hidden])) .fxpanel,body:has(.modal:not([hidden])) .glasspanel,body:has(.modal:not([hidden])) .rec-badge{visibility:hidden;pointer-events:none}
 

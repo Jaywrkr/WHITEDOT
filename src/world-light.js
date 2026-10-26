@@ -12,7 +12,8 @@ export function initialize(runtime){
  function draw(t){
   if(!surface()){flies=[];return;}const L=update(),c=runtime.cx,W=runtime.W,H=runtime.H,x=W/2,y=H/2,calm=!!runtime.S.reducedMotion||prefersReducedMotion();
   c.save();
-  if(L.dawn>.01||L.dusk>.01){c.globalAlpha=.08*Math.max(L.dawn,L.dusk);c.fillStyle=L.dawn>L.dusk?'#ffae6b':'#ff7fa8';c.fillRect(0,0,W,H);}
+  // Panel 10 (P7, Roset): dawn and dusk warm the light around the cube, not the whole screen, so the ground stays black.
+  if(L.dawn>.01||L.dusk>.01){const a=.08*Math.max(L.dawn,L.dusk),rgb=L.dawn>L.dusk?'255,174,107':'255,127,168',g=c.createRadialGradient(x,y,0,x,y,Math.max(W,H)*.45);g.addColorStop(0,`rgba(${rgb},${a.toFixed(3)})`);g.addColorStop(1,`rgba(${rgb},0)`);c.globalAlpha=1;c.fillStyle=g;c.fillRect(0,0,W,H);}
   if(L.darkness>.01){const lantern=Math.max(70,(runtime.lightR?.()||120)*.9),g=c.createRadialGradient(x,y,lantern*.35,x,y,lantern*1.6);g.addColorStop(0,'rgba(4,8,24,0)');g.addColorStop(1,'rgba(4,8,24,'+L.darkness.toFixed(3)+')');c.globalAlpha=1;c.fillStyle=g;c.fillRect(0,0,W,H);}
   // Fireflies live in screen space and drift with the world, so a few dozen points cost almost nothing.
   while(flies.length<L.fireflies)flies.push({x:Math.random()*W,y:Math.random()*H,p:Math.random()*6.28,z:.4+Math.random()*.6});if(flies.length>L.fireflies)flies.length=L.fireflies;
