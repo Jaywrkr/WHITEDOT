@@ -26,6 +26,7 @@ try:
    p.evaluate("()=>{document.querySelectorAll('.modal').forEach(e=>e.hidden=true);__r.addFavorite('Mi ritmo');__r.openFavorites();}")
    p.wait_for_function("()=>{const b=document.querySelector('[data-favorite] > button')?.getBoundingClientRect();return b&&b.top>=0&&b.bottom<=innerHeight;}")
    assert 'Mi ritmo' in p.locator('[data-favorite]').first.inner_text()
+   assert p.locator('#journalBody button').filter(has_text='Ir a este lugar').count()==1,'one destination, one visit action'
    assert p.locator('[data-favorite] > button').first.inner_text()=='Ir a este lugar'
    assert p.locator('#mJournal .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
    assert p.evaluate('__r.ac===uiAc&&uiNodes===0'),'journal actions never allocate a graph or sound source'

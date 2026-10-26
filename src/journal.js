@@ -66,7 +66,7 @@ export function initialize(runtime) {
   }
   function places() {
     const keys=Object.keys(runtime.S.places).filter(k=>/^-?\d+,-?\d+$/.test(k)&&k.split(',').every(n=>Number.isSafeInteger(Number(n)))),regionCount=keys.length,regions=keys.slice().reverse().slice(0,regionLimit).map(k=>regionFromKey(k,runtime)).filter(Boolean);
-    const favorites=runtime.favorites||[];const saved=favorites.length?'<h3>Favoritos</h3>'+favorites.slice().reverse().slice(0,6).map(p=>card(p.name,`${p.layer} · ${runtime.GEN[p.genre]?.name||p.genre}`,`<button data-journal-visit="${escape(p.id)}">Ir a este lugar</button>`)).join('')+'<button data-journal-favorites>Todos tus lugares</button>':'';
+    const favorites=runtime.favorites||[];
     const mirrorEntries=Object.values(runtime.S.mirrorSites||{});
     const mirrorCard=mirrorEntries.length?card('Espejos musicales',`${mirrorEntries.length} instalaciones · ${mirrorEntries.filter(e=>e.solved).length} rutas completadas. Gira espejos para transformar la secuencia.`):'';
     const depth=runtime.S.journal.depth||{},depthCard=Object.values(depth).some(Boolean)?card('Interacciones profundas',`${depth.threads?'Redes tejidas · ':''}${depth.dialogue?'Frases respondidas · ':''}${depth.box?'Suelos transformados':''} Sonidos y patrones temporales.`):'';
@@ -78,7 +78,7 @@ export function initialize(runtime) {
     const records=fold('Recuerdos y vínculos',(runtime.rewardCollectionCard?.()||'')+(runtime.livingStoryCard?.()||'')+(runtime.livingCard?.()||'')+(runtime.worldMemoryCard?.()||'')+(runtime.voiceDiaryCard?.()||'')+(runtime.petCard?.()||'')+(runtime.cultureCard?.()||''));
     const discoveries=fold('Paisajes vivos',ecologyCard)+fold('Tu recorrido creativo',(runtime.creativeCard?.()||'')+(runtime.encounterJournal?.()||'')+rhythmCard+installations);
     if(regionCount>regionLimit)runtime.$('journalMore').hidden=false;
-    return `<div class="journal-summary"><span><b>${regionCount}</b>Regiones</span><span><b>${favorites.length}</b>Guardados</span><span><b>${Object.keys(data().music.instruments).length}</b>Instrumentos</span></div>`+saved+records+discoveries+(regions.length?regions.map(region=>{
+    return `<div class="journal-summary"><span><b>${regionCount}</b>Regiones</span><span><b>${favorites.length}</b>Guardados</span><span><b>${Object.keys(data().music.instruments).length}</b>Instrumentos</span></div>`+records+discoveries+(regions.length?regions.map(region=>{
       const key='region:'+region.key;
       return `<details class="journal-section" data-journal-detail="${escape(key)}" data-region="${escape(region.key)}"><summary>${escape(region.name)} · ${region.bpm} BPM</summary><div data-region-body>${expanded.has(key)?regionDetails(region):''}</div></details>`;
     }).join(''):card('El mapa espera','Recoge una luz. Entra al Mundo y descubre lugares.'));
