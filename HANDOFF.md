@@ -1,4 +1,6 @@
-# Traspaso · integración de alpha.200
+# Traspaso · objetivo diez
+
+Trabajo autorizado: ejecutar E1–E7 en ramas encadenadas, con commit/push; Jay conserva PR/merge. Base main alpha.200 `fd5dfc19`; auditoría9 incluida en E1. [Estado vigente](docs/ENTREGA_E.md). Generación musical/mundos protegidos. Aceptación con personas y nota diez no se acreditan con automatización.
 
 Código **2.3.0-alpha.200**, integrado en main por petición expresa de Jay mediante PR [#354](https://github.com/Jaywrkr/WHITEDOT/pull/354), merge `4b26be2d69f7fe5766950e48208a723e16f706cf`. La pila completa hasta `2048e245` conserva su historia. [Registro de integración](docs/INTEGRACION_ALPHA_200.md) y [entrega](docs/ENTREGA_N.md).
 

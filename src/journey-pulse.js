@@ -26,6 +26,9 @@ export const landDelay=(beat,now,latency=0)=>[beat,now,latency].every(Number.isF
 export const pulseNoteTime=(now,beat)=>Math.max(now+.01,Number.isFinite(beat)&&beat>now?beat:0);
 export const audibleTime=ac=>(ac?.currentTime||0)-outputLatency(ac);
 export const outputLatency=ac=>{const v=Number(ac?.outputLatency||ac?.baseLatency||0);return Number.isFinite(v)?Math.max(0,Math.min(.4,v)):0;};
+// Visual callbacks follow the estimated audible output and expire on a surface change.
+export function scheduleAudibleCue(runtime,time,paint){const state=runtime.S,ac=runtime.ac,mode=state.mode,layer=state.layer,wait=landDelay(time,ac?.currentTime||0,outputLatency(ac)),due=performance.now()+wait;
+ return setTimeout(()=>{if(runtime.S!==state||runtime.ac!==ac||state.mode!==mode||state.layer!==layer||globalThis.document?.hidden||ac?.state&&ac.state!=='running'||performance.now()-due>150||openSurface('.modal:not([hidden])'))return;paint();},wait);}
 // The moment the player heard, on the audio clock: when the finger touched (atMs, from performance.now(); a tap is
 // judged when the finger goes down, not when it lifts) minus the output latency, because the player answers what
 // reaches the ear, not what the clock scheduled.

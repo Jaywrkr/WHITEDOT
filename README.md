@@ -2,13 +2,14 @@
 
 Un cubo, un universo que suena. Tocas a tiempo y el mundo responde con música.
 
-Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.200**, fases K/L/N integradas en main ([estado](HANDOFF.md)). No está publicado en tiendas.
+Repositorio `Jaywrkr/WHITEDOT`. El jugador solo ve **Kubono**; el repositorio, el paquete Android y las claves de guardado conservan WHITEDOT para no perder progreso. Versión del código: **2.3.0-alpha.201**, E1 en desarrollo sobre K/L/N integradas en main ([estado](HANDOFF.md)). No está publicado en tiendas.
 
 ## Empezar aquí
 
 | Si quieres… | Lee |
 |---|---|
 | Saber dónde está el proyecto y qué toca ahora | [HANDOFF.md](HANDOFF.md) |
+| Ver la entrega actual | [Fases E1–E7](docs/ENTREGA_E.md) |
 | Ver las fases N | [Entrega](docs/ENTREGA_N.md) |
 | Revisar el candidato actual | [Cierre N](docs/panel/candidato-n/informe.md) y [dictamen ciego](docs/panel/candidato-n/revision-ciega.md) |
 | Ver el cierre conservando música y mundos | [Entrega K1–K6](docs/CIERRE_K.md) y [auditoría](docs/panel/sesion-6/informe.md) |

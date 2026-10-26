@@ -22,3 +22,13 @@ assert.equal(audibleTime({currentTime:10,outputLatency:.18}),9.82);
 assert.equal(audibleTime({currentTime:10,outputLatency:NaN,baseLatency:.02}),9.98);
 const oldDoc=globalThis.document;globalThis.document={querySelectorAll:()=>[]};
 try {const r={S:{mode:'world',sound:false},MU:{},inWorld:()=>true,journeyGamePulse:()=> 'wait',cubeGlow:0};initialize(r);assert(r.journeyPulse());assert.equal(r.journeyPulseState().action,'wait');assert.equal(r.cubeGlow,0,'a valid musical pulse waiting for the rule never announces progress');}finally{globalThis.document=oldDoc;}
+
+// Delayed world light follows the same output estimate, without stale callbacks.
+const {scheduleAudibleCue}=await import('../src/journey-pulse.js');
+const keep={set:setTimeout,clear:clearTimeout,now:performance.now.bind(performance),doc:globalThis.document};let at=0,callback,delay;
+try {globalThis.setTimeout=(fn,ms)=>{callback=fn;delay=ms;return 1;};performance.now=()=>at;globalThis.document={hidden:false,querySelector:()=>null};
+ for(const latency of [0,.05,.18,.4]){const r={S:{mode:'world',layer:'superficie'},ac:{currentTime:10,outputLatency:latency,state:'running'}};let calls=0;scheduleAudibleCue(r,10.1,()=>calls++);assert.equal(delay,100+Math.round(latency*1000));at+=delay;callback();assert.equal(calls,1);
+  scheduleAudibleCue(r,10.1,()=>calls++);r.S.layer='cielo';at+=delay;callback();assert.equal(calls,1,'old layer cannot light');}
+ const r={S:{mode:'world'},ac:{currentTime:0,state:'running'}};let calls=0;scheduleAudibleCue(r,.1,()=>calls++);at+=delay+151;callback();assert.equal(calls,0,'late callbacks cannot flash');
+ scheduleAudibleCue(r,.1,()=>calls++);globalThis.document.hidden=true;at+=delay;callback();assert.equal(calls,0,'background cannot flash');
+}finally{globalThis.setTimeout=keep.set;globalThis.clearTimeout=keep.clear;performance.now=keep.now;globalThis.document=keep.doc;}

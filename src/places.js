@@ -20,6 +20,9 @@ export const PLACE_IDS=Object.freeze(PLACES.map(p=>p.id));
 // Plan I5 (Jay, 24 October, third panel): ★★ at 75 % on time and ★★★ at 70 % in the Maestro round (they were 85 and
 // 80 %; the two-hour model showed the song stopping after the win for anyone below 85 %).
 export const RHYTHM_STAR=.75,MAESTRO_STAR=.7,MAESTRO_TEMPO=1.1,MAESTRO_GOAL=1.5,MAESTRO_WINDOW=.06,TOTAL_STARS=33;
+// Never round an unmet threshold up to an apparently earned star.
+export const roundPercent=value=>String(Math.floor(Math.max(0,Math.min(1,Number(value)||0))*1000)/10).replace('.',',');
+export function roundTime(ms){const seconds=Math.floor(Math.max(0,Number.isFinite(Number(ms))?Number(ms):0)/1000);return Math.floor(seconds/60)+':'+String(seconds%60).padStart(2,'0');}
 const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
 const point=v=>object(v)&&Number.isFinite(v.x)&&Number.isFinite(v.y)?{x:Math.round(v.x),y:Math.round(v.y)}:null;
 const share=(hits,total)=>total>0?Math.max(0,Math.min(1,hits/total)):0;
@@ -122,11 +125,11 @@ export function initialize(runtime){
   if(runtime.save?.()===false){s.run=r;if(playing===undefined)delete runtime.S.journey[key];else runtime.S.journey[key]=playing;Object.assign(runtime.S,position);if(runtime.MU){runtime.MU.tempoScale=tempo;runtime.MU.onTimeWindow=window;}runtime.toast?.('No se pudo salir. Tu ronda sigue aquí.',{level:2});return false;}
   runtime.narrate?.('abandon');runtime.hud?.();return true;}
  // The round's card: the three stars, what each asks, and what you earned. Silent buttons.
- function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=Math.round(r.onTime*100),mm=Math.floor(r.ms/60000),ss=String(Math.round(r.ms/1000)%60).padStart(2,'0');
+ function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=roundPercent(r.onTime);
   runtime.$('placeTitle').textContent=r.maestro?'Maestro':r.remix?'Remezcla':'Completo';
   runtime.$('placeStars').innerHTML=['★','★','★'].map((x,i)=>`<span class="${own().stars[r.id][i]?'got':''}${r.fresh[i]?' new':''}">${x}</span>`).join('');
-  runtime.$('placeRows').innerHTML=[`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % a tiempo</li>`,`<li>${r.stars[2]?'✓':'·'} Maestro</li>`].join('')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>')+(r.personal?`<li>${r.personal==='changed'?'Tu frase queda':'Tu frase sigue'} en el final de Tu canción.</li>`:'');
-  runtime.$('placeEarned').textContent=`${mm}:${ss} · +${r.sparks+(r.extra?.sparks||0)} ✦${r.record||r.extra?.record?' · récord':''}`;box.hidden=false;
+  runtime.$('placeRows').innerHTML=[`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % / 75 % a tiempo</li>`,`<li>${r.stars[2]?'✓':'·'} Maestro${r.maestro?` · ${pct} % / 70 %`:' · otra ronda'}</li>`].join('')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>')+(r.personal?`<li>${r.personal==='changed'?'Tu frase queda':'Tu frase sigue'} en el final de Tu canción.</li>`:'');
+  runtime.$('placeEarned').textContent=`${roundTime(r.ms)} · +${r.sparks+(r.extra?.sparks||0)} ✦${r.record||r.extra?.record?' · récord':''}`;box.hidden=false;
   // The narrator speaks here, in the card, never during play (plan H5).
   const said=runtime.takePendingLine?.(),nar=runtime.$('placeNarrator');if(nar){nar.hidden=!said;nar.textContent=said?`${said.title} · ${said.line}`:'';}
   runtime.$('placeAgain').onclick=()=>{box.hidden=true;start(r.id,{maestro:r.maestro,from:r.from,remix:r.remix});};runtime.$('placeMaestro').hidden=!own().stars[r.id][1]||r.maestro;runtime.$('placeMaestro').onclick=()=>{box.hidden=true;start(r.id,{maestro:true,from:r.from});};runtime.$('placeClose').onclick=()=>{box.hidden=true;back(r.from);runtime.save?.();runtime.songFinaleCheck?.();};
