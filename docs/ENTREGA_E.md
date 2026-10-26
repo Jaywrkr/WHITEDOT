@@ -8,7 +8,7 @@ Jay autorizó ejecutar las siete fases, sin confirmación entre ellas. La meta d
 | E2 | `excepcional/e2-interaccion` | Implementada; pruebas locales aprobadas | Gestos legibles, cancelación segura y respuestas distintas |
 | E3 | `excepcional/e3-aprender` | Implementada; pruebas locales aprobadas | Ayuda concreta en el momento necesario |
 | E4 | `excepcional/e4-interfaz` | Implementada; pruebas locales aprobadas | Lectura, desplazamiento y salida consistentes |
-| E5 | `excepcional/e5-descubrimientos` | Pendiente | Hallazgo, uso y regreso comprensibles |
+| E5 | `excepcional/e5-descubrimientos` | Implementada; pruebas locales aprobadas | Hallazgo, uso y regreso comprensibles |
 | E6 | `excepcional/e6-recorrido` | Pendiente | Aportación personal y próximos pasos claros |
 | E7 | `excepcional/e7-validacion` | Pendiente | Revisión independiente, regresiones y protocolo humano listo |
 
@@ -42,3 +42,8 @@ Cómo jugar queda visible al abrir el menú, sin desplegar Más. La guía resalt
 ## E4 · alpha.204
 
 Etiquetas pendientes de Tu canción legibles sin convertirlas en premios. Lugares señala y coloca el próximo objetivo dentro de la lista; scroll con teclado y señal discreta cuando queda contenido debajo. Cabecera con cierre consistente en Lugares, resultado y portal. El final5 solo sale mediante Seguir explorando, créditos, Escape o salida programada; el fondo no lo omite. Botones de tarjetas con área táctil44px. Sin cambiar partituras ni estética del mundo. Verificación local:253 suites Node; polish_navigation_smoke.py en cuatro tamaños, interface_smoke.py en cinco (ocho paneles), finale_resize_smoke.py, festival_smoke.py y refugio_lugares_smoke.py aprobados. Auditoría limpia. Cierres, foco, scroll y salida al Mundo comprobados; pantalla física/lector pendientes.
+
+
+## E5 · alpha.205
+
+El libro muestra cuántas voces eliges, cuáles ya están en el jardín y cuándo está completo; acceso directo al Refugio. Función musical distingue el hallazgo de su interpretación en el jardín. Añadir/retirar voces, guardar conjuntos y cargarlos revierten si falla escribir: no anuncian éxito ni consumen tarjetas. Favoritos conserva deliberadamente trabajo pendiente para exportar/reintentar y ahora lo dice dentro de su panel, con acceso al cuidado del guardado. La ayuda de una ronda no ofrece abandonar para seguir a otro destino. Sin cambiar los instrumentos. Verificación local:253 suites Node; collection_commit_smoke.py (añadir/retirar/guardar/cargar con cuota, recarga y formato futuro), favorite_save_failure_smoke.py, experience_garden_smoke.py, card_inspect_smoke.py y rare_cards_smoke.py aprobados. Auditoría limpia. Se conserva el trabajo no guardado de favoritos y las cinco tarjetas en todos los fallos simulados; jardín de versión futura queda de solo lectura incluso al reemplazarse dentro de una partida.

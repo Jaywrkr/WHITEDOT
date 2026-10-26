@@ -665,3 +665,7 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 .scroll-cue{display:block;text-align:right;margin:-4px 0 12px;font:11px var(--mono);color:var(--dim)}
 .rare-notice .rare-dismiss{width:44px;height:44px;top:0;right:0}
 #rareNotice[data-layout="compact"] :is(#rareNoticeOpen,#rareNoticeContinue){min-height:44px}
+
+.rare-primary-actions button[data-garden-selected="true"]{border-style:dashed;color:#fff;opacity:.8}
+.rare-book-head #gardenSelectionCount{display:block;color:var(--dim);margin:8px 0}
+#favRepair{margin-bottom:12px;min-height:44px}

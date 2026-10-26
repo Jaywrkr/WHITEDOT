@@ -36,6 +36,7 @@ try:
    };
   }''')
   page.locator('#quickSave').click()
+  page.evaluate('__testRuntime.openFavorites()');assert 'Guardado pendiente' in page.inner_text('#favNote');assert page.locator('#favRepair').is_visible();page.locator('#journalClose').click()
   assert page.evaluate('__testRuntime.favorites.length') == 1, 'retain unsaved work for export or retry'
   assert page.evaluate('localStorage.getItem(__testRuntime.saveStore.key)===__diskBefore'), 'preserve the last valid disk save'
   assert not page.evaluate('__testRuntime.S.firstJourney.facts.save'), 'a failed write cannot finish the save lesson'
