@@ -1,0 +1,1321 @@
+{
+  "base": "fd5dfc1939a4774714420d2098cfa3a2d38971bd",
+  "revision": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+  "version": "2.3.0-alpha.207",
+  "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+  "runtimeDirty": false,
+  "protectedFiles": [
+    {
+      "file": "assets/fonts/GeistMono-Black.ttf",
+      "sha256": "5e39e016a7f0c8690f01fb1eb779ea71eab866c9670189dbdcd195cf2f049af7"
+    },
+    {
+      "file": "assets/fonts/GeistMono-Bold.ttf",
+      "sha256": "75c0828d5c1ee44b9ef9f4df577bf41595ec362e2ea3f1e558590c9e92c7949d"
+    },
+    {
+      "file": "assets/fonts/GeistMono-ExtraBold.ttf",
+      "sha256": "ac4a97ecf88b14c3284b96ccb1fe39aeb6e627c5e10fb613eb3d378d299b709f"
+    },
+    {
+      "file": "assets/fonts/GeistMono-ExtraLight.ttf",
+      "sha256": "a8d4ab3cbf7e10a2c49cfa147e3cca47aecfc596d8acf9d133f994c7ccb777bb"
+    },
+    {
+      "file": "assets/fonts/GeistMono-Light.ttf",
+      "sha256": "c4096d0a2b0522902b262d1123dee5f9bbd20eb020d1812ca89f2ff11d365b71"
+    },
+    {
+      "file": "assets/fonts/GeistMono-Medium.ttf",
+      "sha256": "c3abe0505993f3b3747ed05fffd124d110b46f96fd8b17ac69b77ad09302b970"
+    },
+    {
+      "file": "assets/fonts/GeistMono-Regular.ttf",
+      "sha256": "a55c1b51cda4afeab9e471e7947b85a20f7c8831d7e6b1470c1b7fbdc0f0f15e"
+    },
+    {
+      "file": "assets/fonts/GeistMono-SemiBold.ttf",
+      "sha256": "44f04aaabab09d4ea9473cad55ca3d0129e885c333dede4bc97328b7c267e450"
+    },
+    {
+      "file": "assets/fonts/GeistMono-Thin.ttf",
+      "sha256": "d64ea850a435389f76a46b36b5cba8e91c757dc0c2b5304de9755acdb5312156"
+    },
+    {
+      "file": "assets/fonts/fonts.css",
+      "sha256": "14579b9fa031a63cf0389ade345189d6c2ef59b93db436a809db4836d1e18b01"
+    },
+    {
+      "file": "assets/fonts/geistmono-OFL.txt",
+      "sha256": "c683bfbcc7e087f5d37a54ef628f10387c451a83ddc459b151403a164ac46c90"
+    },
+    {
+      "file": "assets/fonts/jetbrains-mono.ttf",
+      "sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda"
+    },
+    {
+      "file": "assets/fonts/jetbrainsmono-OFL.txt",
+      "sha256": "b2fe5e8987594e9ffd1d2ca52a2f5d73eb8335243893c5d6254b5ad69269591d"
+    },
+    {
+      "file": "assets/fonts/silkscreen-OFL.txt",
+      "sha256": "86c5e9c9382cdcc5948704fdfe60f2aa164a719746931219a42736ecd9cefbd3"
+    },
+    {
+      "file": "assets/fonts/silkscreen.ttf",
+      "sha256": "c845473330b94c2079ce9af01c51ac8ba2d99c24f4d14c039843bbb8e642ebd8"
+    },
+    {
+      "file": "assets/fonts/sources.json",
+      "sha256": "b419ac2c63498eb1fc46bd56d1ac967d70404f3c0965e09e9d0af8e3e626d851"
+    },
+    {
+      "file": "src/account-entry.js",
+      "sha256": "03979533a52a14a81989a75ed3eed3b5ce009751f06adadd64e3e8538391b142"
+    },
+    {
+      "file": "src/achievement-metadata.js",
+      "sha256": "7ea07ea119368e29e93622b4cc4309a790b45d89dd0f008e13509ff1bb22456a"
+    },
+    {
+      "file": "src/achievements-model.js",
+      "sha256": "cdbd897d53cbbcb7573808fc6275d61713aeea6e180126ccd448668a84c8ef30"
+    },
+    {
+      "file": "src/achievements.js",
+      "sha256": "2d46864a478322c8d71548dc480f0427dbb60ea676fb2d9f2a6db42bbc4e441f"
+    },
+    {
+      "file": "src/adventure-achievements.js",
+      "sha256": "d96e34ba5cc4d34bd866ddff222237800811b30f4e3e94f49fe44f828d36f5e0"
+    },
+    {
+      "file": "src/album-art.js",
+      "sha256": "8809bbb45e8e68c8eeed5e775f61c50c9bae3f57f3cfcbff55b8e9df474ffc2c"
+    },
+    {
+      "file": "src/alive.js",
+      "sha256": "418e016b5d27f1e6a10ee2efbafc179003033c142846580fd6c1d789bd162714"
+    },
+    {
+      "file": "src/ambience.js",
+      "sha256": "fdf3cb3ffd0aebb2d04b0ae824e94dac10ca2a8ab792ccc1b7c1fa1fe4aba170"
+    },
+    {
+      "file": "src/ambient-score.js",
+      "sha256": "1e3ca3e452c43f701d26a5b9545aea0a225ffb9e915cc04213a4a3ddb05714b8"
+    },
+    {
+      "file": "src/anatomy-view.js",
+      "sha256": "612a360b88fe5a18879c427500397e302cff8140741a7ff5e8805f4a95f0f932"
+    },
+    {
+      "file": "src/anatomy.js",
+      "sha256": "2e5a5e7cac94f165349479c0a325fac58f1e13cb88c29c462e6fe25221ddc3f2"
+    },
+    {
+      "file": "src/arrangement-phrases.js",
+      "sha256": "95395f1266b32c8fa47f86aae5087eba2d63e5aed9bf745969160712f40b021e"
+    },
+    {
+      "file": "src/atlas-model.js",
+      "sha256": "4c334a2462c6330c0b4112860727476beb70c9bc570a3ff93c7039317feb0645"
+    },
+    {
+      "file": "src/atlas-play.js",
+      "sha256": "d40ebbf94633702cb3c06877073f1f9356ecb39e15621d51a3fbc12f8a674b20"
+    },
+    {
+      "file": "src/atlas.js",
+      "sha256": "975b480f57c23c9a2df01f921600e9c982751bb379258ac6eb8592aa59561217"
+    },
+    {
+      "file": "src/autopilot.js",
+      "sha256": "a3daaff949cb8cecc1c1a3e2839f4c89f9e890d2390833d79e3b4bb62902e029"
+    },
+    {
+      "file": "src/bar-beat-hint.js",
+      "sha256": "6c5a295e863200aca4dfc86563bf9994189b09aaeb989597c3420e0d53f204f9"
+    },
+    {
+      "file": "src/blobs.js",
+      "sha256": "326d6ab4188ee5f9b9748ab735b66b922dbc68e4a187b6889532237098edbbe9"
+    },
+    {
+      "file": "src/body.js",
+      "sha256": "3545d88526fa255a16bcbd2f1b7534a2bae92fe2664784a6a02203e1431dc4d3"
+    },
+    {
+      "file": "src/box-surprises-model.js",
+      "sha256": "1161538fbd3184e462ef57b6b1c89703cba895e0f89cc0a88b53b93306f10804"
+    },
+    {
+      "file": "src/box-surprises.js",
+      "sha256": "7802fa538fc447af5d5304735bdcf87c3cd88f477844bbc424ce8d42412b464f"
+    },
+    {
+      "file": "src/cache.js",
+      "sha256": "0a775fcd9bbe3da8b8b704f0b7e09e0bf5b49429cfa66cedea12a97656c001b3"
+    },
+    {
+      "file": "src/cajas.js",
+      "sha256": "b501ee808d3b26cf655401aff86ea8eeefb5e928c8af065442455738406cfb2f"
+    },
+    {
+      "file": "src/catalog.js",
+      "sha256": "64f716b971b9f47e930d658d1f8ff91fd9ccd5d406747937c684d16077b3cd01"
+    },
+    {
+      "file": "src/celebration-audio.js",
+      "sha256": "6b19e8113df2dd04742953952501b94b132a1b553a9ae2c0559a488862ab64de"
+    },
+    {
+      "file": "src/celebration-model.js",
+      "sha256": "4f394e7481958dc685d9295087163ffb785beb17123be35f99190190484160ee"
+    },
+    {
+      "file": "src/celebration.js",
+      "sha256": "2794f684ce65475e7313d3d9833234ace7ac0add759bdd42309695f01ec37003"
+    },
+    {
+      "file": "src/chapter-test.js",
+      "sha256": "df5939b507f41a16bfeeee538457920d8da9b78af44c323d2a32fb20ef658dc4"
+    },
+    {
+      "file": "src/cloud-account.js",
+      "sha256": "f9467f46abaf55f29d3e5cb68d34e1f3d71106f14973deb0d576017cfd9d76d3"
+    },
+    {
+      "file": "src/cloud-client.js",
+      "sha256": "388ddf89e9df7ebf30550ed75c9fd4d603abf471e02aca75e0af681287c41476"
+    },
+    {
+      "file": "src/cloud-config.js",
+      "sha256": "d80ffe1fb321e263ed9f9f8877246d38126421904bdb7356b46edee1a04046a0"
+    },
+    {
+      "file": "src/cloud-recovery.js",
+      "sha256": "68d1098c1b29eae2c4a8b893df4fb7bac5d1fbd20383f7cbc448fb94f13cbd66"
+    },
+    {
+      "file": "src/cloud-sync.js",
+      "sha256": "b1cb4bea613b644b0dc8393e8c2d8d7e24b29375915868c386ce1efaa7539176"
+    },
+    {
+      "file": "src/clues.js",
+      "sha256": "aa7c8aadebb9307233ff9374b0c04bee84a7682e1a18c0f854a46805462b1e0f"
+    },
+    {
+      "file": "src/color-safe.js",
+      "sha256": "af85ec1c81737de6c875a29084cdf4389374536a0a6fbd82d844f71cac114603"
+    },
+    {
+      "file": "src/composition.js",
+      "sha256": "2472603434116c8b109887f3858702f5a51b87463bf16948815344cf7502e238"
+    },
+    {
+      "file": "src/connection-groves.js",
+      "sha256": "eb1c6294cd8ba077f0c79cf00b11c9b393f6f4f13b8dbcf4cedaf8465ae53c9a"
+    },
+    {
+      "file": "src/constellation-model.js",
+      "sha256": "a74155a12c7691d2640195f0d6bb4e6dc458357a086c5023ae1a6639050d419e"
+    },
+    {
+      "file": "src/contact.js",
+      "sha256": "3644dec76b16a40f375437dce081117116009a37277a654fc3a6ba55b34e17ef"
+    },
+    {
+      "file": "src/content-contracts.js",
+      "sha256": "03b6f12bfdba82d389ef8c82d3cde145472c214ca2a9275e58ac434a67f5054b"
+    },
+    {
+      "file": "src/content-gallery.js",
+      "sha256": "77090f36223147aa17989267271095e54212e760aeddf452cc825cc425663b14"
+    },
+    {
+      "file": "src/content-manifest.js",
+      "sha256": "f28744daf150e3c7e3218507f2a4800d8a74c5a165808e967645f9d955a7d341"
+    },
+    {
+      "file": "src/continents.js",
+      "sha256": "37b3b152faabd7c90727ea8aa8238f2f866161cd4d9ee3b40dde269245eb619c"
+    },
+    {
+      "file": "src/control-motion.js",
+      "sha256": "b0970996cf32ca6b7086acf2fe7f9a8b352de20ccb139ac122668d6fed11fbaa"
+    },
+    {
+      "file": "src/controls.js",
+      "sha256": "d40b68dc3a177ff112829618521b7043e6e1c054335273d8d30b32aa0f0ce367"
+    },
+    {
+      "file": "src/creative.js",
+      "sha256": "985277da65fe438f096274b425410b90c60e0deb729bb2d6c4777603e608e626"
+    },
+    {
+      "file": "src/crystal-play-model.js",
+      "sha256": "0a48f99c8b0f3f79d81dc47359d59f9e864dd948de9ad7cab70a15d08deab45e"
+    },
+    {
+      "file": "src/crystal-sparks.js",
+      "sha256": "80ce452aae69c8139f89efa3273ac1800f320b303c9063eb8a2a7313325501ff"
+    },
+    {
+      "file": "src/cube-art.js",
+      "sha256": "c88015607906b1fb0f6c5e3c96ac9d434335c278d62918784542763dcb26376e"
+    },
+    {
+      "file": "src/cube-model.js",
+      "sha256": "32ba12dea2e4862be4f2bb8d6d863e725212b8f1808777fcad28fc831864ad3e"
+    },
+    {
+      "file": "src/cube-shop-art.js",
+      "sha256": "d37d6dcd814b1fe71e263df8bdc59d61327fb151aee1fe5f95899880ee900bf7"
+    },
+    {
+      "file": "src/cube-shop-model.js",
+      "sha256": "60c318a6ed9e0b5c8a0441bad188ab7586491ea7e258d988bf641f26ff785710"
+    },
+    {
+      "file": "src/cube-shop-moves.js",
+      "sha256": "b789cf00b59ad9335b3931dffc9cb5077ec58dc67250cabe95fbee499988f0b1"
+    },
+    {
+      "file": "src/cube-shop-preview.js",
+      "sha256": "d04d1935695a3eec6bbb98ef3a9c17c4320b306af8338a8c212d7e5e7d7c5e0f"
+    },
+    {
+      "file": "src/cube-shop-pulse.js",
+      "sha256": "dd398fb6d7240a61e68db4a2e138dc95ecccf7be70ab5d62be4a243feaa5e81f"
+    },
+    {
+      "file": "src/cube-shop-skills.js",
+      "sha256": "4b56bc2dad274e0d3fadba2d7e5c70bfb5c85c0a8a028745016a3359baad0887"
+    },
+    {
+      "file": "src/cube-shop-sound.js",
+      "sha256": "9b9bc103c2ec25c495e3562d4a300193ed6a63dc500dffb5ed29c9ccf5926d58"
+    },
+    {
+      "file": "src/cube-shop-wild.js",
+      "sha256": "4bfc0d80f61b4c7aceaf77040129d8647e252f5872447e6e3b3d30630ee55fb9"
+    },
+    {
+      "file": "src/cube-shop-world.js",
+      "sha256": "22e3223963cfc16d754a64abc59ecb1ae568d556728df5ad8fa39bd9c0507374"
+    },
+    {
+      "file": "src/cube-voice.js",
+      "sha256": "27387561373196cc4c4fc1bf7d71122a25c55f8d5d6f12df9d9aab4fa670c902"
+    },
+    {
+      "file": "src/cube.js",
+      "sha256": "a6539965903571944f1fde1e048cc1564537b19ec66585d1b0d02849603f127d"
+    },
+    {
+      "file": "src/culture-model.js",
+      "sha256": "251d7d08d13cab3b2c982ed7a774f1dcf301171b7ac399501cb2a5b4a1acc386"
+    },
+    {
+      "file": "src/cultures.js",
+      "sha256": "856fa63923d8219f0079eddcffc822883988041f7cb354400ffe4a0d27bca26f"
+    },
+    {
+      "file": "src/data.js",
+      "sha256": "8b5d6c0a09f6d2118803f4ca2427bce8b7df6b951c9c19642fa23a3ecedb5994"
+    },
+    {
+      "file": "src/discovery.js",
+      "sha256": "1898846d61aab4a868073261b88225985712a574a8c0ab019a654da3debf3932"
+    },
+    {
+      "file": "src/distant-colors.js",
+      "sha256": "4f87ee1752254396c84bd0f59a740d8c6c040d7f0d4c2121b67305c84d639e6e"
+    },
+    {
+      "file": "src/ecology-model.js",
+      "sha256": "da5a62721b2756be17ab6cf949335b745403bfccb53da9b200d3df810652dc1e"
+    },
+    {
+      "file": "src/ecology.js",
+      "sha256": "c1bd2e4b81b15189275b2fb4afa91810acf7098a068347bc762bd2343a165494"
+    },
+    {
+      "file": "src/ecoregions.js",
+      "sha256": "b26d2014b5a4bb1b38b0f8d6bcffae686eb7ec144ca2593a3577e55cc07900ae"
+    },
+    {
+      "file": "src/ecosystem-field.js",
+      "sha256": "60fa0fa72f310097483de9e689f5da792c3f93fe94adc3e04f57c829f0e0f78b"
+    },
+    {
+      "file": "src/effects.js",
+      "sha256": "b484dd639021383f55f7174fdcd064bed2dac4da74d48b55280562303a73442a"
+    },
+    {
+      "file": "src/electronic-ensemble.js",
+      "sha256": "a890848fd37a93410d767eaadc04e8338bbc0ff08021a3424ef07fc5365bfb13"
+    },
+    {
+      "file": "src/element-book-model.js",
+      "sha256": "95732b4bb43e917bf8a58bbfe700a550ef8c6fae72b5325f60a8b597a77f79a5"
+    },
+    {
+      "file": "src/element-book.js",
+      "sha256": "e0e4449069a13fa2f23fac6401452cd021353c51b2ff46d02c7af216c7e8480e"
+    },
+    {
+      "file": "src/encounter-depth-model.js",
+      "sha256": "15e8bedaf980236e68679b46e2bd6756750342374c04be7606b8e64de165ca6e"
+    },
+    {
+      "file": "src/encounter-depth.js",
+      "sha256": "54f013d82aa95f68212c2b8a9df4bea4125c1e9d4a95797828ec104c62127b12"
+    },
+    {
+      "file": "src/encounter-families.js",
+      "sha256": "5d3a5af970c626bee40fe04684a9c9e011f66ca513750722edb8d52251fa6d4c"
+    },
+    {
+      "file": "src/encounters.js",
+      "sha256": "261bc966b64998b7341f260a4a8d462cd6ff2c8b2b5ae500e0ddfe47a4c44886"
+    },
+    {
+      "file": "src/error-log.js",
+      "sha256": "9c32cf1b1a4cdcf0fec21837c53c5d976969036b1c7f9c1a1a2fb05618efd046"
+    },
+    {
+      "file": "src/expanded-content.js",
+      "sha256": "b637617c7c36c12be92225e786139fbd39462a8202def1b14725cef22a8cfd8c"
+    },
+    {
+      "file": "src/expansion-music.js",
+      "sha256": "106daa9e9666db6433ea2e73a3d55a0ea59b0f74dd9ed195873918bb4374c3cd"
+    },
+    {
+      "file": "src/experimental.js",
+      "sha256": "476e1ed26387e6421446b348278ed5ca0701f232dbdb8796833e7aefe04e2779"
+    },
+    {
+      "file": "src/exploration-context.js",
+      "sha256": "8092f91de03b7cc6488d64ad5591a3eaaf671c13c1dbd0348dfc545db24c3c0a"
+    },
+    {
+      "file": "src/feedback.js",
+      "sha256": "63813ab8c4e59243af8f08a35b4c98d74318342f6c1e72d763fcc675d5b61553"
+    },
+    {
+      "file": "src/festival.js",
+      "sha256": "b47633cb8e7f06ea9b6e8d10338a2d9253aeac1a87f6172f342e5264ccc67d0d"
+    },
+    {
+      "file": "src/focusui.js",
+      "sha256": "a11e712759a283c1f5d4b24e99d708659c2046cdf8906a6838b63775558f7eed"
+    },
+    {
+      "file": "src/foreground.js",
+      "sha256": "cf87248884920a8ba22061aec118984eb5c7f2fe64a4e9d01f2cc481f86b91c3"
+    },
+    {
+      "file": "src/frame-quality.js",
+      "sha256": "619335eebf0abeafe82852f80a026eed164710adfe95badeeaf8c36aef8ad109"
+    },
+    {
+      "file": "src/frame-state.js",
+      "sha256": "79f25af48c09b30d2fe2ec03571fe1a2dc38c56a867b4ccff886a58b9c3fdf56"
+    },
+    {
+      "file": "src/fxpad.js",
+      "sha256": "370eebfb327daf42ac2dba729e32933757594aca1cc8b05cdad6f063a657d1c7"
+    },
+    {
+      "file": "src/garden-model.js",
+      "sha256": "aa640f2b8802371257d81116d6217000dc8a4aad6f310ba805e7f895fa313817"
+    },
+    {
+      "file": "src/genre-tempo.js",
+      "sha256": "e74ee3450b458ed154040f3322318be3a69b7685249c9c30d6f3149da81340f5"
+    },
+    {
+      "file": "src/glass-music.js",
+      "sha256": "a1c23b7ad71ed3079cba2b71c4fda91ff9a60b37c67a85366b8c1a1470a3fe66"
+    },
+    {
+      "file": "src/glass.js",
+      "sha256": "97696018c5993880107fe547e6e10a30019acd0be51334d0eaf4808ac3d3dd64"
+    },
+    {
+      "file": "src/grammar.js",
+      "sha256": "c219395788b8a5450f2b26c34a25294bfeb692ff41a954d74cf73c04c1aeb907"
+    },
+    {
+      "file": "src/gravity.js",
+      "sha256": "8a524244384294929e041bc6e65dd62c04aa31b065e03a21e99238c15ee5b941"
+    },
+    {
+      "file": "src/habitats.js",
+      "sha256": "eaa3ae9b9864ee6b6fd2a33c7b8c3ffb9d2cfb10c6f7c7508718f83e1e78edc2"
+    },
+    {
+      "file": "src/heritage.js",
+      "sha256": "448e2013567a3747155f481979e6a3267102adcf797bc285c09906eb9ed95518"
+    },
+    {
+      "file": "src/house-audio.js",
+      "sha256": "969360c4ca9eaa38e7e04978fbc4d70eabd04cc91f86974d9eaf0efec9665063"
+    },
+    {
+      "file": "src/house-capsules.js",
+      "sha256": "427c9688813d03aa962d13a1ab2b0ea2bb13a067c2caab772a5bbb52635989e9"
+    },
+    {
+      "file": "src/house-collection.js",
+      "sha256": "9ba3c987b88fe74f1bd5a32cfceb83543ab33cb07f71603dd956d470176827c3"
+    },
+    {
+      "file": "src/house-guide.js",
+      "sha256": "bd9a34cdb53de7f16c986e3c7830709c1903da4f351267666645a0e3c9aa34aa"
+    },
+    {
+      "file": "src/house-model.js",
+      "sha256": "7da3cca796484594b5296a010875ca9ac144dd263ba1518b69838752cf67becf"
+    },
+    {
+      "file": "src/house-view.js",
+      "sha256": "a1e29c98bb1002b00075c7666440ee19f6b34566637a2e68e7023e51bbaca60e"
+    },
+    {
+      "file": "src/identity-play.js",
+      "sha256": "5cee83621be300c208169e4eb3d00627841442627bc11791b05cd317e29f9cad"
+    },
+    {
+      "file": "src/influence.js",
+      "sha256": "827c71ed2f5b76f1cbbe195ea429627993ab039ca7a5add8b9bb53ef64f9592a"
+    },
+    {
+      "file": "src/initiative.js",
+      "sha256": "68fcaa8a271bcd934533ce7ecaad90018ff087e08be80549741e9fdd50c5dc71"
+    },
+    {
+      "file": "src/installations.js",
+      "sha256": "fdf9b534588c9b44198240bbb2247e980934bdbb892315bbc143689389daad8e"
+    },
+    {
+      "file": "src/instrument-techniques.js",
+      "sha256": "0bd0704e9577f22711fad838514d397b1ab6b4e92568af049c24680567a61297"
+    },
+    {
+      "file": "src/instruments.js",
+      "sha256": "75b17092901799ae97d04855aa5373b77abb139baedbc56706f6da5d9d6c10d0"
+    },
+    {
+      "file": "src/interactions.js",
+      "sha256": "c2dadc2ad70256272718d7e896e942eb7c6903f388ebd0c7dd9524d64c1bcf9f"
+    },
+    {
+      "file": "src/jam.js",
+      "sha256": "9dfa4b071a4f2796ea1789df01b15712407c7d22be81fbdae77bde33db255adf"
+    },
+    {
+      "file": "src/journal-model.js",
+      "sha256": "d608c0a562dee09dd9735fd38d9897cc386bd6c1319ea9b9fb97def8d52d5f43"
+    },
+    {
+      "file": "src/journey-chain.js",
+      "sha256": "a57237639445a35510c2614d7d5b7a01c331ecc3171bfd8efdd5969577b6f1b3"
+    },
+    {
+      "file": "src/journey-chapters.js",
+      "sha256": "a4df3a0a504fe070bf0a15e68eefc1e19c992474593bed275123508328ee5227"
+    },
+    {
+      "file": "src/journey-dance.js",
+      "sha256": "c8f773212ce4426b338bc93fe9cd98e5f900b4151b56902c1cec24a7b2522350"
+    },
+    {
+      "file": "src/journey-echo.js",
+      "sha256": "504ec4413a904c2eaa7c525fa3362c70b334cbfe18f14b7433171e489c5cc964"
+    },
+    {
+      "file": "src/journey-games.js",
+      "sha256": "e60ef7cd9449ef1d5b6e8c4b5ff07ab6104de510f56f6ba3c2ead33fcd7a3729"
+    },
+    {
+      "file": "src/journey-guide.js",
+      "sha256": "7e97cebc58db93c308bdb402c902b9effa28491713acd22a8b89666164a4f0b8"
+    },
+    {
+      "file": "src/journey-hint.js",
+      "sha256": "48ebb5444b8995b87de62221d212ca82bf310f0fe493d85051ae7fccd1c35519"
+    },
+    {
+      "file": "src/journey-lasso.js",
+      "sha256": "811455efe49325448330fcc0a1bd772245ba4f1b74e20b9894f6a182f3dbb145"
+    },
+    {
+      "file": "src/journey-mode.js",
+      "sha256": "083d1140f1f087dcbca1eee776b78248693fb2970f426f99327e748194bf2647"
+    },
+    {
+      "file": "src/journey-moments.js",
+      "sha256": "2812dd49c25d2225b17143e5857cbe98cf68b93c8c331c3816d25b359642748a"
+    },
+    {
+      "file": "src/journey-rebuild.js",
+      "sha256": "6ae01724d6d65b933ff894b5e9f8525e971d81b97ac8404f2277878623353182"
+    },
+    {
+      "file": "src/journey-release.js",
+      "sha256": "519ad5b9e5bf430481cd947e63864c9456722527a41d067ea4f7db25a06ea514"
+    },
+    {
+      "file": "src/journey-resonance.js",
+      "sha256": "22ad62f77d62f5d0e9b58fad9d197cb6ad0ba06e1348855ff84c4447c4b0fc69"
+    },
+    {
+      "file": "src/journey-stick.js",
+      "sha256": "f9519669ec412cb4da0774d678ef6254c83d0e02537f7ab17e367eedac2f6c4f"
+    },
+    {
+      "file": "src/journey-surf.js",
+      "sha256": "cca38e5fca9e3a8fdd844a1857c5756414ab642ef8220dd271efffca350bb503"
+    },
+    {
+      "file": "src/journey-victory.js",
+      "sha256": "fc2a4a63e2f6769d0417de992d2fef6f01318e71e74b5442ac2a66a7e4b22184"
+    },
+    {
+      "file": "src/lab-catalog.js",
+      "sha256": "bc7571e50b42513bde02b083236f6a1ae4aff3289b027467d80041ec19b8332b"
+    },
+    {
+      "file": "src/lab-learning-model.js",
+      "sha256": "3ff5389d44382db632e821b293f7ff71bf4e9a1a80eec59706570108afa4930f"
+    },
+    {
+      "file": "src/lab-learning.js",
+      "sha256": "830458688d999f37b4344143342ff5ae48f7bfa7b702992ad8476b4c4dffad58"
+    },
+    {
+      "file": "src/lab-score.js",
+      "sha256": "c44cd48fd874193beaa87a470176fcbdeff90afeea000c3e3ef0886bd83fcc87"
+    },
+    {
+      "file": "src/lab.js",
+      "sha256": "dc73c9ccb3bae70c79dd7c12c7a6d39719b26081cc5189309821856fb640fffc"
+    },
+    {
+      "file": "src/landmarks.js",
+      "sha256": "bbe1b80dd6cbcf6083856f493ca32321e1f6558c04ec0e491e04859110746e57"
+    },
+    {
+      "file": "src/layers.js",
+      "sha256": "9ad94c4374857f0ca2eeccc73a2b2c6113c28dda5fad00e7cbfbb53bab775689"
+    },
+    {
+      "file": "src/listening-reference.js",
+      "sha256": "8db4aa9d99d126e9903e994c59d6c8ce1b6598242ce7914ea49056980ad7264b"
+    },
+    {
+      "file": "src/living-art.js",
+      "sha256": "0a26d72acc273a81d11885e47f857bad10bec6ab38e80d7824f10fb69657bc6c"
+    },
+    {
+      "file": "src/living-behavior.js",
+      "sha256": "f13be39474e10a72ff50d905463882b2737197c4caf8592c7300bfb62648a37c"
+    },
+    {
+      "file": "src/living-buildings.js",
+      "sha256": "08ba8085bd9ecfb66a50e44a4ce9520a8757413048040cfc1d98db31669d126d"
+    },
+    {
+      "file": "src/living-catalog.js",
+      "sha256": "f0961cf1cb426b3d1aa185e34b2cfd71a189e8ee51e02a6c89fd6e613444c966"
+    },
+    {
+      "file": "src/living-composition.js",
+      "sha256": "35c093fe1b13c4e50b225c709fe09801f6165a0ec9cc0cf0a53f0a97a8bebf5f"
+    },
+    {
+      "file": "src/living-discoveries.js",
+      "sha256": "ee6e648fd0afe572ac439154ea54a40edf82764951f20bcd4673121757871772"
+    },
+    {
+      "file": "src/living-ecology.js",
+      "sha256": "d7c28c29621eaa01cf2bbd4a8754d51411e8d8e758a64d13931935ece8c55bb1"
+    },
+    {
+      "file": "src/living-mind.js",
+      "sha256": "d648c8722ec996da763002a2475afa16f59ab706e73db6be9761a41072b93948"
+    },
+    {
+      "file": "src/living-populations.js",
+      "sha256": "a5dc2b4b4fe3deaa28b7ab2cc9a5446eb61b2dee47376391653dfa0ec5de8053"
+    },
+    {
+      "file": "src/living-portraits.js",
+      "sha256": "832face5b1e8fc8e6e9aea0affedccf8df0a467c809fffe52c9c7f360f71450e"
+    },
+    {
+      "file": "src/living-state.js",
+      "sha256": "a6c8308ffaf932665163d0b731628f9022d109a86a3794bceee75cf6b1488616"
+    },
+    {
+      "file": "src/living-studies.js",
+      "sha256": "9bc5240b4a8ffcbfcf5328124759e25db4b90e3be3b38f7912219e59d894c26e"
+    },
+    {
+      "file": "src/living-synthesis.js",
+      "sha256": "f28c45fdcf877773c99f5be5da5b029c7b20f0a3b7351ed0980145125b7d4ffc"
+    },
+    {
+      "file": "src/living-terrain.js",
+      "sha256": "925d53712b7a1bf81c9490d10c6dbcd09f19a3d83957a2abdc6ac7f5a00ae6ae"
+    },
+    {
+      "file": "src/living-voicing.js",
+      "sha256": "2430eac91cd22161938d3ec5df7e7ed03d8fa8df40145e53f11b17eacfeaa647"
+    },
+    {
+      "file": "src/living.js",
+      "sha256": "f02a7fd9401f312cf2f37d9891b1f99d8d76612b2c182bfbb121c792e56bb8ab"
+    },
+    {
+      "file": "src/main.js",
+      "sha256": "80eca89fc7ff3f62f133da0d0c125ac93cf1f15c152832e786f4cb32810fde43"
+    },
+    {
+      "file": "src/map.js",
+      "sha256": "9510f94098ba7ac4997e7c0d2f1506549095e181daea802d1be30ae37afbf90e"
+    },
+    {
+      "file": "src/materia-music.js",
+      "sha256": "f3542cca617f307aeded9b1540a238cb0455b78a081d797a4eafd08e29c37128"
+    },
+    {
+      "file": "src/materia.js",
+      "sha256": "fcc2119a7389f1cd8ccbf19f9fa9c9589a33681bf6971a055cdb8e07b81a57ab"
+    },
+    {
+      "file": "src/memory-model.js",
+      "sha256": "774e8a7437e418c75e17e0b861424b0e1a4bed2e04e5fbd88896bb5907724705"
+    },
+    {
+      "file": "src/messages.js",
+      "sha256": "e833f2839b5e53eebadb824ef99be208693caddd8ac4e4a44ab886d6d1f64671"
+    },
+    {
+      "file": "src/micro-instruments-model.js",
+      "sha256": "300671c9a346c9715c6bfb604e878658b6f89e5339f059891913db3f3f42f6e2"
+    },
+    {
+      "file": "src/micro-instruments.js",
+      "sha256": "9777f43cf261dd4436a8c986ef7d6b690040f346e3bd9b1b388e911ee7f08686"
+    },
+    {
+      "file": "src/micro-synthesis.js",
+      "sha256": "61017ce47f29daf270f6d40e387b99b7914efcaf00da7f0cc96f3caff88359f3"
+    },
+    {
+      "file": "src/mirrors.js",
+      "sha256": "37af773ccdc4ee1837bd19d62aac41fcf2e2a09a4f751721ccd4f545a2460aa8"
+    },
+    {
+      "file": "src/mix.js",
+      "sha256": "3d0307e098d373448ae6247f51827b86888d9cfce132faf7da4f8b479e24546c"
+    },
+    {
+      "file": "src/modular-routing.js",
+      "sha256": "ff94c9e75187435a5711fbe5a9482c4cc7df4cd0769ef89352e2af019dbcd1e4"
+    },
+    {
+      "file": "src/modular-synth.js",
+      "sha256": "77f52f34f0b3741e2edb9ce53fde783d628e839f0d096217e0d93485be347269"
+    },
+    {
+      "file": "src/music-direction.js",
+      "sha256": "acbf98402734cd93f11e6e1c2d5507530baf654a986a28fb2bc8053bb4fac454"
+    },
+    {
+      "file": "src/music-families.js",
+      "sha256": "193bff4f6486f0a740885cf91731bd91612a427ee7799e66a56afdc30369a045"
+    },
+    {
+      "file": "src/music-travel.js",
+      "sha256": "891cd0193fad122fa599de90ab7fad619a43b4fe002a55ca6a1b878042ec9c3f"
+    },
+    {
+      "file": "src/musical-character.js",
+      "sha256": "4c5593c15d7f7357e158c9cddd937cc394b3a6447456f93e0437b3c552c70f44"
+    },
+    {
+      "file": "src/musical-conductor.js",
+      "sha256": "bcc9e08a82880132ee016e4e76d7a4b72f3887f4b9498e063d04b64197546aa5"
+    },
+    {
+      "file": "src/musical-hybrids.js",
+      "sha256": "80a97a64dfe6e457412dbcf885565ddde21fea1bd04e010f160716557794e00a"
+    },
+    {
+      "file": "src/musical-recipes.js",
+      "sha256": "662a6863b4af7a76f095634251641a7a1b67ecb2ceb1f9d07df6afaaabb08f86"
+    },
+    {
+      "file": "src/musical-wonders-art.js",
+      "sha256": "e81f7b96a850d08e9f29d85c4525366d2b60472b04695d993f96e3455c238a8c"
+    },
+    {
+      "file": "src/musical-wonders-audio.js",
+      "sha256": "66416f1ba52402c2a60e086b446bdfd81bf2d1cfc22d889bf7b381afdc20a3e9"
+    },
+    {
+      "file": "src/musical-wonders-model.js",
+      "sha256": "1a4bf8a4187f54888e55596169c64b16222e4197a81090ba1e626735a65fd18d"
+    },
+    {
+      "file": "src/musical-wonders.js",
+      "sha256": "7dcdf219fef7f07eafaa8854427ddf854c00d2fcd53266c0678cfb3a3228cb6d"
+    },
+    {
+      "file": "src/narrator.js",
+      "sha256": "55223fe58223c24126c056255a6b28da5fb47031c275e340a10face1700aa4f8"
+    },
+    {
+      "file": "src/native-visual.js",
+      "sha256": "8170238ab95c314ac3bafa8baf7c0260342421676bf5d6cd87de4de4d59fee03"
+    },
+    {
+      "file": "src/navigation.js",
+      "sha256": "5cc083a4477d4ec43e778a9aefe7204879d8ccbc34633d9614e2ace0c77e9091"
+    },
+    {
+      "file": "src/neighborhoods.js",
+      "sha256": "291c007da156790ea9b40e3e1b73fa152f2c094cde7103e571e5d922140f2d4b"
+    },
+    {
+      "file": "src/notice-lane.js",
+      "sha256": "a8c9b99a87e6adf520c6443f8fb050110069de86ed3cc7d50bd689b556c79670"
+    },
+    {
+      "file": "src/onboarding-model.js",
+      "sha256": "420cac836c544ae156cd5634c02845b8b82652a7c46a772b7b863b03a350318e"
+    },
+    {
+      "file": "src/onboarding.js",
+      "sha256": "5a09055eb28a274c98c4f9eddc2845558970c3670b656d1e63e0f42876b7a0ec"
+    },
+    {
+      "file": "src/palettes.js",
+      "sha256": "6584c4585482f1f972ecf012f5682bf1f6bce373c72130445ef058ce2bd09ff5"
+    },
+    {
+      "file": "src/patches.js",
+      "sha256": "4da6895a48f018e9ede8e1e7fbe0b4575402fcf1abce6089882b488a461c7338"
+    },
+    {
+      "file": "src/percussion-material.js",
+      "sha256": "e664a89d0705a77afaf5a0f42393a55aeac20978103b5724b3d1aa1c110c0e29"
+    },
+    {
+      "file": "src/percussion-model.js",
+      "sha256": "426fcc096215ae06e17991b5b8a5823d651a7bdcb4e7890514f971f60725bf42"
+    },
+    {
+      "file": "src/percussion.js",
+      "sha256": "929e9000aedf88f4240ba67015ab0d4688dde1fe169fb83cbd58d941590a60e1"
+    },
+    {
+      "file": "src/performance-instruments.js",
+      "sha256": "a33a928e35ad2d21a3b1f6c4a9f66626f53f772befce1cb377f6ec36bea795ef"
+    },
+    {
+      "file": "src/performance.js",
+      "sha256": "6c0ec0326a4236419ca2eb75ec6a854604047ab4ea13a381515a4a1bd6d90af3"
+    },
+    {
+      "file": "src/personality.js",
+      "sha256": "fb13744ad208976d5b6394de40bae72c757b27890357d11691d0d19628324583"
+    },
+    {
+      "file": "src/pet-model.js",
+      "sha256": "9937fc7d0af3b4a4144dc55df7131478ed15bfa0fffff10802fabede7630ffb5"
+    },
+    {
+      "file": "src/pet.js",
+      "sha256": "96b8431ab9091dd157d6dffb660818d3db84e06e186e651a4cfd0a79fa25d5e9"
+    },
+    {
+      "file": "src/phenomena.js",
+      "sha256": "eac7189fed1e7d0215e1d7094ca1229034c50159dfeed552b5bcf6c00ba05cfb"
+    },
+    {
+      "file": "src/pixel-life-model.js",
+      "sha256": "deb4ebe2119c23781c8eb5da7529901a8254d76ee2bf342e92ae3ff3d90016a0"
+    },
+    {
+      "file": "src/pixel-life.js",
+      "sha256": "59991b2a9b7bd24491d20a484b210719d996a148412da095e52f34d74bd9e77b"
+    },
+    {
+      "file": "src/places-ring.js",
+      "sha256": "0659d7537cd412e460172d7d19eae639fd9e70054649a529ee9a07cd1d527e22"
+    },
+    {
+      "file": "src/player-profile-model.js",
+      "sha256": "1b1c870bad034cea3e35901fe21965e184a9f90d68ea8ed12f292125103b5205"
+    },
+    {
+      "file": "src/player-profile.js",
+      "sha256": "8db2b4b2fb134cf06a0b89a12a5d6b8346c53fb77abd43591e2c3335d0cfecfb"
+    },
+    {
+      "file": "src/playtest.js",
+      "sha256": "25df9e010b59c3e4b887f7862dd3c0e8af24b641fe6741b8a4387bf498dfd94a"
+    },
+    {
+      "file": "src/playthings.js",
+      "sha256": "fd6bd7b6f70437e33837e203e3d91751b86d920d6e9707b3614d16634ac1859f"
+    },
+    {
+      "file": "src/pockets.js",
+      "sha256": "92a1781428cf60daf6f1f60656316ec80a1e97b563682d2c4bbfd0e76ff7ac68"
+    },
+    {
+      "file": "src/power-clock.js",
+      "sha256": "49bd0d6037d18022aefdff6c57b96342eea3a17aa7fe98e071dadbc05ea91e86"
+    },
+    {
+      "file": "src/practice-travel.js",
+      "sha256": "ba915db3a4dbd8c5d6c89a0ac744fc95211e1734245fb48780234d11ab82b57b"
+    },
+    {
+      "file": "src/production-experiments.js",
+      "sha256": "cad9b2156498b058da5f371d3a9dae1eadcd09bcc04188423bb9748bdc0e929e"
+    },
+    {
+      "file": "src/production-identities.js",
+      "sha256": "babfecadb8e5e676fd7573b09b464c322d1738bcdb3aaafcaf4990b3591465a5"
+    },
+    {
+      "file": "src/progress.js",
+      "sha256": "30a044b5b99680e48830d4b3d40cdf3f92490363db8921d23334fb381224a6b7"
+    },
+    {
+      "file": "src/pulse-forms.js",
+      "sha256": "2e3dbf4db8bdd3ab032c8e524b9f6c5293c090b14c3d2e42ea2a5187808b8736"
+    },
+    {
+      "file": "src/pwa.js",
+      "sha256": "2aa938bea7b6c89da3836bccbbb4f9c318f9c23a8927062b0576f9852ce44ace"
+    },
+    {
+      "file": "src/quietud.js",
+      "sha256": "95d92659a3036e07168dce7363bf308de9958d8fabdc7b8d8b41c0b49be08912"
+    },
+    {
+      "file": "src/radio-reference.js",
+      "sha256": "4835e7dffb8fb25a90a6031a6dc1b2bf7cf58a28242dca6171ba5fa742498e93"
+    },
+    {
+      "file": "src/radio.js",
+      "sha256": "9569ad852cfeb0046e316e2695507f27f31047b60dabf4107af64593b15e8aa2"
+    },
+    {
+      "file": "src/rare-card-art.js",
+      "sha256": "0be7ef25979c1e76f23bb2bf937af466dead1b09790f3f8a3aff242721e1f7ab"
+    },
+    {
+      "file": "src/rare-card-model.js",
+      "sha256": "594bc5bfa9fc85e712e9889928004213f1f51c04007ebf7540077f8b76c8e7ce"
+    },
+    {
+      "file": "src/reactive-ecology-model.js",
+      "sha256": "d7ae68003fc0bb450fb22e6c9e9e4bd4cfbdc3fad7bab3677781d1d94e973f98"
+    },
+    {
+      "file": "src/reactive-ecology.js",
+      "sha256": "33dec116527186dd94aea9a85c5dbe42ebddeab475edab5edd3f4bf4305b4700"
+    },
+    {
+      "file": "src/references.js",
+      "sha256": "1a5d0552a2a50a3fdcdda4b7f25234029d1d45f1c11701f9815604c43b27f37d"
+    },
+    {
+      "file": "src/regional-phrases.js",
+      "sha256": "0ff5b3ce6e6faf4832257eeaa43b47480b7e63d6b933a80d5311121c82225bd7"
+    },
+    {
+      "file": "src/release-model.js",
+      "sha256": "b0ef2460ad1aedc0b558818f2407aeab624c69ef81c3515d30aac3f83a633eaa"
+    },
+    {
+      "file": "src/release-ui.js",
+      "sha256": "983a5aec8563c273c798808b49767d6754a979a73503ad4bf2ab348fd2733262"
+    },
+    {
+      "file": "src/relics.js",
+      "sha256": "5e55963e6e5d62a557bf8195074b627ac9baeb190909a3776988e8b26ebb5ee2"
+    },
+    {
+      "file": "src/render.js",
+      "sha256": "396d0f2925e75cc26f83c1b12eb2080b59dccb9c0298532fbb8f412463dc395a"
+    },
+    {
+      "file": "src/return-entrance.js",
+      "sha256": "9c38634c34aec507ef65589d780208efb6d7edc09d081e9d06f2e95fe46ae792"
+    },
+    {
+      "file": "src/rewards-model.js",
+      "sha256": "c99d6f211dc798bd0cb77b7ddc7c4c0bb0ee4d1eba779708d850be4b5142b2d2"
+    },
+    {
+      "file": "src/rewards.js",
+      "sha256": "d91c90c3d6e4055ff08af9435f65cd284df4dc29e7a86e7065dae99de069124f"
+    },
+    {
+      "file": "src/rhythm-calibration.js",
+      "sha256": "2b44beea84c16e2cddda0f2b10e756a4f90f510a45ef03c0ddfc772bf3fd1fa1"
+    },
+    {
+      "file": "src/rhythms.js",
+      "sha256": "0617c81091157c4660a216f563d81694bb6ddf1c891c9f372ff70918eab57d98"
+    },
+    {
+      "file": "src/save-store.js",
+      "sha256": "1452fc259d6bf6394d0819da262ec43672dfd9b43b240bf347bd30e91910b6cd"
+    },
+    {
+      "file": "src/save-tools.js",
+      "sha256": "129a7e9f495851943e5c08b8b9f034e89abce7b265d31f1cf239de5a77810579"
+    },
+    {
+      "file": "src/scanner.js",
+      "sha256": "4d0fa3a54155dc8eb666707b0210309cd38c9fd85151635192de869516ecb1fc"
+    },
+    {
+      "file": "src/sculpture-totems-art.js",
+      "sha256": "c35fb0bb583d126a35f9035d3e6229d5ad2e7ac9a37296fe0d15d2ab6e119ae1"
+    },
+    {
+      "file": "src/sculpture-totems-model.js",
+      "sha256": "d727289a9ec5949a6c06f24e261c370681437158c0ef5d13a03e4b0c928befce"
+    },
+    {
+      "file": "src/sculpture-totems.js",
+      "sha256": "bdb44dce37a28602595883ac5d17928692a0acd6c1676458151cd6188fd79dcd"
+    },
+    {
+      "file": "src/seeds.js",
+      "sha256": "cde5c7a74831592b8ab41c93b7559962d05fc3c1907f1494bc6156122963e978"
+    },
+    {
+      "file": "src/session.js",
+      "sha256": "13cccc5587c92f9f42db29489bdd6e8d3c4ed6c0eb3b703f5c731d38c54888b8"
+    },
+    {
+      "file": "src/share-tools.js",
+      "sha256": "4b3d86fe7a22d3f8923116ab20947cd11065b0ee2ab83b108134a94161a1afb6"
+    },
+    {
+      "file": "src/sharing.js",
+      "sha256": "ed5f294657ef75f2b713aa93d1c62ecc0d08e4ceda6a61d011d0b1f4cf99a7e1"
+    },
+    {
+      "file": "src/song.js",
+      "sha256": "b65771013cc88ed536102d7bd9afb8c045ae9257cfb2f66150dfe37205db627b"
+    },
+    {
+      "file": "src/spark-rules.js",
+      "sha256": "04d58711f86625df98c571004eb4527793f0f1e108f873a7521b7a933e000b6a"
+    },
+    {
+      "file": "src/sparks-model.js",
+      "sha256": "0f7bc2fc85cb9af92daf012b48a26e0a939ee2695616f54a75b6a8c46443cd5e"
+    },
+    {
+      "file": "src/sparks.js",
+      "sha256": "78e6946699d0c10541e8ddc72bb53092fe2249696ed9da2b63751fd6f83737a1"
+    },
+    {
+      "file": "src/spatial.js",
+      "sha256": "df07931e53bc4b29fbe53ee916fa34d62c5b0c903c3f8d271b463b72758e9526"
+    },
+    {
+      "file": "src/studio.js",
+      "sha256": "ff105158ebf1c1a5eeac25c9225073c32caee2fe96fa6d03a385641ea2f06a8e"
+    },
+    {
+      "file": "src/superbiome-fusion.js",
+      "sha256": "ca8debd86c2193284539c37499fa70aefb61d5914ef76182a51412a7d7a3001d"
+    },
+    {
+      "file": "src/superbiome-journal.js",
+      "sha256": "f2771fedd828c5ec395b7671ebd36d4f269e84eb1f3a711890e10f4423089ef4"
+    },
+    {
+      "file": "src/superbiome-rarity.js",
+      "sha256": "c9e0dadd0efb9d30dce7326716401d9645e98ddb9fc4a2ce990bcd9e151a1500"
+    },
+    {
+      "file": "src/superbiomes.js",
+      "sha256": "121f81a34741be424fdd3ef89906890df2f3803dc1cf792c8dd7b36a49b44c95"
+    },
+    {
+      "file": "src/synth-colors.js",
+      "sha256": "3030c6f2364ec09be75f806983245c95b6f287ad2b621367f4291cb41cf676ab"
+    },
+    {
+      "file": "src/territory-journey.js",
+      "sha256": "e60efd3e8105ff616aa2e2e31c9df625f045be199dbe8f3d75a2fd3c0430ffaf"
+    },
+    {
+      "file": "src/territory-presentation.js",
+      "sha256": "2d3547e99053d4b843844ac6c4f8cc623895fdd00cc15c9c0e1e537f4971af4a"
+    },
+    {
+      "file": "src/territory-transition.js",
+      "sha256": "12c4e4f026e5671c484a3a110e4979117ed53a2ef03884be61b26d9cb0075b1a"
+    },
+    {
+      "file": "src/theme-key.js",
+      "sha256": "ee8344b56add50dae48f4edcfd19e0651ba7e78a09951b74bee2ae19c3d85f23"
+    },
+    {
+      "file": "src/ui.js",
+      "sha256": "98cef080c0e5ed650a923992b657e859455126c1954aa8dd9e31679dc53c6cd7"
+    },
+    {
+      "file": "src/universe-activities-art.js",
+      "sha256": "498d3f7856a266435f86ca97a27a65e58145bd786afab4edcc3b181d6f989ece"
+    },
+    {
+      "file": "src/universe-activities-model.js",
+      "sha256": "b0202be595c324cc12ed832c49c7183aab26641f096ab3d866cccd56bceec4e6"
+    },
+    {
+      "file": "src/universe-activities.js",
+      "sha256": "6dd7f365f898093eb67a2a39b6133c5b7176cf51ccb24dc3b37956e2b0365b47"
+    },
+    {
+      "file": "src/universe-layers.js",
+      "sha256": "de05e6ef6e4e7461550577d00ac6ab30d79ebd40293634cf45581e1dbb913f4c"
+    },
+    {
+      "file": "src/universe-mischief-art.js",
+      "sha256": "cf9638395705e76d7922ed45e329c8502383deeb1661f867eb5ccad202736b07"
+    },
+    {
+      "file": "src/universe-mischief-model.js",
+      "sha256": "d4afdb55e13b97471d664760ec1b6f0bf333d412473a4fb3ab8da7faba38e697"
+    },
+    {
+      "file": "src/universe-mischief.js",
+      "sha256": "b85b837de20f3d65709b87b6c786ed2c2a99325d3b5ca09b6632f4726a470ee4"
+    },
+    {
+      "file": "src/universe-rare.js",
+      "sha256": "b389e0378ae2450da9a546d17e28f47c3ea560cbcca7408c41d5d9a125cc1b41"
+    },
+    {
+      "file": "src/universe-regions.js",
+      "sha256": "f76a8fe077ab83f54d6aea9664c5f1499cc57e8efa61b65ad0953befa93adac5"
+    },
+    {
+      "file": "src/universe-texts.js",
+      "sha256": "c6788b153f03541d4df0fcde9575d1f8f9d3f214a666d7861720daa998d90bd3"
+    },
+    {
+      "file": "src/vida-music.js",
+      "sha256": "abebaec7707c8dc94b74f9f7cbdee36c466f8baf46745d0c3adf0887da771b85"
+    },
+    {
+      "file": "src/vida.js",
+      "sha256": "8ad81602e28d0cc319df16cd1fbccf977eb68589672a4bb1311aeb5782035ba9"
+    },
+    {
+      "file": "src/visual.js",
+      "sha256": "7603533e00ca6a1e7a1c0666f8674d20143827c562bfff40619913b8f2999f6d"
+    },
+    {
+      "file": "src/vj-art.js",
+      "sha256": "fa233099c58aa3702bca52e66c7b082ce105170f4478f7f355ae454ee9d507ce"
+    },
+    {
+      "file": "src/vj-model.js",
+      "sha256": "b316b7ca348d219540b977be189144c165fed086b59085229ad32875e2dbb8f9"
+    },
+    {
+      "file": "src/vj-world.js",
+      "sha256": "d1bf6cd762bbe4e1be3f57808e0082fd40360e573503bbcc6292f08ca7c3d45c"
+    },
+    {
+      "file": "src/voice-expression.js",
+      "sha256": "7fcd6cfb9372bcf87c3b07f1b950f35ebe5d2ee2f7e0e1e6dcaec179aa13c38f"
+    },
+    {
+      "file": "src/voices.js",
+      "sha256": "12bed8c3fc2d5fcbff34bcad9a13255ad1dd5e928434e35881ef5aaa988f9c7c"
+    },
+    {
+      "file": "src/walker-forms.js",
+      "sha256": "7139d151c8e01e264df56477d49ac4e4a58359e112825c73a42406e890661af2"
+    },
+    {
+      "file": "src/wardrobe-model.js",
+      "sha256": "c6d106124e68ac42522cf2d15c107ef3559d9ef851bd530d8effa3b744640fe9"
+    },
+    {
+      "file": "src/wild.js",
+      "sha256": "05cb468ddfd6f427e013f040460e8bcc04ac8138a08b4a7689e80dcd41b03c32"
+    },
+    {
+      "file": "src/wonders.js",
+      "sha256": "459d68e970407f3d2a92f5b7c3cd02610bef2907852272d067c900d90677cf8c"
+    },
+    {
+      "file": "src/world-camera.js",
+      "sha256": "4e5e280fc6e7c41ad703fbf5e98e106c517df7a2247af582a23c1f0d7673cd8c"
+    },
+    {
+      "file": "src/world-families.js",
+      "sha256": "9f5481b53bb287ca9b4860799217c026b47f6b8e0ad18233186c4bdb1744c2da"
+    },
+    {
+      "file": "src/world-family-art.js",
+      "sha256": "362cf9ec6f3086ea7d37da141ce56477dde1cfe53366430847d55fcc582a0472"
+    },
+    {
+      "file": "src/world-fauna.js",
+      "sha256": "86ef44933f73a9eed6fab889c62793f3d17bc09ac48f160827da692056a8f96a"
+    },
+    {
+      "file": "src/world-happenings.js",
+      "sha256": "e04bec0e32fe164681d5feebb50621a10376f7171f3613be7df0c9c6b73ff378"
+    },
+    {
+      "file": "src/world-identity.js",
+      "sha256": "dc37421ad6256a07ad8ccd39e567cc6afc7c7c7dadb745e3e3b3e4600127c668"
+    },
+    {
+      "file": "src/world-light-model.js",
+      "sha256": "b67bd21d95256316d74b1d438bf4bff64114424fe06f7898c4e65201f9d7cfc2"
+    },
+    {
+      "file": "src/world-light.js",
+      "sha256": "26d0a9eaf979d754f9805e58b78e25c7c21464a43a6b952d85cd125ccd7c8226"
+    },
+    {
+      "file": "src/world-memory.js",
+      "sha256": "2a5af9c517a53d0eb434382fcd49b6ebdb8d827aa3a89ce3c28db7f25dc2b52a"
+    },
+    {
+      "file": "src/world-music.js",
+      "sha256": "76b605233e62bc8efee820f5db46199d2c2b8db5c150bbfe81b008dc60885211"
+    },
+    {
+      "file": "src/world-sheet.js",
+      "sha256": "5da9a778a845103276dab1333172bad71f9d2689945640de57fa6fc96a9ab769"
+    },
+    {
+      "file": "src/world-visibility-model.js",
+      "sha256": "4bc3c9885e8f4daf2673d5aedefe82820c0d226beda11797f5e1df3d4cb458ff"
+    },
+    {
+      "file": "src/world-visibility.js",
+      "sha256": "5500c8c21e0ca76e60fbe6783b500f1430536e74463c12025ae9535b4503f46a"
+    },
+    {
+      "file": "src/world-weather.js",
+      "sha256": "273bcece35db0c783ff22eb550a946637dec62de96a7e868621a4df6f89df720"
+    },
+    {
+      "file": "src/world.js",
+      "sha256": "6395892554512958758ea74c74176bfc34763c0fd1cf5ca86a1c7da06c86f69e"
+    },
+    {
+      "file": "src/wow-feel.js",
+      "sha256": "fa0b5bd170023f267ed40f3c26f464860d1b3b4d4daf0f4ac312dc7599f5518a"
+    },
+    {
+      "file": "src/wow-memory.js",
+      "sha256": "c645eb69ab5f71d57df60b02ecf5ab652961b703fca5984110934ee52fd01384"
+    },
+    {
+      "file": "src/wow-model.js",
+      "sha256": "cab74ab8cda4e0e70174959aaea2712b25fa829dd615a0a5f5511848a55b66e4"
+    },
+    {
+      "file": "src/wow-ui.js",
+      "sha256": "e4ee48157aaa5af4f703cfabe72f5983314a215158aba18ae3b883b766cd3c04"
+    }
+  ],
+  "contracts": [
+    {
+      "label": "complete final11 plan, notes, harmony and events",
+      "file": "src/song-stage.js",
+      "sha256": "ed5e5481eb3232adeadd8d69ac39b2cfc0665f15f2287fabfb6845b4da38bccd"
+    },
+    {
+      "label": "complete final5 score, arrangement and audio output",
+      "file": "src/journey-finale.js",
+      "sha256": "2642810329c4dc2fa184767e6d34978dfd9634a32bf2eb46a0a8ddcc69442255"
+    },
+    {
+      "label": "pulse judgement, note selection and recorded timing",
+      "file": "src/journey-pulse.js",
+      "sha256": "7af20d254f8faaa0fa20e600db9aa30d4829da8f56c9c1c47256f74ec98d5250"
+    },
+    {
+      "label": "garden positions, rules, growth and save normalization",
+      "file": "src/journey-garden.js",
+      "sha256": "c4d4f3a2cd50037bca2941b837668845bec27df22eff50f0ae4c3f51de6135a0"
+    },
+    {
+      "label": "star rules, migration and existing open places",
+      "file": "src/places.js",
+      "sha256": "7809cce3a1ed67311aa4471352816d71454ff09f10c9fbc9716673c696e6c2fd"
+    },
+    {
+      "label": "round execution, reward, restore and failed-save rollback",
+      "file": "src/places.js",
+      "sha256": "c1ceca28d913628747552851cc1b99ccc1202b90560e08bc8a3b521c81a46962"
+    },
+    {
+      "label": "successful card voices, instruments, timbres and garden score",
+      "file": "src/collection-garden.js",
+      "sha256": "15ed9b0fee59ec0a6ce0c2d13f4d75726aabefeb1e7d6208e0ce4b34e78a3e31"
+    },
+    {
+      "label": "all rhythm patterns, judgement grid and timing rules",
+      "file": "src/journey-rhythm.js",
+      "sha256": "9705da3ed4c62be78af0498425e5564754d070093a04a99aa9bb8d28f995c8fd"
+    },
+    {
+      "label": "Refugio object proximity and audible brush scheduling",
+      "file": "src/house.js",
+      "sha256": "ed2945479a776ea4c30170ec47d7e898300e7095207f12e1eee6f882855edc5b"
+    },
+    {
+      "label": "Refugio pulse notes, proximity, ordering and sound scheduling",
+      "file": "src/house.js",
+      "sha256": "8fc5fb8bad88dd6a73d078baf272e56eb1e1bf19cac3b078606f68c0dbcf8738"
+    },
+    {
+      "label": "rhythm demonstration audio identical beyond visual history queue",
+      "file": "src/journey-rhythm.js",
+      "sha256": "c07fc209d2a21ea7b4ef239369244455fff5347d0be2391abe5c115b229b92f7"
+    },
+    {
+      "label": "finale audio scheduling identical beyond visual history queue",
+      "file": "src/song-stage.js",
+      "sha256": "7a5cac9bca9ea645904fa759336fe23f01a01b557df03fd86952c0608a752583"
+    },
+    {
+      "label": "audio engine unchanged beyond six visual-only replacements",
+      "file": "src/audio.js",
+      "sha256": "118d425f1a81552350a74bcfc40ba0e7bf4bdb2613d5f11e408a34a4b9df23bc"
+    }
+  ],
+  "scope": "Byte preservation and exact protected musical functions; no perceptual listening or human acceptance implied."
+}

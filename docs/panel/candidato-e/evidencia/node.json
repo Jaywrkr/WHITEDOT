@@ -1,0 +1,12 @@
+{
+  "command": "npm test",
+  "status": "pass",
+  "exitCode": 0,
+  "suites": 254,
+  "node": "v24.19.0",
+  "runtimeCommit": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+  "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+  "evidence": "logs/node.log",
+  "sha256": "f3bfa58b3b910c94e78af55faadf0f53febabd781ca9499c0ec20ab05488f399",
+  "recordedAt": "2026-10-26T04:50:21.210137+00:00"
+}

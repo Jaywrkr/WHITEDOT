@@ -1,0 +1,56 @@
+{
+  "revision": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+  "version": "2.3.0-alpha.207",
+  "runtimeDirty": false,
+  "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+  "capturedAt": "2026-10-26T04:46:03.586785+00:00",
+  "viewport": [
+    390,
+    844
+  ],
+  "scope": "Local scripted fixtures; normal hostname gate and webdriver=false; no human or physical listening claims",
+  "captures": [
+    {
+      "file": "21-lugares.png",
+      "query": "?anillo=1",
+      "forcedPanel": "lugares",
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "32-libro.png",
+      "query": "?anillo=1",
+      "forcedPanel": "cards",
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    },
+    {
+      "file": "34-favoritos.png",
+      "query": "?anillo=1",
+      "forcedPanel": "favorites",
+      "state": {
+        "mode": "world",
+        "chapter": 6,
+        "dev": false,
+        "audio": "running",
+        "width": 390,
+        "height": 844
+      },
+      "pageErrors": []
+    }
+  ]
+}

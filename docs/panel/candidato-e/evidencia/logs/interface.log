@@ -1,0 +1,5 @@
+PASS UI 320×568: eight real sheets, optional account entry available in local mode, touch targets, no overflow, summary/focus return, silent settings and keyboard effects
+PASS UI 360×640: eight real sheets, optional account entry available in local mode, touch targets, no overflow, summary/focus return, silent settings and keyboard effects
+PASS UI 390×844: eight real sheets, optional account entry available in local mode, touch targets, no overflow, summary/focus return, silent settings and keyboard effects
+PASS UI 844×390: eight real sheets, optional account entry available in local mode, touch targets, no overflow, summary/focus return, silent settings and keyboard effects
+PASS UI 1280×800: eight real sheets, optional account entry available in local mode, touch targets, no overflow, summary/focus return, silent settings and keyboard effects

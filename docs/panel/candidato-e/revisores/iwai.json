@@ -1,0 +1,46 @@
+{
+  "lens": "Iwai — simulated musical-toy, discovery and collection-garden lens; not the named creator's opinion",
+  "scope": "Independent blind review of candidate 2.3.0-alpha.207, final runtime revision 3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58. Scoped source review covers rare-cards.js, collection-garden.js, journal.js, house.js, supporting garden-model.js/house-audio.js, and the two named smoke scripts as text. Verified transactional garden edits and the final collection hierarchy in source. Inspected fresh /tmp/e7-capturas-cierre/32-libro.png and its manifest (runtimeDirty=false, digest 14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062). Earlier inspected 31-guia-jardin.png, 32-libro.png and 33-resultado.png from the separate 21-capture e8368253 snapshot; those are historical observations within this review, not captures of the final runtime. No execution, listening, repository edits or delegation.",
+  "scores": {
+    "visual": 7.5,
+    "audio": null,
+    "creativity": 8,
+    "sensation": null,
+    "cohesion": 7.5,
+    "polish": 7
+  },
+  "scoreBasis": {
+    "visual": "Narrow static-image judgment: fresh 390 × 844 collection screenshot now shows the first card name, portrait, musical ability and garden selection action within the opening viewport. Compact search/type controls, collapsed secondary filters and the full-width voice count establish a clearer sequence from collection to playable voice. The disciplined black/Geist Mono presentation and restrained card accent support this clarity. The 0.5 revision follows this directly observed hierarchy change; house layout, animation and uninspected final views remain ungraded. Earlier guide/result observations belong to e8368253 only.",
+    "audio": "Perceptual audio unobserved. Technical inspection confirms instrument/technique mapping and gesture/sequence scheduling, but is not listening.",
+    "creativity": "Source-defined interaction concept only: a located discovery becomes a retained card, a playable house object and one of four combinable garden voices; three distinct roles plus a saved set can produce a following musical sprout (collection-garden.js:8-10; garden-model.js:13). This is a meaningful reuse of a discovery across play contexts. Surprise, legibility and delight in actual play remain unobserved.",
+    "sensation": "Unobserved: no hands-on session or perceptual sound evaluation.",
+    "cohesion": "Source-defined discovery-to-book-to-refuge loop: provenance, musical roles and reusable voices share retained ownership. The final book leads with the card and moves its refuge link after the cards (rare-cards.js:81-98; journal.js:109-114). Cross-modal timing and perceived unity were not observed. Score remains 7.5.",
+    "polish": "Static interaction, persistence and limited screenshot scope only. The earlier direct-manipulation rollback issue remains resolved in inspected source: house.js:18-19,111 snapshots the arrangement, saves once, restores on failure and gates success feedback. The earlier collection hierarchy issue is also resolved in fresh screenshot 32-libro and source. Coordinator-reported tests cover entry at four sizes plus role filters, source indices, focus, storage and dragging; this reviewer did not execute them. Score remains 7 because full runtime, listening and visual polish across the final experience are unobserved."
+  },
+  "strengths": [
+    {
+      "evidence": "src/rare-cards.js:54-60,81-89,97; src/collection-garden.js:15-18",
+      "assessment": "Discoveries retain their place, provenance and ownership while gaining another use as musical voices. Collection does not itself start audio or open a modal; the book offers an explicit add action and selected/full states. This supports exploration without turning every find into an interruption or expenditure."
+    },
+    {
+      "evidence": "src/collection-garden.js:8-10; src/garden-model.js:7-13; src/house.js:46-47,118-121; src/house-audio.js:17,21",
+      "assessment": "The garden has a concrete toy mechanism: cards determine instruments and roles, objects can be moved and triggered, walking brushes nearby voices, and a pulse answers with up to four nearby objects. A multi-role saved combination can create a moving musical sprout. These are source-verified mechanisms, not claims about how enjoyable they feel or sound."
+    },
+    {
+      "evidence": "src/collection-garden.js:16-20; src/house.js:18-19,111; tests/collection_commit_smoke.py:33-45",
+      "assessment": "The final direct-manipulation path now shares transactional persistence: failed garden movement or drag-out restores the previous arrangement and suppresses success feedback. The smoke script now uses pointer gestures to assert both failures and verifies a successful position after reload. The coordinator reports PASS; this reviewer verified source and test text only."
+    },
+    {
+      "evidence": "/tmp/e7-capturas-cierre/32-libro.png; src/rare-cards.js:81-82,97; src/journal.js:110,114; styles/estilo-j.css:240-241",
+      "assessment": "The final collection opening now presents a complete named musical discovery and its selected garden action in the first 390 × 844 viewport. Search and type share a row, secondary filters collapse, and the selection count reads on one line. This resolves the observed hierarchy friction without adding a new control."
+    }
+  ],
+  "findings": [],
+  "limits": [
+    "Fresh final-candidate visual evidence inspected by this reviewer is only /tmp/e7-capturas-cierre/32-libro.png. The fresh manifest contains three captures; the other two were not inspected. The older 21-capture set identifies e8368253, and only its guide/book/result images were inspected earlier. Those older images are not represented as current final-runtime evidence.",
+    "Neither screenshot set shows the house garden itself in this review. Both manifests describe local scripted fixtures; forced labelled cards do not establish natural rarity or human experience.",
+    "Perceptual audio and sensation remain null. No browser, Node tests, audio renders, listening or git mutations were run by this reviewer. Test PASS statements are attributed to the coordinator, not independent execution.",
+    "The supplied experience smoke intercepts houseAudioCue (tests/experience_garden_smoke.py:20-21). A scheduled technical event cannot establish audible quality, perceived causality, pleasure or sensation.",
+    "No natural rarity, unforced discovery, human usability, device listening or longitudinal collection behavior was observed. The approved black space, Geist Mono, small cube, sequential ring unlocking and slow transitions are constraints, not defects."
+  ]
+}

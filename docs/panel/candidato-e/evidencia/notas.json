@@ -1,0 +1,830 @@
+{
+  "scope": "Independent simulated lenses, source and scripted screenshots; not real creator opinions, listening, human acceptance or an overall quality certification. Scores retain each reviewer stated scope.",
+  "runtimeCommit": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+  "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+  "overall": null,
+  "reason": "No perceptual audio or sensation observations. Do not average unobserved categories.",
+  "axes": {
+    "visual": {
+      "mean": 7.642857142857143,
+      "reviewers": 7,
+      "totalReviewers": 10
+    },
+    "audio": {
+      "mean": 7.0,
+      "reviewers": 1,
+      "totalReviewers": 10
+    },
+    "creativity": {
+      "mean": 7.75,
+      "reviewers": 10,
+      "totalReviewers": 10
+    },
+    "sensation": {
+      "mean": null,
+      "reviewers": 0,
+      "totalReviewers": 10
+    },
+    "cohesion": {
+      "mean": 7.8,
+      "reviewers": 10,
+      "totalReviewers": 10
+    },
+    "polish": {
+      "mean": 7.4,
+      "reviewers": 10,
+      "totalReviewers": 10
+    }
+  },
+  "reviewers": [
+    {
+      "file": "../revisores/chen.json",
+      "lens": "Chen — lente simulada de comprensión, atención dirigida, guía y progresión; no representa la opinión real del creador.",
+      "scope": {
+        "candidate": "2.3.0-alpha.207",
+        "revision": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+        "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+        "review": "Revisión final de solo lectura: comprobados de nuevo guía contextual, final del Jardín, porcentajes de Lugares/trofeo, resultado y gardenTarget en 3c9d5dbc. Vista la captura nueva de Lugares y su manifest. Se reutilizan las observaciones anteriores de código y tres capturas atribuidas a e8368253. Sin ejecutar pruebas, navegador ni audio.",
+        "visualEvidence": [
+          {
+            "path": "/tmp/e7-capturas-cierre/21-lugares.png",
+            "revision": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+            "inspection": "Vista en esta comprobación final"
+          },
+          {
+            "path": "/tmp/e7-final-capturas/31-guia-jardin.png",
+            "revision": "e83682531530125fc7ad3726bf4ca7dfc97b6a19",
+            "inspection": "Observación visual reutilizada de la comprobación anterior"
+          },
+          {
+            "path": "/tmp/e7-final-capturas/33-resultado.png",
+            "revision": "e83682531530125fc7ad3726bf4ca7dfc97b6a19",
+            "inspection": "Observación visual reutilizada de la comprobación anterior"
+          },
+          {
+            "path": "/tmp/e7-final-capturas/10-lugar-jardin.png",
+            "revision": "e83682531530125fc7ad3726bf4ca7dfc97b6a19",
+            "inspection": "Observación visual reutilizada de la comprobación anterior"
+          }
+        ],
+        "fixtureQualification": "Capturas locales guionizadas, con paneles de guía, resultado y Lugares forzados según manifest. No son evidencia de hallazgo espontáneo, frecuencia de aparición o comprensión humana.",
+        "intentionalDecisions": "Espacio negro, Geist Mono, cubo pequeño, progresión del anillo y transiciones lentas aceptados como decisiones. No se consideran defectos.",
+        "sourceAttribution": "Las correcciones de guía y porcentaje y la lógica de resultado/target se volvieron a leer en 3c9d5dbc. El resto de las observaciones de guía/progresión conserva el alcance de la lectura e8368253. Los cambios posteriores de Libro/Favoritos quedan fuera de esta lente y no se puntúan."
+      },
+      "scores": {
+        "visual": 7.5,
+        "audio": null,
+        "creativity": 8.0,
+        "sensation": null,
+        "cohesion": 8.0,
+        "polish": 7.5
+      },
+      "scoreBasis": {
+        "visual": "Solo cuatro vistas a 390 × 844, con atribución de revisión en scope.visualEvidence: Lugares actual conserva destino destacado y continuidad clara; las vistas e8368253 de guía, resultado y Jardín se reutilizan. Buen foco del paso activo; espacio y escala contenidos. La guía ocupa casi toda la altura y acumula acciones secundarias. No se puntúan animaciones, otros tamaños ni las nuevas pantallas de Libro/Favoritos.",
+        "audio": "Sin escucha; leer llamadas de audio y ver el estado audio=running no permite valorar su percepción.",
+        "creativity": "Solo diseño expresado en las reglas: sembrar/cosechar en el golpe y regar entre golpes convierte una interacción rítmica en cuidado; los trofeos conservan el verbo del lugar y recuperan su capa musical. No puntúa originalidad sonora ni experiencia humana.",
+        "sensation": "Sin sesión jugada ni observación humana, no se puntúa la sensación de atención, descubrimiento o ritmo.",
+        "cohesion": "Solo arquitectura de información y coherencia de instrucciones inspeccionadas: objetivo compartido, once lugares separados de las 33 estrellas, siguiente destino consistente y estado final del Jardín explícito. El resultado diferencia la colección acumulada de esta ronda y conserva su lugar de origen. Las correcciones se verifican por su comportamiento expresado en código; no implican mejora automática de la experiencia global.",
+        "polish": "Solo precisión del texto, estados y cuatro pantallas: ayuda contextual con paso activo, umbrales sin redondeo al alza, resultado con lugar y colección/ronda separados. La guía sigue ofreciendo varias rutas de práctica en una pantalla muy llena. No certifica interacción táctil, navegación completa, accesibilidad ejecutada ni estabilidad."
+      },
+      "strengths": [
+        {
+          "evidence": [
+            "src/places.js:60",
+            "src/places.js:70",
+            "src/voice-guide.js:46",
+            "src/refugio-lugares.js:55",
+            "src/places.js:137",
+            "/tmp/e7-capturas-cierre/21-lugares.png",
+            "/tmp/e7-final-capturas/33-resultado.png"
+          ],
+          "observation": "La guía, Lugares y el cierre de ronda conducen al mismo siguiente lugar incompleto. Las pantallas distinguen completar once lugares de reunir 33 estrellas y destacan Seguir hacia Jardín."
+        },
+        {
+          "evidence": [
+            "src/journey-garden.js:23",
+            "src/journey-garden.js:34",
+            "src/voice-guide.js:35",
+            "src/journey-garden.js:81",
+            "/tmp/e7-final-capturas/31-guia-jardin.png"
+          ],
+          "observation": "La ayuda del Jardín calcula la acción con las mismas distancias y etapas que el gesto real: acercarse, sembrar, regar o cosechar. El paso actual y la indicación recuperable se ven claramente; Ver el gesto ofrece una demostración adicional."
+        },
+        {
+          "evidence": [
+            "src/places.js:129",
+            "src/places.js:130",
+            "src/places.js:131",
+            "/tmp/e7-final-capturas/33-resultado.png"
+          ],
+          "observation": "El resultado nombra Lago, separa Tu colección de Esta ronda y muestra 74,6 % frente a 75 %. Permite comprender el logro obtenido y lo que falta sin confundir un récord con una estrella nueva."
+        }
+      ],
+      "findings": [
+        {
+          "status": "RESOLVED",
+          "priority": "P2",
+          "evidence": [
+            "src/voice-guide.js:26",
+            "src/voice-guide.js:27",
+            "src/voice-guide.js:28",
+            "tests/guide-context.mjs:19"
+          ],
+          "issue": "La ayuda del Jardín con la barra llena debe recuperar la instrucción del árbol dorado.",
+          "verification": "El código clona los pasos y sustituye el tercero por «Tu árbol dorado está listo. Pulsa en el golpe.» cuando progress>=1; el hint reutiliza ese texto y mantiene el paso 2 activo. La prueba textual cubre tanto hint como steps[2].",
+          "consequence": "La contradicción anterior entre cosechar y cerrar la ronda ya no está presente en la lógica leída.",
+          "remedy": "Aplicado. La captura observada es del acercamiento, no del estado final; verificación de esta corrección limitada al código."
+        },
+        {
+          "status": "RESOLVED",
+          "priority": "P2",
+          "evidence": [
+            "src/refugio-lugares.js:1",
+            "src/refugio-lugares.js:53",
+            "src/refugio-lugares.js:59",
+            "src/places.js:24",
+            "src/places.js:128"
+          ],
+          "issue": "El porcentaje de Lugares y del trofeo debe conservar el mismo criterio de precisión que la tarjeta de resultado.",
+          "verification": "Ambas lecturas usan roundPercent(best.onTime), compartido con results(). Un valor 0,746 se expresa como 74,6 %, sin aparentar haber alcanzado el umbral del 75 %.",
+          "consequence": "La contradicción de porcentaje suficiente con estrella pendiente ya no está presente en estos lectores.",
+          "remedy": "Aplicado. La captura de resultado corrobora el formato 74,6 %; la corrección específica de Lugares/trofeo se verifica por lectura de código."
+        }
+      ],
+      "limits": [
+        "No se identifican nuevos defectos verificados dentro del alcance inspeccionado; esto no equivale a ausencia global de defectos.",
+        "La evidencia visual combina Lugares de 3c9d5dbc con guía, resultado y Jardín observados en e8368253. Son fixtures locales de un único tamaño; no muestran ayuda con Jardín lleno, lectura del trofeo ni todos los estados. No se inspeccionaron las nuevas capturas de Libro/Favoritos.",
+        "Sin escucha ni juego humano: no se infieren musicalidad, sensación, comprensión real del gesto, descubrimiento espontáneo o ritmo percibido.",
+        "No se ejecutaron pruebas ni se delegó. Los resultados de pruebas comunicados por el coordinador no se convierten aquí en verificación independiente.",
+        "No se consultaron documentos históricos de producto, puntuaciones de otros revisores ni objetivos del panel.",
+        "Las puntuaciones se mantienen tras esta comprobación acotada; actualizar la revisión y cerrar correcciones no produce un incremento automático."
+      ]
+    },
+    {
+      "file": "../revisores/iwai.json",
+      "lens": "Iwai — simulated musical-toy, discovery and collection-garden lens; not the named creator's opinion",
+      "scope": "Independent blind review of candidate 2.3.0-alpha.207, final runtime revision 3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58. Scoped source review covers rare-cards.js, collection-garden.js, journal.js, house.js, supporting garden-model.js/house-audio.js, and the two named smoke scripts as text. Verified transactional garden edits and the final collection hierarchy in source. Inspected fresh /tmp/e7-capturas-cierre/32-libro.png and its manifest (runtimeDirty=false, digest 14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062). Earlier inspected 31-guia-jardin.png, 32-libro.png and 33-resultado.png from the separate 21-capture e8368253 snapshot; those are historical observations within this review, not captures of the final runtime. No execution, listening, repository edits or delegation.",
+      "scores": {
+        "visual": 7.5,
+        "audio": null,
+        "creativity": 8,
+        "sensation": null,
+        "cohesion": 7.5,
+        "polish": 7
+      },
+      "scoreBasis": {
+        "visual": "Narrow static-image judgment: fresh 390 × 844 collection screenshot now shows the first card name, portrait, musical ability and garden selection action within the opening viewport. Compact search/type controls, collapsed secondary filters and the full-width voice count establish a clearer sequence from collection to playable voice. The disciplined black/Geist Mono presentation and restrained card accent support this clarity. The 0.5 revision follows this directly observed hierarchy change; house layout, animation and uninspected final views remain ungraded. Earlier guide/result observations belong to e8368253 only.",
+        "audio": "Perceptual audio unobserved. Technical inspection confirms instrument/technique mapping and gesture/sequence scheduling, but is not listening.",
+        "creativity": "Source-defined interaction concept only: a located discovery becomes a retained card, a playable house object and one of four combinable garden voices; three distinct roles plus a saved set can produce a following musical sprout (collection-garden.js:8-10; garden-model.js:13). This is a meaningful reuse of a discovery across play contexts. Surprise, legibility and delight in actual play remain unobserved.",
+        "sensation": "Unobserved: no hands-on session or perceptual sound evaluation.",
+        "cohesion": "Source-defined discovery-to-book-to-refuge loop: provenance, musical roles and reusable voices share retained ownership. The final book leads with the card and moves its refuge link after the cards (rare-cards.js:81-98; journal.js:109-114). Cross-modal timing and perceived unity were not observed. Score remains 7.5.",
+        "polish": "Static interaction, persistence and limited screenshot scope only. The earlier direct-manipulation rollback issue remains resolved in inspected source: house.js:18-19,111 snapshots the arrangement, saves once, restores on failure and gates success feedback. The earlier collection hierarchy issue is also resolved in fresh screenshot 32-libro and source. Coordinator-reported tests cover entry at four sizes plus role filters, source indices, focus, storage and dragging; this reviewer did not execute them. Score remains 7 because full runtime, listening and visual polish across the final experience are unobserved."
+      },
+      "strengths": [
+        {
+          "evidence": "src/rare-cards.js:54-60,81-89,97; src/collection-garden.js:15-18",
+          "assessment": "Discoveries retain their place, provenance and ownership while gaining another use as musical voices. Collection does not itself start audio or open a modal; the book offers an explicit add action and selected/full states. This supports exploration without turning every find into an interruption or expenditure."
+        },
+        {
+          "evidence": "src/collection-garden.js:8-10; src/garden-model.js:7-13; src/house.js:46-47,118-121; src/house-audio.js:17,21",
+          "assessment": "The garden has a concrete toy mechanism: cards determine instruments and roles, objects can be moved and triggered, walking brushes nearby voices, and a pulse answers with up to four nearby objects. A multi-role saved combination can create a moving musical sprout. These are source-verified mechanisms, not claims about how enjoyable they feel or sound."
+        },
+        {
+          "evidence": "src/collection-garden.js:16-20; src/house.js:18-19,111; tests/collection_commit_smoke.py:33-45",
+          "assessment": "The final direct-manipulation path now shares transactional persistence: failed garden movement or drag-out restores the previous arrangement and suppresses success feedback. The smoke script now uses pointer gestures to assert both failures and verifies a successful position after reload. The coordinator reports PASS; this reviewer verified source and test text only."
+        },
+        {
+          "evidence": "/tmp/e7-capturas-cierre/32-libro.png; src/rare-cards.js:81-82,97; src/journal.js:110,114; styles/estilo-j.css:240-241",
+          "assessment": "The final collection opening now presents a complete named musical discovery and its selected garden action in the first 390 × 844 viewport. Search and type share a row, secondary filters collapse, and the selection count reads on one line. This resolves the observed hierarchy friction without adding a new control."
+        }
+      ],
+      "findings": [],
+      "limits": [
+        "Fresh final-candidate visual evidence inspected by this reviewer is only /tmp/e7-capturas-cierre/32-libro.png. The fresh manifest contains three captures; the other two were not inspected. The older 21-capture set identifies e8368253, and only its guide/book/result images were inspected earlier. Those older images are not represented as current final-runtime evidence.",
+        "Neither screenshot set shows the house garden itself in this review. Both manifests describe local scripted fixtures; forced labelled cards do not establish natural rarity or human experience.",
+        "Perceptual audio and sensation remain null. No browser, Node tests, audio renders, listening or git mutations were run by this reviewer. Test PASS statements are attributed to the coordinator, not independent execution.",
+        "The supplied experience smoke intercepts houseAudioCue (tests/experience_garden_smoke.py:20-21). A scheduled technical event cannot establish audible quality, perceived causality, pleasure or sensation.",
+        "No natural rarity, unforced discovery, human usability, device listening or longitudinal collection behavior was observed. The approved black space, Geist Mono, small cube, sequential ring unlocking and slow transitions are constraints, not defects."
+      ]
+    },
+    {
+      "file": "../revisores/matsuura.json",
+      "lens": "Matsuura — simulated design lens; not the named creator's real opinion",
+      "scope": "Final independent scoped review of runtime revision 98cb54a6, 2.3.0-alpha.207. Previously reviewed rhythm, judgement, place rewards and result styles; now reread changed result labeling, audible guide history and result_clarity_smoke.py as text. Visually inspected 01-capitulo-llanura.png, 12-lugar-cristales.png, 15-lugar-cueva.png and 33-resultado.png from /tmp/e7-final-capturas. Their manifest identifies revision e83682531530125fc7ad3726bf4ca7dfc97b6a19, runtimeDigest c2444442f7f5c786b09451447cb86cecbf2ac62babb03ada17c81169cef4220a, 390x844, clean runtime and scripted fixtures. The final source revision is newer than these captures. No historical review reports, tests, browser runs, listening, rendering, repository edits or delegation.",
+      "scores": {
+        "visual": 7.5,
+        "audio": null,
+        "creativity": 8,
+        "sensation": null,
+        "cohesion": 7.5,
+        "polish": 7.5
+      },
+      "scoreBasis": {
+        "visual": "Static 390x844 samples only, at manifest revision e8368253: the small cube remains a clear central point amid the black field, the shared rhythm bar is visually restrained, and the result heading, gold collection star and action hierarchy read clearly. The timing markers are small and subtle; no dynamic legibility or final-revision layout certification is implied. This is a first visual score after newly available observation, not a correction bonus.",
+        "audio": "Unobserved: no listening. Scheduled clicks, notes and latency calculations are implementation evidence only.",
+        "creativity": "Code-defined interaction design only: eleven place rhythms, a common anticipating bar, a two-bar musical demonstration, gradual cube forms and saved personal phrases make a coherent musical progression. This does not rate how inventive it feels in play.",
+        "sensation": "Unobserved: no hands-on play, human timing evidence, device haptics or listening.",
+        "cohesion": "Source and the four inspected screenshots: counted steps, the common Line, shared timing window, earned gold, stars and progression use a consistent vocabulary. The result now separates the place identity, accumulated collection and current attempt. Intentionally sequential places, slow transitions, black space and small cube are respected. Score retained; no automatic increase for fixes.",
+        "polish": "Source-defined judgement/result behavior plus the static result fixture: accurate threshold and minute display, silent-play reward restrictions, dropped-touch marks and surface-safe feedback. The two previously reported labeling defects are resolved in current source and the inspected result screenshot. Audible guide history now selects the most recent actually audible event rather than a future scheduled cue (journey-rhythm.js:58). Score retained because dynamic perception, actual device timing, other viewports and final browser behavior were not independently exercised."
+      },
+      "strengths": [
+        {
+          "evidence": "src/journey-rhythm.js:7; src/journey-rhythm.js:53; src/journey-pulse.js:120",
+          "observation": "The place's pattern drives both judgement and the common bar; counted steps anticipate the cursor, and the place demonstrates its pattern for two bars. This is a useful teach-by-demonstration structure without enlarging the cube or adding another guide."
+        },
+        {
+          "evidence": "src/places.js:24; src/places.js:25; src/places.js:131; tests/result_clarity_smoke.py:18; tests/places.mjs:47",
+          "observation": "Results floor the displayed percentage instead of rounding an unearned 75% threshold upward, compare it with the stated threshold, and floor elapsed seconds before formatting the clock. The supplied tests explicitly cover 74.6%, 75% and the minute boundary; they were read, not run."
+        },
+        {
+          "evidence": "src/journey-pulse.js:30; src/journey-pulse.js:40; src/journey-pulse.js:68; src/journey-pulse.js:113; src/journey-pulse.js:125",
+          "observation": "Touch-down timing accounts for reported audio output delay, stale feedback is cancelled or suppressed on surface changes, and rejected rapid touches receive a faint mark. The design has considered why a player's input should remain legible even when it does not score; its perceptual effectiveness still needs observation."
+        },
+        {
+          "evidence": "src/places.js:129; src/places.js:130; src/places.js:131; /tmp/e7-final-capturas/33-resultado.png",
+          "observation": "The displayed result now names Lago and explicitly separates Tu colección from Esta ronda. Its 74,6 % / 75 % row and single earned star clearly explain the scripted near-threshold outcome; the correction preserves previously earned progress."
+        }
+      ],
+      "findings": [
+        {
+          "status": "RESOLVED",
+          "priority": "P2",
+          "evidence": "src/places.js:129; /tmp/e7-final-capturas/33-resultado.png",
+          "issue": "The prior missing-place-identity finding is resolved: the heading now includes the completed place and mode, shown as Lago · Completo.",
+          "consequence": "The result has a stable identity even when the continuation button names another place.",
+          "remedy": "No further action from this finding."
+        },
+        {
+          "status": "RESOLVED",
+          "priority": "P2",
+          "evidence": "src/places.js:130; src/places.js:131; styles/estilo-j.css:580; /tmp/e7-final-capturas/33-resultado.png",
+          "issue": "The prior accumulated-versus-current-round scope finding is resolved: the star group is labeled Tu colección and the objective list Esta ronda, in both source and inspected capture.",
+          "consequence": "The player can distinguish retained stars from this attempt’s checked objectives.",
+          "remedy": "No further action from this finding."
+        },
+        {
+          "status": "LIMITATION",
+          "priority": "P2",
+          "evidence": "src/journey-pulse.js:9; src/places.js:22; src/journey-rhythm.js:58; /tmp/e7-final-capturas/manifest.json",
+          "issue": "The 80ms normal and 60ms Maestro windows and queued audible guide cues have not been assessed by ear, touch or motion. Static scripted screenshots cannot establish that a player reads the pattern or trusts its judgement.",
+          "consequence": "No conclusion about practical rhythm feel, physical latency or learning success is supported by this review.",
+          "remedy": "Observe a full first-attempt pattern demonstration and response on a real device with listening; verify the guide, touch judgement and emitted feedback agree before rating sensation or audio."
+        }
+      ],
+      "limits": [
+        "The four inspected captures are scripted 390x844 fixtures at e8368253, not human play or evidence of natural progression. They predate final runtime revision 98cb54a6; final collection/favorites/locked-label changes outside this lens were not visually reassessed.",
+        "No browser or test execution. Updated tests/result_clarity_smoke.py:20-35 was read and covers the labels, threshold and Escape finale path; execution was reported by the coordinator and was not independently verified here.",
+        "No perceptual audio, human or physical-device play evidence. Audio and sensation remain null. Source scheduling and clean screenshot metadata do not substitute for listening or dynamic timing checks.",
+        "The visual score is limited to the four named screenshots and does not establish landscape, desktop, motion or full-game quality."
+      ]
+    },
+    {
+      "file": "../revisores/mizuguchi.json",
+      "lens": "Mizuguchi — simulated lens: synchrony, input, response and latency; not the named creator's real opinion",
+      "scope": "Independent blind static review and final source verification of candidate 2.3.0-alpha.207, supplied final runtime revision e8368253. Initial scoped review covered AGENTS.md, src/journey-pulse.js, src/journey-rhythm.js, src/canvas.js, relevant src/audio.js scheduling/visual callback paths, src/interactions.js pulse call sites, and tests/pulse-output-timing.mjs and tests/radio.mjs as text. Final verification read current src/journey-rhythm.js, tests/journey-rhythm.mjs, relevant src/house.js and src/song-stage.js timing paths, and rechecked the shared timing helpers. No tests, browser, audio renders, listening or repo mutations. Captures were present during final verification but were not inspected; this verification remains code-only.",
+      "scores": {
+        "visual": null,
+        "audio": null,
+        "creativity": 7.5,
+        "sensation": null,
+        "cohesion": 7.5,
+        "polish": 7
+      },
+      "scoreBasis": {
+        "visual": "Unobserved: no screenshots were inspected; source code does not establish rendered visual quality.",
+        "audio": "Unobserved perceptually: scheduling and synthesis code were inspected, but technical audio analysis is not listening.",
+        "creativity": "Code-level design only: player hits advance a recurring melodic theme in the current place's scale; distinct place rhythms, a two-bar musical demonstration and earned cube forms connect musical participation with progression. No claim about novelty or felt enjoyment from play.",
+        "sensation": "Unobserved: no direct play, haptic experience or listening; timing equations cannot establish sensation.",
+        "cohesion": "Technical interaction design only: shared heard-time judgement, output-aware pulse landing and world callbacks establish a consistent temporal language. The guide now selects the currently heard event from retained scheduled events. Refugio and song-stage paths also derive feedback from estimated audible time. Score retained after the source correction; no new perceptual evidence.",
+        "polish": "Static implementation scope only: direct cube press, input cancellation, stale callback guards and reduced-motion handling are concrete refinements. The reported guide lookahead defect is fixed in source; actual device synchrony remains unobserved. Score retained; correcting that defect and adding assertions do not alone establish a higher experiential rating."
+      },
+      "strengths": [
+        {
+          "evidence": "src/journey-pulse.js:24, src/journey-pulse.js:30, src/journey-pulse.js:40, src/journey-pulse.js:67, src/audio.js:302, src/audio.js:308",
+          "detail": "Pulse judgement refers to the estimated time heard, while light and haptics land at the estimated emitted note output. Studio and flower callbacks use the same output-aware scheduling helper. This is a coherent technical basis for audiovisual synchrony, without proving perceptual alignment."
+        },
+        {
+          "evidence": "src/canvas.js:39, src/canvas.js:42, src/canvas.js:66, src/canvas.js:73, src/journey-pulse.js:68, src/journey-pulse.js:69",
+          "detail": "The small cube has a direct press-down instrumental response with a 24-pixel hit radius; ordinary taps preserve their original touch timestamp for judgement. Blur, hidden-page and modal handling cancel input or suppress stale feedback, and reduced motion removes the cube kick."
+        },
+        {
+          "evidence": "src/journey-rhythm.js:7, src/journey-rhythm.js:19, src/journey-rhythm.js:51, src/journey-pulse.js:96, src/journey-pulse.js:123",
+          "detail": "Place-specific counted steps, a musical demonstration and one anticipatory Line guide share the same rhythm vocabulary. Successful timing advances a themed melodic phrase rather than adding an unrelated reward sound. This is an evidenced design relationship, not a listening judgment."
+        },
+        {
+          "evidence": "src/journey-rhythm.js:52, src/journey-rhythm.js:56, src/journey-rhythm.js:58; src/house.js:79, src/house.js:118; src/song-stage.js:45, src/song-stage.js:104, src/song-stage.js:108, src/song-stage.js:116",
+          "detail": "Final source uses retained scheduled events to select the currently audible guide and song-layer hits. Refugio bar position uses audibleTime, and object flashes use scheduleAudibleCue. The audible song-stage path derives ring pulses from recorded layer hits; its decorative clock fallback is confined to the silent path. These are technical source findings, not observations of audiovisual sensation."
+        }
+      ],
+      "findings": [
+        {
+          "type": "RESOLVED_DEFECT",
+          "status": "fixed_in_source_at_e8368253",
+          "priority": "P2",
+          "evidence": "src/journey-rhythm.js:52, src/journey-rhythm.js:54, src/journey-rhythm.js:55, src/journey-rhythm.js:56, src/journey-rhythm.js:58; tests/journey-rhythm.mjs:32",
+          "detail": "The previously reported single-slot guide overwrite and premature visual-tail loss are resolved in the inspected source. Each sung onset enters a bounded 32-event array; singingNow selects the latest event at or before audibleTime. Clearing the scheduling state at the two-bar end no longer discards those events, so the final cue retains its normal audible lifetime. A changed guide key clears old events. The added test text asserts current cue selection with 400 ms output latency, future lookahead, the final tail and stale-round clearing. Tests were read, not run by this reviewer.",
+          "consequence": "The identified static cause of missing or truncated demonstration highlights is removed. Physical audiovisual alignment remains unverified.",
+          "remedy": "No further source remedy for this finding. Validate the implementation on actual output devices as covered by the remaining limitation."
+        },
+        {
+          "type": "LIMITATION",
+          "priority": "P2",
+          "evidence": "tests/pulse-output-timing.mjs:3, tests/pulse-output-timing.mjs:8, tests/radio.mjs:65, tests/radio.mjs:123",
+          "detail": "The inspected timing checks use substituted clocks, timers and AudioContext nodes. They specify expected scheduling behavior, but do not measure browser input delivery, timer jitter, display refresh, physical speaker/Bluetooth delay or haptic onset. These tests were read, not executed during this review.",
+          "consequence": "Actual simultaneous touch, light and sound remains unverified even where the arithmetic is internally consistent.",
+          "remedy": "Observe direct cube presses on a representative phone with its speaker and a Bluetooth output, recording touch-to-feedback and audio-to-light alignment; retain perceptual audio and sensation scores as unobserved until that evidence exists."
+        }
+      ],
+      "limits": [
+        "No screenshots were inspected; visual, perceptual audio and sensation scores remain null. Presence of scripted fixtures does not provide listening or human-play evidence.",
+        "No tests or browser/audio runs were performed by this reviewer. The coordinator reported full254 Node and focused browser passes; those reports are not treated as independent observations or listening evidence here.",
+        "Empty-space taps intentionally defer activation until release to distinguish dragging and holding (src/canvas.js:40, src/canvas.js:66); the direct cube press path is immediate. This interaction choice is not classified as a defect without play evidence.",
+        "Black space, Geist Mono, the small cube, preserved generation/music, eleven sequentially unlocked ring places and slow transitions are accepted constraints, not defects."
+      ]
+    },
+    {
+      "file": "../revisores/pope.json",
+      "lens": "Pope (simulated: accounting, durability, errors, rules and minimal UI; not the creator's opinion)",
+      "scope": "Final source verification of Kubono 2.3.0-alpha.207 at observed HEAD e8368253. Reviewed scoped collection, favorites, places and accessibility source, house edit transaction and relevant tests as text. No tests, browser, listening, delegation or repository edits by this reviewer. Screenshots now exist but were not inspected in this source-scoped final verification. Working-tree changes were observed in HANDOFF.md, README.md, docs/README.md and scripts/verify-e-preservation.mjs; their contents were not read and they are outside this runtime review.",
+      "scores": {
+        "visual": null,
+        "audio": null,
+        "creativity": 7.5,
+        "sensation": null,
+        "cohesion": 8,
+        "polish": 7.5
+      },
+      "scoreBasis": {
+        "visual": "Unobserved by this reviewer. Current screenshots were not inspected; no visual score is inferred from source.",
+        "audio": "Unobserved: no listening; musical source logic is not perceptual audio evidence.",
+        "creativity": "Code-level design only: discoveries become reusable garden voices without consuming ownership (collection-garden.js:8,15-20), while captured personal notes survive a place round (places.js:120-122). These give collection and performance a productive relationship; the resulting experience was not played.",
+        "sensation": "Unobserved: no play session, transitions or tactile/audio experience.",
+        "cohesion": "Rules and state contracts only: clear completion/rhythm/Maestro thresholds, honest percentage flooring, conserved legacy access, read-only future formats and commit-before-celebration rewards. Favorite pending work deliberately follows a different, appropriate retention contract. Results now label cumulative collection and this round separately (places.js:129-131); keyboard dismissal shares the actual exit lifecycle (accessibility.js:49, places.js:135).",
+        "polish": "Source error handling and keyboard lifecycle only. A modest revision is supported by the concrete shared close path and atomic real-pointer arrangement edits, rather than code volume or reported test count. The Escape omission is absent, and house rollback includes objects, decor and garden positions. No claim about rendered finish, human usability or broad runtime verification."
+      },
+      "strengths": [
+        {
+          "status": "VERIFIED_IN_SOURCE",
+          "evidence": "src/collection-garden.js:15-20; src/house.js:17-20,111; tests/collection_commit_smoke.py:19-47",
+          "detail": "Garden add/remove/set operations and house placement/drag-out use failed-save rollback without consuming discovered cards. House edits snapshot objects, decor and garden state, and only play successful-placement feedback after commit. The real-pointer fixture asserts failed drag and drag-out rollback, successful placement, reload durability and retained discovery count. Root reports this fixture passed; this reviewer read it without execution."
+        },
+        {
+          "evidence": "src/favorites.js:24-27,43-49; tests/favorite_save_failure_smoke.py:38-63 (read only)",
+          "detail": "A failed favorite addition intentionally retains unsaved work, labels it pending, exposes repair, and withholds the saved-place lesson/reward. Destructive edits instead restore prior values. These different contracts suit the cost of each action and are explicit in code."
+        },
+        {
+          "evidence": "src/places.js:23-30,31-49,106-122; tests/places-durability.mjs:6-16 (read only)",
+          "detail": "Rewards, personal notes and chapter restoration form one save operation before celebration. Rollback preserves relevant object identities, prevents duplicate payment on retry, and future saves receive a locked view. Displayed rhythm percentages floor rather than implying an unmet threshold has been earned."
+        },
+        {
+          "status": "RESOLVED_VERIFIED_IN_SOURCE",
+          "evidence": "src/accessibility.js:49; src/places.js:135; tests/result_clarity_smoke.py:30-35",
+          "detail": "Escape on mPlace now clicks placeClose, using the same portal return and songFinaleCheck as Salir. The prior keyboard lifecycle defect is resolved in current source. The fixture finishes the last place and asserts Escape opens the actual running final song stage. Root reports that real browser check passed; this reviewer independently verified source and assertion text only."
+        }
+      ],
+      "findings": [],
+      "limits": [
+        "No unresolved defect was verified within this scoped source recheck. This is not an exhaustive audit of the game or every failure path.",
+        "No tests, browser, audio renders or listening were performed by this reviewer. Root-reported passes are attributed and do not become independently observed execution evidence.",
+        "The final-place Escape fixture explicitly covers the ordinary finale. The master finale uses the same corrected close/check path in source, but this reviewer did not observe a dedicated 33-star Escape execution.",
+        "Objects and decor participate in the shared house snapshot transaction in source; the reviewed real-pointer failure assertions specifically exercise a garden voice. No separate failed-pointer object/decor runtime result was observed here.",
+        "Visual, audio and sensation remain unscored. No human or ears evidence is available. Sequential ring unlocking, slow transitions, current generation/music, black space, Geist Mono and the small cube remain approved constraints rather than defects."
+      ]
+    },
+    {
+      "file": "../revisores/proteus.json",
+      "lens": "proteus",
+      "scope": {
+        "perspective": "Simulated Proteus design lens: world coherence, exploration rhythm, readable environmental toys; not the named creator’s opinion.",
+        "revision": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+        "version": "2.3.0-alpha.207",
+        "evidence": "All 21 actual 390×844 screenshots and matching manifest at revision e8368253 in /tmp/e7-final-capturas; three closure screenshots and matching manifest at revision 3c9d5dbc in /tmp/e7-capturas-cierre. Inspected selected source src/voice-guide.js, src/journey-garden.js and src/places-ring.js at the initial review. The coordinator states closure changes are limited to journal/book/favorites layout and preserve world, garden, ruins and music.",
+        "constraints": "Black space, Geist Mono, small cube, preserved approved world/music and geometry, eleven sequential places and slow transitions accepted as intentional. Garden and ruins low salience is assessed as a bounded static visual/comprehension risk, not a proven input failure or authorization to alter preserved art."
+      },
+      "scores": {
+        "visual": 7.5,
+        "audio": null,
+        "creativity": 8,
+        "sensation": null,
+        "cohesion": 8,
+        "polish": 7
+      },
+      "scoreBasis": {
+        "visual": "Rendered chapter and place screenshots have distinct silhouettes and environmental textures inside a consistent sparse grammar. Garden and ruins action geometry has weak salience against ambient marks at this mobile size.",
+        "audio": "Unobserved: no listening. The manifest reporting running audio and source describing sound are not perceptual evidence.",
+        "creativity": "Observed visual concepts plus source rules: care and wilting plants, storm circles, geometric crystals, guiding boats and rebuilding columns turn the same small cube into several coherent environmental toys. Scored conceptual invention, not experiential success.",
+        "sensation": "Unobserved: no live play or listening; still images cannot establish embodied response, rhythm feel or exploration flow.",
+        "cohesion": "The chapter silhouettes, restrained overlays, ring compass, route label, garden-specific help and circular song presentation connect the journey into one authored world. Sequential unlocking is an accepted premise.",
+        "polish": "Observed mobile composition and help hierarchy are controlled and readable, with clear primary continuation actions. The baseline distinction between actionable and decorative world marks remains less resolved than the menus. No timing or interaction correctness inferred. Closure 32-libro.png exposes the first named card and its musical function in one frame; 34-favoritos.png exposes a named saved place and direct travel action. These local layout improvements do not resolve the world-readability uncertainty and do not change the score."
+      },
+      "strengths": [
+        {
+          "evidence": "01-capitulo-llanura.png through 05-capitulo-vacio.png; 11-lugar-dunas.png, 12-lugar-cristales.png and 13-lugar-faros.png",
+          "observation": "Large simple silhouettes and different field textures establish place identity while the tiny cube and generous black space retain a consistent scale. Crystal lattice, dune streaks and the lighthouse beam give exploration distinct visual destinations."
+        },
+        {
+          "evidence": "20-anillo.png; src/places-ring.js:60; src/places-ring.js:75",
+          "observation": "The nearby compass and concise Jardín · 600 m label provide a legible next direction without covering the world. The distant gold column gives that guidance an environmental counterpart."
+        },
+        {
+          "evidence": "31-guia-jardin.png; src/voice-guide.js:35; src/journey-garden.js:34",
+          "observation": "Garden help describes approaching, planting, watering and harvesting as concrete gestures. Its contextual hint uses the same distance and plant-stage rules as the toy, and Ver el gesto offers an explicit replay."
+        },
+        {
+          "evidence": "/tmp/e7-capturas-cierre/32-libro.png; /tmp/e7-capturas-cierre/34-favoritos.png",
+          "observation": "The closure collection shows Fósil de ritmo and its musical role before scrolling. The saved-place view gives Mi primer lugar an immediate Ir a este lugar action, making a collected object and a remembered destination readable as usable parts of exploration."
+        }
+      ],
+      "findings": [
+        {
+          "type": "VERIFIED",
+          "priority": "P2",
+          "evidence": "10-lugar-jardin.png; src/journey-garden.js:72; src/journey-garden.js:81",
+          "finding": "In the captured initial garden state, eight similar faint dashed beds compete with ambient loops and plant marks; there is no immediately dominant bed to approach in this frame. The more explicit demonstration is delayed or intermittent by source design.",
+          "consequence": "The still presents a weaker initial approach cue than the contextual help. Whether players hesitate or fail to identify a bed is an untested comprehension risk; motion and the delayed demonstration may resolve it.",
+          "remedy": "First observe the existing demonstration and initial planting in uninterrupted play on a physical target device. If hesitation is reproduced and a guidance change is authorized within preservation constraints, evaluate a temporary nearest-bed cue; do not alter approved geometry on this still alone.",
+          "classificationScope": "Verified static visual observation only; first-use confusion and input failure are untested."
+        },
+        {
+          "type": "VERIFIED",
+          "priority": "P2",
+          "evidence": "14-lugar-ruinas.png",
+          "finding": "The rebuilding stacks are rendered as very faint dotted vertical marks over many ambient arcs; their small white bases carry most of their visible weight.",
+          "consequence": "In this frame the ruin stacks have less salience than crystal shapes or the lighthouse beam. Reduced first-use comprehension is a bounded risk, not a demonstrated failure in motion.",
+          "remedy": "Observe approach and rebuilding feedback in motion on a physical target device before changing preserved art. If comprehension difficulty is reproduced, evaluate an authorized contextual guidance cue while retaining approved world geometry.",
+          "classificationScope": "Verified static visual observation only; difficulty discovering or using the structures is untested."
+        },
+        {
+          "type": "LIMITATION",
+          "priority": "P2",
+          "evidence": "/tmp/e7-final-capturas/manifest.json, scope; src/journey-garden.js:81",
+          "finding": "These scripted stills cannot verify whether demonstrations arrive at a helpful moment, whether the slow travel sustains curiosity, or whether planting and watering are readable in motion.",
+          "consequence": "Exploration rhythm and first-use comprehension remain untested by this review; no sensory score is assigned.",
+          "remedy": "Observe one uninterrupted first-use journey with actual input and listening, including first garden planting and travel toward the next portal, before drawing temporal usability conclusions."
+        }
+      ],
+      "limits": [
+        "Read-only independent review; no browser, tests, edits to the repository, audio rendering or listening.",
+        "All captures are scripted local fixtures; forced panels and book cards are not evidence of natural discovery, rarity or human comprehension.",
+        "Findings concern the supplied mobile frames; no claim about other displays, physical-device brightness, accessibility testing or a player’s eventual learning.",
+        "Closure inspection covers only the three supplied journal/place/favorite screenshots. Unchanged world findings retain their original e8368253 screenshot evidence; no full recapture or live run of 3c9d5dbc was performed by this reviewer. Scores remain independent and unchanged."
+      ]
+    },
+    {
+      "file": "../revisores/roset.json",
+      "lens": "roset — simulated visual-language lens; not the named creator’s opinion",
+      "scope": {
+        "revision": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+        "version": "2.3.0-alpha.207",
+        "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+        "freshEvidence": {
+          "manifest": "/tmp/e7-capturas-cierre/manifest.json",
+          "screenshots": [
+            "/tmp/e7-capturas-cierre/21-lugares.png",
+            "/tmp/e7-capturas-cierre/32-libro.png",
+            "/tmp/e7-capturas-cierre/34-favoritos.png"
+          ],
+          "viewport": [
+            390,
+            844
+          ]
+        },
+        "reusedEvidence": {
+          "revision": "e83682531530125fc7ad3726bf4ca7dfc97b6a19",
+          "runtimeDigest": "c2444442f7f5c786b09451447cb86cecbf2ac62babb03ada17c81169cef4220a",
+          "manifest": "/tmp/e7-final-capturas/manifest.json",
+          "screenshots": "The other 18 previously inspected screenshots in /tmp/e7-final-capturas: 00–05, 10–15, 20, 22, 23, 30, 31 and 33. These remain evidence of the earlier revision; they were not recaptured at the final revision."
+        },
+        "source": "Read current targeted journal/rare-card source and styles; verified compact card controls, full-width selection count, card-name ordering, Refugio after cards, hidden Lo próximo for cards and dim closed-place names.",
+        "method": "All screenshots are scripted local fixtures, including supplied card states. No browser run, tests, repository edits or listening by this reviewer. Coordinator-reported smokes are not independent sensory evidence. Black space, Geist Mono, small cube, sequential places and slow transitions accepted as intentional constraints."
+      },
+      "scores": {
+        "visual": 8.0,
+        "audio": null,
+        "creativity": 8.0,
+        "sensation": null,
+        "cohesion": 8.0,
+        "polish": 8.0
+      },
+      "scoreBasis": {
+        "visual": "Rendered composition, negative space, typography and earned color in 18 reused world/interface captures plus three fresh closure captures. Visual score remains 8.0: the collection hierarchy improves materially, while this limited recapture does not establish a broader change in the visual language.",
+        "audio": "Unobserved: no listening performed. An audio-running manifest state supplies no perceptual evidence.",
+        "creativity": "Visible invention in the earlier 18 reused captures: place-specific geometry, earned song-layer circle and sparse world notation. Unchanged 8.0; no new art, generative or rarity claims are inferred from the closure.",
+        "sensation": "Unobserved: still screenshots do not establish bodily response, timing feel, motion or audiovisual sensation.",
+        "cohesion": "Observed visual grammar across the mixed-revision evidence: mono text, straight sheets, thin separators, white selected/primary actions and earned accents. Fresh collection and saved-place views fit that grammar. Remains 8.0; audio and motion cohesion unobserved.",
+        "polish": "8.0, raised from 7.5 because fresh 32-libro resolves the specific verified hierarchy defect: the first card starts around y=458 instead of y=714, its name and portrait are visible, and the selection count fits one line. Fresh 34-favoritos gives the saved place a direct destination action, and 21-lugares makes closed-place names legible. Scores cover the inspected mobile stills, not interaction reliability or other viewports."
+      },
+      "strengths": [
+        {
+          "evidence": [
+            "/tmp/e7-final-capturas/30-menu.png",
+            "/tmp/e7-final-capturas/31-guia-jardin.png",
+            "/tmp/e7-final-capturas/33-resultado.png",
+            "styles/estilo-j.css:16",
+            "styles/estilo-j.css:21",
+            "styles/estilo-j.css:658"
+          ],
+          "observation": "The interface gives emphasis a consistent grammar: light mono headings, fine separators, one inverted primary action, and a white rule on the current guide step. Result stars carry earned gold while the next action remains white. This is deliberate hierarchy with very little ornament."
+        },
+        {
+          "evidence": [
+            "/tmp/e7-final-capturas/10-lugar-jardin.png",
+            "/tmp/e7-final-capturas/12-lugar-cristales.png",
+            "/tmp/e7-final-capturas/13-lugar-faros.png",
+            "/tmp/e7-final-capturas/14-lugar-ruinas.png"
+          ],
+          "observation": "The fixed small cube remains an effective visual anchor while each place builds identity around it: dashed planting circles, triangular crystal lattices, lighthouse beams, and broken ruin orbits. Variation comes through the surrounding geometry while black space preserves continuity."
+        },
+        {
+          "evidence": [
+            "/tmp/e7-final-capturas/22-cancion.png",
+            "/tmp/e7-final-capturas/23-salvaje.png",
+            "/tmp/e7-final-capturas/34-favoritos.png"
+          ],
+          "observation": "Color is concentrated enough to register: owned song layers separate from dashed unearned positions, the gold encounter spiral stands out from the world, and the map uses small gold points. The strongest moments emerge from restrained marks rather than additional decoration."
+        },
+        {
+          "evidence": [
+            "/tmp/e7-capturas-cierre/32-libro.png",
+            "src/rare-cards.js:82",
+            "src/rare-cards.js:97",
+            "src/journal.js:110",
+            "src/journal.js:114",
+            "styles/estilo-j.css:240",
+            "styles/estilo-j.css:241"
+          ],
+          "observation": "The earlier collection hierarchy finding is resolved in the fresh capture. Search and type share a row; secondary filters are disclosed; 1 / 4 voices uses the full width; the card begins around y=458 with its name before the portrait. The earned object and musical purpose are now visible in the first viewport. Refugio follows the cards and Lo próximo is absent from this view."
+        },
+        {
+          "evidence": [
+            "/tmp/e7-capturas-cierre/34-favoritos.png",
+            "/tmp/e7-capturas-cierre/21-lugares.png",
+            "styles/estilo-j.css:596"
+          ],
+          "observation": "The fresh saved-place view puts Mi primer lugar and Ir a este lugar in a clear, quiet card rather than presenting only an abstract map. Closed-place names now remain readable while the current Jardin step keeps the brighter rule. Both changes improve hierarchy without introducing more ornament."
+        }
+      ],
+      "findings": [],
+      "limits": [
+        {
+          "kind": "untested limitation",
+          "priority": "scope",
+          "evidence": [
+            "/tmp/e7-capturas-cierre/manifest.json",
+            "/tmp/e7-final-capturas/manifest.json"
+          ],
+          "observation": "Only three panels were recaptured at the final revision; 18 visual observations remain tied to e8368253. All images are static local fixtures at 390×844. This reviewer did not exercise scrolling, keyboard interaction, other sizes, motion or transitions.",
+          "consequence": "The scores describe the stated mixed-revision visual evidence, not complete final-runtime interaction or responsive certification.",
+          "remedy": "For broader visual certification, review matching final-revision captures and direct interaction at the additional viewport or motion scopes required."
+        },
+        {
+          "kind": "unobserved sensory limitation",
+          "priority": "scope",
+          "evidence": [
+            "/tmp/e7-capturas-cierre/manifest.json"
+          ],
+          "observation": "No listening or physical-device interaction. An audio-running state and scripted card encounters supply no perceptual or rarity evidence.",
+          "consequence": "Audio and sensation remain null; no human-response or encounter-frequency claim is made.",
+          "remedy": "Use an actual listening and physical-device session if sensory scores are required."
+        }
+      ]
+    },
+    {
+      "file": "../revisores/simogo.json",
+      "lens": "Simulated Simogo lens; independent design review, not Simogo's opinion",
+      "scope": {
+        "revision": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+        "version": "2.3.0-alpha.207",
+        "evidence": "Final manifest and all three final 390×844 captures directly inspected: 21-lugares, 32-libro, 34-favoritos. Initial matching complete manifest and directly viewed initial captures 00,01,02,03,04,05,20,21,22,30,31,33 remain evidence for unchanged surfaces. Read journey-finale.js, song-stage.js, voice-guide.js, relevant style rules and accessibility.js; read the full runtime diff between the two revisions for favorites.js, journal.js, rare-cards.js and estilo-j.css. Arc/finale/music/world sources are unchanged by that diff. No execution, listening, tests, repository edits, historical reports or target scores.",
+        "intentionalConstraints": "Black space, Geist Mono, small cube, eleven sequential places and slow transitions treated as approved design decisions.",
+        "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+        "evidenceSnapshots": [
+          {
+            "revision": "e83682531530125fc7ad3726bf4ca7dfc97b6a19",
+            "manifest": "/tmp/e7-final-capturas/manifest.json",
+            "runtimeDigest": "c2444442f7f5c786b09451447cb86cecbf2ac62babb03ada17c81169cef4220a",
+            "use": "Original unchanged chapter, world, menu, guide, result and song surfaces. Original 21-lugares superseded by final capture."
+          },
+          {
+            "revision": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+            "manifest": "/tmp/e7-capturas-cierre/manifest.json",
+            "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+            "captures": [
+              "/tmp/e7-capturas-cierre/21-lugares.png",
+              "/tmp/e7-capturas-cierre/32-libro.png",
+              "/tmp/e7-capturas-cierre/34-favoritos.png"
+            ],
+            "use": "Final changed places, collection book and saved-place layouts."
+          }
+        ]
+      },
+      "scores": {
+        "visual": 7.5,
+        "audio": null,
+        "creativity": 7.5,
+        "sensation": null,
+        "cohesion": 8,
+        "polish": 7.5
+      },
+      "scoreBasis": {
+        "visual": "Rendered composition only: restrained chapter fields retain the small central cube; the song screen creates a legible, spacious constellation of earned and missing places. The observed panels have clear type and primary actions. Static mobile fixtures do not establish motion quality. Final changed captures preserve the established typography and panel language; locked names are legible and the book shows the item title before its portrait. These limited refinements do not change the overall score.",
+        "audio": "Unscored: source inspection establishes arrangement intent, not perceptual audio quality.",
+        "creativity": "Observed visual vocabulary plus source-defined narrative mechanism: a player's remembered phrases become the closing arrangement, and five earned rings lead into six discoveries. No claim about the felt originality of live play.",
+        "sensation": "Unscored: no first-hand play or listening.",
+        "cohesion": "Observed copy and source-defined structure agree: five completed chapters open a larger eleven-place world, progress becomes a song, and menu/result actions point to the same next place. This score covers authored structure and visible consistency.",
+        "polish": "Rendered mobile surfaces and source-defined finale controls only: result, guide, menu and song layouts are organized and readable; the dynamic stages join shared dialog focus handling. Temporal pacing, actual controls and full finale rendering were not exercised. The final saved-place view displays one clear saved card, and collection filters are folded above the visible card. Saved-entry scroll behavior was read in source and remains unexecuted; no score increase is inferred."
+      },
+      "strengths": [
+        {
+          "evidence": [
+            "/tmp/e7-final-capturas/22-cancion.png",
+            "src/song-stage.js:26"
+          ],
+          "observation": "Five colored solid rings and six dim dashed rings make the unfinished composition legible at a glance, with names following the same circular order. The remaining black space gives this summary room to act as a quiet visual destination."
+        },
+        {
+          "evidence": [
+            "src/journey-finale.js:16",
+            "src/journey-finale.js:92",
+            "src/song-stage.js:21",
+            "src/song-stage.js:119"
+          ],
+          "observation": "The five-chapter closing text explicitly leaves six places to discover, while the eleven-place finale declares the song complete. This gives the intermediate ending and the ultimate ending different narrative purposes."
+        },
+        {
+          "evidence": [
+            "/tmp/e7-final-capturas/20-anillo.png",
+            "/tmp/e7-capturas-cierre/21-lugares.png",
+            "/tmp/e7-final-capturas/30-menu.png",
+            "/tmp/e7-final-capturas/33-resultado.png"
+          ],
+          "observation": "Jardín remains the next destination across world marker, places sheet, menu and result. Repeated 'Seguir hacia Jardín' supplies a coherent thread through otherwise different interfaces."
+        },
+        {
+          "evidence": [
+            "/tmp/e7-final-capturas/31-guia-jardin.png",
+            "src/voice-guide.js:35",
+            "src/voice-guide.js:46"
+          ],
+          "observation": "The guide translates the garden into three concrete gestures and highlights the current one; its local hint responds to the planting target rather than presenting only a general manual."
+        }
+      ],
+      "findings": [
+        {
+          "type": "LIMITATION",
+          "priority": "P2",
+          "evidence": [
+            "/tmp/e7-final-capturas/22-cancion.png",
+            "src/journey-finale.js:95",
+            "src/song-stage.js:119"
+          ],
+          "observation": "The supplied song image is a five-of-eleven progress view. Neither the journey credit sequence nor the eleven-place finale credits are rendered in the inspected evidence.",
+          "consequence": "The complete narrative closure, credit/ring composition and readability during those transitions remain unverified; the progress image cannot establish their visual finish.",
+          "remedy": "Review timed captures of the actual five-chapter and eleven-place endings, including phrase, silence, credits and exit phases, at this viewport."
+        },
+        {
+          "type": "LIMITATION",
+          "priority": "P2",
+          "evidence": [
+            "src/journey-finale.js:73",
+            "src/journey-finale.js:96",
+            "src/journey-finale.js:114",
+            "src/accessibility.js:49"
+          ],
+          "observation": "Finale timing and exits were read as source only. The journey offers a delayed skip and a credit-phase exploration button; the shared keyboard handler also exposes Escape.",
+          "consequence": "Discoverability, interruption timing and the felt transition back to exploration cannot be assessed from the static fixtures.",
+          "remedy": "Observe one uninterrupted ending and one deliberate exit using touch and keyboard, checking the credit reveal and returned world state."
+        }
+      ],
+      "limits": [
+        "All screenshots are scripted local fixtures, including forced panels; they do not establish normal discovery, rarity, player understanding or human outcomes.",
+        "No listening occurred. Technical audio structure was not converted into an audio or sensation score.",
+        "No blocking visual defect is established by the inspected evidence. Scores cover only the explicitly stated scope; unseen captures and live interaction are not implied.",
+        "Final scope combines explicitly identified snapshots: only 21-lugares, 32-libro and 34-favoritos were freshly captured at 3c9d5dbc. The unchanged finale was still not rendered or heard. Source-only saved-entry scrolling and filter persistence are not interaction verification."
+      ]
+    },
+    {
+      "file": "../revisores/wintory.json",
+      "lens": "Wintory — simulated lens: personal theme, finale, musical ownership and integration; not the named creator's opinion",
+      "scope": "Read-only source review of final runtime 98cb54a6, alpha.207: src/song-stage.js, src/journey-finale.js, src/places.js, src/audio.js, and supporting phrase/theme/voice definitions in src/journey-pulse.js and src/song.js. Source-scoped follow-up verifies the ring-pulse correction. No screenshots inspected. No execution, tests, browser, audio render, listening, or human evidence by this reviewer. Coordinator-reported test results are identified separately from direct source evidence.",
+      "scores": {
+        "visual": null,
+        "audio": 7,
+        "creativity": 7.5,
+        "sensation": null,
+        "cohesion": 7.5,
+        "polish": 7
+      },
+      "scoreBasis": {
+        "visual": "Unobserved: this final review is source-scoped; no screenshots inspected.",
+        "audio": "Technical structure only: ordered personal recall, staged layer entrances, shared scale/tempo, a separately gated full-output pause, and a terminal theme. This score says nothing about enjoyment, timbre quality, balance, loudness, emotional impact, or perceptual musicality.",
+        "creativity": "Source-observed design: eleven earned places become musical layers; retained player timing becomes an attributed phrase in the finale, followed by a recurring theme. This evaluates the compositional design, not whether listeners experience authorship.",
+        "sensation": "Unobserved: code and fixture screenshots cannot establish felt ownership, affect, or the sensation of playing/listening.",
+        "cohesion": "Source-observed coupling among place rewards, saved notes, World scale/clock, chapter labels, ring entrances, and finale order. The corrected pulse path now selects past audible onsets and honors the pause. The approved Journey chord-tone interpretation remains an untested perceptual tradeoff, not a regression.",
+        "polish": "Scoped source review of finale scheduling, persistence, caption timing, silence routing, and exits. The earlier synthetic ring-pulse defect is resolved in source. Scores remain conservative and unchanged: no execution, listening, screenshot assessment, or device verification was added by this reviewer."
+      },
+      "strengths": [
+        {
+          "evidence": "src/places.js:100; src/places.js:120; src/places.js:122; src/journey-pulse.js:49",
+          "observation": "Successful notes retain pitch, bar step, and absolute sequencer tick; completion commits the phrase with its rewards and rolls back on a failed save. Recall preserves note order and bar phase, while shortening exceptionally long rests by whole bars. Player contribution has a concrete durable representation."
+        },
+        {
+          "evidence": "src/song-stage.js:49; src/song-stage.js:63; src/song-stage.js:65; src/song-stage.js:97; src/song-stage.js:108; src/audio.js:70",
+          "observation": "The full finale has a legible musical argument: earned entrances, named personal phrases, a bar of full-output silence, then the theme before credits. Playback joins the World's next downbeat and follows its scale and clock; visuals use estimated audible time. This integrates the reward with the existing musical system."
+        },
+        {
+          "evidence": "src/song-stage.js:81; src/song-stage.js:88; src/places.js:131; src/journey-finale.js:105",
+          "observation": "Ownership is explained at relevant moments: the round card says the phrase is retained, the ordinary song view explains that phrases arrive in the finale, and the finale names the current place's phrase. Journey phrases remain available when a place has not been replayed."
+        }
+      ],
+      "findings": [
+        {
+          "type": "RESOLVED_DEFECT",
+          "priority": "P2",
+          "evidence": "src/song-stage.js:45; src/song-stage.js:104; src/song-stage.js:106; src/song-stage.js:116",
+          "observation": "The prior synthetic-pulse defect is resolved in the audible path: hits are retained as an onset history; layerPulse selects the last hit at or before audible time; pulse explicitly returns zero in the intentional pause; the audible frame path has no sine fallback.",
+          "consequence": "Source now distinguishes audible attacks, rests, and the deliberate silence. This is a source-verified correction, not direct observation of motion or sound.",
+          "remedy": "No further source change requested. Coordinator reports song_authorship_smoke checks silent-bar pulses at zero and layerPulse unit coverage for future events; this reviewer did not execute or independently inspect those results."
+        },
+        {
+          "type": "LIMITATION",
+          "priority": "P2",
+          "evidence": "src/journey-finale.js:40; src/journey-finale.js:52; src/journey-finale.js:55; src/journey-pulse.js:6",
+          "observation": "The approved Journey finale intentionally projects recalled notes and both theme passes onto the current triad. In the default major context, the theme sequence 57,59,64,62,61,57 becomes 57,57,64,61,61,57 over the terminal tonic chord; the second pass deliberately repeats the interpretation.",
+          "consequence": "Pitch contour is deliberately reinterpreted. Recognition, expressive success, and felt ownership remain untested perceptual questions; no regression or audible defect is established.",
+          "remedy": "Preserve the approved harmony. Assess recognition and personal ownership through actual listening when that evidence is available; no musical rewrite is requested."
+        }
+      ],
+      "limits": [
+        "No ears or people were used. Perceptual audio quality, emotional resolution, personal recognition, musical masking, and device reproduction remain unobserved.",
+        "No screenshots inspected in this source-scoped final review; visual quality and layout are not scored. Approved black space, Geist Mono, small cube, sequential places, and slow transitions are not treated as defects.",
+        "src/round-phrase.js and a roundPhrase symbol were absent. The relevant observed timing implementation is src/journey-pulse.js:49; no missing-module defect is inferred.",
+        "Source review cannot verify real-time transport behavior, muted/suspended audio transitions, persistence failures, or output-latency accuracy on devices.",
+        "Coordinator reports the pure songPlan/stageEvents and complete finale scheduler, except visual history, are byte-preserved from main. This reviewer verified the pulse code directly but did not rerun the coordinator verifier."
+      ]
+    },
+    {
+      "file": "../revisores/wong.json",
+      "lens": "Simulated Wong lens: mobile UX, clear actions, precision, legibility and hierarchy; not the named creator's real opinion",
+      "scope": "Blind simulated Wong closure review. Fresh source/capture snapshot: Kubono 2.3.0-alpha.207, revision 3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58, runtimeDirty false, digest 14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062. Inspected all three fresh 390×844 scripted captures in /tmp/e7-capturas-cierre: 21-lugares, 32-libro and 34-favoritos, plus their manifest and selected current favorites/journal/rare-cards/styling source. Initial chapter, song, menu, guide and result judgments retain explicitly earlier screenshot coverage from e8368253 in /tmp/e7-final-capturas; those surfaces were not freshly recaptured for this closure. No tests, browser interaction or listening performed by this reviewer.",
+      "scores": {
+        "visual": 8.0,
+        "audio": null,
+        "creativity": 7.5,
+        "sensation": null,
+        "cohesion": 8.0,
+        "polish": 8.0
+      },
+      "scoreBasis": {
+        "visual": "Fresh mobile collection now presents the named object, portrait, ability and garden state in the opening viewport; saved places now present a named destination and visit button. Locked destination names are readable. These observed improvements justify 8.0; retained world/menu/song composition assessments use earlier captures, not fresh full-runtime coverage.",
+        "audio": "Unobserved. The manifest audio-running state is not listening evidence.",
+        "creativity": "7.5 retained for the previously observed small traveler, sparse musical landscape and earned-layer song ring. The fresh changes improve access and presentation rather than adding a newly observed creative concept. No musical invention assessment.",
+        "sensation": "Unobserved. Static fixtures do not establish touch response, motion pacing, rhythm feel or emotional experience during play.",
+        "cohesion": "8.0 retained: fresh journal changes preserve the existing black, monospaced, square-control language and integrate disclosure and destination actions consistently. Earlier menu/guide/result/song visual coverage remains contextual evidence.",
+        "polish": "8.0 for the observed 390×844 states: all three previously evidenced defects are resolved in fresh images and source. The core card and favorite actions are now reachable in the opening viewport, with secondary filters deferred. This is a visual/source judgment, not an independent interaction-suite result."
+      },
+      "strengths": [
+        {
+          "evidence": [
+            "/tmp/e7-capturas-cierre/34-favoritos.png",
+            "src/favorites.js:71",
+            "src/journal.js:120"
+          ],
+          "observation": "Prior favorites-entry defect resolved. The fresh entry shows Mi primer lugar, its surface/style/tempo and one Ir a este lugar action directly. Current openFavorites scrolls to the existing first saved-place card, with the save form as the empty-list fallback."
+        },
+        {
+          "evidence": [
+            "/tmp/e7-capturas-cierre/32-libro.png",
+            "src/rare-cards.js:82",
+            "src/rare-cards.js:97",
+            "src/journal.js:110",
+            "src/journal.js:114"
+          ],
+          "observation": "Prior collection-entry defect resolved. Search and type share a row; optional filters sit behind Filtrar hallazgos; the first card displays Fósil de ritmo, its portrait, ability and En tu jardín state within the initial viewport. Its name precedes the portrait, Lo próximo is hidden for cards and Refugio follows the cards."
+        },
+        {
+          "evidence": [
+            "/tmp/e7-capturas-cierre/21-lugares.png",
+            "styles/estilo-j.css:596"
+          ],
+          "observation": "Prior locked-name legibility defect resolved. Dunas, Cristales, Faros, Ruinas and Cueva are now readable in the same dim-text family as Cerrado. The approved lock state remains clear without rendering destination names nearly invisible."
+        },
+        {
+          "evidence": [
+            "/tmp/e7-final-capturas/30-menu.png",
+            "/tmp/e7-final-capturas/31-guia-jardin.png",
+            "/tmp/e7-final-capturas/33-resultado.png"
+          ],
+          "observation": "Retained earlier-snapshot strength: explicit continuation names Jardín, the contextual guide highlights one current step, and results separate earned stars from this-round criteria. These surfaces were observed on e8368253 and were not freshly recaptured in this closure."
+        }
+      ],
+      "findings": [],
+      "limits": [
+        "No remaining defect established in the three fresh captures. This is a scoped resolution judgment, not a claim of complete product verification.",
+        "Fresh rendered coverage is limited to 390×844 places, collection and favorites. The coordinator reported passing entry/filter/focus/persistence checks across other viewports; this reviewer neither ran nor independently verified those suites.",
+        "Scripted fixtures, including forced laboratory cards, establish displayed states only. No natural rarity, human use, physical device, screen-reader operation, timing, persistence interaction or perceptual audio evidence was gathered. Audio and sensation remain null.",
+        "The small cube, black space, preserved world/music, sequential eleven-place unlocking and slow transitions remain approved design constraints."
+      ]
+    }
+  ]
+}

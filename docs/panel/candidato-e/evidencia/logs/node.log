@@ -1,0 +1,294 @@
+
+> whitedot@2.3.0-alpha.207 test
+> node scripts/run-tests.mjs
+
+PASS acceptance gate: no blank/bot/duplicate/stale acceptance, independent rounds, honest missing scores and no automatic ten
+PASS 250 unique achievements, seven categories, meaningful metrics, tiers, catalog rewards and preserved retired/future progress
+PASS: moving storms (1.5 % of the world, 2.3 regions per 10 min with the wind), weekly seasons out of phase, river confluences
+PASS ambience: half level under the music, a dip on every beat, pitched beds in the key, one shared gain per audio context
+PASS gradual multicolor fields, stable eight-bar soloists, three additive four-role grove populations and sparse/rich complementary ensembles
+PASS 1536 deterministic individual anatomies, 48 distinct lineages, bounded complexity/coordinates and migrated exact specimen portraits
+Android assets staged; game modules preserved, offline APK shell and existing icon.
+PASS unchanged game assets, early native host adapter, offline shell and no development/private files
+PASS sparse bounded aquatic encounters and species-specific original portraits
+PASS six evolving musical forms, stable arrival, call/response, actual withdrawn parts, bounded density, diatonic development and immutable territories
+PASS one new place per day, same-day reopen in place, Camino keeps the arrival for the Mundo, exact return, earned progress, explicit destination, 10,000 unique allocation cells and 150 nonrepeating land arrivals
+PASS complementary-role expeditions require an actual different source/layer, deduplicate and preserve future progress
+PASS: rhythm atlas lists 52 genres, all reachable within 3721 regions, teleport targets match
+PASS: opt-in slow travel, paused active clock, manual cancellation, arrival, layer transitions and sky speed limit
+PASS bar beat hint: the bar beats on the beat at 120 BPM before the sound, after five seconds without a pulse
+PASS: double-width preview biomes, isolated layouts, stable low/mid blob voices and nonmutating sparse scenery
+PASS versioned active-time power saves, unknown data preservation and durable gift validation
+PASS five moving musical trails: shared voice path, two hits per bar, deduplication, mute, inspection, hidden and undo guards
+PASS sixteen temporary reversible surprises, original six powers/odds intact, paused clocks, bounded traces, safe teleport return and future saves
+PASS browser wrapper preserves failure status, bounds time and reaps its own orphan children
+PASS: recency eviction, bounded long-distance region/continent/chunk caches and deterministic return
+PASS calm motion: setting or system preference, and no module reads the setting alone
+PASS card technique: successful choice retained, failed/throwing writes restore exact selection, future format untouched
+PASS: expandable catalog, independent RNG per element, 6 recipe archetypes, deterministic compatible recipes and protected budgets
+PASS tonal world-only box remate, bounded three notes, low register, silence and suspended-audio guard
+PASS celebration sequencing, duplicate coalescing, active-time pause, bounded queue/fragments and short timed-power copy
+PASS cloud REST: public-key restriction, optional/offline access, no password persistence, single token refresh, account switch, safe initial choice, throttled backups, conflict pause, recovery, stale-response isolation
+PASS persistent login: reopen without password and shared-storage sign-out
+PASS persistent auth: late refresh cannot revive logout; corrupt credentials rejected
+PASS mandatory admission: rejected server identity clears access; cached offline identity retained
+PASS deletion reauthentication retains admission until confirmed account removal
+PASS recovery destination validation and local purge limited to the deleted account
+PASS two-device handoff: earned/spent balance, reopen baseline, previous-local backup, divergent progress, in-flight edits and legacy migration
+PASS automatic first upload, pristine restore and protected guest progress
+PASS recovery validation, expired access, password confirmation, single use, session cleanup
+PASS: compatible material/motion catalog, 35 population sizes, 3 layouts, preserved quiet pockets and deterministic rebuilds
+PASS: 52 style phrase arcs, deliberate-rest protection and real new-synth articulations
+PASS real-note constellation snapshots, independent geometry, future compatibility and no eviction of earned memories
+PASS: entering creates one contact, holding does not retrigger, leaving rearms independently
+PASS actual gallery search, bounded population, original pixel portrait, practice dispatch, focus and close without audio or save access; DOM adapter, not browser layout proof
+PASS complete unique manifest, existing technical routes, searchable practices, restored mirrored original bits and ten micro-instrument practices
+PASS: unified versioned content contracts, guarded compatibility/rarity, independent streams and unchanged legacy worlds
+PASS: v4 save compatibility, daily growth cap, seeded world across runtimes
+PASS: creative journey milestones
+PASS regional gaps/abundance, mandatory ten unique broken crystals, automatic entry without prompt, paused mining, saved depletion and day reset
+PASS real fallback pulse breaks further Camino crystals without payment or re-entry
+PASS real seeded runners/rare fragments, bounded pursuit and chains, individual/bonus payouts, partial reload, failed-save rollback, legacy depletion, reduced motion and finite drawing
+PASS cosmetic impact/debris lifetime, pause, reduced motion and draw-only state conservation
+PASS crystal sizes, manual pulses, deduplication, modal/autopilot guards, collection, depletion, migration, finite drawing and save ownership
+PASS batch 7: three skills at 1850 sparks, catalog halved to 17030, magnet reach, sprint burst and recharge, glide that lands only over land
+PASS batch 5: 12 sound pieces and 3025 sparks, six voices in range and level, quiet cube sounds, filter by speed, deterministic step notes, silent while muted
+PASS batch 6: 11 pieces and 3675 sparks, initial and morse from the name, fixed puddles, recent and rarest cards, costumes by three pulses, grass only on the surface
+PASS cube shop slots, former purchases migrated to their slots, three pieces worn together and newer pieces preserved; eyes, habits and accessories by slot; bounded route for steps and ghost; pulse looks and gestures by slot
+PASS: 50 sparse sanctuaries, eight studies, deterministic land routes/keys, bounded saved progress and isolated vast-layout addresses
+PASS large low-contrast galaxies, slow parallax, soft gradient falloff, distant VJ layout at three sizes and safe headless fallback
+PASS late duet join shares phrase, harmony, bass, motif and instrument on the room timeline
+PASS: phase-1 golden world preserved; 33 ecologies, version/layout save isolation, 33 sampled habitats, 480 bounded objects, continuous climate and deterministic return
+PASS one coherent visibility field, 720/2058 native individuals versus 166 before, seamless colonies/clearings, bounded work, rare identities, intact coordinates and same-array cache refresh
+PASS: stable local effects, protected bass/percussion, beat delay, routing restoration, bounded nodes and cleanup
+PASS all ten ensemble sizes, solo/ten-part real scores, distinct instruments/kits, arrival harmony and protected quiet/rest behavior
+PASS 157 unique collectible families, honest migration, deduplication, UI/modal silence, bounded normalization, save reset, escaped journal and local visual budgets
+PASS unknown discoveries and metadata retained, recognized quarantine restored, future book readonly and honest visible counts
+PASS reproducible hourly opportunity model, still/explore separation, no player-save access, stable legacy worlds and uncertainty without invented awards
+PASS: free threads, cycle and density limits, editable parts, immutable arrangements, learned contour/rhythm, reply turns and physical hit targets
+PASS: encounter gestures, bounded modulation, deterministic sparse generation and regional instrument coverage
+PASS additive ecology sample: 20 new lineages, 12 acoustic bodies, 22 territorial profiles; old streams untouched
+PASS unknown collection/house ownership survives normalization, future books stay read-only and abilities describe actual musical roles
+PASS voice keeps routine messages in memory and reserves presence for teaching, requests and exceptions
+PASS five reachable visual jump grammars, useful contrast and context, bounded migrated sight history, exact region targets and isolated laboratory URLs
+PASS: persistent named coordinates, layer distinction, local deduplication, safe normalization and bounded favorite list
+PASS: audio onset gating, moving sources, lifetime, bounded cues, mute and suspended audio
+PASS festival and colour-safe: festival only by URL with its own save and the whole Journey; colour-blind palette for every place, usual colours when off
+PASS three real festive territories, 237/353 compatible native regions, preserved quiet worlds, bounded percussion and 14/24 inhabited festive jumps
+PASS three persistent backing paths, source-independent duck/recovery, throw restoration, mute and 216 bounded material strikes
+PASS: legacy save migration, rollback-safe recovery/import, quota errors, foreign and future-world isolation, malformed data and preview reset identity
+PASS fun tweaks: race countdown, far finish and a rival that can win, sequential far shadow clues, rising rain, five-second rare chase
+PASS one objective for the Camino, chapters and eleven places; mastery and wallet distinct, future-safe and read-only
+PASS four non-consuming card voices, deterministic score/positions, independent saved sets and future-readonly gardens
+PASS genre map: retuned genres keep every place and region of two worlds, and play at the same point of their new tempo range
+PASS: 172 stable sparse glass sites, forced home example, orientation-to-note/accent mapping, alignment and persistent safe angles
+PASS: balanced glass roles across all 52 genres, actual voice routing, native instruments, consonant degrees and bounded movement influence
+PASS: 854 distinct regional grammars, deterministic stationary evolution, anchored motifs, harmonic clock and density/brightness curation
+PASS: stable gravity, three speeds, neutral origin, continuous edges/corners including negative coordinates
+PASS contextual help: active campaign, close, portal, round, Camino and free exploration
+PASS deterministic niches/guilds, real foraging/shelter/colony/migration choices, bounded motion and twelve-neighbor budgets
+PASS coherent sanctuary flora/fauna, three earned resonators, four deterministic relic roles, low/mid instrumental range and unchanged source seeds
+PASS house capsules: rooms by days or achievements, 18 unique pieces and colours from a fixed draw, kept in saves and codes, sounding pieces in the sequencer, six house achievements, sparks only on a saved capsule
+PASS house collection: rarest frames, one trophy per category, latest showcases, steady visitors
+PASS house guide: one sentence per room with capsule pieces, what is near, menu news for new cards, trophies and a ready capsule
+PASS house v2: v1 migrates in place, sequencer unchanged, new fields cleaned, WH1 kept for plain houses, WH2 for decor and colours, newer houses read-only, full house under 50 KB
+PASS forty earned house objects, four rooms, normalized positions, preserved workshop, note timing/register/proximity and safe visit code
+PASS: regional influence, real bass replacement, bounded motif/levels, pause, decay and immutable radio recipes
+PASS: active listening threshold, excluded paused time, bounded development, movement fade and layer reset
+PASS forty-three original articulated voices, distinct techniques, preserved pitch, sixteen-voice/four-hold budgets and release on pause
+PASS foreground voice reservation and eight-buffer per-context physical-string cache
+PASS searchable album, 50 cube styles, 157 families, 48 lineages, dates, silhouettes and contextual next step
+PASS: legacy discoveries retained, event locations recovered, old relic locations not fabricated, journal survives serialization
+PASS journey chain: flowers by cell hash, off time nothing, a ripple on time lights flowers that pass it on, longer chains worth more, lit flowers saved, the full bar brings the gold flower and a pulse on time opens it once
+PASS journey chapters: seven chapters, saved state cleaned, three states and a waiting pedal as music caps, notes remembered, theme completes the chapter and opens a portal, walking in travels to the next biome, the Tormenta brings bolts on the beat, the Vacío keeps the cube alone until the creatures echo, then leads to the finale; phase 2: each chapter asks for its moment and its bars, the portal waits for the theme, your bolts silence the storm, a kept chapter reopens its portal
+PASS journey dance: circles by hash near the cube, only inside and on time the bolt goes back up, returns in a row worth more, a missed bolt falls and resets the row, the full bar brings the eye and a pulse on time closes it once
+PASS journey echo: fixed patterns of two to five eighths from the «1», an echo has every step and nothing else, lengthens the next and a wrong one shortens it; simulated round 147 s (on time 94 s, Maestro 188 s)
+PASS finale5: 396 biome/transpose/tempo contexts, interpreted phrases and bed in one key, no attack in silence, saved notes untouched
+PASS journey finale: your notes per chapter then the theme twice in major, gold sky and credits, the end is kept and the free World opens, once, skippable, safe on a failed save; the festival ends on your phrase and starts again for the next player
+PASS journey garden: eight fixed beds, sow, grow, bloom and pick on time, untended plants wilt; simulated round 144 s (on time 128 s, Maestro 211 s)
+PASS journey guide: six boats in fixed spots, lit on time they follow, dark they drift, home lit they dock and a convoy is worth more; simulated round 148 s (on time 143 s, Maestro 210 s)
+PASS journey hint: a ghost finger drags and taps after four quiet seconds in the Journey and leaves at the first touch; the Refugio is quiet in the finale; the Camino breaks one crystal per pulse on time
+PASS journey lasso: fireflies in groups by cell hash, the trail closes only around a wide loop, off time nothing, a pulse on time catches all inside worth their count each, the full bar brings the creature that joins as companion with a pulse on time
+PASS journey mode: free World closed until the end of the Journey or already reached; new players in the Journey, World players keep the free World, tests start free, chosen mode kept, future version untouched
+PASS journey moments: saved moments cleaned, the Llanura lighthouse placed and lit when reached, its voice grows near, Lago lotuses open with notes on time, the Bosque creature follows but not into the Vacío
+PASS journey pulse: six-note theme in two bars, on-time window 80 ms, theme notes in every scale and range, phrase every six hits, vibration and its setting, judged at the touch with the headphones delay taken off, one window for the game, a glow without vibration, dropped pulses marked, the Line draws
+PASS journey rebuild: eight pillars in a fixed ring, three steps of the pattern in a bar lay a stone (four in Maestro), whole neighbours raise an arch; simulated round 133 s (on time 111 s, Maestro 255 s)
+PASS journey release: the cube carries what stuck in the Llanura (12–24), off time nothing, each pulse on time lets one go as a rising star, the cube shrinks to its size, its gold light comes and a pulse on time ends the Vacío once
+PASS journey resonance: nine fixed crystals, ring on time within reach, three notes at once make a chord; simulated round 147 s (skilled 123 s, Maestro 209 s)
+PASS journey rhythm: Jay's table of rhythms by place and chapter, and the nearest step each counts on the music's grid
+PASS journey rhythm (H2): the cube gains a form every four hits and loses one per miss; a place sings its pattern for two bars from the next «1»
+PASS journey stick: things placed by cell hash, many small and few big filling the bar by value, off time nothing moves, the full bar brings the gold cloud beside the cube and one pulse on time swallows it once
+PASS journey superbiomes: each chapter prefers its families in order, falls back to its region, and the main world lands Polvo · House, Marea · Downtempo, Cúmulo · Disco, Tormenta solar · Techno and Vacío · Ambient
+PASS journey surf: waves worth more in a row, fixed rings 90–170 px away, a ride only on its beat inside its ring; simulated round 153 s (skilled 101 s, Maestro 228 s)
+PASS victory uses the existing song layer and live chord, never automates the radio, and cancels old notes on travel
+PASS: home in tune, far lands bent (38/40), bigger creatures and impossible colours, deterministic; map shows only visited places and heard landmarks
+PASS 52 native styles, 18 retained live fusions, 51 actual drum grammars and low/mid membrane bodies
+PASS six evolving sections, changed orchestration, quiet response, legacy/current music addresses and future metadata preservation
+PASS all five roles remain learnable while territory/specimen change instruments, preserve heritage/material voices and bound registers
+PASS optional silent arming, actual spaced calls, audible player-only response, pause/retry and additive future-safe learning
+PASS actual fractional 3:2 strokes, binary anchor, answer/resolution/rest phrases, pickups and bounded event budgets
+PASS nine audible territorial bands, coordinated actual drum patterns/bass/phrases, bounded gain, immutable maps and unchanged classic/room transport
+PASS: laboratory lists 277 interactive elements in 25 groups, circular navigation, validated notes and grouped Markdown report
+PASS five isolated layouts, large negative/positive coordinates, return codes and stable microhabitats
+PASS lessons: acknowledge real presentation, rejected requests retry, failed writes roll back, stale/future saves preserved, eleven concise recoverable rules
+PASS light quality: half the points of a layer, the same ones each frame, context restored; frame median and 95th percentile ignore pauses
+PASS ten real listening comparisons, compact prompts and honest export of partial reviews
+PASS bounded 500-second organism travel, distinct personalities and gesture expression
+PASS readable three-stone musical route, twelve original studies and compact optional story
+{ total: 834, distinct: 499, densities: [ 0, 1, 2, 3 ] }
+PASS 48 extensible lineages, seeded bounds, sparse densities, original namespaces and contextual music grammar
+PASS long-form phrase changes, subtraction, native genre banks, bounded comfort and immutable recipes
+PASS production preserves recovered score for 256 bars; only explicit quiet overrides it
+PASS ecological day/night, tides, bounded humidity, seasonal context and genuinely local symbioses
+PASS 48 lineage capability profiles, 32 distinct seeds each, 3+ observable decisions, bounded fauna/immobile flora, individual voices and slow turtle motion
+PASS territorial A/B communities, coherent neighbors, 4 densities, strong native dominance, clustered bounded additions, original coordinates and rare structures preserved
+PASS safe old/new save migration, preserved structure edits, capped diaries, finite ecology time and bounded settings
+PASS bounded warm chord positions and nearby voice leading without changing pitch classes
+PASS: materia families (strings 484, prism 340, membrane 491 in 2532 land regions), gestures, voices and saves
+PASS ten seeded families, regional predominance, quiet gaps, distinct voices/shapes, 1/64 variants, preserved collection, contact edges, modal/mute guards and bounded cache
+PASS: 131 sparse seeded mirror sites, solvable rotated routes, finite rays and shared musical budget
+PASS seven original engines, deterministic damped pitch-preserving physical strings, finite typed routes and actual signal/control graph connections
+PASS moment guide: a faint edge light toward the lighthouse or the lotuses when out of sight, clear of counters and Line
+PASS production characters across all 52 genres, purposeful room/echo/pad contrast, dry local effects, articulation bounds, preserved native recipes/duets and persistent room crossfade
+PASS six families, 6144 deterministic production frames, unique rhythm/bass/harmony, silent release, immutable regions, automatic ringing budget and untouched player/track voices
+PASS musical reference contract: actual native rhythm, swing, tempo, form, instruments and fusion grammar
+PASS 72 historical frames across nine styles: original motifs/bass/timbres/sections with modern ensembles, harmony, room routing and unchanged maps/duets
+PASS bounded real-place traversal, paused autonomous clock and foreground cue priority
+PASS shared source clock, tempo change, swing, harmonic boundary, strong-beat consonance, register and bounded frame history
+PASS companion responses use the audible territory clock/chord across borders; explicit legacy playback and species registers remain
+PASS 18 reachable compositional influences, 52 retained styles, pure worlds, immutable DNA, evolving diatonic phrases, spectral/density limits and room harmony
+PASS 16 reachable arranged identities, all 52 native styles, stable playback DNA, harmony/register/density limits and distinct actual phrases
+PASS 20 natural rare finds/portraits/phrases/gifts, atomic grant/cards, reload/future saves, no demo/autopilot rewards, mute/pause/hidden guards and six first/repeat sculpture shows
+PASS: all 52 styles alternate groove/melody without erased bass, genre-native object palettes, bounded audible octaves and deliberate gesture response
+PASS narrator: every line belongs to an achievement, nothing earned is renamed, short lines, a round earns what it should, events unlock once
+PASS eight families with five actual render grammars, retained original bits, varied faceted topology, filament proportions, motion-safe membranes and immutable inhabitants
+PASS ten native practices in both generations find real visible organisms with exact original IDs, coordinates and bits
+PASS: directions, arrival, layer scale and foreign-world navigation rejection before starting a route
+PASS: coherent neighbor tempos (10.1 vs 32.0 BPM distant), native tempo ranges, negative edges and 52 styles
+PASS notice ownership, FIFO, duplicate tickets, exit interval, cancellation and reset
+PASS headless collection installs no UI timer; Node runtimes cannot race a missing document
+PASS priority reserves the next slot for exceptional findings without interrupting the current reader
+PASS queued cards cannot cover active or armed recording controls
+PASS optional factual first journey, reload/future preservation, short hints, actual source roles and audible player-only learning
+PASS optical angle modulates real source cutoff/four filter slopes, leaves master untouched and protects low registers
+PASS: four reachable electronic palettes, family-specific voices, preserved world fixtures and distinct bounded synth graphs
+PASS passive Paseo invitations, ambient clock routing, bounded activity, quiet-pocket protection and manual discoveries kept separate
+PASS: stable moving-object identities, 500 timbral variants, protected pitch/levels, routing restoration, capped nodes and cache
+PASS six regional percussion habitats, original stream intact, empty space, body/voice/pattern coverage and four bounded magnetic voices per bar with mute/inspection/expiry
+PASS nine deterministic percussion families, all genre voices, sparse bounded placement, native entry/hold, mute, modal, save isolation and shared budget
+PASS 81 registered instruments, 32 reachable new colors, 24 sparse field grammars, protected roles and legacy sources
+PASS persistent edits beyond legacy caps, safe normalizers and save-budget failure preserves the last good progress
+PASS: stable per-object traits, distinct neighboring trees and flight responses, bounded recovery, real chunk attachment
+PASS persistent pet validation, contextual species, bounded phrases/places, rare natural-box births, earned growth and cube unlocks
+PASS: seeded sparse phenomena, rare birds, audio-onset visuals, melodic answers/material percussion/cloud voices, mute, quiet clearings and bounded cache
+PASS phrase fidelity: eight notes survive, legacy wraps ordered, new bar positions retained, long rests bounded, future saves untouched, campaign judged time
+PASS actual inhabitant integration: tap, contact, musical queue, motion/modal pause, untouched saves, replacement ownership and bounded drawing/cache
+PASS actual voice routing across 37 instruments, four roles, exact scheduled onset, shared harmony, bounded registers and source cues (not DSP)
+PASS 2524 distinct pixel silhouettes, 12 activities, 53 regional instruments, 1069 inhabitants across 567 cells and 130 clear cells, autonomous long-distance migration and real practices
+PASS failed entry preserves position and replaced saves cannot show a prior reward card
+PASS durable rewards in eleven places, safe retries without duplicate pay, and future places read-only without mutation
+PASS places ring: eleven fixed portals 30–60 s from the Refugio, moved off the sea, an arrow and a column of light to the next place on the path, back beside the portal, centre and entered portals kept
+PASS places: eleven places and 33 stars, the Journey gives ★ (★★ if played on time), a round gives stars, sparks and a record and gives back the chapter, Maestro opens with ★★ (tempo, window, ×1.5), half from the fourth round, only ★ without sound, an open round dropped on reload
+PASS play curve: four players, the Journey then the places in order, the win before an hour; the 12-minute rule counts only what grows the song (not purchases); 75 and 90 % keep growing, 60 % and no sound stop after the win and the risk of leaving is marked there
+PASS persistent local profile, active-only counters, real walking without teleports, future formats, safe labels and backup roundtrip
+PASS playtest notes: switched by the address, broken notes dropped, bounded, one Spanish line per chapter with time, pulses on time, stillness and the ghost finger
+PASS: deterministic generation, density cap, flight/jump/rotation/static response, return home and real chunk sound hooks
+PASS: stable local spaces, negative coordinates, compact groups, empty listening centers, quieter radio and actual chunk integration
+Active time, suspension, stacking cap and expiry verified
+PASS source-linked power/quiet notes, creative patches, sparse magnet playback, prior-filter restoration and inaudible quiet guard
+PASS contrasting populated destinations, bounded history, exact coordinate/layer return, progress preservation and blocked travel on save failure
+PASS experimental color stays on subdivisions/chord indices, bounded accents without free clusters, and audible two-part ambient arrival
+PASS 52 native genres, original distinct production identities, complementary orchestration, preserved maps and deterministic instrumental variation
+PASS 50 distinct pulse geometries, 40 spatial footprints, ten families, earned/legacy gates, unchanged default, future/unknown progress and reduced-motion drawing
+PASS emitted-note visual timing at 0–400ms, no early landing, reset/background cancellation and unchanged audio scheduling
+PASS quality: slow samples ask for light mode, pauses ignored; errors: local, short, counted and capped
+PASS: 52 genres evolve at rest, environment affects composition, real scheduler plays without movement, path/studio remain separate
+PASS 98 rare card types with sourced conditional odds, place-code roundtrip, invalid-save normalization, encounter/seed dedupe, bounded book and original safe portraits
+PASS ten real-source gestures, three independent regional regimes, tap/stay/orbit distinction, pauses, fading, teleport cleanup, immutable inhabitants and bounded work
+PASS opt-in observations: eleven place rounds, first progress, active/stalled time, explicit help and compatible old notes
+PASS 96 historical acd766f frames intact; unaffected production styles retained; expanded families agree with their emitted motifs; immutable maps and duet agreement retained
+PASS restored deep production: 10 actual scheduled instruments; recording graph, not DSP
+PASS restored dnb production: 10 actual scheduled instruments; recording graph, not DSP
+PASS restored ambient production: 1 actual scheduled instruments; recording graph, not DSP
+PASS: twelve reachable reference families, distinct drum grammars, characteristic palettes, pentatonic/extended melody vocabulary and log drum
+PASS refugio lugares: the next place on the path and the one to complete before a closed place, the song once the eleven are complete, the master version with 33
+PASS current sea, gravity, tempo metadata in the compact notice survives notice coalescing without extra presentations
+PASS 14 phrase grammars, deterministic whole-motif development, actual call/response/resolution, diatonic hybrids, root-preserving interlock and unchanged territory data
+PASS silent/grouped escaped notices, legacy migration, persisted unread, acknowledgement rollback, save validation, no cross-save/reload spam and bounded immutable discovery cues
+PASS version and genuine UTC deployment metadata, local label, invalid inputs, artifact stamping and unique PWA publication cache
+PASS: stable rare sites (836/40000, 101 magical), awakening, repeat prevention, reload and legacy save
+PASS 13-cosmetic migration, hidden colors, preserved dates/future pieces, idempotent awards, durable sources and scope isolation
+PASS rhythm calibration: twelve pulses that agree measure the delay (a bot 150 ms late goes from off time to on time), scattered ones do not, kept in the save and clamped
+PASS: 18 new rhythms with complete recipes, distinct drums, 52 styles balanced (max 2.3 %, min 0.8 %)
+PASS round phrases: global history excluded, actual closing note included, second round isolated, failed save retry and eight-note bound
+PASS: nearby musical sources sorted, silent grass excluded, range and display limit respected
+PASS sparse deterministic singles/groups in all layers, six gradient portraits, three real interactions, manual-only progress, bounded cache, muted/stale audio guards and daily atomic reward limits
+PASS: distinct complete seeded homes, stable reconstruction, separate preview keys and unchanged daily path
+PASS: session-only discoveries, distinct visits, activity, reload, frozen summary and next session baseline
+PASS: place codes round-trip seed, versions, layer and coordinates; invalid codes rejected; recording format negotiation
+PASS Cristales and final theme stay in the actual world scales, all degrees and 12 transpositions (132 contexts)
+PASS song tiers (H4): ★ fragment, ★★ whole layer, ★★★ variation in the chord given; the song opens eight bars; the finale brings the layers in one a bar, your notes from each place, then a bar of silence and the cube's theme twice on the cello, at least a minute (I4)
+PASS stage transport: independent tempo changes, ordered events, pause/theme boundaries, cancellation, final5 captured timing
+PASS audible manual source limits, no inaudible recording/teaching, rearm by musical bar, distant contact rejection and independent band
+PASS spark economy: on time ×2/×3 mining, the cube shop (17030 ✦) in 9.4 h for a casual player and 7 h playing on time
+PASS spark rules: on time ×2 and ×3 from eight in a row in the free World, the streak breaks off time or after a pause, a round gives 60–120 (Maestro double, half from the fourth of the day)
+PASS wallet conservation, migration/future saves, daily depletion, atomic save failure, permanent purchases/equipment, jump rollback, retroactive one-time sets, distance badges and demo rejection
+PASS connected Camino/world guidance, active-only badge distance, consistent travel availability and completed optional goals
+PASS returning Camino crystals break without currency, daily light, objective or badge farming; failed writes roll back
+PASS universe completion counts every activity type, wonder, mischief scene and sculpture shape
+PASS pieces worn per slot, removal keeps the rest, saved wear survives reload and everything comes off at once
+PASS: direction pans left and right and routes through a panner; smooth distance curve, nearby selection, live moving-source gain, effect isolation, bounded routing and cleanup
+PASS start over: never offered with an account open, the previous game is detected
+PASS streak as memory: the World radius and the lamp follow the days you came back, no discipline phrases, saved streak and HTML ids kept, every star still has its phrase
+PASS superbiome fusion: ten families with their own speed and beat, a clock that never jumps, changes on the downbeat mixed over a bar, dub echo, disco sway, straight techno, calm with reduced motion
+PASS superbiome journal: 105 cells, a count that can be completed (absent ones only once heard), heard in gold with their day, rare and absent marked, malformed and future saves ignored, constellation figures
+PASS superbiome rarity: 70 common, 31 rare, 3 very rare, 1 absent over 2646 regions of six worlds, matching a fresh census
+PASS superbiomes: 10 families hold the 52 genres, 105 valid combinations, 62 on the main world's map, new regions in the Abyss, first-heard day kept with save rollback
+PASS 16 original programs, genuine 12/24/36/48 cascades, open/close automation, bounded climate/gesture response and protected mono bass
+PASS actual production scheduler across 180 seconds of travel, distinct retained radios, multiple eight-bar handovers and finite scheduled sources; recording graph only, no DSP claim
+PASS deterministic off-center nuclei, intact terrain, complete phrase ownership, radio swaps without gain jumps, stable border jitter and gentle tempo/wind
+PASS broad clear/textured patches, smooth world-space seams, unchanged physical worlds, compatible neighboring guest phrases, bounded blends and reachable musical materials
+PASS varied regional tempi with bounded convergence, audible sparse transitions, stable monochrome/accent territories and preserved world DNA
+PASS real subprocesses: bounded concurrency, warm cache, changed fingerprint, forced/expired runs, failure retry, fail-fast and signals
+PASS transitive/cyclic dependencies, source-resource checks, new tests, conservative dynamic imports/walks and unchanged-code exclusion
+PASS theme as a key: a landmark plays its motif then the theme, a rare superbiome answers a fifth up, kept once in the Journal, only in the free World
+PASS real portal dwell, manual-only entry, paused local movement, atomic one-time reward, quota backoff, world coordinates preserved, reload/future saves, stale audio cancellation and persisted text-toggle rollback
+PASS 30 seeded activities, 360 real mechanical solutions, reachable maze goals/exits, swept walls, save recovery, future preservation and finite draw-only reduced-motion scenes
+PASS universe cleanup: all voice, achievement, species, life and pet strings carry no word of the Earth; every plant kind draws centred on its place seen from above, and the names of life, drums and their moments carry no word of the Earth
+PASS universe layers: three layers seen from above, all ten regions draw them and the Void nothing, points spread without clumps, regions mix at borders, the furrow closes, region sound stays under the cap
+PASS natural scene entry, manual-only/paused/hidden guards, atomic reward and quota backoff, replay/reload, local freezing, stale audio, future saves, 120 unique achievements, rollback and no duplicate grants
+PASS 240 movement/contact solutions across ten scenes and reduced motion, independent placement, bounded notes/saves, future data and finite immutable Canvas rendering
+PASS universe names: cosmic names for the 11 places with ids unchanged, no earthly words in names, tips and local ecologies, colours apart (closest dunas/faros at 72)
+PASS universe rare moments: two soft notes of the playing chord each, listed in the Journal; one per region but the Void, about once every 48 bars by region and bar, drawn from above for a few seconds, counted in the save, not drawn with reduced motion
+PASS universe regions: Aurora, Cometas, Constelaciones and Nebulosa oscura fill about 40 % of the Abyss by region key, never on continents or in the Journey; constellations join for good when the theme is completed there; the Nebulosa darkens all but the cube
+PASS V1 closure: competing tabs preserve the persisted writer, explicit recovery/restore, and malformed place-code payload rejection
+PASS V1 PWA update controls: save guard, active-recording deferral and explicit reload
+PASS atomic version validation, synchronized app/package/fallback/cache/docs and no invented deployment timestamp
+PASS: 728 flocks in 2428 land regions (golondrina 247, grulla 260, luciernaga 184, lira 37), 647 gardens; trust gathers, running scatters, calls answered in rhythm, fireflies sync into groove, flora grows and withers
+PASS twelve bounded VJ scenes, independent deterministic placement, smooth fade, visitors, comets, modal pause and session isolation
+PASS deterministic expressive roles, metrical accents, bounded invalid inputs, legato/staccato contrast, native instruments for all variants and four distinct dry snares
+PASS sustained native voices start on the shared grid with the active chord and synchronized visual cues
+PASS held voices move to a nearby consonant note on chord change and preserve shared tones without retriggering
+PASS the theme on time: exact note in a melodic voice in every region, third and fifth after
+PASS: stable regional voices, five tree roles within one biome, varied instruments, bounded emitted registers and groove responses
+PASS magnet voices rise by their role, preserve notes and restore gain after errors
+PASS one bass voice per pulse wave
+PASS fifty reachable distinct silhouettes, territorial identity, bounded divergent movement, diatonic replies and preserved collection
+PASS exact 50-style/rarity counts, earned gates, six-month myths, legacy dates/defaults, safe material selection and five actual pulse instruments
+PASS wild: a wild spark after a minute and 1 200 px walked (always by two), today's remix of an open place with another rhythm, 30 ✦ and 20 more over the day's best
+PASS: 97 raro / 16 legendario / 2 mítico rarities with visible rules and unique samples; rivers 1.0 % of land, followable 6000 px downstream
+PASS eight real families, 52 retained genres, distinct spatial fields/contours, matched materials/music/populations, protected bass, raw DNA and rare specimens
+PASS world light: noon clear, night dark with lantern, real night deeper, single dawn or dusk tint, safe fallback
+PASS edit/phrase roundtrips, persistent removals, non-evicting limits, future-data preservation, bounded bonds, familiar approach and musical affinity
+PASS world sheet: seen from above with only the light (no horizon shapes), colours kept for explored biomes, pale until the theme is completed, back once, free World always in colour, failed save keeps it pale
+PASS continuous fog/day/LOD, zero-opacity cutoff, negative-coordinate preload margin, three decor-only parallax planes and independent visual hash
+PASS actual lineage rendering fades bright sources and blends the former 500px cutoff
+PASS: 35 continents (largest 310, smallest 1 regions), 32 % seas, 53 % family identity, density contrast, 447 landmarks of 5 types
+PASS visual motion: starts, decay, reduced motion, teleport and modal guards
+PASS address-based favorite signatures, stable renaming, foreign seeds and safe bounded SVG
+PASS exact one-shot favorite return, expiry, pause and blocked storage
+PASS real-clock visual reactions, bounded queues, teleport cleanup, reduced motion and no audio generation
+PASS real eyes hook and all world effects with nonzero camera offsets
+PASS actual cube hook: Camino movement, pulse compression, unchanged state, pause, reduced motion and teleport cleanup
+PASS delegated card depth, touch intent, scrolling, cancellation, reduced motion and silent UI
+PASS: 254 Node suites with assertions (Web Audio helper excluded)

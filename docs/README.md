@@ -1,6 +1,6 @@
 # Documentación de Kubono
 
-Actualizada el 25 de octubre de 2026. Cada tema tiene una sola guía; si dos documentos se contradicen, manda el código y se corrige la guía.
+Actualizada el 26 de octubre de 2026. Cada tema tiene una sola guía; si dos documentos se contradicen, manda el código y se corrige la guía.
 
 ## Orden de lectura
 
@@ -13,6 +13,7 @@ Actualizada el 25 de octubre de 2026. Cada tema tiene una sola guía; si dos doc
 | Documento | Para qué |
 |---|---|
 | [Entrega E1–E7](ENTREGA_E.md) | Siete fases autorizadas hacia diez, pruebas y límites humanos |
+| [Candidato E](panel/candidato-e/informe.md) | Revisión del cierre E, preservación y aceptación pendiente |
 | [Panel9](panel/sesion-9/informe.md) | Nota exigente posterior a main, historial y correcciones propuestas |
 | [Candidato N](panel/candidato-n/informe.md) | Cierre técnico alpha.200, revisión ciega y evidencia que falta para nueve |
 | [Integración alpha.200](INTEGRACION_ALPHA_200.md) | Merge y CI completo de la pila autorizada |

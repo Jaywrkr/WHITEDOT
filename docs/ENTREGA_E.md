@@ -10,7 +10,7 @@ Jay autorizó ejecutar las siete fases, sin confirmación entre ellas. La meta d
 | E4 | `excepcional/e4-interfaz` | Implementada; pruebas locales aprobadas | Lectura, desplazamiento y salida consistentes |
 | E5 | `excepcional/e5-descubrimientos` | Implementada; pruebas locales aprobadas | Hallazgo, uso y regreso comprensibles |
 | E6 | `excepcional/e6-recorrido` | Implementada; pruebas locales aprobadas | Aportación personal y próximos pasos claros |
-| E7 | `excepcional/e7-validacion` | Validación técnica en curso; personas pendientes | Revisión independiente, regresiones y protocolo humano listo |
+| E7 | `excepcional/e7-validacion` | Cierre técnico entregado; CI/personas pendientes | Revisión independiente, regresiones y protocolo humano listo |
 
 ## Límites protegidos
 
@@ -22,7 +22,7 @@ Solo pruebas enfocadas durante las fases, más lógica/auditoría requeridas ant
 
 Porcentaje con una cifra decimal truncada:74,6% no aparenta alcanzar75%. Resultado muestra el umbral de Ritmo y Maestro. Cronómetro deriva minutos y segundos de un solo total. Flores, solistas, cantores, cola visual y Estudio siguen la latencia estimada de salida; callbacks descartados al cambiar partida, modo/capa, pausar audio, ocultar página o llegar tarde.
 
-Verificación local aprobada:253 suites Node; result_clarity_smoke.py (móvil/horizontal/PC), places_smoke.py y round_phrase_smoke.py; siete renders foundation_mix.py, pico máximo0,876 sin saturación; auditoría0errores/0avisos. Las pruebas nuevas cubren74,6/75%, límite de minuto y cancelación de luces tardías/de otra capa. Los tests temporizados no miden latencia acústica de teléfonos. No se otorga nota nueva.
+Verificación local aprobada:253 suites Node; result_clarity_smoke.py (móvil/horizontal/PC), places_smoke.py y round_phrase_smoke.py; siete renders foundation_mix.py, pico máximo0,8804 sin saturación; auditoría0errores/0avisos. Las pruebas nuevas cubren74,6/75%, límite de minuto y cancelación de luces tardías/de otra capa. Los tests temporizados no miden latencia acústica de teléfonos. No se otorga nota nueva.
 
 ## Validación que necesita personas
 
@@ -56,4 +56,10 @@ Tu canción distingue capas ganadas de frases guardadas para el final. En el fin
 
 ## E7 · alpha.207
 
-Revisión del candidato completo; corregida concordancia de un lugar guardado. Detectado y cerrado el consumo anticipado de marcas futuras: flores/Estudio reciben ahora la marca solo cuando llega su callback audible, conservando los dibujantes. Una regresión usa el secuenciador real con latencia180ms y verifica ausencia de luz antes y presencia al llegar. Verificador reproducible de311 archivos protegidos y doce contratos musicales: mapas, catálogos, voces, reglas, MIDI y partituras conservados; audio.js solo contiene las seis sustituciones visuales autorizadas. Registro de aceptación con identidad del runtime, dos tandas independientes, dispositivos y puntuaciones declaradas. El validador no cuenta bots, duplicados, formularios vacíos o una confirmación de otra versión. No concede diez ni autentica personas. La revisión independiente encontró y corrigió cierre de resultados con Escape, redondeo residual de Lugares, instrucción final de Jardín, arrastre con guardado fallido y luces que se adelantaban o seguían pulsando en silencio. Los resultados identifican lugar, colección y ronda. Comprobaciones y revisión independiente en curso; no acredita CI nuevo, escucha física ni sesiones humanas.
+Revisión del candidato completo; corregida concordancia de un lugar guardado. Detectado y cerrado el consumo anticipado de marcas futuras: flores/Estudio reciben ahora la marca solo cuando llega su callback audible, conservando los dibujantes. Una regresión usa el secuenciador real con latencia180ms y verifica ausencia de luz antes y presencia al llegar. Verificador reproducible de311 archivos protegidos y trece contratos musicales: mapas, catálogos, voces, reglas, MIDI y partituras conservados; audio.js solo contiene las seis sustituciones visuales autorizadas. Registro de aceptación con identidad del runtime, dos tandas independientes, dispositivos y puntuaciones declaradas. El validador no cuenta bots, duplicados, formularios vacíos o una confirmación de otra versión. No concede diez ni autentica personas. La revisión independiente encontró y corrigió cierre de resultados con Escape, redondeo residual de Lugares, instrucción final de Jardín, arrastre con guardado fallido y luces que se adelantaban o seguían pulsando en silencio. Los resultados identifican lugar, colección y ronda. Cierre local:254 suites Node, auditoría limpia y veinte recorridos enfocados acumulados; los últimos verifican libro/favoritos en cuatro tamaños y un único destino por favorito. Veintiuna capturas de revisión y tres actualizadas tras el ajuste final. Diez lentes independientes, notas y cobertura en el [informe](panel/candidato-e/informe.md). No acredita CI nuevo, escucha física ni sesiones humanas.
+
+## Orden de entrega
+
+E1 `955cd6ae` → E2 `f93d4b54` → E3 `b8470e7d` → E4 `ce2aca02` → E5 `0e0277f5` → E6 `a824224a` → E7 `3c9d5dbc` (runtime; el registro documental posterior no lo altera). Las siete ramas están encadenadas. La última contiene el conjunto; Jay conserva PR y merge. No integrar mientras el CI nuevo esté pendiente o en rojo.
+
+Para probar en teléfono, abrir la vista previa de E7 sin modo dev. Menú → Cómo jugar; ronda y resultados; Lugares → Seguir; Libro → tarjeta → jardín; nombre del lugar → Favoritos. La primera tarjeta se ve antes de los controles secundarios; Favoritos muestra directamente el destino y su acción. El detalle por fase y los límites físicos están en [HANDOFF](../HANDOFF.md).

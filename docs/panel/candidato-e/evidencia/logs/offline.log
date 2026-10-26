@@ -1,0 +1,1 @@
+PASS offline reload starts the game without an account, with all 312 modules cached and no HTML fallback for missing JavaScript

@@ -1,0 +1,118 @@
+{
+  "lens": "roset — simulated visual-language lens; not the named creator’s opinion",
+  "scope": {
+    "revision": "3c9d5dbcc64dbee0f1aa086cd68b8d530a1ceb58",
+    "version": "2.3.0-alpha.207",
+    "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+    "freshEvidence": {
+      "manifest": "/tmp/e7-capturas-cierre/manifest.json",
+      "screenshots": [
+        "/tmp/e7-capturas-cierre/21-lugares.png",
+        "/tmp/e7-capturas-cierre/32-libro.png",
+        "/tmp/e7-capturas-cierre/34-favoritos.png"
+      ],
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    "reusedEvidence": {
+      "revision": "e83682531530125fc7ad3726bf4ca7dfc97b6a19",
+      "runtimeDigest": "c2444442f7f5c786b09451447cb86cecbf2ac62babb03ada17c81169cef4220a",
+      "manifest": "/tmp/e7-final-capturas/manifest.json",
+      "screenshots": "The other 18 previously inspected screenshots in /tmp/e7-final-capturas: 00–05, 10–15, 20, 22, 23, 30, 31 and 33. These remain evidence of the earlier revision; they were not recaptured at the final revision."
+    },
+    "source": "Read current targeted journal/rare-card source and styles; verified compact card controls, full-width selection count, card-name ordering, Refugio after cards, hidden Lo próximo for cards and dim closed-place names.",
+    "method": "All screenshots are scripted local fixtures, including supplied card states. No browser run, tests, repository edits or listening by this reviewer. Coordinator-reported smokes are not independent sensory evidence. Black space, Geist Mono, small cube, sequential places and slow transitions accepted as intentional constraints."
+  },
+  "scores": {
+    "visual": 8.0,
+    "audio": null,
+    "creativity": 8.0,
+    "sensation": null,
+    "cohesion": 8.0,
+    "polish": 8.0
+  },
+  "scoreBasis": {
+    "visual": "Rendered composition, negative space, typography and earned color in 18 reused world/interface captures plus three fresh closure captures. Visual score remains 8.0: the collection hierarchy improves materially, while this limited recapture does not establish a broader change in the visual language.",
+    "audio": "Unobserved: no listening performed. An audio-running manifest state supplies no perceptual evidence.",
+    "creativity": "Visible invention in the earlier 18 reused captures: place-specific geometry, earned song-layer circle and sparse world notation. Unchanged 8.0; no new art, generative or rarity claims are inferred from the closure.",
+    "sensation": "Unobserved: still screenshots do not establish bodily response, timing feel, motion or audiovisual sensation.",
+    "cohesion": "Observed visual grammar across the mixed-revision evidence: mono text, straight sheets, thin separators, white selected/primary actions and earned accents. Fresh collection and saved-place views fit that grammar. Remains 8.0; audio and motion cohesion unobserved.",
+    "polish": "8.0, raised from 7.5 because fresh 32-libro resolves the specific verified hierarchy defect: the first card starts around y=458 instead of y=714, its name and portrait are visible, and the selection count fits one line. Fresh 34-favoritos gives the saved place a direct destination action, and 21-lugares makes closed-place names legible. Scores cover the inspected mobile stills, not interaction reliability or other viewports."
+  },
+  "strengths": [
+    {
+      "evidence": [
+        "/tmp/e7-final-capturas/30-menu.png",
+        "/tmp/e7-final-capturas/31-guia-jardin.png",
+        "/tmp/e7-final-capturas/33-resultado.png",
+        "styles/estilo-j.css:16",
+        "styles/estilo-j.css:21",
+        "styles/estilo-j.css:658"
+      ],
+      "observation": "The interface gives emphasis a consistent grammar: light mono headings, fine separators, one inverted primary action, and a white rule on the current guide step. Result stars carry earned gold while the next action remains white. This is deliberate hierarchy with very little ornament."
+    },
+    {
+      "evidence": [
+        "/tmp/e7-final-capturas/10-lugar-jardin.png",
+        "/tmp/e7-final-capturas/12-lugar-cristales.png",
+        "/tmp/e7-final-capturas/13-lugar-faros.png",
+        "/tmp/e7-final-capturas/14-lugar-ruinas.png"
+      ],
+      "observation": "The fixed small cube remains an effective visual anchor while each place builds identity around it: dashed planting circles, triangular crystal lattices, lighthouse beams, and broken ruin orbits. Variation comes through the surrounding geometry while black space preserves continuity."
+    },
+    {
+      "evidence": [
+        "/tmp/e7-final-capturas/22-cancion.png",
+        "/tmp/e7-final-capturas/23-salvaje.png",
+        "/tmp/e7-final-capturas/34-favoritos.png"
+      ],
+      "observation": "Color is concentrated enough to register: owned song layers separate from dashed unearned positions, the gold encounter spiral stands out from the world, and the map uses small gold points. The strongest moments emerge from restrained marks rather than additional decoration."
+    },
+    {
+      "evidence": [
+        "/tmp/e7-capturas-cierre/32-libro.png",
+        "src/rare-cards.js:82",
+        "src/rare-cards.js:97",
+        "src/journal.js:110",
+        "src/journal.js:114",
+        "styles/estilo-j.css:240",
+        "styles/estilo-j.css:241"
+      ],
+      "observation": "The earlier collection hierarchy finding is resolved in the fresh capture. Search and type share a row; secondary filters are disclosed; 1 / 4 voices uses the full width; the card begins around y=458 with its name before the portrait. The earned object and musical purpose are now visible in the first viewport. Refugio follows the cards and Lo próximo is absent from this view."
+    },
+    {
+      "evidence": [
+        "/tmp/e7-capturas-cierre/34-favoritos.png",
+        "/tmp/e7-capturas-cierre/21-lugares.png",
+        "styles/estilo-j.css:596"
+      ],
+      "observation": "The fresh saved-place view puts Mi primer lugar and Ir a este lugar in a clear, quiet card rather than presenting only an abstract map. Closed-place names now remain readable while the current Jardin step keeps the brighter rule. Both changes improve hierarchy without introducing more ornament."
+    }
+  ],
+  "findings": [],
+  "limits": [
+    {
+      "kind": "untested limitation",
+      "priority": "scope",
+      "evidence": [
+        "/tmp/e7-capturas-cierre/manifest.json",
+        "/tmp/e7-final-capturas/manifest.json"
+      ],
+      "observation": "Only three panels were recaptured at the final revision; 18 visual observations remain tied to e8368253. All images are static local fixtures at 390×844. This reviewer did not exercise scrolling, keyboard interaction, other sizes, motion or transitions.",
+      "consequence": "The scores describe the stated mixed-revision visual evidence, not complete final-runtime interaction or responsive certification.",
+      "remedy": "For broader visual certification, review matching final-revision captures and direct interaction at the additional viewport or motion scopes required."
+    },
+    {
+      "kind": "unobserved sensory limitation",
+      "priority": "scope",
+      "evidence": [
+        "/tmp/e7-capturas-cierre/manifest.json"
+      ],
+      "observation": "No listening or physical-device interaction. An audio-running state and scripted card encounters supply no perceptual or rarity evidence.",
+      "consequence": "Audio and sensation remain null; no human-response or encounter-frequency claim is made.",
+      "remedy": "Use an actual listening and physical-device session if sensory scores are required."
+    }
+  ]
+}

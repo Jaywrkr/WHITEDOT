@@ -2,18 +2,18 @@
   "schemaVersion": 1,
   "candidate": {
     "version": "2.3.0-alpha.207",
-    "runtimeDigest": "288d63872056ac0579935c61a7fa8ca1c5372ed6fb2798f45e3efc0cd7edf86d"
+    "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062"
   },
   "checks": {
     "releaseAudit": {
-      "status": "pending",
-      "runtimeDigest": null,
-      "evidence": ""
+      "status": "pass",
+      "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+      "evidence": "panel/candidato-e/evidencia/release-audit.json"
     },
     "nodeFull": {
-      "status": "pending",
-      "runtimeDigest": null,
-      "evidence": ""
+      "status": "pass",
+      "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
+      "evidence": "panel/candidato-e/evidencia/node.json"
     },
     "browserFull": {
       "status": "pending",
@@ -71,7 +71,7 @@
     "id": "",
     "kind": "human",
     "observed": false,
-    "runtimeDigest": "288d63872056ac0579935c61a7fa8ca1c5372ed6fb2798f45e3efc0cd7edf86d",
+    "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062",
     "evidence": "",
     "externalHelp": null,
     "tasks": {

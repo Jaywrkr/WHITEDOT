@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "candidate": {
+    "version": "2.3.0-alpha.207",
+    "runtimeDigest": "14154d7032e8041ca7e030a9f44a5ba1a5b4a78d45ba577fb87ccd3bc1f15062"
+  },
+  "status": "pending",
+  "criteriaMet": false,
+  "tenCertified": false,
+  "counts": {
+    "formative": 0,
+    "confirmation": 0
+  },
+  "tasks": {
+    "goal": {
+      "passed": 0,
+      "total": 0,
+      "ratio": null
+    },
+    "firstAction": {
+      "passed": 0,
+      "total": 0,
+      "ratio": null
+    },
+    "gardenFlower": {
+      "passed": 0,
+      "total": 0,
+      "ratio": null
+    },
+    "nextPlace": {
+      "passed": 0,
+      "total": 0,
+      "ratio": null
+    },
+    "ownPhrase": {
+      "passed": 0,
+      "total": 0,
+      "ratio": null
+    }
+  },
+  "scores": {
+    "visual": {
+      "n": 0,
+      "median": null,
+      "min": null,
+      "max": null
+    },
+    "audio": {
+      "n": 0,
+      "median": null,
+      "min": null,
+      "max": null
+    },
+    "creativity": {
+      "n": 0,
+      "median": null,
+      "min": null,
+      "max": null
+    },
+    "sensation": {
+      "n": 0,
+      "median": null,
+      "min": null,
+      "max": null
+    },
+    "cohesion": {
+      "n": 0,
+      "median": null,
+      "min": null,
+      "max": null
+    },
+    "polish": {
+      "n": 0,
+      "median": null,
+      "min": null,
+      "max": null
+    }
+  },
+  "wantsContinue": {
+    "yes": 0,
+    "total": 0
+  },
+  "duplicates": [],
+  "blockers": [
+    "Pendiente: browserFull.",
+    "Pendiente: audioFull.",
+    "Pendiente: ci.",
+    "Faltan cinco sesiones formativas observadas.",
+    "Falta confirmación independiente con al menos ocho personas.",
+    "Sin confirmar al 80 % sin ayuda externa: goal.",
+    "Sin confirmar al 80 % sin ayuda externa: firstAction.",
+    "Sin confirmar al 80 % sin ayuda externa: gardenFlower.",
+    "Sin confirmar al 80 % sin ayuda externa: nextPlace.",
+    "Sin confirmar al 80 % sin ayuda externa: ownPhrase.",
+    "Puntuación humana insuficiente: visual.",
+    "Puntuación humana insuficiente: audio.",
+    "Puntuación humana insuficiente: creativity.",
+    "Puntuación humana insuficiente: sensation.",
+    "Puntuación humana insuficiente: cohesion.",
+    "Puntuación humana insuficiente: polish.",
+    "Deseo de continuar aún sin confirmar al 80 %.",
+    "Dispositivo/escucha pendiente: androidMidRange.",
+    "Dispositivo/escucha pendiente: iosSafari.",
+    "Dispositivo/escucha pendiente: speaker.",
+    "Dispositivo/escucha pendiente: headphones.",
+    "Dispositivo/escucha pendiente: bluetooth.",
+    "Dispositivo/escucha pendiente: screenReader."
+  ],
+  "scope": "Datos declarados; no autentica personas ni certifica diez. Las medianas describen respuestas, no una nota automática del panel."
+}
