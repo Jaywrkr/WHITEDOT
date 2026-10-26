@@ -1,6 +1,19 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.212**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.213**. Las entradas describen su revisión, no certifican producción.
+
+## P6 · Tocar donde sea y Tu canción para todos · 2.3.0-alpha.213
+
+Rama `panel10/p6-tu-cancion`, sobre `panel10/p5-un-solo-reloj`. Mizuguchi, Chen, Wintory, Simogo e Iwai (panel 10); D1-B, D2-A y D5 de Jay.
+
+- Tocar donde sea (D2-A): en el Camino, los capítulos del Viaje y las rondas de lugar, el pulso suena al apoyar el dedo en cualquier punto del lienzo. Arrastrar sigue caminando y descansar abre el escáner. En el Mundo libre no cambia: el cubo al apoyar, el vacío al soltar. Guía, lección y pista del Camino dicen «Toca al ritmo. Arrastra para moverte.».
+- La capa crece (D1-B): entre ★ y ★★, cada 1,25 puntos de tu mejor porcentaje desde el 55 % suma un tiempo de los compases callados (≈ 62 % de la capa al 60 %, tres cuartos al 67 %). La melodía de Faros gana una cuarta y quinta nota. Una ronda sin sonido ya no sube el mejor porcentaje. Umbrales de estrellas sin cambio.
+- `scripts/play-curve.mjs` cuenta el evento «crece» en la regla de 12 min. El modelo cambia su supuesto de reintentos: tras un segundo reintento que no suma nada, pasa al lugar siguiente. Resultado: el 60 % cumple hasta el minuto 120 (mayor hueco 8,9 min; 13 veces crece). Con el supuesto anterior quedaba en 12,2 min. Sin sonido sigue sin cumplir (81,8 min).
+- La victoria de una ronda suena al nivel ganado (su ★ con crecimiento, ★★ o ★★★), no siempre ★★. Los capítulos del Viaje siguen con la capa entera.
+- El gran final (D5): la ronda que completa los once desemboca sola en él, sin tarjeta delante; la escena se abre 0,3 s antes del fin de la caída y su primer compás es el siguiente «1». La tarjeta sale al cerrar el final. Durante tus frases y la primera vuelta del tema solo siguen colchón y bajo; las demás capas vuelven en la segunda vuelta. Tu frase suena con el arpegio suave del final del Viaje en lugar de `lead`. Créditos de autoría solo en el final de once; el del Viaje dice solo «Tu mundo se abrió» y la versión maestra solo sus dos líneas.
+- Sin rótulo en el compás de silencio. En el anillo de Tu canción, ★, ★★ y ★★★ se distinguen por saturación (45, 75 y 100 %); el blanco del Vacío, por brillo.
+- No cambian la generación, las notas, las armonías, la síntesis, la música del Mundo ni las notas guardadas. Medida de Wintory (todas las capas en ★★, seis notas por lugar): compás de frase 6 de 9 eventos tuyos (antes 6 de 65); compás del tema 3 ajenos (antes 59). En ★★★: 6 de 12 y 6 ajenos.
+- Pruebas: `tests/song-for-everyone.mjs` (Node), `tests/tap_anywhere_smoke.py` y `tests/song_finale_flow_smoke.py` (navegador). Se actualizan `play-curve.mjs`, `journey-finale.mjs`, `touch_precision_smoke.py`, `song_authorship_smoke.py`, `journey_finale_smoke.py` y `result_clarity_smoke.py`, que afirmaban lo anterior. `tap_anywhere_smoke.py`: 40 toques en un capítulo, del `pointerdown` a la nota p95 ≈ 12,5 ms (sin contar la latencia de salida). `song_stage_mix.py` mide el hueco: frase −27,4 dB frente a −23,5 dB con todas las capas (base: −23,6); primera vuelta del tema −26,0 frente a −23,1 en la segunda (base: −23,1 y −23,0). `journey_finale_mix.py` y `victory_mix.py` sin cambios (picos 0,144 y 0,179). `victory_live_smoke.py` falla igual en la rama base (7532 ms frente a un margen de 7500), no por esta fase. `surf_smoke.py` espera la tarjeta 15 s. Renders sin escucha humana: Jay debe oír el final antes de integrar. Sin teléfono.
 
 ## P5 · Un solo reloj · 2.3.0-alpha.212
 

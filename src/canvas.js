@@ -23,6 +23,8 @@ export function initialize(runtime) {
   // Solo se excluyen botones, paneles abiertos y el Estudio.
   const blocked=t=>!!t?.closest?.('button,a,input,select,textarea,label,summary,.modal:not([hidden]),#studioPanel,#scanner,#fxPanel,#mirrorPanel,[data-inspect="true"],[role="button"]');
   let fromOverlay=false;
+  // Where a touch is the pulse itself (D2-A): the Camino, a Journey chapter (the Journey not yet finished) and a round.
+  const tapAnywhere=()=>runtime.S.mode==='camino'||runtime.inWorld()&&(runtime.S.layer||'superficie')==='superficie'&&(!!runtime.placeRun?.()||!!runtime.journeyQuiet?.()&&runtime.S.journey?.finished!==true);
   addEventListener("pointerdown",e=>{
     if(e.target===cv||blocked(e.target))return;
     if(!e.isPrimary||activePointer!==null||runtime.S.mode==="studio")return;
@@ -37,10 +39,13 @@ export function initialize(runtime) {
     if(!fromOverlay)runtime.audio();if(runtime.S.mode==="studio"){runtime.studioTap(e.clientX,e.clientY);return;}
     activePointer=e.pointerId;dragging=held=directPulse=false;
     runtime.tapStart={t:performance.now(),x:e.clientX,y:e.clientY};ptr=null;if(!fromOverlay)try{cv.setPointerCapture(e.pointerId);}catch(_){}   // sin captura sobre textos: así un toque en la Voz la sigue abriendo
-    // The cube is an explicit instrument. Empty space keeps drag/hold ambiguity until release.
-    const x=W/2+(runtime.inWorld()?runtime.S.wx-(runtime.camX??runtime.S.wx):0),y=H/2+(runtime.inWorld()?runtime.S.wy-(runtime.camY??runtime.S.wy):0);
-    if(!fromOverlay&&!runtime.fingerTouch&&(runtime.inWorld()||runtime.S.mode==='camino')&&Math.hypot(e.clientX-x,e.clientY-y)<=24&&!openSurface('.modal:not([hidden])')){directPulse=true;runtime.sonar('player',runtime.tapStart.t);}
-    if(runtime.inWorld()&&!fromOverlay&&!directPulse)holdTimer=setTimeout(()=>{if(activePointer!==e.pointerId||document.hidden||openSurface('.modal:not([hidden])'))return;held=true;runtime.startScanner();},500);
+    // The cube is an explicit instrument. In the free World empty space keeps drag/hold ambiguity until release.
+    // Panel 10 (P6, D2-A, Mizuguchi): in the Camino, the Journey's chapters and a place's round the pulse sounds when the
+    // finger goes down anywhere on the canvas; a finger that then drags walks as always (the pulse already sounded, like
+    // a step with a note) and one that rests still opens the scanner.
+    const x=W/2+(runtime.inWorld()?runtime.S.wx-(runtime.camX??runtime.S.wx):0),y=H/2+(runtime.inWorld()?runtime.S.wy-(runtime.camY??runtime.S.wy):0),anywhere=tapAnywhere();
+    if(!fromOverlay&&(anywhere||!runtime.fingerTouch&&(runtime.inWorld()||runtime.S.mode==='camino')&&Math.hypot(e.clientX-x,e.clientY-y)<=24)&&!openSurface('.modal:not([hidden])')){directPulse=true;runtime.sonar('player',runtime.tapStart.t);}
+    if(runtime.inWorld()&&!fromOverlay&&(!directPulse||anywhere))holdTimer=setTimeout(()=>{if(activePointer!==e.pointerId||document.hidden||openSurface('.modal:not([hidden])'))return;held=true;runtime.startScanner();},500);
     else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   }
   addEventListener("pointermove",e=>{

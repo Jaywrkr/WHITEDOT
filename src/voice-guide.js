@@ -22,14 +22,14 @@ export function rememberVoice(state,text,title,context={}){
 export function guideLesson(runtime){
  const round=runtime.placeRun?.(),chapter=round?null:runtime.journeyChapter?.();
  const id=round?.id||(!runtime.S.journey?.finished&&runtime.journeyQuiet?.()?chapter?.id:null);
- if(id==='camino')return {id,name:'Camino',steps:['Acércate a un cristal.','Toca siguiendo el golpe de la música.','Recoge diez luces para abrir el Mundo.'],hint:'Toca el cubo. Arrastra el vacío para moverte.'};
+ if(id==='camino')return {id,name:'Camino',steps:['Acércate a un cristal.','Toca siguiendo el golpe de la música.','Recoge diez luces para abrir el Mundo.'],hint:'Toca al ritmo. Arrastra para moverte.'};
  const steps=PLACE_LESSONS[id]?[...PLACE_LESSONS[id]]:null;if(!steps)return null;
  const progress=runtime.journeyGameProgress?.(id)||0,done=!round&&chapter?.done?.[id];if(id==='jardin'&&progress>=1)steps[2]='Tu árbol dorado está listo. Pulsa en el golpe.';
  let step=done||progress>=1?2:0,hint=done?'Cruza el portal dorado para continuar.':progress>=1?steps[2]:steps[0];
  if(!done&&progress<1){
   if(id==='bosque'){const g=runtime.journeyLasso?.();if(g?.closed)step=1;hint=g?.closed?(g.inside?'Tu vuelta contiene luces. Pulsa en el golpe.':'Rodea un grupo de luces dentro de tu vuelta.'):'Rodea las luciérnagas y cierra tu estela.';}
   if(id==='lago'&&runtime.journeyChain?.().near?.length){step=1;hint='Estás junto a una flor. Pulsa en el golpe.';}
-  if(id==='llanura'&&runtime.journeyStick?.().near?.length){step=1;hint='Hay algo cerca. Toca el cubo en el golpe.';}
+  if(id==='llanura'&&runtime.journeyStick?.().near?.length){step=1;hint='Hay algo cerca. Toca en el golpe.';}
   if(id==='tormenta'&&runtime.journeyDance?.().inside){step=1;hint='Ya estás dentro. Espera el rayo y pulsa.';}
   if(id==='vacio')hint=runtime.journeyPulseState?.().action==='crowded'?'Camina hacia espacio vacío antes de soltar otra estrella.':'Espera la marca alta: es el primer golpe.';
   if(id==='jardin'){const at=gardenTarget(runtime.journeyGarden?.(),{x:runtime.S.wx,y:runtime.S.wy});if(at){step=at.move?0:at.phase==='harvest'?2:1;hint=at.move?'Acércate al círculo marcado junto a tu planta.':at.phase==='harvest'?'La flor está lista. Pulsa en el golpe.':at.water?(runtime.S.sound?'Entre golpes: pulsa para regar esta planta.':'Pulsa para regar esta planta.'):(runtime.S.sound?'En el golpe: pulsa para sembrar aquí.':'Pulsa para sembrar aquí.');}}

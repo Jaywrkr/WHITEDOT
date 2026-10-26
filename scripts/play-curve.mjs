@@ -5,11 +5,14 @@
 // Plan I6 (Chen, third panel): the rule counts only what grows the song (a chapter, a place, a star, the win); pieces
 // bought no longer pass it. A fourth player plays without sound (only ★ can be won), and each profile reports the
 // start of its first structural gap longer than the rule (not a prediction of abandonment). The calibration is not modelled.
+// Panel 10 (P6, D1-B, Chen): a ★ layer grows with the best share on time in its place (song.js growthSteps); a round
+// with sound that grows it is the novelty «crece», and the rule counts it: the song grows.
 import {PLACES,RHYTHM_STAR,MAESTRO_STAR,MAESTRO_TEMPO,MAESTRO_GOAL,TOTAL_STARS} from '../src/places.js';
 import {roundSparks} from '../src/spark-rules.js';
 import {CUBE_SHOP} from '../src/cube-shop-model.js';
 import {hashKey} from '../src/universe-regions.js';
 import {minePerMinute} from './spark-economy.mjs';
+import {growthSteps} from '../src/song.js';
 export const HORIZON=120,NOVELTY_GAP=12;
 // The Journey (docs/VIAJE.md): the Camino and five chapters, then the Refugio's finale; each chapter keeps the ★ of its place.
 export const JOURNEY=Object.freeze([['camino',2],['llanura',2.5],['lago',2.5],['bosque',3],['tormenta',2.5],['vacio',2.5],['final',1.5]]);
@@ -22,7 +25,7 @@ export function simulate(profile,{mine=null,rhythmStar=RHYTHM_STAR,maestroStar=M
  const rate=mine||{1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)},sound=profile.sound!==false;
  // Without sound there is no beat to meet: every pulse counts once (spark-rules.js).
  const world=!sound?rate[1]:profile.onTime*(profile.onTime>=.85?.5*rate[2]+.5*rate[3]:rate[2]);
- const stars=Object.fromEntries(PLACES.map(p=>[p.id,[false,false,false]])),tries={},shop=[...CUBE_SHOP].sort((a,b)=>a.cost-b.cost);
+ const stars=Object.fromEntries(PLACES.map(p=>[p.id,[false,false,false]])),best={},tries={},shop=[...CUBE_SHOP].sort((a,b)=>a.cost-b.cost);
  const events=[];let t=0,sparks=0,rounds=0,won=null,master=null;
  const note=(kind,what)=>{if(t<=HORIZON)events.push({t:+t.toFixed(2),kind,what});};
  const count=()=>Object.values(stars).reduce((n,s)=>n+s.filter(Boolean).length,0);
@@ -30,32 +33,34 @@ export function simulate(profile,{mine=null,rhythmStar=RHYTHM_STAR,maestroStar=M
  // A round's share on time: the player's own, a little up or down each time, better with practice; narrower in a Maestro.
  const share=(id,maestro)=>{const n=tries[id]=(tries[id]||0)+1;return Math.max(0,Math.min(1,profile.onTime+(hashKey(`curve:${profile.id}:${id}:${n}`)-.5)*2*SPREAD+Math.min(PRACTICE_MAX,PRACTICE*(n-1))-(maestro?MAESTRO_COST:0)));};
  function round(id,maestro=false){const q=share(id,maestro),s=stars[id],had=s.filter(Boolean).length;t+=WALK+roundMinutes(id,q,maestro);rounds++;
-  if(!s[0]){s[0]=true;note('lugar',id);}if(sound&&q>=rhythmStar&&!s[1]){s[1]=true;note('★★',id);}if(sound&&maestro&&q>=maestroStar&&!s[2]){s[2]=true;note('★★★',id);}
+  const grew=sound&&!s[1]&&s[0]&&q<rhythmStar&&growthSteps(q)>growthSteps(best[id]);if(sound)best[id]=Math.max(best[id]??0,q);
+  if(!s[0]){s[0]=true;note('lugar',id);}if(sound&&q>=rhythmStar&&!s[1]){s[1]=true;note('★★',id);}if(grew){note('crece',id);}if(sound&&maestro&&q>=maestroStar&&!s[2]){s[2]=true;note('★★★',id);}
   note('interpretacion',id);sparks+=roundSparks(q,{maestro});buy();
   if(!won&&PLACES.every(p=>stars[p.id][0])){won=t;note('victoria','once lugares');}if(!master&&count()===TOTAL_STARS){master=t;note('maestro','33 ★');}
   if(rounds%WANDER_EVERY===0){t+=WANDER;sparks+=WANDER*world+15;note('salvaje','chispa');buy();}
-  return s.filter(Boolean).length>had;}
+  return s.filter(Boolean).length>had||grew;}
  for(const [id,min] of JOURNEY){t+=min;if(stars[id])stars[id][0]=true;note('viaje',id);}
  // In order, like the tracks of a record: the six places after the Journey open one by one.
  for(const p of PLACES)if(!stars[p.id][0])round(p.id);
  // Then back for ★★ (a few tries each) and the Maestro rounds, while the two hours last.
  for(let pass=0;t<HORIZON&&pass<6;pass++){let any=false;
   for(const p of PLACES){if(t>=HORIZON)break;const s=stars[p.id];
-   if(!s[1]){for(let k=0;k<RETRIES&&!s[1]&&t<HORIZON;k++)any=round(p.id)||any;}
+   // P6: while the song grows the player stays; a second retry that adds nothing sends them to the next place.
+   if(!s[1]){for(let k=0;k<RETRIES&&!s[1]&&t<HORIZON;k++){const grew=round(p.id);any=grew||any;if(!grew&&k>0)break;}}
    else if(!s[2]){for(let k=0;k<RETRIES&&!s[2]&&t<HORIZON;k++)any=round(p.id,true)||any;}}
   if(!any&&pass>1)break;}
  // The longest stretch without a novelty, up to the end of the two hours or the 33 ★ (after those, the free World
  // is all there is): once counting the pieces bought, once counting only what grows the song.
  const end=Math.min(HORIZON,master??HORIZON);
  function longest(kinds){const m=[0,...events.filter(e=>kinds.includes(e.kind)&&e.t<=end).map(e=>e.t),end];let gap=0,from=0;for(let i=1;i<m.length;i++)if(m[i]-m[i-1]>gap){gap=m[i]-m[i-1];from=m[i-1];}return {gap:+gap.toFixed(1),from:+from.toFixed(1)};}
- const any=longest(['viaje','lugar','★★','★★★','victoria','maestro','compra']),song=longest(['viaje','lugar','★★','★★★','victoria','maestro']);
+ const any=longest(['viaje','lugar','crece','★★','★★★','victoria','maestro','compra']),song=longest(['viaje','lugar','crece','★★','★★★','victoria','maestro']);
  // Structural gap only. quitAt retains its legacy field name; this model cannot predict abandonment or enjoyment.
- const marks=[0,...events.filter(e=>['viaje','lugar','★★','★★★','victoria','maestro'].includes(e.kind)&&e.t<=end).map(e=>e.t),end];let quit=null;for(let i=1;i<marks.length;i++)if(marks[i]-marks[i-1]>NOVELTY_GAP){quit=+marks[i-1].toFixed(1);break;}
+ const marks=[0,...events.filter(e=>['viaje','lugar','crece','★★','★★★','victoria','maestro'].includes(e.kind)&&e.t<=end).map(e=>e.t),end];let quit=null;for(let i=1;i<marks.length;i++)if(marks[i]-marks[i-1]>NOVELTY_GAP){quit=+marks[i-1].toFixed(1);break;}
  const at60=events.filter(e=>e.t<=60),starsAt=m=>events.filter(e=>e.t<=m&&['viaje','lugar','★★','★★★'].includes(e.kind)&&!(e.kind==='viaje'&&!stars[e.what])).length;
- return {id:profile.id,onTime:profile.onTime,won:won&&+won.toFixed(1),master:master&&+master.toFixed(1),stars60:starsAt(60),stars120:starsAt(HORIZON),bought120:events.filter(e=>e.kind==='compra').length,
-  completedInterpretations:events.filter(e=>e.kind==='interpretacion').length,interpretationGap:longest(['viaje','lugar','★★','★★★','victoria','maestro','interpretacion']).gap,interestMeasured:false,withPurchasesGap:any.gap,songGap:song.gap,songGapFrom:song.from,rule:song.gap<=NOVELTY_GAP,quitAt:quit,sound,novelties60:at60.filter(e=>!['salvaje','interpretacion'].includes(e.kind)).length,events};}
+ return {id:profile.id,onTime:profile.onTime,won:won&&+won.toFixed(1),master:master&&+master.toFixed(1),stars60:starsAt(60),stars120:starsAt(HORIZON),bought120:events.filter(e=>e.kind==='compra').length,grew120:events.filter(e=>e.kind==='crece').length,
+  completedInterpretations:events.filter(e=>e.kind==='interpretacion').length,interpretationGap:longest(['viaje','lugar','crece','★★','★★★','victoria','maestro','interpretacion']).gap,interestMeasured:false,withPurchasesGap:any.gap,songGap:song.gap,songGapFrom:song.from,rule:song.gap<=NOVELTY_GAP,quitAt:quit,sound,novelties60:at60.filter(e=>!['salvaje','interpretacion'].includes(e.kind)).length,events};}
 export function curve(rules={}){const mine={1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)};return PROFILES.map(p=>simulate(p,{mine,...rules}));}
-const line=r=>`${r.sound?r.id+' %':r.id}  victoria ${r.won??'—'} min · 33★ ${r.master??'—'} · ★ a los 60 min ${r.stars60}, a los 120 ${r.stars120} · ${r.bought120} piezas · sin nuevas capas ${r.songGap} min desde el ${r.songGapFrom} ${r.rule?'(cumple 12 min)':'(NO cumple 12 min)'} · ${r.completedInterpretations} interpretaciones · disfrute no medido · con compras, mayor hueco ${r.withPurchasesGap} min`;
+const line=r=>`${r.sound?r.id+' %':r.id}  victoria ${r.won??'—'} min · 33★ ${r.master??'—'} · ★ a los 60 min ${r.stars60}, a los 120 ${r.stars120} · ${r.bought120} piezas · ${r.grew120} veces crece · sin nuevas capas ${r.songGap} min desde el ${r.songGapFrom} ${r.rule?'(cumple 12 min)':'(NO cumple 12 min)'} · ${r.completedInterpretations} interpretaciones · disfrute no medido · con compras, mayor hueco ${r.withPurchasesGap} min`;
 if(import.meta.url===`file://${process.argv[1]}`){const all=curve();
  console.log('Reglas de hoy (★★ 75 %, ★★★ 70 % en Maestro):');for(const r of all)console.log(line(r));
  console.log('Antes de I5 (★★ 85 %, ★★★ 80 %):');for(const r of curve({rhythmStar:.85,maestroStar:.8}))console.log(line(r));

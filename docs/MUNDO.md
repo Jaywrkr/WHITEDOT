@@ -61,9 +61,13 @@ Las tarjetas guardan el hallazgo, su procedencia y una interpretación musical. 
 
 Cada lugar aporta una capa. ★ da un fragmento,★★ la capa completa y★★★ su variación. Los trofeos permiten recordar su capa. La vista ordinaria explica qué está ganado; las frases personales se escuchan en el final.
 
+Entre ★ y ★★ la capa crece con tu mejor porcentaje a tiempo en ese lugar (D1-B, panel 10, P6). Desde el 55 %, cada 1,25 puntos suma un tiempo de los compases que ★ deja callados: primero el último de cada uno. Al 60 % suena cerca del 62 % de la capa; al 67 %, tres cuartos. Solo sube con rondas con sonido. Los umbrales de las estrellas no cambian. El anillo de Tu canción distingue ★, ★★ y ★★★ por saturación; el blanco del Vacío, por brillo. La victoria de una ronda suena al nivel ganado: con ★, la mitad de los compases que con ★★.
+
 El final de los cinco capítulos abre el Mundo libre. El final de once lugares reúne entradas, tus frases, una pausa y el tema;33★ ofrece la versión maestra. Ambos conservan la música aprobada. La UI sigue el transporte audible y distingue tu interpretación del acompañamiento.
 
-Los resultados nombran lugar, colección y ronda; muestran umbrales reales y siguiente paso. La tarjeta espera a que se oiga el fin de la caída de dos compases. No muestra logros: van a la Bitácora, sin aviso. Entre 70 y 74,9 % sin ★★ dice cuánto falta («A 0,4 de ★★») y pone «Otra vez» junto a «Seguir hacia». Durante la ronda, un tic al final de la Línea se enciende en dorado mientras el porcentaje alcanza la estrella siguiente (75 %; 70 % en Maestro). Salir y Escape comprueban el mismo final. Efectos de UI silenciosos.
+La ronda que completa los once desemboca sola en el final (D5): la escena se abre antes de que acabe la caída y su primer compás llega con el siguiente «1». La tarjeta de esa ronda sale al cerrar el final. Durante tus frases y la primera vuelta del tema solo siguen el colchón (Vacío) y el bajo (Lago); las demás capas vuelven en la segunda vuelta. Tu frase suena con el arpegio suave del final del Viaje. El compás de silencio no lleva rótulo. Los créditos de autoría salen una sola vez, en el final de once; la versión maestra muestra solo sus dos líneas.
+
+Los resultados nombran lugar, colección y ronda; muestran umbrales reales y siguiente paso. La tarjeta espera a que se oiga el fin de la caída de dos compases. No muestra logros: van a la Bitácora, sin aviso. Entre 70 y 74,9 % sin ★★ dice cuánto falta («A 0,4 de ★★») y pone «Otra vez» junto a «Seguir hacia». Durante la ronda, un tic al final de la Línea se enciende en dorado mientras el porcentaje alcanza la estrella siguiente (75 %; 70 % en Maestro). Salir y Escape comprueban el mismo final (la versión maestra llega así). Efectos de UI silenciosos.
 
 ## Ayuda
 

@@ -20,7 +20,7 @@ La duración objetivo es15–20min, pendiente de sesiones reales. Las antiguas t
 
 ## Ritmo y frase propia
 
-El pulso encaja con la escala y el reloj del lugar. Los aciertos avanzan el juego y guardan notas, pasos y ticks para el cierre; un toque fuera de tiempo no borra lo ganado. En el Mundo libre, recoger fragmentos también paga su base fuera de tempo.
+El pulso encaja con la escala y el reloj del lugar. En el Camino, los capítulos y las rondas de lugar, tocar en cualquier punto del lienzo es el pulso y suena al apoyar el dedo (D2-A, panel 10, P6); si el dedo se arrastra, el cubo camina, y si descansa, se abre el escáner. En el Mundo libre el cubo suena al apoyar y el vacío al soltar. La guía dice «Toca al ritmo. Arrastra para moverte.». Los aciertos avanzan el juego y guardan notas, pasos y ticks para el cierre; un toque fuera de tiempo no borra lo ganado. En el Mundo libre, recoger fragmentos también paga su base fuera de tempo.
 
 `journey-pulse.js` define el tema en grados `[0,1,4,3,2,0]`, con duraciones `[3,1,4,2,2,4]` en corcheas. La voz depende del contexto musical; no hay un instrumento separado de premio. La ventana base es±80ms y Maestro la estrecha. No fijar un único tempo para todo el universo.
 
@@ -44,7 +44,7 @@ La aportación personal se guarda de forma aditiva y compatible: notas históric
 
 `journey-finale.js` reconstruye tus frases y el tema con voces suaves existentes, armonizadas al contexto. Su partitura abstracta y el arreglo audible son capas distintas; leer la partitura sola no demuestra cómo suena.
 
-La UI nombra la frase que está sonando. El fondo no salta el final al tocarlo; **Seguir explorando** se habilita tras dos segundos, y Escape/salida normal conservan el cierre. Esperar, omitir o explorar terminan en Mundo libre con rumbo al siguiente lugar. No llevan al jugador al Refugio como destino obligatorio.
+El cierre dice solo «Tu mundo se abrió», con los seis anillos apagados; los créditos de autoría quedan para el final de los once (D5-C). La UI nombra la frase que está sonando. El fondo no salta el final al tocarlo; **Seguir explorando** se habilita tras dos segundos, y Escape/salida normal conservan el cierre. Esperar, omitir o explorar terminan en Mundo libre con rumbo al siguiente lugar. No llevan al jugador al Refugio como destino obligatorio.
 
 Guardar el cierre debe funcionar antes de darlo por terminado. Una falla deja posibilidad de reintento. La configuración musical actual se conserva; reconocimiento y emoción requieren escucha real.
 

@@ -24,7 +24,7 @@ try:
   p.wait_for_function("document.querySelector('#songStage .song-stage-text').textContent.includes('Tu frase · Lago')",timeout=60000)
   assert p.evaluate('__r.songStageState().k>=11*16')
   assert p.evaluate('JSON.stringify([__r.S.lugares.notes,__r.S.lugares.noteSteps,__r.S.lugares.noteTicks])')==before
-  p.wait_for_function("document.querySelector('#songStage .song-stage-text').textContent.includes('Espacio antes')",timeout=20000)
+  p.wait_for_function("document.querySelector('#songStage .song-stage-text').textContent===''&&__r.songStageState().k>=11*16",timeout=20000)   # P6: the silence has no words
   assert p.evaluate('Object.values(__r.songStageState().pulses).every(v=>v===0)'), 'silent bar has no invented visual hits'
   p.locator('#songClose').click()
   p.evaluate("()=>{const r=__r;r.S.sound=false;r.S.journey.finished=false;r.S.journey.notes={llanura:[60]};r.journeyFinale();}")
