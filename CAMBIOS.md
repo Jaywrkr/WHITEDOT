@@ -2,6 +2,10 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.200**. Las entradas describen su revisión, no certifican producción.
 
+## E2 · 2.3.0-alpha.202
+
+Entradas canceladas al perder foco/abrir controles, sin pulsos al cancelar. Primer tiempo legible y espera visual distinta de avance. Música y tamaño del cubo intactos. [Entrega](docs/ENTREGA_E.md).
+
 ## E1 · 2.3.0-alpha.201
 
 Resultados precisos: porcentaje no redondea a una estrella sin ganar; cronómetro coherente y umbrales visibles. Avisos visuales residuales siguen salida audible y descartan callbacks obsoletos, sin cambiar sonido. [Plan y entrega](docs/ENTREGA_E.md).

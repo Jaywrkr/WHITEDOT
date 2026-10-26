@@ -30,7 +30,7 @@ export function initialize(runtime) {
   },true);
   cv.addEventListener("pointerdown",e=>start(e));
   function start(e,overlay=false){
-    if(!e.isPrimary||activePointer!==null||runtime.depthEngaged||runtime.encounterEngaged||runtime.ecologyEngaged)return;
+    if(!e.isPrimary||activePointer!==null||document.hidden||openSurface('.modal:not([hidden])')||runtime.depthEngaged||runtime.encounterEngaged||runtime.ecologyEngaged)return;
     fromOverlay=overlay;
     if(!fromOverlay&&runtime.housePointerDown?.(e))return;
     if(!fromOverlay&&runtime.fingerTouch&&!runtime.pinnedAt?.(e.clientX,e.clientY)&&(runtime.glassPointerDown?.(e)||runtime.materiaPointerDown?.(e)||runtime.vidaPointerDown?.(e)||runtime.mirrorPointerDown?.(e)||runtime.depthDown?.(e)||runtime.encounterDown?.(e)||runtime.ecologyDown?.(e)||runtime.creativePointerDown?.(e)))return;
@@ -40,10 +40,11 @@ export function initialize(runtime) {
     // The cube is an explicit instrument. Empty space keeps drag/hold ambiguity until release.
     const x=W/2+(runtime.inWorld()?runtime.S.wx-(runtime.camX??runtime.S.wx):0),y=H/2+(runtime.inWorld()?runtime.S.wy-(runtime.camY??runtime.S.wy):0);
     if(!fromOverlay&&!runtime.fingerTouch&&(runtime.inWorld()||runtime.S.mode==='camino')&&Math.hypot(e.clientX-x,e.clientY-y)<=24&&!openSurface('.modal:not([hidden])')){directPulse=true;runtime.sonar('player',runtime.tapStart.t);}
-    if(runtime.inWorld()&&!fromOverlay&&!directPulse)holdTimer=setTimeout(()=>{held=true;runtime.startScanner();},500);
+    if(runtime.inWorld()&&!fromOverlay&&!directPulse)holdTimer=setTimeout(()=>{if(activePointer!==e.pointerId||document.hidden||openSurface('.modal:not([hidden])'))return;held=true;runtime.startScanner();},500);
     else if(!runtime.inWorld())ptr={x:e.clientX,y:e.clientY};
   }
   addEventListener("pointermove",e=>{
+    if(document.hidden||openSurface('.modal:not([hidden])')){cancelInput();return;}
     if(runtime.housePointerMove?.(e))return;
     if(runtime.fingerTouch&&(runtime.glassPointerMove?.(e)||runtime.materiaPointerMove?.(e)||runtime.vidaPointerMove?.(e)||runtime.mirrorPointerMove?.(e)||runtime.depthMove?.(e)||runtime.encounterMove?.(e)||runtime.ecologyMove?.(e)||runtime.creativePointerMove?.(e)))return;
     if(e.pointerId!==activePointer||!runtime.tapStart)return;
@@ -69,7 +70,10 @@ export function initialize(runtime) {
   cv.addEventListener("contextmenu",e=>e.preventDefault());
   addEventListener("keydown",e=>{if(e.code==="KeyE"&&!e.repeat&&(e.target===document.body||e.target===cv||e.target===document.getElementById('bMenu'))&&!openSurface('.modal:not([hidden])'))runtime.startScanner();});
   addEventListener("keyup",e=>{if(e.code==="KeyE")runtime.stopScanner();});
-  addEventListener("blur",()=>{cancelHold();activePointer=null;ptr=null;runtime.tapStart=null;for(const key in keys)keys[key]=0;runtime.stopScanner();});
+  function cancelInput(){cancelHold();const captured=activePointer;activePointer=null;ptr=null;runtime.tapStart=null;held=dragging=directPulse=fromOverlay=false;for(const key in keys)keys[key]=0;runtime.stopScanner();if(captured!==null)try{cv.releasePointerCapture(captured);}catch(_){}}
+  addEventListener('blur',cancelInput);addEventListener('pagehide',cancelInput);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelInput();});
+  document.addEventListener('focusin',e=>{if(blocked(e.target))cancelInput();});
 
   let parts=[],flash=0,pulse=0,lastTrail=null,camX=0,camY=0,curZone=-1,hudT=0,flocks=[],enterFx=0,inPond=false,bolts=[],planted=false,gardenN=0;
   const STARS=Array.from({length:110},()=>({x:Math.random(),y:Math.random(),s:Math.random()<.1?2:1,a:.08+Math.random()*.22}));

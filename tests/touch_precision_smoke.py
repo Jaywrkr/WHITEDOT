@@ -35,6 +35,16 @@ try:
    assert p.evaluate('__inputs.length')==1
    p.evaluate("""()=>{const el=document.createElement('span');document.body.append(el);const o={bubbles:true,pointerId:77,isPrimary:true,clientX:100,clientY:200};el.dispatchEvent(new PointerEvent('pointerdown',o));document.getElementById('w').dispatchEvent(new PointerEvent('pointerdown',{...o,pointerId:78,isPrimary:false}));window.dispatchEvent(new PointerEvent('pointerup',o));el.remove();}""")
    assert p.evaluate('__inputs.length')==1,'secondary canvas finger never changes overlay gesture intent'
+   # Opening a control while a pointer rests never leaves a delayed scanner or pulse.
+   p.mouse.move(size['width']*.75,size['height']*.55);p.mouse.down();p.locator('#bMenu').focus();p.wait_for_timeout(550);p.mouse.up()
+   assert p.evaluate('!__r.scanning&&!__r.ptr&&__inputs.length===1')
+   p.locator('#w').focus();p.keyboard.down('ArrowRight');assert p.evaluate('__r.keys.arrowright===1')
+   p.evaluate("window.dispatchEvent(new Event('blur'))")
+   assert p.evaluate('!__r.keys.arrowright&&!__r.ptr&&!__r.tapStart');p.keyboard.up('ArrowRight')
+   # A cancelled pointer has no release action; the next gesture remains usable.
+   p.evaluate("()=>{const cv=document.getElementById('w'),o={bubbles:true,pointerId:99,isPrimary:true,clientX:30,clientY:200};cv.dispatchEvent(new PointerEvent('pointerdown',o));window.dispatchEvent(new PointerEvent('pointercancel',o));window.dispatchEvent(new PointerEvent('pointerup',o));}")
+   assert p.evaluate('__inputs.length')==1
+   p.mouse.click(size['width']/2,size['height']/2);assert p.evaluate('__inputs.length')==2
    assert not errors,errors;p.close()
   b.close()
  print('PASS explicit cube emits on down under40ms, no duplicate release, blank drag/hold preserve movement/scanner',flush=True)

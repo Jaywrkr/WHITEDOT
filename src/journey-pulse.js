@@ -120,9 +120,11 @@ export function initialize(runtime){
   const counted=runtime.journeyRhythmState?.()?.steps||[0,4,8,12],sing=runtime.rhythmSinging?.()||null;
   // Plan I3: the Line anticipates; a counted step grows and brightens over the four steps before the cursor reaches it.
   const now16=stepNow();
-  for(let i=0;i<16;i++){const on=counted.includes(i),one=on&&i===0,lit=sing&&sing.step===i&&on?1-sing.age:0,come=on?approach(i,now16):0;c.globalAlpha=Math.min(1,on?.45+.45*lit+.45*come:(i%4?.14:.25));c.fillStyle=one?(runtime.GOLD||'#f0d27a'):'#fff';const hgt=on?5+6*lit+8*come:(i%4?2:3);c.fillRect(Math.round(x0+(i+.5)/16*w)-(on?1:0),y-hgt/2,on?2:1,hgt);}
-  const step=stepNow(),cx=x0+(step+.5)/16*w;c.globalAlpha=.8;c.fillStyle=runtime.GOLD||'#f0d27a';c.fillRect(Math.round(cx)-1,y-3,2,6);
-  for(const m of marks){const age=(now-m.at)/1000,life=calm()?2.5:1.8;if(age>life)continue;const k=1-age/life,px=x0+(m.step+.5)/16*w,h=(m.on?18:m.dropped?4:8)*(calm()?1:.6+.4*k);c.globalAlpha=k*(m.on?.95:m.dropped?.3:.5);c.strokeStyle=m.on&&!m.waiting?(runtime.GOLD||'#f0d27a'):m.dropped?'#888888':'#ffffff';c.beginPath();c.moveTo(px-5,y);c.lineTo(px,y-h);c.lineTo(px+5,y);c.stroke();}
+  for(let i=0;i<16;i++){const on=counted.includes(i),one=on&&i===0,lit=sing&&sing.step===i&&on?1-sing.age:0,come=on?approach(i,now16):0;c.globalAlpha=Math.min(1,on?.55+.35*lit+.35*come:(i%4?.14:.25));c.fillStyle='#fff';const hgt=on?(one?9:6)+6*lit+8*come:(i%4?2:3);c.fillRect(Math.round(x0+(i+.5)/16*w)-(on?1:0),y-hgt/2,one?3:on?2:1,hgt);}
+  const step=stepNow(),cx=x0+(step+.5)/16*w;c.globalAlpha=.85;c.fillStyle='#ffffff';c.fillRect(Math.round(cx)-1,y-4,2,8);
+  for(const m of marks){const age=(now-m.at)/1000,life=calm()?2.5:1.8;if(age>life)continue;const k=1-age/life,px=x0+(m.step+.5)/16*w,h=(m.on?18:m.dropped?4:8)*(calm()?1:.6+.4*k);c.globalAlpha=k*(m.on?.95:m.dropped?.3:.5);c.strokeStyle=m.on&&!m.waiting?(runtime.GOLD||'#f0d27a'):m.dropped?'#888888':'#ffffff';c.beginPath();
+   // An open bracket means a good beat still waiting for the place's action.
+   if(m.waiting){c.moveTo(px-5,y-5);c.lineTo(px-5,y-1);c.lineTo(px+5,y-1);c.lineTo(px+5,y-5);}else{c.moveTo(px-5,y);c.lineTo(px,y-h);c.lineTo(px+5,y);}c.stroke();}
   c.restore();}
  // The cube's form around it: corners, then a diamond, then a gold double frame that turns. Drawn over the cube.
  function drawForm(c,x,y,s,t){if(!form.level||!(runtime.inWorld?.()||runtime.S.mode==='camino'))return;const gold=runtime.GOLD||'#f0d27a',still=calm(),fresh=Math.max(0,1-(performance.now()-formAt)/400),r=s/2+6;c.save();c.lineWidth=1.5;

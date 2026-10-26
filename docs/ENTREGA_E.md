@@ -5,7 +5,7 @@ Jay autorizó ejecutar las siete fases, sin confirmación entre ellas. La meta d
 | Fase | Rama | Estado | Criterio de cierre |
 |---|---|---|---|
 | E1 | `excepcional/e1-fiabilidad` | Implementada; pruebas locales aprobadas | Resultados coherentes y avisos visuales a tiempo |
-| E2 | `excepcional/e2-interaccion` | Pendiente | Gestos legibles, cancelación segura y respuestas distintas |
+| E2 | `excepcional/e2-interaccion` | Implementada; pruebas locales aprobadas | Gestos legibles, cancelación segura y respuestas distintas |
 | E3 | `excepcional/e3-aprender` | Pendiente | Ayuda concreta en el momento necesario |
 | E4 | `excepcional/e4-interfaz` | Pendiente | Lectura, desplazamiento y salida consistentes |
 | E5 | `excepcional/e5-descubrimientos` | Pendiente | Hallazgo, uso y regreso comprensibles |
@@ -27,3 +27,8 @@ Verificación local aprobada:253 suites Node; result_clarity_smoke.py (móvil/ho
 ## Validación que necesita personas
 
 Cinco sesiones formativas y una tanda independiente de8–12, altavoz/auriculares/Bluetooth, Safari móvil, lector y teléfono de gama media. Preparar no significa ejecutar. Nadie se inventa respuestas, gusto, intención de volver ni notas. Los resultados reales decidirán qué criterios se cierran y qué fase concreta se reabre.
+
+
+## E2 · alpha.202
+
+La Línea distingue acierto dorado, espera con corchete blanco y error; el primer golpe tiene mayor jerarquía sin añadir otra guía. Entradas canceladas al ocultar página, perder foco o enfocar controles: no quedan teclas, arrastres ni escáneres pendientes. Se mantienen pulso inmediato del cubo y desambiguación de arrastre/hold en vacío. Sin sonidos nuevos ni cambios de reglas. Verificación local:253 suites Node; touch_precision_smoke.py ampliado (cancelar, foco, teclado, segundo dedo y recuperación), journey_pulse_smoke.py y player_touch_smoke.py aprobados. Auditoría limpia. El pulso explícito conserva despacho menor de40ms en Chromium; no es latencia acústica física. Audio E1 reutilizado: síntesis/arreglo no cambiaron.
