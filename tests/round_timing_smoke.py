@@ -15,6 +15,7 @@ try:
   p.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
   p.goto(f'http://127.0.0.1:{srv.server_port}/?lugar=lago');p.wait_for_function('__r?.placeRun()?.id==="lago"')
   p.evaluate("()=>{__r.S.sound=true;__r.audio();document.querySelectorAll('.modal,#returnEntrance').forEach(e=>e.hidden=true);}");p.wait_for_function('__r.ac?.state==="running"&&__r.MU.sq.length>2')
+  p.wait_for_function('!__r.rhythmDemo()',timeout=15000)  # Panel 11 (Q2): the round counts after the place sings.
   first=p.evaluate(PULSE,0);p.evaluate(PULSE,first+.5)
   timing=p.evaluate('({steps:__r.S.lugares.run.noteSteps,ticks:__r.S.lugares.run.noteTicks,sq:__r.MU.sq})')
   assert len(timing['ticks'])>=2 and timing['ticks'][-1]>timing['ticks'][-2] and timing['ticks'][-1]-timing['ticks'][-2]>=16,timing

@@ -22,6 +22,9 @@ try:
    st=page.evaluate('__r.places()');assert st['count']==5 and page.evaluate('__r.journeyChain().points')==0,st
    assert page.evaluate('__r.crystalState.near.length')==0 or True
    sparks=page.evaluate('__r.S.sparks')
+   # Panel 11 (Q2): pulses while the Lago sings its pattern are not counted; the round counts after its two bars.
+   page.evaluate(ON);assert page.evaluate('__r.rhythmDemo()') and page.evaluate('__r.places().run.total')==0,'the place sings: nothing counted'
+   page.wait_for_function('!__r.rhythmDemo()',timeout=15000)
    for i in range(6):page.evaluate(ON);page.wait_for_timeout(330)
    assert page.evaluate('__r.places().run.total')>=6
    page.evaluate("()=>{__r.S.journey.chain.points=340;}");page.wait_for_function("!!__r.journeyChain().flower",timeout=3000)

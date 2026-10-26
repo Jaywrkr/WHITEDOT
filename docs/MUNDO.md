@@ -39,6 +39,8 @@ El Viaje completa las cinco primeras; Jardín queda como siguiente destino. Comp
 | ★★ Ritmo | Al menos75% de pulsos a tiempo, con sonido |
 | ★★★ Maestro | Completar Maestro con70% a tiempo; requiere★★ para entrar |
 
+Qué cuenta la ronda (panel 11, Q2): mientras el lugar canta su patrón (desde el inicio hasta el fin de sus dos compases, tal como se oyen) los pulsos no cuentan. En la Cueva cuenta el eco, no la corchea: un paso del patrón en el compás de respuesta es acierto; un paso que no está, o fuera de tiempo en ese compás, es fallo; durante la llamada no cuenta nada. La Cueva juzga con el mismo reloj calibrado que el resto (`heardTime`).
+
 Maestro sube tempo10%, objetivo×1,5 y estrecha la ventana. Las once★ completan la canción;33★ abren su versión maestra. Sin sonido se puede ganar★. Reglas canónicas en `src/places.js`.
 
 ## Orientación y retorno

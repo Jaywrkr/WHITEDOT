@@ -109,7 +109,7 @@ export function initialize(runtime){
   if(ac&&!silent&&!runtime.rhythmSinging?.()&&(!own?.hit||own.hit.step%4===0)){const target=own?.hit?.time??nearestBeat(heard,runtime.MU?.bq,bar);if(Number.isFinite(target))runtime.calibrationSample?.(heard-target);}
   // The chapter game hears every pulse, with the step of the bar it answered (0 is the «1»).
   const played=on?(()=>{const [degree]=THEME[state.next],{scale,tr}=scaleNow();return {degree,scale,tr,midi:themePitch(degree,scale,tr)};})():null;
-  const action=runtime.journeyGamePulse?.(on,{midi:played?.midi,tick:absoluteStepAt(beatAt??heard),step:Number.isFinite(step)?Math.round(step)%16:null,silent,at:Number.isFinite(beatAt)?beatAt:null});
+  const action=runtime.journeyGamePulse?.(on,{midi:played?.midi,tick:absoluteStepAt(beatAt??heard),step:Number.isFinite(step)?Math.round(step)%16:null,silent,at:Number.isFinite(beatAt)?beatAt:null,heard});
   state.action=action||null;const waiting=action==='wait'||action==='crowded';marks[marks.length-1].waiting=waiting;
   // The wild World hears it too: a wild spark beside the cube hops on time (wild.js, plan F18).
   runtime.wildPulse?.(on);

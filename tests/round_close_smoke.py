@@ -24,6 +24,7 @@ try:
   rng=random.Random(10)
   for n in range(10):
    total=rng.randint(40,160);share=rng.uniform(.6,.9);hits=[rng.random()<share for _ in range(total)]
+   p.wait_for_function('!__r.rhythmDemo()',timeout=15000)  # Panel 11 (Q2): the round counts after the place sings.
    p.evaluate('''hits=>{for(const on of hits)__r.placeHear('jardin',on,{});}''',hits)
    tick=p.evaluate('__r.roundTick()')
    p.evaluate(WATCH)
@@ -43,13 +44,15 @@ try:
   # What the rounds earned waits in the Bitácora.
   assert p.evaluate("document.getElementById('bAch').classList.contains('has-unread')")
   # The live tick is drawn: dark at the start of a round, gold once the share passes 75 %.
+  p.wait_for_function('!__r.rhythmDemo()',timeout=15000)  # Panel 11 (Q2): the round counts after the place sings.
   p.evaluate("()=>{for(let i=0;i<8;i++)__r.placeHear('jardin',true,{});}");assert p.evaluate('__r.roundTick().lit')
   assert not errors,errors;p.close()
   # The near-miss card of the Lago: the exact gap, no achievement line, «Otra vez» beside «Seguir hacia».
   p=b.new_page(viewport={'width':390,'height':844});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
   p.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
   p.goto(f'http://127.0.0.1:{srv.server_port}/?lugar=lago');p.wait_for_function('__r?.placeRun()?.id==="lago"',timeout=20000)
-  p.evaluate("()=>{const r=__r;document.querySelectorAll('.modal').forEach(e=>e.hidden=true);r.S.sound=true;r.audio();r.S.lugares.stars.lago=[true,false,false];for(let i=0;i<500;i++)r.placeHear('lago',i<373,{});r.placeFinish('lago');}")
+  p.evaluate("()=>{const r=__r;document.querySelectorAll('.modal').forEach(e=>e.hidden=true);r.S.sound=true;r.audio();r.S.lugares.stars.lago=[true,false,false];}");p.wait_for_function("__r.ac?.state==='running'&&!__r.rhythmDemo()",timeout=20000)
+  p.evaluate("()=>{const r=__r;for(let i=0;i<500;i++)r.placeHear('lago',i<373,{});r.placeFinish('lago');}")
   p.wait_for_function('!document.getElementById("mPlace").hidden',timeout=15000)
   rows=p.inner_text('#placeRows');assert 'A 0,4 de ★★' in rows and 'logro' not in rows.lower(),rows
   a,nx=[p.locator(s).bounding_box() for s in ('#placeAgain','#placeNext')];assert abs(a['y']-nx['y'])<=2 and p.inner_text('#placeNext').startswith('Seguir hacia'),(a,nx)

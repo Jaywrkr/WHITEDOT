@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.216**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.217**. Las entradas describen su revisión, no certifican producción.
+
+## Q2 · Lo que cuenta la ronda · 2.3.0-alpha.217
+
+Rama `panel11/q2-lo-que-cuenta`, sobre `panel11/q1-reglas-a-la-vista` (informe de la sesión 11). Matsuura; Mizuguchi para el reloj.
+
+- La Cueva cuenta el eco, no la corchea. El juego dice qué cuenta cada pulso (`counts`) antes de actuar: un paso del patrón es acierto; un paso equivocado, o fuera de tiempo en el compás de respuesta, es fallo; durante la llamada no cuenta. La gota dorada sigue contando y cierra la ronda.
+- La Cueva juzga con `heardTime` (el reloj calibrado). `journey-pulse.js` le pasa el momento oído del toque.
+- Los pulsos mientras el lugar canta su patrón no cuentan: desde el inicio de la ronda hasta el fin de sus dos compases, tal como se oyen (`rhythmDemo` en `journey-rhythm.js`). Vale también para los capítulos del Viaje. Sin sonido no se canta y todo cuenta, como antes.
+- Aviso: la Cueva será algo más difícil. Es lo justo: la tarjeta mide lo que el lugar pide.
+- No cambia: ventana de ±80 ms, umbrales, ★ ya ganadas, música, guardados.
+- Pruebas: `tests/round-counts.mjs` (un acierto y un eco equivocado dan 50 %; la llamada no suma; con calibración 0,15 se acepta el borde del compás de respuesta; doce toques durante los dos compases cantados dejan `run.total` a 0).
 
 ## Q1 · Reglas a la vista · 2.3.0-alpha.216
 

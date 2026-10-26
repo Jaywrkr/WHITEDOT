@@ -47,6 +47,9 @@ export const PLACE_LESSONS=Object.freeze({
 });
 // The chapter/round owns the save: never persist a closed object before its reward commits.
 export const commitJourneyClose=(runtime,id)=>runtime.journeyComplete?runtime.journeyComplete(id)!==false:runtime.save?.()!==false;
+// Panel 11 (Q2): a game may say what a pulse counts for the round (counts: true, false, or null for not at all); the
+// Cueva counts the echo, not the eighth. Without it, a pulse counts as it was judged. The round hears it first, so the
+// pulse that closes it counts.
 export function initialize(runtime){
  const games={};
  const game=id=>classicJourney()?null:games[id]||null;
@@ -57,7 +60,7 @@ export function initialize(runtime){
  const current=()=>runtime.placeRun?.()?.id||runtime.journeyChapter?.()?.id;
  const now=()=>{const id=current();return playing(id)?games[id]:null;};
  Object.defineProperties(runtime,{registerJourneyGame:{get:()=>(id,g)=>{games[id]=g;}},journeyGame:{get:()=>game},journeyGamePlaying:{get:()=>playing},
-  journeyGamePulse:{get:()=>(on,beat)=>{const g=now();if(!g)return null;runtime.placeHear?.(current(),on,beat||{});return g.pulse(on,beat||{});}},journeyGameProgress:{get:()=>id=>game(id)?.progress()??null},
+  journeyGamePulse:{get:()=>(on,beat)=>{const g=now();if(!g)return null;const b=beat||{},c=g.counts?g.counts(on,b):on;if(c!==null)runtime.placeHear?.(current(),c,b);return g.pulse(on,b);}},journeyGameProgress:{get:()=>id=>game(id)?.progress()??null},
   drawJourneyGamesUnder:{get:()=>(c,W,H,t)=>now()?.under?.(c,W,H,t)},drawJourneyGames:{get:()=>(c,W,H,t)=>{const g=now();if(!g)return;g.over?.(c,W,H,t);runtime.drawRhythmGuide?.(c,W,H,t);}},
   cubeGrowth:{get:()=>()=>now()?.growth?.()||1},journeyBarDrop:{get:()=>()=>({drop:barDropState(),bar:barTarget(runtime.W||globalThis.innerWidth||0)})}});
  globalThis.addEventListener?.('resize',forgetBarTarget);

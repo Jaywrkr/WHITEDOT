@@ -1,4 +1,4 @@
-import {cueDelay,audibleTime} from './journey-pulse.js';
+import {cueDelay,audibleTime,heardTime} from './journey-pulse.js';
 import {hashKey} from './universe-regions.js';
 import {calmMotion} from './frame-state.js';
 import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose,barTarget,drawBarDrop} from './journey-games.js';
@@ -34,7 +34,9 @@ export function initialize(runtime){
  const audible=()=>runtime.S.sound&&runtime.ac&&runtime.bus;
  const full=()=>own().points>=goal();
  const six=()=>runtime.SIX||.125;
- const heard=()=>{const ac=runtime.ac;return ac?ac.currentTime-(ac.outputLatency||ac.baseLatency||0):0;};
+ // Panel 11 (Q2, Mizuguchi): the cave judges on the one clock, heardTime, with the calibration; journey-pulse.js passes
+ // the moment the touch was heard, and without it (tests) it is now as heard.
+ const heard=beat=>Number.isFinite(beat?.heard)?beat.heard:runtime.ac?heardTime(runtime.ac):0;
  function voice(step,t,soft=false){if(!audible())return;const ct=runtime.chordTones?.()||[60,64,67];let m=ct[(step/2)%ct.length]+12+(step>=8?12:0);while(m>88)m-=12;runtime.pluck?.(m,t,soft?.05:.09,2);if(!soft)runtime.pluck?.(m,t+six()*3,.035,2);}
  function arrive(){const s=own();if(s.gold)return;s.gold={x:Math.round(runtime.S.wx+ECHO_GOLD_GAP),y:Math.round(runtime.S.wy-ECHO_GOLD_GAP*.5)};goldPulse=1;runtime.save?.();chapterToast(runtime,'cueva','Cae una gota dorada: atrápala a tiempo.');}
  function open(){const s=own();if(s.opened)return 'done';s.opened=true;if(!commitJourneyClose(runtime,'cueva')){s.opened=false;return null;}runtime.enterFx=1;runtime.flash=1;runtime.soon?.(t=>{for(let i=0;i<4;i++)voice(i*2,t+i*six()*2);},'player');return 'open';}
@@ -46,11 +48,19 @@ export function initialize(runtime){
    else if(phase?.kind==='call')phase={kind:'answer',start:t,end:t+bar,pattern:phase.pattern,steps:[]};
    else phase={kind:'call',start:t,end:t+bar,pattern:echoPattern(st.n,st.len),steps:[]};}
   if(phase?.kind==='call'&&t>=phase.start-1e-3&&phase.pattern.includes(s)){voice(s,t);sung.push({step:s,at:t});if(sung.length>12)sung.shift();}}
+ // What a pulse is, before it does anything (pure): off time a miss; with the bar full the catch; with the sound off an
+ // echo; inside the answer bar an answer (a step of the pattern) or wrong; anywhere else it waits (the call is sung).
+ const answering=beat=>{const h=heard(beat);return !!phase&&phase.kind==='answer'&&h>=phase.start-.1&&h<=phase.end+.1;};
+ function verdict(on,beat={}){if(!active())return null;if(!on)return 'miss';if(full())return 'catch';if(beat.silent)return 'silent';
+  if(!answering(beat)||!Number.isFinite(beat.step))return 'wait';return phase.pattern.includes(beat.step)?'answer':'wrong';}
+ // Panel 11 (Q2, Matsuura): the round counts the echo, not the eighth. A step of the pattern is on time; a wrong step or
+ // a pulse off time in the answer bar is a miss; a pulse while the cave calls (or before its first call) is not counted.
+ function counts(on,beat={}){const v=verdict(on,beat);if(v==='miss')return full()||beat.silent||answering(beat)?false:null;return v===null||v==='wait'?null:v!=='wrong';}
  // A pulse on time inside the answer bar answers its step; one in the call bar is simply early.
- function pulse(on,beat={}){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}if(full()){if(!s.gold)arrive();return open();}
-  if(beat.silent){const before=s.points;s.points=Math.min(goal(),s.points+2);toBar.push({value:2,from:before,at:performance.now()+150});if(before<goal()&&s.points>=goal())arrive();return 'echo';}
-  const h=heard();if(!phase||phase.kind!=='answer'||h<phase.start-.1||h>phase.end+.1||!Number.isFinite(beat.step))return 'wait';
-  if(!phase.steps.includes(beat.step))phase.steps.push(beat.step);runtime.soon?.(t=>voice(beat.step,t,true),'player');return phase.pattern.includes(beat.step)?'answer':'wrong';}
+ function pulse(on,beat={}){const v=verdict(on,beat);if(v===null)return null;const s=own();if(v==='miss'){misses++;shiver=1;return 'miss';}if(v==='catch'){if(!s.gold)arrive();return open();}
+  if(v==='silent'){const before=s.points;s.points=Math.min(goal(),s.points+2);toBar.push({value:2,from:before,at:performance.now()+150});if(before<goal()&&s.points>=goal())arrive();return 'echo';}
+  if(v==='wait')return 'wait';
+  if(!phase.steps.includes(beat.step))phase.steps.push(beat.step);runtime.soon?.(t=>voice(beat.step,t,true),'player');return v;}
  function tick(){const s=own();if(full()&&!s.gold)arrive();
   if(s.gold){const dx=runtime.S.wx+ECHO_GOLD_GAP-s.gold.x,dy=runtime.S.wy-ECHO_GOLD_GAP*.5-s.gold.y;if(Math.hypot(dx,dy)>4){s.gold.x+=dx*.08;s.gold.y+=dy*.08;}}
   const MU=runtime.MU,p=echoProgress(s.points,goal());if(MU&&p>0){MU.journeyFloor=Math.max(MU.journeyFloor||0,.2+.6*p);if(MU.journeyCap!=null)MU.journeyCap=Math.max(MU.journeyCap,.4+.6*p);}}
@@ -78,6 +88,6 @@ export function initialize(runtime){
   for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*echoProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=2+Math.min(6,d.value/2);
    drawBarDrop(c,cx,cy,tx,barY,e,z,1-k*.3,gold);}
   c.restore();}
- runtime.registerJourneyGame?.('cueva',{pulse,under,over,progress:()=>echoProgress(own().points,goal())});
+ runtime.registerJourneyGame?.('cueva',{pulse,counts,under,over,progress:()=>echoProgress(own().points,goal())});
  Object.defineProperties(runtime,{echoMusicStep:{get:()=>step},journeyEcho:{get:()=>()=>{const s=own();return {active:active(),points:s.points,goal:goal(),progress:echoProgress(s.points,goal()),len:s.len,n:s.n,echoes:s.echoes,best:s.best,phase:phase?{kind:phase.kind,start:phase.start,end:phase.end,pattern:[...phase.pattern],steps:[...phase.steps]}:null,misses,gold:s.gold?{...s.gold}:null,opened:s.opened};}}});
 }
