@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.207**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.208**. Las entradas describen su revisión, no certifican producción.
+
+## P1 · Pantallas limpias · 2.3.0-alpha.208
+
+Rama `panel10/p1-pantallas-limpias`, sobre `claude/charming-darwin-dvbfc7`. Detalle visual de Nesbitt (panel 10), prioridad alta y media.
+
+- Palabras enteras o con guion: «Copiar diagnóstico» y la versión ya no se parten; el diagnóstico va en dos columnas.
+- Lugares abre en filas enteras en teléfono, horizontal y escritorio; la cita de la remezcla no se parte.
+- Fuera de pantalla, la columna dorada del portal es una luz de 140 px a la altura del rumbo, con degradado.
+- Refugio: en horizontal la casa encaja a la izquierda del panel; la Voz baja bajo y = 120 (en horizontal, sobre el panel); los rótulos se miden y no cruzan el borde.
+- Menú: la cabecera tapa el margen superior en horizontal; el pie se funde cuando hay más debajo.
+- Filas de botones con la misma altura; «Seguir» va primero y a todo el ancho en resultado, Lugares, portal y guía.
+- Tu canción abre con el foco en su título oculto, no en «Otra vez».
+- Las muestras forzadas no muestran «Laboratorio» ni su código fuera del laboratorio.
+- Mapa: la leyenda va por elementos, sin separador colgante, y deja aire antes de los botones. «Se guarda una copia» en gris.
+- Sin cambios en música, cubo, guardados ni estructura del menú (P2).
+- Pruebas: `tests/clean_screens_smoke.py` (tres tamaños) y `tests/places-ring.mjs` ampliada. Sin teléfono físico.
 
 ## Panel, sesión 10 · sin versión
 

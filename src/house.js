@@ -19,14 +19,17 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
  function putAway(kind){const h=own(),o=items(h).find(o=>o.kind===kind);if(!o||o.capsule||o.gardenSeed)return;const ok=edit(()=>{if(o.gardenCard){const b=runtime.gardenState;if(b.readOnly)return false;b.cards=b.cards.filter(id=>id!==o.cardId);}else h.objects=h.objects.filter(p=>p!==o);});if(ok){selectedObject=null;runtime.toast('Objeto guardado.');}palette();}
  function place(kind,point){if(kind.startsWith('garden:'))return runtime.moveGardenObject?.(kind,point);if(kind.startsWith('sound:')){const d=own().decor.find(d=>d.id===kind);if(!d)return false;Object.assign(d,{room:point.room,x:point.x,y:point.y});return true;}return placeHouseObject(own(),kind,point.room,point.x,point.y);}
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
- // Free screen between the top counters and the house panel.
- const view=()=>frameMemo('house:view',()=>{const bottom=$('housePanel').hidden?runtime.H:$('housePanel').getBoundingClientRect().top-8,hud=Math.max(0,...[...document.querySelectorAll('.hud,#goal')].filter(e=>e.offsetParent).map(e=>e.getBoundingClientRect().bottom)),top=Math.min(Math.max(0,hud+8),bottom-160);return {top,bottom:Math.max(top+160,Math.min(runtime.H,bottom))};});
- const viewH=()=>{const v=view();return v.bottom-v.top;};
- const geometry=()=>{const k=viewScale(runtime.W,viewH(),overview);return {k,overview,W:runtime.W,H:viewH(),cam:cam||{x:HOUSE_W/2,y:HOUSE_H/2}};};
+ function roomLabel(c,full,short,x,min,max){for(const text of [full,short].map(t=>t.toLocaleUpperCase('es'))){const w=c.measureText(text).width;if(x+w<=max)return {text,x:Math.max(min,x)};if(max-w>=min)return {text,x:max-w};}return null;}
+ // Free screen between the top counters and the house panel. In landscape the panel stands at the side:
+ // the house then fits in the band to its left, from the counters to the bottom (panel 10, Nesbitt #1).
+ const view=()=>frameMemo('house:view',()=>{const panel=$('housePanel').hidden?null:$('housePanel').getBoundingClientRect(),side=!!panel&&panel.width>0&&panel.left>runtime.W*.5,right=side?Math.max(240,panel.left-8):runtime.W,
+  bottom=!panel?runtime.H:side?runtime.H-8:panel.top-8,hud=Math.max(0,...[...document.querySelectorAll('.hud,#goal')].filter(e=>e.offsetParent).map(e=>e.getBoundingClientRect().bottom)),top=Math.min(Math.max(0,hud+8),bottom-160);return {top,bottom:Math.max(top+160,Math.min(runtime.H,bottom)),left:0,right};});
+ const viewH=()=>{const v=view();return v.bottom-v.top;},viewW=()=>{const v=view();return v.right-v.left;},midX=()=>{const v=view();return (v.left+v.right)/2;};
+ const geometry=()=>{const k=viewScale(viewW(),viewH(),overview);return {k,overview,W:viewW(),H:viewH(),cam:cam||{x:HOUSE_W/2,y:HOUSE_H/2}};};
  // While it opens, the Refugio unfolds out of the cube: 0 folded, 1 open.
  const unfold=()=>{if(!landing)return 1;const p=(performance.now()-landing.at)/LANDING;if(p>=1||calm()){landing=null;return 1;}return 1-(1-p)**3;};
- const toScreen=(hx,hy)=>{const g=geometry();return {x:runtime.W/2+(hx-g.cam.x)*g.k,y:view().top+g.H/2+(hy-g.cam.y)*g.k};};
- const toHouse=(px,py)=>{const g=geometry();return {x:g.cam.x+(px-runtime.W/2)/g.k,y:g.cam.y+(py-view().top-g.H/2)/g.k};};
+ const toScreen=(hx,hy)=>{const g=geometry();return {x:midX()+(hx-g.cam.x)*g.k,y:view().top+g.H/2+(hy-g.cam.y)*g.k};};
+ const toHouse=(px,py)=>{const g=geometry();return {x:g.cam.x+(px-midX())/g.k,y:g.cam.y+(py-view().top-g.H/2)/g.k};};
  // The wall area of a room on screen: objects use x (beat) and y (height) inside it.
  function roomRect(id){const b=roomBox(id);if(!b)return null;const a=toScreen(...Object.values(wallPoint(b,0,0))),z=toScreen(...Object.values(wallPoint(b,1,1)));return {x:a.x,y:a.y,w:z.x-a.x,h:z.y-a.y,size:z.x-a.x};}
  // Where the cube stands, from the saved room and position.
@@ -46,10 +49,10 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
  // Walking past an object makes it sound once; it rests a moment before it can again.
  function brush(h){const room=roomAt(floor,fx),b=roomBox(room),now=performance.now();for(const o of items(h)){if(o.room!==room||!definition(o))continue;const ox=b.x+18+o.x*(b.w-36);if(Math.abs(ox-fx)>22||now-(brushed.get(o.kind)||-1e9)<2500)continue;brushed.set(o.kind,now);counts.brush++;runtime.now(t=>runtime.playHouseObject(o,t,h));}}
  function cubeAt(){if(climb){const k=climb.t<.5?2*climb.t*climb.t:1-2*(1-climb.t)**2;return {x:climb.x0+(climb.x1-climb.x0)*k,y:climb.y0+(climb.y1-climb.y0)*k};}return {x:fx,y:FLOORS[floor].bottom};}
- function camera(dt){const g=geometry(),c=cubeAt(),half=runtime.W/2/g.k,tx=overview?HOUSE_W/2:Math.max(half-50,Math.min(HOUSE_W+50-half,c.x)),fy=climb?(FLOORS[climb.s.from].top+FLOORS[climb.s.to].bottom)/2:(FLOORS[floor].top+FLOORS[floor].bottom)/2,ty=overview?(EDGE.top+EDGE.bottom)/2:fy-8;
+ function camera(dt){const g=geometry(),c=cubeAt(),half=g.W/2/g.k,tx=overview?HOUSE_W/2:Math.max(half-50,Math.min(HOUSE_W+50-half,c.x)),fy=climb?(FLOORS[climb.s.from].top+FLOORS[climb.s.to].bottom)/2:(FLOORS[floor].top+FLOORS[floor].bottom)/2,ty=overview?(EDGE.top+EDGE.bottom)/2:fy-8;
   if(!cam||calm())cam={x:tx,y:ty};else{const f=Math.min(1,dt*5);cam={x:cam.x+(tx-cam.x)*f,y:cam.y+(ty-cam.y)*f};}
   // Settled once the camera has arrived and the free band has kept its size for a few frames.
-  const band=view().top+':'+view().bottom;settled=Math.abs(tx-cam.x)<.5&&Math.abs(ty-cam.y)<.5&&band===lastBand?settled+1:0;lastBand=band;}
+  const band=view().top+':'+view().bottom+':'+view().right;settled=Math.abs(tx-cam.x)<.5&&Math.abs(ty-cam.y)<.5&&band===lastBand?settled+1:0;lastBand=band;}
  function palette(){const h=own();$('houseGardenTools').hidden=!!visit||!!h.readOnly||roomAt(floor,fx)!=='jardin';gardenRoom=null;$('houseObjects').replaceChildren();for(const available of [true,false]){const group=document.createElement('optgroup');group.label=available?'Puedes colocar':'Por descubrir';for(const d of HOUSE_OBJECTS){const owned=houseOwns(d,runtime.S);if(!!owned!==available)continue;const o=document.createElement('option');o.value=d.id;o.disabled=!owned;o.textContent=d.name;group.append(o);}if(group.children.length)$('houseObjects').append(group);}$('houseObjects').value=selected;$('houseShare').disabled=!!h.readOnly;$('housePlace').setAttribute('aria-pressed',String(action==='place'));$('housePick').hidden=action!=='place'||!!visit||!!h.readOnly;$('houseCount').textContent=h.objects.filter(o=>o&&HOUSE_OBJECTS.some(d=>d.id===o.kind)).length+' de 40';$('houseObjects').disabled=!!visit||!!h.readOnly;$('housePlace').disabled=!!visit||!!h.readOnly;$('houseHint').textContent=h.readOnly?'Este refugio necesita una versión más reciente.':visit?'De visita en otro refugio. Tu colección sigue contigo.':action==='place'?'Toca una pared para colocar. Arrastra fuera para guardar.':'Toca para caminar. Arrastra un objeto para moverlo.';$('houseOverview').setAttribute('aria-pressed',String(overview));runtime.hud();}
  function land(){const S=runtime.S;if(runtime.inWorld?.()){const st=S.studio;if(st.x!=null&&Math.hypot(st.x-S.wx,st.y-S.wy)>400){(S.camps||=[]).push([Math.round(st.x),Math.round(st.y)]);if(S.camps.length>30)S.camps.shift();}st.x=S.wx;st.y=S.wy;st.biome=runtime.biomeOfPos(S.wx,S.wy);}
   const first=!own().landed;enter();if(!calm())landing={at:performance.now()};if(!own().readOnly&&first){own().landed=true;runtime.save();runtime.say?.(runtime.VOZ.houseFirst);}else if(runtime.inWorld?.()===false&&runtime.S.prevMode==='world')runtime.toast('<em>Refugio</em> · se abrió en '+(runtime.BIOMES?.[runtime.S.studio.biome||0]?.name||'el Mundo'));}
@@ -69,7 +72,7 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
   const dpr=Math.max(1,runtime.cx.getTransform?.().a||1),cache=shell(k,dpr,{unlocked:h.unlocked,ink});
   c.save();c.globalAlpha=1;paintBackdrop(c,runtime.W,runtime.H,night,t,calm(),{biome:visit?'llanura':runtime.BIOMES?.[runtime.S.studio?.biome||0]?.id});
   // The house stays in its own band: the counters above keep plain sky behind them.
-  const v=view();c.save();c.beginPath();c.rect(0,v.top,runtime.W,v.bottom-v.top+8);c.clip();
+  const v=view();c.save();c.beginPath();c.rect(0,v.top,v.right,v.bottom-v.top+8);c.clip();
   // Unfolding: everything grows out of the cube and fades in.
   const open=unfold(),at0=cubeAt(),o=toScreen(at0.x,at0.y-15);c.save();if(open<1){c.translate(o.x,o.y);c.scale(open,open);c.translate(-o.x,-o.y);c.globalAlpha=Math.min(1,open*1.4);}const fade=c.globalAlpha;
   if(cache)c.drawImage(cache,o0.x-cache.pad*k,o0.y-(ROOF+cache.pad)*k,cache.width/dpr,cache.height/dpr);
@@ -77,7 +80,10 @@ export function initialize(runtime){const $=runtime.$,signals=new Map();let owne
   for(const th of THREADS)if(th.rooms.every(r=>h.unlocked.includes(r))){const d=toScreen(th.x,th.y0+(calm()?.5:(t/3200)%1)*(th.y1-th.y0));c.fillStyle=ink;c.fillRect(Math.round(d.x-1.5),Math.round(d.y-1.5),3,3);}
   // The bar walks across each open room: a soft light on the current step.
   const now=runtime.ac?audibleTime(runtime.ac):0;while(cues.length>1&&cues[1].time<=now)cues.shift();const cue=cues[0]&&cues[0].time<=now&&now-cues[0].time<.6?cues[0]:null;
-  for(const r of HOUSE_ROOMS){const b=roomBox(r.id),rect=roomRect(r.id),ok=h.unlocked.includes(r.id),label=toScreen(b.x+26,b.y+22);c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.fillStyle=ok?'#ffffff8c':'#ffffff4d';c.fillText((ok?r.name:r.name+' · '+r.days+' días o '+r.found+' logros').toLocaleUpperCase('es'),label.x,label.y);c.letterSpacing='0px';
+  for(const r of HOUSE_ROOMS){const b=roomBox(r.id),rect=roomRect(r.id),ok=h.unlocked.includes(r.id),label=toScreen(b.x+26,b.y+22);c.font='11px "Geist Mono", monospace';c.letterSpacing='2px';c.fillStyle=ok?'#ffffff8c':'#ffffff4d';
+   // Room labels are measured: one that would cross the screen edge is right-aligned inside it; if even then it
+   // does not fit, only the name; a room off screen keeps no label (the tap still says what opens it). Panel 10, Nesbitt #21.
+   const lx=roomLabel(c,ok?r.name:r.name+' · '+r.days+' días o '+r.found+' logros',r.name,label.x,Math.max(v.left+16,toScreen(b.x,b.y).x+8),v.right-16);if(lx)c.fillText(lx.text,lx.x,label.y);c.letterSpacing='0px';
    if(!ok)continue;
    if(cue&&runtime.S.sound&&!calm()){const x=rect.x+(cue.s+.5)/16*rect.w,grad=c.createLinearGradient(0,rect.y,0,rect.y+rect.h);grad.addColorStop(0,'rgba(255,255,255,0)');grad.addColorStop(1,'rgba(255,255,255,.10)');c.fillStyle=grad;c.fillRect(x-rect.w/40,rect.y-20,rect.w/20,rect.h+46);}
    // The bar under each chamber: sixteen ticks, the current one in gold.

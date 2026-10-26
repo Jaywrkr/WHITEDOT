@@ -677,3 +677,22 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 /* One short narrative follows the existing performance, never another overlay. */
 #songStage .song-stage-text{white-space:pre-line;line-height:1.6}
 @media(max-height:500px){#songStage .song-stage-text{white-space:normal}}
+
+/* Panel 10 · P1, clean screens (Nesbitt's detail list). Words break whole or with a hyphen, never mid-word. */
+.sheet button{overflow-wrap:break-word;hyphens:auto}
+#releaseVersion{white-space:nowrap}
+.settings-diagnostic{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:center}.settings-diagnostic #diagnosticCopy{grid-column:1/-1}
+#mSettings button small{color:var(--dim)}
+/* Buttons in one row share their height; the action that goes on leads, alone and full width. */
+.sheet .row,.guide-sheet>.row{align-items:stretch}
+.sheet .row>:is(#placeNext,#lugaresDoor,#portalPlay){flex-basis:100%;order:-1}
+.guide-sheet #guideFollow{grid-column:1/-1;order:-1}
+/* The menu heading covers the sheet's top padding too, and the sheet fades at its foot while more lies below. */
+.modal .menu-sheet>.menu-heading{top:-17px;margin-top:-16px;padding-top:20px}
+.modal .menu-sheet{padding-bottom:0}
+.modal .menu-sheet::after{content:"";position:sticky;bottom:0;height:16px;margin-top:-16px;background:linear-gradient(#0000,#000);pointer-events:none;z-index:3}
+/* The map legend wraps between items; it keeps a breath before the buttons. */
+#mapNote{display:flex;flex-wrap:wrap;gap:2px 14px;margin:8px 0 16px}
+/* In the Refugio the Voice speaks below the counters; in landscape, over the side panel. */
+body:has(#housePanel:not([hidden])) .voice:not(.expanded){top:calc(var(--safe-top,0px) + 128px)}
+@media(max-height:440px){body:has(#housePanel:not([hidden])) .voice:not(.expanded){left:calc(100vw - 8px - min(150px,25vw - 55px));width:min(300px,calc(50vw - 110px));max-width:min(300px,calc(50vw - 110px))}}

@@ -59,7 +59,7 @@ El final5 usa voces suaves existentes, contexto actual y frases guardadas; todas
 
 ## Interfaz y guía
 
-Negro, Geist Mono, esquinas rectas, blanco para estados y dorado ganado. Cubo pequeño conservado. Controles silenciosos y sin menús demo públicos.
+Negro, Geist Mono, esquinas rectas, blanco para estados y dorado ganado. Cubo pequeño conservado. Controles silenciosos y sin menús demo públicos. Las palabras se cortan enteras o con guion; los botones de una fila miden lo mismo y la acción que sigue va primero, a todo el ancho. Al abrir, el foco va al título, no a un botón. Las muestras de laboratorio no enseñan «Laboratorio» ni código fuera del laboratorio.
 
 `journal.js` reúne Hoy, Colección, Mapa, Música, Logros y Tú. Mueve paneles existentes desde `#journalParts` al contenido de la pestaña. El libro pliega filtros secundarios y muestra primero el hallazgo; Favoritos desplaza al destino guardado y no duplica listados. IDs existentes conservados.
 
@@ -75,4 +75,4 @@ Cuenta opcional y progreso local por defecto. Auth/REST, CAS, RLS y recuperació
 
 ## Evidencia
 
-[Entrega E](ENTREGA_E.md), [auditoría E](panel/candidato-e/informe.md) y [verificación](VERIFICACION.md). El verificador de E protege311 archivos y trece contratos; las notas del panel son simulaciones con alcance declarado. CI, despliegue, escucha física y personas se registran por separado.
+[Entrega E](ENTREGA_E.md), [auditoría E](panel/candidato-e/informe.md) y [verificación](VERIFICACION.md). El verificador de E protege309 archivos y trece contratos (P1 abrió `map.js` y `places-ring.js`, solo dibujo); las notas del panel son simulaciones con alcance declarado. CI, despliegue, escucha física y personas se registran por separado.

@@ -27,6 +27,9 @@ assert.deepEqual(normalizePlaces({center:{x:12.4,y:-3}},journey).center,{x:12,y:
 assert(beaconGain(RING_RADIUS)>0);assert(beaconGain(1000)>beaconGain(RING_RADIUS));assert.equal(beaconGain(NEXT_HEAR),0);assert(beaconGain(0)<.06,'a beacon stays under the music');
 // Plan I2: off screen, the next portal's column stands at the screen edge on its side.
 assert.equal(edgeColumn(-900,400,390,844).x,12);assert.equal(edgeColumn(5000,400,390,844).x,378);assert.equal(edgeColumn(200,-3000,390,844).x,200);
+// Panel 10 · P1: off screen the light sits at the height of the heading, a band away from the corners, not down the whole edge.
+{const right=edgeColumn(5000,422,390,844),up=edgeColumn(5000,-3000,390,844),down=edgeColumn(195,9000,390,844);
+ assert.ok(Math.abs(right.y-422)<1,'straight right: the light stands at mid height');assert.ok(up.y<right.y&&up.y>=70,'up and right: higher on the edge');assert.equal(down.y,844-70);assert.equal(edgeColumn(200,-3000,390,844).y,70);}
 console.log('PASS places ring: eleven fixed portals 30–60 s from the Refugio, moved off the sea, an arrow and a column of light to the next place on the path, back beside the portal, centre and entered portals kept');
 
 const {routeEdge}=await import('../src/places-ring.js');for(let i=0;i<8;i++){const a=i*Math.PI/4,e=routeEdge(Math.cos(a)*6000,Math.sin(a)*6000,390,844);assert(Math.abs(e.angle-a)<1e-6||Math.abs(e.angle-a+Math.PI*2)<1e-6);assert(e.x>=23&&e.x<=367&&e.y>=143&&e.y<=697);}assert(routeEdge(0,-6000,390,844).y<422&&routeEdge(0,6000,390,844).y>422);

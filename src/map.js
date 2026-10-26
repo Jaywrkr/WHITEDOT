@@ -71,7 +71,8 @@ export function initialize(runtime){
   const c=$("mapCv"),x=c.getContext("2d"),m=drawMap(runtime,x,0,0,c.width,c.height,zoom);
   $("mRegions").textContent=m.cells.length;$("mConts").textContent=m.continents;$("mRecord").textContent=m.record;
   $("mapZoom").textContent=zoom==='mundo'?'Ver cerca':'Ver todo';
-  $("mapNote").textContent=`${m.favorites.length} favoritos (◇) · ${m.reached.length} hitos visitados · ${m.heard.length} oídos sin visitar (?) · ${Object.keys(runtime.S.anomalies||{}).length} rarezas (✶)${m.camp?' · ⌂ tu Estudio':''}${m.ring.length?` · ${m.ring.filter(q=>q.open).length} lugares abiertos (○)`:''}`;
+  // One item per span: lines break between items, never leaving a separator hanging (panel 10, Nesbitt #14).
+  $("mapNote").replaceChildren(...[`${m.favorites.length} favoritos (◇)`,`${m.reached.length} hitos visitados`,`${m.heard.length} oídos sin visitar (?)`,`${Object.keys(runtime.S.anomalies||{}).length} rarezas (✶)`,m.camp&&'⌂ tu Estudio',m.ring.length&&`${m.ring.filter(q=>q.open).length} lugares abiertos (○)`].filter(Boolean).map(t=>{const e=document.createElement('span');e.textContent=t;return e;}));
   runtime.renderRingTravel?.();
  }
  function open(){runtime.openJournal?.('places');render();runtime.unlock('mapa1');}

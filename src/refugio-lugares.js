@@ -60,8 +60,16 @@ export function initialize(runtime){
    li.append(name,st,note);if(openNow&&!stars(p.id)[0]){const follow=document.createElement('button');follow.textContent='Seguir';follow.onclick=()=>runtime.ringGuide?.(p.id);li.appendChild(follow);}if(openNow&&(d.seen?.[p.id]||stars(p.id)[0])){const go=document.createElement('button');go.textContent='Ir';go.onclick=()=>travel(p.id);li.appendChild(go);}if(!openNow)li.className='closed';list.appendChild(li);}
   // Today's remix (wild.js, plan F18): one open place with another place's rhythm, worth more sparks.
   const mix=runtime.dailyRemix?.(),line=$('lugaresRemixLine'),btn=$('lugaresRemix');if(line&&btn){const place=mix&&PLACES.find(p=>p.id===mix.id);line.hidden=btn.hidden=!place;
-   if(place){line.textContent=`Remezcla de hoy: ${place.name} en «${runtime.remixName?.(mix.rhythm)||mix.rhythm}».`;btn.onclick=()=>remixGo(mix);}}
-  box.hidden=false;(globalThis.requestAnimationFrame||((fn)=>fn()))(()=>{if(box.hidden)return;const next=list.querySelector('[aria-current=step]');if(next)list.scrollTop+=next.getBoundingClientRect().top-list.getBoundingClientRect().top-list.clientHeight*.25;scrollCue();});}
+   if(place){const quote=document.createElement('span');quote.style.whiteSpace='nowrap';quote.textContent=`${place.name} en «${runtime.remixName?.(mix.rhythm)||mix.rhythm}».`;line.replaceChildren('Remezcla de hoy: ',quote);btn.onclick=()=>remixGo(mix);}}
+  list.style.maxHeight='';box.hidden=false;(globalThis.requestAnimationFrame||((fn)=>fn()))(()=>{if(box.hidden)return;align(list);scrollCue();});}
+ // The list opens on whole rows (panel 10, Nesbitt #3): the row before the next place sits at the top edge, and the
+ // list ends on the last row that fits whole; scrolling still shows the rest.
+ function align(list){const next=list.querySelector('[aria-current=step]'),first=next?.previousElementSibling||next;if(!list.getBoundingClientRect)return;
+  if(first)list.scrollTop+=first.getBoundingClientRect().top-list.getBoundingClientRect().top-list.clientTop;if(list.scrollHeight<=list.clientHeight+2)return;
+  const top=list.getBoundingClientRect().top+list.clientTop,bottom=top+list.clientHeight,rows=[...list.children].map(li=>li.getBoundingClientRect()),whole=rows.filter(r=>r.top>=top-1&&r.bottom<=bottom+1);if(!whole.length)return;
+  // Near the end the scroll cannot lift the row to the top: the list then ends with the list and starts on a whole row.
+  if(whole[0].top>top+1){list.style.maxHeight=Math.floor(bottom-whole[0].top+list.clientTop*2)+'px';list.scrollTop=list.scrollHeight;return;}
+  const last=whole.at(-1);if(last.bottom<bottom-1)list.style.maxHeight=Math.ceil(last.bottom-top+list.clientTop*2)+'px';}
  function scrollCue(){const list=$('lugaresList'),hint=$('lugaresScrollHint');if(list&&hint)hint.hidden=list.scrollHeight<=list.clientHeight+2||list.scrollTop+list.clientHeight>=list.scrollHeight-2;}
  $('lugaresList')?.addEventListener?.('scroll',scrollCue,{passive:true});globalThis.addEventListener?.('resize',()=>{if(!$('mLugares')?.hidden)scrollCue();});
  function remixGo(mix){$('mLugares').hidden=true;if(runtime.houseActive?.())runtime.exitHouse?.();return runtime.startPlace?.(mix.id,{remix:mix.rhythm,from:{x:runtime.S.wx,y:runtime.S.wy}});}
