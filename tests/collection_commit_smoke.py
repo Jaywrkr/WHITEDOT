@@ -31,11 +31,11 @@ try:
   p.evaluate('()=>{Storage.prototype.setItem=originalSet;}');p.locator('#gardenSave').click();assert p.evaluate('__r.gardenState.sets.length')==2
   p.reload();p.wait_for_function('!!window.__r?.gardenState');assert p.evaluate('__r.gardenState.cards.length===1&&__r.gardenState.sets.length===2&&__r.gardenState.extra.kept&&__r.rareCards.length===5')
   # The same transaction also protects real dragging inside the Refugio.
-  p.evaluate("()=>{document.querySelectorAll('.modal,#returnEntrance').forEach(e=>e.hidden=true);__r.enterHouse();}");p.wait_for_function('__r.houseSettled()')
+  p.evaluate("()=>{document.querySelectorAll('.modal,#returnEntrance').forEach(e=>e.hidden=true);__r.enterHouse();}");p.wait_for_function('__r.houseSettled()');p.evaluate("__r.houseWalkTo('sala',.5)");p.wait_for_function("__r.houseStand().room==='sala'&&__r.houseSettled()",timeout=15000)
   def card_point():
    return p.evaluate("()=>{const r=__r,o=r.gardenObjects(r.currentHouse()).find(o=>o.gardenCard&&!o.gardenSeed),b=r.houseRoomRect(o.room);return {x:b.x+o.x*b.w,y:b.y+o.y*b.h};}")
   def drag_card(end):
-   at=card_point();p.mouse.move(at['x'],at['y']);p.mouse.down();p.mouse.move(end['x'],end['y'],steps=5);p.mouse.up()
+   at=card_point();assert 0<at['x']<390 and 0<at['y']<844,at;p.mouse.move(at['x'],at['y']);p.mouse.down();p.mouse.move(end['x'],end['y'],steps=5);p.mouse.up()
   baseline=p.evaluate('JSON.stringify(__r.gardenState)');rect=p.evaluate('__r.houseRoomRect("sala")');end={'x':rect['x']+rect['w']*.7,'y':rect['y']+rect['h']*.65}
   p.evaluate("()=>{window.originalSet=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k===__r.saveStore.key)throw Error('quota');return originalSet.call(this,k,v);};}")
   drag_card(end);assert p.evaluate('JSON.stringify(__r.gardenState)')==baseline,'failed drag restores positions'

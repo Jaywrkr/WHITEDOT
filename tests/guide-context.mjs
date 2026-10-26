@@ -14,6 +14,6 @@ c.journeyChapter=()=>({id:'vacio'});c.journeyPulseState=()=>({action:'crowded'})
 
 const {normalizeGarden,bedSpots}=await import('../src/journey-garden.js');
 const garden=normalizeGarden({center:{x:0,y:0}}),spot=bedSpots(garden.center)[0],g={S:{journey:{},wx:spot.x,wy:spot.y,sound:true},placeRun:()=>({id:'jardin'}),journeyGameProgress:()=>.1,journeyGarden:()=>garden};
-assert.match(guideLesson(g).hint,/sembrar/);garden.beds[0].stage=1;assert.match(guideLesson(g).hint,/regar/);garden.beds[0].stage=4;assert.match(guideLesson(g).hint,/flor/);assert.equal(guideLesson(g).step,2);
+assert.match(guideLesson(g).hint,/sembrar/);garden.beds[0].stage=1;assert.match(guideLesson(g).hint,/regar/);garden.beds[0].stage=4;assert.match(guideLesson(g).hint,/flor/);assert.equal(guideLesson(g).step,2);assert.match(guideLesson(g).steps[2],/cosechar/);
 
-g.journeyGameProgress=()=>1;assert.match(guideLesson(g).hint,/árbol dorado/);assert.equal(guideLesson(g).step,2);
+g.journeyGameProgress=()=>1;assert.match(guideLesson(g).hint,/árbol dorado/);assert.equal(guideLesson(g).step,2);assert.match(guideLesson(g).steps[2],/árbol dorado/);
