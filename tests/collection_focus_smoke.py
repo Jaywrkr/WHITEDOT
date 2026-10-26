@@ -21,7 +21,7 @@ try:
   assert page.evaluate('__testRuntime.rareCards.length')==3
   assert page.evaluate('__testRuntime.rareNoticeState.pending')==1,'repeat burst saves every specimen but queues one reveal'
   assert page.locator('.rare-card-details[open]').count()==0
-  page.locator('#rareRole').select_option('bajo');assert page.locator('.rare-card').count()==0
+  (page.locator('.rare-book-filters').get_attribute('open') is not None or page.locator('.rare-book-filters > summary').click());page.locator('#rareRole').select_option('bajo');assert page.locator('.rare-card').count()==0
   page.locator('#journalSearch').fill('nothing like this')
   page.locator('#journalClose').click()
   page.wait_for_function('!document.getElementById("rareNotice").hidden')
@@ -31,7 +31,7 @@ try:
   assert page.locator('.rare-card').count()==3
   page.wait_for_function('document.activeElement.matches("[data-card-id]")')
   page.locator('#journalSearch').fill('woodblock')
-  page.locator('#rareRole').select_option('perc')
+  (page.locator('.rare-book-filters').get_attribute('open') is not None or page.locator('.rare-book-filters > summary').click());page.locator('#rareRole').select_option('perc')
   assert page.locator('.rare-card').count()==3
   assert page.locator('[data-garden-add]').first.get_attribute('data-garden-add')=='2'
   page.screenshot(path='/tmp/whitedot-collection-compact.png')

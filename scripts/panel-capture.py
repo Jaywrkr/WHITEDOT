@@ -17,6 +17,9 @@ srv=ThreadingHTTPServer(('127.0.0.1',0),partial(H,directory=str(ROOT)));threadin
 shots=[('00-inicio','',None)]+[(f'0{i+1}-capitulo-{c}',f'?capitulo={c}',None) for i,c in enumerate(['llanura','lago','bosque','tormenta','vacio'])]
 shots+=[(f'1{i}-lugar-{p}',f'?lugar={p}',None) for i,p in enumerate(['jardin','dunas','cristales','faros','ruinas','cueva'])]
 shots+=[('20-anillo','?anillo=1',None),('21-lugares','?anillo=1','lugares'),('22-cancion','?anillo=1','song'),('23-salvaje','?anillo=1','wild'),('30-menu','?anillo=1','menu'),('31-guia-jardin','?lugar=jardin','guide'),('32-libro','?anillo=1','cards'),('33-resultado','?lugar=lago','result'),('34-favoritos','?anillo=1','favorites')]
+chosen=os.environ.get('CAPTURES')
+if chosen:
+ wanted=set(chosen.split(','));known={row[0] for row in shots};assert wanted<=known,'Unknown capture';shots=[row for row in shots if row[0] in wanted]
 try:
  with sync_playwright() as pw:
   b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required','--no-proxy-server','--host-resolver-rules=MAP kubono.localhost 127.0.0.1'])

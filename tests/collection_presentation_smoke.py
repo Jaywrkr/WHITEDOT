@@ -23,8 +23,8 @@ try:
    assert 'Constelación' in page.locator('#rareNoticeName').inner_text()
    assert page.evaluate("['toast','phrase','zone','voice','rareNotice','celebration'].filter(id=>{const n=document.getElementById(id);return !n.hidden&&n.classList.contains('on')}).length===1")
    page.screenshot(path=f'/tmp/whitedot-collection-{width}.png');page.locator('#rareNoticeOpen').click();assert page.locator('#mJournal').is_visible()
-   page.locator('#rareRole').select_option('perc');assert 'No hay hallazgos con estos filtros.' in page.locator('#journalBody').inner_text()
-   page.locator('#rareRole').select_option('todo');assert page.locator('.rare-card').count()==1
+   (page.locator('.rare-book-filters').get_attribute('open') is not None or page.locator('.rare-book-filters > summary').click());page.locator('#rareRole').select_option('perc');assert 'No hay hallazgos con estos filtros.' in page.locator('#journalBody').inner_text()
+   (page.locator('.rare-book-filters').get_attribute('open') is not None or page.locator('.rare-book-filters > summary').click());page.locator('#rareRole').select_option('todo');assert page.locator('.rare-card').count()==1
    page.locator('.rare-card-details > summary').click();assert all('sub' not in text for text in page.locator('.rare-biome').all_text_contents());assert 'Contacto' in page.locator('#journalBody').inner_text()
    assert page.evaluate('!__r.ac&&__r.waves.length===0'),'card UI must remain silent'
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');page.locator('#journalClose').click();page.reload();page.wait_for_function('__r?.rareCards.length===1');assert page.locator('#rareNotice').is_hidden();assert not errors,errors

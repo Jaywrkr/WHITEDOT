@@ -24,6 +24,10 @@ const singFrom=' function sing(',singTo=' // The step being sung now';
 const oldSing=section(before('src/journey-rhythm.js').toString(),singFrom,singTo),newSing=section(source('src/journey-rhythm.js'),singFrom,singTo).replace('sung.push(singing.last);if(sung.length>32)sung.shift();','');
 if(oldSing!==newSing)throw Error('Changed rhythm demonstration music');
 contracts.push({label:'rhythm demonstration audio identical beyond visual history queue',file:'src/journey-rhythm.js',sha256:sha(newSing)});
+const stepFrom=' function step(',stepTo=' // How hard a layer';
+const oldStep=section(before('src/song-stage.js').toString(),stepFrom,stepTo),newStep=section(source('src/song-stage.js'),stepFrom,stepTo).replace('if(e.layer){run.last[e.layer]=t;run.hits.push({layer:e.layer,t});if(run.hits.length>256)run.hits.shift();}','if(e.layer)run.last[e.layer]=t;');
+if(oldStep!==newStep)throw Error('Changed finale audio scheduling');
+contracts.push({label:'finale audio scheduling identical beyond visual history queue',file:'src/song-stage.js',sha256:sha(newStep)});
 let audio=before('src/audio.js').toString();
 const replacements=[
  ["import {onTime,audibleTime} from './journey-pulse.js';","import {onTime,audibleTime,scheduleAudibleCue} from './journey-pulse.js';"],

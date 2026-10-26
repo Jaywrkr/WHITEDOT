@@ -237,7 +237,10 @@ body.world-focus .goal{display:none}
 /* The musical function stays visible; provenance and export unfold on demand. */
 .rare-primary-actions{display:grid;gap:6px}.rare-primary-actions button{min-height:44px;width:100%;font-size:11px;white-space:normal}.rare-card-details{border-top:1px solid #ffffff24}.rare-card-details>summary{min-height:44px}.rare-card:focus{outline:1px solid #fff;outline-offset:2px}.rare-portrait svg{max-height:110px}.rare-book-head select{min-height:44px;max-width:100%;margin-bottom:8px}.rare-book-head label{display:block;font-size:11px}.rare-grid{align-items:start}
 
-.rare-book-head{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px}.rare-book-head>h3{grid-column:1/-1;grid-row:1;font-size:12px;margin:0 0 8px}.rare-book-head>label{grid-row:2}.rare-book-head>select{grid-row:3;width:100%;min-width:0;font-size:11px}.rare-book-head>p{grid-column:1/-1;font-size:11px;margin:4px 0 12px}.rare-book-head>label[for=rareFilter],#rareFilter{grid-column:1}.rare-book-head>label[for=rareRole],#rareRole{grid-column:2}
+.rare-book-head{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px}.rare-book-head>h3{grid-column:1/-1;font-size:12px;margin:0}.rare-book-head>small,.rare-book-head>details{grid-column:1/-1}.rare-book-filters{margin-bottom:10px}.rare-book-filters>summary{min-height:44px}.rare-filter-fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 8px}.rare-filter-fields label{grid-row:1}.rare-filter-fields select{grid-row:2;width:100%;min-width:0;font-size:11px}.rare-filter-fields label[for=rareFilter],#rareFilter{grid-column:1}.rare-filter-fields label[for=rareRole],#rareRole{grid-column:2}
+#mJournal[data-collection=tarjetas] #journalSearch{grid-column:1}
+#mJournal[data-collection=tarjetas] #journalFilters select{min-width:0;width:100%;font-size:11px}
+#mJournal[data-collection=tarjetas] #journalFilters input{font-size:11px;width:100%}
 
 .music-travel-shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:6px}.music-travel-shortcuts button{min-height:44px;font-size:11px;white-space:normal}.music-travel-shortcuts #musicTravelFull{grid-column:1/-1}#musicTravelBack{min-height:44px;font-size:11px;width:100%;margin-top:6px}
 
@@ -590,7 +593,7 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 .lugares-count{color:#f0d27a;font-size:.8em;margin-left:8px}
 .lugares-list{list-style:none;margin:0 0 12px;padding:0;max-height:52vh;overflow:auto}
 .lugares-list li{display:grid;grid-template-columns:1fr auto 86px 48px;align-items:center;gap:8px;min-height:40px;border-bottom:1px solid #ffffff14;font-size:13px}
-.lugares-list li.closed{color:var(--faint)}
+.lugares-list li.closed{color:var(--dim)}
 .lugares-list .lugar-stars{font-family:system-ui,sans-serif;font-style:normal;letter-spacing:2px;color:#ffffff40}
 .lugares-list .lugar-stars i{font-style:normal}
 .lugares-list .lugar-stars .got{color:#f0d27a}
