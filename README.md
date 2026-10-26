@@ -6,7 +6,7 @@ Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión de
 
 ## Estado de la entrega
 
-Las siete fases E están implementadas en ramas encadenadas. La rama de traspaso **`chore/claude-handoff-cleanup`** contiene toda la entrega y esta limpieza. `main` sigue en alpha.200 (`fd5dfc19`), comprobado el26 de octubre. Jay crea los PR y hace merge.
+Las siete fases E y la limpieza están en `main` desde el 26 de octubre (PR #355). La última revisión del panel es la [sesión 10](docs/panel/sesion-10/informe.md), con el plan P1–P8. Jay crea los PR y hace merge.
 
 Runtime E: `3c9d5dbc`; cierre y evidencias: `7f6374b3`. La limpieza documental conserva exactamente el juego. [Entrega E1–E7](docs/ENTREGA_E.md) · [auditoría y pendientes](docs/panel/candidato-e/informe.md).
 

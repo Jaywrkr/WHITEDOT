@@ -62,7 +62,7 @@ Los IDs se conservan para el tracker local. Los criterios siguientes sustituyen 
 
 ## Secuencia y calendario
 
-1. **Ahora:** revisar con Claude el candidato E y su aceptación pendiente desde `chore/claude-handoff-cleanup`, siguiendo [HANDOFF](../HANDOFF.md). No continuar autenticación ni SQL pendientes durante esta revisión.
+1. **Ahora:** el candidato E está en `main`; decidir y ejecutar las fases P1–P8 del [panel 10](panel/sesion-10/informe.md) y completar su aceptación pendiente, siguiendo [HANDOFF](../HANDOFF.md). No continuar autenticación ni SQL pendientes durante esta revisión.
 2. **Al autorizar reanudación:** completar datos del responsable/país/mercados/correo; resolver escritura Supabase y operación de datos; definir correo/callbacks finales. No contratar automáticamente.
 3. Preparar paquetes y materiales compartidos, conservando prioridad paralela por plataforma. Validar solo lo nuevo/afectado y registrar evidencia específica de cada canal.
 4. Candidato por canal: formularios, precio, firma, pruebas exigidas y experiencia humana real. Publicar solo tras aprobación/autorización explícitas; no esperar a que todas las plataformas estén aprobadas el mismo día.

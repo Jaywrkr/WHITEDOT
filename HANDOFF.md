@@ -1,6 +1,8 @@
 # Traspaso vigente · alpha.207
 
-**Continuar desde `chore/claude-handoff-cleanup`.** Contiene las siete fases E y la limpieza del repositorio. `main` sigue en alpha.200 (`fd5dfc19`), contrastado con GitHub el26 de octubre de2026. Jay crea PR y hace merge; no integrar automáticamente.
+**Continuar desde `main`.** Las siete fases E y la limpieza del repositorio entraron en `main` el 26 de octubre de 2026 con el CI completo en verde (PR #355, `d2f93f2e`). Jay crea PR y hace merge; no integrar automáticamente.
+
+**Lo siguiente:** la [sesión 10 del panel](docs/panel/sesion-10/informe.md) revisó alpha.207 desde cero (doce perfiles, media 6,7) y propone el plan P1–P8, una rama `panel10/…` por fase. P6–P8 esperan las decisiones D1–D6 de Jay. No empezar ninguna fase sin su aprobación.
 
 Leer [AGENTS](AGENTS.md), [README](README.md), [Arquitectura](docs/ARQUITECTURA.md) y [Verificación](docs/VERIFICACION.md). [HANDOFF_CLAUDE](HANDOFF_CLAUDE.md) es solo una entrada a este documento.
 
@@ -32,7 +34,7 @@ La limpieza actualiza guías, separa historial, añade este acceso para Claude y
 
 ## Siguiente paso
 
-1. Revisar este candidato y crear el PR del conjunto; esperar auditoría/lógica, seis grupos de navegador, seis de audio y agregador del nuevo candidato. No integrar en rojo o pendiente.
+1. Hecho: el candidato está en `main` (PR #355, CI completo en verde). Siguiente: las fases P del [panel 10](docs/panel/sesion-10/informe.md) que Jay apruebe.
 2. Completar [aceptación](docs/PRUEBAS_CON_PERSONAS.md):cinco sesiones formativas y confirmación independiente de8–12. El [registro](docs/aceptacion-e.json) sigue sin participantes; no rellenarlo con bots ni respuestas supuestas.
 3. Comprobar Android físico de gama media, Safari, altavoz/auriculares/Bluetooth, lector, interrupciones y retorno. El gusto musical, reconocimiento de la frase y prominencia de Jardín/Ruinas requieren observación real.
 4. Si aparece un fallo, corregir ese criterio con una regresión enfocada. No reabrir planes antiguos ni ampliar el catálogo por una nota simulada.

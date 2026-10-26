@@ -2,6 +2,14 @@
 
 Estado: 26 de octubre de 2026. Código **2.3.0-alpha.207**. Las entradas describen su revisión, no certifican producción.
 
+## Panel, sesión 10 · sin versión
+
+Rama `claude/charming-darwin-dvbfc7`, sobre `main` (alpha.207, tras integrar E1–E7 y la limpieza en el PR #355). Solo documentación.
+
+- Doce perfiles simulados revisaron la app con la memoria borrada: los diez de siempre más Celia Hodent (menús) y Harry Nesbitt (detalle visual). Media 6,7; Menús 5,5; Detalle visual 5,5.
+- Pope consolidó un plan por fases P1–P8, cada una con su rama `panel10/…`, y seis decisiones para Jay (D1–D6). [Informe](docs/panel/sesion-10/informe.md).
+- Sin escucha en teléfono ni pruebas con personas.
+
 ## Traspaso y limpieza · misma versiónalpha.207
 
 README, HANDOFF canónico y entrada para Claude; guías técnicas consolidadas, historial separado y estados corregidos. Retirados163 informes generados sin referencias, con manifiesto recuperable en Git. Código, música, mundos y partidas intactos. [Detalle](docs/LIMPIEZA_REPOSITORIO.md).
