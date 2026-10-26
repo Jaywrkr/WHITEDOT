@@ -26,7 +26,9 @@ try:
    const fonts=[];for(const w of [100,200,300,400,500,600,700,800,900])fonts.push((await document.fonts.load(w+' 14px "Geist Mono"')).length===1);
    const inks=[];r.clearSoundCues();const stroke=r.cx.stroke;
    r.cx.stroke=function(...args){inks.push(this.strokeStyle);return stroke.apply(this,args);};
+   // P5: a cue shows when its note is heard, after the output latency; wait for it before drawing.
    try{for(const role of ['bajo','perc','acorde','lead','agudo'])r.soundCue({x:r.S.wx,y:r.S.wy},role,r.ac.currentTime);
+    const {lightLatency}=await import('/src/journey-pulse.js');await new Promise(f=>setTimeout(f,lightLatency(r.ac)*1000+60));
     r.drawSoundCues(0,0,100);}finally{r.cx.stroke=stroke;r.clearSoundCues();}
    const {createRegionalVoices}=await import('/src/voices.js');const base=r.regionOfPos(r.S.wx,r.S.wy);
    for(const id of ['pad','plucked','strings','bowed'])delete r.S.journal.music.instruments[id];
