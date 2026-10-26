@@ -12,8 +12,9 @@ try:
  with sync_playwright() as pw:
   b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox']);p=b.new_page(viewport={'width':390,'height':844});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
   p.route('**/src/main.js',lambda route:route.fulfill(body=(ROOT/'src/main.js').read_text()+'\nwindow.__r=runtime;',content_type='text/javascript'))
+  # Panel 10 (P8): the Refugio's Jardín opens with six places (or nine ★), not with days played.
   p.goto(f'http://127.0.0.1:{srv.server_port}/?anillo=1');p.wait_for_function('!!window.__r?.gardenState')
-  p.evaluate("()=>{const r=__r;r.S.sound=false;r.S.totalDays=4;document.querySelectorAll('.modal,#returnEntrance').forEach(e=>e.hidden=true);for(let i=0;i<5;i++)r.collectRareCard('fossil',{id:'e5:'+i,x:r.S.wx+i,y:r.S.wy},{forced:true});r.gardenState.extra={kept:true};r.openJournal('rares');}")
+  p.evaluate("()=>{const r=__r;r.S.sound=false;r.S.totalDays=4;Object.keys(r.placesData().stars).forEach((id,i)=>{if(i<6)r.placesData().stars[id][0]=true;});document.querySelectorAll('.modal,#returnEntrance').forEach(e=>e.hidden=true);for(let i=0;i<5;i++)r.collectRareCard('fossil',{id:'e5:'+i,x:r.S.wx+i,y:r.S.wy},{forced:true});r.gardenState.extra={kept:true};r.openJournal('rares');}")
   p.locator('[data-garden-add="0"]').click();assert p.evaluate('__r.gardenState.cards.length')==1
   assert p.locator('[data-garden-add="0"]').is_disabled();assert '1 / 4' in p.inner_text('#gardenSelectionCount')
   p.evaluate("()=>{window.originalSet=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k===__r.saveStore.key)throw Error('quota');return originalSet.call(this,k,v);};}")
