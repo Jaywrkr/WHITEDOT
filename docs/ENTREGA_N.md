@@ -82,3 +82,8 @@ N1 depende de `audit/panel-8-revision-ciega` (`3a8148b5`), que contiene L4. Cada
 
 
 Para conservar la ascendencia de la pila, integrar en orden mediante commits de merge. Squash/rebase de una base requiere reajustar las ramas dependientes antes de compararlas. Esta entrega no ejecuta esos merges.
+
+
+## Integración autorizada por Jay
+
+La petición «Deja todo en main» autoriza reunir la pila completa hasta `2048e245` en `integracion/alpha-200-main` y fusionarla tras controles aprobados. No hace falta integrar individualmente las ocho ramas para esta entrega. Se preservan sus commits mediante merge, sin borrarlas ni cambiar la generación musical. La aceptación humana permanece pendiente.

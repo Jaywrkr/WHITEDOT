@@ -2,6 +2,10 @@
 
 Estado: 25 de octubre de 2026. Código **2.3.0-alpha.200**. Las entradas describen su revisión, no certifican producción.
 
+## Integración de alpha.200
+
+Jay autoriza incorporar a main la pila completa de23 commits hasta `2048e245`, mediante una sola integración. Se conserva el runtime ya entregado; se actualizan estado y traspaso. La validación de integración y el merge se registran por separado de la aceptación con personas, que sigue pendiente.
+
 ## N8 · 2.3.0-alpha.200
 
 Candidato alpha.200 con revisión independiente, cierres de fallos reproducidos y preservación verificada. Corregidos multitáctil, pausa retenida tras salto, abandono fallido, interpretación de fuente compartida, lectura de aprendizaje incompleto y métricas de Camino/once rondas. No se certifica nueve ni producción sin evidencia humana y CI.
