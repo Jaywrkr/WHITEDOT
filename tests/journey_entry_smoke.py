@@ -21,10 +21,12 @@ try:
    assert page.locator('#mConnection').is_hidden() and page.locator('#mHelpC').is_hidden(),'no sheet and no window before playing'
    assert page.evaluate('__r.journeyMode()')=='viaje' and page.evaluate("document.body.classList.contains('journey-quiet')")
    for id in QUIET:assert page.evaluate(f"getComputedStyle(document.getElementById('{id}')).visibility")=='hidden',id
-   # The menu is short: the shop, map, journal and creation tools wait in the free World.
-   page.locator('#bMenu').click();assert all(page.locator('#'+i).is_hidden() for i in ['bCube','bMap','bAch','bRecord','bWorlds','bShare'])
+   # The menu is short: the shop, map, the eleven places and creation tools wait in the free World; the Bitácora stays (panel 10, P2).
+   page.locator('#bMenu').click();assert all(page.locator('#'+i).is_hidden() for i in ['bCube','bMap','bLugares','bRecord','bWorlds','bShare']) and page.locator('#bAch').is_visible()
    page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')")
-   assert all(page.locator('#'+i).is_visible() for i in ['bWorld','bStudio','bSettings','bConnection'])
+   assert all(page.locator('#'+i).is_visible() for i in ['bStudio','bSettings','bConnection'])
+   # «Explorar» shows only when it would do something: the World must be open (ten crystals) and you out of it (panel 10, P2).
+   assert page.locator('#bWorld').is_visible()==page.evaluate('!__r.inWorld()&&__r.worldReady()'),page.evaluate('[__r.S.mode,__r.worldReady()]')
    # The free World is closed until the Journey ends (decision 6A): no switch, and asking for it does nothing.
    assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJourneyMode').is_hidden() and page.evaluate("__r.setJourneyMode('libre')")==False and page.evaluate('__r.journeyMode()')=='viaje'
    page.evaluate("()=>{__r.S.journey.finished=true;__r.applyJourneyMode();}");assert (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bJourneyMode').is_visible()

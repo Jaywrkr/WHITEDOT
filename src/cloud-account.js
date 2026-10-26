@@ -2,11 +2,13 @@ import {CLOUD_CONFIG} from './cloud-config.js';
 import {createCloudClient} from './cloud-client.js';
 import {createCloudSync,purgeUserStorage} from './cloud-sync.js';
 import {validateSave} from './save-store.js';
+// While the cloud is paused (CLOUD_CONFIG.paused, D6 = A) the sheet offers no «Crear cuenta» and no «Eliminar cuenta».
+export const cloudPaused=(config=CLOUD_CONFIG)=>config?.paused===true;
 export function initialize(runtime){
  let conflictShown=false;const $=runtime.$,status=text=>{$('connectionStatus').textContent=text;if((text.startsWith('Hay avances distintos')||text.startsWith('La copia online cambió'))&&!document.hidden&&!conflictShown){conflictShown=true;$('mMenu').hidden=true;$('mConnection').hidden=false;}};let client=null,sync=null,busy=false,recovery=false,checked=false,nextTick=0,nextCheck=0,resumePending=false,scopeState=runtime.S;
  try{client=runtime.accountClient||createCloudClient(CLOUD_CONFIG);}catch(e){status(e.message);}
  if(client){let storage;try{storage=globalThis.localStorage;}catch(_){}sync=createCloudSync({client,storage:storage||{getItem:()=>null,setItem(){}},onStatus:status});}
- function ui(){const live=!!client?.user();$('accountGuest').hidden=true;$('accountLogout').hidden=false;$('accountDelete').hidden=false;$('connectionClose').hidden=!live;$('accountState').textContent=live?'Cuenta conectada · '+client.user().email:'Entra en tu cuenta para jugar.';
+ function ui(){const live=!!client?.user(),paused=cloudPaused();$('accountGuest').hidden=true;$('accountLogout').hidden=!live;$('accountDelete').hidden=paused||!live;$('accountRegister').hidden=paused;$('connectionClose').hidden=false;$('accountState').textContent=live?'Cuenta conectada · '+client.user().email:'Opcional. Se juega sin cuenta.';const saved=$('mConnection').querySelector('.account-saved');if(saved)saved.hidden=!live;
   for(const id of ['accountRegister','accountRecover','accountVerify','accountVerifyRecovery'])$(id).disabled=!client||busy;
   $('accountForm').querySelector('[type="submit"]').disabled=!client||busy;
   for(const id of ['cloudPush','cloudPull'])$(id).disabled=!live||busy||recovery||!checked;
@@ -27,7 +29,7 @@ export function initialize(runtime){
   if(now==='camino'){s.mode='world';runtime.exitWorld?.(false);return;}
   const day=s.lastWorldDay;s.mode='camino';s.lastWorldDay=s.todayKey;runtime.enterWorld?.({automatic:true});if(!runtime.inWorld())s.lastWorldDay=day;}
  function snapshot(){if(scopeState!==runtime.S||sync.scope!==(runtime.cloudScope||runtime.saveStore.key))throw Error('La partida cambió. Abre Cuenta de nuevo.');if(!runtime.save())throw Error('No pudimos guardar en este dispositivo. No reemplazamos tu avance online.');return validateSave(runtime.S,runtime.fresh(),runtime.worldIdentity);}
- $('bConnection').hidden=false;($('bConnection').querySelector('span')||$('bConnection')).textContent='Cuenta';$('connectionRooms').hidden=true;
+ $('bConnection').hidden=false;{const label=$('bConnection').querySelector('span');if(label?.firstChild)label.firstChild.nodeValue='Cuenta';else $('bConnection').textContent='Cuenta';}$('connectionRooms').hidden=true;
  $('bConnection').onclick=()=>{$('mMenu').hidden=true;$('mConnection').hidden=false;if(client&&!recovery)run(inspect);else ui();};$('connectionClose').onclick=()=>{$('mConnection').hidden=true;};
  function credentials(){if(!$('accountForm').reportValidity())return null;return [$('accountName').value.trim(),$('accountPassword').value];}
  $('accountForm').onsubmit=e=>{e.preventDefault();const values=credentials();if(!values||!client)return;run(async()=>{sync.reset();checked=false;recovery=false;try{await client.login(...values);if(runtime.accountClient&&(client.user()?.id||null)!==runtime.accountUserId){location.reload();return;}}finally{$('accountPassword').value='';}if(runtime.accountClient&&(client.user()?.id||null)!==runtime.accountUserId)return;await inspect();});};
@@ -48,5 +50,5 @@ export function initialize(runtime){
  const leave=()=>{if(client?.user()&&checked&&!busy&&sync.ready){runtime.save();run(()=>sync.push(snapshot,{force:true}));}};
  document.addEventListener('visibilitychange',()=>{if(document.hidden)leave();else resumePending=true;});
  globalThis.addEventListener('pagehide',leave);globalThis.addEventListener('focus',()=>{resumePending=true;});globalThis.addEventListener('online',()=>{resumePending=true;});
- Object.defineProperty(runtime,'connectionTick',{get:()=>tick});ui();if(client?.user())run(inspect);
+ Object.defineProperty(runtime,'connectionTick',{get:()=>tick});Object.defineProperty(runtime,'cloudPaused',{get:()=>()=>cloudPaused()});ui();if(client?.user())run(inspect);
 }

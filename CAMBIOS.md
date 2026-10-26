@@ -1,6 +1,22 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.208**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.209**. Las entradas describen su revisión, no certifican producción.
+
+## P2 · Menús · 2.3.0-alpha.209
+
+Rama `panel10/p2-menus`, sobre `panel10/p1-pantallas-limpias`. Estructura de Hodent y retícula de Nesbitt (panel 10). Se reordena; no se añaden destinos.
+
+- Jugar: «Seguir hacia …» y debajo Lugares, Tu cubo, Refugio y Bitácora. Ajustes y Cómo jugar, siempre a la vista. La fila reparte el ancho entre los botones visibles: sin huecos.
+- Cabecera: ★ n/33 primero y en dorado. La vista tranquila no muestra cifras, pero conserva Lugares (★ a dos toques) y Bitácora. Tu cubo y la tienda siguen solo en la completa (regla del Viaje).
+- «Más» se abre cerrado. Ir: «Volver al Camino» en el Mundo o «Explorar» fuera de él, Mapa y favoritos, «Volver al punto anterior», «Viajar a otra tierra». Crear: Efectos y eco, «Grabar 60 s», Compartir. Tú: Vista, Cuenta («Opcional»), Guardar copia, Actualizar. Un rótulo sin filas se oculta.
+- Un botón para cada viaje: `#bPrimary` ya no cae en «Ayuda y cuenta» y `#bWorld` se oculta cuando no haría nada.
+- Una palabra por concepto: favoritos en `#era`, Mapa, la búsqueda y el perfil; «Modo crear: sí/no»; «Otras formas de jugar».
+- Ajustes empieza con el volumen y va en tres bloques: Sonido y tiempo, Ver y sentir, Partida («Empezar de cero» al final, con borde). «Más sonido» vuelve a Ajustes al cerrarse o con Escape.
+- Todos los cierres inferiores dicen «Cerrar». Pestañas de la Bitácora con `role="tab"` y `aria-selected`; un solo estado activo. Casillas cuadradas. Texto de menú desde 12 px; `.spark-goal` y `.spark-power button` a 44 px. Avatar de 12 px en su marco; foco de «Más» con el contorno común.
+- Cuenta (D6 = A): «Opcional. Se juega sin cuenta.». Con la nube en pausa (`CLOUD_CONFIG.paused`) no hay «Crear cuenta» ni «Eliminar cuenta», ni aviso de nube en el Mundo. «Salir de cuenta» solo con sesión.
+- En horizontal la fila principal va en una línea por botón; el menú cabe con «Más» cerrado en 390×844, 844×390 y 1280×800.
+- Sin cambios en música, cubo, mapas ni guardados. IDs conservados; nuevos `rMenuVolume` y `menuVolumeNow` (el código ya los esperaba).
+- Pruebas: `tests/menus_smoke.py` (tres tamaños, ambas vistas, cada botón visible actúa) y `tests/menu_v2_smoke.py` actualizada. Sin teléfono físico ni personas.
 
 ## P1 · Pantallas limpias · 2.3.0-alpha.208
 

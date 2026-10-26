@@ -25,9 +25,12 @@ export function initialize(runtime) {
       goal.textContent=dist?"Eco cercano · escucha y pulsa":"Regiones "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
       gr.textContent="Sin reloj";}
     else{const n=runtime.S.pathCrystals.length;fill.style.width=(n*10)+"%";goal.textContent="Cristales · "+n+" / 10";gr.textContent="Acércate y lanza un pulso";}
-    const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary");$("bWorld").querySelector("span").firstChild.nodeValue=freeOpen(runtime.S.journey)?"Explorar":runtime.inWorld()?"Camino":"Mundo";$("bWorldHint").textContent=freeOpen(runtime.S.journey)?"Explorar el Mundo":runtime.inWorld()?"Volver al Camino":"Explorar el Mundo";
-    const destination=runtime.inWorld()?$('menuMore')?.querySelector('.tiles'):$('dock');if(destination&&bp.parentElement!==destination){if(runtime.inWorld())destination.appendChild(bp);else destination.insertBefore(bp,destination.firstChild);}
-    bp.hidden=!(canWorld||runtime.inWorld());$("bPrimaryL").textContent=runtime.inWorld()?"Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=runtime.inWorld()?"scaleX(-1)":"";
+    // Panel 10 (P2): one way to go at a time. In the World, «Volver al Camino» (#bPrimary) heads «Más › Ir» and #bWorld
+    // hides; elsewhere #bPrimary stays in the dock and #bWorld («Explorar») enters the World or leaves the Refugio.
+    const canWorld=runtime.S.mode==="camino"&&runtime.worldReady(),bp=$("bPrimary"),bw=$("bWorld"),world=runtime.inWorld();bw.querySelector("span").firstChild.nodeValue="Explorar";$("bWorldHint").textContent=world?"Volver al Camino":"Explorar el Mundo";
+    bw.hidden=world||!(runtime.worldReady()||(freeOpen(runtime.S.journey)&&runtime.houseActive?.()));
+    const destination=world?$('menuMore')?.querySelector('.tiles'):$('dock');if(destination&&bp.parentElement!==destination){if(world)bw.before(bp);else destination.insertBefore(bp,destination.firstChild);}
+    bp.hidden=!(canWorld||world);$("bPrimaryL").textContent=world?"Volver al Camino":"Entrar al Mundo";bp.classList.toggle("gold",canWorld);bp.querySelector("svg").style.transform=world?"scaleX(-1)":"";runtime.tidyMenu?.();
   }
   function showPhrase(t,big){const p=$('phrase');lane.enqueue('phrase',p,()=>{p.textContent=t;p.classList.toggle('big',!!big);},big?5:3.2,String(t),()=>true,{level:big?2:1,category:'ambiente',coalesce:true});}
   function toast(html,options={}){const el=$('toast'),important=/no se pudo|no pudo|no pudimos|necesita atención|no disponible|fall[oó]|sin espacio|guardar copia|recoge una luz|libro completo/i.test(html);// The Journey has no words while you play (docs/VIAJE.md): everyday notices wait; problems still show.

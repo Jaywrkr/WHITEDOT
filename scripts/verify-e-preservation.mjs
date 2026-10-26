@@ -6,7 +6,9 @@ const git=(...args)=>execFileSync('git',args),before=path=>git('show',base+':'+p
 const sha=data=>createHash('sha256').update(data).digest('hex');
 const allowed=new Set(['src/accessibility.js','src/audio.js','src/canvas.js','src/collection-garden.js','src/favorites.js','src/journal.js','src/journey-finale.js','src/journey-garden.js','src/journey-pulse.js','src/journey-rhythm.js','src/house.js','src/places.js','src/rare-cards.js','src/refugio-lugares.js','src/release-info.js','src/song-stage.js','src/voice-guide.js',
  // Panel 10 · P1 (approved by Jay, 26 Oct 2026): visual only. The map legend as separate items; the off-screen portal light at the heading.
- 'src/map.js','src/places-ring.js']);
+ 'src/map.js','src/places-ring.js',
+ // Panel 10 · P2 (approved by Jay, 26 Oct 2026): menus reordered and renamed, D6 = A (no sign-up or deletion while the cloud is paused).
+ 'src/account-entry.js','src/cloud-account.js','src/cloud-config.js','src/controls.js','src/creative.js','src/journey-mode.js','src/share-tools.js','src/ui.js']);
 const files=git('ls-tree','-r','--name-only','-z',base,'--','src','assets').toString().split('\0').filter(Boolean),protectedFiles=[];
 for(const file of files.filter(f=>!allowed.has(f))){const a=before(file),b=readFileSync(file);if(!a.equals(b))throw Error('Protected content changed: '+file);protectedFiles.push({file,sha256:sha(b)});}
 const contracts=[];

@@ -13,7 +13,7 @@ export function initialize(runtime){
  runtime.VOZ.composicionAbierta='Tocar, quitar, cultivar, modelar. El lugar ya te responde.';
  runtime.ACH.push(['composicionAbierta','Otra forma de componer','Transforma dos partes musicales de dos maneras en un lugar.']);
  const modeButton=runtime.$('bCreateMode');
- function modeUI(){modeButton.setAttribute('aria-pressed',String(!!runtime.S.relaxedCreate));modeButton.querySelector('span').textContent=runtime.S.relaxedCreate?'Modo: crear':'Modo: explorar';}
+ function modeUI(){modeButton.setAttribute('aria-pressed',String(!!runtime.S.relaxedCreate));modeButton.querySelector('span').textContent=runtime.S.relaxedCreate?'Modo crear: sí':'Modo crear: no';}
  modeButton.onclick=()=>{runtime.S.relaxedCreate=!runtime.S.relaxedCreate;modeUI();runtime.save();runtime.hud();};modeUI();
  const state=()=>runtime.S.creativeJourney||=( {world:false,transformed:false,studio:false} );
  let previousMode=null,subtractIndex=0,gesture=null,lastAction=-Infinity,hintClock=0;

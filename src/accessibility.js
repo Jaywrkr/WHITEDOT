@@ -46,7 +46,7 @@ export function initialize(runtime){
  isolate();
  document.addEventListener('keydown',e=>{
   const d=open();if(!d)return;
-  if(e.key==='Escape'){e.preventDefault();e.stopPropagation();if(d.id==='journeyFinale')runtime.journeyFinaleSkip?.();else if(d.id==='songStage')runtime.closeSong?.();else if(d.id==='mPlace')runtime.$('placeClose').click();else if(d.id==='rareNotice'||d.id==='celebration')runtime.$(d.id==='rareNotice'?'rareNoticeDismiss':'celebrationDismiss').click();else{d.hidden=true;runtime.save();}return;}
+  if(e.key==='Escape'){e.preventDefault();e.stopPropagation();if(d.id==='journeyFinale')runtime.journeyFinaleSkip?.();else if(d.id==='songStage')runtime.closeSong?.();else if(d.id==='mPlace')runtime.$('placeClose').click();else if(d.id==='mMusic')runtime.$('muClose').click();else if(d.id==='rareNotice'||d.id==='celebration')runtime.$(d.id==='rareNotice'?'rareNoticeDismiss':'celebrationDismiss').click();else{d.hidden=true;runtime.save();}return;}
   if(stage(d)&&(/^(Arrow|[wasd]$)/i.test(e.key)||e.key===' '&&!e.target.matches('button,summary,a'))&&!e.target.matches('input,textarea,select')){e.preventDefault();e.stopPropagation();return;}
   if(e.key!=='Tab')return;const items=controls(d);if(!items.length){e.preventDefault();return;}
   const index=items.indexOf(document.activeElement);

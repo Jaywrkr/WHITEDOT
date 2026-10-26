@@ -26,11 +26,11 @@ try:
   # Opening the sound sheet fires no pulse; the wave from the earlier tap may finish meanwhile.
   assert page.evaluate('__testRuntime.waves.length')<=before['waves']
   page.evaluate('__testRuntime.S.livingMusic=false;__testRuntime.save()')
-  page.locator('#muClose').click();page.wait_for_function('__testRuntime.MU.radio?.labScore?.electronic')
+  page.locator('#muClose').click();page.locator('#settingsClose').click();page.wait_for_function('__testRuntime.MU.radio?.labScore?.electronic')
   assert page.evaluate('JSON.stringify(__testRuntime.MU.dnaT)')==first['world']
   page.reload();page.wait_for_function('window.__testRuntime?.S.livingMusic===false')
   page.evaluate('document.querySelectorAll(".modal").forEach(m=>m.hidden=true)')
-  page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bMusicSettings').click();assert page.locator('#bLivingMusic').is_hidden();page.locator('#muClose').click()
+  page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bMusicSettings').click();assert page.locator('#bLivingMusic').is_hidden();page.locator('#muClose').click();page.locator('#settingsClose').click()
   page.locator('#w').click(position={'x':30,'y':300});page.wait_for_function('__testRuntime.MU.radio?.labScore')
   assert page.evaluate('__testRuntime.MU.radio.labScore.id')==first['band']
   page.locator('#bStyles').click();page.locator('#musicTravelFull').click();page.wait_for_function('document.getElementById("mMusicTravel").hidden',timeout=60000)

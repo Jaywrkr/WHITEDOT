@@ -39,7 +39,7 @@ with sync_playwright() as p:
   # El botón junto a otro eco sigue sirviendo de alternativa.
   page.evaluate('()=>{const r=window.__testRuntime;r.jam.loop.ecos.push({x:r.S.wx,y:r.S.wy,layer:r.S.layer||"superficie",events:[],start:r.MU.step});}')
   page.locator('#bMenu').click();(page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#bTools').click();page.locator('#bLoop').click();assert page.evaluate('window.__testRuntime.jam.loop.ecos.length')==0
-  page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bMusicSettings').click();page.locator('#bAutoPins').click();page.locator('#muClose').click()
+  page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#bMusicSettings').click();page.locator('#bAutoPins').click();page.locator('#muClose').click();page.locator('#settingsClose').click()
   # Banda: unir criaturas de distintos papeles y comprobar que tocan a tempo.
   roles=page.evaluate('''()=>{const r=window.__testRuntime,got=new Set();for(let x=-3;x<=3&&got.size<4;x++)for(let y=-3;y<=3&&got.size<4;y++){const d=r.regionOfPos(x*3600+1800,y*3600+1800);
     for(const sp of d.species){const v=r.getVoice('forma:'+sp.id,d);const slot=v.role==='bajo'?'bajo':v.role==='perc'?'perc':v.role==='acorde'?'acorde':'melodia';if(got.has(slot))continue;got.add(slot);r.bandJoin({x:r.S.wx,y:r.S.wy,personality:null},sp);}}return [...got];}''')

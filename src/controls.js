@@ -1,5 +1,5 @@
 import {freeOpen} from './journey-mode.js';
-import {gameObjective} from './places.js';
+import {gameObjective,starCount,TOTAL_STARS} from './places.js';
 import {initialize as controlMotion} from './control-motion.js';
 // Eventos de botones y controles de prototipo.
 export function initialize(runtime) {
@@ -12,8 +12,16 @@ export function initialize(runtime) {
   runtime.$("hcGo").onclick=()=>{runtime.S.help.camino=true;runtime.$("mHelpC").hidden=true;if(runtime.S.sound)runtime.audio();if(!runtime.S.voiceStart){runtime.S.voiceStart=true;setTimeout(()=>runtime.say(runtime.VOZ.start),900);}runtime.save();};
   // The menu opens on who you are and where: name, cube, sparks and place.
   function menuSummary(){const S=runtime.S,$=runtime.$,goal=gameObjective(S,runtime.placesData?.()),name=(S.playerProfile?.name||'').trim();$("menuTitle").textContent=name||'Kubono';const next=$("bLugares")?.querySelector("small");if(next)next.textContent=goal.line;const follow=$('bContinue');if(follow){follow.textContent=runtime.placeRun?.()?'Volver a la ronda':goal.kind==='place'?`Seguir hacia ${runtime.PLACES?.find?.(p=>p.id===goal.id)?.name||goal.line.replace('Siguiente: ','').replace(/\.$/,'')}`:goal.kind==='create'?'Tu canción':'Continuar el Viaje';}$("menuAvatar").style.background=runtime.cubeColor?.()||'#fff';
-   const place=S.mode==='studio'?'Refugio':runtime.inWorld()?((S.layer&&S.layer!=='superficie')?(S.layer==='bajo'?'Subsuelo':'Cielo'):runtime.regionOfPos?.(S.wx,S.wy)?.name):'Camino';$("menuSummary").textContent=[runtime.journeyQuiet?.()?'':'✦ '+Math.floor(S.sparks||0)+' chispas',place].filter(Boolean).join(' · ');}
-  runtime.$("bMenu").onclick=()=>{volumeUI();menuSummary();runtime.houseMenuNote?.();runtime.$("mMenu").hidden=false;};runtime.$("mnClose").onclick=()=>{runtime.$("mMenu").hidden=true;};
+   const place=S.mode==='studio'?'Refugio':runtime.inWorld()?((S.layer&&S.layer!=='superficie')?(S.layer==='bajo'?'Subsuelo':'Cielo'):runtime.regionOfPos?.(S.wx,S.wy)?.name):'Camino';
+   // Panel 10 (P2): ★ first and in gold; the quiet view shows no numbers (★ stay one touch away, in Lugares).
+   const quiet=runtime.journeyQuiet?.(),d=runtime.placesData?.(),summary=$("menuSummary"),parts=[];if(!quiet&&d&&!d.readOnly){const star=document.createElement('span');star.className='menu-stars';star.textContent=`★ ${starCount(d)}/${TOTAL_STARS}`;parts.push(star);}
+   if(!quiet)parts.push('✦ '+Math.floor(S.sparks||0)+' chispas');if(place)parts.push(place);summary.replaceChildren(...parts.flatMap((x,i)=>i?[' · ',x]:[x]));
+   // Lugares shows once the eleven can be visited (the end of the Journey).
+   if($("bLugares"))$("bLugares").hidden=!freeOpen(S.journey);}
+  // «Más» shows a section label only when a row under it is visible.
+  function tidyMenu(){const box=runtime.$('menuMore')?.querySelector('.tiles');if(!box)return;let label=null,seen=false;const close=()=>{if(label)label.hidden=!seen;};
+   for(const el of box.children){if(el.matches('.menu-section-label')){close();label=el;seen=false;}else if(el.matches('button')&&!el.hidden&&getComputedStyle(el).display!=='none')seen=true;}close();}
+  runtime.$("bMenu").onclick=()=>{volumeUI();menuSummary();runtime.houseMenuNote?.();const more=runtime.$("menuMore");if(more)more.open=false;tidyMenu();runtime.$("mMenu").hidden=false;};runtime.$("mnClose").onclick=()=>{runtime.$("mMenu").hidden=true;};
   document.querySelectorAll("#mMenu .tiles button,#mMenu .devbox button").forEach(b=>b.addEventListener("click",()=>{if(b.id!=="dReset")runtime.$("mMenu").hidden=true;}));
   runtime.$('bContinue').onclick=()=>{runtime.$('mMenu').hidden=true;const goal=gameObjective(runtime.S,runtime.placesData?.());if(runtime.placeRun?.())return;if(goal.kind==='place')runtime.ringGuide?.(goal.id);else if(goal.kind==='create')runtime.replaySong?.();};
   runtime.$("bPrimary").onclick=()=>{runtime.$("mMenu").hidden=true;if(runtime.inWorld())runtime.exitWorld(false);else motion.enter(runtime.$('bPrimary'));};
@@ -25,7 +33,7 @@ export function initialize(runtime) {
   runtime.$("hwGo").onclick=()=>{runtime.S.help.mundo=true;runtime.save();runtime.$("mHelpW").hidden=true;runtime.showRegion(runtime.regionOfPos(runtime.S.wx,runtime.S.wy),true);};
   runtime.$("bShare").onclick=()=>runtime.shareCard(runtime.inWorld()||runtime.S.stars.length?"sky":"day");runtime.$("cShare").onclick=()=>{runtime.$("mCap").hidden=true;runtime.shareCard("day");};
   runtime.$("cExplore").onclick=()=>motion.enter(runtime.$('cExplore'),()=>runtime.$('mCap').hidden=true);
-  runtime.$("bWorld").onclick=()=>{if(freeOpen(runtime.S.journey)){if(runtime.houseActive?.())runtime.exitHouse?.();else if(!runtime.inWorld())runtime.enterWorld();}else if(runtime.inWorld())runtime.exitWorld(false);else runtime.enterWorld();};
+  runtime.$("bWorld").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else if(freeOpen(runtime.S.journey)&&runtime.houseActive?.())runtime.exitHouse?.();else runtime.enterWorld();};
   runtime.$("bSky").onclick=runtime.openSky;runtime.$("kClose").onclick=()=>{runtime.$("mSky").hidden=true;};runtime.$("kShare").onclick=()=>{runtime.$("mSky").hidden=true;runtime.shareCard("sky");};
   runtime.$("oSky").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openJournal("places");};runtime.$("oClose").onclick=()=>{runtime.$("mOut").hidden=true;};
   runtime.$("bAch").onclick=runtime.openJournal;
@@ -35,19 +43,19 @@ export function initialize(runtime) {
   const livingUI=()=>{runtime.$('bLivingMusic').hidden=true;runtime.$('bLivingMusic').textContent='Música electrónica generativa';};
   Object.defineProperty(runtime,'refreshLivingMusic',{get:()=>livingUI});
   runtime.$('bLivingMusic').onclick=()=>{};livingUI();
-  runtime.$("bMusicSettings").onclick=()=>{runtime.$("mMenu").hidden=true;runtime.$("mSettings").hidden=true;styleUI();runtime.$("mMusic").hidden=false;};
+  let soundFromSettings=false;runtime.$("bMusicSettings").onclick=()=>{soundFromSettings=!runtime.$("mSettings").hidden;runtime.$("mMenu").hidden=true;runtime.$("mSettings").hidden=true;styleUI();runtime.$("mMusic").hidden=false;};
   const rs=runtime.$("rStyle");
   const styleName=I=>I<.3?'Suave':I<.7?'Equilibrada':'Energética';
   function styleUI(){livingUI();runtime.$("bSoft").setAttribute("aria-pressed",String(!!runtime.S.softMusic));runtime.$("rVolume").value=Math.round((runtime.S.outputVolume??1)*100);const I=Number.isFinite(runtime.S.musicEnergy)?Math.max(0,Math.min(1,runtime.S.musicEnergy)):.5;rs.value=Math.round(I*100);rs.setAttribute('aria-valuetext',styleName(I)+' · '+Math.round(I*100)+'%');runtime.$("styleNow").textContent=styleName(I);runtime.$("muMute").textContent=runtime.S.sound?"Silenciar":"Activar sonido";runtime.$("bSound").querySelector("span").textContent=runtime.S.sound?"Sonido: sí":"Sonido: no";runtime.$("bSound").setAttribute('aria-pressed',String(!!runtime.S.sound));}
   rs.oninput=()=>{runtime.S.musicEnergy=runtime.S.style=rs.value/100;styleUI();};
   rs.onchange=()=>runtime.save();
   runtime.$("bSound").onclick=()=>{runtime.S.sound=!runtime.S.sound;styleUI();runtime.audio();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);runtime.toast(runtime.S.sound?"<em>Música</em> · activada":"<em>Música</em> · en silencio");runtime.save();};
-  runtime.$("bSettings").onclick=()=>{runtime.$("mMenu").hidden=true;runtime.$("haptics").checked=runtime.S.haptics!==false;runtime.$("colorSafe").checked=!!runtime.S.colorSafe;runtime.latencyShow?.();runtime.$("mSettings").hidden=false;};runtime.$("haptics").onchange=e=>{runtime.S.haptics=e.target.checked;runtime.save();if(e.target.checked)runtime.journeyVibrate?.(12);};
+  function openSettings(){runtime.$("mMenu").hidden=true;volumeUI();runtime.$("haptics").checked=runtime.S.haptics!==false;runtime.$("colorSafe").checked=!!runtime.S.colorSafe;runtime.latencyShow?.();runtime.$("mSettings").hidden=false;}runtime.$("bSettings").onclick=openSettings;runtime.$("haptics").onchange=e=>{runtime.S.haptics=e.target.checked;runtime.save();if(e.target.checked)runtime.journeyVibrate?.(12);};
   runtime.$("settingsClose").onclick=()=>runtime.$("mSettings").hidden=true;
   function volumeUI(){const value=Math.round(Math.max(0,Math.min(1,Number.isFinite(runtime.S.outputVolume)?runtime.S.outputVolume:1))*100);for(const id of ['rVolume','rMenuVolume']){if(!runtime.$(id))continue;runtime.$(id).value=value;runtime.$(id).setAttribute('aria-valuetext',value+'%');}for(const id of ['volumeNow','menuVolumeNow'])if(runtime.$(id))runtime.$(id).textContent=value+'%';}
   for(const id of ['rVolume','rMenuVolume']){if(!runtime.$(id))continue;runtime.$(id).oninput=e=>{const value=Number(e.target.value);if(!Number.isFinite(value))return;runtime.S.outputVolume=Math.max(0,Math.min(1,value/100));volumeUI();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);};runtime.$(id).onchange=()=>runtime.save();}volumeUI();
   for(const id of ['bSky','bSession'])runtime.$(id).addEventListener('click',()=>runtime.$('mJournal').hidden=true);
-  runtime.$("muClose").onclick=()=>{runtime.$("mMusic").hidden=true;runtime.save();};
+  runtime.$("muClose").onclick=()=>{runtime.$("mMusic").hidden=true;runtime.save();if(soundFromSettings){soundFromSettings=false;openSettings();}};
   runtime.$("muMute").onclick=()=>{runtime.S.sound=!runtime.S.sound;styleUI();runtime.audio();if(runtime.master)runtime.master.gain.setTargetAtTime(runtime.musicVolume(),runtime.ac.currentTime,.05);runtime.save();};
   runtime.$("dFill").onclick=()=>{if(runtime.isFree())return;if(runtime.S.lastDay!==runtime.S.todayKey)runtime.onFirstLight();const add=runtime.CAP-runtime.S.todayLight;runtime.S.todayLight=runtime.CAP;runtime.S.totalLight+=add;runtime.S.capShown=true;runtime.unlock("tope");runtime.hud();runtime.openCap();};
   runtime.$("dNext").onclick=()=>{runtime.S.offset+=1;runtime.checkDay(true);runtime.hud();runtime.showPhrase("Nuevo día. Recoge una luz para entrar.");};
@@ -57,5 +65,6 @@ export function initialize(runtime) {
 
   Object.defineProperties(runtime, {
     styleUI: { get: () => styleUI },
+    tidyMenu: { get: () => tidyMenu },
   });
 }

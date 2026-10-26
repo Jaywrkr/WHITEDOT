@@ -696,3 +696,50 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 /* In the Refugio the Voice speaks below the counters; in landscape, over the side panel. */
 body:has(#housePanel:not([hidden])) .voice:not(.expanded){top:calc(var(--safe-top,0px) + 128px)}
 @media(max-height:440px){body:has(#housePanel:not([hidden])) .voice:not(.expanded){left:calc(100vw - 8px - min(150px,25vw - 55px));width:min(300px,calc(50vw - 110px));max-width:min(300px,calc(50vw - 110px))}}
+
+/* Panel 10 · P2 (Hodent; Nesbitt #5–#8, #11, #17, #32, #33): menus reordered, nothing added.
+   Jugar: the next step, then Lugares, Tu cubo, Refugio and Bitácora. A row closes its gaps when a button hides. */
+#mMenu .menu-group.primary .tiles{display:flex;flex-wrap:wrap;gap:6px}
+#mMenu .menu-group.primary .tiles>button{flex:1 1 0;min-width:0;min-height:64px;padding:10px 8px;gap:8px}
+#mMenu .menu-group.primary .tiles>:is(#bContinue,#bLeavePlace){flex:1 1 100%}
+#mMenu .menu-group.primary .tiles>#bContinue{min-height:52px;padding:12px}
+#mMenu .menu-group.primary .tiles>#bLeavePlace{min-height:44px}
+#mMenu .menu-group.primary .tiles button span{font-size:12px;overflow-wrap:normal;hyphens:auto}
+/* Ajustes and Cómo jugar: always two equal cells. */
+#mMenu .menu-utilities{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+#mMenu .menu-utilities #bGuide{grid-column:auto}
+/* The header: ★ first, in gold; the avatar is the game's small cube inside its frame. */
+#menuSummary .menu-stars{color:var(--earned)}
+#menuAvatar{width:12px;height:12px;margin:12px;box-shadow:0 0 0 12px #000,0 0 0 13px var(--line)}
+/* «Más»: a label only above rows that show; the row in focus keeps the same outline as every control. */
+.menu-section-label[hidden]{display:none}
+.menu-group:not(.primary) .tiles button:focus-visible{background:transparent;outline:2px solid var(--ink);outline-offset:-2px}
+/* Text in the menus is at least 12 px. */
+#mMenu small,#mMenu .menu-section-label,.menu-heading small,#mSettings small,#mSettings .settings-hint,#mSettings p,#mSettings label,#mConnection p,#mMusic label,.journal-tabs button,.cube-tabs button{font-size:12px!important}
+#mMenu .menu-group:not(.primary) .tiles button small{font-size:12px}
+/* One active state: white line and a faint fill (tabs of Tu cubo and of the Bitácora alike). */
+.journal-tabs button[aria-selected="true"],.journal-tabs button.selected,.cube-tabs [aria-selected="true"]{color:var(--ink);border-color:var(--ink);background:#ffffff14}
+/* Square check boxes, no native look. */
+input[type="checkbox"]{appearance:none;-webkit-appearance:none;display:inline-grid;place-content:center;width:20px;height:20px;min-width:20px;min-height:20px;margin:0;padding:0;border:1px solid #ffffff66;border-radius:0;background:#000;cursor:pointer}
+input[type="checkbox"]::before{content:"";width:10px;height:10px;background:var(--ink);transform:scale(0)}
+input[type="checkbox"]:checked::before{transform:scale(1)}
+input[type="checkbox"]:checked{border-color:var(--ink)}
+/* Ajustes in three blocks: Sonido y tiempo, Ver y sentir, Partida; «Empezar de cero» last and apart. */
+.settings-block{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
+.settings-block:first-of-type{margin-top:4px;padding-top:0;border-top:0}
+.settings-block>h3{font:400 12px/1.5 var(--display);color:var(--dim);letter-spacing:.04em;margin:0 0 8px}
+#mSettings .settings-block>.tiles{margin-top:4px}
+.settings-volume{display:grid;gap:6px;margin:4px 0 8px}
+.settings-volume label{display:flex;justify-content:space-between;color:var(--ink)}
+.settings-volume input{width:100%;min-height:44px;margin:0}
+#mSettings .settings-danger{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
+#mSettings .settings-danger #bStartOver{justify-content:center;border:1px solid var(--ink);padding:12px}
+#mSettings .settings-block .settings-diagnostic{margin-top:12px}
+/* Small HUD controls reach 44 px. */
+.spark-goal,.spark-power button{min-height:44px}
+#mSettings #bMusicSettings>span{display:flex;flex-direction:column;gap:2px}
+#mSettings .settings-block .latency-setting>span{font-size:13px}
+#menuMore #bPrimary{border:0;border-bottom:1px solid var(--line);background:transparent;width:auto;height:auto}
+#mMenu .menu-utilities button,#mMenu .menu-utilities button span,#mMenu .menu-group:not(.primary) .tiles button,#mMenu .menu-group:not(.primary) .tiles button span{font-size:13px}
+/* Landscape phones: the same order in fewer lines, so the menu fits with «Más» closed. */
+@media(max-height:500px){#mMenu .menu-group.primary>h3{display:none}#mMenu .menu-group.primary .tiles>button:not(#bContinue){flex-direction:row;align-items:center;min-height:48px;padding:8px}#mMenu .menu-group.primary .tiles>#bContinue{min-height:48px}}
