@@ -2,6 +2,14 @@
 
 Estado: 26 de octubre de 2026. Código **2.3.0-alpha.215**. Las entradas describen su revisión, no certifican producción.
 
+## Verificador de preservación tras P3–P8 · sin cambio de versión
+
+Rama `claude/charming-darwin-dvbfc7`, sobre `main` (`5464612`). Petición de Jay.
+
+- `scripts/verify-e-preservation.mjs` añade una segunda referencia: `main` tras P8 (`5464612`, PR #357 y #358 con CI completo). Los 56 archivos protegidos que cambiaron P3–P8 y los contratos del final de once, el final del Viaje, el Jardín, la ronda y el paso del final se comparan con ella byte a byte. El resto sigue comparándose con la base E.
+- No abre ningún archivo nuevo a cambios: la lista permitida no crece. Revisado antes de fijarlo: en los módulos de sonido, P5 solo movió las luces a la nota oída y añadió el pulso suave aprobado; notas y síntesis no cambian.
+- Pruebas: el verificador pasa (301 archivos, 13 contratos) y falla al tocar un archivo fijado (`interactions.js`) o una nota del final (`song-stage.js`). Auditoría y `npm test` aprobados. Sin navegador ni audio: no cambia el juego.
+
 ## P8 · Menos contadores · 2.3.0-alpha.215
 
 Rama `panel10/p8-menos-contadores`, sobre `panel10/p7-color-ganado`. Pope, con Hodent para las hojas (panel 10); D3 = A + B de Jay.
