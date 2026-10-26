@@ -6,9 +6,9 @@ from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
-from io import BytesIO
-import threading,os,shutil
+import threading,os,shutil,base64
 ROOT=Path(__file__).resolve().parents[1]
+PIXELS="async b=>{const i=new Image();i.src='data:image/png;base64,'+b;await i.decode();const c=document.createElement('canvas');c.width=i.width;c.height=i.height;const g=c.getContext('2d');g.drawImage(i,0,0);return {w:i.width,d:Array.from(g.getImageData(0,0,i.width,i.height).data)};}"
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
 server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(ROOT)));threading.Thread(target=server.serve_forever,daemon=True).start()
@@ -26,7 +26,6 @@ def open_page(browser,size,query=''):
 try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or shutil.which('chromium'),args=['--no-sandbox','--autoplay-policy=no-user-gesture-required','--no-proxy-server','--host-resolver-rules=MAP kubono.localhost 127.0.0.1'])
-  from PIL import Image
   # 1. The start (00-inicio): the finger at rest is a ring around a dot, inside 14×14, its centre ≤ 30 px from the cube.
   context,page,errors=open_page(browser,(390,844))
   page.wait_for_function('__r.journeyHint().showing',timeout=12000)
@@ -42,7 +41,11 @@ try:
    for d in frame:
     if d['kind']=='rect':assert d['w']==3 and d['h']==3
   # The Line reads over the landscape and the cube keeps its size (6×6 px of fill here).
-  shot=Image.open(BytesIO(page.screenshot())).convert('RGB');y=round(H*.8)
+  # Read the screenshot's pixels in the page itself (no image library needed in CI).
+  y=round(H*.8);rgb=page.evaluate(PIXELS,base64.b64encode(page.screenshot()).decode())
+  class Shot:
+   def getpixel(self,xy):i=(xy[1]*rgb['w']+xy[0])*4;return tuple(rgb['d'][i:i+3])
+  shot=Shot()
   line=sorted(shot.getpixel((x,y))[0] for x in range(60,330));assert line[len(line)//2]>=90,line[len(line)//2]
   cube=[(x,yy) for x in range(W//2-10,W//2+10) for yy in range(H//2-10,H//2+10) if min(shot.getpixel((x,yy)))>240]
   bx=[p[0] for p in cube];by=[p[1] for p in cube];assert max(bx)-min(bx)+1<=12 and max(by)-min(by)+1<=12,(min(bx),max(bx),min(by),max(by))
