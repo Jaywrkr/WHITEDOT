@@ -54,8 +54,9 @@ export function drawMap(runtime,x,X,Y,W,H,zoom){
   x.globalAlpha=1;x.fillStyle=col;x.beginPath();for(let i=0;i<10;i++){const r=i%2?z*.45:z,an=i/10*6.283-Math.PI/2;i?x.lineTo(px+Math.cos(an)*r,py+Math.sin(an)*r):x.moveTo(px+Math.cos(an)*r,py+Math.sin(an)*r);}x.closePath();x.fill();}
  // Favoritos propios, sin revelar terreno adicional.
  for(const p of m.favorites){const [px,py]=P(p.x/m.RP,p.y/m.RP);x.globalAlpha=.9;x.strokeStyle='#9fe8ff';x.lineWidth=1.5;x.beginPath();x.moveTo(px,py-6);x.lineTo(px+5,py);x.lineTo(px,py+6);x.lineTo(px-5,py);x.closePath();x.stroke();}
- // Los once lugares del anillo: dorados los abiertos, con sus estrellas; grises los que aún piden estrellas.
- for(const q of m.ring){const [px,py]=P(q.x/m.RP,q.y/m.RP),z=Math.max(5,Math.min(11,s*.4));x.globalAlpha=q.open?1:.6;x.strokeStyle=q.open?runtime.GOLD:'#8a8a8f';x.lineWidth=2;x.beginPath();x.arc(px,py,z,0,6.283);x.stroke();
+ // Los once lugares del anillo (panel 10, P7, D4): con su color los completos, blancos los abiertos, grises los cerrados;
+ // el dorado, solo en sus estrellas.
+ for(const q of m.ring){const [px,py]=P(q.x/m.RP,q.y/m.RP),z=Math.max(5,Math.min(11,s*.4));x.globalAlpha=q.open?1:.6;x.strokeStyle=q.ink||(q.open?'#ffffff':'#8a8a8f');x.lineWidth=2;x.beginPath();x.arc(px,py,z,0,6.283);x.stroke();
   for(let i=0;i<3;i++){x.fillStyle=i<q.stars?runtime.GOLD:'#ffffff30';x.fillRect(px-7+i*5.5,py+z+4,3,3);}}
  // Origen, campamento y tú.
  {const [px,py]=P(.5,.5);x.globalAlpha=.8;x.strokeStyle='#fff';x.lineWidth=1.5;x.beginPath();x.arc(px,py,Math.max(5,s*.35),0,6.283);x.stroke();}
@@ -72,7 +73,9 @@ export function initialize(runtime){
   $("mRegions").textContent=m.cells.length;$("mConts").textContent=m.continents;$("mRecord").textContent=m.record;
   $("mapZoom").textContent=zoom==='mundo'?'Ver cerca':'Ver todo';
   // One item per span: lines break between items, never leaving a separator hanging (panel 10, Nesbitt #14).
-  $("mapNote").replaceChildren(...[`${m.favorites.length} favoritos (◇)`,`${m.reached.length} hitos visitados`,`${m.heard.length} oídos sin visitar (?)`,`${Object.keys(runtime.S.anomalies||{}).length} rarezas (✶)`,m.camp&&'⌂ tu Estudio',m.ring.length&&`${m.ring.filter(q=>q.open).length} lugares abiertos (○)`].filter(Boolean).map(t=>{const e=document.createElement('span');e.textContent=t;return e;}));
+  const rare=Object.keys(runtime.S.anomalies||{}).length,open=m.ring.filter(q=>q.open).length;
+  // Panel 10 (P8): no counter at zero; regions, continents and record live in Tú (index.html #journalYouPart).
+  $("mapNote").replaceChildren(...[m.favorites.length&&`${m.favorites.length} favoritos (◇)`,m.reached.length&&`${m.reached.length} hitos visitados`,m.heard.length&&`${m.heard.length} oídos sin visitar (?)`,rare&&`${rare} rarezas (✶)`,m.camp&&'⌂ tu Estudio',open&&`${open} lugares abiertos (○)`].filter(Boolean).map(t=>{const e=document.createElement('span');e.textContent=t;return e;}));
   runtime.renderRingTravel?.();
  }
  function open(){runtime.openJournal?.('places');render();runtime.unlock('mapa1');}

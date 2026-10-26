@@ -15,7 +15,7 @@ try:
   page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()','null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=house-sound&layout=wide');page.wait_for_function('!!window.__r?.enterHouse&&!!window.__r?.houseSounds')
   hide="document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)"
-  page.evaluate("""()=>{"""+hide+""";const r=__r,s=r.S;s.sound=true;s.totalDays=14;s.livingSeen={...(s.livingSeen||{}),deer:true};
+  page.evaluate("""()=>{"""+hide+""";const r=__r,s=r.S;s.sound=true;s.totalDays=14;Object.keys(r.placesData().stars).forEach((id,i)=>r.placesData().stars[id]=i<8?[true,true,true]:[false,false,false]);s.livingSeen={...(s.livingSeen||{}),deer:true};
    s.house={...s.house,objects:[{kind:'obj:origen',room:'sala',x:.7,y:.5}],playerRoom:'sala'};r.save();r.audio();window.__plays=[];r.houseAudioCue=n=>__plays.push(n);r.enterHouse();}""")
   page.wait_for_function("__r.ac?.state==='running'&&__r.houseSettled()",timeout=10000)
   # Walking past the object plays it once, not on every frame.

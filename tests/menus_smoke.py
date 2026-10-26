@@ -62,9 +62,16 @@ try:
     # The header: ★ first and in gold in the full view; the quiet view shows no numbers.
     summary=p.locator('#menuSummary').inner_text()
     if view=='libre':
-     assert summary.startswith('★ ') and '/33' in summary and '✦' in summary,summary
+     assert summary.startswith('★ ') and '/33' in summary,summary
+     # Panel 10 (P8): no counter at zero; ✦ shows once there are chispas.
+     assert ('✦' in summary)==(p.evaluate('Math.floor(__r.S.sparks||0)')>0),summary
      gold=p.evaluate("getComputedStyle(document.querySelector('#menuSummary .menu-stars')).color");assert gold=='rgb(240, 210, 122)',gold
     else:assert '★' not in summary and '✦' not in summary,summary
+    # Panel 10 (P8, D3-A): the HUD shows at most three numbers: ★ of 33, ✦ and places of 11.
+    nums=p.evaluate("[...document.querySelectorAll('.hud *')].filter(e=>!e.children.length&&/\\d/.test(e.textContent)&&e.getClientRects().length&&getComputedStyle(e).visibility!=='hidden').map(e=>e.textContent)")
+    assert len(nums)<=3,(w,h,view,nums)
+    if view=='libre':assert sorted(n.split()[0] for n in nums)==sorted(['★',p.evaluate("document.getElementById('hudPlaces').textContent").split()[0],'✦']),(w,h,nums)
+    else:assert not nums,(w,h,view,'the quiet view shows no numbers',nums)
     # Text in the menu is at least 12 px; every control is at least 44 px tall.
     small=p.evaluate("[...document.querySelectorAll('#mMenu .menu-sections *')].filter(e=>e.childNodes.length&&[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim())&&e.getClientRects().length&&parseFloat(getComputedStyle(e).fontSize)<12).map(e=>e.id||e.className||e.tagName)")
     assert not small,(w,h,view,small)

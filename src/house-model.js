@@ -1,6 +1,13 @@
 import {LIVING_CATALOG} from './living-catalog.js';
 import {POWER_IDS,POWERS} from './expansion-music.js';
-export const HOUSE_ROOMS=Object.freeze([{id:'sala',name:'Eco',days:0,found:0,cut:8000,echo:.03},{id:'jardin',name:'Jardín de voces',days:3,found:8,cut:4500,echo:.02},{id:'azotea',name:'Cielo',days:7,found:20,cut:6500,echo:.08},{id:'sotano',name:'Raíz',days:14,found:40,cut:2400,echo:.05}]);
+// Panel 10 (P8, D3-B): a room opens by places complete or by ★ (S.lugares), never by days. The Journey's five chapters
+// are five places, so the first new room asks one place more. LEGACY_ROOMS keeps the old days-or-achievements rule only
+// to migrate older houses on load (save-store.js): every room it opened stays open (roomRule 2 marks a migrated house).
+export const HOUSE_ROOMS=Object.freeze([{id:'sala',name:'Eco',places:0,stars:0,cut:8000,echo:.03},{id:'jardin',name:'Jardín de voces',places:6,stars:9,cut:4500,echo:.02},{id:'azotea',name:'Cielo',places:8,stars:15,cut:6500,echo:.08},{id:'sotano',name:'Raíz',places:11,stars:24,cut:2400,echo:.05}].map(Object.freeze));
+export const LEGACY_ROOMS=Object.freeze({sala:{days:0,found:0},jardin:{days:3,found:8},azotea:{days:7,found:20},sotano:{days:14,found:40}});
+export const HOUSE_ROOM_RULE=2;
+export const legacyRoomsOpen=(days=0,found=0)=>HOUSE_ROOMS.filter(r=>LEGACY_ROOMS[r.id].days<=days||LEGACY_ROOMS[r.id].found<=found).map(r=>r.id);
+export const roomAsks=r=>r.places+' lugares o '+r.stars+' ★';
 const biomes=['llanura','bosque','lago','dunas','cristales','jardin','ruinas','cueva','tormenta','faros','vacio'];
 export const HOUSE_OBJECTS=Object.freeze([
  {id:'obj:origen',name:'Pulso de casa',source:'cube:color:ffffff',instrument:'sub',role:'bajo',shape:'square'},
@@ -17,11 +24,12 @@ const COLOR=/^#[0-9a-f]{6}$/i,safeId=v=>typeof v==='string'&&v.length>0&&v.lengt
 function normalizeDecor(list){const out=[];for(const d of Array.isArray(list)?list:[]){if(!d||!safeId(d.id)||out.length>=60)continue;if(!HOUSE_ROOMS.some(r=>r.id===d.room)){out.push({...d});continue;}out.push({...d,x:Math.max(0,Math.min(1,finite(d.x,.5))),y:Math.max(0,Math.min(1,finite(d.y,.5)))});}return out;}
 function normalizeTints(raw){const out={};if(raw&&typeof raw==='object'&&!Array.isArray(raw))for(const [k,v]of Object.entries(raw))if(safeId(k)&&typeof v==='string'&&COLOR.test(v))out[k]=v.toLowerCase();return out;}
 function normalizeCapsules(raw){const q=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{},items={};for(const [k,v]of Object.entries(q.items&&typeof q.items==='object'?q.items:{}))if(safeId(k)&&v)items[k]=v===true?true:v;return {...q,count:Number.isSafeInteger(q.count)&&q.count>=0?q.count:0,items};}
-// Rooms open by days played or by achievements earned, whichever comes first.
-export const roomOpens=(r,days,found)=>r.days<=days||r.found<=found;
-export function normalizeHouse(raw,days=0,found=0){if(Number.isInteger(raw?.version)&&raw.version>HOUSE_VERSION)return {...raw,readOnly:true,objects:Array.isArray(raw.objects)?raw.objects:[],unlocked:Array.isArray(raw.unlocked)?raw.unlocked:['sala'],knownVisitors:raw.knownVisitors||{}};const objects=[],seen=new Set();for(const p of Array.isArray(raw?.objects)?raw.objects:[]){if(p&&typeof p.kind==='string'&&!HOUSE_OBJECTS.some(d=>d.id===p.kind)&&!seen.has(p.kind)){seen.add(p.kind);objects.push({...p});continue;}if(!p||seen.has(p.kind)||!HOUSE_ROOMS.some(r=>r.id===p.room))continue;seen.add(p.kind);objects.push({...p,kind:p.kind,room:p.room,x:Math.max(0,Math.min(1,finite(p.x,.5))),y:Math.max(0,Math.min(1,finite(p.y,.5)))});}
- const unlocked=[...new Set([...(Array.isArray(raw?.unlocked)?raw.unlocked.filter(id=>HOUSE_ROOMS.some(r=>r.id===id)):[]),...HOUSE_ROOMS.filter(r=>roomOpens(r,days,found)).map(r=>r.id)])];
- return {...raw,readOnly:undefined,version:HOUSE_VERSION,objects,unlocked,visited:raw?.visited===true,playerRoom:HOUSE_ROOMS.some(r=>r.id===raw?.playerRoom)?raw.playerRoom:'sala',x:Math.max(0,Math.min(1,finite(raw?.x,.5))),y:Math.max(0,Math.min(1,finite(raw?.y,.5))),knownVisitors:raw?.knownVisitors&&typeof raw.knownVisitors==='object'?{...raw.knownVisitors}:{},decor:normalizeDecor(raw?.decor),tints:normalizeTints(raw?.tints),capsules:normalizeCapsules(raw?.capsules)};}
+// Rooms open by places complete or by ★ earned, whichever comes first.
+export const roomOpens=(r,{places=0,stars=0}={})=>r.places<=places||r.stars<=stars;
+// progress: {places,stars} from S.lugares. The old rule is migrated once, on load (save-store.js validateSave).
+export function normalizeHouse(raw,progress={}){if(Number.isInteger(raw?.version)&&raw.version>HOUSE_VERSION)return {...raw,readOnly:true,objects:Array.isArray(raw.objects)?raw.objects:[],unlocked:Array.isArray(raw.unlocked)?raw.unlocked:['sala'],knownVisitors:raw.knownVisitors||{}};const objects=[],seen=new Set();for(const p of Array.isArray(raw?.objects)?raw.objects:[]){if(p&&typeof p.kind==='string'&&!HOUSE_OBJECTS.some(d=>d.id===p.kind)&&!seen.has(p.kind)){seen.add(p.kind);objects.push({...p});continue;}if(!p||seen.has(p.kind)||!HOUSE_ROOMS.some(r=>r.id===p.room))continue;seen.add(p.kind);objects.push({...p,kind:p.kind,room:p.room,x:Math.max(0,Math.min(1,finite(p.x,.5))),y:Math.max(0,Math.min(1,finite(p.y,.5)))});}
+ const unlocked=[...new Set([...(Array.isArray(raw?.unlocked)?raw.unlocked.filter(id=>HOUSE_ROOMS.some(r=>r.id===id)):[]),...HOUSE_ROOMS.filter(r=>roomOpens(r,progress)).map(r=>r.id)])];
+ return {...raw,readOnly:undefined,version:HOUSE_VERSION,roomRule:HOUSE_ROOM_RULE,objects,unlocked,visited:raw?.visited===true,playerRoom:HOUSE_ROOMS.some(r=>r.id===raw?.playerRoom)?raw.playerRoom:'sala',x:Math.max(0,Math.min(1,finite(raw?.x,.5))),y:Math.max(0,Math.min(1,finite(raw?.y,.5))),knownVisitors:raw?.knownVisitors&&typeof raw.knownVisitors==='object'?{...raw.knownVisitors}:{},decor:normalizeDecor(raw?.decor),tints:normalizeTints(raw?.tints),capsules:normalizeCapsules(raw?.capsules)};}
 export const houseOwns=(definition,state)=>!!state.rewards?.items?.[definition.id]||!!state.rewards?.items?.[definition.source]||!!(definition.achievement&&state.ach?.[definition.achievement]);
 export const houseStep=o=>Math.min(15,Math.floor(o.x*16));
 export const houseRegister=o=>o.room==='sotano'?36:36+Math.min(2,Math.floor((1-o.y)*3))*12;

@@ -13,8 +13,13 @@ const by=id=>all.find(r=>r.id===id);
 // The 90 % player gets all 33 ★ within the two hours; the 75 % player's song keeps growing (★★ at 75 %, plan I5).
 assert.equal(by('90').stars120,TOTAL_STARS);assert(by('90').rule);assert(by('75').rule,`75 %: ${by('75').songGap} min`);
 assert(!simulate(PROFILES[1],{rhythmStar:.85,maestroStar:.8}).rule,'with the old 85 % the 75 % player stopped after the win');
-// Measured, not hidden: the 60 % player and the player without sound get no ★★, so their song stops after the win
-// and the model marks the risk of leaving there.
-for(const id of ['60','sin sonido']){const r=by(id);assert(!r.rule);assert.equal(r.quitAt,r.songGapFrom);assert(Math.abs(r.quitAt-r.won)<1);}
+// Panel 10 (P6, D1-B): the 60 % player gets no ★★, but each better round grows a ★ layer («crece»), so the song keeps
+// growing until the two hours end. Measured, not hidden: the player without sound gets no ★★ and no growth (without
+// sound the share is not raised), so their song stops after the win and the model marks the risk of leaving there.
+{const r=by('60');assert(r.rule,`60 %: ${r.songGap} min from ${r.songGapFrom}`);assert(r.grew120>=6);assert(r.events.some(e=>e.kind==='crece'&&e.t>r.won));assert.equal(r.quitAt,null);
+ assert(r.events.filter(e=>e.kind==='crece').every(e=>{const before=r.events.filter(q=>q.what===e.what&&q.t<=e.t);return !before.some(q=>q.kind==='★★');}),'only a layer below ★★ grows');}
+{const r=by('sin sonido');assert(!r.rule);assert.equal(r.grew120,0);assert.equal(r.quitAt,r.songGapFrom);assert(Math.abs(r.quitAt-r.won)<1);}
+// Without the growth the same 60 % player would stop after the win: «crece» is what passes the rule.
+{const r=by('60'),after=r.events.filter(e=>e.t>r.won+.1&&['lugar','★★','★★★','victoria','maestro'].includes(e.kind));assert.deepEqual(after,[],'after the win only «crece» grows the 60 % player\'s song');}
 assert.equal(by('sin sonido').stars120,11,'without sound only ★');
-console.log(`PASS play curve: four players, the Journey then the places in order, the win before an hour; the ${NOVELTY_GAP}-minute rule counts only what grows the song (not purchases); 75 and 90 % keep growing, 60 % and no sound stop after the win and the risk of leaving is marked there`);
+console.log(`PASS play curve: four players, the Journey then the places in order, the win before an hour; the ${NOVELTY_GAP}-minute rule counts only what grows the song (not purchases); 60, 75 and 90 % keep growing (60 % by «crece»), no sound stops after the win and the risk of leaving is marked there`);

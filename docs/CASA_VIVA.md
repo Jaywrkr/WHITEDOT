@@ -4,14 +4,16 @@ Sistema construido, incluido en main alpha.200 y refinado en el candidato alpha.
 
 ## Vista y habitaciones
 
-Casa de muñecas recorrible con cámara, escaleras y vista general. En horizontal, la casa encaja a la izquierda del panel lateral y la Voz habla sobre el panel; en vertical, bajo y = 120. Los rótulos de habitación se miden y nunca cruzan el borde. El cubo conserva sus controles y tamaño aprobados. Las habitaciones se abren por días o descubrimientos, lo que ocurra primero:
+Casa de muñecas recorrible con cámara, escaleras y vista general. En horizontal, la casa encaja a la izquierda del panel lateral y la Voz habla sobre el panel; en vertical, bajo y = 120. Los rótulos de habitación se miden y nunca cruzan el borde. El cubo conserva sus controles y tamaño aprobados. Las habitaciones se abren por lugares completos o por ★, lo que ocurra primero (panel 10, P8, D3-B). Nunca por días:
 
-| ID conservado | Nombre | Días / descubrimientos |
+| ID conservado | Nombre | Lugares / ★ |
 |---|---|---|
-| `sala` | Eco |0 /0 |
-| `jardin` | Jardín de voces |3 /8 |
-| `azotea` | Cielo |7 /20 |
-| `sotano` | Raíz |14 /40 |
+| `sala` | Eco | 0 / 0 |
+| `jardin` | Jardín de voces | 6 / 9 |
+| `azotea` | Cielo | 8 / 15 |
+| `sotano` | Raíz | 11 / 24 |
+
+El Viaje deja cinco lugares completos; la primera sala nueva pide uno más. Migración: al cargar un guardado cuya casa no tiene `roomRule: 2`, se suman a sus salas abiertas las que abría la regla antigua (3/7/14 días o 8/20/40 logros). Ninguna sala abierta se cierra. Una casa de versión futura no se toca.
 
 Fuente: `src/house-model.js`. Se guardan IDs antiguos para no mover objetos ni invalidar visitas.
 

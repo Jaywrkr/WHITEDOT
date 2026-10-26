@@ -46,7 +46,7 @@ export function initialize(runtime){
     b.dataset.cubeStyleType=type;b.dataset.cubeStyleValue=p.value;b.disabled=current.version!==2;b.onclick=()=>choose(type,p.value);$(id).append(b);}}
   const bought=drawOwned();
   const gifts=runtime.wonderGifts||[],gift=gifts.find(d=>d.id===s.wonder);$('cubeWonder').innerHTML='<option value="">Sin regalo</option>'+gifts.map(d=>'<option value="'+d.id+'" '+(s.wonder===d.id?'selected':'')+'>'+d.gift+'</option>').join('');$('cubeWonder').disabled=current.version!==2||!gifts.length;
-  $('cubeGiftPortrait').innerHTML=gift?wonderPortrait(gift.id):'<span aria-hidden="true">◇</span>';$('cubeGiftName').textContent=gift?gift.name:'Regalos del universo';$('cubeGiftStatus').textContent=!gifts.length?'Encuentra un hallazgo para desbloquear su regalo.':gift?'Lo llevas':'Elige un regalo o no lleves ninguno.';$('cubeGiftCount').textContent=gifts.length+' de 20 encontrados';
+  $('cubeGiftPortrait').innerHTML=gift?wonderPortrait(gift.id):'<span aria-hidden="true">◇</span>';$('cubeGiftName').textContent=gift?gift.name:'Regalos del universo';$('cubeGiftStatus').textContent=!gifts.length?'Encuentra un hallazgo para desbloquear su regalo.':gift?'Lo llevas':'Elige un regalo o no lleves ninguno.';$('cubeGiftCount').textContent=gifts.length?gifts.length+' de 20 encontrados':'';
   drawPulses(s,current);
   $('cubeCount').textContent='Ganado jugando '+owned+' de 50'+(bought?' · Comprado '+bought:'')+'. Toca para ponértelo; tócalo otra vez para quitarlo.';if($('cubePulseCount'))$('cubePulseCount').textContent='Ondas '+ownedPulses(S()).size+'/50';$('cubeHint').textContent=current.version!==2?'Actualiza para cambiar este cubo.':hint;
   $('cubeRestore').disabled=current.version!==2;

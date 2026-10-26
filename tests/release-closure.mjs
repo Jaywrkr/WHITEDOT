@@ -9,7 +9,7 @@ r.S.ach.new='2026-10-18';r.achievementEarned(['new']);modal=true;r.achievementsT
 validateSave(r.S,{ach:{},journal:{}},{});
 const saved=structuredClone(r.S);fail=true;r.acknowledgeAchievements();assert(classes.has('has-unread'),'failed acknowledgement keeps unread');fail=false;r.acknowledgeAchievements();assert(!classes.has('has-unread'));assert(r.S.journal.achievementSeen.new);assert.equal(notices[0].o.valid(),false,'already-read queued notice expires');
 r.S=saved;r.achievementsTick(2);assert(classes.has('has-unread'),'unread survives reload');assert.equal(notices.length,1,'reload does not replay toast');
-r.S.ach.other='2026-10-18';r.achievementEarned(['new','other']);r.achievementsTick(2);assert.match(notices.at(-1).t,/2 logros nuevos/);assert.equal(notices.at(-1).o.category,'logros');r.acknowledgeAchievements();r.achievementsTick(2);assert(!classes.has('has-unread'));
+r.S.ach.other='2026-10-18';r.achievementEarned(['new','other']);r.achievementsTick(2);assert.match(notices.at(-1).t,/^✦ Logro · /,'one achievement per notice');assert.doesNotMatch(notices.at(-1).t,/logros nuevos|\d+ logros/,'never a count of achievements');assert.equal(notices.at(-1).o.category,'logros');r.acknowledgeAchievements();r.achievementsTick(2);assert(!classes.has('has-unread'));
 r.S={achievementVersion:2,ach:{},journal:{}};r.achievementsTick(2);assert(!classes.has('has-unread'),'another save does not inherit marker');
 // Plan I1: the toast never carries the narrator's line, and between the credits and the first portal nothing is announced.
 r.narratorLine=()=>'Una frase del narrador.';const before=notices.length;r.S.ach.new='2026-10-18';r.achievementEarned(['new']);r.achievementsTick(2);assert(!notices.at(-1).t.includes('narrador'));

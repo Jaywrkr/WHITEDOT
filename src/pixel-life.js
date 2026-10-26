@@ -58,7 +58,7 @@ export function initialize(runtime){
    const phaseTime=(runtime.mischiefTime?.(o,seconds*1000)??seconds*1000)/1000,g=o.genome,p=still?0:phaseTime/g.period+g.phase,age=seconds-(o.responseAt??-10),response=age>=0&&age<1?Math.sin(age*Math.PI):0;
    let pixels=geometry.get(g);if(!pixels){pixels=pixelGeometry(g);geometry.set(g,pixels);}
    const lift=runtime.faunaBob?.(o,runtime.beat?.()||0,d)||0;c.save();c.translate(o.x+ox,o.y+oy+(still?0:o.pose||0)-lift);runtime.wowObjectTransform?.(c,o);if(!still){c.rotate((o.rotation||0)+Math.sin(p*2)*response*.25);c.scale(1+response*.16,1-response*.1);}
-   c.globalAlpha=fade*(.65+o.lit*.35);c.fillStyle=runtime.musicInk?.(o,g.role)||'#bddbe0';
+   c.globalAlpha=fade*(.65+o.lit*.35)*(runtime.faunaDim?.()??1);c.fillStyle=runtime.musicInk?.(o,g.role)||'#bddbe0';
    const cell=1.5+(g.variant%3)*.2;for(const [x,y]of pixels)c.fillRect(Math.round(x*cell),Math.round(y*cell),cell,cell);
    runtime.wowEyes?.(o,c);
    if(o.kind==='viajero'&&!still){c.globalAlpha=fade*.2;for(let i=1;i<=3;i++)c.fillRect(-o.vx*.22*i,-o.vy*.22*i,2,2);}

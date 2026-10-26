@@ -30,5 +30,9 @@ export function initialize(runtime){
   }else crossing=null;
   c.restore();
  }
- Object.defineProperties(runtime,{faunaBob:{get:()=>bob},faunaAfter:{get:()=>after},drawFauna:{get:()=>draw},faunaState:{get:()=>()=>({shown:lastShown,sleeping:lastSleeping,hearts:hearts.length,crossing:!!crossing,bats:!!crossing?.bats,startCrossing:()=>{crossing=null;crossAt=0;}})}});
+ // Panel 10 (P7, Roset #6): in the Journey and in a round, the small creatures drawn of strokes and pixels read as
+ // letters; they are dimmed to about a third so the screen is one figure (the cube and its goal) on a quiet ground.
+ const FAUNA_DIM=.32;
+ const dim=()=>(runtime.inWorld?.()&&runtime.journeyQuiet?.())||runtime.placeRun?.()?FAUNA_DIM:1;
+ Object.defineProperties(runtime,{faunaDim:{get:()=>dim},faunaBob:{get:()=>bob},faunaAfter:{get:()=>after},drawFauna:{get:()=>draw},faunaState:{get:()=>()=>({shown:lastShown,sleeping:lastSleeping,hearts:hearts.length,crossing:!!crossing,bats:!!crossing?.bats,startCrossing:()=>{crossing=null;crossAt=0;}})}});
 }

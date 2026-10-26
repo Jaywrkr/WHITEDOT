@@ -1,6 +1,46 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.212**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.215**. Las entradas describen su revisión, no certifican producción.
+
+## P8 · Menos contadores · 2.3.0-alpha.215
+
+Rama `panel10/p8-menos-contadores`, sobre `panel10/p7-color-ganado`. Pope, con Hodent para las hojas (panel 10); D3 = A + B de Jay.
+
+- Un solo ★: las reliquias del Mundo (`S.stars`) se llaman «Reliquias» en la Constelación, la Bitácora, la hoja de salida, el aviso al encontrarlas, las imágenes para compartir y tres logros (`estrella1`, `e30`, `e100`; mismos ID, nada ganado se pierde). El HUD ya no escribe `#starsN`; el elemento sigue en la página, oculto. `#oStars` (hoja `#mOut`, sin llamada viva a `exitWorld(true)`) se conserva y dice «Reliquias».
+- Vista completa con tres cifras: ★ de 33 (`#hudStars`, dorado), ✦ y lugares de 11 (`#hudPlaces`), desde que se abren los lugares. Día, distancia, elementos y la meta de chispas salen del HUD (los ID siguen). Regiones, continentes y récord pasan de Mapa a «Tú» en la Bitácora. En el Mundo, la línea de objetivo dice «Explora a tu ritmo» en vez de «Regiones N · Formas N».
+- Sin contadores a cero en hojas de primer nivel: menú (✦ y ★ solo con valor), Tu cubo (saldo y regalos), Mapa (favoritos, hitos, oídos, rarezas, lugares abiertos) y Refugio («0 sonando», «0 de 40»).
+- Refugio (D3-B): las salas se abren por lugares completos o por ★ (Jardín 6 o 9 ★, Cielo 8 o 15 ★, Raíz 11 o 24 ★), nunca por días. Al cargar, una casa sin `roomRule: 2` suma las salas que abría la regla antigua (3/7/14 días o 8/20/40 logros): ninguna sala abierta se cierra. Casas de versión futura intactas.
+- Como mucho un logro por aviso: «✦ Logro · nombre»; los demás esperan, sin leer, en la Bitácora. No se retira ningún logro ni se crean logros de tiempo o distancia.
+- No cambian el cubo, la música, chispas, piezas compradas, semillas ni mapas.
+- Pruebas: `tests/fewer-counters.mjs` (migración, regla de salas, ★ único, tres cifras, un logro por aviso); actualizadas a la regla nueva `house*.mjs`, `release-closure.mjs` y los recorridos de Refugio, menú, HUD y Tu cubo. `menus_smoke.py` comprueba que el HUD muestra como máximo tres cifras.
+
+## P7 · El color se gana y se ve · 2.3.0-alpha.214
+
+Rama `panel10/p7-color-ganado`, sobre `panel10/p6-tu-cancion`. Roset, Nesbitt, Wong y Mizuguchi (panel 10); D4 de Jay.
+
+- Color del lugar (D4): portales completos, marcas de capítulo, mapa y trofeos del Refugio toman el color de su lugar (`earnedColor`, `color-safe.js`). Abiertos sin completar, en blanco; la columna y la baliza, en blanco. El dorado queda para las ★.
+- Pigmento, no velo: se quita el relleno plano del bioma recuperado. Su color entra en las formas con una mezcla `color` que deja el negro negro. La luz del bioma es un charco menor alrededor del cubo; el amanecer y el atardecer ya no tiñen toda la pantalla; la niebla es algo más fina.
+- El color vuelve en un compás (2,4–3 s): el gris se retira en un círculo desde el cubo hasta el borde, con un frente fino de su color. Con movimiento reducido, fundido del mismo largo.
+- Menos textura en Lago (dos ondas por estanque), Dunas (una de cada dos franjas) y Ruinas (marcas del suelo más tenues). Caminantes y criaturas de píxeles a un tercio de brillo en el Viaje y en las rondas.
+- El Camino del Viaje no escribe «Pulso»: el cristal cercano late con el golpe.
+- Daltonismo: `SAFE_COLORS` sin repetidos. Dunas, Cristales y Ruinas pasan a ocre, verde pálido y azul pizarra, separados en deuteranopía, protanopía y tritanopía simuladas.
+- Cueva: la llama roja se queda; los cuadros del eco pasan a blanco y dorado, todos de 7 px. Refugio: «cerca», «armado» y el paso del Taller en blanco. «Grabar»: píldora blanca con un punto cuadrado que parpadea.
+- No cambian el cubo, la música, las semillas, las posiciones ni los mapas.
+- Medida de Roset con `scripts/panel-capture.py` (390×844; «encendido» = canal máximo > 10, «color» = croma > 24). Capítulos y lugares, antes → después: Lago 34 → 14 % encendido, Dunas 57 → 19 %, Vacío 29 → 7 %, Cristales 25 → 10 %, Ruinas 15 → 8 %; máximo 19 % (Dunas). Anillo (Bosque recuperado, con niebla): mediana (33,42,37) → (3,17,8) y color 0,13 → 17,8 %. Los capítulos aún pálidos siguen grises a propósito. En un capítulo de Lago recuperado: mediana (1,7,12) y 5,5 % con color; el gris pasa de 1 a 0,05 en 2,2 s.
+- Pruebas: `tests/color-earned.mjs` (Node) y `tests/color_earned_smoke.py` (navegador). `echo_smoke.py` falla también en la rama base (la tarjeta de la Cueva no sale en 15 s); no lo causa esta fase.
+
+## P6 · Tocar donde sea y Tu canción para todos · 2.3.0-alpha.213
+
+Rama `panel10/p6-tu-cancion`, sobre `panel10/p5-un-solo-reloj`. Mizuguchi, Chen, Wintory, Simogo e Iwai (panel 10); D1-B, D2-A y D5 de Jay.
+
+- Tocar donde sea (D2-A): en el Camino, los capítulos del Viaje y las rondas de lugar, el pulso suena al apoyar el dedo en cualquier punto del lienzo. Arrastrar sigue caminando y descansar abre el escáner. En el Mundo libre no cambia: el cubo al apoyar, el vacío al soltar. Guía, lección y pista del Camino dicen «Toca al ritmo. Arrastra para moverte.».
+- La capa crece (D1-B): entre ★ y ★★, cada 1,25 puntos de tu mejor porcentaje desde el 55 % suma un tiempo de los compases callados (≈ 62 % de la capa al 60 %, tres cuartos al 67 %). La melodía de Faros gana una cuarta y quinta nota. Una ronda sin sonido ya no sube el mejor porcentaje. Umbrales de estrellas sin cambio.
+- `scripts/play-curve.mjs` cuenta el evento «crece» en la regla de 12 min. El modelo cambia su supuesto de reintentos: tras un segundo reintento que no suma nada, pasa al lugar siguiente. Resultado: el 60 % cumple hasta el minuto 120 (mayor hueco 8,9 min; 13 veces crece). Con el supuesto anterior quedaba en 12,2 min. Sin sonido sigue sin cumplir (81,8 min).
+- La victoria de una ronda suena al nivel ganado (su ★ con crecimiento, ★★ o ★★★), no siempre ★★. Los capítulos del Viaje siguen con la capa entera.
+- El gran final (D5): la ronda que completa los once desemboca sola en él, sin tarjeta delante; la escena se abre 0,3 s antes del fin de la caída y su primer compás es el siguiente «1». La tarjeta sale al cerrar el final. Durante tus frases y la primera vuelta del tema solo siguen colchón y bajo; las demás capas vuelven en la segunda vuelta. Tu frase suena con el arpegio suave del final del Viaje en lugar de `lead`. Créditos de autoría solo en el final de once; el del Viaje dice solo «Tu mundo se abrió» y la versión maestra solo sus dos líneas.
+- Sin rótulo en el compás de silencio. En el anillo de Tu canción, ★, ★★ y ★★★ se distinguen por saturación (45, 75 y 100 %); el blanco del Vacío, por brillo.
+- No cambian la generación, las notas, las armonías, la síntesis, la música del Mundo ni las notas guardadas. Medida de Wintory (todas las capas en ★★, seis notas por lugar): compás de frase 6 de 9 eventos tuyos (antes 6 de 65); compás del tema 3 ajenos (antes 59). En ★★★: 6 de 12 y 6 ajenos.
+- Pruebas: `tests/song-for-everyone.mjs` (Node), `tests/tap_anywhere_smoke.py` y `tests/song_finale_flow_smoke.py` (navegador). Se actualizan `play-curve.mjs`, `journey-finale.mjs`, `touch_precision_smoke.py`, `song_authorship_smoke.py`, `journey_finale_smoke.py` y `result_clarity_smoke.py`, que afirmaban lo anterior. `tap_anywhere_smoke.py`: 40 toques en un capítulo, del `pointerdown` a la nota p95 ≈ 12,5 ms (sin contar la latencia de salida). `song_stage_mix.py` mide el hueco: frase −27,4 dB frente a −23,5 dB con todas las capas (base: −23,6); primera vuelta del tema −26,0 frente a −23,1 en la segunda (base: −23,1 y −23,0). `journey_finale_mix.py` y `victory_mix.py` sin cambios (picos 0,144 y 0,179). `victory_live_smoke.py` falla igual en la rama base (7532 ms frente a un margen de 7500), no por esta fase. `surf_smoke.py` espera la tarjeta 15 s. Renders sin escucha humana: Jay debe oír el final antes de integrar. Sin teléfono.
 
 ## P5 · Un solo reloj · 2.3.0-alpha.212
 

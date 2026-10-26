@@ -14,8 +14,8 @@ export function initialize(runtime) {
   function menuSummary(){const S=runtime.S,$=runtime.$,goal=gameObjective(S,runtime.placesData?.()),name=(S.playerProfile?.name||'').trim();$("menuTitle").textContent=name||'Kubono';const next=$("bLugares")?.querySelector("small");if(next)next.textContent=goal.line;const follow=$('bContinue');if(follow){follow.textContent=runtime.placeRun?.()?'Volver a la ronda':goal.kind==='place'?`Seguir hacia ${goal.name||runtime.PLACES?.find?.(p=>p.id===goal.id)?.name||goal.line.replace('Siguiente: ','').replace(/\.$/,'')}`:goal.kind==='create'?'Tu canción':'Continuar el Viaje';}$("menuAvatar").style.background=runtime.cubeColor?.()||'#fff';
    const place=S.mode==='studio'?'Refugio':runtime.inWorld()?((S.layer&&S.layer!=='superficie')?(S.layer==='bajo'?'Subsuelo':'Cielo'):runtime.regionOfPos?.(S.wx,S.wy)?.name):'Camino';
    // Panel 10 (P2): ★ first and in gold; the quiet view shows no numbers (★ stay one touch away, in Lugares).
-   const quiet=runtime.journeyQuiet?.(),d=runtime.placesData?.(),summary=$("menuSummary"),parts=[];if(!quiet&&d&&!d.readOnly){const star=document.createElement('span');star.className='menu-stars';star.textContent=`★ ${starCount(d)}/${TOTAL_STARS}`;parts.push(star);}
-   if(!quiet)parts.push('✦ '+Math.floor(S.sparks||0)+' chispas');if(place)parts.push(place);summary.replaceChildren(...parts.flatMap((x,i)=>i?[' · ',x]:[x]));
+   const quiet=runtime.journeyQuiet?.(),d=runtime.placesData?.(),summary=$("menuSummary"),parts=[];if(!quiet&&d&&!d.readOnly&&starCount(d)>0){const star=document.createElement('span');star.className='menu-stars';star.textContent=`★ ${starCount(d)}/${TOTAL_STARS}`;parts.push(star);}
+   if(!quiet&&Math.floor(S.sparks||0)>0)parts.push('✦ '+Math.floor(S.sparks||0)+' chispas');/* P8: no counter at zero */if(place)parts.push(place);summary.replaceChildren(...parts.flatMap((x,i)=>i?[' · ',x]:[x]));
    // Lugares shows once the eleven can be visited (the end of the Journey).
    if($("bLugares"))$("bLugares").hidden=!freeOpen(S.journey);}
   // «Más» shows a section label only when a row under it is visible.

@@ -17,7 +17,7 @@ try:
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.enterHouse&&!!window.__r?.houseGuideTick')
    hide="document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)"
    # A friend's house: an object, three capsule prizes and a colour, shared as WH2.
-   page.evaluate("()=>{"+hide+";const r=__r,s=r.S;s.sound=false;s.totalDays=14;s.sparks=300;s.sparkEconomy.earned=s.sparkEconomy.spent+300;s.house={...s.house,objects:[{kind:'obj:origen',room:'sala',x:.5,y:.4}],decor:[],tints:{},playerRoom:'sala'};r.save();r.enterHouse();for(let i=0;i<3;i++)r.openHouseCapsule();}")
+   page.evaluate("()=>{"+hide+";const r=__r,s=r.S;s.sound=false;s.totalDays=14;Object.keys(r.placesData().stars).forEach((id,i)=>r.placesData().stars[id]=i<8?[true,true,true]:[false,false,false]);s.sparks=300;s.sparkEconomy.earned=s.sparkEconomy.spent+300;s.house={...s.house,objects:[{kind:'obj:origen',room:'sala',x:.5,y:.4}],decor:[],tints:{},playerRoom:'sala'};r.save();r.enterHouse();for(let i=0;i<3;i++)r.openHouseCapsule();}")
    page.wait_for_function('__r.houseSettled()');page.evaluate(hide);page.locator('#houseShare').click();code=page.locator('#houseCode').input_value();assert code.startswith('WH2-'),code
    friend=page.evaluate('JSON.stringify(__r.currentHouse().decor)');page.locator('#houseCodeClose').click()
    # Our own code does not count as a visit.

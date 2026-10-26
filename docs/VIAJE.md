@@ -20,7 +20,7 @@ La duración objetivo es15–20min, pendiente de sesiones reales. Las antiguas t
 
 ## Ritmo y frase propia
 
-El pulso encaja con la escala y el reloj del lugar. Los aciertos avanzan el juego y guardan notas, pasos y ticks para el cierre; un toque fuera de tiempo no borra lo ganado. En el Mundo libre, recoger fragmentos también paga su base fuera de tempo.
+El pulso encaja con la escala y el reloj del lugar. En el Camino, los capítulos y las rondas de lugar, tocar en cualquier punto del lienzo es el pulso y suena al apoyar el dedo (D2-A, panel 10, P6); si el dedo se arrastra, el cubo camina, y si descansa, se abre el escáner. En el Mundo libre el cubo suena al apoyar y el vacío al soltar. La guía dice «Toca al ritmo. Arrastra para moverte.». Los aciertos avanzan el juego y guardan notas, pasos y ticks para el cierre; un toque fuera de tiempo no borra lo ganado. En el Mundo libre, recoger fragmentos también paga su base fuera de tempo.
 
 `journey-pulse.js` define el tema en grados `[0,1,4,3,2,0]`, con duraciones `[3,1,4,2,2,4]` en corcheas. La voz depende del contexto musical; no hay un instrumento separado de premio. La ventana base es±80ms y Maestro la estrecha. No fijar un único tempo para todo el universo.
 
@@ -36,6 +36,8 @@ Ningún toque mudo: un pulso demasiado seguido (240 ms; dos tercios de corchea e
 
 Negro, cubo pequeño, marcas contenidas y color ganado. Los rótulos del paisaje y la economía se reducen durante el Viaje. Menús y controles son silenciosos; no usan notas del tema como sonido de UI.
 
+El color se gana y se ve (panel 10, P7, D4). Un bioma pálido recupera su color en un compás (2,4–3 s): el gris se retira en un círculo que nace en el cubo y llega al borde, con un frente fino de su color; con movimiento reducido, un fundido del mismo largo. Después el color va en las formas como pigmento (mezcla `color`, `world-sheet.js`), no como velo: el fondo sigue negro. El amanecer y el atardecer tiñen solo la luz del cubo. Las marcas de capítulo hechas toman el color de su lugar; el portal de un capítulo completo también. El Camino del Viaje no escribe «Pulso»: el cristal cercano late con el golpe. Durante el Viaje y las rondas, caminantes y criaturas de píxeles bajan a un tercio de brillo (`faunaDim`). Lago, Dunas y Ruinas llevan menos textura de suelo (`textureWeight`). En la Cueva, la llama roja se queda; los cuadros del eco son blancos (el canto) y dorados (tu acierto), de 7 px en una línea.
+
 La ayuda se consulta en menú → Cómo jugar y destaca una acción actual. La primera demostración enseña jugando; no depende de leer una lista larga. Los resultados y el narrador aparecen en su contexto, con salidas y foco accesibles.
 
 La aportación personal se guarda de forma aditiva y compatible: notas históricas sin ticks siguen interpretándose. No reemplazar las frases ni borrar progreso para adaptar una versión nueva.
@@ -44,7 +46,7 @@ La aportación personal se guarda de forma aditiva y compatible: notas históric
 
 `journey-finale.js` reconstruye tus frases y el tema con voces suaves existentes, armonizadas al contexto. Su partitura abstracta y el arreglo audible son capas distintas; leer la partitura sola no demuestra cómo suena.
 
-La UI nombra la frase que está sonando. El fondo no salta el final al tocarlo; **Seguir explorando** se habilita tras dos segundos, y Escape/salida normal conservan el cierre. Esperar, omitir o explorar terminan en Mundo libre con rumbo al siguiente lugar. No llevan al jugador al Refugio como destino obligatorio.
+El cierre dice solo «Tu mundo se abrió», con los seis anillos apagados; los créditos de autoría quedan para el final de los once (D5-C). La UI nombra la frase que está sonando. El fondo no salta el final al tocarlo; **Seguir explorando** se habilita tras dos segundos, y Escape/salida normal conservan el cierre. Esperar, omitir o explorar terminan en Mundo libre con rumbo al siguiente lugar. No llevan al jugador al Refugio como destino obligatorio.
 
 Guardar el cierre debe funcionar antes de darlo por terminado. Una falla deja posibilidad de reintento. La configuración musical actual se conserva; reconocimiento y emoción requieren escucha real.
 

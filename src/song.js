@@ -34,8 +34,21 @@ export function songChord(tones){let root=tones[0],shift=0;while(root>49)root-=1
  return {root,tones:tones.slice(0,3).map(m=>m+shift)};}
 // A layer as the stars have grown it (plan H4): ★ a fragment (every other bar), ★★ the whole layer, ★★★ its variation
 // (the notes doubled an octave up, softer, and the beats answered two sixteenths later, softer). 0 is silent.
+// Panel 10 (P6, D1-B, Chen): between ★ and ★★ the fragment grows with your best share on time in the place
+// (best[id].onTime, raised only by rounds with sound). From 55 % every 1,25 points brings in one more beat of the bars
+// ★ leaves silent: first the last beat of each (a pickup into the next bar), then the one before, and so on; about
+// 62 % of the layer at 60 %, three quarters at 67 %, all but one beat at 73,75 %. The thresholds of the stars do not
+// change, nor how a whole layer sounds: only how much of it sounds. Such a tier is written 1 + beats/16.
+export const GROWTH_FROM=.55,GROWTH_STEP=.0125,GROWTH_BEATS=15,GROWTH_FILL=Object.freeze([7,3,5,1]);
+export const growthSteps=best=>Number.isFinite(best)?Math.max(0,Math.min(GROWTH_BEATS,Math.floor((best-GROWTH_FROM)/GROWTH_STEP+1e-6))):0;
+// A place's tier from its saved record: its stars, and for ★ alone its growth. 0 before its ★.
+export function placeTier(places,id){const st=places?.stars?.[id]||[],n=st.filter(Boolean).length;if(!st[0])return 0;if(n>=2)return n;return 1+growthSteps(places?.best?.[id]?.onTime)/16;}
+// Whether sixteenth s of a layer sounds at a tier below ★★: the even bars always; in the others, the beats its growth
+// has filled, from the bar's last beat backwards, across the four silent bars in turn.
+export function fragmentStep(tier,s){if(tier>=2)return true;const bar=((Math.floor(s/16)%8)+8)%8;if(bar%2===0)return true;const beat=Math.floor((((s%16)+16)%16)/4);
+ return (3-beat)*4+GROWTH_FILL.indexOf(bar)<Math.round((tier-1)*16);}
 const PITCHED=new Set(['bass','acid','arp','bell','lead','echo','conga']),CHORDAL=new Set(['pad','stab']);
-export function tierStep(id,s,c,tier){if(!(tier>0))return [];if(tier===1&&Math.floor(s/16)%2===1)return [];const out=layerStep(id,s,c).map(e=>({...e}));
+export function tierStep(id,s,c,tier){if(!(tier>0))return [];if(tier<2&&!fragmentStep(tier,s))return [];const out=layerStep(id,s,c).map(e=>({...e}));
  if(tier>=3){for(const e of layerStep(id,s,c)){if(PITCHED.has(e.what))out.push({...e,midi:e.midi+12,soft:true});else if(CHORDAL.has(e.what))out.push({...e,tones:e.tones.map(m=>m+12),soft:true});}
   for(const e of layerStep(id,s-2,c))if(!PITCHED.has(e.what)&&!CHORDAL.has(e.what)&&!out.some(q=>q.what===e.what))out.push({...e,s,soft:true});}
  return out;}

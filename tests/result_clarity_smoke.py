@@ -30,9 +30,11 @@ try:
    p.keyboard.press('Escape');p.wait_for_function('document.getElementById("mPlace").hidden')
    p.evaluate('__r.openLugares()');assert '75 %' in p.locator('[data-place-id=lago] small').inner_text();p.locator('#lugaresClose').click()
    p.evaluate("()=>{__r.S.lugares.best.lago.onTime=.746;__r.openLugares();}");assert p.locator('[data-place-id=lago] small').inner_text()=='74,6 %';p.locator('#lugaresClose').click()
-   # Escape on the last result must use the normal close path and launch the real finale.
+   # Panel 10 (P6, D5-A): the last round flows into the real finale by itself; its card comes when the finale closes.
    p.evaluate("()=>{for(const id of __r.places().stars?Object.keys(__r.places().stars):[])__r.S.lugares.stars[id]=[true,false,false];__r.S.lugares.won=false;__r.startPlace('cueva');__r.placeFinish('cueva');}")
-   p.wait_for_function('!document.getElementById("mPlace").hidden');p.keyboard.press('Escape');p.wait_for_function('__r.songStageState().final&&__r.songStageState().running')
+   p.wait_for_function('__r.songStageState().final&&__r.songStageState().running',timeout=15000);assert p.evaluate('document.getElementById("mPlace").hidden'),'no card in front of the finale'
+   p.locator('#songClose').click();p.wait_for_function('!document.getElementById("mPlace").hidden');p.keyboard.press('Escape');p.wait_for_function('document.getElementById("mPlace").hidden')
+   assert not p.evaluate('__r.songStageState().running'),'the finale plays once'
    assert not errors,errors;p.close()
   b.close()
  print('PASS result threshold, earned stars and minute boundary on mobile/landscape/desktop')

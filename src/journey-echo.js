@@ -9,6 +9,8 @@ import {beatGlow,worldCamera,sayOnce,chapterToast,commitJourneyClose,barTarget,d
 // one pulse on time catches it. Off time, nothing. The music's sequencer drives the calls (audio.js calls
 // echoMusicStep on every sixteenth), so the cave always sings on the beat it plays.
 export const ECHO_GOAL=250,ECHO_MIN=2,ECHO_MAX=5,ECHO_GOLD_GAP=70;
+// Panel 10 (P7): every socket of the echo is one size, so they share a line.
+export const ECHO_SOCKET=7;
 export const echoValue=len=>6+2*len;
 export const echoProgress=(points,goal=ECHO_GOAL)=>Math.max(0,Math.min(1,points/goal));
 // The nth pattern: `len` different eighths of the bar, from hashes; it always starts on the «1» so it can be followed.
@@ -58,13 +60,14 @@ export function initialize(runtime){
   // The cave's voice above the cube: a red drop that rings while it sings, gold rings when you echo it.
   const vy=cy-70,singing=phase?.kind==='call';c.globalAlpha=singing?.9:.45;c.fillStyle=red;c.beginPath();c.moveTo(cx,vy-12);c.quadraticCurveTo(cx+9,vy+2,cx,vy+8);c.quadraticCurveTo(cx-9,vy+2,cx,vy-12);c.fill();
   for(const q of sung){const k=(h-q.at)/(six()*6);if(k<0||k>1)continue;c.globalAlpha=.7*(1-k);c.strokeStyle=red;c.lineWidth=1.5;c.beginPath();c.arc(cx,vy,10+(still?6:k*30),0,6.283);c.stroke();}
-  // The eight sockets: in the call its steps light red as they sound; in the answer they wait, gold when you hit them.
+  // The eight sockets: in the call its steps light white as they sound; in the answer they wait, gold when you hit them.
+  // Panel 10 (P7, D4, Nesbitt #24): the flame keeps the cave's red; the sockets are white and gold, all 7 px on one line.
   const y=cy+40,x0=cx-42;for(let i=0;i<8;i++){const st=i*2,x=x0+i*12,inPat=phase?.pattern?.includes(st),cur=phase&&h>=phase.start&&h<phase.end&&Math.floor((h-phase.start)/(six()*2))===i;
-   let fill=null,alpha=.25;if(phase?.kind==='call'&&inPat){const done=h>=phase.start+st*six()-.02;fill=done?red:null;alpha=done?.95:.5;}
+   let fill=null,alpha=.25;if(phase?.kind==='call'&&inPat){const done=h>=phase.start+st*six()-.02;fill=done?'#ffffff':null;alpha=done?.95:.5;}
    if(phase?.kind==='answer'){const hit=phase.steps.includes(st);if(hit){fill=inPat?gold:'#ffffff';alpha=1;}else alpha=inPat?.75:.25;}
-   const z=i%2===0?8:6;c.globalAlpha=alpha;c.strokeStyle=phase?.kind==='answer'&&inPat?gold:'#ffffff';c.lineWidth=cur?2:1;c.strokeRect(Math.round(x-z/2)+.5,Math.round(y-z/2)+.5,z,z);if(fill){c.fillStyle=fill;c.fillRect(Math.round(x-z/2)+1,Math.round(y-z/2)+1,z-1,z-1);}}
-  // Below: the length of the pattern, two to five small drops.
-  for(let k=0;k<ECHO_MAX;k++){c.globalAlpha=k<s.len?.85:.2;c.fillStyle=k<s.len?red:'#ffffff';c.fillRect(Math.round(cx-ECHO_MAX*4+k*8+2),Math.round(y+12),4,4);}
+   const z=ECHO_SOCKET;c.globalAlpha=alpha;c.strokeStyle=phase?.kind==='answer'&&inPat?gold:'#ffffff';c.lineWidth=cur?2:1;c.strokeRect(Math.round(x-z/2)+.5,Math.round(y-z/2)+.5,z,z);if(fill){c.fillStyle=fill;c.fillRect(Math.round(x-z/2)+1,Math.round(y-z/2)+1,z-1,z-1);}}
+  // Below: the length of the pattern, two to five small white squares.
+  for(let k=0;k<ECHO_MAX;k++){c.globalAlpha=k<s.len?.85:.2;c.fillStyle='#ffffff';c.fillRect(Math.round(cx-ECHO_MAX*4+k*8+2),Math.round(y+12),4,4);}
   for(const g of glows){const k=(now-g.at)/800;if(k<0||k>1)continue;c.globalAlpha=.85*(1-k);c.strokeStyle=g.kind==='echo'?gold:'#ffffff';c.lineWidth=g.kind==='echo'?2.5:1;c.beginPath();c.arc(cx,cy,18+k*(g.kind==='echo'?48:20),0,6.283);c.stroke();}
   if(s.gold&&!s.opened){const gx=W/2+(s.gold.x-cam.x),gy=H/2+(s.gold.y-cam.y),breath=still?0:Math.sin(t/700)*3+goldPulse*Math.sin(t/40)*5;goldPulse=Math.max(0,goldPulse-.02);
    c.globalAlpha=.25+.35*glow;c.fillStyle=gold;c.beginPath();c.arc(gx,gy,30+breath+6*glow,0,6.283);c.fill();c.globalAlpha=1;c.beginPath();c.moveTo(gx,gy-18);c.quadraticCurveTo(gx+13,gy+3,gx,gy+12);c.quadraticCurveTo(gx-13,gy+3,gx,gy-18);c.fill();}

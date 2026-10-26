@@ -3,6 +3,7 @@ import {findBiome,WORLD_CHAPTERS,CHAPTERS} from './journey-chapters.js';
 import {freeOpen} from './journey-mode.js';
 import {roundSparks} from './spark-rules.js';
 import {creditSparks,normalizeSparkEconomy} from './sparks-model.js';
+import {placeTier} from './song.js';
 // The eleven places (plan F4, docs/MUNDO.md). After the Journey each chapter is a place you can play again: a round is
 // the chapter's game from an empty bar, closed by its gold thing. Stars are for going forward and winning: ★ complete,
 // ★★ with 75 % of pulses on time, ★★★ the Maestro version (unlocked by ★★: tempo +10 %, bar ×1.5, narrower window)
@@ -83,10 +84,12 @@ export const nextGoal=(places,journey)=>nextOnPath(places,journey)||starGoal(pla
 export function roundTick(run,sound=true){if(!run||run.free||!sound||run.silent)return null;const threshold=run.maestro?MAESTRO_STAR:RHYTHM_STAR,now=share(run.hits,run.total);return {lit:run.total>0&&now>=threshold,share:now,threshold};}
 // A near miss on the card: between 70 and 74,9 % without ★★, the tenths still missing (never rounded up).
 export const NEAR_STAR=.7;
+// How long before the drop's end (on the audio clock) the finale opens: before the sequencer schedules the next «1».
+export const FINALE_LEAD=.3;
 export function nearMiss(onTime){const tenths=Math.floor(Math.max(0,Math.min(1,Number(onTime)||0))*1000);return tenths>=NEAR_STAR*1000&&tenths<RHYTHM_STAR*1000?String((RHYTHM_STAR*1000-tenths)/10).replace('.',','):null;}
 function restoreTree(target,copy){for(const k of Object.keys(target))if(!Object.hasOwn(copy,k))delete target[k];for(const [k,v] of Object.entries(copy)){if(object(v)&&object(target[k]))restoreTree(target[k],v);else if(Array.isArray(v)&&Array.isArray(target[k]))target[k].splice(0,target[k].length,...v);else target[k]=v;}}
 export function initialize(runtime){
- let owner=null,state=null,shown=null,cardDue=null;
+ let owner=null,state=null,shown=null,cardDue=null,afterFinale=null;
  function own(){if(owner!==runtime.S){if(owner){const card=runtime.$?.('mPlace');if(card)card.hidden=true;}shown=null;owner=runtime.S;runtime.S.lugares=normalizePlaces(runtime.S.lugares,runtime.S.journey);state=runtime.S.lugares;
    // A future format remains untouched on disk and in S; readers get a safe, locked view.
    if(state.version>PLACES_VERSION)state={...normalizePlaces(null),version:state.version,readOnly:true};
@@ -125,24 +128,32 @@ export function initialize(runtime){
   function rollback(){if(runtime.S.journey&&game){if(playing===undefined)delete runtime.S.journey[game];else runtime.S.journey[game]=playing;}for(const k of keys){if(before[k]===undefined)delete runtime.S[k];else if(object(before[k])&&object(runtime.S[k]))restoreTree(runtime.S[k],before[k]);else runtime.S[k]=before[k];}if(runtime.MU){runtime.MU.tempoScale=tempo;runtime.MU.onTimeWindow=window;}return false;}
   function commit(){return runtime.save?.()!==false;}
   // Libre (plan H3): only the music of the place; no stars, no sparks, no card. Back to its portal.
-  if(r.free){const pos={wx:runtime.S.wx,wy:runtime.S.wy};restore(r);s.run=null;back(r.from);if(!commit()){Object.assign(runtime.S,pos);return rollback();}shown=null;runtime.journeyVictory?.(id);runtime.hud?.();return true;}const onTime=share(r.hits,r.total),sound=runtime.S.sound!==false&&!r.silent,ms=Date.now()-r.startedAt;
+  if(r.free){const pos={wx:runtime.S.wx,wy:runtime.S.wy};restore(r);s.run=null;back(r.from);if(!commit()){Object.assign(runtime.S,pos);return rollback();}shown=null;runtime.journeyVictory?.(id,{tier:placeTier(s,id)});runtime.hud?.();return true;}const onTime=share(r.hits,r.total),sound=runtime.S.sound!==false&&!r.silent,ms=Date.now()-r.startedAt;
   if(s.rounds.day!==today()){s.rounds.day=today();s.rounds.counts={};}const roundsToday=s.rounds.counts[id]||0;s.rounds.counts[id]=roundsToday+1;
   const stars=roundStars({onTime,maestro:r.maestro,sound}),fresh=grant(id,stars);
   runtime.S.sparkEconomy=normalizeSparkEconomy(runtime.S.sparkEconomy,runtime.S.sparks,runtime.S.todayKey);const sparks=creditSparks(runtime.S,roundSparks(onTime,{maestro:r.maestro,roundsToday}));
   const extra=r.remix?runtime.remixDone?.(onTime)||null:null;
-  const b=s.best[id]||(s.best[id]={onTime:0,ms:null,rounds:0});const record=onTime>b.onTime||b.ms===null||ms<b.ms;b.onTime=Math.max(b.onTime,onTime);b.ms=b.ms===null?ms:Math.min(b.ms,ms);b.rounds++;
+  // Panel 10 (P6, D1-B): the best share grows the song's layer, so only a round with sound raises it (without sound
+  // every pulse counts and the share says nothing of the beat).
+  const b=s.best[id]||(s.best[id]={onTime:0,ms:null,rounds:0});const record=sound&&onTime>b.onTime||b.ms===null||ms<b.ms;if(sound)b.onTime=Math.max(b.onTime,onTime);b.ms=b.ms===null?ms:Math.min(b.ms,ms);b.rounds++;
   const j=runtime.S.journey;if(j&&typeof j==='object'){if(!j.colors||typeof j.colors!=='object')j.colors={};j.colors[id]=true;}
   {const all=(r.notes||[]).map((n,i)=>[n,r.noteSteps?.[i],r.noteTicks?.[i]]).filter(([n])=>Number.isInteger(n)&&n>=36&&n<=96).slice(-8);if(all.length){s.notes[id]=all.map(([n])=>n);s.noteSteps||={};if(all.every(([,st])=>Number.isInteger(st)))s.noteSteps[id]=all.map(([,st])=>st);else delete s.noteSteps[id];s.noteTicks||={};if(all.every((a,i)=>Number.isSafeInteger(a[2])&&a[2]>=0&&(!i||a[2]>=all[i-1][2])))s.noteTicks[id]=all.map(a=>a[2]);else delete s.noteTicks[id];}}
   const personal=s.notes[id]?.length?JSON.stringify([s.notes[id],s.noteSteps?.[id],s.noteTicks?.[id]])!==JSON.stringify([before.lugares.notes?.[id],before.lugares.noteSteps?.[id],before.lugares.noteTicks?.[id]])?'changed':'kept':null;
-  const result={id,personal,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.quietAchievements?.();runtime.journeyVictory?.(id);runtime.hud?.();afterDrop(result);return true;}
+  const result={id,personal,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.quietAchievements?.();runtime.journeyVictory?.(id,{tier:placeTier(s,id)});runtime.hud?.();afterDrop(result);return true;}
  // Panel 10 (P4, Simogo): the card waits for the end of the round's two-bar drop, as heard (audio clock minus the
  // output latency); never before journeyVictoryState().end. Without sound or drop, after 1,2 s as before.
- function afterDrop(result){const born=Date.now();let end=null;
+ // Panel 10 (P6, D5-A, Simogo): the round that completes the eleven flows into the finale by itself, without the card in
+ // front: the stage opens just before the drop ends and its first bar is the one after the drop. The card waits for the
+ // finale to close.
+ function afterDrop(result){const born=Date.now(),finale=!own().won&&allComplete(own());let end=null;
   const check=()=>{if(shown!==result||run())return;const v=runtime.journeyVictoryState?.(),ac=runtime.ac;if(v&&v.id===result.id){if(Number.isFinite(v.end))end=v.end;else if(Date.now()-born<12000){setTimeout(check,250);return;}}
-   const heard=audibleTime(ac);
-   if(end!==null&&ac&&heard<end&&Date.now()-born<12000){setTimeout(check,Math.min(1000,Math.max(30,Math.ceil((end-heard)*1000)+30)));return;}
-   cardDue=null;results();};
-  cardDue=result;setTimeout(check,1200);}
+   const heard=audibleTime(ac),lead=finale&&ac?ac.currentTime+FINALE_LEAD:heard;
+   if(end!==null&&ac&&lead<end&&Date.now()-born<12000){setTimeout(check,Math.min(1000,Math.max(30,Math.ceil((end-lead)*1000)+(finale?0:30))));return;}
+   cardDue=null;if(finale&&flow(result,end))return;results();};
+  cardDue=result;setTimeout(check,finale&&runtime.journeyVictoryState?.()?250:1200);}
+ function flow(result,end){back(result.from);runtime.save?.();afterFinale=result;if(runtime.songFinaleCheck?.({at:end}))return true;afterFinale=null;return false;}
+ // When the finale closes, the round's card it held back.
+ function finaleClosed(){const r=afterFinale;afterFinale=null;if(r&&shown===r&&!run())results();}
  // Leaving a round from the menu: nothing earned, the chapter's state back, and you are at the portal again.
  function abandon(){const s=own(),r=s.run;if(!r||s.readOnly)return false;const key=gameKey(r.id),playing=runtime.S.journey?.[key],position={wx:runtime.S.wx,wy:runtime.S.wy},tempo=runtime.MU?.tempoScale,window=runtime.MU?.onTimeWindow;restore(r);s.run=null;back(r.from);
   if(runtime.save?.()===false){s.run=r;if(playing===undefined)delete runtime.S.journey[key];else runtime.S.journey[key]=playing;Object.assign(runtime.S,position);if(runtime.MU){runtime.MU.tempoScale=tempo;runtime.MU.onTimeWindow=window;}runtime.toast?.('No se pudo salir. Tu ronda sigue aquí.',{level:2});return false;}
@@ -160,5 +171,5 @@ export function initialize(runtime){
   // Near ★★, «Otra vez» stands beside it (CSS: #mPlace[data-near]).
   const next=nextGoal(own(),runtime.S.journey),nb=runtime.$('placeNext');if(nb){nb.hidden=!next||next.id===r.id||!runtime.ringGo;if(next){nb.textContent=`Seguir hacia ${next.name}`;nb.onclick=()=>{box.hidden=true;back(r.from);if(runtime.songFinaleCheck?.())return;runtime.ringGuide?.(next.id);};}}}
  Object.defineProperties(runtime,{placeRun:{get:()=>run},startPlace:{get:()=>start},abandonPlace:{get:()=>abandon},placeHear:{get:()=>hear},placeFinish:{get:()=>finish},placeChapterKept:{get:()=>chapterKept},placesData:{get:()=>own},
-  placeGoalScale:{get:()=>()=>run()?.maestro?MAESTRO_GOAL:1},placeNext:{get:()=>()=>nextGoal(own(),runtime.S.journey)?.id||null},placeCardDue:{get:()=>()=>!!cardDue&&cardDue===shown&&!run()},roundTick:{get:()=>()=>roundTick(run(),runtime.S.sound!==false)},places:{get:()=>()=>{const s=own();return {stars:JSON.parse(JSON.stringify(s.stars)),count:starCount(s),best:JSON.parse(JSON.stringify(s.best)),run:s.run?{id:s.run.id,maestro:s.run.maestro,...(s.run.remix?{remix:s.run.remix}:{}),...(s.run.free?{free:true}:{}),hits:s.run.hits,total:s.run.total}:null,last:shown?{...shown}:null};}}});
+  placeGoalScale:{get:()=>()=>run()?.maestro?MAESTRO_GOAL:1},placeNext:{get:()=>()=>nextGoal(own(),runtime.S.journey)?.id||null},placeCardDue:{get:()=>()=>!!cardDue&&cardDue===shown&&!run()},placeFinaleClosed:{get:()=>finaleClosed},roundTick:{get:()=>()=>roundTick(run(),runtime.S.sound!==false)},places:{get:()=>()=>{const s=own();return {stars:JSON.parse(JSON.stringify(s.stars)),count:starCount(s),best:JSON.parse(JSON.stringify(s.best)),run:s.run?{id:s.run.id,maestro:s.run.maestro,...(s.run.remix?{remix:s.run.remix}:{}),...(s.run.free?{free:true}:{}),hits:s.run.hits,total:s.run.total}:null,last:shown?{...shown}:null};}}});
 }

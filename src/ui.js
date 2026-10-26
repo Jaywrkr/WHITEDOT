@@ -2,6 +2,7 @@ import {freeOpen} from './journey-mode.js';
 import {explorationContext} from './exploration-context.js';
 import {installNoticeLane} from './notice-lane.js';
 import { POCKET_NAMES } from './pockets.js';
+import {starCount,complete,PLACE_IDS,TOTAL_STARS} from './places.js';
 
 
 // HUD, avisos y transiciones del Mundo.
@@ -15,14 +16,19 @@ export function initialize(runtime) {
     const pocket=runtime.currentPocket?.();
     $("day").textContent="DÍA "+d;$("era").textContent=runtime.inWorld()?(runtime.MU.dnaT?runtime.MU.dnaT.name+(runtime.S.worldDetails?" · "+(pocket?POCKET_NAMES[pocket.kind]:explorationContext(runtime.MU.dnaT,runtime.S.wx,runtime.S.wy,runtime.seedOf).label):''):"El Mundo"):"Era "+era(d);
     $("quickSave").hidden=!runtime.inWorld();$("era").disabled=!runtime.inWorld();
-    $("streak").textContent=runtime.S.totalDays||0;$("starsN").textContent=runtime.S.stars.length;$("size").textContent=runtime.level();
+    $("streak").textContent=runtime.S.totalDays||0;$("size").textContent=runtime.level();
+    // Panel 10 (P8, D3-A): the full view keeps three numbers: ★ of 33, ✦ (#sparkCount) and places of 11. One ★ only:
+    // the relics (S.stars) are «Reliquias» in the Constellation; #starsN stays in the page, hidden and unused.
+    {const d=runtime.placesData?.(),show=!!d&&!d.readOnly&&freeOpen(runtime.S.journey),st=$("hudStars"),pl=$("hudPlaces");
+     if(st){st.hidden=!show;if(show)st.textContent="★ "+starCount(d)+"/"+TOTAL_STARS;}
+     if(pl){pl.hidden=!show;if(show)pl.textContent=PLACE_IDS.filter(id=>complete(d,id)).length+"/11 lugares";}}
     $("bar").classList.toggle("free",runtime.isFree());
     runtime.elementBookUI?.();
     const fill=$("barfill"),goal=$("goal"),gr=$("goalR");
     $("bDeploy").hidden=!runtime.inWorld();
-    if(runtime.S.mode==="studio"){const house=runtime.houseActive?.(),n=house?runtime.currentHouse().objects.length:Object.keys(runtime.S.studio.slots).length;$("era").textContent=(house?"Refugio · ":"Taller · ")+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/(house?40:64)*100)+"%";goal.textContent=(house?"Refugio · ":"Taller · ")+n+" sonando";gr.textContent=house?"Camina. Coloca. Escucha.":"Toca un punto";}
+    if(runtime.S.mode==="studio"){const house=runtime.houseActive?.(),n=house?runtime.currentHouse().objects.length:Object.keys(runtime.S.studio.slots).length;$("era").textContent=(house?"Refugio · ":"Taller · ")+runtime.BIOMES[runtime.S.studio.biome||0].name;fill.style.width=(n/(house?40:64)*100)+"%";goal.textContent=(house?"Refugio":"Taller")+(n?" · "+n+" sonando":"");gr.textContent=house?"Camina. Coloca. Escucha.":"Toca un punto";}
     else if(runtime.inWorld()){if(!runtime.journeyQuiet?.())fill.style.width="100%";   // in the Journey the chapter sets it (journey-chapters.js)
-      goal.textContent=dist?"Eco cercano · escucha y pulsa":"Regiones "+(runtime.S.placesN||0)+" · Formas "+(runtime.S.catN||0);
+      goal.textContent=dist?"Eco cercano · escucha y pulsa":"Explora a tu ritmo";   // regions and forms are counted in the Bitácora
       gr.textContent="Sin reloj";}
     else{const n=runtime.S.pathCrystals.length;fill.style.width=(n*10)+"%";goal.textContent="Cristales · "+n+" / 10";gr.textContent="Acércate y lanza un pulso";}
     // Panel 10 (P2): one way to go at a time. In the World, «Volver al Camino» (#bPrimary) heads «Más › Ir» and #bWorld

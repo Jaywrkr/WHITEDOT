@@ -51,10 +51,10 @@ export function initialize(runtime){
  }
  function drawTerrain(chunk,ox,oy,R){const e=chunk.ecology;if(!e||e.density===0)return;const c=runtime.cx,scale=e.terrainScale,[cx,cy]=chunk.id.split(',').map(Number),size=runtime.WCH;
   const x0=Math.max(cx*size,Math.floor((runtime.S.wx-R)/scale)*scale),y0=Math.max(cy*size,Math.floor((runtime.S.wy-R)/scale)*scale);
-  c.save();c.strokeStyle=elementInk(e.material,runtime.regionOfPos(cx*size+1,cy*size+1).hue);c.lineWidth=1;
+  c.save();c.strokeStyle=elementInk(e.material,runtime.regionOfPos(cx*size+1,cy*size+1).hue);c.lineWidth=1;const texture=runtime.groundTexture?.()??1;
   for(let x=x0;x<Math.min((cx+1)*size,runtime.S.wx+R);x+=scale)for(let y=y0;y<Math.min((cy+1)*size,runtime.S.wy+R);y+=scale){
    const h=runtime.seedOf(`ecology:v2:terrain:${Math.round(x)},${Math.round(y)}`)%1000/1000,d=Math.hypot(x-runtime.S.wx,y-runtime.S.wy);if(d>R||h>.28+e.density*.28)continue;
-   const field=decorativeField(x,y,runtime.seedOf);if(field<.002)continue;const px=x+ox,py=y+oy,r=5+h*13;c.globalAlpha=.12*(1-d/R)*field;c.beginPath();
+   const field=decorativeField(x,y,runtime.seedOf);if(field<.002)continue;const px=x+ox,py=y+oy,r=5+h*13;c.globalAlpha=.12*(1-d/R)*field*texture;c.beginPath();
    if(e.terrain==='ripples')c.ellipse(px,py,r*1.5,r*.5,0,0,Math.PI*2);
    else if(e.terrain==='cells'){for(let i=0;i<=6;i++){const a=i*Math.PI/3;i?c.lineTo(px+Math.cos(a)*r,py+Math.sin(a)*r):c.moveTo(px+r,py);}}
    else if(e.terrain==='roots'){c.moveTo(px-r,py+r);c.quadraticCurveTo(px,py-r,px+r,py);c.moveTo(px,py);c.lineTo(px+r*.6,py-r);}

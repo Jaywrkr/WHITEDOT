@@ -43,7 +43,7 @@ Maestro sube tempo10%, objetivo×1,5 y estrecha la ventana. Las once★ completa
 
 ## Orientación y retorno
 
-Una columna y la brújula junto al cubo indican rumbo y distancia. Con el portal fuera de pantalla, la columna es una luz de 140 px en el borde, a la altura del rumbo. **Seguir hacia** activa una ruta a pie; no teletransporta al acabar la ronda. Con los once completos, objetivo y columna señalan el lugar sin ★★ con mejor porcentaje (después, sin ★★★). Con 33★ vuelve «Explora a tu ritmo». Menú → Lugares abre la lista en filas enteras, con el destino actual bajo la fila anterior, y permite viajar a los lugares habilitados para ello.
+Los portales abiertos son blancos; los completos, del color de su lugar (también en el mapa y en los trofeos del Refugio). El dorado queda para las ★ (panel 10, P7, D4). En modo daltonismo, `SAFE_COLORS` da un color distinto a cada lugar. Una columna blanca y la brújula junto al cubo indican rumbo y distancia. Con el portal fuera de pantalla, la columna es una luz de 140 px en el borde, a la altura del rumbo. **Seguir hacia** activa una ruta a pie; no teletransporta al acabar la ronda. Con los once completos, objetivo y columna señalan el lugar sin ★★ con mejor porcentaje (después, sin ★★★). Con 33★ vuelve «Explora a tu ritmo». Menú → Lugares abre la lista en filas enteras, con el destino actual bajo la fila anterior, y permite viajar a los lugares habilitados para ello.
 
 Guardar un lugar conserva semilla/identidad, capa y coordenadas. Tocar el nombre del territorio abre Favoritos en el destino guardado; **Ir a este lugar** vuelve a su dirección compatible. No se promete una instantánea congelada de la música, que sigue evolucionando.
 
@@ -53,6 +53,8 @@ Los saltos pagados, el regreso y la distancia caminada tienen reglas propias; sa
 
 Chispas✦ y estrellas★ son distintas. Las chispas compran piezas y viajes; las estrellas nunca se gastan.
 
+Un solo ★ (panel 10, P8, D3-A): ★ y «Estrellas» solo cuentan las de los lugares (`S.lugares.stars`, máximo 33). Las reliquias del Mundo (`S.stars`) se llaman «Reliquias» en la Constelación, la Bitácora y las tarjetas. En la vista completa, el HUD muestra tres cifras: ★ de 33, ✦ y lugares de 11. Día, distancia, regiones, continentes y récord están en «Tú» de la Bitácora; la meta de chispas, en Tu cubo. Ninguna hoja de primer nivel muestra un contador a cero. Cada aviso nombra como mucho un logro; los demás esperan en la Bitácora.
+
 Recoger fragmentos conserva valor base fuera de tempo. A tiempo se multiplica×2, o×3 desde la racha de ocho. Completar una ronda da60–120✦; Maestro duplica. Tras las tres primeras rondas diarias de un lugar se reduce ese premio a la mitad. Encuentros, remezclas y algunos logros tienen reglas adicionales. Fuente: `src/spark-rules.js`.
 
 Las tarjetas guardan el hallazgo, su procedencia y una interpretación musical. Puedes elegir hasta cuatro voces para el jardín sin consumir la propiedad. Libro, filtros, selección y Refugio comparten estado. [Hallazgos](HALLAZGOS_Y_ACTIVIDADES.md) · [Casa](CASA_VIVA.md).
@@ -61,9 +63,13 @@ Las tarjetas guardan el hallazgo, su procedencia y una interpretación musical. 
 
 Cada lugar aporta una capa. ★ da un fragmento,★★ la capa completa y★★★ su variación. Los trofeos permiten recordar su capa. La vista ordinaria explica qué está ganado; las frases personales se escuchan en el final.
 
+Entre ★ y ★★ la capa crece con tu mejor porcentaje a tiempo en ese lugar (D1-B, panel 10, P6). Desde el 55 %, cada 1,25 puntos suma un tiempo de los compases que ★ deja callados: primero el último de cada uno. Al 60 % suena cerca del 62 % de la capa; al 67 %, tres cuartos. Solo sube con rondas con sonido. Los umbrales de las estrellas no cambian. El anillo de Tu canción distingue ★, ★★ y ★★★ por saturación; el blanco del Vacío, por brillo. La victoria de una ronda suena al nivel ganado: con ★, la mitad de los compases que con ★★.
+
 El final de los cinco capítulos abre el Mundo libre. El final de once lugares reúne entradas, tus frases, una pausa y el tema;33★ ofrece la versión maestra. Ambos conservan la música aprobada. La UI sigue el transporte audible y distingue tu interpretación del acompañamiento.
 
-Los resultados nombran lugar, colección y ronda; muestran umbrales reales y siguiente paso. La tarjeta espera a que se oiga el fin de la caída de dos compases. No muestra logros: van a la Bitácora, sin aviso. Entre 70 y 74,9 % sin ★★ dice cuánto falta («A 0,4 de ★★») y pone «Otra vez» junto a «Seguir hacia». Durante la ronda, un tic al final de la Línea se enciende en dorado mientras el porcentaje alcanza la estrella siguiente (75 %; 70 % en Maestro). Salir y Escape comprueban el mismo final. Efectos de UI silenciosos.
+La ronda que completa los once desemboca sola en el final (D5): la escena se abre antes de que acabe la caída y su primer compás llega con el siguiente «1». La tarjeta de esa ronda sale al cerrar el final. Durante tus frases y la primera vuelta del tema solo siguen el colchón (Vacío) y el bajo (Lago); las demás capas vuelven en la segunda vuelta. Tu frase suena con el arpegio suave del final del Viaje. El compás de silencio no lleva rótulo. Los créditos de autoría salen una sola vez, en el final de once; la versión maestra muestra solo sus dos líneas.
+
+Los resultados nombran lugar, colección y ronda; muestran umbrales reales y siguiente paso. La tarjeta espera a que se oiga el fin de la caída de dos compases. No muestra logros: van a la Bitácora, sin aviso. Entre 70 y 74,9 % sin ★★ dice cuánto falta («A 0,4 de ★★») y pone «Otra vez» junto a «Seguir hacia». Durante la ronda, un tic al final de la Línea se enciende en dorado mientras el porcentaje alcanza la estrella siguiente (75 %; 70 % en Maestro). Salir y Escape comprueban el mismo final (la versión maestra llega así). Efectos de UI silenciosos.
 
 ## Ayuda
 
