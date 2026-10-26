@@ -18,7 +18,7 @@ try:
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.wonderTick');page.locator('#returnContinue').click();page.locator('#hcGo').click()
    page.evaluate('''()=>{const r=__r;r.S.sound=false;r.S.firstJourney.skipped=true;r.S.pathCrystals=Array.from({length:10},(_,i)=>'fixture:'+i);r.enterWorld({automatic:true});r.stopAutopilot?.();}''')
    page.locator('#bStyles').click();page.locator('#musicTravelSearch').fill('bossa');assert page.locator('#musicTravelList [data-music-genre]').count()>0;assert 'Jazz y bossa' in page.locator('#musicTravelList').inner_text();assert page.locator('#mMusicTravel .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2');page.locator('#musicTravelClose').click();page.locator('#bMenu').click();page.locator('#bCube').click()
-   assert page.locator('#cubeWonder').is_disabled();assert '0 de 20' in page.locator('#cubeGiftCount').inner_text()
+   assert page.locator('#cubeWonder').is_disabled();assert page.locator('#cubeGiftCount').inner_text().strip()=='','panel 10 (P8): no counter at zero';assert 'Encuentra un hallazgo' in page.locator('#cubeGiftStatus').inner_text()
    page.locator('#cubeGiftStatus').scroll_into_view_if_needed();page.screenshot(path=str(ROOT.parent/f'menu-empty-{width}.png'))
    page.locator('#cubeClose').click()
    page.evaluate('''async()=>{const {WONDERS}=await import('/src/musical-wonders-model.js');__r.S.musicalWonders={version:1,found:Object.fromEntries(WONDERS.map(d=>[d.id,true])),totems:{}};__r.save();}''')

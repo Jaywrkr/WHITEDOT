@@ -103,7 +103,7 @@ export function initialize(runtime) {
     const region=runtime.regionOfPos(rl.x,rl.y);runtime.soon(t=>runtime.playVoice('reliquia',0,t,region,true,.6,rl,'player'));
     const n=runtime.relicsGot();
     runtime.showPhrase(runtime.ECOS[idx%runtime.ECOS.length],true);
-    runtime.toast("<em>Estrella "+runtime.S.stars.length+"</em> · "+(rl.name||"Reliquia"));
+    runtime.toast("<em>Reliquia "+runtime.S.stars.length+"</em> · "+(rl.name||"Reliquia"));
     runtime.unlock("estrella1");if(n>=3){runtime.unlock("dia3");setTimeout(()=>runtime.showPhrase("Tres hallazgos en un día. El mundo todavía guarda secretos."),5200);}
     if(runtime.S.stars.length>=30)runtime.unlock("e30");if(runtime.S.stars.length>=100)runtime.unlock("e100");
     runtime.save();runtime.hud();

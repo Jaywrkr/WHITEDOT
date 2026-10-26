@@ -24,9 +24,9 @@ try:
    page.reload();page.wait_for_function('!!window.__r?.showReturnEntrance');assert page.locator('#returnEntrance').is_visible();assert len(page.locator('#returnPhrase').inner_text().split())<=12
    page.locator('#returnContinue').click();assert page.locator('#returnEntrance').is_hidden()
    assert page.evaluate('p=>Math.hypot(__r.S.wx-p.x,__r.S.wy-p.y)>500',previous)
-   rect=page.locator('#walkDistance').bounding_box();assert rect and rect['y']>=0 and rect['y']+rect['height']<height and rect['x']+rect['width']<=width
+   assert page.locator('#walkDistance').is_hidden(),'panel 10 (P8): distance lives in the Bitácora (Tú), not the HUD';rect=page.locator('#sparkCount').bounding_box();assert rect and rect['y']>=0 and rect['y']+rect['height']<height and rect['x']+rect['width']<=width
    before=page.evaluate('__r.playerProfile.distanceUnits');page.keyboard.down('d');page.wait_for_timeout(280);page.keyboard.up('d');page.wait_for_timeout(100)
-   assert page.evaluate('__r.playerProfile.distanceUnits')>before+10;assert page.locator('#walkDistance').inner_text()!='Caminado · 0 m'
+   assert page.evaluate('__r.playerProfile.distanceUnits')>before+10;assert page.locator('#walkDistance').text_content()!='Caminado · 0 m'
    before=page.evaluate('__r.playerProfile.distanceUnits');page.evaluate('__r.S.wx+=1');page.wait_for_timeout(80);assert page.evaluate('__r.playerProfile.distanceUnits')==before
    page.evaluate('__r.S.sparks=20;__r.sparkEconomy.earned=20');assert page.evaluate('__r.jumpPracticePlace()');page.wait_for_timeout(80);assert page.evaluate('__r.playerProfile.distanceUnits')==before
    page.evaluate('''async()=>{const r=__r,{distantDirections}=await import('/src/distant-colors.js'),size=r.REG*r.WCH;for(let x=0;x<8;x++)for(let y=0;y<8;y++){const px=(x+.5)*size,py=(y+.5)*size;if(distantDirections(px,py,size,r.W,r.H,r.regionOfPos,r.seedOf).length===2){r.S.wx=px;r.S.wy=py;return;}}throw Error('No real musical horizon');}''')

@@ -53,6 +53,8 @@ Los saltos pagados, el regreso y la distancia caminada tienen reglas propias; sa
 
 Chispas✦ y estrellas★ son distintas. Las chispas compran piezas y viajes; las estrellas nunca se gastan.
 
+Un solo ★ (panel 10, P8, D3-A): ★ y «Estrellas» solo cuentan las de los lugares (`S.lugares.stars`, máximo 33). Las reliquias del Mundo (`S.stars`) se llaman «Reliquias» en la Constelación, la Bitácora y las tarjetas. En la vista completa, el HUD muestra tres cifras: ★ de 33, ✦ y lugares de 11. Día, distancia, regiones, continentes y récord están en «Tú» de la Bitácora; la meta de chispas, en Tu cubo. Ninguna hoja de primer nivel muestra un contador a cero. Cada aviso nombra como mucho un logro; los demás esperan en la Bitácora.
+
 Recoger fragmentos conserva valor base fuera de tempo. A tiempo se multiplica×2, o×3 desde la racha de ocho. Completar una ronda da60–120✦; Maestro duplica. Tras las tres primeras rondas diarias de un lugar se reduce ese premio a la mitad. Encuentros, remezclas y algunos logros tienen reglas adicionales. Fuente: `src/spark-rules.js`.
 
 Las tarjetas guardan el hallazgo, su procedencia y una interpretación musical. Puedes elegir hasta cuatro voces para el jardín sin consumir la propiedad. Libro, filtros, selección y Refugio comparten estado. [Hallazgos](HALLAZGOS_Y_ACTIVIDADES.md) · [Casa](CASA_VIVA.md).

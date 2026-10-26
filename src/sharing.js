@@ -8,7 +8,7 @@ export function initialize(runtime) {
   }
   function drawSky(x,X,Y,Wd,Hd){
     const P=starPos();
-    if(!P.length){x.fillStyle="#8a8a8f";x.font='24px "Geist Mono", monospace';x.textAlign="center";x.fillText("Tu primera estrella está en el Mundo.",X+Wd/2,Y+Hd/2);x.textAlign="left";return;}
+    if(!P.length){x.fillStyle="#8a8a8f";x.font='24px "Geist Mono", monospace';x.textAlign="center";x.fillText("Tu primera reliquia está en el Mundo.",X+Wd/2,Y+Hd/2);x.textAlign="left";return;}
     let a=Infinity,b=Infinity,e=-Infinity,f=-Infinity;P.forEach(p=>{a=Math.min(a,p.x);b=Math.min(b,p.y);e=Math.max(e,p.x);f=Math.max(f,p.y);});
     const s=Math.min(Wd/Math.max(1,e-a),Hd/Math.max(1,f-b),Wd/4),ox=X+(Wd-(e-a)*s)/2-a*s,oy=Y+(Hd-(f-b)*s)/2-b*s;
     const r2=runtime.rng(7);x.fillStyle="#fff";for(let i=0;i<160;i++){x.globalAlpha=.05+r2()*.15;x.fillRect(X+r2()*Wd,Y+r2()*Hd,1.5,1.5);}
@@ -21,7 +21,7 @@ export function initialize(runtime) {
     const c=runtime.$("skyCv"),x=c.getContext("2d");x.fillStyle="#000";x.fillRect(0,0,720,720);drawSky(x,50,50,620,620);
     const days=new Set(runtime.S.stars.map(s=>s.d));
     runtime.$("kStars").textContent=runtime.S.stars.length;runtime.$("kDays").textContent=days.size;runtime.$("kStreak").textContent=runtime.S.totalDays||0;
-    runtime.$("kList").innerHTML=runtime.S.stars.length?runtime.S.stars.slice().reverse().map((s,i)=>`<div class="q"><span class="px"></span><span>${runtime.ECOS[s.p]}<small>ESTRELLA ${runtime.S.stars.length-i} · ${s.d}${s.name?" · "+s.name:""}</small></span></div>`).join(""):`<div><span class="px"></span><span class="q">Completa el camino, entra al Mundo y busca ecos antiguos.</span></div>`;
+    runtime.$("kList").innerHTML=runtime.S.stars.length?runtime.S.stars.slice().reverse().map((s,i)=>`<div class="q"><span class="px"></span><span>${runtime.ECOS[s.p]}<small>RELIQUIA ${runtime.S.stars.length-i} · ${s.d}${s.name?" · "+s.name:""}</small></span></div>`).join(""):`<div><span class="px"></span><span class="q">Completa el camino, entra al Mundo y busca ecos antiguos.</span></div>`;
     runtime.$("mSky").hidden=false;
   }
 
@@ -40,10 +40,10 @@ export function initialize(runtime) {
       const last=tr[tr.length-1],ps=Math.max(14,runtime.pxSize()*1.4);x.globalAlpha=1;x.fillRect(offx+(last[0]-a)*s-ps/2,offy+(last[1]-b)*s-ps/2,ps,ps);
     }
     x.globalAlpha=1;x.textBaseline="top";x.fillStyle="#fff";
-    x.font='96px "Geist Mono", monospace';x.fillText(kind==="sky"?runtime.S.stars.length+" ESTRELLAS":"DÍA "+runtime.displayDay(),100,96);
+    x.font='96px "Geist Mono", monospace';x.fillText(kind==="sky"?runtime.S.stars.length+" RELIQUIAS":"DÍA "+runtime.displayDay(),100,96);
     x.font='28px "Geist Mono", monospace';x.fillStyle="#8a8a8f";x.fillText((kind==="sky"?"MI CONSTELACIÓN · "+Object.keys(runtime.S.zones).length+" ZONAS":"ERA "+runtime.era(runtime.displayDay())).toUpperCase(),104,216);
     x.fillStyle="#fff";x.font='600 34px "Geist Mono", monospace';
-    x.fillText("DÍAS "+(runtime.S.totalDays||0),100,1040);x.fillText("ESTRELLAS "+runtime.S.stars.length,430,1040);x.fillText("TAMAÑO "+runtime.level(),800,1040);
+    x.fillText("DÍAS "+(runtime.S.totalDays||0),100,1040);x.fillText("RELIQUIAS "+runtime.S.stars.length,430,1040);x.fillText("TAMAÑO "+runtime.level(),800,1040);
     x.font='40px "Geist Mono", monospace';{const heard=Object.keys(runtime.S.zones||{}).length;x.fillText(heard>1?heard+" lugares escuchados.":"Hoy escuché.",100,1120);}
     x.fillStyle="#8a8a8f";x.font='26px "Geist Mono", monospace';x.fillText("KUBONO  ·  @jaywrkr",100,1236);x.fillStyle="#fff";x.font='30px "Geist Mono", monospace';x.textAlign="right";x.fillText("SIMPLE.",980,1232);x.textAlign="left";
     runtime.$("shareImg").alt=kind==="sky"?"Mi constelación en Kubono":"Mi día en Kubono";

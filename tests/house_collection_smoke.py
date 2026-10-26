@@ -16,7 +16,7 @@ try:
    page.route('**/src/main.js',lambda r:r.fulfill(body=(ROOT/'src/main.js').read_text(encoding='utf-8').replace('await requireAccount()','null')+'\nwindow.__r=runtime;',content_type='text/javascript'))
    page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=house-collection&layout=wide&generation=2');page.wait_for_function('!!window.__r?.enterHouse&&!!window.__r?.drawHouseCollection')
    hide="document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)"
-   page.evaluate("""()=>{"""+hide+""";const r=__r,s=r.S;s.sound=false;s.totalDays=14;s.firstJourney.skipped=true;s.pathCrystals=Array.from({length:10},(_,i)=>'shop:'+i);r.enterWorld({automatic:true});s.rareBook={version:1,items:[]};
+   page.evaluate("""()=>{"""+hide+""";const r=__r,s=r.S;s.sound=false;s.totalDays=14;Object.keys(r.placesData().stars).forEach((id,i)=>r.placesData().stars[id]=i<8?[true,true,true]:[false,false,false]);s.firstJourney.skipped=true;s.pathCrystals=Array.from({length:10},(_,i)=>'shop:'+i);r.enterWorld({automatic:true});s.rareBook={version:1,items:[]};
     for(const [i,t]of ['fossil','relic:magical','fossil'].entries())r.collectRareCard(t,{id:'hc:'+i,x:s.wx+300+i,y:s.wy},{context:{role:'perc',instrument:'woodblock'}});
     s.livingSeen={...(s.livingSeen||{}),moth:true,deer:true};s.sparks=900;s.sparkEconomy.earned=s.sparkEconomy.spent+900;for(const id of ['acc:hat','pet:cloud'])r.buySparkStyle(id);r.save();}""")
    page.evaluate("()=>{"+hide+";__r.enterHouse();}");page.wait_for_function('__r.houseSettled()');page.wait_for_timeout(500)

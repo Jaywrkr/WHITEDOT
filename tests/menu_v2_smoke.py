@@ -17,7 +17,7 @@ try:
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__testRuntime?.styleUI');page.evaluate('document.getElementById("returnContinue").click();document.querySelectorAll(".modal").forEach(m=>m.hidden=true)')
    page.locator('#bMenu').click();assert page.locator('.menu-group.primary .tiles button:not([hidden])').count()==5 and not page.locator('#bLeavePlace').is_visible(),'the next step and four places in Jugar (panel 10, P2); «Dejar la ronda» only during a round'
    assert page.locator('.menu-group h3').all_text_contents()==['Jugar','Más'];assert not page.locator('#menuMore').evaluate('e=>e.open'),'the rest folded under «Más»'
-   assert page.locator('#menuTitle').inner_text() and '✦' in page.locator('#menuSummary').inner_text(),'the menu opens on who and where'
+   assert page.locator('#menuTitle').inner_text() and page.locator('#menuSummary').inner_text(),'the menu opens on who and where';assert ('✦' in page.locator('#menuSummary').inner_text())==(page.evaluate('Math.floor(__testRuntime.S.sparks||0)')>0),'panel 10 (P8): no counter at zero'
    assert page.locator('#bWorldHint').text_content() in ('Explorar el Mundo','Volver al Camino')
    assert page.locator('#mMenu #bSoft').count()==0 and page.locator('#mMenu #bSession').count()==0
    page.locator('#bSettings').click();page.locator('#bMusicSettings').click();before=page.evaluate('({waves:window.__testRuntime.waves.length,context:!!window.__testRuntime.ac})')

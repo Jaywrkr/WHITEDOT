@@ -17,12 +17,12 @@ try:
    page.goto(f'http://127.0.0.1:{server.server_port}/');page.wait_for_function('!!window.__r?.enterHouse&&!!window.__r?.houseStand')
    hide="document.querySelectorAll('.modal,#returnEntrance').forEach(m=>m.hidden=true)"
    # A new player: only the Sala is open, the door to the Jardín stays shut.
-   page.evaluate("()=>{"+hide+";const r=__r;r.S.sound=false;r.S.totalDays=0;r.save();r.enterHouse();}");page.wait_for_function('__r.houseSettled()')
+   page.evaluate("()=>{"+hide+";const r=__r;r.S.sound=false;r.S.totalDays=0;Object.keys(r.placesData().stars).forEach(id=>r.placesData().stars[id]=[false,false,false]);r.save();r.enterHouse();}");page.wait_for_function('__r.houseSettled()')
    page.evaluate(hide);page.locator('#w').focus();page.keyboard.down('ArrowRight');page.wait_for_timeout(2200);page.keyboard.up('ArrowRight')
    stand=page.evaluate('__r.houseStand()');assert stand['room']=='sala' and stand['fx']<=545,stand
    page.keyboard.down('ArrowLeft');page.wait_for_timeout(3000);page.keyboard.up('ArrowLeft');assert page.evaluate('__r.houseStand().fx')>=25,'the outer wall stops the cube'
    # Every room open: right through the door, up the stairs, and a tap that walks down to the basement.
-   page.evaluate("()=>{const r=__r;r.S.totalDays=14;r.save();r.exitHouse?.();}");page.evaluate("()=>{"+hide+";__r.enterHouse();}");page.wait_for_function('__r.houseSettled()')
+   page.evaluate("()=>{const r=__r;r.S.totalDays=14;Object.keys(r.placesData().stars).forEach((id,i)=>r.placesData().stars[id]=i<8?[true,true,true]:[false,false,false]);r.save();r.exitHouse?.();}");page.evaluate("()=>{"+hide+";__r.enterHouse();}");page.wait_for_function('__r.houseSettled()')
    page.evaluate(hide);page.locator('#w').focus();page.keyboard.down('ArrowRight');page.wait_for_timeout(3200);page.keyboard.up('ArrowRight');assert page.evaluate('__r.houseStand().room')=='jardin'
    page.evaluate("__r.houseWalkTo('sala',.86)");page.wait_for_function("__r.houseSettled()&&__r.houseStand().room==='sala'",timeout=8000)
    page.keyboard.down('ArrowUp');page.wait_for_function("__r.houseStand().climbing");page.keyboard.up('ArrowUp');page.wait_for_function("__r.houseStand().room==='azotea'&&!__r.houseStand().climbing",timeout=5000)

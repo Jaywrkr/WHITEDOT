@@ -46,8 +46,8 @@ try:
   assert page.evaluate('__r.S.sparks')>=10
   for width,height in [(390,844),(844,390),(1280,800)]:
    page.set_viewport_size({'width':width,'height':height});page.wait_for_timeout(300)
-   distance=page.locator('#walkDistance').bounding_box();wallet=page.locator('#sparkCount').bounding_box()
-   assert wallet['y']>=distance['y']+distance['height']-1
+   assert page.locator('#walkDistance').is_hidden(),'panel 10 (P8): the HUD keeps three numbers';wallet=page.locator('#sparkCount').bounding_box()
+   assert wallet and wallet['y']>=0
    assert wallet['x']+wallet['width']<=width
    page.screenshot(path=str(ROOT.parent/f'crystal-path-{width}.png'))
   page.evaluate("""()=>{__r.S.firstJourney.skipped=true;document.querySelectorAll('.modal').forEach(m=>m.hidden=true);}""")

@@ -2,7 +2,7 @@
 
 Un cubo, un universo que suena. Explora, toca a tiempo y construye tu canción con lo que descubres.
 
-Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión del código: **2.3.0-alpha.214**. Cuenta opcional y guardado local. Sin publicación en tiendas.
+Repositorio [Jaywrkr/WHITEDOT](https://github.com/Jaywrkr/WHITEDOT). Versión del código: **2.3.0-alpha.215**. Cuenta opcional y guardado local. Sin publicación en tiendas.
 
 ## Estado de la entrega
 

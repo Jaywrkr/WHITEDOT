@@ -73,7 +73,9 @@ export function initialize(runtime){
   $("mRegions").textContent=m.cells.length;$("mConts").textContent=m.continents;$("mRecord").textContent=m.record;
   $("mapZoom").textContent=zoom==='mundo'?'Ver cerca':'Ver todo';
   // One item per span: lines break between items, never leaving a separator hanging (panel 10, Nesbitt #14).
-  $("mapNote").replaceChildren(...[`${m.favorites.length} favoritos (◇)`,`${m.reached.length} hitos visitados`,`${m.heard.length} oídos sin visitar (?)`,`${Object.keys(runtime.S.anomalies||{}).length} rarezas (✶)`,m.camp&&'⌂ tu Estudio',m.ring.length&&`${m.ring.filter(q=>q.open).length} lugares abiertos (○)`].filter(Boolean).map(t=>{const e=document.createElement('span');e.textContent=t;return e;}));
+  const rare=Object.keys(runtime.S.anomalies||{}).length,open=m.ring.filter(q=>q.open).length;
+  // Panel 10 (P8): no counter at zero; regions, continents and record live in Tú (index.html #journalYouPart).
+  $("mapNote").replaceChildren(...[m.favorites.length&&`${m.favorites.length} favoritos (◇)`,m.reached.length&&`${m.reached.length} hitos visitados`,m.heard.length&&`${m.heard.length} oídos sin visitar (?)`,rare&&`${rare} rarezas (✶)`,m.camp&&'⌂ tu Estudio',open&&`${open} lugares abiertos (○)`].filter(Boolean).map(t=>{const e=document.createElement('span');e.textContent=t;return e;}));
   runtime.renderRingTravel?.();
  }
  function open(){runtime.openJournal?.('places');render();runtime.unlock('mapa1');}

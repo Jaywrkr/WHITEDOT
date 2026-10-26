@@ -80,7 +80,9 @@ try:
   p.evaluate(HIDE)
   # The map legend: items, no separator hanging at a line end, a breath before the buttons.
   p.evaluate("()=>{document.getElementById('bMenu').click();document.getElementById('menuMore')?.setAttribute('open','');document.getElementById('bMap').click()}");p.wait_for_timeout(400)
-  assert p.locator('#mapNote span').count()>=4 and '·' not in p.locator('#mapNote').inner_text()
+  # Panel 10 (P8): no counter at zero in the legend.
+  spans=p.locator('#mapNote span').all_text_contents();assert spans and not any(t.startswith('0 ') for t in spans),spans
+  assert '·' not in p.locator('#mapNote').inner_text()
   assert p.evaluate("parseFloat(getComputedStyle(document.getElementById('mapNote')).marginBottom)")>=16
   assert not errors,errors;p.close()
   # The Refugio: in landscape the house keeps to the band left of its panel; the Voice speaks below y=120.

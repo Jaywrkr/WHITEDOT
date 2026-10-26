@@ -1,5 +1,6 @@
 import {normalizeSparkEconomy} from './sparks-model.js';
 import {sameWorld,supportedWorld,validWorldIdentity} from './world-identity.js';
+import {HOUSE_VERSION,HOUSE_ROOM_RULE,legacyRoomsOpen} from './house-model.js';
 export const SAVE_VERSION=1,MAX_SAVE_BYTES=8*1024*1024;
 const incompatible=message=>Object.assign(new Error(message),{code:'incompatible'});
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
@@ -38,6 +39,9 @@ export function validateSave(value,defaults,identity){
  result.sparks=Number.isFinite(result.sparks)?Math.min(Number.MAX_SAFE_INTEGER,Math.max(0,Math.floor(result.sparks))):0;
  result.sparkEconomy=normalizeSparkEconomy(result.sparkEconomy,result.sparks,result.todayKey);
  result.studio={...base.studio,...value.studio};result.journal={...base.journal,...value.journal};result.journal.music={...base.journal.music,...value.journal?.music};
+ // Panel 10 (P8, D3-B): the Refugio's rooms now open by places or ★. A house saved under the old rule (days or
+ // achievements) keeps every room that rule had opened, counted once here; a newer house is kept untouched.
+ const h=result.house;if(object(h)&&h.roomRule!==HOUSE_ROOM_RULE&&!(Number.isInteger(h.version)&&h.version>HOUSE_VERSION)){const old=Array.isArray(h.unlocked)?h.unlocked:[];result.house={...h,unlocked:[...new Set([...old,...legacyRoomsOpen(Number.isFinite(result.totalDays)?result.totalDays:0,object(result.ach)?Object.keys(result.ach).length:0)])],roomRule:HOUSE_ROOM_RULE};}
  return result;
 }
 export function parseSave(raw,defaults,identity){return validateSave(JSON.parse(checkSaveSize(raw)),defaults,identity);}

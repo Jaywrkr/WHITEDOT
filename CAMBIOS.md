@@ -1,6 +1,18 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.214**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.215**. Las entradas describen su revisión, no certifican producción.
+
+## P8 · Menos contadores · 2.3.0-alpha.215
+
+Rama `panel10/p8-menos-contadores`, sobre `panel10/p7-color-ganado`. Pope, con Hodent para las hojas (panel 10); D3 = A + B de Jay.
+
+- Un solo ★: las reliquias del Mundo (`S.stars`) se llaman «Reliquias» en la Constelación, la Bitácora, la hoja de salida, el aviso al encontrarlas, las imágenes para compartir y tres logros (`estrella1`, `e30`, `e100`; mismos ID, nada ganado se pierde). El HUD ya no escribe `#starsN`; el elemento sigue en la página, oculto. `#oStars` (hoja `#mOut`, sin llamada viva a `exitWorld(true)`) se conserva y dice «Reliquias».
+- Vista completa con tres cifras: ★ de 33 (`#hudStars`, dorado), ✦ y lugares de 11 (`#hudPlaces`), desde que se abren los lugares. Día, distancia, elementos y la meta de chispas salen del HUD (los ID siguen). Regiones, continentes y récord pasan de Mapa a «Tú» en la Bitácora. En el Mundo, la línea de objetivo dice «Explora a tu ritmo» en vez de «Regiones N · Formas N».
+- Sin contadores a cero en hojas de primer nivel: menú (✦ y ★ solo con valor), Tu cubo (saldo y regalos), Mapa (favoritos, hitos, oídos, rarezas, lugares abiertos) y Refugio («0 sonando», «0 de 40»).
+- Refugio (D3-B): las salas se abren por lugares completos o por ★ (Jardín 6 o 9 ★, Cielo 8 o 15 ★, Raíz 11 o 24 ★), nunca por días. Al cargar, una casa sin `roomRule: 2` suma las salas que abría la regla antigua (3/7/14 días o 8/20/40 logros): ninguna sala abierta se cierra. Casas de versión futura intactas.
+- Como mucho un logro por aviso: «✦ Logro · nombre»; los demás esperan, sin leer, en la Bitácora. No se retira ningún logro ni se crean logros de tiempo o distancia.
+- No cambian el cubo, la música, chispas, piezas compradas, semillas ni mapas.
+- Pruebas: `tests/fewer-counters.mjs` (migración, regla de salas, ★ único, tres cifras, un logro por aviso); actualizadas a la regla nueva `house*.mjs`, `release-closure.mjs` y los recorridos de Refugio, menú, HUD y Tu cubo. `menus_smoke.py` comprueba que el HUD muestra como máximo tres cifras.
 
 ## P7 · El color se gana y se ve · 2.3.0-alpha.214
 
