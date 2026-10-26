@@ -1,5 +1,7 @@
 # El Viaje
 
+**Vigente alpha.200:** el final5 es un arreglo local suave en su contexto; esperar, omitir y Explorar dejan al jugador en el Mundo libre con rumbo a Jardín. La casa queda voluntaria. K3/K5 y el diseño original de abajo describen revisiones anteriores; [cambios K7](panel/sesion-7/informe.md) y [correcciones N](panel/candidato-n/informe.md).
+
 Guía de diseño de la Fase 0 del panel creativo (22 de octubre de 2026). Jay aprobó seguir lo que el panel acordó: el juego principal es **el Viaje**, actualmente 15–20 minutos en 7 capítulos con un final, y después se abre **el Mundo libre** con todo lo que existe hoy. Esta guía fija la forma; cada fase siguiente la construye en su rama.
 
 ## Decisiones aprobadas por Jay
@@ -203,3 +205,29 @@ Detalle completo en el informe del panel. Cada fase, en su rama:
 | Sensación | 5,6 | 8,5 |
 | Cohesión | 4,8 | 8,5 |
 | Pulido | 6,1 | 8,5 |
+
+## K3 · final del Viaje (alpha.184)
+
+El final5 usa el contexto de salida: misma escala/transposición, tempo acotado90–150 y ritmo guardado. Las cinco capas entran junto a sus frases interpretadas con voces existentes; el tema usa la voz suave ya disponible. El pad y las demás colas quedan bajo una envolvente que termina antes de los dos segundos de silencio. Salir cancela esa envolvente sin reabrir notas. Las frases originales permanecen intactas. Los círculos siguen ataques de cada capa. Radio y final11 no se reescriben.
+
+## K5 · paso al Mundo libre (alpha.186)
+
+El final explica cinco lugares completos y seis nuevos. Explorar a pie sale del Refugio y señala Jardín, sin llevar allí automáticamente. El antiguo tutorial de seis pasos deja de presentarse solo tras terminar el Viaje; conserva los hechos y puede repetirse con Practicar. Guardar un favorito sigue siendo opcional; los errores reales de guardado siguen visibles. Guía, menú y ruta leen el mismo objetivo.
+
+## K7 · cierre y salida (alpha.188)
+
+El final interpreta las notas sobre el acorde, en registro52–76, sin duplicación aguda. Se sustituyen solo aquí bajo cuadrado, ácido y pad de sierra por voces suaves existentes y percusión contenida. Se conserva el ritmo de la frase y sus datos guardados; hay huecos entre notas y envolvente de salida. Radio, síntesis, final11 y mundos intactos. Escucha agradable pendiente de Jay: los renders no la certifican.
+
+Esperar al final, omitirlo y pulsar Explorar abren Mundo libre y rumbo a Jardín. No se salta al portal ni se cobra. Festival espera a Otra persona. Un fallo al guardar mantiene el cierre visible para reintentar.
+
+## Precisión N2
+
+Tocar el área del cubo (48px de alcance táctil, dibujo pequeño intacto) emite al apoyar. Arrastrar o mantener en el vacío conserva movimiento/escáner; un toque breve allí se confirma al soltar. El modo dedo conserva su edición directa. En Vacío un golpe musical válido puede esperar al primer tiempo o necesitar espacio: marca blanca, sin anunciar progreso dorado. No se amplía la ventana de acierto.
+
+## Memoria N3
+
+Las notas nuevas conservan paso y posición absoluta (`journey.ticks` / `lugares.noteTicks`), como campos aditivos compatibles. Tu canción reserva los compases que requiera cada frase, incluidas repeticiones. Las memorias antiguas conservan sus notas: un paso igual o anterior se interpreta en el siguiente compás; no se conoce el tiempo original perdido. Pausas superiores a64 pasos se abrevian por compases completos, manteniendo su fase. Los datos guardados no se reescriben para esa interpretación.
+
+## Integración de cierre N7
+
+El transporte registra número absoluto y paso del compás por separado. Al reanudar una campaña, un transporte reiniciado se añade al siguiente compás compatible; el tiempo pasado con la app cerrada se desconoce. Final5 interpreta la posición nueva; las memorias antiguas mantienen su interpretación compatible. Final11 cuenta pasos, no segundos divididos por el último tempo: su pausa termina en el paso del tema y silencia también reverberación/eco. Salir cancela la pausa y restaura salida sin cambiar volumen elegido. La generación y los instrumentos de fondo permanecen.

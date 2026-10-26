@@ -1,19 +1,19 @@
 # El mundo de Kubono: Viaje, 11 lugares y Refugio
 
-Diseño aprobado por Jay el 23 de octubre de 2026. Es la guía del juego y sus reglas. El cierre vigente es [J1–J7](PULIDO_CIERRE.md); las tablas anteriores conservan su contexto histórico. Estado de cada fase: en [Cambios](../CAMBIOS.md). Una decisión aprobada no equivale a construida ni probada con personas.
+Diseño aprobado por Jay el 23 de octubre de 2026. Es la guía del juego y sus reglas. El candidato vigente es [N, alpha.200](panel/candidato-n/informe.md); J/K/L y sus tablas conservan el contexto de su entrega. Estado de cada fase: en [Cambios](../CAMBIOS.md). Una decisión aprobada no equivale a construida ni probada con personas.
 
 ## Las cuatro capas
 
 | Capa | Qué es | Para qué sirve |
 |---|---|---|
-| **Viaje** (prólogo, 15–17 min) | Cinco capítulos con historia: Llanura, Lago, Bosque, Tormenta y Vacío, más el Camino y el Refugio | Aprender los cinco primeros verbos y llegar a casa |
+| **Viaje** (prólogo, 15–17 min) | Cinco capítulos con historia: Llanura, Lago, Bosque, Tormenta y Vacío, más el Camino y el Refugio | Aprender cinco verbos y abrir el Mundo libre |
 | **Los 11 lugares** | Retos fijos, cada uno con su juego y tres estrellas | Avanzar: las estrellas abren lugares y ganan el juego |
 | **Mundo salvaje** | El mundo infinito alrededor | Explorar, encuentros sorpresa, chispas y coleccionables |
 | **Refugio** | La casa, en el centro del anillo | Trofeos, estrellas, mapa, tienda, espejo, logros y Bitácora |
 
 ## Reglas fijas
 
-1. **Solo a tiempo pasa algo**, en todas partes. En el Mundo libre se toca cuando se quiera y todo suena, pero solo a tiempo da chispas (desde H5).
+1. **Solo a tiempo pasa algo**, en todas partes. En el Mundo libre recoger fragmentos da su base; romper a tiempo multiplica el valor×2 y la racha×3 (K2 sustituye H5).
 2. **Cada lugar:** una barra, un verbo, un objeto dorado al final y un último pulso a tiempo para cerrarlo.
 3. **Nadie pierde:** no hay derrota; solo más o menos estrellas y chispas.
 4. **Texto mínimo:** el Viaje no tiene rótulos; cada lugar dice cada frase una sola vez, la primera. El narrador habla solo en la tarjeta de la ronda y en la Bitácora.
@@ -55,7 +55,7 @@ Tras el Viaje, el anillo se abre **en orden**, como las pistas de un disco: cada
 | **Ganar** | Los 11 completos (11 ★): suena el final verdadero de tu canción | | |
 | **Versión maestra** | Las 33 ★ | | |
 
-- Una columna de luz dorada y la flecha del borde señalan el siguiente lugar del camino. La tarjeta de la ronda tiene «Siguiente · lugar», que lleva a su portal y empieza su ronda.
+- Una columna de luz señala el portal; una brújula junto al cubo indica rumbo/metraje. La tarjeta de la ronda ofrece Seguir: caminar hacia el siguiente lugar, sin llevar allí automáticamente.
 - Un lugar ya completo ofrece **Jugar**, **Libre** (su música y su verbo, sin barra, estrellas ni chispas) y **Maestro** (con ★★).
 - Nadie pierde una puerta: un guardado de antes conserva abiertos los lugares que sus estrellas ya abrían (`kept`), y un lugar con su ★ o ya visitado sigue abierto.
 
@@ -65,7 +65,7 @@ Tras el Viaje, el anillo se abre **en orden**, como las pistas de un disco: cada
 |---|---|
 | Ronda completada en un lugar | 60 + 6 por cada 10 % a tiempo (60–120) |
 | Ronda Maestro | El doble (120–240) |
-| Mundo libre | Fuera de tiempo, 0 (desde H5); a tiempo ×2; con racha de 8 o más, ×3 |
+| Mundo libre | Fragmentos base×1; a tiempo ×2; con racha de8 o más, ×3 (K2) |
 | Encuentro salvaje | 15 |
 | Remezcla diaria | 30, y 20 más con récord |
 | Logros | 0–25 |
@@ -85,7 +85,7 @@ Cada lugar da chispas completas en sus tres primeras rondas del día y la mitad 
 ## Dónde están y cómo se llega
 
 - Los 11 portales dorados forman un anillo alrededor del Refugio, cada uno en su bioma. Cada portal suena, más fuerte cuanto más cerca; los cerrados muestran las estrellas que piden.
-- Una flecha en el borde de la pantalla señala el lugar más cercano sin jugar; el mapa los muestra todos con sus estrellas.
+- Una flecha bidimensional y el nombre/distancia señalan el siguiente lugar; Seguir activa rumbo a pie. El mapa muestra los once y sus estrellas.
 - Viaje rápido desde la mesa del mapa del Refugio o desde el menú, a lugares ya visitados.
 - No hay orden obligatorio: se juega cualquiera de los abiertos.
 
@@ -97,7 +97,7 @@ Cada lugar da chispas completas en sus tres primeras rondas del día y la mitad 
 
 ## Tu canción
 
-Cada lugar da una capa de una canción. El final del Viaje junta las cinco primeras y abre el mundo («Tu mundo se abrió · Once lugares te esperan», botón Explorar). Con los 11 lugares completos suenan las once juntas: es ganar el juego («Los 11 lugares»). Con las 33 ★ vuelve como versión maestra («Las 33 ★»). Desde H4 la canción es la música del propio juego: el Mundo sigue sonando en su tono y tempo, y encima entra la capa de cada lugar ganado sobre el acorde que suena. Las estrellas la hacen crecer: ★ un fragmento (un compás de cada dos), ★★ la capa entera, ★★★ su variación (una octava arriba y con eco). El final con los 11: las capas entran una por compás, luego tus notas de cada lugar en orden y al final el tema del cubo; la versión maestra lo toca todo en su variación. Los trofeos del Refugio tocan su capa dos compases sobre la música.
+Cada lugar da una capa de una canción. El final del Viaje junta las cinco primeras y abre el mundo («Tu mundo se abrió · Cinco completos. Quedan seis por descubrir.», botón Explorar). Con los 11 lugares completos suenan las once juntas: es ganar el juego («Los 11 lugares»). Con las 33 ★ vuelve como versión maestra («Las 33 ★»). Desde H4 la canción es la música del propio juego: el Mundo sigue sonando en su tono y tempo, y encima entra la capa de cada lugar ganado sobre el acorde que suena. Las estrellas la hacen crecer: ★ un fragmento (un compás de cada dos), ★★ la capa entera, ★★★ su variación (una octava arriba y con eco). El final con los 11: las capas entran una por compás, luego tus notas de cada lugar en orden y al final el tema del cubo; la versión maestra lo toca todo en su variación. Los trofeos del Refugio tocan su capa dos compases sobre la música.
 
 ## Logros del narrador
 
@@ -235,3 +235,29 @@ Se conservan generación musical, semillas, mapas, biomas, distribución y arte.
 Las rondas anuncian premios después de guardarlos y admiten reintento seguro. Lugares y Refugio priorizan /11; /33 es maestría. La guía y el menú leen el siguiente destino del mismo estado. Tras completar los once, Lugares → Tu canción vuelve al final existente con tus notas actuales; no hay otra recompensa por oírlo.
 
 Detalle, comprobaciones y aceptación pendiente en [Cierre](PULIDO_CIERRE.md) y [quinta sesión](panel/sesion-5/informe.md). No se declara publicación ni cambia Supabase.
+
+## K1 · orientación corregida (alpha.182)
+
+«Seguir hacia…» y «Seguir» en Lugares activan rumbo a pie, sin salto ni gasto, incluso antes de visitar el portal. Nombre y distancia acompañan una señal bidimensional. El anillo migra su referencia desde el Refugio vigente y después permanece estable aunque la casa se despliegue en otro lugar. Una escritura fallida conserva el guardado anterior. Las tablas históricas donde el anillo seguía la casa describen la regla sustituida.
+
+## K2 · valor base de fragmentos (alpha.183)
+
+Jay sustituye la regla H5 de moneda: en Mundo libre recoger siempre da el valor base×1; romper a tiempo×2 y desde ocho aciertos seguidos×3. La multiplicación corresponde al golpe que rompe el cristal y se cobra al recoger cada fragmento. Pendientes antiguos con×0 recuperan su valor base; los fragmentos ya recogidos no se vuelven a pagar. Estrellas, retos, precios y saldo conservan sus reglas; no cambian síntesis ni distribución.
+
+Estado vigente K1–K6: [entrega alpha.187](CIERRE_K.md). Las cifras históricas H5 de duración de tienda usaban×0 fuera de tempo; K2 cambia esa base. La simulación actual está en `scripts/spark-economy.mjs`; no son medidas de personas. El viaje rápido voluntario admite los capítulos ya completos, sin exigir descubrir de nuevo su portal.
+
+## K7 · rumbo junto al cubo (alpha.188)
+
+La flecha rodea el cubo a48px; nombre y metros quedan90px arriba, separados de Otro paisaje. No intercepta el dedo ni cambia tamaño, movimiento o personalización. Un destino explícito a casa/favorito tiene prioridad; Seguir al anillo lo sustituye. El final5 abre el Mundo libre por todas sus salidas normales; no deja en casa ni transporta a Jardín. [Auditoría actual y siguientes mejoras propuestas](panel/sesion-7/informe.md).
+
+## L1 · Aprender jugando (alpha.189)
+
+La guía muestra tres pasos del lugar activo; en Jardín permite repetir una demostración silenciosa. Tras falta de progreso aparece brevemente una semilla o gotas junto al círculo. Los valores, alcance y ritmo de los once juegos no cambian. La explicación se conserva como vista después de presentarse, no por encolarse. [Entrega L](ENTREGA_L.md).
+
+## L2 · La frase de cada ronda (alpha.190)
+
+Cada ronda captura sus últimas ocho notas válidas y los pasos de su ritmo. El pulso que termina se captura antes de guardar el premio. Los historiales de otros lugares no se mezclan. Una ronda sin frase nueva mantiene la anterior; escribir mal conserva la ronda para reintentar. La música generativa y el arreglo de reproducción no cambian.
+
+## L3 · Edición y acceso (alpha.191)
+
+Si renombrar, borrar o editar notas falla al guardar, el favorito conserva su versión anterior. El borrado solo notifica a navegación después de confirmarse. Los formatos futuros siguen de solo lectura. Final5 y Tu canción participan del foco accesible: Tab no llega al fondo, Escape usa su salida real y los controles de juego permanecen aislados mientras el panel está abierto.

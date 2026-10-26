@@ -1,7 +1,8 @@
 // Menus trap keyboard focus; closing them returns to the control that opened them.
 export function initialize(runtime){
  const canvas=runtime.$('w');canvas.tabIndex=0;canvas.setAttribute('aria-label','Mundo musical: arrastra para caminar; el cubo toca los objetos. Un toque vacío lanza el pulso.');
- const visible=d=>!d.hidden&&(d.matches('.modal')||d.dataset.inspect==='true');
+ const stage=d=>d.id==='journeyFinale'||d.id==='songStage';
+ const visible=d=>!d.hidden&&(d.matches('.modal')||d.dataset.inspect==='true'||stage(d));
  const dialogs=[...document.querySelectorAll('.modal,#rareNotice,#celebration')],returnFocus=new WeakMap(),opened=[],managedInert=new Set(),hiddenState=new Map(dialogs.map(d=>[d,!visible(d)]));
  const closers={mProfile:'profileClose',mGuide:'guideClose',mHouseCode:'houseCodeClose',mSettings:'settingsClose',mConnection:'connectionClose',mCube:'cubeClose',mSeeds:'seedClose',mSaveTools:'saveToolsClose',mSky:'kClose',mMap:'mapClose',mJournal:'journalClose',mMusic:'muClose',mSession:'sessionClose',mShare:'sClose',mAtlas:'atlasClose',mFavorites:'favoritesClose',mMusicTravel:'musicTravelClose',contentGallery:'contentGalleryClose',mLab:'labClose',mSet:'setClose',mOut:'oClose'};
  for(const dialog of dialogs.filter(d=>d.matches('.modal'))){
@@ -25,7 +26,8 @@ export function initialize(runtime){
   runtime.$('bMenu').setAttribute('aria-expanded',String(!runtime.$('mMenu').hidden));
  }
  const observer=new MutationObserver(records=>{
-  const changedDialogs=[...new Set(records.map(r=>r.target))].filter(d=>hiddenState.get(d)!==!visible(d));
+  const targets=[];for(const record of records){if(record.type==='childList'){for(const node of record.addedNodes){if(node.nodeType!==1)continue;for(const d of [node,...node.querySelectorAll('#journeyFinale,#songStage')])if(stage(d)&&!dialogs.includes(d)){dialogs.push(d);hiddenState.set(d,true);d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.dataset.inspect='true';d.tabIndex=-1;observer.observe(d,{attributes:true,attributeFilter:['hidden','data-inspect']});targets.push(d);}}}else targets.push(record.target);}
+  const changedDialogs=[...new Set(targets)].filter(d=>hiddenState.get(d)!==!visible(d));
   if(!changedDialogs.length)return;
   let closedTarget=null,changed=false;
   for(const d of changedDialogs){
@@ -35,15 +37,17 @@ export function initialize(runtime){
    else{if(index>=0)opened.splice(index,1);closedTarget=returnFocus.get(d)||closedTarget;returnFocus.delete(d);}
   }
   isolate();const active=open();
-  if(active&&(changed||!active.contains(document.activeElement)))(active.querySelector('h2')||controls(active)[0])?.focus({preventScroll:true});
+  if(active&&(changed||!active.contains(document.activeElement)))(active.querySelector('h2')||controls(active)[0]||active)?.focus({preventScroll:true});
   else if(!active){const target=closedTarget;if(target?.isConnected&&target!==document.body&&target!==document.documentElement&&!target.closest('[inert]')&&target.getClientRects().length&&getComputedStyle(target).visibility!=='hidden')target.focus({preventScroll:true});else canvas.focus({preventScroll:true});}
  });
  for(const dialog of dialogs)observer.observe(dialog,{attributes:true,attributeFilter:['hidden','data-inspect']});
+ observer.observe(document.body,{childList:true});
  runtime.$('bMenu').setAttribute('aria-haspopup','dialog');
  isolate();
  document.addEventListener('keydown',e=>{
   const d=open();if(!d)return;
-  if(e.key==='Escape'){e.preventDefault();e.stopPropagation();if(d.id==='rareNotice'||d.id==='celebration')runtime.$(d.id==='rareNotice'?'rareNoticeDismiss':'celebrationDismiss').click();else{d.hidden=true;runtime.save();}return;}
+  if(e.key==='Escape'){e.preventDefault();e.stopPropagation();if(d.id==='journeyFinale')runtime.journeyFinaleSkip?.();else if(d.id==='songStage')runtime.closeSong?.();else if(d.id==='rareNotice'||d.id==='celebration')runtime.$(d.id==='rareNotice'?'rareNoticeDismiss':'celebrationDismiss').click();else{d.hidden=true;runtime.save();}return;}
+  if(stage(d)&&(/^(Arrow|[wasd]$)/i.test(e.key)||e.key===' '&&!e.target.matches('button,summary,a'))&&!e.target.matches('input,textarea,select')){e.preventDefault();e.stopPropagation();return;}
   if(e.key!=='Tab')return;const items=controls(d);if(!items.length){e.preventDefault();return;}
   const index=items.indexOf(document.activeElement);
   if(index<0||e.shiftKey&&index===0||!e.shiftKey&&index===items.length-1){e.preventDefault();items[e.shiftKey?items.length-1:0].focus();}

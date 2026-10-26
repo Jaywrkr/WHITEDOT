@@ -1,0 +1,5706 @@
+{
+  "result": "passed",
+  "scope": "Fresh symbolic run on current alpha192; no recordings downloaded or listened to during this audit.",
+  "nativeStyles": 52,
+  "influences": 18,
+  "barsPerStyle": 128,
+  "checks": [
+    {
+      "id": "all-native-styles",
+      "passed": true,
+      "actual": 52
+    },
+    {
+      "id": "all-compositional-influences",
+      "passed": true,
+      "actual": 18
+    },
+    {
+      "id": "composed-melodic",
+      "passed": true,
+      "actual": {
+        "notes": 910,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 15,
+        "repeated": 95
+      }
+    },
+    {
+      "id": "composed-melodictechno",
+      "passed": true,
+      "actual": {
+        "notes": 942,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 16,
+        "repeated": 98
+      }
+    },
+    {
+      "id": "composed-breaks",
+      "passed": true,
+      "actual": {
+        "notes": 1263,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 12,
+        "repeated": 104
+      }
+    },
+    {
+      "id": "composed-cosmic",
+      "passed": true,
+      "actual": {
+        "notes": 883,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 15,
+        "repeated": 81
+      }
+    },
+    {
+      "id": "composed-tropical",
+      "passed": true,
+      "actual": {
+        "notes": 1063,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 12,
+        "repeated": 96
+      }
+    },
+    {
+      "id": "composed-deep",
+      "passed": true,
+      "actual": {
+        "notes": 1005,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 14,
+        "repeated": 89
+      }
+    },
+    {
+      "id": "composed-nudisco",
+      "passed": true,
+      "actual": {
+        "notes": 1126,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 16,
+        "repeated": 96
+      }
+    },
+    {
+      "id": "quarter-floor-nudisco",
+      "passed": true,
+      "actual": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "clap",
+            "rim"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "wood",
+            "cowbell"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap",
+            "rim"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "wood"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "composed-minimal",
+      "passed": true,
+      "actual": {
+        "notes": 803,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 8,
+        "repeated": 112
+      }
+    },
+    {
+      "id": "composed-rominimal",
+      "passed": true,
+      "actual": {
+        "notes": 884,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 7,
+        "repeated": 83
+      }
+    },
+    {
+      "id": "composed-progressive",
+      "passed": true,
+      "actual": {
+        "notes": 1204,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 19,
+        "repeated": 94
+      }
+    },
+    {
+      "id": "composed-heart",
+      "passed": true,
+      "actual": {
+        "notes": 257,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 8,
+        "repeated": 74
+      }
+    },
+    {
+      "id": "composed-boombap",
+      "passed": true,
+      "actual": {
+        "notes": 901,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 11,
+        "repeated": 95
+      }
+    },
+    {
+      "id": "composed-ambient",
+      "passed": true,
+      "actual": {
+        "notes": 220,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 12,
+        "repeated": 66
+      }
+    },
+    {
+      "id": "composed-downtempo",
+      "passed": true,
+      "actual": {
+        "notes": 748,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 13,
+        "repeated": 83
+      }
+    },
+    {
+      "id": "composed-dub",
+      "passed": true,
+      "actual": {
+        "notes": 918,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 11,
+        "repeated": 101
+      }
+    },
+    {
+      "id": "composed-microhouse",
+      "passed": true,
+      "actual": {
+        "notes": 877,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 7,
+        "repeated": 109
+      }
+    },
+    {
+      "id": "composed-techhouse",
+      "passed": true,
+      "actual": {
+        "notes": 886,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 11,
+        "repeated": 87
+      }
+    },
+    {
+      "id": "composed-garage",
+      "passed": true,
+      "actual": {
+        "notes": 1095,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 13,
+        "repeated": 104
+      }
+    },
+    {
+      "id": "backbeat-garage",
+      "passed": true,
+      "actual": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "hat",
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "snare"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "snare"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "garage-swing",
+      "passed": true,
+      "actual": 0.30400000000000005
+    },
+    {
+      "id": "composed-dubstep",
+      "passed": true,
+      "actual": {
+        "notes": 795,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 12,
+        "repeated": 77
+      }
+    },
+    {
+      "id": "composed-tribal",
+      "passed": true,
+      "actual": {
+        "notes": 1019,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 13,
+        "repeated": 91
+      }
+    },
+    {
+      "id": "composed-soulful",
+      "passed": true,
+      "actual": {
+        "notes": 1232,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 12,
+        "repeated": 96
+      }
+    },
+    {
+      "id": "composed-algorave",
+      "passed": true,
+      "actual": {
+        "notes": 1159,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 18,
+        "repeated": 101
+      }
+    },
+    {
+      "id": "composed-trap",
+      "passed": true,
+      "actual": {
+        "notes": 638,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 17,
+        "repeated": 96
+      }
+    },
+    {
+      "id": "composed-lofi",
+      "passed": true,
+      "actual": {
+        "notes": 569,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 11,
+        "repeated": 94
+      }
+    },
+    {
+      "id": "composed-jersey",
+      "passed": true,
+      "actual": {
+        "notes": 1212,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 13,
+        "repeated": 110
+      }
+    },
+    {
+      "id": "composed-footwork",
+      "passed": true,
+      "actual": {
+        "notes": 1065,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 18,
+        "repeated": 90
+      }
+    },
+    {
+      "id": "composed-detroit",
+      "passed": true,
+      "actual": {
+        "notes": 1165,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 16,
+        "repeated": 82
+      }
+    },
+    {
+      "id": "composed-robotic",
+      "passed": true,
+      "actual": {
+        "notes": 1083,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 13,
+        "repeated": 97
+      }
+    },
+    {
+      "id": "composed-ghetto",
+      "passed": true,
+      "actual": {
+        "notes": 916,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 17,
+        "repeated": 93
+      }
+    },
+    {
+      "id": "composed-electrofunk",
+      "passed": true,
+      "actual": {
+        "notes": 907,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 13,
+        "repeated": 93
+      }
+    },
+    {
+      "id": "composed-boogie",
+      "passed": true,
+      "actual": {
+        "notes": 1147,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 17,
+        "repeated": 96
+      }
+    },
+    {
+      "id": "composed-detroitelectro",
+      "passed": true,
+      "actual": {
+        "notes": 1206,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 13,
+        "repeated": 94
+      }
+    },
+    {
+      "id": "composed-berlin",
+      "passed": true,
+      "actual": {
+        "notes": 1294,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 12,
+        "repeated": 89
+      }
+    },
+    {
+      "id": "composed-jazztronica",
+      "passed": true,
+      "actual": {
+        "notes": 952,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 12,
+        "repeated": 97
+      }
+    },
+    {
+      "id": "composed-idm",
+      "passed": true,
+      "actual": {
+        "notes": 919,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 16,
+        "repeated": 91
+      }
+    },
+    {
+      "id": "composed-baltimore",
+      "passed": true,
+      "actual": {
+        "notes": 934,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 14,
+        "repeated": 89
+      }
+    },
+    {
+      "id": "composed-chicago",
+      "passed": true,
+      "actual": {
+        "notes": 842,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 10,
+        "repeated": 97
+      }
+    },
+    {
+      "id": "composed-acid",
+      "passed": true,
+      "actual": {
+        "notes": 1461,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 10,
+        "repeated": 108
+      }
+    },
+    {
+      "id": "composed-garagehouse",
+      "passed": true,
+      "actual": {
+        "notes": 1202,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 12,
+        "repeated": 101
+      }
+    },
+    {
+      "id": "composed-miamibass",
+      "passed": true,
+      "actual": {
+        "notes": 812,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 12,
+        "repeated": 79
+      }
+    },
+    {
+      "id": "composed-ebm",
+      "passed": true,
+      "actual": {
+        "notes": 1258,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 11,
+        "repeated": 98
+      }
+    },
+    {
+      "id": "composed-electro",
+      "passed": true,
+      "actual": {
+        "notes": 1024,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 10,
+        "repeated": 109
+      }
+    },
+    {
+      "id": "composed-brokenbeat",
+      "passed": true,
+      "actual": {
+        "notes": 1200,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 13,
+        "repeated": 107
+      }
+    },
+    {
+      "id": "composed-acidhouse",
+      "passed": true,
+      "actual": {
+        "notes": 1360,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 9,
+        "repeated": 95
+      }
+    },
+    {
+      "id": "composed-minimaltechno",
+      "passed": true,
+      "actual": {
+        "notes": 627,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 7,
+        "repeated": 99
+      }
+    },
+    {
+      "id": "quarter-floor-minimaltechno",
+      "passed": true,
+      "actual": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "wood",
+            "rim"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "restrained-minimal",
+      "passed": true,
+      "actual": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "wood",
+            "rim"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "composed-gfunk",
+      "passed": true,
+      "actual": {
+        "notes": 1096,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 16,
+        "repeated": 91
+      }
+    },
+    {
+      "id": "composed-amapiano",
+      "passed": true,
+      "actual": {
+        "notes": 1204,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 12,
+        "repeated": 93
+      }
+    },
+    {
+      "id": "composed-andean",
+      "passed": true,
+      "actual": {
+        "notes": 912,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 14,
+        "repeated": 92
+      }
+    },
+    {
+      "id": "composed-organic",
+      "passed": true,
+      "actual": {
+        "notes": 1001,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 14,
+        "repeated": 92
+      }
+    },
+    {
+      "id": "composed-afro",
+      "passed": true,
+      "actual": {
+        "notes": 797,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 10,
+        "repeated": 114
+      }
+    },
+    {
+      "id": "quarter-floor-afro",
+      "passed": true,
+      "actual": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "conga"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "rim"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "conga"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "shaker",
+            "rim"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "shaker",
+            "conga"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "conga",
+            "rim"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "shaker"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layered-afro",
+      "passed": true,
+      "actual": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "conga"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "rim"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "conga"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "shaker",
+            "rim"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "shaker",
+            "conga"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "conga",
+            "rim"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "shaker"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "composed-liquid",
+      "passed": true,
+      "actual": {
+        "notes": 987,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 16,
+        "repeated": 100
+      }
+    },
+    {
+      "id": "composed-dnb",
+      "passed": true,
+      "actual": {
+        "notes": 1062,
+        "invalid": 0,
+        "forms": 6,
+        "motifs": 10,
+        "repeated": 105
+      }
+    },
+    {
+      "id": "backbeat-dnb",
+      "passed": true,
+      "actual": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "wood"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fast-dnb",
+      "passed": true,
+      "actual": 174
+    },
+    {
+      "id": "real-fusion-blues-machine",
+      "passed": true,
+      "actual": {
+        "key": "-40,3",
+        "production": "blues"
+      }
+    },
+    {
+      "id": "twelve-bar-blues",
+      "passed": true,
+      "actual": {
+        "progression": [
+          0,
+          0,
+          0,
+          0,
+          3,
+          3,
+          0,
+          0,
+          4,
+          3,
+          0,
+          4
+        ],
+        "barsPerChord": 1
+      }
+    },
+    {
+      "id": "real-fusion-guitar-machine",
+      "passed": true,
+      "actual": {
+        "key": "-39,-36",
+        "production": "guitar"
+      }
+    },
+    {
+      "id": "guitar-protagonist",
+      "passed": true,
+      "actual": [
+        "p_barkkeys",
+        "p_cellobody",
+        "p_gutguitar",
+        "orbitorgan",
+        "hollow",
+        "pluckbody"
+      ]
+    },
+    {
+      "id": "real-fusion-italo-current",
+      "passed": true,
+      "actual": {
+        "key": "-40,-22",
+        "production": "italo"
+      }
+    },
+    {
+      "id": "synth-sequence-protagonist",
+      "passed": true,
+      "actual": [
+        "phasekeys",
+        "p_fmharp",
+        "clav",
+        "lowbow",
+        "feltpiano",
+        "p_cellobody"
+      ]
+    },
+    {
+      "id": "rhythmic-contrast",
+      "passed": true,
+      "actual": 51
+    },
+    {
+      "id": "tempo-contrast",
+      "passed": true,
+      "actual": {
+        "min": 71,
+        "max": 174
+      }
+    }
+  ],
+  "failures": [],
+  "rows": [
+    {
+      "genre": "melodic",
+      "key": "-34,-9",
+      "parts": 9,
+      "bpm": 118,
+      "swing": 0.038,
+      "forms": 6,
+      "motifVersions": 15,
+      "repeatedBarPairs": 95,
+      "noteEvents": 910,
+      "instruments": [
+        "sub",
+        "fmglass",
+        "p_gutguitar",
+        "p_feltmallet",
+        "phasekeys",
+        "saw",
+        "strings"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "rim"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "rim"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "wood"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "melodictechno",
+      "key": "-22,-11",
+      "parts": 8,
+      "bpm": 124,
+      "swing": 0.022,
+      "forms": 6,
+      "motifVersions": 16,
+      "repeatedBarPairs": 98,
+      "noteEvents": 942,
+      "instruments": [
+        "fm",
+        "phasekeys",
+        "p_feltmallet",
+        "p_tinepiano",
+        "fmglass"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "breaks",
+      "key": "-23,21",
+      "parts": 9,
+      "bpm": 129,
+      "swing": 0.07400000000000001,
+      "forms": 6,
+      "motifVersions": 12,
+      "repeatedBarPairs": 104,
+      "noteEvents": 1263,
+      "instruments": [
+        "reese",
+        "resonantpluck",
+        "p_cellobody",
+        "p_panreed",
+        "p_feltmallet"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "wood"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "cosmic",
+      "key": "-28,-2",
+      "parts": 8,
+      "bpm": 105,
+      "swing": 0.10000000000000002,
+      "forms": 6,
+      "motifVersions": 15,
+      "repeatedBarPairs": 81,
+      "noteEvents": 883,
+      "instruments": [
+        "sub",
+        "phasekeys",
+        "p_softhorn",
+        "p_gutguitar"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat",
+            "timbale"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "guiro",
+            "cowbell"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat",
+            "timbale"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "tropical",
+      "key": "-25,-19",
+      "parts": 10,
+      "bpm": 110,
+      "swing": 0.11800000000000001,
+      "forms": 6,
+      "motifVersions": 12,
+      "repeatedBarPairs": 96,
+      "noteEvents": 1063,
+      "instruments": [
+        "rubber",
+        "resonantpluck",
+        "kalimba",
+        "p_feltmallet",
+        "p_cellobody",
+        "p_tinepiano"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "conga",
+            "rim"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "conga",
+            "shaker"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "deep",
+      "key": "-38,0",
+      "parts": 10,
+      "bpm": 118,
+      "swing": 0.124,
+      "forms": 6,
+      "motifVersions": 14,
+      "repeatedBarPairs": 89,
+      "noteEvents": 1005,
+      "instruments": [
+        "velvetbass",
+        "phasekeys",
+        "p_cellobody",
+        "p_tapepiano",
+        "p_gutguitar",
+        "clav"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "conga"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "conga"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat",
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat",
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat",
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "wood",
+            "rim"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "nudisco",
+      "key": "-20,9",
+      "parts": 9,
+      "bpm": 112,
+      "swing": 0.14800000000000002,
+      "forms": 6,
+      "motifVersions": 16,
+      "repeatedBarPairs": 96,
+      "noteEvents": 1126,
+      "instruments": [
+        "pluck",
+        "rhodes",
+        "p_gutguitar",
+        "p_cellobody",
+        "clav",
+        "phasekeys"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "clap",
+            "rim"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "wood",
+            "cowbell"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap",
+            "rim"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "wood"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "minimal",
+      "key": "-32,-25",
+      "parts": 8,
+      "bpm": 126,
+      "swing": 0.08,
+      "forms": 6,
+      "motifVersions": 8,
+      "repeatedBarPairs": 112,
+      "noteEvents": 803,
+      "instruments": [
+        "pluck",
+        "phasekeys",
+        "p_tinepiano",
+        "p_fmharp",
+        "resonantpluck"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "rim",
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "rominimal",
+      "key": "-35,-25",
+      "parts": 8,
+      "bpm": 124,
+      "swing": 0.28,
+      "forms": 6,
+      "motifVersions": 7,
+      "repeatedBarPairs": 83,
+      "noteEvents": 884,
+      "instruments": [
+        "hollow",
+        "p_tinepiano",
+        "roll",
+        "p_fmharp",
+        "resonantpluck"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "shaker",
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 5,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "shaker"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "progressive",
+      "key": "-34,-15",
+      "parts": 8,
+      "bpm": 120,
+      "swing": 0.038,
+      "forms": 6,
+      "motifVersions": 19,
+      "repeatedBarPairs": 94,
+      "noteEvents": 1204,
+      "instruments": [
+        "pluck",
+        "strings",
+        "p_cellobody",
+        "p_gutguitar",
+        "fmglass"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "rim",
+            "wood"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "heart",
+      "key": "-40,16",
+      "parts": 3,
+      "bpm": 76,
+      "swing": 0,
+      "forms": 6,
+      "motifVersions": 8,
+      "repeatedBarPairs": 74,
+      "noteEvents": 257,
+      "instruments": [
+        "granularair",
+        "p_violaswell",
+        "p_cellobody",
+        "bowed"
+      ],
+      "drums": []
+    },
+    {
+      "genre": "boombap",
+      "key": "-23,-8",
+      "parts": 10,
+      "bpm": 88,
+      "swing": 0.232,
+      "forms": 6,
+      "motifVersions": 11,
+      "repeatedBarPairs": 95,
+      "noteEvents": 901,
+      "instruments": [
+        "sub",
+        "rhodes",
+        "p_softhorn",
+        "p_cellobody",
+        "clav",
+        "p_tinepiano",
+        "reed"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "rim",
+            "wood"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "ambient",
+      "key": "-40,18",
+      "parts": 2,
+      "bpm": 84,
+      "swing": 0,
+      "forms": 6,
+      "motifVersions": 12,
+      "repeatedBarPairs": 66,
+      "noteEvents": 220,
+      "instruments": [
+        "choir",
+        "p_tapepiano",
+        "bowed",
+        "granularair"
+      ],
+      "drums": []
+    },
+    {
+      "genre": "downtempo",
+      "key": "4,36",
+      "parts": 10,
+      "bpm": 98,
+      "swing": 0.174,
+      "forms": 6,
+      "motifVersions": 13,
+      "repeatedBarPairs": 83,
+      "noteEvents": 748,
+      "instruments": [
+        "sub",
+        "hollow",
+        "p_panreed",
+        "p_tinepiano",
+        "p_feltmallet",
+        "kalimba",
+        "bowed"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "shaker"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "dub",
+      "key": "-36,-10",
+      "parts": 10,
+      "bpm": 116,
+      "swing": 0.04900000000000001,
+      "forms": 6,
+      "motifVersions": 11,
+      "repeatedBarPairs": 101,
+      "noteEvents": 918,
+      "instruments": [
+        "velvetbass",
+        "resonantpluck",
+        "p_feltmallet",
+        "p_bassclarinet",
+        "rhodes",
+        "p_tapepiano",
+        "phasekeys"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "rim"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "wood"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "microhouse",
+      "key": "-33,-12",
+      "parts": 9,
+      "bpm": 120,
+      "swing": 0.184,
+      "forms": 6,
+      "motifVersions": 7,
+      "repeatedBarPairs": 109,
+      "noteEvents": 877,
+      "instruments": [
+        "roll",
+        "resonantpluck",
+        "p_cellobody",
+        "p_tinepiano",
+        "p_feltmallet",
+        "clav"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "wood",
+            "rim"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "techhouse",
+      "key": "-33,-8",
+      "parts": 9,
+      "bpm": 124,
+      "swing": 0.136,
+      "forms": 6,
+      "motifVersions": 11,
+      "repeatedBarPairs": 87,
+      "noteEvents": 886,
+      "instruments": [
+        "pluck",
+        "phasekeys",
+        "p_cellobody",
+        "p_tinepiano",
+        "p_feltmallet",
+        "hollow"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "rim",
+            "wood"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "garage",
+      "key": "-38,-28",
+      "parts": 10,
+      "bpm": 133,
+      "swing": 0.30400000000000005,
+      "forms": 6,
+      "motifVersions": 13,
+      "repeatedBarPairs": 104,
+      "noteEvents": 1095,
+      "instruments": [
+        "organb",
+        "reed",
+        "resonantpluck",
+        "p_panreed",
+        "p_gutguitar",
+        "p_feltmallet",
+        "rhodes"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "hat",
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "snare"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "snare"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "dubstep",
+      "key": "-29,29",
+      "parts": 8,
+      "bpm": 144,
+      "swing": 0.12,
+      "forms": 6,
+      "motifVersions": 12,
+      "repeatedBarPairs": 77,
+      "noteEvents": 795,
+      "instruments": [
+        "reese",
+        "rhodes",
+        "p_feltmallet",
+        "p_tinepiano"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "kick",
+            "wood"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "snare"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "tribal",
+      "key": "-29,-32",
+      "parts": 10,
+      "bpm": 121,
+      "swing": 0.11800000000000001,
+      "forms": 6,
+      "motifVersions": 13,
+      "repeatedBarPairs": 91,
+      "noteEvents": 1019,
+      "instruments": [
+        "fm",
+        "resonantpluck",
+        "p_gutguitar",
+        "p_panreed",
+        "p_feltmallet",
+        "p_cellobody",
+        "reed"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "conga"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "conga",
+            "rim"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "conga"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick",
+            "wood"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "conga"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "conga"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "wood"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "soulful",
+      "key": "15,7",
+      "parts": 9,
+      "bpm": 120,
+      "swing": 0.18800000000000003,
+      "forms": 6,
+      "motifVersions": 12,
+      "repeatedBarPairs": 96,
+      "noteEvents": 1232,
+      "instruments": [
+        "rubber",
+        "resonantpluck",
+        "p_gutguitar",
+        "p_tinepiano",
+        "p_softhorn"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 1,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "shaker",
+            "conga",
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "clap",
+            "rim"
+          ]
+        },
+        {
+          "step": 5,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "shaker",
+            "conga"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 9,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "shaker",
+            "conga",
+            "wood"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap",
+            "rim"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "shaker",
+            "conga"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "shaker"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "algorave",
+      "key": "-29,17",
+      "parts": 9,
+      "bpm": 150,
+      "swing": 0.058,
+      "forms": 6,
+      "motifVersions": 18,
+      "repeatedBarPairs": 101,
+      "noteEvents": 1159,
+      "instruments": [
+        "machine",
+        "phasekeys",
+        "p_tinepiano",
+        "p_cellobody",
+        "p_gutguitar",
+        "clav"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "wood"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat",
+            "wood"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "timbale",
+            "rim"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "trap",
+      "key": "-6,-8",
+      "parts": 10,
+      "bpm": 148,
+      "swing": 0,
+      "forms": 6,
+      "motifVersions": 17,
+      "repeatedBarPairs": 96,
+      "noteEvents": 638,
+      "instruments": [
+        "machine",
+        "resonantpluck",
+        "p_bassclarinet",
+        "p_feltmallet",
+        "p_tinepiano",
+        "p_gutguitar",
+        "phasekeys"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat",
+            "hatRoll"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "clap",
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat",
+            "hatRoll"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "wood"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "lofi",
+      "key": "-15,25",
+      "parts": 8,
+      "bpm": 71,
+      "swing": 0.264,
+      "forms": 6,
+      "motifVersions": 11,
+      "repeatedBarPairs": 94,
+      "noteEvents": 569,
+      "instruments": [
+        "sub",
+        "phasekeys",
+        "p_cellobody",
+        "clav"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "wood"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "jersey",
+      "key": "-31,30",
+      "parts": 10,
+      "bpm": 144,
+      "swing": 0,
+      "forms": 6,
+      "motifVersions": 13,
+      "repeatedBarPairs": 110,
+      "noteEvents": 1212,
+      "instruments": [
+        "machine",
+        "brass",
+        "p_panreed",
+        "resonantpluck",
+        "p_tinepiano",
+        "p_cellobody",
+        "phasekeys"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "clap"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "clap"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "footwork",
+      "key": "-11,-5",
+      "parts": 10,
+      "bpm": 161,
+      "swing": 0,
+      "forms": 6,
+      "motifVersions": 18,
+      "repeatedBarPairs": 90,
+      "noteEvents": 1065,
+      "instruments": [
+        "sub",
+        "phasekeys",
+        "p_cellobody",
+        "resonantpluck",
+        "p_feltmallet",
+        "p_gutguitar",
+        "machine"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "hatRoll",
+            "wood"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "clap"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "tom"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat",
+            "tom"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "hatRoll"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "detroit",
+      "key": "-38,-35",
+      "parts": 9,
+      "bpm": 126,
+      "swing": 0.038,
+      "forms": 6,
+      "motifVersions": 16,
+      "repeatedBarPairs": 82,
+      "noteEvents": 1165,
+      "instruments": [
+        "fm",
+        "reed",
+        "p_tinepiano",
+        "p_cellobody",
+        "p_panreed"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 1,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat",
+            "hatO"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "hat",
+            "rim",
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "clap",
+            "hat"
+          ]
+        },
+        {
+          "step": 5,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat",
+            "hatO"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 9,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat",
+            "hatO"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "hat",
+            "rim"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap",
+            "hat"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat",
+            "hatO"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "robotic",
+      "key": "13,-21",
+      "parts": 9,
+      "bpm": 124,
+      "swing": 0.025,
+      "forms": 6,
+      "motifVersions": 13,
+      "repeatedBarPairs": 97,
+      "noteEvents": 1083,
+      "instruments": [
+        "fm",
+        "metalkeys",
+        "p_bassclarinet",
+        "resonantpluck",
+        "p_cellobody",
+        "phasekeys",
+        "hollow",
+        "machine"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "ghetto",
+      "key": "-34,19",
+      "parts": 8,
+      "bpm": 136,
+      "swing": 0.057,
+      "forms": 6,
+      "motifVersions": 17,
+      "repeatedBarPairs": 93,
+      "noteEvents": 916,
+      "instruments": [
+        "sub",
+        "vocalform",
+        "p_barkkeys",
+        "phasekeys",
+        "fmglass",
+        "machine"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "rim",
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "clap",
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap",
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "clapRoll",
+            "rim"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "electrofunk",
+      "key": "-38,-19",
+      "parts": 8,
+      "bpm": 109,
+      "swing": 0.057,
+      "forms": 6,
+      "motifVersions": 13,
+      "repeatedBarPairs": 93,
+      "noteEvents": 907,
+      "instruments": [
+        "fm",
+        "phasekeys",
+        "resonantpluck",
+        "rhodes",
+        "fmglass"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "rim",
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "clap",
+            "hat",
+            "rim"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "kick",
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "cowbell",
+            "wood"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "clap",
+            "hat",
+            "rim"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "rim"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "boogie",
+      "key": "-4,24",
+      "parts": 8,
+      "bpm": 104,
+      "swing": 0.132,
+      "forms": 6,
+      "motifVersions": 17,
+      "repeatedBarPairs": 96,
+      "noteEvents": 1147,
+      "instruments": [
+        "pluck",
+        "strings",
+        "rhodes",
+        "p_softhorn",
+        "phasekeys"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 1,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "shaker",
+            "cowbell"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 5,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 9,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "snare",
+            "clap",
+            "hat"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "shaker"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "detroitelectro",
+      "key": "-36,-6",
+      "parts": 9,
+      "bpm": 138,
+      "swing": 0.025,
+      "forms": 6,
+      "motifVersions": 13,
+      "repeatedBarPairs": 94,
+      "noteEvents": 1206,
+      "instruments": [
+        "fm",
+        "fmglass",
+        "p_fmharp",
+        "p_cellobody",
+        "p_bassclarinet",
+        "phasekeys"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 1,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "hat",
+            "rim",
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "clap",
+            "hat"
+          ]
+        },
+        {
+          "step": 5,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 9,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "hat",
+            "rim"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "clap",
+            "hat"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "berlin",
+      "key": "-38,6",
+      "parts": 9,
+      "bpm": 99,
+      "swing": 0.021,
+      "forms": 6,
+      "motifVersions": 12,
+      "repeatedBarPairs": 89,
+      "noteEvents": 1294,
+      "instruments": [
+        "fm",
+        "strings",
+        "p_bassclarinet",
+        "p_panreed",
+        "p_tinepiano",
+        "organ"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "rim"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "jazztronica",
+      "key": "-2,23",
+      "parts": 9,
+      "bpm": 99,
+      "swing": 0.21600000000000003,
+      "forms": 6,
+      "motifVersions": 12,
+      "repeatedBarPairs": 97,
+      "noteEvents": 952,
+      "instruments": [
+        "rubber",
+        "phasekeys",
+        "p_tinepiano",
+        "clav",
+        "p_cellobody"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "idm",
+      "key": "-38,20",
+      "parts": 8,
+      "bpm": 147,
+      "swing": 0.07400000000000001,
+      "forms": 6,
+      "motifVersions": 16,
+      "repeatedBarPairs": 91,
+      "noteEvents": 919,
+      "instruments": [
+        "fm",
+        "phasekeys",
+        "resonantpluck",
+        "p_feltmallet"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "timbale"
+          ]
+        },
+        {
+          "step": 5,
+          "instruments": [
+            "snare"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "hat",
+            "wood"
+          ]
+        },
+        {
+          "step": 9,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "snare"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "timbale"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "baltimore",
+      "key": "-28,14",
+      "parts": 10,
+      "bpm": 134,
+      "swing": 0.058,
+      "forms": 6,
+      "motifVersions": 14,
+      "repeatedBarPairs": 89,
+      "noteEvents": 934,
+      "instruments": [
+        "machine",
+        "phasekeys",
+        "p_panreed",
+        "resonantpluck",
+        "p_tinepiano",
+        "p_cellobody"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "kick",
+            "wood"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "snare",
+            "clap"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "clapRoll",
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "chicago",
+      "key": "-34,-39",
+      "parts": 8,
+      "bpm": 120,
+      "swing": 0.14,
+      "forms": 6,
+      "motifVersions": 10,
+      "repeatedBarPairs": 97,
+      "noteEvents": 842,
+      "instruments": [
+        "rubber",
+        "resonantpluck",
+        "p_softhorn",
+        "p_tinepiano",
+        "phasekeys"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "conga"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hatO",
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "hat",
+            "conga"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hatO",
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "hat",
+            "conga",
+            "wood"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hatO",
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hatO",
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "hat",
+            "conga",
+            "wood"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "acid",
+      "key": "-36,17",
+      "parts": 9,
+      "bpm": 137,
+      "swing": 0,
+      "forms": 6,
+      "motifVersions": 10,
+      "repeatedBarPairs": 108,
+      "noteEvents": 1461,
+      "instruments": [
+        "acid",
+        "clav",
+        "p_gutguitar",
+        "phasekeys",
+        "p_barkkeys",
+        "p_feltmallet"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "hat",
+            "rim"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "garagehouse",
+      "key": "-37,-37",
+      "parts": 10,
+      "bpm": 124,
+      "swing": 0.30000000000000004,
+      "forms": 6,
+      "motifVersions": 12,
+      "repeatedBarPairs": 101,
+      "noteEvents": 1202,
+      "instruments": [
+        "organb",
+        "resonantpluck",
+        "p_softhorn",
+        "p_cellobody",
+        "clav",
+        "p_tinepiano"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 1,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "hat",
+            "conga"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "clap",
+            "rim"
+          ]
+        },
+        {
+          "step": 5,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "shaker",
+            "conga"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "hat",
+            "wood"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 9,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "hat",
+            "conga"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap",
+            "rim"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "miamibass",
+      "key": "-24,30",
+      "parts": 9,
+      "bpm": 133,
+      "swing": 0.056,
+      "forms": 6,
+      "motifVersions": 12,
+      "repeatedBarPairs": 79,
+      "noteEvents": 812,
+      "instruments": [
+        "machine",
+        "rhodes",
+        "resonantpluck",
+        "p_gutguitar",
+        "p_bassclarinet"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat",
+            "cowbell"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "snare",
+            "clap",
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat",
+            "cowbell"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "snare",
+            "clap",
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat",
+            "hatO"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "ebm",
+      "key": "-33,27",
+      "parts": 9,
+      "bpm": 138,
+      "swing": 0.023,
+      "forms": 6,
+      "motifVersions": 11,
+      "repeatedBarPairs": 98,
+      "noteEvents": 1258,
+      "instruments": [
+        "machine",
+        "phasekeys",
+        "p_tinepiano",
+        "p_cellobody",
+        "resonantpluck"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "snare"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "snare"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "rim"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "electro",
+      "key": "-26,-33",
+      "parts": 9,
+      "bpm": 124,
+      "swing": 0.04900000000000001,
+      "forms": 6,
+      "motifVersions": 10,
+      "repeatedBarPairs": 109,
+      "noteEvents": 1024,
+      "instruments": [
+        "fm",
+        "fmglass",
+        "p_barkkeys",
+        "p_fmharp",
+        "phasekeys",
+        "p_cellobody"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "clap",
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "clap",
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "brokenbeat",
+      "key": "-35,-19",
+      "parts": 10,
+      "bpm": 124,
+      "swing": 0.18600000000000003,
+      "forms": 6,
+      "motifVersions": 13,
+      "repeatedBarPairs": 107,
+      "noteEvents": 1200,
+      "instruments": [
+        "sub",
+        "granularair",
+        "p_feltmallet",
+        "rhodes",
+        "p_bassclarinet",
+        "p_panreed",
+        "p_tinepiano",
+        "phasekeys"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 1,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "snare"
+          ]
+        },
+        {
+          "step": 5,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "rim",
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 9,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "shaker",
+            "wood"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "snare"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "rim"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "acidhouse",
+      "key": "-37,24",
+      "parts": 10,
+      "bpm": 123,
+      "swing": 0.10300000000000001,
+      "forms": 6,
+      "motifVersions": 9,
+      "repeatedBarPairs": 95,
+      "noteEvents": 1360,
+      "instruments": [
+        "acid",
+        "resonantpluck",
+        "p_barkkeys",
+        "p_cellobody",
+        "p_feltmallet",
+        "phasekeys",
+        "hollow"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 1,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hatO",
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "conga",
+            "rim"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "rim"
+          ]
+        },
+        {
+          "step": 5,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hatO",
+            "conga"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "cowbell"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 9,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hatO",
+            "shaker"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "conga"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "clap",
+            "rim"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hatO",
+            "shaker"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "cowbell"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "minimaltechno",
+      "key": "-36,-19",
+      "parts": 8,
+      "bpm": 126,
+      "swing": 0.064,
+      "forms": 6,
+      "motifVersions": 7,
+      "repeatedBarPairs": 99,
+      "noteEvents": 627,
+      "instruments": [
+        "fm",
+        "phasekeys",
+        "p_barkkeys",
+        "p_tinepiano",
+        "clav"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "wood",
+            "rim"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "gfunk",
+      "key": "-11,29",
+      "parts": 9,
+      "bpm": 88,
+      "swing": 0.15,
+      "forms": 6,
+      "motifVersions": 16,
+      "repeatedBarPairs": 91,
+      "noteEvents": 1096,
+      "instruments": [
+        "sub",
+        "phasekeys",
+        "p_tapepiano",
+        "p_tinepiano",
+        "p_panreed",
+        "rhodes"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 1,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "hat",
+            "shaker"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "clap",
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 5,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 9,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "hat",
+            "shaker",
+            "wood"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "clap",
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "hat"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "amapiano",
+      "key": "-20,-22",
+      "parts": 10,
+      "bpm": 108,
+      "swing": 0.18400000000000002,
+      "forms": 6,
+      "motifVersions": 12,
+      "repeatedBarPairs": 93,
+      "noteEvents": 1204,
+      "instruments": [
+        "sub",
+        "rhodes",
+        "resonantpluck",
+        "p_feltmallet",
+        "p_gutguitar",
+        "p_bassclarinet",
+        "phasekeys"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 1,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "shaker",
+            "wood"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 5,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "kick",
+            "shaker"
+          ]
+        },
+        {
+          "step": 9,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "rim"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "shaker"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "andean",
+      "key": "-24,16",
+      "parts": 9,
+      "bpm": 104,
+      "swing": 0.11800000000000001,
+      "forms": 6,
+      "motifVersions": 14,
+      "repeatedBarPairs": 92,
+      "noteEvents": 912,
+      "instruments": [
+        "sub",
+        "resonantpluck",
+        "p_tinepiano",
+        "p_cellobody",
+        "p_feltmallet"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "wood"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "wood",
+            "rim"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "wood",
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "wood",
+            "shaker"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "conga",
+            "shaker"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "organic",
+      "key": "-30,8",
+      "parts": 9,
+      "bpm": 108,
+      "swing": 0.158,
+      "forms": 6,
+      "motifVersions": 14,
+      "repeatedBarPairs": 92,
+      "noteEvents": 1001,
+      "instruments": [
+        "sub",
+        "reed",
+        "p_feltmallet",
+        "p_wireharp",
+        "p_cellobody",
+        "granularair"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 1,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 5,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "conga"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "wood"
+          ]
+        },
+        {
+          "step": 9,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "wood",
+            "rim"
+          ]
+        },
+        {
+          "step": 13,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "conga"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "afro",
+      "key": "-25,-11",
+      "parts": 8,
+      "bpm": 118,
+      "swing": 0.10200000000000002,
+      "forms": 6,
+      "motifVersions": 10,
+      "repeatedBarPairs": 114,
+      "noteEvents": 797,
+      "instruments": [
+        "sub",
+        "resonantpluck",
+        "p_feltmallet",
+        "p_tinepiano"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "conga"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "kick",
+            "rim"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "conga"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "shaker",
+            "rim"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "conga",
+            "shaker"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "shaker",
+            "conga"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "kick",
+            "conga",
+            "rim"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "shaker"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "liquid",
+      "key": "-13,-5",
+      "parts": 8,
+      "bpm": 168,
+      "swing": 0.02,
+      "forms": 6,
+      "motifVersions": 16,
+      "repeatedBarPairs": 100,
+      "noteEvents": 987,
+      "instruments": [
+        "velvetbass",
+        "rhodes",
+        "p_feltmallet",
+        "p_tinepiano",
+        "reed"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 3,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "snare"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 7,
+          "instruments": [
+            "shaker",
+            "wood"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 11,
+          "instruments": [
+            "shaker"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "snare"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "shaker"
+          ]
+        }
+      ]
+    },
+    {
+      "genre": "dnb",
+      "key": "-16,-7",
+      "parts": 9,
+      "bpm": 174,
+      "swing": 0.02,
+      "forms": 6,
+      "motifVersions": 10,
+      "repeatedBarPairs": 105,
+      "noteEvents": 1062,
+      "instruments": [
+        "reese",
+        "resonantpluck",
+        "p_cellobody",
+        "p_bassclarinet",
+        "p_feltmallet"
+      ],
+      "drums": [
+        {
+          "step": 0,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 2,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 4,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 6,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 8,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 10,
+          "instruments": [
+            "kick",
+            "hat"
+          ]
+        },
+        {
+          "step": 12,
+          "instruments": [
+            "snare",
+            "hat"
+          ]
+        },
+        {
+          "step": 14,
+          "instruments": [
+            "hat"
+          ]
+        },
+        {
+          "step": 15,
+          "instruments": [
+            "wood"
+          ]
+        }
+      ]
+    }
+  ]
+}

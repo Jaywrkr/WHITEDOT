@@ -1,0 +1,162 @@
+{
+  "scope": "Local production-appearance fixtures, real keyboard/audio/house; no human listening",
+  "checks": [
+    {
+      "viewport": [
+        320,
+        568
+      ],
+      "doubleText": false,
+      "rect": {
+        "x": 113.796875,
+        "y": 194,
+        "width": 92.40625,
+        "height": 16.5
+      },
+      "text": "Jard\u00edn \u00b7 600 m",
+      "pointer": "none",
+      "overlap": [],
+      "hit": "w"
+    },
+    {
+      "viewport": [
+        320,
+        568
+      ],
+      "doubleText": true,
+      "rect": {
+        "x": 67.59375,
+        "y": 194,
+        "width": 184.8125,
+        "height": 33
+      },
+      "text": "Jard\u00edn \u00b7 600 m",
+      "pointer": "none",
+      "overlap": [],
+      "hit": "w"
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "doubleText": false,
+      "rect": {
+        "x": 148.796875,
+        "y": 332,
+        "width": 92.40625,
+        "height": 16.5
+      },
+      "text": "Jard\u00edn \u00b7 600 m",
+      "pointer": "none",
+      "overlap": [],
+      "hit": "w"
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "doubleText": true,
+      "rect": {
+        "x": 102.59375,
+        "y": 332,
+        "width": 184.8125,
+        "height": 33
+      },
+      "text": "Jard\u00edn \u00b7 600 m",
+      "pointer": "none",
+      "overlap": [],
+      "hit": "w"
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "doubleText": false,
+      "rect": {
+        "x": 375.796875,
+        "y": 105,
+        "width": 92.40625,
+        "height": 16.5
+      },
+      "text": "Jard\u00edn \u00b7 600 m",
+      "pointer": "none",
+      "overlap": [],
+      "hit": "w"
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "doubleText": true,
+      "rect": {
+        "x": 329.59375,
+        "y": 105,
+        "width": 184.8125,
+        "height": 33
+      },
+      "text": "Jard\u00edn \u00b7 600 m",
+      "pointer": "none",
+      "overlap": [],
+      "hit": "w"
+    },
+    {
+      "viewport": [
+        1280,
+        800
+      ],
+      "doubleText": false,
+      "rect": {
+        "x": 593.796875,
+        "y": 310,
+        "width": 92.40625,
+        "height": 16.5
+      },
+      "text": "Jard\u00edn \u00b7 600 m",
+      "pointer": "none",
+      "overlap": [],
+      "hit": "w"
+    },
+    {
+      "viewport": [
+        1280,
+        800
+      ],
+      "doubleText": true,
+      "rect": {
+        "x": 547.59375,
+        "y": 310,
+        "width": 184.8125,
+        "height": 33
+      },
+      "text": "Jard\u00edn \u00b7 600 m",
+      "pointer": "none",
+      "overlap": [],
+      "hit": "w"
+    },
+    {
+      "exit": "automatic",
+      "world": true,
+      "house": false,
+      "next": "jardin",
+      "audioResumed": true
+    },
+    {
+      "exit": "skip",
+      "world": true,
+      "house": false,
+      "next": "jardin",
+      "audioResumed": true
+    },
+    {
+      "exit": "button",
+      "world": true,
+      "house": false,
+      "next": "jardin",
+      "audioResumed": true
+    }
+  ]
+}

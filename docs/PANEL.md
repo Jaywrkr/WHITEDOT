@@ -1,6 +1,8 @@
 # El panel creativo de Kubono
 
-Guía para repetir la auditoría. La [quinta sesión](panel/sesion-5/informe.md) revisa las correcciones J1–J6 conservando la generación musical y del universo. La evidencia técnica se separa de la aceptación de Jay, las personas y el despliegue. La siguiente sesión conservará los IDs abiertos; no abre contenido nuevo ni cambia la base para mejorar una nota simulada.
+Guía para repetir la auditoría. **Candidato vigente: [fases N, alpha.200](panel/candidato-n/informe.md).** Diez lentes nuevas hicieron revisión ciega acotada, con capturas actuales y defectos reproducidos; las correcciones no elevan automáticamente sus notas. Nueve por categoría aún sin acreditar; faltan personas, escucha y dispositivos. [Dictamen y límites](panel/candidato-n/revision-ciega.md).
+
+La revisión ciega del usuario prevalece sobre las comparaciones históricas del procedimiento de abajo: primero puntuar sin notas anteriores; después cruzar hallazgos con el registro para conservar IDs. El coordinador conserva contexto operativo, los revisores no lo heredan. No se borra el historial del proyecto ni progreso de jugadores.
 
 ## 1. Qué es
 
@@ -38,7 +40,7 @@ Seis ejes, del 0 al 10, con medios puntos:
 | Cohesión | Si todo sirve a una sola idea (tocar a tiempo) y a un solo arco |
 | Pulido | Errores, textos, menús, rendimiento y pruebas |
 
-La **media** de cada perfil es la media de sus seis notas. La fila del panel es la media de los diez. **Meta: 8,5 · 9 · 9 · 8,5 · 8,5 · 8,5 (media 8,7).**
+La **media** de cada perfil es la media de sus seis notas. La fila del panel es la media de los diez. **Meta vigente de Jay: nueve en cada categoría.** Escucha y uso reales deben acreditar las categorías sensoriales; no se promedian áreas no observadas para certificarla.
 
 ## 4. Historial
 
@@ -49,6 +51,7 @@ La **media** de cada perfil es la media de sus seis notas. La fila del panel es 
 | 3 | 24 oct | alpha.167 | 7,3 | 8,5 | 8,2 | 7,3 | 7,1 | 6,9 | **7,5** | I1–I6 |
 | 4 | 25 oct | alpha.174 | 7,7 | 7,8 | 8,4 | 7,7 | 7,7 | 7,3 | **7,7** | J1–J7 propuestas, sin ejecutar |
 | 5 | 25 oct | alpha.181 | 7,7 | 8,0 | 8,4 | 8,1 | 8,3 | 8,0 | **8,1** | Correcciones y CI probados; aceptación humana pendiente |
+| 6 | 25 oct | alpha.181 | 7,2 | 7,4 | 8,4 | 7,2 | 6,7 | 6,6 | **7,2** | Nueva evidencia de Jay; K1–K5 propuestas, sin ejecutar |
 
 Lo que se construyó con cada plan está en [CAMBIOS](../CAMBIOS.md) (H1–H7, I1–I6) y en [El mundo](MUNDO.md).
 
@@ -98,13 +101,13 @@ Un resumen corto en español: la media nueva, las tres o cuatro cosas que más i
 
 - Español, frases cortas, una idea por frase. Sin jerga de diseño sin explicar.
 - Cifras y nombres de archivo exactos. Nada de «parece» sin decir por qué.
-- Separar siempre: **aprobado**, **construido**, **probado** (bot, captura) y **probado con personas**. Hoy nada está probado con personas.
+- Separar siempre: **aprobado**, **construido**, **probado** (bot, captura) y **probado con personas**. Existe el relato real de Jay; no equivale a cinco sesiones instrumentadas ni a una escucha del auditor.
 - No inventar citas reales de los creadores.
 
 ## 7. Lo que Jay ya decidió (no reabrir)
 
-- El verbo es **tocar a tiempo**. Nunca suena mal; solo a tiempo cuenta (y da chispas).
-- **El Viaje** es el juego principal (Camino y cinco capítulos, ~15–20 min) y termina en el Refugio con tu canción; después se abre el Mundo libre.
+- El verbo es **tocar a tiempo**. Se busca armonía agradable. El ritmo mejora premios; desde K2 recoger fragmentos también da su valor base fuera de tempo.
+- **El Viaje** es el juego principal (Camino y cinco capítulos, ~15–20 min) y muestra el cierre de tu canción; desde K7 todas sus salidas normales dejan en el Mundo libre. La casa queda voluntaria.
 - Once lugares en anillo, abiertos **en orden**. Se gana con los once; las 33 ★ son la versión maestra. ★ = fragmento de la capa del lugar, ★★ = capa entera, ★★★ = variación.
 - **★★ al 75 %** a tiempo; **★★★ al 70 %** en la ronda Maestro.
 - **Festival** (`?festival=1`) = el Viaje entero hasta los créditos, sin anillo, tienda ni remezcla.
@@ -134,11 +137,11 @@ Registro histórico. El estado vigente está en la quinta sesión y el cierre J1
 
 ## 9. Próxima comprobación
 
-Leer `AGENTS.md`, `HANDOFF.md`, el cierre J1–J7 y el registro de hallazgos. La quinta sesión ya revisa las correcciones. Cuando Jay aporte escucha o sesiones con personas, añadir su evidencia a V01/P01/T01 y conservar lo aún no comprobado. Una nueva sesión completa solo se repite si hay cambios que evaluar o nueva evidencia; no rehace la quinta ni abre otra expansión automáticamente.
+Leer `AGENTS.md`, `HANDOFF.md`, la sexta sesión y el registro de hallazgos. El relato de Jay reabre U03/U04, añade A04/U05–U08 y aporta evidencia negativa a V01. K1–K6 están implementadas técnicamente; su verificación y pendientes humanos están en CIERRE_K.md. Incorporar las capturas adicionales y la aceptación de cada fase; conservar lo aún no comprobado. Repetir el panel cuando haya cambios o nueva evidencia, sin abrir otra expansión automáticamente.
 
 ## 10. Ciclo de cierre
 
-Jay autorizó solucionar los hallazgos conservando la generación musical y del universo. Se integra lo existente antes de ampliar. El registro de la sesión 4 contiene ID, prioridad, evidencia, fase y criterio de cierre. Cada fase autorizada añade revisión y resultado de su regresión. La reevaluación conserva los abiertos; ni un commit, ni una nota mayor, ni un test aislado los cierra. La meta orientativa sigue en 8,7, acompañada de candidato verde y aceptación humana; no hay garantía de un 10 simulado.
+Jay autorizó solucionar los hallazgos conservando la generación musical y del universo. Se integra lo existente antes de ampliar. El registro de la sesión 4 contiene ID, prioridad, evidencia, fase y criterio de cierre. Cada fase autorizada añade revisión y resultado de su regresión. La reevaluación conserva los abiertos; ni un commit, ni una nota mayor, ni un test aislado los cierra. La meta vigente es nueve en cada categoría, acompañada de candidato verde y aceptación humana; no se certifica mediante una nota simulada.
 
 ## 11. Archivo
 
@@ -151,3 +154,28 @@ Jay autorizó solucionar los hallazgos conservando la generación musical y del 
 Los expedientes y análisis citan rutas y versiones de su día (por ejemplo `3-extra-mz/`). Esas capturas no están en Git; se rehacen con `scripts/panel-capture.py`.
 
 - [Sesión 5](panel/sesion-5/informe.md) · [expediente](panel/sesion-5/expediente.md) · [preservación](panel/sesion-5/evidencia/preservacion.json). Notas provisionales del mismo agente, no jurado independiente ni escucha humana.
+
+- [Sesión 6](panel/sesion-6/informe.md) · [expediente](panel/sesion-6/expediente.md) · [plan K1–K5](panel/sesion-6/plan.md). Nueva evidencia de navegación y final5; no se implementa por esta revisión.
+
+## Cierre K1–K6
+
+[Reevaluación técnica](panel/sesion-6/cierre-k6.md), alpha.187: nota provisional7,9, antes7,2; dos revisiones simuladas consolidadas, sin escucha humana. Los hallazgos corregidos conservan sus límites. V01 y P01 siguen pendientes; no se abre otro catálogo por una nota. [Entrega](CIERRE_K.md).
+
+## Séptima sesión
+
+[Informe](panel/sesion-7/informe.md) · [expediente](panel/sesion-7/expediente.md) · [plan propuesto L1–L4](panel/sesion-7/plan.md). Diez lentes, revisión integral y nuevos hallazgos; se conserva el registro canónico. No son opiniones reales ni aceptación de alpha.188.
+
+## Fases L implementadas
+
+Jay autorizó L1–L4 después de K7. [Entrega](ENTREGA_L.md) y [evidencia](panel/sesion-7/evidencia/cierre-l.json): ayudas y comprensión, frase por ronda, persistencia y accesibilidad. Cierre técnico de L4 con humanos/CI pendientes. Nota de referencia7,7 sin subida automática; A04/V01/P01 y comprensión/lector real conservan sus límites.
+
+## Octava sesión · revisión ciega
+
+[Informe](panel/sesion-8/informe.md) · [expediente](panel/sesion-8/expediente.md) · [propuesta M1–M4](panel/sesion-8/plan.md). Diez lentes, rúbrica exigente y alcance por revisor. Categorías y promedio calculados desde notas independientes, sin comparación ni subida por versiones. No son opiniones reales ni escucha humana.
+
+
+## Revisión ciega y candidato N
+
+Durante una evaluación ciega, el coordinador retiene el contexto operativo. A los revisores se entrega AGENTS, las fuentes seleccionadas y artefactos sin puntuaciones/metas. README, HANDOFF, esta guía y las entregas contienen notas históricas: excluirlos del recorte ciego por la petición vigente del usuario. Conservar historial del proyecto y progreso; no borrar memoria del juego.
+
+[Informe N](panel/candidato-n/informe.md): correcciones autorizadas,253 suites, evidencias de UI/transporte/mezcla y pendientes humanos. El dictamen ciego registra la revisión del momento y sus límites; no es aceptación de producción ni acreditación de nueve.

@@ -1,0 +1,130 @@
+{
+  "scope": "Diez lentes simuladas, consolidadas por el agente con dos revisiones de lectura. No opiniones reales ni jurado humano.",
+  "assessedVersion": "2.3.0-alpha.187",
+  "candidateVersion": "2.3.0-alpha.188",
+  "basis": "Nueva experiencia de Jay y revisión completa de sistemas; no aceptación auditiva de K7.",
+  "rows": [
+    {
+      "lens": "Mizuguchi",
+      "scores": {
+        "Visual": 8,
+        "Audio": 7.5,
+        "Creatividad": 8.5,
+        "Sensación": 8,
+        "Cohesión": 7.5,
+        "Pulido": 7.5
+      },
+      "mean": 7.833333333333333
+    },
+    {
+      "lens": "Iwai",
+      "scores": {
+        "Visual": 8,
+        "Audio": 7,
+        "Creatividad": 8.5,
+        "Sensación": 8,
+        "Cohesión": 7.5,
+        "Pulido": 7.5
+      },
+      "mean": 7.75
+    },
+    {
+      "lens": "Matsuura",
+      "scores": {
+        "Visual": 8,
+        "Audio": 7.5,
+        "Creatividad": 8.5,
+        "Sensación": 8,
+        "Cohesión": 8,
+        "Pulido": 7.5
+      },
+      "mean": 7.916666666666667
+    },
+    {
+      "lens": "Simogo",
+      "scores": {
+        "Visual": 7.5,
+        "Audio": 6.5,
+        "Creatividad": 8.5,
+        "Sensación": 7.5,
+        "Cohesión": 7,
+        "Pulido": 7.5
+      },
+      "mean": 7.416666666666667
+    },
+    {
+      "lens": "Proteus",
+      "scores": {
+        "Visual": 8,
+        "Audio": 8,
+        "Creatividad": 8.5,
+        "Sensación": 8,
+        "Cohesión": 7.5,
+        "Pulido": 8
+      },
+      "mean": 8.0
+    },
+    {
+      "lens": "Jenova Chen",
+      "scores": {
+        "Visual": 7.5,
+        "Audio": 7,
+        "Creatividad": 8.5,
+        "Sensación": 7.5,
+        "Cohesión": 7,
+        "Pulido": 7.5
+      },
+      "mean": 7.5
+    },
+    {
+      "lens": "Conrad Roset",
+      "scores": {
+        "Visual": 8,
+        "Audio": 7.5,
+        "Creatividad": 8.5,
+        "Sensación": 8,
+        "Cohesión": 7.5,
+        "Pulido": 7.5
+      },
+      "mean": 7.833333333333333
+    },
+    {
+      "lens": "Ken Wong",
+      "scores": {
+        "Visual": 8.5,
+        "Audio": 7.5,
+        "Creatividad": 8.5,
+        "Sensación": 8,
+        "Cohesión": 7.5,
+        "Pulido": 7.5
+      },
+      "mean": 7.916666666666667
+    },
+    {
+      "lens": "Lucas Pope",
+      "scores": {
+        "Visual": 8,
+        "Audio": 7.5,
+        "Creatividad": 8.5,
+        "Sensación": 8,
+        "Cohesión": 7.5,
+        "Pulido": 7.5
+      },
+      "mean": 7.833333333333333
+    },
+    {
+      "lens": "Austin Wintory",
+      "scores": {
+        "Visual": 7.5,
+        "Audio": 6.5,
+        "Creatividad": 8.5,
+        "Sensación": 7.5,
+        "Cohesión": 7,
+        "Pulido": 7.5
+      },
+      "mean": 7.416666666666667
+    }
+  ],
+  "mean": 7.741666666666666,
+  "candidateScore": "Se conserva la referencia; no se eleva por código ni renders."
+}

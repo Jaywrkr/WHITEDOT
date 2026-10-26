@@ -36,7 +36,7 @@ try:
   keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.sparkTick')
   assert page.evaluate('(id)=>__r.savedCrystal(id).collected',crystal_id)
   page.evaluate("""()=>{__r.S.sparks=100;__r.sparkEconomy.earned=100+__r.sparkEconomy.spent;__r.save();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);__r.openSparks();}""")
-  assert page.locator('#sparkJump').inner_text()=='Saltar · 20 ✦'
+  assert page.locator('#sparkJump').inner_text()=='Otro paisaje · 20 ✦'
   assert page.locator('#sparkJump').evaluate('e=>e.closest("#cubePanelTravel")!==null')
   # The shop shows a picture drawn by the game; buying puts the piece on and moves it out of the shop into Llevar.
   page.locator('#cubeTabShop').click();assert page.locator('#sparkShop [data-piece="orbit"] img').evaluate('e=>e.complete&&e.naturalWidth>0')
@@ -111,6 +111,11 @@ try:
   assert page.evaluate('__r.sparkEconomy.equipped')=='dust'
   assert page.evaluate('__r.sparkEconomy.goal')=='shop:orbit'
   assert page.evaluate('__r.sparkEconomy.earned-__r.sparkEconomy.spent===__r.S.sparks')
+  # K2: outside timing still gives the base; the breaking pulse carries its bonus.
+  amounts=page.evaluate("""()=>{const r=__r;r.S.sound=true;const base=r.sparkRhythmPulse(false);if(base!==1)throw Error('off-time base missing');return [base,2,3].map((mult,i)=>{const o={id:'k2:browser:'+i,x:r.S.wx,y:r.S.wy,size:1,value:1},before=r.S.sparks;r.crystalTransaction(o,'hit',false,null,false,mult);r.crystalTransaction(o,'collect');r.crystalTransaction(o,'collect');return r.S.sparks-before;});}""")
+  assert amounts==[1,2,3],amounts
+  paid=page.evaluate('__r.S.sparks');keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.sparkTick')
+  assert page.evaluate('__r.S.sparks')==paid,'collected rewards survive reload exactly once'
   assert not errors,errors
   browser.close()
  print('PASS persistent mining, paid/free travel, failed-write refunds, purchase/preview/equip, one-time sets, chosen goal, responsive hub, timed nonblocking cards, short boxes/undo and reload')

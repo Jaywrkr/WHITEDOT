@@ -1,9 +1,8 @@
 // Sparks are what you buy with; stars are only for going forward and winning (docs/MUNDO.md, plan F3). These are the
 // rules that decide how many sparks playing gives, in one place, so the game and the economy simulation agree.
-// Playing on time is worth more in the free World: on time ×2, and ×3 from the eighth pulse on time in a row. Since
-// plan H5 a pulse off time still sounds and breaks, but earns nothing (×0): only on time does something, everywhere.
+// Playing on time is worth more in the free World: on time ×2, and ×3 from the eighth pulse on time in a row. Since K2 a pulse off time keeps the base value (×1); rhythm adds a bonus, never removes a collected reward.
 export const STREAK_TRIPLE=8,STREAK_FORGET_MS=4000;
-export const rhythmMultiplier=(onTime,streak=0)=>!onTime?0:streak>=STREAK_TRIPLE?3:2;
+export const rhythmMultiplier=(onTime,streak=0)=>!onTime?1:streak>=STREAK_TRIPLE?3:2;
 // A round completed in one of the eleven places: 60 sparks, plus 6 for every tenth of pulses on time (60–120); a
 // Maestro round, double. The first three rounds of a place each day give everything; after that, half, so repeating
 // one place is never the best way to earn.

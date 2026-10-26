@@ -1,0 +1,123 @@
+{
+  "scope": "Dictamen independiente durante N8, antes de cerrar sus últimos P2. Notas acotadas/provisionales, sin escucha ni personas. No recalificadas por arreglar bugs. Sin media final ni certificado de nueve.",
+  "categories": [
+    "Visual",
+    "Audio técnico",
+    "Creatividad",
+    "Sensación",
+    "Cohesión",
+    "Pulido"
+  ],
+  "rows": [
+    {
+      "lens": "Mizuguchi",
+      "scores": [
+        7,
+        8,
+        8,
+        7,
+        8,
+        7
+      ]
+    },
+    {
+      "lens": "Matsuura",
+      "scores": [
+        7,
+        8,
+        8,
+        7,
+        8,
+        7
+      ]
+    },
+    {
+      "lens": "Ken Wong",
+      "scores": [
+        7,
+        8,
+        7,
+        7,
+        8,
+        7
+      ]
+    },
+    {
+      "lens": "Iwai",
+      "scores": [
+        6.5,
+        7,
+        7.5,
+        6.5,
+        7,
+        6.5
+      ]
+    },
+    {
+      "lens": "Wintory",
+      "scores": [
+        6.5,
+        7,
+        7.5,
+        6.5,
+        6.5,
+        6.5
+      ]
+    },
+    {
+      "lens": "Pope",
+      "scores": [
+        6.5,
+        7,
+        7,
+        6.5,
+        7,
+        6.5
+      ]
+    },
+    {
+      "lens": "Roset",
+      "scores": [
+        7.5,
+        null,
+        7.5,
+        7,
+        8,
+        7.5
+      ]
+    },
+    {
+      "lens": "Simogo",
+      "scores": [
+        7,
+        null,
+        8,
+        7,
+        7.5,
+        7
+      ]
+    },
+    {
+      "lens": "Chen",
+      "scores": [
+        7,
+        null,
+        7.5,
+        7,
+        7.5,
+        7.5
+      ]
+    },
+    {
+      "lens": "Proteus",
+      "scores": [
+        7.5,
+        null,
+        8,
+        7.5,
+        8,
+        7.5
+      ]
+    }
+  ]
+}

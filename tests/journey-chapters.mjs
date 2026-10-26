@@ -3,10 +3,10 @@ import {CHAPTERS,WORLD_CHAPTERS,STATE_CAP,STORM_FLOOR,STATE_FLOOR,stateFloor,VOI
 assert.deepEqual(CHAPTERS,['camino','llanura','lago','bosque','tormenta','vacio','refugio']);assert.equal(WORLD_CHAPTERS.length,5);
 assert(STATE_CAP.silencio<STATE_CAP.llegada&&STATE_CAP.llegada<STATE_CAP.pertenencia&&STATE_CAP.pertenencia<STATE_CAP.plenitud);
 // Saved chapters are cleaned; a player already in the World starts at chapter 1.
-assert.deepEqual(normalizeChapters({}),{chapter:0,done:{},notes:{},steps:{},progress:{}});assert.equal(normalizeChapters({},true).chapter,1);
-assert.deepEqual(normalizeChapters({chapter:3,done:{lago:true,x:true,bosque:'yes'},notes:{lago:[60,'a',200,62],otro:[60]}}),{chapter:3,done:{lago:true},notes:{lago:[60,62]},steps:{},progress:{}});
+assert.deepEqual(normalizeChapters({}),{chapter:0,done:{},notes:{},steps:{},ticks:{},progress:{}});assert.equal(normalizeChapters({},true).chapter,1);
+assert.deepEqual(normalizeChapters({chapter:3,done:{lago:true,x:true,bosque:'yes'},notes:{lago:[60,'a',200,62],otro:[60]}}),{chapter:3,done:{lago:true},notes:{lago:[60,62]},steps:{},ticks:{},progress:{}});
 // Steps stay beside their notes (dropped with them); progress keeps only counts.
-assert.deepEqual(normalizeChapters({notes:{lago:[60,'a',62]},steps:{lago:[4,8,12],bosque:[1]},progress:{lago:{bars:12.34,walk:-3,bolts:2.7,x:9},vacio:'no'}}),{chapter:0,done:{},notes:{lago:[60,62]},steps:{lago:[4,12]},progress:{lago:{bars:12.3,bolts:2}}});
+assert.deepEqual(normalizeChapters({notes:{lago:[60,'a',62]},steps:{lago:[4,8,12],bosque:[1]},progress:{lago:{bars:12.34,walk:-3,bolts:2.7,x:9},vacio:'no'}}),{chapter:0,done:{},notes:{lago:[60,62]},steps:{lago:[4,12]},ticks:{},progress:{lago:{bars:12.3,bolts:2}}});
 assert.deepEqual(normalizeChapters({notes:{lago:[60,62]},steps:{lago:[4]}}).steps,{},'steps that do not match the notes are dropped');
 // Phase 2: each chapter is lived (its moment) and stayed in (its bars), not only six hits.
 assert.equal(momentLived('llanura',{},{faro:{reached:false}}),false);assert.equal(momentLived('llanura',{},{faro:{reached:true}}),true);

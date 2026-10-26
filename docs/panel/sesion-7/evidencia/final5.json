@@ -1,0 +1,60 @@
+{
+  "scope": "Actual final5 offline player, synthetic chapter phrases; no human listening",
+  "renders": [
+    {
+      "tr": 0,
+      "six": 0.125,
+      "skip": false,
+      "end": 28.05,
+      "peak": 0.14408355951309204,
+      "hot": 0,
+      "rms": -35.64429024452435,
+      "silentPeak": 0,
+      "events": 169
+    },
+    {
+      "tr": 3,
+      "six": 0.1,
+      "skip": false,
+      "end": 22.450000000000003,
+      "peak": 0.13386446237564087,
+      "hot": 0,
+      "rms": -34.97411298745436,
+      "silentPeak": 0,
+      "events": 169
+    },
+    {
+      "tr": 7,
+      "six": 0.16666666666666666,
+      "skip": false,
+      "end": 37.38333333333333,
+      "peak": 0.13668443262577057,
+      "hot": 0,
+      "rms": -36.6896390795906,
+      "silentPeak": 0,
+      "events": 169
+    },
+    {
+      "tr": 0,
+      "six": 0.125,
+      "skip": true,
+      "end": 28.05,
+      "peak": 0.11252869665622711,
+      "hot": 0,
+      "rms": -45.528026405397675,
+      "silentPeak": 1.4408356037165504e-05,
+      "events": 169
+    },
+    {
+      "tr": 0,
+      "six": 0.125,
+      "skip": "late",
+      "end": 28.05,
+      "peak": 0.14408355951309204,
+      "hot": 0,
+      "rms": -35.64429036825537,
+      "silentPeak": 0,
+      "events": 169
+    }
+  ]
+}

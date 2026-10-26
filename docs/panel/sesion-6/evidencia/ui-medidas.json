@@ -1,0 +1,1763 @@
+{
+  "revision": "3c5fd7b6b0bf76bbd8471228ea9f0e8b2f69f256",
+  "version": "2.3.0-alpha.181",
+  "runtimeDirty": false,
+  "runtimeDigest": "8aef24a3c19785900dd5a2c3b58fc0c0f4a9fa6b42608e41942d22522aa9237e",
+  "scope": "Local scripted production-appearance fixtures, normal hostname and webdriver=false; no human testing",
+  "states": [
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": true,
+      "menuMore": false,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar",
+        "Más"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "menu",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": true,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar",
+        "Más"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes",
+        "MapaRegiones y favoritos"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "menu-mas",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Lugares 5 / 11"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Remezcla"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mLugares"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "lugares",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Guía de juego",
+        "Tu siguiente paso"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Guía de juego",
+        "Escuchar y responder",
+        "Practicar",
+        "Seguir jugando"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mGuide"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "guia",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "Saltar"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas",
+        "Saltar · 20 ✦",
+        "Volver gratis"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "cubo-chispas",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "territorio",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": true,
+      "menuMore": false,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar",
+        "Más"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "menu",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": true,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar",
+        "Más"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes",
+        "MapaRegiones y favoritos",
+        "Bitácora",
+        "Herramientas",
+        "Grabar set",
+        "Compartir",
+        "Volver al salto"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "menu-mas",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Lugares 5 / 11"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Remezcla",
+        "Tu canción",
+        "Salir al anillo",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mLugares"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "lugares",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Guía de juego",
+        "Tu siguiente paso"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Guía de juego",
+        "Cómo jugar y guardar",
+        "Escuchar y responder",
+        "Practicar",
+        "Seguir jugando"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mGuide"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "guia",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "Saltar",
+        "Colecciones",
+        "Universo completo",
+        "Primera banda"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas",
+        "Saltar · 20 ✦",
+        "Volver gratis",
+        "Sin meta Ahorrar para un salto Polvo viajero Pulso facetado Órbita personal Gelatina Patinador Pogo Gusano Ing"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "cubo-chispas",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "territorio",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": true,
+      "menuMore": false,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "menu",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": true,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "menu-mas",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Lugares 5 / 11"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mLugares"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "lugares",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Guía de juego"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Guía de juego",
+        "Escuchar y responder",
+        "Practicar",
+        "Seguir jugando"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mGuide"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "guia",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "cubo-chispas",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "territorio",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": true,
+      "menuMore": false,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar",
+        "Más"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "menu",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": true,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Kubono",
+        "Jugar",
+        "Más"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar menú",
+        "Tu cubo Llevar, tienda y chispas",
+        "Camino Volver al Camino",
+        "Lugares Siguiente: Jardín.",
+        "Refugio Tu Refugio viaja contigo",
+        "Sonido",
+        "Ajustes",
+        "MapaRegiones y favoritos",
+        "Bitácora",
+        "Herramientas",
+        "Grabar set",
+        "Compartir",
+        "Volver al salto",
+        "Vista completa Cambiar a tranquila",
+        "Guía de juego",
+        "Cuenta"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mMenu"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "menu-mas",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Lugares 5 / 11"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Remezcla",
+        "Tu canción",
+        "Salir al anillo",
+        "Cerrar"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mLugares"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "lugares",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Guía de juego",
+        "Tu siguiente paso"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Guía de juego",
+        "Cómo jugar y guardar",
+        "Escuchar y responder",
+        "Practicar",
+        "Seguir jugando"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mGuide"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "guia",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [
+        "Tu cubo",
+        "Saltar",
+        "Colecciones",
+        "Universo completo",
+        "Primera banda",
+        "Vecinos extraños"
+      ],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Cerrar Tu cubo",
+        "Llevar",
+        "Tienda",
+        "Chispas",
+        "Saltar · 20 ✦",
+        "Volver gratis",
+        "Sin meta Ahorrar para un salto Polvo viajero Pulso facetado Órbita personal Gelatina Patinador Pogo Gusano Ing"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [
+        "mCube"
+      ],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "cubo-chispas",
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": true,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "territorio",
+      "viewport": [
+        1280,
+        800
+      ]
+    }
+  ]
+}

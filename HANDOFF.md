@@ -1,49 +1,12 @@
-# Traspaso para el siguiente agente
+# Traspaso · integración de alpha.200
 
-**Código 2.3.0-alpha.181 · auditoría corregida conservando generadores.** Leer [AGENTS](AGENTS.md), [Cierre](docs/PULIDO_CIERRE.md) y [quinta sesión](docs/panel/sesion-5/informe.md).
+Código **2.3.0-alpha.200**. Jay pidió integrar toda la entrega en main; esta petición sustituye la reserva anterior de PR/merge. `integracion/alpha-200-main` reúne los23 commits de la pila hasta `2048e245`, sin reescribir sus ramas. El runtime del candidato se conserva; los controles de integración deben aprobarse antes del merge. [Estado y pruebas](docs/ENTREGA_N.md).
 
-## Qué autorizó Jay
+Candidato alpha.200 con revisión independiente, cierres de fallos reproducidos y preservación verificada. Corregidos multitáctil, pausa retenida tras salto, abandono fallido, interpretación de fuente compartida, lectura de aprendizaje incompleto y métricas de Camino/once rondas. No se certifica nueve ni producción sin evidencia humana y CI.
 
-Solucionar los hallazgos de la auditoría conservando cómo se generan la música y los mundos. Se mantiene la música base que le gusta, semillas, RNG, mapas, biomas, distribución, criaturas y arte. El sonido de victoria sí se integra en la capa ganada; las notas incorrectas de la capa/final se corrigen localmente. No hay otra expansión aprobada.
+Verificación: 253 suites Node; regresiones de táctil, tarjetas, métricas, foco, cuota y offline aprobadas. UI24 sin desbordamientos/objetivos<24px;16 capturas nuevas;186 renders de técnicas.311 archivos protegidos idénticos a la auditoría; voces/generadores conservados. Catálogo completo/CI, teléfono y personas pendientes.
 
-Entrega integrada en `main` por el PR #353, con autorización expresa de Jay el 25 de octubre. La integración reúne el cubo pequeño, ambas auditorías y J1–J7 desde `e6c0a3a6`, sin otros cambios de juego. Para tareas posteriores vuelve a regir el flujo habitual: rama, commit y push; Jay crea PR y merge. Supabase continúa en pausa.
+Meta nueve por categoría, sin nota nueva automática. Comprensión, escucha física, lectores, rendimiento en teléfono y sesiones nuevas siguen pendientes. La auditoría de partida es [panel8](docs/panel/sesion-8/informe.md); IDs canónicos en su registro enlazado. Generación musical, mapas y progreso se conservan. Supabase/tiendas en pausa.
 
-## Historial de la entrega unificada
 
-La entrega incluye `fix/cubo-pequeno` (04ae8bdd) y `audit/panel-4-cierre` (3673f2ec). Las fases siguientes se reúnen en una sola integración; no hace falta volver a integrarlas por separado:
-
-| Rama | Commit | Qué |
-|---|---|---|
-| `pulido/j1-base-fiable` | `8212e0de` | Premio durable, reintento, lector futuro y carreras de fixtures |
-| `pulido/j2-cierre-musical` | `b78295a9` | Capa en compás/acorde vivo, sin fanfarria; dos correcciones de armonía |
-| `pulido/j3-interfaz-produccion` | `9398291d` | Nombres claros, metadatos en Ajustes y paneles sin superposición |
-| `pulido/j4-meta-compartida` | `a72bc22b` | Una meta según el estado; once lugares frente a 33 estrellas |
-| `pulido/j5-continuidad` | `b898b9d7` | Volver al final existente con las notas actuales; modelo honesto |
-| `pulido/j6-sincronia` | `99a3e525` | Acento al instante emitido + salida estimada, sin cambiar el tiempo sonoro |
-| `pulido/j7-cierre` | `e6c0a3a6` | Verificación, dos límites de guardado y conteo de cierre por pasos vivos |
-
-J7 añade D03 (posición tras entrada fallida) y D04 (tarjeta tras sustituir S), encontrados durante la comprobación. El cierre cuenta dos compases del secuenciador aun si el tempo cambia. Son correcciones de integración; no modifican el secuenciador ni sus géneros.
-
-## Evidencia
-
-La [quinta sesión](docs/panel/sesion-5/informe.md) separa catálogo inicial, regresiones repetidas, renders reutilizables y pruebas físicas. Notas provisionales **8,1**, antes 7,7, del mismo agente con diez lentes simuladas; no jurado independiente ni escucha humana.
-
-`scripts/pulido-preservation.mjs` comprueba 305 archivos protegidos idénticos a 04ae8bdd, SVGs y secciones de reglas/síntesis/dibujo. Enumera los 26 módulos de integración revisados; no afirma que todo el árbol sea idéntico.
-
-- 245 suites Node y auditoría de release aprobadas en alpha.181.
-- Catálogo local inicial alpha.180: 186/188; dos fixtures corregidas y repetidas en alpha.181. Después, el CI de integración aprobó el catálogo completo de navegador y audio en alpha.181.
-- 64 estados de UI normal en cuatro tamaños; sin errores o desbordamientos en esas muestras. Once renders actuales de cierre; capas/final/movimiento conservan sus renders aprobados.
-- Detalle de comandos, versiones, evidencias y límites en la quinta sesión. CI completo de integración aprobado; no se afirma prueba física o publicación en tiendas.
-
-## Pendiente real
-
-- V01: Jay acepta el tamaño del cubo y el cierre en teléfono; altavoz y auriculares. Cinco sesiones sin ayuda (dos personas sin hábito de jugar).
-- P01: verificar interés después de ganar; el modelo conserva el hueco estructural de capas y no predice disfrute o abandono.
-- CI de integración aprobado. Despliegue efectivo y aceptación humana se comprueban por separado; las futuras integraciones siguen requiriendo sus checks.
-- Meta orientativa 8,7 no alcanzada por certificación. No perseguir 10 añadiendo funciones o alterando la base que Jay pidió conservar.
-
-El registro de la sesión 4 conserva los 14 hallazgos originales y añade D03–D04. Cada estado técnico incluye pruebas y límites. La siguiente sesión vuelve a los pendientes concretos; no genera otro plan infinito. D01–D22 de lanzamiento permanecen en su guía, sin reabrir servicios o tiendas por esta entrega.
-
-## Integración confirmada
-
-[PR #353](https://github.com/Jaywrkr/WHITEDOT/pull/353) · [CI completo](https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278): lógica, seis grupos de navegador, tres de audio y agregador aprobados antes de incorporar el código. El runtime coincide con `e6c0a3a6`; esta actualización añade solo el estado documental y la evidencia de CI.
+[Auditoría N y evidencia](docs/panel/candidato-n/informe.md). Los ocho bloques tienen commits encadenados. N5 deja calibración de duración/emoción pendiente de personas; N8 cierra fallos reproducidos, no acredita nueve. No repetir el catálogo pesado por documentación. Próximo trabajo dependiente de evidencia: sesiones, escucha física, Safari/lector/rendimiento y CI del PR. No abrir expansión. La autorización actual permite esta integración; las entregas futuras vuelven al flujo de ramas salvo otra petición de Jay.

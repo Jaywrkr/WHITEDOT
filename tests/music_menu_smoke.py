@@ -33,7 +33,13 @@ try:
    page.locator('#bMenu').click();page.locator('#bSettings').click();page.locator('#universeTexts').uncheck();assert page.evaluate('__r.S.universeTexts===false');assert page.locator('#universeTexts').evaluate('e=>e.getBoundingClientRect().width<=24');assert page.locator('#universeTextsHint').is_visible();page.screenshot(path=str(ROOT.parent/f'menu-settings-before-{width}.png'));assert page.locator('#mSettings .sheet').evaluate('e=>e.scrollWidth<=e.clientWidth+2'),page.locator('#mSettings .sheet').evaluate('e=>({sw:e.scrollWidth,cw:e.clientWidth,children:[...e.querySelectorAll("*")].map(n=>({id:n.id,tag:n.tagName,x:n.getBoundingClientRect().x,w:n.getBoundingClientRect().width})).filter(n=>n.x+n.w>innerWidth)})');page.locator('#settingsClose').scroll_into_view_if_needed();page.screenshot(path=str(ROOT.parent/f'menu-settings-{width}.png'));page.locator('#settingsClose').click()
    page.reload();page.wait_for_function('!!window.__r?.wonderTick');page.locator('#returnContinue').click();assert page.evaluate('__r.S.cube.wonder')=='star-seed';assert page.evaluate('__r.S.universeTexts===false')
    for button,modal in [('bMusicSettings','mMusic'),('bAch','mJournal'),('bMap','mJournal'),('bGuide','mGuide'),('bSaveTools','mSaveTools')]:
-    page.locator('#bMenu').click();page.evaluate("document.getElementById('mMenu').hidden=true;(window.__r||window.__testRuntime).openSaveTools()") if button=='bSaveTools' else (page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')") or page).locator('#'+button).click();sheet=page.locator('#'+modal+' .sheet');assert sheet.is_visible();assert sheet.evaluate('e=>e.scrollWidth<=e.clientWidth+2'),modal
+    page.locator('#bMenu').click()
+    if button=='bSaveTools':page.evaluate("document.getElementById('mMenu').hidden=true;(window.__r||window.__testRuntime).openSaveTools()")
+    else:
+     page.evaluate("document.getElementById('menuMore')?.setAttribute('open','')")
+     if button=='bMusicSettings':page.locator('#bSettings').click()
+     page.locator('#'+button).click()
+    sheet=page.locator('#'+modal+' .sheet');assert sheet.is_visible();assert sheet.evaluate('e=>e.scrollWidth<=e.clientWidth+2'),modal
     assert sheet.evaluate('e=>{const b=e.getBoundingClientRect();return b.x>=0&&b.right<=innerWidth+1&&b.y>=0&&b.bottom<=innerHeight+1}'),modal
     if width==390:page.screenshot(path=str(ROOT.parent/f'menu-review-{modal}.png'))
     page.locator('#'+modal+' .sheet-close').click();page.wait_for_function('!document.getElementById("w").inert')

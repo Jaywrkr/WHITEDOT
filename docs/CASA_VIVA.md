@@ -2,7 +2,15 @@
 
 Propuesta del 21 de octubre de 2026, a partir de la idea de Luca: una casa como la base de Astro Bot, donde todo lo que consigues está a la vista, se puede recorrer y responde. No es backlog de lanzamiento (ese sigue siendo D01–D22). Aprobada por Jay el 21 de octubre como casa de muñecas; sus respuestas están al final. Las seis fases (C0–C5) están hechas en ramas encadenadas; integrarlas es decisión de Jay.
 
-## Cómo es hoy
+## Estado vigente · alpha.200
+
+- Cuatro habitaciones recorribles de una casa de muñecas: Eco, Jardín de voces, Cielo y Raíz. Cámara, escaleras y vista general en `house.js`/`house-view.js`.
+- La posición horizontal sigue marcando paso musical y la altura, nota. Sonido y secuenciador se conservan.
+- Modelo2: objetos, adornos, tintes y cápsulas. Migra modelo1; formatos futuros en lectura. Comparte WH1 si solo hay objetos; WH2 para adornos/tintes. Ambos se leen.
+- Habitaciones por días o descubrimientos, lo primero; colección, trofeos, visitantes, jardín y Taller están construidos.
+- N6 agrupa los40 objetos en «Puedes colocar» y «Por descubrir». N8 aclara qué voz aporta una tarjeta al jardín. [Cierre y límites](panel/candidato-n/informe.md).
+
+## Base anterior a C0–C5 · histórica
 
 - Plano de 2×2 visto desde arriba: Sala, Jardín (3 días), Azotea (7 días) y Sótano (14 días). Módulos: `house.js` (dibujo y gestos), `house-model.js` (datos, 40 objetos, código WH1), `house-audio.js` (secuenciador) y `collection-garden.js` (Jardín de voces).
 - El cubo no camina con los controles del Mundo: se toca el plano. Modos Camina, Coloca y Retira; el selector lista los 40 objetos.
@@ -11,7 +19,7 @@ Propuesta del 21 de octubre de 2026, a partir de la idea de Luca: una casa como 
 - Comparte modo con el Taller (`S.mode='studio'` y `houseActive()`): el botón Taller cambia al panel radial del Estudio.
 - Lo que se colecciona en otros sitios (tarjetas raras, logros, piezas de la tienda, criaturas vistas) casi no aparece: siete puntos dorados por logros y alguna criatura de visita.
 
-## A dónde vamos
+## Diseño aprobado de C0–C5 · histórico
 
 1. **Un lugar para caminar.** El cubo se mueve con los mismos controles que en el Mundo, con cámara, puertas entre habitaciones y luz según la hora real.
 2. **Tu colección, viva.**

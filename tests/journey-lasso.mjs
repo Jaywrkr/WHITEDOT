@@ -31,7 +31,7 @@ assert.equal(r.journeyGamePulse(false),'miss');assert.equal(r.journeyLasso().poi
 assert.equal(r.journeyGamePulse(true),'catch');const n=group.length;assert.equal(r.journeyLasso().points,lassoValue(n)*n);assert.equal(r.journeyLasso().caught,n);assert.equal(r.journeyLasso().trail,0,'the trail starts again');
 // Caught fireflies are gone: the same circle again catches nothing.
 walk(k=>({x:cx+Math.cos(k*6.283)*110,y:cy+Math.sin(k*6.283)*110}),60);assert.notEqual(r.journeyGamePulse(true),'catch');
-frame();assert(r.S.journey.lasso.hinted);timers.splice(0).forEach(f=>f());assert(!toasts.some(t=>/luciérnagas/.test(t)),'the Journey has no lines (plan H5)');
+frame();assert(!r.S.journey.lasso.hinted,'a suppressed lesson is not marked as shown');timers.splice(0).forEach(f=>f());assert(!toasts.some(t=>/luciérnagas/.test(t)),'the Journey has no lines (plan H5)');
 // Full bar: the creature comes beside the cube and joins with a pulse on time; it becomes the companion.
 r.S.journey.lasso.points=LASSO_GOAL;frame();assert(r.journeyLasso().friend);timers.splice(0).forEach(f=>f());assert(!toasts.some(t=>/criatura/.test(t)),'the Journey has no lines (plan H5)');
 assert.equal(r.journeyGamePulse(false),'miss');assert.deepEqual(done,[]);assert.equal(r.journeyGamePulse(true),'join');assert.deepEqual(done,['bosque']);assert.equal(r.S.journey.moments.companion,true);

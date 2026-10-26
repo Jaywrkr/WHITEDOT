@@ -19,7 +19,7 @@ export function createNoticeLane(){
 export function installNoticeLane(runtime){
  if(runtime.noticeLane)return runtime.noticeLane;
  const model=createNoticeLane(),timed=new Map(),callbacks=new Map(),hides=new WeakMap(),recent=new Map(),started=new Map(),panelIDs={rareNotice:'rare'};let state=runtime.S,last=performance.now(),quiet=0;
- const blocked=()=>!globalThis.document||document.hidden||!!runtime.setRecording||!!runtime.jam?.loop?.rec||!!runtime.jam?.loop?.armed||!!openSurface('.modal:not([hidden]),.fxpanel:not([hidden]),.glasspanel:not([hidden]),#mirrorPanel:not([hidden])');
+ const blocked=()=>!globalThis.document||document.hidden||!!runtime.setRecording||!!runtime.jam?.loop?.rec||!!runtime.jam?.loop?.armed||!!openSurface('#journeyFinale:not([hidden]),#songStage:not([hidden]),.modal:not([hidden]),.fxpanel:not([hidden]),.glasspanel:not([hidden]),#mirrorPanel:not([hidden])');
  const reduced=()=>runtime.S?.reducedMotion||prefersReducedMotion();
  const idOf=panel=>panelIDs[panel.id]||panel.id;
  const panels=()=>document.querySelectorAll('#toast,#phrase,#zone,#voice,#rareNotice,#celebration');
@@ -41,8 +41,8 @@ export function installNoticeLane(runtime){
   if(options.coalesce&&level===1)for(const [other,slot]of timed)if(other!==id){slot.queue=slot.queue.filter(e=>e.level!==1);if(!slot.current&&!slot.queue.length)model.cancel(other);}
   let slot=timed.get(id);if(!slot){slot={panel,queue:[],current:null,left:0};timed.set(id,slot);}
   if(key&&(slot.current?.key===key||slot.queue.some(e=>e.key===key)))return false;
-  if(options.coalesce)slot.queue=slot.queue.filter(e=>e.category!==category);
-  slot.queue.push({render,seconds:options.persistent?Infinity:options.level?style.seconds:seconds,detail:options.detail|| (options.persistent?'save':''),key,category,level,valid,paced:options.level!==undefined,expires:now+(options.ttl??style.ttl)});
+  if(options.coalesce)slot.queue=slot.queue.filter(e=>e.category!==category||e.level>level);
+  slot.queue.push({render,onShown:options.onShown,seconds:options.persistent?Infinity:options.level?style.seconds:seconds,detail:options.detail|| (options.persistent?'save':''),key,category,level,valid,paced:options.level!==undefined,expires:now+(options.ttl??style.ttl)});
   slot.queue.sort((a,b)=>b.level-a.level);while(slot.queue.length>(slot.queue.every(e=>e.level===1)?1:8))slot.queue.pop();
   recent.set(duplicate,now);if(recent.size>120)recent.delete(recent.keys().next().value);
   request(id,{level:Math.max(...slot.queue.map(e=>e.level),slot.current?.level||1)});return true;
@@ -63,8 +63,8 @@ export function installNoticeLane(runtime){
     while(slot.queue[0]?.level===1&&now-(started.get(1)??-Infinity)<NOTICE_STYLES[1].cooldown)slot.queue.shift();
     if(!slot.queue.length){model.cancel(id);continue;}
     request(id,{level:slot.queue[0].level});if(slot.queue[0].paced&&slot.queue[0].level===2&&now-(started.get(2)??-Infinity)<NOTICE_STYLES[2].cooldown)continue;if(!claim(id))continue;
-    slot.current=slot.queue.shift();slot.left=slot.current.seconds;started.set(slot.current.level,now);slot.panel.dataset.detail=slot.current.detail;slot.panel.dataset.noticeLevel=String(slot.current.level);slot.current.render();if(slot.current.seconds===Infinity){slot.panel.setAttribute('role','button');slot.panel.tabIndex=0;}else{slot.panel.removeAttribute('role');slot.panel.removeAttribute('tabindex');}show(slot.panel);
-   }else if(show(slot.panel)){slot.left-=dt;if(slot.left<=0){hide(slot.panel);slot.current=null;release(id);if(slot.queue.length)request(id,{level:slot.queue[0].level});}}
+    slot.current=slot.queue.shift();slot.left=slot.current.seconds;started.set(slot.current.level,now);slot.panel.dataset.detail=slot.current.detail;slot.panel.dataset.noticeLevel=String(slot.current.level);slot.current.render();if(slot.current.seconds===Infinity){slot.panel.setAttribute('role','button');slot.panel.tabIndex=0;}else{slot.panel.removeAttribute('role');slot.panel.removeAttribute('tabindex');}if(show(slot.panel)){slot.current.onShown?.();slot.current.onShown=null;}
+   }else if(show(slot.panel)){const shown=slot.current.onShown;slot.current.onShown=null;shown?.();slot.left-=dt;if(slot.left<=0){hide(slot.panel);slot.current=null;release(id);if(slot.queue.length)request(id,{level:slot.queue[0].level});}}
   }
   for(const fn of callbacks.values())fn(dt);
   // A producer bypassing show() still cannot display a second notice.

@@ -36,7 +36,7 @@ with sync_playwright() as p:
   page.locator('#fxStop').click();page.wait_for_timeout(250);assert page.evaluate('window.__testRuntime.fx.dry.gain.value')<.6
   assert page.evaluate('!!window.__testRuntime.S.ach.robot && !!window.__testRuntime.S.ach.cinta')
   page.locator('#fxClose').click();assert not page.locator('#fxPanel').is_visible()
-  page.locator('#bMenu').click();page.locator('#bWorld').click();page.wait_for_function('document.getElementById("bFx").hidden')
+  page.locator('#bMenu').click();page.evaluate("document.getElementById('menuMore').open=true");page.locator('#bPrimary').click();page.wait_for_function('document.getElementById("bFx").hidden')
   assert not errors,errors
   print(label+': fx pad filters and space, clean on release, hold, eco, robot, tape stop, does not move the pixel PASS',flush=True);c.close()
  b.close()

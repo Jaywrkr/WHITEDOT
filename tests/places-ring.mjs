@@ -28,3 +28,14 @@ assert(beaconGain(RING_RADIUS)>0);assert(beaconGain(1000)>beaconGain(RING_RADIUS
 // Plan I2: off screen, the next portal's column stands at the screen edge on its side.
 assert.equal(edgeColumn(-900,400,390,844).x,12);assert.equal(edgeColumn(5000,400,390,844).x,378);assert.equal(edgeColumn(200,-3000,390,844).x,200);
 console.log('PASS places ring: eleven fixed portals 30–60 s from the Refugio, moved off the sea, an arrow and a column of light to the next place on the path, back beside the portal, centre and entered portals kept');
+
+const {routeEdge}=await import('../src/places-ring.js');for(let i=0;i<8;i++){const a=i*Math.PI/4,e=routeEdge(Math.cos(a)*6000,Math.sin(a)*6000,390,844);assert(Math.abs(e.angle-a)<1e-6||Math.abs(e.angle-a+Math.PI*2)<1e-6);assert(e.x>=23&&e.x<=367&&e.y>=143&&e.y<=697);}assert(routeEdge(0,-6000,390,844).y<422&&routeEdge(0,6000,390,844).y>422);
+
+const {initialize}=await import('../src/places-ring.js');let writable=false;const saved=normalizePlaces(null,journey),r={S:{mode:'world',wx:12,wy:34,studio:{x:100,y:200},journey},placesData:()=>saved,inWorld:()=>true,save:()=>writable};initialize(r);const beforeAnchor=structuredClone(saved);assert.deepEqual(r.ringState().center,{x:100,y:200});assert.deepEqual(saved,beforeAnchor,'failed migration preserves old save');writable=true;r.ringState();assert(saved.ringFixed);r.S.studio.x=30000;assert.deepEqual(r.ringState().center,{x:100,y:200});assert(normalizePlaces(saved,journey).ringFixed,'anchor survives reload');
+
+r.S.mode='camino';r.enterWorld=()=>{r.S.mode='world';};const pos=[r.S.wx,r.S.wy];assert(r.ringGuide('jardin'));assert.deepEqual([r.S.wx,r.S.wy],pos,'Camino guidance enters the World without a portal warp in this fixture');assert(r.ringTravel('lago'),'a chapter already completed is an explicit free travel destination');assert(!r.ringTravel('dunas'),'locked places remain locked');
+
+const {routeCompass}=await import('../src/places-ring.js');for(const [W,H] of [[320,568],[390,844],[844,390],[1280,800]])for(let i=0;i<8;i++){const a=i*Math.PI/4,e=routeCompass(Math.cos(a)*6000,Math.sin(a)*6000,W,H);assert(Math.abs(Math.hypot(e.x-W/2,e.y-H/2)-48)<1e-6);assert(Math.cos(e.angle-a)>.999);}
+r.S.destination='studio';assert.equal(r.ringRoute(),null,'a chosen destination takes priority over the suggested ring');r.cancelDestination=()=>{r.S.destination=null;};assert(r.ringGuide('jardin'));assert.equal(r.ringRoute().id,'jardin','following the ring replaces the old destination');
+
+assert.deepEqual(routeCompass(300,400,390,844,{x:18,y:-12}),{...routeCompass(300,400,390,844),x:routeCompass(300,400,390,844).x+18,y:routeCompass(300,400,390,844).y-12});

@@ -17,7 +17,7 @@ export const ROUND_MINUTES=2.75;
 // Two players: one who plays on time six pulses in ten without long streaks, one who plays on time nine in ten.
 export const PROFILES=Object.freeze([{id:'casual',onTime:.6,streakShare:0,placeShare:.5},{id:'ritmo',onTime:.9,streakShare:.6,placeShare:.5}]);
 export function simulate(){const mine={0:0,1:minePerMinute(1),2:minePerMinute(2),3:minePerMinute(3)},shop=CUBE_SHOP.reduce((a,p)=>a+p.cost,0);
- const players=PROFILES.map(p=>{const off=1-p.onTime,on3=p.onTime*p.streakShare,on2=p.onTime-on3,world=off*mine[0]+on2*mine[2]+on3*mine[3],places=roundSparks(p.onTime)/ROUND_MINUTES,perMinute=p.placeShare*places+(1-p.placeShare)*world;
+ const players=PROFILES.map(p=>{const off=1-p.onTime,on3=p.onTime*p.streakShare,on2=p.onTime-on3,world=off*mine[1]+on2*mine[2]+on3*mine[3],places=roundSparks(p.onTime)/ROUND_MINUTES,perMinute=p.placeShare*places+(1-p.placeShare)*world;
   return {...p,worldPerMinute:+world.toFixed(1),placesPerMinute:+places.toFixed(1),perMinute:+perMinute.toFixed(1),shopHours:+(shop/perMinute/60).toFixed(1)};});
  return {shop,minePerMinute:Object.fromEntries(Object.entries(mine).map(([k,v])=>[k,+v.toFixed(1)])),players};}
-if(import.meta.url===`file://${process.argv[1]}`)console.log(JSON.stringify({method:'Mining measured on the real economy (ten-minute route, pulse every 0.9 s) at ×1, ×2 and ×3 (off time earns ×0 since plan H5); rounds from spark-rules.js at 2.75 min; half the time in places. A model, not people.',...simulate()},null,2));
+if(import.meta.url===`file://${process.argv[1]}`)console.log(JSON.stringify({method:'Mining measured on the real economy (ten-minute route, pulse every 0.9 s) at ×1, ×2 and ×3 (off time earns its ×1 base since K2); rounds from spark-rules.js at 2.75 min; half the time in places. A model, not people.',...simulate()},null,2));

@@ -1,4 +1,5 @@
-import {gameObjective} from './places.js';
+import {gameObjective,PLACES} from './places.js';
+import {PLACE_LESSONS} from './journey-games.js';
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const VOICE_MODES=['discreta','guia','poetica'];
 export function discoveryJourney(state){
@@ -16,11 +17,29 @@ export function rememberVoice(state,text,title,context={}){
  state.voiceDiary.push({text:String(text).slice(0,600),title:String(title||'Sistema').slice(0,80),at:new Date().toISOString(),x:state.wx,y:state.wy,...context});
  if(state.voiceDiary.length>80)state.voiceDiary.shift();
 }
+// Explicit help follows the active rule; no new automatic overlay interrupts play.
+export function guideLesson(runtime){
+ const round=runtime.placeRun?.(),chapter=round?null:runtime.journeyChapter?.();
+ const id=round?.id||(!runtime.S.journey?.finished&&runtime.journeyQuiet?.()?chapter?.id:null);
+ if(id==='camino')return {id,name:'Camino',steps:['Acércate a un cristal.','Toca siguiendo el golpe de la música.','Recoge diez luces para abrir el Mundo.'],hint:'Toca el cubo. Arrastra el vacío para moverte.'};
+ const steps=PLACE_LESSONS[id];if(!steps)return null;
+ const progress=runtime.journeyGameProgress?.(id)||0,done=!round&&chapter?.done?.[id];
+ let hint=done?'Cruza el portal dorado para continuar.':progress>=1?steps[2]:steps[0];
+ if(!done&&progress<1){
+  if(id==='bosque'){const g=runtime.journeyLasso?.();hint=g?.closed?(g.inside?'Tu vuelta contiene luces. Pulsa en el golpe.':'Rodea un grupo de luces dentro de tu vuelta.'):'Rodea las luciérnagas y cierra tu estela.';}
+  if(id==='lago'&&runtime.journeyChain?.().near?.length)hint='Estás junto a una flor. Pulsa en el golpe.';
+  if(id==='llanura'&&runtime.journeyStick?.().near?.length)hint='Hay algo cerca. Toca el cubo en el golpe.';
+  if(id==='tormenta'&&runtime.journeyDance?.().inside)hint='Ya estás dentro. Espera el rayo y pulsa.';
+  if(id==='vacio')hint=runtime.journeyPulseState?.().action==='crowded'?'Camina hacia espacio vacío antes de soltar otra estrella.':'Espera el primer golpe. Muévete entre estrellas.';
+ }
+
+ return {id,name:PLACES.find(p=>p.id===id)?.name||id,steps,hint};
+}
 export function initialize(runtime){
  const select=runtime.$('voiceMode');select.value=VOICE_MODES.includes(runtime.S.voiceMode)?runtime.S.voiceMode:'discreta';
  select.onchange=()=>{runtime.S.voiceMode=select.value;runtime.save();};
  let seconds=0,lastKey='',owner=runtime.S;
- function openGuide(){const journey=discoveryJourney(runtime.S),goal=gameObjective(runtime.S,runtime.placesData?.());runtime.$('guideNext').textContent=goal.line;runtime.$('guideProgress').textContent=goal.progress;const symbols={voice:'M5 14q5-17 10 0t10 0',place:'M8 3h14v22l-7-5-7 5Z',home:'M4 13 15 3l11 10v13H4Z M11 26V16h8v10',relic:'M15 2 27 15 15 28 3 15Z M15 8v14M8 15h14'},labels={voice:'Escucha una voz',place:'Conserva un lugar',home:'Crea en tu Refugio',relic:'Despierta una reliquia'};runtime.$('guideJourney').innerHTML=journey.steps.map(step=>`<li${step.done?' data-complete="true"':''}${step.id===journey.nextId?' aria-current="step"':''}><svg viewBox="0 0 30 30" aria-hidden="true"><path d="${symbols[step.id]}"/></svg><span>${labels[step.id]}</span><small>${step.done?'✓ Hecho':step.id===journey.nextId?'Puedes probarlo':'A tu ritmo'}</small></li>`).join('');runtime.$('guideDefinitions').hidden=true;runtime.$('guideGlossary').setAttribute('aria-expanded','false');runtime.$('mMenu').hidden=true;runtime.$('mGuide').hidden=false;}
+ function openGuide(){runtime.playtestHelp?.();const lesson=guideLesson(runtime),place=lesson?.id,box=runtime.$('guidePlaceLesson');runtime.$('guidePurpose').hidden=!!lesson;runtime.$('mGuide').dataset.rule=String(!!lesson);if(box){box.hidden=!lesson;if(lesson){runtime.$('guidePlaceName').textContent=lesson.name;runtime.$('guidePlaceSteps').replaceChildren(...lesson.steps.map(text=>{const li=document.createElement('li');li.textContent=text;return li;}));runtime.$('guidePlaceHint').textContent=lesson.hint;const demo=runtime.$('guidePlaceDemo');demo.hidden=place!=='jardin';demo.onclick=()=>{runtime.$('mGuide').hidden=true;runtime.gardenLessonReplay?.();};}}const journey=discoveryJourney(runtime.S),goal=gameObjective(runtime.S,runtime.placesData?.());runtime.$('guideNext').textContent=lesson?.hint||goal.line;runtime.$('guideProgress').textContent=goal.kind==='place'?`${goal.completed}/11 completos · quedan ${goal.remaining}`:goal.progress;const follow=runtime.$('guideFollow');follow.hidden=goal.kind!=='place';if(!follow.hidden){follow.textContent=`Seguir hacia ${goal.name}`;follow.onclick=()=>runtime.ringGuide?.(goal.id);}runtime.$('guideExplore').open=false;const symbols={voice:'M5 14q5-17 10 0t10 0',place:'M8 3h14v22l-7-5-7 5Z',home:'M4 13 15 3l11 10v13H4Z M11 26V16h8v10',relic:'M15 2 27 15 15 28 3 15Z M15 8v14M8 15h14'},labels={voice:'Escucha una voz',place:'Conserva un lugar',home:'Crea en tu Refugio',relic:'Despierta una reliquia'};runtime.$('guideJourney').innerHTML=journey.steps.map(step=>`<li${step.done?' data-complete="true"':''}${step.id===journey.nextId?' aria-current="step"':''}><svg viewBox="0 0 30 30" aria-hidden="true"><path d="${symbols[step.id]}"/></svg><span>${labels[step.id]}</span><small>${step.done?'✓ Hecho':step.id===journey.nextId?'Puedes probarlo':'A tu ritmo'}</small></li>`).join('');runtime.$('guideDefinitions').hidden=true;runtime.$('guideGlossary').setAttribute('aria-expanded','false');runtime.$('mMenu').hidden=true;runtime.$('mGuide').hidden=false;}
  runtime.$('bGuide').onclick=openGuide;runtime.$('guideClose').onclick=()=>runtime.$('mGuide').hidden=true;
  runtime.$('guideGlossary').onclick=()=>{const content=runtime.$('guideDefinitions');content.hidden=!content.hidden;runtime.$('guideGlossary').setAttribute('aria-expanded',String(!content.hidden));};
  function tick(dt,paused){

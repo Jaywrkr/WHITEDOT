@@ -23,12 +23,12 @@ export function initialize(runtime){
  function changeNotice(amount){if(!amount)return;delta=clock<deltaUntil&&Math.sign(delta)===Math.sign(amount)?delta+amount:amount;deltaUntil=clock+1.5;if(amount>0&&!jumpAvailable&&book().earned>=SPARK_JUMP_COST){jumpAvailable=true;jumpUntil=clock+3;notice('Ya puedes saltar');}}
  function notice(title,text=''){runtime.toast?.(title+(text?' · '+text:''),{level:2,category:'spark-result',detail:'sparks',ttl:120000});}
  // The free World's rhythm (plan F3): each player pulse, judged by journey-pulse.js, updates the streak; the wave it
- // sends carries the multiplier for what it breaks: off time ×0 (plan H5), on time ×2, from the eighth in a row ×3.
+ // sends carries the multiplier for what it breaks: off time ×1 (K2), on time ×2, from the eighth in a row ×3.
  // Never in the Journey; without sound there is no beat to meet, so every pulse counts ×1.
  let streak=0,lastRhythm=-1e9,lastMult=1;
  function rhythmPulse(on){const now=performance.now();// Without sound there is no beat to meet: every pulse counts as on time there, so it earns no multiplier.
   if(runtime.journeyQuiet?.()||!runtime.inWorld?.()||!runtime.S.sound){streak=0;lastMult=1;return 1;}streak=nextStreak(streak,on,now-lastRhythm);lastRhythm=now;lastMult=rhythmMultiplier(on,streak);return lastMult;}
- function crystal(o,action,path=false,fragment=null,dim=false,mult=1){mult=[0,1,2,3].includes(mult)?mult:1;
+ function crystal(o,action,path=false,fragment=null,dim=false,mult=1){mult=[2,3].includes(mult)?mult:1;
   const q=book();if(q.version!==1||runtime.labMode||owner.previewSeed&&!runtime.realTravel)return null;
   const prior=q.sites[o.id];if(!prior&&Object.keys(q.sites).length>=SPARK_SITE_LIMIT)return null;
   if(action==='hit'&&prior?.broken||action==='collect'&&(!prior?.broken||prior.collected))return prior?{...prior}:null;
@@ -36,7 +36,7 @@ export function initialize(runtime){
   let amount=0,result=null,first=false;
   const ok=commit(next=>{const p=next.sites[o.id]||{x:o.x,y:o.y,size:o.size,value:o.value,hits:0,broken:false,collected:false,rare:!path&&o.rare===true,fragments:0};
    if(action==='hit'){p.hits++;p.broken=p.hits>=o.size;if(p.broken){if(!path||owner.pathCrystals.length<10)next.stats.broken++;if(path){p.collected=true;p.fragments=fragmentMask(p);if(owner.pathCrystals.length<10){first=!owner.pathCrystals.length;owner.pathCrystals.push(o.id);owner.todayLight=(owner.todayLight||0)+1;owner.totalLight=(owner.totalLight||0)+1;if(!runtime.journeyQuiet?.())amount=creditSparks(owner,o.value*mult);}}else if(mult!==1)p.mult=mult;}}
-   else if(action==='collect'){const remaining=crystalFragments(p,p.rare===true).filter(f=>!((p.fragments||0)&(1<<f.index))&&(fragment===null||fragment===f.index));if(!remaining.length)return false;for(const f of remaining){p.fragments=(p.fragments||0)|(1<<f.index);amount+=creditSparks(owner,(dim&&f.rare?1:f.value)*(p.mult??1));}p.collected=p.fragments===fragmentMask(p);}else return false;
+   else if(action==='collect'){const remaining=crystalFragments(p,p.rare===true).filter(f=>!((p.fragments||0)&(1<<f.index))&&(fragment===null||fragment===f.index));if(!remaining.length)return false;for(const f of remaining){p.fragments=(p.fragments||0)|(1<<f.index);amount+=creditSparks(owner,(dim&&f.rare?1:f.value)*([2,3].includes(p.mult)?p.mult:1));}p.collected=p.fragments===fragmentMask(p);}else return false;
    next.sites[o.id]=p;result={...p};
   });
   if(!ok)return null;if(amount)changeNotice(amount);if(action==='hit'&&result.broken&&!path)worldBroken++;if(first)runtime.onFirstLight?.();if(path)runtime.hud?.();return result;
@@ -81,7 +81,7 @@ export function initialize(runtime){
  function equip(id){const q0=book();if(q0.version!==1)return false;if(id&&(!q0.purchases[id]||!shopPiece(id)))return false;const ok=commit(q=>{q.wear={...(q.wear||{})};q.on={...(q.on||{})};if(!id){q.wear={};q.on={};q.equipped='';return;}const p=shopPiece(id);if(shopSlot(p.slot)?.many)q.on[id]=true;else q.wear[p.slot]=id;q.equipped=id;});if(ok){trail=[];render();}return ok;}
  function unequip(id){const q0=book();if(q0.version!==1||!wearing(q0,id))return false;const ok=commit(q=>{const p=shopPiece(id);q.wear={...(q.wear||{})};q.on={...(q.on||{})};if(shopSlot(p.slot)?.many)delete q.on[id];else delete q.wear[p.slot];if(q.equipped===id)q.equipped=Object.values(q.wear).find(v=>shopPiece(v))||'';});if(ok){trail=[];render();}return ok;}
  function goalText(){const q=book(),progress=sparkSetProgress(owner),goal=q.goal;
-  if(goal==='none')return '';if(goal==='jump')return owner.sparks>=SPARK_JUMP_COST?'Salto disponible · '+SPARK_JUMP_COST+' ✦':'Próximo salto · '+sparkNumber(owner.sparks)+'/'+SPARK_JUMP_COST+' ✦';
+  if(goal==='none')return '';if(goal==='jump')return owner.sparks>=SPARK_JUMP_COST?'Salto disponible · '+SPARK_JUMP_COST+' ✦':'Otro paisaje · '+sparkNumber(owner.sparks)+'/'+SPARK_JUMP_COST+' ✦';
   const p=SPARK_SHOP.find(p=>'shop:'+p.id===goal);if(p)return q.purchases[p.id]?p.name+' · Meta cumplida':p.name+' · '+Math.min(owner.sparks,p.cost)+'/'+p.cost+' ✦';
   const set=SPARK_SETS.find(p=>'set:'+p.id===goal);if(set)return set.name+' · '+(q.claims['set:'+set.id]?'Meta cumplida':Math.min(progress[set.id],set.need)+'/'+set.need);
   if(goal==='universe'){const u=universeProgress(owner);return q.claims['universe:complete']?SPARK_UNIVERSE.name+' · Meta cumplida':'Universo · '+u.value+'/'+u.need;}
@@ -123,7 +123,7 @@ export function initialize(runtime){
   c.restore();
  }
  $('sparkGoal').onclick=()=>open();
- for(const id of ['bJump','sparkJump'])$(id).textContent='Saltar · '+SPARK_JUMP_COST+' ✦';
+ for(const id of ['bJump','sparkJump'])$(id).textContent='Otro paisaje · '+SPARK_JUMP_COST+' ✦';
  $('sparkJump').onclick=()=>{if(sparkNumber(runtime.S.sparks)<SPARK_JUMP_COST){$('sparkStatus').textContent='Necesitas '+(SPARK_JUMP_COST-sparkNumber(runtime.S.sparks))+' chispas más.';return;}$('mCube').hidden=true;runtime.jumpPracticePlace();};
  $('sparkBack').onclick=()=>{$('mCube').hidden=true;runtime.returnPracticePlace();};
  $('sparkShop').onclick=e=>{const b=e.target.closest('[data-spark-buy]');if(b)buy(b.dataset.sparkBuy);};

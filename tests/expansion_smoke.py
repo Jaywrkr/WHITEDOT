@@ -24,7 +24,10 @@ with sync_playwright() as p:
  page.evaluate(f"(async()=>{{const r={R};for(let i=1;i<=30;i++){{r.S.wx+=2;await new Promise(f=>requestAnimationFrame(f));}}}})()");page.wait_for_function(f"{R}.hasPower('campo')")
  assert page.evaluate(f"{R}.fieldSolo && !!{R}.S.ach.caja1")
  page.wait_for_timeout(1500);page.screenshot(path='/tmp/whitedot-campo.png')
- page.evaluate(f"{R}.givePower('cometa')");assert page.evaluate(f"{R}.SPEED")>400
+ # A box can also give Paso de miel: compare the boost with that same active surprise,
+ # rather than assuming the unmodified speed of an otherwise empty world.
+ speeds=page.evaluate(f"()=>{{const r={R},before=r.SPEED;r.givePower('cometa');return [before,r.SPEED,r.hasPower('cometa')];}}")
+ assert speeds[2] and abs(speeds[1]-speeds[0]*2.2)<.001,speeds
  # Crossing the old 400-box limit must keep every consumed native location.
  page.evaluate('''async()=>{const r=window.__testRuntime,{boxAt}=await import('/src/expansion-music.js');for(let i=0;i<405;i++)r.S.boxes['caja:'+(10000+i)+',10000']=1;let box;for(let x=-30;x<30&&!box;x++)for(let y=-30;y<30&&!box;y++){const b=boxAt(x,y,r.WCH,r.seedOf,r.rng);if(b&&!r.S.boxes[b.id]&&!r.regionOfPos(b.x,b.y).sea)box=b;}if(!box)throw Error('No native box');window.__retainedBox=box;r.S.wx=box.x;r.S.wy=box.y;}''')
  page.wait_for_function('!!__testRuntime.S.boxes[__retainedBox.id]')

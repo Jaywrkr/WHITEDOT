@@ -11,6 +11,6 @@ assert.deepEqual(s.order,['camino','llanura']);assert(!('nada' in s.chapters));
 const text=summarize([s]);
 assert.match(text,/^Persona 1 · .* · 12:34 · festival · 2\.3\.0-alpha\.136/);
 assert.match(text,/\nCamino 2:10 ✓ · 18\/25 a tiempo \(72%\) · quieto máx 14 s · dedo 1/);
-assert.match(text,/\nLlanura 5:00 · 40\/50 a tiempo \(80%\) · quieto máx 31 s \(2 veces más de 15 s\)$/);
+assert.match(text,/\nLlanura 5:00 · 40\/50 a tiempo \(80%\) · quieto máx 31 s \(2 veces más de 15 s\) · activo 0:00 · sin primer avance · sin avance máx 0:00$/);
 assert.equal(summarize([]),'Sin pruebas todavía.');assert.equal(summarize([{start:1,ms:2000,order:['camino'],chapters:{}},{start:2,ms:60000,order:[],chapters:{}}]),'Sin pruebas todavía.','empty or tiny sessions are left out');
 console.log('PASS playtest notes: switched by the address, broken notes dropped, bounded, one Spanish line per chapter with time, pulses on time, stillness and the ghost finger');

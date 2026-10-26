@@ -39,8 +39,10 @@ export function initialize(runtime){
   const point=storeFavorite(s,{address,name,x:address.x,y:address.y,layer:address.layer,created:Date.now(),shared:true,region:region?.key||'',regionName:region?.name||'',genre:region?.genre||'',bpm:region?.bpm||0,scale:region?[...region.scale]:[],character:region?.recipe?.name||'',material:region?.recipe?.materialName||'',...(region?{musicStamp:runtime.musicStamp?.(region,address.musicMode)}:{})});
   return point?persist(point):null;
  }
- function rename(id,name){if(readOnly())return null;const point=list().find(p=>p.id===id);if(point){point.name=cleanName(name);runtime.save();}return point;}
- function remove(id){if(readOnly())return;runtime.S.favorites.items=list().filter(p=>p.id!==id);runtime.favoriteRemoved?.(id);runtime.save();render();}
+ function failedEdit(){runtime.toast('No se pudo guardar. Tu lugar sigue intacto.',{level:2});}
+ function rename(id,name){if(readOnly())return null;const point=list().find(p=>p.id===id);if(!point)return null;const old=point.name;point.name=cleanName(name);if(runtime.save()===false){point.name=old;failedEdit();return null;}return point;}
+ function editNotes(id,value){if(readOnly())return false;const point=list().find(p=>p.id===id);if(!point)return false;const had=Object.hasOwn(point,'notes'),old=point.notes;point.notes=String(value||'').slice(0,280);if(runtime.save()===false){if(had)point.notes=old;else delete point.notes;failedEdit();return false;}return true;}
+ function remove(id){if(readOnly())return false;const book=runtime.S.favorites,old=book.items;if(!list().some(p=>p.id===id))return false;book.items=old.filter(p=>p.id!==id);if(runtime.save()===false){book.items=old;failedEdit();return false;}runtime.favoriteRemoved?.(id);render();$('favSave').focus?.();return true;}
  function render(){
   const body=$('favoritesBody');body.replaceChildren();$('favSave').disabled=!runtime.inWorld()||readOnly();
   $('favNote').textContent=readOnly()?'Lugares conservados. Actualiza para editarlos.':runtime.inWorld()?'Guarda el lugar. Su música sigue viviendo.':'Entra al Mundo. Tus lugares siguen guardados.';
@@ -51,7 +53,7 @@ export function initialize(runtime){
    const card=document.createElement('article');card.className='journal-card favorite-card';card.dataset.favorite=point.id;
    const title=document.createElement('h3'),label=document.createElement('span'),signature=document.createElement('span');title.className='favorite-title';label.textContent=point.name;signature.className='favorite-signature';signature.innerHTML=favoriteSignatureSVG(point);title.append(label,signature);const input=document.createElement('input');input.value=point.name;input.maxLength=60;input.setAttribute('aria-label','Nombre del favorito');
    const details=document.createElement('p');details.textContent=[point.layer==='bajo'?'Subsuelo':point.layer==='cielo'?'Cielo':'Superficie',point.genre?(runtime.GEN[point.genre]?.name||point.genre):'',point.bpm?`${point.bpm} BPM`:''].filter(Boolean).join(' · ');
-   const notes=document.createElement('textarea');notes.rows=2;notes.maxLength=280;notes.value=point.notes||'';notes.setAttribute('aria-label','Recuerdo del lugar');notes.placeholder='Qué te gusta de este lugar';notes.onchange=()=>{point.notes=notes.value.slice(0,280);runtime.save();};
+   const notes=document.createElement('textarea');notes.rows=2;notes.maxLength=280;notes.value=point.notes||'';notes.setAttribute('aria-label','Recuerdo del lugar');notes.placeholder='Qué te gusta de este lugar';notes.onchange=()=>{editNotes(point.id,notes.value);notes.value=point.notes||'';};
    const edit=document.createElement('details'),summary=document.createElement('summary');summary.textContent='Editar y compartir';edit.append(summary);const row=document.createElement('div');row.className='row';
    const button=(text,callback)=>{const b=document.createElement('button');b.textContent=text;b.onclick=callback;row.append(b);return b;};
    button('Renombrar',()=>{rename(point.id,input.value);input.value=point.name;label.textContent=point.name;});button('Borrar',()=>remove(point.id));
@@ -66,8 +68,8 @@ export function initialize(runtime){
   runtime.refreshDestinations?.();
  }
  function open(){runtime.stopScanner?.();shown=20;query='';$('favSearch').value='';$('arrivalMode').value=runtime.S.arrivalMode==='continue'?'continue':'explore';const region=runtime.inWorld()?(runtime.activeLayerRegion?.()||runtime.regionOfPos(runtime.S.wx,runtime.S.wy)):null;$('favName').value=region?.name||'';runtime.openJournal?.('places');render();}
- $('favSearch').oninput=e=>{query=e.target.value.trim().toLocaleLowerCase('es');shown=20;render();};$('arrivalMode').onchange=e=>{runtime.S.arrivalMode=e.target.value;runtime.save();};
+ $('favSearch').oninput=e=>{query=e.target.value.trim().toLocaleLowerCase('es');shown=20;render();};$('arrivalMode').onchange=e=>{const old=runtime.S.arrivalMode;runtime.S.arrivalMode=e.target.value;if(runtime.save()===false){runtime.S.arrivalMode=old;e.target.value=old==='continue'?'continue':'explore';failedEdit();}};
  $('era').onclick=()=>{if(runtime.inWorld())open();};$('quickSave').onclick=()=>{if(!runtime.inWorld()||readOnly())return;const s=runtime.S,existing=list().find(p=>p.layer===(s.layer||'superficie')&&sameWorld(p.address,runtime.worldIdentity)&&Math.hypot(p.x-s.wx,p.y-s.wy)<8);if(existing){persist(existing,true);open();return;}const point=add();if(point)runtime.toast('<em>Lugar guardado</em> · Toca su nombre para volver.');};$('favReturn').onclick=()=>{const address=runtime.previousWorldAddress?.();if(address)runtime.visitWorldAddress?.(address);};$('favoritesClose').onclick=()=>{$('mJournal').hidden=true;};
  $('favForm').onsubmit=e=>{e.preventDefault();add($('favName').value);};
- Object.defineProperties(runtime,{favorites:{get:()=>list()},addFavorite:{get:()=>add},addFavoriteAddress:{get:()=>addAddress},renameFavorite:{get:()=>rename},removeFavorite:{get:()=>remove},openFavorites:{get:()=>open},renderFavorites:{get:()=>render}});
+ Object.defineProperties(runtime,{favorites:{get:()=>list()},addFavorite:{get:()=>add},addFavoriteAddress:{get:()=>addAddress},renameFavorite:{get:()=>rename},removeFavorite:{get:()=>remove},updateFavoriteNotes:{get:()=>editNotes},openFavorites:{get:()=>open},renderFavorites:{get:()=>render}});
 }

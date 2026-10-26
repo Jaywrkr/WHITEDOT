@@ -3,7 +3,7 @@ from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
-import threading,os,shutil,math
+import threading,os,shutil,math,re
 ROOT=Path(__file__).resolve().parents[1]
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
@@ -29,11 +29,14 @@ try:
    rows=page.locator('#lugaresList li');assert rows.count()==11
    # Plan H3: Lugares says the next place on the path.
    assert page.inner_text('#lugaresNext').startswith('Siguiente: '),page.inner_text('#lugaresNext')
-   assert page.locator('#lugaresList button').count()==1,'Ir only to the places already entered'
+   expected=page.evaluate("async()=>{const {PLACES,placeOpen}=await import('/src/places.js'),d=__r.S.lugares;return PLACES.filter(p=>placeOpen(d,p.id,__r.S.journey)&&(d.seen[p.id]||d.stars[p.id]?.[0])).map(p=>p.name);}")
+   actual=rows.filter(has=page.get_by_role('button',name='Ir',exact=True)).locator('.lugar-name').all_text_contents()
+   assert actual==expected,(actual,expected)
+   assert page.locator('#lugaresList button').filter(has_text=re.compile(r'^Seguir$')).count()>0,'Unvisited open places offer walking guidance'
    page.locator('#lugaresClose').click();assert page.evaluate("document.getElementById('mLugares').hidden")
    # The house bar opens it too; «Ir» leaves the Refugio beside the Lago's portal.
    page.locator('#houseStars').click();page.wait_for_function("!document.getElementById('mLugares').hidden",timeout=3000)
-   page.locator('#lugaresList button',has_text='Ir').click()
+   rows.filter(has=page.get_by_text('Lago',exact=True)).get_by_role('button',name='Ir',exact=True).click()
    page.wait_for_function("!__r.houseActive()&&__r.S.mode==='world'",timeout=5000)
    s=next(q for q in page.evaluate('__r.ringState().spots') if q['id']=='lago');x,y=page.evaluate('[__r.S.wx,__r.S.wy]');assert math.hypot(x-s['x'],y-s['y'])<200,'beside the Lago portal'
    # «Salir al anillo»: out to the World.

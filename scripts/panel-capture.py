@@ -8,7 +8,7 @@ import threading,os,shutil,json,subprocess,hashlib
 from datetime import datetime,timezone
 ROOT=Path(__file__).resolve().parents[1];OUT=Path(os.environ.get('OUT','panel-capturas'));OUT.mkdir(parents=True,exist_ok=True)
 def snapshot():
- files=sorted((ROOT/'src').glob('*.js'))+[ROOT/'index.html',ROOT/'package.json',ROOT/'sw.js'];digest=hashlib.sha256()
+ files=sorted((ROOT/'src').glob('*.js'))+sorted((ROOT/'styles').glob('*.css'))+[ROOT/'index.html',ROOT/'package.json',ROOT/'sw.js'];digest=hashlib.sha256()
  for f in files:digest.update(str(f.relative_to(ROOT)).encode()+b'\0'+f.read_bytes())
  return {'revision':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'version':json.loads((ROOT/'package.json').read_text())['version'],'runtimeDirty':subprocess.run(['git','diff','--quiet','HEAD','--','src','index.html','package.json','sw.js','styles'],cwd=ROOT).returncode!=0,'runtimeDigest':digest.hexdigest()}
 class H(SimpleHTTPRequestHandler):

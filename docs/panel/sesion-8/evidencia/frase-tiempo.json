@@ -1,0 +1,47 @@
+{
+  "scope": "Fresh minimal symbolic probes; no audio rendering or listening.",
+  "replayedPhrase": {
+    "saved": [
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67
+    ],
+    "savedSteps": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "renderedPersonalEvents": 2,
+    "rendered": [
+      {
+        "what": "lead",
+        "midi": 72,
+        "len": 2,
+        "layer": "lago",
+        "mine": true
+      },
+      {
+        "what": "lead",
+        "midi": 72,
+        "len": 2,
+        "layer": "lago",
+        "mine": true
+      }
+    ]
+  },
+  "capturedTiming": {
+    "judgedStep": 0,
+    "chapterStep": 2,
+    "schedulerStep": 2
+  }
+}

@@ -1,4 +1,4 @@
-"""Plan F3 and H5: in the free World a pulse on time doubles the sparks of what it breaks (shown ×2 in gold), from the eighth in a row it triples them, off time it still breaks but earns nothing (plan H5), and without sound there is no multiplier."""
+"""Plan F3 and H5: in the free World a pulse on time doubles the sparks of what it breaks (shown ×2 in gold), from the eighth in a row it triples them, off time it earns its base value (K2), and without sound there is no multiplier."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -28,8 +28,8 @@ try:
   page.goto(f'http://127.0.0.1:{server.server_port}/?testSeed=laboratorio&layout=wide&generation=2&travel=1');page.wait_for_function('!!window.__r?.crystalTick')
   page.evaluate("()=>{const r=__r;r.S.sound=true;r.S.firstJourney.skipped=true;r.S.wx=5000;r.S.wy=5200;r.stopAutopilot?.();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);r.audio();}")
   page.wait_for_function("__r.ac?.state==='running'&&__r.MU.bq.length>1",timeout=10000)
-  # Off time (plan H5): the crystal breaks and its fragments are gathered, but they earn nothing.
-  o,gain,m=mine(page,1,OFF);assert m==0 and gain==0,(gain,m,o)
+  # K2: an off-time break still pays the base value; rhythm adds a bonus.
+  o,gain,m=mine(page,1,OFF);assert m==1 and gain>=o['value'],(gain,m,o)
   # On time: double, kept in the save, and the pickup says ×2.
   o,gain,m=mine(page,1,ON);assert m==2 and gain>=2*o['value'],(gain,m,o)
   # Eight on time in a row: triple.
@@ -37,7 +37,7 @@ try:
   assert page.evaluate('__r.sparkStreak()')>=7
   o,gain,m=mine(page,1,ON);assert m==3 and gain>=3*o['value'],(gain,m,o,page.evaluate('__r.sparkStreak()'))
   # Without sound there is no beat: no multiplier.
-  page.evaluate("()=>{__r.S.sound=false;}");o,gain,m=mine(page,1,"()=>__r.sonar('player')");assert m==1,(gain,m,o)
+  page.evaluate("()=>{__r.S.sound=false;}");o,gain,m=mine(page,1,"()=>__r.sonar('player')");assert m==1 and gain>=o['value'],(gain,m,o)
   assert not errors,errors;browser.close()
- print('PASS spark rhythm: off time a crystal breaks but earns nothing, on time it is worth double (saved), from eight in a row triple, without sound no multiplier',flush=True)
+ print('PASS spark rhythm: off time a crystal pays its base value, on time it is worth double (saved), from eight in a row triple, without sound no multiplier',flush=True)
 finally:server.shutdown()

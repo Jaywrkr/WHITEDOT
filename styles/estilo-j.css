@@ -607,3 +607,46 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 .latency-setting{display:flex;align-items:center;gap:8px;margin:6px 0}.latency-setting span{flex:1}.latency-setting button{min-width:36px}.latency-setting output{min-width:56px;text-align:center}
 
 .place-narrator{font-size:12px;color:var(--gold,#f0d27a);margin:6px 0 0}
+
+/* K1: a quiet walking destination; the cube and universe keep their size. */
+.ring-route{position:fixed;top:calc(50% - 90px + var(--route-y,0px));bottom:auto;left:calc(50% + var(--route-x,0px));right:auto;width:max-content;max-width:calc(100vw - 32px);transform:translateX(-50%);margin:0;text-align:center;font:11px/1.5 var(--mono);color:#fff;pointer-events:none;z-index:12;text-shadow:0 1px 5px #000,0 0 9px #000}.ring-route[hidden]{display:none}body:has(.modal:not([hidden])) .ring-route{visibility:hidden}
+
+/* K4: one continuation, three destinations, two quiet utilities. */
+.modal .menu-sheet{max-width:480px;padding:16px}.menu-sections{grid-template-columns:minmax(0,1fr)!important;gap:12px}.menu-group.primary .tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.menu-group.primary .tiles button{min-height:68px;padding:10px 6px;gap:6px}.menu-group.primary .tiles #bContinue{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;min-height:52px;padding:12px;background:#fff;color:#000;border-color:#fff;text-align:left}.menu-continue:after{content:'→';font-size:18px}.menu-group.primary .tiles #bLeavePlace{grid-column:1/-1;min-height:44px}.menu-utilities{grid-template-columns:repeat(2,minmax(0,1fr))}.menu-utilities button{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px}.menu-utilities svg{width:16px;height:16px}.menu-section-label{grid-column:1/-1;margin:12px 0 4px!important;font-size:11px!important;color:#aaa}.menu-heading{align-items:center}.menu-who,.menu-who>div{min-width:0}.menu-heading small{display:block;overflow-wrap:anywhere}
+#zone{grid-template-columns:minmax(0,1fr);min-width:0}#zone>*{min-width:0;max-width:100%;overflow-wrap:anywhere}#zone[data-notice-level="1"]{white-space:normal;max-height:none;overflow:visible}#zone[data-notice-level="1"] #zName{order:0;text-align:left;font-size:12px;white-space:normal;overflow-wrap:anywhere}#zone[data-notice-level="1"] #zMood{order:1;text-align:left;white-space:normal;font-size:11px;letter-spacing:0;line-height:1.45}
+#firstJourney[data-step="save"]{top:calc(var(--safe-top,0px) + 72px);bottom:auto;left:16px;width:min(248px,calc(100vw - 32px));border:1px solid #ffffff30;padding:6px 4px 6px 10px;z-index:16}#firstJourney[data-step="save"] #firstJourneyProgress{display:none}body:has(#zone.on:not([hidden])) #firstJourney[data-step="save"]{visibility:hidden}
+.menu-group.primary .tiles #bContinue{flex-direction:row}.menu-group.primary .tiles small{display:none}
+/* K6: place rows keep readable labels and full touch targets, including enlarged text. */
+.lugares-list li{grid-template-columns:minmax(0,1fr) auto;align-items:center;padding:8px 0;gap:4px 10px}.lugares-list .lugar-name{grid-column:1;min-width:0;overflow-wrap:anywhere}.lugares-list .lugar-stars{grid-column:2;font-family:var(--mono);letter-spacing:0}.lugares-list small{grid-column:1;text-align:left;min-width:0;overflow-wrap:anywhere}.lugares-list button{grid-column:2;grid-row:2;min-height:44px;min-width:44px}.menu-utilities button span{min-width:0;overflow-wrap:anywhere}
+.latency-setting{flex-wrap:wrap;min-width:0}.latency-setting>span{flex:1 1 100%}.latency-setting output{width:auto;min-width:0;max-width:100%;flex:1 1 80px;overflow-wrap:anywhere}.latency-setting>button:last-child{flex:1 1 100%;max-width:100%}.cube-sheet #sparkSets{grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr))}.spark-grid h3{overflow-wrap:anywhere}body.first-journey .ring-route{visibility:hidden}
+
+/* Secondary destinations share the primary title/subtitle hierarchy. */
+.menu-group:not(.primary) .tiles button>span{display:flex;flex-direction:column;gap:4px;min-width:0;overflow-wrap:anywhere}
+.menu-group:not(.primary) .tiles button small{font:400 11px/1.4 var(--mono);color:var(--dim)}
+#guidePlaceHint{border-top:1px solid var(--line);padding-top:12px;color:var(--ink)}
+
+/* Context first, then one next step. No extra surface over the world. */
+#guidePlaceSteps{padding-left:20px;margin:8px 0;font:12px/1.65 var(--mono)}
+#guidePlaceSteps li+li{margin-top:8px}
+#mGuide[data-rule="true"] #guideExplore{margin-top:12px}
+.sheet :is(h2,h3,li,small){overflow-wrap:anywhere}
+#songStage .song-stage-row{flex-wrap:wrap;bottom:calc(var(--safe-bottom,0px) + 16px)}
+#songStage .song-stage-row button{max-width:100%;flex:0 1 160px;min-width:0;padding:10px 16px}
+#journeyFinale .journey-explore,#journeyFinale .journey-again{max-width:calc(100vw - 32px);white-space:normal}
+#rareNotice[data-layout="full"],#celebration[data-layout="full"]{padding:calc(var(--safe-top,0px) + 12px) 12px calc(var(--safe-bottom,0px) + 12px)}
+@media(max-height:500px){
+ #journeyFinale .journey-credits{top:10%;font-size:11px;line-height:1.8}
+ #journeyFinale .journey-explore,#journeyFinale .journey-again{bottom:calc(var(--safe-bottom,0px) + 12px)}
+ #songStage .song-stage-text{top:calc(var(--safe-top,0px) + 12px);font-size:11px;line-height:1.6}
+ #songStage .journey-title,#journeyFinale .journey-title{font-size:18px;letter-spacing:.08em}
+}
+
+/* A finding stays quiet until the player chooses to inspect its card. */
+#rareNotice[data-layout="compact"] #rareNoticeContinue{display:inline-flex;min-height:44px;padding:8px;margin-top:6px}
+#rareNotice[data-layout="compact"] #rareNoticeOpen{min-height:44px;margin-top:6px}
+#rareNotice[data-layout="compact"] #rareNoticeName{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+#rareNotice[data-layout="full"] .rare-reveal-card{border-color:var(--rare-ink);box-shadow:0 0 60px #ffffff08}
+#rareNotice[data-layout="full"] #rareNoticeAbility{border-top:1px solid #ffffff26;padding-top:12px;line-height:1.65}
+#rareNotice[data-layout="full"] #rareNoticeOdds{font-variant-numeric:tabular-nums}
+
+#rareNotice[data-layout="full"] #rareNoticeAbility{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}

@@ -32,7 +32,7 @@ export function gardenWilt(state,now,barSeconds,bars=GARDEN_WILT_BARS){const lim
 export const gardenProgress=(points,goal=GARDEN_GOAL)=>Math.max(0,Math.min(1,points/goal));
 export function initialize(runtime){
  const goal=()=>GARDEN_GOAL*(runtime.placeGoalScale?.()||1),wiltBars=()=>runtime.placeRun?.()?.maestro?GARDEN_MAESTRO_WILT:GARDEN_WILT_BARS;
- let owner=null,state=null,misses=0,shiver=0,treePulse=0;const glows=[],toBar=[];
+ let owner=null,state=null,misses=0,shiver=0,treePulse=0;const glows=[],toBar=[];let lessonOwner=null,lessonAt=0,lastCare=0,lessonDone=false,replay=false,lessonMiss=0;
  const calm=()=>calmMotion(runtime.S);
  function own(){const j=runtime.S.journey||(runtime.S.journey={});if(owner!==runtime.S||j.garden!==state){owner=runtime.S;j.garden=normalizeGarden(j.garden);state=j.garden;glows.length=0;toBar.length=0;}
   if(!state.center){state.center={x:Math.round(runtime.S.wx),y:Math.round(runtime.S.wy)};const now=performance.now();state.beds.forEach(b=>{b.care=now;});}return state;}
@@ -47,7 +47,7 @@ export function initialize(runtime){
  function pulse(on,beat={}){if(!active())return null;const s=own();if(!on){misses++;shiver=1;return 'miss';}if(full()){if(!s.tree)arrive();return open();}
   const mode=beat.silent||runtime.journeyRhythm?.()?.key!=='siembra'?null:onAnd(beat.step)?'water':onBeat(beat.step)?'sow':null;
   const before=s.points,r=gardenPulse(s,{x:runtime.S.wx,y:runtime.S.wy},performance.now(),{goal:goal(),mode}),spots=bedSpots(s.center),now=performance.now();
-  for(const e of r.events){const p=spots[e.bed];glows.push({x:p.x,y:p.y,at:now,kind:e.kind});if(e.kind==='bloom')note(s.blooms-1);else if(e.kind==='grow')note(e.stage,true);}if(glows.length>40)glows.splice(0,glows.length-40);
+  for(const e of r.events){const p=spots[e.bed];glows.push({x:p.x,y:p.y,at:now,kind:e.kind});if(e.kind==='bloom')note(s.blooms-1);else if(e.kind==='grow')note(e.stage,true);}if(glows.length>40)glows.splice(0,glows.length-40);if(r.events.length){lastCare=now;lessonMiss=0;}else lessonMiss++;if(r.events.some(e=>e.kind==='pick')){lessonDone=true;replay=false;}
   if(r.gained)toBar.push({value:r.gained,from:before,at:now+150});if(r.events.length)runtime.save?.();if(before<goal()&&s.points>=goal())arrive();return r.events.length?'grow':'still';}
  function tick(){const s=own(),now=performance.now();if(gardenWilt(s,now,bar(),wiltBars()).length)runtime.save?.();if(full()&&!s.tree)arrive();
   if(s.tree){const dx=runtime.S.wx+GARDEN_TREE_GAP-s.tree.x,dy=runtime.S.wy-GARDEN_TREE_GAP*.5-s.tree.y;if(Math.hypot(dx,dy)>4){s.tree.x+=dx*.08;s.tree.y+=dy*.08;}}
@@ -72,12 +72,20 @@ export function initialize(runtime){
    c.beginPath();c.moveTo(gx,gy+18);c.lineTo(gx,gy-6);for(const [a,l] of [[-.7,14],[.7,14],[-1.4,10],[1.4,10]]){c.moveTo(gx,gy-2-Math.abs(a)*4);c.lineTo(gx+Math.sin(a)*l,gy-2-Math.abs(a)*4-Math.cos(a)*l);}c.stroke();
    for(let k=0;k<7;k++){const a=-Math.PI/2+(k-3)*.45,r=18+breath*.5;c.beginPath();c.arc(gx+Math.cos(a)*r,gy-8+Math.sin(a)*r*.8,3.5,0,6.283);c.fill();}}
   c.restore();}
+ // A ghost demonstrates one bed without changing it, playing sound or consuming RNG.
+ function lesson(c,W,H,now){const s=own();if(lessonOwner!==s){lessonOwner=s;lessonAt=lastCare=now;lessonDone=s.blooms>0;replay=false;lessonMiss=0;}if(s.opened||full()||lessonDone&&!replay||now-lastCare<3500&&lessonMiss<2&&!replay)return;if(replay&&now-lessonAt>7000){replay=false;lastCare=now;return;}if(!replay&&Math.max(0,now-lastCare-3500)%18000>5000)return;
+  const spots=bedSpots(s.center),pos=runtime.S,near=spots.map((p,i)=>({...p,i,d:Math.hypot(p.x-pos.wx,p.y-pos.wy)})).sort((a,b)=>a.d-b.d),at=near.find(p=>s.beds[p.i].stage>0)||near[0],stage=s.beds[at.i].stage,move=at.d>(stage>0&&stage<4?GARDEN_REACH:GARDEN_BED_R+18),cam=worldCamera(runtime),x=W/2+at.x-cam.x,y=H/2+at.y-cam.y,step=runtime.journeyRhythmState?.()?.step,water=stage>0&&stage<4,silent=!runtime.S.sound,activeStep=silent||step!=null&&(water?onAnd(Math.round(step)):onBeat(Math.round(step))),text=move?'Entra en este círculo.':stage===4?'En el golpe: cosecha.':water?(silent?'Pulsa para regar.':'Entre golpes: riega.'):(silent?'Pulsa para sembrar.':'En el golpe: siembra.');
+  const px=Math.max(40,Math.min(W-40,x)),py=Math.max(110,Math.min(H-170,y));c.save();c.strokeStyle=c.fillStyle='#ffffff';c.globalAlpha=.65;c.lineWidth=1;c.setLineDash?.([2,5]);c.beginPath();c.arc(px,py,32,0,Math.PI*2);c.stroke();c.setLineDash?.([]);
+  // Empty bed: a hollow seed; growing bed: three drops. They anticipate the relevant half of the beat.
+  c.globalAlpha=activeStep?.9:.35;if(!move){if(water){for(let i=-1;i<=1;i++){c.beginPath();c.moveTo(px+i*8,py-18);c.lineTo(px+i*8,py-12);c.stroke();}}else c.strokeRect(px-3,py-15,6,6);}
+  c.font='11px "Geist Mono",monospace';c.textAlign='center';c.textBaseline='top';const tx=Math.max(110,Math.min(W-110,px));c.globalAlpha=.9;c.fillText(text,tx,py+38);c.restore();
+ }
  function over(c,W,H){if(!active())return;const now=performance.now(),gold=runtime.GOLD||'#f0d27a',cam=worldCamera(runtime),cx=W/2+(runtime.S.wx-cam.x),cy=H/2+(runtime.S.wy-cam.y);c.save();
   if(shiver>0&&!calm()){c.globalAlpha=.5*shiver;c.strokeStyle='#ffffff';c.lineWidth=1;c.beginPath();c.arc(cx+Math.sin(now/25)*2,cy,16,0,6.283);c.stroke();shiver=Math.max(0,shiver-.05);}
-  const left=16,right=W-16,barY=42;
+  lesson(c,W,H,now);const left=16,right=W-16,barY=42;
   for(let i=toBar.length-1;i>=0;i--){const d=toBar[i],k=(now-d.at)/450;if(k<0)continue;if(k>=1){toBar.splice(i,1);continue;}const tx=left+(right-left)*gardenProgress(d.from+d.value,goal()),e=1-(1-k)*(1-k),z=2+Math.min(6,d.value/2);
    c.globalAlpha=1-k*.3;c.fillStyle=gold;c.fillRect(Math.round(cx+(tx-cx)*e-z/2),Math.round(cy+(barY-cy)*e-z/2),Math.round(z),Math.round(z));}
   c.restore();}
  runtime.registerJourneyGame?.('jardin',{pulse,under,over,progress:()=>gardenProgress(own().points,goal())});
- Object.defineProperties(runtime,{journeyGarden:{get:()=>()=>{const s=own();return {active:active(),points:s.points,goal:goal(),progress:gardenProgress(s.points,goal()),center:{...s.center},beds:s.beds.map(b=>({...b})),spots:bedSpots(s.center),blooms:s.blooms,misses,tree:s.tree?{...s.tree}:null,opened:s.opened};}}});
+ Object.defineProperties(runtime,{gardenLessonReplay:{get:()=>()=>{lessonOwner=own();lessonDone=false;replay=true;lessonAt=performance.now();lastCare=0;}},gardenLessonState:{get:()=>()=>({done:lessonDone,replaying:replay,misses:lessonMiss})},journeyGarden:{get:()=>()=>{const s=own();return {active:active(),points:s.points,goal:goal(),progress:gardenProgress(s.points,goal()),center:{...s.center},beds:s.beds.map(b=>({...b})),spots:bedSpots(s.center),blooms:s.blooms,misses,tree:s.tree?{...s.tree}:null,opened:s.opened};}}});
 }

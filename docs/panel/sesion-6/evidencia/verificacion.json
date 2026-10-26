@@ -1,0 +1,85 @@
+{
+  "revision": "3c5fd7b6b0bf76bbd8471228ea9f0e8b2f69f256",
+  "version": "2.3.0-alpha.181",
+  "scope": "Documentation-only review, executable tree unchanged; no listening claim",
+  "releaseAudit": {
+    "version": "2.3.0-alpha.181",
+    "sourceModules": 312,
+    "htmlIDs": 500,
+    "staticImports": 943,
+    "shellAssets": 333,
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "Checks source/UI/shell presence and font licenses/hashes; browser/audio/manual acceptance are separate.",
+      "Historical generator metadata retains retired patch/trail IDs for map compatibility; these are not playable systems."
+    ]
+  },
+  "node": {
+    "command": "npm test",
+    "result": "PASS",
+    "suites": 245
+  },
+  "browser": {
+    "normalHostname": "kubono.localhost mapped to 127.0.0.1",
+    "webdriver": false,
+    "uiStates": 24,
+    "territoryInitiallyHidden": 4,
+    "controlledTerritoryStates": 4,
+    "control": "X2 persistent notice ticket, then visual data-notice-level=1; same DOM/CSS and actual showRegion text, not natural notification timing",
+    "pageErrors": 0,
+    "viewports": [
+      [
+        320,
+        568
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        844,
+        390
+      ],
+      [
+        1280,
+        800
+      ]
+    ],
+    "scope": "Measurements, not a full browser suite or independent human play"
+  },
+  "audio": {
+    "newRenders": false,
+    "auditorListening": false,
+    "humanFeedback": "Supplied Jay account rejects final5 and accepts improvement of short closures; exact save/device unknown"
+  },
+  "preservation": {
+    "changedRuntimeFiles": [],
+    "changedTests": [],
+    "changedScripts": [],
+    "newFeatures": false
+  },
+  "findings": {
+    "originalAndEarlier": 16,
+    "retained": 16,
+    "added": [
+      "A04",
+      "U05",
+      "U06",
+      "U07",
+      "U08"
+    ],
+    "reopened": [
+      "U03",
+      "U04"
+    ],
+    "proposedPhases": [
+      "K1",
+      "K2",
+      "K3",
+      "K4",
+      "K5"
+    ],
+    "implementedPhases": []
+  }
+}

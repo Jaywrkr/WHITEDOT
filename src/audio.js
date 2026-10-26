@@ -1,4 +1,4 @@
-import {onTime} from './journey-pulse.js';
+import {onTime,audibleTime} from './journey-pulse.js';
 import {createTerritoryJourney,approachJourneyTempo} from './territory-journey.js';
 import {approachTempo,transitionGain,sparseFoundationGain} from './territory-transition.js';
 import {createMusicalConductor} from './musical-conductor.js';
@@ -53,6 +53,7 @@ export function initialize(runtime) {
   function resetMusicJourney(){journey.reset();journeyOwner=null;journeyFrame=null;}
   let arrangementAir=1,productionRooms=null;
   const OUTPUT_BOOST=1.5,LOUD=5.6*OUTPUT_BOOST;   // requested lift before limiter/peak guard
+  let stageGate=null;
   let ac=null,fx=null,master,mixInput,mfilt,punch,presence,makeup,limiter,clipper,comfortShelf,comfortLowpass,subsonic,headroom,bus,delay,dfb,dsend,verbIn,drone,droneG,noiseBuf,windG,windF;
   const voiceCurator=createVoiceCurator();
   const musicVolume=()=>runtime.S.sound?(runtime.S.softMusic?.65:1)*(Number.isFinite(runtime.S.outputVolume)?Math.max(0,Math.min(1,runtime.S.outputVolume)):1):0;
@@ -64,6 +65,14 @@ export function initialize(runtime) {
     if(punch){punch.gain.setTargetAtTime(soft?0:2,time,.5);presence.gain.setTargetAtTime(soft?0:2.5,time,.5);makeup.gain.setTargetAtTime(soft?1.6*OUTPUT_BOOST:LOUD,time,.5);}
     comfortLowpass.frequency.setTargetAtTime(soft?5500:runtime.inWorld()?(MU.anomaly==='detenido'&&MU.still>1?700:Math.min(MU.radio?.grammar?.brightness||10000,MU.radio?.character?.ceiling||10000)*(MU.season?.bright||1)*(1-.35*(MU.storm||0))):18000,time,1.2);
   }
+  // A scene's deliberate pause controls the complete output, including room/echo tails.
+  // Unity at all other times: generation, voices, filters and the volume control are unchanged.
+  function silenceSongMix(start,end=null){
+    if(!ac||!stageGate||!Number.isFinite(start)||end!==null&&(!Number.isFinite(end)||end<=start))return false;
+    const now=ac.currentTime,a=Math.max(now,start),z=end===null?null:Math.max(a,end),g=stageGate.gain;
+    g.cancelScheduledValues(now);g.setValueAtTime(1,now);g.setValueAtTime(1,Math.max(now,a-.012));g.linearRampToValueAtTime(0,a);if(z!==null){g.setValueAtTime(0,z);g.linearRampToValueAtTime(1,z+.012);}return true;
+  }
+  function restoreSongMix(at=null){if(!ac||!stageGate)return;const now=ac.currentTime,g=stageGate.gain;if(Number.isFinite(at)&&at>now){g.cancelScheduledValues(at);g.setValueAtTime(0,at);g.linearRampToValueAtTime(1,at+.012);return;}if(g.cancelAndHoldAtTime)g.cancelAndHoldAtTime(now);else g.cancelScheduledValues(now);g.setTargetAtTime(1,now,.015);}
   function impulse(sec){const n=ac.sampleRate*sec|0,b=ac.createBuffer(2,n,ac.sampleRate);for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.6);}return b;}
   function audio(){
     if(!ac&&runtime.S.sound===false)return;
@@ -107,7 +116,7 @@ export function initialize(runtime) {
        fx.hp.connect(fx.phaserSend);node.connect(punch);
        fx.freezeIn=ac.createGain();fx.freezeIn.gain.value=1;fx.freeze=ac.createDelay(2);fx.freeze.delayTime.value=.5;fx.freezeFb=ac.createGain();fx.freezeFb.gain.value=0;fx.freezeOut=ac.createGain();fx.freezeOut.gain.value=0;
        fx.hp.connect(fx.freezeIn).connect(fx.freeze).connect(fx.freezeFb).connect(fx.freeze);fx.freeze.connect(fx.freezeOut).connect(punch);}
-      punch.connect(comfortShelf).connect(comfortLowpass).connect(presence).connect(comp).connect(makeup).connect(limiter).connect(clipper).connect(headroom).connect(master).connect(ac.destination);
+      punch.connect(comfortShelf).connect(comfortLowpass).connect(presence).connect(comp).connect(makeup).connect(limiter).connect(clipper).connect(headroom).connect(stageGate=ac.createGain()).connect(master).connect(ac.destination);
       bus=ac.createGain();bus.connect(mixInput);
       verbIn=ac.createGain();verbIn.gain.value=.8;const room=returnFilters(ac);productionRooms=createProductionRooms(ac,impulse,room.input);productionRooms.connect(verbIn);productionRooms.set(1,ac.currentTime);room.output.connect(mixInput);
       delay=ac.createDelay(1.5);delay.delayTime.value=SIX*3;dfb=ac.createGain();dfb.gain.value=.38;const dl=ac.createBiquadFilter();dl.type="lowpass";dl.frequency.value=2000;
@@ -259,7 +268,7 @@ export function initialize(runtime) {
     if(runtime.inWorld()&&MU.journeyCap!=null)E=Math.min(E,MU.journeyCap);
     const A=live&&MU.dnaA?MU.dnaA:null,G=A?runtime.GEN[A.genre]:runtime.GEN.ambient,nb=runtime.inWorld()&&musicNeighbor()&&musicNeighbor()!==A?musicNeighbor():null,w=nb?musicBlend():0;
     if(s%4===0){MU.bq.push(t);if(MU.bq.length>8)MU.bq.shift();}
-    MU.sq.push({t,s});if(MU.sq.length>12)MU.sq.shift();
+    MU.sq.push({t,s,tick:MU.step});if(MU.sq.length>12)MU.sq.shift();
     const id=BI().id,cave=id==="cueva",bar=MU.step>>4;
     const nativeSpace=productionSpace(A?.genre||'ambient',{cave,fog:A?.air==='niebla',canon:MU.anomaly==='canon'}),
      space=runtime.inWorld()&&!runtime.duetRoom?(nb?blendProductionSpace(nativeSpace,productionSpace(nb.genre),w):nativeSpace):null;
@@ -290,7 +299,7 @@ export function initialize(runtime) {
       };const emit=()=>runtime.withVoiceOrigin?runtime.withVoiceOrigin('track',accompany):accompany();if(runtime.withAccompaniment)runtime.withAccompaniment(emit);else emit();
     }
     // tu Estudio: cada pieza suena en su paso
-    runtime.houseMusicStep?.(s,t);runtime.ringMusicStep?.(s,t);runtime.wildMusicStep?.(s,t);runtime.victoryMusicStep?.(s,t);runtime.echoMusicStep?.(s,t);runtime.rhythmMusicStep?.(s,t);runtime.songStageStep?.(s,t);if(runtime.S.mode==="studio"&&!runtime.houseActive?.()){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);runtime.studioHit[key]=performance.now()+(t-ac.currentTime)*1000;}}}
+    runtime.houseMusicStep?.(s,t);runtime.ringMusicStep?.(s,t);runtime.wildMusicStep?.(s,t);runtime.victoryMusicStep?.(s,t);runtime.echoMusicStep?.(s,t);runtime.rhythmMusicStep?.(s,t);runtime.songStageStep?.(s,t,MU.step);if(runtime.S.mode==="studio"&&!runtime.houseActive?.()){for(const key in runtime.S.studio.slots){const c=key.indexOf(",");if(+key.slice(c+1)===s){runtime.playSample(runtime.S.studio.slots[key],+key.slice(0,c),t,ct,R);runtime.studioHit[key]=performance.now()+(t-ac.currentTime)*1000;}}}
     // faros: instrumentos que encendiste
     if(runtime.inWorld()&&(runtime.S.layer||"superficie")==="superficie"){
       if(MU.layers.has(0)&&s%2===0)runtime.playVoice('faro',0,t+jit(),MU.dnaA,false,.4);
@@ -582,7 +591,7 @@ export function initialize(runtime) {
     if(source){runtime.soundCue?.(source,'perc',t);runtime.stormStrikeCue?.({variation,time:t});}}
   const soon=(fn,origin="ambient")=>{if(ac)MU.queue.push(t=>runtime.withVoiceOrigin?runtime.withVoiceOrigin(origin,()=>fn(t)):fn(t));};
   const now=fn=>{if(ac&&ac.state==="running")fn(ac.currentTime+.01);};
-  function beat(){if(!ac)return 0;const n=ac.currentTime;while(MU.bq.length>1&&MU.bq[1]<=n)MU.bq.shift();const bt=MU.bq[0];if(bt===undefined||bt>n)return 0;const ph=(n-bt)/(SIX*4);return ph>1?0:Math.pow(1-ph,4)*(.35+MU.E*.65);}
+  function beat(){if(!ac)return 0;const n=audibleTime(ac);const bt=MU.bq.findLast(t=>t<=n);if(bt===undefined||bt>n)return 0;const ph=(n-bt)/(SIX*4);return ph>1?0:Math.pow(1-ph,4)*(.35+MU.E*.65);}
 
 
   Object.defineProperties(runtime, {
@@ -642,6 +651,7 @@ export function initialize(runtime) {
     thunder: { get: () => thunder },
     musicalFrame:{get:()=>time=>conducted()?conductor.at(time):null},
     musicalTime:{get:()=>time=>conducted()?conductor.align(time,ac?.currentTime||0):time},
+    silenceSongMix:{get:()=>silenceSongMix},restoreSongMix:{get:()=>restoreSongMix},
     clearMusicalFrames:{get:()=>()=>conductor.clear()},
     soon: { get: () => soon },
     now: { get: () => now },

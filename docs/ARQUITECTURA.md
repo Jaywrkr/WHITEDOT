@@ -277,3 +277,12 @@ La presentación alpha.50 aclara el saldo de chispas y refuerza el contraste de 
 ## Retención operativa de desarrollo
 
 GitHub Actions conserva artefactos/logs nuevos durante siete días. Windows ejecuta `prune-local-retention.ps1` cada hora desde una copia instalada fuera del checkout; solo elimina respaldos de migración y logs inactivos permitidos, nunca la clave de firma ni los datos activos del juego. `supabase/retention.sql` prepara limpieza de auditoría sin cuentas/partidas, todavía no aplicada por error de solicitud del conector. Alcance y pendientes en [configuración de producción](CONFIGURACION_PRODUCCION.md).
+
+
+## Integración N · alpha.200
+
+`journey-pulse.js` comparte instante juzgado, referencia audible y reconstrucción compatible de frases. `MU.sq` conserva `s` módulo16 y `tick` absoluto. Los nuevos `journey.ticks` y `lugares.noteTicks` son campos aditivos; datos históricos sin compás se interpretan sin reescribirlos. Al reanudar, un transporte nuevo continúa en un compás compatible: no se recupera el tiempo ausente.
+
+`song-stage.js` cuenta pasos del transporte y guarda una cola acotada de instantes para su dibujo; no divide toda la duración por el último tempo. `audio.js` añade una compuerta posterior a efectos/headroom y anterior al volumen: valor1 salvo la pausa deliberada del final11. El tema, fin del plan y salida restauran esa compuerta. Generación, voces y control de volumen permanecen.
+
+`rare-card-model.js` ofrece vista segura de aprendizaje y asignación durable de la última tarjeta elegida a una fuente compartida. `playtest.js` guarda observaciones opcionales y locales separadas de la partida; no registra coordenadas ni audio. [Evidencia y pendientes](panel/candidato-n/informe.md).

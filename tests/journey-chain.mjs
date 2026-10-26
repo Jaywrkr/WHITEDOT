@@ -19,7 +19,7 @@ const draws=[];const ctx=new Proxy({},{get:(o,k)=>k in o?o[k]:()=>draws.push(k),
 const frame=()=>{r.drawJourneyGamesUnder(ctx,390,844,clock);r.drawJourneyGames(ctx,390,844,clock);};
 // Stand on a flower with others around.
 let spot=null;for(let i=2;i<30&&!spot;i++)for(let j=2;j<30&&!spot;j++){const list=cellFlowers(i,j);if(list.length>=5){const f=list[0];r.S.wx=f.x-100*Math.sign(list[1].x-f.x||1);r.S.wy=f.y;if(r.journeyChain().near.length===1)spot=f;}}
-assert(spot);frame();assert(r.S.journey.chain.hinted);
+assert(spot);frame();assert(!r.S.journey.chain.hinted,'a suppressed lesson is not marked as shown');
 assert.equal(r.journeyGamePulse(false),'miss');for(let i=0;i<10;i++){clock+=60;frame();}assert.equal(r.journeyChain().points,0,'off time nothing lights');
 assert.equal(r.journeyGamePulse(true),'ripple');for(let i=0;i<60;i++){clock+=50;frame();}
 const st=r.journeyChain();assert(st.lit>=5&&st.best>=5,'one pulse runs through the cluster: '+JSON.stringify(st));assert(r.S.journey.chain.lit.length===st.lit,'lit flowers are saved');

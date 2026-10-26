@@ -7,3 +7,5 @@ for(const id of PLACE_IDS){const goal=gameObjective(s,d);assert.equal(goal.id,ne
 const all=gameObjective(s,d);assert.equal(all.kind,'create');assert.equal(all.completed,11);assert.equal(all.stars,11);assert.match(all.progress,/11\/11/);s.sparks=100000;assert.deepEqual(gameObjective(s,d),all,'wallet never substitutes for progression');
 assert.equal(gameObjective(s,{version:9}).kind,'update');assert.deepEqual(s,{journey:{finished:true},sparks:100000},'objective cannot mutate progress');
 console.log('PASS one objective for the Camino, chapters and eleven places; mastery and wallet distinct, future-safe and read-only');
+
+const finished={journey:{finished:true,done:{llanura:true,lago:true,bosque:true,tormenta:true,vacio:true}}};assert.equal(gameObjective(finished).remaining,6);assert.equal(gameObjective(finished).name,'Jardín');

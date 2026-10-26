@@ -1,0 +1,154 @@
+{
+  "version": "2.3.0-alpha.192",
+  "revision": "a850ceee",
+  "method": "Five fresh-context reviewers, two simulated lenses each, no prior scores supplied or consulted. All grading before comparison with historical ledger.",
+  "rubric": {
+    "5": "Functional with notable friction",
+    "7": "Solid but lacks clarity/consistency",
+    "8": "Publication-level experience supported by evidence",
+    "9": "Exceptional, documented experience"
+  },
+  "audio": "Technical/structural rating only; no listening or taste score",
+  "rows": [
+    {
+      "lens": "Tetsuya Mizuguchi",
+      "scores": {
+        "Visual": 7,
+        "Audio técnico": 7,
+        "Creatividad": 6.5,
+        "Sensación": 6,
+        "Cohesión": 6.5,
+        "Pulido": 6
+      },
+      "mean": 6.5,
+      "scope": "Fuente y tests ligeros; sin inspección visual propia ni escucha. Confianza sensorial baja. "
+    },
+    {
+      "lens": "Toshio Iwai",
+      "scores": {
+        "Visual": 6.5,
+        "Audio técnico": 7,
+        "Creatividad": 7,
+        "Sensación": 6.5,
+        "Cohesión": 6.5,
+        "Pulido": 6.5
+      },
+      "mean": 6.666666666666667,
+      "scope": "Fuente, dos tests ligeros y sonda de eventos; sin escucha ni recorrido propio."
+    },
+    {
+      "lens": "Masaya Matsuura",
+      "scores": {
+        "Visual": 6.5,
+        "Audio técnico": 7,
+        "Creatividad": 7.5,
+        "Sensación": 6,
+        "Cohesión": 6.5,
+        "Pulido": 6
+      },
+      "mean": 6.583333333333333,
+      "scope": "Fuente y cuatro tests ligeros; sin navegador propio ni escucha."
+    },
+    {
+      "lens": "Simogo",
+      "scores": {
+        "Visual": 7,
+        "Audio técnico": 7,
+        "Creatividad": 7.5,
+        "Sensación": 6.5,
+        "Cohesión": 7,
+        "Pulido": 6.5
+      },
+      "mean": 6.916666666666667,
+      "scope": "Fuente y tests ligeros; sin escucha o recorrido humano."
+    },
+    {
+      "lens": "Ed Key y David Kanaga",
+      "scores": {
+        "Visual": 6.5,
+        "Audio técnico": 7,
+        "Creatividad": 7.5,
+        "Sensación": 6,
+        "Cohesión": 7,
+        "Pulido": 6.5
+      },
+      "mean": 6.75,
+      "scope": "Solo fuente y tests actuales, sin ejecutarlos ni escuchar."
+    },
+    {
+      "lens": "Jenova Chen",
+      "scores": {
+        "Visual": 6.5,
+        "Audio técnico": 7,
+        "Creatividad": 7.5,
+        "Sensación": 5.5,
+        "Cohesión": 6.5,
+        "Pulido": 6
+      },
+      "mean": 6.5,
+      "scope": "Solo fuente; riesgos de motivación no equivalen a conducta humana observada."
+    },
+    {
+      "lens": "Conrad Roset",
+      "scores": {
+        "Visual": 7,
+        "Audio técnico": 7,
+        "Creatividad": 8,
+        "Sensación": 7,
+        "Cohesión": 7.5,
+        "Pulido": 7
+      },
+      "mean": 7.25,
+      "scope": "Capturas nuevas de juego y paneles 320/390, más fuente. Audio confianza baja."
+    },
+    {
+      "lens": "Ken Wong",
+      "scores": {
+        "Visual": 7,
+        "Audio técnico": 7,
+        "Creatividad": 7.5,
+        "Sensación": 6.5,
+        "Cohesión": 7,
+        "Pulido": 6.5
+      },
+      "mean": 6.916666666666667,
+      "scope": "Capturas nuevas de juego, menú, guía y tienda; sin prueba humana."
+    },
+    {
+      "lens": "Lucas Pope",
+      "scores": {
+        "Visual": 7,
+        "Audio técnico": 7,
+        "Creatividad": 7.5,
+        "Sensación": 7,
+        "Cohesión": 7.5,
+        "Pulido": 7
+      },
+      "mean": 7.166666666666667,
+      "scope": "Fuente y dos sondas Node pequeñas; sin recorrido propio ni escucha."
+    },
+    {
+      "lens": "Austin Wintory",
+      "scores": {
+        "Visual": 7,
+        "Audio técnico": 7,
+        "Creatividad": 7.5,
+        "Sensación": 7,
+        "Cohesión": 7,
+        "Pulido": 7
+      },
+      "mean": 7.083333333333333,
+      "scope": "Fuente y sondas simbólicas; audio técnico, sin escucha."
+    }
+  ],
+  "categories": {
+    "Visual": 6.8,
+    "Audio técnico": 7.0,
+    "Creatividad": 7.4,
+    "Sensación": 6.4,
+    "Cohesión": 6.9,
+    "Pulido": 6.5
+  },
+  "mean": 6.833333333333333,
+  "confidence": "Provisional; independent code review plus selected current captures, symbolic probes and browser measurements. No human jury."
+}

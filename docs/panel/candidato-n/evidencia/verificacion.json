@@ -1,0 +1,145 @@
+{
+  "version": "2.3.0-alpha.200",
+  "base": "3a8148b5",
+  "dependency": "c8b9194b",
+  "scope": "Resultados locales por fase y candidato; cada fila identifica su revisión. No equivalen a catálogo completo de CI, personas, escucha o dispositivos físicos.",
+  "checks": [
+    {
+      "command": "npm test",
+      "status": "PASS",
+      "scope": "253 suites Node, candidato alpha.200; no audio_mix helper incluido"
+    },
+    {
+      "command": "node scripts/release-audit.mjs",
+      "status": "PASS",
+      "scope": "0 errores,0 avisos"
+    },
+    {
+      "command": "node scripts/n-preservation.mjs",
+      "status": "PASS",
+      "scope": "311 archivos protegidos idénticos a3a8148b5; diferencias de audio limitadas a integración revisada"
+    },
+    {
+      "command": "node scripts/pulido-preservation.mjs",
+      "status": "PASS",
+      "scope": "284 archivos protegidos desde04ae8bdd y secciones de reglas/voces/SVG intactas"
+    },
+    {
+      "command": "tests/guide_context_smoke.py",
+      "status": "PASS N4",
+      "scope": "Campaña/Eco en320/390/1280"
+    },
+    {
+      "command": "tests/interface_smoke.py",
+      "status": "PASS N4",
+      "scope": "Ocho paneles, cinco tamaños, foco, navegación silenciosa"
+    },
+    {
+      "command": "tests/touch_precision_smoke.py",
+      "status": "PASS N8",
+      "scope": "Cubo al apoyar, no segundo pulso, arrastre/escáner y segundo dedo"
+    },
+    {
+      "command": "tests/round_phrase_smoke.py",
+      "status": "PASS N3",
+      "scope": "Última nota real y rondas aisladas"
+    },
+    {
+      "command": "tests/round_timing_smoke.py",
+      "status": "PASS N7",
+      "scope": "Mismo paso en compases distintos del scheduler real"
+    },
+    {
+      "command": "tests/finale_resize_smoke.py",
+      "status": "PASS N8",
+      "scope": "Cambios verticales/rotación/Escape"
+    },
+    {
+      "command": "tests/journey_finale_smoke.py",
+      "status": "PASS N7",
+      "scope": "Final5 con audio, créditos y Mundo libre en teléfono/PC simulados"
+    },
+    {
+      "command": "tests/song_stage_smoke.py",
+      "status": "PASS N7",
+      "scope": "Final11 y33 estrellas una sola vez, audio activo"
+    },
+    {
+      "command": "tests/playtest_smoke.py",
+      "status": "PASS N8",
+      "scope": "Notas opcionales, ayuda, pausa y primer avance"
+    },
+    {
+      "command": "tests/after_journey_smoke.py",
+      "status": "PASS N5",
+      "scope": "Marcha real27,8s,6465 unidades, gasto0"
+    },
+    {
+      "command": "tests/card_inspect_smoke.py",
+      "status": "PASS N8",
+      "scope": "Inspección voluntaria, aprendizaje incompleto, selección por fuente y casa40 objetos"
+    },
+    {
+      "command": "tests/rare_cards_smoke.py",
+      "status": "PASS N6",
+      "scope": "Libro, coordenadas, probabilidades, migración y persistencia"
+    },
+    {
+      "command": "tests/edit_and_dialog_smoke.py",
+      "status": "PASS N8",
+      "scope": "Rollback y foco de finales, Tab/Escape/movimiento aislado"
+    },
+    {
+      "command": "tests/favorite_save_failure_smoke.py",
+      "status": "PASS N8",
+      "scope": "Cuota/conflicto, disco intacto y reintento"
+    },
+    {
+      "command": "tests/offline_smoke.py",
+      "status": "PASS N8",
+      "scope": "312 módulos cacheados; arranque sin cuenta"
+    },
+    {
+      "command": "tests/song_pause_mix.py",
+      "status": "PASS N7",
+      "scope": "Pausa de mezcla completa pico0; retorno~0,873; ningún sample>=0,99"
+    },
+    {
+      "command": "tests/journey_finale_mix.py",
+      "status": "PASS N7",
+      "scope": "Seis renders, timing nuevo, silencio/salida anticipada; pico0,144"
+    },
+    {
+      "command": "tests/song_stage_mix.py",
+      "status": "PASS N7",
+      "scope": "Final11 con margen; pico0,389"
+    },
+    {
+      "command": "tests/technique_mix.py",
+      "status": "PASS N8",
+      "scope": "186 renders,43 voces, sustain/release y técnicas suaves"
+    },
+    {
+      "command": "scripts/panel-capture.py",
+      "status": "PASS N8",
+      "scope": "16 estados nuevos; manifiesto con digest de JS/CSS/HTML/versión/shell"
+    },
+    {
+      "command": "UI acotada del candidato",
+      "status": "PASS N8",
+      "scope": "24 estados, cuatro viewports,0 desbordamientos/objetivos<24px"
+    }
+  ],
+  "techniqueRenderSummary": {
+    "renders": 186,
+    "maxPeak": 0.04280345141887665
+  },
+  "pending": [
+    "Cinco personas nuevas y tanda independiente8–12",
+    "Escucha altavoz/cable/Bluetooth y aceptación Jay",
+    "Safari móvil y lector físicos",
+    "Rendimiento/batería/memoria en teléfono",
+    "Catálogo completo de navegador/audio y CI del PR",
+    "Supabase/tiendas en pausa"
+  ]
+}

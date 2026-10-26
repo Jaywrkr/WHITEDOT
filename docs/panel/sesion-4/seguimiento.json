@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "scope": "Auditoría simulada histórica. Jay autoriza J1–J7 preservando generación musical y mundos; correcciones y límites en docs/PULIDO_CIERRE.md.",
+  "scope": "Registro canónico de auditorías simuladas J/K. Séptima sesión añade feedback real y correcciones K7; no jurado humano ni aceptación musical inventada.",
   "base": "676ac511",
   "audited": "04ae8bdd",
   "findings": [
@@ -123,7 +123,14 @@
         ],
         "limits": "Escucha de Jay y comprobación final del candidato pendientes; radio y generación intactas.",
         "followup": "J7 cuenta dos compases por pasos vivos al cambiar tempo; regresión de reloj variable y once renders actuales aprobados."
-      }
+      },
+      "reviews": [
+        {
+          "session": 6,
+          "evidence": "../sesion-6/informe.md",
+          "observed": "Jay comunica mejora del cierre breve; rechaza final5, registrado aparte como A04. No equivale a aceptación global de audio."
+        }
+      ]
     },
     {
       "id": "A02",
@@ -237,8 +244,8 @@
       "id": "U03",
       "area": "Objetivo",
       "priority": "P1",
-      "status": "corregido-tecnico",
-      "phase": "J4",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "K1/K5/K6",
       "title": "La guía aún dirige a metas anteriores",
       "evidence": [
         "index.html:211",
@@ -257,14 +264,32 @@
           "tests/journey_entry_smoke.py"
         ],
         "limits": "Comprensión con personas nuevas pendiente en J7; reglas y generación intactas."
+      },
+      "reviews": [
+        {
+          "session": 6,
+          "evidence": "../sesion-6/informe.md",
+          "observed": "Tras completar cinco capítulos, Jay no encontró el siguiente reto; gastó20 chispas en salto exploratorio sin llegar al anillo. La corrección nominal no cierra acceso/comprensión.",
+          "nextPhase": "K1/K4"
+        }
+      ],
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/after_journey_smoke.py",
+          "tests/places-ring.mjs"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
       }
     },
     {
       "id": "U04",
       "area": "Objetivo y economía",
       "priority": "P1",
-      "status": "corregido-tecnico",
-      "phase": "J4",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "K1/K2/K5/K6",
       "title": "33 estrellas domina al objetivo de once lugares",
       "evidence": [
         "src/refugio-lugares.js:12",
@@ -283,6 +308,24 @@
           "tests/journey_entry_smoke.py"
         ],
         "limits": "Comprensión con personas nuevas pendiente en J7; reglas y generación intactas."
+      },
+      "reviews": [
+        {
+          "session": 6,
+          "evidence": "../sesion-6/informe.md",
+          "observed": "Tras completar cinco capítulos, Jay no encontró el siguiente reto; gastó20 chispas en salto exploratorio sin llegar al anillo. La corrección nominal no cierra acceso/comprensión.",
+          "nextPhase": "K1/K4"
+        }
+      ],
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/game-objective.mjs",
+          "tests/sparks_economy_smoke.py"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
       }
     },
     {
@@ -348,7 +391,20 @@
         "capturas/manifest.json"
       ],
       "observed": "Hay feedback de Jay y pruebas automatizadas; no sesiones documentadas de nuevos jugadores ni validación instrumentada de estos cierres en teléfono. Esta revisión no verifica deploy, tiendas o cuenta en producción.",
-      "acceptance": "Cinco sesiones sin ayuda, al menos dos personas sin hábito de jugar; Jay acepta cubo y cierre en su teléfono; candidato con lógica/navegador/audio verdes y revisión de despliegue. Supabase permanece en pausa."
+      "acceptance": "Cinco sesiones sin ayuda, al menos dos personas sin hábito de jugar; Jay acepta cubo y cierre en su teléfono; candidato con lógica/navegador/audio verdes y revisión de despliegue. Supabase permanece en pausa.",
+      "reviews": [
+        {
+          "session": 6,
+          "evidence": "../sesion-6/informe.md",
+          "observed": "Aceptación negativa comunicada por Jay: navegación al anillo, final5 y sobrecarga del menú. No se considera una sesión instrumentada con cinco participantes.",
+          "nextPhase": "K5"
+        },
+        {
+          "phase": "K6",
+          "evidence": "../sesion-6/cierre-k6.md",
+          "result": "Correcciones técnicas y revisión del panel completadas; no se declara aceptación humana, CI remoto ni publicación."
+        }
+      ]
     },
     {
       "id": "D03",
@@ -394,6 +450,731 @@
         "limits": "Fixtures y navegador, no teléfono físico.",
         "additionalTests": [
           "tests/places_durability_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "A04",
+      "area": "Audio final del Viaje",
+      "priority": "P1",
+      "status": "corregido-k7-aceptacion-reabierta",
+      "phase": "K3",
+      "title": "El final5 conserva otra cama y frases no adaptadas",
+      "evidence": [
+        "src/journey-finale.js:28–45; src/song.js:73–78",
+        "../sesion-6/informe.md"
+      ],
+      "observed": "Partitura28 s, cama30 s y pad hasta32 s en modelo; notas crudas potencialmente ajenas a La mayor. Jay rechaza la escucha.",
+      "acceptance": "Contrato armónico y salida coherentes; silencio real, render de llegada/final y aceptación de Jay sin alterar generadores.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/journey-finale-harmony.mjs",
+          "tests/journey_finale_mix.py",
+          "tests/journey_finale_smoke.py"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      },
+      "feedback7": "Jay rechaza el final5 anterior / informa solape de rumbo; K7 corrige causas. Aceptación nueva pendiente.",
+      "closureK7": {
+        "version": "2.3.0-alpha.188",
+        "evidence": "../sesion-7/evidencia/verificacion.json",
+        "limits": "Técnico; no escucha humana."
+      }
+    },
+    {
+      "id": "U05",
+      "area": "Orientación",
+      "priority": "P1",
+      "status": "corregido-k7-aceptacion-reabierta",
+      "phase": "K1",
+      "title": "El faro pierde la dirección vertical",
+      "evidence": [
+        "src/places-ring.js:21,59–64",
+        "../sesion-6/informe.md"
+      ],
+      "observed": "Norte y sur producen la misma columna X.",
+      "acceptance": "Ocho rumbos correctos, destino/distancia discretos y funcionamiento sin sonido.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/places-ring.mjs",
+          "tests/after_journey_smoke.py"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      },
+      "feedback7": "Jay rechaza el final5 anterior / informa solape de rumbo; K7 corrige causas. Aceptación nueva pendiente.",
+      "closureK7": {
+        "version": "2.3.0-alpha.188",
+        "evidence": "../sesion-7/evidencia/verificacion.json",
+        "limits": "Técnico; no escucha humana."
+      }
+    },
+    {
+      "id": "U06",
+      "area": "Continuidad espacial",
+      "priority": "P1",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "K1",
+      "title": "Desplegar el Refugio desplaza el centro del anillo",
+      "evidence": [
+        "src/house.js:51,110; src/places-ring.js:33–34",
+        "../sesion-6/informe.md"
+      ],
+      "observed": "El anillo usa studio.x/y; la casa se despliega en la posición actual.",
+      "acceptance": "Referencia estable migrada desde la vigente, ruta no obsoleta y progreso/semillas preservados.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/places-ring.mjs",
+          "tests/ring_smoke.py"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      }
+    },
+    {
+      "id": "U07",
+      "area": "Menú",
+      "priority": "P1",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "K4",
+      "title": "Las decisiones principales compiten con funciones secundarias",
+      "evidence": [
+        "index.html:147–168; ../sesion-6/capturas/menu-390.png",
+        "../sesion-6/informe.md"
+      ],
+      "observed": "Seis tarjetas principales y controles adicionales; Jay informa sobrecarga.",
+      "acceptance": "Continuar destaca, herramientas en contexto, capacidades conservadas; aceptación visual y uso sin ayuda.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/menu_v2_smoke.py",
+          "tests/interface_smoke.py"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      },
+      "feedback7": "Jay: le gusta cómo está organizado el menú. Conservarlo; aceptación parcial real, no cinco sesiones."
+    },
+    {
+      "id": "U08",
+      "area": "Aviso territorial",
+      "priority": "P1",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "K4/K6",
+      "title": "La fila territorial supera el ancho de su tarjeta",
+      "evidence": [
+        "styles/estilo-j.css:309–311; ../sesion-6/evidencia/territorio-control.json",
+        "../sesion-6/informe.md"
+      ],
+      "observed": "Control visual X1: fila464px; borde derecho530,3 en pantalla390. Temporización controlada; capturas exactas de Jay pendientes.",
+      "acceptance": "Nombres/metadata largos dentro de la tarjeta; texto legible en móvil/horizontal/ampliado; revisar hijos y capturas.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "docs/panel/sesion-6/evidencia/ui-k6.json",
+          "docs/panel/sesion-6/evidencia/ui-200-k6.json"
+        ],
+        "result": "PASS",
+        "evidence": "../sesion-6/evidencia/verificacion-k6.json",
+        "limits": "Fixture/modelo/navegador; aceptación real de Jay y cinco sesiones siguen en V01. No se altera la generación del universo."
+      }
+    },
+    {
+      "id": "E01",
+      "area": "Economía",
+      "priority": "P1",
+      "status": "implementado-aceptacion-pendiente",
+      "phase": "K2",
+      "title": "Valor base al recoger fuera de tempo",
+      "observed": "Regla nueva aprobada por Jay: ×1 fuera de tempo, ×2 a tiempo y ×3 con racha; pendientes×0 reparados sin doble pago.",
+      "evidence": [
+        "../sesion-6/cierre-k6.md"
+      ],
+      "acceptance": "Contrato aprobado en lógica/navegador; contraste físico de Jay pendiente.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/spark-rules.mjs",
+          "tests/sparks-economy.mjs",
+          "tests/sparks_economy_smoke.py"
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "id": "U09",
+      "area": "Ayuda contextual",
+      "priority": "P1",
+      "status": "implementado-aceptacion-pendiente",
+      "phase": "K4/K5",
+      "title": "La lección de guardar reaparece tras el Viaje",
+      "observed": "Campaña terminada oculta la lección automática; conserva hechos y ofrece Practicar. Ayuda junto al marcador si se solicita. Errores reales de guardado siguen visibles.",
+      "evidence": [
+        "../sesion-6/cierre-k6.md"
+      ],
+      "acceptance": "Contrato aprobado en lógica/navegador; contraste físico de Jay pendiente.",
+      "closureK": {
+        "version": "2.3.0-alpha.187",
+        "tests": [
+          "tests/after_journey_smoke.py",
+          "tests/onboarding.mjs",
+          "tests/sparks_economy_smoke.py"
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "id": "U10",
+      "area": "Didáctica",
+      "priority": "P1",
+      "status": "corregido-tecnico-comprension-pendiente",
+      "phase": "L1",
+      "title": "Aprender las reglas de los lugares",
+      "observed": "Jardín no distingue con claridad posición, siembra y riego.",
+      "evidence": [
+        "src/journey-garden.js:23–29,48,62",
+        "../sesion-7/informe.md"
+      ],
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit.",
+      "closureL": {
+        "phase": "L1",
+        "version": "alpha.189",
+        "evidence": "../sesion-7/evidencia/cierre-l.json",
+        "limits": "Pruebas locales y fixtures. No sesiones humanas ni certificación de lector de pantalla."
+      }
+    },
+    {
+      "id": "U11",
+      "area": "Ayudas",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "L1",
+      "title": "Ayuda consumida antes de presentarse",
+      "observed": "Flags se guardan antes de mostrar; rechazo/caducidad puede perder la explicación.",
+      "evidence": [
+        "src/journey-games.js:13–16",
+        "../sesion-7/informe.md"
+      ],
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit.",
+      "closureL": {
+        "phase": "L1",
+        "version": "alpha.189",
+        "evidence": "../sesion-7/evidencia/cierre-l.json",
+        "limits": "Pruebas locales y fixtures. No sesiones humanas ni certificación de lector de pantalla."
+      }
+    },
+    {
+      "id": "D05",
+      "area": "Persistencia",
+      "priority": "P1",
+      "status": "corregido-tecnico",
+      "phase": "L3",
+      "title": "Edición durable de favoritos",
+      "observed": "Renombre, borrado y notas no tratan fallo de guardado.",
+      "evidence": [
+        "src/favorites.js:42–43,54",
+        "../sesion-7/informe.md"
+      ],
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit.",
+      "closureL": {
+        "phase": "L3",
+        "version": "alpha.191",
+        "evidence": "../sesion-7/evidencia/cierre-l.json",
+        "limits": "Pruebas locales y fixtures. No sesiones humanas ni certificación de lector de pantalla."
+      }
+    },
+    {
+      "id": "A05",
+      "area": "Frase propia",
+      "priority": "P2",
+      "status": "corregido-tecnico",
+      "phase": "L2",
+      "title": "Notas delimitadas por ronda",
+      "observed": "Buffer global puede arrastrar notas; último gesto se registra después de cerrar.",
+      "evidence": [
+        "src/places.js:86–118; src/journey-pulse.js:83,90",
+        "../sesion-7/informe.md"
+      ],
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit.",
+      "closureL": {
+        "phase": "L2",
+        "version": "alpha.190",
+        "evidence": "../sesion-7/evidencia/cierre-l.json",
+        "limits": "Pruebas locales y fixtures. No sesiones humanas ni certificación de lector de pantalla."
+      }
+    },
+    {
+      "id": "U12",
+      "area": "Accesibilidad",
+      "priority": "P2",
+      "status": "corregido-tecnico-lector-pendiente",
+      "phase": "L3",
+      "title": "Cierres dinámicos fuera del manejo de foco",
+      "observed": "Final5 no pertenece a lista inicial de paneles accesibles.",
+      "evidence": [
+        "src/accessibility.js:5,41; src/journey-finale.js",
+        "../sesion-7/informe.md"
+      ],
+      "acceptance": "Criterio en ../sesion-7/plan.md; no cerrar por un commit.",
+      "closureL": {
+        "phase": "L3",
+        "version": "alpha.191",
+        "evidence": "../sesion-7/evidencia/cierre-l.json",
+        "limits": "Pruebas locales y fixtures. No sesiones humanas ni certificación de lector de pantalla."
+      }
+    },
+    {
+      "id": "U13",
+      "area": "Continuidad",
+      "priority": "P1",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "K7",
+      "title": "Todas las salidas al Mundo libre",
+      "observed": "Jay pide no quedar en el Refugio tras final5; K7 centraliza las tres salidas.",
+      "evidence": [
+        "src/journey-finale.js",
+        "../sesion-7/informe.md"
+      ],
+      "acceptance": "Esperar, omitir y Explorar abren Mundo con rumbo Jardín y progreso conservado."
+    },
+    {
+      "id": "U14",
+      "area": "Aprendizaje",
+      "priority": "P1",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "M1",
+      "title": "La guía no ofrece la lección del capítulo activo",
+      "evidence": [
+        "src/voice-guide.js:24; src/journey-games.js:13",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N1",
+        "version": "alpha.193",
+        "tests": [
+          "tests/guide-context.mjs",
+          "tests/guide_context_smoke.py"
+        ],
+        "limits": "Comprensión con personas pendiente."
+      }
+    },
+    {
+      "id": "S02",
+      "area": "Respuesta táctil",
+      "priority": "P1",
+      "status": "integrado-validacion-fisica-pendiente",
+      "phase": "M3",
+      "title": "Juicio en apoyo y despacho al soltar el dedo",
+      "evidence": [
+        "src/canvas.js:38,61; src/journey-pulse.js:26",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N2",
+        "version": "alpha.194",
+        "tests": [
+          "tests/touch_precision_smoke.py",
+          "tests/pulse-output-timing.mjs",
+          "tests/journey_pulse_smoke.py"
+        ],
+        "limits": "Pulso explícito sobre cubo inmediato. Vacío conserva acierto musical sin anunciar avance. Toque fuera espera confirmación; latencia acústica/Bluetooth y comprensión pendientes."
+      }
+    },
+    {
+      "id": "A06",
+      "area": "Frase reproducida",
+      "priority": "P1",
+      "status": "corregido-tecnico-escucha-pendiente",
+      "phase": "M2",
+      "title": "El final descarta notas del mismo paso",
+      "evidence": [
+        "src/song-stage.js:48–51",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N3",
+        "version": "alpha.195",
+        "tests": [
+          "tests/phrase-fidelity.mjs",
+          "tests/round-phrase.mjs",
+          "tests/round_phrase_smoke.py",
+          "tests/song_stage_mix.py"
+        ],
+        "limits": "El paso histórico no revela su compás original; temporización compatible explícita. Reconocimiento humano pendiente."
+      },
+      "reviews": [
+        {
+          "phase": "N7",
+          "observed": "Revisión adicional corrige metadata absoluta real, cambio de tempo y época al reanudar. Regresiones reales y unitarias añadidas."
+        }
+      ]
+    },
+    {
+      "id": "A07",
+      "area": "Memoria temporal",
+      "priority": "P2",
+      "status": "corregido-tecnico-escucha-pendiente",
+      "phase": "M2",
+      "title": "Capítulos guardan paso del scheduler en lugar del juzgado",
+      "evidence": [
+        "src/journey-pulse.js:77,91; src/journey-chapters.js:89",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N3",
+        "version": "alpha.195",
+        "tests": [
+          "tests/phrase-fidelity.mjs",
+          "tests/round-phrase.mjs",
+          "tests/round_phrase_smoke.py",
+          "tests/song_stage_mix.py"
+        ],
+        "limits": "El paso histórico no revela su compás original; temporización compatible explícita. Reconocimiento humano pendiente."
+      },
+      "reviews": [
+        {
+          "phase": "N7",
+          "observed": "Revisión adicional corrige metadata absoluta real, cambio de tempo y época al reanudar. Regresiones reales y unitarias añadidas."
+        }
+      ]
+    },
+    {
+      "id": "A08",
+      "area": "Arco musical",
+      "priority": "P2",
+      "status": "corregido-tecnico-escucha-pendiente",
+      "phase": "M3",
+      "title": "Compás de silencio no coordina fondo del final11",
+      "evidence": [
+        "src/song-stage.js:43; src/audio.js:214,277–293",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N7",
+        "version": "alpha.199",
+        "tests": [
+          "tests/song_pause_mix.py",
+          "tests/song-transport.mjs",
+          "tests/song_stage_smoke.py"
+        ],
+        "limits": "Salida completa medida en render; escucha física pendiente."
+      }
+    },
+    {
+      "id": "U15",
+      "area": "Jerarquía textual",
+      "priority": "P2",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "M1",
+      "title": "Títulos y subtítulos concatenados en Más",
+      "evidence": [
+        "index.html:157–158; styles/estilo-j.css:492",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N1",
+        "version": "alpha.193",
+        "tests": [
+          "tests/guide-context.mjs",
+          "tests/guide_context_smoke.py"
+        ],
+        "limits": "Comprensión con personas pendiente."
+      }
+    },
+    {
+      "id": "U16",
+      "area": "Acción anunciada",
+      "priority": "P2",
+      "status": "corregido-tecnico-aceptacion-pendiente",
+      "phase": "M1",
+      "title": "Eco anuncia grabar donde su acción es borrar",
+      "evidence": [
+        "src/jam.js:50–54,148; index.html:84",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N1",
+        "version": "alpha.193",
+        "tests": [
+          "tests/guide-context.mjs",
+          "tests/guide_context_smoke.py"
+        ],
+        "limits": "Comprensión con personas pendiente."
+      }
+    },
+    {
+      "id": "S03",
+      "area": "Regla de Vacío",
+      "priority": "P2",
+      "status": "integrado-validacion-fisica-pendiente",
+      "phase": "M2",
+      "title": "Acierto premiado en tiempos donde el juego espera",
+      "evidence": [
+        "src/journey-rhythm.js:9; src/journey-release.js:42",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N2",
+        "version": "alpha.194",
+        "tests": [
+          "tests/touch_precision_smoke.py",
+          "tests/pulse-output-timing.mjs",
+          "tests/journey_pulse_smoke.py"
+        ],
+        "limits": "Pulso explícito sobre cubo inmediato. Vacío conserva acierto musical sin anunciar avance. Toque fuera espera confirmación; latencia acústica/Bluetooth y comprensión pendientes."
+      }
+    },
+    {
+      "id": "S04",
+      "area": "Reloj audiovisual",
+      "priority": "P2",
+      "status": "integrado-validacion-fisica-pendiente",
+      "phase": "M3",
+      "title": "Luces de ecos y objetos no aplican la misma referencia audible",
+      "evidence": [
+        "src/jam.js:95,123; src/wow-feel.js:41–46",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N2",
+        "version": "alpha.194",
+        "tests": [
+          "tests/touch_precision_smoke.py",
+          "tests/pulse-output-timing.mjs",
+          "tests/journey_pulse_smoke.py"
+        ],
+        "limits": "Pulso explícito sobre cubo inmediato. Vacío conserva acierto musical sin anunciar avance. Toque fuera espera confirmación; latencia acústica/Bluetooth y comprensión pendientes."
+      }
+    },
+    {
+      "id": "U17",
+      "area": "Viewport",
+      "priority": "P2",
+      "status": "corregido-tecnico",
+      "phase": "M3",
+      "title": "Finales no actualizan buffer si cambia solo la altura",
+      "evidence": [
+        "src/journey-finale.js:90; src/song-stage.js:91",
+        "../sesion-8/informe.md"
+      ],
+      "observed": "Revisión independiente ciega de alpha.192; hallazgo enlazado después de cerrar puntuaciones. Alcance y nivel de evidencia en el informe.",
+      "acceptance": "Criterio en ../sesion-8/plan.md. No cerrar por puntuación ni prueba aislada.",
+      "closureN": {
+        "phase": "N4",
+        "version": "alpha.196",
+        "tests": [
+          "tests/finale_resize_smoke.py",
+          "tests/interface_smoke.py"
+        ],
+        "limits": "Navegador en cinco tamaños; no teléfono físico."
+      }
+    },
+    {
+      "id": "N01",
+      "area": "Fiabilidad",
+      "priority": "P1",
+      "title": "Final5 sin importación de reloj",
+      "phase": "N7",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.199",
+        "tests": [
+          "tests/journey_finale_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N02",
+      "area": "Frase propia",
+      "priority": "P1",
+      "title": "Tick real y época al reanudar",
+      "phase": "N7",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.199",
+        "tests": [
+          "tests/phrase-fidelity.mjs",
+          "tests/round_timing_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N03",
+      "area": "Transporte",
+      "priority": "P1",
+      "title": "Tempo variable no descarta pasos",
+      "phase": "N7",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.199",
+        "tests": [
+          "tests/song-transport.mjs"
+        ]
+      }
+    },
+    {
+      "id": "N04",
+      "area": "Observación",
+      "priority": "P2",
+      "title": "Baseline, Camino y once rondas",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/recorrido-observations.mjs",
+          "tests/playtest_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N05",
+      "area": "Colección",
+      "priority": "P2",
+      "title": "Aprendizaje incompleto abre el libro",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/card_inspect_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N06",
+      "area": "Colección",
+      "priority": "P2",
+      "title": "Última tarjeta elegida controla fuente compartida",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/card-technique-durability.mjs",
+          "tests/card_inspect_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N07",
+      "area": "Entrada",
+      "priority": "P2",
+      "title": "Segundo dedo no cambia intención del primero",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/touch_precision_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N08",
+      "area": "Audio",
+      "priority": "P2",
+      "title": "Salto del transporte libera pausa",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/song-transport.mjs"
+        ]
+      }
+    },
+    {
+      "id": "N09",
+      "area": "Interfaz",
+      "priority": "P2",
+      "title": "Función de tarjeta plena no se trunca",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/card_inspect_smoke.py"
+        ]
+      }
+    },
+    {
+      "id": "N10",
+      "area": "Persistencia",
+      "priority": "P2",
+      "title": "Abandono fallido conserva intento",
+      "phase": "N8",
+      "status": "corregido-tecnico",
+      "evidence": [
+        "../candidato-n/informe.md"
+      ],
+      "acceptance": "Regresión concreta aprobada; no certifica gusto, comprensión o dispositivo físico.",
+      "closureN": {
+        "version": "alpha.200",
+        "tests": [
+          "tests/round-phrase.mjs"
         ]
       }
     }

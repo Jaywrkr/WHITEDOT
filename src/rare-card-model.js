@@ -84,3 +84,32 @@ export function learnCardEncounter(card,context={}){
  card.learning={...old,version:1,contexts,techniques,selected:techniques.includes(old.selected)?old.selected:'normal'};return true;
 }
 export function nextCardTechnique(card){const l=card.learning;if(!l||l.version!==1||!Array.isArray(l.techniques)||!l.techniques.length)return null;const options=l.techniques.filter(t=>Object.hasOwn(CARD_TECHNIQUES,t));if(!options.length)return null;l.selected=options[(options.indexOf(l.selected)+1)%options.length];return l.selected;}
+
+// Technique selection is durable or restored exactly; never discard the collected card.
+export function commitCardTechnique(card,save){
+ const learning=card?.learning;if(!learning||learning.version!==1)return null;
+ const had=Object.hasOwn(learning,'selected'),old=learning.selected,next=nextCardTechnique(card);if(!next)return null;
+ try{if(save()!==false)return next;}catch{}
+ if(had)learning.selected=old;else delete learning.selected;return null;
+}
+
+// Read malformed legacy learning safely without rewriting any collected data.
+export function cardLearning(card){
+ const l=card?.learning;if(l?.version!==1)return null;
+ const contexts=Array.isArray(l.contexts)?l.contexts.filter(c=>typeof c==='string'):[];
+ const techniques=Array.isArray(l.techniques)?l.techniques.filter(t=>Object.hasOwn(CARD_TECHNIQUES,t)):[];
+ return {contexts,techniques,selected:techniques.includes(l.selected)?l.selected:'normal'};
+}
+// Shared source IDs can have both an individual and an encounter card. The last chosen card owns its voice.
+export function chooseCardTechnique(book,card,save){
+ if(book.readOnly||book.version>1)return null;
+ const had=Object.hasOwn(book,'techniqueSelections'),old=book.techniqueSelections,key=cardKey('',card.sourceId,card.world);
+ const selected=commitCardTechnique(card,()=>{book.techniqueSelections={...(old&&typeof old==='object'&&!Array.isArray(old)?old:{}),[key]:card.id};return save();});
+ if(!selected){if(had)book.techniqueSelections=old;else delete book.techniqueSelections;}return selected;
+}
+export function sourceCardTechnique(book,sourceId,world){
+ if(book.readOnly||book.version>1)return null;
+ const selected=book.techniqueSelections?.[cardKey('',sourceId,world)],candidates=(book.items||[]).filter(c=>c.sourceId===sourceId&&sameWorld(c.world,world));
+ const card=candidates.find(c=>c.id===selected)||candidates[0],learning=cardLearning(card);
+ return learning&&Object.hasOwn(CARD_TECHNIQUES,learning.selected)?learning.selected:null;
+}

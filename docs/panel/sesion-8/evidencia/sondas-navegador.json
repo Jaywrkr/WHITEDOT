@@ -1,0 +1,46 @@
+{
+  "songHeightResize": {
+    "before": {
+      "width": 390,
+      "height": 844,
+      "bufferH": 844,
+      "dpr": 1
+    },
+    "after": {
+      "width": 390,
+      "height": 700,
+      "bufferH": 844,
+      "dpr": 1
+    },
+    "bufferResized": false
+  },
+  "finaleHeightResize": {
+    "before": {
+      "width": 390,
+      "height": 700,
+      "bufferH": 700,
+      "dpr": 1
+    },
+    "after": {
+      "width": 390,
+      "height": 600,
+      "bufferH": 700,
+      "dpr": 1
+    },
+    "bufferResized": false
+  },
+  "heldTap": {
+    "requestedHoldMs": 220,
+    "dispatches": [
+      {
+        "entry": 1710.0999999940395,
+        "down": 1464.0999999940395,
+        "origin": "player"
+      }
+    ],
+    "judgement": true,
+    "fingerTouch": true,
+    "dispatchDelayMs": 246.0
+  },
+  "pageErrors": []
+}

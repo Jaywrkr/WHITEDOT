@@ -33,6 +33,13 @@ try:
    ctx.grant_permissions(['clipboard-read','clipboard-write']);page.locator('#playtestCopy').click();page.wait_for_function("document.getElementById('playtestStatus').textContent.length>0")
    page.locator('#playtestClear').click();assert 'Persona' in page.locator('#playtestText').inner_text(),'one touch never clears'
    page.locator('#playtestClear').click();page.wait_for_function("document.getElementById('playtestText').textContent==='Sin pruebas todavía.'");page.locator('#playtestClose').click();assert page.locator('#mPlaytest').is_hidden()
+   # Separate place observations record meaningful progress and explicit help, without collecting coordinates.
+   page.goto(base+'?lugar=jardin&prueba=1');page.wait_for_function('__r?.placeRun()?.id==="jardin"');page.evaluate(hide)
+   page.wait_for_timeout(1100);page.evaluate('__r.$("bGuide").click()');page.wait_for_timeout(1100)
+   c=page.evaluate('__r.playtest().current.chapters["ronda:jardin"]');assert c['helps']==1 and c['activeMs']<c['ms'],c
+   page.locator('#guideClose').click()
+   page.evaluate("()=>{const r=__r,b=r.journeyGarden().spots[0];r.S.wx=b.x;r.S.wy=b.y;for(let i=0;i<5;i++)r.journeyGamePulse(true,{step:0,silent:true,midi:60});r.playtestTick();}")
+   c=page.evaluate('__r.playtest().current.chapters["ronda:jardin"]');assert c['firstActionMs'] is not None,c
    # ?prueba=0 stops it; the game's save never holds the notes.
    page.goto(base+'?prueba=0');page.wait_for_function('!!window.__r?.playtest');assert not page.evaluate('__r.playtest().on');assert 'prueba' not in page.evaluate("JSON.stringify(__r.S)")
    assert not errors,errors;ctx.close()

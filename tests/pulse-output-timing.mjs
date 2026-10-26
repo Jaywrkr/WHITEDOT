@@ -16,3 +16,9 @@ try{
  for(const now of [0,10,100])for(const beat of [null,NaN,-1,0,10,100,110])assert.equal(pulseNoteTime(now,beat),Math.max(now+.01,Number.isFinite(beat)&&beat>now?beat:0));
  console.log('PASS emitted-note visual timing at 0–400ms, no early landing, reset/background cancellation and unchanged audio scheduling');
 }finally{globalThis.setTimeout=original.set;globalThis.clearTimeout=original.clear;performance.now=original.now;globalThis.document=original.doc;}
+// One reference for scheduled world cues; calibration does not shift the audible clock.
+const {audibleTime}=await import('../src/journey-pulse.js');
+assert.equal(audibleTime({currentTime:10,outputLatency:.18}),9.82);
+assert.equal(audibleTime({currentTime:10,outputLatency:NaN,baseLatency:.02}),9.98);
+const oldDoc=globalThis.document;globalThis.document={querySelectorAll:()=>[]};
+try {const r={S:{mode:'world',sound:false},MU:{},inWorld:()=>true,journeyGamePulse:()=> 'wait',cubeGlow:0};initialize(r);assert(r.journeyPulse());assert.equal(r.journeyPulseState().action,'wait');assert.equal(r.cubeGlow,0,'a valid musical pulse waiting for the rule never announces progress');}finally{globalThis.document=oldDoc;}

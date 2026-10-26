@@ -1,0 +1,273 @@
+{
+  "revision": "3c5fd7b6b0bf76bbd8471228ea9f0e8b2f69f256",
+  "version": "2.3.0-alpha.181",
+  "runtimeDirty": false,
+  "runtimeDigest": "8aef24a3c19785900dd5a2c3b58fc0c0f4a9fa6b42608e41942d22522aa9237e",
+  "scope": "Local scripted production-appearance fixtures, normal hostname and webdriver=false; no human testing",
+  "states": [
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 464,
+          "scroll": 464,
+          "rect": {
+            "left": 31,
+            "right": 495.3125
+          },
+          "overflow": "visible",
+          "whiteSpace": "nowrap"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 464,
+          "scroll": 464,
+          "rect": {
+            "left": 31,
+            "right": 495.3125
+          },
+          "overflow": "hidden",
+          "whiteSpace": "nowrap"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": false,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 320,
+      "documentWidth": 320,
+      "surface": "territorio-x1-control",
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 464,
+          "scroll": 464,
+          "rect": {
+            "left": 66,
+            "right": 530.3125
+          },
+          "overflow": "visible",
+          "whiteSpace": "nowrap"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 464,
+          "scroll": 464,
+          "rect": {
+            "left": 66,
+            "right": 530.3125
+          },
+          "overflow": "hidden",
+          "whiteSpace": "nowrap"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": false,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 390,
+      "documentWidth": 390,
+      "surface": "territorio-x1-control",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 464,
+          "scroll": 464,
+          "rect": {
+            "left": 293,
+            "right": 757.3125
+          },
+          "overflow": "visible",
+          "whiteSpace": "nowrap"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 464,
+          "scroll": 464,
+          "rect": {
+            "left": 293,
+            "right": 757.3125
+          },
+          "overflow": "hidden",
+          "whiteSpace": "nowrap"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": false,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 844,
+      "documentWidth": 844,
+      "surface": "territorio-x1-control",
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "zoneText": [
+        {
+          "id": "zMood",
+          "text": "Cúmulo · House — Microhouse × Grave y espacio · 120 BPM · Primavera",
+          "client": 464,
+          "scroll": 464,
+          "rect": {
+            "left": 511,
+            "right": 975.3125
+          },
+          "overflow": "visible",
+          "whiteSpace": "nowrap"
+        },
+        {
+          "id": "zName",
+          "text": "Raíces entrelazadas",
+          "client": 464,
+          "scroll": 464,
+          "rect": {
+            "left": 511,
+            "right": 975.3125
+          },
+          "overflow": "hidden",
+          "whiteSpace": "nowrap"
+        },
+        {
+          "id": "zDo",
+          "text": "Tierra de Origen · Gravedad ligera · Movimiento rápido",
+          "client": 0,
+          "scroll": 0,
+          "rect": {
+            "left": 0,
+            "right": 0
+          },
+          "overflow": "visible",
+          "whiteSpace": "normal"
+        }
+      ],
+      "menuVisible": false,
+      "menuMore": false,
+      "mode": "world",
+      "journeyMode": "libre",
+      "dev": false,
+      "headings": [],
+      "visibleButtons": [
+        "Veis",
+        "Guardar este lugar",
+        "Próximo salto · 0/20 ✦",
+        "Iniciar paseo musical",
+        "Estilos",
+        "Menú"
+      ],
+      "technicalText": [],
+      "smallText": [],
+      "smallTargets": [],
+      "overflow": [],
+      "openDialogs": [],
+      "pageWidth": 1280,
+      "documentWidth": 1280,
+      "surface": "territorio-x1-control",
+      "viewport": [
+        1280,
+        800
+      ]
+    }
+  ]
+}

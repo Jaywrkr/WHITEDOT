@@ -46,12 +46,13 @@ export const barsLived=(id,progress={})=>(progress.bars||0)>=(CHAPTER_BARS[id]||
 export function stateCap(state,id){const cap=STATE_CAP[state]??null;return cap!=null&&id==='vacio'?Math.min(cap,VOID_CAP):cap;}
 export function normalizeChapters(j,inWorld=false){
  const q=j&&typeof j==='object'?j:{},chapter=Number.isInteger(q.chapter)&&q.chapter>=0&&q.chapter<CHAPTERS.length?q.chapter:inWorld?1:0;
- const done={},notes={},steps={},progress={},count=(v,max)=>Number.isFinite(v)&&v>0?Math.min(max,v):0;
+ const done={},notes={},steps={},ticks={},progress={},count=(v,max)=>Number.isFinite(v)&&v>0?Math.min(max,v):0;
  for(const id of CHAPTERS){if(q.done?.[id]===true)done[id]=true;const raw=Array.isArray(q.notes?.[id])?q.notes[id]:[],keep=raw.map((m,i)=>Number.isFinite(m)&&m>=24&&m<=96?i:-1).filter(i=>i>=0).slice(-16),n=keep.map(i=>raw[i]);if(n.length)notes[id]=n;
   // When each note sounded (the music's sixteenth), kept beside the notes so the finale plays your rhythm; older saves have none.
   const st=Array.isArray(q.steps?.[id])&&q.steps[id].length===raw.length?keep.map(i=>q.steps[id][i]):null;if(n.length&&st?.every(v=>Number.isInteger(v)&&v>=0))steps[id]=st;
+  const ts=q.ticks?.[id];if(Array.isArray(ts)&&ts.length===raw.length){const kept=keep.map(i=>ts[i]);if(kept.every((v,i)=>Number.isSafeInteger(v)&&v>=0&&(!i||v>=kept[i-1])))ticks[id]=kept;}
   const p=q.progress?.[id],out={};if(p&&typeof p==='object'){for(const [k,max] of [['bars',9999],['walk',99999],['bolts',999],['echoes',999]]){const v=count(p[k],max);if(v)out[k]=k==='bars'||k==='walk'?Math.round(v*10)/10:Math.floor(v);}}if(Object.keys(out).length)progress[id]=out;}
- return {chapter,done,notes,steps,progress};}
+ return {chapter,done,notes,steps,ticks,progress};}
 // The state of a chapter from its on-time hits and whether it is done.
 export function chapterState(hits,done){return done?'plenitud':hits>0?'pertenencia':'llegada';}
 // The nearest place of a biome, searched in rings around a point on the World's grid. Never the sea, except for the
@@ -71,7 +72,7 @@ export function initialize(runtime){
  const calm=()=>!!(runtime.S.reducedMotion||prefersReducedMotion());
  const journey=()=>runtime.S.journey||{};
  function own(){if(owner!==runtime.S){owner=runtime.S;const j=journey();Object.assign(j,normalizeChapters(j,runtime.inWorld?.()));hits=0;portal=null;storm.length=0;echoes.length=0;lastPulse=lastTick=performance.now();lastSpot=null;}return journey();}
- let lastTick=0,lastSpot=null;
+ let lastTick=0,lastSpot=null,timingOwner=null,timingId=null,lastTransportTick=null,tickOffset=0;
  const progress=id=>{const j=own();return (j.progress[id]||={});};
  const ready=id=>momentLived(id,progress(id),journey().moments||{})&&barsLived(id,progress(id));
  const portalOpen=()=>!!portal&&performance.now()>=portal.at;
@@ -84,10 +85,16 @@ export function initialize(runtime){
  const inChapter=()=>active()&&WORLD_CHAPTERS.includes(current())&&biomeId()===current();
  function stateNow(){if(!active())return null;const j=own();const bars=(performance.now()-lastPulse)/1000/((runtime.SIX||.15)*16);if(bars>SILENCE_BARS&&!portal)return 'silencio';return chapterState(inChapter()?hits:0,!!j.done[current()]);}
  // Every pulse of the player: on-time theme notes are remembered for the finale.
- function pulse(on,midi,step){lastPulse=performance.now();if(!on||!inChapter())return;hits++;const j=own(),id=current(),notes=(j.notes[id]||=[]);
+ function pulse(on,midi,step,tick){lastPulse=performance.now();if(!on||!inChapter())return;hits++;const j=own(),id=current(),notes=(j.notes[id]||=[]);
   // Steps stay beside the notes only while every note has one.
   const steps=j.steps[id]||(notes.length?null:(j.steps[id]=[]));notes.push(midi);if(steps){if(Number.isInteger(step)&&step>=0)steps.push(step);else delete j.steps[id];}
-  runtime.journeyMomentNote?.(id,midi);if(notes.length>16){notes.splice(0,notes.length-16);j.steps[id]?.splice(0,j.steps[id].length-16);}
+  const ticks=j.ticks[id]||(notes.length===1?j.ticks[id]=[]:null);if(ticks){if(Number.isSafeInteger(tick)&&tick>=0){
+   if(timingOwner!==runtime.S||timingId!==id){timingOwner=runtime.S;timingId=id;lastTransportTick=null;tickOffset=0;}
+   // A resumed transport has a new epoch. Keep saved timing; append at the next compatible bar.
+   if(lastTransportTick===null||tick<lastTransportTick){const previous=ticks.at(-1);if(Number.isFinite(previous))tickOffset=Math.max(tickOffset,Math.ceil((previous+1-tick)/16)*16);}
+   ticks.push(tick+tickOffset);lastTransportTick=tick;
+  }else delete j.ticks[id];}
+  runtime.journeyMomentNote?.(id,midi);if(notes.length>16){notes.splice(0,notes.length-16);j.steps[id]?.splice(0,j.steps[id].length-16);j.ticks[id]?.splice(0,j.ticks[id].length-16);}
   // The Tormenta: every note on time brings your own bolt down on the beat; once yours fall, the storm's stop.
   // With «Baila» (journey-dance.js) your bolts are the ones you return from its circles.
   if(id==='tormenta'&&runtime.ac&&!runtime.journeyGame?.('tormenta')){storm.push(runtime.ac.currentTime);moments.bolts++;progress(id).bolts=(progress(id).bolts||0)+1;}

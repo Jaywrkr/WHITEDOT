@@ -1,3 +1,4 @@
+import {freeOpen} from './journey-mode.js';
 import {gameObjective} from './places.js';
 import {initialize as controlMotion} from './control-motion.js';
 // Eventos de botones y controles de prototipo.
@@ -10,11 +11,12 @@ export function initialize(runtime) {
   runtime.$("sessionShare").onclick=runtime.shareSession;
   runtime.$("hcGo").onclick=()=>{runtime.S.help.camino=true;runtime.$("mHelpC").hidden=true;if(runtime.S.sound)runtime.audio();if(!runtime.S.voiceStart){runtime.S.voiceStart=true;setTimeout(()=>runtime.say(runtime.VOZ.start),900);}runtime.save();};
   // The menu opens on who you are and where: name, cube, sparks and place.
-  function menuSummary(){const S=runtime.S,$=runtime.$,goal=gameObjective(S,runtime.placesData?.()),name=(S.playerProfile?.name||'').trim();$("menuTitle").textContent=name||'Kubono';const next=$("bLugares")?.querySelector("small");if(next)next.textContent=goal.line;$("menuAvatar").style.background=runtime.cubeColor?.()||'#fff';
+  function menuSummary(){const S=runtime.S,$=runtime.$,goal=gameObjective(S,runtime.placesData?.()),name=(S.playerProfile?.name||'').trim();$("menuTitle").textContent=name||'Kubono';const next=$("bLugares")?.querySelector("small");if(next)next.textContent=goal.line;const follow=$('bContinue');if(follow){follow.textContent=runtime.placeRun?.()?'Volver a la ronda':goal.kind==='place'?`Seguir hacia ${runtime.PLACES?.find?.(p=>p.id===goal.id)?.name||goal.line.replace('Siguiente: ','').replace(/\.$/,'')}`:goal.kind==='create'?'Tu canción':'Continuar el Viaje';}$("menuAvatar").style.background=runtime.cubeColor?.()||'#fff';
    const place=S.mode==='studio'?'Refugio':runtime.inWorld()?((S.layer&&S.layer!=='superficie')?(S.layer==='bajo'?'Subsuelo':'Cielo'):runtime.regionOfPos?.(S.wx,S.wy)?.name):'Camino';$("menuSummary").textContent=[runtime.journeyQuiet?.()?'':'✦ '+Math.floor(S.sparks||0)+' chispas',place].filter(Boolean).join(' · ');}
   runtime.$("bMenu").onclick=()=>{volumeUI();menuSummary();runtime.houseMenuNote?.();runtime.$("mMenu").hidden=false;};runtime.$("mnClose").onclick=()=>{runtime.$("mMenu").hidden=true;};
   document.querySelectorAll("#mMenu .tiles button,#mMenu .devbox button").forEach(b=>b.addEventListener("click",()=>{if(b.id!=="dReset")runtime.$("mMenu").hidden=true;}));
-  runtime.$("bPrimary").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else motion.enter(runtime.$('bPrimary'));};
+  runtime.$('bContinue').onclick=()=>{runtime.$('mMenu').hidden=true;const goal=gameObjective(runtime.S,runtime.placesData?.());if(runtime.placeRun?.())return;if(goal.kind==='place')runtime.ringGuide?.(goal.id);else if(goal.kind==='create')runtime.replaySong?.();};
+  runtime.$("bPrimary").onclick=()=>{runtime.$("mMenu").hidden=true;if(runtime.inWorld())runtime.exitWorld(false);else motion.enter(runtime.$('bPrimary'));};
   runtime.$("bStudio").onclick=runtime.enterStudio;runtime.$("bDeploy").onclick=runtime.deployStudio;runtime.$("stExit").onclick=()=>runtime.houseBack();
   runtime.$("oDeploy").onclick=()=>{runtime.$("mOut").hidden=true;runtime.deployStudio();};
   runtime.$("bag").onclick=e=>{const b=e.target.closest("button");if(!b)return;runtime.selSample=b.dataset.s;runtime.renderBag();};
@@ -23,7 +25,7 @@ export function initialize(runtime) {
   runtime.$("hwGo").onclick=()=>{runtime.S.help.mundo=true;runtime.save();runtime.$("mHelpW").hidden=true;runtime.showRegion(runtime.regionOfPos(runtime.S.wx,runtime.S.wy),true);};
   runtime.$("bShare").onclick=()=>runtime.shareCard(runtime.inWorld()||runtime.S.stars.length?"sky":"day");runtime.$("cShare").onclick=()=>{runtime.$("mCap").hidden=true;runtime.shareCard("day");};
   runtime.$("cExplore").onclick=()=>motion.enter(runtime.$('cExplore'),()=>runtime.$('mCap').hidden=true);
-  runtime.$("bWorld").onclick=()=>{if(runtime.inWorld())runtime.exitWorld(false);else runtime.enterWorld();};
+  runtime.$("bWorld").onclick=()=>{if(freeOpen(runtime.S.journey)){if(runtime.houseActive?.())runtime.exitHouse?.();else if(!runtime.inWorld())runtime.enterWorld();}else if(runtime.inWorld())runtime.exitWorld(false);else runtime.enterWorld();};
   runtime.$("bSky").onclick=runtime.openSky;runtime.$("kClose").onclick=()=>{runtime.$("mSky").hidden=true;};runtime.$("kShare").onclick=()=>{runtime.$("mSky").hidden=true;runtime.shareCard("sky");};
   runtime.$("oSky").onclick=()=>{runtime.$("mOut").hidden=true;runtime.openJournal("places");};runtime.$("oClose").onclick=()=>{runtime.$("mOut").hidden=true;};
   runtime.$("bAch").onclick=runtime.openJournal;
@@ -33,7 +35,7 @@ export function initialize(runtime) {
   const livingUI=()=>{runtime.$('bLivingMusic').hidden=true;runtime.$('bLivingMusic').textContent='Música electrónica generativa';};
   Object.defineProperty(runtime,'refreshLivingMusic',{get:()=>livingUI});
   runtime.$('bLivingMusic').onclick=()=>{};livingUI();
-  runtime.$("bMusicSettings").onclick=()=>{styleUI();runtime.$("mMusic").hidden=false;};
+  runtime.$("bMusicSettings").onclick=()=>{runtime.$("mMenu").hidden=true;runtime.$("mSettings").hidden=true;styleUI();runtime.$("mMusic").hidden=false;};
   const rs=runtime.$("rStyle");
   const styleName=I=>I<.3?'Suave':I<.7?'Equilibrada':'Energética';
   function styleUI(){livingUI();runtime.$("bSoft").setAttribute("aria-pressed",String(!!runtime.S.softMusic));runtime.$("rVolume").value=Math.round((runtime.S.outputVolume??1)*100);const I=Number.isFinite(runtime.S.musicEnergy)?Math.max(0,Math.min(1,runtime.S.musicEnergy)):.5;rs.value=Math.round(I*100);rs.setAttribute('aria-valuetext',styleName(I)+' · '+Math.round(I*100)+'%');runtime.$("styleNow").textContent=styleName(I);runtime.$("muMute").textContent=runtime.S.sound?"Silenciar":"Activar sonido";runtime.$("bSound").querySelector("span").textContent=runtime.S.sound?"Sonido: sí":"Sonido: no";runtime.$("bSound").setAttribute('aria-pressed',String(!!runtime.S.sound));}
