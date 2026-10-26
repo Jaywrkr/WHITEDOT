@@ -650,3 +650,8 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 #rareNotice[data-layout="full"] #rareNoticeOdds{font-variant-numeric:tabular-nums}
 
 #rareNotice[data-layout="full"] #rareNoticeAbility{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+
+/* One explicit route to help; the lesson highlights just the action needed now. */
+.menu-utilities #bGuide{grid-column:1/-1}
+#guidePlaceSteps li{color:var(--dim)}
+#guidePlaceSteps li[aria-current="step"]{color:var(--ink);border-left:2px solid #fff;padding-left:10px;margin-left:-12px}

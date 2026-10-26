@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {GARDEN_GOAL,GARDEN_BEDS,GARDEN_REACH,GARDEN_VALUES,bedSpots,normalizeGarden,gardenPulse,gardenWilt,gardenProgress} from '../src/journey-garden.js';
+import {GARDEN_GOAL,GARDEN_BEDS,GARDEN_REACH,GARDEN_VALUES,bedSpots,normalizeGarden,gardenPulse,gardenWilt,gardenProgress,gardenTarget} from '../src/journey-garden.js';
 // Eight beds around the centre, near and far in turn; fixed, never random.
 const c={x:1000,y:500},spots=bedSpots(c);assert.equal(spots.length,GARDEN_BEDS);assert.deepEqual(bedSpots(c),spots);
 assert(spots.every((p,i)=>Math.abs(Math.hypot(p.x-c.x,p.y-c.y)-(i%2?230:150))<1));
@@ -30,3 +30,6 @@ function simulate(onTime,goal=GARDEN_GOAL,seed=7,wiltBars=8){let rnd=seed;const 
 const casual=simulate(.75),skilled=simulate(.9),maestro=simulate(.8,GARDEN_GOAL*1.5,7,6);
 assert(casual>=130&&casual<=180,'a round of the Jardín lasts about 2:30, not '+casual+' s');assert(skilled<casual,'playing on time is faster');assert(maestro>=180&&maestro<=260,'the Maestro one lasts 3–4 min, not '+maestro+' s');
 console.log(`PASS journey garden: eight fixed beds, sow, grow, bloom and pick on time, untended plants wilt; simulated round ${Math.round(casual)} s (on time ${Math.round(skilled)} s, Maestro ${Math.round(maestro)} s)`);
+
+// A nearby empty bed stays actionable even if a distant plant is already growing.
+{const q=normalizeGarden({center:c});q.beds[4].stage=2;const original=JSON.stringify(q);assert.equal(gardenTarget(q,spots[0]).phase,'sow');q.beds[0].stage=1;assert.equal(gardenTarget(q,spots[0]).phase,'water');q.beds[0].stage=4;assert.equal(gardenTarget(q,spots[0]).phase,'harvest');assert.equal(gardenTarget(q,{x:9000,y:9000}).phase,'approach');const before=JSON.stringify(q);gardenTarget(q,spots[0]);assert.equal(JSON.stringify(q),before);}
