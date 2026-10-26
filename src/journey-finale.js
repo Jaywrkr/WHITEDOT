@@ -87,7 +87,7 @@ export function initialize(runtime){
  function credits(r){r.credits=true;const box=r.el.querySelector('.journey-credits');box.replaceChildren(...(r.festival?FESTIVAL_LINES:CREDIT_LINES).map((line,i)=>{const p=document.createElement('p');p.textContent=line;p.style.animationDelay=`${i*.9}s`;if(i===0)p.className='journey-title';return p;}));
   // «Explorar»: straight into the free World, without waiting for the credits to end.
   if(!r.festival){const go=document.createElement('button');go.className='journey-explore';go.id='journeyExplore';go.textContent='Explorar a pie';go.onclick=e=>{e?.stopPropagation?.();finish(false);};r.el.appendChild(go);}}
- function frame(){if(!run)return;const el=run.el,cv=el.querySelector('canvas'),W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);if(cv.width!==Math.round(W*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
+ function frame(){if(!run)return;const el=run.el,cv=el.querySelector('canvas'),W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
   const c=cv.getContext('2d'),t=now()-run.at,music=t-GATHER,end=run.length,still=calm();c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
   // The sky turns gold while your journey plays, and goes dark in the silence.
   const glow=(music<0?Math.max(0,1+music/GATHER)*.3:.35+.65*Math.min(1,music/end))*(music>end?Math.max(0,1-(music-end)/SILENCE):1);const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,`rgba(240,210,122,${.32*glow})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);

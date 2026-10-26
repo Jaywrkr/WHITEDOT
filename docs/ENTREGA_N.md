@@ -7,7 +7,7 @@ Autorizadas por Jay tras la revisión ciega de alpha.192. Meta: nueve en cada ca
 | N1 | `pulido/n1-entender-jugando` | Implementación técnica; aceptación pendiente |
 | N2 | `pulido/n2-precision` | Implementación técnica; aceptación pendiente |
 | N3 | `pulido/n3-frase-fiel` | Implementación técnica; aceptación pendiente |
-| N4 | `pulido/n4-interfaz` | Pendiente |
+| N4 | `pulido/n4-interfaz` | Implementación técnica; aceptación pendiente |
 | N5 | `pulido/n5-recorrido` | Pendiente |
 | N6 | `pulido/n6-descubrimientos` | Pendiente |
 | N7 | `pulido/n7-integracion-musical` | Pendiente |
@@ -32,3 +32,9 @@ Verificación: 249 suites Node; touch_precision_smoke.py y journey_pulse_smoke.p
 La canción da a cada frase los compases necesarios; no descarta notas del mismo paso. Capturas nuevas guardan posición absoluta junto al paso juzgado; campaña deja de guardar el cabezal adelantado. Guardados antiguos conservados con orden compatible; pausas muy largas se abrevían por compases completos, sin afirmar reconstrucción histórica.
 
 Verificación: 250 suites Node, round_phrase_smoke.py y render song_stage_mix.py aprobados; pico0,389 sin saturación. Auditoría limpia. Reconocimiento/agrado físico pendientes.
+
+## N4 · 2.3.0-alpha.196
+
+Finales actualizan ancho y altura de su canvas. Guía contextual reduce texto repetido y explica pulso/movimiento. Jerarquía y salidas adaptadas a pantalla baja, áreas seguras y contenido largo, sin redibujar mundo ni cubo.
+
+Verificación: 250 suites Node; finale_resize_smoke.py, interface_smoke.py (cinco tamaños, ocho paneles) y guide_context_smoke.py aprobados. Auditoría limpia. Lector y pantalla física pendientes.

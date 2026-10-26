@@ -88,7 +88,7 @@ export function initialize(runtime){
  function pulse(id,time){const t=run?.last?.[id];if(!Number.isFinite(t))return 0;return Math.max(0,1-(time-t)/((runtime.SIX||.15)*4));}
  // Whether a layer sounds now: won, and already in (the final brings them in one bar after another).
  function sounding(id){if(!run||!run.ids.includes(id))return false;const bar=run.k<0?-1:Math.floor(run.k/16);return run.start!==null&&bar>=(run.plan.entry[id]||0);}
- function frame(){if(!run||!run.el)return;const el=run.el,cv=el.querySelector('canvas'),W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);if(cv.width!==Math.round(W*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
+ function frame(){if(!run||!run.el)return;const el=run.el,cv=el.querySelector('canvas'),W=innerWidth,H=innerHeight,dpr=Math.min(2,devicePixelRatio||1);if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);}
   const c=cv.getContext('2d'),ms=performance.now()-run.at,still=calm(),time=runtime.ac?.currentTime??0,bar=run.k<0?0:Math.floor(run.k/16);c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#000';c.fillRect(0,0,W,H);
   const full=run.ids.filter(id=>sounding(id)).length/SONG_IDS.length,g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,`rgba(240,210,122,${.08+.3*full})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);
   // Without sound the stage still opens: the layers come in by the clock, at the World's tempo.

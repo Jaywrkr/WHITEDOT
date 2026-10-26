@@ -624,3 +624,19 @@ body.journey-quiet.world-focus .bar,body.place-round.world-focus .bar{display:bl
 .menu-group:not(.primary) .tiles button>span{display:flex;flex-direction:column;gap:4px;min-width:0;overflow-wrap:anywhere}
 .menu-group:not(.primary) .tiles button small{font:400 11px/1.4 var(--mono);color:var(--dim)}
 #guidePlaceHint{border-top:1px solid var(--line);padding-top:12px;color:var(--ink)}
+
+/* Context first, then one next step. No extra surface over the world. */
+#guidePlaceSteps{padding-left:20px;margin:8px 0;font:12px/1.65 var(--mono)}
+#guidePlaceSteps li+li{margin-top:8px}
+#mGuide[data-rule="true"] #guideExplore{margin-top:12px}
+.sheet :is(h2,h3,li,small){overflow-wrap:anywhere}
+#songStage .song-stage-row{flex-wrap:wrap;bottom:calc(var(--safe-bottom,0px) + 16px)}
+#songStage .song-stage-row button{max-width:100%;flex:0 1 160px;min-width:0;padding:10px 16px}
+#journeyFinale .journey-explore,#journeyFinale .journey-again{max-width:calc(100vw - 32px);white-space:normal}
+#rareNotice[data-layout="full"],#celebration[data-layout="full"]{padding:calc(var(--safe-top,0px) + 12px) 12px calc(var(--safe-bottom,0px) + 12px)}
+@media(max-height:500px){
+ #journeyFinale .journey-credits{top:10%;font-size:11px;line-height:1.8}
+ #journeyFinale .journey-explore,#journeyFinale .journey-again{bottom:calc(var(--safe-bottom,0px) + 12px)}
+ #songStage .song-stage-text{top:calc(var(--safe-top,0px) + 12px);font-size:11px;line-height:1.6}
+ #songStage .journey-title,#journeyFinale .journey-title{font-size:18px;letter-spacing:.08em}
+}
