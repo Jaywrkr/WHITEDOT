@@ -32,17 +32,24 @@ export const LINE_ALPHA=.38,LINE_BACK=.7,LINE_TICK_GAP=12;
 export const landDelay=(beat,now,latency=0)=>[beat,now,latency].every(Number.isFinite)?Math.max(0,Math.round((beat+latency-now)*1000)):0;
 // Same scheduling rule the pulse already uses; visuals follow the emitted note, not a past judged beat.
 export const pulseNoteTime=(now,beat)=>Math.max(now+.01,Number.isFinite(beat)&&beat>now?beat:0);
-export const audibleTime=ac=>(ac?.currentTime||0)-outputLatency(ac);
+// The player's own delay (see heardTime below), declared first: the light follows it too.
+let NUDGE=0;
 export const outputLatency=ac=>{const v=Number(ac?.outputLatency||ac?.baseLatency||0);return Number.isFinite(v)?Math.max(0,Math.min(.4,v)):0;};
+// Panel 10 (P5, Mizuguchi): one clock for the light. Every light, cursor and glow waits for the moment the note is
+// heard: the device's output latency plus the player's measured delay (the calibration, latencyNudge), never negative.
+export const lightLatency=ac=>Math.max(0,outputLatency(ac)+NUDGE);
+// The audio clock as the player hears it now; what the Line's cursor, the beat glows and every visual cue follow.
+export const audibleTime=ac=>(ac?.currentTime||0)-lightLatency(ac);
+// Milliseconds from now until a note scheduled at `time` on the audio clock is heard (0 without audio).
+export const cueDelay=(ac,time)=>ac?landDelay(time,ac.currentTime||0,lightLatency(ac)):0;
 // Visual callbacks follow the estimated audible output and expire on a surface change.
-export function scheduleAudibleCue(runtime,time,paint){const state=runtime.S,ac=runtime.ac,mode=state.mode,layer=state.layer,wait=landDelay(time,ac?.currentTime||0,outputLatency(ac)),due=performance.now()+wait;
+export function scheduleAudibleCue(runtime,time,paint){const state=runtime.S,ac=runtime.ac,mode=state.mode,layer=state.layer,wait=cueDelay(ac,time),due=performance.now()+wait;
  return setTimeout(()=>{if(runtime.S!==state||runtime.ac!==ac||state.mode!==mode||state.layer!==layer||globalThis.document?.hidden||ac?.state&&ac.state!=='running'||performance.now()-due>150||openSurface('.modal:not([hidden])'))return;paint();},wait);}
 // The moment the player heard, on the audio clock: when the finger touched (atMs, from performance.now(); a tap is
 // judged when the finger goes down, not when it lifts) minus the output latency, because the player answers what
 // reaches the ear, not what the clock scheduled.
 // Plus the player's own delay, measured from their first pulses (rhythm-calibration.js, plan H2): some phones and
 // headphones are later than they say, and some players hear the beat a little late.
-let NUDGE=0;
 export const latencyNudge=()=>NUDGE;
 export function setLatencyNudge(v){NUDGE=Number.isFinite(v)?Math.max(-.08,Math.min(.3,v)):0;return NUDGE;}
 export function heardTime(ac,atMs,nowMs){const late=Number.isFinite(atMs)&&Number.isFinite(nowMs)?Math.max(0,Math.min(1,(nowMs-atMs)/1000)):0;return (ac?.currentTime||0)-late-outputLatency(ac)-NUDGE;}
@@ -72,7 +79,7 @@ export function initialize(runtime){
  const haptics=()=>runtime.S.haptics!==false;
  function vibrate(ms){if(!haptics()||typeof navigator==='undefined'||typeof navigator.vibrate!=='function')return false;try{navigator.vibrate(ms);state.vibrations++;return true;}catch(_){return false;}}
  function scheduleLanding(time){const f=lastLanding;if(!f)return;if(f.timer!==undefined){clearTimeout(f.timer);pending.delete(f.timer);}
-  const ac=runtime.ac,wait=runtime.S.sound&&ac?landDelay(time,ac.currentTime,outputLatency(ac)):0;state.landIn=wait;f.due=performance.now()+wait;
+  const ac=runtime.ac,wait=runtime.S.sound&&ac?cueDelay(ac,time):0;state.landIn=wait;f.due=performance.now()+wait;
   const land=()=>{pending.delete(f.timer);if(f.epoch!==epoch||f.owner!==runtime.S||f.mode!==runtime.S.mode||f.layer!==runtime.S.layer||globalThis.document?.hidden||openSurface('.modal:not([hidden])')||performance.now()-f.due>150||runtime.S.sound&&runtime.ac?.state&&runtime.ac.state!=='running')return;
    if(f.waiting)return;vibrate(f.phrase?[12,40,18]:12);runtime.cubeGlow=1;runtime.cubeKick=calm()?0:1;runtime.flash=Math.max(runtime.flash||0,.7);};
   if(wait>0){f.timer=setTimeout(land,wait);pending.add(f.timer);if(pending.size>12){const first=pending.values().next().value;clearTimeout(first);pending.delete(first);}}else land();

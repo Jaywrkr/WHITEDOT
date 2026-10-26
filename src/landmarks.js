@@ -1,3 +1,4 @@
+import {cueDelay} from './journey-pulse.js';
 import {musicalCharacter,inRegister} from './musical-character.js';
 import {elementInk,WORLD_VISUAL,localGlowRadius} from './visual.js';
 // Hitos y horizonte sonoro. Un hito grande primero se OYE (apagado y desde su dirección),
@@ -52,7 +53,7 @@ export function initialize(runtime){
    lm.motif.forEach((deg,i)=>{const at=t+lm.steps[i]*six,midi=ct[deg%ct.length]+(lm.type==='monolito'?-12:lm.type==='faro'||lm.type==='torre'?12:0);
     const profile=musicalCharacter(runtime.MU.dnaA?.genre||runtime.regionOfPos(runtime.S.wx,runtime.S.wy).genre);
     voice(lm.type,inRegister(midi,lm.type==='monolito'?36:profile.low,lm.type==='monolito'?55:profile.high),at,gain*(i?0.8:1),cut,pan);
-    setTimeout(()=>{lm.ref.lit=1;},Math.max(0,(at-ac.currentTime)*1000));});
+    setTimeout(()=>{lm.ref.lit=1;},cueDelay(ac,at));});
   }
  }
  // Timbre propio por tipo de hito; cadena aparte con filtro (lejanía) y paneo (dirección).

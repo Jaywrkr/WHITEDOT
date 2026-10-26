@@ -43,7 +43,7 @@ Web Audio sintetiza localmente; no se usan Tone ni instrumentos de Arturia. El s
 
 `MU.sq` conserva paso módulo16 y tick absoluto. `journey.notes/steps/ticks` y `lugares.notes/noteSteps/noteTicks` conservan la aportación personal; formatos antiguos sin ticks siguen interpretándose sin reescribirlos.
 
-`journey-pulse.js` comparte juicio, reloj audible y `scheduleAudibleCue`. Luz y sonido se programan por separado: flores/Estudio reciben una marca presente cuando llega su callback, no una marca futura que el dibujante interpretaría como activa. Se cancelan callbacks antiguos por partida, contexto, modo/capa, pausa o pantalla oculta.
+`journey-pulse.js` comparte juicio, reloj audible (`audibleTime`, `cueDelay`: latencia de salida más calibración) y `scheduleAudibleCue`; ningún temporizador visual usa `ac.currentTime` crudo. Luz y sonido se programan por separado: flores/Estudio reciben una marca presente cuando llega su callback, no una marca futura que el dibujante interpretaría como activa. Se cancelan callbacks antiguos por partida, contexto, modo/capa, pausa o pantalla oculta.
 
 `journey-rhythm.js` conserva una cola acotada de notas demostradas y elige la actualmente audible. `song-stage.js` cuenta pasos del transporte, conserva golpes visuales y respeta la pausa sin pulsos inventados. `audio.js` tiene una compuerta para el silencio deliberado del final11; salir restaura la mezcla. No se cambia el control de volumen del jugador.
 

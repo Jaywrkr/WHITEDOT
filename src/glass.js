@@ -1,3 +1,4 @@
+import {cueDelay} from './journey-pulse.js';
 import {openSurface} from './frame-state.js';
 import {claimInstallationBar} from './installations.js';
 import {WORLD_VISUAL,elementInk} from './visual.js';
@@ -44,7 +45,7 @@ export function initialize(runtime){
  function emit(site,pane,time,origin='ambient'){
   const p=glassShape(site.angles,pane,site.region,runtime.seedOf),source=site.plates[pane];source.opticalPosition=(1+Math.cos(site.angles[pane]-site.angles[(pane+1)%3]))/2;
   runtime.playVoice(`installation:glass:${pane}`,p.degree,time,site.region,false,origin==='player'?.2:.12,source,origin);
-  setTimeout(()=>{site.lit=1;},Math.max(0,(time-runtime.ac.currentTime)*1000));
+  setTimeout(()=>{site.lit=1;},cueDelay(runtime.ac,time));
  }
  function turn(site,pane,angle){
   if(!Number.isFinite(angle)||!Number.isInteger(pane)||pane<0||pane>2||!onSurface()||!site||Math.hypot(site.x-S().wx,site.y-S().wy)>180)return false;

@@ -1,3 +1,4 @@
+import {audibleTime} from './journey-pulse.js';
 import {openSurface,calmMotion} from './frame-state.js';
 import {FAMILIES,encounterRole} from './encounter-families.js';
 import {MAX_THREADS,toggleThread,threadScore,threadArrangement,createBox,paintBoxStep,moveBoxPart,boxPart,boxArrangement,startDialogue,captureDialogue,finishDialogue,dialogueReply} from './encounter-depth-model.js';
@@ -150,7 +151,7 @@ export function initialize(runtime){
   ensure(o);const c=runtime.cx,near=distance(o,{x:runtime.S.wx,y:runtime.S.wy})<180;
   if(o.kind==='weaver'){
    for(const edge of o.state.weave.edges){const nodes=anchors(o),a=nodes.find(n=>n.id===edge.from)||edge.a,b=nodes.find(n=>n.id===edge.to)||edge.b;c.beginPath();c.moveTo(a.x-o.x,a.y-o.y);c.lineTo(b.x-o.x,b.y-o.y);c.stroke();
-    if(o.groveStyle&&!calmMotion(runtime.S)&&o.state.active>0&&runtime.ac?.state==='running'){const phase=((runtime.ac.currentTime/(runtime.SIX*4))%1+1)%1;c.beginPath();c.arc(a.x-o.x+(b.x-a.x)*phase,a.y-o.y+(b.y-a.y)*phase,2,0,Math.PI*2);c.fill();}}
+    if(o.groveStyle&&!calmMotion(runtime.S)&&o.state.active>0&&runtime.ac?.state==='running'){const phase=((audibleTime(runtime.ac)/(runtime.SIX*4))%1+1)%1;c.beginPath();c.arc(a.x-o.x+(b.x-a.x)*phase,a.y-o.y+(b.y-a.y)*phase,2,0,Math.PI*2);c.fill();}}
    if(near&&(!o.groveStyle||distance(o,{x:runtime.S.wx,y:runtime.S.wy})<85)){for(const [index,a]of anchors(o).entries()){const x=a.x-o.x,y=a.y-o.y;c.beginPath();if(index===1){c.moveTo(x,y-5);c.lineTo(x+4,y);c.lineTo(x,y+5);c.lineTo(x-4,y);c.closePath();}else if(index===2){c.moveTo(x-5,y);c.bezierCurveTo(x-2,y-7,x+2,y+7,x+5,y);}else c.arc(x,y,armed?.node.id===a.id?7:4,0,Math.PI*2);c.stroke();if(index<3&&o.state.cubeAnchor===a.id){c.font='11px "Geist Mono", monospace';c.fillText(['Fuente','Filtro','Modulador'][index],x-20,y+16);}}if(gesture?.object===o&&gesture.type==='anchor'){c.beginPath();c.moveTo(gesture.node.x-o.x,gesture.node.y-o.y);c.lineTo(gesture.now.x-o.x,gesture.now.y-o.y);c.stroke();}}
    if(!o.groveStyle||distance(o,{x:runtime.S.wx,y:runtime.S.wy})<85){c.font='11px "Geist Mono", monospace';c.textAlign='center';c.fillText(`${o.state.weave.edges.length}/${MAX_THREADS} hilos`,0,34);}
   }
@@ -175,7 +176,7 @@ export function initialize(runtime){
 
   }
   const d=o.state.dialogue;if(o.kind==='animal'&&near){
-   const listening=d?.phase==='listening',speaking=d?.phase==='replying'&&Number.isFinite(d.replyAt)&&runtime.ac.currentTime>=d.replyAt&&runtime.ac.currentTime<d.replyEnd;
+   const listening=d?.phase==='listening',speaking=d?.phase==='replying'&&Number.isFinite(d.replyAt)&&audibleTime(runtime.ac)>=d.replyAt&&audibleTime(runtime.ac)<d.replyEnd;
    c.font='11px "Geist Mono", monospace';c.textAlign='center';
    const width=Math.min(220,runtime.W-24),sx=runtime.W/2+o.x-runtime.S.wx,sy=runtime.H/2+o.y-runtime.S.wy,lx=Math.max(width/2+12,Math.min(runtime.W-width/2-12,sx))-sx,ly=sy>runtime.H-70?-38:48;
    const guide=guidedAnimal&&objects().includes(guidedAnimal)&&distance(guidedAnimal,{x:runtime.S.wx,y:runtime.S.wy})<180?guidedAnimal:objects().filter(a=>a.kind==='animal').sort((a,b)=>distance(a,{x:runtime.S.wx,y:runtime.S.wy})-distance(b,{x:runtime.S.wx,y:runtime.S.wy}))[0];

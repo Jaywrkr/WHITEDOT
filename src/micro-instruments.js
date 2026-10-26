@@ -1,3 +1,4 @@
+import {audibleTime} from './journey-pulse.js';
 import {openSurface,prefersReducedMotion} from './frame-state.js';
 import {MICRO_INSTRUMENTS,microChunk,microVoice,microPath,microPattern} from './micro-instruments-model.js';
 import {contactEntry} from './contact.js';
@@ -50,7 +51,7 @@ export function initialize(runtime){
  }
  function pulse(origin='player'){if(!active())return false;let changed=false;for(const o of nearby(170).slice(0,2))changed=touch(o,origin)||changed;return changed;}
  function draw(t,ox,oy,radius){
-  if(!surface())return;const c=runtime.cx,now=runtime.ac?.currentTime??-100,still=runtime.S.reducedMotion||prefersReducedMotion();
+  if(!surface())return;const c=runtime.cx,now=runtime.ac?audibleTime(runtime.ac):-100,still=runtime.S.reducedMotion||prefersReducedMotion();
   for(const o of nearby(Math.min(radius+40,1200))){const distance=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy),elapsed=now-(o.onset??-1000),lit=runtime.S.sound&&elapsed>=0?Math.max(0,1-elapsed/.65):0,fade=runtime.worldOpacity?.(distance)??Math.max(0,1-distance/radius);if(fade<=.001)continue;
    c.save();c.translate(o.x+ox,o.y+oy);const response=runtime.reactivePose?.(o.id);if(response){c.translate(response.x,response.y);c.rotate(response.rotation);c.scale(response.sx,response.sy);}c.globalAlpha=fade*(.45+lit*.55);c.strokeStyle=runtime.musicInk?.(o,MICRO_INSTRUMENTS[o.kind].role)||'#fff';c.fillStyle=c.strokeStyle;c.lineWidth=lit?1.4:1;
    const scale=1+(still?0:lit*.15);c.scale(scale,scale);c.stroke(new Path2D(microPath(o.kind)));

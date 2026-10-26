@@ -1,6 +1,17 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.211**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.212**. Las entradas describen su revisión, no certifican producción.
+
+## P5 · Un solo reloj · 2.3.0-alpha.212
+
+Rama `panel10/p5-un-solo-reloj`, sobre `panel10/p4-cierre-de-ronda`. Mizuguchi e Iwai (panel 10).
+
+- Un reloj para la luz: `cueDelay` y `audibleTime` incluyen la latencia de salida y la calibración (`latencyNudge`). Pasan a él los temporizadores con `ac.currentTime` crudo: vidrio, espejos, materia, vida, iniciativa, hitos, quietud, cajas, especies (`render.js`), señales (`feedback.js`), parches, eco, victoria, tienda del cubo y `jam.js`. También los dibujos que comparaban con el reloj crudo: Momentos, capas del universo, encuentros, estudio, culturas, percusión, microinstrumentos, fenómenos y la espera de la tarjeta.
+- La calibración mueve la luz: con `latencyNudge` 0,15 el cursor de la Línea cruza el paso 0 cuando se oye su bombo, y el aterrizaje del acierto espera lo mismo. El juicio no cambia.
+- Un golpe, una imagen: el acierto ya no engorda el cubo al tocar; solo golpea al oírse. Fuera de tiempo, el cubo engorda cuando suena su nota cuantizada. La onda sigue saliendo al tocar.
+- Ningún toque mudo: el pulso demasiado seguido suena con su misma voz al 45 % en la siguiente semicorchea (como mucho 4 por paso, 8 pendientes). Sigue sin juzgarse y deja su marca gris.
+- No cambian la generación musical, las voces, la mezcla, la ventana de ±80 ms ni el límite entre toques (240 ms, o dos tercios de corchea en ritmos de corcheas). El ambiente sigue con el reloj de audio: es sonido, no luz. El rayo de Tormenta tampoco cambia: su destello dispara el trueno en el mismo instante, y retrasarlo movería el sonido.
+- Pruebas: `tests/one-clock.mjs` (Node): sin temporizadores crudos, brillo ≤ 20 ms tras su nota con 250 ms de latencia, cursor y aterrizaje con `latencyNudge` 0,15, un pico por acierto, diez toques a 8 Hz con diez sonidos y ≤ 4 por semicorchea. `echo_smoke.py` espera la tarjeta 15 s, como los recorridos que P4 ya ajustó (la espera de la caída rozaba los 5 s). Renders aprobados: `shop_sound_mix`, `wardrobe_mix`, `music_direction_mix`, `glass_mix`, `percussion_mix`, `micro_mix`, `journey_mix`, `journey_finale_mix`, `victory_mix` y `audio_mix`. Picos frente a la base: tienda 0,88252 / 0,88252, vestuario 0,88169 / 0,88168, percusión 0,87975 / 0,87975. Sin teléfono físico, auriculares Bluetooth ni personas.
 
 ## P4 · El cierre de la ronda · 2.3.0-alpha.211
 

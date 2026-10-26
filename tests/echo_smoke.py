@@ -41,7 +41,7 @@ try:
    page.evaluate("()=>{__r.S.journey.echo.points=__r.journeyEcho().goal;}");page.wait_for_function("!!__r.journeyEcho().gold",timeout=3000)
    page.evaluate(ON);page.wait_for_function("!__r.places().run",timeout=5000)
    last=page.evaluate('__r.places().last');assert last['id']=='cueva' and last['stars'][0] and last['sparks']>=10,last
-   page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=5000);assert page.evaluate('__r.places().stars.cueva[0]')
+   page.wait_for_function("!document.getElementById('mPlace').hidden",timeout=15000);assert page.evaluate('__r.places().stars.cueva[0]')
    assert not errors,errors;page.close()
   browser.close()
  print('PASS Cueva on phone and desktop: ?lugar=cueva sings a pattern from the «1» in a call bar, answering it on time in the next bar is an echo that scores and lengthens the next, off the eighths is not on time, the bar follows the round in both modes, the gold drop ends it with stars, sparks and its card',flush=True)

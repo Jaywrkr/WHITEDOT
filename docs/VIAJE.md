@@ -28,6 +28,10 @@ El pulso encaja con la escala y el reloj del lugar. Los aciertos avanzan el jueg
 
 El golpe se ve junto al cubo (panel 10, P3). Un anillo de 1 px se cierra sobre el cubo en los cuatro pasos previos a cada paso que cuenta, con el mismo `approach` y el mismo reloj que la Línea; es dorado en el «1». No cambia el tamaño del cubo; con movimiento reducido no se mueve, solo se ilumina. El dedo fantasma es un anillo de 1 px con punto de 3 px junto al cubo (caja de 14×14, centro a ≤ 30 px). Marca los pasos del lugar (`journeyRhythmState().steps`) en tiempo audible. La Línea tiene base de alfa .38 sobre una franja negra y el «1» dorado cuando cuenta. Las marcas de capítulo miden 4 px y solo se ven dentro de un capítulo. Las chispas doradas vuelan a la posición real de `#bar` (`barTarget` en `journey-games.js`).
 
+Un solo reloj (panel 10, P5). Toda luz que acompaña a una nota espera a que se oiga: `cueDelay`, `audibleTime` o `scheduleAudibleCue` (`journey-pulse.js`). El retraso visual es la latencia de salida más el ajuste medido por la calibración (`latencyNudge`), nunca negativo. Así se mueven juntos la Línea, el anillo, el dedo fantasma, el aterrizaje del acierto y las luces del Mundo. El juicio no cambia (±80 ms, `heardTime`).
+Un golpe, una imagen: el acierto golpea el cubo una vez, al oírse (`cubeKick`); cualquier otro pulso lo engorda cuando suena su nota cuantizada, no al tocar. La onda sigue saliendo al tocar: es la marca del toque y su alcance en el Mundo.
+Ningún toque mudo: un pulso demasiado seguido (240 ms; dos tercios de corchea en ritmos de corcheas, `journey-rhythm.js`) no se juzga, deja la marca gris y suena con la misma voz al 45 % en la siguiente semicorchea. La cola de la música toca como mucho 4 por paso; con más de 8 pendientes (un dedo desbocado) el resto se descarta.
+
 ## Presentación y ayuda
 
 Negro, cubo pequeño, marcas contenidas y color ganado. Los rótulos del paisaje y la economía se reducen durante el Viaje. Menús y controles son silenciosos; no usan notas del tema como sonido de UI.

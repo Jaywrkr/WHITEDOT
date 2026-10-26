@@ -1,3 +1,4 @@
+import {cueDelay} from './journey-pulse.js';
 import {openSurface} from './frame-state.js';
 // Fase 5 · Vida e intercambio musical (runtime). El cubo es quien toca:
 // - Pasar el cubo por un ave = tu llamada (más arriba en la bandada, más aguda). En dos compases te la devuelven.
@@ -37,7 +38,7 @@ export function initialize(runtime){
   if(kind==='lira')runtime.unlock('aveLira');runtime.save();}
  const played=[];
  function voice(kind,index,degree,time,volume,region,source,origin='ambient',full=false){played.push(`vida:${kind}:${index}`);if(played.length>64)played.shift();runtime.playVoice(`vida:${kind}:${index}`,degree,time,region,full,volume,source,origin);}
- const at=(time,fn)=>setTimeout(fn,Math.max(0,(time-(runtime.ac?.currentTime||0))*1000));
+ const at=(time,fn)=>setTimeout(fn,cueDelay(runtime.ac,time));
  const fx=(f,m,kind)=>{m.flash=1;m.burst=1;(f.notes||=[]).push({x:m.x,y:m.y,a:1,kind});if(f.notes.length>24)f.notes.shift();if(f.species==='grulla')(f.ripples||=[]).push({x:m.x,y:m.y+18,r:6,a:1});};
  function sing(f,notes,time,origin='ambient',toCube=false){const local=runtime.regionOfPos(f.x,f.y);for(const n of notes){const t=time+n.step*runtime.SIX;voice(f.species,Math.min(9,n.member),n.degree,t,n.volume*(f.species==='grulla'?1.4:1),local,f,origin,f.species==='grulla');const m=f.members[n.member];if(m)at(t,()=>{fx(f,m,toCube?'answer':'call');if(toCube)f.toCube=1;});}}
  // ---------- tocar (cubo; el dedo solo en modo de prueba) ----------

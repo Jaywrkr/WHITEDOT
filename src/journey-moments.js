@@ -1,5 +1,5 @@
 import {prefersReducedMotion} from './frame-state.js';
-import {playCello} from './journey-pulse.js';
+import {playCello,audibleTime} from './journey-pulse.js';
 // The Journey's moments in its first chapters (docs/VIAJE.md):
 // - Llanura: a lighthouse in the distance with its own voice, a held tone that grows as you come near; reached, it
 //   lights on every beat.
@@ -28,7 +28,7 @@ export function initialize(runtime){
  const inBiome=id=>(x,y)=>ids()[runtime.biomeOfPos(x,y)]===id&&!runtime.regionOfPos?.(x,y)?.sea;
  const here=()=>({x:runtime.S.wx,y:runtime.S.wy});
  // How close we are to the last beat: 1 on it, fading over the beat.
- function beatNow(){const ac=runtime.ac,bq=runtime.MU?.bq;if(!ac||!bq?.length)return 0;let last=-Infinity;for(const b of bq)if(b<=ac.currentTime)last=Math.max(last,b);return Math.max(0,1-(ac.currentTime-last)/((runtime.SIX||.15)*4));}
+ function beatNow(){const ac=runtime.ac,bq=runtime.MU?.bq;if(!ac||!bq?.length)return 0;const now=audibleTime(ac);let last=-Infinity;for(const b of bq)if(b<=now)last=Math.max(last,b);return Math.max(0,1-(now-last)/((runtime.SIX||.15)*4));}
  const audible=()=>runtime.S.sound&&runtime.ac&&runtime.bus;
  function stopTone(){if(!tone)return;const ac=runtime.ac;try{tone.g.gain.setTargetAtTime(.0001,ac.currentTime,.2);tone.o.stop(ac.currentTime+1);}catch(_){}tone=null;}
  // The lighthouse's held tone, the fifth of the place, following the distance.

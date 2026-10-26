@@ -1,3 +1,4 @@
+import {audibleTime} from './journey-pulse.js';
 import {findBiome,WORLD_CHAPTERS,CHAPTERS} from './journey-chapters.js';
 import {freeOpen} from './journey-mode.js';
 import {roundSparks} from './spark-rules.js';
@@ -138,7 +139,7 @@ export function initialize(runtime){
  // output latency); never before journeyVictoryState().end. Without sound or drop, after 1,2 s as before.
  function afterDrop(result){const born=Date.now();let end=null;
   const check=()=>{if(shown!==result||run())return;const v=runtime.journeyVictoryState?.(),ac=runtime.ac;if(v&&v.id===result.id){if(Number.isFinite(v.end))end=v.end;else if(Date.now()-born<12000){setTimeout(check,250);return;}}
-   const lat=Math.max(0,Math.min(.4,Number(ac?.outputLatency||ac?.baseLatency||0)||0)),heard=(ac?.currentTime||0)-lat;
+   const heard=audibleTime(ac);
    if(end!==null&&ac&&heard<end&&Date.now()-born<12000){setTimeout(check,Math.min(1000,Math.max(30,Math.ceil((end-heard)*1000)+30)));return;}
    cardDue=null;results();};
   cardDue=result;setTimeout(check,1200);}

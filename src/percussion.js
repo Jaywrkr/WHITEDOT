@@ -1,3 +1,4 @@
+import {audibleTime} from './journey-pulse.js';
 import {openSurface} from './frame-state.js';
 import {expandedRhythm} from './ecoregions.js';
 import {RHYTHM_ELEMENTS,NEW_PERCUSSION,createRhythmElements,additionalRhythmElements,rhythmPattern} from './percussion-model.js';
@@ -74,7 +75,7 @@ export function initialize(runtime){
  function draw(t,dt,ox,oy,radius){
   const c=runtime.cx;
   for(const o of nearby(radius)){
-   const elapsed=(runtime.ac?.currentTime||0)-(o.onset??-10),lit=Math.max(elapsed>=0?Math.max(0,1-elapsed/.3):0,Math.max(0,1-(performance.now()-(o.visualAt??-Infinity))/400));
+   const elapsed=audibleTime(runtime.ac)-(o.onset??-10),lit=Math.max(elapsed>=0?Math.max(0,1-elapsed/.3):0,Math.max(0,1-(performance.now()-(o.visualAt??-Infinity))/400));
    const spec=RHYTHM_ELEMENTS[o.kind],d=Math.hypot(o.x-runtime.S.wx,o.y-runtime.S.wy);
    c.save();c.translate(o.x+ox,o.y+oy);c.globalAlpha=elementAlpha(d,radius,lit*.4);c.strokeStyle=elementInk(spec.material,runtime.regionOfPos(o.x,o.y).hue,lit>.1);c.fillStyle=c.strokeStyle;c.lineWidth=WORLD_VISUAL.line;
    c.beginPath();

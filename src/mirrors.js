@@ -1,3 +1,4 @@
+import {cueDelay} from './journey-pulse.js';
 import {openSurface} from './frame-state.js';
 import {claimInstallationBar} from './installations.js';
 import {WORLD_VISUAL,elementInk,localGlowRadius} from './visual.js';
@@ -73,7 +74,7 @@ export function initialize(runtime){
  function emit(site,i,time,origin='ambient'){
   const route=traceMirrors(site),m=site.mirrors[i],degree=route.connected?i*2:Math.floor(m.angle/Math.PI*7)%7;m.opticalPosition=m.angle/Math.PI;
   runtime.playVoice(`installation:mirror:${i}`,degree,time,site.region,false,.4,m,origin);
-  setTimeout(()=>site.lit=1,Math.max(0,(time-runtime.ac.currentTime)*1000));
+  setTimeout(()=>site.lit=1,cueDelay(runtime.ac,time));
  }
  function panel(){
   if(!selected)return;const route=traceMirrors(selected);

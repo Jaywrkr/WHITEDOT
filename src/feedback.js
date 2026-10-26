@@ -1,3 +1,4 @@
+import {cueDelay} from './journey-pulse.js';
 import {prefersReducedMotion} from './frame-state.js';
 import {territoryInk} from './territory-transition.js';
 import {musicalInk} from './visual.js';
@@ -27,11 +28,11 @@ export function initialize(runtime) {
   function soundCue(source,role,time,origin='ambient') {
     if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running')return;
     runtime.wowSoundCue?.(source,role,time);
-    buffer.add(source,role,performance.now()+Math.max(0,time-runtime.ac.currentTime)*1000,null,origin);
+    buffer.add(source,role,performance.now()+cueDelay(runtime.ac,time),null,origin);
   }
   function filterCue(source,role,filter,time){
     if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running')return;
-    buffer.add(source,role,performance.now()+Math.max(0,time-runtime.ac.currentTime)*1000,{...filter});
+    buffer.add(source,role,performance.now()+cueDelay(runtime.ac,time),{...filter});
   }
   function drawSoundCues(ox,oy,radius) {
     if(!runtime.inWorld()||!runtime.S.sound||runtime.musicVolume?.()===0||runtime.ac?.state!=='running'){buffer.clear();return;}

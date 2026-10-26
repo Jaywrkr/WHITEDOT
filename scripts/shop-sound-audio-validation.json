@@ -1,6 +1,6 @@
 {
   "renders": 8,
-  "maxPeak": 0.8795142769813538,
+  "maxPeak": 0.8825244307518005,
   "sampleRates": [
     44100,
     48000
@@ -10,7 +10,7 @@
       "kind": "voice",
       "piece": "voice:808",
       "genre": "minimaltechno",
-      "peak": 0.8725672960281372,
+      "peak": 0.8725675940513611,
       "hotFraction": 0,
       "notes": 160,
       "ids": [
@@ -21,7 +21,7 @@
       "kind": "voice",
       "piece": "voice:bell",
       "genre": "deep",
-      "peak": 0.5670921802520752,
+      "peak": 0.5671218633651733,
       "hotFraction": 0,
       "notes": 160,
       "ids": [
@@ -32,7 +32,7 @@
       "kind": "voice",
       "piece": "voice:acid",
       "genre": "afro",
-      "peak": 0.8775161504745483,
+      "peak": 0.877515971660614,
       "hotFraction": 0,
       "notes": 160,
       "ids": [
@@ -43,7 +43,7 @@
       "kind": "voice",
       "piece": "voice:vocal",
       "genre": "ambient",
-      "peak": 0.22809085249900818,
+      "peak": 0.22808930277824402,
       "hotFraction": 0,
       "notes": 160,
       "ids": [
@@ -54,7 +54,7 @@
       "kind": "voice",
       "piece": "voice:scratch",
       "genre": "dnb",
-      "peak": 0.8795142769813538,
+      "peak": 0.8825244307518005,
       "hotFraction": 0,
       "notes": 160,
       "ids": [
@@ -65,7 +65,7 @@
       "kind": "voice",
       "piece": "voice:chord",
       "genre": "acid",
-      "peak": 0.567104160785675,
+      "peak": 0.5671042203903198,
       "hotFraction": 0,
       "notes": 160,
       "ids": [
@@ -75,7 +75,7 @@
     {
       "kind": "walk",
       "genre": "deep",
-      "peak": 0.8735377788543701,
+      "peak": 0.8735373616218567,
       "hotFraction": 0,
       "sounds": {
         "voice": 54,
@@ -95,14 +95,14 @@
     {
       "kind": "walk",
       "genre": "minimaltechno",
-      "peak": 0.872637927532196,
+      "peak": 0.8727383017539978,
       "hotFraction": 0,
       "sounds": {
         "voice": 44,
-        "hat": 41,
+        "hat": 40,
         "hum": 0,
         "dj": 0,
-        "radio": 5,
+        "radio": 4,
         "step": 0,
         "filter": 8,
         "speed": 119.99999999999852,

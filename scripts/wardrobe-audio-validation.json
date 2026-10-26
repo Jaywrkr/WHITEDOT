@@ -1,6 +1,6 @@
 {
   "renders": 25,
-  "maxPeak": 0.8816860914230347,
+  "maxPeak": 0.8816853761672974,
   "sampleRates": [
     44100,
     48000
@@ -4691,7 +4691,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8731761574745178,
+      "fullPeak": 0.8731762766838074,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -5413,8 +5413,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8731761574745178,
-      "rmsDb": -12.274891217811309,
+      "peak": 0.8731762766838074,
+      "rmsDb": -12.274826209954231,
       "hotFraction": 0
     },
     {
@@ -10102,7 +10102,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8730183839797974,
+      "fullPeak": 0.8730188608169556,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -10825,8 +10825,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8730183839797974,
-      "rmsDb": -12.30574716392422,
+      "peak": 0.8730188608169556,
+      "rmsDb": -12.30569924931655,
       "hotFraction": 0
     },
     {
@@ -15514,7 +15514,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8755123615264893,
+      "fullPeak": 0.875512421131134,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -16237,8 +16237,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8755123615264893,
-      "rmsDb": -12.50448624337408,
+      "peak": 0.875512421131134,
+      "rmsDb": -12.50448274768508,
       "hotFraction": 0
     },
     {
@@ -20926,7 +20926,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8727293014526367,
+      "fullPeak": 0.8727291822433472,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -21649,8 +21649,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8727293014526367,
-      "rmsDb": -9.921610964633649,
+      "peak": 0.8727291822433472,
+      "rmsDb": -9.921612666357646,
       "hotFraction": 0
     },
     {
@@ -26338,7 +26338,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8734308481216431,
+      "fullPeak": 0.8734304308891296,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -27062,8 +27062,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8734308481216431,
-      "rmsDb": -11.156827850817601,
+      "peak": 0.8734304308891296,
+      "rmsDb": -11.156808006926655,
       "hotFraction": 0
     },
     {
@@ -31807,7 +31807,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.5671235918998718,
+      "fullPeak": 0.567123532295227,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -32503,8 +32503,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.5671235918998718,
-      "rmsDb": -19.49782182147361,
+      "peak": 0.567123532295227,
+      "rmsDb": -19.497837400178234,
       "hotFraction": 0
     },
     {
@@ -37946,7 +37946,7 @@
       "glassRoles": [],
       "sampleRate": 44100,
       "peak": 0.567123532295227,
-      "rmsDb": -19.519024329701633,
+      "rmsDb": -19.519030409224612,
       "hotFraction": 0
     },
     {
@@ -43388,7 +43388,7 @@
       "glassRoles": [],
       "sampleRate": 44100,
       "peak": 0.567123532295227,
-      "rmsDb": -19.621498887006727,
+      "rmsDb": -19.621517756158607,
       "hotFraction": 0
     },
     {
@@ -48132,7 +48132,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.5671001076698303,
+      "fullPeak": 0.5671000480651855,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -48830,8 +48830,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.5671001076698303,
-      "rmsDb": -18.303045012281704,
+      "peak": 0.5671000480651855,
+      "rmsDb": -18.30304383154392,
       "hotFraction": 0
     },
     {
@@ -54274,7 +54274,7 @@
       "glassRoles": [],
       "sampleRate": 44100,
       "peak": 0.5670985579490662,
-      "rmsDb": -19.051268225805817,
+      "rmsDb": -19.051256654690004,
       "hotFraction": 0
     },
     {
@@ -58983,7 +58983,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8747414350509644,
+      "fullPeak": 0.8747413158416748,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -59678,8 +59678,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8747414350509644,
-      "rmsDb": -11.00905906423866,
+      "peak": 0.8747413158416748,
+      "rmsDb": -11.009072280770319,
       "hotFraction": 0
     },
     {
@@ -64388,7 +64388,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8747411966323853,
+      "fullPeak": 0.8747410178184509,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -65084,8 +65084,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8747411966323853,
-      "rmsDb": -10.996724263729018,
+      "peak": 0.8747410178184509,
+      "rmsDb": -10.996727499160643,
       "hotFraction": 0
     },
     {
@@ -69794,7 +69794,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.874740481376648,
+      "fullPeak": 0.8747402429580688,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -70491,8 +70491,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.874740481376648,
-      "rmsDb": -10.992296637208705,
+      "peak": 0.8747402429580688,
+      "rmsDb": -10.992351788700876,
       "hotFraction": 0
     },
     {
@@ -75201,7 +75201,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8755921721458435,
+      "fullPeak": 0.8755925297737122,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -75898,8 +75898,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8755921721458435,
-      "rmsDb": -10.304567842484447,
+      "peak": 0.8755925297737122,
+      "rmsDb": -10.304594800621036,
       "hotFraction": 0
     },
     {
@@ -80608,7 +80608,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8755779266357422,
+      "fullPeak": 0.8755771517753601,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -81304,8 +81304,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8755779266357422,
-      "rmsDb": -10.944511674662003,
+      "peak": 0.8755771517753601,
+      "rmsDb": -10.944504597033324,
       "hotFraction": 0
     },
     {
@@ -85846,7 +85846,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.3968200981616974,
+      "fullPeak": 0.39682015776634216,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -86494,8 +86494,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.3968200981616974,
-      "rmsDb": -30.822773758066884,
+      "peak": 0.39682015776634216,
+      "rmsDb": -30.822773941648542,
       "hotFraction": 0
     },
     {
@@ -91036,7 +91036,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.36991119384765625,
+      "fullPeak": 0.369911253452301,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -91685,8 +91685,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.36991119384765625,
-      "rmsDb": -31.48474437576152,
+      "peak": 0.369911253452301,
+      "rmsDb": -31.48474364538233,
       "hotFraction": 0
     },
     {
@@ -96227,7 +96227,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.2484087347984314,
+      "fullPeak": 0.24840915203094482,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -96877,8 +96877,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.2484087347984314,
-      "rmsDb": -35.56960139832044,
+      "peak": 0.24840915203094482,
+      "rmsDb": -35.56960169879238,
       "hotFraction": 0
     },
     {
@@ -101419,7 +101419,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.43591687083244324,
+      "fullPeak": 0.43591511249542236,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -102069,8 +102069,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.4296635389328003,
-      "rmsDb": -21.840033163310935,
+      "peak": 0.4296651780605316,
+      "rmsDb": -21.84003142072896,
       "hotFraction": 0
     },
     {
@@ -106611,7 +106611,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.43671688437461853,
+      "fullPeak": 0.4367142915725708,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -107261,8 +107261,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 44100,
-      "peak": 0.43671688437461853,
-      "rmsDb": -25.52022763280104,
+      "peak": 0.4367142915725708,
+      "rmsDb": -25.520226196970906,
       "hotFraction": 0
     },
     {
@@ -112167,7 +112167,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8806118965148926,
+      "fullPeak": 0.8806139826774597,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -112901,8 +112901,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8806118965148926,
-      "rmsDb": -12.01427642783527,
+      "peak": 0.8806139826774597,
+      "rmsDb": -12.014262859814163,
       "hotFraction": 0
     },
     {
@@ -117807,7 +117807,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8802585601806641,
+      "fullPeak": 0.880253255367279,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -118542,8 +118542,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8802585601806641,
-      "rmsDb": -12.043436372756664,
+      "peak": 0.880253255367279,
+      "rmsDb": -12.043507144258106,
       "hotFraction": 0
     },
     {
@@ -124184,7 +124184,7 @@
       "glassRoles": [],
       "sampleRate": 48000,
       "peak": 0.8796862959861755,
-      "rmsDb": -12.165761877045929,
+      "rmsDb": -12.165797429770235,
       "hotFraction": 0
     },
     {
@@ -129089,7 +129089,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.882144570350647,
+      "fullPeak": 0.8821441531181335,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -129825,8 +129825,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8811131119728088,
-      "rmsDb": -9.713031373302655,
+      "peak": 0.8811129927635193,
+      "rmsDb": -9.71298569774455,
       "hotFraction": 0
     },
     {
@@ -134731,7 +134731,7 @@
       "magnetNotes": [],
       "microNotes": [],
       "surpriseNotes": [],
-      "fullPeak": 0.8817025423049927,
+      "fullPeak": 0.8817017674446106,
       "experimentalNotes": [],
       "tempoFrames": [
         {
@@ -135467,8 +135467,8 @@
       "glassNotes": 0,
       "glassRoles": [],
       "sampleRate": 48000,
-      "peak": 0.8816860914230347,
-      "rmsDb": -11.095929192624308,
+      "peak": 0.8816853761672974,
+      "rmsDb": -11.09592929621873,
       "hotFraction": 0
     }
   ]
