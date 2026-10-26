@@ -34,7 +34,8 @@ try:
    if width==390 and os.environ.get('LASSO_SHOT'):page.screenshot(path=os.environ['LASSO_SHOT'])
    page.evaluate(ON);page.wait_for_function(f"__r.journeyLasso().caught>={n}",timeout=5000);st=page.evaluate('__r.journeyLasso()');assert st['points']==min(3,n)*n,st
    assert float(page.evaluate("document.getElementById('barfill').style.width").rstrip('%'))>0,'the bar fills'
-   assert page.evaluate('__r.S.journey.lasso.hinted'),'the rule is told once'
+   assert not page.evaluate('__r.S.journey.lasso.hinted'),'quiet Journey does not acknowledge a notice that was suppressed'
+   page.evaluate('__r.$("bGuide").click()');assert page.locator('#guidePlaceLesson').is_visible();assert page.inner_text('#guidePlaceName')=='Bosque';assert 'Rodea' in page.inner_text('#guidePlaceSteps');page.locator('#guideClose').click()
    # Full bar: the creature comes beside the cube; a pulse on time makes it the companion and opens the portal.
    page.evaluate("()=>{__r.S.journey.lasso.points=240;}");page.wait_for_function("!!__r.journeyLasso().friend",timeout=3000)
    page.evaluate("__r.journeyGamePulse(false)");assert not page.evaluate('__r.journeyLasso().joined'),'off time it waits'

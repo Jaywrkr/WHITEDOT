@@ -36,7 +36,7 @@ try:
   keep_place_on_reload(page);page.reload();page.wait_for_function('!!window.__r?.sparkTick')
   assert page.evaluate('(id)=>__r.savedCrystal(id).collected',crystal_id)
   page.evaluate("""()=>{__r.S.sparks=100;__r.sparkEconomy.earned=100+__r.sparkEconomy.spent;__r.save();document.querySelectorAll('.modal').forEach(m=>m.hidden=true);__r.openSparks();}""")
-  assert page.locator('#sparkJump').inner_text()=='Saltar · 20 ✦'
+  assert page.locator('#sparkJump').inner_text()=='Otro paisaje · 20 ✦'
   assert page.locator('#sparkJump').evaluate('e=>e.closest("#cubePanelTravel")!==null')
   # The shop shows a picture drawn by the game; buying puts the piece on and moves it out of the shop into Llevar.
   page.locator('#cubeTabShop').click();assert page.locator('#sparkShop [data-piece="orbit"] img').evaluate('e=>e.complete&&e.naturalWidth>0')

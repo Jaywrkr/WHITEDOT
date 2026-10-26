@@ -86,3 +86,18 @@ Resultados y límites del candidato en la [quinta sesión](panel/sesion-5/inform
 ## Integración de alpha.181 en main
 
 [CI completo de integración](https://github.com/Jaywrkr/WHITEDOT/actions/runs/40164328278) aprobado antes del merge: lógica, seis grupos de navegador, tres de audio y agregador. Runtime `6be023df`, idéntico al cierre `e6c0a3a6`; el registro posterior solo actualiza documentos y evidencia. [Detalle](panel/sesion-5/evidencia/ci-integracion.json). Las limitaciones físicas y de publicación siguen en [HANDOFF](../HANDOFF.md).
+
+
+## Preparación de la integración alpha.200
+
+El catálogo completo del PR354 detectó ocho recorridos con contratos anteriores al cierre K/L/N. Se corrigieron las pruebas, sin modificar runtime, sonido, mapas ni progreso:
+
+- `spark_rhythm_smoke.py`: valor base fuera de tempo (K2); se mantienen ×2, ×3, guardado y modo silencioso.
+- `alive_smoke.py`: fixture libre explícita; estación en el motor y género/tempo en tarjeta compacta; cierre del menú antes del Refugio. Lluvia, trueno y confluencia se conservan.
+- `journey_lasso_smoke.py` y `journey_dance_smoke.py`: un aviso suprimido no se marca leído; la guía explícita sí enseña la acción. Se mantienen gesto real, progreso, pulso a tiempo, portal y recarga.
+- `refugio_lugares_smoke.py`: «Ir» solo para lugares vistos o ganados; «Seguir» guía a los abiertos sin completar. El fixture ya completa cinco lugares y no tiene un único botón. Se mantienen viaje a Lago y salida caminando.
+- `expansion_smoke.py`: Cometa multiplica por2,2 la velocidad vigente; puede coexistir con Paso de miel. Se mantiene apertura de caja, campo, historial de405 ubicaciones, quietud y zona experimental.
+- `house_visit_smoke.py`: acceso compacto «Refugio» y modelo de novedades/estado visto, sin exigir el subtítulo retirado; se conservan visitas de solo lectura, teclado, gasto y enlace de Bitácora.
+- `sparks_economy_smoke.py`: etiqueta vigente «Otro paisaje ·20✦»; conserva coste, retorno gratuito, reintegro al fallar, compras y persistencia.
+
+Los ocho recorridos corregidos pasaron localmente con Chromium, uno por uno. El resultado remoto y el merge se registran al completar CI; este apartado no los da por aprobados.

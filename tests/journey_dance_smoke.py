@@ -30,7 +30,9 @@ try:
    if width==390 and os.environ.get('DANCE_SHOT'):page.screenshot(path=os.environ['DANCE_SHOT'])
    page.evaluate("()=>{const t=__r.journeyDance().target;__r.S.wx=t.x;__r.S.wy=t.y;}");page.evaluate(ON);page.wait_for_function("__r.journeyDance().returned>=1",timeout=5000);assert page.evaluate('__r.journeyDance().points')>=10
    assert float(page.evaluate("document.getElementById('barfill').style.width").rstrip('%'))>0,'the bar fills'
-   assert page.evaluate('__r.S.journey.dance.hinted') and page.evaluate('__r.S.sparks')==sparks
+   assert not page.evaluate('__r.S.journey.dance.hinted'),'a suppressed explanation is not marked delivered'
+   assert page.evaluate('__r.S.sparks')==sparks
+   page.evaluate('__r.$("bGuide").click()');assert page.locator('#guidePlaceLesson').is_visible();assert page.inner_text('#guidePlaceName')=='Tormenta';assert 'rayo' in page.inner_text('#guidePlaceSteps');page.locator('#guideClose').click()
    page.evaluate("()=>{__r.S.journey.dance.points=250;}");page.wait_for_function("!!__r.journeyDance().eye",timeout=3000)
    page.evaluate("__r.journeyGamePulse(false)");assert not page.evaluate('__r.journeyDance().closed')
    page.evaluate(ON);page.wait_for_function("__r.journeyDance().closed&&__r.journeyChapter().done.tormenta",timeout=5000);page.wait_for_function("__r.journeyChapter().portal",timeout=10000)
