@@ -70,9 +70,9 @@ assert.deepEqual([...TIER_SATURATION],[0,.45,.75,1]);
  advance(200);assert.equal(opened.length,0);advance(4800);assert.equal(opened.length,0,"not while the drop plays");advance(400);
  assert.equal(opened.length,1,'the finale opens by itself');assert.equal(opened[0].card,false,'no card in front');assert.equal(opened[0].at,5.5,'its first bar may start at the end of the drop');
  assert(opened[0].time<5.5-.12&&opened[0].time>=5.5-FINALE_LEAD-.05,`before the sequencer schedules the next «1» (${opened[0].time})`);
- assert.equal($('mPlace').hidden,true);r.placeFinaleClosed();assert.equal($('mPlace').hidden,false,'the card after the finale');assert.match($('placeTitle').textContent,/Cueva/);
+ assert.equal($('mPlace').hidden,true);r.placeFinaleClosed();advance(2000);assert.equal($('mPlace').hidden,true,'panel 11 (Q3): no card after the finale');assert.equal(d.stars.cueva[0],true,'the round is kept');
  // Without sound: no change to the best share and no growth; the card as before (the finale already played).
  $('mPlace').hidden=true;r.S.sound=false;drop=null;r.journeyVictory=()=>0;const before=d.best.cueva.onTime;r.startPlace('cueva');for(let i=0;i<10;i++)r.placeHear('cueva',true,{silent:true});r.placeFinish('cueva');
  assert.equal(d.best.cueva.onTime,before,'a silent round does not raise the best share');advance(1200);assert.equal($('mPlace').hidden,false);assert.equal(opened.length,1);
  Date.now=realNow;globalThis.setTimeout=realTimeout;}
-console.log('PASS song for everyone (P6): a ★ layer grows a beat every 1,25 points of best share from 55 %, the close sounds as the level won (★ half the bars of ★★), the finale holds all but pad and bass under your phrase (≥ 40 % yours, ≤ 8 others in the theme) in the soft voice, the silence has no words, authorship once, rings by saturation, the eleventh round flows into the finale and its card waits');
+console.log('PASS song for everyone (P6): a ★ layer grows a beat every 1,25 points of best share from 55 %, the close sounds as the level won (★ half the bars of ★★), the finale holds all but pad and bass under your phrase (≥ 40 % yours, ≤ 8 others in the theme) in the soft voice, the silence has no words, authorship once, rings by saturation, the eleventh round flows into the finale and no card follows it');

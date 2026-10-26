@@ -43,6 +43,9 @@ export const GROWTH_FROM=.55,GROWTH_STEP=.0125,GROWTH_BEATS=15,GROWTH_FILL=Objec
 export const growthSteps=best=>Number.isFinite(best)?Math.max(0,Math.min(GROWTH_BEATS,Math.floor((best-GROWTH_FROM)/GROWTH_STEP+1e-6))):0;
 // A place's tier from its saved record: its stars, and for ★ alone its growth. 0 before its ★.
 export function placeTier(places,id){const st=places?.stars?.[id]||[],n=st.filter(Boolean).length;if(!st[0])return 0;if(n>=2)return n;return 1+growthSteps(places?.best?.[id]?.onTime)/16;}
+// Panel 11 (Q3, Chen): a round grew its layer when the place already had its ★, still has no ★★, and its tier rose:
+// the novelty play-curve.mjs calls «crece». A new ★ or a new ★★ is not growth.
+export function layerGrew(before,after,id){const a=placeTier(before,id),b=placeTier(after,id);return a>=1&&a<2&&b>a&&b<2;}
 // Whether sixteenth s of a layer sounds at a tier below ★★: the even bars always; in the others, the beats its growth
 // has filled, from the bar's last beat backwards, across the four silent bars in turn.
 export function fragmentStep(tier,s){if(tier>=2)return true;const bar=((Math.floor(s/16)%8)+8)%8;if(bar%2===0)return true;const beat=Math.floor((((s%16)+16)%16)/4);

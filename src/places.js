@@ -3,7 +3,7 @@ import {findBiome,WORLD_CHAPTERS,CHAPTERS} from './journey-chapters.js';
 import {freeOpen} from './journey-mode.js';
 import {roundSparks} from './spark-rules.js';
 import {creditSparks,normalizeSparkEconomy} from './sparks-model.js';
-import {placeTier} from './song.js';
+import {placeTier,layerGrew} from './song.js';
 // The eleven places (plan F4, docs/MUNDO.md). After the Journey each chapter is a place you can play again: a round is
 // the chapter's game from an empty bar, closed by its gold thing. Stars are for going forward and winning: ★ complete,
 // ★★ with 75 % of pulses on time, ★★★ the Maestro version (unlocked by ★★: tempo +10 %, bar ×1.5, narrower window)
@@ -48,7 +48,7 @@ export function normalizePlaces(raw,journey={}){if(object(raw)&&Number.isInteger
  const noteSteps={};if(object(q.noteSteps))for(const id of Object.keys(notes)){const v=q.noteSteps[id];if(Array.isArray(v)&&v.length===notes[id].length&&v.every(s=>Number.isInteger(s)&&s>=0&&s<16))noteSteps[id]=[...v];}
  const kept={};if(object(q.kept))for(const id of PLACE_IDS)if(q.kept[id]===true)kept[id]=true;
  if(legacy){const have=PLACE_IDS.reduce((a,id)=>a+stars[id].filter(Boolean).length,0);for(const [id,need] of Object.entries(LEGACY_NEED))if(have>=need)kept[id]=true;}
- return {version:PLACES_VERSION,stars,best,rounds:{day:typeof q.rounds?.day==='string'?q.rounds.day:'',counts},journeyShare,center:point(q.center),ringFixed:q.ringFixed===true,seen,kept,notes,noteSteps,noteTicks,won:q.won===true,master:q.master===true,run:object(q.run)&&PLACE_IDS.includes(q.run.id)?q.run:null};}
+ return {version:PLACES_VERSION,stars,best,rounds:{day:typeof q.rounds?.day==='string'?q.rounds.day:'',counts},journeyShare,center:point(q.center),ringFixed:q.ringFixed===true,seen,kept,notes,noteSteps,noteTicks,won:q.won===true,master:q.master===true,credited:q.credited===true,run:object(q.run)&&PLACE_IDS.includes(q.run.id)?q.run:null};}
 export const starCount=places=>PLACE_IDS.reduce((a,id)=>a+(places?.stars?.[id]||[]).filter(Boolean).length,0);
 // The place before this one on the path: the Journey's five open together; each later one follows the one before it.
 export const previousPlace=id=>{const i=PLACE_IDS.indexOf(id);return i>WORLD_CHAPTERS.length-1?PLACE_IDS[i-1]:null;};
@@ -89,7 +89,7 @@ export const FINALE_LEAD=.3;
 export function nearMiss(onTime){const tenths=Math.floor(Math.max(0,Math.min(1,Number(onTime)||0))*1000);return tenths>=NEAR_STAR*1000&&tenths<RHYTHM_STAR*1000?String((RHYTHM_STAR*1000-tenths)/10).replace('.',','):null;}
 function restoreTree(target,copy){for(const k of Object.keys(target))if(!Object.hasOwn(copy,k))delete target[k];for(const [k,v] of Object.entries(copy)){if(object(v)&&object(target[k]))restoreTree(target[k],v);else if(Array.isArray(v)&&Array.isArray(target[k]))target[k].splice(0,target[k].length,...v);else target[k]=v;}}
 export function initialize(runtime){
- let owner=null,state=null,shown=null,cardDue=null,afterFinale=null;
+ let owner=null,state=null,shown=null,cardDue=null;
  function own(){if(owner!==runtime.S){if(owner){const card=runtime.$?.('mPlace');if(card)card.hidden=true;}shown=null;owner=runtime.S;runtime.S.lugares=normalizePlaces(runtime.S.lugares,runtime.S.journey);state=runtime.S.lugares;
    // A future format remains untouched on disk and in S; readers get a safe, locked view.
    if(state.version>PLACES_VERSION)state={...normalizePlaces(null),version:state.version,readOnly:true};
@@ -140,21 +140,22 @@ export function initialize(runtime){
   const j=runtime.S.journey;if(j&&typeof j==='object'){if(!j.colors||typeof j.colors!=='object')j.colors={};j.colors[id]=true;}
   {const all=(r.notes||[]).map((n,i)=>[n,r.noteSteps?.[i],r.noteTicks?.[i]]).filter(([n])=>Number.isInteger(n)&&n>=36&&n<=96).slice(-8);if(all.length){s.notes[id]=all.map(([n])=>n);s.noteSteps||={};if(all.every(([,st])=>Number.isInteger(st)))s.noteSteps[id]=all.map(([,st])=>st);else delete s.noteSteps[id];s.noteTicks||={};if(all.every((a,i)=>Number.isSafeInteger(a[2])&&a[2]>=0&&(!i||a[2]>=all[i-1][2])))s.noteTicks[id]=all.map(a=>a[2]);else delete s.noteTicks[id];}}
   const personal=s.notes[id]?.length?JSON.stringify([s.notes[id],s.noteSteps?.[id],s.noteTicks?.[id]])!==JSON.stringify([before.lugares.notes?.[id],before.lugares.noteSteps?.[id],before.lugares.noteTicks?.[id]])?'changed':'kept':null;
-  const result={id,personal,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.quietAchievements?.();runtime.journeyVictory?.(id,{tier:placeTier(s,id)});runtime.hud?.();afterDrop(result);return true;}
+  const grew=layerGrew(before.lugares,s,id),result={id,personal,grew,from:r.from,maestro:r.maestro,remix:r.remix||null,extra,onTime,ms,stars,fresh,sparks,record,roundsToday,sound};restore(r);s.run=null;if(!commit())return rollback();shown=result;runtime.narrateRound?.(shown);runtime.quietAchievements?.();runtime.journeyVictory?.(id,{tier:placeTier(s,id)});runtime.hud?.();afterDrop(result);return true;}
  // Panel 10 (P4, Simogo): the card waits for the end of the round's two-bar drop, as heard (audio clock minus the
  // output latency); never before journeyVictoryState().end. Without sound or drop, after 1,2 s as before.
  // Panel 10 (P6, D5-A, Simogo): the round that completes the eleven flows into the finale by itself, without the card in
- // front: the stage opens just before the drop ends and its first bar is the one after the drop. The card waits for the
- // finale to close.
+ // front: the stage opens just before the drop ends and its first bar is the one after the drop. Since panel 11 (Q3)
+ // no card follows the finale.
  function afterDrop(result){const born=Date.now(),finale=!own().won&&allComplete(own());let end=null;
   const check=()=>{if(shown!==result||run())return;const v=runtime.journeyVictoryState?.(),ac=runtime.ac;if(v&&v.id===result.id){if(Number.isFinite(v.end))end=v.end;else if(Date.now()-born<12000){setTimeout(check,250);return;}}
    const heard=audibleTime(ac),lead=finale&&ac?ac.currentTime+FINALE_LEAD:heard;
    if(end!==null&&ac&&lead<end&&Date.now()-born<12000){setTimeout(check,Math.min(1000,Math.max(30,Math.ceil((end-lead)*1000)+(finale?0:30))));return;}
    cardDue=null;if(finale&&flow(result,end))return;results();};
   cardDue=result;setTimeout(check,finale&&runtime.journeyVictoryState?.()?250:1200);}
- function flow(result,end){back(result.from);runtime.save?.();afterFinale=result;if(runtime.songFinaleCheck?.({at:end}))return true;afterFinale=null;return false;}
- // When the finale closes, the round's card it held back.
- function finaleClosed(){const r=afterFinale;afterFinale=null;if(r&&shown===r&&!run())results();}
+ function flow(result,end){back(result.from);runtime.save?.();return !!runtime.songFinaleCheck?.({at:end});}
+ // Panel 11 (Q3, Simogo): when the finale closes, no card: the record ends on the last song, not on the receipt. The
+ // round is kept all the same (its stars and best in Lugares, its achievements in the Bitácora).
+ function finaleClosed(){}
  // Leaving a round from the menu: nothing earned, the chapter's state back, and you are at the portal again.
  function abandon(){const s=own(),r=s.run;if(!r||s.readOnly)return false;const key=gameKey(r.id),playing=runtime.S.journey?.[key],position={wx:runtime.S.wx,wy:runtime.S.wy},tempo=runtime.MU?.tempoScale,window=runtime.MU?.onTimeWindow;restore(r);s.run=null;back(r.from);
   if(runtime.save?.()===false){s.run=r;if(playing===undefined)delete runtime.S.journey[key];else runtime.S.journey[key]=playing;Object.assign(runtime.S,position);if(runtime.MU){runtime.MU.tempoScale=tempo;runtime.MU.onTimeWindow=window;}runtime.toast?.('No se pudo salir. Tu ronda sigue aquí.',{level:2});return false;}
@@ -163,7 +164,7 @@ export function initialize(runtime){
  function results(){const box=runtime.$?.('mPlace'),r=shown;if(!box||!r)return;if(globalThis.document?.querySelector?.('.modal:not([hidden]):not(#mPlace)')){setTimeout(()=>{if(shown===r&&!run())results();},300);return;}const pct=roundPercent(r.onTime),near=!r.maestro&&r.sound&&!own().stars[r.id][1]?nearMiss(r.onTime):null;box.toggleAttribute?.('data-near',!!near);
   runtime.$('placeTitle').textContent=(PLACES.find(p=>p.id===r.id)?.name||r.id)+' · '+(r.maestro?'Maestro':r.remix?'Remezcla':'Completo');
   runtime.$('placeStars').setAttribute('aria-label','Tu colección de estrellas');runtime.$('placeRows').setAttribute('aria-label','Esta ronda');runtime.$('placeStars').innerHTML='<small>Tu colección</small>'+['★','★','★'].map((x,i)=>`<span class="${own().stars[r.id][i]?'got':''}${r.fresh[i]?' new':''}">${x}</span>`).join('');
-  runtime.$('placeRows').innerHTML=['<li>Esta ronda</li>',`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % / 75 % a tiempo</li>`,near?`<li class="place-near">A ${near} de ★★</li>`:'',`<li>${r.stars[2]?'✓':'·'} Maestro${r.maestro?` · ${pct} % / 70 %`:' · otra ronda'}</li>`].join('')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>')+(r.personal?`<li>${r.personal==='changed'?'Tu frase queda':'Tu frase sigue'} en el final de Tu canción.</li>`:'');
+  runtime.$('placeRows').innerHTML=['<li>Esta ronda</li>',`<li>${r.stars[0]?'✓':'·'} Completar</li>`,`<li>${r.stars[1]?'✓':'·'} Ritmo · ${pct} % / 75 % a tiempo</li>`,near?`<li class="place-near">A ${near} de ★★</li>`:'',`<li>${r.stars[2]?'✓':'·'} Maestro${r.maestro?` · ${pct} % / 70 %`:' · otra ronda'}</li>`].join('')+(r.grew?`<li>Tu capa de ${PLACES.find(p=>p.id===r.id)?.name||r.id} creció.</li>`:'')+(r.sound?'':'<li>Con sonido: ★★ y ★★★.</li>')+(r.personal?`<li>${r.personal==='changed'?'Tu frase queda':'Tu frase sigue'} en el final de Tu canción.</li>`:'');
   runtime.$('placeEarned').textContent=`${roundTime(r.ms)} · +${r.sparks+(r.extra?.sparks||0)} ✦${r.record||r.extra?.record?' · récord':''}`;box.hidden=false;
   // Panel 10 (P4, Chen, Matsuura, Pope): the card speaks only of the round; new achievements wait in the Bitácora.
   runtime.quietAchievements?.();const nar=runtime.$('placeNarrator');if(nar){nar.hidden=true;nar.textContent='';}

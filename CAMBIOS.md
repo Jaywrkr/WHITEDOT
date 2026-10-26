@@ -1,6 +1,20 @@
 # Cambios recientes de Kubono
 
-Estado: 26 de octubre de 2026. Código **2.3.0-alpha.217**. Las entradas describen su revisión, no certifican producción.
+Estado: 26 de octubre de 2026. Código **2.3.0-alpha.218**. Las entradas describen su revisión, no certifican producción.
+
+## Q3 · Tu canción se ve crecer y se cierra · 2.3.0-alpha.218
+
+Rama `panel11/q3-tu-cancion`, sobre `panel11/q2-lo-que-cuenta` (informe de la sesión 11). Iwai, Simogo y Chen; Pope para el arco.
+
+- El aro de cada capa con ★ se llena en proporción a lo que suena, contado en sus golpes (`layerShare`): Lago a ★ 12/24, a 1,5 16/24, a 1,94 23/24. Sin cifra. Colchón y Eco ya suenan enteros con ★: su arco va cerrado.
+- ★, ★★ y ★★★ también por forma: arco sin relleno; aro relleno; aro relleno con un aro exterior fino. El color por saturación sigue.
+- Sin velo dorado fuera del final.
+- La tarjeta dice «Tu capa de Lago creció» solo si la ronda hizo crecer la capa (`layerGrew`, la misma regla que «crece» en `play-curve.mjs`).
+- Tras el final de once no vuelve la tarjeta. La ronda se conserva: ★ y récord en Lugares, logros en la Bitácora.
+- Créditos una vez de verdad: al mostrarlos se guarda `credited` (campo nuevo, `false` por defecto; se normaliza sin borrar nada). Un final repetido acaba en «Tu canción está completa».
+- El final de once (y la versión maestra) se cierra solo 7 s después de su último compás.
+- No cambia: notas, voces, arreglo, mezcla, umbrales, cubo ni ID de HTML. El final del Viaje sigue dibujando sus anillos como antes.
+- Pruebas: `tests/song-grows.mjs` (arco ≤ 1/16 de los golpes que suenan en las once capas, tres arcos distintos, forma por estrella, línea de crecimiento igual a «crece», `credited` en el guardado). Se actualizan `song-for-everyone.mjs`, `song_finale_flow_smoke.py` (sin tarjeta tras «Seguir»; el segundo final sin nombres y cerrado 5–10 s después del último compás), `result_clarity_smoke.py` y `song_stage_smoke.py` (Ruinas ★ sin relleno, ★★ relleno, sin velo).
 
 ## Q2 · Lo que cuenta la ronda · 2.3.0-alpha.217
 

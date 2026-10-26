@@ -30,10 +30,10 @@ try:
    p.keyboard.press('Escape');p.wait_for_function('document.getElementById("mPlace").hidden')
    p.evaluate('__r.openLugares()');assert '75 %' in p.locator('[data-place-id=lago] small').inner_text();p.locator('#lugaresClose').click()
    p.evaluate("()=>{__r.S.lugares.best.lago.onTime=.746;__r.openLugares();}");assert p.locator('[data-place-id=lago] small').inner_text()=='74,6 %';p.locator('#lugaresClose').click()
-   # Panel 10 (P6, D5-A): the last round flows into the real finale by itself; its card comes when the finale closes.
+   # Panel 10 (P6, D5-A): the last round flows into the real finale by itself; panel 11 (Q3): no card after it.
    p.evaluate("()=>{for(const id of __r.places().stars?Object.keys(__r.places().stars):[])__r.S.lugares.stars[id]=[true,false,false];__r.S.lugares.won=false;__r.startPlace('cueva');__r.placeFinish('cueva');}")
    p.wait_for_function('__r.songStageState().final&&__r.songStageState().running',timeout=15000);assert p.evaluate('document.getElementById("mPlace").hidden'),'no card in front of the finale'
-   p.locator('#songClose').click();p.wait_for_function('!document.getElementById("mPlace").hidden');p.keyboard.press('Escape');p.wait_for_function('document.getElementById("mPlace").hidden')
+   p.locator('#songClose').click();p.wait_for_timeout(1500);assert p.evaluate('document.getElementById("mPlace").hidden'),'panel 11 (Q3): no card after the finale'
    assert not p.evaluate('__r.songStageState().running'),'the finale plays once'
    assert not errors,errors;p.close()
   b.close()

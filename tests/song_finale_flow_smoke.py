@@ -2,7 +2,8 @@
 anything. On ?lugar=cueva (the ten before it complete) a ★ round with sound closes: its drop plays at its tier (★ with
 growth from its best share), no card opens in front, the stage opens by itself and its first bar starts less than a bar
 after the drop ends. Under your phrases only the pad and the bass go on; the silence carries no words; the credits of
-authorship come at the end. Closing the finale brings back the round's card."""
+authorship come at the end. Panel 11 (Q3): closing the finale does not bring back the round's card, the credits come
+once (the next finale ends on «Tu canción está completa») and the finale closes by itself 5–10 s after its last bar."""
 from pathlib import Path
 from functools import partial
 from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
@@ -36,8 +37,19 @@ try:
   p.wait_for_function("__r.songStageState().caption===''",timeout=60000)
   assert 'Espacio' not in p.inner_text('#songStage')
   p.wait_for_function("__r.songStageState().credits",timeout=60000);assert 'Jay · diseño y código' in p.inner_text('#songStage')
-  p.locator('#songClose').click()
-  p.wait_for_function("!document.getElementById('mPlace').hidden",timeout=5000);assert 'Cueva' in p.inner_text('#placeTitle'),'the round\'s card after the finale'
+  assert p.evaluate('__r.S.lugares.credited')==True,'the credits are kept as shown'
+  # Panel 11 (Q3, Simogo): «Seguir» ends on the song; the round's card does not come back.
+  p.locator('#songClose').click();p.wait_for_timeout(2000)
+  assert p.evaluate("document.getElementById('mPlace').hidden"),'no card after the finale'
+  assert not p.evaluate('__r.songStageState().running')
+  # The finale again: no names; it ends on «Tu canción está completa» and closes by itself 5–10 s after its last bar.
+  assert p.evaluate("__r.replaySong()")
+  p.evaluate("()=>{const r=__r;window.__end={last:null,closed:null};const tick=()=>{const st=r.songStageState();if(st.running&&st.bars&&st.k>=st.bars*16&&__end.last===null)__end.last=performance.now();if(!st.running){__end.closed=performance.now();return;}requestAnimationFrame(tick);};requestAnimationFrame(tick);}")
+  p.wait_for_function("__r.songStageState().credits",timeout=90000);text=p.inner_text('#songStage')
+  assert 'Jay · diseño y código' not in text and 'Luca' not in text and 'Tu canción está completa' in text,text
+  p.wait_for_function("__end.closed!==null",timeout=60000);end=p.evaluate('__end')
+  assert end['last'] is not None and 5000<=end['closed']-end['last']<=10000,('closes 5–10 s after the last bar',end)
+  assert p.evaluate("document.getElementById('mPlace').hidden")
   assert not errors,errors;b.close()
- print('PASS song finale flow (P6, D5-A): the eleventh round closes at its tier, no card in front, the finale starts by itself within a bar of the drop, a silence without words, authorship at the end, and the card after it',flush=True)
+ print('PASS song finale flow (P6, D5-A; Q3): the eleventh round closes at its tier, no card in front, the finale starts by itself within a bar of the drop, a silence without words, authorship at the end and no card after it; the next finale has no names and closes by itself 5–10 s after its last bar',flush=True)
 finally:srv.shutdown();srv.server_close()

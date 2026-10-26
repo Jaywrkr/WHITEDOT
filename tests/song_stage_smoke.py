@@ -32,6 +32,15 @@ try:
    assert not page.evaluate('__r.songPlaying()')
    if os.environ.get('SONG_SHOT'):page.screenshot(path=os.environ['SONG_SHOT'].replace('.png',f'-{width}.png'))
    page.locator('#songClose').click();assert not page.evaluate('__r.songStageState().running')
+   # Panel 11 (Q3, Iwai): Ruinas ★ and Ruinas ★★ differ by fill, not by a shade; no gold veil outside the finale.
+   def ruinas(stars):
+    page.evaluate(f"()=>{{__r.S.lugares.stars.ruinas={stars};__r.openSong();}}");page.wait_for_function("__r.songStageState().rings.length===11&&__r.songStageState().k>2",timeout=8000);page.wait_for_timeout(300)
+    got=page.evaluate("()=>{const st=__r.songStageState(),p=st.rings.find(q=>q.id==='ruinas'),cv=document.querySelector('#songStage canvas'),d=cv.width/innerWidth,c=cv.getContext('2d'),at=(x,y)=>[...c.getImageData(Math.round(x*d),Math.round(y*d),1,1).data];return {centre:at(p.x,p.y),edge:at(p.x,p.y-p.r),top:at(innerWidth/2,2)};}")
+    page.locator('#songClose').click();return got
+   one,two=ruinas('[true,false,false]'),ruinas('[true,true,false]')
+   assert sum(one['centre'][:3])==0,('★: no fill',one);assert sum(two['centre'][:3])>90,('★★: filled',two);assert sum(one['edge'][:3])>90,('★: its arc',one)
+   assert sum(one['top'][:3])==0 and sum(two['top'][:3])==0,('no gold veil outside the finale',one,two)
+   page.evaluate("()=>{__r.S.lugares.stars.ruinas=[false,false,false];}")
 
    # The eleven complete (plan H3): the true finale, once.
    page.evaluate(f"()=>{{for(const id of {ALL})__r.S.lugares.stars[id][0]=true;}}")
